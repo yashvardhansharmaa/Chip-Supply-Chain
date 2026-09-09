@@ -164,7 +164,7 @@
   };
 
   /* ---------------- router ---------------- */
-  var VIEWS = ['stack', 'landscape', 'suppliers', 'geopolitics', 'sources'];
+  var VIEWS = ['stack', 'briefing', 'landscape', 'suppliers', 'geopolitics', 'glossary', 'sources'];
   var Router = {
     current: null,
     init: function () {
@@ -193,7 +193,7 @@
         }
         Sections.update();
       }
-      document.title = v === 'stack' ? 'Chokepoints' : 'Chokepoints · ' + { landscape: 'Landscape', suppliers: 'Suppliers', geopolitics: 'Geopolitics', sources: 'Sources' }[v];
+      document.title = v === 'stack' ? 'Chokepoints' : 'Chokepoints · ' + { briefing: 'Briefing', landscape: 'Landscape', suppliers: 'Suppliers', geopolitics: 'Geopolitics', glossary: 'Glossary', sources: 'Sources' }[v];
     }
   };
 
@@ -427,8 +427,18 @@
   };
 
   /* ---------------- boot ---------------- */
+  var Glossary = {
+    init: function () {
+      var inp = $('#gl-search'); if (!inp) return;
+      inp.addEventListener('input', function () {
+        var q = inp.value.trim().toLowerCase();
+        $$('#glossary .gl-entry').forEach(function (el) { el.hidden = !!q && (el.getAttribute('data-text') || '').indexOf(q) < 0; });
+      });
+    }
+  };
   function boot() {
     Theme.init();
+    Glossary.init();
     Stage.init();
     Router.init();
     Sections.init();

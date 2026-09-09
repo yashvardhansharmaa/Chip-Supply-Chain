@@ -23,8 +23,8 @@ PC.register('rack', function (p) {
     var y = y0 + i * pitch;
     var isSwitch = (i >= 10 && i < 19);
     // body: a light top face and the two ends, no long edge lines (they only scribble)
-    parts.push(PC.T(PC.plane({ w: tW, d: tD, n: 300, tone: 0.24 }), { pos: [0, y + tH / 2, 0] }));
-    parts.push(PC.T(PC.box({ w: tW, h: tH, d: tD, faces: ['px', 'nx'], n: 240, tone: 0.32 }), { pos: [0, y, 0] }));
+    parts.push(PC.T(PC.plane({ w: tW, d: tD, n: 230, tone: 0.2 }), { pos: [0, y + tH / 2, 0] }));
+    parts.push(PC.T(PC.box({ w: tW, h: tH, d: tD, faces: ['px', 'nx'], n: 200, tone: 0.3 }), { pos: [0, y, 0] }));
     // front panel and its lip
     parts.push(PC.T(PC.plane({ w: tW, d: tH, n: 620, tone: isSwitch ? 0.3 : 0.46 }), { rot: V, pos: [0, y, front] }));
     parts.push(PC.T(PC.polyline({ pts: [[-tW / 2, 0, -tH / 2], [tW / 2, 0, -tH / 2], [tW / 2, 0, tH / 2], [-tW / 2, 0, tH / 2]], closed: true, perUnit: 330, tone: 1 }), { rot: V, pos: [0, y, front + 0.002] }));
@@ -72,8 +72,16 @@ PC.register('rack', function (p) {
   parts.push(PC.T(PC.box({ w: W, h: 0.08, d: D, faces: ['pz', 'px', 'nx', 'ny'], n: 2600, tone: 0.4 }), { pos: [0, 0.04, 0] }));
   parts.push(PC.T(PC.boxEdges({ w: W, h: 0.08, d: D, perUnit: 190, tone: 1 }), { pos: [0, 0.04, 0] }));
 
+  // ---------- perforated side panel, so the rack does not read as an open crate ----------
+  // It covers the front two-thirds only; the rear stays open so the cable spine shows.
+  var SP = [Math.PI / 2, Math.PI / 2, 0];        // stands a plane up facing +X
+  var spW = 0.68, spH = H - 0.16, spZ = 0.18;
+  parts.push(PC.T(PC.plane({ w: spW, d: spH, n: 4200, tone: 0.2 }), { rot: SP, pos: [W / 2 - 0.004, H / 2, spZ] }));
+  parts.push(PC.T(PC.dots({ nx: 15, nz: 40, sx: (spW - 0.06) / 14, sz: (spH - 0.1) / 39, tone: 0.42 }), { rot: SP, pos: [W / 2 - 0.002, H / 2, spZ] }));
+  parts.push(PC.T(PC.polyline({ pts: [[-spW / 2, 0, -spH / 2], [spW / 2, 0, -spH / 2], [spW / 2, 0, spH / 2], [-spW / 2, 0, spH / 2]], closed: true, perUnit: 220, tone: 0.9 }), { rot: SP, pos: [W / 2 - 0.001, H / 2, spZ] }));
+
   // ---------- coolant manifold: two vertical pipes down one side ----------
-  var pipeX = W / 2 + 0.15, pipeZ = [0.22, -0.02], pr = 0.036, pTop = 2.10, pBot = 0.12;
+  var pipeX = W / 2 + 0.10, pipeZ = [0.42, 0.24], pr = 0.036, pTop = 2.10, pBot = 0.12;
   pipeZ.forEach(function (pz) {
     parts.push(PC.T(PC.cylinder({ r: pr, h: pTop - pBot, caps: false, n: 4600, tone: 0.5 }), { pos: [pipeX, (pTop + pBot) / 2, pz] }));
     for (var m = 0; m < 9; m++) {

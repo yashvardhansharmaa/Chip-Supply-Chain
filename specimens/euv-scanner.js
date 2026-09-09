@@ -72,17 +72,17 @@ PC.register('euv-scanner', function (p) {
 
   var NODE = [
     { p: [-1.66, -0.72], kind: 'ap', h: 0.05 },      // intermediate focus
-    { p: [-1.45, -1.05], kind: 'm', r: 0.24 },       // illuminator 1
+    { p: [-1.22, -1.02], kind: 'm', r: 0.24 },       // illuminator 1
     { p: [-1.35, 0.60], kind: 'm', r: 0.28 },        // illuminator 2
     { p: [-0.90, -0.15], kind: 'm', r: 0.26 },       // illuminator 3
     { p: [-0.25, 1.55], kind: 'ret', h: 0.15 },      // reticle, face down
     { p: [0.10, 0.635], kind: 'm', r: 0.30 },        // M1
-    { p: [1.15, 1.05], kind: 'm', r: 0.32 },         // M2
+    { p: [1.15, 0.95], kind: 'm', r: 0.32 },         // M2
     { p: [0.30, -0.25], kind: 'm', r: 0.28 },        // M3
     { p: [1.30, 0.05], kind: 'm', r: 0.28 },         // M4
     { p: [0.38, -1.05], kind: 'm', r: 0.24 },        // M5
     { p: [1.20, -0.70], kind: 'm', r: 0.34 },        // M6
-    { p: [1.10, -1.75], kind: 'waf', h: 0.06 }       // wafer
+    { p: [1.10, -1.60], kind: 'waf', h: 0.06 }       // wafer
   ];
 
   // normals and in-plane tangents at every node
@@ -137,16 +137,16 @@ PC.register('euv-scanner', function (p) {
 
   // ---------- vacuum frames ----------
   // illuminator vessel
-  add(PC.T(PC.boxEdges({ w: 1.30, h: 2.35, d: 1.10, perUnit: 190, tone: 0.85 }), { pos: [-1.10, -0.10, 0] }));
-  add(panel(1.30, 2.35, -1.10, -0.10, -0.55, 3200, 0.14));
+  add(PC.T(PC.boxEdges({ w: 1.30, h: 2.575, d: 1.10, perUnit: 190, tone: 0.85 }), { pos: [-1.10, 0.0125, 0] }));
+  add(panel(1.30, 2.575, -1.10, 0.0125, -0.55, 3200, 0.14));
   // projection optics box
-  add(PC.T(PC.boxEdges({ w: 2.10, h: 2.75, d: 1.30, perUnit: 190, tone: 0.9 }), { pos: [0.70, -0.20, 0] }));
-  add(panel(2.10, 2.75, 0.70, -0.20, -0.65, 4400, 0.14));
-  add(frame2(2.10, 0.02, 0.70, 0.70, -0.65, 170, 0.45));
-  add(frame2(2.10, 0.02, 0.70, -0.90, -0.65, 170, 0.45));
-  // reticle stage chamber on top
-  add(PC.T(PC.boxEdges({ w: 1.45, h: 0.60, d: 0.95, perUnit: 210, tone: 0.9 }), { pos: [-0.25, 1.87, 0] }));
-  add(panel(1.45, 0.60, -0.25, 1.87, -0.475, 1300, 0.14));
+  add(PC.T(PC.boxEdges({ w: 2.20, h: 2.875, d: 1.30, perUnit: 190, tone: 0.9 }), { pos: [0.65, -0.1375, 0] }));
+  add(panel(2.20, 2.875, 0.65, -0.1375, -0.65, 4400, 0.14));
+  add(frame2(2.20, 0.02, 0.65, 0.70, -0.65, 170, 0.45));
+  add(frame2(2.20, 0.02, 0.65, -0.90, -0.65, 170, 0.45));
+  // reticle stage chamber, carried on top of both vessels
+  add(PC.T(PC.boxEdges({ w: 1.60, h: 0.80, d: 0.95, perUnit: 210, tone: 0.9 }), { pos: [-0.25, 1.70, 0] }));
+  add(panel(1.60, 0.80, -0.25, 1.70, -0.475, 1500, 0.14));
   // turbo pumps slung under the vessels
   var pumpAt = [[-2.30, -1.72], [-1.10, -1.42], [0.70, -1.72]];
   for (i = 0; i < pumpAt.length; i++) {
@@ -167,34 +167,41 @@ PC.register('euv-scanner', function (p) {
   for (i = 0; i < NODE.length; i++) if (NODE[i].kind === 'm') add(mirror(NODE[i].p, NODE[i].nv, NODE[i].r));
 
   // ---------- reticle and its stage ----------
-  var R = NODE[4].p, rw = 0.58, rd = 0.44;
-  add(PC.T(PC.accent(PC.box({ w: rw, h: 0.035, d: rd, n: 2600, tone: 1 }), 0.8), { pos: [R[0], R[1] + 0.0175, 0] }));
-  add(PC.T(PC.accent(PC.boxEdges({ w: rw, h: 0.035, d: rd, perUnit: 520 }), 1), { pos: [R[0], R[1] + 0.0175, 0] }));
-  add(PC.T(PC.box({ w: rw * 1.35, h: 0.16, d: rd * 1.3, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 2600, tone: 0.36 }), { pos: [R[0], R[1] + 0.12, 0] }));
-  add(PC.T(PC.boxEdges({ w: rw * 1.35, h: 0.16, d: rd * 1.3, perUnit: 260, tone: 0.95 }), { pos: [R[0], R[1] + 0.12, 0] }));
+  // The reticle is held pattern-down; a narrow clamp grips it so the copper
+  // plate stays visible from above.
+  var R = NODE[4].p, rw = 0.64, rd = 0.50;
+  add(PC.T(PC.accent(PC.box({ w: rw, h: 0.04, d: rd, n: 3000, tone: 1 }), 0.65), { pos: [R[0], R[1] + 0.02, 0] }));
+  add(PC.T(PC.accent(PC.boxEdges({ w: rw, h: 0.04, d: rd, perUnit: 620 }), 1), { pos: [R[0], R[1] + 0.02, 0] }));
+  add(PC.T(PC.accent(PC.polyline({
+    pts: [[-rw * 0.34, 0, -rd * 0.36], [rw * 0.34, 0, -rd * 0.36], [rw * 0.34, 0, rd * 0.36], [-rw * 0.34, 0, rd * 0.36]],
+    closed: true, perUnit: 620
+  }), 1), { pos: [R[0], R[1] + 0.042, 0] }));
+  add(PC.T(PC.box({ w: rw * 0.52, h: 0.15, d: rd * 0.46, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 1600, tone: 0.4 }), { pos: [R[0], R[1] + 0.115, 0] }));
+  add(PC.T(PC.boxEdges({ w: rw * 0.52, h: 0.15, d: rd * 0.46, perUnit: 260, tone: 0.95 }), { pos: [R[0], R[1] + 0.115, 0] }));
   for (i = -1; i <= 1; i += 2) {
-    add(PC.T(PC.box({ w: 1.30, h: 0.05, d: 0.07, n: 700, tone: 0.6 }), { pos: [R[0], R[1] + 0.23, i * 0.30] }));
+    add(PC.T(PC.box({ w: 1.40, h: 0.05, d: 0.06, n: 700, tone: 0.6 }), { pos: [R[0], R[1] + 0.22, i * 0.33] }));
+    add(PC.T(PC.line({ a: [-0.70, 0, 0], b: [0.70, 0, 0], perUnit: 220, tone: 0.9 }), { pos: [R[0], R[1] + 0.246, i * 0.33] }));
   }
-  add(PC.T(PC.dots({ nx: 9, nz: 6, sx: 0.055, sz: 0.055, per: 2, tone: 0.5 }), { pos: [R[0], R[1] - 0.004, 0] }));
 
   // ---------- wafer stage ----------
-  var W = NODE[11].p, wafR = 0.27;
-  add(PC.T(PC.cylinder({ r: wafR, h: 0.02, n: 1300, tone: 0.42 }), { pos: [W[0], W[1] - 0.01, 0] }));
+  var W = NODE[11].p, wafR = 0.33;
+  add(PC.T(PC.cylinder({ r: wafR, h: 0.02, n: 1400, tone: 0.34 }), { pos: [W[0], W[1] - 0.01, 0] }));
   add(PC.T(PC.circle({ r: wafR, perUnit: 620, tone: 1 }), { pos: [W[0], W[1] + 0.002, 0] }));
   var dg = [];
   for (var gx = -3; gx <= 3; gx++) for (var gz = -3; gz <= 3; gz++) {
-    var cx = gx * 0.075, cz = gz * 0.062;
-    if (cx * cx + cz * cz > (wafR - 0.045) * (wafR - 0.045)) continue;
-    dg.push(PC.polyline({ pts: [[cx - 0.036, 0, cz - 0.030], [cx + 0.036, 0, cz - 0.030], [cx + 0.036, 0, cz + 0.030], [cx - 0.036, 0, cz + 0.030]], closed: true, perUnit: 200, tone: 0.8 }));
+    var cx = gx * 0.092, cz = gz * 0.076;
+    if (cx * cx + cz * cz > (wafR - 0.055) * (wafR - 0.055)) continue;
+    dg.push(PC.polyline({ pts: [[cx - 0.044, 0, cz - 0.037], [cx + 0.044, 0, cz - 0.037], [cx + 0.044, 0, cz + 0.037], [cx - 0.044, 0, cz + 0.037]], closed: true, perUnit: 150, tone: 0.7 }));
   }
   add(PC.T(PC.merge.apply(null, dg), { pos: [W[0], W[1] + 0.004, 0] }));
-  add(PC.T(PC.accent(PC.plane({ w: 0.072, d: 0.060, n: 700 }), 0.9), { pos: [W[0], W[1] + 0.008, 0] }));
-  add(PC.T(PC.cylinder({ r: wafR * 0.92, h: 0.07, n: 1200, tone: 0.32 }), { pos: [W[0], W[1] - 0.055, 0] }));
-  add(PC.T(PC.box({ w: 0.92, h: 0.10, d: 0.72, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 2000, tone: 0.3 }), { pos: [W[0], W[1] - 0.145, 0] }));
-  add(PC.T(PC.boxEdges({ w: 0.92, h: 0.10, d: 0.72, perUnit: 240, tone: 0.95 }), { pos: [W[0], W[1] - 0.145, 0] }));
+  add(PC.T(PC.accent(PC.plane({ w: 0.088, d: 0.074, n: 800 }), 0.9), { pos: [W[0], W[1] + 0.008, 0] }));
+  add(PC.T(PC.cylinder({ r: wafR * 0.9, h: 0.06, n: 900, tone: 0.24 }), { pos: [W[0], W[1] - 0.05, 0] }));
+  add(PC.T(PC.box({ w: 1.02, h: 0.13, d: 0.80, faces: ['py', 'px', 'pz'], n: 1600, tone: 0.24 }), { pos: [W[0], W[1] - 0.145, 0] }));
+  add(PC.T(PC.boxEdges({ w: 1.02, h: 0.13, d: 0.80, perUnit: 150, tone: 0.9 }), { pos: [W[0], W[1] - 0.145, 0] }));
   // stage rails on the base
   for (i = -1; i <= 1; i += 2) {
-    add(PC.T(PC.box({ w: 1.55, h: 0.05, d: 0.08, n: 800, tone: 0.55 }), { pos: [W[0] - 0.10, W[1] - 0.22, i * 0.26] }));
+    add(PC.T(PC.box({ w: 1.60, h: 0.045, d: 0.07, n: 420, tone: 0.45 }), { pos: [W[0] - 0.12, W[1] - 0.235, i * 0.30] }));
+    add(PC.T(PC.line({ a: [-0.80, 0, 0], b: [0.80, 0, 0], perUnit: 180, tone: 0.85 }), { pos: [W[0] - 0.12, W[1] - 0.212, i * 0.30] }));
   }
 
   // ---------- the beam ----------

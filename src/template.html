@@ -17,9 +17,11 @@
     <a class="wordmark" href="#/"><b>Chokepoints</b><span>The AI chip supply chain</span></a>
     <nav class="tabs" aria-label="Sections">
       <a href="#/" data-view="stack" aria-current="page">The Stack</a>
+      <a href="#/briefing" data-view="briefing">Briefing</a>
       <a href="#/landscape" data-view="landscape">Landscape</a>
       <a href="#/suppliers" data-view="suppliers">Suppliers</a>
       <a href="#/geopolitics" data-view="geopolitics">Geopolitics</a>
+      <a href="#/glossary" data-view="glossary">Glossary</a>
       <a href="#/sources" data-view="sources">Sources</a>
       <button class="theme-toggle" type="button" aria-label="Switch to dark mode">
         <svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
@@ -95,6 +97,23 @@
       <h3 class="label" style="margin: 44px 0 6px">The control regime, event by event</h3>
       <div id="tl-filters" class="chips tl-filters" role="group" aria-label="Filter events"></div>
       <ol class="timeline" id="timeline"></ol>
+    </section>
+
+    <section class="view column wide" data-view="briefing" hidden>
+      <div class="view-head">
+        <h2>The Briefing</h2>
+        <p class="dek">The whole chain in one sitting: for every stage, the plain-language explanation, the conclusions, the chokepoint score and who leads. Written for readers who need to understand the chain before they regulate it, invest in it, or build on it. Each card links to the full chapter.</p>
+      </div>
+      <div class="briefing">{{BRIEFING}}</div>
+    </section>
+
+    <section class="view column wide" data-view="glossary" hidden>
+      <div class="view-head">
+        <h2>Glossary</h2>
+        <p class="dek">{{GLOSSARY_COUNT}} terms, each defined for a reader with no engineering background, with one line on why it matters for policy or investment and a link to the chapter where it lives.</p>
+      </div>
+      <div class="filters"><input id="gl-search" type="search" placeholder="Filter terms…" aria-label="Filter glossary"></div>
+      <dl class="glossary" id="glossary">{{GLOSSARY}}</dl>
     </section>
 
     <section class="view column" data-view="sources" hidden>

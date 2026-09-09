@@ -8,59 +8,60 @@
 PC.register('boule-and-wafer', function (p) {
   var R = 0.15;                                       // 300 mm diameter
   var yTip = -1.05, yBody0 = -0.85, yBody1 = 0.65;    // 0.2 m tail cone, 1.5 m body
-  var yCrown1 = 0.803, yNeck1 = 1.000, ySeed1 = 1.090, yClamp1 = 1.126;
+  var yCrown1 = 0.862, yNeck1 = 1.132, ySeed1 = 1.232, yClamp1 = 1.264;
   var bx = -0.30;                                     // boule centre on X
   var parts = [], i, y, a;
 
   // ---------- tail cone ----------
-  parts.push(PC.T(PC.cone({ r1: 0, r2: R, h: yBody0 - yTip, n: 3000, tone: 0.34 }),
+  parts.push(PC.T(PC.cone({ r1: 0, r2: R, h: yBody0 - yTip, n: 1800, tone: 0.32 }),
     { pos: [bx, (yTip + yBody0) / 2, 0] }));
   for (i = 1; i <= 3; i++) {
-    parts.push(PC.T(PC.circle({ r: R * i / 3.6, perUnit: 150, tone: 0.5 }), { pos: [bx, yTip + 0.055 * i, 0] }));
+    parts.push(PC.T(PC.circle({ r: R * i / 3.6, perUnit: 150, tone: 0.55 }), { pos: [bx, yTip + 0.055 * i, 0] }));
   }
 
   // ---------- body ----------
-  parts.push(PC.T(PC.cylinder({ r: R, h: yBody1 - yBody0, caps: false, n: 22000, tone: 0.30 }),
+  parts.push(PC.T(PC.cylinder({ r: R, h: yBody1 - yBody0, caps: false, n: 26000, tone: 0.28 }),
     { pos: [bx, (yBody0 + yBody1) / 2, 0] }));
   // growth striations: faint rings, spaced well clear of each other
   for (i = 0; i <= 14; i++) {
     y = yBody0 + 0.02 + (yBody1 - yBody0 - 0.04) * i / 14;
-    parts.push(PC.T(PC.circle({ r: R * 1.002, perUnit: 170, tone: 0.45 }), { pos: [bx, y, 0] }));
+    parts.push(PC.T(PC.circle({ r: R * 1.002, perUnit: 150, tone: 0.38 }), { pos: [bx, y, 0] }));
   }
   // the four flat facets that run the length of a <100> ingot
   for (i = 0; i < 4; i++) {
     a = Math.PI / 4 + i * Math.PI / 2;
     parts.push(PC.line({
-      a: [bx + R * 1.004 * Math.cos(a), yBody0, R * 1.004 * Math.sin(a)],
-      b: [bx + R * 1.004 * Math.cos(a), yBody1, R * 1.004 * Math.sin(a)],
-      perUnit: 220, tone: 0.7
+      a: [bx + R * 1.004 * Math.cos(a), yBody0 + 0.06, R * 1.004 * Math.sin(a)],
+      b: [bx + R * 1.004 * Math.cos(a), yBody1 - 0.06, R * 1.004 * Math.sin(a)],
+      perUnit: 180, tone: 0.5
     }));
   }
-  // where the body is cropped and sliced: four kerf rings above the tail
-  for (i = 0; i < 4; i++) {
-    parts.push(PC.T(PC.circle({ r: R * 1.008, perUnit: 240, tone: 0.9 }), { pos: [bx, yBody0 + 0.035 + i * 0.042, 0] }));
+  // where the body is cropped and sliced: three kerf rings above the tail
+  for (i = 0; i < 3; i++) {
+    parts.push(PC.T(PC.circle({ r: R * 1.008, perUnit: 240, tone: 0.9 }), { pos: [bx, yBody0 + 0.04 + i * 0.05, 0] }));
   }
+  // the shoulder line where the body meets the crown
+  parts.push(PC.T(PC.circle({ r: R * 1.008, perUnit: 340, tone: 1 }), { pos: [bx, yBody1, 0] }));
 
   // ---------- crown, neck, seed ----------
-  parts.push(PC.T(PC.lathe({
-    profile: [[R, yBody1], [0.146, 0.686], [0.135, 0.716], [0.117, 0.742], [0.093, 0.764],
-              [0.064, 0.782], [0.034, 0.795], [0.018, yCrown1]],
-    tone: 0.42
-  }), { pos: [bx, 0, 0] }));
-  parts.push(PC.T(PC.circle({ r: 0.135, perUnit: 200, tone: 0.6 }), { pos: [bx, 0.716, 0] }));
-  parts.push(PC.T(PC.circle({ r: 0.064, perUnit: 260, tone: 0.75 }), { pos: [bx, 0.782, 0] }));
-  parts.push(PC.T(PC.cylinder({ r: 0.016, h: yNeck1 - yCrown1, caps: false, n: 1100, tone: 0.85 }),
+  var crown = [[R, yBody1], [0.148, 0.672], [0.140, 0.700], [0.124, 0.730], [0.102, 0.760],
+               [0.076, 0.790], [0.048, 0.818], [0.024, 0.845], [0.013, yCrown1]];
+  parts.push(PC.T(PC.lathe({ profile: crown, tone: 0.4 }), { pos: [bx, 0, 0] }));
+  [[0.140, 0.700], [0.102, 0.760], [0.048, 0.818]].forEach(function (ring) {
+    parts.push(PC.T(PC.circle({ r: ring[0] * 1.01, perUnit: 240, tone: 0.7 }), { pos: [bx, ring[1], 0] }));
+  });
+  parts.push(PC.T(PC.cylinder({ r: 0.013, h: yNeck1 - yCrown1, caps: false, n: 700, tone: 0.75 }),
     { pos: [bx, (yCrown1 + yNeck1) / 2, 0] }));
   // seed crystal: a small square-section rod held in a clamp
-  parts.push(PC.T(PC.box({ w: 0.050, h: ySeed1 - yNeck1, d: 0.050, n: 1300, tone: 0.6 }),
+  parts.push(PC.T(PC.box({ w: 0.056, h: ySeed1 - yNeck1, d: 0.056, n: 340, tone: 0.5 }),
     { pos: [bx, (yNeck1 + ySeed1) / 2, 0] }));
-  parts.push(PC.T(PC.boxEdges({ w: 0.050, h: ySeed1 - yNeck1, d: 0.050, perUnit: 460, tone: 1 }),
+  parts.push(PC.T(PC.boxEdges({ w: 0.056, h: ySeed1 - yNeck1, d: 0.056, perUnit: 420, tone: 1 }),
     { pos: [bx, (yNeck1 + ySeed1) / 2, 0] }));
-  parts.push(PC.T(PC.box({ w: 0.125, h: yClamp1 - ySeed1, d: 0.058, n: 1100, tone: 0.5 }),
+  parts.push(PC.T(PC.box({ w: 0.135, h: yClamp1 - ySeed1, d: 0.062, n: 280, tone: 0.45 }),
     { pos: [bx, (ySeed1 + yClamp1) / 2, 0] }));
-  parts.push(PC.T(PC.boxEdges({ w: 0.125, h: yClamp1 - ySeed1, d: 0.058, perUnit: 420, tone: 1 }),
+  parts.push(PC.T(PC.boxEdges({ w: 0.135, h: yClamp1 - ySeed1, d: 0.062, perUnit: 400, tone: 1 }),
     { pos: [bx, (ySeed1 + yClamp1) / 2, 0] }));
-  parts.push(PC.T(PC.cylinder({ r: 0.011, h: 0.07, caps: false, n: 420, tone: 0.7 }), { pos: [bx, yClamp1 + 0.035, 0] }));
+  parts.push(PC.T(PC.cylinder({ r: 0.010, h: 0.05, caps: false, n: 170, tone: 0.65 }), { pos: [bx, yClamp1 + 0.025, 0] }));
 
   // ---------- one wafer standing on edge, leaning back (accent) ----------
   var lean = 0.13;
@@ -79,18 +80,17 @@ PC.register('boule-and-wafer', function (p) {
   }
   parts.push(PC.T(new Float32Array(keep), {
     rot: [0, 0.9, -(Math.PI / 2 - lean)],
-    pos: [0.44, yTip + R * Math.cos(lean) + 0.008, -0.13]
+    pos: [0.50, yTip + R * Math.cos(lean) + 0.008, 0.02]
   }));
 
   // ---------- a short stack of wafers lying flat ----------
-  var sx = 0.40, sz = 0.24, pitch = 0.023;
+  var sx = 0.38, sz = 0.26, pitch = 0.024;
   for (i = 0; i < 5; i++) {
     y = yTip + 0.008 + i * pitch;
-    parts.push(PC.T(PC.cylinder({ r: R, h: 0.009, caps: false, n: 210, tone: 0.4 }), { pos: [sx, y, sz] }));
-    parts.push(PC.T(PC.circle({ r: R, perUnit: 170, tone: 1 }), { pos: [sx, y + 0.0045, sz] }));
-    parts.push(PC.T(PC.circle({ r: R, perUnit: 120, tone: 0.6 }), { pos: [sx, y - 0.0045, sz] }));
+    parts.push(PC.T(PC.cylinder({ r: R, h: 0.009, caps: false, n: 190, tone: 0.34 }), { pos: [sx, y, sz] }));
+    parts.push(PC.T(PC.circle({ r: R, perUnit: 160, tone: 0.95 }), { pos: [sx, y + 0.0045, sz] }));
   }
-  parts.push(PC.T(PC.disc({ r: R, n: 1500, tone: 0.34 }), { pos: [sx, yTip + 0.008 + 4 * pitch + 0.0045, sz] }));
+  parts.push(PC.T(PC.disc({ r: R, n: 1700, tone: 0.32 }), { pos: [sx, yTip + 0.008 + 4 * pitch + 0.0045, sz] }));
   parts.push(PC.T(PC.circle({ r: R * 0.80, perUnit: 150, tone: 0.5 }), { pos: [sx, yTip + 0.008 + 4 * pitch + 0.006, sz] }));
 
   return {

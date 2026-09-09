@@ -201,8 +201,8 @@ function nameplate(card) {
 <div class="wide"><dt>Where it is made</dt><dd>${countries || '—'}</dd></div>
 <div><dt>Cost signal</dt><dd>${esc(card.costSignal || '—')}</dd></div>
 <div><dt>Time to substitute</dt><dd><b>${esc(sub.years || '—')}${sub.years && !/year/i.test(sub.years) ? ' years' : ''}</b>${sub.why ? `<span class="why">${esc(sub.why)}</span>` : ''}</dd></div>
-${card.chinaStatus ? `<div class="wide"><dt>China</dt><dd>${esc(card.chinaStatus)}</dd></div>` : ''}
-${card.usStatus ? `<div class="wide"><dt>United States</dt><dd>${esc(card.usStatus)}</dd></div>` : ''}
+${card.chinaStatus ? `<div><dt>China</dt><dd>${esc(card.chinaStatus)}</dd></div>` : ''}
+${card.usStatus ? `<div><dt>United States</dt><dd>${esc(card.usStatus)}</dd></div>` : ''}
 </dl>`;
 }
 
@@ -225,9 +225,30 @@ chapters.sort((a, b) => a.number - b.number);
 if (!chapters.length) warn('no chapters found; building with a placeholder');
 
 const pad = (n) => String(n).padStart(2, '0');
+const textOf = (html) => String(html || '').replace(/<sup class="cite">[\s\S]*?<\/sup>/g, '').replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+const norm = (t) => textOf(t).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+// Pull the Takeaways block out of the body so it can lead the chapter as "In short".
+function splitTakeaways(html) {
+  const m = html.match(/<div class="takeaways"><h3[^>]*>Takeaways<\/h3>([\s\S]*?)<\/div>\s*$/) || html.match(/<div class="takeaways"><h3[^>]*>Takeaways<\/h3>([\s\S]*?)<\/div>/);
+  if (!m) return { body: html, inShort: '' };
+  return { body: html.replace(m[0], ''), inShort: m[1].trim() };
+}
+// Replace the paragraph that repeats meta.plain with a highlighted "In plain terms" box (or insert one after the first h3).
+function plainBox(html, plain, ctx) {
+  if (!plain) return html;
+  const key = norm(plain).slice(0, 60);
+  const box = `<div class="plain"><span class="label">In plain terms</span><p>${inline(plain, ctx)}</p></div>`;
+  let done = false;
+  html = html.replace(/<p>([\s\S]*?)<\/p>/g, (whole, inner) => { if (!done && key && norm(inner).slice(0, 60) === key) { done = true; return box; } return whole; });
+  if (!done) { const i = html.indexOf('</h3>'); html = i >= 0 ? html.slice(0, i + 5) + '\n' + box + html.slice(i + 5) : box + html; }
+  return html;
+}
 function chapterHTML(ch) {
   const m = ch.meta, mins = Math.max(1, Math.round(ch.words / 230));
   const specimen = m.specimen || 'wafer';
+  const parts = splitTakeaways(ch.html);
+  const body = plainBox(parts.body, m.plain, { id: ch.id, cites: ch.cites, figures: [] });
+  ch.inShort = parts.inShort;
   const sources = ch.cites.length ? `<details class="chapter-sources"><summary>Sources for this chapter (${ch.cites.length})</summary><ol>${ch.cites.map((c) => `<li><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url.length > 96 ? c.url.slice(0, 94) + '…' : c.url)}</a><span class="host">${esc(host(c.url))}</span></li>`).join('')}</ol></details>` : '';
   return `<article class="chapter" id="${esc(ch.id)}" data-specimen="${esc(specimen)}" data-number="${pad(ch.number)}" data-title="${esc(ch.title)}" data-caption="${esc(m.specimenCaption || '')}">
 <header class="chapter-head">
@@ -236,8 +257,9 @@ function chapterHTML(ch) {
 ${m.oneLiner ? `<p class="chapter-lede">${esc(m.oneLiner)}</p>` : ''}
 <div class="chapter-meta"><span class="label">${ch.words.toLocaleString('en-US')} words · ${mins} min</span><span class="label">Specimen: ${esc(specimen.replace(/-/g, ' '))}</span></div>
 ${nameplate(m.card)}
+${parts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${parts.inShort}</section>` : ''}
 </header>
-<div class="prose">${ch.html}${sources}</div>
+<div class="prose">${body}${sources}</div>
 </article>`;
 }
 const chaptersHTML = chapters.length ? chapters.map(chapterHTML).join('\n') : `<article class="chapter" id="placeholder" data-specimen="wafer" data-number="01" data-title="Placeholder"><header class="chapter-head"><div class="chapter-num">01</div><h2 class="chapter-title">Chapters are being written</h2></header><div class="prose"><p>Content agents have not delivered yet. This is a shell build.</p></div></article>`;
@@ -272,7 +294,8 @@ let geoBody = '<p>The geopolitics essay has not been delivered yet.</p>', geoDek
 if (geo) {
   geoDek = geo.meta.oneLiner || geoDek;
   const sources = geo.cites.length ? `<details class="chapter-sources"><summary>Sources for this essay (${geo.cites.length})</summary><ol>${geo.cites.map((c) => `<li><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url.length > 96 ? c.url.slice(0, 94) + '…' : c.url)}</a><span class="host">${esc(host(c.url))}</span></li>`).join('')}</ol></details>` : '';
-  geoBody = nameplate(geo.meta.card) + `<p class="label" style="margin:10px 0 26px">${geo.words.toLocaleString('en-US')} words · ${Math.max(1, Math.round(geo.words / 230))} min</p>` + geo.html + sources;
+  const gparts = splitTakeaways(geo.html); geo.inShort = gparts.inShort;
+  geoBody = nameplate(geo.meta.card) + (gparts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${gparts.inShort}</section>` : '') + `<p class="label" style="margin:10px 0 26px">${geo.words.toLocaleString('en-US')} words · ${Math.max(1, Math.round(geo.words / 230))} min</p>` + plainBox(gparts.body, geo.meta.plain, { id: 'geopolitics', cites: geo.cites, figures: [] }) + sources;
 }
 
 /* ---------------- sources view ---------------- */
@@ -280,6 +303,28 @@ const all = chapters.concat(geo ? [geo] : []);
 const sourcesHTML = all.map((ch) => `<h3>${pad(ch.number)} · ${esc(ch.title)}</h3><ol>${ch.cites.map((c) => `<li><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url)}</a></li>`).join('')}</ol>`).join('') +
   (matrixNotes ? `<h3>Method: the country-share matrix</h3><div class="prose">${markdown(matrixNotes, { id: 'matrix-notes', cites: [], figures: [] }).html}</div>` : '') +
   `<h3>How this site was made</h3><div class="prose"><p>Chokepoints was researched, written, designed and built in September 2026 by Claude (Fable 5.1 as orchestrator and designer, with Opus agents writing chapters, compiling datasets and modelling the specimens) for Yashvardhan Sharma. Every number links to a public source; figures are redrawn from those sources. The specimens are procedural point clouds built from primitives, not scans, and their proportions follow published dimensions. Text and data are offered as a starting point for your own diligence, not as investment advice.</p></div>`;
+
+/* ---------------- briefing (all the "in short" blocks on one page) ---------------- */
+const briefingHTML = all.map((ch) => {
+  const c = ch.meta.card || {};
+  const leaders = (c.leaders || []).slice(0, 3).map((l) => `${esc(l.name)}${l.country ? ` <span class="cc">${esc(l.country)}</span>` : ''}`).join(' · ');
+  const href = ch.id === 'geopolitics' ? '#/geopolitics' : `#${esc(ch.id)}`;
+  return `<article class="brief-card" id="brief-${esc(ch.id)}">
+<div class="brief-head"><span class="n">${pad(ch.number)}</span><a href="${href}" class="t">${esc(ch.title)}</a>
+<span class="brief-meta">${c.chokepointScore ? pips(+c.chokepointScore) + `<span class="num">${c.chokepointScore}/5</span>` : ''}${c.concentration ? `<span class="conc ${esc(c.concentration)}">${esc(c.concentration)}</span>` : ''}</span></div>
+${ch.meta.plain ? `<p class="brief-plain">${inline(ch.meta.plain, { id: 'brief-' + ch.id, cites: [], figures: [] })}</p>` : (ch.meta.oneLiner ? `<p class="brief-plain">${esc(ch.meta.oneLiner)}</p>` : '')}
+${ch.inShort ? `<div class="brief-short">${ch.inShort.replace(/<sup class="cite">[\s\S]*?<\/sup>/g, '')}</div>` : ''}
+${leaders ? `<p class="brief-leaders"><span class="label">Who leads</span> ${leaders}</p>` : ''}
+</article>`;
+}).join('');
+
+/* ---------------- glossary ---------------- */
+const glossary = readJSON(path.join(root, 'data', 'glossary.json'), []);
+const chapterTitle = (id) => { const c = all.find((x) => x.id === id); return c ? c.title : null; };
+const glossaryHTML = glossary.length ? glossary.slice().sort((a, b) => a.term.localeCompare(b.term)).map((g) => `<div class="gl-entry" data-text="${esc((g.term + ' ' + (g.aka || '') + ' ' + g.plain + ' ' + (g.why || '')).toLowerCase())}">
+<dt>${esc(g.term)}${g.aka ? `<span class="aka">${esc(g.aka)}</span>` : ''}</dt>
+<dd><p>${esc(g.plain)}</p>${g.why ? `<p class="why">${esc(g.why)}</p>` : ''}${g.chapter && chapterTitle(g.chapter) ? `<a class="gl-link" href="${g.chapter === 'geopolitics' ? '#/geopolitics' : '#' + esc(g.chapter)}">${esc(chapterTitle(g.chapter))} →</a>` : ''}</dd>
+</div>`).join('') : '<p>The glossary has not been delivered yet.</p>';
 
 /* ---------------- assemble ---------------- */
 const totalWords = all.reduce((a, c) => a + c.words, 0);
@@ -301,6 +346,7 @@ const fill = (k, v) => { html = html.split(`{{${k}}}`).join(v); };
 fill('STYLES', read(path.join(root, 'src', 'styles.css')));
 fill('RAIL', railHTML); fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits); fill('FOOTER', footer);
 fill('SUPPLIERS_INTRO', suppliersIntro); fill('GEO_DEK', esc(geoDek)); fill('GEO_BODY', geoBody); fill('SOURCES', sourcesHTML);
+fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));
 fill('KIT', kit); fill('SPECIMENS', specimens);
 fill('DATA', JSON.stringify(data).replace(/<\/script/gi, '<\\/script'));
 fill('APP', read(path.join(root, 'src', 'app.js')));
@@ -308,7 +354,7 @@ fill('APP', read(path.join(root, 'src', 'app.js')));
 fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
 fs.writeFileSync(path.join(root, 'dist', 'index.html'), html);
 const report = [`built ${new Date().toISOString()}`, `chapters: ${chapters.length}${geo ? ' + geopolitics' : ''}`, `words: ${totalWords}`, `sources: ${all.reduce((a, c) => a + c.cites.length, 0)}`,
-  `landscape: ${landscape.length} chips · suppliers: ${suppliers.length} · timeline: ${timeline.length} · matrix: ${matrix.length}`, `specimens: ${[...specNames].join(', ')}`,
+  `landscape: ${landscape.length} chips · suppliers: ${suppliers.length} · timeline: ${timeline.length} · matrix: ${matrix.length} · glossary: ${glossary.length}`, `specimens: ${[...specNames].join(', ')}`,
   `size: ${(html.length / 1024).toFixed(0)} KB`, ...all.map((c) => `  ${pad(c.number)} ${c.id}: ${c.words} words, ${c.cites.length} sources, ${(c.meta.figures || []).length} figures`), ...warnings.map((w) => 'WARN ' + w)].join('\n');
 fs.writeFileSync(path.join(root, 'dist', 'build-report.txt'), report);
 console.log(report);

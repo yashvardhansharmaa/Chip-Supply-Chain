@@ -1,10 +1,10 @@
-built 2026-09-09T05:04:22.765Z
+built 2026-09-09T05:08:54.015Z
 chapters: 17 + geopolitics
-words: 28373
-sources: 364
-landscape: 19 chips · suppliers: 220 · timeline: 41 · matrix: 20
+words: 31567
+sources: 420
+landscape: 19 chips · suppliers: 220 · timeline: 41 · matrix: 20 · glossary: 0
 specimens: boule-and-wafer, die-floorplan, euv-scanner, gaa-transistor, gpu-baseboard, package, probe-card, rack, substrate-layers, wafer
-size: 1105 KB
+size: 1212 KB
   01 introduction-and-goals: 1226 words, 14 sources, 2 figures
   02 design-and-eda: 1784 words, 13 sources, 3 figures
   03 silicon-and-wafers: 1520 words, 15 sources, 2 figures
@@ -22,7 +22,7 @@ size: 1105 KB
   15 systems-and-networking: 1583 words, 17 sources, 3 figures
   16 data-centers-and-power: 1583 words, 18 sources, 3 figures
   17 component-costs: 1734 words, 44 sources, 3 figures
-  18 geopolitics: 62 words, 0 sources, 0 figures
+  18 geopolitics: 3256 words, 56 sources, 3 figures
 WARN chemicals-gases-and-photoresist: specimen "gas-cabinet" is not built yet
 WARN photomasks-and-pellicles: specimen "photomask" is not built yet
 WARN deposition-and-etch: specimen "process-chamber" is not built yet

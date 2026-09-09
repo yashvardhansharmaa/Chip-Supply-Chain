@@ -110,6 +110,7 @@ small { font-size: 0.85em; }
 /* ---------- page grid ---------- */
 #app { position: relative; z-index: 1; padding-top: var(--masthead); }
 .column { width: var(--col); padding: 0 clamp(16px, 4vw, 56px); }
+.column.wide { width: min(100%, 1180px); }
 .view { min-height: 60vh; }
 
 /* ---------- stage (the specimen) ---------- */
@@ -171,12 +172,12 @@ small { font-size: 0.85em; }
 
 /* nameplate: the chokepoint card, styled like an equipment nameplate */
 .nameplate { margin: 0 0 8px; border: 1px solid var(--line-2); border-radius: 2px; background: var(--bg-2); display: grid; grid-template-columns: 1fr 1fr; }
-.nameplate > div { padding: 12px 14px 12px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); min-width: 0; }
+.nameplate > div { padding: 10px 14px 10px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); min-width: 0; }
 .nameplate > div:nth-child(2n) { border-right: 0; }
 .nameplate > div:nth-last-child(-n+2) { border-bottom: 0; }
 .nameplate > div.wide { grid-column: 1 / -1; border-right: 0; }
 .nameplate dt { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
-.nameplate dd { margin: 0; font-size: 15.5px; line-height: 1.45; color: var(--ink); }
+.nameplate dd { margin: 0; font-size: 15px; line-height: 1.42; color: var(--ink); }
 .nameplate dd .cc { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; color: var(--accent-ink); border: 1px solid var(--line-2); padding: 1px 5px; border-radius: 2px; margin-right: 6px; position: relative; top: -1px; }
 .nameplate dd .sep { color: var(--muted); margin: 0 8px; }
 .nameplate .pips { display: inline-flex; gap: 4px; vertical-align: middle; margin-right: 10px; }
@@ -185,6 +186,16 @@ small { font-size: 0.85em; }
 .nameplate .conc { font-family: var(--font-display); font-weight: 700; font-stretch: 88%; font-size: 17px; letter-spacing: 0.02em; }
 .nameplate .conc.Extreme { color: var(--accent-ink); }
 .nameplate .why { display: block; color: var(--ink-2); font-size: 14.5px; margin-top: 3px; }
+
+/* in short + in plain terms */
+.inshort { margin: 22px 0 6px; padding: 18px 22px 8px; border: 1px solid var(--line-2); border-left: 3px solid var(--ink); background: var(--bg-2); border-radius: 2px; max-width: var(--measure); }
+.inshort h3 { margin: 0 0 8px; }
+.inshort p { font-size: 18.5px; line-height: 1.55; }
+.inshort p:last-child { margin-bottom: 8px; }
+.plain { margin: 0.4em 0 1.4em; padding: 16px 20px 6px; border: 1px solid var(--accent); background: var(--accent-soft); border-radius: 2px; }
+.plain .label { color: var(--accent-ink); display: block; margin-bottom: 6px; }
+.plain p { font-size: 18.5px; line-height: 1.55; color: var(--ink); }
+.prose .takeaways { display: none; }
 
 /* ---------- prose ---------- */
 .prose { max-width: var(--measure); }
@@ -369,6 +380,37 @@ sup.cite a:hover { text-decoration: underline; }
 .timeline .src { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
 .year-label { font-family: var(--font-display); font-weight: 900; font-stretch: 64%; font-size: 40px; color: var(--bg-3); line-height: 1; margin: 28px 0 0; }
 .tl-filters { margin: 14px 0 6px; }
+
+/* ---------- briefing ---------- */
+.briefing { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 18px; margin-bottom: 50px; }
+.brief-card { border: 1px solid var(--line-2); border-radius: 2px; background: var(--bg-2); padding: 18px 20px 14px; display: flex; flex-direction: column; gap: 10px; }
+.brief-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.brief-head .n { font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.06em; }
+.brief-head .t { font-family: var(--font-display); font-weight: 800; font-stretch: 84%; font-size: 22px; text-decoration: none; line-height: 1.05; }
+.brief-head .t:hover { color: var(--accent-ink); }
+.brief-meta { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.brief-meta .pips { display: inline-flex; gap: 3px; }
+.brief-meta .pips i { width: 9px; height: 9px; border: 1.5px solid var(--ink); border-radius: 50%; display: inline-block; }
+.brief-meta .pips i.on { background: var(--accent); border-color: var(--accent); }
+.brief-meta .conc { font-family: var(--font-display); font-weight: 700; font-stretch: 88%; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); }
+.brief-meta .conc.Extreme { color: var(--accent-ink); }
+.brief-plain { font-size: 16.5px; line-height: 1.5; color: var(--ink); margin: 0; padding: 12px 14px 2px; border-left: 3px solid var(--accent); background: var(--accent-soft); }
+.brief-plain::before { content: "In plain terms"; display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); margin-bottom: 4px; }
+.brief-short p { font-size: 15.5px; line-height: 1.5; color: var(--ink-2); margin: 0 0 0.6em; }
+.brief-leaders { font-size: 13.5px; color: var(--ink-2); margin: 0; padding-top: 8px; border-top: 1px dashed var(--line-2); }
+.brief-leaders .label { margin-right: 6px; }
+.brief-leaders .cc { font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); }
+
+/* ---------- glossary ---------- */
+.glossary { margin: 10px 0 50px; display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+.gl-entry { display: grid; grid-template-columns: 1fr; padding: 14px 0; border-top: 1px solid var(--line); break-inside: avoid; }
+.gl-entry dt { font-family: var(--font-display); font-weight: 700; font-stretch: 90%; font-size: 18px; margin-bottom: 4px; }
+.gl-entry dt .aka { display: block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--muted); font-weight: 400; margin-top: 2px; }
+.gl-entry dd { margin: 0; }
+.gl-entry dd p { font-size: 15.5px; line-height: 1.5; margin: 0 0 4px; }
+.gl-entry dd p.why { color: var(--ink-2); font-size: 14.5px; }
+.gl-link { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-ink); text-decoration: none; }
+@media (max-width: 900px) { .glossary { grid-template-columns: 1fr; } .briefing { grid-template-columns: 1fr; } }
 
 /* ---------- sources view ---------- */
 .sources-list h3 { font-family: var(--font-display); font-weight: 700; font-stretch: 88%; font-size: 20px; margin: 28px 0 10px; }
