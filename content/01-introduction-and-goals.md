@@ -98,13 +98,13 @@ Neither finding cancels the other. Cheaper inference has raised total compute co
 
 ## How to read this site
 
-Every chapter opens with a chokepoint card. Read three fields on it first.
+Every chapter opens with a chokepoint card, and three fields on it matter most.
 
 - **Concentration.** How many firms credibly supply this stage: Extreme, High, Moderate or Low.
 - **Chokepoint score.** A 1 means many substitutes. A 5 means a single point of failure, where losing one supplier stops leading-edge production worldwide.
 - **Substitution time.** Our estimate of how long a well-funded state or firm would need to stand up an alternative. It is the most opinionated number on the card.
 
-The card also gives China's position and the United States'. Chapters run in process order.
+The card also gives China's position and the United States', and the chapters run in process order.
 
 ## What we are not doing
 

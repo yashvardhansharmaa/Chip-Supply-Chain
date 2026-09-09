@@ -170,9 +170,9 @@ The classification is ours; its yield and margin figures are cited above.
 - **HBM dollars per gigabyte, and gigabytes per part.** The largest line on the bill, set by three firms.
 - **Packaging yield.** A package that fails after memory attach destroys the most valuable parts inside it ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
 - **Share of the bill the vendor does not control.** Nvidia sets its own margin but buys HBM, CoWoS and substrates at another firm's price.
-- **Rack watts, not rack dollars.** Past about 140 kW a rack, power and cooling capex grows faster than accelerator capex ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
-- **Compressibility class.** Ask whether the line falls when volume doubles. If it does not, capacity is the constraint.
+- **Rack watts.** Past about 140 kW a rack, power and cooling capex grows faster than accelerator capex ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
+- **Compressibility class.** The test is whether the line falls when volume doubles. If it does not, capacity is the constraint.
 
 ## Takeaways
 
-The silicon is the cheap part. On a B200 the logic dies are 14 percent of the build, HBM 45, and packaging with its scrap another 33 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Nvidia's 75 percent gross margin is the most visible number in the chain ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027)), and a custom ASIC can attack it by buying the same wafers and the same HBM. The lines underneath are harder to attack. HBM stacking yield, CoWoS interposer yield and the megawatts do not get cheaper as volume rises, and that is why we treat them as chokepoints.
+On a B200 the logic dies are 14 percent of the build, HBM 45, and packaging with its scrap another 33 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Nvidia's 75 percent gross margin is the most visible number in the chain ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027)), and a custom ASIC can attack it by buying the same wafers and the same HBM. The lines underneath are harder to attack. HBM stacking yield, CoWoS interposer yield and the megawatts do not get cheaper as volume rises, and that is why we treat them as chokepoints.

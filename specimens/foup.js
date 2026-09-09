@@ -64,7 +64,7 @@ PC.register('foup', function (p) {
 
   // ---------- the moulded shell, front face left open for the door ----------
   var shape = roundRect(0.388, 0.342, 0.045, 4);
-  var walls = PC.T(PC.extrude({ shape: shape, h: 0.332, caps: false, tone: 0.12 }),
+  var walls = PC.T(PC.extrude({ shape: shape, h: 0.332, caps: false, tone: 0.10 }),
     { scale: 1000, pos: [0, H / 2, 0] });
   add(cut(walls, function (x, y, z) { return z > 145 && Math.abs(x) < 152; }));
   var shape2 = shape.map(function (q) { return [q[0] * 1000, q[1] * 1000]; });
@@ -92,9 +92,9 @@ PC.register('foup', function (p) {
   // ---------- 25 wafers on their slot teeth ----------
   for (var i = 0; i < slots; i++) {
     var y = y1 + i * pitch, isAcc = (i === accentSlot);
-    var disc = PC.disc({ r: rW, n: isAcc ? 1900 : 380, tone: isAcc ? 0.34 : 0.14 });
-    var rim = PC.circle({ r: rW, perUnit: isAcc ? 1.5 : 0.9, tone: isAcc ? 1 : 0.82 });
-    add(PC.T(isAcc ? PC.accent(disc, 0.34) : disc, { pos: [0, y, 0] }));
+    var disc = PC.disc({ r: rW, n: isAcc ? 3400 : 380, tone: isAcc ? 0.5 : 0.14 });
+    var rim = PC.circle({ r: rW, perUnit: isAcc ? 2.2 : 0.9, tone: isAcc ? 1 : 0.82 });
+    add(PC.T(isAcc ? PC.accent(disc, 0.5) : disc, { pos: [0, y, 0] }));
     add(PC.T(isAcc ? PC.accent(rim, 1) : rim, { pos: [0, y, 0] }));
     // the comb of teeth the wafer rests on, moulded into both side walls
     [1, -1].forEach(function (s) {
@@ -105,9 +105,12 @@ PC.register('foup', function (p) {
 
   // ---------- the door: the part that makes it a cleanroom ----------
   var dz = D / 2 + 7, dW = 344, dH = 300, dy = H / 2 - 4;
-  add(faceZ(dW, dH, [0, dy, dz], 4200, 0.15));
+  add(faceZ(dW, dH, [0, dy, dz], 5600, 0.26));
   add(rectZ(dW, dH, [0, dy, dz + 0.5], 2.8, 1));
   add(rectZ(dW - 40, dH - 40, [0, dy, dz + 0.5], 2.0, 0.5));
+  [-1, 1].forEach(function (s) {                                     // the moulded ribs on the panel
+    add(PC.line({ a: [-dW / 2 + 26, dy + s * 62, dz + 0.6], b: [dW / 2 - 26, dy + s * 62, dz + 0.6], perUnit: 2.0, tone: 0.42 }));
+  });
   add(PC.T(PC.box({ w: dW, h: dH, d: 14, faces: ['py', 'ny', 'px', 'nx'], n: 1500, tone: 0.3 }),
     { pos: [0, dy, dz - 7] }));
   [-1, 1].forEach(function (s) {                                     // the two latch key ports
