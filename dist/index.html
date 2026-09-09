@@ -7338,6 +7338,7 @@ PC.register('wafer', function (p) {
       this.gl.viewport(0, 0, this.w, this.h);
     },
     build: function (name, params) {
+      if (!this.ok || !name) return null; // no context: building the cloud would cost the work and then throw at the buffer
       var key = name + '|' + JSON.stringify(params || {});
       if (this.cache[key]) return this.cache[key];
       var spec;
@@ -7427,7 +7428,7 @@ PC.register('wafer', function (p) {
   };
 
   /* ---------------- router ---------------- */
-  var VIEWS = ['home', 'stack', 'chain', 'intro', 'walk', 'briefing', 'landscape', 'suppliers', 'geopolitics', 'controls', 'thresholds', 'exposure', 'glossary', 'sources', 'methods'];
+  var VIEWS = ['home', 'stack', 'chain', 'intro', 'walk', 'briefing', 'landscape', 'suppliers', 'geopolitics', 'controls', 'thresholds', 'exposure', 'glossary', 'sources', 'methods', 'summary-a', 'summary-b'];
   var ALIAS = { chain: 'stack', intro: 'walk', briefing: 'walk', geopolitics: 'stack', 'summary-a': 'home', 'summary-b': 'home' };
   var MODULE_VIEWS = {}; // modules register { activate(), stage: bool } per view through window.CP.register
   var Router = {
