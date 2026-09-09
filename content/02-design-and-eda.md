@@ -22,7 +22,7 @@
       {"code": "GB", "note": "Arm CPU and interconnect IP, Cambridge"},
       {"code": "TW", "note": "Alchip, Global Unichip, MediaTek design services and tape-out"},
       {"code": "IL", "note": "Annapurna Labs, the AWS design house behind Trainium and Graviton"},
-      {"code": "IN", "note": "Nearly 20% of the world's chip design engineers, by India's own government's count"}
+      {"code": "IN", "note": "Nearly 20% of the world's chip design engineers, on the Indian government's count"}
     ],
     "chinaStatus": "Can design competitive accelerators. Cannot yet run a complete leading-edge digital flow on domestic EDA tools; Empyrean is the strongest local vendor and sits in the global second tier. Access to US and German tools was cut off for five weeks in 2025 and restored.",
     "usStatus": "Owns the two largest EDA vendors and the dominant ASIC design houses, and controls Siemens EDA's US-origin technology through export licensing. This is the fastest-acting lever in the entire chain.",

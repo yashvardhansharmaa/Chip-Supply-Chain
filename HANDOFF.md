@@ -8,7 +8,7 @@ Repo: https://github.com/yashvardhansharmaa/chokepoints. Build: `node build/buil
 - Writing skill added (`.claude/skills/writing-well/SKILL.md`, Zinsser); a combined source-quality + prose pass ran on every chapter (below-bar citations 53 → single digits; see `dist/build-report.txt`).
 - New Controls page: `data/control-thresholds.json` (40 thresholds) and `data/exposure.json` (China revenue share by firm-year from filings), rendered by `Controls` in `src/app.js`.
 - Research tools: site search (Ctrl+K), section permalinks, dataset export, cite block.
-- Design memo at `qa/design-memo.md` with references in `qa/design-refs/`; applied: heading ramp on the reading face, dark-mode chapter numerals, lighter figure tracks, phone masthead wrap. Pending decision: the "cold open" hero (see memo H2) once `qa/prototype-hero.html` is reviewed.
+- Design memo at `qa/design-memo.md` (references in `qa/design-refs/`) and prototype at `qa/prototype-hero.html`. Adopted from the prototype: thesis hero with three claims, the scored chain strip (also the fixed rail and the chapter-head orientation), the chapter head with a stage tile, "In short" first and unboxed, the nameplate as a card, a 26em measure, and the pairing IBM Plex Sans Condensed + Newsreader + IBM Plex Mono. QA aid: `?only=<chapter-id>` shows one chapter at the top of the page.
 - Credits now read "Made by Yashvardhan Sharma with Claude".
 
 ## State at pause
