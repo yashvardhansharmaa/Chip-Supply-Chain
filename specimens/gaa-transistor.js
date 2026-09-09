@@ -26,7 +26,7 @@ PC.register('gaa-transistor', function (p) {
   var yStackTop = y0[2] + sT;                   // 38
   var gX = Lg / 2, spX = gX + sp;               // gate +/-7.5, spacer out to +/-12.5
   var gY0 = -11, gY1 = 45, gZ = sW / 2 + 4;     // gate box, 4 nm proud of the sheet edges
-  var epiX0 = spX, epiX1 = 30.5, epiZ = 17;
+  var epiX0 = spX, epiX1 = 32, epiZ = 17;
   var parts = [];
   function add(c) { parts.push(c); }
   function acc(c, a) { return PC.accent(c, a); }
@@ -46,10 +46,10 @@ PC.register('gaa-transistor', function (p) {
   }
 
   // ---------- substrate and the isolation the stack sits on ----------
-  add(boxAt(-34, -26, -23, 34, -16, 23, { n: 3200, tone: 0.11 }));
-  add(edgesAt(-34, -26, -23, 34, -16, 23, 6, 0.65));
-  add(boxAt(-31, -16, -21, 31, -11, 21, { n: 1200, tone: 0.20 }));      // bottom dielectric isolation
-  add(edgesAt(-31, -16, -21, 31, -11, 21, 6, 0.75));
+  add(boxAt(-36, -23, -25, 36, -16, 25, { n: 2400, tone: 0.11 }));
+  add(edgesAt(-36, -23, -25, 36, -16, 25, 6, 0.65));
+  add(boxAt(-33, -16, -22, 33, -11, 22, { n: 1100, tone: 0.20 }));      // bottom dielectric isolation
+  add(edgesAt(-33, -16, -22, 33, -11, 22, 6, 0.75));
 
   // ---------- the three silicon nanosheets ----------
   y0.forEach(function (yb) {
@@ -89,31 +89,31 @@ PC.register('gaa-transistor', function (p) {
   });
 
   // ---------- source and drain epitaxy: faceted blocks grown off the sheet ends ----------
-  var shape = [[0.125, -0.130], [0.165, -0.170], [0.265, -0.170], [0.305, -0.130],
-               [0.305, 0.130], [0.265, 0.170], [0.165, 0.170], [0.125, 0.130]];
+  var shape = [[0.125, -0.130], [0.165, -0.170], [0.280, -0.170], [0.320, -0.130],
+               [0.320, 0.130], [0.280, 0.170], [0.165, 0.170], [0.125, 0.130]];
   [-1, 1].forEach(function (s) {
-    var epi = PC.thin(PC.extrude({ shape: shape, h: 0.42, tone: 0.22 }), 0.40);
+    var epi = PC.thin(PC.extrude({ shape: shape, h: 0.42, tone: 0.30 }), 0.52);
     add(PC.T(epi, { scale: [s * 100, 100, 100], pos: [0, 19, 0] }));
     var ring = shape.map(function (q) { return [s * q[0] * 100, 0, q[1] * 100]; });
     [-2, 40].forEach(function (yy) {
       add(PC.T(PC.polyline({ pts: ring, closed: true, perUnit: 8, tone: 0.9 }), { pos: [0, yy, 0] }));
     });
-    ring.forEach(function (q) { add(PC.line({ a: [q[0], -2, q[2]], b: [q[0], 40, q[2]], perUnit: 7, tone: 0.7 })); });
+    ring.forEach(function (q, qi) { add(PC.line({ a: [q[0], -2, q[2]], b: [q[0], 40, q[2]], perUnit: 7, tone: (qi % 2) ? 0.3 : 0.75 })); });
   });
 
   // ---------- contacts landing on the source, the drain and the gate ----------
   [-1, 1].forEach(function (s) {
-    var a = s > 0 ? 16 : -28, c = s > 0 ? 28 : -16;
-    add(boxAt(a, 40, -11, c, 52, 11, { n: 900, tone: 0.18, faces: ['py', 'px', 'nx', 'pz', 'nz'] }));
-    add(edgesAt(a, 40, -11, c, 52, 11, 9, 0.95));
+    var a = s > 0 ? 17 : -29, c = s > 0 ? 29 : -17;
+    add(boxAt(a, 40, -11, c, 48, 11, { n: 620, tone: 0.18, faces: ['py', 'px', 'nx', 'pz', 'nz'] }));
+    add(edgesAt(a, 40, -11, c, 48, 11, 9, 0.9));
   });
-  add(boxAt(-5, gY1, -8, 5, 54, 8, { n: 700, tone: 0.18, faces: ['py', 'px', 'nx', 'pz', 'nz'] }));
-  add(edgesAt(-5, gY1, -8, 5, 54, 8, 9, 0.95));
+  add(boxAt(-5, gY1, -8, 5, 51, 8, { n: 520, tone: 0.18, faces: ['py', 'px', 'nx', 'pz', 'nz'] }));
+  add(edgesAt(-5, gY1, -8, 5, 51, 8, 9, 0.9));
 
   return {
     cloud: PC.merge.apply(null, parts),
     spin: 0.12,
-    tilt: [0.34, -0.68, 0],
+    tilt: [0.46, -0.72, 0],
     caption: 'A gate-all-around nanosheet transistor, drawn at the dimensions a 2 nm-class node ' +
       'uses: three silicon sheets 6 nm thick and 30 nm wide, stacked 10 nm apart, running from the ' +
       'source epitaxy on one side to the drain epitaxy on the other. The copper cage is the gate. ' +

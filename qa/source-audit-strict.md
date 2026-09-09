@@ -597,3 +597,152 @@ No claim in either chapter now rests on a source that could not be opened and re
 ## Verification note: Amkor releases (chapter 14)
 
 The two `ir.amkor.com` releases the chapter-14 worker could not open were read in a real browser on 9 September 2026. Both support the sentence that cites them: "Amkor Technology Breaks Ground on New Semiconductor Advanced Packaging and Test Campus in Arizona; Expands Investment to $7 Billion" (6 October 2025: two phases, total investment $7 billion, first facility complete mid-2027, production early 2028, customers including Apple and Nvidia) and "TSMC and Amkor Technology Announce Long Term Partnership to Accelerate Advanced Packaging in the United States" (16 June 2026: a 10-year agreement under which TSMC procures advanced packaging and test services from Amkor in Arizona).
+
+---
+
+# Second search (9 September 2026)
+
+A second, deeper pass over three claims the first pass deleted for want of an allowed source. Two came
+back with the source's own number; one did not. Build after: chapters 11, 12 and 13 all D 0, zero
+warnings. `plain` was not touched in any of the three and remains byte-identical to the first
+paragraph under "How it works".
+
+## 1 · Chapter 12 · TSMC's CoWoS capacity ladder, and Nvidia's share of it
+
+**Searched.** SemiAnalysis (site search plus the free previews of *AI Capacity Constraints — CoWoS and
+HBM Supply Chain*, *AI Expansion — Supply Chain Analysis For CoWoS And HBM* and *The Great AI Silicon
+Shortage*, all read in a browser because the fetcher is blocked); Nikkei Asia; TSMC's 2Q24, 3Q25 and
+2Q26 earnings transcripts and `pr.tsmc.com`; CSIS; CSET and the ETO provision table; Epoch AI.
+
+**Ladder: not found, still deleted.** No allowed source publishes TSMC's CoWoS wafers per month. TSMC
+still refuses to; Wei said in October 2025 he would give the number "next year" and had not by the 2Q26
+call. The SemiAnalysis previews carry no wafer figure — the closest is the 2023 note that Advanced
+Backend Fab 6 in Zhunan has cleanroom for "potentially 1 million wafers per year of 3D Fabric", which
+is a building, not a capacity, and covers SoIC and InFO as well. Nikkei's CoWoS pieces are paywalled
+past the lede and none of the ledes carries a number.
+
+The near miss is worth recording because it is the kind of thing that looks like a source and is not.
+Epoch AI's methodology for its CoWoS work states year-end benchmarks of roughly 13,000–16,000 WPM at
+end-2023, 35,000–40,000 at end-2024 and 65,000–75,000 at end-2025 — exactly the ladder the chapter
+lost. But Epoch says in the same sentence that it "relies on year-end wafers per month benchmarks from
+SemiWiki and TrendForce", both disallowed. That is a relay, not an institutional estimate, and citing
+Epoch for it would launder the source. The ladder stays out.
+
+**Nvidia's share: found and restored.** Epoch AI, *Advanced packaging and HBM, not logic dies, were the
+bottlenecks on AI chip production in 2025* (data insight, 12 March 2026, Venkat Somala), publishes a
+CoWoS split by buyer for 2025: Nvidia 60.3 percent (90% CI 56.5–64.3), Google 13.5, AMD 8.4, Amazon
+7.4, other 10.4; and finds that those four consumed around 90 percent of world CoWoS and HBM by value
+while using about 12 percent of advanced logic die production. This is Epoch's own Monte Carlo
+estimate, built from TSMC node-level revenue, Micron's stated HBM TAM, Epoch's Chip Sales Hub and the
+designers' 10-K inventory lines, with published confidence intervals.
+
+The judgment call, stated openly: Epoch's *denominator* for the CoWoS share derives from the same
+SemiWiki/TrendForce WPM benchmarks. The share is therefore not fully independent of them. It is
+restored anyway, on the precedent this project already set — five equipment rows in the matrix are
+"CSET analysis of TechInsights data", and TechInsights is disallowed. An allowed institution's analysis
+of industry data is citable as that institution's work; an allowed institution quoting a number it did
+not compute is not. That is the line drawn here, and it puts the share in and the ladder out.
+
+**Changed in chapter 12.** Added a keyFact carrying the 60.3 percent with its interval and the
+90-versus-12 asymmetry. Added a third figure, `cowos-buyers`, a stacked share of 2025 CoWoS by buyer.
+Added a paragraph to "Capacity" and a clause to "Takeaways". Extended `card.costSignal` with the
+Nvidia share. One further sentence was added to "Capacity" that is adjacent to the assigned claim and
+should be flagged for the chapter's owner: SemiAnalysis reported on 12 March 2026 that front-end wafer
+capacity is now the dominant bottleneck and CoWoS constraints are easing. The chapter's opening still
+calls packaging "the tightest constraint in the chain". That framing was left alone rather than
+rewritten from here, but it is now in tension with a Tier B source the chapter cites elsewhere.
+
+## 2 · Chapter 13 · Ajinomoto's share of ABF, and Ibiden's share of AI-server substrates
+
+**Searched.** `ajinomoto.com` and `ajinomoto.co.jp` (stories, innovation pages, the June 2019 and June
+2023 electronic-materials business briefings, integrated-report extracts, the May 2026 plant-site
+release); `ibiden.com` IR library; METI's semiconductor strategy decks; the White House hundred-day
+supply chain review; CSET and the ETO provision table; Nikkei Asia.
+
+**Ajinomoto: found and restored, at the company's own 95 percent.** Ajinomoto's own global site carries
+an interview with Takashi Takahashi and Akito Kitano of Ajinomoto Fine-Techno's Electronics Materials
+Division, published March 2026. Asked whether ABF's share of the FC-BGA insulating market was nearer 30
+or 50 percent, Kitano answers "More like 95% market share", and adds that practically all
+high-performance computers and servers in the world rely on the film. The page's own heading is "Over
+95% global market share!?" and its body says the share is "reportedly approaching 100%". This is the
+company's own domain and its own staff on the record, which is Tier A.
+
+The deleted claim was ">95%". It is restored as 95 percent, which is what the source actually says, in
+the body under "ABF build-up substrates", in `keyFacts`, in the Ajinomoto `leaders` share string, in
+`oneLiner` and in "Takeaways". No figure was added: a 95/5 split is a sentence, not a chart.
+
+**Ibiden: the 85 percent not found; a better company statement found instead.** Nothing in Ibiden's
+filings, decks or IR pages states a share of the AI-server substrate market, and no allowed outlet
+publishes one. Nikkei's own reporting calls Ibiden "the world's top supplier of advanced chip packaging
+substrates", but its articles are paywalled past the lede and that phrase could not be read in context,
+so it is not cited.
+
+What Ibiden does state, in the Q&A from its 12 May 2026 results presentation on `ibiden.com`, is
+better than the estimate that was deleted: on interposer-type substrates it "typically secure[s] a
+market share close to 100%" at the launch of a new generation, "but this may decline by 20–30% after
+approximately three to six months", and on silicon-bridge substrates the backside interconnection is
+hard enough that it expects to hold its technological advantage at least through FY2030. That is a
+first-party, quantified statement of exactly the concentration the deleted number was trying to show,
+and it explains the mechanism as well. Added to `keyFacts`, to the Ibiden `leaders` share string and to
+the Ibiden bullet under "Who makes it".
+
+**Also added.** The White House hundred-day supply chain review of June 2021 records ABF substrate
+among the materials commenters flagged as vulnerable and names the substrate makers — Ibiden, Shinko,
+Nanya, Samsung, Unimicron, Shennan Circuits, Zhuhai Yueya, AKM — with no American firm among them. One
+sentence under "Who makes it", which is the government's own support for the chapter's `usStatus`.
+
+## 3 · Chapter 11 · Korea's share of HBM
+
+**Searched.** SEC EDGAR (SK hynix, Micron, Samsung ADR filings); `news.skhynix.com`;
+`news.samsung.com` and `semiconductor.samsung.com`; `investors.micron.com` earnings-call prepared
+remarks; MOTIE English press releases; CSIS (*AI Has a Memory Problem*, June 2026; *Where the Chips
+Fall*, December 2024; *Mapping the Semiconductor Supply Chain*); CRS R47508; CSET.
+
+**Found and restored, at 82.5 percent for 2025.** SK hynix registered shares in the United States and
+filed a Form 424B4 prospectus on 10 July 2026. Under "Competitive Landscape" it prints a chart, "Global
+HBM Market Shares by Revenue", whose values were read directly from the filed exhibit image:
+
+| | SK hynix | Samsung | Micron | Korea |
+|---|---|---|---|---|
+| 2024A | 56.4% | 37.8% | 5.8% | 94.2% |
+| 2025A | 63.2% | 19.3% | 17.4% | 82.5% |
+| 1Q26A | 56.4% | 20.5% | 23.1% | 76.9% |
+
+The 2025 column is the deleted "83 percent with SK hynix plus Samsung", to within rounding, and it now
+comes from a securities filing rather than from a market-research note.
+
+The prospectus attributes the figures to IDC, which is disallowed. They are used because the document
+is a registered prospectus: SK hynix has adopted these numbers as its own description of the market it
+competes in, under securities-law liability, and company filings are Tier A. The chapter says so in the
+sentence that carries them, so the reader can discount them accordingly. The same caveat governs the
+DRAM figures used in the data pass.
+
+Two things checked and not used. CSIS's *Where the Chips Fall* gives SK hynix 53, Samsung 38 and Micron
+9 for 2023, which would put Korea at 91 percent, but its footnote attributes those to the Korea Herald,
+which is press and disallowed — and 2023 is three years stale. Micron's earnings-call remarks say it
+expected HBM share "commensurate with our overall DRAM share" in the second half of calendar 2025,
+which is a target rather than an outcome and would have required arithmetic on top of it; the
+prospectus makes it unnecessary.
+
+**Changed in chapter 11.** Rewrote all three `leaders` share strings to carry the 2025 revenue shares.
+Added two `keyFacts` (the HBM split; SK hynix at 29.1 percent of DRAM and three firms above 90 percent).
+Added a third figure, `hbm-suppliers`, a stacked 2025 split. Added a paragraph to "Who makes it" giving
+the split, the 2024 comparison and the first-quarter-2026 position, and put the 82.5 percent into
+"Takeaways".
+
+## Domains added to data/source-tiers.json under A
+
+`bidenwhitehouse.archives.gov` — the archived White House site, which is where the June 2021 hundred-day
+supply chain review now lives. `whitehouse.gov` was already listed but does not match the archive host
+under the audit script's suffix test. `epoch.ai`, `ajinomoto.com`, `ibiden.com` and `sec.gov` were
+already listed.
+
+## Verification
+
+Every number restored was read at its source, not taken from a search snippet. The Ajinomoto interview,
+the Ibiden Q&A PDF, the Epoch data insight and its methodology section, the ETO provision table and the
+White House review were downloaded and read as text. The SK hynix HBM and DRAM shares are in chart
+images inside the filed 424B4; both JPEGs were pulled from the EDGAR archive
+(`g32785g29b29.jpg` for HBM, `g32785g29a29.jpg` for DRAM) and read directly. The three SemiAnalysis
+previews and the Nikkei pages were opened in a real browser; the Nikkei articles are paywalled past
+the lede and nothing was taken from them.

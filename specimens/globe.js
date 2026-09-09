@@ -248,6 +248,48 @@ PC.register('globe', function (p) {
   }
   parts.push(alloc.subarray(0, n * 4));
 
+  // ---------- Antarctica ----------
+  // A ring round the pole cannot be tested by the even-odd rule above, so
+  // the ice sheet is drawn as "everything south of this coast", with the
+  // coast given as one latitude per meridian: the Ross and Weddell
+  // embayments at -78, the peninsula reaching -63.
+  var ANT = [
+    [-180, -78.5], [-160, -78.0], [-150, -75.0], [-135, -74.2], [-120, -73.8], [-100, -73.2],
+    [-80, -73.0], [-70, -68.0], [-63, -65.0], [-57, -63.4], [-50, -66.5], [-42, -75.0],
+    [-33, -77.6], [-25, -76.0], [-14, -71.5], [-5, -70.2], [4, -69.8], [14, -70.2],
+    [26, -69.8], [36, -68.8], [46, -67.2], [56, -66.8], [66, -68.4], [76, -67.0],
+    [88, -66.4], [100, -66.5], [112, -66.4], [124, -66.6], [136, -66.0], [146, -68.5],
+    [156, -71.5], [166, -76.5], [174, -78.4], [180, -78.5]
+  ];
+  function antLat(lon) {
+    while (lon < -180) lon += 360;
+    while (lon > 180) lon -= 360;
+    for (var i = 0; i < ANT.length - 1; i++) {
+      if (lon >= ANT[i][0] && lon <= ANT[i + 1][0]) {
+        var t = (lon - ANT[i][0]) / (ANT[i + 1][0] - ANT[i][0]);
+        return ANT[i][1] + (ANT[i + 1][1] - ANT[i][1]) * t;
+      }
+    }
+    return -70;
+  }
+  var ice = new Float32Array(4200 * 4), ni = 0;
+  var sIce0 = Math.sin(-90 * RAD), sIce1 = Math.sin(-62 * RAD);
+  for (var it = 0; it < 5200 && ni < 4200; it++) {
+    var sI = sIce0 + PC.rnd() * (sIce1 - sIce0);
+    var latI = Math.asin(sI) / RAD, lonI = -180 + PC.rnd() * 360;
+    if (latI > antLat(lonI)) continue;
+    var vI = ll(latI, lonI, RF);
+    ice[ni * 4] = vI[0]; ice[ni * 4 + 1] = vI[1]; ice[ni * 4 + 2] = vI[2]; ice[ni * 4 + 3] = 0.28;
+    ni++;
+  }
+  parts.push(ice.subarray(0, ni * 4));
+  var antPts = [];
+  for (var ai = 0; ai <= 180; ai++) {
+    var alon = -180 + ai * 2;
+    antPts.push(ll(antLat(alon), alon, RC));
+  }
+  parts.push(PC.polyline({ pts: antPts, perUnit: 800, tone: 0.9 }));
+
   // ---------- coastlines ----------
   var coast = [];
   for (c = 0; c < rings.length; c++) {
