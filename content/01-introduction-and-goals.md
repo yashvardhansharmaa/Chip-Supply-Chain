@@ -60,53 +60,59 @@
 ---
 # Introduction and Goals
 
-An AI accelerator is not a chip. It is a stack of roughly a dozen separately made parts, and only one company in the world can currently assemble them at volume.
+An AI accelerator is not a chip. It is a stack of roughly a dozen separately made parts, and only one company in the world can assemble them at volume.
 
-This site takes that package apart, one chapter per stage, from the sand that becomes a silicon wafer to the liquid-cooled rack on a data center floor. Each chapter answers the same three questions: how does this stage work, where do the trade-offs sit, and who controls it and how hard would it be to replace them.
+This site takes that package apart, one chapter per stage, from the sand that becomes a wafer to the liquid-cooled rack on a data center floor. Every chapter answers the same three questions: how the stage works, where the trade-offs sit, and who controls it and how hard they would be to replace.
 
 ## Why AI chips?
 
-Because the demand curve is unlike anything else in electronics. The compute used to train frontier AI models has grown 4 to 5 times per year since 2010 ([source](https://epoch.ai/publications/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year)). No other part of the semiconductor industry has ever absorbed a demand signal that steep for that long.
+The compute used to train frontier AI models has grown 4 to 5 times a year since 2010 ([source](https://epoch.ai/publications/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year)). No other part of the semiconductor industry has ever absorbed a demand signal that steep for that long.
 
-The money followed. Capex at the five largest hyperscalers went from $162.3 billion in 2022 to $448.2 billion in 2025 ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)). Nvidia's data center revenue went from $15.01 billion in fiscal 2023 ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2023)) to $193.7 billion in fiscal 2026 ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026)).
+The money followed. Capex at the five largest hyperscalers went from $162.3 billion in 2022 to $448.2 billion in 2025 ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)). Nvidia's data center revenue rose from $15.01 billion in fiscal 2023 ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2023)) to $193.7 billion in fiscal 2026 ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026)).
 
 {{figure:ai-capex}}
 
 {{figure:compute-growth}}
 
-What that money buys is a system, not a die. One Nvidia GB300 NVL72 rack holds 72 GPUs and 36 CPUs, 20 TB of GPU memory and 576 TB/s of memory bandwidth ([source](https://www.nvidia.com/en-us/data-center/gb300-nvl72/)). Every one of those numbers is set by a different supplier.
+The money buys a system, not a die. One Nvidia GB300 NVL72 rack holds 72 GPUs and 36 CPUs, 20 TB of GPU memory and 576 TB/s of memory bandwidth ([source](https://www.nvidia.com/en-us/data-center/gb300-nvl72/)). A different supplier sets every one of those numbers.
 
 ## The chain in one paragraph
 
 Think of building a car in which the engine, the gearbox and the wheels each come from a single factory somewhere in the world, with no second factory able to make them. The chip that trains and runs an artificial intelligence model is put together that way. About a dozen separately manufactured objects, each from a different country, are stacked into one finished package. Most of those objects have one or two credible suppliers, and replacing any of them takes years rather than months. That is why a rule written in one capital city can slow computing everywhere.
 
-Polysilicon is pulled into a single-crystal ingot and sliced into 300 mm wafers. A design house turns an architecture into a layout using EDA software and licensed IP, then hands a mask set to a foundry. The foundry prints that layout hundreds of times per wafer, alternating lithography with deposition, etch, cleaning and metrology, using photoresists and specialty gases from a handful of Japanese and Korean suppliers. Finished wafers are tested, thinned and diced. Separately, a memory maker stacks bare DRAM dies with through-silicon vias to build an HBM cube. An advanced packaging line places the logic dies and the HBM stacks side by side on a silicon interposer, attaches that to an ABF substrate, and ships a part the size of a coaster. Systems integrators solder several of those onto a baseboard, add switch silicon and optics, rack the chassis with cold plates and busbars, and plug the rack into a substation. Every chapter here is one link in that sentence.
+A crystal grower pulls polysilicon into a single-crystal ingot and slices it into 300 mm wafers. A design house turns an architecture into a layout with EDA software and licensed IP, then hands a mask set to a foundry.
+
+The foundry prints that layout hundreds of times per wafer, alternating lithography with deposition, etch, cleaning and metrology, on photoresists and specialty gases from a handful of Japanese and Korean suppliers. Test and assembly lines then probe, thin and dice the wafers. Meanwhile a memory maker stacks bare DRAM dies with through-silicon vias into an HBM cube.
+
+A packaging line sets the logic dies and the HBM stacks side by side on a silicon interposer, attaches that to an ABF substrate, and ships a part the size of a coaster. Systems integrators solder several onto a baseboard, add switch silicon and optics, rack the chassis with cold plates and busbars, and plug it into a substation. Every chapter here is one link in that chain.
 
 ## Why does the supply chain matter?
 
-The case for treating hardware as the binding constraint on AI is empirical. In 2025 the four largest AI chip designers consumed 80 to 85 percent of TSMC's CoWoS advanced packaging output and nearly all available HBM, while taking only about 11 percent of global leading-edge logic capacity ([source](https://epoch.ai/blog/introducing-the-ai-chip-components-explorer)). The scarce thing was never transistors. It was the ability to stack memory next to them. All three HBM suppliers were effectively sold out, and component spending by those four designers rose from $22 billion in 2024 to $52 billion in 2025 ([source](https://epoch.ai/blog/introducing-the-ai-chip-components-explorer)). Sixty to 95 percent of measured performance gains in language models trace to scaling compute and data rather than to algorithms ([source](https://epoch.ai/blog/algorithmic-progress-in-language-models)).
+The case for treating hardware as the binding constraint is empirical. In 2025 the four largest AI chip designers took 80 to 85 percent of TSMC's CoWoS advanced packaging output and nearly all available HBM, while using only about 11 percent of global leading-edge logic capacity ([source](https://epoch.ai/blog/introducing-the-ai-chip-components-explorer)). The scarce thing was never transistors. It was the ability to stack memory next to them.
 
-The counter-case is equally empirical. DeepSeek-V3 was trained on 14.8 trillion tokens using 2.788 million H800 GPU-hours, an order of magnitude below what comparable Western models were understood to cost ([source](https://arxiv.org/abs/2412.19437)). The compute required to reach a fixed language model performance level halves roughly every eight months, with a 95 percent confidence interval of 5 to 14 months ([source](https://epoch.ai/blog/algorithmic-progress-in-language-models)).
+All three HBM suppliers were effectively sold out, and component spending by those four designers rose from $22 billion in 2024 to $52 billion in 2025 ([source](https://epoch.ai/blog/introducing-the-ai-chip-components-explorer)). Sixty to 95 percent of measured performance gains in language models trace to scaling compute and data rather than to algorithms ([source](https://epoch.ai/blog/algorithmic-progress-in-language-models)).
+
+The counter-case is just as empirical. DeepSeek-V3 trained on 14.8 trillion tokens for 2.788 million H800 GPU-hours, an order of magnitude below what comparable Western models were understood to cost ([source](https://arxiv.org/abs/2412.19437)). The compute needed to reach a fixed language model performance level halves roughly every eight months, with a 95 percent confidence interval of 5 to 14 months ([source](https://epoch.ai/blog/algorithmic-progress-in-language-models)).
 
 Both are true, and they do not cancel. Cheaper inference has so far raised total compute consumption rather than lowering it. The supply chain does not determine what AI can do. It determines how much of it exists, who can afford it, and which governments can switch it off.
 
 ## How to read this site
 
-Every chapter opens with a chokepoint card. Read three numbers on it first.
+Every chapter opens with a chokepoint card. Read three fields on it first.
 
-- **Concentration.** A qualitative rating of how many firms credibly supply this stage: Extreme, High, Moderate or Low.
+- **Concentration.** How many firms credibly supply this stage: Extreme, High, Moderate or Low.
 - **Chokepoint score.** A 1 means many substitutes. A 5 means a single point of failure, where losing one supplier stops leading-edge production worldwide.
-- **Substitution time.** Our estimate of how long a determined, well-funded state or firm would need to stand up a working alternative. It is the most opinionated number on the card and the one to argue with.
+- **Substitution time.** Our estimate of how long a determined, well-funded state or firm would need to stand up an alternative. It is the most opinionated number on the card, and the one to argue with.
 
-The card also gives China's position in this stage and the United States' position. The chapters run in process order.
+The card also gives China's position and the United States'. Chapters run in process order.
 
 ## What we are not doing
 
 - **No investment advice.** We are not forecasting share prices.
 - **No policy recommendation.** The geopolitics chapter describes export controls and their effects rather than arguing for them.
 - **No fab manual.** Where process detail would run past what a non-specialist can use, we stop.
-- **No unsourced numbers.** Every figure carries a link to the document it came from, with the year attached, and where good sources disagree we give the range and cite both.
+- **No unsourced numbers.** Every number carries a link to the document it came from, with the year. Where good sources disagree we give the range and cite both.
 
 ## Takeaways
 
-AI compute demand has grown 4 to 5 times a year for over a decade, and the hardware chain that serves it was not built for that ([source](https://epoch.ai/publications/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year)). The scarce inputs in 2025 were high-bandwidth memory and advanced packaging, not leading-edge transistors ([source](https://epoch.ai/blog/introducing-the-ai-chip-components-explorer)). Algorithmic efficiency is improving fast, roughly a halving of required compute every eight months, but so far that has increased total hardware demand rather than reducing it ([source](https://epoch.ai/blog/algorithmic-progress-in-language-models)). The rest of this site is about who owns each link, and what it would take to replace them.
+AI compute demand has grown 4 to 5 times a year for over a decade, and the hardware chain that serves it was not built for that ([source](https://epoch.ai/publications/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year)). The scarce inputs in 2025 were high-bandwidth memory and advanced packaging, not leading-edge transistors ([source](https://epoch.ai/blog/introducing-the-ai-chip-components-explorer)). Algorithmic efficiency is improving fast, a halving of required compute roughly every eight months, but that has raised total hardware demand rather than cut it ([source](https://epoch.ai/blog/algorithmic-progress-in-language-models)). The rest of this site is about who owns each link, and what it would take to replace them.
