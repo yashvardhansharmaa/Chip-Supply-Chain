@@ -961,7 +961,7 @@
     open: function () {
       var self = this, box = $('#cp-search');
       if (!box) {
-        box = document.createElement('div'); box.id = 'cp-search'; box.setAttribute('role', 'dialog'); box.setAttribute('aria-label', 'Search the site');
+        box = document.createElement('div'); box.id = 'cp-search'; box.hidden = true; box.setAttribute('role', 'dialog'); box.setAttribute('aria-label', 'Search the site');
         box.innerHTML = '<div class="cp-search-panel"><input type="search" placeholder="Search chapters, glossary, suppliers, chips, rules and events…" aria-label="Search"><ol class="cp-search-results"></ol><p class="cp-search-hint">Type to search · Enter opens the first result · Esc closes</p></div>';
         document.body.appendChild(box);
         var inp = $('input', box), list = $('ol', box);
@@ -977,7 +977,7 @@
           list.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { var h = hits[+a.getAttribute('data-k')]; self.close(true); if (h.chip) setTimeout(function () { Landscape.select(h.chip); }, 60); if (h.q) setTimeout(function () { var s = $('#sup-search'); if (s) { s.value = h.q; s.dispatchEvent(new Event('input')); } }, 60); if (h.el) setTimeout(function () { h.el.scrollIntoView({ block: 'center' }); }, 60); }); });
         });
       }
-      if (box.hidden !== false) this.from = document.activeElement; // where the reader was, so closing can put them back
+      if (box.hidden) this.from = document.activeElement; // where the reader was, so closing can put them back
       box.hidden = false; $('input', box).value = ''; $('ol', box).innerHTML = ''; $('input', box).focus();
     },
     close: function (following) { // following a result: the destination takes focus, so leave it alone

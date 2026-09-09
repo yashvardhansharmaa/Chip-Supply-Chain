@@ -7,7 +7,7 @@
   "plain": "Lithography prints the pattern of a circuit onto the wafer: the machine holds a stencil of one layer up to a lamp and projects it, four times smaller, onto the silicon. Finer circuits need shorter wavelengths, and the shortest light now in use will not pass through air, so the printing has to happen in a vacuum. Only one company has ever built such a machine, and it is Dutch. Export controls on advanced chipmaking run through that one firm.",
   "bridge": "Coated and still blank, the wafer goes to the machine that decides how small the circuit can be.",
   "specimen": "euv-scanner",
-  "specimenCaption": "Right: an extreme ultraviolet scanner in cross-section. Tin plasma source at the bottom left, collector and three illuminator mirrors, the mask, or reticle, held pattern-down at the top, six projection mirrors, the wafer stage at the bottom right, and in copper the 13.5 nm light itself.",
+  "specimenCaption": "An extreme ultraviolet scanner in cross-section. Tin plasma source at the bottom left, collector and three illuminator mirrors, the mask, or reticle, held pattern-down at the top, six projection mirrors, the wafer stage at the bottom right, and in copper the 13.5 nm light itself.",
   "card": {
     "concentration": "Extreme",
     "chokepointScore": 5,

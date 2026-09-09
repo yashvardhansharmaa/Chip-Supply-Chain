@@ -7,7 +7,7 @@
   "plain": "Packaging wires finished chips into one component and mounts them on a base built to the tolerances of a chip. A lithography machine can print only a rectangle about the size of a postage stamp in one shot, so a modern accelerator is cut into pieces and stitched back together on a shared slab of silicon, with its memory a few millimetres away. Slab, chips and base all expand at different rates when heated, so the package warps and the joints crack. Getting that right in volume is hard enough that nearly every AI accelerator is packaged by TSMC, in Taiwan.",
   "bridge": "Logic and memory are still two separate objects, made in different countries, and the next stage exists to close the distance between them.",
   "specimen": "cowos-exploded",
-  "specimenCaption": "Right: a CoWoS package pulled apart. A stiffener frame at the top, then two reticle-sized logic dies and eight HBM stacks, microbumps, the silicon interposer with its vertical vias and the wiring that stitches the dies together and fans out to the memory, then the larger solder bumps beneath it and the resin build-up substrate at the bottom.",
+  "specimenCaption": "A CoWoS package pulled apart. A stiffener frame at the top, then two reticle-sized logic dies and eight HBM stacks, microbumps, the silicon interposer with its vertical vias and the wiring that stitches the dies together and fans out to the memory, then the larger solder bumps beneath it and the resin build-up substrate at the bottom.",
   "card": {
     "concentration": "Extreme",
     "chokepointScore": 5,

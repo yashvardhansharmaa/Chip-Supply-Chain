@@ -218,3 +218,5 @@
 .sa-exit b { display: block; font-family: var(--font-display); font-weight: 700; font-size: 21px; letter-spacing: -0.005em; margin-bottom: 4px; }
 .sa-exit span { display: block; font-family: var(--font-body); font-size: 15.5px; line-height: 1.45; color: var(--ink-2); }
 @media (max-width: 700px) { .sa-exits { grid-template-columns: 1fr; } }
+
+.sa-est { font-family: var(--font-mono); font-style: normal; font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-left: 6px; }

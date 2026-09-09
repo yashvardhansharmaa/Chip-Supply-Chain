@@ -7,7 +7,7 @@
   "plain": "High bandwidth memory is where an AI chip keeps the numbers it is working on, and it is built to hand them over fast. It stacks up to sixteen memory chips into a cube, drills copper wires straight down through them, and sets the cube beside the processor. Stacking is the hard part: each chip is ground down until the copper comes through the back, the cube must stay under a fixed height or it fouls the cooling plate, and one bad layer ruins the rest. Only SK hynix, Samsung and Micron have made it work, and a single line in an American export rule reaches all three.",
   "bridge": "A die that computes fast still sits idle if its data arrives slowly, and nothing on the chip itself can fix that.",
   "specimen": "hbm-stack",
-  "specimenCaption": "Right: a twelve-high HBM stack, pulled apart. A logic chip at the bottom, twelve thinned memory chips above it, copper through-silicon vias running the full height of the cube, microbumps between every layer, and the moulding compound as a faint box around the whole stack.",
+  "specimenCaption": "A twelve-high HBM stack, pulled apart. A logic chip at the bottom, twelve thinned memory chips above it, copper through-silicon vias running the full height of the cube, microbumps between every layer, and the moulding compound as a faint box around the whole stack.",
   "card": {
     "concentration": "Extreme",
     "chokepointScore": 5,

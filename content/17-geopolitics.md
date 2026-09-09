@@ -7,7 +7,7 @@
   "plain": "An export control is a licence requirement. A government names an item and a buyer, and its own companies then need a licence to ship that item to that buyer; Washington stretches the rule to cover foreign-made goods built with American technology. Few governments can enforce such a rule, because the machines, software and chemicals that make an advanced chip come from a short list of firms in the United States, the Netherlands, Japan and South Korea. China can copy the simpler machines within a few years. It cannot yet copy the machine that prints the finest circuits, the chemistry that machine needs, or high-bandwidth memory.",
   "bridge": "What is left is not how a chip gets built but who can stop it, and that answer is written into law.",
   "specimen": "globe",
-  "specimenCaption": "Right: the world with the chain's chokepoint sites marked. Veldhoven and Oberkochen for lithography, Hsinchu and Tainan for leading-edge logic, Icheon and Pyeongtaek for high-bandwidth memory, Shanghai and Wuhan for China's substitution effort, and the Gulf and Southeast Asian hubs the finished accelerators now flow through.",
+  "specimenCaption": "The world with the chain's chokepoint sites marked. Veldhoven and Oberkochen for lithography, Hsinchu and Tainan for leading-edge logic, Icheon and Pyeongtaek for high-bandwidth memory, Shanghai and Wuhan for China's substitution effort, and the Gulf and Southeast Asian hubs the finished accelerators now flow through.",
   "card": {
     "concentration": "Extreme",
     "chokepointScore": 5,

@@ -232,7 +232,7 @@ function nameplate(card, title) {
   const costLong = costHead.length > 30;
   const cost = [costHead, costRest];
   return `<section class="plate" aria-label="Chokepoint card${title ? ' for ' + esc(title) : ''}">
-<header class="plate-head"><span class="label">Chokepoint card</span><span class="plate-score">${pips(score)}<span><b>${score || '—'}</b> / 5</span><span class="sr-only">Chokepoint score ${score} of 5</span></span></header>
+<header class="plate-head"><span class="label">Chokepoint card</span><span class="plate-score">${pips(score)}<button type="button" class="gl-term plate-score-term" data-term="chokepoint score"><b>${score || '—'}</b> / 5</button><span class="sr-only">Chokepoint score ${score} of 5</span></span></header>
 <div class="plate-kpis">
 <div><span class="k">Concentration</span><b class="v ${esc(card.concentration || '')}">${esc(card.concentration || '—')}</b></div>
 <div><span class="k">Substitution time</span><b class="v">${esc(sub.years || '—')}${sub.years && !/year/i.test(sub.years) ? '<small>years</small>' : ''}</b></div>

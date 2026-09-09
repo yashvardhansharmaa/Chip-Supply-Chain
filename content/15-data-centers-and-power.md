@@ -7,7 +7,7 @@
   "plain": "A data center's job is to feed and cool the machines inside it. The scale has changed: a hair dryer pours about two kilowatts of heat out of a hand-sized nozzle, and one rack of AI chips draws seventy of them in a box the size of a wardrobe, every watt of it turning into heat that has to be carried away in water rather than air. The building is the easy part. Getting the electricity to the door is the hard one, because the transformers, switchgear and turbines that connect a site to the grid come from a few suppliers and are ordered years in advance.",
   "bridge": "Racks like that have to stand somewhere, and the somewhere has to be built around what they consume.",
   "specimen": "rack",
-  "specimenCaption": "Right: a liquid-cooled 72-GPU rack. Eighteen compute trays above and below nine NVLink switch trays, the NVLink cable cartridge filling the back, cold-plate manifolds up the side, and in amber the power shelves at top and bottom with the busbar they feed, the part of the machine that waits on the grid.",
+  "specimenCaption": "A liquid-cooled 72-GPU rack. Eighteen compute trays above and below nine NVLink switch trays, the NVLink cable cartridge filling the back, cold-plate manifolds up the side, and in amber the power shelves at top and bottom with the busbar they feed, the part of the machine that waits on the grid.",
   "card": {
     "concentration": "High",
     "chokepointScore": 4,

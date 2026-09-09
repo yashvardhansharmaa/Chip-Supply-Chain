@@ -7,7 +7,7 @@
   "plain": "Every chip starts as a wafer: a mirror-polished disc of silicon 300 millimetres across. A furnace melts purified sand, and a machine pulls a cylinder out of the melt the way a candle is dipped, except that what comes out is a single crystal, every atom on the same repeating grid. Saws slice that cylinder into discs, polished until nothing on the surface stands more than a few atoms proud. Fewer than one atom in a hundred billion may be anything but silicon, and the flatness has to hold right to the edge. Only five firms can do it reliably, and none of them is American or Chinese.",
   "bridge": "Nothing in a file computes; the drawing has to be printed onto something, and that something is a disc of pure silicon.",
   "specimen": "boule-and-wafer",
-  "specimenCaption": "Right: a Czochralski ingot, one crystal pulled whole from molten silicon, and the wafers cut from it. A seed crystal on a 10 mm neck at the top, the crown where the crystal opens out to full diameter, 1.5 m of body ground to a true 300 mm, and the cropped tail. The wafers at its foot are as wide as the ingot: a quarter of a tonne of one crystal, hung from a neck the width of a finger.",
+  "specimenCaption": "A Czochralski ingot, one crystal pulled whole from molten silicon, and the wafers cut from it. A seed crystal on a 10 mm neck at the top, the crown where the crystal opens out to full diameter, 1.5 m of body ground to a true 300 mm, and the cropped tail. The wafers at its foot are as wide as the ingot: a quarter of a tonne of one crystal, hung from a neck the width of a finger.",
   "card": {
     "concentration": "High",
     "chokepointScore": 4,

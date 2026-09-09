@@ -7,7 +7,7 @@
   "plain": "Chip design turns an idea for a processor into a complete blueprint, with every one of billions of transistors placed and wired. That is the street plan of a city that size, and every road has to be walkable in less than a billionth of a second. No one draws it by hand. Software from three companies, Synopsys, Cadence and Siemens, generates the layout, checks it and signs it off, and a chip factory accepts only designs that have passed those tools. Changing one street afterwards costs a fresh set of printing stencils and several months. Withhold the software and the design cannot be made.",
   "bridge": "The chain starts before any material does, when a company still has nothing but an idea for a processor.",
   "specimen": "die-floorplan",
-  "specimenCaption": "Right: the floorplan of a GPU die, one whole reticle field of 26 by 33 mm, the largest patch a scanner can print in a single exposure. 144 compute tiles fill the centre in eight clusters, the L2 cache splits them in a band across the middle, the high-bandwidth memory interfaces run along the two long edges, and the amber strip on the short edge is the link to the chiplet next door, a second die in the same package.",
+  "specimenCaption": "The floorplan of a GPU die, one whole reticle field of 26 by 33 mm, the largest patch a scanner can print in a single exposure. 144 compute tiles fill the centre in eight clusters, the L2 cache splits them in a band across the middle, the high-bandwidth memory interfaces run along the two long edges, and the amber strip on the short edge is the link to the chiplet next door, a second die in the same package.",
   "card": {
     "concentration": "Extreme",
     "chokepointScore": 4,

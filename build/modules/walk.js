@@ -39,6 +39,14 @@ module.exports = function (ctx) {
   }
 
   const plainOf = (id) => String((card[id] || {}).plain || '');
+  const bib = ctx.readJSON(ctx.path.join(ctx.root, 'data', 'bibliography.json'), {}) || {};
+  const okUrl = (u) => /^(https?:|#|\/)/i.test(String(u || '').trim());
+  // two of the chapter's sourced key facts, so a hurried reader can lift a cited line without opening the chapter
+  const factsHTML = (ch) => {
+    const facts = ((ch.meta && ch.meta.keyFacts) || []).filter((k) => k && k.fact && okUrl(k.source)).slice(0, 2);
+    if (!facts.length) return '';
+    return `<ul class="wk-facts" aria-label="Two sourced facts">${facts.map((k) => { const e = bib[k.source] || {}; const t = e.title ? `${e.title}${e.publisher ? ', ' + e.publisher : ''}${e.date ? ', ' + e.date : ''}` : k.source; return `<li>${esc(k.fact)} <a class="wk-src" href="${esc(k.source)}" target="_blank" rel="noopener" title="${esc(t)}">source</a></li>`; }).join('')}</ul>`;
+  };
   const walkWords = steps.reduce((a, c) => a + wordCount(plainOf(c.id)), 0);
   const mins = Math.max(1, Math.round(walkWords / 230));
   const siteWords = all.reduce((a, c) => a + (c.words || 0), 0);
@@ -61,6 +69,7 @@ module.exports = function (ctx) {
 ${ch.meta && ch.meta.bridge ? `<p class="wk-bridge">${esc(ch.meta.bridge)}</p>` : ''}
 <h3 class="wk-t">${esc(ch.title)}</h3>
 <p class="wk-p">${esc(plainOf(ch.id))}</p>
+${factsHTML(ch)}
 ${leadersHTML(c)}
 <div class="wk-foot">${scoreHTML(+c.score || 0)}<a class="wk-read" href="${esc(chapterHref(ch.id))}">Read the chapter</a></div>
 <nav class="wk-pn" aria-label="Step ${i + 1} of ${steps.length}">${

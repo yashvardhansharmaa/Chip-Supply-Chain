@@ -516,5 +516,12 @@
     "plain": "The percentage of chips on a wafer that work. Flaws land at random, so the larger the chip the more likely it is to catch one, and yield falls steeply as chips get bigger.",
     "why": "Yield, not wafer price, sets the cost of a working AI chip, and a ten point yield drop on a reticle-sized die hurts far more than a 30 percent rise in the wafer price.",
     "chapter": "component-costs"
+  },
+  {
+    "term": "Chokepoint score",
+    "aka": "score, 1 to 5",
+    "plain": "The site's own rating, from 1 to 5, of how hard a stage would be to replace. A 1 means many substitutes exist. A 5 means a single point of failure: losing one supplier would stop leading-edge production worldwide. It is a judgment by the authors, made from the supplier count, the substitution time and the failure mode, not a published measurement.",
+    "why": "It is the number the whole site sorts by, so a reader should know it is an estimate and how it was made.",
+    "chapter": null
   }
 ]

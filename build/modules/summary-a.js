@@ -115,7 +115,8 @@ module.exports = function (ctx) {
   const towns = [];
   let m, sb = block('SITES') || '';
   while ((m = sitesRe.exec(sb))) {
-    const ch = chapters.find((c) => c.number === +m[5]);
+    const key = (m[6] || '').toLowerCase().replace(/^(advanced|data)\s+/, (w) => w).split(/\s+/)[0];
+    const ch = chapters.find((c) => c.id.split('-')[0] === key || c.id.startsWith(key)) || chapters.find((c) => c.number === +m[5]); // match by the comment's first word, so renumbering never misassigns a town
     towns.push({ name: m[1], lat: +m[2], lon: +m[3], score: +m[4], sub: false, ch: ch || null, cc: TOWN_CC[m[1]] || '' });
   }
   sb = block('SUBS') || '';
@@ -187,7 +188,7 @@ module.exports = function (ctx) {
     const named = chapters.filter((c) => (c.countries || []).some((x) => x.code === cc));
     const segs = matrix.filter((r) => r.shares[cc] != null).map((r) => {
       const rank = Object.keys(r.shares).sort((a, b) => r.shares[b] - r.shares[a]).indexOf(cc) + 1;
-      return { seg: r.segment, v: r.shares[cc], year: r.year, rank: rank, ch: SEG_CH[r.segment] || null };
+      return { seg: r.segment, v: r.shares[cc], year: r.year, rank: rank, ch: SEG_CH[r.segment] || null, estimate: /estimate/i.test((r.metric || '') + ' ' + (r.note || '').slice(0, 40)) };
     }).sort((a, b) => b.v - a.v);
     const firms = suppliers.filter((s) => s.country === cc);
     const cats = {};
@@ -214,7 +215,7 @@ module.exports = function (ctx) {
     // up to three segment shares: anything it leads, or holds a tenth of
     const shares = d.segs.filter((s) => s.rank === 1 || s.v >= 10).slice(0, 3).map((s) => {
       const ch = s.ch ? byId(s.ch) : null;
-      const inner = `<span class="sa-fact-k">${esc(s.seg)}</span><span class="sa-fact-v">${num(s.v)}%<small>${s.year}</small></span>`;
+      const inner = `<span class="sa-fact-k">${esc(s.seg)}${s.estimate ? ' <em class="sa-est">site estimate</em>' : ''}</span><span class="sa-fact-v">${num(s.v)}%<small>${s.year}</small></span>`;
       return `<li class="sa-fact sa-fact--share"><span class="sa-fact-bar" style="--w:${Math.min(100, s.v)}%"></span>${ch ? `<a href="${href(ch)}">${inner}</a>` : `<span class="sa-fact-in">${inner}</span>`}</li>`;
     });
 

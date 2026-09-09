@@ -7,7 +7,7 @@
   "plain": "A photomask is the printing plate for one layer of a chip. One plate prints the same layer on wafer after wafer, so it shapes millions of chips. No glass is transparent to the short light now in use, so the plate is not a window but a mirror of about forty pairs of ultrathin layers, and any speck of dust on it repeats on every wafer it prints. Two Japanese firms make almost all of those mirrors. An obscure business almost nobody has heard of can hold up every leading-edge chip in the world.",
   "bridge": "Look next at the stencil itself, because everything the machine prints is decided by what is written on that one plate.",
   "specimen": "photomask",
-  "specimenCaption": "Right: a six-inch EUV mask, or reticle, with its pellicle dust cover. Low-thermal-expansion glass at the base, the molybdenum and silicon multilayer mirror in copper round the top edge, a tantalum absorber carrying the pattern, and the membrane held 2.5 mm off the surface on four glued pads, far enough that a particle landing on it prints out of focus.",
+  "specimenCaption": "A six-inch EUV mask, or reticle, with its pellicle dust cover. Low-thermal-expansion glass at the base, the molybdenum and silicon multilayer mirror in copper round the top edge, a tantalum absorber carrying the pattern, and the membrane held 2.5 mm off the surface on four glued pads, far enough that a particle landing on it prints out of focus.",
   "card": {
     "concentration": "Extreme",
     "chokepointScore": 5,

@@ -7,7 +7,7 @@
   "plain": "Photoresist is photographic film for chips. A coating machine spreads a film thinner than a soap bubble across the wafer, light shines through a stencil, and the exposed parts dissolve away, leaving a pattern the next machine can etch. A few hundred other gases and liquids deposit, strip and clean around it. All of it has to be clean to about one stray metal atom in a trillion, and each formula is approved for one factory and one product at a time. That is why nine tenths of the world's photoresist comes from Japan, and a second source takes years rather than weeks.",
   "bridge": "A bare disc records nothing, so before any light reaches it the wafer is coated in a chemical that reacts where the beam lands.",
   "specimen": "gas-cabinet",
-  "specimenCaption": "Right: a specialty gas cabinet beside a bulk liquid cylinder. It shows the purge and process lines, the double-block-and-bleed valve panel that isolates the cylinder before anyone opens it, the pressure gauges, and in amber the point-of-use filter between cylinder and chamber.",
+  "specimenCaption": "A specialty gas cabinet beside a bulk liquid cylinder. It shows the purge and process lines, the double-block-and-bleed valve panel that isolates the cylinder before anyone opens it, the pressure gauges, and in amber the point-of-use filter between cylinder and chamber.",
   "card": {
     "concentration": "High",
     "chokepointScore": 4,

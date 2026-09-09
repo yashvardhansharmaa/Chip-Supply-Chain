@@ -7,7 +7,7 @@
   "plain": "Metrology and inspection are the factory's quality control. Between the steps that build a chip, another machine looks the wafer over: are the lines the right width, did this layer land on the last one, has a speck of dirt killed a circuit. On a die as big as an AI accelerator, halving the stray specks lifts the share of working chips from about half to about seven in ten. One American firm sells seven times as many of those machines as its nearest rival, so a fab cut off from it can buy every other tool and still not learn why its chips fail.",
   "bridge": "Every one of those films can land wrong, and wrong is invisible until something goes looking for it.",
   "specimen": "sem-column",
-  "specimenCaption": "Right: a scanning electron microscope column over a wafer, cut in half, with the electron beam in copper. The electron gun sits at the top under its high-voltage insulator, the condenser and objective lenses are magnets drawn as iron yokes round their coils, then the scan coils, a ring-shaped detector, and the wafer on a precision stage.",
+  "specimenCaption": "A scanning electron microscope column over a wafer, cut in half, with the electron beam in copper. The electron gun sits at the top under its high-voltage insulator, the condenser and objective lenses are magnets drawn as iron yokes round their coils, then the scan coils, a ring-shaped detector, and the wafer on a precision stage.",
   "card": {
     "concentration": "High",
     "chokepointScore": 4,

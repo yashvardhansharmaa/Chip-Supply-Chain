@@ -304,25 +304,25 @@ PC.register('globe', function (p) {
   // ---------- the chokepoint pins ----------
   // name, lat, lon, the chapter it belongs to, that chapter's chokepoint score
   var SITES = [
-    ['Veldhoven', 51.42, 5.40, 5],       // 05 lithography
-    ['Oberkochen', 48.78, 10.10, 5],     // 05 lithography optics
-    ['Hsinchu', 24.80, 120.97, 5],       // 10 foundries
-    ['Tainan', 22.99, 120.21, 5],        // 10 foundries
-    ['Kaohsiung', 22.63, 120.30, 5],     // 12 advanced packaging
-    ['Icheon', 37.28, 127.44, 5],        // 11 memory
-    ['Pyeongtaek', 36.99, 127.11, 5],    // 11 memory
-    ['Kumamoto', 32.80, 130.71, 5],      // 10 foundries
-    ['Yokkaichi', 34.97, 136.62, 5],     // 11 memory
-    ['Tokyo', 35.68, 139.69, 4],         // 07 deposition and etch
-    ['Shanghai', 31.23, 121.47, 5],      // 10 foundries
-    ['Penang', 5.41, 100.34, 4],         // 14 test and assembly
-    ['Singapore', 1.35, 103.82, 4],      // 14 test and assembly
-    ['Bengaluru', 12.97, 77.59, 4],      // 02 design and EDA
-    ['Abu Dhabi', 24.45, 54.38, 4],      // 16 data centers and power
-    ['Hillsboro', 45.52, -122.99, 5],    // 09 transistors and the front end
-    ['Phoenix', 33.45, -112.07, 5],      // 10 foundries
-    ['Austin', 30.27, -97.74, 4],        // 02 design and EDA
-    ['Boise', 43.62, -116.20, 5]         // 11 memory
+    ['Veldhoven', 51.42, 5.40, 5],       // 04 lithography
+    ['Oberkochen', 48.78, 10.10, 5],     // 04 lithography optics
+    ['Hsinchu', 24.80, 120.97, 5],       // 09 foundries
+    ['Tainan', 22.99, 120.21, 5],        // 09 foundries
+    ['Kaohsiung', 22.63, 120.30, 5],     // 11 advanced packaging
+    ['Icheon', 37.28, 127.44, 5],        // 10 memory
+    ['Pyeongtaek', 36.99, 127.11, 5],    // 10 memory
+    ['Kumamoto', 32.80, 130.71, 5],      // 09 foundries
+    ['Yokkaichi', 34.97, 136.62, 5],     // 10 memory
+    ['Tokyo', 35.68, 139.69, 4],         // 06 deposition and etch
+    ['Shanghai', 31.23, 121.47, 5],      // 09 foundries
+    ['Penang', 5.41, 100.34, 4],         // 13 test and assembly
+    ['Singapore', 1.35, 103.82, 4],      // 13 test and assembly
+    ['Bengaluru', 12.97, 77.59, 4],      // 01 design and EDA
+    ['Abu Dhabi', 24.45, 54.38, 4],      // 15 data centers and power
+    ['Hillsboro', 45.52, -122.99, 5],    // 08 transistors and the front end
+    ['Phoenix', 33.45, -112.07, 5],      // 09 foundries
+    ['Austin', 30.27, -97.74, 4],        // 01 design and EDA
+    ['Boise', 43.62, -116.20, 5]         // 10 memory
   ];
   // The towns where substitutes are being built, drawn in ink rather than copper: China's
   // foundry, memory and tool clusters (chapter 18) and Europe's fab cluster at Dresden.

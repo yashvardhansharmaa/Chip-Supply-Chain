@@ -7,7 +7,7 @@
   "plain": "Before a chip can be sold, a machine has to interrogate it and check every answer. Thousands of needles land on pads on the wafer and drive test patterns into each chip; the tester marks the ones that answer wrong, and they never leave. This matters more each year because of arithmetic: a modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them. So the industry tests earlier, hotter and longer than it used to, and two firms, one Japanese and one American, sell most of the machines that do it.",
   "bridge": "Nothing yet proves that any of it works, and a package this far along is worth too much to guess about.",
   "specimen": "probe-card",
-  "specimenCaption": "Right: a probe card over a wafer. A printed circuit board carries the tester's signals to a micro-machined probe head whose needles land on pads a few tens of micrometres across, all of them within microns of the same plane.",
+  "specimenCaption": "A probe card over a wafer. A printed circuit board carries the tester's signals to a micro-machined probe head whose needles land on pads a few tens of micrometres across, all of them within microns of the same plane.",
   "card": {
     "concentration": "High",
     "chokepointScore": 4,

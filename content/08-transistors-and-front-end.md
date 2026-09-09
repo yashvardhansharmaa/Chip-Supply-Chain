@@ -7,7 +7,7 @@
   "plain": "The front end of a chip factory builds the switches. Each one is a valve on a pipe: current runs along a silicon channel, and a voltage on the gate above it opens or shuts the flow. Make the channel short enough and the valve stops sealing, so current leaks through even when the gate is off and the chip burns power doing nothing. The fix is to wrap the gate around all four sides of the channel, a sequence that has to run in exact order. Only TSMC, Intel and Samsung can do it, a list short enough for an export rule to name in full.",
   "bridge": "Measured and clean, the layers mean nothing on their own; laid in the right order they become switches.",
   "specimen": "gaa-transistor",
-  "specimenCaption": "Right: a gate-all-around nanosheet transistor. Three stacked silicon sheets run from the source at one end to the drain at the other, the gate metal in amber wraps all four sides of each sheet, inner spacers keep that metal from touching the two ends, and the contacts land on top.",
+  "specimenCaption": "A gate-all-around nanosheet transistor. Three stacked silicon sheets run from the source at one end to the drain at the other, the gate metal in amber wraps all four sides of each sheet, inner spacers keep that metal from touching the two ends, and the contacts land on top.",
   "card": {
     "concentration": "Extreme",
     "chokepointScore": 5,

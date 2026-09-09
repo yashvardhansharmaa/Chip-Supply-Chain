@@ -7,7 +7,7 @@
   "plain": "A rack is where finished chips become one machine. Builders bolt each package onto a board, feed it more than a thousand amps, and wire it to seventy-one neighbours so that a training run sees one computer instead of seventy-two. A cluster runs only as fast as its slowest link, and copper carries a signal a few metres at most, so the longer links have to become light. Many firms can bolt racks together. Far fewer can make the lasers that carry the light, and that is where the chain narrows.",
   "bridge": "A tested package is still a single chip, and the machine that trains a model is a room full of them acting as one.",
   "specimen": "gpu-baseboard",
-  "specimenCaption": "Right: an eight-GPU baseboard. Four accelerator modules per side, the two NVLink switch chips in amber down the centre, voltage regulator banks along the long edges, and the connectors that carry traffic off the board to the rest of the cluster.",
+  "specimenCaption": "An eight-GPU baseboard. Four accelerator modules per side, the two NVLink switch chips in amber down the centre, voltage regulator banks along the long edges, and the connectors that carry traffic off the board to the rest of the cluster.",
   "card": {
     "concentration": "High",
     "chokepointScore": 3,
