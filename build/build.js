@@ -258,7 +258,8 @@ if (notesSrc && landscape.length) {
   const blocks = notesSrc.split(/^##\s+/m).slice(1);
   for (const b of blocks) {
     const nl = b.indexOf('\n'); const head = b.slice(0, nl).trim().toLowerCase(); const text = b.slice(nl + 1).trim();
-    const chip = landscape.find((c) => head.includes(c.id) || head.includes(c.name.toLowerCase()) || (c.family && head.includes(c.family.toLowerCase()) && head.includes(c.vendor.toLowerCase())));
+    const chip = landscape.find((c) => head.includes(c.id) || head.includes(c.name.toLowerCase()))
+      || landscape.find((c) => !landscapeNotes[c.id] && c.family && head.includes(c.family.toLowerCase()) && head.includes(c.vendor.toLowerCase()));
     if (chip) { const ctx = { id: 'landscape-' + chip.id, cites: [], figures: [] }; landscapeNotes[chip.id] = markdown(text, ctx).html; }
   }
   const missing = landscape.filter((c) => !landscapeNotes[c.id]).map((c) => c.id);
