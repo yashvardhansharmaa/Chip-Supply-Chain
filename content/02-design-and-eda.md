@@ -4,7 +4,7 @@
   "number": 2,
   "title": "Chip Design, EDA and IP",
   "oneLiner": "The cheapest stage in the chain by capital and one of the most concentrated by vendor. Three software firms sell the tools that every leading-edge AI accelerator passes through.",
-  "plain": "Designing a chip is like drawing the street plan of a city of billions of buildings, where every road has to be walkable in less than a billionth of a second. No one draws it by hand. The layout is generated, checked and signed off by software sold by three companies, and a foundry will only accept a design that has passed their particular tools. Once the plan goes to the factory, changing one street costs a new set of printing plates and several months. That is why cutting off the software cuts off the chip.",
+  "plain": "Designing a chip is like drawing the street plan of a city of billions of buildings, where every road has to be walkable in less than a billionth of a second. No one draws it by hand. The layout is generated, checked and signed off by software sold by three companies, and a foundry will only accept a design that has passed their particular tools. Once the plan goes to the factory, changing one street costs a new set of printing plates and several months. Withhold the software and the design cannot be manufactured.",
   "specimen": "die-floorplan",
   "specimenCaption": "Right: the floorplan of a GPU die. Replicated compute tiles fill the centre, SRAM banks sit between them, HBM PHYs run along the two long edges, and the die-to-die interface faces the neighbouring chiplet.",
   "card": {
@@ -71,13 +71,13 @@
 ---
 # Chip Design, EDA and IP
 
-Design is the only stage in this chain with no fab, no cleanroom and no hazardous gas. It is also the one a foreign government can shut off fastest, and in 2025 one did: for five weeks, every Chinese chip designer lost the software that turns a design into something a factory can print.
+Design is the only stage in this chain with no factory. It is also the one a foreign government can shut off fastest, and in 2025 one did: for five weeks, every Chinese chip designer lost the software that turns a design into something a factory can print.
 
 ## How it works
 
-Designing a chip is like drawing the street plan of a city of billions of buildings, where every road has to be walkable in less than a billionth of a second. No one draws it by hand. The layout is generated, checked and signed off by software sold by three companies, and a foundry will only accept a design that has passed their particular tools. Once the plan goes to the factory, changing one street costs a new set of printing plates and several months. That is why cutting off the software cuts off the chip.
+Designing a chip is like drawing the street plan of a city of billions of buildings, where every road has to be walkable in less than a billionth of a second. No one draws it by hand. The layout is generated, checked and signed off by software sold by three companies, and a foundry will only accept a design that has passed their particular tools. Once the plan goes to the factory, changing one street costs a new set of printing plates and several months. Withhold the software and the design cannot be manufactured.
 
-A design runs through five phases.
+A design starts as an architecture and ends as pattern files for the mask shop.
 
 - **Architecture.** Engineers fix the machine's shape: the matrix-multiply unit's width, the SRAM beside it, the HBM stacks on the edges.
 - **RTL.** Register-transfer-level code in SystemVerilog fixes what every register holds on every clock edge.
@@ -85,7 +85,7 @@ A design runs through five phases.
 - **Physical design.** Synthesis maps the code onto the foundry's standard cells, then placement, routing, timing closure and signoff.
 - **Tape-out.** Mask data preparation and optical proximity correction turn the layout into pattern files for the mask shop.
 
-What disciplines the work is not the licence fee but the cost of a mistake. A photomask set passes $1 million at 28 nm, $10 million at 7 nm and about $40 million at 3 nm, and a whole leading-edge chip has gone from design to tape-out on TSMC 7 nm for $50 million to $75 million, everything included ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)).
+The licence fee is not what disciplines the work; a mistake costs a mask set. A photomask set passes $1 million at 28 nm, $10 million at 7 nm and about $40 million at 3 nm, and a whole leading-edge chip has gone from design to tape-out on TSMC 7 nm for $50 million to $75 million, everything included ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)).
 
 {{figure:mask-cost}}
 
@@ -115,7 +115,7 @@ The EDA and design IP market was about $18 billion in 2025, and Synopsys, Cadenc
 
 {{figure:eda-share}}
 
-Design services are tighter still, and Broadcom is the name on most of the deals. It booked $16.7 billion of AI semiconductor revenue in the third quarter of fiscal 2026, up 221% ([source](https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm)). Its customers no longer hide the arrangement. In October 2025 OpenAI and Broadcom said they would deploy 10 gigawatts of OpenAI-designed accelerators, with Broadcom supplying the silicon implementation and the Ethernet around it ([source](https://investors.broadcom.com/news-releases/news-release-details/openai-and-broadcom-announce-strategic-collaboration-deploy-10)). In April 2026 Broadcom extended its Meta partnership to multiple gigawatts of MTIA and the first 2 nm AI accelerator ([source](https://investors.broadcom.com/news-releases/news-release-details/broadcom-announces-extended-partnership-meta-deploy-technology)).
+Design services are narrower again, and Broadcom is the name on most of the deals. It booked $16.7 billion of AI semiconductor revenue in the third quarter of fiscal 2026, up 221% ([source](https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm)). Its customers no longer hide the arrangement. In October 2025 OpenAI and Broadcom said they would deploy 10 gigawatts of OpenAI-designed accelerators, with Broadcom supplying the silicon implementation and the Ethernet around it ([source](https://investors.broadcom.com/news-releases/news-release-details/openai-and-broadcom-announce-strategic-collaboration-deploy-10)). In April 2026 Broadcom extended its Meta partnership to multiple gigawatts of MTIA and the first 2 nm AI accelerator ([source](https://investors.broadcom.com/news-releases/news-release-details/broadcom-announces-extended-partnership-meta-deploy-technology)).
 
 Below Broadcom and Marvell sit the Taiwanese houses that take a netlist to tape-out on TSMC's newest nodes; Alchip reported $992 million of revenue in 2025 ([source](https://www.alchip.com/en/Investors/financials/)). The engineers are spread wider than the firms: India alone holds nearly 20% of the world's chip designers ([source](https://www.pib.gov.in/PressReleasePage.aspx?PRID=2148393)).
 
@@ -123,15 +123,15 @@ Below Broadcom and Marvell sit the Taiwanese houses that take a netlist to tape-
 
 In late May 2025 the Bureau of Industry and Security told the EDA vendors to stop selling to China. Cadence got its letter on 23 May: exporting design software classified 3D991 and 3E991 to any party in China, or to a Chinese military end user anywhere, now needed a licence ([source](https://www.sec.gov/Archives/edgar/data/813672/000081367225000093/cdns-20250702.htm)). Synopsys got its letter on 29 May and a rescinding letter on 2 July, after trade talks in which Washington eased technology restrictions ([source](https://www.sec.gov/Archives/edgar/data/883241/000119312525155294/d80081d8k.htm)).
 
-The lever works, and needs no allied coordination and no lead time. It is also expensive: it speeds the substitution it was meant to prevent, and Synopsys's China revenue fell from 16% of the total in fiscal 2024 to 12% in fiscal 2025 ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
+The lever needs no allied coordination and no lead time. It is also expensive: it speeds the substitution it was meant to prevent, and Synopsys's China revenue fell from 16% of the total in fiscal 2024 to 12% in fiscal 2025 ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
 
-China's answer is real but partial. CSET puts it flatly: Chinese designers rely on US tools for all their chip designs, US firms are the only ones selling the full-spectrum software a leading-edge chip needs, and Chinese EDA firms cannot yet support designs at those nodes ([source](https://cset.georgetown.edu/article/semiconductors-more-u-s-leverage-more-bad-news-for-beijing-part-3/)). No domestic vendor has a certified, complete digital flow for a 5 nm-class accelerator, and the gap is foundry-validated corner cases, not features.
+China's answer is real but partial. CSET puts it flatly: Chinese designers rely on US tools for all their chip designs, US firms are the only ones selling the full-spectrum software a leading-edge chip needs, and Chinese EDA firms cannot yet support designs at those nodes ([source](https://cset.georgetown.edu/article/semiconductors-more-u-s-leverage-more-bad-news-for-beijing-part-3/)). No domestic vendor has a certified, complete digital flow for a 5 nm-class accelerator, and the gap is in foundry-validated corner cases rather than in features.
 
 China can architect an accelerator. It cannot design one at the leading edge without foreign tools, or build what it designs without foreign equipment: SMIC's 7 nm capacity is tight enough that Huawei has to choose between its phone chips and its AI chips ([source](https://cset.georgetown.edu/publication/pushing-the-limits-huaweis-ai-chip-tests-u-s-export-controls/)).
 
 ## Key evaluation criteria
 
-- **Flow completeness.** How many steps a vendor covers from RTL to signoff. A point tool is replaceable; a signed-off flow is not.
+- **Flow completeness.** How many steps a vendor covers from RTL to signoff.
 - **Foundry certification.** Whether the foundry has validated that tool version against its reference flow and process design kit. Without it, signoff is refused.
 - **Verification throughput.** Simulation cycles and emulator capacity per day, which sets schedule more than anything else.
 - **IP availability at node.** Whether the CPU, SerDes, PCIe and HBM PHY blocks are silicon-proven on that process.
@@ -140,4 +140,4 @@ China can architect an accelerator. It cannot design one at the leading edge wit
 
 ## Takeaways
 
-Three vendors sell every complete design flow used at the leading edge ([source](https://newsletter.semianalysis.com/p/eda-market-primer)). Design is cheap next to what it commits: tens of millions of dollars of engineering and masks direct tens of billions of fab capacity ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)). It is the fastest lever a government can pull, and the one China is closest to neutralising. Closest is not close. And the largest buyers now design their own parts, with Broadcom's name on the implementation rather than on the box ([source](https://investors.broadcom.com/news-releases/news-release-details/openai-and-broadcom-announce-strategic-collaboration-deploy-10)).
+Three vendors sell every complete design flow used at the leading edge ([source](https://newsletter.semianalysis.com/p/eda-market-primer)). Design is cheap next to what it commits: tens of millions of dollars of engineering and masks direct tens of billions of fab capacity ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)). It is the fastest lever a government can pull, and the one China is closest to neutralising, though CSET still puts a complete domestic flow out of reach ([source](https://cset.georgetown.edu/article/semiconductors-more-u-s-leverage-more-bad-news-for-beijing-part-3/)). And the largest buyers now design their own parts, with Broadcom's name on the implementation rather than on the box ([source](https://investors.broadcom.com/news-releases/news-release-details/openai-and-broadcom-announce-strategic-collaboration-deploy-10)).
