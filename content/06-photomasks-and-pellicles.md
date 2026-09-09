@@ -93,7 +93,7 @@ A pellicle is a thin membrane on a frame above the mask. Particles land on it ra
 
 EUV makes that hard: ASML's membrane is 13 nanometres thick, has to hold together at 500C in vacuum, and every photon it absorbs is productivity the customer loses ([source](https://www.asml.com/en/news/stories/2022/the-euv-pellicle-indistinguishable-from-magic)). The light crosses it twice, on the way in and on the way back off the mirror, so absorption counts double.
 
-Carbon nanotube membranes are the intended fix. Imec has mounted them on reticles and exposed them in an NXE:3300 scanner, measuring single-pass transmission up to 97 percent and finding the effect on imaging low and correctable ([source](https://www.imec-int.com/en/press/imec-demonstrates-cnt-pellicle-utilization-euv-scanner)). Mitsui Chemicals, licensed by ASML, is building capacity at Iwakuni-Ohtake for membranes above 92 percent transmittance that can stand sources above 1,000 W ([source](https://jp.mitsuichemicals.com/en/release/2024/2024_0528_1/index.htm)), and neither is yet a production part in a leading-edge fab.
+Carbon nanotube membranes are the intended fix, still short of production in a leading-edge fab. Imec has mounted them on reticles and exposed them in an NXE:3300 scanner, measuring single-pass transmission up to 97 percent and finding the effect on imaging low and correctable ([source](https://www.imec-int.com/en/press/imec-demonstrates-cnt-pellicle-utilization-euv-scanner)). Mitsui Chemicals, licensed by ASML, is building capacity at Iwakuni-Ohtake for membranes above 92 percent transmittance that can stand sources above 1,000 W ([source](https://jp.mitsuichemicals.com/en/release/2024/2024_0528_1/index.htm)).
 
 ## Cost and design economics
 
