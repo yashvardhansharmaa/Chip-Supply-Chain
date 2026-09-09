@@ -24,20 +24,20 @@
       {"code": "US", "note": "Photronics merchant mask shops, KLA inspection"},
       {"code": "TW", "note": "TSMC captive mask shop, and a 10% stake in IMS"}
     ],
-    "chinaStatus": "No EUV mask capability. SMIC runs captive mask shops in Shanghai for g-line, i-line, KrF and ArF. Newway mass-produces 180 nm masks, has 150/130 nm in small-volume production, and started 40 nm trial production in the second half of 2025.",
+    "chinaStatus": "No EUV mask capability. SMIC runs two captive mask shops in Shanghai for g-line, i-line, KrF and ArF tools. There is no Chinese EUV blank, no Chinese actinic inspection tool and no Chinese multi-beam writer.",
     "usStatus": "Photronics is the largest merchant mask maker and KLA supplies inspection, but the US has no EUV blank or actinic inspection supplier.",
     "costSignal": "A leading-edge mask set runs from roughly $10M to $40M depending on node and source",
     "substitution": {"years": "5-10", "why": "EUV blank defect levels took AGC and Hoya two decades to reach, and Lasertec's actinic inspection tools have no alternative at all."}
   },
   "keyFacts": [
-    {"fact": "The top two EUV mask blank makers held about 93.7% of revenue in 2024, in a market worth $259.25 million", "source": "https://www.dri.co.jp/auto/report/qyr/250206-euv-mask-blanks-global-market-share-and.html"},
+    {"fact": "The top two EUV mask blank makers held about 93.7% of revenue in 2024, in a market worth $259.25 million (QY Research estimate)", "source": "https://www.dri.co.jp/auto/report/qyr/250206-euv-mask-blanks-global-market-share-and.html"},
     {"fact": "An EUV mask reflector is about 40 Mo/Si bilayers of 7 nm period, capped with 3 nm of ruthenium, under a 58 nm TaBN plus 2 nm TaBO absorber", "source": "https://arxiv.org/pdf/1912.09075"},
     {"fact": "A 90% transmission EUV pellicle costs about 20% of throughput because the light passes through it twice", "source": "https://semiengineering.com/mask-complexity-cost-and-change/"},
     {"fact": "Mitsui Chemicals' carbon nanotube pellicles target 92% or higher EUV transmittance and sources above 1,000 W", "source": "https://jp.mitsuichemicals.com/en/release/2024/2024_0528_1/index.htm"},
     {"fact": "Mask sets cost beyond $1M at 28 nm, beyond $10M at 7 nm and approach $40M at 3 nm (2022 estimate)", "source": "https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor"},
     {"fact": "IMS Nanofabrication was valued at about $4.3 billion when TSMC bought roughly 10% in September 2023", "source": "https://www.intc.com/news-events/press-releases/detail/1645/intel-to-sell-minority-stake-in-ims-nanofabrication"},
     {"fact": "Lasertec reported JPY 230.5 billion of net sales and JPY 237.5 billion of orders in the year to June 2026", "source": "https://www.lasertec.co.jp/en/ir/plan/message.html"},
-    {"fact": "Photronics, the largest merchant mask maker, had $849.3 million of revenue in fiscal 2025, of which $615.1 million was IC masks", "source": "https://www.nasdaq.com/press-release/photronics-reports-full-year-and-fourth-quarter-fiscal-2025-results-2025-12-10"}
+    {"fact": "Photronics, the largest merchant mask maker, had $849.3 million of revenue in fiscal 2025, of which $615.1 million was IC masks", "source": "https://www.globenewswire.com/news-release/2025/12/10/3203040/0/en/Photronics-Reports-Full-Year-and-Fourth-Quarter-Fiscal-2025-Results.html"}
   ],
   "figures": [
     {
@@ -61,7 +61,7 @@
 ---
 # Photomasks and Pellicles
 
-A scanner can only print what is on the mask. Every EUV layer on an AI accelerator needs a defect-free reticle, made from a blank two Japanese companies supply and inspected on a tool one Japanese company makes. The whole EUV mask blank market was worth $259.25 million in 2024 ([source](https://www.dri.co.jp/auto/report/qyr/250206-euv-mask-blanks-global-market-share-and.html)).
+A scanner can only print what is on the mask. Every EUV layer on an AI accelerator needs a defect-free reticle, built on a blank two Japanese firms supply and cleared by a tool one Japanese firm makes. QY Research puts the whole EUV mask blank market at $259.25 million in 2024 ([source](https://www.dri.co.jp/auto/report/qyr/250206-euv-mask-blanks-global-market-share-and.html)).
 
 ## How it works
 
@@ -71,7 +71,7 @@ A DUV mask is transmissive: quartz carrying a light-shielding film such as molyb
 
 Three consequences follow.
 
-- **Mask 3D effects.** Light hits at an angle and reflects off a stack with depth, so the distortion must be pre-compensated.
+- **Mask 3D effects.** Light strikes at an angle and reflects off a stack with depth, so software has to pre-compensate the distortion.
 - **Write precision.** The absorber must be cut with single-digit nanometre placement accuracy.
 - **Particles.** Anything landing on the reflector prints on every wafer until someone finds it.
 
@@ -81,37 +81,37 @@ High-NA halves the printable field, so a large die must be stitched from two mas
 
 ### Blanks
 
-The blank is the hard part. Depositing forty bilayers with sub-angstrom uniformity across a six-inch plate, with essentially no buried particles, took two decades to learn. AGC and Hoya together held about 93.7% of EUV mask blank revenue in 2024 ([source](https://www.dri.co.jp/auto/report/qyr/250206-euv-mask-blanks-global-market-share-and.html)). Hoya expects EUV competition to intensify over the medium term, which tells you how little it has faced ([source](https://www.hoya.com/ir/2024/en/review/it.html)). For DUV, Shin-Etsu Chemical is the other major supplier ([source](https://www.shinetsu.co.jp/en/products/electronics-materials/photomask-blanks/)).
+The blank is the hard part. Depositing forty bilayers with sub-angstrom uniformity across a six-inch plate, with essentially no buried particles, took two decades to learn. On QY Research's numbers AGC and Hoya together held about 93.7% of EUV blank revenue in 2024 ([source](https://www.dri.co.jp/auto/report/qyr/250206-euv-mask-blanks-global-market-share-and.html)). Hoya expects EUV competition to intensify over the medium term, which tells you how little it has met so far ([source](https://www.hoya.com/ir/2024/en/review/it.html)). Shin-Etsu Chemical supplies the DUV blanks ([source](https://www.shinetsu.co.jp/en/products/electronics-materials/photomask-blanks/)).
 
 ### Writers
 
-An electron-beam writer cuts the pattern into resist on the blank. Multi-beam writers fire beamlets in parallel, which is what lets a dense EUV mask finish in a usable time. Intel calls IMS Nanofabrication of Vienna the established industry leader in multi-beam mask writers, and sold roughly 10% of it to TSMC in September 2023 at a valuation near $4.3 billion ([source](https://www.intc.com/news-events/press-releases/detail/1645/intel-to-sell-minority-stake-in-ims-nanofabrication)). Japan's NuFlare is the other supplier.
+An electron-beam writer cuts the pattern into resist on the blank. Multi-beam writers fire beamlets in parallel, which is what lets a dense EUV mask finish in a usable time. Intel calls IMS Nanofabrication of Vienna the established industry leader in multi-beam writers, and sold roughly 10% of it to TSMC in September 2023 at a valuation near $4.3 billion ([source](https://www.intc.com/news-events/press-releases/detail/1645/intel-to-sell-minority-stake-in-ims-nanofabrication)). Japan's NuFlare is the other supplier.
 
-The looming limit is not the writer. Assist features for High-NA may need to be 15 nm at mask scale, and D2S argues the constraint is resist speed at that size ([source](https://semiengineering.com/mask-economics-shape-high-na-euv-adoption/)).
+The writer is not the wall. High-NA assist features may need to be 15 nm at mask scale, and D2S told Semiconductor Engineering the constraint at that size is resist speed ([source](https://semiengineering.com/mask-economics-shape-high-na-euv-adoption/)).
 
 ### Inspection and repair
 
-A mask defect is a systematic yield killer, so masks are inspected as blanks, after patterning, and in production. Actinic inspection means inspecting at 13.5 nm, the wavelength the mask actually sees, and Lasertec is the only supplier, on JPY 230.5 billion of net sales in the year to June 2026 ([source](https://www.lasertec.co.jp/en/ir/plan/message.html)). Actinic tools work only on EUV masks, they are very expensive, and few EUV masks run, so cost per use is high ([source](https://semiengineering.com/mask-complexity-cost-and-change/)). KLA supplies optical reticle inspection and Zeiss supplies e-beam repair.
+A mask defect is a systematic yield killer, so masks are inspected as blanks, after patterning and in production. Actinic inspection looks at 13.5 nm, the wavelength the mask itself sees. Lasertec is the only supplier, on JPY 230.5 billion of net sales in the year to June 2026 ([source](https://www.lasertec.co.jp/en/ir/plan/message.html)). Its tools work on nothing but EUV masks, cost a fortune and serve few of them, so cost per use is high ([source](https://semiengineering.com/mask-complexity-cost-and-change/)). KLA sells optical reticle inspection; Zeiss sells e-beam repair.
 
 ### Pellicles
 
-A pellicle is a thin membrane on a frame above the mask, so particles land on it instead of the pattern, far enough out of focus that they do not print. At 193 nm immersion this is settled technology ([source](https://semiengineering.com/mask-complexity-cost-and-change/)).
+A pellicle is a thin membrane on a frame above the mask. Particles land on it instead of the pattern, far enough out of focus that they do not print. At 193 nm immersion this is settled technology ([source](https://semiengineering.com/mask-complexity-cost-and-change/)).
 
-EUV breaks it. The light crosses the membrane twice, so a 90% transmission pellicle costs about 20% of throughput, and today's polysilicon pellicles also reflect deep ultraviolet light from the source, needing a filter membrane that costs roughly another 20%. Micron skips EUV pellicles entirely and cleans masks more often instead, holding duplicates so scanners keep running during inspection ([source](https://semiengineering.com/mask-complexity-cost-and-change/)).
+EUV breaks it. The light crosses the membrane twice, so a 90% transmission pellicle costs about 20% of throughput, and today's polysilicon pellicles also reflect deep ultraviolet from the source, needing a filter that costs roughly another 20%. Micron skips EUV pellicles and cleans masks more often instead, holding duplicates so scanners keep running during inspection ([source](https://semiengineering.com/mask-complexity-cost-and-change/)).
 
-Carbon nanotube membranes are the intended fix, and they are not ready: current versions survive fewer than 10,000 wafer exposures, can shatter inside the scanner, and have no known production use ([source](https://semiengineering.com/mask-complexity-cost-and-change/)). Mitsui Chemicals, which runs its EUV pellicle business under an ASML licence, is building capacity at Iwakuni-Ohtake targeting 92% or higher transmittance and sources above 1,000 W ([source](https://jp.mitsuichemicals.com/en/release/2024/2024_0528_1/index.htm)).
+Carbon nanotube membranes are the intended fix, and they are not ready: current versions survive fewer than 10,000 wafer exposures, can shatter inside the scanner, and have no known production use ([source](https://semiengineering.com/mask-complexity-cost-and-change/)). Mitsui Chemicals, which licenses the business from ASML, is building capacity at Iwakuni-Ohtake for membranes above 92% transmittance and sources above 1,000 W ([source](https://jp.mitsuichemicals.com/en/release/2024/2024_0528_1/index.htm)).
 
-The trade-off splits by product. On a logic die of around 800 mm2 one killer defect wipes out the die, so you want a pellicle. Memory has redundancy built in, so skipping the pellicle and repairing defects can be better economics ([source](https://semiengineering.com/mask-complexity-cost-and-change/)).
+The choice splits by product. One killer defect wipes out an 800 mm2 logic die, so logic wants a pellicle. Memory ships with redundancy, so running bare and repairing defects can pay better ([source](https://semiengineering.com/mask-complexity-cost-and-change/)).
 
 {{figure:blank-share}}
 
 ## Cost and design economics
 
-Cost estimates vary and should be read as a range. SemiAnalysis put mask sets beyond $1 million at 28 nm, beyond $10 million at 7 nm and approaching $40 million at 3 nm, as of 2022 ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)). A 2026 survey is lower, at $10 million to $20 million over 70 to 100 layers at 3 to 5 nm ([source](https://semiconductorinsight.com/blog/from-design-to-silicon-photomask-connection/)). We would call the leading edge $10 million to $40 million.
+Estimates vary; read them as a range. SemiAnalysis put mask sets beyond $1 million at 28 nm, beyond $10 million at 7 nm and approaching $40 million at 3 nm, as of 2022 ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)). We would call the leading edge $10 million to $40 million.
 
-That number decides who gets to use a node. D2S puts it bluntly: a new AI chip startup proves its design out on a 193 nm immersion node first, because it lacks the volume to amortise an EUV mask set ([source](https://semiengineering.com/mask-economics-shape-high-na-euv-adoption/)).
+That number decides who gets to use a node. A new AI chip startup proves its design out on a 193 nm immersion node first, D2S says, because it lacks the volume to amortise an EUV mask set ([source](https://semiengineering.com/mask-economics-shape-high-na-euv-adoption/)).
 
-For AI accelerators, mask cost is real but not decisive. A GPU die spread over hundreds of thousands of units absorbs a $40 million mask set easily ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)). The same mask set kills a specialised inference ASIC shipping in the thousands, which is the quiet reason so much AI silicon converges on a handful of designs.
+For AI accelerators the cost is real but not decisive. A GPU spread over hundreds of thousands of units absorbs a $40 million mask set easily ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)). The same set kills an inference ASIC shipping in the thousands. That is the quiet reason so much AI silicon converges on a handful of designs.
 
 {{figure:mask-set-cost}}
 
@@ -119,15 +119,15 @@ For AI accelerators, mask cost is real but not decisive. A GPU die spread over h
 
 The stage is Japanese almost end to end: an AGC and Hoya blank duopoly, a Lasertec inspection monopoly, and Mitsui Chemicals pellicles under a Dutch licence. Writers are Austrian and Japanese; repair is German.
 
-Mask making splits into captive and merchant. TSMC, Samsung and Intel run their own leading-edge mask shops, because turnaround time is a competitive weapon. Photronics is the largest merchant supplier, with $849.3 million of fiscal 2025 revenue, of which $615.1 million was IC masks ([source](https://www.nasdaq.com/press-release/photronics-reports-full-year-and-fourth-quarter-fiscal-2025-results-2025-12-10)). Toppan, Dai Nippon Printing and Hoya take most of the rest.
+Mask making splits into captive and merchant. TSMC, Samsung and Intel run their own leading-edge mask shops, because turnaround time is a competitive weapon. Photronics is the largest merchant supplier, on $849.3 million of fiscal 2025 revenue, of which $615.1 million was IC masks ([source](https://www.globenewswire.com/news-release/2025/12/10/3203040/0/en/Photronics-Reports-Full-Year-and-Fourth-Quarter-Fiscal-2025-Results.html)). Toppan, Dai Nippon Printing and Hoya take most of the rest.
 
-China has mask capability at trailing nodes and nothing at the leading edge. SMIC runs two captive mask shops in Shanghai for g-line, i-line, KrF and ArF tools ([source](https://www.smics.com/en/site/mask)), and Newway of Shenzhen began 40 nm trial production in the second half of 2025 ([source](https://www.newwaymask.com/en/competitive/semiconductor.html)). There is no Chinese EUV blank, no Chinese actinic inspection tool and no Chinese multi-beam writer.
+China has mask capability at trailing nodes and nothing at the leading edge. SMIC runs two captive mask shops in Shanghai for g-line, i-line, KrF and ArF tools ([source](https://www.smics.com/en/site/mask)). There is no Chinese EUV blank, no Chinese actinic inspection tool and no Chinese multi-beam writer.
 
 ## The chokepoint
 
-This stage scores a 5 for the same reason lithography does, but for far less money. Two firms supply the blanks, one firm certifies them, and none of these businesses is big enough to attract a well-funded entrant. Nobody builds a $259 million blank business from scratch to serve four customers with a two-decade defect-learning curve ahead ([source](https://www.dri.co.jp/auto/report/qyr/250206-euv-mask-blanks-global-market-share-and.html)).
+This stage scores a 5 for the reason lithography does, on a fraction of the money. Two firms supply the blanks, one firm certifies them, and neither business is big enough to attract a funded entrant. Nobody builds a $259 million blank business from scratch to serve four customers with a two-decade defect-learning curve ahead ([source](https://www.dri.co.jp/auto/report/qyr/250206-euv-mask-blanks-global-market-share-and.html)).
 
-Pellicles are the open sore. A decade on, no membrane is transparent, tough and long-lived enough, and running EUV bare pushes cost into mask spend and scanner downtime. We think carbon nanotube pellicles reaching production would move EUV cost per wafer more than any incremental scanner improvement.
+Pellicles are the open sore. A decade on, no membrane is transparent, tough and long-lived at once, and running EUV bare pushes the cost into mask spend and scanner downtime. We think carbon nanotube pellicles reaching production would move EUV cost per wafer more than any incremental scanner improvement.
 
 ## Key evaluation criteria
 
@@ -139,4 +139,4 @@ Pellicles are the open sore. A decade on, no membrane is transparent, tough and 
 
 ## Takeaways
 
-Photomasks are the cheapest critical chokepoint in the AI chip supply chain, and that is exactly what makes them dangerous. A $259 million blank market with two suppliers ([source](https://www.dri.co.jp/auto/report/qyr/250206-euv-mask-blanks-global-market-share-and.html)) and a single-vendor actinic inspection tool ([source](https://www.lasertec.co.jp/en/ir/plan/message.html)) sit under every EUV layer of every leading-edge accelerator. EUV pellicles remain unsolved, so fabs trade throughput against defect risk product by product ([source](https://semiengineering.com/mask-complexity-cost-and-change/)). And mask-set costs of $10 million to $40 million quietly determine which AI chips get designed at all ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)).
+Photomasks are the cheapest critical chokepoint in the AI chip supply chain, and that is what makes them dangerous. A $259 million blank market with two suppliers ([source](https://www.dri.co.jp/auto/report/qyr/250206-euv-mask-blanks-global-market-share-and.html)) and a single-vendor actinic inspection tool ([source](https://www.lasertec.co.jp/en/ir/plan/message.html)) sit under every EUV layer of every leading-edge accelerator. Pellicles remain unsolved, so fabs trade throughput against defect risk product by product ([source](https://semiengineering.com/mask-complexity-cost-and-change/)). And mask-set costs of $10 million to $40 million quietly decide which AI chips get designed at all ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)).

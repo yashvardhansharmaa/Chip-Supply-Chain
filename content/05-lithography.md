@@ -72,43 +72,43 @@ Every transistor in an AI accelerator gets its shape from a machine built by one
 
 Lithography is photographic printing, shrunk. A stencil of one layer of the circuit is held up to a lamp, and the machine projects that image onto a silicon wafer coated in a light-sensitive film, four times smaller than the stencil. Finer circuits need shorter-wavelength light, and the shortest light now in use is absorbed by air and by glass, so the whole machine runs in a vacuum and every lens has to be a mirror. Only one company has ever built such a machine, which is why a single Dutch firm is a chokepoint.
 
-The stencil is a photomask, the film is photoresist, and the machine is a scanner. Deposition and etch later build structures wherever the resist opened. See Photomasks and pellicles.
+The stencil is a photomask, the film is photoresist, and the machine is a scanner. See Photomasks and pellicles, and Deposition and etch.
 
 Resolution follows one relation: the smallest printable half-pitch is a process factor times the wavelength, divided by the numerical aperture of the optics. Shorter wavelength and wider aperture both buy resolution. Aperture depends on the refractive index above the wafer, so flooding that gap with ultrapure water lifts ASML's deep ultraviolet systems to 1.35 ([source](https://www.asml.com/en/technology/lithography-principles/lenses-and-mirrors)).
 
-When one exposure cannot resolve a pitch, the fab splits the layer across two, three or four masks in sequence. Each pass adds a mask, cycle time and overlay error, so moving a layer to single-exposure EUV usually saves money. That is the commercial case for EUV.
+When one exposure cannot resolve a pitch, the fab splits the layer across two, three or four masks in sequence. Each pass adds a mask, cycle time and overlay error, so moving a layer to single-exposure EUV usually saves money. That is the commercial case for the machine.
 
 ## Variants and trade-offs
 
 ### Deep ultraviolet
 
-DUV means excimer laser light: 248 nm from krypton fluoride, 193 nm from argon fluoride, dry or through water. These tools still dominate by volume. Of the 327 systems ASML sold in 2025, 131 were ArF immersion, 78 KrF, 54 i-line and 16 ArF dry ([source](https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf)).
+DUV means excimer laser light: 248 nm from krypton fluoride, 193 nm from argon fluoride, dry or through water. These tools still dominate by volume. Of ASML's 327 systems in 2025, 131 were ArF immersion, 78 KrF, 54 i-line and 16 ArF dry ([source](https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf)).
 
 Immersion is the contested tier. A fab needs NXT:2000i-class scanners to reach leading-edge logic through multipatterning, and that is where Dutch export licensing draws its line.
 
 ### Extreme ultraviolet
 
-The 13.5 nm light comes from dropping molten tin into a vacuum vessel 50,000 times a second and hitting each droplet with two carbon dioxide laser pulses ([source](https://www.heise.de/en/news/EUV-Lithography-ASML-will-shoot-tin-droplets-300-000-times-per-second-11187649.html)). A collector mirror hands the result to six-mirror optics from Zeiss, ASML's optics partner since the late 1980s. The largest of those mirrors are a metre across and polished smooth to tens of picometres ([source](https://www.asml.com/en/technology/lithography-principles/lenses-and-mirrors)).
+The 13.5 nm light comes from dropping molten tin into a vacuum vessel 50,000 times a second and hitting each droplet with two carbon dioxide laser pulses ([source](https://www.heise.de/en/news/EUV-Lithography-ASML-will-shoot-tin-droplets-300-000-times-per-second-11187649.html)). A collector mirror hands the result to six-mirror optics from Zeiss, ASML's optics partner since the late 1980s. The largest are a metre across and polished smooth to tens of picometres ([source](https://www.asml.com/en/technology/lithography-principles/lenses-and-mirrors)).
 
 Source power is about 600 W, which runs the TWINSCAN NXE:3800E above 220 wafers per hour ([source](https://bits-chips.com/article/asmls-high-na-euv-technology-is-seeping-into-low-na-tools/)). ASML reached 1,000 W in research in February 2026 and targets 330 wafers per hour by 2030 ([source](https://www.heise.de/en/news/EUV-Lithography-ASML-will-shoot-tin-droplets-300-000-times-per-second-11187649.html)). A Low-NA machine costs around $250 million ([source](https://www.reuters.com/world/china/how-china-built-its-manhattan-project-rival-west-ai-chips-2025-12-17/)).
 
 ### High-NA EUV
 
-High-NA raises numerical aperture from 0.33 to 0.55. The TWINSCAN EXE:5200B resolves 8 nm features, for sub-2 nm logic and leading-edge DRAM ([source](https://www.asml.com/en/products/euv-lithography-systems/twinscan-exe-5200b)). Its optics are anamorphic, demagnifying 4x in one direction and 8x in the other, which halves the printable field, so the fab must stitch a large die from two exposures ([source](https://marklapedus.substack.com/p/tsmc-samsung-back-high-na-euv-and)).
+High-NA raises numerical aperture from 0.33 to 0.55. The TWINSCAN EXE:5200B resolves 8 nm features, for sub-2 nm logic and leading-edge DRAM ([source](https://www.asml.com/en/products/euv-lithography-systems/twinscan-exe-5200b)). Its optics are anamorphic, demagnifying 4x in one direction and 8x in the other. That halves the printable field, so the fab must stitch a large die from two exposures ([source](https://marklapedus.substack.com/p/tsmc-samsung-back-high-na-euv-and)).
 
-Ten systems were running at four customers as of September 2026, and the tool hit 135 wafers per hour in acceptance testing ([source](https://www.trendforce.com/news/2026/09/01/news-asml-advances-high-na-euv-toward-high-volume-manufacturing-as-10-systems-reportedly-go-live-at-4-customers)). Estimates put the price between $350 million and $400 million ([source](https://semiengineering.com/mask-economics-shape-high-na-euv-adoption/)) ([source](https://marklapedus.substack.com/p/tsmc-samsung-back-high-na-euv-and)). Adoption splits three ways.
+Ten systems were running at four customers in September 2026, and the tool hit 135 wafers per hour in acceptance testing ([source](https://www.trendforce.com/news/2026/09/01/news-asml-advances-high-na-euv-toward-high-volume-manufacturing-as-10-systems-reportedly-go-live-at-4-customers)). Estimates put the price at $350 million to $400 million ([source](https://semiengineering.com/mask-economics-shape-high-na-euv-adoption/)) ([source](https://marklapedus.substack.com/p/tsmc-samsung-back-high-na-euv-and)). Adoption splits three ways.
 
 - **Intel Foundry** has processed more than a million High-NA wafers and is the first foundry to run the tool in high-volume manufacturing, on Intel 18A ([source](https://www.trendforce.com/news/2026/09/08/news-asml-expands-high-na-euv-push-with-tsmc-samsung-and-intel-12-inch-photomask-pilot-line-set-for-2031/)).
 - **TSMC** held off and now says it will use High-NA in high-volume manufacturing from 2030 ([source](https://marklapedus.substack.com/p/tsmc-samsung-back-high-na-euv-and)).
 - **Samsung** targets 2028, for DRAM rather than logic ([source](https://marklapedus.substack.com/p/tsmc-samsung-back-high-na-euv-and)).
 
-On 8 September 2026 ASML and TSMC announced a move to 12-inch photomasks to remove that stitching constraint, with a pilot mask line targeted for 2031 ([source](https://www.asml.com/en/news/press-releases/2026/tsmc-and-asml-announce-industry-transition-to-large-format-photomasks-for-high-na-euv)).
+ASML and TSMC announced a move to 12-inch photomasks on 8 September 2026 to lift the field-size limit, with a pilot mask line targeted for 2031 ([source](https://www.asml.com/en/news/press-releases/2026/tsmc-and-asml-announce-industry-transition-to-large-format-photomasks-for-high-na-euv)).
 
 {{figure:euv-shipments}}
 
 ## Who makes it
 
-ASML took EUR 32.7 billion in net sales in 2025 at a 52.8% gross margin, and guides to EUR 34 to 39 billion for 2026 ([source](https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf)). It is an integrator with 5,100 suppliers ([source](https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm)). Four of them carry the EUV machine.
+ASML took EUR 32.7 billion in net sales in 2025 at a 52.8% gross margin, and guides to EUR 34 to 39 billion for 2026 ([source](https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf)). It is an integrator with 5,100 suppliers ([source](https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm)). Four carry the EUV machine.
 
 - **Zeiss SMT**, Oberkochen, makes the mirrors and illumination optics ([source](https://www.heise.de/en/news/EUV-Lithography-ASML-will-shoot-tin-droplets-300-000-times-per-second-11187649.html)).
 - **Trumpf**, Ditzingen, makes the carbon dioxide drive lasers ([source](https://www.heise.de/en/news/EUV-Lithography-ASML-will-shoot-tin-droplets-300-000-times-per-second-11187649.html)).
@@ -117,7 +117,7 @@ ASML took EUR 32.7 billion in net sales in 2025 at a 52.8% gross margin, and gui
 
 We think Zeiss mirror polishing and coating, not final assembly in Veldhoven, sets the ceiling on how fast EUV output can grow.
 
-The Japanese incumbents are specialists now. Nikon sold 22 new semiconductor scanners in the year to March 2026, into a market it sizes at 570 units, and its Precision Equipment business ran at a loss ([source](https://www.nikon.com/content/dam/web-assets/nikoncom/company/local/global/en/ir/ir_library/result/pdf/2026/26_all_e.pdf)). Canon's bet is nanoimprint: the FPA-1200NZ2C stamps rather than projects and reaches a 14 nm minimum linewidth ([source](https://global.canon/en/news/2024/20240926.html)). It is a real technology with no leading-edge logic customer.
+The Japanese incumbents are specialists now. Nikon sold 22 new semiconductor scanners in the year to March 2026, into a market it sizes at 570 units, and its Precision Equipment business ran at a loss ([source](https://www.nikon.com/content/dam/web-assets/nikoncom/company/local/global/en/ir/ir_library/result/pdf/2026/26_all_e.pdf)). Canon's bet is nanoimprint: the FPA-1200NZ2C stamps rather than projects, at a 14 nm minimum linewidth ([source](https://global.canon/en/news/2024/20240926.html)). It is a real technology with no leading-edge logic customer.
 
 {{figure:litho-mix}}
 
@@ -129,7 +129,7 @@ No EUV system has ever been sold to a customer in China ([source](https://www.re
 - **A partial licence revocation** disclosed on 1 January 2024 stopped NXT:2050i and NXT:2100i shipments to a few Chinese customers ([source](https://www.asml.com/en/news/press-releases/2023/statement-regarding-partial-revocation-export-license)).
 - **The BIS Affiliates Rule** extended entity-list controls to 50%-owned subsidiaries from 29 September 2025 ([source](https://www.federalregister.gov/documents/2025/09/30/2025-19001/expansion-of-end-user-controls-to-cover-affiliates-of-certain-listed-entities)). A US-China trade deal suspended it for a year from 10 November 2025 ([source](https://www.internationaltradeinsights.com/2025/11/bis-suspends-affiliates-rule-for-one-year-following-u-s-agreement-with-china/)).
 
-The effect shows in ASML's mix. China was 41% of net system sales in 2024 and 33% in 2025 ([source](https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf)), and roughly 16% of net sales in the first half of 2026 ([source](https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/)). ASML expects about 20% for the full year ([source](https://www.caixinglobal.com/2026-01-29/asml-expects-china-revenue-drop-following-backlog-fueled-surge-102409285.html)).
+The effect shows in ASML's mix. China was 41% of net system sales in 2024, 33% in 2025 ([source](https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf)) and roughly 16% in the first half of 2026 ([source](https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/)). ASML expects about 20% for the full year ([source](https://www.caixinglobal.com/2026-01-29/asml-expects-china-revenue-drop-following-backlog-fueled-surge-102409285.html)).
 
 China's answer has two tracks. On DUV it is verified. Reuters reported in July 2026 that the state-owned Shanghai Aishengna, capitalised at 7 billion yuan, has begun mass producing immersion DUV scanners after absorbing teams from SMEE and the SiCarrier affiliate Yuliangsheng. It plans about five machines this year and 20 in 2027 ([source](https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/)). That is a real tool at trivial volume.
 
@@ -139,9 +139,9 @@ On EUV the record is thinner and rests on unnamed sources. Reuters reported in D
 
 ## The chokepoint
 
-Lithography scores a 5 because the failure mode is total and substitution takes decades. Even ASML could not rebuild itself quickly, because the hardest parts sit at Zeiss and Trumpf, not in Veldhoven.
+Lithography scores a 5 because the failure mode is total and substitution takes decades. Even ASML could not rebuild itself quickly: the hardest parts sit at Zeiss and Trumpf, not in Veldhoven.
 
-For AI accelerators the leverage is in EUV. It prints the tightest-pitch layers, the ones that set transistor density and metal pitch, and TSMC expects High-NA layer counts to rise as AI architectures get more complex ([source](https://www.asml.com/en/news/press-releases/2026/tsmc-and-asml-announce-industry-transition-to-large-format-photomasks-for-high-na-euv)). As of mid-2025 every EUV node in high-volume production still used single-patterning EUV ([source](https://semiengineering.com/mask-complexity-cost-and-change/)). When that changes, tool demand per wafer rises again.
+For AI accelerators the leverage is in EUV. It prints the tightest-pitch layers, the ones that set transistor density and metal pitch, and TSMC expects High-NA layer counts to rise as AI architectures grow more complex ([source](https://www.asml.com/en/news/press-releases/2026/tsmc-and-asml-announce-industry-transition-to-large-format-photomasks-for-high-na-euv)). As of mid-2025 every EUV node in high-volume production still used single patterning ([source](https://semiengineering.com/mask-complexity-cost-and-change/)). When that changes, tool demand per wafer rises again.
 
 ## Key evaluation criteria
 
@@ -153,4 +153,4 @@ For AI accelerators the leverage is in EUV. It prints the tightest-pitch layers,
 
 ## Takeaways
 
-One firm, in one Dutch town, using mirrors from one German optics house, gates the resolution of every leading-edge AI chip. The tool count is small enough to track by hand: 48 EUV systems in 2025 ([source](https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf)) and ten High-NA systems in the field worldwide ([source](https://www.trendforce.com/news/2026/09/01/news-asml-advances-high-na-euv-toward-high-volume-manufacturing-as-10-systems-reportedly-go-live-at-4-customers)). Export controls have cut China's share of ASML system sales from 41% in 2024 toward a guided 20% in 2026 ([source](https://www.cnbc.com/2026/01/28/asml-q4-2025-earnings-report.html)), and China's answer is low-volume immersion DUV plus an EUV prototype that has not yet made a chip. Nothing on the horizon changes the shape of this bottleneck before 2030.
+One firm, in one Dutch town, using mirrors from one German optics house, gates the resolution of every leading-edge AI chip. The tool count is small enough to track by hand: 48 EUV systems in 2025 ([source](https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf)) and ten High-NA systems in the field ([source](https://www.trendforce.com/news/2026/09/01/news-asml-advances-high-na-euv-toward-high-volume-manufacturing-as-10-systems-reportedly-go-live-at-4-customers)). Export controls have cut China's share of ASML system sales from 41% in 2024 toward a guided 20% in 2026 ([source](https://www.cnbc.com/2026/01/28/asml-q4-2025-earnings-report.html)), and China's answer is low-volume immersion DUV plus an EUV prototype that has not yet made a chip. Nothing on the horizon changes the shape of this bottleneck before 2030.
