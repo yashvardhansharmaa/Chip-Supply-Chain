@@ -3,10 +3,10 @@
   "id": "memory-and-hbm",
   "number": 11,
   "title": "Memory and HBM",
-  "oneLiner": "Three firms make every HBM stack on Earth. The cube is the largest block of silicon in an AI package, and its height is now capped by the cooling plate above it.",
-  "plain": "A cook can chop faster than anyone can fetch the ingredients, so the answer is a wider door. High bandwidth memory stacks up to sixteen memory chips into a cube, drills copper wires straight down through them, and sits the cube a few millimetres from the processor. Stacking is the hard part: each chip is ground thinner than a human hair, the whole cube must stay under a fixed height so it does not foul the cooling plate, and one bad layer ruins all of them. Only SK hynix, Samsung and Micron can do it.",
+  "oneLiner": "Three firms make every HBM stack in the world. The cube is the largest block of silicon in an AI package, and the cooling plate above it now caps its height.",
+  "plain": "High bandwidth memory is where an AI chip keeps the numbers it is working on, and it is built to hand them over fast. It stacks up to sixteen memory chips into a cube, drills copper wires straight down through them, and sits the cube a few millimetres from the processor. Stacking is the hard part: each chip is ground thinner than a human hair, the cube must stay under a fixed height or it fouls the cooling plate, and one bad layer ruins the rest. Only SK hynix, Samsung and Micron can do it, and a single line in an American export rule reaches all three.",
   "specimen": "hbm-stack",
-  "specimenCaption": "Right: a 12-high HBM stack, exploded. A logic base die at the bottom, twelve thinned DRAM dies above it, through-silicon vias running the full height of the cube, microbumps between every layer, and the molding compound as a faint box around the whole stack.",
+  "specimenCaption": "Right: a twelve-high HBM stack, pulled apart. A logic chip at the bottom, twelve thinned memory chips above it, copper through-silicon vias running the full height of the cube, microbumps between every layer, and the moulding compound as a faint box around the whole stack.",
   "card": {
     "concentration": "Extreme",
     "chokepointScore": 5,
@@ -24,8 +24,8 @@
     ],
     "chinaStatus": "No Chinese firm ships HBM3E or HBM4 in volume. CXMT is the only credible domestic entrant, and the export controls are written to keep it that way.",
     "usStatus": "Micron is the only US-headquartered HBM maker. BIS controls HBM above 2 GB/s per mm2 of package area under ECCN 3A090.c, which captures every stack now in production.",
-    "costSignal": "An HBM cube's data interface is 16 times wider than a DDR5 module's, and that width is bought with die area and stacking yield",
-    "substitution": {"years": "5-10", "why": "A new entrant needs leading-edge DRAM, a through-silicon-via and thinning line, a stacking process that holds warpage on dies ground to tens of microns, and qualification by Nvidia."}
+    "costSignal": "An HBM cube's data interface is 16 times wider than a DDR5 module's, and that width costs die area and stacking yield",
+    "substitution": {"years": "5-10", "why": "A new entrant needs leading-edge DRAM, a line that drills and thins wafers, a stacking process that keeps dies ground to tens of microns from warping, and Nvidia's approval."}
   },
   "keyFacts": [
     {"fact": "HBM4 sets a 2,048-bit interface with 32 channels, 2 TB/s per stack at 8 Gb/s per pin, and up to 64 GB per stack", "source": "https://www.jedec.org/news/pressreleases/jedec%C2%AE-and-industry-leaders-collaborate-release-jesd270-4-hbm4-standard-advancing"},
@@ -51,10 +51,10 @@
     {
       "id": "hbm-revenue",
       "type": "bars",
-      "title": "HBM market revenue, BofA estimate",
+      "title": "HBM market revenue, Bank of America estimate",
       "unit": "$B",
       "data": [["2025", 34.6], ["2026", 54.6]],
-      "source": {"label": "BofA estimate cited in SK hynix 2026 market outlook", "url": "https://news.skhynix.com/en/2026-market-outlook-focus-on-the-hbm-led-memory-supercycle/"}
+      "source": {"label": "Bank of America estimate cited in SK hynix's 2026 market outlook", "url": "https://news.skhynix.com/en/2026-market-outlook-focus-on-the-hbm-led-memory-supercycle/"}
     },
     {
       "id": "hbm-suppliers",

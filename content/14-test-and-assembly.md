@@ -78,8 +78,8 @@ Before a chip can be sold, a machine has to interrogate it and check every answe
 
 Each round of test catches failures the round before it cannot see.
 
-- **Wafer sort.** Thousands of needles land on each die while it is still on the wafer, and a tester drives patterns in and checks the answers; failures never leave the wafer.
-- **Burn-in.** Run the part hot and under power for hours, so that anything which would fail early fails now, before assembly.
+- **Wafer sort.** Thousands of needles land on each die while it is still on the wafer, a tester drives patterns in and checks the answers, and the failures go no further.
+- **Burn-in.** Run the part hot and under power for hours, so anything that would fail early fails now, before assembly.
 - **Final test.** The tester runs the packaged part again, because packaging adds failures of its own.
 - **System-level test.** The finished part sits in a socket and runs something close to a real workload, because some failures appear only when everything runs at once.
 
@@ -114,7 +114,7 @@ Thermocompression bonders, which press memory dies into a stack and place chiple
 
 ## The back end's geography
 
-Outsourced assembly and test, the OSAT business, is Taiwanese with a large Chinese challenger. ASE, the biggest of them, billed US$20.6 billion in 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0001122411/ifrs-full/Revenue.json)); Georgetown's CSET counts four of the top ten OSATs by 2024 revenue as China-headquartered ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). Malaysia ships about 13% of the world's packaged chips and wants 7% of advanced packaging shipments by 2035 ([source](https://www.mida.gov.my/advanced-packaging-how-malaysia-is-packaging-the-future-of-ai/)).
+Outsourced assembly and test, the OSAT business, is Taiwanese with a large Chinese challenger. ASE, the biggest, billed US$20.6 billion in 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0001122411/ifrs-full/Revenue.json)); Georgetown's CSET counts four of the top ten OSATs by 2024 revenue as China-headquartered ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). Malaysia ships about 13% of the world's packaged chips and wants 7% of advanced packaging shipments by 2035 ([source](https://www.mida.gov.my/advanced-packaging-how-malaysia-is-packaging-the-future-of-ai/)).
 
 ASE spent US$2.7 billion on machinery and US$1.4 billion on buildings in the first half of 2026, and says revenue from leading-edge advanced packaging is running ahead of its US$3.5 billion guidance for the year ([source](https://www.sec.gov/Archives/edgar/data/1122411/000095010326011353/dp250875_6k.htm)). Powertech is chasing the first panel-level packaging line for AI chips in 2027 ([source](https://asia.nikkei.com/business/tech/semiconductors/powertech-eyes-world-s-first-panel-level-packaging-for-ai-chips-in-2027)).
 
