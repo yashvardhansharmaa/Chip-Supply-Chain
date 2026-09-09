@@ -90,7 +90,7 @@ The 192 GB of HBM3E beside those dies is the single largest line: about $2,900, 
 
 ### Packaging, substrate and test
 
-CoWoS-L packaging adds about $1,100, more than the logic dies it carries ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Then comes the line nobody quotes. Packaging yield runs 65 to 95 percent, and a package that fails after memory attach throws away the dies and the HBM with it, adding roughly $1,000 to every B200 that ships ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Substrate, board, test and assembly add $480. See Advanced packaging on why that capacity binds first.
+CoWoS-L packaging adds about $1,100, more than the logic dies it carries ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Then comes the line nobody quotes. Packaging yield runs 65 to 95 percent, and a package that fails after memory attach throws away the dies and the HBM with it, adding roughly $1,000 to every B200 that ships ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Substrate, board, test and assembly add $480 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). See Advanced packaging on why that capacity binds first.
 
 ### The B200 bill of materials
 
@@ -110,7 +110,7 @@ Epoch AI builds these as distributions, not point estimates, deriving the packag
 
 ### From package to rack to cluster
 
-Rubin moves the argument up a level. Bernstein puts a single Vera Rubin NVL72 rack as high as $9.1 million, and analysts quoted by TrendForce put memory near 29 percent of a VR200 system's bill of materials, against the 20 percent Nvidia prefers ([source](https://www.trendforce.com/news/2026/07/28/news-nvidia-reportedly-halves-vera-rubin-socamm-capacity-as-memory-costs-near-29-of-system-bom/)). Nvidia's answer was to halve the memory on each Vera CPU, cutting the LPDDR5X bill from $1.2 million to $586,000. When a vendor redesigns a product to buy less of a component, that component is the chokepoint.
+Rubin moves the argument up a level. Bernstein puts a single Vera Rubin NVL72 rack as high as $9.1 million, and analysts quoted by TrendForce put memory near 29 percent of a VR200 system's bill of materials, against the 20 percent Nvidia prefers ([source](https://www.trendforce.com/news/2026/07/28/news-nvidia-reportedly-halves-vera-rubin-socamm-capacity-as-memory-costs-near-29-of-system-bom/)). Nvidia's answer was to halve the memory on each Vera CPU, cutting the LPDDR5X bill from $1.2 million to $586,000 ([source](https://www.trendforce.com/news/2026/07/28/news-nvidia-reportedly-halves-vera-rubin-socamm-capacity-as-memory-costs-near-29-of-system-bom/)). When a vendor redesigns a product to buy less of a component, that component is the chokepoint.
 
 One level up again, a 100,000 H100 cluster carries over $4B of server capex, draws about 150 MW, burns 1.59 TWh a year, pays $123.9M for power and needs 98,304 optical transceivers ([source](https://newsletter.semianalysis.com/p/100000-h100-clusters-power-network)).
 
@@ -135,7 +135,7 @@ SK hynix publishes no gross margin. Its operating margin hit 76 percent in the J
 
 {{figure:gross-margins}}
 
-Design, inspection and leading-edge wafers earn 50 to 75 points, substrates 36, assembly and test 17 to 21. In 2026 memory passed all of them. Micron's gross margin was 39.8 percent for the year to August 2025 ([source](https://investors.micron.com/news/press-release/2025/Micron-Technology-Inc--Reports-Results-for-the-Fourth-Quarter-and-Full-Year-of-Fiscal-2025-09-23-2025/default.aspx)) and 84.6 percent in the quarter to May 2026. Value moved from Nvidia to Nvidia's suppliers.
+Design, inspection and leading-edge wafers earn 50 to 75 points, substrates 36, assembly and test 17 to 21. In 2026 memory passed all of them. Micron's gross margin was 39.8 percent for the year to August 2025 ([source](https://investors.micron.com/news/press-release/2025/Micron-Technology-Inc--Reports-Results-for-the-Fourth-Quarter-and-Full-Year-of-Fiscal-2025-09-23-2025/default.aspx)) and 84.6 percent in the quarter to May 2026 ([source](https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Results-for-the-Third-Quarter-of-Fiscal-2026/default.aspx)). Value moved from Nvidia to Nvidia's suppliers.
 
 Gartner puts 2025 semiconductor revenue at $809B and forecasts $1.6T for 2026, memory alone $837B, 54 percent of the industry against 27 percent a year earlier ([source](https://www.gartner.com/en/newsroom/press-releases/2026-08-24-gartner-forecasts-worldwide-semiconductor-revenue-to-reach-1-trillion-dollars-in-2026)). WSTS had forecast $772B ([source](https://www.wsts.org/76/103/Global-Semiconductor-Market-Approaches-1T-in-2026)) and SIA reported actual sales of $791.7B ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)); take the spread between the measurers as the error bar on every total here. Below those totals sit $135.1B of equipment billings ([source](https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025)), a $55B advanced packaging market ([source](https://www.yolegroup.com/product/report/status-of-the-advanced-packaging-industry-2026/)) and $23.8B of optical transceivers ([source](https://www.lightcounting.com/newsletter/en/march-2026-quarterly-market-update-380)). Capex at Alphabet, Amazon, Meta, Microsoft and Oracle was about $448B in 2025 and is tracking $770B in 2026 ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)).
 
@@ -143,7 +143,7 @@ Gartner puts 2025 semiconductor revenue at $809B and forecasts $1.6T for 2026, m
 
 ## The chokepoint (what is structurally expensive)
 
-Per unit of compute, logic still deflates. What is wrapped around the die does not. HBM is 45 percent of a B200 build and near 29 percent of a Vera Rubin system, packaging and its scrap cost more than twice the logic dies, and a GB300 NVL72 rack already draws 142 kW ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)). The power plant is outgrowing the compute.
+Per unit of compute, logic still deflates. What is wrapped around the die does not. HBM is 45 percent of a B200 build ([source](https://epoch.ai/data-insights/b200-cost-breakdown)) and near 29 percent of a Vera Rubin system ([source](https://www.trendforce.com/news/2026/07/28/news-nvidia-reportedly-halves-vera-rubin-socamm-capacity-as-memory-costs-near-29-of-system-bom/)), packaging and its scrap cost more than twice the logic dies, and a GB300 NVL72 rack already draws 142 kW ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)). The power plant is outgrowing the compute.
 
 Three classes result.
 

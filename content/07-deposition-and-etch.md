@@ -77,29 +77,29 @@ If lithography is the printing, this is the building. A chip is built like a lay
 
 CSET puts a single chip at more than 1,000 process steps, with the part-finished product crossing international borders 70 or more times ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 
-Most of this happens in a vacuum chamber with a plasma in it: a radio-frequency field strips electrons off a process gas, and the ions and radicals do the chemistry. Change the gas, pressure, power and temperature and the same hardware either adds material or removes it. That is why export controls here are written as process specifications rather than as bans on machines.
+Most of it happens in a vacuum chamber with a plasma in it: a radio-frequency field strips electrons off a process gas, and the ions and radicals do the chemistry. Change the gas, pressure, power and temperature and the same hardware adds material or removes it. That is why export controls here are written as process specifications, not as bans on machines.
 
 ## Variants and trade-offs
 
 ### Deposition families
 
-- **Physical vapour deposition** fires argon ions at a target so its atoms fly off onto the wafer, the workhorse for metal barriers and seed layers and a $2.4 billion market in 2019 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
-- **Chemical vapour deposition** reacts gases at the wafer surface to grow a film; the plasma-enhanced variant does it cooler and was a $3.5 billion market in 2019 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
-- **Atomic layer deposition** builds a fraction of a monolayer at a time, and because each half-reaction stops when the surface saturates it coats vertical walls and horizontal floors alike. US regulators call it the basis for 3D scaling in 3D DRAM, 3D NAND and gate-all-around logic ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)); ASM International leads a market worth $1.6 billion in 2019 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
-- **Epitaxy and electroplating** grow the strained silicon-germanium source and drain and fill the copper interconnect trenches ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
+- **Physical vapour deposition** sputters atoms off a target onto the wafer, the workhorse for metal barriers and seed layers, $2.4 billion in 2019 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
+- **Chemical vapour deposition** reacts gases at the wafer surface to grow a film; the plasma-enhanced version runs cooler, $3.5 billion in 2019 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
+- **Atomic layer deposition** lays down a fraction of a monolayer at a time, so it coats vertical walls and horizontal floors alike. US regulators call it the basis for 3D scaling in 3D DRAM, 3D NAND and gate-all-around logic ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)); ASM International leads it, $1.6 billion in 2019 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
+- **Epitaxy and electroplating** grow the strained silicon-germanium source and drain and fill the copper trenches ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 
 ### Etch families
 
-- **Conductor etch** cuts gates, metals and silicon, a $6.5 billion market in 2019 led by Lam ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
-- **Dielectric etch** cuts the oxides and nitrides between them, a $4.3 billion market in 2019 led by Tokyo Electron ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
-- **High-aspect-ratio etch** is what memory lives or dies by. A 3D NAND channel or DRAM capacitor is a hole far deeper than it is wide that has to come out straight, and BIS treats anything above 200:1 as characteristic of 3D DRAM ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)). Lam's cryogenic etch chills the wafer to sharpen the profile: Lam says Cryo 3.0 holds critical-dimension deviation under 0.1 percent down channels up to 10 microns deep ([source](https://newsroom.lamresearch.com/2024-07-31-Lam-Research-Introduces-Lam-Cryo-TM-3-0-Cryogenic-Etch-Technology-to-Accelerate-Scaling-of-3D-NAND-for-the-AI-Era)).
-- **Atomic layer etch** removes a monolayer per cycle, slowly and expensively, so it is used only where nothing else will do.
+- **Conductor etch** cuts gates, metals and silicon, $6.5 billion in 2019, led by Lam ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
+- **Dielectric etch** cuts the oxides and nitrides between them, $4.3 billion in 2019, led by Tokyo Electron ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
+- **High-aspect-ratio etch** is what memory lives or dies by: a 3D NAND channel or DRAM capacitor is a hole far deeper than it is wide that has to come out straight. Lam chills the wafer to sharpen the profile, and says Cryo 3.0 holds critical-dimension deviation under 0.1 percent down channels 10 microns deep ([source](https://newsroom.lamresearch.com/2024-07-31-Lam-Research-Introduces-Lam-Cryo-TM-3-0-Cryogenic-Etch-Technology-to-Accelerate-Scaling-of-3D-NAND-for-the-AI-Era)).
+- **Atomic layer etch** removes a monolayer per cycle, slowly and expensively, so it goes only where nothing else will do.
 
 Three AI-specific pulls.
 
-- **Gate-all-around** needs isotropic etch, which cuts sideways, to release the silicon nanosheets from the silicon-germanium between them. BIS ties its dry etch controls to this and controls wet processing at 100:1 silicon-germanium-to-silicon selectivity ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)).
-- **HBM** needs deep through-silicon vias, which BIS defines as etch at 10:1 or greater above 7 microns per minute ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
-- **Backside power delivery** adds thinning, backside vias and a second metal stack. Applied Materials expects it to add about $1 billion per 100,000 wafer starts a month to its wiring business, taking that to roughly $7 billion ([source](https://www.globenewswire.com/news-release/2024/07/08/2909540/0/en/applied-materials-unveils-chip-wiring-innovations-for-more-energy-efficient-computing.html)).
+- **Gate-all-around** needs isotropic etch, which cuts sideways, to release the silicon nanosheets from the silicon-germanium between them ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)).
+- **HBM** needs through-silicon vias, holes driven clean through the die so it can be stacked ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
+- **Backside power delivery** adds thinning, backside vias and a second metal stack. Applied Materials expects it to add about $1 billion per 100,000 wafer starts a month to its wiring business ([source](https://www.globenewswire.com/news-release/2024/07/08/2909540/0/en/applied-materials-unveils-chip-wiring-innovations-for-more-energy-efficient-computing.html)).
 
 {{figure:tel-tool-share}}
 
@@ -107,7 +107,7 @@ Three AI-specific pulls.
 
 SEMI put global equipment billings at $135.1 billion in 2025, up 15 percent from $117.1 billion ([source](https://www.semiconductor-digest.com/semi-reports-global-semiconductor-equipment-billings-reached-135-billion-in-2025-up-15-year-on-year/)). Tokyo Electron sees $150 billion to $170 billion a year in 2026 and 2027, with leading-edge spending up more than 30 percent ([source](https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf)).
 
-Within deposition and etch there is no single ASML. Gartner numbers in Tokyo Electron's own deck put it at 23 percent of dry etch, 27 percent of batch deposition and 15 percent of ALD in 2025, against 91 percent of coater/developer ([source](https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf)). That gap is the point: a near-monopoly in track tools, an ordinary share in etch and deposition.
+Within deposition and etch there is no single ASML. Gartner numbers in Tokyo Electron's own deck put it at 23 percent of dry etch, 27 percent of batch deposition and 15 percent of ALD in 2025, against 91 percent of coater/developer ([source](https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf)). A near-monopoly in track tools; an ordinary share in etch and deposition.
 
 ASM International is the specialist. Its 2025 revenue was a record EUR 3.2 billion, driven by customers building 2 nm gate-all-around capacity, with molybdenum ALD entering volume production ([source](https://www.asm.com/media/yvxbavwe/20260303-asm-reports-q4-and-full-year-2025-results.pdf)).
 
@@ -119,17 +119,17 @@ China is the largest customer and the fastest-improving competitor at once. It b
 
 - **Tokyo Electron**: 34.1 percent of sales in the year to March 2026, down from 41.7 percent ([source](https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf)).
 - **Lam Research**: 26 percent in the June 2026 quarter, behind Taiwan at 27 percent ([source](https://www.sec.gov/Archives/edgar/data/707549/000070754926000033/lrcx_exhibitx991xq4x2026.htm)).
-- **Applied Materials**: 28 percent in the third fiscal quarter of 2026, down from 35 percent a year earlier ([source](https://www.globenewswire.com/news-release/2026/08/13/3344890/0/en/applied-materials-announces-third-quarter-2026-results.html)).
+- **Applied Materials**: 28 percent in the third fiscal quarter of 2026, down from 35 percent ([source](https://www.globenewswire.com/news-release/2026/08/13/3344890/0/en/applied-materials-announces-third-quarter-2026-results.html)).
 - **ASM International**: more than 30 percent of 2025 revenue ([source](https://www.asm.com/media/yvxbavwe/20260303-asm-reports-q4-and-full-year-2025-results.pdf)).
 
-Domestic toolmakers cut both ways. Between 2019 and 2024 China-based suppliers went from 2 to 7 percent of deposition and from under 3 to about 9 percent of etch and clean, roughly 11 percent in dry etch alone. In ALD they gained nothing and held under 1 percent ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). AMEC's 2025 revenue was RMB 12.38 billion, up 36.6 percent, with cumulative etch tool shipments past 6,800 units ([source](https://www.trendforce.com/news/2026/04/21/news-china-memory-expansion-lifts-domestic-equipment-suppliers-amec-wuhan-jingce-hwatsing-acm-in-focus/)).
+Domestic toolmakers cut both ways. Between 2019 and 2024 China-based suppliers went from 2 to 7 percent of deposition and from under 3 to about 9 percent of etch and clean, 11 percent in dry etch alone. In ALD they gained nothing and stayed under 1 percent ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). AMEC's 2025 revenue was RMB 12.38 billion, up 36.6 percent, on cumulative etch tool shipments past 6,800 units ([source](https://www.trendforce.com/news/2026/04/21/news-china-memory-expansion-lifts-domestic-equipment-suppliers-amec-wuhan-jingce-hwatsing-acm-in-focus/)).
 
 The controls tightened in four moves.
 
-- **October 2022.** The interim final rule of 7 October put manufacturing equipment and US person support under licence and widened foreign-produced item rules for 28 listed Chinese entities ([source](https://www.govinfo.gov/content/pkg/FR-2022-10-13/pdf/2022-21658.pdf)).
-- **October 2023.** The rule effective 17 November 2023 rewrote the equipment entries, adding controls on isotropic and anisotropic dry etch (ECCN 3B001.c.1), spatial ALD (3B001.d.9), low-fluorine tungsten ALD and CVD (3B001.d.10) and carbon hard mask PECVD (3B001.d.5) ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)).
-- **December 2024.** The interim final rule added eight ECCNs, listed 140 entities and extended a foreign direct product rule to tools made outside the United States ([source](https://www.cov.com/en/news-and-insights/insights/2024/12/us-department-of-commerce-strengthens-export-controls-on-advanced-computing-and-semiconductor-manufacturing-items)), reaching TSV etch and deposition above 200:1 ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
-- **September 2025.** The Affiliates Rule extended Entity List restrictions to any company at least 50 percent owned by a listed entity ([source](https://www.govinfo.gov/content/pkg/FR-2025-09-30/pdf/2025-19001.pdf)), and BIS then stayed it to 9 November 2026 ([source](https://www.govinfo.gov/content/pkg/FR-2025-11-12/pdf/2025-19846.pdf)).
+- **October 2022.** The 7 October interim final rule put manufacturing equipment and US person support under licence and widened foreign-produced item rules for 28 listed Chinese entities ([source](https://www.govinfo.gov/content/pkg/FR-2022-10-13/pdf/2022-21658.pdf)).
+- **October 2023.** The rule effective 17 November rewrote the equipment entries, adding isotropic and anisotropic dry etch (ECCN 3B001.c.1), spatial ALD (3B001.d.9), low-fluorine tungsten ALD and CVD (3B001.d.10) and carbon hard mask PECVD (3B001.d.5) ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)).
+- **December 2024.** The interim final rule added eight ECCNs, listed 140 entities and extended a foreign direct product rule to tools built outside the United States ([source](https://www.cov.com/en/news-and-insights/insights/2024/12/us-department-of-commerce-strengthens-export-controls-on-advanced-computing-and-semiconductor-manufacturing-items)), reaching TSV etch and deposition above 200:1 ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
+- **September 2025.** The Affiliates Rule extended Entity List restrictions to any company at least 50 percent owned by a listed entity ([source](https://www.govinfo.gov/content/pkg/FR-2025-09-30/pdf/2025-19001.pdf)); BIS then stayed it to 9 November 2026 ([source](https://www.govinfo.gov/content/pkg/FR-2025-11-12/pdf/2025-19846.pdf)).
 
 Enforcement has bite: Applied Materials took a $253 million charge to settle an export controls matter ([source](https://www.globenewswire.com/news-release/2026/08/13/3344890/0/en/applied-materials-announces-third-quarter-2026-results.html)).
 
@@ -137,16 +137,16 @@ Enforcement has bite: Applied Materials took a $253 million charge to settle an 
 
 ## The chokepoint
 
-This is a real chokepoint but a softer one than lithography. Three or four credible vendors exist for most etch and deposition steps. The narrow points are ALD, where China holds under 1 percent ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)), and the extreme aspect ratios that HBM and 3D memory need. Those are exactly where the December 2024 rule aims ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
+This is a real chokepoint but a softer one than lithography. Three or four credible vendors exist for most etch and deposition steps. The narrow points are ALD, where China holds under 1 percent ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)), and the extreme aspect ratios HBM and 3D memory need. That is where the December 2024 rule aims ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
 
 ## Key evaluation criteria
 
-- **Selectivity** — how hard the process attacks one material and spares another. BIS uses a silicon-germanium-to-silicon ratio of 100:1 as a control threshold ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)).
+- **Selectivity** — how hard the process attacks one material and spares another. BIS controls wet processing at a silicon-germanium-to-silicon ratio of 100:1 ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)).
 - **Conformality and aspect ratio** — whether a film reaches the bottom of a deep hole. Controls start at 10:1 for TSV etch and 200:1 for 3D DRAM deposition ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
-- **Uniformity** — variation across a 300 mm wafer. Regulators treat under 2 percent as an advanced-manufacturing marker ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
+- **Uniformity** — variation across a 300 mm wafer, with under 2 percent treated as an advanced-manufacturing marker ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
 - **Throughput** — wafers per hour, which sets cost per layer; BIS states 7 microns per minute for high-volume TSV work ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
 - **Particles and chamber matching** — the defect budget these tools consume, measured by the tools in the next chapter.
 
 ## Takeaways
 
-Deposition and etch are the volume business of a fab: over a thousand steps per wafer, four American, Japanese and Dutch firms taking most of the money, and no monopoly of the kind ASML holds in lithography. The AI roadmap raises difficulty faster than tool count: gate-all-around, HBM and backside power want better selectivity and deeper holes, not more chambers. China has closed the gap fastest here, into double digits in dry etch, and least in ALD, where the next two logic nodes are won.
+Deposition and etch are the volume business of a fab: over a thousand steps per wafer, four American, Japanese and Dutch firms taking most of the money, and no monopoly of the kind ASML holds in lithography. The AI roadmap raises difficulty faster than tool count, because gate-all-around, HBM and backside power want better selectivity and deeper holes, not more chambers. China has closed the gap fastest here, into double digits in dry etch, and least in ALD, where the next two logic nodes are won.

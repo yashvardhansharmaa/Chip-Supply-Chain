@@ -104,7 +104,7 @@ The rest of the floor is more fragmented.
 
 - **Probe cards.** A three-way race with a long tail: FormFactor took US$785.0 million in fiscal 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0001039399/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json)); Technoprobe grew 15.7% to EUR 628.4 million, 38% of it from AI, and plans to double capacity by the end of 2027 ([source](https://technoprobe.com/wp-content/uploads/2026/03/PR-FY-2025_.pdf)).
 - **Handlers and burn-in.** Cohu took US$453.0 million in fiscal 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0000021535/us-gaap/RevenueFromContractWithCustomerIncludingAssessedTax.json)); Aehr did US$50.0 million in fiscal 2026 but booked a record US$60.7 million in the fourth quarter alone and guides to US$130 million to US$150 million in fiscal 2027 ([source](https://www.aehr.com/2026/07/aehr-test-systems-reports-fiscal-2026-fourth-quarter-and-full-year-financial-results-with-record-quarterly-bookings-and-100-million-effective-backlog/)).
-- **Dicing and grinding.** Disco leads in wafer grinders, dicing saws and laser saws ([source](https://newsletter.semianalysis.com/p/disco-corporation-the-world-leader)), and its newest package dicing saw handles workpieces up to 400 by 400 mm for panel-level work ([source](https://www.disco.co.jp/eg/news/corp/20251215_1.html)).
+- **Dicing and grinding.** Disco leads in wafer grinders and dicing saws ([source](https://newsletter.semianalysis.com/p/disco-corporation-the-world-leader)), and its newest package saw handles workpieces up to 400 by 400 mm for panel-level work ([source](https://www.disco.co.jp/eg/news/corp/20251215_1.html)).
 - **Bonding.** Kulicke and Soffa did US$654.1 million in fiscal 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0000056978/us-gaap/Revenues.json)), while Besi's second-quarter 2026 revenue rose 68.7% to EUR 249.9 million on hybrid bonding and datacentre demand ([source](https://www.besi.com/investor-relations/press-releases/2025/details-1/be-semiconductor-industries-nv-announces-q2-26-and-h1-26-results/)).
 
 Thermocompression bonders for HBM are a two-and-a-half-horse race: SK hynix runs about 50 sets for HBM4, roughly half of them from ASMPT ([source](https://www.trendforce.com/news/2025/12/12/news-sk-hynix-reportedly-places-hbm4-tc-bonder-order-with-asmpt-as-hanmi-hanwha-patent-clash-heats-up/)), and gave Hanmi a KRW 44.2 billion order for about 15 more in June 2026 ([source](https://www.trendforce.com/news/2026/06/09/news-sk-hynix-reportedly-places-44-2bn-won-tc-bonder-order-with-hanmi-accelerating-hbm4-ramp-up/)). See Memory and HBM.
@@ -125,14 +125,14 @@ Amkor took US$6.71 billion of revenue in 2025 ([source](https://data.sec.gov/api
 
 This is not lithography. No single tool has a single supplier. The lock-in is stickiness: Advantest argues that switching tester vendor means rebuilding a customer's entire device development, evaluation and production test environment, which is why share moves slowly and in one direction ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf)).
 
-The back end is also the part of the chain China is closest to owning. Chinese OSATs took about 28.6% of top-10 revenue in 2024, and assembly, dicing, bonding and test tools sit largely outside the export control lines drawn around lithography and deposition. Set that US$41.56 billion against industry sales of US$791.7 billion in 2025 ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)): a small share of the revenue sitting on the critical path of all of it.
+The back end is also the part of the chain China is closest to owning. Chinese OSATs took about 28.6% of top-10 revenue in 2024, and assembly, dicing, bonding and test tools sit outside the export control lines drawn around lithography and deposition. Set that US$41.56 billion against industry sales of US$791.7 billion in 2025 ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)): a small share of the revenue sitting on the critical path of all of it.
 
 ## Key evaluation criteria
 
 - **Test coverage** is what you actually buy: the share of latent failures caught before they reach an irreplaceable package.
-- **Test time per part** sets throughput and cost. Large dies, HBM stacks and chiplets all push it up, which is why tester revenue grew faster than unit volumes in 2025.
+- **Test time per part** sets throughput and cost, and large dies, HBM stacks and chiplets all push it up.
 - **Probe card planarity and life** decide sort economics. Every needle must stay coplanar over a full die across a long touchdown count.
-- **Thermal control** matters more every generation. A kilowatt-class accelerator must be held at temperature in the socket while it is tested at speed.
+- **Thermal control** matters more every generation. A kilowatt-class accelerator must be held at temperature in the socket while tested at speed.
 - **Capacity and geography** are the practical constraint. Taiwan, China, Malaysia and the Philippines hold most of the floor space, and new capacity takes years.
 
 ## Takeaways
