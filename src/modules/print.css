@@ -56,7 +56,7 @@
   /* Where the page came from. Browsers cannot inject a date from CSS; anything that sets
      body[data-printed] gets it printed here too, and the build date is in the site footer. */
   body::after {
-    content: "Compute Chokepoints · computechokepoints.com";
+    content: "Compute Chokepoints · yashvardhansharmaa.github.io/chokepoints";
     display: block;
     margin-top: 14mm;
     padding-top: 4mm;
@@ -66,5 +66,5 @@
     letter-spacing: 0.04em;
     color: var(--muted);
   }
-  body[data-printed]::after { content: "Compute Chokepoints · computechokepoints.com · " attr(data-printed); }
+  body[data-printed]::after { content: "Compute Chokepoints · yashvardhansharmaa.github.io/chokepoints · " attr(data-printed); }
 }
