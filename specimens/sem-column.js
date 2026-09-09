@@ -82,6 +82,7 @@ PC.register('sem-column', function (p) {
   add(cut(ring(0.098, 0.72, 300, 0.9)));
   add(lens(0.48, 0.72, 0.34, 0.098, 3000, 0));       // condenser 1
   add(cut(tube(0.096, 0.36, 0.48, 560, 0.26)));
+  add(cut(ring(0.096, 0.48, 300, 0.9)), cut(ring(0.096, 0.36, 300, 0.9)));
   add(aperture(0.435, 0.10, 0.009, 0.6));            // beam-limiting aperture
   add(lens(0.12, 0.36, 0.32, 0.094, 2800, 0));       // condenser 2
   add(cut(tube(0.094, -0.06, 0.12, 800, 0.26)));
@@ -89,9 +90,10 @@ PC.register('sem-column', function (p) {
   for (var i = 0; i < 8; i++) {
     var a = i * Math.PI / 4 + 0.15;
     if (a > A0 && a < A1) continue;
-    add(PC.T(PC.box({ w: 0.05, h: 0.09, d: 0.035, n: 220, tone: 0.5 }), { rot: [0, -a, 0], pos: [0.115 * Math.cos(a), 0.02, 0.115 * Math.sin(a)] }));
+    add(PC.T(PC.box({ w: 0.065, h: 0.10, d: 0.045, n: 300, tone: 0.5 }), { rot: [0, -a, 0], pos: [0.115 * Math.cos(a), 0.02, 0.115 * Math.sin(a)] }));
   }
   add(cut(ring(0.145, 0.065, 220, 0.7)), cut(ring(0.145, -0.025, 220, 0.7)));
+  add(cut(ring(0.094, 0.12, 300, 0.9)), cut(ring(0.094, -0.06, 300, 0.9)));
   // scan / deflection coils
   add(cut(tube(0.20, -0.26, -0.10, 900, 0.26)));
   add(cut(ring(0.20, -0.10)), cut(ring(0.20, -0.26)));
@@ -123,14 +125,14 @@ PC.register('sem-column', function (p) {
   }
   add(PC.T(PC.merge.apply(null, dg), { pos: [0, yW + 0.003, 0] }));
   add(PC.T(PC.cylinder({ r: wafR + 0.03, h: 0.055, n: 1300, tone: 0.26 }), { pos: [0, yW - 0.03, 0] }));
-  add(PC.T(PC.box({ w: 1.16, h: 0.085, d: 0.94, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 2400, tone: 0.24 }), { pos: [0, yW - 0.10, 0] }));
-  add(PC.T(PC.boxEdges({ w: 1.16, h: 0.085, d: 0.94, perUnit: 200, tone: 0.9 }), { pos: [0, yW - 0.10, 0] }));
+  add(PC.T(PC.box({ w: 1.08, h: 0.085, d: 0.88, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 2400, tone: 0.24 }), { pos: [0, yW - 0.10, 0] }));
+  add(PC.T(PC.boxEdges({ w: 1.08, h: 0.085, d: 0.88, perUnit: 200, tone: 0.9 }), { pos: [0, yW - 0.10, 0] }));
   for (i = -1; i <= 1; i += 2) {
-    add(PC.T(PC.box({ w: 1.44, h: 0.05, d: 0.08, n: 500, tone: 0.45 }), { pos: [0, yW - 0.175, i * 0.34] }));
-    add(PC.T(PC.line({ a: [-0.72, 0, 0], b: [0.72, 0, 0], perUnit: 200, tone: 0.9 }), { pos: [0, yW - 0.15, i * 0.34] }));
+    add(PC.T(PC.box({ w: 1.34, h: 0.05, d: 0.075, n: 460, tone: 0.45 }), { pos: [0, yW - 0.175, i * 0.31] }));
+    add(PC.T(PC.line({ a: [-0.67, 0, 0], b: [0.67, 0, 0], perUnit: 200, tone: 0.9 }), { pos: [0, yW - 0.15, i * 0.31] }));
   }
-  add(PC.T(PC.box({ w: 1.56, h: 0.085, d: 1.24, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 3000, tone: 0.22 }), { pos: [0, yW - 0.25, 0] }));
-  add(PC.T(PC.boxEdges({ w: 1.56, h: 0.085, d: 1.24, perUnit: 190, tone: 0.9 }), { pos: [0, yW - 0.25, 0] }));
+  add(PC.T(PC.box({ w: 1.44, h: 0.085, d: 1.16, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 2700, tone: 0.2 }), { pos: [0, yW - 0.25, 0] }));
+  add(PC.T(PC.boxEdges({ w: 1.44, h: 0.085, d: 1.16, perUnit: 190, tone: 0.9 }), { pos: [0, yW - 0.25, 0] }));
 
   // ---------- the beam ----------
   var ENV = [[1.262, 0.010], [1.20, 0.030], [1.11, 0.040], [0.72, 0.062], [0.60, 0.072], [0.50, 0.034],

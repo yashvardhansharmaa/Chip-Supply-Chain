@@ -4,10 +4,20 @@
 
 The whole site compiles to **one self-contained HTML file** (`dist/index.html`). No framework, no build-time dependencies beyond Node, no runtime dependencies at all: the point-cloud renderer is ~200 lines of WebGL, and the specimens are generated from primitives at load time rather than downloaded.
 
+## What is on the site
+
+- **The Stack**: 17 component chapters, each opening with a chokepoint nameplate, an "In short" summary and an "In plain terms" paragraph for readers with no technical background, with a procedural 3D specimen of the stage beside the text.
+- **Briefing**: every chapter's plain-language explanation, conclusions and chokepoint score on one page.
+- **Landscape**: 19 AI accelerators with full spec sheets and a package render drawn from each chip's die and HBM layout.
+- **Suppliers**: 220 firms, filterable by category, country and chokepoint status, exportable as CSV.
+- **Geopolitics**: the essay, a country-by-segment share matrix, and a 45-event export-control timeline.
+- **Glossary**: 74 terms defined for policy readers.
+- **Sources**: every citation, tagged by source tier (see `brief/SOURCE_POLICY.md`).
+
 ## Layout
 
 ```
-brief/        editorial brief, data schemas, specimen brief (the contracts the writers and builders followed)
+brief/        editorial, editing, source-policy, data-schema and specimen briefs (the contracts the workers followed)
 content/      one markdown file per chapter, JSON front matter + body, inline ([source](url)) citations
 data/         landscape.json (accelerators), suppliers.json, export-controls-timeline.json, chokepoint-matrix.json
 specimens/    one JS file per 3D specimen, built from src/kit.js primitives
