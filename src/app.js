@@ -165,7 +165,7 @@
   };
 
   /* ---------------- router ---------------- */
-  var VIEWS = ['stack', 'briefing', 'landscape', 'suppliers', 'geopolitics', 'controls', 'glossary', 'sources'];
+  var VIEWS = ['stack', 'briefing', 'landscape', 'suppliers', 'geopolitics', 'controls', 'exposure', 'glossary', 'sources'];
   var Router = {
     current: null,
     init: function () {
@@ -178,10 +178,16 @@
     route: function () {
       var h = location.hash || '#/', m = h.match(/^#\/([a-z]+)/), v = 'stack';
       if (m && VIEWS.indexOf(m[1]) >= 0) v = m[1];
-      var changed = v !== this.current;
-      this.current = v;
+      var sub = null; // the Controls page has two sections; #/exposure opens the second
+      if (v === 'exposure') { v = 'controls'; sub = 'exposure'; } else if (v === 'controls') sub = 'thresholds';
+      var changed = v !== this.current || sub !== this.currentSub;
+      this.current = v; this.currentSub = sub;
+      if (sub) {
+        $$('.view[data-view="controls"] .sub').forEach(function (s) { s.hidden = s.getAttribute('data-sub') !== sub; });
+        $$('#controls-subtabs a').forEach(function (a) { if (a.getAttribute('data-sub') === sub) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+      }
       $$('.view').forEach(function (s) { s.hidden = s.getAttribute('data-view') !== v; });
-      $$('.tabs a').forEach(function (a) { if (a.getAttribute('data-view') === v) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+      $$('.tabs a').forEach(function (a) { var dv = a.getAttribute('data-view'); var on = dv === 'exposure' ? sub === 'exposure' : dv === 'controls' ? sub === 'thresholds' : dv === v; if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
       var rail = $('.rail'); if (rail && v !== 'stack') rail.setAttribute('data-show', '0');
       Stage.setVisible(v === 'stack' || v === 'landscape' || v === 'geopolitics');
       if (v === 'landscape') Landscape.activate();
@@ -202,7 +208,7 @@
         }
         Sections.update();
       }
-      document.title = v === 'stack' ? 'Compute Chokepoints' : 'Compute Chokepoints · ' + { briefing: 'Summary', landscape: 'AI Chips', suppliers: 'Suppliers', geopolitics: 'Geopolitics', controls: 'Controls', glossary: 'Glossary', sources: 'Sources' }[v];
+      document.title = v === 'stack' ? 'Compute Chokepoints' : 'Compute Chokepoints · ' + { briefing: 'Summary', landscape: 'AI Chips', suppliers: 'Suppliers', geopolitics: 'Geopolitics', controls: sub === 'exposure' ? 'China exposure' : 'Controls', glossary: 'Glossary', sources: 'Sources' }[v];
     }
   };
 
@@ -525,7 +531,7 @@
       (DATA.landscape || []).forEach(function (c) { idx.push({ kind: 'Chip', title: c.vendor + ' ' + c.name, text: ((c.process || {}).node || '') + ' · ' + ((c.memory || {}).type || '') + ' · ' + (c.status || ''), href: '#/landscape', chip: c.id }); });
       (DATA.timeline || []).forEach(function (e) { idx.push({ kind: 'Event ' + e.date, title: e.title, text: e.summary || '', href: '#/geopolitics' }); });
       (DATA.controls || []).forEach(function (t) { idx.push({ kind: 'Control', title: t.instrument + (t.parameter ? ' · ' + t.parameter : ''), text: [t.scope, t.destinations, t.note].filter(Boolean).join(' · '), href: '#/controls' }); });
-      (DATA.exposure || []).forEach(function (r) { if (r.chinaShare != null) idx.push({ kind: 'Exposure', title: r.firm + ' ' + r.fiscalYear, text: 'China ' + r.chinaShare + '% of revenue' + (r.basis ? ' · ' + r.basis : ''), href: '#/controls' }); });
+      (DATA.exposure || []).forEach(function (r) { if (r.chinaShare != null) idx.push({ kind: 'Exposure', title: r.firm + ' ' + r.fiscalYear, text: 'China ' + r.chinaShare + '% of revenue' + (r.basis ? ' · ' + r.basis : ''), href: '#/exposure' }); });
       idx.forEach(function (i) { i.hay = (i.kind + ' ' + i.title + ' ' + i.text).toLowerCase(); });
       this.index = idx; return idx;
     },

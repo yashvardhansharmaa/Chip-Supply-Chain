@@ -22,6 +22,7 @@
       <a href="#/suppliers" data-view="suppliers">Suppliers</a>
       <a href="#/geopolitics" data-view="geopolitics">Geopolitics</a>
       <a href="#/controls" data-view="controls">Controls</a>
+      <a href="#/exposure" data-view="exposure">Exposure</a>
       <a href="#/glossary" data-view="glossary">Glossary</a>
       <a href="#/sources" data-view="sources">Sources</a>
       <button class="theme-toggle" type="button" aria-label="Switch to dark mode">
@@ -114,16 +115,21 @@
         <h2>The Controls</h2>
         <p class="dek">{{CONTROLS_DEK}}</p>
       </div>
+      <nav class="subtabs" id="controls-subtabs" aria-label="Controls sections"><a href="#/controls" data-sub="thresholds" aria-current="true">Threshold map</a><a href="#/exposure" data-sub="exposure">China exposure, from filings</a></nav>
+      <div class="sub" data-sub="thresholds">
       <h3 class="label" style="margin: 10px 0 6px">Threshold map</h3>
       <p class="controls-intro">Every quantitative line that decides whether a chip or a tool needs a licence: the parameter, the value, where it applies, its status and the rule that set it. Filter by regime.</p>
       <div id="controls-chips" class="chips" role="group" aria-label="Filter by regime"></div>
       <div class="sup-toolbar"><span class="count" id="controls-count"></span></div>
       <div class="sup-wrap"><table class="sup" id="controls-table"></table></div>
-      <h3 class="label" style="margin: 44px 0 6px">China exposure, from filings</h3>
+      </div>
+      <div class="sub" data-sub="exposure" hidden>
+      <h3 class="label" style="margin: 10px 0 6px">China exposure, from filings</h3>
       <p class="controls-intro">Share of each controlled-tool or chip vendor's revenue that came from China, computed from the absolute figures in the company's own filings. The ranking compares each firm's latest fiscal year with its first; the panels trace every year against the three US rule dates. Hover a point for the filed figures, click it for the filing.</p>
       <div id="exposure-viz">{{EXPOSURE_VIZ}}</div>
       <details class="table-view"><summary>Table view</summary><div class="matrix-wrap"><table class="matrix" id="exposure-table"></table></div></details>
       <p class="matrix-note" id="exposure-note">{{EXPOSURE_NOTE}}</p>
+      </div>
     </section>
 
     <section class="view column wide" data-view="glossary" hidden>
