@@ -1,0 +1,13 @@
+{
+  "name": "chokepoints",
+  "version": "1.0.0",
+  "description": "A deep dive on the AI chip supply chain, compiled to one self-contained HTML file",
+  "private": true,
+  "scripts": {
+    "build": "node build/build.js",
+    "preview": "node build/preview.js",
+    "serve": "python3 -m http.server 8765 --directory dist"
+  },
+  "engines": { "node": ">=18" },
+  "license": "CC-BY-4.0"
+}

@@ -129,14 +129,15 @@
     setVisible: function (v) { this.active = v; this.fig.setAttribute('data-hidden', v ? '0' : '1'); if (v) this.resize(); },
     draw: function (slot, op, extraRot, sc) {
       var gl = this.gl, aspect = this.w / this.h;
-      var P = perspective(34 * Math.PI / 180, aspect, 0.1, 20);
-      var V = translate(0, -0.06, -3.6);
+      var P = perspective(34 * Math.PI / 180, aspect, 0.1, 40);
+      // pull the camera back on narrow (portrait) stages so the bounding sphere fits the width too
+      var V = translate(0, -0.05, -3.6 * Math.max(1, 0.98 / aspect));
       var t = slot.tilt;
       var M = mul(rotZ(t[2]), mul(rotY(t[1] + this.spin + slot.spinBase + this.scrollAngle + extraRot), rotX(t[0])));
       M = mul(M, scale(sc));
       var MVP = mul(P, mul(V, M));
       gl.uniformMatrix4fv(this.loc.uMVP, false, new Float32Array(MVP));
-      var size = 7.2 * this.dpr * Math.min(1.05, Math.max(0.6, this.h / (900 * this.dpr)));
+      var size = 6.3 * this.dpr * Math.min(1.05, Math.max(0.6, this.h / (900 * this.dpr))) * Math.max(1, 0.98 / aspect);
       gl.uniform1f(this.loc.uSize, size);
       gl.uniform1f(this.loc.uOp, op);
       gl.uniform3fv(this.loc.uInk, this.ink); gl.uniform3fv(this.loc.uAcc, this.accent);

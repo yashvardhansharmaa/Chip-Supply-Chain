@@ -282,7 +282,7 @@ const sourcesHTML = all.map((ch) => `<h3>${pad(ch.number)} · ${esc(ch.title)}</
 
 /* ---------------- assemble ---------------- */
 const totalWords = all.reduce((a, c) => a + c.words, 0);
-const credits = `Researched, written and built by Claude (Fable 5.1 directing Opus agents) for <a href="https://x.com/" rel="noopener">Yashvardhan Sharma</a>. September 2026. ${all.length ? `${all.length} chapters · ${totalWords.toLocaleString('en-US')} words · ${all.reduce((a, c) => a + c.cites.length, 0)} sources` : ''}. In the tradition of <a href="https://www.humanityslastmachine.com/" target="_blank" rel="noopener">Humanity's Last Machine</a> and CSET's supply-chain work.`;
+const credits = `Researched, written and built by Claude (Fable 5.1 directing Opus agents) for Yashvardhan Sharma. September 2026. ${all.length ? `${all.length} chapters · ${totalWords.toLocaleString('en-US')} words · ${all.reduce((a, c) => a + c.cites.length, 0)} sources` : ''}. In the tradition of <a href="https://www.humanityslastmachine.com/" target="_blank" rel="noopener">Humanity's Last Machine</a> and CSET's supply-chain work.`;
 const footer = `<p>Chokepoints · A deep dive on the AI chip supply chain · ${new Date().toISOString().slice(0, 10)}</p><p>Every figure on this site links to its source. Corrections and additions are welcome. Built with a dependency-free point-cloud renderer; no scans, no tracking.</p>`;
 const suppliersIntro = suppliers.length ? `${suppliers.length} firms across the chain, from polysilicon to liquid cooling, with what each one makes, where it is based and how hard it would be to replace. Filter by category, country or chokepoint status; copy the result as CSV.` : 'The supplier database has not been delivered yet.';
 
