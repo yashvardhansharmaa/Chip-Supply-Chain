@@ -58,7 +58,7 @@
       "HPE",
       "Lenovo"
     ],
-    "priceEstimate": "$30,000-40,000 per GPU, the range Jensen Huang gave CNBC in March 2024",
+    "priceEstimate": null,
     "bomEstimate": null,
     "exportStatus": "Controlled. Dense FP8 of 4,500 TFLOPS puts total processing performance near 36,000, well above the 21,000 TPP ceiling in the BIS rule effective 15 January 2026, so it is not licensable to China or Macau.",
     "notes": "The first reticle-crossing Nvidia data center GPU: two 4NP dies fused by a 10 TB/s NV-HBI link and presented to software as one GPU. It set the template every 2025-2026 part copies, and it is the reason CoWoS-L capacity became the binding constraint on AI compute.",
@@ -149,10 +149,6 @@
       {
         "label": "Nvidia DGX B200 spec table",
         "url": "https://www.nvidia.com/en-us/data-center/dgx-b200/"
-      },
-      {
-        "label": "CNBC: Jensen Huang on Blackwell pricing",
-        "url": "https://www.cnbc.com/2024/03/19/nvidias-blackwell-ai-chip-will-cost-more-than-30000-ceo-says.html"
       }
     ]
   },
@@ -218,7 +214,7 @@
     "priceEstimate": null,
     "bomEstimate": null,
     "exportStatus": "Controlled. Far above the 21,000 TPP and 6,500 GB/s memory-bandwidth ceilings in the BIS rule effective 15 January 2026; not licensable to China or Macau.",
-    "notes": "Same two-die 4NP silicon as B200 but with 12-high HBM3E stacks lifting capacity to 288 GB, and a tensor core retuned for NVFP4 and for the softmax step in attention. It is the part that made 12-high HBM3E the volume product for SK hynix, Micron and Samsung.",
+    "notes": "Same two-die 4NP silicon as B200 but with 12-high HBM3E stacks lifting capacity to 288 GB, and a tensor core retuned for NVFP4 and for the softmax step in attention. Eight 36 GB stacks give the 288 GB, which is the configuration Micron, SK hynix and Samsung built 12-high HBM3E for.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -304,8 +300,8 @@
         "url": "https://www.nvidia.com/en-us/data-center/hgx/"
       },
       {
-        "label": "The Register on Blackwell Ultra's 288 GB",
-        "url": "https://www.theregister.com/2025/03/18/nvidia_blackwell_ultra/"
+        "label": "Micron on 12-high 36 GB HBM3E",
+        "url": "https://www.micron.com/about/blog/applications/ai/micron-continues-memory-industry-leadership-with-hbm3e-12-high-36gb"
       }
     ]
   },
@@ -369,7 +365,7 @@
     "priceEstimate": "Vera Rubin NVL72 rack reported at $7.8M to $8.8M, roughly $108,000 to $122,000 per GPU including CPUs, networking and the rack itself",
     "bomEstimate": null,
     "exportStatus": "Controlled. Not licensable to China or Macau under the BIS advanced-computing rules; performance is an order of magnitude above the January 2026 licensing thresholds.",
-    "notes": "The first HBM4 part in volume, and the first Nvidia GPU where memory rather than logic dominates the bill of materials. Nvidia qualified all three HBM vendors for it after suppliers missed the original 22 TB/s target and the shipping spec settled at 19.2 TB/s per GPU.",
+    "notes": "The first HBM4 part in volume, and the first Nvidia GPU where memory rather than logic dominates the bill of materials. Nvidia qualified all three HBM vendors for it, and the shipping spec is 288 GB at 19.2 TB/s per GPU.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -453,10 +449,6 @@
       {
         "label": "Nvidia technical blog: Inside the Rubin GPU architecture",
         "url": "https://developer.nvidia.com/blog/inside-nvidia-rubin-gpu-architecture-powering-the-era-of-agentic-ai/"
-      },
-      {
-        "label": "TechPowerUp on the lowered HBM4 bandwidth target",
-        "url": "https://www.techpowerup.com/346983/nvidia-lowers-hbm4-specs-for-vera-rubin-vr200-as-memory-suppliers-miss-22-tb-s-target"
       }
     ]
   },
@@ -584,8 +576,8 @@
         "url": "https://www.nvidia.com/en-us/data-center/h200/"
       },
       {
-        "label": "Baker McKenzie on the BIS rule effective 15 January 2026",
-        "url": "https://sanctionsnews.bakermckenzie.com/bis-revises-license-review-policy-for-advanced-computing-commodities-ai-semiconductors-to-china-and-macau-when-exported-from-the-united-states/"
+        "label": "Federal Register: Revision to License Review Policy for Advanced Computing Commodities (effective 15 January 2026)",
+        "url": "https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities"
       },
       {
         "label": "Institute for Progress on the B30A decision",
@@ -774,8 +766,8 @@
         "url": "https://inferencex.semianalysis.com/chips/mi355x"
       },
       {
-        "label": "Glenn Lockwood's MI355X reference notes",
-        "url": "https://glennklockwood.com/garden/processors/MI355X"
+        "label": "AMD Instinct MI355X GPU datasheet",
+        "url": "https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/product-briefs/amd-instinct-mi355x-gpu-brochure.pdf"
       }
     ]
   },

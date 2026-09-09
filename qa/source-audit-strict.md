@@ -593,3 +593,7 @@ Reuters is blocked to this fetcher at every URL, including known-good ones, so n
 Nikkei Asia is cited three times, in every case for a claim the headline itself carries, and each URL was confirmed to return HTTP 200. The article bodies are paywalled and were not relied on. The `$73bn` in "China chip material makers battle Japan rivals for $73bn market" is the only number taken from a Nikkei headline.
 
 No claim in either chapter now rests on a source that could not be opened and read, except the two Amkor releases noted above.
+
+## Verification note: Amkor releases (chapter 14)
+
+The two `ir.amkor.com` releases the chapter-14 worker could not open were read in a real browser on 9 September 2026. Both support the sentence that cites them: "Amkor Technology Breaks Ground on New Semiconductor Advanced Packaging and Test Campus in Arizona; Expands Investment to $7 Billion" (6 October 2025: two phases, total investment $7 billion, first facility complete mid-2027, production early 2028, customers including Apple and Nvidia) and "TSMC and Amkor Technology Announce Long Term Partnership to Accelerate Advanced Packaging in the United States" (16 June 2026: a 10-year agreement under which TSMC procures advanced packaging and test services from Amkor in Arizona).
