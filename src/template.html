@@ -39,18 +39,14 @@
   <figure class="stage" aria-label="3D specimen of the current stage">
     <canvas id="stage-canvas"></canvas>
     <div class="stage-tag"><span id="stage-tag-text">Specimen <b>00</b> · the whole chip</span></div>
-    <div class="stage-hint" aria-hidden="true">Drag to turn · Ctrl + scroll to zoom · double-click to reset</div>
     <figcaption id="stage-caption"></figcaption>
   </figure>
 
   <main>
     <section class="view column" data-view="stack">
       <div class="hero" data-specimen="package" data-caption="An AI accelerator package: two reticle-sized logic dies and eight HBM stacks on a silicon interposer, on a build-up substrate. Highlighted: the HBM.">
-        <p class="eyebrow"><i></i><span class="label">The AI chip supply chain</span><span class="sep">/</span><span class="label">September 2026</span></p>
         <h1 class="thesis">{{THESIS}}</h1>
-        <div class="claims">{{CLAIMS}}</div>
-        <p class="credits">{{CREDITS}}</p>
-        <div class="scroll-hint"><svg viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1v15M1.5 10.5 7 16l5.5-5.5"/></svg><span>Scroll for the stack</span></div>
+        <p class="dek">{{SUBTITLE}}</p>
       </div>
       <div class="chain" id="chain">
         <div class="chain-head"><h2>The chain, scored</h2><p>Bar height is the chokepoint score, 1 to 5.</p><div class="chain-key"><span><i style="background:var(--bar-5)"></i>5 of 5</span><span><i style="background:var(--bar-4)"></i>4</span><span><i style="background:var(--bar-3)"></i>3 or less</span></div></div>

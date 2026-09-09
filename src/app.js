@@ -91,34 +91,6 @@
       if (window.ResizeObserver) new ResizeObserver(function () { self.resize(); }).observe(this.canvas); // the caption below the canvas changes height per specimen
       document.addEventListener('visibilitychange', function () { self.hidden = document.hidden; });
       this.resize();
-      // direct manipulation: drag turns the specimen, ctrl+scroll or a pinch zooms it, double-click resets
-      this.userY = 0; this.userX = 0; this.zoom = 1; this.dragging = false; this.lastInteract = -1e9; this.pts = {};
-      var cv = this.canvas;
-      var count = function () { return Object.keys(self.pts).length; };
-      cv.addEventListener('pointerdown', function (e) {
-        self.pts[e.pointerId] = { x: e.clientX, y: e.clientY };
-        if (count() === 1) { self.dragging = true; self.last = { x: e.clientX, y: e.clientY }; try { cv.setPointerCapture(e.pointerId); } catch (err) {} }
-        self.lastInteract = performance.now();
-      });
-      cv.addEventListener('pointermove', function (e) {
-        if (!self.pts[e.pointerId]) return;
-        var ids = Object.keys(self.pts);
-        if (ids.length === 2) { // pinch
-          var me = self.pts[e.pointerId], o = self.pts[ids[0] === String(e.pointerId) ? ids[1] : ids[0]];
-          var d0 = Math.hypot(me.x - o.x, me.y - o.y), d1 = Math.hypot(e.clientX - o.x, e.clientY - o.y);
-          if (d0 > 0) self.setZoom(self.zoom * d1 / d0);
-          self.pts[e.pointerId] = { x: e.clientX, y: e.clientY };
-        } else if (self.dragging) {
-          self.userY += (e.clientX - self.last.x) * 0.008;
-          self.userX = Math.max(-1.2, Math.min(1.2, self.userX + (e.clientY - self.last.y) * 0.006));
-          self.last = { x: e.clientX, y: e.clientY }; self.pts[e.pointerId] = self.last;
-        }
-        self.lastInteract = performance.now();
-      });
-      var up = function (e) { delete self.pts[e.pointerId]; if (!count()) self.dragging = false; self.lastInteract = performance.now(); };
-      cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
-      cv.addEventListener('wheel', function (e) { if (!(e.ctrlKey || e.metaKey)) return; e.preventDefault(); self.setZoom(self.zoom * Math.exp(-e.deltaY * 0.0025)); self.lastInteract = performance.now(); }, { passive: false });
-      cv.addEventListener('dblclick', function () { self.userY = 0; self.userX = 0; self.zoom = 1; });
       requestAnimationFrame(function (t) { self.loop(t); });
     },
     refreshColors: function () {
@@ -155,9 +127,8 @@
       if (this.cur && this.cur.key === slot.key) return;
       this.prev = this.cur; this.cur = slot; this.transStart = performance.now();
       slot.spinBase = -this.spin; // each specimen starts from its own tilt
-      this.scrollAngle = 0; this.userY = 0; this.userX = 0; this.zoom = 1;
+      this.scrollAngle = 0;
     },
-    setZoom: function (z) { this.zoom = Math.max(0.6, Math.min(3.2, z)); },
     setVisible: function (v) { this.active = v; this.fig.setAttribute('data-hidden', v ? '0' : '1'); if (v) this.resize(); },
     draw: function (slot, op, extraRot, sc) {
       var gl = this.gl, aspect = this.w / this.h;
@@ -165,11 +136,11 @@
       // pull the camera back on narrow (portrait) stages so the bounding sphere fits the width too
       var V = translate(0, 0, -3.8 * Math.max(1, 0.98 / aspect)); // 3.8 keeps the unit sphere inside 89% of the canvas height, including perspective
       var t = slot.tilt;
-      var M = mul(rotZ(t[2]), mul(rotY(t[1] + this.spin + slot.spinBase + this.scrollAngle + extraRot + this.userY), rotX(t[0] + this.userX)));
-      M = mul(M, scale(sc * this.zoom));
+      var M = mul(rotZ(t[2]), mul(rotY(t[1] + this.spin + slot.spinBase + this.scrollAngle + extraRot), rotX(t[0])));
+      M = mul(M, scale(sc));
       var MVP = mul(P, mul(V, M));
       gl.uniformMatrix4fv(this.loc.uMVP, false, new Float32Array(MVP));
-      var size = 6.6 * Math.pow(this.zoom, 0.6) * this.dpr * Math.min(1.05, Math.max(0.6, this.h / (900 * this.dpr))) * Math.max(1, 0.98 / aspect);
+      var size = 6.6 * this.dpr * Math.min(1.05, Math.max(0.6, this.h / (900 * this.dpr))) * Math.max(1, 0.98 / aspect);
       gl.uniform1f(this.loc.uSize, size);
       gl.uniform1f(this.loc.uOp, op);
       gl.uniform3fv(this.loc.uInk, this.ink); gl.uniform3fv(this.loc.uAcc, this.accent);
@@ -185,7 +156,7 @@
       var gl = this.gl;
       gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
       if (!this.cur) return;
-      if (!reduced && !this.dragging && t - this.lastInteract > 2500) this.spin += (this.cur.spin || 0.1) * dt; // the idle turn pauses while the reader holds it
+      if (!reduced) this.spin += (this.cur.spin || 0.1) * dt;
       var k = easeOut((t - this.transStart) / this.transDur);
       if (this.prev && k < 1) this.draw(this.prev, 1 - k, 0.35 * k, 1 + 0.04 * k);
       else this.prev = null;

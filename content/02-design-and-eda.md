@@ -6,7 +6,7 @@
   "oneLiner": "The cheapest stage in the chain by capital and one of the most concentrated by vendor. Three software firms sell the tools that every leading-edge AI accelerator passes through.",
   "plain": "Designing a chip is like drawing the street plan of a city of billions of buildings, where every road has to be walkable in less than a billionth of a second. No one draws it by hand. The layout is generated, checked and signed off by software sold by three companies, and a foundry will only accept a design that has passed their particular tools. Once the plan goes to the factory, changing one street costs a new set of printing plates and several months. Withhold the software and the design cannot be manufactured.",
   "specimen": "die-floorplan",
-  "specimenCaption": "Right: the floorplan of a GPU die. Replicated compute tiles fill the centre, SRAM banks sit between them, HBM PHYs run along the two long edges, and the die-to-die interface faces the neighbouring chiplet.",
+  "specimenCaption": "Right: the floorplan of a GPU die, one whole reticle field of 26 by 33 mm. 144 compute tiles fill the centre in eight clusters, the L2 cache splits them in a band across the middle, HBM PHYs run along the two long edges, and the amber strip on the short edge is the die-to-die interface, facing a sliver of the neighbouring chiplet.",
   "card": {
     "concentration": "Extreme",
     "chokepointScore": 4,
@@ -25,7 +25,7 @@
       {"code": "IN", "note": "Nearly 20% of the world's chip design engineers, on the Indian government's count"}
     ],
     "chinaStatus": "Can design competitive accelerators. Cannot yet run a complete leading-edge digital flow on domestic EDA tools, and CSET judges that Chinese EDA firms cannot support designs at those nodes. Access to US and German tools was cut off for five weeks in 2025 and restored.",
-    "usStatus": "Owns the two largest EDA vendors and the dominant ASIC design houses, and controls Siemens EDA's US-origin technology through export licensing. This is the fastest-acting lever in the entire chain.",
+    "usStatus": "Owns the two largest EDA vendors and the dominant ASIC design houses, and controls Siemens EDA's US-origin technology through export licensing.",
     "costSignal": "A 3 nm photomask set runs about $40M, and startups have taken a 7 nm design all the way to tape-out for $50-75M",
     "substitution": {"years": "5-10", "why": "Replacing one point tool is feasible. Replacing a signed-off flow means rebuilding foundry-certified reference flows, timing and extraction models, and twenty years of accumulated corner cases."}
   },

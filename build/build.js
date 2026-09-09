@@ -298,7 +298,8 @@ const contentsHTML = chapters.map((ch) => `<div class="item"><span class="n">${p
   (geo ? `<div class="item"><span class="n">${pad(chapters.length + 1)}</span><a class="t" href="#/geopolitics">Geopolitics</a><ul>${geo.headings.slice(0, 6).map((h) => `<li><a href="#/geopolitics">${esc(h.text)}</a></li>`).join('')}</ul></div>` : '');
 const railHTML = chainTrack(stages, null);
 const score5 = stages.filter((c) => +((c.meta.card || {}).chokepointScore || 0) >= 5).length;
-const thesisHTML = `${cap(word(stages.length))} stages turn sand into a GPU. <span class="q">${cap(word(score5))}</span> of them come down to three firms or fewer.`;
+const thesisHTML = 'Who controls the AI chip?';
+const subtitleHTML = `${cap(word(stages.length))} stages, ${word(score5)} chokepoints, every number linked to its source.`;
 
 /* ---------------- data ---------------- */
 function readJSONSafe(f) { try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch (e) { return null; } }
@@ -429,7 +430,7 @@ const glossaryHTML = glossary.length ? glossary.slice().sort((a, b) => a.term.lo
 /* ---------------- assemble ---------------- */
 const totalWords = all.reduce((a, c) => a + c.words, 0);
 const credits = `Made by <b>Yashvardhan Sharma</b> with Claude. Inspired by <a href="https://www.humanityslastmachine.com/" target="_blank" rel="noopener">Humanity's Last Machine</a> and <a href="https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/" target="_blank" rel="noopener">CSET's supply-chain work</a>.`;
-const footer = `<p>Compute Chokepoints · The AI chip supply chain, stage by stage · Made by Yashvardhan Sharma with Claude · ${new Date().toISOString().slice(0, 10)}</p><p>Every number on this site links to its source. Corrections and additions are welcome. Built with a dependency-free point-cloud renderer. No scans and no tracking.</p>`;
+const footer = `<p>Compute Chokepoints · The AI chip supply chain, stage by stage · ${new Date().toISOString().slice(0, 10)}</p><p class="credits">${credits}</p><p>Every number on this site links to its source. Corrections and additions are welcome. Built with a dependency-free point-cloud renderer. No scans and no tracking.</p>`;
 const suppliersIntro = suppliers.length ? `${suppliers.length} firms across the chain, with what each one makes, where it is based and how hard it would be to replace. Filter by category, country or chokepoint status; copy the result as CSV.` : 'The supplier database is not compiled yet.';
 
 const kit = read(path.join(root, 'src', 'kit.js')) || '';
@@ -446,7 +447,7 @@ const fill = (k, v) => { html = html.split(`{{${k}}}`).join(v); };
 fill('STYLES', read(path.join(root, 'src', 'styles.css')));
 const totalCites = all.reduce((a, c) => a + c.cites.length, 0);
 const claimsHTML = `<div><b class="num">${stages.length}</b><span>Stages, quartz<br>to a finished rack</span></div><div class="of-five"><b class="num">${score5}</b><span>Score 5 of 5<br>for concentration</span></div><div><b class="num">${totalCites}</b><span>Sources, one<br>per claim</span></div>`;
-fill('THESIS', thesisHTML); fill('CLAIMS', claimsHTML); fill('CHAIN', chainTrack(stages, null));
+fill('THESIS', thesisHTML); fill('SUBTITLE', subtitleHTML); fill('CLAIMS', claimsHTML); fill('CHAIN', chainTrack(stages, null));
 fill('RAIL', railHTML); fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits); fill('FOOTER', footer);
 fill('SUPPLIERS_INTRO', suppliersIntro); fill('GEO_DEK', esc(geoDek)); fill('GEO_BODY', geoBody); fill('SOURCES', sourcesHTML);
 fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));
