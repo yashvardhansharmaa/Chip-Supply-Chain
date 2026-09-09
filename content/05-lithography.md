@@ -82,7 +82,7 @@ Every transistor in an AI accelerator gets its shape from a machine built by one
 
 Lithography is photographic printing, shrunk. A stencil of one layer of the circuit is held up to a lamp, and the machine projects that image onto a silicon wafer coated in a light-sensitive film, four times smaller than the stencil. Finer circuits need shorter-wavelength light, and the shortest light now in use is absorbed by air and by glass, so the whole machine runs in a vacuum and every lens has to be a mirror. Only one company has ever built such a machine, which is why a single Dutch firm is a chokepoint.
 
-The stencil is a photomask, the film is photoresist, and the machine is a scanner. See Photomasks and pellicles, and Deposition and etch.
+The stencil is a photomask, the film is photoresist, and the machine is a scanner (see Photomasks and pellicles, and Deposition and etch).
 
 Resolution follows one relation: the smallest printable half-pitch is a process factor times the wavelength divided by numerical aperture. Aperture depends on the refractive index above the wafer, so flooding that gap with ultrapure water lifts ASML's deep ultraviolet systems to 1.35 ([source](https://www.asml.com/en/technology/lithography-principles/lenses-and-mirrors)).
 
@@ -115,7 +115,7 @@ Intel and TSMC have split on High-NA:
 - **Intel Foundry** is first to ship a high-volume logic product made with High-NA, on Intel 18A, and first to install and accept an EXE:5200B ([source](https://www.asml.com/en/news/press-releases/2026/high-na-euv-reaches-new-readiness-milestone)), having processed more than a million High-NA wafers ([source](https://www.intel.com/content/www/us/en/newsroom/news/intel-foundry/intel-foundry-asml-accelerate-industry-readiness-for-high-na-euv.html)).
 - **TSMC** held off and now says it will use High-NA in high-volume manufacturing from 2030 ([source](https://pr.tsmc.com/english/news/3338)).
 
-ASML recognized four EXE systems in revenue in 2025, against two in 2024 ([source](https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf)), and expects the platform to support high-volume manufacturing from 2027 ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf)). On 8 September 2026 it announced with TSMC a move to 12-inch photomasks to lift the field-size limit, aiming at a pilot mask line in 2031 and 12-inch High-NA systems in advanced-node production by 2033 ([source](https://pr.tsmc.com/english/news/3338)).
+ASML recognized four EXE systems in revenue in 2025, against two in 2024 ([source](https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf)), and expects the platform to support high-volume manufacturing from 2027 ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf)). On 8 September 2026 it announced with TSMC a move to 12-inch photomasks to lift the field-size limit, aiming at a pilot mask line in 2031 and 12-inch High-NA systems in production by 2033 ([source](https://pr.tsmc.com/english/news/3338)).
 
 {{figure:euv-shipments}}
 
@@ -160,9 +160,9 @@ For AI accelerators, EUV is the point of control. It prints the tightest-pitch l
 
 - **Resolution** — set by wavelength divided by numerical aperture. 13 nm at 0.33 NA, 8 nm at 0.55 NA ([source](https://www.asml.com/en/company/stories/2024/5-things-high-na-euv)).
 - **Throughput** — wafers per hour at a stated dose. 220 wph on the NXE:3800E, 175 wph on the EXE:5200B ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf)).
-- **Overlay** — how precisely one layer lands on the one below. ASML credits the EXE:5200B's gain to new Zeiss projection optics ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf)).
+- **Overlay** — how precisely one layer lands on the one below; ASML credits the EXE:5200B's gain to new Zeiss projection optics ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf)).
 - **Field size** — High-NA halves the field, so big AI dies must be stitched until 12-inch masks arrive ([source](https://www.asml.com/en/company/stories/2024/5-things-high-na-euv)).
-- **Source power** — power sets throughput, which is what makes the 1,000-watt demonstration matter ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf)).
+- **Source power** — power sets throughput, which is why the 1,000-watt demonstration matters ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf)).
 
 ## Takeaways
 
