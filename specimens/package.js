@@ -1,98 +1,194 @@
-/* Specimen: an AI accelerator package. Parameterised by p.layout (mm):
- *   { interposer:[w,h], dies:[{x,y,w,h}], hbm:[{x,y,w,h}], substrate:[w,h] }
- *   or { waferScale:true, diameterMm:300, dieGrid:[cols, rows] }
- * Default: two reticle-sized logic dies and eight HBM stacks (Blackwell-style).
+/* Specimen: an AI accelerator package. Parameterised by p.layout (mm).
+ *
+ *   { interposer: [w, h],              // one interposer centred on the package
+ *     interposers: [{x,y,w,h}, ...],   // or several 2.5D sub-assemblies on one substrate
+ *     base:  [{x,y,w,h}, ...],         // optional base / IO dies (MI300-style 3.5D)
+ *     dies:  [{x,y,w,h}, ...],         // logic dies and chiplets; those that sit
+ *                                      //   inside a base rectangle are drawn raised on it
+ *     hbm:   [{x,y,w,h}, ...],         // memory stacks
+ *     substrate: [w, h] }
+ *
+ *   or { waferScale: true, diameterMm: 300, dieGrid: [cols, rows], squareMm: 215 }
+ *
+ * Centres are relative to the package centre; x runs across, y along the depth axis.
+ * `interposer: null` (with no `interposers`) means a flip-chip part with no interposer
+ * at all: the die sits straight on the build-up substrate.
+ * Layout objects may also carry "estimated", "sources" and "note" fields; the renderer
+ * ignores them.
+ *
+ * Vertical dimensions are exaggerated about 3.4x against the plan, or the whole thing
+ * reads as a flat grey rectangle. The caption says so.
+ * Default (no params): the two-die, eight-HBM Blackwell-style layout.
  */
 PC.register('package', function (p) {
   var L = (p && p.layout) || {
-    interposer: [85, 85],
-    dies: [{ x: -13, y: 0, w: 26, h: 32 }, { x: 13, y: 0, w: 26, h: 32 }],
-    hbm: [{ x: -34, y: 24, w: 11, h: 12 }, { x: -34, y: 8, w: 11, h: 12 }, { x: -34, y: -8, w: 11, h: 12 }, { x: -34, y: -24, w: 11, h: 12 },
-          { x: 34, y: 24, w: 11, h: 12 }, { x: 34, y: 8, w: 11, h: 12 }, { x: 34, y: -8, w: 11, h: 12 }, { x: 34, y: -24, w: 11, h: 12 }],
-    substrate: [110, 110]
+    interposer: [78, 50],
+    dies: [{ x: -13.5, y: 0, w: 26, h: 32.5 }, { x: 13.5, y: 0, w: 26, h: 32.5 }],
+    hbm: [{ x: -33.5, y: 17.7, w: 11, h: 11 }, { x: -33.5, y: 5.9, w: 11, h: 11 }, { x: -33.5, y: -5.9, w: 11, h: 11 }, { x: -33.5, y: -17.7, w: 11, h: 11 },
+          { x: 33.5, y: 17.7, w: 11, h: 11 }, { x: 33.5, y: 5.9, w: 11, h: 11 }, { x: 33.5, y: -5.9, w: 11, h: 11 }, { x: 33.5, y: -17.7, w: 11, h: 11 }],
+    substrate: [95, 68]
   };
-  var S = 1 / 60; // mm -> units
+
+  var S = 1 / 60;    // mm -> scene units, in plan
+  var VX = 3.4;      // vertical exaggeration
+  function Y(mm) { return mm * S * VX; }
   var parts = [];
+  function add(c) { if (c && c.length) parts.push(c); }
+
+  // rectangle outline in the XZ plane, centred at the origin
+  function outline(w, d, tone, perUnit) {
+    return PC.polyline({
+      pts: [[-w / 2, 0, -d / 2], [w / 2, 0, -d / 2], [w / 2, 0, d / 2], [-w / 2, 0, d / 2]],
+      closed: true, perUnit: perUnit || 300, tone: tone
+    });
+  }
+  // rectangular annulus of points: the outer rectangle with the inner one punched out
+  function frame(ow, od, iw, id, tone, dens) {
+    var a = Math.max(0, ow * od - iw * id);
+    var n = PC.area(a * (dens == null ? 1 : dens));
+    var c = new Float32Array(n * 4), i = 0, guard = 0;
+    while (i < n && guard++ < n * 40) {
+      var x = (PC.rnd() - 0.5) * ow, z = (PC.rnd() - 0.5) * od;
+      if (Math.abs(x) < iw / 2 && Math.abs(z) < id / 2) continue;
+      c[i * 4] = x; c[i * 4 + 1] = 0; c[i * 4 + 2] = z; c[i * 4 + 3] = tone; i++;
+    }
+    return c.subarray(0, i * 4);
+  }
 
   // ---------- wafer-scale variant ----------
   if (L.waferScale) {
-    var R = (L.diameterMm || 300) / 2 * S, th = 1.6 * S;
-    var body = PC.cylinder({ r: R, h: th, n: 52000, tone: 0.5 });
+    var R = (L.diameterMm || 300) / 2 * S, th = Y(0.9);
+    var body = PC.cylinder({ r: R, h: th, n: 46000, tone: 0.42 });
     var keep = [];
-    for (var i = 0; i < body.length; i += 4) { var x = body[i], z = body[i + 2]; if (Math.sqrt(x * x + (z - R) * (z - R)) < R * 0.045) continue; keep.push(body[i], body[i + 1], body[i + 2], body[i + 3]); }
-    parts.push(new Float32Array(keep));
+    for (var i = 0; i < body.length; i += 4) { // notch at the top of the wafer
+      var bx = body[i], bz = body[i + 2];
+      if (Math.sqrt(bx * bx + (bz - R) * (bz - R)) < R * 0.045) continue;
+      keep.push(body[i], body[i + 1], body[i + 2], body[i + 3]);
+    }
+    add(new Float32Array(keep));
+    var side = L.squareMm ? L.squareMm * S : 2 * R * 0.7;
     var cols = (L.dieGrid && L.dieGrid[0]) || 12, rows = (L.dieGrid && L.dieGrid[1]) || 7;
-    var dw = 2 * R * 0.94 / cols, dh = 2 * R * 0.94 / rows;
+    var dw = side / cols, dh = side / rows, yTopW = th / 2 + 0.004, live = 0;
     for (var gx = 0; gx < cols; gx++) for (var gz = 0; gz < rows; gz++) {
       var cx = (gx - (cols - 1) / 2) * dw, cz = (gz - (rows - 1) / 2) * dh;
-      var corners = [[cx - dw / 2, cz - dh / 2], [cx + dw / 2, cz - dh / 2], [cx - dw / 2, cz + dh / 2], [cx + dw / 2, cz + dh / 2]];
-      if (!corners.every(function (c) { return c[0] * c[0] + c[1] * c[1] < (R * 0.985) * (R * 0.985); })) continue;
-      var y = th / 2 + 0.004;
-      parts.push(PC.polyline({ pts: [[cx - dw / 2, y, cz - dh / 2], [cx + dw / 2, y, cz - dh / 2], [cx + dw / 2, y, cz + dh / 2], [cx - dw / 2, y, cz + dh / 2]], closed: true, perUnit: 140, tone: 1 }));
-      // a faint core grid inside each die
-      parts.push(PC.T(PC.dots({ nx: 3, nz: 3, sx: dw / 4, sz: dh / 4, tone: 0.45 }), { pos: [cx, y, cz] }));
+      if (cx * cx + cz * cz > R * R) continue;
+      live++;
+      // the scribe lines between dies stay in place on a wafer-scale part: draw them light
+      add(PC.T(outline(dw * 0.985, dh * 0.985, 0.9, 150), { pos: [cx, yTopW, cz] }));
+      add(PC.T(PC.dots({ nx: 4, nz: 6, sx: dw / 5.5, sz: dh / 7.5, tone: 0.4 }), { pos: [cx, yTopW, cz] }));
     }
-    parts.push(PC.T(PC.accent(PC.circle({ r: R * 0.995, perUnit: 500 }), 0.9), { pos: [0, th / 2 + 0.004, 0] }));
-    return { cloud: PC.merge.apply(null, parts), spin: 0.1, tilt: [0.9, -0.5, 0], caption: 'A wafer-scale processor: the whole 300 mm wafer is one chip, with the die grid left in place and wired together across the scribe lines.' };
+    // the square that is actually cut out of the wafer
+    add(PC.T(PC.accent(outline(side, side, 1, 520), 0.95), { pos: [0, yTopW + 0.003, 0] }));
+    add(PC.T(PC.accent(PC.circle({ r: R * 0.997, perUnit: 260 }), 0.5), { pos: [0, yTopW, 0] }));
+    return {
+      cloud: PC.merge.apply(null, parts), spin: 0.1, tilt: [0.95, -0.5, 0],
+      caption: 'A wafer-scale processor: a ' + Math.round(side / S) + ' mm square (amber) cut from a '
+        + (L.diameterMm || 300) + ' mm wafer, its ' + live + '-die grid left in place and wired together across the scribe lines. No interposer, no HBM.'
+    };
   }
 
   // ---------- conventional package ----------
-  var sub = L.substrate || [L.interposer[0] * 1.3, L.interposer[1] * 1.3];
-  var subW = sub[0] * S, subD = sub[1] * S, subH = 1.8 * S;
-  var ipW = L.interposer[0] * S, ipD = L.interposer[1] * S, ipH = 0.9 * S;
-  var dieH = 0.9 * S, hbmH = 1.35 * S; // die and HBM heights, slightly exaggerated so the stacks read
+  var dies = L.dies || [], base = L.base || [], hbm = L.hbm || [];
+  var ips = L.interposers ? L.interposers.slice()
+    : (L.interposer ? [{ x: 0, y: 0, w: L.interposer[0], h: L.interposer[1] }] : []);
 
-  // substrate slab (no bottom face; the ball grid covers it)
-  parts.push(PC.box({ w: subW, h: subH, d: subD, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 26000, tone: 0.42 }));
-  parts.push(PC.boxEdges({ w: subW, h: subH, d: subD, perUnit: 300, tone: 0.9 }));
-  // BGA ball grid under the substrate
-  var pitch = 3.6 * S, nb = Math.max(4, Math.floor(subW / pitch) - 1);
-  var balls = PC.dots({ nx: nb, nz: Math.max(4, Math.floor(subD / pitch) - 1), sx: pitch, sz: pitch, per: 3, tone: 0.75 });
-  parts.push(PC.T(balls, { pos: [0, -subH / 2 - 0.35 * S, 0] }));
-  // stiffener ring on the substrate around the interposer
-  var ringW = 5 * S, ringH = 1.4 * S, gap = 3 * S, y0 = subH / 2;
-  var rx = ipW / 2 + gap, rz = ipD / 2 + gap;
-  var ringParts = [
-    PC.T(PC.box({ w: 2 * rx + 2 * ringW, h: ringH, d: ringW, tone: 0.45 }), { pos: [0, y0 + ringH / 2, rz + ringW / 2] }),
-    PC.T(PC.box({ w: 2 * rx + 2 * ringW, h: ringH, d: ringW, tone: 0.45 }), { pos: [0, y0 + ringH / 2, -rz - ringW / 2] }),
-    PC.T(PC.box({ w: ringW, h: ringH, d: 2 * rz, tone: 0.45 }), { pos: [rx + ringW / 2, y0 + ringH / 2, 0] }),
-    PC.T(PC.box({ w: ringW, h: ringH, d: 2 * rz, tone: 0.45 }), { pos: [-rx - ringW / 2, y0 + ringH / 2, 0] })
-  ];
-  parts.push(PC.merge.apply(null, ringParts));
-  // interposer
-  var yIp = y0 + ipH / 2;
-  parts.push(PC.T(PC.box({ w: ipW, h: ipH, d: ipD, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 16000, tone: 0.5 }), { pos: [0, yIp, 0] }));
-  parts.push(PC.T(PC.boxEdges({ w: ipW, h: ipH, d: ipD, perUnit: 320, tone: 1 }), { pos: [0, yIp, 0] }));
-  // a sparse TSV / RDL dot field on the exposed interposer top
-  parts.push(PC.T(PC.dots({ nx: Math.floor(ipW / (2.2 * S)), nz: Math.floor(ipD / (2.2 * S)), sx: 2.2 * S, tone: 0.28 }), { pos: [0, y0 + ipH + 0.003, 0] }));
-  var yTop = y0 + ipH;
-  // logic dies
-  (L.dies || []).forEach(function (d) {
-    var w = d.w * S, dd = d.h * S;
-    parts.push(PC.T(PC.box({ w: w, h: dieH, d: dd, faces: ['py', 'px', 'nx', 'pz', 'nz'], tone: 0.72 }), { pos: [d.x * S, yTop + dieH / 2, -d.y * S] }));
-    parts.push(PC.T(PC.boxEdges({ w: w, h: dieH, d: dd, perUnit: 360, tone: 1 }), { pos: [d.x * S, yTop + dieH / 2, -d.y * S] }));
-    // floorplan hint: an inner rectangle and a light block grid on the die top
-    var inner = PC.polyline({ pts: [[-w * 0.42, 0, -dd * 0.42], [w * 0.42, 0, -dd * 0.42], [w * 0.42, 0, dd * 0.42], [-w * 0.42, 0, dd * 0.42]], closed: true, perUnit: 220, tone: 0.9 });
-    parts.push(PC.T(inner, { pos: [d.x * S, yTop + dieH + 0.003, -d.y * S] }));
-    parts.push(PC.T(PC.dots({ nx: 6, nz: 8, sx: w * 0.13, sz: dd * 0.1, tone: 0.5 }), { pos: [d.x * S, yTop + dieH + 0.003, -d.y * S] }));
+  function envelope(list) {
+    var e = { x0: Infinity, x1: -Infinity, y0: Infinity, y1: -Infinity };
+    list.forEach(function (r) {
+      e.x0 = Math.min(e.x0, r.x - r.w / 2); e.x1 = Math.max(e.x1, r.x + r.w / 2);
+      e.y0 = Math.min(e.y0, r.y - r.h / 2); e.y1 = Math.max(e.y1, r.y + r.h / 2);
+    });
+    if (!list.length) { e = { x0: -1, x1: 1, y0: -1, y1: 1 }; }
+    e.w = e.x1 - e.x0; e.h = e.y1 - e.y0;
+    return e;
+  }
+  var stack = envelope(ips.length ? ips : dies.concat(base, hbm));   // what the ring encloses
+  var sub = L.substrate || [stack.w + 24, stack.h + 24];
+
+  var hSub = 2.2, hIp = 0.9, hBase = 0.8, hDie = 0.85, hHbm = 2.0;
+  var subW = sub[0] * S, subD = sub[1] * S, subH = Y(hSub);
+  var ipH = ips.length ? Y(hIp) : 0;
+  var y0 = subH / 2;              // top of the substrate
+  var yIpTop = y0 + ipH;          // the plane the dies and stacks sit on
+
+  // --- substrate: walls, edges, ball grid, and only the top that is actually exposed ---
+  add(PC.box({ w: subW, h: subH, d: subD, faces: ['px', 'nx', 'pz', 'nz'], tone: 0.4 }));
+  add(PC.boxEdges({ w: subW, h: subH, d: subD, perUnit: 300, tone: 0.85 }));
+  add(PC.T(frame(subW, subD, stack.w * S * 1.02, stack.h * S * 1.02, 0.22, 0.55), { pos: [0, y0, 0] }));
+  var pitch = 2.8 * S;
+  add(PC.T(PC.dots({
+    nx: Math.max(6, Math.floor(subW / pitch) - 1), nz: Math.max(6, Math.floor(subD / pitch) - 1),
+    sx: pitch, sz: pitch, per: 2, tone: 0.55
+  }), { pos: [0, -subH / 2 - Y(0.5), 0] }));
+
+  // --- stiffener ring: a metal frame on the substrate edge, no lid over the dies ---
+  var ringOut = [subW - 2 * 1.2 * S, subD - 2 * 1.2 * S];
+  var gapMm = 3.2;
+  var ringIn = [Math.min(ringOut[0] - 8 * S, (stack.w + 2 * gapMm) * S), Math.min(ringOut[1] - 8 * S, (stack.h + 2 * gapMm) * S)];
+  var rh = Y(hIp + hDie + 0.7), yr = y0 + rh / 2;
+  add(PC.T(PC.box({ w: ringOut[0], h: rh, d: ringOut[1], faces: ['px', 'nx', 'pz', 'nz'], tone: 0.44 }), { pos: [0, yr, 0] }));
+  add(PC.T(PC.box({ w: ringIn[0], h: rh, d: ringIn[1], faces: ['px', 'nx', 'pz', 'nz'], tone: 0.3 }), { pos: [0, yr, 0] }));
+  add(PC.T(frame(ringOut[0], ringOut[1], ringIn[0], ringIn[1], 0.5, 0.8), { pos: [0, y0 + rh, 0] }));
+  add(PC.T(outline(ringOut[0], ringOut[1], 1, 340), { pos: [0, y0 + rh + 0.002, 0] }));
+  add(PC.T(outline(ringIn[0], ringIn[1], 1, 340), { pos: [0, y0 + rh + 0.002, 0] }));
+  add(PC.T(outline(ringIn[0], ringIn[1], 0.5, 260), { pos: [0, y0 + 0.002, 0] }));
+
+  // --- interposers ---
+  ips.forEach(function (r) {
+    var w = r.w * S, d = r.h * S, x = r.x * S, z = -r.y * S;
+    add(PC.T(PC.box({ w: w, h: ipH, d: d, faces: ['px', 'nx', 'pz', 'nz'], tone: 0.5 }), { pos: [x, y0 + ipH / 2, z] }));
+    add(PC.T(PC.boxEdges({ w: w, h: ipH, d: d, perUnit: 300, tone: 1 }), { pos: [x, y0 + ipH / 2, z] }));
+    // through-silicon vias on the exposed silicon
+    var vp = 2.1 * S;
+    add(PC.T(PC.dots({ nx: Math.floor(w / vp), nz: Math.floor(d / vp), sx: vp, tone: 0.3 }), { pos: [x, yIpTop + 0.002, z] }));
   });
-  // HBM stacks: boxes with 12 layer lines and accent tops
-  (L.hbm || []).forEach(function (h) {
-    var w = h.w * S, dd = h.h * S, x = h.x * S, z = -h.y * S, yc = yTop + hbmH / 2;
-    parts.push(PC.T(PC.box({ w: w, h: hbmH, d: dd, faces: ['px', 'nx', 'pz', 'nz'], tone: 0.55 }), { pos: [x, yc, z] }));
-    for (var k = 1; k <= 12; k++) {
-      var yy = yTop + hbmH * k / 13;
-      parts.push(PC.T(PC.polyline({ pts: [[-w / 2, 0, -dd / 2], [w / 2, 0, -dd / 2], [w / 2, 0, dd / 2], [-w / 2, 0, dd / 2]], closed: true, perUnit: 260, tone: 0.95 }), { pos: [x, yy, z] }));
+
+  // --- base / IO dies, with the compute chiplets stepped up on top of them ---
+  var baseH = base.length ? Y(hBase) : 0;
+  base.forEach(function (b) {
+    var w = b.w * S, d = b.h * S, x = b.x * S, z = -b.y * S;
+    add(PC.T(PC.box({ w: w, h: baseH, d: d, faces: ['py', 'px', 'nx', 'pz', 'nz'], tone: 0.5 }), { pos: [x, yIpTop + baseH / 2, z] }));
+    add(PC.T(PC.boxEdges({ w: w, h: baseH, d: d, perUnit: 300, tone: 0.95 }), { pos: [x, yIpTop + baseH / 2, z] }));
+    // hybrid-bond pad field on the exposed shoulder of the base die
+    add(PC.T(PC.dots({ nx: Math.max(4, Math.round(w / (1.6 * S))), nz: Math.max(4, Math.round(d / (1.6 * S))), sx: 1.6 * S, tone: 0.32 }), { pos: [x, yIpTop + baseH + 0.002, z] }));
+  });
+
+  // --- logic dies and chiplets ---
+  var dieH = Y(hDie);
+  dies.forEach(function (dd) {
+    var onBase = base.some(function (b) {
+      return Math.abs(dd.x - b.x) <= b.w / 2 && Math.abs(dd.y - b.y) <= b.h / 2;
+    });
+    var w = dd.w * S, d = dd.h * S, x = dd.x * S, z = -dd.y * S;
+    var yb = yIpTop + (onBase ? baseH : 0), yc = yb + dieH / 2, yt = yb + dieH;
+    add(PC.T(PC.box({ w: w, h: dieH, d: d, faces: ['py', 'px', 'nx', 'pz', 'nz'], tone: 0.74 }), { pos: [x, yc, z] }));
+    add(PC.T(PC.boxEdges({ w: w, h: dieH, d: d, perUnit: 340, tone: 1 }), { pos: [x, yc, z] }));
+    // a hint of floorplan on the die top: a core outline and a block grid
+    add(PC.T(outline(w * 0.84, d * 0.84, 0.95, 240), { pos: [x, yt + 0.002, z] }));
+    var nx = Math.max(2, Math.round(dd.w / 4.2)), nz = Math.max(2, Math.round(dd.h / 3.4));
+    add(PC.T(PC.dots({ nx: nx, nz: nz, sx: w * 0.8 / nx, sz: d * 0.8 / nz, per: 2, tone: 0.45 }), { pos: [x, yt + 0.002, z] }));
+  });
+
+  // --- HBM stacks: layered boxes with amber tops ---
+  var hbmH = Y(hHbm), layers = 8;
+  hbm.forEach(function (h) {
+    var w = h.w * S, d = h.h * S, x = h.x * S, z = -h.y * S;
+    add(PC.T(PC.box({ w: w, h: hbmH, d: d, faces: ['px', 'nx', 'pz', 'nz'], tone: 0.5 }), { pos: [x, yIpTop + hbmH / 2, z] }));
+    for (var k = 1; k <= layers; k++) {
+      add(PC.T(outline(w, d, 0.95, 210), { pos: [x, yIpTop + hbmH * k / (layers + 1), z] }));
     }
-    parts.push(PC.T(PC.accent(PC.plane({ w: w, d: dd }), 0.85), { pos: [x, yTop + hbmH, z] }));
-    parts.push(PC.T(PC.accent(PC.polyline({ pts: [[-w / 2, 0, -dd / 2], [w / 2, 0, -dd / 2], [w / 2, 0, dd / 2], [-w / 2, 0, dd / 2]], closed: true, perUnit: 320 }), 1), { pos: [x, yTop + hbmH + 0.002, z] }));
+    add(PC.T(PC.accent(PC.plane({ w: w * 0.97, d: d * 0.97 }), 0.7), { pos: [x, yIpTop + hbmH, z] }));
+    add(PC.T(PC.accent(outline(w, d, 1, 340)), { pos: [x, yIpTop + hbmH + 0.002, z] }));
   });
-  var nd = (L.dies || []).length, nh = (L.hbm || []).length;
-  var cloud = PC.merge.apply(null, parts);
-  return {
-    cloud: cloud,
-    spin: 0.1,
-    tilt: [0.55, -0.7, 0],
-    caption: 'An accelerator package: ' + nd + ' logic die' + (nd === 1 ? '' : 's') + (nh ? ' and ' + nh + ' HBM stacks (amber tops)' : '') + ' on a silicon interposer, inside a stiffener ring on a build-up substrate with its ball grid below.'
-  };
+
+  var nd = dies.length, nh = hbm.length, nb = base.length, ni = ips.length;
+  var cap = 'An accelerator package, seen with its vertical dimensions exaggerated about '
+    + VX + 'x: ' + nd + ' logic die' + (nd === 1 ? '' : 's')
+    + (nb ? ' stepped up on ' + nb + ' base die' + (nb === 1 ? '' : 's') : '')
+    + (nh ? ' and ' + nh + ' HBM stack' + (nh === 1 ? '' : 's') + ' (amber tops)' : ' and no HBM')
+    + (ni === 0 ? ', flip-chipped straight onto the build-up substrate'
+      : ni === 1 ? ' on a silicon interposer' : ' across ' + ni + ' separate interposers')
+    + ', inside a lid-less stiffener ring, with the ball grid below.';
+
+  return { cloud: PC.merge.apply(null, parts), spin: 0.1, tilt: [0.55, -0.7, 0], caption: cap };
 });

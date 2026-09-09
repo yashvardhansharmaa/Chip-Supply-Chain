@@ -42,15 +42,15 @@ PC.register('cowos-exploded', function (p) {
   var yC4 = subTop + gap;
   var ipBot = yC4 + gap, ipTop = ipBot + ipH;
   var yUb = ipTop + gap * 0.75;
-  var yChip = yUb + gap * 0.75;
-  var yFr = yChip + hbmH + gap * 1.15;
+  var yChip = yUb + gap * 0.85;
+  var yFr = yChip + hbmH + gap * 1.3;
 
   // ---------- 1. the build-up substrate, with its ball grid underneath ----------
-  add(PC.T(PC.plane({ w: subW, d: subD, n: 8000, tone: 0.3 }), { pos: [0, subTop, 0] }));
+  add(PC.T(PC.plane({ w: subW, d: subD, n: 6500, tone: 0.26 }), { pos: [0, subTop, 0] }));
   add(PC.T(PC.box({ w: subW, h: subH, d: subD, faces: ['px', 'nx', 'pz', 'nz'], n: 3200, tone: 0.48 }), { pos: [0, ySub, 0] }));
   add(PC.T(PC.boxEdges({ w: subW, h: subH, d: subD, perUnit: 280, tone: 0.9 }), { pos: [0, ySub, 0] }));
   var bp = 2.0 * S;
-  add(PC.T(PC.dots({ nx: Math.floor(subW / bp) - 1, nz: Math.floor(subD / bp) - 1, sx: bp, sz: bp, per: 3, tone: 0.55 }),
+  add(PC.T(PC.dots({ nx: Math.floor(subW / bp) - 1, nz: Math.floor(subD / bp) - 1, sx: bp, sz: bp, per: 2, tone: 0.45 }),
     { pos: [0, ySub - subH / 2 - 0.028, 0] }));
   // where the interposer will land, and the ring of capacitors around it
   add(PC.T(rect(ipW, ipD, 240, 0.7), { pos: [0, subTop + 0.003, 0] }));
@@ -73,7 +73,7 @@ PC.register('cowos-exploded', function (p) {
 
   // ---------- 2. the C4 bumps that carry the interposer down to the substrate ----------
   var c4 = 2.8 * S;
-  add(PC.T(PC.dots({ nx: Math.floor(ipW / c4) - 1, nz: Math.floor(ipD / c4) - 1, sx: c4, sz: c4, per: 4, tone: 0.72 }), { pos: [0, yC4, 0] }));
+  add(PC.T(PC.dots({ nx: Math.floor(ipW / c4) - 1, nz: Math.floor(ipD / c4) - 1, sx: c4, sz: c4, per: 3, tone: 0.6 }), { pos: [0, yC4, 0] }));
   add(PC.T(rect(ipW, ipD, 150, 0.3), { pos: [0, yC4, 0] }));
 
   // ---------- 3. the silicon interposer: the chokepoint, in copper ----------
@@ -83,20 +83,20 @@ PC.register('cowos-exploded', function (p) {
   add(PC.T(PC.accent(PC.boxEdges({ w: ipW, h: ipH, d: ipD, perUnit: 320 }), 1), { pos: [0, ipY, 0] }));
   // the through-silicon vias, a field of them across the whole slab
   var tv = 3.4 * S;
-  add(PC.T(PC.accent(PC.dots({ nx: Math.floor(ipW / tv), nz: Math.floor(ipD / tv), sx: tv, sz: tv }), 0.3), { pos: [0, ipTop + 0.003, 0] }));
+  add(PC.T(PC.accent(PC.dots({ nx: Math.floor(ipW / tv), nz: Math.floor(ipD / tv), sx: tv, sz: tv }), 0.26), { pos: [0, ipTop + 0.003, 0] }));
   // the wiring: a dense bundle across the die-to-die seam, and a bundle out to
   // every HBM site. This is what the interposer is for.
   var rdl = [], yR = ipTop + 0.004;
-  for (q = 0; q < 34; q++) {
-    var rz = (q - 16.5) * (dieD * 0.94 / 34);
-    rdl.push(PC.line({ a: [-dieX + dieW / 2 - 3 * S, yR, rz], b: [dieX - dieW / 2 + 3 * S, yR, rz], perUnit: 210, tone: 1 }));
+  for (q = 0; q < 24; q++) {
+    var rz = (q - 11.5) * (dieD * 0.92 / 24);
+    rdl.push(PC.line({ a: [-dieX + dieW / 2 - 3 * S, yR, rz], b: [dieX - dieW / 2 + 3 * S, yR, rz], perUnit: 130, tone: 1 }));
   }
   hbm.forEach(function (h) {
     var sg = h.x < 0 ? -1 : 1;
-    for (var i = 0; i < 13; i++) {
-      var z0 = h.z + (i - 6) * hbmD * 0.062;
-      var z1 = h.z * 0.55 + (i - 6) * hbmD * 0.05;
-      rdl.push(PC.polyline({ pts: [[sg * (hbmX - hbmW * 0.36), yR, z0], [sg * (dieX + dieW / 2 + 2.4 * S), yR, z0], [sg * (dieX + dieW / 2 - 2.5 * S), yR, z1]], perUnit: 300, tone: 1 }));
+    for (var i = 0; i < 10; i++) {
+      var z0 = h.z + (i - 4.5) * hbmD * 0.078;
+      var z1 = h.z * 0.55 + (i - 4.5) * hbmD * 0.062;
+      rdl.push(PC.polyline({ pts: [[sg * (hbmX - hbmW * 0.36), yR, z0], [sg * (dieX + dieW / 2 + 2.4 * S), yR, z0], [sg * (dieX + dieW / 2 - 2.5 * S), yR, z1]], perUnit: 170, tone: 1 }));
     }
   });
   add(PC.accent(PC.merge.apply(null, rdl), 0.75));
@@ -108,30 +108,30 @@ PC.register('cowos-exploded', function (p) {
   }
   chips(function (x, z, w, d, isDie) {
     var s = isDie ? 1.4 * S : 1.2 * S;
-    add(PC.T(PC.dots({ nx: Math.round(w / s), nz: Math.round(d / s), sx: s, sz: s, per: 2, tone: 0.62 }), { pos: [x, yUb, z] }));
+    add(PC.T(PC.dots({ nx: Math.round(w / s), nz: Math.round(d / s), sx: s, sz: s, per: 2, tone: 0.55 }), { pos: [x, yUb, z] }));
     add(PC.T(rect(w, d, 170, isDie ? 0.5 : 0.42), { pos: [x, yUb, z] }));
   });
 
   // ---------- 5. the chips: two logic dies and eight HBM stacks ----------
   dies.forEach(function (d) {
     var yc = yChip + dieH / 2;
-    add(PC.T(PC.plane({ w: dieW, d: dieD, n: 2200, tone: 0.28 }), { pos: [d.x, yChip + dieH, d.z] }));
-    add(PC.T(PC.box({ w: dieW, h: dieH, d: dieD, faces: ['px', 'nx', 'pz', 'nz'], n: 1500, tone: 0.5 }), { pos: [d.x, yc, d.z] }));
-    add(PC.T(PC.boxEdges({ w: dieW, h: dieH, d: dieD, perUnit: 300, tone: 1 }), { pos: [d.x, yc, d.z] }));
+    add(PC.T(PC.plane({ w: dieW, d: dieD, n: 1800, tone: 0.24 }), { pos: [d.x, yChip + dieH, d.z] }));
+    add(PC.T(PC.box({ w: dieW, h: dieH, d: dieD, faces: ['px', 'nx', 'pz', 'nz'], n: 1100, tone: 0.42 }), { pos: [d.x, yc, d.z] }));
+    add(PC.T(PC.boxEdges({ w: dieW, h: dieH, d: dieD, perUnit: 170, tone: 0.9 }), { pos: [d.x, yc, d.z] }));
     // a hint of the floorplan: a block grid with the memory interface facing outward
     var fp = [], sg = d.x < 0 ? -1 : 1;
     for (var a = 0; a < 4; a++) for (var b = 0; b < 7; b++) {
-      fp.push(PC.T(rect(dieW * 0.19, dieD * 0.115, 150, 0.75), { pos: [d.x + (a - 1.5) * dieW * 0.215, yChip + dieH + 0.003, d.z + (b - 3) * dieD * 0.132] }));
+      fp.push(PC.T(rect(dieW * 0.19, dieD * 0.115, 70, 0.6), { pos: [d.x + (a - 1.5) * dieW * 0.215, yChip + dieH + 0.003, d.z + (b - 3) * dieD * 0.132] }));
     }
-    fp.push(PC.T(rect(dieW * 0.1, dieD * 0.9, 190, 0.9), { pos: [d.x + sg * dieW * 0.43, yChip + dieH + 0.003, d.z] }));
+    fp.push(PC.T(rect(dieW * 0.1, dieD * 0.9, 110, 0.8), { pos: [d.x + sg * dieW * 0.43, yChip + dieH + 0.003, d.z] }));
     add(PC.merge.apply(null, fp));
   });
   hbm.forEach(function (h) {
     var yc = yChip + hbmH / 2;
-    add(PC.T(PC.box({ w: hbmW, h: hbmH, d: hbmD, faces: ['px', 'nx', 'pz', 'nz'], n: 900, tone: 0.45 }), { pos: [h.x, yc, h.z] }));
-    for (var k = 1; k <= 12; k++) add(PC.T(rect(hbmW, hbmD, 150, 0.85), { pos: [h.x, yChip + hbmH * k / 12.6, h.z] }));
-    add(PC.T(PC.plane({ w: hbmW, d: hbmD, n: 420, tone: 0.24 }), { pos: [h.x, yChip + hbmH, h.z] }));
-    add(PC.T(rect(hbmW, hbmD, 320, 1), { pos: [h.x, yChip + hbmH, h.z] }));
+    add(PC.T(PC.box({ w: hbmW, h: hbmH, d: hbmD, faces: ['px', 'nx', 'pz', 'nz'], n: 460, tone: 0.3 }), { pos: [h.x, yc, h.z] }));
+    for (var k = 1; k <= 12; k++) add(PC.T(rect(hbmW, hbmD, 58, 0.62), { pos: [h.x, yChip + hbmH * k / 12.6, h.z] }));
+    add(PC.T(PC.plane({ w: hbmW, d: hbmD, n: 340, tone: 0.2 }), { pos: [h.x, yChip + hbmH, h.z] }));
+    add(PC.T(rect(hbmW, hbmD, 190, 0.95), { pos: [h.x, yChip + hbmH, h.z] }));
   });
 
   // ---------- 6. the stiffener frame, lifted clear of the chips ----------
@@ -156,7 +156,7 @@ PC.register('cowos-exploded', function (p) {
   return {
     cloud: PC.merge.apply(null, parts),
     spin: 0.1,
-    tilt: [0.52, -0.68, 0],
+    tilt: [0.66, -0.62, 0],
     caption: 'A CoWoS package pulled apart: a ball grid and a build-up substrate ringed with capacitors at the bottom, then the C4 bumps, then the silicon interposer in copper with its through-silicon vias and the wiring that stitches the two logic dies together and fans out to the memory, then the micro-bumps, then two reticle-sized dies and eight HBM stacks, with the stiffener frame lifted clear above. Footprints are to scale: the chips cover about 2,700 mm2, a little over three reticles. Thicknesses and gaps are exaggerated.'
   };
 });
