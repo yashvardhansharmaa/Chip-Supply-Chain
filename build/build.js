@@ -460,6 +460,9 @@ fill('APP', read(path.join(root, 'src', 'app.js')));
 
 fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
 fs.writeFileSync(path.join(root, 'dist', 'index.html'), html);
+// the datasets are served next to the page so the method notes' links resolve and researchers can fetch them directly
+fs.mkdirSync(path.join(root, 'dist', 'data'), { recursive: true });
+fs.readdirSync(path.join(root, 'data')).filter((f) => /\.(json|md)$/.test(f)).forEach((f) => fs.copyFileSync(path.join(root, 'data', f), path.join(root, 'dist', 'data', f)));
 const tierTotal = tierCounts([].concat(...all.map((c) => c.cites)));
 const report = [`built ${new Date().toISOString()}`, `source tiers: A ${tierTotal.A} · B ${tierTotal.B} · C ${tierTotal.C} · D ${tierTotal.D} · unclassified ${tierTotal['?']}`, `chapters: ${chapters.length}${geo ? ' + geopolitics' : ''}`, `words: ${totalWords}`, `sources: ${all.reduce((a, c) => a + c.cites.length, 0)}`,
   `landscape: ${landscape.length} chips · suppliers: ${suppliers.length} · timeline: ${timeline.length} · matrix: ${matrix.length} · glossary: ${glossary.length} · controls: ${controls.length} · exposure: ${exposure.length}`, `specimens: ${[...specNames].join(', ')}`,

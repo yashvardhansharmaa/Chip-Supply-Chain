@@ -1,3 +1,6 @@
+<!doctype html>
+<html lang="en">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Compute Chokepoints</title>
@@ -16,7 +19,7 @@
   --bg-3: #d9dde0;
   --ink: #12161a;
   --ink-2: #3a434c;
-  --muted: #667079;
+  --muted: #5b646d;
   --line: #cbd0d4;
   --line-2: #b6bcc1;
   --accent: #c98a12;
@@ -89,7 +92,9 @@ p { margin: 0 0 1.15em; }
 strong { font-weight: 640; }
 small { font-size: 0.85em; }
 [hidden] { display: none !important; }
-.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.sr-only { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+.skip { position: absolute; left: -10000px; top: 8px; z-index: 100; padding: 8px 12px; background: var(--ink); color: var(--bg); font-family: var(--font-mono); font-size: 12px; text-decoration: none; border-radius: 3px; }
+.skip:focus { left: 8px; }
 
 /* ---------- labels ---------- */
 .label { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
@@ -154,7 +159,7 @@ small { font-size: 0.85em; }
 .contents-grid li { font-size: 15.5px; line-height: 1.5; color: var(--ink-2); }
 .contents-grid li a { text-decoration: none; }
 .contents-grid li a:hover { color: var(--accent-ink); }
-.contents-grid li::before { content: "◇"; font-size: 9px; color: var(--muted); margin-right: 8px; position: relative; top: -2px; }
+.contents-grid li::before { content: "◇"; font-size: 10px; color: var(--muted); margin-right: 8px; position: relative; top: -2px; }
 
 /* ---------- prose ---------- */
 .prose { max-width: var(--measure); }
@@ -448,7 +453,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 .ex-panel { margin: 0; padding: 10px 10px 6px; border: 1px solid var(--line); border-radius: 2px; background: var(--bg-2); }
 .ex-panel figcaption { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin: 0 0 4px; }
 .ex-panel figcaption b { font-family: var(--font-display); font-weight: 600; font-size: 14px; white-space: nowrap; }
-.ex-panel figcaption span { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); text-align: right; }
+.ex-panel figcaption span { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); text-align: right; }
 .ex-panel svg { display: block; width: 100%; height: auto; }
 .ex-panel .grid { stroke: var(--line); stroke-dasharray: 2 3; }
 .ex-panel .rule { stroke: var(--ink-2); stroke-dasharray: 1 3; opacity: 0.7; }
@@ -478,7 +483,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 .stage-cell[data-score="5"] .bar i { height: 100%; background: var(--bar-5); }
 .stage-cell[data-score="4"] .bar i { height: 66%; background: var(--bar-4); }
 .stage-cell[data-score="3"] .bar i { height: 38%; background: var(--bar-3); }
-.stage-cell .t { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-2); line-height: 1.25; overflow-wrap: normal; hyphens: manual; }
+.stage-cell .t { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-2); line-height: 1.25; overflow-wrap: normal; hyphens: manual; }
 .stage-cell a:hover .t, .stage-cell a:hover .n { color: var(--ink); }
 .stage-cell[aria-current="true"] .n, .stage-cell[aria-current="true"] .t { color: var(--ink); font-weight: 600; }
 .stage-cell[aria-current="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 3px; background: var(--ink); }
@@ -495,7 +500,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 .rail[data-show="1"] { transform: none; opacity: 1; }
 .rail .stage-cell .bar { height: 18px; }
 .rail .stage-cell .n { display: none; }
-.rail .stage-cell .t { font-size: 9px; }
+.rail .stage-cell .t { font-size: 9.5px; }
 .rail li.done .bar i { opacity: 0.55; }
 
 /* ---------- chapter head ---------- */
@@ -503,9 +508,9 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 .chapter-head { margin-bottom: 8px; }
 .ch-id { display: grid; grid-template-columns: 92px 1fr; gap: 24px; align-items: start; margin-bottom: 26px; }
 .ch-tile { border: 1px solid var(--line-2); border-radius: 3px; background: var(--bg-2); text-align: center; padding: 9px 4px 10px; overflow: hidden; }
-.ch-tile .k { display: block; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.ch-tile .k { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
 .ch-tile .v { display: block; font-family: var(--font-display); font-weight: 700; font-size: 54px; line-height: 0.94; letter-spacing: 0.01em; font-variant-numeric: tabular-nums; margin: 3px 0 2px; }
-.ch-tile .of { display: block; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.ch-tile .of { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
 .ch-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(44px, 4.8vw, 68px); line-height: 0.96; letter-spacing: -0.006em; margin: -6px 0 14px; }
 .ch-lede { font-size: clamp(19px, 1.5vw, 22px); line-height: 1.42; color: var(--ink-2); max-width: 20em; font-weight: 350; margin: 0; }
 .ch-meta { display: flex; gap: 18px; flex-wrap: wrap; margin: 16px 0 0; }
@@ -529,7 +534,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 .plate-kpis { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--line); }
 .plate-kpis > div { padding: 15px 18px 16px; border-right: 1px solid var(--line); min-width: 0; }
 .plate-kpis > div:last-child { border-right: 0; }
-.plate-kpis .k { display: block; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.plate-kpis .k { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
 .plate-kpis .v { display: block; font-family: var(--font-display); font-weight: 600; font-size: 27px; line-height: 1.05; letter-spacing: 0.005em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
 .plate-kpis .v.cost { font-size: 22px; }
 .plate-kpis .v.cost.long { font-family: var(--font-body); font-weight: 500; font-size: 15.5px; line-height: 1.35; letter-spacing: 0; }
@@ -539,12 +544,12 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 .plate-rows { margin: 0; border-bottom: 1px solid var(--line); }
 .plate-rows .row { display: grid; grid-template-columns: 150px 1fr; gap: 20px; padding: 13px 18px; border-bottom: 1px solid var(--line); }
 .plate-rows .row:last-child { border-bottom: 0; }
-.plate-rows dt { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); padding-top: 4px; }
+.plate-rows dt { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); padding-top: 4px; }
 .plate-rows dd { margin: 0; font-size: 15.5px; line-height: 1.45; }
 .plate-rows ul { list-style: none; margin: 0; padding: 0; }
 .plate-rows li { padding-left: 32px; text-indent: -32px; margin-bottom: 8px; }
 .plate-rows li:last-child { margin-bottom: 0; }
-.chip { display: inline-block; width: 24px; text-align: center; text-indent: 0; margin-right: 8px; font-family: var(--font-mono); font-size: 9.5px; font-weight: 500; letter-spacing: 0.04em; border: 1px solid var(--line-2); border-radius: 2px; padding: 1px 0 2px; color: var(--ink-2); vertical-align: 1px; }
+.chip { display: inline-block; width: 24px; text-align: center; text-indent: 0; margin-right: 8px; font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.04em; border: 1px solid var(--line-2); border-radius: 2px; padding: 1px 0 2px; color: var(--ink-2); vertical-align: 1px; }
 .cc { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; }
 .plate-rows .who { font-weight: 600; }
 .plate-rows .note { color: var(--muted); font-size: 14.5px; }
@@ -552,7 +557,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 .plate-status { display: grid; grid-template-columns: 1fr 1fr; }
 .plate-status > div { padding: 14px 18px 16px; border-right: 1px solid var(--line); }
 .plate-status > div:last-child { border-right: 0; }
-.plate-status .k { display: block; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+.plate-status .k { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
 .plate-status p { font-size: 14.5px; line-height: 1.5; color: var(--ink-2); margin: 0; }
 .brief-meta .conc.Extreme, .plate-kpis .v.Extreme { color: var(--accent-ink); }
 
@@ -563,9 +568,9 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 @media (max-width: 900px) {
   :root { --col: 100%; --masthead: 52px; }
   body { font-size: 17px; }
-  .masthead { padding: 0 14px; height: auto; min-height: var(--masthead); flex-wrap: wrap; row-gap: 0; padding-top: 6px; padding-bottom: 6px; }
+  .masthead { padding: 0 14px; height: auto; min-height: 52px; flex-wrap: nowrap; gap: 10px; }
   .wordmark span { display: none; }
-  .tabs { flex-wrap: wrap; overflow: visible; justify-content: flex-end; row-gap: 2px; }
+  .tabs { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; -webkit-overflow-scrolling: touch; }
   .tabs a { padding: 5px 7px; font-size: 12px; }
   .column { padding: 0 18px; }
   .stage { position: sticky; top: var(--masthead); width: 100%; height: 38vh; min-height: 250px; z-index: 6; background: color-mix(in srgb, var(--bg) 92%, transparent); border-bottom: 1px solid var(--line); }
@@ -610,6 +615,9 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 /* apply a saved theme before first paint */
 (function(){try{var t=localStorage.getItem('cp-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
+</head>
+<body>
+<a class="skip" href="#app">Skip to content</a>
 <div id="app">
   <header class="masthead">
     <a class="wordmark" href="#/"><b>Compute Chokepoints</b><span>The AI chip supply chain</span></a>
@@ -657,7 +665,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
       <article class="chapter" id="introduction-and-goals" data-specimen="wafer" data-number="01" data-title="Introduction and Goals" data-caption="Right: a polished 300 mm wafer, its 57 whole exposure fields ruled by scribe streets, the orientation notch drawn six times life size and one field in amber. Every chapter explains one step this disc passes through on its way to a rack.">
 <header class="chapter-head">
 
-<div class="ch-id"><div class="ch-tile"><span class="k">Chapter</span><span class="v">01</span><span class="of">the map</span></div><div><h2 class="ch-title"><span class="sr-only">Chapter 1: </span>Introduction and Goals</h2><p class="ch-lede">A component-level map of the hardware that makes AI chips, from sand to a rack. Eighteen stages, and the handful of firms that own each one.</p><p class="ch-meta"><span class="label">820 words / 4 min</span><span class="label">Specimen: wafer</span></p></div></div>
+<div class="ch-id"><div class="ch-tile"><span class="k">Chapter</span><span class="v">01</span><span class="of">the map</span></div><div><h2 class="ch-title"><span class="sr-only">Chapter 1: </span>Introduction and Goals</h2><p class="ch-lede">A component-level map of the hardware that makes AI chips, from sand to a rack: fifteen stages, and the handful of firms that own each one.</p><p class="ch-meta"><span class="label">820 words / 4 min</span><span class="label">Specimen: wafer</span></p></div></div>
 <section class="inshort"><h3 class="label">In short</h3><p>AI compute demand has grown 4 to 5 times a year for over a decade, and the chain that serves it was not built for that <sup class="cite"><a href="https://epoch.ai/publications/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year" target="_blank" rel="noopener" title="epoch.ai">1</a></sup>. The scarce inputs in 2025 were high-bandwidth memory and advanced packaging, not transistors <sup class="cite"><a href="https://epoch.ai/blog/introducing-the-ai-chip-components-explorer" target="_blank" rel="noopener" title="epoch.ai">6</a></sup>. Algorithmic efficiency halves the compute a given result needs about every eight months, but that has raised total hardware demand rather than cut it <sup class="cite"><a href="https://epoch.ai/blog/algorithmic-progress-in-language-models" target="_blank" rel="noopener" title="epoch.ai">7</a></sup>. The rest of this site is about who owns each link, and what it would take to replace them.</p></section>
 <section class="plate" aria-label="Chokepoint nameplate for Introduction and Goals">
 <header class="plate-head"><span class="label">Chokepoint nameplate</span><span class="plate-score"><span class="pips" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span><b>5</b> / 5</span><span class="sr-only">Chokepoint score 5 of 5</span></span></header>
@@ -1672,7 +1680,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
       <div class="briefing"><article class="brief-card" id="brief-introduction-and-goals">
 <div class="brief-head"><span class="n">01</span><a href="#introduction-and-goals" class="t">Introduction and Goals</a>
 <span class="brief-meta"><span class="pips" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="num">5/5</span><span class="conc Extreme">Extreme</span></span></div>
-<p class="brief-lede">A component-level map of the hardware that makes AI chips, from sand to a rack. Eighteen stages, and the handful of firms that own each one.</p>
+<p class="brief-lede">A component-level map of the hardware that makes AI chips, from sand to a rack: fifteen stages, and the handful of firms that own each one.</p>
 <div class="brief-short"><p>AI compute demand has grown 4 to 5 times a year for over a decade, and the chain that serves it was not built for that. The scarce inputs in 2025 were high-bandwidth memory and advanced packaging, not transistors. Algorithmic efficiency halves the compute a given result needs about every eight months, but that has raised total hardware demand rather than cut it. The rest of this site is about who owns each link, and what it would take to replace them.</p></div>
 <p class="brief-leaders"><span class="label">Who leads</span> TSMC <span class="chip">TW</span> · ASML <span class="chip">NL</span> · SK hynix <span class="chip">KR</span></p>
 </article><article class="brief-card" id="brief-design-and-eda">
@@ -6650,7 +6658,7 @@ PC.register('wafer', function (p) {
       $$('.prose h3[id], .prose h4[id]').forEach(function (h) { var a = document.createElement('a'); a.className = 'permalink'; a.href = '#' + h.id; a.setAttribute('aria-label', 'Link to this section'); a.textContent = '#'; h.appendChild(a); });
       // dataset export buttons (copy to clipboard: JSON or CSV)
       var copy = function (text, btn, label) { var done = function (ok) { btn.textContent = ok ? 'Copied' : 'Copy failed'; setTimeout(function () { btn.textContent = label; }, 2000); }; if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); }); else done(false); };
-      var toCSV = function (rows) { if (!rows.length) return ''; var cols = Object.keys(rows[0]); var q = function (v) { if (v == null) return ''; if (typeof v === 'object') v = JSON.stringify(v); v = String(v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }; return cols.join(',') + '\n' + rows.map(function (r) { return cols.map(function (c) { return q(r[c]); }).join(','); }).join('\n'); };
+      var toCSV = function (rows) { if (!rows.length) return ''; var cols = []; rows.forEach(function (r) { Object.keys(r).forEach(function (k) { if (cols.indexOf(k) < 0) cols.push(k); }); }); var q = function (v) { if (v == null) return ''; if (typeof v === 'object') v = JSON.stringify(v); v = String(v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }; return cols.join(',') + '\n' + rows.map(function (r) { return cols.map(function (c) { return q(r[c]); }).join(','); }).join('\n'); };
       var addExport = function (anchorSel, name, rows, where) {
         var host = $(anchorSel); if (!host || !rows || !rows.length) return;
         var bar = document.createElement('div'); bar.className = 'export-bar';
@@ -6677,6 +6685,8 @@ PC.register('wafer', function (p) {
     Theme.init();
     Glossary.init();
     Tools.init();
+    var setMast = function () { var m = $('.masthead'), root = document.documentElement; if (!m) return; root.style.removeProperty('--masthead'); root.style.setProperty('--masthead', m.offsetHeight + 'px'); }; // the masthead wraps on phones, so the sticky offsets follow its real height
+    setMast(); window.addEventListener('resize', setMast); window.addEventListener('load', setMast);
     Stage.init();
     Router.init();
     Sections.init();
@@ -6690,3 +6700,5 @@ PC.register('wafer', function (p) {
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
 </script>
+</body>
+</html>

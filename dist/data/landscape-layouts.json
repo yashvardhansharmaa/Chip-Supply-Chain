@@ -1,0 +1,1457 @@
+{
+  "nvidia-b200": {
+    "unit": "mm",
+    "interposer": [
+      78,
+      50
+    ],
+    "dies": [
+      {
+        "x": -13.5,
+        "y": 0,
+        "w": 26,
+        "h": 32.5
+      },
+      {
+        "x": 13.5,
+        "y": 0,
+        "w": 26,
+        "h": 32.5
+      }
+    ],
+    "hbm": [
+      {
+        "x": -33.5,
+        "y": -17.7,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -33.5,
+        "y": -5.9,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -33.5,
+        "y": 5.9,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -33.5,
+        "y": 17.7,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 33.5,
+        "y": -17.7,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 33.5,
+        "y": -5.9,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 33.5,
+        "y": 5.9,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 33.5,
+        "y": 17.7,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      95,
+      68
+    ],
+    "estimated": true,
+    "sources": [
+      "https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/",
+      "https://www.nvidia.com/en-us/data-center/dgx-b200/",
+      "https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm"
+    ],
+    "note": "Nvidia states two reticle-limited 4NP dies joined by NV-HBI and 192 GB of HBM3E in eight stacks; the die and stack footprints are the reticle limit (26 x 33 mm) and the JEDEC HBM package (about 11 x 11 mm), and the interposer and substrate rectangles are the geometric envelope of that arrangement, not published dimensions."
+  },
+  "nvidia-b300": {
+    "unit": "mm",
+    "interposer": [
+      78,
+      50
+    ],
+    "dies": [
+      {
+        "x": -13.5,
+        "y": 0,
+        "w": 26,
+        "h": 32.5
+      },
+      {
+        "x": 13.5,
+        "y": 0,
+        "w": 26,
+        "h": 32.5
+      }
+    ],
+    "hbm": [
+      {
+        "x": -33.5,
+        "y": -17.7,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -33.5,
+        "y": -5.9,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -33.5,
+        "y": 5.9,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -33.5,
+        "y": 17.7,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 33.5,
+        "y": -17.7,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 33.5,
+        "y": -5.9,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 33.5,
+        "y": 5.9,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 33.5,
+        "y": 17.7,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      95,
+      68
+    ],
+    "estimated": true,
+    "sources": [
+      "https://developer.nvidia.com/blog/inside-nvidia-blackwell-ultra-the-chip-powering-the-ai-factory-era/",
+      "https://www.nvidia.com/en-us/data-center/gb300-nvl72/",
+      "https://www.micron.com/about/blog/applications/ai/micron-continues-memory-industry-leadership-with-hbm3e-12-high-36gb"
+    ],
+    "note": "Blackwell Ultra keeps the two reticle-sized dies and eight stacks of B200 and swaps 8-high HBM3E for 12-high, so the plan view is the same and only the stacks get taller; the same envelope caveat applies."
+  },
+  "nvidia-vr200": {
+    "unit": "mm",
+    "interposer": [
+      80,
+      54
+    ],
+    "dies": [
+      {
+        "x": -13.5,
+        "y": 0,
+        "w": 26,
+        "h": 33
+      },
+      {
+        "x": 13.5,
+        "y": 0,
+        "w": 26,
+        "h": 33
+      }
+    ],
+    "hbm": [
+      {
+        "x": -34,
+        "y": -18.9,
+        "w": 11,
+        "h": 12
+      },
+      {
+        "x": -34,
+        "y": -6.3,
+        "w": 11,
+        "h": 12
+      },
+      {
+        "x": -34,
+        "y": 6.3,
+        "w": 11,
+        "h": 12
+      },
+      {
+        "x": -34,
+        "y": 18.9,
+        "w": 11,
+        "h": 12
+      },
+      {
+        "x": 34,
+        "y": -18.9,
+        "w": 11,
+        "h": 12
+      },
+      {
+        "x": 34,
+        "y": -6.3,
+        "w": 11,
+        "h": 12
+      },
+      {
+        "x": 34,
+        "y": 6.3,
+        "w": 11,
+        "h": 12
+      },
+      {
+        "x": 34,
+        "y": 18.9,
+        "w": 11,
+        "h": 12
+      }
+    ],
+    "substrate": [
+      98,
+      74
+    ],
+    "estimated": true,
+    "sources": [
+      "https://developer.nvidia.com/blog/inside-nvidia-rubin-gpu-architecture-powering-the-era-of-agentic-ai/",
+      "https://www.nvidia.com/en-us/data-center/vera-rubin-nvl72/",
+      "https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm"
+    ],
+    "note": "Nvidia says Rubin is built from two reticle-limited compute dies on one package with up to 288 GB of HBM4 in 12-high stacks; stack footprint, interposer and substrate are estimated, and the small I/O dies described in press reports are left out because Nvidia has not shown them."
+  },
+  "nvidia-h200-china": {
+    "unit": "mm",
+    "interposer": [
+      54,
+      38
+    ],
+    "dies": [
+      {
+        "x": 0,
+        "y": 0,
+        "w": 26,
+        "h": 31.5
+      }
+    ],
+    "hbm": [
+      {
+        "x": -20,
+        "y": -11.8,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -20,
+        "y": 0,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -20,
+        "y": 11.8,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 20,
+        "y": -11.8,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 20,
+        "y": 0,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 20,
+        "y": 11.8,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      72,
+      56
+    ],
+    "estimated": true,
+    "sources": [
+      "https://www.nvidia.com/en-us/data-center/h200/",
+      "https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm"
+    ],
+    "note": "One monolithic Hopper die with six HBM3E stacks, three per long edge, on a CoWoS-S interposer; Nvidia publishes the memory configuration but no dimensions, so the die, interposer and substrate rectangles are estimated (the envelope works out near 2.4 reticle fields, in line with CoWoS-S of that generation)."
+  },
+  "amd-mi355x": {
+    "unit": "mm",
+    "interposer": [
+      62,
+      50
+    ],
+    "base": [
+      {
+        "x": -9.5,
+        "y": 0,
+        "w": 18.5,
+        "h": 34
+      },
+      {
+        "x": 9.5,
+        "y": 0,
+        "w": 18.5,
+        "h": 34
+      }
+    ],
+    "dies": [
+      {
+        "x": -14,
+        "y": -7.5,
+        "w": 8,
+        "h": 14
+      },
+      {
+        "x": -14,
+        "y": 7.5,
+        "w": 8,
+        "h": 14
+      },
+      {
+        "x": -5,
+        "y": -7.5,
+        "w": 8,
+        "h": 14
+      },
+      {
+        "x": -5,
+        "y": 7.5,
+        "w": 8,
+        "h": 14
+      },
+      {
+        "x": 5,
+        "y": -7.5,
+        "w": 8,
+        "h": 14
+      },
+      {
+        "x": 5,
+        "y": 7.5,
+        "w": 8,
+        "h": 14
+      },
+      {
+        "x": 14,
+        "y": -7.5,
+        "w": 8,
+        "h": 14
+      },
+      {
+        "x": 14,
+        "y": 7.5,
+        "w": 8,
+        "h": 14
+      }
+    ],
+    "hbm": [
+      {
+        "x": -25.5,
+        "y": -17.1,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -25.5,
+        "y": -5.7,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -25.5,
+        "y": 5.7,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -25.5,
+        "y": 17.1,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 25.5,
+        "y": -17.1,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 25.5,
+        "y": -5.7,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 25.5,
+        "y": 5.7,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 25.5,
+        "y": 17.1,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      76.8,
+      72
+    ],
+    "estimated": true,
+    "sources": [
+      "https://www.amd.com/en/products/accelerators/instinct/mi350/mi355x.html",
+      "https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/product-briefs/amd-instinct-mi355x-gpu-brochure.pdf",
+      "https://inferencex.semianalysis.com/chips/mi355x",
+      "https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm"
+    ],
+    "note": "Eight N3P accelerator dies hybrid-bonded onto two N6 I/O dies, with eight 12-high HBM3E stacks four to a side; the OAM package outline is carried over from the published 76.8 x 72 mm MI300X package and the chiplet and interposer rectangles are estimated."
+  },
+  "amd-mi455x": {
+    "unit": "mm",
+    "interposer": [
+      74,
+      74
+    ],
+    "base": [
+      {
+        "x": -12.5,
+        "y": 0,
+        "w": 24,
+        "h": 50
+      },
+      {
+        "x": 12.5,
+        "y": 0,
+        "w": 24,
+        "h": 50
+      }
+    ],
+    "dies": [
+      {
+        "x": -18,
+        "y": -10.5,
+        "w": 9.5,
+        "h": 19
+      },
+      {
+        "x": -18,
+        "y": 10.5,
+        "w": 9.5,
+        "h": 19
+      },
+      {
+        "x": -7,
+        "y": -10.5,
+        "w": 9.5,
+        "h": 19
+      },
+      {
+        "x": -7,
+        "y": 10.5,
+        "w": 9.5,
+        "h": 19
+      },
+      {
+        "x": 7,
+        "y": -10.5,
+        "w": 9.5,
+        "h": 19
+      },
+      {
+        "x": 7,
+        "y": 10.5,
+        "w": 9.5,
+        "h": 19
+      },
+      {
+        "x": 18,
+        "y": -10.5,
+        "w": 9.5,
+        "h": 19
+      },
+      {
+        "x": 18,
+        "y": 10.5,
+        "w": 9.5,
+        "h": 19
+      },
+      {
+        "x": 0,
+        "y": 31,
+        "w": 46,
+        "h": 8
+      },
+      {
+        "x": 0,
+        "y": -31,
+        "w": 46,
+        "h": 8
+      }
+    ],
+    "hbm": [
+      {
+        "x": -31,
+        "y": -29.5,
+        "w": 11,
+        "h": 11.5
+      },
+      {
+        "x": -31,
+        "y": -17.7,
+        "w": 11,
+        "h": 11.5
+      },
+      {
+        "x": -31,
+        "y": -5.9,
+        "w": 11,
+        "h": 11.5
+      },
+      {
+        "x": -31,
+        "y": 5.9,
+        "w": 11,
+        "h": 11.5
+      },
+      {
+        "x": -31,
+        "y": 17.7,
+        "w": 11,
+        "h": 11.5
+      },
+      {
+        "x": -31,
+        "y": 29.5,
+        "w": 11,
+        "h": 11.5
+      },
+      {
+        "x": 31,
+        "y": -29.5,
+        "w": 11,
+        "h": 11.5
+      },
+      {
+        "x": 31,
+        "y": -17.7,
+        "w": 11,
+        "h": 11.5
+      },
+      {
+        "x": 31,
+        "y": -5.9,
+        "w": 11,
+        "h": 11.5
+      },
+      {
+        "x": 31,
+        "y": 5.9,
+        "w": 11,
+        "h": 11.5
+      },
+      {
+        "x": 31,
+        "y": 17.7,
+        "w": 11,
+        "h": 11.5
+      },
+      {
+        "x": 31,
+        "y": 29.5,
+        "w": 11,
+        "h": 11.5
+      }
+    ],
+    "substrate": [
+      96,
+      94
+    ],
+    "estimated": true,
+    "sources": [
+      "https://www.amd.com/en/products/accelerators/instinct/mi400/mi455x.html",
+      "https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era",
+      "https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm"
+    ],
+    "note": "Eight N2 accelerator dies on two N3 I/O dies, two separate fabric-and-cache dies and twelve HBM4 stacks, six to a side; AMD calls it the largest chip ever built on CoWoS-L but publishes no dimensions, so every rectangle here is estimated from the part counts."
+  },
+  "google-tpu-v7-ironwood": {
+    "unit": "mm",
+    "interposer": [
+      70,
+      60
+    ],
+    "dies": [
+      {
+        "x": -11.5,
+        "y": -5,
+        "w": 22,
+        "h": 26
+      },
+      {
+        "x": 11.5,
+        "y": -5,
+        "w": 22,
+        "h": 26
+      },
+      {
+        "x": 0,
+        "y": 23,
+        "w": 20,
+        "h": 9
+      },
+      {
+        "x": -28.5,
+        "y": 23,
+        "w": 12,
+        "h": 9
+      },
+      {
+        "x": 28.5,
+        "y": 23,
+        "w": 12,
+        "h": 9
+      }
+    ],
+    "hbm": [
+      {
+        "x": -28.5,
+        "y": -21.8,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -28.5,
+        "y": -10.6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -28.5,
+        "y": 0.6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -28.5,
+        "y": 11.8,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 28.5,
+        "y": -21.8,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 28.5,
+        "y": -10.6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 28.5,
+        "y": 0.6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 28.5,
+        "y": 11.8,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      88,
+      78
+    ],
+    "estimated": true,
+    "sources": [
+      "https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack",
+      "https://docs.cloud.google.com/tpu/docs/tpu7x",
+      "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/ironwood-tpu-age-of-inference/"
+    ],
+    "note": "Google states eight HBM3E stacks and 192 GiB per chip; the two compute chiplets in the middle and the three small interconnect dies along the top edge are read off published package photographs, and all dimensions are estimated."
+  },
+  "google-tpu-8i": {
+    "unit": "mm",
+    "interposer": [
+      54,
+      50
+    ],
+    "dies": [
+      {
+        "x": 0,
+        "y": -4,
+        "w": 26,
+        "h": 30
+      },
+      {
+        "x": 0,
+        "y": 18,
+        "w": 22,
+        "h": 8
+      }
+    ],
+    "hbm": [
+      {
+        "x": -20,
+        "y": -15.6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -20,
+        "y": -4,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -20,
+        "y": 7.6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 20,
+        "y": -15.6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 20,
+        "y": -4,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 20,
+        "y": 7.6,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      72,
+      68
+    ],
+    "estimated": true,
+    "sources": [
+      "https://cloud.google.com/blog/products/compute/tpu-8t-and-tpu-8i-technical-deep-dive"
+    ],
+    "note": "The inference half of the eighth-generation TPU is described as one compute die, one I/O die and six HBM stacks feeding 288 GB at 8.6 TB/s; nothing physical has been published, so the whole layout is estimated from that part count."
+  },
+  "aws-trainium3": {
+    "unit": "mm",
+    "interposers": [
+      {
+        "x": -22,
+        "y": 0,
+        "w": 40,
+        "h": 30
+      },
+      {
+        "x": 22,
+        "y": 0,
+        "w": 40,
+        "h": 30
+      }
+    ],
+    "dies": [
+      {
+        "x": -16,
+        "y": 0,
+        "w": 24,
+        "h": 26
+      },
+      {
+        "x": 16,
+        "y": 0,
+        "w": 24,
+        "h": 26
+      }
+    ],
+    "hbm": [
+      {
+        "x": -35.5,
+        "y": -6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -35.5,
+        "y": 6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 35.5,
+        "y": -6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 35.5,
+        "y": 6,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      96,
+      46
+    ],
+    "estimated": true,
+    "sources": [
+      "https://newsletter.semianalysis.com/p/aws-trainium3-deep-dive-a-potential",
+      "https://awsdocs-neuron.readthedocs-hosted.com/en/latest/general/arch/neuron-hardware/trainium3.html"
+    ],
+    "note": "Trainium3 is two CoWoS-R sub-assemblies on one substrate rather than a single interposer: each carries one compute die and two 12-high HBM3E stacks, and the two dies talk through the substrate; the rectangles are estimated."
+  },
+  "microsoft-maia-200": {
+    "unit": "mm",
+    "interposer": [
+      56,
+      40
+    ],
+    "dies": [
+      {
+        "x": 0,
+        "y": 0,
+        "w": 26,
+        "h": 32
+      }
+    ],
+    "hbm": [
+      {
+        "x": -20.5,
+        "y": -11.6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -20.5,
+        "y": 0,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -20.5,
+        "y": 11.6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 20.5,
+        "y": -11.6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 20.5,
+        "y": 0,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 20.5,
+        "y": 11.6,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      74,
+      60
+    ],
+    "estimated": true,
+    "sources": [
+      "https://blogs.microsoft.com/blog/2026/01/26/maia-200-the-ai-accelerator-built-for-inference/",
+      "https://techcommunity.microsoft.com/blog/azureinfrastructureblog/deep-dive-into-the-maia-200-architecture/4489312"
+    ],
+    "note": "Microsoft gives 140 billion transistors on N3P, 216 GB of HBM3E and 272 MB of SRAM but says nothing about the package; six stacks divide the capacity evenly at 36 GB each, so this is drawn as one large die with three stacks per edge and every dimension is estimated."
+  },
+  "meta-mtia-400": {
+    "unit": "mm",
+    "interposer": [
+      70,
+      50
+    ],
+    "dies": [
+      {
+        "x": -11.5,
+        "y": 3,
+        "w": 22,
+        "h": 26
+      },
+      {
+        "x": 11.5,
+        "y": 3,
+        "w": 22,
+        "h": 26
+      },
+      {
+        "x": 0,
+        "y": -18,
+        "w": 15,
+        "h": 10
+      },
+      {
+        "x": -18,
+        "y": -18,
+        "w": 10,
+        "h": 10
+      },
+      {
+        "x": 18,
+        "y": -18,
+        "w": 10,
+        "h": 10
+      }
+    ],
+    "hbm": [
+      {
+        "x": -29,
+        "y": -17.7,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -29,
+        "y": -5.9,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -29,
+        "y": 5.9,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -29,
+        "y": 17.7,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 29,
+        "y": -17.7,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 29,
+        "y": -5.9,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 29,
+        "y": 5.9,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 29,
+        "y": 17.7,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      88,
+      68
+    ],
+    "estimated": true,
+    "sources": [
+      "https://ai.meta.com/blog/meta-mtia-scale-ai-chips-for-billions/",
+      "https://engineering.fb.com/2026/08/24/networking-traffic/mtia-300-meta-training-chip-built-in-nics/"
+    ],
+    "note": "MTIA 400 is a multi-chip package with two compute chiplets, two network/IO chiplets and a host SoC die around eight HBM3E stacks; Meta has published the part count and the 9.4 TB/s figure but no dimensions, so the layout is estimated."
+  },
+  "openai-jalapeno": {
+    "unit": "mm",
+    "interposer": [
+      78,
+      44
+    ],
+    "base": [
+      {
+        "x": -13.5,
+        "y": 0,
+        "w": 26,
+        "h": 33
+      },
+      {
+        "x": 13.5,
+        "y": 0,
+        "w": 26,
+        "h": 33
+      }
+    ],
+    "dies": [
+      {
+        "x": -13.5,
+        "y": 0,
+        "w": 23,
+        "h": 29
+      },
+      {
+        "x": 13.5,
+        "y": 0,
+        "w": 23,
+        "h": 29
+      }
+    ],
+    "hbm": [
+      {
+        "x": -33.5,
+        "y": -12.6,
+        "w": 11,
+        "h": 12
+      },
+      {
+        "x": -33.5,
+        "y": 0,
+        "w": 11,
+        "h": 12
+      },
+      {
+        "x": -33.5,
+        "y": 12.6,
+        "w": 11,
+        "h": 12
+      },
+      {
+        "x": 33.5,
+        "y": -12.6,
+        "w": 11,
+        "h": 12
+      },
+      {
+        "x": 33.5,
+        "y": 0,
+        "w": 11,
+        "h": 12
+      },
+      {
+        "x": 33.5,
+        "y": 12.6,
+        "w": 11,
+        "h": 12
+      }
+    ],
+    "substrate": [
+      96,
+      62
+    ],
+    "estimated": true,
+    "sources": [
+      "https://openai.com/index/jalapeno-first-results/",
+      "https://openai.com/index/openai-and-broadcom-announce-strategic-collaboration/",
+      "https://newsletter.semianalysis.com/p/openai-jalapeno-better-than-nvidia"
+    ],
+    "note": "Broadcom builds Jalapeno on its 3.5D face-to-face platform, so the compute dies are stacked on base dies inside a 2.5D package; 216 GB at 15.4 TB/s divides cleanly into six 12-high HBM4 stacks, and the die count, sizes and interposer are estimated."
+  },
+  "intel-gaudi3": {
+    "unit": "mm",
+    "interposer": [
+      74,
+      46
+    ],
+    "dies": [
+      {
+        "x": -12.5,
+        "y": 0,
+        "w": 24,
+        "h": 28
+      },
+      {
+        "x": 12.5,
+        "y": 0,
+        "w": 24,
+        "h": 28
+      }
+    ],
+    "hbm": [
+      {
+        "x": -31,
+        "y": -16.5,
+        "w": 11,
+        "h": 10.5
+      },
+      {
+        "x": -31,
+        "y": -5.5,
+        "w": 11,
+        "h": 10.5
+      },
+      {
+        "x": -31,
+        "y": 5.5,
+        "w": 11,
+        "h": 10.5
+      },
+      {
+        "x": -31,
+        "y": 16.5,
+        "w": 11,
+        "h": 10.5
+      },
+      {
+        "x": 31,
+        "y": -16.5,
+        "w": 11,
+        "h": 10.5
+      },
+      {
+        "x": 31,
+        "y": -5.5,
+        "w": 11,
+        "h": 10.5
+      },
+      {
+        "x": 31,
+        "y": 5.5,
+        "w": 11,
+        "h": 10.5
+      },
+      {
+        "x": 31,
+        "y": 16.5,
+        "w": 11,
+        "h": 10.5
+      }
+    ],
+    "substrate": [
+      90,
+      66
+    ],
+    "estimated": true,
+    "sources": [
+      "https://www.intel.com/content/www/us/en/content-details/817486/intel-gaudi-3-ai-accelerator-white-paper.html",
+      "https://docs.habana.ai/en/latest/Gaudi_Overview/Gaudi_Architecture.html",
+      "https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm"
+    ],
+    "note": "Intel’s white paper describes two identical compute dies joined across a high-speed interposer with eight HBM2E devices making up 128 GB; the die, stack and substrate rectangles are estimated from that description."
+  },
+  "cerebras-wse3-turbo": {
+    "unit": "mm",
+    "waferScale": true,
+    "diameterMm": 300,
+    "dieGrid": [
+      12,
+      7
+    ],
+    "squareMm": 215,
+    "estimated": false,
+    "sources": [
+      "https://www.cerebras.ai/product-chip",
+      "https://www.cerebras.ai/blog/introducing-cerebras-cs-4",
+      "https://www.cerebras.ai/blog/ultrafast-frontier-inference-cerebras-deep-dive-at-hot-chips-2026"
+    ],
+    "note": "Cerebras publishes the two numbers that fix this drawing: 46,225 mm² of silicon, which is a 215 mm square, cut from a single 300 mm wafer; the 12 x 7 grid follows from the 84 reticle fields that fill that square, and there is no interposer, no substrate and no HBM."
+  },
+  "groq-lpu": {
+    "unit": "mm",
+    "interposer": null,
+    "dies": [
+      {
+        "x": 0,
+        "y": 0,
+        "w": 27,
+        "h": 27
+      }
+    ],
+    "hbm": [],
+    "substrate": [
+      52,
+      52
+    ],
+    "estimated": true,
+    "sources": [
+      "https://groq.com/lpu",
+      "https://newsletter.semianalysis.com/p/groq-inference-tokenomics-speed-but"
+    ],
+    "note": "The LPU keeps every weight in on-die SRAM, so there is no HBM and no interposer at all: one large 14 nm die flip-chipped straight onto a build-up substrate; the roughly 725 mm² die is drawn square and the substrate is estimated."
+  },
+  "huawei-ascend-910c": {
+    "unit": "mm",
+    "interposers": [
+      {
+        "x": -27,
+        "y": 0,
+        "w": 50,
+        "h": 34
+      },
+      {
+        "x": 27,
+        "y": 0,
+        "w": 50,
+        "h": 34
+      }
+    ],
+    "dies": [
+      {
+        "x": -27,
+        "y": 0,
+        "w": 24,
+        "h": 28
+      },
+      {
+        "x": 27,
+        "y": 0,
+        "w": 24,
+        "h": 28
+      }
+    ],
+    "hbm": [
+      {
+        "x": -45,
+        "y": -5.6,
+        "w": 11,
+        "h": 10.5
+      },
+      {
+        "x": -45,
+        "y": 5.6,
+        "w": 11,
+        "h": 10.5
+      },
+      {
+        "x": -9,
+        "y": -5.6,
+        "w": 11,
+        "h": 10.5
+      },
+      {
+        "x": -9,
+        "y": 5.6,
+        "w": 11,
+        "h": 10.5
+      },
+      {
+        "x": 9,
+        "y": -5.6,
+        "w": 11,
+        "h": 10.5
+      },
+      {
+        "x": 9,
+        "y": 5.6,
+        "w": 11,
+        "h": 10.5
+      },
+      {
+        "x": 45,
+        "y": -5.6,
+        "w": 11,
+        "h": 10.5
+      },
+      {
+        "x": 45,
+        "y": 5.6,
+        "w": 11,
+        "h": 10.5
+      }
+    ],
+    "substrate": [
+      116,
+      50
+    ],
+    "estimated": true,
+    "sources": [
+      "https://arxiv.org/abs/2506.12708",
+      "https://newsletter.semianalysis.com/p/huawei-ai-cloudmatrix-384-chinas-answer-to-nvidia-gb200-nvl72"
+    ],
+    "note": "The 910C is two complete 910B-class sub-assemblies on one organic substrate: each is a single compute die with four HBM2E stacks on its own silicon interposer, eight stacks in all; the dimensions are estimated from package photographs."
+  },
+  "huawei-ascend-950pr": {
+    "unit": "mm",
+    "interposer": [
+      54,
+      36
+    ],
+    "dies": [
+      {
+        "x": 0,
+        "y": 0,
+        "w": 26,
+        "h": 30
+      }
+    ],
+    "hbm": [
+      {
+        "x": -20,
+        "y": -6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -20,
+        "y": 6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 20,
+        "y": -6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 20,
+        "y": 6,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      72,
+      54
+    ],
+    "estimated": true,
+    "sources": [
+      "https://www.huawei.com/en/news/2025/9/hc-xu-keynote-speech",
+      "https://www.huawei.com/en/news/2025/9/hc-superpod-innovation"
+    ],
+    "note": "Huawei says the 950PR is the first Ascend with its own HiBL 1.0 stacked memory and reports a monolithic compute die rather than the stitched pair of the 910C; four stacks fit the stated capacity and bandwidth, and everything here is estimated."
+  },
+  "cambricon-siyuan-590": {
+    "unit": "mm",
+    "interposer": [
+      52,
+      34
+    ],
+    "dies": [
+      {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 28
+      }
+    ],
+    "hbm": [
+      {
+        "x": -19,
+        "y": -5.8,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -19,
+        "y": 5.8,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 19,
+        "y": -5.8,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 19,
+        "y": 5.8,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      70,
+      52
+    ],
+    "estimated": true,
+    "sources": [
+      "https://www.cambricon.com/"
+    ],
+    "note": "Cambricon publishes neither the die count nor the memory configuration for the MLU590; this is the smallest arrangement consistent with a single SMIC 7 nm-class die and the reported HBM capacity, and every number is estimated."
+  },
+  "moore-threads-mtt-s5000": {
+    "unit": "mm",
+    "interposer": [
+      50,
+      34
+    ],
+    "dies": [
+      {
+        "x": 0,
+        "y": 0,
+        "w": 23,
+        "h": 26
+      }
+    ],
+    "hbm": [
+      {
+        "x": -18.5,
+        "y": -5.8,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -18.5,
+        "y": 5.8,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 18.5,
+        "y": -5.8,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 18.5,
+        "y": 5.8,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      68,
+      52
+    ],
+    "estimated": true,
+    "sources": [
+      "https://en.mthreads.com/product/S5000"
+    ],
+    "note": "Moore Threads gives 80 GB at 1.6 TB/s, which is about four HBM2E-class stacks, and nothing else; the single die and all dimensions are estimated."
+  }
+}

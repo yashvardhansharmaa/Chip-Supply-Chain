@@ -3,7 +3,7 @@
   "id": "introduction-and-goals",
   "number": 1,
   "title": "Introduction and Goals",
-  "oneLiner": "A component-level map of the hardware that makes AI chips, from sand to a rack. Eighteen stages, and the handful of firms that own each one.",
+  "oneLiner": "A component-level map of the hardware that makes AI chips, from sand to a rack: fifteen stages, and the handful of firms that own each one.",
   "plain": "Building an AI chip, the kind that trains and runs an artificial intelligence model, is like building a car in which the engine, the gearbox and the wheels each come from a single factory somewhere in the world, with no second factory able to make them. About a dozen separately manufactured objects, each from a different country, are stacked into one finished package. Most of those objects have one or two credible suppliers, and replacing any of them takes years rather than months. That is why a rule written in one capital city can slow computing everywhere.",
   "specimen": "wafer",
   "specimenCaption": "Right: a polished 300 mm wafer, its 57 whole exposure fields ruled by scribe streets, the orientation notch drawn six times life size and one field in amber. Every chapter explains one step this disc passes through on its way to a rack.",
