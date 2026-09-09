@@ -79,15 +79,15 @@
 ---
 # Geopolitics
 
-The seventeen chapters before this describe a supply chain. This one describes what governments have done with it. Since 2018 Washington has been converting industrial facts into a control regime, and Beijing has been building an answer. Neither is finished.
+The seventeen chapters before this describe a supply chain. This one describes what governments have done with it. Since 2018 Washington has converted industrial facts into a control regime and Beijing has built an answer. Neither is finished.
 
 ## The shape of the contest
 
 An export control is a licence requirement, not a ban on ideas. It tells a company that a named item cannot be shipped to a named buyer without a government's permission, and Washington extends that rule to foreign-made goods built with American technology. A handful of countries can enforce it because the machines, software and chemicals that make an advanced chip come from a short list of firms in the United States, the Netherlands, Japan and South Korea. China can copy the simpler machines in a few years. It cannot yet copy the machine that prints the finest circuits, the chemistry that machine needs, or high-bandwidth memory.
 
-The American premise is simple. AI capability is a function of compute, compute is a function of a small number of physical inputs, and most of those inputs pass through countries that will take a call from Washington. CSET's 2021 segment map made that legible, and the finding has held: a few segments have one or two countries holding most of the market, and those are where policy has leverage ([source](https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/)).
+The American premise: AI capability is a function of compute, compute is a function of a few physical inputs, and most of those inputs pass through countries that will take a call from Washington. CSET's 2021 segment map made that legible. A few segments have one or two countries holding most of the market, and those are where policy has leverage ([source](https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/)).
 
-The goal changed in 2022, when the national security adviser said the United States would seek "as large a lead as possible" in force-multiplier technologies, replacing decades of policy that aimed only at staying a generation or two ahead. "Small yard, high fence" was the intended shape ([source](https://www.csis.org/analysis/where-chips-fall-us-export-controls-under-biden-administration-2022-2024)). Gregory Allen's reading of the October 2022 rules is the standard one: they attacked four chokepoints at once, AI chip sales, EDA software, manufacturing equipment and the components inside that equipment, and aimed to push China's capability below where it already stood ([source](https://www.csis.org/analysis/choking-chinas-access-future-ai)).
+In 2022 the goal changed from staying a generation ahead to seeking "as large a lead as possible", with "small yard, high fence" as the intended shape ([source](https://www.csis.org/analysis/where-chips-fall-us-export-controls-under-biden-administration-2022-2024)). The October 2022 rules attacked four chokepoints at once, AI chip sales, EDA software, manufacturing equipment and the components inside that equipment, and were meant to push China below where it already stood rather than slow its growth ([source](https://www.csis.org/analysis/choking-chinas-access-future-ai)).
 
 The yard has not stayed small. The regime moved from end-use licensing, where the question was who is buying and why, to country-wide prohibitions, where the only question is where the box is going.
 
@@ -108,14 +108,14 @@ The yard has not stayed small. The regime moved from end-use licensing, where th
 | AI accelerator design | United States | 93% | revenue, 2025 |
 | Logic at 28 nm and above | China | 38% | capacity, 2025 |
 
-- **Equipment.** Firm-level revenue from CSET's ETO Supply Chain Explorer on TechInsights 2025 data, aggregated to country by parent-company headquarters ([source](https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv)).
+- **Equipment.** Firm-level revenue from CSET's ETO Supply Chain Explorer on TechInsights 2025 data, by parent-company headquarters ([source](https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv)).
 - **Materials.** CSET's 2021 segment map ([source](https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/)).
 - **Leading-edge capacity.** TrendForce's 2023 country split ([source](https://www.trendforce.com/presscenter/news/20231214-11959.html)).
 - **Memory.** Counterpoint's Q2 2026 figures, which give SK hynix 50 percent of HBM revenue and Samsung 33 ([source](https://counterpointresearch.com/en/insights/global-dram-and-hbm-market-share)).
 - **Design and mature nodes.** CSIS ([source](https://www.csis.org/analysis/chinas-localization-drive-semiconductors-gains-impetus-allied-chip-export-controls)).
-- **Packaging.** This site's estimate, from TSMC running 120,000 to 140,000 CoWoS wafers a month in 2026 against 50,000 to 60,000 at its OSAT partners, almost all of TSMC's in Taiwan ([source](https://www.trendforce.com/news/2026/06/15/news-tsmc-cowos-supply-demand-gap-reportedly-seen-narrowing-from-20-to-10-by-end-2026-as-capacity-expands/)).
+- **Packaging.** Our estimate: TSMC should run 120,000 to 140,000 CoWoS wafers a month in 2026 against 50,000 to 60,000 at its OSAT partners, almost all of TSMC's in Taiwan ([source](https://www.trendforce.com/news/2026/06/15/news-tsmc-cowos-supply-demand-gap-reportedly-seen-narrowing-from-20-to-10-by-end-2026-as-capacity-expands/)).
 
-The structure falls out of that column. The United States holds design and three of five tool categories. The Netherlands holds the one machine nobody can copy. Japan holds the consumables, Korea the memory, Taiwan the manufacturing, China the low end and the minerals underneath everything. No country holds enough to be independent, which is why controls work and why they hurt the country imposing them.
+The structure falls out of that column. The United States holds design and three of five tool categories, the Netherlands the one machine nobody can copy, Japan the consumables, Korea the memory, Taiwan the manufacturing, China the low end and the minerals underneath. No country holds enough to be independent, which is why controls work and why they hurt the country imposing them.
 
 ## The US export-control campaign, 2018 to today
 

@@ -101,10 +101,10 @@ The other HBM4 change is commercial. The base die is now a logic die, so it goes
 ## How a stack is built
 
 - **Drill and thin.** Etch through-silicon vias into a DRAM wafer, fill them with copper, then grind the wafer until the vias come through the back, down to around 50 microns for 16-high HBM4 ([source](https://www.tomshardware.com/tech-industry/semiconductors/sk-hynix-says-hybrid-bonding-wont-be-ready-for-hbm4e-as-ai-memory-runs-into-a-775-micron-ceiling)).
-- **Stack and join.** Samsung bonds one die at a time with thermal compression; SK hynix joins the whole stack in a single reflow, which controls heat and warpage better.
+- **Stack and join.** Samsung bonds one die at a time with thermal compression; SK hynix joins the whole stack in a single reflow, which controls heat and warpage better ([source](https://www.tomshardware.com/tech-industry/semiconductors/sk-hynix-says-hybrid-bonding-wont-be-ready-for-hbm4e-as-ai-memory-runs-into-a-775-micron-ceiling)).
 - **Stay under the ceiling.** A finished cube is capped at 775 microns, raised from 720 for HBM4, because a stack taller than the processor beside it would foul the cold plate ([source](https://www.tomshardware.com/tech-industry/semiconductors/sk-hynix-says-hybrid-bonding-wont-be-ready-for-hbm4e-as-ai-memory-runs-into-a-775-micron-ceiling)).
 
-Hybrid bonding would remove the microbumps and cut thermal resistance, but SK hynix has ruled it out for HBM4E, leaving HBM5 as the earliest slot.
+Hybrid bonding would remove the microbumps and cut thermal resistance, but SK hynix has ruled it out for HBM4E, leaving HBM5 as the earliest slot ([source](https://www.tomshardware.com/tech-industry/semiconductors/sk-hynix-says-hybrid-bonding-wont-be-ready-for-hbm4e-as-ai-memory-runs-into-a-775-micron-ceiling)).
 
 A stack is only as good as its worst die. Samsung's HBM4 yield was below 60 percent when mass production started in February 2026 and reached about 80 percent by August, with SK hynix in the same range ([source](https://www.trendforce.com/news/2026/08/10/news-samsungs-hbm4-yield-reportedly-hits-80-as-race-to-supply-vera-rubin-heats-up-sk-hynix-labor-talks-add-a-twist/)). And the silicon cost is the part people miss: in a two-GPU package the memory is around 90 percent of the silicon, roughly eight times the area of the GPU dies ([source](https://www.tomshardware.com/tech-industry/semiconductors/micron-says-the-silicon-gap-between-hbm-and-ddr5-is-widening-with-every-generation)).
 

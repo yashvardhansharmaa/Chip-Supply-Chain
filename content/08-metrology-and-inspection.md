@@ -83,7 +83,7 @@ Five families of tool do the work, and they trade sensitivity against speed.
 - **Overlay and film metrology** measure whether this layer sits on the last one and how thick each film is, using scatterometry to recover thickness and profile without cutting the wafer open. Film and wafer measuring was a $0.54 billion market as of 2019 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). It is Nova's home ground and much of Onto's, and in August 2026 Onto paid about $720 million for 27 percent of the Japanese X-ray maker Rigaku ([source](https://investors.ontoinnovation.com/news/news-details/2026/Onto-Innovation-Completes-Strategic-Investment-in-Rigaku-Holdings-Corporation/default.aspx)).
 - **Mask inspection** gets its own tools, because a defect on a reticle repeats on every die. Photomask inspection and repair was a $0.94 billion market as of 2019, supplied by KLA, Lasertec, Zeiss and Applied Materials ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 
-That 15x multiple is the trade-off in one number: e-beam is far slower than optical, so fabs run optical for coverage and e-beam for what optical cannot see. How many wafers and sites to sample is a cost decision as much as a physics one.
+That 15x multiple is the trade-off in one number ([source](https://www.asml.com/en/products/metrology-and-inspection-systems/hmi-escan-1100)): e-beam is far slower than optical, so fabs run optical for coverage and e-beam for what optical cannot see. How many wafers and sites to sample is a cost decision as much as a physics one.
 
 {{figure:pc-share}}
 

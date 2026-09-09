@@ -84,7 +84,7 @@ When one exposure cannot resolve a pitch, the layer is split across two, three o
 
 DUV means excimer laser light: 248 nm from krypton fluoride, 193 nm from argon fluoride, dry or through water. These tools still dominate by volume. Of the 327 systems ASML sold in 2025, 131 were ArF immersion, 78 KrF, 54 i-line and 16 ArF dry ([source](https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf)).
 
-Immersion is the contested tier. NXT:2000i-class scanners are what a fab needs to reach 7 nm-class logic through multipatterning, which is where Dutch export licensing draws its line.
+Immersion is the contested tier. NXT:2000i-class scanners are what a fab needs to reach leading-edge logic through multipatterning, and that is where Dutch export licensing draws its line.
 
 ### Extreme ultraviolet
 

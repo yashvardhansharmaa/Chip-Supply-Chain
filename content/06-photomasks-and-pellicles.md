@@ -111,7 +111,7 @@ Cost estimates vary and should be read as a range. SemiAnalysis put mask sets be
 
 That number decides who gets to use a node. D2S puts it bluntly: a new AI chip startup proves its design out on a 193 nm immersion node first, because it lacks the volume to amortise an EUV mask set ([source](https://semiengineering.com/mask-economics-shape-high-na-euv-adoption/)).
 
-For AI accelerators, mask cost is real but not decisive. A GPU die spread over hundreds of thousands of units absorbs a $40 million mask set easily. The same mask set kills a specialised inference ASIC shipping in the thousands, which is the quiet reason so much AI silicon converges on a handful of designs.
+For AI accelerators, mask cost is real but not decisive. A GPU die spread over hundreds of thousands of units absorbs a $40 million mask set easily ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)). The same mask set kills a specialised inference ASIC shipping in the thousands, which is the quiet reason so much AI silicon converges on a handful of designs.
 
 {{figure:mask-set-cost}}
 
