@@ -451,8 +451,9 @@
         var title = (ch.querySelector('.chapter-title') || {}).textContent || ch.id;
         idx.push({ kind: 'Chapter', title: title.replace(/^Chapter \d+: /, ''), text: (ch.querySelector('.chapter-lede') || {}).textContent || '', href: '#' + ch.id });
         $$('.prose h3[id], .prose h4[id]', ch).forEach(function (h) {
-          var p = h.nextElementSibling; var t = p && /^(P|DIV)$/.test(p.tagName) ? p.textContent : '';
-          idx.push({ kind: title.replace(/^Chapter \d+: /, ''), title: h.textContent, text: t.slice(0, 220), href: '#' + h.id });
+          var t = '', p = h.nextElementSibling;
+          while (p && !/^H[1-4]$/.test(p.tagName) && t.length < 900) { if (/^(P|DIV|UL|OL|TABLE)$/.test(p.tagName)) t += ' ' + p.textContent; p = p.nextElementSibling; }
+          idx.push({ kind: title.replace(/^Chapter \d+: /, ''), title: h.textContent.replace(/#$/, ''), text: t.replace(/\s+/g, ' ').trim().slice(0, 900), href: '#' + h.id });
         });
       });
       (DATA.chapters || []).filter(function (c) { return c.id === 'geopolitics'; }).forEach(function () { idx.push({ kind: 'Essay', title: 'Geopolitics', text: 'Who holds each chokepoint, the export-control campaign, China\'s response, the Gulf and smuggling.', href: '#/geopolitics' }); });
