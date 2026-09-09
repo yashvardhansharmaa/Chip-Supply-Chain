@@ -2,3 +2,4 @@ qa/*.bin
 dist/*.map
 node_modules/
 .DS_Store
+qa/bib-cache/
