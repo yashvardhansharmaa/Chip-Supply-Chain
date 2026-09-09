@@ -3,7 +3,7 @@
   "id": "metrology-and-inspection",
   "number": 8,
   "title": "Metrology and Inspection",
-  "oneLiner": "Nobody builds a fab around process control, and every fab fails without it. One American firm holds about seven times the share of its nearest rival, and is still pulling away.",
+  "oneLiner": "Nobody builds a fab around process control, and every fab fails without it. One American firm holds about 57% of the market, roughly seven times its nearest rival, and is still pulling away.",
   "plain": "Every chip factory is really a quality-control operation. Machines print and build a pattern a thousand times over, and after many of those steps another machine looks at the wafer: are the lines the right width, did this layer land on the last one, has a speck of dirt killed a circuit. On a die as big as an AI accelerator, halving the number of stray specks lifts the share of working chips from about half to about seven in ten. One American firm sells about seven times as many of those machines as its nearest rival.",
   "specimen": "sem-column",
   "specimenCaption": "Right: a scanning electron microscope column over a wafer. Electron gun at the top, condenser and objective lenses, deflection coils, secondary electron detector, wafer on a precision stage.",
@@ -11,11 +11,12 @@
     "concentration": "High",
     "chokepointScore": 4,
     "leaders": [
-      {"name": "KLA", "country": "US", "share": "About 7x the process control share of its nearest rival; $13.58B revenue, FY2026"},
-      {"name": "Applied Materials", "country": "US", "share": "Process diagnostics and control: e-beam review, CD-SEM and film metrology"},
-      {"name": "ASML", "country": "NL", "share": "YieldStar overlay metrology and HMI multibeam e-beam inspection"},
-      {"name": "Onto Innovation", "country": "US", "share": "$1.01B revenue, 2025"},
-      {"name": "Nova", "country": "IL", "share": "$880.6M revenue, 2025; optical film and dimensional metrology"}
+      {"name": "KLA", "country": "US", "share": "56.5% of process control in 2024 on its own investor-day count, 6.5x its nearest rival; $13.58B revenue, FY2026"},
+      {"name": "Applied Materials", "country": "US", "share": "10.5% of process control tools in 2024: e-beam review, CD-SEM and film metrology"},
+      {"name": "Lasertec", "country": "JP", "share": "7.7% of process control tools in 2024, almost all of it mask inspection"},
+      {"name": "ASML", "country": "NL", "share": "5.2% of process control tools in 2024: YieldStar overlay and HMI multibeam e-beam inspection"},
+      {"name": "Nova", "country": "IL", "share": "3.7% of process control tools in 2024; $880.6M revenue, 2025"},
+      {"name": "Onto Innovation", "country": "US", "share": "3.0% of process control tools in 2024; $1.01B revenue, 2025"}
     ],
     "countries": [
       {"code": "US", "note": "KLA (Milpitas), Onto Innovation (Wilmington, MA), Applied Materials"},
@@ -25,8 +26,8 @@
       {"code": "CN", "note": "Domestic entrants only; 3.4% of CD measuring and none of mask or packaging inspection as of 2019"}
     ],
     "chinaStatus": "The weakest Chinese position of any major tool segment. As of 2019 domestic firms held 3.4% of CD measuring, 1.3% of defect inspection and none of mask or packaging inspection. CSET's 2026 survey of Chinese share gains runs through deposition, etch, CMP, lithography, packaging and test, and does not cover process control at all.",
-    "usStatus": "KLA is the largest process-control supplier worldwide, at roughly seven times its nearest rival on its own reported share. The December 2024 rule swept metrology and inspection tools for patterned 300 mm wafers into the controlled list at a 21 nm defect threshold.",
-    "costSignal": "KLA's fiscal 2026 revenue was $13.58B against a wafer equipment market of roughly $120B in calendar 2025, so process control is around a tenth of fab tool spending.",
+    "usStatus": "KLA is the largest process-control supplier worldwide. It puts its own 2024 share at 56.5% and 6.5x its nearest rival; CSET's Supply Chain Explorer puts it at 57.2% of the same year's market. US firms take 71.7% of the segment. The December 2024 rule swept metrology and inspection tools for patterned 300 mm wafers into the controlled list at a 21 nm defect threshold.",
+    "costSignal": "A $13.4B process control tool market in 2024, of which KLA took about 57%. KLA's fiscal 2026 revenue was $13.58B against a wafer equipment market of roughly $120B in calendar 2025, so process control is around a tenth of fab tool spending.",
     "substitution": {"years": "10+", "why": "Sensitivity comes from optics, electron columns and decades of defect libraries. China gained real share in etch and deposition between 2019 and 2024; in process control it held almost nothing in 2019 and nobody has published a gain since."}
   },
   "keyFacts": [
