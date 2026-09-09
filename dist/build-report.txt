@@ -1,11 +1,11 @@
-built 2026-09-09T05:17:44.875Z
-source tiers: A 182 · B 110 · C 60 · D 60 · unclassified 3
+built 2026-09-09T05:18:43.612Z
+source tiers: A 184 · B 110 · C 61 · D 60 · unclassified 0
 chapters: 17 + geopolitics
-words: 30317
+words: 30181
 sources: 415
 landscape: 19 chips · suppliers: 220 · timeline: 41 · matrix: 20 · glossary: 74
 specimens: boule-and-wafer, die-floorplan, euv-scanner, foup, gaa-transistor, gas-cabinet, gpu-baseboard, hbm-stack, package, photomask, probe-card, rack, substrate-layers, wafer-cost, wafer
-size: 1364 KB
+size: 1363 KB
   01 introduction-and-goals: 987 words, 8 sources (D 0, ? 0), 2 figures
   02 design-and-eda: 1782 words, 13 sources (D 3, ? 0), 3 figures
   03 silicon-and-wafers: 1520 words, 15 sources (D 2, ? 0), 2 figures
@@ -17,13 +17,13 @@ size: 1364 KB
   09 transistors-and-front-end: 1702 words, 23 sources (D 4, ? 0), 3 figures
   10 foundries-and-fabs: 1621 words, 23 sources (D 3, ? 0), 3 figures
   11 memory-and-hbm: 1777 words, 23 sources (D 2, ? 0), 3 figures
-  12 advanced-packaging: 1424 words, 14 sources (D 1, ? 0), 2 figures
+  12 advanced-packaging: 1391 words, 14 sources (D 1, ? 0), 2 figures
   13 substrates-and-pcbs: 1543 words, 26 sources (D 0, ? 0), 2 figures
   14 test-and-assembly: 1495 words, 25 sources (D 1, ? 0), 3 figures
   15 systems-and-networking: 1313 words, 16 sources (D 1, ? 0), 3 figures
   16 data-centers-and-power: 1583 words, 18 sources (D 4, ? 0), 3 figures
   17 component-costs: 1734 words, 44 sources (D 26, ? 0), 3 figures
-  18 geopolitics: 3453 words, 64 sources (D 2, ? 3), 3 figures
+  18 geopolitics: 3350 words, 64 sources (D 2, ? 0), 3 figures
 WARN deposition-and-etch: specimen "process-chamber" is not built yet
 WARN metrology-and-inspection: specimen "sem-column" is not built yet
 WARN advanced-packaging: specimen "cowos-exploded" is not built yet

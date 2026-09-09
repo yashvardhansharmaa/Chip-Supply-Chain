@@ -8,7 +8,7 @@
  */
 PC.register('hbm-stack', function (p) {
   var mm = 0.09;
-  var W = 11 * mm, D = 12 * mm, t = 0.05, pitch = 0.16;   // die footprint, drawn thickness, exploded pitch
+  var W = 11 * mm, D = 12 * mm, t = 0.045, pitch = 0.175; // die footprint, drawn thickness, exploded pitch
   var baseW = 12 * mm, baseD = 13 * mm, baseT = 0.09;
   var dies = 12;
   var parts = [];
@@ -35,17 +35,18 @@ PC.register('hbm-stack', function (p) {
   }
 
   // ---------- twelve DRAM dies ----------
-  var yTopDie = 0;
-  for (var i = 0; i < dies; i++) {
-    var y = baseT / 2 + pitch * (i + 1);
-    yTopDie = y;
-    add(PC.T(PC.plane({ w: W, d: D, n: 1500, tone: 0.28 }), { pos: [0, y + t / 2, 0] }));
+  var lvl = [];                                   // an extra step off the base die
+  for (var i = 0; i < dies; i++) lvl.push(baseT / 2 + 0.075 + pitch * (i + 1));
+  var yTopDie = lvl[dies - 1];
+  for (i = 0; i < dies; i++) {
+    var y = lvl[i];
+    add(PC.T(PC.plane({ w: W, d: D, n: 1200, tone: 0.26 }), { pos: [0, y + t / 2, 0] }));
     add(PC.T(PC.box({ w: W, h: t, d: D, faces: ['px', 'nx', 'pz', 'nz'], n: 1300, tone: 0.5 }), { pos: [0, y, 0] }));
     add(PC.T(PC.boxEdges({ w: W, h: t, d: D, perUnit: 300, tone: 0.95 }), { pos: [0, y, 0] }));
     // micro-bumps on the top face, and the outline of each TSV farm
-    add(PC.T(PC.dots({ nx: 13, nz: 14, sx: W / 14, sz: D / 15, per: 3, tone: 0.62 }), { pos: [0, y + t / 2 + 0.004, 0] }));
+    add(PC.T(PC.dots({ nx: 10, nz: 11, sx: W / 11, sz: D / 12, per: 4, tone: 0.8 }), { pos: [0, y + t / 2 + 0.004, 0] }));
     for (q = 0; q < zones.length; q++) {
-      add(PC.T(rect(zones[q][1], zones[q][2], y + t / 2 + 0.005, 200, 0.5), { pos: [zones[q][0], 0, 0] }));
+      add(PC.T(rect(zones[q][1], zones[q][2], y + t / 2 + 0.005, 170, 0.42), { pos: [zones[q][0], 0, 0] }));
     }
   }
 
@@ -59,11 +60,9 @@ PC.register('hbm-stack', function (p) {
   var g = [];
   for (var c = 0; c < 4; c++) {
     var cx = (c === 0 || c === 3) ? -W / 2 : W / 2, cz = (c < 2) ? -D / 2 : D / 2;
-    for (i = 0; i <= dies; i++) {
-      var yA = (i === 0) ? yBase + baseT / 2 : baseT / 2 + pitch * i + t / 2;
-      var yB = baseT / 2 + pitch * (i + 1) - t / 2;
-      if (i === dies) continue;
-      g.push(PC.line({ a: [cx, yA, cz], b: [cx, yB, cz], perUnit: 150, tone: 0.3 }));
+    for (i = 0; i < dies; i++) {
+      var yA = (i === 0) ? yBase + baseT / 2 : lvl[i - 1] + t / 2;
+      g.push(PC.line({ a: [cx, yA, cz], b: [cx, lvl[i] - t / 2, cz], perUnit: 150, tone: 0.3 }));
     }
   }
   add(PC.merge.apply(null, g));

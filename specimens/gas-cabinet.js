@@ -9,7 +9,7 @@
 PC.register('gas-cabinet', function (p) {
   var parts = [], i, k, x, y;
   var CBX = -0.85;                                   // cabinet centre on X
-  var CW = 1.15, CD = 0.62, CFL = 0.10, CTOP = 2.05; // width, depth, floor, top
+  var CW = 1.22, CD = 0.62, CFL = 0.10, CTOP = 2.05; // width, depth, floor, top
   var CH = CTOP - CFL, CY = (CFL + CTOP) / 2;
 
   function at(c, px, py, pz, rot) { return PC.T(c, { pos: [px, py, pz], rot: rot }); }
@@ -25,14 +25,18 @@ PC.register('gas-cabinet', function (p) {
   // shell: back, two sides, top and floor. The front (+z) is open.
   parts.push(at(PC.box({ w: CW, h: CH, d: CD, faces: ['nz'], n: 11000, tone: 0.20 }), CBX, CY, 0));  // inside of the back
   parts.push(at(PC.box({ w: CW, h: CH, d: CD, faces: ['nx'], n: 3600, tone: 0.20 }), CBX, CY, 0));   // inside of the far wall
-  parts.push(at(PC.box({ w: CW, h: CH, d: CD, faces: ['px'], n: 8000, tone: 0.44 }), CBX, CY, 0));   // outside of the near wall
+  parts.push(at(PC.box({ w: CW, h: CH, d: CD, faces: ['px'], n: 7000, tone: 0.32 }), CBX, CY, 0));   // outside of the near wall
   parts.push(at(PC.box({ w: CW, h: CH, d: CD, faces: ['py'], n: 2400, tone: 0.44 }), CBX, CY, 0));
   parts.push(at(PC.box({ w: CW, h: CH, d: CD, faces: ['ny'], n: 3600, tone: 0.42 }), CBX, CY, 0));
-  // louvre slots in the near wall
+  // a louvred vent grille low on the near wall
+  parts.push(at(PC.polyline({
+    pts: [[0, -0.20, -0.19], [0, -0.20, 0.19], [0, 0.20, 0.19], [0, 0.20, -0.19]], closed: true, perUnit: 200, tone: 1
+  }), CBX + CW / 2 + 0.003, CFL + 0.36, 0));
   for (i = 0; i < 5; i++) {
-    parts.push(at(PC.polyline({
-      pts: [[0, -0.02, -0.20], [0, -0.02, 0.20], [0, 0.02, 0.20], [0, 0.02, -0.20]], closed: true, perUnit: 190, tone: 0.85
-    }), CBX + CW / 2 + 0.002, CFL + 1.52 + i * 0.075, 0));
+    parts.push(PC.line({
+      a: [CBX + CW / 2 + 0.003, CFL + 0.24 + i * 0.06, -0.17], b: [CBX + CW / 2 + 0.003, CFL + 0.24 + i * 0.06, 0.17],
+      perUnit: 200, tone: 0.8
+    }));
   }
   parts.push(at(PC.boxEdges({ w: CW, h: CH, d: CD, perUnit: 200, tone: 0.95 }), CBX, CY, 0));
   // door frame return around the open front, and three hinge blocks
@@ -56,17 +60,17 @@ PC.register('gas-cabinet', function (p) {
   parts.push(at(PC.torus({ R: 0.102, r: 0.016, n: 500, tone: 0.7 }), CBX, CTOP + 0.22, -0.02));
   // two cylinder restraint bars across the front of the bottles
   [0.62, 1.20].forEach(function (by) {
-    parts.push(at(PC.box({ w: 1.00, h: 0.045, d: 0.045, n: 260, tone: 0.55 }), CBX, by, 0.05));
-    parts.push(at(PC.boxEdges({ w: 1.00, h: 0.045, d: 0.045, perUnit: 210, tone: 1 }), CBX, by, 0.05));
+    parts.push(at(PC.box({ w: 1.08, h: 0.045, d: 0.045, n: 280, tone: 0.55 }), CBX, by, 0.05));
+    parts.push(at(PC.boxEdges({ w: 1.08, h: 0.045, d: 0.045, perUnit: 210, tone: 1 }), CBX, by, 0.05));
   });
 
   // ================= three gas cylinders =================
-  var cylX = [-0.34, 0.0, 0.34], cylH = [1.14, 0.96, 0.80], CR = 0.115, cz = -0.09;
+  var cylX = [-0.37, 0.0, 0.37], cylH = [1.14, 0.96, 0.80], CR = 0.115, cz = -0.09;
   var valveTop = [];
   for (i = 0; i < 3; i++) {
     x = CBX + cylX[i];
     var b0 = CFL, b1 = CFL + cylH[i], sh = b1 + 0.12;
-    parts.push(at(PC.cylinder({ r: CR, h: cylH[i], caps: false, n: 5200, tone: 0.48 }), x, (b0 + b1) / 2, cz));
+    parts.push(at(PC.cylinder({ r: CR, h: cylH[i], caps: false, n: 5600, tone: 0.54 }), x, (b0 + b1) / 2, cz));
     parts.push(at(PC.cone({ r1: CR, r2: 0.036, h: 0.12, n: 900, tone: 0.5 }), x, b1 + 0.06, cz));
     parts.push(at(PC.circle({ r: CR * 1.004, perUnit: 220, tone: 1 }), x, b1, cz));          // shoulder line
     // a painted band and a label plate on the body
@@ -85,7 +89,7 @@ PC.register('gas-cabinet', function (p) {
 
   // ================= the valve manifold (accent) =================
   var hy = 1.72, hz = -0.20, man = [];
-  man.push(PC.T(PC.cylinder({ r: 0.017, h: 0.98, caps: false, n: 700, tone: 1 }),
+  man.push(PC.T(PC.cylinder({ r: 0.017, h: 1.04, caps: false, n: 740, tone: 1 }),
     { rot: [0, 0, Math.PI / 2], pos: [CBX, hy, hz] }));                                       // header
   for (i = 0; i < 3; i++) {
     var v = valveTop[i], cy0 = v[1] + 0.03;
