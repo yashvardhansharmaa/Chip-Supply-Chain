@@ -96,7 +96,7 @@ Most wafers are not leading-edge. SEMI expects the foundry segment alone to reac
 
 TSMC intends to spend $165 billion in the United States, adding $100 billion in March 2025 to the $65 billion already committed in Phoenix, for three more fabs, two packaging plants and an R&D centre ([source](https://pr.tsmc.com/english/news/3210)). That is the largest foreign direct investment in US history, and it still does not move a gigafab.
 
-Allocation is the quiet lever. TSMC does not auction capacity; it books it years ahead against prepayments, so the queue for a node is set before the node exists. The binding constraint is usually packaging, not wafers. See Advanced packaging.
+Allocation matters as much as capacity. TSMC does not auction it; it books it years ahead against prepayments, so the queue for a node is set before the node exists. The binding constraint is usually packaging, not wafers. See Advanced packaging.
 
 ## Who makes it
 
@@ -108,7 +108,7 @@ Samsung's swing factor is Taylor, Texas: a committed minimum of $17 billion, $6 
 
 ## The chokepoint
 
-The distribution at the leading edge is not the distribution overall. SEMI forecast China at 10.1 million wafers a month in 2025, the most of any region, against Taiwan's 5.8 million out of a world total of 33.7 million ([source](https://www.semi.org/en/news-media-press-releases/semi-press-releases/global-semiconductor-fab-capacity-projected-to-expand-6%25-in-2024-and-7%25-in-2025-semi-reports)). Almost none of China's is advanced. Below 10 nm the United States had essentially zero share in 2022 and is projected to reach 28 percent by 2032, on $2.3 trillion of new fab investment ([source](https://www.bcg.com/publications/2024/emerging-resilience-in-semiconductor-supply-chain)). Until then, the leading edge is Taiwan.
+SEMI forecast China at 10.1 million wafers a month in 2025, the most of any region, against Taiwan's 5.8 million out of a world total of 33.7 million ([source](https://www.semi.org/en/news-media-press-releases/semi-press-releases/global-semiconductor-fab-capacity-projected-to-expand-6%25-in-2024-and-7%25-in-2025-semi-reports)). Almost none of China's is advanced. Below 10 nm the United States had almost no share in 2022 and is projected to reach 28 percent by 2032, on $2.3 trillion of new fab investment ([source](https://www.bcg.com/publications/2024/emerging-resilience-in-semiconductor-supply-chain)). Until then, the leading edge is Taiwan.
 
 {{figure:capacity-by-region}}
 
@@ -118,7 +118,7 @@ That stacks three risks on one island. We think the first two are manageable and
 - **Power.** A gigafab is a large industrial load on a small island grid. We think grid margin, not silicon, sets how fast Taiwan can add fabs.
 - **Political.** A blockade or conflict would remove most sub-5 nm capacity from the world market at once, with no substitute available inside a decade. See Geopolitics.
 
-Diversification is real and slow. A fab is not a building. It is a workforce that has run one process for years, and TSMC has yet to build a gigafab anywhere but Taiwan ([source](https://www.tsmc.com/english/dedicatedFoundry/manufacturing/gigafab)).
+Diversification is real and slow. The hard part of a fab is a workforce that has run one process for years, and TSMC has yet to build a gigafab anywhere but Taiwan ([source](https://www.tsmc.com/english/dedicatedFoundry/manufacturing/gigafab)).
 
 ## Key evaluation criteria
 

@@ -86,8 +86,8 @@ PC.register('probe-card', function (p) {
 
   /* ---------------- the space transformer: multi-layer ceramic ---------------- */
   var ySTc = yST + stH / 2;
-  add(PC.T(PC.box({ w: stW, h: stH, d: stW, faces: ['px', 'nx', 'pz', 'nz'], n: 1500, tone: 0.22 }), { pos: [0, ySTc, 0] }));
-  add(PC.T(PC.boxEdges({ w: stW, h: stH, d: stW, perUnit: 150, tone: 0.8 }), { pos: [0, ySTc, 0] }));
+  add(PC.T(PC.box({ w: stW, h: stH, d: stW, faces: ['px', 'nx', 'pz', 'nz'], n: 1800, tone: 0.26 }), { pos: [0, ySTc, 0] }));
+  add(PC.T(PC.boxEdges({ w: stW, h: stH, d: stW, perUnit: 175, tone: 0.88 }), { pos: [0, ySTc, 0] }));
   for (i = 1; i < 7; i++) add(rect(stW, stW, yST + stH * i / 7, 52, 0.3));
   // the fan-out: the tester's coarse pitch on top, the die's fine pitch below
   add(PC.T(PC.dots({ nx: 15, nz: 15, sx: stW * 0.062, sz: stW * 0.062, per: 2, tone: 0.35 }), { pos: [0, yST + stH + 0.002, 0] }));
@@ -95,7 +95,7 @@ PC.register('probe-card', function (p) {
   /* ---------------- the probe head: two guide plates and the probes ---------------- */
   [[yLo, tG], [yUp, tG]].forEach(function (g) {
     add(PC.T(PC.box({ w: gW, h: g[1], d: gW, n: 700, tone: 0.22 }), { pos: [0, g[0] + g[1] / 2, 0] }));
-    add(PC.T(PC.boxEdges({ w: gW, h: g[1], d: gW, perUnit: 165, tone: 0.85 }), { pos: [0, g[0] + g[1] / 2, 0] }));
+    add(PC.T(PC.boxEdges({ w: gW, h: g[1], d: gW, perUnit: 190, tone: 0.92 }), { pos: [0, g[0] + g[1] / 2, 0] }));
   });
   for (i = 0; i < 4; i++) {
     var px = (i < 2 ? -1 : 1) * hW * 0.48, pz = (i % 2 ? -1 : 1) * hW * 0.48;
@@ -117,7 +117,7 @@ PC.register('probe-card', function (p) {
         pts: [[qx, yTip + 0.022, qz], [qx, yLo + tG * 0.4, qz],
               [qx + bo * Math.cos(th), (yLoTop + yUp) / 2, qz + bo * Math.sin(th)],
               [qx, yUp + tG * 0.6, qz], [qx, yUpTop + 0.004, qz]],
-        perUnit: 105, tone: 0.32
+        perUnit: 110, tone: 0.38
       }));
       // the tip, where it touches the pad
       needles.push(seg([qx, yTip, qz], [qx, yTip + 0.024, qz], 340, 0.75));

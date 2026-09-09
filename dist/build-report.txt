@@ -1,21 +1,21 @@
-built 2026-09-09T15:23:36.886Z
+built 2026-09-09T15:25:21.799Z
 source tiers: A 314 · B 20 · C 0 · D 0 · unclassified 0
 chapters: 17 + geopolitics
-words: 22474
+words: 22391
 sources: 334
 landscape: 19 chips · suppliers: 220 · timeline: 43 · matrix: 20 · glossary: 74 · controls: 40 · exposure: 103
 specimens: boule-and-wafer, cowos-exploded, die-floorplan, euv-scanner, foup, gaa-transistor, gas-cabinet, globe, gpu-baseboard, hbm-stack, package, photomask, probe-card, process-chamber, rack, sem-column, substrate-layers, wafer-cost, wafer
-size: 1529 KB
+size: 1528 KB
   01 introduction-and-goals: 902 words, 8 sources (D 0, ? 0), 2 figures
   02 design-and-eda: 1162 words, 16 sources (D 0, ? 0), 3 figures
   03 silicon-and-wafers: 1136 words, 13 sources (D 0, ? 0), 2 figures
   04 chemicals-gases-and-photoresist: 1169 words, 15 sources (D 0, ? 0), 2 figures
   05 lithography: 1363 words, 24 sources (D 0, ? 0), 3 figures
   06 photomasks-and-pellicles: 1154 words, 14 sources (D 0, ? 0), 1 figures
-  07 deposition-and-etch: 1148 words, 17 sources (D 0, ? 0), 3 figures
+  07 deposition-and-etch: 1149 words, 17 sources (D 0, ? 0), 3 figures
   08 metrology-and-inspection: 1178 words, 13 sources (D 0, ? 0), 2 figures
-  09 transistors-and-front-end: 1089 words, 16 sources (D 0, ? 0), 2 figures
-  10 foundries-and-fabs: 1141 words, 12 sources (D 0, ? 0), 2 figures
+  09 transistors-and-front-end: 1090 words, 16 sources (D 0, ? 0), 2 figures
+  10 foundries-and-fabs: 1130 words, 12 sources (D 0, ? 0), 2 figures
   11 memory-and-hbm: 1070 words, 14 sources (D 0, ? 0), 2 figures
   12 advanced-packaging: 1317 words, 18 sources (D 0, ? 0), 2 figures
   13 substrates-and-pcbs: 1252 words, 17 sources (D 0, ? 0), 2 figures
@@ -23,4 +23,4 @@ size: 1529 KB
   15 systems-and-networking: 1140 words, 21 sources (D 0, ? 0), 2 figures
   16 data-centers-and-power: 1190 words, 14 sources (D 0, ? 0), 3 figures
   17 component-costs: 1259 words, 21 sources (D 0, ? 0), 3 figures
-  18 geopolitics: 2675 words, 54 sources (D 0, ? 0), 3 figures
+  18 geopolitics: 2601 words, 54 sources (D 0, ? 0), 3 figures

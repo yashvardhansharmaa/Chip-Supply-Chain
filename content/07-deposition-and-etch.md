@@ -77,7 +77,7 @@ If lithography is the printing, this is the building. A chip is built like a lay
 
 CSET puts a single chip at more than 1,000 process steps, with the part-finished product crossing international borders 70 or more times ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 
-Most of it happens in a vacuum chamber: a radio-frequency field strips electrons off a process gas, and the ions and radicals do the chemistry. Change the gas, pressure, power and temperature and the same hardware adds material or removes it. That is why export controls here are written as process specifications, not as bans on machines.
+Most of those steps happen in a vacuum chamber: a radio-frequency field strips electrons off a process gas, and the ions and radicals do the chemistry. Change the gas, pressure, power and temperature and the same hardware adds material or removes it. That is why export controls here are written as process specifications, not as bans on machines.
 
 ## Variants and trade-offs
 
