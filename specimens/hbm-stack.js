@@ -40,7 +40,7 @@ PC.register('hbm-stack', function (p) {
   var yTopDie = lvl[dies - 1];
   for (i = 0; i < dies; i++) {
     var y = lvl[i];
-    add(PC.T(PC.plane({ w: W, d: D, n: 1200, tone: 0.26 }), { pos: [0, y + t / 2, 0] }));
+    add(PC.T(PC.plane({ w: W, d: D, n: 1500, tone: 0.32 }), { pos: [0, y + t / 2, 0] }));
     add(PC.T(PC.box({ w: W, h: t, d: D, faces: ['px', 'nx', 'pz', 'nz'], n: 1300, tone: 0.5 }), { pos: [0, y, 0] }));
     add(PC.T(PC.boxEdges({ w: W, h: t, d: D, perUnit: 300, tone: 0.95 }), { pos: [0, y, 0] }));
     // micro-bumps on the top face, and the outline of each TSV farm
@@ -53,7 +53,7 @@ PC.register('hbm-stack', function (p) {
   // ---------- TSVs: vertical lines the whole height of the stack ----------
   var yLow = yBase - baseT / 2, yHigh = yTopDie + t / 2;
   var tl = [];
-  for (i = 0; i < tsv.length; i++) tl.push(PC.line({ a: [tsv[i][0], yLow, tsv[i][1]], b: [tsv[i][0], yHigh, tsv[i][1]], perUnit: 110, tone: 0.26 }));
+  for (i = 0; i < tsv.length; i++) tl.push(PC.line({ a: [tsv[i][0], yLow, tsv[i][1]], b: [tsv[i][0], yHigh, tsv[i][1]], perUnit: 120, tone: 0.34 }));
   add(PC.merge.apply(null, tl));
 
   // ---------- corner guide lines, spanning the gaps only ----------
@@ -70,7 +70,7 @@ PC.register('hbm-stack', function (p) {
   return {
     cloud: PC.merge.apply(null, parts),
     spin: 0.11,
-    tilt: [0.3, -0.7, 0],
+    tilt: [0.24, -0.45, 0],
     caption: 'A twelve-high HBM stack pulled apart: twelve DRAM dies of 11 by 12 mm, each with its field of micro-bumps, lifted off the copper-coloured logic base die, with the through-silicon vias that carry every signal drawn as lines through the whole stack. Thickness and gaps are exaggerated about tenfold; the real stack is 0.7 mm tall.'
   };
 });

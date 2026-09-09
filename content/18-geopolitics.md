@@ -47,7 +47,7 @@
       "title": "China's share of revenue at the four largest chip-tool makers, peak year and latest",
       "unit": "%",
       "data": [["ASML, 2024", 41], ["ASML, 2025", 33], ["Applied Materials, FY2024", 37], ["Applied Materials, FY2025", 30], ["Lam Research, FY2024", 42], ["Lam Research, FY2025", 34], ["Tokyo Electron, Q4 FY2024", 47], ["Tokyo Electron, Q4 FY2026", 27]],
-      "source": {"label": "Company filings and investor presentations, compiled", "url": "https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf"}
+      "source": {"label": "ASML Q4 2025 investor presentation, Applied Materials and Lam Research 10-K filings, Tokyo Electron Q4 FY2026 results", "url": "https://www.investing.com/news/company-news/asml-q4-2025-presentation-record-revenue-drives-16-annual-growth-new-buyback-announced-93CH-4469205"}
     },
     {
       "id": "chips-awards",

@@ -75,77 +75,72 @@
 ---
 # Transistors and the Front End
 
-A Blackwell GPU is 208 billion switches spread across two reticle-limited dies ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)). Every one has to turn on hard, turn off completely, and survive years of constant switching. Building those switches is the front end of line. Wiring them is the back end.
+A Blackwell GPU is 208 billion switches on two reticle-limited dies ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)). Every one has to turn on hard, turn off completely, and survive years of switching. Making the switches is the front end of line. Wiring them is the back end.
 
 ## How it works
 
 A transistor is a valve on a pipe. Current runs from one end of a silicon channel to the other, and a voltage on the gate above it opens or shuts the flow. Make the channel short enough and the valve stops sealing: the far end pulls current through even when the gate says off, so a chip burns power doing nothing. The fix has been to wrap the gate around all four sides of the channel, a change that takes roughly a thousand process steps in exact order. Three companies can run that sequence, which is why a regulator can name them.
 
-In engineering terms, the gate has to win an argument with the drain. As the channel shortens, the drain's own field reaches in and turns the transistor on when it should be off. That is short-channel leakage, and there are three ways to fight it:
+The gate has to win an argument with the drain: as the channel shortens, the drain's field reaches in and turns the transistor on when it should be off. That is short-channel leakage, and there are three fixes:
 
-- **Better insulator.** Make the gate insulator electrically thicker without making it physically thicker. Intel did this at 45 nm in 2007 with a hafnium-based high-k dielectric and a metal gate ([source](https://www.intel.com/pressroom/archive/releases/2007/20070128comp.htm)).
-- **More gate.** Wrap gate metal around more sides of the channel, which is what fins and then nanosheets do.
+- **Better insulator.** Make the gate insulator electrically thicker without making it physically thicker, as Intel first did at 45 nm in 2007 with a hafnium-based high-k dielectric ([source](https://www.intel.com/pressroom/archive/releases/2007/20070128comp.htm)).
+- **More gate.** Wrap gate metal around more sides of the channel, as fins and then nanosheets do.
 - **Thinner channel.** Thin the channel so the drain's field has nowhere to hide.
 
-The front end builds the wells, the isolation, the fin or nanosheet stack, the gate stack, the source and drain epitaxy, and the contacts. The back end builds the wiring above it. A 2 nm-class flow runs over a thousand process steps and roughly 95 mask layers, and a wafer spends about sixteen weeks in the fab ([source](https://semiconductorx.com/front-end-fabrication-overview.html)).
+A 2 nm-class flow runs roughly 95 mask layers, and a wafer spends about sixteen weeks in the fab ([source](https://semiconductorx.com/front-end-fabrication-overview.html)).
 
 ## Variants and trade-offs
 
 ### Planar and FinFET
 
-Planar transistors put the channel flat with the gate on one side, and lost control as channels shortened. The fin stands the channel on edge so the gate wraps three sides. Channel width then comes in quanta: a designer who wants 1.5 fins of drive cannot have it.
+Planar transistors put the channel flat with the gate on one side, and lost control as channels shortened. The fin stands the channel on edge so the gate wraps three sides. Width then comes in quanta: a designer who wants 1.5 fins of drive cannot have it.
 
 ### Gate-all-around nanosheets
 
-A nanosheet lays the channel back down, stacks two to four thin sheets on top of each other, and threads gate metal around each one. Control improves because the gate surrounds the channel, and width becomes continuous again because the sheets can be drawn wider. TSMC sells that flexibility as NanoFlex.
+A nanosheet lays the channel back down, stacks two to four thin sheets, and threads gate metal around each one, so the gate surrounds the channel and width is continuous again. TSMC sells that flexibility as NanoFlex.
 
-TSMC's N2 entered volume production in the fourth quarter of 2025, its first nanosheet node ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm)). Against N3E it offers 10 to 15 percent more speed at the same power, 25 to 30 percent less power at the same speed, and about 15 percent more density on a mixed design ([source](https://semiwiki.com/forum/threads/tsmc-quietly-begins-volume-production-of-2nm-class-chips.24283/)). Intel brought its own gate-all-around device, RibbonFET, to market on 18A, and 18A-P adds a further 9 percent performance at the same power ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)).
+TSMC's N2 entered volume production in the fourth quarter of 2025, its first nanosheet node ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm)). Against N3E it gives 10 to 15 percent more speed at the same power, 25 to 30 percent less power at the same speed, and about 15 percent more density on a mixed design ([source](https://semiwiki.com/forum/threads/tsmc-quietly-begins-volume-production-of-2nm-class-chips.24283/)). Intel's gate-all-around device, RibbonFET, shipped on 18A, and 18A-P adds a further 9 percent performance at the same power ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)).
 
 {{figure:density-by-node}}
 
 ### Backside power delivery
 
-On a conventional chip, power and signal share the same stack of copper above the transistors. Power rails are wide, so they crowd out signal routing, and the current loses voltage travelling down the whole metal stack. Backside power flips the wafer, thins it, and builds a separate power network underneath, connected up through nano-scale through-silicon vias.
+On a conventional chip, power and signal share one stack of copper, and the wide power rails crowd out signal routing. Backside power flips the wafer, thins it, and builds a separate power network underneath, connected through nano-scale through-silicon vias.
 
-Intel shipped this first as PowerVia. In production on 18A it reports an 11 percent routed area reduction and a tenfold reduction in dynamic voltage droop ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)). TSMC's version, Super Power Rail, lands the backside network directly on the transistor source and drain rather than on a buried rail. It is harder to build and gives more back: against N2P, A16 delivers 8 to 10 percent more speed at the same power, 15 to 20 percent less power at the same speed, and 8 to 10 percent more chip density ([source](https://semiwiki.com/semiconductor-manufacturers/tsmc/370949-tsmc-a16-backside-power-at-vlsi-2026/)). TSMC's April 2026 roadmap moved A16 volume production from the second half of 2026 into 2027 ([source](https://www.trendforce.com/news/2026/04/23/news-tsmc-unveils-latest-roadmap-a12-a13-set-for-2029-without-high-na-euv-a16-volume-production-delayed-to-2027/)). Samsung's SF2Z adds backside power in 2027, claiming up to a 17 percent die area reduction ([source](https://www.mckinsey-electronics.com/post/the-best-kept-secret-in-semiconductor-innovation-backside-power-delivery)).
+Intel shipped this first as PowerVia, and on 18A reports an 11 percent routed area reduction and a tenfold cut in dynamic voltage droop ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)). TSMC's Super Power Rail lands the network on the transistor source and drain rather than a buried rail, which is harder to build and gives more back: against N2P, A16 delivers 8 to 10 percent more speed, 15 to 20 percent less power, and 8 to 10 percent more density ([source](https://semiwiki.com/semiconductor-manufacturers/tsmc/370949-tsmc-a16-backside-power-at-vlsi-2026/)).
 
 {{figure:node-roadmap}}
 
 ### CFET and what comes after
 
-The nanosheet still puts the n-type and p-type devices side by side. A complementary FET stacks one on the other, roughly halving the area of a CMOS pair. imec places CFET beyond the 1 nm nodes and describes two routes, neither comfortable: a monolithic flow whose very high aspect ratio structures make fin, gate, spacer and contact patterning severe, or a sequential flow that must hold the top tier below about 500 degrees Celsius while a good gate stack wants roughly 900 ([source](https://www.imec-int.com/en/articles/imec-puts-complementary-fet-cfet-logic-technology-roadmap)).
+The nanosheet still puts the n-type and p-type devices side by side. imec expects complementary FETs to stack them and roughly halve a CMOS pair's area beyond the 1 nm nodes, by one of two uncomfortable routes ([source](https://www.imec-int.com/en/articles/imec-puts-complementary-fet-cfet-logic-technology-roadmap)).
 
 ## The back end of line
 
-Wiring is now as hard as the transistor. Copper needs a tantalum nitride barrier to stop it diffusing into the dielectric, and at narrow pitches that barrier eats most of the trench. Copper's electron mean free path is also about 40 nm; below that width, surface and grain-boundary scattering dominate and effective resistivity climbs far above the 1.7 microhm-cm bulk figure ([source](https://www.patsnap.com/resources/blog/articles/ruthenium-interconnects-at-sub-10nm-beol-nodes/)). Three metals now split the stack:
+Wiring is now as hard as the transistor. Copper needs a tantalum nitride barrier that eats most of a narrow trench, and below about 40 nm of width scattering drives its resistivity far above the 1.7 microhm-cm bulk figure ([source](https://www.patsnap.com/resources/blog/articles/ruthenium-interconnects-at-sub-10nm-beol-nodes/)). Copper keeps the wide upper levels, where bulk conductivity still wins, and two metals are taking the narrow ones:
 
 - **Ruthenium** needs no barrier and beats copper at line widths of roughly 10 to 17 nm and below ([source](https://www.patsnap.com/resources/blog/articles/ruthenium-interconnects-at-sub-10nm-beol-nodes/)).
-- **Molybdenum** has a bulk resistivity of about 5.3 microhm-cm against copper's 1.68, but in thin films it runs up to 30 percent below tungsten and needs no barrier either, which is moving it into contacts and local interconnect ([source](https://blog.entegris.com/molybdenums-role-in-ultra-fast-computing-the-metal-behind-the-speed)).
-- **Copper** stays on the wide upper levels, where bulk conductivity still wins.
-
-The other half of the problem is capacitance between adjacent wires. The answer is low-k dielectrics, porous carbon-doped oxides that trade mechanical strength for a lower dielectric constant, and at the tightest pitches air gaps, where the process deliberately leaves a void between lines. Both are fragile and make dicing harder.
+- **Molybdenum** is the worse bulk conductor, 5.3 against copper's 1.68 microhm-cm, but in thin films it beats tungsten by up to 30 percent and needs no barrier, moving it into contacts and local interconnect ([source](https://blog.entegris.com/molybdenums-role-in-ultra-fast-computing-the-metal-behind-the-speed)).
 
 ## Who makes it
 
 Three companies build gate-all-around nodes with EUV: TSMC, Intel and Samsung. SMIC builds 7 and 5 nm-class nodes without it. Rapidus is a state-backed fourth, targeting 2 nm mass production in 2027 after raising 267.6 billion yen in February 2026 ([source](https://www.rapidus.inc/en/news_topics/information/rapidus-secures-267-6-billion-yen-in-funding-from-japan-government-and-private-sector-companies/)).
 
-The node names mean nothing physical. SMIC's N+3, marketed as 5 nm-class, measures a 57 nm contacted gate pitch and a 32.5 nm minimum metal pitch, tighter than the 36 nm minimum metal pitch on Intel's 18A in Panther Lake, and yields 113.4 MTr/mm2 against 107.7 for TSMC's N6 ([source](https://newsletter.semianalysis.com/p/steel-smic-n3-teardown)). Library choice matters as much: that teardown puts 18A's high-performance cells near 177.7 MTr/mm2, while TechInsights' high-density estimates put 18A at 238 and N2 at 313 ([source](https://www.techspot.com/news/106782-intel-18a-found-faster-but-tsmc-n2-denser.html)).
+Node names mean nothing physical. SMIC's N+3, marketed as 5 nm-class, measures a 57 nm contacted gate pitch and a 32.5 nm minimum metal pitch, tighter than the 36 nm on Intel's 18A, and yields 113.4 MTr/mm2 against 107.7 for TSMC's N6 ([source](https://newsletter.semianalysis.com/p/steel-smic-n3-teardown)).
 
-AI accelerators sit a node behind the leading edge, because a reticle-limited die needs a mature process to yield at all. Blackwell is built on a custom TSMC 4NP process ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)), and Rubin moves to TSMC's 3 nm family ([source](https://www.isaiahresearch.com/Insight/Detail/107)). TSMC is lifting N3 capacity from about 150,000 wafers per month in the first half of 2026 to 180,000 by early in the fourth quarter ([source](https://www.trendforce.com/news/2026/09/07/news-tsmcs-3nm-reportedly-to-overtake-5nm-as-top-revenue-node-in-2h26-output-value-could-top-nt400b/)).
+AI accelerators sit a node behind the leading edge, because a reticle-limited die needs a mature process to yield at all. Blackwell uses a custom TSMC 4NP process ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)) and Rubin moves to TSMC's 3 nm family ([source](https://www.isaiahresearch.com/Insight/Detail/107)).
 
-The most consequential failure of scaling for AI chips is SRAM. The high-density bit cell sat at 0.021 square micrometres from N5 through N3 and N3E, then fell to 0.0175 at N2 ([source](https://semiwiki.com/forum/threads/sram-scaling-isnt-dead-after-all-%E2%80%94-tsmcs-2nm-process-tech-claims-major-improvements.21414/)). Logic kept shrinking while cache did not, so cache eats a growing share of an expensive die. That is much of why accelerators push capacity off-die into HBM and split memory-heavy blocks onto separate chiplets. See Memory and HBM and Advanced packaging.
+SRAM is the most consequential failure of scaling for AI chips. The high-density bit cell sat at 0.021 square micrometres from N5 through N3E, then fell to 0.0175 at N2 ([source](https://semiwiki.com/forum/threads/sram-scaling-isnt-dead-after-all-%E2%80%94-tsmcs-2nm-process-tech-claims-major-improvements.21414/)). Logic kept shrinking while cache did not, so cache eats a growing share of an expensive die, which is much of why accelerators push memory off-die. See Memory and HBM.
 
 {{figure:sram-bitcell}}
 
-Cost has turned. An N2 wafer runs around $30,000 against roughly $20,000 at N3, which EE Times argues makes this the first node transition where cost per transistor rises ([source](https://www.eetasia.com/tsmc-ends-era-of-cheap-transistors-with-5-10-price-hikes-for-advanced-nodes/)). TrendForce puts the N2 increase lower, at 10 to 20 percent over N3 wafers it prices at $25,000 to $27,000 ([source](https://www.trendforce.com/news/2025/10/08/news-tsmc-2nm-reportedly-up-10-20-far-below-rumored-50-3-7nm-to-rise-single-digit-in-2026/)).
+Cost has turned. An N2 wafer runs around $30,000 against roughly $20,000 at N3, which EE Times argues makes this the first node transition where cost per transistor rises ([source](https://www.eetasia.com/tsmc-ends-era-of-cheap-transistors-with-5-10-price-hikes-for-advanced-nodes/)). TrendForce prices N3 higher, at $25,000 to $27,000, and puts the N2 increase at 10 to 20 percent ([source](https://www.trendforce.com/news/2025/10/08/news-tsmc-2nm-reportedly-up-10-20-far-below-rumored-50-3-7nm-to-rise-single-digit-in-2026/)).
 
 ## The chokepoint
 
-The front end is not a single chokepoint the way EUV is. It is where every other chokepoint gets cashed in. What is scarce is the recipe: a thousand-step flow tuned against one specific tool set, with defect budgets measured in particles per wafer.
+The front end is not a single chokepoint the way EUV is. It is where every other chokepoint gets cashed in, and what is scarce is the recipe.
 
-China's position shows what that recipe costs without EUV. Reaching 7 nm with DUV takes about 34 lithography steps where EUV needs nine, SMIC's cost per wafer runs 40 to 50 percent above TSMC's, and its 7 nm yields sit below 50 percent with 5 nm projected at 30 to 40 percent against TSMC's 80 to 90 ([source](https://www.eetimes.com/china-invests-billions-to-close-critical-chokepoints/)).
-
-Money is not the binding constraint. The third National Integrated Circuit Fund is 344 billion yuan, about $47.5 billion ([source](https://www.eetimes.com/china-invests-billions-to-close-critical-chokepoints/)). Tools are:
+China shows what that recipe costs without EUV. Reaching 7 nm with DUV takes about 34 lithography steps where EUV needs nine, SMIC's cost per wafer runs 40 to 50 percent above TSMC's, and its 7 nm yields sit below 50 percent with 5 nm projected at 30 to 40 percent against TSMC's 80 to 90 ([source](https://www.eetimes.com/china-invests-billions-to-close-critical-chokepoints/)). Money is not the binding constraint: the third National Integrated Circuit Fund is 344 billion yuan, about $47.5 billion ([source](https://www.eetimes.com/china-invests-billions-to-close-critical-chokepoints/)). Tools are:
 
 - **Immersion DUV.** SMIC has been testing a domestic 28 nm-class prototype ([source](https://blog.aifutures.org/p/a-forecast-of-chinese-duv-and-euv)), and a Shanghai state firm began building domestic immersion scanners in 2026 at single-digit annual volumes ([source](https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/)).
 - **EUV.** A state-backed prototype has produced some EUV light but is far from working chips ([source](https://blog.aifutures.org/p/a-forecast-of-chinese-duv-and-euv)).
@@ -155,13 +150,13 @@ See Lithography and Geopolitics.
 
 ## Key evaluation criteria
 
-- **Electrostatic control** — how completely the gate surrounds the channel, which sets off-state leakage and how low the supply voltage can go. Nanosheets beat fins; CFET stacks them.
+- **Electrostatic control** — how completely the gate surrounds the channel, which sets off-state leakage and the floor on supply voltage.
 - **Density** — transistors per square millimetre, comparable only within the same library type. High-density and high-performance cells give very different answers for the same node.
-- **Interconnect resistance** — at line widths in the 10 to 17 nm range the wire, not the transistor, starts to set the delay. Barrier-free ruthenium and molybdenum are the fix ([source](https://www.patsnap.com/resources/blog/articles/ruthenium-interconnects-at-sub-10nm-beol-nodes/)).
+- **Interconnect resistance** — at line widths of 10 to 17 nm the wire, not the transistor, sets the delay ([source](https://www.patsnap.com/resources/blog/articles/ruthenium-interconnects-at-sub-10nm-beol-nodes/)).
 - **Power delivery** — IR drop across the die. Backside power buys back routed area and cuts dynamic droop by an order of magnitude.
 - **SRAM scaling** — flat since N5. Sets how much cache an accelerator can afford and how much work HBM has to do.
 - **Cost per transistor** — rising at the leading edge for the first time, which changes every design decision downstream.
 
 ## Takeaways
 
-Geometry stopped being free around the FinFET era, and every gain since has been bought with steps and materials: high-k metal gates, fins, nanosheets, ruthenium wires, and now a second power network on the back of the wafer. Three companies can run a 2 nm-class flow and only TSMC does it at scale for merchant customers. SRAM's refusal to shrink is the quiet reason AI accelerators keep most of their memory outside the logic die. China's front end proves you can reach 5 nm-class geometry without EUV, at roughly half the yield and half again the cost, which is a business only a state can fund ([source](https://www.eetimes.com/china-invests-billions-to-close-critical-chokepoints/)).
+Every gain since the FinFET era has been bought with steps and materials: high-k metal gates, nanosheets, ruthenium wires, and a second power network on the back of the wafer. Three companies can run a 2 nm-class flow, and only TSMC does it at scale for merchant customers. SRAM's refusal to shrink is the quiet reason AI accelerators keep most of their memory outside the logic die. China's front end proves you can reach 5 nm-class geometry without EUV, at roughly half the yield and half again the cost, which is a business only a state can fund ([source](https://www.eetimes.com/china-invests-billions-to-close-critical-chokepoints/)).

@@ -7,7 +7,7 @@
  * Right: a horizontal bulk dewar on saddle legs with a vent stack.
  */
 PC.register('gas-cabinet', function (p) {
-  var parts = [], i, k, x, y;
+  var parts = [], i, x;
   var CBX = -0.85;                                   // cabinet centre on X
   var CW = 1.22, CD = 0.62, CFL = 0.10, CTOP = 2.05; // width, depth, floor, top
   var CH = CTOP - CFL, CY = (CFL + CTOP) / 2;
@@ -115,38 +115,43 @@ PC.register('gas-cabinet', function (p) {
   parts.push(PC.accent(PC.merge.apply(null, man), 0.95));
 
   // ================= the bulk dewar =================
-  var TX = 1.18, TY = 0.95, TZ = -0.18, TR = 0.42, TL = 1.30;
-  parts.push(PC.T(PC.cylinder({ r: TR, h: TL, caps: false, n: 11000, tone: 0.30 }),
+  var TX = 1.20, TY = 0.99, TZ = -0.18, TR = 0.46, TL = 1.42;
+  parts.push(PC.T(PC.cylinder({ r: TR, h: TL, caps: false, n: 12500, tone: 0.29 }),
     { rot: [0, 0, Math.PI / 2], pos: [TX, TY, TZ] }));
   [-1, 1].forEach(function (sg) {                                                             // dished ends
-    parts.push(PC.T(PC.sphere({ r: TR, thetaMax: Math.PI / 2, n: 2400, tone: 0.34 }),
+    parts.push(PC.T(PC.sphere({ r: TR, thetaMax: Math.PI / 2, n: 2700, tone: 0.33 }),
       { scale: [1, 0.52, 1], rot: [0, 0, -sg * Math.PI / 2], pos: [TX + sg * TL / 2, TY, TZ] }));
     parts.push(ringYZ(TR * 1.004, 260, 1, TX + sg * TL / 2, TY, TZ));
   });
-  [-0.40, 0.0, 0.40].forEach(function (dx) {                                                   // stiffening ribs
+  [-0.44, 0.0, 0.44].forEach(function (dx) {                                                   // stiffening ribs
     parts.push(ringYZ(TR * 1.006, 170, 0.5, TX + dx, TY, TZ));
   });
   parts.push(PC.line({ a: [TX - TL / 2, TY + TR * 1.004, TZ], b: [TX + TL / 2, TY + TR * 1.004, TZ], perUnit: 200, tone: 0.55 }));
   // saddle legs and floor rails
   [-1, 1].forEach(function (sg) {
-    var lx = TX + sg * 0.44;
-    parts.push(PC.T(PC.box({ w: 0.085, h: 0.55, d: 0.42, faces: ['px', 'nx', 'pz', 'nz'], n: 1000, tone: 0.4 }), { pos: [lx, 0.275, TZ] }));
-    parts.push(PC.T(PC.boxEdges({ w: 0.085, h: 0.55, d: 0.42, perUnit: 200, tone: 1 }), { pos: [lx, 0.275, TZ] }));
+    var lx = TX + sg * 0.48;
+    parts.push(PC.T(PC.box({ w: 0.085, h: 0.53, d: 0.44, faces: ['px', 'nx', 'pz', 'nz'], n: 1000, tone: 0.4 }), { pos: [lx, 0.265, TZ] }));
+    parts.push(PC.T(PC.boxEdges({ w: 0.085, h: 0.53, d: 0.44, perUnit: 200, tone: 1 }), { pos: [lx, 0.265, TZ] }));
     parts.push(PC.T(PC.box({ w: 0.16, h: 0.05, d: 0.54, n: 240, tone: 0.5 }), { pos: [lx, 0.025, TZ] }));
   });
-  parts.push(PC.T(PC.box({ w: 0.94, h: 0.06, d: 0.06, n: 200, tone: 0.5 }), { pos: [TX, 0.13, TZ] }));
-  parts.push(PC.T(PC.boxEdges({ w: 0.94, h: 0.06, d: 0.06, perUnit: 200, tone: 0.95 }), { pos: [TX, 0.13, TZ] }));
+  parts.push(PC.T(PC.box({ w: 1.02, h: 0.06, d: 0.06, n: 210, tone: 0.5 }), { pos: [TX, 0.13, TZ] }));
+  parts.push(PC.T(PC.boxEdges({ w: 1.02, h: 0.06, d: 0.06, perUnit: 200, tone: 0.95 }), { pos: [TX, 0.13, TZ] }));
   // vent stack, relief valve and the outlet manifold slung under the tank
   parts.push(PC.T(PC.cylinder({ r: 0.052, h: 0.40, caps: false, n: 700, tone: 0.45 }), { pos: [TX - 0.28, TY + TR + 0.18, TZ] }));
   parts.push(PC.T(PC.circle({ r: 0.052, perUnit: 230, tone: 1 }), { pos: [TX - 0.28, TY + TR + 0.38, TZ] }));
   parts.push(PC.T(PC.torus({ R: 0.07, r: 0.014, n: 240, tone: 0.65 }), { pos: [TX - 0.28, TY + TR + 0.02, TZ] }));
-  parts.push(PC.T(PC.box({ w: 0.30, h: 0.26, d: 0.24, n: 900, tone: 0.42 }), { pos: [TX + 0.02, 0.34, TZ + 0.34] }));
-  parts.push(PC.T(PC.boxEdges({ w: 0.30, h: 0.26, d: 0.24, perUnit: 210, tone: 1 }), { pos: [TX + 0.02, 0.34, TZ + 0.34] }));
+  parts.push(PC.T(PC.box({ w: 0.30, h: 0.38, d: 0.26, n: 1100, tone: 0.42 }), { pos: [TX + 0.02, 0.30, TZ + 0.36] }));
+  parts.push(PC.T(PC.boxEdges({ w: 0.30, h: 0.38, d: 0.26, perUnit: 210, tone: 1 }), { pos: [TX + 0.02, 0.30, TZ + 0.36] }));
   parts.push(PC.polyline({
-    pts: [[TX + 0.02, 0.47, TZ + 0.34], [TX + 0.02, 0.62, TZ + 0.34], [TX + 0.02, 0.66, TZ + 0.10]],
+    pts: [[TX + 0.02, 0.49, TZ + 0.36], [TX + 0.02, 0.66, TZ + 0.36], [TX + 0.02, 0.70, TZ + 0.10]],
     perUnit: 210, tone: 0.8
   }));
-  parts.push(gauge(0.042, 200, 0.9, TX + 0.02, 0.40, TZ + 0.46));
+  parts.push(gauge(0.046, 200, 0.9, TX - 0.05, 0.38, TZ + 0.49));
+  parts.push(gauge(0.030, 200, 0.9, TX + 0.09, 0.38, TZ + 0.49));
+  // nameplate on the shell
+  parts.push(PC.T(PC.polyline({
+    pts: [[-0.14, 0, -0.09], [0.14, 0, -0.09], [0.14, 0, 0.09], [-0.14, 0, 0.09]], closed: true, perUnit: 200, tone: 0.9
+  }), { rot: [1.0, 0, 0], pos: [TX + 0.18, TY + 0.22, TZ + 0.36] }));
 
   return {
     cloud: PC.merge.apply(null, parts),

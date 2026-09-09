@@ -4,6 +4,7 @@
   "number": 16,
   "title": "Data Centers and Power",
   "oneLiner": "The chips are no longer the long pole. Transformers take two years, turbine slots are sold out to 2030, and the interconnection queue is fifty times larger than what actually gets energised.",
+  "plain": "Picture a domestic hair dryer, about two kilowatts of heat pouring out of a hand-sized nozzle. One rack of AI chips draws seventy of them in a box the size of a wardrobe, and every watt turns into heat that has to be carried away in water rather than air. Feeding and cooling that box is what a modern data center does. The hard part is not the building. It is getting the electricity to the door, because the transformers, switchgear and turbines that connect a site to the grid are ordered years in advance, which is where an AI buildout now actually waits.",
   "specimen": "rack",
   "specimenCaption": "Right: a liquid-cooled 72-GPU rack. Eighteen compute trays above and below nine NVLink switch trays, a vertical busbar at the back, power shelves at the top and bottom, and cold-plate manifolds feeding every tray.",
   "card": {
@@ -68,71 +69,79 @@
 ---
 # Data Centers and Power
 
-For thirty years the semiconductor industry set the pace and everything downstream followed. That has inverted. A wafer clears a leading-edge fab in a matter of months. A substation-class power transformer now takes 75 to 110 weeks, and there is a queue for it ([source](https://terrapincg.com/news/switchgear-transformer-generator-lead-times-2026)). This chapter is about the layer that now decides how fast AI capacity actually arrives.
+For thirty years the semiconductor industry set the pace and everything downstream followed. That has inverted. A wafer clears a leading-edge fab in months; a substation-class power transformer takes 75 to 110 weeks, and there is a queue for it ([source](https://terrapincg.com/news/switchgear-transformer-generator-lead-times-2026)).
 
 ## How it works
 
-The unit of AI compute is no longer the server. It is the rack. A GB300 NVL72 is a single 72-GPU machine that draws up to 142 kW through eight 33 kW power shelves, each holding six 5.5 kW supplies ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)). That is more than an order of magnitude above a conventional enterprise rack, in the same floor area.
+Picture a domestic hair dryer, about two kilowatts of heat pouring out of a hand-sized nozzle. One rack of AI chips draws seventy of them in a box the size of a wardrobe, and every watt turns into heat that has to be carried away in water rather than air. Feeding and cooling that box is what a modern data center does. The hard part is not the building. It is getting the electricity to the door, because the transformers, switchgear and turbines that connect a site to the grid are ordered years in advance, which is where an AI buildout now actually waits.
 
-Everything else in the building follows from that number. Utility power arrives at transmission voltage, drops through a substation and medium-voltage switchgear, passes uninterruptible power supplies and power distribution units, then reaches the rack busbar. Each conversion loses a few percent and needs its own equipment with its own lead time.
+The unit of AI compute is no longer the server but the rack. A GB300 NVL72 draws up to 142 kW through eight 33 kW power shelves, more than ten times a conventional enterprise rack in the same floor area ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
 
-Heat leaves the rack in water, not air. Cold plates sit directly on the GPU and CPU packages, a manifold gathers the flow, and a coolant distribution unit exchanges heat between that closed technical loop and the facility water loop, which finally rejects heat through chillers, dry coolers or evaporative towers. Nvidia's Vera Rubin racks are fully liquid-cooled and run 45 °C supply water, warm enough that many sites can reject heat without mechanical chillers ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
+Everything else follows from that number. Utility power arrives at transmission voltage and steps down through a substation, switchgear, uninterruptible supplies and distribution units before it reaches the rack busbar, each stage with its own lead time.
 
-Voltage is the next thing to change. Nvidia is moving rack distribution to 800 VDC, which pushes more than 150% more power through the same copper and removes the need for 200 kg busbars feeding a single rack ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
+Heat leaves the rack in water. Cold plates sit on the GPU packages and a coolant distribution unit passes the heat to the facility loop, which rejects it outdoors. Nvidia's Vera Rubin racks run 45 °C supply water, warm enough that many sites can skip chillers altogether ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
+
+Voltage changes next. Nvidia is moving rack distribution to 800 VDC, which pushes more than 150% more power through the same copper and retires the 200 kg busbars feeding a single rack ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
 
 ## Variants and trade-offs
 
 ### Cooling
 
-Air cooling with rear-door heat exchangers still works at moderate densities, but it stops being economic well below AI rack loads because fan power and air volume both scale badly. Direct-to-chip liquid cooling handles today's densities and is the default for anything Blackwell-class or later. Immersion goes further but has poor serviceability and almost no installed base at hyperscale.
+- **Air.** Rear-door heat exchangers work at moderate densities but stop being economic well below AI rack loads, because fan power and air volume both scale badly.
+- **Direct-to-chip liquid.** The default for anything Blackwell-class or later; it adds 7% to 10% to construction cost but cuts the floor area needed per megawatt by 70% to 85% ([source](https://www.globaldatacenterhub.com/p/what-a-data-center-actually-costs)).
+- **Immersion.** Higher density still, but poor serviceability and almost no installed base at hyperscale.
 
-The liquid cooling market is still small relative to the compute it enables: about $4.8 billion in 2025 growing to roughly $6 billion in 2026, with Vertiv the leader at 11.3% share and the top five suppliers, Schneider Electric, Vertiv, Rittal, Stulz and Boyd, holding only 35% between them ([source](https://www.gminsights.com/industry-analysis/data-center-liquid-cooling-market)). Motivair, CoolIT, Asetek and Delta Electronics fill out the coolant distribution unit and cold plate supply. This is a fragmented business, which is why it is not the bottleneck.
-
-Liquid cooling adds 7% to 10% to construction cost but cuts the floor area needed per megawatt by 70% to 85% ([source](https://www.globaldatacenterhub.com/p/what-a-data-center-actually-costs)). For an AI site where land and shell are cheap relative to power, that trade is easy.
+The liquid cooling market is small relative to the compute it enables: about $4.8 billion in 2025, with Vertiv the leader at 11.3% and the top five holding only 35% between them ([source](https://www.gminsights.com/industry-analysis/data-center-liquid-cooling-market)). That fragmentation is why cooling is not the bottleneck.
 
 ### Rack power by generation
 
 {{figure:rack-power}}
 
-The GB200 class landed around 120 kW per rack and the Kyber rack for Rubin Ultra is designed for about 600 kW ([source](https://introl.com/blog/nvidia-vera-rubin-gpu-600kw-racks-2027)). The Vera Rubin NVL72 in between them exceeds 250 kW, on GPUs rated at 1,800 to 2,300 W each ([source](https://blog.barrack.ai/nvidia-rubin-specs-architecture-2026/)). Nvidia has confirmed Kyber will carry 576 Rubin Ultra GPUs across up to 18 compute blades per chassis in 2027 ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)). Facilities being designed today are already being specified for GPU racks above 250 kW ([source](https://datacenterfrontier.com/sponsored/article/55400568/installing-cooling-that-scales)).
+The GB200 class landed around 120 kW per rack, the Vera Rubin NVL72 exceeds 250 kW on GPUs rated at 1,800 to 2,300 W ([source](https://blog.barrack.ai/nvidia-rubin-specs-architecture-2026/)), and the Kyber rack for Rubin Ultra is designed for about 600 kW ([source](https://introl.com/blog/nvidia-vera-rubin-gpu-600kw-racks-2027)) with 576 GPUs in 2027 ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
 
-A 600 kW rack is not a bigger version of a 120 kW rack. It changes the busbar, the floor loading, the coolant flow rate, the leak detection strategy and the ride-through energy storage. Nvidia's Rubin racks carry 20 times more energy storage than their predecessors precisely to keep the draw steady as tens of thousands of GPUs enter and leave a synchronous training step together ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
+A 600 kW rack is not a bigger version of a 120 kW rack. It changes the busbar, the floor loading, the coolant flow, the leak detection and the ride-through storage: Nvidia's Rubin racks carry 20 times more stored energy, to steady the draw as tens of thousands of GPUs enter and leave a training step together ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
 
 ### Where the electrons come from
 
-Grid interconnection is the slow path. Behind-the-meter gas is the fast one, which is why campuses are being sited next to gas rather than next to fibre. Nuclear is the reputationally attractive one and is almost entirely prospective: the Crane Clean Energy Center restart of 835 MW under a 20-year Microsoft agreement targets 2027, Google's Kairos Hermes 2 deal through TVA is up to 50 MW by 2030 on a pathway to 500 MW by 2035, and no new nuclear capacity is operating for data centers yet ([source](https://www.datacenterfrontier.com/energy/article/55394098/nuclear-momentum-meets-the-megawatt-test)).
+- **Grid interconnection.** The slow path, and the one every announced campus is queued in.
+- **Behind-the-meter gas.** The fast path, which is why campuses are being sited next to gas rather than next to fibre.
+- **Nuclear.** Almost entirely prospective: the 835 MW Crane Clean Energy Center restart under a 20-year Microsoft agreement targets 2027, and no new nuclear capacity is running for data centers yet ([source](https://www.datacenterfrontier.com/energy/article/55394098/nuclear-momentum-meets-the-megawatt-test)).
 
 ## Who makes it
 
-The hyperscalers pay for it. Amazon has guided to about $200 billion of capex in 2026, Alphabet $175 to $185 billion, Meta $115 to $135 billion, Microsoft $120 billion or more and Oracle around $50 billion, for a combined $660 to $690 billion ([source](https://futurumgroup.com/insights/ai-capex-2026-the-690b-infrastructure-sprint/)). The same five firms spent $448.2 billion in 2025 ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)).
+The hyperscalers pay for it. The five largest have guided to a combined $660 to $690 billion of capital expenditure in 2026 ([source](https://futurumgroup.com/insights/ai-capex-2026-the-690b-infrastructure-sprint/)), against $448.2 billion spent by the same five in 2025 ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)).
 
 {{figure:hyperscaler-capex}}
 
-The campuses are getting large enough to be described in gigawatts rather than megawatts. OpenAI's Stargate portfolio targets more than 9 GW across US sites by 2029, with Abilene, Texas going from 0.3 GW today to 1.2 GW by the fourth quarter of 2026 and Doña Ana County, New Mexico planned at 2.2 GW ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)). Meta's Hyperion in Louisiana, xAI's Colossus in Memphis and Microsoft's Fairwater sites are on similar trajectories. Outside the US, the buildout is concentrating in the UAE and Saudi Arabia, in Johor across the strait from Singapore, and in a handful of Nordic and Irish sites where interconnection is still available.
+Campuses are now described in gigawatts. OpenAI's Stargate portfolio targets more than 9 GW across US sites by 2029, with Abilene, Texas going from 0.3 GW today to 1.2 GW by the fourth quarter of 2026 ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)). Outside the US it is concentrating in the Gulf, in Johor and in the Nordic and Irish sites where interconnection is still available.
 
-The equipment vendors are the constraint. GE Vernova, Siemens Energy, Hitachi Energy, ABB, Eaton and Schneider Electric supply the turbines, transformers and switchgear, and all of them are sold out well into the second half of the decade.
+The equipment vendors are the constraint: GE Vernova, Siemens Energy, Hitachi Energy, ABB, Eaton and Schneider Electric supply the turbines, transformers and switchgear, and all are sold out well into the second half of the decade.
 
 ## Capacity and cost
 
-An air-cooled Tier III facility costs $8 million to $14 million per critical IT megawatt in 2026; a liquid-cooled one costs $17 million to $25 million ([source](https://www.globaldatacenterhub.com/p/what-a-data-center-actually-costs)). Within that hard construction cost, power infrastructure is 40% to 45%, cooling 15% to 20%, and the shell and site only 12% to 15% ([source](https://www.globaldatacenterhub.com/p/what-a-data-center-actually-costs)). The building is the cheap part.
+An air-cooled Tier III facility costs $8 million to $14 million per critical IT megawatt in 2026, a liquid-cooled one $17 million to $25 million. Power infrastructure is 40% to 45% of that hard cost, cooling 15% to 20%, the shell and site only 12% to 15% ([source](https://www.globaldatacenterhub.com/p/what-a-data-center-actually-costs)). The building is the cheap part.
 
-The silicon dwarfs both. In a 20 MW AI hall the GPUs cost $500 million to $1 billion while the building costs $200 million to $300 million, and the equipment depreciates over three to five years against a facility amortised over 15 to 30 ([source](https://www.globaldatacenterhub.com/p/what-a-data-center-actually-costs)). On those figures the compute is roughly two thirds to three quarters of the capital and nearly all of the reinvestment risk.
+The silicon dwarfs it. In a 20 MW AI hall the GPUs cost $500 million to $1 billion against $200 million to $300 million for the building, and they depreciate over three to five years against 15 to 30 for the facility ([source](https://www.globaldatacenterhub.com/p/what-a-data-center-actually-costs)). Compute is most of the capital and nearly all of the reinvestment risk.
 
 {{figure:us-dc-electricity}}
 
-US data centers consumed 176 TWh in 2023, or 4.4% of national electricity, up from 58 TWh in 2014, and Lawrence Berkeley National Laboratory projects 325 to 580 TWh by 2028, between 6.7% and 12% of the total ([source](https://newscenter.lbl.gov/2025/01/15/berkeley-lab-report-evaluates-increase-in-electricity-demand-from-data-centers/)). The EIA's December 2025 outlook put 2026 US generation at 4,327 billion kWh, growth of 1.7%, concentrated in the ERCOT and PJM footprints where the data centers cluster ([source](https://www.utilitydive.com/news/energy-short-term-outlook-2026-load-demand-data-centers/807530/)).
+US data centers consumed 176 TWh in 2023, 4.4% of national electricity and up from 58 TWh in 2014, and Lawrence Berkeley National Laboratory projects 325 to 580 TWh by 2028, between 6.7% and 12% of the total ([source](https://newscenter.lbl.gov/2025/01/15/berkeley-lab-report-evaluates-increase-in-electricity-demand-from-data-centers/)). National generation grows 1.7% in 2026, and the new load lands in the ERCOT and PJM footprints ([source](https://www.utilitydive.com/news/energy-short-term-outlook-2026-load-demand-data-centers/807530/)).
 
-Efficiency is improving fast at the chip level, which is what keeps the low case plausible. Google's Ironwood TPU delivers twice the performance per watt of its predecessor and about 30 times that of its 2018 part ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)). Energy per token falls with every generation. Total energy still rises, because token volume rises faster.
+Chip efficiency keeps the low case plausible: Google's Ironwood TPU delivers twice the performance per watt of its predecessor and 30 times that of its 2018 part ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)). Energy per token falls; total energy still rises, because token volume rises faster.
 
 ## The chokepoint
 
-The gap between announced and energised capacity is the whole story. ERCOT had more than 438 GW of proposed large loads in June 2026, about 89% of it data centers, against 5.9 GW of large load actually energised and 3.2 GW approved but not yet running ([source](https://datacenterfrontier.com/energy/article/55401760/ercot-puts-texas-ai-megawatts-to-the-test)). By August 2026 the figure cited by the Texas governor had reached roughly 474 GW ([source](https://datacenterfrontier.com/energy/article/55401760/ercot-puts-texas-ai-megawatts-to-the-test)). A queue is not a grid.
+The gap between announced and energised capacity is the whole story. ERCOT had more than 438 GW of proposed large loads in June 2026, about 89% of it data centers, against 5.9 GW energised and 3.2 GW approved but not yet running ([source](https://datacenterfrontier.com/energy/article/55401760/ercot-puts-texas-ai-megawatts-to-the-test)). A queue is not a grid.
 
-Utilities are converting some of it. Southern Company had 17 GW of large-load contracts signed through the mid-2030s, another 8 GW in late-stage development and a prospective pipeline above 75 GW, against just over 1.2 GW of operating data center load, with data center consumption up 55% year over year ([source](https://datacenterfrontier.com/energy/article/55398810/southerns-17-gw-pipeline-puts-ai-power-demand-into-utility-math)). New generation runs about $2 billion per gigawatt and would enter service around 2031 or 2032 ([source](https://datacenterfrontier.com/energy/article/55398810/southerns-17-gw-pipeline-puts-ai-power-demand-into-utility-math)).
+Utilities are converting some of it slowly. Southern Company had 17 GW of signed large-load contracts running through the mid-2030s against just over 1.2 GW of operating data center load, and new generation costs about $2 billion per gigawatt and arrives around 2031 ([source](https://datacenterfrontier.com/energy/article/55398810/southerns-17-gw-pipeline-puts-ai-power-demand-into-utility-math)).
 
-Then the equipment. Substation-class power transformers run 75 to 110 weeks, roughly 2.5 times pre-pandemic lead times, medium-voltage switchgear 52 to 80 weeks, and large diesel generators 50 to 78 weeks, with no meaningful relief expected before 2028 ([source](https://terrapincg.com/news/switchgear-transformer-generator-lead-times-2026)). GE Vernova has roughly 100 GW of gas turbines under contract, about 20% of it tied to data centers, and only about 10 GW of delivery slots left across 2029 and 2030 combined against annualised output near 20 GW ([source](https://www.power-eng.com/gas/turbines/data-centers-drive-record-surge-in-ge-vernova-power-equipment-orders-as-turbine-slots-tighten-through-2030/)).
+Then the equipment, where the lead times bind.
 
-Set that against the chip chain, where foundry and HBM capacity have repeatedly been expanded within a couple of years of the order being placed. Silicon responds to capital in quarters. The power chain responds in half-decades. That asymmetry, not wafer supply, is what will decide how much of the 2026 capex actually becomes running compute.
+- **Substation-class transformers.** 75 to 110 weeks, roughly 2.5 times pre-pandemic lead times, with no meaningful relief expected before 2028 ([source](https://terrapincg.com/news/switchgear-transformer-generator-lead-times-2026)).
+- **Switchgear and generators.** Medium-voltage switchgear runs 52 to 80 weeks and large diesel generators 50 to 78 weeks ([source](https://terrapincg.com/news/switchgear-transformer-generator-lead-times-2026)).
+- **Gas turbines.** GE Vernova holds about 100 GW under contract, roughly 20% of it tied to data centers, with only about 10 GW of delivery slots left across 2029 and 2030 combined ([source](https://www.power-eng.com/gas/turbines/data-centers-drive-record-surge-in-ge-vernova-power-equipment-orders-as-turbine-slots-tighten-through-2030/)).
+
+Set that against the chip chain, where foundry and HBM capacity have repeatedly expanded within a couple of years of the order. Silicon responds to capital in quarters, the power chain in half-decades, and that asymmetry decides how much of the 2026 capex becomes compute.
 
 ## Key evaluation criteria
 
@@ -144,4 +153,4 @@ Set that against the chip chain, where foundry and HBM capacity have repeatedly 
 
 ## Takeaways
 
-The rack became the unit of AI compute somewhere around 120 kW, and it is heading to 600 kW by 2027 ([source](https://introl.com/blog/nvidia-vera-rubin-gpu-600kw-racks-2027)), which forces liquid cooling and an 800 VDC bus on every serious operator ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)). Cooling is fragmented and therefore cheap to solve ([source](https://www.gminsights.com/industry-analysis/data-center-liquid-cooling-market)). Power is not: transformers take two years ([source](https://terrapincg.com/news/switchgear-transformer-generator-lead-times-2026)), turbine slots are gone to 2030 ([source](https://www.power-eng.com/gas/turbines/data-centers-drive-record-surge-in-ge-vernova-power-equipment-orders-as-turbine-slots-tighten-through-2030/)), and interconnection queues run fifty times larger than what gets energised ([source](https://datacenterfrontier.com/energy/article/55401760/ercot-puts-texas-ai-megawatts-to-the-test)). If an AI buildout slips, look for the delay in the substation yard, not the fab.
+The rack became the unit of AI compute around 120 kW and is heading to 600 kW by 2027 ([source](https://introl.com/blog/nvidia-vera-rubin-gpu-600kw-racks-2027)), which forces liquid cooling and an 800 VDC bus on every serious operator ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)). Cooling is fragmented and therefore cheap to solve ([source](https://www.gminsights.com/industry-analysis/data-center-liquid-cooling-market)). Power is not: transformers take two years ([source](https://terrapincg.com/news/switchgear-transformer-generator-lead-times-2026)), turbine slots are gone to 2030 ([source](https://www.power-eng.com/gas/turbines/data-centers-drive-record-surge-in-ge-vernova-power-equipment-orders-as-turbine-slots-tighten-through-2030/)), and interconnection queues run fifty times larger than what gets energised ([source](https://datacenterfrontier.com/energy/article/55401760/ercot-puts-texas-ai-megawatts-to-the-test)). If an AI buildout slips, look in the substation yard, not the fab.
