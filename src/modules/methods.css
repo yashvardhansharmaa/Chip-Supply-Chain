@@ -1,0 +1,66 @@
+/* Methods (#/methods): reading measure for the text, wider room for the rubric and the as-of tables. */
+
+/* The block itself is not capped, so a table can run wider than the measure; the text children keep it. */
+.view[data-view="methods"] .prose.mt-prose { max-width: none; }
+.mt-prose > p, .mt-prose > ul, .mt-prose > ol, .mt-prose > blockquote, .mt-prose > h3, .mt-prose > h4, .mt-prose > h5 { max-width: var(--measure); }
+.mt-prose > .table-wrap { max-width: min(100%, 880px); margin: 1.6em 0 2em; }
+.mt-prose > .table-wrap table { font-size: 14.5px; }
+.mt-prose > .table-wrap td:first-child { font-family: var(--font-mono); font-weight: 500; width: 4.5em; }
+.mt-prose > .table-wrap th:first-child { width: 4.5em; }
+.view[data-view="methods"] .view-head .dek { max-width: 64ch; }
+
+/* ---- the four dataset method notes ---- */
+.mt-notes { margin: 0 0 40px; max-width: min(100%, 880px); border-top: 1px solid var(--line); }
+.mt-note { border-bottom: 1px solid var(--line); }
+.mt-note > summary {
+  cursor: pointer; list-style: none; display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+  padding: 14px 2px; color: var(--ink);
+}
+.mt-note > summary::-webkit-details-marker { display: none; }
+.mt-note > summary::before { content: "+"; font-family: var(--font-mono); color: var(--accent-ink); width: 1em; flex: 0 0 auto; }
+.mt-note[open] > summary::before { content: "–"; }
+.mt-note > summary:hover .mt-note-title { color: var(--accent-ink); }
+.mt-note-title { font-family: var(--font-display); font-weight: 600; font-size: 18px; }
+.mt-note-file { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--muted); margin-left: auto; }
+.mt-note-body { padding: 2px 0 26px 1.9em; }
+.mt-note-body .prose h3 { font-size: 19px; margin: 1.5em 0 0.5em; }
+.mt-note-body .prose h4 { font-size: 16px; }
+.mt-note-body .prose > p { font-size: 17px; }
+
+.mt-cites { margin: 18px 0 0; padding-left: 2.2em; font-size: 13px; line-height: 1.5; color: var(--ink-2); max-width: var(--measure); }
+.mt-cites li { margin-bottom: 4px; overflow-wrap: anywhere; }
+.mt-cites li a { color: var(--ink-2); }
+.mt-cites .host { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-left: 6px; }
+
+/* ---- as-of tables ---- */
+.mt-tables { display: flex; flex-wrap: wrap; gap: 34px 48px; margin: 0 0 44px; align-items: flex-start; }
+.mt-table-wrap { overflow-x: auto; }
+.mt-table { border-collapse: collapse; font-size: 14px; line-height: 1.35; font-variant-numeric: tabular-nums; }
+.mt-caption { caption-side: top; text-align: left; font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding-bottom: 8px; }
+.mt-table th, .mt-table td { text-align: left; padding: 7px 14px 7px 0; border-bottom: 1px solid var(--line); vertical-align: baseline; white-space: nowrap; }
+.mt-table thead th { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+.mt-table tbody th { font-weight: 600; white-space: normal; }
+.mt-table tbody th a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line-2); }
+.mt-table tbody th a:hover { color: var(--accent-ink); border-bottom-color: var(--accent); }
+.mt-table .mt-n { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); }
+.mt-table .mt-num { text-align: right; font-family: var(--font-mono); font-size: 12.5px; padding-right: 0; }
+.mt-table .mt-file { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); }
+.mt-table tfoot th, .mt-table tfoot td { border-bottom: 0; border-top: 1px solid var(--line-2); padding-top: 9px; }
+.mt-foot { font-family: var(--font-mono); font-size: 11.5px; line-height: 1.6; color: var(--muted); margin: 10px 0 0; max-width: 74ch; }
+.mt-foot .tier { margin: 0 3px 0 2px; }
+.mt-foot code { font-size: 11px; background: var(--bg-2); padding: 1px 4px; border-radius: 2px; }
+.mt-foot b { color: var(--ink-2); font-weight: 500; }
+
+/* ---- changelog ---- */
+.mt-log { list-style: none; margin: 0 0 60px; padding: 0; max-width: min(100%, 880px); border-top: 1px solid var(--line); }
+.mt-log li { display: grid; grid-template-columns: 8.5em 1fr; gap: 0 24px; padding: 15px 0; border-bottom: 1px solid var(--line); }
+.mt-log-date { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.04em; color: var(--muted); padding-top: 4px; }
+.mt-log p { margin: 0; font-size: 17px; line-height: 1.5; color: var(--ink-2); max-width: var(--measure); }
+
+@media (max-width: 900px) {
+  .mt-tables { display: block; }
+  .mt-tables .mt-table-wrap { margin-bottom: 34px; }
+  .mt-note-file { margin-left: 0; flex-basis: 100%; padding-left: 1.9em; }
+  .mt-note-body { padding-left: 0; }
+  .mt-log li { grid-template-columns: 1fr; gap: 4px; }
+}

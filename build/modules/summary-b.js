@@ -154,9 +154,9 @@ ${miniBars(fig, c.id)}
     if (!chId) warn(`summary-b: matrix segment "${s.segment}" has no chapter mapped`);
     else if (!byId[chId]) warn(`summary-b: matrix segment "${s.segment}" maps to missing chapter "${chId}"`);
     const name = chId && byId[chId] ? `<a href="${esc(chapterHref(chId))}">${esc(s.segment)}</a>` : esc(s.segment);
+    if (!s.shares) return `<tr class="sb-mx-null"><th scope="row">${name}</th><td class="sb-mx-none" colspan="${cols.length}">${esc(s.metric || 'No published split')}</td></tr>`;
     const metric = [s.metric, s.year].filter(Boolean).join(' · ');
     const head = `<th scope="row">${name}<small>${esc(metric)}</small></th>`;
-    if (!s.shares) return `<tr class="sb-mx-null">${head}<td class="sb-mx-none" colspan="${cols.length}">No published split</td></tr>`;
     const max = Math.max(...cols.map((c) => +s.shares[c] || 0));
     return `<tr>${head}${cols.map((c) => {
       const v = +s.shares[c] || 0;
@@ -198,7 +198,8 @@ ${miniBars(fig, c.id)}
     }
     picked.sort((a, b) => (a.date < b.date ? -1 : 1));
   }
-  const fmtDate = (d) => { const t = new Date(d + 'T00:00:00Z'); return isNaN(t) ? d : t.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }); };
+  const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']; // spelled out here so the build does not depend on the host's date locale
+  const fmtDate = (d) => { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(d); return m ? `${MON[+m[2] - 1]} ${+m[3]}, ${m[1]}` : d; };
   const changed = picked.length ? `<section class="sb-sec" aria-labelledby="sb-changed-h">
 <div class="sb-sec-head">
 <h3 id="sb-changed-h">What changed</h3>

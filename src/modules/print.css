@@ -1,0 +1,70 @@
+/* Print: a chapter printed to PDF keeps its sources, its charts and a line saying where it came from. */
+
+@page { margin: 18mm; }
+
+@media print {
+  /* Dark mode must not print as dark ink. Light tokens for paper, whatever the reader was using. */
+  :root, :root[data-theme="dark"] {
+    --bg: #fff; --bg-2: #f4f5f6; --bg-3: #e9ebec;
+    --ink: #000; --ink-2: #22272b; --muted: #464e55;
+    --line: #c6cacd; --line-2: #a4aaaf;
+    --accent: #8a5f0b; --accent-ink: #6b4a08; --accent-soft: rgba(138, 95, 11, 0.12);
+    --bar-5: #8a5f0b; --bar-4: #3a434c; --bar-3: #adb3b8;
+    --shadow: none; --masthead: 0px; --band: 0px;
+    color-scheme: light;
+  }
+
+  /* Fills and backgrounds are data here: the chain bars, the chokepoint pips and every SVG chart. */
+  *, *::before, *::after { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  /* Chrome, screen furniture off: masthead, specimen stage, phone strip and its sheet, rail,
+     back-to-top, search dialog, hover tooltips and the copy buttons. */
+  .masthead, .tabs, .search-btn, .theme-toggle, .skip,
+  .stage, .stage-actions, .stage-tag, .sheet,
+  .rail, .to-top, #cp-search, .ex-tip, .export-bar, .permalink { display: none !important; }
+
+  /* Every view that is on screen prints, full width. Hidden views stay hidden. */
+  .view[hidden] { display: none !important; }
+  .view:not([hidden]) { display: block; min-height: 0; }
+  .view.column:not([hidden]), .view.column.wide:not([hidden]) { width: 100%; max-width: none; padding: 0; }
+  #app { padding-top: 0; }
+  body { background: #fff; color: #000; font-size: 10.5pt; }
+  .prose, .prose > p, .prose > ul, .prose > ol, .prose h3, .prose h4, .mt-prose > p, .mt-log p, .mt-cites { max-width: none; }
+
+  /* Collapsed source lists and method notes open on paper. */
+  details { display: block; }
+  details > summary { display: block; list-style: none; }
+  details:not([open]) > *:not(summary) { display: block !important; }
+  details::details-content { content-visibility: visible !important; display: block !important; block-size: auto !important; }
+  .chapter-sources, .mt-note { break-inside: avoid; }
+  .chapter-sources ol, .mt-cites { font-size: 8.5pt; }
+  .chapter-sources li, .mt-cites li { overflow-wrap: anywhere; }
+  .chapter-sources summary::before, .mt-note > summary::before { content: ""; }
+
+  /* One chapter per page, and blocks that must not be split across the fold. */
+  .chapter { break-before: page; }
+  .chapter:first-of-type { break-before: auto; }
+  .view-head { break-after: avoid; padding-top: 0; }
+  .plate, .figure, .takeaways, .plain, .brief-card, .gl-entry, .mt-note, .mt-log li { break-inside: avoid; }
+  h1, h2, h3, h4, .chapter-title { break-after: avoid; }
+  thead { display: table-header-group; }
+  tr { break-inside: avoid; }
+  figure svg, .figure svg, #exposure-viz svg { max-width: 100%; height: auto; }
+  a[href] { text-decoration: none; color: inherit; }
+  .prose sup.cite a { color: var(--accent-ink); }
+
+  /* Where the page came from. Browsers cannot inject a date from CSS; anything that sets
+     body[data-printed] gets it printed here too, and the build date is in the site footer. */
+  body::after {
+    content: "Compute Chokepoints · computechokepoints.com";
+    display: block;
+    margin-top: 14mm;
+    padding-top: 4mm;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: 8.5pt;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+  body[data-printed]::after { content: "Compute Chokepoints · computechokepoints.com · " attr(data-printed); }
+}

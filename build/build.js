@@ -400,10 +400,7 @@ if (geo) {
 const all = chapters.concat(geo ? [geo] : []);
 const sourcesHTML = `<div class="tier-key">Every source is one of two kinds: <span class="tier tier-A">A</span> primary or institutional (company filings and investor materials, governments and regulators, standards bodies, universities and labs, and research institutions such as CSET, CSIS, SIA, SEMI and Epoch AI) · <span class="tier tier-B">B</span> one of four named exceptions: SemiAnalysis, Reuters, the Financial Times and Nikkei Asia. Nothing else is cited.</div>` +
   all.map((ch) => { const tc = tierCounts(ch.cites); return `<h3>${pad(ch.number)} · ${esc(ch.title)} <span class="label">${ch.cites.length} sources · A ${tc.A} · B ${tc.B}${tc.C + tc.D ? ' · disallowed ' + (tc.C + tc.D) : ''}${tc['?'] ? ' · unclassified ' + tc['?'] : ''}</span></h3><ol>${ch.cites.map((c) => `<li>${tierTag(c.url)}<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url)}</a></li>`).join('')}</ol>`; }).join('') +
-  (matrixNotes ? `<h3>Method: the country-share matrix</h3><div class="prose">${markdown(matrixNotes, { id: 'matrix-notes', cites: [], figures: [] }).html}</div>` : '') +
-  (controlsNotes ? `<h3>Method: the licence thresholds</h3><div class="prose">${markdown(controlsNotes, { id: 'controls-notes', cites: [], figures: [] }).html}</div>` : '') +
-  (exposureNotes ? `<h3>Method: the China share of revenue</h3><div class="prose">${markdown(exposureNotes, { id: 'exposure-notes', cites: [], figures: [] }).html}</div>` : '') +
-  `<h3>How this site was made</h3><div class="prose"><p>Compute Chokepoints was made by Yashvardhan Sharma with Claude in September 2026. Yashvardhan set the brief, the direction and the standards; Claude did the research, writing, design and code. Every number links to a public source, and the 3D specimens are drawn by code from published dimensions, not scanned from real objects. Treat the text and data as a starting point for your own diligence, not as investment advice.</p></div>`;
+  `<p class="made">Yashvardhan Sharma made this with Claude in September 2026. Every number links to a public source. Not investment advice.</p>`;
 
 /* ---------------- briefing (all the "in short" blocks on one page) ---------------- */
 const briefingHTML = all.map((ch) => {

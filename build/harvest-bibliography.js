@@ -21,6 +21,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const zlib = require('zlib');
+const { spawnSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
 const CONTENT_DIR = path.join(ROOT, 'content');
@@ -111,6 +112,19 @@ function readCache(url) {
 function writeCache(url, record) {
   fs.mkdirSync(CACHE_DIR, { recursive: true });
   fs.writeFileSync(cachePath(url), JSON.stringify(record, null, 2));
+}
+
+// Bodies are kept beside the record so extraction can be improved and re-run
+// without going back to the network. HTML is truncated; only the head matters.
+function bodyPath(url, ext) {
+  const h = crypto.createHash('sha1').update(url).digest('hex');
+  return path.join(CACHE_DIR, h + ext);
+}
+
+function writeBody(url, buf, isPdf) {
+  fs.mkdirSync(CACHE_DIR, { recursive: true });
+  if (isPdf) fs.writeFileSync(bodyPath(url, '.pdf'), buf);
+  else fs.writeFileSync(bodyPath(url, '.html'), buf.slice(0, 400 * 1024));
 }
 
 async function fetchUrl(url) {
@@ -271,6 +285,48 @@ function extractFromHtml(html) {
   return out;
 }
 
+// PyMuPDF, when present, reads the document properties and the first page of
+// real text — far better than guessing at content streams. Falls back to the
+// pure-JS peek below when Python or the module is missing.
+const PY_PDF = `
+import sys, json
+try:
+    import pymupdf as fitz
+except Exception:
+    import fitz
+doc = fitz.open(sys.argv[1])
+meta = doc.metadata or {}
+lines = []
+if doc.page_count:
+    text = doc.load_page(0).get_text("text")
+    lines = [l.strip() for l in text.splitlines() if l.strip()]
+print(json.dumps({
+    "title": meta.get("title") or None,
+    "author": meta.get("author") or None,
+    "subject": meta.get("subject") or None,
+    "creationDate": meta.get("creationDate") or None,
+    "modDate": meta.get("modDate") or None,
+    "pages": doc.page_count,
+    "lines": lines[:25],
+}))
+`;
+
+let PY_PDF_OK = null;
+function extractPdfWithPython(file) {
+  if (PY_PDF_OK === false) return null;
+  const r = spawnSync('python3', ['-c', PY_PDF, file], { encoding: 'utf8', timeout: 60000 });
+  if (r.status !== 0 || !r.stdout) {
+    if (/ModuleNotFoundError|No module named/.test(r.stderr || '')) PY_PDF_OK = false;
+    return null;
+  }
+  PY_PDF_OK = true;
+  try {
+    return JSON.parse(r.stdout);
+  } catch {
+    return null;
+  }
+}
+
 // Very small PDF text peek: pull /Title from the Info dictionary or XMP, and
 // the first readable text run from an uncompressed or FlateDecode stream.
 function extractFromPdf(buf) {
@@ -324,6 +380,55 @@ function extractFromPdf(buf) {
     out.firstLine = line.slice(0, 200) || null;
   }
   return out;
+}
+
+// A PDF's title is, in order of trust: its Info-dictionary /Title, then the
+// first substantial line of text on page one (which is what a reader sees as
+// the heading). Boilerplate first lines are skipped.
+const PDF_SKIP_LINE =
+  /^(page\s*\d|\d+$|confidential|draft|for immediate release|press release|news release|table of contents|contents|©|copyright|all rights reserved|www\.|https?:|\(|\[|—|-{2,}|\.{3,})/i;
+
+function extractPdf(url, buf) {
+  const file = bodyPath(url, '.pdf');
+  if (!fs.existsSync(file)) {
+    try {
+      fs.mkdirSync(CACHE_DIR, { recursive: true });
+      fs.writeFileSync(file, buf);
+    } catch {}
+  }
+  const py = extractPdfWithPython(file);
+  if (py) {
+    const lines = (py.lines || []).map((l) => l.replace(/\s+/g, ' ').trim()).filter(Boolean);
+    let heading = null;
+    for (const l of lines) {
+      if (l.length < 6 || l.length > 200) continue;
+      if (PDF_SKIP_LINE.test(l)) continue;
+      heading = l;
+      break;
+    }
+    // A heading often wraps onto the next line; join when the first is short
+    // and the next continues it in the same register.
+    if (heading && heading.length < 45) {
+      const i = lines.indexOf(heading);
+      const next = lines[i + 1];
+      if (next && next.length < 90 && !PDF_SKIP_LINE.test(next) && !/[.:;]$/.test(heading)) {
+        heading = `${heading} ${next}`.trim();
+      }
+    }
+    const metaTitle = cleanTitle(py.title);
+    return {
+      title: metaTitle && metaTitle.length > 4 && !JUNK_TITLE.test(metaTitle) ? metaTitle : cleanTitle(heading),
+      metaTitle,
+      firstLine: heading,
+      author: py.author || null,
+      subject: py.subject || null,
+      pages: py.pages || null,
+      date: normaliseDate(py.creationDate),
+      dateModified: normaliseDate(py.modDate),
+      via: 'pymupdf',
+    };
+  }
+  return { ...extractFromPdf(buf), via: 'js' };
 }
 
 // ------------------------------------------------------------ classification
@@ -592,19 +697,42 @@ async function main() {
       extracted: null,
     };
     if (res.body && res.body.length) {
+      writeBody(url, res.body, res.isPdf);
       try {
-        if (res.isPdf) {
-          record.extracted = { kind: 'pdf', ...extractFromPdf(res.body) };
-        } else {
-          const html = res.body.toString('utf8');
-          record.extracted = { kind: 'html', ...extractFromHtml(html) };
-        }
+        record.extracted = res.isPdf
+          ? { kind: 'pdf', ...extractPdf(url, res.body) }
+          : { kind: 'html', ...extractFromHtml(res.body.toString('utf8')) };
       } catch (e) {
         record.extractError = String(e.message || e);
       }
     }
     writeCache(url, record);
   });
+
+  // Re-run extraction over anything already cached whose body we kept, so an
+  // improved extractor benefits old entries without re-fetching.
+  console.error('Re-extracting cached bodies...');
+  let reExtracted = 0;
+  for (const url of urls) {
+    const rec = readCache(url);
+    if (!rec || (rec.extracted && rec.extracted.title)) continue;
+    const pdf = bodyPath(url, '.pdf');
+    const html = bodyPath(url, '.html');
+    try {
+      if (fs.existsSync(pdf)) {
+        rec.extracted = { kind: 'pdf', ...extractPdf(url, fs.readFileSync(pdf)) };
+      } else if (fs.existsSync(html)) {
+        rec.extracted = { kind: 'html', ...extractFromHtml(fs.readFileSync(html, 'utf8')) };
+      } else {
+        continue;
+      }
+    } catch {
+      continue;
+    }
+    writeCache(url, rec);
+    if (rec.extracted && rec.extracted.title) reExtracted++;
+  }
+  console.error(`  ${reExtracted} titles recovered`);
 
   // -------------------------------------------------- authoritative passes
   console.error('Resolving Federal Register documents...');
