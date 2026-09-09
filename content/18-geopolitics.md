@@ -79,7 +79,7 @@
 ---
 # Geopolitics
 
-Since 2018 Washington has turned this supply chain into a control regime, and Beijing has built an answer. Neither is finished.
+Since 2018 Washington has turned this supply chain into a control regime, and Beijing has built an answer.
 
 ## The shape of the contest
 
@@ -87,7 +87,7 @@ An export control is a licence requirement, not a ban on ideas. It tells a compa
 
 In 2022 the goal changed from staying a generation ahead to "as large a lead as possible", sold as a small yard with a high fence ([source](https://www.csis.org/analysis/where-chips-fall-us-export-controls-under-biden-administration-2022-2024)). The October rules that followed were meant to push China backwards, not just slow it ([source](https://www.csis.org/analysis/choking-chinas-access-future-ai)).
 
-The yard has not stayed small. Licensing once asked who was buying and why; country-wide prohibition asks only where the box is going.
+Licensing once asked who was buying and why; country-wide prohibition asks only where the box is going.
 
 ## Chokepoints and who holds them
 
@@ -108,8 +108,8 @@ The yard has not stayed small. Licensing once asked who was buying and why; coun
 
 - **Equipment.** CSET's ETO Supply Chain Explorer, TechInsights 2025 revenue by parent-company headquarters ([source](https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv)).
 - **Materials.** CSET's 2021 segment map ([source](https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/)).
-- **Taiwan.** The Stimson Center's count of Taiwanese foundry share and of capacity for the most advanced chips ([source](https://www.stimson.org/2025/why-taiwan-fears-america-first-risks-eroding-its-silicon-shield/)).
-- **Memory.** SK hynix's US listing prospectus, which puts its HBM share at 56.4 percent of revenue and its DRAM share at 29.1 percent in the first quarter of 2026 ([source](https://www.sec.gov/Archives/edgar/data/0002120882/000119312526299963/d32785d424b4.htm)). Samsung holds most of the rest of the Korean HBM position, and no source we trust splits it.
+- **Taiwan.** The Stimson Center ([source](https://www.stimson.org/2025/why-taiwan-fears-america-first-risks-eroding-its-silicon-shield/)).
+- **Memory.** SK hynix's US listing prospectus, which puts its HBM share at 56.4 percent of revenue and its DRAM share at 29.1 percent in the first quarter of 2026 ([source](https://www.sec.gov/Archives/edgar/data/0002120882/000119312526299963/d32785d424b4.htm)). Samsung holds most of the rest, and no source we trust splits it.
 - **Design and mature nodes.** CSIS ([source](https://www.csis.org/analysis/chinas-localization-drive-semiconductors-gains-impetus-allied-chip-export-controls)).
 
 Advanced packaging belongs in that table but is missing: nobody publishes a capacity split, and TSMC will not give one.
@@ -120,15 +120,15 @@ No country in the table is self-sufficient, so controls bite in both directions.
 
 The regime was built one rule at a time, each closing a gap the last one left.
 
-- **17 August 2020, the Foreign Direct Product Rule.** The Entity List cut Huawei and 68 affiliates off from US technology in May 2019 ([source](https://www.federalregister.gov/documents/2019/05/21/2019-10616/addition-of-entities-to-the-entity-list)), so Huawei bought foreign-made chips instead; Commerce then extended the restriction to any foreign item made with US technology and bound for Huawei ([source](https://www.federalregister.gov/documents/2020/08/20/2020-18213/addition-of-huawei-non-us-affiliates-to-the-entity-list-the-removal-of-temporary-general-license-and)). That is what makes American controls extraterritorial.
+- **17 August 2020, the Foreign Direct Product Rule.** The Entity List cut Huawei and 68 affiliates off from US technology in May 2019 ([source](https://www.federalregister.gov/documents/2019/05/21/2019-10616/addition-of-entities-to-the-entity-list)), so Huawei bought foreign-made chips instead. Commerce then extended the restriction to any foreign item made with US technology and bound for Huawei ([source](https://www.federalregister.gov/documents/2020/08/20/2020-18213/addition-of-huawei-non-us-affiliates-to-the-entity-list-the-removal-of-temporary-general-license-and)), which is what makes American controls extraterritorial.
 - **7 October 2022, the break.** New ECCNs 3A090 and 3B090 capped exportable AI chips and set fab thresholds at 16 nm FinFET logic, 18 nm half-pitch DRAM and 128-layer NAND ([source](https://www.csis.org/analysis/choking-chinas-access-future-ai)). They also barred US persons from servicing advanced Chinese fabs, emptying them of American engineers within days ([source](https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor)).
-- **17 October 2023, the density fix.** Chip designers had tuned interconnect speed to slip under the 2022 line while keeping the compute, so BIS deleted that parameter and put two in its place: total processing performance and performance density. A data-centre chip now needs a licence at 4,800 TPP, or at 1,600 TPP with a density of 5.92 ([source](https://cset.georgetown.edu/article/bis-2023-update-explainer/)).
+- **17 October 2023, the density fix.** Chip designers had tuned interconnect speed to slip under the 2022 line while keeping the compute, so BIS deleted that parameter and added two: total processing performance and performance density. A data-centre chip now needs a licence at 4,800 TPP, or at 1,600 TPP with a density of 5.92 ([source](https://cset.georgetown.edu/article/bis-2023-update-explainer/)).
 - **2 December 2024, the widest package.** 24 equipment types, three software tools, the first controls on high-bandwidth memory and 140 Entity List additions ([source](https://www.bis.gov/press-release/commerce-strengthens-export-controls-restrict-chinas-capability-produce-advanced-semiconductors-military)).
 - **15 January 2025, AI Diffusion.** A rule sorting the world into three tiers of compute allocation ([source](https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion)), pulled on 13 May, two days before compliance began ([source](https://www.bis.gov/press-release/department-commerce-announces-rescission-biden-era-artificial-intelligence-diffusion-rule-strengthens)). No tiered replacement has appeared since.
 
 The H20 sequence shows the drift. On 9 April 2025 the government told Nvidia it needed a licence to ship the H20 to China, to D:5 countries, and to any company headquartered or ultimately owned there ([source](https://www.sec.gov/Archives/edgar/data/1045810/000104581025000082/nvda-20250409.htm)). The rule follows ownership, so a Chinese firm cannot buy through a subsidiary abroad. Nvidia took a $4.5 billion charge on stock it could no longer sell. Licences came back in August at a price. US officials, the filing says, "have expressed an expectation that the USG will receive 15% of the revenue generated from licensed H20 sales". No regulation codifies it ([source](https://www.sec.gov/Archives/edgar/data/1045810/000104581025000209/nvda-20250727.htm)).
 
-Three moves have set the current settlement.
+Three moves set the current settlement.
 
 - **13 January 2026.** BIS moved the H200 and AMD MI325X to case-by-case review, with third-party testing and a cap at 50 percent of what the exporter ships to US customers ([source](https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities)).
 - **15 January 2026.** A Section 232 proclamation put a 25 percent tariff on the same class of chips, then exempted almost every American use of them, from data centres and research to startups and the public sector ([source](https://www.federalregister.gov/documents/2026/01/20/2026-01052/adjusting-imports-of-semiconductors-semiconductor-manufacturing-equipment-and-their-derivative)).

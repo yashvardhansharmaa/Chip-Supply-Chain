@@ -40,7 +40,8 @@
     {"fact": "JCET, China's largest OSAT, billed RMB 35.96 billion in 2024, up 21.2%", "source": "https://www.jcetglobal.com/en/site/news-detail?id=1952"},
     {"fact": "ASMPT advanced packaging revenue was $532.1M in 2025, up 30.2%, with TCB revenue up about 146%; it targets 35-40% of the TCB market", "source": "https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/"},
     {"fact": "Amkor broke ground in Peoria, Arizona in October 2025 on a $7B two-phase packaging and test campus, with up to $407M of CHIPS funding and production from early 2028", "source": "https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced"},
-    {"fact": "TSMC's Arizona commitment reached $265 billion covering 10 fabs and 2 advanced packaging facilities", "source": "https://www.azcommerce.com/news-events/news/2026/7/tsmc-announcement/"}
+    {"fact": "TSMC's Arizona commitment reached $265 billion covering 10 fabs and 2 advanced packaging facilities", "source": "https://www.azcommerce.com/news-events/news/2026/7/tsmc-announcement/"},
+    {"fact": "Epoch AI estimates Nvidia consumed 60.3% of the world's CoWoS packaging capacity in 2025, with a 90% confidence interval of 56.5 to 64.3, and that Nvidia, Google, AMD and Amazon together took around 90% of it while using only about 12% of advanced logic die production", "source": "https://epoch.ai/data-insights/ai-chip-supply-chain-constraints"}
   ],
   "figures": [
     {
@@ -58,6 +59,14 @@
       "unit": "%",
       "data": [["Test, linear and discrete", 69], ["Burn-in test", 9], ["Advanced packaging tools", 7], ["SoC test", 5], ["Atomic layer deposition", 1]],
       "source": {"label": "CSET, Inside Beijing’s Chipmaking Offensive (ALD shown for contrast, under 1%)", "url": "https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/"}
+    },
+    {
+      "id": "cowos-buyers",
+      "type": "stack",
+      "title": "Who consumed the world's CoWoS capacity, 2025",
+      "unit": "%",
+      "data": [["Nvidia", 60.3], ["Google", 13.5], ["AMD", 8.4], ["Amazon", 7.4], ["Everyone else", 10.4]],
+      "source": {"label": "Epoch AI, advanced packaging and HBM were the bottlenecks on AI chip production in 2025", "url": "https://epoch.ai/data-insights/ai-chip-supply-chain-constraints"}
     }
   ]
 }
@@ -106,6 +115,12 @@ TSMC does not publish a CoWoS wafer number, and that silence is itself the story
 
 Fifteen months later the answer had not changed. In October 2025 Wei said only that TSMC was working very hard to narrow the gap, would add capacity again in 2026, and would give the real number the following year ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf)). Front end and back end were both, in his word, tight. A company that reports monthly revenue to the exchange will not say how many interposers it can build, because the number is the constraint.
 
+The absolute number is missing, but the split is not. Epoch AI models each designer's component consumption against global supply and puts Nvidia at 60.3 percent of the world's CoWoS capacity in 2025, with a 90 percent confidence interval of 56.5 to 64.3; Google took 13.5, AMD 8.4 and Amazon 7.4 ([source](https://epoch.ai/data-insights/ai-chip-supply-chain-constraints)). Those four absorbed around 90 percent of all CoWoS and all HBM by value, while taking about 12 percent of the world's advanced logic wafers. Packaging is scarce and logic is not because packaging is built almost entirely for these four buyers.
+
+{{figure:cowos-buyers}}
+
+The pressure has since moved up the chain. SemiAnalysis reported in March 2026 that front-end wafer capacity is now the dominant bottleneck and that CoWoS constraints are easing, partly because TSMC has no reason to build interposer lines that its N3 output cannot feed ([source](https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage)).
+
 ## Who makes it
 
 {{figure:cowos-reticles}}
@@ -143,4 +158,4 @@ TSMC's roadmap makes the chokepoint worse before it gets better.
 
 ## Takeaways
 
-Advanced packaging is the second great chokepoint after lithography, and it is a capacity problem, not a physics problem: the steps are known, there are not enough lines. TSMC has guided to 60 percent compound growth in CoWoS capacity, added more every year, and still cannot say when supply meets demand. China can package chips but not the 2.5D structures AI accelerators need, and the American alternatives do not start until 2028.
+Advanced packaging is the second great chokepoint after lithography, and it is a capacity problem, not a physics problem: the steps are known, there are not enough lines. TSMC has guided to 60 percent compound growth in CoWoS capacity, added more every year, and still cannot say when supply meets demand. The demand side is as narrow as the supply side: on Epoch AI's estimate one company, Nvidia, took 60.3 percent of the world's CoWoS in 2025, and four American designers took around 90 percent ([source](https://epoch.ai/data-insights/ai-chip-supply-chain-constraints)). China can package chips but not the 2.5D structures AI accelerators need, and the American alternatives do not start until 2028.

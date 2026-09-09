@@ -106,9 +106,9 @@ The consumables are tighter still. As of 2021 five firms held more than 60 perce
 
 ## The chokepoint
 
-Twice since 2019 the industry has lost a supplier country, and neither time did a fab stop.
+This layer has been squeezed twice since 2019, once by a government and once by a war.
 
-In July 2019 Japan put photoresist, hydrogen fluoride and fluorinated polyimide under individual export licences for South Korea. It had supplied more than 90 percent of Korean imports of two of the three, and hydrogen fluoride exports fell 87.9 percent ([source](https://www.rieti.go.jp/en/columns/v01_0201.html)). Korea then spent five years funding domestic substitutes, which is what materials controls usually produce.
+In July 2019 Japan put photoresist, hydrogen fluoride and fluorinated polyimide under individual export licences for South Korea. It had supplied more than 90 percent of Korean imports of two of the three, and hydrogen fluoride exports fell 87.9 percent ([source](https://www.rieti.go.jp/en/columns/v01_0201.html)). Korea kept its fabs running and spent five years funding domestic substitutes, which is what materials controls usually produce.
 
 In 2022 Russia invaded Ukraine, which supplied about 70 percent of the world's neon and 90 percent of the semiconductor-grade neon used by US industry ([source](https://www.csis.org/blogs/perspectives-innovation/russias-invasion-ukraine-impacts-gas-markets-critical-chip-production)). Buyers had stockpiled since the 2014 annexation of Crimea, and Korean and Japanese chipmakers reported adequate neon from China instead ([source](https://www.csis.org/blogs/perspectives-innovation/russias-invasion-ukraine-impacts-gas-markets-critical-chip-production)).
 
