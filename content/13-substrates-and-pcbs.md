@@ -6,7 +6,7 @@
   "oneLiner": "A Japanese food company makes 95 percent of the insulating film inside high-performance chip packages, and a Japanese textile company makes the glass cloth under it.",
   "plain": "A chip's connections come out finer than a human hair. The board underneath works in millimetres. The package substrate is the adapter in between, built like plywood: a stiff core of glass cloth and resin, with thin sheets of epoxy film laminated onto both faces, holes burned through each sheet by laser, and copper plated into the holes. Add a layer and you add another chance for a hole to open. The film and the glass cloth each come from a single Japanese supplier, which is why a shortage here stops accelerators shipping.",
   "specimen": "substrate-layers",
-  "specimenCaption": "Right: an ABF build-up substrate pulled apart. A glass-cloth-reinforced core in the middle, laser-drilled microvias and plated copper in the build-up layers above and below, micro-bump pads on top, BGA balls underneath.",
+  "specimenCaption": "Right: an ABF build-up substrate with a quarter cut away. A glass-cloth core drilled with plated through-holes, eight layers of build-up film laminated onto each face with their own copper wiring and laser-drilled microvias, landing pads above and solder balls underneath, with the film itself drawn in copper.",
   "card": {
     "concentration": "Extreme",
     "chokepointScore": 5,
@@ -64,7 +64,7 @@
 ---
 # Substrates and PCBs
 
-On TSMC's July 2026 earnings call, chief executive C.C. Wei said the company's packaging capacity is now so tight that it limits its customers' growth ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf)). The interposer in Advanced packaging carries signals a few millimetres. Everything after it is organic chemistry: an epoxy build-up substrate, then a printed circuit board with thirty layers, then a rack.
+On TSMC's July 2026 earnings call, chief executive C.C. Wei said the company's packaging capacity is now so tight that it limits its customers' growth ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf)). The interposer carries signals a few millimetres. Everything after it is organic chemistry: an epoxy build-up substrate, then a printed circuit board with thirty layers, then a rack.
 
 ## How it works
 
@@ -72,7 +72,7 @@ A chip's connections come out finer than a human hair. The board underneath work
 
 The substrate maker drills the core through and plates it with copper before the build-up starts. Each build-up cycle then laminates a film of epoxy about 10 micrometres thick, burns microvias through it with a laser, plates copper into the vias, and patterns the traces ([source](https://www.ajinomoto.com/stories/the-ajinomoto-groups-unexpected-role-in-semiconductor-manufacturing-the-insulating-film-abf-born-from-aminoscience)). A human hair is ten times thicker than one of those films ([source](https://www.ajinomoto.co.jp/company/en/ir/event/business_briefing/main/01113/teaserItems1/01/linkList/00/link/3_ICT_E.pdf)).
 
-The hard part is that silicon and epoxy expand at different rates when heated, and warpage grows with area. Scale is what makes it bite. Ajinomoto counts 18 layers of its film in a high-performance computing substrate against six in a PC part, on a body three and a half times the area ([source](https://www.ajinomoto.co.jp/company/en/ir/event/business_briefing/main/01113/teaserItems1/01/linkList/00/link/3_ICT_E.pdf)). The fix is a core that barely moves: low-expansion glass cloth and tighter control of the resin.
+The hard part is that silicon and epoxy expand at different rates when heated, and warpage grows with area. Ajinomoto counts 18 layers of its film in a high-performance computing substrate against six in a PC part, on a body three and a half times the area ([source](https://www.ajinomoto.co.jp/company/en/ir/event/business_briefing/main/01113/teaserItems1/01/linkList/00/link/3_ICT_E.pdf)). The fix is a core that barely moves: low-expansion glass cloth and tighter control of the resin.
 
 ## Variants and trade-offs
 
@@ -93,7 +93,7 @@ Replace the resin core with glass and the expansion problem mostly goes away, wh
 - **Intel** announced glass substrates in September 2023 for the latter part of this decade, arguing that organic materials run into shrinkage and warping limits as packages grow ([source](https://download.intel.com/newsroom/archive/2025/en-us-2023-09-18-intel-unveils-industryleading-glass-substrates-to-meet-demand-for-more-powerful-compute.pdf)).
 - **Samsung Electro-Mechanics** signed a joint venture with Sumitomo Chemical in November 2025 to make glass core, with a main agreement due in 2026 and mass production after 2027 ([source](https://samsungsem.com/global/newsroom/news/view.do?id=9850)).
 
-Both dates are the giveaway. Glass is the answer to the next problem, not this one.
+Both programmes point past 2027, so glass answers the next problem rather than this one.
 
 ## The materials underneath
 

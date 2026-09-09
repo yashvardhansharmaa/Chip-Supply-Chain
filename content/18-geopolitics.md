@@ -79,7 +79,7 @@
 ---
 # Geopolitics
 
-Since 2018 Washington has turned this supply chain into a control regime, and Beijing has built an answer.
+Washington's control regime and Beijing's answer to it are both unfinished, and this chapter is a status report on each.
 
 ## The shape of the contest
 
@@ -107,7 +107,7 @@ In 2022 the goal changed from staying a generation ahead to "as large a lead as 
 - **Equipment.** CSET's ETO Supply Chain Explorer, TechInsights 2025 revenue by parent-company headquarters ([source](https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv)).
 - **Materials.** CSET's 2021 segment map ([source](https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/)).
 - **Taiwan.** The Stimson Center ([source](https://www.stimson.org/2025/why-taiwan-fears-america-first-risks-eroding-its-silicon-shield/)).
-- **Memory.** SK hynix's US listing prospectus, which puts its HBM share at 56.4 percent of revenue and its DRAM share at 29.1 percent in the first quarter of 2026 ([source](https://www.sec.gov/Archives/edgar/data/0002120882/000119312526299963/d32785d424b4.htm)). Samsung holds most of the rest, and no source we trust splits it.
+- **Memory.** SK hynix's US listing prospectus puts its HBM share at 56.4 percent of revenue and its DRAM share at 29.1 percent in the first quarter of 2026 ([source](https://www.sec.gov/Archives/edgar/data/0002120882/000119312526299963/d32785d424b4.htm)). Samsung holds most of the rest, and no source we trust splits it.
 - **Design and mature nodes.** CSIS ([source](https://www.csis.org/analysis/chinas-localization-drive-semiconductors-gains-impetus-allied-chip-export-controls)).
 
 Advanced packaging belongs in that table, but nobody publishes a capacity split and TSMC will not give one. No country in the table is self-sufficient, so controls bite in both directions.
