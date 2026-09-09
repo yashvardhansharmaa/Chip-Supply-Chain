@@ -1,23 +1,23 @@
 [
   {
     "date": "2026-09-09",
-    "summary": "Added this Methods page: the chokepoint scoring rubric, the sourcing rule with the four Tier B exceptions named, how estimates and relayed figures are labelled, the coverage statement, and the four dataset method notes moved here from the foot of the Sources page. Added a print stylesheet so a printed chapter keeps its sources and its charts."
+    "summary": "Added the Methods page: the scoring rubric, the sourcing rule, how estimates are labelled, what the site does not cover, and the four dataset notes moved from the Sources page. Added a print stylesheet that keeps a chapter's sources and charts on paper."
   },
   {
     "date": "2026-09-09",
-    "summary": "Opened the build to modules, so new pages can be added without touching the main build script. Reserved routes for a front door, a ten-minute walk through the chain, and this page."
+    "summary": "Opened the build to modules: a new page no longer means editing the main build script. Reserved routes for a front door, a ten-minute walk through the chain, and this page."
   },
   {
     "date": "2026-09-09",
-    "summary": "Rebuilt the site for phones. The specimen became a fixed strip at the foot of the screen with a live thumbnail and a Show control, the Contents opened as a full-screen sheet, and the masthead split into two rows with the search and theme buttons pinned."
+    "summary": "Rebuilt the site for phones: the specimen became a fixed strip at the foot of the screen with a live thumbnail and a Show control, the Contents opened as a full-screen sheet, and the masthead split into two rows with the search and theme buttons pinned."
   },
   {
     "date": "2026-09-09",
-    "summary": "AI Chips now draws every package from above, turning in its own plane, so one chip's die and memory layout can be compared with another's."
+    "summary": "Redrew every package on AI Chips from above, turning in its own plane, so one chip's die and memory layout sit beside another's."
   },
   {
     "date": "2026-09-09",
-    "summary": "Fixed the defects the reader tests found: a missing doctype and language attribute, screen-reader tables overflowing the phone layout, the stage count that read 15 in one place and 18 in another, muted text below the contrast threshold, labels under 10 pixels, a missing skip link, and a CSV export that dropped any field absent from the first row. The datasets are now served as files next to the page."
+    "summary": "Fixed the defects the reader tests found: a missing doctype and language attribute, screen-reader tables overflowing the phone layout, a stage count that read 15 in one place and 18 in another, muted text below the contrast threshold, labels under 10 pixels, a missing skip link, and a CSV export that dropped any field missing from the first row. Started serving the datasets as files beside the page."
   },
   {
     "date": "2026-09-09",
@@ -29,7 +29,7 @@
   },
   {
     "date": "2026-09-09",
-    "summary": "Summary cards now lead with the one-liner instead of the plain-language paragraph. Every specimen caption was rewritten to match the redesigned specimens, and chapter 1 shows the wafer."
+    "summary": "Made the summary cards lead with the one-liner instead of the plain-language paragraph. Rewrote every specimen caption to match the redesigned specimens, and put the wafer on chapter 1."
   },
   {
     "date": "2026-09-09",
@@ -37,7 +37,7 @@
   },
   {
     "date": "2026-09-09",
-    "summary": "Tightened the source rule to Tier A plus four named exceptions, SemiAnalysis, Reuters, the Financial Times and Nikkei Asia, and re-sourced the whole site against it. Chapters and datasets now stand at zero disallowed citations. Five rows of the country-share matrix lost their numbers; a second search the same day recovered two from a company filing. An audit script checks the datasets on every run."
+    "summary": "Tightened the source rule to Tier A plus four named exceptions, SemiAnalysis, Reuters, the Financial Times and Nikkei Asia, and re-sourced the whole site against it. Chapters and datasets came out at zero disallowed citations. Five rows of the country-share matrix lost their numbers; a second search the same day recovered two from a company filing. Added an audit script that checks the datasets on every run."
   },
   {
     "date": "2026-09-09",
@@ -49,7 +49,7 @@
   },
   {
     "date": "2026-09-09",
-    "summary": "Built the licence threshold map, every quantitative line in the US, Dutch, Japanese, EU and Chinese regimes, with method notes, and edited the geopolitics essay down to length."
+    "summary": "Built the licence threshold map, every number that triggers a licence in the US, Dutch, Japanese, EU and Chinese regimes, with method notes, and edited the geopolitics essay down to length."
   },
   {
     "date": "2026-09-09",

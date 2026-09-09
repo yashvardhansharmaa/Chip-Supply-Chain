@@ -529,11 +529,39 @@ function guessPublisher(url, extracted) {
   return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
+// Hosts whose every page is the same kind of document, so the path says nothing
+// extra. Checked after the PDF test and before the path patterns.
+const HOST_TYPE = {
+  'reuters.com': 'article',
+  'asia.nikkei.com': 'article',
+  'ft.com': 'article',
+  'technode.com': 'article',
+  'eetimes.com': 'article',
+  'eetasia.com': 'article',
+  'semianalysis.com': 'article',
+  'newsletter.semianalysis.com': 'article',
+  'inferencex.semianalysis.com': 'article',
+  'arxiv.org': 'report',
+  'prnewswire.com': 'press release',
+  'globenewswire.com': 'press release',
+  'businesswire.com': 'press release',
+  'rand.org': 'report',
+  'cfr.org': 'report',
+  'stimson.org': 'report',
+  'bcg.com': 'report',
+  'ifp.org': 'report',
+};
+
 function guessType(url, rec) {
   const u = url.toLowerCase();
   const host = hostOf(url);
   if (rec && rec.isPdf) return 'pdf';
   if (u.endsWith('.pdf')) return 'pdf';
+  if (HOST_TYPE[host]) return HOST_TYPE[host];
+  if (host === 'epoch.ai') {
+    if (u.includes('/publications/')) return 'report';
+    if (u.includes('/blog/') || u.includes('/data-insights/')) return 'article';
+  }
   if (host === 'sec.gov' || host === 'data.sec.gov' || u.includes('/edgar/')) return 'filing';
   if (host === 'federalregister.gov' || host === 'ecfr.gov' || host === 'eur-lex.europa.eu' || u.includes('/federal-register/')) return 'regulation';
   if (host === 'congress.gov') return 'regulation';
