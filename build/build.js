@@ -301,7 +301,11 @@ const score5 = stages.filter((c) => +((c.meta.card || {}).chokepointScore || 0) 
 const thesisHTML = `${cap(word(stages.length))} stages turn sand into a GPU. <span class="q">${cap(word(score5))}</span> of them come down to three firms or fewer.`;
 
 /* ---------------- data ---------------- */
+function readJSONSafe(f) { try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch (e) { return null; } }
 const landscape = readJSON(path.join(root, 'data', 'landscape.json'), []);
+// per-chip package layouts live in their own file so the specimen designers and the data editors never touch the same JSON
+const landscapeLayouts = readJSONSafe(path.join(root, 'data', 'landscape-layouts.json')) || {};
+landscape.forEach((c) => { if (!c.layout && landscapeLayouts[c.id]) c.layout = landscapeLayouts[c.id]; });
 const suppliers = readJSON(path.join(root, 'data', 'suppliers.json'), []);
 const timeline = readJSON(path.join(root, 'data', 'export-controls-timeline.json'), []);
 const matrix = readJSON(path.join(root, 'data', 'chokepoint-matrix.json'), []);
