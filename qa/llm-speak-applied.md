@@ -538,3 +538,154 @@ aphorism to close. What survives is four bullets and a closing paragraph:
 - Sources: 14 unchanged at 27, 16 at 14, 17 at 21, 18 at 54. 15 goes 21 → 22, the added source being Marvell's 2 December 2024 8-K on SEC EDGAR (Tier A; `sec.gov` is already in `data/source-tiers.json` under A). No number was separated from its `([source](url))`; the one number removed from prose (`one ban was paused for twelve months`) is stated in the cited bullet directly above it.
 - Body word counts: 14 1,129 · 15 1,141 · 16 1,160 · 17 1,259, all inside 1,050-1,350; 18 is 2,493, inside 1,800-2,500.
 - Paragraph-ending sweep after the pass: no paragraph in any of the five ends on a short rhetorical sentence following long cited ones, and no two consecutive paragraphs end on an aphorism. The short paragraph endings that remain are cross-references (`See Memory and HBM.`, `See Advanced packaging on why that capacity binds first.`) or facts (`Saudi Arabia still works licence by licence.`).
+
+---
+
+## `content/02-design-and-eda.md` — 1,162 → 1,155 words
+
+**Applied**
+
+| Audit item | What I did |
+|---|---|
+| Card `plain`: `That is why cutting off the software cuts off the chip.` | → `Withhold the software and the design cannot be manufactured.` Changed byte-identically in the front matter and in the first paragraph under "How it works". |
+| Lede: `no fab, no cleanroom and no hazardous gas` | → `no factory`. The triplet of negations was doing one job. |
+| `A design runs through five phases.` | Count deleted. Replaced with a lead-in that carries its own content, `The sequence is the same at every design house:`, because the build strips the `plain` paragraph out of the body and the section would otherwise open on a bare bullet list. |
+| `What disciplines the work is not the licence fee but the cost of a mistake.` | → `The licence fee is not what disciplines the work; a mistake costs a mask set.` |
+| `Design services are tighter still` | → `Design services are narrower again`. The chapter used "tighter still" twice; the other one, on segment share, is the apter and stays. |
+| `The lever works, and needs no allied coordination and no lead time.` | → `The lever needs no allied coordination and no lead time.` |
+| `the gap is foundry-validated corner cases, not features.` | → `the gap is in foundry-validated corner cases rather than in features.` |
+| Criteria: `A point tool is replaceable; a signed-off flow is not.` | Cut. The nameplate's `substitution.why` says it two inches higher on the same page. |
+| Takeaways: `Closest is not close.` | Cut, and the sentence before finished as the audit proposes: `…and the one China is closest to neutralising, though CSET still puts a complete domestic flow out of reach ([source])`. The citation is the CSET piece already used in the body, so no new source. |
+
+**Applied beyond the audit (rhythm pass)**
+
+- The Broadcom paragraph in "Who makes it" ran five sentences and two ideas (how big Broadcom is, and which customers admit to using it). Split after the $16.7 billion figure.
+
+**Skipped**
+
+- Card `usStatus`: `This is the fastest-acting lever in the entire chain.` The audit is right, but front-matter fields other than `oneLiner`, `plain` and `specimenCaption` are out of bounds for this pass. **Left for whoever owns the nameplate fields.**
+- `specimenCaption` untouched: the `die-floorplan` specimen is still being redesigned.
+
+---
+
+## `content/05-lithography.md` — 1,446 → 1,334 words
+
+Back inside the 1,050 to 1,350 band. Nothing cut was a sourced number: the citation multiset is unchanged except one Reuters price citation, which was the second copy of the same prices in Takeaways.
+
+**Applied**
+
+| Audit item | What I did |
+|---|---|
+| Lede: `No other stage in this chain has a single point of failure this sharp.` | Cut. 48 systems and nobody else selling one is harder than the claim about it. The chapter's one superlative now sits in the `oneLiner`, where the numbers support it. |
+| `That is the commercial case for EUV.` | Cut. |
+| `Adoption splits two ways.` | → `Intel and TSMC have split on High-NA:` (names the split, and runs into the bullets). |
+| `Four carry the EUV machine.` | → `Four of them carry the EUV machine:` |
+| `It is a real technology with no leading-edge logic customer.` | Folded onto the Canon sentence: `…at a 14 nm minimum linewidth ([source]), and no leading-edge logic customer has adopted it.` |
+| `Below EUV, the restrictions came in three moves.` | → `Below EUV, the restrictions arrived in this order:` |
+| `China's answer has two tracks.` | Deleted; `On DUV it is real.` became `On DUV, China's answer is real.` |
+| `Mirrors are the reason: only Zeiss makes optics to that figure.` | → `Between the light and a printed chip sit the mirrors, and only Zeiss makes them to that figure.` (drops the colon-reveal, keeps the causal point). |
+| `the hardest parts sit at Zeiss and Trumpf, not in Veldhoven` | → `…since its optics come from Zeiss and its drive laser from Trumpf.` The Zeiss-versus-Veldhoven contrast was being made twice in one chapter; it now happens once, in the "We think" judgment under "Who makes it". |
+| `For AI accelerators the leverage is in EUV` | → `For AI accelerators, EUV is the point of control.` |
+| Takeaways: `One firm, in one Dutch town, using mirrors from one German optics house` | → `ASML, in Veldhoven, using Zeiss mirrors from Oberkochen`. Reporting instead of anaphora. |
+| Takeaways: `Nothing on the horizon changes the shape of this bottleneck before 2030.` | → `No announced programme changes this bottleneck before 2030.` |
+
+**Applied beyond the audit (Zinsser pass and word budget)**
+
+- `We think Zeiss mirror polishing and coating, not final assembly in Veldhoven, sets the ceiling…` → `We think the ceiling on EUV output is Zeiss mirror polishing and coating rather than final assembly in Veldhoven.` The judgment is the contrast, so it stays; the stapled-tag shape does not.
+- `Treat claims of Huawei EUV mass production in 2026 as unverified.` was a second-person instruction closing a paragraph. It is now a statement at the head of that paragraph, which also stops the paragraph landing on a ten-word beat: `On EUV the record is thinner, and claims of Huawei EUV mass production in 2026 remain unverified.`
+- `Source power sets output.` and `The price moves with the aperture.` were both stems. The first is now a clause carrying the 1,000-watt fact; the second is gone and the price moved into its own two-sentence paragraph.
+- Merged the long-then-short pairs at `These tools still dominate by volume.`, `Immersion is the contested tier.`, `The effect shows in ASML's mix.` and `A DUV scanner costs roughly $60 million.`
+- Removed two repetitions rather than facts: the $200M / $350-400M prices in Takeaways (they stand in the body under High-NA with the same Reuters citation) and the significance clause on the 1,000-watt source (it stands in the "Source power" criterion).
+- Clutter: `polished smooth to tens of picometres` → `polished to tens of picometres`; `the number of exposures needed to cover a wafer` → `the exposures per wafer`; `divided by the numerical aperture of the optics` → `divided by numerical aperture`; `CSIS judges the technology firmly out of reach there despite heavy state spending` → `out of reach there despite state spending`; `raised its 2026 guidance to` → `raised its forecast for the year to`.
+
+**Caption changed** (`specimenCaption`), per `qa/specimen-review-tools.md`. The reticle is no longer the copper thread, so:
+
+> Right: an EUV scanner in cross-section. Tin plasma source at the bottom left, collector and three illuminator mirrors, the reticle held pattern-down at the top, six projection mirrors, the wafer stage at the bottom right, and in copper the 13.5 nm light itself.
+
+The proposal ran to three sentences; the copper clause is folded into the parts list to keep it to two.
+
+---
+
+## `content/06-photomasks-and-pellicles.md` — 1,237 → 1,175 words
+
+**Applied**
+
+| Audit item | What I did |
+|---|---|
+| Lede: `A scanner can only print what is on the mask.` | Cut; the chapter opens on the reticle sentence, as the audit proposes. |
+| `Three consequences follow.` | Count deleted. The lead-in is now attached to the paragraph above it as `Making the plate a mirror creates its own problems:`, so the bullets are not orphaned under the heading. |
+| `The blank is the hard part.` | → `The blank is where two decades of learning sit: depositing forty bilayers with sub-angstrom uniformity across a six-inch plate, with no buried particles.` (merged with the sentence after it). |
+| `Call the leading edge $10 million to $40 million.` | → `At the leading edge the range is $10 million to $40 million.` |
+| `That is the quiet reason so much AI silicon converges…` | → `That is why so much AI silicon converges…` |
+| `Pellicles are the open sore.` | → `Pellicles are the unsolved part:` merged with the sentence after it. |
+| Takeaways: `Photomasks are the cheapest critical chokepoint in this chain, and that is what makes them dangerous.` | → `Photomasks are the cheapest chokepoint in this chain, which is why nobody has funded an entrant.` This is the chapter's single superlative and the numbers under it (three suppliers, a ¥40 billion business) support it; the least/most paradox tag, which was the twin of 13's Ajinomoto line, is gone. |
+| Takeaways: `quietly decide which AI chips get designed at all` | → `decide which AI chips get designed`. |
+
+**Applied beyond the audit (rhythm pass)**
+
+- Three subsections in a row (Blanks, Writers, Inspection and repair) ended on a short sentence naming one more supplier: *Shin-Etsu supplies the DUV blanks.* / *Japan's NuFlare is the other supplier.* / *KLA sells optical reticle inspection; Zeiss sells e-beam repair.* Shin-Etsu moved up into the DUV-mask sentence under "How it works" with its citation; NuFlare moved into the multi-beam sentence, so Writers now ends on the $4.3 billion valuation. The third was left alone, since it is two facts and no longer part of a run.
+- The Blanks paragraph was 140 words and six sentences. Split after AGC's data book.
+- `China has mask capability at trailing nodes and nothing at the leading edge.` cut: the three-part negative that closed the paragraph already says it, and the paragraph now opens on SMIC's two Shanghai mask shops.
+- The chokepoint paragraph repeated the METI subsidy and the 30 percent capacity addition from the Blanks section, plus Hoya's "exceptionally high" share from Blanks and Takeaways. Both repetitions cut; ¥40 billion kept with its citation, and every fact removed still stands elsewhere in the chapter with the same source.
+- The carbon nanotube paragraph ended on the concession (`Neither is yet a production part in a leading-edge fab.`). The concession now arrives with the claim (`Carbon nanotube membranes are the intended fix, still short of production in a leading-edge fab.`) and the paragraph ends on the Mitsui capacity fact.
+
+**Skipped**
+
+- `plain`: `the plate is not a window but a mirror`. This is the site's fourth `not X but Y`, but the contrast is the chapter's central physical fact and the sentence is written for a reader with no background, where "a mirror, not a window" is the whole explanation. Kept, and `plain` and the body paragraph remain byte-identical.
+
+**Caption changed** (`specimenCaption`), per `qa/specimen-review-tools.md`. The copper is now the Mo/Si multilayer rather than the pellicle frame:
+
+> Right: a six-inch EUV reticle with its pellicle. Low-thermal-expansion glass at the base, the molybdenum and silicon multilayer mirror in copper round the top edge, a tantalum absorber carrying the pattern, and a membrane held 2.5 mm off the surface on four glued pads to keep particles out of focus.
+
+`inside its black border` dropped from the proposal to keep the second sentence readable.
+
+---
+
+## `content/08-metrology-and-inspection.md` — 1,339 → 1,328 words
+
+The audit named this chapter second worst, for the lede that repeats the one-liner's joke and for four competing superlatives. Both are gone: the body now makes no "most X in the chain" claim at all, and the no/every antithesis happens once on the page, in the `oneLiner`.
+
+**Applied**
+
+| Audit item | What I did |
+|---|---|
+| Lede: `No fab is built around its inspection tools. Every fab fails without them.` | Cut. The chapter opens on the size of the segment and KLA's share, as the audit proposes. |
+| Lede: `Process control is the quietest chokepoint in this chain and one of the tightest` | Cut. The audit's replacement fact, that process control is about a tenth of fab tool spending, moved up from "Who makes it" into the lede with its citation, and the paragraph that carried it there is now one sentence about the share still rising. |
+| `Six families of tool do the work, trading sensitivity against speed.` | → `The tools trade sensitivity against speed.` |
+| `Optical carries the volume; e-beam catches what optical cannot see.` | Cut; the bullets above say it. |
+| `KLA is the segment.` | → `KLA is most of the segment.` |
+| `The rest is specialised, not second.` | → `The rest are specialists, and nobody else reaches 11 percent.` (merged with the sentence after). |
+| `The moat is analytics as much as optics` | → `The advantage is analytics as much as optics`. |
+| `That is an absence of evidence rather than evidence of absence.` | The chiasmus had already gone; the stub left behind, `Nobody has published a Chinese gain here.`, now carries the audit's second clause: `…, which is not the same as there being none.` |
+| `Process control is a chokepoint by concentration, not by physics.` | → `a chokepoint of concentration rather than of physics`. Kept as a contrast because it is the section's argument. |
+| Takeaways: `which makes it the most durable lever in the chain` | → `which is why the controls on it are the hardest for China to work around`. Also cut `so process control matters more here than anywhere else` from the takeaway's first sentence, which was the fourth superlative in the chapter. |
+
+**Applied beyond the audit**
+
+- The only em dash in prose in these four files was in "Who makes it", introducing a second copy of KLA's 56.5 percent. Both gone; the 56.5 percent stands in the lede with the investor-day citation, and 57.2 percent with CSET's.
+- The new lede was rewritten once more so it does not echo the plain-English box below it (`One American firm sells about seven times as many…`): it now names KLA in its second clause.
+- `That is yield learning: find which of the thousand-odd steps is bleeding, fix it, move on.` → `Getting from one to the other is yield learning: find which of the thousand-odd steps is losing dies, fix it, move on.`
+- `the direct lever on process control cost` → `which is what sets the cost of process control` (the last `lever` in the chapter).
+- `The AI packaging build-out is the fastest-growing part of this segment.` → `…is where this segment is growing fastest.` and Takeaways' `Advanced packaging is the growth engine` → the plain fact, `KLA's packaging process control revenue is heading toward $1.1 billion in 2026`.
+- Merged `The December 2024 rule wrote process control into the export lists.` with the sentence listing what it controls.
+
+**Skipped**
+
+- Nothing from the audit's table for 08. Card `chinaStatus` opens `The weakest Chinese position of any major tool segment`, which is a fifth superlative in spirit, but nameplate fields are out of bounds for this pass. **Flagged for whoever owns them**; the body's own version of that claim is now a comparative backed by the cited 0.8 percent.
+
+**Caption changed** (`specimenCaption`), per `qa/specimen-review-tools.md`. The column is now a half-section with the beam in amber:
+
+> Right: a scanning electron microscope column over a wafer, cut in half, with the electron beam in copper. Electron gun under its high-voltage insulator at the top, condenser and objective lenses drawn as iron yokes round their coils, scan coils, an annular detector, and the wafer on a precision stage.
+
+Compressed from the proposal's three sentences to two, and `secondary electron detector` kept as `annular detector`, which is what the specimen draws.
+
+## Checks (chapters 02, 05, 06 and 08)
+
+- `node build/build.js` from the project root: **0 warnings, 0 errors.** `D 0` and `? 0` for all four chapters.
+- Body word counts: 02 1,155 · 05 1,334 · 06 1,175 · 08 1,328. All inside 1,050 to 1,350; 05 came down from 1,446.
+- Front matter parses as JSON in all four. `plain` is byte-identical to the first paragraph under "How it works" in all four; the pair in 02 was edited together.
+- Figure markers all still placed: 02 three, 05 four, 06 one, 08 three. No heading, table, figure marker or front-matter field other than `plain` (02) and `specimenCaption` (05, 06, 08) was changed. `oneLiner` was left alone in all four.
+- Em dashes: none in prose. The only ones in these files are the bold-label bullets of "Key evaluation criteria" in 02 (none, the list uses full stops), 05 (5), 06 (5) and 08 (5).
+- Sources unchanged: 02 16, 05 25, 06 16, 08 15. Two citation instances were removed as duplicates (the Reuters prices repeated in 05's Takeaways, the Shin-Etsu blank line repeated in 06), and one was added, the CSET article already cited in 02's body, now attached to the same claim in Takeaways. No number lost its `([source](url))`, and no fact was added. The one number that appears in a place it did not before is the year in 08's takeaway, `heading toward $1.1 billion in 2026`, which is the date in the cited KLA letter and in the body sentence the takeaway summarises.
+- Numbers diffed against the pre-edit files: identical in 02, and in 05, 06 and 08 the only differences are second copies of numbers that still stand elsewhere in the same chapter with the same source ($200M / $350-400M in 05, 30 percent in 06, 56.5 percent in 08).
+- Paragraph-ending sweep: no two consecutive paragraphs in any of the four end on a short sentence after long cited ones. What remains is colon lead-ins into bullet lists, one cross-reference and two short facts.
