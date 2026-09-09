@@ -5,12 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Tue, 28 Jul 2026 20:05:01 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:21:15.666Z",
+  "fetchedAt": "2026-09-09T18:30:44.154Z",
   "extracted": {
     "kind": "pdf",
-    "title": "Lockwood, Ed",
+    "title": "Letter to Shareholders Q4 Fiscal 2026",
+    "metaTitle": null,
+    "firstLine": "Letter to Shareholders Q4 Fiscal 2026",
+    "author": "Lockwood, Ed",
+    "subject": null,
+    "pages": 15,
     "date": "2026-07-27",
-    "firstLine": "Q46306286íKvóÌ\u0017\u001d»\u001f\u001dÈøìÏ²ªx!T*ð°éÉVâxCê\u0006gÜ\u001eE\u001fTWEL-\u0018Î{-m{ê\u0001\u000fi\u0003»Uð`rÎm£tPãÑ 7\u001f§Ãé\u001dt}|W9lrÈËïÜ»ºNRc\u0002ømc\u001cxG?ä$ð¹»\u001däB¶Åp¬-Ìt\u0006°\u0000I&ì·y+\u000eégÒ[[+ Â\u001ar :ÇkÙ\u0004mÞ}\u0017²DÖ²Ôë[è\u001b\u001aåÞµxÛ}\u001b²IdìØszØ\\;í§Çt",
-    "dateModified": "2026-07-27"
+    "dateModified": "2026-07-27",
+    "via": "pymupdf"
   }
 }

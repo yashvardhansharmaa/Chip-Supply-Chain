@@ -5,7 +5,7 @@
   if (!CP) return;
 
   var rail, fill, num, label, list, steps = [], total = 0;
-  var setUp = false, queued = false, at = -1, jumped = false;
+  var setUp = false, queued = false, at = -1, first = true;
 
   function head() { // the masthead is measured at runtime, so read it rather than assume 56
     var v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--masthead'));
@@ -61,25 +61,26 @@
     label.textContent = steps[cur].getAttribute('data-title') || '';
   }
 
-  /* #/walk/<chapter> is a step anchor: the router reads it as the walk view, and the step's own id
-     carries the same string, so the browser scrolls to it. On a cold load the router scrolls to the
-     top first, so redo the jump on the next frame. */
-  function jump() {
+  /* #/walk/<chapter> is a step anchor: the router reads the hash as the walk view, and the step's own
+     id is that same string, so the browser scrolls to it on its own. The one case it cannot handle is
+     a cold load, where the router scrolls back to the top after this view opens — so redo it here. */
+  function jump(cold) {
     var h = location.hash || '';
     if (h.indexOf('#/walk/') !== 0) return;
     var el = document.getElementById(decodeURIComponent(h.slice(1)));
     if (!el) return;
     var root = document.documentElement, prev = root.style.scrollBehavior;
-    if (!jumped) root.style.scrollBehavior = 'auto'; // first load: jump, do not animate the whole page
+    if (cold) root.style.scrollBehavior = 'auto'; // land on the step, do not animate the whole page
     el.scrollIntoView({ block: 'start' });
     root.style.scrollBehavior = prev;
-    jumped = true;
   }
 
   CP.register('walk', {
     activate: function () {
       if (!setup()) return;
-      soon(function () { jump(); at = -1; update(); });
+      var cold = first;
+      first = false;
+      soon(function () { jump(cold); at = -1; update(); });
     }
   });
 })();

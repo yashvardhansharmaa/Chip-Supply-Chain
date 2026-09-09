@@ -5,12 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Thu, 12 Mar 2026 19:36:30 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:21:17.030Z",
+  "fetchedAt": "2026-09-09T18:30:43.387Z",
   "extracted": {
     "kind": "pdf",
     "title": "Compounding Sustainable Outperformance",
+    "metaTitle": "Compounding Sustainable Outperformance",
+    "firstLine": "Process Control for the AI Era Ahmad Khan",
+    "author": "Darlene Malloy",
+    "subject": null,
+    "pages": 60,
     "date": "2026-03-12",
-    "firstLine": "¦d\u000f­YW°7ËMëÍ\u0019õ ¦d\u000f­YW°7ËMëÍ\u0019õ",
-    "dateModified": "2026-03-12"
+    "dateModified": "2026-03-12",
+    "via": "pymupdf"
   }
 }

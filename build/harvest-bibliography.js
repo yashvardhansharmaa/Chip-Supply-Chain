@@ -196,8 +196,13 @@ function cleanTitle(t) {
 }
 
 // Titles a bot wall or an error page serves instead of the document's own.
-const JUNK_TITLE =
-  /^(access denied|just a moment|error|forbidden|403|404|401|429|page not found|not found|attention required|are you a robot|robot check|请稍候|security check|redirecting|loading|untitled|document|home|index|sec\.gov \| |challenge|blocked|service unavailable|bad gateway|site maintenance|你的连接不是私密连接)/i;
+const WALL_TITLE =
+  /^(access denied|just a moment|forbidden|403|404|401|429|error\b|page not found|not found|attention required|are you a robot|robot check|请稍候|security check|redirecting|challenge|blocked|service unavailable|bad gateway|site maintenance|sec\.gov \|)/i;
+
+// Real page titles that name no document: a bare "Home", "Index", "Untitled".
+const GENERIC_TITLE = /^(home|home ?page|index|untitled|document|default|welcome|main|top)$/i;
+
+const JUNK_TITLE = new RegExp(`(${WALL_TITLE.source})|(${GENERIC_TITLE.source})`, 'i');
 
 function metaContent(html, patterns) {
   for (const re of patterns) {
@@ -469,17 +474,33 @@ function guessType(url, rec) {
   return 'page';
 }
 
+// Path segments that carry no meaning of their own.
+const NOISE_SEG = /^(en|en-us|en_us|us|eng|english|global|www|index|home|site|default|content|pages?|ww|worldwide|jp|kr|tw|cn|de|nl)$/i;
+
+// Last resort: read the URL's own path as a title. Marked unverified wherever
+// it is used, because it is our words rather than the document's.
 function titleFromPath(url) {
   try {
     const u = new URL(url);
-    const segs = u.pathname.split('/').filter(Boolean);
-    let last = segs[segs.length - 1] || u.hostname;
-    last = last.replace(/\.(html?|php|aspx?|pdf|json|csv)$/i, '');
-    last = decodeURIComponent(last).replace(/[-_+]+/g, ' ').replace(/\s+/g, ' ').trim();
+    const host = u.hostname.replace(/^www\./, '');
+    const org = PUBLISHERS[host] || null;
+    const segs = u.pathname
+      .split('/')
+      .filter(Boolean)
+      .map((s) => decodeURIComponent(s))
+      .filter((s) => !NOISE_SEG.test(s));
+
+    // Nothing meaningful in the path: this is the organisation's front page.
+    if (!segs.length) return org ? `${org} home page` : `${host} home page`;
+
+    let last = segs[segs.length - 1].replace(/\.(html?|php|aspx?|pdf|json|csv|xml|htm)$/i, '');
+    last = last.replace(/[-_+]+/g, ' ').replace(/\s+/g, ' ').trim();
     if (!last || /^\d+$/.test(last)) {
-      last = segs.slice(-2).join(' ').replace(/[-_+]/g, ' ').trim() || u.hostname;
+      last = segs.slice(-2).join(' ').replace(/[-_+]/g, ' ').trim();
     }
-    return last.charAt(0).toUpperCase() + last.slice(1);
+    if (!last) return org ? `${org} home page` : `${host} home page`;
+    const phrase = last.charAt(0).toUpperCase() + last.slice(1);
+    return org ? `${phrase} (${org} website)` : phrase;
   } catch {
     return url;
   }
@@ -789,11 +810,18 @@ async function main() {
 
     if (ex) {
       if (ex.kind === 'pdf') {
-        title = ex.title || (ex.firstLine ? cleanTitle(ex.firstLine.slice(0, 140)) : null);
+        title = ex.title || (ex.firstLine ? cleanTitle(ex.firstLine.slice(0, 160)) : null);
       } else {
         title = ex.title;
       }
       date = ex.date || null;
+    }
+    // "Home | ASM" cleans down to "Home", which says nothing. When the trimmed
+    // title is useless but the page's untrimmed <title> is not, keep the whole
+    // thing: it is still the document's own words.
+    if (ex && ex.kind === 'html' && (!title || JUNK_TITLE.test(title)) && ex.rawTitle) {
+      const raw = ex.rawTitle.replace(/\s*[|–—-]\s*$/, '').trim();
+      if (raw && raw.length > 6 && !WALL_TITLE.test(raw) && !GENERIC_TITLE.test(raw)) title = raw;
     }
     if (!title || title.length < 3 || JUNK_TITLE.test(title)) {
       title = null;

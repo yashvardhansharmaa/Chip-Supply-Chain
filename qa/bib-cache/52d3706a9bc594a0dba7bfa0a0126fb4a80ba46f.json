@@ -5,11 +5,17 @@
   "contentType": "application/pdf; charset=utf-8",
   "lastModified": null,
   "error": null,
-  "fetchedAt": "2026-09-09T18:21:18.566Z",
+  "fetchedAt": "2026-09-09T18:30:47.398Z",
   "extracted": {
     "kind": "pdf",
-    "title": null,
+    "title": "Federal Communications Commission FCC-26-50",
+    "metaTitle": null,
+    "firstLine": "Federal Communications Commission FCC-26-50",
+    "author": null,
+    "subject": null,
+    "pages": 108,
     "date": null,
-    "firstLine": null
+    "dateModified": null,
+    "via": "pymupdf"
   }
 }

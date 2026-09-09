@@ -5,11 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Mon, 23 Jun 2025 18:45:15 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:21:12.590Z",
+  "fetchedAt": "2026-09-09T18:30:41.202Z",
   "extracted": {
     "kind": "pdf",
-    "title": null,
+    "title": "BUILDING RESILIENT SUPPLY CHAINS,",
+    "metaTitle": null,
+    "firstLine": "BUILDING RESILIENT SUPPLY CHAINS,",
+    "author": null,
+    "subject": null,
+    "pages": 250,
     "date": "2021-06-07",
-    "firstLine": null
+    "dateModified": "2021-06-07",
+    "via": "pymupdf"
   }
 }

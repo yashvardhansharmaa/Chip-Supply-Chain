@@ -3,9 +3,9 @@
   "status": 200,
   "finalUrl": "https://www.qualcomm.com/data-center",
   "contentType": "text/html;charset=utf-8",
-  "lastModified": "Wed, 09 Sep 2026 18:07:49 GMT",
+  "lastModified": "Wed, 09 Sep 2026 18:05:11 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:21:12.192Z",
+  "fetchedAt": "2026-09-09T18:30:40.786Z",
   "extracted": {
     "kind": "html",
     "title": "Qualcomm Data Center Products",

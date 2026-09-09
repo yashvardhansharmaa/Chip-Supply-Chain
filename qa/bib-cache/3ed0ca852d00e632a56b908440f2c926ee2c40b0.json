@@ -5,12 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Wed, 20 Sep 2023 03:27:53 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:21:14.912Z",
+  "fetchedAt": "2026-09-09T18:30:42.761Z",
   "extracted": {
     "kind": "pdf",
     "title": "The Semiconductor Supply Chain - Issue Brief",
+    "metaTitle": "The Semiconductor Supply Chain - Issue Brief",
+    "firstLine": "Issue Brief January 2021",
+    "author": null,
+    "subject": null,
+    "pages": 98,
     "date": "2021-01-21",
-    "firstLine": null,
-    "dateModified": "2023-09-19"
+    "dateModified": "2023-09-19",
+    "via": "pymupdf"
   }
 }

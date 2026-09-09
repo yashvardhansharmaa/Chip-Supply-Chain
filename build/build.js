@@ -399,8 +399,7 @@ if (geo) {
 /* ---------------- sources view ---------------- */
 const all = chapters.concat(geo ? [geo] : []);
 const sourcesHTML = `<div class="tier-key">Every source is one of two kinds: <span class="tier tier-A">A</span> primary or institutional (company filings and investor materials, governments and regulators, standards bodies, universities and labs, and research institutions such as CSET, CSIS, SIA, SEMI and Epoch AI) · <span class="tier tier-B">B</span> one of four named exceptions: SemiAnalysis, Reuters, the Financial Times and Nikkei Asia. Nothing else is cited.</div>` +
-  all.map((ch) => { const tc = tierCounts(ch.cites); return `<h3>${pad(ch.number)} · ${esc(ch.title)} <span class="label">${ch.cites.length} sources · A ${tc.A} · B ${tc.B}${tc.C + tc.D ? ' · disallowed ' + (tc.C + tc.D) : ''}${tc['?'] ? ' · unclassified ' + tc['?'] : ''}</span></h3><ol>${ch.cites.map((c) => `<li>${tierTag(c.url)}<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url)}</a></li>`).join('')}</ol>`; }).join('') +
-  `<p class="made">Yashvardhan Sharma made this with Claude in September 2026. Every number links to a public source. Not investment advice.</p>`;
+  all.map((ch) => { const tc = tierCounts(ch.cites); return `<h3>${pad(ch.number)} · ${esc(ch.title)} <span class="label">${ch.cites.length} sources · A ${tc.A} · B ${tc.B}${tc.C + tc.D ? ' · disallowed ' + (tc.C + tc.D) : ''}${tc['?'] ? ' · unclassified ' + tc['?'] : ''}</span></h3><ol>${ch.cites.map((c) => `<li>${tierTag(c.url)}<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url)}</a></li>`).join('')}</ol>`; }).join('');
 
 /* ---------------- briefing (all the "in short" blocks on one page) ---------------- */
 const briefingHTML = all.map((ch) => {
@@ -427,7 +426,7 @@ const glossaryHTML = glossary.length ? glossary.slice().sort((a, b) => a.term.lo
 /* ---------------- assemble ---------------- */
 const totalWords = all.reduce((a, c) => a + c.words, 0);
 const credits = `Made by <b>Yashvardhan Sharma</b> with Claude. Inspired by <a href="https://www.humanityslastmachine.com/" target="_blank" rel="noopener">Humanity's Last Machine</a> and <a href="https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/" target="_blank" rel="noopener">CSET's supply-chain work</a>.`;
-const footer = `<p>Compute Chokepoints · The AI chip supply chain, stage by stage · Built ${new Date().toISOString().slice(0, 10)}</p><p class="credits">${credits}</p><p>Every number on this site links to its source. Corrections and additions are welcome. The 3D specimens are drawn by code, with no outside libraries and no scanned objects, and the site carries no trackers.</p>`;
+const footer = `<p class="credits">${credits}</p>`;
 const suppliersIntro = suppliers.length ? `${suppliers.length} firms across the chain: what each one makes, where it is based and how hard it would be to replace. Filter by category, country or chokepoint level, then copy what you find as CSV.` : 'The supplier database is not compiled yet.';
 
 const kit = read(path.join(root, 'src', 'kit.js')) || '';

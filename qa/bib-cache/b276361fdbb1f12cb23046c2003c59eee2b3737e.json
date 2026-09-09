@@ -5,11 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Wed, 05 Feb 2025 21:01:02 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:21:18.236Z",
+  "fetchedAt": "2026-09-09T18:30:46.616Z",
   "extracted": {
     "kind": "pdf",
     "title": "Intel Unveils Industry-Leading Glass Substrates to Meet Demand for...",
+    "metaTitle": "Intel Unveils Industry-Leading Glass Substrates to Meet Demand for...",
+    "firstLine": "Newsroom Home | Newsroom Search",
+    "author": null,
+    "subject": null,
+    "pages": 7,
     "date": "2025-01-31",
-    "firstLine": null
+    "dateModified": "2025-01-31",
+    "via": "pymupdf"
   }
 }

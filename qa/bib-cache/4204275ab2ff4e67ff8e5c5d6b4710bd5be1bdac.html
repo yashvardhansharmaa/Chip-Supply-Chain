@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en-US" prefix="og: https://ogp.me/ns#">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<title>HBM3e and HBM4: IC design guide for next-generation high bandwidth memory</title>
+<meta name="description" content="HBM3e delivers 1.2 TB/s now. HBM4 doubles that by 2026. Here&#039;s what IC design engineers need to know about integration, thermal management and EDA tools."/>
+<meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
+<link rel="canonical" href="https://blogs.sw.siemens.com/semiconductor-packaging/2026/04/24/hbm3e-hbm4-ic-design-guide/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="HBM3e and HBM4: IC design guide for next-generation high bandwidth memory" />
+<meta property="og:description" content="HBM3e delivers 1.2 TB/s now. HBM4 doubles that by 2026. Here&#039;s what IC design engineers need to know about integration, thermal management and EDA tools." />
+<meta property="og:url" content="https://blogs.sw.siemens.com/semiconductor-packaging/2026/04/24/hbm3e-hbm4-ic-design-guide/" />
+<meta property="og:site_name" content="Semiconductor Packaging" />
+<meta property="article:tag" content="3D IC" />
+<meta property="article:tag" content="heterogeneous design" />
+<meta property="article:tag" content="Innovator3D IC" />
+<meta property="article:section" content="News" />
+<meta property="og:updated_time" content="2026-04-24T14:18:23-04:00" />
+<meta property="og:image" content="https://blogs.sw.siemens.com/wp-content/uploads/sites/64/2026/04/A-smarter-way-to-design-3D-IC-packages-_-Siemens.png" />
+<meta property="og:image:secure_url" content="https://blogs.sw.siemens.com/wp-content/uploads/sites/64/2026/04/A-smarter-way-to-design-3D-IC-packages-_-Siemens.png" />
+<meta property="og:image:width" content="900" />
+<meta property="og:image:height" content="506" />
+<meta property="og:image:alt" content="3d ic package design" />
+<meta property="og:image:type" content="image/png" />
+<meta property="article:published_time" content="2026-04-24T14:18:19-04:00" />
+<meta property="article:modified_time" content="2026-04-24T14:18:23-04:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="HBM3e and HBM4: IC design guide for next-generation high bandwidth memory" />
+<meta name="twitter:description" content="HBM3e delivers 1.2 TB/s now. HBM4 doubles that by 2026. Here&#039;s what IC design engineers need to know about integration, thermal management and EDA tools." />
+<meta name="twitter:image" content="https://blogs.sw.siemens.com/wp-content/uploads/sites/64/2026/04/A-smarter-way-to-design-3D-IC-packages-_-Siemens.png" />
+<meta name="twitter:label1" content="Written by" />
+<meta name="twitter:data1" content="Emily Yan" />
+<meta name="twitter:label2" content="Time to read" />
+<meta name="twitter:data2" content="14 minutes" />
+<script type="application/ld+json" class="rank-math-schema">{"@context":"https://schema.org","@graph":[{"@type":["Person","Organization"],"@id":"https://blogs.sw.siemens.com/semiconductor-packaging/#person","name":"Semiconductor Packaging"},{"@type":"WebSite","@id":"https://blogs.sw.siemens.com/semiconductor-packaging/#website","url":"https://blogs.sw.siemens.com/semiconductor-packaging","name":"Semiconductor Packaging","publisher":{"@id":"https://blogs.sw.siemens.com/semiconductor-packaging/#person"},"inLanguage":"en-US"},{"@type":"ImageObject","@id":"https://blogs.sw.siemens.com/wp-content/uploads/sites/64/2026/04/A-smarter-way-to-design-3D-IC-packages-_-Siemens.png","url":"https://blogs.sw.siemens.com/wp-content/uploads/sites/64/2026/04/A-smarter-way-to-design-3D-IC-packages-_-Siemens.png","width":"900","height":"506","caption":"3d ic package design","inLanguage":"en-US"},{"@type":"WebPage","@id":"https://blogs.sw.siemens.com/semiconductor-packaging/2026/04/24/hbm3e-hbm4-ic-design-guide/#webpage","url":"https://blogs.sw.siemens.com/semiconductor-packaging/2026/04/24/hbm3e-hbm4-ic-design-guide/","name":"HBM3e and HBM4: IC design guide for next-generation high bandwidth memory","datePublished":"2026-04-24T14:18:19-04:00","dateModified":"2026-04-24T14:18:23-04:00","isPartOf":{"@id":"https://blogs.sw.siemens.com/semiconductor-packaging/#website"},"primaryImageOfPage":{"@id":"https://blogs.sw.siemens.com/wp-content/uploads/sites/64/2026/04/A-smarter-way-to-design-3D-IC-packages-_-Siemens.png"},"inLanguage":"en-US"},{"@type":"Person","@id":"https://blogs.sw.siemens.com/semiconductor-packaging/author/emilyyan/","name":"Emily Yan","url":"https://blogs.sw.siemens.com/semiconductor-packaging/author/emilyyan/","image":{"@type":"ImageObject","@id":"https://secure.gravatar.com/avatar/8b2e34a2339a7009d63bb9442c7c49d4abc355c43b512a196743841ceae401ee?s=96&amp;d=identicon&amp;r=pg","url":"https://secure.gravatar.com/avatar/8b2e34a2339a7009d63bb9442c7c49d4abc355c43b512a196743841ceae401ee?s=96&amp;d=identicon&amp;r=pg","caption":"Emily Yan","inLanguage":"en-US"}},{"@type":"BlogPosting","headline":"HBM3e and HBM4: IC design guide for next-generation high bandwidth memory","keywords":"HBM3e and HBM4","datePublished":"2026-04-24T14:18:19-04:00","dateModified":"2026-04-24T14:18:23-04:00","articleSection":"News","author":{"@id":"https://blogs.sw.siemens.com/semiconductor-packaging/author/emilyyan/","name":"Emily Yan"},"publisher":{"@id":"https://blogs.sw.siemens.com/semiconductor-packaging/#person"},"description":"HBM3e delivers 1.2 TB/s now. HBM4 doubles that by 2026. Here&#039;s what IC design engineers need to know about integration, thermal management and EDA tools.","name":"HBM3e and HBM4: IC design guide for next-generation high bandwidth memory","@id":"https://blogs.sw.siemens.com/semiconductor-packaging/2026/04/24/hbm3e-hbm4-ic-design-guide/#richSnippet","isPartOf":{"@id":"https://blogs.sw.siemens.com/semiconductor-packaging/2026/04/24/hbm3e-hbm4-ic-design-guide/#webpage"},"image":{"@id":"https://blogs.sw.siemens.com/wp-content/uploads/sites/64/2026/04/A-smarter-way-to-design-3D-IC-packages-_-Siemens.png"},"inLanguage":"en-US","mainEntityOfPage":{"@id":"https://blogs.sw.siemens.com/semiconductor-packaging/2026/04/24/hbm3e-hbm4-ic-design-guide/#webpage"}}]}</script>
+<link rel='dns-prefetch' href='//cdnjs.cloudflare.com' />
+<link rel="alternate" type="application/rss+xml" title="Semiconductor Packaging &raquo; Feed" href="https://blogs.sw.siemens.com/semiconductor-packaging/feed/" />
+<style id="wp-img-auto-sizes-contain-inline-css">
+img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
+/*# sourceURL=wp-img-auto-sizes-contain-inline-css */
+</style>
+<style id="wp-emoji-styles-inline-css">
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+/*# sourceURL=wp-emoji-styles-inline-css */
+</style>
+<link rel='stylesheet' id='wp-block-library-css' href='https://blogs.sw.siemens.com/semiconductor-packaging/wp-includes/css/dist/block-library/style.min.css?ver=507f053e42ac2e4a2f1cf16c58b48f1e' media='all' />
+<style id="classic-theme-styles-inline-css">
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+/*# sourceURL=/wp-includes/css/classic-themes.min.css */
+</style>
+<link rel='stylesheet' id='cb-carousel-style-css' href='https://blogs.sw.siemens.com/wp-content/plugins/carousel-block/blocks/../build/carousel-legacy/style-index.css?ver=2.1.5' media='all' />
+<style id="cb-carousel-v2-style-inline-css">
+.wp-block-cb-carousel-v2{position:relative}.wp-block-cb-carousel-v2[data-cb-pagination=true] .swiper-horizontal{margin-bottom:calc(var(--wp--custom--carousel-block--pagination-bullet-size, 16px)*4)}.wp-block-cb-carousel-v2 .cb-button-next,.wp-block-cb-carousel-v2 .cb-button-prev{color:var(--wp--custom--carousel-block--navigation-color,#000);height:var(--wp--custom--carousel-block--navigation-size,22px);margin-top:calc(0px - var(--wp--custom--carousel-block--navigation-size, 22px)/2);width:calc(var(--wp--custom--carousel-block--navigation-size, 22px)/44*27)}.wp-block-cb-carousel-v2 .cb-button-next:after,.wp-block-cb-carousel-v2 .cb-button-prev:after{font-size:var(--wp--custom--carousel-block--navigation-size,22px)}.wp-block-cb-carousel-v2 .cb-button-next:hover,.wp-block-cb-carousel-v2 .cb-button-prev:hover{color:var(--wp--custom--carousel-block--navigation-hover-color,var(--wp--custom--carousel-block--navigation-color,#000))}.wp-block-cb-carousel-v2 .cb-button-prev,.wp-block-cb-carousel-v2.cb-rtl .cb-button-next{left:calc(var(--wp--custom--carousel-block--navigation-size, 22px)*-1/44*27 - var(--wp--custom--carousel-block--navigation-sides-offset, 10px));right:auto}.wp-block-cb-carousel-v2 .cb-button-next,.wp-block-cb-carousel-v2.cb-rtl .cb-button-prev{left:auto;right:calc(var(--wp--custom--carousel-block--navigation-size, 22px)*-1/44*27 - var(--wp--custom--carousel-block--navigation-sides-offset, 10px))}.wp-block-cb-carousel-v2.cb-rtl .cb-button-next,.wp-block-cb-carousel-v2.cb-rtl .cb-button-prev{transform:scaleX(-1)}.wp-block-cb-carousel-v2 .cb-pagination.swiper-pagination-horizontal{bottom:var(--wp--custom--carousel-block--pagination-bottom,-35px);display:flex;justify-content:center;top:var(--wp--custom--carousel-block--pagination-top,auto)}.wp-block-cb-carousel-v2 .cb-pagination.swiper-pagination-horizontal.swiper-pagination-bullets .cb-pagination-bullet{margin:0 var(--wp--custom--carousel-block--pagination-bullet-horizontal-gap,4px)}.wp-block-cb-carousel-v2 .cb-pagination .cb-pagination-bullet{background:var(--wp--custom--carousel-block--pagination-bullet-color,var(--wp--custom--carousel-block--pagination-bullet-inactive-color,#000));height:var(--wp--custom--carousel-block--pagination-bullet-size,8px);opacity:var(--wp--custom--carousel-block--pagination-bullet-inactive-opacity,var(--wp--custom--carousel-block--pagination-bullet-opacity,.2));width:var(--wp--custom--carousel-block--pagination-bullet-size,8px)}.wp-block-cb-carousel-v2 .cb-pagination .cb-pagination-bullet.swiper-pagination-bullet-active{background:var(--wp--custom--carousel-block--pagination-bullet-active-color,#000);opacity:var(--wp--custom--carousel-block--pagination-bullet-active-opacity,1)}.wp-block-cb-carousel-v2 .cb-pagination .cb-pagination-bullet:not(.swiper-pagination-bullet-active):hover{background:var(--wp--custom--carousel-block--pagination-bullet-hover-color,var(--wp--custom--carousel-block--pagination-bullet-inactive-hover-color,var(--wp--custom--carousel-block--pagination-bullet-active-color,#000)));opacity:var(--wp--custom--carousel-block--pagination-bullet-inactive-hover-opacity,var(--wp--custom--carousel-block--pagination-bullet-inactive-opacity,.2))}.wp-block-cb-carousel-v2.alignfull .cb-button-next,.wp-block-cb-carousel-v2.alignfull .cb-button-prev{color:var(--wp--custom--carousel-block--navigation-alignfull-color,#000)}.wp-block-cb-carousel-v2.alignfull .cb-button-prev,.wp-block-cb-carousel-v2.alignfull.cb-rtl .cb-button-next{left:var(--wp--custom--carousel-block--navigation-sides-offset,10px);right:auto}.wp-block-cb-carousel-v2.alignfull .cb-button-next,.wp-block-cb-carousel-v2.alignfull.cb-rtl .cb-button-prev{left:auto;right:var(--wp--custom--carousel-block--navigation-sides-offset,10px)}.wp-block-cb-carousel-v2.alignfull.cb-hero-slider{--wp--custom--carousel-block--navigation-alignfull-color:#fff;--wp--custom--carousel-block--pagination-bottom:24px;--wp--custom--carousel-block--pagination-bullet-active-color:#fff;--wp--custom--carousel-block--pagination-bullet-inactive-color:#fff;--wp--custom--carousel-block--pagination-bullet-inactive-hover-color:#fff}.wp-block-cb-carousel-v2 .wp-block-image{margin-bottom:var(--wp--custom--carousel-block--image-margin-bottom,0);margin-top:var(--wp--custom--carousel-block--image-margin-top,0)}.wp-block-cb-carousel-v2 .wp-block-cover{margin-bottom:var(--wp--custom--carousel-block--cover-margin-bottom,0);margin-top:var(--wp--custom--carousel-block--cover-margin-top,0)}.wp-block-cb-carousel-v2 .wp-block-cover.aligncenter,.wp-block-cb-carousel-v2 .wp-block-image.aligncenter{margin-left:auto!important;margin-right:auto!important}
+
+/*# sourceURL=https://blogs.sw.siemens.com/wp-content/plugins/carousel-block/build/carousel/style-index.css */
+</style>
+<style id="co-authors-plus-coauthors-style-inline-css">
+.wp-block-co-authors-plus-coauthors.is-layout-flow [class*=wp-block-co-authors-plus]{display:inline}
+
+/*# sourceURL=https://blogs.sw.siemens.com/wp-content/plugins/co-authors-plus/build/blocks/block-coauthors/style-index.css */
+</style>
+<style id="co-authors-plus-avatar-style-inline-css">
+.wp-block-co-authors-plus-avatar :where(img){height:auto;max-width:100%;vertical-align:bottom}.wp-block-co-authors-plus-coauthors.is-layout-flow .wp-block-co-authors-plus-avatar :where(img){vertical-align:middle}.wp-block-co-authors-plus-avatar:is(.alignleft,.alignright){display:table}.wp-block-co-authors-plus-avatar.aligncenter{display:table;margin-inline:auto}
+
+/*# sourceURL=https://blogs.sw.siemens.com/wp-content/plugins/co-authors-plus/build/blocks/block-coauthor-avatar/style-index.css */
+</style>
+<style id="co-authors-plus-image-style-inline-css">
+.wp-block-co-authors-plus-image{margin-bottom:0}.wp-block-co-authors-plus-image :where(img){height:auto;max-width:100%;vertical-align:bottom}.wp-block-co-authors-plus-coauthors.is-layout-flow .wp-block-co-authors-plus-image :where(img){vertical-align:middle}.wp-block-co-authors-plus-image:is(.alignfull,.alignwide) :where(img){width:100%}.wp-block-co-authors-plus-image:is(.alignleft,.alignright){display:table}.wp-block-co-authors-plus-image.aligncenter{display:table;margin-inline:auto}
+
+/*# sourceURL=https://blogs.sw.siemens.com/wp-content/plugins/co-authors-plus/build/blocks/block-coauthor-image/style-index.css */
+</style>
+<style id="pdfemb-pdf-embedder-viewer-style-inline-css">
+.wp-block-pdfemb-pdf-embedder-viewer{max-width:none}
+
+/*# sourceURL=https://blogs.sw.siemens.com/wp-content/plugins/pdf-embedder/block/build/style-index.css */
+</style>
+<style id="global-styles-inline-css">
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #fff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--blue: #007bff;--wp--preset--color--indigo: #6610f2;--wp--preset--color--purple: #5533ff;--wp--preset--color--pink: #e83e8c;--wp--preset--color--red: #dc3545;--wp--preset--color--orange: #fd7e14;--wp--preset--color--yellow: #ffc107;--wp--preset--color--green: #28a745;--wp--preset--color--teal: #20c997;--wp--preset--color--cyan: #17a2b8;--wp--preset--color--gray: #6c757d;--wp--preset--color--gray-dark: #343a40;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgb(252,185,0) 0%,rgb(255,105,0) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgb(255,105,0) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgb(255, 255, 255), 6px 6px rgb(0, 0, 0);--wp--preset--shadow--crisp: 6px 6px 0px rgb(0, 0, 0);}.wp-block-button{--wp--preset--dimension--25: 25%;--wp--preset--dimension--50: 50%;--wp--preset--dimension--75: 75%;--wp--preset--dimension--100: 100%;}:where(body) { margin: 0; }:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}body{padding-top: 0px;padding-right: 0px;padding-bottom: 0px;padding-left: 0px;}:root :where(.wp-element-button, .wp-block-button__link){background-color: #32373c;border-width: 0;color: #fff;font-family: inherit;font-size: inherit;font-style: inherit;font-weight: inherit;letter-spacing: inherit;line-height: inherit;padding-top: calc(0.667em + 2px);padding-right: calc(1.333em + 2px);padding-bottom: calc(0.667em + 2px);padding-left: calc(1.333em + 2px);text-decoration: none;text-transform: inherit;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-blue-color{color: var(--wp--preset--color--blue) !important;}.has-indigo-color{color: var(--wp--preset--color--indigo) !important;}.has-purple-color{color: var(--wp--preset--color--purple) !important;}.has-pink-color{color: var(--wp--preset--color--pink) !important;}.has-red-color{color: var(--wp--preset--color--red) !important;}.has-orange-color{color: var(--wp--preset--color--orange) !important;}.has-yellow-color{color: var(--wp--preset--color--yellow) !important;}.has-green-color{color: var(--wp--preset--color--green) !important;}.has-teal-color{color: var(--wp--preset--color--teal) !important;}.has-cyan-color{color: var(--wp--preset--color--cyan) !important;}.has-gray-color{color: var(--wp--preset--color--gray) !important;}.has-gray-dark-color{color: var(--wp--preset--color--gray-dark) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-blue-background-color{background-color: var(--wp--preset--color--blue) !important;}.has-indigo-background-color{background-color: var(--wp--preset--color--indigo) !important;}.has-purple-background-color{background-color: var(--wp--preset--color--purple) !important;}.has-pink-background-color{background-color: var(--wp--preset--color--pink) !important;}.has-red-background-color{background-color: var(--wp--preset--color--red) !important;}.has-orange-background-color{background-color: var(--wp--preset--color--orange) !important;}.has-yellow-background-color{background-color: var(--wp--preset--color--yellow) !important;}.has-green-background-color{background-color: var(--wp--preset--color--green) !important;}.has-teal-background-color{background-color: var(--wp--preset--color--teal) !important;}.has-cyan-background-color{background-color: var(--wp--preset--color--cyan) !important;}.has-gray-background-color{background-color: var(--wp--preset--color--gray) !important;}.has-gray-dark-background-color{background-color: var(--wp--preset--color--gray-dark) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-blue-border-color{border-color: var(--wp--preset--color--blue) !important;}.has-indigo-border-color{border-color: var(--wp--preset--color--indigo) !important;}.has-purple-border-color{border-color: var(--wp--preset--color--purple) !important;}.has-pink-border-color{border-color: var(--wp--preset--color--pink) !important;}.has-red-border-color{border-color: var(--wp--preset--color--red) !important;}.has-orange-border-color{border-color: var(--wp--preset--color--orange) !important;}.has-yellow-border-color{border-color: var(--wp--preset--color--yellow) !important;}.has-green-border-color{border-color: var(--wp--preset--color--green) !important;}.has-teal-border-color{border-color: var(--wp--preset--color--teal) !important;}.has-cyan-border-color{border-color: var(--wp--preset--color--cyan) !important;}.has-gray-border-color{border-color: var(--wp--preset--color--gray) !important;}.has-gray-dark-border-color{border-color: var(--wp--preset--color--gray-dark) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+:root :where(.wp-block-icon svg){width: 24px;}
+:where(.wp-block-gallery.is-layout-flex){gap: var( --wp--style--gallery-gap-default, var( --gallery-block--gutter-size, var( --wp--style--block-gap, 0.5em ) ) );}:where(.wp-block-gallery.is-layout-grid){gap: var( --wp--style--gallery-gap-default, var( --gallery-block--gutter-size, var( --wp--style--block-gap, 0.5em ) ) );}
+:where(.wp-block-latest-posts.is-layout-flex){gap: 1.25em;}:where(.wp-block-latest-posts.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-term-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-term-template.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
+:root :where(.wp-block-pullquote){font-size: 1.5em;line-height: 1.6;}
+/*# sourceURL=global-styles-inline-css */
+</style>
+<link rel='stylesheet' id='auth0-widget-css' href='https://blogs.sw.siemens.com/wp-content/plugins/auth0/assets/css/main.css?ver=4.6.2' media='all' />
+<link rel='stylesheet' id='baguettebox-css-css' href='https://blogs.sw.siemens.com/wp-content/plugins/gallery-block-lightbox/dist/baguetteBox.min.css?ver=1.12.0' media='all' />
+<link rel='stylesheet' id='swp-styles-css' href='https://blogs.sw.siemens.com/wp-content/themes/disw-blogs-theme/css/theme.css?ver=3.16.5.1788436552' media='all' />
+<link rel='stylesheet' id='font-awesome-css' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css?ver=507f053e42ac2e4a2f1cf16c58b48f1e' media='all' />
+<script id="jquery-core-js" src="https://blogs.sw.siemens.com/semiconductor-packaging/wp-includes/js/jquery/jquery.min.js?ver=3.7.1"></script>
+<script id="jquery-migrate-js" src="https://blogs.sw.siemens.com/semiconductor-packaging/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1"></script>
+<script id="resize-sensor-js" src="https://blogs.sw.siemens.com/wp-content/themes/disw-blogs-theme/js/resizeSensor.js?ver=1.0.0"></script>
+<script id="sticky-toc-js" src="https://blogs.sw.siemens.com/wp-content/themes/disw-blogs-theme/js/sticky-sidebar.min.js?ver=3.2.0"></script>
+<link rel='shortlink' href='https://blogs.sw.siemens.com/semiconductor-packaging/?p=1379' />
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Semiconductor Packaging - Siemens Software">
+	<!-- UNIVERSAL COMPONENTS -->
+	<script src="https://static.sw.cdn.siemens.com/xd/xd-utils/1.x/xd-utils.min.js"></script>
+	<script src="https://static.sw.cdn.siemens.com/xd/universal-components/1.x/web/index.js"></script>
+	<script type="module">
+		window.universalComponents.init(["header-xd-v1", "footer-xd-v1"]);
+	</script>
+
+	<!-- END UNIVERSAL COMPONENTS -->
+		<!-- Initialize Universal Components -->
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			window.disw.init({
+                mtm: {
+                    containerId: 'UFefytkf',
+					cookieBannerVersion: ''
+                }, 
+            });
+		});
+		dataLayer.push({'authorName': "Emily Yan"}, {'blogDate': "April 24, 2026"});
+	</script>
+
+
+	<!-- meta name="image" property="og:image" content="https://blogs.sw.siemens.com/wp-content/uploads/2021/04/siemens-software-blog-network.jpg" --><!-- fallback social image, disabled because LinkedIn is frustrating -->
+</head>
+
+<body class="wp-singular post-template-default single single-post postid-1379 single-format-standard wp-embed-responsive wp-theme-disw-blogs-theme products eda group-blog swp-has-sidebar site-id-64" itemscope itemtype="http://schema.org/WebSite" id="body" class="flex-body">
+	
+	<!-- Universal Header -->
+	<header-xd-v1 locales="false" account="false" cart="false" search="true" utilmenu="true"></header-xd-v1>
+	<!-- end Universal Header -->
+
+	<div class="site" id="page">
+		<!-- Start local login -->
+		<div class="user-container" id="local-nav">
+			<div class="container login-wrapper">
+									<a class="login-button" href="https://blogs.sw.siemens.com/semiconductor-packaging/wp-login.php?redirect_to=https%3A%2F%2Fblogs.sw.siemens.com%2Fsemiconductor-packaging%2F2026%2F04%2F24%2Fhbm3e-hbm4-ic-design-guide%2F" title="Log in" rel="home">Log in</a>
+							</div>
+		</div><!-- end local login -->
+		  <!-- Local Navbar -->
+	<div id="wrapper-navbar" itemscope itemtype="http://schema.org/WebSite">
+		<a class="skip-link sr-only sr-only-focusable" href="#content">Skip to content</a>
+		<nav id="main-nav" class="navbar navbar-expand-lg navbar-dark bg-primary" aria-labelledby="main-nav-label">
+
+			<h2 id="main-nav-label" class="sr-only">
+				Main Navigation			</h2>
+					<div class="container disw-container">
+		        <a href="https://blogs.sw.siemens.com/" class="navbar-brand custom-logo-link" rel="home">
+                <span class="logo-blog">Blogs</span>
+            </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon navbar-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+			<ul id="main-menu" class="navbar-nav ml-auto">
+				<li itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" id="menu-item-products" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children dropdown nav-item product-link">
+					<a title="Products" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle nav-link" id="menu-item-dropdown-26">Products</a>
+			        <ul class="dropdown-menu productsDropdown" aria-labelledby="menu-item-dropdown-26" role="menu">
+                        <div class="container disw-container">
+                            <li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-example" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-25 nav-item">
+                                <a title="All Products" href="https://blogs.sw.siemens.com/products/" class="dropdown-item">All Products</a>
+                            </li>
+                                      <div class="d-md-flex align-items-start justify-content-start">
+              <div class="basis-auto">
+      <li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-additive" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Additive Manufacturing Software" href="https://blogs.sw.siemens.com/additive"class = "dropdown-item">Additive Manufacturing Software</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-aprisa" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Aprisa" href="https://blogs.sw.siemens.com/aprisa"class = "dropdown-item">Aprisa</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-calibre" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Calibre IC Design &amp; Manufacturing" href="https://blogs.sw.siemens.com/calibre"class = "dropdown-item">Calibre IC Design &amp; Manufacturing</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-ee-systems" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Capital" href="https://blogs.sw.siemens.com/ee-systems"class = "dropdown-item">Capital</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-catchbook" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Catchbook" href="https://blogs.sw.siemens.com/catchbook"class = "dropdown-item">Catchbook</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-cicv" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Custom IC" href="https://blogs.sw.siemens.com/cicv"class = "dropdown-item">Custom IC</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-designcenter" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Designcenter" href="https://blogs.sw.siemens.com/designcenter"class = "dropdown-item">Designcenter</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-solidedge" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Designcenter Solid Edge" href="https://blogs.sw.siemens.com/solidedge"class = "dropdown-item">Designcenter Solid Edge</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-digital-design-creation-platform" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Digital Design Creation Platform" href="https://blogs.sw.siemens.com/digital-design-creation-platform"class = "dropdown-item">Digital Design Creation Platform</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-digital-logistics" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Digital Logistics" href="https://blogs.sw.siemens.com/digital-logistics"class = "dropdown-item">Digital Logistics</a></li>                  </div>
+                  <div class="basis-auto">
+              <li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-eda-consulting-services" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="EDA Consulting Services" href="https://blogs.sw.siemens.com/eda-consulting-services"class = "dropdown-item">EDA Consulting Services</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-electronic-systems-design" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Electronic Systems Design" href="https://blogs.sw.siemens.com/electronic-systems-design"class = "dropdown-item">Electronic Systems Design</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-fibersim" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Fibersim" href="https://blogs.sw.siemens.com/fibersim"class = "dropdown-item">Fibersim</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-hardware-assisted-verification" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Hardware Assisted Verification" href="https://blogs.sw.siemens.com/hardware-assisted-verification"class = "dropdown-item">Hardware Assisted Verification</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-hlsdesign-verification" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="HLS Design &amp; Verification Blog" href="https://blogs.sw.siemens.com/hlsdesign-verification"class = "dropdown-item">HLS Design &amp; Verification Blog</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-hpcworks" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="HPCWorks" href="https://blogs.sw.siemens.com/hpcworks"class = "dropdown-item">HPCWorks</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-insights-hub" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Insights Hub" href="https://blogs.sw.siemens.com/insights-hub"class = "dropdown-item">Insights Hub</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-jt-open" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="JT" href="https://blogs.sw.siemens.com/jt-open"class = "dropdown-item">JT</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-mendix" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Mendix" href="https://blogs.sw.siemens.com/mendix"class = "dropdown-item">Mendix</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-nx-manufacturing" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="NX Manufacturing" href="https://blogs.sw.siemens.com/nx-manufacturing"class = "dropdown-item">NX Manufacturing</a></li>                  </div>
+                  <div class="basis-auto">
+              <li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-opcenter" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Opcenter" href="https://blogs.sw.siemens.com/opcenter"class = "dropdown-item">Opcenter</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-pave360" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Pave360" href="https://blogs.sw.siemens.com/pave360"class = "dropdown-item">Pave360</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-plm-components" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="PLM Components" href="https://blogs.sw.siemens.com/plm-components"class = "dropdown-item">PLM Components</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-polarion" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Polarion" href="https://blogs.sw.siemens.com/polarion"class = "dropdown-item">Polarion</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-questa" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Questa" href="https://blogs.sw.siemens.com/verificationhorizons"class = "dropdown-item">Questa</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-rapidminer" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Rapidminer" href="https://blogs.sw.siemens.com/rapidminer"class = "dropdown-item">Rapidminer</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-semiconductor-packaging" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Semiconductor Packaging" href="https://blogs.sw.siemens.com/semiconductor-packaging"class = "dropdown-item">Semiconductor Packaging</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-service-lifecycle-management" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Service Lifecycle Management" href="https://blogs.sw.siemens.com/service-lifecycle-management"class = "dropdown-item">Service Lifecycle Management</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-simcenter" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Simcenter" href="https://blogs.sw.siemens.com/simcenter"class = "dropdown-item">Simcenter</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-teamcenter" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Teamcenter" href="https://blogs.sw.siemens.com/teamcenter"class = "dropdown-item">Teamcenter</a></li>                  </div>
+                  <div class="basis-auto">
+              <li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-teamcenter-manufacturing" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Teamcenter Manufacturing" href="https://blogs.sw.siemens.com/teamcenter-manufacturing"class = "dropdown-item">Teamcenter Manufacturing</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-tecnomatix" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Tecnomatix" href="https://blogs.sw.siemens.com/tecnomatix"class = "dropdown-item">Tecnomatix</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-tessent" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Tessent Solutions" href="https://blogs.sw.siemens.com/tessent"class = "dropdown-item">Tessent Solutions</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-valor" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Valor" href="https://blogs.sw.siemens.com/valor"class = "dropdown-item">Valor</a></li>              </div>
+          </div>
+                              </div>
+                    </ul>
+				</li><!-- end .menu-item-products -->
+				<li itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" id="menu-item-industries" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children dropdown nav-item industry-link">
+					<a title="Industries" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle nav-link" id="menu-item-dropdown-industries">Industries</a>
+			        <ul class="dropdown-menu industriesDropdown" aria-labelledby="menu-item-dropdown-industries" role="menu">
+                        <div class="container disw-container">
+                            <li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-example" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-25 nav-item">
+                                <a title="All Industries" href="https://blogs.sw.siemens.com/industries/" class="dropdown-item">All Industries</a>
+                            </li>
+                                      <div class="d-md-flex align-items-start justify-content-start">
+              <div class="basis-auto">
+      <li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-aerospace-defense" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Aerospace &amp; Defense" href="https://blogs.sw.siemens.com/aerospace-defense"class = "dropdown-item">Aerospace &amp; Defense</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-automotive-transportation" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Automotive &amp; Transportation" href="https://blogs.sw.siemens.com/automotive-transportation"class = "dropdown-item">Automotive &amp; Transportation</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-consumer-products-retail" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Consumer Products &amp; Retail" href="https://blogs.sw.siemens.com/consumer-products-retail"class = "dropdown-item">Consumer Products &amp; Retail</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-electronics-semiconductors" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Electronics &amp; Semiconductors" href="https://blogs.sw.siemens.com/electronics-semiconductors"class = "dropdown-item">Electronics &amp; Semiconductors</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-energy-utilities" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Energy &amp; Utilities" href="https://blogs.sw.siemens.com/energy-utilities"class = "dropdown-item">Energy &amp; Utilities</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-heavy-equipment" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Heavy Equipment" href="https://blogs.sw.siemens.com/heavy-equipment"class = "dropdown-item">Heavy Equipment</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-industrial-machinery" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Industrial Machinery" href="https://blogs.sw.siemens.com/industrial-machinery"class = "dropdown-item">Industrial Machinery</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-marine" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Marine" href="https://blogs.sw.siemens.com/marine"class = "dropdown-item">Marine</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-medical-devices-pharmaceuticals" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Medical Devices &amp; Pharmaceuticals" href="https://blogs.sw.siemens.com/medical-devices-pharmaceuticals"class = "dropdown-item">Medical Devices &amp; Pharmaceuticals</a></li>              </div>
+          </div>
+                              </div>
+                    </ul>
+				</li><!-- end .menu-item-industries -->
+				<li itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" id="menu-item-podcasts" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children dropdown nav-item podcast-link">
+					<a title="Podcasts" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle nav-link" id="menu-item-dropdown-80">Podcasts</a>
+			        <ul class="dropdown-menu podcastsDropdown" aria-labelledby="menu-item-dropdown-80" role="menu">
+                        <div class="container disw-container">
+                            <li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-all-podcasts" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+                                <a title="All Podcasts" href="https://blogs.sw.siemens.com/podcasts/" class="dropdown-item">All Podcasts</a>
+                            </li>
+                                      <div class="d-md-flex align-items-start justify-content-start">
+              <div class="basis-auto">
+      <li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-3d-ic" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="3D IC" href="https://blogs.sw.siemens.com/podcasts/category/3d-ic"class = "dropdown-item">3D IC</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-additive-manufacturing" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Additive Manufacturing Podcast" href="https://blogs.sw.siemens.com/podcasts/category/additive-manufacturing"class = "dropdown-item">Additive Manufacturing Podcast</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-ai-spectrum" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="AI Spectrum" href="https://blogs.sw.siemens.com/podcasts/category/ai-spectrum"class = "dropdown-item">AI Spectrum</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-bugged-out" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Bugged Out" href="https://blogs.sw.siemens.com/podcasts/category/bugged-out"class = "dropdown-item">Bugged Out</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-cloud-talk-today" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Cloud Talk Today" href="https://blogs.sw.siemens.com/podcasts/category/cloud-talk-today"class = "dropdown-item">Cloud Talk Today</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-digital-powers-flexible-consumer-products" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Digital Powers Flexible: Consumer Products Podcast" href="https://blogs.sw.siemens.com/podcasts/category/digital-powers-flexible-consumer-products"class = "dropdown-item">Digital Powers Flexible: Consumer Products Podcast</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-digital-transformation" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Digital Transformation Podcast" href="https://blogs.sw.siemens.com/podcasts/category/digital-transformation"class = "dropdown-item">Digital Transformation Podcast</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-empowering-educators" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Empowering Engineering Educators" href="https://blogs.sw.siemens.com/podcasts/category/empowering-educators"class = "dropdown-item">Empowering Engineering Educators</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-energy-transformation" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Energy Transformation Podcast" href="https://blogs.sw.siemens.com/podcasts/category/energy-transformation"class = "dropdown-item">Energy Transformation Podcast</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-engineer-innovation" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Engineer Innovation Podcast" href="https://blogs.sw.siemens.com/podcasts/category/engineer-innovation"class = "dropdown-item">Engineer Innovation Podcast</a></li>                  </div>
+                  <div class="basis-auto">
+              <li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-engineering-the-future-workforce" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Engineering the Future Workforce" href="https://blogs.sw.siemens.com/podcasts/category/engineering-the-future-workforce"class = "dropdown-item">Engineering the Future Workforce</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-model-based-matters" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Model Based Matters" href="https://blogs.sw.siemens.com/podcasts/category/model-based-matters"class = "dropdown-item">Model Based Matters</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-next-generation-design" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Next Generation Design Podcast" href="https://blogs.sw.siemens.com/podcasts/category/next-generation-design"class = "dropdown-item">Next Generation Design Podcast</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-on-the-move" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="On the Move: A Siemens Automotive Podcast" href="https://blogs.sw.siemens.com/podcasts/category/on-the-move"class = "dropdown-item">On the Move: A Siemens Automotive Podcast</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-startups" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Pioneers: Startups from Dreams to Reality" href="https://blogs.sw.siemens.com/podcasts/category/startups"class = "dropdown-item">Pioneers: Startups from Dreams to Reality</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-printed-circuit" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Printed Circuit Podcast" href="https://blogs.sw.siemens.com/podcasts/category/printed-circuit"class = "dropdown-item">Printed Circuit Podcast</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-security-by-design" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Security by Design" href="https://blogs.sw.siemens.com/podcasts/category/security-by-design"class = "dropdown-item">Security by Design</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-talking-aerospace-today" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Talking Aerospace Today Podcast" href="https://blogs.sw.siemens.com/podcasts/category/talking-aerospace-today"class = "dropdown-item">Talking Aerospace Today Podcast</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-the-battery-podcast" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="The Battery Podcast" href="https://blogs.sw.siemens.com/podcasts/category/the-battery-podcast"class = "dropdown-item">The Battery Podcast</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-the-digital-dig" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="The Digital Dig - A Siemens Heavy Equipment Podcast" href="https://blogs.sw.siemens.com/podcasts/category/the-digital-dig"class = "dropdown-item">The Digital Dig - A Siemens Heavy Equipment Podcast</a></li>                  </div>
+                  <div class="basis-auto">
+              <li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-industry-forward" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="The Industry Forward Podcast" href="https://blogs.sw.siemens.com/podcasts/category/industry-forward"class = "dropdown-item">The Industry Forward Podcast</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-marine-industry" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="The Marine Industry Podcast Series" href="https://blogs.sw.siemens.com/podcasts/category/marine-industry"class = "dropdown-item">The Marine Industry Podcast Series</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-smart-digital-manufacturing" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="The Voice of Smart Digital Manufacturing Podcast" href="https://blogs.sw.siemens.com/podcasts/category/smart-digital-manufacturing"class = "dropdown-item">The Voice of Smart Digital Manufacturing Podcast</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-where-today-meets-tomorrow" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Where Today Meets Tomorrow Podcast" href="https://blogs.sw.siemens.com/podcasts/category/where-today-meets-tomorrow"class = "dropdown-item">Where Today Meets Tomorrow Podcast</a></li>              </div>
+          </div>
+                                  <li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-german-only" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+                                <span class="dropdown-item"><strong>German only Podcasts</strong></span>
+                            </li>
+                            <li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-machinenbau-talk" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+                                <a title="Machinenbau Talk" href="https://blogs.sw.siemens.com/podcasts/category/machinenbau-talk/" class="dropdown-item">Machinenbau Talk</a>
+                            </li>
+                        </div>
+                    </ul>
+				</li><!-- end .menu-item-podcasts -->
+				<li itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" id="menu-item-thoughtleadership" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children dropdown nav-item thought-leadership-link">
+					<a title="Thought Leadership" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle nav-link" id="menu-item-dropdown-52">Thought Leadership</a>
+			        <ul class="dropdown-menu thoughtLeadershipDropdown" aria-labelledby="menu-item-dropdown-52" role="menu">
+                        <div class="container disw-container">
+                            <li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-example" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+                                <a title="All Thought Leadership Blogs" href="https://blogs.sw.siemens.com/all-thought-leadership/" class="dropdown-item">All Thought Leadership</a>
+                            </li>
+                                      <div class="d-md-flex align-items-start justify-content-start">
+              <div class="basis-auto">
+      <li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-digital-transformation" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Digital Transformation" href="https://blogs.sw.siemens.com/digital-transformation"class = "dropdown-item">Digital Transformation</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-embedded-software" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Embedded Software" href="https://blogs.sw.siemens.com/embedded-software"class = "dropdown-item">Embedded Software</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-expertinsights" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Expert Insights" href="https://blogs.sw.siemens.com/expertinsights"class = "dropdown-item">Expert Insights</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-simulating-the-real-world" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Simulating the Real World" href="https://blogs.sw.siemens.com/simulating-the-real-world"class = "dropdown-item">Simulating the Real World</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-art-of-the-possible" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="The Art of the Possible" href="https://blogs.sw.siemens.com/art-of-the-possible"class = "dropdown-item">The Art of the Possible</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-thought-leadership" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Thought Leadership" href="https://blogs.sw.siemens.com/thought-leadership"class = "dropdown-item">Thought Leadership</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-verificationhorizons" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Verification Horizons" href="https://blogs.sw.siemens.com/verificationhorizons"class = "dropdown-item">Verification Horizons</a></li>              </div>
+          </div>
+                              </div>
+                    </ul>
+				</li><!-- end .menu-item-thoughtleadership -->
+				<li itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" id="menu-item-corporate" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children dropdown nav-item corporate-link">
+					<a title="Corporate News" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle nav-link" id="menu-item-dropdown-27">Corporate</a>
+			        <ul class="dropdown-menu corporateDropdown" aria-labelledby="menu-item-dropdown-27" role="menu">
+                        <div class="container disw-container">
+                            <li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-community" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+                                <a title="All Corporate Blogs" href="https://blogs.sw.siemens.com/corporate/" class="dropdown-item">All Corporate</a>
+                            </li>
+                                      <div class="d-md-flex align-items-start justify-content-start">
+              <div class="basis-auto">
+      <li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-academic" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Academic and Future Workforce" href="https://blogs.sw.siemens.com/academic"class = "dropdown-item">Academic and Future Workforce</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-aws" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="AWS Partnership" href="https://blogs.sw.siemens.com/aws"class = "dropdown-item">AWS Partnership</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-news" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Corporate Blog" href="https://blogs.sw.siemens.com/news"class = "dropdown-item">Corporate Blog</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-cre8ventures" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Cre8Ventures (Siemens EDA)" href="https://blogs.sw.siemens.com/cre8ventures"class = "dropdown-item">Cre8Ventures (Siemens EDA)</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-eda-support" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="EDA Support Blogs" href="https://blogs.sw.siemens.com/eda-support"class = "dropdown-item">EDA Support Blogs</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-employee-spotlight" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Employee Spotlight" href="https://blogs.sw.siemens.com/employee-spotlight"class = "dropdown-item">Employee Spotlight</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-exploretour" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="eXplore tour" href="https://blogs.sw.siemens.com/exploretour"class = "dropdown-item">eXplore tour</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-partners" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Partners" href="https://blogs.sw.siemens.com/partners"class = "dropdown-item">Partners</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-realize-live" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Realize LIVE" href="https://blogs.sw.siemens.com/realize-live"class = "dropdown-item">Realize LIVE</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-xcelerator-academy" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Siemens Xcelerator Academy" href="https://blogs.sw.siemens.com/xcelerator-academy"class = "dropdown-item">Siemens Xcelerator Academy</a></li>                  </div>
+                  <div class="basis-auto">
+              <li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-xcelerator" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Siemens Xcelerator Software for Industry" href="https://blogs.sw.siemens.com/xcelerator"class = "dropdown-item">Siemens Xcelerator Software for Industry</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-small-medium-business" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Small &amp; Medium Business" href="https://blogs.sw.siemens.com/small-medium-business"class = "dropdown-item">Small &amp; Medium Business</a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-startup-video" class="menu-item menu-item-type-custom menu-item-object-custom nav-item">
+          <a title="Xcelerator for Startups Videos" href="https://blogs.sw.siemens.com/startup-video"class = "dropdown-item">Xcelerator for Startups Videos</a></li>              </div>
+          </div>
+                              </div>
+                    </ul>
+				</li><!-- end .menu-item-corporate -->
+				<li itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" id="menu-item-community" class="menu-item menu-item-type-post_type menu-item-object-page nav-item">
+					<a title="Community" href="https://community.sw.siemens.com/s/" class="nav-link" target="_blank">Community</a>
+				</li><!-- end .menu-item-community -->
+				<li itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" id="menu-item-search" class="menu-item menu-item-type-post_type menu-item-object-page nav-item">
+					
+<form role="search" class="search-form" method="get" action="https://blogs.sw.siemens.com/semiconductor-packaging/" >
+	<div class="input-group">
+		<input type="search" class="field search-field form-control" id="s-1" name="s" value="" placeholder="Search current blog">
+		<span class="input-group-append">
+			<input type="submit" class="submit search-submit btn btn-primary" name="submit" value="Search current blog">
+		</span>
+	</div>
+</form>
+				</li><!-- end .menu-item-community -->
+			</ul><!-- end #main-menu -->
+		</div><!-- end #navbarNavDropdown -->
+				</div><!-- .container -->
+				</nav><!-- .site-navigation -->
+        <div class="post-progress-container"></div><!-- Progress Bar - JS for this is in js/onscroll-events.js -->
+	</div><!-- #wrapper-navbar end -->
+      <div class="container disw-container breadcrumbs p-a">
+
+        <div class="disw-breadcrumb d-none d-lg-block">
+            <nav class="disw-breadcrumb">
+                <ol itemscope="" itemtype="https://schema.org/BreadcrumbList">
+                    
+                        <li class="home" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                            <a itemscope itemtype="https://schema.org/WebPage" itemprop="item" itemid="https://blogs.sw.siemens.com/" href="https://blogs.sw.siemens.com/">
+                                <span style="display:none;" itemprop="name">Home</span>
+                                <svg class="icon icon-sm" width="30" height="25">
+                                    <path d="M12 2L2 10v12h8v-6h4v6h8V10L12 2zm8 18h-4v-6H8v6H4v-9.039l8-6.4 8 6.4V20z"></path>
+                                    <path fill="none" d="M0 0h24v24H0z"></path>
+                                </svg>
+                            </a>
+                            <meta itemprop="position" content="1">
+                        </li>
+                        
+                            <li class="breadcrumb-list" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                                <a itemscope itemtype="https://schema.org/WebPage" itemprop="item" itemid="https://blogs.sw.siemens.com/products" href="https://blogs.sw.siemens.com/products">
+                                    <span itemprop="name">Products</span>
+                                </a>
+                                <meta itemprop="position" content="2">
+                            </li>
+                                                                        <li class="current breadcrumb-list" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                            <a itemscope itemtype="https://schema.org/WebPage" itemprop="item" itemid="https://blogs.sw.siemens.com/semiconductor-packaging" href="https://blogs.sw.siemens.com/semiconductor-packaging">
+                                <span itemprop="name"> Semiconductor Packaging</span>
+                            </a>
+                            <meta itemprop="position" content="3">
+                        </li>
+                </ol>
+        </div>
+        </nav>
+    </div>
+<script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+
+<div class="wrapper diswcontentwrapper" id="single-article">
+	<div class="container disw-container disw-post-body">
+			<a id="back-to-top-container" href="#">
+				<div class="back-to-top" data-text-caption="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512' width='18' height='14'><path d='M288.662 352H31.338c-17.818 0-26.741-21.543-14.142-34.142l128.662-128.662c7.81-7.81 20.474-7.81 28.284 0l128.662 128.662c12.6 12.599 3.676 34.142-14.142 34.142z'></path></svg><br>TOP">
+					<button class="scrolling-back-to-top" title="Back to Top"><svg height="14" width="18" viewBox="0 0 320 512" xmlns="http://www.w3.org/2000/svg"><path d="M288.662 352H31.338c-17.818 0-26.741-21.543-14.142-34.142l128.662-128.662c7.81-7.81 20.474-7.81 28.284 0l128.662 128.662c12.6 12.599 3.676 34.142-14.142 34.142z"></path></svg>
+					<br>TOP </button>
+				</div><!-- end .back-to-top -->
+			</a><!-- end #back-to-top-container -->
+
+	<article class="post-1379 post type-post status-publish format-standard has-post-thumbnail hentry category-news tag-3d-ic tag-heterogeneous-design tag-innovator3d-ic" id="post-1379">
+		<header class="entry-header row" id="article-header" >
+			<div class="col-md-7 col-xs-12" id="article-meta">
+				<div class="category-name">Products</div>
+				<h1 id="article-title">HBM3e and HBM4: IC design guide for next-generation high bandwidth memory </h1>
+				<div class="entry-meta">
+					<span id="byline-publish-date">April 24, 2026</span><span id="byline-read-time"> &bull; <span class="span-reading-time rt-reading-time"><span class="rt-label rt-prefix"></span> <span class="rt-time"> 8</span> <span class="rt-label rt-postfix">MIN READ</span></span></span>
+										<div class="icons-wrap">
+						<div class="social-share">
+							<span href="https://blogs.sw.siemens.com/semiconductor-packaging/2026/04/24/hbm3e-hbm4-ic-design-guide/" title="" onclick="copy_blog_url()" class="social-share-button" style="margin-left: 8px"><i class="fa fa-share-alt" style="margin-right: 8px"></i><span class="share-text">Share</span> <span id="copy-link" class="copy-link">Copy link</span></span>
+							<span class="social-share-facebook"><a tagret="_blank" title="Share via Facebook" href="http://www.facebook.com/sharer/sharer.php?utm_source=facebook&utm_medium=social&utm_campaign=sw_blog_share_button&u=https://blogs.sw.siemens.com/semiconductor-packaging/2026/04/24/hbm3e-hbm4-ic-design-guide/"><i class="fab fa-facebook"></a></i></span>
+							<span class="social-share-twitter social-share-x"><a data-wpel-link="external" class="contact-social contact-social-twitter contact-social-x" href="https://twitter.com/intent/tweet?text=HBM3e+and+HBM4%3A+IC+design+guide+for+next-generation+high+bandwidth+memory%C2%A0%0Ahttps://blogs.sw.siemens.com/semiconductor-packaging/2026/04/24/hbm3e-hbm4-ic-design-guide/" title="Share via X" target="_blank" rel="external noopener noreferrer">
+							<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1200 1227" xml:space="preserve" class="is-taller">
+								<path d="M714.2,519.3L1160.9,0H1055L667.1,450.9L357.3,0H0l468.5,681.8L0,1226.4h105.9l409.6-476.2l327.2,476.2H1200L714.2,519.3
+						L714.2,519.3z M569.2,687.8l-47.5-67.9L144,79.7h162.6l304.8,436l47.5,67.9l396.2,566.7H892.5L569.2,687.8L569.2,687.8z"></path></svg></a></span>
+							<span class="social-share-linkedin">
+								<a  title="Share via LinkedIn" href="https://www.linkedin.com/shareArticle?utm_source=linkedin&utm_medium=social&utm_campaign=sw_blog_share_button&mini=true&url=https://blogs.sw.siemens.com/semiconductor-packaging/2026/04/24/hbm3e-hbm4-ic-design-guide/&title=HBM3e+and+HBM4%3A+IC+design+guide+for+next-generation+high+bandwidth+memory%C2%A0&summary=HBM3e%26nbsp%3B%28High+Bandwidth+Memory%29%26nbsp%3Bis+the+current+production-grade+high+bandwidth+memory+architecture%2C+delivering+over+1.2+TB%2Fs+per+stack+and+powering+the+AI...&source=" target="_blank"><i class="fab fa-linkedin"></a></i></span>
+							<span class="social-share-email"><a class="email" title="Share via Email" href="#?utm_source=email_share&utm_medium=email&utm_campaign=sw_blog_share_button" onclick="javascript:window.location='mailto:?subject=Siemens Digital Industries Software Blog Article&body=Check out this article on the Siemens Digital Industries Software blogs: ' + window.location;"><i class="far fa-envelope"></a></i></span>
+						</div><!-- end .social-share -->
+						<div id="print-btn" class="print-button">
+							<span class="social-share-print"><a href="javascript:window.print()">Print</a></span>
+								<span class="social-share-print-button"><a href="javascript:window.print()"><i class="fa fa-solid fa-print print-icon"></i></a>
+							</span> 
+						</div><!-- end .print-button -->
+					</div><!-- end .icons-wrap -->
+				</div><!-- .entry-meta -->
+			</div><!-- #article-meta -->
+			<div class="col-md-5 col-xs-12" id="article-image">
+				<div class="featured-image"><img width="395" height="222" src="https://blogs.sw.siemens.com/wp-content/uploads/sites/64/2026/04/A-smarter-way-to-design-3D-IC-packages-_-Siemens-395x222.png" class="attachment-tile-article size-tile-article wp-post-image" alt="3d ic package design" decoding="async" fetchpriority="high" srcset="https://blogs.sw.siemens.com/wp-content/uploads/sites/64/2026/04/A-smarter-way-to-design-3D-IC-packages-_-Siemens-395x222.png 395w, https://blogs.sw.siemens.com/wp-content/uploads/sites/64/2026/04/A-smarter-way-to-design-3D-IC-packages-_-Siemens-600x337.png 600w, https://blogs.sw.siemens.com/wp-content/uploads/sites/64/2026/04/A-smarter-way-to-design-3D-IC-packages-_-Siemens-768x432.png 768w, https://blogs.sw.siemens.com/wp-content/uploads/sites/64/2026/04/A-smarter-way-to-design-3D-IC-packages-_-Siemens.png 900w" sizes="(max-width: 395px) 100vw, 395px" />					</div><!-- .featured-image-->
+			</div><!-- #article-image -->
+		</header><!-- .entry-header#article-header -->
+
+		<!-- Begin Entry Content -->
+		<div class="row" id="article-body">
+			<div class="toc-for-mobile">
+				<button type="button" class="collapsible" id="mobile-toc" onclick="mobileTocDropdown()" >
+				</button>
+				<div class="arrow"  onclick="mobileTocDropdown()"></div>
+			</div>
+			<div class="col-md-3 col-xs-12 entry-sidebar" id="toc">
+				<div id="toc-list" class="list_of_toc"></div>
+			</div><!-- #toc -->
+			<div class="col-md-9 col-xs-12 entry-content" id="article-content">
+				<!-- Begin author info -->
+			<div class="authors-info">	
+				By <a href="#author-bio" title="Click here for more info on the author">Emily Yan</a>			</div> <!-- end author info -->
+				
+<p class="wp-block-paragraph">HBM3e&nbsp;(High Bandwidth Memory)&nbsp;is the current production-grade high bandwidth memory architecture, delivering over 1.2 TB/s per stack and powering the AI accelerators reshaping data center infrastructure today. HBM4 is its successor, built on a fundamentally wider architecture that targets 2.0 TB/s and beyond when it reaches production in 2026. For IC design engineers, both generations raise the bar on what it takes to ship a successful design: thermal management becomes an architectural decision, signal integrity tolerances tighten and physical verification spans more die,&nbsp;interposer&nbsp;and package combinations than prior memory generations&nbsp;required.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">This guide&nbsp;covers what HBM3e and HBM4 are, how they compare, the specific design challenges each creates and the EDA solutions available to address them, along with a look at the roadmap through 2027 and beyond.&nbsp;</p>
+
+
+
+<h2 class="wp-block-heading"><strong>Why HBM&nbsp;matters for AI</strong>&nbsp;</h2>
+
+
+
+<p class="wp-block-paragraph">Training large language models (LLMs), running real-time&nbsp;inference&nbsp;and&nbsp;processing massive datasets all depend on feeding data to accelerators fast enough to keep them&nbsp;utilized. Without sufficient bandwidth, even the most advanced GPUs sit idle. Thus, modern AI system&nbsp;performance is&nbsp;increasingly&nbsp;memory bandwidth bound.&nbsp;&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">For years, mainstream memory technologies like LPDDR and DDR have relied on 2D scaling. While engineers have pushed bandwidth higher by increasing channel counts and improving signaling speeds,&nbsp;there’s&nbsp;a fundamental limitation: the number of channels, and&nbsp;therefore total bandwidth, is physically constrained.&nbsp;&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">HBM fundamentally breaks this bottleneck of traditional planar memory design by adopting a 3D stacked architecture. By stacking multiple memory dies vertically and connecting them using Through-Silicon Vias (TSVs), HBM enables an unprecedented level of parallel data access:&nbsp;</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>2015</strong>: Early HBM delivered ~2Gb capacity / 1 Gbps speed&nbsp;&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li><strong>2025:&nbsp;</strong>(HBM4): Expected to reach ~24Gb capacity / 11.7 Gbps speed&nbsp;</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">For workloads that iterate billions of times, these&nbsp;microseconds gain&nbsp;compounds&nbsp;into meaningful reductions in total training time.&nbsp;In addition to higher throughput,&nbsp;HBM achieves significantly&nbsp;higher energy efficiency per bit transferred&nbsp;compared to traditional DDR-based systems, thanks to shorter interconnects and lower signaling overhead.&nbsp;This is critical in data centers where power delivery and thermal limits increasingly define system architecture.&nbsp;</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full is-resized"><img decoding="async" width="624" height="358" src="https://blogs.sw.siemens.com/wp-content/uploads/sites/64/2026/04/illustration-of-hbm-stacking.png" alt="Illustration of HBM stacking " class="wp-image-1395" style="width:744px;height:auto" srcset="https://blogs.sw.siemens.com/wp-content/uploads/sites/64/2026/04/illustration-of-hbm-stacking.png 624w, https://blogs.sw.siemens.com/wp-content/uploads/sites/64/2026/04/illustration-of-hbm-stacking-600x344.png 600w" sizes="(max-width: 624px) 100vw, 624px" /><figcaption class="wp-element-caption">Figure 1. Illustration of HBM stacking </figcaption></figure>
+</div>
+
+
+<h2 class="wp-block-heading"><strong>What is HBM3e?</strong>&nbsp;</h2>
+
+
+
+<p class="wp-block-paragraph"><em>HBM3e is the fifth-generation high bandwidth memory architecture, delivering over 1.2 TB/s per stack through a 1024-bit wide interface and 16 independent channels.&nbsp;As an extension of HBM3, it pushes per-pin data rates beyond 9 Gbps, enabling significantly higher throughput for AI and HPC workloads.&nbsp;HBM3E is now entering high-volume production, with SK&nbsp;hynix, Samsung&nbsp;and&nbsp;Micron supplying memory for next-generation AI accelerators.</em>&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">HBM3E&nbsp;provides an all-time high bandwidth of up to 1180 gigabytes per second&nbsp;(GB/s) and an industry-leading capacity of 36 gigabytes (GB).&nbsp;The &#8216;e&#8217; designation signals an&nbsp;extended or&nbsp;enhanced revision of HBM3&nbsp;as an intermediate, pin-compatible upgrade, enabling 50% higher performance and better power efficiency for GPUs.&nbsp;This performance gain is driven by higher per-pin data rates, scaling from 9.2 to 12.4 Gbps&nbsp;and&nbsp;larger stack configurations, increasing from 24 GB (8-high) to 36 GB (12-high). At the same time, architectural improvements in power delivery—such as all-around power TSVs and a significantly higher TSV count—reduce IR drop by up to 75%, improving signal integrity and stability under heavy workloads. The result is a substantial 2.5× improvement in performance per watt compared to HBM2E, while&nbsp;maintaining&nbsp;backward compatibility with existing HBM3 controllers. With HBM3E already deployed in systems like NVIDIA’s H200, it has effectively become the baseline memory technology for today’s AI training, HPC&nbsp;and&nbsp;data center acceleration platforms.&nbsp;</p>
+
+
+
+<h2 class="wp-block-heading"><strong>What is HBM4?</strong>&nbsp;</h2>
+
+
+
+<p class="wp-block-paragraph"><em>HBM4 is the sixth-generation high bandwidth memory&nbsp;architecture,&nbsp;doubling&nbsp;the interface width to 2048 bits and 32 independent channels to deliver over 2.0 TB/s per stack, up to 3.3 TB/s in advanced configurations. It is the next-generation standard, with production expected from Samsung, SK&nbsp;Hynix&nbsp;and Micron in 2026.</em>&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">HBM4 is not an incremental&nbsp;speed bump&nbsp;to&nbsp;HBM3e,&nbsp;but a redesign of the memory interface and&nbsp;shift in memory architecture by integrating logic&nbsp;die&nbsp;and turning the memory stack into a co-processor.&nbsp;It doubles the interface width to 2048 bits and increases speeds to over 2 TB/s per stack.&nbsp;&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">Where HBM3e delivers up to 1.33 TB/s per stack, HBM4 targets over 2.0 TB/s and reaches 3.3 TB/s in advanced configurations. Pin speeds&nbsp;extend&nbsp;to 12.8 Gbps with Samsung having&nbsp;demonstrated&nbsp;13 Gbps. Stack capacity reaches 64GB per stack via 16-high configurations with 32Gb layers. Core voltage drops to 1.05V from 1.1V in HBM3/3e, contributing to a 60% efficiency improvement over HBM2/2E. A new Directed Refresh Management (DRFM) capability improves reliability at these stack heights.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">These gains come with non-trivial design implications.&nbsp;HBM4&nbsp;represents&nbsp;a significant leap forward from its predecessors—HBM3E, HBM3 and earlier generations—in terms of bandwidth, capacity,&nbsp;efficiency&nbsp;and&nbsp;architectural innovation.&nbsp;In the meantime, the wider interface, increased TSV&nbsp;density&nbsp;and&nbsp;taller stacks pose&nbsp;new design&nbsp;and verification challenges in signal integrity, thermal&nbsp;management&nbsp;and&nbsp;power delivery.&nbsp;</p>
+
+
+
+<h2 class="wp-block-heading"><strong>HBM3e and HBM4 specifications compared</strong>&nbsp;</h2>
+
+
+
+<p class="wp-block-paragraph"><strong>HBM3e key specifications</strong>&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">HBM3e is&nbsp;<a href="https://www.jedec.org/standards-documents/docs/jesd238b01" target="_blank" rel="noreferrer noopener">standardized by JEDEC (JESD238)</a>, with production shipments underway from SK Hynix,&nbsp;Samsung&nbsp;and Micron:&nbsp;</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Interface:&nbsp;</strong>1024-bit, 16 independent channels, 32 pseudo-channels&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Pin speeds:&nbsp;</strong>9.2 to 9.8 Gbps typical, up to 12.4 Gbps in advanced implementations&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Bandwidth:&nbsp;</strong>Over 1.2 TB/s per stack (up to 1.33 TB/s)&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Capacity:&nbsp;</strong>24GB at 8-high to 36GB at 12-high stack&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Power efficiency:&nbsp;</strong>2.5X improvement per watt vs. HBM2E&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Interconnect:&nbsp;</strong>Through-Silicon Via (TSV) stacked die architecture&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Power delivery:&nbsp;</strong>All-around power TSVs, 6X increase in TSV count, 75% lower IR drop&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Controller compatibility:&nbsp;</strong>Backward compatible with HBM3 controllers&nbsp;</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>HBM4 key specifications</strong>&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">HBM4&#8217;s standard was&nbsp;<a href="https://www.jedec.org/news/pressreleases/jedec%C2%AE-and-industry-leaders-collaborate-release-jesd270-4-hbm4-standard-advancing" target="_blank" rel="noreferrer noopener">published by JEDEC as JESD270-4 in April 2025</a>. It is a fundamental architectural overhaul:&nbsp;</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Interface:&nbsp;</strong>2048-bit, 32 independent channels, 64 pseudo-channels&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Pin speeds:&nbsp;</strong>6.4 to 12.8 Gbps,&nbsp;demonstrated&nbsp;up to 13 Gbps by Samsung&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Bandwidth:&nbsp;</strong>Over 2.0 TB/s per stack, up to 3.3 TB/s in advanced configurations&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Capacity:&nbsp;</strong>Up to 64GB per stack via 16-high stack with 32Gb layers&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Core voltage:&nbsp;</strong>1.05V vs. 1.1V in HBM3/3e, 60% improved efficiency over HBM2/2E&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li><strong>New reliability feature:&nbsp;</strong>Directed Refresh Management (DRFM)&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Controller compatibility:&nbsp;</strong>Not backward compatible with HBM3/3e&nbsp;</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>Side-by-side comparison</strong>&nbsp;</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td><strong>Specification</strong>&nbsp;</td><td><strong>HBM3e</strong>&nbsp;</td><td><strong>HBM4</strong>&nbsp;</td></tr><tr><td>Interface width&nbsp;</td><td>1024-bit&nbsp;</td><td>2048-bit&nbsp;</td></tr><tr><td>Independent channels&nbsp;</td><td>16&nbsp;</td><td>32&nbsp;</td></tr><tr><td>Pin speeds&nbsp;</td><td>9.2 to 12.4 Gbps&nbsp;</td><td>6.4 to 12.8 Gbps (up to 13 Gbps)&nbsp;</td></tr><tr><td>Bandwidth per stack&nbsp;</td><td>&gt;1.2 TB/s (up to 1.33 TB/s)&nbsp;</td><td>&gt;2.0 TB/s (up to 3.3 TB/s)&nbsp;</td></tr><tr><td>Capacity per stack&nbsp;</td><td>Up to 36GB&nbsp;</td><td>Up to 64GB&nbsp;</td></tr><tr><td>Core voltage&nbsp;</td><td>1.1V&nbsp;</td><td>1.05V&nbsp;</td></tr><tr><td>Power efficiency gain&nbsp;</td><td>2.5X vs. HBM2E&nbsp;</td><td>60% vs. HBM2/2E&nbsp;</td></tr><tr><td>HBM3 controller&nbsp;compat.&nbsp;</td><td>Yes&nbsp;</td><td>No&nbsp;</td></tr><tr><td>Production status&nbsp;</td><td>In production&nbsp;</td><td>2026 (Samsung, SK Hynix, Micron)&nbsp;</td></tr></tbody></table></figure>
+
+
+
+<h2 class="wp-block-heading"><strong>HBM3e and HBM4 advantages for&nbsp;AI / HPC&nbsp;applications</strong>&nbsp;</h2>
+
+
+
+<p class="wp-block-paragraph"><strong>What HBM3e enables today</strong>&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">HBM3e is shipping now and solving real problems. Over 1.2 TB/s per stack meets the throughput demands of current-generation AI training, and&nbsp;its power efficiency allows data centers to pack more&nbsp;compute&nbsp;into the same thermal envelope. The compact form factor saves meaningful board space compared to discrete DRAM solutions.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">HBM3E is already deployed in platforms such as NVIDIA’s H200 and AMD’s MI300 series, with SK&nbsp;hynix, Samsung&nbsp;and&nbsp;Micron all ramping production. This growing multi-vendor ecosystem is improving supply availability and making HBM3E a practical choice for current-generation AI, HPC&nbsp;and&nbsp;data center accelerator designs.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph"><strong>What HBM4 makes possible in 2026</strong>&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">HBM4 is purpose-built&nbsp;to support the next scale of data-intensive workloads that are beginning to stretch the limits of HBM3E:&nbsp;next-generation large language models&nbsp;and real-time inference at scale. The bandwidth&nbsp;jump&nbsp;from 1.2 TB/s to over 2.0 TB/s&nbsp;directly&nbsp;impacts&nbsp;how efficiently large models can be trained and deployed, improving&nbsp;utilization, reducing&nbsp;bottlenecks&nbsp;and&nbsp;enabling more predictable scaling at the system level.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">Looking ahead, next-generation accelerator architectures&nbsp;are expected to integrate larger numbers of HBM stacks and higher channel parallelism, providing greater flexibility for multi-chiplet designs and more balanced memory-to-compute ratios. This increased parallelism is particularly important as systems move toward disaggregated and heterogeneous architectures.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">Beyond AI, HBM4 will play a critical role in workloads where both latency and throughput are tightly constrained, including autonomous driving, scientific&nbsp;simulation&nbsp;and&nbsp;real-time analytics. In these domains, memory bandwidth is no longer a secondary consideration—it is a primary limiter of system performance.&nbsp;</p>
+
+
+
+<h2 class="wp-block-heading"><strong>Critical&nbsp;design&nbsp;considerations for HBM3E and HBM4</strong>&nbsp;</h2>
+
+
+
+<p class="wp-block-paragraph"><strong>Signal integrity challenges in HBM3e and HBM4 interfaces</strong>&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">HBM3e runs&nbsp;&gt;9.2 Gb/s per pin&nbsp;across a 1024-bit interface,&nbsp;organized into multiple independent channels and&nbsp;pseudo-channels.&nbsp;Maintaining signal quality at those speeds across more than 1,000 I/O connections requires&nbsp;tightly&nbsp;coordinated optimization across the&nbsp;base die, interposer&nbsp;and&nbsp;package, including power delivery network (PDN) design, clock&nbsp;distribution&nbsp;and&nbsp;tight control of impedance discontinuities.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">HBM4 raises the complexity significantly. The interface is expected to expand to 2048 bits, effectively doubling I/O density and routing demand. Combined with higher data rates (~12 Gb/s and beyond), this drives tighter jitter budgets, increased susceptibility to crosstalk&nbsp;and&nbsp;greater sensitivity to reflections across multi-die interconnect paths. As a result, signal integrity can no longer be treated as a later-stage verification step. It must be addressed early and&nbsp;at the system level.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph"><strong>HBM thermal management in 3D IC integration</strong>&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">HBM’s vertically stacked architecture fundamentally changes how heat is generated and dissipated. Heat must travel through multiple layers of silicon, bonding interfaces&nbsp;and&nbsp;packaging materials, creating complex vertical thermal gradients that are difficult to predict without detailed modeling.&nbsp;&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">HBM3E already requires careful thermal design to manage localized hotspots in logic and I/O regions. HBM4 intensifies these challenges by increasing I/O density, stack&nbsp;height&nbsp;and&nbsp;overall power delivery demands. Taller stacks introduce&nbsp;additional&nbsp;thermal resistance, while higher bandwidth operation increases heat density in a confined volume.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">These effects make thermal behavior a first-order design constraint. Early, coupled thermal analysis across die and package is essential to avoid late-stage design iterations and ensure reliable operation under real workloads.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph"><strong>Chiplet&nbsp;architecture and HBM integration</strong>&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">Compared to HBM3e,&nbsp;HBM4 supports&nbsp;more complex multi-chiplet&nbsp;data flows with&nbsp;greater&nbsp;parallelism and routing flexibility.&nbsp;Achieving this requires advanced 2.5D / 3D packaging technologies, particularly silicon interposers and bridge-based integration approaches, which support the fine-pitch routing needed for HBM-class interfaces.&nbsp;<a href="https://www.siemens.com/en-us/company/electronic-design-automation/trending-technologies/3d-ic-design/" target="_blank" rel="noreferrer noopener">Siemens&nbsp;Innovator3D IC solutions</a>&nbsp;provide&nbsp;the integrated planning and verification workflows that manage this complexity across die, interposer and package simultaneously.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph"><strong>Physical design: TSVs, routing and&nbsp;microbump&nbsp;precision</strong>&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">At the physical level, HBM introduces unique manufacturing and design challenges.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">Through-silicon vias (TSVs) enable vertical connectivity but introduce mechanical stress, layout&nbsp;constraints&nbsp;and&nbsp;additional&nbsp;process complexity. Wafer thinning, high-aspect-ratio&nbsp;etching&nbsp;and&nbsp;precise copper fill must all be tightly controlled to&nbsp;maintain&nbsp;yield and reliability. As stack heights increase in newer generations, these challenges compound. More layers mean more interfaces, tighter alignment&nbsp;tolerances&nbsp;and&nbsp;increased sensitivity to defects.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">In addition, HBM interfaces require fine-pitch interconnects beyond standard PCB capabilities, pushing designs toward silicon&nbsp;interposers&nbsp;and advanced packaging technologies. At these geometries, signal integrity, routing&nbsp;congestion&nbsp;and&nbsp;manufacturability are tightly&nbsp;coupled&nbsp;problems.&nbsp;Microbump&nbsp;and hybrid bonding precision also become yield-critical, requiring tight process control across the entire assembly flow.&nbsp;</p>
+
+
+
+<h2 class="wp-block-heading"><strong>HBM roadmap through 2027 and beyond</strong>&nbsp;</h2>
+
+
+
+<p class="wp-block-paragraph"><strong>Near-term: 2026&nbsp;to 2027</strong>&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">HBM3E continues to power today’s AI infrastructure, but the transition to HBM4 is already underway.&nbsp;HBM3e is in mass production ramp across the AI accelerator ecosystem and will remain the dominant design target through 2025. HBM4 production from Samsung, SK Hynix and Micron is expected in late 2025 to 2026. The NVIDIA Rubin and AMD MI455X are&nbsp;the platform&nbsp;milestones that will pull HBM4 into volume. Customized HBM4 base die configurations with embedded logic or accelerator circuitry are expected to&nbsp;emerge&nbsp;as a differentiation layer.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph"><strong>Long-term roadmap: 2027 and beyond</strong>&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">Beyond first-generation HBM4 deployments, the roadmap points toward higher per-pin data rates, greater per-stack&nbsp;bandwidth&nbsp;and&nbsp;more customized HBM base-die designs. Vendors are already signaling follow-on products such as HBM4E and custom HBM, but exact performance targets and packaging directions should still be treated as evolving rather than fixed. What is clear is that future HBM generations will continue to push memory,&nbsp;packaging&nbsp;and&nbsp;system design closer together, increasing the importance of co-optimizing&nbsp;the base die, interposer,&nbsp;package&nbsp;and&nbsp;cooling architecture.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph"><strong>Growing market adoption</strong>&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">AI and ML training and inference are the dominant&nbsp;driver. HPC and scientific computing represent a large established segment. Data center acceleration and cloud AI services continue to pull HBM demand. Automotive, including autonomous driving and ADAS, requires HBM&#8217;s real-time throughput.&nbsp;As demand grows, HBM is reshaping the broader ecosystem:&nbsp;</p>
+
+
+
+<ul class="wp-block-list">
+<li>Memory vendors&nbsp;are pushing new architectures and higher stack densities&nbsp;&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li>Foundries and OSATs&nbsp;are scaling advanced packaging technologies like silicon interposers and hybrid integration&nbsp;&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li>System companies&nbsp;are redesigning architectures around bandwidth rather than just compute&nbsp;</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>Designing HBM Systems Requires a Different Approach</strong>&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">Traditional flows separate die,&nbsp;package&nbsp;and&nbsp;system concerns. HBM breaks that model.&nbsp;What is&nbsp;required&nbsp;instead is a system-driven design approach. To meet bandwidth,&nbsp;power&nbsp;and&nbsp;thermal targets simultaneously, engineers need to:&nbsp;</p>
+
+
+
+<ul class="wp-block-list">
+<li>Evaluate trade-offs across&nbsp;die, interposer&nbsp;and&nbsp;package together&nbsp;&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li>Understand&nbsp;thermal behavior before layout is fixed&nbsp;&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li>Anticipate&nbsp;signal integrity and PDN challenges early, not at sign-off&nbsp;&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li>Iterate quickly across architecture and implementation without breaking the flow&nbsp;</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">This is where a unified 3D IC design platform becomes essential.&nbsp;&nbsp;</p>
+
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="936" height="439" src="https://blogs.sw.siemens.com/wp-content/uploads/sites/64/2026/04/image-1.png" alt="" class="wp-image-1381" srcset="https://blogs.sw.siemens.com/wp-content/uploads/sites/64/2026/04/image-1.png 936w, https://blogs.sw.siemens.com/wp-content/uploads/sites/64/2026/04/image-1-600x281.png 600w, https://blogs.sw.siemens.com/wp-content/uploads/sites/64/2026/04/image-1-768x360.png 768w, https://blogs.sw.siemens.com/wp-content/uploads/sites/64/2026/04/image-1-900x422.png 900w" sizes="(max-width: 936px) 100vw, 936px" /></figure>
+
+
+
+<p class="wp-block-paragraph">Siemens&nbsp;<a href="https://www.siemens.com/en-us/company/electronic-design-automation/trending-technologies/3d-ic-design/" target="_blank" rel="noreferrer noopener"><strong>Innovator3D IC&nbsp;solutions</strong></a><strong>&nbsp;</strong>enables a true system-driven design flow&nbsp;for HBMs,&nbsp;connecting early architectural exploration through implementation and sign-off within a single, integrated environment.&nbsp;</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Chip-package co-design</strong>&nbsp;allows engineers to&nbsp;optimize&nbsp;across die, interposer&nbsp;and&nbsp;package simultaneously, rather than in isolation&nbsp;&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Multi-physics analysis</strong>&nbsp;integrates electrical,&nbsp;thermal&nbsp;and&nbsp;mechanical effects into the design process from the&nbsp;very beginning&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Unified data and workflows</strong>&nbsp;reduce iteration cycles and improve predictability across complex HBM-based systems&nbsp;</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">Explore&nbsp;Siemens’&nbsp;<a href="https://www.siemens.com/en-us/company/electronic-design-automation/trending-technologies/3d-ic-design/" target="_blank" rel="noreferrer noopener"><strong>3D IC resources and technical content</strong></a>&nbsp;to what a system-driven workflow for HBM design looks like in action.&nbsp;</p>
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is HBM3e?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "HBM3e (High Bandwidth Memory 3e) is the fifth-generation high bandwidth memory architecture. It delivers over 1.2 TB/s per stack through a 1024-bit interface and 16 independent channels. It uses vertically stacked DRAM dies connected with through-silicon vias (TSVs) and is placed next to the compute die on a silicon interposer. HBM3e is currently deployed in accelerators such as the NVIDIA H100, H200, and AMD MI300 series."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is HBM4?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "HBM4 (High Bandwidth Memory 4) is the sixth-generation high bandwidth memory architecture. It features a 2048-bit interface and 32 channels, delivering over 2.0 TB/s per stack. HBM4 introduces a redesigned architecture that requires new controllers, PHY IP, and base logic die, making it incompatible with previous HBM generations."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between HBM3e and HBM4?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The primary difference between HBM3e and HBM4 is interface width and bandwidth. HBM3e uses a 1024-bit interface with 16 channels and delivers up to 1.33 TB/s per stack. HBM4 doubles this to a 2048-bit interface with 32 channels, delivering over 2.0 TB/s and up to 3.3 TB/s in advanced configurations."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is HBM4 backward compatible with HBM3e controllers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No, HBM4 is not backward compatible with HBM3 or HBM3e controllers. Its increased interface width and architectural changes require new PHY IP and memory controllers, meaning designs must start a new development cycle."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What chiplet packaging technologies support HBM3e and HBM4?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Advanced packaging technologies that support HBM3e and HBM4 include TSMC CoWoS (Chip-on-Wafer-on-Substrate) and Intel EMIB (Embedded Multi-die Interconnect Bridge). These technologies provide the routing density and interconnect capability required for high-bandwidth memory integration."
+      }
+    }
+  ]
+}
+</script>
+
+
+
+<h2 class="wp-block-heading"><strong>Frequently asked questions about HBM3e and HBM4</strong></h2>
+
+
+
+<h3 class="wp-block-heading"><strong>What is HBM3e?</strong>&nbsp;</h3>
+
+
+
+<p class="wp-block-paragraph">HBM3e (High Bandwidth Memory 3e) is the fifth-generation high bandwidth memory architecture, delivering over 1.2 TB/s per stack through a 1024-bit interface and 16 independent channels. It stacks multiple DRAM dies vertically using Through-Silicon Vias (TSVs) and sits&nbsp;adjacent to&nbsp;the&nbsp;compute&nbsp;die on a silicon interposer. HBM3e is the current production standard, deployed in the NVIDIA H100, H200 and AMD MI300 series, with volume supply from SK Hynix,&nbsp;Samsung&nbsp;and Micron.&nbsp;</p>
+
+
+
+<h3 class="wp-block-heading"><strong>What is HBM4?</strong>&nbsp;</h3>
+
+
+
+<p class="wp-block-paragraph">HBM4 (High Bandwidth Memory 4) is the sixth-generation high bandwidth memory architecture, doubling the interface to 2048 bits and 32 channels to deliver over 2.0 TB/s per stack. It is a fundamental redesign of HBM3e: controllers, PHY IP and base&nbsp;logic die&nbsp;are all incompatible with prior generations.&nbsp;</p>
+
+
+
+<h3 class="wp-block-heading"><strong>What is the difference between HBM3e and HBM4?</strong>&nbsp;</h3>
+
+
+
+<p class="wp-block-paragraph">The core difference is interface width and bandwidth. HBM3e uses a 1024-bit interface across 16 channels and delivers up to 1.33 TB/s per stack. HBM4 doubles both to a 2048-bit interface across 32 channels, delivering over 2.0 TB/s and up to 3.3 TB/s in advanced configurations.&nbsp;</p>
+
+
+
+<h3 class="wp-block-heading"><strong>Is HBM4 backward compatible with HBM3e controllers?</strong>&nbsp;</h3>
+
+
+
+<p class="wp-block-paragraph">No. HBM4 is not backward compatible with HBM3 or HBM3e controllers. The doubled interface width and architectural changes require new PHY IP and memory controllers. Programs targeting HBM4 are starting&nbsp;a new design&nbsp;cycle.&nbsp;</p>
+
+
+
+<h3 class="wp-block-heading"><strong>What&nbsp;chiplet&nbsp;packaging technologies support HBM3e and HBM4?</strong>&nbsp;</h3>
+
+
+
+<p class="wp-block-paragraph">The two&nbsp;popular advanced&nbsp;packaging technologies for HBM integration are TSMC&nbsp;CoWoS&nbsp;(Chip-on-Wafer-on-Substrate) and Intel EMIB (Embedded Multi-die Interconnect Bridge). Both support the routing density required for HBM interfaces.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph"></p>
+		</div><!-- #article-content -->
+	</div><!-- .entry-content -->
+	<script type="text/javascript">
+
+		document.addEventListener('DOMContentLoaded', () => {
+			
+			var header_height = document.querySelector('#main-nav').offsetHeight;
+			var header_height_top = document.querySelector('#main-nav').offsetTop;
+			var full_header_height = header_height + header_height_top;
+			var author_bio = document.querySelector('#author-bio');
+
+			author_bio.setAttribute('style', 'scroll-margin-top:' + full_header_height + 'px;');
+
+			//console.log(header_height);
+			//console.log(header_height_top);
+			//console.log(full_header_height);
+
+
+
+			const headings = document.querySelectorAll('.entry-content h1, .entry-content h2, .entry-content h3');
+			if (headings && headings.length >= 3) {
+				
+				let tableOfContentInner = '';
+				headings.forEach((heading, i) => {
+
+					const headingText = decodeHTML(heading.textContent);
+
+					// generate an 'li' element that includes a link to the appropriate section
+					tableOfContentInner += `<li><a href="#section_${i}" id="link_${i}">${headingText}</a></li>`;
+
+					const originalHeadingContent 	= heading.innerHTML;
+					// href.push(originalHeadingContent);
+
+					const anchor 					= `<a class="offset-anchor" id="section_${i}"></a>`;
+
+					// add the anchor to the <h> tags
+					heading.innerHTML = anchor + originalHeadingContent;
+				});
+
+			
+
+				// anchor tags active state
+
+				const tableOfContent = `<ul>${tableOfContentInner}</ul>`;
+				// add the generated table of contents to the dive
+				document.querySelector('#toc-list').innerHTML += tableOfContent;		
+
+				// automatically go to the correct section on load
+				if (location.hash) {
+					const target = location.hash;
+					const offsetY = document.querySelector(target).offsetTop;
+					window.scrollTo(0, offsetY);
+				}
+
+			}
+			if ( headings.length < 3) {
+
+				const tocmobilediv = document.querySelector(".toc-for-mobile");
+				tocmobilediv.style.display = 'none';
+
+				const tocdiv = document.getElementById("toc");
+				tocdiv.style.display = 'none';
+
+				const content = document.getElementById("article-content");
+				content.classList.remove("col-md-9");
+				content.classList.add("col-md-12");
+
+			}
+
+			const pdfIframe = document.querySelector('.embed-pdf-viewer');
+			let hasPDF = document.getElementById('article-body').contains(pdfIframe);
+
+			// console.log(hasPDF);
+
+			if ( hasPDF ) {
+
+				const element = document.getElementById('print-btn');
+				element.remove();
+				
+			}
+
+		});
+
+		// active state of the headers in TOC
+
+		window.addEventListener('scroll', () => {
+			const headings = document.querySelectorAll('.entry-content h1, .entry-content h2, .entry-content h3');
+
+			const headings_array = Object.entries(headings);
+
+			var article_header =  document.querySelector('#article-header').offsetHeight;
+			var author_info =  document.querySelector('.authors-info').offsetHeight;
+
+			var header_Container =  document.querySelector('#main-nav').offsetHeight;
+			var header_Container_top =  document.querySelector('#main-nav').offsetTop;		
+			 
+			var mobile_toc = document.querySelector('#mobile-toc').offsetHeight;
+			var full_height_of_mobile_toc = document.querySelector('.toc-for-mobile').offsetHeight;
+			var arr = [];
+
+			//console.log(header_Container_top);
+			
+			for(var j=0; j < headings_array.length; j++) {
+
+				var first_offset = headings_array[j][1].offsetTop;
+				
+				if(j !== headings_array.length-1) {
+				var second_offset = headings_array[j+1][1].offsetTop;
+				};
+
+				if (window.screen.width <= 768){ // TOC in mobile view
+					if( window.scrollY >=  first_offset + article_header - 130   && window.scrollY  <= second_offset + article_header - 130  ){
+						
+						var link = document.querySelector('#link_'+[j]);
+						var mobile_link = document.querySelector('#mobile-toc');
+						mobile_link.innerText = link.innerText;
+						mobile_link.style.paddingLeft = "1rem";
+						link.style.color = "#008099";
+						link.style.fontWeight = "700";
+						
+					}
+					else if(window.scrollY  >= first_offset + article_header - 130  && j+1 >= headings_array.length ) {
+					
+						var link = document.querySelector('#link_'+[j]);
+						var mobile_link = document.querySelector('#mobile-toc');
+						mobile_link.innerText = link.innerText;
+						mobile_link.style.paddingLeft = "1rem";
+						link.style.color = "#008099";
+						link.style.fontWeight = "700";
+					}
+					else if (window.scrollY + header_Container_top <= article_header + headings_array[0][1].offsetTop -130){
+						var mobile_link = document.querySelector('#mobile-toc');
+						mobile_link.innerText = "Select Option";
+
+					}else {
+						var link = document.querySelector('#link_'+[j]);
+						link.style.color = '#4B4D67';
+						link.style.fontWeight = '600';
+					}
+				}else{ // TOC in Desktop view
+					if( window.scrollY  >=  first_offset + article_header && window.scrollY  <= second_offset + article_header   ){
+						
+						var link = document.querySelector('#link_'+[j]);
+						var mobile_link = document.querySelector('#mobile-toc');
+						mobile_link.innerText = link.innerText;
+						mobile_link.style.paddingLeft = "1rem";
+						link.style.color = "#008099";
+						link.style.fontWeight = "600";
+					}
+					else if(window.scrollY  >= first_offset + article_header   && j+1 >= headings_array.length ) {
+					
+						var link = document.querySelector('#link_'+[j]);
+						var mobile_link = document.querySelector('#mobile-toc');
+						mobile_link.innerText = link.innerText;
+						mobile_link.style.paddingLeft = "1rem";
+						link.style.color = "#008099";
+						link.style.fontWeight = "600";
+					}
+					else {
+						var link = document.querySelector('#link_'+[j]);
+						link.style.color = '#4B4D67';
+						link.style.fontWeight = '600';
+					}
+				}
+			};
+		}); 
+		// end of active state of the headers in TOC
+
+		// Call Sticky sidebar
+		//window.addEventListener('load', () => {
+			var sidebar = new StickySidebar('.entry-sidebar', {
+				topSpacing: 250,
+				bottomSpacing: 20,
+				containerSelector: '#article-body',
+				innerWrapperSelector: '#toc-list',
+				minWidth: 768
+			});
+		//});
+	</script>
+</article><!-- #post-## -->
+<div class="post-additional-content">
+		<div id="author-bio" class="author-bio">
+		<div class="container-fluid ab-container">
+			<div class="row flex">
+									<div class="col-sm-auto author-avatar">
+						<img alt="" src="https://s.gravatar.com/avatar/60a16ce2d06edfcf2fe5b1925c20c2c9?s=480&amp;r=pg&amp;d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fem.png" class="avatar avatar-74 photo avatar-auth0" width="74" height="74" />					</div>
+								<div class="col-md">
+											<div class="author-name">Emily Yan</div>
+																				<div class="author-description">
+						<p class="authorDescription"></p>
+													<p><a title="Read more from this author" href="https://blogs.sw.siemens.com/semiconductor-packaging/author/emilyyan/">More from this author</a></p>
+											</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+	<footer class="entry-footer" id="topics">
+		<span class="tags-links"> Topics</span><div class="container-fluid tag-container">
+				<div class="row flex"><div class="col-sm-auto mr-2 mb-2 tag-topics"><a href="https://blogs.sw.siemens.com/semiconductor-packaging/category/news/" rel="category tag">News</a></div>      <div class="col-sm-auto mr-2 mb-2 tag-topics"><a href="https://blogs.sw.siemens.com/semiconductor-packaging/tag/3d-ic/" rel="tag">3D IC</a></div>      <div class="col-sm-auto mr-2 mb-2 tag-topics"> <a href="https://blogs.sw.siemens.com/semiconductor-packaging/tag/heterogeneous-design/" rel="tag">heterogeneous design</a></div>      <div class="col-sm-auto mr-2 mb-2 tag-topics"> <a href="https://blogs.sw.siemens.com/semiconductor-packaging/tag/innovator3d-ic/" rel="tag">Innovator3D IC</a></div>      </div></div>	</footer><!-- .entry-footer -->
+	<div class="newsletter">
+		<!-- Conditional to display content depending on EDA or PLM -->
+			</div><!-- end .newsletter -->
+		<div class="related-posts">
+		<div class="crp_related crp_related_shortcode">
+			<h5 class="related-posts">What to read next:</h5>
+			<div id="related-posts" class="row">
+								<div class="related-post col-12 col-sm-4">
+					<div class="related-inner">
+						<a href="https://blogs.sw.siemens.com/semiconductor-packaging/2025/05/19/3d-ic-guide-to-heterogeneous-integration/" class="crp_link post-936">
+															<figure>
+									<img width="395" height="222" src="https://blogs.sw.siemens.com/wp-content/uploads/sites/64/2025/05/Siemens-EDA-3D-IC-1200x1200-Image-3-395x222.png" class="crp_thumb crp_featured wp-post-image" alt="3D IC technology: your comprehensive guide to enabling heterogeneous integration" loading="lazy" decoding="async" />								</figure>
+														<span class="crp_title">3D IC technology: your comprehensive guide to enabling heterogeneous integration</span>
+						</a>
+						<div class="top-meta">
+							<span class="crp_date">May 19, 2025</span>
+							<span class="crp_excerpt">What is 3D IC technology? 3D IC technology refers to the integration of multiple silicon dies or wafers in a...</span>
+						</div>
+						<div class="bottom-meta">
+							<span class="crp_author">
+								By 																	John McMillan															</span>
+							<span class="span-reading-time rt-reading-time"><span class="rt-label rt-prefix"></span> <span class="rt-time"> 14</span> <span class="rt-label rt-postfix">MIN READ</span></span>						</div>
+					</div>
+				</div><!-- end .related-post -->
+								<div class="related-post col-12 col-sm-4">
+					<div class="related-inner">
+						<a href="https://blogs.sw.siemens.com/semiconductor-packaging/2025/07/17/why-3d-ics-need-a-mindset-shift-and-how-to-make-it-happen/" class="crp_link post-1072">
+															<figure>
+									<img width="395" height="222" src="https://blogs.sw.siemens.com/wp-content/uploads/sites/64/2025/07/3D-IC-Podcast-Ep-12-Tony-M-Blog-Featured-1200x627-1-395x222.png" class="crp_thumb crp_featured wp-post-image" alt="​Why 3D ICs need a mindset shift and how to make it happen" loading="lazy" decoding="async" />								</figure>
+														<span class="crp_title">​Why 3D ICs need a mindset shift and how to make it happen</span>
+						</a>
+						<div class="top-meta">
+							<span class="crp_date">July 17, 2025</span>
+							<span class="crp_excerpt">What if the most revolutionary advances in semiconductor design aren&#8217;t about making things smaller, but about fundamentally reimagining how we...</span>
+						</div>
+						<div class="bottom-meta">
+							<span class="crp_author">
+								By 																	John McMillan															</span>
+							<span class="span-reading-time rt-reading-time"><span class="rt-label rt-prefix"></span> <span class="rt-time"> 17</span> <span class="rt-label rt-postfix">MIN READ</span></span>						</div>
+					</div>
+				</div><!-- end .related-post -->
+								<div class="related-post col-12 col-sm-4">
+					<div class="related-inner">
+						<a href="https://blogs.sw.siemens.com/semiconductor-packaging/2025/06/16/why-traditional-pcb-methods-fall-short-in-3d-ic-design/" class="crp_link post-1010">
+															<figure>
+									<img width="395" height="222" src="https://blogs.sw.siemens.com/wp-content/uploads/sites/64/2025/06/3D-IC-Podcast-Ep-11-Chris-Cone-Blog-Featured-1200x627-1-395x222.png" class="crp_thumb crp_featured wp-post-image" alt="​Why Traditional PCB Methods Fall Short in 3D IC Design" loading="lazy" decoding="async" />								</figure>
+														<span class="crp_title">​Why Traditional PCB Methods Fall Short in 3D IC Design</span>
+						</a>
+						<div class="top-meta">
+							<span class="crp_date">June 16, 2025</span>
+							<span class="crp_excerpt">In this episode of the Siemens 3D IC Podcast Series,we delve into the world of FOWLP (Fan-out wafer-level packaging) with...</span>
+						</div>
+						<div class="bottom-meta">
+							<span class="crp_author">
+								By 																	John McMillan															</span>
+							<span class="span-reading-time rt-reading-time"><span class="rt-label rt-prefix"></span> <span class="rt-time"> 11</span> <span class="rt-label rt-postfix">MIN READ</span></span>						</div>
+					</div>
+				</div><!-- end .related-post -->
+							</div><!-- end #related-posts -->
+			<div class="crp_clear"></div>
+		</div>
+	</div>
+		</div><!-- end .post-additional-content -->
+	<span class="print-page-last-line" >This article first appeared on the Siemens Digital Industries Software blog at https://blogs.sw.siemens.com/semiconductor-packaging/2026/04/24/hbm3e-hbm4-ic-design-guide/</span>
+	</div><!-- end #single-article -->
+
+<footer-xd-v1 slug="global-footer-one" allownavslugoverride="false"></footer-xd-v1>
+
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/semiconductor-packaging/*"},{"not":{"href_matches":["/semiconductor-packaging/wp-*.php","/semiconductor-packaging/wp-admin/*","https://blogs.sw.siemens.com/wp-content/uploads/sites/64/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/disw-blogs-theme/*","/semiconductor-packaging/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+</script>
+<script id="onscroll-events-js" src="https://blogs.sw.siemens.com/wp-content/themes/disw-blogs-theme/js/onscroll-events.js?ver=507f053e42ac2e4a2f1cf16c58b48f1e"></script>
+<script id="copy-blog-url-js" src="https://blogs.sw.siemens.com/wp-content/themes/disw-blogs-theme/js/copy-blog-url.js?ver=507f053e42ac2e4a2f1cf16c58b48f1e"></script>
+<script id="toc-collapsible-js" src="https://blogs.sw.siemens.com/wp-content/themes/disw-blogs-theme/js/toc-collapsible.js?ver=507f053e42ac2e4a2f1cf16c58b48f1e"></script>
+<script id="baguettebox-js" src="https://blogs.sw.siemens.com/wp-content/plugins/gallery-block-lightbox/dist/baguetteBox.min.js?ver=1.12.0"></script>
+<script id="baguettebox-js-after">
+window.addEventListener('load', function() {baguetteBox.run('.wp-block-gallery,:not(.wp-block-gallery)>.wp-block-image,.wp-block-media-text__media,.gallery,.wp-block-coblocks-gallery-masonry,.wp-block-coblocks-gallery-stacked,.wp-block-coblocks-gallery-collage,.wp-block-coblocks-gallery-offset,.wp-block-coblocks-gallery-stacked,.mgl-gallery,.gb-block-image',{captions:function(t){var e=t.parentElement.classList.contains("wp-block-image")||t.parentElement.classList.contains("wp-block-media-text__media")?t.parentElement.querySelector("figcaption"):t.parentElement.parentElement.querySelector("figcaption,dd");return!!e&&e.innerHTML},filter:/.+\.(gif|jpe?g|png|webp|svg|avif|heif|heic|tif?f|)($|\?)/i,ignoreClass:'no-lightbox',animation:'slideIn'});});
+//# sourceURL=baguettebox-js-after
+</script>
+<script id="anchorific-js" src="https://blogs.sw.siemens.com/wp-content/plugins/shortcode-toc/assets/vendor/js/anchorific.js?ver=1.0.3"></script>
+<script id="swp-scripts-js" src="https://blogs.sw.siemens.com/wp-content/themes/disw-blogs-theme/js/theme.min.js?ver=3.16.5.1788436552"></script>
+<script id="collapse-footer-js" src="https://blogs.sw.siemens.com/wp-content/themes/disw-blogs-theme/js/collapsing.js?ver=507f053e42ac2e4a2f1cf16c58b48f1e"></script>
+<script id="wp-emoji-settings" type="application/json">
+{"baseUrl":"https://s.w.org/images/core/emoji/17.0.2/72x72/","ext":".png","svgUrl":"https://s.w.org/images/core/emoji/17.0.2/svg/","svgExt":".svg","source":{"concatemoji":"https://blogs.sw.siemens.com/semiconductor-packaging/wp-includes/js/wp-emoji-release.min.js?ver=507f053e42ac2e4a2f1cf16c58b48f1e"}}
+</script>
+<script type="module">
+/*! This file is auto-generated */
+var e="script#wp-emoji-settings",t=document.querySelector(e);if(!(t instanceof HTMLScriptElement))throw new Error("Element missing: "+e);const r=JSON.parse(t.text),s=(window._wpemojiSettings=r,"wpEmojiSettingsSupports"),o=["flag","emoji"];function i(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(s,JSON.stringify(t))}catch(e){}}function c(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0);const r=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);return t.every((e,t)=>e===r[t])}function p(e,t){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var n=e.getImageData(16,16,1,1);for(let e=0;e<n.data.length;e++)if(0!==n.data[e])return!1;return!0}function u(e,t,n,r){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\udde8\ud83c\uddf6","\ud83c\udde8\u200b\ud83c\uddf6")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!r(e,"\ud83e\u1fac8")}return!1}function f(e,t,n,r){let a;const s=(a="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):document.createElement("canvas")).getContext("2d",{willReadFrequently:!0}),o=(s.textBaseline="top",s.font="600 32px Arial",{});return e.forEach(e=>{o[e]=t(s,e,n,r)}),o}function a(e){var t=document.createElement("script");t.src=e,t.defer=!0,document.head.appendChild(t)}r.supports={everything:!0,everythingExceptFlag:!0},new Promise(t=>{let n=function(){try{var e=JSON.parse(sessionStorage.getItem(s));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(o),u.toString(),c.toString(),p.toString()].join(",")+"));",r=new Blob([e],{type:"text/javascript"});const a=new Worker(URL.createObjectURL(r),{name:"wpTestEmojiSupports"});return void(a.onmessage=e=>{i(n=e.data),a.terminate(),t(n)})}catch(e){}i(n=f(o,u,c,p))}t(n)}).then(e=>{for(const n in e)r.supports[n]=e[n],r.supports.everything=r.supports.everything&&r.supports[n],"flag"!==n&&(r.supports.everythingExceptFlag=r.supports.everythingExceptFlag&&r.supports[n]);var t;r.supports.everythingExceptFlag=r.supports.everythingExceptFlag&&!r.supports.flag,r.supports.everything||((t=r.source||{}).concatemoji?a(t.concatemoji):t.wpemoji&&t.twemoji&&(a(t.twemoji),a(t.wpemoji)))});
+//# sourceURL=https://blogs.sw.siemens.com/semiconductor-packaging/wp-includes/js/wp-emoji-loader.min.js
+</script>
+
+</body>
+<!--
+
+   _  _
+  (o)(o)--.
+   \../ (  )
+   m\/m--m'`--
+I'm a computer mouse. Get it? 
+I'm here all week.
+
+
+-->
+
+</html>
+<!--
+Performance optimized by W3 Total Cache. Learn more: https://www.boldgrid.com/w3-total-cache/?utm_source=w3tc&utm_medium=footer_comment&utm_campaign=free_plugin
+
+Content Delivery Network via Amazon Web Services: CloudFront: blogs.sw.siemens.com
+
+Served from: blogs.sw.siemens.com @ 2026-09-09 13:53:58 by W3 Total Cache
+-->

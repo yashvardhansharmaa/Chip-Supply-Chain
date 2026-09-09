@@ -48,13 +48,13 @@ module.exports = function (ctx) {
   const num = (n) => n.toLocaleString('en-US');
 
   const chapterRows = chapters.map((ch) => `<tr><td class="mt-n">${pad(ch.number)}</td><th scope="row"><a href="${ch.id === 'geopolitics' ? '#/geopolitics' : '#' + esc(ch.id)}">${esc(ch.title)}</a></th><td class="mt-num">${num(ch.words)}</td><td class="mt-num">${num(ch.cites.length)}</td></tr>`).join('');
-  const chapterTable = `<div class="mt-table-wrap"><table class="mt-table">
+  const chapterTable = `<section class="mt-block"><div class="mt-table-wrap"><table class="mt-table">
 <caption class="mt-caption">Chapters, as of ${esc(buildDate)}</caption>
 <thead><tr><th scope="col">#</th><th scope="col">Chapter</th><th scope="col" class="mt-num">Words</th><th scope="col" class="mt-num">Sources</th></tr></thead>
 <tbody>${chapterRows}</tbody>
 <tfoot><tr><td></td><th scope="row">${num(chapters.length)} chapters</th><td class="mt-num">${num(totalWords)}</td><td class="mt-num">${num(totalCites)}</td></tr></tfoot>
 </table></div>
-<p class="mt-foot">Source tiers across the chapters: <span class="tier tier-A">A</span> ${num(tiers.A)} primary or institutional, <span class="tier tier-B">B</span> ${num(tiers.B)} from the four named exceptions, ${num(tiers.other)} disallowed. The count is taken at build time, so the number above is this copy's own audit rather than a claim about an earlier one.</p>`;
+<p class="mt-foot">Source tiers across the chapters: <span class="tier tier-A">A</span> ${num(tiers.A)} primary or institutional, <span class="tier tier-B">B</span> ${num(tiers.B)} from the four named exceptions, ${num(tiers.other)} disallowed. The count is taken at build time, so it is this copy's own audit rather than a claim about an earlier one.</p></section>`;
 
   const LABEL = {
     landscape: ['AI accelerators, with specs and package layouts', 'data/landscape.json'],
@@ -73,12 +73,12 @@ module.exports = function (ctx) {
   const log = readJSON(path.join(dataDir, 'changelog.json'), []);
   if (log.length) datasets.push({ label: 'Changelog entries', file: 'data/changelog.json', rows: log.length });
 
-  const datasetTable = `<div class="mt-table-wrap"><table class="mt-table">
+  const datasetTable = `<section class="mt-block"><div class="mt-table-wrap"><table class="mt-table">
 <caption class="mt-caption">Datasets, as of ${esc(buildDate)}</caption>
 <thead><tr><th scope="col">Dataset</th><th scope="col">File</th><th scope="col" class="mt-num">Rows</th></tr></thead>
 <tbody>${datasets.map((d) => `<tr><th scope="row">${esc(d.label)}</th><td class="mt-file">${esc(d.file)}</td><td class="mt-num">${num(d.rows)}</td></tr>`).join('')}</tbody>
 </table></div>
-<p class="mt-foot">Every file above is served next to this page, so <code>data/exposure.json</code> and the rest can be fetched directly. This copy was built on <b>${esc(buildDate)}</b>.</p>`;
+<p class="mt-foot">Every file above is served next to this page, so <code>data/exposure.json</code> and the rest can be fetched directly. This copy was built on <b>${esc(buildDate)}</b>.</p></section>`;
 
   /* ---- changelog ---- */
   const entries = log.slice().sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));

@@ -5,12 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Wed, 11 Aug 2021 04:26:11 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:21:10.689Z",
+  "fetchedAt": "2026-09-09T18:30:38.768Z",
   "extracted": {
     "kind": "pdf",
-    "title": null,
+    "title": "The refined EUV mask model I.A. MAKHOTKIN1*, M. WU1, V. SOLTWISCH2, F. SCHOLZE2, V. PHILIPSEN1",
+    "metaTitle": null,
+    "firstLine": "The refined EUV mask model I.A. MAKHOTKIN1*, M. WU1, V. SOLTWISCH2, F. SCHOLZE2, V. PHILIPSEN1",
+    "author": "Jennifer Mayfield",
+    "subject": null,
+    "pages": 11,
     "date": "2019-12-19",
-    "firstLine": "IAc8dt=»dõp d^ÉÝ\u0018\"YO]oæ·ë\u001f¯",
-    "dateModified": "2019-12-19"
+    "dateModified": "2019-12-19",
+    "via": "pymupdf"
   }
 }
