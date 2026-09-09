@@ -94,7 +94,7 @@ PC.register('gaa-transistor', function (p) {
   return {
     cloud: PC.merge.apply(null, parts),
     spin: 0.12,
-    tilt: [0.42, -0.42, 0],
+    tilt: [0.3, -0.38, 0],
     caption: 'A gate-all-around nanosheet transistor roughly 120 nm across: three silicon channels stacked one above another, a gate wrapping every face of all three, epitaxial source and drain diamonds at the ends, and copper contacts rising to the wiring above.'
   };
 });
