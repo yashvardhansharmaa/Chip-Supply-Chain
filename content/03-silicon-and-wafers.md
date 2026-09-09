@@ -83,7 +83,7 @@ A buried oxide separates a thin device layer from the bulk, and Soitec's Smart C
 
 ## Who makes it
 
-Five firms supply the whole market. Siltronic's own map of the chain puts five major suppliers behind $11.4 billion of wafer revenue ([source](https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf)), and CSET names them: Shin-Etsu, SUMCO, GlobalWafers, Siltronic and SK Siltron, headquartered in Japan, Taiwan, Germany and South Korea ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
+Siltronic's own map of the chain puts five major suppliers behind the entire $11.4 billion wafer market ([source](https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf)). CSET names them: Shin-Etsu, SUMCO, GlobalWafers, Siltronic and SK Siltron, headquartered in Japan, Taiwan, Germany and South Korea ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 
 {{figure:wafer-concentration}}
 
@@ -96,11 +96,11 @@ Their 2025 results split the field: an AI boom, a mature-node hangover.
 
 Price explains the gap between volume and profit: area shipped rose 5.8 percent in 2025 while revenue fell 1.2 percent ([source](https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html)). Wafers sell on multi-year agreements that fix price and volume years ahead, so a demand spike never reaches the invoice.
 
-Feedstock is a separate map, and the headline number misleads. China made 1.50 million tonnes of polysilicon in 2023, about 93 percent of world output ([source](https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf)). Almost none of it can go into a chip. Solar-grade material was 98 percent of that output and electronic-grade 2 percent ([source](https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf)).
+Feedstock is a separate map. China made 1.50 million tonnes of polysilicon in 2023, about 93 percent of world output ([source](https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf)). Almost none of it can go into a chip: solar-grade material was 98 percent of that output and electronic-grade 2 percent ([source](https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf)).
 
 {{figure:polysilicon-grade}}
 
-The grade that matters is a small business with a short supplier list. Siltronic counts the market for silicon for electronic applications at $1.4 billion with five major suppliers: Wacker, Hemlock, OCI, Tokuyama and Mitsubishi ([source](https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf)). Not one of them is Chinese.
+The grade that matters is a small business with a short supplier list. Siltronic sizes electronic-grade silicon at $1.4 billion, with five major suppliers: Wacker, Hemlock, OCI, Tokuyama and Mitsubishi ([source](https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf)). Not one is Chinese.
 
 Crystal growth and polishing sit in Japan, Taiwan, Germany and South Korea, with no major US-headquartered producer as of 2021 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). That is changing at the margin. GlobalWafers opened a $3.5 billion plant in Sherman, Texas in May 2025, the first production line of its kind built in the United States in over twenty years, and announced another $4 billion for phases three and four the same day ([source](https://www.sas-globalwafers.com/en/gwc_news_en_20250516/)). Washington had awarded it up to $406 million under the CHIPS incentives programme ([source](https://www.commerce.gov/news/press-releases/2024/12/biden-harris-administration-announces-chips-incentives-awards)).
 

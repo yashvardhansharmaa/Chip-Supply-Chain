@@ -11,7 +11,7 @@
     "concentration": "High",
     "chokepointScore": 4,
     "leaders": [
-      {"name": "JSR", "country": "JP", "share": "~27% of photoresist; owner of Inpria's metal-oxide EUV resist"},
+      {"name": "JSR", "country": "JP", "share": "Owner of Inpria's metal-oxide EUV resist; 84% held by Japan's state-backed JIC since April 2024"},
       {"name": "Tokyo Ohka Kogyo", "country": "JP", "share": "Top-five resist maker; ¥139.7bn sales in H1 FY2026"},
       {"name": "Air Liquide", "country": "FR", "share": "€2,465m of electronics revenue in 2025, 9.1% of group sales"},
       {"name": "Entegris", "country": "US", "share": "$3.20bn 2025 revenue in filtration, CMP, delivery and carriers"},
@@ -24,19 +24,19 @@
       {"code": "KR", "note": "SK Materials NF3, Dongjin resist, on-site gas for memory fabs"},
       {"code": "CN", "note": "Gallium, germanium and antimony refining; growing wet chemicals and CMP"}
     ],
-    "chinaStatus": "Cannot make EUV or leading-edge ArF resist and held under 5% of the photoresist market as of 2021. It refines most of the world's gallium and germanium and has used export licensing on both since July 2023.",
+    "chinaStatus": "Cannot make EUV or leading-edge ArF resist and held under 5% of the photoresist market as of 2021. It refines 99% of the world's primary low-purity gallium and has used export licensing on gallium and germanium since August 2023.",
     "usStatus": "Strong in filtration, containers, CMP and delivery systems through Entegris, DuPont and Air Products. Nearly absent from advanced photoresist since Inpria was bought by JSR.",
     "costSignal": "Wafer fabrication materials were a $45.8bn market in 2025 and packaging materials $27.4bn, $73.2bn between them",
     "substitution": {"years": "3-7", "why": "Formulations are qualified per process per fab and metals impurities are measured in parts per trillion, so a second source takes years of joint development rather than a purchase order."}
   },
   "keyFacts": [
     {"fact": "Japan holds about 90% of world semiconductor photoresist production, and China could not make EUV resists (as of 2021)", "source": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"},
-    {"fact": "JSR holds roughly 27% of the photoresist market and was taken private by Japan Investment Corporation for about ¥900 billion in 2024", "source": "https://evertiq.com/news/55596"},
+    {"fact": "Japan Investment Corporation's vehicle took 84.36% of JSR at ¥4,350 a share in a tender offer that closed on 16 April 2024", "source": "https://www.jiccapital.co.jp/en/news/.assets/E_20240417_JIC_JICC_PressRelease.pdf"},
     {"fact": "The global semiconductor materials market reached $73.2bn in 2025: $45.8bn of wafer fabrication materials and $27.4bn of packaging materials", "source": "https://www.prnewswire.com/news-releases/global-semiconductor-materials-market-revenue-reaches-record-73-2-billion-in-2025--semi-reports-302768700.html"},
     {"fact": "Before the 2022 invasion Ukraine supplied about 70% of the world's neon and 90% of the semiconductor-grade neon used by US industry", "source": "https://www.csis.org/blogs/perspectives-innovation/russias-invasion-ukraine-impacts-gas-markets-critical-chip-production"},
     {"fact": "Japan's 2019 export licensing cut hydrogen fluoride exports to South Korea by 87.9%", "source": "https://www.rieti.go.jp/en/columns/v01_0201.html"},
     {"fact": "JX Advanced Metals holds about 65% of the global market for semiconductor sputtering targets", "source": "https://www.jx-nmm.com/english/company/glance/"},
-    {"fact": "China banned gallium, germanium and antimony exports to the US on 3 December 2024 and suspended that ban on 9 November 2025 until 27 November 2026", "source": "https://www.pillsburylaw.com/en/news-and-insights/china-suspends-export-controls-certain-critical-minerals-related-items.html"},
+    {"fact": "China controlled gallium exports from August 2023, banned them to the US in December 2024, and lifted that ban for one year in November 2025; it holds 99% of world primary low-purity gallium production", "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gallium.pdf"},
     {"fact": "Germanium metal averaged $4,100 per kilogram in 2025 against $1,392 in 2023, and US imports of the metal fell 67% in 2025", "source": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf"}
   ],
   "figures": [
@@ -91,7 +91,7 @@ Japan produced about 90 percent of the world's semiconductor photoresist as of 2
 
 {{figure:resist-country}}
 
-JSR is the largest single supplier, at about 27 percent of the market on trade-press estimates, and no longer a normal public company: Japan Investment Corporation, a state-backed fund, took more than 84 percent of its shares in 2024 for roughly ¥900 billion and delisted it ([source](https://evertiq.com/news/55596)). A government owns the world's biggest photoresist maker.
+JSR, which calls itself a global leader in cutting-edge semiconductor materials ([source](https://www.jsr.co.jp/jsr_e/products/em/)), is no longer a normal public company. A vehicle of Japan Investment Corporation, a state-backed fund, took 84.36 percent of its shares at ¥4,350 each in a tender offer that closed on 16 April 2024, and then delisted it ([source](https://www.jiccapital.co.jp/en/news/.assets/E_20240417_JIC_JICC_PressRelease.pdf)). A government now controls the company that owns Inpria.
 
 Others are expanding on AI demand.
 
@@ -110,15 +110,15 @@ This layer has been tested twice, and both tests confirmed the theory.
 
 In July 2019 Japan put photoresist, hydrogen fluoride and fluorinated polyimide under individual export licences for South Korea, having supplied more than 90 percent of Korean imports of two of them; hydrogen fluoride exports then fell 87.9 percent ([source](https://www.rieti.go.jp/en/columns/v01_0201.html)). No fab stopped, but Korea spent five years funding domestic substitutes, which is what materials controls usually produce.
 
-In 2022 Russia invaded Ukraine, which supplied about 70 percent of the world's neon and 90 percent of the semiconductor-grade neon used by US industry ([source](https://www.csis.org/blogs/perspectives-innovation/russias-invasion-ukraine-impacts-gas-markets-critical-chip-production)). Again no fab stopped. The lasting consequence: China now runs more than 40 percent of global air separation capacity, on one specialist's count ([source](https://www.sfa-oxford.com/rare-earths-and-minor-metals/gaseous-elements-and-noble-gases/electronic-gases/neon-10-ne/)).
+In 2022 Russia invaded Ukraine, which supplied about 70 percent of the world's neon and 90 percent of the semiconductor-grade neon used by US industry ([source](https://www.csis.org/blogs/perspectives-innovation/russias-invasion-ukraine-impacts-gas-markets-critical-chip-production)). Again no fab stopped. Buyers had stockpiled since the 2014 annexation of Crimea, and Korean and Japanese chipmakers reported adequate neon from China instead ([source](https://www.csis.org/blogs/perspectives-innovation/russias-invasion-ukraine-impacts-gas-markets-critical-chip-production)). One supplier country was swapped for another.
 
-China's own lever is metals, not molecules. Beijing licensed gallium and germanium exports from 3 July 2023, then banned them, plus antimony and superhard materials, to the United States on 3 December 2024 ([source](https://www.stimson.org/2025/chinas-germanium-and-gallium-export-restrictions-consequences-for-the-united-states/)). On 9 November 2025 it suspended that ban until 27 November 2026, keeping it for US military end users ([source](https://www.pillsburylaw.com/en/news-and-insights/china-suspends-export-controls-certain-critical-minerals-related-items.html)).
+China's own lever is metals, not molecules. Beijing licensed gallium and germanium exports from July 2023, then banned both, plus antimony and superhard materials, to the United States in December 2024 ([source](https://www.stimson.org/2025/chinas-germanium-and-gallium-export-restrictions-consequences-for-the-united-states/)). In November 2025 it lifted the gallium ban for one year ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gallium.pdf)).
 
-Be precise: none of this is silicon logic. Gallium, germanium and antimony go into radar and RF front ends, power conversion, infrared optics, fibre and dopants, not into an AI accelerator. What they gate is price. Germanium metal averaged $4,100 a kilogram in 2025 against $1,392 in 2023, and US imports fell 67 percent ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf)). USGS put the GDP cost of a complete ban at about $3.4 billion ([source](https://www.stimson.org/2025/chinas-germanium-and-gallium-export-restrictions-consequences-for-the-united-states/)).
+Be precise: none of this is silicon logic. Germanium goes into fibre optics, infrared optics, solar cells for satellites and radiation detectors ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf)); gallium into the compound-semiconductor wafers behind RF front ends, LEDs and lasers ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gallium.pdf)). What they gate is price. Germanium metal averaged $4,100 a kilogram in 2025 against $1,392 in 2023, and US imports of the metal fell 67 percent ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf)). USGS put the GDP cost of a complete ban at about $3.4 billion ([source](https://www.stimson.org/2025/chinas-germanium-and-gallium-export-restrictions-consequences-for-the-united-states/)).
 
 {{figure:germanium-price}}
 
-The slower risk is regulatory. The EU revised its PFAS dossier on 20 August 2025 to add a risk-based option judged proportionate for electronics, with a decision likely in 2027 and effect from late 2028 ([source](https://www.kirkland.com/publications/kirkland-alert/2025/10/pfas-update-scrapping-prior-broader-proposal-eu-publishes-updated-narrower-proposal-to-restrict-the)). Photoacid generators, etch gases, chamber liners, pump seals and filter membranes are all fluorinated. A carve-out is likely, but not law yet.
+The slower risk is regulatory. The five member states behind the EU's PFAS restriction published a revised proposal on 20 August 2025, after working through more than 5,600 comments, and ECHA's committees now back an EU-wide restriction with targeted derogations rather than a flat ban, with the scientific evaluation due to finish by the end of 2026 ([source](https://echa.europa.eu/-/echa-supports-pfas-restriction-with-targeted-derogations)). Photoacid generators, etch gases, chamber liners, pump seals and filter membranes are all fluorinated. A carve-out looks likely, but it is not law yet.
 
 ## Key evaluation criteria
 
@@ -126,8 +126,8 @@ The slower risk is regulatory. The EU revised its PFAS dossier on 20 August 2025
 - **Qualification lock-in**: a resist or slurry is approved per layer per device per fab, so switching costs are counted in tape-outs.
 - **Photon efficiency** for EUV resists: absorption sets dose, dose sets throughput, shot noise sets defectivity. That is the case for metal-oxide chemistry.
 - **Transportability**: bulk gases are made at the fab fence, and only cylinder-shipped specialty gases can be embargoed.
-- **Byproduct exposure**: neon comes from steel oxygen plants, gallium and germanium from aluminium and zinc refining, so supply answers to another industry ([source](https://www.sfa-oxford.com/rare-earths-and-minor-metals/gaseous-elements-and-noble-gases/electronic-gases/neon-10-ne/)).
+- **Byproduct exposure**: gallium is recovered mostly from bauxite refining and germanium from zinc concentrates, so supply answers to another industry's economics ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gallium.pdf)).
 
 ## Takeaways
 
-Photoresist is the sharpest point here: about 90 percent Japanese, with the largest supplier owned by a Japanese state fund ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)) ([source](https://evertiq.com/news/55596)). Individual molecules are far more concentrated than the industry selling them: neon and nitrogen trifluoride come from a handful of plants. China's gallium, germanium and antimony controls are real leverage over compound semiconductors and optics, but not over a silicon GPU, and the suspension runs only to 27 November 2026 ([source](https://www.pillsburylaw.com/en/news-and-insights/china-suspends-export-controls-certain-critical-minerals-related-items.html)). Watch the qualification cycle, not the spot price: every disruption so far was absorbed within a year, and each added a second source somewhere.
+Photoresist is the sharpest point here: about 90 percent Japanese ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)), with one of the largest suppliers now 84 percent owned by a Japanese state fund ([source](https://www.jiccapital.co.jp/en/news/.assets/E_20240417_JIC_JICC_PressRelease.pdf)). Individual molecules are far more concentrated than the industry selling them: neon and nitrogen trifluoride come from a handful of plants. China's gallium, germanium and antimony controls are real leverage over compound semiconductors and optics, but not over a silicon GPU, and the gallium suspension runs for one year from November 2025 ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gallium.pdf)). Watch the qualification cycle, not the spot price: every disruption so far was absorbed within a year, and each added a second source somewhere.

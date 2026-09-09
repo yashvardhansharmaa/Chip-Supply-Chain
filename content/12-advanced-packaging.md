@@ -49,6 +49,14 @@
       "unit": "reticles",
       "data": [["2024, CoWoS-L", 3.5], ["2026, in production", 5.5], ["In development", 9.5], ["2028", 14]],
       "source": {"label": "TSMC 2025 annual report and 2026 technology symposium", "url": "https://pr.tsmc.com/english/news/3302"}
+    },
+    {
+      "id": "china-backend-tools",
+      "type": "bars",
+      "title": "China-based suppliers' share of back-end tool segments, 2024",
+      "unit": "%",
+      "data": [["Test, linear and discrete", 69], ["Burn-in test", 9], ["Advanced packaging tools", 7], ["SoC test", 5], ["Atomic layer deposition", 1]],
+      "source": {"label": "CSET, Inside Beijing’s Chipmaking Offensive (ALD shown for contrast, under 1%)", "url": "https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/"}
     }
   ]
 }
@@ -106,30 +114,32 @@ Two industries share the word packaging. The 2.5D work for AI accelerators happe
 The tools are a narrower chokepoint than the OSATs, and bonding is the narrowest.
 
 - **Thermocompression bonding.** ASMPT's advanced packaging revenue reached $532.1 million in 2025, with TCB revenue up about 146%; it targets 35 to 40% of a market it puts at $1.6 billion by 2028 ([source](https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/)).
-- **Hybrid bonding.** A two-supplier market: SK hynix's first mass-production order paired Applied Materials and Besi tools in one inline system for about 20 billion won, or $15 million ([source](https://www.tomshardware.com/tech-industry/semiconductors/sk-hynix-says-hybrid-bonding-wont-be-ready-for-hbm4e-as-ai-memory-runs-into-a-775-micron-ceiling)).
+- **Hybrid bonding.** Solder disappears and copper pads meet directly. Applied Materials built its Kinex bonder with Besi, which makes the placement head ([source](https://www.appliedmaterials.com/eu/en/product-library/kinex-integrated-die-to-wafer-hybrid-bonding-system.html)); SK hynix expects full adoption only at HBM4E or HBM5, where stacks pass 20 layers ([source](https://news.skhynix.com/en/tech-note-series-ep2/)).
 - **Grinding and dicing.** Disco dominates the steps that thin wafers and cut packages apart; see Test and assembly ([source](https://newsletter.semianalysis.com/p/disco-corporation-the-world-leader)).
 
-TSMC's Arizona commitment reached $265 billion in July 2026: 10 fabs, two advanced packaging plants and an R&D centre ([source](https://www.azcommerce.com/news-events/news/2026/7/tsmc-announcement/)). Amkor's $7 billion Peoria plant, with TSMC as process partner, starts production in early 2028 ([source](https://www.trendforce.com/news/2025/10/14/news-amkor-breaks-ground-on-usd-7-billion-advanced-semiconductor-packaging-facility-in-arizona/)). Neither replaces Taiwan this decade.
+TSMC's Arizona commitment reached $265 billion in July 2026: 10 fabs, two advanced packaging plants and an R&D centre ([source](https://www.azcommerce.com/news-events/news/2026/7/tsmc-announcement/)). Amkor broke ground in Peoria in October 2025 on a $7 billion campus, backed by up to $407 million of CHIPS money, producing from early 2028 ([source](https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced)). Wei confirms it will open before TSMC's own two packaging fabs ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf)). Neither replaces Taiwan this decade.
 
 ## The chokepoint
 
-China's back end is much stronger than its front end. JCET, Tongfu and HT-Tech together took about 25% of top-10 OSAT revenue in 2024 ([source](https://www.trendforce.com/presscenter/news/20250513-12577.html)). Packaging tools are less export-controlled than lithography, and chiplets on SMIC silicon plus domestic assembly is the most credible route around the restrictions Huawei faces. What China lacks is silicon-interposer 2.5D at volume with qualified HBM beside it.
+{{figure:china-backend-tools}}
+
+China's back end is much stronger than its front end. JCET, the largest Chinese assembler, billed RMB 35.96 billion in 2024, up 21 percent ([source](https://www.jcetglobal.com/en/site/news-detail?id=1952)), and Chinese toolmakers took real share in packaging and test equipment over the same years they took none in ALD ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). Packaging tools are less export-controlled than lithography, and chiplets on SMIC silicon plus domestic assembly is the most credible route around the restrictions Huawei faces. What China lacks is silicon-interposer 2.5D at volume with qualified HBM beside it.
 
 TSMC's roadmap makes the chokepoint worse before it gets better.
 
-- **2027.** A 9.5-reticle interposer supporting 12 HBM5 stacks ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)).
-- **2028.** A 14-reticle interposer with 20 HBM5 modules and, we think, ten to twenty compute chiplets ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)).
-- **2029.** More than 14 reticles with up to 24 HBM5E stacks, which at 12,020 mm2 is roughly the area of a compact disc ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)).
+- **Now.** 5.5 reticles in production, up from 3.5 in 2024, with a 9.5-reticle version in development ([source](https://investor.tsmc.com/static/annualReports/2025/english/pdf/2025_tsmc_ar_e_ch5.pdf)).
+- **2028.** A 14-reticle interposer carrying about ten large compute dies and 20 HBM stacks, roughly 12,000 mm2 of silicon, about the area of a compact disc ([source](https://pr.tsmc.com/english/news/3302)).
+- **2029.** More than 14 reticles, and a 40-reticle System-on-Wafer beside it ([source](https://pr.tsmc.com/english/news/3302)).
 
 ## Key evaluation criteria
 
-- **Interposer area** — the ceiling on how much logic and memory fit. 3.3x reticle for CoWoS-S, 5.5x in production today ([source](https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm)).
-- **Package yield** — over 98% on 5.5-reticle CoWoS, after a much worse start on Blackwell ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)).
-- **Warpage control** — the expansion mismatch that broke early CoWoS-L recurs as packages grow ([source](https://www.3dincites.com/2024/10/iftle-607-why-nvidias-blackwell-is-having-issues-with-tsmc-cowos-l-technology/)).
-- **HBM stacks supported** — 12 today, 20 planned for 2028, 24 for 2029 ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)).
+- **Interposer area** — the ceiling on how much logic and memory fit. 3.3x reticle for CoWoS-S ([source](https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm)), 5.5x for CoWoS-L in production today ([source](https://pr.tsmc.com/english/news/3302)).
+- **Package yield** — the number nobody publishes, and the one that decides whether a generation ships on time.
+- **Warpage control** — the expansion mismatch between die, bridge, interposer and substrate that broke early CoWoS-L, and that gets harder as packages grow ([source](https://semianalysis.com/2024/08/04/nvidias-blackwell-reworked-shipment/)).
+- **HBM stacks supported** — about 20 on the 14-reticle package due in 2028 ([source](https://pr.tsmc.com/english/news/3302)).
 - **Bonder throughput** — thermocompression and hybrid bonding are slow and serial, and three or four firms hold the tools ([source](https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/)).
-- **Substrate size** — the 120 mm by 150 mm substrate planned for 2027 pushes the limits of ABF build-up film, see Substrates and PCBs ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)).
+- **Substrate size** — a 14-reticle interposer needs an organic substrate that will not warp under it, which pushes ABF build-up film to its limits; see Substrates and PCBs.
 
 ## Takeaways
 
-Advanced packaging is the second great chokepoint after lithography, and it is a capacity problem, not a physics problem: the steps are known, there are not enough lines. CoWoS capacity roughly quadrupled between 2024 and 2026 and is still short, with Nvidia holding more than half of it. China can package chips but not the 2.5D structures AI accelerators need, and the American alternatives do not start until 2028.
+Advanced packaging is the second great chokepoint after lithography, and it is a capacity problem, not a physics problem: the steps are known, there are not enough lines. TSMC has doubled CoWoS capacity, promised a 60 percent compound growth rate, and still cannot say when supply meets demand. China can package chips but not the 2.5D structures AI accelerators need, and the American alternatives do not start until 2028.
