@@ -4,7 +4,7 @@
   "number": 16,
   "title": "Data Centers and Power",
   "oneLiner": "The chips are no longer the long pole. A large transformer takes three years, turbine output does not reach 30 GW a year until 2030, and Texas has fifty times more large load queued than it has approved to switch on.",
-  "plain": "Picture a domestic hair dryer, about two kilowatts of heat pouring out of a hand-sized nozzle. One rack of AI chips draws seventy of them in a box the size of a wardrobe, and every watt turns into heat that has to be carried away in water rather than air. Feeding and cooling that box is what a modern data center does. The hard part is not the building. It is getting the electricity to the door, because the transformers, switchgear and turbines that connect a site to the grid are ordered years in advance, which is where an AI buildout now actually waits.",
+  "plain": "Picture a domestic hair dryer, about two kilowatts of heat pouring out of a hand-sized nozzle. One rack of AI chips draws seventy of them in a box the size of a wardrobe, and every watt turns into heat that has to be carried away in water rather than air. Feeding and cooling that box is what a modern data center does. The building is the easy part. Getting the electricity to the door is the hard one, because the transformers, switchgear and turbines that connect a site to the grid are ordered years in advance. That queue is where an AI buildout now waits.",
   "specimen": "rack",
   "specimenCaption": "Right: a liquid-cooled 72-GPU rack. Eighteen compute trays above and below nine NVLink switch trays, a vertical busbar at the back, power shelves at the top and bottom, and cold-plate manifolds feeding every tray.",
   "card": {
@@ -75,9 +75,9 @@ For thirty years the semiconductor industry set the pace and everything downstre
 
 ## How it works
 
-Picture a domestic hair dryer, about two kilowatts of heat pouring out of a hand-sized nozzle. One rack of AI chips draws seventy of them in a box the size of a wardrobe, and every watt turns into heat that has to be carried away in water rather than air. Feeding and cooling that box is what a modern data center does. The hard part is not the building. It is getting the electricity to the door, because the transformers, switchgear and turbines that connect a site to the grid are ordered years in advance, which is where an AI buildout now actually waits.
+Picture a domestic hair dryer, about two kilowatts of heat pouring out of a hand-sized nozzle. One rack of AI chips draws seventy of them in a box the size of a wardrobe, and every watt turns into heat that has to be carried away in water rather than air. Feeding and cooling that box is what a modern data center does. The building is the easy part. Getting the electricity to the door is the hard one, because the transformers, switchgear and turbines that connect a site to the grid are ordered years in advance. That queue is where an AI buildout now waits.
 
-The unit of AI compute is no longer the server but the rack. A GB300 NVL72 draws up to 142 kW through eight 33 kW power shelves, more than ten times a conventional enterprise rack in the same floor area ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
+A rack is now the unit of AI compute. A GB300 NVL72 draws up to 142 kW through eight 33 kW power shelves, more than ten times a conventional enterprise rack in the same floor area ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
 
 Everything else follows from that number. Utility power steps down through a substation, switchgear, uninterruptible supplies and distribution units before it reaches the rack busbar, each stage with its own lead time.
 
@@ -93,7 +93,7 @@ Nvidia is also moving rack distribution to 800 VDC, which pushes more than 150% 
 - **Direct-to-chip liquid.** The default for anything Blackwell-class or later; every serious AI hall is now plumbed.
 - **Immersion.** Higher density still, but poor serviceability and almost no installed base at hyperscale.
 
-Cooling is not the bottleneck, because it has no shortage of sellers. Nvidia names nine firms supplying data center power and cooling systems for its gigawatt reference designs, among them ABB, Eaton, Hitachi Energy, Mitsubishi Electric, Schneider Electric, Siemens and Vertiv ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)). Where a buyer can pick from nine names, price falls.
+Cooling is not the bottleneck. Nvidia names nine firms supplying data center power and cooling systems for its gigawatt reference designs, among them ABB, Eaton, Hitachi Energy, Mitsubishi Electric, Schneider Electric, Siemens and Vertiv ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)). With nine suppliers to choose from, a buyer can get the kit and haggle over the price.
 
 ### Rack power
 
@@ -115,7 +115,7 @@ The hyperscalers pay for it. Alphabet, Amazon, Meta, Microsoft and Oracle spent 
 
 Campuses are now described in gigawatts: OpenAI's Stargate portfolio targets more than 9 GW across US sites by 2029, with Abilene, Texas going from 0.3 GW to 1.2 GW by late 2026 ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)).
 
-The equipment vendors are the constraint. GE Vernova, Siemens Energy, Hitachi Energy, ABB, Eaton and Schneider Electric supply the turbines, transformers and switchgear, and the order books show what that scarcity is worth: GE Vernova's gas equipment backlog and slot reservations went from 100 GW to 116 GW inside 2026, with data center orders past $5 billion by mid-year, more than double the whole of 2025 ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
+The equipment vendors are the constraint. GE Vernova, Siemens Energy, Hitachi Energy, ABB, Eaton and Schneider Electric supply the turbines, transformers and switchgear. GE Vernova's gas equipment backlog and slot reservations went from 100 GW to 116 GW inside 2026, with data center orders past $5 billion by mid-year, more than double the whole of 2025 ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
 
 {{figure:turbine-output}}
 

@@ -117,7 +117,7 @@ PC.register('cowos-exploded', function (p) {
     var yc = yChip + dieH / 2;
     add(PC.T(PC.plane({ w: dieW, d: dieD, n: 1800, tone: 0.24 }), { pos: [d.x, yChip + dieH, d.z] }));
     add(PC.T(PC.box({ w: dieW, h: dieH, d: dieD, faces: ['px', 'nx', 'pz', 'nz'], n: 1100, tone: 0.42 }), { pos: [d.x, yc, d.z] }));
-    add(PC.T(PC.boxEdges({ w: dieW, h: dieH, d: dieD, perUnit: 170, tone: 0.9 }), { pos: [d.x, yc, d.z] }));
+    add(PC.T(PC.boxEdges({ w: dieW, h: dieH, d: dieD, perUnit: 220, tone: 0.98 }), { pos: [d.x, yc, d.z] }));
     // a hint of the floorplan: a block grid with the memory interface facing outward
     var fp = [], sg = d.x < 0 ? -1 : 1;
     for (var a = 0; a < 4; a++) for (var b = 0; b < 7; b++) {

@@ -1,129 +1,138 @@
-/* Specimen: a GPU die floorplan, drawn the way a die shot is annotated.
- * A reticle-sized die (26 x 32 mm) seen from above: two banks of 8 x 8
- * streaming-multiprocessor blocks either side of a central L2 cache band,
- * HBM PHY strips down both long edges (accent), NVLink and I/O along the
- * short edges, and the memory ring bus running inside the PHY.
+/* Specimen: the floorplan of a GPU die, seen from above.
+ *
+ * Units are millimetres. The die is 26 x 33 mm, which is one full reticle
+ * field - the largest area a scanner can print in a single exposure, and the
+ * reason the biggest accelerators are built from two dies rather than one.
+ *
+ * The arrangement follows Nvidia's published GH100 block diagram:
+ *   - 144 streaming multiprocessors in 8 graphics processing clusters, four
+ *     above the cache band and four below, 18 tiles each;
+ *   - the L2 cache split into two partitions in a band across the middle,
+ *     with the crossbar between them;
+ *   - twelve memory controllers and their HBM PHYs down the two long edges,
+ *     two controllers per HBM stack, three stacks a side;
+ *   - the PCI Express host interface and the scheduler across one short edge,
+ *     with a row of NVLink ports inside it;
+ *   - on a two-die part the other short edge carries the die-to-die interface
+ *     instead, so a sliver of the neighbouring die is drawn beyond it.
+ *
+ * The die-to-die interface is the copper strip: thousands of contacts at a few
+ * microns' pitch, carrying about 10 TB/s, doing the job the reticle limit
+ * stopped a single piece of silicon from doing.
  */
 PC.register('die-floorplan', function (p) {
-  var W = 1.30, D = 1.60, H = 0.052;          // 26 : 32 aspect, thin
-  var y0 = H / 2;                              // die top surface
-  var y1 = y0 + 0.003, y2 = y0 + 0.006, y3 = y0 + 0.009;
-  var parts = [];
+  var W = 26, D = 33, T = 0.75;                 // one reticle field
+  var yTop = T / 2 + 0.02, parts = [];
+  function add(c) { parts.push(c); }
+  function fill(x0, z0, x1, z1, n, tn) {
+    return PC.T(PC.plane({ w: x1 - x0, d: z1 - z0, n: n, tone: tn }),
+      { pos: [(x0 + x1) / 2, yTop, (z0 + z1) / 2] });
+  }
+  function rect(x0, z0, x1, z1, per, tn) {
+    return PC.polyline({
+      pts: [[x0, yTop, z0], [x1, yTop, z0], [x1, yTop, z1], [x0, yTop, z1]],
+      closed: true, perUnit: per, tone: tn
+    });
+  }
+  function hline(x0, x1, z, per, tn) { return PC.line({ a: [x0, yTop, z], b: [x1, yTop, z], perUnit: per, tone: tn }); }
+  function vline(x, z0, z1, per, tn) { return PC.line({ a: [x, yTop, z0], b: [x, yTop, z1], perUnit: per, tone: tn }); }
 
-  function fill(cx, cz, w, d, y, t, n) {
-    return PC.T(PC.plane({ w: w, d: d, tone: t, n: n }), { pos: [cx, y, cz] });
-  }
-  function rect(cx, cz, w, d, y, t, per) {
-    return PC.T(PC.polyline({
-      pts: [[-w / 2, 0, -d / 2], [w / 2, 0, -d / 2], [w / 2, 0, d / 2], [-w / 2, 0, d / 2]],
-      closed: true, perUnit: per || 320, tone: t
-    }), { pos: [cx, y, cz] });
-  }
-  function seg(x1, z1, x2, z2, y, t, per) {
-    return PC.line({ a: [x1, y, z1], b: [x2, y, z2], perUnit: per || 300, tone: t });
-  }
+  // ---------- the slab ----------
+  add(PC.T(PC.box({ w: W, h: T, d: D, faces: ['px', 'nx', 'pz', 'nz'], n: 5200, tone: 0.30 }), { pos: [0, 0, 0] }));
+  add(fill(-W / 2, -D / 2, W / 2, D / 2, 13000, 0.10));            // the field between blocks
+  add(rect(-W / 2, -D / 2, W / 2, D / 2, 46, 1));                  // die edge
+  add(rect(-W / 2 + 0.45, -D / 2 + 0.45, W / 2 - 0.45, D / 2 - 0.45, 22, 0.55));   // seal ring
 
-  // ---------- the die itself ----------
-  parts.push(fill(0, 0, W, D, y0, 0.24, 13000));                                   // silicon ground
-  parts.push(PC.box({ w: W, h: H, d: D, faces: ['px', 'nx', 'pz', 'nz'], n: 2400, tone: 0.45 }));
-  parts.push(PC.boxEdges({ w: W, h: H, d: D, perUnit: 280, tone: 1 }));
-  parts.push(rect(0, 0, W - 0.030, D - 0.030, y1, 0.95, 400));                     // seal ring
-  parts.push(rect(0, 0, W - 0.062, D - 0.062, y1, 0.5, 220));
-  // scribe-line alignment crosses just inside each corner
-  for (var q = 0; q < 4; q++) {
-    var qx = (q < 2 ? -1 : 1) * (W / 2 - 0.026), qz = (q % 2 ? -1 : 1) * (D / 2 - 0.026);
-    parts.push(seg(qx - 0.014, qz, qx + 0.014, qz, y3, 1, 480));
-    parts.push(seg(qx, qz - 0.014, qx, qz + 0.014, y3, 1, 480));
-  }
-
-  // ---------- HBM PHY strips down both long edges (accent) ----------
-  var phyX = 0.573, phyW = 0.118, phyZ = 1.34, nPhy = 6, s, i, k, cx, cz, hh;
-  for (s = -1; s <= 1; s += 2) {
-    cx = s * phyX;
-    parts.push(PC.accent(fill(cx, 0, phyW, phyZ, y1, 1, 2100), 0.5));
-    hh = phyZ / nPhy;
-    for (i = 0; i < nPhy; i++) {
-      cz = -phyZ / 2 + hh * (i + 0.5);
-      parts.push(PC.accent(rect(cx, cz, phyW - 0.016, hh - 0.020, y2, 1, 400), 1));
-      for (k = 0; k < 4; k++) {                                                     // PHY macro rows
-        var zz = cz - hh * 0.27 + k * hh * 0.18;
-        parts.push(PC.accent(seg(cx - phyW / 2 + 0.024, zz, cx + phyW / 2 - 0.024, zz, y3, 1, 240), 0.62));
+  // ---------- memory: 6 controllers and their HBM PHY down each long edge ----------
+  var phyW = 2.5, mcW = 1.5;
+  [-1, 1].forEach(function (s) {
+    var xa = s * (W / 2 - phyW), xb = s * (W / 2 - 0.55);          // PHY, hard against the edge
+    for (var m = 0; m < 6; m++) {
+      var z0 = -15.4 + m * 5.15, z1 = z0 + 4.7;
+      add(fill(Math.min(xa, xb), z0, Math.max(xa, xb), z1, 620, 0.34));
+      add(rect(Math.min(xa, xb), z0, Math.max(xa, xb), z1, 30, 0.95));
+      for (var k = 1; k <= 7; k++) {                               // the PHY's repeated lanes
+        add(hline(Math.min(xa, xb) + 0.12, Math.max(xa, xb) - 0.12, z0 + (z1 - z0) * k / 8, 22, 0.42));
       }
-    }
-  }
-  // memory ring bus: a pair of long lines just inboard of each PHY strip
-  for (s = -1; s <= 1; s += 2) {
-    parts.push(seg(s * 0.516, -0.72, s * 0.516, 0.72, y2, 0.6, 300));
-    parts.push(seg(s * 0.506, -0.72, s * 0.506, 0.72, y2, 0.38, 300));
-  }
-
-  // ---------- NVLink / PCIe I/O blocks along the short edges ----------
-  var ioZ = 0.731, ioD = 0.098, nIo = 4, ioW = 0.236;
-  for (s = -1; s <= 1; s += 2) {
-    cz = s * ioZ;
-    for (i = 0; i < nIo; i++) {
-      cx = (i - (nIo - 1) / 2) * (ioW + 0.024);
-      parts.push(fill(cx, cz, ioW - 0.02, ioD - 0.02, y1, 0.34, 150));
-      parts.push(rect(cx, cz, ioW, ioD, y2, 1, 380));
-      for (k = 0; k < 5; k++) {                                                     // SerDes lanes
-        var xx = cx - ioW * 0.28 + k * ioW * 0.14;
-        parts.push(seg(xx, cz - ioD / 2 + 0.016, xx, cz + ioD / 2 - 0.016, y3, 0.8, 260));
-      }
-    }
-  }
-
-  // ---------- corner blocks: PLLs and test structures ----------
-  for (s = -1; s <= 1; s += 2) for (var t2 = -1; t2 <= 1; t2 += 2) {
-    parts.push(fill(s * 0.573, t2 * 0.731, 0.118, 0.098, y1, 0.5, 150));
-    parts.push(rect(s * 0.573, t2 * 0.731, 0.118, 0.098, y2, 1, 380));
-    parts.push(rect(s * 0.573, t2 * 0.731, 0.062, 0.050, y3, 0.85, 320));
-  }
-
-  // ---------- central L2 cache band ----------
-  var l2X = 1.00, l2Slices = 16;
-  [-1, 1].forEach(function (sg) {
-    var zc = sg * 0.0565;                       // two strips either side of the crossbar gap
-    parts.push(fill(0, zc, l2X, 0.097, y1, 0.4, 1100));
-    parts.push(rect(0, zc, l2X, 0.097, y2, 1, 400));
-    for (var j = 1; j < l2Slices; j++) {
-      var x = -l2X / 2 + j * l2X / l2Slices;
-      parts.push(seg(x, zc - 0.0485, x, zc + 0.0485, y3, 1, 340));
+      // the memory controller, inboard of the PHY
+      var xc = s * (W / 2 - phyW - 0.25), xd = s * (W / 2 - phyW - 0.25 - mcW);
+      add(fill(Math.min(xc, xd), z0 + 0.2, Math.max(xc, xd), z1 - 0.2, 240, 0.22));
+      add(rect(Math.min(xc, xd), z0 + 0.2, Math.max(xc, xd), z1 - 0.2, 22, 0.7));
     }
   });
-  // crossbar: fine lines running the width of the die between the two L2 strips
-  for (i = 0; i < 5; i++) {
-    var zc2 = -0.0075 + i * 0.00375;
-    parts.push(seg(-l2X / 2, zc2, l2X / 2, zc2, y2, 0.45, 220));
+
+  // ---------- 8 GPCs of 18 SM tiles, four above the cache band and four below ----------
+  var cx0 = -9.5, cx1 = 9.5;                     // compute region in x
+  var gcW = (cx1 - cx0) / 4, gcD = 10.4;
+  var bands = [[3.5, 13.9], [-13.9, -3.5]];
+  bands.forEach(function (bz) {
+    for (var g = 0; g < 4; g++) {
+      var gx0 = cx0 + g * gcW + 0.22, gx1 = cx0 + (g + 1) * gcW - 0.22;
+      add(rect(gx0, bz[0], gx1, bz[1], 34, 1));                    // GPC outline
+      var tw = (gx1 - gx0 - 0.5) / 3, td = (gcD - 0.7) / 6;
+      for (var a = 0; a < 3; a++) for (var b = 0; b < 6; b++) {
+        var sx0 = gx0 + 0.25 + a * tw + 0.10, sx1 = gx0 + 0.25 + (a + 1) * tw - 0.10;
+        var sz0 = bz[0] + 0.35 + b * td + 0.10, sz1 = bz[0] + 0.35 + (b + 1) * td - 0.10;
+        add(fill(sx0, sz0, sx1, sz1, 46, 0.26));                   // SM tile
+        add(rect(sx0, sz0, sx1, sz1, 24, 0.88));
+        for (var q = 1; q <= 3; q++) {                             // the SM's own rows
+          add(hline(sx0 + 0.08, sx1 - 0.08, sz0 + (sz1 - sz0) * q / 4, 17, 0.40));
+        }
+      }
+    }
+  });
+
+  // ---------- L2 cache: two partitions and the crossbar between them ----------
+  [[-9.5, -0.55], [0.55, 9.5]].forEach(function (lx) {
+    add(fill(lx[0], -2.7, lx[1], 2.7, 900, 0.30));
+    add(rect(lx[0], -2.7, lx[1], 2.7, 34, 1));
+    for (var k = 1; k <= 11; k++) add(hline(lx[0] + 0.15, lx[1] - 0.15, -2.7 + 5.4 * k / 12, 24, 0.44));
+  });
+  add(fill(-0.45, -2.7, 0.45, 2.7, 200, 0.5));                     // crossbar
+  add(rect(-0.45, -2.7, 0.45, 2.7, 26, 0.8));
+  [-1, 1].forEach(function (s) {                                   // cache to memory
+    for (var k = -2; k <= 2; k++) add(hline(s * 9.5, s * (W / 2 - phyW - 1.9), k * 1.05, 26, 0.5));
+  });
+
+  // ---------- host edge: PCI Express, the scheduler, and a row of NVLink ports ----------
+  add(fill(-11.4, 14.35, 11.4, 16.05, 900, 0.32));
+  add(rect(-11.4, 14.35, 11.4, 16.05, 32, 1));
+  for (var k = -5; k <= 5; k++) add(vline(k * 2.0, 14.45, 15.95, 22, 0.42));
+  add(fill(-11.4, 14.0, 11.4, 14.2, 260, 0.5));                    // scheduler strip
+  add(rect(-11.4, 14.0, 11.4, 14.2, 26, 0.85));
+  for (var n = 0; n < 9; n++) {                                    // NVLink ports
+    var nx = -10.4 + n * 2.6;
+    add(fill(nx, 12.15, nx + 2.0, 13.5, 150, 0.3));
+    add(rect(nx, 12.15, nx + 2.0, 13.5, 26, 0.85));
   }
 
-  // ---------- the SM array: 8 columns x 16 rows in two banks, grouped into GPCs ----------
-  var cols = 8, rowsPer = 8, colW = l2X / cols;
-  var bankZ0 = 0.132, bankZ1 = 0.666, rowH = (bankZ1 - bankZ0) / rowsPer;
-  var smW = colW * 0.72, smD = rowH * 0.62;
-  for (var bank = -1; bank <= 1; bank += 2) {
-    // GPC boundary: four two-column groups per bank
-    parts.push(rect(0, bank * (bankZ0 + bankZ1) / 2, l2X, bankZ1 - bankZ0, y2, 1, 420));
-    for (var g = 1; g < 4; g++) {
-      var gx = -l2X / 2 + g * l2X / 4;
-      parts.push(seg(gx, bank * bankZ0, gx, bank * bankZ1, y2, 1, 420));
-      parts.push(seg(gx + 0.004, bank * bankZ0, gx + 0.004, bank * bankZ1, y2, 0.5, 300));
-    }
-    for (var c = 0; c < cols; c++) {
-      cx = (c - (cols - 1) / 2) * colW;
-      for (var r = 0; r < rowsPer; r++) {
-        cz = bank * (bankZ0 + rowH * (r + 0.5));
-        parts.push(rect(cx, cz, smW, smD, y2, 0.9, 340));
-        parts.push(fill(cx, cz - smD * 0.24, smW * 0.66, smD * 0.26, y1, 0.7, 24));   // tensor core
-      }
-      // shared L1 / column bus running from the L2 band out to the end of the bank
-      if (c % 2 === 1) parts.push(seg(cx + colW * 0.5, bank * 0.114, cx + colW * 0.5, bank * bankZ1, y3, 0.55, 240));
-    }
+  // ---------- the die-to-die interface, and a sliver of the die it faces ----------
+  var d0 = -16.15, d1 = -14.25;
+  add(PC.accent(fill(-11.9, d0, 11.9, d1, 3400, 1), 0.30));        // the micro-bump field
+  add(PC.accent(rect(-11.9, d0, 11.9, d1, 40, 1), 1));
+  for (var k2 = 0; k2 < 24; k2++) {
+    add(PC.accent(vline(-11.6 + k2 * 1.0, d0 + 0.18, d1 - 0.18, 26, 1), 0.75));
+  }
+  add(PC.accent(hline(-11.9, 11.9, -13.85, 30, 1), 0.55));         // the bus behind it
+  // the neighbouring die, cut off: its edge, its own interface and one row of tiles
+  var nz1 = -D / 2 - 0.55, nz0 = nz1 - 3.2;
+  add(fill(-W / 2, nz0, W / 2, nz1, 1400, 0.09));
+  add(rect(-W / 2, nz0, W / 2, nz1, 40, 0.7));
+  add(PC.accent(fill(-11.9, nz1 - 1.9, 11.9, nz1, 1500, 1), 0.24));
+  add(PC.accent(rect(-11.9, nz1 - 1.9, 11.9, nz1, 30, 1), 0.7));
+  for (var t = 0; t < 12; t++) {
+    var tx = -9.5 + t * 1.6;
+    add(rect(tx, nz0 + 0.2, tx + 1.25, nz1 - 2.2, 18, 0.45));
   }
 
   return {
     cloud: PC.merge.apply(null, parts),
-    spin: 0.1,
-    tilt: [1.0, -0.35, 0],
-    caption: 'The floorplan of a reticle-sized GPU die, about 26 by 32 mm: 128 streaming-multiprocessor blocks in two banks, a central L2 cache band and crossbar, HBM PHY strips in copper down both long edges, and NVLink and PCIe I/O along the short edges.'
+    spin: 0.11,
+    tilt: [1.02, -0.32, 0],
+    caption: 'The floorplan of a GPU die: 26 by 33 mm, one whole reticle field. ' +
+      '144 compute tiles sit in eight clusters, four above the L2 cache band and four below; ' +
+      'twelve memory controllers and their HBM PHYs run down the two long edges; the PCI Express ' +
+      'interface and the NVLink ports line the top edge. The copper strip along the bottom edge is ' +
+      'the die-to-die interface, and the sliver beyond it is the neighbouring die it talks to.'
   };
 });

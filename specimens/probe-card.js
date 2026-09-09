@@ -69,13 +69,13 @@ PC.register('probe-card', function (p) {
   add(PC.merge.apply(null, pads));
 
   /* ---------------- the stiffener that sets the reference plane ---------------- */
-  var armL = 0.86, armW = 0.13, armH = 0.055, yArm = pcbTop + armH / 2;
+  var armL = 0.86, armW = 0.105, armH = 0.05, yArm = pcbTop + armH / 2;
   for (i = 0; i < 2; i++) {
     var ang = i * Math.PI / 2;
-    add(PC.T(PC.box({ w: armL * 2, h: armH, d: armW, n: 2600, tone: 0.38 }), { rot: [0, -ang, 0], pos: [0, yArm, 0] }));
-    add(PC.T(PC.boxEdges({ w: armL * 2, h: armH, d: armW, perUnit: 300, tone: 0.95 }), { rot: [0, -ang, 0], pos: [0, yArm, 0] }));
+    add(PC.T(PC.box({ w: armL * 2, h: armH, d: armW, n: 1900, tone: 0.28 }), { rot: [0, -ang, 0], pos: [0, yArm, 0] }));
+    add(PC.T(PC.boxEdges({ w: armL * 2, h: armH, d: armW, perUnit: 240, tone: 0.85 }), { rot: [0, -ang, 0], pos: [0, yArm, 0] }));
   }
-  add(PC.T(PC.cylinder({ r: 0.20, h: armH * 1.5, n: 2200, tone: 0.42 }), { pos: [0, pcbTop + armH * 0.75, 0] }));
+  add(PC.T(PC.cylinder({ r: 0.20, h: armH * 1.5, n: 1600, tone: 0.32 }), { pos: [0, pcbTop + armH * 0.75, 0] }));
   add(ring(0.20, pcbTop + armH * 1.5, 420, 1));
   // three levelling screws, the ones that bring every tip into the same plane
   for (i = 0; i < 3; i++) {
@@ -86,21 +86,21 @@ PC.register('probe-card', function (p) {
 
   /* ---------------- the space transformer: multi-layer ceramic ---------------- */
   var ySTc = yST + stH / 2;
-  add(PC.T(PC.box({ w: stW, h: stH, d: stW, faces: ['px', 'nx', 'pz', 'nz'], n: 2400, tone: 0.33 }), { pos: [0, ySTc, 0] }));
-  add(PC.T(PC.boxEdges({ w: stW, h: stH, d: stW, perUnit: 190, tone: 0.92 }), { pos: [0, ySTc, 0] }));
-  for (i = 1; i < 7; i++) add(rect(stW, stW, yST + stH * i / 7, 62, 0.42));
+  add(PC.T(PC.box({ w: stW, h: stH, d: stW, faces: ['px', 'nx', 'pz', 'nz'], n: 1500, tone: 0.22 }), { pos: [0, ySTc, 0] }));
+  add(PC.T(PC.boxEdges({ w: stW, h: stH, d: stW, perUnit: 150, tone: 0.8 }), { pos: [0, ySTc, 0] }));
+  for (i = 1; i < 7; i++) add(rect(stW, stW, yST + stH * i / 7, 52, 0.3));
   // the fan-out: the tester's coarse pitch on top, the die's fine pitch below
-  add(PC.T(PC.dots({ nx: 15, nz: 15, sx: stW * 0.062, sz: stW * 0.062, per: 2, tone: 0.45 }), { pos: [0, yST + stH + 0.002, 0] }));
+  add(PC.T(PC.dots({ nx: 15, nz: 15, sx: stW * 0.062, sz: stW * 0.062, per: 2, tone: 0.35 }), { pos: [0, yST + stH + 0.002, 0] }));
 
   /* ---------------- the probe head: two guide plates and the probes ---------------- */
   [[yLo, tG], [yUp, tG]].forEach(function (g) {
-    add(PC.T(PC.box({ w: gW, h: g[1], d: gW, n: 950, tone: 0.3 }), { pos: [0, g[0] + g[1] / 2, 0] }));
-    add(PC.T(PC.boxEdges({ w: gW, h: g[1], d: gW, perUnit: 210, tone: 0.95 }), { pos: [0, g[0] + g[1] / 2, 0] }));
+    add(PC.T(PC.box({ w: gW, h: g[1], d: gW, n: 700, tone: 0.22 }), { pos: [0, g[0] + g[1] / 2, 0] }));
+    add(PC.T(PC.boxEdges({ w: gW, h: g[1], d: gW, perUnit: 165, tone: 0.85 }), { pos: [0, g[0] + g[1] / 2, 0] }));
   });
   for (i = 0; i < 4; i++) {
     var px = (i < 2 ? -1 : 1) * hW * 0.48, pz = (i % 2 ? -1 : 1) * hW * 0.48;
-    add(seg([px, yLo, pz], [px, yUpTop, pz], 420, 0.7));
-    add(seg([px, yUpTop, pz], [px, yST, pz], 420, 0.55));
+    add(seg([px, yLo, pz], [px, yUpTop, pz], 300, 0.5));
+    add(seg([px, yUpTop, pz], [px, yST, pz], 300, 0.4));
   }
 
   // the probes themselves: an area array over a two-by-two block of dies,
