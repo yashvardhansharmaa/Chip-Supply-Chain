@@ -836,7 +836,10 @@
       if (r.shareNote) facts.push(['Share', esc(r.shareNote)]);
       if (r.founded) facts.push(['Founded', esc(r.founded)]);
       if (r.ownership) facts.push(['Ownership', esc(r.ownership)]);
-      if (r.revenueUSDb != null) facts.push(['Revenue', '$' + (r.revenueUSDb >= 10 ? r.revenueUSDb.toFixed(1) : r.revenueUSDb.toFixed(2)) + 'B' + (r.revenueYear ? ' (' + esc(r.revenueYear) + ')' : '')]);
+      if (r.revenueUSDb != null) {
+        var v = (r.revenueUSDb >= 10 ? r.revenueUSDb.toFixed(1) : r.revenueUSDb.toFixed(2)).replace(/0+$/, '').replace(/\.$/, '');
+        facts.push(['Revenue', '$' + v + 'B' + (r.revenueYear ? ' (' + esc(r.revenueYear) + ')' : '')]);
+      }
       return '<div class="sup-detail-body">' + (r.role ? '<p class="sup-role">' + esc(r.role) + '</p>' : '') +
         (facts.length ? '<dl class="sup-facts">' + facts.map(function (f) { return '<dt>' + f[0] + '</dt><dd>' + f[1] + '</dd>'; }).join('') + '</dl>' : '') +
         (r.source ? '<a class="sup-src" href="' + safeUrl(r.source) + '" target="_blank" rel="noopener">Source for ' + esc(r.name) + '</a>' : '') + '</div>';
@@ -1092,8 +1095,8 @@
       if (!svg || !items.length) return;
       var mast = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--masthead')) || 56;
       var probe = mast + (window.innerWidth >= 900 ? svg.getBoundingClientRect().height : 0) + 26;
-      var at = 0;
-      for (var i = 0; i < items.length; i++) { if (items[i].getBoundingClientRect().top <= probe) at = i; else break; }
+      var at = 0; // the first entry still crossing the reading line: the one the reader is on
+      for (var i = 0; i < items.length; i++) { at = i; if (items[i].getBoundingClientRect().bottom > probe) break; }
       if (at === this.at) return;
       this.at = at;
       var dots = svg.querySelectorAll('.tl-dot'), ring = svg.querySelector('.tl-ring'), d = dots[at];
