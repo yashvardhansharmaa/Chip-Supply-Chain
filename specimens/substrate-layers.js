@@ -35,15 +35,15 @@ PC.register('substrate-layers', function (p) {
   function section(L) {
     var s = [], i, k, u;
     // resin bulk behind everything
-    s.push(PC.T(PC.scatter({ n: Math.round(L * H * 5200), w: L, h: H, d: 0, tone: 0.18 }), { pos: [L / 2, 0, 0] }));
+    s.push(PC.T(PC.scatter({ n: Math.round(L * H * 21000), w: L, h: H, d: 0, tone: 0.18 }), { pos: [L / 2, 0, 0] }));
     // the build-up film: the chokepoint, so the dielectric is the copper colour
     for (k = 1; k <= nb; k++) {
-      var band = PC.scatter({ n: Math.round(L * tb * 7000), w: L, h: tb * 0.86, d: 0 });
+      var band = PC.scatter({ n: Math.round(L * tb * 34000), w: L, h: tb * 0.86, d: 0 });
       s.push(PC.T(PC.accent(band, 0.42), { pos: [L / 2, lay[k] - tb / 2, 0] }));
-      s.push(PC.T(PC.accent(PC.scatter({ n: Math.round(L * tb * 7000), w: L, h: tb * 0.86, d: 0 }), 0.42), { pos: [L / 2, -lay[k] + tb / 2, 0] }));
+      s.push(PC.T(PC.accent(PC.scatter({ n: Math.round(L * tb * 34000), w: L, h: tb * 0.86, d: 0 }), 0.42), { pos: [L / 2, -lay[k] + tb / 2, 0] }));
     }
     // the core: darker, with a hint of the woven glass cloth inside it
-    s.push(PC.T(PC.scatter({ n: Math.round(L * tc * 6000), w: L, h: tc, d: 0, tone: 0.34 }), { pos: [L / 2, 0, 0] }));
+    s.push(PC.T(PC.scatter({ n: Math.round(L * tc * 24000), w: L, h: tc, d: 0, tone: 0.42 }), { pos: [L / 2, 0, 0] }));
     for (i = 0; i < Math.round(L * 46); i++) {
       u = (i + 0.5) * L / Math.round(L * 46);
       [-tc * 0.22, tc * 0.22].forEach(function (yy) {
@@ -55,12 +55,12 @@ PC.register('substrate-layers', function (p) {
     function conductors(sgn) {
       for (k = 0; k <= nb; k++) {
         var y = sgn * lay[k];
-        s.push(seg([0, y, 0], [L, y, 0], 120, 0.28));
+        s.push(seg([0, y, 0], [L, y, 0], k === 0 ? 260 : 120, k === 0 ? 0.55 : 0.28));
         u = 0.004;
         while (u < L - 0.004) {
           var w = 0.004 + PC.rnd() * (k === 0 ? 0.05 : 0.028);
           if (u + w > L - 0.004) break;
-          s.push(seg([u, y, 0], [u + w, y, 0], 700, 1));
+          s.push(seg([u, y, 0], [u + w, y, 0], 560, 1));
           u += w + 0.004 + PC.rnd() * 0.02;
         }
       }
@@ -68,32 +68,32 @@ PC.register('substrate-layers', function (p) {
     conductors(1); conductors(-1);
     // solder resist, top and bottom
     [1, -1].forEach(function (sg) {
-      s.push(PC.T(PC.scatter({ n: Math.round(L * tr * 6500), w: L, h: tr, d: 0, tone: 0.42 }), { pos: [L / 2, sg * (lay[nb] + tr / 2), 0] }));
+      s.push(PC.T(PC.scatter({ n: Math.round(L * tr * 22000), w: L, h: tr, d: 0, tone: 0.42 }), { pos: [L / 2, sg * (lay[nb] + tr / 2), 0] }));
       s.push(seg([0, sg * top, 0], [L, sg * top, 0], 460, 0.95));
     });
     // plated through-holes: copper barrels straight through the core, with the
     // pads that cap them at both ends
-    var np = Math.max(3, Math.round(L * 13));
+    var np = Math.max(3, Math.round(L * 9));
     for (i = 0; i < np; i++) {
       u = (i + 0.5) * L / np + (PC.rnd() - 0.5) * 0.01;
       var hw = 0.0062;
-      s.push(seg([u - hw, -cTop, 0], [u - hw, cTop, 0], 620, 0.95));
-      s.push(seg([u + hw, -cTop, 0], [u + hw, cTop, 0], 620, 0.95));
-      s.push(seg([u - hw * 2.6, cTop, 0], [u + hw * 2.6, cTop, 0], 620, 1));
-      s.push(seg([u - hw * 2.6, -cTop, 0], [u + hw * 2.6, -cTop, 0], 620, 1));
+      s.push(seg([u - hw, -cTop, 0], [u - hw, cTop, 0], 560, 0.82));
+      s.push(seg([u + hw, -cTop, 0], [u + hw, cTop, 0], 560, 0.82));
+      s.push(seg([u - hw * 2.6, cTop, 0], [u + hw * 2.6, cTop, 0], 560, 0.9));
+      s.push(seg([u - hw * 2.6, -cTop, 0], [u + hw * 2.6, -cTop, 0], 560, 0.9));
     }
     // microvias: laser-drilled, tapered, one per build-up layer, some stacked in
     // a column and some staggered as they climb
-    var nv = Math.max(4, Math.round(L * 11));
+    var nv = Math.max(4, Math.round(L * 8));
     for (i = 0; i < nv; i++) {
       var u0 = (i + 0.5) * L / nv, stacked = (i % 3 !== 0);
       [1, -1].forEach(function (sg) {
-        var uu = u0;
-        for (k = 1; k <= nb; k++) {
+        var uu = u0, climb = 2 + Math.floor(PC.rnd() * (nb - 1));
+        for (k = 1; k <= climb; k++) {
           if (!stacked) uu += (k % 2 ? 1 : -1) * 0.011;
           var yl = sg * lay[k - 1], yh = sg * lay[k];
-          s.push(seg([uu - 0.0058, yh, 0], [uu - 0.0030, yl, 0], 700, 0.9));
-          s.push(seg([uu + 0.0058, yh, 0], [uu + 0.0030, yl, 0], 700, 0.9));
+          s.push(seg([uu - 0.0058, yh, 0], [uu - 0.0030, yl, 0], 560, 0.7));
+          s.push(seg([uu + 0.0058, yh, 0], [uu + 0.0030, yl, 0], 560, 0.7));
         }
       });
     }
@@ -146,7 +146,7 @@ PC.register('substrate-layers', function (p) {
   }
   var sw = 0.82, sd = 0.53, yT = top + 0.003;
   add(cut(PC.T(PC.polyline({ pts: [[-sw / 2, 0, -sd / 2], [sw / 2, 0, -sd / 2], [sw / 2, 0, sd / 2], [-sw / 2, 0, sd / 2]], closed: true, perUnit: 360, tone: 1 }), { pos: [0, yT, 0] })));
-  add(cut(PC.T(PC.dots({ nx: 54, nz: 35, sx: sw / 55, sz: sd / 36, per: 2, tone: 0.62 }), { pos: [0, yT, 0] })));
+  add(cut(PC.T(PC.dots({ nx: 46, nz: 30, sx: sw / 47, sz: sd / 31, per: 2, tone: 0.58 }), { pos: [0, yT, 0] })));
   var caps = [];
   for (var q = 0; q < 30; q++) {
     var cu = (q - 14.5) * (W * 0.94 / 30);

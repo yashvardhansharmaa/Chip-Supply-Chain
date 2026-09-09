@@ -71,7 +71,7 @@ PC.register('process-chamber', function (p) {
 
   var yMid = (yTop + yBot) / 2, yLid = yTop + wall, yFlo = yBot - wall;
   add(PC.T(cut(PC.cylinder({ r: rO, h: yLid - yFlo, caps: false, n: 9000, tone: 0.36 })), { pos: [0, (yLid + yFlo) / 2, 0] }));
-  add(PC.T(cut(PC.cylinder({ r: rI, h: yTop - yBot, caps: false, n: 5200, tone: 0.15 })), { pos: [0, yMid, 0] }));
+  add(PC.T(cut(PC.cylinder({ r: rI, h: yTop - yBot, caps: false, n: 4200, tone: 0.115 })), { pos: [0, yMid, 0] }));
   add(face(rI, rO, yFlo, yLid, 0.6));                                    // the wall, sectioned
   add(cut(PC.T(PC.disc({ r: rO, rIn: 0.105, n: 3600, tone: 0.3 }), { pos: [0, yFlo, 0] })));
   add(cut(PC.T(PC.disc({ r: rO, rIn: 0.105, n: 2000, tone: 0.16 }), { pos: [0, yBot, 0] })));
@@ -120,7 +120,7 @@ PC.register('process-chamber', function (p) {
 
   /* ---------- electrostatic chuck, focus ring, wafer ---------- */
 
-  var pedR = 0.170, yPed = yWaf - 0.004, pedH = 0.066;
+  var pedR = 0.170, yPed = yWaf - 0.005, pedH = 0.088;
   add(cut(PC.T(PC.cylinder({ r: pedR, h: pedH, caps: false, n: 1700, tone: 0.32 }), { pos: [0, yPed - pedH / 2, 0] })));
   add(face(0, pedR, yPed - pedH, yPed - 0.014, 0.5));                    // aluminium base plate
   add(face(0, pedR, yPed - 0.014, yPed, 0.8));                           // the ceramic puck
@@ -134,10 +134,10 @@ PC.register('process-chamber', function (p) {
   }
   add(cut(PC.T(PC.disc({ r: 0.185, rIn: wafR + 0.004, n: 1300, tone: 0.45 }), { pos: [0, yPed + 0.005, 0] })));
   add(cut(PC.T(PC.circle({ r: 0.185, perUnit: 480, tone: 1 }), { pos: [0, yPed + 0.005, 0] })));
-  add(cut(PC.T(PC.circle({ r: wafR + 0.004, perUnit: 420, tone: 0.9 }), { pos: [0, yPed + 0.005, 0] })));
+  add(cut(PC.T(PC.circle({ r: wafR + 0.004, perUnit: 260, tone: 0.7 }), { pos: [0, yPed + 0.005, 0] })));
   add(face(wafR + 0.004, 0.185, yPed, yPed + 0.010, 0.7));
   add(cut(PC.T(PC.disc({ r: wafR, n: 2400, tone: 0.34 }), { pos: [0, yWaf, 0] })));
-  add(cut(PC.T(PC.circle({ r: wafR, perUnit: 620, tone: 1 }), { pos: [0, yWaf + 0.001, 0] })));
+  add(cut(PC.T(PC.circle({ r: wafR, perUnit: 420, tone: 1 }), { pos: [0, yWaf + 0.001, 0] })));
   add(cutLine(wafR, yWaf + 0.001, 1));
   add(cut(PC.T(PC.cylinder({ r: 0.072, h: 0.150, caps: false, n: 1200, tone: 0.28 }), { pos: [0, yPed - pedH - 0.075, 0] })));
   add(face(0.058, 0.072, yFlo, yPed - pedH, 0.55));
@@ -175,6 +175,14 @@ PC.register('process-chamber', function (p) {
   add(PC.T(PC.polyline({ pts: dv, perUnit: 420, tone: 0.6 }), { pos: [0, yWaf + svH * 1.7, 0] }));
   add(PC.T(PC.polyline({ pts: dv, perUnit: 420, tone: 0.6 }), { pos: [0, yWaf - svH * 1.7, 0] }));
   for (k = 0; k < dv.length; k += 6) add(PC.line({ a: [dv[k][0], yWaf - svH * 1.7, dv[k][2]], b: [dv[k][0], yWaf + svH * 1.7, dv[k][2]], perUnit: 300, tone: 0.45 }));
+
+  // viewport and gauge port in the standing wall
+  var vpA = AC + Math.PI * 1.32, vpRy = Math.PI / 2 - vpA;
+  add(PC.T(PC.circle({ r: 0.042, perUnit: 520, tone: 0.9 }), { rot: [Math.PI / 2, vpRy, 0], pos: [rO * Math.cos(vpA), 0.075, rO * Math.sin(vpA)] }));
+  add(PC.T(PC.circle({ r: 0.029, perUnit: 400, tone: 0.6 }), { rot: [Math.PI / 2, vpRy, 0], pos: [rO * Math.cos(vpA), 0.075, rO * Math.sin(vpA)] }));
+  var gpA = AC + Math.PI * 0.72, gpRy = Math.PI / 2 - gpA;
+  add(PC.T(PC.cylinder({ r: 0.020, h: 0.070, caps: false, n: 300, tone: 0.4 }), { rot: [Math.PI / 2, gpRy, 0], pos: [(rO + 0.035) * Math.cos(gpA), 0.100, (rO + 0.035) * Math.sin(gpA)] }));
+  add(PC.T(PC.circle({ r: 0.030, perUnit: 460, tone: 0.9 }), { rot: [Math.PI / 2, gpRy, 0], pos: [(rO + 0.070) * Math.cos(gpA), 0.100, (rO + 0.070) * Math.sin(gpA)] }));
 
   /* ---------- gate valve and turbopump ---------- */
 
