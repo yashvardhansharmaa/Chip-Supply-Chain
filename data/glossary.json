@@ -10,21 +10,21 @@
     "term": "accelerator",
     "aka": "AI accelerator, XPU",
     "plain": "A chip built to do the one kind of arithmetic machine learning needs, multiplying large grids of numbers, far faster than a general-purpose processor can. Nvidia's graphics processors, Google's Tensor Processing Units and Amazon's Trainium are all accelerators.",
-    "why": "Accelerators are the product this entire supply chain exists to deliver, and the unit that export licences are granted or refused for.",
+    "why": "Accelerators are what the whole supply chain is for, and the unit that export licences are granted or refused for.",
     "chapter": "introduction-and-goals"
   },
   {
     "term": "advanced packaging",
     "aka": "2.5D packaging, 3D packaging",
     "plain": "The steps that assemble several finished chips into one component, sitting side by side or stacked, wired together closely enough to behave like a single larger chip. Ordinary packaging only puts one chip into a protective case with contacts on the bottom.",
-    "why": "It is the second tightest bottleneck in the chain after lithography, and in 2025 it, not transistor supply, was what limited how many AI accelerators could be built.",
+    "why": "The second tightest bottleneck in the chain after lithography, and in 2025 it rather than transistor supply limited how many AI accelerators could be built.",
     "chapter": "advanced-packaging"
   },
   {
     "term": "ALD",
     "aka": "atomic layer deposition",
     "plain": "A way of coating a chip roughly one atomic layer at a time. Each pulse of gas sticks to the surface and then stops once the surface is covered, so the film ends up the same thickness on the floor and on the walls of a hole hundreds of times deeper than it is wide.",
-    "why": "It is the step that makes stacked memory and wrap-around transistors possible, US export rules name it directly, and it is the one tool category where Chinese suppliers still hold under 1 percent of the market.",
+    "why": "ALD is what makes stacked memory and wrap-around transistors possible. US export rules name it directly, and it is the one tool category where Chinese suppliers still hold under 1 percent of the market.",
     "chapter": "deposition-and-etch"
   },
   {
@@ -66,7 +66,7 @@
     "term": "capex",
     "aka": "capital expenditure",
     "plain": "Money a company spends on long-lived physical assets such as buildings, machines and servers, as distinct from salaries and other running costs.",
-    "why": "The five largest cloud companies spent $448 billion of capex in 2025 and have guided to roughly $660 to $690 billion in 2026, which is the demand signal every firm in this chain plans against.",
+    "why": "The five largest cloud companies spent $448 billion of capex in 2025 and have guided to roughly $660 to $690 billion in 2026, and that is the number every firm in this chain plans against.",
     "chapter": "data-centers-and-power"
   },
   {
@@ -80,7 +80,7 @@
     "term": "chokepoint",
     "aka": "",
     "plain": "A step in the supply chain where so few firms or countries can do the work that losing one of them stops everybody. The term comes from Georgetown's Center for Security and Emerging Technology, which mapped the chip industry segment by segment to find the ones with only one or two suppliers.",
-    "why": "Chokepoints are where policy has leverage, and where a single sanction, factory fire or earthquake propagates to the whole industry.",
+    "why": "Chokepoints are where policy gets purchase, and where one sanction or one factory fire reaches the whole industry.",
     "chapter": "introduction-and-goals"
   },
   {
@@ -122,7 +122,7 @@
     "term": "DUV",
     "aka": "deep ultraviolet",
     "plain": "Chipmaking light with a wavelength of 248 or 193 nanometres, produced by a gas laser. Flooding the gap above the wafer with ultrapure water bends the light further and sharpens the printed image, which is called immersion.",
-    "why": "Immersion DUV is the most advanced lithography China can currently buy or build, which is exactly where Dutch export licensing draws its line.",
+    "why": "Immersion DUV is the most advanced lithography China can currently buy or build, which is where Dutch export licensing draws its line.",
     "chapter": "lithography"
   },
   {
@@ -136,7 +136,7 @@
     "term": "EDA",
     "aka": "electronic design automation, chip design software",
     "plain": "The software that turns a description of what a chip should do into the exact pattern of shapes to be printed on silicon, and proves the result will work before anyone commits money to masks and wafers.",
-    "why": "Three vendors sell every complete design flow used at the leading edge, which is why cutting China off from them in May 2025 took three letters and no lead time at all.",
+    "why": "Three vendors sell every complete design flow used at the leading edge, which is why cutting China off from them in May 2025 took three letters and no lead time.",
     "chapter": "design-and-eda"
   },
   {
@@ -192,7 +192,7 @@
     "term": "FLOPS",
     "aka": "floating point operations per second; a TFLOPS is a trillion of them",
     "plain": "A count of how many arithmetic operations on decimal numbers a chip can perform each second, the way horsepower counts an engine's output. One teraflop, written TFLOPS, is a trillion operations per second.",
-    "why": "It is the standard unit of AI compute and the basis of export thresholds, but it is only comparable between chips when the number format behind it is stated.",
+    "why": "The standard unit of AI compute and the basis of export thresholds, but only comparable between chips when the number format behind it is stated.",
     "chapter": "introduction-and-goals"
   },
   {
@@ -220,7 +220,7 @@
     "term": "gate-all-around",
     "aka": "GAA, nanosheet transistor, RibbonFET at Intel",
     "plain": "A transistor in which the controlling gate surrounds the channel that current flows through, rather than touching three sides as a fin does. Surrounding it gives the gate total authority, so the switch still turns fully off as dimensions shrink.",
-    "why": "It is the transistor of the 2 nanometre generation, only TSMC, Intel and Samsung can build it in volume, and it is what drives new demand for atomic layer deposition and sideways etching tools.",
+    "why": "The transistor of the 2 nanometre generation. Only TSMC, Intel and Samsung can build it in volume, and it is what drives new demand for atomic layer deposition and sideways etching tools.",
     "chapter": "transistors-and-front-end"
   },
   {
@@ -241,7 +241,7 @@
     "term": "HBM",
     "aka": "high bandwidth memory",
     "plain": "A stack of eight to sixteen memory chips, drilled through with copper columns and mounted a few millimetres from the processor so data reaches the arithmetic units far faster than it could across a motherboard. A single HBM chip moves data roughly thirty times faster than an ordinary memory chip.",
-    "why": "It is the most expensive line on an AI accelerator's bill of materials, all of it comes from three firms, and their entire 2026 output was sold forward before the year began.",
+    "why": "The most expensive line on an AI accelerator's bill of materials. All of it comes from three firms, and their entire 2026 output was sold forward before the year began.",
     "chapter": "memory-and-hbm"
   },
   {
@@ -262,7 +262,7 @@
     "term": "hyperscaler",
     "aka": "",
     "plain": "One of the handful of companies that run data centres at global scale and buy computing hardware by the gigawatt: Amazon, Microsoft, Google, Meta and, on most definitions, Oracle.",
-    "why": "Their combined capital spending, guided at roughly $660 to $690 billion for 2026, is the single demand number that the entire chip supply chain plans against.",
+    "why": "Their combined capital spending is guided at roughly $660 to $690 billion for 2026, most of it committed years before the hardware exists.",
     "chapter": "data-centers-and-power"
   },
   {
@@ -289,7 +289,7 @@
   {
     "term": "license exception",
     "aka": "licence exception",
-    "plain": "A written carve-out in export rules that lets a shipment go ahead without applying for an individual licence, provided it meets stated conditions. It is permission granted in advance to a whole category rather than to one transaction.",
+    "plain": "A written carve-out in export rules that lets a shipment go ahead without applying for an individual licence, provided it meets stated conditions.",
     "why": "Exceptions are how a control regime is tuned without rewriting it, and the December 2024 US rules used one to reward allied countries that adopt equivalent national controls.",
     "chapter": "geopolitics"
   },
@@ -304,7 +304,7 @@
     "term": "lithography",
     "aka": "photolithography",
     "plain": "Printing a circuit pattern onto a wafer by shining light through a patterned plate and projecting a shrunken image of it onto a light-sensitive coating. It is photography at the scale of nanometres, repeated once for every layer of the chip.",
-    "why": "It is the most concentrated stage in the whole chain, and the resolution a country can reach sets the ceiling on every chip it can make.",
+    "why": "The most concentrated stage in the chain, and the resolution a country can reach sets the ceiling on every chip it can make.",
     "chapter": "lithography"
   },
   {
@@ -324,7 +324,7 @@
   {
     "term": "multipatterning",
     "aka": "double patterning, quadruple patterning, self-aligned quadruple patterning",
-    "plain": "Printing a single chip layer using two, three or four separate plates and etching steps, because one exposure cannot resolve features that close together. It is the workaround for not having sharper light.",
+    "plain": "Printing a single chip layer using two, three or four separate plates and etching steps, because one exposure cannot resolve features that close together. It is what a fab does when it cannot get sharper light.",
     "why": "It is how China reaches advanced processes without extreme ultraviolet machines, taking roughly 34 lithography steps where nine would do, which is the direct source of its yield and cost penalty.",
     "chapter": "lithography"
   },
@@ -346,7 +346,7 @@
     "term": "NVLink",
     "aka": "",
     "plain": "Nvidia's private high-speed connection between its own accelerators, carrying up to 3,600 gigabytes per second per chip so that dozens of them can act as one. No other vendor sells a switch with comparable bandwidth.",
-    "why": "It is a genuine single-vendor chokepoint inside an otherwise competitive systems layer, which is precisely what the industry's UALink standard was created to break.",
+    "why": "It is a genuine single-vendor chokepoint inside an otherwise competitive systems layer, which is what the industry's UALink standard was created to break.",
     "chapter": "systems-and-networking"
   },
   {
@@ -360,7 +360,7 @@
     "term": "OSAT",
     "aka": "outsourced semiconductor assembly and test",
     "plain": "A contract firm that takes finished wafers, cuts them into chips, seals the chips into packages and tests them. It is the back end of chipmaking, done for hire.",
-    "why": "It is a low-margin business at 14 to 20 percent, four of the ten largest firms are Chinese, and its tools sit largely outside the export control lines drawn around lithography and advanced deposition.",
+    "why": "A low-margin business at 14 to 20 percent. Four of the ten largest firms are Chinese, and its tools sit largely outside the export control lines drawn around lithography and advanced deposition.",
     "chapter": "test-and-assembly"
   },
   {
@@ -429,7 +429,7 @@
   {
     "term": "scale-out network",
     "aka": "back-end network, cluster fabric",
-    "plain": "The network that joins thousands of accelerator groups into one cluster, running at hundreds of gigabits per second over Ethernet or InfiniBand. It is ordinary data centre networking, done at extraordinary scale.",
+    "plain": "The network that joins thousands of accelerator groups into one cluster, running at hundreds of gigabits per second over Ethernet or InfiniBand. The technology is ordinary data centre networking; the scale is not.",
     "why": "Ethernet has taken more than two thirds of this market from InfiniBand, which moved the value to merchant switch chips and to the optical modules that carry the traffic.",
     "chapter": "systems-and-networking"
   },
@@ -450,7 +450,7 @@
   {
     "term": "small yard, high fence",
     "aka": "",
-    "plain": "The stated design of US technology controls: restrict the narrow set of items that genuinely decide national security and leave the rest of the trade alone. The yard is what gets fenced in, and the fence is how hard it is to climb.",
+    "plain": "The stated design of US technology controls: restrict the narrow set of items that genuinely decide national security and leave the rest of the trade alone.",
     "why": "Whether the yard has stayed small is the standard test of whether export controls remain targeted security policy or have become general industrial policy.",
     "chapter": "geopolitics"
   },
@@ -472,14 +472,14 @@
     "term": "TPP",
     "aka": "total processing performance",
     "plain": "The measure US export rules use for a chip's computing power: operations per second multiplied by the number of bits in each operation. It replaced an earlier test based on how fast chips could talk to one another.",
-    "why": "It is the real dividing line for sales to China, with control starting at 4,800 and case-by-case licensing capped near 21,000, so accelerator designs are now shaped around a regulatory formula.",
+    "why": "The real dividing line for sales to China: control starts at 4,800 and case-by-case licensing is capped near 21,000, so accelerator designs are now shaped around a regulatory formula.",
     "chapter": "geopolitics"
   },
   {
     "term": "TPU",
     "aka": "Tensor Processing Unit",
     "plain": "Google's own AI chip, designed in-house rather than bought from Nvidia and used only inside Google's own data centres and cloud service. The seventh generation is called Ironwood.",
-    "why": "It is the leading proof that a large buyer can build a real alternative to merchant chips, with Google claiming a total cost per chip about 44 percent below the Nvidia server it replaces.",
+    "why": "The clearest evidence that a large buyer can build a real alternative to merchant chips, with Google claiming a total cost per chip about 44 percent below the Nvidia server it replaces.",
     "chapter": "design-and-eda"
   },
   {

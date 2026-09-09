@@ -75,7 +75,7 @@ A transistor is a valve on a pipe. Current runs along a silicon channel, and a v
 
 That leak is short-channel leakage. It has three fixes:
 
-- **Better insulator.** Electrically thicker without being physically thicker: Intel's hafnium high-k dielectric at 45 nm in 2007 ([source](https://www.intel.com/pressroom/archive/releases/2007/20070128comp.htm)).
+- **Better insulator.** Physically thicker, so it leaks less, yet electrically as thin as the oxide it replaced: Intel's hafnium high-k dielectric at 45 nm in 2007 ([source](https://www.intel.com/pressroom/archive/releases/2007/20070128comp.htm)).
 - **More gate.** Wrap gate metal around more sides of the channel, as fins and nanosheets do.
 - **Thinner channel.** Thin it so the drain's field has nowhere to hide.
 
