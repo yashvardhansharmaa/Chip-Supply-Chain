@@ -598,3 +598,130 @@ Every replacement URL above was opened and read before it was cited. WebFetch wa
 (`pib.gov.in`, `pubs.usgs.gov`) the same URL was fetched with curl and, for the USGS PDF, the text extracted locally.
 Sources that could not be read at all and were therefore not used: `semiengineering.com`, `semiconductors.org`,
 `blog.semi.org`, `businesswire.com`, `investindia.gov.in`, `ism.gov.in`, and every JavaScript-rendered SUMCO IR page.
+
+---
+
+## 09 — Transistors and the Front End
+
+**Before:** 1,326 body words, 21 sources, **3 Tier D** on the old tier list (`semiconductorx.com`, `blog.aifutures.org`, `techspot.com`).
+**After:** 1,094 body words (17.5% removed), 16 sources, **0 disallowed, 0 unclassified** under the strict policy of 9 September 2026.
+
+The old-policy pass was done first and reached D 0 on the old tiers. The strict policy landed mid-task and
+re-disallowed SemiWiki, EE Times, EE Times Asia, TrendForce, Tom's Hardware, TechInsights, patsnap and
+Isaiah Research, so the chapter was re-sourced a second time onto TSMC's, Intel's and imec's own pages plus
+SemiAnalysis, Nikkei and CSIS. Front matter parses; `plain` is 91 words and byte-identical to the first
+paragraph under "How it works"; em-dash count 6, all in Key evaluation criteria.
+
+### Replacements
+
+| Fact | Old source (tier) | New source (tier) | What changed |
+|---|---|---|---|
+| 2 nm flow runs ~95 mask layers, ~16 weeks in the fab | semiconductorx.com/front-end-fabrication-overview.html (D) | — | **Deleted.** No allowed source states either number. |
+| SMIC testing a domestic 28 nm-class immersion prototype | blog.aifutures.org (D) | reuters.com (B) | Kept the Reuters line already in the chapter: a Shanghai state firm building immersion scanners in 2026 at single-digit volumes |
+| Chinese EUV prototype has produced EUV light | blog.aifutures.org (D) → trendforce.com (B, then disallowed) | csis.org (A) | Replaced the prototype-status claim with CSIS: **$43 billion announced for domestic EUV**, and EUV "firmly out of reach despite massive state investment" |
+| Domestic 7 nm DUV mid-2030s, 5 nm EUV late-2030s | blog.aifutures.org (D) | — | **Deleted.** A single forecaster's dates; no allowed source carries them |
+| N2 density 313 / 238 / 231 MTr/mm2 | techspot.com (D) → tomshardware.com (C, then disallowed) | tsmc.com HPC advanced technologies (A) | Figure `density-by-node` **rebuilt**: TSMC's own node-over-node density gains, N2P 1.2x logic and 1.15x chip over N3E, A16 up to 1.10x chip over N2P. The cross-foundry comparison is gone; the chapter now says plainly that no foundry publishes a comparable figure |
+| N2 vs N3E: 10-15% speed, 25-30% power, ~15% density | semiwiki.com (C, then disallowed) | tsmc.com HPC advanced technologies (A) | Corrected to TSMC's published **N2P vs N3E: 18% speed, 36% power, 1.2x logic density** |
+| A16 vs N2P: 8-10% speed, 15-20% power, 8-10% density | semiwiki.com (C, then disallowed) | tsmc.com HPC advanced technologies (A) | Density corrected to **up to 1.10x chip density**, TSMC's own wording |
+| Backside power, general benefit | — | newsletter.semianalysis.com (B) | Added: **15-20% power improvement** on high-performance designs |
+| SRAM bit cell 0.021 → 0.0175 um2, N5 to N2 | semiwiki.com (C, then disallowed) | newsletter.semianalysis.com (B) | Replaced with **TSMC's claimed 22% SRAM density gain from N3E to N2, which comes from the periphery, not the bit cell**. Figure `sram-bitcell` removed with its marker and front-matter entry per the strict policy's figure rule |
+| Copper resistivity 1.7 microhm-cm below 40 nm width; ruthenium wins at 10-17 nm | patsnap.com (C, then disallowed) | imec-int.com semi-damascene (A) and imec 16 nm Ru press release (A) | Rewritten to imec's framing: barrier, liner and cap eat the line **below a 20 nm metal pitch**, and imec has demonstrated **ruthenium lines at 16 nm pitch** |
+| Rubin on TSMC's 3 nm family | isaiahresearch.com (B-other, then disallowed) | — | **Deleted.** Blackwell's 4NP, cited to Nvidia, carries the point |
+| N2 wafer ~$30,000 vs ~$20,000 at N3; TrendForce's $25-27k and +10-20% | eetasia.com and trendforce.com (both disallowed) | — | **Deleted**, with the paragraph. Card `costSignal` rewritten to the one cost signal that is public: TSMC's density gain per node step falling from 1.2x at N2P to about 1.1x at A16 |
+| 7 nm needs 34 DUV litho steps vs nine EUV; SMIC yields below 50%; Big Fund III 344bn yuan | eetimes.com (disallowed) | asia.nikkei.com (B) for the fund | Litho-step and yield numbers **deleted**. The fund is now **344 billion yuan, about $47 billion, May 2024**, from Nikkei Asia |
+| TSMC roadmap figure rows | trendforce.com (B, then disallowed) | pr.tsmc.com/english/news/3302 (A) and /3228 (A) | Figure `node-roadmap` rebuilt from TSMC's own 2026 symposium release. The unsupported **A16-in-2027 row was dropped**; N2U, A14, A13 and A12 rows now match TSMC's stated years and figures |
+
+### Removals
+
+- The mask-layer and cycle-time sentence, the wafer-price paragraph, the Rubin-node clause, and the
+  China litho-step and yield numbers, all for want of an allowed source.
+- Figure `sram-bitcell`, with its `{{figure:sram-bitcell}}` marker and front-matter entry.
+
+---
+
+## 10 — Foundries and Fabs
+
+**Before:** 1,339 body words, 18 sources, **2 Tier D** on the old list (`creating-nanotech.com`, `semiconductorx.com`); **12 disallowed** under the strict policy.
+**After:** 1,141 body words (14.8% removed), 12 sources, **0 disallowed, 0 unclassified**.
+
+The chapter had been built on a market-share number and a capex number that only analysts publish. It is now
+built on TSMC's own manufacturing pages and SEC filing, SMIC's own annual results, Intel's own releases,
+Samsung's own Taylor page, SEMI and BCG. The argument is stronger for it: instead of "TSMC has 73 percent of
+pure-foundry revenue", the chapter now opens on TSMC's own definition of a gigafab and the fact that all six
+of them are in Taiwan. Front matter parses; `plain` is 94 words and byte-identical; em-dash count 6, all in
+Key evaluation criteria.
+
+### Replacements
+
+| Fact | Old source (tier) | New source (tier) | What changed |
+|---|---|---|---|
+| Installed capacity by region, 2025 | creating-nanotech.com (D) | semi.org press release, 18 June 2024 (A) | Same numbers, verified at source: **China 10.1M wpm, Taiwan 5.8, Korea 5.4, Japan 4.7, Americas 3.2, Europe and Mideast 2.7, SE Asia 1.8, world 33.7M**. Figure `capacity-by-region` re-sourced |
+| Leading-edge line costs $15-25bn, four to six years to build | semiconductorx.com/fabs-leading-edge.php (D) | bcg.com (A) | Replaced with BCG's **ten-year cost of ownership of $35-43 billion for a fab completed in 2026**, a third to two thirds above one finished three years earlier. Card `costSignal` and the matching criteria bullet updated |
+| Fab tool set is "many hundreds of machines, fifteen or more EUV scanners" | semiconductorx.com (D) | — | **Deleted.** No allowed source gives a per-fab EUV count |
+| Fab 18 cleanroom ~160,000 m2, ~$20bn, gigafab above 100k wafer starts | asianometry.com (disallowed) | tsmc.com/dedicatedFoundry/manufacturing/gigafab (A) | Replaced with TSMC's own definition and totals: a **GIGAFAB runs more than 100,000 300 mm wafers a month; six of them; combined output above 13 million 12-inch equivalent wafers in 2025**, against **more than 17 million across everything TSMC manages** (fab_capacity page, A). This is now the chapter's lead |
+| TSMC 73% of pure-foundry revenue, 2Q26 | counterpointresearch.com (disallowed) | sec.gov TSMC 2Q26 results (A) | **Deleted as a share number.** Figure `foundry-share` rebuilt as **TSMC wafer revenue by node, 2Q26: 2 nm 3%, 3 nm 30%, 5 nm 33%, 7 nm 11%**, from the SEC filing |
+| Top-10 foundry revenue, 4Q25 | trendforce.com presscenter (disallowed) | — | Figure `foundry-revenue` **removed** with its marker and front-matter entry. No allowed source publishes a comparable ranking |
+| TSMC 2026 capex $60-64bn; $100bn US on top of $165bn | semiwiki.com (disallowed) | pr.tsmc.com/english/news/3210 (A) | Capex guidance **deleted**. US investment corrected to TSMC's own wording: **$165 billion total, $100 billion added in March 2025 to $65 billion in Phoenix, for three fabs, two packaging plants and an R&D centre** |
+| SMIC 2025 revenue, utilisation, capacity | trendforce.com (disallowed) | smics.com annual results (A) | Verified at source and slightly corrected: **revenue up 16.2% to $9.327bn, gross margin 21.0%, utilisation 93.5%, monthly capacity above 1 million 8-inch equivalent wafers**. The "1.059 million" figure is not in SMIC's release, so it is gone |
+| Mature-node vendor revenues, 4Q25 | trendforce.com (disallowed) | semi.org (A) | Section rewritten around SEMI's **12.7 million wafers a month of foundry capacity by 2026**, growth led by China |
+| Arizona Fab 2 3 nm in 2H27, Tainan 1H27, Kumamoto 2028; N3 150k → 180k wpm; A16 customer queue | trendforce.com (disallowed) | pr.tsmc.com (A) | All **deleted**. The TSMC US press release carries the investment; per-fab schedules and wafer-start ramps have no allowed source |
+| Arizona premium 5-20%, up to 30% at 4 nm | eetasia.com (disallowed) | — | **Deleted** |
+| Samsung Taylor building Tesla AI5 on 2 nm, 2H27 | electrek.co (disallowed) | semiconductor.samsung.com Taylor page (A) | Replaced with Samsung's own commitment: **a minimum $17 billion, $6bn buildings and $11bn equipment**, for leading-edge and mature logic. The Tesla claim is gone |
+| TSMC 8.4% of Taiwan's electricity, 23.7% by 2030 | taipeitimes.com (disallowed) | — | **Deleted.** TSMC's ESG pages could not be read (403 to WebFetch, Cloudflare block to the browser), so nothing was cited in their place. The "Power" bullet is now labelled as our judgment, with no number |
+
+---
+
+## 11 — Memory and HBM
+
+**Before:** 1,334 body words, 21 sources, **2 Tier D** on the old list (`finance.yahoo.com`, `earningscall.ai`); **12 disallowed** under the strict policy.
+**After:** 1,070 body words (19.8% removed), 14 sources, **0 disallowed, 0 unclassified**.
+
+Almost every number in this chapter came from TrendForce, Counterpoint or Tom's Hardware. It has been rebuilt
+on JEDEC, SK hynix's newsroom, Micron's product pages, Nvidia, Siemens EDA, the Federal Register, Purdue and
+SemiAnalysis. The market-share and DRAM-price material is gone; the physics, the standard and the control are
+better sourced than before. Front matter parses; `plain` is 101 words and byte-identical; em-dash count 6, all
+in Key evaluation criteria.
+
+### Replacements
+
+| Fact | Old source (tier) | New source (tier) | What changed |
+|---|---|---|---|
+| Micron committed its whole calendar 2026 HBM supply; HBM TAM $35bn 2025 → $100bn 2028 | earningscall.ai (D) | — | Verified on TrendForce (B at the time) and CNBC, then **deleted** when both became disallowed. Micron's own 10-Q and FQ1 26 press release do not carry either statement; the prepared-remarks PDF redirects. The chapter now says only that HBM is sold forward |
+| Jensen Huang confirmed all three passed Vera Rubin certification, June 2026 | finance.yahoo.com (D) | — | Verified on `en.sedaily.com` (B at the time), then **deleted** when that became disallowed. Replaced by SK hynix's own statement that it expects **roughly 70 percent of Rubin HBM4 in 2026** |
+| HBM revenue share 2Q26: SK hynix 50%, Samsung 33%, Micron 18% | counterpointresearch.com (disallowed) | — | **Deleted**, with the SK-hynix-slipping-from-57% narrative. Figure `hbm-share` removed with its marker and front-matter entry. No allowed source publishes vendor share |
+| DDR5 die 8 GB/s vs HBM3E die 256 GB/s; HBM needs 3x wafer area and 5x price per bit; memory ~90% of package silicon; compute scaling 3x/2yr vs bandwidth under 2x | tomshardware.com (disallowed) | micron.com/products/memory/hbm (A) | Replaced with Micron's own framing: **an HBM cube presents a 1,024-bit interface across 32 channels, sixteen times wider than a standard DDR5 module**. The area and price ratios have no allowed source and are gone, including from the card `costSignal` |
+| DRAM prices +93-98% QoQ in 1Q26, then +58-63%; $97bn DRAM market; Samsung 38.5% / SK hynix 28.8% / Micron 22.4%; HP's build-cost jump | trendforce.com and tomshardware.com (disallowed) | — | **Deleted**, and the "Price, contracts and the DRAM shortage" section folded into "Who makes it". The qualitative point that HBM wafers displace commodity DRAM survives without the price series |
+| Nvidia demanded above 10 Gb/s for Rubin | trendforce.com (disallowed) | news.skhynix.com HBM4 completion (A) | Replaced with SK hynix's own **over 10 Gb/s per pin against JEDEC's 8**, announced 12 September 2025 |
+| Micron HBM4 above 11 Gb/s, over 2.8 TB/s per stack | tomshardware.com (disallowed) | micron.com/products/memory/hbm/hbm4 (A) | Same numbers, from Micron's own product page |
+| SK hynix HBM4 base dies built by TSMC on 12 nm, 3-4x the cost of core dies, Intel evaluated for HBM4E | trendforce.com (disallowed) | news.skhynix.com TSMC partnership (A) | Reduced to what SK hynix states: it **adopts TSMC's foundry process for the HBM4 base die**. The cost multiple and the Intel evaluation are gone |
+| TSV thinning to ~50 microns; Samsung thermal compression vs SK hynix single reflow; 775-micron ceiling raised from 720; hybrid bonding ruled out for HBM4E | tomshardware.com (disallowed) | news.skhynix.com hybrid bonding tech note (A) and HBM4 release (A) | Rebuilt on SK hynix's own material: **height rises from 720 to 775 micrometres starting with HBM4**, **Advanced MR-MUF** is the joining process, and **hybrid bonding cuts bond pitch from about 20 micrometres to under 1** with full adoption expected only at **HBM4E or HBM5, past twenty layers**. The 50-micron thinning figure is gone |
+| Samsung HBM4 yield under 60% at launch, ~80% by August 2026 | trendforce.com (disallowed) | — | **Deleted.** The criteria bullet on stack yield now makes the structural point without a number |
+| Micron Hiroshima 1.5 trillion yen expansion | trendforce.com (disallowed) | — | **Deleted.** Micron's English-language release for the Hiroshima cleanroom could not be verified in time |
+| CXMT HBM3 mass production 2026, XMC at ~3,000 wpm | tomshardware.com (disallowed) | — | **Deleted.** The China paragraph is now explicitly our judgment, naming CXMT without a production figure |
+| Foreign direct product rule extension | cov.com (disallowed) | federalregister.gov (A) | Folded into the existing Federal Register citation, which contains the rule itself |
+| JEDEC HBM4 publication date | jedec.org (A) | jedec.org (A) | Kept. "16 April 2025" softened to "April 2025", the month the release supports |
+
+---
+
+## Verification notes for chapters 09, 10 and 11
+
+Every new URL above was opened and read before it was cited, with WebFetch as the default. Where a host
+refused WebFetch, the same page was read through the browser tool: `semi.org` (403 to WebFetch) and
+`tomshardware.com` were both read that way during the intermediate pass.
+
+Sources that could not be read at all, and were therefore not cited: `reuters.com` (blocked to this agent, so
+the one pre-existing Reuters URL in chapter 09 was left in place but could not be re-verified here),
+`esg.tsmc.com` and `investors.micron.com` static-file PDFs (403 or redirect to the IR landing page),
+`cnbc.com`, `techinsights.com` library assets, and `library.techinsights.com`.
+
+No new domains needed adding to `data/source-tiers.json`: every domain cited across the three chapters was
+already classified, and the build reports 0 unclassified for all three.
+
+**Note on the policy change.** These chapters were first taken to D 0 against the tier list as it stood at the
+start of the task (Tiers A/B/C allowed, Tier D never). Commit `c7fc8ef`, "Strict source policy: Tier A plus
+SemiAnalysis, Reuters, FT and Nikkei only", landed mid-task and re-disallowed TrendForce, Counterpoint,
+TechInsights, SemiWiki, EE Times, Tom's Hardware and every other trade title. All three chapters were then
+re-sourced a second time against the strict list, which is what the tables above record. The strict policy's
+rule 3, that a figure whose data cannot be rebuilt from allowed sources is removed with its marker and
+front-matter entry, cost three figures: `sram-bitcell` in 09, `foundry-revenue` in 10 and `hbm-share` in 11.
+Each of the three chapters keeps two figures, all markers present and all front-matter entries matching.

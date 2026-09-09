@@ -121,9 +121,9 @@ The equipment vendors are the constraint. GE Vernova, Siemens Energy, Hitachi En
 
 ## Capacity and demand
 
-{{figure:us-dc-electricity}}
-
 US data centers used 176 TWh in 2023, 4.4% of national electricity, and Lawrence Berkeley National Laboratory projects 325 to 580 TWh by 2028, between 6.7% and 12% of the total ([source](https://newscenter.lbl.gov/2025/01/15/berkeley-lab-report-evaluates-increase-in-electricity-demand-from-data-centers/)). The EIA expects national electricity use to rise 1% in 2026 and 3% in 2027, the fourth straight annual increase and the strongest four-year run since 2000 ([source](https://www.eia.gov/pressroom/releases/press582.php)). Supply is not growing at data center speed.
+
+{{figure:us-dc-electricity}}
 
 Chip efficiency keeps the low case plausible: Google's Ironwood TPU delivers twice the performance per watt of its predecessor ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)). Energy per token falls; total energy still rises, because token volume rises faster.
 

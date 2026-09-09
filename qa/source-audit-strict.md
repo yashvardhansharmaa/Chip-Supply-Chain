@@ -273,3 +273,99 @@ Tier A: `gao.gov`, `files.gao.gov`, `miti.gov.my`. Already listed and used uncha
 ### Verification notes
 
 Every replacement URL was read before it was cited. WebFetch was the default. Three hosts refuse it and were read another way: SEC EDGAR and the TSMC transcript PDF with a declared user agent through curl (the Nvidia 10-Qs, the Nvidia 8-K and the SK hynix 424B4 were read in full and the quoted sentences extracted from the filing text), and RAND likewise. One page, the Commerce statement on UAE and Saudi chip exports, sits behind Cloudflare and returns 403 to both WebFetch and curl; its text was confirmed through search against commerce.gov itself and matches the figure recorded independently in `qa/research-notes-gulf-sea-smuggling.md`. No Reuters, FT or Nikkei page is cited in this chapter: the two candidates found (Reuters on Big Fund III, Reuters on state data centres) either could not be resolved to a canonical URL or carried no number in the headline.
+
+---
+
+# Chapter 15 — Systems and Networking
+
+Words before 1,114 / after 1,160. Sources 15 → 21. Build: `D 0, ? 0`. Figures 3 → 2.
+
+## Replacements
+
+| Claim | Old source (disallowed) | New source (allowed) | What changed |
+|---|---|---|---|
+| Tomahawk 6 Davisson cuts optical interconnect power ~70%, >3.5x better than pluggables | globenewswire.com syndication | broadcom.com/company/news/product-releases/63626 | Same numbers, now the vendor's own page. Dropped the "16 co-packaged 6.4 Tbps optical engines" detail: it is not on Broadcom's own page. |
+| UALink 1.0: 200 Gbps per lane, up to 1,024 accelerators, ratified April 2025, backed by AMD, Intel, Meta, AWS, Google, Microsoft | sdxcentral.com | ualinkconsortium.org (spec overview) | Number confirmed as 200 Gb/s per lane and "up to 1024 endpoints"; added the four-lane 800 Gb/s station. Dropped the ratification date and the backer list, which the consortium page does not state. |
+| Ultra Ethernet standardised lossless, congestion-aware behaviour | asserted, no citation | ultraethernet.org (UEC 1.0 launch) | Now dated: specification 1.0 published June 2025. |
+| Foxconn, Quanta and Wistron each cleared NT$1 trillion (~US$32B) of 2025 revenue | digitimes.com | honhai.com FY2025 & 4Q25 results | Number replaced: Foxconn group revenue NT$8.1 trillion in 2025, up 18%, cloud and networking among the drivers. The per-ODM NT$1 trillion trio claim is gone; no allowed source carries it. |
+| "US regulators drafted import restrictions in 2026" (optical modules) | caixinglobal.com | docs.fcc.gov FCC-26-50, Third Report and Order, adopted 22 July 2026 | Claim narrowed to what the order actually does: bars new authorisations for devices containing logic-bearing components from Covered List firms, with optical transceivers named in the record as such a component. |
+| Ethernet won scale-out | delloro.com | broadcom.com (Tomahawk 4/5/6) + ultraethernet.org | Rebuilt as a mechanism, not a market share: switch capacity 25.6 → 51.2 → 102.4 Tbps, plus the UEC 1.0 stack. |
+| Nvidia sells both fabrics | — | sec.gov Nvidia 10-Q, quarter ended 26 Apr 2026 | New citation: $75.2B Data Center quarter "driven by the ramp of our Blackwell 300 products and demand for our InfiniBand, Spectrum-X Ethernet, and NVLink solutions". |
+| Nvidia put $2B each into Coherent and Lumentum, March 2026 | futurumgroup.com | nvidianews.nvidia.com (Lumentum and Coherent releases) | Same $2B + $2B, now from Nvidia's own newsroom. Coherent's 8-K exhibit on sec.gov corroborates. |
+| Indium phosphide is the narrow input | futurumgroup.com | pubs.usgs.gov Mineral Commodity Summaries 2026, indium | Different number, better claim: China accounts for about 70% of world indium production. |
+| InnoLight/Eoptolink offshore assembly in Thailand (2019/2020) | caixinglobal.com | innolight.com/about and eoptolink.com/about-us/contacts | InnoLight's Thai plant, established 2019, confirmed on its own site alongside Suzhou and Taiwan; Eoptolink's Rayong and Chonburi sites confirmed on its own contacts page. The 2020 date for Eoptolink is dropped. |
+
+## Deletions
+
+- **Ethernet took more than two-thirds of AI back-end switch revenue in 2025 (67/33).** Dell'Oro only. Figure `ai-fabric-share` removed with its `{{figure:ai-fabric-share}}` marker, front-matter entry and keyFact. No filing, regulator, standards body or Tier B source publishes this split.
+- **Celestica led AI back-end Ethernet switching in Q1 2026, ahead of Nvidia, Arista and Cisco.** Dell'Oro only; deleted with the sentence.
+- **InnoLight and Eoptolink supply more than 60% of 800G-and-above optical modules; Chinese firms hold seven of the top ten supplier slots.** Caixin citing LightCounting. Figure `optics-800g-share` removed with its marker, front-matter entry and keyFact; `card.chinaStatus` and the InnoLight leader line rewritten. Reuters covered the US draft ban but no Reuters headline or Google News RSS snippet states a share figure, so the strict rule blocks it. CSIS's silicon-photonics work carries no share number either.
+- **"Transceiver demand exceeded supply by roughly a factor of two in early 2026."** Futurum only. Deleted from keyFacts, the "Who makes it" paragraph and the takeaway; the Nvidia investment and the USGS indium concentration now carry the argument.
+- **"Whether those fabs ramp inside 18 to 24 months."** Unsourced editorial number in the body; removed. The 18-24 month estimate survives only in `card.substitution.why`, which is labelled site analysis.
+
+## Addition
+
+New figure `switch-bandwidth`: Broadcom Tomahawk 4 (25.6 Tbps), 5 (51.2), 6 (102.4), each from Broadcom's own product release, replacing one of the two removed figures.
+
+---
+
+# Chapter 16 — Data Centers and Power
+
+Words before 1,106 / after 1,196. Sources 15 → 14. Build: `D 0, ? 0`. Figures 3 → 3.
+
+## Replacements
+
+| Claim | Old source (disallowed) | New source (allowed) | What changed |
+|---|---|---|---|
+| Substation-class transformers take 75 to 110 weeks, ~2.5x pre-pandemic, no relief before 2028 | terrapincg.com | energy.gov, *Large Power Transformer Resilience: Report to Congress*, July 2024 | **Numbers changed.** 36-month lead times commonly quoted, worst cases 60 months, against under a year before the pandemic. Added that 82% of units put into US service in 2019 were imported. |
+| Medium-voltage switchgear 52-80 weeks, large diesel generators 50-78 weeks | terrapincg.com | none found | Bullet deleted (see Deletions). |
+| GE Vernova has ~100 GW of gas turbines under contract, ~20% data centers, ~10 GW of slots left across 2029-30 | power-eng.com | sec.gov, GE Vernova Q2 2026 press release | **Numbers changed.** Gas equipment backlog and slot reservations grew from 100 GW to 116 GW; output 20 GW/yr in 2026, 24 GW in 2028, 30 GW in 2030; data center orders over $5B year to date, more than double all of 2025. The "20% tied to data centers" and "10 GW of slots left" figures are gone. |
+| ERCOT had >438 GW of proposed large loads in June 2026, ~89% data centers, against 5.9 GW energised | datacenterfrontier.com | ercot.com, President and CEO update to the Texas Senate Committee on Business & Commerce, 29 July 2026; and ERCOT Large Load Interconnection Status Update, 13 March 2026 | **Numbers changed.** ~474 GW of large loads seeking interconnection as of June 2026, ~90% data centers; 9,042 MW had received Approval to Energize. The ratio the chapter turns on survives at roughly fifty to one. |
+| Crane Clean Energy Center: 835 MW restart under a 20-year Microsoft agreement targeting 2027 | datacenterfrontier.com | constellationenergy.com; energy.gov loan article | **Number changed.** 835 MW and the Microsoft PPA confirmed; the plant shut in 2019 and is restarting on a $1B DOE loan closed November 2025, still subject to NRC approval. The 2027 date and the 20-year term are dropped: neither Constellation's nor DOE's release states them. |
+| Five largest US AI spenders plan $660-690B of capex in 2026 | futurumgroup.com | epoch.ai, hyperscaler capex trend | **Numbers changed.** Alphabet, Amazon, Meta, Microsoft and Oracle spent $448.3B in 2025 and are on a trend that reaches $770B in 2026. Figure `hyperscaler-capex` rebuilt from Epoch's per-company 2025 actuals (Amazon 137.5, Microsoft 88.0, Alphabet 83.1, Meta 72.5, Oracle 40.6) instead of Futurum's 2026 guidance midpoints. |
+| National generation grows 1.7% in 2026 | utilitydive.com | eia.gov press release 582, 13 January 2026 | **Number changed.** US electricity use grows 1% in 2026 and 3% in 2027, the fourth straight rise and the strongest four-year run since 2000. |
+| Rack power by generation: ~150 kW GB300, ~225 kW VR200, ~660 kW Rubin Ultra in 2H27 | trendforce.com | developer.nvidia.com, 800 VDC architecture | **Numbers changed.** Nvidia's own figures: today's 54 VDC racks hit physical limits past about 200 kW; the 800 VDC architecture is drawn for 100 kW to over 1 MW, with megawatt racks from 2027. The GB300 NVL72's 142 kW stays on docs.nvidia.com. |
+| Liquid cooling is fragmented (~$3B market, Vertiv leading, CoolIT/nVent/Boyd/Aaon behind) | delloro.com | blogs.nvidia.com, gigawatt AI factories | **Number deleted, claim kept.** Nvidia names nine firms supplying data center power and cooling for its gigawatt reference designs; nine sellers is the fragmentation argument without a market-size estimate. |
+
+## Deletions
+
+- **Data center construction cost: $7.7M/MW in 2020, $10.7M in 2025, $11.3M forecast for 2026, plus up to $25M/MW for an AI fit-out.** JLL only, and no filing, regulator or Tier B source publishes a cost-per-megawatt series. Deleted from keyFacts, from `card.costSignal` (replaced with the transformer and turbine lead-time signal), from the body and from the "Key evaluation criteria" bullet, which now reads on transformer and turbine lead time instead. The section heading "Capacity and cost" is now "Capacity and demand", because the cost half of it no longer exists.
+- **Switchgear and generator lead times.** Terrapin only; bullet removed and replaced with a firm-new-generation bullet built on the Crane restart.
+- **Figure `rack-power`** removed with its `{{figure:rack-power}}` marker, front-matter entry and keyFact: the 150/225/660 kW series is TrendForce's and Nvidia publishes no rack wattage for Rubin generations.
+
+## Addition
+
+New figure `turbine-output`: GE Vernova annual gas turbine output, 20 GW (2026), 24 GW (2028), 30 GW (2030), from its Q2 2026 release on sec.gov.
+
+---
+
+# Chapter 17 — Component Costs
+
+Words before 1,335 / after 1,299. Sources 26 → 21. Build: `D 0, ? 0`. Figures 3 → 3. The BOM table and the compressibility table both survive intact on Epoch AI, company filings and SemiAnalysis.
+
+## Replacements
+
+| Claim | Old source (disallowed) | New source (allowed) | What changed |
+|---|---|---|---|
+| TSMC N2 near $30,000 and N3 at $25,000-27,000 per wafer, October 2025 | trendforce.com | epoch.ai B200 cost breakdown | **Numbers deleted, bullet rebuilt.** The wafer-price bullet now says TSMC does not publish the price and no allowed source does either, and gives Epoch's modelled $17,000 for Blackwell's 4NP. Added Epoch's other two assumptions (two ~800 mm2 chiplets, 40-70% die yield centred on 60) as a keyFact so the model is auditable. |
+| Bernstein puts a Vera Rubin NVL72 rack as high as $9.1M; memory near 29% of VR200 BOM against the 20% Nvidia prefers; HBM4 at $53/GB by 2027; Nvidia halved Vera SOCAMM capacity, cutting the LPDDR5X bill from $1.2M to $586,000 | trendforce.com (relaying Bernstein) | inferencex.semianalysis.com, Vera Rubin NVL72 vs GB200 NVL72, 23 July 2026 | **All four numbers deleted.** Replaced with the one public Rubin cost figure from an allowed source: total cost of ownership of $3.57 per GPU-hour against $1.84 for GB200 and $2.36 for GB300 in the operator case. |
+| TrendForce expects HBM contract prices to rise by multiples in 2027 because the three suppliers reprice annually | trendforce.com | none needed | Sentence rewritten to make the structural point without the forecast: three firms make HBM, they sell every stack they build, and Micron's own gross margin (already cited from its filings) is the evidence. |
+| 2025 semiconductor revenue $809B; 2026 forecast $1.6T; memory alone $837B, 54% of the industry against 27% a year earlier | gartner.com | wsts.org and semiconductors.org | **Numbers changed.** WSTS forecast $772B for 2025, SIA counted $791.7B; WSTS puts 2026 at $975B with memory and logic each growing more than 30%. The memory-specific $837B and the 54%/27% share pair are gone: no allowed source publishes a memory-only industry total. |
+
+## Deletions
+
+- **$55B advanced packaging market (Yole).** Deleted from the body and from figure `market-2025`. SEMI publishes assembly and packaging *equipment* billings ($6.0B in 2025), which is a different quantity and cannot stand in.
+- **$23.8B of optical transceivers (LightCounting).** Deleted from the body and from figure `market-2025`.
+- **"When a vendor redesigns a product to buy less of a component, that component is the chokepoint."** The observation rested entirely on the SOCAMM-halving story, which has no allowed source; deleted with it. This is the sharpest thing the chapter loses.
+- Figure `market-2025` kept but rebuilt with four bars instead of six: semiconductor sales 792 (SIA), hyperscaler capex 448 (Epoch AI), Nvidia data centre revenue 194 (Nvidia FY2026), semiconductor equipment 135 (SEMI). Source label and URL updated from Gartner to SIA.
+- `card.costSignal` no longer carries "up to $9.1M for a Vera Rubin NVL72 rack"; it now reads on the B200 build cost and the $2,900 HBM line, both from Epoch AI.
+
+## Verification notes for all three chapters
+
+`sec.gov`, `investors.micron.com`, `ir.appliedmaterials.com`, `pr.tsmc.com`, `semi.org` and `investors.broadcom.com` all return 403 to curl but serve the fetcher; every one of those pages was read and its figures confirmed. The DOE transformer report and the two ERCOT decks are PDFs the fetcher returns as binary; all three were downloaded and read with `pymupdf`, and the quoted phrases ("36-month lead times being commonly quoted", "approximately 474 GW of Large Loads seeking interconnection, of which ~90% are data centers", "Of the 9042 MW that have received Approval to Energize") are verbatim. The FCC Third Report and Order was read the same way. `pubs.usgs.gov` refuses the fetcher; the indium figure was confirmed from search results quoting the 2026 Mineral Commodity Summaries indium page, and the URL itself returns 200.
+
+Reuters is not fetchable. Two Reuters items were found that bear on chapter 15 — "EXCLUSIVE: Trump administration drafting ban on Chinese data center devices, sources say" (4 August 2026) and "China's control over indium phosphide exports threatens AI data centre rollout" (11 June 2026) — but neither headline nor RSS snippet carries a number, and the underlying claims are now covered by the FCC order and USGS respectively, so neither was cited.
+
+## Domains added to `data/source-tiers.json` under A
+
+`ualinkconsortium.org` and `ultraethernet.org` (standards bodies), `fcc.gov` (regulator; covers `docs.fcc.gov`), `energy.gov` and `eia.gov` (US government), `ercot.com` (the Texas system operator, cited here only for its own reports to the Texas Senate under PUCT oversight), `honhai.com` and `constellationenergy.com` (company investor materials). `investors.broadcom.com` and `pubs.usgs.gov` were already covered by existing entries.
