@@ -112,7 +112,7 @@ Leading-edge 300 mm wafers rest on know-how that was never written down rather t
 
 The last increase in wafer size, to 300 mm, happened in 2002 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). Bigger discs make printing a bigger share of the bill: photolithography takes half the cost of processing a 300 mm wafer against a quarter of a 150 mm one ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). The push to 450 mm never reached production, and every leading-edge chip is still made on 300 mm.
 
-AI accelerators make the wafer's job harder. One fatal defect ruins far more silicon on a GPU die that fills a whole printed field than on a small chip, and extreme-ultraviolet printing has almost no depth of focus to give (see Lithography), so flatness has to hold everywhere on the disc rather than on average.
+AI accelerators make the wafer's job harder. One fatal defect ruins far more silicon on a GPU die that fills a whole printed field than on a small chip, and extreme-ultraviolet printing has almost no depth of focus to give (see [Lithography](#lithography)), so flatness has to hold everywhere on the disc rather than on average.
 
 ## Key evaluation criteria
 

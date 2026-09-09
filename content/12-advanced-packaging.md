@@ -105,7 +105,7 @@ TSMC's SoIC and Intel's Foveros bond dies face to face, copper pad to copper pad
 
 ### The escape routes
 
-Panel-level packaging swaps the round wafer for a rectangular panel and wastes far less area; see Test and assembly. JEDEC published SPHBM4 on 13 July 2026: HBM4 memory on a base chip carrying 512 data signals instead of 2,048, which spaces the connections widely enough to mount the stack on a standard resin substrate, taking the memory off the silicon interposer altogether ([source](https://www.jedec.org/news/pressreleases/new-jedec%C2%AE-sphbm4-standard-enables-hbm4-class-bandwidth-organic-substrates)).
+Panel-level packaging swaps the round wafer for a rectangular panel and wastes far less area; see [Test and assembly](#test-and-assembly). JEDEC published SPHBM4 on 13 July 2026: HBM4 memory on a base chip carrying 512 data signals instead of 2,048, which spaces the connections widely enough to mount the stack on a standard resin substrate, taking the memory off the silicon interposer altogether ([source](https://www.jedec.org/news/pressreleases/new-jedec%C2%AE-sphbm4-standard-enables-hbm4-class-bandwidth-organic-substrates)).
 
 ## Capacity
 
@@ -129,7 +129,7 @@ The tools are a narrower chokepoint than the assembly houses.
 
 - **Thermocompression bonding.** Pressing dies together under heat and force. ASMPT's advanced packaging revenue reached $532.1 million in 2025, with the bonder line up about 146 percent; it targets 35 to 40 percent of a market it puts at $1.6 billion by 2028 ([source](https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/)).
 - **Hybrid bonding.** Solder disappears and copper pads meet directly. Applied Materials built its Kinex bonder with Besi, which makes the placement head ([source](https://www.appliedmaterials.com/eu/en/product-library/kinex-integrated-die-to-wafer-hybrid-bonding-system.html)).
-- **Grinding and dicing.** Disco dominates the steps that thin wafers and cut packages apart; see Test and assembly ([source](https://newsletter.semianalysis.com/p/disco-corporation-the-world-leader)).
+- **Grinding and dicing.** Disco dominates the steps that thin wafers and cut packages apart; see [Test and assembly](#test-and-assembly) ([source](https://newsletter.semianalysis.com/p/disco-corporation-the-world-leader)).
 
 America is building, slowly. TSMC's Arizona commitment reached $265 billion in July 2026 and covers two advanced packaging plants alongside 10 fabs ([source](https://www.azcommerce.com/news-events/news/2026/7/tsmc-announcement/)). Amkor broke ground in Peoria in October 2025 on a $7 billion campus, backed by up to $407 million of CHIPS money, producing from early 2028 ([source](https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced)), and Wei confirms it will open before TSMC's own two do ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf)).
 
@@ -151,7 +151,7 @@ Each generation on TSMC's roadmap asks more of the interposer.
 - **Warpage control** — the expansion mismatch between die, bridge, interposer and substrate that broke early CoWoS-L and gets harder as packages grow ([source](https://semianalysis.com/2024/08/04/nvidias-blackwell-reworked-shipment/)).
 - **HBM stacks supported** — about 20 on the 14-reticle package due in 2028 ([source](https://pr.tsmc.com/english/news/3302)).
 - **Bonder throughput** — thermocompression and hybrid bonding place one die at a time, slowly, and three or four firms hold the tools ([source](https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/)).
-- **Substrate size** — a 14-reticle interposer needs a resin substrate that will not warp under it, which pushes ABF build-up film to its limits; see Substrates and PCBs.
+- **Substrate size** — a 14-reticle interposer needs a resin substrate that will not warp under it, which pushes ABF build-up film to its limits; see [Substrates and PCBs](#substrates-and-pcbs).
 
 ## Takeaways
 

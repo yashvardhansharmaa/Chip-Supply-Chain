@@ -115,7 +115,7 @@ What cannot be replaced that fast sits underneath the assembly.
 
 - **Indium phosphide laser capacity.** The shortage is in material and fab space: Nvidia's answer was to buy into two laser makers rather than place a bigger order ([source](https://nvidianews.nvidia.com/news/nvidia-and-coherent-announce-strategic-partnership-to-develop-optics-technology-to-scale-next-generation-data-center-architecture)), and the indium under it is 70% Chinese ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-indium.pdf)).
 - **NVSwitch.** Nobody else sells a scale-up switch of NVLink's bandwidth to all comers, which is what UALink exists to change ([source](https://ualinkconsortium.org/blog/ualink-200g-1-0-specification-overview-802/)).
-- **High-layer-count circuit boards.** The boards, and the low-loss laminate they are built from, are concentrated in Taiwan and Japan; see Substrates and PCBs.
+- **High-layer-count circuit boards.** The boards, and the low-loss laminate they are built from, are concentrated in Taiwan and Japan; see [Substrates and PCBs](#substrates-and-pcbs).
 
 Optical module assembly is a separate case: concentrated, but not technically hard. Where the modules get built follows cost and policy, and it can change in a year or two.
 

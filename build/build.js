@@ -270,6 +270,54 @@ function plainBox(html, plain, ctx) {
   html = html.replace(/<p>([\s\S]*?)<\/p>/g, (whole, inner) => { if (!done && key && norm(inner).slice(0, 60) === key) { done = true; return ''; } return whole; });
   return { html, box: `<div class="plain"><span class="label">In plain terms</span><p>${inline(plain, ctx)}</p></div>` };
 }
+/* ---------------- glossary terms in the prose ----------------
+   The first time a chapter uses a glossary term, it is wrapped in a button the runtime hangs a
+   definition popover on. Headings, links, code, citation marks, figures and the card are left alone. */
+const glossary = readJSON(path.join(root, 'data', 'glossary.json'), []);
+const GL_SKIP = /^(a|code|sup|button|svg|figure|h1|h2|h3|h4|h5|h6|dt|dd)$/i;
+const glVariants = (() => {
+  const canon = new Set(glossary.map((g) => String(g.term).toLowerCase()));
+  const map = new Map();
+  glossary.forEach((g) => map.set(String(g.term).toLowerCase(), g.term));
+  glossary.forEach((g) => String(g.aka || '').split(/,\s*/).forEach((a) => {
+    a = a.trim();
+    // some aka fields carry a gloss rather than an alternate name ("singular of dice", "for example N2 or 18A")
+    if (!a || a.includes(';') || /^(part of|singular of|when |for example|also )/i.test(a)) return;
+    if (canon.has(a.toLowerCase()) || map.has(a.toLowerCase())) return;
+    map.set(a.toLowerCase(), g.term);
+  }));
+  return [...map.entries()].map(([v, term]) => ({ v, term })).sort((a, b) => b.v.length - a.v.length);
+})();
+const glRE = glVariants.length
+  ? new RegExp('(?<![A-Za-z0-9])(' + glVariants.map((t) => t.v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+')).join('|') + ')(?![A-Za-z0-9])', 'gi')
+  : null;
+const glTermOf = new Map(glVariants.map((t) => [t.v, t.term]));
+function glossaryWrap(html) {
+  if (!glRE) return html;
+  const used = new Set();
+  const wrapText = (text) => text.split(/(&[a-zA-Z#][a-zA-Z0-9]*;)/).map((part, i) => {
+    if (i % 2) return part; // an HTML entity: leave it whole
+    return part.replace(glRE, (match) => {
+      const term = glTermOf.get(match.toLowerCase().replace(/\s+/g, ' '));
+      if (!term || used.has(term)) return match;
+      used.add(term);
+      return `<button type="button" class="gl-term" data-term="${esc(term.toLowerCase())}">${match}</button>`;
+    });
+  }).join('');
+  let out = '', last = 0, m, depth = 0;
+  const tag = /<(\/?)([a-zA-Z][\w-]*)\b[^>]*?(\/?)>/g;
+  while ((m = tag.exec(html))) {
+    const text = html.slice(last, m.index);
+    out += depth ? text : wrapText(text);
+    out += m[0];
+    last = tag.lastIndex;
+    if (GL_SKIP.test(m[2]) && !m[3]) depth += m[1] ? -1 : 1;
+    if (depth < 0) depth = 0;
+  }
+  out += depth ? html.slice(last) : wrapText(html.slice(last));
+  return out;
+}
+
 // The reading spine: the numbered chapters, then the geopolitics essay, which sits on its own route.
 const chapterHref = (c) => (c.id === 'geopolitics' ? '#/geopolitics' : '#' + esc(c.id));
 function prevNext(ch) {

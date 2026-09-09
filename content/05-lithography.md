@@ -82,7 +82,7 @@ Every transistor in an AI accelerator gets its shape from a machine one company 
 
 Lithography prints the pattern of a circuit onto the chip. It is photography, shrunk: the machine holds a stencil of one layer up to a lamp and projects it, four times smaller, onto a silicon wafer coated in a light-sensitive film. Finer circuits need shorter wavelengths, and the shortest light now in use is absorbed by air and by glass, so the machine runs in a vacuum and every lens has to be a mirror. Only one company has ever built such a machine, and it is Dutch, which is why export controls on advanced chipmaking run through one firm.
 
-The stencil is a photomask, the film is photoresist, the machine is a scanner (see Photomasks and pellicles).
+The stencil is a photomask, the film is photoresist, the machine is a scanner (see [Photomasks and pellicles](#photomasks-and-pellicles)).
 
 Resolution follows one relation: the finest feature a scanner can print is a process factor times its wavelength, divided by the numerical aperture, which is how wide a cone of light the optics gather. A wider cone prints finer, and a denser medium widens it, so ASML floods the gap above the wafer with ultrapure water and reaches an aperture of 1.35 on its deep ultraviolet systems ([source](https://www.asml.com/en/technology/lithography-principles/lenses-and-mirrors)).
 

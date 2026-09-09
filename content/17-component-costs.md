@@ -90,7 +90,7 @@ The 192 GB of high-bandwidth memory beside those dies, sold as HBM3E, is the sin
 
 ### Packaging, substrate and test
 
-CoWoS-L, the TSMC process that mounts dies and memory on one carrier and wires them together, adds about $1,100, more than the logic dies it carries ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Packaging yield runs 65 to 95 percent, and a package that fails after the memory goes on throws away the dies and the memory with it, adding roughly $1,000 to every B200 that ships ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Substrate, board, test and assembly add $480 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). See Advanced packaging for why that capacity binds first.
+CoWoS-L, the TSMC process that mounts dies and memory on one carrier and wires them together, adds about $1,100, more than the logic dies it carries ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Packaging yield runs 65 to 95 percent, and a package that fails after the memory goes on throws away the dies and the memory with it, adding roughly $1,000 to every B200 that ships ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Substrate, board, test and assembly add $480 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). See [Advanced packaging](#advanced-packaging) for why that capacity binds first.
 
 ### The B200 bill of materials
 

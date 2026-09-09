@@ -10,10 +10,6 @@
   var hoverable = !window.matchMedia || matchMedia('(hover: hover)').matches;
   var root = null, map = null, bound = false;
 
-  function pick(sel, cc) {
-    return $$(sel, root).filter(function (el) { return el.getAttribute('data-cc') === cc; });
-  }
-
   function selectCountry(cc, fromMap) {
     if (!cc || !$('.sa-panel[data-cc="' + cc + '"]', root)) return;
     if (map) map.setAttribute('data-cc', cc);

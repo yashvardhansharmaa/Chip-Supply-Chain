@@ -122,7 +122,7 @@ Node names describe nothing physical. SMIC's N+3, sold as 5 nm-class, sets its n
 
 AI accelerators sit a node behind the leading edge: a die that large comes out working only on a process that has run for years. Blackwell uses a custom TSMC 4NP ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)).
 
-SRAM, the fast memory on the logic die, is the scaling failure that hurts AI chips most. TSMC claims 22 percent more SRAM density from N3E to N2, but the gain comes from the circuits around the array rather than from the cell that holds one bit ([source](https://newsletter.semianalysis.com/p/clash-of-the-foundries)), which is much of why accelerators push their memory off the die. See Memory and HBM.
+SRAM, the fast memory on the logic die, is the scaling failure that hurts AI chips most. TSMC claims 22 percent more SRAM density from N3E to N2, but the gain comes from the circuits around the array rather than from the cell that holds one bit ([source](https://newsletter.semianalysis.com/p/clash-of-the-foundries)), which is much of why accelerators push their memory off the die. See [Memory and HBM](#memory-and-hbm).
 
 ## The chokepoint
 
@@ -130,7 +130,7 @@ No single machine makes the front end a chokepoint. The scarce thing is the reci
 
 China shows what that recipe costs. The money is there: the third National Integrated Circuit Fund raised 344 billion yuan, about $47 billion, in May 2024 ([source](https://asia.nikkei.com/spotlight/supply-chain/china-launches-47bn-chip-fund-to-counter-u.s.-restrictions)). The tools are not. A Shanghai state firm began building domestic immersion scanners in 2026, in single-digit annual volumes ([source](https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/)). Those are deep-ultraviolet machines, a generation behind EUV, and SMIC gets fine features out of them by printing each layer in several passes. A handful of new scanners a year keeps those lines running and comes nowhere near replacing ASML. EUV is further off again: China has announced $43 billion for domestic development, and the Center for Strategic and International Studies still reads working systems as out of reach ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).
 
-See Lithography and Geopolitics.
+See [Lithography](#lithography) and [Geopolitics](#/geopolitics).
 
 ## Key evaluation criteria
 

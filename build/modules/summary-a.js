@@ -229,7 +229,9 @@ module.exports = function (ctx) {
       const geo = byId('geopolitics'), lit = byId('lithography');
       const first5 = stages.filter((c) => c.score === 5 && (c.countries || []).some((x) => x.code === 'CN') && c.chinaStatus)[0];
       const rows = [geo, lit, first5].filter((c, i, a) => c && c.chinaStatus && a.indexOf(c) === i);
-      china = `<div class="sa-china"><span class="label">Where China stands, from the chapter cards</span>${rows.map((c) => `<p><a href="${href(c)}">${esc(c.title)}</a> ${esc(c.chinaStatus)}</p>`).join('')}</div>`;
+      // the first sentence of each card's China line; the chapter link carries the rest
+      const first = (s) => { const m2 = String(s).match(/^[\s\S]*?[.!?](?=\s+[A-Z"'(]|$)/); return (m2 ? m2[0] : String(s)).trim(); };
+      china = `<div class="sa-china"><span class="label">Where China stands, from the chapter cards</span>${rows.map((c) => `<p><a href="${href(c)}">${esc(c.title)}</a> ${esc(first(c.chinaStatus))}</p>`).join('')}</div>`;
     }
 
     const townLine = d.towns.length
@@ -327,9 +329,9 @@ ${svg}
 <div class="sa-overlay">${townDots}${markers}</div>
 </div>
 <div class="sa-panels" aria-live="polite">${panels}</div>
-</div>
 <div class="sa-chips">${chips}</div>
 <p class="sa-legend"><span class="sa-lg sa-lg--big"></span>Marker area: how many of the ${chapters.length} chapter cards name the country<span class="sa-lg sa-lg--hard"></span>Heavier ring: named by a stage scored 5 of 5<span class="sa-lg sa-lg--pin"></span>Chokepoint town<span class="sa-lg sa-lg--sub"></span>Town building a substitute</p>
+</div>
 </section>
 
 <section class="sa-strip">

@@ -16,7 +16,11 @@
 .sa-strip, .sa-numbers { margin-top: 52px; padding-top: 22px; border-top: 1px solid var(--line); }
 
 /* ---------- map + panel ---------- */
-.sa-grid { display: grid; grid-template-columns: minmax(0, 1fr) 372px; gap: 22px; align-items: start; }
+.sa-grid { display: grid; grid-template-columns: minmax(0, 1fr) 372px; gap: 14px 22px; align-items: start; }
+.sa-grid > .sa-map { grid-column: 1; grid-row: 1; }
+.sa-grid > .sa-panels { grid-column: 2; grid-row: 1 / span 3; }
+.sa-grid > .sa-chips { grid-column: 1; grid-row: 2; }
+.sa-grid > .sa-legend { grid-column: 1; grid-row: 3; }
 .sa-map { position: relative; background: var(--bg-2); border: 1px solid var(--line); border-radius: 3px; overflow: visible; }
 .sa-svg { display: block; width: 100%; height: auto; border-radius: 2px; }
 .sa-ocean { fill: var(--bg-2); }
@@ -172,13 +176,23 @@
 
 /* ---------- narrow ---------- */
 @media (max-width: 900px) {
-  .sa-grid { grid-template-columns: 1fr; gap: 16px; }
+  /* one column on a phone: map, then the country buttons, then the panel */
+  .sa-grid { grid-template-columns: 1fr; gap: 14px; }
+  .sa-grid > .sa-map, .sa-grid > .sa-panels, .sa-grid > .sa-chips, .sa-grid > .sa-legend { grid-column: 1; grid-row: auto; }
+  .sa-grid > .sa-map { order: 1; }
+  .sa-grid > .sa-chips { order: 2; margin-top: 0; }
+  .sa-grid > .sa-panels { order: 3; }
+  .sa-grid > .sa-legend { order: 4; }
   .sa-panel { max-height: none; }
   .sa-nums { grid-template-columns: repeat(2, 1fr); }
   .sa-tiles { grid-template-columns: repeat(8, 1fr); row-gap: 12px; }
   .sa-tile-bar { height: 46px; }
 }
 @media (max-width: 700px) {
+  /* the map runs to both edges on a phone: at this width every degree of width counts */
+  .sa-map { margin: 0 -18px; border-left: 0; border-right: 0; border-radius: 0; }
+  .sa-chip { padding: 7px 9px; font-size: 13px; }
+  .sa-chip--minor { padding: 6px 8px; font-size: 12px; }
   .sa-marker { --d: max(18px, calc(var(--d0) * 0.66)); }
   .sa-marker-cc { display: none; }
   .sa-town { --d: max(5px, calc(var(--d0) * 0.75)); }
