@@ -485,7 +485,7 @@
   /* ---------------- glossary popover: one panel, shared by every .gl-term in the prose ----------------
      The definitions already sit in the page, in the Glossary view, so nothing is duplicated. */
   var Tip = {
-    el: null, btn: null, defs: null, timer: null,
+    el: null, btn: null, defs: null, timer: null, at: 0,
     def: function (term) {
       if (!this.defs) {
         this.defs = {};
@@ -513,7 +513,7 @@
       var t = this.panel();
       t.innerHTML = '<b>' + esc(d.term) + '</b><p>' + esc(d.plain) + '</p><a href="#/glossary">Glossary →</a>';
       t.hidden = false;
-      this.btn = btn; btn.setAttribute('aria-describedby', 'gl-tip');
+      this.btn = btn; this.at = Date.now(); btn.setAttribute('aria-describedby', 'gl-tip');
       this.place(btn);
       // focus may scroll the term into view after this frame, so settle the position once more
       if (window.requestAnimationFrame) requestAnimationFrame(function () { if (self.btn === btn) self.place(btn); });
@@ -554,8 +554,9 @@
       // follow the term while the page scrolls; let go once it has left the screen
       window.addEventListener('scroll', function () {
         if (!self.btn || !self.el || self.el.hidden || self.el.classList.contains('is-sheet')) return;
-        var r = self.btn.getBoundingClientRect();
-        if (r.bottom < 0 || r.top > window.innerHeight) self.hide(); else self.place(self.btn);
+        var r = self.btn.getBoundingClientRect(), gone = r.bottom < 0 || r.top > window.innerHeight;
+        // a term reached by keyboard is scrolled into view after it opens, so give that scroll a moment
+        if (gone && Date.now() - self.at > 600) self.hide(); else self.place(self.btn);
       }, { passive: true });
       window.addEventListener('resize', function () { if (self.btn && self.el && !self.el.hidden) self.place(self.btn); });
     }
