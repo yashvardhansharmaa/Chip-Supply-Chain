@@ -69,67 +69,61 @@
 ---
 # Systems and Networking
 
-A package computes nothing until it is wired into a machine. This is the layer where the chip supply chain meets the electrical and optical one, and where the binding constraint has moved from silicon to lasers.
+A package computes nothing until it is wired into a machine. This is where the chip supply chain meets the electrical and optical one, and where the binding constraint has moved from silicon to lasers.
 
 ## How it works
 
 Think of a rowing eight. The crew only goes fast if every oar moves together, so the boat is built to keep them in step. This stage does the same for chips: it bolts each finished package onto a board, feeds it more than a thousand amps, and wires it to seventy-one neighbours so that a training run sees one machine instead of seventy-two. Copper carries a signal a few metres at most, so the longer links have to become light, and light needs lasers. That is why the tightest supply in this layer is a laser material, not a chip.
 
-An accelerator ships as a module, not a bare chip: SXM in Nvidia's world, the OCP Accelerator Module in the open one. Eight modules bolt onto a baseboard, Nvidia's HGX or the open Universal Baseboard, which carries the power for all eight and the switch chips that let them reach each other at full speed. Because the logic runs well under one volt, the voltage regulators must sit within centimetres of the package.
+An accelerator ships as a module, not a bare chip: SXM in Nvidia's world, the OCP Accelerator Module in the open one. Eight bolt onto a baseboard that carries their power and the switch chips that let them reach each other at full speed.
 
-Rack-scale systems dissolve the baseboard entirely. An Nvidia GB300 NVL72 holds 18 compute trays of four Blackwell Ultra GPUs each, plus nine NVLink switch trays with two NVSwitch ASICs apiece, and draws up to 142 kW through eight 33 kW power shelves ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)). Rubin keeps the same 72-GPU rack shape ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
+Rack-scale systems dissolve the baseboard. An Nvidia GB300 NVL72 holds 18 compute trays of four Blackwell Ultra GPUs each plus nine NVLink switch trays, and draws up to 142 kW ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)). Rubin keeps the same 72-GPU shape ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
 
-Two networks run through every AI cluster and they are not interchangeable. The scale-up fabric joins a few dozen accelerators into one memory-coherent domain at terabytes per second; the scale-out fabric joins thousands of those domains at hundreds of gigabits per second. Model parallelism lives on scale-up, so its bandwidth sets how large a model you can shard.
+Two networks run through every AI cluster and they are not interchangeable. Scale-up joins a few dozen accelerators into one memory-coherent domain at terabytes per second; scale-out joins thousands of those domains at hundreds of gigabits per second. Model parallelism lives on scale-up, so its bandwidth sets how large a model you can shard.
 
 ## Variants and trade-offs
 
 ### Scale-up: NVLink, UALink and Google's torus
 
-Three architectures matter, and they differ in how many accelerators can share one coherent domain.
+Three architectures matter, and they differ in how many accelerators share one coherent domain.
 
-- **NVLink and NVSwitch.** Nvidia's per-GPU bandwidth went from 900 GB/s in NVLink 4 to 1,800 GB/s in NVLink 5 and 3,600 GB/s in NVLink 6, and the rack fabric moves 130 TB/s on Blackwell and 260 TB/s on Rubin ([source](https://www.nvidia.com/en-us/data-center/nvlink/)).
-- **UALink.** The open answer, ratified at version 1.0 in April 2025, runs 200 Gbps per lane and addresses up to 1,024 accelerators in a pod, backed by AMD, Intel, Meta, AWS, Google, Microsoft and Cisco among others ([source](https://www.sdxcentral.com/news/ualink-consortium-releases-200g-10-specification-for-ai-accelerator-interconnects/)).
-- **Google's 3D torus.** Ironwood, the seventh-generation TPU, wires 64 chips per rack over Google's own interconnect and uses optical circuit switches to stitch cubes into superpods of 9,216 chips, which costs latency but lets Google reroute around a failed rack in software ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)).
+- **NVLink and NVSwitch.** Nvidia's per-GPU bandwidth went from 900 GB/s in NVLink 4 to 1,800 in NVLink 5 and 3,600 in NVLink 6, and the rack fabric moves 130 TB/s on Blackwell and 260 TB/s on Rubin ([source](https://www.nvidia.com/en-us/data-center/nvlink/)).
+- **UALink.** The open answer, ratified at 1.0 in April 2025, runs 200 Gbps per lane and addresses up to 1,024 accelerators in a pod, backed by AMD, Intel, Meta, AWS, Google and Microsoft ([source](https://www.sdxcentral.com/news/ualink-consortium-releases-200g-10-specification-for-ai-accelerator-interconnects/)).
+- **Google's 3D torus.** Ironwood, the seventh-generation TPU, wires 64 chips per rack and uses optical circuit switches to stitch cubes into superpods of 9,216 chips, trading latency for the ability to route around a failed rack in software ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)).
 
 {{figure:nvlink-bandwidth}}
 
-AMD's Helios rack is the first large deployment of the open approach: 72 MI450-series GPUs and 260 TB/s of scale-up bandwidth carried as UALink over Ethernet, with Oracle committed to 50,000 sockets from the third quarter of 2026 ([source](https://www.nextplatform.com/2025/10/14/oracle-first-in-line-for-amd-altair-mi450-gpus-helios-racks/)).
-
 ### Scale-out: InfiniBand versus Ethernet
 
-InfiniBand owned this layer when AI clusters were small and homogeneous. It has lost. Ethernet took more than two-thirds of data center switch revenue in AI back-end networks across 2025 ([source](https://www.delloro.com/news/ethernet-more-than-doubles-size-of-infiniband-as-the-leading-fabric-for-ai-scale-out-networks-in-2025/)), and extended that lead in the first quarter of 2026 even as InfiniBand rebounded ([source](https://www.delloro.com/news/ethernet-extends-lead-in-ai-scale-out-networks-despite-strong-infiniband-rebound/)).
+InfiniBand owned this layer when AI clusters were small and homogeneous. It has lost. Ethernet took more than two-thirds of AI back-end switch revenue across 2025 ([source](https://www.delloro.com/news/ethernet-more-than-doubles-size-of-infiniband-as-the-leading-fabric-for-ai-scale-out-networks-in-2025/)), and extended that lead in the first quarter of 2026 even as InfiniBand rebounded ([source](https://www.delloro.com/news/ethernet-extends-lead-in-ai-scale-out-networks-despite-strong-infiniband-rebound/)).
 
 {{figure:ai-fabric-share}}
 
-Two things caused the flip. Broadcom's Tomahawk 6 put 102.4 Tbps of switching on one chip, double the previous generation ([source](https://www.broadcom.com/company/news/product-releases/64031)). And the Ultra Ethernet Consortium standardised the lossless, congestion-aware behaviour InfiniBand had by birth. The vendor table is now unusually flat: Celestica led AI back-end Ethernet switching in the first quarter of 2026, ahead of Nvidia, Arista and Cisco ([source](https://www.delloro.com/news/ethernet-extends-lead-in-ai-scale-out-networks-despite-strong-infiniband-rebound/)). Whitebox builders on merchant silicon outsell the networking brands.
+Two things caused the flip. Broadcom's Tomahawk 6 put 102.4 Tbps of switching on one chip, double the previous generation ([source](https://www.broadcom.com/company/news/product-releases/64031)). And the Ultra Ethernet Consortium standardised the lossless, congestion-aware behaviour InfiniBand had by birth. Celestica then led AI back-end Ethernet switching in the first quarter of 2026, ahead of Nvidia, Arista and Cisco ([source](https://www.delloro.com/news/ethernet-extends-lead-in-ai-scale-out-networks-despite-strong-infiniband-rebound/)): whitebox builders on merchant silicon now outsell the networking brands.
 
 ### Optics: pluggable, then co-packaged
 
-Every scale-out link longer than a few metres is optical, and a cluster needs several transceivers per accelerator. Their power cost is why both switch vendors are moving the optics onto the switch package.
-
-- **Tomahawk 6 Davisson.** Broadcom integrates sixteen 6.4 Tbps optical engines at 200 Gbps per channel and cuts optical interconnect power by about 70%, roughly 3.5 times better than pluggables ([source](https://www.globenewswire.com/news-release/2025/10/08/3163429/19933/en/Broadcom-Announces-Tomahawk-6-Davisson-the-Industry-s-First-102-4-Tbps-Ethernet-Switch-with-Co-Packaged-Optics.html)).
-- **Quantum-X Photonics.** Nvidia's co-packaged InfiniBand switch offers 144 ports of 800G and shipped from late 2025 ([source](https://nvidianews.nvidia.com/news/nvidia-spectrum-x-co-packaged-optics-networking-switches-ai-factories)).
-- **Spectrum-X Photonics.** The Ethernet version reaches 512 ports of 800G during 2026, with 3.5 times better power efficiency and, more important for supply, four times fewer lasers ([source](https://nvidianews.nvidia.com/news/nvidia-spectrum-x-co-packaged-optics-networking-switches-ai-factories)).
+Every scale-out link longer than a few metres is optical, and a cluster needs several transceivers per accelerator. Their power cost is why both switch vendors are moving the optics onto the switch package. Broadcom's Tomahawk 6 Davisson integrates sixteen 6.4 Tbps optical engines and cuts optical interconnect power by about 70%, roughly 3.5 times better than pluggables ([source](https://www.globenewswire.com/news-release/2025/10/08/3163429/19933/en/Broadcom-Announces-Tomahawk-6-Davisson-the-Industry-s-First-102-4-Tbps-Ethernet-Switch-with-Co-Packaged-Optics.html)). Nvidia's Spectrum-X Photonics reaches 512 ports of 800G during 2026 and, more important for supply, uses four times fewer lasers ([source](https://nvidianews.nvidia.com/news/nvidia-spectrum-x-co-packaged-optics-networking-switches-ai-factories)).
 
 ## Who makes it
 
-Optical modules are the most concentrated part of this layer, and they are Chinese. Chinese firms hold seven of the top ten supplier slots, and InnoLight and Eoptolink alone account for more than 60% of 800G-and-above modules, which is why US officials were drafting import restrictions on Chinese-made modules as of August 2026 ([source](https://www.caixinglobal.com/2026-08-05/us-drafts-ban-on-chinese-optical-modules-exposing-mutual-supply-chain-risks-102471268.html)).
+Optical modules are the most concentrated part of this layer, and they are Chinese. Chinese firms hold seven of the top ten supplier slots, and InnoLight and Eoptolink alone supply more than 60% of 800G-and-above modules, which is why US officials were drafting import restrictions as of August 2026 ([source](https://www.caixinglobal.com/2026-08-05/us-drafts-ban-on-chinese-optical-modules-exposing-mutual-supply-chain-risks-102471268.html)).
 
 {{figure:optics-800g-share}}
 
-The lasers inside those modules are a separate and much narrower business. Indium phosphide is the only practical material for the high-speed lasers in 800G and 1.6T optics, and epitaxy capacity is small. Demand exceeded supply by roughly two to one in early 2026, and Nvidia responded by investing $2 billion each in Coherent and Lumentum in March 2026; whether those fabs ramp inside 18 to 24 months determines whether optics keeps pace with Rubin ([source](https://futurumgroup.com/insights/nvidias-4b-optics-bet-signals-photonics-as-ais-next-bottleneck/)).
+The lasers inside those modules are a much narrower business. Indium phosphide is the only practical material for the high-speed lasers in 800G and 1.6T optics, and epitaxy capacity is small. Demand ran at roughly twice supply in early 2026, and Nvidia put $2 billion each into Coherent and Lumentum in March 2026 ([source](https://futurumgroup.com/insights/nvidias-4b-optics-bet-signals-photonics-as-ais-next-bottleneck/)). Whether those fabs ramp inside 18 to 24 months decides whether optics keeps pace with Rubin.
 
-Switch and accelerator silicon is a US duopoly. Broadcom sells merchant Ethernet switching and designs most of the custom accelerators in the market, including Google's TPUs and Meta's MTIA; its AI semiconductor revenue hit $16.7 billion in the third quarter of fiscal 2026, with custom parts 73% of that ([source](https://finance.yahoo.com/technology/ai/articles/broadcom-q3-earnings-call-highlights-230318650.html)). Marvell holds the other side of the custom business, with AWS and Microsoft.
+Switch and accelerator silicon is a US duopoly. Broadcom sells merchant Ethernet switching and designs most of the custom accelerators in the market, including Google's TPUs and Meta's MTIA; its AI semiconductor revenue reached $16.7 billion in the third quarter of fiscal 2026, up 221% ([source](https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm)). Marvell holds the other half of the custom business, with AWS and Microsoft.
 
-Physical assembly belongs to Taiwan. Foxconn, Quanta, Wistron and Inventec build most AI racks, and the first three each cleared NT$1 trillion, about US$32 billion, of revenue in 2025 on AI server demand ([source](https://www.digitimes.com/news/a20260109PD249/revenue-ai-server-foxconn-wistron-quanta.html)). Final integration is migrating toward the customer: Nvidia and its partners commissioned more than a million square feet of US manufacturing space in 2025, including a Foxconn plant in Houston and a Wistron plant in Dallas ([source](https://blogs.nvidia.com/blog/nvidia-manufacture-american-made-ai-supercomputers-us/)).
+Physical assembly belongs to Taiwan. Foxconn, Quanta, Wistron and Inventec build most AI racks, and the first three each cleared NT$1 trillion, about US$32 billion, of revenue in 2025 ([source](https://www.digitimes.com/news/a20260109PD249/revenue-ai-server-foxconn-wistron-quanta.html)). Integration is moving toward the customer: Nvidia and its partners commissioned more than a million square feet of US manufacturing space in 2025, including a Foxconn plant in Houston and a Wistron plant in Dallas ([source](https://blogs.nvidia.com/blog/nvidia-manufacture-american-made-ai-supercomputers-us/)).
 
 ## The chokepoint
 
-Most of this layer is not a chokepoint. At least five capable ODMs on three continents screw racks together, and power shelves, busbars, cables and connectors have many suppliers. If Foxconn stopped tomorrow, Quanta and Wistron would absorb the volume within a couple of quarters.
+Most of this layer is not a chokepoint. At least five capable ODMs on three continents screw racks together, and power shelves, busbars, cables and connectors have many suppliers. If Foxconn stopped tomorrow, Quanta and Wistron would absorb the volume in a couple of quarters.
 
 Three things are genuinely narrow.
 
-- **Indium phosphide laser capacity.** This is a materials problem, not a design problem, and a cheque cannot buy epitaxy tools faster than they can be installed ([source](https://futurumgroup.com/insights/nvidias-4b-optics-bet-signals-photonics-as-ais-next-bottleneck/)).
+- **Indium phosphide laser capacity.** A materials problem, not a design problem, and a cheque cannot buy epitaxy tools faster than they can be installed ([source](https://futurumgroup.com/insights/nvidias-4b-optics-bet-signals-photonics-as-ais-next-bottleneck/)).
 - **NVSwitch.** No one else sells a merchant scale-up switch with NVLink's bandwidth, which is precisely what UALink exists to change ([source](https://www.sdxcentral.com/news/ualink-consortium-releases-200g-10-specification-for-ai-accelerator-interconnects/)).
 - **High-layer-count PCBs.** The boards and the low-loss copper-clad laminate under them are concentrated in Taiwan and Japan; see Substrates and PCBs.
 
@@ -145,4 +139,4 @@ Optical module assembly is a fourth case of a different kind. It is concentrated
 
 ## Takeaways
 
-The system layer is where AI hardware stops being a chip business and becomes an electrical and optical one. Assembly is competitive and can move countries in a year, so leverage does not live there. It lives in NVLink-class scale-up switching, which one firm still owns, and in indium phosphide lasers, where demand ran at twice supply in early 2026 and no amount of capital shortens an epitaxy ramp below about two years ([source](https://futurumgroup.com/insights/nvidias-4b-optics-bet-signals-photonics-as-ais-next-bottleneck/)).
+The system layer is where AI hardware stops being a chip business and becomes an electrical and optical one. Assembly is competitive and can move countries in a year, so leverage does not live there. It lives in NVLink-class scale-up switching, which one firm still owns, and in indium phosphide lasers, where demand ran at twice supply in early 2026 and no cheque shortens an epitaxy ramp below about two years ([source](https://futurumgroup.com/insights/nvidias-4b-optics-bet-signals-photonics-as-ais-next-bottleneck/)).

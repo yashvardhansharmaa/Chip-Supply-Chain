@@ -75,9 +75,9 @@
     "date": "2023-05-21",
     "actor": "China (Cyberspace Administration)",
     "title": "Micron barred from critical information infrastructure",
-    "summary": "China's Cybersecurity Review Office concluded that Micron's products carried serious security risks and ordered operators of critical information infrastructure to stop buying them, two months after opening the review. Micron said roughly half of its China-headquartered customer revenue, a low-to-high single-digit percentage of total company revenue, was at risk. It was Beijing's first direct retaliation against a US chipmaker. Chinese buyers shifted to Samsung, SK hynix and the domestic suppliers YMTC and CXMT.",
+    "summary": "China's Cybersecurity Review Office concluded that Micron's products carried serious security risks and ordered operators of critical information infrastructure to stop buying them, two months after opening the review. Micron told the SEC that customers headquartered in mainland China and Hong Kong were about a quarter of its worldwide revenue, and that roughly half of that China-headquartered customer revenue, a low-double-digit percentage of worldwide revenue, was at risk. It was Beijing's first direct retaliation against a US chipmaker. Chinese buyers shifted to Samsung, SK hynix and the domestic suppliers YMTC and CXMT.",
     "category": "China countermeasure",
-    "source": "https://www.globaltimes.cn/page/202305/1291098.shtml"
+    "source": "https://www.sec.gov/Archives/edgar/data/723125/000072312523000041/mu-20230601.htm"
   },
   {
     "date": "2023-07-03",
@@ -85,7 +85,7 @@
     "title": "Gallium and germanium export licensing",
     "summary": "MOFCOM and the General Administration of Customs issued Announcement No. 23 of 2023, placing eight gallium-related and six germanium-related items under dual-use export licensing from 1 August 2023 on national security grounds. Controlled items include gallium metal, gallium nitride, gallium arsenide, germanium metal, zone-refined germanium ingots and germanium tetrachloride. China produced roughly 98 percent of the world's primary gallium and about 60 percent of refined germanium at the time. Chinese exports of both metals fell sharply in the following months and ex-China prices roughly doubled.",
     "category": "China countermeasure",
-    "source": "https://www.iea.org/policies/17893-announcement-on-the-implementation-of-export-control-of-items-related-to-gallium-and-germanium"
+    "source": "http://exportcontrol.mofcom.gov.cn/article/zcfg/gnzcfg/zcfggzqd/202307/847.html"
   },
   {
     "date": "2023-07-23",
@@ -173,7 +173,7 @@
     "title": "Export controls on seven medium and heavy rare earths",
     "summary": "Announcement No. 18 of 2025 put samarium, gadolinium, terbium, dysprosium, lutetium, scandium and yttrium, together with their oxides, alloys, compounds and permanent magnets, under dual-use export licensing effective immediately, two days after the US reciprocal tariff round. China refines roughly 90 percent of global rare earth output and until recently accounted for about 99 percent of heavy rare earth separation. Licence processing initially ran to 45 working days or more, and Chinese magnet exports fell about 75 percent in May before recovering under a June trade truce.",
     "category": "China countermeasure",
-    "source": "https://www.iea.org/policies/26796-export-controls-on-certain-medium-and-heavy-rare-earth-items"
+    "source": "https://english.mofcom.gov.cn/Policies/AnnouncementsOrders/art/2025/art_0dd87cbee7b045bf93fabe6ab2faceee.html"
   },
   {
     "date": "2025-04-09",
@@ -357,6 +357,6 @@
     "title": "China hits Japanese dichlorosilane with duties of up to 99.2 percent",
     "summary": "MOFCOM issued a preliminary anti-dumping ruling against Japanese dichlorosilane, a specialty gas used for thin-film deposition in logic, memory and analog chip production, requiring importers to post deposits with Chinese customs from 8 September 2026 at rates of 80.8 to 99.2 percent, with 99.2 percent for Shin-Etsu Chemical and all non-cooperating exporters. The investigation opened on 7 January 2026 after a complaint from Tangshan Sanfu Electronic Materials, which said Japanese suppliers held about 72 percent of the Chinese market and had cut prices 31 percent between 2022 and 2024. Japan protested the measure. A final determination is due by January 2027.",
     "category": "China countermeasure",
-    "source": "https://www.globaltimes.cn/page/202609/1369988.shtml"
+    "source": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_01c15948864a45d186abb146fe30a42b.html"
   }
 ]

@@ -267,7 +267,7 @@ b, strong { font-weight: 600; }
 .chain-key span { font-family: var(--mono); font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); display: inline-flex; align-items: center; gap: 6px; }
 .chain-key i { width: 9px; height: 9px; display: inline-block; }
 
-.chain-track { display: grid; grid-template-columns: repeat(15, 1fr); gap: 3px; align-items: end; }
+.chain-track { display: grid; grid-template-columns: repeat(15, 1fr); gap: 3px; align-items: start; }
 .stage-cell { display: flex; flex-direction: column; gap: 6px; min-width: 0; padding-bottom: 5px; position: relative; }
 .stage-cell .n { font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; color: var(--muted); font-variant-numeric: tabular-nums; }
 .stage-cell .bar { height: 46px; display: flex; align-items: flex-end; }
@@ -290,8 +290,8 @@ b, strong { font-weight: 600; }
 .chain--compact { padding: 0; border-top: 0; margin-bottom: 34px; }
 .chain--compact .chain-track { gap: 2px; }
 .chain--compact .stage-cell .bar { height: 26px; }
-/* keep the label line reserved on every cell so the row stays on one baseline */
-.chain--compact .stage-cell .t { visibility: hidden; }
+/* keep one label line reserved on every cell so the row stays on one baseline */
+.chain--compact .stage-cell .t { visibility: hidden; white-space: nowrap; }
 .chain--compact .stage-cell[aria-current="true"] .t { visibility: visible; }
 .chain--compact .chain-foot {
   display: flex; justify-content: space-between; gap: 12px; margin-top: 8px;

@@ -503,6 +503,8 @@
       (DATA.suppliers || []).forEach(function (r) { idx.push({ kind: 'Supplier', title: r.name, text: r.category + ' · ' + cname(r.country) + (r.role ? ' · ' + r.role : ''), href: '#/suppliers', q: r.name }); });
       (DATA.landscape || []).forEach(function (c) { idx.push({ kind: 'Chip', title: c.vendor + ' ' + c.name, text: ((c.process || {}).node || '') + ' · ' + ((c.memory || {}).type || '') + ' · ' + (c.status || ''), href: '#/landscape', chip: c.id }); });
       (DATA.timeline || []).forEach(function (e) { idx.push({ kind: 'Event ' + e.date, title: e.title, text: e.summary || '', href: '#/geopolitics' }); });
+      (DATA.controls || []).forEach(function (t) { idx.push({ kind: 'Control', title: t.instrument + (t.parameter ? ' · ' + t.parameter : ''), text: [t.scope, t.destinations, t.note].filter(Boolean).join(' · '), href: '#/controls' }); });
+      (DATA.exposure || []).forEach(function (r) { if (r.chinaShare != null) idx.push({ kind: 'Exposure', title: r.firm + ' ' + r.fiscalYear, text: 'China ' + r.chinaShare + '% of revenue' + (r.basis ? ' · ' + r.basis : ''), href: '#/controls' }); });
       idx.forEach(function (i) { i.hay = (i.kind + ' ' + i.title + ' ' + i.text).toLowerCase(); });
       this.index = idx; return idx;
     },
@@ -551,6 +553,8 @@
       addExport('#compare', 'accelerators', DATA.landscape, 'before');
       addExport('#matrix', 'country-share matrix', DATA.matrix, 'before');
       addExport('#timeline', 'export-control timeline', DATA.timeline, 'before');
+      addExport('#controls-table', 'control thresholds', DATA.controls, 'before');
+      addExport('#exposure-table', 'China exposure by firm and year', DATA.exposure, 'before');
       // cite-this block in the footer
       var foot = $('.site-footer');
       if (foot) { var d = new Date().toISOString().slice(0, 10); foot.insertAdjacentHTML('beforeend', '<details class="cite"><summary>Cite this site</summary><pre>Sharma, Y. with Claude. Chokepoints: a deep dive on the AI chip supply chain. September 2026. https://yashvardhansharmaa.github.io/chokepoints/ (accessed ' + d + ').</pre><pre>@misc{chokepoints2026,\n  title  = {Chokepoints: a deep dive on the AI chip supply chain},\n  author = {Sharma, Yashvardhan and Claude},\n  year   = {2026},\n  month  = {September},\n  url    = {https://yashvardhansharmaa.github.io/chokepoints/},\n  note   = {Accessed ' + d + '}\n}</pre></details>'); }
