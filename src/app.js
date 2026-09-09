@@ -200,8 +200,8 @@
   };
 
   /* ---------------- router ---------------- */
-  var VIEWS = ['home', 'stack', 'chain', 'intro', 'walk', 'briefing', 'landscape', 'suppliers', 'geopolitics', 'controls', 'thresholds', 'exposure', 'glossary', 'sources', 'methods', 'summary-a', 'summary-b'];
-  var ALIAS = { chain: 'stack', intro: 'walk', briefing: 'walk', geopolitics: 'stack', 'summary-a': 'home', 'summary-b': 'home' };
+  var VIEWS = ['home', 'stack', 'chain', 'intro', 'walk', 'briefing', 'landscape', 'suppliers', 'geopolitics', 'controls', 'thresholds', 'exposure', 'glossary', 'sources']; // retired routes (methods, summary-a, summary-b) are unknown and go home
+  var ALIAS = { chain: 'stack', intro: 'walk', briefing: 'walk', geopolitics: 'stack' };
   var MODULE_VIEWS = {}; // modules register { activate(), stage: bool } per view through window.CP.register
   var Router = {
     current: null,
@@ -254,7 +254,8 @@
         }
         Sections.update();
       }
-      document.title = v === 'home' ? 'Compute Chokepoints' : 'Compute Chokepoints · ' + { stack: 'The Chain', walk: 'Intro', landscape: 'AI Chips', suppliers: 'Suppliers', controls: sub === 'exposure' ? 'China revenue share' : sub === 'thresholds' ? 'Licence thresholds' : 'Export Controls', 'summary-a': 'Summary A', 'summary-b': 'Summary B', glossary: 'Glossary', sources: 'Sources' }[v];
+      var label = { stack: 'The Chain', walk: 'Intro', landscape: 'AI Chips', suppliers: 'Suppliers', controls: sub === 'exposure' ? 'China revenue share' : sub === 'thresholds' ? 'Licence thresholds' : 'Export Controls', glossary: 'Glossary', sources: 'Sources' }[v];
+      document.title = (v === 'home' || !label) ? 'Compute Chokepoints' : 'Compute Chokepoints · ' + label;
     }
   };
 
