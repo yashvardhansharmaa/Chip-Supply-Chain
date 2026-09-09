@@ -6,6 +6,7 @@
   var DATA = window.CP_DATA || {};
   var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var narrow = function () { return window.innerWidth < 900; };
+  var safeUrl = function (u) { var v = String(u == null ? '' : u).trim(); return /^(https?:|mailto:|#|\/)/i.test(v) ? esc(v) : '#'; }; // data-fed link targets may only be web links, mail, fragments or site paths
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var dec = function (s) { try { return decodeURIComponent(s); } catch (e) { return s; } }; // a hand-typed "#%" is not valid escaping and must not throw the router
   var COUNTRY = { US: 'United States', NL: 'Netherlands', JP: 'Japan', TW: 'Taiwan', KR: 'South Korea', CN: 'China', DE: 'Germany', CH: 'Switzerland', GB: 'United Kingdom', FR: 'France', IL: 'Israel', SG: 'Singapore', MY: 'Malaysia', AT: 'Austria', IT: 'Italy', BE: 'Belgium', IN: 'India', AE: 'United Arab Emirates', SA: 'Saudi Arabia', CA: 'Canada', SE: 'Sweden', FI: 'Finland', IE: 'Ireland', TH: 'Thailand', VN: 'Vietnam', PH: 'Philippines', MX: 'Mexico', 'EU-other': 'Other Europe', Other: 'Other' };
@@ -213,7 +214,7 @@
     },
     route: function () {
       var h = location.hash || '#/', m = h.match(/^#\/([a-z-]+)/), bare = h.replace(/^#/, '');
-      var v = (bare === '' || bare === '/') ? 'home' : 'stack'; // the site opens on the map; a bare chapter anchor opens the chain
+      var v = (bare === '' || bare === '/' || m) ? 'home' : 'stack'; // the site opens on the map; an unknown #/route goes home; a bare chapter anchor opens the chain
       if (m && VIEWS.indexOf(m[1]) >= 0) v = m[1];
       var anchor = v === 'geopolitics' ? 'geopolitics' : ((!m && bare && bare !== '/') ? dec(bare) : null);
       if (anchor && !m) { // a bare anchor belongs to whichever view holds it; one that sits outside them all (the skip link's #app) leaves the view alone
@@ -253,7 +254,7 @@
         }
         Sections.update();
       }
-      document.title = v === 'home' ? 'Compute Chokepoints' : 'Compute Chokepoints · ' + { stack: 'The Chain', walk: 'Intro', landscape: 'AI Chips', suppliers: 'Suppliers', controls: sub === 'exposure' ? 'China revenue share' : sub === 'thresholds' ? 'Licence thresholds' : 'Export Controls', methods: 'Methods', 'summary-a': 'Summary A', 'summary-b': 'Summary B', glossary: 'Glossary', sources: 'Sources' }[v];
+      document.title = v === 'home' ? 'Compute Chokepoints' : 'Compute Chokepoints · ' + { stack: 'The Chain', walk: 'Intro', landscape: 'AI Chips', suppliers: 'Suppliers', controls: sub === 'exposure' ? 'China revenue share' : sub === 'thresholds' ? 'Licence thresholds' : 'Export Controls', 'summary-a': 'Summary A', 'summary-b': 'Summary B', glossary: 'Glossary', sources: 'Sources' }[v];
     }
   };
 
@@ -421,6 +422,7 @@
     clear: function () {
       this.picked = []; this.sel = null; this.hint = '';
       this.render();
+      Stage.show('package', { plan: true }, 'An AI accelerator package, drawn from above. Pick a chip to see its own layout.', 'AI chips · <b>pick a chip</b>');
     },
 
     /* ---- render ---- */
@@ -599,7 +601,7 @@
       host.innerHTML = '<h3 class="label cx-h">Notes and sources</h3>' + this.selection().map(function (c) {
         var body = self.notes[c.id] || (c.notes ? '<p>' + esc(c.notes) + '</p>' : '<p class="cx-nil">No note yet.</p>');
         body = body.replace(/^\s*<p><code>[^<]*<\/code><\/p>\s*/, ''); // the notes file opens each block with the chip id, which is keying, not copy
-        var srcs = (c.sources || []).map(function (s) { return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.label || s.url) + '</a>'; }).join('');
+        var srcs = (c.sources || []).map(function (s) { return '<a href="' + safeUrl(s.url) + '" target="_blank" rel="noopener">' + esc(s.label || s.url) + '</a>'; }).join('');
         return '<details class="cx-note" id="cx-note-' + esc(c.id) + '"' + (c.id === self.sel ? ' open' : '') + '>' +
           '<summary><b>' + esc(c.name) + '</b><span>' + esc(c.vendor) + ' · ' + esc(cname(c.vendorCountry)) + '</span></summary>' +
           '<div class="cx-note-body">' + body + '</div>' + (srcs ? '<p class="cx-srcs">' + srcs + '</p>' : '') + '</details>';
@@ -637,7 +639,7 @@
       Object.keys(countries).sort(function (a, b) { return countries[b] - countries[a]; }).forEach(function (c) { var o = document.createElement('option'); o.value = c; o.textContent = cname(c) + ' (' + countries[c] + ')'; sel.appendChild(o); });
       sel.addEventListener('change', function () { self.country = sel.value; self.render(); });
       $('#sup-chk').addEventListener('change', function (e) { self.chk = e.target.value; self.render(); });
-      $('#sup-search').addEventListener('input', function (e) { self.q = e.target.value.trim().toLowerCase(); self.render(); });
+      var supTimer; $('#sup-search').addEventListener('input', function (e) { var v = e.target.value; clearTimeout(supTimer); supTimer = setTimeout(function () { self.q = v.trim().toLowerCase(); self.render(); }, 120); });
       $('#sup-copy').addEventListener('click', function () { self.copy(); });
       $('#sup-table').addEventListener('click', function (e) { var b = e.target.closest('button[data-sort]'); if (!b) return; var k = b.getAttribute('data-sort'); if (self.sortKey === k) self.sortDir = -self.sortDir; else { self.sortKey = k; self.sortDir = 1; } self.render(); });
       this.render();
@@ -671,7 +673,7 @@
           '<td><span class="cc">' + esc(r.country) + '</span> ' + esc(r.city || '') + '</td>' +
           '<td class="num">' + (r.founded || '—') + '</td>' +
           '<td><span class="chk ' + esc(r.chokepoint || '') + '">' + esc(r.chokepoint || '') + '</span>' + (r.shareNote ? '<br><span class="cc" style="color:var(--muted)">' + esc(r.shareNote) + '</span>' : '') + '</td>' +
-          '<td class="role">' + esc(r.role || '') + (r.source ? ' <a href="' + esc(r.source) + '" target="_blank" rel="noopener" class="cc" aria-label="Source for ' + esc(r.name) + '">source</a>' : '') + '</td>' +
+          '<td class="role">' + esc(r.role || '') + (r.source ? ' <a href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" class="cc" aria-label="Source for ' + esc(r.name) + '">source</a>' : '') + '</td>' +
           '<td style="font-size:13px;color:var(--ink-2)">' + esc((r.customers || []).join(', ')) + '</td></tr>';
       });
       $('#sup-table').innerHTML = html + '</tbody>';
@@ -722,15 +724,17 @@
     renderTimeline: function (tl) {
       var self = this, html = '', year = null;
       var cls = function (c) { c = c || ''; return /China/i.test(c) ? 'cn' : /Allied/i.test(c) ? 'ally' : /Industrial/i.test(c) ? 'policy' : /Corporate/i.test(c) ? 'corp' : ''; };
+      self.visible = tl.filter(function (e) { return !self.cat || e.category === self.cat; });
       tl.forEach(function (e) {
         if (self.cat && e.category !== self.cat) return;
         var y = (e.date || '').slice(0, 4);
         if (y !== year) { year = y; html += '<li style="border:0;display:block;padding:0"><div class="year-label">' + esc(y) + '</div></li>'; }
         var d = new Date(e.date + 'T00:00:00');
         var ds = isNaN(d) ? esc(e.date) : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-        html += '<li><div class="d"><b>' + ds + '</b>' + esc(e.actor || '') + '</div><div><span class="cat ' + cls(e.category) + '">' + esc(e.category || '') + '</span><h4>' + esc(e.title) + '</h4><p>' + esc(e.summary || '') + '</p>' + (e.source ? '<a class="src" href="' + esc(e.source) + '" target="_blank" rel="noopener">' + esc(e.source.replace(/^https?:\/\//, '').split('/')[0]) + '</a>' : '') + '</div></li>';
+        html += '<li><div class="d"><b>' + ds + '</b>' + esc(e.actor || '') + '</div><div><span class="cat ' + cls(e.category) + '">' + esc(e.category || '') + '</span><h4>' + esc(e.title) + '</h4><p>' + esc(e.summary || '') + '</p>' + (e.source ? '<a class="src" href="' + safeUrl(e.source) + '" target="_blank" rel="noopener">' + esc(e.source.replace(/^https?:\/\//, '').split('/')[0]) + '</a>' : '') + '</div></li>';
       });
       $('#timeline').innerHTML = html || '<li><p>No events in this category.</p></li>';
+      $('#timeline').dispatchEvent(new CustomEvent('cp:rows'));
     }
   };
 
@@ -847,11 +851,13 @@
         };
         var render = function () {
           var rows = th.filter(function (t) { return !sel || t.regime === sel; });
+          self.visible = rows;
           tbl.innerHTML = '<thead><tr><th>Legal instrument</th><th>Scope</th><th>Threshold</th><th>Destinations and licence policy</th><th>Status</th><th>Source</th></tr></thead><tbody>' + rows.map(function (t) {
             var thr = (t.parameter ? esc(t.parameter) + ' ' : '') + (t.operator ? esc(t.operator) + ' ' : '') + (t.value != null ? '<b class="num">' + (typeof t.value === 'number' ? t.value.toLocaleString('en-US') : esc(t.value)) + '</b>' : '') + (t.unit ? ' <span class="cc">' + esc(t.unit) + '</span>' : '') + (t.alternative ? '<br><span class="cc" style="color:var(--muted)">' + esc(t.alternative) + '</span>' : '');
             var st = esc(t.status || ''), cls = /force/i.test(st) ? 'Critical' : /suspend/i.test(st) ? 'Contested' : /rescind|expired/i.test(st) ? 'Diversified' : 'Important';
-            return '<tr><td class="name"><b>' + esc(t.instrument) + '</b><span>' + esc(t.regime) + (t.effectiveDate ? ' · from ' + esc(t.effectiveDate) : '') + '</span>' + chapterChip(t.chapter) + '</td><td>' + esc(t.scope || '') + '</td><td>' + thr + '</td><td class="role">' + esc(t.destinations || '') + (t.licensePolicy ? '<br><span class="cc" style="color:var(--muted)">' + esc(t.licensePolicy) + '</span>' : '') + (t.note ? '<br>' + esc(t.note) : '') + '</td><td><span class="chk ' + cls + '">' + st + '</span>' + (t.amendedBy && t.amendedBy.length ? '<br><span class="cc" style="color:var(--muted)">amended ' + esc(t.amendedBy.join(', ')) + '</span>' : '') + '</td><td>' + (t.source ? '<a class="cc" href="' + esc(t.source) + '" target="_blank" rel="noopener">source</a>' : '') + '</td></tr>';
+            return '<tr><td class="name"><b>' + esc(t.instrument) + '</b><span>' + esc(t.regime) + (t.effectiveDate ? ' · from ' + esc(t.effectiveDate) : '') + '</span>' + chapterChip(t.chapter) + '</td><td>' + esc(t.scope || '') + '</td><td>' + thr + '</td><td class="role">' + esc(t.destinations || '') + (t.licensePolicy ? '<br><span class="cc" style="color:var(--muted)">' + esc(t.licensePolicy) + '</span>' : '') + (t.note ? '<br>' + esc(t.note) : '') + '</td><td><span class="chk ' + cls + '">' + st + '</span>' + (t.amendedBy && t.amendedBy.length ? '<br><span class="cc" style="color:var(--muted)">amended ' + esc(t.amendedBy.join(', ')) + '</span>' : '') + '</td><td>' + (t.source ? '<a class="cc" href="' + safeUrl(t.source) + '" target="_blank" rel="noopener">source</a>' : '') + '</td></tr>';
           }).join('') + '</tbody>';
+          tbl.dispatchEvent(new CustomEvent('cp:rows'));
           var c = $('#controls-count'); if (c) c.textContent = 'Showing ' + rows.length + ' of ' + th.length + ' thresholds';
         };
         render();
@@ -884,7 +890,7 @@
         et.innerHTML = '<thead><tr><th>Firm</th>' + ys.map(function (y) { return '<th>' + esc(y) + '</th>'; }).join('') + '</tr></thead><tbody>' + order.map(function (f) {
           var m = meta[f];
           var basisShort = function (b) { b = (b || '').toLowerCase(); if (!b) return ''; if (/ship-to|ship to|destination|fab\)/.test(b)) return 'counted where it ships'; if (/bill|invoice/.test(b)) return 'counted where it is billed'; if (/headquarters/.test(b)) return 'counted by headquarters'; if (/seat|licen/.test(b)) return 'counted by licence seats'; if (/used|usage/.test(b)) return 'counted where it is used'; if (/own operating|operating units|own units/.test(b)) return 'counted by own units'; return 'counted by customer location'; };
-          return '<tr><td title="' + esc(m.basis || '') + '">' + esc(f) + '<small>' + esc(m.category || '') + ' · ' + esc(cname(m.country)) + (m.basis ? ' · ' + esc(basisShort(m.basis)) : '') + '</small></td>' + ys.map(function (y) { var r = firms[f][y]; if (!r || r.chinaShare == null) return '<td><span class="cell zero">·</span></td>'; return '<td><a class="cell" style="--v:' + Math.round(Math.min(100, r.chinaShare) * 1.6) + '" href="' + esc(r.source) + '" target="_blank" rel="noopener" title="' + esc((r.chinaRevenue != null ? r.chinaRevenue.toLocaleString('en-US') + ' of ' + (r.totalRevenue || 0).toLocaleString('en-US') + ' ' + (r.currency || '') : '') + (r.note ? ' · ' + r.note : '')) + '">' + r.chinaShare.toFixed(1) + '%</a></td>'; }).join('') + '</tr>';
+          return '<tr><td title="' + esc(m.basis || '') + '">' + esc(f) + '<small>' + esc(m.category || '') + ' · ' + esc(cname(m.country)) + (m.basis ? ' · ' + esc(basisShort(m.basis)) : '') + '</small></td>' + ys.map(function (y) { var r = firms[f][y]; if (!r || r.chinaShare == null) return '<td><span class="cell zero">·</span></td>'; return '<td><a class="cell" style="--v:' + Math.round(Math.min(100, r.chinaShare) * 1.6) + '" href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" title="' + esc((r.chinaRevenue != null ? r.chinaRevenue.toLocaleString('en-US') + ' of ' + (r.totalRevenue || 0).toLocaleString('en-US') + ' ' + (r.currency || '') : '') + (r.note ? ' · ' + r.note : '')) + '">' + r.chinaShare.toFixed(1) + '%</a></td>'; }).join('') + '</tr>';
         }).join('') + '</tbody>';
       }
     }
@@ -896,6 +902,8 @@
     buildIndex: function () {
       if (this.index) return this.index;
       var idx = [];
+      idx.push({ kind: 'Intro', title: 'How a GPU is made', text: 'One plain paragraph per stage, in order, with the specimens: the chain in one sitting', href: '#/intro' });
+      (DATA.chapters || []).forEach(function (c) { if (c.plain && c.id !== 'introduction-and-goals') idx.push({ kind: 'Intro', title: c.title + ', in plain terms', text: c.plain, href: '#/walk/' + c.id }); });
       $$('[data-view="stack"] .chapter').forEach(function (ch) {
         var title = (ch.querySelector('.ch-title') || {}).textContent || ch.id;
         idx.push({ kind: 'Chapter', title: title.replace(/^Chapter \d+: /, ''), text: (ch.querySelector('.ch-lede') || {}).textContent || '', href: '#' + ch.id });
@@ -977,7 +985,7 @@
           if (!q) { list.innerHTML = ''; return; }
           var res = self.search(q), hits = res.hits;
           list.innerHTML = (res.note ? '<li class="none">' + esc(res.note) + '</li>' : '') +
-            (hits.map(function (h, k) { return '<li><a href="' + esc(h.href) + '" data-k="' + k + '"><span class="k">' + esc(h.kind) + '</span><b>' + esc(h.title) + '</b><span class="t">' + esc(h.text.slice(0, 140)) + '</span></a></li>'; }).join('') || (res.note ? '' : '<li class="none">Nothing matches. Try fewer words.</li>'));
+            (hits.map(function (h, k) { return '<li><a href="' + safeUrl(h.href) + '" data-k="' + k + '"><span class="k">' + esc(h.kind) + '</span><b>' + esc(h.title) + '</b><span class="t">' + esc(h.text.slice(0, 140)) + '</span></a></li>'; }).join('') || (res.note ? '' : '<li class="none">Nothing matches. Try fewer words.</li>'));
           list.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { var h = hits[+a.getAttribute('data-k')]; self.close(true); if (h.chip) setTimeout(function () { Landscape.select(h.chip); }, 60); if (h.q) setTimeout(function () { var s = $('#sup-search'); if (s) { s.value = h.q; s.dispatchEvent(new Event('input')); } }, 60); if (h.el) setTimeout(function () { h.el.scrollIntoView({ block: 'center' }); }, 60); }); });
         });
       }
@@ -1004,18 +1012,20 @@
       var copy = function (text, btn, label) { var done = function (ok) { btn.textContent = ok ? 'Copied' : 'Copy failed'; setTimeout(function () { btn.textContent = label; }, 2000); }; if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); }); else done(false); };
       var toCSV = function (rows) { if (!rows.length) return ''; var cols = []; rows.forEach(function (r) { Object.keys(r).forEach(function (k) { if (cols.indexOf(k) < 0) cols.push(k); }); }); var q = function (v) { if (v == null) return ''; if (typeof v === 'object') v = JSON.stringify(v); v = String(v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }; return cols.join(',') + '\n' + rows.map(function (r) { return cols.map(function (c) { return q(r[c]); }).join(','); }).join('\n'); };
       var addExport = function (anchorSel, name, rows, where) {
-        var host = $(anchorSel); if (!host || !rows || !rows.length) return;
+        var get = typeof rows === 'function' ? rows : function () { return rows; }; // a function means: whatever the table currently shows
+        var host = $(anchorSel); if (!host || !get() || !get().length) return;
         var bar = document.createElement('div'); bar.className = 'export-bar';
-        bar.innerHTML = '<span class="count">' + rows.length + ' rows · ' + esc(name) + '</span><button type="button" class="btn ghost">Copy as CSV</button><button type="button" class="btn ghost">Copy as JSON</button>';
-        var b = bar.querySelectorAll('button');
-        b[0].addEventListener('click', function () { copy(toCSV(rows), b[0], 'Copy as CSV'); });
-        b[1].addEventListener('click', function () { copy(JSON.stringify(rows, null, 1), b[1], 'Copy as JSON'); });
+        bar.innerHTML = '<span class="count">' + get().length + ' rows · ' + esc(name) + '</span><button type="button" class="btn ghost">Copy as CSV</button><button type="button" class="btn ghost">Copy as JSON</button>';
+        var b = bar.querySelectorAll('button'), countEl = bar.querySelector('.count');
+        host.addEventListener('cp:rows', function () { countEl.textContent = get().length + ' rows · ' + name; });
+        b[0].addEventListener('click', function () { copy(toCSV(get()), b[0], 'Copy as CSV'); });
+        b[1].addEventListener('click', function () { copy(JSON.stringify(get(), null, 1), b[1], 'Copy as JSON'); });
         if (where === 'after') host.insertAdjacentElement('afterend', bar); else host.insertAdjacentElement('beforebegin', bar);
       };
       addExport('#cx-table-wrap', 'the chips you picked', Landscape.exportRows, 'before'); // a live array: Landscape keeps it in step with the selection
       addExport('#matrix', 'country-share matrix', DATA.matrix, 'before');
-      addExport('#timeline', 'export-control timeline', DATA.timeline, 'before');
-      addExport('#controls-table', 'licence thresholds', DATA.controls, 'before');
+      addExport('#timeline', 'export-control timeline', function () { return Geo.visible || DATA.timeline; }, 'before');
+      addExport('#controls-table', 'licence thresholds', function () { return Controls.visible || DATA.controls; }, 'before');
       addExport('#exposure-table', 'China revenue share by firm and year', DATA.exposure, 'before');
       // cite-this block in the footer
       var foot = $('.site-footer');
