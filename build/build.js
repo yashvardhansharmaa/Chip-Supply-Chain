@@ -298,8 +298,8 @@ const contentsHTML = chapters.map((ch) => `<div class="item"><span class="n">${p
   (geo ? `<div class="item"><span class="n">${pad(chapters.length + 1)}</span><a class="t" href="#/geopolitics">Geopolitics</a><ul>${geo.headings.slice(0, 6).map((h) => `<li><a href="#/geopolitics">${esc(h.text)}</a></li>`).join('')}</ul></div>` : '');
 const railHTML = chainTrack(stages, null);
 const score5 = stages.filter((c) => +((c.meta.card || {}).chokepointScore || 0) >= 5).length;
-const thesisHTML = `${cap(word(stages.length))} stages. <span class="q">${cap(word(score5))}</span> chokepoints.`;
-const subtitleHTML = 'Who makes the AI chip, and who could stop it.';
+const thesisHTML = 'How AI chips are made';
+const subtitleHTML = 'Every stage of the supply chain, and who controls it.';
 
 /* ---------------- data ---------------- */
 function readJSONSafe(f) { try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch (e) { return null; } }
