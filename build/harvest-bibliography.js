@@ -127,6 +127,17 @@ function writeBody(url, buf, isPdf) {
   else fs.writeFileSync(bodyPath(url, '.html'), buf.slice(0, 400 * 1024));
 }
 
+// A few hosts accept the connection and then never finish the body. The abort
+// signal covers the request, but wrap the whole call in a hard deadline too so
+// one dead host cannot stall the pool indefinitely.
+function withDeadline(promise, ms, url) {
+  let timer;
+  const guard = new Promise((resolve) => {
+    timer = setTimeout(() => resolve({ url, status: 0, error: `hard timeout after ${ms}ms` }), ms);
+  });
+  return Promise.race([promise, guard]).finally(() => clearTimeout(timer));
+}
+
 async function fetchUrl(url) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
@@ -781,7 +792,7 @@ async function main() {
     const cacheOk = cached && cached.status >= 200 && cached.status < 400 && cached.extracted;
     if (cacheOk && !refetch && !needBody) return;
     if (cached && !refetch && !needBody && cached.status !== 0) return; // keep recorded failure
-    const res = await fetchUrl(url);
+    const res = await withDeadline(fetchUrl(url), TIMEOUT_MS + 5000, url);
     const record = {
       url,
       status: res.status,
