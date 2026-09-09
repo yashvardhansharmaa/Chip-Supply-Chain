@@ -150,7 +150,7 @@ small { font-size: 0.85em; }
 
 /* ---------- prose ---------- */
 .prose { max-width: var(--measure); }
-.view[data-view="geopolitics"] { --measure: 29.5em; } /* the essay reads a little wider than the chapters */
+.view[data-view="geopolitics"] { --measure: 29.5rem; } /* rem: an em here would resolve against the view element, not the root */ /* the essay reads a little wider than the chapters */
 .prose h3 { font-family: var(--font-display); font-weight: 600; font-size: 27px; line-height: 1.15; letter-spacing: -0.002em; margin: 1.9em 0 0.65em; max-width: var(--measure); scroll-margin-top: calc(var(--masthead) + 16px); }
 .prose h4 { font-family: var(--font-display); font-weight: 600; font-size: 20px; line-height: 1.25; margin: 1.7em 0 0.5em; max-width: var(--measure); scroll-margin-top: calc(var(--masthead) + 16px); }
 .prose > p, .prose > ul, .prose > ol, .prose blockquote { max-width: var(--measure); }
