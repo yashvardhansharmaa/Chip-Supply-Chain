@@ -17,8 +17,8 @@ PC.register('foup', function (p) {
   }
 
   // ---------- the shell: five translucent walls, the front face left open ----------
-  add(PC.box({ w: W, h: H, d: D, faces: ['nz'], n: 5200, tone: 0.22 }));
-  add(PC.box({ w: W, h: H, d: D, faces: ['px', 'nx'], n: 9000, tone: 0.2 }));
+  add(PC.box({ w: W, h: H, d: D, faces: ['nz'], n: 5200, tone: 0.18 }));
+  add(PC.box({ w: W, h: H, d: D, faces: ['px', 'nx'], n: 9000, tone: 0.16 }));
   add(PC.box({ w: W, h: H, d: D, faces: ['py'], n: 4000, tone: 0.24 }));
   add(PC.box({ w: W, h: H, d: D, faces: ['ny'], n: 4000, tone: 0.3 }));
   add(PC.boxEdges({ w: W, h: H, d: D, perUnit: 360, tone: 0.95 }));
@@ -35,13 +35,13 @@ PC.register('foup', function (p) {
   // ---------- 25 wafers on their slot teeth ----------
   for (var i = 0; i < slots; i++) {
     var y = y0 + i * pitch, acc = (i === accentSlot);
-    var disc = PC.disc({ r: rW, n: 360, tone: 0.28 });
-    var rim = PC.circle({ r: rW, perUnit: 120, tone: 0.62 });
+    var disc = PC.disc({ r: rW, n: 300, tone: 0.22 });
+    var rim = PC.circle({ r: rW, perUnit: 150, tone: 0.8 });
     add(PC.T(acc ? PC.accent(disc, 0.45) : disc, { pos: [0, y, 0] }));
     add(PC.T(acc ? PC.accent(rim, 1) : rim, { pos: [0, y, 0] }));
     // the teeth the wafer rests on, running front to back down both side walls
     [1, -1].forEach(function (s) {
-      add(PC.line({ a: [s * (W / 2 - 3 * cm), y - 0.2 * cm, -D / 2 + 6 * cm], b: [s * (W / 2 - 3 * cm), y - 0.2 * cm, D / 2 - 3 * cm], perUnit: 200, tone: 0.5 }));
+      add(PC.line({ a: [s * (W / 2 - 3 * cm), y - 0.2 * cm, -D / 2 + 6 * cm], b: [s * (W / 2 - 3 * cm), y - 0.2 * cm, D / 2 - 3 * cm], perUnit: 150, tone: 0.3 }));
     });
   }
 
@@ -72,7 +72,7 @@ PC.register('foup', function (p) {
   return {
     cloud: PC.merge.apply(null, parts),
     spin: 0.11,
-    tilt: [0.28, -0.45, 0],
+    tilt: [0.18, -0.5, 0],
     caption: 'A FOUP with its door off: twenty-five 300 mm wafers lying 10 mm apart on the slot teeth inside a sealed box the size of a carry-on bag, with the robot handle on top. One wafer is picked out in copper.'
   };
 });

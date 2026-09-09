@@ -321,7 +321,7 @@ const briefingHTML = all.map((ch) => {
 <div class="brief-head"><span class="n">${pad(ch.number)}</span><a href="${href}" class="t">${esc(ch.title)}</a>
 <span class="brief-meta">${c.chokepointScore ? pips(+c.chokepointScore) + `<span class="num">${c.chokepointScore}/5</span>` : ''}${c.concentration ? `<span class="conc ${esc(c.concentration)}">${esc(c.concentration)}</span>` : ''}</span></div>
 ${ch.meta.plain ? `<p class="brief-plain">${inline(ch.meta.plain, { id: 'brief-' + ch.id, cites: [], figures: [] })}</p>` : (ch.meta.oneLiner ? `<p class="brief-plain">${esc(ch.meta.oneLiner)}</p>` : '')}
-${ch.inShort ? `<div class="brief-short">${ch.inShort.replace(/<sup class="cite">[\s\S]*?<\/sup>/g, '')}</div>` : ''}
+${ch.inShort ? `<div class="brief-short">${ch.inShort.replace(/<sup class="cite">[\s\S]*?<\/sup>/g, '').replace(/\s+([.,;:])/g, '$1')}</div>` : ''}
 ${leaders ? `<p class="brief-leaders"><span class="label">Who leads</span> ${leaders}</p>` : ''}
 </article>`;
 }).join('');

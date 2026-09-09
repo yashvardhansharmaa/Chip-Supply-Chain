@@ -23,10 +23,17 @@ PC.register('gas-cabinet', function (p) {
 
   // ================= the cabinet =================
   // shell: back, two sides, top and floor. The front (+z) is open.
-  parts.push(at(PC.box({ w: CW, h: CH, d: CD, faces: ['nz'], n: 13000, tone: 0.28 }), CBX, CY, 0));
-  parts.push(at(PC.box({ w: CW, h: CH, d: CD, faces: ['nx', 'px'], n: 9000, tone: 0.36 }), CBX, CY, 0));
-  parts.push(at(PC.box({ w: CW, h: CH, d: CD, faces: ['py'], n: 2400, tone: 0.42 }), CBX, CY, 0));
-  parts.push(at(PC.box({ w: CW, h: CH, d: CD, faces: ['ny'], n: 3400, tone: 0.44 }), CBX, CY, 0));
+  parts.push(at(PC.box({ w: CW, h: CH, d: CD, faces: ['nz'], n: 11000, tone: 0.20 }), CBX, CY, 0));  // inside of the back
+  parts.push(at(PC.box({ w: CW, h: CH, d: CD, faces: ['nx'], n: 3600, tone: 0.20 }), CBX, CY, 0));   // inside of the far wall
+  parts.push(at(PC.box({ w: CW, h: CH, d: CD, faces: ['px'], n: 8000, tone: 0.44 }), CBX, CY, 0));   // outside of the near wall
+  parts.push(at(PC.box({ w: CW, h: CH, d: CD, faces: ['py'], n: 2400, tone: 0.44 }), CBX, CY, 0));
+  parts.push(at(PC.box({ w: CW, h: CH, d: CD, faces: ['ny'], n: 3600, tone: 0.42 }), CBX, CY, 0));
+  // louvre slots in the near wall
+  for (i = 0; i < 5; i++) {
+    parts.push(at(PC.polyline({
+      pts: [[0, -0.02, -0.20], [0, -0.02, 0.20], [0, 0.02, 0.20], [0, 0.02, -0.20]], closed: true, perUnit: 190, tone: 0.85
+    }), CBX + CW / 2 + 0.002, CFL + 1.52 + i * 0.075, 0));
+  }
   parts.push(at(PC.boxEdges({ w: CW, h: CH, d: CD, perUnit: 200, tone: 0.95 }), CBX, CY, 0));
   // door frame return around the open front, and three hinge blocks
   parts.push(at(PC.polyline({

@@ -95,12 +95,16 @@ PC.register('photomask', function (p) {
     rect(FW, FD, yF, 300, 1)
   ];
   add(PC.accent(PC.merge.apply(null, fr), 0.85));
-  // four standoff posts
+  // four standoff posts, with a hairline down to the blank so the gap reads
   for (sx = -1; sx <= 1; sx += 2) for (sz = -1; sz <= 1; sz += 2) {
-    add(PC.accent(PC.T(PC.cylinder({ r: 2.6 * S, h: stand, n: 420, tone: 1 }), { pos: [sx * (FW / 2 - bar / 2), yTop + stand / 2, sz * (FD / 2 - bar / 2)] }), 0.7));
+    var px = sx * (FW / 2 - bar / 2), pz = sz * (FD / 2 - bar / 2);
+    add(PC.accent(PC.T(PC.cylinder({ r: 3.0 * S, h: stand, n: 520, tone: 1 }), { pos: [px, yTop + stand / 2, pz] }), 0.75));
+    add(PC.line({ a: [px + sx * 3.0 * S, yTop, pz], b: [px + sx * 3.0 * S, yF, pz], perUnit: 260, tone: 0.8 }));
   }
+  // filter/vent port on one frame bar
+  add(PC.accent(PC.T(PC.box({ w: 9 * S, h: fh * 0.8, d: 5 * S, n: 500, tone: 1 }), { pos: [FW * 0.22, yF + fh / 2, -(FD / 2 + 2 * S)] }), 0.9));
   // the membrane itself: a whisper of a plane inside the frame
-  add(PC.T(PC.plane({ w: FW - 2 * bar, d: FD - 2 * bar, n: 2600, tone: 0.14 }), { pos: [0, yF + fh, 0] }));
+  add(PC.T(PC.plane({ w: FW - 2 * bar, d: FD - 2 * bar, n: 3000, tone: 0.17 }), { pos: [0, yF + fh, 0] }));
 
   return {
     cloud: PC.merge.apply(null, parts),
