@@ -47,16 +47,16 @@ PC.register('gaa-transistor', function (p) {
   }
 
   // ---------- substrate and the isolation the stack sits on ----------
-  add(boxAt(-30, -23, -25, 30, -16, 25, { n: 2000, tone: 0.11 }));
-  add(edgesAt(-30, -23, -25, 30, -16, 25, 6, 0.65));
-  add(boxAt(-27, -16, -22, 27, -11, 22, { n: 900, tone: 0.20 }));       // bottom dielectric isolation
-  add(edgesAt(-27, -16, -22, 27, -11, 22, 6, 0.75));
+  add(boxAt(-30, -23, -25, 30, -16, 25, { n: 1600, tone: 0.09 }));
+  add(edgesAt(-30, -23, -25, 30, -16, 25, 5, 0.45));
+  add(boxAt(-27, -16, -22, 27, -11, 22, { n: 800, tone: 0.16 }));       // bottom dielectric isolation
+  add(edgesAt(-27, -16, -22, 27, -11, 22, 6, 0.6));
 
   // ---------- the three silicon nanosheets ----------
   y0.forEach(function (yb) {
     add(boxAt(-sL / 2, yb, -sW / 2, sL / 2, yb + sT, sW / 2,
       { n: 4400, tone: 0.30, faces: ['py', 'pz', 'nz', 'px', 'nx'] }));
-    add(edgesAt(-sL / 2, yb, -sW / 2, sL / 2, yb + sT, sW / 2, 9, 0.9));
+    add(edgesAt(-sL / 2, yb, -sW / 2, sL / 2, yb + sT, sW / 2, 15, 0.95));
     for (var q = -1; q <= 1; q++) {
       add(PC.line({ a: [-sL / 2, yb + sT, q * 8], b: [sL / 2, yb + sT, q * 8], perUnit: 7, tone: 0.45 }));
     }
@@ -97,19 +97,19 @@ PC.register('gaa-transistor', function (p) {
     add(PC.T(epi, { scale: [s * 100, 100, 100], pos: [0, 19, 0] }));
     var ring = shape.map(function (q) { return [s * q[0] * 100, 0, q[1] * 100]; });
     [-2, 40].forEach(function (yy) {
-      add(PC.T(PC.polyline({ pts: ring, closed: true, perUnit: 8, tone: 0.9 }), { pos: [0, yy, 0] }));
+      add(PC.T(PC.polyline({ pts: ring, closed: true, perUnit: 8, tone: 0.75 }), { pos: [0, yy, 0] }));
     });
-    ring.forEach(function (q, qi) { add(PC.line({ a: [q[0], -2, q[2]], b: [q[0], 40, q[2]], perUnit: 7, tone: (qi % 2) ? 0.3 : 0.75 })); });
+    ring.forEach(function (q, qi) { add(PC.line({ a: [q[0], -2, q[2]], b: [q[0], 40, q[2]], perUnit: 7, tone: (qi % 2) ? 0.22 : 0.55 })); });
   });
 
   // ---------- contacts landing on the source, the drain and the gate ----------
   [-1, 1].forEach(function (s) {
     var a = s > 0 ? 14.5 : -23, c = s > 0 ? 23 : -14.5;
     add(boxAt(a, 40, -10, c, 48, 10, { n: 520, tone: 0.18, faces: ['py', 'px', 'nx', 'pz', 'nz'] }));
-    add(edgesAt(a, 40, -10, c, 48, 10, 9, 0.9));
+    add(edgesAt(a, 40, -10, c, 48, 10, 8, 0.8));
   });
   add(boxAt(-5, gY1, -8, 5, 51, 8, { n: 520, tone: 0.18, faces: ['py', 'px', 'nx', 'pz', 'nz'] }));
-  add(edgesAt(-5, gY1, -8, 5, 51, 8, 9, 0.9));
+  add(edgesAt(-5, gY1, -8, 5, 51, 8, 8, 0.8));
 
   return {
     cloud: PC.merge.apply(null, parts),

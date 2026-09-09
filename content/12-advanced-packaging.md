@@ -79,7 +79,7 @@ A lithography scanner prints a rectangle 26 mm by 33 mm, or 858 mm2, in one expo
 
 A chip package is a printed circuit board shrunk to the size of a playing card and built to the tolerances of a chip. A lithography machine can print only a rectangle about the size of a postage stamp in one shot, so a modern accelerator is cut into pieces and stitched back together on a shared slab of silicon, with its memory a few millimetres away. Slab, chips and board all expand at different rates when heated, so the finished package warps and the joints crack. Getting that right in volume is why nearly every AI accelerator is packaged by one company in Taiwan.
 
-HBM gives a second reason to split the package. Its 1,024-bit or 2,048-bit interface is too wide for an organic substrate to route, so the memory has to sit beside the logic on a shared silicon carrier, the interposer.
+HBM gives a second reason to split the package: its 1,024-bit or 2,048-bit interface is too wide for an organic substrate to route, so the memory has to sit beside the logic on a shared silicon carrier, the interposer.
 
 CoWoS builds it in two passes, chip-on-wafer and then wafer-on-substrate. TSMC makes a thin silicon wafer carrying wiring and through-silicon vias but no transistors, bonds logic dies and HBM stacks face down onto it with microbumps at 30 to 40 micron pitch, then dices the interposer out and attaches it to an organic build-up substrate.
 
@@ -97,7 +97,7 @@ The unit processes are ordinary. One joint cracked by thermal cycling, though, k
 
 TSMC has run CoWoS in volume since 2012 ([source](https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm)). CoWoS-S wires most finely, but its interposer is one monolithic die whose yield falls as area grows, so CoWoS-L replaces the slab with a redistribution layer carrying silicon bridges only where the wiring is dense. Intel's EMIB embeds the same bridge idea in the organic substrate, and is the one credible second source when CoWoS is tight.
 
-Blackwell was the first high-volume design on CoWoS-L, and it went badly. Bridges, dies, organic interposer and substrate all expand at different rates, so the package warps, and the bridges between the two compute dies carry a 10 TB/s link that has to be placed to a tolerance the warping fights ([source](https://semianalysis.com/2024/08/04/nvidias-blackwell-reworked-shipment/)).
+Blackwell was the first high-volume design on CoWoS-L, and it went badly. Bridges, dies, organic interposer and substrate all expand at different rates, so the package warps, and the bridges carrying the 10 TB/s link between the two compute dies have to be placed to a tolerance the warping fights ([source](https://semianalysis.com/2024/08/04/nvidias-blackwell-reworked-shipment/)).
 
 ### 3D: SoIC, Foveros, X-Cube
 
@@ -105,11 +105,11 @@ TSMC's SoIC and Intel's Foveros bond dies face to face, copper pad to copper pad
 
 ### The escape routes
 
-Panel-level packaging swaps the round wafer for a rectangular panel and wastes far less area; see Test and assembly. JEDEC published SPHBM4 on 13 July 2026: HBM4's DRAM on a base die carrying 512 data signals instead of 2,048, which relaxes bump pitch enough to mount HBM on a standard organic substrate ([source](https://www.jedec.org/news/pressreleases/new-jedec%C2%AE-sphbm4-standard-enables-hbm4-class-bandwidth-organic-substrates)). At volume, that would take the memory off the silicon interposer altogether.
+Panel-level packaging swaps the round wafer for a rectangular panel and wastes far less area; see Test and assembly. JEDEC published SPHBM4 on 13 July 2026: HBM4's DRAM on a base die carrying 512 data signals instead of 2,048, which relaxes bump pitch enough to mount HBM on a standard organic substrate ([source](https://www.jedec.org/news/pressreleases/new-jedec%C2%AE-sphbm4-standard-enables-hbm4-class-bandwidth-organic-substrates)) and would take the memory off the silicon interposer altogether.
 
 ## Capacity
 
-TSMC does not publish a CoWoS wafer number, and the omission is deliberate. At its 2024 symposium it told investors capacity would grow at a 60 percent compound rate, and on the July 2024 earnings call C.C. Wei said he could not reach supply and demand balance and expected supply to stay very tight ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf)).
+TSMC does not publish a CoWoS wafer number, and the omission is deliberate. Its 2024 symposium told investors capacity would grow at a 60 percent compound rate, and on the July 2024 earnings call C.C. Wei said he could not reach supply and demand balance and expected supply to stay very tight ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf)).
 
 Fifteen months later the answer had not changed. In October 2025 Wei would say only that TSMC was working hard to narrow the gap, would add capacity again in 2026, would give the real number the following year, and that front end and back end were both, in his word, tight ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf)).
 
@@ -117,13 +117,13 @@ The split is public even though the total is not. Epoch AI models each designer'
 
 {{figure:cowos-buyers}}
 
-The ordering has since flipped. SemiAnalysis reported in March 2026 that front-end wafer capacity is now the dominant bottleneck and that CoWoS constraints are easing, partly because TSMC has no reason to build interposer lines its N3 output cannot feed ([source](https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage)). The queue has eased and the concentration has not, since TSMC still does nearly all of the 2.5D work.
+The ordering has since flipped. SemiAnalysis reported in March 2026 that front-end wafer capacity is now the dominant bottleneck and that CoWoS constraints are easing, partly because TSMC has no reason to build interposer lines its N3 output cannot feed ([source](https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage)). The queue has eased and the concentration has not.
 
 ## Who makes it
 
 {{figure:cowos-reticles}}
 
-The word packaging covers two different industries. TSMC does the 2.5D work for AI accelerators in its own backend fabs; everything else goes to outsourced assembly and test firms. ASE Technology Holding, the largest, billed NT$645.4 billion in 2025, with its assembly and test business up 23 percent, and Amkor, the largest American one, billed $6.71 billion ([source](https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-fourth-quarter-and-the-full-year-of-2025-302679779.html)) ([source](https://www.sec.gov/Archives/edgar/data/1047127/000104712726000007/amkr123125erex-991.htm)).
+The word packaging covers two industries. TSMC does the 2.5D work for AI accelerators in its own backend fabs; everything else goes to outsourced assembly and test firms. ASE Technology Holding, the largest, billed NT$645.4 billion in 2025, with its assembly and test business up 23 percent, and Amkor, the largest American one, billed $6.71 billion ([source](https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-fourth-quarter-and-the-full-year-of-2025-302679779.html)) ([source](https://www.sec.gov/Archives/edgar/data/1047127/000104712726000007/amkr123125erex-991.htm)).
 
 The tools are a narrower chokepoint than the assembly houses.
 
@@ -139,15 +139,14 @@ America is building, slowly. TSMC's Arizona commitment reached $265 billion in J
 
 JCET, the largest Chinese assembler, billed RMB 35.96 billion in 2024, up 21 percent ([source](https://www.jcetglobal.com/en/site/news-detail?id=1952)), and Chinese toolmakers took real share in packaging and test equipment over the same years they took none in ALD ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). Packaging tools are less export-controlled than lithography, and chiplets on SMIC silicon plus domestic assembly is the most credible route around the restrictions Huawei faces. China still has no silicon-interposer 2.5D at volume with qualified HBM beside it.
 
-Each generation on TSMC's roadmap asks more of the interposer.
+Each generation on TSMC's roadmap asks more of the interposer than the last.
 
-- **Now.** 5.5 reticles in production, up from 3.5 in 2024, with a 9.5-reticle version in development ([source](https://investor.tsmc.com/static/annualReports/2025/english/pdf/2025_tsmc_ar_e_ch5.pdf)).
 - **2028.** A 14-reticle interposer carrying about ten large compute dies and 20 HBM stacks, roughly 12,000 mm2 of silicon, about the area of a compact disc ([source](https://pr.tsmc.com/english/news/3302)).
 - **2029.** More than 14 reticles, and a 40-reticle System-on-Wafer beside it ([source](https://pr.tsmc.com/english/news/3302)).
 
 ## Key evaluation criteria
 
-- **Interposer area** — the ceiling on how much logic and memory fit. 3.3x reticle for CoWoS-S ([source](https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm)), 5.5x for CoWoS-L in production today ([source](https://pr.tsmc.com/english/news/3302)).
+- **Interposer area** — the ceiling on how much logic and memory fit, now 5.5x reticle on CoWoS-L ([source](https://pr.tsmc.com/english/news/3302))).
 - **Package yield** — nobody publishes it, and it decides whether a generation ships on time.
 - **Warpage control** — the expansion mismatch between die, bridge, interposer and substrate that broke early CoWoS-L and gets harder as packages grow ([source](https://semianalysis.com/2024/08/04/nvidias-blackwell-reworked-shipment/)).
 - **HBM stacks supported** — about 20 on the 14-reticle package due in 2028 ([source](https://pr.tsmc.com/english/news/3302)).
@@ -156,4 +155,4 @@ Each generation on TSMC's roadmap asks more of the interposer.
 
 ## Takeaways
 
-Advanced packaging capped AI chip output through 2024 and 2025: the physics was solved and the lines were not built. Demand is as narrow as supply, and on Epoch AI's estimate Nvidia alone took 60.3 percent of the world's CoWoS in 2025, with four American designers taking around 90 percent ([source](https://epoch.ai/data-insights/ai-chip-supply-chain-constraints)). By March 2026 the binding constraint had moved back to front-end wafers ([source](https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage)). The concentration is unchanged: China can package chips but not the 2.5D structures AI accelerators need, and the American alternatives do not start until 2028.
+Advanced packaging capped AI chip output through 2024 and 2025: the physics was solved and the lines were not built. On Epoch AI's estimate Nvidia alone took 60.3 percent of the world's CoWoS in 2025, and four American designers took around 90 percent ([source](https://epoch.ai/data-insights/ai-chip-supply-chain-constraints)). By March 2026 the binding constraint had moved back to front-end wafers ([source](https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage)). The concentration is unchanged: China can package chips but not the 2.5D structures AI accelerators need, and the American alternatives do not start until 2028.

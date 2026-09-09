@@ -61,7 +61,7 @@
 ---
 # Systems and Networking
 
-A package computes nothing until it is wired into a machine. Bolting it down, powering it and linking it to its neighbours is a separate industry, and the scarcest input in that industry is a laser material.
+A package computes nothing until it is wired into a machine. Bolting it down, powering it and linking it to its neighbours is a separate industry from making it.
 
 ## How it works
 
