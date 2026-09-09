@@ -628,28 +628,150 @@
   /* ---------------- suppliers ---------------- */
   var Suppliers = {
     rows: DATA.suppliers || [], built: false, cat: null, country: '', chk: '', q: '', sortKey: 'name', sortDir: 1,
+    mode: 'compact', shown: [], cells: {},
+    MAIN: ['US', 'JP', 'CN', 'TW', 'KR', 'DE', 'NL', 'GB'], // the eight columns of the matrix; everything else falls into Other
+    LEVELS: ['Critical', 'Important', 'Contested', 'Diversified'],
+    RANK: { Critical: 0, Important: 1, Contested: 2, Diversified: 3 },
+    ORDER: ['Design & EDA', 'IP & Architecture', 'Silicon & Wafers', 'Photomasks', 'Lithography', 'Deposition & Etch', 'Photoresist & Materials', 'Chemicals & Gases', 'Optics & Photonics', 'Equipment Subsystems & Components', 'Metrology & Inspection', 'Foundry', 'Memory', 'Advanced Packaging & OSAT', 'Test', 'Substrates & PCBs', 'Interconnect & Networking', 'Power & Cooling', 'Systems & Servers', 'AI Accelerator Vendor'], // chain order, design first
     activate: function () { if (!this.built) this.build(); },
+
     build: function () {
       this.built = true;
       var self = this, cats = {}, countries = {};
+      try { var saved = localStorage.getItem('cp-sup-mode'); if (saved === 'compact' || saved === 'detailed') this.mode = saved; } catch (e) { }
       this.rows.forEach(function (r) { cats[r.category] = (cats[r.category] || 0) + 1; countries[r.country] = (countries[r.country] || 0) + 1; });
+      var order = this.ORDER.filter(function (c) { return cats[c]; }); // a category the data adds later lands at the end
+      Object.keys(cats).sort().forEach(function (c) { if (order.indexOf(c) < 0) order.push(c); });
+      this.order = order;
+
       var chips = $('#sup-chips');
-      chips.innerHTML = Object.keys(cats).sort().map(function (c) { return '<button type="button" data-cat="' + esc(c) + '" aria-pressed="false">' + esc(c) + '<b>' + cats[c] + '</b></button>'; }).join('');
-      chips.addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; var c = b.getAttribute('data-cat'); self.cat = self.cat === c ? null : c; $$('button', chips).forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-cat') === self.cat ? 'true' : 'false'); }); self.render(); });
-      var sel = $('#sup-country');
+      chips.innerHTML = order.map(function (c) { return '<button type="button" data-cat="' + esc(c) + '" aria-pressed="false">' + esc(c) + '<b>' + cats[c] + '</b></button>'; }).join('');
+      chips.addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; var c = b.getAttribute('data-cat'); self.setFilters(self.cat === c ? null : c, self.country, false); });
+      var csel = $('#sup-cat'); // phones get a select instead of twenty chips
+      order.forEach(function (c) { var o = document.createElement('option'); o.value = c; o.textContent = c + ' (' + cats[c] + ')'; csel.appendChild(o); });
+      csel.addEventListener('change', function () { self.setFilters(csel.value || null, self.country, false); });
+
+      var sel = $('#sup-country'), other = 0;
+      Object.keys(countries).forEach(function (c) { if (self.MAIN.indexOf(c) < 0) other += countries[c]; });
       Object.keys(countries).sort(function (a, b) { return countries[b] - countries[a]; }).forEach(function (c) { var o = document.createElement('option'); o.value = c; o.textContent = cname(c) + ' (' + countries[c] + ')'; sel.appendChild(o); });
-      sel.addEventListener('change', function () { self.country = sel.value; self.render(); });
+      if (other) { var oo = document.createElement('option'); oo.value = '__other'; oo.textContent = 'Every other country (' + other + ')'; sel.appendChild(oo); }
+      sel.addEventListener('change', function () { self.setFilters(self.cat, sel.value, false); });
+
       $('#sup-chk').addEventListener('change', function (e) { self.chk = e.target.value; self.render(); });
       var supTimer; $('#sup-search').addEventListener('input', function (e) { var v = e.target.value; clearTimeout(supTimer); supTimer = setTimeout(function () { self.q = v.trim().toLowerCase(); self.render(); }, 120); });
       $('#sup-copy').addEventListener('click', function () { self.copy(); });
-      $('#sup-table').addEventListener('click', function (e) { var b = e.target.closest('button[data-sort]'); if (!b) return; var k = b.getAttribute('data-sort'); if (self.sortKey === k) self.sortDir = -self.sortDir; else { self.sortKey = k; self.sortDir = 1; } self.render(); });
+      $('#sup-table').addEventListener('click', function (e) { var b = e.target.closest('button[data-sort]'); if (b) self.sortBy(b.getAttribute('data-sort')); });
+      $('#sup-list').addEventListener('click', function (e) {
+        var s = e.target.closest('button[data-sort]'); if (s) { self.sortBy(s.getAttribute('data-sort')); return; }
+        var h = e.target.closest('.sup-head'); if (h) self.toggleRow(h);
+      });
+      $$('.sup-mode').forEach(function (b) { b.addEventListener('click', function () { self.setMode(b.getAttribute('data-mode')); }); });
+
+      this.buildMap();
+      this.sync();
       this.render();
     },
+
+    /* ---- the dot matrix: stages down, countries across ---- */
+    buildMap: function () {
+      var self = this, host = $('#sup-map-scroll'); if (!host) return;
+      var cols = this.MAIN.concat(['Other']), cells = {}, rowTot = {}, colTot = {}, max = 0;
+      this.rows.forEach(function (r) {
+        var c = self.MAIN.indexOf(r.country) >= 0 ? r.country : 'Other', k = r.category + '|' + c;
+        var e = cells[k] || (cells[k] = { n: 0, lv: 3, names: [] });
+        e.n++; e.names.push(r.name);
+        var rk = self.RANK[r.chokepoint]; if (rk != null && rk < e.lv) e.lv = rk;
+        rowTot[r.category] = (rowTot[r.category] || 0) + 1; colTot[c] = (colTot[c] || 0) + 1;
+        if (e.n > max) max = e.n;
+      });
+      this.cells = cells;
+      var dia = function (n) { return Math.max(5, Math.round(20 * Math.sqrt(n / max) * 10) / 10); }; // area, not width, carries the count
+      var label = function (c) { return c === 'Other' ? 'every other country' : cname(c); };
+
+      var h = '<table class="sup-grid"><thead><tr><th class="sup-gcorner"><span class="sr-only">Stage</span></th>';
+      cols.forEach(function (c) { h += '<th scope="col"' + (c === 'Other' ? ' class="sup-gother"' : '') + ' title="' + esc(label(c)) + '">' + esc(c) + '</th>'; });
+      h += '<th scope="col" class="sup-gall" title="All countries">All</th></tr></thead><tbody>';
+      this.order.forEach(function (cat, i) {
+        h += '<tr style="--i:' + i + '"><th scope="row" title="' + esc(cat) + '">' + esc(cat) + '</th>';
+        cols.forEach(function (c) {
+          var e = cells[cat + '|' + c];
+          if (!e) { h += '<td class="sup-td"><span class="sup-nil" aria-hidden="true"></span></td>'; return; }
+          var lv = self.LEVELS[e.lv];
+          h += '<td class="sup-td"><button type="button" class="sup-cell" data-cat="' + esc(cat) + '" data-cc="' + esc(c) + '" aria-label="' + esc(cat + ', ' + label(c) + ': ' + e.n + ' supplier' + (e.n === 1 ? '' : 's') + ', most severe ' + lv) + '"><i class="sup-dot lv-' + lv + '" style="--s:' + dia(e.n) + 'px"></i></button></td>';
+        });
+        h += '<td class="sup-gn">' + (rowTot[cat] || 0) + '</td></tr>';
+      });
+      h += '</tbody><tfoot><tr><th scope="row">All</th>';
+      cols.forEach(function (c) { h += '<td class="sup-gn">' + (colTot[c] || 0) + '</td>'; });
+      h += '<td class="sup-gn">' + this.rows.length + '</td></tr></tfoot></table>';
+      host.innerHTML = h;
+
+      var sw = function (lv) { return '<span class="sup-lg"><i class="sup-dot lv-' + lv + '" style="--s:9px"></i>' + lv + '</span>'; };
+      $('#sup-legend').innerHTML = 'Bigger dot, more firms. The fill is the most severe level in that cell: ' +
+        sw('Critical') + sw('Important') + sw('Contested') + sw('Diversified') +
+        '. Click a dot to filter the list, and again to clear.';
+
+      host.addEventListener('click', function (e) { var b = e.target.closest('.sup-cell'); if (b) self.pickCell(b); });
+      host.addEventListener('mouseover', function (e) { var b = e.target.closest('.sup-cell'); if (b) self.showTip(b); });
+      host.addEventListener('mouseout', function (e) { var b = e.target.closest('.sup-cell'); if (b && !b.contains(e.relatedTarget)) self.hideTip(); });
+      host.addEventListener('focusin', function (e) { var b = e.target.closest('.sup-cell'); if (b) self.showTip(b); });
+      host.addEventListener('focusout', function () { self.hideTip(); });
+      host.addEventListener('scroll', function () { self.hideTip(); });
+    },
+    showTip: function (btn) {
+      var e = this.cells[btn.getAttribute('data-cat') + '|' + btn.getAttribute('data-cc')], el = $('#sup-tip'), map = $('#sup-map');
+      if (!e || !el || !map) return;
+      var cc = btn.getAttribute('data-cc');
+      el.innerHTML = '<b>' + esc(btn.getAttribute('data-cat')) + ' · ' + esc(cc === 'Other' ? 'Other countries' : cname(cc)) + '</b>' +
+        e.names.slice(0, 6).map(function (n) { return '<span>' + esc(n) + '</span>'; }).join('') +
+        (e.names.length > 6 ? '<span class="sup-tip-more">+' + (e.names.length - 6) + ' more</span>' : '');
+      el.hidden = false;
+      var r = btn.getBoundingClientRect(), m = map.getBoundingClientRect(), w = el.offsetWidth, hh = el.offsetHeight;
+      var left = Math.max(0, Math.min(r.left - m.left + r.width / 2 - w / 2, m.width - w));
+      var top = r.top - m.top - hh - 8;
+      if (top < 0) top = r.bottom - m.top + 8;
+      el.style.left = left + 'px'; el.style.top = top + 'px';
+    },
+    hideTip: function () { var el = $('#sup-tip'); if (el) el.hidden = true; },
+    pickCell: function (btn) {
+      var cat = btn.getAttribute('data-cat'), cc = btn.getAttribute('data-cc');
+      var want = cc === 'Other' ? '__other' : cc, same = this.cat === cat && this.country === want;
+      this.setFilters(same ? null : cat, same ? '' : want, !same);
+    },
+
+    /* ---- filters ---- */
+    setFilters: function (cat, country, scroll) {
+      this.cat = cat || null; this.country = country || '';
+      this.sync(); this.render();
+      if (scroll) { var t = $('#sup-toolbar'); if (t) t.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' }); }
+    },
+    sortBy: function (k) { if (this.sortKey === k) this.sortDir = -this.sortDir; else { this.sortKey = k; this.sortDir = 1; } this.render(); },
+    setMode: function (m) {
+      if (m === this.mode) return;
+      this.mode = m;
+      try { localStorage.setItem('cp-sup-mode', m); } catch (e) { }
+      this.sync(); this.render();
+    },
+    sync: function () { // every control and the matrix show the same state
+      var self = this, on = this.country === '__other' ? 'Other' : this.country;
+      $$('#sup-chips button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-cat') === self.cat ? 'true' : 'false'); });
+      var csel = $('#sup-cat'); if (csel) csel.value = this.cat || '';
+      var sel = $('#sup-country'); if (sel) sel.value = this.country || '';
+      $$('.sup-mode').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-mode') === self.mode ? 'true' : 'false'); });
+      $('#sup-list').hidden = this.mode !== 'compact';
+      $('#sup-wrap').hidden = this.mode !== 'detailed';
+      $$('.sup-cell').forEach(function (b) {
+        if (self.cat && b.getAttribute('data-cat') === self.cat && b.getAttribute('data-cc') === on) b.setAttribute('data-on', '1');
+        else b.removeAttribute('data-on');
+      });
+    },
+    countryLabel: function () { return this.country === '__other' ? 'Other countries' : cname(this.country); },
     filtered: function () {
-      var self = this, CHK = { Critical: 0, Important: 1, Contested: 2, Diversified: 3 };
+      var self = this, CHK = this.RANK;
       var out = this.rows.filter(function (r) {
         if (self.cat && r.category !== self.cat) return false;
-        if (self.country && r.country !== self.country) return false;
+        if (self.country === '__other') { if (self.MAIN.indexOf(r.country) >= 0) return false; }
+        else if (self.country && r.country !== self.country) return false;
         if (self.chk && r.chokepoint !== self.chk) return false;
         if (self.q) { var hay = [r.name, r.nativeName, r.city, r.ticker, r.role, r.subcategory, (r.customers || []).join(' '), cname(r.country)].join(' ').toLowerCase(); if (hay.indexOf(self.q) < 0) return false; }
         return true;
@@ -665,7 +787,61 @@
       return out;
     },
     render: function () {
-      var rows = this.filtered(), self = this;
+      var rows = this.filtered();
+      this.shown = rows;
+      $('#sup-count').textContent = 'Showing ' + rows.length + ' of ' + this.rows.length + ' suppliers' +
+        (this.cat ? ' · ' + this.cat : '') + (this.country ? ' · ' + this.countryLabel() : '') + (this.chk ? ' · ' + this.chk : '');
+      if (this.mode === 'compact') this.renderList(rows); else this.renderTable(rows);
+    },
+
+    /* ---- compact list: one line a firm, opening in place ---- */
+    renderList: function (rows) {
+      var self = this;
+      var sortBtn = function (k, label, cls) {
+        return '<button type="button" class="' + cls + '" data-sort="' + k + '"' + (self.sortKey === k ? ' aria-sort="' + (self.sortDir > 0 ? 'ascending' : 'descending') + '"' : '') + '>' + label + '</button>';
+      };
+      var html = '<div class="sup-hrow"><span class="sup-hlab">Sort</span>' + sortBtn('name', 'Supplier', 'c1') +
+        '<span class="c2">What they make</span>' + sortBtn('country', 'Country', 'c3') + sortBtn('founded', 'Founded', 'c4') +
+        sortBtn('chokepoint', 'Level', 'c5') + '<span class="c6"></span></div>';
+      rows.forEach(function (r, i) {
+        var tag = [r.nativeName, r.ticker].filter(Boolean).join(' · '), id = 'sup-d-' + i;
+        html += '<div class="sup-row" data-i="' + i + '" style="--i:' + Math.min(i, 40) + '">' +
+          '<button type="button" class="sup-head" aria-expanded="false" aria-controls="' + id + '">' +
+          '<span class="c1"><b>' + esc(r.name) + '</b>' + (tag ? '<em>' + esc(tag) + '</em>' : '') + '</span>' +
+          '<span class="c2">' + esc(r.subcategory || '') + '</span>' +
+          '<span class="c3"><i>' + esc(r.country) + '</i>' + (r.city ? ' ' + esc(r.city) : '') + '</span>' +
+          '<span class="c4">' + (r.founded || '—') + '</span>' +
+          '<span class="c5"><span class="chk ' + esc(r.chokepoint || '') + '">' + esc(r.chokepoint || '') + '</span></span>' +
+          '<span class="c6"><i class="sup-chev" aria-hidden="true"></i></span>' +
+          '</button><div class="sup-detail" id="' + id + '"><div class="sup-detail-in"></div></div></div>';
+      });
+      $('#sup-list').innerHTML = html;
+    },
+    toggleRow: function (head) {
+      var row = head.parentNode, open = row.getAttribute('data-open') === '1';
+      if (!open) {
+        var body = $('.sup-detail-in', row);
+        if (body && !body.getAttribute('data-filled')) { body.innerHTML = this.detail(this.shown[+row.getAttribute('data-i')]); body.setAttribute('data-filled', '1'); }
+      }
+      row.setAttribute('data-open', open ? '0' : '1');
+      head.setAttribute('aria-expanded', open ? 'false' : 'true');
+    },
+    detail: function (r) {
+      if (!r) return '';
+      var facts = [];
+      if ((r.customers || []).length) facts.push(['Customers', esc(r.customers.join(', '))]);
+      if (r.shareNote) facts.push(['Share', esc(r.shareNote)]);
+      if (r.founded) facts.push(['Founded', esc(r.founded)]);
+      if (r.ownership) facts.push(['Ownership', esc(r.ownership)]);
+      if (r.revenueUSDb != null) facts.push(['Revenue', '$' + (r.revenueUSDb >= 10 ? r.revenueUSDb.toFixed(1) : r.revenueUSDb.toFixed(2)) + 'B' + (r.revenueYear ? ' (' + esc(r.revenueYear) + ')' : '')]);
+      return '<div class="sup-detail-body">' + (r.role ? '<p class="sup-role">' + esc(r.role) + '</p>' : '') +
+        (facts.length ? '<dl class="sup-facts">' + facts.map(function (f) { return '<dt>' + f[0] + '</dt><dd>' + f[1] + '</dd>'; }).join('') + '</dl>' : '') +
+        (r.source ? '<a class="sup-src" href="' + safeUrl(r.source) + '" target="_blank" rel="noopener">Source for ' + esc(r.name) + '</a>' : '') + '</div>';
+    },
+
+    /* ---- detailed table: every field, as before ---- */
+    renderTable: function (rows) {
+      var self = this;
       var th = function (k, label) { return '<th><button type="button" data-sort="' + k + '"' + (self.sortKey === k ? ' aria-sort="' + (self.sortDir > 0 ? 'ascending' : 'descending') + '"' : '') + '>' + label + '</button></th>'; };
       var html = '<thead><tr>' + th('name', 'Supplier') + th('category', 'Category') + th('country', 'Country') + th('founded', 'Founded') + th('chokepoint', 'Chokepoint level') + '<th>What they make and why it matters</th><th>Customers</th></tr></thead><tbody>';
       rows.forEach(function (r) {
@@ -678,7 +854,6 @@
           '<td style="font-size:13px;color:var(--ink-2)">' + esc((r.customers || []).join(', ')) + '</td></tr>';
       });
       $('#sup-table').innerHTML = html + '</tbody>';
-      $('#sup-count').textContent = 'Showing ' + rows.length + ' of ' + this.rows.length + ' suppliers' + (this.cat ? ' · ' + this.cat : '') + (this.country ? ' · ' + cname(this.country) : '');
     },
     copy: function () {
       var rows = this.filtered(), cols = ['name', 'nativeName', 'category', 'subcategory', 'country', 'city', 'founded', 'ticker', 'ownership', 'chokepoint', 'shareNote', 'role', 'customers', 'revenueUSDb', 'revenueYear', 'source'];
@@ -694,6 +869,24 @@
   /* ---------------- geopolitics ---------------- */
   var Geo = {
     built: false, cat: null,
+    tl: [], visible: [], items: [], full: false, drawn: false, tip: null, at: -1, atDot: -1, stripW: 0, tickQ: false,
+    /* the five lanes of the minimap, in this order; the colours are the .timeline .cat classes */
+    CATS: [
+      { name: 'US export control', label: 'US rules', short: 'US', cls: '' },
+      { name: 'China countermeasure', label: 'China', short: 'CN', cls: 'cn' },
+      { name: 'Allied control', label: 'Allied', short: 'Ally', cls: 'ally' },
+      { name: 'Industrial policy', label: 'Policy', short: 'Pol', cls: 'policy' },
+      { name: 'Corporate', label: 'Firms', short: 'Firm', cls: 'corp' }
+    ],
+    RULES: [
+      { date: '2022-10-07', label: 'Oct 2022', short: '’22' },
+      { date: '2023-10-17', label: 'Oct 2023', short: '’23' },
+      { date: '2024-12-02', label: 'Dec 2024', short: '’24' }
+    ],
+    lane: function (c) {
+      c = c || '';
+      return /China/i.test(c) ? 1 : /Allied/i.test(c) ? 2 : /Industrial/i.test(c) ? 3 : /Corporate/i.test(c) ? 4 : 0;
+    },
     activate: function () {
       if (!this.built) this.build();
       Stage.show('globe', null, null, 'Geopolitics · <b>the map</b>');

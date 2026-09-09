@@ -5,7 +5,8 @@
     "title": "ZTE denial order activated",
     "summary": "BIS activated a suspended denial order against ZTE for seven years, to March 2025, after finding the company had lied about disciplining the employees responsible for illegal shipments to Iran and North Korea. The order barred all US persons from exporting anything to ZTE, cutting off Qualcomm processors and Android licensing and halting most of ZTE's production within weeks. ZTE settled that July for a $1 billion penalty plus $400 million in escrow, a replaced board and a US-appointed compliance monitor. It was the first demonstration that a single export order could shut down a large Chinese electronics firm.",
     "category": "US export control",
-    "source": "https://www.federalregister.gov/documents/2018/04/23/2018-08354/in-the-matter-of-zhongxing-telecommunications-equipment-corporation-zte-plaza-keji-road-south"
+    "source": "https://www.federalregister.gov/documents/2018/04/23/2018-08354/in-the-matter-of-zhongxing-telecommunications-equipment-corporation-zte-plaza-keji-road-south",
+    "gist": "The first proof that one US order could shut down a large Chinese electronics firm."
   },
   {
     "date": "2018-10-30",
@@ -13,7 +14,8 @@
     "title": "Fujian Jinhua added to the Entity List",
     "summary": "BIS added Fujian Jinhua Integrated Circuit, a state-backed DRAM start-up, to the Entity List with a presumption of denial for all items subject to the EAR. The End-User Review Committee said the firm posed a significant risk of activities contrary to US national security, and BIS separately warned that new Chinese DRAM capacity threatened the viability of US suppliers of military memory. The listing cut Jinhua off from Applied Materials, Lam and KLA tools mid-installation and the fab never reached volume production. It was the first use of the Entity List against a Chinese memory maker and the template for later chip listings.",
     "category": "US export control",
-    "source": "https://www.federalregister.gov/documents/2018/10/30/2018-23693/addition-of-an-entity-to-the-entity-list"
+    "source": "https://www.federalregister.gov/documents/2018/10/30/2018-23693/addition-of-an-entity-to-the-entity-list",
+    "gist": "US tool vendors walked away mid-installation and the DRAM fab never produced at volume."
   },
   {
     "date": "2019-05-16",
@@ -21,7 +23,8 @@
     "title": "Huawei and 68 affiliates added to the Entity List",
     "summary": "BIS listed Huawei Technologies and 68 non-US affiliates across 26 destinations, requiring a licence with a presumption of denial for every item subject to the EAR. The action cut Huawei off from Google Mobile Services, Intel and Xilinx parts and from US EDA tools. BIS added a further 46 affiliates in August 2019 and 38 more in August 2020, taking the listed total past 150 entities. Huawei's handset shipments fell from roughly 240 million units in 2019 to about 35 million in 2021.",
     "category": "US export control",
-    "source": "https://www.federalregister.gov/documents/2019/05/21/2019-10616/addition-of-entities-to-the-entity-list"
+    "source": "https://www.federalregister.gov/documents/2019/05/21/2019-10616/addition-of-entities-to-the-entity-list",
+    "gist": "US suppliers now needed a licence to sell Huawei anything, chips included."
   },
   {
     "date": "2020-05-15",
@@ -29,7 +32,8 @@
     "title": "Foreign Direct Product Rule extended to Huawei chip designs",
     "summary": "BIS amended General Prohibition Three so that foreign-made chips became subject to the EAR when they were the direct product of US-origin software or technology and were designed by Huawei or HiSilicon. The rule reached TSMC's production of HiSilicon Kirin and Ascend parts even though the chips themselves contained no US content. TSMC stopped taking new HiSilicon orders within days and cut off shipments after 14 September 2020. This was the first time Washington used control of US design tools to stop a foreign foundry serving a foreign customer.",
     "category": "US export control",
-    "source": "https://www.federalregister.gov/documents/2020/05/19/2020-10856/export-administration-regulations-amendments-to-general-prohibition-three-foreign-produced-direct"
+    "source": "https://www.federalregister.gov/documents/2020/05/19/2020-10856/export-administration-regulations-amendments-to-general-prohibition-three-foreign-produced-direct",
+    "gist": "Washington used control of US design tools to stop TSMC building Huawei's chips."
   },
   {
     "date": "2020-08-17",
@@ -37,7 +41,8 @@
     "title": "Huawei FDPR broadened to any chip made with US equipment",
     "summary": "BIS widened the May rule so that any foreign-produced item made with US-origin semiconductor equipment or software needs a licence when Huawei is a party to the transaction, whether or not Huawei designed it. It also added 38 more Huawei affiliates in 21 countries and let the Temporary General Licence expire. Because effectively every advanced fab uses Applied Materials, Lam or KLA tools, the rule made even off-the-shelf merchant chips unavailable to Huawei. It established the equipment-based direct product test reused two years later for the China-wide rules.",
     "category": "US export control",
-    "source": "https://www.federalregister.gov/documents/2020/08/20/2020-18213/addition-of-huawei-non-us-affiliates-to-the-entity-list-the-removal-of-temporary-general-license-and"
+    "source": "https://www.federalregister.gov/documents/2020/08/20/2020-18213/addition-of-huawei-non-us-affiliates-to-the-entity-list-the-removal-of-temporary-general-license-and",
+    "gist": "Because every advanced fab runs American tools, even off-the-shelf chips became unavailable to Huawei."
   },
   {
     "date": "2020-12-18",
@@ -45,7 +50,8 @@
     "title": "SMIC added to the Entity List",
     "summary": "BIS added Semiconductor Manufacturing International Corporation and dozens of affiliates to the Entity List, citing evidence of military end use. Licences for items uniquely capable of production at 10 nm and below carry a presumption of denial, while less advanced items are reviewed case by case. The listing killed SMIC's plan to buy an ASML EUV scanner, which the Dutch government had already declined to license since 2019. SMIC nonetheless reached a 7 nm-class node using multi-patterned DUV immersion by 2022.",
     "category": "US export control",
-    "source": "https://www.federalregister.gov/documents/2020/12/22/2020-28031/addition-of-entities-to-the-entity-list-revision-of-entry-on-the-entity-list-and-removal-of-entities"
+    "source": "https://www.federalregister.gov/documents/2020/12/22/2020-28031/addition-of-entities-to-the-entity-list-revision-of-entry-on-the-entity-list-and-removal-of-entities",
+    "gist": "SMIC lost its shot at an EUV scanner but reached 7 nm with immersion DUV."
   },
   {
     "date": "2022-08-09",
@@ -53,7 +59,8 @@
     "title": "CHIPS and Science Act signed",
     "summary": "Public Law 117-167 authorised $52.7 billion for US semiconductors, including $39 billion in manufacturing incentives, $13.2 billion for R&D and workforce and $500 million for international supply-chain work, alongside a 25 percent advanced manufacturing investment tax credit. Companies taking incentives are barred for ten years from materially expanding advanced capacity in China or other countries of concern. Commerce ultimately signed awards worth roughly $33 billion, including about $6.6 billion for TSMC Arizona, $6.4 billion for Samsung Taylor and $7.86 billion for Intel.",
     "category": "Industrial policy",
-    "source": "https://www.govinfo.gov/app/details/PLAW-117publ167"
+    "source": "https://www.govinfo.gov/app/details/PLAW-117publ167",
+    "gist": "Federal money for American fabs came with a ten-year bar on expanding capacity in China."
   },
   {
     "date": "2022-08-31",
@@ -61,7 +68,8 @@
     "title": "First licence requirement on A100 and H100 exports to China",
     "summary": "Nvidia disclosed in an 8-K that on 26 August 2022 the US government imposed a licence requirement on exports to China, Hong Kong and Russia of the A100, the A100X and the forthcoming H100, plus DGX systems built on them and any future chip at equivalent performance. Nvidia put about $400 million of third-quarter China sales at risk. AMD received a parallel restriction on the MI250. Nvidia answered within weeks with the A800, which kept the compute but cut chip-to-chip interconnect from 600 to 400 GB/s.",
     "category": "US export control",
-    "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581022000146/nvda-20220826.htm"
+    "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581022000146/nvda-20220826.htm",
+    "gist": "Nvidia lost its top China parts and answered within weeks with a slower-linked A800."
   },
   {
     "date": "2022-10-07",
@@ -69,7 +77,8 @@
     "title": "October 7 rules on advanced computing and semiconductor equipment",
     "summary": "BIS created ECCN 3A090 and imposed China-wide controls on chips above 4,800 total processing performance combined with interconnect bandwidth of 600 GB/s or more, capturing the A100, H100 and equivalents. Equipment controls covered logic below 16/14 nm FinFET, DRAM at 18 nm half-pitch or below and NAND with 128 layers or more, with new foreign direct product rules extending them to non-US tools. US persons were barred from supporting the development or production of advanced chips at fabs in China without a licence, which pulled American engineers out of Chinese fabs within days. The interim final rule was published on 13 October 2022.",
     "category": "US export control",
-    "source": "https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor"
+    "source": "https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor",
+    "gist": "China lost access to top chips, the tools to make them, and American engineers."
   },
   {
     "date": "2023-05-21",
@@ -77,7 +86,8 @@
     "title": "Micron barred from critical information infrastructure",
     "summary": "China's Cybersecurity Review Office concluded that Micron's products carried serious security risks and ordered operators of critical information infrastructure to stop buying them, two months after opening the review. Micron told the SEC that customers headquartered in mainland China and Hong Kong were about a quarter of its worldwide revenue, and that roughly half of that China-headquartered customer revenue, a low-double-digit percentage of worldwide revenue, was at risk. It was Beijing's first direct retaliation against a US chipmaker. Chinese buyers shifted to Samsung, SK hynix and the domestic suppliers YMTC and CXMT.",
     "category": "China countermeasure",
-    "source": "https://www.sec.gov/Archives/edgar/data/723125/000072312523000041/mu-20230601.htm"
+    "source": "https://www.sec.gov/Archives/edgar/data/723125/000072312523000041/mu-20230601.htm",
+    "gist": "Beijing hit back at a US chipmaker for the first time and buyers switched suppliers."
   },
   {
     "date": "2023-07-03",
@@ -85,7 +95,8 @@
     "title": "Gallium and germanium export licensing",
     "summary": "MOFCOM and the General Administration of Customs issued Announcement No. 23 of 2023, placing eight gallium-related and six germanium-related items under dual-use export licensing from 1 August 2023 on national security grounds. Controlled items include gallium metal, gallium nitride, gallium arsenide, germanium metal, zone-refined germanium ingots and germanium tetrachloride. China produced roughly 98 percent of the world's primary gallium and about 60 percent of refined germanium at the time. Chinese exports of both metals fell sharply in the following months and ex-China prices roughly doubled.",
     "category": "China countermeasure",
-    "source": "http://exportcontrol.mofcom.gov.cn/article/zcfg/gnzcfg/zcfggzqd/202307/847.html"
+    "source": "http://exportcontrol.mofcom.gov.cn/article/zcfg/gnzcfg/zcfggzqd/202307/847.html",
+    "gist": "China showed it could squeeze the raw materials, and prices outside it roughly doubled."
   },
   {
     "date": "2023-07-23",
@@ -93,7 +104,8 @@
     "title": "Japanese controls on 23 categories of chipmaking equipment",
     "summary": "METI's amended export trade control order took effect, adding 23 categories of advanced semiconductor manufacturing equipment to the licence list, covering cleaning, deposition, lithography, annealing, test and mask-related tools. The controls apply to all destinations, but a simplified process covers 42 friendly countries, so China is the practical target. Tokyo Electron, Screen, Advantest, Nikon and Canon were the main affected exporters. China filed a WTO consultation request over the measure in December 2023.",
     "category": "Allied control",
-    "source": "https://www.csis.org/analysis/csis-translation-updated-japanese-export-controls-high-performance-semiconductor"
+    "source": "https://www.csis.org/analysis/csis-translation-updated-japanese-export-controls-high-performance-semiconductor",
+    "gist": "Japan's toolmakers now needed licences for China, and Beijing took the measure to the WTO."
   },
   {
     "date": "2023-09-01",
@@ -101,7 +113,8 @@
     "title": "Dutch licence requirement takes effect for advanced immersion DUV",
     "summary": "The Netherlands' national export control measure for advanced semiconductor manufacturing equipment entered into force, applying to exports outside the EU on a case-by-case basis rather than as a ban. ASML confirmed on 30 June 2023 that it would need Dutch licences for all shipments of the TWINSCAN NXT:2000i and subsequent immersion systems, and said it expected no material impact on its 2023 outlook. Chinese customers pulled orders forward through 2023 and 2024, and China rose to about 46 percent of ASML system sales in the second quarter of 2024.",
     "category": "Allied control",
-    "source": "https://www.asml.com/en/news/press-releases/2023/statement-regarding-export-control-regulations-dutch-government"
+    "source": "https://www.asml.com/en/news/press-releases/2023/statement-regarding-export-control-regulations-dutch-government",
+    "gist": "The Hague could now refuse ASML's newest scanners, and Chinese buyers rushed their orders."
   },
   {
     "date": "2023-10-17",
@@ -109,7 +122,8 @@
     "title": "October 17, 2023 update closes the A800 and H800 workaround",
     "summary": "BIS replaced the interconnect-bandwidth test with a performance-density criterion, splitting ECCN 3A090 into a controlled tier .a and a notification tier .b, which captured the A800, H800, L40S and even the RTX 4090. Licence requirements were extended to companies headquartered in China or Macau wherever they are located and to about 40 additional arms-embargoed countries, to stop transshipment. Equipment controls were tightened in a companion rule, and BIS separately added the Chinese GPU designers Biren and Moore Threads to the Entity List the same day. The rules were published on 25 October 2023 and took effect from 17 November.",
     "category": "US export control",
-    "source": "https://www.federalregister.gov/documents/2023/10/25/2023-23055/implementation-of-additional-export-controls-certain-advanced-computing-items-supercomputer-and"
+    "source": "https://www.federalregister.gov/documents/2023/10/25/2023-23055/implementation-of-additional-export-controls-certain-advanced-computing-items-supercomputer-and",
+    "gist": "A density test caught the cut-down parts, and Chinese firms lost them wherever they bought."
   },
   {
     "date": "2024-05-24",
@@ -117,7 +131,8 @@
     "title": "Big Fund III capitalised at 344 billion yuan",
     "summary": "The third phase of the National Integrated Circuit Industry Investment Fund was registered with 344 billion yuan, about $47.5 billion, larger than Phases I and II combined. The Ministry of Finance holds 17 percent and six state banks together about 33 percent, with ICBC, Agricultural Bank, Bank of China and China Construction Bank putting in 21.5 billion yuan each. Reported priorities include silicon carbide and gallium nitride, high-value DRAM and HBM, and continued support for equipment and materials. Phase I raised 138.7 billion yuan in 2014 and Phase II 204 billion yuan in 2019.",
     "category": "Industrial policy",
-    "source": "https://english.www.gov.cn/news/202405/29/content_WS66569746c6d0868f4e8e7987.html"
+    "source": "https://english.www.gov.cn/news/202405/29/content_WS66569746c6d0868f4e8e7987.html",
+    "gist": "State money larger than the first two funds combined went towards tools, materials and memory."
   },
   {
     "date": "2024-09-06",
@@ -125,7 +140,8 @@
     "title": "Dutch controls extended to more DUV immersion tools",
     "summary": "The Netherlands expanded its national licensing measure to more types of advanced semiconductor manufacturing equipment with effect from 7 September 2024, taking over from the US licence requirement that had covered ASML's TWINSCAN NXT:1970i and NXT:1980i immersion scanners and related services. Minister Klever cited increased security risks in the current geopolitical context and stressed that applications would still be assessed case by case. The measure was tightened again on 1 April 2025. The change consolidated control of the mid-range immersion fleet under Dutch national authority.",
     "category": "Allied control",
-    "source": "https://www.government.nl/latest/news/2024/09/06/the-netherlands-expands-export-control-measure-advanced-semiconductor-manufacturing-equipment"
+    "source": "https://www.government.nl/latest/news/2024/09/06/the-netherlands-expands-export-control-measure-advanced-semiconductor-manufacturing-equipment",
+    "gist": "Licensing power over ASML's mid-range fleet moved from Washington to the Dutch government."
   },
   {
     "date": "2024-12-02",
@@ -133,7 +149,8 @@
     "title": "December 2024 equipment and HBM package",
     "summary": "BIS controlled 24 additional types of semiconductor manufacturing equipment and three software tools, and for the first time controlled high bandwidth memory under ECCN 3A090.c, defined as memory with a bandwidth density above 2 GB/s per square millimetre, which captures HBM2E and everything above it. New foreign direct product rules extended the equipment and HBM controls to production outside the United States. BIS simultaneously added 140 entities, 128 of them in China, including Naura Technology, Empyrean, SwaySure, PXW Semiconductor and additional SMIC and Fujian Jinhua entries. The rules were published on 5 December 2024.",
     "category": "US export control",
-    "source": "https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-produced-direct-product-rule-additions-and-refinements-to-controls-for-advanced-computing"
+    "source": "https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-produced-direct-product-rule-additions-and-refinements-to-controls-for-advanced-computing",
+    "gist": "High bandwidth memory came under control for the first time, wherever it is made."
   },
   {
     "date": "2024-12-03",
@@ -141,7 +158,8 @@
     "title": "Outright ban on gallium, germanium and antimony exports to the US",
     "summary": "MOFCOM Notice No. 46 of 2024, issued the day after the US equipment package, banned exports to the United States of gallium, germanium, antimony and superhard materials and imposed stricter end-user and end-use checks on dual-use graphite. Unlike the 2023 measures this was a country-specific prohibition rather than a licensing regime. The US Geological Survey estimated the gallium and germanium ban alone could cost the US economy about $3.4 billion of GDP. US germanium prices roughly doubled over the following year.",
     "category": "China countermeasure",
-    "source": "https://cset.georgetown.edu/publication/china-rare-earth-export-ban/"
+    "source": "https://cset.georgetown.edu/publication/china-rare-earth-export-ban/",
+    "gist": "Beijing switched from licensing to refusal, and American germanium prices roughly doubled."
   },
   {
     "date": "2025-01-13",
@@ -149,7 +167,8 @@
     "title": "AI Diffusion Rule announced",
     "summary": "The Framework for Artificial Intelligence Diffusion divided the world into three tiers: about 18 close allies with no caps, a middle group of roughly 120 countries capped in total processing performance, and a denied group led by China and Russia. The middle-tier caps were 26.9 million TPP per consignee per year without a licence and a cumulative 790 million TPP through 2027 with one, equivalent to roughly 1,700 and 50,000 H100-class GPUs. It created Universal and National Validated End User authorisations for trusted data-centre operators and, for the first time, controlled the model weights of closed frontier AI models. Published on 15 January 2025 with a compliance date of 15 May 2025, it drew immediate objections from Nvidia and from allied governments.",
     "category": "US export control",
-    "source": "https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion"
+    "source": "https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion",
+    "gist": "Most countries got a compute quota, and closed model weights came under control."
   },
   {
     "date": "2025-01-16",
@@ -157,7 +176,8 @@
     "title": "Foundry due-diligence rule and Approved IC Designer status",
     "summary": "BIS required foundries and packaging houses to apply a due-diligence test before making advanced logic dies, presuming a chip is destined for a restricted party unless the customer is an Approved IC Designer or the package is assembled by an approved OSAT. The rule followed the discovery that a TSMC-made die had ended up inside a Huawei Ascend 910B. It set a deadline of 13 April 2026 for designers to obtain approved status, which BIS later extended to 31 December 2026.",
     "category": "US export control",
-    "source": "https://www.federalregister.gov/documents/2025/01/16/2025-00711/implementation-of-additional-due-diligence-measures-for-advanced-computing-integrated-circuits"
+    "source": "https://www.federalregister.gov/documents/2025/01/16/2025-00711/implementation-of-additional-due-diligence-measures-for-advanced-computing-integrated-circuits",
+    "gist": "The burden of checking who a chip is really for landed on foundries and packagers."
   },
   {
     "date": "2025-03-03",
@@ -165,7 +185,8 @@
     "title": "TSMC raises US investment to $165 billion",
     "summary": "TSMC announced at the White House an additional $100 billion of US investment on top of the $65 billion already committed in Arizona, for a total of $165 billion. The plan covers three more fabs, two advanced packaging facilities and an R&D centre, taking the Arizona campus to six fabs. TSMC said the expansion would support around 40,000 construction jobs over four years. The first Arizona fab had begun volume 4 nm production in the fourth quarter of 2024.",
     "category": "Corporate",
-    "source": "https://pr.tsmc.com/english/news/3210"
+    "source": "https://pr.tsmc.com/english/news/3210",
+    "gist": "Arizona is set to hold six TSMC fabs, two packaging plants and a research centre."
   },
   {
     "date": "2025-04-04",
@@ -173,7 +194,8 @@
     "title": "Export controls on seven medium and heavy rare earths",
     "summary": "Announcement No. 18 of 2025 put samarium, gadolinium, terbium, dysprosium, lutetium, scandium and yttrium, together with their oxides, alloys, compounds and permanent magnets, under dual-use export licensing effective immediately, two days after the US reciprocal tariff round. China refines roughly 90 percent of global rare earth output and until recently accounted for about 99 percent of heavy rare earth separation. Licence processing initially ran to 45 working days or more, and Chinese magnet exports fell about 75 percent in May before recovering under a June trade truce.",
     "category": "China countermeasure",
-    "source": "https://english.mofcom.gov.cn/Policies/AnnouncementsOrders/art/2025/art_0dd87cbee7b045bf93fabe6ab2faceee.html"
+    "source": "https://english.mofcom.gov.cn/Policies/AnnouncementsOrders/art/2025/art_0dd87cbee7b045bf93fabe6ab2faceee.html",
+    "gist": "Chinese magnet exports fell about 75 percent in May before recovering under a June truce."
   },
   {
     "date": "2025-04-09",
@@ -181,7 +203,8 @@
     "title": "H20 and MI308 put under indefinite licence requirement",
     "summary": "The US government told Nvidia that the H20, the China-compliant Hopper part designed to the October 2023 thresholds, would require a licence for China, Hong Kong, Macau and D:5 countries indefinitely, on the concern it could be diverted to a supercomputer. The restriction also covers any chip matching the H20's memory or interconnect bandwidth. Nvidia warned of up to $5.5 billion of charges and ultimately booked $4.5 billion in the quarter, plus about $8 billion of lost orders in the next. AMD disclosed a charge of up to $800 million on its MI308.",
     "category": "US export control",
-    "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000082/nvda-20250409.htm"
+    "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000082/nvda-20250409.htm",
+    "gist": "Washington pulled even the China-legal Hopper part, costing Nvidia billions in charges and orders."
   },
   {
     "date": "2025-05-13",
@@ -189,7 +212,8 @@
     "title": "AI Diffusion Rule rescinded",
     "summary": "Two days before the compliance date, Commerce announced it would not enforce the AI Diffusion Rule and would replace it with country-by-country negotiated arrangements. BIS issued three pieces of guidance the same day: that using Huawei Ascend 910B, 910C and 910D chips risks violating the EAR because they were likely made with controlled US technology, that allowing US AI chips to train or serve Chinese AI models carries consequences, and how exporters should guard against diversion. The Ascend guidance originally said the chips were restricted \"anywhere in the world\", wording BIS softened after Chinese protests.",
     "category": "US export control",
-    "source": "https://www.bis.gov/press-release/department-commerce-rescinds-biden-era-artificial-intelligence-diffusion-rule-strengthens-chip-related"
+    "source": "https://www.bis.gov/press-release/department-commerce-rescinds-biden-era-artificial-intelligence-diffusion-rule-strengthens-chip-related",
+    "gist": "Country quotas gave way to case-by-case deals, and using Huawei's Ascend chips became risky."
   },
   {
     "date": "2025-05-15",
@@ -197,7 +221,8 @@
     "title": "Gulf AI infrastructure deals replace the diffusion caps",
     "summary": "During President Trump's Gulf trip the White House announced more than $200 billion of new US-UAE deals and an AI accord under which the UAE commits to build or finance US data centres at least as large and powerful as those it builds at home; the two governments separately announced a 5 gigawatt AI campus in Abu Dhabi led by G42, with reporting that the UAE could import the equivalent of roughly 500,000 Nvidia-class GPUs a year, about a fifth for G42 and the rest for US hyperscalers operating there. Saudi Arabia's new state AI company Humain signed agreements with Nvidia for several hundred thousand GPUs over five years and with AMD for a $10 billion programme. The deals substituted bilateral, security-conditioned arrangements for the rescinded rule's country caps.",
     "category": "US export control",
-    "source": "https://www.whitehouse.gov/fact-sheets/2025/05/fact-sheet-president-donald-j-trump-secures-200-billion-in-new-u-s-uae-deals-and-accelerates-previously-committed-1-4-trillion-uae-investment/"
+    "source": "https://www.whitehouse.gov/fact-sheets/2025/05/fact-sheet-president-donald-j-trump-secures-200-billion-in-new-u-s-uae-deals-and-accelerates-previously-committed-1-4-trillion-uae-investment/",
+    "gist": "Gulf states won large GPU flows by promising American data centres and security conditions."
   },
   {
     "date": "2025-07-14",
@@ -205,7 +230,8 @@
     "title": "H20 sales to China permitted again",
     "summary": "Nvidia said the US government had assured it that licences for H20 sales to China would be granted and that it hoped to start deliveries soon; AMD received the same signal for the MI308. Nvidia simultaneously announced an RTX PRO 6000D built for the Chinese market. Beijing then pushed back: regulators raised security concerns with domestic buyers in August, told large firms to stop ordering the RTX PRO 6000D in September, and China's market regulator found in the same month that Nvidia had breached the conditions of its 2020 Mellanox clearance. Actual H20 shipments stayed small.",
     "category": "US export control",
-    "source": "https://blogs.nvidia.com/blog/nvidia-ceo-promotes-ai-in-dc-and-china/"
+    "source": "https://blogs.nvidia.com/blog/nvidia-ceo-promotes-ai-in-dc-and-china/",
+    "gist": "Washington reopened the door and Beijing closed it, so few chips moved."
   },
   {
     "date": "2025-08-11",
@@ -213,7 +239,8 @@
     "title": "A 15 percent revenue expectation attached to China licences",
     "summary": "The US government granted licences in August 2025 that allowed Nvidia to ship H20 products to certain China-based customers. Nvidia's annual report records the condition that came with them: USG officials expressed an expectation that the government would receive 15 percent or more of the revenue generated from licensed sales of its products, but, in the company's words, \"the USG did not publish a regulation codifying such requirement\". There is no rule, no Federal Register notice and no published legal basis for the payment. Nvidia booked about $60 million of H20 revenue under those licences before Chinese buyers were discouraged from taking the part. AMD was described at the time as accepting the same terms for its MI308, but AMD has filed no comparable statement, so only Nvidia's disclosure is recorded here.",
     "category": "US export control",
-    "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+    "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+    "gist": "Access to China now carried a payment demand with no rule or published legal basis."
   },
   {
     "date": "2025-08-22",
@@ -221,7 +248,8 @@
     "title": "US takes a 9.9 percent equity stake in Intel",
     "summary": "The US government bought 433.3 million Intel shares at $20.47 for $8.9 billion, about 9.9 percent of the company, funded by $5.7 billion of unpaid CHIPS Act grants and $3.2 billion from the Secure Enclave programme. Counting the $2.2 billion already disbursed, the deal accounted for $11.1 billion of Intel's federal awards. The stake is passive, carries no board seat and the government agreed to vote with the board on most matters. It followed SoftBank's $2 billion investment and preceded Nvidia's $5 billion stake in September 2025.",
     "category": "Industrial policy",
-    "source": "https://www.sec.gov/Archives/edgar/data/50863/000005086325000129/0000050863-25-000129-index.htm"
+    "source": "https://www.sec.gov/Archives/edgar/data/50863/000005086325000129/0000050863-25-000129-index.htm",
+    "gist": "Unpaid grants turned into shares, making the government part-owner of an American chipmaker."
   },
   {
     "date": "2025-08-29",
@@ -229,7 +257,8 @@
     "title": "Validated End User status revoked for foreign fabs in China",
     "summary": "BIS revoked the Validated End User authorisations that let Intel Semiconductor (Dalian), Samsung China Semiconductor and SK hynix Semiconductor (China) receive US equipment for their China fabs under a general authorisation rather than individual licences. The companies had 120 days after publication, to 31 December 2025, to obtain licences. BIS said it would license the operation of existing fabs but would not approve capacity expansion or technology upgrades in China, and estimated the change would generate about 1,000 extra licence applications a year.",
     "category": "US export control",
-    "source": "https://www.bis.gov/press-release/department-commerce-closes-export-controls-loophole-foreign-owned-semiconductor-fabs-china"
+    "source": "https://www.bis.gov/press-release/department-commerce-closes-export-controls-loophole-foreign-owned-semiconductor-fabs-china",
+    "gist": "Korean and American fabs inside China may keep running but may not upgrade or grow."
   },
   {
     "date": "2025-09-18",
@@ -237,7 +266,8 @@
     "title": "Huawei announces the Ascend 950 series with its own HBM",
     "summary": "At Huawei Connect in Shanghai, Eric Xu set out an Ascend roadmap of three new series over three years: the Ascend 950, 960 and 970. The 950 splits in two around memory rather than compute. The Ascend 950PR, for the prefill stage of inference and for recommendation systems, uses HiBL 1.0, a Huawei-designed high bandwidth memory that the company presents as cheaper than HBM3E and HBM4E; Huawei said it would be available in the first quarter of 2026 as computing cards and in SuperPoD servers. The Ascend 950DT, for decode and training, uses HiZQ 2.0 with 144 GB of memory, 4 TB/s of memory bandwidth and 2 TB/s of interconnect bandwidth. Designing its own HBM is the point: high bandwidth memory above the control thresholds cannot be sold to Huawei, and no Chinese merchant supplier makes it.",
     "category": "Corporate",
-    "source": "https://www.huawei.com/en/news/2025/9/hc-xu-keynote-speech"
+    "source": "https://www.huawei.com/en/news/2025/9/hc-xu-keynote-speech",
+    "gist": "Blocked from buying fast memory, Huawei designed its own to feed its accelerators."
   },
   {
     "date": "2025-09-29",
@@ -245,7 +275,8 @@
     "title": "Affiliates rule extends the Entity List to subsidiaries",
     "summary": "BIS issued an interim final rule making any entity that is 50 percent or more owned, directly or indirectly, by one or more Entity List or Military End User parties subject to the same licence requirements, worldwide. The rule closed the long-standing gap in which listed firms bought through unlisted subsidiaries. Industry warned it could sweep in thousands of previously unlisted companies, and it was the trigger that pulled Nexperia into scope two weeks later. Beijing called it a serious escalation and Washington suspended the rule for a year on 10 November 2025.",
     "category": "US export control",
-    "source": "https://www.federalregister.gov/documents/2025/09/30/2025-19001/expansion-of-end-user-controls-to-cover-affiliates-of-certain-listed-entities"
+    "source": "https://www.federalregister.gov/documents/2025/09/30/2025-19001/expansion-of-end-user-controls-to-cover-affiliates-of-certain-listed-entities",
+    "gist": "Buying through an unlisted subsidiary stopped working, and the rule reached Nexperia within two weeks."
   },
   {
     "date": "2025-10-09",
@@ -253,7 +284,8 @@
     "title": "Extraterritorial rare earth controls with a 0.1 percent rule",
     "summary": "MOFCOM Notice No. 61 of 2025 and its companions added holmium, erbium, thulium, europium and ytterbium to the controlled list, controlled rare earth mining, smelting, separation, magnet-making and recycling technology, and asserted jurisdiction over foreign-made goods in which Chinese-origin controlled rare earths account for 0.1 percent or more of value. Exports for foreign military users face denial and those for advanced semiconductor and AI uses face case-by-case review. It was the first time China applied a foreign direct product-style rule of its own, and it caught semiconductor and AI components containing rare earth magnets or sputtering targets. The measures were due to take effect on 1 December 2025.",
     "category": "China countermeasure",
-    "source": "https://cset.georgetown.edu/publication/mofcom-notice-2025-61/"
+    "source": "https://cset.georgetown.edu/publication/mofcom-notice-2025-61/",
+    "gist": "China claimed reach over foreign goods, catching magnets and sputtering targets in chip gear."
   },
   {
     "date": "2025-10-12",
@@ -261,7 +293,8 @@
     "title": "Dutch government seizes control of Nexperia",
     "summary": "The Netherlands disclosed that on 30 September 2025 it had invoked the 1952 Goods Availability Act for the first time, citing serious governance failings at Nexperia after the US affiliates rule brought the Wingtech-owned chipmaker within Entity List scope. An Amsterdam court suspended the Chinese chief executive and placed the shares in trust. China retaliated by blocking exports from Nexperia's Dongguan plant, which packages roughly 70 percent of the company's output, causing shortages of automotive discrete parts across Europe. The Dutch order was suspended on 19 November 2025, and Wingtech later sought more than $8 billion in treaty arbitration.",
     "category": "Allied control",
-    "source": "https://www.government.nl/latest/news/2025/10/12/minister-of-economic-affairs-invokes-goods-availability-act"
+    "source": "https://www.government.nl/latest/news/2025/10/12/minister-of-economic-affairs-invokes-goods-availability-act",
+    "gist": "China answered by holding back Dongguan output, and European carmakers ran short of parts."
   },
   {
     "date": "2025-11-10",
@@ -269,7 +302,8 @@
     "title": "One-year truce suspends the affiliates rule and the rare earth regime",
     "summary": "Following the Trump-Xi meeting in Busan on 30 October 2025, BIS suspended the affiliates rule for one year, to 9 November 2026, and China suspended the 9 October rare earth measures for the same period along with the December 2024 ban on gallium, germanium and antimony exports to the US. China agreed to issue general licences covering rare earths, gallium, germanium, antimony and graphite for US end users and their suppliers, and began issuing them in December 2025. The US halved fentanyl-related tariffs on Chinese goods from 20 to 10 percent as part of the same package.",
     "category": "US export control",
-    "source": "https://www.federalregister.gov/documents/2025/11/12/2025-19846/one-year-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed-entities"
+    "source": "https://www.federalregister.gov/documents/2025/11/12/2025-19846/one-year-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed-entities",
+    "gist": "Both sides stood their broadest measures down for a year and China issued general licences."
   },
   {
     "date": "2025-12-08",
@@ -277,7 +311,8 @@
     "title": "Trump clears H200 sales to China",
     "summary": "President Trump announced that the United States would allow the H200 and similar products to be shipped to approved customers in China. BIS implemented the announcement with a rule on 13 January 2026, moving licence applications for the Nvidia H200, the AMD MI325X and similar chips from a presumption of denial to case-by-case review, on conditions: the applicant must show that the exports will not reduce the global semiconductor capacity available to US customers, that the Chinese purchaser has adopted sufficient security procedures, and that the item has passed independent third-party testing in the United States. The \"cut\" attached to the deal is a tariff rather than a royalty. Nvidia's filings state that the licences require each H200 to pass a US inspection before shipment, so any H200 shipped under the programme is subject to a 25 percent tariff on importation into the United States, which the company says it has been unable to pass on to customers.",
     "category": "US export control",
-    "source": "https://www.bis.gov/press-release/department-commerce-revises-license-review-policy-semiconductors-exported-china"
+    "source": "https://www.bis.gov/press-release/department-commerce-revises-license-review-policy-semiconductors-exported-china",
+    "gist": "China could buy the chip, but only after US testing and a 25 percent tariff."
   },
   {
     "date": "2026-01-14",
@@ -285,7 +320,8 @@
     "title": "Section 232 proclamation puts a 25 percent tariff on advanced AI chips",
     "summary": "A presidential proclamation under Section 232 imposed a 25 percent tariff from 12:01 a.m. on 15 January 2026 on a narrow set of advanced computing semiconductors and products containing them that pass through the United States but are not destined for US use. The covered bands are chips of 14,000 to 17,500 total processing performance with 4,500 to 5,000 GB/s of DRAM bandwidth, and 20,800 to 21,100 TPP with 5,800 to 6,200 GB/s, which capture the Nvidia H200 and AMD MI325X. Eight use-based exemptions cover US data centres, R&D, start-ups, repairs, consumer and industrial uses and the public sector. The proclamation ordered a review of data-centre chips by 1 July 2026 and signalled a second phase with higher rates and an investment offset.",
     "category": "US export control",
-    "source": "https://www.whitehouse.gov/presidential-actions/2026/01/adjusting-imports-of-semiconductors-semiconductor-manufacturing-equipment-and-their-derivative-products-into-the-united-states/"
+    "source": "https://www.whitehouse.gov/presidential-actions/2026/01/adjusting-imports-of-semiconductors-semiconductor-manufacturing-equipment-and-their-derivative-products-into-the-united-states/",
+    "gist": "A duty falls on chips crossing America for elsewhere, while American uses go free."
   },
   {
     "date": "2026-01-15",
@@ -293,7 +329,8 @@
     "title": "H200-class chips move to case-by-case licensing for China",
     "summary": "BIS shifted its licence review policy from a presumption of denial to case-by-case review for exports from the United States to China and Macau of advanced computing chips with total processing performance below 21,000 and total DRAM bandwidth below 6,500 GB/s, the band covering the Nvidia H200 and AMD MI325X. Approval is conditioned on certifications of adequate US supply, independent third-party testing inside US customs territory, and know-your-customer and remote-access safeguards. Because the testing condition routes the chips through the United States, they also incur the 25 percent Section 232 tariff. Blackwell-class parts remain outside the policy.",
     "category": "US export control",
-    "source": "https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities"
+    "source": "https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities",
+    "gist": "A band below the top parts opened for China, with Blackwell still shut out."
   },
   {
     "date": "2026-01-15",
@@ -301,7 +338,8 @@
     "title": "US-Taiwan memorandum of understanding on investment",
     "summary": "The American Institute in Taiwan and the Taipei Economic and Cultural Representative Office signed a memorandum of understanding on Taiwan-US investment, in which the United States committed to modify certain Section 232 tariffs on Taiwanese goods. Commerce and the US Trade Representative implemented the tariff elements on 28 May 2026, amending the tariff schedule for Taiwanese automobile parts, timber, lumber and wood derivative products and removing derivative Section 232 steel, aluminium and copper tariffs from Taiwanese aircraft components. A broader Agreement on Reciprocal Trade was signed by the two offices on 12 February 2026 but had not entered into force when the implementing notice was published. The headline investment totals and the semiconductor-specific terms reported at signing do not appear in the published US implementing documents and are not recorded here.",
     "category": "Industrial policy",
-    "source": "https://www.federalregister.gov/documents/2026/05/28/2026-10571/implementing-certain-tariff-related-elements-of-a-trade-and-security-agreement-between-the-american"
+    "source": "https://www.federalregister.gov/documents/2026/05/28/2026-10571/implementing-certain-tariff-related-elements-of-a-trade-and-security-agreement-between-the-american",
+    "gist": "Taiwan won tariff relief on car parts, timber and aircraft components, but nothing on chips."
   },
   {
     "date": "2026-02-12",
@@ -309,7 +347,8 @@
     "title": "Applied Materials pays $252.5 million for shipments to SMIC",
     "summary": "BIS announced a $252.5 million settlement with Applied Materials and its Korean subsidiary over unlicensed reexports of ion implanters, classified under ECCN 3B991, to SMIC after SMIC's Entity List designation. The equipment was built in Massachusetts and routed through Korea, and the shipments were valued at about $126 million, so the penalty is twice the transaction value, the statutory maximum and the second largest in BIS history. Applied Materials agreed to multiple compliance audits and annual certifications, and the employees responsible no longer work for the company.",
     "category": "Corporate",
-    "source": "https://www.bis.gov/press-release/applied-materials-pay-252-million-penalty-bis-illegally-exporting-semiconductor-manufacturing-equipment"
+    "source": "https://www.bis.gov/press-release/applied-materials-pay-252-million-penalty-bis-illegally-exporting-semiconductor-manufacturing-equipment",
+    "gist": "A toolmaker paid twice what the shipments were worth, the second largest penalty BIS has levied."
   },
   {
     "date": "2026-03-19",
@@ -317,7 +356,8 @@
     "title": "Super Micro co-founder charged over $2.5 billion of diverted AI servers",
     "summary": "Federal prosecutors in the Southern District of New York charged Super Micro co-founder Yih-Shyan \"Wally\" Liaw, Taiwan-based general manager Ruei-Tsang Chang and broker Ting-Wei Sun with conspiring to violate the Export Control Reform Act, to smuggle goods and to defraud the United States. The indictment alleges about $2.5 billion of GPU-equipped servers bought in 2024 and 2025 were diverted to China, including $510 million between late April and mid-May 2025, using false documents, staged dummy servers to fool auditors and layered transshipment. Liaw resigned from the Super Micro board the next day and pleaded not guilty on 1 April 2026; Super Micro shares fell about a third on the news.",
     "category": "Corporate",
-    "source": "https://www.justice.gov/opa/pr/three-charged-conspiring-unlawfully-divert-cutting-edge-us-artificial-intelligence"
+    "source": "https://www.justice.gov/opa/pr/three-charged-conspiring-unlawfully-divert-cutting-edge-us-artificial-intelligence",
+    "gist": "GPU servers worth billions allegedly reached China through false papers and layered transshipment."
   },
   {
     "date": "2026-07-10",
@@ -325,7 +365,8 @@
     "title": "UAE moved to Country Group A:5",
     "summary": "BIS removed the United Arab Emirates from Country Groups D:3 and D:4 and added it to A:5, granting Strategic Trade Authorization eligibility and licence exceptions TMP, GOV, TSU, AVS and APR for chemical, biological and missile-technology controlled items. Licences are still required for advanced computing items under ECCNs 3A090.a and 4A090.a, except when consigned to UAE government agencies, to approved commercial entities listed in a new Supplement No. 8, or to US-headquartered AI companies and their UAE subsidiaries including Amazon, Google, Meta, Microsoft, OpenAI, Oracle and xAI. The rule put the bilateral model that replaced the AI Diffusion Rule's country caps into regulation.",
     "category": "US export control",
-    "source": "https://www.federalregister.gov/documents/2026/07/14/2026-14132/enhanced-favorable-treatment-for-the-united-arab-emirates-under-the-export-administration"
+    "source": "https://www.federalregister.gov/documents/2026/07/14/2026-14132/enhanced-favorable-treatment-for-the-united-arab-emirates-under-the-export-administration",
+    "gist": "A named list of approved companies, not a country quota, now governs Emirati chip access."
   },
   {
     "date": "2026-08-26",
@@ -333,7 +374,8 @@
     "title": "PRC restrictions leave the H200 licences largely unused",
     "summary": "Nvidia's quarterly filing for the period to 26 July 2026 records what the January opening actually produced. The US government began granting licences in February 2026 to ship small amounts of H200 to specific China-based customers, but, in the company's words, \"such sales were restricted by the PRC government, and we have been unable to sell all the products for which we have licenses\". Nvidia took a $0.4 billion charge in the first half of fiscal 2027 for excess H200 inventory and purchase obligations, and shipped only a fraction of what the licences allowed: less than 1 percent of data-centre revenue in the quarter. China including Hong Kong accounted for $7.9 billion of the quarter's $96.2 billion of revenue, against $4.0 billion a year earlier, so the China business is real and is almost entirely not the H200. Beijing's own instruments here are not published; the effect is on the record in a US filing.",
     "category": "China countermeasure",
-    "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm"
+    "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+    "gist": "Beijing restricted the sales, so Nvidia shipped a fraction and wrote down the stock."
   },
   {
     "date": "2026-09-07",
@@ -341,6 +383,7 @@
     "title": "China hits Japanese dichlorosilane with duties of up to 99.2 percent",
     "summary": "MOFCOM issued a preliminary anti-dumping ruling against Japanese dichlorosilane, a specialty gas used for thin-film deposition in logic, memory and analog chip production, requiring importers to post deposits with Chinese customs from 8 September 2026 at rates of 80.8 to 99.2 percent, with 99.2 percent for Shin-Etsu Chemical and all non-cooperating exporters. The investigation opened on 7 January 2026 after a complaint from Tangshan Sanfu Electronic Materials, which said Japanese suppliers held about 72 percent of the Chinese market and had cut prices 31 percent between 2022 and 2024. Japan protested the measure. A final determination is due by January 2027.",
     "category": "China countermeasure",
-    "source": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_01c15948864a45d186abb146fe30a42b.html"
+    "source": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_01c15948864a45d186abb146fe30a42b.html",
+    "gist": "Importers must now post deposits, making a Japanese thin-film gas costly for Chinese fabs."
   }
 ]
