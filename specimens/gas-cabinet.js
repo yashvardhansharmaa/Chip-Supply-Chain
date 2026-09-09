@@ -182,7 +182,7 @@ PC.register('gas-cabinet', function (p) {
   return {
     cloud: PC.merge.apply(null, parts),
     spin: 0.11,
-    tilt: [0.25, -0.7, 0],
+    tilt: [0.24, -0.50, 0],
     caption: 'A specialty gas cabinet with its door off: three cylinders strapped behind restraint bars, coiled pigtails climbing to the gas panel on the back wall, and the exhaust collar that takes any leak to the scrubber. The panel is in copper - regulator, block and bleed valves, gauges, purge and vent legs - with the process line leaving through the side wall through a point-of-use filter. Behind it stands a bulk liquid cylinder.'
   };
 });

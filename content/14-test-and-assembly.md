@@ -4,7 +4,7 @@
   "number": 14,
   "title": "Test and Assembly",
   "oneLiner": "The back end decides which dies are allowed into a package that costs more than a car. One Japanese firm now sells two thirds of the world's chip testers.",
-  "plain": "Before a chip can be sold, a machine has to interrogate it and check every answer. Needles finer than a hair land on pads on the wafer and drive test patterns into each chip; the ones that answer wrong are marked and never leave. Why this matters more each year is arithmetic: a modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them. So the industry tests earlier, hotter and longer than it used to, and two companies sell most of the machines that do it.",
+  "plain": "Before a chip can be sold, a machine has to interrogate it and check every answer. Needles finer than a hair land on pads on the wafer and drive test patterns into each chip; the ones that answer wrong are marked and never leave. It matters more each year because of arithmetic: a modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them. So the industry tests earlier, hotter and longer than it used to, and two companies sell most of the machines that do it.",
   "specimen": "probe-card",
   "specimenCaption": "Right: a probe card over a wafer. A printed circuit board carries the tester's signals to a MEMS probe head whose needles land on pads a few tens of micrometres across, all of them within microns of the same plane.",
   "card": {
@@ -70,11 +70,11 @@
 ---
 # Test and Assembly
 
-Everything before this chapter makes dies. The back end decides which are allowed into a package. Among the 400 to 600 steps in semiconductor manufacturing, Advantest notes, test is the only one that handles electricity ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf)).
+Semiconductor manufacturing runs to 400 to 600 steps, and Advantest counts test as the only one that handles electricity ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf)). Everything before this chapter makes dies. The back end decides which of them are allowed into a package.
 
 ## How it works
 
-Before a chip can be sold, a machine has to interrogate it and check every answer. Needles finer than a hair land on pads on the wafer and drive test patterns into each chip; the ones that answer wrong are marked and never leave. Why this matters more each year is arithmetic: a modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them. So the industry tests earlier, hotter and longer than it used to, and two companies sell most of the machines that do it.
+Before a chip can be sold, a machine has to interrogate it and check every answer. Needles finer than a hair land on pads on the wafer and drive test patterns into each chip; the ones that answer wrong are marked and never leave. It matters more each year because of arithmetic: a modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them. So the industry tests earlier, hotter and longer than it used to, and two companies sell most of the machines that do it.
 
 Test happens at least three times and increasingly four.
 
@@ -83,7 +83,7 @@ Test happens at least three times and increasingly four.
 - **Final test.** The packaged part is tested again, because packaging introduces its own failures.
 - **System-level test.** The finished part runs in a socket against something close to a real workload, because some failures appear only when everything runs at once.
 
-The known-good-die problem is what changed. Aehr screens early-life and latent failures before dies are singulated, so a weak processor never reaches high-bandwidth memory and an expensive substrate ([source](https://www.aehr.com/2026/08/aehr-receives-22-million-follow-on-order-for-ai-processor-wafer-level-burn-in-systems/)). Its lead AI customer is moving burn-in from system level entirely onto the wafer, nine 300 mm wafers at a time ([source](https://www.aehr.com/2026/07/aehr-test-systems-reports-fiscal-2026-fourth-quarter-and-full-year-financial-results-with-record-quarterly-bookings-and-100-million-effective-backlog/)).
+Known-good die is what changed. Aehr screens early-life and latent failures before dies are cut from the wafer, so a weak processor never reaches high-bandwidth memory and an expensive substrate ([source](https://www.aehr.com/2026/08/aehr-receives-22-million-follow-on-order-for-ai-processor-wafer-level-burn-in-systems/)). Its lead AI customer is moving burn-in from system level entirely onto the wafer, nine 300 mm wafers at a time ([source](https://www.aehr.com/2026/07/aehr-test-systems-reports-fiscal-2026-fourth-quarter-and-full-year-financial-results-with-record-quarterly-bookings-and-100-million-effective-backlog/)).
 
 ## Variants and trade-offs
 
@@ -93,13 +93,13 @@ Probe cards are the hard part. For HBM the card must contact a stack of eight, t
 
 ### Final test, burn-in and system-level test
 
-The economics get worse as packages grow. TSMC has told investors its CoWoS roadmap runs beyond 14 times reticle size ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf)). Every die in a body that size is another chance to throw the whole assembly away, which is why test insertions multiply instead of consolidating. The capacity answer is visible in ASE's own numbers: it ran 6,797 testers in the second quarter of 2025 and 8,348 a year later ([source](https://www.sec.gov/Archives/edgar/data/1122411/000095010326011351/dp250868_6k.htm)).
+The economics get worse as packages grow. TSMC has told investors its CoWoS roadmap runs beyond 14 times reticle size ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf)). Every die in a body that size is another chance to throw the whole assembly away, which is why test insertions multiply instead of consolidating. ASE ran 6,797 testers in the second quarter of 2025 and 8,348 a year later ([source](https://www.sec.gov/Archives/edgar/data/1122411/000095010326011351/dp250868_6k.htm)).
 
 {{figure:ate-share}}
 
 ## Who makes it
 
-Automated test equipment is a duopoly that has stopped being symmetric. Advantest puts its own share at about 65% of a US$9.0 billion tester market in 2025: 66% of SoC test, up ten points in a year, and about 60% of memory test ([source](https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf)). It and Teradyne hold about 80% between them ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf)). Teradyne grew 13% to US$3.19 billion for 2025, with fourth-quarter revenue up 44% on AI demand ([source](https://investors.teradyne.com/news-events/press-releases/detail/433/teradyne-reports-fourth-quarter-and-full-year-2025-results)).
+Advantest puts its own share at about 65% of a US$9.0 billion tester market in 2025: 66% of SoC test, up ten points in a year, and about 60% of memory test ([source](https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf)). It and Teradyne hold about 80% between them ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf)). Teradyne grew 13% to US$3.19 billion for 2025, with fourth-quarter revenue up 44% on AI demand ([source](https://investors.teradyne.com/news-events/press-releases/detail/433/teradyne-reports-fourth-quarter-and-full-year-2025-results)).
 
 {{figure:tester-market}}
 
@@ -110,23 +110,23 @@ The rest of the floor is more fragmented.
 - **Dicing and grinding.** Disco leads in wafer grinders and dicing saws ([source](https://newsletter.semianalysis.com/p/disco-corporation-the-world-leader)), and its newest package saw handles workpieces up to 400 by 400 mm for panel-level work ([source](https://www.disco.co.jp/eg/news/corp/20251215_1.html)).
 - **Bonding.** Kulicke and Soffa did US$654.1 million in fiscal 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0000056978/us-gaap/Revenues.json)), while Besi's second-quarter 2026 revenue rose 68.7% to EUR 249.9 million on hybrid bonding and datacentre demand ([source](https://www.besi.com/investor-relations/press-releases/2025/details-1/be-semiconductor-industries-nv-announces-q2-26-and-h1-26-results/)).
 
-Thermocompression bonders, the tools that stack HBM and place chiplets on substrates, are the tightest niche of all. ASMPT took a repeat order for fifteen chip-to-substrate bonders in December 2025 and expects the market for them to pass US$1 billion by 2027, of which it means to hold 35 to 40% ([source](https://www.asmpt.com/en/investor-relations/news-events/asmpt-secures-additional-orders-for-fifteen-chip-to-substrate-thermo-compression-bonding-tools-driven-by-ai-tailwind/)). See Memory and HBM.
+Thermocompression bonders, which stack HBM and place chiplets on substrates, are the tightest niche. ASMPT took a repeat order for fifteen chip-to-substrate bonders in December 2025 and expects that market to pass US$1 billion by 2027, of which it means to hold 35 to 40% ([source](https://www.asmpt.com/en/investor-relations/news-events/asmpt-secures-additional-orders-for-fifteen-chip-to-substrate-thermo-compression-bonding-tools-driven-by-ai-tailwind/)). See Memory and HBM.
 
 ## The back end's geography
 
 Outsourced assembly and test is a Taiwanese business with a large Chinese challenger. ASE, the biggest of them, billed US$20.6 billion in 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0001122411/ifrs-full/Revenue.json)); CSET counts four of the top ten OSATs by 2024 revenue as China-headquartered ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). Malaysia ships about 13% of the world's packaged chips and wants 7% of advanced packaging shipments by 2035 ([source](https://www.mida.gov.my/advanced-packaging-how-malaysia-is-packaging-the-future-of-ai/)).
 
-The money is moving fast. ASE spent US$2.7 billion on machinery and US$1.4 billion on buildings and automation in the first half of 2026 alone, and says revenue from leading-edge advanced packaging is running ahead of its US$3.5 billion guidance for the year ([source](https://www.sec.gov/Archives/edgar/data/1122411/000095010326011353/dp250875_6k.htm)). Powertech, meanwhile, is chasing the first panel-level packaging line for AI chips in 2027 ([source](https://asia.nikkei.com/business/tech/semiconductors/powertech-eyes-world-s-first-panel-level-packaging-for-ai-chips-in-2027)).
+ASE spent US$2.7 billion on machinery and US$1.4 billion on buildings and automation in the first half of 2026, and says revenue from leading-edge advanced packaging is running ahead of its US$3.5 billion guidance for the year ([source](https://www.sec.gov/Archives/edgar/data/1122411/000095010326011353/dp250875_6k.htm)). Powertech is chasing the first panel-level packaging line for AI chips in 2027 ([source](https://asia.nikkei.com/business/tech/semiconductors/powertech-eyes-world-s-first-panel-level-packaging-for-ai-chips-in-2027)).
 
-Amkor took US$6.71 billion of revenue in 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0001047127/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json)) and US$1.90 billion in the second quarter of 2026, up 26% year on year ([source](https://www.sec.gov/Archives/edgar/data/1047127/000104712726000043/amkr6302026erex-991.htm)). It has expanded its Arizona campus to a US$7 billion investment ([source](https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced)) and will run turnkey packaging and test there for TSMC, whose Phoenix fabs sit next door ([source](https://pr.tsmc.com/english/news/3174)), under a long-term partnership signed in June 2026 ([source](https://ir.amkor.com/news-releases/news-release-details/tsmc-and-amkor-technology-announce-long-term-partnership)).
+Amkor took US$6.71 billion of revenue in 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0001047127/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json)) and US$1.90 billion in the second quarter of 2026, up 26% year on year ([source](https://www.sec.gov/Archives/edgar/data/1047127/000104712726000043/amkr6302026erex-991.htm)). It has expanded its Arizona campus to a US$7 billion investment ([source](https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced)). Under a partnership signed in June 2026 ([source](https://ir.amkor.com/news-releases/news-release-details/tsmc-and-amkor-technology-announce-long-term-partnership)) it will run turnkey packaging and test there for TSMC, whose Phoenix fabs sit next door ([source](https://pr.tsmc.com/english/news/3174)).
 
 {{figure:ase-testers}}
 
 ## The chokepoint
 
-This is not lithography. No single tool has a single supplier. The lock-in is stickiness: Advantest argues that switching tester vendor means rebuilding a customer's entire device development, evaluation and production test environment, which is why share moves slowly and in one direction ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf)).
+Unlike lithography, no tool here has a single supplier. What holds a customer is the cost of leaving: Advantest argues that switching tester vendor means rebuilding a customer's entire device development, evaluation and production test environment, which is why share moves slowly ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf)).
 
-The back end is also the part of the chain China is closest to owning, and assembly, dicing, bonding and test tools sit outside the export control lines drawn around lithography and deposition. Set the US$27.3 billion that ASE and Amkor billed between them in 2025 against industry sales of US$791.7 billion ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)): a small share of the revenue sitting on the critical path of all of it.
+The back end is also the part of the chain China is closest to owning, and assembly, dicing, bonding and test tools sit outside the export control lines drawn around lithography and deposition. ASE and Amkor billed US$27.3 billion between them in 2025, against industry sales of US$791.7 billion ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)). That is a small share of the money for a step every chip has to pass through.
 
 ## Key evaluation criteria
 

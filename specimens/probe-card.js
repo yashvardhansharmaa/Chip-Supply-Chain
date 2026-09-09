@@ -30,15 +30,15 @@ PC.register('probe-card', function (p) {
     return PC.polyline({ pts: [[-w / 2, y, -d / 2], [w / 2, y, -d / 2], [w / 2, y, d / 2], [-w / 2, y, d / 2]], closed: true, perUnit: per, tone: tn });
   }
 
-  var Rw = 1.00, Rc = 1.02, Rch = 1.13;        // wafer 300 mm, card 305 mm, chuck
+  var Rw = 1.00, Rc = 1.02, Rch = 1.08;        // wafer 300 mm, card 305 mm, chuck
   var tWaf = 0.028, wafTop = tWaf / 2;
   var dw = 0.20, dh = 0.245;                    // reticle-sized dies on the wafer
 
   // heights, measured from the wafer surface
-  var yTip = wafTop, yLo = wafTop + 0.052, tG = 0.022;
-  var yLoTop = yLo + tG, yUp = yLoTop + 0.060, yUpTop = yUp + tG;
-  var stH = 0.085, yST = yUpTop + 0.010, stW = 0.50;
-  var tPcb = 0.052, pcbBot = yST + stH + 0.008, pcbTop = pcbBot + tPcb;
+  var yTip = wafTop, yLo = wafTop + 0.082, tG = 0.020;
+  var yLoTop = yLo + tG, yUp = yLoTop + 0.082, yUpTop = yUp + tG;
+  var stH = 0.100, yST = yUpTop + 0.052, stW = 0.50;
+  var tPcb = 0.052, pcbBot = yST + stH + 0.030, pcbTop = pcbBot + tPcb;
   var gW = 0.40, hW = 0.46;                     // guide plates, probe-head frame
 
   /* ---------------- the printed circuit board ---------------- */
@@ -86,16 +86,16 @@ PC.register('probe-card', function (p) {
 
   /* ---------------- the space transformer: multi-layer ceramic ---------------- */
   var ySTc = yST + stH / 2;
-  add(PC.T(PC.box({ w: stW, h: stH, d: stW, faces: ['px', 'nx', 'pz', 'nz'], n: 4200, tone: 0.42 }), { pos: [0, ySTc, 0] }));
-  add(PC.T(PC.boxEdges({ w: stW, h: stH, d: stW, perUnit: 300, tone: 1 }), { pos: [0, ySTc, 0] }));
-  for (i = 1; i < 7; i++) add(rect(stW, stW, yST + stH * i / 7, 110, 0.5));
+  add(PC.T(PC.box({ w: stW, h: stH, d: stW, faces: ['px', 'nx', 'pz', 'nz'], n: 2400, tone: 0.33 }), { pos: [0, ySTc, 0] }));
+  add(PC.T(PC.boxEdges({ w: stW, h: stH, d: stW, perUnit: 190, tone: 0.92 }), { pos: [0, ySTc, 0] }));
+  for (i = 1; i < 7; i++) add(rect(stW, stW, yST + stH * i / 7, 62, 0.42));
   // the fan-out: the tester's coarse pitch on top, the die's fine pitch below
-  add(PC.T(PC.dots({ nx: 15, nz: 15, sx: stW * 0.062, sz: stW * 0.062, per: 2, tone: 0.55 }), { pos: [0, yST + stH + 0.002, 0] }));
+  add(PC.T(PC.dots({ nx: 15, nz: 15, sx: stW * 0.062, sz: stW * 0.062, per: 2, tone: 0.45 }), { pos: [0, yST + stH + 0.002, 0] }));
 
   /* ---------------- the probe head: two guide plates and the probes ---------------- */
   [[yLo, tG], [yUp, tG]].forEach(function (g) {
-    add(PC.T(PC.box({ w: gW, h: g[1], d: gW, n: 2000, tone: 0.44 }), { pos: [0, g[0] + g[1] / 2, 0] }));
-    add(PC.T(PC.boxEdges({ w: gW, h: g[1], d: gW, perUnit: 340, tone: 1 }), { pos: [0, g[0] + g[1] / 2, 0] }));
+    add(PC.T(PC.box({ w: gW, h: g[1], d: gW, n: 950, tone: 0.3 }), { pos: [0, g[0] + g[1] / 2, 0] }));
+    add(PC.T(PC.boxEdges({ w: gW, h: g[1], d: gW, perUnit: 210, tone: 0.95 }), { pos: [0, g[0] + g[1] / 2, 0] }));
   });
   for (i = 0; i < 4; i++) {
     var px = (i < 2 ? -1 : 1) * hW * 0.48, pz = (i % 2 ? -1 : 1) * hW * 0.48;
@@ -105,7 +105,7 @@ PC.register('probe-card', function (p) {
 
   // the probes themselves: an area array over a two-by-two block of dies,
   // bowed between the guide plates
-  var needles = [], nx = 13, nz = 15;
+  var needles = [], nx = 8, nz = 10;
   for (var gx = -1; gx <= 0; gx++) for (var gz = -1; gz <= 0; gz++) {
     var ox = (gx + 0.5) * dw, oz = (gz + 0.5) * dh;
     for (var a1 = 0; a1 < nx; a1++) for (var b1 = 0; b1 < nz; b1++) {
@@ -116,7 +116,7 @@ PC.register('probe-card', function (p) {
         pts: [[qx, yTip, qz], [qx, yLo + tG * 0.4, qz],
               [qx + bo * Math.cos(th), (yLoTop + yUp) / 2, qz + bo * Math.sin(th)],
               [qx, yUp + tG * 0.6, qz], [qx, yUpTop + 0.004, qz]],
-        perUnit: 250, tone: 0.6
+        perUnit: 150, tone: 0.5
       }));
     }
   }
@@ -160,7 +160,7 @@ PC.register('probe-card', function (p) {
   return {
     cloud: PC.merge.apply(null, parts),
     spin: 0.11,
-    tilt: [0.36, -0.62, 0],
+    tilt: [0.46, -0.62, 0],
     caption: 'A vertical probe card over a wafer: a twelve-inch circular board, wider than the wafer it tests, with the tester\'s contact rings on top and a stiffener bolted across it whose three screws bring every needle into the same plane. Under it hangs a ceramic space transformer that fans the tester\'s coarse pitch down to the pitch of the pads, and a probe head whose needles bow between two guide plates before landing on four dies at once, picked out in copper. The height between the card and the wafer is exaggerated; in the prober it is a millimetre or two.'
   };
 });

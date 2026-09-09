@@ -16,7 +16,7 @@
  * Layout objects may also carry "estimated", "sources" and "note" fields; the renderer
  * ignores them.
  *
- * Vertical dimensions are exaggerated about 3.4x against the plan, or the whole thing
+ * Vertical dimensions are exaggerated about 4x against the plan, or the whole thing
  * reads as a flat grey rectangle. The caption says so.
  * Default (no params): the two-die, eight-HBM Blackwell-style layout.
  */
@@ -64,7 +64,7 @@ PC.register('package', function (p) {
   // ---------- wafer-scale variant ----------
   if (L.waferScale) {
     var R = (L.diameterMm || 300) / 2 * S, th = Y(0.9);
-    var body = PC.cylinder({ r: R, h: th, n: 46000, tone: 0.42 });
+    var body = PC.cylinder({ r: R, h: th, n: 40000, tone: 0.33 });
     var keep = [];
     for (var i = 0; i < body.length; i += 4) { // notch at the top of the wafer
       var bx = body[i], bz = body[i + 2];
@@ -110,6 +110,10 @@ PC.register('package', function (p) {
   }
   var stack = envelope(ips.length ? ips : dies.concat(base, hbm));   // what the ring encloses
   var sub = L.substrate || [stack.w + 24, stack.h + 24];
+  // small packages would come out thin at the shared density, big ones too heavy:
+  // scale the point budget by area against a 6,500 mm2 reference package
+  var d0 = PC.density;
+  PC.density = d0 * Math.max(0.8, Math.min(2.2, Math.sqrt(6500 / (sub[0] * sub[1]))));
 
   var hSub = 2.2, hIp = 0.9, hBase = 0.8, hDie = 0.85, hHbm = 2.0;
   var subW = sub[0] * S, subD = sub[1] * S, subH = Y(hSub);
@@ -125,7 +129,7 @@ PC.register('package', function (p) {
   var pitch = 2.8 * S;
   add(PC.T(PC.dots({
     nx: Math.max(6, Math.floor(subW / pitch) - 1), nz: Math.max(6, Math.floor(subD / pitch) - 1),
-    sx: pitch, sz: pitch, tone: 0.3
+    sx: pitch, sz: pitch, per: 2, tone: 0.26
   }), { pos: [0, -subH / 2 - Y(0.5), 0] }));
 
   // --- stiffener ring: a metal frame on the substrate edge, no lid over the dies ---
@@ -209,5 +213,6 @@ PC.register('package', function (p) {
       : ni === 1 ? ' on a silicon interposer' : ' across ' + ni + ' separate interposers')
     + ', inside a lid-less stiffener ring, with the ball grid below.';
 
+  PC.density = d0;
   return { cloud: PC.merge.apply(null, parts), spin: 0.1, tilt: [0.55, -0.7, 0], caption: cap };
 });

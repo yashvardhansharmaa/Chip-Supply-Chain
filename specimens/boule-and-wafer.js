@@ -13,14 +13,14 @@
  * that run down a <100> crystal, clearly visible on an as-grown crown. The
  * body is ground to diameter, so it carries only faint growth striations.
  *
- * Beside the tail stand three wafers sawn from that body, one in copper. A
+ * Beside the tail are two wafers sawn from that body, one on its rim in copper. A
  * wafer is exactly as wide as the ingot: that is the whole reason for growing
  * the crystal to 300 mm in the first place.
  */
 PC.register('boule-and-wafer', function (p) {
   var R = 0.15, bx = -0.20;
   var yTip = -0.71, yB0 = -0.45, yB1 = 1.05;         // tail 0.26 m, body 1.50 m
-  var yCr = 1.47, yNk = 1.60, ySd = 1.67, yCh = 1.715;
+  var yCr = 1.40, yNk = 1.53, ySd = 1.60, yCh = 1.645;
   var MER = 24;                                       // meridians around each solid
   var parts = [], i, y, a;
   function at(c) { return PC.T(c, { pos: [bx, 0, 0] }); }
@@ -60,10 +60,10 @@ PC.register('boule-and-wafer', function (p) {
 
   // ---------- crown: as-grown, one step proud of the ground body ----------
   var Rc = R * 1.03;
-  var crown = [[Rc, yB1], [Rc, yB1 + 0.022], [Rc * 0.992, 1.115], [Rc * 0.972, 1.165],
-               [Rc * 0.936, 1.215], [Rc * 0.880, 1.265], [Rc * 0.800, 1.315],
-               [Rc * 0.690, 1.362], [Rc * 0.545, 1.404], [Rc * 0.370, 1.437],
-               [Rc * 0.185, 1.461], [0.004, yCr]];
+  var crown = [[Rc, yB1], [Rc, yB1 + 0.018], [Rc * 0.992, 1.105], [Rc * 0.972, 1.145],
+               [Rc * 0.936, 1.185], [Rc * 0.880, 1.225], [Rc * 0.800, 1.265],
+               [Rc * 0.690, 1.303], [Rc * 0.545, 1.338], [Rc * 0.370, 1.368],
+               [Rc * 0.185, 1.390], [0.004, yCr]];
   parts.push(at(PC.lathe({ profile: crown, tone: 0.17 })));
   hatch(crown, 0.34, 6, 0.88);                         // 4 heavy meridians = the facet ridges
   parts.push(at(PC.T(PC.circle({ r: Rc * 1.006, perUnit: 640, tone: 1 }), { pos: [0, yB1, 0] })));
@@ -81,7 +81,7 @@ PC.register('boule-and-wafer', function (p) {
   parts.push(PC.T(PC.circle({ r: 0.026, perUnit: 380, tone: 0.9 }), { pos: [bx, yCh, 0] }));
   parts.push(PC.T(PC.circle({ r: 0.026, perUnit: 380, tone: 0.9 }), { pos: [bx, ySd, 0] }));
 
-  // ---------- three wafers standing on their rims, as they come out of the wire saw ----------
+  // ---------- two wafers off the wire saw: one on its rim, one lying flat ----------
   function wafer(accent) {
     var face = PC.disc({ r: R, n: accent ? 5400 : 3000, tone: accent ? 0.24 : 0.15 });
     var rim = PC.circle({ r: R, perUnit: accent ? 620 : 380, tone: accent ? 1 : 0.85 });
@@ -100,22 +100,21 @@ PC.register('boule-and-wafer', function (p) {
     return new Float32Array(keep);
   }
   var lean = 0.17;
-  for (i = 0; i < 3; i++) {
-    parts.push(PC.T(wafer(i === 1), {
-      rot: [0, 0.34, -(Math.PI / 2 - lean)],
-      pos: [0.30 + (i - 1) * 0.030, yTip + R * Math.cos(lean) + 0.002, (i - 1) * 0.175]
-    }));
-  }
+  parts.push(PC.T(wafer(true), {                       // standing on its rim, in copper
+    rot: [0, 0.34, -(Math.PI / 2 - lean)],
+    pos: [0.28, yTip + R * Math.cos(lean) + 0.002, -0.06]
+  }));
+  parts.push(PC.T(wafer(false), { rot: [0, 0.9, 0], pos: [0.34, yTip + 0.002, 0.26] }));
 
   return {
     cloud: PC.merge.apply(null, parts),
     spin: 0.075,
     tilt: [0.16, -0.62, 0],
-    caption: 'A Czochralski silicon ingot: 2.2 m of one unbroken crystal, roughly 265 kg of it, ' +
+    caption: 'A Czochralski silicon ingot: 2.1 m of one unbroken crystal, roughly 265 kg of it, ' +
       'hanging from a seed on a neck about 10 mm across. Below the seed comes the neck, then the ' +
       'crown where the crystal opens out to 300 mm - the four heavy lines down it are the facet ' +
       'ridges of a <100> crystal - then 1.5 m of ground body ringed with growth striations, then ' +
-      'the cropped tail. Standing at its foot are wafers sawn from that body, one in copper, each ' +
-      'exactly as wide as the ingot it came from.'
+      'the cropped tail. At its foot are two wafers sawn from that body, the one on its rim in ' +
+      'copper, each exactly as wide as the ingot it came from.'
   };
 });
