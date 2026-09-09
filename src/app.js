@@ -636,8 +636,55 @@
       (DATA.timeline || []).forEach(function (e) { idx.push({ kind: 'Event ' + e.date, title: e.title, text: e.summary || '', href: '#/geopolitics' }); });
       (DATA.controls || []).forEach(function (t) { idx.push({ kind: 'Export rule', title: t.instrument + (t.parameter ? ' · ' + t.parameter : ''), text: [t.scope, t.destinations, t.note].filter(Boolean).join(' · '), href: '#/controls' }); });
       (DATA.exposure || []).forEach(function (r) { if (r.chinaShare != null) idx.push({ kind: 'China revenue', title: r.firm + ' ' + r.fiscalYear, text: 'China was ' + r.chinaShare + '% of revenue' + (r.basis ? ' · ' + r.basis : ''), href: '#/exposure' }); });
-      idx.forEach(function (i) { i.hay = (i.kind + ' ' + i.title + ' ' + i.text).toLowerCase(); });
+      var self = this;
+      idx.forEach(function (i) {
+        i.hay = (i.kind + ' ' + i.title + ' ' + i.text).toLowerCase();
+        i.hayn = self.norm(i.hay); // hyphens flattened, so "export-control" and "export control" are the same string
+        i.tn = self.norm(i.title);
+        i.tw = i.tn.split(' ').filter(Boolean);
+      });
       this.index = idx; return idx;
+    },
+    norm: function (s) { return String(s == null ? '' : s).toLowerCase().replace(/[‐-―]/g, '-').replace(/[-_/,;:()]+/g, ' ').replace(/\s+/g, ' ').trim(); },
+    STOP: { a: 1, an: 1, and: 1, are: 1, as: 1, at: 1, be: 1, by: 1, do: 1, does: 1, for: 1, from: 1, how: 1, in: 1, is: 1, it: 1, its: 1, of: 1, on: 1, or: 1, that: 1, the: 1, this: 1, to: 1, was: 1, what: 1, when: 1, where: 1, which: 1, who: 1, why: 1, with: 1 },
+    KIND: { Glossary: 20, Chapter: 10, Essay: 8 },
+    // Rank rather than filter: an exact title first, then a title word, then the glossary, then body text.
+    search: function (raw) {
+      var self = this, idx = this.buildIndex(), qn = this.norm(raw);
+      var words = qn.split(' ').filter(Boolean);
+      var terms = words.filter(function (t) { return !self.STOP[t]; });
+      if (!terms.length) terms = words;
+      if (!terms.length) return { hits: [], note: '' };
+      var out = [];
+      idx.forEach(function (i, order) {
+        var score = 0, matched = 0;
+        terms.forEach(function (t) {
+          var w = 0;
+          for (var k = 0; k < i.tw.length; k++) {
+            if (i.tw[k] === t) { w = 40; break; }
+            if (i.tw[k].indexOf(t) === 0) w = 30;
+          }
+          if (!w && i.tn.indexOf(t) >= 0) w = 22;
+          if (!w && i.hayn.indexOf(t) >= 0) w = 6;
+          if (w) { matched++; score += w; }
+        });
+        if (!matched) return;
+        if (i.tn === qn) score += 300;
+        else if (i.tn.indexOf(qn) === 0) score += 90;
+        else if (i.tn.indexOf(qn) >= 0) score += 55;
+        if (matched === terms.length) score += 45;
+        score += self.KIND[i.kind] || 0;
+        score += Math.max(0, 30 - i.tn.length) * 0.5; // a short, exact title beats a long one
+        out.push({ i: i, s: score, o: order });
+      });
+      out.sort(function (a, b) { return b.s - a.s || a.i.tn.length - b.i.tn.length || a.o - b.o; });
+      if (out.length) return { hits: out.slice(0, 14).map(function (x) { return x.i; }), note: '' };
+      // nothing matched: offer the glossary entries that share the longest opening run of letters
+      var near = idx.filter(function (i) { return i.kind === 'Glossary'; }).map(function (i) {
+        var n = 0; while (n < qn.length && n < i.tn.length && qn.charAt(n) === i.tn.charAt(n)) n++;
+        return { i: i, n: n };
+      }).sort(function (a, b) { return b.n - a.n || a.i.tn.length - b.i.tn.length; }).slice(0, 3);
+      return { hits: near.map(function (x) { return x.i; }), note: 'Nothing matches. The nearest glossary entries:' };
     },
     open: function () {
       var self = this, box = $('#cp-search');
@@ -649,10 +696,11 @@
         box.addEventListener('click', function (e) { if (e.target === box) self.close(); });
         inp.addEventListener('keydown', function (e) { if (e.key === 'Escape') self.close(); if (e.key === 'Enter') { var a = list.querySelector('a'); if (a) a.click(); } });
         inp.addEventListener('input', function () {
-          var q = inp.value.trim().toLowerCase(), terms = q.split(/\s+/).filter(Boolean);
-          if (!terms.length) { list.innerHTML = ''; return; }
-          var hits = self.buildIndex().filter(function (i) { return terms.every(function (t) { return i.hay.indexOf(t) >= 0; }); }).slice(0, 14);
-          list.innerHTML = hits.map(function (h, k) { return '<li><a href="' + esc(h.href) + '" data-k="' + k + '"><span class="k">' + esc(h.kind) + '</span><b>' + esc(h.title) + '</b><span class="t">' + esc(h.text.slice(0, 140)) + '</span></a></li>'; }).join('') || '<li class="none">Nothing matches. Try fewer words.</li>';
+          var q = inp.value.trim();
+          if (!q) { list.innerHTML = ''; return; }
+          var res = self.search(q), hits = res.hits;
+          list.innerHTML = (res.note ? '<li class="none">' + esc(res.note) + '</li>' : '') +
+            (hits.map(function (h, k) { return '<li><a href="' + esc(h.href) + '" data-k="' + k + '"><span class="k">' + esc(h.kind) + '</span><b>' + esc(h.title) + '</b><span class="t">' + esc(h.text.slice(0, 140)) + '</span></a></li>'; }).join('') || (res.note ? '' : '<li class="none">Nothing matches. Try fewer words.</li>'));
           list.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { var h = hits[+a.getAttribute('data-k')]; self.close(); if (h.chip) setTimeout(function () { Landscape.select(h.chip); }, 60); if (h.q) setTimeout(function () { var s = $('#sup-search'); if (s) { s.value = h.q; s.dispatchEvent(new Event('input')); } }, 60); if (h.el) setTimeout(function () { h.el.scrollIntoView({ block: 'center' }); }, 60); }); });
         });
       }

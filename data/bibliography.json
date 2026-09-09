@@ -508,42 +508,49 @@
   "https://epoch.ai/blog/algorithmic-progress-in-language-models": {
     "title": "Algorithmic progress in language models",
     "publisher": "Epoch AI",
+    "date": "2024-03-12",
     "type": "article",
     "accessed": "2026-09-09"
   },
   "https://epoch.ai/blog/introducing-the-ai-chip-components-explorer": {
     "title": "AI Chip Supply Chain Bottlenecks and Capacity",
     "publisher": "Epoch AI",
+    "date": "2026-05-08",
     "type": "article",
     "accessed": "2026-09-09"
   },
   "https://epoch.ai/data-insights/ai-chip-supply-chain-constraints": {
     "title": "Advanced packaging and HBM, not logic dies, were the bottlenecks on AI chip production in 2025",
     "publisher": "Epoch AI",
+    "date": "2026-03-12",
     "type": "page",
     "accessed": "2026-09-09"
   },
   "https://epoch.ai/data-insights/b200-cost-breakdown": {
     "title": "NVIDIA",
     "publisher": "Epoch AI",
+    "date": "2025-12-10",
     "type": "page",
     "accessed": "2026-09-09"
   },
   "https://epoch.ai/data-insights/hyperscaler-capex-trend": {
     "title": "Hyperscaler capex has quadrupled since GPT-4",
     "publisher": "Epoch AI",
+    "date": "2026-02-26",
     "type": "page",
     "accessed": "2026-09-09"
   },
   "https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand": {
     "title": "OpenAI Stargate: where the US sites stand",
     "publisher": "Epoch AI",
+    "date": "2026-04-17",
     "type": "report",
     "accessed": "2026-09-09"
   },
   "https://epoch.ai/publications/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year": {
     "title": "Training compute of frontier AI models grows by 4-5x per year",
     "publisher": "Epoch AI",
+    "date": "2024-05-28",
     "type": "report",
     "accessed": "2026-09-09"
   },
@@ -1159,6 +1166,7 @@
   "https://semiconductor.samsung.com/foundry/": {
     "title": "Foundry Overview | Samsung Semiconductor Global",
     "publisher": "Samsung Electronics",
+    "date": "2026-08-12",
     "type": "page",
     "accessed": "2026-09-09"
   },
@@ -1172,6 +1180,7 @@
   "https://semiconductor.samsung.com/sas/company/taylor/": {
     "title": "Taylor | US Fab | Samsung Semiconductor Global",
     "publisher": "Samsung Electronics",
+    "date": "2025-09-11",
     "type": "page",
     "accessed": "2026-09-09"
   },
@@ -1491,6 +1500,7 @@
   "https://www.asml.com/": {
     "title": "ASML | The world's supplier to the semiconductor industry",
     "publisher": "ASML",
+    "date": "2026-06-25",
     "type": "page",
     "accessed": "2026-09-09"
   },
@@ -1516,6 +1526,7 @@
   "https://www.asml.com/en/investors/annual-report/2025": {
     "title": "ASML 2025 Annual Report",
     "publisher": "ASML",
+    "date": "2026-02-25",
     "type": "page",
     "accessed": "2026-09-09"
   },
@@ -1880,36 +1891,42 @@
   "https://www.csis.org/analysis/chinas-localization-drive-semiconductors-gains-impetus-allied-chip-export-controls": {
     "title": "China’s Localization Drive in Semiconductors Gains Impetus from Allied Chip Export Controls",
     "publisher": "Center for Strategic and International Studies",
+    "date": "2026-03-24",
     "type": "report",
     "accessed": "2026-09-09"
   },
   "https://www.csis.org/analysis/choking-chinas-access-future-ai": {
     "title": "Choking off China’s Access to the Future of AI",
     "publisher": "Center for Strategic and International Studies",
+    "date": "2022-10-11",
     "type": "report",
     "accessed": "2026-09-09"
   },
   "https://www.csis.org/analysis/csis-translation-updated-japanese-export-controls-high-performance-semiconductor": {
     "title": "CSIS Translation: Updated Japanese Export Controls on High-Performance Semiconductor Manufacturing Equipment",
     "publisher": "Center for Strategic and International Studies",
+    "date": "2023-07-18",
     "type": "report",
     "accessed": "2026-09-09"
   },
   "https://www.csis.org/analysis/micron-aggression-right-response-beijings-ban-us-chipmaker": {
     "title": "Micron Aggression: The Right Response to Beijing’s Ban on the U.S. Chipmaker",
     "publisher": "Center for Strategic and International Studies",
+    "date": "2023-06-22",
     "type": "report",
     "accessed": "2026-09-09"
   },
   "https://www.csis.org/analysis/us-china-trade-truce-has-not-solved-gallium-problem": {
     "title": "The U.S.-China Trade Truce Has Not Solved the Gallium Problem",
     "publisher": "Center for Strategic and International Studies",
+    "date": "2026-05-11",
     "type": "report",
     "accessed": "2026-09-09"
   },
   "https://www.csis.org/analysis/where-chips-fall-us-export-controls-under-biden-administration-2022-2024": {
     "title": "Where the Chips Fall: U.S. Export Controls Under the Biden Administration from 2022 to 2024",
     "publisher": "Center for Strategic and International Studies",
+    "date": "2024-12-12",
     "type": "report",
     "accessed": "2026-09-09"
   },
@@ -2601,7 +2618,6 @@
   "https://www.infineon.com/": {
     "title": "Semiconductor & System Solutions",
     "publisher": "Infineon Technologies",
-    "date": "2026-09-03",
     "type": "page",
     "accessed": "2026-09-09"
   },
@@ -3047,42 +3063,49 @@
   "https://www.nvidia.com/en-us/data-center/dgx-b200/": {
     "title": "NVIDIA DGX B200",
     "publisher": "Nvidia",
+    "date": "2026-04-29",
     "type": "page",
     "accessed": "2026-09-09"
   },
   "https://www.nvidia.com/en-us/data-center/gb300-nvl72/": {
     "title": "NVIDIA GB300 NVL72",
     "publisher": "Nvidia",
+    "date": "2026-07-23",
     "type": "page",
     "accessed": "2026-09-09"
   },
   "https://www.nvidia.com/en-us/data-center/h200/": {
     "title": "NVIDIA H200 GPU",
     "publisher": "Nvidia",
+    "date": "2026-08-27",
     "type": "page",
     "accessed": "2026-09-09"
   },
   "https://www.nvidia.com/en-us/data-center/hgx/": {
     "title": "NVIDIA HGX Platform",
     "publisher": "Nvidia",
+    "date": "2026-08-11",
     "type": "page",
     "accessed": "2026-09-09"
   },
   "https://www.nvidia.com/en-us/data-center/nvlink/": {
     "title": "NVLink & NVLink Switch for Advanced Multi-GPU Communication",
     "publisher": "Nvidia",
+    "date": "2026-04-20",
     "type": "page",
     "accessed": "2026-09-09"
   },
   "https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/": {
     "title": "NVIDIA Blackwell Architecture",
     "publisher": "Nvidia",
+    "date": "2025-12-18",
     "type": "page",
     "accessed": "2026-09-09"
   },
   "https://www.nvidia.com/en-us/data-center/vera-rubin-nvl72/": {
     "title": "NVIDIA Vera Rubin NVL72",
     "publisher": "Nvidia",
+    "date": "2026-09-07",
     "type": "page",
     "accessed": "2026-09-09"
   },

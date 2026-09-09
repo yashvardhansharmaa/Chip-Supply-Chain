@@ -401,7 +401,9 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 /* ---------- sources view ---------- */
 .sources-list h3 { font-family: var(--font-display); font-weight: 700; font-size: 20px; margin: 28px 0 10px; }
 .sources-list ol { padding-left: 2.2em; font-size: 14px; line-height: 1.5; color: var(--ink-2); }
-.sources-list li { margin-bottom: 4px; overflow-wrap: anywhere; }
+.sources-list li { margin-bottom: 6px; overflow-wrap: anywhere; }
+/* publisher and date, after the title of a reference */
+.src-meta { display: block; font-family: var(--font-mono); font-size: 11px; line-height: 1.4; color: var(--muted); }
 
 /* ---------- footer ---------- */
 .site-footer { border-top: 1px solid var(--line); margin-top: 60px; padding: 28px 0 60px; font-family: var(--font-mono); font-size: 12px; line-height: 1.7; color: var(--muted); }

@@ -20,6 +20,25 @@ const TIER_LABEL = { A: 'Primary or institutional', B: 'SemiAnalysis, Reuters, t
 const tierTag = (url) => { const t = tierOf(url); return `<span class="tier tier-${t}" title="${TIER_LABEL[t]}">${t}</span>`; };
 const tierCounts = (cites) => { const c = { A: 0, B: 0, C: 0, D: 0, '?': 0 }; cites.forEach((x) => { c[tierOf(x.url)]++; }); return c; };
 
+/* ---------------- bibliography: url -> { title, publisher, date, type, accessed } ---------------- */
+const bibliography = readJSON(path.join(root, 'data', 'bibliography.json'), {});
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const bibOf = (url) => bibliography[url] || bibliography[String(url).replace(/&amp;/g, '&')] || null;
+const bibDate = (d) => {
+  const p = String(d || '').split('-');
+  if (p.length === 3) return `${+p[2]} ${MONTHS[+p[1] - 1] || p[1]} ${p[0]}`;
+  if (p.length === 2) return `${MONTHS[+p[1] - 1] || p[1]} ${p[0]}`;
+  return p[0] || '';
+};
+const bibLabel = (url) => { const b = bibOf(url); return b && b.title ? b.title : ''; };
+// One citation as a reference line: the title, then publisher and date in small type. A url with no entry stays a url.
+function sourceLine(url) {
+  const b = bibOf(url);
+  const label = b && b.title ? b.title : (url.length > 96 ? url.slice(0, 94) + '…' : url);
+  const meta = b ? [b.publisher, bibDate(b.date)].filter(Boolean).join(' · ') : host(url);
+  return `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(label)}</a>${meta ? `<span class="src-meta">${esc(meta)}</span>` : ''}`;
+}
+
 /* ---------------- front matter ---------------- */
 function parseChapter(src, file) {
   const m = src.match(/^---json\s*\n([\s\S]*?)\n---\s*\n?/);
@@ -53,7 +72,8 @@ function cite(url, ctx) {
   url = url.replace(/&amp;/g, '&');
   let i = ctx.cites.findIndex((c) => c.url === url);
   if (i < 0) { ctx.cites.push({ url }); i = ctx.cites.length - 1; }
-  return `<sup class="cite"><a href="${esc(url)}" target="_blank" rel="noopener" title="${esc(host(url))}">${i + 1}</a></sup>`;
+  const t = bibLabel(url);
+  return `<sup class="cite"><a href="${esc(url)}" target="_blank" rel="noopener" title="${esc(t ? t + ' · ' + host(url) : host(url))}">${i + 1}</a></sup>`;
 }
 function host(url) { try { return new URL(url).hostname.replace(/^www\./, ''); } catch (e) { return url; } }
 
@@ -335,7 +355,7 @@ function chapterHTML(ch) {
   const parts = splitTakeaways(ch.html);
   const pb = plainBox(parts.body, m.plain, { id: ch.id, cites: ch.cites, figures: [] });
   ch.inShort = parts.inShort;
-  const sources = ch.cites.length ? `<details class="chapter-sources"><summary>Sources for this chapter (${ch.cites.length})</summary><ol>${ch.cites.map((c) => `<li>${tierTag(c.url)}<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url.length > 96 ? c.url.slice(0, 94) + '…' : c.url)}</a><span class="host">${esc(host(c.url))}</span></li>`).join('')}</ol></details>` : '';
+  const sources = ch.cites.length ? `<details class="chapter-sources"><summary>Sources for this chapter (${ch.cites.length})</summary><ol>${ch.cites.map((c) => `<li>${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol></details>` : '';
   const stageIdx = stages.findIndex((c) => c.id === ch.id);
   const next = stageIdx >= 0 ? stages[stageIdx + 1] : null;
   const tile = stageIdx >= 0 ? `<div class="ch-tile"><span class="k">Chapter</span><span class="v">${pad(ch.number)}</span><span class="of">stage ${stageIdx + 1} of ${stages.length}</span></div>` : `<div class="ch-tile"><span class="k">Chapter</span><span class="v">${pad(ch.number)}</span><span class="of">${ch.number === 1 ? 'the map' : 'the costs'}</span></div>`;
@@ -449,7 +469,7 @@ function exposureViz(rows) {
 let geoBody = '<p>The geopolitics essay is not written yet.</p>', geoDek ='Who holds each chokepoint, how the export-control campaign has unfolded since 2018, and where the chips actually go.';
 if (geo) {
   geoDek = geo.meta.oneLiner || geoDek;
-  const sources = geo.cites.length ? `<details class="chapter-sources"><summary>Sources for this essay (${geo.cites.length})</summary><ol>${geo.cites.map((c) => `<li><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url.length > 96 ? c.url.slice(0, 94) + '…' : c.url)}</a><span class="host">${esc(host(c.url))}</span></li>`).join('')}</ol></details>` : '';
+  const sources = geo.cites.length ? `<details class="chapter-sources"><summary>Sources for this essay (${geo.cites.length})</summary><ol>${geo.cites.map((c) => `<li>${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol></details>` : '';
   const gparts = splitTakeaways(geo.html); geo.inShort = gparts.inShort;
   const gpb = plainBox(gparts.body, geo.meta.plain, { id: 'geopolitics', cites: geo.cites, figures: [] });
   geoBody = gpb.box + (gparts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${gparts.inShort}</section>` : '') + nameplate(geo.meta.card, 'Geopolitics') + `<p class="label" style="margin:10px 0 26px">${geo.words.toLocaleString('en-US')} words / ${Math.max(1, Math.round(geo.words / 230))} min</p>` + glossaryWrap(gpb.html) + prevNext(geo) + sources;
@@ -458,7 +478,7 @@ if (geo) {
 /* ---------------- sources view ---------------- */
 const all = chapters.concat(geo ? [geo] : []);
 const sourcesHTML = `<div class="tier-key">Every source is one of two kinds: <span class="tier tier-A">A</span> primary or institutional (company filings and investor materials, governments and regulators, standards bodies, universities and labs, and research institutions such as CSET, CSIS, SIA, SEMI and Epoch AI) · <span class="tier tier-B">B</span> one of four named exceptions: SemiAnalysis, Reuters, the Financial Times and Nikkei Asia. Nothing else is cited.</div>` +
-  all.map((ch) => { const tc = tierCounts(ch.cites); return `<h3>${pad(ch.number)} · ${esc(ch.title)} <span class="label">${ch.cites.length} sources · A ${tc.A} · B ${tc.B}${tc.C + tc.D ? ' · disallowed ' + (tc.C + tc.D) : ''}${tc['?'] ? ' · unclassified ' + tc['?'] : ''}</span></h3><ol>${ch.cites.map((c) => `<li>${tierTag(c.url)}<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url)}</a></li>`).join('')}</ol>`; }).join('');
+  all.map((ch) => { const tc = tierCounts(ch.cites); return `<h3>${pad(ch.number)} · ${esc(ch.title)} <span class="label">${ch.cites.length} sources · A ${tc.A} · B ${tc.B}${tc.C + tc.D ? ' · disallowed ' + (tc.C + tc.D) : ''}${tc['?'] ? ' · unclassified ' + tc['?'] : ''}</span></h3><ol>${ch.cites.map((c) => `<li>${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol>`; }).join('');
 
 /* ---------------- briefing (all the "in short" blocks on one page) ---------------- */
 const briefingHTML = all.map((ch) => {

@@ -204,10 +204,32 @@ const GENERIC_TITLE = /^(home|home ?page|index|untitled|document|default|welcome
 
 const JUNK_TITLE = new RegExp(`(${WALL_TITLE.source})|(${GENERIC_TITLE.source})`, 'i');
 
-function metaContent(html, patterns) {
-  for (const re of patterns) {
+// Pull the content of a <meta> tag. `key` is the attribute value to look for
+// (og:title, article:published_time, ...) matched on name=, property=, or
+// itemprop=. The quote character is captured and required to close, so a title
+// containing an apostrophe ("NVIDIA's B200...") is not cut short — the bug this
+// replaced a hand-written pattern list to avoid.
+function metaTag(html, key) {
+  const k = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const attr = `(?:name|property|itemprop)\\s*=\\s*(["'])${k}\\1`;
+  const content = `content\\s*=\\s*(["'])([\\s\\S]*?)\\2`;
+  for (const re of [
+    new RegExp(`<meta[^>]*?${attr}[^>]*?${content}[^>]*>`, 'i'),
+    new RegExp(`<meta[^>]*?${content}[^>]*?${attr}[^>]*>`, 'i'),
+  ]) {
     const m = html.match(re);
-    if (m && m[1] && m[1].trim()) return decodeEntities(m[1].trim());
+    if (m) {
+      const v = decodeEntities((m[3] || m[2] || '').trim());
+      if (v && !/^%%.*%%$/.test(v)) return v;
+    }
+  }
+  return null;
+}
+
+function metaContent(html, keysOrPatterns) {
+  for (const k of keysOrPatterns) {
+    const v = typeof k === 'string' ? metaTag(html, k) : (html.match(k) || [])[1];
+    if (v && String(v).trim()) return typeof k === 'string' ? v : decodeEntities(String(v).trim());
   }
   return null;
 }
@@ -237,12 +259,12 @@ function extractFromHtml(html) {
   const out = { title: null, date: null, siteName: null };
 
   const ogTitle = metaContent(html, [
-    /<meta[^>]+property=["']og:title["'][^>]+content=["']([^"']+)["']/i,
-    /<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:title["']/i,
-    /<meta[^>]+name=["']twitter:title["'][^>]+content=["']([^"']+)["']/i,
-    /<meta[^>]+name=["']title["'][^>]+content=["']([^"']+)["']/i,
-    /<meta[^>]+name=["']dc\.title["'][^>]+content=["']([^"']+)["']/i,
-    /<meta[^>]+name=["']citation_title["'][^>]+content=["']([^"']+)["']/i,
+    'og:title',
+    'twitter:title',
+    'citation_title',
+    'dc.title',
+    'DC.title',
+    'title',
   ]);
   const tagTitle = (html.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1];
   const h1 = (html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i) || [])[1];
@@ -254,27 +276,26 @@ function extractFromHtml(html) {
   out.rawTitle = decodeEntities((tagTitle || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()) || null;
 
   const dateRaw = metaContent(html, [
-    /<meta[^>]+property=["']article:published_time["'][^>]+content=["']([^"']+)["']/i,
-    /<meta[^>]+content=["']([^"']+)["'][^>]+property=["']article:published_time["']/i,
-    /<meta[^>]+name=["']article:published_time["'][^>]+content=["']([^"']+)["']/i,
-    /<meta[^>]+itemprop=["']datePublished["'][^>]+content=["']([^"']+)["']/i,
-    /<meta[^>]+name=["']citation_publication_date["'][^>]+content=["']([^"']+)["']/i,
-    /<meta[^>]+name=["']citation_date["'][^>]+content=["']([^"']+)["']/i,
-    /<meta[^>]+name=["']publish[-_]?date["'][^>]+content=["']([^"']+)["']/i,
-    /<meta[^>]+name=["']publication[-_]?date["'][^>]+content=["']([^"']+)["']/i,
-    /<meta[^>]+name=["']date["'][^>]+content=["']([^"']+)["']/i,
-    /<meta[^>]+name=["']dc\.date["'][^>]*content=["']([^"']+)["']/i,
-    /<meta[^>]+name=["']DC\.date\.issued["'][^>]+content=["']([^"']+)["']/i,
-    /<meta[^>]+name=["']pubdate["'][^>]+content=["']([^"']+)["']/i,
-    /<meta[^>]+name=["']sailthru\.date["'][^>]+content=["']([^"']+)["']/i,
-    /<meta[^>]+property=["']og:published_time["'][^>]+content=["']([^"']+)["']/i,
+    'article:published_time',
+    'og:published_time',
+    'datePublished',
+    'citation_publication_date',
+    'citation_date',
+    'publish-date',
+    'publish_date',
+    'publication-date',
+    'publication_date',
+    'pubdate',
+    'sailthru.date',
+    'dc.date',
+    'DC.date',
+    'DC.date.issued',
+    'date',
     // Pagefind index metadata (Epoch AI and other Astro sites)
-    /<meta[^>]+property=["']pagefind:date["'][^>]*content=["']([^"']+)["']/i,
-    /<meta[^>]+data-pagefind-meta=["']date\[content\]["'][^>]*content=["']([^"']+)["']/i,
-    // Nikkei / Newsvault style
-    /<meta[^>]+name=["']nv-pub-date["'][^>]+content=["']([^"']+)["']/i,
-    /<meta[^>]+name=["']sc:publication_date["'][^>]+content=["']([^"']+)["']/i,
-    /<meta[^>]+name=["']datePublished["'][^>]+content=["']([^"']+)["']/i,
+    'pagefind:date',
+    // Nikkei / Newsvault and Sitecore style
+    'nv-pub-date',
+    'sc:publication_date',
     /<time[^>]+datetime=["']([^"']+)["']/i,
   ]);
   out.date = normaliseDate(dateRaw);
@@ -286,14 +307,12 @@ function extractFromHtml(html) {
     if (ld) out.date = normaliseDate(ld[1]);
   }
   if (!out.date) {
-    const mod = metaContent(html, [
-      /<meta[^>]+property=["']article:modified_time["'][^>]+content=["']([^"']+)["']/i,
-      /<meta[^>]+name=["']last-?modified["'][^>]+content=["']([^"']+)["']/i,
-    ]);
+    const mod = metaContent(html, ['article:modified_time', 'og:updated_time', 'last-modified', 'lastmodified']);
     if (mod) out.dateModified = normaliseDate(mod);
   }
 
   out.siteName = metaContent(html, [
+    'og:site_name',
     /<meta[^>]+property=["']og:site_name["'][^>]+content=["']([^"']+)["']/i,
     /<meta[^>]+name=["']application-name["'][^>]+content=["']([^"']+)["']/i,
     /<meta[^>]+name=["']citation_journal_title["'][^>]+content=["']([^"']+)["']/i,
