@@ -123,7 +123,9 @@ small { font-size: 0.85em; }
   z-index: 5; pointer-events: none;
   display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
 }
-.stage canvas { position: relative; flex: 1 1 0; min-height: 0; width: 100%; align-self: stretch; display: block; margin-top: 12px; }
+.stage canvas { position: relative; flex: 1 1 0; min-height: 0; width: 100%; align-self: stretch; display: block; margin-top: 12px; pointer-events: auto; cursor: grab; touch-action: pan-y; }
+.stage canvas:active { cursor: grabbing; }
+.stage .stage-hint { position: absolute; top: 18px; right: 28px; z-index: 1; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
 .stage figcaption {
   position: relative; z-index: 1; flex: none; margin: 14px 0 26px; max-width: 46ch; text-align: center;
   font-family: var(--font-mono); font-size: 11.5px; line-height: 1.5; letter-spacing: 0.02em; color: var(--muted);
@@ -409,6 +411,41 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 @keyframes nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
 @media (prefers-reduced-motion: reduce) { .scroll-hint svg { animation: none; } }
 
+/* ---------- China exposure charts ---------- */
+.ex-legend { display: flex; flex-wrap: wrap; gap: 6px 20px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin: 14px 0 6px; }
+.ex-legend i { display: inline-block; vertical-align: middle; margin-right: 7px; width: 10px; height: 10px; border-radius: 50%; box-sizing: border-box; }
+.ex-legend .lg-first { border: 1.5px solid var(--ink-2); background: var(--bg-2); }
+.ex-legend .lg-last { background: var(--ink); }
+.ex-legend .lg-peak { width: 2px; height: 12px; border-radius: 0; background: var(--accent); margin-left: 4px; margin-right: 11px; }
+.ex-legend .lg-rule { width: 1px; height: 12px; border-radius: 0; border-left: 1px dashed var(--ink-2); background: none; margin-left: 4px; margin-right: 12px; }
+.ex-legend .lg-peakdot { background: var(--accent); }
+.ex-rank { display: block; width: 100%; max-width: 760px; height: auto; margin: 4px 0 30px; }
+.ex-rank .grid { stroke: var(--line); }
+.ex-rank .tick, .ex-panel .tick { font-family: var(--font-mono); font-size: 10px; fill: var(--muted); }
+.ex-rank .name { font-family: var(--font-display); font-weight: 600; font-size: 12.5px; fill: var(--ink); }
+.ex-rank .link { stroke: var(--line-2); stroke-width: 2; }
+.ex-rank .peak { stroke: var(--accent); stroke-width: 2; }
+.ex-rank .dot.first { fill: var(--bg-2); stroke: var(--ink-2); stroke-width: 1.5; }
+.ex-rank .dot.last { fill: var(--ink); }
+.ex-rank a:hover circle, .ex-panel a:hover circle { stroke: var(--accent); stroke-width: 2.5; }
+.ex-rank .val, .ex-panel .val { font-family: var(--font-mono); font-size: 11px; font-weight: 500; fill: var(--ink); }
+.ex-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px 22px; margin: 6px 0 12px; }
+.ex-panel { margin: 0; padding: 10px 10px 6px; border: 1px solid var(--line); border-radius: 2px; background: var(--bg-2); }
+.ex-panel figcaption { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin: 0 0 4px; }
+.ex-panel figcaption b { font-family: var(--font-display); font-weight: 600; font-size: 14px; white-space: nowrap; }
+.ex-panel figcaption span { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); text-align: right; }
+.ex-panel svg { display: block; width: 100%; height: auto; }
+.ex-panel .grid { stroke: var(--line); stroke-dasharray: 2 3; }
+.ex-panel .rule { stroke: var(--ink-2); stroke-dasharray: 1 3; opacity: 0.7; }
+.ex-panel .axis { stroke: var(--line-2); }
+.ex-panel .area { fill: var(--ink); fill-opacity: 0.07; }
+.ex-panel .line { fill: none; stroke: var(--ink-2); stroke-width: 1.8; stroke-linejoin: round; }
+.ex-panel .pt { fill: var(--bg-2); stroke: var(--ink); stroke-width: 1.5; }
+.ex-panel .pt.peak { fill: var(--accent); stroke: var(--accent); }
+.ex-tip { position: absolute; z-index: 40; max-width: 320px; padding: 8px 10px; background: var(--ink); color: var(--bg); font-family: var(--font-mono); font-size: 11px; line-height: 1.45; border-radius: 2px; pointer-events: none; box-shadow: var(--shadow); }
+.ex-tip b { display: block; font-family: var(--font-display); font-size: 13px; margin-bottom: 2px; }
+.table-view > summary { cursor: pointer; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 10px 0 4px; }
+
 /* ---------- chain strip: every stage, scored, always in the same order ---------- */
 .chain { padding: 18px 0 20px; border-top: 1px solid var(--line); }
 .chain-head { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
@@ -520,6 +557,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
   .stage canvas { margin-top: 4px; }
   .stage figcaption { margin: 4px 0 7px; font-size: 10px; line-height: 1.3; padding: 0 14px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .stage .stage-tag { top: 8px; left: 14px; }
+  .stage .stage-hint { display: none; }
   .wordmark b { font-size: 18px; }
   .hero { padding-top: 22px; }
   .rail { display: none; }

@@ -39,6 +39,7 @@
   <figure class="stage" aria-label="3D specimen of the current stage">
     <canvas id="stage-canvas"></canvas>
     <div class="stage-tag"><span id="stage-tag-text">Specimen <b>00</b> · the whole chip</span></div>
+    <div class="stage-hint" aria-hidden="true">Drag to turn · Ctrl + scroll to zoom · double-click to reset</div>
     <figcaption id="stage-caption"></figcaption>
   </figure>
 
@@ -123,8 +124,9 @@
       <div class="sup-toolbar"><span class="count" id="controls-count"></span></div>
       <div class="sup-wrap"><table class="sup" id="controls-table"></table></div>
       <h3 class="label" style="margin: 44px 0 6px">China exposure, from filings</h3>
-      <p class="controls-intro">Share of each controlled-tool or chip vendor's revenue that came from China, by fiscal year, computed from the absolute figures in the company's own filings. Darker cells are higher shares; every cell links to the filing.</p>
-      <div class="matrix-wrap"><table class="matrix" id="exposure-table"></table></div>
+      <p class="controls-intro">Share of each controlled-tool or chip vendor's revenue that came from China, computed from the absolute figures in the company's own filings. The ranking compares each firm's latest fiscal year with its first; the panels trace every year against the three US rule dates. Hover a point for the filed figures, click it for the filing.</p>
+      <div id="exposure-viz">{{EXPOSURE_VIZ}}</div>
+      <details class="table-view"><summary>Table view</summary><div class="matrix-wrap"><table class="matrix" id="exposure-table"></table></div></details>
       <p class="matrix-note" id="exposure-note">{{EXPOSURE_NOTE}}</p>
     </section>
 

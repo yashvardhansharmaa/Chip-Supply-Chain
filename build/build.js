@@ -328,6 +328,62 @@ const controls = readJSON(path.join(root, 'data', 'control-thresholds.json'), []
 const exposure = readJSON(path.join(root, 'data', 'exposure.json'), []);
 const controlsNotes = read(path.join(root, 'data', 'control-thresholds-notes.md'));
 const exposureNotes = read(path.join(root, 'data', 'exposure-notes.md'));
+/* ---------------- China exposure: ranking dumbbell + small multiples (static SVG; app.js adds the tooltips) ---------------- */
+function exposureViz(rows) {
+  const ok = rows.filter((r) => r.chinaShare != null && r.fyEnd);
+  if (!ok.length) return '';
+  const byFirm = {};
+  ok.forEach((r) => { (byFirm[r.firm] = byFirm[r.firm] || []).push(r); });
+  const tx = (fy) => { const [y, m] = fy.split('-').map(Number); return y + (m - 0.5) / 12; };
+  const firms = Object.keys(byFirm).map((f) => {
+    const rs = byFirm[f].slice().sort((a, b) => tx(a.fyEnd) - tx(b.fyEnd));
+    const peak = rs.reduce((m, r) => (r.chinaShare > m.chinaShare ? r : m), rs[0]);
+    return { firm: f, rows: rs, first: rs[0], last: rs[rs.length - 1], peak, meta: rs[0] };
+  }).sort((a, b) => b.last.chinaShare - a.last.chinaShare);
+  const T0 = 2021, T1 = 2026.6, YMAX = 60;
+  const rules = [[tx('2022-10'), 'Oct 2022'], [tx('2023-10'), 'Oct 2023'], [tx('2024-12'), 'Dec 2024']];
+  const pct = (v) => (v >= 10 ? Math.round(v) : Math.round(v * 10) / 10) + '%';
+  const attrs = (r) => `data-firm="${esc(r.firm)}" data-fy="${esc(r.fiscalYear)}" data-share="${r.chinaShare}" data-china="${r.chinaRevenue != null ? r.chinaRevenue : ''}" data-total="${r.totalRevenue != null ? r.totalRevenue : ''}" data-cur="${esc(r.currency || '')}" data-basis="${esc(r.basis || '')}"`;
+  // ranking: first fiscal year (hollow) to latest (filled), peak year as an amber tick
+  const RW = 760, L = 190, R = RW - 40, RH = 24, top = 30;
+  const xs = (v) => L + (v / YMAX) * (R - L);
+  const H = top + firms.length * RH + 8;
+  let d = `<div class="ex-legend"><span><i class="lg-first"></i>First fiscal year on file</span><span><i class="lg-last"></i>Latest fiscal year</span><span><i class="lg-peak"></i>Peak year</span><span>Scale 0 to 60% of revenue</span></div>`;
+  d += `<svg class="ex-rank" viewBox="0 0 ${RW} ${H}" role="img" aria-label="China share of revenue by firm: first fiscal year on file against the latest">`;
+  [0, 20, 40, 60].forEach((v) => { d += `<line x1="${xs(v)}" y1="${top - 6}" x2="${xs(v)}" y2="${H - 6}" class="grid"/><text x="${xs(v)}" y="${top - 12}" class="tick" text-anchor="middle">${v}%</text>`; });
+  firms.forEach((f, i) => {
+    const y = top + i * RH + RH / 2, a = xs(f.first.chinaShare), b = xs(f.last.chinaShare);
+    d += `<text x="${L - 14}" y="${y + 4}" class="name" text-anchor="end">${esc(f.firm)}</text>`;
+    d += `<line x1="${Math.min(a, b).toFixed(1)}" y1="${y}" x2="${Math.max(a, b).toFixed(1)}" y2="${y}" class="link"/>`;
+    if (f.peak !== f.first && f.peak !== f.last) d += `<line x1="${xs(f.peak.chinaShare).toFixed(1)}" y1="${y - 7}" x2="${xs(f.peak.chinaShare).toFixed(1)}" y2="${y + 7}" class="peak"/>`;
+    d += `<a href="${esc(f.first.source || '#')}" target="_blank" rel="noopener"><circle cx="${a.toFixed(1)}" cy="${y}" r="4.2" class="dot first" ${attrs(f.first)}/></a>`;
+    d += `<a href="${esc(f.last.source || '#')}" target="_blank" rel="noopener"><circle cx="${b.toFixed(1)}" cy="${y}" r="4.8" class="dot last" ${attrs(f.last)}/></a>`;
+    const right = b >= a;
+    d += `<text x="${(b + (right ? 10 : -10)).toFixed(1)}" y="${y + 4}" class="val" text-anchor="${right ? 'start' : 'end'}">${pct(f.last.chinaShare)}</text>`;
+  });
+  d += '</svg>';
+  // small multiples: one panel per firm on a shared time axis and a shared 0 to 60% scale
+  const PW = 240, PH = 118, px0 = 10, px1 = 232, py0 = 16, py1 = 96;
+  const X = (t) => px0 + ((t - T0) / (T1 - T0)) * (px1 - px0), Y = (v) => py1 - (v / YMAX) * (py1 - py0);
+  d += `<div class="ex-legend"><span><i class="lg-rule"></i>US rules of Oct 2022, Oct 2023 and Dec 2024</span><span><i class="lg-peakdot"></i>Peak year</span><span>Shared scale, 0 to 60%</span></div><div class="ex-grid">`;
+  firms.forEach((f) => {
+    const pts = f.rows.map((r) => [X(tx(r.fyEnd)), Y(r.chinaShare)]);
+    const line = pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
+    const area = line + ` L${pts[pts.length - 1][0].toFixed(1)} ${py1} L${pts[0][0].toFixed(1)} ${py1} Z`;
+    let s = `<figure class="ex-panel"><figcaption><b>${esc(f.firm)}</b><span>${esc(f.meta.category || '')}${f.meta.country ? ' · ' + esc(f.meta.country) : ''}</span></figcaption>`;
+    s += `<svg viewBox="0 0 ${PW} ${PH}" role="img" aria-label="${esc(f.firm)}: China share of revenue by fiscal year, ${esc(f.first.fiscalYear)} to ${esc(f.last.fiscalYear)}">`;
+    [20, 40, 60].forEach((v) => { s += `<line x1="${px0}" y1="${Y(v).toFixed(1)}" x2="${px1}" y2="${Y(v).toFixed(1)}" class="grid"/>`; });
+    rules.forEach((r) => { s += `<line x1="${X(r[0]).toFixed(1)}" y1="${py0 - 4}" x2="${X(r[0]).toFixed(1)}" y2="${py1}" class="rule"/>`; });
+    s += `<line x1="${px0}" y1="${py1}" x2="${px1}" y2="${py1}" class="axis"/><path d="${area}" class="area"/><path d="${line}" class="line"/>`;
+    f.rows.forEach((r, i) => { const p = pts[i]; s += `<a href="${esc(r.source || '#')}" target="_blank" rel="noopener"><circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${r === f.peak ? 3.6 : 2.8}" class="pt${r === f.peak ? ' peak' : ''}" ${attrs(r)}/></a>`; });
+    const lp = pts[pts.length - 1];
+    s += `<text x="${(lp[0] - 6).toFixed(1)}" y="${Math.max(10, lp[1] - 7).toFixed(1)}" class="val" text-anchor="end">${pct(f.last.chinaShare)}</text>`;
+    s += `<text x="${px0}" y="${PH - 4}" class="tick">${esc(f.first.fiscalYear)}</text><text x="${px1}" y="${PH - 4}" class="tick" text-anchor="end">${esc(f.last.fiscalYear)}</text></svg></figure>`;
+    d += s;
+  });
+  return d + '</div>';
+}
+
 
 /* ---------------- geopolitics view ---------------- */
 let geoBody = '<p>The geopolitics essay is not written yet.</p>', geoDek ='Who holds each chokepoint, how the export-control campaign has unfolded since 2018, and where the chips actually go.';
@@ -395,6 +451,7 @@ fill('RAIL', railHTML); fill('CONTENTS', contentsHTML); fill('CHAPTERS', chapter
 fill('SUPPLIERS_INTRO', suppliersIntro); fill('GEO_DEK', esc(geoDek)); fill('GEO_BODY', geoBody); fill('SOURCES', sourcesHTML);
 fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));
 fill('CONTROLS_DEK', controls.length ? `${controls.length} thresholds across ${[...new Set(controls.map((c) => c.regime))].length} regimes, and China revenue exposure for ${[...new Set(exposure.map((e) => e.firm))].length} controlled-tool and chip vendors from their own filings.` : 'The threshold map and exposure series are being compiled.');
+fill('EXPOSURE_VIZ', exposureViz(exposure));
 fill('EXPOSURE_NOTE', exposure.length ? 'Shares computed from filed absolute figures; bases differ by firm (ship-to, bill-to or headquarters) and are stated in each row. Method notes are on the <a href="#/sources">Sources</a> page.' : '');
 fill('KIT', kit); fill('SPECIMENS', specimens);
 fill('DATA', JSON.stringify(data).replace(/<\/script/gi, '<\\/script'));
