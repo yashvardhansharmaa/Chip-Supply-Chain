@@ -299,7 +299,8 @@ sup.cite a:hover { text-decoration: underline; }
 .matrix th { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding: 10px 8px; border-bottom: 1px solid var(--line-2); background: var(--bg-2); text-align: center; font-weight: 500; }
 .matrix th:first-child { text-align: left; }
 .matrix td { padding: 0; border-bottom: 1px solid var(--line); text-align: center; }
-.matrix td:first-child { text-align: left; padding: 8px 10px; font-weight: 600; font-size: 13.5px; white-space: nowrap; }
+.matrix td:first-child { text-align: left; padding: 8px 10px; font-weight: 600; font-size: 13.5px; white-space: nowrap; max-width: 260px; }
+#exposure-table td:first-child { white-space: normal; min-width: 200px; width: 28%; }
 .matrix td:first-child small { display: block; font-family: var(--font-mono); font-size: 10px; color: var(--muted); font-weight: 400; letter-spacing: 0.04em; }
 .matrix td .cell { display: block; padding: 9px 6px; color: var(--ink); background: color-mix(in srgb, var(--accent) calc(var(--v) * 1%), transparent); }
 .matrix td .cell[data-hi="1"] { font-weight: 700; }
@@ -619,7 +620,6 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
       <a href="#/suppliers" data-view="suppliers">Suppliers</a>
       <a href="#/geopolitics" data-view="geopolitics">Geopolitics</a>
       <a href="#/controls" data-view="controls">Controls</a>
-      <a href="#/exposure" data-view="exposure">Exposure</a>
       <a href="#/glossary" data-view="glossary">Glossary</a>
       <a href="#/sources" data-view="sources">Sources</a>
       <button class="theme-toggle" type="button" aria-label="Switch to dark mode">
@@ -6269,7 +6269,7 @@ PC.register('wafer', function (p) {
         $$('#controls-subtabs a').forEach(function (a) { if (a.getAttribute('data-sub') === sub) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
       }
       $$('.view').forEach(function (s) { s.hidden = s.getAttribute('data-view') !== v; });
-      $$('.tabs a').forEach(function (a) { var dv = a.getAttribute('data-view'); var on = dv === 'exposure' ? sub === 'exposure' : dv === 'controls' ? sub === 'thresholds' : dv === v; if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+      $$('.tabs a').forEach(function (a) { var dv = a.getAttribute('data-view'); var on = dv === v; if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
       var rail = $('.rail'); if (rail && v !== 'stack') rail.setAttribute('data-show', '0');
       Stage.setVisible(v === 'stack' || v === 'landscape' || v === 'geopolitics');
       if (v === 'landscape') Landscape.activate();
@@ -6586,7 +6586,8 @@ PC.register('wafer', function (p) {
         var order = Object.keys(firms).sort(function (a, b) { var la = firms[a][ys[ys.length - 1]] || {}, lb = firms[b][ys[ys.length - 1]] || {}; return (lb.chinaShare || 0) - (la.chinaShare || 0); });
         et.innerHTML = '<thead><tr><th>Firm</th>' + ys.map(function (y) { return '<th>' + esc(y) + '</th>'; }).join('') + '</tr></thead><tbody>' + order.map(function (f) {
           var m = meta[f];
-          return '<tr><td>' + esc(f) + '<small>' + esc(m.category || '') + ' · ' + esc(cname(m.country)) + (m.basis ? ' · ' + esc(m.basis) : '') + '</small></td>' + ys.map(function (y) { var r = firms[f][y]; if (!r || r.chinaShare == null) return '<td><span class="cell zero">·</span></td>'; return '<td><a class="cell" style="--v:' + Math.round(Math.min(100, r.chinaShare) * 1.6) + '" href="' + esc(r.source) + '" target="_blank" rel="noopener" title="' + esc((r.chinaRevenue != null ? r.chinaRevenue.toLocaleString('en-US') + ' of ' + (r.totalRevenue || 0).toLocaleString('en-US') + ' ' + (r.currency || '') : '') + (r.note ? ' · ' + r.note : '')) + '">' + r.chinaShare.toFixed(1) + '%</a></td>'; }).join('') + '</tr>';
+          var basisShort = function (b) { b = (b || '').toLowerCase(); if (!b) return ''; if (/ship-to|ship to|destination|fab\)/.test(b)) return 'ship-to'; if (/bill|invoice/.test(b)) return 'bill-to'; if (/headquarters/.test(b)) return 'headquarters'; if (/seat|licen/.test(b)) return 'licence seats'; if (/used|usage/.test(b)) return 'place of use'; if (/own operating|operating units|own units/.test(b)) return 'own units'; return 'customer location'; };
+          return '<tr><td title="' + esc(m.basis || '') + '">' + esc(f) + '<small>' + esc(m.category || '') + ' · ' + esc(cname(m.country)) + (m.basis ? ' · ' + esc(basisShort(m.basis)) : '') + '</small></td>' + ys.map(function (y) { var r = firms[f][y]; if (!r || r.chinaShare == null) return '<td><span class="cell zero">·</span></td>'; return '<td><a class="cell" style="--v:' + Math.round(Math.min(100, r.chinaShare) * 1.6) + '" href="' + esc(r.source) + '" target="_blank" rel="noopener" title="' + esc((r.chinaRevenue != null ? r.chinaRevenue.toLocaleString('en-US') + ' of ' + (r.totalRevenue || 0).toLocaleString('en-US') + ' ' + (r.currency || '') : '') + (r.note ? ' · ' + r.note : '')) + '">' + r.chinaShare.toFixed(1) + '%</a></td>'; }).join('') + '</tr>';
         }).join('') + '</tbody>';
       }
     }

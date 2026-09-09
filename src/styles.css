@@ -291,7 +291,8 @@ sup.cite a:hover { text-decoration: underline; }
 .matrix th { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding: 10px 8px; border-bottom: 1px solid var(--line-2); background: var(--bg-2); text-align: center; font-weight: 500; }
 .matrix th:first-child { text-align: left; }
 .matrix td { padding: 0; border-bottom: 1px solid var(--line); text-align: center; }
-.matrix td:first-child { text-align: left; padding: 8px 10px; font-weight: 600; font-size: 13.5px; white-space: nowrap; }
+.matrix td:first-child { text-align: left; padding: 8px 10px; font-weight: 600; font-size: 13.5px; white-space: nowrap; max-width: 260px; }
+#exposure-table td:first-child { white-space: normal; min-width: 200px; width: 28%; }
 .matrix td:first-child small { display: block; font-family: var(--font-mono); font-size: 10px; color: var(--muted); font-weight: 400; letter-spacing: 0.04em; }
 .matrix td .cell { display: block; padding: 9px 6px; color: var(--ink); background: color-mix(in srgb, var(--accent) calc(var(--v) * 1%), transparent); }
 .matrix td .cell[data-hi="1"] { font-weight: 700; }
