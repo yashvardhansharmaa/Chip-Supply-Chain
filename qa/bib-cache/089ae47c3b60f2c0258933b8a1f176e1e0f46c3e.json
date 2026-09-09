@@ -1,0 +1,16 @@
+{
+  "url": "https://www.zeiss.com/semiconductor-manufacturing-technology/inspiring-technology/euv-lithography.html",
+  "status": 200,
+  "finalUrl": "https://www.zeiss.com/semiconductor-manufacturing-technology/inspiring-technology/euv-lithography.html",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:30.748Z",
+  "extracted": {
+    "kind": "html",
+    "title": "EUV lithography and technology",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "EUV lithography and technology | ZEISS SMT"
+  }
+}

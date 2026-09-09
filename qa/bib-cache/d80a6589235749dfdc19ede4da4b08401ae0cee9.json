@@ -1,0 +1,16 @@
+{
+  "url": "https://www.toppan.com/",
+  "status": 200,
+  "finalUrl": "https://www.holdings.toppan.com/ja/",
+  "contentType": "text/html",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:27.549Z",
+  "extracted": {
+    "kind": "html",
+    "title": "ホーム｜TOPPANグループサイト",
+    "date": "2026-09-09",
+    "siteName": "TOPPANグループサイト",
+    "rawTitle": "ホーム｜TOPPANグループサイト"
+  }
+}
