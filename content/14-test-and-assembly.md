@@ -130,7 +130,7 @@ The back end is also the part of the chain China is closest to owning, and assem
 
 ## Key evaluation criteria
 
-- **Test coverage** is what you actually buy: the share of latent failures caught before they reach an irreplaceable package.
+- **Test coverage** is what you buy: the share of latent failures caught before they reach a package that cannot be reworked.
 - **Test time per part** sets throughput and cost, and large dies, HBM stacks and chiplets all push it up.
 - **Probe card planarity and life** decide sort economics. Every needle must stay coplanar over a full die across a long touchdown count.
 - **Thermal control** matters more every generation. A kilowatt-class accelerator must be held at temperature in the socket while tested at speed.
@@ -138,4 +138,4 @@ The back end is also the part of the chain China is closest to owning, and assem
 
 ## Takeaways
 
-Test used to be the cheap step at the end. With a dozen expensive dies in one package, it is now the insurance policy for everything upstream: the SoC tester market grew about 68% in 2025 ([source](https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf)) and burn-in has started migrating back onto the wafer ([source](https://www.aehr.com/2026/07/aehr-test-systems-reports-fiscal-2026-fourth-quarter-and-full-year-financial-results-with-record-quarterly-bookings-and-100-million-effective-backlog/)). Advantest has quietly turned a duopoly into a two-thirds share. And the back end is the one segment where Chinese firms are genuinely competitive. That makes it the least likely part of this chain to be controlled by export policy, and the most likely to be reshaped by it.
+Test used to be the cheap step at the end. With a dozen expensive dies in one package, it now insures everything upstream: the SoC tester market grew about 68% in 2025 ([source](https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf)) and burn-in has started migrating back onto the wafer ([source](https://www.aehr.com/2026/07/aehr-test-systems-reports-fiscal-2026-fourth-quarter-and-full-year-financial-results-with-record-quarterly-bookings-and-100-million-effective-backlog/)). Advantest has turned a duopoly into a two-thirds share. The back end is also the one segment where Chinese firms are genuinely competitive, so export policy has less grip here than anywhere else in the chain.

@@ -60,13 +60,13 @@
 ---
 # Introduction and Goals
 
-An AI accelerator is not a chip. It is a stack of roughly a dozen separately made parts, and only one company in the world can assemble them at volume.
+An AI accelerator is a stack of roughly a dozen separately made parts, and only one company in the world can assemble them at volume.
 
 This site takes that package apart, one chapter per stage, from the sand that becomes a wafer to the liquid-cooled rack it ends up in. Every chapter answers three questions: how the stage works, where the trade-offs sit, and who controls it and how hard they are to replace.
 
 ## Why AI chips?
 
-Compute used to train frontier AI models has grown 4 to 5 times a year since 2010 ([source](https://epoch.ai/publications/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year)). No other part of the semiconductor industry has absorbed a demand signal that steep for that long.
+Compute used to train frontier AI models has grown 4 to 5 times a year since 2010 ([source](https://epoch.ai/publications/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year)). No other part of the semiconductor industry has faced demand rising that fast for that long.
 
 The money followed. Capex at the five largest hyperscalers went from $162.3 billion in 2022 to $448.2 billion in 2025 ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)). Nvidia's data center revenue rose from $15.01 billion in fiscal 2023 ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2023)) to $193.7 billion in fiscal 2026 ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026)).
 
@@ -74,7 +74,7 @@ The money followed. Capex at the five largest hyperscalers went from $162.3 bill
 
 {{figure:compute-growth}}
 
-It buys a system, not a die. One Nvidia GB300 NVL72 rack holds 72 GPUs and 36 CPUs, 20 TB of GPU memory and 576 TB/s of memory bandwidth ([source](https://www.nvidia.com/en-us/data-center/gb300-nvl72/)). A different supplier sets every one of those numbers.
+What the money buys is a rack. One Nvidia GB300 NVL72 holds 72 GPUs and 36 CPUs, 20 TB of GPU memory and 576 TB/s of memory bandwidth ([source](https://www.nvidia.com/en-us/data-center/gb300-nvl72/)). A different supplier sets every one of those numbers.
 
 ## The chain in one paragraph
 
@@ -84,17 +84,17 @@ A crystal grower pulls polysilicon into a single-crystal ingot and slices it int
 
 The foundry prints that layout hundreds of times per wafer, alternating lithography with deposition, etch, cleaning and metrology, on photoresists and specialty gases from a handful of Japanese and Korean suppliers. Test and assembly lines then probe, thin and dice the wafers. Meanwhile a memory maker stacks bare DRAM dies with through-silicon vias into an HBM cube.
 
-A packaging line sets the logic dies and the HBM stacks side by side on a silicon interposer, attaches that to an ABF substrate, and ships a part the size of a coaster. Systems integrators solder several onto a baseboard, add switch silicon and optics, rack the chassis with cold plates and busbars, and plug it into a substation. Every chapter here is one link in that chain.
+A packaging line sets the logic dies and the HBM stacks side by side on a silicon interposer, attaches that to an ABF substrate, and ships a part the size of a coaster. Systems integrators solder several onto a baseboard, add switch silicon and optics, rack the chassis with cold plates and busbars, and plug it into a substation.
 
 ## Why does the supply chain matter?
 
-The case for treating hardware as the binding constraint is empirical. In 2025 the four largest AI chip designers took 80 to 85 percent of TSMC's CoWoS advanced packaging output and nearly all available HBM, while using only about 11 percent of leading-edge logic capacity ([source](https://epoch.ai/blog/introducing-the-ai-chip-components-explorer)). The scarce thing was never transistors. It was the ability to stack memory next to them.
+The case for hardware as the binding constraint is empirical. In 2025 the four largest AI chip designers took 80 to 85 percent of TSMC's CoWoS advanced packaging output and nearly all available HBM, while using only about 11 percent of leading-edge logic capacity ([source](https://epoch.ai/blog/introducing-the-ai-chip-components-explorer)). Transistors were plentiful; what ran short was the ability to stack memory beside them.
 
 All three HBM suppliers were effectively sold out, and component spending by those four designers rose from $22 billion in 2024 to $52 billion in 2025 ([source](https://epoch.ai/blog/introducing-the-ai-chip-components-explorer)). Sixty to 95 percent of measured performance gains in language models trace to scaling compute and data rather than to algorithms ([source](https://epoch.ai/blog/algorithmic-progress-in-language-models)).
 
 The counter-case is just as empirical. DeepSeek-V3 trained on 14.8 trillion tokens for 2.788 million H800 GPU-hours, an order of magnitude below what comparable Western models were understood to cost ([source](https://arxiv.org/abs/2412.19437)). The compute needed to reach a fixed performance level halves roughly every eight months, with a 95 percent confidence interval of 5 to 14 months ([source](https://epoch.ai/blog/algorithmic-progress-in-language-models)).
 
-Both are true, and they do not cancel. Cheaper inference has raised total compute consumption, not lowered it. The supply chain does not determine what AI can do. It determines how much of it exists, who can afford it, and which governments can switch it off.
+Both are true, and they do not cancel. Cheaper inference has raised total compute consumption rather than lowered it. The supply chain sets how much AI exists, who can afford it, and which governments can switch it off.
 
 ## How to read this site
 
@@ -102,7 +102,7 @@ Every chapter opens with a chokepoint card. Read three fields on it first.
 
 - **Concentration.** How many firms credibly supply this stage: Extreme, High, Moderate or Low.
 - **Chokepoint score.** A 1 means many substitutes. A 5 means a single point of failure, where losing one supplier stops leading-edge production worldwide.
-- **Substitution time.** Our estimate of how long a well-funded state or firm would need to stand up an alternative. It is the most opinionated number on the card, and the one to argue with.
+- **Substitution time.** Our estimate of how long a well-funded state or firm would need to stand up an alternative. It is the most opinionated number on the card.
 
 The card also gives China's position and the United States'. Chapters run in process order.
 

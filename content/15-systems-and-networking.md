@@ -3,7 +3,7 @@
   "id": "systems-and-networking",
   "number": 15,
   "title": "Systems and Networking",
-  "oneLiner": "A finished package is useless until it is bolted to a baseboard, fed a thousand amps and wired to seventy-one siblings. Assembly is diversified. The lasers are not.",
+  "oneLiner": "A finished package is useless until it is bolted to a baseboard, fed a thousand amps and wired to seventy-one siblings. Many firms can do the bolting; few can make the lasers.",
   "plain": "Think of a rowing eight. The crew only goes fast if every oar moves together, so the boat is built to keep them in step. This stage does the same for chips: it bolts each finished package onto a board, feeds it more than a thousand amps, and wires it to seventy-one neighbours so that a training run sees one machine instead of seventy-two. Copper carries a signal a few metres at most, so the longer links have to become light, and light needs lasers. That is why the tightest supply in this layer is a laser material, not a chip.",
   "specimen": "gpu-baseboard",
   "specimenCaption": "Right: an eight-GPU baseboard. Four accelerator modules per side, switch chips down the centre, voltage regulator banks along the long edges, and the high-density connectors that carry scale-out traffic off the board.",
@@ -61,7 +61,7 @@
 ---
 # Systems and Networking
 
-A package computes nothing until it is wired into a machine. This is where the chip supply chain meets the electrical and optical one, and where the binding constraint moved from silicon to lasers.
+A package computes nothing until it is wired into a machine. Bolting it down, powering it and linking it to its neighbours is a separate industry, and the scarcest input in that industry is a laser material.
 
 ## How it works
 
@@ -93,7 +93,7 @@ Broadcom doubled merchant switch capacity every generation: 25.6 Tbps on one chi
 
 {{figure:switch-bandwidth}}
 
-Nvidia now sells both sides of the argument. It tells its own investors that a $75.2 billion data center quarter came from Blackwell 300 plus demand for "InfiniBand, Spectrum-X Ethernet, and NVLink" ([source](https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm)), which is a fair description of a market that stopped picking one fabric.
+Nvidia sells both sides of the argument, telling investors that a $75.2 billion data center quarter came from Blackwell 300 plus demand for "InfiniBand, Spectrum-X Ethernet, and NVLink" ([source](https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm)). Large buyers run both fabrics.
 
 ### Optics: pluggable, then co-packaged
 
@@ -101,9 +101,9 @@ Every scale-out link longer than a few metres is optical, and a cluster needs se
 
 ## Who makes it
 
-Optical modules are assembled where labour and land are cheap, and the Chinese makers went offshore early. InnoLight has run a Thai plant since 2019 alongside Suzhou and Taiwan ([source](https://www.innolight.com/about)), and Eoptolink assembles in Rayong and Chonburi ([source](https://www.eoptolink.com/about-us/contacts)). Policy is now reaching for that geography: the FCC's July 2026 order bars new authorisations for devices containing logic-bearing components from firms on its Covered List, and the record for that rule names optical transceivers as exactly such a component ([source](https://docs.fcc.gov/public/attachments/FCC-26-50A1.pdf)).
+Optical modules are assembled where labour and land are cheap, and the Chinese makers went offshore early. InnoLight has run a Thai plant since 2019 alongside Suzhou and Taiwan ([source](https://www.innolight.com/about)), and Eoptolink assembles in Rayong and Chonburi ([source](https://www.eoptolink.com/about-us/contacts)). The rules now follow the firm rather than the site: the FCC's July 2026 order bars new authorisations for devices containing logic-bearing components from firms on its Covered List, and the record for that rule names optical transceivers as exactly such a component ([source](https://docs.fcc.gov/public/attachments/FCC-26-50A1.pdf)).
 
-The lasers inside those modules are a narrower business than the modules. Indium phosphide is the only practical material for the high-speed lasers in 800G and 1.6T optics, and its feedstock is concentrated: China accounts for about 70% of world indium production ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-indium.pdf)). Nvidia put $2 billion into Lumentum and $2 billion into Coherent in March 2026, buying research, future capacity and access rights rather than parts ([source](https://nvidianews.nvidia.com/news/nvidia-announces-strategic-partnership-with-lumentum-to-develop-state-of-the-art-optics-technology)) ([source](https://nvidianews.nvidia.com/news/nvidia-and-coherent-announce-strategic-partnership-to-develop-optics-technology-to-scale-next-generation-data-center-architecture)). Nobody writes a cheque that size for a component they can simply order.
+The lasers inside those modules come from far fewer hands. Indium phosphide is the only practical material for the high-speed lasers in 800G and 1.6T optics, and its feedstock is concentrated: China accounts for about 70% of world indium production ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-indium.pdf)). Nvidia put $2 billion into Lumentum and $2 billion into Coherent in March 2026, buying research, future capacity and access rights rather than parts ([source](https://nvidianews.nvidia.com/news/nvidia-announces-strategic-partnership-with-lumentum-to-develop-state-of-the-art-optics-technology)) ([source](https://nvidianews.nvidia.com/news/nvidia-and-coherent-announce-strategic-partnership-to-develop-optics-technology-to-scale-next-generation-data-center-architecture)).
 
 Switch and accelerator silicon is a US duopoly. Broadcom sells merchant Ethernet switching and designs most of the custom accelerators, including Google's TPUs and Meta's MTIA; its AI semiconductor revenue reached $16.7 billion in the third quarter of fiscal 2026, up 221% ([source](https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm)). Marvell holds the other half, with AWS and Microsoft.
 
@@ -115,11 +115,11 @@ Most of this layer is not a chokepoint. Several capable ODMs on three continents
 
 Three things are genuinely narrow.
 
-- **Indium phosphide laser capacity.** A materials problem, not a design problem. Nvidia's answer was to buy into two laser makers rather than place a bigger order ([source](https://nvidianews.nvidia.com/news/nvidia-and-coherent-announce-strategic-partnership-to-develop-optics-technology-to-scale-next-generation-data-center-architecture)), and the indium under it is 70% Chinese ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-indium.pdf)).
+- **Indium phosphide laser capacity.** The shortage is in material and fab space, and Nvidia's answer was to buy into two laser makers rather than place a bigger order ([source](https://nvidianews.nvidia.com/news/nvidia-and-coherent-announce-strategic-partnership-to-develop-optics-technology-to-scale-next-generation-data-center-architecture)), and the indium under it is 70% Chinese ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-indium.pdf)).
 - **NVSwitch.** No one else sells a merchant scale-up switch with NVLink's bandwidth, which is what UALink exists to change ([source](https://ualinkconsortium.org/blog/ualink-200g-1-0-specification-overview-802/)).
 - **High-layer-count PCBs.** The boards and the low-loss copper-clad laminate under them are concentrated in Taiwan and Japan; see Substrates and PCBs.
 
-Optical module assembly is a fourth case of a different kind: concentrated but not technically hard. InnoLight moved volume to Thailand in 2019, years before the current rules ([source](https://www.innolight.com/about)). Geography here is a policy artefact, not a physical one.
+Optical module assembly is a fourth case, concentrated but not technically hard. InnoLight moved volume to Thailand in 2019, years before the current rules ([source](https://www.innolight.com/about)). Where these modules get built follows cost and policy, and it can change in a year or two.
 
 ## Key evaluation criteria
 
@@ -131,4 +131,4 @@ Optical module assembly is a fourth case of a different kind: concentrated but n
 
 ## Takeaways
 
-The system layer is where AI hardware stops being a chip business and becomes an electrical and optical one. Assembly is competitive and can move countries in a year, so leverage does not live there. It lives in NVLink-class scale-up switching, which one firm still owns ([source](https://www.nvidia.com/en-us/data-center/nvlink/)), and in indium phosphide lasers, where Nvidia paid $4 billion for capacity it could not order ([source](https://nvidianews.nvidia.com/news/nvidia-announces-strategic-partnership-with-lumentum-to-develop-state-of-the-art-optics-technology)) and 70% of the feedstock is Chinese ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-indium.pdf)).
+The system layer is where AI hardware stops being a chip business and becomes an electrical and optical one. Assembly is competitive and can move countries in a year. The leverage sits in NVLink-class scale-up switching, which one firm still owns ([source](https://www.nvidia.com/en-us/data-center/nvlink/)), and in indium phosphide lasers, where Nvidia paid $4 billion for capacity it could not order ([source](https://nvidianews.nvidia.com/news/nvidia-announces-strategic-partnership-with-lumentum-to-develop-state-of-the-art-optics-technology)) and 70% of the feedstock is Chinese ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-indium.pdf)).
