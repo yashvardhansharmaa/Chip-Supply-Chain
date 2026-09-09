@@ -134,7 +134,7 @@ ${miniBars(fig, c.id)}
   const binds = `<section class="sb-sec" aria-labelledby="sb-binds-h">
 <div class="sb-sec-head">
 <h3 id="sb-binds-h">What binds</h3>
-<p class="sb-sec-note">${cap(word(score5.length))} of the ${word(stages.length)} stages score five out of five. These are the places where one country, and in several the one company, holds the line.</p>
+<p class="sb-sec-note">${cap(word(score5.length))} of the ${word(stages.length)} stages sit at the top of the scale. Each one in a sentence.</p>
 </div>
 <ul class="sb-binds">${score5.map((c) => `<li class="sb-bind"><a href="${esc(chapterHref(c.id))}"><span class="label"><span class="sb-bind-n">${pad(c.number)}</span>${esc(c.title)}</span>${c.meta.oneLiner ? `<span class="sb-bind-line">${esc(c.meta.oneLiner)}</span>` : ''}</a></li>`).join('')}</ul>
 </section>`;

@@ -641,6 +641,29 @@ async function resolveSec(urls) {
   return out;
 }
 
+// data.sec.gov XBRL "company concept" endpoints are datasets, not pages: the
+// JSON itself carries the filer's name and the accounting tag's own label.
+async function resolveSecXbrl(urls) {
+  const out = {};
+  const re = /data\.sec\.gov\/api\/xbrl\/companyconcept\/CIK(\d{10})\/([^/]+)\/([^/]+)\.json/;
+  for (const url of urls) {
+    const m = url.match(re);
+    if (!m) continue;
+    const data = await jsonGet(url, 'xbrl-' + m[1] + '-' + m[2] + '-' + m[3]);
+    if (!data) continue;
+    const entity = data.entityName || null;
+    const label = data.label || m[3];
+    if (!entity) continue;
+    out[url] = {
+      title: `${label} (${m[2]}:${m[3]}) reported by ${entity}, XBRL company concept data`,
+      publisher: `U.S. Securities and Exchange Commission (XBRL data for ${entity})`,
+      date: null,
+      type: 'dataset',
+    };
+  }
+  return out;
+}
+
 // ------------------------------------------------------------------- driving
 
 async function pool(items, n, worker) {
@@ -680,11 +703,15 @@ async function main() {
   console.error(`Collected ${urls.length} unique URLs. Fetching...`);
   fs.mkdirSync(CACHE_DIR, { recursive: true });
 
+  const wantBodies = args.includes('--bodies');
+  const hasBody = (u) => fs.existsSync(bodyPath(u, '.pdf')) || fs.existsSync(bodyPath(u, '.html'));
+
   await pool(urls, CONCURRENCY, async (url) => {
     const cached = readCache(url);
+    const needBody = wantBodies && cached && cached.status >= 200 && cached.status < 400 && !hasBody(url);
     const cacheOk = cached && cached.status >= 200 && cached.status < 400 && cached.extracted;
-    if (cacheOk && !refetch) return;
-    if (cached && !refetch && cached.status !== 0) return; // keep recorded failure
+    if (cacheOk && !refetch && !needBody) return;
+    if (cached && !refetch && !needBody && cached.status !== 0) return; // keep recorded failure
     const res = await fetchUrl(url);
     const record = {
       url,
@@ -741,6 +768,9 @@ async function main() {
   console.error('Resolving SEC EDGAR filings...');
   const secResolved = await resolveSec(urls);
   console.error(`  ${Object.keys(secResolved).length} resolved`);
+  console.error('Resolving SEC XBRL company-concept datasets...');
+  const xbrlResolved = await resolveSecXbrl(urls);
+  console.error(`  ${Object.keys(xbrlResolved).length} resolved`);
 
   // ------------------------------------------------------------ assemble
   const overrides = MANUAL;
@@ -750,7 +780,7 @@ async function main() {
 
   for (const url of urls) {
     const ov = overrides[url];
-    const auth = secResolved[url] || frResolved[url] || null;
+    const auth = secResolved[url] || frResolved[url] || xbrlResolved[url] || null;
     const rec = readCache(url);
     const ex = rec && rec.extracted;
     let title = null;
