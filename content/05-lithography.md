@@ -11,7 +11,7 @@
     "concentration": "Extreme",
     "chokepointScore": 5,
     "leaders": [
-      {"name": "ASML", "country": "NL", "share": "All EUV (extreme ultraviolet) scanners and above 80% of DUV (deep ultraviolet); EUV was 48% of its own 2025 system revenue and immersion DUV 42%"},
+      {"name": "ASML", "country": "NL", "share": "100% of EUV (extreme ultraviolet) and above 80% of DUV (deep ultraviolet); EUV was 48% of its own 2025 system revenue and immersion DUV 42%"},
       {"name": "Nikon", "country": "JP", "share": "22 new chipmaking scanners in the year to March 2026, in a market Nikon sizes at 570 units"},
       {"name": "Canon", "country": "JP", "share": "i-line and krypton fluoride steppers for older, coarser layers, plus the only commercial nanoimprint tool"}
     ],

@@ -73,17 +73,17 @@
 ---
 # Advanced Packaging
 
-A lithography scanner prints a rectangle 26 mm by 33 mm, or 858 mm2, in one exposure ([source](https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe3400c)). Every AI accelerator worth buying is bigger than that. Packaging is how the industry got around that reticle limit, and through 2024 and 2025 it was what capped how many accelerators the world could build.
+A lithography scanner prints a rectangle 26 mm by 33 mm, or 858 mm2, in one exposure ([source](https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe3400c)). Every AI accelerator worth buying is bigger than that. Packaging is how the industry got around that reticle limit, and through 2024 and 2025 it capped how many accelerators the world could build.
 
 ## How it works
 
 Packaging wires finished chips into one component and mounts them on a board the size of a playing card, built to the tolerances of a chip. A lithography machine can print only a rectangle about the size of a postage stamp in one shot, so a modern accelerator is cut into pieces and stitched back together on a shared slab of silicon, with its memory a few millimetres away. Slab, chips and board all expand at different rates when heated, so the package warps and the joints crack. Getting that right in volume is why TSMC packages nearly every AI accelerator, in Taiwan.
 
-High bandwidth memory gives a second reason to split the package: its 1,024-bit or 2,048-bit connection is too wide to route through a resin base board, so the memory has to sit beside the logic on a shared silicon carrier, the interposer.
+High bandwidth memory gives a second reason to split the package: its 1,024-bit or 2,048-bit connection is too wide for a resin base board to carry, so the memory sits beside the logic on a shared silicon carrier, the interposer.
 
-CoWoS, chip-on-wafer-on-substrate, builds that in two passes: chips onto a wafer, then the wafer onto a substrate. TSMC makes a thin silicon wafer carrying wiring and vertical copper vias but no transistors, bonds logic dies and memory stacks face down onto it with microbumps 30 to 40 microns apart, then cuts the interposer out and attaches it to the resin substrate.
+The name CoWoS says the order: chip onto wafer, then wafer onto substrate. TSMC makes a thin silicon wafer carrying wiring and vertical copper vias but no transistors, bonds logic dies and memory stacks face down onto it with microbumps 30 to 40 microns apart, then cuts the interposer out and attaches it to the resin substrate.
 
-The individual steps are ordinary. But one joint cracked by repeated heating and cooling scraps a package holding eight qualified HBM stacks and two of the most expensive logic dies ever made.
+The individual steps are ordinary. But one cracked joint scraps a package holding eight qualified HBM stacks and two of the most expensive logic dies ever made.
 
 ## Variants and trade-offs
 
@@ -95,13 +95,13 @@ The individual steps are ordinary. But one joint cracked by repeated heating and
 
 ### 2.5D: silicon, RDL and bridges
 
-TSMC has run CoWoS in volume since 2012 ([source](https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm)). CoWoS-S wires most finely, but its interposer is one unbroken piece of silicon whose yield falls as the area grows, so CoWoS-L replaces the slab with layers of fine wiring and drops in small silicon bridges only where the wiring is dense. Intel's EMIB buries the same bridge idea in the resin substrate, and is the one credible second source when CoWoS is tight.
+TSMC has run CoWoS in volume since 2012 ([source](https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm)). CoWoS-S wires most finely, but its interposer is one unbroken piece of silicon whose yield falls as the area grows, so CoWoS-L replaces the slab with layers of fine wiring and small silicon bridges only where the wiring is dense. Intel's EMIB buries the same bridge idea in the resin substrate, and is the one credible second source when CoWoS is tight.
 
-Blackwell was the first high-volume design on CoWoS-L, and it went badly. Bridges, dies, interposer and substrate all expand at different rates, so the package warps, and the bridges carrying the 10 TB/s link between the two compute dies have to be placed to a tolerance the warping fights ([source](https://semianalysis.com/2024/08/04/nvidias-blackwell-reworked-shipment/)).
+Blackwell was the first high-volume design on CoWoS-L, and it went badly. The bridges carry the 10 TB/s link between the two compute dies, and they have to be placed to a tolerance that the package's warping fights ([source](https://semianalysis.com/2024/08/04/nvidias-blackwell-reworked-shipment/)).
 
 ### 3D: SoIC, Foveros, X-Cube
 
-TSMC's SoIC and Intel's Foveros bond dies face to face, copper pad to copper pad with no solder, which puts the connections far closer together than microbumps allow. TSMC put 3 nm SoIC into volume production in 2025 ([source](https://investor.tsmc.com/static/annualReports/2025/english/pdf/2025_tsmc_ar_e_ch5.pdf)), with an A14-on-A14 version due in 2029 carrying 1.8 times as many connections between the two dies as the 2 nm generation ([source](https://pr.tsmc.com/english/news/3302)). Heat decides the layout: the bottom die overheats and the top is hard to power, so 3D designs often put cache underneath rather than compute.
+TSMC's SoIC and Intel's Foveros bond dies face to face, copper pad to copper pad with no solder, which puts the connections far closer together than microbumps allow. TSMC put 3 nm SoIC into volume production in 2025 ([source](https://investor.tsmc.com/static/annualReports/2025/english/pdf/2025_tsmc_ar_e_ch5.pdf)), with an A14-on-A14 version due in 2029 carrying 1.8 times as many connections between the dies as the 2 nm generation ([source](https://pr.tsmc.com/english/news/3302)). Heat decides the layout: the bottom die overheats and the top is hard to power, so 3D designs often put cache underneath rather than compute.
 
 ### The escape routes
 

@@ -67,11 +67,11 @@ A package computes nothing until it is wired into a machine, and bolting it down
 
 This stage turns finished chips into a machine. It bolts each package onto a board, feeds it more than a thousand amps, and wires it to seventy-one neighbours so that a training run sees one computer instead of seventy-two. A cluster runs only as fast as its slowest link, and copper carries a signal a few metres at most, so the longer links have to become light. Many firms can bolt racks together. Far fewer can make the lasers that carry the light, and that is where this layer is tight.
 
-An accelerator ships as a module, not a bare chip: Nvidia calls its version SXM, and the open-standards equivalent is the Open Compute Project's accelerator module. Eight bolt onto a baseboard that carries their power and the switch chips letting them reach each other at full speed.
+An accelerator ships as a module, not a bare chip: Nvidia calls its version SXM, and the open-standards equivalent is the Open Compute Project's accelerator module. Eight bolt onto a baseboard that carries their power and the switch chips that let them reach each other at full speed.
 
 Rack-scale systems do away with the baseboard. An Nvidia GB300 NVL72 holds 18 compute trays plus nine switch trays, 72 GPUs in all, and draws up to 142 kW ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)); Rubin keeps that shape ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
 
-Every AI cluster runs two networks that are not interchangeable. Scale-up binds a few dozen accelerators tightly enough that they can read each other's memory, at terabytes per second; scale-out joins thousands of those groups at hundreds of gigabits per second. A model too big for one accelerator is split across the scale-up group, so that group's bandwidth sets how large a model can be trained.
+Every AI cluster runs two networks that are not interchangeable. Scale-up binds a few dozen accelerators tightly enough that they can read each other's memory, at terabytes per second; scale-out joins thousands of those groups at hundreds of gigabits per second. A model too big for one accelerator gets split across the scale-up group, so that group's bandwidth sets the size of model you can train.
 
 ## Variants and trade-offs
 

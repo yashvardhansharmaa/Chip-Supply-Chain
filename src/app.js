@@ -432,7 +432,7 @@
     activate: function () {
       if (!this.built) this.build();
       Stage.show('globe', null, null, 'Geopolitics · <b>the map</b>');
-      var sec = $('[data-view="geopolitics"]');
+      var sec = $('section[data-view="geopolitics"]'); // the masthead link carries the same attribute; we want the view
       if (sec && sec.getAttribute('data-caption')) $('#stage-caption').textContent = sec.getAttribute('data-caption');
     },
     build: function () {

@@ -6,7 +6,7 @@ The whole site compiles to **one self-contained HTML file** (`dist/index.html`).
 
 ## What is on the site
 
-- **The Stack**: 18 chapters (an introduction, the 15 stages of the chain, component costs and a geopolitics essay), each opening with a chokepoint nameplate, an "In short" summary and an "In plain terms" paragraph for readers with no technical background, with a procedural 3D specimen of the stage beside the text.
+- **The Chain**: 18 chapters (an introduction, the 15 stages of the chain, component costs and a geopolitics essay), each opening with a chokepoint card, an "In short" summary and an "In plain terms" paragraph for readers with no technical background, with a procedural 3D specimen of the stage beside the text.
 - **Summary** (`#/briefing`): every chapter's plain-language explanation, conclusions and chokepoint score on one page.
 - **AI Chips** (`#/landscape`): 19 AI accelerators with full spec sheets and a package render drawn from each chip's die and HBM layout.
 - **Suppliers**: 220 firms, filterable by category, country and chokepoint status, exportable as CSV.

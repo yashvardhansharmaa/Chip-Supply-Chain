@@ -70,7 +70,7 @@
 ---
 # Test and Assembly
 
-Semiconductor manufacturing runs to 400 to 600 steps, and Advantest counts test as the only one that puts electricity through the chip ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf)). Everything before this chapter makes dies; assembly and test, the back end of the industry, decides which of them are allowed into a package.
+Semiconductor manufacturing runs to 400 to 600 steps, and Advantest counts test as the only one that puts electricity through the chip ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf)). Everything before this chapter makes dies; the back end of the industry, assembly and test, decides which of them are allowed into a package.
 
 ## How it works
 
