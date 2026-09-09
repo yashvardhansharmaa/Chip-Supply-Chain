@@ -22,7 +22,7 @@
       {"code": "NL", "note": "ASML lithography"},
       {"code": "JP", "note": "Photoresist, wafers, specialty chemicals, substrates, test"}
     ],
-    "chinaStatus": "Can design competitive accelerators and can fabricate at SMIC 7 nm with imported DUV. Cannot buy EUV, cannot make HBM at volume, and cannot yet run a full leading-edge EDA flow on domestic tools.",
+    "chinaStatus": "Can design competitive accelerators and can fabricate at SMIC's 7 and 5 nm-class nodes with imported DUV. Cannot buy EUV, cannot make HBM at volume, and cannot yet run a full leading-edge EDA flow on domestic tools.",
     "usStatus": "Owns the architecture, the design software and much of the equipment, but almost none of the physical manufacturing of leading-edge logic, HBM or advanced packaging.",
     "costSignal": "Hyperscaler capex reached $448.2B in 2025 across five firms",
     "substitution": {"years": "10+", "why": "No country has ever rebuilt the whole chain. The narrowest stages, EUV optics and HBM stacking, each took two decades and tens of billions of dollars of accumulated process knowledge."}

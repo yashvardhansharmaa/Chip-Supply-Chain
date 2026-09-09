@@ -20,10 +20,10 @@
       {"code": "TW", "note": "ASE, Powertech, KYEC and ChipMOS; the largest assembly and test cluster"},
       {"code": "JP", "note": "Advantest testers, Disco dicing and grinding, Micronics Japan probe cards"},
       {"code": "US", "note": "Teradyne, FormFactor, Cohu, Aehr; Amkor's Arizona packaging plant"},
-      {"code": "CN", "note": "Four of the top ten OSATs by revenue, about 28.5% of top-10 revenue in 2024"},
+      {"code": "CN", "note": "Four of the top ten OSATs by revenue, about 28.6% of top-10 revenue in 2024"},
       {"code": "MY", "note": "Penang and Kulim; about 13% of global assembly, test and packaging"}
     ],
-    "chinaStatus": "The back end is where China is most competitive. JCET, Tongfu, Huatian and WiseRoad together took about 28.5% of top-10 OSAT revenue in 2024, and back-end equipment is far less tightly controlled than lithography or deposition.",
+    "chinaStatus": "The back end is where China is most competitive. JCET, Tongfu, Huatian and WiseRoad together took about 28.6% of top-10 OSAT revenue in 2024, and back-end equipment is far less tightly controlled than lithography or deposition.",
     "usStatus": "Strong in test equipment and probe cards through Teradyne, FormFactor, Cohu and Aehr, weak in assembly capacity. Amkor is building a US$7 billion packaging and test plant in Arizona with a ten-year TSMC commitment.",
     "costSignal": "The ten largest OSATs billed US$41.56 billion in 2024; ASE, Powertech and KYEC alone plan about NT$370 billion of capital spending in 2026",
     "substitution": {"years": "3-5", "why": "Assembly and test floors can be built in a few years, but changing tester vendor means rebuilding the entire device development, evaluation and production test environment, so customers almost never switch."}
@@ -52,7 +52,7 @@
       "type": "bars",
       "title": "Top 10 OSAT revenue share, 2024",
       "unit": "%",
-      "data": [["ASE", 44.6], ["Amkor", 15.2], ["JCET", 12], ["Tongfu", 8], ["Powertech", 5.5], ["Huatian (HT-Tech)", 4.8], ["WiseRoad", 3.7], ["Hana Micron", 2.2], ["KYEC", 2.2], ["ChipMOS", 1.7]],
+      "data": [["ASE", 44.6], ["Amkor", 15.2], ["JCET", 12], ["Tongfu", 8], ["Powertech", 5.5], ["Huatian (HT-Tech)", 4.8], ["WiseRoad", 3.8], ["Hana Micron", 2.2], ["KYEC", 2.2], ["ChipMOS", 1.7]],
       "source": {"label": "TrendForce", "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html"}
     },
     {
@@ -60,7 +60,7 @@
       "type": "stack",
       "title": "Top 10 OSAT revenue by company home country, 2024",
       "unit": "%",
-      "data": [["Taiwan", 54.0], ["China", 28.5], ["United States", 15.2], ["South Korea", 2.2]],
+      "data": [["Taiwan", 54.0], ["China", 28.6], ["United States", 15.2], ["South Korea", 2.2]],
       "source": {"label": "TrendForce company shares, summed by headquarters country", "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html"}
     }
   ]
@@ -120,7 +120,7 @@ The money is moving fast. ASE, Powertech and KYEC together plan roughly NT$370 b
 
 This is not lithography. There is no single tool with a single supplier. What there is instead is stickiness: Advantest argues that switching tester vendor means rebuilding a customer's entire device development, evaluation and volume production environment, which is why share moves slowly and only in one direction ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf)). Probe cards have the same property one level down, since every card is designed for one device.
 
-The back end is also the part of the chain China is closest to owning. Chinese OSATs took about 28.5% of top-10 revenue in 2024, and assembly, dicing, bonding and test tools sit largely outside the export control lines drawn around lithography and advanced deposition. For scale, the ten largest OSATs billed US$41.56 billion in 2024 while the whole industry sold US$791.7 billion in 2025 ([source](https://www.trendforce.com/presscenter/news/20250513-12577.html)) ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)). Assembly and test is a small share of the industry's revenue sitting on the critical path of all of it.
+The back end is also the part of the chain China is closest to owning. Chinese OSATs took about 28.6% of top-10 revenue in 2024, and assembly, dicing, bonding and test tools sit largely outside the export control lines drawn around lithography and advanced deposition. For scale, the ten largest OSATs billed US$41.56 billion in 2024 while the whole industry sold US$791.7 billion in 2025 ([source](https://www.trendforce.com/presscenter/news/20250513-12577.html)) ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)). Assembly and test is a small share of the industry's revenue sitting on the critical path of all of it.
 
 ## Key evaluation criteria
 
@@ -132,4 +132,4 @@ The back end is also the part of the chain China is closest to owning. Chinese O
 
 ## Takeaways
 
-Test used to be the cheap step at the end. With thirty dies in a package and a finished assembly worth tens of thousands of dollars, it is now the insurance policy for everything upstream, and spending has moved accordingly: the tester market grew about 50% in 2025 and burn-in has started migrating back onto the wafer. Advantest has quietly turned a duopoly into a two-thirds share. And the back end remains the one segment where Chinese firms are genuinely competitive, which makes it the least likely part of this chain to be controlled by export policy and the most likely to be reshaped by it.
+Test used to be the cheap step at the end. With thirty dies in a package and a finished assembly worth tens of thousands of dollars, it is now the insurance policy for everything upstream, and spending has moved accordingly: the tester market grew about 50% in 2025 ([source](https://www.investing.com/news/company-news/advantest-fy25-slides-record-margins-as-ai-testing-demand-surges-93CH-4639589)) and burn-in has started migrating back onto the wafer ([source](https://www.aehr.com/2026/07/aehr-test-systems-reports-fiscal-2026-fourth-quarter-and-full-year-financial-results-with-record-quarterly-bookings-and-100-million-effective-backlog/)). Advantest has quietly turned a duopoly into a two-thirds share. And the back end remains the one segment where Chinese firms are genuinely competitive, which makes it the least likely part of this chain to be controlled by export policy and the most likely to be reshaped by it.

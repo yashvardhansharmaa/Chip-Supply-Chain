@@ -32,9 +32,9 @@
     {"fact": "A GB300 NVL72 rack draws up to 142 kW, fed by eight 33 kW power shelves", "source": "https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html"},
     {"fact": "Nvidia's Kyber rack will hold 576 Rubin Ultra GPUs in 2027 on an 800 VDC bus that carries over 150% more power through the same copper", "source": "https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin"},
     {"fact": "US data centers used 176 TWh in 2023, 4.4% of US electricity, and are projected at 325 to 580 TWh by 2028, or 6.7% to 12%", "source": "https://newscenter.lbl.gov/2025/01/15/berkeley-lab-report-evaluates-increase-in-electricity-demand-from-data-centers/"},
-    {"fact": "The five largest US AI infrastructure spenders plan $660-690B of capex in 2026, up from about $380B in 2025", "source": "https://futurumgroup.com/insights/ai-capex-2026-the-690b-infrastructure-sprint/"},
+    {"fact": "The five largest US AI infrastructure spenders plan $660-690B of capex in 2026", "source": "https://futurumgroup.com/insights/ai-capex-2026-the-690b-infrastructure-sprint/"},
     {"fact": "ERCOT had more than 438 GW of proposed large loads in June 2026, about 89% of it data centers, against 5.9 GW actually energised", "source": "https://datacenterfrontier.com/energy/article/55401760/ercot-puts-texas-ai-megawatts-to-the-test"},
-    {"fact": "Large power transformers take 75 to 110 weeks in 2026 versus roughly 16 to 20 weeks before 2020, with no relief expected before 2028", "source": "https://terrapincg.com/news/switchgear-transformer-generator-lead-times-2026"},
+    {"fact": "Substation-class power transformers take 75 to 110 weeks in 2026, roughly 2.5 times pre-pandemic lead times, with no relief expected before 2028", "source": "https://terrapincg.com/news/switchgear-transformer-generator-lead-times-2026"},
     {"fact": "GE Vernova has about 100 GW of gas turbines under contract, roughly 20% tied to data centers, with only ~10 GW of slots left across 2029 and 2030", "source": "https://www.power-eng.com/gas/turbines/data-centers-drive-record-surge-in-ge-vernova-power-equipment-orders-as-turbine-slots-tighten-through-2030/"},
     {"fact": "In a 20 MW AI hall the GPUs cost $500M to $1B while the building costs $200M to $300M", "source": "https://www.globaldatacenterhub.com/p/what-a-data-center-actually-costs"}
   ],
@@ -52,8 +52,8 @@
       "type": "bars",
       "title": "Power per rack, Nvidia rack-scale generations",
       "unit": "kW",
-      "data": [["GB200 NVL72 (2024)", 120], ["Vera Rubin NVL72 (2026)", 130], ["Rubin Ultra Kyber NVL576 (2027)", 600]],
-      "source": {"label": "Introl, September 2025", "url": "https://introl.com/blog/nvidia-vera-rubin-gpu-600kw-racks-2027"}
+      "data": [["GB200 NVL72 (2024)", 120], ["Vera Rubin NVL72 (2026)", 250], ["Rubin Ultra Kyber NVL576 (2027)", 600]],
+      "source": {"label": "Introl (GB200 and Kyber) and Rubin architecture analysis (Vera Rubin)", "url": "https://blog.barrack.ai/nvidia-rubin-specs-architecture-2026/"}
     },
     {
       "id": "us-dc-electricity",
@@ -94,7 +94,7 @@ Liquid cooling adds 7% to 10% to construction cost but cuts the floor area neede
 
 {{figure:rack-power}}
 
-The GB200 class landed around 120 kW per rack, Vera Rubin sits at roughly 120 to 130 kW, and the Kyber rack for Rubin Ultra is designed for about 600 kW ([source](https://introl.com/blog/nvidia-vera-rubin-gpu-600kw-racks-2027)). Nvidia has confirmed Kyber will carry 576 Rubin Ultra GPUs across up to 18 compute blades per chassis in 2027 ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)). Facilities being designed today are already being specified for GPU racks above 250 kW ([source](https://datacenterfrontier.com/sponsored/article/55400568/installing-cooling-that-scales)).
+The GB200 class landed around 120 kW per rack and the Kyber rack for Rubin Ultra is designed for about 600 kW ([source](https://introl.com/blog/nvidia-vera-rubin-gpu-600kw-racks-2027)). The Vera Rubin NVL72 in between them exceeds 250 kW, on GPUs rated at 1,800 to 2,300 W each ([source](https://blog.barrack.ai/nvidia-rubin-specs-architecture-2026/)). Nvidia has confirmed Kyber will carry 576 Rubin Ultra GPUs across up to 18 compute blades per chassis in 2027 ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)). Facilities being designed today are already being specified for GPU racks above 250 kW ([source](https://datacenterfrontier.com/sponsored/article/55400568/installing-cooling-that-scales)).
 
 A 600 kW rack is not a bigger version of a 120 kW rack. It changes the busbar, the floor loading, the coolant flow rate, the leak detection strategy and the ride-through energy storage. Nvidia's Rubin racks carry 20 times more energy storage than their predecessors precisely to keep the draw steady as tens of thousands of GPUs enter and leave a synchronous training step together ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
 
@@ -104,7 +104,7 @@ Grid interconnection is the slow path. Behind-the-meter gas is the fast one, whi
 
 ## Who makes it
 
-The hyperscalers pay for it. Amazon has guided to about $200 billion of capex in 2026, Alphabet $175 to $185 billion, Meta $115 to $135 billion, Microsoft $120 billion or more and Oracle around $50 billion, for a combined $660 to $690 billion against roughly $380 billion in 2025 ([source](https://futurumgroup.com/insights/ai-capex-2026-the-690b-infrastructure-sprint/)).
+The hyperscalers pay for it. Amazon has guided to about $200 billion of capex in 2026, Alphabet $175 to $185 billion, Meta $115 to $135 billion, Microsoft $120 billion or more and Oracle around $50 billion, for a combined $660 to $690 billion ([source](https://futurumgroup.com/insights/ai-capex-2026-the-690b-infrastructure-sprint/)). The same five firms spent $448.2 billion in 2025 ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)).
 
 {{figure:hyperscaler-capex}}
 
@@ -130,7 +130,7 @@ The gap between announced and energised capacity is the whole story. ERCOT had m
 
 Utilities are converting some of it. Southern Company had 17 GW of large-load contracts signed through the mid-2030s, another 8 GW in late-stage development and a prospective pipeline above 75 GW, against just over 1.2 GW of operating data center load, with data center consumption up 55% year over year ([source](https://datacenterfrontier.com/energy/article/55398810/southerns-17-gw-pipeline-puts-ai-power-demand-into-utility-math)). New generation runs about $2 billion per gigawatt and would enter service around 2031 or 2032 ([source](https://datacenterfrontier.com/energy/article/55398810/southerns-17-gw-pipeline-puts-ai-power-demand-into-utility-math)).
 
-Then the equipment. Substation-class power transformers run 75 to 110 weeks against a pre-2020 norm near 16 to 20 weeks, medium-voltage switchgear 52 to 80 weeks, and large diesel generators 50 to 78 weeks, with no meaningful relief expected before 2028 ([source](https://terrapincg.com/news/switchgear-transformer-generator-lead-times-2026)). GE Vernova has roughly 100 GW of gas turbines under contract, about 20% of it tied to data centers, and only about 10 GW of delivery slots left across 2029 and 2030 combined against annualised output near 20 GW ([source](https://www.power-eng.com/gas/turbines/data-centers-drive-record-surge-in-ge-vernova-power-equipment-orders-as-turbine-slots-tighten-through-2030/)).
+Then the equipment. Substation-class power transformers run 75 to 110 weeks, roughly 2.5 times pre-pandemic lead times, medium-voltage switchgear 52 to 80 weeks, and large diesel generators 50 to 78 weeks, with no meaningful relief expected before 2028 ([source](https://terrapincg.com/news/switchgear-transformer-generator-lead-times-2026)). GE Vernova has roughly 100 GW of gas turbines under contract, about 20% of it tied to data centers, and only about 10 GW of delivery slots left across 2029 and 2030 combined against annualised output near 20 GW ([source](https://www.power-eng.com/gas/turbines/data-centers-drive-record-surge-in-ge-vernova-power-equipment-orders-as-turbine-slots-tighten-through-2030/)).
 
 Set that against the chip chain, where foundry and HBM capacity have repeatedly been expanded within a couple of years of the order being placed. Silicon responds to capital in quarters. The power chain responds in half-decades. That asymmetry, not wafer supply, is what will decide how much of the 2026 capex actually becomes running compute.
 
@@ -144,4 +144,4 @@ Set that against the chip chain, where foundry and HBM capacity have repeatedly 
 
 ## Takeaways
 
-The rack became the unit of AI compute somewhere around 120 kW, and it is heading to 600 kW by 2027, which forces liquid cooling and an 800 VDC bus on every serious operator. Cooling is fragmented and therefore cheap to solve. Power is not: transformers take two years, turbine slots are gone to 2030, and interconnection queues run fifty times larger than what gets energised. If an AI buildout slips, look for the delay in the substation yard, not the fab.
+The rack became the unit of AI compute somewhere around 120 kW, and it is heading to 600 kW by 2027 ([source](https://introl.com/blog/nvidia-vera-rubin-gpu-600kw-racks-2027)), which forces liquid cooling and an 800 VDC bus on every serious operator ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)). Cooling is fragmented and therefore cheap to solve ([source](https://www.gminsights.com/industry-analysis/data-center-liquid-cooling-market)). Power is not: transformers take two years ([source](https://terrapincg.com/news/switchgear-transformer-generator-lead-times-2026)), turbine slots are gone to 2030 ([source](https://www.power-eng.com/gas/turbines/data-centers-drive-record-surge-in-ge-vernova-power-equipment-orders-as-turbine-slots-tighten-through-2030/)), and interconnection queues run fifty times larger than what gets energised ([source](https://datacenterfrontier.com/energy/article/55401760/ercot-puts-texas-ai-megawatts-to-the-test)). If an AI buildout slips, look for the delay in the substation yard, not the fab.

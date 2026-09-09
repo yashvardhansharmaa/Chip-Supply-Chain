@@ -6,10 +6,11 @@
 PC.register('probe-card', function (p) {
   var parts = [];
   var Rc = 0.72, hole = 0.30, tPcb = 0.05;     // card radius, central opening, thickness
-  var yPcb = 0.56;                              // card mid-plane, well clear of the wafer
+  var yPcb = 0.62;                              // card mid-plane, well clear of the wafer
   var pcbTop = yPcb + tPcb / 2, pcbBot = yPcb - tPcb / 2;
-  var headW = 0.72, headH = 0.13, yHead = 0.35;
-  var headBot = yHead - headH / 2;
+  var headW = 0.62, headH = 0.10, yHead = 0.42; // space transformer block
+  var gW = 0.44, gH = 0.09, yG = 0.315;         // narrower guide-plate block under it
+  var headBot = yG - gH / 2;
   var tWaf = 0.03, yWaf = 0.0, Rw = 1.0;        // wafer top sits at yWaf + tWaf/2
   var wafTop = yWaf + tWaf / 2;
   var dw = 0.20, dh = 0.245;                    // die pitch on the wafer
@@ -54,14 +55,16 @@ PC.register('probe-card', function (p) {
   }
 
   // ---------- probe head slung under the card ----------
-  parts.push(PC.T(PC.box({ w: headW, h: headH, d: headW, n: 5200, tone: 0.6 }), { pos: [0, yHead, 0] }));
+  parts.push(PC.T(PC.box({ w: headW, h: headH, d: headW, n: 2800, tone: 0.45 }), { pos: [0, yHead, 0] }));
   parts.push(PC.T(PC.boxEdges({ w: headW, h: headH, d: headW, perUnit: 380, tone: 1 }), { pos: [0, yHead, 0] }));
-  // guide plate at the bottom of the head, drilled with the needle holes
-  parts.push(PC.T(PC.boxEdges({ w: headW * 0.86, h: 0.022, d: headW * 0.86, perUnit: 320, tone: 0.9 }), { pos: [0, headBot + 0.011, 0] }));
+  parts.push(PC.T(PC.box({ w: gW, h: gH, d: gW, n: 1900, tone: 0.5 }), { pos: [0, yG, 0] }));
+  parts.push(PC.T(PC.boxEdges({ w: gW, h: gH, d: gW, perUnit: 380, tone: 1 }), { pos: [0, yG, 0] }));
+  // the drilled guide plate at the very bottom, through which the needles pass
+  parts.push(PC.T(PC.boxEdges({ w: gW * 0.9, h: 0.02, d: gW * 0.9, perUnit: 320, tone: 0.9 }), { pos: [0, headBot + 0.01, 0] }));
   // four short standoffs from the card down to the head
   for (i = 0; i < 4; i++) {
-    var sx = (i < 2 ? -1 : 1) * headW * 0.42, sz = (i % 2 ? -1 : 1) * headW * 0.42;
-    parts.push(PC.line({ a: [sx, pcbBot, sz], b: [sx, yHead + headH / 2, sz], perUnit: 600, tone: 0.8 }));
+    var sx = (i < 2 ? -1 : 1) * headW * 0.46, sz = (i % 2 ? -1 : 1) * headW * 0.46;
+    parts.push(PC.line({ a: [sx, pcbBot, sz], b: [sx, yHead + headH / 2, sz], perUnit: 600, tone: 0.85 }));
   }
 
   // ---------- the needle bed: six die-sized blocks of fine vertical probes ----------
@@ -72,13 +75,14 @@ PC.register('probe-card', function (p) {
       var px = ox + (a1 - (nx - 1) / 2) * (dw * 0.74 / (nx - 1));
       var pz = oz + (b1 - (nz - 1) / 2) * (dh * 0.74 / (nz - 1));
       var jx = (PC.rnd() - 0.5) * 0.007, jz = (PC.rnd() - 0.5) * 0.007;
-      needles.push(PC.line({ a: [px, headBot + 0.015, pz], b: [px + jx, wafTop + 0.004, pz + jz], perUnit: 260, tone: 0.85 }));
+      // needles splay very slightly outward at the top so they read as separate wires
+      needles.push(PC.line({ a: [px * 1.14, headBot + 0.015, pz * 1.14], b: [px + jx, wafTop + 0.004, pz + jz], perUnit: 210, tone: 0.8 }));
     }
   }
   parts.push(PC.merge.apply(null, needles));
 
   // ---------- wafer on the chuck ----------
-  var body = PC.cylinder({ r: Rw, h: tWaf, n: 26000, tone: 0.5 });
+  var body = PC.cylinder({ r: Rw, h: tWaf, n: 23000, tone: 0.4 });
   var keep = [];
   for (i = 0; i < body.length; i += 4) {
     var bx2 = body[i], bz2 = body[i + 2];
@@ -96,7 +100,7 @@ PC.register('probe-card', function (p) {
     if (!cor.every(function (c) { return c[0] * c[0] + c[1] * c[1] < (Rw - 0.02) * (Rw - 0.02); })) continue;
     var probed = (Math.abs(gx) <= 1 && (gz === -1 || gz === 0));
     if (probed) continue;
-    grid.push(PC.T(PC.polyline({ pts: [[-dw / 2, 0, -dh / 2], [dw / 2, 0, -dh / 2], [dw / 2, 0, dh / 2], [-dw / 2, 0, dh / 2]], closed: true, perUnit: 180, tone: 0.9 }), { pos: [cx, wafTop + 0.002, cz] }));
+    grid.push(PC.T(PC.polyline({ pts: [[-dw / 2, 0, -dh / 2], [dw / 2, 0, -dh / 2], [dw / 2, 0, dh / 2], [-dw / 2, 0, dh / 2]], closed: true, perUnit: 280, tone: 1 }), { pos: [cx, wafTop + 0.002, cz] }));
   }
   parts.push(PC.merge.apply(null, grid));
 

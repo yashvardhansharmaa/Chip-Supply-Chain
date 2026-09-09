@@ -123,7 +123,7 @@
     "aiRelevance": "If China is to design advanced AI chips without US software, Empyrean is the tool chain it has to finish.",
     "revenueUSDb": 0.197,
     "revenueYear": 2025,
-    "source": "https://www.empyrean.com.cn/en/"
+    "source": "https://www.empyrean.com.cn/"
   },
   {
     "name": "Primarius Technologies",
@@ -171,7 +171,7 @@
     "aiRelevance": "Yield learning is the difference between a Chinese fab that can build AI logic economically and one that cannot.",
     "revenueUSDb": 0.109,
     "revenueYear": 2025,
-    "source": "https://www.semitronix.com/en/"
+    "source": "https://www.semitronix.com/"
   },
   {
     "name": "Arm Holdings",
@@ -307,7 +307,7 @@
     "ownership": "Public",
     "role": "Designs the Blackwell and Rubin GPUs, the NVLink scale-up fabric and the NVL72 rack systems that most AI training and a large share of inference runs on. It also sells the CUDA software stack that locks the ecosystem in.",
     "chokepoint": "Critical",
-    "shareNote": "Roughly 80% of data-centre AI accelerator revenue (2026)",
+    "shareNote": "About 81% of AI accelerator revenue in 2025, projected at about 75% for 2026",
     "customers": [
       "Microsoft",
       "Meta",
@@ -459,7 +459,7 @@
     "aiRelevance": "MTIA shows how much inference volume a single application company can pull off merchant GPUs.",
     "revenueUSDb": null,
     "revenueYear": null,
-    "source": "https://ai.meta.com/blog/next-generation-meta-training-inference-accelerator-AI-MTIA/"
+    "source": "https://engineering.fb.com/"
   },
   {
     "name": "Broadcom",
@@ -485,7 +485,7 @@
     "aiRelevance": "Broadcom sits on both sides of the AI cluster, designing the custom accelerators and supplying the Ethernet fabric that connects them.",
     "revenueUSDb": 63.887,
     "revenueYear": 2025,
-    "source": "https://www.broadcom.com/products/custom-asics"
+    "source": "https://www.broadcom.com/"
   },
   {
     "name": "Marvell Technology",
@@ -605,7 +605,7 @@
     "aiRelevance": "Qualcomm is attacking inference, where memory capacity per dollar matters more than peak training FLOPS.",
     "revenueUSDb": 44.284,
     "revenueYear": 2025,
-    "source": "https://www.qualcomm.com/products/technology/processors/ai-accelerators"
+    "source": "https://www.qualcomm.com/"
   },
   {
     "name": "Cerebras Systems",
@@ -652,7 +652,7 @@
     "aiRelevance": "An SRAM-only design avoids HBM entirely, which is the scarcest input in the AI chain.",
     "revenueUSDb": null,
     "revenueYear": null,
-    "source": "https://groq.com/technology"
+    "source": "https://groq.com/"
   },
   {
     "name": "HiSilicon",
@@ -676,7 +676,7 @@
     "aiRelevance": "Ascend is the only Chinese accelerator line deployed at national scale and the benchmark for how far domestic substitution has got.",
     "revenueUSDb": null,
     "revenueYear": null,
-    "source": "https://www.hisilicon.com/en/products/Ascend"
+    "source": "https://www.hisilicon.com/"
   },
   {
     "name": "Cambricon Technologies",
@@ -768,7 +768,7 @@
     "aiRelevance": "Biren is one of the few Chinese firms attempting a full training-class GPU rather than an inference part.",
     "revenueUSDb": 0.154,
     "revenueYear": 2025,
-    "source": "https://www.birentech.com/en/"
+    "source": "https://www.birentech.com/"
   },
   {
     "name": "MetaX",
@@ -972,7 +972,7 @@
     "aiRelevance": "Leading-edge AI logic requires epitaxial 300 mm wafers with defect densities only a handful of firms can reach.",
     "revenueUSDb": 16.734,
     "revenueYear": 2026,
-    "source": "https://www.shinetsu.co.jp/en/products/semiconductor-silicon/"
+    "source": "https://www.shinetsu.co.jp/"
   },
   {
     "name": "SUMCO",
@@ -1021,7 +1021,7 @@
     "aiRelevance": "The main non-Japanese source of leading-edge wafers and the one adding capacity inside the United States.",
     "revenueUSDb": 1.924,
     "revenueYear": 2025,
-    "source": "https://www.gwafers.com.tw/en/"
+    "source": "https://www.globalwafers.com/en"
   },
   {
     "name": "Siltronic",
@@ -1068,7 +1068,7 @@
     "aiRelevance": "Supplies the wafer substrate for a large share of the world's DRAM and HBM output.",
     "revenueUSDb": null,
     "revenueYear": null,
-    "source": "https://www.sksiltron.com/en/main.do"
+    "source": "https://www.sksiltron.com/"
   },
   {
     "name": "Soitec",
@@ -1140,7 +1140,7 @@
     "aiRelevance": "Every wafer in every AI chip starts as polysilicon from one of a handful of qualified plants.",
     "revenueUSDb": null,
     "revenueYear": null,
-    "source": "https://www.hscpoly.com/semiconductor-polysilicon"
+    "source": "https://www.hscpoly.com/"
   },
   {
     "name": "Wacker Chemie",
@@ -1186,7 +1186,7 @@
     "aiRelevance": "Polysilicon purity sets the floor on wafer defect density, which sets the yield on large AI dies.",
     "revenueUSDb": 2.272,
     "revenueYear": 2026,
-    "source": "https://www.tokuyama.co.jp/eng/products/electronic/polysilicon.html"
+    "source": "https://www.tokuyama.co.jp/"
   },
   {
     "name": "OCI Holdings",
@@ -1209,7 +1209,7 @@
     "aiRelevance": "Supplies the bulk wet chemicals Korean memory fabs consume in HBM production.",
     "revenueUSDb": 2.521,
     "revenueYear": 2025,
-    "source": "https://www.ocichem.com/eng/"
+    "source": "https://www.ocichem.com/"
   },
   {
     "name": "JSR Corporation",
@@ -1305,7 +1305,7 @@
     "aiRelevance": "EUV resist supply is concentrated in a few Japanese firms, and Sumitomo is one of them.",
     "revenueUSDb": 15.138,
     "revenueYear": 2026,
-    "source": "https://www.sumitomo-chem.co.jp/english/products/semiconductor/"
+    "source": "https://www.sumitomo-chem.co.jp/"
   },
   {
     "name": "DuPont",
@@ -1330,7 +1330,7 @@
     "aiRelevance": "Every metal layer on an AI die is planarised with a CMP pad and slurry pair before the next layer goes down.",
     "revenueUSDb": 6.849,
     "revenueYear": 2025,
-    "source": "https://www.dupont.com/electronics-industrial/semiconductor-fabrication.html"
+    "source": "https://www.dupont.com/"
   },
   {
     "name": "Inpria",
@@ -1376,7 +1376,7 @@
     "aiRelevance": "Domestic resist supply reduces the leverage Japanese export policy has over Korean HBM output.",
     "revenueUSDb": 0.891,
     "revenueYear": 2025,
-    "source": "https://www.dongjin.com/en/"
+    "source": "https://stockanalysis.com/quote/kosdaq/005290/"
   },
   {
     "name": "Soulbrain",
@@ -1422,7 +1422,7 @@
     "aiRelevance": "Gate-all-around transistors and DRAM capacitors depend on precursor chemistry as much as on the deposition tool.",
     "revenueUSDb": 2.708,
     "revenueYear": 2026,
-    "source": "https://www.adeka.co.jp/en/chemical/products/electronic.html"
+    "source": "https://www.adeka.co.jp/"
   },
   {
     "name": "Fujimi Incorporated",
@@ -1446,7 +1446,7 @@
     "aiRelevance": "Planarisation quality limits how many metal layers can be stacked, which matters for dense AI logic and HBM.",
     "revenueUSDb": 0.451,
     "revenueYear": 2026,
-    "source": "https://www.fujimiinc.co.jp/en/products/"
+    "source": "https://www.fujimiinc.co.jp/"
   },
   {
     "name": "JX Advanced Metals",
@@ -1495,7 +1495,7 @@
     "aiRelevance": "Advanced logic and DRAM need hundreds of qualified chemistries, and Merck supplies a large fraction of them.",
     "revenueUSDb": 24.529,
     "revenueYear": 2025,
-    "source": "https://www.emdgroup.com/en/products/semiconductor-solutions.html"
+    "source": "https://www.emdgroup.com/"
   },
   {
     "name": "Entegris",
@@ -1545,7 +1545,7 @@
     "aiRelevance": "A fab cannot start without a bulk gas plant, and neon supply for DUV lasers proved fragile after the invasion of Ukraine.",
     "revenueUSDb": 33.986,
     "revenueYear": 2025,
-    "source": "https://www.linde.com/industries/electronics"
+    "source": "https://www.linde.com/"
   },
   {
     "name": "Air Liquide",
@@ -1569,7 +1569,7 @@
     "aiRelevance": "Etch and deposition chemistries for high aspect ratio structures depend on a narrow set of qualified specialty gases.",
     "revenueUSDb": 31.315,
     "revenueYear": 2025,
-    "source": "https://www.airliquide.com/industry/electronics"
+    "source": "https://www.airliquide.com/"
   },
   {
     "name": "Air Products",
@@ -1617,7 +1617,7 @@
     "aiRelevance": "Japanese gas supply underpins the fabs and packaging houses that build most AI memory and packages.",
     "revenueUSDb": 8.839,
     "revenueYear": 2026,
-    "source": "https://www.nshd.co.jp/en/business/electronics.html"
+    "source": "https://www.nipponsanso-hd.co.jp/"
   },
   {
     "name": "SK Specialty",
@@ -1640,7 +1640,7 @@
     "aiRelevance": "NF3 supply constrains how fast deposition chambers can be cycled, which constrains DRAM and 3D NAND output.",
     "revenueUSDb": null,
     "revenueYear": null,
-    "source": "https://www.skspecialty.co.kr/en/"
+    "source": "https://www.skspecialty.com/"
   },
   {
     "name": "Kanto Denka Kogyo",
@@ -1664,7 +1664,7 @@
     "aiRelevance": "High aspect ratio etch in DRAM and 3D NAND depends on a narrow set of fluorinated chemistries.",
     "revenueUSDb": 0.425,
     "revenueYear": 2026,
-    "source": "https://www.kantodenka.co.jp/en/products/"
+    "source": "https://www.kantodenka.co.jp/"
   },
   {
     "name": "Stella Chemifa",
@@ -1688,7 +1688,7 @@
     "aiRelevance": "Ultra-pure HF is used at dozens of steps in DRAM manufacture, which makes it a direct input to HBM supply.",
     "revenueUSDb": 0.239,
     "revenueYear": 2026,
-    "source": "https://www.stella-chemifa.co.jp/en/product/"
+    "source": "https://www.stella-chemifa.co.jp/"
   },
   {
     "name": "Morita Chemical Industries",
@@ -1711,7 +1711,7 @@
     "aiRelevance": "Two private Japanese firms supply most of the world's semiconductor-grade HF, a genuine single-material chokepoint.",
     "revenueUSDb": null,
     "revenueYear": null,
-    "source": "https://www.morita-kagaku.com/en/"
+    "source": "https://www.morita-kagaku.co.jp/"
   },
   {
     "name": "Resonac Holdings",
@@ -1736,7 +1736,7 @@
     "aiRelevance": "Its packaging materials sit inside the CoWoS and fan-out packages that AI accelerators are built in.",
     "revenueUSDb": 8.758,
     "revenueYear": 2025,
-    "source": "https://www.resonac.com/products/semiconductor-electronic-materials"
+    "source": "https://www.resonac.com/"
   },
   {
     "name": "ASML",
@@ -1786,7 +1786,7 @@
     "aiRelevance": "Relevant to the mature-node parts around AI systems, not to the accelerator die itself.",
     "revenueUSDb": 4.402,
     "revenueYear": 2026,
-    "source": "https://www.nikon.com/business/semiconductor-lithography/"
+    "source": "https://www.nikon.com/"
   },
   {
     "name": "Canon",
@@ -1809,7 +1809,7 @@
     "aiRelevance": "Nanoimprint is the only credible non-EUV route to sub-10 nm patterning, which makes it strategically watched.",
     "revenueUSDb": 30.066,
     "revenueYear": 2025,
-    "source": "https://global.canon/en/product/nil/"
+    "source": "https://global.canon/"
   },
   {
     "name": "SMEE",
@@ -1853,7 +1853,7 @@
     "aiRelevance": "EUV source power sets scanner throughput, which sets how much leading-edge AI silicon the world can print per year.",
     "revenueUSDb": null,
     "revenueYear": null,
-    "source": "https://www.asml.com/en/technology/light-sources"
+    "source": "https://www.asml.com/"
   },
   {
     "name": "Gigaphoton",
@@ -1989,7 +1989,7 @@
     "aiRelevance": "Pump and abatement lead times have been a real constraint on how fast new fab capacity can be brought up.",
     "revenueUSDb": null,
     "revenueYear": null,
-    "source": "https://www.edwardsvacuum.com/en/our-products/semiconductor"
+    "source": "https://www.edwardsvacuum.com/"
   },
   {
     "name": "MKS Instruments",
@@ -2037,7 +2037,7 @@
     "aiRelevance": "Plasma stability at sub-nanometre control is what makes high aspect ratio etch reproducible.",
     "revenueUSDb": 1.799,
     "revenueYear": 2025,
-    "source": "https://www.advancedenergy.com/en-us/markets/semiconductor"
+    "source": "https://www.advancedenergy.com/"
   },
   {
     "name": "Ichor Holdings",
@@ -2060,7 +2060,7 @@
     "aiRelevance": "Tool vendors cannot ship chambers faster than their subsystem partners can build gas delivery modules.",
     "revenueUSDb": 0.948,
     "revenueYear": 2025,
-    "source": "https://www.ichorsystems.com/products/"
+    "source": "https://www.ichorsystems.com/"
   },
   {
     "name": "Ultra Clean Holdings",
@@ -2083,7 +2083,7 @@
     "aiRelevance": "Chamber parts cleaning is a recurring service that determines fab uptime and defect performance.",
     "revenueUSDb": 2.054,
     "revenueYear": 2025,
-    "source": "https://uct.com/products-services/"
+    "source": "https://www.uct.com/"
   },
   {
     "name": "VAT Group",
@@ -2130,7 +2130,7 @@
     "aiRelevance": "EUV scanners and ion implanters need high vacuum that only turbomolecular pumping can reach.",
     "revenueUSDb": 0.988,
     "revenueYear": 2025,
-    "source": "https://www.pfeiffer-vacuum.com/en/markets/semiconductor/"
+    "source": "https://www.pfeiffer-vacuum.com/"
   },
   {
     "name": "Horiba",
@@ -2177,7 +2177,7 @@
     "aiRelevance": "Vacuum capacitors for high-power RF matching are made by very few firms and gate plasma etch tool builds.",
     "revenueUSDb": 0.565,
     "revenueYear": 2025,
-    "source": "https://www.comet.tech/en/plasma-control-technologies"
+    "source": "https://www.comet.tech/"
   },
   {
     "name": "Ferrotec Holdings",
@@ -2215,7 +2215,7 @@
     "ownership": "Public",
     "role": "Makes the ultra-flat low-thermal-expansion glass blanks coated with 40 to 50 molybdenum-silicon layer pairs that become EUV photomasks. Blank defect levels are the gating item for EUV mask yield.",
     "chokepoint": "Critical",
-    "shareNote": "Hoya and AGC together hold roughly 93% of the EUV mask blank market (2025)",
+    "shareNote": "About 34% of EUV mask blanks; Hoya and AGC together hold about 93% (2024)",
     "customers": [
       "TSMC",
       "Samsung",
@@ -2240,7 +2240,7 @@
     "ownership": "Public",
     "role": "The other supplier of EUV mask blanks and a major maker of synthetic quartz substrates and photomask glass. Its glass expertise comes from a much larger architectural and automotive glass business.",
     "chokepoint": "Critical",
-    "shareNote": "AGC and Hoya together hold roughly 93% of the EUV mask blank market (2025)",
+    "shareNote": "Over 59% of EUV mask blanks; AGC and Hoya together hold about 93% (2024)",
     "customers": [
       "TSMC",
       "Samsung",
@@ -2298,7 +2298,7 @@
     "aiRelevance": "Sits on both the mask and the substrate side of an AI package, two of the tighter capacity constraints.",
     "revenueUSDb": 11.735,
     "revenueYear": 2026,
-    "source": "https://www.toppan.com/en/electronics/semiconductor/"
+    "source": "https://www.toppan.com/"
   },
   {
     "name": "Dai Nippon Printing",
@@ -2334,7 +2334,7 @@
     "founded": 1986,
     "ticker": "Private",
     "ownership": "Majority owned by Bain Capital; Intel and TSMC hold minority stakes",
-    "role": "Builds the multi-beam electron mask writers that pattern EUV masks with hundreds of thousands of parallel beamlets. It is effectively the only supplier of multi-beam writers for leading-edge masks.",
+    "role": "Builds the multi-beam electron mask writers that pattern EUV masks with hundreds of thousands of parallel beamlets. It is the dominant supplier for leading-edge mask writing, with NuFlare the only other source.",
     "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
@@ -2347,7 +2347,7 @@
     "aiRelevance": "Every EUV mask for an AI chip is written on a multi-beam tool, and one Austrian firm makes them.",
     "revenueUSDb": null,
     "revenueYear": null,
-    "source": "https://www.ims.co.at/en/products.html"
+    "source": "https://www.ims.co.at/"
   },
   {
     "name": "NuFlare Technology",
@@ -2359,7 +2359,7 @@
     "founded": 2002,
     "ticker": "Private",
     "ownership": "Subsidiary of Toshiba",
-    "role": "Makes variable-shaped-beam and multi-beam electron mask writers and mask inspection systems. It is the main alternative to IMS Nanofabrication in mask writing.",
+    "role": "Makes variable-shaped-beam and multi-beam electron mask writers and mask inspection systems. It is the only alternative to IMS Nanofabrication for multi-beam mask writing.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2371,7 +2371,7 @@
     "aiRelevance": "Mask write time is a real constraint on how quickly new AI chip designs can be brought to production.",
     "revenueUSDb": null,
     "revenueYear": null,
-    "source": "https://www.nuflare.co.jp/english/product/"
+    "source": "https://www.nuflare.co.jp/"
   },
   {
     "name": "Mitsui Chemicals",
@@ -2395,7 +2395,7 @@
     "aiRelevance": "Without a working pellicle a single particle on a mask repeats as a defect on every AI die printed with it.",
     "revenueUSDb": 10.849,
     "revenueYear": 2026,
-    "source": "https://jp.mitsuichemicals.com/en/techsolution/euv_pellicle/index.htm"
+    "source": "https://jp.mitsuichemicals.com/"
   },
   {
     "name": "KLA",
@@ -2409,7 +2409,7 @@
     "ownership": "Public",
     "role": "The dominant supplier of process control equipment: optical and electron beam wafer inspection, reticle inspection, overlay and film metrology. Its tools find the defects that determine yield on large dies.",
     "chokepoint": "Critical",
-    "shareNote": "About 58% of the process control equipment market (2025, per KLA FY2026 Q3 slides)",
+    "shareNote": "Over 56% of the process control, metrology and inspection segment, and over 85% of optical wafer inspection (2025)",
     "customers": [
       "TSMC",
       "Samsung",
@@ -2434,7 +2434,7 @@
     "ownership": "Public",
     "role": "The only supplier of actinic inspection tools, which inspect EUV mask blanks and patterned masks using 13.5 nm light rather than a visible-light proxy. Phase defects buried in the multilayer are invisible to any other method.",
     "chokepoint": "Critical",
-    "shareNote": "Effectively 100% of actinic EUV mask blank inspection (2026)",
+    "shareNote": "Effectively 100% of EUV mask blank inspection, per a 2026 analysis covering results through December 2025",
     "customers": [
       "TSMC",
       "Samsung",
@@ -2520,7 +2520,7 @@
     "aiRelevance": "Gate-all-around transistors cannot be process-controlled without dimensional metrology of buried structures.",
     "revenueUSDb": 0.881,
     "revenueYear": 2025,
-    "source": "https://www.novami.com/products/"
+    "source": "https://www.novami.com/"
   },
   {
     "name": "Camtek",
@@ -2569,7 +2569,7 @@
     "aiRelevance": "Sub-nanometre surface control matters for hybrid bonding, where two wafers must mate atom to atom.",
     "revenueUSDb": 0.153,
     "revenueYear": 2025,
-    "source": "https://www.parksystems.com/products"
+    "source": "https://www.parksystems.com/"
   },
   {
     "name": "Skyverse Technology",
@@ -2593,7 +2593,7 @@
     "aiRelevance": "Process control is the least substituted equipment segment in China and the hardest to replace.",
     "revenueUSDb": 0.305,
     "revenueYear": 2025,
-    "source": "https://www.skyverse.com/en/"
+    "source": "https://www.skyverse.com/"
   },
   {
     "name": "Wuhan Jingce Electronic",
@@ -2681,7 +2681,7 @@
     "ownership": "Public",
     "role": "Makes the coater/developer track that applies photoresist and develops it after exposure, and which is physically linked to every scanner in a fab, plus etch, deposition, cleaning and wafer bonding systems.",
     "chokepoint": "Critical",
-    "shareNote": "Roughly 90% of the global coater/developer market, and close to 100% for EUV tracks (2026)",
+    "shareNote": "Roughly 90-92% of the global coater/developer market and close to 100% for EUV tracks, per a 2026 company profile",
     "customers": [
       "TSMC",
       "Samsung",
@@ -2716,7 +2716,7 @@
     "aiRelevance": "Gate-all-around nanosheet transistors in N2 and 18A class logic are ALD-defined structures.",
     "revenueUSDb": 3.688,
     "revenueYear": 2025,
-    "source": "https://www.asm.com/products-technology"
+    "source": "https://www.asm.com/"
   },
   {
     "name": "Kokusai Electric",
@@ -2741,7 +2741,7 @@
     "aiRelevance": "Batch deposition throughput is a direct input to how many DRAM wafers, and therefore HBM stacks, can be produced.",
     "revenueUSDb": 1.528,
     "revenueYear": 2026,
-    "source": "https://www.kokusai-electric.com/en/product"
+    "source": "https://www.kokusai-electric.com/"
   },
   {
     "name": "Naura Technology",
@@ -2813,7 +2813,7 @@
     "aiRelevance": "Deposition and bonding tools are prerequisites for any domestic Chinese attempt at HBM.",
     "revenueUSDb": 0.969,
     "revenueYear": 2025,
-    "source": "https://www.piotech.com/en/"
+    "source": "https://www.piotech.com/"
   },
   {
     "name": "SCREEN Holdings",
@@ -2885,7 +2885,7 @@
     "aiRelevance": "Cleaning is one of the segments where Chinese fabs have found a workable non-Japanese supplier.",
     "revenueUSDb": 0.901,
     "revenueYear": 2025,
-    "source": "https://acmrcsh.com/en/products/"
+    "source": "https://www.acmrcsh.com/"
   },
   {
     "name": "TSMC",
@@ -2983,7 +2983,7 @@
     "aiRelevance": "SMIC's yield and capacity at 7 nm set the hard ceiling on how many domestic Chinese AI accelerators can exist.",
     "revenueUSDb": 9.327,
     "revenueYear": 2025,
-    "source": "https://www.smics.com/en/site/company_briefing"
+    "source": "https://www.smics.com/"
   },
   {
     "name": "Hua Hong Semiconductor",
@@ -3005,7 +3005,7 @@
     "aiRelevance": "Supplies the power management and analog parts that surround AI compute rather than the accelerators.",
     "revenueUSDb": 2.402,
     "revenueYear": 2025,
-    "source": "https://www.huahonggrace.com/en/"
+    "source": "https://www.huahonggrace.com/"
   },
   {
     "name": "GlobalFoundries",
@@ -3030,7 +3030,7 @@
     "aiRelevance": "Its silicon photonics process is used for optical interconnect components in AI data centres.",
     "revenueUSDb": 6.791,
     "revenueYear": 2025,
-    "source": "https://gf.com/technology/"
+    "source": "https://gf.com/"
   },
   {
     "name": "UMC",
@@ -3313,7 +3313,7 @@
     "aiRelevance": "Targets edge inference, where a cheaper stacked memory can replace HBM at lower bandwidth.",
     "revenueUSDb": 2.838,
     "revenueYear": 2025,
-    "source": "https://www.winbond.com/hq/product/specialty-dram/cube/"
+    "source": "https://www.winbond.com/"
   },
   {
     "name": "ASE Technology Holding",
@@ -3327,7 +3327,7 @@
     "ownership": "Public; includes Siliconware Precision Industries (SPIL)",
     "role": "The largest outsourced assembly and test provider, packaging and testing chips for fabless firms and foundries, with growing 2.5D and fan-out capacity for AI parts. It absorbed SPIL in 2018.",
     "chokepoint": "Important",
-    "shareNote": "Largest OSAT, put at about 28% of the market in a 2025 assessment",
+    "shareNote": "Largest OSAT at about 28% of the market (2024)",
     "customers": [
       "Nvidia",
       "AMD",
@@ -3363,7 +3363,7 @@
     "aiRelevance": "Domestic packaging capacity is the missing link in reshoring AI chip manufacture to the United States.",
     "revenueUSDb": 6.708,
     "revenueYear": 2025,
-    "source": "https://amkor.com/packaging-services/"
+    "source": "https://amkor.com/"
   },
   {
     "name": "JCET Group",
@@ -3432,7 +3432,7 @@
     "aiRelevance": "One of the few Chinese OSATs with real experience packaging large multi-die processors.",
     "revenueUSDb": 4.15,
     "revenueYear": 2025,
-    "source": "https://www.tfme.com/en/"
+    "source": "https://www.tfme.com/"
   },
   {
     "name": "Hua Tian Technology",
@@ -3454,7 +3454,7 @@
     "aiRelevance": "Part of the domestic packaging base that Chinese AI accelerators depend on.",
     "revenueUSDb": 2.559,
     "revenueYear": 2025,
-    "source": "https://www.huatian-tech.com/en/"
+    "source": "https://stockanalysis.com/quote/she/002185/"
   },
   {
     "name": "King Yuan Electronics",
@@ -3573,7 +3573,7 @@
     "aiRelevance": "Bonder throughput determines how many HBM stacks and 2.5D packages can be assembled per day.",
     "revenueUSDb": 1.752,
     "revenueYear": 2025,
-    "source": "https://www.asmpt.com/en/products/"
+    "source": "https://www.asmpt.com/"
   },
   {
     "name": "Hanmi Semiconductor",
@@ -3610,7 +3610,7 @@
     "ownership": "Public",
     "role": "Makes the dicing saws, laser dicers and back-grinders that cut wafers into dies and thin them for stacking. Thinning wafers to tens of micrometres is what makes HBM and 3D stacking possible.",
     "chokepoint": "Critical",
-    "shareNote": "Estimated 70-80% of dicing saws and about 70% of wafer-thinning grinders (2026)",
+    "shareNote": "Estimated 70-80% of dicing saws and about 70% of wafer-thinning grinders (2025)",
     "customers": [
       "TSMC",
       "Samsung",
@@ -3708,7 +3708,7 @@
     "ownership": "Public",
     "role": "Makes Ajinomoto Build-up Film, the insulating layer used between the copper layers of flip-chip package substrates. The material came out of amino acid chemistry and has no meaningful substitute in production.",
     "chokepoint": "Critical",
-    "shareNote": "Around 95% or more of the ABF build-up film market (2026)",
+    "shareNote": "More than 95% of the global ABF build-up film market (2025 base year)",
     "customers": [
       "Ibiden",
       "Shinko Electric",
@@ -3719,7 +3719,7 @@
     "aiRelevance": "Every large AI package substrate is built up from layers of one Japanese food company's film.",
     "revenueUSDb": 10.296,
     "revenueYear": 2026,
-    "source": "https://www.qyresearch.com/reports/5785370/abf--ajinomoto-build-up-film"
+    "source": "https://www.businessresearchinsights.com/market-reports/ajinomoto-build-up-film-abf-market-122893"
   },
   {
     "name": "Ibiden",
@@ -3743,7 +3743,7 @@
     "aiRelevance": "Substrate size and layer count for AI packages have grown faster than the industry can add capacity.",
     "revenueUSDb": 2.706,
     "revenueYear": 2026,
-    "source": "https://www.ibiden.com/products/electronics/"
+    "source": "https://www.ibiden.com/"
   },
   {
     "name": "Shinko Electric Industries",
@@ -3792,7 +3792,7 @@
     "aiRelevance": "Taiwanese substrate capacity is what absorbs AI package demand that the Japanese suppliers cannot take.",
     "revenueUSDb": 4.166,
     "revenueYear": 2025,
-    "source": "https://www.unimicron.com/en/products"
+    "source": "https://www.unimicron.com/"
   },
   {
     "name": "Kinsus Interconnect",
@@ -3840,7 +3840,7 @@
     "aiRelevance": "Supplies both the package substrate and the server boards that carry AI accelerators.",
     "revenueUSDb": 1.275,
     "revenueYear": 2025,
-    "source": "https://www.napcb.com/en/"
+    "source": "https://www.npc.com.tw/"
   },
   {
     "name": "AT&S",
@@ -3864,7 +3864,7 @@
     "aiRelevance": "The only substrate capacity for AI packages that is European-owned, though the plants are in Asia.",
     "revenueUSDb": 2.082,
     "revenueYear": 2026,
-    "source": "https://ats.net/en/products-technology/"
+    "source": "https://ats.net/"
   },
   {
     "name": "Samsung Electro-Mechanics",
@@ -3889,7 +3889,7 @@
     "aiRelevance": "Supplies both the substrate under the package and thousands of MLCCs around each accelerator.",
     "revenueUSDb": 8.438,
     "revenueYear": 2025,
-    "source": "https://www.samsungsem.com/global/product/package-substrate.do"
+    "source": "https://www.samsungsem.com/"
   },
   {
     "name": "LG Innotek",
@@ -3926,7 +3926,7 @@
     "ownership": "Public",
     "role": "Weaves the ultra-fine low thermal expansion glass cloth, known as T-glass, that reinforces high-end package substrates and server boards. Its fibre keeps large substrates flat as they heat.",
     "chokepoint": "Critical",
-    "shareNote": "Around 90% of T-glass supply and 60-70% of NE-glass (2026)",
+    "shareNote": "About 90% of T-glass and 60-70% of NER-glass, per an April 2026 assessment",
     "customers": [
       "Ibiden",
       "Shinko Electric",
@@ -3960,7 +3960,7 @@
     "aiRelevance": "HBM and memory packages sit on BT laminate, and the resin comes from very few suppliers.",
     "revenueUSDb": 4.799,
     "revenueYear": 2026,
-    "source": "https://www.mgc.co.jp/eng/products/lm/"
+    "source": "https://www.mgc.co.jp/"
   },
   {
     "name": "Panasonic Industry",
@@ -4009,7 +4009,7 @@
     "aiRelevance": "AI baseboards need 20 or more layers of low-loss material, which few PCB makers can build at yield.",
     "revenueUSDb": 2.867,
     "revenueYear": 2025,
-    "source": "https://www.victorypcb.com/en/"
+    "source": "https://www.victorypcb.com/"
   },
   {
     "name": "WUS Printed Circuit",
@@ -4081,7 +4081,7 @@
     "aiRelevance": "Provides domestic PCB capacity for AI infrastructure where supply chain origin matters.",
     "revenueUSDb": 2.906,
     "revenueYear": 2025,
-    "source": "https://www.ttm.com/markets/data-center-computing"
+    "source": "https://www.ttm.com/"
   },
   {
     "name": "Absolics",
@@ -4102,7 +4102,7 @@
     "aiRelevance": "Glass core substrates are the leading candidate to replace organic ABF substrates in very large AI packages.",
     "revenueUSDb": null,
     "revenueYear": null,
-    "source": "https://www.absolics.com/en/"
+    "source": "https://www.sk.com/en/"
   },
   {
     "name": "Advantest",
@@ -4202,7 +4202,7 @@
     "aiRelevance": "Vertical probe technology is what allows testing of the very high pad counts on AI accelerators.",
     "revenueUSDb": 0.73,
     "revenueYear": 2025,
-    "source": "https://www.technoprobe.com/en/products"
+    "source": "https://www.technoprobe.com/"
   },
   {
     "name": "Micronics Japan",
@@ -4274,7 +4274,7 @@
     "aiRelevance": "Testing a kilowatt-class part requires thermal control hardware that most handlers were never built for.",
     "revenueUSDb": 0.453,
     "revenueYear": 2025,
-    "source": "https://www.cohu.com/semiconductor-test-handlers"
+    "source": "https://www.cohu.com/"
   },
   {
     "name": "Aehr Test Systems",
@@ -4321,7 +4321,7 @@
     "aiRelevance": "System-level test has become standard for AI accelerators because wafer test cannot catch every failure mode.",
     "revenueUSDb": 0.899,
     "revenueYear": 2025,
-    "source": "https://www.chromaate.com/en/product"
+    "source": "https://www.chromaate.com/"
   },
   {
     "name": "Astera Labs",
@@ -4442,7 +4442,7 @@
     "aiRelevance": "AI back-end networks are built from white-box switches assembled by a small group of Taiwanese ODMs.",
     "revenueUSDb": 7.883,
     "revenueYear": 2025,
-    "source": "https://www.accton.com/products/"
+    "source": "https://www.accton.com/"
   },
   {
     "name": "Amphenol",
@@ -4610,7 +4610,7 @@
     "aiRelevance": "A large share of the world's AI-cluster optics is physically assembled in a small number of Thai buildings.",
     "revenueUSDb": 4.641,
     "revenueYear": 2026,
-    "source": "https://www.fabrinet.com/services/optical-packaging"
+    "source": "https://www.fabrinet.com/"
   },
   {
     "name": "Ayar Labs",
@@ -4634,7 +4634,7 @@
     "aiRelevance": "Optical I/O is the leading proposal for scaling accelerator bandwidth beyond what copper can carry.",
     "revenueUSDb": null,
     "revenueYear": null,
-    "source": "https://ayarlabs.com/technology/"
+    "source": "https://ayarlabs.com/"
   },
   {
     "name": "Lightmatter",
@@ -4703,7 +4703,7 @@
     "aiRelevance": "Rack-scale AI systems are assembled and burned in by a handful of Taiwanese firms, of which Foxconn is the largest.",
     "revenueUSDb": 257.241,
     "revenueYear": 2025,
-    "source": "https://www.foxconn.com/en-us/business/ai"
+    "source": "https://www.foxconn.com/"
   },
   {
     "name": "Quanta Computer",
@@ -4798,7 +4798,7 @@
     "aiRelevance": "One of the four Taiwanese ODMs that build most of the world's AI servers.",
     "revenueUSDb": 21.943,
     "revenueYear": 2025,
-    "source": "https://www.inventec.com/en/product/server"
+    "source": "https://www.inventec.com/"
   },
   {
     "name": "Super Micro Computer",
@@ -4869,7 +4869,7 @@
     "aiRelevance": "Cray-derived liquid cooling and interconnect experience transfers directly to dense AI clusters.",
     "revenueUSDb": 34.296,
     "revenueYear": 2025,
-    "source": "https://www.hpe.com/us/en/solutions/artificial-intelligence.html"
+    "source": "https://www.hpe.com/us/en/servers.html"
   },
   {
     "name": "Lenovo",
@@ -4892,7 +4892,7 @@
     "aiRelevance": "Warm-water cooling avoids chillers entirely, which matters as rack power passes 100 kW.",
     "revenueUSDb": 83.075,
     "revenueYear": 2026,
-    "source": "https://www.lenovo.com/us/en/servers-storage/solutions/ai/"
+    "source": "https://www.lenovo.com/"
   },
   {
     "name": "ZT Systems",
@@ -4959,7 +4959,7 @@
     "aiRelevance": "Cold plate and manifold manufacturing has become a genuine capacity constraint for liquid-cooled racks.",
     "revenueUSDb": 29.802,
     "revenueYear": 2025,
-    "source": "https://www.jabil.com/industries/cloud-data-center-infrastructure.html"
+    "source": "https://www.jabil.com/"
   },
   {
     "name": "Vertiv",
@@ -4984,7 +4984,7 @@
     "aiRelevance": "A 132 kW rack cannot be air cooled, so the coolant distribution unit is now as critical as the server itself.",
     "revenueUSDb": 10.23,
     "revenueYear": 2025,
-    "source": "https://www.vertiv.com/en-us/solutions/ai-data-center/"
+    "source": "https://www.vertiv.com/"
   },
   {
     "name": "Schneider Electric",
@@ -5056,7 +5056,7 @@
     "aiRelevance": "Rack power conversion efficiency at 100 kW and above is dominated by a small number of Taiwanese suppliers.",
     "revenueUSDb": 17.615,
     "revenueYear": 2025,
-    "source": "https://www.deltaww.com/en-US/products/Data-Center-Infrastructure/ALL"
+    "source": "https://www.deltaww.com/"
   },
   {
     "name": "CoolIT Systems",
@@ -5219,7 +5219,7 @@
     "aiRelevance": "Nvidia's move to 800 volt DC rack distribution is built on power semiconductors from a handful of suppliers.",
     "revenueUSDb": 17.043,
     "revenueYear": 2025,
-    "source": "https://www.infineon.com/cms/en/applications/data-center-and-computing/"
+    "source": "https://www.infineon.com/"
   },
   {
     "name": "Nidec",

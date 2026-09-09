@@ -1,0 +1,92 @@
+/* Specimen: a gate-all-around (nanosheet) transistor.
+ * Three stacked silicon channels threaded through a gate that wraps them on
+ * every face, epitaxial source/drain diamonds at both ends, shallow trench
+ * isolation in the substrate below, and metal contacts rising to the wiring.
+ * Scale: 1 nm = 0.014 units — sheets 36 nm wide and 5 nm thick on an 18 nm
+ * pitch, an 18 nm gate: a device about 120 nm across.
+ */
+PC.register('gaa-transistor', function (p) {
+  var nm = 0.014;
+  var sheetLen = 80 * nm, sheetW = 36 * nm, sheetT = 5 * nm, pitch = 18 * nm;
+  var gateLen = 20 * nm, gateD = sheetW + 26 * nm;
+  var yTop = 2 * pitch;                                  // centre of the top sheet
+  var gateBot = -8 * nm, gateTop = yTop + 14 * nm;
+  var parts = [];
+  function add(c) { parts.push(c); }
+  function rect(w, d, y, per, tn) {
+    return PC.polyline({ pts: [[-w / 2, y, -d / 2], [w / 2, y, -d / 2], [w / 2, y, d / 2], [-w / 2, y, d / 2]], closed: true, perUnit: per, tone: tn });
+  }
+
+  // ---------- substrate, shallow trench isolation, bottom isolation ----------
+  var subW = 100 * nm, subD = 74 * nm, subH = 18 * nm, subY = -26 * nm;
+  var subTop = subY + subH / 2;
+  add(PC.T(PC.box({ w: subW, h: subH, d: subD, faces: ['px', 'nx', 'pz', 'nz'], n: 5000, tone: 0.34 }), { pos: [0, subY, 0] }));
+  add(PC.T(PC.plane({ w: subW, d: subD, n: 3600, tone: 0.24 }), { pos: [0, subTop, 0] }));
+  add(PC.T(PC.boxEdges({ w: subW, h: subH, d: subD, perUnit: 260, tone: 0.8 }), { pos: [0, subY, 0] }));
+
+  // silicon mesa: the fin the sheets were cut from
+  var mesaH = 9 * nm, mesaY = subTop + mesaH / 2;
+  add(PC.T(PC.box({ w: sheetLen * 1.04, h: mesaH, d: sheetW, faces: ['px', 'nx', 'pz', 'nz'], n: 2000, tone: 0.45 }), { pos: [0, mesaY, 0] }));
+  add(PC.T(PC.boxEdges({ w: sheetLen * 1.04, h: mesaH, d: sheetW, perUnit: 260, tone: 0.65 }), { pos: [0, mesaY, 0] }));
+
+  // shallow trench isolation: oxide on both sides, its top just under the channels
+  var stiH = 9 * nm, stiY = subTop + stiH / 2, stiD = (subD - sheetW) / 2 - 2 * nm;
+  [1, -1].forEach(function (s) {
+    var zc = s * (sheetW / 2 + stiD / 2 + 1.5 * nm);
+    add(PC.T(PC.box({ w: subW, h: stiH, d: stiD, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 1800, tone: 0.18 }), { pos: [0, stiY, zc] }));
+    add(PC.T(PC.boxEdges({ w: subW, h: stiH, d: stiD, perUnit: 150, tone: 0.4 }), { pos: [0, stiY, zc] }));
+  });
+
+  // bottom dielectric isolation under the sheet stack
+  var biY = mesaY + mesaH / 2 + 2 * nm;
+  add(PC.T(PC.plane({ w: sheetLen * 1.02, d: sheetW + 4 * nm, n: 900, tone: 0.45 }), { pos: [0, biY, 0] }));
+  add(rect(sheetLen * 1.02, sheetW + 4 * nm, biY, 260, 0.75));
+
+  // ---------- the three nanosheets: light faces, crisp edges ----------
+  for (var i = 0; i < 3; i++) {
+    var y = i * pitch;
+    add(PC.T(PC.box({ w: sheetLen, h: sheetT, d: sheetW, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 4200, tone: 0.5 }), { pos: [0, y, 0] }));
+    add(PC.T(PC.boxEdges({ w: sheetLen, h: sheetT, d: sheetW, perUnit: 340, tone: 1 }), { pos: [0, y, 0] }));
+  }
+
+  // ---------- the gate: a block wrapping the whole stack, drawn hollow ----------
+  var gateH = gateTop - gateBot, gateY = (gateTop + gateBot) / 2;
+  add(PC.T(PC.box({ w: gateLen, h: gateH, d: gateD, faces: ['py', 'pz', 'nz'], n: 7000, tone: 0.3 }), { pos: [0, gateY, 0] }));
+  add(PC.T(PC.boxEdges({ w: gateLen, h: gateH, d: gateD, perUnit: 420, tone: 1 }), { pos: [0, gateY, 0] }));
+  // the wrap: outline the gate metal filling the space under, between and over the sheets
+  for (i = 0; i < 4; i++) add(rect(gateLen, gateD, (i - 0.5) * pitch, 240, 0.7));
+
+  // ---------- epitaxial source and drain: diamond prisms over the sheet ends ----------
+  var epiHH = 21 * nm, epiWW = 24 * nm, epiLen = 24 * nm, epiY = pitch, epiX = 33 * nm;
+  [1, -1].forEach(function (s) {
+    var d = PC.thin(PC.extrude({ shape: [[-epiHH, 0], [0, -epiWW], [epiHH, 0], [0, epiWW]], h: epiLen, tone: 0.32 }), 0.5);
+    add(PC.T(d, { rot: [0, 0, Math.PI / 2], pos: [s * epiX, epiY, 0] }));
+    [-epiLen / 2, epiLen / 2].forEach(function (dx) {
+      add(PC.polyline({
+        pts: [[s * epiX + dx, epiY + epiHH, 0], [s * epiX + dx, epiY, epiWW], [s * epiX + dx, epiY - epiHH, 0], [s * epiX + dx, epiY, -epiWW]],
+        closed: true, perUnit: 320, tone: 1
+      }));
+    });
+    [[epiHH, 0], [-epiHH, 0], [0, epiWW], [0, -epiWW]].forEach(function (v) {
+      add(PC.line({ a: [s * epiX - epiLen / 2, epiY + v[0], v[1]], b: [s * epiX + epiLen / 2, epiY + v[0], v[1]], perUnit: 260, tone: 0.75 }));
+    });
+  });
+
+  // ---------- metal contacts (accent) ----------
+  var cTop = 52 * nm;
+  function contact(x, w, d, yBot) {
+    var h = cTop - yBot;
+    add(PC.T(PC.accent(PC.box({ w: w, h: h, d: d, faces: ['px', 'nx', 'py', 'pz', 'nz'], n: 1500 }), 0.45), { pos: [x, yBot + h / 2, 0] }));
+    add(PC.T(PC.accent(PC.boxEdges({ w: w, h: h, d: d, perUnit: 300 }), 1), { pos: [x, yBot + h / 2, 0] }));
+  }
+  contact(epiX, epiLen * 0.7, epiWW * 1.05, epiY + epiHH * 0.55);
+  contact(-epiX, epiLen * 0.7, epiWW * 1.05, epiY + epiHH * 0.55);
+  contact(0, gateLen * 0.75, gateD * 0.4, gateTop - 2 * nm);
+
+  return {
+    cloud: PC.merge.apply(null, parts),
+    spin: 0.12,
+    tilt: [0.35, -0.7, 0],
+    caption: 'A gate-all-around nanosheet transistor roughly 120 nm across: three silicon channels stacked one above another, a gate wrapping every face of all three, epitaxial source and drain diamonds at the ends, and copper contacts rising to the wiring above.'
+  };
+});

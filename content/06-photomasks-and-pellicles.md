@@ -122,7 +122,7 @@ China has mask capability at trailing nodes and nothing at the leading edge. SMI
 
 ## The chokepoint
 
-This stage scores a 5 for the same reason lithography does, but for far less money. Two firms supply the blanks, one firm supplies the tool that certifies them, and none of these businesses is big enough to attract a well-funded entrant. Nobody builds a $259 million blank business from scratch to serve four customers with a two-decade defect-learning curve ahead.
+This stage scores a 5 for the same reason lithography does, but for far less money. Two firms supply the blanks, one firm supplies the tool that certifies them, and none of these businesses is big enough to attract a well-funded entrant. Nobody builds a $259 million blank business from scratch to serve four customers with a two-decade defect-learning curve ahead ([source](https://www.dri.co.jp/auto/report/qyr/250206-euv-mask-blanks-global-market-share-and.html)).
 
 Pellicles are the open sore. A decade on, no membrane is transparent, tough and long-lived enough, and the workaround of running EUV bare and cleaning more often pushes cost straight into mask spend and scanner downtime. Whether CNT pellicles reach production moves EUV cost per wafer more than any incremental scanner improvement.
 
@@ -136,4 +136,4 @@ Pellicles are the open sore. A decade on, no membrane is transparent, tough and 
 
 ## Takeaways
 
-Photomasks are the cheapest critical chokepoint in the AI chip supply chain, and that is exactly what makes them dangerous. A $259 million blank market with two suppliers, and a single-vendor actinic inspection tool, sit under every EUV layer of every leading-edge accelerator. EUV pellicles remain unsolved, so fabs trade throughput against defect risk product by product. And mask-set costs of $10 million to $40 million at the leading edge quietly determine which AI chips get designed at all.
+Photomasks are the cheapest critical chokepoint in the AI chip supply chain, and that is exactly what makes them dangerous. A $259 million blank market with two suppliers ([source](https://www.dri.co.jp/auto/report/qyr/250206-euv-mask-blanks-global-market-share-and.html)), and a single-vendor actinic inspection tool ([source](https://www.lasertec.co.jp/en/ir/plan/message.html)), sit under every EUV layer of every leading-edge accelerator. EUV pellicles remain unsolved, so fabs trade throughput against defect risk product by product ([source](https://semiengineering.com/mask-complexity-cost-and-change/)). And mask-set costs of $10 million to $40 million at the leading edge quietly determine which AI chips get designed at all ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)).

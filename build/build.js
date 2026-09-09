@@ -289,7 +289,8 @@ const suppliersIntro = suppliers.length ? `${suppliers.length} firms across the 
 
 const kit = read(path.join(root, 'src', 'kit.js')) || '';
 const specDir = path.join(root, 'specimens');
-const specimens = fs.existsSync(specDir) ? fs.readdirSync(specDir).filter((f) => f.endsWith('.js')).sort().map((f) => `/* ${f} */\n(function(PC){\n${read(path.join(specDir, f))}\n})(window.PC);`).join('\n') : '';
+// each specimen gets its own <script> so a syntax error in one cannot take the others down
+const specimens = fs.existsSync(specDir) ? fs.readdirSync(specDir).filter((f) => f.endsWith('.js')).sort().map((f) => `</script><script>/* ${f} */\ntry{(function(PC){\n${read(path.join(specDir, f)).replace(/<\/script/gi, '<\\/script')}\n})(window.PC);}catch(e){console.warn('specimen ${f} failed to load', e);}`).join('\n') : '';
 const specNames = new Set((specimens.match(/PC\.register\('([\w-]+)'/g) || []).map((s) => s.match(/'([\w-]+)'/)[1]));
 all.forEach((ch) => { const s = ch.meta.specimen; if (s && !specNames.has(s)) warn(`${ch.id}: specimen "${s}" is not built yet`); });
 ['package', 'globe'].forEach((s) => { if (!specNames.has(s)) warn(`specimen "${s}" (used by hero/geopolitics) is not built yet`); });

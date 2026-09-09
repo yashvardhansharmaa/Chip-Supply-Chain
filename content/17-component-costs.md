@@ -34,7 +34,7 @@
     {"fact": "CoWoS-L runs $1,000 to $1,500 per package versus about $750 for CoWoS-S", "source": "https://gr8ham.substack.com/p/cowos-chip-on-wafer-on-substrate"},
     {"fact": "A Vera Rubin NVL72 rack is estimated at $7.80M, of which $2.00M is memory", "source": "https://www.shanethegamer.com/pc-mac/nvidia-vera-rubins-memory-bill-hits-2m-more-than-doubling-grace-blackwells-cost/"},
     {"fact": "A 100,000 H100 cluster needs about 150 MW and burns 1.59 TWh per year", "source": "https://newsletter.semianalysis.com/p/100000-h100-clusters-power-network"},
-    {"fact": "Combined hyperscaler capex was $492B in 2025 and is forecast at $1.009T in 2026", "source": "https://247wallst.com/investing/2026/08/22/ais-absurd-spending-boom-hyperscalers-are-spending-102-of-cloud-revenue-on-capex/"},
+    {"fact": "UBS projects total hyperscaler capex, a definition that includes neocloud providers, at $492B in 2025 and $1.009T in 2026", "source": "https://247wallst.com/investing/2026/08/22/ais-absurd-spending-boom-hyperscalers-are-spending-102-of-cloud-revenue-on-capex/"},
     {"fact": "Gartner puts 2025 semiconductor revenue at $809B and forecasts $1.6T for 2026", "source": "https://www.intelligentcio.com/north-america/2026/09/01/gartner-forecasts-semiconductor-revenue-to-hit-us1-6-trillion-in-2026/"}
   ],
   "figures": [
@@ -59,8 +59,8 @@
       "type": "bars",
       "title": "Size of each layer of the chain, 2025",
       "unit": "$B",
-      "data": [["Total semiconductor revenue", 809], ["Hyperscaler capex", 492], ["Nvidia data centre revenue (FY2026)", 194], ["Wafer fab equipment", 117], ["Advanced packaging", 45], ["Optical transceivers", 15]],
-      "source": {"label": "Gartner, 24/7 Wall St on hyperscaler capex, Nvidia filings, SEMI, advanced packaging estimate", "url": "https://www.intelligentcio.com/north-america/2026/09/01/gartner-forecasts-semiconductor-revenue-to-hit-us1-6-trillion-in-2026/"}
+      "data": [["Total semiconductor revenue", 809], ["Hyperscaler capex (UBS)", 492], ["Nvidia data centre revenue (FY2026)", 194], ["Wafer fab equipment", 117], ["Advanced packaging", 45], ["Optical transceivers", 15]],
+      "source": {"label": "Gartner, UBS via 24/7 Wall St on hyperscaler capex (its definition includes neoclouds), Nvidia filings, SEMI, advanced packaging estimate", "url": "https://www.intelligentcio.com/north-america/2026/09/01/gartner-forecasts-semiconductor-revenue-to-hit-us1-6-trillion-in-2026/"}
     }
   ]
 }
@@ -77,7 +77,7 @@ Die cost has three inputs: wafer price, dies per wafer, and yield.
 
 **Dies per wafer.** A 300 mm wafer offers 70,686 mm2, but dies are rectangles and the wafer is a circle. Step an 800 mm2 die, about 26.0 by 30.8 mm, across a 294 mm usable diameter, keeping only dies that fall wholly inside: 68 gross dies.
 
-**Yield.** Defects land at random, so a bigger die is likelier to catch one. Poisson gives survival as e to the power of minus A times D0, for die area A and defect density D0 per cm2. It is too harsh at large dies because real defects cluster. Murphy's model, the default, averages Poisson over a spread of densities: on an 800 mm2 die at D0 of 0.10 it gives 47 percent against Poisson's 45.
+**Yield.** Defects land at random, so a bigger die is likelier to catch one. Poisson gives survival as e to the power of minus A times D0, for die area A and defect density D0 per cm2. It is too harsh at large dies because real defects cluster. Murphy's model, the default, averages Poisson over a spread of densities: on an 800 mm2 die at D0 of 0.10 it gives 47 percent against Poisson's 45 ([source](https://fog.misty.com/perry/cod/references/yield_models.pdf)).
 
 TSMC's N5 sat at 0.10 to 0.11 defects per cm2 in 2020 ([source](https://ljdevice.com.tw/en/better-yield-5nm-7nm-tsmc-update-defect-rates-n5/)). Estimates put N3 at 0.09 to 0.14 early to mature, and the H100's 814 mm2 die at 40 to 50 percent yield ([source](https://siliconanalysts.com/guide/semiconductor-costs)). TSMC says N2 sits below all three ([source](https://semiwiki.com/forum/threads/tsmc-discloses-n2-defect-density-lower-than-n3-at-the-same-stage-of-development.22699/)).
 
@@ -140,9 +140,9 @@ Gross margin. Nvidia's are its own ([source](https://nvidianews.nvidia.com/news/
 
 {{figure:gross-margins}}
 
-Design, memory, inspection and leading-edge wafers earn 60 to 75 points. Substrates earn about 30. Assembly and test earn 14 to 20 and are, in margin terms, contract manufacturing. The 2026 change is that memory joined the top tier: Micron went from 39.8 to 72.6 percent in nine months, moving value to Nvidia's suppliers.
+Design, memory, inspection and leading-edge wafers earn 60 to 75 points. Substrates earn about 30. Assembly and test earn 14 to 20 and are, in margin terms, contract manufacturing. The 2026 change is that memory joined the top tier: Micron went from 39.8 to 72.6 percent in nine months ([source](https://stockanalysis.com/stocks/mu/financials/)), moving value to Nvidia's suppliers.
 
-Gartner put 2025 semiconductor revenue at $809B and forecasts $1.6T for 2026, memory alone $837B ([source](https://www.intelligentcio.com/north-america/2026/09/01/gartner-forecasts-semiconductor-revenue-to-hit-us1-6-trillion-in-2026/)); WSTS, a year earlier, had $772B and $975B ([source](https://www.wsts.org/76/103/Global-Semiconductor-Market-Approaches-1T-in-2026)). DRAM alone hit $154.73B in 2Q26, up 59.5 percent sequentially ([source](https://www.trendforce.com/presscenter/news/20260907-13219.html)). Wafer fab equipment was a record $116.9B in 2025, forecast $143.9B in 2026 ([source](https://www.semi.org/en/semi-press-release/global-semiconductor-equipment-sales-projected-to-reach-a-record-of-156-billion-dollars-in-2027-semi-reports)). Advanced packaging is $40B to $50B, reaching $79B to $90B by 2030 ([source](https://gr8ham.substack.com/p/cowos-chip-on-wafer-on-substrate)). Optical transceivers were $15.4B in 2025 and $17.6B in 2026, $34.4B by 2031 ([source](https://finance.yahoo.com/technology/articles/global-optical-transceiver-market-reach-103700630.html)). Hyperscaler capex went from $492B in 2025 to a forecast $1.009T in 2026 ([source](https://247wallst.com/investing/2026/08/22/ais-absurd-spending-boom-hyperscalers-are-spending-102-of-cloud-revenue-on-capex/)), and Dell'Oro expects data centre capex above $3T by 2030 ([source](https://finance.yahoo.com/technology/ai/articles/ai-buildout-maintains-momentum-data-120000543.html)).
+Gartner put 2025 semiconductor revenue at $809B and forecasts $1.6T for 2026, memory alone $837B ([source](https://www.intelligentcio.com/north-america/2026/09/01/gartner-forecasts-semiconductor-revenue-to-hit-us1-6-trillion-in-2026/)); WSTS, a year earlier, had forecast $772B and $975B ([source](https://www.wsts.org/76/103/Global-Semiconductor-Market-Approaches-1T-in-2026)), and SIA reported actual 2025 sales of $791.7B ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)). Take the spread between the measurers as the error bar on every total in this section. DRAM alone hit $154.73B in 2Q26, up 59.5 percent sequentially ([source](https://www.trendforce.com/presscenter/news/20260907-13219.html)). Wafer fab equipment was a record $116.9B in 2025, forecast $143.9B in 2026 ([source](https://www.semi.org/en/semi-press-release/global-semiconductor-equipment-sales-projected-to-reach-a-record-of-156-billion-dollars-in-2027-semi-reports)). Advanced packaging is $40B to $50B, reaching $79B to $90B by 2030 ([source](https://gr8ham.substack.com/p/cowos-chip-on-wafer-on-substrate)). Optical transceivers were $15.4B in 2025 and $17.6B in 2026, $34.4B by 2031 ([source](https://finance.yahoo.com/technology/articles/global-optical-transceiver-market-reach-103700630.html)). UBS projects total hyperscaler capex, a broader definition than the five largest cloud firms because it includes neoclouds, at $492B in 2025 rising to $1.009T in 2026 ([source](https://247wallst.com/investing/2026/08/22/ais-absurd-spending-boom-hyperscalers-are-spending-102-of-cloud-revenue-on-capex/)); on the narrower five-firm basis used in the Introduction the 2025 figure is $448.2B ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)). Dell'Oro expects data centre capex above $3T by 2030 ([source](https://finance.yahoo.com/technology/ai/articles/ai-buildout-maintains-momentum-data-120000543.html)).
 
 {{figure:market-2025}}
 
@@ -169,15 +169,17 @@ Three classes result.
 | Wafers and bulk gases | Already commoditised | Multi-supplier, long-qualified, thin spreads. |
 | Rack integration (ODM) | Already commoditised | Low-teens margins on specified content. |
 
+The classification is ours; the interposer yield and OSAT margin figures in it are the ones cited above ([source](https://siliconanalysts.com/analysis/cowos-packaging-cost-chiplet-vs-monolithic-2026)) ([source](https://stockanalysis.com/stocks/asx/financials/)).
+
 ## Key evaluation criteria
 
 - **Cost per good die, not per wafer.** A 30 percent wafer price rise at constant yield is survivable. A ten-point yield drop on an 800 mm2 die is not.
 - **HBM dollars per GB, and GB per part.** The largest and fastest-growing line, set by three firms.
 - **Packaging yield.** Failing after HBM attach throws away the most valuable parts.
 - **Share of the bill the vendor does not control.** Nvidia sets its own margin but buys HBM, CoWoS and substrates at another firm's price.
-- **Rack dollars per watt.** Past 250 kW per rack, power and cooling capex grows faster than accelerator capex.
+- **Rack dollars per watt.** Past 250 kW per rack, power and cooling capex grows faster than accelerator capex ([source](https://blog.barrack.ai/nvidia-rubin-specs-architecture-2026/)).
 - **Compressibility class.** Ask whether the line falls when volume doubles. If not, capacity is the constraint.
 
 ## Takeaways
 
-The silicon is the cheap part. On a B200 the logic dies are about 13 percent of manufacturing cost, HBM 48, packaging and substrate another 16, and every generation pushes further that way. Nvidia's 71 to 75 percent gross margin is the most visible number in the chain and the most contestable, because a custom ASIC buys the same wafers and the same HBM. What is not contestable sits underneath: HBM stacking yield, CoWoS interposer yield, and the megawatts. Those do not get cheaper when you order more, which is what makes them chokepoints.
+The silicon is the cheap part. On a B200 the logic dies are about 13 percent of manufacturing cost, HBM 48, packaging and substrate another 16, and every generation pushes further that way ([source](https://siliconanalysts.com/analysis/nvidia-b200-blackwell-cost-breakdown)). Nvidia's 71 to 75 percent gross margin is the most visible number in the chain and the most contestable ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027)), because a custom ASIC buys the same wafers and the same HBM. What is not contestable sits underneath: HBM stacking yield, CoWoS interposer yield, and the megawatts. Those do not get cheaper when you order more, which is what makes them chokepoints.
