@@ -746,3 +746,119 @@ images inside the filed 424B4; both JPEGs were pulled from the EDGAR archive
 (`g32785g29b29.jpg` for HBM, `g32785g29a29.jpg` for DRAM) and read directly. The three SemiAnalysis
 previews and the Nikkei pages were opened in a real browser; the Nikkei articles are paywalled past
 the lede and nothing was taken from them.
+
+---
+
+# Second search
+
+A second, deeper pass over four claims the first pass deleted for want of an allowed source. Same rule: Tier A plus the four Tier B exceptions. Two claims came back with allowed sources and better numbers, one came back partly, one did not come back at all.
+
+WebSearch worked this time and was used with `allowed_domains` filters; Reuters and FT are blocked to the search crawler and to WebFetch, so those were read in a real browser. Google News RSS was used for discovery only. Every number below was read in the source before it was written.
+
+## 1 · Chapter 02 — Broadcom and Marvell at ~95% of custom AI ASIC design
+
+**Not found. Chapter 02 is unchanged.**
+
+Searched: SemiAnalysis (`newsletter.semianalysis.com` and `semianalysis.com`) for custom-silicon and accelerator posts, including the free previews of the EDA Market Primer, the Accelerator Industry Model and the 2022 Marvell deep dive; Marvell's own investor material (`marvell.com/ai.html`, the Custom AI Investor Event page and its June 2025 slide deck, `investor.marvell.com`); Broadcom's investor releases and 8-K exhibits; SEC EDGAR full-text search for the phrases "custom AI accelerator market", "custom accelerator" + "market share" and "XPU market share" across 10-K, 20-F and 8-K (zero hits); CSET, ETO, IFP and CSIS; Reuters and FT via site search, and the Reuters pieces on the Marvell-Google warrant and Broadcom's earnings read in full in a browser.
+
+What exists and what does not:
+
+- **SemiAnalysis** names Broadcom ASIC Group and Marvell Custom Silicon as the two turnkey design houses and sizes Broadcom's EDA spend, but publishes no share of the custom accelerator market in any free preview.
+- **Marvell** publishes a TAM, not a share: $40.8bn of custom XPU TAM by 2028 and $94bn of data centre TAM, plus a count of 18 custom projects. No "our share is X%" claim in the deck or on the site. (`marvell.com` is behind Akamai and refuses this fetcher; the event page and its slide link were opened in a browser.)
+- **Broadcom** discloses AI semiconductor revenue, a backlog and named customers, never a share of the custom market.
+- **Reuters** frames the pair qualitatively — "larger rival Broadcom, which had been Google's main custom chip partner so far", "sets Marvell up to challenge larger rival Broadcom" — and gives no percentage. That supports the duopoly shape the chapter already argues from named deals, and adds no number.
+- **ETO's** `provision.csv` has an "AI ASICs" node, but its rows are from 2019 and carry no share values at all.
+
+The ~95% traces only to sell-side notes relayed by trade press. Nothing allowed carries it. The chapter keeps making the same argument through the OpenAI-Broadcom and Meta-Broadcom announcements, which the parties made themselves.
+
+## 2 · Chapter 05 — EUV tool prices
+
+**Found and restored, with Reuters' own numbers rather than the deleted ones.**
+
+Searched: ASML's 2025 annual report financial-performance section and the full 20-F on EDGAR for "average selling price", "selling price", "ASP" and "units sold" — ASML discloses unit counts and net system sales but **no per-system price anywhere**, which confirms the first pass's note; CRS R47558 *Semiconductors and the CHIPS Act: The Global Context* (mentions ASML's EUV monopoly, no price); the White House 100-day supply-chain review (whitehouse.gov no longer serves the 2021 PDF); CSET's supply-chain brief; ETO's `inputs.csv`, whose EUV node says a single EUV scanner "costs well over $150 million"; and Reuters via Google News RSS, then read in a browser.
+
+The source is Reuters' own explainer, **"Explainer: The $400 million ASML 'printers' key for the AI chip boom"**, by Toby Sterling and Nathan Vifflin, 28 January 2026, updated 28 July 2026, at `reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/` (the slug is the January version's; the July update carries the higher headline number). Reuters reports, in its own voice and attributed to no analyst house:
+
+- DUV tools "costing roughly $60 million each", with ASML at "a market share above 80%" in DUV, ahead of Nikon and Canon;
+- "Standard EUV tools cost around $200 million";
+- High NA tools, "[o]nly a handful have so far been made, with a price tag estimated at $350 million to $400 million each".
+
+Changed in `content/05-lithography.md`:
+
+| Where | Change |
+| --- | --- |
+| `oneLiner` | now ends "…it shipped 48 of them in 2025, and each one costs around $200 million" |
+| `card.costSignal` | "48 EUV systems inside EUR 32.7bn of 2025 net sales; ASML does not publish per-system prices" → "About $200M for a 0.33 NA EUV scanner, $350-400M for High-NA and about $60M for a DUV tool, on Reuters' reporting; ASML itself does not publish per-system prices". The nameplate now leads on "About $200M" instead of "48" |
+| `card.leaders` ASML | "100% of EUV" → "100% of EUV and above 80% of DUV" |
+| `keyFacts` | one added, carrying all three prices and the DUV share |
+| `figures` | new `tool-price` bars: DUV scanner 60, EUV 0.33 NA 200, High-NA EUV 350 ($M). The title says High-NA is a $350-400M range and the bar shows the low end, so no midpoint is invented |
+| Body, "Deep ultraviolet" | adds the $60M price and ASML's above-80% DUV share |
+| Body, "High-NA EUV" | adds the $200M and $350-400M prices, prefaced by the fact that ASML publishes no prices itself; `{{figure:tool-price}}` placed after that paragraph |
+| Body, "Takeaways" | the 48 systems and four High-NA now carry their prices |
+
+The deleted claim was "about $250M Low-NA, $350-400M High-NA". The High-NA range is restored exactly. The Low-NA number is **not** restored at $250M: Reuters says around $200 million, and the source's own number is what the chapter now carries. The `plain` paragraph is untouched.
+
+## 3 · Chapter 06 — the $259M EUV mask blank market and AGC + Hoya at 93.7%
+
+**Neither number found. Both stay deleted.** A related allowed number was found and added: the supplier count.
+
+Searched: METI's semiconductor strategy materials — the 2021 半導体戦略（概略）and the 2022 and 2024 English strategy PDFs are dead links on `meti.go.jp`; the surviving May 2024 半導体・デジタル産業戦略 deck (185 pages) lists マスクブランクス as a supply-chain item and gives **no share or market size for it**; CSET's 2021 supply-chain brief, which sizes all photomasks at $4bn and names Hoya among mask producers but has no mask-blank line; ETO's `inputs.csv` and `provision.csv`, which have a Photomasks node (2019, country shares only) and **no mask-blank node at all**; Hoya's integrated reports 2022-2025 (qualitative only: "exceptionally high share", no percentage); AGC's Data Book, Company Overview and 2020 Electronic Materials business briefing; the White House 2021 review; Nikkei Asia, Reuters and FT via site search; SemiAnalysis, which has never published on mask blanks.
+
+Two allowed AGC claims were found and added, because they measure the same thing the deleted 93.7% measured — how few firms supply EUV blanks:
+
+- **`agc.com/en/hub/pr/the-japanese-glass-behind-next-generation-chips.html`** (13 December 2024, AGC's own site, quoting Nobuyuki Suzuki, president of AGC's Electronics Company): "AGC is one of three companies worldwide that supply photomask blanks for EUV lithography" and "AGC is the only supplier in the world that takes care of all essential materials and processes required to fabricate the EUV mask blank."
+- **`agc.com/en/ir/library/outline/pdf/reference.pdf`** (AGC Data Book, March 2026, "Products with Top Market Share", as of January 2026): EUV lithography photomask blanks listed as **No.1 Worldwide**, footnoted "Based on fiscal 2026 estimates by AGC".
+
+Changed in `content/06-photomasks-and-pellicles.md`: the AGC `leaders` string; two new `keyFacts`; two sentences in "Blanks"; "Two firms supply the blanks" → "Three firms supply EUV blanks worldwide on AGC's own count, two of them Japanese" in The chokepoint and Takeaways. The `oneLiner`, the `plain` paragraph and the `mask-set-cost` figure are untouched, and the deleted `blank-share` figure is **not** restored — there is nothing to rebuild it from.
+
+Note the tension the chapter now carries on purpose: AGC ranks itself No.1 worldwide, Hoya says its own share is exceptionally high. Both are self-reported and cannot both be measured against the other. The chapter says so.
+
+## 4 · Chapter 08 — KLA's share of process control
+
+**Found twice, from two independent allowed sources, and restored at 2024 rather than the deleted 64.1%.**
+
+Searched: KLA's investor relations site, the Investor Day 2026 page and every deck linked from it, the Q3 and Q4 FY2026 shareholder letters, and KLA's 10-K; Applied Materials, Onto, Nova, Hitachi High-Tech and Camtek investor materials; CSET and ETO; SemiAnalysis.
+
+**KLA's own investor day.** The master deck from KLA's Investor Day of 12 March 2026, linked from `ir.kla.com/news-events/investor-day-2026`, carries the slide "KLA Continues to Decisively Lead the Industry — Process Control Market Share": **56.5%, KLA Share in 2024, up 2% from 2021, 6.5x nearest competitor**, with gains in optical, e-beam, advanced packaging and reticle inspection. The same 56.5% appears on the "Systems Market-Leading Performance" summary slide alongside CY25 semi PC revenue of $9.0bn and process control intensity of 7.4%. URL: `d1io3yog0oux5.cloudfront.net/_7791115a123b86b3f10b1a5eb5210224/klatencor/db/1166/10653/file/2026+Investor+Day+Master+Final_IR+copy.pdf`. **Disclosure: KLA footnotes the slide "Source: Gartner April 2025."** It is cited here as the company's own claim in its own investor material, on the same basis the brief allows a share claim in a company deck, and the chapter attributes it to KLA rather than stating it flatly.
+
+**CSET's ETO Supply Chain Explorer.** The Explorer's process control tools node gives a **$13.4 billion market in 2024** and company shares of **KLA 57.2%**, Applied Materials 10.5, Lasertec 7.7, Hitachi 5.6, ASML 5.2, Nova 3.7, Onto Innovation 3.0, Camtek 1.5, Rigaku 1.2, other 4.4; country shares of USA 72.0, JPN 15.1, ISR 5.2, NLD 5.2, **CHN 0.8**. Sub-segments, all 2024: defect inspection $5.9bn (KLA 84.6%), film/stack/shape metrology $2.3bn (KLA 47.0, Nova 20.6, Onto 13.6), photomask inspection and repair $2.1bn (Lasertec 45.6, KLA 40.7, Zeiss 11.0), overlay metrology $906.6M (KLA 54.2, ASML 45.1), CD metrology $869.9M (Hitachi 69.0, Applied 30.1), e-beam metrology $769.5M (Applied 49.5, ASML 37.6, KLA 11.9), defect review $618.1M (Applied 71.9, KLA 24.2). URL: `chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60`. **Disclosure: ETO's source line reads "CSET analysis of TechInsights data (2024)."** It is CSET's own published dataset, which the brief names explicitly as allowed. The values above were taken from the version of `data/provision.csv` and `data/inputs.csv` in the `georgetown-cset/eto-supply-chain` repository that matches what the live Explorer serves — confirmed by the market size it prints, $13.4 billion (2024). The repository's August 2026 update carries a 2025 vintage (process control $15.7bn, KLA 56.8%) that the live site does not yet show; **2024 was used throughout** so that every number is visible at the cited link, and because it lines up with KLA's own 2024 figure.
+
+Two independent counts of the same year, 56.5% and 57.2%, agree within seven tenths of a point. That is a stronger footing than the deleted 64.1% ever had.
+
+Changed in `content/08-metrology-and-inspection.md`:
+
+| Where | Change |
+| --- | --- |
+| `oneLiner` | "holds about seven times the share of its nearest rival" → "holds about 57% of the market, roughly seven times its nearest rival" |
+| `card.leaders` | KLA now "56.5% of process control in 2024 on its own investor-day count, 6.5x its nearest rival"; Applied 10.5%, ASML 5.2%, Nova 3.7%, Onto 3.0% added; **Lasertec added** as a sixth leader at 7.7%, since it is the third-largest supplier and outranks three firms already listed |
+| `card.countries` CN | "3.4% of CD measuring … as of 2019" → "0.8% of the process control tool market in 2024" |
+| `card.chinaStatus` | adds the 2024 figure of 0.8% |
+| `card.usStatus` | adds 56.5% / 57.2% and the US and Japanese country shares |
+| `card.costSignal` | now leads on "$13.4B" — the market, not KLA's revenue |
+| `card.substitution.why` | "nobody has published a gain since" → "it was still at 0.8% in 2024", which is now a published number |
+| `keyFacts` | two added, one per source |
+| `figures` | **`pc-share` restored** as a stack, "Process control tool revenue share, 2024", from the Explorer's ten company values. This is the figure the first pass removed; it is rebuilt from an allowed source with a different, better-founded set of numbers. **`pc-segments` upgraded** from CSET's 2019 four-family split to the Explorer's 2024 seven-family split in $M |
+| Body, lead | now gives 56.5% and 57.2% and names both counts |
+| Body, "Variants and trade-offs" | five 2019 bullets rewritten as six 2024 bullets on ETO's own tool families, each with its market size and its leader's share. The ASML eScan 1100 citation is kept inside the defect-inspection bullet |
+| Body, "Who makes it" | KLA's share added; "None of them publishes a segment share" — no longer true — replaced by "Nobody else reaches 11 percent"; every rival now carries its share; `{{figure:pc-share}}` placed after the KLA paragraph |
+| Body, China paragraph | adds the 0.8% for 2024 and drops the "absence of evidence" hedge, which the new number makes unnecessary |
+| Body, Takeaways | "roughly seven times the share of its nearest rival" → "about 57 percent of the market, six to seven times its nearest rival" |
+
+The `plain` paragraph and the first paragraph under "How it works" are byte-identical and untouched; both still say "about seven times as many", which the Q3 FY2026 shareholder letter supports.
+
+## Domains added to data/source-tiers.json
+
+**None.** Every host cited in this pass already resolves: `reuters.com` under B, and `d1io3yog0oux5.cloudfront.net` (KLA's IR CDN), `chipexplorer.eto.tech`, `agc.com`, `hoya.com`, `asml.com`, `ourbrand.asml.com`, `cset.georgetown.edu`, `sec.gov` and `data.sec.gov` under A.
+
+## Build
+
+`node build/build.js` after the edits: no warnings, `A 322 · B 22 · C 0 · D 0 · unclassified 0`.
+
+- 02 design-and-eda: 1,162 words, 16 sources, D 0, 3 figures — unchanged from before this pass
+- 05 lithography: 1,446 words, 25 sources, D 0, 4 figures
+- 06 photomasks-and-pellicles: 1,237 words, 16 sources, D 0, 1 figure
+- 08 metrology-and-inspection: 1,339 words, 15 sources, D 0, 3 figures
+
+## Sources that could not be opened
+
+`marvell.com` and `investor.marvell.com` return 403 to this fetcher (Akamai) at every URL including plain HTML; the Custom AI Investor Event page was read in a browser and its slide deck could not be downloaded by any route, so nothing is cited from it. `ft.com` is paywalled in the browser as well as blocked to the fetcher; no FT article was relied on. Three METI PDFs that search returned are 404 on `meti.go.jp`. The White House 2021 supply-chain review PDF no longer resolves. Reuters was read in a browser and the one article cited was read in full.

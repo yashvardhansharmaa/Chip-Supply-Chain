@@ -324,22 +324,33 @@ PC.register('globe', function (p) {
     ['Austin', 30.27, -97.74, 4],        // 02 design and EDA
     ['Boise', 43.62, -116.20, 5]         // 11 memory
   ];
+  // The towns where substitutes are being built, drawn in ink rather than copper: China's
+  // foundry, memory and tool clusters (chapter 18) and Europe's fab cluster at Dresden.
+  var SUBS = [
+    ['Beijing', 39.90, 116.40],   // Naura, SMIC Beijing
+    ['Wuhan', 30.59, 114.31],     // YMTC
+    ['Shenzhen', 22.54, 114.06],  // Huawei, SMIC Shenzhen
+    ['Hefei', 31.82, 117.23],     // CXMT
+    ['Dresden', 51.05, 13.74]     // ESMC, GlobalFoundries, Infineon
+  ];
 
-  var pins = [];
-  SITES.forEach(function (s) {
-    var lat = s[1], lon = s[2], h = 0.032 * s[3];
+  function pin(lat, lon, h, out) {
     var a = ll(lat, lon, RS), b = ll(lat, lon, RS + h);
-    pins.push(PC.line({ a: a, b: b, perUnit: 1700 }));
-    pins.push(PC.T(PC.sphere({ r: 0.012, n: 90 }), { pos: b }));
+    out.push(PC.line({ a: a, b: b, perUnit: 1700 }));
+    out.push(PC.T(PC.sphere({ r: 0.012, n: 90 }), { pos: b }));
     // a ring on the ground, laid flat on the sphere at that point
-    pins.push(PC.T(PC.T(PC.circle({ r: 0.022, perUnit: 1300 }), { pos: [0, RS + 0.004, 0] }), { rot: [Math.PI / 2 - lat * RAD, lon * RAD, 0] }));
-  });
+    out.push(PC.T(PC.T(PC.circle({ r: 0.022, perUnit: 1300 }), { pos: [0, RS + 0.004, 0] }), { rot: [Math.PI / 2 - lat * RAD, lon * RAD, 0] }));
+  }
+  var pins = [], inkPins = [];
+  SITES.forEach(function (s) { pin(s[1], s[2], 0.032 * s[3], pins); });
+  SUBS.forEach(function (s) { pin(s[1], s[2], 0.032 * 2, inkPins); });
   parts.push(PC.accent(PC.merge.apply(null, pins), 1));
+  parts.push(PC.tone(PC.merge.apply(null, inkPins), 0.95));
 
   return {
     cloud: PC.merge.apply(null, parts),
     spin: 0.06,
     tilt: [-0.30, -1.75, 0],
-    caption: 'The world with nineteen chokepoint towns pinned in copper, the pins standing in proportion to how narrow each town’s link in the chain is. The first view looks down on the Malacca Strait: Hsinchu, Tainan and Kaohsiung on Taiwan, Icheon and Pyeongtaek in Korea, Kumamoto, Yokkaichi and Tokyo in Japan, Shanghai, Penang, Singapore, Bengaluru and Abu Dhabi. Veldhoven, Oberkochen and the four American sites come round as it turns.'
+    caption: 'The world with nineteen chokepoint towns pinned in copper, the pins standing in proportion to how narrow each town’s link in the chain is, and five towns building substitutes pinned in ink: Beijing, Wuhan, Shenzhen, Hefei and Dresden. The first view looks down on the Malacca Strait: Hsinchu, Tainan and Kaohsiung on Taiwan, Icheon and Pyeongtaek in Korea, Kumamoto, Yokkaichi and Tokyo in Japan, Shanghai, Penang, Singapore, Bengaluru and Abu Dhabi. Veldhoven, Oberkochen and the four American sites come round as it turns.'
   };
 });

@@ -70,13 +70,13 @@
 ---
 # Test and Assembly
 
-Semiconductor manufacturing runs to 400 to 600 steps, and Advantest counts test as the only one that handles electricity ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf)). Everything before this chapter makes dies. The back end decides which of them are allowed into a package.
+Semiconductor manufacturing runs to 400 to 600 steps, and Advantest counts test as the only one that handles electricity ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf)). Everything before this chapter makes dies; the back end decides which of them are allowed into a package.
 
 ## How it works
 
 Before a chip can be sold, a machine has to interrogate it and check every answer. Needles finer than a hair land on pads on the wafer and drive test patterns into each chip; the ones that answer wrong are marked and never leave. It matters more each year because of arithmetic: a modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them. So the industry tests earlier, hotter and longer than it used to, and two companies sell most of the machines that do it.
 
-Test happens at least three times and increasingly four.
+Each round of test catches failures the round before it cannot.
 
 - **Wafer sort.** Thousands of needles land on the pads of each die while a tester drives patterns in and checks the answers; failures never leave the wafer.
 - **Burn-in.** Run the part hot and at voltage for hours to force early failures out before assembly.
@@ -103,9 +103,9 @@ Advantest puts its own share at about 65% of a US$9.0 billion tester market in 2
 
 {{figure:tester-market}}
 
-The rest of the floor is more fragmented.
+Below the two testers, each segment has its own leader.
 
-- **Probe cards.** A three-way race with a long tail: FormFactor took US$785.0 million in fiscal 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0001039399/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json)); Technoprobe grew 15.7% to EUR 628.4 million, 38% of it from AI, and plans to double capacity by the end of 2027 ([source](https://technoprobe.com/wp-content/uploads/2026/03/PR-FY-2025_.pdf)).
+- **Probe cards.** FormFactor took US$785.0 million in fiscal 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0001039399/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json)); Technoprobe grew 15.7% to EUR 628.4 million, 38% of it from AI, and plans to double capacity by the end of 2027 ([source](https://technoprobe.com/wp-content/uploads/2026/03/PR-FY-2025_.pdf)).
 - **Handlers and burn-in.** Cohu took US$453.0 million in fiscal 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0000021535/us-gaap/RevenueFromContractWithCustomerIncludingAssessedTax.json)); Aehr did US$50.0 million in fiscal 2026 but booked a record US$60.7 million in the fourth quarter alone and guides to US$130 million to US$150 million in fiscal 2027 ([source](https://www.aehr.com/2026/07/aehr-test-systems-reports-fiscal-2026-fourth-quarter-and-full-year-financial-results-with-record-quarterly-bookings-and-100-million-effective-backlog/)).
 - **Dicing and grinding.** Disco leads in wafer grinders and dicing saws ([source](https://newsletter.semianalysis.com/p/disco-corporation-the-world-leader)), and its newest package saw handles workpieces up to 400 by 400 mm for panel-level work ([source](https://www.disco.co.jp/eg/news/corp/20251215_1.html)).
 - **Bonding.** Kulicke and Soffa did US$654.1 million in fiscal 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0000056978/us-gaap/Revenues.json)), while Besi's second-quarter 2026 revenue rose 68.7% to EUR 249.9 million on hybrid bonding and datacentre demand ([source](https://www.besi.com/investor-relations/press-releases/2025/details-1/be-semiconductor-industries-nv-announces-q2-26-and-h1-26-results/)).
@@ -126,7 +126,7 @@ Amkor took US$6.71 billion of revenue in 2025 ([source](https://data.sec.gov/api
 
 Unlike lithography, no tool here has a single supplier. What holds a customer is the cost of leaving: Advantest argues that switching tester vendor means rebuilding a customer's entire device development, evaluation and production test environment, which is why share moves slowly ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf)).
 
-The back end is also the part of the chain China is closest to owning, and assembly, dicing, bonding and test tools sit outside the export control lines drawn around lithography and deposition. ASE and Amkor billed US$27.3 billion between them in 2025, against industry sales of US$791.7 billion ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)). That is a small share of the money for a step every chip has to pass through.
+The back end is also the part of the chain China is closest to owning, and assembly, dicing, bonding and test tools sit outside the export control lines drawn around lithography and deposition. ASE and Amkor billed US$27.3 billion between them in 2025, against industry sales of US$791.7 billion ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)), a small share of the money for a step every chip has to pass through.
 
 ## Key evaluation criteria
 
@@ -138,4 +138,4 @@ The back end is also the part of the chain China is closest to owning, and assem
 
 ## Takeaways
 
-Test used to be the cheap step at the end. With a dozen expensive dies in one package, it now insures everything upstream: the SoC tester market grew about 68% in 2025 ([source](https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf)) and burn-in has started migrating back onto the wafer ([source](https://www.aehr.com/2026/07/aehr-test-systems-reports-fiscal-2026-fourth-quarter-and-full-year-financial-results-with-record-quarterly-bookings-and-100-million-effective-backlog/)). Advantest has turned a duopoly into a two-thirds share. The back end is also the one segment where Chinese firms are genuinely competitive, so export policy has less grip here than anywhere else in the chain.
+Test used to be the cheap step at the end. With a dozen expensive dies in one package, it now insures everything upstream: the SoC tester market grew about 68% in 2025 ([source](https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf)) and burn-in has started migrating back onto the wafer ([source](https://www.aehr.com/2026/07/aehr-test-systems-reports-fiscal-2026-fourth-quarter-and-full-year-financial-results-with-record-quarterly-bookings-and-100-million-effective-backlog/)). Advantest has turned a duopoly into a two-thirds share of the machines, while the assembly floor beneath it stays fragmented and, in four of the top ten OSATs, Chinese ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)).

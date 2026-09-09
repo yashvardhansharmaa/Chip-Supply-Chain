@@ -77,7 +77,7 @@ If lithography is the printing, this is the building. A chip is built like a lay
 
 CSET puts a single chip at more than 1,000 process steps, with the part-finished product crossing international borders 70 or more times ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 
-Most of those steps happen in a vacuum chamber: a radio-frequency field strips electrons off a process gas, and the ions and radicals do the chemistry. Change the gas, pressure, power and temperature and the same hardware adds material or removes it. That is why export controls here are written as process specifications, not as bans on machines.
+Most of those steps happen in a vacuum chamber: a radio-frequency field strips electrons off a process gas, and the ions and radicals do the chemistry. Change the gas, pressure, power and temperature and the same hardware adds material or removes it. That is why the export controls here name process specifications rather than machines.
 
 ## Variants and trade-offs
 
@@ -94,7 +94,7 @@ Most of those steps happen in a vacuum chamber: a radio-frequency field strips e
 - **Dielectric etch** cuts the oxides and nitrides between them, $4.3 billion in 2019, led by Tokyo Electron ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 - **High-aspect-ratio etch** decides whether memory works at all: a 3D NAND channel or DRAM capacitor is a hole far deeper than it is wide that has to come out straight. Lam chills the wafer to sharpen the profile, and says Cryo 3.0 holds critical-dimension deviation under 0.1 percent down channels 10 microns deep ([source](https://newsroom.lamresearch.com/2024-07-31-Lam-Research-Introduces-Lam-Cryo-TM-3-0-Cryogenic-Etch-Technology-to-Accelerate-Scaling-of-3D-NAND-for-the-AI-Era)).
 
-AI raises the difficulty in three specific places.
+AI hardware asks for sideways cuts, deeper holes and a second metal stack on the wafer's back.
 
 - **Gate-all-around** needs isotropic etch, which cuts sideways, to release the silicon nanosheets from the silicon-germanium between them, and BIS ties its dry etch controls to exactly that ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)).
 - **HBM** needs deep through-silicon vias, which BIS defines as etch at 10:1 or greater above 7 microns per minute ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
@@ -123,7 +123,7 @@ China is the largest customer and the fastest-improving competitor. It bought $4
 
 Between 2019 and 2024 China-based suppliers went from 2 to 7 percent of deposition and from under 3 to about 9 percent of etch and clean, 11 percent in dry etch alone. In ALD they gained nothing and stayed under 1 percent ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). AMEC, the biggest of them, turned over RMB 12.385 billion in 2025, up 36.6 percent, and spent RMB 3.744 billion on research, 30.2 percent of sales ([source](https://www.amec-inc.com/news/708.html)).
 
-The controls tightened in four moves.
+The controls tightened in stages.
 
 - **October 2022.** The 7 October interim final rule put manufacturing equipment and US person support under licence and widened foreign-produced item rules for 28 listed Chinese entities ([source](https://www.govinfo.gov/content/pkg/FR-2022-10-13/pdf/2022-21658.pdf)).
 - **October 2023.** The rule effective 17 November rewrote the equipment entries, adding isotropic and anisotropic dry etch (ECCN 3B001.c.1), spatial ALD (3B001.d.9), low-fluorine tungsten ALD and CVD (3B001.d.10) and carbon hard mask PECVD (3B001.d.5) ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)).
@@ -148,4 +148,4 @@ This is a real chokepoint but a softer one than lithography. Three or four credi
 
 ## Takeaways
 
-Deposition and etch are the volume business of a fab: over a thousand steps per wafer, four American, Japanese and Dutch firms taking most of the money, and no monopoly like ASML's in lithography. The AI roadmap raises difficulty faster than tool count, because gate-all-around, HBM and backside power want better selectivity and deeper holes, not more chambers. China has closed the gap fastest here and slowest in ALD, the tool the next two logic nodes depend on.
+Deposition and etch are the volume business of a fab: over a thousand steps per wafer, four American, Japanese and Dutch firms taking most of the money, and no monopoly like ASML's in lithography. The AI roadmap raises difficulty faster than tool count, because gate-all-around, HBM and backside power need better selectivity and deeper holes rather than more chambers. China has closed the gap fastest here and slowest in ALD, the tool the next two logic nodes depend on.

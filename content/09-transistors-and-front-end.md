@@ -73,7 +73,7 @@ A Blackwell GPU is 208 billion switches on two reticle-limited dies ([source](ht
 
 A transistor is a valve on a pipe. Current runs along a silicon channel, and a voltage on the gate above it opens or shuts the flow. Make the channel short enough and the valve stops sealing: current leaks through even when the gate says off, so a chip burns power doing nothing. The fix is to wrap the gate around all four sides of the channel, which takes about a thousand process steps in exact order. Three companies can run that sequence, which is why a regulator can name them.
 
-That leak is short-channel leakage. It has three fixes:
+That leak is short-channel leakage, and it has three fixes:
 
 - **Better insulator.** Physically thicker, so it leaks less, yet electrically as thin as the oxide it replaced: Intel's hafnium high-k dielectric at 45 nm in 2007 ([source](https://www.intel.com/pressroom/archive/releases/2007/20070128comp.htm)).
 - **More gate.** Wrap gate metal around more sides of the channel, as fins and nanosheets do.
@@ -91,7 +91,7 @@ A nanosheet lays the channel back down, stacks two to four thin sheets and threa
 
 N2 entered volume production in the fourth quarter of 2025, TSMC's first nanosheet node ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm)). TSMC rates the follow-on N2P at 18 percent more speed at the same power, 36 percent less power at the same speed, and 1.2 times the logic density of N3E ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech)). Intel's RibbonFET shipped on 18A, and 18A-P adds another 9 percent performance at the same power ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)).
 
-Read those numbers as marketing until someone measures the silicon. Each foundry picks its own baseline, and none publishes a density figure you can set against a rival's.
+Those numbers are vendor claims until someone measures the silicon. Each foundry picks its own baseline, and none publishes a density figure you can set against a rival's.
 
 {{figure:density-by-node}}
 
@@ -109,7 +109,7 @@ imec expects complementary FETs to stack the n-type and p-type devices, which si
 
 ## The back end of line
 
-Wiring is now as hard as the transistor. Copper needs a barrier, a liner and a cap to stop it diffusing into the dielectric, and those layers eat a large share of the line once the critical metal pitches fall below 20 nm ([source](https://www.imec-int.com/en/articles/semi-damascene-metallization-inflection-point-back-end-line-processing)). Two metals are taking the narrow levels:
+Wiring is now as hard as the transistor. Copper needs a barrier, a liner and a cap to stop it diffusing into the dielectric, and those layers eat a large share of the line once the critical metal pitches fall below 20 nm ([source](https://www.imec-int.com/en/articles/semi-damascene-metallization-inflection-point-back-end-line-processing)). Two metals are moving into the narrow levels.
 
 - **Ruthenium** runs without a barrier, which is why imec builds its semi-damascene scheme around it and has demonstrated ruthenium lines at a 16 nm pitch ([source](https://www.imec-int.com/en/press/imec-demonstrates-16nm-pitch-ru-lines-record-low-resistance-obtained-using-semi-damascene)).
 - **Molybdenum** conducts worse in bulk, 5.3 against copper's 1.68 microhm-cm, but in thin films beats tungsten by up to 30 percent with no barrier, moving it into contacts ([source](https://blog.entegris.com/molybdenums-role-in-ultra-fast-computing-the-metal-behind-the-speed)).
@@ -118,17 +118,17 @@ Wiring is now as hard as the transistor. Copper needs a barrier, a liner and a c
 
 Three companies build gate-all-around nodes with EUV: TSMC, Intel and Samsung. SMIC builds 7 and 5 nm-class nodes without it. State-backed Rapidus targets 2 nm mass production in 2027 on 267.6 billion yen raised in February 2026 ([source](https://www.rapidus.inc/en/news_topics/information/rapidus-secures-267-6-billion-yen-in-funding-from-japan-government-and-private-sector-companies/)).
 
-Node names mean nothing physical. SMIC's N+3, sold as 5 nm-class, has a 32.5 nm minimum metal pitch, tighter than Intel 18A's 36 nm, and yields 113.4 MTr/mm2 against 107.7 for TSMC's N6 ([source](https://newsletter.semianalysis.com/p/steel-smic-n3-teardown)).
+Node names describe nothing physical: SMIC's N+3, sold as 5 nm-class, has a 32.5 nm minimum metal pitch, tighter than Intel 18A's 36 nm, and yields 113.4 MTr/mm2 against 107.7 for TSMC's N6 ([source](https://newsletter.semianalysis.com/p/steel-smic-n3-teardown)).
 
 AI accelerators sit a node behind: a reticle-limited die needs a mature process to yield. Blackwell uses a custom TSMC 4NP ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)).
 
-SRAM is the scaling failure that hurts AI chips most. TSMC claims 22 percent more SRAM density from N3E to N2, but the gain comes from the periphery, not the bit cell ([source](https://newsletter.semianalysis.com/p/clash-of-the-foundries)). Logic shrank; cache did not, which is much of why accelerators push memory off-die. See Memory and HBM.
+SRAM is the scaling failure that hurts AI chips most. TSMC claims 22 percent more SRAM density from N3E to N2, but the gain comes from the periphery, not the bit cell ([source](https://newsletter.semianalysis.com/p/clash-of-the-foundries)), which is much of why accelerators push memory off-die. See Memory and HBM.
 
 ## The chokepoint
 
 No single machine makes the front end a chokepoint. The scarce thing is the recipe: which steps, in which order, on which tools.
 
-China shows what that recipe costs. It has the money. The third National Integrated Circuit Fund raised 344 billion yuan, about $47 billion, in May 2024 ([source](https://asia.nikkei.com/spotlight/supply-chain/china-launches-47bn-chip-fund-to-counter-u.s.-restrictions)). What it lacks is tools. A Shanghai state firm began building domestic immersion scanners in 2026, at single-digit annual volumes ([source](https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/)), enough to keep SMIC's DUV multipatterning lines running and nowhere near enough to replace ASML. EUV is further off again: China has announced $43 billion for domestic development, and CSIS still reads working systems as out of reach ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).
+China shows what that recipe costs. It has the money: the third National Integrated Circuit Fund raised 344 billion yuan, about $47 billion, in May 2024 ([source](https://asia.nikkei.com/spotlight/supply-chain/china-launches-47bn-chip-fund-to-counter-u.s.-restrictions)). The tools are the problem. A Shanghai state firm began building domestic immersion scanners in 2026, at single-digit annual volumes ([source](https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/)), enough to keep SMIC's DUV multipatterning lines running and nowhere near enough to replace ASML. EUV is further off again: China has announced $43 billion for domestic development, and CSIS still reads working systems as out of reach ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).
 
 See Lithography and Geopolitics.
 
@@ -139,8 +139,8 @@ See Lithography and Geopolitics.
 - **Interconnect resistance** — below a 20 nm metal pitch the wire, not the transistor, sets the delay ([source](https://www.imec-int.com/en/articles/semi-damascene-metallization-inflection-point-back-end-line-processing)).
 - **Power delivery** — IR drop across the die. Backside power buys back area and cuts droop tenfold ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)).
 - **SRAM scaling** — the bit cell has stopped shrinking, which sets how much cache an accelerator can afford.
-- **Cost per transistor** — no foundry publishes wafer prices, so read the shrinking density gain per node as the proxy. We think this is the first era where cost per transistor rises.
+- **Cost per transistor** — no foundry publishes wafer prices, so the shrinking density gain per node is the proxy. We think this is the first era where cost per transistor rises.
 
 ## Takeaways
 
-Every gain since the FinFET era has been bought with process steps and new materials, not geometry. TSMC's own numbers show the density gain per node step falling from 1.2 times at N2P to about 1.1 at A16 ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech)). Three companies can run a 2 nm-class flow, and only TSMC runs it at scale for merchant customers. SRAM has stopped shrinking, which is why accelerators keep their memory off the logic die. China can reach 5 nm-class geometry without EUV, and CSIS still reads working EUV systems as out of reach, which is the gap the export controls defend ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).
+Every gain since the FinFET era has been bought with process steps and new materials rather than geometry. TSMC's own numbers show the density gain per node step falling from 1.2 times at N2P to about 1.1 at A16 ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech)). Three companies can run a 2 nm-class flow, and only TSMC runs it at scale for merchant customers. SRAM has stopped shrinking, which is why accelerators keep their memory off the logic die. China can reach 5 nm-class geometry without EUV, and CSIS still reads working EUV systems as out of reach, which is the gap the export controls defend ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).
