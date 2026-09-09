@@ -124,7 +124,7 @@ Design services are tighter still. Broadcom and Marvell hold roughly 95% of cust
 | Maia 200 | Microsoft | Marvell | TSMC 3 nm |
 | Custom accelerator | OpenAI | Broadcom | 3 nm and 2 nm |
 
-Design partners per Tom's Hardware, May 2026 ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)).
+Per Tom's Hardware, May 2026 ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)).
 
 ## The chokepoint
 

@@ -14,7 +14,7 @@
       {"name": "GE Vernova", "country": "US", "share": "~100 GW of gas turbines under contract; slots effectively sold out to 2030"},
       {"name": "Hitachi Energy", "country": "CH", "share": "Large power transformers and HV switchgear"},
       {"name": "Siemens Energy", "country": "DE", "share": "Grid technologies, transformers, turbines"},
-      {"name": "Vertiv", "country": "US", "share": "11.3% of data center liquid cooling (2025)"},
+      {"name": "Vertiv", "country": "US", "share": "Leads the data center liquid cooling market (2025)"},
       {"name": "Schneider Electric", "country": "FR", "share": "Top-5 liquid cooling and electrical distribution"}
     ],
     "countries": [
@@ -26,18 +26,19 @@
     ],
     "chinaStatus": "Power is not China's binding constraint. It has surplus generation, a large domestic transformer and switchgear industry, and can energise sites quickly. Its AI buildout is limited by accelerator supply, not megawatts.",
     "usStatus": "Holds the demand and the capital but not the equipment lead times. Transformers, switchgear and turbines are all multi-year queues, and no new nuclear capacity is online yet.",
-    "costSignal": "$8-14M per critical IT MW air-cooled, $17-25M per MW liquid-cooled (2026)",
+    "costSignal": "About $11.3M per MW of shell and core in 2026, plus up to $25M per MW for an AI fit-out",
     "substitution": {"years": "4-6", "why": "Large power transformers run 75 to 110 weeks, gas turbine slots are booked through 2030, and the first restarted reactor is not due until 2027."}
   },
   "keyFacts": [
     {"fact": "A GB300 NVL72 rack draws up to 142 kW, fed by eight 33 kW power shelves", "source": "https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html"},
+    {"fact": "Rack power runs about 150 kW for GB300, about 225 kW for Vera Rubin VR200 and about 660 kW for Rubin Ultra in 2H27", "source": "https://www.trendforce.com/presscenter/news/20260625-13121.html"},
     {"fact": "Nvidia's Kyber rack will hold 576 Rubin Ultra GPUs in 2027 on an 800 VDC bus that carries over 150% more power through the same copper", "source": "https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin"},
     {"fact": "US data centers used 176 TWh in 2023, 4.4% of US electricity, and are projected at 325 to 580 TWh by 2028, or 6.7% to 12%", "source": "https://newscenter.lbl.gov/2025/01/15/berkeley-lab-report-evaluates-increase-in-electricity-demand-from-data-centers/"},
     {"fact": "The five largest US AI infrastructure spenders plan $660-690B of capex in 2026", "source": "https://futurumgroup.com/insights/ai-capex-2026-the-690b-infrastructure-sprint/"},
     {"fact": "ERCOT had more than 438 GW of proposed large loads in June 2026, about 89% of it data centers, against 5.9 GW actually energised", "source": "https://datacenterfrontier.com/energy/article/55401760/ercot-puts-texas-ai-megawatts-to-the-test"},
     {"fact": "Substation-class power transformers take 75 to 110 weeks in 2026, roughly 2.5 times pre-pandemic lead times, with no relief expected before 2028", "source": "https://terrapincg.com/news/switchgear-transformer-generator-lead-times-2026"},
     {"fact": "GE Vernova has about 100 GW of gas turbines under contract, roughly 20% tied to data centers, with only ~10 GW of slots left across 2029 and 2030", "source": "https://www.power-eng.com/gas/turbines/data-centers-drive-record-surge-in-ge-vernova-power-equipment-orders-as-turbine-slots-tighten-through-2030/"},
-    {"fact": "In a 20 MW AI hall the GPUs cost $500M to $1B while the building costs $200M to $300M", "source": "https://www.globaldatacenterhub.com/p/what-a-data-center-actually-costs"}
+    {"fact": "Average global data center construction cost rose from $7.7M to $10.7M per MW between 2020 and 2025 and is forecast at $11.3M per MW in 2026, shell and core only; an AI tech fit-out can add up to $25M per MW", "source": "https://www.jll.com/en-us/insights/market-outlook/data-center-outlook"}
   ],
   "figures": [
     {
@@ -53,8 +54,8 @@
       "type": "bars",
       "title": "Power per rack, Nvidia rack-scale generations",
       "unit": "kW",
-      "data": [["GB200 NVL72 (2024)", 120], ["Vera Rubin NVL72 (2026)", 250], ["Rubin Ultra Kyber NVL576 (2027)", 600]],
-      "source": {"label": "Introl (GB200 and Kyber) and Rubin architecture analysis (Vera Rubin)", "url": "https://blog.barrack.ai/nvidia-rubin-specs-architecture-2026/"}
+      "data": [["GB300 NVL72 (2025)", 150], ["Vera Rubin VR200 (2026)", 225], ["Rubin Ultra (2027)", 660]],
+      "source": {"label": "TrendForce, June 2026 (approximate rack power by generation)", "url": "https://www.trendforce.com/presscenter/news/20260625-13121.html"}
     },
     {
       "id": "us-dc-electricity",
