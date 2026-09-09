@@ -245,3 +245,155 @@ works".
 `data/source-tiers.json`: added `ucsb.edu` to Tier A, next to `purdue.edu`, for the Parhami dependable-
 computing chapter now cited in 08. No other new domain was needed: `globenewswire.com` was already Tier A,
 and `newsroom.lamresearch.com` resolves by suffix to `lamresearch.com`.
+
+---
+
+## 12 — Advanced Packaging
+
+**Before:** 1,336 body words, 14 sources, **1 Tier D**. **After:** 1,133 body words, 14 sources, **0 Tier D, 0 unclassified** (15.2% of the words cut). Front matter parses; six em dashes, all in Key-evaluation-criteria bullets; both figure markers present.
+
+The chapter's capacity spine, including the `cowos-capacity` figure, rested on `xenospectrum.com`, which was
+itself compiling TrendForce and SemiWiki numbers. It has been rebuilt from TrendForce's own press releases,
+one release per year, and the years TrendForce never published have been dropped rather than carried.
+
+### Replacements
+
+| Fact | Old source (tier) | New source (tier) | What changed |
+|---|---|---|---|
+| CoWoS capacity, end-2023 | xenospectrum.com/en/cowos-packaging-bottleneck-nvidia (D) | none found | **Deleted.** No TrendForce release states an end-2023 monthly figure; the August 2023 release quotes ~11,000 wpm from Morgan Stanley, which is a bank estimate carried by a press item, not a TrendForce number. The 2023 bar left the figure. |
+| CoWoS capacity, 2024 | xenospectrum.com (D), 35,000-40,000 | trendforce.com/news/2024/12/13 (B) | **35,000 wafers a month**, TrendForce's own wording ("reaches 35,000 wafers this year") |
+| CoWoS capacity, 2025 | xenospectrum.com (D), ~75,000 | trendforce.com/news/2025/01/02 (B) | **75,000**, unchanged, now cited to the release that states it |
+| CoWoS capacity, 2026 | xenospectrum.com (D) | trendforce.com/news/2026/06/15 (B), already in the chapter | **120,000-140,000**, unchanged |
+| Nvidia's share of CoWoS | xenospectrum.com (D) on a Morgan Stanley estimate, ~60% and ~595,000 wafers across TSMC and its OSATs; plus digitimes.com (C) "more than half of the 2026-2027 expansion" | trendforce.com/news/2026/08/05 (B) | **800,000 to 850,000 wafers of TSMC's 2026 CoWoS capacity, more than 50% of the total.** Both the number and its basis changed: it is TSMC capacity for one year, not TSMC-plus-OSAT capacity across an expansion. The Tier C DigiTimes citation went with it. |
+
+`figures.cowos-capacity` was `[["2023",15],["2024",38],["2025",75],["2026",130]]` sourced to XenoSpectrum;
+it is now `[["2024",35],["2025",75],["2026",130]]` sourced to TrendForce, with the label naming all three
+releases and saying the 2026 bar is the midpoint of 120,000-140,000.
+
+### Removals
+
+- The paragraph beginning "Public per-unit cost estimates for a finished package do not trace to a primary
+  source" — a hedge carrying no sourced number, and its second sentence made an uncited growth claim.
+- The COUPE silicon-photonics paragraph (TrendForce, Tier B). Sound source, but it is a fourth subject in a
+  section about China and the interposer roadmap; its citation went with it.
+- Restated context: the CoWoS-S 3.3x ceiling in prose (the table above it already gives it), the C4-bump and
+  lidding step, and "Stacking logic on logic is the vertical axis" under a heading that says 3D.
+- Takeaways: "grew roughly ninefold in three years" → **"roughly quadrupled between 2024 and 2026"**, which is
+  what the surviving TrendForce series supports.
+
+---
+
+## 14 — Test and Assembly
+
+**Before:** 1,337 body words, 25 sources, **1 Tier D**. **After:** 1,133 body words, 23 sources, **0 Tier D, 0 unclassified** (15.3% of the words cut). Front matter parses; no em dashes; all three figure markers present.
+
+Every tester-market number came from an `investing.com` write-up of Advantest's FY2025 slides. Advantest
+publishes the same slides and a bilingual speaker's note itself, so the note is now the source, and reading it
+corrected one share and replaced a growth rate the chapter had rounded from the wrong series.
+
+### Replacements
+
+All four go to Advantest's FY2025 results briefing note, `advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf` (Tier A).
+
+| Fact | Old (tier) | What changed |
+|---|---|---|
+| Advantest overall tester share | investing.com (D), "65% in 2025, up from 58% in 2024" | **65% confirmed.** The 58% comparator is gone: Advantest's briefing states no CY2024 overall share. Replaced with the gain it does state, **66% of SoC test, up about ten points year on year**. |
+| Advantest memory tester share | investing.com (D), 61% | **Corrected to about 60%** ("although our market share declined by approximately 2 percentage points, it remained at around 60%") |
+| Tester market size | investing.com (D), "grew about 50% in 2025 to roughly US$9.0 billion" | **US$9.0 billion confirmed** (SoC US$6.9B + memory US$2.1B). The 50% growth figure is not in Advantest's note; the Takeaways now use the growth rate Advantest does publish, **the SoC tester market up about 68% year on year**. |
+| `ate-share` figure source | investing.com (D) | Relabelled "Advantest FY2025 results briefing, April 2026" with the Advantest URL |
+
+The two Advantest claims already sourced to `Investors_Guide_2504E.pdf` (the ~80% combined share, and the
+switching-cost argument) were left alone: that guide is Advantest's own, already Tier A.
+
+### Removals
+
+- **Disco's "more than 4,000 laser saws shipped"** and its `disco.co.jp/eg/news/corp/20260302.html` citation:
+  a third statistic in a bullet that already establishes Disco's lead and its 400 mm panel saw.
+- **The 5.5-reticle 98% yield restatement** — chapter 12 carries it; the TrendForce citation stays on the 2028
+  package fact in the same sentence.
+- **"up 3%" on 2024 OSAT revenue and ASE's absolute US$18.54 billion** — both in chapter 12; the 44.6% share
+  that does work here survives.
+- **Amkor's separate ground-breaking citation** (trendforce.com/news/2025/10/14) folded into the ten-year TSMC
+  partnership sentence; chapter 12 carries the ground-breaking.
+- **"Probe cards have the same property one level down"** — restates the probe-card paragraph two sections up.
+- **"which is why tester revenue grew faster than unit volumes in 2025"** — an uncited claim inside a criterion
+  bullet.
+- The wafer-level burn-in paragraph merged into the known-good-die paragraph under "How it works", keeping both
+  Aehr citations and the nine-wafers-at-once number, dropping the FOX-XP model name.
+
+---
+
+## 15 — Systems and Networking
+
+**Before:** 1,313 body words, 16 sources, **1 Tier D**. **After:** 1,114 body words, 15 sources, **0 Tier D, 0 unclassified** (15.2% of the words cut). Front matter parses; five em dashes, all in Key-evaluation-criteria bullets; all three figure markers present.
+
+### Replacements
+
+| Fact | Old source (tier) | New source (tier) | What changed |
+|---|---|---|---|
+| Broadcom AI semiconductor revenue | finance.yahoo.com earnings-call write-up (D) | sec.gov 8-K exhibit 99.1, Q3 FY2026, filed 2 September 2026 (A) | **$16.7 billion, up 221% year over year** — both confirmed verbatim in the exhibit ("Q3 AI semiconductor revenue of $16.7 billion grew 221% year-over-year, and 54% quarter-over-quarter"). The quarter-over-quarter figure was added to the keyFact. |
+| "Custom XPUs 73% of AI revenue" | finance.yahoo.com (D) | none found | **Deleted.** Broadcom's 8-K gives no XPU-versus-networking split; the CEO's quoted line is qualitative ("Demand for our custom AI accelerators and networking continues to be very strong"). No Tier A or B source states the 73%. The sentence now stops at the revenue and its growth. |
+
+### Removals
+
+- **The AMD Helios paragraph** (72 MI450-series GPUs, 260 TB/s, Oracle's 50,000 sockets) and its
+  `nextplatform.com` (C) citation: a second example of the open scale-up approach that the UALink bullet
+  already makes, and the chapter's own argument is that scale-up leverage sits with NVLink.
+- **The Quantum-X Photonics bullet** (144 ports of 800G): a second Nvidia co-packaged-optics product. The
+  Spectrum-X line survives because its "four times fewer lasers" is the fact that bears on the chapter's
+  thesis; its `nvidianews.nvidia.com` citation carries both.
+- **The voltage-regulator sentence** under "How it works": the thousand-amp fact is already in the `plain`
+  paragraph directly above it.
+- Tomahawk 6 Davisson's "sixteen 6.4 Tbps optical engines at 200 Gbps per channel" cut back to the power
+  number; the globenewswire citation stays and still carries the 3.5x in the criteria list.
+
+---
+
+## 16 — Data Centers and Power
+
+**Before:** 1,309 body words, 17 sources, **4 Tier D**. **After:** 1,106 body words, 15 sources, **0 Tier D, 0 unclassified** (15.5% of the words cut). Front matter parses; five em dashes, all in Key-evaluation-criteria bullets; all three figure markers present.
+
+Four Tier D domains carried the cost model, the cooling market and the whole rack-power figure. Two were
+replaced with analysts who publish the same series (Dell'Oro, TrendForce), one with JLL's own outlook, and the
+numbers moved materially in three of the four cases.
+
+### Replacements
+
+| Fact | Old source (tier) | New source (tier) | What changed |
+|---|---|---|---|
+| Liquid cooling market | gminsights.com (D), "$4.8B in 2025" | delloro.com, January 2026 (B) | **Close to $3 billion in 2025, roughly double 2024, approaching $7 billion by 2029.** The market is about 40% smaller than the chapter said, which strengthens rather than weakens the point it was making. |
+| Liquid cooling vendor shares | gminsights.com (D), "Vertiv 11.3%, top five 35%" | delloro.com (B) | **Deleted.** Dell'Oro names Vertiv as the leader with CoolIT, nVent, Boyd and Aaon behind it, and publishes no percentages in the release. The card's Vertiv line changed from "11.3% of data center liquid cooling (2025)" to "Leads the data center liquid cooling market (2025)". |
+| Cost per critical IT megawatt | globaldatacenterhub.com (D), "$8-14M air-cooled, $17-25M liquid-cooled" | jll.com, 2026 Global Data Center Market Outlook (B) | **$10.7M per MW in 2025, up from $7.7M in 2020, forecast $11.3M in 2026 — shell and core only — plus up to $25M per MW for an AI tech fit-out.** Card `costSignal` and the "Cost per megawatt" criterion were rewritten to match, and the criterion renamed from "Cost per critical IT megawatt" because JLL's basis is not critical IT load. |
+| "GPUs cost $500M-$1B against a $200-300M building in a 20 MW hall" | globaldatacenterhub.com (D) | none found | **Deleted**, with its keyFact. The point it carried, that the building is the cheap part, now rests on JLL's fit-out figure being more than twice the shell and core. |
+| "Liquid cooling adds 7-10% to construction cost, cuts floor area 70-85%" | globaldatacenterhub.com (D) | none found | **Deleted.** Nothing above Tier D was found for either number. |
+| Rack power by generation | introl.com (D) for 600 kW Kyber, blog.barrack.ai (D) for Vera Rubin ">250 kW" and "GPUs rated 1,800-2,300 W" | trendforce.com press release, 25 June 2026 (B) | **About 150 kW for GB300, about 225 kW for Vera Rubin VR200, about 660 kW for Rubin Ultra in 2H27.** All three numbers changed. The GPU wattage range was deleted. |
+
+Nvidia's own pages were checked first for the rack figures and do not carry them: the OCP/Vera Rubin blog
+gives 800 VDC, 45 °C water and 576 GPUs but no kilowatts, and the 800 VDC developer blog gives only "racks
+ranging from 100 kW to over 1 MW". Nvidia's reference architecture figure of **142 kW for a GB300 NVL72**
+(docs.nvidia.com, Tier A) is kept where precision matters, in "How it works" and in the rack-density
+criterion; the generational series in the figure and the trajectory sentence is attributed to TrendForce in
+the text, so the two numbers do not read as a contradiction.
+
+`figures.rack-power` was `[["GB200 NVL72 (2024)",120],["Vera Rubin NVL72 (2026)",250],["Rubin Ultra Kyber NVL576 (2027)",600]]`
+across two Tier D blogs; it is now `[["GB300 NVL72 (2025)",150],["Vera Rubin VR200 (2026)",225],["Rubin Ultra (2027)",660]]`
+on one TrendForce release.
+
+### Removals
+
+- **The Southern Company paragraph** (17 GW of signed contracts against 1.2 GW operating, ~$2B per GW,
+  generation arriving around 2031) and its `datacenterfrontier.com` citation: a second example of the
+  announced-versus-energised gap that ERCOT's 438 GW against 5.9 GW already makes harder.
+- Ironwood's "30 times its 2018 part" (the doubling per watt survives, same citation).
+- The 2014 figure of 58 TWh in prose; the `us-dc-electricity` figure still carries it.
+- "Voltage changes next" and similar throat-clearing openers across "How it works".
+
+---
+
+## Source tiers (second addition)
+
+`data/source-tiers.json`: added **`jll.com` to Tier B**, placed with the named-methodology analysts. JLL
+publishes its own annual data center construction-cost series with a stated basis (shell and core, global
+average, per MW) and is the standard citation for it in the trade press, which puts it alongside Gartner and
+IDC rather than with the SEO market-research sites in Tier D. No other new domain was needed: `delloro.com`,
+`trendforce.com`, `advantest.com` and `sec.gov` were already classified.

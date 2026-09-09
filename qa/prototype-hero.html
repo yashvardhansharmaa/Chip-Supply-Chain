@@ -186,12 +186,11 @@ b, strong { font-weight: 600; }
 /* ---------------------------------------------------------------- spread */
 /* text column at 58 percent, specimen stage at 42 percent, stage sticks */
 .spread { display: grid; grid-template-columns: var(--col) 1fr; align-items: stretch; }
-.spread-main { padding: 0 var(--pad); min-width: 0; }
+.spread-main { padding: 0 var(--pad); min-width: 0; border-right: 1px solid var(--line); }
 .stage {
   position: sticky; top: var(--masthead); align-self: start;
   height: calc(100vh - var(--masthead));
   display: flex; flex-direction: column;
-  border-left: 1px solid var(--line);
   padding: 20px 26px 22px;
   min-width: 0;
 }
@@ -444,11 +443,12 @@ sup.cite a:hover { text-decoration: underline; }
   .tabs a { font-size: 13.5px; padding: 5px 8px; }
   .wordmark span { display: none; }
   .spread { grid-template-columns: 1fr; }
+  .spread-main { border-right: 0; }
   .hero .spread { min-height: 0; }
   .hero-text { padding-top: 26px; }
   .stage {
     position: static; height: auto; min-height: 260px;
-    border-left: 0; border-top: 1px solid var(--line);
+    border-top: 1px solid var(--line);
     padding: 16px 18px 18px;
   }
   .stage-art { min-height: 0; height: 230px; padding: 10px 0; }
