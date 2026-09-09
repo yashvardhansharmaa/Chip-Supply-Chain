@@ -117,7 +117,7 @@ Three risks stack on one island, and we think only the third is unmanageable:
 
 - **Seismic.** Taiwan sits on an active plate boundary, and a tool knocked out of calibration scraps the work in progress across a whole fab.
 - **Power.** A gigafab is a large industrial load on a small island grid. We think spare generating capacity, rather than anything about silicon, sets how fast Taiwan can add fabs.
-- **Political.** A blockade or conflict would remove most sub-5 nm capacity from the world market at once, with no substitute available inside a decade. See [Geopolitics](#/geopolitics).
+- **Political.** A blockade or conflict would remove most sub-5 nm capacity from the world market at once, with no substitute available inside a decade. See [Geopolitics](#geopolitics).
 
 Diversification is real and slow. The hard part of a fab is a workforce that has run one process for years, and TSMC has yet to build a gigafab anywhere but Taiwan ([source](https://www.tsmc.com/english/dedicatedFoundry/manufacturing/gigafab)).
 

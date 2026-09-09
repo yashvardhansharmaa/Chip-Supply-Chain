@@ -64,6 +64,7 @@
     init: function () {
       this.canvas = $('#stage-canvas');
       this.fig = $('.stage');
+      if (!this.canvas || !this.fig) return;
       var gl = this.canvas.getContext('webgl2', { alpha: true, antialias: false, premultipliedAlpha: true, powerPreference: 'high-performance' }) ||
                this.canvas.getContext('webgl', { alpha: true, antialias: false, premultipliedAlpha: true });
       if (!gl || !window.PC) { this.fig.setAttribute('data-hidden', '1'); return; }
@@ -129,7 +130,8 @@
       slot.spinBase = -this.spin; // each specimen starts from its own tilt
       this.scrollAngle = 0;
     },
-    setVisible: function (v) { var self = this; this.active = v; this.fig.setAttribute('data-hidden', v ? '0' : '1'); if (v) { this.resize(); requestAnimationFrame(function () { self.resize(); }); } },
+    // with no WebGL there is nothing to draw, so the figure stays hidden rather than framing an empty canvas under a stale tag
+    setVisible: function (v) { var self = this; this.active = v; if (!this.fig) return; var show = v && this.ok; this.fig.setAttribute('data-hidden', show ? '0' : '1'); if (show) { this.resize(); requestAnimationFrame(function () { self.resize(); }); } },
     draw: function (slot, op, extraRot, sc) {
       var gl = this.gl, aspect = this.w / this.h;
       var P = perspective(34 * Math.PI / 180, aspect, 0.1, 40);
@@ -209,7 +211,12 @@
       var h = location.hash || '#/', m = h.match(/^#\/([a-z-]+)/), bare = h.replace(/^#/, '');
       var v = (bare === '' || bare === '/') ? 'home' : 'stack'; // the site opens on the map; a bare chapter anchor opens the chain
       if (m && VIEWS.indexOf(m[1]) >= 0) v = m[1];
-      var anchor = v === 'geopolitics' ? 'geopolitics' : (!m && h.length > 1 ? decodeURIComponent(h.slice(1)) : null);
+      var anchor = v === 'geopolitics' ? 'geopolitics' : ((!m && bare && bare !== '/') ? decodeURIComponent(bare) : null);
+      if (anchor && !m) { // a bare anchor belongs to whichever view holds it; one that sits outside them all (the skip link's #app) leaves the view alone
+        var target = document.getElementById(anchor), host = target && target.closest ? target.closest('.view[data-view]') : null;
+        if (host) v = host.getAttribute('data-view');
+        else if (target) v = this.current || v;
+      }
       if (ALIAS[v]) v = ALIAS[v];
       var sub = null; // the Export Controls page has three sections
       if (v === 'exposure') { v = 'controls'; sub = 'exposure'; } else if (v === 'thresholds') { v = 'controls'; sub = 'thresholds'; } else if (v === 'controls') sub = 'timeline';
@@ -228,7 +235,7 @@
       if (v === 'landscape') Landscape.activate();
       else if (v === 'suppliers') Suppliers.activate();
       else if (v === 'controls') { Controls.activate(); if (!Geo.built) Geo.build(); }
-      if (changed && m && !anchor) window.scrollTo(0, 0);
+      if (changed && !anchor) window.scrollTo(0, 0); // no anchor to land on, so start the new view at the top ("#/" included)
       if (v === 'stack' || v === 'walk') {
         if (anchor) {
           var el = document.getElementById(anchor);

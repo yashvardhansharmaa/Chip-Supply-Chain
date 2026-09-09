@@ -131,7 +131,7 @@ No single machine makes the front end a chokepoint. The scarce thing is the reci
 
 China shows what that recipe costs. The money is there: the third National Integrated Circuit Fund raised 344 billion yuan, about $47 billion, in May 2024 ([source](https://asia.nikkei.com/spotlight/supply-chain/china-launches-47bn-chip-fund-to-counter-u.s.-restrictions)). The tools are not. A Shanghai state firm began building domestic immersion scanners in 2026, in single-digit annual volumes ([source](https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/)). Those are deep-ultraviolet machines, a generation behind EUV, and SMIC gets fine features out of them by printing each layer in several passes. A handful of new scanners a year keeps those lines running and comes nowhere near replacing ASML. EUV is further off again: China has announced $43 billion for domestic development, and the Center for Strategic and International Studies still reads working systems as out of reach ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).
 
-See [Lithography](#lithography) and [Geopolitics](#/geopolitics).
+See [Lithography](#lithography) and [Geopolitics](#geopolitics).
 
 ## Key evaluation criteria
 
