@@ -1,4 +1,4 @@
-# Chokepoints — handoff (updated 9 September 2026, third session)
+# Compute Chokepoints — handoff (updated 9 September 2026, third session)
 
 Live site: https://yashvardhansharmaa.github.io/chokepoints/ (redeploys on every push to `main`).
 Repo: https://github.com/yashvardhansharmaa/chokepoints. Build: `node build/build.js` → `dist/index.html`; report in `dist/build-report.txt`. Data-source audit: `node build/audit-data-sources.js`.

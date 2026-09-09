@@ -4,9 +4,9 @@
   "number": 11,
   "title": "Memory and HBM",
   "oneLiner": "Three firms make every HBM stack on Earth. The cube is the largest block of silicon in an AI package, and its height is now capped by the cooling plate above it.",
-  "plain": "Think of a cook who can chop faster than anyone can fetch ingredients. The fix is not a faster runner but a wider door, so high bandwidth memory stacks up to sixteen memory chips into a cube, drills copper wires straight down through them, and sits the cube a few millimetres from the processor. Stacking is the hard part: each chip is ground thinner than a human hair, the whole cube must stay under a fixed height so it does not foul the cooling plate, and one bad layer ruins all of them. Three firms in the world can do it.",
+  "plain": "A cook can chop faster than anyone can fetch the ingredients, so the answer is a wider door. High bandwidth memory stacks up to sixteen memory chips into a cube, drills copper wires straight down through them, and sits the cube a few millimetres from the processor. Stacking is the hard part: each chip is ground thinner than a human hair, the whole cube must stay under a fixed height so it does not foul the cooling plate, and one bad layer ruins all of them. Only SK hynix, Samsung and Micron can do it.",
   "specimen": "hbm-stack",
-  "specimenCaption": "Right: a 12-high HBM stack, exploded. A logic base die at the bottom, twelve thinned DRAM dies above it, through-silicon vias running the full height of the cube, microbumps between every layer, molding compound filling the gaps.",
+  "specimenCaption": "Right: a 12-high HBM stack, exploded. A logic base die at the bottom, twelve thinned DRAM dies above it, through-silicon vias running the full height of the cube, microbumps between every layer, and the molding compound as a faint box around the whole stack.",
   "card": {
     "concentration": "Extreme",
     "chokepointScore": 5,
@@ -69,15 +69,15 @@
 ---
 # Memory and HBM
 
-An AI accelerator is a machine for dragging numbers past arithmetic units. The arithmetic got cheap. The dragging did not. High bandwidth memory decides how fast a GPU runs, it is the largest block of silicon in the package, and three companies make all of it.
+An AI accelerator is a machine for dragging numbers past arithmetic units, and arithmetic got cheap faster than the dragging did. High bandwidth memory now decides how fast a GPU runs, and three companies make all of it.
 
 ## How it works
 
-Think of a cook who can chop faster than anyone can fetch ingredients. The fix is not a faster runner but a wider door, so high bandwidth memory stacks up to sixteen memory chips into a cube, drills copper wires straight down through them, and sits the cube a few millimetres from the processor. Stacking is the hard part: each chip is ground thinner than a human hair, the whole cube must stay under a fixed height so it does not foul the cooling plate, and one bad layer ruins all of them. Three firms in the world can do it.
+A cook can chop faster than anyone can fetch the ingredients, so the answer is a wider door. High bandwidth memory stacks up to sixteen memory chips into a cube, drills copper wires straight down through them, and sits the cube a few millimetres from the processor. Stacking is the hard part: each chip is ground thinner than a human hair, the whole cube must stay under a fixed height so it does not foul the cooling plate, and one bad layer ruins all of them. Only SK hynix, Samsung and Micron can do it.
 
-The width is the whole trick. One HBM cube presents a 1,024-bit interface across 32 independent channels, sixteen times wider than a standard DDR5 module ([source](https://www.micron.com/products/memory/hbm)). Ordinary DRAM cannot be made that wide, because the pins would not fit on a board.
+One HBM cube presents a 1,024-bit interface across 32 independent channels, sixteen times wider than a standard DDR5 module ([source](https://www.micron.com/products/memory/hbm)). Ordinary DRAM cannot be made that wide, because the pins would not fit on a board.
 
-Inference is where that bites. Training reuses each weight across a large matrix multiplication, so it tolerates fetching few bytes per operation. Generating one token instead reads the whole weight set and the whole key-value cache, then stalls on memory, and the cache grows with context and batch size. What limits users per chip is usually capacity and bandwidth, not arithmetic.
+Inference is where the width earns its cost. Training reuses each weight across a large matrix multiplication, so it tolerates fetching few bytes per operation. Generating one token reads the whole weight set and the whole key-value cache, then stalls on memory, and the cache grows with context and batch size. Capacity and bandwidth rather than arithmetic usually set how many users one chip can serve.
 
 ## Variants and trade-offs
 
@@ -88,13 +88,13 @@ Inference is where that bites. Training reuses each weight across a large matrix
 
 ### HBM3E
 
-The workhorse. Micron ships 24 GB 8-high and 36 GB 12-high parts ([source](https://www.micron.com/products/memory/hbm/hbm3e)), and HBM3E should be about two thirds of all HBM shipments in 2026 ([source](https://news.skhynix.com/en/2026-market-outlook-focus-on-the-hbm-led-memory-supercycle/)).
+Micron ships the workhorse parts, 24 GB 8-high and 36 GB 12-high ([source](https://www.micron.com/products/memory/hbm/hbm3e)), and HBM3E should be about two thirds of all HBM shipments in 2026 ([source](https://news.skhynix.com/en/2026-market-outlook-focus-on-the-hbm-led-memory-supercycle/)).
 
 ### HBM4
 
-JEDEC published JESD270-4 in April 2025, setting the 2,048-bit interface and 2 TB/s per stack at 8 Gb/s per pin ([source](https://www.jedec.org/news/pressreleases/jedec%C2%AE-and-industry-leaders-collaborate-release-jesd270-4-hbm4-standard-advancing)). Nobody ships the baseline. SK hynix completed HBM4 at over 10 Gb/s per pin in September 2025 ([source](https://news.skhynix.com/en/sk-hynix-completes-worlds-first-hbm4-development-and-readies-mass-production/)), and Micron's parts run above 11 Gb/s for more than 2.8 TB/s per stack ([source](https://www.micron.com/products/memory/hbm/hbm4)). The standard is now a floor the buyers negotiate above.
+JEDEC published JESD270-4 in April 2025, setting the 2,048-bit interface and 2 TB/s per stack at 8 Gb/s per pin ([source](https://www.jedec.org/news/pressreleases/jedec%C2%AE-and-industry-leaders-collaborate-release-jesd270-4-hbm4-standard-advancing)). Nobody ships at that baseline: SK hynix completed HBM4 at over 10 Gb/s per pin in September 2025 ([source](https://news.skhynix.com/en/sk-hynix-completes-worlds-first-hbm4-development-and-readies-mass-production/)), and Micron's parts run above 11 Gb/s for more than 2.8 TB/s per stack ([source](https://www.micron.com/products/memory/hbm/hbm4)).
 
-The other HBM4 change is commercial. The base die is a logic die, so it goes to a foundry: SK hynix partnered with TSMC to build it ([source](https://news.skhynix.com/sk-hynix-partners-with-tsmc-to-strengthen-hbm-technological-leadership/)). That hands TSMC a position inside a product it does not make.
+HBM4's other change is commercial. The base die is now a logic die, so it goes to a foundry, and SK hynix partnered with TSMC to build it ([source](https://news.skhynix.com/sk-hynix-partners-with-tsmc-to-strengthen-hbm-technological-leadership/)). That hands TSMC a position inside a product it does not make.
 
 {{figure:hbm-bandwidth}}
 
@@ -108,25 +108,25 @@ Hybrid bonding is the next step and it is not ready. Bonding copper to copper di
 
 ## Who makes it
 
-DRAM is a three-firm oligopoly, and HBM is the same three firms reordered: SK hynix, Samsung and Micron. Nobody else has leading-edge DRAM and a stacking line in the same company, and that is the barrier.
+DRAM is a three-firm oligopoly, and HBM is the same three firms reordered: SK hynix, Samsung and Micron. Nobody else has leading-edge DRAM and a stacking line inside one company.
 
-SK hynix built its lead by being first through Nvidia qualification, and expects roughly 70 percent of Rubin HBM4 in 2026 ([source](https://news.skhynix.com/en/2026-market-outlook-focus-on-the-hbm-led-memory-supercycle/)). The Korean core is now growing an American edge: SK hynix broke ground on a $4 billion packaging plant in West Lafayette, Indiana in August 2026 ([source](https://www.purdue.edu/newsroom/2026/Q3/sk-hynix-breaks-ground-on-4-billion-advanced-packaging-production-facility-in-purdue-research-park/)). Micron packages in Taichung and Singapore.
+SK hynix built its lead by being first through Nvidia qualification, and expects roughly 70 percent of Rubin HBM4 in 2026 ([source](https://news.skhynix.com/en/2026-market-outlook-focus-on-the-hbm-led-memory-supercycle/)). It broke ground on a $4 billion packaging plant in West Lafayette, Indiana in August 2026 ([source](https://www.purdue.edu/newsroom/2026/Q3/sk-hynix-breaks-ground-on-4-billion-advanced-packaging-production-facility-in-purdue-research-park/)), and Micron packages in Taichung and Singapore.
 
-How the three divide the market is on the record because SK hynix registered shares in the United States. Its July 2026 prospectus prints the split: of 2025 HBM revenue, SK hynix took 63.2 percent, Samsung 19.3 and Micron 17.4, which puts the two Korean suppliers at 82.5 percent of the world's HBM ([source](https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm)). The filing attributes the figures to IDC, and they move fast. In 2024 the same three stood at 56.4, 37.8 and 5.8: Samsung halved and Micron tripled inside a year, on qualification wins rather than on capacity. By the first quarter of 2026 Micron was at 23.1 percent and Korea down to 76.9.
+The split is on the record because SK hynix registered shares in the United States. Its July 2026 prospectus prints it: of 2025 HBM revenue, SK hynix took 63.2 percent, Samsung 19.3 and Micron 17.4, which puts the two Korean suppliers at 82.5 percent of the world's HBM ([source](https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm)). The filing attributes the figures to IDC, and they move fast. In 2024 the same three stood at 56.4, 37.8 and 5.8, so Samsung halved and Micron tripled inside a year on qualification wins rather than capacity. By the first quarter of 2026 Micron was at 23.1 percent and Korea down to 76.9.
 
 {{figure:hbm-suppliers}}
 
 {{figure:hbm-revenue}}
 
-BofA puts the 2026 HBM market at $54.6 billion, up 58 percent on the year ([source](https://news.skhynix.com/en/2026-market-outlook-focus-on-the-hbm-led-memory-supercycle/)). HBM is sold forward, so that revenue is contracted long before the wafers exist, and every wafer converted to HBM is a wafer not making commodity DRAM. That is the mechanism by which AI demand raises the price of a laptop.
+BofA puts the 2026 HBM market at $54.6 billion, up 58 percent on the year ([source](https://news.skhynix.com/en/2026-market-outlook-focus-on-the-hbm-led-memory-supercycle/)). HBM is sold forward, so that revenue is contracted long before the wafers exist, and every wafer converted to HBM is a wafer not making commodity DRAM. That is how AI demand raises the price of a laptop.
 
 ## The chokepoint
 
-Every leading accelerator is defined by its memory. Nvidia's GB300 NVL72 carries 20 TB of HBM3E at up to 576 TB/s ([source](https://www.nvidia.com/en-us/data-center/gb300-nvl72/)), Rubin's VR200 up to 288 GB of HBM4 per GPU at up to 22 TB/s ([source](https://developer.nvidia.com/blog/inside-nvidia-rubin-gpu-architecture-powering-the-era-of-agentic-ai/)), and AMD's MI355X 288 GB of HBM3E at 8 TB/s ([source](https://inferencex.semianalysis.com/chips/mi355x)). None exists without Korean or American HBM.
+Every leading accelerator depends on Korean or American HBM. Nvidia's GB300 NVL72 carries 20 TB of HBM3E at up to 576 TB/s ([source](https://www.nvidia.com/en-us/data-center/gb300-nvl72/)), Rubin's VR200 up to 288 GB of HBM4 per GPU at up to 22 TB/s ([source](https://developer.nvidia.com/blog/inside-nvidia-rubin-gpu-architecture-powering-the-era-of-agentic-ai/)), and AMD's MI355X 288 GB of HBM3E at 8 TB/s ([source](https://inferencex.semianalysis.com/chips/mi355x)).
 
-Washington noticed. The BIS rule of 5 December 2024 added ECCN 3A090.c, controlling HBM with a bandwidth density above 2 GB/s per square millimetre of package area, and extended it to stacks made outside the United States through a foreign direct product rule ([source](https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-direct-product-rule-additions-entity-list-modifications)). Read against the JEDEC numbers, that threshold captures every stack now in production, which is what makes it a clean control: there is no compliant high-end HBM to sell.
+The BIS rule of 5 December 2024 added ECCN 3A090.c, controlling HBM with a bandwidth density above 2 GB/s per square millimetre of package area, and extended it to stacks made outside the United States through a foreign direct product rule ([source](https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-direct-product-rule-additions-entity-list-modifications)). Against the JEDEC numbers, that threshold captures every stack now in production, so there is no compliant high-end HBM to sell.
 
-China's answer is CXMT, and it is behind. We think the gap is real but closing from a base that did not exist five years ago, and the binding constraint for a new entrant is not the DRAM die but the stacking line and the Nvidia qualification behind it.
+China's answer is CXMT, which is behind. We think the gap is closing from a base that did not exist five years ago, and that what binds a new entrant is the stacking line and the Nvidia qualification behind it rather than the DRAM die.
 
 ## Key evaluation criteria
 

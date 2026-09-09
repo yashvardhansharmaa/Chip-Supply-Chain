@@ -1,4 +1,4 @@
-# Chokepoints
+# Compute Chokepoints
 
 *A deep dive on the AI chip supply chain.* Every stage from polysilicon to a liquid-cooled rack, with a procedural 3D specimen of each stage drawn beside the text as you scroll. Built in the tradition of [Humanity's Last Machine](https://www.humanityslastmachine.com/) and CSET's semiconductor supply-chain work.
 

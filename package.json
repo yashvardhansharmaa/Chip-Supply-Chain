@@ -1,5 +1,5 @@
 {
-  "name": "chokepoints",
+  "name": "compute-chokepoints",
   "version": "1.0.0",
   "description": "A deep dive on the AI chip supply chain, compiled to one self-contained HTML file",
   "private": true,

@@ -1,4 +1,4 @@
-/* CHOKEPOINTS runtime: theme, router, WebGL specimen stage, section tracking, landscape / suppliers / geopolitics views. */
+/* COMPUTE CHOKEPOINTS runtime: theme, router, WebGL specimen stage, section tracking, landscape / suppliers / geopolitics views. */
 (function () {
   'use strict';
   var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -202,7 +202,7 @@
         }
         Sections.update();
       }
-      document.title = v === 'stack' ? 'Chokepoints' : 'Chokepoints · ' + { briefing: 'Summary', landscape: 'AI Chips', suppliers: 'Suppliers', geopolitics: 'Geopolitics', controls: 'Controls', glossary: 'Glossary', sources: 'Sources' }[v];
+      document.title = v === 'stack' ? 'Compute Chokepoints' : 'Compute Chokepoints · ' + { briefing: 'Summary', landscape: 'AI Chips', suppliers: 'Suppliers', geopolitics: 'Geopolitics', controls: 'Controls', glossary: 'Glossary', sources: 'Sources' }[v];
     }
   };
 
@@ -560,7 +560,7 @@
       addExport('#exposure-table', 'China exposure by firm and year', DATA.exposure, 'before');
       // cite-this block in the footer
       var foot = $('.site-footer');
-      if (foot) { var d = new Date().toISOString().slice(0, 10); foot.insertAdjacentHTML('beforeend', '<details class="cite"><summary>Cite this site</summary><pre>Sharma, Y. with Claude. Chokepoints: a deep dive on the AI chip supply chain. September 2026. https://yashvardhansharmaa.github.io/chokepoints/ (accessed ' + d + ').</pre><pre>@misc{chokepoints2026,\n  title  = {Chokepoints: a deep dive on the AI chip supply chain},\n  author = {Sharma, Yashvardhan and Claude},\n  year   = {2026},\n  month  = {September},\n  url    = {https://yashvardhansharmaa.github.io/chokepoints/},\n  note   = {Accessed ' + d + '}\n}</pre></details>'); }
+      if (foot) { var d = new Date().toISOString().slice(0, 10); foot.insertAdjacentHTML('beforeend', '<details class="cite"><summary>Cite this site</summary><pre>Sharma, Y. with Claude. Compute Chokepoints: a deep dive on the AI chip supply chain. September 2026. https://yashvardhansharmaa.github.io/chokepoints/ (accessed ' + d + ').</pre><pre>@misc{chokepoints2026,\n  title  = {Chokepoints: a deep dive on the AI chip supply chain},\n  author = {Sharma, Yashvardhan and Claude},\n  year   = {2026},\n  month  = {September},\n  url    = {https://yashvardhansharmaa.github.io/chokepoints/},\n  note   = {Accessed ' + d + '}\n}</pre></details>'); }
     }
   };
 
