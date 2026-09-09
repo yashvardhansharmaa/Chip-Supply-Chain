@@ -128,10 +128,10 @@ PC.register('cowos-exploded', function (p) {
   });
   hbm.forEach(function (h) {
     var yc = yChip + hbmH / 2;
-    add(PC.T(PC.box({ w: hbmW, h: hbmH, d: hbmD, faces: ['px', 'nx', 'pz', 'nz'], n: 460, tone: 0.3 }), { pos: [h.x, yc, h.z] }));
-    for (var k = 1; k <= 12; k++) add(PC.T(rect(hbmW, hbmD, 58, 0.62), { pos: [h.x, yChip + hbmH * k / 12.6, h.z] }));
-    add(PC.T(PC.plane({ w: hbmW, d: hbmD, n: 340, tone: 0.2 }), { pos: [h.x, yChip + hbmH, h.z] }));
-    add(PC.T(rect(hbmW, hbmD, 190, 0.95), { pos: [h.x, yChip + hbmH, h.z] }));
+    add(PC.T(PC.box({ w: hbmW, h: hbmH, d: hbmD, faces: ['px', 'nx', 'pz', 'nz'], n: 340, tone: 0.26 }), { pos: [h.x, yc, h.z] }));
+    for (var k = 1; k <= 12; k++) add(PC.T(rect(hbmW, hbmD, 46, 0.52), { pos: [h.x, yChip + hbmH * k / 12.6, h.z] }));
+    add(PC.T(PC.plane({ w: hbmW, d: hbmD, n: 260, tone: 0.18 }), { pos: [h.x, yChip + hbmH, h.z] }));
+    add(PC.T(rect(hbmW, hbmD, 150, 0.85), { pos: [h.x, yChip + hbmH, h.z] }));
   });
 
   // ---------- 6. the stiffener frame, lifted clear of the chips ----------

@@ -30,7 +30,7 @@ PC.register('package', function (p) {
   };
 
   var S = 1 / 60;    // mm -> scene units, in plan
-  var VX = 3.4;      // vertical exaggeration
+  var VX = 4;        // vertical exaggeration
   function Y(mm) { return mm * S * VX; }
   var parts = [];
   function add(c) { if (c && c.length) parts.push(c); }
@@ -112,9 +112,9 @@ PC.register('package', function (p) {
   var yIpTop = y0 + ipH;          // the plane the dies and stacks sit on
 
   // --- substrate: walls, edges, ball grid, and only the top that is actually exposed ---
-  add(PC.box({ w: subW, h: subH, d: subD, faces: ['px', 'nx', 'pz', 'nz'], n: 9000, tone: 0.28 }));
-  add(PC.boxEdges({ w: subW, h: subH, d: subD, perUnit: 230, tone: 0.7 }));
-  add(PC.T(frame(subW, subD, stack.w * S * 1.02, stack.h * S * 1.02, 0.14, 0.4), { pos: [0, y0, 0] }));
+  add(PC.box({ w: subW, h: subH, d: subD, faces: ['px', 'nx', 'pz', 'nz'], n: 5200, tone: 0.24 }));
+  add(PC.boxEdges({ w: subW, h: subH, d: subD, perUnit: 180, tone: 0.6 }));
+  add(PC.T(frame(subW, subD, stack.w * S, stack.h * S, 0.2, 0.45), { pos: [0, y0, 0] }));
   var pitch = 2.8 * S;
   add(PC.T(PC.dots({
     nx: Math.max(6, Math.floor(subW / pitch) - 1), nz: Math.max(6, Math.floor(subD / pitch) - 1),
@@ -125,9 +125,9 @@ PC.register('package', function (p) {
   var ringOut = [subW - 2 * 1.2 * S, subD - 2 * 1.2 * S];
   var gapMm = 3.2;
   var ringIn = [Math.min(ringOut[0] - 8 * S, (stack.w + 2 * gapMm) * S), Math.min(ringOut[1] - 8 * S, (stack.h + 2 * gapMm) * S)];
-  var rh = Y(hIp + hDie + 0.7), yr = y0 + rh / 2;
-  add(PC.T(PC.box({ w: ringOut[0], h: rh, d: ringOut[1], faces: ['px', 'nx', 'pz', 'nz'], n: 4200, tone: 0.3 }), { pos: [0, yr, 0] }));
-  add(PC.T(PC.box({ w: ringIn[0], h: rh, d: ringIn[1], faces: ['px', 'nx', 'pz', 'nz'], n: 3600, tone: 0.22 }), { pos: [0, yr, 0] }));
+  var rh = Y(hIp + hDie * 0.65), yr = y0 + rh / 2;
+  add(PC.T(PC.box({ w: ringOut[0], h: rh, d: ringOut[1], faces: ['px', 'nx', 'pz', 'nz'], n: 2200, tone: 0.3 }), { pos: [0, yr, 0] }));
+  add(PC.T(PC.box({ w: ringIn[0], h: rh, d: ringIn[1], faces: ['px', 'nx', 'pz', 'nz'], n: 1300, tone: 0.2 }), { pos: [0, yr, 0] }));
   add(PC.T(frame(ringOut[0], ringOut[1], ringIn[0], ringIn[1], 0.26, 0.45), { pos: [0, y0 + rh, 0] }));
   add(PC.T(outline(ringOut[0], ringOut[1], 0.75, 240), { pos: [0, y0 + rh + 0.002, 0] }));
   add(PC.T(outline(ringIn[0], ringIn[1], 0.8, 240), { pos: [0, y0 + rh + 0.002, 0] }));
@@ -136,11 +136,13 @@ PC.register('package', function (p) {
   // --- interposers ---
   ips.forEach(function (r) {
     var w = r.w * S, d = r.h * S, x = r.x * S, z = -r.y * S;
-    add(PC.T(PC.box({ w: w, h: ipH, d: d, faces: ['px', 'nx', 'pz', 'nz'], n: 3000, tone: 0.42 }), { pos: [x, y0 + ipH / 2, z] }));
-    add(PC.T(PC.boxEdges({ w: w, h: ipH, d: d, perUnit: 260, tone: 0.85 }), { pos: [x, y0 + ipH / 2, z] }));
-    // through-silicon vias on the exposed silicon
-    var vp = 2.1 * S;
-    add(PC.T(PC.dots({ nx: Math.floor(w / vp), nz: Math.floor(d / vp), sx: vp, tone: 0.24 }), { pos: [x, yIpTop + 0.002, z] }));
+    add(PC.T(PC.box({ w: w, h: ipH, d: d, faces: ['px', 'nx', 'pz', 'nz'], n: 2600, tone: 0.4 }), { pos: [x, y0 + ipH / 2, z] }));
+    add(PC.T(PC.boxEdges({ w: w, h: ipH, d: d, perUnit: 260, tone: 0.9 }), { pos: [x, y0 + ipH / 2, z] }));
+    // the silicon surface, and the through-silicon vias standing on it
+    add(PC.T(PC.plane({ w: w, d: d, n: PC.area(w * d * 0.55), tone: 0.24 }), { pos: [x, yIpTop + 0.001, z] }));
+    var vp = 1.6 * S;
+    add(PC.T(PC.dots({ nx: Math.floor(w / vp), nz: Math.floor(d / vp), sx: vp, per: 2, tone: 0.4 }), { pos: [x, yIpTop + 0.002, z] }));
+    add(PC.T(outline(w, d, 0.9, 300), { pos: [x, yIpTop + 0.003, z] }));
   });
 
   // --- base / IO dies, with the compute chiplets stepped up on top of them ---
