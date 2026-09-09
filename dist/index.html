@@ -429,6 +429,28 @@ sup.cite a:hover { text-decoration: underline; }
 .tier-D, .tier-\? { border-color: var(--c6); color: var(--c6); }
 .tier-key { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); margin: 6px 0 10px; }
 
+/* ---------- research tools ---------- */
+.search-btn { width: 34px; height: 34px; flex: 0 0 auto; border: 1px solid var(--line-2); border-radius: 3px; display: inline-grid; place-items: center; margin-left: 6px; }
+.search-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+#cp-search { position: fixed; inset: 0; z-index: 100; background: color-mix(in srgb, var(--ink) 40%, transparent); display: flex; align-items: flex-start; justify-content: center; padding: 12vh 16px 0; }
+.cp-search-panel { width: min(680px, 100%); background: var(--bg); border: 1px solid var(--line-2); border-radius: 4px; box-shadow: var(--shadow); overflow: hidden; }
+.cp-search-panel input { width: 100%; font: inherit; font-size: 17px; padding: 14px 16px; border: 0; border-bottom: 1px solid var(--line); background: var(--bg); color: var(--ink); outline: none; }
+.cp-search-results { list-style: none; margin: 0; padding: 0; max-height: 56vh; overflow: auto; }
+.cp-search-results li a { display: grid; grid-template-columns: 110px 1fr; gap: 2px 12px; padding: 10px 16px; border-bottom: 1px solid var(--line); text-decoration: none; }
+.cp-search-results li a:hover, .cp-search-results li a:focus { background: var(--bg-2); }
+.cp-search-results .k { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); grid-row: span 2; padding-top: 3px; }
+.cp-search-results b { font-family: var(--font-display); font-weight: 700; font-stretch: 92%; font-size: 15px; }
+.cp-search-results .t { font-size: 13.5px; color: var(--ink-2); line-height: 1.4; }
+.cp-search-results .none { padding: 14px 16px; color: var(--muted); }
+.cp-search-hint { margin: 0; padding: 8px 16px; font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); letter-spacing: 0.04em; }
+.permalink { margin-left: 8px; font-family: var(--font-mono); font-size: 0.65em; color: var(--muted); text-decoration: none; opacity: 0; transition: opacity 0.15s; }
+h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
+.export-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 10px 0 12px; }
+.export-bar .count { margin-right: auto; }
+.cite { margin-top: 14px; }
+.cite summary { cursor: pointer; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); }
+.cite pre { margin: 10px 0 0; padding: 12px 14px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 2px; font-family: var(--font-mono); font-size: 11.5px; line-height: 1.5; white-space: pre-wrap; overflow-x: auto; color: var(--ink); }
+
 /* ---------- sources view ---------- */
 .sources-list h3 { font-family: var(--font-display); font-weight: 700; font-stretch: 88%; font-size: 20px; margin: 28px 0 10px; }
 .sources-list ol { padding-left: 2.2em; font-size: 14px; line-height: 1.5; color: var(--ink-2); }
@@ -5152,9 +5174,83 @@ PC.register('wafer', function (p) {
       });
     }
   };
+  /* ---------------- research tools: search, permalinks, dataset export, citation ---------------- */
+  var Tools = {
+    index: null,
+    buildIndex: function () {
+      if (this.index) return this.index;
+      var idx = [];
+      $$('[data-view="stack"] .chapter').forEach(function (ch) {
+        var title = (ch.querySelector('.chapter-title') || {}).textContent || ch.id;
+        idx.push({ kind: 'Chapter', title: title.replace(/^Chapter \d+: /, ''), text: (ch.querySelector('.chapter-lede') || {}).textContent || '', href: '#' + ch.id });
+        $$('.prose h3[id], .prose h4[id]', ch).forEach(function (h) {
+          var p = h.nextElementSibling; var t = p && /^(P|DIV)$/.test(p.tagName) ? p.textContent : '';
+          idx.push({ kind: title.replace(/^Chapter \d+: /, ''), title: h.textContent, text: t.slice(0, 220), href: '#' + h.id });
+        });
+      });
+      (DATA.chapters || []).filter(function (c) { return c.id === 'geopolitics'; }).forEach(function () { idx.push({ kind: 'Essay', title: 'Geopolitics', text: 'Who holds each chokepoint, the export-control campaign, China\'s response, the Gulf and smuggling.', href: '#/geopolitics' }); });
+      $$('#glossary .gl-entry').forEach(function (el) { idx.push({ kind: 'Glossary', title: el.querySelector('dt').firstChild.textContent, text: el.querySelector('dd p').textContent, href: '#/glossary', el: el }); });
+      (DATA.suppliers || []).forEach(function (r) { idx.push({ kind: 'Supplier', title: r.name, text: r.category + ' · ' + cname(r.country) + (r.role ? ' · ' + r.role : ''), href: '#/suppliers', q: r.name }); });
+      (DATA.landscape || []).forEach(function (c) { idx.push({ kind: 'Chip', title: c.vendor + ' ' + c.name, text: ((c.process || {}).node || '') + ' · ' + ((c.memory || {}).type || '') + ' · ' + (c.status || ''), href: '#/landscape', chip: c.id }); });
+      (DATA.timeline || []).forEach(function (e) { idx.push({ kind: 'Event ' + e.date, title: e.title, text: e.summary || '', href: '#/geopolitics' }); });
+      idx.forEach(function (i) { i.hay = (i.kind + ' ' + i.title + ' ' + i.text).toLowerCase(); });
+      this.index = idx; return idx;
+    },
+    open: function () {
+      var self = this, box = $('#cp-search');
+      if (!box) {
+        box = document.createElement('div'); box.id = 'cp-search'; box.setAttribute('role', 'dialog'); box.setAttribute('aria-label', 'Search the site');
+        box.innerHTML = '<div class="cp-search-panel"><input type="search" placeholder="Search chapters, glossary, suppliers, chips, events…" aria-label="Search"><ol class="cp-search-results"></ol><p class="cp-search-hint">Type to search · Enter opens the first result · Esc closes</p></div>';
+        document.body.appendChild(box);
+        var inp = $('input', box), list = $('ol', box);
+        box.addEventListener('click', function (e) { if (e.target === box) self.close(); });
+        inp.addEventListener('keydown', function (e) { if (e.key === 'Escape') self.close(); if (e.key === 'Enter') { var a = list.querySelector('a'); if (a) a.click(); } });
+        inp.addEventListener('input', function () {
+          var q = inp.value.trim().toLowerCase(), terms = q.split(/\s+/).filter(Boolean);
+          if (!terms.length) { list.innerHTML = ''; return; }
+          var hits = self.buildIndex().filter(function (i) { return terms.every(function (t) { return i.hay.indexOf(t) >= 0; }); }).slice(0, 14);
+          list.innerHTML = hits.map(function (h, k) { return '<li><a href="' + esc(h.href) + '" data-k="' + k + '"><span class="k">' + esc(h.kind) + '</span><b>' + esc(h.title) + '</b><span class="t">' + esc(h.text.slice(0, 140)) + '</span></a></li>'; }).join('') || '<li class="none">Nothing matches.</li>';
+          list.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { var h = hits[+a.getAttribute('data-k')]; self.close(); if (h.chip) setTimeout(function () { Landscape.select(h.chip); }, 60); if (h.q) setTimeout(function () { var s = $('#sup-search'); if (s) { s.value = h.q; s.dispatchEvent(new Event('input')); } }, 60); if (h.el) setTimeout(function () { h.el.scrollIntoView({ block: 'center' }); }, 60); }); });
+        });
+      }
+      box.hidden = false; $('input', box).value = ''; $('ol', box).innerHTML = ''; $('input', box).focus();
+    },
+    close: function () { var box = $('#cp-search'); if (box) box.hidden = true; },
+    init: function () {
+      var self = this;
+      // search button in the masthead
+      var nav = $('.tabs'), btn = document.createElement('button'); btn.type = 'button'; btn.className = 'search-btn'; btn.setAttribute('aria-label', 'Search'); btn.title = 'Search (Ctrl+K)';
+      btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>';
+      btn.addEventListener('click', function () { self.open(); });
+      if (nav) nav.insertBefore(btn, $('.theme-toggle'));
+      document.addEventListener('keydown', function (e) { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); self.open(); } if (e.key === '/' && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); self.open(); } });
+      // heading permalinks
+      $$('.prose h3[id], .prose h4[id]').forEach(function (h) { var a = document.createElement('a'); a.className = 'permalink'; a.href = '#' + h.id; a.setAttribute('aria-label', 'Link to this section'); a.textContent = '#'; h.appendChild(a); });
+      // dataset export buttons (copy to clipboard: JSON or CSV)
+      var copy = function (text, btn, label) { var done = function (ok) { btn.textContent = ok ? 'Copied' : 'Copy failed'; setTimeout(function () { btn.textContent = label; }, 2000); }; if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); }); else done(false); };
+      var toCSV = function (rows) { if (!rows.length) return ''; var cols = Object.keys(rows[0]); var q = function (v) { if (v == null) return ''; if (typeof v === 'object') v = JSON.stringify(v); v = String(v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }; return cols.join(',') + '\n' + rows.map(function (r) { return cols.map(function (c) { return q(r[c]); }).join(','); }).join('\n'); };
+      var addExport = function (anchorSel, name, rows, where) {
+        var host = $(anchorSel); if (!host || !rows || !rows.length) return;
+        var bar = document.createElement('div'); bar.className = 'export-bar';
+        bar.innerHTML = '<span class="count">' + rows.length + ' rows · ' + esc(name) + '</span><button type="button" class="btn ghost">Copy as CSV</button><button type="button" class="btn ghost">Copy as JSON</button>';
+        var b = bar.querySelectorAll('button');
+        b[0].addEventListener('click', function () { copy(toCSV(rows), b[0], 'Copy as CSV'); });
+        b[1].addEventListener('click', function () { copy(JSON.stringify(rows, null, 1), b[1], 'Copy as JSON'); });
+        if (where === 'after') host.insertAdjacentElement('afterend', bar); else host.insertAdjacentElement('beforebegin', bar);
+      };
+      addExport('#compare', 'accelerators', DATA.landscape, 'before');
+      addExport('#matrix', 'country-share matrix', DATA.matrix, 'before');
+      addExport('#timeline', 'export-control timeline', DATA.timeline, 'before');
+      // cite-this block in the footer
+      var foot = $('.site-footer');
+      if (foot) { var d = new Date().toISOString().slice(0, 10); foot.insertAdjacentHTML('beforeend', '<details class="cite"><summary>Cite this site</summary><pre>Sharma, Y. with Claude. Chokepoints: a deep dive on the AI chip supply chain. September 2026. https://yashvardhansharmaa.github.io/chokepoints/ (accessed ' + d + ').</pre><pre>@misc{chokepoints2026,\n  title  = {Chokepoints: a deep dive on the AI chip supply chain},\n  author = {Sharma, Yashvardhan and Claude},\n  year   = {2026},\n  month  = {September},\n  url    = {https://yashvardhansharmaa.github.io/chokepoints/},\n  note   = {Accessed ' + d + '}\n}</pre></details>'); }
+    }
+  };
+
   function boot() {
     Theme.init();
     Glossary.init();
+    Tools.init();
     Stage.init();
     Router.init();
     Sections.init();
