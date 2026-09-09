@@ -716,7 +716,10 @@
       host.addEventListener('mouseout', function (e) { var b = e.target.closest('.sup-cell'); if (b && !b.contains(e.relatedTarget)) self.hideTip(); });
       host.addEventListener('focusin', function (e) { var b = e.target.closest('.sup-cell'); if (b) self.showTip(b); });
       host.addEventListener('focusout', function () { self.hideTip(); });
-      host.addEventListener('scroll', function () { self.hideTip(); });
+      var edge = function () { host.setAttribute('data-end', host.scrollLeft + host.clientWidth >= host.scrollWidth - 2 ? '1' : '0'); }; // a faded right edge says the matrix keeps going
+      host.addEventListener('scroll', function () { self.hideTip(); edge(); });
+      window.addEventListener('resize', edge);
+      edge();
     },
     showTip: function (btn) {
       var e = this.cells[btn.getAttribute('data-cat') + '|' + btn.getAttribute('data-cc')], el = $('#sup-tip'), map = $('#sup-map');
@@ -1252,7 +1255,10 @@
     OPS: { '>=': '≥', '<=': '≤', '>': '>', '<': '<', '=': '=' },
     op: function (o) {
       o = String(o == null ? '' : o).trim();
-      return this.OPS[o] || o.replace(/>=/g, '≥').replace(/<=/g, '≤');
+      if (this.OPS[o]) return this.OPS[o];
+      var band = o.match(/^(>=|<=|>|<|=)(\s|$)/); // ">= and <" is a band: the headline carries its floor, Details the rest
+      if (band) return this.OPS[band[1]];
+      return o.replace(/>=/g, '≥').replace(/<=/g, '≤');
     },
     headline: function (t) {
       var p = t.paramShort || t.parameter || '', u = this.unitOf(t);

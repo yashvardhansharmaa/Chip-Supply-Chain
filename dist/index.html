@@ -926,14 +926,14 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 .tl-strip[data-anim="1"] .tl-base { animation: tl-base-in 260ms var(--ease) 430ms backwards; }
 
 /* ---------- thresholds: jump nav and board ---------- */
-.th-jump { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 16px; }
+.th-jump { display: flex; flex-wrap: wrap; gap: 2px 18px; margin: 2px 0 16px; }
 .th-jump button {
   font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase;
-  padding: 4px 9px 5px; border: 1px solid var(--line); border-radius: 2px;
-  background: var(--bg-2); color: var(--ink-2); cursor: pointer;
+  padding: 3px 0 3px; border: 0; border-bottom: 1px solid transparent;
+  background: none; color: var(--muted); cursor: pointer;
 }
-.th-jump button:hover, .th-jump button:focus-visible { border-color: var(--accent); color: var(--accent-ink); }
-.th-jump button b { font-weight: 500; color: var(--muted); margin-left: 6px; }
+.th-jump button:hover, .th-jump button:focus-visible { border-bottom-color: var(--accent); color: var(--ink); }
+.th-jump button b { font-weight: 500; color: var(--line-2); margin-left: 5px; }
 
 .th-board { margin-bottom: 32px; }
 .th-group { margin: 0 0 28px; scroll-margin-top: calc(var(--masthead) + 14px); }
@@ -953,7 +953,10 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
   letter-spacing: 0.01em; margin: 0;
   display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
-.th-inst { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em; color: var(--accent-ink); }
+.th-inst {
+  font-family: var(--font-mono); font-size: 11px; line-height: 1.35; letter-spacing: 0.05em; color: var(--accent-ink);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
 .th-scope {
   font-family: var(--font-body); font-size: 14.5px; line-height: 1.4; color: var(--ink-2); margin: 0;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
@@ -1321,6 +1324,11 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 .sup-map { position: relative; margin: 26px 0 8px; }
 .sup-map-h { display: block; margin: 0 0 10px; }
 .sup-map-scroll { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 2px; }
+/* when the matrix is wider than its scroller, the right edge fades to say so */
+.sup-map-scroll[data-end="0"] {
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 22px), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - 22px), transparent);
+}
 
 .sup-grid { border-collapse: separate; border-spacing: 0; table-layout: fixed; width: 630px; } /* the column widths below add up to this; on a phone the scroller carries the overflow */
 .sup-grid th, .sup-grid td { padding: 0; }
@@ -1441,6 +1449,8 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 @media (max-width: 699px) {
   .sup-catsel { display: block; }
   #sup-chips { display: none; }
+  .view[data-view="suppliers"] .filters { gap: 8px; }
+  .view[data-view="suppliers"] .filters > * { flex: 1 1 100%; min-width: 0; }
 
   .sup-grid { width: 418px; }
   .sup-grid thead th.sup-gcorner { width: 118px; }
@@ -1452,7 +1462,7 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
   .sup-cell { height: 25px; }
   .sup-gn { width: 34px; font-size: 9.5px; }
   .sup-nil { margin: 11px auto; }
-  .sup-legend { line-height: 2; }
+  .sup-legend { line-height: 1.75; }
 
   .sup-toolbar .count { flex: 1 1 100%; margin-right: 0; }
   .sup-hrow { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; padding: 8px 2px; }
@@ -1460,16 +1470,17 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
   .sup-hrow .c2, .sup-hrow .c6 { display: none; }
 
   .sup-head {
-    grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-areas: "n lv" "w w" "m ch";
-    gap: 3px 10px; align-items: center; padding: 10px 2px 11px;
+    grid-template-columns: minmax(0, 1fr) auto 14px;
+    grid-template-areas: "n lv ch" "w w ch" "m m ch";
+    gap: 2px 10px; align-items: start; padding: 9px 2px 10px;
   }
   .sup-head .c1 { grid-area: n; }
-  .sup-head .c5 { grid-area: lv; }
-  .sup-head .c2 { grid-area: w; white-space: normal; font-size: 13px; }
-  .sup-head .c3 { grid-area: m; }
+  .sup-head .c1 b { font-size: 14.5px; }
+  .sup-head .c5 { grid-area: lv; align-self: center; }
+  .sup-head .c2 { grid-area: w; white-space: normal; font-size: 12.5px; line-height: 1.35; }
+  .sup-head .c3 { grid-area: m; font-size: 12px; }
   .sup-head .c4 { display: none; }
-  .sup-head .c6 { grid-area: ch; }
+  .sup-head .c6 { grid-area: ch; align-self: center; }
   .sup-detail-body { padding: 0 2px 14px; }
   .sup-facts { grid-template-columns: 1fr; gap: 1px; }
   .sup-facts dd { margin-bottom: 7px; }
@@ -1675,7 +1686,6 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
   .wk-step { break-inside: avoid; }
 }
 
-.wk-bridge { font-family: var(--font-body); font-style: italic; font-size: 16.5px; line-height: 1.5; color: var(--ink-2); margin: 0 0 8px; max-width: var(--measure); }
 
 .wk-facts { list-style: none; margin: 10px 0 4px; padding: 10px 12px 8px; border-left: 2px solid var(--line-2); max-width: var(--measure); }
 .wk-facts li { font-family: var(--font-body); font-size: 15px; line-height: 1.45; color: var(--ink-2); margin: 0 0 6px; }
@@ -2880,7 +2890,6 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">01</span></div>
 <div class="wk-block">
 <p class="wk-where"><span class="label">Chapter 01</span><span class="label wk-stage">Stage 1 of 15</span></p>
-<p class="wk-bridge">The chain starts before any material does, when a company still has nothing but an idea for a processor.</p>
 <h3 class="wk-t">Chip Design, EDA and IP</h3>
 <p class="wk-p">Chip design turns an idea for a processor into a complete blueprint, with every one of billions of transistors placed and wired. That is the street plan of a city that size, and every road has to be walkable in less than a billionth of a second. No one draws it by hand. Software from three companies, Synopsys, Cadence and Siemens, generates the layout, checks it and signs it off, and a chip factory accepts only designs that have passed those tools. Changing one street afterwards costs a fresh set of printing stencils and several months. Withhold the software and the design cannot be made.</p>
 <ul class="wk-facts" aria-label="Two sourced facts"><li>The market for chip design software and licensed circuit blocks was about $18B in 2025, with Synopsys, Cadence and Siemens EDA holding over 85% <a class="wk-src" href="https://newsletter.semianalysis.com/p/eda-market-primer" target="_blank" rel="noopener" title="EDA Market Primer, SemiAnalysis, 2026-05-21">source</a></li><li>A photomask set costs over $1M at 28 nm, over $10M at 7 nm and about $40M at 3 nm; startups have built leading-edge 7 nm chips end to end for $50-75M <a class="wk-src" href="https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor" target="_blank" rel="noopener" title="The Dark Side Of The Semiconductor Design Renaissance – Fixed Costs Soaring Due To Photomask Sets, Verification, and Validation, SemiAnalysis, 2022-07-24">source</a></li></ul>
@@ -2893,7 +2902,6 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">02</span></div>
 <div class="wk-block">
 <p class="wk-where"><span class="label">Chapter 02</span><span class="label wk-stage">Stage 2 of 15</span></p>
-<p class="wk-bridge">Nothing in a file computes; the drawing has to be printed onto something, and that something is a disc of pure silicon.</p>
 <h3 class="wk-t">Silicon and Wafers</h3>
 <p class="wk-p">Every chip starts as a wafer: a mirror-polished disc of silicon 300 millimetres across. A furnace melts purified sand, and a machine pulls a cylinder out of the melt the way a candle is dipped, except that what comes out is a single crystal, every atom on the same repeating grid. Saws slice that cylinder into discs, polished until nothing on the surface stands more than a few atoms proud. Fewer than one atom in a hundred billion may be anything but silicon, and the flatness has to hold right to the edge. Only five firms can do it reliably, and none of them is American or Chinese.</p>
 <ul class="wk-facts" aria-label="Two sourced facts"><li>Worldwide silicon wafer shipments rose 5.8% to 12,973 million square inches in 2025 while revenue fell 1.2% to $11.4 billion <a class="wk-src" href="https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html" target="_blank" rel="noopener" title="SEMI Reports 2025 Annual Worldwide Silicon Wafer Shipments and Revenue Results, PR Newswire, 2026-02-10">source</a></li><li>Five major suppliers stand behind the entire $11.4bn semiconductor silicon wafer market <a class="wk-src" href="https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf" target="_blank" rel="noopener" title="FOUNDATION OF DIGITAL LIFE Investor Presentation, Siltronic, 2026-04-29">source</a></li></ul>
@@ -2906,7 +2914,6 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">03</span></div>
 <div class="wk-block">
 <p class="wk-where"><span class="label">Chapter 03</span><span class="label wk-stage">Stage 3 of 15</span></p>
-<p class="wk-bridge">A bare disc records nothing, so before any light reaches it the wafer is coated in a chemical that reacts where the beam lands.</p>
 <h3 class="wk-t">Chemicals, Gases and Photoresist</h3>
 <p class="wk-p">Photoresist is photographic film for chips. A coating machine spreads a film thinner than a soap bubble across the wafer, light shines through a stencil, and the exposed parts dissolve away, leaving a pattern the next machine can etch. A few hundred other gases and liquids deposit, strip and clean around it. All of it has to be clean to about one stray metal atom in a trillion, and each formula is approved for one factory and one product at a time. That is why nine tenths of the world's photoresist comes from Japan, and a second source takes years rather than weeks.</p>
 <ul class="wk-facts" aria-label="Two sourced facts"><li>Japan holds about 90% of world semiconductor photoresist production, and China could not make EUV resists (as of 2021) <a class="wk-src" href="https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf" target="_blank" rel="noopener" title="The Semiconductor Supply Chain - Issue Brief, Center for Security and Emerging Technology (CSET), 2021-01-21">source</a></li><li>Japan Investment Corporation's vehicle took 84.36% of JSR at ¥4,350 a share in a tender offer that closed on 16 April 2024 <a class="wk-src" href="https://www.jiccapital.co.jp/en/news/.assets/E_20240417_JIC_JICC_PressRelease.pdf" target="_blank" rel="noopener" title="April 17, 2024 Japan Investment Corporation, Japan Investment Corporation, 2024-04-17">source</a></li></ul>
@@ -2919,7 +2926,6 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">04</span></div>
 <div class="wk-block">
 <p class="wk-where"><span class="label">Chapter 04</span><span class="label wk-stage">Stage 4 of 15</span></p>
-<p class="wk-bridge">Coated and still blank, the wafer goes to the machine that decides how small the circuit can be.</p>
 <h3 class="wk-t">Lithography</h3>
 <p class="wk-p">Lithography prints the pattern of a circuit onto the wafer: the machine holds a stencil of one layer up to a lamp and projects it, four times smaller, onto the silicon. Finer circuits need shorter wavelengths, and the shortest light now in use will not pass through air, so the printing has to happen in a vacuum. Only one company has ever built such a machine, and it is Dutch. Export controls on advanced chipmaking run through that one firm.</p>
 <ul class="wk-facts" aria-label="Two sourced facts"><li>ASML recognized 48 EUV systems in revenue in 2025, versus 44 in 2024 and 53 in 2023 <a class="wk-src" href="https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf" target="_blank" rel="noopener" title="ASML 2025 Annual Report, ASML, 2026-02-24">source</a></li><li>ASML total net sales were EUR 32.7 billion in 2025 at a 52.8% gross margin <a class="wk-src" href="https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf" target="_blank" rel="noopener" title="ASML 2025 Annual Report, ASML, 2026-02-24">source</a></li></ul>
@@ -2932,7 +2938,6 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">05</span></div>
 <div class="wk-block">
 <p class="wk-where"><span class="label">Chapter 05</span><span class="label wk-stage">Stage 5 of 15</span></p>
-<p class="wk-bridge">Look next at the stencil itself, because everything the machine prints is decided by what is written on that one plate.</p>
 <h3 class="wk-t">Photomasks and Pellicles</h3>
 <p class="wk-p">A photomask is the printing plate for one layer of a chip. One plate prints the same layer on wafer after wafer, so it shapes millions of chips. No glass is transparent to the short light now in use, so the plate is not a window but a mirror of about forty pairs of ultrathin layers, and any speck of dust on it repeats on every wafer it prints. Two Japanese firms make almost all of those mirrors. An obscure business almost nobody has heard of can hold up every leading-edge chip in the world.</p>
 <ul class="wk-facts" aria-label="Two sourced facts"><li>AGC calls itself the world's only maker of EUV mask blanks handling every step from glass material to coating, and expanded capacity by about 30% in 2025 under a METI supply-chain programme <a class="wk-src" href="https://www.agc.com/en/news/detail/1203819_2814.html" target="_blank" rel="noopener" title="AGC to Boost Production Capacity of EUVL Photomask Blanks ｜ News ｜ AGC, AGC Inc.">source</a></li><li>Hoya says it holds an exceptionally high share of the mask blank market and expects customers to move gradually toward multi-sourcing EUV blanks <a class="wk-src" href="https://www.hoya.com/ir/2025/en/review/it.html" target="_blank" rel="noopener" title="Information Technology Business | Review of Operations | HOYA REPORT 2025, HOYA">source</a></li></ul>
@@ -2945,7 +2950,6 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">06</span></div>
 <div class="wk-block">
 <p class="wk-where"><span class="label">Chapter 06</span><span class="label wk-stage">Stage 6 of 15</span></p>
-<p class="wk-bridge">A printed pattern is not yet a circuit, and the machines that turn it into one run more often than anything else in the fab.</p>
 <h3 class="wk-t">Deposition and Etch</h3>
 <p class="wk-p">Deposition and etch build the chip itself, like a layer cake: lay down a film a few atoms thick, print a pattern on it, burn away everything the pattern does not protect, then do it again, more than a thousand times over. The film has to reach the bottom of a hole hundreds of times deeper than it is wide, and the burn has to eat one material and leave the one beside it untouched. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.</p>
 <ul class="wk-facts" aria-label="Two sourced facts"><li>Producing one chip takes more than 1,000 process steps and 70 or more border crossings (CSET, 2021) <a class="wk-src" href="https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf" target="_blank" rel="noopener" title="The Semiconductor Supply Chain - Issue Brief, Center for Security and Emerging Technology (CSET), 2021-01-21">source</a></li><li>Global semiconductor equipment billings reached $135.1B in 2025, up 15% from $117.1B in 2024, with wafer processing equipment up 12% (SEMI) <a class="wk-src" href="https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025" target="_blank" rel="noopener" title="SEMI Reports Global Semiconductor Equipment Billings Reached $135 Billion in 2025, Up 15% Year-on-Year, SEMI, 2026-04-07">source</a></li></ul>
@@ -2958,7 +2962,6 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">07</span></div>
 <div class="wk-block">
 <p class="wk-where"><span class="label">Chapter 07</span><span class="label wk-stage">Stage 7 of 15</span></p>
-<p class="wk-bridge">Every one of those films can land wrong, and wrong is invisible until something goes looking for it.</p>
 <h3 class="wk-t">Metrology and Inspection</h3>
 <p class="wk-p">Metrology and inspection are the factory's quality control. Between the steps that build a chip, another machine looks the wafer over: are the lines the right width, did this layer land on the last one, has a speck of dirt killed a circuit. On a die as big as an AI accelerator, halving the stray specks lifts the share of working chips from about half to about seven in ten. One American firm sells seven times as many of those machines as its nearest rival, so a fab cut off from it can buy every other tool and still not learn why its chips fail.</p>
 <ul class="wk-facts" aria-label="Two sourced facts"><li>Die yield is (1 + D0A/a) to the power minus a, with a of 3 to 4 for modern CMOS, so defect density and die area alone set the ceiling <a class="wk-src" href="https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf" target="_blank" rel="noopener" title="Microsoft Word - f33-book-dep-comp-20201010.docx, University of California, Santa Barbara, 2020-10-11">source</a></li><li>KLA took the number one position in advanced wafer-level packaging process control in calendar 2025, adding 14 percentage points of share and growing that revenue about 70% <a class="wk-src" href="https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf" target="_blank" rel="noopener" title="Letter to Shareholders Q3 Fiscal 2026, KLA Corporation, 2026-04-29">source</a></li></ul>
@@ -2971,7 +2974,6 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">08</span></div>
 <div class="wk-block">
 <p class="wk-where"><span class="label">Chapter 08</span><span class="label wk-stage">Stage 8 of 15</span></p>
-<p class="wk-bridge">Measured and clean, the layers mean nothing on their own; laid in the right order they become switches.</p>
 <h3 class="wk-t">Transistors and the Front End</h3>
 <p class="wk-p">The front end of a chip factory builds the switches. Each one is a valve on a pipe: current runs along a silicon channel, and a voltage on the gate above it opens or shuts the flow. Make the channel short enough and the valve stops sealing, so current leaks through even when the gate is off and the chip burns power doing nothing. The fix is to wrap the gate around all four sides of the channel, a sequence that has to run in exact order. Only TSMC, Intel and Samsung can do it, a list short enough for an export rule to name in full.</p>
 <ul class="wk-facts" aria-label="Two sourced facts"><li>TSMC N2 entered volume production in 4Q25, its first nanosheet gate-all-around node <a class="wk-src" href="https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm" target="_blank" rel="noopener" title="2nm Technology, TSMC">source</a></li><li>TSMC N2P delivers 18% more speed at the same power, 36% less power at the same speed, 1.2x logic density and 1.15x chip density over N3E <a class="wk-src" href="https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech" target="_blank" rel="noopener" title="HPC Platform – Advanced Technologies, TSMC">source</a></li></ul>
@@ -2984,7 +2986,6 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">09</span></div>
 <div class="wk-block">
 <p class="wk-where"><span class="label">Chapter 09</span><span class="label wk-stage">Stage 9 of 15</span></p>
-<p class="wk-bridge">The designers of the chip own none of these machines; they rent time in someone else's building, and that building is a business of its own.</p>
 <h3 class="wk-t">Foundries and Fabs</h3>
 <p class="wk-p">A foundry is a print shop for chips: other companies send in designs, and the foundry runs them through the same building on the same tools. The building costs tens of billions of dollars, the air inside is cleaner than an operating theatre, and a wafer crosses hundreds of machines over several months without ever touching that air. No design house sells enough of one product to fill a shop like that, so the world shares a handful of them. TSMC runs the biggest, and all six of its largest plants sit in Taiwan, which is why one island's politics reaches the whole chip supply.</p>
 <ul class="wk-facts" aria-label="Two sourced facts"><li>7 nm and below was 77% of TSMC's wafer revenue in 2Q26, on revenue of $40.20 billion at a 67.7% gross margin <a class="wk-src" href="https://www.sec.gov/Archives/edgar/data/0001046179/000104617926000451/a2q26e_withguidancexfinal.htm" target="_blank" rel="noopener" title="TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD, Form 6-K report of foreign private issuer for the period ended 2026-06-30 (6-K), U.S. Securities and Exchange Commission (filing by TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD), 2026-07-16">source</a></li><li>TSMC defines a GIGAFAB as a 300 mm fab running more than 100,000 wafers a month; it operates six, whose combined capacity exceeded 13 million 12-inch equivalent wafers in 2025 <a class="wk-src" href="https://www.tsmc.com/english/dedicatedFoundry/manufacturing/gigafab" target="_blank" rel="noopener" title="GIGAFAB® Facilities, TSMC">source</a></li></ul>
@@ -2997,7 +2998,6 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">10</span></div>
 <div class="wk-block">
 <p class="wk-where"><span class="label">Chapter 10</span><span class="label wk-stage">Stage 10 of 15</span></p>
-<p class="wk-bridge">A die that computes fast still sits idle if its data arrives slowly, and nothing on the chip itself can fix that.</p>
 <h3 class="wk-t">Memory and HBM</h3>
 <p class="wk-p">High bandwidth memory is where an AI chip keeps the numbers it is working on, and it is built to hand them over fast. It stacks up to sixteen memory chips into a cube, drills copper wires straight down through them, and sets the cube beside the processor. Stacking is the hard part: each chip is ground down until the copper comes through the back, the cube must stay under a fixed height or it fouls the cooling plate, and one bad layer ruins the rest. Only SK hynix, Samsung and Micron have made it work, and a single line in an American export rule reaches all three.</p>
 <ul class="wk-facts" aria-label="Two sourced facts"><li>HBM4 sets a 2,048-bit interface with 32 channels, 2 TB/s per stack at 8 Gb/s per pin, and up to 64 GB per stack <a class="wk-src" href="https://www.jedec.org/news/pressreleases/jedec%C2%AE-and-industry-leaders-collaborate-release-jesd270-4-hbm4-standard-advancing" target="_blank" rel="noopener" title="JEDEC® and Industry Leaders Collaborate to Release JESD270-4 HBM4 Standard: Advancing Bandwidth, Efficiency, and Capacity for AI and HPC, JEDEC Solid State Technology Association, 2025-04-16">source</a></li><li>A single HBM cube's data interface is 1,024 bits wide, which Micron counts as 32 independent channels (the JEDEC standard calls them 16 channels of two pseudo-channels each), 16 times wider than a standard DDR5 module <a class="wk-src" href="https://www.micron.com/products/memory/hbm" target="_blank" rel="noopener" title="High-bandwidth memory (HBM), Micron Technology">source</a></li></ul>
@@ -3010,7 +3010,6 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">11</span></div>
 <div class="wk-block">
 <p class="wk-where"><span class="label">Chapter 11</span><span class="label wk-stage">Stage 11 of 15</span></p>
-<p class="wk-bridge">Logic and memory are still two separate objects, made in different countries, and the next stage exists to close the distance between them.</p>
 <h3 class="wk-t">Advanced Packaging</h3>
 <p class="wk-p">Packaging wires finished chips into one component and mounts them on a base built to the tolerances of a chip. A lithography machine can print only a rectangle about the size of a postage stamp in one shot, so a modern accelerator is cut into pieces and stitched back together on a shared slab of silicon, with its memory a few millimetres away. Slab, chips and base all expand at different rates when heated, so the package warps and the joints crack. Getting that right in volume is hard enough that nearly every AI accelerator is packaged by TSMC, in Taiwan.</p>
 <ul class="wk-facts" aria-label="Two sourced facts"><li>A scanner's maximum exposure field is 26 mm by 33 mm, or 858 mm2 <a class="wk-src" href="https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe3400c" target="_blank" rel="noopener" title="TWINSCAN NXE:3400C, ASML">source</a></li><li>TSMC is now producing 5.5-reticle CoWoS, having certified it in 2025 and started volume production in 2026 <a class="wk-src" href="https://pr.tsmc.com/english/news/3302" target="_blank" rel="noopener" title="TSMC Debuts A13 Technology at 2026 North America Technology Symposium, TSMC, 2026-04-23">source</a></li></ul>
@@ -3023,7 +3022,6 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">12</span></div>
 <div class="wk-block">
 <p class="wk-where"><span class="label">Chapter 12</span><span class="label wk-stage">Stage 12 of 15</span></p>
-<p class="wk-bridge">Everything so far builds upward, and the base under the package now has to carry all of it down to an ordinary board.</p>
 <h3 class="wk-t">Substrates and PCBs</h3>
 <p class="wk-p">A package substrate is the adapter between a chip and the circuit board under it. The chip's connections come out finer than a human hair; the board works in millimetres. The substrate is built like plywood: a stiff core of glass cloth and resin, thin sheets of epoxy film pressed onto both faces, holes burned through each sheet by laser, and copper plated into the holes. Every added layer is another hole that can fail. A handful of firms build these substrates, and the film and the glass cloth each come from a single Japanese supplier, so a shortage here stops accelerators shipping.</p>
 <ul class="wk-facts" aria-label="Two sourced facts"><li>TSMC's chief executive told the July 2026 earnings call that packaging capacity is so tight it now limits customers' growth <a class="wk-src" href="https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf" target="_blank" rel="noopener" title="Q2 2026 Taiwan Semiconductor Manufacturing Co Ltd Earnings Call (Chinese, English) — edited transcript, LSEG StreetEvents (transcript of a TSMC earnings call), via TSMC, 2026-07-16">source</a></li><li>Ajinomoto Build-up Film was first adopted by a major semiconductor manufacturer in 1999, and Ajinomoto calls it the de facto standard insulating material for package development ever since <a class="wk-src" href="https://www.ajinomoto.co.jp/company/en/ir/event/business_briefing/main/01113/teaserItems1/01/linkList/00/link/3_ICT_E.pdf" target="_blank" rel="noopener" title="Microsoft PowerPoint - 3_ICT_E, Ajinomoto, 2023-06-12">source</a></li></ul>
@@ -3036,7 +3034,6 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">13</span></div>
 <div class="wk-block">
 <p class="wk-where"><span class="label">Chapter 13</span><span class="label wk-stage">Stage 13 of 15</span></p>
-<p class="wk-bridge">Nothing yet proves that any of it works, and a package this far along is worth too much to guess about.</p>
 <h3 class="wk-t">Test and Assembly</h3>
 <p class="wk-p">Before a chip can be sold, a machine has to interrogate it and check every answer. Thousands of needles land on pads on the wafer and drive test patterns into each chip; the tester marks the ones that answer wrong, and they never leave. This matters more each year because of arithmetic: a modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them. So the industry tests earlier, hotter and longer than it used to, and two firms, one Japanese and one American, sell most of the machines that do it.</p>
 <ul class="wk-facts" aria-label="Two sourced facts"><li>Advantest estimates its overall tester market share at about 65% in CY2025, with 66% of logic chip test (up about 10 points year on year) and about 60% of memory test <a class="wk-src" href="https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf" target="_blank" rel="noopener" title="JE BIZ 260427 note (Advantest website), Advantest">source</a></li><li>The CY2025 tester market was about US$9.0 billion: US$6.9 billion of logic chip testers, up about 68% year on year, and US$2.1 billion of memory testers <a class="wk-src" href="https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf" target="_blank" rel="noopener" title="JE BIZ 260427 note (Advantest website), Advantest">source</a></li></ul>
@@ -3049,7 +3046,6 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">14</span></div>
 <div class="wk-block">
 <p class="wk-where"><span class="label">Chapter 14</span><span class="label wk-stage">Stage 14 of 15</span></p>
-<p class="wk-bridge">A tested package is still a single chip, and the machine that trains a model is a room full of them acting as one.</p>
 <h3 class="wk-t">Systems and Networking</h3>
 <p class="wk-p">A rack is where finished chips become one machine. Builders bolt each package onto a board, feed it more than a thousand amps, and wire it to seventy-one neighbours so that a training run sees one computer instead of seventy-two. A cluster runs only as fast as its slowest link, and copper carries a signal a few metres at most, so the longer links have to become light. Many firms can bolt racks together. Far fewer can make the lasers that carry the light, and that is where the chain narrows.</p>
 <ul class="wk-facts" aria-label="Two sourced facts"><li>NVLink 6 carries 3,600 GB/s per GPU, double NVLink 5's 1,800 GB/s and four times NVLink 4's 900 GB/s <a class="wk-src" href="https://www.nvidia.com/en-us/data-center/nvlink/" target="_blank" rel="noopener" title="NVLink &amp; NVLink Switch for Advanced Multi-GPU Communication, Nvidia, 2026-04-20">source</a></li><li>A GB300 NVL72 rack holds 18 compute trays and 9 NVLink switch trays with 18 NVSwitch ASICs, drawing up to 142 kW <a class="wk-src" href="https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html" target="_blank" rel="noopener" title="System Hardware &amp; Components, Nvidia">source</a></li></ul>
@@ -3062,7 +3058,6 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">15</span></div>
 <div class="wk-block">
 <p class="wk-where"><span class="label">Chapter 15</span><span class="label wk-stage">Stage 15 of 15</span></p>
-<p class="wk-bridge">Racks like that have to stand somewhere, and the somewhere has to be built around what they consume.</p>
 <h3 class="wk-t">Data Centers and Power</h3>
 <p class="wk-p">A data center's job is to feed and cool the machines inside it. The scale has changed: a hair dryer pours about two kilowatts of heat out of a hand-sized nozzle, and one rack of AI chips draws seventy of them in a box the size of a wardrobe, every watt of it turning into heat that has to be carried away in water rather than air. The building is the easy part. Getting the electricity to the door is the hard one, because the transformers, switchgear and turbines that connect a site to the grid come from a few suppliers and are ordered years in advance.</p>
 <ul class="wk-facts" aria-label="Two sourced facts"><li>A GB300 NVL72 rack draws up to 142 kW, fed by eight 33 kW power shelves <a class="wk-src" href="https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html" target="_blank" rel="noopener" title="System Hardware &amp; Components, Nvidia">source</a></li><li>NVIDIA's 800-volt DC architecture is drawn for racks from 100 kW to over 1 MW, with megawatt racks from 2027, because the 54-volt distribution in today's racks hits physical limits past about 200 kW <a class="wk-src" href="https://developer.nvidia.com/blog/nvidia-800-v-hvdc-architecture-will-power-the-next-generation-of-ai-factories/" target="_blank" rel="noopener" title="NVIDIA 800 VDC Architecture Will Power the Next Generation of AI Factories, Nvidia, 2025-05-20">source</a></li></ul>
@@ -3075,7 +3070,6 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">16</span></div>
 <div class="wk-block">
 <p class="wk-where"><span class="label">Chapter 16</span></p>
-<p class="wk-bridge">The physical chain ends at a powered rack, and the next question is which part of it holds the money.</p>
 <h3 class="wk-t">Component Costs</h3>
 <p class="wk-p">A bill of materials is the list of parts inside a product and what each one costs to build. For an AI accelerator, the famous logic chip is the cheap part, about a seventh of the total. The stacked memory beside it is nearly half, and the packaging that wires the two together costs more than the chip. Three firms in the world make that memory and one Taiwanese firm does that packaging, so the costliest parts are also the scarcest, and that is where a government has the most purchase.</p>
 <ul class="wk-facts" aria-label="Two sourced facts"><li>A B200 costs about $6,400 to build, in a range of $5,700 to $7,300, and sells for $30,000 to $40,000 <a class="wk-src" href="https://epoch.ai/data-insights/b200-cost-breakdown" target="_blank" rel="noopener" title="NVIDIA's B200 costs around $6,400 to produce, Epoch AI, 2025-12-10">source</a></li><li>High-bandwidth memory (HBM3E) is $2,900 of that $6,400, at $14 to $17 per gigabyte; the logic dies are $900 <a class="wk-src" href="https://epoch.ai/data-insights/b200-cost-breakdown" target="_blank" rel="noopener" title="NVIDIA's B200 costs around $6,400 to produce, Epoch AI, 2025-12-10">source</a></li></ul>
@@ -3088,7 +3082,6 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">17</span></div>
 <div class="wk-block">
 <p class="wk-where"><span class="label">Chapter 17</span></p>
-<p class="wk-bridge">What is left is not how a chip gets built but who can stop it, and that answer is written into law.</p>
 <h3 class="wk-t">Geopolitics</h3>
 <p class="wk-p">An export control is a licence requirement. A government names an item and a buyer, and its own companies then need a licence to ship that item to that buyer; Washington stretches the rule to cover foreign-made goods built with American technology. Few governments can enforce such a rule, because the machines, software and chemicals that make an advanced chip come from a short list of firms in the United States, the Netherlands, Japan and South Korea. China can copy the simpler machines within a few years. It cannot yet copy the machine that prints the finest circuits, the chemistry that machine needs, or high-bandwidth memory.</p>
 <ul class="wk-facts" aria-label="Two sourced facts"><li>Taiwan's foundries hold 78% of the global foundry market and 92% of the manufacturing capacity for the most advanced chips <a class="wk-src" href="https://www.stimson.org/2025/why-taiwan-fears-america-first-risks-eroding-its-silicon-shield/" target="_blank" rel="noopener" title="Why Taiwan Fears ‘America First’ Risks Eroding Its ‘Silicon Shield’, Stimson Center, 2025-10-10">source</a></li><li>ASML's China share of net system sales fell from 41% in 2024 to 33% in 2025 <a class="wk-src" href="https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf" target="_blank" rel="noopener" title="Presentation Investor Relations Q4 2025, ASML, 2026-01-27">source</a></li></ul>
@@ -8052,7 +8045,10 @@ PC.register('wafer', function (p) {
       host.addEventListener('mouseout', function (e) { var b = e.target.closest('.sup-cell'); if (b && !b.contains(e.relatedTarget)) self.hideTip(); });
       host.addEventListener('focusin', function (e) { var b = e.target.closest('.sup-cell'); if (b) self.showTip(b); });
       host.addEventListener('focusout', function () { self.hideTip(); });
-      host.addEventListener('scroll', function () { self.hideTip(); });
+      var edge = function () { host.setAttribute('data-end', host.scrollLeft + host.clientWidth >= host.scrollWidth - 2 ? '1' : '0'); }; // a faded right edge says the matrix keeps going
+      host.addEventListener('scroll', function () { self.hideTip(); edge(); });
+      window.addEventListener('resize', edge);
+      edge();
     },
     showTip: function (btn) {
       var e = this.cells[btn.getAttribute('data-cat') + '|' + btn.getAttribute('data-cc')], el = $('#sup-tip'), map = $('#sup-map');
@@ -8588,7 +8584,10 @@ PC.register('wafer', function (p) {
     OPS: { '>=': '≥', '<=': '≤', '>': '>', '<': '<', '=': '=' },
     op: function (o) {
       o = String(o == null ? '' : o).trim();
-      return this.OPS[o] || o.replace(/>=/g, '≥').replace(/<=/g, '≤');
+      if (this.OPS[o]) return this.OPS[o];
+      var band = o.match(/^(>=|<=|>|<|=)(\s|$)/); // ">= and <" is a band: the headline carries its floor, Details the rest
+      if (band) return this.OPS[band[1]];
+      return o.replace(/>=/g, '≥').replace(/<=/g, '≤');
     },
     headline: function (t) {
       var p = t.paramShort || t.parameter || '', u = this.unitOf(t);

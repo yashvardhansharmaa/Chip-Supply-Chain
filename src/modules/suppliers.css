@@ -144,7 +144,7 @@
   .sup-cell { height: 25px; }
   .sup-gn { width: 34px; font-size: 9.5px; }
   .sup-nil { margin: 11px auto; }
-  .sup-legend { line-height: 2; }
+  .sup-legend { line-height: 1.75; }
 
   .sup-toolbar .count { flex: 1 1 100%; margin-right: 0; }
   .sup-hrow { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; padding: 8px 2px; }
@@ -152,16 +152,17 @@
   .sup-hrow .c2, .sup-hrow .c6 { display: none; }
 
   .sup-head {
-    grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-areas: "n lv" "w w" "m ch";
-    gap: 3px 10px; align-items: center; padding: 10px 2px 11px;
+    grid-template-columns: minmax(0, 1fr) auto 14px;
+    grid-template-areas: "n lv ch" "w w ch" "m m ch";
+    gap: 2px 10px; align-items: start; padding: 9px 2px 10px;
   }
   .sup-head .c1 { grid-area: n; }
-  .sup-head .c5 { grid-area: lv; }
-  .sup-head .c2 { grid-area: w; white-space: normal; font-size: 13px; }
-  .sup-head .c3 { grid-area: m; }
+  .sup-head .c1 b { font-size: 14.5px; }
+  .sup-head .c5 { grid-area: lv; align-self: center; }
+  .sup-head .c2 { grid-area: w; white-space: normal; font-size: 12.5px; line-height: 1.35; }
+  .sup-head .c3 { grid-area: m; font-size: 12px; }
   .sup-head .c4 { display: none; }
-  .sup-head .c6 { grid-area: ch; }
+  .sup-head .c6 { grid-area: ch; align-self: center; }
   .sup-detail-body { padding: 0 2px 14px; }
   .sup-facts { grid-template-columns: 1fr; gap: 1px; }
   .sup-facts dd { margin-bottom: 7px; }

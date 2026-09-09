@@ -66,7 +66,6 @@ module.exports = function (ctx) {
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">${pad(ch.number)}</span></div>
 <div class="wk-block">
 <p class="wk-where"><span class="label">Chapter ${pad(ch.number)}</span>${stage ? `<span class="label wk-stage">${esc(stage)}</span>` : ''}</p>
-${ch.meta && ch.meta.bridge ? `<p class="wk-bridge">${esc(ch.meta.bridge)}</p>` : ''}
 <h3 class="wk-t">${esc(ch.title)}</h3>
 <p class="wk-p">${esc(plainOf(ch.id))}</p>
 ${factsHTML(ch)}

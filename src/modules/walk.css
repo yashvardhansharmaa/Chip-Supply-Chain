@@ -191,7 +191,6 @@
   .wk-step { break-inside: avoid; }
 }
 
-.wk-bridge { font-family: var(--font-body); font-style: italic; font-size: 16.5px; line-height: 1.5; color: var(--ink-2); margin: 0 0 8px; max-width: var(--measure); }
 
 .wk-facts { list-style: none; margin: 10px 0 4px; padding: 10px 12px 8px; border-left: 2px solid var(--line-2); max-width: var(--measure); }
 .wk-facts li { font-family: var(--font-body); font-size: 15px; line-height: 1.45; color: var(--ink-2); margin: 0 0 6px; }
