@@ -108,7 +108,7 @@ The consumables are tighter still. As of 2021 five firms held more than 60 perce
 
 This layer has been tested twice, and both tests confirmed the theory.
 
-In July 2019 Japan put photoresist, hydrogen fluoride and fluorinated polyimide under individual export licences for South Korea, after supplying more than 90 percent of Korean imports of two of them. Hydrogen fluoride exports fell 87.9 percent ([source](https://www.rieti.go.jp/en/columns/v01_0201.html)). No fab stopped, but Korea spent five years funding domestic substitutes, which is what materials controls usually produce.
+In July 2019 Japan put photoresist, hydrogen fluoride and fluorinated polyimide under individual export licences for South Korea, having supplied more than 90 percent of Korean imports of two of them; hydrogen fluoride exports then fell 87.9 percent ([source](https://www.rieti.go.jp/en/columns/v01_0201.html)). No fab stopped, but Korea spent five years funding domestic substitutes, which is what materials controls usually produce.
 
 In 2022 Russia invaded Ukraine, which supplied about 70 percent of the world's neon and 90 percent of the semiconductor-grade neon used by US industry ([source](https://www.csis.org/blogs/perspectives-innovation/russias-invasion-ukraine-impacts-gas-markets-critical-chip-production)). Again no fab stopped. The lasting consequence: China now runs more than 40 percent of global air separation capacity, on one specialist's count ([source](https://www.sfa-oxford.com/rare-earths-and-minor-metals/gaseous-elements-and-noble-gases/electronic-gases/neon-10-ne/)).
 

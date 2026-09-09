@@ -69,7 +69,7 @@ Sand is melted and then pulled slowly out of the melt like a candle being dipped
 
 Silicon starts as quartzite reduced with carbon in an arc furnace, then turned into trichlorosilane gas, distilled and decomposed onto heated filaments in a bell jar. That Siemens process grows the grey polysilicon rods everything downstream is made from. Solar cells tolerate nine nines of purity; electronics demand eleven ([source](https://www.pv-magazine.com/2025/11/25/china-dominates-global-polysilicon-capacity-says-bernreuter-research/)). Those two orders of magnitude separate a commodity from a chokepoint.
 
-The polysilicon is melted at about 1,420 degrees Celsius and pulled into a single crystal by the Czochralski method, starting with a thin neck that starves out dislocations at the seed. Boron or phosphorus in the melt sets resistivity and conductivity type. Wafering is subtraction: the ingot is sliced with a wire saw, lapped, etched and mirror-polished with colloidal silica, and epitaxial wafers get a further layer of near-perfect silicon grown on at about 1,200 degrees Celsius ([source](https://www.sumcosi.com/english/products/process/)). Almost every step throws material away.
+The polysilicon is melted at about 1,420 degrees Celsius and pulled into a single crystal by the Czochralski method, starting with a thin neck that starves out dislocations at the seed. Boron or phosphorus in the melt sets resistivity and conductivity type. Wafering is subtraction: the ingot is sliced with a wire saw, lapped, etched and mirror-polished with colloidal silica, and epitaxial wafers get a further layer of near-perfect silicon grown on top at about 1,200 degrees Celsius ([source](https://www.sumcosi.com/english/products/process/)). Almost every step throws material away.
 
 ## Variants and trade-offs
 
@@ -96,7 +96,7 @@ Their 2025 results split the field: an AI boom, a mature-node hangover.
 
 Price explains the gap between volume and profit: area shipped rose 5.8 percent in 2025 while revenue fell 1.2 percent ([source](https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html)). Wafers sell on multi-year agreements that fix price and volume years ahead, so a demand spike never reaches the invoice.
 
-Feedstock is a separate map. China produced 93.5 percent of the world's polysilicon in 2024, and nine of the ten largest producers are Chinese, on a Bernreuter ranking reported in the trade press. That dominance is in solar-grade material: the one non-Chinese firm in the top ten, Wacker, ranks eighth by volume and makes more semiconductor-grade polysilicon than anyone ([source](https://www.pv-magazine.com/2025/11/25/china-dominates-global-polysilicon-capacity-says-bernreuter-research/)).
+Feedstock is a separate map. China produced 93.5 percent of the world's polysilicon in 2024, and nine of the ten largest producers are Chinese, on a Bernreuter ranking reported in the trade press ([source](https://www.pv-magazine.com/2025/11/25/china-dominates-global-polysilicon-capacity-says-bernreuter-research/)). That dominance is in solar-grade material: the one non-Chinese firm in the top ten, Wacker, ranks eighth by volume and makes more semiconductor-grade polysilicon than anyone ([source](https://www.pv-magazine.com/2025/11/25/china-dominates-global-polysilicon-capacity-says-bernreuter-research/)).
 
 {{figure:polysilicon-capacity}}
 

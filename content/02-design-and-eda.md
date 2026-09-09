@@ -84,7 +84,7 @@ A design runs through five phases.
 - **Physical design.** Synthesis maps the code onto the foundry's standard cells, then placement, routing, timing closure and signoff.
 - **Tape-out.** Mask data preparation and optical proximity correction turn the layout into pattern files for the mask shop.
 
-What disciplines the work is not the licence fee but the cost of a mistake. A photomask set passes $1 million at 28 nm, $10 million at 7 nm and about $40 million at 3 nm. The design itself costs less than its reputation: SemiAnalysis has seen startups take a leading-edge chip to tape-out on TSMC 7 nm for $50 million to $75 million, everything included ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)).
+What disciplines the work is not the licence fee but the cost of a mistake. A photomask set passes $1 million at 28 nm, $10 million at 7 nm and about $40 million at 3 nm, and a whole leading-edge chip has gone from design to tape-out on TSMC 7 nm for $50 million to $75 million, everything included ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)).
 
 {{figure:mask-cost}}
 
@@ -110,7 +110,7 @@ Reticle limits ended the single-die accelerator. Modern parts are chiplets joine
 
 ## Who makes it
 
-The EDA and design IP market was about $18 billion in 2025, and Synopsys, Cadence and Siemens EDA took more than 85% of it. No one else holds 5% of any core category ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
+The EDA and design IP market was about $18 billion in 2025, and Synopsys, Cadence and Siemens EDA took more than 85% of it, with no other vendor above 5% in any core category ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
 
 {{figure:eda-share}}
 
