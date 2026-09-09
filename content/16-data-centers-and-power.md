@@ -6,7 +6,7 @@
   "oneLiner": "The chips are no longer what a buildout waits on. A large transformer takes three years, turbine output does not reach 30 GW a year until 2030, and Texas has fifty times more large load queued than it has approved to switch on.",
   "plain": "A domestic hair dryer pours about two kilowatts of heat out of a hand-sized nozzle. One rack of AI chips draws seventy of them in a box the size of a wardrobe, and every watt turns into heat that has to be carried away in water rather than air. Feeding and cooling that box is what a modern data center does. The building is the easy part. Getting the electricity to the door is the hard one, because the transformers, switchgear and turbines that connect a site to the grid are ordered years in advance.",
   "specimen": "rack",
-  "specimenCaption": "Right: a liquid-cooled 72-GPU rack. Eighteen compute trays above and below nine NVLink switch trays, a vertical busbar at the back, power shelves at the top and bottom, and cold-plate manifolds feeding every tray.",
+  "specimenCaption": "Right: a liquid-cooled 72-GPU rack. Eighteen compute trays above and below nine NVLink switch trays, the NVLink cable cartridge filling the back, cold-plate manifolds up the side, and in amber the power shelves at top and bottom and the busbar they feed, the part with the queue in front of it.",
   "card": {
     "concentration": "High",
     "chokepointScore": 4,

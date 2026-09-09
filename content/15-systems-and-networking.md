@@ -6,7 +6,7 @@
   "oneLiner": "A finished package is useless until it is bolted to a baseboard, fed a thousand amps and wired to seventy-one siblings. Many firms can do the bolting; few can make the lasers.",
   "plain": "A cluster runs only as fast as its slowest link, so this stage is built to keep every accelerator in step. It bolts each finished package onto a board, feeds it more than a thousand amps, and wires it to seventy-one neighbours so that a training run sees one machine instead of seventy-two. Copper carries a signal a few metres at most, so the longer links have to become light, and light needs lasers. That is why the tightest supply in this layer is a laser material.",
   "specimen": "gpu-baseboard",
-  "specimenCaption": "Right: an eight-GPU baseboard. Four accelerator modules per side, switch chips down the centre, voltage regulator banks along the long edges, and the high-density connectors that carry scale-out traffic off the board.",
+  "specimenCaption": "Right: an eight-GPU baseboard. Four accelerator modules per side, the two NVLink switch chips in amber down the centre, voltage regulator banks along the long edges, and the connectors that carry scale-out traffic off the board.",
   "card": {
     "concentration": "High",
     "chokepointScore": 3,

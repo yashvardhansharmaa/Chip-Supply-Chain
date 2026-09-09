@@ -27,7 +27,7 @@
     "chinaStatus": "Blocked at the leading edge and substituting fast below it. Domestic tools went from 25 percent of China's own equipment market in 2024 to 35 percent in 2025, and about 40 percent in etch and deposition; SMIC runs 7 nm-class logic without EUV at roughly 45,000 advanced-node wafers a month; CXMT's 2026 HBM output covers 250,000 to 300,000 Ascend packages. No EUV, no HBM at scale, no path to either before 2028.",
     "usStatus": "Holds design, EDA and most process tools, and uses the Foreign Direct Product Rule to reach foreign-made goods. Has traded parts of the fence for revenue and investment since 2025: an expected 15 percent cut of licensed H20 sales, a 9.9 percent equity stake in Intel, a 25 percent tariff on advanced chips, and case-by-case H200 licences.",
     "costSignal": "$52.7B authorised under the CHIPS Act against about $47B in the latest round of China's Big Fund alone",
-    "substitution": {"years": "10+", "why": "China can copy mature tools in three to five years, but EUV optics, EUV resist and HBM stacking each took two decades and a supplier ecosystem that a single national programme cannot conjure."}
+    "substitution": {"years": "10+", "why": "China can copy mature tools in three to five years, but EUV optics, EUV resist and HBM stacking each took two decades and a supplier base that no single national programme can build to order."}
   },
   "keyFacts": [
     {"fact": "Taiwan's foundries hold 78% of the global foundry market and 92% of the manufacturing capacity for the most advanced chips", "source": "https://www.stimson.org/2025/why-taiwan-fears-america-first-risks-eroding-its-silicon-shield/"},

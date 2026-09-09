@@ -6,7 +6,7 @@
   "oneLiner": "Follow the money through an AI accelerator and the silicon turns out to be the cheap part. Memory and packaging are the bill.",
   "plain": "An accelerator's bill of materials works like a car's. The engine is the famous part, but the battery, the gearbox and the assembly line are what the bill is made of. The logic chip everyone names is about a seventh of the cost of building one, the stacked memory beside it is nearly half, and the packaging that binds them costs more than the chip. Those parts come from very few firms, which is where a regulator has the most purchase.",
   "specimen": "wafer-cost",
-  "specimenCaption": "Right: a 300 mm wafer stepped with an 800 mm2 die. Sixty-eight dies fit inside the usable circle; at the 60 percent die yield Epoch AI models for Blackwell, about forty survive. Everything about die cost falls out of that picture.",
+  "specimenCaption": "Right: the cost of one B200, stacked to scale from the foot: $2,900 of HBM in amber, $1,100 of CoWoS packaging, $1,000 of packaging yield loss drawn hollow because it ships nothing, $900 of logic dies and $480 of substrate, board and test. About $6,400 in all, for a part that sells for $30,000 to $40,000.",
   "card": {
     "concentration": "High",
     "chokepointScore": 4,
@@ -70,7 +70,7 @@
 
 Building a Blackwell B200 costs about $6,400. Nvidia sells it for $30,000 to $40,000 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Follow that $6,400 and you learn which stages are expensive because of physics, which because capacity is short, and which because one firm can charge.
 
-## How it works (the cost model)
+## How it works
 
 An accelerator's bill of materials works like a car's. The engine is the famous part, but the battery, the gearbox and the assembly line are what the bill is made of. The logic chip everyone names is about a seventh of the cost of building one, the stacked memory beside it is nearly half, and the packaging that binds them costs more than the chip. Those parts come from very few firms, which is where a regulator has the most purchase.
 
@@ -82,7 +82,7 @@ Die cost is set by the wafer price, the number of dies that fit on a wafer, and 
 
 Run those three numbers and the two dies inside a B200 come to about $900, 14 percent of the build ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Doubling the wafer price moves the whole bill by a few hundred dollars.
 
-## Variants and trade-offs (the BOMs)
+## Variants and trade-offs
 
 ### Memory is the bill
 
@@ -141,7 +141,7 @@ The industry totals disagree with each other, which sets the error bar on this s
 
 {{figure:market-2025}}
 
-## The chokepoint (what is structurally expensive)
+## The chokepoint
 
 Per unit of compute, logic still gets cheaper. Everything wrapped around the die gets dearer. HBM is 45 percent of a B200 build ([source](https://epoch.ai/data-insights/b200-cost-breakdown)), packaging and its scrap cost more than twice the logic dies, and a GB300 NVL72 rack already draws 142 kW ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
 
