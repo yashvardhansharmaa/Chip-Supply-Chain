@@ -840,7 +840,7 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 .tl-bar .chips { margin: 0; flex: 1 1 320px; }
 .tl-all { flex: 0 0 auto; padding: 5px 11px; font-size: 10.5px; }
 .tl-all[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.tl-chip { padding-left: 21px; position: relative; }
+.chips button.tl-chip { padding-left: 22px; position: relative; }
 .tl-chip::before {
   content: ""; position: absolute; left: 9px; top: 50%; width: 7px; height: 7px;
   margin-top: -3.5px; border-radius: 50%; background: var(--accent-ink);
@@ -906,7 +906,7 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 .timeline .tl-e.is-target { background: var(--accent-soft); box-shadow: inset 2px 0 0 var(--accent); }
 .timeline .cat { display: block; margin-bottom: 3px; }
 .timeline .tl-e h4 { font-size: 16.5px; line-height: 1.24; margin-bottom: 3px; }
-.timeline .tl-gist { font-family: var(--font-body); font-size: 15.5px; line-height: 1.45; color: var(--ink-2); margin: 0 0 7px; max-width: 76ch; }
+.timeline .tl-gist { font-family: var(--font-body); font-size: 15.5px; line-height: 1.45; color: var(--ink-2); margin: 0 0 5px; max-width: 76ch; }
 .timeline .tl-more {
   font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--muted); background: none; border: 0; border-bottom: 1px solid var(--line-2);
@@ -1322,7 +1322,7 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 .sup-map-h { display: block; margin: 0 0 10px; }
 .sup-map-scroll { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 2px; }
 
-.sup-grid { border-collapse: separate; border-spacing: 0; table-layout: fixed; width: auto; }
+.sup-grid { border-collapse: separate; border-spacing: 0; table-layout: fixed; width: 630px; } /* the column widths below add up to this; on a phone the scroller carries the overflow */
 .sup-grid th, .sup-grid td { padding: 0; }
 .sup-grid thead th {
   height: 26px; vertical-align: bottom; padding-bottom: 5px; text-align: center;
@@ -1442,6 +1442,7 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
   .sup-catsel { display: block; }
   #sup-chips { display: none; }
 
+  .sup-grid { width: 418px; }
   .sup-grid thead th.sup-gcorner { width: 118px; }
   .sup-grid tbody th, .sup-grid tfoot th { width: 118px; max-width: 118px; padding-right: 8px; font-size: 10px; line-height: 1.05; white-space: normal; }
   .sup-grid thead th[scope="col"] { width: 28px; font-size: 9.5px; letter-spacing: 0.01em; }
@@ -8204,7 +8205,7 @@ PC.register('wafer', function (p) {
   /* ---------------- geopolitics ---------------- */
   var Geo = {
     built: false, cat: null,
-    tl: [], visible: [], items: [], full: false, drawn: false, tip: null, at: -1, atDot: -1, stripW: 0, tickQ: false,
+    tl: [], visible: null, items: [], full: false, /* visible stays null until the first render so the export bar falls back to the whole set */ drawn: false, tip: null, at: -1, atDot: -1, stripW: 0, tickQ: false,
     /* the five lanes of the minimap, in this order; the colours are the .timeline .cat classes */
     CATS: [
       { name: 'US export control', label: 'US rules', short: 'US', cls: '' },

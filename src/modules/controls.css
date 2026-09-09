@@ -11,7 +11,7 @@
 .tl-bar .chips { margin: 0; flex: 1 1 320px; }
 .tl-all { flex: 0 0 auto; padding: 5px 11px; font-size: 10.5px; }
 .tl-all[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.tl-chip { padding-left: 21px; position: relative; }
+.chips button.tl-chip { padding-left: 22px; position: relative; }
 .tl-chip::before {
   content: ""; position: absolute; left: 9px; top: 50%; width: 7px; height: 7px;
   margin-top: -3.5px; border-radius: 50%; background: var(--accent-ink);
@@ -77,7 +77,7 @@
 .timeline .tl-e.is-target { background: var(--accent-soft); box-shadow: inset 2px 0 0 var(--accent); }
 .timeline .cat { display: block; margin-bottom: 3px; }
 .timeline .tl-e h4 { font-size: 16.5px; line-height: 1.24; margin-bottom: 3px; }
-.timeline .tl-gist { font-family: var(--font-body); font-size: 15.5px; line-height: 1.45; color: var(--ink-2); margin: 0 0 7px; max-width: 76ch; }
+.timeline .tl-gist { font-family: var(--font-body); font-size: 15.5px; line-height: 1.45; color: var(--ink-2); margin: 0 0 5px; max-width: 76ch; }
 .timeline .tl-more {
   font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--muted); background: none; border: 0; border-bottom: 1px solid var(--line-2);

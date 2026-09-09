@@ -6,8 +6,13 @@
 .sup-map { position: relative; margin: 26px 0 8px; }
 .sup-map-h { display: block; margin: 0 0 10px; }
 .sup-map-scroll { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 2px; }
+/* when the matrix is wider than its scroller, the right edge fades to say so */
+.sup-map-scroll[data-end="0"] {
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 22px), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - 22px), transparent);
+}
 
-.sup-grid { border-collapse: separate; border-spacing: 0; table-layout: fixed; width: auto; }
+.sup-grid { border-collapse: separate; border-spacing: 0; table-layout: fixed; width: 630px; } /* the column widths below add up to this; on a phone the scroller carries the overflow */
 .sup-grid th, .sup-grid td { padding: 0; }
 .sup-grid thead th {
   height: 26px; vertical-align: bottom; padding-bottom: 5px; text-align: center;
@@ -126,7 +131,10 @@
 @media (max-width: 699px) {
   .sup-catsel { display: block; }
   #sup-chips { display: none; }
+  .view[data-view="suppliers"] .filters { gap: 8px; }
+  .view[data-view="suppliers"] .filters > * { flex: 1 1 100%; min-width: 0; }
 
+  .sup-grid { width: 418px; }
   .sup-grid thead th.sup-gcorner { width: 118px; }
   .sup-grid tbody th, .sup-grid tfoot th { width: 118px; max-width: 118px; padding-right: 8px; font-size: 10px; line-height: 1.05; white-space: normal; }
   .sup-grid thead th[scope="col"] { width: 28px; font-size: 9.5px; letter-spacing: 0.01em; }

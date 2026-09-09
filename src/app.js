@@ -869,7 +869,7 @@
   /* ---------------- geopolitics ---------------- */
   var Geo = {
     built: false, cat: null,
-    tl: [], visible: [], items: [], full: false, drawn: false, tip: null, at: -1, atDot: -1, stripW: 0, tickQ: false,
+    tl: [], visible: null, items: [], full: false, /* visible stays null until the first render so the export bar falls back to the whole set */ drawn: false, tip: null, at: -1, atDot: -1, stripW: 0, tickQ: false,
     /* the five lanes of the minimap, in this order; the colours are the .timeline .cat classes */
     CATS: [
       { name: 'US export control', label: 'US rules', short: 'US', cls: '' },
