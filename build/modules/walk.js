@@ -22,7 +22,7 @@ module.exports = function (ctx) {
   /* the score, shown the way the scored chain strip shows it: five pips, amber at 5, ink at 4, grey below */
   const rank = (n) => (n >= 5 ? '5' : n >= 4 ? '4' : '3');
   function scoreHTML(n) {
-    if (!n) return '<span class="wk-score"><span class="label">Chokepoint</span><span class="wk-sc">not scored</span></span>';
+    if (!n) return '<span class="wk-score"><button type="button" class="gl-term label wk-score-term" data-term="chokepoint score">Chokepoint</button><span class="wk-sc">not scored</span></span>';
     let pips = '';
     for (let i = 1; i <= 5; i++) pips += `<i${i <= n ? ' class="on"' : ''}></i>`;
     return `<span class="wk-score" data-rank="${rank(n)}"><span class="label">Chokepoint</span><span class="wk-pips" aria-hidden="true">${pips}</span><span class="wk-sc"><b>${n}</b> / 5</span></span>`;
