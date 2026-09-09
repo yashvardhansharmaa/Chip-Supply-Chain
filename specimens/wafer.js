@@ -12,7 +12,7 @@
  * invisible at 570 px: the thickness (x2.3) and the notch (x6).
  *
  * The exposure field is one full reticle, 26 x 33 mm, which is 0.173 x 0.220
- * units. About 70 whole fields fit inside the exclusion circle. One of them is
+ * units, and 57 whole fields fall inside the exclusion circle. One of them is
  * picked out in copper: that single field is the largest area a scanner can
  * print in one shot, and every chapter after this one is about getting a
  * pattern into it.
@@ -138,7 +138,7 @@ PC.register('wafer', function (p) {
     spin: 0.1,
     tilt: [0.92, -0.5, 0],
     caption: 'A polished 300 mm wafer, ruled by the scribe streets between exposure fields. ' +
-      'About ' + whole + ' whole 26 by 33 mm fields fall inside the edge-exclusion ring; ' +
+      whole + ' whole 26 by 33 mm fields fall inside the edge-exclusion ring; ' +
       'the copper one is a single reticle field, the largest pattern a scanner can print in one shot. ' +
       'The V at the rim is the orientation notch, drawn six times its real size.'
   };

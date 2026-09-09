@@ -53,7 +53,7 @@ weight for the per-die seal rings.
   wafer, which is what a highlight on a mirror does.
 - Scribe streets are continuous lines clipped to the edge-exclusion circle, at tone 1; seal rings
   inside each whole field at tone 0.62 give the second line weight. Field size is one full reticle,
-  26 × 33 mm = 0.173 × 0.220 units, so 71 whole fields fall inside the exclusion ring — the caption
+  26 × 33 mm = 0.173 × 0.220 units, so 57 whole fields fall inside the exclusion ring — the caption
   now counts them from the geometry rather than asserting a number.
 - The notch is a true 90° V, cut out of the disc and outlined top and bottom with its two walls
   drawn. Depth is 6 × life size (6 mm rather than 1 mm) because at 1 mm it is 1.6 px on a 570 px
