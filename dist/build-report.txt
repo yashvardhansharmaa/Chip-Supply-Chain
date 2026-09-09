@@ -1,23 +1,24 @@
-built 2026-09-09T04:30:18.894Z
-chapters: 13
-words: 22380
-sources: 264
+built 2026-09-09T04:33:46.289Z
+chapters: 14
+words: 23296
+sources: 285
 landscape: 0 chips · suppliers: 0 · timeline: 0 · matrix: 20
 specimens: package, wafer
-size: 607 KB
+size: 642 KB
   01 introduction-and-goals: 1226 words, 14 sources, 2 figures
   02 design-and-eda: 1784 words, 13 sources, 3 figures
   03 silicon-and-wafers: 1524 words, 15 sources, 2 figures
   04 chemicals-gases-and-photoresist: 1806 words, 21 sources, 2 figures
-  05 lithography: 1858 words, 25 sources, 3 figures
-  07 deposition-and-etch: 1828 words, 23 sources, 3 figures
+  05 lithography: 1807 words, 25 sources, 3 figures
+  07 deposition-and-etch: 1820 words, 23 sources, 3 figures
   08 metrology-and-inspection: 1577 words, 18 sources, 2 figures
-  09 transistors-and-front-end: 1843 words, 23 sources, 3 figures
-  11 memory-and-hbm: 1782 words, 23 sources, 3 figures
-  12 advanced-packaging: 1697 words, 15 sources, 2 figures
+  09 transistors-and-front-end: 1842 words, 23 sources, 3 figures
+  10 foundries-and-fabs: 1600 words, 21 sources, 3 figures
+  11 memory-and-hbm: 1777 words, 23 sources, 3 figures
+  12 advanced-packaging: 1713 words, 15 sources, 2 figures
   15 systems-and-networking: 1583 words, 17 sources, 3 figures
   16 data-centers-and-power: 1573 words, 16 sources, 3 figures
-  17 component-costs: 2299 words, 41 sources, 3 figures
+  17 component-costs: 1664 words, 41 sources, 3 figures
 WARN design-and-eda: specimen "die-floorplan" is not built yet
 WARN silicon-and-wafers: specimen "boule-and-wafer" is not built yet
 WARN chemicals-gases-and-photoresist: specimen "gas-cabinet" is not built yet
@@ -25,6 +26,7 @@ WARN lithography: specimen "euv-scanner" is not built yet
 WARN deposition-and-etch: specimen "process-chamber" is not built yet
 WARN metrology-and-inspection: specimen "sem-column" is not built yet
 WARN transistors-and-front-end: specimen "gaa-transistor" is not built yet
+WARN foundries-and-fabs: specimen "foup" is not built yet
 WARN memory-and-hbm: specimen "hbm-stack" is not built yet
 WARN advanced-packaging: specimen "cowos-exploded" is not built yet
 WARN systems-and-networking: specimen "gpu-baseboard" is not built yet

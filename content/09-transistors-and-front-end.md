@@ -74,7 +74,7 @@
 ---
 # Transistors and the Front End
 
-A Blackwell GPU is 208 billion switches spread across two reticle-limited dies ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)). Every one has to turn on hard, turn off completely, and survive years of being switched a billion times a second. Building those switches is the front end of line; wiring them is the back end. Neither has scaled for free in over a decade, and everything bought since has been paid for in process steps.
+A Blackwell GPU is 208 billion switches spread across two reticle-limited dies ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)). Every one has to turn on hard, turn off completely, and survive years of constant switching. Building those switches is the front end of line; wiring them is the back end. Neither has scaled for free in over a decade, and everything bought since has been paid for in process steps.
 
 ## How it works
 
@@ -90,7 +90,7 @@ The front end builds all of this: wells, isolation, the fin or nanosheet stack, 
 
 ### Planar and FinFET
 
-Planar transistors put the channel flat with the gate on one side, and ran out of electrostatic control around the 28 nm generation. The fin stands the channel on edge so the gate wraps three sides. Channel width then comes in quanta: a designer who wants 1.5 fins of drive cannot have it.
+Planar transistors put the channel flat with the gate on one side, and ran out of control as channels shortened. The fin stands the channel on edge so the gate wraps three sides. Channel width then comes in quanta: a designer who wants 1.5 fins of drive cannot have it.
 
 ### Gate-all-around nanosheets
 
@@ -102,7 +102,7 @@ TSMC's N2 started volume production in the fourth quarter of 2025, its first nan
 
 ### Backside power delivery
 
-On a conventional chip, power and signal share the same stack of copper above the transistors. Power rails are wide, so they crowd out signal routing, and the current loses voltage travelling down a dozen metal levels. Backside power flips the wafer, thins it, and builds a separate power network underneath, connected up through nano-scale through-silicon vias. Intel shipped this first as PowerVia. On its Blue Sky Creek test vehicle it demonstrated over 90 percent standard-cell utilisation, a frequency benefit of a few percent, and more than a 30 percent improvement in platform voltage droop ([source](https://www.insidedeeptech.com/backside-power-delivery-powervia-full-guide/)). In production on 18A, Intel reports an 11 percent routed area reduction and a tenfold reduction in dynamic voltage droop ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)).
+On a conventional chip, power and signal share the same stack of copper above the transistors. Power rails are wide, so they crowd out signal routing, and the current loses voltage travelling down the whole metal stack. Backside power flips the wafer, thins it, and builds a separate power network underneath, connected up through nano-scale through-silicon vias. Intel shipped this first as PowerVia. On its Blue Sky Creek test vehicle it demonstrated over 90 percent standard-cell utilisation, a frequency benefit of a few percent, and more than a 30 percent improvement in platform voltage droop ([source](https://www.insidedeeptech.com/backside-power-delivery-powervia-full-guide/)). In production on 18A, Intel reports an 11 percent routed area reduction and a tenfold reduction in dynamic voltage droop ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)).
 
 TSMC's version, Super Power Rail, lands the backside network directly on the transistor source and drain rather than on a buried rail. It is harder to build and gives more back: against N2P, A16 delivers 8 to 10 percent more speed at the same power, 15 to 20 percent less power at the same speed, and 8 to 10 percent more chip density ([source](https://semiwiki.com/semiconductor-manufacturers/tsmc/370949-tsmc-a16-backside-power-at-vlsi-2026/)). TSMC's April 2026 roadmap moved A16 volume production from the second half of 2026 into 2027 ([source](https://www.trendforce.com/news/2026/04/23/news-tsmc-unveils-latest-roadmap-a12-a13-set-for-2029-without-high-na-euv-a16-volume-production-delayed-to-2027/)). Samsung's SF2Z adds backside power in 2027, claiming up to a 17 percent die area reduction ([source](https://www.mckinsey-electronics.com/post/the-best-kept-secret-in-semiconductor-innovation-backside-power-delivery)).
 
@@ -118,7 +118,7 @@ Wiring is now as hard as the transistor. Copper needs a tantalum nitride barrier
 
 Two metals are taking over the narrowest lines. Ruthenium needs no barrier and beats copper at line widths of roughly 10 to 17 nm and below, with the liner deposited at about 5 angstroms ([source](https://www.patsnap.com/resources/blog/articles/ruthenium-interconnects-at-sub-10nm-beol-nodes/)). Molybdenum has a bulk resistivity of about 5.3 microhm-cm against copper's 1.68, but in thin films it runs up to 30 percent below tungsten and needs no barrier either, which is why it is moving into contacts and local interconnect ([source](https://blog.entegris.com/molybdenums-role-in-ultra-fast-computing-the-metal-behind-the-speed)). Copper stays on the wide upper levels where bulk conductivity still wins.
 
-The other half of the problem is capacitance between adjacent wires. The answer is low-k dielectrics, porous carbon-doped oxides that trade mechanical strength for a lower dielectric constant, and at the tightest pitches air gaps, where the process deliberately leaves a void between lines. Both are fragile and both make dicing harder.
+The other half of the problem is capacitance between adjacent wires. The answer is low-k dielectrics, porous carbon-doped oxides that trade mechanical strength for a lower dielectric constant, and at the tightest pitches air gaps, where the process deliberately leaves a void between lines. Both are fragile and make dicing harder.
 
 ## Who makes it
 
@@ -145,9 +145,9 @@ Money is not the binding constraint. The third National Integrated Circuit Fund 
 ## Key evaluation criteria
 
 - **Electrostatic control** — how completely the gate surrounds the channel, which sets off-state leakage and how low the supply voltage can go. Nanosheets beat fins; CFET stacks them.
-- **Density** — transistors per square millimetre, comparable only within the same library type. High-density and high-performance cells differ by a factor approaching two.
-- **Interconnect resistance** — below about 15 nm line width the wire, not the transistor, sets the delay. Barrier-free ruthenium and molybdenum are the fix.
-- **Power delivery** — IR drop across the die. Backside power buys roughly 10 percent area and an order of magnitude in dynamic droop.
+- **Density** — transistors per square millimetre, comparable only within the same library type. High-density and high-performance cells give very different answers for the same node.
+- **Interconnect resistance** — at line widths in the 10 to 17 nm range the wire, not the transistor, starts to set the delay. Barrier-free ruthenium and molybdenum are the fix.
+- **Power delivery** — IR drop across the die. Backside power buys back routed area and cuts dynamic droop by an order of magnitude.
 - **SRAM scaling** — flat since N5. Sets how much cache an accelerator can afford and how much work HBM has to do.
 - **Cost per transistor** — rising at the leading edge for the first time, which changes every design decision downstream.
 

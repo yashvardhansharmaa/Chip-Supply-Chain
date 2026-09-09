@@ -74,7 +74,7 @@ Lithography prints the pattern. Deposition and etch build the thing. Applied Mat
 
 A chip is built by repeating a short loop: deposit a film, coat it with resist, print a pattern, etch the pattern into the film below, strip the resist, clean, measure. CSET's 2021 map of the supply chain put a single chip at more than 1,000 process steps, with the part-finished product crossing international borders 70 or more times ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). ASML says a modern chip can carry up to 100 layers and take up to four months to make ([source](https://www.asml.com/en/technology/all-about-microchips/how-microchips-are-made)). Cleaning alone accounts for roughly 30 percent of front-end process steps ([source](https://www.rapidus.inc/en/tech/te0009/)).
 
-Deposition tools lay down or grow films from a few atoms to a few hundred nanometres thick: the insulators between wires, the metal in the wires, the gate stack of the transistor. Etch tools remove material where the pattern says it should not be.
+Deposition tools lay down films from a few atoms to a few hundred nanometres thick: the insulators between wires, the metal in the wires, the transistor gate stack. Etch tools remove material where the pattern says it should not be.
 
 The hard part in both is selectivity and conformality. An etch has to attack one material and leave another sitting a nanometre away untouched. A deposition has to coat the bottom of a hole hundreds of times deeper than it is wide as evenly as it coats the flat surface beside it.
 
@@ -112,7 +112,7 @@ Within deposition and etch there is no single ASML. Tokyo Electron's own Gartner
 
 ASM International is the specialist. Its 2025 revenue was a record €3.2 billion, up 12 percent at constant currency, driven by customers building 2 nm gate-all-around capacity, with molybdenum ALD and area-selective deposition entering volume production at that node ([source](https://www.asm.com/media/yvxbavwe/20260303-asm-reports-q4-and-full-year-2025-results.pdf)). Lam's product families run across the same ground: Striker for dielectric ALD, ALTUS for metal ALD, Aether for dry resist and a cryogenic etch line ([source](https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm)).
 
-Demand is running ahead of the tool makers. KLA raised its wafer equipment forecast to the low $150 billion range for calendar 2026, up from roughly $120 billion in calendar 2025 ([source](https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf)). Tokyo Electron sees $150 billion to $170 billion per year in 2026 and 2027, with leading-edge spending up more than 30 percent ([source](https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf)).
+Demand is running ahead of supply. KLA raised its wafer equipment forecast to the low $150 billion range for calendar 2026, from roughly $120 billion in calendar 2025 ([source](https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf)). Tokyo Electron sees $150 billion to $170 billion per year in 2026 and 2027, with leading-edge spending up more than 30 percent ([source](https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf)).
 
 {{figure:equipment-billings}}
 
@@ -132,7 +132,7 @@ Since then the direction has wobbled. The Affiliates Rule of September 29, 2025 
 
 ## The chokepoint
 
-This is a real chokepoint but a softer one than lithography. Three or four credible vendors exist for most etch and deposition steps, which is why the controls are written as process specifications rather than as a ban on a machine. The narrow points are ALD, where China holds under 1 percent ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)), and the extreme aspect ratios that HBM and 3D memory need. Those are exactly where the December 2024 rule aims ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
+This is a real chokepoint but a softer one than lithography. Three or four credible vendors exist for most etch and deposition steps, which is why the controls are written as process specifications rather than a ban on a machine. The narrow points are ALD, where China holds under 1 percent ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)), and the extreme aspect ratios that HBM and 3D memory need. Those are exactly where the December 2024 rule aims ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
 
 ## Key evaluation criteria
 

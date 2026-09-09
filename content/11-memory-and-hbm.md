@@ -66,7 +66,7 @@
 ---
 # Memory and HBM
 
-An AI accelerator is a machine for dragging numbers past arithmetic units. The arithmetic got cheap. The dragging did not. High bandwidth memory is the component that decides how fast a GPU actually runs, it is the largest single line in the bill of materials, and three companies make all of it.
+An AI accelerator is a machine for dragging numbers past arithmetic units. The arithmetic got cheap. The dragging did not. High bandwidth memory decides how fast a GPU actually runs, it is the largest block of silicon in the package, and three companies make all of it.
 
 ## How it works
 
@@ -89,7 +89,7 @@ Per-pin rates run 9.2 to 12.4 Gbps on HBM3E and 6.4 to 12.8 Gbps on HBM4 ([sourc
 
 ### HBM3E
 
-The workhorse. Micron ships 24 GB 8-high and 36 GB 12-high parts at over 1.2 TB/s and over 9.2 Gbps per pin on 1,024 I/O ([source](https://www.micron.com/products/memory/hbm/hbm3e)). SK hynix expects HBM3E to be about two thirds of all HBM shipments in 2026 ([source](https://news.skhynix.com/en/2026-market-outlook-focus-on-the-hbm-led-memory-supercycle/)).
+The workhorse. Micron ships 24 GB 8-high and 36 GB 12-high parts at over 1.2 TB/s and over 9.2 Gbps per pin on 1,024 I/O ([source](https://www.micron.com/products/memory/hbm/hbm3e)). HBM3E is expected to account for about two thirds of all HBM shipments in 2026 ([source](https://news.skhynix.com/en/2026-market-outlook-focus-on-the-hbm-led-memory-supercycle/)).
 
 ### HBM4
 
@@ -125,7 +125,7 @@ Geographically this is a Korean industry with American and Japanese edges. SK hy
 
 HBM is sold forward. Micron told investors in December 2025 that it had completed agreements on price and volume for its entire calendar 2026 HBM supply, and forecast the HBM market growing from about $35 billion in 2025 to about $100 billion in 2028, a milestone pulled forward two years ([source](https://www.earningscall.ai/stock/transcript/MU-2026-Q1)). BofA puts 2026 at $54.6 billion, up 58% ([source](https://news.skhynix.com/en/2026-market-outlook-focus-on-the-hbm-led-memory-supercycle/)).
 
-The rest of the memory market is paying for it. Because HBM needs three times the wafer area per bit and sells for about five times the price per bit, every wafer a maker converts removes a disproportionate quantity of commodity DRAM from the world ([source](https://www.tomshardware.com/tech-industry/semiconductors/micron-says-the-silicon-gap-between-hbm-and-ddr5-is-widening-with-every-generation)). Conventional DRAM contract prices rose 93% to 98% quarter over quarter in 1Q26 ([source](https://www.trendforce.com/presscenter/news/20260601-13070.html)), with PC DRAM more than doubling ([source](https://www.trendforce.com/presscenter/news/20260202-12911.html)), then a further 58% to 63% in 2Q26. HP told investors that DRAM had gone from 15% to 18% of its PC build cost to 35% ([source](https://www.tomshardware.com/tech-industry/semiconductors/micron-says-the-silicon-gap-between-hbm-and-ddr5-is-widening-with-every-generation)). This is what an AI capex cycle looks like from the consumer end.
+The rest of the memory market is paying for it. Because HBM needs three times the wafer area per bit and sells for about five times the price per bit, every wafer a maker converts removes a disproportionate quantity of commodity DRAM from the world ([source](https://www.tomshardware.com/tech-industry/semiconductors/micron-says-the-silicon-gap-between-hbm-and-ddr5-is-widening-with-every-generation)). Conventional DRAM contract prices rose 93% to 98% quarter over quarter in 1Q26 ([source](https://www.trendforce.com/presscenter/news/20260601-13070.html)), with PC DRAM more than doubling ([source](https://www.trendforce.com/presscenter/news/20260202-12911.html)), then a further 58% to 63% in 2Q26 ([source](https://www.tomshardware.com/tech-industry/semiconductors/micron-says-the-silicon-gap-between-hbm-and-ddr5-is-widening-with-every-generation)). HP told investors that DRAM had gone from 15% to 18% of its PC build cost to 35% ([source](https://www.tomshardware.com/tech-industry/semiconductors/micron-says-the-silicon-gap-between-hbm-and-ddr5-is-widening-with-every-generation)). This is what an AI capex cycle looks like from the consumer end.
 
 ## The chokepoint
 

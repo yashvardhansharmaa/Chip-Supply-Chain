@@ -67,119 +67,117 @@
 ---
 # Component Costs
 
-An AI accelerator is an assembly of purchased things, and the receipt is more informative than the datasheet. Trace the money from wafer to rack and you learn which stages are expensive because of physics, which are expensive because capacity is short, and which are expensive only because one firm can charge for them. The three are not the same, and they do not respond to scale the same way.
+An accelerator is an assembly of purchased things, and the receipt is more informative than the datasheet. Follow the money and you learn which stages are expensive because of physics, which because capacity is short, and which because a firm can charge.
 
 ## How it works (the cost model)
 
-Die cost has three inputs: what the wafer costs, how many dies fit on it, and what fraction of those dies work.
+Die cost has three inputs: wafer price, dies per wafer, and yield.
 
-**Wafer price.** TSMC does not publish prices. Supply chain reporting in October 2025 put N3 at $25,000 to $27,000 per 300 mm wafer and N2 at roughly $30,000, a 10 to 20 percent step rather than the 50 percent that had been rumoured ([source](https://technode.com/2025/10/09/tsmc-sets-2nm-wafer-price-at-30000-far-below-earlier-50-increase-speculation/)). TrendForce reported the same 10 to 20 percent N2 increase and single-digit rises on 3 nm to 7 nm nodes in 2026 ([source](https://www.trendforce.com/news/2025/10/08/news-tsmc-2nm-reportedly-up-10-20-far-below-rumored-50-3-7nm-to-rise-single-digit-in-2026/)). Published cost models put N5 and N4 at about $18,500 in 2026 within a $16,000 to $21,300 range ([source](https://siliconanalysts.com/guide/semiconductor-costs)). The same work tracks N5 at $17,000 in 2020 and N3 at $20,000 in 2024, so the leading-edge wafer has roughly doubled in six years ([source](https://siliconanalysts.com/market-data/wafer-price-tsmc)). A16 has been reported at up to $45,000 ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmc-could-charge-up-to-usd45-000-for-1-6nm-wafers-rumors-allege-a-50-percent-increase-in-pricing-over-prior-gen-wafers)).
+**Wafer price.** TSMC does not publish prices. Supply chain reporting in October 2025 put N3 at $25,000 to $27,000 per 300 mm wafer and N2 at roughly $30,000, a 10 to 20 percent step rather than the rumoured 50 percent ([source](https://technode.com/2025/10/09/tsmc-sets-2nm-wafer-price-at-30000-far-below-earlier-50-increase-speculation/)). TrendForce reported the same step and single-digit rises on 3 nm to 7 nm nodes in 2026 ([source](https://www.trendforce.com/news/2025/10/08/news-tsmc-2nm-reportedly-up-10-20-far-below-rumored-50-3-7nm-to-rise-single-digit-in-2026/)). Cost models put N5 and N4 at about $18,500 in 2026, range $16,000 to $21,300 ([source](https://siliconanalysts.com/guide/semiconductor-costs)), against $17,000 for N5 in 2020 ([source](https://siliconanalysts.com/market-data/wafer-price-tsmc)). A16 has been reported at up to $45,000 ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmc-could-charge-up-to-usd45-000-for-1-6nm-wafers-rumors-allege-a-50-percent-increase-in-pricing-over-prior-gen-wafers)).
 
-**Dies per wafer.** A 300 mm wafer offers 70,686 mm2 of area, but the dies are rectangles and the wafer is a circle, so you lose the edge. Stepping an 800 mm2 die, roughly 26.0 by 30.8 mm, across a 294 mm usable diameter and keeping only dies whose four corners land inside it gives 68 gross dies. That is the number to hold in your head: at reticle-class sizes, one 300 mm wafer is about seventy chances.
+**Dies per wafer.** A 300 mm wafer offers 70,686 mm2, but dies are rectangles and the wafer is a circle. Step an 800 mm2 die, about 26.0 by 30.8 mm, across a 294 mm usable diameter, keeping only dies that fall wholly inside: 68 gross dies.
 
-**Yield.** Defects fall on the wafer at random, so a bigger die is more likely to catch one. The Poisson model says the probability a die of area A survives is e to the power of minus A times D0, where D0 is defects per cm2. Poisson is too pessimistic at large die sizes because real defects cluster rather than scatter evenly. Murphy's model, which averages Poisson over a spread of defect densities, is the industry default and gives a materially higher number for an 800 mm2 die: at D0 of 0.10 it predicts 47 percent against Poisson's 45 percent, and at D0 of 0.20 it predicts 25 percent against 20 percent.
+**Yield.** Defects land at random, so a bigger die is likelier to catch one. Poisson gives survival as e to the power of minus A times D0, for die area A and defect density D0 per cm2. It is too harsh at large dies because real defects cluster. Murphy's model, the default, averages Poisson over a spread of densities: on an 800 mm2 die at D0 of 0.10 it gives 47 percent against Poisson's 45.
 
-TSMC's N5 sat at 0.10 to 0.11 defects per cm2 in 2020 ([source](https://ljdevice.com.tw/en/better-yield-5nm-7nm-tsmc-update-defect-rates-n5/)). Published cost work puts N3 at roughly 0.09 to 0.14 defects per cm2 between early and mature production and an 814 mm2 die such as the H100's at 40 to 50 percent yield ([source](https://siliconanalysts.com/guide/semiconductor-costs)). TSMC has said N2's defect density sits below N3, N5 and N7 at the same point in the ramp ([source](https://semiwiki.com/forum/threads/tsmc-discloses-n2-defect-density-lower-than-n3-at-the-same-stage-of-development.22699/)).
+TSMC's N5 sat at 0.10 to 0.11 defects per cm2 in 2020 ([source](https://ljdevice.com.tw/en/better-yield-5nm-7nm-tsmc-update-defect-rates-n5/)). Estimates put N3 at 0.09 to 0.14 early to mature, and the H100's 814 mm2 die at 40 to 50 percent yield ([source](https://siliconanalysts.com/guide/semiconductor-costs)). TSMC says N2 sits below all three ([source](https://semiwiki.com/forum/threads/tsmc-discloses-n2-defect-density-lower-than-n3-at-the-same-stage-of-development.22699/)).
 
-**Worked example, Blackwell.** A B200 is two reticle-limited dies on a custom TSMC 4NP process, 208 billion transistors, joined by a 10 TB/s die-to-die link ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)). Take 68 gross dies, D0 of 0.07 and Murphy: 59 percent yield, 40 good dies, and at an $18,000 wafer that is $450 per die or $900 for the pair. Push D0 to 0.10 and yield falls to 47 percent, 32 good dies, $560 each. A published model assuming 70 to 75 percent yield lands at $350 to $425 per die, about $850 for the pair ([source](https://siliconanalysts.com/analysis/nvidia-b200-blackwell-cost-breakdown)). The range across all those assumptions is only a few hundred dollars on a part that sells for tens of thousands.
+**Blackwell.** A B200 is two reticle-limited dies on custom TSMC 4NP, 208 billion transistors, joined by a 10 TB/s link ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)). Take 68 gross dies, D0 of 0.07 and Murphy: 59 percent yield, 40 good dies, and at an $18,000 wafer that is $450 per die, $900 the pair. At D0 of 0.10, $560 each. A model at 70 to 75 percent yield gives $350 to $425 ([source](https://siliconanalysts.com/analysis/nvidia-b200-blackwell-cost-breakdown)).
 
-**Worked example, Rubin.** Rubin puts two compute dies and two I/O dies on a four-reticle CoWoS-L interposer on TSMC 3 nm, 336 billion transistors and 288 GB of HBM4 ([source](https://blog.barrack.ai/nvidia-rubin-specs-architecture-2026/)). At a $25,000 N3P wafer, 68 gross dies and 59 percent yield, each compute die is $625. At $27,000 and 50 percent yield it is $795. Doubling the wafer price from N5 to N2 moves the die line by a few hundred dollars. Nothing else in the bill of materials is that forgiving.
+**Rubin.** Rubin puts two compute dies and two I/O dies on a four-reticle CoWoS-L interposer on TSMC 3 nm, 336 billion transistors, 288 GB of HBM4 ([source](https://blog.barrack.ai/nvidia-rubin-specs-architecture-2026/)). At a $25,000 N3P wafer and 59 percent yield each compute die is $625; at $27,000 and 50 percent yield, $795. Doubling the wafer price from N5 to N2 moves the die line by a few hundred dollars. Nothing else on the bill is that forgiving.
 
 ## Variants and trade-offs (the BOMs)
 
 ### Memory is the bill
 
-HBM3E in a 12-high 36 GB stack has been modelled at about $300 per stack at the factory gate, $8.33 per GB, with HBM4 at roughly $550 per stack and $15.28 per GB ([source](https://siliconanalysts.com/data/hbm-pricing)). Contract prices run close to double that: HBM3E blended at $12.20 per GB in July 2026 and HBM4 at $16.67 per GB in January 2026 ([source](https://siliconanalysts.com/data/hbm-pricing)). At $17 per GB the eight 24 GB HBM3E stacks on a B200 come to $3,250, about 48 percent of manufacturing cost ([source](https://siliconanalysts.com/analysis/nvidia-b200-blackwell-cost-breakdown)).
+A 12-high 36 GB HBM3E stack is modelled at about $300 at the factory gate, $8.33 per GB, and HBM4 at $550 and $15.28; contract prices run near double, $12.20 per GB for HBM3E in July 2026 and $16.67 for HBM4 in January 2026 ([source](https://siliconanalysts.com/data/hbm-pricing)). At $17 per GB the eight 24 GB HBM3E stacks on a B200 come to $3,250, about 48 percent of manufacturing cost ([source](https://siliconanalysts.com/analysis/nvidia-b200-blackwell-cost-breakdown)).
 
-The premium is compressing at the low end and exploding at the high end. TrendForce notes HBM3E once priced at four to five times server DDR5 and expects that gap to narrow to one to two times by the end of 2026 ([source](https://www.trendforce.com/presscenter/news/20251218-12843.html)), while forecasting that HBM contract prices will rise by multiples in 2027 as buyers move to HBM4 ([source](https://www.trendforce.com/presscenter/news/20260602-13074.html)).
+TrendForce notes HBM3E once priced at four to five times server DDR5, with the gap narrowing to one or two times by end-2026 ([source](https://www.trendforce.com/presscenter/news/20251218-12843.html)), and forecasts HBM contract prices rising by multiples in 2027 on HBM4 ([source](https://www.trendforce.com/presscenter/news/20260602-13074.html)).
 
 ### Packaging, substrate and test
 
-CoWoS-S runs about $750 per package on H100-class designs, and CoWoS-L $1,000 to $1,100 on a B200, a 47 percent premium for the multi-die build ([source](https://siliconanalysts.com/analysis/cowos-packaging-cost-chiplet-vs-monolithic-2026)). Another estimate puts CoWoS-L at $1,100 to $1,500, with the silicon interposer taking 50 to 70 percent of packaging cost and the ABF substrate about 40 percent ([source](https://gr8ham.substack.com/p/cowos-chip-on-wafer-on-substrate)). Interposer yields sit at 60 to 70 percent, and small LSI bridges yield around 90 percent against roughly 60 percent for a large monolithic interposer, which is the whole argument for CoWoS-L ([source](https://siliconanalysts.com/analysis/cowos-packaging-cost-chiplet-vs-monolithic-2026)).
+CoWoS-S runs about $750 per package on H100-class designs and CoWoS-L $1,000 to $1,100 on a B200, a 47 percent premium for the multi-die build ([source](https://siliconanalysts.com/analysis/cowos-packaging-cost-chiplet-vs-monolithic-2026)). Another estimate puts CoWoS-L at $1,100 to $1,500, the interposer at 50 to 70 percent of packaging cost and the ABF substrate at about 40 percent ([source](https://gr8ham.substack.com/p/cowos-chip-on-wafer-on-substrate)). Interposer yields are 60 to 70 percent; LSI bridges yield near 90 percent against roughly 60 for a large monolithic interposer, the argument for CoWoS-L ([source](https://siliconanalysts.com/analysis/cowos-packaging-cost-chiplet-vs-monolithic-2026)).
 
-Packaging is where a yield loss actually hurts, because when a package fails you scrap the good dies and the good HBM with it. For B200-class parts that scrap adds roughly $1,000 of effective cost per shipped unit ([source](https://siliconanalysts.com/analysis/cowos-packaging-cost-chiplet-vs-monolithic-2026)). Test and assembly on an H100 is about $920, some 28 percent of its cost of goods ([source](https://siliconanalysts.com/analysis/cowos-packaging-cost-chiplet-vs-monolithic-2026)).
-
-Packaging is also the line rising fastest. TSMC raised CoWoS prices 15 to 20 percent in 2025 with a further 10 to 20 percent expected in 2026, against roughly 5 percent annual increases on logic wafers ([source](https://gr8ham.substack.com/p/cowos-chip-on-wafer-on-substrate)). See Advanced packaging for why capacity, not price, is the binding constraint.
+Yield loss at packaging scraps the dies and the HBM together. On B200-class parts that adds roughly $1,000 per shipped unit, and H100 test and assembly is about $920, 28 percent of cost of goods ([source](https://siliconanalysts.com/analysis/cowos-packaging-cost-chiplet-vs-monolithic-2026)). TSMC raised CoWoS prices 15 to 20 percent in 2025, with 10 to 20 percent more expected in 2026 against roughly 5 percent a year on logic wafers ([source](https://gr8ham.substack.com/p/cowos-chip-on-wafer-on-substrate)). See Advanced packaging on why capacity binds first.
 
 ### Three generations of bill of materials
 
 | Line | H100 (2023) | B200 (2025-26) | Rubin VR200 (2026) |
 |---|---|---|---|
-| Logic die | ~$300 | ~$850 | ~$1,250-1,590 for two N3P compute dies, modelled |
-| HBM | ~$1,350 (HBM3) | ~$3,250 (8x HBM3E) | ~$4,800 (288 GB HBM4 at $16.67/GB, derived) |
-| Packaging | ~$750 (CoWoS-S) | ~$1,100 (CoWoS-L) | $1,500 or more, 4x reticle CoWoS-L |
+| Logic die | ~$300 | ~$850 | ~$1,250-1,590, two N3P dies, modelled |
+| HBM | ~$1,350 | ~$3,250 | ~$4,800, derived at $16.67/GB |
+| Packaging | ~$750 CoWoS-S | ~$1,100 CoWoS-L | $1,500+, 4x reticle CoWoS-L |
 | Test, assembly, other | ~$920 | ~$1,550 | not published |
 | Total manufacturing cost | ~$3,320 | ~$6,750 | not published |
 | Selling price | ~$27,000 | ~$40,000 | ~$50,000-55,000 |
 
-H100 and B200 lines and prices from a published cost model that aggregates Raymond James and TrendForce inputs ([source](https://siliconanalysts.com/data/ai-chip-costs)) ([source](https://siliconanalysts.com/analysis/nvidia-b200-blackwell-cost-breakdown)); an independent estimate puts B200 module manufacturing cost at $5,700 to $7,300 ([source](https://gr8ham.substack.com/p/cowos-chip-on-wafer-on-substrate)). Rubin die and HBM lines are derived from the wafer and HBM4 prices above and its published configuration ([source](https://blog.barrack.ai/nvidia-rubin-specs-architecture-2026/)); the selling price is the reported $50,000 to $55,000 per GPU in volume ([source](https://www.shanethegamer.com/pc-mac/nvidia-vera-rubins-memory-bill-hits-2m-more-than-doubling-grace-blackwells-cost/)).
+H100 and B200 lines are from a cost model built on Raymond James and TrendForce inputs ([source](https://siliconanalysts.com/data/ai-chip-costs)) ([source](https://siliconanalysts.com/analysis/nvidia-b200-blackwell-cost-breakdown)); an independent estimate puts B200 module cost at $5,700 to $7,300 ([source](https://gr8ham.substack.com/p/cowos-chip-on-wafer-on-substrate)). Rubin's die and HBM lines are derived from the prices above and its configuration ([source](https://blog.barrack.ai/nvidia-rubin-specs-architecture-2026/)); its price is the reported volume figure ([source](https://www.shanethegamer.com/pc-mac/nvidia-vera-rubins-memory-bill-hits-2m-more-than-doubling-grace-blackwells-cost/)).
 
 {{figure:b200-bom}}
 
 ### From package to rack to cluster
 
-A GB300 NVL72 rack has been priced at about $5.0M, with compute trays roughly 87 percent of the value and Nvidia-supplied content above 92 percent; the in-rack liquid cooling loop is a Morgan Stanley-estimated $49,860 ([source](https://www.datagravity.dev/p/how-much-does-an-nvidia-nvl72-cost)). A Vera Rubin NVL72 is estimated at $7,803,148, of which $2,001,600 is memory, up from $373,939 on Grace Blackwell, a 435 percent jump that lifts memory from about 9 percent of the rack to 26 percent; the Rubin GPUs themselves are roughly $4M and the printed circuit boards $116,730 against $35,100 ([source](https://www.shanethegamer.com/pc-mac/nvidia-vera-rubins-memory-bill-hits-2m-more-than-doubling-grace-blackwells-cost/)).
+A GB300 NVL72 rack is priced near $5.0M, compute trays roughly 87 percent of the value, Nvidia content above 92 percent, and liquid cooling a Morgan Stanley-estimated $49,860 ([source](https://www.datagravity.dev/p/how-much-does-an-nvidia-nvl72-cost)). A Vera Rubin NVL72 is estimated at $7,803,148, of which $2,001,600 is memory against $373,939 on Grace Blackwell, lifting memory from about 9 percent of the rack to 26; the GPUs are roughly $4M and the boards $116,730 against $35,100 ([source](https://www.shanethegamer.com/pc-mac/nvidia-vera-rubins-memory-bill-hits-2m-more-than-doubling-grace-blackwells-cost/)).
 
-At cluster scale the accelerators still dominate but stop being the only story. A 100,000 H100 build carries more than $4B of server capital expenditure alone, needs about 150 MW of critical IT power at roughly 1,275 W per GPU once CPUs, NICs and supplies are counted, consumes 1.59 TWh a year and pays $123.9M a year for electricity at $0.078 per kWh ([source](https://newsletter.semianalysis.com/p/100000-h100-clusters-power-network)). A rail-optimised network for that cluster needs 98,304 optical transceivers, which is why operators substitute copper wherever reach allows ([source](https://newsletter.semianalysis.com/p/100000-h100-clusters-power-network)). At the node level a reference eight-GPU server runs about $318,000, or $283,000 after stripping DPUs and oversubscribing the back-end fabric ([source](https://newsletter.semianalysis.com/p/ai-neocloud-playbook-and-anatomy)).
+A 100,000 H100 build carries over $4B of server capex alone, needs about 150 MW at roughly 1,275 W per GPU once CPUs, NICs and supplies are counted, burns 1.59 TWh a year and pays $123.9M for power at $0.078 per kWh; rail-optimised networking needs 98,304 optical transceivers, which is why operators substitute copper where reach allows ([source](https://newsletter.semianalysis.com/p/100000-h100-clusters-power-network)).
 
 ## Who captures the value
 
-| Firm | Stage | Gross margin, last full year | Most recent twelve months |
+| Firm | Stage | Last full year | Latest 12 months |
 |---|---|---|---|
-| Nvidia | Accelerator design | 71.1% (FY2026) | 75.0% in Q2 FY2027 |
+| Nvidia | Design | 71.1% (FY2026) | 75.0% (Q2 FY2027) |
 | KLA | Inspection | 60.9% (FY2025) | 61.3% |
-| SK hynix | HBM and DRAM | 60.4% (2025) | 76.3% |
-| TSMC | Wafers and CoWoS | 59.9% (2025) | 64.2% |
+| SK hynix | HBM | 60.4% (2025) | 76.3% |
+| TSMC | Wafers, CoWoS | 59.9% (2025) | 64.2% |
 | ASML | Lithography | 52.8% (2025) | 52.7% |
-| Lam Research | Deposition and etch | 48.7% (FY2025) | 50.5% |
-| Applied Materials | Deposition and etch | 48.7% (FY2025) | 49.4% |
-| Micron | HBM and DRAM | 39.8% (FY2025) | 72.6% |
-| Ibiden | ABF substrates | 31.6% (FY to March 2026) | 32.0% |
+| Lam Research | Etch | 48.7% (FY2025) | 50.5% |
+| Applied Materials | Deposition | 48.7% (FY2025) | 49.4% |
+| Micron | HBM | 39.8% (FY2025) | 72.6% |
+| Ibiden | Substrates | 31.6% (FY Mar 2026) | 32.0% |
 | ASE Technology | OSAT | 17.7% (2025) | 19.5% |
 | Amkor | OSAT | 14.0% (2025) | 15.5% |
 
-Nvidia's figures are from its own results ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026)) ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027)); SK hynix reported a 49 percent operating margin for 2025 and 76 percent in Q2 2026 ([source](https://news.skhynix.com/en/sk-hynix-announces-fy25-financial-results/)) ([source](https://news.skhynix.com/en/q2-2026-business-results/)); the remaining rows are from company filings ([source](https://stockanalysis.com/stocks/tsm/financials/)) ([source](https://stockanalysis.com/quote/krx/000660/financials/)) ([source](https://stockanalysis.com/stocks/mu/financials/)) ([source](https://stockanalysis.com/stocks/asml/financials/)) ([source](https://stockanalysis.com/stocks/klac/financials/)) ([source](https://stockanalysis.com/stocks/lrcx/financials/)) ([source](https://stockanalysis.com/stocks/amat/financials/)) ([source](https://stockanalysis.com/quote/tyo/4062/financials/)) ([source](https://stockanalysis.com/stocks/asx/financials/)) ([source](https://stockanalysis.com/stocks/amkr/financials/)).
+Gross margin. Nvidia's are its own ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026)) ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027)); SK hynix's operating margin was 49 percent in 2025 and 76 in Q2 2026 ([source](https://news.skhynix.com/en/sk-hynix-announces-fy25-financial-results/)) ([source](https://news.skhynix.com/en/q2-2026-business-results/)); the rest are filings ([source](https://stockanalysis.com/stocks/tsm/financials/)) ([source](https://stockanalysis.com/quote/krx/000660/financials/)) ([source](https://stockanalysis.com/stocks/mu/financials/)) ([source](https://stockanalysis.com/stocks/asml/financials/)) ([source](https://stockanalysis.com/stocks/klac/financials/)) ([source](https://stockanalysis.com/stocks/lrcx/financials/)) ([source](https://stockanalysis.com/stocks/amat/financials/)) ([source](https://stockanalysis.com/quote/tyo/4062/financials/)) ([source](https://stockanalysis.com/stocks/asx/financials/)) ([source](https://stockanalysis.com/stocks/amkr/financials/)).
 
 {{figure:gross-margins}}
 
-The shape is clear. Design, memory, inspection and leading-edge wafers earn 60 to 75 points of gross margin. Substrates earn about 30. Assembly and test earn 14 to 20 and are, in margin terms, contract manufacturing. The 2026 shift is that memory has moved into the top tier: Micron went from 39.8 percent to 72.6 percent gross margin in nine months, which is a transfer of value from Nvidia's suppliers-of-record to Nvidia's suppliers.
+Design, memory, inspection and leading-edge wafers earn 60 to 75 points. Substrates earn about 30. Assembly and test earn 14 to 20 and are, in margin terms, contract manufacturing. The 2026 change is that memory joined the top tier: Micron went from 39.8 to 72.6 percent in nine months, moving value to Nvidia's suppliers.
 
-The pools are large enough to matter. Gartner put 2025 semiconductor revenue at $809B and forecast $1.6T for 2026, with memory alone at $837B and 54 percent of the total ([source](https://www.intelligentcio.com/north-america/2026/09/01/gartner-forecasts-semiconductor-revenue-to-hit-us1-6-trillion-in-2026/)); WSTS, forecasting a year earlier, had 2025 at $772B and 2026 at $975B ([source](https://www.wsts.org/76/103/Global-Semiconductor-Market-Approaches-1T-in-2026)). DRAM industry revenue alone reached $154.73B in the second quarter of 2026, up 59.5 percent sequentially ([source](https://www.trendforce.com/presscenter/news/20260907-13219.html)). Wafer fab equipment was a record $116.9B in 2025 and is forecast at $143.9B in 2026 ([source](https://www.semi.org/en/semi-press-release/global-semiconductor-equipment-sales-projected-to-reach-a-record-of-156-billion-dollars-in-2027-semi-reports)). Advanced packaging is a $40B to $50B market heading to $79B to $90B by 2030 ([source](https://gr8ham.substack.com/p/cowos-chip-on-wafer-on-substrate)). Optical transceivers were $15.4B in 2025 and $17.6B in 2026, heading to $34.4B by 2031 ([source](https://finance.yahoo.com/technology/articles/global-optical-transceiver-market-reach-103700630.html)). Above all of it, hyperscaler capex went from $492B in 2025 to a forecast $1.009T in 2026 ([source](https://247wallst.com/investing/2026/08/22/ais-absurd-spending-boom-hyperscalers-are-spending-102-of-cloud-revenue-on-capex/)), and Dell'Oro expects total data centre capex to pass $3T by 2030 ([source](https://finance.yahoo.com/technology/ai/articles/ai-buildout-maintains-momentum-data-120000543.html)).
+Gartner put 2025 semiconductor revenue at $809B and forecasts $1.6T for 2026, memory alone $837B ([source](https://www.intelligentcio.com/north-america/2026/09/01/gartner-forecasts-semiconductor-revenue-to-hit-us1-6-trillion-in-2026/)); WSTS, a year earlier, had $772B and $975B ([source](https://www.wsts.org/76/103/Global-Semiconductor-Market-Approaches-1T-in-2026)). DRAM alone hit $154.73B in 2Q26, up 59.5 percent sequentially ([source](https://www.trendforce.com/presscenter/news/20260907-13219.html)). Wafer fab equipment was a record $116.9B in 2025, forecast $143.9B in 2026 ([source](https://www.semi.org/en/semi-press-release/global-semiconductor-equipment-sales-projected-to-reach-a-record-of-156-billion-dollars-in-2027-semi-reports)). Advanced packaging is $40B to $50B, reaching $79B to $90B by 2030 ([source](https://gr8ham.substack.com/p/cowos-chip-on-wafer-on-substrate)). Optical transceivers were $15.4B in 2025 and $17.6B in 2026, $34.4B by 2031 ([source](https://finance.yahoo.com/technology/articles/global-optical-transceiver-market-reach-103700630.html)). Hyperscaler capex went from $492B in 2025 to a forecast $1.009T in 2026 ([source](https://247wallst.com/investing/2026/08/22/ais-absurd-spending-boom-hyperscalers-are-spending-102-of-cloud-revenue-on-capex/)), and Dell'Oro expects data centre capex above $3T by 2030 ([source](https://finance.yahoo.com/technology/ai/articles/ai-buildout-maintains-momentum-data-120000543.html)).
 
 {{figure:market-2025}}
 
 ## The chokepoint (what is structurally expensive)
 
-Per unit of delivered compute, logic is still deflating. A Rubin compute die costs perhaps 50 percent more than a Blackwell die and delivers far more throughput, so dollars per FLOP on the silicon keep falling. Everything wrapped around that die is going the other way. HBM went from 41 percent of H100 cost to 48 percent of B200 cost and 26 percent of a Rubin rack ([source](https://www.shanethegamer.com/pc-mac/nvidia-vera-rubins-memory-bill-hits-2m-more-than-doubling-grace-blackwells-cost/)). Packaging prices are rising three to four times faster than wafer prices ([source](https://gr8ham.substack.com/p/cowos-chip-on-wafer-on-substrate)). And a Rubin rack draws more than 250 kW where a GB200 rack drew about 124 kW, so the power and cooling plant per rack is growing faster than the compute inside it ([source](https://blog.barrack.ai/nvidia-rubin-specs-architecture-2026/)).
+Per unit of compute, logic still deflates. What is wrapped around the die does not. HBM went from 41 percent of H100 cost to 48 percent of B200 cost and 26 percent of a Rubin rack ([source](https://www.shanethegamer.com/pc-mac/nvidia-vera-rubins-memory-bill-hits-2m-more-than-doubling-grace-blackwells-cost/)). Packaging prices rise three to four times faster than wafer prices ([source](https://gr8ham.substack.com/p/cowos-chip-on-wafer-on-substrate)). A Rubin rack draws more than 250 kW ([source](https://blog.barrack.ai/nvidia-rubin-specs-architecture-2026/)) where a GB200 rack drew about 124 kW ([source](https://newsletter.semianalysis.com/p/gb200-hardware-architecture-and-component)), so the power plant outgrows the compute.
 
-That gives three cost classes, which the rest of this site uses.
+Three classes result.
 
 | Stage | Class | Why |
 |---|---|---|
-| EUV lithography tools | Structurally expensive | One supplier, tool price set by a twenty-year optics learning curve, not by volume. |
-| EUV masks and pellicles | Structurally expensive | Mask set cost scales with layer count, and every new design pays it again. |
-| Metrology and inspection | Structurally expensive | Inspection time per wafer rises with layer count faster than throughput improves. |
-| HBM | Structurally expensive | Stacking and TSVs cut good-die-per-wafer, so more capacity does not lower unit cost much. |
-| Advanced packaging, CoWoS-L | Structurally expensive | Interposer yield of 60 to 70 percent and scrap that destroys good dies and good HBM together. |
-| Power and cooling plant | Structurally expensive | Priced by grid interconnection and turbine lead times, not by semiconductor volume. |
-| Leading-edge logic wafers | Compressible with scale | Per-wafer cost falls with node maturity and utilisation; defect density improves every quarter. |
-| Design and EDA | Compressible with scale | Non-recurring engineering amortises across volume, which is why 100k-unit programmes win. |
-| Deposition and etch tools | Compressible with scale | Multiple credible vendors and a real second source in most process steps. |
-| ABF substrates | Compressible with scale | Capacity-constrained today, but the process is a laminate line, not a physics frontier. |
-| Optical transceivers | Compressible with scale | Copper substitution and co-packaged optics cap the price; volumes are already enormous. |
-| Test and assembly (OSAT) | Already commoditised | 14 to 20 percent gross margins say the market clears on price. |
-| Silicon wafers, bulk gases | Already commoditised | Multi-supplier, long-qualified, priced on contract with thin spreads. |
-| Server and rack integration | Already commoditised | ODM assembly earns single-digit to low-teens margins on Nvidia-specified content. |
+| EUV lithography | Structurally expensive | One supplier; price set by a twenty-year optics curve. |
+| Masks and pellicles | Structurally expensive | Scales with layer count; every design pays again. |
+| Metrology and inspection | Structurally expensive | Inspection time rises faster than throughput. |
+| HBM | Structurally expensive | Stacking and TSVs cut good die per wafer. |
+| Advanced packaging, CoWoS-L | Structurally expensive | 60 to 70 percent interposer yield; scrap kills dies and HBM. |
+| Power and cooling plant | Structurally expensive | Priced by grid queues and turbine lead times. |
+| Leading-edge logic wafers | Compressible with scale | Defect density and utilisation improve through a ramp. |
+| Design and EDA | Compressible with scale | Engineering cost amortises across volume. |
+| Deposition and etch tools | Compressible with scale | Credible second sources in most steps. |
+| ABF substrates | Compressible with scale | A laminate line, not a physics frontier. |
+| Optical transceivers | Compressible with scale | Copper and co-packaged optics cap the price. |
+| Test and assembly (OSAT) | Already commoditised | 14 to 20 percent margins; clears on price. |
+| Wafers and bulk gases | Already commoditised | Multi-supplier, long-qualified, thin spreads. |
+| Rack integration (ODM) | Already commoditised | Low-teens margins on specified content. |
 
 ## Key evaluation criteria
 
-- **Cost per good die, not cost per wafer.** A 30 percent wafer price increase at constant yield is survivable. A ten-point yield drop on an 800 mm2 die is not.
-- **HBM dollars per GB, and how many GB the architecture demands.** This is the single largest and fastest-growing line, and it is set by a three-supplier market.
-- **Packaging yield, and what a scrapped package destroys.** Failing after HBM attach throws away the most valuable parts of the assembly.
-- **Share of bill of materials the vendor does not control.** Nvidia sets its own margin but buys HBM, CoWoS and substrates at someone else's price.
-- **Rack-level dollars per watt delivered.** Once racks pass 250 kW, power and cooling capex grows faster than accelerator capex.
-- **Compressibility class.** Ask whether a cost line falls when volume doubles. If it does not, capacity, not price, is the constraint.
+- **Cost per good die, not per wafer.** A 30 percent wafer price rise at constant yield is survivable. A ten-point yield drop on an 800 mm2 die is not.
+- **HBM dollars per GB, and GB per part.** The largest and fastest-growing line, set by three firms.
+- **Packaging yield.** Failing after HBM attach throws away the most valuable parts.
+- **Share of the bill the vendor does not control.** Nvidia sets its own margin but buys HBM, CoWoS and substrates at another firm's price.
+- **Rack dollars per watt.** Past 250 kW per rack, power and cooling capex grows faster than accelerator capex.
+- **Compressibility class.** Ask whether the line falls when volume doubles. If not, capacity is the constraint.
 
 ## Takeaways
 
-The silicon is the cheap part. On a B200 the two logic dies are about 13 percent of manufacturing cost while HBM is 48 percent and packaging plus substrate another 16 percent, and the direction of travel is toward memory and packaging on every generation. Nvidia's 71 to 75 percent gross margin is the most visible number in the chain but the most contestable one, because a custom ASIC buys the same wafers and the same HBM. What is not contestable sits underneath: HBM stacking yield, CoWoS interposer yield, and the megawatts. Those three do not get cheaper because you order more of them, and that is the definition of a chokepoint.
+The silicon is the cheap part. On a B200 the logic dies are about 13 percent of manufacturing cost, HBM 48, packaging and substrate another 16, and every generation pushes further that way. Nvidia's 71 to 75 percent gross margin is the most visible number in the chain and the most contestable, because a custom ASIC buys the same wafers and the same HBM. What is not contestable sits underneath: HBM stacking yield, CoWoS interposer yield, and the megawatts. Those do not get cheaper when you order more, which is what makes them chokepoints.

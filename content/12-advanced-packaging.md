@@ -90,7 +90,7 @@ Blackwell was the first product to use it, and it went badly. Analysts identifie
 
 Two years later the technology is mature. TSMC is mass-producing 5.5-reticle CoWoS packages carrying up to 12 HBM3E or HBM4 stacks at yields over 98% ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)).
 
-Intel's EMIB is the same idea reached from the other direction, embedding a silicon bridge in the organic substrate rather than in an RDL layer, and it is gaining traction as designers look past constrained CoWoS supply ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)). Samsung's I-Cube is its silicon-interposer equivalent.
+Intel's EMIB is the same idea reached from the other direction, embedding a silicon bridge in the organic substrate rather than in an RDL layer, which makes it a credible second source when CoWoS supply is tight. Samsung's I-Cube is its silicon-interposer equivalent, and TSMC's InFO fan-out family covers the smaller packages where no interposer is needed at all.
 
 ### 3D: SoIC, Foveros, X-Cube
 

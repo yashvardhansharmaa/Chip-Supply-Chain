@@ -185,7 +185,8 @@
       if (v === 'stack') {
         if (!m && h.length > 1) {
           var el = document.getElementById(decodeURIComponent(h.slice(1)));
-          if (el) el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+          if (el) el.scrollIntoView({ behavior: (reduced || !this.booted) ? 'auto' : 'smooth', block: 'start' });
+          this.booted = true;
         }
         Sections.update();
       }
@@ -387,8 +388,10 @@
     },
     build: function () {
       this.built = true;
-      var mx = DATA.matrix || [], cols = ['US', 'NL', 'JP', 'TW', 'KR', 'CN', 'DE', 'EU-other', 'Other'];
-      var used = cols.filter(function (c) { return mx.some(function (s) { return (s.shares || {})[c] > 0; }); });
+      var mx = DATA.matrix || [], pref = ['US', 'TW', 'KR', 'JP', 'NL', 'CN', 'DE', 'GB', 'IL', 'CH', 'AT', 'SG', 'MY', 'EU-other', 'Other'];
+      var present = {}; mx.forEach(function (s) { Object.keys(s.shares || {}).forEach(function (k) { if ((s.shares || {})[k] > 0) present[k] = 1; }); });
+      var cols = pref.filter(function (c) { return present[c]; }).concat(Object.keys(present).filter(function (c) { return pref.indexOf(c) < 0; }));
+      var used = cols;
       var html = '<thead><tr><th>Segment</th>' + used.map(function (c) { return '<th title="' + esc(cname(c)) + '">' + esc(c) + '</th>'; }).join('') + '</tr></thead><tbody>';
       mx.forEach(function (s) {
         var max = 0; used.forEach(function (c) { max = Math.max(max, (s.shares || {})[c] || 0); });
