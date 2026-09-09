@@ -145,4 +145,4 @@ Optical module assembly is a fourth case of a different kind. It is concentrated
 
 ## Takeaways
 
-The system layer is where AI hardware stops being a chip business and becomes an electrical and optical one. Assembly is competitive and can move countries in a year, so leverage does not live there. It lives in NVLink-class scale-up switching, which one firm still owns, and in indium phosphide lasers, where demand ran at twice supply in early 2026 and no amount of capital shortens an epitaxy ramp below about two years.
+The system layer is where AI hardware stops being a chip business and becomes an electrical and optical one. Assembly is competitive and can move countries in a year, so leverage does not live there. It lives in NVLink-class scale-up switching, which one firm still owns, and in indium phosphide lasers, where demand ran at twice supply in early 2026 and no amount of capital shortens an epitaxy ramp below about two years ([source](https://futurumgroup.com/insights/nvidias-4b-optics-bet-signals-photonics-as-ais-next-bottleneck/)).
