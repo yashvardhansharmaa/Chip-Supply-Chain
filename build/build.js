@@ -507,7 +507,7 @@ const glossaryHTML = glossary.length ? glossary.slice().sort((a, b) => a.term.lo
 const totalWords = all.reduce((a, c) => a + c.words, 0);
 const credits = `Made by <b>Yashvardhan Sharma</b> with Claude. Inspired by <a href="https://www.humanityslastmachine.com/" target="_blank" rel="noopener">Humanity's Last Machine</a> and <a href="https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/" target="_blank" rel="noopener">CSET's supply-chain work</a>.`;
 const footer = `<p class="credits">${credits}</p>`;
-const suppliersIntro = suppliers.length ? `${suppliers.length} firms across the chain: what each one makes, where it is based and how hard it would be to replace. Filter by category, country or chokepoint level, then copy what you find as CSV.` : 'The supplier database is not compiled yet.';
+const suppliersIntro = suppliers.length ? `${suppliers.length} firms: what each one makes, where it sits, and how hard it would be to replace.` : 'The supplier database is not compiled yet.';
 
 const kit = read(path.join(root, 'src', 'kit.js')) || '';
 const specDir = path.join(root, 'specimens');
@@ -538,7 +538,7 @@ fill('SHEET_PAGES', sheetPages); fill('SHEET_CHAPTERS', sheetChapters);
 fill('RAIL', railHTML); fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits); fill('FOOTER', footer);
 fill('SUPPLIERS_INTRO', suppliersIntro); fill('GEO_DEK', esc(geoDek)); fill('GEO_BODY', geoBody); fill('SOURCES', sourcesHTML);
 fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));
-fill('CONTROLS_DEK', controls.length ? `Every export-control move since 2018 in order, ${controls.length} licence thresholds across ${word([...new Set(controls.map((c) => c.regime))].length)} regimes, and the China share of revenue for ${[...new Set(exposure.map((e) => e.firm))].length} firms that sell controlled tools or chips, from their own filings.` : 'The licence thresholds and the revenue series are being compiled.');
+fill('CONTROLS_DEK', controls.length ? `Every move since 2018, the numbers that trigger a licence, and each firm's China sales from its own filings.` : 'The licence thresholds and the revenue series are being compiled.');
 fill('EXPOSURE_VIZ', exposureViz(exposure));
 fill('EXPOSURE_NOTE', exposure.length ? 'Shares are computed from the absolute figures each firm filed. Firms count China differently: where the goods ship, where they are billed, or where the customer is based. Each row says which.' : '');
 fill('KIT', kit); fill('SPECIMENS', specimens);

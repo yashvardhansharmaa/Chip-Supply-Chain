@@ -2452,7 +2452,7 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
     <section class="view column wide" data-view="suppliers" hidden>
       <div class="view-head">
         <h2>Suppliers</h2>
-        <p class="dek">220 firms across the chain: what each one makes, where it is based and how hard it would be to replace. Filter by category, country or chokepoint level, then copy what you find as CSV.</p>
+        <p class="dek">220 firms: what each one makes, where it sits, and how hard it would be to replace.</p>
       </div>
       <div class="filters">
         <input id="sup-search" type="search" placeholder="Search suppliers, cities, tickers…" aria-label="Search suppliers">
@@ -2467,7 +2467,7 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
     <section class="view column wide" data-view="controls" hidden>
       <div class="view-head">
         <h2>Export Controls</h2>
-        <p class="dek">Every export-control move since 2018 in order, 40 licence thresholds across seven regimes, and the China share of revenue for 20 firms that sell controlled tools or chips, from their own filings.</p>
+        <p class="dek">Every move since 2018, the numbers that trigger a licence, and each firm's China sales from its own filings.</p>
       </div>
       <nav class="subtabs" id="controls-subtabs" aria-label="Controls sections"><a href="#/controls" data-sub="timeline" aria-current="true">What the rules did</a><a href="#/thresholds" data-sub="thresholds">Licence thresholds</a><a href="#/exposure" data-sub="exposure">China revenue share</a></nav>
       <div class="sub" data-sub="timeline">
@@ -7996,7 +7996,7 @@ PC.register('wafer', function (p) {
   };
 
   // public surface for the module files concatenated after this one (src/modules/*.js)
-  window.CP = { Stage: Stage, Router: Router, Sections: Sections, Tools: Tools, Band: Band, DATA: DATA, $: $, $$: $$, esc: esc, narrow: narrow,
+  window.CP = { Stage: Stage, Router: Router, Sections: Sections, Tools: Tools, Band: Band, DATA: DATA, $: $, $$: $$, esc: esc, narrow: narrow, safeUrl: safeUrl, cname: cname, reduced: reduced,
     register: function (view, def) { MODULE_VIEWS[view] = def; if (Router.current === view && def.activate) def.activate(); } };
   function boot() {
     // QA aid: ?only=<chapter-id> shows just that chapter at the top of the page (screenshots in a hidden pane only paint the first frame)
