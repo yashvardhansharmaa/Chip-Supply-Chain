@@ -398,12 +398,12 @@ if (geo) {
 
 /* ---------------- sources view ---------------- */
 const all = chapters.concat(geo ? [geo] : []);
-const sourcesHTML = `<div class="tier-key"><span class="tier tier-A">A</span> primary or institutional · <span class="tier tier-B">B</span> established analyst or top-tier press · <span class="tier tier-C">C</span> specialist press or named analyst</div>` +
+const sourcesHTML = `<div class="tier-key">Every source is graded by how close it is to the evidence: <span class="tier tier-A">A</span> primary or institutional · <span class="tier tier-B">B</span> established analyst or top-tier press · <span class="tier tier-C">C</span> specialist press or named analyst. Anything below C is not cited.</div>` +
   all.map((ch) => { const tc = tierCounts(ch.cites); return `<h3>${pad(ch.number)} · ${esc(ch.title)} <span class="label">${ch.cites.length} sources · A ${tc.A} · B ${tc.B} · C ${tc.C}${tc.D ? ' · below bar ' + tc.D : ''}${tc['?'] ? ' · unclassified ' + tc['?'] : ''}</span></h3><ol>${ch.cites.map((c) => `<li>${tierTag(c.url)}<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url)}</a></li>`).join('')}</ol>`; }).join('') +
   (matrixNotes ? `<h3>Method: the country-share matrix</h3><div class="prose">${markdown(matrixNotes, { id: 'matrix-notes', cites: [], figures: [] }).html}</div>` : '') +
-  (controlsNotes ? `<h3>Method: the threshold map</h3><div class="prose">${markdown(controlsNotes, { id: 'controls-notes', cites: [], figures: [] }).html}</div>` : '') +
-  (exposureNotes ? `<h3>Method: the exposure series</h3><div class="prose">${markdown(exposureNotes, { id: 'exposure-notes', cites: [], figures: [] }).html}</div>` : '') +
-  `<h3>How this site was made</h3><div class="prose"><p>Compute Chokepoints was made by Yashvardhan Sharma with Claude in September 2026. Yashvardhan set the brief, the direction and the standards; Claude did the research, writing, design and code. Every number links to a public source, and the 3D specimens are procedural models built from published dimensions, not scans. Treat the text and data as a starting point for your own diligence, not as investment advice.</p></div>`;
+  (controlsNotes ? `<h3>Method: the licence thresholds</h3><div class="prose">${markdown(controlsNotes, { id: 'controls-notes', cites: [], figures: [] }).html}</div>` : '') +
+  (exposureNotes ? `<h3>Method: the China share of revenue</h3><div class="prose">${markdown(exposureNotes, { id: 'exposure-notes', cites: [], figures: [] }).html}</div>` : '') +
+  `<h3>How this site was made</h3><div class="prose"><p>Compute Chokepoints was made by Yashvardhan Sharma with Claude in September 2026. Yashvardhan set the brief, the direction and the standards; Claude did the research, writing, design and code. Every number links to a public source, and the 3D specimens are drawn by code from published dimensions, not scanned from real objects. Treat the text and data as a starting point for your own diligence, not as investment advice.</p></div>`;
 
 /* ---------------- briefing (all the "in short" blocks on one page) ---------------- */
 const briefingHTML = all.map((ch) => {
@@ -430,8 +430,8 @@ const glossaryHTML = glossary.length ? glossary.slice().sort((a, b) => a.term.lo
 /* ---------------- assemble ---------------- */
 const totalWords = all.reduce((a, c) => a + c.words, 0);
 const credits = `Made by <b>Yashvardhan Sharma</b> with Claude. Inspired by <a href="https://www.humanityslastmachine.com/" target="_blank" rel="noopener">Humanity's Last Machine</a> and <a href="https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/" target="_blank" rel="noopener">CSET's supply-chain work</a>.`;
-const footer = `<p>Compute Chokepoints · The AI chip supply chain, stage by stage · ${new Date().toISOString().slice(0, 10)}</p><p class="credits">${credits}</p><p>Every number on this site links to its source. Corrections and additions are welcome. Built with a dependency-free point-cloud renderer. No scans and no tracking.</p>`;
-const suppliersIntro = suppliers.length ? `${suppliers.length} firms across the chain, with what each one makes, where it is based and how hard it would be to replace. Filter by category, country or chokepoint status; copy the result as CSV.` : 'The supplier database is not compiled yet.';
+const footer = `<p>Compute Chokepoints · The AI chip supply chain, stage by stage · Built ${new Date().toISOString().slice(0, 10)}</p><p class="credits">${credits}</p><p>Every number on this site links to its source. Corrections and additions are welcome. The 3D specimens are drawn by code, with no outside libraries and no scanned objects, and the site carries no trackers.</p>`;
+const suppliersIntro = suppliers.length ? `${suppliers.length} firms across the chain: what each one makes, where it is based and how hard it would be to replace. Filter by category, country or chokepoint level, then copy what you find as CSV.` : 'The supplier database is not compiled yet.';
 
 const kit = read(path.join(root, 'src', 'kit.js')) || '';
 const specDir = path.join(root, 'specimens');
@@ -464,7 +464,7 @@ fill('SUPPLIERS_INTRO', suppliersIntro); fill('GEO_DEK', esc(geoDek)); fill('GEO
 fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));
 fill('CONTROLS_DEK', controls.length ? `${controls.length} licensing thresholds across ${[...new Set(controls.map((c) => c.regime))].length} regimes, and the China share of revenue for ${[...new Set(exposure.map((e) => e.firm))].length} firms that sell controlled tools or chips, taken from their own filings.` : 'The licence thresholds and the revenue series are being compiled.');
 fill('EXPOSURE_VIZ', exposureViz(exposure));
-fill('EXPOSURE_NOTE', exposure.length ? 'Shares computed from filed absolute figures; bases differ by firm (ship-to, bill-to or headquarters) and are stated in each row. Method notes are on the <a href="#/sources">Sources</a> page.' : '');
+fill('EXPOSURE_NOTE', exposure.length ? 'Shares are computed from the absolute figures each firm filed. Firms count China differently: where the goods ship, where they are billed, or where the customer is based. Each row says which. Method notes are on the <a href="#/sources">Sources</a> page.' : '');
 fill('KIT', kit); fill('SPECIMENS', specimens);
 fill('DATA', JSON.stringify(data).replace(/<\/script/gi, '<\\/script'));
 const moduleJS = modDir(path.join(root, 'src', 'modules')).filter((f) => f.endsWith('.js')).map((f) => `\n/* module: ${f} */\ntry {\n${read(path.join(root, 'src', 'modules', f)).replace(/<\/script/gi, '<\\/script')}\n} catch (e) { console.warn('module ${f} failed', e); }`).join('\n');
