@@ -126,20 +126,23 @@
       <nav class="subtabs" id="controls-subtabs" aria-label="Controls sections"><a href="#/controls" data-sub="timeline" aria-current="true">What the rules did</a><a href="#/thresholds" data-sub="thresholds">Licence thresholds</a><a href="#/exposure" data-sub="exposure">China revenue share</a></nav>
       <div class="sub" data-sub="timeline">
       <h3 class="label" style="margin: 10px 0 6px">Every move since 2018, in order</h3>
-      <p class="controls-intro">Every export-control move that touched the AI chip chain, in plain words: rules from the United States, countermeasures from China, and the Dutch and Japanese controls beside them. Filter by type.</p>
-      <div id="tl-filters" class="chips tl-filters" role="group" aria-label="Filter events"></div>
+      <p class="controls-intro">Five kinds of move, in one strip: click a dot to read the entry.</p>
+      <div class="tl-bar"><div id="tl-filters" class="chips tl-filters" role="group" aria-label="Filter events"></div><button type="button" class="btn ghost tl-all" id="tl-all" aria-pressed="false">Show full summaries</button></div>
+      <div class="tl-strip" id="tl-strip"></div>
       <ol class="timeline" id="timeline"></ol>
       </div>
       <div class="sub" data-sub="thresholds" hidden>
       <h3 class="label" style="margin: 10px 0 6px">The numbers that trigger a licence</h3>
-      <p class="controls-intro">Every number that decides whether a chip or a tool needs an export licence: what is measured, the limit, where it applies, whether it is still in force, and the rule that set it. Filter by regime.</p>
+      <p class="controls-intro">Each card is one rule: what is measured, the limit, and whether it still binds.</p>
       <div id="controls-chips" class="chips" role="group" aria-label="Filter by regime"></div>
+      <nav class="th-jump" id="th-jump" aria-label="Jump to a group"></nav>
       <div class="sup-toolbar"><span class="count" id="controls-count"></span></div>
-      <div class="sup-wrap"><table class="sup" id="controls-table"></table></div>
+      <div class="th-board" id="th-board"></div>
+      <details class="table-view"><summary>Show the same thresholds as a table</summary><div class="sup-wrap"><table class="sup" id="controls-table"></table></div></details>
       </div>
       <div class="sub" data-sub="exposure" hidden>
       <h3 class="label" style="margin: 10px 0 6px">China share of revenue, from company filings</h3>
-      <p class="controls-intro">How much of each firm's revenue came from China, worked out from the absolute figures in its own filings. The ranking sets each firm's first year on file against its latest; the panels below trace every year against the three US rule dates. Hover a point for the filed figures, or click it to open the filing.</p>
+      <p class="controls-intro">Each firm's China revenue share, year by year, from its own filings; hover a point for the filed figures.</p>
       <div id="exposure-viz">{{EXPOSURE_VIZ}}</div>
       <details class="table-view"><summary>Show the same figures as a table</summary><div class="matrix-wrap"><table class="matrix" id="exposure-table"></table></div></details>
       <p class="matrix-note" id="exposure-note">{{EXPOSURE_NOTE}}</p>
