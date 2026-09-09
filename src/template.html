@@ -46,7 +46,7 @@
   <figure class="stage" aria-label="3D specimen of the current stage">
     <canvas id="stage-canvas"></canvas>
     <div class="stage-tag"><span id="stage-tag-text">Specimen <b>00</b> · the whole chip</span></div>
-    <div class="stage-actions"><button type="button" class="stage-menu" aria-haspopup="dialog" aria-controls="sheet">Contents</button><button type="button" class="stage-toggle" aria-expanded="false">Show</button></div>
+    <div class="stage-actions"><button type="button" class="stage-menu" aria-haspopup="dialog" aria-controls="sheet">Contents</button><button type="button" class="stage-toggle" aria-expanded="false">Expand</button></div>
     <figcaption id="stage-caption"></figcaption>
   </figure>
 
@@ -88,7 +88,7 @@
       <div class="filters">
         <input id="sup-search" type="search" placeholder="Search suppliers, cities, tickers…" aria-label="Search suppliers">
         <select id="sup-country" aria-label="Filter by country"><option value="">All countries</option></select>
-        <select id="sup-chk" aria-label="Filter by chokepoint status"><option value="">All chokepoint levels</option><option>Critical</option><option>Important</option><option>Contested</option><option>Diversified</option></select>
+        <select id="sup-chk" aria-label="Filter by chokepoint level"><option value="">All chokepoint levels</option><option>Critical</option><option>Important</option><option>Contested</option><option>Diversified</option></select>
       </div>
       <div id="sup-chips" class="chips" role="group" aria-label="Filter by category"></div>
       <div class="sup-toolbar"><span class="count" id="sup-count"></span><button class="btn ghost" id="sup-copy" type="button">Copy as CSV</button></div>
@@ -157,7 +157,7 @@
     <section class="view column" data-view="sources" hidden>
       <div class="view-head">
         <h2>Sources</h2>
-        <p class="dek">Every number on this site links to where it came from. This is the full list, by chapter, plus the method notes.</p>
+        <p class="dek">Every number on this site links to where it came from. The full list follows, chapter by chapter, with the method notes.</p>
       </div>
       <div class="sources-list">{{SOURCES}}</div>
     </section>

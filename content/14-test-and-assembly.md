@@ -3,17 +3,17 @@
   "id": "test-and-assembly",
   "number": 14,
   "title": "Test and Assembly",
-  "oneLiner": "The back end decides which dies are allowed into a package that costs more than a car. One Japanese firm now sells two thirds of the world's chip testers.",
-  "plain": "Before a chip can be sold, a machine has to interrogate it and check every answer. Needles finer than a hair land on pads on the wafer and drive test patterns into each chip; the ones that answer wrong are marked and never leave. It matters more each year because of arithmetic: a modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them. So the industry tests earlier, hotter and longer than it used to, and two companies sell most of the machines that do it.",
+  "oneLiner": "Assembly and test decide which dies are allowed into a package that costs more than a car. One Japanese firm now sells two thirds of the world's chip testers.",
+  "plain": "Before a chip can be sold, a machine has to interrogate it and check every answer. Needles finer than a hair land on pads on the wafer and drive test patterns into each chip; the tester marks the ones that answer wrong, and they never leave. This matters more each year because of arithmetic: a modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them. So the industry tests earlier, hotter and longer than it used to, and two firms, one Japanese and one American, sell most of the machines that do it.",
   "specimen": "probe-card",
-  "specimenCaption": "Right: a probe card over a wafer. A printed circuit board carries the tester's signals to a MEMS probe head whose needles land on pads a few tens of micrometres across, all of them within microns of the same plane.",
+  "specimenCaption": "Right: a probe card over a wafer. A printed circuit board carries the tester's signals to a micro-machined probe head whose needles land on pads a few tens of micrometres across, all of them within microns of the same plane.",
   "card": {
     "concentration": "High",
     "chokepointScore": 4,
     "leaders": [
       {"name": "Advantest", "country": "JP", "share": "65% of the tester market in 2025"},
-      {"name": "Teradyne", "country": "US", "share": "Most of the remainder with Advantest, about 80% combined"},
-      {"name": "ASE", "country": "TW", "share": "US$20.6bn of 2025 revenue, the largest OSAT"},
+      {"name": "Teradyne", "country": "US", "share": "Second in testers; about 80% of the market with Advantest"},
+      {"name": "ASE", "country": "TW", "share": "US$20.6bn of 2025 revenue, the largest assembly and test contractor"},
       {"name": "Amkor", "country": "US", "share": "US$6.71bn of 2025 revenue"},
       {"name": "Disco", "country": "JP", "share": "Leading share in dicing saws, grinders and blades"}
     ],
@@ -21,23 +21,23 @@
       {"code": "TW", "note": "ASE, Powertech, KYEC and ChipMOS; the largest assembly and test cluster"},
       {"code": "JP", "note": "Advantest testers, Disco dicing and grinding, Micronics Japan probe cards"},
       {"code": "US", "note": "Teradyne, FormFactor, Cohu, Aehr; Amkor's Arizona packaging plant"},
-      {"code": "CN", "note": "Four of the top ten OSATs by 2024 revenue are China-headquartered"},
+      {"code": "CN", "note": "Four of the top ten assembly and test firms by 2024 revenue are China-headquartered"},
       {"code": "MY", "note": "Penang and Kulim; Malaysia ships about 13% of the world's packaged chips"}
     ],
-    "chinaStatus": "The back end is where China is most competitive. CSET counts four of the top ten OSATs by 2024 revenue as China-headquartered, and back-end equipment is far less tightly controlled than lithography or deposition.",
+    "chinaStatus": "Assembly and test is where China is most competitive. Georgetown's CSET counts four of the top ten assembly and test firms by 2024 revenue as China-headquartered, and their equipment is far less tightly controlled than lithography or deposition.",
     "usStatus": "Strong in test equipment and probe cards through Teradyne, FormFactor, Cohu and Aehr, weak in assembly capacity. Amkor is building a US$7 billion packaging and test campus in Arizona and has a long-term partnership with TSMC to fill it.",
     "costSignal": "ASE and Amkor alone billed US$27.3 billion in 2025; ASE spent US$4.1 billion on machinery and buildings in the first half of 2026",
     "substitution": {"years": "3-5", "why": "Assembly and test floors can be built in a few years, but changing tester vendor means rebuilding the entire device development, evaluation and production test environment, so customers almost never switch."}
   },
   "keyFacts": [
-    {"fact": "Advantest estimates its overall tester market share at about 65% in CY2025, with 66% of SoC test (up about 10 points year on year) and about 60% of memory test", "source": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf"},
-    {"fact": "The CY2025 tester market was about US$9.0 billion: US$6.9 billion of SoC testers, up about 68% year on year, and US$2.1 billion of memory testers", "source": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf"},
+    {"fact": "Advantest estimates its overall tester market share at about 65% in CY2025, with 66% of logic chip test (up about 10 points year on year) and about 60% of memory test", "source": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf"},
+    {"fact": "The CY2025 tester market was about US$9.0 billion: US$6.9 billion of logic chip testers, up about 68% year on year, and US$2.1 billion of memory testers", "source": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf"},
     {"fact": "Advantest and Teradyne together hold about 80% of the tester market", "source": "https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf"},
     {"fact": "Teradyne's 2025 revenue was US$3.19 billion, up 13%, with fourth-quarter growth of 44% driven by AI compute and memory test", "source": "https://investors.teradyne.com/news-events/press-releases/detail/433/teradyne-reports-fourth-quarter-and-full-year-2025-results"},
     {"fact": "Technoprobe's 2025 revenue was EUR 628.4 million, up 15.7%, with about 38% of revenue from AI applications", "source": "https://technoprobe.com/wp-content/uploads/2026/03/PR-FY-2025_.pdf"},
     {"fact": "Aehr received a US$22 million follow-on order for AI processor wafer-level burn-in systems in August 2026", "source": "https://www.aehr.com/2026/08/aehr-receives-22-million-follow-on-order-for-ai-processor-wafer-level-burn-in-systems/"},
     {"fact": "ASE's installed tester count rose from 6,797 in the second quarter of 2025 to 8,348 a year later, and it spent US$2.7 billion on machinery and US$1.4 billion on buildings in the first half of 2026", "source": "https://www.sec.gov/Archives/edgar/data/1122411/000095010326011353/dp250875_6k.htm"},
-    {"fact": "Four of the top ten OSATs by 2024 revenue are China-headquartered", "source": "https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/"},
+    {"fact": "Four of the top ten outsourced assembly and test firms by 2024 revenue are China-headquartered", "source": "https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/"},
     {"fact": "Malaysia ships about 13% of the world's packaged chips and is targeting 7% of advanced packaging shipments by 2035", "source": "https://www.mida.gov.my/advanced-packaging-how-malaysia-is-packaging-the-future-of-ai/"}
   ],
   "figures": [
@@ -60,7 +60,7 @@
     {
       "id": "ase-testers",
       "type": "bars",
-      "title": "Testers installed at ASE, the largest OSAT",
+      "title": "Testers installed at ASE, the largest assembly and test contractor",
       "unit": "testers",
       "data": [["Q2 2025", 6797], ["Q1 2026", 7585], ["Q2 2026", 8348]],
       "source": {"label": "ASE Technology Holding, second quarter 2026 earnings release (SEC Form 6-K)", "url": "https://www.sec.gov/Archives/edgar/data/1122411/000095010326011351/dp250868_6k.htm"}
@@ -70,20 +70,20 @@
 ---
 # Test and Assembly
 
-Semiconductor manufacturing runs to 400 to 600 steps, and Advantest counts test as the only one that handles electricity ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf)). Everything before this chapter makes dies; the back end decides which of them are allowed into a package.
+Semiconductor manufacturing runs to 400 to 600 steps, and Advantest counts test as the only one that puts electricity through the chip ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf)). Everything before this chapter makes dies; assembly and test, the back end of the industry, decides which of them are allowed into a package.
 
 ## How it works
 
-Before a chip can be sold, a machine has to interrogate it and check every answer. Needles finer than a hair land on pads on the wafer and drive test patterns into each chip; the ones that answer wrong are marked and never leave. It matters more each year because of arithmetic: a modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them. So the industry tests earlier, hotter and longer than it used to, and two companies sell most of the machines that do it.
+Before a chip can be sold, a machine has to interrogate it and check every answer. Needles finer than a hair land on pads on the wafer and drive test patterns into each chip; the tester marks the ones that answer wrong, and they never leave. This matters more each year because of arithmetic: a modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them. So the industry tests earlier, hotter and longer than it used to, and two firms, one Japanese and one American, sell most of the machines that do it.
 
 Each round of test catches failures the round before it cannot see.
 
-- **Wafer sort.** Thousands of needles land on the pads of each die while a tester drives patterns in and checks the answers; failures never leave the wafer.
-- **Burn-in.** Run the part hot and at voltage for hours to force early failures out before assembly.
-- **Final test.** The packaged part is tested again, because packaging introduces its own failures.
-- **System-level test.** The finished part runs in a socket against something close to a real workload, because some failures appear only when everything runs at once.
+- **Wafer sort.** Thousands of needles land on each die while it is still on the wafer, and a tester drives patterns in and checks the answers; failures never leave the wafer.
+- **Burn-in.** Run the part hot and under power for hours, so that anything which would fail early fails now, before assembly.
+- **Final test.** The tester runs the packaged part again, because packaging adds failures of its own.
+- **System-level test.** The finished part sits in a socket and runs something close to a real workload, because some failures appear only when everything runs at once.
 
-Known-good die is what changed. Aehr screens early-life and latent failures before dies are cut from the wafer, so a weak processor never reaches high-bandwidth memory and an expensive substrate ([source](https://www.aehr.com/2026/08/aehr-receives-22-million-follow-on-order-for-ai-processor-wafer-level-burn-in-systems/)). Its lead AI customer is moving burn-in from system level entirely onto the wafer, nine 300 mm wafers at a time ([source](https://www.aehr.com/2026/07/aehr-test-systems-reports-fiscal-2026-fourth-quarter-and-full-year-financial-results-with-record-quarterly-bookings-and-100-million-effective-backlog/)).
+What changed is the value of proving a die good before it is packaged. Aehr screens for early and hidden failures before dies are cut from the wafer, so a weak processor never reaches high-bandwidth memory and an expensive substrate ([source](https://www.aehr.com/2026/08/aehr-receives-22-million-follow-on-order-for-ai-processor-wafer-level-burn-in-systems/)). Its lead AI customer is moving burn-in off the finished system and onto the wafer, nine 300 mm wafers at a time ([source](https://www.aehr.com/2026/07/aehr-test-systems-reports-fiscal-2026-fourth-quarter-and-full-year-financial-results-with-record-quarterly-bookings-and-100-million-effective-backlog/)).
 
 ## Variants and trade-offs
 

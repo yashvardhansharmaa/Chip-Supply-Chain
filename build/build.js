@@ -209,19 +209,19 @@ function nameplate(card, title) {
   if (numLead && costHead.length > 30) { costRest = numLead[2] + (costRest ? '. ' + costRest : ''); costHead = numLead[1]; }
   const costLong = costHead.length > 30;
   const cost = [costHead, costRest];
-  return `<section class="plate" aria-label="Chokepoint nameplate${title ? ' for ' + esc(title) : ''}">
-<header class="plate-head"><span class="label">Chokepoint nameplate</span><span class="plate-score">${pips(score)}<span><b>${score || '—'}</b> / 5</span><span class="sr-only">Chokepoint score ${score} of 5</span></span></header>
+  return `<section class="plate" aria-label="Chokepoint card${title ? ' for ' + esc(title) : ''}">
+<header class="plate-head"><span class="label">Chokepoint card</span><span class="plate-score">${pips(score)}<span><b>${score || '—'}</b> / 5</span><span class="sr-only">Chokepoint score ${score} of 5</span></span></header>
 <div class="plate-kpis">
 <div><span class="k">Concentration</span><b class="v ${esc(card.concentration || '')}">${esc(card.concentration || '—')}</b></div>
-<div><span class="k">Time to substitute</span><b class="v">${esc(sub.years || '—')}${sub.years && !/year/i.test(sub.years) ? '<small>years</small>' : ''}</b></div>
-<div><span class="k">Cost signal</span><b class="v cost${costLong ? ' long' : ''}">${esc(cost[0] || '—')}</b>${cost[1] ? `<span class="sub">${esc(cost[1])}</span>` : ''}</div>
+<div><span class="k">Substitution time</span><b class="v">${esc(sub.years || '—')}${sub.years && !/year/i.test(sub.years) ? '<small>years</small>' : ''}</b></div>
+<div><span class="k">Money, for scale</span><b class="v cost${costLong ? ' long' : ''}">${esc(cost[0] || '—')}</b>${cost[1] ? `<span class="sub">${esc(cost[1])}</span>` : ''}</div>
 </div>
 <dl class="plate-rows">
 ${leaders ? `<div class="row"><dt>Who leads</dt><dd><ul>${leaders}</ul></dd></div>` : ''}
 ${countries ? `<div class="row"><dt>Where it is made</dt><dd><ul>${countries}</ul></dd></div>` : ''}
 ${sub.why ? `<div class="row"><dt>Why substitution is slow</dt><dd class="why">${esc(sub.why)}</dd></div>` : ''}
 </dl>
-${card.chinaStatus || card.usStatus ? `<div class="plate-status">${card.chinaStatus ? `<div><span class="k">China</span><p>${esc(card.chinaStatus)}</p></div>` : ''}${card.usStatus ? `<div><span class="k">United States</span><p>${esc(card.usStatus)}</p></div>` : ''}</div>` : ''}
+${card.chinaStatus || card.usStatus ? `<div class="plate-status">${card.chinaStatus ? `<div><span class="k">Where China stands</span><p>${esc(card.chinaStatus)}</p></div>` : ''}${card.usStatus ? `<div><span class="k">Where the US stands</span><p>${esc(card.usStatus)}</p></div>` : ''}</div>` : ''}
 </section>`;
 }
 
@@ -279,7 +279,7 @@ function chapterHTML(ch) {
   const sources = ch.cites.length ? `<details class="chapter-sources"><summary>Sources for this chapter (${ch.cites.length})</summary><ol>${ch.cites.map((c) => `<li>${tierTag(c.url)}<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url.length > 96 ? c.url.slice(0, 94) + '…' : c.url)}</a><span class="host">${esc(host(c.url))}</span></li>`).join('')}</ol></details>` : '';
   const stageIdx = stages.findIndex((c) => c.id === ch.id);
   const next = stageIdx >= 0 ? stages[stageIdx + 1] : null;
-  const tile = stageIdx >= 0 ? `<div class="ch-tile"><span class="k">Chapter</span><span class="v">${pad(ch.number)}</span><span class="of">stage ${stageIdx + 1} of ${stages.length}</span></div>` : `<div class="ch-tile"><span class="k">Chapter</span><span class="v">${pad(ch.number)}</span><span class="of">${ch.number === 1 ? 'the map' : 'the bill'}</span></div>`;
+  const tile = stageIdx >= 0 ? `<div class="ch-tile"><span class="k">Chapter</span><span class="v">${pad(ch.number)}</span><span class="of">stage ${stageIdx + 1} of ${stages.length}</span></div>` : `<div class="ch-tile"><span class="k">Chapter</span><span class="v">${pad(ch.number)}</span><span class="of">${ch.number === 1 ? 'the map' : 'the costs'}</span></div>`;
   const chain = stageIdx >= 0 ? `<div class="chain chain--compact" aria-label="Where this stage sits in the chain">${chainTrack(stages, ch.id)}<p class="chain-foot"><span>You are here: <b>${esc(ch.title)}</b>, stage ${stageIdx + 1} of ${stages.length}</span><span>${next ? `Next: ${pad(next.number)} ${esc(next.title)}` : 'Last stage in the chain'}</span></p></div>` : '';
   return `<article class="chapter" id="${esc(ch.id)}" data-specimen="${esc(specimen)}" data-number="${pad(ch.number)}" data-title="${esc(ch.title)}" data-caption="${esc(m.specimenCaption || '')}">
 <header class="chapter-head">
@@ -349,7 +349,7 @@ function exposureViz(rows) {
   const RW = 760, L = 190, R = RW - 40, RH = 24, top = 30;
   const xs = (v) => L + (v / YMAX) * (R - L);
   const H = top + firms.length * RH + 8;
-  let d = `<div class="ex-legend"><span><i class="lg-first"></i>First fiscal year on file</span><span><i class="lg-last"></i>Latest fiscal year</span><span><i class="lg-peak"></i>Peak year</span><span>Scale 0 to 60% of revenue</span></div>`;
+  let d = `<div class="ex-legend"><span><i class="lg-first"></i>First fiscal year on file</span><span><i class="lg-last"></i>Latest fiscal year</span><span><i class="lg-peak"></i>Highest year</span><span>Axis: China's share of revenue, 0 to 60%</span></div>`;
   d += `<svg class="ex-rank" viewBox="0 0 ${RW} ${H}" role="img" aria-label="China share of revenue by firm: first fiscal year on file against the latest">`;
   [0, 20, 40, 60].forEach((v) => { d += `<line x1="${xs(v)}" y1="${top - 6}" x2="${xs(v)}" y2="${H - 6}" class="grid"/><text x="${xs(v)}" y="${top - 12}" class="tick" text-anchor="middle">${v}%</text>`; });
   firms.forEach((f, i) => {
@@ -366,7 +366,7 @@ function exposureViz(rows) {
   // small multiples: one panel per firm on a shared time axis and a shared 0 to 60% scale
   const PW = 240, PH = 118, px0 = 10, px1 = 232, py0 = 16, py1 = 96;
   const X = (t) => px0 + ((t - T0) / (T1 - T0)) * (px1 - px0), Y = (v) => py1 - (v / YMAX) * (py1 - py0);
-  d += `<div class="ex-legend"><span><i class="lg-rule"></i>US rules of Oct 2022, Oct 2023 and Dec 2024</span><span><i class="lg-peakdot"></i>Peak year</span><span>Shared scale, 0 to 60%</span></div><div class="ex-grid">`;
+  d += `<div class="ex-legend"><span><i class="lg-rule"></i>US export rules of Oct 2022, Oct 2023 and Dec 2024</span><span><i class="lg-peakdot"></i>Highest year</span><span>Same scale on every panel, 0 to 60%</span></div><div class="ex-grid">`;
   firms.forEach((f) => {
     const pts = f.rows.map((r) => [X(tx(r.fyEnd)), Y(r.chinaShare)]);
     const line = pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
@@ -462,7 +462,7 @@ fill('SHEET_PAGES', sheetPages); fill('SHEET_CHAPTERS', sheetChapters);
 fill('RAIL', railHTML); fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits); fill('FOOTER', footer);
 fill('SUPPLIERS_INTRO', suppliersIntro); fill('GEO_DEK', esc(geoDek)); fill('GEO_BODY', geoBody); fill('SOURCES', sourcesHTML);
 fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));
-fill('CONTROLS_DEK', controls.length ? `${controls.length} thresholds across ${[...new Set(controls.map((c) => c.regime))].length} regimes, and China revenue exposure for ${[...new Set(exposure.map((e) => e.firm))].length} controlled-tool and chip vendors from their own filings.` : 'The threshold map and exposure series are being compiled.');
+fill('CONTROLS_DEK', controls.length ? `${controls.length} licensing thresholds across ${[...new Set(controls.map((c) => c.regime))].length} regimes, and the China share of revenue for ${[...new Set(exposure.map((e) => e.firm))].length} firms that sell controlled tools or chips, taken from their own filings.` : 'The licence thresholds and the revenue series are being compiled.');
 fill('EXPOSURE_VIZ', exposureViz(exposure));
 fill('EXPOSURE_NOTE', exposure.length ? 'Shares computed from filed absolute figures; bases differ by firm (ship-to, bill-to or headquarters) and are stated in each row. Method notes are on the <a href="#/sources">Sources</a> page.' : '');
 fill('KIT', kit); fill('SPECIMENS', specimens);

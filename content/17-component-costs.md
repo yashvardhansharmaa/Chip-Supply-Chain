@@ -86,11 +86,11 @@ Run those three numbers and the two dies inside a B200 come to about $900, 14 pe
 
 ### Memory is the bill
 
-The 192 GB of high-bandwidth memory stacked beside those dies, sold as HBM3E, is the single largest line: about $2,900, 45 percent of the build, at $14 to $17 per gigabyte ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). It is also the line Nvidia controls least. Three firms make that memory and they sell every stack they can build; Micron's gross margin, further down this page, shows what that is worth to a seller.
+The 192 GB of high-bandwidth memory beside those dies, sold as HBM3E, is the single largest line: about $2,900, 45 percent of the build, at $14 to $17 per gigabyte ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Nvidia controls it least of all: three firms make it, and they sell every stack they can build.
 
 ### Packaging, substrate and test
 
-CoWoS-L, the TSMC process that mounts the dies and the memory stacks on one carrier and wires them together, adds about $1,100, more than the logic dies it carries ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Packaging yield runs 65 to 95 percent, and a package that fails after the memory goes on throws away the dies and the memory with it, adding roughly $1,000 to every B200 that ships ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Substrate, board, test and assembly add $480 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). See Advanced packaging for why that capacity binds first.
+CoWoS-L, the TSMC process that mounts dies and memory on one carrier and wires them together, adds about $1,100, more than the logic dies it carries ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Packaging yield runs 65 to 95 percent, and a package that fails after the memory goes on throws away the dies and the memory with it, adding roughly $1,000 to every B200 that ships ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Substrate, board, test and assembly add $480 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). See Advanced packaging for why that capacity binds first.
 
 ### The B200 bill of materials
 
@@ -110,9 +110,9 @@ Epoch AI models each line as a range rather than a single figure, deriving the p
 
 ### From package to rack to cluster
 
-Buy a whole rack and the number that matters becomes what an hour of it costs to own. For an operator that owns the rack, SemiAnalysis puts a Vera Rubin NVL72 at $3.57 per GPU-hour, against $1.84 for a GB200 and $2.36 for a GB300 ([source](https://inferencex.semianalysis.com/blog/vera-rubin-nvl72-vs-gb200-nvl72-inference)). Each generation costs its owner more per GPU-hour than the last, and buyers pay because throughput rises faster than the rate.
+Buy a whole rack and the number that matters is the cost of a GPU-hour. For an operator that owns the machine, SemiAnalysis puts a Vera Rubin NVL72 at $3.57, against $1.84 for a GB200 and $2.36 for a GB300 ([source](https://inferencex.semianalysis.com/blog/vera-rubin-nvl72-vs-gb200-nvl72-inference)). Each generation costs its owner more per hour than the last, and buyers pay because throughput rises faster than the rate.
 
-One level up, a 100,000 H100 cluster carries over $4B of server capex, draws about 150 MW, burns 1.59 TWh a year, pays $123.9M for power and needs 98,304 optical transceivers ([source](https://newsletter.semianalysis.com/p/100000-h100-clusters-power-network)).
+One level up, a 100,000 H100 cluster costs over $4B in servers, draws about 150 MW, burns 1.59 TWh a year, pays $123.9M for power and needs 98,304 optical transceivers ([source](https://newsletter.semianalysis.com/p/100000-h100-clusters-power-network)).
 
 ## Who captures the value
 
@@ -143,7 +143,7 @@ The two bodies that count this industry disagree, which sets the error bar here.
 
 ## The chokepoint
 
-Per unit of compute, logic keeps getting cheaper and everything wrapped around it gets dearer. Memory is 45 percent of a B200 build ([source](https://epoch.ai/data-insights/b200-cost-breakdown)), packaging and its scrap cost more than twice the logic dies, and a GB300 NVL72 rack already draws 142 kW ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
+Per unit of compute, logic keeps getting cheaper and everything wrapped around it gets dearer. Packaging and its scrap cost more than twice the logic dies ([source](https://epoch.ai/data-insights/b200-cost-breakdown)), and a GB300 NVL72 rack already draws 142 kW ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
 
 | Stage | Class | Why |
 |---|---|---|
