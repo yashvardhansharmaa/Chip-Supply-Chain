@@ -80,8 +80,8 @@ Every AI cluster runs two networks that are not interchangeable. Scale-up binds 
 The designs differ in how many accelerators can share one pool of memory.
 
 - **NVLink and NVSwitch.** Nvidia's per-GPU bandwidth went from 900 GB/s in NVLink 4 to 1,800 in NVLink 5 and 3,600 in NVLink 6; the rack's own network moves 130 TB/s on Blackwell and 260 TB/s on Rubin ([source](https://www.nvidia.com/en-us/data-center/nvlink/)).
-- **UALink.** The open answer runs 200 Gb/s per lane, four lanes to a port for 800 Gb/s, and can address up to 1,024 endpoints in one group ([source](https://ualinkconsortium.org/blog/ualink-200g-1-0-specification-overview-802/)).
-- **Google's 3D torus.** Ironwood, the seventh generation of Google's own TPU accelerator, wires 64 chips to a rack and uses optical switches to stitch cubes of racks into superpods of 9,216 chips, trading latency for the ability to route around a failed rack in software ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)).
+- **UALink.** The open answer runs 200 Gb/s per lane, four lanes to a station for 800 Gb/s, and can address up to 1,024 endpoints in one group ([source](https://ualinkconsortium.org/blog/ualink-200g-1-0-specification-overview-802/)).
+- **Google's 3D torus.** Ironwood, the seventh generation of Google's own TPU accelerator, wires 64 chips to a rack and uses optical switches to stitch cubes into superpods of 9,216 chips, trading latency for the ability to route around a failed rack in software ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)).
 
 {{figure:nvlink-bandwidth}}
 
