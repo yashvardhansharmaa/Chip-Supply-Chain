@@ -397,3 +397,204 @@ publishes its own annual data center construction-cost series with a stated basi
 average, per MW) and is the standard citation for it in the trade press, which puts it alongside Gartner and
 IDC rather than with the SEO market-research sites in Tier D. No other new domain was needed: `delloro.com`,
 `trendforce.com`, `advantest.com` and `sec.gov` were already classified.
+
+---
+
+# 02 · Chip Design, EDA and IP
+
+**Words: 1,319 → 1,116 (-15.4%). Tier D citations: 3 → 0.**
+
+### Replacements
+
+**`siliconanalysts.com/market-data/nre-design-cost` → `newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor` (Tier B, verified).**
+The Tier D site was the only support for the IBS series ($257M at 7 nm, $479M at 5 nm, $585M at 3 nm), and it
+appeared four times: in `keyFacts`, as the source of `figures.design-cost`, in the "How it works" cost paragraph
+and in the Takeaways. No Tier A or B source carries that series. The SIA design-cost slides (semiconductors.org,
+Tier A) and the SemiEngineering pieces that carry IBS numbers both refuse WebFetch and curl (403), so the IBS
+figures could not be verified anywhere above Tier D and were removed rather than re-hedged.
+
+What replaced them, from a SemiAnalysis piece that was verified in full: photomask set cost by node (over $1M at
+28 nm, over $10M at 7 nm, about $40M at 3 nm) and the observation that startups have carried a leading-edge design
+to tape-out on TSMC 7 nm for $50M to $75M, software and validation included. The figure `design-cost` is therefore
+retired and replaced by `mask-cost` (bars: 28 nm 1, 7 nm 10, 3 nm 40, titled so the first two read as floors), and
+`card.costSignal` now reads "A 3 nm photomask set runs about $40M, and startups have taken a 7 nm design all the way
+to tape-out for $50-75M". This is a better fact for the chapter than the IBS series: it is verifiable, it is not
+contested by practitioners, and it quantifies the thing the `plain` paragraph already promises the reader ("changing
+one street costs a new set of printing plates").
+
+**`finance.yahoo.com/.../broadcom-q3-earnings-call-highlights` → `sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm` (Tier A, verified).**
+Broadcom's own Q3 FY2026 earnings release, filed as an 8-K exhibit, confirms $16.7bn of AI semiconductor revenue,
+up 221% year on year. **Number changed:** the claim that XPUs were "73% of it" is dropped. That split comes from the
+earnings call, not the release; the release says only "demand for our custom AI accelerators and networking continues
+to be very strong", and no Tier A or B source reporting the 73% could be verified. The `keyFacts` entry and the
+`card.leaders` Broadcom line were rewritten to match.
+
+**`semiconhunt.com/.../india-employs-20-percent-global-chip-design-workforce` → `pib.gov.in/PressReleasePage.aspx?PRID=2148393` (Tier A).**
+India's Press Information Bureau, releasing for the Ministry of Electronics and IT, states: "India is home to nearly
+20% of the world's chip design engineers." **Number changed:** the headcount of 125,000 is dropped, because PIB gives
+the share and not the count, and no government or Tier B source verified the absolute number. `card.countries.IN` now
+reads "Nearly 20% of the world's chip design engineers, on the Indian government's count". Verified by curl rather
+than WebFetch, which pib.gov.in answers with 403.
+
+### Hedges added
+
+`tomshardware.com` is Tier C and carries four numbers in this chapter (Google's 44% TCO claim, the Broadcom-Marvell
+95% share, Broadcom's 3.5D package area, the Huawei and Cambricon unit targets). The two load-bearing share claims
+now say "on trade-press figures" and "on trade-press estimates" in the sentence.
+
+### Removals
+
+- The "Where the designers sit" section (four bullets restating `card.countries`); the one fact in it not in the card,
+  India's share of the design workforce, moved into "Who makes it" with the new Tier A source.
+- The per-segment share list in "The EDA flow" (90% static timing, 84-85% synthesis, 85% physical verification, 55-60%
+  emulation), which `figures.tool-lock` prints immediately below it. One anchor number survives in the prose.
+- The per-vendor revenue split in the first paragraph of "Who makes it", for the same reason: `figures.eda-share` has it.
+- "The cut-off lasted five weeks" in "The chokepoint", already said in the lead.
+
+### New domains
+
+`pib.gov.in` → Tier A, with the other government and ministry sources.
+
+---
+
+# 03 · Silicon and Wafers
+
+**Words: 1,330 → 1,133 (-14.8%). Tier D citations: 2 → 0.**
+
+### Replacements
+
+**`mordorintelligence.com/industry-reports/semiconductor-silicon-wafer-market` → `koreajoongangdaily.com/business/doosan-to-buy-sk-siltron-in-23-trillion-won-chip-deal/12803658` (Tier B, verified).**
+Mordor supported the chapter in six places. The concentration claim is now sourced to Korea JoongAng Daily, which was
+already cited in the chapter and states: "The global silicon wafer market is also highly concentrated, with five
+companies — including SK siltron — accounting for more than 90 percent of global market share." **Number changed:**
+"about 85 percent of global 300 mm capacity" becomes "more than 90 percent of the global wafer market", and
+`figures.wafer-concentration` moves from 85/15 to 90/10 with a retitled axis and the new source. The `keyFacts` entry
+was rewritten to match.
+
+Two other Mordor numbers had no replacement and were deleted with their sentences: **"Chinese suppliers price 10 to 15
+percent below Japanese peers where flatness targets are looser"**, and **"300 mm carried 73.81 percent of wafer area
+shipped in 2025"**. The **Diameter** criterion now carries CSET's 99.7% of fab capacity at 45 nm and below instead,
+which is Tier A and already in the chapter.
+
+**`investing.com/news/transcripts/earnings-call-transcript-sumco-q4-2025-...` → `trendforce.com/news/2026/04/06/news-sumco-delays-construction-of-two-silicon-wafer-fabs-amid-market-shift/` (Tier B, verified).**
+The transcript mirror supported SUMCO's FY2025 revenue (¥409.6bn), operating profit (¥1.3bn), the 9% rise in 300 mm
+volume, and the long-term-agreement pricing commentary. SUMCO's own results are published through eir-parts.net rather
+than sumcosi.com, and every sumcosi.com IR page is JavaScript-rendered and returns navigation only to WebFetch and
+curl; no Tier A or B mirror of the FY2025 numbers could be verified. **Numbers changed:** the revenue, profit and
+volume figures are gone. The SUMCO bullet now carries a verified TrendForce fact instead, which makes the same point
+harder: SUMCO shelved a ¥225bn plan for two new fabs at Imari and Yoshinogari to upgrade existing lines, after its
+state subsidy was cut from ¥75bn to ¥19.3bn. `card.leaders` and the `keyFacts` entry were rewritten to match.
+
+The pricing paragraph is now built on SEMI instead of the call transcript, and says the same thing with Tier A
+support: area shipped rose 5.8% in 2025 while revenue fell 1.2%.
+
+### Upgrade (not required, but free)
+
+**`semiconductor-digest.com/...` (Tier C, three uses) → `prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html` (Tier A, verified).**
+SEMI's own release carries the same numbers (12,973 MSI, +5.8%; $11.4bn, -1.2%) and the epitaxial-and-HBM attribution,
+so the chapter no longer leans on a trade-press retelling of it. This removes the need for a Tier C hedge in three places.
+
+### Hedges added
+
+`pv-magazine.com`, `digitimes.com` and `theregister.com` are Tier C. The polysilicon ranking now says "on a Bernreuter
+ranking reported in the trade press", NSIG's growth says "per the trade press", and the 450 mm cost estimate says "on
+one trade account".
+
+### Removals
+
+- The "Polished, or prime" subsection, folded into a single clause of a merged "Prime versus epitaxial".
+- The GlobalWafers St Peters SOI sentence (the Missouri plant is still in `card.countries`); the SOI subsection is now
+  two sentences, because the chapter itself says SOI is not the substrate under an AI GPU.
+- Tongwei's 910,000 t and Wacker's 80,000 t from the prose: `figures.polysilicon-capacity` prints both directly below.
+- NSIG's 36.51% first-half revenue rise, which said the same thing as the 90% shipment growth in the same sentence.
+
+### New domains
+
+None. `prnewswire.com`, `koreajoongangdaily.com` and `trendforce.com` were already classified.
+
+---
+
+# 04 · Chemicals, Gases and Photoresist
+
+**Words: 1,343 → 1,143 (-14.9%). Tier D citations: 6 → 0.**
+
+### Replacements
+
+**`gminsights.com/industry-analysis/high-purity-specialty-gases-market` → deleted; `figures.gas-share` replaced by `figures.germanium-price` on `pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf` (Tier A, verified).**
+The Tier D market-research page was the only support for the whole share table (Linde 18.8%, Air Liquide 16.5%,
+Air Products 8.4%, Taiyo Nippon Sanso 6.1%, Messer 4.1%, 53.9% together, a $12.1bn market). SEMI's blog on electronic
+specialty gases, TechInsights' gases page and Yole were all checked; SEMI is behind Cloudflare, TechInsights publishes
+no numbers on its landing page, and neither Yole nor TrendForce has a public electronic-gas share release.
+**Numbers deleted:** all five percentages and the market size. The prose still names the five firms, which is a
+roll-call rather than a share claim, and anchors the scale on Air Liquide's own disclosure (€2,465m of electronics
+revenue in 2025, 9.1% of group revenue), verified on airliquide.com. `card.leaders` for Air Liquide was rewritten
+from "16.5% of high-purity specialty gases" to that company figure.
+
+The retired figure is replaced by a stronger one for the same chapter: USGS Mineral Commodity Summaries, February 2026,
+germanium metal annual average price, $1,187/kg (2021) to $4,100/kg (2025). It sits in "The chokepoint", where it
+shows what an export control does to a price, which is the argument the section was already making.
+
+**`gminsights.com/industry-analysis/photoresist-chemicals-for-advanced-lithography-market` → `fujifilm.com/jp/en/news/hq/11942` and `fujifilm.com/jp/en/news/hq/11842` (Tier A, verified), plus `prnewswire.com/.../global-semiconductor-materials-market-revenue-reaches-record-73-2-billion-in-2025--semi-reports-302768700.html` (Tier A, verified).**
+This one was also wrong on the facts. The Tier D page said Fujifilm's June 2025 Kumamoto expansion raised **EUV resist**
+capacity by 30% next to TSMC's Japanese fab. Fujifilm's own releases say the Kumamoto investment is a roughly 30%
+increase in **CMP slurry** capacity, operational January 2025, and that the EUV resist and developer capacity went into
+**Shizuoka and Pyeongtaek**, operational October 2025. The bullet was rewritten to the company's version.
+**Number deleted:** the "$6.1bn advanced-lithography resist market in 2025, top five about half". `card.costSignal` and
+the market-size sentence now use SEMI's materials figures instead: $45.8bn of wafer fabrication materials and $27.4bn
+of packaging materials in 2025, $73.2bn together.
+
+**`en.tmt-blog.jp/articles/company-jsr-en` → `jsr.co.jp/jsr_e/news/2021/20210917.html` (Tier A, verified).**
+JSR's own announcement of the Inpria acquisition confirms the deal and that Inpria "has been developing its
+non-chemically amplified metal oxide EUV resists since the company was established in 2007". **Number deleted:** the
+$514m price, which JSR's release does not give; the Business Wire release that does carry it returns 403 to both
+WebFetch and curl. The second use of this source, in the **Photon efficiency** criterion, needed no citation once the
+number went, since the bullet makes no numeric claim.
+
+**`factmr.com/report/nitrogen-trifluoride-market` → citation removed.** It sat on a sentence describing what NF3 does
+(cracked in a plasma to strip chamber walls). No number, so no source is required.
+
+**`businessresearchinsights.com/market-reports/ultra-high-purity-hydrofluoric-acid-market-107517` → citation removed.**
+Same case: a list of four supplier names with no number attached. Stella Chemifa's own site 404s on its English index.
+
+**`strategicmetalsinvest.com/germanium-prices/` → `pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf` (Tier A, verified).**
+**Numbers changed:** the spot quotes of $8,597.50/kg in September 2026 against $4,120.80 at the start of 2025 become
+USGS annual averages, $4,100/kg in 2025 against $1,392 in 2023, with the added Tier A fact that US imports of germanium
+metal fell 67% in 2025 on China's ban. Annual averages from the USGS series (sourced to Argus Media) are both better
+sourced and more useful to a policy reader than a spot print on an unnamed date.
+
+### Correction found while verifying
+
+The sentence "Again no fab stopped, because excimer lasers had been re-engineered to use less neon after a 2014 price
+shock" was cited to CSIS. The CSIS piece says nothing about excimer lasers or a 2014 shock; the SFA Oxford page does not
+support it either. The claim is removed. What CSIS does support, and now carries, is that Ukraine supplied about 70% of
+the world's neon and 90% of the semiconductor-grade neon used by US industry. The `keyFacts` entry that quoted SFA's 70%
+of neon demand and 54% supply loss was replaced with the CSIS figures, which moves that fact from Tier C to Tier A and
+keeps `keyFacts` consistent with the body.
+
+### Hedges added
+
+`sfa-oxford.com` (Tier C) keeps two numbers: China's share of air separation capacity now says "on one specialist's
+count", and the byproduct criterion is unchanged in substance. `evertiq.com` (Tier C) carries JSR's 27% share, which
+now says "on trade-press estimates".
+
+### Removals
+
+- The gas transportability paragraph in "Variants and trade-offs", which restated the **Transportability** criterion.
+- The Shin-Etsu Isesaki bullet, a third example of the same point as Tokyo Ohka and Fujifilm.
+- The Entegris revenue sentence from "Who makes it" (the figure is still in `card.leaders`).
+- Neon's 1-part-in-65,000 concentration and the 54% supply-loss figure, both from the Tier C page, now that CSIS
+  carries the Ukraine share at Tier A.
+
+### New domains
+
+`pubs.usgs.gov` and `usgs.gov` → Tier A, with the other government and institutional sources.
+`jsr.co.jp` and `fujifilm.com` → Tier A, with the other company IR and newsroom domains.
+
+---
+
+## Verification notes for these three chapters
+
+Every replacement URL above was opened and read before it was cited. WebFetch was the default; where a host refuses it
+(`pib.gov.in`, `pubs.usgs.gov`) the same URL was fetched with curl and, for the USGS PDF, the text extracted locally.
+Sources that could not be read at all and were therefore not used: `semiengineering.com`, `semiconductors.org`,
+`blog.semi.org`, `businesswire.com`, `investindia.gov.in`, `ism.gov.in`, and every JavaScript-rendered SUMCO IR page.
