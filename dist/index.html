@@ -7395,78 +7395,316 @@ PC.register('wafer', function (p) {
     }
   };
 
-  /* ---------------- landscape ---------------- */
+  /* ---------------- AI chips: compare two to four ---------------- */
   var Landscape = {
-    chips: DATA.landscape || [], notes: DATA.landscapeNotes || {}, sel: null, built: false,
+    chips: DATA.landscape || [],
+    notes: DATA.landscapeNotes || {},
+    max: 4,
+    picked: [],       // the selected chip ids, in the order the reader added them
+    sel: null,        // the focused chip: its render fills the stage and its notes open
+    built: false,
+    hint: '',
+    exportRows: [],   // the export bar in Tools holds this same array, so mutate it, never replace it
+
+    /* ---- data ---- */
+    byId: function (id) { for (var i = 0; i < this.chips.length; i++) if (this.chips[i].id === id) return this.chips[i]; return null; },
+    selection: function () { var self = this, out = []; this.picked.forEach(function (id) { var c = self.byId(id); if (c) out.push(c); }); return out; },
+    initSelection: function () { // the page opens in comparison mode on the two best-documented parts
+      var self = this;
+      ['nvidia-b200', 'amd-mi355x'].forEach(function (id) { if (self.byId(id)) self.picked.push(id); });
+      for (var i = 0; this.picked.length < 2 && i < this.chips.length; i++) if (this.picked.indexOf(this.chips[i].id) < 0) this.picked.push(this.chips[i].id);
+      this.sel = this.picked[0] || null;
+      this.syncExport();
+    },
+    syncExport: function () { // Tools' copy buttons read this array at click time
+      var rows = this.selection();
+      this.exportRows.length = 0;
+      for (var i = 0; i < rows.length; i++) this.exportRows.push(rows[i]);
+      var wrap = $('#cx-table-wrap'), bar = wrap && wrap.previousElementSibling;
+      if (bar && bar.classList && bar.classList.contains('export-bar')) {
+        var n = bar.querySelector('.count');
+        if (n) n.textContent = rows.length + (rows.length === 1 ? ' row' : ' rows') + ' · AI chips, selected';
+      }
+    },
+
+    /* ---- lifecycle ---- */
     activate: function () {
       if (!this.built) this.buildUI();
-      if (!this.sel && this.chips.length) this.select(this.chips[0].id);
-      else if (this.sel) this.showStage(this.byId(this.sel));
+      var c = this.byId(this.sel);
+      if (c) this.showStage(c);
     },
-    byId: function (id) { for (var i = 0; i < this.chips.length; i++) if (this.chips[i].id === id) return this.chips[i]; return null; },
     buildUI: function () {
       this.built = true;
-      var self = this, pk = $('#picker'), html = '', lastVendor = null;
-      var order = this.chips.slice();
-      order.forEach(function (c) {
-        if (c.vendorCountry !== lastVendor) { html += '<div class="group">' + esc(cname(c.vendorCountry)) + '</div>'; lastVendor = c.vendorCountry; }
+      var self = this, pk = $('#picker'), html = '', last = null;
+      this.chips.forEach(function (c) {
+        if (c.vendorCountry !== last) { html += '<div class="group">' + esc(cname(c.vendorCountry)) + '</div>'; last = c.vendorCountry; }
         html += '<button type="button" data-id="' + esc(c.id) + '" aria-pressed="false"><b>' + esc(c.name) + '</b><span>' + esc(c.vendor) + (c.family && c.family !== c.name ? ' · ' + esc(c.family) : '') + '</span></button>';
       });
       pk.innerHTML = html;
-      pk.addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) self.select(b.getAttribute('data-id')); });
-      this.buildCompare();
+      pk.addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) self.toggle(b.getAttribute('data-id')); });
+      pk.addEventListener('keydown', function (e) { self.arrows(e, $$('button', pk)); });
+      var clear = $('#cx-clear');
+      if (clear) clear.addEventListener('click', function () { self.clear(); });
+      var plans = $('#cx-plans');
+      if (plans) {
+        plans.addEventListener('click', function (e) { var b = e.target.closest('button[data-id]'); if (b) self.focus(b.getAttribute('data-id')); });
+        plans.addEventListener('keydown', function (e) { self.arrows(e, $$('button[data-id]', plans)); });
+      }
+      var tb = $('#cx-table');
+      if (tb) tb.addEventListener('click', function (e) {
+        var j = e.target.closest('button[data-notes]');
+        if (j) { var id = j.getAttribute('data-notes'); self.focus(id); self.jumpToNotes(id); return; }
+        var b = e.target.closest('button[data-id]');
+        if (b) self.focus(b.getAttribute('data-id'));
+      });
+      this.render();
     },
-    fmt: function (v, unit) { if (v == null || v === '') return '—'; if (typeof v === 'number') return v.toLocaleString('en-US') + (unit ? ' ' + unit : ''); return esc(v) + (unit ? ' ' + unit : ''); },
-    row: function (k, v, unit) { return '<dt>' + esc(k) + '</dt><dd>' + this.fmt(v, unit) + '</dd>'; },
-    select: function (id) {
+    arrows: function (e, list) { // arrow keys walk the buttons; Home and End jump to the ends
+      var i = list.indexOf(document.activeElement), n = null, k = e.key;
+      if (i < 0 || !list.length) return;
+      if (k === 'ArrowRight' || k === 'ArrowDown') n = (i + 1) % list.length;
+      else if (k === 'ArrowLeft' || k === 'ArrowUp') n = (i - 1 + list.length) % list.length;
+      else if (k === 'Home') n = 0;
+      else if (k === 'End') n = list.length - 1;
+      if (n == null) return;
+      e.preventDefault();
+      list[n].focus();
+    },
+
+    /* ---- selection ---- */
+    say: function (msg) { this.hint = msg; this.renderCount(); },
+    toggle: function (id) {
       var c = this.byId(id); if (!c) return;
-      this.sel = id;
-      $$('#picker button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-id') === id ? 'true' : 'false'); });
-      var f = this.fmt.bind(this), r = this.row.bind(this);
-      var m = c.memory || {}, d = c.die || {}, p = c.package || {}, pr = c.process || {}, cp = c.compute || {}, ic = c.interconnect || {};
-      var note = this.notes[c.id] || '';
-      var html = '<div class="spec-head"><div><span class="vendor">' + esc(c.vendor) + ' · ' + esc(cname(c.vendorCountry)) + (c.family ? ' · ' + esc(c.family) : '') + '</span><h3>' + esc(c.name) + '</h3></div>' +
-        '<span class="status ' + esc((c.status || '').replace(/\s.*/, '')) + '">' + esc(c.status || '') + (c.shipping ? ' · ' + esc(c.shipping) : '') + '</span></div>' +
-        '<div class="spec-kpis">' +
-        '<div><b>' + (m.capacityGB != null ? m.capacityGB + '<small>GB</small>' : '—') + '</b><span>' + esc(m.type || 'Memory') + '</span></div>' +
-        '<div><b>' + (m.bandwidthTBs != null ? m.bandwidthTBs + '<small>TB/s</small>' : '—') + '</b><span>Bandwidth</span></div>' +
-        '<div><b>' + (cp.fp8TFLOPS != null ? Math.round(cp.fp8TFLOPS).toLocaleString('en-US') : (cp.fp16TFLOPS != null ? Math.round(cp.fp16TFLOPS).toLocaleString('en-US') : '—')) + '<small>' + (cp.fp8TFLOPS != null ? 'FP8 TFLOPS' : 'FP16 TFLOPS') + '</small></b><span>Dense compute</span></div>' +
-        '<div><b>' + (c.tdpW != null ? c.tdpW + '<small>W</small>' : '—') + '</b><span>Power (TDP)</span></div></div>' +
-        '<div class="spec-groups">' +
-        '<h4>Silicon</h4><dl>' + r('Foundry', pr.foundry ? pr.foundry + (pr.country ? ' (' + cname(pr.country) + ')' : '') : null) + r('Process node', pr.node) + r('Dies', d.count) + r('Die area', d.areaMm2Each, 'mm² each') + r('Transistors', d.transistorsB, 'billion') + r('Reticle-limited', d.reticleLimited == null ? null : (d.reticleLimited ? 'Yes' : 'No')) + '</dl>' +
-        '<h4>Package</h4><dl>' + r('Type', p.type) + r('Assembled by', p.assembler) + r('Package size', p.sizeMm) + '</dl>' +
-        '<h4>Memory</h4><dl>' + r('Type', m.type) + r('Stacks', m.stacks) + r('Capacity', m.capacityGB, 'GB') + r('Bandwidth', m.bandwidthTBs, 'TB/s') + r('Suppliers', (m.suppliers || []).join(', ') || null) + '</dl>' +
-        '<h4>Compute</h4><dl>' + r('FP16 / BF16', cp.fp16TFLOPS, 'TFLOPS') + r('FP8', cp.fp8TFLOPS, 'TFLOPS') + r('FP4', cp.fp4TFLOPS, 'TFLOPS') + r('Note', cp.precisionNote) + r('Power (TDP)', c.tdpW, 'W') + '</dl>' +
-        '<h4>System</h4><dl>' + r('Chip to chip', ic.chipToChip) + r('Scale-up (inside a rack)', ic.scaleUp) + r('Scale-out (rack to rack)', ic.scaleOut) + r('System builders', (c.systemIntegrators || []).join(', ') || null) + r('Built for', c.target) + '</dl>' +
-        '<h4>Economics and policy</h4><dl>' + r('Price estimate', c.priceEstimate) + r('Bill of materials, estimated', c.bomEstimate) + r('Export status', c.exportStatus) + r('Announced', c.announced) + r('Shipping', c.shipping) + '</dl>' +
-        '</div>' +
-        (note || c.notes ? '<div class="spec-notes"><span class="label">In the supply chain</span>' + (note ? note : '<p>' + esc(c.notes) + '</p>') + '</div>' : '') +
-        (c.sources && c.sources.length ? '<div class="spec-sources">' + c.sources.map(function (s) { return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.label || s.url) + '</a>'; }).join('') + '</div>' : '');
-      $('#spec').innerHTML = html;
+      var at = this.picked.indexOf(id);
+      if (at >= 0) {
+        if (this.picked.length === 1) { this.say('One chip stays selected.'); return; }
+        this.picked.splice(at, 1);
+        if (this.sel === id) this.sel = this.picked[0];
+      } else {
+        if (this.picked.length >= this.max) { this.say('Four is the limit. Remove one first.'); return; }
+        this.picked.push(id);
+        this.sel = id;
+      }
+      this.hint = '';
+      this.render();
+      this.showStage(this.byId(this.sel));
+    },
+    focus: function (id) {
+      var c = this.byId(id); if (!c) return;
+      if (this.picked.indexOf(id) < 0) { this.select(id); return; }
+      if (this.sel !== id) { this.sel = id; this.hint = ''; this.render(); }
       this.showStage(c);
     },
+    select: function (id) { // the search box calls this: add the chip if it is not in yet, then focus it
+      var c = this.byId(id); if (!c) return;
+      if (this.picked.indexOf(id) < 0) {
+        if (this.picked.length >= this.max) { var out = this.picked.indexOf(this.sel); this.picked.splice(out < 0 ? 0 : out, 1); }
+        this.picked.push(id);
+      }
+      this.sel = id; this.hint = '';
+      if (!this.built) this.buildUI(); else this.render();
+      this.showStage(c);
+    },
+    clear: function () {
+      var keep = (this.sel && this.byId(this.sel)) ? this.sel : this.picked[0];
+      this.picked = keep ? [keep] : [];
+      this.sel = keep || null;
+      this.hint = 'Down to one chip. Pick another to compare.';
+      this.render();
+    },
+
+    /* ---- render ---- */
+    render: function () {
+      var self = this;
+      $$('#picker button').forEach(function (b) {
+        var id = b.getAttribute('data-id');
+        b.setAttribute('aria-pressed', self.picked.indexOf(id) >= 0 ? 'true' : 'false');
+        if (id === self.sel) b.setAttribute('data-focus', '1'); else b.removeAttribute('data-focus');
+      });
+      this.renderCount();
+      this.renderPlans();
+      this.renderTable();
+      this.renderNotes();
+      this.syncExport();
+    },
+    renderCount: function () {
+      var el = $('#cx-count'); if (!el) return;
+      el.innerHTML = '<b>' + this.picked.length + '</b> of ' + this.max + ' chips selected' + (this.hint ? ' · <i>' + esc(this.hint) + '</i>' : '');
+    },
+
+    /* ---- package plans, all at one millimetres-per-pixel scale ---- */
+    mm: function (v) { return Math.round(v * 100) / 100; },
+    planBounds: function (L) {
+      if (!L) return null;
+      if (L.waferScale) { var d = L.diameterMm || 300; return [d, d]; }
+      if (L.substrate) return [L.substrate[0], L.substrate[1]];
+      if (L.interposer) return [L.interposer[0], L.interposer[1]];
+      var w = 0, h = 0;
+      ['interposers', 'base', 'dies', 'hbm'].forEach(function (k) {
+        (L[k] || []).forEach(function (r) { w = Math.max(w, Math.abs(r.x) * 2 + r.w); h = Math.max(h, Math.abs(r.y) * 2 + r.h); });
+      });
+      return (w && h) ? [w, h] : null;
+    },
+    scaleFor: function (sel) {
+      var self = this, span = 0;
+      sel.forEach(function (c) { var b = self.planBounds(c.layout); if (b) span = Math.max(span, b[0], b[1]); });
+      if (!span) return 1;
+      return Math.min((narrow() ? 148 : 196) / span, 2.6);
+    },
+    rects: function (list, cls) {
+      var self = this;
+      return (list || []).map(function (r) {
+        return '<rect class="' + cls + '" x="' + self.mm(r.x - r.w / 2) + '" y="' + self.mm(-r.y - r.h / 2) + '" width="' + self.mm(r.w) + '" height="' + self.mm(r.h) + '" vector-effect="non-scaling-stroke"/>';
+      }).join('');
+    },
+    box: function (dims, cls, rx) {
+      return '<rect class="' + cls + '" x="' + this.mm(-dims[0] / 2) + '" y="' + this.mm(-dims[1] / 2) + '" width="' + this.mm(dims[0]) + '" height="' + this.mm(dims[1]) + '"' + (rx ? ' rx="' + rx + '"' : '') + ' vector-effect="non-scaling-stroke"/>';
+    },
+    planSVG: function (c, k) {
+      var L = c.layout, b = this.planBounds(L);
+      if (!b) return '';
+      var W = b[0], H = b[1], g = '';
+      if (L.waferScale) { // one square cut from a 300 mm disc
+        var d = L.diameterMm || 300, s = L.squareMm || Math.round(d / Math.SQRT2), gx = (L.dieGrid || [])[0] || 0, gy = (L.dieGrid || [])[1] || 0, i;
+        g += '<circle class="cx-wafer" cx="0" cy="0" r="' + this.mm(d / 2) + '" vector-effect="non-scaling-stroke"/>';
+        g += this.box([s, s], 'cx-die');
+        for (i = 1; i < gx; i++) g += '<line class="cx-grid" x1="' + this.mm(-s / 2 + s * i / gx) + '" y1="' + this.mm(-s / 2) + '" x2="' + this.mm(-s / 2 + s * i / gx) + '" y2="' + this.mm(s / 2) + '" vector-effect="non-scaling-stroke"/>';
+        for (i = 1; i < gy; i++) g += '<line class="cx-grid" x1="' + this.mm(-s / 2) + '" y1="' + this.mm(-s / 2 + s * i / gy) + '" x2="' + this.mm(s / 2) + '" y2="' + this.mm(-s / 2 + s * i / gy) + '" vector-effect="non-scaling-stroke"/>';
+      } else {
+        if (L.substrate) g += this.box(L.substrate, 'cx-substrate', 1.5);
+        if (L.interposer) g += this.box(L.interposer, 'cx-interposer');
+        g += this.rects(L.interposers, 'cx-interposer');
+        g += this.rects(L.base, 'cx-base');
+        g += this.rects(L.dies, 'cx-die');
+        g += this.rects(L.hbm, 'cx-hbm');
+      }
+      return '<svg class="cx-plan-svg" width="' + Math.max(16, Math.round(W * k)) + '" height="' + Math.max(16, Math.round(H * k)) +
+        '" viewBox="' + this.mm(-W / 2) + ' ' + this.mm(-H / 2) + ' ' + this.mm(W) + ' ' + this.mm(H) + '" aria-hidden="true" focusable="false">' + g + '</svg>';
+    },
+    planSize: function (c) {
+      var L = c.layout || {}, p = c.package || {};
+      if (L.waferScale) return (L.squareMm ? L.squareMm + ' × ' + L.squareMm + ' mm, ' : '') + 'cut from a ' + (L.diameterMm || 300) + ' mm wafer';
+      if (L.substrate) return L.substrate[0] + ' × ' + L.substrate[1] + ' mm' + (L.estimated ? ', estimated' : '');
+      if (p.sizeMm) return String(p.sizeMm);
+      return 'size not published';
+    },
+    scaleKey: function (k) {
+      var steps = [10, 20, 50, 100, 200], mm = steps[0];
+      for (var i = 0; i < steps.length; i++) if (steps[i] * k <= 130) mm = steps[i];
+      return '<span class="cx-scale"><i style="width:' + Math.round(mm * k) + 'px"></i>' + mm + ' mm</span>';
+    },
+    renderPlans: function () {
+      var self = this, host = $('#cx-plans'); if (!host) return;
+      var sel = this.selection(), k = this.scaleFor(sel);
+      host.innerHTML = sel.map(function (c) {
+        var L = c.layout || {}, tip = L.note || (c.package || {}).type || '';
+        return '<button type="button" class="cx-plan" data-id="' + esc(c.id) + '" aria-pressed="' + (c.id === self.sel ? 'true' : 'false') + '"' + (tip ? ' title="' + esc(tip) + '"' : '') + '>' +
+          '<span class="cx-plan-name"><b>' + esc(c.name) + '</b><em>' + esc(c.vendor) + '</em></span>' +
+          '<span class="cx-plan-art">' + self.planSVG(c, k) + '</span>' +
+          '<span class="cx-plan-size">' + esc(self.planSize(c)) + '</span></button>';
+      }).join('') || '<p class="cx-nil">No chip selected.</p>';
+      var key = $('#cx-key');
+      if (key) key.innerHTML = '<span><i class="cx-sw die"></i>logic die</span><span><i class="cx-sw hbm"></i>memory stack</span><span><i class="cx-sw int"></i>interposer</span><span><i class="cx-sw sub"></i>substrate</span>' + this.scaleKey(k);
+    },
+
+    /* ---- the side-by-side table ---- */
+    nf: function (v) { return (Math.round(v * 100) / 100).toLocaleString('en-US'); },
+    nil: function () { return '<span class="cx-nil">not published</span>'; },
+    rows: [
+      { label: 'Vendor', hint: ['product page', 'press release', 'corporate'], text: function (c) { return esc(c.vendor) + '<span class="cx-2">' + esc(cname(c.vendorCountry)) + '</span>'; } },
+      { label: 'Status', hint: ['product page', 'press release', 'spec table'], text: function (c) { return c.status ? esc(c.status) + (c.shipping ? '<span class="cx-2">from ' + esc(c.shipping) + '</span>' : '') : null; } },
+      { label: 'Built for', hint: ['product page', 'blog', 'documentation'], text: function (c) { return c.target ? esc(c.target) : null; } },
+      { label: 'Foundry and node', hint: ['architecture', 'deep dive', 'white paper', 'documentation'], text: function (c) { var p = c.process || {}; return p.foundry ? esc(p.foundry) + '<span class="cx-2">' + esc(p.node || '') + (p.country ? ' · ' + esc(cname(p.country)) : '') + '</span>' : null; } },
+      { label: 'Dies', hint: ['architecture', 'deep dive', 'white paper'], num: function (c) { return (c.die || {}).count; }, sub: function (c) { var a = (c.die || {}).areaMm2Each; return a != null ? a + ' mm² each' : 'area not published'; } },
+      { label: 'Transistors, billion', hint: ['architecture', 'deep dive', 'white paper'], num: function (c) { return (c.die || {}).transistorsB; }, better: 'high' },
+      { label: 'Package', hint: ['cowos', 'packag', 'deep dive', 'architecture'], text: function (c) { var p = c.package || {}; return p.type ? esc(p.type) + (p.assembler ? '<span class="cx-2">assembled by ' + esc(p.assembler) + '</span>' : '') : null; } },
+      { label: 'Memory type', hint: ['hbm', 'micron', 'memory', 'datasheet'], text: function (c) { var m = c.memory || {}; return m.type ? esc(m.type) + (m.stacks ? '<span class="cx-2">' + m.stacks + ' stacks</span>' : '') : null; } },
+      { label: 'Memory, GB', hint: ['spec table', 'datasheet', 'product page'], num: function (c) { return (c.memory || {}).capacityGB; }, better: 'high' },
+      { label: 'Bandwidth, TB/s', hint: ['spec table', 'datasheet', 'product page'], num: function (c) { return (c.memory || {}).bandwidthTBs; }, better: 'high' },
+      { label: 'FP16 TFLOPS', hint: ['spec table', 'datasheet', 'product page'], num: function (c) { return (c.compute || {}).fp16TFLOPS; }, better: 'high', fn: true },
+      { label: 'FP8 TFLOPS', hint: ['spec table', 'datasheet', 'product page'], num: function (c) { return (c.compute || {}).fp8TFLOPS; }, better: 'high', fn: true },
+      { label: 'FP4 TFLOPS', hint: ['spec table', 'datasheet', 'product page'], num: function (c) { return (c.compute || {}).fp4TFLOPS; }, better: 'high', fn: true },
+      { label: 'Power, watts', hint: ['spec table', 'datasheet', 'product page'], num: function (c) { return c.tdpW; } },
+      { label: 'Chip to chip', hint: ['architecture', 'deep dive', 'white paper'], long: true, text: function (c) { return (c.interconnect || {}).chipToChip ? esc(c.interconnect.chipToChip) : null; } },
+      { label: 'Scale-up', hint: ['nvl', 'rack', 'system', 'deep dive', 'spec table'], long: true, text: function (c) { return (c.interconnect || {}).scaleUp ? esc(c.interconnect.scaleUp) : null; } },
+      { label: 'Price estimate', hint: ['semianalysis', 'price', 'rack', 'press release'], long: true, text: function (c) { return c.priceEstimate ? esc(c.priceEstimate) : null; } },
+      { label: 'Export status', hint: ['federal register', 'entity list', 'institute for progress', 'mofcom'], long: true, text: function (c) { return c.exportStatus ? esc(c.exportStatus) : null; } }
+    ],
+    sourceFor: function (c, row) { // the chip's sources are not tagged per field, so match the row's subject against the labels
+      var srcs = c.sources || []; if (!srcs.length) return null;
+      var hints = row.hint || [];
+      for (var h = 0; h < hints.length; h++) for (var i = 0; i < srcs.length; i++) {
+        if ((srcs[i].label || '').toLowerCase().indexOf(hints[h]) >= 0) return srcs[i];
+      }
+      return srcs[0];
+    },
+    cellHTML: function (c, row, max, marker, multi) {
+      var s = this.sourceFor(c, row), title = s ? 'Source: ' + (s.label || s.url) : '', inner;
+      if (row.num) {
+        var v = row.num(c);
+        if (v == null) inner = this.nil();
+        else {
+          var best = row.better === 'high' && max > 0 && v === max;
+          inner = '<span class="cx-v' + (best ? ' is-best' : '') + '">' + esc(this.nf(v)) + '</span>' + (marker || '') +
+            (row.sub ? '<span class="cx-2">' + esc(row.sub(c)) + '</span>' : '') +
+            (multi && max > 0 ? '<span class="cx-bar"><i style="width:' + Math.round(Math.max(0, v) / max * 100) + '%"></i></span>' : '');
+        }
+      } else {
+        var t = row.text(c);
+        inner = (t == null || t === '') ? this.nil() : t + (marker || '');
+      }
+      return '<td class="' + (row.long ? 'cx-long' : '') + (c.id === this.sel ? ' is-focus' : '') + '"' + (title ? ' title="' + esc(title) + '"' : '') + '>' + inner + '</td>';
+    },
+    renderTable: function () {
+      var self = this, tb = $('#cx-table'); if (!tb) return;
+      var sel = this.selection(), multi = sel.length > 1, fns = [];
+      sel.forEach(function (c) { var n = (c.compute || {}).precisionNote; if (n) fns.push({ c: c, n: n }); });
+      var marker = function (c) { for (var i = 0; i < fns.length; i++) if (fns[i].c.id === c.id) return '<sup class="cx-fn">' + (i + 1) + '</sup>'; return ''; };
+      var html = '<thead><tr><th class="cx-rowhead" scope="col"><span class="sr-only">Spec</span></th>';
+      sel.forEach(function (c) {
+        html += '<th scope="col" class="cx-col' + (c.id === self.sel ? ' is-focus' : '') + '">' +
+          '<button type="button" class="cx-colhead" data-id="' + esc(c.id) + '" aria-pressed="' + (c.id === self.sel ? 'true' : 'false') + '"><b>' + esc(c.name) + '</b><span>' + esc(c.vendor) + '</span></button>' +
+          '<button type="button" class="cx-jump" data-notes="' + esc(c.id) + '">Notes</button></th>';
+      });
+      html += '</tr></thead><tbody>';
+      this.rows.forEach(function (row) {
+        var max = 0;
+        if (row.num) sel.forEach(function (c) { var v = row.num(c); if (typeof v === 'number' && v > max) max = v; });
+        html += '<tr><th scope="row" class="cx-rowhead">' + esc(row.label) + '</th>';
+        sel.forEach(function (c) { html += self.cellHTML(c, row, max, row.fn ? marker(c) : '', multi); });
+        html += '</tr>';
+      });
+      tb.innerHTML = html + '</tbody>';
+      var foot = $('#cx-foot');
+      if (foot) foot.innerHTML = fns.length ? '<p class="label">How the compute figures are measured</p><ol class="cx-fns">' +
+        fns.map(function (f) { return '<li><b>' + esc(f.c.name) + '</b> ' + esc(f.n) + '</li>'; }).join('') + '</ol>' : '';
+    },
+    renderNotes: function () {
+      var self = this, host = $('#cx-notes'); if (!host) return;
+      host.innerHTML = '<h3 class="label cx-h">In the supply chain</h3>' + this.selection().map(function (c) {
+        var body = self.notes[c.id] || (c.notes ? '<p>' + esc(c.notes) + '</p>' : '<p class="cx-nil">No note yet.</p>');
+        var srcs = (c.sources || []).map(function (s) { return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.label || s.url) + '</a>'; }).join('');
+        return '<details class="cx-note" id="cx-note-' + esc(c.id) + '"' + (c.id === self.sel ? ' open' : '') + '>' +
+          '<summary><b>' + esc(c.name) + '</b><span>' + esc(c.vendor) + ' · ' + esc(cname(c.vendorCountry)) + '</span></summary>' +
+          '<div class="cx-note-body">' + body + '</div>' + (srcs ? '<p class="cx-srcs">' + srcs + '</p>' : '') + '</details>';
+      }).join('');
+    },
+    jumpToNotes: function (id) {
+      var el = document.getElementById('cx-note-' + id);
+      if (!el) return;
+      el.open = true;
+      el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    },
+
+    /* ---- the stage keeps drawing the focused chip's package from above ---- */
     showStage: function (c) {
+      if (!c) return;
       var lay = c.layout || null, hb = (c.memory && c.memory.stacks) || 0;
       var cap = lay && lay.waferScale ? 'Wafer-scale: one ' + esc(c.name) + ' is a whole 300 mm wafer.' : esc(c.name) + ': ' + ((c.die && c.die.count) || 1) + ' logic die' + (((c.die && c.die.count) || 1) > 1 ? 's' : '') + (hb ? ' and ' + hb + ' ' + esc((c.memory && c.memory.type) || 'HBM') + ' stacks' : '') + ' on ' + esc((c.package && c.package.type) || 'the package') + '.';
       Stage.show('package', lay ? { layout: lay, plan: true } : { plan: true }, cap, 'AI chips · <b>' + esc(c.name) + '</b>');
-    },
-    buildCompare: function () {
-      var cols = [['Chip', function (c) { return '<b>' + esc(c.name) + '</b> <span class="cc">' + esc(c.vendor) + '</span>'; }],
-        ['Process node', function (c) { return esc((c.process || {}).node || '—') + ' · ' + esc((c.process || {}).foundry || ''); }],
-        ['Dies', function (c) { return (c.die || {}).count != null ? c.die.count : '—'; }],
-        ['Transistors', function (c) { return (c.die || {}).transistorsB != null ? c.die.transistorsB + ' B' : '—'; }],
-        ['Package', function (c) { return esc((c.package || {}).type || '—'); }],
-        ['Memory', function (c) { var m = c.memory || {}; return m.type ? esc(m.type) + (m.stacks ? ' ×' + m.stacks : '') : '—'; }],
-        ['Capacity', function (c) { return (c.memory || {}).capacityGB != null ? c.memory.capacityGB + ' GB' : '—'; }],
-        ['Bandwidth', function (c) { return (c.memory || {}).bandwidthTBs != null ? c.memory.bandwidthTBs + ' TB/s' : '—'; }],
-        ['FP8 dense', function (c) { return (c.compute || {}).fp8TFLOPS != null ? Math.round(c.compute.fp8TFLOPS).toLocaleString('en-US') : '—'; }],
-        ['Power (TDP)', function (c) { return c.tdpW != null ? c.tdpW + ' W' : '—'; }],
-        ['Status', function (c) { return esc(c.status || '') + (c.shipping ? ' ' + esc(c.shipping) : ''); }]];
-      var html = '<thead><tr>' + cols.map(function (c) { return '<th>' + c[0] + '</th>'; }).join('') + '</tr></thead><tbody>';
-      this.chips.forEach(function (ch) { html += '<tr>' + cols.map(function (c) { return '<td>' + c[1](ch) + '</td>'; }).join('') + '</tr>'; });
-      $('#compare').innerHTML = html + '</tbody>';
     }
   };
+  Landscape.initSelection();
 
   /* ---------------- suppliers ---------------- */
   var Suppliers = {
@@ -7851,7 +8089,7 @@ PC.register('wafer', function (p) {
         b[1].addEventListener('click', function () { copy(JSON.stringify(rows, null, 1), b[1], 'Copy as JSON'); });
         if (where === 'after') host.insertAdjacentElement('afterend', bar); else host.insertAdjacentElement('beforebegin', bar);
       };
-      addExport('#compare', 'AI chips', DATA.landscape, 'before');
+      addExport('#cx-table-wrap', 'AI chips, selected', Landscape.exportRows, 'before'); // a live array: Landscape keeps it in step with the selection
       addExport('#matrix', 'country-share matrix', DATA.matrix, 'before');
       addExport('#timeline', 'export-control timeline', DATA.timeline, 'before');
       addExport('#controls-table', 'licence thresholds', DATA.controls, 'before');
