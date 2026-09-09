@@ -13,20 +13,20 @@
     "leaders": [
       {"name": "Advantest", "country": "JP", "share": "65% of the tester market in 2025"},
       {"name": "Teradyne", "country": "US", "share": "Most of the remainder with Advantest, about 80% combined"},
-      {"name": "ASE", "country": "TW", "share": "44.6% of top-10 OSAT revenue, 2024"},
-      {"name": "Amkor", "country": "US", "share": "15.2% of top-10 OSAT revenue, 2024"},
+      {"name": "ASE", "country": "TW", "share": "US$20.6bn of 2025 revenue, the largest OSAT"},
+      {"name": "Amkor", "country": "US", "share": "US$6.71bn of 2025 revenue"},
       {"name": "Disco", "country": "JP", "share": "Leading share in dicing saws, grinders and blades"}
     ],
     "countries": [
       {"code": "TW", "note": "ASE, Powertech, KYEC and ChipMOS; the largest assembly and test cluster"},
       {"code": "JP", "note": "Advantest testers, Disco dicing and grinding, Micronics Japan probe cards"},
       {"code": "US", "note": "Teradyne, FormFactor, Cohu, Aehr; Amkor's Arizona packaging plant"},
-      {"code": "CN", "note": "Four of the top ten OSATs by revenue, about 28.6% of top-10 revenue in 2024"},
-      {"code": "MY", "note": "Penang and Kulim; about 13% of global assembly, test and packaging"}
+      {"code": "CN", "note": "Four of the top ten OSATs by 2024 revenue are China-headquartered"},
+      {"code": "MY", "note": "Penang and Kulim; Malaysia ships about 13% of the world's packaged chips"}
     ],
-    "chinaStatus": "The back end is where China is most competitive. JCET, Tongfu, Huatian and WiseRoad together took about 28.6% of top-10 OSAT revenue in 2024, and back-end equipment is far less tightly controlled than lithography or deposition.",
-    "usStatus": "Strong in test equipment and probe cards through Teradyne, FormFactor, Cohu and Aehr, weak in assembly capacity. Amkor is building a US$7 billion packaging and test plant in Arizona with a ten-year TSMC commitment.",
-    "costSignal": "The ten largest OSATs billed US$41.56 billion in 2024; ASE, Powertech and KYEC alone plan about NT$370 billion of capital spending in 2026",
+    "chinaStatus": "The back end is where China is most competitive. CSET counts four of the top ten OSATs by 2024 revenue as China-headquartered, and back-end equipment is far less tightly controlled than lithography or deposition.",
+    "usStatus": "Strong in test equipment and probe cards through Teradyne, FormFactor, Cohu and Aehr, weak in assembly capacity. Amkor is building a US$7 billion packaging and test campus in Arizona and has a long-term partnership with TSMC to fill it.",
+    "costSignal": "ASE and Amkor alone billed US$27.3 billion in 2025; ASE spent US$4.1 billion on machinery and buildings in the first half of 2026",
     "substitution": {"years": "3-5", "why": "Assembly and test floors can be built in a few years, but changing tester vendor means rebuilding the entire device development, evaluation and production test environment, so customers almost never switch."}
   },
   "keyFacts": [
@@ -36,8 +36,9 @@
     {"fact": "Teradyne's 2025 revenue was US$3.19 billion, up 13%, with fourth-quarter growth of 44% driven by AI compute and memory test", "source": "https://investors.teradyne.com/news-events/press-releases/detail/433/teradyne-reports-fourth-quarter-and-full-year-2025-results"},
     {"fact": "Technoprobe's 2025 revenue was EUR 628.4 million, up 15.7%, with about 38% of revenue from AI applications", "source": "https://technoprobe.com/wp-content/uploads/2026/03/PR-FY-2025_.pdf"},
     {"fact": "Aehr received a US$22 million follow-on order for AI processor wafer-level burn-in systems in August 2026", "source": "https://www.aehr.com/2026/08/aehr-receives-22-million-follow-on-order-for-ai-processor-wafer-level-burn-in-systems/"},
-    {"fact": "The top ten OSATs billed US$41.56 billion in 2024, with ASE at 44.6% and Amkor at 15.2%", "source": "https://www.trendforce.com/presscenter/news/20250513-12577.html"},
-    {"fact": "Malaysia accounts for about 13% of the global assembly, test and packaging market and the Philippines about 10%", "source": "https://www.z2data.com/insights/which-countries-does-the-world-rely-on-for-chip-assembly-packaging"}
+    {"fact": "ASE's installed tester count rose from 6,797 in the second quarter of 2025 to 8,348 a year later, and it spent US$2.7 billion on machinery and US$1.4 billion on buildings in the first half of 2026", "source": "https://www.sec.gov/Archives/edgar/data/1122411/000095010326011353/dp250875_6k.htm"},
+    {"fact": "Four of the top ten OSATs by 2024 revenue are China-headquartered", "source": "https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/"},
+    {"fact": "Malaysia ships about 13% of the world's packaged chips and is targeting 7% of advanced packaging shipments by 2035", "source": "https://www.mida.gov.my/advanced-packaging-how-malaysia-is-packaging-the-future-of-ai/"}
   ],
   "figures": [
     {
@@ -49,20 +50,20 @@
       "source": {"label": "Advantest FY2025 results briefing, April 2026", "url": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf"}
     },
     {
-      "id": "osat-firms",
-      "type": "bars",
-      "title": "Top 10 OSAT revenue share, 2024",
-      "unit": "%",
-      "data": [["ASE", 44.6], ["Amkor", 15.2], ["JCET", 12], ["Tongfu", 8], ["Powertech", 5.5], ["Huatian (HT-Tech)", 4.8], ["WiseRoad", 3.8], ["Hana Micron", 2.2], ["KYEC", 2.2], ["ChipMOS", 1.7]],
-      "source": {"label": "TrendForce", "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html"}
+      "id": "tester-market",
+      "type": "stack",
+      "title": "Where the tester money went in calendar 2025",
+      "unit": "US$bn",
+      "data": [["SoC testers", 6.9], ["Memory testers", 2.1]],
+      "source": {"label": "Advantest FY2025 results briefing, April 2026", "url": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf"}
     },
     {
-      "id": "osat-region",
-      "type": "stack",
-      "title": "Top 10 OSAT revenue by company home country, 2024",
-      "unit": "%",
-      "data": [["Taiwan", 54.0], ["China", 28.6], ["United States", 15.2], ["South Korea", 2.2]],
-      "source": {"label": "TrendForce company shares, summed by headquarters country", "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html"}
+      "id": "ase-testers",
+      "type": "bars",
+      "title": "Testers installed at ASE, the largest OSAT",
+      "unit": "testers",
+      "data": [["Q2 2025", 6797], ["Q1 2026", 7585], ["Q2 2026", 8348]],
+      "source": {"label": "ASE Technology Holding, second quarter 2026 earnings release (SEC Form 6-K)", "url": "https://www.sec.gov/Archives/edgar/data/1122411/000095010326011351/dp250868_6k.htm"}
     }
   ]
 }
@@ -92,13 +93,15 @@ Probe cards are the hard part. For HBM the card must contact a stack of eight, t
 
 ### Final test, burn-in and system-level test
 
-The economics get worse as packages grow. TSMC's 2028 package will hold twenty HBM stacks and, we think, ten to twenty compute chiplets ([source](https://www.trendforce.com/news/2026/08/11/news-tsmcs-5-5-reticle-cowos-reportedly-tops-99-yield-flags-memory-abf-as-ai-bottlenecks/)). Every die in that body is another chance to throw the whole assembly away, which is why test insertions multiply instead of consolidating. KYEC is expanding capacity 30% to 50% in 2026, weighted to high-power burn-in and packaging test for AI GPUs and ASICs ([source](https://www.trendforce.com/news/2026/05/05/news-ase-powertech-kyec-capex-may-hit-nt370b-this-year-as-ai-drives-record-osat-investment/)).
+The economics get worse as packages grow. TSMC has told investors its CoWoS roadmap runs beyond 14 times reticle size ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf)). Every die in a body that size is another chance to throw the whole assembly away, which is why test insertions multiply instead of consolidating. The capacity answer is visible in ASE's own numbers: it ran 6,797 testers in the second quarter of 2025 and 8,348 a year later ([source](https://www.sec.gov/Archives/edgar/data/1122411/000095010326011351/dp250868_6k.htm)).
 
 {{figure:ate-share}}
 
 ## Who makes it
 
 Automated test equipment is a duopoly that has stopped being symmetric. Advantest puts its own share at about 65% of a US$9.0 billion tester market in 2025: 66% of SoC test, up ten points in a year, and about 60% of memory test ([source](https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf)). It and Teradyne hold about 80% between them ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf)). Teradyne grew 13% to US$3.19 billion for 2025, with fourth-quarter revenue up 44% on AI demand ([source](https://investors.teradyne.com/news-events/press-releases/detail/433/teradyne-reports-fourth-quarter-and-full-year-2025-results)).
+
+{{figure:tester-market}}
 
 The rest of the floor is more fragmented.
 
@@ -107,25 +110,23 @@ The rest of the floor is more fragmented.
 - **Dicing and grinding.** Disco leads in wafer grinders and dicing saws ([source](https://newsletter.semianalysis.com/p/disco-corporation-the-world-leader)), and its newest package saw handles workpieces up to 400 by 400 mm for panel-level work ([source](https://www.disco.co.jp/eg/news/corp/20251215_1.html)).
 - **Bonding.** Kulicke and Soffa did US$654.1 million in fiscal 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0000056978/us-gaap/Revenues.json)), while Besi's second-quarter 2026 revenue rose 68.7% to EUR 249.9 million on hybrid bonding and datacentre demand ([source](https://www.besi.com/investor-relations/press-releases/2025/details-1/be-semiconductor-industries-nv-announces-q2-26-and-h1-26-results/)).
 
-Thermocompression bonders for HBM are a two-and-a-half-horse race: SK hynix runs about 50 sets for HBM4, roughly half of them from ASMPT ([source](https://www.trendforce.com/news/2025/12/12/news-sk-hynix-reportedly-places-hbm4-tc-bonder-order-with-asmpt-as-hanmi-hanwha-patent-clash-heats-up/)), and gave Hanmi a KRW 44.2 billion order for about 15 more in June 2026 ([source](https://www.trendforce.com/news/2026/06/09/news-sk-hynix-reportedly-places-44-2bn-won-tc-bonder-order-with-hanmi-accelerating-hbm4-ramp-up/)). See Memory and HBM.
+Thermocompression bonders, the tools that stack HBM and place chiplets on substrates, are the tightest niche of all. ASMPT took a repeat order for fifteen chip-to-substrate bonders in December 2025 and expects the market for them to pass US$1 billion by 2027, of which it means to hold 35 to 40% ([source](https://www.asmpt.com/en/investor-relations/news-events/asmpt-secures-additional-orders-for-fifteen-chip-to-substrate-thermo-compression-bonding-tools-driven-by-ai-tailwind/)). See Memory and HBM.
 
 ## The back end's geography
 
-Outsourced assembly and test is a Taiwanese business with a large Chinese challenger. The top ten OSATs billed US$41.56 billion in 2024, led by ASE at 44.6%, and four of the ten are Chinese ([source](https://www.trendforce.com/presscenter/news/20250513-12577.html)). Malaysia holds about 13% of global assembly, test and packaging, the Philippines about 10% ([source](https://www.z2data.com/insights/which-countries-does-the-world-rely-on-for-chip-assembly-packaging)).
+Outsourced assembly and test is a Taiwanese business with a large Chinese challenger. ASE, the biggest of them, billed US$20.6 billion in 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0001122411/ifrs-full/Revenue.json)); CSET counts four of the top ten OSATs by 2024 revenue as China-headquartered ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). Malaysia ships about 13% of the world's packaged chips and wants 7% of advanced packaging shipments by 2035 ([source](https://www.mida.gov.my/advanced-packaging-how-malaysia-is-packaging-the-future-of-ai/)).
 
-The money is moving fast. ASE, Powertech and KYEC together plan roughly NT$370 billion of capital spending in 2026, with ASE raising its budget from US$7 billion to US$8.5 billion ([source](https://www.trendforce.com/news/2026/05/05/news-ase-powertech-kyec-capex-may-hit-nt370b-this-year-as-ai-drives-record-osat-investment/)). Powertech is putting NT$70 billion into fan-out panel-level packaging on 510 by 515 mm panels, scaling from 1,000 panels a month to 5,000 by 2028; AMD and Broadcom have booked its 2027 capacity ([source](https://www.trendforce.com/news/2026/08/31/news-powertech-plans-nt70b-push-for-worlds-first-panel-level-ai-chip-packaging-in-2027-potentially-ahead-of-tsmc/)).
+The money is moving fast. ASE spent US$2.7 billion on machinery and US$1.4 billion on buildings and automation in the first half of 2026 alone, and says revenue from leading-edge advanced packaging is running ahead of its US$3.5 billion guidance for the year ([source](https://www.sec.gov/Archives/edgar/data/1122411/000095010326011353/dp250875_6k.htm)). Powertech, meanwhile, is chasing the first panel-level packaging line for AI chips in 2027 ([source](https://asia.nikkei.com/business/tech/semiconductors/powertech-eyes-world-s-first-panel-level-packaging-for-ai-chips-in-2027)).
 
-Amkor took US$6.71 billion of revenue in 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0001047127/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json)) and broke ground on a US$7 billion Arizona packaging plant, now under a ten-year partnership with TSMC ([source](https://www.trendforce.com/news/2026/06/17/news-tsmc-amkor-forge-10-year-arizona-advanced-packaging-partnership-to-complete-the-u-s-chip-supply-chain/)).
+Amkor took US$6.71 billion of revenue in 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0001047127/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json)) and US$1.90 billion in the second quarter of 2026, up 26% year on year ([source](https://www.sec.gov/Archives/edgar/data/1047127/000104712726000043/amkr6302026erex-991.htm)). It has expanded its Arizona campus to a US$7 billion investment ([source](https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced)) and will run turnkey packaging and test there for TSMC, whose Phoenix fabs sit next door ([source](https://pr.tsmc.com/english/news/3174)), under a long-term partnership signed in June 2026 ([source](https://ir.amkor.com/news-releases/news-release-details/tsmc-and-amkor-technology-announce-long-term-partnership)).
 
-{{figure:osat-firms}}
-
-{{figure:osat-region}}
+{{figure:ase-testers}}
 
 ## The chokepoint
 
 This is not lithography. No single tool has a single supplier. The lock-in is stickiness: Advantest argues that switching tester vendor means rebuilding a customer's entire device development, evaluation and production test environment, which is why share moves slowly and in one direction ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf)).
 
-The back end is also the part of the chain China is closest to owning. Chinese OSATs took about 28.6% of top-10 revenue in 2024, and assembly, dicing, bonding and test tools sit outside the export control lines drawn around lithography and deposition. Set that US$41.56 billion ([source](https://www.trendforce.com/presscenter/news/20250513-12577.html)) against industry sales of US$791.7 billion in 2025 ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)): a small share of the revenue sitting on the critical path of all of it.
+The back end is also the part of the chain China is closest to owning, and assembly, dicing, bonding and test tools sit outside the export control lines drawn around lithography and deposition. Set the US$27.3 billion that ASE and Amkor billed between them in 2025 against industry sales of US$791.7 billion ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)): a small share of the revenue sitting on the critical path of all of it.
 
 ## Key evaluation criteria
 
@@ -133,7 +134,7 @@ The back end is also the part of the chain China is closest to owning. Chinese O
 - **Test time per part** sets throughput and cost, and large dies, HBM stacks and chiplets all push it up.
 - **Probe card planarity and life** decide sort economics. Every needle must stay coplanar over a full die across a long touchdown count.
 - **Thermal control** matters more every generation. A kilowatt-class accelerator must be held at temperature in the socket while tested at speed.
-- **Capacity and geography** are the practical constraint. Taiwan, China, Malaysia and the Philippines hold most of the floor space, and new capacity takes years.
+- **Capacity and geography** are the practical constraint. Taiwan, China and Malaysia hold most of the floor space, and new capacity takes years.
 
 ## Takeaways
 

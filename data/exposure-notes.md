@@ -12,6 +12,8 @@ Three bases sit behind the same word, and they are not interchangeable.
 
 Synopsys allocates by where the licence seats sit, Cadence by where the product is used. Samsung reports the region of its own operating units rather than a customer split, and the figure covers phones, displays and Harman alongside memory.
 
+Every row in the file cites a filing or an investor document on the company's own domain. Samsung is the one firm here that is not an SEC registrant, so its rows point at the audited consolidated financial statements as Samsung itself publishes them, on the company's investor-relations asset host; the FY2022 and FY2024 rows read the comparative column of the following year's statements, and say so. The figures were checked against those documents: FY2025 revenue of KRW 333,605,938 million and FY2024 of KRW 300,870,903 million, with the regional lines that give the China numbers, all appear in the statements cited.
+
 `chinaShare` is computed here from the filed absolute figures, never copied from a filing's own percentage. Nova is the one exception below.
 
 ## Fiscal-year calendars
