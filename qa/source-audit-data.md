@@ -33,3 +33,20 @@ Global Times, PRC state media.
 ## Claims downgraded or removed
 
 (filled in below as work proceeds)
+
+### suppliers.json — Tokyo Electron
+- Old: `https://japan-earnings.com/companies/8035/` (Tier D, transcript/earnings mirror)
+- New: `https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4presentations-e.pdf` (Tier A, TEL FY2026 Q4 results presentation, 30 April 2026)
+- Revenue unchanged: FY2026 net sales JPY 2,443.5bn (p.6) = $15.886b at the file's ~153.8 JPY/USD.
+- shareNote corrected. Old: "Roughly 90-92% of the global coater/developer market and close to 100% for EUV tracks, per a 2026 company profile". TEL's own deck (p.28) gives coater/developer world share of **91% for CY2025**, sourced to Gartner, "Market Share: Semiconductor Wafer Fab Equipment, Worldwide, 2025" (2 April 2026); p.16 states "Market share: > 90%". No Tier A or B source supports the "close to 100% for EUV tracks" figure, so that clause was **removed**.
+
+### suppliers.json — KLA
+- Old: `https://www.maximizemarketresearch.com/news/kla-corporation-semiconductor-wafer-inspection/` (Tier D, market-research SEO site)
+- New: `https://ir.kla.com/news-events/press-releases/detail/518/kla-corporation-reports-fiscal-2026-fourth-quarter-and-full` (Tier A, KLA FY2026 Q4/full-year results, 28 July 2026)
+- Revenue unchanged: FY2026 total revenues $13.58b, matching the stored 13.579.
+- shareNote: see below (KLA's FY2026 10-K claims only "leading competitive positions", no percentage).
+
+### suppliers.json — DISCO Corporation
+- Old: `https://en.tmt-blog.jp/articles/company-disco-en` (Tier D, anonymous company-profile blog)
+- New: `https://www.disco.co.jp/eg/ir/library/doc/fr/fr20260422.pdf` (Tier A, DISCO consolidated results for the year ended 31 March 2026, published 22 April 2026)
+- Revenue unchanged: net sales JPY 436,889m for the year ended 31 March 2026 = $2.84b at ~153.8 JPY/USD.
