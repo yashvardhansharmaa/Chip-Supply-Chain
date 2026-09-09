@@ -66,17 +66,17 @@
 ---
 # Lithography
 
-Every transistor in an AI accelerator gets its shape from a machine built by one company. ASML sold 327 lithography systems in 2025, 48 of them extreme ultraviolet, and nobody else sells EUV at all ([source](https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf)). No other stage in this chain has a single point of failure this sharp.
+Every transistor in an AI accelerator gets its shape from a machine built by one company. ASML sold 327 lithography systems in 2025, 48 of them extreme ultraviolet, and nobody else sells EUV ([source](https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf)). No other stage in this chain has a single point of failure this sharp.
 
 ## How it works
 
 Lithography is photographic printing, shrunk. A stencil of one layer of the circuit is held up to a lamp, and the machine projects that image onto a silicon wafer coated in a light-sensitive film, four times smaller than the stencil. Finer circuits need shorter-wavelength light, and the shortest light now in use is absorbed by air and by glass, so the whole machine runs in a vacuum and every lens has to be a mirror. Only one company has ever built such a machine, which is why a single Dutch firm is a chokepoint.
 
-The stencil is a photomask, the film is photoresist, the machine is a scanner, and deposition and etch later build structures wherever the resist opened. See Photomasks and pellicles.
+The stencil is a photomask, the film is photoresist, and the machine is a scanner. Deposition and etch later build structures wherever the resist opened. See Photomasks and pellicles.
 
-Resolution follows one relation: the smallest printable half-pitch equals a process factor times the wavelength, divided by the numerical aperture of the optics. Shorter wavelength and larger aperture both buy resolution. Aperture depends on the refractive index above the wafer, so flooding that gap with ultrapure water lifts ASML's deep ultraviolet systems to 1.35 ([source](https://www.asml.com/en/technology/lithography-principles/lenses-and-mirrors)).
+Resolution follows one relation: the smallest printable half-pitch is a process factor times the wavelength, divided by the numerical aperture of the optics. Shorter wavelength and wider aperture both buy resolution. Aperture depends on the refractive index above the wafer, so flooding that gap with ultrapure water lifts ASML's deep ultraviolet systems to 1.35 ([source](https://www.asml.com/en/technology/lithography-principles/lenses-and-mirrors)).
 
-When one exposure cannot resolve a pitch, the layer is split across two, three or four masks exposed in sequence. Each pass adds a mask, cycle time and overlay error, so moving a layer to single-exposure EUV usually saves money. That is the commercial case for EUV.
+When one exposure cannot resolve a pitch, the fab splits the layer across two, three or four masks in sequence. Each pass adds a mask, cycle time and overlay error, so moving a layer to single-exposure EUV usually saves money. That is the commercial case for EUV.
 
 ## Variants and trade-offs
 
@@ -84,21 +84,21 @@ When one exposure cannot resolve a pitch, the layer is split across two, three o
 
 DUV means excimer laser light: 248 nm from krypton fluoride, 193 nm from argon fluoride, dry or through water. These tools still dominate by volume. Of the 327 systems ASML sold in 2025, 131 were ArF immersion, 78 KrF, 54 i-line and 16 ArF dry ([source](https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf)).
 
-Immersion is the contested tier. NXT:2000i-class scanners are what a fab needs to reach leading-edge logic through multipatterning, and that is where Dutch export licensing draws its line.
+Immersion is the contested tier. A fab needs NXT:2000i-class scanners to reach leading-edge logic through multipatterning, and that is where Dutch export licensing draws its line.
 
 ### Extreme ultraviolet
 
 The 13.5 nm light comes from dropping molten tin into a vacuum vessel 50,000 times a second and hitting each droplet with two carbon dioxide laser pulses ([source](https://www.heise.de/en/news/EUV-Lithography-ASML-will-shoot-tin-droplets-300-000-times-per-second-11187649.html)). A collector mirror hands the result to six-mirror optics from Zeiss, ASML's optics partner since the late 1980s. The largest of those mirrors are a metre across and polished smooth to tens of picometres ([source](https://www.asml.com/en/technology/lithography-principles/lenses-and-mirrors)).
 
-Source power is about 600 W, which runs the TWINSCAN NXE:3800E above 220 wafers per hour at a 30 mJ/cm2 dose with 0.9 nm machine-matched overlay ([source](https://bits-chips.com/article/asmls-high-na-euv-technology-is-seeping-into-low-na-tools/)). ASML reached 1,000 W in research in February 2026 and targets 330 wafers per hour by 2030 ([source](https://www.heise.de/en/news/EUV-Lithography-ASML-will-shoot-tin-droplets-300-000-times-per-second-11187649.html)). A Low-NA machine costs around $250 million ([source](https://www.reuters.com/world/china/how-china-built-its-manhattan-project-rival-west-ai-chips-2025-12-17/)).
+Source power is about 600 W, which runs the TWINSCAN NXE:3800E above 220 wafers per hour ([source](https://bits-chips.com/article/asmls-high-na-euv-technology-is-seeping-into-low-na-tools/)). ASML reached 1,000 W in research in February 2026 and targets 330 wafers per hour by 2030 ([source](https://www.heise.de/en/news/EUV-Lithography-ASML-will-shoot-tin-droplets-300-000-times-per-second-11187649.html)). A Low-NA machine costs around $250 million ([source](https://www.reuters.com/world/china/how-china-built-its-manhattan-project-rival-west-ai-chips-2025-12-17/)).
 
 ### High-NA EUV
 
-High-NA raises numerical aperture from 0.33 to 0.55. The TWINSCAN EXE:5200B resolves 8 nm features, for sub-2 nm logic and leading-edge DRAM ([source](https://www.asml.com/en/products/euv-lithography-systems/twinscan-exe-5200b)). Its optics are anamorphic, demagnifying 4x in one direction and 8x in the other, which halves the printable field and forces large dies to be stitched from two exposures ([source](https://marklapedus.substack.com/p/tsmc-samsung-back-high-na-euv-and)). Ten systems were running at four customers as of September 2026, and the tool demonstrated 135 wafers per hour in acceptance testing ([source](https://www.trendforce.com/news/2026/09/01/news-asml-advances-high-na-euv-toward-high-volume-manufacturing-as-10-systems-reportedly-go-live-at-4-customers)). Estimates put the price between $350 million and $400 million ([source](https://semiengineering.com/mask-economics-shape-high-na-euv-adoption/)) ([source](https://marklapedus.substack.com/p/tsmc-samsung-back-high-na-euv-and)).
+High-NA raises numerical aperture from 0.33 to 0.55. The TWINSCAN EXE:5200B resolves 8 nm features, for sub-2 nm logic and leading-edge DRAM ([source](https://www.asml.com/en/products/euv-lithography-systems/twinscan-exe-5200b)). Its optics are anamorphic, demagnifying 4x in one direction and 8x in the other, which halves the printable field, so the fab must stitch a large die from two exposures ([source](https://marklapedus.substack.com/p/tsmc-samsung-back-high-na-euv-and)).
 
-Adoption splits three ways.
+Ten systems were running at four customers as of September 2026, and the tool hit 135 wafers per hour in acceptance testing ([source](https://www.trendforce.com/news/2026/09/01/news-asml-advances-high-na-euv-toward-high-volume-manufacturing-as-10-systems-reportedly-go-live-at-4-customers)). Estimates put the price between $350 million and $400 million ([source](https://semiengineering.com/mask-economics-shape-high-na-euv-adoption/)) ([source](https://marklapedus.substack.com/p/tsmc-samsung-back-high-na-euv-and)). Adoption splits three ways.
 
-- **Intel Foundry** has processed more than a million High-NA wafers and is the first foundry to run the tool in high-volume manufacturing, starting with Intel 18A ([source](https://www.trendforce.com/news/2026/09/08/news-asml-expands-high-na-euv-push-with-tsmc-samsung-and-intel-12-inch-photomask-pilot-line-set-for-2031/)).
+- **Intel Foundry** has processed more than a million High-NA wafers and is the first foundry to run the tool in high-volume manufacturing, on Intel 18A ([source](https://www.trendforce.com/news/2026/09/08/news-asml-expands-high-na-euv-push-with-tsmc-samsung-and-intel-12-inch-photomask-pilot-line-set-for-2031/)).
 - **TSMC** held off and now says it will use High-NA in high-volume manufacturing from 2030 ([source](https://marklapedus.substack.com/p/tsmc-samsung-back-high-na-euv-and)).
 - **Samsung** targets 2028, for DRAM rather than logic ([source](https://marklapedus.substack.com/p/tsmc-samsung-back-high-na-euv-and)).
 

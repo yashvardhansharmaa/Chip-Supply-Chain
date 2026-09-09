@@ -50,3 +50,19 @@ Global Times, PRC state media.
 - Old: `https://en.tmt-blog.jp/articles/company-disco-en` (Tier D, anonymous company-profile blog)
 - New: `https://www.disco.co.jp/eg/ir/library/doc/fr/fr20260422.pdf` (Tier A, DISCO consolidated results for the year ended 31 March 2026, published 22 April 2026)
 - Revenue unchanged: net sales JPY 436,889m for the year ended 31 March 2026 = $2.84b at ~153.8 JPY/USD.
+
+### suppliers.json — Advantest
+- Old: `https://www.wing.vc/content/the-chip-testing-bottleneck` (venture-capital marketing blog; unmapped, Tier D in substance)
+- New: `https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_slide.pdf` (Tier A, Advantest FY2025 results presentation, 27 April 2026)
+- Revenue unchanged: FY sales JPY 1,128.6bn for the year ended 31 March 2026 (p.5) = $7.337b.
+- shareNote confirmed exactly by the company's own "Tester Market Share Report" (p.18): SoC tester share **66% in CY25**, up from **56% in CY24**; overall tester share 65%.
+
+### suppliers.json — Ajinomoto
+- Old: `https://www.businessresearchinsights.com/market-reports/ajinomoto-build-up-film-abf-market-122893` (Tier D, market-research SEO site)
+- New: `https://www.ajinomoto.co.jp/company/en/ir/event/business_briefing/main/011117/teaserItems1/01/linkList/03/link/20260630_presentation_E.pdf` (Tier A, Ajinomoto "Growth Strategy for the Electronic Materials Business" briefing, 30 June 2026)
+- shareNote confirmed: the deck states ABF has "established an overwhelming position in its market, maintaining a share of over 95%" (p.3). Wording of the note tightened to cite the company briefing rather than a "2025 base year" market report.
+
+### suppliers.json — Nvidia
+- Old: `https://siliconanalysts.com/analysis/nvidia-ai-accelerator-market-share-2024-2026` (Tier D, promotional analysis blog)
+- New: `https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026` (Tier A, NVIDIA FY2026 results release)
+- Revenue confirmed: FY2026 revenue "$215.9 billion, up 65%" (stored 215.938).
