@@ -78,13 +78,13 @@ PC.register('sem-column', function (p) {
   add(PC.T(PC.boxEdges({ w: 0.13, h: 0.16, d: 0.16, perUnit: 260, tone: 0.9 }), { pos: [ipx + 0.17, ipy, 0] }));
 
   // ---------- column ----------
-  add(cut(tube(0.085, 0.72, 1.10, 1100, 0.26)));
-  add(cut(ring(0.085, 0.72, 300, 0.9)));
-  add(lens(0.48, 0.72, 0.34, 0.075, 3000, 0));       // condenser 1
-  add(cut(tube(0.075, 0.36, 0.48, 500, 0.26)));
+  add(cut(tube(0.098, 0.72, 1.10, 1200, 0.26)));
+  add(cut(ring(0.098, 0.72, 300, 0.9)));
+  add(lens(0.48, 0.72, 0.34, 0.098, 3000, 0));       // condenser 1
+  add(cut(tube(0.096, 0.36, 0.48, 560, 0.26)));
   add(aperture(0.435, 0.10, 0.009, 0.6));            // beam-limiting aperture
-  add(lens(0.12, 0.36, 0.32, 0.070, 2800, 0));       // condenser 2
-  add(cut(tube(0.075, -0.06, 0.12, 700, 0.26)));
+  add(lens(0.12, 0.36, 0.32, 0.094, 2800, 0));       // condenser 2
+  add(cut(tube(0.094, -0.06, 0.12, 800, 0.26)));
   // stigmator: eight small saddle blocks round the tube
   for (var i = 0; i < 8; i++) {
     var a = i * Math.PI / 4 + 0.15;
@@ -101,11 +101,10 @@ PC.register('sem-column', function (p) {
     add(PC.T(PC.helix({ r: 0.055, pitch: 0.028, turns: 4, perUnit: 200, tone: 0.6 }), { rot: [Math.PI / 2, Math.PI / 2 - a, 0], pos: [0.185 * Math.cos(a), -0.18, 0.185 * Math.sin(a)] }));
   }
   // objective lens
-  add(lens(-0.56, -0.30, 0.44, 0.085, 3600, 0));
-  add(cut(shell([[0.115, -0.79], [0.115, -0.745], [0.26, -0.685], [0.44, -0.585], [0.44, -0.56]], 2600, 0.28)));
-  add(cut(tube(0.085, -0.79, -0.56, 700, 0.32)));
+  add(lens(-0.56, -0.30, 0.44, 0.115, 3600, 0));
+  add(cut(shell([[0.135, -0.79], [0.135, -0.745], [0.26, -0.685], [0.44, -0.585], [0.44, -0.56]], 2600, 0.28)));
+  add(cut(tube(0.105, -0.79, -0.56, 800, 0.32)));
   add(cut(ring(0.44, -0.56)), cut(ring(0.44, -0.30)), cut(ring(0.115, -0.79, 400, 1)));
-  add(cut(PC.T(PC.helix({ r: 0.29, pitch: 0.05, turns: 4, perUnit: 190, tone: 0.55 }), { pos: [0, -0.66, 0] })));
   // detector under the pole piece, and its side arm
   add(PC.T(PC.disc({ r: 0.17, rIn: 0.055, n: 900, tone: 0.4 }), { pos: [0, -0.83, 0] }));
   add(ring(0.17, -0.828, 300, 0.9), ring(0.055, -0.828, 500, 0.95));
@@ -134,16 +133,16 @@ PC.register('sem-column', function (p) {
   add(PC.T(PC.boxEdges({ w: 1.56, h: 0.085, d: 1.24, perUnit: 190, tone: 0.9 }), { pos: [0, yW - 0.25, 0] }));
 
   // ---------- the beam ----------
-  var ENV = [[1.262, 0.010], [1.20, 0.026], [1.11, 0.030], [0.72, 0.046], [0.60, 0.052], [0.50, 0.026],
-  [0.436, 0.004], [0.36, 0.020], [0.24, 0.044], [0.12, 0.028], [0.02, 0.024], [-0.18, 0.030],
-  [-0.43, 0.068], [-0.60, 0.052], [-0.79, 0.028], [yW, 0.002]];
+  var ENV = [[1.262, 0.010], [1.20, 0.030], [1.11, 0.040], [0.72, 0.062], [0.60, 0.072], [0.50, 0.034],
+  [0.436, 0.005], [0.36, 0.026], [0.24, 0.062], [0.12, 0.036], [0.02, 0.030], [-0.18, 0.040],
+  [-0.43, 0.098], [-0.60, 0.074], [-0.79, 0.040], [yW, 0.002]];
   var env = [];
   for (var s = -1; s <= 1; s += 2) for (var ax = 0; ax < 2; ax++) {
     var pts = [];
     for (i = 0; i < ENV.length; i++) pts.push(ax ? [s * ENV[i][1], ENV[i][0], 0] : [0, ENV[i][0], s * ENV[i][1]]);
     env.push(PC.polyline({ pts: pts, perUnit: 210, tone: 1 }));
   }
-  add(PC.accent(PC.merge.apply(null, env), 0.4));
+  add(PC.accent(PC.merge.apply(null, env), 0.55));
   add(PC.accent(PC.line({ a: [0, 1.262, 0], b: [0, yW, 0], perUnit: 260, tone: 1 }), 0.6));
   // where the beam lands, and the secondaries it kicks back up to the detector
   add(PC.accent(PC.T(PC.disc({ r: 0.018, n: 160 }), { pos: [0, yW + 0.006, 0] }), 1));

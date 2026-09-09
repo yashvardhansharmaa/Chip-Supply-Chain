@@ -61,9 +61,9 @@ PC.register('cowos-exploded', function (p) {
   // ---------- 5. the top layer: two logic dies and eight HBM stacks ----------
   (L.dies || []).forEach(function (d) {
     var w = d.w * S, dd = d.h * S, x = d.x * S, z = -d.y * S;
-    add(PC.T(PC.box({ w: w, h: dieH, d: dd, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 4400, tone: 0.72 }), { pos: [x, yTop + dieH / 2, z] }));
+    add(PC.T(PC.box({ w: w, h: dieH, d: dd, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 3200, tone: 0.62 }), { pos: [x, yTop + dieH / 2, z] }));
     add(PC.T(PC.boxEdges({ w: w, h: dieH, d: dd, perUnit: 360, tone: 1 }), { pos: [x, yTop + dieH / 2, z] }));
-    add(PC.T(PC.polyline({ pts: [[-w * 0.42, 0, -dd * 0.42], [w * 0.42, 0, -dd * 0.42], [w * 0.42, 0, dd * 0.42], [-w * 0.42, 0, dd * 0.42]], closed: true, perUnit: 220, tone: 0.9 }),
+    add(PC.T(PC.polyline({ pts: [[-w * 0.42, 0, -dd * 0.42], [w * 0.42, 0, -dd * 0.42], [w * 0.42, 0, dd * 0.42], [-w * 0.42, 0, dd * 0.42]], closed: true, perUnit: 220, tone: 0.8 }),
       { pos: [x, yTop + dieH + 0.003, z] }));
     add(PC.T(PC.dots({ nx: 6, nz: 8, sx: w * 0.13, sz: dd * 0.1, tone: 0.5 }), { pos: [x, yTop + dieH + 0.003, z] }));
   });

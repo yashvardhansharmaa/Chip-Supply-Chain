@@ -188,7 +188,12 @@
       if (v === 'stack') {
         if (!m && h.length > 1) {
           var el = document.getElementById(decodeURIComponent(h.slice(1)));
-          if (el) el.scrollIntoView({ behavior: (reduced || !this.booted) ? 'auto' : 'smooth', block: 'start' });
+          if (el) {
+            if (!this.booted) { // first load: jump, do not animate 30,000 px
+              var root = document.documentElement, prev = root.style.scrollBehavior;
+              root.style.scrollBehavior = 'auto'; el.scrollIntoView({ block: 'start' }); root.style.scrollBehavior = prev;
+            } else el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+          }
           this.booted = true;
         }
         Sections.update();

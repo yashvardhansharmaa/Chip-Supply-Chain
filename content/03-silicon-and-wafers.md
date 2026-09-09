@@ -61,7 +61,7 @@
 ---
 # Silicon and Wafers
 
-Every AI accelerator begins as a disc of silicon so pure and so flat that the industry treats it as a solved problem and then quietly pays five companies to keep solving it. The whole world market is small: $11.4 billion of wafer revenue on 12,973 million square inches shipped in 2025 ([source](https://www.semiconductor-digest.com/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results/)). That is less than a single quarter of Nvidia's data-center revenue, and it sits under all of it.
+Every AI accelerator begins as a disc of silicon so pure and so flat that the industry treats it as a solved problem, then quietly pays five companies to keep solving it. The market is small: $11.4 billion of wafer revenue on 12,973 million square inches shipped in 2025 ([source](https://www.semiconductor-digest.com/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results/)). That is less than one quarter of Nvidia's data-center revenue, and it sits under all of it.
 
 ## How it works
 
@@ -102,11 +102,11 @@ The 2025 results split the industry between an AI boom and a mature-node hangove
 
 Pricing explains the gap between volume and profit. Wafers sell on multi-year long-term agreements, and SUMCO says those prices are broadly respected and generally flat, with no easy route to raising them absent a shortfall ([source](https://www.investing.com/news/transcripts/earnings-call-transcript-sumco-q4-2025-sees-revenue-beat-eps-miss-93CH-4505681)).
 
-Feedstock is a separate map. China produced 93.5 percent of global polysilicon output in 2024, and nine of the ten largest producers are Chinese, led by Tongwei at roughly 910,000 metric tons of capacity ([source](https://www.pv-magazine.com/2025/11/25/china-dominates-global-polysilicon-capacity-says-bernreuter-research/)). That dominance is in solar-grade material. The only non-Chinese firm in the top ten, Wacker, ranks eighth on volume at about 80,000 metric tons while being the largest producer of semiconductor-grade polysilicon ([source](https://www.pv-magazine.com/2025/11/25/china-dominates-global-polysilicon-capacity-says-bernreuter-research/)). Solar-grade prices fell below $4.50 per kilogram at the end of 2024 ([source](https://www.pv-magazine.com/2025/11/25/china-dominates-global-polysilicon-capacity-says-bernreuter-research/)).
+Feedstock is a separate map. China produced 93.5 percent of global polysilicon output in 2024, and nine of the ten largest producers are Chinese, led by Tongwei at roughly 910,000 metric tons of capacity ([source](https://www.pv-magazine.com/2025/11/25/china-dominates-global-polysilicon-capacity-says-bernreuter-research/)). That dominance is in solar-grade material. The only non-Chinese firm in the top ten, Wacker, ranks eighth on volume at about 80,000 metric tons while being the largest producer of semiconductor-grade polysilicon ([source](https://www.pv-magazine.com/2025/11/25/china-dominates-global-polysilicon-capacity-says-bernreuter-research/)).
 
 {{figure:polysilicon-capacity}}
 
-Crystal growth and polishing sit in Japan, Taiwan, Germany and South Korea, with no major US-headquartered wafer producer (as of 2021) ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). GlobalWafers opened a $3.5 billion plant in Sherman, Texas in May 2025 with a $406 million CHIPS award, and has announced a further $4 billion of US investment ([source](https://www.manufacturingdive.com/news/globalwafers-to-spend-additional-4-billion-us-operations-sherman-texas/748338/)). Ownership is moving too: Doosan agreed to buy 70.6 percent of SK Siltron for ₩2.3 trillion, about $1.6 billion ([source](https://www.koreajoongangdaily.com/business/doosan-to-buy-sk-siltron-in-23-trillion-won-chip-deal/12803658)).
+Crystal growth and polishing sit in Japan, Taiwan, Germany and South Korea, with no major US-headquartered wafer producer (as of 2021) ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). GlobalWafers opened a $3.5 billion plant in Sherman, Texas in May 2025 with a $406 million CHIPS award ([source](https://www.manufacturingdive.com/news/globalwafers-to-spend-additional-4-billion-us-operations-sherman-texas/748338/)). Ownership is moving too: Doosan agreed to buy 70.6 percent of SK Siltron for ₩2.3 trillion, about $1.6 billion ([source](https://www.koreajoongangdaily.com/business/doosan-to-buy-sk-siltron-in-23-trillion-won-chip-deal/12803658)).
 
 ## The chokepoint
 

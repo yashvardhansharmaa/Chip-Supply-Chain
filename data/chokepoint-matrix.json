@@ -183,7 +183,7 @@
   },
   {
     "segment": "Leading-edge logic manufacturing (≤5 nm)",
-    "metric": "Capacity share",
+    "metric": "Capacity share, site estimate",
     "year": 2025,
     "shares": {
       "TW": 72,
@@ -191,7 +191,7 @@
       "US": 11,
       "EU-other": 5
     },
-    "note": "Capacity by fab location, not by company headquarters, which is the right cut for this segment because it is where the physical risk sits. Anchored on SIA/BCG's 2022 baseline for sub-10 nm logic, which was Taiwan 69 percent and South Korea 31 percent with the US at zero, then rolled forward for three changes: TSMC's Fab 21 in Arizona now runs N4/N5 in volume, Intel's Fab 34 in Leixlip, Ireland runs Intel 4 and Intel 3 (the EU-other column) and Intel 18A has started in Arizona and Oregon, and Samsung's Taylor, Texas fab has begun ramping. TW is TSMC's Fab 18 and Fab 20 complexes in Tainan and Hsinchu. JP is zero because Rapidus remains at pilot scale. China is zero at this definition; SMIC's 7 nm-class N+2 output is real but is not a 5 nm node and is produced without EUV. This is a CHOKEPOINTS estimate, not a published table.",
+    "note": "CHOKEPOINTS estimate, not a published measurement. Capacity by fab location, not by company headquarters, which is the right cut for this segment because it is where the physical risk sits. Anchored on SIA/BCG's 2022 baseline for sub-10 nm logic, which was Taiwan 69 percent and South Korea 31 percent with the US at zero, then rolled forward for three changes: TSMC's Fab 21 in Arizona now runs N4/N5 in volume, Intel's Fab 34 in Leixlip, Ireland runs Intel 4 and Intel 3 (the EU-other column) and Intel 18A has started in Arizona and Oregon, and Samsung's Taylor, Texas fab has begun ramping. TW is TSMC's Fab 18 and Fab 20 complexes in Tainan and Hsinchu. JP is zero because Rapidus remains at pilot scale. China is zero at this definition; SMIC's 7 nm-class N+2 output is real but is not a 5 nm node and is produced without EUV. This is a CHOKEPOINTS estimate, not a published table.",
     "source": "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf",
     "aiCritical": true,
     "trend": "Taiwan's share is falling slowly from about 69 percent as the US column goes from zero to double digits, but concentration remains the single most extreme geographic risk in the chain."
@@ -245,7 +245,7 @@
   },
   {
     "segment": "Advanced packaging (2.5D/3D)",
-    "metric": "Capacity share",
+    "metric": "Capacity share, site estimate",
     "year": 2025,
     "shares": {
       "TW": 82,
@@ -255,8 +255,8 @@
       "JP": 1,
       "Other": 1
     },
-    "note": "Silicon-interposer and die-stacking capacity, meaning CoWoS, InFO, SoIC, EMIB, Foveros and I-Cube, rather than all packaging. TW is TSMC, which is the overwhelming majority, plus ASE/SPIL and Powertech taking spillover; TrendForce reports CoWoS has been short since 2023 with most capacity absorbed by Nvidia, and that TSMC plans to expand CoWoS by over 60 percent by 2027. US is Intel's EMIB and Foveros lines in Arizona and New Mexico plus Amkor's Arizona build; Google and Meta are moving some ASIC packaging to Intel EMIB. KR is Samsung I-Cube and SK hynix's HBM stacking. CN is JCET and TongFu, which are constrained by export controls on the tools. This is a modelled estimate; no vendor publishes 2.5D capacity by country.",
-    "source": "https://www.trendforce.com/presscenter/news/20260430-13028.html",
+    "note": "CHOKEPOINTS estimate derived from TrendForce CoWoS capacity reporting (TSMC roughly 120,000 to 140,000 wafers a month in 2026 against 50,000 to 60,000 at OSAT partners), not a published country split. Silicon-interposer and die-stacking capacity, meaning CoWoS, InFO, SoIC, EMIB, Foveros and I-Cube, rather than all packaging. TW is TSMC, which is the overwhelming majority, plus ASE/SPIL and Powertech taking spillover; TrendForce reports CoWoS has been short since 2023 with most capacity absorbed by Nvidia, and that TSMC plans to expand CoWoS by over 60 percent by 2027. US is Intel's EMIB and Foveros lines in Arizona and New Mexico plus Amkor's Arizona build; Google and Meta are moving some ASIC packaging to Intel EMIB. KR is Samsung I-Cube and SK hynix's HBM stacking. CN is JCET and TongFu, which are constrained by export controls on the tools. This is a modelled estimate; no vendor publishes 2.5D capacity by country.",
+    "source": "https://www.trendforce.com/news/2026/06/15/news-tsmc-cowos-supply-demand-gap-reportedly-seen-narrowing-from-20-to-10-by-end-2026-as-capacity-expands/",
     "aiCritical": true,
     "trend": "Taiwan's share has fallen only slightly since 2021 despite heavy US investment, and advanced packaging has replaced wafer capacity as the binding constraint on AI accelerator output."
   },
