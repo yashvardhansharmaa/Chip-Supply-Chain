@@ -108,14 +108,29 @@
         <h2>Suppliers</h2>
         <p class="dek">{{SUPPLIERS_INTRO}}</p>
       </div>
+      <section class="sup-map" id="sup-map" aria-labelledby="sup-map-h">
+        <h3 class="label sup-map-h" id="sup-map-h">Where the suppliers sit</h3>
+        <div class="sup-map-scroll" id="sup-map-scroll"></div>
+        <p class="sup-legend" id="sup-legend"></p>
+        <div class="sup-tip" id="sup-tip" role="tooltip" hidden></div>
+      </section>
       <div class="filters">
         <input id="sup-search" type="search" placeholder="Search suppliers, cities, tickers…" aria-label="Search suppliers">
+        <select id="sup-cat" class="sup-catsel" aria-label="Filter by category"><option value="">All categories</option></select>
         <select id="sup-country" aria-label="Filter by country"><option value="">All countries</option></select>
         <select id="sup-chk" aria-label="Filter by chokepoint level"><option value="">All chokepoint levels</option><option>Critical</option><option>Important</option><option>Contested</option><option>Diversified</option></select>
       </div>
       <div id="sup-chips" class="chips" role="group" aria-label="Filter by category"></div>
-      <div class="sup-toolbar"><span class="count" id="sup-count"></span><button class="btn ghost" id="sup-copy" type="button">Copy as CSV</button></div>
-      <div class="sup-wrap"><table class="sup" id="sup-table"></table></div>
+      <div class="sup-toolbar" id="sup-toolbar">
+        <span class="count" id="sup-count"></span>
+        <div class="sup-modes" role="group" aria-label="How much of each row to show">
+          <button type="button" class="sup-mode" data-mode="compact" aria-pressed="true">Compact</button>
+          <button type="button" class="sup-mode" data-mode="detailed" aria-pressed="false">Detailed</button>
+        </div>
+        <button class="btn ghost" id="sup-copy" type="button">Copy as CSV</button>
+      </div>
+      <div class="sup-list" id="sup-list"></div>
+      <div class="sup-wrap" id="sup-wrap" hidden><table class="sup" id="sup-table"></table></div>
     </section>
 
     <section class="view column wide" data-view="controls" hidden>
