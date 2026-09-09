@@ -28,9 +28,9 @@ PC.register('gas-cabinet', function (p) {
 
   /* ================= the cabinet ================= */
 
-  add(at(PC.box({ w: CW, h: CH, d: CD, faces: ['nz'], n: 8200, tone: 0.20 }), CBX, CY, 0));   // inside the back
-  add(at(PC.box({ w: CW, h: CH, d: CD, faces: ['nx'], n: 3400, tone: 0.19 }), CBX, CY, 0));   // inside the far side
-  add(at(PC.box({ w: CW, h: CH, d: CD, faces: ['px'], n: 6000, tone: 0.34 }), CBX, CY, 0));   // outside the near side
+  add(at(PC.box({ w: CW, h: CH, d: CD, faces: ['nz'], n: 7000, tone: 0.16 }), CBX, CY, 0));   // inside the back
+  add(at(PC.box({ w: CW, h: CH, d: CD, faces: ['nx'], n: 3000, tone: 0.15 }), CBX, CY, 0));   // inside the far side
+  add(at(PC.box({ w: CW, h: CH, d: CD, faces: ['px'], n: 5200, tone: 0.26 }), CBX, CY, 0));   // outside the near side
   add(at(PC.box({ w: CW, h: CH, d: CD, faces: ['py'], n: 2000, tone: 0.44 }), CBX, CY, 0));
   add(at(PC.box({ w: CW, h: CH, d: CD, faces: ['ny'], n: 2600, tone: 0.40 }), CBX, CY, 0));
   add(at(PC.boxEdges({ w: CW, h: CH, d: CD, perUnit: 240, tone: 0.95 }), CBX, CY, 0));
@@ -92,15 +92,15 @@ PC.register('gas-cabinet', function (p) {
 
   /* ================= the gas panel (copper) ================= */
 
-  var PZ = -CD / 2 + 0.035, PY0 = 1.44, man = [];
+  var PZ = -CD / 2 + 0.035, PY0 = 1.26, man = [];
   // panel plate on the back wall
-  man.push(PC.T(PC.plane({ w: 0.80, d: 0.40, n: 2600, tone: 0.30 }), { rot: [Math.PI / 2, 0, 0], pos: [CBX - 0.02, PY0 + 0.18, PZ] }));
+  man.push(PC.T(PC.plane({ w: 0.84, d: 0.54, n: 2600, tone: 0.26 }), { rot: [Math.PI / 2, 0, 0], pos: [CBX - 0.02, PY0 + 0.25, PZ] }));
   man.push(PC.T(PC.polyline({
-    pts: [[-0.40, 0, -0.20], [0.40, 0, -0.20], [0.40, 0, 0.20], [-0.40, 0, 0.20]], closed: true, perUnit: 300, tone: 1
-  }), { rot: [Math.PI / 2, 0, 0], pos: [CBX - 0.02, PY0 + 0.18, PZ + 0.004] }));
+    pts: [[-0.42, 0, -0.27], [0.42, 0, -0.27], [0.42, 0, 0.27], [-0.42, 0, 0.27]], closed: true, perUnit: 300, tone: 1
+  }), { rot: [Math.PI / 2, 0, 0], pos: [CBX - 0.02, PY0 + 0.25, PZ + 0.004] }));
   // process header running across the panel, and the vent header above it
   man.push(PC.line({ a: [CBX - 0.40, PY0 + 0.06, PZ + 0.03], b: [CBX + 0.40, PY0 + 0.06, PZ + 0.03], perUnit: 300, tone: 1 }));
-  man.push(PC.line({ a: [CBX - 0.40, PY0 + 0.30, PZ + 0.03], b: [CBX + 0.40, PY0 + 0.30, PZ + 0.03], perUnit: 300, tone: 1 }));
+  man.push(PC.line({ a: [CBX - 0.40, PY0 + 0.44, PZ + 0.03], b: [CBX + 0.40, PY0 + 0.44, PZ + 0.03], perUnit: 300, tone: 1 }));
   for (i = 0; i < 3; i++) {
     var v = valveTop[i], px = CBX + cylX[i];
     // coiled pigtail from the cylinder valve up to the panel
@@ -108,14 +108,14 @@ PC.register('gas-cabinet', function (p) {
     man.push(PC.line({ a: [v[0], v[1], v[2]], b: [v[0] + 0.096, v[1] + 0.03, v[2]], perUnit: 260, tone: 1 }));
     man.push(PC.polyline({ pts: [[v[0] + 0.096, v[1] + 0.13, v[2]], [v[0] + 0.096, PY0 - 0.02, v[2]], [px, PY0 - 0.02, PZ + 0.03], [px, PY0 + 0.06, PZ + 0.03]], perUnit: 260, tone: 1 }));
     // two valve blocks in series on each leg: block, bleed
-    man.push(PC.T(PC.box({ w: 0.046, h: 0.05, d: 0.046, n: 200, tone: 1 }), { pos: [px, PY0 + 0.06, PZ + 0.03] }));
-    man.push(PC.T(PC.boxEdges({ w: 0.046, h: 0.05, d: 0.046, perUnit: 300, tone: 1 }), { pos: [px, PY0 + 0.06, PZ + 0.03] }));
-    man.push(PC.T(PC.box({ w: 0.042, h: 0.046, d: 0.042, n: 180, tone: 1 }), { pos: [px, PY0 + 0.30, PZ + 0.03] }));
-    man.push(PC.T(PC.boxEdges({ w: 0.042, h: 0.046, d: 0.042, perUnit: 300, tone: 1 }), { pos: [px, PY0 + 0.30, PZ + 0.03] }));
-    man.push(PC.line({ a: [px, PY0 + 0.09, PZ + 0.03], b: [px, PY0 + 0.27, PZ + 0.03], perUnit: 260, tone: 1 }));
+    man.push(PC.T(PC.box({ w: 0.058, h: 0.062, d: 0.058, n: 260, tone: 1 }), { pos: [px, PY0 + 0.06, PZ + 0.03] }));
+    man.push(PC.T(PC.boxEdges({ w: 0.058, h: 0.062, d: 0.058, perUnit: 300, tone: 1 }), { pos: [px, PY0 + 0.06, PZ + 0.03] }));
+    man.push(PC.T(PC.box({ w: 0.052, h: 0.056, d: 0.052, n: 230, tone: 1 }), { pos: [px, PY0 + 0.44, PZ + 0.03] }));
+    man.push(PC.T(PC.boxEdges({ w: 0.052, h: 0.056, d: 0.052, perUnit: 300, tone: 1 }), { pos: [px, PY0 + 0.44, PZ + 0.03] }));
+    man.push(PC.line({ a: [px, PY0 + 0.10, PZ + 0.03], b: [px, PY0 + 0.41, PZ + 0.03], perUnit: 260, tone: 1 }));
     // gauge over each leg
-    man.push(dial(0.036, 300, 1, px, PY0 + 0.185, PZ + 0.055));
-    man.push(dial(0.014, 300, 1, px, PY0 + 0.185, PZ + 0.055));
+    man.push(dial(0.050, 320, 1, px, PY0 + 0.265, PZ + 0.055));
+    man.push(dial(0.020, 320, 1, px, PY0 + 0.265, PZ + 0.055));
   }
   // regulator body and the process line leaving through the side wall,
   // by way of the point-of-use filter
@@ -126,17 +126,18 @@ PC.register('gas-cabinet', function (p) {
   man.push(PC.T(PC.circle({ r: 0.038, perUnit: 320, tone: 1 }), { rot: [0, 0, Math.PI / 2], pos: [CBX + CW / 2 + 0.058, PY0 - 0.16, PZ + 0.03] }));
   man.push(PC.T(PC.circle({ r: 0.038, perUnit: 320, tone: 1 }), { rot: [0, 0, Math.PI / 2], pos: [CBX + CW / 2 + 0.172, PY0 - 0.16, PZ + 0.03] }));
   // vent leg up into the exhaust plenum
-  man.push(PC.polyline({ pts: [[CBX - 0.40, PY0 + 0.30, PZ + 0.03], [CBX - 0.40, CTOP - 0.03, PZ + 0.03]], perUnit: 260, tone: 1 }));
+  man.push(PC.polyline({ pts: [[CBX - 0.40, PY0 + 0.44, PZ + 0.03], [CBX - 0.40, CTOP - 0.03, PZ + 0.03]], perUnit: 260, tone: 1 }));
   add(PC.accent(PC.merge.apply(null, man), 0.95));
 
   /* ================= the bulk liquid cylinder ================= */
 
-  var TX = 0.98, TZ = -0.34, TR = 0.255, TB = 0.20, TT = 1.62;
-  add(PC.T(PC.cylinder({ r: TR, h: TT - TB, caps: false, n: 9000, tone: 0.30 }), { pos: [TX, (TB + TT) / 2, TZ] }));
-  add(PC.T(PC.sphere({ r: TR, thetaMax: Math.PI / 2, n: 2600, tone: 0.33 }), { scale: [1, 0.52, 1], pos: [TX, TT, TZ] }));
+  var TX = 1.02, TZ = -0.44, TR = 0.222, TB = 0.16, TT = 1.24;
+  add(PC.T(PC.cylinder({ r: TR, h: TT - TB, caps: false, n: 7000, tone: 0.25 }), { pos: [TX, (TB + TT) / 2, TZ] }));
+  add(PC.T(PC.sphere({ r: TR, thetaMax: Math.PI / 2, n: 2000, tone: 0.28 }), { scale: [1, 0.52, 1], pos: [TX, TT, TZ] }));
   add(PC.T(PC.circle({ r: TR * 1.004, perUnit: 300, tone: 1 }), { pos: [TX, TT, TZ] }));
   add(PC.T(PC.circle({ r: TR * 1.004, perUnit: 300, tone: 1 }), { pos: [TX, TB, TZ] }));
-  [0.42, 0.84, 1.26].forEach(function (ry) { add(PC.T(PC.circle({ r: TR * 1.006, perUnit: 190, tone: 0.5 }), { pos: [TX, ry, TZ] })); });
+  [0.34, 0.56, 0.78, 1.00].forEach(function (ry) { add(PC.T(PC.circle({ r: TR * 1.006, perUnit: 200, tone: 0.5 }), { pos: [TX, ry, TZ] })); });
+  add(PC.line({ a: [TX - TR * 0.71, TB, TZ + TR * 0.71], b: [TX - TR * 0.71, TT, TZ + TR * 0.71], perUnit: 220, tone: 0.42 }));
   // skirt base with three feet
   add(PC.T(PC.cylinder({ r: TR * 0.86, h: TB, caps: false, n: 1600, tone: 0.36 }), { pos: [TX, TB / 2, TZ] }));
   add(PC.T(PC.circle({ r: TR * 0.86, perUnit: 280, tone: 0.9 }), { pos: [TX, 0.012, TZ] }));
@@ -162,14 +163,14 @@ PC.register('gas-cabinet', function (p) {
   // relief valve and the vertical vaporiser coil on the jacket
   add(PC.T(PC.cylinder({ r: 0.026, h: 0.085, caps: false, n: 200, tone: 0.55 }), { pos: [TX - 0.10, TT + 0.145, TZ - 0.06] }));
   add(PC.T(PC.circle({ r: 0.034, perUnit: 320, tone: 0.9 }), { pos: [TX - 0.10, TT + 0.188, TZ - 0.06] }));
-  add(PC.T(PC.helix({ r: 0.052, pitch: 0.060, turns: 6, perUnit: 300, tone: 0.7 }), { pos: [TX - TR - 0.055, 0.86, TZ + 0.02] }));
-  add(PC.polyline({ pts: [[TX - TR - 0.055, 1.04, TZ + 0.02], [TX - TR - 0.055, TT + 0.06, TZ + 0.02], [TX - 0.08, TT + 0.06, TZ + 0.02]], perUnit: 260, tone: 0.7 }));
-  add(PC.polyline({ pts: [[TX - TR - 0.055, 0.68, TZ + 0.02], [TX - TR - 0.055, 0.42, TZ + 0.02], [TX - TR + 0.02, 0.42, TZ + 0.02]], perUnit: 260, tone: 0.7 }));
+  add(PC.T(PC.helix({ r: 0.046, pitch: 0.052, turns: 5, perUnit: 300, tone: 0.7 }), { pos: [TX - TR - 0.050, 0.70, TZ + 0.02] }));
+  add(PC.polyline({ pts: [[TX - TR - 0.050, 0.83, TZ + 0.02], [TX - TR - 0.050, TT + 0.06, TZ + 0.02], [TX - 0.08, TT + 0.06, TZ + 0.02]], perUnit: 260, tone: 0.7 }));
+  add(PC.polyline({ pts: [[TX - TR - 0.050, 0.57, TZ + 0.02], [TX - TR - 0.050, 0.36, TZ + 0.02], [TX - TR + 0.02, 0.36, TZ + 0.02]], perUnit: 260, tone: 0.7 }));
   // liquid-level gauge and nameplate on the shell
   add(PC.T(PC.polyline({ pts: [[-0.10, 0, -0.07], [0.10, 0, -0.07], [0.10, 0, 0.07], [-0.10, 0, 0.07]], closed: true, perUnit: 280, tone: 0.9 }),
-        { rot: [Math.PI / 2, 0, 0], pos: [TX, 1.30, TZ + TR * 1.01] }));
+        { rot: [Math.PI / 2, 0, 0], pos: [TX, 1.02, TZ + TR * 1.01] }));
   add(PC.T(PC.polyline({ pts: [[-0.055, 0, -0.045], [0.055, 0, -0.045], [0.055, 0, 0.045], [-0.055, 0, 0.045]], closed: true, perUnit: 280, tone: 0.8 }),
-        { rot: [Math.PI / 2, 0, 0], pos: [TX, 0.62, TZ + TR * 1.01] }));
+        { rot: [Math.PI / 2, 0, 0], pos: [TX, 0.48, TZ + TR * 1.01] }));
 
   return {
     cloud: PC.merge.apply(null, parts),

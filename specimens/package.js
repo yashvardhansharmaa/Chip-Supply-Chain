@@ -42,14 +42,20 @@ PC.register('package', function (p) {
       closed: true, perUnit: perUnit || 300, tone: tone
     });
   }
-  // rectangular annulus of points: the outer rectangle with the inner one punched out
-  function frame(ow, od, iw, id, tone, dens) {
-    var a = Math.max(0, ow * od - iw * id);
+  // a rectangle of points with one or more rectangles punched out of it
+  function frame(ow, od, holes, tone, dens) {
+    var hole = 0;
+    holes.forEach(function (h) { hole += h.w * h.d; });
+    var a = Math.max(ow * od * 0.02, ow * od - hole);
     var n = PC.area(a * (dens == null ? 1 : dens));
     var c = new Float32Array(n * 4), i = 0, guard = 0;
     while (i < n && guard++ < n * 40) {
-      var x = (PC.rnd() - 0.5) * ow, z = (PC.rnd() - 0.5) * od;
-      if (Math.abs(x) < iw / 2 && Math.abs(z) < id / 2) continue;
+      var x = (PC.rnd() - 0.5) * ow, z = (PC.rnd() - 0.5) * od, in_ = false;
+      for (var k = 0; k < holes.length; k++) {
+        var h = holes[k];
+        if (Math.abs(x - h.x) < h.w / 2 && Math.abs(z - h.z) < h.d / 2) { in_ = true; break; }
+      }
+      if (in_) continue;
       c[i * 4] = x; c[i * 4 + 1] = 0; c[i * 4 + 2] = z; c[i * 4 + 3] = tone; i++;
     }
     return c.subarray(0, i * 4);
@@ -114,7 +120,8 @@ PC.register('package', function (p) {
   // --- substrate: walls, edges, ball grid, and only the top that is actually exposed ---
   add(PC.box({ w: subW, h: subH, d: subD, faces: ['px', 'nx', 'pz', 'nz'], n: 5200, tone: 0.24 }));
   add(PC.boxEdges({ w: subW, h: subH, d: subD, perUnit: 180, tone: 0.6 }));
-  add(PC.T(frame(subW, subD, stack.w * S, stack.h * S, 0.2, 0.45), { pos: [0, y0, 0] }));
+  var ipHoles = ips.map(function (r) { return { x: r.x * S, z: -r.y * S, w: r.w * S, d: r.h * S }; });
+  add(PC.T(frame(subW, subD, ipHoles, 0.2, 0.45), { pos: [0, y0, 0] }));
   var pitch = 2.8 * S;
   add(PC.T(PC.dots({
     nx: Math.max(6, Math.floor(subW / pitch) - 1), nz: Math.max(6, Math.floor(subD / pitch) - 1),
@@ -128,7 +135,7 @@ PC.register('package', function (p) {
   var rh = Y(hIp + hDie * 0.65), yr = y0 + rh / 2;
   add(PC.T(PC.box({ w: ringOut[0], h: rh, d: ringOut[1], faces: ['px', 'nx', 'pz', 'nz'], n: 2200, tone: 0.3 }), { pos: [0, yr, 0] }));
   add(PC.T(PC.box({ w: ringIn[0], h: rh, d: ringIn[1], faces: ['px', 'nx', 'pz', 'nz'], n: 1300, tone: 0.2 }), { pos: [0, yr, 0] }));
-  add(PC.T(frame(ringOut[0], ringOut[1], ringIn[0], ringIn[1], 0.26, 0.45), { pos: [0, y0 + rh, 0] }));
+  add(PC.T(frame(ringOut[0], ringOut[1], [{ x: 0, z: 0, w: ringIn[0], d: ringIn[1] }], 0.26, 0.45), { pos: [0, y0 + rh, 0] }));
   add(PC.T(outline(ringOut[0], ringOut[1], 0.75, 240), { pos: [0, y0 + rh + 0.002, 0] }));
   add(PC.T(outline(ringIn[0], ringIn[1], 0.8, 240), { pos: [0, y0 + rh + 0.002, 0] }));
   add(PC.T(outline(ringIn[0], ringIn[1], 0.45, 200), { pos: [0, y0 + 0.002, 0] }));

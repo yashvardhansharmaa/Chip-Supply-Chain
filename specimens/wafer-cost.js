@@ -48,15 +48,17 @@ PC.register('wafer-cost', function (p) {
   }
 
   // ---------- the plinth ----------
-  var PW = 0.90, PH = 0.042;
+  var PW = 0.84, PH = 0.038;
   parts.push(PC.T(PC.plane({ w: PW, d: PW, n: 6200, tone: 0.15 }), { pos: [0, PH / 2, 0] }));
   parts.push(PC.box({ w: PW, h: PH, d: PW, faces: ['px', 'nx', 'pz', 'nz'], n: 2000, tone: 0.36 }));
   parts.push(PC.boxEdges({ w: PW, h: PH, d: PW, perUnit: 300, tone: 1 }));
-  for (var gi = 1; gi < 12; gi++) {
-    var gp = -PW / 2 + gi * PW / 12;
-    parts.push(PC.line({ a: [gp, PH / 2 + 0.001, -PW / 2], b: [gp, PH / 2 + 0.001, PW / 2], perUnit: 110, tone: 0.28 }));
-    parts.push(PC.line({ a: [-PW / 2, PH / 2 + 0.001, gp], b: [PW / 2, PH / 2 + 0.001, gp], perUnit: 110, tone: 0.28 }));
+  var GE = PW / 2 - 0.03;
+  for (var gi = 1; gi < 10; gi++) {
+    var gp = -GE + gi * 2 * GE / 10;
+    parts.push(PC.line({ a: [gp, PH / 2 + 0.001, -GE], b: [gp, PH / 2 + 0.001, GE], perUnit: 95, tone: 0.24 }));
+    parts.push(PC.line({ a: [-GE, PH / 2 + 0.001, gp], b: [GE, PH / 2 + 0.001, gp], perUnit: 95, tone: 0.24 }));
   }
+  parts.push(ring(2 * GE, PH / 2 + 0.002, 220, 0.5));
   parts.push(ring(CW + 0.10, PH / 2 + 0.002, 320, 0.85));
 
   // ---------- the stack ----------
@@ -130,9 +132,8 @@ PC.register('wafer-cost', function (p) {
   });
   var TOP = y;
   // the lid: the finished module the whole bill adds up to
-  parts.push(PC.T(PC.plane({ w: CW, d: CW, n: 2400, tone: 0.24 }), { pos: [0, TOP, 0] }));
-  parts.push(ring(CW, TOP + 0.002, 620, 1));
-  parts.push(ring(CW * 0.66, TOP + 0.003, 340, 0.6));
+  parts.push(PC.T(PC.plane({ w: CW, d: CW, n: 1100, tone: 0.14 }), { pos: [0, TOP, 0] }));
+  parts.push(ring(CW, TOP + 0.002, 560, 1));
 
   // ---------- the scale: gridlines every $1,000, a rule graduated every $500 ----------
   var grid = [];
@@ -159,7 +160,7 @@ PC.register('wafer-cost', function (p) {
   return {
     cloud: PC.merge.apply(null, parts),
     spin: 0.09,
-    tilt: [0.16, -0.62, 0],
+    tilt: [0.12, -0.62, 0],
     caption: 'What it costs to build one B200, stacked to scale: $2,900 of high-bandwidth memory in copper at the foot, $1,100 of CoWoS packaging, $1,000 of packaging yield loss drawn hollow because it ships nothing, $900 of logic die and $480 of board, power and test. About $6,400 in all, for a part that sells for thirty to forty thousand. The rule is graduated every $500.'
   };
 });
