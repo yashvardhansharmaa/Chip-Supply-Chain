@@ -66,3 +66,46 @@ Global Times, PRC state media.
 - Old: `https://siliconanalysts.com/analysis/nvidia-ai-accelerator-market-share-2024-2026` (Tier D, promotional analysis blog)
 - New: `https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026` (Tier A, NVIDIA FY2026 results release)
 - Revenue confirmed: FY2026 revenue "$215.9 billion, up 65%" (stored 215.938).
+
+### suppliers.json — KLA (share)
+- shareNote old: "Over 56% of the process control, metrology and inspection segment, and over 85% of optical wafer inspection (2025)"
+- shareNote new: "56.5% of the process control market in 2024, about 6.5 times the nearest competitor, on Gartner data published in KLA's 2026 investor day"
+- Source moved to the investor-day deck `2026 Investor Day_Khan_Final_IR copy.pdf` on `d1io3yog0oux5.cloudfront.net` (Tier A per policy). Slide 9 reads "Process Control Market Share … 56.5% … KLA Share in 2024 … 6.5x nearest competitor", sourced to Gartner, April 2025. The **"over 85% of optical wafer inspection" figure was removed**: KLA's FY2026 10-K claims only "leading competitive positions", the investor-day deck gives no optical-inspection percentage, and no Tier A or B source states one.
+
+### suppliers.json — ASE Technology Holding
+- Old: `https://www.congruencemarketinsights.com/report/outsourced-semiconductor-assembly-and-test-market` (Tier D)
+- New: `https://www.trendforce.com/presscenter/news/20250513-12577.html` (Tier B, TrendForce top-10 OSAT ranking for 2024)
+- shareNote old: "Largest OSAT at about 28% of the market (2024)". No Tier A or B source states a 28% total-market share. Corrected to TrendForce's published figures: "$18.54B of 2024 revenue, close to 45% of the combined revenue of the top ten OSATs".
+- Revenue unchanged and independently confirmed: ASE's SEC Form 6-K Q4 2025 earnings release (`https://www.sec.gov/Archives/edgar/data/1122411/000095010326001662/dp241167_6k.htm`) gives FY2025 net revenues of NT$645,388m = $20.489b at the file's ~31.5 TWD/USD.
+
+### suppliers.json — Hua Tian Technology
+- Old: `https://stockanalysis.com/quote/she/002185/` (Tier D, financial data aggregator)
+- New: `https://disc.static.szse.cn/disc/disk03/finalpage/2026-03-31/a0209878-88e7-443c-b062-6a33047d9c98.PDF` (Tier A, Tianshui Huatian 2025 annual report filed on the Shenzhen Stock Exchange disclosure platform, 31 March 2026)
+- Revenue unchanged and confirmed: 2025 operating revenue RMB 17.214bn (up 19.03%) = $2.559b at ~6.73 CNY/USD.
+
+### suppliers.json — Lasertec
+- Old: `https://japan-earnings.com/analysis/2026/04/6920-lasertec-analysis-20260428/` (Tier D)
+- New: `https://www.lasertec.co.jp/en/ir/plan/message.html` (Tier A, Lasertec business report)
+- Revenue unchanged and confirmed: FY2026 (year ended 30 June 2026) consolidated net sales JPY 230,485m, down 8.3% YoY = $1.498b.
+- shareNote **removed** (was "Effectively 100% of EUV mask blank inspection, per a 2026 analysis covering results through December 2025"). Lasertec publishes no share figure in its IR materials or FAQ; no Tier A or B source gives a percentage. The `role` field already states, and the company's product line supports, that it is the only supplier of actinic inspection tools, so nothing structural is lost.
+
+### suppliers.json — Nvidia (share)
+- shareNote **removed** (was "About 81% of AI accelerator revenue in 2025, projected at about 75% for 2026"). No Tier A or B source supports it. Nearest Tier B figures are different metrics — TrendForce puts GPUs at 69.7% of 2026 AI-server shipments with CSP ASICs at 27.8%, and Nvidia at 57% of the top-ten fabless IC firms' 2025 revenue; Futurum's 92% is GPUs in early 2024. None is "share of AI accelerator revenue", so the claim was dropped rather than swapped for a near-miss.
+
+### suppliers.json — Hoya
+- Old: `https://www.intelmarketresearch.com/euv-mask-blanks-market-11463` (Tier D)
+- New: `https://www.hoya.com/ir/2026/en/review/it.html` (Tier A, HOYA REPORT 2026 IT business review, FY25)
+- shareNote **removed** (was "About 34% of EUV mask blanks; Hoya and AGC together hold about 93% (2024)"). HOYA's own review says only that it "holds an exceptionally high market share" and shows share in an untranscribed chart; it publishes no percentage, and no Tier A or B source gives the 34% / 93% split.
+
+### suppliers.json — AGC Inc.
+- Old: `https://www.intelmarketresearch.com/euv-mask-blanks-market-11463` (Tier D)
+- New: `https://www.agc.com/en/news/detail/1201109_2814.html` (Tier A, AGC release on EUVL mask blank capacity expansion)
+- shareNote **removed** (was "Over 59% of EUV mask blanks; AGC and Hoya together hold about 93% (2024)"). The only figure AGC publishes is a *target* — "target sales of 40 billion JPY or more and a global market share of 50% in 2025" — not an achieved share, so it cannot stand in for the removed number.
+
+### suppliers.json — Disco Corporation (share)
+- shareNote **removed** (was "Estimated 70-80% of dicing saws and about 70% of wafer-thinning grinders (2025)"). DISCO publishes no share figure in its results materials; the nearest Tier B datapoint is Yole's ~20% share of *back-end semiconductor equipment overall* in 2023, which is a different claim.
+
+### suppliers.json — Dongjin Semichem
+- Old: `https://stockanalysis.com/quote/kosdaq/005290/` (Tier D, financial data aggregator)
+- New: `https://www.trendforce.com/news/2023/12/27/insights-analysis-of-the-global-photoresist-market-in-2023/` (Tier B; supports the role — "companies like Dongjin Semichem and SK Materials have made significant progress in the field of advanced photoresists, achieving domestic production of certain ArFi and EUV photoresists")
+- `revenueUSDb` (0.891) and `revenueYear` (2025) **set to null**. The figure existed only on the Tier D aggregator; dongjin.com is unreachable from here, the SEMI directory entry returns 403, and no Tier A or B source gives Dongjin's 2025 sales.

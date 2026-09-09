@@ -65,8 +65,10 @@ NOTES FOR THE PORT
     states, and the compact state replaces the current .rail dot row.
   - The specimen panel appears twice for the same reason. In production it stays
     one fixed stage that swaps its contents, exactly as it does today.
-  - Body measure is capped at 65ch. Live site is 66ch but at 19px Source Serif
-    inside a 58 percent column, so the real line is longer than it looks.
+  - Measure: the live site's --measure: 66ch actually renders 88 to 91 characters
+    per line, because a serif's "0" is much wider than its average lowercase and
+    ch measures the "0". Measured in the browser, 26em lands on 65 characters at
+    any type size. Worth changing in styles.css whatever else you take from here.
 ================================================================================
 -->
 
@@ -93,7 +95,13 @@ NOTES FOR THE PORT
   --body:    "Newsreader", Georgia, "Times New Roman", serif;
   --mono:    "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --measure: 65ch;
+  /* reading measure. NOT ch: Newsreader's "0" is far wider than its average
+     lowercase, so 65ch measures 91 characters. 26em measures 65, at any size,
+     which is why every text block below uses em and every data block does not.
+     Prose sits at 26em inside a 688px column; figures, the nameplate and the
+     chain strip take the full column. Reading width and data width differ on
+     purpose. */
+  --measure: 26em;
   --col: 58%;
   --masthead: 60px;
   --pad: clamp(20px, 3.2vw, 52px);
@@ -123,8 +131,8 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--body);
-  font-size: 19px;
-  line-height: 1.62;
+  font-size: 20px;
+  line-height: 1.6;
   font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -221,7 +229,7 @@ b, strong { font-weight: 600; }
 
 .dek {
   font-size: clamp(17px, 1.35vw, 19.5px); line-height: 1.55; color: var(--ink-2);
-  max-width: 52ch; margin-bottom: clamp(20px, 3vh, 30px);
+  max-width: 24em; margin-bottom: clamp(20px, 3vh, 30px);
 }
 .dek em { font-style: italic; color: var(--ink); }
 
@@ -312,14 +320,14 @@ b, strong { font-weight: 600; }
 }
 .ch-lede {
   font-size: clamp(19px, 1.55vw, 22.5px); line-height: 1.42; color: var(--ink-2);
-  max-width: 46ch; font-weight: 350;
+  max-width: 20em; font-weight: 350;
 }
 .ch-meta { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 16px; }
 
 /* in short: the conclusion. no box. size and a heavy rule carry it. */
-.inshort { margin: 34px 0 38px; border-left: 4px solid var(--ink); padding-left: 24px; max-width: 60ch; }
+.inshort { margin: 34px 0 38px; border-left: 4px solid var(--ink); padding-left: 24px; }
 .inshort h3 { margin-bottom: 10px; }
-.inshort p { font-size: 21.5px; line-height: 1.5; color: var(--ink); }
+.inshort p { font-size: 22px; line-height: 1.5; color: var(--ink); max-width: var(--measure); }
 
 /* nameplate: a card, with the two numbers that matter set as stats */
 .plate {
@@ -356,12 +364,12 @@ b, strong { font-weight: 600; }
 .plate-rows .row:last-child { border-bottom: 0; }
 .plate-rows dt { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); padding-top: 4px; }
 .plate-rows dd { font-size: 15.5px; line-height: 1.45; }
-.plate-rows li { margin-bottom: 7px; }
+.plate-rows li { display: grid; grid-template-columns: 30px 1fr; margin-bottom: 8px; }
 .plate-rows li:last-child { margin-bottom: 0; }
 .cc {
   font-family: var(--mono); font-size: 9.5px; font-weight: 500; letter-spacing: 0.07em;
   border: 1px solid var(--line-2); border-radius: 2px; padding: 1px 4px 2px;
-  color: var(--ink-2); margin-right: 8px; vertical-align: 2px;
+  color: var(--ink-2); align-self: start; justify-self: start; margin-top: 3px;
 }
 .plate-rows .who { font-weight: 600; }
 .plate-rows .note { color: var(--muted); font-size: 14.5px; }
@@ -376,17 +384,17 @@ b, strong { font-weight: 600; }
 /* in plain terms: the bridge into the body. tinted, but smaller than In short. */
 .plain {
   border: 1px solid var(--amber); border-left-width: 3px; background: var(--amber-soft);
-  border-radius: 3px; padding: 14px 20px 16px; margin: 0 0 34px; max-width: var(--measure);
+  border-radius: 3px; padding: 15px 22px 17px; margin: 0 0 36px; max-width: 30em;
 }
 .plain .lab { color: var(--amber-ink); display: block; margin-bottom: 7px; }
-.plain p { font-size: 17px; line-height: 1.55; color: var(--ink); }
+.plain p { font-size: 17.5px; line-height: 1.55; color: var(--ink); max-width: var(--measure); }
 
 /* ---------------------------------------------------------------- prose */
-.prose { max-width: var(--measure); padding-bottom: clamp(56px, 9vh, 96px); }
-.prose p { margin-bottom: 1.15em; }
+.prose { padding-bottom: clamp(56px, 9vh, 96px); }
+.prose p { margin-bottom: 1.15em; max-width: var(--measure); }
 .prose h3 {
   font-family: var(--display); font-weight: 600; font-size: 27px; line-height: 1.15;
-  letter-spacing: -0.002em; margin: 1.9em 0 0.65em;
+  letter-spacing: -0.002em; margin: 1.9em 0 0.65em; max-width: var(--measure);
 }
 .prose h3:first-child { margin-top: 0; }
 sup.cite { font-size: 0.6em; line-height: 0; vertical-align: 0.6em; margin-left: 1px; font-family: var(--mono); }

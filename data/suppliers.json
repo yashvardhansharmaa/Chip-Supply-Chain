@@ -2409,7 +2409,7 @@
     "ownership": "Public",
     "role": "The dominant supplier of process control equipment: optical and electron beam wafer inspection, reticle inspection, overlay and film metrology. Its tools find the defects that determine yield on large dies.",
     "chokepoint": "Critical",
-    "shareNote": "56.5% of the process control market, about 6.5 times the nearest competitor, on Gartner data published in KLA’s 2026 investor day (2024 share, restated for CY2025)",
+    "shareNote": "56.5% of the process control market in 2024, about 6.5 times the nearest competitor, on Gartner data published in KLA's 2026 investor day",
     "customers": [
       "TSMC",
       "Samsung",
@@ -2681,7 +2681,7 @@
     "ownership": "Public",
     "role": "Makes the coater/developer track that applies photoresist and develops it after exposure, and which is physically linked to every scanner in a fab, plus etch, deposition, cleaning and wafer bonding systems.",
     "chokepoint": "Critical",
-    "shareNote": "91% of the world coater/developer (track) market in CY2025, on Gartner data published in Tokyo Electron’s own results presentation",
+    "shareNote": "91% of the world coater/developer (track) market in CY2025, on Gartner data published in Tokyo Electron's own results presentation",
     "customers": [
       "TSMC",
       "Samsung",
@@ -3708,7 +3708,7 @@
     "ownership": "Public",
     "role": "Makes Ajinomoto Build-up Film, the insulating layer used between the copper layers of flip-chip package substrates. The material came out of amino acid chemistry and has no meaningful substitute in production.",
     "chokepoint": "Critical",
-    "shareNote": "Over 95% of the ABF build-up film market, per Ajinomoto’s June 2026 electronic materials briefing",
+    "shareNote": "Over 95% of the ABF build-up film market, per Ajinomoto's June 2026 electronic materials briefing",
     "customers": [
       "Ibiden",
       "Shinko Electric",
@@ -4116,7 +4116,7 @@
     "ownership": "Public",
     "role": "The leading maker of automated test equipment for logic and memory, including the V93000 platform used to test AI accelerators and the testers used for HBM. Test time on AI dies is long and rising.",
     "chokepoint": "Critical",
-    "shareNote": "66% of the SoC tester market in CY2025, up from 56% in CY2024, on Advantest’s own tester market share report",
+    "shareNote": "66% of the SoC tester market in CY2025, up from 56% in CY2024, on Advantest's own tester market share report",
     "customers": [
       "TSMC",
       "Nvidia",

@@ -37,8 +37,8 @@
   {
     "term": "ATE",
     "aka": "automated test equipment, tester",
-    "plain": "The machine that connects to a finished chip, feeds it millions of test patterns and checks whether the answers coming back are right. It is the only stage of chip manufacturing that actually runs electricity through the product.",
-    "why": "Advantest and Teradyne hold about 80 percent of this market, and changing tester vendor means rebuilding a customer's whole production test environment, so share moves very slowly.",
+    "plain": "The machine that connects to a finished chip, feeds it millions of test patterns and checks whether the answers coming back are right. It is the only stage of chip manufacturing that runs electricity through the product.",
+    "why": "Advantest and Teradyne hold about 80 percent of this market, and changing tester vendor means rebuilding a customer's whole production test environment, so share moves slowly.",
     "chapter": "test-and-assembly"
   },
   {
@@ -52,7 +52,7 @@
     "term": "bill of materials",
     "aka": "BOM",
     "plain": "The itemised list of every purchased part in a finished product and what each part cost, the way a builder's invoice prices lumber, wiring and fixtures separately.",
-    "why": "On an AI accelerator the memory line alone is roughly half of manufacturing cost, so the bill of materials shows which suppliers actually capture the money a buyer spends.",
+    "why": "On an AI accelerator the memory line alone is roughly half of manufacturing cost, so the bill of materials shows which suppliers capture the money a buyer spends.",
     "chapter": "component-costs"
   },
   {
@@ -79,8 +79,8 @@
   {
     "term": "chokepoint",
     "aka": "",
-    "plain": "A step in the supply chain where so few firms or countries can do the work that losing one of them stops everybody. The term comes from Georgetown's Center for Security and Emerging Technology, which mapped the chip industry segment by segment and asked which segments have only one or two suppliers.",
-    "why": "Chokepoints are where policy has leverage, and also where a single sanction, factory fire or earthquake propagates to the whole industry.",
+    "plain": "A step in the supply chain where so few firms or countries can do the work that losing one of them stops everybody. The term comes from Georgetown's Center for Security and Emerging Technology, which mapped the chip industry segment by segment to find the ones with only one or two suppliers.",
+    "why": "Chokepoints are where policy has leverage, and where a single sanction, factory fire or earthquake propagates to the whole industry.",
     "chapter": "introduction-and-goals"
   },
   {
@@ -93,8 +93,8 @@
   {
     "term": "defect density",
     "aka": "D0, defects per square centimetre",
-    "plain": "The average number of chip-killing flaws per square centimetre of processed wafer. It is a fab's quality score, and it is worked backwards from how many chips come out working rather than counted directly.",
-    "why": "Yield falls steeply with die area multiplied by defect density, so on the very large dies AI chips use, halving defect density nearly doubles the number of saleable parts.",
+    "plain": "The average number of chip-killing flaws per square centimetre of processed wafer. It is a fab's quality score, inferred from how many chips come out working rather than counted directly.",
+    "why": "Yield falls steeply with die area multiplied by defect density, so on the reticle-sized dies AI chips use, halving defect density nearly doubles the number of saleable parts.",
     "chapter": "metrology-and-inspection"
   },
   {
@@ -129,7 +129,7 @@
     "term": "ECCN",
     "aka": "Export Control Classification Number",
     "plain": "The catalogue number that US export rules assign to a controlled item, rather like a customs tariff code for security-sensitive technology. Number 3A090 covers advanced computing chips and 3B001 covers chipmaking equipment.",
-    "why": "An item's classification number decides whether it needs a licence, so the technical thresholds written into each number are where the policy actually bites.",
+    "why": "An item's classification number decides whether it needs a licence, so the technical thresholds written into each number are where the policy bites.",
     "chapter": "geopolitics"
   },
   {
@@ -157,7 +157,7 @@
     "term": "etch",
     "aka": "",
     "plain": "Removing material from a wafer wherever the printed pattern says it should not be, usually by turning a gas into a plasma whose ions and fragments eat one material while leaving the material beside it alone.",
-    "why": "Cutting very deep, very narrow holes is what stacked memory and wrap-around transistors require, which is why US rules control etch tools by hole shape and selectivity rather than by product name.",
+    "why": "Stacked memory and wrap-around transistors need holes far deeper than they are wide, which is why US rules control etch tools by hole shape and selectivity rather than by product name.",
     "chapter": "deposition-and-etch"
   },
   {
@@ -199,14 +199,14 @@
     "term": "foreign direct product rule",
     "aka": "FDPR, FDP rule",
     "plain": "A US rule that claims authority over goods made anywhere in the world by anyone, if they were produced using American technology or American-built equipment. A chip made in Taiwan on American tools falls under it.",
-    "why": "It is the instrument that makes US controls extraterritorial, and without it a listed buyer could simply order the same item from a non-American supplier.",
+    "why": "It is the instrument that makes US controls extraterritorial, and without it a listed buyer could order the same item from a non-American supplier.",
     "chapter": "geopolitics"
   },
   {
     "term": "foundry",
     "aka": "pure-play foundry, contract chipmaker",
     "plain": "A factory business that manufactures chips designed by other companies and promises never to compete with them. TSMC created the model in 1987, and it worked because no single design house sells enough chips to fill a modern fab.",
-    "why": "TSMC took about 73 percent of foundry revenue in 2026 and nearly all leading-edge production, so one company's capacity plan effectively sets the world's supply of AI chips.",
+    "why": "TSMC took about 73 percent of foundry revenue in 2026 and nearly all leading-edge production, so one company's capacity plan sets the world's supply of AI chips.",
     "chapter": "foundries-and-fabs"
   },
   {
@@ -219,7 +219,7 @@
   {
     "term": "gate-all-around",
     "aka": "GAA, nanosheet transistor, RibbonFET at Intel",
-    "plain": "A transistor in which the controlling gate completely surrounds the channel that current flows through, rather than touching three sides as a fin does. Surrounding it gives the gate total authority, so the switch still turns fully off at very small sizes.",
+    "plain": "A transistor in which the controlling gate surrounds the channel that current flows through, rather than touching three sides as a fin does. Surrounding it gives the gate total authority, so the switch still turns fully off as dimensions shrink.",
     "why": "It is the transistor of the 2 nanometre generation, only TSMC, Intel and Samsung can build it in volume, and it is what drives new demand for atomic layer deposition and sideways etching tools.",
     "chapter": "transistors-and-front-end"
   },
@@ -234,7 +234,7 @@
     "term": "gross margin",
     "aka": "",
     "plain": "The share of a sale left over after paying what it cost to make the thing, before research, sales and overheads are counted. A 70 percent gross margin means $70 of every $100 of revenue survives manufacturing cost.",
-    "why": "Gross margin shows where pricing power actually sits: design, memory and inspection earn 60 to 75 percent, substrates around 30, and assembly and test only 14 to 20.",
+    "why": "Gross margin shows where pricing power sits: design, memory and inspection earn 60 to 75 percent, substrates around 30, and assembly and test only 14 to 20.",
     "chapter": "component-costs"
   },
   {
@@ -304,7 +304,7 @@
     "term": "lithography",
     "aka": "photolithography",
     "plain": "Printing a circuit pattern onto a wafer by shining light through a patterned plate and projecting a shrunken image of it onto a light-sensitive coating. It is photography at the scale of nanometres, repeated once for every layer of the chip.",
-    "why": "It is the most concentrated stage in the whole chain, and the resolution a country can reach sets the ceiling on every chip it is able to make.",
+    "why": "It is the most concentrated stage in the whole chain, and the resolution a country can reach sets the ceiling on every chip it can make.",
     "chapter": "lithography"
   },
   {
@@ -338,7 +338,7 @@
   {
     "term": "NVL72",
     "aka": "GB200 NVL72, GB300 NVL72, Vera Rubin NVL72",
-    "plain": "Nvidia's rack-sized product: 72 accelerators and 36 processors wired into one machine that software can treat as a single very large computer. The GB300 version draws up to 142 kilowatts.",
+    "plain": "Nvidia's rack-sized product: 72 accelerators and 36 processors wired into one machine that software can treat as a single computer. The GB300 version draws up to 142 kilowatts.",
     "why": "It is the unit AI capacity is now bought and priced in, at roughly $5.0 million for a Grace Blackwell rack and an estimated $7.8 million for its Vera Rubin successor.",
     "chapter": "systems-and-networking"
   },
@@ -436,7 +436,7 @@
   {
     "term": "scale-up network",
     "aka": "scale-up fabric, coherent domain",
-    "plain": "The very fast wiring that joins a few dozen accelerators inside one rack so a model too large for a single chip can be spread across them. It runs at terabytes per second, hundreds of times faster than the network between racks.",
+    "plain": "The wiring that joins a few dozen accelerators inside one rack so a model too large for a single chip can be spread across them. It runs at terabytes per second, hundreds of times faster than the network between racks.",
     "why": "Scale-up bandwidth sets how large a model can be trained or served without choking, and Nvidia's NVLink is still the only product at the top of this market.",
     "chapter": "systems-and-networking"
   },
@@ -513,8 +513,8 @@
   {
     "term": "yield",
     "aka": "die yield",
-    "plain": "The percentage of chips on a wafer that actually work. Flaws land at random, so the larger the chip the more likely it is to catch one, and yield falls steeply as chips get bigger.",
-    "why": "Yield, not wafer price, sets the cost of a working AI chip, and a ten point yield drop on a very large die hurts far more than a 30 percent rise in the price of the wafer.",
+    "plain": "The percentage of chips on a wafer that work. Flaws land at random, so the larger the chip the more likely it is to catch one, and yield falls steeply as chips get bigger.",
+    "why": "Yield, not wafer price, sets the cost of a working AI chip, and a ten point yield drop on a reticle-sized die hurts far more than a 30 percent rise in the wafer price.",
     "chapter": "component-costs"
   }
 ]
