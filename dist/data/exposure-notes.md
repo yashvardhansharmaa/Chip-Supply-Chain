@@ -4,17 +4,17 @@
 
 Three bases sit behind the same word, and they are not interchangeable.
 
-**Ship-to** attributes revenue to the customer facility that received the goods. Every equipment and materials vendor here uses it except Besi. It is closest to where a controlled tool physically lands.
+**Ship-to** attributes revenue to the customer facility that received the goods. Every equipment and materials vendor here uses it except Besi. It is closest to where a controlled tool lands.
 
 **Bill-to** attributes revenue to the entity invoiced. AMD and Besi use it. An invoice routed through a Hong Kong or Singapore arm moves revenue away from the fab that installs the tool.
 
-**Headquarters location** attributes revenue to the customer's corporate home. Micron has always used it. Nvidia switched to it in the FY2026 10-K and restated the two prior years: FY2025 China revenue was $17,108m, 13.1%, on the old billing basis and is $25,048m, 19.2%, restated. This file carries restated figures for FY2024 to FY2026 and original billing-basis figures for FY2021 to FY2023, so the series breaks between FY2023 and FY2024. Each affected row records the superseded number.
+**Headquarters location** attributes revenue to the customer's corporate home. Micron has always used it. Nvidia switched to it in the FY2026 10-K and restated the two prior years: FY2025 China revenue was $17,108m, or 13.1 percent, on the old billing basis, and $25,048m, or 19.2 percent, restated. This file carries restated figures for FY2024 to FY2026 and original billing-basis figures for FY2021 to FY2023, so the series breaks between FY2023 and FY2024. Each affected row records the superseded number.
 
 Synopsys allocates by where the licence seats sit, Cadence by where the product is used. Samsung reports the region of its own operating units rather than a customer split, and the figure covers phones, displays and Harman alongside memory.
 
-Every row in the file cites a filing or an investor document on the company's own domain. Samsung is the one firm here that is not an SEC registrant, so its rows point at the audited consolidated financial statements as Samsung itself publishes them, on the company's investor-relations asset host; the FY2022 and FY2024 rows read the comparative column of the following year's statements, and say so. The figures were checked against those documents: FY2025 revenue of KRW 333,605,938 million and FY2024 of KRW 300,870,903 million, with the regional lines that give the China numbers, all appear in the statements cited.
+Every row in the file cites a filing or an investor document on the company's own domain. Samsung is the one firm here that files with no US regulator, so its rows point at the audited consolidated statements Samsung publishes on its own investor-relations site. The FY2022 and FY2024 rows read the comparative column of the following year's statements, and say so. We checked the figures against those documents: FY2025 revenue of KRW 333,605,938 million and FY2024 of KRW 300,870,903 million, with the regional lines that give the China numbers, all appear in the statements cited.
 
-`chinaShare` is computed here from the filed absolute figures, never copied from a filing's own percentage. Nova is the one exception below.
+We compute `chinaShare` from the filed absolute figures, never copying a filing's own percentage. Nova is the one exception below.
 
 ## Fiscal-year calendars
 
@@ -26,16 +26,16 @@ Chinese fabs bought ahead of the October 2022 and October 2023 US rules and the 
 
 ## Firms not covered, and why
 
-**Axcelis.** Its ion implanters sit inside the controls, but the 10-K reports only North America, Asia Pacific and Europe. No China line appears anywhere in it.
+**Axcelis.** Its ion implanters sit inside the controls, but the 10-K reports only North America, Asia Pacific and Europe. No China line appears in it.
 
-**ASM International.** Note 22 of the 2025 annual report gives United States, Europe and Asia only. The narrative says China equipment sales were "more than 30% of total ASM revenue" in 2025, which is neither absolute nor on a total-revenue basis.
+**ASM International.** Note 22 of the 2025 annual report gives United States, Europe and Asia only. The narrative says China equipment sales were "more than 30% of total ASM revenue" in 2025, which gives no absolute figure and sets equipment sales against a total-revenue denominator.
 
-**SK hynix.** The English earnings releases give revenue and the DRAM and NAND segments but no geographic split. The audited statements are filed in Korean with DART, not on the company's own site.
+**SK hynix.** The English earnings releases give revenue and the DRAM and NAND segments but no geographic split. The audited statements go to DART, Korea's disclosure system, in Korean, and not to the company's own site.
 
-**Advantest FY2021 and FY2022.** The audited note reports Japan, Americas, Europe and one Asia line, as does Integrated Annual Report 2023. The FY2023 to FY2025 rows come from Advantest's own reports, where those three regions reconcile to the audited note.
+**Advantest FY2021 and FY2022.** The audited note reports Japan, Americas, Europe and one Asia line, as does the Integrated Annual Report 2023. The FY2023 to FY2025 rows come from Advantest's own reports, where those three regions reconcile to the audited note.
 
 **Nova** discloses China only as a rounded percentage of total sales. Its rows carry `chinaRevenue: null` and a `chinaShare` taken from the filing. Treat it as one significant figure.
 
 **Applied Materials FY2026 and Micron FY2026** are not yet filed.
 
-Categories match `data/suppliers.json` where the firm appears. Veeco is absent from that file and is classed as `Deposition & Etch`.
+Categories match `data/suppliers.json` where the firm appears. Veeco does not appear there, so this file classes it as `Deposition & Etch`.

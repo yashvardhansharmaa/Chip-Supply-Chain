@@ -231,6 +231,149 @@ Cuts:
 
 Open item for a fact-checker, not changed here: the sentence "An 8 square centimetre die ... yields about 49 percent at a defect density of 0.10 and about 69 percent at 0.05" carries no citation of its own. It is presumably computed from the yield equation cited in the paragraph above, but as printed it is the only unsourced number pair in the chapter, and the `plain` paragraph rests on it.
 
+## 09 Transistors and the Front End
+
+Body words 1,096 to 1,265. Front matter parses; `plain` rewritten and byte-identical in both copies; both figure markers present; six em dashes, all in criteria bullets; build clean, D 0, 16 sources. This is the one chapter of the four that grew. It carried more unexplained vocabulary than any other file I hold, and the glosses cost more than the cuts saved.
+
+Precision and actors:
+
+- Passive with a knowable actor, in the Takeaways: "Every gain since the FinFET era has been bought with process steps and new materials" became "Foundries have bought every gain since the FinFET era with process steps and new materials".
+- "Making them is the front end of line; wiring them is the back end" became "Making the switches is the front end of line; wiring them together is the back end", so neither pronoun has to reach back to "208 billion switches".
+- "A planar transistor puts the gate on one side" became "lays the gate on one side"; "The fin stands it on edge for three-sided control" became "A fin stands the channel on edge so the gate covers three sides".
+- "Copper needs a barrier, a liner and a cap to stop it diffusing into the dielectric" became "Copper seeps into the insulator around it, so every wire needs a barrier, a liner and a cap": the problem now comes before the remedy.
+- "AI accelerators sit a node behind: a reticle-limited die needs a mature process to yield" became "AI accelerators sit a node behind the leading edge: a die that large comes out working only on a process that has run for years." Yield as an intransitive verb is trade-speak.
+- "which is harder to build and worth more" became "which is harder to build and buys more". Worth more to whom was never said.
+- Figure title and card: "TSMC logic roadmap beyond N2, from TSMC's own announcements" became "TSMC's logic roadmap beyond N2, from its own announcements"; `costSignal` lost "The public signal is" as a separate clause.
+
+Expansions:
+
+- "reticle-limited dies" became "dies, each the largest a lithography machine can print in one shot". The reticle limit is chapter 12's subject; here it needed a clause, not a term.
+- "electrically as thin as the oxide it replaced: Intel's hafnium high-k dielectric" became "gripping the channel as tightly as before: Intel switched the gate insulator from silicon dioxide to hafnium". High-k, the industry's name for the property, is gone and the property is stated.
+- "width then comes in whole fins: nobody gets 1.5 fins of drive" became "current then comes in whole fins: a designer who needs more adds one, and nobody gets half a fin". Drive current is now called current, and "Width is continuous again" became "The sheets can be drawn any width, so current comes in fine steps again".
+- "a tenfold cut in dynamic voltage droop" gained "the sag in supply voltage when a block of logic switches on at once".
+- "imec expects complementary FETs to stack the n-type and p-type devices, which sit side by side today, and roughly halve a CMOS pair's area" became "A logic gate needs two transistors that switch on opposite signals, and today they sit side by side. The research institute imec expects complementary FETs to stack them and roughly halve the pair's area." Three terms replaced by one plain sentence, and imec identified: the site names it three times and nowhere says what it is.
+- "with EUV" became "with extreme ultraviolet lithography" on first use, and "enough to keep SMIC's DUV multipatterning lines running" became "Those are deep-ultraviolet machines, a generation behind EUV, and SMIC gets fine features out of them by printing each layer in several passes."
+- "113.4 MTr/mm2" became "113.4 million transistors per square millimetre" in the body, the keyFact and `chinaStatus`; "has a 32.5 nm minimum metal pitch" became "sets its narrowest wires 32.5 nm apart".
+- "SRAM is the scaling failure" became "SRAM, the fast memory on the logic die, is the scaling failure", and "the gain comes from the periphery, not the bit cell" became "from the circuits around the array rather than from the cell that holds one bit".
+- CSIS spelled out on first use in the body; the Takeaways keep the abbreviation.
+- Criteria glossed in place: "off-state leakage and the minimum supply voltage" became "how much the switch leaks when off, and the lowest supply voltage it can run on"; "IR drop across the die" became "the voltage lost carrying power across the die"; "one library type" became "one kind of cell".
+
+Cuts:
+
+- "SemiAnalysis puts the generic gain at 15 to 20 percent on power for high-performance designs ([source])" deleted. The sentence immediately before it gives 15 to 20 percent less power for A16, so the reader met the same range twice in two sentences. The source survives in the chapter through the SRAM and SMIC teardown citations.
+- "self-aligned quadruple and double patterning" in `chinaStatus` became "printing each layer in two or four passes", and "semi-damascene scheme" left the ruthenium bullet. The demonstrated 16 nm pitch and its citation stayed.
+- "Three companies build gate-all-around nodes with EUV: TSMC, Intel and Samsung" became "TSMC, Intel and Samsung build gate-all-around nodes with extreme ultraviolet lithography", because the rewritten `plain` now names the three and the sentence no longer has to count them.
+
+Left alone:
+
+- `substitution.why` says "over a thousand steps" and `plain` says "about a thousand steps". Both were already in the file, neither is cited, and reconciling them would mean choosing a number.
+- "Node names describe nothing physical." Kept as a flat assertion; the sentence after it is the evidence.
+- "That is the largest foreign direct investment in US history" is in chapter 10, not here, but the same rule applied throughout: uncited claims already in the file were left for the fact-checker rather than quietly rewritten.
+
+## 10 Foundries and Fabs
+
+Body words 1,118 to 1,183. Front matter parses; `plain` rewritten and byte-identical in both copies; both figure markers present; six em dashes, all in criteria bullets; build clean, D 0, 12 sources.
+
+Precision and actors:
+
+- "TSMC was founded in 1987 and pioneered the pure-play model by promising never to compete with its customers" became "TSMC, founded in 1987, invented the pure-play model: it builds chips for other companies and promises never to compete with them." The model is now defined where the term first appears rather than a section later.
+- "Everything TSMC and its subsidiaries manage came to" became "Every plant TSMC and its subsidiaries run came to", and "The Taiwanese gigafabs are 13 million of it" became "The six Taiwanese gigafabs hold 13 million of that".
+- "Intel and Samsung make their own products and sell capacity too" became "design and sell their own chips and rent out capacity too", which also unpacks the section heading's "integrated device makers"; "internal products absorb the good capacity" became "the house products take the best capacity".
+- "Samsung's swing factor is Taylor, Texas" became "Samsung's bet outside Korea is Taylor, Texas".
+- The Intel stake paragraph was one chain of clauses. It is now three sentences; "The stake is passive" became "The stake carries no control"; and the warrant's trigger is stated as something Washington does, "a five-year warrant for a further 5 percent that Washington can exercise only if Intel drops below 51 percent ownership of the foundry business".
+- "Below 10 nm the United States had almost no share in 2022" became "The United States had almost no capacity below 10 nm in 2022", so the share has an object.
+- "compete on cost rather than density" became "compete on price rather than density". They compete on price.
+- Consistency fix using facts already on the site: "The binding constraint is usually packaging rather than wafers" became "Through 2024 and 2025 the binding constraint was packaging rather than wafers", because chapter 12 reports the constraint moving back to front-end wafers in March 2026. In the present tense the two chapters contradicted each other.
+
+Expansions:
+
+- The lead now anchors the unit once for the whole chapter: "more than 100,000 300 mm wafers a month" became "more than 100,000 wafers a month, each a 300 mm disc, twelve inches across", so "12-inch equivalent wafers" two paragraphs later needs no lookup. SMIC's "8-inch-equivalent wafers" became "wafers counted in the smaller 8-inch size".
+- "Chips at 7 nm and below" gained "meaning the newest processes" on first use.
+- "SEMI expects" became "The industry association SEMI expects".
+- "put 18A-P into risk production" gained "the trial runs a process goes through before it is signed off"; "ASML's High-NA EUV" became "ASML's High-NA extreme ultraviolet scanners".
+- Criteria: "Yield at ramp" now says what it measures, "how many good chips a new process gives in its first year"; "Utilisation" gained "how full the lines run", and "what a captive home market does for loading" became "for volume"; "an IDM-owned foundry" became "a foundry owned by a chipmaker"; "grid margin" became "spare generating capacity".
+- Card: `chinaStatus` now reads "it cannot buy an EUV scanner, which caps it below the leading edge", and the China country note's "almost all of it mature" became "almost all of it on older nodes".
+
+Cuts:
+
+- "No design house sells enough of one product to fill that." Deleted from the body: the rewritten `plain`, which is the paragraph directly above it, now makes that point in almost the same words.
+- The lead lost "their combined output passed 13 million 12-inch equivalent wafers in 2025", which the third paragraph gives alongside the 17 million total that makes it mean something. The gigafab citation moved with it, so the 13 million figure is sourced where it now sits.
+
+Left alone:
+
+- "That is the largest foreign direct investment in US history" carries no citation of its own. Flagged for the fact-checker rather than cut, because the sentence it sits in is the chapter's point about scale.
+- "Diversification is real and slow." A judgment stated flat, in the site's voice; the sentence after it supplies the reason.
+
+## 11 Memory and HBM
+
+Body words 1,090 to 1,197. Front matter parses; `plain` rewritten and byte-identical in both copies; all three figure markers present; six em dashes, all in criteria bullets; build clean, D 0, 15 sources.
+
+Precision and actors:
+
+- "that width is bought with die area and stacking yield" became "that width costs die area and stacking yield" in `costSignal`.
+- "The base die is now a logic die, so it goes to a foundry" became "The chip at the bottom of the stack is now a logic chip rather than a memory one, so it has to be made in a foundry".
+- "melting the bumps between stacked dies and moulding underfill around them" became "which melts the solder bumps between stacked chips and moulds a filler around them", and "which controls heat and warpage" became "holding heat and warping in check".
+- "A finished cube is capped at 775 micrometres, raised from 720 for HBM4" became "HBM4 raised the cap on a finished cube from 720 micrometres to 775, still under a millimetre", which gives the change an actor and the unit a scale.
+- "what binds a new entrant is the stacking line and the Nvidia qualification behind it rather than the DRAM die" became "what stops a new entrant is the stacking line and Nvidia's approval, rather than the memory chip itself"; the Takeaways' "What binds now is heat and height" became "The limit now is heat and height".
+- "The filing attributes the figures to IDC, and they move fast" became "The filing credits the research firm IDC, and the numbers move fast", because "they" could have been read as the firms.
+- The first-quarter 2026 split, "Micron was at 23.1 percent and Korea down to 76.9", ended its paragraph with no citation beside it. The prospectus citation is now repeated on that sentence.
+- Spellings brought into line with the rest of the site: "molding compound" became "moulding compound", and "cold plate" became "cooling plate" to match `plain`.
+
+Expansions:
+
+- The hardest paragraph in the chapter used weight, token, key-value cache, context and batch size in four sentences. It now reads: "Answering a prompt is where the width earns its cost. Training reuses each stored number across a huge multiplication, so a chip can fetch little and compute a lot. Generating one word of an answer reads the whole model and the whole running record of the conversation, then waits on memory, and that record grows with the length of the conversation and the number of users served at once."
+- "Ordinary DRAM cannot be made that wide" became "Ordinary memory cannot be made that wide", and DRAM is introduced later as "Ordinary computer memory, DRAM".
+- "24 GB 8-high and 36 GB 12-high" became "24 GB with eight chips stacked and 36 GB with twelve"; the table's "(8-high)", "(12-high)" and "(16-high)" became "(8 chips)", "(12 chips)" and "(16 chips)".
+- "Etch through-silicon vias into a DRAM wafer" became "Etch vertical holes, the through-silicon vias, into a memory wafer"; "Bonding copper to copper directly cuts the pitch ... and removes the underfill" became "Pressing copper pad straight onto copper pad, with no solder and no filler, would cut the spacing between connections".
+- "JEDEC published" became "The standards body JEDEC published"; "BofA" became "Bank of America" in the body and in the figure's title and source label; "first through Nvidia qualification" became "first to pass Nvidia's qualification tests".
+- The export paragraph, the one a policy reader is most likely to cite, now spells out the agency and glosses the mechanism: "The Bureau of Industry and Security rule of 5 December 2024 added an export classification, ECCN 3A090.c, ... and reached stacks made outside the United States through a foreign direct product rule, which catches goods made abroad with American technology".
+- Criteria: "sets inference throughput" became "sets how fast a chip can serve answers"; "the base die runs hottest, and every added layer raises resistance to the heatsink above" became "the chip at the bottom runs hottest, and every layer added above it makes the heat harder to get out".
+- `specimenCaption`: "a 12-high HBM stack, exploded" became "a twelve-high HBM stack, pulled apart", and "thinned DRAM dies" became "thinned memory chips".
+
+Cuts: none of substance. This chapter was the tightest of the four, and the growth is all glossing.
+
+Two open items for a fact-checker, neither changed here:
+
+- The variants table gives HBM3E as "1,024-bit, 16 channels" while the body and the keyFact, both from Micron, say "1,024 bits wide across 32 channels". Channels against pseudo-channels is the likely explanation, but as printed the chapter contradicts itself, and fixing it means choosing a number.
+- "Generating one word of an answer" simplifies "generating one token". It is the plainest available rendering, and it is not exact.
+
+## 12 Advanced Packaging
+
+Body words 1,348 to 1,338. Front matter parses; `plain` rewritten and byte-identical in both copies; all three figure markers present; six em dashes, all in criteria bullets; build clean, D 0, 19 sources. This was the only one of the four already at the top of the range, so every gloss had to be paid for with a cut.
+
+Precision and actors:
+
+- "CoWoS builds it in two passes, chip-on-wafer and then wafer-on-substrate" became "The name CoWoS says the order: chip onto wafer, then wafer onto substrate", which stops the sentence expanding the acronym and then restating it.
+- "its interposer is one monolithic die whose yield falls as area grows" became "one unbroken piece of silicon whose yield falls as the area grows".
+- "Intel's EMIB embeds the same bridge idea in the organic substrate" became "buries the same bridge idea in the resin substrate".
+- "taking interconnect pitch far below what microbumps allow" became "packing the connections far closer than microbumps allow".
+- "Epoch AI models each designer's component consumption against global supply" became "weighs each designer's component use against world supply".
+- "front-end wafer capacity is now the dominant bottleneck and that CoWoS constraints are easing" became "front-end wafers are now the dominant bottleneck and CoWoS is easing"; "The queue has eased and the concentration has not" became "The queue has eased; the concentration has not".
+- "%" became "percent" in the thermocompression bullet, the only place in the chapter that mixed the two.
+- "TSMC does not publish a CoWoS wafer number, and the omission is deliberate" became "and will not", which is what the next paragraph demonstrates.
+
+Expansions:
+
+- "organic substrate" and "organic build-up substrate" became "resin base board" and "resin substrate" throughout, including the table cell "Organic RDL interposer", now "Resin interposer with fine redistribution wiring", which is also where RDL first appears.
+- "thermal cycling" became "repeated heating and cooling", and then, once the `plain` paragraph above had made the point, simply "one cracked joint".
+- "TSMC does the 2.5D work for AI accelerators" gained "chips side by side on a shared carrier", the only place the chapter says what its own section headings mean.
+- The thermocompression bullet now says what the tool does before it gives ASMPT's revenue.
+- "chiplets on SMIC silicon plus domestic assembly" became "building big chips from small chiplets cut on SMIC silicon and assembled at home"; "they took none in ALD" became "none in atomic layer deposition", matching the figure's own axis label.
+- "relaxes bump pitch enough to mount HBM on a standard organic substrate" became "spaces the connections widely enough to mount the stack on a standard resin substrate".
+- Card: OSAT spelled out in the leaders and the China country note; "60% CAGR" became "60% compound annual growth"; `substitution.why`'s "the yielded integration of a 5.5-reticle interposer with its HBM stacks" became "getting a 5.5-reticle interposer and its HBM stacks to come out working"; `specimenCaption`'s "C4 bumps" became "the larger solder bumps beneath it".
+- The lead's "got around the reticle" became "got around that reticle limit", so the unit used later, "5.5x reticle" and "14-reticle", has an antecedent.
+
+Cuts, to pay for the above and get back under 1,350:
+
+- "Bridges, dies, organic interposer and substrate all expand at different rates, so the package warps" deleted from the Blackwell paragraph. The `plain` paragraph a screen above says it in nearly the same words; what survives is the consequence, "the bridges ... have to be placed to a tolerance that the package's warping fights".
+- "Fifteen months later the answer had not changed" deleted and the October 2025 paragraph folded onto the July 2024 one. The section said "no number" four times and now says it twice, keeping every date, figure and quote.
+- Smaller: "and expected supply to stay tight" (the same call already says he could not reach balance); "one at a time" from the thermocompression bullet, since the Bonder throughput criterion carries it; "would give the real number the following year" trimmed to "give the real figure the year after".
+
+Left alone:
+
+- "Lithography stopped being the limit on chip size in 2022" in `oneLiner`, an uncited date already in the file.
+- "the most expensive logic dies ever made" and "Every AI accelerator worth buying is bigger than that". Both are the site's voice, and both carry the chapter's argument.
+
 ## 13 Substrates and PCBs
 
 Body words 1,334 to 1,323. Front matter parses; `plain` byte-identical to the first paragraph under "How it works"; both figure markers present; no em dashes; build clean, D 0.

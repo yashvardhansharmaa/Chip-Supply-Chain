@@ -130,6 +130,74 @@ The paragraph now ends on the consequence rather than on a market share, and the
 
 What a policymaker would still not understand: what "quality control" involves at this scale, that is, that the machines measure rather than reject, and that their output is a map of where the process went wrong rather than a pass or fail; why the same firm dominates every family at once, which the body attributes to optics, electron columns and decades of catalogued defects; and the yield numbers themselves, which are the chapter's most quotable claim and, as printed in the body, the only pair without a citation attached.
 
+## 09 Transistors and the Front End
+
+Scored before: (a) fail, the paragraph opened on the valve analogy and never said that this stage is where the switches get built; (b) partial, "three companies" counted but named nobody; (c) partial, "which is why a regulator can name them" never says name them in what; (d) pass; (e) pass, one analogy; (f) pass, 91 words; (g) pass. Rewritten for (a), (b) and (c).
+
+Before:
+
+> A transistor is a valve on a pipe. Current runs along a silicon channel, and a voltage on the gate above it opens or shuts the flow. Make the channel short enough and the valve stops sealing: current leaks through even when the gate says off, so a chip burns power doing nothing. The fix is to wrap the gate around all four sides of the channel, which takes about a thousand process steps in exact order. Three companies can run that sequence, which is why a regulator can name them.
+
+After (106 words):
+
+> The front end of a chip factory builds the switches. Each one is a valve on a pipe: current runs along a silicon channel, and a voltage on the gate above it opens or shuts the flow. Make the channel short enough and the valve stops sealing, so current leaks through even when the gate is off and the chip burns power doing nothing. The fix is to wrap the gate around all four sides of the channel, which takes about a thousand steps in exact order. Only TSMC, Intel and Samsung can run that sequence, which is why an export rule can name them all.
+
+The stage now has a name and a job in the first six words, and the analogy is subordinated to it. The three firms are named, which is the most useful thing this paragraph can hand a regulator, and the closing clause says what naming them is for. "The gate says off" became "the gate is off"; "process steps" became "steps", since the paragraph has already said what is happening.
+
+What a policymaker would still not understand: why wrapping the gate takes a thousand steps rather than ten, which is the whole substitution argument and needs the body; and that "the front end" has a back end, defined one paragraph earlier in the chapter lead but not here.
+
+## 10 Foundries and Fabs
+
+Scored before: (a) pass; (b) fail, "the world shares a few of them" gives the fewness and no name, and "a few of them" has an unclear referent; (c) partial, "most of the newest ones sit in Taiwan" states the concentration but not why it matters; (d) pass; (e) borderline, the print shop plus the operating theatre; (f) pass, 94 words; (g) partial, "What makes it hard is that" is an inflating opener. Rewritten for (b), (c) and (g).
+
+Before:
+
+> A foundry is a print shop for chips. Other companies send in designs, and the foundry runs them through the same building on the same tools. What makes it hard is that the building costs tens of billions of dollars, the air inside has to be cleaner than an operating theatre, and a wafer crosses hundreds of machines over several months without ever touching that air. Nobody sells enough chips to fill a shop like that alone, so the world shares a few of them, and most of the newest ones sit in Taiwan.
+
+After (105 words):
+
+> A foundry is a print shop for chips: other companies send in designs, and the foundry runs them through the same building on the same tools. The building costs tens of billions of dollars, the air inside is cleaner than an operating theatre, and a wafer crosses hundreds of machines over several months without ever touching that air. No design house sells enough of one product to fill a shop like that, so the world shares a handful of them. TSMC runs the biggest, and all six of its largest plants sit in Taiwan, which is why one island's politics reaches the whole chip supply.
+
+"What makes it hard is that" is gone and the three facts stand on their own. "Nobody sells enough chips" became "No design house sells enough of one product", which is the actual economics and names the actor. TSMC appears, the six plants are counted, and the last clause states the policy stake instead of leaving the reader to infer it.
+
+I kept two figures of speech rather than one. The print shop is the analogy; the operating theatre is a scale comparison, and the editing brief asks for exactly that kind of anchor. Recorded here as a deliberate reading of criterion (e) rather than an oversight.
+
+What a policymaker would still not understand: what a wafer is, which the chapter's third paragraph assumes; that "the newest" plants and "the biggest" are the same six; and why nobody has built a seventh outside Taiwan, which is the chapter's closing argument.
+
+## 11 Memory and HBM
+
+Scored before: (a) fail, the paragraph opened on a cook analogy whose payoff, "the answer is a wider door", mixes two images and explains nothing; (b) pass, three firms named; (c) fail, no reason a regulator should care appears anywhere; (d) pass, high bandwidth memory spelled out; (e) marginal, one analogy that does not clarify; (f) pass, 95 words; (g) pass. Rewritten for (a), (c) and (e).
+
+Before:
+
+> A cook can chop faster than anyone can fetch the ingredients, so the answer is a wider door. High bandwidth memory stacks up to sixteen memory chips into a cube, drills copper wires straight down through them, and sits the cube a few millimetres from the processor. Stacking is the hard part: each chip is ground thinner than a human hair, the whole cube must stay under a fixed height so it does not foul the cooling plate, and one bad layer ruins all of them. Only SK hynix, Samsung and Micron can do it.
+
+After (107 words):
+
+> High bandwidth memory is where an AI chip keeps the numbers it is working on, and it is built to hand them over fast. It stacks up to sixteen memory chips into a cube, drills copper wires straight down through them, and sits the cube a few millimetres from the processor. Stacking is the hard part: each chip is ground thinner than a human hair, the cube must stay under a fixed height or it fouls the cooling plate, and one bad layer ruins the rest. Only SK hynix, Samsung and Micron can do it, and a single line in an American export rule reaches all three.
+
+The cook is gone. It was the weakest analogy on the site: it needed the reader to already know that the bottleneck is fetching rather than computing, which is the thing the paragraph was supposed to teach. The replacement says what the component is and what it is for in one sentence, keeps the two scale anchors that were doing real work (thinner than a human hair, a few millimetres from the processor), and ends on the policy fact that the chapter is built around.
+
+What a policymaker would still not understand: why a wider connection has to mean a stack rather than a bigger chip, which the paragraph after it answers with the pin count; and what "a single line in an export rule" contains, which is the bandwidth-density threshold given later in full.
+
+## 12 Advanced Packaging
+
+Scored before: (a) partial, the first sentence describes the object rather than the stage, and the reader has to reach the second sentence to learn what happens; (b) fail, "one company in Taiwan" names nobody, in a chapter whose whole argument is that the company is TSMC; (c) pass; (d) pass; (e) borderline, a playing card and a postage stamp; (f) pass, 105 words; (g) pass. Rewritten for (a) and (b).
+
+Before:
+
+> A chip package is a printed circuit board shrunk to the size of a playing card and built to the tolerances of a chip. A lithography machine can print only a rectangle about the size of a postage stamp in one shot, so a modern accelerator is cut into pieces and stitched back together on a shared slab of silicon, with its memory a few millimetres away. Slab, chips and board all expand at different rates when heated, so the finished package warps and the joints crack. Getting that right in volume is why nearly every AI accelerator is packaged by one company in Taiwan.
+
+After (103 words):
+
+> Packaging wires finished chips into one component and mounts them on a board the size of a playing card, built to the tolerances of a chip. A lithography machine can print only a rectangle about the size of a postage stamp in one shot, so a modern accelerator is cut into pieces and stitched back together on a shared slab of silicon, with its memory a few millimetres away. Slab, chips and board all expand at different rates when heated, so the package warps and the joints crack. Getting that right in volume is why TSMC packages nearly every AI accelerator, in Taiwan.
+
+The paragraph now opens on the verb: packaging wires and mounts. The playing card survives as a size, which is what it was doing, rather than as the subject of the sentence. TSMC is named. "The finished package warps" became "the package warps", since nothing else in the sentence is unfinished.
+
+Two size comparisons again, both anchors rather than analogies, kept for the same reason as in chapter 10.
+
+What a policymaker would still not understand: that "a board" here is the substrate of chapter 13 and not the motherboard they are picturing; and why a slab of silicon is the carrier rather than more of the same board, which the paragraph after it answers with the width of the memory connection.
+
 ## 13 Substrates and PCBs
 
 Scored before: (a) fail, two sentences of setup came before the stage's job, which arrived third; (b) partial, it named the single Japanese supplier of each material but never said who builds the substrate itself; (c) pass, "a shortage here stops accelerators shipping"; (d) pass, no acronyms; (e) pass, one analogy, plywood; (f) pass, 93 words; (g) pass. Rewritten for (a) and (b).
