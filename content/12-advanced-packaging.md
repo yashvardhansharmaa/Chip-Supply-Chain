@@ -4,9 +4,9 @@
   "number": 12,
   "title": "Advanced Packaging",
   "oneLiner": "Lithography stopped being the limit on chip size in 2022. Since then the limit has been how large an interposer TSMC can build, and how many of them per month.",
-  "plain": "Think of a printed circuit board shrunk to the size of a playing card and built to the tolerances of a chip. A lithography machine can print only a rectangle about the size of a postage stamp in one shot, so a modern accelerator is cut into pieces and stitched back together on a shared slab of silicon, with its memory a few millimetres away. Slab, chips and board all expand at different rates when heated, so the finished package warps and joints crack. Doing that at scale is why nearly every AI accelerator is packaged by one company in Taiwan.",
+  "plain": "A chip package is a printed circuit board shrunk to the size of a playing card and built to the tolerances of a chip. A lithography machine can print only a rectangle about the size of a postage stamp in one shot, so a modern accelerator is cut into pieces and stitched back together on a shared slab of silicon, with its memory a few millimetres away. Slab, chips and board all expand at different rates when heated, so the finished package warps and the joints crack. Getting that right in volume is why nearly every AI accelerator is packaged by one company in Taiwan.",
   "specimen": "cowos-exploded",
-  "specimenCaption": "Right: a CoWoS package pulled apart. Lid and stiffener at the top, then two logic dies and eight HBM stacks, microbumps, the interposer with its through-silicon vias, C4 bumps, and the organic build-up substrate at the bottom.",
+  "specimenCaption": "Right: a CoWoS package pulled apart. A stiffener frame at the top, then two reticle-sized logic dies and eight HBM stacks, microbumps, the silicon interposer with its through-silicon vias and the wiring that stitches the dies together and fans out to the memory, C4 bumps, and the organic build-up substrate at the bottom.",
   "card": {
     "concentration": "Extreme",
     "chokepointScore": 5,
@@ -73,17 +73,17 @@
 ---
 # Advanced Packaging
 
-A lithography scanner prints a rectangle 26 mm by 33 mm, or 858 mm2, in one exposure ([source](https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe3400c)). Every AI accelerator worth buying is bigger than that. Packaging is how the industry escaped the reticle. It is now the tightest constraint in the chain.
+A lithography scanner prints a rectangle 26 mm by 33 mm, or 858 mm2, in one exposure ([source](https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe3400c)). Every AI accelerator worth buying is bigger than that, so the industry cuts its chips into pieces and stitches them back together on a slab of silicon. Through 2024 and 2025, how many of those slabs TSMC could build set how many accelerators the world got.
 
 ## How it works
 
-Think of a printed circuit board shrunk to the size of a playing card and built to the tolerances of a chip. A lithography machine can print only a rectangle about the size of a postage stamp in one shot, so a modern accelerator is cut into pieces and stitched back together on a shared slab of silicon, with its memory a few millimetres away. Slab, chips and board all expand at different rates when heated, so the finished package warps and joints crack. Doing that at scale is why nearly every AI accelerator is packaged by one company in Taiwan.
+A chip package is a printed circuit board shrunk to the size of a playing card and built to the tolerances of a chip. A lithography machine can print only a rectangle about the size of a postage stamp in one shot, so a modern accelerator is cut into pieces and stitched back together on a shared slab of silicon, with its memory a few millimetres away. Slab, chips and board all expand at different rates when heated, so the finished package warps and the joints crack. Getting that right in volume is why nearly every AI accelerator is packaged by one company in Taiwan.
 
-The reticle limit is why logic is cut into chiplets. HBM adds a second reason: its 1,024-bit or 2,048-bit interface is too wide for an organic substrate to route, so the memory must sit on a shared silicon carrier beside the logic. That carrier is the interposer.
+The reticle limit is why logic is cut into chiplets. HBM adds a second reason: its 1,024-bit or 2,048-bit interface is too wide for an organic substrate to route, so the memory has to sit beside the logic on a shared silicon carrier, the interposer.
 
-CoWoS builds it in two steps. TSMC makes a thin silicon wafer carrying wiring and through-silicon vias but no transistors, then bonds logic dies and HBM stacks face down onto it with microbumps at 30 to 40 micron pitch: chip-on-wafer. It dices the interposer out and attaches it to an organic build-up substrate: wafer-on-substrate.
+CoWoS builds it in two passes, chip-on-wafer and then wafer-on-substrate. TSMC makes a thin silicon wafer carrying wiring and through-silicon vias but no transistors, bonds logic dies and HBM stacks face down onto it with microbumps at 30 to 40 micron pitch, then dices the interposer out and attaches it to an organic build-up substrate.
 
-None of it is novel physics. But one joint cracked by thermal cycling kills a body holding eight qualified HBM stacks and two of the most expensive logic dies ever made.
+The unit processes are ordinary. One joint cracked by thermal cycling, though, kills a body holding eight qualified HBM stacks and two of the most expensive logic dies ever made.
 
 ## Variants and trade-offs
 
@@ -93,13 +93,11 @@ None of it is novel physics. But one joint cracked by thermal cycling kills a bo
 | CoWoS-R | Organic RDL interposer | Above 3.3x reticle | Cost-sensitive, fewer HBM |
 | CoWoS-L | RDL interposer with local silicon bridges | 5.5x reticle in production, 9.5x in development | Blackwell, Rubin |
 
-TSMC has run CoWoS in volume since 2012 ([source](https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm)).
-
 ### 2.5D: silicon, RDL and bridges
 
-CoWoS-S gives the finest wiring, but its interposer is a monolithic die whose yield falls as area grows. CoWoS-L replaces the slab with a redistribution layer carrying silicon bridges only where dense wiring is needed. Intel's EMIB embeds the same bridge idea in the organic substrate instead, and is the one credible second source when CoWoS is tight.
+TSMC has run CoWoS in volume since 2012 ([source](https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm)). CoWoS-S gives the finest wiring, but its interposer is a monolithic die whose yield falls as area grows. CoWoS-L replaces the slab with a redistribution layer carrying silicon bridges only where dense wiring is needed. Intel's EMIB embeds the same bridge idea in the organic substrate instead, and is the one credible second source when CoWoS is tight.
 
-Blackwell was the first high-volume design on CoWoS-L, and it went badly. The bridges expand at a different rate from the dies, the organic interposer and the substrate, and the package warps; the bridges between the two compute dies carry a 10 TB/s link and have to be placed to a tolerance the rest of the package fights ([source](https://semianalysis.com/2024/08/04/nvidias-blackwell-reworked-shipment/)). TSMC certified the 5.5-reticle version in 2025 and now produces it ([source](https://pr.tsmc.com/english/news/3302)).
+Blackwell was the first high-volume design on CoWoS-L, and it went badly. Bridges, dies, organic interposer and substrate all expand at different rates, so the package warps, and the bridges between the two compute dies carry a 10 TB/s link that has to be placed to a tolerance the warping fights ([source](https://semianalysis.com/2024/08/04/nvidias-blackwell-reworked-shipment/)). TSMC certified the 5.5-reticle version in 2025 and now produces it ([source](https://pr.tsmc.com/english/news/3302)).
 
 ### 3D: SoIC, Foveros, X-Cube
 
@@ -107,7 +105,7 @@ TSMC's SoIC and Intel's Foveros bond dies face to face, copper pad to copper pad
 
 ### The escape routes
 
-Panel-level packaging swaps the round wafer for a rectangular panel and wastes far less area; see Test and assembly. JEDEC published SPHBM4 on 13 July 2026: HBM4's DRAM on a base die carrying 512 data signals instead of 2,048, which relaxes bump pitch enough to mount HBM on a standard organic substrate ([source](https://www.jedec.org/news/pressreleases/new-jedec%C2%AE-sphbm4-standard-enables-hbm4-class-bandwidth-organic-substrates)). If it works at volume it relieves the industry's most constrained process.
+Panel-level packaging swaps the round wafer for a rectangular panel and wastes far less area; see Test and assembly. JEDEC published SPHBM4 on 13 July 2026: HBM4's DRAM on a base die carrying 512 data signals instead of 2,048, which relaxes bump pitch enough to mount HBM on a standard organic substrate ([source](https://www.jedec.org/news/pressreleases/new-jedec%C2%AE-sphbm4-standard-enables-hbm4-class-bandwidth-organic-substrates)). At volume, that would take the memory off the silicon interposer altogether.
 
 ## Capacity
 

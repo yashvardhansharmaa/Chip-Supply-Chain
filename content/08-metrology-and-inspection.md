@@ -27,7 +27,7 @@
     ],
     "chinaStatus": "The weakest Chinese position of any major tool segment. As of 2019 domestic firms held 3.4% of CD measuring, 1.3% of defect inspection and none of mask or packaging inspection; in 2024 they were still at 0.8% of the whole process control tool market. CSET's 2026 survey of Chinese share gains runs through deposition, etch, CMP, lithography, packaging and test, and does not cover process control at all.",
     "usStatus": "KLA is the largest process-control supplier worldwide. It puts its own 2024 share at 56.5% and 6.5x its nearest rival; CSET's Supply Chain Explorer puts it at 57.2% of the same year's market. US firms take 72% of the segment and Japanese firms 15%. The December 2024 rule swept metrology and inspection tools for patterned 300 mm wafers into the controlled list at a 21 nm defect threshold.",
-    "costSignal": "A $13.4B process control tool market in 2024, of which KLA took about 57%. KLA's fiscal 2026 revenue was $13.58B against a wafer equipment market of roughly $120B in calendar 2025, so process control is around a tenth of fab tool spending.",
+    "costSignal": "$13.4B process control tool market in 2024, of which KLA took about 57%; KLA's fiscal 2026 revenue was $13.58B against a wafer equipment market of roughly $120B in calendar 2025, so process control is around a tenth of fab tool spending.",
     "substitution": {"years": "10+", "why": "Sensitivity comes from optics, electron columns and decades of defect libraries. China gained real share in etch and deposition between 2019 and 2024; in process control it was still at 0.8% in 2024."}
   },
   "keyFacts": [

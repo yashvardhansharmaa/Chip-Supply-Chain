@@ -94,7 +94,7 @@ All three HBM suppliers were effectively sold out, and component spending by tho
 
 The counter-case is just as empirical. DeepSeek-V3 trained on 14.8 trillion tokens for 2.788 million H800 GPU-hours, an order of magnitude below what comparable Western models were thought to cost ([source](https://arxiv.org/abs/2412.19437)). The compute needed to reach a fixed performance level halves roughly every eight months, with a 95 percent confidence interval of 5 to 14 months ([source](https://epoch.ai/blog/algorithmic-progress-in-language-models)).
 
-Both are true, and they do not cancel. Cheaper inference has raised total compute consumption rather than lowered it. The supply chain sets how much AI exists, who can afford it, and which governments can switch it off.
+Neither finding cancels the other. Cheaper inference has raised total compute consumption, and the supply chain still sets how much AI exists and which governments can switch it off.
 
 ## How to read this site
 

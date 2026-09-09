@@ -23,7 +23,7 @@
     ],
     "chinaStatus": "No EUV has ever been sold to a customer in China, and CSIS judges the technology firmly out of reach despite state investment. A Shanghai firm, Aishengna, began producing domestic immersion DUV scanners in 2026. SMEE, the older domestic supplier, holds about 4% of the global i-line market and nothing above it.",
     "usStatus": "No domestic scanner maker. Washington controls access through Dutch licensing, US-origin subsystems and entity-list rules.",
-    "costSignal": "About $60M for a DUV scanner, around $200M for a 0.33 NA EUV tool and $350-400M for High-NA, on Reuters' reporting; ASML itself does not publish per-system prices",
+    "costSignal": "About $200M for a 0.33 NA EUV scanner, $350-400M for High-NA and about $60M for a DUV tool, on Reuters' reporting; ASML itself does not publish per-system prices",
     "substitution": {"years": "10+", "why": "ASML built its first EUV prototype in 2001 and needed nearly two decades and billions of euros before commercial chips shipped in 2019, and it still depends on Zeiss optics that no one else can make."}
   },
   "keyFacts": [
