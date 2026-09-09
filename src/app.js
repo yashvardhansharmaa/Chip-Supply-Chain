@@ -171,6 +171,8 @@
     init: function () {
       var self = this;
       window.addEventListener('hashchange', function () { self.route(); });
+      var wm = $('.wordmark'); // the wordmark always takes you back to the top of the stack
+      if (wm) wm.addEventListener('click', function (e) { e.preventDefault(); if (location.hash && location.hash !== '#/') location.hash = '#/'; window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' }); });
       this.route();
     },
     route: function () {
@@ -200,7 +202,7 @@
         }
         Sections.update();
       }
-      document.title = v === 'stack' ? 'Chokepoints' : 'Chokepoints · ' + { briefing: 'Briefing', landscape: 'Landscape', suppliers: 'Suppliers', geopolitics: 'Geopolitics', controls: 'Controls', glossary: 'Glossary', sources: 'Sources' }[v];
+      document.title = v === 'stack' ? 'Chokepoints' : 'Chokepoints · ' + { briefing: 'Summary', landscape: 'AI Chips', suppliers: 'Suppliers', geopolitics: 'Geopolitics', controls: 'Controls', glossary: 'Glossary', sources: 'Sources' }[v];
     }
   };
 
@@ -301,7 +303,7 @@
     showStage: function (c) {
       var lay = c.layout || null, hb = (c.memory && c.memory.stacks) || 0;
       var cap = lay && lay.waferScale ? 'Wafer-scale: one ' + esc(c.name) + ' is a whole 300 mm wafer.' : esc(c.name) + ': ' + ((c.die && c.die.count) || 1) + ' logic die' + (((c.die && c.die.count) || 1) > 1 ? 's' : '') + (hb ? ' and ' + hb + ' ' + esc((c.memory && c.memory.type) || 'HBM') + ' stacks' : '') + ' on ' + esc((c.package && c.package.type) || 'the package') + '.';
-      Stage.show('package', lay ? { layout: lay } : null, cap, 'Landscape · <b>' + esc(c.name) + '</b>');
+      Stage.show('package', lay ? { layout: lay } : null, cap, 'AI chips · <b>' + esc(c.name) + '</b>');
     },
     buildCompare: function () {
       var cols = [['Chip', function (c) { return '<b>' + esc(c.name) + '</b> <span class="cc">' + esc(c.vendor) + '</span>'; }],

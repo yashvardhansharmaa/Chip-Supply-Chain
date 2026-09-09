@@ -368,7 +368,7 @@ const glossaryHTML = glossary.length ? glossary.slice().sort((a, b) => a.term.lo
 
 /* ---------------- assemble ---------------- */
 const totalWords = all.reduce((a, c) => a + c.words, 0);
-const credits = `Made by <b>Yashvardhan Sharma</b> with Claude (Fable 5.1 directing Opus agents). ${all.length} chapters, ${totalWords.toLocaleString('en-US')} words. In the tradition of <a href="https://www.humanityslastmachine.com/" target="_blank" rel="noopener">Humanity's Last Machine</a> and CSET's supply-chain work.`;
+const credits = `Made by <b>Yashvardhan Sharma</b> with Claude. Inspired by <a href="https://www.humanityslastmachine.com/" target="_blank" rel="noopener">Humanity's Last Machine</a> and <a href="https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/" target="_blank" rel="noopener">CSET's supply-chain work</a>.`;
 const footer = `<p>Chokepoints · A deep dive on the AI chip supply chain · Made by Yashvardhan Sharma with Claude · ${new Date().toISOString().slice(0, 10)}</p><p>Every number on this site links to its source. Corrections and additions are welcome. Built with a dependency-free point-cloud renderer; no scans, no tracking.</p>`;
 const suppliersIntro = suppliers.length ? `${suppliers.length} firms across the chain, from polysilicon to liquid cooling, with what each one makes, where it is based and how hard it would be to replace. Filter by category, country or chokepoint status; copy the result as CSV.` : 'The supplier database has not been delivered yet.';
 

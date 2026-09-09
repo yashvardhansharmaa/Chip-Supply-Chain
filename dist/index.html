@@ -122,12 +122,12 @@ small { font-size: 0.85em; }
 #app { position: relative; z-index: 1; padding-top: var(--masthead); }
 .column { width: var(--col); padding: 0 clamp(16px, 4vw, 56px); }
 .column.wide { width: min(100%, 1180px); }
-.column.wide[data-view="suppliers"] { width: 100%; }
+.column.wide[data-view="suppliers"], .column.wide[data-view="controls"], .column.wide[data-view="glossary"] { width: 100%; }
 .view { min-height: 60vh; }
 
 /* ---------- stage (the specimen) ---------- */
 .stage {
-  position: fixed; top: var(--masthead); right: 0; bottom: 0; width: calc(100% - var(--col));
+  position: fixed; top: var(--masthead); right: 0; bottom: 0; width: calc(100% - var(--col)); margin: 0; /* the UA gives figure a 40px margin, which pushed the stage under the rail */
   z-index: 5; pointer-events: none;
   display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
 }
@@ -158,7 +158,7 @@ small { font-size: 0.85em; }
 
 /* ---------- prose ---------- */
 .prose { max-width: var(--measure); }
-.view[data-view="geopolitics"] { --measure: 29.5rem; } /* rem: an em here would resolve against the view element, not the root */ /* the essay reads a little wider than the chapters */
+.view[data-view="geopolitics"] { --measure: 29.5em; } /* the essay reads a little wider than the chapters */
 .prose h3 { font-family: var(--font-display); font-weight: 600; font-size: 27px; line-height: 1.15; letter-spacing: -0.002em; margin: 1.9em 0 0.65em; max-width: var(--measure); scroll-margin-top: calc(var(--masthead) + 16px); }
 .prose h4 { font-family: var(--font-display); font-weight: 600; font-size: 20px; line-height: 1.25; margin: 1.7em 0 0.5em; max-width: var(--measure); scroll-margin-top: calc(var(--masthead) + 16px); }
 .prose > p, .prose > ul, .prose > ol, .prose blockquote { max-width: var(--measure); }
@@ -341,7 +341,7 @@ sup.cite a:hover { text-decoration: underline; }
 .brief-leaders .chip { margin-left: 2px; }
 
 /* ---------- glossary ---------- */
-.glossary { margin: 10px 0 50px; display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+.glossary { margin: 10px 0 50px; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 0 40px; }
 .gl-entry { display: grid; grid-template-columns: 1fr; padding: 14px 0; border-top: 1px solid var(--line); break-inside: avoid; }
 .gl-entry dt { font-family: var(--font-display); font-weight: 700; font-size: 18px; margin-bottom: 4px; }
 .gl-entry dt .aka { display: block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--muted); font-weight: 400; margin-top: 2px; }
@@ -349,7 +349,7 @@ sup.cite a:hover { text-decoration: underline; }
 .gl-entry dd p { font-size: 15.5px; line-height: 1.5; margin: 0 0 4px; }
 .gl-entry dd p.why { color: var(--ink-2); font-size: 14.5px; }
 .gl-link { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-ink); text-decoration: none; }
-@media (max-width: 900px) { .glossary { grid-template-columns: 1fr; } .briefing { grid-template-columns: 1fr; } }
+@media (max-width: 900px) { .briefing { grid-template-columns: 1fr; } }
 
 /* ---------- source tiers ---------- */
 .tier { display: inline-block; font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.06em; width: 18px; height: 18px; line-height: 16px; text-align: center; border: 1px solid var(--line-2); border-radius: 2px; margin-right: 8px; color: var(--ink-2); vertical-align: 1px; }
@@ -572,8 +572,8 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
     <a class="wordmark" href="#/"><b>Chokepoints</b><span>The AI chip supply chain</span></a>
     <nav class="tabs" aria-label="Sections">
       <a href="#/" data-view="stack" aria-current="page">The Stack</a>
-      <a href="#/briefing" data-view="briefing">Briefing</a>
-      <a href="#/landscape" data-view="landscape">Landscape</a>
+      <a href="#/briefing" data-view="briefing">Summary</a>
+      <a href="#/landscape" data-view="landscape">AI Chips</a>
       <a href="#/suppliers" data-view="suppliers">Suppliers</a>
       <a href="#/geopolitics" data-view="geopolitics">Geopolitics</a>
       <a href="#/controls" data-view="controls">Controls</a>
@@ -604,7 +604,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
         <h1 class="thesis">Fifteen stages turn sand into a GPU. <span class="q">Seven</span> of them come down to three firms or fewer.</h1>
         <p class="dek">Chokepoints walks the chain one stage at a time and scores each one: what the stage does, who can actually do it, what the tool costs, and how long a substitute would take to build. Every number links to its source.</p>
         <div class="claims"><div><b class="num">15</b><span>Stages from<br>quartz to a rack</span></div><div class="of-five"><b class="num">7</b><span>Score 5 of 5<br>for concentration</span></div><div><b class="num">350</b><span>Sources, one<br>per claim</span></div></div>
-        <p class="credits">Made by <b>Yashvardhan Sharma</b> with Claude (Fable 5.1 directing Opus agents). 18 chapters, 22,264 words. In the tradition of <a href="https://www.humanityslastmachine.com/" target="_blank" rel="noopener">Humanity's Last Machine</a> and CSET's supply-chain work.</p>
+        <p class="credits">Made by <b>Yashvardhan Sharma</b> with Claude. Inspired by <a href="https://www.humanityslastmachine.com/" target="_blank" rel="noopener">Humanity's Last Machine</a> and <a href="https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/" target="_blank" rel="noopener">CSET's supply-chain work</a>.</p>
         <div class="scroll-hint"><svg viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1v15M1.5 10.5 7 16l5.5-5.5"/></svg><span>Scroll for the stack</span></div>
       </div>
       <div class="chain" id="chain">
@@ -1544,7 +1544,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 
     <section class="view column" data-view="landscape" hidden data-specimen="package">
       <div class="view-head">
-        <h2>The Landscape</h2>
+        <h2>AI Chips</h2>
         <p class="dek">The accelerators that matter in 2026, with the supply chain behind each one: which foundry, which node, whose memory, which packaging line. Pick a chip; the package beside the text follows its real die and HBM layout.</p>
       </div>
       <div id="picker" class="picker" role="group" aria-label="Choose a chip"></div>
@@ -1647,7 +1647,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 
     <section class="view column wide" data-view="briefing" hidden>
       <div class="view-head">
-        <h2>The Briefing</h2>
+        <h2>Summary</h2>
         <p class="dek">The whole chain in one sitting: for every stage, the plain-language explanation, the conclusions, the chokepoint score and who leads. Read it before you regulate the chain, invest in it, or build on it. Each card links to the full chapter.</p>
       </div>
       <div class="briefing"><article class="brief-card" id="brief-introduction-and-goals">
@@ -5060,6 +5060,8 @@ PC.register('wafer', function (p) {
     init: function () {
       var self = this;
       window.addEventListener('hashchange', function () { self.route(); });
+      var wm = $('.wordmark'); // the wordmark always takes you back to the top of the stack
+      if (wm) wm.addEventListener('click', function (e) { e.preventDefault(); if (location.hash && location.hash !== '#/') location.hash = '#/'; window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' }); });
       this.route();
     },
     route: function () {
@@ -5089,7 +5091,7 @@ PC.register('wafer', function (p) {
         }
         Sections.update();
       }
-      document.title = v === 'stack' ? 'Chokepoints' : 'Chokepoints · ' + { briefing: 'Briefing', landscape: 'Landscape', suppliers: 'Suppliers', geopolitics: 'Geopolitics', controls: 'Controls', glossary: 'Glossary', sources: 'Sources' }[v];
+      document.title = v === 'stack' ? 'Chokepoints' : 'Chokepoints · ' + { briefing: 'Summary', landscape: 'AI Chips', suppliers: 'Suppliers', geopolitics: 'Geopolitics', controls: 'Controls', glossary: 'Glossary', sources: 'Sources' }[v];
     }
   };
 
@@ -5190,7 +5192,7 @@ PC.register('wafer', function (p) {
     showStage: function (c) {
       var lay = c.layout || null, hb = (c.memory && c.memory.stacks) || 0;
       var cap = lay && lay.waferScale ? 'Wafer-scale: one ' + esc(c.name) + ' is a whole 300 mm wafer.' : esc(c.name) + ': ' + ((c.die && c.die.count) || 1) + ' logic die' + (((c.die && c.die.count) || 1) > 1 ? 's' : '') + (hb ? ' and ' + hb + ' ' + esc((c.memory && c.memory.type) || 'HBM') + ' stacks' : '') + ' on ' + esc((c.package && c.package.type) || 'the package') + '.';
-      Stage.show('package', lay ? { layout: lay } : null, cap, 'Landscape · <b>' + esc(c.name) + '</b>');
+      Stage.show('package', lay ? { layout: lay } : null, cap, 'AI chips · <b>' + esc(c.name) + '</b>');
     },
     buildCompare: function () {
       var cols = [['Chip', function (c) { return '<b>' + esc(c.name) + '</b> <span class="cc">' + esc(c.vendor) + '</span>'; }],

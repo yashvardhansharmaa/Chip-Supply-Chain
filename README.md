@@ -7,8 +7,8 @@ The whole site compiles to **one self-contained HTML file** (`dist/index.html`).
 ## What is on the site
 
 - **The Stack**: 17 component chapters, each opening with a chokepoint nameplate, an "In short" summary and an "In plain terms" paragraph for readers with no technical background, with a procedural 3D specimen of the stage beside the text.
-- **Briefing**: every chapter's plain-language explanation, conclusions and chokepoint score on one page.
-- **Landscape**: 19 AI accelerators with full spec sheets and a package render drawn from each chip's die and HBM layout.
+- **Summary** (`#/briefing`): every chapter's plain-language explanation, conclusions and chokepoint score on one page.
+- **AI Chips** (`#/landscape`): 19 AI accelerators with full spec sheets and a package render drawn from each chip's die and HBM layout.
 - **Suppliers**: 220 firms, filterable by category, country and chokepoint status, exportable as CSV.
 - **Geopolitics**: the essay, a country-by-segment share matrix, and a 45-event export-control timeline.
 - **Controls**: a machine-readable threshold map (every quantitative line in the US, Dutch, Japanese, EU and Chinese regimes, with status and source) and a China-exposure series computed from company filings.

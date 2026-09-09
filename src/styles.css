@@ -114,12 +114,12 @@ small { font-size: 0.85em; }
 #app { position: relative; z-index: 1; padding-top: var(--masthead); }
 .column { width: var(--col); padding: 0 clamp(16px, 4vw, 56px); }
 .column.wide { width: min(100%, 1180px); }
-.column.wide[data-view="suppliers"] { width: 100%; }
+.column.wide[data-view="suppliers"], .column.wide[data-view="controls"], .column.wide[data-view="glossary"] { width: 100%; }
 .view { min-height: 60vh; }
 
 /* ---------- stage (the specimen) ---------- */
 .stage {
-  position: fixed; top: var(--masthead); right: 0; bottom: 0; width: calc(100% - var(--col));
+  position: fixed; top: var(--masthead); right: 0; bottom: 0; width: calc(100% - var(--col)); margin: 0; /* the UA gives figure a 40px margin, which pushed the stage under the rail */
   z-index: 5; pointer-events: none;
   display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
 }
@@ -150,7 +150,7 @@ small { font-size: 0.85em; }
 
 /* ---------- prose ---------- */
 .prose { max-width: var(--measure); }
-.view[data-view="geopolitics"] { --measure: 29.5rem; } /* rem: an em here would resolve against the view element, not the root */ /* the essay reads a little wider than the chapters */
+.view[data-view="geopolitics"] { --measure: 29.5em; } /* the essay reads a little wider than the chapters */
 .prose h3 { font-family: var(--font-display); font-weight: 600; font-size: 27px; line-height: 1.15; letter-spacing: -0.002em; margin: 1.9em 0 0.65em; max-width: var(--measure); scroll-margin-top: calc(var(--masthead) + 16px); }
 .prose h4 { font-family: var(--font-display); font-weight: 600; font-size: 20px; line-height: 1.25; margin: 1.7em 0 0.5em; max-width: var(--measure); scroll-margin-top: calc(var(--masthead) + 16px); }
 .prose > p, .prose > ul, .prose > ol, .prose blockquote { max-width: var(--measure); }
@@ -333,7 +333,7 @@ sup.cite a:hover { text-decoration: underline; }
 .brief-leaders .chip { margin-left: 2px; }
 
 /* ---------- glossary ---------- */
-.glossary { margin: 10px 0 50px; display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+.glossary { margin: 10px 0 50px; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 0 40px; }
 .gl-entry { display: grid; grid-template-columns: 1fr; padding: 14px 0; border-top: 1px solid var(--line); break-inside: avoid; }
 .gl-entry dt { font-family: var(--font-display); font-weight: 700; font-size: 18px; margin-bottom: 4px; }
 .gl-entry dt .aka { display: block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--muted); font-weight: 400; margin-top: 2px; }
@@ -341,7 +341,7 @@ sup.cite a:hover { text-decoration: underline; }
 .gl-entry dd p { font-size: 15.5px; line-height: 1.5; margin: 0 0 4px; }
 .gl-entry dd p.why { color: var(--ink-2); font-size: 14.5px; }
 .gl-link { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-ink); text-decoration: none; }
-@media (max-width: 900px) { .glossary { grid-template-columns: 1fr; } .briefing { grid-template-columns: 1fr; } }
+@media (max-width: 900px) { .briefing { grid-template-columns: 1fr; } }
 
 /* ---------- source tiers ---------- */
 .tier { display: inline-block; font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.06em; width: 18px; height: 18px; line-height: 16px; text-align: center; border: 1px solid var(--line-2); border-radius: 2px; margin-right: 8px; color: var(--ink-2); vertical-align: 1px; }
