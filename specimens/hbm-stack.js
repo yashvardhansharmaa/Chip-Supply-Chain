@@ -1,76 +1,108 @@
-/* Specimen: a 12-high HBM stack, exploded.
- * Twelve DRAM dies of 11 x 12 mm lifted off a thicker logic base die (copper),
- * each carrying its field of micro-bumps, with the through-silicon vias drawn
- * as vertical lines running the height of the stack and corner guide lines
- * across the gaps. Die thickness and the gaps are exaggerated about tenfold:
- * the real stack is 0.7 mm tall, thinner than two sheets of paper.
- * Scale: 1 mm = 0.09 units.
+/* Specimen: a 12-high HBM3E stack, exploded inside its molding compound.
+ *
+ * Real object: an 11 x 12 mm cube, 0.72 mm tall, holding a logic base die and
+ * twelve DRAM dies each ground to about 30 um, joined by micro-bumps and pierced
+ * by through-silicon vias down the middle of every die. Wikipedia's HBM article
+ * gives the 30 um die thickness; Samsung's 36 GB HBM3E 12H release gives the
+ * 7 um die-to-die gap and the rule that a 12-high must fit the same height as an
+ * 8-high.
+ *
+ * Drawing decisions:
+ *  - Footprint is to scale (1 mm = 0.09 units). Thicknesses and gaps are
+ *    exaggerated about fifteen times, chosen so the exploded assembly is roughly
+ *    as tall as it is wide: at true scale this object is a tile, not a cube, and
+ *    at the old 40x explosion it read as a tall slab.
+ *  - The molding compound is drawn as a faint shell around the whole stack. It
+ *    is what makes the finished part a cube, and it is what the reader is being
+ *    shown the inside of.
+ *  - The base die is wider, twice as thick, copper, and carries its own logic
+ *    floorplan, so it cannot be mistaken for a thirteenth DRAM die.
  */
 PC.register('hbm-stack', function (p) {
   var mm = 0.09;
-  var W = 11 * mm, D = 12 * mm, t = 0.045, pitch = 0.175; // die footprint, drawn thickness, exploded pitch
-  var baseW = 12 * mm, baseD = 13 * mm, baseT = 0.09;
+  var W = 11 * mm, D = 12 * mm;             // DRAM die footprint
+  var bW = 12 * mm, bD = 13 * mm;           // base die: a shade larger all round
+  var t = 0.040, bt = 0.080;                // drawn thicknesses (~15x life)
+  var pitch = 0.062;                        // gap is 55% of a die's own thickness
+  var baseGap = 0.032;                      // a wider step off the base die
   var dies = 12;
   var parts = [];
-  function add(c) { parts.push(c); }
-  function rect(w, d, y, per, tn) {
-    return PC.polyline({ pts: [[-w / 2, y, -d / 2], [w / 2, y, -d / 2], [w / 2, y, d / 2], [-w / 2, y, d / 2]], closed: true, perUnit: per, tone: tn });
+  function add(c) { if (c) parts.push(c); }
+  function rect(w, d, per, tn) {
+    return PC.polyline({ pts: [[-w / 2, 0, -d / 2], [w / 2, 0, -d / 2], [w / 2, 0, d / 2], [-w / 2, 0, d / 2]], closed: true, perUnit: per, tone: tn });
   }
 
-  // ---------- logic base die (accent) ----------
-  var yBase = 0;
-  add(PC.T(PC.plane({ w: baseW, d: baseD, n: 1700, tone: 0.3 }), { pos: [0, yBase + baseT / 2, 0] }));
-  add(PC.T(PC.accent(PC.box({ w: baseW, h: baseT, d: baseD, faces: ['px', 'nx', 'pz', 'nz'], n: 2600 }), 0.6), { pos: [0, yBase, 0] }));
-  add(PC.T(PC.accent(PC.boxEdges({ w: baseW, h: baseT, d: baseD, perUnit: 320 }), 1), { pos: [0, yBase, 0] }));
-  // the micro-bumps that carry the stack down onto the interposer
-  add(PC.T(PC.dots({ nx: 15, nz: 16, sx: baseW / 16, sz: baseD / 17, per: 3, tone: 0.55 }), { pos: [0, yBase - baseT / 2 - 0.02, 0] }));
+  // ---------- levels ----------
+  var yBase = 0, baseTop = bt / 2;
+  var lvl = [];                                   // bottom face of each DRAM die
+  for (var i = 0; i < dies; i++) lvl.push(baseTop + baseGap + pitch * i);
+  var yTop = lvl[dies - 1] + t;                   // top face of the twelfth die
 
-  // ---------- the two through-silicon-via farms, drawn on every die ----------
-  var zones = [[-W * 0.22, W * 0.3, D * 0.62], [W * 0.22, W * 0.3, D * 0.62]];
-  var tsv = [];
-  for (var q = 0; q < zones.length; q++) {
-    for (var a = 0; a < 4; a++) for (var b = 0; b < 6; b++) {
-      tsv.push([zones[q][0] + (a - 1.5) * zones[q][1] / 4, (b - 2.5) * zones[q][2] / 6]);
-    }
+  // ---------- molding compound: the faint shell that makes this a cube ----------
+  var mH = yTop + 0.014 - baseTop, mY = baseTop + mH / 2;
+  add(PC.T(PC.box({ w: bW, h: mH, d: bD, faces: ['px', 'nx', 'pz', 'nz'], n: 5200, tone: 0.13 }), { pos: [0, mY, 0] }));
+  add(PC.T(PC.plane({ w: bW, d: bD, n: 1600, tone: 0.11 }), { pos: [0, baseTop + mH, 0] }));
+  add(PC.T(PC.boxEdges({ w: bW, h: mH, d: bD, perUnit: 190, tone: 0.3 }), { pos: [0, mY, 0] }));
+
+  // ---------- the logic base die (copper) ----------
+  add(PC.T(PC.plane({ w: bW, d: bD, n: 1900, tone: 0.3 }), { pos: [0, baseTop, 0] }));
+  add(PC.T(PC.accent(PC.box({ w: bW, h: bt, d: bD, faces: ['px', 'nx', 'pz', 'nz'], n: 2400 }), 0.58), { pos: [0, yBase, 0] }));
+  add(PC.T(PC.accent(PC.boxEdges({ w: bW, h: bt, d: bD, perUnit: 320 }), 1), { pos: [0, yBase, 0] }));
+  // its floorplan: two wide PHY strips facing the dies, a controller block between them
+  var bl = [];
+  bl.push(PC.T(rect(bW * 0.86, bD * 0.2, 150, 1), { pos: [0, baseTop + 0.003, -bD * 0.33] }));
+  bl.push(PC.T(rect(bW * 0.86, bD * 0.2, 150, 1), { pos: [0, baseTop + 0.003, bD * 0.33] }));
+  bl.push(PC.T(rect(bW * 0.5, bD * 0.3, 150, 1), { pos: [0, baseTop + 0.003, 0] }));
+  for (i = 0; i < 7; i++) {
+    var bx = (i - 3) * bW * 0.12;
+    bl.push(PC.line({ a: [bx, baseTop + 0.003, -bD * 0.42], b: [bx, baseTop + 0.003, -bD * 0.24], perUnit: 130, tone: 1 }));
+    bl.push(PC.line({ a: [bx, baseTop + 0.003, bD * 0.24], b: [bx, baseTop + 0.003, bD * 0.42], perUnit: 130, tone: 1 }));
+  }
+  add(PC.accent(PC.merge.apply(null, bl), 0.75));
+  // the micro-bumps that carry the cube down onto the interposer
+  add(PC.T(PC.accent(PC.dots({ nx: 16, nz: 17, sx: bW / 17, sz: bD / 18, per: 3 }), 0.5), { pos: [0, yBase - bt / 2 - 0.018, 0] }));
+
+  // ---------- the through-silicon-via farm, down the middle of every die ----------
+  var tsv = [], fx = W * 0.30, fz = D * 0.66;
+  for (var a = 0; a < 4; a++) for (var b = 0; b < 9; b++) {
+    tsv.push([(a - 1.5) * fx / 3.4, (b - 4) * fz / 8.6]);
   }
 
-  // ---------- twelve DRAM dies ----------
-  var lvl = [];                                   // an extra step off the base die
-  for (var i = 0; i < dies; i++) lvl.push(baseT / 2 + 0.075 + pitch * (i + 1));
-  var yTopDie = lvl[dies - 1];
+  // ---------- the twelve DRAM dies ----------
   for (i = 0; i < dies; i++) {
-    var y = lvl[i];
-    add(PC.T(PC.plane({ w: W, d: D, n: 1500, tone: 0.32 }), { pos: [0, y + t / 2, 0] }));
-    add(PC.T(PC.box({ w: W, h: t, d: D, faces: ['px', 'nx', 'pz', 'nz'], n: 1300, tone: 0.5 }), { pos: [0, y, 0] }));
-    add(PC.T(PC.boxEdges({ w: W, h: t, d: D, perUnit: 300, tone: 0.95 }), { pos: [0, y, 0] }));
-    // micro-bumps on the top face, and the outline of each TSV farm
-    add(PC.T(PC.dots({ nx: 10, nz: 11, sx: W / 11, sz: D / 12, per: 4, tone: 0.8 }), { pos: [0, y + t / 2 + 0.004, 0] }));
-    for (q = 0; q < zones.length; q++) {
-      add(PC.T(rect(zones[q][1], zones[q][2], y + t / 2 + 0.005, 170, 0.42), { pos: [zones[q][0], 0, 0] }));
-    }
+    var y = lvl[i], yc = y + t / 2;
+    add(PC.T(PC.plane({ w: W, d: D, n: 800, tone: 0.26 }), { pos: [0, y + t, 0] }));
+    add(PC.T(PC.box({ w: W, h: t, d: D, faces: ['px', 'nx', 'pz', 'nz'], n: 1150, tone: 0.5 }), { pos: [0, yc, 0] }));
+    add(PC.T(PC.boxEdges({ w: W, h: t, d: D, perUnit: 240, tone: 0.95 }), { pos: [0, yc, 0] }));
+    // the micro-bumps sitting in the gap under this die
+    add(PC.T(PC.dots({ nx: 11, nz: 12, sx: W / 12, sz: D / 13, per: 3, tone: 0.72 }), { pos: [0, y - (i === 0 ? baseGap : pitch - t) / 2, 0] }));
+    // the TSV farm outline, so the reader sees where the vias pierce the silicon
+    add(PC.T(rect(fx, fz, 130, 0.4), { pos: [0, y + t + 0.002, 0] }));
   }
 
-  // ---------- TSVs: vertical lines the whole height of the stack ----------
-  var yLow = yBase - baseT / 2, yHigh = yTopDie + t / 2;
-  var tl = [];
-  for (i = 0; i < tsv.length; i++) tl.push(PC.line({ a: [tsv[i][0], yLow, tsv[i][1]], b: [tsv[i][0], yHigh, tsv[i][1]], perUnit: 120, tone: 0.34 }));
+  // ---------- the bank floorplan, drawn only on the fully visible top die ----------
+  var bank = [];
+  for (a = 0; a < 2; a++) for (b = 0; b < 4; b++) {
+    var cx = (a - 0.5) * W * 0.44, cz = (b - 1.5) * D * 0.225;
+    bank.push(PC.T(rect(W * 0.34, D * 0.19, 190, 0.85), { pos: [cx, yTop + 0.003, cz] }));
+  }
+  add(PC.merge.apply(null, bank));
+
+  // ---------- TSVs: faint the whole height, bright inside each die ----------
+  var tl = [], yLow = yBase - bt / 2;
+  for (i = 0; i < tsv.length; i++) {
+    tl.push(PC.line({ a: [tsv[i][0], yLow, tsv[i][1]], b: [tsv[i][0], yTop, tsv[i][1]], perUnit: 95, tone: 0.2 }));
+    tl.push(PC.line({ a: [tsv[i][0], yLow, tsv[i][1]], b: [tsv[i][0], baseTop, tsv[i][1]], perUnit: 260, tone: 0.55 }));
+    for (var k = 0; k < dies; k++) {
+      tl.push(PC.line({ a: [tsv[i][0], lvl[k], tsv[i][1]], b: [tsv[i][0], lvl[k] + t, tsv[i][1]], perUnit: 300, tone: 0.6 }));
+    }
+  }
   add(PC.merge.apply(null, tl));
-
-  // ---------- corner guide lines, spanning the gaps only ----------
-  var g = [];
-  for (var c = 0; c < 4; c++) {
-    var cx = (c === 0 || c === 3) ? -W / 2 : W / 2, cz = (c < 2) ? -D / 2 : D / 2;
-    for (i = 0; i < dies; i++) {
-      var yA = (i === 0) ? yBase + baseT / 2 : lvl[i - 1] + t / 2;
-      g.push(PC.line({ a: [cx, yA, cz], b: [cx, lvl[i] - t / 2, cz], perUnit: 150, tone: 0.3 }));
-    }
-  }
-  add(PC.merge.apply(null, g));
 
   return {
     cloud: PC.merge.apply(null, parts),
-    spin: 0.11,
-    tilt: [0.24, -0.45, 0],
-    caption: 'A twelve-high HBM stack pulled apart: twelve DRAM dies of 11 by 12 mm, each with its field of micro-bumps, lifted off the copper-coloured logic base die, with the through-silicon vias that carry every signal drawn as lines through the whole stack. Thickness and gaps are exaggerated about tenfold; the real stack is 0.7 mm tall.'
+    spin: 0.12,
+    tilt: [0.34, -0.68, 0],
+    caption: 'A twelve-high HBM stack opened up: twelve DRAM dies of 11 by 12 mm, each ground to about thirty micrometres, lifted off the copper-coloured logic base die, with micro-bumps in every gap and through-silicon vias running the full height. The faint box around them is the molding compound that makes the finished part a cube. Footprint is to scale; thicknesses and gaps are exaggerated about fifteen times, because the real cube is only 0.72 mm tall.'
   };
 });
