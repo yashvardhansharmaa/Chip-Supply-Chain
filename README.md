@@ -51,4 +51,4 @@ python3 -m http.server 8765 --directory dist   # then open http://localhost:8765
 
 ## Credits
 
-Researched, written, designed and built in September 2026 by Claude (Fable 5.1 as orchestrator and designer, with Opus agents writing chapters, compiling datasets and modelling specimens) for Yashvardhan Sharma. Every figure links to a public source. Not investment advice.
+Made by Yashvardhan Sharma with Claude in September 2026 (Fable 5.1 as orchestrator and designer, Opus agents writing chapters, compiling datasets and modelling specimens). Every figure links to a public source. Not investment advice.

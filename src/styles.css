@@ -111,6 +111,7 @@ small { font-size: 0.85em; }
 #app { position: relative; z-index: 1; padding-top: var(--masthead); }
 .column { width: var(--col); padding: 0 clamp(16px, 4vw, 56px); }
 .column.wide { width: min(100%, 1180px); }
+.column.wide[data-view="suppliers"] { width: 100%; }
 .view { min-height: 60vh; }
 
 /* ---------- stage (the specimen) ---------- */
@@ -344,7 +345,7 @@ sup.cite a:hover { text-decoration: underline; }
 .sup td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
 .sup td.name b { font-weight: 650; display: block; }
 .sup td.name span { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
-.sup td.role { min-width: 320px; max-width: 480px; color: var(--ink-2); font-size: 13.5px; }
+.sup td.role { min-width: 380px; max-width: 640px; color: var(--ink-2); font-size: 13.5px; }
 .sup td .cc { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; }
 .chk { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 7px; border-radius: 2px; border: 1px solid var(--line-2); white-space: nowrap; }
 .chk.Critical { border-color: var(--accent); color: var(--accent-ink); background: var(--accent-soft); }
