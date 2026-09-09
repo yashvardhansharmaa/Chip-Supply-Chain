@@ -1,0 +1,769 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chokepoints prototype: hero and chapter head</title>
+
+<!--
+================================================================================
+CHOKEPOINTS / design prototype
+Hero + Lithography chapter head. Static, inline CSS, no JS. Real copy from
+content/05-lithography.md. Specimen is a stippled placeholder at true 42% width.
+
+--------------------------------------------------------------------------------
+TYPE PAIRING (proposed, replaces Archivo + Source Serif 4 + JetBrains Mono)
+
+  Nameplates / display .... IBM Plex Sans Condensed  (400, 500, 600, 700)
+  Reading ................. Newsreader               (variable opsz 6..72, wght)
+  Labels, data, tags ...... IBM Plex Mono            (400, 500, 600)
+
+Why:
+  1. Plex Sans Condensed is drawn condensed. The live site fakes condensation
+     with Archivo's width axis at 62 to 72 percent, and at 900 weight the
+     chapter numerals close up into blobs. A real condensed cut holds its
+     counters at 120px and still sets a 13px tab label.
+  2. Plex Sans Condensed and Plex Mono share one skeleton, so the mono labels
+     that carry every number on this site stop looking like a third voice
+     bolted on. Plex also comes out of hardware documentation, which is the
+     register this site is writing in.
+  3. Newsreader is a screen-first variable serif with a real optical size axis:
+     it can be set at 26px for a lede and 15px for a figure note from the same
+     file and stay in proportion. Sharper wedge serifs and a wider aperture than
+     Source Serif 4, so it reads as reporting rather than as documentation.
+  4. All three carry tabular figures. Every numeric element below sets
+     font-variant-numeric: tabular-nums so columns of tool counts, percentages
+     and dollar figures line up.
+  Rejected: Instrument Serif (a display face pretending to be a text face),
+  Fraunces (too warm), Bricolage Grotesque (its quirks fight the data),
+  Literata (a good serif, but too close to Source Serif 4 to be worth a change).
+
+--------------------------------------------------------------------------------
+ACCENT: keeping amber, narrowing its job.
+
+Amber is right. It is the literal yellow light of a lithography bay, it reads on
+both grounds, and it is not the blue every other supply-chain site uses. The
+problem is not the hue, it is that amber currently does two jobs at once: it is
+the severity signal (chokepoint pips, "Extreme", the In plain terms box) and it
+is also decoration (eyebrow dashes, blockquote bars, scroll hints, figure bars,
+timeline dots). When every rule on the page is amber, a 5-of-5 chokepoint score
+carries no more weight than a scroll arrow.
+
+So in this prototype amber means one thing: this stage is a chokepoint. It
+appears on the score pips, on "Extreme", on the score-5 bars in the chain strip,
+on the one highlighted bar in the figure, and on citation markers. Structure is
+graphite and hairline grey. "You are here" is a solid ink marker, not amber.
+
+Tried and rejected: a second cool accent (steel #3c6e8f) for structure and
+"you are here". It read as a second brand colour and pulled the page toward a
+generic dashboard. Ink at full strength does the same job with no new hue.
+
+--------------------------------------------------------------------------------
+NOTES FOR THE PORT
+  - The chain strip appears twice here (full in the hero, compact in the chapter
+    head) because this page has no JS. In production it is one component in two
+    states, and the compact state replaces the current .rail dot row.
+  - The specimen panel appears twice for the same reason. In production it stays
+    one fixed stage that swaps its contents, exactly as it does today.
+  - Body measure is capped at 65ch. Live site is 66ch but at 19px Source Serif
+    inside a 58 percent column, so the real line is longer than it looks.
+================================================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&display=swap">
+
+<style>
+/* ---------------------------------------------------------------- tokens */
+:root {
+  --paper:      #eceeef;
+  --paper-2:    #e4e7e9;
+  --paper-3:    #d8dcdf;
+  --ink:        #14181b;
+  --ink-2:      #39424a;
+  --muted:      #6a747c;
+  --line:       #ccd1d5;
+  --line-2:     #b3b9be;
+  --amber:      #c0810c;
+  --amber-ink:  #7d5405;
+  --amber-soft: rgba(192, 129, 12, 0.12);
+
+  --display: "IBM Plex Sans Condensed", "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --body:    "Newsreader", Georgia, "Times New Roman", serif;
+  --mono:    "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --measure: 65ch;
+  --col: 58%;
+  --masthead: 60px;
+  --pad: clamp(20px, 3.2vw, 52px);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f1214; --paper-2: #161a1d; --paper-3: #1e2429;
+    --ink: #e8eaeb; --ink-2: #bcc3c8; --muted: #869097;
+    --line: #262d32; --line-2: #39424a;
+    --amber: #e0a92e; --amber-ink: #efc161; --amber-soft: rgba(224, 169, 46, 0.15);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0f1214; --paper-2: #161a1d; --paper-3: #1e2429;
+  --ink: #e8eaeb; --ink-2: #bcc3c8; --muted: #869097;
+  --line: #262d32; --line-2: #39424a;
+  --amber: #e0a92e; --amber-ink: #efc161; --amber-soft: rgba(224, 169, 46, 0.15);
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 19px;
+  line-height: 1.62;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+h1, h2, h3, h4, h5, p, dl, dd, figure, ul, ol { margin: 0; }
+ul { padding: 0; list-style: none; }
+a { color: inherit; text-decoration-color: var(--line-2); text-underline-offset: 0.16em; }
+a:hover { text-decoration-color: var(--amber); }
+b, strong { font-weight: 600; }
+.num, .tab { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* a label is always mono, always uppercase, always the same size */
+.lab {
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.11em; text-transform: uppercase; color: var(--muted);
+}
+
+/* ---------------------------------------------------------------- masthead */
+.masthead {
+  position: sticky; top: 0; z-index: 40; height: var(--masthead);
+  display: flex; align-items: center; gap: 22px;
+  padding: 0 var(--pad);
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.wordmark { display: flex; align-items: baseline; gap: 13px; text-decoration: none; margin-right: auto; }
+.wordmark b {
+  font-family: var(--display); font-weight: 700; font-size: 23px;
+  letter-spacing: 0.075em; text-transform: uppercase; line-height: 1;
+}
+.wordmark span {
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.09em;
+  text-transform: uppercase; color: var(--muted);
+}
+.tabs { display: flex; gap: 2px; align-items: center; }
+.tabs a {
+  font-family: var(--display); font-weight: 500; font-size: 15px; letter-spacing: 0.015em;
+  text-decoration: none; padding: 6px 11px; border-radius: 3px;
+  border: 1px solid transparent; color: var(--ink-2); white-space: nowrap;
+}
+.tabs a[aria-current="page"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+/* ---------------------------------------------------------------- spread */
+/* text column at 58 percent, specimen stage at 42 percent, stage sticks */
+.spread { display: grid; grid-template-columns: var(--col) 1fr; align-items: stretch; }
+.spread-main { padding: 0 var(--pad); min-width: 0; }
+.stage {
+  position: sticky; top: var(--masthead); align-self: start;
+  height: calc(100vh - var(--masthead));
+  display: flex; flex-direction: column;
+  border-left: 1px solid var(--line);
+  padding: 20px 26px 22px;
+  min-width: 0;
+}
+.stage-tag { display: flex; justify-content: space-between; gap: 12px; }
+.stage-tag b { color: var(--amber-ink); font-weight: 600; }
+.stage-art { flex: 1; display: grid; place-items: center; min-height: 0; padding: 14px 0; }
+.stage-art svg { width: 100%; height: 100%; max-height: 100%; display: block; color: var(--ink); }
+.stage figcaption {
+  font-family: var(--mono); font-size: 11px; line-height: 1.6; color: var(--muted);
+  max-width: 48ch; margin: 0 auto; text-align: center;
+}
+.stage figcaption b { color: var(--ink-2); font-weight: 500; }
+.stage-note {
+  margin-top: 10px; text-align: center;
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--line-2);
+}
+
+/* ---------------------------------------------------------------- hero */
+.hero { border-bottom: 1px solid var(--line); }
+.hero .spread { min-height: calc(100vh - var(--masthead) - 158px); }
+.hero-text { padding: clamp(30px, 5.2vh, 62px) 0 clamp(26px, 4vh, 46px); max-width: 34em; }
+
+.eyebrow { display: flex; align-items: center; gap: 14px; margin-bottom: clamp(20px, 3.4vh, 34px); }
+.eyebrow i { display: block; width: 26px; height: 2px; background: var(--ink); flex: 0 0 auto; }
+.eyebrow .sep { color: var(--line-2); }
+
+.thesis {
+  font-family: var(--display); font-weight: 600;
+  font-size: clamp(34px, 3.55vw, 50px); line-height: 1.05;
+  letter-spacing: -0.005em; text-wrap: balance;
+  margin-bottom: clamp(16px, 2.4vh, 26px);
+}
+.thesis .q { color: var(--amber-ink); font-variant-numeric: tabular-nums; }
+
+.dek {
+  font-size: clamp(17px, 1.35vw, 19.5px); line-height: 1.55; color: var(--ink-2);
+  max-width: 52ch; margin-bottom: clamp(20px, 3vh, 30px);
+}
+.dek em { font-style: italic; color: var(--ink); }
+
+/* the three claims the site can be held to */
+.claims { display: flex; gap: 0; border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
+.claims div { flex: 1; padding: 12px 16px 13px; border-right: 1px solid var(--line); min-width: 0; }
+.claims div:first-child { padding-left: 0; }
+.claims div:last-child { border-right: 0; }
+.claims b {
+  display: block; font-family: var(--display); font-weight: 600; font-size: 30px;
+  line-height: 1; letter-spacing: 0.005em; font-variant-numeric: tabular-nums;
+}
+.claims .of-five b { color: var(--amber-ink); }
+.claims span {
+  display: block; font-family: var(--mono); font-size: 10px; line-height: 1.45;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 7px;
+}
+.credits {
+  font-family: var(--mono); font-size: 11px; line-height: 1.75; color: var(--muted);
+  max-width: 58ch; margin-top: clamp(18px, 2.6vh, 26px);
+}
+.credits a, .credits b { color: var(--ink-2); }
+.credits b { font-weight: 500; }
+
+/* ---------------------------------------------------------------- chain strip */
+/* the orientation device: every stage, scored, always in the same order */
+.chain { padding: 16px var(--pad) 18px; border-top: 1px solid var(--line); }
+.chain-head { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+.chain-head h2 {
+  font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.11em;
+  text-transform: uppercase; color: var(--ink);
+}
+.chain-head p { font-family: var(--mono); font-size: 10.5px; color: var(--muted); letter-spacing: 0.02em; }
+.chain-key { margin-left: auto; display: flex; gap: 14px; align-items: center; }
+.chain-key span { font-family: var(--mono); font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); display: inline-flex; align-items: center; gap: 6px; }
+.chain-key i { width: 9px; height: 9px; display: inline-block; }
+
+.chain-track { display: grid; grid-template-columns: repeat(15, 1fr); gap: 3px; align-items: end; }
+.stage-cell { display: flex; flex-direction: column; gap: 6px; min-width: 0; padding-bottom: 5px; position: relative; }
+.stage-cell .n { font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; color: var(--muted); font-variant-numeric: tabular-nums; }
+.stage-cell .bar { height: 46px; display: flex; align-items: flex-end; }
+.stage-cell .bar i { display: block; width: 100%; background: var(--line-2); }
+.stage-cell[data-score="5"] .bar i { height: 100%; background: var(--amber); }
+.stage-cell[data-score="4"] .bar i { height: 66%; background: var(--ink-2); }
+.stage-cell[data-score="3"] .bar i { height: 38%; background: var(--line-2); }
+.stage-cell .t {
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--ink-2); line-height: 1.25; overflow-wrap: anywhere;
+}
+.chain-track { border-bottom: 1px solid var(--line-2); }
+.stage-cell[aria-current="true"] .n,
+.stage-cell[aria-current="true"] .t { color: var(--ink); font-weight: 600; }
+.stage-cell[aria-current="true"]::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 3px; background: var(--ink);
+}
+
+/* compact state, used in the chapter head */
+.chain--compact { padding: 0; border-top: 0; margin-bottom: 34px; }
+.chain--compact .chain-track { gap: 2px; }
+.chain--compact .stage-cell .bar { height: 26px; }
+.chain--compact .stage-cell .t { display: none; }
+.chain--compact .stage-cell[aria-current="true"] .t { display: block; }
+.chain--compact .chain-foot {
+  display: flex; justify-content: space-between; gap: 12px; margin-top: 8px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted);
+}
+.chain--compact .chain-foot b { color: var(--ink); font-weight: 600; }
+
+/* ---------------------------------------------------------------- chapter head */
+.chapter { padding: clamp(48px, 8vh, 84px) 0 0; }
+
+.ch-id { display: grid; grid-template-columns: 92px 1fr; gap: 24px; align-items: start; margin-bottom: 26px; }
+.ch-tile {
+  border: 1px solid var(--line-2); border-radius: 3px; background: var(--paper-2);
+  text-align: center; padding: 9px 4px 10px; overflow: hidden;
+}
+.ch-tile .k { display: block; font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.ch-tile .v {
+  display: block; font-family: var(--display); font-weight: 700; font-size: 54px; line-height: 0.94;
+  letter-spacing: 0.01em; font-variant-numeric: tabular-nums; margin: 3px 0 2px;
+}
+.ch-tile .of { display: block; font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.ch-title {
+  font-family: var(--display); font-weight: 700;
+  font-size: clamp(46px, 5.1vw, 74px); line-height: 0.96; letter-spacing: -0.006em;
+  margin: -6px 0 14px;
+}
+.ch-lede {
+  font-size: clamp(20px, 1.62vw, 24px); line-height: 1.4; color: var(--ink-2);
+  max-width: 44ch; font-weight: 350;
+}
+.ch-meta { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 16px; }
+
+/* in short: the conclusion. no box. size and a heavy rule carry it. */
+.inshort { margin: 34px 0 38px; border-left: 4px solid var(--ink); padding-left: 24px; max-width: 60ch; }
+.inshort h3 { margin-bottom: 10px; }
+.inshort p { font-size: 21.5px; line-height: 1.5; color: var(--ink); }
+
+/* nameplate: a card, with the two numbers that matter set as stats */
+.plate {
+  border: 1px solid var(--line-2); border-radius: 4px; background: var(--paper-2);
+  box-shadow: 0 1px 0 rgba(20, 24, 27, 0.04), 0 10px 26px rgba(20, 24, 27, 0.055);
+  overflow: hidden; margin-bottom: 38px;
+}
+@media (prefers-color-scheme: dark) { .plate { box-shadow: 0 1px 0 rgba(0,0,0,.3), 0 10px 26px rgba(0,0,0,.34); } }
+.plate-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 11px 18px; background: var(--paper-3); border-bottom: 1px solid var(--line-2);
+}
+.plate-head .lab { color: var(--ink-2); }
+.plate-score { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.plate-score b { color: var(--ink); font-weight: 600; font-size: 13px; }
+.pips { display: inline-flex; gap: 4px; }
+.pips i { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid var(--ink-2); display: block; }
+.pips i.on { background: var(--amber); border-color: var(--amber); }
+
+.plate-kpis { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--line); }
+.plate-kpis > div { padding: 15px 18px 16px; border-right: 1px solid var(--line); min-width: 0; }
+.plate-kpis > div:last-child { border-right: 0; }
+.plate-kpis .k { display: block; font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.plate-kpis .v {
+  display: block; font-family: var(--display); font-weight: 600; font-size: 27px; line-height: 1;
+  letter-spacing: 0.005em; font-variant-numeric: tabular-nums;
+}
+.plate-kpis .v small { font-size: 14px; font-weight: 500; color: var(--muted); margin-left: 4px; }
+.plate-kpis .v.hot { color: var(--amber-ink); }
+.plate-kpis .sub { display: block; font-family: var(--mono); font-size: 10.5px; line-height: 1.5; color: var(--muted); margin-top: 8px; }
+
+.plate-rows { border-bottom: 1px solid var(--line); }
+.plate-rows .row { display: grid; grid-template-columns: 150px 1fr; gap: 20px; padding: 13px 18px; border-bottom: 1px solid var(--line); }
+.plate-rows .row:last-child { border-bottom: 0; }
+.plate-rows dt { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); padding-top: 4px; }
+.plate-rows dd { font-size: 15.5px; line-height: 1.45; }
+.plate-rows li { margin-bottom: 7px; }
+.plate-rows li:last-child { margin-bottom: 0; }
+.cc {
+  font-family: var(--mono); font-size: 9.5px; font-weight: 500; letter-spacing: 0.07em;
+  border: 1px solid var(--line-2); border-radius: 2px; padding: 1px 4px 2px;
+  color: var(--ink-2); margin-right: 8px; vertical-align: 2px;
+}
+.plate-rows .who { font-weight: 600; }
+.plate-rows .note { color: var(--muted); font-size: 14.5px; }
+.plate-rows .why { color: var(--ink-2); font-size: 15px; }
+
+.plate-status { display: grid; grid-template-columns: 1fr 1fr; }
+.plate-status > div { padding: 14px 18px 16px; border-right: 1px solid var(--line); }
+.plate-status > div:last-child { border-right: 0; }
+.plate-status .k { display: block; font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+.plate-status p { font-size: 14.5px; line-height: 1.5; color: var(--ink-2); }
+
+/* in plain terms: the bridge into the body. tinted, but smaller than In short. */
+.plain {
+  border: 1px solid var(--amber); border-left-width: 3px; background: var(--amber-soft);
+  border-radius: 3px; padding: 14px 20px 16px; margin: 0 0 34px; max-width: var(--measure);
+}
+.plain .lab { color: var(--amber-ink); display: block; margin-bottom: 7px; }
+.plain p { font-size: 17px; line-height: 1.55; color: var(--ink); }
+
+/* ---------------------------------------------------------------- prose */
+.prose { max-width: var(--measure); padding-bottom: clamp(56px, 9vh, 96px); }
+.prose p { margin-bottom: 1.15em; }
+.prose h3 {
+  font-family: var(--display); font-weight: 600; font-size: 27px; line-height: 1.15;
+  letter-spacing: -0.002em; margin: 1.9em 0 0.65em;
+}
+.prose h3:first-child { margin-top: 0; }
+sup.cite { font-size: 0.6em; line-height: 0; vertical-align: 0.6em; margin-left: 1px; font-family: var(--mono); }
+sup.cite a { color: var(--amber-ink); text-decoration: none; padding: 0 1px; }
+sup.cite a:hover { text-decoration: underline; }
+
+/* ---------------------------------------------------------------- figure */
+.figure {
+  border: 1px solid var(--line); border-radius: 3px; background: var(--paper-2);
+  padding: 18px 20px 15px; margin: 2em 0 2.2em;
+}
+.fig-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+.fig-head h4 { font-family: var(--display); font-weight: 600; font-size: 17px; line-height: 1.25; letter-spacing: 0.002em; }
+.bars { display: grid; gap: 7px; }
+.bar-row { display: grid; grid-template-columns: 46px 1fr 46px; gap: 12px; align-items: center; }
+.bar-row .bl, .bar-row .bv {
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.03em;
+  font-variant-numeric: tabular-nums; color: var(--ink-2);
+}
+.bar-row .bv { text-align: right; color: var(--ink); font-weight: 500; }
+.bar-track {
+  height: 20px; background: var(--paper-3); position: relative;
+  background-image: linear-gradient(90deg, transparent calc(33.333% - 1px), var(--line) calc(33.333% - 1px), var(--line) 33.333%, transparent 33.333%),
+                    linear-gradient(90deg, transparent calc(66.666% - 1px), var(--line) calc(66.666% - 1px), var(--line) 66.666%, transparent 66.666%);
+}
+.bar-track i { display: block; height: 100%; background: var(--ink-2); width: var(--w); }
+.bar-row.hot .bar-track i { background: var(--amber); }
+.bar-row.hot .bv { color: var(--amber-ink); font-weight: 600; }
+.bar-axis { display: grid; grid-template-columns: 46px 1fr 46px; gap: 12px; margin-top: 7px; }
+.bar-axis .ticks { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; color: var(--muted); font-variant-numeric: tabular-nums; }
+.fig-source { font-family: var(--mono); font-size: 10.5px; line-height: 1.5; color: var(--muted); margin-top: 13px; padding-top: 11px; border-top: 1px solid var(--line); }
+.fig-source a { color: var(--muted); }
+
+/* ---------------------------------------------------------------- narrow */
+@media (max-width: 900px) {
+  :root { --col: 100%; --masthead: 54px; --pad: 18px; }
+  body { font-size: 17.5px; }
+  .tabs { display: none; }
+  .spread { grid-template-columns: 1fr; }
+  .hero .spread { min-height: 0; }
+  .hero-text { padding-top: 26px; }
+  .stage {
+    position: static; height: auto; min-height: 260px;
+    border-left: 0; border-top: 1px solid var(--line);
+    padding: 16px 18px 18px;
+  }
+  .stage-art { min-height: 190px; }
+  .chain-track { grid-template-columns: repeat(5, 1fr); gap: 3px 8px; row-gap: 14px; border-bottom: 0; }
+  .stage-cell { border-bottom: 1px solid var(--line-2); }
+  .chain-key { margin-left: 0; flex-basis: 100%; }
+  .chain--compact .chain-track { grid-template-columns: repeat(5, 1fr); }
+  .chain--compact .stage-cell .t { display: block; }
+  .ch-id { grid-template-columns: 72px 1fr; gap: 16px; }
+  .ch-tile .v { font-size: 40px; }
+  .ch-title { font-size: clamp(38px, 9vw, 52px); margin-top: 0; }
+  .ch-lede { font-size: 19px; max-width: none; }
+  .inshort { padding-left: 16px; border-left-width: 3px; }
+  .inshort p { font-size: 19px; }
+  .claims { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+  .claims div { padding: 10px 10px 12px; }
+  .claims div:first-child { padding-left: 0; }
+  .claims b { font-size: 24px; }
+  .plate-kpis { grid-template-columns: 1fr; }
+  .plate-kpis > div { border-right: 0; border-bottom: 1px solid var(--line); }
+  .plate-kpis > div:last-child { border-bottom: 0; }
+  .plate-rows .row { grid-template-columns: 1fr; gap: 8px; }
+  .plate-status { grid-template-columns: 1fr; }
+  .plate-status > div { border-right: 0; border-top: 1px solid var(--line); }
+  .bar-row { grid-template-columns: 42px 1fr 40px; }
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <a class="wordmark" href="#"><b>Chokepoints</b><span>The AI chip supply chain</span></a>
+  <nav class="tabs" aria-label="Sections">
+    <a href="#" aria-current="page">The Stack</a>
+    <a href="#">Briefing</a>
+    <a href="#">Landscape</a>
+    <a href="#">Suppliers</a>
+    <a href="#">Geopolitics</a>
+    <a href="#">Glossary</a>
+    <a href="#">Sources</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- ============================================================ HERO -->
+<section class="hero">
+  <div class="spread">
+    <div class="spread-main">
+      <div class="hero-text">
+        <p class="eyebrow lab"><i></i><span>A component-level map of the AI chip supply chain</span><span class="sep">/</span><span>September 2026</span></p>
+
+        <h1 class="thesis">Fifteen stages turn sand into a GPU. <span class="q">Seven</span> of them come down to three firms or fewer.</h1>
+
+        <p class="dek">Chokepoints walks the chain one stage at a time and scores each one: what the stage does, who can actually do it, what the tool costs, and how long a substitute would take to build. Every number links to where it came from.</p>
+
+        <div class="claims">
+          <div><b class="num">15</b><span>Stages from<br>quartz to a rack</span></div>
+          <div class="of-five"><b class="num">7</b><span>Score 5 of 5<br>for concentration</span></div>
+          <div><b class="num">379</b><span>Sources, one<br>per claim</span></div>
+        </div>
+
+        <p class="credits">Made by <b>Yashvardhan Sharma</b> with Claude (Fable 5.1 directing Opus agents). 18 chapters, 25,453 words, 379 sources. In the tradition of <a href="https://www.humanityslastmachine.com/">Humanity’s Last Machine</a> and CSET’s supply-chain work.</p>
+      </div>
+    </div>
+
+    <!-- specimen stage: 42 percent, sticky. placeholder stands in for the 3D render. -->
+    <figure class="stage">
+      <div class="stage-tag lab"><span>Specimen <b>00</b> / the whole chip</span><span>Placeholder</span></div>
+      <div class="stage-art">
+        <svg viewBox="0 0 360 300" role="img" aria-label="Placeholder for the AI accelerator package specimen">
+          <defs>
+            <pattern id="stipA" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(14)">
+              <circle cx="1.4" cy="1.4" r="0.75" fill="currentColor"/>
+            </pattern>
+          </defs>
+          <g opacity="0.34" fill="url(#stipA)">
+            <!-- substrate -->
+            <path d="M180 34 L340 118 L180 264 L20 118 Z"/>
+          </g>
+          <g opacity="0.62" fill="url(#stipA)">
+            <!-- interposer -->
+            <path d="M180 68 L300 130 L180 224 L60 130 Z"/>
+          </g>
+          <g opacity="0.9" fill="url(#stipA)">
+            <!-- two logic dies -->
+            <path d="M180 96 L228 124 L180 152 L132 124 Z"/>
+            <path d="M180 140 L228 168 L180 196 L132 168 Z"/>
+          </g>
+          <g opacity="0.5" stroke="currentColor" stroke-width="0.75" fill="none">
+            <path d="M180 34 L340 118 L180 264 L20 118 Z"/>
+            <path d="M180 68 L300 130 L180 224 L60 130 Z"/>
+            <path d="M180 96 L228 124 L180 152 L132 124 Z"/>
+            <path d="M180 140 L228 168 L180 196 L132 168 Z"/>
+          </g>
+          <!-- eight HBM stacks -->
+          <g opacity="0.85" fill="url(#stipA)" stroke="currentColor" stroke-width="0.6">
+            <path d="M118 112 L142 126 L124 140 L100 126 Z"/>
+            <path d="M100 130 L124 144 L106 158 L82 144 Z"/>
+            <path d="M82 148 L106 162 L88 176 L64 162 Z"/>
+            <path d="M136 158 L160 172 L142 186 L118 172 Z"/>
+            <path d="M242 112 L266 126 L248 140 L218 126 Z" transform="translate(-6,0)"/>
+            <path d="M254 130 L278 144 L260 158 L230 144 Z" transform="translate(-6,0)"/>
+            <path d="M266 148 L290 162 L272 176 L242 162 Z" transform="translate(-6,0)"/>
+            <path d="M212 158 L236 172 L218 186 L188 172 Z"/>
+          </g>
+        </svg>
+      </div>
+      <figcaption>An AI accelerator package: two reticle-sized logic dies and eight HBM stacks on a silicon interposer, on a build-up substrate. Highlighted: <b>the HBM</b>.</figcaption>
+      <p class="stage-note">Stipple placeholder / production ships a point-cloud render</p>
+    </figure>
+  </div>
+
+  <!-- the orientation device -->
+  <div class="chain">
+    <div class="chain-head">
+      <h2>The chain, scored</h2>
+      <p>Bar height is the chokepoint score, 1 to 5.</p>
+      <div class="chain-key">
+        <span><i style="background:var(--amber)"></i>5 of 5</span>
+        <span><i style="background:var(--ink-2)"></i>4</span>
+        <span><i style="background:var(--line-2)"></i>3</span>
+      </div>
+    </div>
+    <ol class="chain-track">
+      <li class="stage-cell" data-score="4"><span class="n">02</span><span class="bar"><i></i></span><span class="t">Design</span></li>
+      <li class="stage-cell" data-score="4"><span class="n">03</span><span class="bar"><i></i></span><span class="t">Silicon</span></li>
+      <li class="stage-cell" data-score="4"><span class="n">04</span><span class="bar"><i></i></span><span class="t">Chemicals</span></li>
+      <li class="stage-cell" data-score="5"><span class="n">05</span><span class="bar"><i></i></span><span class="t">Litho</span></li>
+      <li class="stage-cell" data-score="5"><span class="n">06</span><span class="bar"><i></i></span><span class="t">Masks</span></li>
+      <li class="stage-cell" data-score="4"><span class="n">07</span><span class="bar"><i></i></span><span class="t">Dep + etch</span></li>
+      <li class="stage-cell" data-score="4"><span class="n">08</span><span class="bar"><i></i></span><span class="t">Metrology</span></li>
+      <li class="stage-cell" data-score="5"><span class="n">09</span><span class="bar"><i></i></span><span class="t">Transistor</span></li>
+      <li class="stage-cell" data-score="5"><span class="n">10</span><span class="bar"><i></i></span><span class="t">Foundry</span></li>
+      <li class="stage-cell" data-score="5"><span class="n">11</span><span class="bar"><i></i></span><span class="t">Memory</span></li>
+      <li class="stage-cell" data-score="5"><span class="n">12</span><span class="bar"><i></i></span><span class="t">Packaging</span></li>
+      <li class="stage-cell" data-score="5"><span class="n">13</span><span class="bar"><i></i></span><span class="t">Substrate</span></li>
+      <li class="stage-cell" data-score="4"><span class="n">14</span><span class="bar"><i></i></span><span class="t">Test</span></li>
+      <li class="stage-cell" data-score="3"><span class="n">15</span><span class="bar"><i></i></span><span class="t">Systems</span></li>
+      <li class="stage-cell" data-score="4"><span class="n">16</span><span class="bar"><i></i></span><span class="t">Power</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============================================================ CHAPTER -->
+<div class="spread">
+  <div class="spread-main">
+    <article class="chapter">
+
+      <header class="chapter-head">
+
+        <!-- compact chain strip: same component, "you are here" state -->
+        <div class="chain chain--compact">
+          <ol class="chain-track">
+            <li class="stage-cell" data-score="4"><span class="n">02</span><span class="bar"><i></i></span><span class="t">Design</span></li>
+            <li class="stage-cell" data-score="4"><span class="n">03</span><span class="bar"><i></i></span><span class="t">Silicon</span></li>
+            <li class="stage-cell" data-score="4"><span class="n">04</span><span class="bar"><i></i></span><span class="t">Chemicals</span></li>
+            <li class="stage-cell" data-score="5" aria-current="true"><span class="n">05</span><span class="bar"><i></i></span><span class="t">Litho</span></li>
+            <li class="stage-cell" data-score="5"><span class="n">06</span><span class="bar"><i></i></span><span class="t">Masks</span></li>
+            <li class="stage-cell" data-score="4"><span class="n">07</span><span class="bar"><i></i></span><span class="t">Dep + etch</span></li>
+            <li class="stage-cell" data-score="4"><span class="n">08</span><span class="bar"><i></i></span><span class="t">Metrology</span></li>
+            <li class="stage-cell" data-score="5"><span class="n">09</span><span class="bar"><i></i></span><span class="t">Transistor</span></li>
+            <li class="stage-cell" data-score="5"><span class="n">10</span><span class="bar"><i></i></span><span class="t">Foundry</span></li>
+            <li class="stage-cell" data-score="5"><span class="n">11</span><span class="bar"><i></i></span><span class="t">Memory</span></li>
+            <li class="stage-cell" data-score="5"><span class="n">12</span><span class="bar"><i></i></span><span class="t">Packaging</span></li>
+            <li class="stage-cell" data-score="5"><span class="n">13</span><span class="bar"><i></i></span><span class="t">Substrate</span></li>
+            <li class="stage-cell" data-score="4"><span class="n">14</span><span class="bar"><i></i></span><span class="t">Test</span></li>
+            <li class="stage-cell" data-score="3"><span class="n">15</span><span class="bar"><i></i></span><span class="t">Systems</span></li>
+            <li class="stage-cell" data-score="4"><span class="n">16</span><span class="bar"><i></i></span><span class="t">Power</span></li>
+          </ol>
+          <p class="chain-foot"><span>You are here: <b>stage 05 of 15</b></span><span>Next: 06 photomasks and pellicles</span></p>
+        </div>
+
+        <div class="ch-id">
+          <div class="ch-tile">
+            <span class="k">Stage</span>
+            <span class="v">05</span>
+            <span class="of">of 15</span>
+          </div>
+          <div>
+            <h2 class="ch-title">Lithography</h2>
+            <p class="ch-lede">The most concentrated stage in the chain. One firm in the Netherlands builds every EUV scanner on Earth, and it shipped 48 of them in 2025.</p>
+            <p class="ch-meta"><span class="lab">1,343 words / 6 min</span><span class="lab">Specimen: EUV scanner</span></p>
+          </div>
+        </div>
+
+        <!-- the conclusion, first, and unboxed so it does not fight the card -->
+        <section class="inshort">
+          <h3 class="lab">In short</h3>
+          <p>One firm, in one Dutch town, using mirrors from one German optics house, gates the resolution of every leading-edge AI chip. The tool count is small enough to track by hand: 48 EUV systems in 2025<sup class="cite"><a href="#s1">1</a></sup> and ten High-NA systems in the field worldwide<sup class="cite"><a href="#s9">9</a></sup>. Export controls have cut China’s share of ASML system sales from 41% in 2024 toward a guided 20% in 2026<sup class="cite"><a href="#s23">23</a></sup>, and China’s answer is low-volume immersion DUV plus an EUV prototype that has not yet made a chip. Nothing on the horizon changes the shape of this bottleneck before 2030.</p>
+        </section>
+
+        <!-- the evidence, as a card -->
+        <section class="plate" aria-label="Chokepoint nameplate for lithography">
+          <header class="plate-head">
+            <span class="lab">Chokepoint nameplate</span>
+            <span class="plate-score">
+              <span class="pips" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>
+              <span><b>5</b> / 5</span>
+              <span class="sr-only">Chokepoint score 5 of 5</span>
+            </span>
+          </header>
+
+          <div class="plate-kpis">
+            <div>
+              <span class="k">Concentration</span>
+              <b class="v hot">Extreme</b>
+            </div>
+            <div>
+              <span class="k">Time to substitute</span>
+              <b class="v">10+<small>years</small></b>
+            </div>
+            <div>
+              <span class="k">Cost signal</span>
+              <b class="v">$250M<small>Low-NA</small></b>
+              <span class="sub">$350M to $400M for High-NA EXE:5200B</span>
+            </div>
+          </div>
+
+          <dl class="plate-rows">
+            <div class="row">
+              <dt>Who leads</dt>
+              <dd><ul>
+                <li><span class="cc">NL</span><span class="who">ASML</span> <span class="note">100% of EUV; 48% of its own 2025 system revenue was EUV, 42% ArF immersion</span></li>
+                <li><span class="cc">JP</span><span class="who">Nikon</span> <span class="note">22 new semiconductor scanners in FY ended March 2026, against a market Nikon sizes at 570 units</span></li>
+                <li><span class="cc">JP</span><span class="who">Canon</span> <span class="note">i-line and KrF steppers, plus the only commercial nanoimprint tool</span></li>
+              </ul></dd>
+            </div>
+            <div class="row">
+              <dt>Where it is made</dt>
+              <dd><ul>
+                <li><span class="cc">NL</span><span class="who">Netherlands</span> <span class="note">ASML design and final assembly, Veldhoven</span></li>
+                <li><span class="cc">DE</span><span class="who">Germany</span> <span class="note">Zeiss SMT optics, Oberkochen; Trumpf CO2 drive lasers, Ditzingen</span></li>
+                <li><span class="cc">US</span><span class="who">United States</span> <span class="note">ASML light-source research and manufacturing, San Diego</span></li>
+                <li><span class="cc">JP</span><span class="who">Japan</span> <span class="note">Nikon and Canon DUV scanners and steppers</span></li>
+              </ul></dd>
+            </div>
+            <div class="row">
+              <dt>Why substitution is slow</dt>
+              <dd class="why">ASML built its first EUV prototype in 2001 and needed nearly two decades and billions of euros before commercial chips shipped in 2019, and it still depends on Zeiss optics that no one else can make.</dd>
+            </div>
+          </dl>
+
+          <div class="plate-status">
+            <div>
+              <span class="k">China</span>
+              <p>No EUV has ever been sold to a customer in China. A Shenzhen prototype built by former ASML engineers generated EUV light in early 2025 but has not made a working chip. A Shanghai state firm, Aishengna, began building domestic immersion DUV in 2026 at single-digit annual volumes.</p>
+            </div>
+            <div>
+              <span class="k">United States</span>
+              <p>No domestic scanner maker. Washington controls access through Dutch licensing, US-origin subsystems and entity-list rules.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- the bridge into the body: tinted, but quieter than In short -->
+        <div class="plain">
+          <span class="lab">In plain terms</span>
+          <p>Lithography is photographic printing, shrunk. A stencil of one layer of the circuit is held up to a lamp, and the machine projects that image onto a silicon wafer coated in a light-sensitive film, four times smaller than the stencil. Finer circuits need shorter-wavelength light, and the shortest light now in use is absorbed by air and by glass, so the whole machine runs in a vacuum and every lens has to be a mirror. Only one company has ever built such a machine, which is why a single Dutch firm is a chokepoint.</p>
+        </div>
+      </header>
+
+      <div class="prose">
+        <p>Every transistor in an AI accelerator gets its shape from a machine built by one company. ASML sold 327 lithography systems in 2025, 48 of them extreme ultraviolet, and nobody else sells EUV at all<sup class="cite"><a href="#s1">1</a></sup>. No other stage in this chain has a single point of failure this sharp.</p>
+
+        <h3>How it works</h3>
+
+        <p>Resolution follows one relation: the smallest printable half-pitch equals a process factor times the wavelength, divided by the numerical aperture of the optics. Shorter wavelength and larger aperture both buy resolution. Aperture depends on the refractive index above the wafer, so flooding that gap with ultrapure water lifts ASML’s deep ultraviolet systems to 1.35<sup class="cite"><a href="#s4">4</a></sup>.</p>
+
+        <figure class="figure">
+          <div class="fig-head">
+            <h4>EUV systems recognized in revenue per year</h4>
+            <span class="lab">Tools</span>
+          </div>
+          <div class="bars">
+            <div class="bar-row"><span class="bl">2023</span><span class="bar-track"><i style="--w:88.3%"></i></span><span class="bv">53</span></div>
+            <div class="bar-row"><span class="bl">2024</span><span class="bar-track"><i style="--w:73.3%"></i></span><span class="bv">44</span></div>
+            <div class="bar-row hot"><span class="bl">2025</span><span class="bar-track"><i style="--w:80.0%"></i></span><span class="bv">48</span></div>
+          </div>
+          <div class="bar-axis"><span></span><span class="ticks"><span>0</span><span>20</span><span>40</span><span>60</span></span><span></span></div>
+          <p class="fig-source">Source: ASML annual reports 2024 and 2025. <a href="https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf">asml.com</a></p>
+        </figure>
+      </div>
+    </article>
+  </div>
+
+  <!-- specimen stage for the chapter -->
+  <figure class="stage">
+    <div class="stage-tag lab"><span>Specimen <b>05</b> / EUV scanner</span><span>Placeholder</span></div>
+    <div class="stage-art">
+      <svg viewBox="0 0 300 380" role="img" aria-label="Placeholder for the EUV scanner specimen">
+        <defs>
+          <pattern id="stipB" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(-11)">
+            <circle cx="1.4" cy="1.4" r="0.75" fill="currentColor"/>
+          </pattern>
+        </defs>
+        <!-- frame -->
+        <g opacity="0.26" fill="url(#stipB)">
+          <rect x="22" y="26" width="256" height="330" rx="4"/>
+        </g>
+        <!-- reticle stage, top -->
+        <g opacity="0.85" fill="url(#stipB)" stroke="currentColor" stroke-width="0.7">
+          <rect x="96" y="48" width="112" height="26" rx="2"/>
+        </g>
+        <!-- projection optics column, six mirrors -->
+        <g opacity="0.75" fill="url(#stipB)" stroke="currentColor" stroke-width="0.7">
+          <ellipse cx="112" cy="118" rx="30" ry="11"/>
+          <ellipse cx="192" cy="150" rx="26" ry="10"/>
+          <ellipse cx="108" cy="184" rx="24" ry="9"/>
+          <ellipse cx="188" cy="216" rx="21" ry="8"/>
+          <ellipse cx="116" cy="246" rx="18" ry="7"/>
+          <ellipse cx="180" cy="272" rx="15" ry="6"/>
+        </g>
+        <!-- light path -->
+        <g opacity="0.5" stroke="currentColor" stroke-width="0.9" fill="none" stroke-dasharray="3 4">
+          <path d="M62 306 L74 250 L112 128 L192 150 L108 184 L188 216 L116 246 L180 272 L152 322"/>
+        </g>
+        <!-- tin plasma source, lower left -->
+        <g opacity="0.9" fill="url(#stipB)" stroke="currentColor" stroke-width="0.7">
+          <circle cx="62" cy="310" r="20"/>
+        </g>
+        <!-- collector -->
+        <g opacity="0.6" stroke="currentColor" stroke-width="0.8" fill="none">
+          <path d="M42 292 A 26 26 0 0 1 84 292"/>
+        </g>
+        <!-- wafer stage, lower right -->
+        <g opacity="0.9" fill="url(#stipB)" stroke="currentColor" stroke-width="0.7">
+          <rect x="118" y="322" width="82" height="16" rx="2"/>
+          <rect x="128" y="312" width="52" height="10" rx="1"/>
+        </g>
+        <g opacity="0.4" stroke="currentColor" stroke-width="0.7" fill="none">
+          <rect x="22" y="26" width="256" height="330" rx="4"/>
+        </g>
+      </svg>
+    </div>
+    <figcaption>An EUV scanner in cross-section. Tin plasma source at the bottom left, collector mirror, reticle stage at the top, six-mirror projection optics, <b>wafer stage</b> at the bottom right.</figcaption>
+    <p class="stage-note">Stipple placeholder / production ships a point-cloud render</p>
+  </figure>
+</div>
+
+</main>
+</body>
+</html>

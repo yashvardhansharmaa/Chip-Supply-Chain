@@ -164,7 +164,7 @@
   };
 
   /* ---------------- router ---------------- */
-  var VIEWS = ['stack', 'briefing', 'landscape', 'suppliers', 'geopolitics', 'glossary', 'sources'];
+  var VIEWS = ['stack', 'briefing', 'landscape', 'suppliers', 'geopolitics', 'controls', 'glossary', 'sources'];
   var Router = {
     current: null,
     init: function () {
@@ -184,6 +184,7 @@
       if (v === 'landscape') Landscape.activate();
       else if (v === 'geopolitics') Geo.activate();
       else if (v === 'suppliers') Suppliers.activate();
+      else if (v === 'controls') Controls.activate();
       if (changed && m) window.scrollTo(0, 0);
       if (v === 'stack') {
         if (!m && h.length > 1) {
@@ -198,7 +199,7 @@
         }
         Sections.update();
       }
-      document.title = v === 'stack' ? 'Chokepoints' : 'Chokepoints · ' + { briefing: 'Briefing', landscape: 'Landscape', suppliers: 'Suppliers', geopolitics: 'Geopolitics', glossary: 'Glossary', sources: 'Sources' }[v];
+      document.title = v === 'stack' ? 'Chokepoints' : 'Chokepoints · ' + { briefing: 'Briefing', landscape: 'Landscape', suppliers: 'Suppliers', geopolitics: 'Geopolitics', controls: 'Controls', glossary: 'Glossary', sources: 'Sources' }[v];
     }
   };
 
@@ -441,6 +442,47 @@
       });
     }
   };
+  /* ---------------- controls view: threshold map + China exposure (rendered only if the section exists) ---------------- */
+  var Controls = {
+    built: false,
+    activate: function () { if (!this.built) this.build(); },
+    build: function () {
+      this.built = true;
+      var th = DATA.controls || [], ex = DATA.exposure || [];
+      var tbl = $('#controls-table');
+      if (tbl) {
+        var regimes = {}; th.forEach(function (t) { regimes[t.regime] = (regimes[t.regime] || 0) + 1; });
+        var chips = $('#controls-chips'), self = this, sel = null;
+        if (chips) {
+          chips.innerHTML = Object.keys(regimes).map(function (r) { return '<button type="button" data-r="' + esc(r) + '" aria-pressed="false">' + esc(r) + '<b>' + regimes[r] + '</b></button>'; }).join('');
+          chips.addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; sel = sel === b.getAttribute('data-r') ? null : b.getAttribute('data-r'); $$('button', chips).forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-r') === sel ? 'true' : 'false'); }); render(); });
+        }
+        var render = function () {
+          var rows = th.filter(function (t) { return !sel || t.regime === sel; });
+          tbl.innerHTML = '<thead><tr><th>Instrument</th><th>Scope</th><th>Threshold</th><th>Destinations and policy</th><th>Status</th><th>Source</th></tr></thead><tbody>' + rows.map(function (t) {
+            var thr = (t.parameter ? esc(t.parameter) + ' ' : '') + (t.operator ? esc(t.operator) + ' ' : '') + (t.value != null ? '<b class="num">' + (typeof t.value === 'number' ? t.value.toLocaleString('en-US') : esc(t.value)) + '</b>' : '') + (t.unit ? ' <span class="cc">' + esc(t.unit) + '</span>' : '') + (t.alternative ? '<br><span class="cc" style="color:var(--muted)">' + esc(t.alternative) + '</span>' : '');
+            var st = esc(t.status || ''), cls = /force/i.test(st) ? 'Critical' : /suspend/i.test(st) ? 'Contested' : /rescind|expired/i.test(st) ? 'Diversified' : 'Important';
+            return '<tr><td class="name"><b>' + esc(t.instrument) + '</b><span>' + esc(t.regime) + (t.effectiveDate ? ' · from ' + esc(t.effectiveDate) : '') + '</span></td><td>' + esc(t.scope || '') + '</td><td>' + thr + '</td><td class="role">' + esc(t.destinations || '') + (t.licensePolicy ? '<br><span class="cc" style="color:var(--muted)">' + esc(t.licensePolicy) + '</span>' : '') + (t.note ? '<br>' + esc(t.note) : '') + '</td><td><span class="chk ' + cls + '">' + st + '</span>' + (t.amendedBy && t.amendedBy.length ? '<br><span class="cc" style="color:var(--muted)">amended ' + esc(t.amendedBy.join(', ')) + '</span>' : '') + '</td><td>' + (t.source ? '<a class="cc" href="' + esc(t.source) + '" target="_blank" rel="noopener">source</a>' : '') + '</td></tr>';
+          }).join('') + '</tbody>';
+          var c = $('#controls-count'); if (c) c.textContent = rows.length + ' of ' + th.length + ' thresholds';
+        };
+        render();
+      }
+      var et = $('#exposure-table');
+      if (et && ex.length) {
+        var firms = {}, years = {};
+        ex.forEach(function (r) { (firms[r.firm] = firms[r.firm] || {})[r.fiscalYear] = r; years[r.fiscalYear] = 1; });
+        var ys = Object.keys(years).sort();
+        var meta = {}; ex.forEach(function (r) { meta[r.firm] = r; });
+        var order = Object.keys(firms).sort(function (a, b) { var la = firms[a][ys[ys.length - 1]] || {}, lb = firms[b][ys[ys.length - 1]] || {}; return (lb.chinaShare || 0) - (la.chinaShare || 0); });
+        et.innerHTML = '<thead><tr><th>Firm</th>' + ys.map(function (y) { return '<th>' + esc(y) + '</th>'; }).join('') + '</tr></thead><tbody>' + order.map(function (f) {
+          var m = meta[f];
+          return '<tr><td>' + esc(f) + '<small>' + esc(m.category || '') + ' · ' + esc(cname(m.country)) + (m.basis ? ' · ' + esc(m.basis) : '') + '</small></td>' + ys.map(function (y) { var r = firms[f][y]; if (!r || r.chinaShare == null) return '<td><span class="cell zero">·</span></td>'; return '<td><a class="cell" style="--v:' + Math.round(Math.min(100, r.chinaShare) * 1.6) + '" href="' + esc(r.source) + '" target="_blank" rel="noopener" title="' + esc((r.chinaRevenue != null ? r.chinaRevenue.toLocaleString('en-US') + ' of ' + (r.totalRevenue || 0).toLocaleString('en-US') + ' ' + (r.currency || '') : '') + (r.note ? ' · ' + r.note : '')) + '">' + r.chinaShare.toFixed(1) + '%</a></td>'; }).join('') + '</tr>';
+        }).join('') + '</tbody>';
+      }
+    }
+  };
+
   /* ---------------- research tools: search, permalinks, dataset export, citation ---------------- */
   var Tools = {
     index: null,

@@ -421,6 +421,11 @@ sup.cite a:hover { text-decoration: underline; }
 .tier-D, .tier-\? { border-color: var(--c6); color: var(--c6); }
 .tier-key { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); margin: 6px 0 10px; }
 
+/* ---------- controls view ---------- */
+.matrix td .cell { text-decoration: none; }
+.matrix td a.cell:hover { outline: 1px solid var(--accent); }
+.controls-intro { max-width: 66ch; color: var(--ink-2); font-size: 17px; }
+
 /* ---------- research tools ---------- */
 .search-btn { width: 34px; height: 34px; flex: 0 0 auto; border: 1px solid var(--line-2); border-radius: 3px; display: inline-grid; place-items: center; margin-left: 6px; }
 .search-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; }

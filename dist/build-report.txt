@@ -1,11 +1,11 @@
-built 2026-09-09T13:06:49.493Z
+built 2026-09-09T13:08:23.261Z
 source tiers: A 170 · B 99 · C 55 · D 49 · unclassified 1
 chapters: 17 + geopolitics
-words: 24875
+words: 24805
 sources: 374
 landscape: 19 chips · suppliers: 220 · timeline: 45 · matrix: 20 · glossary: 74
 specimens: boule-and-wafer, cowos-exploded, die-floorplan, euv-scanner, foup, gaa-transistor, gas-cabinet, globe, gpu-baseboard, hbm-stack, package, photomask, probe-card, process-chamber, rack, sem-column, substrate-layers, wafer-cost, wafer
-size: 1357 KB
+size: 1361 KB
   01 introduction-and-goals: 935 words, 8 sources (D 0, ? 0), 2 figures
   02 design-and-eda: 1319 words, 13 sources (D 3, ? 0), 3 figures
   03 silicon-and-wafers: 1330 words, 14 sources (D 2, ? 0), 2 figures
@@ -17,7 +17,7 @@ size: 1357 KB
   09 transistors-and-front-end: 1326 words, 21 sources (D 3, ? 0), 3 figures
   10 foundries-and-fabs: 1339 words, 18 sources (D 2, ? 0), 3 figures
   11 memory-and-hbm: 1334 words, 21 sources (D 2, ? 0), 3 figures
-  12 advanced-packaging: 1274 words, 14 sources (D 0, ? 0), 2 figures
+  12 advanced-packaging: 1204 words, 14 sources (D 0, ? 0), 2 figures
   13 substrates-and-pcbs: 1324 words, 23 sources (D 0, ? 0), 2 figures
   14 test-and-assembly: 1337 words, 25 sources (D 1, ? 0), 3 figures
   15 systems-and-networking: 1313 words, 16 sources (D 1, ? 0), 3 figures
