@@ -29,10 +29,14 @@
     return true;
   }
 
+  function soon(fn) { // requestAnimationFrame must be called on window, never detached
+    if (window.requestAnimationFrame) window.requestAnimationFrame(fn); else window.setTimeout(fn, 16);
+  }
+
   function tick() {
     if (queued) return;
     queued = true;
-    (window.requestAnimationFrame || window.setTimeout)(update, 16);
+    soon(update);
   }
 
   function update() {
@@ -75,8 +79,7 @@
   CP.register('walk', {
     activate: function () {
       if (!setup()) return;
-      var go = function () { jump(); update(); };
-      if (window.requestAnimationFrame) requestAnimationFrame(go); else setTimeout(go, 0);
+      soon(function () { jump(); at = -1; update(); });
     }
   });
 })();

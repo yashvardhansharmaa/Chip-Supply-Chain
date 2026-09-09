@@ -1,10 +1,16 @@
 {
   "url": "https://www.ocichem.com/",
-  "status": 0,
-  "finalUrl": "https://www.ocichem.com/",
-  "contentType": null,
+  "status": 200,
+  "finalUrl": "https://ocichem.com/",
+  "contentType": "text/html; charset=utf-8",
   "lastModified": null,
-  "error": "This operation was aborted",
-  "fetchedAt": "2026-09-09T18:23:20.707Z",
-  "extracted": null
+  "error": null,
+  "fetchedAt": "2026-09-09T18:26:53.011Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Home",
+    "date": "2025-01-17",
+    "siteName": "Ocichem S.R.L.",
+    "rawTitle": "Home - Ocichem S.R.L."
+  }
 }

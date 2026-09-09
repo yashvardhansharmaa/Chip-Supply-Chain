@@ -64,7 +64,7 @@
 }
 .wk-leaders .label { flex: 0 0 auto; }
 .wk-lead { font-weight: 600; color: var(--ink); }
-.wk-lead .chip { margin: 0 0 0 7px; }
+.wk-lead .chip { margin: 0 0 0 3px; } /* the markup already carries a literal space, so the name reads apart from its code */
 .wk-sep { font-style: normal; color: var(--line-2); }
 
 .wk-foot {

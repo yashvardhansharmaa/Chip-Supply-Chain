@@ -1,10 +1,16 @@
 {
   "url": "https://www.qct.io/solution/index/AI-Solutions",
-  "status": 0,
+  "status": 403,
   "finalUrl": "https://www.qct.io/solution/index/AI-Solutions",
-  "contentType": null,
+  "contentType": "text/html",
   "lastModified": null,
-  "error": "fetch failed",
-  "fetchedAt": "2026-09-09T18:23:12.929Z",
-  "extracted": null
+  "error": null,
+  "fetchedAt": "2026-09-09T18:26:52.498Z",
+  "extracted": {
+    "kind": "html",
+    "title": "403 Forbidden",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "403 Forbidden"
+  }
 }

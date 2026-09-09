@@ -1,10 +1,16 @@
 {
   "url": "https://www.naura.com/en/",
-  "status": 0,
-  "finalUrl": "https://www.naura.com/en/",
-  "contentType": null,
-  "lastModified": null,
-  "error": "fetch failed",
-  "fetchedAt": "2026-09-09T18:23:07.838Z",
-  "extracted": null
+  "status": 200,
+  "finalUrl": "https://www.naura.com/index.html?l=english",
+  "contentType": "text/html",
+  "lastModified": "Wed, 02 Sep 2026 06:04:28 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:26:51.827Z",
+  "extracted": {
+    "kind": "html",
+    "title": "首页 - 北方华创",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "首页 - 北方华创"
+  }
 }

@@ -65,7 +65,7 @@ function collectUrls() {
   const files = [
     ...walkFiles(CONTENT_DIR, ['.md']),
     ...walkFiles(DATA_DIR, ['.json', '.md']),
-  ];
+  ].filter((f) => path.resolve(f) !== OUT_FILE); // never scan our own output
   const found = new Map(); // url -> Set of files
 
   for (const file of files) {

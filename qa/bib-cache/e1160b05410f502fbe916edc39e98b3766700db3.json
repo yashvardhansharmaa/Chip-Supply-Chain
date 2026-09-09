@@ -1,10 +1,16 @@
 {
   "url": "https://www.wuhanjingce.com/en/",
-  "status": 0,
+  "status": 200,
   "finalUrl": "https://www.wuhanjingce.com/en/",
-  "contentType": null,
+  "contentType": "text/html; charset=utf-8",
   "lastModified": null,
-  "error": "This operation was aborted",
-  "fetchedAt": "2026-09-09T18:23:48.246Z",
-  "extracted": null
+  "error": null,
+  "fetchedAt": "2026-09-09T18:26:54.555Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Wuhan Jingce Electronic Group Co., Ltd.",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "Wuhan Jingce Electronic Group Co., Ltd."
+  }
 }

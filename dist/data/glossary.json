@@ -24,13 +24,13 @@
     "term": "ALD",
     "aka": "atomic layer deposition",
     "plain": "A way of coating a chip roughly one atomic layer at a time. Each pulse of gas sticks to the surface and then stops once the surface is covered, so the film ends up the same thickness on the floor and on the walls of a hole hundreds of times deeper than it is wide.",
-    "why": "ALD is what makes stacked memory and wrap-around transistors possible. US export rules name it directly, and it is the one tool category where Chinese suppliers still hold under 1 percent of the market.",
+    "why": "Atomic layer deposition is what makes stacked memory and wrap-around transistors possible, US export rules name it directly, and it is the one tool category where Chinese suppliers still hold under 1 percent of the market.",
     "chapter": "deposition-and-etch"
   },
   {
     "term": "ASIC",
     "aka": "application-specific integrated circuit, custom silicon",
-    "plain": "A chip designed for one job for one buyer instead of being sold on the open market. Google's Tensor Processing Unit and Amazon's Trainium are chips of this kind; an Nvidia part sold to any customer is not.",
+    "plain": "A one-customer chip, designed for a single job rather than sold on the open market. Google's Tensor Processing Unit and Amazon's Trainium are chips of this kind; an Nvidia part sold to any customer is not.",
     "why": "Custom chips are how the largest cloud buyers try to escape Nvidia's pricing, and roughly 95 percent of the co-design work for them runs through just two firms, Broadcom and Marvell.",
     "chapter": "design-and-eda"
   },
@@ -59,7 +59,7 @@
     "term": "BIS",
     "aka": "Bureau of Industry and Security, part of the US Department of Commerce",
     "plain": "The US government office that decides which technologies may be exported, to whom, and on what conditions. It writes the rules, issues the licences and brings the enforcement cases.",
-    "why": "Almost every restriction on selling AI chips or chipmaking tools to China is a BIS rule, and BIS can change a threshold with a Federal Register notice rather than an act of Congress.",
+    "why": "Almost every restriction on selling AI chips or chipmaking tools to China is a bureau rule, and the bureau can change a threshold with a Federal Register notice rather than an act of Congress.",
     "chapter": "geopolitics"
   },
   {
@@ -122,7 +122,7 @@
     "term": "DUV",
     "aka": "deep ultraviolet",
     "plain": "Chipmaking light with a wavelength of 248 or 193 nanometres, produced by a gas laser. Flooding the gap above the wafer with ultrapure water bends the light further and sharpens the printed image, which is called immersion.",
-    "why": "Immersion DUV is the most advanced lithography China can currently buy or build, which is where Dutch export licensing draws its line.",
+    "why": "Immersion deep ultraviolet is the most advanced lithography China can buy or build, which is where Dutch export licensing draws its line.",
     "chapter": "lithography"
   },
   {
@@ -164,7 +164,7 @@
     "term": "EUV",
     "aka": "extreme ultraviolet",
     "plain": "Chipmaking light at a wavelength of 13.5 nanometres, made by dropping molten tin into a vacuum and hitting it with a laser 100,000 times a second to create a plasma hotter than the surface of the sun. Everything absorbs this light, including air and glass, so the machine runs in vacuum and every lens has to be a mirror.",
-    "why": "One company, ASML, makes every EUV machine on Earth, none has ever been sold to China, and no leading-edge logic or advanced memory process runs without one.",
+    "why": "One company, ASML, makes every extreme ultraviolet machine on Earth, none has ever been sold to China, and no leading-edge logic or advanced memory process runs without one.",
     "chapter": "lithography"
   },
   {
@@ -191,7 +191,7 @@
   {
     "term": "FLOPS",
     "aka": "floating point operations per second; a TFLOPS is a trillion of them",
-    "plain": "A count of how many arithmetic operations on decimal numbers a chip can perform each second, the way horsepower counts an engine's output. One teraflop, written TFLOPS, is a trillion operations per second.",
+    "plain": "A count of how many arithmetic operations on decimal numbers a chip can perform each second, the way horsepower counts an engine's output.",
     "why": "The standard unit of AI compute and the basis of export thresholds, but only comparable between chips when the number format behind it is stated.",
     "chapter": "introduction-and-goals"
   },
@@ -199,7 +199,7 @@
     "term": "foreign direct product rule",
     "aka": "FDPR, FDP rule",
     "plain": "A US rule that claims authority over goods made anywhere in the world by anyone, if they were produced using American technology or American-built equipment. A chip made in Taiwan on American tools falls under it.",
-    "why": "It is the instrument that makes US controls extraterritorial, and without it a listed buyer could order the same item from a non-American supplier.",
+    "why": "This rule is what makes US controls extraterritorial; without it a listed buyer could order the same item from a supplier outside America.",
     "chapter": "geopolitics"
   },
   {
@@ -220,7 +220,7 @@
     "term": "gate-all-around",
     "aka": "GAA, nanosheet transistor, RibbonFET at Intel",
     "plain": "A transistor in which the controlling gate surrounds the channel that current flows through, rather than touching three sides as a fin does. Surrounding it gives the gate total authority, so the switch still turns fully off as dimensions shrink.",
-    "why": "The transistor of the 2 nanometre generation. Only TSMC, Intel and Samsung can build it in volume, and it is what drives new demand for atomic layer deposition and sideways etching tools.",
+    "why": "Only TSMC, Intel and Samsung can build the 2 nanometre generation's transistor in volume, and it is what drives new demand for atomic layer deposition and sideways etching tools.",
     "chapter": "transistors-and-front-end"
   },
   {
@@ -240,8 +240,8 @@
   {
     "term": "HBM",
     "aka": "high bandwidth memory",
-    "plain": "A stack of eight to sixteen memory chips, drilled through with copper columns and mounted a few millimetres from the processor so data reaches the arithmetic units far faster than it could across a motherboard. A single HBM chip moves data roughly thirty times faster than an ordinary memory chip.",
-    "why": "The most expensive line on an AI accelerator's bill of materials. All of it comes from three firms, and their entire 2026 output was sold forward before the year began.",
+    "plain": "A stack of eight to sixteen memory chips, drilled through with copper columns and mounted a few millimetres from the processor so data reaches the arithmetic units far faster than it could across a motherboard. One such stack moves data roughly thirty times faster than an ordinary memory chip.",
+    "why": "The most expensive line on an AI accelerator's bill of materials, made by three firms whose entire 2026 output was sold forward before the year began.",
     "chapter": "memory-and-hbm"
   },
   {
@@ -255,14 +255,14 @@
     "term": "hybrid bonding",
     "aka": "direct bond interconnect",
     "plain": "Joining two chips face to face by pressing their copper pads and the surrounding oxide into direct contact, with no solder in between. Removing the solder lets connections be packed much more tightly and shortens the path heat has to travel out.",
-    "why": "It is the technology that would let memory stacks grow taller and run cooler, only two suppliers make the tools, and its repeated slippage is a leading indicator for memory roadmaps.",
+    "why": "Taller, cooler memory stacks wait on this step, only two suppliers make the tools, and every slip in their schedule moves the memory roadmap with it.",
     "chapter": "advanced-packaging"
   },
   {
     "term": "hyperscaler",
     "aka": "",
     "plain": "One of the handful of companies that run data centres at global scale and buy computing hardware by the gigawatt: Amazon, Microsoft, Google, Meta and, on most definitions, Oracle.",
-    "why": "Their combined capital spending is guided at roughly $660 to $690 billion for 2026, most of it committed years before the hardware exists.",
+    "why": "They have guided to roughly $660 to $690 billion of combined capital spending for 2026, most of it committed years before the hardware exists.",
     "chapter": "data-centers-and-power"
   },
   {
@@ -276,14 +276,14 @@
     "term": "interposer",
     "aka": "",
     "plain": "A slab of silicon carrying wiring but no transistors, used as a miniature circuit board underneath several chips so they can be connected at a density no ordinary board could reach.",
-    "why": "The interposer's own manufacturing yield, roughly 60 to 70 percent on large ones, is now a material share of an accelerator's cost, and its maximum area caps how much silicon fits in one package.",
+    "why": "The interposer's own manufacturing yield, roughly 60 to 70 percent on large ones, is now a real share of an accelerator's cost, and its maximum area caps how much silicon fits in one package.",
     "chapter": "advanced-packaging"
   },
   {
     "term": "known-good die",
     "aka": "KGD",
     "plain": "A bare chip tested thoroughly enough, before assembly, to be trusted inside something expensive. In an ordinary product a marginal chip costs you one chip; inside a stacked package it can destroy thirty.",
-    "why": "As packages grow toward ten logic chips and twenty memory stacks, the cost of catching a bad one late is what is pushing testing and burn-in back onto the wafer.",
+    "why": "As packages grow toward ten logic chips and twenty memory stacks, the cost of catching a bad one late pushes testing and burn-in back onto the wafer.",
     "chapter": "test-and-assembly"
   },
   {
@@ -311,7 +311,7 @@
     "term": "memory wall",
     "aka": "",
     "plain": "The widening gap between how fast a processor can calculate and how fast memory can feed it numbers to work on. Computing speed has been roughly tripling every two years while memory bandwidth has less than doubled.",
-    "why": "It is the reason AI accelerators now spend most of their cost and most of their silicon area on memory rather than arithmetic, and why memory suppliers have started earning margins comparable to chip designers.",
+    "why": "This gap is why AI accelerators now spend most of their cost and silicon area on memory rather than arithmetic, and why memory suppliers have started earning margins comparable to chip designers.",
     "chapter": "memory-and-hbm"
   },
   {
@@ -325,7 +325,7 @@
     "term": "multipatterning",
     "aka": "double patterning, quadruple patterning, self-aligned quadruple patterning",
     "plain": "Printing a single chip layer using two, three or four separate plates and etching steps, because one exposure cannot resolve features that close together. It is what a fab does when it cannot get sharper light.",
-    "why": "It is how China reaches advanced processes without extreme ultraviolet machines, taking roughly 34 lithography steps where nine would do, which is the direct source of its yield and cost penalty.",
+    "why": "China reaches advanced processes this way without extreme ultraviolet machines, taking roughly 34 lithography steps where nine would do, which is the direct source of its yield and cost penalty.",
     "chapter": "lithography"
   },
   {
@@ -339,14 +339,14 @@
     "term": "NVL72",
     "aka": "GB200 NVL72, GB300 NVL72, Vera Rubin NVL72",
     "plain": "Nvidia's rack-sized product: 72 accelerators and 36 processors wired into one machine that software can treat as a single computer. The GB300 version draws up to 142 kilowatts.",
-    "why": "It is the unit AI capacity is now bought and priced in, at roughly $5.0 million for a Grace Blackwell rack and an estimated $7.8 million for its Vera Rubin successor.",
+    "why": "AI capacity is now bought and priced by the rack, at roughly $5.0 million for a Grace Blackwell one and an estimated $7.8 million for its Vera Rubin successor.",
     "chapter": "systems-and-networking"
   },
   {
     "term": "NVLink",
     "aka": "",
     "plain": "Nvidia's private high-speed connection between its own accelerators, carrying up to 3,600 gigabytes per second per chip so that dozens of them can act as one. No other vendor sells a switch with comparable bandwidth.",
-    "why": "It is a genuine single-vendor chokepoint inside an otherwise competitive systems layer, which is what the industry's UALink standard was created to break.",
+    "why": "A genuine single-vendor chokepoint inside an otherwise competitive systems layer, and the reason the rest of the industry created the UALink standard to break it.",
     "chapter": "systems-and-networking"
   },
   {
@@ -360,7 +360,7 @@
     "term": "OSAT",
     "aka": "outsourced semiconductor assembly and test",
     "plain": "A contract firm that takes finished wafers, cuts them into chips, seals the chips into packages and tests them. It is the back end of chipmaking, done for hire.",
-    "why": "A low-margin business at 14 to 20 percent. Four of the ten largest firms are Chinese, and its tools sit largely outside the export control lines drawn around lithography and advanced deposition.",
+    "why": "A low-margin business at 14 to 20 percent, with four of the ten largest firms Chinese and its tools largely outside the export control lines drawn around lithography and advanced deposition.",
     "chapter": "test-and-assembly"
   },
   {
@@ -374,7 +374,7 @@
     "term": "pellicle",
     "aka": "",
     "plain": "A thin transparent membrane held a few millimetres above a photomask so that dust settles on it rather than on the pattern, far enough out of focus that it does not print. It is a lens cap you can shoot through.",
-    "why": "No membrane yet survives extreme ultraviolet light while passing enough of it, so fabs trade printing speed against defect risk product by product, and solving this would move the cost of EUV more than any machine upgrade.",
+    "why": "No membrane yet survives extreme ultraviolet light while passing enough of it, so fabs trade printing speed against defect risk product by product, and solving this would cut the cost of that printing more than any machine upgrade.",
     "chapter": "photomasks-and-pellicles"
   },
   {
@@ -415,7 +415,7 @@
   {
     "term": "reticle",
     "aka": "photomask",
-    "plain": "The patterned plate that a lithography machine projects onto the wafer, one chip layer at a time. In practice the word is used interchangeably with photomask, with reticle stressing that the same image is stepped repeatedly across the disc.",
+    "plain": "The patterned plate that a lithography machine projects onto the wafer, one chip layer at a time. In practice the word means the same as photomask, with reticle stressing that the machine steps the same image repeatedly across the disc.",
     "why": "The reticle's fixed printable area, 26 by 33 millimetres, is a hard physical limit that shapes how every large AI chip has to be designed.",
     "chapter": "photomasks-and-pellicles"
   },
@@ -444,7 +444,7 @@
     "term": "silicon shield",
     "aka": "",
     "plain": "The argument that Taiwan's dominance of advanced chipmaking deters an attack, because destroying or seizing TSMC would cost an aggressor and the world more than the island is worth.",
-    "why": "It is the central and contested assumption behind Taiwan policy, and its weakness is that a shield only works while it stays irreplaceable, which gives Taipei a reason to slow the diversification its allies want.",
+    "why": "The central and contested assumption behind Taiwan policy: a shield works only while it stays irreplaceable, which gives Taipei reason to slow the diversification its allies want.",
     "chapter": "geopolitics"
   },
   {
@@ -479,7 +479,7 @@
     "term": "TPU",
     "aka": "Tensor Processing Unit",
     "plain": "Google's own AI chip, designed in-house rather than bought from Nvidia and used only inside Google's own data centres and cloud service. The seventh generation is called Ironwood.",
-    "why": "The clearest evidence that a large buyer can build a real alternative to merchant chips, with Google claiming a total cost per chip about 44 percent below the Nvidia server it replaces.",
+    "why": "The clearest evidence that a large buyer can build a real alternative to chips bought on the open market, with Google claiming a total cost per chip about 44 percent below the Nvidia server it replaces.",
     "chapter": "design-and-eda"
   },
   {
@@ -493,7 +493,7 @@
     "term": "TSV",
     "aka": "through-silicon via",
     "plain": "A copper column drilled all the way down through a chip so that power and signals can pass from its top face to its bottom face. It is what makes stacking chips vertically possible, in the way a lift shaft makes a tall building usable.",
-    "why": "These columns are the enabling step for high bandwidth memory, and US rules control the tools that cut them by hole shape and etching speed.",
+    "why": "These columns are what make high bandwidth memory possible, and US rules control the tools that cut them by hole shape and etching speed.",
     "chapter": "memory-and-hbm"
   },
   {
