@@ -7,6 +7,7 @@
   var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var narrow = function () { return window.innerWidth < 900; };
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var dec = function (s) { try { return decodeURIComponent(s); } catch (e) { return s; } }; // a hand-typed "#%" is not valid escaping and must not throw the router
   var COUNTRY = { US: 'United States', NL: 'Netherlands', JP: 'Japan', TW: 'Taiwan', KR: 'South Korea', CN: 'China', DE: 'Germany', CH: 'Switzerland', GB: 'United Kingdom', FR: 'France', IL: 'Israel', SG: 'Singapore', MY: 'Malaysia', AT: 'Austria', IT: 'Italy', BE: 'Belgium', IN: 'India', AE: 'United Arab Emirates', SA: 'Saudi Arabia', CA: 'Canada', SE: 'Sweden', FI: 'Finland', IE: 'Ireland', TH: 'Thailand', VN: 'Vietnam', PH: 'Philippines', MX: 'Mexico', 'EU-other': 'Other Europe', Other: 'Other' };
   var cname = function (c) { return COUNTRY[c] || c; };
 
@@ -214,7 +215,7 @@
       var h = location.hash || '#/', m = h.match(/^#\/([a-z-]+)/), bare = h.replace(/^#/, '');
       var v = (bare === '' || bare === '/') ? 'home' : 'stack'; // the site opens on the map; a bare chapter anchor opens the chain
       if (m && VIEWS.indexOf(m[1]) >= 0) v = m[1];
-      var anchor = v === 'geopolitics' ? 'geopolitics' : ((!m && bare && bare !== '/') ? decodeURIComponent(bare) : null);
+      var anchor = v === 'geopolitics' ? 'geopolitics' : ((!m && bare && bare !== '/') ? dec(bare) : null);
       if (anchor && !m) { // a bare anchor belongs to whichever view holds it; one that sits outside them all (the skip link's #app) leaves the view alone
         var target = document.getElementById(anchor), host = target && target.closest ? target.closest('.view[data-view]') : null;
         if (host) v = host.getAttribute('data-view');

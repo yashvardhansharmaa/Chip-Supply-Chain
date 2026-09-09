@@ -67,7 +67,9 @@
   function jump(cold) {
     var h = location.hash || '';
     if (h.indexOf('#/walk/') !== 0) return;
-    var el = document.getElementById(decodeURIComponent(h.slice(1)));
+    var id = h.slice(1);
+    try { id = decodeURIComponent(id); } catch (e) { } // "#/walk/%" is not valid escaping; take it as typed rather than throw
+    var el = document.getElementById(id);
     if (!el) return;
     var root = document.documentElement, prev = root.style.scrollBehavior;
     if (cold) root.style.scrollBehavior = 'auto'; // land on the step, do not animate the whole page
