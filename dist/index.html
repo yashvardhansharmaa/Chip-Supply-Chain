@@ -8091,7 +8091,7 @@ PC.register('wafer', function (p) {
 
   /* ---------------- research tools: search, permalinks, dataset export, citation ---------------- */
   var Tools = {
-    index: null,
+    index: null, from: null,
     buildIndex: function () {
       if (this.index) return this.index;
       var idx = [];
@@ -8169,19 +8169,26 @@ PC.register('wafer', function (p) {
         document.body.appendChild(box);
         var inp = $('input', box), list = $('ol', box);
         box.addEventListener('click', function (e) { if (e.target === box) self.close(); });
-        inp.addEventListener('keydown', function (e) { if (e.key === 'Escape') self.close(); if (e.key === 'Enter') { var a = list.querySelector('a'); if (a) a.click(); } });
+        box.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.preventDefault(); self.close(); } }); // on the panel, not the input: Esc must work from a result too
+        inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') { var a = list.querySelector('a'); if (a) a.click(); } });
         inp.addEventListener('input', function () {
           var q = inp.value.trim();
           if (!q) { list.innerHTML = ''; return; }
           var res = self.search(q), hits = res.hits;
           list.innerHTML = (res.note ? '<li class="none">' + esc(res.note) + '</li>' : '') +
             (hits.map(function (h, k) { return '<li><a href="' + esc(h.href) + '" data-k="' + k + '"><span class="k">' + esc(h.kind) + '</span><b>' + esc(h.title) + '</b><span class="t">' + esc(h.text.slice(0, 140)) + '</span></a></li>'; }).join('') || (res.note ? '' : '<li class="none">Nothing matches. Try fewer words.</li>'));
-          list.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { var h = hits[+a.getAttribute('data-k')]; self.close(); if (h.chip) setTimeout(function () { Landscape.select(h.chip); }, 60); if (h.q) setTimeout(function () { var s = $('#sup-search'); if (s) { s.value = h.q; s.dispatchEvent(new Event('input')); } }, 60); if (h.el) setTimeout(function () { h.el.scrollIntoView({ block: 'center' }); }, 60); }); });
+          list.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { var h = hits[+a.getAttribute('data-k')]; self.close(true); if (h.chip) setTimeout(function () { Landscape.select(h.chip); }, 60); if (h.q) setTimeout(function () { var s = $('#sup-search'); if (s) { s.value = h.q; s.dispatchEvent(new Event('input')); } }, 60); if (h.el) setTimeout(function () { h.el.scrollIntoView({ block: 'center' }); }, 60); }); });
         });
       }
+      if (box.hidden !== false) this.from = document.activeElement; // where the reader was, so closing can put them back
       box.hidden = false; $('input', box).value = ''; $('ol', box).innerHTML = ''; $('input', box).focus();
     },
-    close: function () { var box = $('#cp-search'); if (box) box.hidden = true; },
+    close: function (following) { // following a result: the destination takes focus, so leave it alone
+      var box = $('#cp-search'); if (box) box.hidden = true;
+      var back = this.from; this.from = null;
+      if (following || !back || !back.focus || !document.contains(back)) return;
+      try { back.focus({ preventScroll: true }); } catch (e) { try { back.focus(); } catch (e2) { } }
+    },
     init: function () {
       var self = this;
       // search button in the masthead
@@ -8189,7 +8196,7 @@ PC.register('wafer', function (p) {
       btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>';
       btn.addEventListener('click', function () { self.open(); });
       if (nav) nav.insertBefore(btn, $('.theme-toggle'));
-      document.addEventListener('keydown', function (e) { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); self.open(); } if (e.key === '/' && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); self.open(); } });
+      document.addEventListener('keydown', function (e) { var k = e.key || '', a = document.activeElement || document.body; if ((e.ctrlKey || e.metaKey) && k.toLowerCase() === 'k') { e.preventDefault(); self.open(); } if (k === '/' && !/INPUT|TEXTAREA|SELECT/.test(a.tagName || '') && !a.isContentEditable) { e.preventDefault(); self.open(); } });
       // heading permalinks
       $$('.prose h3[id], .prose h4[id]').forEach(function (h) { var a = document.createElement('a'); a.className = 'permalink'; a.href = '#' + h.id; a.setAttribute('aria-label', 'Link to this section'); a.textContent = '#'; h.appendChild(a); });
       // dataset export buttons (copy to clipboard: JSON or CSV)
