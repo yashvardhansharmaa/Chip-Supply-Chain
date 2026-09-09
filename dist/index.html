@@ -2419,7 +2419,7 @@ try{(function(PC){
  * that run down a <100> crystal, clearly visible on an as-grown crown. The
  * body is ground to diameter, so it carries only faint growth striations.
  *
- * Below the tail stand three wafers sawn from that body, one in copper. A
+ * Beside the tail stand three wafers sawn from that body, one in copper. A
  * wafer is exactly as wide as the ingot: that is the whole reason for growing
  * the crystal to 300 mm in the first place.
  */
@@ -2457,7 +2457,7 @@ PC.register('boule-and-wafer', function (p) {
   var body = [[R, yB0], [R, yB1]];
   parts.push(at(PC.T(PC.cylinder({ r: R, h: yB1 - yB0, caps: false, n: 9000, tone: 0.16 }),
     { pos: [0, (yB0 + yB1) / 2, 0] })));
-  hatch(body, 0.36);
+  hatch(body, 0.30);
   for (i = 0; i <= 9; i++) {                          // growth striations
     y = yB0 + 0.07 + (yB1 - yB0 - 0.14) * i / 9;
     parts.push(at(PC.T(PC.circle({ r: R * 1.006, perUnit: 130, tone: 0.28 }), { pos: [0, y, 0] })));
@@ -2471,7 +2471,7 @@ PC.register('boule-and-wafer', function (p) {
                [Rc * 0.690, 1.362], [Rc * 0.545, 1.404], [Rc * 0.370, 1.437],
                [Rc * 0.185, 1.461], [0.004, yCr]];
   parts.push(at(PC.lathe({ profile: crown, tone: 0.17 })));
-  hatch(crown, 0.30, 6, 0.72);                         // 4 heavy meridians = the facet ridges
+  hatch(crown, 0.34, 6, 0.88);                         // 4 heavy meridians = the facet ridges
   parts.push(at(PC.T(PC.circle({ r: Rc * 1.006, perUnit: 640, tone: 1 }), { pos: [0, yB1, 0] })));
   parts.push(at(PC.T(PC.circle({ r: R * 1.006, perUnit: 400, tone: 0.8 }), { pos: [0, yB1, 0] })));
   [4, 7].forEach(function (k) {
@@ -2487,7 +2487,7 @@ PC.register('boule-and-wafer', function (p) {
   parts.push(PC.T(PC.circle({ r: 0.026, perUnit: 380, tone: 0.9 }), { pos: [bx, yCh, 0] }));
   parts.push(PC.T(PC.circle({ r: 0.026, perUnit: 380, tone: 0.9 }), { pos: [bx, ySd, 0] }));
 
-  // ---------- three wafers standing on their rims, as they come out of the saw ----------
+  // ---------- three wafers standing on their rims, as they come out of the wire saw ----------
   function wafer(accent) {
     var face = PC.disc({ r: R, n: accent ? 5400 : 3000, tone: accent ? 0.24 : 0.15 });
     var rim = PC.circle({ r: R, perUnit: accent ? 620 : 380, tone: accent ? 1 : 0.85 });
@@ -2506,10 +2506,10 @@ PC.register('boule-and-wafer', function (p) {
     return new Float32Array(keep);
   }
   var lean = 0.17;
-  for (i = 0; i < 5; i++) {
-    parts.push(PC.T(wafer(i === 2), {
-      rot: [0, 0.30, -(Math.PI / 2 - lean)],
-      pos: [0.34 + (i - 2) * 0.014, yTip + R * Math.cos(lean) + 0.002, (i - 2) * 0.062]
+  for (i = 0; i < 3; i++) {
+    parts.push(PC.T(wafer(i === 1), {
+      rot: [0, 0.34, -(Math.PI / 2 - lean)],
+      pos: [0.30 + (i - 1) * 0.030, yTip + R * Math.cos(lean) + 0.002, (i - 1) * 0.175]
     }));
   }
 
@@ -3382,14 +3382,14 @@ PC.register('gas-cabinet', function (p) {
   add(at(PC.cylinder({ r: 0.016, h: 0.055, caps: false, n: 160, tone: 0.6 }), CBX + 0.20, CTOP - 0.055, -0.05));
   add(at(PC.circle({ r: 0.030, perUnit: 340, tone: 0.85 }), CBX + 0.20, CTOP - 0.082, -0.05));
   // two restraint bars across the bottles
-  [0.62, 1.14].forEach(function (by) {
+  [0.58, 1.04].forEach(function (by) {
     add(at(PC.box({ w: CW - 0.13, h: 0.038, d: 0.038, n: 340, tone: 0.55 }), CBX, by, 0.045));
     add(at(PC.boxEdges({ w: CW - 0.13, h: 0.038, d: 0.038, perUnit: 280, tone: 1 }), CBX, by, 0.045));
   });
 
   /* ================= three cylinders ================= */
 
-  var cylX = [-0.29, 0.0, 0.29], cylH = [1.30, 1.30, 1.12], CR = 0.114, cz = -0.055;
+  var cylX = [-0.29, 0.0, 0.29], cylH = [1.16, 1.16, 0.98], CR = 0.114, cz = -0.055;
   var valveTop = [];
   for (i = 0; i < 3; i++) {
     x = CBX + cylX[i];
@@ -3411,11 +3411,11 @@ PC.register('gas-cabinet', function (p) {
 
   /* ================= the gas panel (copper) ================= */
 
-  var PZ = -CD / 2 + 0.035, PY0 = 1.26, man = [];
+  var PZ = -CD / 2 + 0.035, PY0 = 1.44, man = [];
   // panel plate on the back wall
-  man.push(PC.T(PC.plane({ w: 0.84, d: 0.54, n: 2600, tone: 0.26 }), { rot: [Math.PI / 2, 0, 0], pos: [CBX - 0.02, PY0 + 0.25, PZ] }));
+  man.push(PC.T(PC.plane({ w: 0.84, d: 0.46, n: 2400, tone: 0.26 }), { rot: [Math.PI / 2, 0, 0], pos: [CBX - 0.02, PY0 + 0.25, PZ] }));
   man.push(PC.T(PC.polyline({
-    pts: [[-0.42, 0, -0.27], [0.42, 0, -0.27], [0.42, 0, 0.27], [-0.42, 0, 0.27]], closed: true, perUnit: 300, tone: 1
+    pts: [[-0.42, 0, -0.23], [0.42, 0, -0.23], [0.42, 0, 0.23], [-0.42, 0, 0.23]], closed: true, perUnit: 300, tone: 1
   }), { rot: [Math.PI / 2, 0, 0], pos: [CBX - 0.02, PY0 + 0.25, PZ + 0.004] }));
   // process header running across the panel, and the vent header above it
   man.push(PC.line({ a: [CBX - 0.40, PY0 + 0.06, PZ + 0.03], b: [CBX + 0.40, PY0 + 0.06, PZ + 0.03], perUnit: 300, tone: 1 }));
@@ -3450,12 +3450,12 @@ PC.register('gas-cabinet', function (p) {
 
   /* ================= the bulk liquid cylinder ================= */
 
-  var TX = 1.02, TZ = -0.44, TR = 0.222, TB = 0.16, TT = 1.24;
+  var TX = 0.86, TZ = -0.40, TR = 0.205, TB = 0.15, TT = 1.06;
   add(PC.T(PC.cylinder({ r: TR, h: TT - TB, caps: false, n: 7000, tone: 0.25 }), { pos: [TX, (TB + TT) / 2, TZ] }));
   add(PC.T(PC.sphere({ r: TR, thetaMax: Math.PI / 2, n: 2000, tone: 0.28 }), { scale: [1, 0.52, 1], pos: [TX, TT, TZ] }));
   add(PC.T(PC.circle({ r: TR * 1.004, perUnit: 300, tone: 1 }), { pos: [TX, TT, TZ] }));
   add(PC.T(PC.circle({ r: TR * 1.004, perUnit: 300, tone: 1 }), { pos: [TX, TB, TZ] }));
-  [0.34, 0.56, 0.78, 1.00].forEach(function (ry) { add(PC.T(PC.circle({ r: TR * 1.006, perUnit: 200, tone: 0.5 }), { pos: [TX, ry, TZ] })); });
+  [0.30, 0.48, 0.66, 0.84].forEach(function (ry) { add(PC.T(PC.circle({ r: TR * 1.006, perUnit: 200, tone: 0.5 }), { pos: [TX, ry, TZ] })); });
   add(PC.line({ a: [TX - TR * 0.71, TB, TZ + TR * 0.71], b: [TX - TR * 0.71, TT, TZ + TR * 0.71], perUnit: 220, tone: 0.42 }));
   // skirt base with three feet
   add(PC.T(PC.cylinder({ r: TR * 0.86, h: TB, caps: false, n: 1600, tone: 0.36 }), { pos: [TX, TB / 2, TZ] }));
@@ -3464,6 +3464,13 @@ PC.register('gas-cabinet', function (p) {
     var fa = i * Math.PI * 2 / 3 + 0.4;
     add(PC.T(PC.cylinder({ r: 0.030, h: 0.030, n: 160, tone: 0.5 }), { pos: [TX + TR * 0.78 * Math.cos(fa), 0.015, TZ + TR * 0.78 * Math.sin(fa)] }));
   }
+  for (i = 0; i < 3; i++) {
+    var ca2 = i * Math.PI * 2 / 3 + 0.9;
+    add(PC.T(PC.torus({ R: 0.030, r: 0.010, n: 260, tone: 0.6 }), { rot: [Math.PI / 2, 0, 0], pos: [TX + TR * 0.74 * Math.cos(ca2), 0.030, TZ + TR * 0.74 * Math.sin(ca2)] }));
+  }
+  add(PC.T(PC.circle({ r: TR * 1.006, perUnit: 300, tone: 0.85 }), { pos: [TX, 1.00, TZ] }));
+  add(PC.T(PC.circle({ r: TR * 1.006, perUnit: 300, tone: 0.85 }), { pos: [TX, 0.94, TZ] }));
+
   // top collar and the valve cluster it protects
   add(PC.T(PC.torus({ R: TR * 0.96, r: 0.018, n: 900, tone: 0.62 }), { pos: [TX, TT + 0.20, TZ] }));
   for (i = 0; i < 4; i++) {
@@ -3482,14 +3489,14 @@ PC.register('gas-cabinet', function (p) {
   // relief valve and the vertical vaporiser coil on the jacket
   add(PC.T(PC.cylinder({ r: 0.026, h: 0.085, caps: false, n: 200, tone: 0.55 }), { pos: [TX - 0.10, TT + 0.145, TZ - 0.06] }));
   add(PC.T(PC.circle({ r: 0.034, perUnit: 320, tone: 0.9 }), { pos: [TX - 0.10, TT + 0.188, TZ - 0.06] }));
-  add(PC.T(PC.helix({ r: 0.046, pitch: 0.052, turns: 5, perUnit: 300, tone: 0.7 }), { pos: [TX - TR - 0.050, 0.70, TZ + 0.02] }));
-  add(PC.polyline({ pts: [[TX - TR - 0.050, 0.83, TZ + 0.02], [TX - TR - 0.050, TT + 0.06, TZ + 0.02], [TX - 0.08, TT + 0.06, TZ + 0.02]], perUnit: 260, tone: 0.7 }));
-  add(PC.polyline({ pts: [[TX - TR - 0.050, 0.57, TZ + 0.02], [TX - TR - 0.050, 0.36, TZ + 0.02], [TX - TR + 0.02, 0.36, TZ + 0.02]], perUnit: 260, tone: 0.7 }));
+  add(PC.T(PC.helix({ r: 0.042, pitch: 0.046, turns: 5, perUnit: 300, tone: 0.7 }), { pos: [TX - TR - 0.046, 0.60, TZ + 0.02] }));
+  add(PC.polyline({ pts: [[TX - TR - 0.046, 0.72, TZ + 0.02], [TX - TR - 0.046, TT + 0.06, TZ + 0.02], [TX - 0.08, TT + 0.06, TZ + 0.02]], perUnit: 260, tone: 0.7 }));
+  add(PC.polyline({ pts: [[TX - TR - 0.046, 0.49, TZ + 0.02], [TX - TR - 0.046, 0.32, TZ + 0.02], [TX - TR + 0.02, 0.32, TZ + 0.02]], perUnit: 260, tone: 0.7 }));
   // liquid-level gauge and nameplate on the shell
   add(PC.T(PC.polyline({ pts: [[-0.10, 0, -0.07], [0.10, 0, -0.07], [0.10, 0, 0.07], [-0.10, 0, 0.07]], closed: true, perUnit: 280, tone: 0.9 }),
-        { rot: [Math.PI / 2, 0, 0], pos: [TX, 1.02, TZ + TR * 1.01] }));
+        { rot: [Math.PI / 2, 0, 0], pos: [TX, 0.88, TZ + TR * 1.01] }));
   add(PC.T(PC.polyline({ pts: [[-0.055, 0, -0.045], [0.055, 0, -0.045], [0.055, 0, 0.045], [-0.055, 0, 0.045]], closed: true, perUnit: 280, tone: 0.8 }),
-        { rot: [Math.PI / 2, 0, 0], pos: [TX, 0.48, TZ + TR * 1.01] }));
+        { rot: [Math.PI / 2, 0, 0], pos: [TX, 0.42, TZ + TR * 1.01] }));
 
   return {
     cloud: PC.merge.apply(null, parts),
@@ -4373,134 +4380,170 @@ PC.register('photomask', function (p) {
 })(window.PC);}catch(e){console.warn('specimen photomask.js failed to load', e);}
 </script><script>/* probe-card.js */
 try{(function(PC){
-/* Specimen: a probe card over a wafer.
- * A 300 mm circular PCB with a central opening, a stiffener cross on top, a
- * rectangular probe head slung underneath, and a bed of fine needles landing on
- * a six-die site (copper) on the wafer below. Chuck under the wafer.
+/* Specimen: a vertical probe card over a wafer.
+ *
+ * Real object: a circular multilayer PCB about twelve inches across - wider than
+ * the 300 mm wafer it works on - with a stiffener bolted over it that sets the
+ * reference plane, a multi-layer ceramic space transformer hung underneath to fan
+ * the tester's coarse pitch down to the die's, and a probe head of vertical
+ * probes held between an upper and a lower guide plate. A probe card for a large
+ * logic device carries four to five thousand probes at 80 to 150 um pitch, and
+ * every tip must sit within about 25 um of the same plane.
+ *
+ * Sources: Tektronix's probe card tutorial (PCB layer counts, planarity, tip
+ * geometry, overdrive), Glew Engineering on the twelve-inch card and the 4,000-pin
+ * GPU array, and FormFactor/Technoprobe patents for the stiffener, MLC space
+ * transformer and two-guide-plate probe head.
+ *
+ * Drawing decisions:
+ *  - The card was previously drawn smaller than the wafer and with a hole through
+ *    the middle. A vertical card is a solid disc slightly larger than the wafer.
+ *  - The probes are drawn bowed between the two guide plates, which is what a
+ *    buckling-beam probe does under overdrive, and is the only way a few hundred
+ *    lines read as separate wires rather than a black bar.
+ *  - Heights are exaggerated: a real card rides a millimetre or two off the wafer.
  */
 PC.register('probe-card', function (p) {
   var parts = [];
-  var Rc = 0.72, hole = 0.30, tPcb = 0.05;     // card radius, central opening, thickness
-  var yPcb = 0.62;                              // card mid-plane, well clear of the wafer
-  var pcbTop = yPcb + tPcb / 2, pcbBot = yPcb - tPcb / 2;
-  var headW = 0.62, headH = 0.10, yHead = 0.42; // space transformer block
-  var gW = 0.44, gH = 0.09, yG = 0.315;         // narrower guide-plate block under it
-  var headBot = yG - gH / 2;
-  var tWaf = 0.03, yWaf = 0.0, Rw = 1.0;        // wafer top sits at yWaf + tWaf/2
-  var wafTop = yWaf + tWaf / 2;
-  var dw = 0.20, dh = 0.245;                    // die pitch on the wafer
+  function add(c) { if (c) parts.push(c); }
+  function seg(a, b, per, tn) { return PC.line({ a: a, b: b, perUnit: per, tone: tn }); }
+  function ring(r, y, per, tn) { return PC.T(PC.circle({ r: r, perUnit: per, tone: tn }), { pos: [0, y, 0] }); }
+  function rect(w, d, y, per, tn) {
+    return PC.polyline({ pts: [[-w / 2, y, -d / 2], [w / 2, y, -d / 2], [w / 2, y, d / 2], [-w / 2, y, d / 2]], closed: true, perUnit: per, tone: tn });
+  }
 
-  // ---------- the circular PCB ----------
-  parts.push(PC.T(PC.disc({ r: Rc, rIn: hole, n: 8000, tone: 0.4 }), { pos: [0, pcbTop, 0] }));
-  parts.push(PC.T(PC.cylinder({ r: Rc, h: tPcb, caps: false, n: 2600, tone: 0.55 }), { pos: [0, yPcb, 0] }));
-  parts.push(PC.T(PC.cylinder({ r: hole, h: tPcb, caps: false, n: 1100, tone: 0.55 }), { pos: [0, yPcb, 0] }));
-  [pcbTop, pcbBot].forEach(function (y) {
-    parts.push(PC.T(PC.circle({ r: Rc, perUnit: 380, tone: 1 }), { pos: [0, y, 0] }));
-    parts.push(PC.T(PC.circle({ r: hole, perUnit: 380, tone: 1 }), { pos: [0, y, 0] }));
-  });
+  var Rw = 1.00, Rc = 1.02, Rch = 1.13;        // wafer 300 mm, card 305 mm, chuck
+  var tWaf = 0.028, wafTop = tWaf / 2;
+  var dw = 0.20, dh = 0.245;                    // reticle-sized dies on the wafer
 
-  // two rings of test pads, a ring of edge fingers, and six mounting holes
-  var pads = [], i, a, cx, cz;
-  [0.44, 0.53].forEach(function (rr) {
-    for (i = 0; i < 48; i++) {
-      a = i * Math.PI * 2 / 48 + (rr > 0.5 ? Math.PI / 48 : 0);
-      pads.push(PC.T(PC.circle({ r: 0.017, perUnit: 380, tone: 0.95 }), { pos: [rr * Math.cos(a), pcbTop + 0.003, rr * Math.sin(a)] }));
+  // heights, measured from the wafer surface
+  var yTip = wafTop, yLo = wafTop + 0.052, tG = 0.022;
+  var yLoTop = yLo + tG, yUp = yLoTop + 0.060, yUpTop = yUp + tG;
+  var stH = 0.085, yST = yUpTop + 0.010, stW = 0.50;
+  var tPcb = 0.052, pcbBot = yST + stH + 0.008, pcbTop = pcbBot + tPcb;
+  var gW = 0.40, hW = 0.46;                     // guide plates, probe-head frame
+
+  /* ---------------- the printed circuit board ---------------- */
+  add(PC.T(PC.disc({ r: Rc, n: 12000, tone: 0.3 }), { pos: [0, pcbTop, 0] }));
+  add(PC.T(PC.disc({ r: Rc, n: 6000, tone: 0.26 }), { pos: [0, pcbBot, 0] }));
+  add(PC.T(PC.cylinder({ r: Rc, h: tPcb, caps: false, n: 3000, tone: 0.5 }), { pos: [0, pcbBot + tPcb / 2, 0] }));
+  add(ring(Rc, pcbTop, 400, 1)); add(ring(Rc, pcbBot, 400, 0.8));
+  // the pogo pads the tester head lands on: three concentric rings of contacts
+  var pads = [], i, a;
+  [[0.56, 72], [0.66, 84], [0.76, 96]].forEach(function (r) {
+    for (i = 0; i < r[1]; i++) {
+      a = i * Math.PI * 2 / r[1] + (r[0] * 10 % 2) * Math.PI / r[1];
+      pads.push(PC.T(PC.circle({ r: 0.0125, perUnit: 420, tone: 0.95 }), { pos: [r[0] * Math.cos(a), pcbTop + 0.003, r[0] * Math.sin(a)] }));
     }
   });
-  for (i = 0; i < 52; i++) {
-    a = i * Math.PI * 2 / 52;
-    cx = Math.cos(a); cz = Math.sin(a);
-    pads.push(PC.line({ a: [0.60 * cx, pcbTop + 0.003, 0.60 * cz], b: [0.69 * cx, pcbTop + 0.003, 0.69 * cz], perUnit: 420, tone: 0.9 }));
+  // edge fingers and the six bolts that hold the stiffener down
+  for (i = 0; i < 72; i++) {
+    a = i * Math.PI * 2 / 72;
+    pads.push(seg([0.87 * Math.cos(a), pcbTop + 0.003, 0.87 * Math.sin(a)], [0.97 * Math.cos(a), pcbTop + 0.003, 0.97 * Math.sin(a)], 420, 0.85));
   }
   for (i = 0; i < 6; i++) {
     a = i * Math.PI / 3 + Math.PI / 6;
-    pads.push(PC.T(PC.circle({ r: 0.038, perUnit: 420, tone: 1 }), { pos: [0.645 * Math.cos(a), pcbTop + 0.003, 0.645 * Math.sin(a)] }));
+    pads.push(PC.T(PC.circle({ r: 0.032, perUnit: 460, tone: 1 }), { pos: [0.44 * Math.cos(a), pcbTop + 0.004, 0.44 * Math.sin(a)] }));
   }
-  parts.push(PC.merge.apply(null, pads));
+  // a flat on the rim: the card only goes into the prober one way round
+  pads.push(seg([-0.19, pcbTop, -0.998], [0.19, pcbTop, -0.998], 500, 1));
+  pads.push(seg([-0.19, pcbBot, -0.998], [0.19, pcbBot, -0.998], 400, 0.7));
+  add(PC.merge.apply(null, pads));
 
-  // stiffener cross bolted over the card
-  var armL = 0.34, armW = 0.085, armH = 0.05, yArm = pcbTop + armH / 2;
+  /* ---------------- the stiffener that sets the reference plane ---------------- */
+  var armL = 0.86, armW = 0.13, armH = 0.055, yArm = pcbTop + armH / 2;
+  for (i = 0; i < 2; i++) {
+    var ang = i * Math.PI / 2;
+    add(PC.T(PC.box({ w: armL * 2, h: armH, d: armW, n: 2600, tone: 0.38 }), { rot: [0, -ang, 0], pos: [0, yArm, 0] }));
+    add(PC.T(PC.boxEdges({ w: armL * 2, h: armH, d: armW, perUnit: 300, tone: 0.95 }), { rot: [0, -ang, 0], pos: [0, yArm, 0] }));
+  }
+  add(PC.T(PC.cylinder({ r: 0.20, h: armH * 1.5, n: 2200, tone: 0.42 }), { pos: [0, pcbTop + armH * 0.75, 0] }));
+  add(ring(0.20, pcbTop + armH * 1.5, 420, 1));
+  // three levelling screws, the ones that bring every tip into the same plane
+  for (i = 0; i < 3; i++) {
+    a = i * Math.PI * 2 / 3 + 0.4;
+    add(PC.T(PC.cylinder({ r: 0.036, h: armH * 2.1, n: 700, tone: 0.6 }), { pos: [0.30 * Math.cos(a), pcbTop + armH * 1.05, 0.30 * Math.sin(a)] }));
+    add(ring(0.036, pcbTop + armH * 2.1, 420, 1));
+  }
+
+  /* ---------------- the space transformer: multi-layer ceramic ---------------- */
+  var ySTc = yST + stH / 2;
+  add(PC.T(PC.box({ w: stW, h: stH, d: stW, faces: ['px', 'nx', 'pz', 'nz'], n: 4200, tone: 0.42 }), { pos: [0, ySTc, 0] }));
+  add(PC.T(PC.boxEdges({ w: stW, h: stH, d: stW, perUnit: 300, tone: 1 }), { pos: [0, ySTc, 0] }));
+  for (i = 1; i < 7; i++) add(rect(stW, stW, yST + stH * i / 7, 110, 0.5));
+  // the fan-out: the tester's coarse pitch on top, the die's fine pitch below
+  add(PC.T(PC.dots({ nx: 15, nz: 15, sx: stW * 0.062, sz: stW * 0.062, per: 2, tone: 0.55 }), { pos: [0, yST + stH + 0.002, 0] }));
+
+  /* ---------------- the probe head: two guide plates and the probes ---------------- */
+  [[yLo, tG], [yUp, tG]].forEach(function (g) {
+    add(PC.T(PC.box({ w: gW, h: g[1], d: gW, n: 2000, tone: 0.44 }), { pos: [0, g[0] + g[1] / 2, 0] }));
+    add(PC.T(PC.boxEdges({ w: gW, h: g[1], d: gW, perUnit: 340, tone: 1 }), { pos: [0, g[0] + g[1] / 2, 0] }));
+  });
   for (i = 0; i < 4; i++) {
-    var ang = i * Math.PI / 2, r0 = 0.34 + armL / 2;
-    var bx = r0 * Math.cos(ang), bz = r0 * Math.sin(ang);
-    var box = PC.box({ w: armL, h: armH, d: armW, n: 900, tone: 0.42 });
-    var ed = PC.boxEdges({ w: armL, h: armH, d: armW, perUnit: 280, tone: 0.95 });
-    parts.push(PC.T(box, { rot: [0, -ang, 0], pos: [bx, yArm, bz] }));
-    parts.push(PC.T(ed, { rot: [0, -ang, 0], pos: [bx, yArm, bz] }));
+    var px = (i < 2 ? -1 : 1) * hW * 0.48, pz = (i % 2 ? -1 : 1) * hW * 0.48;
+    add(seg([px, yLo, pz], [px, yUpTop, pz], 420, 0.7));
+    add(seg([px, yUpTop, pz], [px, yST, pz], 420, 0.55));
   }
 
-  // ---------- probe head slung under the card ----------
-  parts.push(PC.T(PC.box({ w: headW, h: headH, d: headW, n: 2800, tone: 0.45 }), { pos: [0, yHead, 0] }));
-  parts.push(PC.T(PC.boxEdges({ w: headW, h: headH, d: headW, perUnit: 380, tone: 1 }), { pos: [0, yHead, 0] }));
-  parts.push(PC.T(PC.box({ w: gW, h: gH, d: gW, n: 1900, tone: 0.5 }), { pos: [0, yG, 0] }));
-  parts.push(PC.T(PC.boxEdges({ w: gW, h: gH, d: gW, perUnit: 380, tone: 1 }), { pos: [0, yG, 0] }));
-  // the drilled guide plate at the very bottom, through which the needles pass
-  parts.push(PC.T(PC.boxEdges({ w: gW * 0.9, h: 0.02, d: gW * 0.9, perUnit: 320, tone: 0.9 }), { pos: [0, headBot + 0.01, 0] }));
-  // four short standoffs from the card down to the head
-  for (i = 0; i < 4; i++) {
-    var sx = (i < 2 ? -1 : 1) * headW * 0.46, sz = (i % 2 ? -1 : 1) * headW * 0.46;
-    parts.push(PC.line({ a: [sx, pcbBot, sz], b: [sx, yHead + headH / 2, sz], perUnit: 600, tone: 0.85 }));
-  }
-
-  // ---------- the needle bed: six die-sized blocks of fine vertical probes ----------
-  var needles = [], nx = 5, nz = 6;
-  for (var gx = -1; gx <= 1; gx++) for (var gz = -1; gz <= 0; gz++) {
-    var ox = gx * dw, oz = (gz + 0.5) * dh;
+  // the probes themselves: an area array over a two-by-two block of dies,
+  // bowed between the guide plates
+  var needles = [], nx = 13, nz = 15;
+  for (var gx = -1; gx <= 0; gx++) for (var gz = -1; gz <= 0; gz++) {
+    var ox = (gx + 0.5) * dw, oz = (gz + 0.5) * dh;
     for (var a1 = 0; a1 < nx; a1++) for (var b1 = 0; b1 < nz; b1++) {
-      var px = ox + (a1 - (nx - 1) / 2) * (dw * 0.74 / (nx - 1));
-      var pz = oz + (b1 - (nz - 1) / 2) * (dh * 0.74 / (nz - 1));
-      var jx = (PC.rnd() - 0.5) * 0.007, jz = (PC.rnd() - 0.5) * 0.007;
-      // needles splay very slightly outward at the top so they read as separate wires
-      needles.push(PC.line({ a: [px * 1.14, headBot + 0.015, pz * 1.14], b: [px + jx, wafTop + 0.004, pz + jz], perUnit: 210, tone: 0.8 }));
+      var qx = ox + (a1 - (nx - 1) / 2) * (dw * 0.80 / (nx - 1));
+      var qz = oz + (b1 - (nz - 1) / 2) * (dh * 0.80 / (nz - 1));
+      var th = PC.rnd() * Math.PI * 2, bo = 0.011 + PC.rnd() * 0.006;
+      needles.push(PC.polyline({
+        pts: [[qx, yTip, qz], [qx, yLo + tG * 0.4, qz],
+              [qx + bo * Math.cos(th), (yLoTop + yUp) / 2, qz + bo * Math.sin(th)],
+              [qx, yUp + tG * 0.6, qz], [qx, yUpTop + 0.004, qz]],
+        perUnit: 250, tone: 0.6
+      }));
     }
   }
-  parts.push(PC.merge.apply(null, needles));
+  add(PC.merge.apply(null, needles));
 
-  // ---------- wafer on the chuck ----------
-  var body = PC.cylinder({ r: Rw, h: tWaf, n: 23000, tone: 0.4 });
-  var keep = [];
+  /* ---------------- the wafer on the chuck ---------------- */
+  var body = PC.cylinder({ r: Rw, h: tWaf, n: 22000, tone: 0.36 }), keep = [];
   for (i = 0; i < body.length; i += 4) {
-    var bx2 = body[i], bz2 = body[i + 2];
-    if (Math.sqrt(bx2 * bx2 + (bz2 - Rw) * (bz2 - Rw)) < 0.055) continue;   // notch
-    keep.push(body[i], body[i + 1] + yWaf, body[i + 2], body[i + 3]);
+    var bx = body[i], bz = body[i + 2];
+    if (Math.sqrt(bx * bx + (bz - Rw) * (bz - Rw)) < 0.052) continue;   // notch
+    keep.push(bx, body[i + 1], bz, body[i + 3]);
   }
-  parts.push(new Float32Array(keep));
-  parts.push(PC.T(PC.circle({ r: Rw, perUnit: 420, tone: 1 }), { pos: [0, wafTop, 0] }));
+  add(new Float32Array(keep));
+  add(ring(Rw, wafTop, 440, 1));
 
-  // die grid
-  var grid = [];
+  var grid = [], probed = [], cx, cz;
   for (gx = -5; gx <= 5; gx++) for (gz = -5; gz <= 4; gz++) {
-    cx = gx * dw; cz = (gz + 0.5) * dh;
+    cx = (gx + 0.5) * dw; cz = (gz + 0.5) * dh;
     var cor = [[cx - dw / 2, cz - dh / 2], [cx + dw / 2, cz - dh / 2], [cx - dw / 2, cz + dh / 2], [cx + dw / 2, cz + dh / 2]];
     if (!cor.every(function (c) { return c[0] * c[0] + c[1] * c[1] < (Rw - 0.02) * (Rw - 0.02); })) continue;
-    var probed = (Math.abs(gx) <= 1 && (gz === -1 || gz === 0));
-    if (probed) continue;
-    grid.push(PC.T(PC.polyline({ pts: [[-dw / 2, 0, -dh / 2], [dw / 2, 0, -dh / 2], [dw / 2, 0, dh / 2], [-dw / 2, 0, dh / 2]], closed: true, perUnit: 280, tone: 1 }), { pos: [cx, wafTop + 0.002, cz] }));
+    if (gx >= -1 && gx <= 0 && gz >= -1 && gz <= 0) { probed.push([cx, cz]); continue; }
+    grid.push(PC.T(rect(dw, dh, 0, 200, 0.9), { pos: [cx, wafTop + 0.002, cz] }));
   }
-  parts.push(PC.merge.apply(null, grid));
+  add(PC.merge.apply(null, grid));
 
-  // the six-die site the needles are landing on, in copper
+  // the four dies under the needles, in copper
   var site = [];
-  for (gx = -1; gx <= 1; gx++) for (gz = -1; gz <= 0; gz++) {
-    cx = gx * dw; cz = (gz + 0.5) * dh;
-    site.push(PC.T(PC.polyline({ pts: [[-dw / 2, 0, -dh / 2], [dw / 2, 0, -dh / 2], [dw / 2, 0, dh / 2], [-dw / 2, 0, dh / 2]], closed: true, perUnit: 340 }), { pos: [cx, wafTop + 0.003, cz] }));
-  }
-  site.push(PC.T(PC.plane({ w: 3 * dw, d: 2 * dh, n: 2600 }), { pos: [0, wafTop + 0.0025, 0] }));
-  site.push(PC.T(PC.polyline({ pts: [[-1.5 * dw, 0, -dh], [1.5 * dw, 0, -dh], [1.5 * dw, 0, dh], [-1.5 * dw, 0, dh]], closed: true, perUnit: 520 }), { pos: [0, wafTop + 0.004, 0] }));
-  parts.push(PC.accent(PC.merge.apply(null, site), 0.9));
+  probed.forEach(function (c) {
+    site.push(PC.T(PC.plane({ w: dw * 0.97, d: dh * 0.97, n: 900 }), { pos: [c[0], wafTop + 0.0022, c[1]] }));
+    site.push(PC.T(rect(dw, dh, 0, 300, 1), { pos: [c[0], wafTop + 0.003, c[1]] }));
+  });
+  site.push(PC.T(rect(2 * dw, 2 * dh, 0, 520, 1), { pos: [0, wafTop + 0.004, 0] }));
+  add(PC.accent(PC.merge.apply(null, site), 0.9));
 
-  // chuck
-  var yCh = yWaf - tWaf / 2 - 0.065;
-  parts.push(PC.T(PC.cylinder({ r: 1.12, h: 0.13, n: 13000, tone: 0.33 }), { pos: [0, yCh, 0] }));
-  parts.push(PC.T(PC.circle({ r: 1.12, perUnit: 320, tone: 0.9 }), { pos: [0, yCh + 0.065, 0] }));
-  parts.push(PC.T(PC.circle({ r: 1.12, perUnit: 320, tone: 0.9 }), { pos: [0, yCh - 0.065, 0] }));
-  parts.push(PC.T(PC.circle({ r: 1.05, perUnit: 220, tone: 0.5 }), { pos: [0, yCh + 0.066, 0] }));
+  // chuck: wider than the wafer, with the vacuum grooves that hold it flat
+  var tCh = 0.13, yCh = -tWaf / 2 - tCh / 2;
+  add(PC.T(PC.cylinder({ r: Rch, h: tCh, n: 13000, tone: 0.28 }), { pos: [0, yCh, 0] }));
+  add(ring(Rch, yCh + tCh / 2, 340, 0.9)); add(ring(Rch, yCh - tCh / 2, 340, 0.7));
+  [0.42, 0.68, 0.94, 1.06].forEach(function (r) { add(ring(r, yCh + tCh / 2 + 0.001, 200, 0.45)); });
 
   return {
     cloud: PC.merge.apply(null, parts),
     spin: 0.11,
-    tilt: [0.35, -0.6, 0],
-    caption: 'A probe card: a 300 mm circular PCB with a stiffener cross, a probe head slung beneath it, and hundreds of fine needles coming down onto six dies at once. The site being tested is picked out in copper on the wafer below.'
+    tilt: [0.36, -0.62, 0],
+    caption: 'A vertical probe card over a wafer: a twelve-inch circular board, wider than the wafer it tests, with the tester\'s contact rings on top and a stiffener bolted across it whose three screws bring every needle into the same plane. Under it hangs a ceramic space transformer that fans the tester\'s coarse pitch down to the pitch of the pads, and a probe head whose needles bow between two guide plates before landing on four dies at once, picked out in copper. The height between the card and the wafer is exaggerated; in the prober it is a millimetre or two.'
   };
 });
 
@@ -5319,10 +5362,10 @@ PC.register('wafer-cost', function (p) {
 
   var BOM = [
     { name: 'hbm', usd: 2900, amber: true },
-    { name: 'packaging', usd: 1100 },
+    { name: 'packaging', usd: 1100, tone: 0.30 },
     { name: 'loss', usd: 1000, hollow: true },
-    { name: 'logic', usd: 900 },
-    { name: 'aux', usd: 480 }
+    { name: 'logic', usd: 900, tone: 0.24 },
+    { name: 'aux', usd: 480, tone: 0.36 }
   ];
 
   function ring(w, y, per, tn) {
@@ -5368,8 +5411,8 @@ PC.register('wafer-cost', function (p) {
         var p0 = [ca * CW / 2 - sa * CW / 2, y0, sa * CW / 2 + ca * CW / 2];
         var p1 = [ca * CW / 2 + sa * CW / 2, y0, sa * CW / 2 - ca * CW / 2];
         var q0 = [p0[0], y1, p0[2]], q1 = [p1[0], y1, p1[2]];
-        parts.push(PC.line({ a: p0, b: q1, perUnit: 260, tone: 0.8 }));
-        parts.push(PC.line({ a: p1, b: q0, perUnit: 260, tone: 0.8 }));
+        parts.push(PC.line({ a: p0, b: q1, perUnit: 175, tone: 0.62 }));
+        parts.push(PC.line({ a: p1, b: q0, perUnit: 175, tone: 0.62 }));
       }
     } else if (seg.amber) {
       // memory: twelve DRAM layers over a thicker base die
@@ -5388,7 +5431,7 @@ PC.register('wafer-cost', function (p) {
         parts.push(PC.accent(PC.line({ a: [-CW / 2 - 0.001, y0 + h * 0.18, tx], b: [-CW / 2 - 0.001, y1, tx], perUnit: 130 }), 0.85));
       }
     } else {
-      parts.push(PC.T(PC.box({ w: CW, h: h, d: CW, faces: ['px', 'nx', 'pz', 'nz'], n: faceN, tone: 0.22 }), { pos: [0, yc, 0] }));
+      parts.push(PC.T(PC.box({ w: CW, h: h, d: CW, faces: ['px', 'nx', 'pz', 'nz'], n: faceN, tone: seg.tone }), { pos: [0, yc, 0] }));
       parts.push(posts(CW, y0, y1, 420, 1));
       if (seg.name === 'packaging') {
         // an interposer: a few build-up lines and a field of vias

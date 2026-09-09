@@ -13,7 +13,7 @@
  * that run down a <100> crystal, clearly visible on an as-grown crown. The
  * body is ground to diameter, so it carries only faint growth striations.
  *
- * Below the tail stand three wafers sawn from that body, one in copper. A
+ * Beside the tail stand three wafers sawn from that body, one in copper. A
  * wafer is exactly as wide as the ingot: that is the whole reason for growing
  * the crystal to 300 mm in the first place.
  */
@@ -51,7 +51,7 @@ PC.register('boule-and-wafer', function (p) {
   var body = [[R, yB0], [R, yB1]];
   parts.push(at(PC.T(PC.cylinder({ r: R, h: yB1 - yB0, caps: false, n: 9000, tone: 0.16 }),
     { pos: [0, (yB0 + yB1) / 2, 0] })));
-  hatch(body, 0.36);
+  hatch(body, 0.30);
   for (i = 0; i <= 9; i++) {                          // growth striations
     y = yB0 + 0.07 + (yB1 - yB0 - 0.14) * i / 9;
     parts.push(at(PC.T(PC.circle({ r: R * 1.006, perUnit: 130, tone: 0.28 }), { pos: [0, y, 0] })));
@@ -65,7 +65,7 @@ PC.register('boule-and-wafer', function (p) {
                [Rc * 0.690, 1.362], [Rc * 0.545, 1.404], [Rc * 0.370, 1.437],
                [Rc * 0.185, 1.461], [0.004, yCr]];
   parts.push(at(PC.lathe({ profile: crown, tone: 0.17 })));
-  hatch(crown, 0.30, 6, 0.72);                         // 4 heavy meridians = the facet ridges
+  hatch(crown, 0.34, 6, 0.88);                         // 4 heavy meridians = the facet ridges
   parts.push(at(PC.T(PC.circle({ r: Rc * 1.006, perUnit: 640, tone: 1 }), { pos: [0, yB1, 0] })));
   parts.push(at(PC.T(PC.circle({ r: R * 1.006, perUnit: 400, tone: 0.8 }), { pos: [0, yB1, 0] })));
   [4, 7].forEach(function (k) {
@@ -81,7 +81,7 @@ PC.register('boule-and-wafer', function (p) {
   parts.push(PC.T(PC.circle({ r: 0.026, perUnit: 380, tone: 0.9 }), { pos: [bx, yCh, 0] }));
   parts.push(PC.T(PC.circle({ r: 0.026, perUnit: 380, tone: 0.9 }), { pos: [bx, ySd, 0] }));
 
-  // ---------- three wafers standing on their rims, as they come out of the saw ----------
+  // ---------- three wafers standing on their rims, as they come out of the wire saw ----------
   function wafer(accent) {
     var face = PC.disc({ r: R, n: accent ? 5400 : 3000, tone: accent ? 0.24 : 0.15 });
     var rim = PC.circle({ r: R, perUnit: accent ? 620 : 380, tone: accent ? 1 : 0.85 });
@@ -100,10 +100,10 @@ PC.register('boule-and-wafer', function (p) {
     return new Float32Array(keep);
   }
   var lean = 0.17;
-  for (i = 0; i < 5; i++) {
-    parts.push(PC.T(wafer(i === 2), {
-      rot: [0, 0.30, -(Math.PI / 2 - lean)],
-      pos: [0.34 + (i - 2) * 0.014, yTip + R * Math.cos(lean) + 0.002, (i - 2) * 0.062]
+  for (i = 0; i < 3; i++) {
+    parts.push(PC.T(wafer(i === 1), {
+      rot: [0, 0.34, -(Math.PI / 2 - lean)],
+      pos: [0.30 + (i - 1) * 0.030, yTip + R * Math.cos(lean) + 0.002, (i - 1) * 0.175]
     }));
   }
 

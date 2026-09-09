@@ -26,10 +26,10 @@ PC.register('wafer-cost', function (p) {
 
   var BOM = [
     { name: 'hbm', usd: 2900, amber: true },
-    { name: 'packaging', usd: 1100 },
+    { name: 'packaging', usd: 1100, tone: 0.30 },
     { name: 'loss', usd: 1000, hollow: true },
-    { name: 'logic', usd: 900 },
-    { name: 'aux', usd: 480 }
+    { name: 'logic', usd: 900, tone: 0.24 },
+    { name: 'aux', usd: 480, tone: 0.36 }
   ];
 
   function ring(w, y, per, tn) {
@@ -75,8 +75,8 @@ PC.register('wafer-cost', function (p) {
         var p0 = [ca * CW / 2 - sa * CW / 2, y0, sa * CW / 2 + ca * CW / 2];
         var p1 = [ca * CW / 2 + sa * CW / 2, y0, sa * CW / 2 - ca * CW / 2];
         var q0 = [p0[0], y1, p0[2]], q1 = [p1[0], y1, p1[2]];
-        parts.push(PC.line({ a: p0, b: q1, perUnit: 260, tone: 0.8 }));
-        parts.push(PC.line({ a: p1, b: q0, perUnit: 260, tone: 0.8 }));
+        parts.push(PC.line({ a: p0, b: q1, perUnit: 175, tone: 0.62 }));
+        parts.push(PC.line({ a: p1, b: q0, perUnit: 175, tone: 0.62 }));
       }
     } else if (seg.amber) {
       // memory: twelve DRAM layers over a thicker base die
@@ -95,7 +95,7 @@ PC.register('wafer-cost', function (p) {
         parts.push(PC.accent(PC.line({ a: [-CW / 2 - 0.001, y0 + h * 0.18, tx], b: [-CW / 2 - 0.001, y1, tx], perUnit: 130 }), 0.85));
       }
     } else {
-      parts.push(PC.T(PC.box({ w: CW, h: h, d: CW, faces: ['px', 'nx', 'pz', 'nz'], n: faceN, tone: 0.22 }), { pos: [0, yc, 0] }));
+      parts.push(PC.T(PC.box({ w: CW, h: h, d: CW, faces: ['px', 'nx', 'pz', 'nz'], n: faceN, tone: seg.tone }), { pos: [0, yc, 0] }));
       parts.push(posts(CW, y0, y1, 420, 1));
       if (seg.name === 'packaging') {
         // an interposer: a few build-up lines and a field of vias

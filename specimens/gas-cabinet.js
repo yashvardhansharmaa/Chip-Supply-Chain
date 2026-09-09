@@ -63,14 +63,14 @@ PC.register('gas-cabinet', function (p) {
   add(at(PC.cylinder({ r: 0.016, h: 0.055, caps: false, n: 160, tone: 0.6 }), CBX + 0.20, CTOP - 0.055, -0.05));
   add(at(PC.circle({ r: 0.030, perUnit: 340, tone: 0.85 }), CBX + 0.20, CTOP - 0.082, -0.05));
   // two restraint bars across the bottles
-  [0.62, 1.14].forEach(function (by) {
+  [0.58, 1.04].forEach(function (by) {
     add(at(PC.box({ w: CW - 0.13, h: 0.038, d: 0.038, n: 340, tone: 0.55 }), CBX, by, 0.045));
     add(at(PC.boxEdges({ w: CW - 0.13, h: 0.038, d: 0.038, perUnit: 280, tone: 1 }), CBX, by, 0.045));
   });
 
   /* ================= three cylinders ================= */
 
-  var cylX = [-0.29, 0.0, 0.29], cylH = [1.30, 1.30, 1.12], CR = 0.114, cz = -0.055;
+  var cylX = [-0.29, 0.0, 0.29], cylH = [1.16, 1.16, 0.98], CR = 0.114, cz = -0.055;
   var valveTop = [];
   for (i = 0; i < 3; i++) {
     x = CBX + cylX[i];
@@ -92,11 +92,11 @@ PC.register('gas-cabinet', function (p) {
 
   /* ================= the gas panel (copper) ================= */
 
-  var PZ = -CD / 2 + 0.035, PY0 = 1.26, man = [];
+  var PZ = -CD / 2 + 0.035, PY0 = 1.44, man = [];
   // panel plate on the back wall
-  man.push(PC.T(PC.plane({ w: 0.84, d: 0.54, n: 2600, tone: 0.26 }), { rot: [Math.PI / 2, 0, 0], pos: [CBX - 0.02, PY0 + 0.25, PZ] }));
+  man.push(PC.T(PC.plane({ w: 0.84, d: 0.46, n: 2400, tone: 0.26 }), { rot: [Math.PI / 2, 0, 0], pos: [CBX - 0.02, PY0 + 0.25, PZ] }));
   man.push(PC.T(PC.polyline({
-    pts: [[-0.42, 0, -0.27], [0.42, 0, -0.27], [0.42, 0, 0.27], [-0.42, 0, 0.27]], closed: true, perUnit: 300, tone: 1
+    pts: [[-0.42, 0, -0.23], [0.42, 0, -0.23], [0.42, 0, 0.23], [-0.42, 0, 0.23]], closed: true, perUnit: 300, tone: 1
   }), { rot: [Math.PI / 2, 0, 0], pos: [CBX - 0.02, PY0 + 0.25, PZ + 0.004] }));
   // process header running across the panel, and the vent header above it
   man.push(PC.line({ a: [CBX - 0.40, PY0 + 0.06, PZ + 0.03], b: [CBX + 0.40, PY0 + 0.06, PZ + 0.03], perUnit: 300, tone: 1 }));
@@ -131,12 +131,12 @@ PC.register('gas-cabinet', function (p) {
 
   /* ================= the bulk liquid cylinder ================= */
 
-  var TX = 1.02, TZ = -0.44, TR = 0.222, TB = 0.16, TT = 1.24;
+  var TX = 0.86, TZ = -0.40, TR = 0.205, TB = 0.15, TT = 1.06;
   add(PC.T(PC.cylinder({ r: TR, h: TT - TB, caps: false, n: 7000, tone: 0.25 }), { pos: [TX, (TB + TT) / 2, TZ] }));
   add(PC.T(PC.sphere({ r: TR, thetaMax: Math.PI / 2, n: 2000, tone: 0.28 }), { scale: [1, 0.52, 1], pos: [TX, TT, TZ] }));
   add(PC.T(PC.circle({ r: TR * 1.004, perUnit: 300, tone: 1 }), { pos: [TX, TT, TZ] }));
   add(PC.T(PC.circle({ r: TR * 1.004, perUnit: 300, tone: 1 }), { pos: [TX, TB, TZ] }));
-  [0.34, 0.56, 0.78, 1.00].forEach(function (ry) { add(PC.T(PC.circle({ r: TR * 1.006, perUnit: 200, tone: 0.5 }), { pos: [TX, ry, TZ] })); });
+  [0.30, 0.48, 0.66, 0.84].forEach(function (ry) { add(PC.T(PC.circle({ r: TR * 1.006, perUnit: 200, tone: 0.5 }), { pos: [TX, ry, TZ] })); });
   add(PC.line({ a: [TX - TR * 0.71, TB, TZ + TR * 0.71], b: [TX - TR * 0.71, TT, TZ + TR * 0.71], perUnit: 220, tone: 0.42 }));
   // skirt base with three feet
   add(PC.T(PC.cylinder({ r: TR * 0.86, h: TB, caps: false, n: 1600, tone: 0.36 }), { pos: [TX, TB / 2, TZ] }));
@@ -145,6 +145,13 @@ PC.register('gas-cabinet', function (p) {
     var fa = i * Math.PI * 2 / 3 + 0.4;
     add(PC.T(PC.cylinder({ r: 0.030, h: 0.030, n: 160, tone: 0.5 }), { pos: [TX + TR * 0.78 * Math.cos(fa), 0.015, TZ + TR * 0.78 * Math.sin(fa)] }));
   }
+  for (i = 0; i < 3; i++) {
+    var ca2 = i * Math.PI * 2 / 3 + 0.9;
+    add(PC.T(PC.torus({ R: 0.030, r: 0.010, n: 260, tone: 0.6 }), { rot: [Math.PI / 2, 0, 0], pos: [TX + TR * 0.74 * Math.cos(ca2), 0.030, TZ + TR * 0.74 * Math.sin(ca2)] }));
+  }
+  add(PC.T(PC.circle({ r: TR * 1.006, perUnit: 300, tone: 0.85 }), { pos: [TX, 1.00, TZ] }));
+  add(PC.T(PC.circle({ r: TR * 1.006, perUnit: 300, tone: 0.85 }), { pos: [TX, 0.94, TZ] }));
+
   // top collar and the valve cluster it protects
   add(PC.T(PC.torus({ R: TR * 0.96, r: 0.018, n: 900, tone: 0.62 }), { pos: [TX, TT + 0.20, TZ] }));
   for (i = 0; i < 4; i++) {
@@ -163,14 +170,14 @@ PC.register('gas-cabinet', function (p) {
   // relief valve and the vertical vaporiser coil on the jacket
   add(PC.T(PC.cylinder({ r: 0.026, h: 0.085, caps: false, n: 200, tone: 0.55 }), { pos: [TX - 0.10, TT + 0.145, TZ - 0.06] }));
   add(PC.T(PC.circle({ r: 0.034, perUnit: 320, tone: 0.9 }), { pos: [TX - 0.10, TT + 0.188, TZ - 0.06] }));
-  add(PC.T(PC.helix({ r: 0.046, pitch: 0.052, turns: 5, perUnit: 300, tone: 0.7 }), { pos: [TX - TR - 0.050, 0.70, TZ + 0.02] }));
-  add(PC.polyline({ pts: [[TX - TR - 0.050, 0.83, TZ + 0.02], [TX - TR - 0.050, TT + 0.06, TZ + 0.02], [TX - 0.08, TT + 0.06, TZ + 0.02]], perUnit: 260, tone: 0.7 }));
-  add(PC.polyline({ pts: [[TX - TR - 0.050, 0.57, TZ + 0.02], [TX - TR - 0.050, 0.36, TZ + 0.02], [TX - TR + 0.02, 0.36, TZ + 0.02]], perUnit: 260, tone: 0.7 }));
+  add(PC.T(PC.helix({ r: 0.042, pitch: 0.046, turns: 5, perUnit: 300, tone: 0.7 }), { pos: [TX - TR - 0.046, 0.60, TZ + 0.02] }));
+  add(PC.polyline({ pts: [[TX - TR - 0.046, 0.72, TZ + 0.02], [TX - TR - 0.046, TT + 0.06, TZ + 0.02], [TX - 0.08, TT + 0.06, TZ + 0.02]], perUnit: 260, tone: 0.7 }));
+  add(PC.polyline({ pts: [[TX - TR - 0.046, 0.49, TZ + 0.02], [TX - TR - 0.046, 0.32, TZ + 0.02], [TX - TR + 0.02, 0.32, TZ + 0.02]], perUnit: 260, tone: 0.7 }));
   // liquid-level gauge and nameplate on the shell
   add(PC.T(PC.polyline({ pts: [[-0.10, 0, -0.07], [0.10, 0, -0.07], [0.10, 0, 0.07], [-0.10, 0, 0.07]], closed: true, perUnit: 280, tone: 0.9 }),
-        { rot: [Math.PI / 2, 0, 0], pos: [TX, 1.02, TZ + TR * 1.01] }));
+        { rot: [Math.PI / 2, 0, 0], pos: [TX, 0.88, TZ + TR * 1.01] }));
   add(PC.T(PC.polyline({ pts: [[-0.055, 0, -0.045], [0.055, 0, -0.045], [0.055, 0, 0.045], [-0.055, 0, 0.045]], closed: true, perUnit: 280, tone: 0.8 }),
-        { rot: [Math.PI / 2, 0, 0], pos: [TX, 0.48, TZ + TR * 1.01] }));
+        { rot: [Math.PI / 2, 0, 0], pos: [TX, 0.42, TZ + TR * 1.01] }));
 
   return {
     cloud: PC.merge.apply(null, parts),
