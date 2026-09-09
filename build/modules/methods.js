@@ -54,7 +54,7 @@ module.exports = function (ctx) {
 <tbody>${chapterRows}</tbody>
 <tfoot><tr><td></td><th scope="row">${num(chapters.length)} chapters</th><td class="mt-num">${num(totalWords)}</td><td class="mt-num">${num(totalCites)}</td></tr></tfoot>
 </table></div>
-<p class="mt-foot">Source tiers across the chapters: <span class="tier tier-A">A</span> ${num(tiers.A)} primary or institutional, <span class="tier tier-B">B</span> ${num(tiers.B)} from the four named exceptions, ${num(tiers.other)} disallowed. The count is taken at build time, so it is this copy's own audit rather than a claim about an earlier one.</p></section>`;
+<p class="mt-foot">Source tiers across the chapters: <span class="tier tier-A">A</span> ${num(tiers.A)} primary or institutional, <span class="tier tier-B">B</span> ${num(tiers.B)} from the four named exceptions, ${num(tiers.other)} disallowed. The count is taken at build time, so it audits this copy rather than an earlier one.</p></section>`;
 
   const LABEL = {
     landscape: ['AI accelerators, with specs and package layouts', 'data/landscape.json'],
@@ -78,7 +78,7 @@ module.exports = function (ctx) {
 <thead><tr><th scope="col">Dataset</th><th scope="col">File</th><th scope="col" class="mt-num">Rows</th></tr></thead>
 <tbody>${datasets.map((d) => `<tr><th scope="row">${esc(d.label)}</th><td class="mt-file">${esc(d.file)}</td><td class="mt-num">${num(d.rows)}</td></tr>`).join('')}</tbody>
 </table></div>
-<p class="mt-foot">Every file above is served next to this page, so <code>data/exposure.json</code> and the rest can be fetched directly. This copy was built on <b>${esc(buildDate)}</b>.</p></section>`;
+<p class="mt-foot">Every file above is served next to this page, so you can fetch <code>data/exposure.json</code> and the rest directly. This copy was built on <b>${esc(buildDate)}</b>.</p></section>`;
 
   /* ---- changelog ---- */
   const entries = log.slice().sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
@@ -88,17 +88,17 @@ module.exports = function (ctx) {
 
   const html = `<div class="view-head">
 <h2>Methods</h2>
-<p class="dek">How the chokepoint score is set and who owns it, which sources this site will and will not cite, how estimates and relayed figures are labelled, what the site does not cover, and what changed when.</p>
+<p class="dek">How the chokepoint score is set and who owns it, which sources this site will and will not cite, how it labels estimates and relayed figures, what it does not cover, and what changed when.</p>
 </div>
 ${prose}
 <div class="prose mt-prose">
 <h3 id="methods--dataset-notes">Method notes for the datasets</h3>
-<p>Four datasets carry a note on how they were built, including where their numbers are weakest. They used to sit at the foot of the Sources page. Open one to read it.</p>
+<p>Four datasets carry a note on how they were built, and on where their numbers are weakest. Open one to read it.</p>
 </div>
 <div class="mt-notes">${notes}</div>
 <div class="prose mt-prose">
 <h3 id="methods--as-of">What is on the site, and when it was built</h3>
-<p>Word counts and source counts are measured at build time from the chapters themselves, so this table cannot drift from the site it describes.</p>
+<p>The build counts the words and the sources from the chapters themselves, so this table cannot drift from the site it describes.</p>
 </div>
 <div class="mt-tables">${chapterTable}${datasetTable}</div>
 <div class="prose mt-prose">

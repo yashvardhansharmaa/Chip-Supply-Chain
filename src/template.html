@@ -61,7 +61,7 @@
 
     <section class="view column" data-view="stack" hidden>
       <div class="chain" id="chain">
-        <div class="chain-head"><h2>The chain, scored</h2><p>One bar per stage. The taller the bar, the harder that stage would be to replace: the chokepoint score, 1 to 5.</p><div class="chain-key"><span><i style="background:var(--bar-5)"></i>5 of 5</span><span><i style="background:var(--bar-4)"></i>4</span><span><i style="background:var(--bar-3)"></i>3 or less</span></div></div>
+        <div class="chain-head"><h2>The chain, scored</h2><p>One bar per stage. The taller the bar, the harder that stage is to replace: the chokepoint score, 1 to 5.</p><div class="chain-key"><span><i style="background:var(--bar-5)"></i>5 of 5</span><span><i style="background:var(--bar-4)"></i>4</span><span><i style="background:var(--bar-3)"></i>3 or less</span></div></div>
         {{CHAIN}}
       </div>
       <div class="contents" id="contents">
@@ -79,18 +79,19 @@
     <section class="view column" data-view="landscape" hidden data-specimen="package">
       <div class="view-head">
         <h2>AI Chips</h2>
-        <p class="dek">The chips that train and run AI models in 2026, with the foundry, process node, memory supplier and packaging plant behind each one. Pick two to four and the page sets their specs side by side and draws their packages at one scale. Click a package to redraw the specimen beside the text.</p>
+        <p class="dek">The chips that train and run AI models in 2026, with the foundry, process node, memory supplier and packaging plant behind each one. Pick two to four chips: the page sets their specs side by side and draws their packages at one scale. The specimen beside the text follows whichever chip you click.</p>
       </div>
       <div id="picker" class="picker cx-picker" role="group" aria-label="Choose two to four chips to compare"></div>
       <div class="cx-bar">
         <span class="count cx-count" id="cx-count" aria-live="polite"></span>
-        <button type="button" class="btn ghost cx-clear" id="cx-clear">Clear</button>
+        <button type="button" class="btn ghost cx-clear" id="cx-clear">Clear all but one</button>
       </div>
       <h3 class="label cx-h">Packages at one scale</h3>
-      <p class="cx-sub">Every plan is drawn at the same millimetres per pixel, so a bigger package looks bigger. Click one to focus that chip.</p>
+      <p class="cx-sub">Every package is drawn from above at one scale, so a bigger one looks bigger. The logic dies do the computing, the memory stacks feed them, the interposer is the silicon slab that wires the two together, and the substrate is the card underneath. Click a package to highlight that chip in the table and open its notes.</p>
       <div class="cx-key" id="cx-key"></div>
       <div id="cx-plans" class="cx-plans"></div>
       <h3 class="label cx-h">Specs side by side</h3>
+      <p class="cx-sub">Hover any figure to see its source. TFLOPS counts trillions of calculations a second. FP16, FP8 and FP4 are number formats: the fewer the bits, the more calculations a chip gets through.</p>
       <div id="cx-table-wrap" class="cx-tablewrap"><table class="cx-table" id="cx-table"></table></div>
       <div id="cx-foot" class="cx-foot"></div>
       <div id="cx-notes" class="cx-notes"></div>
@@ -118,21 +119,21 @@
       </div>
       <nav class="subtabs" id="controls-subtabs" aria-label="Controls sections"><a href="#/controls" data-sub="timeline" aria-current="true">What the rules did</a><a href="#/thresholds" data-sub="thresholds">Licence thresholds</a><a href="#/exposure" data-sub="exposure">China revenue share</a></nav>
       <div class="sub" data-sub="timeline">
-      <h3 class="label" style="margin: 10px 0 6px">What the rules did, dated</h3>
-      <p class="controls-intro">Every export-control move since 2019 that touched the AI chip chain, in plain words and in order: the United States, the Netherlands, Japan and China. Filter by type.</p>
+      <h3 class="label" style="margin: 10px 0 6px">Every move since 2018, in order</h3>
+      <p class="controls-intro">Every export-control move that touched the AI chip chain, in plain words: rules from the United States, countermeasures from China, and the Dutch and Japanese controls beside them. Filter by type.</p>
       <div id="tl-filters" class="chips tl-filters" role="group" aria-label="Filter events"></div>
       <ol class="timeline" id="timeline"></ol>
       </div>
       <div class="sub" data-sub="thresholds" hidden>
-      <h3 class="label" style="margin: 10px 0 6px">Licence thresholds</h3>
-      <p class="controls-intro">Every number that decides whether a chip or a tool needs an export licence: what is measured, the value, where the rule applies, whether it is still in force, and the rule that set it. Filter by regime.</p>
+      <h3 class="label" style="margin: 10px 0 6px">The numbers that trigger a licence</h3>
+      <p class="controls-intro">Every number that decides whether a chip or a tool needs an export licence: what is measured, the limit, where it applies, whether it is still in force, and the rule that set it. Filter by regime.</p>
       <div id="controls-chips" class="chips" role="group" aria-label="Filter by regime"></div>
       <div class="sup-toolbar"><span class="count" id="controls-count"></span></div>
       <div class="sup-wrap"><table class="sup" id="controls-table"></table></div>
       </div>
       <div class="sub" data-sub="exposure" hidden>
       <h3 class="label" style="margin: 10px 0 6px">China share of revenue, from company filings</h3>
-      <p class="controls-intro">How much of each firm's revenue came from China, worked out from the absolute figures in its own filings. The ranking compares each firm's first year on file with its latest; the panels below trace every year against the three US rule dates. Hover a point for the filed figures, click it to open the filing.</p>
+      <p class="controls-intro">How much of each firm's revenue came from China, worked out from the absolute figures in its own filings. The ranking sets each firm's first year on file against its latest; the panels below trace every year against the three US rule dates: October 2022, October 2023 and December 2024. Hover a point for the filed figures, or click it to open the filing.</p>
       <div id="exposure-viz">{{EXPOSURE_VIZ}}</div>
       <details class="table-view"><summary>Show the same figures as a table</summary><div class="matrix-wrap"><table class="matrix" id="exposure-table"></table></div></details>
       <p class="matrix-note" id="exposure-note">{{EXPOSURE_NOTE}}</p>
@@ -154,7 +155,7 @@
     <section class="view column" data-view="sources" hidden>
       <div class="view-head">
         <h2>Sources</h2>
-        <p class="dek">Every number on this site links to where it came from. The full list follows, chapter by chapter. How the sources are graded, how the chokepoint score is judged, and what changed when are on the <a href="#/methods">Methods</a> page.</p>
+        <p class="dek">Every number on this site links to the document it came from. The full list follows, chapter by chapter. The <a href="#/methods">Methods</a> page says how sources are graded, how the chokepoint score is judged, and what changed when.</p>
       </div>
       <div class="sources-list">{{SOURCES}}</div>
     </section>

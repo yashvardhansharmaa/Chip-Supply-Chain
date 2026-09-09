@@ -453,10 +453,11 @@
     "accessed": "2026-09-09"
   },
   "https://echa.europa.eu/-/echa-supports-pfas-restriction-with-targeted-derogations": {
-    "title": "Azure WAF",
+    "title": "Echa supports pfas restriction with targeted derogations (European Chemicals Agency website)",
     "publisher": "European Chemicals Agency",
     "type": "page",
-    "accessed": "2026-09-09"
+    "accessed": "2026-09-09",
+    "unverified": true
   },
   "https://en.mthreads.com/product/KUAE": {
     "title": "MTT KUAE | Moore Threads",
@@ -2824,10 +2825,11 @@
     "accessed": "2026-09-09"
   },
   "https://www.kns.com/en-us/products": {
-    "title": "K&S - 404",
+    "title": "Products (Kulicke & Soffa website)",
     "publisher": "Kulicke & Soffa",
     "type": "page",
-    "accessed": "2026-09-09"
+    "accessed": "2026-09-09",
+    "unverified": true
   },
   "https://www.kokusai-electric.com/": {
     "title": "TOP | 株式会社 KOKUSAI ELECTRIC",
@@ -3114,13 +3116,13 @@
   },
   "https://www.ocichem.com/": {
     "title": "Home - Ocichem S.R.L.",
-    "publisher": "OCI Company",
+    "publisher": "Ocichem S.R.L.",
     "date": "2025-01-17",
     "type": "page",
     "accessed": "2026-09-09"
   },
   "https://www.parksystems.com/": {
-    "title": "English",
+    "title": "English | Park Systems",
     "publisher": "Park Systems",
     "type": "page",
     "accessed": "2026-09-09"

@@ -1617,6 +1617,19 @@ const MANUAL = {
     publisher: 'TSMC',
     type: 'report',
   },
+  // Scanned pages, no extractable text; title read off the file name and path.
+  'https://investor.tsmc.com/static/annualReports/2025/english/pdf/2025_tsmc_ar_e_ch5.pdf': {
+    title: 'TSMC 2025 Annual Report, chapter 5',
+    publisher: 'TSMC',
+    type: 'pdf',
+    unverified: true,
+  },
+  'https://www.unimicron.com/files/money/Earnings/en/2026-Q2-consolidated-en.pdf': {
+    title: 'Unimicron consolidated financial statements, second quarter 2026',
+    publisher: 'Unimicron Technology',
+    type: 'pdf',
+    unverified: true,
+  },
 
   // --- company pages read in the browser after the fetcher was refused
   'https://industrial.panasonic.com/ww/products/pt/megtron': {
