@@ -5,12 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Mon, 20 Oct 2025 21:05:29 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:23:15.016Z",
+  "fetchedAt": "2026-09-09T18:32:53.707Z",
   "extracted": {
     "kind": "pdf",
-    "title": "515065297",
+    "title": "R AJ VA RA DA RA JA N / I ACOB KOCH -W E SE R / CH RI S RI CH A RD / JOSE P H FI TZ GE RA L D /",
+    "metaTitle": null,
+    "firstLine": "R AJ VA RA DA RA JA N / I ACOB KOCH -W E SE R / CH RI S RI CH A RD / JOSE P H FI TZ GE RA L D /",
+    "author": null,
+    "subject": null,
+    "pages": 38,
     "date": "2024-05-09",
-    "firstLine": null,
-    "dateModified": "2024-05-09"
+    "dateModified": "2024-05-09",
+    "via": "pymupdf"
   }
 }

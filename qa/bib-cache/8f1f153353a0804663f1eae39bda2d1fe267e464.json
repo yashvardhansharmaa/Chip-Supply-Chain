@@ -5,12 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Fri, 21 Nov 2025 15:57:12 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:22:35.966Z",
+  "fetchedAt": "2026-09-09T18:32:04.707Z",
   "extracted": {
     "kind": "pdf",
-    "title": "Layer 1",
+    "title": "Federal Register / Vol. 90, No. 187 / Tuesday, September 30, 2025 / Rules and Regulations",
+    "metaTitle": null,
+    "firstLine": "Federal Register / Vol. 90, No. 187 / Tuesday, September 30, 2025 / Rules and Regulations",
+    "author": null,
+    "subject": null,
+    "pages": 14,
     "date": "2025-09-30",
-    "firstLine": "47201 Federal RegisterControl(s) Country chart (see Supp. No. 1 to part 738) AT applies to tech-nology for devel-opment, produc-tion, operation, in-stallation, mainte-nance, repair, over-haul, or refu",
-    "dateModified": "2025-09-30"
+    "dateModified": "2025-09-30",
+    "via": "pymupdf"
   }
 }

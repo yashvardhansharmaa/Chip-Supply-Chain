@@ -5,12 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Wed, 17 Apr 2024 06:02:13 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:22:52.083Z",
+  "fetchedAt": "2026-09-09T18:32:24.239Z",
   "extracted": {
     "kind": "pdf",
-    "title": null,
+    "title": "April 17, 2024 Japan Investment Corporation",
+    "metaTitle": null,
+    "firstLine": "April 17, 2024 Japan Investment Corporation",
+    "author": null,
+    "subject": null,
+    "pages": 9,
     "date": "2024-04-17",
-    "firstLine": null,
-    "dateModified": "2024-04-17"
+    "dateModified": "2024-04-17",
+    "via": "pymupdf"
   }
 }

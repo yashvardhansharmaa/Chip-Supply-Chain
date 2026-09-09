@@ -86,7 +86,7 @@ Run those three numbers and the two dies inside a B200 come to about $900, 14 pe
 
 ### Memory is the bill
 
-The 192 GB of high-bandwidth memory beside those dies, sold as HBM3E, is the single largest line: about $2,900, 45 percent of the build, at $14 to $17 per gigabyte ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Nvidia controls it least of all: three firms make it, and they sell every stack they can build.
+The 192 GB of high-bandwidth memory beside those dies, sold as HBM3E, is the single largest line: about $2,900, 45 percent of the build, at $14 to $17 per gigabyte ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Nvidia controls that line least of all: three firms make the memory, and they sell every stack they can build.
 
 ### Packaging, substrate and test
 

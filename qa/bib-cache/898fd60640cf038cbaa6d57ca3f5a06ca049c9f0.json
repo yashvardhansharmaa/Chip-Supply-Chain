@@ -5,12 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Thu, 29 Feb 2024 13:32:56 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:22:05.262Z",
+  "fetchedAt": "2026-09-09T18:31:37.883Z",
   "extracted": {
     "kind": "pdf",
-    "title": "Logo_Besi_def",
+    "title": "Annual Report 2023 People Drive Innovation",
+    "metaTitle": null,
+    "firstLine": "Annual Report 2023 People Drive Innovation",
+    "author": null,
+    "subject": null,
+    "pages": 211,
     "date": "2024-02-19",
-    "firstLine": null,
-    "dateModified": "2013-04-09"
+    "dateModified": "2024-02-19",
+    "via": "pymupdf"
   }
 }

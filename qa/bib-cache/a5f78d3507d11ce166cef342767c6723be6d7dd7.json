@@ -5,11 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Fri, 03 Jul 2026 00:47:50 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:23:22.801Z",
+  "fetchedAt": "2026-09-09T18:33:01.467Z",
   "extracted": {
     "kind": "pdf",
-    "title": null,
-    "date": null,
-    "firstLine": null
+    "title": "Consolidated Financial Statements FY2024",
+    "metaTitle": "Consolidated Financial Statements FY2024",
+    "firstLine": "CONSOLIDATED FINANCIAL",
+    "author": null,
+    "subject": null,
+    "pages": 14,
+    "date": "2024-06-14",
+    "dateModified": "2024-06-14",
+    "via": "pymupdf"
   }
 }

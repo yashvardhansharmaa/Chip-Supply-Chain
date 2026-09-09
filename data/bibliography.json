@@ -6,7 +6,7 @@
     "accessed": "2026-09-09"
   },
   "https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm": {
-    "title": "Cowos",
+    "title": "Cowos (TSMC website)",
     "publisher": "TSMC",
     "type": "page",
     "accessed": "2026-09-09",
@@ -20,7 +20,7 @@
     "accessed": "2026-09-09"
   },
   "https://ai.meta.com/blog/meta-mtia-scale-ai-chips-for-billions/": {
-    "title": "Meta mtia scale ai chips for billions",
+    "title": "Meta mtia scale ai chips for billions (Meta website)",
     "publisher": "Meta",
     "type": "article",
     "accessed": "2026-09-09",
@@ -48,7 +48,7 @@
     "accessed": "2026-09-09"
   },
   "https://arxiv.org/pdf/1912.09075": {
-    "title": "IAc8dt=»dõp d^ÉÝ\u0018\"YO]oæ",
+    "title": "The refined EUV mask model I.A. MAKHOTKIN1*, M. WU1, V. SOLTWISCH2, F. SCHOLZE2, V. PHILIPSEN1",
     "publisher": "arXiv",
     "date": "2019-12-19",
     "type": "page",
@@ -135,11 +135,11 @@
     "accessed": "2026-09-09"
   },
   "https://bidenwhitehouse.archives.gov/wp-content/uploads/2021/06/100-day-supply-chain-review-report.pdf": {
-    "title": "100 day supply chain review report",
+    "title": "BUILDING RESILIENT SUPPLY CHAINS,",
     "publisher": "The White House (Biden administration archive)",
+    "date": "2021-06-07",
     "type": "pdf",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://blog.entegris.com/molybdenums-role-in-ultra-fast-computing-the-metal-behind-the-speed": {
     "title": "Molybdenum’s Role in Ultra-Fast Computing: The Metal Behind the Speed",
@@ -307,81 +307,72 @@
     "accessed": "2026-09-09"
   },
   "https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf": {
-    "title": "Lockwood, Ed",
+    "title": "Letter to Shareholders Q3 Fiscal 2026",
     "publisher": "KLA Corporation",
     "date": "2026-04-29",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf": {
-    "title": "Lockwood, Ed",
+    "title": "Letter to Shareholders Q4 Fiscal 2026",
     "publisher": "KLA Corporation",
     "date": "2026-07-27",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://data.sec.gov/api/xbrl/companyconcept/CIK0000006951/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json": {
-    "title": "RevenueFromContractWithCustomerExcludingAssessedTax",
-    "publisher": "U.S. Securities and Exchange Commission",
-    "type": "filing",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "title": "Revenue from Contract with Customer, Excluding Assessed Tax (us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax) reported by APPLIED MATERIALS INC /DE, XBRL company concept data",
+    "publisher": "U.S. Securities and Exchange Commission (XBRL data for APPLIED MATERIALS INC /DE)",
+    "type": "dataset",
+    "accessed": "2026-09-09"
   },
   "https://data.sec.gov/api/xbrl/companyconcept/CIK0000021535/us-gaap/RevenueFromContractWithCustomerIncludingAssessedTax.json": {
-    "title": "RevenueFromContractWithCustomerIncludingAssessedTax",
-    "publisher": "U.S. Securities and Exchange Commission",
-    "type": "filing",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "title": "Revenue from Contract with Customer, Including Assessed Tax (us-gaap:RevenueFromContractWithCustomerIncludingAssessedTax) reported by COHU, INC., XBRL company concept data",
+    "publisher": "U.S. Securities and Exchange Commission (XBRL data for COHU, INC.)",
+    "type": "dataset",
+    "accessed": "2026-09-09"
   },
   "https://data.sec.gov/api/xbrl/companyconcept/CIK0000056978/us-gaap/Revenues.json": {
-    "title": "Revenues",
-    "publisher": "U.S. Securities and Exchange Commission",
-    "type": "filing",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "title": "Revenues (us-gaap:Revenues) reported by KULICKE AND SOFFA INDUSTRIES, INC., XBRL company concept data",
+    "publisher": "U.S. Securities and Exchange Commission (XBRL data for KULICKE AND SOFFA INDUSTRIES, INC.)",
+    "type": "dataset",
+    "accessed": "2026-09-09"
   },
   "https://data.sec.gov/api/xbrl/companyconcept/CIK0000319201/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json": {
-    "title": "RevenueFromContractWithCustomerExcludingAssessedTax",
-    "publisher": "U.S. Securities and Exchange Commission",
-    "type": "filing",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "title": "Revenue from Contract with Customer, Excluding Assessed Tax (us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax) reported by KLA CORP, XBRL company concept data",
+    "publisher": "U.S. Securities and Exchange Commission (XBRL data for KLA CORP)",
+    "type": "dataset",
+    "accessed": "2026-09-09"
   },
   "https://data.sec.gov/api/xbrl/companyconcept/CIK0001039399/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json": {
-    "title": "RevenueFromContractWithCustomerExcludingAssessedTax",
-    "publisher": "U.S. Securities and Exchange Commission",
-    "type": "filing",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "title": "Revenue from Contract with Customer, Excluding Assessed Tax (us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax) reported by FormFactor, Inc., XBRL company concept data",
+    "publisher": "U.S. Securities and Exchange Commission (XBRL data for FormFactor, Inc.)",
+    "type": "dataset",
+    "accessed": "2026-09-09"
   },
   "https://data.sec.gov/api/xbrl/companyconcept/CIK0001047127/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json": {
-    "title": "RevenueFromContractWithCustomerExcludingAssessedTax",
-    "publisher": "U.S. Securities and Exchange Commission",
-    "type": "filing",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "title": "Revenue from Contract with Customer, Excluding Assessed Tax (us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax) reported by AMKOR TECHNOLOGY, INC., XBRL company concept data",
+    "publisher": "U.S. Securities and Exchange Commission (XBRL data for AMKOR TECHNOLOGY, INC.)",
+    "type": "dataset",
+    "accessed": "2026-09-09"
   },
   "https://data.sec.gov/api/xbrl/companyconcept/CIK0001109345/us-gaap/Revenues.json": {
-    "title": "Revenues",
-    "publisher": "U.S. Securities and Exchange Commission",
-    "type": "filing",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "title": "Revenues (us-gaap:Revenues) reported by NOVA LTD., XBRL company concept data",
+    "publisher": "U.S. Securities and Exchange Commission (XBRL data for NOVA LTD.)",
+    "type": "dataset",
+    "accessed": "2026-09-09"
   },
   "https://data.sec.gov/api/xbrl/companyconcept/CIK0001116942/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json": {
-    "title": "RevenueFromContractWithCustomerExcludingAssessedTax",
-    "publisher": "U.S. Securities and Exchange Commission",
-    "type": "filing",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "title": "Revenue from Contract with Customer, Excluding Assessed Tax (us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax) reported by TTM TECHNOLOGIES, INC., XBRL company concept data",
+    "publisher": "U.S. Securities and Exchange Commission (XBRL data for TTM TECHNOLOGIES, INC.)",
+    "type": "dataset",
+    "accessed": "2026-09-09"
   },
   "https://data.sec.gov/api/xbrl/companyconcept/CIK0001122411/ifrs-full/Revenue.json": {
-    "title": "Revenue",
-    "publisher": "U.S. Securities and Exchange Commission",
-    "type": "filing",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "title": "Revenue (ifrs-full:Revenue) reported by ASE Technology Holding Co., Ltd., XBRL company concept data",
+    "publisher": "U.S. Securities and Exchange Commission (XBRL data for ASE Technology Holding Co., Ltd.)",
+    "type": "dataset",
+    "accessed": "2026-09-09"
   },
   "https://developer.nvidia.com/blog/inside-nvidia-blackwell-ultra-the-chip-powering-the-ai-factory-era/": {
     "title": "Inside NVIDIA Blackwell Ultra: The Chip Powering the AI Factory Era",
@@ -417,14 +408,14 @@
     "accessed": "2026-09-09"
   },
   "https://disc.static.szse.cn/disc/disk03/finalpage/2026-03-31/a0209878-88e7-443c-b062-6a33047d9c98.PDF": {
-    "title": "A0209878 88e7 443c b062 6a33047d9c98",
+    "title": "天水华天科技股份有限公司2025 年年度报告全文",
     "publisher": "Shenzhen Stock Exchange",
+    "date": "2026-03-30",
     "type": "pdf",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://docs.broadcom.com/doc/3-5d-xdsip-platform-technology": {
-    "title": "Slide 1",
+    "title": "3.5D XDSiP Platform Technology",
     "publisher": "Broadcom",
     "date": "2024-12-04",
     "type": "page",
@@ -437,11 +428,10 @@
     "accessed": "2026-09-09"
   },
   "https://docs.fcc.gov/public/attachments/FCC-26-50A1.pdf": {
-    "title": "FCC 26 50A1",
+    "title": "Federal Communications Commission FCC-26-50",
     "publisher": "U.S. Federal Communications Commission",
     "type": "pdf",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://docs.habana.ai/en/latest/Gaudi_Overview/Gaudi_Architecture.html": {
     "title": "Gaudi Architecture — Gaudi Documentation 1.24.0 documentation",
@@ -629,21 +619,21 @@
     "accessed": "2026-09-09"
   },
   "https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2023_con_quarter04_all.pdf": {
-    "title": "ìë¬¸í¤ëì§ ìë§ì¶¤",
+    "title": "Independent Accountants' Review Report",
     "publisher": "Samsung Electronics",
-    "date": "2018-04-10",
+    "date": "2024-02-19",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2025_con_quarter04_all.pdf": {
-    "title": "ë ì´ì´ 1",
+    "title": "Microsoft Word - SEC_20254Q_Consolidated_F",
     "publisher": "Samsung Electronics",
-    "date": "2018-04-10",
+    "date": "2026-02-12",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://industrial.panasonic.com/ww/products/pt/megtron": {
-    "title": "Megtron",
+    "title": "Megtron (Panasonic Industry website)",
     "publisher": "Panasonic Industry",
     "type": "page",
     "accessed": "2026-09-09",
@@ -663,91 +653,91 @@
     "accessed": "2026-09-09"
   },
   "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf": {
-    "title": "TSMC 2Q24 Transcript",
+    "title": "TSMC 2Q24 Transcript (TSMC website)",
     "publisher": "TSMC",
     "type": "pdf",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf": {
-    "title": "TSMC 3Q25 Transcript",
+    "title": "TSMC 3Q25 Transcript (TSMC website)",
     "publisher": "TSMC",
     "type": "pdf",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf": {
-    "title": "TSMC 2Q26 Transcript",
+    "title": "TSMC 2Q26 Transcript (TSMC website)",
     "publisher": "TSMC",
     "type": "pdf",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://investor.tsmc.com/static/annualReports/2025/english/index.html": {
-    "title": "Index",
+    "title": "Index (TSMC website)",
     "publisher": "TSMC",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://investor.tsmc.com/static/annualReports/2025/english/pdf/2025_tsmc_ar_e_ch5.pdf": {
-    "title": "2025 tsmc ar e ch5",
+    "title": "2025 tsmc ar e ch5 (TSMC website)",
     "publisher": "TSMC",
     "type": "pdf",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://investors.arm.com/": {
-    "title": "Investors.arm.com",
+    "title": "Arm home page",
     "publisher": "Arm",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://investors.broadcom.com/news-releases/news-release-details/broadcom-announces-extended-partnership-meta-deploy-technology": {
-    "title": "Broadcom announces extended partnership meta deploy technology",
+    "title": "Broadcom announces extended partnership meta deploy technology (Broadcom website)",
     "publisher": "Broadcom",
     "type": "press release",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://investors.broadcom.com/news-releases/news-release-details/broadcom-ships-tomahawk-5-industrys-highest-bandwidth-switch": {
-    "title": "Broadcom ships tomahawk 5 industrys highest bandwidth switch",
+    "title": "Broadcom ships tomahawk 5 industrys highest bandwidth switch (Broadcom website)",
     "publisher": "Broadcom",
     "type": "press release",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://investors.broadcom.com/news-releases/news-release-details/openai-and-broadcom-announce-strategic-collaboration-deploy-10": {
-    "title": "Openai and broadcom announce strategic collaboration deploy 10",
+    "title": "Openai and broadcom announce strategic collaboration deploy 10 (Broadcom website)",
     "publisher": "Broadcom",
     "type": "press release",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://investors.micron.com/news/press-release/2025/Micron-Technology-Inc--Reports-Results-for-the-Fourth-Quarter-and-Full-Year-of-Fiscal-2025-09-23-2025/default.aspx": {
-    "title": "Default",
+    "title": "Default (Micron Technology website)",
     "publisher": "Micron Technology",
     "type": "press release",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Results-for-the-Third-Quarter-of-Fiscal-2026/default.aspx": {
-    "title": "Default",
+    "title": "Default (Micron Technology website)",
     "publisher": "Micron Technology",
     "type": "press release",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://investors.ontoinnovation.com/news/news-details/2026/Onto-Innovation-Completes-Strategic-Investment-in-Rigaku-Holdings-Corporation/default.aspx": {
-    "title": "Default",
+    "title": "Default (Onto Innovation website)",
     "publisher": "Onto Innovation",
     "type": "press release",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://investors.ontoinnovation.com/news/news-details/2026/Onto-Innovation-Reports-2025-Fourth-Quarter-and-Full-Year-Results/default.aspx": {
-    "title": "Default",
+    "title": "Default (Onto Innovation website)",
     "publisher": "Onto Innovation",
     "type": "press release",
     "accessed": "2026-09-09",
@@ -768,21 +758,21 @@
     "accessed": "2026-09-09"
   },
   "https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced": {
-    "title": "Amkor technology breaks ground new semiconductor advanced",
+    "title": "Amkor technology breaks ground new semiconductor advanced (Amkor Technology website)",
     "publisher": "Amkor Technology",
     "type": "press release",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://ir.amkor.com/news-releases/news-release-details/tsmc-and-amkor-technology-announce-long-term-partnership": {
-    "title": "Tsmc and amkor technology announce long term partnership",
+    "title": "Tsmc and amkor technology announce long term partnership (Amkor Technology website)",
     "publisher": "Amkor Technology",
     "type": "press release",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-third-quarter-2026-results": {
-    "title": "Applied materials announces third quarter 2026 results",
+    "title": "Applied materials announces third quarter 2026 results (Applied Materials website)",
     "publisher": "Applied Materials",
     "type": "press release",
     "accessed": "2026-09-09",
@@ -1037,56 +1027,56 @@
     "accessed": "2026-09-09"
   },
   "https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf": {
-    "title": "2025 Financial performance section_COVER.pdf",
+    "title": "ASML 2025 Annual Report",
     "publisher": "ASML",
     "date": "2026-02-24",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf": {
-    "title": "ASML 2025 Annual Report  Strategic report section",
+    "title": "ASML 2025 Annual Report",
     "publisher": "ASML",
     "date": "2026-02-24",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://pr.tsmc.com/english/news/3174": {
-    "title": "News 3174",
+    "title": "News 3174 (TSMC website)",
     "publisher": "TSMC",
     "type": "press release",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://pr.tsmc.com/english/news/3210": {
-    "title": "News 3210",
+    "title": "News 3210 (TSMC website)",
     "publisher": "TSMC",
     "type": "press release",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://pr.tsmc.com/english/news/3228": {
-    "title": "News 3228",
+    "title": "News 3228 (TSMC website)",
     "publisher": "TSMC",
     "type": "press release",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://pr.tsmc.com/english/news/3302": {
-    "title": "News 3302",
+    "title": "News 3302 (TSMC website)",
     "publisher": "TSMC",
     "type": "press release",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://pr.tsmc.com/english/news/3326": {
-    "title": "News 3326",
+    "title": "News 3326 (TSMC website)",
     "publisher": "TSMC",
     "type": "press release",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://pr.tsmc.com/english/news/3338": {
-    "title": "News 3338",
+    "title": "News 3338 (TSMC website)",
     "publisher": "TSMC",
     "type": "press release",
     "accessed": "2026-09-09",
@@ -1100,28 +1090,28 @@
     "accessed": "2026-09-09"
   },
   "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gallium.pdf": {
-    "title": "Gallium",
+    "title": "Mineral Commodity Summaries 2026",
     "publisher": "U.S. Geological Survey",
     "date": "2026-02-05",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf": {
-    "title": "Germanium",
+    "title": "Mineral Commodity Summaries 2026",
     "publisher": "U.S. Geological Survey",
     "date": "2026-02-05",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-indium.pdf": {
-    "title": "Indium",
+    "title": "Mineral Commodity Summaries 2026",
     "publisher": "U.S. Geological Survey",
     "date": "2026-02-05",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-silicon.pdf": {
-    "title": "Silicon",
+    "title": "Mineral Commodity Summaries 2026",
     "publisher": "U.S. Geological Survey",
     "date": "2026-02-05",
     "type": "pdf",
@@ -1259,28 +1249,29 @@
     "accessed": "2026-09-09"
   },
   "https://www.advancedenergy.com/": {
-    "title": "Www.advancedenergy.com",
+    "title": "Home | Advanced Energy",
     "publisher": "Advanced Energy Industries",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.advantest.com/document/en/investors/ir-library/annual/E_all_IAR2024.pdf": {
-    "title": "«QZEe°\u0015\u0012ygOU==ËÞ»\u001a\u0007@\u0004s*¬õa_¶\u001f>kìlÐs@üZRP¿ÃÆ\u0019\"ÓuaØ²h½,f³1zj\u0019¢m\u0005AD\u001cÃÚ¹sÅ&\u0013éÈ1Ñ",
+    "title": "Integrated Annual Report 2024",
     "publisher": "Advantest",
+    "date": "2025-10-03",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://www.advantest.com/document/en/investors/ir-library/annual/E_all_IAR2025.pdf": {
-    "title": "E all IAR2025",
+    "title": "Integrated Annual Report 2025",
     "publisher": "Advantest",
+    "date": "2025-12-03",
     "type": "pdf",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf": {
-    "title": "\u0004kKdËG²Ü¡_éßbúi\u001dºYÙß\u0003y\u0012ÑÈØñ^eÄx:\u0007\u0012oP¦ýëÒÂ½«À",
+    "title": "Investors Guide April 25, 2025",
     "publisher": "Advantest",
+    "date": "2025-05-13",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
@@ -1291,11 +1282,11 @@
     "accessed": "2026-09-09"
   },
   "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_slide.pdf": {
-    "title": "JE BIZ 260427 slide",
+    "title": "FY25 (Period Ended March 31st, 2026) Financial Briefing",
     "publisher": "Advantest",
+    "date": "2026-04-27",
     "type": "pdf",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.aehr.com/2026/07/aehr-test-systems-reports-fiscal-2026-fourth-quarter-and-full-year-financial-results-with-record-quarterly-bookings-and-100-million-effective-backlog/": {
     "title": "Aehr Test Systems Reports Fiscal 2026 Fourth Quarter and Full Year Financial Results with Record Quarterly Bookings and $100 Million Effective Backlog",
@@ -1325,11 +1316,11 @@
     "accessed": "2026-09-09"
   },
   "https://www.agc.com/en/ir/library/outline/pdf/reference.pdf": {
-    "title": "Reference",
+    "title": "AGC Data Book",
     "publisher": "AGC Inc.",
+    "date": "2026-05-29",
     "type": "pdf",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.agc.com/en/news/detail/1201109_2814.html": {
     "title": "AGC to Make Drastic Expansion to Supply System for EUVL Mask Blanks ｜ News ｜ AGC",
@@ -1357,7 +1348,7 @@
     "accessed": "2026-09-09"
   },
   "https://www.airproducts.com/industries/electronics": {
-    "title": "Electronics",
+    "title": "Electronics (Air Products website)",
     "publisher": "Air Products",
     "type": "page",
     "accessed": "2026-09-09",
@@ -1371,13 +1362,14 @@
     "accessed": "2026-09-09"
   },
   "https://www.ajinomoto.co.jp/company/en/ir/event/business_briefing/main/01113/teaserItems1/01/linkList/00/link/3_ICT_E.pdf": {
-    "title": "?½\u001f",
+    "title": "Microsoft PowerPoint - 3_ICT_E",
     "publisher": "Ajinomoto",
+    "date": "2023-06-12",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://www.ajinomoto.co.jp/company/en/ir/library/result/main/014/teaserItems1/0/linkList/06/link/FY25Q4_Tanshin_E.pdf": {
-    "title": "&&ÿÿÿÿÿÿÿÿÿUTU'$$ÿÿÿÿÿÿÿÿÿÿÿÿ½¾¿&$$ùùùÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ,++ÿÿÿÿÿÿÿÿÿ&$$><>QQS&&ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ^^a\\Z[ÿ",
+    "title": "Note: This document has been translated from the Japanese original for reference purposes only. In the event of any",
     "publisher": "Ajinomoto",
     "date": "2026-05-01",
     "type": "pdf",
@@ -1403,9 +1395,9 @@
     "accessed": "2026-09-09"
   },
   "https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/product-briefs/amd-instinct-mi355x-gpu-brochure.pdf": {
-    "title": "AMD_Tech_Lockup_Template",
+    "title": "AMD Instinct MI355X GPU",
     "publisher": "AMD",
-    "date": "2025-10-01",
+    "date": "2025-06-16",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
@@ -1454,53 +1446,52 @@
     "accessed": "2026-09-09"
   },
   "https://www.amphenol.com/markets/it-datacom": {
-    "title": "It datacom",
+    "title": "It datacom (Amphenol website)",
     "publisher": "Amphenol",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.ansys.com/products/semiconductors": {
-    "title": "Semiconductors",
+    "title": "Semiconductors (Ansys website)",
     "publisher": "Ansys",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.appliedmaterials.com/eu/en/product-library/kinex-integrated-die-to-wafer-hybrid-bonding-system.html": {
-    "title": "Kinex integrated die to wafer hybrid bonding system",
+    "title": "Kinex integrated die to wafer hybrid bonding system (Applied Materials website)",
     "publisher": "Applied Materials",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.appliedmaterials.com/us/en/semiconductor.html": {
-    "title": "Semiconductor",
+    "title": "Semiconductor (Applied Materials website)",
     "publisher": "Applied Materials",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.arista.com/en/solutions/ai-networking": {
-    "title": "Ai networking",
+    "title": "Ai networking (Arista Networks website)",
     "publisher": "Arista Networks",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.asetek.com/data-center/": {
-    "title": "Data center",
+    "title": "Data center (Asetek website)",
     "publisher": "Asetek",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.asm.com/": {
-    "title": "Www.asm.com",
+    "title": "Home | ASM",
     "publisher": "ASM International",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.asm.com/media/yvxbavwe/20260303-asm-reports-q4-and-full-year-2025-results.pdf": {
     "title": "Press Release Q4, 2025 text",
@@ -1633,42 +1624,42 @@
     "accessed": "2026-09-09"
   },
   "https://www.azcommerce.com/news-events/news/2026/7/tsmc-announcement/": {
-    "title": "Tsmc announcement",
+    "title": "Tsmc announcement (Arizona Commerce Authority website)",
     "publisher": "Arizona Commerce Authority",
     "type": "press release",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.bcg.com/publications/2023/navigating-the-semiconductor-manufacturing-costs": {
-    "title": "Navigating the semiconductor manufacturing costs",
+    "title": "Navigating the semiconductor manufacturing costs (Boston Consulting Group website)",
     "publisher": "Boston Consulting Group",
     "type": "report",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.bcg.com/publications/2024/emerging-resilience-in-semiconductor-supply-chain": {
-    "title": "Emerging resilience in semiconductor supply chain",
+    "title": "Emerging resilience in semiconductor supply chain (Boston Consulting Group website)",
     "publisher": "Boston Consulting Group",
     "type": "report",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.besi.com/fileadmin/data/Investor_Relations/_Semi__Annual_Reports/Annual_Report_2021.pdf": {
-    "title": "Logo_Besi_def",
+    "title": "Annual Report 2021 The Future of Innovation",
     "publisher": "BE Semiconductor Industries (Besi)",
-    "date": "2013-04-09",
+    "date": "2022-02-17",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://www.besi.com/fileadmin/data/Investor_Relations/_Semi__Annual_Reports/Annual_Report_2023.pdf": {
-    "title": "Logo_Besi_def",
+    "title": "Annual Report 2023 People Drive Innovation",
     "publisher": "BE Semiconductor Industries (Besi)",
     "date": "2024-02-19",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://www.besi.com/fileadmin/data/Investor_Relations/_Semi__Annual_Reports/Annual_Report_2025.pdf": {
-    "title": "Logo_Besi_def",
+    "title": "Annual Report 2025 Talent Innovation",
     "publisher": "BE Semiconductor Industries (Besi)",
     "date": "2026-02-20",
     "type": "pdf",
@@ -1771,7 +1762,7 @@
     "accessed": "2026-09-09"
   },
   "https://www.camtek.com/products/": {
-    "title": "Products",
+    "title": "Products (Camtek website)",
     "publisher": "Camtek",
     "type": "page",
     "accessed": "2026-09-09",
@@ -1815,11 +1806,10 @@
     "accessed": "2026-09-09"
   },
   "https://www.chipbond.com.tw/en/": {
-    "title": "En",
+    "title": "Home Page - Chipbond",
     "publisher": "Chipbond Technology",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.chromaate.com/": {
     "title": "Chroma ATE Inc. | Global",
@@ -1828,7 +1818,7 @@
     "accessed": "2026-09-09"
   },
   "https://www.cisco.com/site/us/en/products/networking/silicon-one/index.html": {
-    "title": "Index",
+    "title": "Index (Cisco Systems website)",
     "publisher": "Cisco Systems",
     "type": "page",
     "accessed": "2026-09-09",
@@ -1841,35 +1831,34 @@
     "accessed": "2026-09-09"
   },
   "https://www.cohu.com/": {
-    "title": "Www.cohu.com",
+    "title": "Home | Cohu",
     "publisher": "Cohu",
+    "date": "2015-02-18",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.comet.tech/": {
-    "title": "Www.comet.tech",
+    "title": "Home page - Comet",
     "publisher": "Comet Group",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.commerce.gov/news/press-releases/2024/12/biden-harris-administration-announces-chips-incentives-awards": {
-    "title": "Biden harris administration announces chips incentives awards",
+    "title": "Biden harris administration announces chips incentives awards (U.S. Department of Commerce website)",
     "publisher": "U.S. Department of Commerce",
     "type": "press release",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.commerce.gov/news/press-releases/2025/11/statement-uae-and-saudi-chip-exports": {
-    "title": "Statement uae and saudi chip exports",
+    "title": "Statement uae and saudi chip exports (U.S. Department of Commerce website)",
     "publisher": "U.S. Department of Commerce",
     "type": "press release",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.congress.gov/bill/119th-congress/senate-bill/1705/text": {
-    "title": "Text",
+    "title": "Text (U.S. Congress website)",
     "publisher": "U.S. Congress",
     "type": "regulation",
     "accessed": "2026-09-09",
@@ -1890,7 +1879,7 @@
     "accessed": "2026-09-09"
   },
   "https://www.corning.com/worldwide/en/products/communication-networks.html": {
-    "title": "Communication networks",
+    "title": "Communication networks (Corning website)",
     "publisher": "Corning",
     "type": "page",
     "accessed": "2026-09-09",
@@ -1990,7 +1979,7 @@
     "accessed": "2026-09-09"
   },
   "https://www.dongjin.com/en/business/semiconductor.php": {
-    "title": "Semiconductor",
+    "title": "Semiconductor (Dongjin Semichem website)",
     "publisher": "Dongjin Semichem",
     "type": "page",
     "accessed": "2026-09-09",
@@ -2003,7 +1992,7 @@
     "accessed": "2026-09-09"
   },
   "https://www.eaton.com/us/en-us/markets/data-centers.html": {
-    "title": "Data centers",
+    "title": "Data centers (Eaton website)",
     "publisher": "Eaton",
     "type": "page",
     "accessed": "2026-09-09",
@@ -2110,11 +2099,11 @@
     "accessed": "2026-09-09"
   },
   "https://www.fabrinet.com/": {
-    "title": "Www.fabrinet.com",
+    "title": "Home - Fabrinet",
     "publisher": "Fabrinet",
+    "date": "2015-10-30",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.federalregister.gov/documents/2018/04/23/2018-08354/in-the-matter-of-zhongxing-telecommunications-equipment-corporation-zte-plaza-keji-road-south": {
     "title": "In the Matter of: Zhongxing Telecommunications Equipment Corporation ZTE Plaza, Keji Road South Hi-Tech Industrial Park Nanshan District, Shenzhen China; ZTE Kangxun Telecommunications Ltd. 2/3 Floor, Suite A, Zte Communication Mansion Keji (S) Road Hi-New Shenzhen, 518057 China Respondent'; Order Activating Suspended Denial Order Relating to Zhongxing Telecommunications Equipment Corporation and Zte Kangxun Telecommunications Ltd.",
@@ -2306,7 +2295,7 @@
     "accessed": "2026-09-09"
   },
   "https://www.foxconn.com/": {
-    "title": "Www.foxconn.com",
+    "title": "Hon Hai Precision Industry (Foxconn) home page",
     "publisher": "Hon Hai Precision Industry (Foxconn)",
     "type": "page",
     "accessed": "2026-09-09",
@@ -2361,28 +2350,28 @@
     "accessed": "2026-09-09"
   },
   "https://www.globalwafers.com/en": {
-    "title": "En",
+    "title": "GlobalWafers home page",
     "publisher": "GlobalWafers",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.globenewswire.com/news-release/2024/07/08/2909540/0/en/applied-materials-unveils-chip-wiring-innovations-for-more-energy-efficient-computing.html": {
-    "title": "Applied materials unveils chip wiring innovations for more energy efficient computing",
+    "title": "Applied materials unveils chip wiring innovations for more energy efficient computing (GlobeNewswire website)",
     "publisher": "GlobeNewswire",
     "type": "press release",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.globenewswire.com/news-release/2025/12/10/3203040/0/en/Photronics-Reports-Full-Year-and-Fourth-Quarter-Fiscal-2025-Results.html": {
-    "title": "Photronics Reports Full Year and Fourth Quarter Fiscal 2025 Results",
+    "title": "Photronics Reports Full Year and Fourth Quarter Fiscal 2025 Results (GlobeNewswire website)",
     "publisher": "GlobeNewswire",
     "type": "press release",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.globenewswire.com/news-release/2026/08/13/3344890/0/en/applied-materials-announces-third-quarter-2026-results.html": {
-    "title": "Applied materials announces third quarter 2026 results",
+    "title": "Applied materials announces third quarter 2026 results (GlobeNewswire website)",
     "publisher": "GlobeNewswire",
     "type": "press release",
     "accessed": "2026-09-09",
@@ -2477,7 +2466,7 @@
     "accessed": "2026-09-09"
   },
   "https://www.hitachi-hightech.com/global/en/products/semiconductor-manufacturing/": {
-    "title": "Semiconductor manufacturing",
+    "title": "Semiconductor manufacturing (Hitachi High-Tech website)",
     "publisher": "Hitachi High-Tech",
     "type": "page",
     "accessed": "2026-09-09",
@@ -2515,21 +2504,21 @@
     "accessed": "2026-09-09"
   },
   "https://www.hpe.com/us/en/servers.html": {
-    "title": "Servers",
+    "title": "Servers (Hewlett Packard Enterprise website)",
     "publisher": "Hewlett Packard Enterprise",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.hscpoly.com/": {
-    "title": "Www.hscpoly.com",
+    "title": "Home - Hemlock Semiconductor",
     "publisher": "Hemlock Semiconductor",
+    "date": "2026-06-01",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.huahonggrace.com/": {
-    "title": "Www.huahonggrace.com",
+    "title": "Hua Hong Semiconductor home page",
     "publisher": "Hua Hong Semiconductor",
     "type": "page",
     "accessed": "2026-09-09",
@@ -2579,11 +2568,11 @@
     "accessed": "2026-09-09"
   },
   "https://www.ibiden.com/ir/items/tannshinn2026Q1.pdf": {
-    "title": "Tannshinn2026Q1",
+    "title": "Note : This document has been translated from a part of the Japanese original for reference purposes only.",
     "publisher": "Ibiden",
+    "date": "2026-08-03",
     "type": "pdf",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.ichorsystems.com/": {
     "title": "Ichor Systems",
@@ -2629,11 +2618,11 @@
     "accessed": "2026-09-09"
   },
   "https://www.ims.co.at/": {
-    "title": "Www.ims.co.at",
+    "title": "Home - IMS Nanofabrication GmbH",
     "publisher": "IMS Nanofabrication",
+    "date": "2019-01-04",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.infineon.com/": {
     "title": "Semiconductor & System Solutions",
@@ -2689,35 +2678,35 @@
     "accessed": "2026-09-09"
   },
   "https://www.intel.com/content/www/us/en/content-details/817486/intel-gaudi-3-ai-accelerator-white-paper.html": {
-    "title": "Intel gaudi 3 ai accelerator white paper",
+    "title": "Intel gaudi 3 ai accelerator white paper (Intel website)",
     "publisher": "Intel",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.intel.com/content/www/us/en/foundry/overview.html": {
-    "title": "Overview",
+    "title": "Overview (Intel website)",
     "publisher": "Intel",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.intel.com/content/www/us/en/newsroom/news/intel-foundry/intel-foundry-asml-accelerate-industry-readiness-for-high-na-euv.html": {
-    "title": "Intel foundry asml accelerate industry readiness for high na euv",
+    "title": "Intel foundry asml accelerate industry readiness for high na euv (Intel website)",
     "publisher": "Intel",
     "type": "press release",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.intel.com/content/www/us/en/products/details/processors/ai-accelerators.html": {
-    "title": "Ai accelerators",
+    "title": "Ai accelerators (Intel website)",
     "publisher": "Intel",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.intel.com/pressroom/archive/releases/2007/20070128comp.htm": {
-    "title": "20070128comp",
+    "title": "20070128comp (Intel website)",
     "publisher": "Intel",
     "type": "page",
     "accessed": "2026-09-09",
@@ -2736,28 +2725,28 @@
     "accessed": "2026-09-09"
   },
   "https://www.jcetglobal.com/en/": {
-    "title": "En",
+    "title": "JCET Group home page",
     "publisher": "JCET Group",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.jcetglobal.com/en/site/news-detail?id=1952": {
-    "title": "News detail",
+    "title": "News detail (JCET Group website)",
     "publisher": "JCET Group",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.jedec.org/news/pressreleases/jedec%C2%AE-and-industry-leaders-collaborate-release-jesd270-4-hbm4-standard-advancing": {
-    "title": "Jedec® and industry leaders collaborate release jesd270 4 hbm4 standard advancing",
+    "title": "Jedec® and industry leaders collaborate release jesd270 4 hbm4 standard advancing (JEDEC Solid State Technology Association website)",
     "publisher": "JEDEC Solid State Technology Association",
     "type": "press release",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.jedec.org/news/pressreleases/new-jedec%C2%AE-sphbm4-standard-enables-hbm4-class-bandwidth-organic-substrates": {
-    "title": "New jedec® sphbm4 standard enables hbm4 class bandwidth organic substrates",
+    "title": "New jedec® sphbm4 standard enables hbm4 class bandwidth organic substrates (JEDEC Solid State Technology Association website)",
     "publisher": "JEDEC Solid State Technology Association",
     "type": "press release",
     "accessed": "2026-09-09",
@@ -2770,18 +2759,18 @@
     "accessed": "2026-09-09"
   },
   "https://www.jiccapital.co.jp/en/news/.assets/E_20240417_JIC_JICC_PressRelease.pdf": {
-    "title": "E 20240417 JIC JICC PressRelease",
+    "title": "April 17, 2024 Japan Investment Corporation",
     "publisher": "Japan Investment Corporation",
+    "date": "2024-04-17",
     "type": "pdf",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.jiccapital.co.jp/en/news/.assets/E_20250217_JIC_JICC_PressRelease.pdf": {
-    "title": "E 20250217 JIC JICC PressRelease",
+    "title": "February 17, 2025 Japan Investment Corporation",
     "publisher": "Japan Investment Corporation",
+    "date": "2025-02-17",
     "type": "pdf",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.jsr.co.jp/jsr_e/news/2021/20210917.html": {
     "title": "JSR Agrees to Acquire EUV Pioneer Inpria Corporation | 2021 | News",
@@ -2829,18 +2818,18 @@
     "accessed": "2026-09-09"
   },
   "https://www.kinsus.com.tw/en/": {
-    "title": "En",
+    "title": "Kinsus Interconnect Technology home page",
     "publisher": "Kinsus Interconnect Technology",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/ir/library/securities/asset/Annual-Securities-Report-FY2025-EN.pdf": {
-    "title": "Annual Securities Report FY2025 EN",
+    "title": "Annual Securities Report for the Fiscal Year Ended March 2026",
     "publisher": "Kioxia Holdings",
+    "date": "2026-06-24",
     "type": "pdf",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.kns.com/en-us/products": {
     "title": "K&S - 404",
@@ -2894,7 +2883,7 @@
     "accessed": "2026-09-09"
   },
   "https://www.lumentum.com/en/cloud-and-ai": {
-    "title": "Cloud and ai",
+    "title": "Cloud and ai (Lumentum website)",
     "publisher": "Lumentum",
     "type": "page",
     "accessed": "2026-09-09",
@@ -2907,7 +2896,7 @@
     "accessed": "2026-09-09"
   },
   "https://www.marvell.com/company/investor-relations.html": {
-    "title": "Investor relations",
+    "title": "Investor relations (Marvell Technology website)",
     "publisher": "Marvell Technology",
     "type": "page",
     "accessed": "2026-09-09",
@@ -2958,7 +2947,7 @@
     "accessed": "2026-09-09"
   },
   "https://www.miti.gov.my/miti/resources/Media%20Release/%5BFINAL%5D_MITI_Press_Stmt_Malaysia_Regulates_Trade_of_US_AI_Chips_2025-07-14.pdf": {
-    "title": "Èùí",
+    "title": "EXPORT, TRANSSHIPMENT AND TRANSIT OF HIGH-PERFORMANCE AI CHIPS OF US ORIGIN",
     "publisher": "Ministry of Investment, Trade and Industry (Malaysia)",
     "date": "2025-07-14",
     "type": "pdf",
@@ -3032,8 +3021,9 @@
     "accessed": "2026-09-09"
   },
   "https://www.nikon.com/content/dam/web-assets/nikoncom/company/local/global/en/ir/ir_library/result/pdf/2026/26_all_e.pdf": {
-    "title": "zMûh\u0013#¥bUÂs\u0018ÏÿXâ±»AåÒ\u0006y¥Õà×$l\u001a\u001cQ3/`BÓy\u0003ªeO´\u0015Áÿ6 f¢",
+    "title": "FINANCIAL RESULTS The Year Ended March 31,2026",
     "publisher": "Nikon",
+    "date": "2026-05-21",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
@@ -3050,27 +3040,28 @@
     "accessed": "2026-09-09"
   },
   "https://www.nittobo.co.jp/eng/ir/pdf/Nittobo_Integrated-Report_2025.pdf": {
-    "title": "ÛE&4þÎ\u0005ªZÕ¾\u0018\u0005ùhök\u0001X#hÏs½ì_C=cBØó\b+îAì\u001d9&Xµ>·\u0005DÔ k,v9dìÙú1\u001c·GæÌÝF±WZt}ÉÌO¤b¤âNw\u0004N\u001bÞRHÊ\u001en\"æ$ò K29\u0011LQ²µê<\"d{* =3r¹«>*Ñ¹I",
+    "title": "2-4-1, Kojimachi, Chiyoda-ku, Tokyo, 102-8489, Japan",
     "publisher": "Nitto Boseki (Nittobo)",
+    "date": "2025-09-16",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://www.novami.com/": {
-    "title": "Www.novami.com",
+    "title": "Nova -Metrology Solutions for Semiconductors Manufacturing",
     "publisher": "Nova Ltd",
+    "date": "2023-01-06",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.npc.com.tw/": {
-    "title": "Www.npc.com.tw",
+    "title": "Nan Ya PCB home page",
     "publisher": "Nan Ya PCB",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.nsig.com/en/": {
-    "title": "En",
+    "title": "National Silicon Industry Group (NSIG) home page",
     "publisher": "National Silicon Industry Group (NSIG)",
     "type": "page",
     "accessed": "2026-09-09",
@@ -3126,11 +3117,11 @@
     "accessed": "2026-09-09"
   },
   "https://www.ocichem.com/": {
-    "title": "Www.ocichem.com",
+    "title": "Home - Ocichem S.R.L.",
     "publisher": "OCI Company",
+    "date": "2025-01-17",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.parksystems.com/": {
     "title": "English",
@@ -3170,7 +3161,7 @@
     "accessed": "2026-09-09"
   },
   "https://www.primarius-tech.com/en/": {
-    "title": "En",
+    "title": "Primarius Technologies home page",
     "publisher": "Primarius Technologies",
     "type": "page",
     "accessed": "2026-09-09",
@@ -3205,11 +3196,10 @@
     "accessed": "2026-09-09"
   },
   "https://www.pti.com.tw/en/": {
-    "title": "En",
+    "title": "Home - Powertech Technology Inc.",
     "publisher": "Powertech Technology",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.purdue.edu/newsroom/2026/Q3/sk-hynix-breaks-ground-on-4-billion-advanced-packaging-production-facility-in-purdue-research-park/": {
     "title": "SK hynix breaks ground on $4 billion advanced packaging production facility in Purdue Research Park",
@@ -3219,7 +3209,7 @@
     "accessed": "2026-09-09"
   },
   "https://www.qct.io/solution/index/AI-Solutions": {
-    "title": "AI Solutions",
+    "title": "AI Solutions (Quanta Cloud Technology website)",
     "publisher": "Quanta Cloud Technology",
     "type": "page",
     "accessed": "2026-09-09",
@@ -3315,21 +3305,21 @@
     "accessed": "2026-09-09"
   },
   "https://www.screen.co.jp/download_file/view/6d6c7bf6-ec75-4f44-82d6-b67d0052b45a/451": {
-    "title": "ç¬¬81ææä¾¡è¨¼å¸å ±åæ¸",
+    "title": "第81期有価証券報告書",
     "publisher": "SCREEN Holdings",
     "date": "2022-06-27",
     "type": "page",
     "accessed": "2026-09-09"
   },
   "https://www.screen.co.jp/download_file/view/7e03d9a8-88eb-4a7d-ab77-509eba1422ac/2540": {
-    "title": "ç¬¬85ææä¾¡è¨¼å¸å ±åæ¸",
+    "title": "第85期有価証券報告書",
     "publisher": "SCREEN Holdings",
     "date": "2026-06-23",
     "type": "page",
     "accessed": "2026-09-09"
   },
   "https://www.screen.co.jp/download_file/view/95fd5713-120c-43ce-ab1c-83791af24040/1857": {
-    "title": "ç¬¬83ææä¾¡è¨¼å¸å ±åæ¸",
+    "title": "第83期有価証券報告書",
     "publisher": "SCREEN Holdings",
     "date": "2024-06-20",
     "type": "page",
@@ -3343,7 +3333,7 @@
     "accessed": "2026-09-09"
   },
   "https://www.se.com/us/en/work/solutions/for-business/data-centers-and-networks/": {
-    "title": "Data centers and networks",
+    "title": "Data centers and networks (Schneider Electric website)",
     "publisher": "Schneider Electric",
     "type": "page",
     "accessed": "2026-09-09",
@@ -3770,21 +3760,21 @@
     "accessed": "2026-09-09"
   },
   "https://www.semes.com/en/": {
-    "title": "En",
+    "title": "SEMES home page",
     "publisher": "SEMES",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025": {
-    "title": "SEMI Reports Global Semiconductor Equipment Billings Reached 135 Billion in 2025",
+    "title": "SEMI Reports Global Semiconductor Equipment Billings Reached 135 Billion in 2025 (SEMI website)",
     "publisher": "SEMI",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.semi.org/en/news-media-press-releases/semi-press-releases/global-semiconductor-fab-capacity-projected-to-expand-6%25-in-2024-and-7%25-in-2025-semi-reports": {
-    "title": "Global semiconductor fab capacity projected to expand 6% in 2024 and 7% in 2025 semi reports",
+    "title": "Global semiconductor fab capacity projected to expand 6% in 2024 and 7% in 2025 semi reports (SEMI website)",
     "publisher": "SEMI",
     "type": "press release",
     "accessed": "2026-09-09",
@@ -3798,25 +3788,25 @@
     "accessed": "2026-09-09"
   },
   "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf": {
-    "title": "515065297",
+    "title": "R AJ VA RA DA RA JA N / I ACOB KOCH -W E SE R / CH RI S RI CH A RD / JOSE P H FI TZ GE RA L D /",
     "publisher": "Semiconductor Industry Association",
     "date": "2024-05-09",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://www.semitronix.com/": {
-    "title": "Www.semitronix.com",
+    "title": "Semitronix home page",
     "publisher": "Semitronix",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.shinetsu.co.jp/": {
-    "title": "Www.shinetsu.co.jp",
+    "title": "Homepage_en - Shin-Etsu Chemical Co., Ltd.",
     "publisher": "Shin-Etsu Chemical",
+    "date": "2019-02-27",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.shinetsu.co.jp/en/products/electronics-materials/photomask-blanks/": {
     "title": "Photomask blanks - Shin-Etsu Chemical Co., Ltd.",
@@ -3826,8 +3816,9 @@
     "accessed": "2026-09-09"
   },
   "https://www.shinetsu.co.jp/wp-content/uploads/2025/07/20260127_con_E.pdf": {
-    "title": "X98Hcb\u001dL¨M\u0001M+Yà\u0002©´­",
+    "title": "Consolidated Financial Results for the First Three Quarters Ended December 31, 2025",
     "publisher": "Shin-Etsu Chemical",
+    "date": "2026-01-26",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
@@ -3864,21 +3855,21 @@
     "accessed": "2026-09-09"
   },
   "https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf": {
-    "title": "Grunert da Fonseca, Carlos Filipe",
+    "title": "FOUNDATION OF DIGITAL LIFE Investor Presentation",
     "publisher": "Siltronic",
     "date": "2026-04-29",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://www.sk.com/en/": {
-    "title": "En",
+    "title": "SK Group home page",
     "publisher": "SK Group",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.sksiltron.com/": {
-    "title": "Www.sksiltron.com",
+    "title": "SK siltron home page",
     "publisher": "SK siltron",
     "type": "page",
     "accessed": "2026-09-09",
@@ -3903,21 +3894,21 @@
     "accessed": "2026-09-09"
   },
   "https://www.smics.com/": {
-    "title": "Www.smics.com",
+    "title": "SMIC home page",
     "publisher": "SMIC",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.smics.com/en/site/mask": {
-    "title": "Mask",
+    "title": "Mask (SMIC website)",
     "publisher": "SMIC",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.smics.com/en/site/news_read/7951": {
-    "title": "News read 7951",
+    "title": "News read 7951 (SMIC website)",
     "publisher": "SMIC",
     "type": "page",
     "accessed": "2026-09-09",
@@ -3963,11 +3954,11 @@
     "accessed": "2026-09-09"
   },
   "https://www.sumcosi.com/english/pdf/ir/library/shareholders/27/pdf/nc_e_27.pdf": {
-    "title": "Nc e 27",
+    "title": "Note: This document has been translated from the Japanese original for reference purposes only. In the event of any",
     "publisher": "SUMCO",
+    "date": "2026-03-03",
     "type": "pdf",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.sumcosi.com/english/products/": {
     "title": "Products│SUMCO CORPORATION",
@@ -3988,7 +3979,7 @@
     "accessed": "2026-09-09"
   },
   "https://www.supermicro.com/en/products/gpu": {
-    "title": "Gpu",
+    "title": "Gpu (Supermicro website)",
     "publisher": "Supermicro",
     "type": "page",
     "accessed": "2026-09-09",
@@ -4009,39 +4000,40 @@
   "https://www.tel.com/ir/library/consolidated-financial-statements/d5ttlr000000004o-att/Consolidated_Financial_Statements_FY2022.pdf": {
     "title": "Consolidated Financial Statements FY2022",
     "publisher": "Tokyo Electron",
+    "date": "2022-06-24",
     "type": "pdf",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.tel.com/ir/library/consolidated-financial-statements/hbu2s80000000099-att/Consolidated_Financial_Statements_FY2024.pdf": {
     "title": "Consolidated Financial Statements FY2024",
     "publisher": "Tokyo Electron",
+    "date": "2024-06-14",
     "type": "pdf",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.tel.com/ir/library/consolidated-financial-statements/i242su00000000yk-att/Consolidated_Financial_Statements_FY2026.pdf": {
-    "title": "6ò`ÄÄµí«³#^h ¨ 5'>Ï\u0005ÔNd\u0016åFâ¨ûýreôe b ^0HtBKoÑ\u001cGï*¸ì\u000e<Â;íÅÂ;\u00021[PÅö²;{+S§ñlM[úÅZA\u001c]ç 7Ü¶\u0006\u0018ÿiwèèÚxyàûÃÿ° ¦-»êD\u0003T}\u0012Ôãx%È²",
+    "title": "CONSOLIDATED FINANCIAL",
     "publisher": "Tokyo Electron",
+    "date": "2026-06-16",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4presentations-e.pdf": {
-    "title": "FY2024 (April 2023 – March 2024) Financial Announcement",
+    "title": "fy26q4presentations-e",
     "publisher": "Tokyo Electron",
     "date": "2026-04-30",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf": {
-    "title": "スライド 1: FY2026 (April 2025-March 2026) Financial Announcement",
+    "title": "Investor Relations / April 30, 2026",
     "publisher": "Tokyo Electron",
     "date": "2026-04-30",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://www.teradyne.com/semiconductor-test/": {
-    "title": "Semiconductor test",
+    "title": "Semiconductor test (Teradyne website)",
     "publisher": "Teradyne",
     "type": "page",
     "accessed": "2026-09-09",
@@ -4054,18 +4046,18 @@
     "accessed": "2026-09-09"
   },
   "https://www.tok.co.jp/application/files/7417/8598/0069/q2_2612_en.pdf": {
-    "title": "Q2 2612 en",
+    "title": "Consolidated Financial Results for the Second Quarter (Interim) of the Fiscal Year Ending December 31, 2026 [J-GAAP]",
     "publisher": "Tokyo Ohka Kogyo",
+    "date": "2026-08-05",
     "type": "pdf",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.tok.co.jp/en/products/semiconductor": {
-    "title": "Semiconductor",
+    "title": "TOKYO OHKA KOGYO CO., LTD.",
     "publisher": "Tokyo Ohka Kogyo",
+    "date": "2026-09-01",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.tokuyama.co.jp/": {
     "title": "Tokuyama",
@@ -4093,28 +4085,28 @@
     "accessed": "2026-09-09"
   },
   "https://www.tsmc.com/english/dedicatedFoundry/manufacturing/fab_capacity": {
-    "title": "Fab capacity",
+    "title": "Fab capacity (TSMC website)",
     "publisher": "TSMC",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.tsmc.com/english/dedicatedFoundry/manufacturing/gigafab": {
-    "title": "Gigafab",
+    "title": "Gigafab (TSMC website)",
     "publisher": "TSMC",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm": {
-    "title": "L 2nm",
+    "title": "L 2nm (TSMC website)",
     "publisher": "TSMC",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech": {
-    "title": "Platform HPC tech advancedTech",
+    "title": "Platform HPC tech advancedTech (TSMC website)",
     "publisher": "TSMC",
     "type": "page",
     "accessed": "2026-09-09",
@@ -4140,21 +4132,21 @@
     "accessed": "2026-09-09"
   },
   "https://www.umc.com/en/Product/technologies/Overview": {
-    "title": "Overview",
+    "title": "Overview (United Microelectronics Corporation (UMC) website)",
     "publisher": "United Microelectronics Corporation (UMC)",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.unimicron.com/": {
-    "title": "Www.unimicron.com",
+    "title": "Unimicron Technology home page",
     "publisher": "Unimicron Technology",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.unimicron.com/files/money/Earnings/en/2026-Q2-consolidated-en.pdf": {
-    "title": "2026 Q2 consolidated en",
+    "title": "2026 Q2 consolidated en (Unimicron Technology website)",
     "publisher": "Unimicron Technology",
     "type": "pdf",
     "accessed": "2026-09-09",
@@ -4168,21 +4160,21 @@
     "accessed": "2026-09-09"
   },
   "https://www.vatgroup.com/files/live/sites/vat/files/Investor%20relations/annual-report/2025/full-year-2025-results-presentation.pdf": {
-    "title": "VAT FY 2025 Financial Results Presentation",
+    "title": "VAT full-year 2025 results presentation",
     "publisher": "VAT Group",
     "date": "2026-03-03",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://www.vdlgroep.com/en/markets/semiconductor": {
-    "title": "Semiconductor",
+    "title": "Semiconductor (VDL Groep website)",
     "publisher": "VDL Groep",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.vdlgroep.com/en/vdl-groep/innovation-projects/vdl-etg-builds-complex-frames-for-zeiss": {
-    "title": "Vdl etg builds complex frames for zeiss",
+    "title": "Vdl etg builds complex frames for zeiss (VDL Groep website)",
     "publisher": "VDL Groep",
     "type": "page",
     "accessed": "2026-09-09",
@@ -4202,7 +4194,7 @@
     "accessed": "2026-09-09"
   },
   "https://www.wacker.com/cms/en-us/products/product-groups/polysilicon/polysilicon.html": {
-    "title": "Polysilicon",
+    "title": "Polysilicon (Wacker Chemie website)",
     "publisher": "Wacker Chemie",
     "type": "page",
     "accessed": "2026-09-09",
@@ -4223,14 +4215,14 @@
     "accessed": "2026-09-09"
   },
   "https://www.winbond.com/": {
-    "title": "Www.winbond.com",
+    "title": "Winbond Electronics home page",
     "publisher": "Winbond Electronics",
     "type": "page",
     "accessed": "2026-09-09",
     "unverified": true
   },
   "https://www.wistron.com/en/Business/Solutions": {
-    "title": "Solutions",
+    "title": "Solutions (Wistron website)",
     "publisher": "Wistron",
     "type": "page",
     "accessed": "2026-09-09",
@@ -4255,7 +4247,7 @@
     "accessed": "2026-09-09"
   },
   "https://www.wuspcb.com/en/": {
-    "title": "En",
+    "title": "Wus Printed Circuit home page",
     "publisher": "Wus Printed Circuit",
     "type": "page",
     "accessed": "2026-09-09",

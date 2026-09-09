@@ -80,7 +80,11 @@
       if (!setup()) return;
       var cold = first;
       first = false;
-      soon(function () { jump(cold); at = -1; update(); });
+      // the router scrolls to the top right after this returns, so land the jump on the next task,
+      // not the next frame — a background tab gets no frames
+      window.setTimeout(function () { jump(cold); }, 0);
+      at = -1;
+      soon(update);
     }
   });
 })();

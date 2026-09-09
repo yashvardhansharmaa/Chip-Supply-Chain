@@ -5,11 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Tue, 02 Jun 2026 03:22:32 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:22:59.052Z",
+  "fetchedAt": "2026-09-09T18:32:35.163Z",
   "extracted": {
     "kind": "pdf",
-    "title": null,
-    "date": null,
-    "firstLine": "zMûh\u0013#¥bUÂs\u0018ÏÿXâ±»AåÒ\u0006y¥Õà×$l\u001a\u001cQ3/`BÓy\u0003ªeO´\u0015Áÿ6 f¢"
+    "title": "FINANCIAL RESULTS The Year Ended March 31,2026",
+    "metaTitle": "FINANCIAL RESULTS The Year Ended March 31,2026",
+    "firstLine": "May 8, 2026",
+    "author": "Nikon Corporation",
+    "subject": null,
+    "pages": 43,
+    "date": "2026-05-21",
+    "dateModified": "2026-05-21",
+    "via": "pymupdf"
   }
 }

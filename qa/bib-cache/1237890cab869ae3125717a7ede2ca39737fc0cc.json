@@ -5,11 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Tue, 27 Jan 2026 06:32:15 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:23:19.720Z",
+  "fetchedAt": "2026-09-09T18:32:59.216Z",
   "extracted": {
     "kind": "pdf",
-    "title": null,
-    "date": null,
-    "firstLine": "X98Hcb\u001dL¨M\u0001M+Yà\u0002©´­"
+    "title": "Consolidated Financial Results for the First Three Quarters Ended December 31, 2025",
+    "metaTitle": null,
+    "firstLine": "Consolidated Financial Results for the First Three Quarters Ended December 31, 2025",
+    "author": null,
+    "subject": null,
+    "pages": 24,
+    "date": "2026-01-26",
+    "dateModified": "2026-01-26",
+    "via": "pymupdf"
   }
 }

@@ -1246,6 +1246,257 @@ const PUBLISHERS = {
 };
 
 // ----------------------------------------------------------- hand-checked
-// URL -> fields that override whatever the fetcher produced. Every entry here
-// was read by a person (page, filing index, Federal Register API or PDF).
-const MANUAL = {};
+// URL -> fields that override whatever the fetcher produced. Every entry below
+// was read off the page itself (headline and dateline) after the automated
+// fetch was refused by a bot wall. Where a page would not show its date, the
+// date is left out rather than guessed.
+const MANUAL = {
+  // --- Reuters (bot wall; headline and dateline read from the article)
+  'https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/': {
+    title: "Explainer: The $400 million ASML 'printers' key for the AI chip boom",
+    publisher: 'Reuters',
+    date: '2026-01-28',
+    type: 'article',
+  },
+  'https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/': {
+    title: 'China starts production of home-grown immersion DUV chipmaking tools, source says',
+    publisher: 'Reuters',
+    date: '2026-07-28',
+    type: 'article',
+  },
+  'https://www.reuters.com/world/china/how-china-built-its-manhattan-project-rival-west-ai-chips-2025-12-17/': {
+    title: "How China built its 'Manhattan Project' to rival the West in AI chips",
+    publisher: 'Reuters',
+    date: '2025-12-17',
+    type: 'article',
+  },
+
+  // --- TSMC newsroom (Cloudflare wall)
+  'https://pr.tsmc.com/english/news/3174': {
+    title: 'Amkor and TSMC to Expand Partnership and Collaborate on Advanced Packaging in Arizona',
+    publisher: 'TSMC',
+    date: '2024-10-04',
+    type: 'press release',
+  },
+  'https://pr.tsmc.com/english/news/3210': {
+    title: 'TSMC Intends to Expand Its Investment in the United States to US$165 Billion to Power the Future of AI',
+    publisher: 'TSMC',
+    date: '2025-03-04',
+    type: 'press release',
+  },
+  'https://pr.tsmc.com/english/news/3228': {
+    title: 'TSMC Unveils Next-Generation A14 Process at North America Technology Symposium',
+    publisher: 'TSMC',
+    date: '2025-04-24',
+    type: 'press release',
+  },
+  'https://pr.tsmc.com/english/news/3302': {
+    title: 'TSMC Debuts A13 Technology at 2026 North America Technology Symposium',
+    publisher: 'TSMC',
+    date: '2026-04-23',
+    type: 'press release',
+  },
+  'https://pr.tsmc.com/english/news/3326': {
+    title: 'TSMC Reports Second Quarter EPS of NT$27.25',
+    publisher: 'TSMC',
+    date: '2026-07-16',
+    type: 'press release',
+  },
+  'https://pr.tsmc.com/english/news/3338': {
+    title: 'ASML and TSMC Announce Initiative to Pioneer Industry Transition to Large-Format Photomasks for High NA EUV',
+    publisher: 'TSMC',
+    date: '2026-09-08',
+    type: 'press release',
+  },
+  'https://www.tsmc.com/english/dedicatedFoundry/manufacturing/fab_capacity': {
+    title: 'Fab Capacity',
+    publisher: 'TSMC',
+    type: 'page',
+  },
+  'https://www.tsmc.com/english/dedicatedFoundry/manufacturing/gigafab': {
+    title: 'GIGAFAB® Facilities',
+    publisher: 'TSMC',
+    type: 'page',
+  },
+  'https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm': {
+    title: '2nm Technology',
+    publisher: 'TSMC',
+    type: 'page',
+  },
+  'https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech': {
+    title: 'HPC Platform – Advanced Technologies',
+    publisher: 'TSMC',
+    type: 'page',
+  },
+
+  // --- investor-relations platforms that refuse scripted requests
+  'https://investors.micron.com/news/press-release/2025/Micron-Technology-Inc--Reports-Results-for-the-Fourth-Quarter-and-Full-Year-of-Fiscal-2025-09-23-2025/default.aspx': {
+    title: 'Micron Technology, Inc. Reports Results for the Fourth Quarter and Full Year of Fiscal 2025',
+    publisher: 'Micron Technology',
+    date: '2025-09-23',
+    type: 'press release',
+  },
+  'https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Results-for-the-Third-Quarter-of-Fiscal-2026/default.aspx': {
+    title: 'Micron Technology, Inc. Reports Record Results for the Third Quarter of Fiscal 2026',
+    publisher: 'Micron Technology',
+    date: '2026-06-24',
+    type: 'press release',
+  },
+  'https://investors.ontoinnovation.com/news/news-details/2026/Onto-Innovation-Completes-Strategic-Investment-in-Rigaku-Holdings-Corporation/default.aspx': {
+    title: 'Onto Innovation Completes Strategic Investment in Rigaku Holdings Corporation',
+    publisher: 'Onto Innovation',
+    date: '2026-08-10',
+    type: 'press release',
+  },
+  'https://investors.ontoinnovation.com/news/news-details/2026/Onto-Innovation-Reports-2025-Fourth-Quarter-and-Full-Year-Results/default.aspx': {
+    title: 'Onto Innovation Reports 2025 Fourth Quarter and Full Year Results',
+    publisher: 'Onto Innovation',
+    date: '2026-02-19',
+    type: 'press release',
+  },
+  'https://investors.broadcom.com/news-releases/news-release-details/broadcom-announces-extended-partnership-meta-deploy-technology': {
+    title: "Broadcom Announces Extended Partnership with Meta to Deploy Technology to Support Multi-Gigawatts of Meta's Custom Silicon, MTIA",
+    publisher: 'Broadcom',
+    date: '2026-04-14',
+    type: 'press release',
+  },
+  'https://investors.broadcom.com/news-releases/news-release-details/broadcom-ships-tomahawk-5-industrys-highest-bandwidth-switch': {
+    title: "Broadcom Ships Tomahawk 5, Industry's Highest Bandwidth Switch Chip to Accelerate AI/ML Workloads",
+    publisher: 'Broadcom',
+    type: 'press release',
+  },
+  'https://investors.broadcom.com/news-releases/news-release-details/openai-and-broadcom-announce-strategic-collaboration-deploy-10': {
+    title: 'OpenAI and Broadcom announce strategic collaboration to deploy 10 gigawatts of OpenAI-designed AI accelerators',
+    publisher: 'Broadcom',
+    type: 'press release',
+  },
+  'https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced': {
+    title: 'Amkor Technology Breaks Ground on New Semiconductor Advanced Packaging and Test Campus in Arizona; Expands Investment to $7 Billion',
+    publisher: 'Amkor Technology',
+    type: 'press release',
+  },
+  'https://ir.amkor.com/news-releases/news-release-details/tsmc-and-amkor-technology-announce-long-term-partnership': {
+    title: 'TSMC and Amkor Technology Announce Long Term Partnership to Accelerate Advanced Packaging in the United States',
+    publisher: 'Amkor Technology',
+    type: 'press release',
+  },
+  'https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-third-quarter-2026-results': {
+    title: 'Applied Materials Announces Third Quarter 2026 Results',
+    publisher: 'Applied Materials',
+    date: '2026-08-13',
+    type: 'press release',
+  },
+  'https://investors.arm.com/': {
+    title: 'Investor Relations – Arm®',
+    publisher: 'Arm',
+    type: 'page',
+  },
+
+  // --- standards bodies and trade associations
+  'https://www.jedec.org/news/pressreleases/jedec%C2%AE-and-industry-leaders-collaborate-release-jesd270-4-hbm4-standard-advancing': {
+    title: 'JEDEC® and Industry Leaders Collaborate to Release JESD270-4 HBM4 Standard: Advancing Bandwidth, Efficiency, and Capacity for AI and HPC',
+    publisher: 'JEDEC Solid State Technology Association',
+    date: '2025-04-16',
+    type: 'press release',
+  },
+  'https://www.jedec.org/news/pressreleases/new-jedec%C2%AE-sphbm4-standard-enables-hbm4-class-bandwidth-organic-substrates': {
+    title: 'New JEDEC® SPHBM4 Standard Enables HBM4-Class Bandwidth on Organic Substrates',
+    publisher: 'JEDEC Solid State Technology Association',
+    date: '2026-07-13',
+    type: 'press release',
+  },
+  'https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025': {
+    title: 'SEMI Reports Global Semiconductor Equipment Billings Reached $135 Billion in 2025, Up 15% Year-on-Year',
+    publisher: 'SEMI',
+    date: '2026-04-07',
+    type: 'press release',
+  },
+  'https://www.semi.org/en/news-media-press-releases/semi-press-releases/global-semiconductor-fab-capacity-projected-to-expand-6%25-in-2024-and-7%25-in-2025-semi-reports': {
+    title: 'Global Semiconductor Fab Capacity Projected to Expand 6% in 2024 and 7% in 2025, SEMI Reports',
+    publisher: 'SEMI',
+    date: '2024-06-18',
+    type: 'press release',
+  },
+
+  // --- other pages behind bot walls
+  'https://www.smics.com/en/site/news_read/7951': {
+    title: 'SMIC Announces 2025 Annual Results',
+    publisher: 'SMIC',
+    type: 'press release',
+  },
+  'https://www.smics.com/en/site/mask': {
+    title: 'Mask Service',
+    publisher: 'SMIC',
+    type: 'page',
+  },
+  'https://www.jcetglobal.com/en/site/news-detail?id=1952': {
+    title: 'JCET Releases 2024 Annual Report, Achieves Record-High Revenue',
+    publisher: 'JCET Group',
+    date: '2025-04-20',
+    type: 'press release',
+  },
+  'https://www.azcommerce.com/news-events/news/2026/7/tsmc-announcement/': {
+    title: 'TSMC Announces Additional $100 Billion Investment in Arizona',
+    publisher: 'Arizona Commerce Authority',
+    date: '2026-07-16',
+    type: 'press release',
+  },
+  'https://www.congress.gov/bill/119th-congress/senate-bill/1705/text': {
+    title: 'S.1705 – Chip Security Act, 119th Congress (2025-2026), bill text',
+    publisher: 'U.S. Congress (Congress.gov, Library of Congress)',
+    type: 'regulation',
+  },
+  'https://www.intel.com/content/www/us/en/content-details/817486/intel-gaudi-3-ai-accelerator-white-paper.html': {
+    title: 'Intel® Gaudi® 3 AI Accelerator White Paper',
+    publisher: 'Intel',
+    date: '2025-07-14',
+    type: 'report',
+  },
+  'https://www.intel.com/pressroom/archive/releases/2007/20070128comp.htm': {
+    title: "Intel's Transistor Technology Breakthrough Represents Biggest Change to Computer Chips in 40 Years",
+    publisher: 'Intel',
+    date: '2007-01-27',
+    type: 'press release',
+  },
+  'https://www.bcg.com/publications/2024/emerging-resilience-in-semiconductor-supply-chain': {
+    title: 'Emerging Resilience in the Semiconductor Supply Chain',
+    publisher: 'Boston Consulting Group',
+    date: '2024-05-08',
+    type: 'report',
+  },
+  'https://www.bcg.com/publications/2023/navigating-the-semiconductor-manufacturing-costs': {
+    title: 'Navigating the Costly Economics of Chip Making',
+    publisher: 'Boston Consulting Group',
+    date: '2023-09-28',
+    type: 'report',
+  },
+  'https://www.globenewswire.com/news-release/2026/08/13/3344890/0/en/applied-materials-announces-third-quarter-2026-results.html': {
+    title: 'Applied Materials Announces Third Quarter 2026 Results',
+    publisher: 'GlobeNewswire (release by Applied Materials)',
+    date: '2026-08-13',
+    type: 'press release',
+  },
+  'https://www.globenewswire.com/news-release/2025/12/10/3203040/0/en/Photronics-Reports-Full-Year-and-Fourth-Quarter-Fiscal-2025-Results.html': {
+    title: 'Photronics Reports Full Year and Fourth Quarter Fiscal 2025 Results',
+    publisher: 'GlobeNewswire (release by Photronics)',
+    date: '2025-12-10',
+    type: 'press release',
+  },
+  'https://www.globenewswire.com/news-release/2024/07/08/2909540/0/en/applied-materials-unveils-chip-wiring-innovations-for-more-energy-efficient-computing.html': {
+    title: 'Applied Materials Unveils Chip Wiring Innovations for More Energy-Efficient Computing',
+    publisher: 'GlobeNewswire (release by Applied Materials)',
+    date: '2024-07-08',
+    type: 'press release',
+  },
+  'https://ai.meta.com/blog/meta-mtia-scale-ai-chips-for-billions/': {
+    title: 'Four MTIA Chips in Two Years: Scaling AI Experiences for Billions',
+    publisher: 'Meta',
+    date: '2026-03-11',
+    type: 'article',
+  },
+  'https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv': {
+    title: 'ETO Chip Explorer source data: provision.csv',
+    publisher: 'Center for Security and Emerging Technology (CSET) / Emerging Technology Observatory',
+    type: 'dataset',
+  },
+};

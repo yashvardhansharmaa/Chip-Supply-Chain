@@ -45,8 +45,8 @@
   .chapter { break-before: page; }
   .chapter:first-of-type { break-before: auto; }
   .view-head { break-after: avoid; padding-top: 0; }
-  .plate, .figure, .takeaways, .plain, .brief-card, .gl-entry, .mt-note, .mt-log li { break-inside: avoid; }
-  h1, h2, h3, h4, .chapter-title { break-after: avoid; }
+  .plate, .figure, .inshort, .plain, .brief-card, .gl-entry, .mt-note, .mt-log li { break-inside: avoid; }
+  h1, h2, h3, h4, .ch-title, .ch-lede { break-after: avoid; }
   thead { display: table-header-group; }
   tr { break-inside: avoid; }
   figure svg, .figure svg, #exposure-viz svg { max-width: 100%; height: auto; }

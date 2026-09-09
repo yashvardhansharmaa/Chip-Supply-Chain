@@ -5,12 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Mon, 07 Oct 2024 14:14:51 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:22:24.175Z",
+  "fetchedAt": "2026-09-09T18:31:47.924Z",
   "extracted": {
     "kind": "pdf",
     "title": "U.S. Department of Energy Large Power Transformer Resilience Report to Congress, July 2024",
+    "metaTitle": "U.S. Department of Energy Large Power Transformer Resilience Report to Congress, July 2024",
+    "firstLine": "Large Power Transformer",
+    "author": "U.S. Department of Energy, Grid Deployment Office",
+    "subject": "Large Power Transformer Resilience",
+    "pages": 53,
     "date": "2024-07-10",
-    "firstLine": "20585\u001dýó%+\u0015\u0006\u0005\u0015+&\u0002 T}aÄ{;\u0005\u0015+&\u0002 manman",
-    "dateModified": "2024-10-07"
+    "dateModified": "2024-10-07",
+    "via": "pymupdf"
   }
 }

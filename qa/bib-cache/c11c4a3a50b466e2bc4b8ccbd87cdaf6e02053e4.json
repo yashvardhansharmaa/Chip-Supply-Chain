@@ -5,11 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Wed, 24 Jun 2026 02:28:08 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:22:53.365Z",
+  "fetchedAt": "2026-09-09T18:32:27.568Z",
   "extracted": {
     "kind": "pdf",
-    "title": null,
-    "date": null,
-    "firstLine": null
+    "title": "Annual Securities Report for the Fiscal Year Ended March 2026",
+    "metaTitle": "Annual Securities Report for the Fiscal Year Ended March 2026",
+    "firstLine": "This document is a partial translation of the original Japanese document filed by Kioxia Holdings Corporation (the",
+    "author": "Kioxia Holdings Corporation",
+    "subject": null,
+    "pages": 107,
+    "date": "2026-06-24",
+    "dateModified": "2026-06-24",
+    "via": "pymupdf"
   }
 }

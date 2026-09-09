@@ -270,6 +270,17 @@ function plainBox(html, plain, ctx) {
   html = html.replace(/<p>([\s\S]*?)<\/p>/g, (whole, inner) => { if (!done && key && norm(inner).slice(0, 60) === key) { done = true; return ''; } return whole; });
   return { html, box: `<div class="plain"><span class="label">In plain terms</span><p>${inline(plain, ctx)}</p></div>` };
 }
+// The reading spine: the numbered chapters, then the geopolitics essay, which sits on its own route.
+const chapterHref = (c) => (c.id === 'geopolitics' ? '#/geopolitics' : '#' + esc(c.id));
+function prevNext(ch) {
+  const seq = chapters.concat(geo ? [geo] : []);
+  const i = seq.findIndex((c) => c.id === ch.id);
+  if (i < 0) return '';
+  const prev = seq[i - 1], next = seq[i + 1];
+  if (!prev && !next) return '';
+  const link = (c, dir, label) => (c ? `<a class="pn ${dir}" href="${chapterHref(c)}"><span class="label">${label}</span><span class="t"><span class="n">${pad(c.number)}</span>${esc(c.title)}</span></a>` : '');
+  return `<nav class="prevnext" aria-label="Previous and next chapter">${link(prev, 'prev', 'Previous')}${link(next, 'next', 'Next')}</nav>`;
+}
 function chapterHTML(ch) {
   const m = ch.meta, mins = Math.max(1, Math.round(ch.words / 230));
   const specimen = m.specimen || 'wafer';
@@ -285,11 +296,11 @@ function chapterHTML(ch) {
 <header class="chapter-head">
 ${chain}
 <div class="ch-id">${tile}<div><h2 class="ch-title"><span class="sr-only">Chapter ${ch.number}: </span>${esc(ch.title)}</h2>${m.oneLiner ? `<p class="ch-lede">${esc(m.oneLiner)}</p>` : ''}<p class="ch-meta"><span class="label">${ch.words.toLocaleString('en-US')} words / ${mins} min</span><span class="label">Specimen: ${esc(specimen.replace(/-/g, ' '))}</span></p></div></div>
+${pb.box}
 ${parts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${parts.inShort}</section>` : ''}
 ${nameplate(m.card, ch.title)}
-${pb.box}
 </header>
-<div class="prose">${pb.html}${sources}</div>
+<div class="prose">${pb.html}${prevNext(ch)}${sources}</div>
 </article>`;
 }
 const chaptersHTML = chapters.length ? chapters.map(chapterHTML).join('\n') : `<article class="chapter" id="placeholder" data-specimen="wafer" data-number="01" data-title="Placeholder"><header class="chapter-head"><div class="chapter-num">01</div><h2 class="chapter-title">No chapters yet</h2></header><div class="prose"><p>No chapters found. This is a shell build.</p></div></article>`;
@@ -393,7 +404,7 @@ if (geo) {
   const sources = geo.cites.length ? `<details class="chapter-sources"><summary>Sources for this essay (${geo.cites.length})</summary><ol>${geo.cites.map((c) => `<li><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url.length > 96 ? c.url.slice(0, 94) + '…' : c.url)}</a><span class="host">${esc(host(c.url))}</span></li>`).join('')}</ol></details>` : '';
   const gparts = splitTakeaways(geo.html); geo.inShort = gparts.inShort;
   const gpb = plainBox(gparts.body, geo.meta.plain, { id: 'geopolitics', cites: geo.cites, figures: [] });
-  geoBody = (gparts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${gparts.inShort}</section>` : '') + nameplate(geo.meta.card, 'Geopolitics') + gpb.box + `<p class="label" style="margin:10px 0 26px">${geo.words.toLocaleString('en-US')} words / ${Math.max(1, Math.round(geo.words / 230))} min</p>` + gpb.html + sources;
+  geoBody = gpb.box + (gparts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${gparts.inShort}</section>` : '') + nameplate(geo.meta.card, 'Geopolitics') + `<p class="label" style="margin:10px 0 26px">${geo.words.toLocaleString('en-US')} words / ${Math.max(1, Math.round(geo.words / 230))} min</p>` + gpb.html + prevNext(geo) + sources;
 }
 
 /* ---------------- sources view ---------------- */

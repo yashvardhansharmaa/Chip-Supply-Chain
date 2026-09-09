@@ -5,12 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Fri, 03 Jul 2026 00:48:09 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:23:24.210Z",
+  "fetchedAt": "2026-09-09T18:33:02.661Z",
   "extracted": {
     "kind": "pdf",
-    "title": "スライド 1: FY2026 (April 2025-March 2026) Financial Announcement",
+    "title": "Investor Relations / April 30, 2026",
+    "metaTitle": null,
+    "firstLine": "Investor Relations / April 30, 2026",
+    "author": null,
+    "subject": null,
+    "pages": 29,
     "date": "2026-04-30",
-    "firstLine": "ûØ\u0003ñÅOá¨o±,¨ûØ\u0003ñÅOá¨o±,¨",
-    "dateModified": "2026-04-30"
+    "dateModified": "2026-04-30",
+    "via": "pymupdf"
   }
 }

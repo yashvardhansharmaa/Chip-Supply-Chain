@@ -7,7 +7,7 @@ const allowed = new Set([...(tiers.A || []), ...(tiers.B || [])]);
 const ok = (host) => { host = host.replace(/^www\./, ''); return allowed.has(host) || [...allowed].some((d) => host.endsWith('.' + d)); };
 let bad = 0;
 for (const f of fs.readdirSync(path.join(root, 'data'))) {
-  if (!/\.(json|md)$/.test(f) || f === 'source-tiers.json') continue;
+  if (!/\.(json|md)$/.test(f) || ['source-tiers.json', 'bibliography.json', 'changelog.json', 'methods.md'].includes(f)) continue; // metadata files describe sources; they are not citations
   const text = fs.readFileSync(path.join(root, 'data', f), 'utf8');
   const urls = [...new Set(text.match(/https?:\/\/[^\s"')<>\]]+/g) || [])];
   const dis = urls.filter((u) => { try { return !ok(new URL(u).host); } catch (e) { return true; } });

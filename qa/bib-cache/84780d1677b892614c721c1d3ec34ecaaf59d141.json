@@ -3,9 +3,9 @@
   "status": 200,
   "finalUrl": "https://www.nvidia.com/en-us/data-center/h200/",
   "contentType": "text/html; charset=utf-8",
-  "lastModified": "Tue, 08 Sep 2026 21:26:05 GMT",
+  "lastModified": "Mon, 07 Sep 2026 15:55:17 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:23:00.487Z",
+  "fetchedAt": "2026-09-09T18:32:38.204Z",
   "extracted": {
     "kind": "html",
     "title": "NVIDIA H200 GPU",

@@ -154,6 +154,12 @@
   .sb-changed li { grid-template-columns: 150px minmax(0, 1fr); }
 }
 
+/* A heavy amber wash is light, so on the dark ground the strongest cells take the page ground as ink. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .sb-mx-cell[data-strong="1"] { color: var(--bg); }
+}
+:root[data-theme="dark"] .sb-mx-cell[data-strong="1"] { color: var(--bg); }
+
 @media (prefers-reduced-motion: reduce) {
   .sb-bar i { transition: none; }
   .sb-flow-scroll { scroll-behavior: auto; }

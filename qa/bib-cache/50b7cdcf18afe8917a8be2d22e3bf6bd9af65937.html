@@ -1,0 +1,1070 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1"><title>
+	Press Release Page | Press Information Bureau
+</title><link href="css/style.css" rel="stylesheet" type="text/css" /><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><link rel="alternate stylesheet" href="css/change.css" media="screen" title="change" /><link rel="alternate stylesheet" href="css/green.css" media="screen" title="green" /><link rel="alternate stylesheet" href="css/yellow.css" media="screen" title="yellow" /><link rel="stylesheet" type="text/css" href="css/prtint.css" media="print" /><link rel="stylesheet" href="css/style3.1.css" type="text/css" /><link id="pibA11yCss" rel="stylesheet" href="/css/accessibility.css?v=3" type="text/css" />
+      <script type="text/javascript">
+        /* Stamps the saved theme on <html> before the page paints. The
+           switcher in js/accessibility.js settles the rest, but on inner
+           pages it does not run until the end of the body and inside the
+           release frame it is a separate download - either way the reader
+           would otherwise watch a light page turn dark in front of them. */
+        (function (d) {
+            var t = "";
+            try {
+                t = window.localStorage.getItem("pibStyle") || "";
+            } catch (e) {
+                t = "";
+            }
+            if (t === "orange") {
+                t = "yellow";
+            }
+            var c = t === "change" ? " pib-hc"
+                : t === "green" ? " pib-theme-green"
+                : t === "yellow" ? " pib-theme-yellow" : "";
+            d.documentElement.className += c + " pib-a11y-content";
+        }(document));
+      </script>
+
+
+      <script src="js/jquery.min.js" type="text/javascript"></script>
+      <script type="text/javascript" src="/js/accessibility.js?v=7"></script>
+      <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true" /><link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet" />
+
+      <script type="text/javascript">
+            $(document).ready(function () {
+                  function getParameterByName(name) {
+                        var url = window.location.href;
+                        name = name.replace(/[\[\]]/g, '\\$&');
+                        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                              results = regex.exec(url);
+                        if (!results) return null;
+                        if (!results[2]) return '';
+                        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+                  }
+                  // Get the IDs from the current page's URL
+                  let prid = parseInt(getParameterByName('PRID'), 10);
+
+                  if (!isNaN(prid) && prid > 0) {
+                        $.ajax({
+                              type: "POST",
+                              url: "AjaxMethod.aspx/UpdatePRHitCount",
+                              async: false,
+                              data: JSON.stringify({ 'PermId': prid }),
+                              contentType: "application/json; charset=utf-8",
+                              dataType: "json",
+                              success: function (response) {
+                                    console.log(response);
+                              },
+                              error: function (error) {
+                                    console.log("Error in AJAX request", error);
+                              }
+                        });
+                  } else {
+                        console.log("Invalid parameters:", prid);
+                  }
+
+            });
+      </script>
+      <style type="text/css">
+            .table-responsive {
+                  width: 100%;
+                  overflow-x: auto;
+            }
+
+            .banner {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  background-color: #000;
+                  color: #fff;
+                  padding: 20px;
+            }
+
+            full-width {
+                  width: 100%;
+            }
+
+            .logo-left, .logo-center, .countdown {
+                  display: flex;
+                  align-items: center;
+            }
+
+                  .logo-left img, .logo-center img {
+                        height: 70px;
+                  }
+
+            .countdown {
+                  text-align: center;
+                  background-color: #444;
+                  border-radius: 10px;
+                  padding: 10px;
+                  border: 2px solid grey;
+            }
+
+            .firstnumber {
+                  color: #000000;
+                  position: absolute;
+                  top: 50px;
+                  right: 90px;
+                  font-size: 30px;
+            }
+
+            .secondnumber {
+                  position: absolute;
+                  color: #000000;
+                  right: 45px;
+                  top: 50px;
+                  font-size: 30px;
+            }
+
+            .countdown .days {
+                  font-size: 35px;
+                  color: gold;
+            }
+
+            .countdown p {
+                  margin: 0;
+            }
+
+            .countdown .text {
+                  font-size: 16px;
+            }
+
+            a {
+                  word-break: break-all;
+            }
+
+            iframe, img {
+                  max-width: 100%;
+            }
+
+            @media(max-width:1199px) {
+                  .firstnumber {
+                        top: 40px;
+                        right: 72px;
+                        font-size: 30px;
+                  }
+
+                  .secondnumber {
+                        right: 35px;
+                        top: 40px;
+                        font-size: 30px;
+                  }
+            }
+
+            @media(max-width:990px) {
+                  .firstnumber {
+                        top: 25px;
+                        right: 54px;
+                        font-size: 30px;
+                  }
+
+                  .secondnumber {
+                        right: 25px;
+                        top: 25px;
+                        font-size: 30px;
+                  }
+            }
+
+            @media(max-width:768px) {
+                  .countdown, .days {
+                        font-size: 12px !important;
+                  }
+
+
+                  .firstnumber {
+                        top: 25%;
+                        right: 8%;
+                        font-size: 30px;
+                  }
+
+                  .secondnumber {
+                        right: 4.5%;
+                        top: 25%;
+                        font-size: 30px;
+                  }
+            }
+
+            @media(max-width:475px) {
+                  .countdown, .days {
+                        font-size: 10px !important;
+                        top: 20%;
+                  }
+
+                  .bannerimgdiv {
+                        padding: 0 !important;
+                  }
+
+                  .bannerimg {
+                        width: 108% !important;
+                  }
+            }
+      </style>
+      <script type="text/javascript">
+            $(function () {
+                  $("[id*=printPDF]").click(function () {
+                        $("[id*=hfGridHtml]").val($("#PdfDiv").html());
+                  });
+            });
+            $(function () {
+                  $("[id*=printPDFEvent]").click(function () {
+                        $("[id*=hfGridHtml]").val($("#PdfDiv").html());
+                  });
+            });
+      </script>
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112591026-1"></script>
+      <script>
+
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() { dataLayer.push(arguments); }
+
+            gtag('js', new Date());
+
+
+
+            gtag('config', 'UA-112591026-1');
+
+      </script>
+
+<meta property="og:title" content="India’s Semiconductor Vision Gathers Momentum with 3nm Chip Design and Large-Scale Talent Development Initiatives" /><meta property="og:url" content="www.pib.gov.in/Pressreleaseshare.aspx?PRID=2148393" /><meta property="og:description" content="India is home to nearly 20% of the world’s chip design engineers. Building on this strong talent bas" /><meta property="og:image" content="https:/pib.gov.in/images/indian-emblem.png" />
+                                <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="C4E7H-KSCMC-422L4-W3EM5-U36MF",function(){function e(){if(!i){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,o.parentNode.appendChild(e),i=!0}}function t(e){i=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(o.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",o.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"C4E7H-KSCMC-422L4-W3EM5-U36MF";var o=document.currentScript||document.getElementsByTagName("script")[0],i=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!i)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),o.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="xl33yoyx3msos2vbuzea-f-75ac2a42a-clientnsv4-s.akamaihd.net",o="false"=="true"?2:1,i={"ak.v":"41","ak.cp":"1825201","ak.ai":parseInt("1215205",10),"ak.ol":"0","ak.cr":6,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"7e0f10dc","ak.r":49045,"ak.a2":n,"ak.m":"dscb","ak.n":"ff","ak.cport":30782,"ak.gh":"23.46.181.236","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1788978760","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==Bzv+A/AaMcnDI9dlAeF32wHNDIjPf30P+TKeOmlDQ4HyZ3BOEQQgQlR/eV56Ve/eXup7LhLIk9tmwdrDf1iCcFGDCMT3zANcRhDHeWCzeMhER4Lrp2x64CjeULXrbKd+vwKUw99w1QvFRyzt12lur5Qf52QPSASkJRlF7JBBmA9yvdhvupiazlJe8CznLuEdBjAhsoeRYSzYGAJ4u1C5SzEHJYbXfyraa9X+dIfb6tq1tfY7/S2ywai63w3yBML3Qi4gzGLOJuGY+dyNabjTifJCvSKnsmZ/EHq0cP5b+pqyWZe3yXKScbDfRJ+yHXlQdCIgKUqhOmLS9YyRc5QV6tofmEYB45ivsoJ7lQDESqh60qmsEAoqMeGl0MqrRHCHUjhkYL67qk+6ajyKw3dYrv1+tTDyr4GZB8fk+omF+X0=","ak.pv":"9","ak.dpoabenc":"","ak.tf":o};if(""!==t)i["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))i["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(i)},rv:function(){var e=["ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak.t","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:i,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+<body>
+      <form method="post" action="./PressReleasePage.aspx?PRID=2148393&amp;reg=48&amp;lang=2" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="sc_HiddenField" id="sc_HiddenField" value="" />
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=b94hX14NMWluUQ9a73g0LYFvtKhY52TK8cbDkYB_F2GuPre4tdh-ebiiI4xuhXnRu6Q5dQjaQA4oN3PEeL0GrtKEyEY1&amp;t=638942408819057530" type="text/javascript"></script>
+
+
+<script src="/ScriptResource.axd?d=YwOa_0w_u3oCLFqmIIOf-XEz4GWZ1DuyQIpxIA4LVkywj39sZSps12NbK5wNl5XN9JF3m7d-ey7BFDgj6i0380qRQ5IMWCL54sYNVU1IjMmiOWpp0&amp;t=ffffffffecf8d3f2" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=_shmykYI80CxCNR43Ii1nLy9PBGhuSe6SPp3CEYu0wDEuLqDAuIcsXVNhTIgQn0iyiwPorMflXuK31FftDX9GnB0m366MCEoOmY-eKQ3YAO9xRL0gIigzgRbtbVOgSQkJbJpFg2&amp;t=ffffffffecf8d3f2" type="text/javascript"></script>
+<script src="/PressReleasePage.aspx?_TSM_HiddenField_=sc_HiddenField&amp;_TSM_CombinedScripts_=%3b%3bAjaxControlToolkit%2c+Version%3d3.5.7.123%2c+Culture%3dneutral%2c+PublicKeyToken%3d28f01b0e84b6d53e%3aen-US%3a5a4df314-b4a2-4da2-a207-9284f1b1e96c%3ade1feab2%3af2c8e708%3a720a52bf%3af9cec9bc%3a589eaa30%3aa67c2700%3aab09e3fe%3a87104b7c%3a8613aea7%3a3202a5a2%3abe6fb298" type="text/javascript"></script>
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="59B53027" />
+	<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="eh4V7VWjMfcq8wxMiBKPsv+h9FR+zPfXJlgxW/ti0+A8j8SgWKNd41CTWaUWEN+0qQe85aVfXPWc7V0vlFo2KNzeX9OQkBhrpZDUy1pLXvk5rlVK9zw51rdPLvF0dwdp4sbcATDyAaqCu2Ribak1BkRb1SX3lDaBEjbEj9ac0A9vsrIbpDWOdxRUYgbAVX1clp0joSZ6pFsQFzWDXBewvrKZ8SRofI0bsDj0QGhxdMBfhR0e+rn4DudtjSyGWaT5CETbT6H2O1/o2b/e5ftefDaLzi7Cc1O0kPlh39/6gbePdP6L" />
+</div>
+                              
+            <div id="templateCss"></div>
+            <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('sc', 'form1', ['tupdate12','update12'], [], [], 90, '');
+//]]>
+</script>
+
+            <input type="hidden" name="hfGridHtml" id="hfGridHtml" />
+            <div class="container" style='margin-bottom: 50px;'>
+                  <div id="accessories">
+
+                        
+                        <div class="pull-right" style="display: flex">
+                              <div id="voll"></div>
+                              <div id="vollDT"></div>
+                              
+                              
+<div class="print-icons">
+<input type="image" name="Print1$print" id="Print1_print" aria-label="Print" src="images/printer_icon.png" alt="print page button" style="padding: 5px 10px 5px 10px;" />
+</div>
+                        </div>
+                  </div>
+                  <input type="hidden" name="hydpermid" id="hydpermid" value="2148393" />
+                  
+
+
+
+                  <div class="innner-page-main-about-us-content-right-part">
+
+                        <div id="MinistryName" class="MinistryNameSubhead text-center">
+                              Ministry of Electronics & IT
+                        </div>
+                        
+                        <div id="lg_g"><div class='log_oo'>  <img src='https://static.pib.gov.in/WriteReadData/specificdocs/photo/2026/sep/ph_9768_20260902_10000501.png' alt='azadi ka amrit mahotsav' /> </div></div>
+
+
+
+
+
+                        <div class="text-center event-heading-background">
+                              
+                              <h2 id="Titleh2">
+                                    India’s Semiconductor Vision Gathers Momentum with 3nm Chip Design and Large-Scale Talent Development Initiatives
+                              </h2>
+                              <h3 id="Subtitleh3">
+                                    <span id="ltrSubtitle"><br/> Government Pushes for End-to-End Chip Ecosystem with Talent and Industry Support<br/><br/>Enhancing domestic capabilities in critical technologies, creating high-value jobs, enabling indigenous digital infrastructure, and positioning India as a trusted global partner in semiconductors</span>
+                              </h3>
+                        </div>
+
+                        <div id="PrDateTime" class="ReleaseDateSubHeaddateTime text-center pt20">
+                              Posted On:
+                25 JUL 2025 4:34PM by PIB Delhi
+                        </div>
+                        
+                        <div class='pt20'>
+                        </div>
+                        <input type="hidden" name="hydphotoUrl" id="hydphotoUrl" />
+                        
+                        <p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">India is home to nearly 20% of the world&rsquo;s chip design engineers. Building on this strong talent base, the Government is facilitating the development of a complete semiconductor ecosystem in India. </span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">Leading semiconductor companies have established chip design and research centers in India. A 3nm semiconductor chip designed in India was recently unveiled. It showcases the technical capabilities of Indian engineers and importance of Indian design centres in global semiconductor industry. </span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">To foster talent development in the semiconductor chip design, the Government has launched several initiatives, as outlined below:</span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">● New curriculum by All India Council for Technical Education (AICTE)<strong> </strong>for VLSI Design &amp; Technology, Integrated Circuit (IC) manufacturing</span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">● Developing 85,000 skilled manpower in semiconductor design sector &amp; providing EDA tools to design semiconductor chips</span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">○ 45,000+ students from 100 institutions enrolled so far</span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">● Skilled Manpower Advanced Research and Training (SMART) Lab at NIELIT Calicut to train 1 lakh engineers nation-wide with 44,000+ engineers already trained</span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">● Collaboration with industry and universities such as Lam Research, IBM and Purdue University</span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">Leveraging the country&#39;s large talent pool, global semiconductor design companies are now rapidly expanding their workforce in India to design cutting-edge chips.</span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">Other initiatives undertaken by Government to promote semiconductor ecosystem:</span></span></p>
+
+<p><strong><u><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">Semicon India programme</span></span></u></strong></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">● Approved with a total outlay of Rs 76,000 crore for catalysing semiconductor and display manufacturing ecosystem in India</span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">● Six (6) semiconductor manufacturing and 22 design-linked incentive (DLI) projects have been approved</span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">● 72 companies are provided chip design infrastructure such as EDA tools &amp; FPGA (Field Programmable Gate Array) boards from Synopsys, Cadence, Siemens, etc.</span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">● Access to the Post Silicon Validation &amp; Testing and Packaging Support is also being provided</span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">This information was submitted by Union Minister of State for Electronics and Information Technology, Shri Jitin Prasada, in the Lok Sabha today.</span></span></p>
+
+<p style="text-align:center"><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">****</span></span></p>
+
+<p><strong><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">Dharmendra Tewari/ Navin Sreejith</span></span></strong></p>
+
+
+                        
+                        <div id="reel_pic">
+                        </div>
+
+
+
+                        
+                        <br />
+                        <span id="ReleaseId">(Release ID: 2148393)</span>
+                        <span id="lblViews">Visitor Counter : 2339</span>
+                        <div>
+                              
+                        </div>
+                        
+
+                        <span id="lblRefPhoto"></span>
+
+                        <div class="BackgroundRelease">
+                              
+                        </div>
+                        <div>
+                              
+                        </div>
+                        <div class="ReleaseLang">Read this release in: 
+                        
+                                    
+                                    <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=2148487' target="_blank">
+                                          हिन्दी </a>
+                              
+                                    ,
+                              
+                                    
+                                    <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=2148459' target="_blank">
+                                          Urdu </a>
+                              
+                                    ,
+                              
+                                    
+                                    <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=2148685' target="_blank">
+                                          Odia </a>
+                              
+                                    ,
+                              
+                                    
+                                    <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=2148583' target="_blank">
+                                          Tamil </a>
+                              
+                        </div>
+
+                        <div class="RelTag">
+                              <ul>
+                                    
+                              </ul>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div id="RelLink" class="RelLink">
+                              <ul>
+                                    
+                                    
+                              </ul>
+                        </div>
+                        <center>
+                              
+                        </center>
+                  </div>
+
+                  <div id="update12">
+	
+                              
+                              <input type="hidden" name="Hidden" id="Hidden" />
+                              <div id="P_CategoryManagement" class="ModalWindow" style="border-width:0px;height:60%;width:60%;overflow:auto;display: none">
+		
+                                    <div>
+                                          <input type="image" name="btnClose" id="btnClose" src="images/close_flat_icon.png" />
+                                    </div>
+                                    <div id="description">
+                                    </div>
+                                    <div class="text-center">
+                                          <h2>
+                                                
+                                                <br>
+                                                
+                                          </h2>
+                                    </div>
+                                    <br />
+                                    <div class="clear">
+                                    </div>
+                                    
+                              
+	</div>
+                        
+</div>
+            </div>
+            
+            <div id="PdfDiv" style="display: none;">
+                  <table width="100%">
+                        <tr>
+                              <td style="font-weight: 200; text-align: center">
+                                    Ministry of Electronics & IT
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 200; text-align: center; font-size: 30px;">
+                                          India’s Semiconductor Vision Gathers Momentum with 3nm Chip Design and Large-Scale Talent Development Initiatives
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 200; text-align: center; font-size: 30px;">
+                                          <div style='height:30px;width:100%;'></div> Government Pushes for End-to-End Chip Ecosystem with Talent and Industry Support<div style='height:30px;width:100%;'></div><div style='height:30px;width:100%;'></div>Enhancing domestic capabilities in critical technologies, creating high-value jobs, enabling indigenous digital infrastructure, and positioning India as a trusted global partner in semiconductors
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="text-align: center; font-size: 14px;">
+                                          Posted On:
+                        25 JUL 2025 4:34PM by PIB Delhi
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 200; text-align: left; font-size: 16px;">
+                                          <p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">India is home to nearly 20% of the world&rsquo;s chip design engineers. Building on this strong talent base, the Government is facilitating the development of a complete semiconductor ecosystem in India. </span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">Leading semiconductor companies have established chip design and research centers in India. A 3nm semiconductor chip designed in India was recently unveiled. It showcases the technical capabilities of Indian engineers and importance of Indian design centres in global semiconductor industry. </span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">To foster talent development in the semiconductor chip design, the Government has launched several initiatives, as outlined below:</span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">● New curriculum by All India Council for Technical Education (AICTE)<strong> </strong>for VLSI Design &amp; Technology, Integrated Circuit (IC) manufacturing</span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">● Developing 85,000 skilled manpower in semiconductor design sector &amp; providing EDA tools to design semiconductor chips</span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">○ 45,000+ students from 100 institutions enrolled so far</span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">● Skilled Manpower Advanced Research and Training (SMART) Lab at NIELIT Calicut to train 1 lakh engineers nation-wide with 44,000+ engineers already trained</span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">● Collaboration with industry and universities such as Lam Research, IBM and Purdue University</span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">Leveraging the country&#39;s large talent pool, global semiconductor design companies are now rapidly expanding their workforce in India to design cutting-edge chips.</span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">Other initiatives undertaken by Government to promote semiconductor ecosystem:</span></span></p>
+
+<p><strong><u><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">Semicon India programme</span></span></u></strong></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">● Approved with a total outlay of Rs 76,000 crore for catalysing semiconductor and display manufacturing ecosystem in India</span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">● Six (6) semiconductor manufacturing and 22 design-linked incentive (DLI) projects have been approved</span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">● 72 companies are provided chip design infrastructure such as EDA tools &amp; FPGA (Field Programmable Gate Array) boards from Synopsys, Cadence, Siemens, etc.</span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">● Access to the Post Silicon Validation &amp; Testing and Packaging Support is also being provided</span></span></p>
+
+<p><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">This information was submitted by Union Minister of State for Electronics and Information Technology, Shri Jitin Prasada, in the Lok Sabha today.</span></span></p>
+
+<p style="text-align:center"><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">****</span></span></p>
+
+<p><strong><span style="font-size:12.0pt"><span style="font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">Dharmendra Tewari/ Navin Sreejith</span></span></strong></p>
+
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 100; text-align: left; font-size: 16px;">
+                                          (Release ID: 2148393)
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                              </td>
+                        </tr>
+                        <tr>
+                              <td style="font-weight: 200; text-align: center; font-size: 24px;"></td>
+                        </tr>
+                  </table>
+            </div>
+            <div class="clearfix">
+            </div>
+
+            
+
+            <div class="section1">
+                  <div id="frst_t">
+                        <div id="arr_rm"><div class='sticky-social_mb'><ul class='social_mb'><a href='http://www.facebook.com/share.php?u=https://pib.gov.in/PressReleasePage.aspx?PRID=2148393' target='_blank'><li class='fb_b'   ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/facebook.jpg' alt='Share on facebook'  width='40' /></li></a><a href='https://twitter.com/intent/tweet?url=https://pib.gov.in/PressReleasePage.aspx?PRID=2148393&text=India’s Semiconductor Vision Gathers Momentum with 3nm Chip Design and Large-Scale Talent Development Initiatives' target='_blank'><li class='twitter_r'  ><img  src='https://static.pib.gov.in/WriteReadData/specificdocs/photo/2023/aug/ph2023818240601.jpg' alt='Share on twitter' width='40' /> </li></a><a href='https://api.whatsapp.com/send?text=https://pib.gov.in/PressReleasePage.aspx?PRID=2148393' target='_blank'><li class='whatsapp_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/whatsapp1.png' alt='Share on whatsapp' width='40' /></li></a><a href='https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=India’s Semiconductor Vision Gathers Momentum with 3nm Chip Design and Large-Scale Talent Development Initiatives&body=https://pib.gov.in/PressReleasePage.aspx?PRID=2148393&ui=2&tf=1&pli=1' title='Share by Email' target='_blank'><li class='fa-envelope_r' ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/email1.png' alt='Share on email'  width='40' /></li></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https://pib.gov.in/PressReleasePage.aspx?PRID=2148393&title=India’s Semiconductor Vision Gathers Momentum with 3nm Chip Design and Large-Scale Talent Development Initiatives&summary=My%20favorite%20developer%20program&source=LinkedIn' target='_blank'><li class='fa-linkedin_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/linkedin.png' alt='Share on linkedin' width='40' /></li></a></ul></div></div>
+                  </div>
+                  <div id="second_t">
+                        <div id="sndr_rm"><div class='sticky-social'><ul class='social'><a href='http://www.facebook.com/share.php?u=https://pib.gov.in/PressReleasePage.aspx?PRID=2148393' target='_blank'><li class='fb_b'   ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/facebook.jpg' alt='Share on facebook'  width='35' /></li></a><a href='https://twitter.com/intent/tweet?url=https://pib.gov.in/PressReleasePage.aspx?PRID=2148393&text=India’s Semiconductor Vision Gathers Momentum with 3nm Chip Design and Large-Scale Talent Development Initiatives' target='_blank'><li class='twitter_r'  ><img  src='https://static.pib.gov.in/WriteReadData/specificdocs/photo/2023/aug/ph2023818240601.jpg' alt='Share on twitter' width='35' /> </li></a><a href='https://api.whatsapp.com/send?text=https://pib.gov.in/PressReleasePage.aspx?PRID=2148393' target='_blank'><li class='whatsapp_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/whatsapp1.png' alt='Share on whatsapp' width='35' /></li></a><a href='https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=India’s Semiconductor Vision Gathers Momentum with 3nm Chip Design and Large-Scale Talent Development Initiatives&body=https://pib.gov.in/PressReleasePage.aspx?PRID=2148393&ui=2&tf=1&pli=1' title='Share by Email' target='_blank'><li class='fa-envelope_r' ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/email1.png' alt='Share on email'  width='35' /></li></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https://pib.gov.in/PressReleasePage.aspx?PRID=2148393&title=India’s Semiconductor Vision Gathers Momentum with 3nm Chip Design and Large-Scale Talent Development Initiatives&summary=My%20favorite%20developer%20program&source=LinkedIn' target='_blank'><li class='fa-linkedin_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/linkedin.png' alt='Share on linkedin' width='35' /></li></a></ul></div></div>
+                  </div>
+            </div>
+            <input type="hidden" name="ltrTitlee" id="ltrTitlee" value="India’s Semiconductor Vision Gathers Momentum with 3nm Chip Design and Large-Scale Talent Development Initiatives" />
+            <input type="hidden" name="ltrSubtitlee" id="ltrSubtitlee" value="&lt;br/> Government Pushes for End-to-End Chip Ecosystem with Talent and Industry Support&lt;br/>&lt;br/>Enhancing domestic capabilities in critical technologies, creating high-value jobs, enabling indigenous digital infrastructure, and positioning India as a trusted global partner in semiconductors" />
+            <input type="hidden" name="ltrDescriptionn" id="ltrDescriptionn" value="&lt;p>&lt;span style=&quot;font-size:12.0pt&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,&amp;quot;serif&amp;quot;&quot;>India is home to nearly 20% of the world&amp;rsquo;s chip design engineers. Building on this strong talent base, the Government is facilitating the development of a complete semiconductor ecosystem in India. &lt;/span>&lt;/span>&lt;/p>
+
+&lt;p>&lt;span style=&quot;font-size:12.0pt&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,&amp;quot;serif&amp;quot;&quot;>Leading semiconductor companies have established chip design and research centers in India. A 3nm semiconductor chip designed in India was recently unveiled. It showcases the technical capabilities of Indian engineers and importance of Indian design centres in global semiconductor industry. &lt;/span>&lt;/span>&lt;/p>
+
+&lt;p>&lt;span style=&quot;font-size:12.0pt&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,&amp;quot;serif&amp;quot;&quot;>To foster talent development in the semiconductor chip design, the Government has launched several initiatives, as outlined below:&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p>&lt;span style=&quot;font-size:12.0pt&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,&amp;quot;serif&amp;quot;&quot;>● New curriculum by All India Council for Technical Education (AICTE)&lt;strong> &lt;/strong>for VLSI Design &amp;amp; Technology, Integrated Circuit (IC) manufacturing&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p>&lt;span style=&quot;font-size:12.0pt&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,&amp;quot;serif&amp;quot;&quot;>● Developing 85,000 skilled manpower in semiconductor design sector &amp;amp; providing EDA tools to design semiconductor chips&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p>&lt;span style=&quot;font-size:12.0pt&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,&amp;quot;serif&amp;quot;&quot;>○ 45,000+ students from 100 institutions enrolled so far&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p>&lt;span style=&quot;font-size:12.0pt&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,&amp;quot;serif&amp;quot;&quot;>● Skilled Manpower Advanced Research and Training (SMART) Lab at NIELIT Calicut to train 1 lakh engineers nation-wide with 44,000+ engineers already trained&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p>&lt;span style=&quot;font-size:12.0pt&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,&amp;quot;serif&amp;quot;&quot;>● Collaboration with industry and universities such as Lam Research, IBM and Purdue University&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p>&lt;span style=&quot;font-size:12.0pt&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,&amp;quot;serif&amp;quot;&quot;>Leveraging the country&amp;#39;s large talent pool, global semiconductor design companies are now rapidly expanding their workforce in India to design cutting-edge chips.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p>&lt;span style=&quot;font-size:12.0pt&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,&amp;quot;serif&amp;quot;&quot;>Other initiatives undertaken by Government to promote semiconductor ecosystem:&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p>&lt;strong>&lt;u>&lt;span style=&quot;font-size:12.0pt&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,&amp;quot;serif&amp;quot;&quot;>Semicon India programme&lt;/span>&lt;/span>&lt;/u>&lt;/strong>&lt;/p>
+
+&lt;p>&lt;span style=&quot;font-size:12.0pt&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,&amp;quot;serif&amp;quot;&quot;>● Approved with a total outlay of Rs 76,000 crore for catalysing semiconductor and display manufacturing ecosystem in India&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p>&lt;span style=&quot;font-size:12.0pt&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,&amp;quot;serif&amp;quot;&quot;>● Six (6) semiconductor manufacturing and 22 design-linked incentive (DLI) projects have been approved&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p>&lt;span style=&quot;font-size:12.0pt&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,&amp;quot;serif&amp;quot;&quot;>● 72 companies are provided chip design infrastructure such as EDA tools &amp;amp; FPGA (Field Programmable Gate Array) boards from Synopsys, Cadence, Siemens, etc.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p>&lt;span style=&quot;font-size:12.0pt&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,&amp;quot;serif&amp;quot;&quot;>● Access to the Post Silicon Validation &amp;amp; Testing and Packaging Support is also being provided&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p>&lt;span style=&quot;font-size:12.0pt&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,&amp;quot;serif&amp;quot;&quot;>This information was submitted by Union Minister of State for Electronics and Information Technology, Shri Jitin Prasada, in the Lok Sabha today.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-size:12.0pt&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,&amp;quot;serif&amp;quot;&quot;>****&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p>&lt;strong>&lt;span style=&quot;font-size:12.0pt&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,&amp;quot;serif&amp;quot;&quot;>Dharmendra Tewari/ Navin Sreejith&lt;/span>&lt;/span>&lt;/strong>&lt;/p>
+" />
+            <script type="text/javascript">
+                  var mPlayer = document.getElementById("background_music");
+                  var mPlayAction = document.getElementById("playbutton");
+
+                  var isPlaying = false;
+
+                  function playAudio() {
+                        mPlayer.play();
+                        isPlaying = true;
+                        document.getElementById('stopA').style.display = "block";
+                        document.getElementById('playA').style.display = "none";
+                  }
+
+                  function pauseAudio() {
+                        mPlayer.pause();
+                        isPlaying = false;
+                        document.getElementById('playA').style.display = "block";
+                        document.getElementById('stopA').style.display = "none";
+                  }
+                  //function HandleAudio() {
+                  //    if (isPlaying == true) {
+                  //        //Playing already Pause it
+                  //        pauseAudio();
+                  //    } else {
+                  //        //Play the music
+                  //        playAudio();
+                  //    }
+                  //}
+            </script>
+            <script type="text/javascript">
+                  var synth = window.speechSynthesis;
+
+            
+                  function CleanHtml(html) {
+
+                        html = html.replace(/<script[\s\S]*?<\/script>/gi, '');
+
+                        return html;
+                  }
+                  function stripHtml(html) {
+                        let tmp = document.createElement("DIV");
+                        tmp.innerHTML = CleanHtml(html);
+                        return tmp.textContent || tmp.innerText || "";
+                  }
+            </script>
+            <script type="text/javascript">
+                  $(document).ready(function () {
+                        //for responsive tables
+                        $("table").each(function () {
+                              if (!$(this).closest(".table-responsive").length) {
+                                    $(this).wrap("<div class='table-responsive'></div>");
+                              }
+                        });
+
+                        var width = $(window).width();
+                        if (width < 768) {
+
+                              // Extra Small Device
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+
+                        } else if (width < 991) {
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+                              // Small Device
+
+                        } else if (width < 1199) {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Medium Device
+
+                        } else {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Large Device
+
+                        }
+                  });
+            </script>
+            <script type="text/javascript">
+                  $(document).ready(function () {
+                        var width = $(window).width();
+                        if (width < 768) {
+
+                              // Extra Small Device
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+
+                        } else if (width < 991) {
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+                              // Small Device
+
+                        } else if (width < 1199) {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Medium Device
+
+                        } else {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Large Device
+
+                        }
+                  });
+            </script>
+            
+            <style type="text/css">
+                  @media print {
+                        .sticky-social, .sticky-social_mb, .pull-right, #printPDF {
+                              display: none !important;
+                        }
+                  }
+
+                  .f_vl {
+                        padding-right: 30px;
+                        font-size: 17px;
+                        cursor: pointer;
+                  }
+
+                  .log_oo {
+                        // width: 20%;
+                        display: flex;
+                        justify-content: space-between;
+                  }
+
+                        .log_oo img {
+                              width: 150px;
+                              /*width: 100%;
+                    height: auto;*/
+                        }
+
+                  .sticky-social_mb {
+                        position: fixed;
+                        bottom: 0px;
+                        padding: 0px;
+                        margin: 0px;
+                        width: 100%;
+                  }
+
+                  .social_mb {
+                        list-style: none;
+                        display: flex;
+                        width: 100%;
+                        margin-bottom: -8px;
+                  }
+
+                        .social_mb a {
+                              padding: 8px 0px;
+                              font-size: 30px;
+                              transition: all 0.8s ease-in-out;
+                              width: 20% !important;
+                              text-align: center;
+                        }
+            </style>
+            <style type="text/css">
+                  .section1 {
+                        position: relative;
+                        padding: 10px 0px;
+                        width: 100%;
+                  }
+
+
+
+                  .sticky-social {
+                        position: fixed;
+                        top: 20px;
+                        left: 0px;
+                        padding: 0px;
+                        margin: 0px;
+                  }
+
+                  .social {
+                        list-style: none;
+                  }
+
+                        .social a li {
+                              padding: 8px 12px;
+                              font-size: 25px;
+                              transition: all 0.8s ease-in-out;
+                        }
+
+                              .social a li:hover {
+                                    margin-right: -30px;
+                                    box-shadow: 2px 5px 10px grey;
+                              }
+
+                                    .social a li:hover .fa {
+                                          margin-left: 20px;
+                                    }
+
+                  .fb_b {
+                        /* background-color: rgb(59, 89, 152);*/
+                        background-color: rgba(65,103,178,255);
+                  }
+
+                  .twitter_r {
+                        /* background-color: rgb(29, 161, 242);*/
+                        background-color: #000000;
+                  }
+
+                  .whatsapp_r {
+                        /* background-color: rgb(77, 194, 71);*/
+                        background-color: rgba(13,191,67,255);
+                  }
+
+                  .fa-envelope_r {
+                        /* background-color: rgb(219, 68, 55);*/
+                        background-color: #e2123d;
+                  }
+
+                  .fa-linkedin_r {
+                        background-color: rgb(0, 119, 181);
+                  }
+            </style>
+            <style type="text/css">
+                  @media only screen and (max-device-width: 767px) {
+                        p span img {
+                              max-width: 90% !important;
+                              height: auto !important;
+                        }
+
+                        p img {
+                              max-width: 90% !important;
+                              height: auto !important;
+                        }
+
+                        h2 {
+                              font-size: 20px !important;
+                              font-weight: 600 !important;
+                        }
+
+                        h3 {
+                              font-size: 18px !important;
+                              font-weight: 600 !important;
+                        }
+                  }
+            </style>
+            <style type="text/css">
+                  /* === Film Roll Badge Styling(IFFI2025 countdown) === */
+                  .film-roll-badge {
+                        position: absolute;
+                        top:82%;
+                        right: 20px;
+                        width: 230px;
+                        height: 70px;
+                        background: repeating-linear-gradient( to right, #9a2375 0px, #9a2375 18px, #6e2b8b 18px, #6e2b8b 36px );
+                        border-top: 8px solid #9a2375;
+                        border-bottom: 8px solid #9a2375;
+                        border-radius: 8px;
+                        overflow: hidden;
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+                        animation: moveFilm 8s linear infinite;
+                        z-index: 10;
+                  }
+
+                        /* film sprocket holes */
+                        .film-roll-badge::before,
+                        .film-roll-badge::after {
+                              content: "";
+                              position: absolute;
+                              width: 100%;
+                              height: 10px;
+                              background: repeating-linear-gradient( to right, #9a2375 0px, #9a2375 10px, #fff 10px, #fff 20px );
+                              left: 0;
+                              z-index: 2;
+                        }
+
+                        .film-roll-badge::before {
+                              top: -4px;
+                        }
+
+                        .film-roll-badge::after {
+                              bottom: -4px;
+                        }
+
+                  .film-roll-inner {
+                        position: relative;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        animation: flicker 2s infinite ease-in-out;
+                  }
+
+                  .countdown-text {
+                        font-size: 1.3rem;
+                        font-weight: 700;
+                        color: #fff;
+                        text-shadow: 0 0 6px rgba(255, 255, 255, 0.4), 0 0 10px #000;
+                        white-space: nowrap;
+                  }
+
+                  /* === Animations === */
+                  @keyframes moveFilm {
+                        0% {
+                              background-position: 0 0;
+                        }
+
+                        100% {
+                              background-position: 120px 0;
+                        }
+                  }
+
+                  @keyframes flicker {
+                        0%, 100% {
+                              opacity: 1;
+                        }
+
+                        50% {
+                              opacity: 0.9;
+                        }
+
+                        25% {
+                              opacity: 0.95;
+                        }
+
+                        75% {
+                              opacity: 0.85;
+                        }
+                  }
+
+                  /* === Responsive Adjustments === */
+                  @media (max-width: 1500px) {
+                        .film-roll-badge {
+                              top: 68%;
+                              right: 18px;
+                              /* width: 220px; */
+                              height: 65px;
+                              font-size: 0.85rem;
+                        }
+
+                        .press-section {
+                              margin-top: 35px;
+                        }
+                  }
+
+                  @media (max-width: 992px) {
+                        .film-roll-badge {
+                              top: 52%;
+                              right: 10px;
+                               width: 200px; 
+                              height: 60px;
+                        }
+                  }
+
+                  @media (max-width: 768px) {
+                        .film-roll-badge {
+                              top: 56%;
+                              right: 10px;
+                               width: 124px; 
+                              height: 55px;
+                        }
+
+                        .countdown-text {
+                              font-size: 0.9rem;
+                        }
+                  }
+
+                  @media (max-width: 576px) {
+                        .film-roll-badge {
+                              top: 59%;
+                              right: 5px;
+                              /* width: 160px; */
+                              height: 50px;
+                        }
+
+                        .countdown-text {
+                              font-size: 0.85rem;
+                        }
+                  }
+            </style>
+          <script type="text/javascript">
+                const festivalStart = new Date("2025-11-20T00:00:00").getTime();
+                const festivalEnd = new Date("2025-11-28T23:59:59").getTime();
+
+                const countdownElement = document.getElementById("countdown");
+
+                const interval = setInterval(() => {
+                      const now = new Date().getTime();
+
+                      // BEFORE FESTIVAL — show days + hours left
+                      if (now < festivalStart) {
+                            const diff = festivalStart - now;
+                            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+                            countdownElement.innerHTML = `
+              ${days} Day${days !== 1 ? 's' : ''} 
+              ${hours} Hour${hours !== 1 ? 's' : ''} to go
+          `;
+
+                      }
+
+                      // DURING FESTIVAL — show 56th IFFI - Day X
+                      else if (now >= festivalStart && now <= festivalEnd) {
+                            const dayNumber = Math.floor((now - festivalStart) / (1000 * 60 * 60 * 24)) + 1;
+                            countdownElement.innerHTML = `56th IFFI - Day ${dayNumber}`;
+                      }
+
+                      // AFTER FESTIVAL — new message
+                      else {
+                            countdownElement.innerHTML = `✨ IFFI closes but never ends…`;
+
+                            // Width change logic
+                            const elements = document.querySelectorAll('.film-roll-badge');
+                            elements.forEach(el => el.style.width = "350px");
+
+                            clearInterval(interval);
+                      }
+
+                }, 1000);
+          </script>
+ <script type="text/javascript">
+
+               const miffStart = new Date("2026-06-15T00:00:00").getTime();
+               const miffEnd = new Date("2026-06-15T23:59:59").getTime();
+
+               const miffElement = document.getElementById("miff");
+
+               if (miffElement) {
+
+                   const miffInterval = setInterval(() => {
+
+                       const now = new Date().getTime();
+
+                       // Before MIFF
+                       if (now < miffStart) {
+
+                           const diff = miffStart - now;
+                           const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                           const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+        
+
+                   /*  miffElement.innerHTML = `${days} Day${days !== 1 ? 's' : ''} ${hours} Hour${hours !== 1 ? 's' : ''} to MIFF`;*/
+                           miffElement.innerHTML = `${days} Day${days === 1 ? '' : 's'} to MIFF ...`;
+
+
+                     }
+
+                       // During MIFF
+                       else if (now >= miffStart && now <= miffEnd) {
+
+                           const dayNumber =
+                               Math.floor((now - miffStart) / (1000 * 60 * 60 * 24)) + 1;
+
+                           miffElement.innerHTML = `19th MIFF - Day ${dayNumber}`;
+                       }
+
+                       // After MIFF
+                       else {
+
+                           miffElement.innerHTML = `✨ MIFF concludes, cinema lives on...`;
+
+                           document.querySelectorAll('.film-roll-badge')
+                               .forEach(el => el.style.width = "350px");
+
+                           clearInterval(miffInterval);
+                       }
+
+                   }, 1000);
+               }
+
+</script>
+
+      
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {var fn = function() {$get("sc_HiddenField").value = '';Sys.Application.remove_init(fn);};Sys.Application.add_init(fn);})();Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.ModalPopupBehavior, {"BackgroundCssClass":"modalBackground","PopupControlID":"P_CategoryManagement","dynamicServicePath":"/PressReleasePage.aspx","id":"mpe"}, null, null, $get("Hidden"));
+});
+//]]>
+</script>
+<input type="hidden" name="__ncforminfo" value="0QJKwoB9I06lRxaWh5xqxUYFB_A0cRhfESA21NeGpIytPrcDD2wiaH_9G3fOjZfnIdsBOeQ7nwkZK0LyqkpunHrLYc9qf7pdG16Lq05ykyTpUt1CE6fvEA=="/></form>
+</body>
+</html>
+

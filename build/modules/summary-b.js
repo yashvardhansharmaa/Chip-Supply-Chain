@@ -160,7 +160,10 @@ ${miniBars(fig, c.id)}
     const max = Math.max(...cols.map((c) => +s.shares[c] || 0));
     return `<tr>${head}${cols.map((c) => {
       const v = +s.shares[c] || 0;
-      return `<td><span class="sb-mx-cell${v ? '' : ' is-zero'}"${v && v === max ? ' data-hi="1"' : ''} style="--v:${Math.round(Math.min(100, v) * 0.85)}">${v ? Math.round(v) + '%' : '·'}</span></td>`;
+      // "·" is a country the source does not list at all; "<1%" is one it lists below half a point
+      const txt = !v ? '·' : v < 0.5 ? '&lt;1%' : Math.round(v) + '%';
+      // data-strong flips the cell's text to the page ground in dark mode, where a heavy amber wash is light
+      return `<td><span class="sb-mx-cell${v ? '' : ' is-zero'}"${v && v === max ? ' data-hi="1"' : ''}${v >= 70 ? ' data-strong="1"' : ''} style="--v:${Math.round(Math.min(100, v) * 0.85)}">${txt}</span></td>`;
     }).join('')}</tr>`;
   }).join('');
 

@@ -467,7 +467,7 @@ Expansions:
 
 ## 17 Component Costs
 
-Body words 1,250 to 1,279 (range 1,050 to 1,350). Front matter parses; `plain` byte-identical to the first paragraph under "How it works"; all three figure markers present; no em dashes; build clean, D 0, 21 sources unchanged.
+Body words 1,250 to 1,281 (range 1,050 to 1,350). Front matter parses; `plain` byte-identical to the first paragraph under "How it works"; all three figure markers present; no em dashes; build clean, D 0, 21 sources unchanged.
 
 This chapter talks to a reader who knows money better than silicon, so the pass spent words naming the parts and took them back out of the machinery.
 

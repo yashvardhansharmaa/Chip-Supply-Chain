@@ -5,11 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Tue, 04 Aug 2026 06:43:25 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:22:46.249Z",
+  "fetchedAt": "2026-09-09T18:32:17.119Z",
   "extracted": {
     "kind": "pdf",
-    "title": null,
+    "title": "Note : This document has been translated from a part of the Japanese original for reference purposes only.",
+    "metaTitle": null,
+    "firstLine": "Note : This document has been translated from a part of the Japanese original for reference purposes only.",
+    "author": null,
+    "subject": null,
+    "pages": 13,
     "date": "2026-08-03",
-    "firstLine": null
+    "dateModified": "2026-08-03",
+    "via": "pymupdf"
   }
 }

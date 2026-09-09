@@ -1,0 +1,1032 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+  <!-- OneTrust Cookie 本番環境 -->
+  <script type="text/javascript" src="https://cdn-au.onetrust.com/consent/018dc9a6-69f4-72b3-974c-8d222a48ed24/OtAutoBlock.js" ></script>
+  <script src="https://cdn-au.onetrust.com/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="018dc9a6-69f4-72b3-974c-8d222a48ed24" ></script>
+  <script type="text/javascript">
+  	function OptanonWrapper() { }
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics 本番環境 -->
+<!--
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114680033-1"></script>
+  <script>
+  	window.dataLayer = window.dataLayer || [];
+  	function gtag(){dataLayer.push(arguments);}
+  	gtag('js', new Date());
+  	gtag('config', 'UA-114680033-1');
+  </script>
+-->
+  <!-- トラッカードメイン設置タグ  本番環境 -->
+  <script type='text/javascript'>
+  piAId = '1046143';
+  piCId = '35255';
+  piHostname = 'ma.tokuyama.co.jp';
+  (function() {
+  	function async_load(){
+  		var s = document.createElement('script'); s.type = 'text/javascript';
+  		s.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + piHostname + '/pd.js';
+  		var c = document.getElementsByTagName('script')[0]; c.parentNode.insertBefore(s, c);
+  	}
+  	if(window.attachEvent) { window.attachEvent('onload', async_load); }
+  	else { window.addEventListener('load', async_load, false); }
+  })();
+  </script>
+  <!-- reCAPTCHA v3 本番環境 -->
+  <script src="https://www.recaptcha.net/recaptcha/api.js?render=6LenJForAAAAACn0_7j42m1b1iP16o_pJBXvEQZ8"></script>
+  <script>
+  grecaptcha.ready(function() {
+      grecaptcha.execute('6LenJForAAAAACn0_7j42m1b1iP16o_pJBXvEQZ8', {action: 'submit'}).then(function(token) {
+          var recaptchaResponse = document.getElementById('recaptchaResponse');
+          recaptchaResponse.value = token;
+      });
+  });
+  </script>
+  <style>.grecaptcha-badge { visibility: hidden; }</style>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tokuyama</title>
+    <meta name="description" content="もっと未来の人のために。トクヤマは、電子先端材料・ライフサイエンス・環境事業・化成品・セメントの各分野で、もっと幸せな未来をつくる価値創造型企業です。">
+    <link rel="icon" href="/images/favicon.ico" />
+    <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/ex_common.css">
+    <link rel="stylesheet" href="/css/ex_page.css">
+    
+<link rel="stylesheet" href="/css/slick.min.css">
+  <style>
+
+  .slide {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+.slide .item {
+  position: relative;
+  height: 100%;
+}
+.slide .item::before {
+  display: block;
+  padding-top: 0%;
+  content: "";
+}
+.slide .item .image {
+  position: relative;
+  overflow: hidden;
+}
+.slide .item img {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  width: 100%;
+}
+.slide > .slick-list,
+.slide > .slick-list > .slick-track,
+.slide > .slick-list > .slick-track > .slick-slide > div {
+  position: relative;
+  height: 100%;
+}
+.slide-animation{
+/*
+    animation: fadezoom 8s 0s forwards;
+*/
+}
+@keyframes fadezoom {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+@media screen and (max-width:767px){
+.p-homeKv01{margin-bottom:25px;padding-top:100%;background:url(/images/kv_sp01_v1.jpg) no-repeat center top;background-size:contain}
+.p-homeKv02{margin-bottom:25px;padding-top:100%;background:url(/images/kv_sp02_v1.jpg) no-repeat center top;background-size:contain}
+.p-homeKv03{margin-bottom:25px;padding-top:100%;background:url(/images/kv_sp03_v1.jpg) no-repeat center top;background-size:contain}
+  .draggable{
+	height : 280px !important;
+  }
+}
+
+@media screen and (min-width:768px){
+.p-homeKv01{padding-top:46.204%;background:url(/images/kv_pc01_v1.jpg) no-repeat center top;background-size:contain;}
+.p-homeKv02{padding-top:46.204%;background:url(/images/kv_pc02_v1.jpg) no-repeat center top;background-size:contain;}
+.p-homeKv03{padding-top:46.204%;background:url(/images/kv_pc03_v1.jpg) no-repeat center top;background-size:contain;}
+}
+
+</style>
+
+<style>
+#TOP_CONTENTS{
+	padding-top : 20px;
+}
+
+/*** BuCP_News_Release ***/
+	.adt_bucp .p-homeNews__tag .bucp {
+	    background-color: #d55f1d;
+	}
+	.adt_bucp dd a{
+		font-weight : bold;
+	}
+
+/*** COVID19_News_Release ***/
+/*
+	@media screen and (min-width: 768px){
+		.adt_cov_news{
+			text-align: left;
+			margin-left : 185px;
+			margin-top : 10px;
+		}
+		.adt_cov_news a{
+			font-size : 1.2em;
+			font-weight : bold;
+		}
+	}
+	@media screen and (max-width: 767px){
+		.adt_cov_news{
+			text-align: center;
+			margin-top : 10px;
+		}
+		.adt_cov_news a{
+			font-size : 1.1em;
+			font-weight : bold;
+			padding-right : 10px;
+		}
+	}
+*/
+
+@media screen and (min-width: 768px) {
+	.adt_br {
+		display: block;
+	}
+}
+
+@media screen and (max-width: 767px) {
+	.adt_br {
+		display: none;
+	}
+}
+
+.adt_List__link {
+    color: #000;
+}
+.adt_List__link:hover {
+    opacity: .5;
+    transition: all .2s ease-in-out 0s;
+}
+
+.p-homeHeadline--pd {
+	margin-bottom: 8px !important;
+}
+
+.adt_special {
+	text-align: right;
+	padding-bottom: 10px;
+}
+
+.adt_contents_container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+@media screen and (min-width: 768px) {
+	.adt_contents {
+		width: 23.359%;
+	}
+}
+
+@media screen and (max-width: 767px) {
+    .p-homeContSlide__photo {
+        padding-top: 69.181% !important;
+    }
+	.adt_contents {
+		width: 50%;
+	}
+	.adt_contents:nth-child(odd) {
+		padding-right: 10px;
+	}
+	.adt_contents:nth-child(even) {
+		padding-left: 10px;
+	}
+}
+
+.adt_contents a {
+    margin-bottom: 20px;
+}
+
+.p-homeContSlide__photo--slide05{
+	background:url(../images/photo_homeCont_05.jpg) no-repeat center center;
+	background-size:cover
+}
+.p-homeContSlide__photo--slide06{
+	background:url(../images/photo_homeCont_06.jpg) no-repeat center center;
+	background-size:cover
+}
+.p-homeContSlide__photo--slide07{
+	background:url(../images/photo_homeCont_07.jpg) no-repeat center center;
+	background-size:cover
+}
+.p-homeContSlide__photo--slide08{
+	background:url(../images/photo_homeCont_08.jpg) no-repeat center center;
+	background-size:cover
+}
+.adt_slide_txt {
+        margin-top: 0;
+}
+</style>
+
+</head>
+
+<style>
+@media print, screen and (min-width: 768px) and (max-width: 1110px) {
+    .h-menuItem__link {
+        padding: 10px 12px !important;
+    }
+}
+
+.adt_header_special {
+	font-size: 1.6rem;
+	font-weight: 600;
+}
+</style>
+<body>
+<div class="c-wrap">
+
+<header role="banner" class="h-wrap">
+	<div class="h-menuWrap">
+
+		<div class="h-headWrap">
+			<h1 class="h-logo"><a href="/"><img src="/images/logo.png" alt="Tokuyama"></a></h1>
+			<a class="h-btnEn" href="/eng/">EN</a>
+			<a class="h-btnNav__link" href="javascript:void(0)">
+				<span class="cd-menu-icon"></span>
+			</a> <!-- h-btnNav__link -->
+		</div>
+
+		<div class="h-navWrap">
+			<nav>
+				<div class="h-menu">
+					<ul class="h-menuArea">
+						<li class="h-menuItem">
+							<a href="/company/" class="h-menuItem__link">会社情報</a>
+							<div class="h-menuChildWrap">
+								<div class="h-menuChildInner">
+									<div class="h-menuChildHead">会社情報</div>
+									<ul class="h-menuChild">
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/company/greeting.html">ご挨拶</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/company/mission.html">トクヤマの存在意義</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/company/overview.html">会社概要</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/company/officer.html">役員紹介</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/company/governance/index.html">コーポレート・ガバナンス</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/company/org_chart.html">組織図</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/company/business.html">事業紹介</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/company/address/japan.html">拠点・グループ会社</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/company/history.html">沿革</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/company/purchase_policy.html">購買基本情報</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/company/access.html">アクセス</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/company/faq.html">よくあるご質問</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li class="h-menuItem">
+							<a href="/products/" class="h-menuItem__link">製品情報</a>
+							<div class="h-menuChildWrap">
+								<div class="h-menuChildInner">
+									<div class="h-menuChildHead">製品情報</div>
+									<ul class="h-menuChild">
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/products/transform/">化学品</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/products/electronic_products/">エレクトロニクス</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/products/cement/">建設資材</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/products/lifeamenity/">ライフサイエンス</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/products/environment/">環境</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/products/sds/sds_download.php">SDSダウンロード</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link adt_header_special" href="/special/" target="_blank">製品特設サイト</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li class="h-menuItem">
+							<a href="/ir/" class="h-menuItem__link">株主・投資家情報</a>
+							<div class="h-menuChildWrap">
+								<div class="h-menuChildInner">
+									<div class="h-menuChildHead">株主・投資家情報</div>
+									<ul class="h-menuChild">
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/ir/business_policy/">経営方針</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/ir/event/">IRイベント</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/ir/report/">IRライブラリ</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/ir/individual_investor.html">個人投資家の皆さまへ</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/ir/finance/">業績・財務情報</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/ir/stock/">株式・社債情報</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li class="h-menuItem">
+							<a href="/research/" class="h-menuItem__link">研究開発</a>
+							<div class="h-menuChildWrap">
+								<div class="h-menuChildInner">
+									<div class="h-menuChildHead">研究開発</div>
+									<ul class="h-menuChild">
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/research/message.html">本部長メッセージ</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/research/organization.html">研究開発体制</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/research/recent_study.html">研究テーマ紹介</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/research/awards.html">受賞歴一覧</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/research/publication.html">学会発表</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/research/report.html">論文紹介</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/research/developing_story/index.html">製品開発物語</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li class="h-menuItem">
+							<a href="/csr/" class="h-menuItem__link">サステナビリティ</a>
+							<div class="h-menuChildWrap">
+								<div class="h-menuChildInner">
+									<div class="h-menuChildHead">サステナビリティ</div>
+									<ul class="h-menuChild">
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/csr/activities.html">トクヤマのサステナビリティ</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/csr/materiality.html">マテリアリティ</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/csr/risk_management.html">サステナビリティ・ガバナンス</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/csr/responsible_care.html">レスポンシブル・ケア</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/csr/environment.html">環境への取り組み</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/csr/waste.html">環境負荷物質・廃棄物の削減</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/csr/global_warming.html">地球温暖化防止への取り組み</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/csr/disaster_prevention.html">保安防災・労働安全衛生</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/csr/employee.html">従業員とともに</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/csr/health_management.html">トクヤマの健康経営<sup>&reg;</sup></a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/csr/society.html">社会とともに</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/csr/csr_procurement.html">サステナブル調達</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/csr/evaluation.html">社会からの評価</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/csr/report/index.html">データ集</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/csr/policies.html">方針一覧</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li class="h-menuItem">
+							<a href="/news/" class="h-menuItem__link">ニュース</a>
+						</li>
+						<li class="h-menuItem">
+							<a href="/recruit/" class="h-menuItem__link">採用情報</a>
+							<div class="h-menuChildWrap">
+								<div class="h-menuChildInner">
+									<div class="h-menuChildHead">採用情報</div>
+									<ul class="h-menuChild">
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="https://www.tokuyama.co.jp/recruit/jobnet/" target="_blank">新卒採用</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="https://hrmos.co/pages/tokuyama" target="_blank">キャリア採用</a>
+										</li>
+										<li class="h-menuChildItem">
+											<a class="h-menuChildItem__link" href="/recruit/jobnet/internship/" target="_blank">インターンシップ</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</li>
+					</ul>
+					<ul class="h-utilityWrap">
+						<li class="h-utilityItem"><a class="h-utilityItem__link" href="https://search-tokuyama.dga.jp/?kw=&ie=u&temp=ja"><span>サイト内検索</span></a></li>
+						<li class="h-utilityItem"><a class="h-utilityItem__link" href="/inquiry/"><span>お問い合わせ</span></a></li>
+						<li class="h-utilityItem"><a class="h-utilityItem__link" href="/company/access.html"><span>アクセス</span></a></li>
+						<li class="h-utilityItem"><a class="h-utilityItem__link" href="/download.html"><span>資料ダウンロード</span></a></li>
+						<li class="h-utilityItem"><a class="h-utilityItem__link" href="/index.html#TOP_CONTENTS"><span>コンテンツ</span></a></li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+
+	</div>
+</header>
+
+
+
+<div class="p-homeKvWrap">
+	<div class="slide">
+		<div class="item"><div class="p-homeKv01"></div></div>
+		<div class="item"><div class="p-homeKv02"></div></div>
+		<div class="item"><div class="p-homeKv03"></div></div>
+	</div>
+
+	
+
+</div>    
+
+<main role="main">
+
+<div class="p-homeNewsPdWrap">
+	<div class="p-homeContWrap p-homeContWrap--news">
+		<div class="p-homeContInner">
+			<div class="p-homeNewsContWrap">
+				<div class="p-homeNewsHead">
+					<h2 class="p-homeHeadline p-homeHeadline--news"><span class="en">NEWS</span><br><span class="jp">ニュース</span></h2>
+				</div>
+
+				<div class="p-homeNewsArea">
+
+<!--BCP対応-->
+
+					<dl class="p-homeNewsList">
+						<dt class="p-homeNews__date">2026年09月08日</dt>
+						<dd class="p-homeNews__tag"><span class="ir">IR</span></dd>
+						<dd class="p-homeNews__txt"><a href="/news/2026/2026090801.html">トクヤマレポート2026（統合報告書）冊子請求受付開始</a></dd>
+					</dl>
+
+					<dl class="p-homeNewsList">
+						<dt class="p-homeNews__date">2026年09月03日</dt>
+						<dd class="p-homeNews__tag"><span class="csr">ｻｽﾃﾅﾋﾞﾘﾃｨ</span></dd>
+						<dd class="p-homeNews__txt"><a href="/news/2026/2026090301.html">TOKUYAMA TCFD REPORT 2026を発行しました</a></dd>
+					</dl>
+
+					<dl class="p-homeNewsList">
+						<dt class="p-homeNews__date">2026年08月27日</dt>
+						<dd class="p-homeNews__tag"><span class="ir">IR</span></dd>
+						<dd class="p-homeNews__txt"><a href="/news/2026/2026082702.html">トクヤマレポート2026（統合報告書）を発行しました</a></dd>
+					</dl>
+
+					<dl class="p-homeNewsList">
+						<dt class="p-homeNews__date">2026年08月27日</dt>
+						<dd class="p-homeNews__tag"><span class="csr">ｻｽﾃﾅﾋﾞﾘﾃｨ</span></dd>
+						<dd class="p-homeNews__txt"><a href="/news/2026/2026082701.html">サステナビリティデータブック 2026を発行しました</a></dd>
+					</dl>
+
+					<dl class="p-homeNewsList">
+						<dt class="p-homeNews__date">2026年08月20日</dt>
+						<dd class="p-homeNews__tag"><span class="release">リリース</span></dd>
+						<dd class="p-homeNews__txt"><a href="/news/2026/2026082001.html">トクヤマベトナム、多結晶シリコン新工場の開所式を開催</a></dd>
+					</dl>
+
+				</div>
+				<div class="p-homeNewsBtn"><a class="p-homeNewsBtn__link" href="/news/"><span>ニュース一覧</span></a></div>
+			</div>
+<!--
+			<div class="p-homeNews__txt adt_cov_news">
+				<a href="/news/covid19/">新型コロナウイルス感染拡大に伴う対応について</a><br>
+				<span>（最終更新日：2022年04月28日）</span>
+			</div>
+-->
+		</div>
+	<!-- /.p-homeContWrap -->
+	</div>
+
+<div class="p-homePdWrap">
+	<div class="p-homeContWrap p-homeContWrap--pd">
+		<div class="p-homeContInner">
+			<h2 class="p-homeHeadline p-homeHeadline--pd"><span class="en">PRODUCTS</span><br><span class="jp">トクヤマの製品</span></h2>
+			<div class="p-homeNewsBtn adt_special"><a class="p-homeNewsBtn__link" href="/special/" target="_blank"><span>製品特設サイト</span></a></div>
+			<div class="p-homePdListWrap">
+				<div class="p-homePdListPhoto">
+					<a class="adt_List__link" href="/products/transform/">
+						<img src="/images/photo_homePd_01.jpg" alt="">
+					</a>
+				</div>
+				<div class="p-homePdListTxt">
+					<a class="adt_List__link" href="/products/transform/">
+						<div class="p-homePdListTxt__box">
+							<div class="p-homePdListTxt__head p-homePdListTxt__head--chemi">化学品</div>
+						</div>
+					</a>
+				</div>
+			<!-- /.p-homePdListWrap -->
+			</div>
+			<div class="p-homePdListWrap p-homePdListWrap--rev">
+				<div class="p-homePdListPhoto">
+					<a class="adt_List__link" href="/products/electronic_products/">
+						<img src="/images/photo_homePd_02.jpg" alt="">
+					</a>
+				</div>
+				<div class="p-homePdListTxt p-homePdListTxt--rev">
+					<a class="adt_List__link" href="/products/electronic_products/">
+						<div class="p-homePdListTxt__box">
+							<div class="p-homePdListTxt__head p-homePdListTxt__head--ele">エレクトロ二クス</div>
+						</div>
+					</a>
+				</div>
+			<!-- /.p-homePdListWrap.p-homePdListWrap--rev -->
+			</div>
+			<div class="p-homePdListWrap">
+				<div class="p-homePdListPhoto">
+					<a class="adt_List__link" href="/products/cement/">
+						<img src="/images/photo_homePd_03.jpg" alt="">
+					</a>
+				</div>
+				<div class="p-homePdListTxt">
+					<a class="adt_List__link" href="/products/cement/">
+						<div class="p-homePdListTxt__box">
+							<div class="p-homePdListTxt__head p-homePdListTxt__head--buil">建設資材</div>
+						</div>
+					</a>
+				</div>
+			<!-- /.p-homePdListWrap -->
+			</div>
+			<div class="p-homePdListWrap p-homePdListWrap--rev">
+				<div class="p-homePdListPhoto">
+					<a class="adt_List__link" href="/products/lifeamenity/">
+						<img src="/images/photo_homePd_04.jpg" alt="">
+					</a>
+				</div>
+				<div class="p-homePdListTxt p-homePdListTxt--rev">
+					<a class="adt_List__link" href="/products/lifeamenity/">
+						<div class="p-homePdListTxt__box">
+							<div class="p-homePdListTxt__head p-homePdListTxt__head--health">ライフサイエンス</div>
+						</div>
+					</a>
+				</div>
+			<!-- /.p-homePdListWrap.p-homePdListWrap--rev -->
+			</div>
+			<div class="p-homePdListWrap">
+				<div class="p-homePdListPhoto">
+					<a class="adt_List__link" href="/products/environment/">
+						<img src="/images/photo_homePd_05.jpg" alt="">
+					</a>
+				</div>
+				<div class="p-homePdListTxt">
+					<a class="adt_List__link" href="/products/environment/">
+						<div class="p-homePdListTxt__box">
+							<div class="p-homePdListTxt__head p-homePdListTxt__head--env">環境</div>
+						</div>
+					</a>
+				</div>
+			<!-- /.p-homePdListWrap -->
+			</div>
+			<div class="p-homePdSearchWrap">
+				<div class="p-homePdSearch__head">製品名から探す</div>
+				<div class="p-homePdSearch__input">
+					<form method="get" action="https://search-tokuyama.dga.jp/" class="search_container">
+						<input type="text" name="kw" size="25" placeholder="製品名を入力">
+                        <input type="hidden" name="ie" value="u">
+                        <input type="hidden" name="temp" value="jp">
+                        <input type="hidden" name="cate[]" value="products">
+						<input type="submit" value="">
+					</form>
+				</div>
+			</div>
+		</div>
+	<!-- /.p-homeContWrap -->
+	</div>
+<!-- /.p-homePdWrap -->
+</div>
+<!-- /.p-homeNewsPdWrap -->
+</div>
+
+	<div class="p-homeContWrap p-homeContWrap--about">
+		<div class="p-homeContInner">
+			<h2 class="p-homeHeadline p-homeHeadline--about"><span class="en">ABOUT</span><br><span class="jp">トクヤマについて</span></h2>
+			<div class="p-homeAboutTopBox">
+				<div class="p-homeAboutTopBox__l">
+					<a class="adt_List__link" href="/company/">
+						<img src="/images/photo_homeAbout_top.jpg" alt="">
+					</a>
+				</div>
+				<div class="p-homeAboutTopBox__r">
+					<p class="p-homeAbout__lead">もっと未来の人のために</p>
+					<p class="p-homeAbout__txt">トクヤマは、電子先端材料・ライフサイエンス・環境事業・化成品・セメントの各分野で、もっと幸せな未来をつくる価値創造型企業です。</p>
+					<div class="p-homeBtnWrap"><a class="p-homeBtnItem" href="/company/">会社情報トップ</a></div>
+				</div>
+			</div>
+			<ul class="p-homeAboutListWrap">
+				<li class="p-homeAboutListBox">
+					<a class="p-homeAboutList__link" href="/company/greeting.html">
+						<div class="p-homeAboutList__photo p-homeAboutList__photo--mes"></div>
+						<div class="p-homeAboutList__head"><span class="en">MESSAGE</span><span class="jp"><span class="u-hidden--sp">／ </span>ご挨拶</span></div>
+					</a>
+				</li>
+				<li class="p-homeAboutListBox">
+					<a class="p-homeAboutList__link" href="/company/overview.html">
+						<div class="p-homeAboutList__photo p-homeAboutList__photo--com"></div>
+						<div class="p-homeAboutList__head"><span class="en">COMPANY</span><span class="jp"><span class="u-hidden--sp">／ </span>会社概要</span></div>
+					</a>
+				</li>
+				<li class="p-homeAboutListBox">
+					<a class="p-homeAboutList__link" href="/company/mission.html">
+						<div class="p-homeAboutList__photo p-homeAboutList__photo--vis"></div>
+						<div class="p-homeAboutList__head"><span class="en">MISSION</span><span class="jp"><span class="u-hidden--sp">／ </span>存在意義</span></div>
+					</a>
+				</li>
+				<li class="p-homeAboutListBox">
+					<a class="p-homeAboutList__link" href="/company/business.html">
+						<div class="p-homeAboutList__photo p-homeAboutList__photo--bus"></div>
+						<div class="p-homeAboutList__head"><span class="en">BUSINESS</span><span class="jp"><span class="u-hidden--sp">／ </span>事業紹介</span></div>
+					</a>
+				</li>
+			</ul>
+		</div>
+	<!-- /.p-homeContWrap -->
+	</div>
+
+	<div class="p-homeContWrap" id="TOP_CONTENTS">
+		<div class="p-homeContInner">
+			<h2 class="p-homeHeadline p-homeHeadline--cont"><span class="en">CONTENTS</span><br><span class="jp">コンテンツ</span></h2>
+		    <div class="adt_contents_container u-mb20">
+		        <div class="adt_contents">
+		        	<a class="p-homeContSlide__link" href="/tdx/">
+		        		<span class="p-homeContSlide__photo p-homeContSlide__photo--slide05"></span>
+		        		<span class="p-homeContSlide__txt">トクヤマのDX</span>
+		        	</a>
+		        </div>
+		        <div class="adt_contents">
+		        	<a class="p-homeContSlide__link" href="/circular_economy/index.html">
+		        		<span class="p-homeContSlide__photo p-homeContSlide__photo--slide06"></span>
+		        		<span class="p-homeContSlide__txt">サーキュラーエコノミー</span>
+		        		<span class="p-homeContSlide__txt adt_slide_txt">実現に向けた取り組み</span>
+		        	</a>
+		        </div>
+		        <div class="adt_contents">
+		        	<a class="p-homeContSlide__link" href="/feature/gallery.html">
+		        		<span class="p-homeContSlide__photo p-homeContSlide__photo--slide01"></span>
+		        		<span class="p-homeContSlide__txt">フォトギャラリー</span>
+		        	</a>
+		        </div>
+		        <div class="adt_contents">
+		        	<a class="p-homeContSlide__link" href="/feature/video_library.html">
+		        		<span class="p-homeContSlide__photo p-homeContSlide__photo--slide04"></span>
+		        		<span class="p-homeContSlide__txt">動画ギャラリー</span>
+		        	</a>
+		        </div>
+		        <div class="adt_contents">
+		        	<a class="p-homeContSlide__link" href="/feature/marugoto.html">
+		        		<span class="p-homeContSlide__photo p-homeContSlide__photo--slide03"></span>
+		        		<span class="p-homeContSlide__txt">トクヤマまるごと</span>
+		        	</a>
+		        </div>
+		        <div class="adt_contents">
+		        	<a class="p-homeContSlide__link" href="/feature/productsite.html">
+		        		<span class="p-homeContSlide__photo p-homeContSlide__photo--slide07"></span>
+		        		<span class="p-homeContSlide__txt">すぐそこに！</span>
+		        		<span class="p-homeContSlide__txt adt_slide_txt">トクヤマの製品紹介</span>
+		        	</a>
+		        </div>
+		        <div class="adt_contents">
+		        	<a class="p-homeContSlide__link" href="/feature/tokuchalle.html">
+		        		<span class="p-homeContSlide__photo p-homeContSlide__photo--slide02"></span>
+		        		<span class="p-homeContSlide__txt">しごとの部活</span>
+		        	</a>
+		        </div>
+		        <div class="adt_contents">
+		        	<a class="p-homeContSlide__link" href="/zaidan/" target="_blank">
+		        		<span class="p-homeContSlide__photo p-homeContSlide__photo--slide08"></span>
+		        		<span class="p-homeContSlide__txt">公益財団法人</span>
+		        		<span class="p-homeContSlide__txt adt_slide_txt">徳山科学技術振興財団</span>
+		        	</a>
+		        </div>
+		        <div class="adt_contents">
+		        </div>
+		    </div>
+		</div>
+	<!-- /.p-homeContWrap -->
+	</div>
+</main>
+
+<footer role="contentinfo">
+    <div class="f-wrap">
+
+        <style>
+.adt_footer_special {
+	margin-top: 30px;
+}
+.adt_footer_special a {
+	font-size: 1.6rem !important;
+	font-weight: 600;
+}
+</style>
+<div class="f-menuWrap">
+    <div class="f-menuCol">
+        <dl class="f-menuBox">
+            <dt><a href="/company/">会社情報</a></dt>
+            <dd><a href="/company/greeting.html">ご挨拶</a></dd>
+            <dd><a href="/company/mission.html">トクヤマの存在意義</a></dd>
+            <dd><a href="/company/overview.html">会社概要</a></dd>
+            <dd><a href="/company/officer.html">役員紹介</a></dd>
+            <dd><a href="/company/governance/index.html">コーポレート・<br>ガバナンス</a></dd>
+            <dd><a href="/company/org_chart.html">組織図</a></dd>
+            <dd><a href="/company/business.html">事業紹介</a></dd>
+            <dd><a href="/company/address/japan.html">拠点・グループ会社</a></dd>
+            <dd><a href="/company/history.html">沿革</a></dd>
+            <dd><a href="/company/purchase_policy.html">購買基本情報</a></dd>
+            <dd><a href="/company/access.html">アクセス</a></dd>
+            <dd><a href="/company/faq.html">よくあるご質問</a></dd>
+        </dl>
+        <!-- /.f-menuCol -->
+    </div>
+    <div class="f-menuCol">
+        <dl class="f-menuBox">
+            <dt><a href="/products/">製品情報</a></dt>
+            <dd><a href="/products/transform/">化学品</a></dd>
+            <dd><a href="/products/electronic_products/">エレクトロニクス</a></dd>
+            <dd><a href="/products/cement/">建設資材</a></dd>
+            <dd><a href="/products/lifeamenity/">ライフサイエンス</a></dd>
+            <dd><a href="/products/environment/">環境</a></dd>
+            <dd><a href="/products/sds/sds_download.php">SDSダウンロード</a></dd>
+            <dd class="adt_footer_special"><a href="/special/" target="_blank">製品特設サイト</a></dd>
+        </dl>
+        <!-- /.f-menuCol -->
+    </div>
+    <div class="f-menuCol">
+        <dl class="f-menuBox">
+            <dt><a href="/ir/">株主・投資家情報</a></dt>
+            <dd><a href="/ir/business_policy/">経営方針</a></dd>
+            <dd><a href="/ir/event/">IRイベント</a></dd>
+            <dd><a href="/ir/report/">IRライブラリ</a></dd>
+            <dd><a href="/ir/individual_investor.html">個人投資家の皆さまへ</a></dd>
+            <dd><a href="/ir/finance/">業績・財務情報</a></dd>
+            <dd><a href="/ir/stock/">株式・社債情報</a></dd>
+        </dl>
+        <!-- /.f-menuCol -->
+    </div>
+    <div class="f-menuCol">
+        <dl class="f-menuBox">
+            <dt><a href="/research/">研究開発</a></dt>
+            <dd><a href="/research/message.html">本部長メッセージ</a></dd>
+            <dd><a href="/research/organization.html">研究開発体制</a></dd>
+            <dd><a href="/research/recent_study.html">研究テーマ紹介</a></dd>
+            <dd><a href="/research/awards.html">受賞歴一覧</a></dd>
+            <dd><a href="/research/publication.html">学会発表</a></dd>
+            <dd><a href="/research/report.html">論文紹介</a></dd>
+            <dd><a href="/research/developing_story/index.html">製品開発物語</a></dd>
+        </dl>
+        <!-- /.f-menuCol -->
+    </div>
+    <div class="f-menuCol">
+        <dl class="f-menuBox">
+            <dt><a href="/csr/">サステナビリティ</a></dt>
+            <dd><a href="/csr/activities.html">トクヤマの<br>サステナビリティ</a></dd>
+            <dd><a href="/csr/materiality.html">マテリアリティ</a></dd>
+            <dd><a href="/csr/risk_management.html">サステナビリティ・<br>ガバナンス</a></dd>
+            <dd><a href="/csr/responsible_care.html">レスポンシブル・<br>ケア</a></dd>
+            <dd><a href="/csr/environment.html">環境への取り組み</a></dd>
+            <dd><a href="/csr/waste.html">環境負荷物質・<br>廃棄物の削減</a></dd>
+            <dd><a href="/csr/global_warming.html">地球温暖化防止への<br>取り組み</a></dd>
+            <dd><a href="/csr/disaster_prevention.html">保安防災・<br>労働安全衛生</a></dd>
+            <dd><a href="/csr/employee.html">従業員とともに</a></dd>
+            <dd><a href="/csr/health_management.html">トクヤマの健康経営<sup>&reg;</sup></a></dd>
+            <dd><a href="/csr/society.html">社会とともに</a></dd>
+            <dd><a href="/csr/csr_procurement.html">サステナブル調達</a></dd>
+            <dd><a href="/csr/evaluation.html">社会からの評価</a></dd>
+            <dd><a href="/csr/report/index.html">データ集</a></dd>
+            <dd><a href="/csr/policies.html">方針一覧</a></dd>
+        </dl>
+        <!-- /.f-menuCol -->
+    </div>
+    <div class="f-menuCol">
+        <dl class="f-menuBox">
+            <dt><a href="/news/">ニュース</a></dt>
+            <dd> </dd>
+        </dl>
+        <dl class="f-menuBox f-menuBox--last">
+            <dt><a href="/recruit/">採用情報</a></dt>
+            <dd><a href="https://www.tokuyama.co.jp/recruit/jobnet/" target="_blank">新卒採用</a></dd>
+            <dd><a href="https://hrmos.co/pages/tokuyama" target="_blank">キャリア採用</a></dd>
+            <dd><a href="/recruit/jobnet/internship/" target="_blank">インターンシップ</a></dd>
+        </dl>
+        <!-- /.f-menuCol -->
+    </div>
+</div>
+        <div class="f-copyWrap">
+            <div class="f-copyInner">
+                <div class="f-logo"><a href="#"><img src="/images/logo_footer.svg" alt="Tokuyama"></a></div>
+                <ul class="f-copyMenu">
+                    <li class="f-copyMenuItem"><a class="f-copyMenuItem__link" href="/misc/terms.html">サイトのご利用にあたって</a></li>
+                    <li class="f-copyMenuItem"><a class="f-copyMenuItem__link" href="/misc/privacy.html">個人情報保護</a></li>
+                    <li class="f-copyMenuItem"><a class="f-copyMenuItem__link" href="/misc/cookie_policy.html">Cookieポリシー</a></li>
+                </ul>
+                <div class="f-copy">Copyright(c)Tokuyama Corporation All rights reserved.</div>
+            </div>
+        </div>
+        <!-- /.f-wrap -->
+    </div>
+</footer>
+
+<!-- /.c-wrap -->
+</div>
+
+<script type="text/javascript" src="/js/app.js"></script>
+<script type="text/javascript" src="/js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-3.3.2.min.js"></script>
+<script type="text/javascript" src="/js/slick.min.js"></script>
+<script>
+/**slick用**/
+var $slide = $(".slide")
+  .slick({
+    infinite: true,		//繰り返し処理するか
+    slidesToShow: 1,		//スライドエリアの画像数
+    slidesToScroll: 1,		//一度にスライドする数
+    arrows: false,		//次へ／前へボタンを表示するか
+    fade: true,			//切替時のフェードイン
+    speed: 3000,		//スライド時のスピード
+    autoplaySpeed: 2000,	//切替時の時間
+    autoplay: true,		//自動再生
+    cssEase: 'linear',		//イージング（追加）
+    pauseOnHover:false,		//スライドのエリアにマウスオンで一時停止するかどうか
+    pauseOnDotsHover:false,	//ドットにマウスオンで一時停止するかどうか
+    pauseOnFocus:false		//スライドをクリック一時停止するかどうか
+  })
+  .on({
+    beforeChange: function(event, slick, currentSlide, nextSlide) {
+      $(".slick-slide", this).eq(currentSlide).addClass("preve-slide");
+      $(".slick-slide", this).eq(nextSlide).addClass("slide-animation");
+    },
+    afterChange: function() {
+      $(".preve-slide", this).removeClass("preve-slide slide-animation");
+    }
+  });
+$slide.find(".slick-slide").eq(0).addClass("slide-animation");
+
+</script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

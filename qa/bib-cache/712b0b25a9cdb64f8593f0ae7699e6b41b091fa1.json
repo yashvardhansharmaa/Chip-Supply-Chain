@@ -5,12 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Mon, 18 May 2026 06:58:44 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:22:45.728Z",
+  "fetchedAt": "2026-09-09T18:32:16.943Z",
   "extracted": {
     "kind": "pdf",
     "title": "enQA_FY25Q4",
+    "metaTitle": "enQA_FY25Q4",
+    "firstLine": "IBIDEN CO., LTD.",
+    "author": "吉川 文康",
+    "subject": null,
+    "pages": 4,
     "date": "2026-05-18",
-    "firstLine": null,
-    "dateModified": "2026-05-18"
+    "dateModified": "2026-05-18",
+    "via": "pymupdf"
   }
 }

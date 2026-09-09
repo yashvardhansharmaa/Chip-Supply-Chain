@@ -261,3 +261,37 @@ After (107 words):
 The hair dryer survives, demoted from opener to evidence, and "domestic" went with it as a word doing no work. "Come from a few suppliers" is the missing (b), and is what makes the lead times a chokepoint rather than a queue.
 
 What a policymaker would still not understand: what switchgear is, which the body places in the chain but never defines; who the few suppliers are, since GE Vernova, Siemens Energy, Hitachi Energy, ABB, Eaton and Schneider Electric appear only in the body; and that "connect a site to the grid" means an interconnection queue in which, in Texas, about 474 GW is waiting behind 9 GW that has been approved.
+
+## 17 Component Costs
+
+Scored before: (a) fail, the paragraph opened on the car analogy and never said what a bill of materials is; (b) fail, "Those parts come from very few firms" names nobody and counts nobody; (c) pass, "which is where a regulator has the most purchase"; (d) pass, no acronyms; (e) borderline, one analogy but a loose one, since the engine, battery, gearbox and assembly line are never matched to the parts they stand for and an assembly line is not a line on a bill of materials; (f) pass, 81 words; (g) pass. Rewritten for (a), (b) and (e).
+
+Before:
+
+> An accelerator's bill of materials works like a car's. The engine is the famous part, but the battery, the gearbox and the assembly line are what the bill is made of. The logic chip everyone names is about a seventh of the cost of building one, the stacked memory beside it is nearly half, and the packaging that binds them costs more than the chip. Those parts come from very few firms, which is where a regulator has the most purchase.
+
+After (91 words):
+
+> A bill of materials is the list of parts inside a product and what each one costs to build. For an AI accelerator, the famous logic chip is the cheap part, about a seventh of the total. The stacked memory beside it is nearly half, and the packaging that wires the two together costs more than the chip. Three firms in the world make that memory and one Taiwanese firm does that packaging, so the costliest parts are also the scarcest, and that is where a government has the most purchase.
+
+The car went out. It cost 30 words, and the term it was standing in for, "bill of materials", now gets a one-line definition in the same space. That definition is what criterion (a) asks for in a chapter whose subject is a document rather than a machine. "The famous logic chip is the cheap part" keeps the one thing the analogy was doing well. For (b), "very few firms" became a count and a place: three firms and one Taiwanese firm, both facts the chapter and the site state elsewhere, and neither a new claim.
+
+What a policymaker would still not understand: which three firms make the memory, since SK hynix, Samsung and Micron are named in the margin table and in Memory and HBM but not here; that the Taiwanese firm is TSMC; and that "packaging" in this chapter means mounting the chip and its memory on a shared carrier and wiring them together, not putting a chip in a box, which the body explains one screen later.
+
+## 18 Geopolitics
+
+Scored before: (a) fail on "in one plain sentence", because the opener defines the instrument by what it is not and the sentence that says what a control actually does runs 35 words with no actor in it ("a named item cannot be shipped to a named buyer without a government's permission"); (b) pass, four countries named and "a short list of firms"; (c) pass, the last two sentences are the stake; (d) pass, high-bandwidth memory spelled out and no acronyms; (e) pass, no analogy; (f) pass, 107 words, three from the ceiling; (g) pass. Rewritten for (a).
+
+Before:
+
+> An export control is a licence requirement, not a ban on ideas. It tells a company that a named item cannot be shipped to a named buyer without a government's permission, and Washington extends that rule to foreign-made goods built with American technology. A handful of countries can enforce it because the machines, software and chemicals that make an advanced chip come from a short list of firms in the United States, the Netherlands, Japan and South Korea. China can copy the simpler machines in a few years. It cannot yet copy the machine that prints the finest circuits, the chemistry that machine needs, or high-bandwidth memory.
+
+After (106 words):
+
+> An export control is a licence requirement. A government names an item and a buyer, and its own companies then need a licence to ship that item to that buyer; Washington stretches the rule to cover foreign-made goods built with American technology. Few governments can enforce such a rule, because the machines, software and chemicals that make an advanced chip come from a short list of firms in the United States, the Netherlands, Japan and South Korea. China can copy the simpler machines within a few years. It cannot yet copy the machine that prints the finest circuits, the chemistry that machine needs, or high-bandwidth memory.
+
+The instrument is now defined by what it does rather than by what it is not, and the mechanism runs in the order a reader would say it aloud: a government names, the companies need, Washington stretches. "Cannot be shipped ... without a government's permission" had two passives and an unnamed actor in nine words. The rest of the paragraph was already doing its job and was left standing, including the two sentences that carry the stake.
+
+The cost of the rewrite: "not a ban on ideas" is gone. It was doing real work for a reader who confuses export controls with restrictions on research or publication, and neither the paragraph nor the chapter now makes that distinction anywhere. It was cut because a negation is a poor opening definition and the paragraph had three words of headroom, not because the point is wrong. If the ceiling were 120 words it should go back in.
+
+What a policymaker would still not understand: that the licence is issued or refused by a named agency, since "a government" is as specific as the paragraph gets and the Bureau of Industry and Security appears only in the body; that "the machine that prints the finest circuits" is an extreme-ultraviolet scanner and that ASML is the only firm that makes one, which the paragraph withholds on purpose and the chokepoint table supplies four paragraphs later; and which of the four named countries actually holds which chokepoint, since the paragraph lists them as a group.

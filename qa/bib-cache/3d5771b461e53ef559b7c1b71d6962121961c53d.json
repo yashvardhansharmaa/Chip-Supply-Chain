@@ -5,12 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Thu, 25 Jun 2026 04:51:48 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:23:11.554Z",
+  "fetchedAt": "2026-09-09T18:32:53.121Z",
   "extracted": {
     "kind": "pdf",
-    "title": "ç¬¬85ææä¾¡è¨¼å¸å ±åæ¸",
+    "title": "第85期有価証券報告書",
+    "metaTitle": "第85期有価証券報告書",
+    "firstLine": "（金融商品取引法第24条第１項に基づく報告書） 事業年度",
+    "author": "株式会社SCREENホールディングス",
+    "subject": null,
+    "pages": 154,
     "date": "2026-06-23",
-    "firstLine": null,
-    "dateModified": "2026-06-24"
+    "dateModified": "2026-06-24",
+    "via": "pymupdf"
   }
 }

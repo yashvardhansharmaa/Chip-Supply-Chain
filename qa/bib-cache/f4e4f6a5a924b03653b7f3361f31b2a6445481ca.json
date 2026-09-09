@@ -5,11 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Thu, 06 Aug 2026 04:56:04 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:23:24.959Z",
+  "fetchedAt": "2026-09-09T18:33:03.911Z",
   "extracted": {
     "kind": "pdf",
-    "title": null,
-    "date": null,
-    "firstLine": null
+    "title": "Consolidated Financial Results for the Second Quarter (Interim) of the Fiscal Year Ending December 31, 2026 [J-GAAP]",
+    "metaTitle": "Consolidated Financial Results for the Second Quarter (Interim) of the Fiscal Year Ending December 31, 2026 [J-GAAP]",
+    "firstLine": "Consolidated Financial Results for the Second Quarter (Interim)",
+    "author": null,
+    "subject": null,
+    "pages": 10,
+    "date": "2026-08-05",
+    "dateModified": "2026-08-06",
+    "via": "pymupdf"
   }
 }

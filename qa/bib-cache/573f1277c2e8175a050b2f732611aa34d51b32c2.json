@@ -5,12 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Wed, 04 Mar 2026 01:57:53 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:23:27.636Z",
+  "fetchedAt": "2026-09-09T18:33:05.895Z",
   "extracted": {
     "kind": "pdf",
-    "title": "VAT FY 2025 Financial Results Presentation",
+    "title": "VAT full-year 2025 results presentation",
+    "metaTitle": "VAT full-year 2025 results presentation",
+    "firstLine": "Full-year 2025 results",
+    "author": "c.wickli@VAT.CH",
+    "subject": null,
+    "pages": 33,
     "date": "2026-03-03",
-    "firstLine": "-Ç£Nf\u0000ÝÛ\u0000\u000fÜ\u0000\u0000\u001f \u0007\u0000$*$\u001f0\u0000÷Ü\u0019\u0000\u0000\u0000\u0000\u0000\u0000s3 \u0000\u0000\u0003¶\u0000L>a\u0003`\u0000a9Cæ\u0011þ \u0004Îàp6bÀ`\u0018.`kîo` ÂÀãw0\u0006À\u000ef!ê\u0004£\u0001°¨¨°H\u0000\u0000\u0000w¤\u0000¨.`\u0006\u0000\\Á\u0001`\u0018è\u0002gXÌAp\u0002æ\u0014ëÀ\u0000\u0000\u0005Ì\u0000f Â\u0000\u0000ù\u0000 ì\u0002æ\u0018DX6\u0000\u0000\u0000\u001b\u0003ÿ×Í\u0002@:æXà\u0000\u0015\u0012\u000f\u0001p8*ÝÄÜË\u0000q¾£m`ñ°?h\u0001 \u001dÀã½ \u0000L6a@\u0000\u0000",
-    "dateModified": "2026-03-03"
+    "dateModified": "2026-03-04",
+    "via": "pymupdf"
   }
 }

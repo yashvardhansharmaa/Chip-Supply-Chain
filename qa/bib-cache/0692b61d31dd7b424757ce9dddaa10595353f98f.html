@@ -1,0 +1,794 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!doctype html>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="Author" content="LeeSeungJu">
+	<meta name="description" content="SK">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<script src="/lib/plugin/jquery-3.5.0.min.js"></script>
+	<!-- IE supports -->
+	<!--[if lt IE 9]>
+	<script src="./lib/plugin/html5shiv.min.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" href="/lib/fonts/fonts.css" />
+	<link rel="stylesheet" href="/lib/plugin/slick.css" />
+	<link rel="stylesheet" href="/lib/plugin/datepicker/datepicker.css">
+	<link rel="stylesheet" href="/lib/style/common.css?ver=210222" /><!--mib210222 ver 수정 -->
+	<link rel="stylesheet" href="/lib/style/contents.css?ver=210222" /><!--mib210222 ver 추가 -->
+	<link rel="stylesheet" href="/lib/style/sub.css?ver=210222" /><!--mib210222 ver 추가 -->
+	<link rel="stylesheet" href="/lib/style/english.css?ver=210222" /><!--mib210222 ver 추가 -->
+	<link rel="stylesheet" href="/lib/style/english_sub.css?ver=210222" /><!--mib210222 ver 추가 -->
+	<title>SK</title>
+	<link rel="shortcut icon" type="image/x-icon" href="/lib/images/common/logo_32x32.png" />
+	<link rel="image_src" href="https://www.sk.co.kr/lib/images/common/sk_image.png" />
+	<link rel="canonical" href="https://www.sk.co.kr">
+	<link rel="icon" href="/lib/images/common/logo_192x192.png" />
+	<link rel="apple-touch-icon-precomposed" href="/lib/images/common/logo_180x180.png" />
+	<meta name="msapplication-TileImage" content="/lib/images/common/logo_270x270.png" />
+	<meta name="naver-site-verification" content="c32beaab50ad6e214abfd49b7361bf500adcd76e"/>
+	<meta name="robots" content="index,follow">
+	<!-- facebook -->
+	<meta property="fb:app_id" content="Write facebook developer's app_id number" />
+	<meta property="og:title" content="SK" />
+	<meta property="og:site_name" content="SK" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://www.sk.co.kr" />
+	<meta property="og:description" content="SK" />
+	<meta property="og:image" content="https://www.sk.co.kr/lib/images/common/sk_facebook.png" />
+	<meta property="og:image:width" content="182" />
+	<meta property="og:image:height" content="182" />
+	<!-- twitter -->
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@skstory_blog" />
+	<meta name="twitter:creator" content="@skstory_blog" />
+	<meta name="twitter:url" content="https://www.sk.co.kr" />
+	<meta name="twitter:title" content="SK" />
+	<meta name="twitter:description" content="SK" />
+	<meta name="twitter:image" content="https://www.sk.co.kr/lib/images/common/sk_image.png" />
+	<!-- mib190617 seo 관련 youtube 주소 추가// --><!-- mib200421 youtube 주소 변경// --><!-- mib200423 Type 변경// -->
+	<script type="application/ld+json">
+		{
+			"@context": "http://schema.org",
+			"@type": "Organization",
+			"name": "SK",
+			"url": "https://www.sk.co.kr",
+			"sameAs": [
+				"https://www.facebook.com/mediask",
+				"https://twitter.com/skstory_blog",
+				"http://mediask.co.kr",
+				"https://post.naver.com/mediask_post",
+				"https://www.youtube.com/channel/UCa6GPhyiDQEpxG-L1cQMpBw",
+				"https://tv.naver.com/sktv"
+			]
+		}
+	 </script>
+	 <!-- //mib200423 Type 변경 --><!-- //mib200421 youtube 주소 변경 --><!-- //mib190617 seo 관련 youtube 주소 추가 -->
+	 <script>
+		//Checking browser
+		(function(){
+			$(document).ready(function(){
+				var $agents = [/(opr|opera)/gim,/(chrome)/gim,/(firefox)/gim,/(safari)/gim,/(msie[\s]+[\d]+)/gim,/(trident).*rv:(\d+)/gim];
+				var $agent = navigator.userAgent.toLocaleLowerCase();
+				for(var ag in $agents){
+					if($agent.match($agents[ag])){
+						$(document.body).addClass(String(RegExp.$1+RegExp.$2).replace(/opr/,'opera').replace(/trident/,'msie').replace(/\s+/,''));
+						break;
+					}
+				}
+			});
+		})();
+	 </script>
+</head>
+<body  class="main">
+	<!-- ie9 Supporting start -->
+	<!--[if lt IE 9]><div class="legacy-browser">
+	<div class="legacy-pad"><p>This browser is not supplied service.<br>Please update <a href="http://windows.microsoft.com/ko-kr/internet-explorer/ie-11-worldwide-languages" target="_blank">recently version.</a> Thank you.	</p></div>
+	</div><![endif]--><!-- //ie9 Supporting End -->
+	
+	<!-- Skip Navi Starts -->
+	<div class="skipNav_wrap">
+		<a href="#skipContent" class="skipNav">Go content area</a>
+		<a href="#skipSites" class="skipNav only_desktop">Go searching area</a>
+	</div><!--//Sktp Navi Ends-->
+	
+	<!-- Common Header starts -->
+	<header class="layout_header">
+		<div class="layout_header_inner">
+			<!-- Mobile Menu -->
+			<a href="#sideMenu_AREA" id="topMobile_btn_AREA" class="layout_topMobile_btn" title="Open Mobile menu"></a>
+			<!-- Logo -->
+			<h1 class="logo" id="logo">
+				<a href="/en/index.jsp" class="logo_a"><img src="/lib/images/desktop/logo.png" alt="SK" class="logo_img" title="Home"></a>
+			</h1>
+			<!-- Top Navigation -->
+			<nav class="layout_topNav">
+				<h1 class="blind" id="skipGnb">GNB Menu</h1>
+				<div class="layout_topNavSub_bg"></div>
+				<ul class="topNav_ul">
+					<li class="topNav_li topNav_about">
+						<a href="/en/about/about.jsp" class="topNav_a"><h2>About SK </h2></a>
+						<ul class="topNavSub_ul">
+							<li class="topNavSub_li topNavSub_history"><a href="/en/about/history.jsp" class="topNavSub_a">History </a></li>
+							<!-- mib200925 이름 변경// --><li class="topNavSub_li topNavSub_skms"><a href="/en/about/skms.jsp" class="topNavSub_a">Management Philosophy(SKMS)</a></li><!-- //mib200925 이름 변경 -->
+							<li class="topNavSub_li topNavSub_supex"><a href="/en/about/supex.jsp" class="topNavSub_a">SUPEX Council</a></li>
+							<!-- mib191216 텍스트 수정// --><li class="topNavSub_li topNavSub_affiliates"><a href="/en/about/affiliates.jsp" class="topNavSub_a">Our Affiliates</a></li><!-- //mib191216 텍스트 수정 -->
+							<!-- mib200911 SK 브로슈어 추가// --><li class="topNavSub_li topNavSub_brochure"><a href="/en/about/brochure.jsp" class="topNavSub_a">Brochure</a></li><!-- //mib200911 SK 브로슈어 추가 -->
+						</ul>
+					</li>
+					<li class="topNav_li topNav_media">
+						<a href="/en/media/media.jsp" class="topNav_a"><h2>Media Center</h2></a>
+						<ul class="topNavSub_ul">
+							<!-- mib191023 메뉴명 수정// --><li class="topNavSub_li topNavSub_news"><a href="/en/media/news.jsp" class="topNavSub_a">SK News</a></li><!-- //mib191023 메뉴명 수정 -->
+							<!-- mib191023 메뉴 삭제// --<li class="topNavSub_li topNavSub_channel"><a href="/en/media/channel.jsp" class="topNavSub_a">Social Media</a></li>!-- //mib191023 메뉴 삭제 -->
+							<li class="topNavSub_li topNavSub_ci"><a href="/en/media/ci.jsp" class="topNavSub_a">CI</a></li>
+						</ul>
+					</li>
+					<li class="topNav_li topNav_together">
+						<a href="/en/together/together.jsp" class="topNav_a"><!-- mib190819 메뉴명 수정// --><h2>Social Value</h2><!-- //mib190819 메뉴명 수정 --></a>
+						<ul class="topNavSub_ul">
+							<li class="topNavSub_li topNavSub_happiness"><!-- mib191216 텍스트 수정// --><!-- mib190819 메뉴명 수정// --><a href="/en/together/happiness.jsp" class="topNavSub_a">Our Philosophy</a><!-- //mib190819 메뉴명 수정 --><!-- //mib191216 텍스트 수정 --></li>
+							<li class="topNavSub_li topNavSub_social"><a href="/en/together/social.jsp" class="topNavSub_a">Social Enterprise</a></li>
+							<!-- mib190819 메뉴명 수정// --><li class="topNavSub_li topNavSub_programs"><a href="/en/together/programs.jsp" class="topNavSub_a">Social Value Programs</a></li><!-- //mib190819 메뉴명 수정 -->
+							<!-- mib190819 메뉴명 수정// --><li class="topNavSub_li topNavSub_foundation"><a href="/en/together/foundation.jsp" class="topNavSub_a">Foundations</a></li><!-- //mib190819 메뉴명 수정 -->
+						</ul>
+					</li>
+					<li class="topNav_li topNav_careers">
+						<a href="/en/careers/careers.jsp" class="topNav_a"><h2>Careers</h2></a>
+						<ul class="topNavSub_ul">
+							<li class="topNavSub_li topNavSub_person"><a href="/en/careers/person.jsp" class="topNavSub_a">SK Citizens</a></li>
+							<li class="topNavSub_li topNavSub_policy"><a href="/en/careers/policy.jsp" class="topNavSub_a">Recruitment Policy</a></li>
+						</ul>
+					</li>
+				</ul>
+			</nav>
+			<!-- Social media, language, family site -->
+			<div class="layout_linksArea">
+				<p class="skipArea" id="skipSites" tabindex="0">Search area</p>
+				<!-- Searching area -->
+				<div class="linkSearch_area">
+					<button class="linkSearch_btn" title="Searching SK news"></button>
+					<form id="schNews" name="schNews" method="post" action="/en/media/news.jsp">
+						<label for="s_gnbSearch" class="blind">Please enter a word to search SK news.</label>
+						<input type="hidden" name="s_kind" value="t1.subject">												
+						<input type="text" id="s_gnbSearch" name="s_value"  class="linkSearch_input" placeholder="Please enter a word to search SK news"  maxlength="30"/>
+						<input type="reset" class="linkDelete_btn" title="Remove words" value="">
+						<input type="submit" class="linkSearch_submit" title="Submit" id="schNewsBtn"/>
+					</form>
+				</div>
+				<!-- Social media links -->
+				<ul class="linkSocial_ul">
+					<!-- mib190617 소셜미디어 링크 수정// -->
+					<p class="linkSocial_title blind">Social links</p>
+					<li class="linkSocial_li linkSocial_youtube"><!-- mib200421 youtube 주소 변경// -->
+						<a href="https://www.youtube.com/channel/UCa6GPhyiDQEpxG-L1cQMpBw" class="linkSocial_a" target="_blank" title="YouTube"><span class="blind">YouTube</span></a>
+					<!-- //mib200421 youtube 주소 변경 --></li>
+					<li class="linkSocial_li linkSocial_blog">
+						<a href="http://mediask.co.kr/" class="linkSocial_a" target="_blank" title="Blogger"><span class="blind">Blogger</span></a>
+					</li>
+					<li class="linkSocial_li linkSocial_facebook">
+						<a href="https://www.facebook.com/mediask" class="linkSocial_a" target="_blank" title="Facebook"><span class="blind">Facebook</span></a>
+					</li>
+					<!-- <li class="linkSocial_li linkSocial_twitter">
+						<a href="https://twitter.com/skstory_blog" class="linkSocial_a" target="_blank" title="Twitter"><span class="blind">Twitter</span></a>
+					</li> -->
+					<!-- //mib190617 소셜미디어 링크 수정 -->
+				</ul>
+				<!-- Language links -->
+				<div class="linkLang_area">
+					<a href="#linkLang_AREA" id="linkLang_openBtn_AREA" class="linkLang_title" onclick="showLangMenu();"><span class="blind">Change Language setting</span>ENG</a>
+					<ul id="linkLang_AREA" class="linkLang_ul">
+						<li class="linkLang_li linkLang_ko">
+							<a href="/ko/index.jsp" class="linkLang_a" title="Korean">KOR</a>
+						</li>
+						<li class="linkLang_li linkLang_en">
+							<!-- mib210225 주소변경// --><a href="https://eng.sk.com" class="linkLang_a" title="English">ENG</a><!-- //mib210225 주소변경 -->
+						</li>
+						<li class="linkLang_li linkLang_zh">
+							<a href="/zh/index.jsp" class="linkLang_a" title="Chinese">CHN</a>
+						</li>
+					</ul>
+				</div>
+				<!-- Quick Link -->
+				<div class="linkFamily_area">
+					<a href="#linkFamily_popup_AREA" id="linkFamily_openBtn_AREA" class="linkFamily_title" onclick="showFamilyPopup();">QUICK LINK<span class="blind">Open the quick link</span></a>
+				</div>
+			</div>
+			<!-- Mobile Quick Link  -->
+			<a href="#linkFamily_popup_AREA" id="topMobileFamily_btn_AREA" class="layout_topMobileFamily_btn" title="Quick Link" onclick="showFamilyPopup();"></a>
+		</div>
+		<!-- Mobile SubMenu Starts // -->
+		<div class="mSubMenu_wrap only_mobile">
+			<button class="mSub_ul_title" title="Closed Submenu"></button>
+			<ul class="mSub_ul mSub_about">
+				<li class="mSub_li mSub_history"><a href="/en/about/history.jsp" class="mSub_a">History</a></li>
+				<!-- mib200925 이름 변경// --><li class="mSub_li mSub_skms"><a href="/en/about/skms.jsp" class="mSub_a">Management Philosophy(SKMS)</a></li><!-- //mib200925 이름 변경 -->
+				<li class="mSub_li mSub_supex"><a href="/en/about/supex.jsp" class="mSub_a">SUPEX Council</a></li>
+				<!-- mib191216 텍스트 수정// --><li class="mSub_li mSub_affiliates"><a href="/en/about/affiliates.jsp" class="mSub_a">Our Affiliates</a></li><!-- //mib191216 텍스트 수정 -->
+				<!-- mib200911 SK 브로슈어 추가// --><li class="mSub_li mSub_brochure"><a href="/en/about/brochure.jsp" class="mSub_a">Brochure</a></li><!-- //mib200911 SK 브로슈어 추가 -->
+			</ul>
+			<ul class="mSub_ul mSub_media">
+				<!-- mib191023 메뉴명 수정// --><li class="mSub_li mSub_news"><a href="/en/media/news.jsp" class="mSub_a">SK News</a></li><!-- //mib191023 메뉴명 수정 -->
+				<!-- mib191023 메뉴 삭제// --<li class="mSub_li mSub_channel"><a href="/en/media/channel.jsp" class="mSub_a">Social Media</a></li>!--//mib191023 메뉴 삭제-->
+				<li class="mSub_li mSub_ci"><a href="/en/media/ci.jsp" class="mSub_a">CI</a></li>
+			</ul>
+			<ul class="mSub_ul mSub_together">
+				<li class="mSub_li mSub_happiness"><!-- mib191216 텍스트 수정// --><!-- mib190819 메뉴명 수정// --><a href="/en/together/happiness.jsp" class="mSub_a">Our Philosophy</a><!-- //mib190819 메뉴명 수정 --></li>
+				<li class="mSub_li mSub_social"><a href="/en/together/social.jsp" class="mSub_a">Social Enterprise</a></li>
+				<li class="mSub_li mSub_programs"><a href="/en/together/programs.jsp" class="mSub_a">Social Value Programs</a></li>
+				<!-- mib191216 텍스트 수정// --><li class="mSub_li mSub_foundation"><a href="/en/together/foundation.jsp" class="mSub_a">Foundations</a></li><!-- //mib191216 텍스트 수정 -->
+			</ul>
+			<ul class="mSub_ul mSub_careers">
+				<li class="mSub_li mSub_person"><a href="/en/careers/person.jsp" class="mSub_a">SK Citizens</a></li>
+				<!-- mib191216 텍스트 수정// --><li class="mSub_li mSub_policy"><a href="/en/careers/policy.jsp" class="mSub_a">Recruitment Policy</a></li><!-- //mib191216 텍스트 수정 -->
+			</ul>
+		</div>
+	</header><!-- //Common Header ends -->
+
+
+	<!-- Index page starts --> 
+	<main class="layout_main">
+		<section class="layout_content">
+			<h1 class="skipArea" id="skipContent" tabindex="0">Content</h1>
+			<!-- Index page's intro area -->
+			<section class="layout_grid_full main_section01">
+				<h1 class="blind">Intro</h1>
+				<div class="main_slider">
+				<!-- top banner //-->
+
+
+					<article class="main_cont01 slide01">
+						<div class="main_cont01_img only_desktop" style="background:url('/upload/banner/20191119/20191119134614(0).jpg');background-size:cover;background-position:center;"></div>
+						<div class="main_cont01_img only_mobile" style="background:url('/upload/banner/20191119/20191119134824(0).jpg');background-size:cover;background-position:center;"></div>
+						<div class="main_cont01_videoWrap only_desktop" tabindex="-1">
+							<iframe src="https://player.vimeo.com/video/374078094?background=1&autoplay=1&loop=1&title=0&byline=0&portrait=0" width="100%" height="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen class="main_cont01_video" title="SK&#039;s social value is 업" tabindex="-1"></iframe>
+						</div>
+						<!-- mib181112 태그 변경 (링크 임시 제거)// -->
+						<div href="#" class="main_cont01_slide_a" target='_self' title="SK&#039;s social value is 업">
+							<h1 class="main_cont01_title">SK&#039;s social value is 업</h1>
+							<!-- mib191022 제거//<img class="main_cont01_title_ani" src="/lib/images/mobile/index_ani.gif" alt="">//mib191022 제거 -->
+						</div>
+						<!-- //mib181112 태그 변경 -->
+					</article>
+			
+<!--// top banner -->
+				</div>
+				<!-- mib191022 스크롤이미지 삭제 //<button title="More" class="main_cont01_moreBtn"></button> //mib191022 스크롤이미지 삭제 -->
+			</section>
+			<!-- Index page's Gateway area -->
+			<section class="layout_grid_wrap main_section02">
+				<h1 class="main_section_h"><span class="pointColor">SK</span> <br class="only_mobile">GATEWAY</h1>
+				<article id="gateway_AREA01" class="layout_grid_cont3 main_cont02">
+					<a href="/en/media/news.jsp" class="main_cont_a" title="SK News">
+						<div class="main_cont_bg" data-parallax='{"y": -210, "distance": 800,"smoothness": 10}'></div>
+						<!-- mib191216 텍스트 수정// --><!-- mib191023 텍스트 수정// --><h1 class="main_cont_title">Read the latest <br class="only_mobile">SK news <br class="only_desktop">and press releases</h1><!-- //mib191023 텍스트 수정 --><!-- //mib191216 텍스트 수정 -->
+						<!-- mib191023 타이틀 수정// --><p class="main_cont_link"><span class="point">SK News</span></p><!-- //mib191023 타이틀 수정 -->
+						<div class="lineAni">
+							<div class="lineAni_top"></div>
+							<div class="lineAni_right"></div>
+							<div class="lineAni_bottom"></div>
+							<div class="lineAni_left"></div>
+						</div>
+					</a>
+				</article>
+				<article id="gateway_AREA02" class="layout_grid_cont3 main_cont03">
+					<a href="/en/about/affiliates.jsp" class="main_cont_a" title="Affiliates">
+						<div class="main_cont_bg" data-parallax='{"y": -210, "distance": 800,"smoothness": 10}'></div>
+						<!-- mib191216 텍스트 수정// --><h1 class="main_cont_title">Independent <br class="only_mobile">yet United. <br>Our affiliates.</h1><!-- //mib191216 텍스트 수정 -->
+						<p class="main_cont_link"><span class="point">Affiliates</span></p>
+						<div class="lineAni">
+							<div class="lineAni_top"></div> 
+							<div class="lineAni_right"></div>
+							<div class="lineAni_bottom"></div> 
+							<div class="lineAni_left"></div>
+						</div>
+					</a>
+				</article>
+				<article id="gateway_AREA03" class="layout_grid_cont3 main_cont04">
+					<a href="/en/careers/careers.jsp" class="main_cont_a"title="Careers">
+						<div class="main_cont_bg" data-parallax='{"y": -210, "distance": 800,"smoothness": 10}'></div>
+						<!-- mib191216 텍스트 수정// --><h1 class="main_cont_title">Discover career opportunities <br>and join the SK team</h1><!-- //mib191216 텍스트 수정 -->
+						<p class="main_cont_link"><span class="point">Careers</span></p>
+						<div class="lineAni">
+							<div class="lineAni_top"></div>
+							<div class="lineAni_right"></div>
+							<div class="lineAni_bottom"></div>
+							<div class="lineAni_left"></div>
+						</div>
+					</a>
+				</article>
+			</section>
+			<!-- Index page's Hightlight area -->
+			<section class="layout_grid_wrap main_section03">
+				<h1 class="main_section_h"><span class="pointColor">SK</span> <br class="only_mobile">HIGHLIGHT</h1>
+				<!-- high light //-->
+
+
+				<article id="highlight_AREA01" class="layout_grid_cont2 main_news01">
+					<a href="http://mediask.co.kr/90001-40" class="main_news_a" target='_self' title="[SK] SK global chemical enters PACK EXPO 2019">
+						<div class="main_news_bg">							
+							<!-- div class="main_news_bg_img" style="background:url('/upload/banner/20191023/20191023092807(0).jpg');background-size:cover;background-position:center;"></div-->							 
+							<div class="main_news_bg_img only_mobile" style="background:url('/upload/banner/20191023/20191023092819(0).jpg');background-size:cover;background-position:center;"></div>
+							<div class="main_news_bg_img only_desktop" style="background:url('/upload/banner/20191023/20191023092807(0).jpg');background-size:cover;background-position:center;"></div>							
+							<div class="main_news_bg_dimmed"></div>
+						</div>
+						<h1 class="main_news_title">[SK] SK global chemical enters PACK EXPO 2019</h1>
+						<img class="main_news_link" src="/lib/images/desktop/right_arrow.png" alt="">
+					</a>
+				</article>		
+		
+				<article id="highlight_AREA02" class="layout_grid_cont2 main_news02">
+					<a href="http://mediask.co.kr/90001-34" class="main_news_a" target='_self' title="[SK] The 2nd SK Night Hosted in Washington, D.C., USA">
+						<div class="main_news_bg">							
+							<!-- div class="main_news_bg_img" style="background:url('/upload/banner/20191022/20191022180729(0).jpg');background-size:cover;background-position:center;"></div-->							 
+							<div class="main_news_bg_img only_mobile" style="background:url('/upload/banner/20191022/20191022180734(0).jpg');background-size:cover;background-position:center;"></div>
+							<div class="main_news_bg_img only_desktop" style="background:url('/upload/banner/20191022/20191022180729(0).jpg');background-size:cover;background-position:center;"></div>							
+							<div class="main_news_bg_dimmed"></div>
+						</div>
+						<h1 class="main_news_title">[SK] The 2nd SK Night Hosted in Washington, D.C., USA</h1>
+						<img class="main_news_link" src="/lib/images/desktop/right_arrow.png" alt="">
+					</a>
+				</article>		
+		
+				<article id="highlight_AREA03" class="layout_grid_cont2 main_news03">
+					<a href="https://youtu.be/BT1wYeib6p8" class="main_news_a" target='_blank' title="[SK MOVIE] SK &#039;s way of Designing the Future">
+						<div class="main_news_bg">							
+							<!-- div class="main_news_bg_img" style="background:url('/upload/banner/20191023/20191023110718(0).jpg');background-size:cover;background-position:center;"></div-->							 
+							<div class="main_news_bg_img only_mobile" style="background:url('/upload/banner/20191023/20191023110725(0).jpg');background-size:cover;background-position:center;"></div>
+							<div class="main_news_bg_img only_desktop" style="background:url('/upload/banner/20191023/20191023110718(0).jpg');background-size:cover;background-position:center;"></div>							
+							<div class="main_news_bg_dimmed"></div>
+						</div>
+						<h1 class="main_news_title">[SK MOVIE] SK &#039;s way of Designing the Future</h1>
+						<img class="main_news_link" src="/lib/images/desktop/right_arrow.png" alt="">
+					</a>
+				</article>		
+		
+				<article id="highlight_AREA04" class="layout_grid_cont2 main_news04">
+					<a href="https://youtu.be/tHCdddzTIi4" class="main_news_a" target='_blank' title="[SK MOVIE] The Coming of Happiness">
+						<div class="main_news_bg">							
+							<!-- div class="main_news_bg_img" style="background:url('/upload/banner/20191023/20191023110824(0).jpg');background-size:cover;background-position:center;"></div-->							 
+							<div class="main_news_bg_img only_mobile" style="background:url('/upload/banner/20191023/20191023110832(0).jpg');background-size:cover;background-position:center;"></div>
+							<div class="main_news_bg_img only_desktop" style="background:url('/upload/banner/20191023/20191023110824(0).jpg');background-size:cover;background-position:center;"></div>							
+							<div class="main_news_bg_dimmed"></div>
+						</div>
+						<h1 class="main_news_title">[SK MOVIE] The Coming of Happiness</h1>
+						<img class="main_news_link" src="/lib/images/desktop/right_arrow.png" alt="">
+					</a>
+				</article>		
+		<!--// high light -->
+				</section>
+		</section>
+	</main><!-- Index page ends -->
+	
+	<!-- Index's script -->
+	<script src="/lib/plugin/slick.js"></script>
+	<script src="/lib/plugin/jquery.easing.1.3.js"></script>
+	<script src="/lib/plugin/jquery.parallax-scroll.js"></script>
+	<script src="/lib/plugin/noframework.waypoints.min.js"></script>
+	<script>
+		$(function(){
+			//Main slider
+			$(".main_slider").slick({
+				autoplay:false,
+				fade:true,
+				dots:true,
+				responsive:[{
+					breakpoint: 1024,
+					settings: {
+						arrows:false,
+						initialSlide:0,
+						slidesToShow: 1,
+						slidesToScroll: 1,
+						infinite: true
+					}
+				}]
+			});
+			//Click to mouse icon of slider
+			/*mib191022 스크롤이미지 삭제// $('.main_cont01_moreBtn').click(btnMore); //mib191022 스크롤이미지 삭제*/
+			//Waypoint(gateway01)
+			var wpGateway01 = new Waypoint({
+				element: document.getElementById('gateway_AREA01'),
+				handler: function (direction) {
+					if (direction == 'down') {
+						$('.main_cont02').addClass("appeared");
+					} else {
+						$('.main_cont02').removeClass("appeared");
+					}
+				},
+				offset: '80%'
+			});			
+			//Waypoint (gateway02)
+			var wpGateway02 = new Waypoint({
+				element: document.getElementById('gateway_AREA02'),
+				handler: function (direction) {
+					if (direction == 'down') {
+						$('.main_cont03').addClass("appeared");
+					} else {
+						$('.main_cont03').removeClass("appeared");
+					}
+				},
+				offset: '80%'
+			});			
+			//Waypoint (gateway01)
+			var wpGateway03 = new Waypoint({
+				element: document.getElementById('gateway_AREA03'),
+				handler: function (direction) {
+					if (direction == 'down') {
+						$('.main_cont04').addClass("appeared");
+					} else {
+						$('.main_cont04').removeClass("appeared");
+					}
+				},
+				offset: '80%'
+			});
+			//Waypoint (highlight01)
+			if(Boolean(document.getElementById('highlight_AREA01'))){			
+				var wpHightlight01 = new Waypoint({
+					element: document.getElementById('highlight_AREA01'),
+					handler: function (direction) {
+						if (direction == 'down') {
+							$('.main_news01').addClass("appeared");
+						} else {
+							$('.main_news01').removeClass("appeared");
+						}
+					},
+					offset: '80%'
+				});
+			}
+			//Waypoint (highlight02)
+			if(Boolean(document.getElementById('highlight_AREA02'))){			
+				var wpHightlight01 = new Waypoint({
+					element: document.getElementById('highlight_AREA02'),
+					handler: function (direction) {
+						if (direction == 'down') {
+							$('.main_news02').addClass("appeared");
+						} else {
+							$('.main_news02').removeClass("appeared");
+						}
+					},
+					offset: '80%'
+				});
+			}
+			//Waypoint (highlight03)
+			if(Boolean(document.getElementById('highlight_AREA03'))){			
+				var wpHightlight01 = new Waypoint({
+					element: document.getElementById('highlight_AREA03'),
+					handler: function (direction) {
+						if (direction == 'down') {
+							$('.main_news03').addClass("appeared");
+						} else {
+							$('.main_news03').removeClass("appeared");
+						}
+					},
+					offset: '80%'
+				});
+			}
+			//Waypoint (highlight04)
+			if(Boolean(document.getElementById('highlight_AREA04'))){	
+				var wpHightlight01 = new Waypoint({
+					element: document.getElementById('highlight_AREA04'),
+					handler: function (direction) {
+						if (direction == 'down') {
+							$('.main_news04').addClass("appeared");						
+						} else {
+							$('.main_news04').removeClass("appeared");
+						}
+					},
+					offset: '80%'
+				});
+			}
+			//Change icon when scorll on hightlight area
+			chkMediaLink();
+			//Set slide arrow according to slider amount
+			mainSliderNextBtnPos();//Call
+			//메인 타이틀 변경
+			changeTitle();
+			$(window).resize(changeTitle);
+		});
+		//메인 타이틀 모바일에서 변경(추후 운영 시 해제)
+		function changeTitle(){
+			var $windowW = $(window).width();
+			if( $windowW < 1200){
+				$('.main_cont01.slide01 .main_cont01_title').html("");/*Mobile*/	 //mib191022 제거
+			}else{
+				$('.main_cont01.slide01 .main_cont01_title').html("");/*PC*/ //mib191022 제거
+			}
+		}
+		//Main content more btn
+		function btnMore(){
+			var $offsetTop = parseInt($('.main_section02').offset().top)-parseInt($('.layout_header').height());
+			$("html, body").stop().animate({scrollTop:$offsetTop});
+			$('.main_section_h').focus();
+		}
+		//Check media link for shape of link icon
+		function chkMediaLink (){
+			$('.main_news_a').each(function(index,item){
+				var $href = $(item).attr("href");
+				$href = $href.toLowerCase();
+				if($href.indexOf("youtu") != -1){ /*Strings of video site name*/
+					$(item).find(".main_news_link").attr("src","/lib/images/desktop/right_triangle.png");
+			    }
+			});
+		}
+		//Set slide arrow according to slider amount
+		function mainSliderNextBtnPos(){
+			var $sliderNum = parseInt($('.main_cont01.slick-slide').length)-1;
+			var $distance = $sliderNum*17;
+			$('.main_slider .slick-next').css({'left':100+$distance});
+		}
+	</script>
+
+	<!-- Popup area starts -->
+	<section id="dimmed_AREA" class="dimmed_bg" tabindex="-1">
+		<h1 class="blind">popup content</h1>
+		<!-- Popup sample -->
+		<article class="popupContent sample_cont01_popup" tabindex="-1">
+			<a href="#about_cont03_openBtn_AREA" class="popup_close_btn" title="" onclick="hidePopup();"></a>
+			<div class="popup_area">
+				<h1>popup name</h1>
+				<a href="/">link1</a>
+				<a href="/">link2</a>
+				<a href="/">link3</a>
+			</div>
+		</article>
+	</section><!-- Popup area ends -->
+	
+
+	
+	<!-- Quick Link Popup starts// -->
+	<script type="text/javascript">
+		function initFamilyCo(){
+			$("#com_fc_name").val("");
+			loadFamilyCo();
+		}
+
+		//Load Affiliates Site
+		function loadFamilyCo(){
+			var strUrl = "/en/common/load_family_co_01.jsp";
+			var dataString = $("#srcFcForm").serialize();
+			
+			$.ajax({
+				url: strUrl,
+				type: "post",
+				data: dataString,
+				timeout: 5000,
+				tryCount: 0,
+				retryLimit: 3,
+				error: function(xhr, status, e) {
+					if (xhr.status == 500) {
+						console.log('데이터 조회 중 오류.');						
+					} else {
+						this.tryCount++;
+		
+						if (this.tryCount <= this.retryLimit) {
+							$.ajax(this);
+						} else {
+							console.log('데이터 조회 중 오류.');								
+						}
+					}
+				},
+				beforeSubmit: function() {						
+				},
+				success: function(data) {					
+					$("#listBodyF01").html(data);				
+
+					$('.linkFamily_a').click(showlinkFamilySub);
+					$('.linkFamilySub_calcel_btn').click(hidelinkFamilySub);
+					//console.log(data);		
+					tryCount = 0;
+				}
+			});			
+		}	
+
+		//Load Related Link sites
+		function loadFamilyCoRel(){
+			var strUrl = "/en/common/load_family_co_02.jsp";
+			var dataString = "";
+			
+			$.ajax({
+				url: strUrl,
+				type: "post",
+				data: dataString,
+				timeout: 5000,
+				tryCount: 0,
+				retryLimit: 3,
+				error: function(xhr, status, e) {
+					if (xhr.status == 500) {
+						console.log('데이터 조회 중 오류.');						
+					} else {
+						this.tryCount++;
+		
+						if (this.tryCount <= this.retryLimit) {
+							$.ajax(this);
+						} else {
+							console.log('데이터 조회 중 오류.');								
+						}
+					}
+				},
+				beforeSubmit: function() {						
+				},
+				success: function(data) {					
+					$("#listBodyF02").html(data);				
+
+					$('.linkFamily_a').click(showlinkFamilySub);
+					$('.linkFamilySub_none').unbind("click");
+					$('.linkFamilySub_calcel_btn').click(hidelinkFamilySub);
+					//console.log(data);		
+					tryCount = 0;
+				}
+			});			
+		}		
+		
+		function schFamilyCo(){
+			if($("#com_fc_name").val() == ""){
+				alert("검색하시려는 계열사 이름을 입력하세요.");
+				$("#com_fc_name").focus();
+				return;
+			}else loadFamilyCo();
+		}
+	</script>
+	<div id="linkFamily_popup_AREA" class="linkFamily_popup_wrap">
+		<div class="familyPopupBg" onclick="hideFamilyPopup();"></div>
+		<div class="linkFamily_popup_content firstTab">
+			<button class="linkFamily_exitPrevent blind" data-name=".linkFamily_closeBtn">The popup is opened yet</button>
+			<a href="#linkFamily_openBtn_AREA" class="linkFamily_closeBtn" title="Close quick search" onclick="hideFamilyPopup();">close</a>
+			<div class="linkFamily_tabNav_wrap">
+				<button class="linkFamily_tabNav firstTabNav tabOn"  onclick="initFamilyCo()">Affiliates</button>
+				<button class="linkFamily_tabNav secondTabNav" onclick="loadFamilyCoRel()">Related Link</button>
+			</div>
+			<div class="linkFamily_tabContent_wrap">
+				<div class="linkFamily_tabContent firstTabCont tabOn">
+					<div class="linkFamily_search_wrap">
+						<form id="srcFcForm"  name="srcFcForm" method="post"  onsubmit="return false;">
+							<label for="com_fc_name" class="blind">Please enter a word to search</label>
+							<input type="text" id="com_fc_name" name="com_fc_name" class="linkFamily_searchInput" placeholder="Please enter a word to search" maxlength="30"/>
+							<button class="linkFamily_searchBtn" title="search"  onclick="schFamilyCo()"></button>
+						</form>
+					</div>
+					<ul class="linkFamily_ul" id="listBodyF01"></ul><!-- Affiliates list -->
+				</div>
+				<div class="linkFamily_tabContent secondTabCont">
+					<ul class="linkFamily_ul" id="listBodyF02"></ul><!-- Related Link list -->
+				</div>
+				<button class="linkFamily_exitPrevent blind" data-name=".linkFamily_closeBtn">The popup is opened yet</button>
+			</div>
+		</div>
+	</div><!-- // Quick Link Popup ends -->
+
+
+	<!-- Common Footer starts -->
+	<footer class="layout_footer">
+		<div class="layout_footer_inner">
+			<h2 class="blind">Footer</h2>
+			<!-- Footer left area -->
+			<div class="layout_footerLeft">
+				<a href="/en/index.jsp" class="footerlogo_a"><img src="/lib/images/desktop/footer_logo.png" alt="Home" class="footerLogo_img"></a>
+			</div>
+			<!-- Footer Center area -->
+			<div class="layout_footerCenter">
+				<!-- mib190624 사이트맵 수정// <ul class="footer_menu only_desktop">
+					<li class="footer_munu_li"><a href="/en/sitemap.jsp" class="footer_menu_a">Site map</a></li>
+				</ul> //mib190624 사이트맵 수정 -->
+				<address class="footer_address">26, Jong-ro, Jongno-gu, Seoul, 03188, <br class="only_mobile">Republic of Korea <br class="only_mobile"><span class="copyright">COPYRIGHT (C) BY SK HOLDINGS. <br class="only_mobile">ALL RIGHT RESERVED.</span></address>
+				<!-- mib190624 사이트맵 수정// -->
+				<a href="/en/sitemap.jsp" target="_self" class="footer-sitemap-link only_desktop" title="Site map">Site map</a>
+				<!-- //mib190624 사이트맵 수정 -->
+			</div>
+			<!-- Footer right area -->
+			<a href="http://www.webwatch.or.kr/Situation/WA_Situation.html?MenuCD=110" class="layout_footerRight" title="국가 공인 인증기관 : 웹와치" target="_blank">
+				<img src="/lib/images/desktop/footer_access.png" alt="과학기술정보통신부 WEB ACCESSIBILITY 마크(웹 접근성 품질인증 마크)" class="footerAccess_img">
+			</a>
+		</div>
+	</footer><!-- //Common Footer ends -->
+	<!--  Common mobile menu starts -->
+	<nav id="sideMenu_AREA" tabindex="-1" class="layout_sideMenu">
+		<button class="sideMenu_exitPrevent blind" data-name=".sideMenu_close_btn">The popup is open.</button>
+		<h1 class="blind">Mobile Side menu</h1>
+		<div class="sideMenu_bg"></div>
+		<div class="sideMenu_wrap">
+			<a href="#topMobile_btn_AREA" class="sideMenu_close_btn" title="Close mobile menu">Close</a>
+			<!-- Change language for mobile -->
+			<ul class="mLinkLang_ul">
+				<li class="mLinkLang_li mLinkLang_ko">
+					<a href="/ko/index.jsp" class="mLinkLang_a">KOR</a>
+				</li>
+				<li class="mLinkLang_li mLinkLang_en on">
+					<!-- mib210225 주소변경// --><a href="https://eng.sk.com" class="mLinkLang_a">ENG</a><!-- //mib210225 주소변경 -->
+				</li>
+				<li class="mLinkLang_li mLinkLang_zh">
+					<a href="/zh/index.jsp" class="mLinkLang_a">CHN</a>
+				</li>
+			</ul>
+			<!-- Search area for mobile -->
+			<form id="schNews_m" name="schNews" method="post" action="/en/media/news.jsp"  class="mLinkSearch_area">
+				<label for="mSnbSearch" class="blind">Please enter a word to search.</label>
+				<input type="hidden" name="s_kind" value="t1.subject">
+				<input type="text" id="mSnbSearch" name="s_value"   class="mLinkSearch_input" placeholder="Please enter a word to search."  maxlength="30"/>
+				<input type="reset" class="mLinkDelete_btn" title="Remove all words" value="">
+				<input type="submit" class="mLinkSearch_submit" title="Submit" value="" id="schNewsBtn_m"/>
+			</form>			
+			
+			<!-- Mobile menu area -->
+			<ul class="mTopNav_ul">
+				<li class="mTopNav_li mTopNav_about on">
+					<button class="mTopNav_a">About SK</button>
+					<ul class="mTopNavSub_ul">
+						<li class="mTopNavSub_li mTopNavSub_about"><a href="/en/about/about.jsp" class="mTopNavSub_a">About SK Main</a></li>
+						<li class="mTopNavSub_li mTopNavSub_history"><a href="/en/about/history.jsp" class="mTopNavSub_a">History</a></li>
+						<!-- mib200925 이름 변경// --><li class="mTopNavSub_li mTopNavSub_skms"><a href="/en/about/skms.jsp" class="mTopNavSub_a">Management Philosophy(SKMS)</a></li><!-- //mib200925 이름 변경 -->
+						<li class="mTopNavSub_li mTopNavSub_supex"><a href="/en/about/supex.jsp" class="mTopNavSub_a">SUPEX Council</a></li>
+						<!-- mib191216 텍스트 수정// --><li class="mTopNavSub_li mTopNavSub_affiliates"><a href="/en/about/affiliates.jsp" class="mTopNavSub_a">Our Affiliates</a></li><!-- //mib191216 텍스트 수정 -->
+						<!-- mib200911 SK 브로슈어 추가// --><li class="mTopNavSub_li mTopNavSub_brochure"><a href="/en/about/brochure.jsp" class="mTopNavSub_a">Brochure</a></li><!-- //mib200911 SK 브로슈어 추가 -->
+					</ul>
+				</li>
+				<li class="mTopNav_li mTopNav_media">
+					<button class="mTopNav_a">Media Center</button>
+					<ul class="mTopNavSub_ul">
+						<li class="mTopNavSub_li mTopNavSub_media"><a href="/en/media/media.jsp" class="mTopNavSub_a">Media Center Main</a></li>
+						<!-- mib191023 메뉴명 수정// --><li class="mTopNavSub_li mTopNavSub_news"><a href="/en/media/news.jsp" class="mTopNavSub_a">SK News</a></li><!-- //mib191023 메뉴명 수정 -->
+						<!-- mib191023 메뉴 삭제// --<li class="mTopNavSub_li mTopNavSub_channel"><a href="/en/media/channel.jsp" class="mTopNavSub_a">Social Media</a></li>!-- //mib191023 메뉴 삭제 -->
+						<li class="mTopNavSub_li mTopNavSub_ci"><a href="/en/media/ci.jsp" class="mTopNavSub_a">CI</a></li>
+					</ul>
+				</li>
+				<li class="mTopNav_li mTopNav_together">
+					<!-- mib190819 메뉴명 수정// --><button class="mTopNav_a">Social Value</button><!-- //mib190819 메뉴명 수정 -->
+					<ul class="mTopNavSub_ul">
+						<li class="mTopNavSub_li mTopNavSub_together"><!-- mib190819 메뉴명 수정// --><a href="/en/together/together.jsp" class="mTopNavSub_a">Social Value Main</a><!-- //mib190819 메뉴명 수정 --></li>
+						<li class="mTopNavSub_li mTopNavSub_happiness"><!-- mib191216 텍스트 수정// --><!-- mib190819 메뉴명 수정// --><a href="/en/together/happiness.jsp" class="mTopNavSub_a">Our Philosophy</a><!-- //mib190819 메뉴명 수정 --></li><!-- //mib191216 텍스트 수정 -->
+						<li class="mTopNavSub_li mTopNavSub_social"><a href="/en/together/social.jsp" class="mTopNavSub_a">Social Enterprise</a></li>
+						<!-- mib191216 텍스트 수정// --><li class="mTopNavSub_li mTopNavSub_programs"><a href="/en/together/programs.jsp" class="mTopNavSub_a">Social Value Programs</a></li><!-- //mib191216 텍스트 수정 -->
+						<!-- mib191216 텍스트 수정// --><li class="mTopNavSub_li mTopNavSub_foundation"><a href="/en/together/foundation.jsp" class="mTopNavSub_a">Foundations</a></li><!-- //mib191216 텍스트 수정 -->
+					</ul>
+				</li>
+				<li class="mTopNav_li mTopNav_careers">
+					<button class="mTopNav_a">Careers</button>
+					<ul class="mTopNavSub_ul">
+						<li class="mTopNavSub_li mTopNavSub_careers"><a href="/en/careers/careers.jsp" class="mTopNavSub_a">Careers Main</a></li>
+						<li class="mTopNavSub_li mTopNavSub_person"><a href="/en/careers/person.jsp" class="mTopNavSub_a">SK Citizens</a></li>
+						<li class="mTopNavSub_li mTopNavSub_policy"><a href="/en/careers/policy.jsp" class="mTopNavSub_a">Recruitment Policy</a></li>
+					</ul>
+				</li>
+			</ul>
+			<!-- Social media links for mobile -->
+			<ul class="mLinkSocial_ul">
+				<!-- mib190617 소셜미디어 링크 수정// -->
+				<li class="mLinkSocial_li mLinkSocial_youtube"><!-- mib200421 youtube 주소 변경// -->
+					<a href="https://www.youtube.com/channel/UCa6GPhyiDQEpxG-L1cQMpBw" class="mLinkSocial_a" target="_blank" title="YouTube"><span class="blind">YouTube</span></a>
+				<!-- //mib200421 youtube 주소 변경 --></li>
+				<li class="mLinkSocial_li mLinkSocial_blog">
+					<a href="http://mediask.co.kr/" class="mLinkSocial_a" target="_blank" title="Blogger"><span class="blind">Blogger</span></a>
+				</li>
+				<li class="mLinkSocial_li mLinkSocial_facebook">
+					<a href="https://www.facebook.com/mediask" class="mLinkSocial_a" target="_blank" title="Facebook"><span class="blind">Facebook</span></a>
+				</li>
+				<!-- <li class="mLinkSocial_li mLinkSocial_twitter">
+					<a href="https://twitter.com/skstory_blog" class="mLinkSocial_a" target="_blank"><span class="blind">Twitter</span></a>
+				</li> -->
+				<!-- //mib190617 소셜미디어 링크 수정 -->
+			</ul>
+		</div>
+		<button class="sideMenu_exitPrevent blind" data-name=".sideMenu_close_btn">The popup is open.</button>
+	</nav>
+	<!--  //Common mobile menu ends -->
+	
+	<!-- Common script -->
+	<script src="/lib/script/common.js"></script>
+</body>
+</html>
+

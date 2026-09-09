@@ -4,7 +4,7 @@
 
 Compute Chokepoints follows the AI chip in the order it is built, from the quartz that becomes a wafer to the liquid-cooled rack. Each chapter says how one stage works, which firms control it, and how hard they would be to replace. Beside the chapters sit the datasets: the supplier list, the accelerator specs, the export-control timeline, the licence threshold map, the China share of revenue taken from company filings, and the glossary. The table further down counts them all.
 
-Yashvardhan Sharma made it with Claude in September 2026. He set the brief, the direction and the standards. Claude did the research, writing, design and code. The site was built in the tradition of [Humanity's Last Machine](https://www.humanityslastmachine.com/) and [CSET's semiconductor supply-chain work](https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/).
+Yashvardhan Sharma made it with Claude in September 2026. He set the brief, the direction and the standards. Claude did the research, writing, design and code. The site was built in the tradition of Humanity's Last Machine and of CSET's semiconductor supply-chain work, both linked in the credits at the foot of the home page.
 
 The whole thing compiles to one HTML file. No framework, no runtime dependencies, no trackers. The 3D specimens are drawn by code from published dimensions rather than scanned from real objects. Every figure links to a public document. Treat the text and the data as a starting point for your own diligence, not as investment advice.
 
@@ -36,7 +36,7 @@ Concentration answers a narrower question: how many firms credibly supply this s
 
 The band is judged at the narrowest step inside the stage rather than on a headcount of the firms in it. Photomasks lists five leaders and is Extreme, because three firms in the world supply EUV mask blanks and one firm inspects them. Silicon and wafers also lists five leaders and is High, because those five firms stand behind the wafer market as a whole.
 
-Concentration and the score are separate judgments, and one chapter shows the gap. Chip design and EDA is Extreme and scores a 4: three vendors hold the certified flow, but as the card puts it, "swapping one tool is feasible."
+Concentration and the score are separate judgments, and one chapter shows the gap. Chip design and EDA is Extreme and scores a 4: three vendors each hold a different signoff step, but as the card puts it, "swapping one tool is feasible."
 
 ### Substitution time
 
@@ -84,7 +84,7 @@ Our own estimates are labelled too. One row of the country-share matrix, leading
 
 The build date at the foot of the table below is the site's as-of date. Everything in this copy, every chapter and every dataset, was last touched on or before it. The same date prints in the site footer. No chapter carries a date of its own yet.
 
-Inside the datasets, individual rows carry their own dates, and those are the ones to cite. The country-share matrix gives the year of each segment's measurement. Every licence threshold carries its effective date and, where it has been amended, the date of the amendment. Timeline events carry the event date. The China-revenue series is keyed to each firm's fiscal-year end, which is why the years do not line up across firms. Supplier rows carry the year of the revenue figure, and each accelerator carries its announcement date.
+Inside the datasets, individual rows carry their own dates, and those are the ones to cite. The country-share matrix gives the year each segment was measured, on every row that carries a number. Every licence threshold carries its effective date and the date of each amendment since. Timeline events carry the event date. The China-revenue series is keyed to each firm's fiscal-year end, which is why the years do not line up across firms. Each accelerator carries its announcement month, and a supplier row carries the year of its revenue figure where one is published.
 
 ## What this site does not cover
 
