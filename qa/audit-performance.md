@@ -307,7 +307,7 @@ t=2719 ms  value=0.2988
 
 It fires in 4 of 6 cold loads. When the first paint happens to land after `setMast()`, the shift never becomes visible and CLS is 0. That is a race, not a fix.
 
-Desktop CLS is 0.0045 and comes from the same family: `main` gaining its height when the router reveals a view. Chapter deep links measured 0.0297 in four runs and 0.4513 in one outlier, attributed to `article.chapter` and a `ul` moving after fonts settled above the anchor.
+Desktop CLS is 0.0045 and comes from the same family: `main` gaining its height when the router reveals a view. Chapter deep links measured 0.0297 in all six repeat runs, with one earlier outlier at 0.4513 attributed to `article.chapter` and a `ul` moving after fonts settled above the anchor. Deep links pass CLS in the ordinary case; the outlier shows the failure mode is available.
 
 ## 1.11 GitHub Pages caching
 
@@ -399,7 +399,7 @@ The collapsed strip is 232 x 232 device pixels and receives 60,000 to 98,000 poi
 
 ### 9. Fix the chapter deep-link cost. A day.
 
-`#lithography` reaches `domInteractive` at 834 ms against 199 ms for `#/chain`, because Chrome performs fragment navigation into a 141,229 px document while parsing. Deep links also carry the site's worst CLS outlier, 0.4513.
+`#lithography` reaches `domInteractive` at 834 ms against 199 ms for `#/chain`, because Chrome performs fragment navigation into a 141,229 px document while parsing. LCP on a deep link exceeded 2500 ms in 3 of 6 runs, and deep links carry the site's worst CLS outlier at 0.4513.
 
 Give chapters real per-chapter URLs, which HANDOFF.md already lists as Tier 2, and route them through the router rather than through native fragment navigation. Re-run the anchor scroll after `document.fonts.ready` so a font swap above the anchor does not move the reader's position.
 
