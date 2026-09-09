@@ -9,6 +9,8 @@ const readJSON = (p, fallback) => { const s = read(p); if (!s) return fallback; 
 const warnings = [];
 const warn = (m) => { warnings.push(m); console.warn('warn: ' + m); };
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+// a URL from a data file may only be http(s), mailto, a fragment or a site-relative path; anything else becomes a dead fragment
+const safeUrl = (u) => { const v = String(u == null ? '' : u).trim(); return /^(https?:|mailto:|#|\/)/i.test(v) ? esc(v) : '#'; };
 const slug = (s) => String(s).toLowerCase().replace(/[’'"]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 const COUNTRY = { US: 'United States', NL: 'Netherlands', JP: 'Japan', TW: 'Taiwan', KR: 'South Korea', CN: 'China', DE: 'Germany', CH: 'Switzerland', GB: 'United Kingdom', FR: 'France', IL: 'Israel', SG: 'Singapore', MY: 'Malaysia', AT: 'Austria', IT: 'Italy', BE: 'Belgium', IN: 'India', AE: 'UAE', SA: 'Saudi Arabia', CA: 'Canada', SE: 'Sweden', FI: 'Finland', IE: 'Ireland', TH: 'Thailand', VN: 'Vietnam', PH: 'Philippines', MX: 'Mexico', 'EU-other': 'Other Europe', Other: 'Other' };
 const COUNTRY_COLOR = { US: 1, NL: 2, TW: 3, JP: 4, KR: 5, CN: 6, DE: 7, 'EU-other': 8, Other: 8, 'United States': 1, Netherlands: 2, Taiwan: 3, Japan: 4, 'South Korea': 5, Korea: 5, China: 6, Germany: 7, Europe: 8, 'Other Europe': 8, Other: 8, 'Rest of world': 8, 'Others': 8 };
@@ -82,7 +84,7 @@ function fmtNum(v) { if (typeof v !== 'number') return esc(v); return Math.abs(v
 function figure(f, ctx) {
   if (!f) return '';
   const title = `<p class="fig-title">${esc(f.title)}${f.unit ? `<span class="unit">${esc(f.unit)}</span>` : ''}</p>`;
-  const source = f.source && f.source.url ? `<p class="fig-source">Source: <a href="${esc(f.source.url)}" target="_blank" rel="noopener">${esc(f.source.label || host(f.source.url))}</a></p>` : (f.source && f.source.label ? `<p class="fig-source">Source: ${esc(f.source.label)}</p>` : '');
+  const source = f.source && f.source.url ? `<p class="fig-source">Source: <a href="${safeUrl(f.source.url)}" target="_blank" rel="noopener">${esc(f.source.label || host(f.source.url))}</a></p>` : (f.source && f.source.label ? `<p class="fig-source">Source: ${esc(f.source.label)}</p>` : '');
   if (f.source && f.source.url) cite(f.source.url, ctx);
   let body = '';
   const data = Array.isArray(f.data) ? f.data.filter((d) => Array.isArray(d) && d.length >= 2) : [];
@@ -436,8 +438,8 @@ function exposureViz(rows) {
     d += `<text x="${L - 14}" y="${y + 4}" class="name" text-anchor="end">${esc(f.firm)}</text>`;
     d += `<line x1="${Math.min(a, b).toFixed(1)}" y1="${y}" x2="${Math.max(a, b).toFixed(1)}" y2="${y}" class="link"/>`;
     if (f.peak !== f.first && f.peak !== f.last) d += `<line x1="${xs(f.peak.chinaShare).toFixed(1)}" y1="${y - 7}" x2="${xs(f.peak.chinaShare).toFixed(1)}" y2="${y + 7}" class="peak"/>`;
-    d += `<a href="${esc(f.first.source || '#')}" target="_blank" rel="noopener"><circle cx="${a.toFixed(1)}" cy="${y}" r="4.2" class="dot first" ${attrs(f.first)}/></a>`;
-    d += `<a href="${esc(f.last.source || '#')}" target="_blank" rel="noopener"><circle cx="${b.toFixed(1)}" cy="${y}" r="4.8" class="dot last" ${attrs(f.last)}/></a>`;
+    d += `<a href="${safeUrl(f.first.source || '#')}" target="_blank" rel="noopener"><circle cx="${a.toFixed(1)}" cy="${y}" r="4.2" class="dot first" ${attrs(f.first)}/></a>`;
+    d += `<a href="${safeUrl(f.last.source || '#')}" target="_blank" rel="noopener"><circle cx="${b.toFixed(1)}" cy="${y}" r="4.8" class="dot last" ${attrs(f.last)}/></a>`;
     const right = b >= a;
     d += `<text x="${(b + (right ? 10 : -10)).toFixed(1)}" y="${y + 4}" class="val" text-anchor="${right ? 'start' : 'end'}">${pct(f.last.chinaShare)}</text>`;
   });
@@ -455,7 +457,7 @@ function exposureViz(rows) {
     [20, 40, 60].forEach((v) => { s += `<line x1="${px0}" y1="${Y(v).toFixed(1)}" x2="${px1}" y2="${Y(v).toFixed(1)}" class="grid"/>`; });
     rules.forEach((r) => { s += `<line x1="${X(r[0]).toFixed(1)}" y1="${py0 - 4}" x2="${X(r[0]).toFixed(1)}" y2="${py1}" class="rule"/>`; });
     s += `<line x1="${px0}" y1="${py1}" x2="${px1}" y2="${py1}" class="axis"/><path d="${area}" class="area"/><path d="${line}" class="line"/>`;
-    f.rows.forEach((r, i) => { const p = pts[i]; s += `<a href="${esc(r.source || '#')}" target="_blank" rel="noopener"><circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${r === f.peak ? 3.6 : 2.8}" class="pt${r === f.peak ? ' peak' : ''}" ${attrs(r)}/></a>`; });
+    f.rows.forEach((r, i) => { const p = pts[i]; s += `<a href="${safeUrl(r.source || '#')}" target="_blank" rel="noopener"><circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${r === f.peak ? 3.6 : 2.8}" class="pt${r === f.peak ? ' peak' : ''}" ${attrs(r)}/></a>`; });
     const lp = pts[pts.length - 1];
     s += `<text x="${(lp[0] - 6).toFixed(1)}" y="${Math.max(10, lp[1] - 7).toFixed(1)}" class="val" text-anchor="end">${pct(f.last.chinaShare)}</text>`;
     s += `<text x="${px0}" y="${PH - 4}" class="tick">${esc(f.first.fiscalYear)}</text><text x="${px1}" y="${PH - 4}" class="tick" text-anchor="end">${esc(f.last.fiscalYear)}</text></svg></figure>`;
