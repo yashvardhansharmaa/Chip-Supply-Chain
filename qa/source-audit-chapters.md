@@ -107,3 +107,141 @@ ASE via its own PR Newswire release, Amkor via its SEC 8-K exhibit, SK hynix `ne
   `investors.micron.com`, `investor.tsmc.com`, `amkor.com`, `ir.amkor.com` and `aseglobal.com` to Tier A.
   The first five already resolved by suffix match; the Amkor and ASE domains were absent altogether and would
   have come back unclassified.
+
+## 06 — Photomasks and Pellicles
+
+Body words 1,346 → 1,103 (−18.1%). Tier D citations 3 → 0.
+
+### Replacements
+
+1. **Photronics fiscal 2025 revenue** — `nasdaq.com/press-release/photronics-reports-full-year-and-fourth-quarter-fiscal-2025-results-2025-12-10`
+   → `globenewswire.com/news-release/2025/12/10/3203040/0/en/Photronics-Reports-Full-Year-and-Fourth-Quarter-Fiscal-2025-Results.html`
+   (Tier A, the company's own wire release). Nasdaq was a mirror of the same text. Verified by WebFetch:
+   revenue $849.3M, IC $615.1M, FPD $234.2M. **No number changed.** Swapped in `keyFacts` and in the body.
+
+### Removals (no Tier A/B source found)
+
+2. **"A 2026 survey is lower, at $10 million to $20 million over 70 to 100 layers at 3 to 5 nm"**
+   (semiconductorinsight.com). No Tier A/B or C source carries that range; searches returned only
+   market-research SEO pages and aggregators. Sentence deleted. The `$10M to $40M` range in the text,
+   in `card.costSignal` and in the `mask-set-cost` figure now rests entirely on SemiAnalysis (Tier B),
+   which already spans $10M at 7 nm to $40M at 3 nm, so the figures stay consistent.
+3. **"Newway of Shenzhen began 40 nm trial production in the second half of 2025"** (newwaymask.com — the
+   company's own promotional site, listed Tier D). The claim traces only to Newway's own investor page and
+   to aggregator mirrors of it (MarketScreener, stockanalysis, PatSnap). The underlying document is a
+   Shanghai Stock Exchange filing for 688401.SH that is not fetchable, and neither TrendForce nor Reuters
+   nor any Tier C trade outlet I could verify covers it. Sentence deleted, and the Newway clause removed
+   from `card.chinaStatus`, which now reads: "No EUV mask capability. SMIC runs two captive mask shops in
+   Shanghai for g-line, i-line, KrF and ArF tools. There is no Chinese EUV blank, no Chinese actinic
+   inspection tool and no Chinese multi-beam writer." The China paragraph keeps the SMIC citation
+   (smics.com, Tier A) and the three "no Chinese X" claims, so the chapter's China argument is unchanged.
+
+### Tier C hedges added
+
+- `dri.co.jp` (Tier C) carries the two headline numbers, $259.25M and 93.7%. The sentences now name the
+  analyst: "QY Research puts that blank market at $259.25 million in 2024" and "On QY Research's numbers
+  AGC and Hoya held about 93.7%". The `keyFacts` entry gained "(QY Research estimate)".
+- `semiengineering.com` (Tier C) attributions named in-line where the claim is an opinion rather than a
+  measurement ("D2S told Semiconductor Engineering").
+
+### Prose
+
+Cut Hoya's "competition will intensify" quote (a hedged corporate statement with no number, and the point
+is already made by 93.7%); cut the D2S resist-speed paragraph, which duplicated the "Write time and
+placement" criterion verbatim; merged the pellicle definition and folded the four-paragraph pellicle
+section to the same four ideas in 160 words. `plain` reworked and kept byte-identical to the first
+paragraph under "How it works", 95 words: the inverted "For the shortest light now in use no glass is
+transparent" became "No glass is transparent to the short light now in use".
+
+## 07 — Deposition and Etch
+
+Body words 1,327 → 1,127 (−15.1%). Tier D citations 1 → 0.
+
+### Replacements
+
+1. **"Lam claims Cryo 3.0 cuts profile deviation by 80 percent"** —
+   `quartr.com/events/lam-research-corporation-lrcx-investor-day-2025_33D7JGMm`
+   → `newsroom.lamresearch.com/2024-07-31-Lam-Research-Introduces-Lam-Cryo-TM-3-0-Cryogenic-Etch-Technology-to-Accelerate-Scaling-of-3D-NAND-for-the-AI-Era`
+   (Tier A, Lam's own release; resolves by suffix to `lamresearch.com`).
+   **The number was wrong and is corrected.** Lam does not claim an 80 percent reduction. Verified by
+   WebFetch, Lam claims "less than 0.1% deviation in the feature's critical dimension from the top to the
+   bottom" on channels "up to 10 microns" deep and "more than 50 times deeper than their width". The
+   sentence now reads: "Lam chills the wafer to sharpen the profile, and says Cryo 3.0 holds
+   critical-dimension deviation under 0.1 percent down channels 10 microns deep."
+2. **"Lam expects equipment intensity per leading-edge wafer to rise more than 50 percent"** — same quartr
+   URL. The figure comes from Lam's February 2025 investor day; Lam's own deck
+   (`filecache.investorroom.com/mr5ir_lamresearch2/1435/…`) returns HTTP 403, the SEC full-text search for
+   "intensity per leading-edge wafer" returns zero hits, and Lam issued no press release carrying it, so
+   the claim could not be verified against a Tier A or B source. **The 50 percent number is deleted.**
+   The backside-power bullet now carries a verified Tier A equivalent from the other side of the trade:
+   `globenewswire.com/news-release/2024/07/08/2909540/0/en/applied-materials-unveils-chip-wiring-innovations-for-more-energy-efficient-computing.html`
+   — "the introduction of backside power delivery is expected to increase Applied's wiring opportunity by
+   another $1 billion per 100K WSPM". Same point (backside power raises tool intensity), verified number.
+
+### Tier C hedge added
+
+- `semiconductor-digest.com` (Tier C) is reporting SEMI. SEMI's own release
+  (`semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025`) carries
+  the identical figures ($135.1B, +15%, $117.1B, China $49.3B, China+Taiwan+Korea 79%) but semi.org returns
+  HTTP 403 to WebFetch, so I could not verify the URL and left the citation where it is. The sentence now
+  names the underlying source: "SEMI put global equipment billings at $135.1 billion in 2025."
+
+### Prose
+
+Removed the Tokyo Electron $150-170bn spending forecast (a market projection that did not bear on the
+chokepoint argument, and the `equipment-billings` figure already shows the trend); removed the atomic layer
+etch bullet (the only uncited item in the taxonomy); converted the "AI-specific pull" paragraph into three
+bulleted items per the editing brief; deleted the duplicate 7 microns/minute threshold from the
+"Throughput" criterion, which repeated the HBM bullet. `plain` shortened to 102 words and kept identical to
+the first paragraph under "How it works", with "Most of these machines come from four firms" made active
+("Four firms in America, Japan and the Netherlands make most of these machines").
+
+## 08 — Metrology and Inspection
+
+Body words 1,338 → 1,132 (−15.4%). Tier D citations 1 → 0.
+
+### Replacements
+
+1. **The yield model, cited five times** — `fog.misty.com/perry/cod/references/yield_models.pdf`
+   (a personal-domain mirror of Prof. Robert Leachman's UC Berkeley IEOR 130 handout; no Berkeley-hosted
+   original exists any more) → `web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf`
+   (Tier A, Behrooz Parhami, *Dependable Computing: A Multilevel Approach*, UCSB, Part II "Defects:
+   Physical Imperfections"). Verified by extracting the PDF text locally.
+   **The model changed, so the numbers changed with it.** The old text used the Poisson form
+   `DY = exp(-D0 x A)`. Parhami gives the negative-binomial form
+   `Die yield = [1 + (defect density x die area)/a]^-a`, with `a` between 3 and 4 for modern CMOS, plus a
+   worked example: at 0.8 defects/cm2 a 1 cm2 die yields 49 percent and a 2x2 cm die 11 percent, and
+   because die cost is area divided by yield the larger die costs about 20 times as much. Consequences:
+   - `keyFacts[0]` now reads "Die yield is (1 + D0A/a) to the power minus a, with a of 3 to 4 for modern
+     CMOS, so defect density and die area alone set the ceiling".
+   - The 8 cm2 accelerator example moves from "roughly 45 percent at 0.10 and roughly 67 percent at 0.05"
+     to **about 49 percent at 0.10 and about 69 percent at 0.05**, which is the same arithmetic on the new
+     formula (0.10 x 8 is the same lambda as the source's own 0.8 x 1 case).
+   - `plain`, and the identical first paragraph under "How it works", change from "from under half to about
+     two-thirds" to **"from about half to about seven in ten"**.
+   - The old line "Defect density is additive across layers, so total yield is the product of each layer's
+     contribution" is **deleted**: Parhami does not state it and no better source was found.
+   - The defect taxonomy is re-cast in the source's own terms: gross-area defects (mishandling,
+     misalignment, over-etching) versus spot defects (stray material, airborne particles).
+   - The `Time to result` criterion lost its citation; it makes no numeric claim, so it now stands
+     uncited alongside `Nuisance rate` and `Sampling plan`.
+
+### Tier C hedge added
+
+- `drrobertcastellano.substack.com` (Tier C) carries KLA's 64.1 percent share, which is the chapter's
+  headline. The lead now names the underlying dataset: "on The Information Network's data KLA held 64.1
+  percent of metrology and inspection in 2025". The `pc-share` figure already labelled it that way.
+
+### Prose
+
+Cut the paragraph restating KLA's revenue mix, which the `kla-mix` figure already shows (kept the two
+numbers the figure does not carry: patterning +61 percent year on year, and the Taiwan 31 / China 26 split);
+cut the sentence restating the e-beam bullet's 15x throughput; dropped the voltage-contrast clause, a third
+capability claim after two. `plain` is 93 words and byte-identical to the first paragraph under "How it
+works".
+
+## Source tiers
+
+`data/source-tiers.json`: added `ucsb.edu` to Tier A, next to `purdue.edu`, for the Parhami dependable-
+computing chapter now cited in 08. No other new domain was needed: `globenewswire.com` was already Tier A,
+and `newsroom.lamresearch.com` resolves by suffix to `lamresearch.com`.

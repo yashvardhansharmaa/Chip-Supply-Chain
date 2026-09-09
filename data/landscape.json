@@ -1719,12 +1719,12 @@
       "fp16TFLOPS": null,
       "fp8TFLOPS": null,
       "fp4TFLOPS": null,
-      "precisionNote": "OpenAI has published no per-precision FLOPS figures and says it will detail the architecture and performance over the coming months."
+      "precisionNote": "OpenAI publishes no per-precision FLOPS and argues peak FLOPS is the wrong metric, quoting delivered throughput instead. On SemiAnalysis's InferenceX benchmark the part returns over 700 tokens per second per user on DeepSeek R1 at concurrency 1 and about 1,400 on Kimi-K2.5 and GPT-OSS."
     },
     "tdpW": 700,
     "interconnect": {
-      "chipToChip": "200 Gb/s Ethernet running a scale-up protocol",
-      "scaleUp": null,
+      "chipToChip": "Ethernet scale-up: 4.8 Tb/s per chip inside a 128-accelerator local domain, 1.6 Tb/s across domains",
+      "scaleUp": "Up to 2,048 accelerators across 16 racks",
       "scaleOut": "Broadcom Tomahawk Ethernet switching"
     },
     "systemIntegrators": [
@@ -1733,7 +1733,7 @@
     "priceEstimate": null,
     "bomEstimate": null,
     "exportStatus": "Not merchant silicon; deployed in OpenAI and partner datacenters.",
-    "notes": "A reticle-sized inference ASIC taped out in nine months under the 10 gigawatt co-development deal OpenAI signed with Broadcom in October 2025. It draws 700 W against the GB300's 1,400 W and OpenAI claims up to 1.9x the throughput per kilowatt, which is the first credible efficiency win over Nvidia by a customer-designed part.",
+    "notes": "A reticle-sized inference ASIC taped out in nine months under the 10 gigawatt co-development deal OpenAI signed with Broadcom in October 2025. It is rated at 700 W against the GB300's 1,400 W, and OpenAI reports 1.5x to 1.9x the throughput per kilowatt of Nvidia's GB200 and GB300 racks, the first credible efficiency win over Nvidia by a customer-designed part.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -1799,6 +1799,14 @@
       {
         "label": "OpenAI and Broadcom announce a 10 GW collaboration",
         "url": "https://openai.com/index/openai-and-broadcom-announce-strategic-collaboration/"
+      },
+      {
+        "label": "SemiAnalysis InferenceX: Jalapeno measured against Blackwell",
+        "url": "https://newsletter.semianalysis.com/p/openai-jalapeno-better-than-nvidia"
+      },
+      {
+        "label": "OpenAI: Jalapeno first results",
+        "url": "https://openai.com/index/jalapeno-first-results/"
       }
     ]
   },

@@ -125,7 +125,7 @@ Amkor took US$6.71 billion of revenue in 2025 ([source](https://data.sec.gov/api
 
 This is not lithography. No single tool has a single supplier. The lock-in is stickiness: Advantest argues that switching tester vendor means rebuilding a customer's entire device development, evaluation and production test environment, which is why share moves slowly and in one direction ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf)).
 
-The back end is also the part of the chain China is closest to owning. Chinese OSATs took about 28.6% of top-10 revenue in 2024, and assembly, dicing, bonding and test tools sit outside the export control lines drawn around lithography and deposition. Set that US$41.56 billion against industry sales of US$791.7 billion in 2025 ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)): a small share of the revenue sitting on the critical path of all of it.
+The back end is also the part of the chain China is closest to owning. Chinese OSATs took about 28.6% of top-10 revenue in 2024, and assembly, dicing, bonding and test tools sit outside the export control lines drawn around lithography and deposition. Set that US$41.56 billion ([source](https://www.trendforce.com/presscenter/news/20250513-12577.html)) against industry sales of US$791.7 billion in 2025 ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)): a small share of the revenue sitting on the critical path of all of it.
 
 ## Key evaluation criteria
 

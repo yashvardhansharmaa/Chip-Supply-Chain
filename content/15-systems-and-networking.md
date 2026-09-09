@@ -77,7 +77,7 @@ Think of a rowing eight. The crew only goes fast if every oar moves together, so
 
 An accelerator ships as a module, not a bare chip: SXM in Nvidia's world, the OCP Accelerator Module in the open one. Eight bolt onto a baseboard carrying their power and the switch chips that let them reach each other at full speed.
 
-Rack-scale systems dissolve the baseboard. An Nvidia GB300 NVL72 holds 18 compute trays plus nine NVLink switch trays, 72 GPUs in all, and draws up to 142 kW ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)). Rubin keeps the same shape ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
+Rack-scale systems dissolve the baseboard. An Nvidia GB300 NVL72 holds 18 compute trays plus nine NVLink switch trays, 72 GPUs in all, and draws up to 142 kW ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)). Rubin keeps that shape ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
 
 Two networks run through every AI cluster and they are not interchangeable. Scale-up joins a few dozen accelerators into one memory-coherent domain at terabytes per second; scale-out joins thousands of those domains at hundreds of gigabits per second. Model parallelism lives on scale-up, so its bandwidth sets how large a model you can shard.
 
