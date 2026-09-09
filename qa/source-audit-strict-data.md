@@ -303,3 +303,213 @@ the `source` fields of the data files, and the build reports zero unclassified s
   The four eCFR URLs added here were built from the eCFR structure API for title 15, so the paths
   are canonical, and the text of each section was read through the eCFR versioner API to confirm
   it says what the entry claims. Nothing was cited to eCFR without reading the section.
+
+---
+
+# Source audit — suppliers, landscape and landscape notes (strict rule)
+
+Second worker, same day. Scope: `data/suppliers.json`, `data/landscape.json`,
+`data/landscape-notes.md`. Nothing else in `data/` or `content/` was touched, except the six
+additions to `data/source-tiers.json` listed at the end.
+
+## Method
+
+A script read every `http(s)` URL out of the three files and compared each host against tiers A
+and B of `data/source-tiers.json`, treating a subdomain of a listed domain as listed. That found
+9 disallowed URLs in `suppliers.json` and 24 in each of `landscape.json` and
+`landscape-notes.md`, the notes mirroring the JSON. Every one was replaced or removed. The same
+script now reports zero. `node build/build.js` runs clean: 19 chips, 220 suppliers, zero D-tier
+and zero unclassified sources.
+
+Where a better source gave a different number, the number was corrected rather than deleted.
+Where no allowed source carried the fact, the field was set to `null` and the sentence that
+depended on it was cut. Every such loss is listed below.
+
+## `data/suppliers.json` — 9 replacements
+
+| Firm | Was | Now | Field changes |
+| --- | --- | --- | --- |
+| Dongjin Semichem | trendforce.com | dongjin.com semiconductor business page | none; `shareNote` and `revenueUSDb` were already null |
+| TSMC | trendforce.com | investor.tsmc.com 2025 annual report | `shareNote` → null; `revenueUSDb` 120.922 → **122.42** |
+| SK hynix | trendforce.com | news.skhynix.com FY25 results | `shareNote` → null |
+| Samsung Memory | trendforce.com | semiconductor.samsung.com HBM4 shipment release | `shareNote` → null; `role` rewritten |
+| Micron | trendforce.com | SEC Form ARS FY2025 (Micron annual report) | `shareNote` → null |
+| Kioxia | trendforce.com | kioxia-holdings.com Annual Securities Report FY2025 | `shareNote` → null |
+| ASE Technology Holding | trendforce.com | SEC Form 6-K, 4Q25 earnings release | `shareNote` → null |
+| Hanmi Semiconductor | chosun.com | hanmisemi.com equipment line-up | `shareNote` → null; `revenueUSDb` **0.43 → null**; `aiRelevance` rewritten |
+| Nittobo | insights.trendforce.com | nittobo.co.jp T-glass product page | `shareNote` → null; `revenueUSDb` **0.769 → null**; `aiRelevance` rewritten |
+
+Notes on the two numbers that moved rather than died:
+
+- **TSMC.** The old 120.922 was TrendForce's foundry-revenue line for TSMC. TSMC's own 2025
+  annual report states consolidated revenue of US$122.42 billion on NT$3,809.05 billion, the
+  latter confirmed against TSMC's own monthly revenue page (NT$3,809,054 million, +31.6%).
+  Corrected to the company's figure.
+- **Kioxia.** 15.197 USD-b for FY2026 was checked against Kioxia's own Annual Securities Report
+  for the year ended 31 March 2026, which gives revenue of ¥2,337,628 million. The conversion
+  implies ¥153.8/USD, a reasonable average for the year, so the number was kept and the filing
+  cited. Micron ($37.378B FY2025), SK hynix (₩97.1467tn FY2025 ≈ $72.45B) and ASE
+  (NT$645,388M FY2025 ≈ $20.49B) were checked the same way and kept.
+
+**Nulled and why.** Hanmi's 2025 revenue (₩576.7bn) and its ~71% TC-bonder share appear only in
+Korean trade press quoting TechInsights; Hanmi's own site publishes product pages and press
+releases but no financials, and Google News RSS surfaced no Reuters, FT or Nikkei headline
+carrying either fact. Nittobo's FY2026 revenue and its ~90% T-glass share are likewise
+TrendForce-only; nittobo.co.jp serves its IR pages through a wrapper that returns navigation
+without the financial tables to every automated request tried, so the figure could not be
+anchored on the company's own filing. All eight DRAM/NAND/foundry/OSAT `shareNote` strings were
+market-share estimates from TrendForce's own datasets, which have no Tier A or Tier B
+equivalent, so they are gone rather than replaced.
+
+## `data/landscape.json` and `data/landscape-notes.md` — 24 replacements
+
+The two files carry the same citation set, so each row below was applied in both.
+
+| Chip | Removed | Replaced with |
+| --- | --- | --- |
+| nvidia-b200 | cnbc.com | *(nothing — see losses)* |
+| nvidia-b300 | theregister.com | micron.com, 12-high 36 GB HBM3E |
+| nvidia-vr200 | techpowerup.com | *(nothing — see losses)* |
+| nvidia-h200-china | sanctionsnews.bakermckenzie.com | federalregister.gov, 2026-00789, effective 15 Jan 2026 |
+| amd-mi355x | glennklockwood.com | amd.com MI355X GPU datasheet |
+| amd-mi455x | storagereview.com | amd.com MI455X product page + rocm.blogs.amd.com CDNA 5 / Helios |
+| google-tpu-v7-ironwood | servethehome.com | *(nothing — see losses)* |
+| google-tpu-8i | nextplatform.com | *(nothing — see losses)* |
+| microsoft-maia-200 | servethehome.com, nextplatform.com | techcommunity.microsoft.com Maia 200 deep dive + Hot Chips 2026 Microsoft deck |
+| meta-mtia-400 | servethehome.com, datacenterdynamics.com | Hot Chips 2026 Meta deck + engineering.fb.com MTIA 300 |
+| openai-jalapeno | servethehome.com | newsletter.semianalysis.com (already cited; carries the same figures) |
+| cerebras-wse3-turbo | servethehome.com ×2 | cerebras.ai/cs4 + cerebras.ai Hot Chips 2026 deep dive |
+| huawei-ascend-910c | trendforce.com, scmp.com | english.mofcom.gov.cn Unreliable Entity List remarks |
+| huawei-ascend-950pr | trendforce.com ×2 | huawei.com SuperPoD architecture release (Atlas 350 on 950PR) |
+| cambricon-siyuan-590 | trendforce.com ×2 | federalregister.gov 2022-27151 (Entity List addition) |
+| moore-threads-mtt-s5000 | trendforce.com ×2, technode.com | en.mthreads.com MTT S5000 + MTT KUAE product pages |
+
+Moore Threads had no allowed source at all before this pass. It now has two, both the vendor's.
+
+### Specs set to null
+
+| Chip | Field | Old value | Why |
+| --- | --- | --- | --- |
+| nvidia-b200 | `priceEstimate` | "$30,000–40,000 per GPU" | Only CNBC. Reuters ran a headline saying "priced at over $30,000" on 19 Mar 2024, but Google News RSS exposes no reuters.com URL for it, so there is nothing to cite. |
+| amd-mi455x | `die.count` | 12 | Only StorageReview |
+| amd-mi455x | `die.transistorsB` | 320 | Only StorageReview |
+| google-tpu-v7-ironwood | `memory.stacks` | 8 | Only ServeTheHome's package photo. Google's own docs give 192 GiB and two chiplets at 96 GB each, never a stack count. |
+| google-tpu-8i | `process.node` | "2 nm class (reported)" | Only The Next Platform |
+| microsoft-maia-200 | `memory.stacks` | 6 | Only The Next Platform |
+| microsoft-maia-200 | `memory.suppliers` | ["SK hynix"] | Only The Next Platform |
+| meta-mtia-400 | `die.count` | 5 | Only ServeTheHome, and it conflicts with Meta's own post, which attributes the SoC-chiplet configuration to MTIA 500 and says MTIA 400 "combines two compute chiplets" |
+| cerebras-wse3-turbo | `compute.fp16TFLOPS` | 125,000 | The 250 PFLOPS headline is Cerebras's, but only ServeTheHome called it sparse FP16, and the dense reading was derived from that. Cerebras names no format. |
+| huawei-ascend-950pr | `memory.capacityGB` | 112 | Only TrendForce |
+| huawei-ascend-950pr | `memory.bandwidthTBs` | 1.4 | Only TrendForce |
+| huawei-ascend-950pr | `tdpW` | 600 | Only TrendForce |
+| huawei-ascend-950pr | `process.node` | "N+3 7 nm class (reported)" | Only TrendForce |
+
+### Specs corrected rather than nulled
+
+| Chip | Field | Old | New | Source |
+| --- | --- | --- | --- | --- |
+| microsoft-maia-200 | `compute.fp4TFLOPS` | 10,000 | 10,100 | Microsoft states 10.1 PetaOPS FP4 |
+| microsoft-maia-200 | `compute.fp8TFLOPS` | 5,000 | 5,050 | Microsoft states FP4 is 2× FP8 |
+| microsoft-maia-200 | `process.node` | "N3P" | "N3" | Microsoft says "the latest TSMC N3 process technology" and names no variant; N3P was The Next Platform's |
+| huawei-ascend-910c | `compute.fp16TFLOPS` | 800 | 781 | 800 was TrendForce's; 781 is SemiAnalysis's CloudMatrix aggregate divided by 384 chips |
+| huawei-ascend-950pr | `compute.fp4TFLOPS` | 1,560 | 2,000 | 1,560 was TrendForce's card-level figure; Huawei's own roadmap gives 2 PFLOPS MXFP4 for the die |
+| huawei-ascend-950pr | `shipping` | 2026-Q2 | 2026-Q1 | Huawei's stated availability quarter; the March launch and April mass-production dates were TrendForce's |
+| amd-mi455x | `process.node` | "N2 (8 XCDs) plus N3 (2 I/O dies and 2 fabric-and-cache dies)" | "N2 plus N3, split not published" | AMD's product page gives "TSMC 2nm \| 3nm" lithography; the die-by-die assignment was StorageReview's |
+| cerebras-wse3-turbo | on-wafer fabric | 53 PB/s | 53.5 PB/s | Cerebras's own figure |
+
+### Prose deleted from `landscape-notes.md`
+
+Sentences whose only support was a disallowed source, removed rather than rewritten:
+
+- **B200**: the $30,000–40,000 module price. Replaced with a sentence saying Nvidia has never
+  published a list price.
+- **Rubin**: the claim that 19.2 TB/s settled there after suppliers missed a 22 TB/s pin-speed
+  target. Nvidia never confirmed it and only TechPowerUp carried it.
+- **Ironwood**: ServeTheHome's visual confirmation of eight HBM3E sites.
+- **TPU 8i**: that TPU 8i was co-designed with MediaTek rather than Broadcom, and that TPU 8t is
+  "Sunfish". Google names no design partner. Reuters ran "Google preparing to partner with
+  Taiwan's MediaTek on next AI chip, Information reports" in March 2025, which is a prospective
+  partnership about an unnamed chip and does not support the claim. The paragraph now uses
+  Google's published TPU 8t figures instead.
+- **MI455X**: twelve dies, 320 billion transistors, 192 MB of L2 at 54 TB/s, "largest chip ever
+  built on CoWoS-L", and the 225–245 kW Helios rack power. Replaced with AMD's own lithography,
+  packaging and rack-bandwidth figures.
+- **Maia 200**: The Next Platform's N3P, 836 mm² and six SK hynix stacks.
+- **MTIA 400**: Data Center Dynamics' 9.2 TB/s variant and the four-accelerator tray count.
+- **Ascend 910C**: the TechInsights teardown finding TSMC, Samsung and SK hynix parts inside
+  Ascend processors. MOFCOM's own statement confirms the listing and the stated grounds but not
+  the teardown's findings, so the paragraph now cites MOFCOM for the listing and SemiAnalysis for
+  the TSMC-origin judgement.
+- **Ascend 950PR**: the 1.56 PFLOPS / 112 GB / 1.4 TB/s / 600 W card figures, the 2.8× H20 claim,
+  the competing 128 GB / 1.6 TB/s figure, and the March/April 2026 launch dates.
+- **Cambricon**: "roughly 80 percent of an Nvidia A100", RMB 6.5bn 2025 revenue, RMB 6.0bn H1
+  2026, 99.98 percent cloud accelerators, ~20 percent yields, and the 690's one-year slip. Also
+  removed from `exportStatus`: that Cambricon is a named launch customer for CXMT's HBM3E.
+- **Moore Threads**: "up to 1,000 TFLOPS of dense AI compute", the RMB 1bn loss to quarterly
+  profit swing, R&D at 87 percent of revenue, the December 2025 STAR Market listing, day-zero
+  DeepSeek V4 adaptation, and the Huashan successor. Replaced with the vendor's own claims.
+
+### One judgement call worth flagging
+
+Three chips lost numbers that came from Hot Chips 2026 talks by the vendors themselves, reported
+second-hand by ServeTheHome. The conference publishes those decks at
+`hc2026.hotchips.org/assets/program/conference/day2/…`, and the policy names Hot Chips slides as
+an allowed replacement, so the **Microsoft Maia 200** and **Meta MTIA 400** decks are now cited
+directly in place of the trade-press coverage. Two caveats the client should know:
+
+1. The 2026 decks return **HTTP 401** to anyone not registered for the conference, so their
+   contents could not be read here. What is verifiable is the public conference programme at
+   `hc2026.hotchips.org/program/conference/`, which lists both talks and links exactly these two
+   PDF paths. Hot Chips normally opens the archive later; until then a reader without a
+   registration cannot follow these two links.
+2. Where the vendor's own site carried the same fact, the vendor's page was preferred and the
+   deck was not used. That is why **Cerebras** ended up on `cerebras.ai/cs4` and Cerebras's own
+   Hot Chips deep-dive blog rather than the Cerebras deck, and why Maia 200's node, FLOPS, SRAM,
+   HBM and networking figures now cite Microsoft's Azure Infrastructure blog rather than the
+   deck. The deck backs only the two numbers Microsoft has not published elsewhere: the ~820 mm²
+   die and the 1.65 PFLOPS effective attention throughput.
+
+If the client would rather not cite a registration-gated PDF, the fallback is to null
+`microsoft-maia-200.die.areaMm2Each`, `meta-mtia-400`'s `memory.capacityGB`,
+`memory.bandwidthTBs`, `memory.stacks`, `compute.fp8TFLOPS`, `compute.fp4TFLOPS` and `tdpW`, and
+cut the corresponding sentences. Say the word and it is a ten-minute change.
+
+## Additions to `data/source-tiers.json`
+
+Six hosts, all Tier A by category:
+
+- `dongjin.com` — Dongjin Semichem's own site (vendor product page)
+- `hanmisemi.com` — Hanmi Semiconductor's own site (vendor product page)
+- `kioxia-holdings.com` — Kioxia Holdings' IR host, carrying its Annual Securities Report
+- `hotchips.org` — Hot Chips, named in the brief as an allowed primary source
+- `techcommunity.microsoft.com` — Microsoft's Azure Infrastructure engineering blog
+- `nittobo.co.jp` — already added by the other worker before this pass; left as found
+
+`micron.com`, `federalregister.gov`, `english.mofcom.gov.cn`, `semiconductor.samsung.com`,
+`news.skhynix.com`, `investor.tsmc.com`, `sec.gov`, `huawei.com`, `mthreads.com`, `cerebras.ai`,
+`amd.com` (covering `rocm.blogs.amd.com`) and `engineering.fb.com` were already listed.
+
+## What could not be verified, and was therefore not used
+
+- **Reuters.** The search tool refuses `reuters.com` outright and Google News RSS returns only
+  `news.google.com` redirect links, so no Reuters URL could be produced. Two Reuters headlines
+  were found that state facts this data set wanted — the B200 price and the MediaTek TPU
+  partnership — and neither could be cited for want of a URL.
+- **Financial Times, Nikkei Asia.** Nothing relevant surfaced in RSS for any of these chips or
+  firms.
+- **amd.com PDFs and product pages** time out on fetch from this environment. The MI355X
+  Infinity Fabric figures and the MI455X lithography, HBM and Helios figures were confirmed
+  through search snippets drawn from those same amd.com pages, and `rocm.blogs.amd.com`, which
+  does fetch, carries the Helios rack numbers directly.
+- **openai.com** returns HTTP 403, so the two OpenAI pages already cited for Jalapeño could not
+  be re-read. They were left in place unchanged; SemiAnalysis, which does fetch, independently
+  carries the networking and Celestica facts that ServeTheHome had been carrying.
+- **Cambricon and Moore Threads financials.** Both are STAR Market issuers, so their results are
+  company filings in substance, but the filings live on `sse.com.cn`, which is not in the domain
+  map, and the specific announcements could not be located from here. The figures were deleted
+  rather than left on TrendForce. If someone adds `sse.com.cn` under A and finds the annual
+  reports, the revenue and profit narrative for both firms can come back.
+- **Layouts.** The `layout` blocks in `landscape.json` are schematic drawings, not cited specs.
+  Ironwood, Maia 200 and MTIA 400 still draw 8, 6 and 8 HBM sites respectively even though those
+  stack counts are now null. Nothing in the build reads a stack count from a layout, and
+  redrawing them was out of scope, but whoever owns the figures should know.

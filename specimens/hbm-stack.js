@@ -24,7 +24,7 @@ PC.register('hbm-stack', function (p) {
   var bW = 12 * mm, bD = 13 * mm;           // base die: a shade larger all round
   var t = 0.040, bt = 0.080;                // drawn thicknesses (~15x life)
   var pitch = 0.062;                        // gap is 55% of a die's own thickness
-  var baseGap = 0.032;                      // a wider step off the base die
+  var baseGap = 0.046;                      // a wider step off the base die
   var dies = 12;
   var parts = [];
   function add(c) { if (c) parts.push(c); }
@@ -40,7 +40,7 @@ PC.register('hbm-stack', function (p) {
 
   // ---------- molding compound: the faint shell that makes this a cube ----------
   var mH = yTop + 0.014 - baseTop, mY = baseTop + mH / 2;
-  add(PC.T(PC.box({ w: bW, h: mH, d: bD, faces: ['px', 'nx', 'pz', 'nz'], n: 5200, tone: 0.13 }), { pos: [0, mY, 0] }));
+  add(PC.T(PC.box({ w: bW, h: mH, d: bD, faces: ['px', 'nx', 'pz', 'nz'], n: 4600, tone: 0.12 }), { pos: [0, mY, 0] }));
   add(PC.T(PC.plane({ w: bW, d: bD, n: 1600, tone: 0.11 }), { pos: [0, baseTop + mH, 0] }));
   add(PC.T(PC.boxEdges({ w: bW, h: mH, d: bD, perUnit: 190, tone: 0.3 }), { pos: [0, mY, 0] }));
 
@@ -72,10 +72,13 @@ PC.register('hbm-stack', function (p) {
   for (i = 0; i < dies; i++) {
     var y = lvl[i], yc = y + t / 2;
     add(PC.T(PC.plane({ w: W, d: D, n: 800, tone: 0.26 }), { pos: [0, y + t, 0] }));
-    add(PC.T(PC.box({ w: W, h: t, d: D, faces: ['px', 'nx', 'pz', 'nz'], n: 1150, tone: 0.5 }), { pos: [0, yc, 0] }));
-    add(PC.T(PC.boxEdges({ w: W, h: t, d: D, perUnit: 240, tone: 0.95 }), { pos: [0, yc, 0] }));
+    add(PC.T(PC.box({ w: W, h: t, d: D, faces: ['px', 'nx', 'pz', 'nz'], n: 950, tone: 0.4 }), { pos: [0, yc, 0] }));
+    // one crisp outline on the top edge and a softer one below: the layer line an
+    // engraver would draw, and half the ink of a full wireframe box
+    add(PC.T(rect(W, D, 240, 0.95), { pos: [0, y + t, 0] }));
+    add(PC.T(rect(W, D, 105, 0.45), { pos: [0, y, 0] }));
     // the micro-bumps sitting in the gap under this die
-    add(PC.T(PC.dots({ nx: 11, nz: 12, sx: W / 12, sz: D / 13, per: 3, tone: 0.72 }), { pos: [0, y - (i === 0 ? baseGap : pitch - t) / 2, 0] }));
+    add(PC.T(PC.dots({ nx: 11, nz: 12, sx: W / 12, sz: D / 13, per: 3, tone: 0.62 }), { pos: [0, y - (i === 0 ? baseGap : pitch - t) / 2, 0] }));
     // the TSV farm outline, so the reader sees where the vias pierce the silicon
     add(PC.T(rect(fx, fz, 130, 0.4), { pos: [0, y + t + 0.002, 0] }));
   }
@@ -91,10 +94,10 @@ PC.register('hbm-stack', function (p) {
   // ---------- TSVs: faint the whole height, bright inside each die ----------
   var tl = [], yLow = yBase - bt / 2;
   for (i = 0; i < tsv.length; i++) {
-    tl.push(PC.line({ a: [tsv[i][0], yLow, tsv[i][1]], b: [tsv[i][0], yTop, tsv[i][1]], perUnit: 95, tone: 0.2 }));
+    tl.push(PC.line({ a: [tsv[i][0], yLow, tsv[i][1]], b: [tsv[i][0], yTop, tsv[i][1]], perUnit: 80, tone: 0.15 }));
     tl.push(PC.line({ a: [tsv[i][0], yLow, tsv[i][1]], b: [tsv[i][0], baseTop, tsv[i][1]], perUnit: 260, tone: 0.55 }));
     for (var k = 0; k < dies; k++) {
-      tl.push(PC.line({ a: [tsv[i][0], lvl[k], tsv[i][1]], b: [tsv[i][0], lvl[k] + t, tsv[i][1]], perUnit: 300, tone: 0.6 }));
+      tl.push(PC.line({ a: [tsv[i][0], lvl[k], tsv[i][1]], b: [tsv[i][0], lvl[k] + t, tsv[i][1]], perUnit: 240, tone: 0.55 }));
     }
   }
   add(PC.merge.apply(null, tl));
@@ -102,7 +105,7 @@ PC.register('hbm-stack', function (p) {
   return {
     cloud: PC.merge.apply(null, parts),
     spin: 0.12,
-    tilt: [0.34, -0.68, 0],
+    tilt: [0.40, -0.68, 0],
     caption: 'A twelve-high HBM stack opened up: twelve DRAM dies of 11 by 12 mm, each ground to about thirty micrometres, lifted off the copper-coloured logic base die, with micro-bumps in every gap and through-silicon vias running the full height. The faint box around them is the molding compound that makes the finished part a cube. Footprint is to scale; thicknesses and gaps are exaggerated about fifteen times, because the real cube is only 0.72 mm tall.'
   };
 });
