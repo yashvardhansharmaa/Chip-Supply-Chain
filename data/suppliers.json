@@ -1376,7 +1376,7 @@
     "aiRelevance": "Domestic resist supply reduces the leverage Japanese export policy has over Korean HBM output.",
     "revenueUSDb": null,
     "revenueYear": null,
-    "source": "https://www.trendforce.com/news/2023/12/27/insights-analysis-of-the-global-photoresist-market-in-2023/"
+    "source": "https://www.dongjin.com/en/business/semiconductor.php"
   },
   {
     "name": "Soulbrain",
@@ -2899,7 +2899,7 @@
     "ownership": "Public; the Taiwanese state holds a minority stake",
     "role": "Manufactures almost every leading-edge AI accelerator, including Nvidia, AMD, Broadcom and hyperscaler custom silicon, on N4, N3 and N2 processes. It also owns CoWoS and SoIC advanced packaging, which is the tighter constraint.",
     "chokepoint": "Critical",
-    "shareNote": "About 75% of top-10 foundry revenue in 1Q26 ($35.86B of $47.95B)",
+    "shareNote": null,
     "customers": [
       "Nvidia",
       "Apple",
@@ -2909,9 +2909,9 @@
       "MediaTek"
     ],
     "aiRelevance": "TSMC is the single most concentrated point in the AI chain: one company, mostly on one island, makes the dies and packages them.",
-    "revenueUSDb": 120.922,
+    "revenueUSDb": 122.42,
     "revenueYear": 2025,
-    "source": "https://www.trendforce.com/presscenter/news/20260612-13095.html"
+    "source": "https://investor.tsmc.com/static/annualReports/2025/english/index.html"
   },
   {
     "name": "Samsung Foundry",
@@ -3115,7 +3115,7 @@
     "ownership": "Public; part of SK Group",
     "role": "The leading supplier of high bandwidth memory and Nvidia's principal HBM source, alongside a large conventional DRAM and NAND business including Solidigm. HBM is stacked DRAM connected by through-silicon vias.",
     "chokepoint": "Critical",
-    "shareNote": "24.9% of DRAM industry revenue in 2Q26; leads the HBM segment",
+    "shareNote": null,
     "customers": [
       "Nvidia",
       "AMD",
@@ -3126,7 +3126,7 @@
     "aiRelevance": "HBM capacity allocation between SK hynix, Samsung and Micron effectively decides how many accelerators ship.",
     "revenueUSDb": 72.451,
     "revenueYear": 2025,
-    "source": "https://www.trendforce.com/presscenter/news/20260907-13219.html"
+    "source": "https://news.skhynix.com/en/sk-hynix-announces-fy25-financial-results/"
   },
   {
     "name": "Samsung Memory",
@@ -3138,9 +3138,9 @@
     "founded": 1983,
     "ticker": "Private",
     "ownership": "Division of Samsung Electronics (005930.KS)",
-    "role": "The largest memory maker overall, supplying DRAM, NAND and HBM. It reached mass production on HBM4 early and regained share in 2026 after a difficult HBM3E qualification.",
+    "role": "The largest memory maker overall, supplying DRAM, NAND and HBM. It began mass production of HBM4 in 2026 and was first to ship commercial HBM4, at 11.7 Gbps per pin.",
     "chokepoint": "Critical",
-    "shareNote": "39.4% of DRAM industry revenue and 29.3% of NAND flash revenue in 2Q26",
+    "shareNote": null,
     "customers": [
       "Nvidia",
       "AMD",
@@ -3151,7 +3151,7 @@
     "aiRelevance": "Samsung is the only firm that makes HBM, logic at leading edge and packaging under one roof.",
     "revenueUSDb": null,
     "revenueYear": null,
-    "source": "https://www.trendforce.com/presscenter/news/20260907-13219.html"
+    "source": "https://semiconductor.samsung.com/news-events/news/samsung-ships-industry-first-commercial-hbm4-with-ultimate-performance-for-ai-computing/"
   },
   {
     "name": "Micron Technology",
@@ -3165,7 +3165,7 @@
     "ownership": "Public",
     "role": "The only American maker of leading-edge DRAM and the third HBM supplier, with fabs in the US, Japan, Taiwan and Singapore and CHIPS Act support for new capacity in Idaho and New York.",
     "chokepoint": "Critical",
-    "shareNote": "23.3% of DRAM industry revenue in 2Q26",
+    "shareNote": null,
     "customers": [
       "Nvidia",
       "AMD",
@@ -3176,7 +3176,7 @@
     "aiRelevance": "Micron is the only HBM source outside Korea and therefore the main geographic diversification in AI memory.",
     "revenueUSDb": 37.378,
     "revenueYear": 2025,
-    "source": "https://www.trendforce.com/presscenter/news/20260907-13219.html"
+    "source": "https://www.sec.gov/Archives/edgar/data/723125/000072312525000040/202510karscopy.pdf"
   },
   {
     "name": "CXMT",
@@ -3235,7 +3235,7 @@
     "ownership": "Public; listed in Tokyo in December 2024, with a Bain-led consortium retaining a stake",
     "role": "The former Toshiba Memory, making 3D NAND at Yokkaichi and Kitakami in a long-running joint venture with SanDisk. Its BiCS8 generation targets enterprise SSDs.",
     "chokepoint": "Important",
-    "shareNote": "13.6% of NAND flash revenue in 2Q26",
+    "shareNote": null,
     "customers": [
       "Dell",
       "HPE",
@@ -3245,7 +3245,7 @@
     "aiRelevance": "Enterprise SSD demand from AI clusters has become the strongest part of the NAND market.",
     "revenueUSDb": 15.197,
     "revenueYear": 2026,
-    "source": "https://www.trendforce.com/presscenter/news/20260818-13186.html"
+    "source": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/ir/library/securities/asset/Annual-Securities-Report-FY2025-EN.pdf"
   },
   {
     "name": "SanDisk",
@@ -3327,7 +3327,7 @@
     "ownership": "Public; includes Siliconware Precision Industries (SPIL)",
     "role": "The largest outsourced assembly and test provider, packaging and testing chips for fabless firms and foundries, with growing 2.5D and fan-out capacity for AI parts. It absorbed SPIL in 2018.",
     "chokepoint": "Important",
-    "shareNote": "Largest OSAT worldwide: $18.54B of 2024 revenue, close to 45% of the combined revenue of the top ten OSATs (TrendForce)",
+    "shareNote": null,
     "customers": [
       "Nvidia",
       "AMD",
@@ -3338,7 +3338,7 @@
     "aiRelevance": "As TSMC's CoWoS capacity saturates, ASE takes overflow assembly and test work for AI packages.",
     "revenueUSDb": 20.489,
     "revenueYear": 2025,
-    "source": "https://www.trendforce.com/presscenter/news/20250513-12577.html"
+    "source": "https://www.sec.gov/Archives/edgar/data/1122411/000095010326001662/dp241167_6k.htm"
   },
   {
     "name": "Amkor Technology",
@@ -3587,16 +3587,16 @@
     "ownership": "Public",
     "role": "Makes the thermocompression bonders used to stack HBM dies, supplying SK hynix and Micron. Its dual-head TC bonders set the pace for HBM stacking capacity.",
     "chokepoint": "Critical",
-    "shareNote": "About 71% of the HBM TC bonder market on cumulative sales (2025, per TechInsights)",
+    "shareNote": null,
     "customers": [
       "SK hynix",
       "Micron",
       "Samsung"
     ],
-    "aiRelevance": "HBM output cannot grow faster than TC bonder deliveries, and one Korean firm supplies most of them.",
-    "revenueUSDb": 0.43,
-    "revenueYear": 2025,
-    "source": "https://www.chosun.com/english/industry-en/2025/12/22/CI5ZPGQ2JJFQHHJPM2DTXWNKRY/"
+    "aiRelevance": "HBM stacking capacity cannot grow faster than thermocompression bonder deliveries.",
+    "revenueUSDb": null,
+    "revenueYear": null,
+    "source": "https://www.hanmisemi.com/en/product/index.html"
   },
   {
     "name": "Disco Corporation",
@@ -3926,17 +3926,17 @@
     "ownership": "Public",
     "role": "Weaves the ultra-fine low thermal expansion glass cloth, known as T-glass, that reinforces high-end package substrates and server boards. Its fibre keeps large substrates flat as they heat.",
     "chokepoint": "Critical",
-    "shareNote": "About 90% of T-glass and 60-70% of NER-glass, per an April 2026 assessment",
+    "shareNote": null,
     "customers": [
       "Ibiden",
       "Shinko Electric",
       "Unimicron",
       "Mitsubishi Gas Chemical"
     ],
-    "aiRelevance": "A shortage of one Japanese firm's glass cloth became a documented constraint on AI server board supply in 2026.",
-    "revenueUSDb": 0.769,
-    "revenueYear": 2026,
-    "source": "https://insights.trendforce.com/p/glass-fiber-cloth-shortage"
+    "aiRelevance": "Nittobo's T-glass goes into the package substrates and boards of AI accelerators, so its weaving capacity gates board supply.",
+    "revenueUSDb": null,
+    "revenueYear": null,
+    "source": "https://www.nittobo.co.jp/eng/business/electronicmaterials/t-glass.htm"
   },
   {
     "name": "Mitsubishi Gas Chemical",

@@ -305,7 +305,7 @@ function readJSONSafe(f) { try { return JSON.parse(fs.readFileSync(f, 'utf8')); 
 const landscape = readJSON(path.join(root, 'data', 'landscape.json'), []);
 // per-chip package layouts live in their own file so the specimen designers and the data editors never touch the same JSON
 const landscapeLayouts = readJSONSafe(path.join(root, 'data', 'landscape-layouts.json')) || {};
-landscape.forEach((c) => { if (!c.layout && landscapeLayouts[c.id]) c.layout = landscapeLayouts[c.id]; });
+landscape.forEach((c) => { if (landscapeLayouts[c.id]) c.layout = landscapeLayouts[c.id]; }); // the researched layouts file wins over the inline field
 const suppliers = readJSON(path.join(root, 'data', 'suppliers.json'), []);
 const timeline = readJSON(path.join(root, 'data', 'export-controls-timeline.json'), []);
 const matrix = readJSON(path.join(root, 'data', 'chokepoint-matrix.json'), []);

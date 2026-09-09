@@ -472,3 +472,124 @@ PDFs that came back as binary through the fetcher — the two KLA shareholder le
 No Reuters, FT or Nikkei page is cited in these three chapters. Reuters is blocked to this fetcher and no headline or feed snippet carried a number these chapters needed, so nothing was cited on a snippet alone.
 
 One thing left alone: `newsletter.semianalysis.com/p/disco-corporation-the-world-leader` in the grinding and dicing bullet was already Tier B and is untouched.
+
+---
+
+# Chapters 13 and 14 — strict re-sourcing, 9 September 2026
+
+## 13 Substrates and PCBs
+
+Words before: 1,277. Words after: 1,252. Sources 23 → 17. Build: **D 19 → D 0**, no warnings. Figures 2 → 2 (both replaced). Front matter parses; markers match front matter; `plain` byte-identical to the first paragraph under "How it works"; zero em dashes in prose.
+
+Nineteen of the chapter's twenty-three citations were TrendForce, Yole, Prismark, DigiTimes or a Substack. It has been rebuilt on Ajinomoto's and Nitto Boseki's own investor material, Ibiden's and Unimicron's own disclosures, Samsung Electro-Mechanics' newsroom, Intel's glass-substrate release, TSMC's 2Q26 earnings transcript, TTM's 10-K, and three Nikkei headlines.
+
+### Replacements
+
+| Fact | Old source | New source | What changed |
+|---|---|---|---|
+| Lead: what is holding back AI supply | trendforce.com 2026/08/11 ("memory and ABF as AI bottlenecks") | TSMC 2Q26 earnings transcript, investor.tsmc.com (A) | The ABF framing goes. C.C. Wei's own words on 16 July 2026: packaging capacity is so tight it **limits customers' growth** |
+| Why warpage is the binding problem | trendforce.com 2026/09/03 (Unimicron chairman) | Ajinomoto ABF business briefing, ajinomoto.co.jp IR (A) | Replaced with hard numbers: **18 ABF layers in an HPC substrate against 6 in a PC part, on 3.5× the area** |
+| Ajinomoto's position in build-up film | trendforce.com 2025/04/01 (">95% share") | Ajinomoto ABF business briefing (A) | **Number deleted.** Now Ajinomoto's own claim: first adopted 1999, "de facto standard" in package development since |
+| Ajinomoto electronic materials economics | trendforce.com 2026/05/08 (JPY 100.7bn sales, JPY 54.6bn OP, >50% margin) | Ajinomoto FY2025 tanshin, ajinomoto.co.jp (A) | Corrected to the segment Ajinomoto actually reports: **Healthcare and Others business profit +45.1% to JPY 66.2bn**, attributed mainly to electronic materials |
+| Ajinomoto capacity investment | trendforce.com 2025/04/01 + 2026/05/08 (JPY 25bn for +50% output by 2030; third plant 2032) | Ajinomoto ABF business briefing (A) | **JPY 25bn kept** (from FY2023, sized to 2030). The "+50% output" and the 2032 third plant deleted |
+| Nitto Boseki's share of low-expansion glass | insights.trendforce.com (~90% T-glass, 60-70% NER) | Nittobo Integrated Report 2025 + Nittobo T-glass product page (A) | **Both numbers deleted.** Now the company's own words: an "overwhelming competitive advantage in both quality and production capacity for low thermal expansion glass" |
+| Nittobo's JPY 80bn | trendforce.com 2026/08/06 ("triple T-glass capacity by March 2029"; US$550m; Nvidia, Microsoft, Google, Amazon, Apple booked) | Nittobo Integrated Report 2025 (A) | **JPY 80bn kept but reframed correctly**: capital spending across the four years of the FY2024-2027 plan. Tripling, the dollar conversion and the customer list deleted. Added: demand running **two to three times** ahead of plan |
+| Glass cloth shortage | insights.trendforce.com ("not expected to ease until mid-2027") | Nikkei Asia, "Apple and Qualcomm fret over strained supplies of Japan's glass cloth" (B) | Date deleted; claim reduced to what the headline states |
+| China attacking the materials layer | trendforce.com 2026/07/03 (Guangyuan US$1bn Henan; Shengyi RMB 5.2bn + RMB 1.4bn) | Nittobo Integrated Report 2025 (A) + Nikkei Asia, "China chip material makers battle Japan rivals for **$73bn** market" (B) | Plant-level numbers deleted. Nittobo names Chinese and Taiwanese firms as aggressive fast followers; the $73bn is stated in the Nikkei headline |
+| Glass core: Samsung Electro-Mechanics | trendforce.com 2026/02/03 (glass core material 2H2027, substrates 2028) | samsungsem.com newsroom, 5 Nov 2025 (A) | Dates corrected to the company's own: Sumitomo Chemical joint venture, **main agreement in 2026, mass production after 2027** |
+| Glass core: the general case | yolegroup.com (market "a few hundred million dollars by 2030") | Intel glass substrates release, 18 Sept 2023, intel.com (A) | Market-size number deleted. Replaced with Intel's own timing (**second half of this decade**) and its reason (organics hit shrinkage and warping limits) |
+| Ibiden's capacity multiple | digitimes.com ("2.5 times current levels") | Ibiden capital investment notice, ibiden.com (A) | Multiple deleted. Replaced with what Ibiden discloses: **JPY 220bn first phase at the Gama plant, mass production from fiscal 2027**, inside the JPY 500bn total |
+| Unimicron capital plan | trendforce.com 2026/08/27 (NT$53.7bn 2026 capex, 80-85% to ABF) | Unimicron 2026 Q2 earnings conference, unimicron.com (A) | Replaced with the company's filed numbers: **Q2 2026 sales NT$42.9bn, ABF 52% of sales, AI data centre 61%, NT$11.7bn of fixed-asset spending in H1** |
+| Samsung Electro-Mechanics substrate business | trendforce.com 2026/08/27 (89% and 94% utilisation; packaging solutions +41% to KRW 1.497tn) | samsungsem.com Q2 2026 results, 30 July 2026 (A) | Utilisation figures and the LG Innotek line deleted. Corrected to the company's own quarter: **Package Solution sales KRW 771.6bn, up 37%** |
+| Shinko ownership change | digitimes.com (co-investors, June 2025 delisting) | Japan Investment Corporation press release, jiccapital.co.jp (A, already cited) | Delisting date deleted; the 50.02% stake sale and the co-investors come from the JIC release alone |
+| AI server board layer count | trendforce.com 2026/07/09 (traditional 14-24 layers, AI 20-30+) | TTM Technologies FY2025 10-K, sec.gov (A) | Replaced with TTM's own capability statement: **more than 30 layers routinely, over 70 at the top** |
+| Where PCBs are made | prismark.com (China ~53% by value, Taiwan ~14%, 2022) | TTM Technologies FY2025 10-K (A) | **Both numbers deleted.** TTM says only that its PCB competitors are "mostly based in China and Taiwan". Added in their place, from the same filing: **data centre computing was 24% of TTM's FY2025 sales against 14% in 2023** |
+| Southeast Asia hedge | prismark.com (WUS US$280m Thai plant; 16 of the top 100 PCB suppliers in Thailand) | Nikkei Asia, "Thailand carves out a less-glamorous AI niche: printed circuit boards" (B) | Both numbers deleted; the claim is now qualitative |
+| Panel formats as packages grow | trendforce.com 2026/05/19 (310×310 mm, 510×515, 600×600) | TSMC 2Q26 earnings transcript (A) | Panel dimensions deleted. Replaced with TSMC's own roadmap statement: **CoWoS beyond 14 times reticle size** |
+
+### Deletions (no allowed source exists)
+
+- **Shinko's 22-layer glass substrate with 11 copper wiring layers per side** (trendforce.com 2026/08/18). Shinko's own news releases carry nothing on it. Bullet removed.
+- **Dai Nippon Printing's through-glass-via pilot line in Saitama, December 2025, mass production 2028** (trendforce.com 2026/08/18). Nothing on global.dnp. Bullet removed.
+- **The organic advanced IC substrate market at US$14.2bn in 2024** and Yole's supplier ranking (yolegroup.com). No allowed source sizes this market. The opening sentence of "Who makes it" was rewritten around it.
+- **Ibiden at ~85% of AI-server build-up substrate in 2023, Unimicron at ~10%, Ibiden falling to ~55% by 2026** (tspasemiconductor.substack.com). Removed with the figure it fed.
+- **2026 substrates roughly doubling glass cloth content per unit** (trendforce.com 2025/11/24).
+- **Intel asking EMIB customers to prepay for substrate capacity** (trendforce.com 2026/05/20). Paragraph removed.
+- **Victory Giant's RMB 3.6bn 1Q26 capex against RMB 730.1m a year earlier; WUS at RMB 1.5bn; Shennan Circuits raising up to RMB 4.88bn** (trendforce.com 2026/07/09). All three bullets removed.
+
+### Figures
+
+- **`abf-share` removed** (Ajinomoto 95 / all other films 5, TrendForce). The 95% cannot be rebuilt from allowed sources, so the figure, its `{{figure:abf-share}}` marker and its front-matter entry are gone. **Replaced at the same position by `abf-layers`**: 6 layers in a PC substrate against 18 in an HPC substrate, from Ajinomoto's own June 2023 ABF business briefing.
+- **`substrate-share` removed** (Ibiden 85 / Unimicron 10 / Ibiden 2026 forecast 55, from a Substack). Marker and front-matter entry gone. **Replaced by `unimicron-mix`**: ABF 52%, PCB 27%, BT 9%, HDI 9%, FPC 2%, Other 1% of Unimicron's Q2 2026 sales, from Unimicron's own earnings deck.
+
+### Front matter
+
+`oneLiner` lost "about 95%" and "about 90%". All five `leaders` share strings rewritten to claims their own filings support. `chinaStatus`, `usStatus`, the CN country note and `costSignal` rewritten (the JPY 500bn stays; the "roughly US$3.3 billion" conversion is gone and the first-phase JPY 220bn added). All nine `keyFacts` now trace to Tier A. `plain` untouched.
+
+---
+
+## 14 Test and Assembly
+
+Words before: 1,133. Words after: 1,176. Sources 23 → 27. Build: **D 8 → D 0**, no warnings. Figures 3 → 3 (two replaced). Front matter parses; markers match front matter; `plain` byte-identical to the first paragraph under "How it works"; zero em dashes in prose.
+
+The Advantest, Teradyne, Technoprobe, Aehr, FormFactor, Cohu, Kulicke & Soffa, Besi, Disco and SIA citations were already Tier A or Tier B and are untouched. Every TrendForce and Z2Data citation is gone.
+
+### Replacements
+
+| Fact | Old source | New source | What changed |
+|---|---|---|---|
+| How big packages get | trendforce.com 2026/08/11 (TSMC's 2028 package holds twenty HBM stacks, plus our own guess of 10-20 chiplets) | TSMC 2Q26 earnings transcript, investor.tsmc.com (A) | HBM-stack count and the chiplet estimate deleted. Replaced with TSMC's own: **a CoWoS roadmap beyond 14 times reticle size** |
+| Test capacity being added | trendforce.com 2026/05/05 (KYEC expanding 30-50% in 2026) | ASE Q2 2026 earnings release, SEC Form 6-K (A) | Replaced with a filed number: ASE's installed testers went from **6,797 in Q2 2025 to 8,348 in Q2 2026** |
+| OSAT capital spending | trendforce.com 2026/05/05 (ASE, Powertech and KYEC ~NT$370bn in 2026; ASE raising US$7bn to US$8.5bn) | ASE Q2 2026 earnings presentation, SEC Form 6-K (A) | Replaced with ASE's own first-half figures: **US$2.7bn machinery and US$1.4bn buildings and automation**, with leading-edge advanced packaging revenue running ahead of **US$3.5bn** guidance |
+| Panel-level packaging at Powertech | trendforce.com 2026/08/31 (NT$70bn, 510×515 mm panels, 1,000 → 5,000 panels a month by 2028, AMD and Broadcom booked) | Nikkei Asia, "Powertech eyes world's first panel-level packaging for AI chips in 2027" (B) | **All four numbers deleted**; the claim is now what the headline states |
+| Thermocompression bonders | trendforce.com 2025/12/12 (SK hynix ~50 sets for HBM4, half from ASMPT) + 2026/06/09 (KRW 44.2bn Hanmi order for ~15 more) | ASMPT press release, 22 Dec 2025, asmpt.com (A) | Customer-specific numbers deleted. Replaced with the supplier's own disclosure: **an order for fifteen chip-to-substrate TCB tools**, a TCB market expected to pass **US$1bn by 2027**, and ASMPT targeting **35-40%** of it |
+| The size and shape of the OSAT industry | trendforce.com/presscenter/news/20250513-12577.html (top ten billed US$41.56bn in 2024; ASE 44.6%; Amkor 15.2%; four of ten Chinese) | ASE 20-F revenue via SEC XBRL + Amkor XBRL + CSET, "Inside Beijing's Chipmaking Offensive" (all A) | Market total and company shares deleted. Replaced with filed revenue, **ASE US$20.6bn and Amkor US$6.71bn in 2025**, and CSET's count that **four of the top ten OSATs by 2024 revenue are China-headquartered** |
+| Back-end geography | z2data.com (Malaysia ~13%, Philippines ~10% of global assembly, test and packaging) | Malaysian Investment Development Authority, 1 July 2026 (A) | Malaysia's **13%** confirmed by the government agency, plus its target of **7% of advanced packaging shipments by 2035**. The Philippines figure is deleted, here and from the "Capacity and geography" criterion |
+| Amkor in Arizona | trendforce.com 2026/06/17 (ten-year TSMC partnership) | Amkor news releases, ir.amkor.com, plus TSMC's own release, pr.tsmc.com (A) | Same facts from the two parties: the **US$7 billion** Arizona campus, TSMC contracting turnkey packaging and test there, and the long-term partnership signed in June 2026 |
+| The chokepoint's scale comparison | US$41.56bn (trendforce) against US$791.7bn (SIA) | ASE and Amkor filed revenue against SIA (A) | The comparator changes from the top ten to the top two: **US$27.3bn against US$791.7bn** |
+
+### Additions
+
+- Amkor's Q2 2026 net sales of **US$1.90 billion, up 26% year on year**, from the 8-K earnings exhibit on sec.gov, to keep the paragraph anchored to a current number now that the top-ten table is gone.
+
+### Figures
+
+- **`osat-firms` removed** (top-ten OSAT revenue share, TrendForce). Marker and front-matter entry gone. Rebuilding it would need WiseRoad, which is private and files nothing.
+- **`osat-region` removed** (top-ten OSAT revenue by home country, summed from the same TrendForce shares). Marker and front-matter entry gone.
+- **`tester-market` added**: SoC testers US$6.9bn and memory testers US$2.1bn in calendar 2025, from the Advantest results briefing the chapter already cites.
+- **`ase-testers` added**: 6,797 / 7,585 / 8,348 installed testers, from ASE's Q2 2026 Form 6-K.
+- `ate-share` unchanged.
+
+### Front matter
+
+ASE's and Amkor's `leaders` share strings changed from top-ten revenue percentages to filed revenue. The CN and MY country notes, `chinaStatus`, `usStatus` and `costSignal` rewritten. Two `keyFacts` (TrendForce, Z2Data) replaced by three Tier A ones (ASE 6-K, CSET, MIDA); nine entries, all Tier A. `plain` untouched.
+
+---
+
+## The numbers the argument leaned on
+
+**Ajinomoto's >95% share of ABF build-up film.** This was chapter 13's headline, its `oneLiner`, a figure, a keyFact and the closing sentence of its takeaways. It is the whole reason the chapter exists: one food company owning the insulator under every accelerator. No Tier A or Tier B source states it. Ajinomoto's own investor material says "de facto standard" and nothing numeric, so that is what the chapter now says. The shape of the claim survives; the measurement does not.
+
+**Nitto Boseki's ~90% of T-glass cloth and 60-70% of NER-glass.** Same problem, same fix. Nittobo's integrated report claims "an overwhelming competitive advantage in both quality and production capacity for low thermal expansion glass", which is a company's self-assessment rather than a measured share, and the chapter is now explicit that it is quoting the company.
+
+**Ibiden at ~85% of AI-server build-up substrate, falling to ~55% by 2026.** This was the only quantitative picture of how concentrated the AI substrate business actually is, and it came from a Substack. Nothing allowed replaces it. The chapter now shows concentration indirectly, through Unimicron's own product mix, and no longer tells the reader how the AI substrate business splits between suppliers.
+
+**Top-ten OSAT revenue of US$41.56 billion, with ASE at 44.6%.** Two of chapter 14's three figures rested on it, and "The chokepoint" scaled its central argument by it. The replacement, ASE plus Amkor at US$27.3 billion, is verifiable from filings but covers two firms rather than ten, so the comparison against industry sales is now a floor rather than a measure.
+
+**China's ~53% of world PCB production by value.** Chapter 13's "China dominates this layer" is now TTM's much weaker statement that its competitors are mostly Chinese and Taiwanese. The three Chinese board-maker capex bullets that followed it are gone with it.
+
+## Domains added to data/source-tiers.json under A
+
+`nittobo.co.jp` (Nitto Boseki investor relations and product pages) and `mida.gov.my` (Malaysian Investment Development Authority, a government agency). Everything else already resolved: `investor.tsmc.com`, `pr.tsmc.com`, `ajinomoto.com`, `ajinomoto.co.jp`, `ibiden.com`, `unimicron.com`, `samsungsem.com` (covers `m.samsungsem.com`), `intel.com` (covers `download.intel.com`), `jiccapital.co.jp`, `asmpt.com`, `advantest.com`, `investors.teradyne.com`, `technoprobe.com`, `aehr.com`, `disco.co.jp`, `besi.com`, `amkor.com` (covers `ir.amkor.com`), `sec.gov`, `data.sec.gov`, `cset.georgetown.edu`, `semiconductors.org`, and under B `asia.nikkei.com` and `newsletter.semianalysis.com`.
+
+## Verification notes
+
+Every replacement was read before it was cited. PDFs that the fetcher returned as binary were downloaded and extracted locally, then read as text: the TSMC 2Q26 earnings transcript, Ajinomoto's FY2025 tanshin and its June 2023 ABF business briefing, Nitto Boseki's Integrated Report 2025, and Unimicron's Q2 2026 earnings deck. The ASE and Amkor 6-K and 8-K exhibits, the TTM 10-K and the ASE revenue concept were pulled from SEC EDGAR and read as text; ASE's 2025 revenue of US$20,573,405,000 is the filed 20-F figure, not a conversion.
+
+Three hosts refuse this fetcher and were handled carefully. `ir.amkor.com` and `businesswire.com` return 403; the two Amkor releases are cited because the search index returns their exact titles, and the US$7 billion figure is stated in the release title itself ("Expands Investment to $7 Billion"). `azcommerce.com` also returns 403 and is therefore not cited, even though it carries the same groundbreaking release. TSMC's own release on `pr.tsmc.com` was fetched and read in full, so the Amkor-TSMC Arizona relationship rests on a source that was actually read.
+
+Reuters is blocked to this fetcher at every URL, including known-good ones, so no Reuters URL could be verified and none is cited. Two Reuters headlines that would have served ("ASE Tech raises 2026 capex by $2 billion", "ASE sees its advanced packaging business doubling to $3.2 billion") were dropped in favour of ASE's own SEC filing.
+
+Nikkei Asia is cited three times, in every case for a claim the headline itself carries, and each URL was confirmed to return HTTP 200. The article bodies are paywalled and were not relied on. The `$73bn` in "China chip material makers battle Japan rivals for $73bn market" is the only number taken from a Nikkei headline.
+
+No claim in either chapter now rests on a source that could not be opened and read, except the two Amkor releases noted above.
