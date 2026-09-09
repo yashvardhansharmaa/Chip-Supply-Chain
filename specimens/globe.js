@@ -180,7 +180,7 @@ PC.register('globe', function (p) {
   var HOLES = [1, 2];
   // Taiwan and the Japanese islands are small enough at this scale that
   // they need a denser fill and a heavier coast to survive.
-  var DENSE = { 10: 1, 11: 1, 12: 1, 13: 1, 14: 1.7 };
+  var DENSE = { 10: 1.3, 11: 1.3, 12: 1.4, 13: 1.4, 14: 2.6 };
 
   // ---------- prepare the rings ----------
   var rings = [];
@@ -285,12 +285,12 @@ PC.register('globe', function (p) {
 
   var pins = [];
   SITES.forEach(function (s) {
-    var lat = s[1], lon = s[2], h = 0.055 * s[3];
+    var lat = s[1], lon = s[2], h = 0.032 * s[3];
     var a = ll(lat, lon, RS), b = ll(lat, lon, RS + h);
-    pins.push(PC.line({ a: a, b: b, perUnit: 1500 }));
-    pins.push(PC.T(PC.sphere({ r: 0.0155, n: 130 }), { pos: b }));
+    pins.push(PC.line({ a: a, b: b, perUnit: 1700 }));
+    pins.push(PC.T(PC.sphere({ r: 0.012, n: 90 }), { pos: b }));
     // a ring on the ground, laid flat on the sphere at that point
-    pins.push(PC.T(PC.T(PC.circle({ r: 0.030, perUnit: 900 }), { pos: [0, RS + 0.004, 0] }), { rot: [Math.PI / 2 - lat * RAD, lon * RAD, 0] }));
+    pins.push(PC.T(PC.T(PC.circle({ r: 0.022, perUnit: 1300 }), { pos: [0, RS + 0.004, 0] }), { rot: [Math.PI / 2 - lat * RAD, lon * RAD, 0] }));
   });
   parts.push(PC.accent(PC.merge.apply(null, pins), 1));
 

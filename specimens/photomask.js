@@ -119,10 +119,10 @@ PC.register('photomask', function (p) {
   var FW = 145 * S, FD = 117 * S, bar = 4.5 * S, fh = 2.6 * S, stand = 2.5 * S;
   var yF = yTop + stand, yM = yF + fh;
   var fr = [
-    PC.T(PC.box({ w: FW, h: fh, d: bar, faces: ['py', 'pz', 'nz', 'px', 'nx'], n: 1500, tone: 0.5 }), { pos: [0, yF + fh / 2, (FD - bar) / 2] }),
-    PC.T(PC.box({ w: FW, h: fh, d: bar, faces: ['py', 'pz', 'nz', 'px', 'nx'], n: 1500, tone: 0.5 }), { pos: [0, yF + fh / 2, -(FD - bar) / 2] }),
-    PC.T(PC.box({ w: bar, h: fh, d: FD - 2 * bar, faces: ['py', 'px', 'nx'], n: 1200, tone: 0.5 }), { pos: [(FW - bar) / 2, yF + fh / 2, 0] }),
-    PC.T(PC.box({ w: bar, h: fh, d: FD - 2 * bar, faces: ['py', 'px', 'nx'], n: 1200, tone: 0.5 }), { pos: [-(FW - bar) / 2, yF + fh / 2, 0] }),
+    PC.T(PC.box({ w: FW, h: fh, d: bar, faces: ['py', 'pz', 'nz', 'px', 'nx'], n: 1800, tone: 0.6 }), { pos: [0, yF + fh / 2, (FD - bar) / 2] }),
+    PC.T(PC.box({ w: FW, h: fh, d: bar, faces: ['py', 'pz', 'nz', 'px', 'nx'], n: 1800, tone: 0.6 }), { pos: [0, yF + fh / 2, -(FD - bar) / 2] }),
+    PC.T(PC.box({ w: bar, h: fh, d: FD - 2 * bar, faces: ['py', 'px', 'nx'], n: 1500, tone: 0.6 }), { pos: [(FW - bar) / 2, yF + fh / 2, 0] }),
+    PC.T(PC.box({ w: bar, h: fh, d: FD - 2 * bar, faces: ['py', 'px', 'nx'], n: 1500, tone: 0.6 }), { pos: [-(FW - bar) / 2, yF + fh / 2, 0] }),
     rect(FW, FD, yM, 420, 1),
     rect(FW - 2 * bar, FD - 2 * bar, yM, 380, 1),
     rect(FW, FD, yF, 380, 1),
@@ -132,11 +132,20 @@ PC.register('photomask', function (p) {
   // the four glued pads that hold the frame off the mask, and the gap they make
   for (sx = -1; sx <= 1; sx += 2) for (sz = -1; sz <= 1; sz += 2) {
     var px = sx * (FW / 2 - bar / 2), pz = sz * (FD / 2 - bar / 2);
-    add(PC.T(PC.box({ w: 4.5 * S, h: stand, d: 4.5 * S, faces: ['px', 'nx', 'pz', 'nz'], n: 420, tone: 0.6 }), { pos: [px, yTop + stand / 2, pz] }));
-    add(PC.T(PC.boxEdges({ w: 4.5 * S, h: stand, d: 4.5 * S, perUnit: 420, tone: 1 }), { pos: [px, yTop + stand / 2, pz] }));
+    add(PC.T(PC.box({ w: 5.5 * S, h: stand, d: 5.5 * S, faces: ['px', 'nx', 'pz', 'nz'], n: 520, tone: 0.7 }), { pos: [px, yTop + stand / 2, pz] }));
+    add(PC.T(PC.boxEdges({ w: 5.5 * S, h: stand, d: 5.5 * S, perUnit: 420, tone: 1 }), { pos: [px, yTop + stand / 2, pz] }));
   }
-  // the outline of the frame's shadow on the mask, so the standoff reads
+  // the outline of the frame's footprint on the mask, and short ticks up the
+  // 2.5 mm gap at the mid-edges, so a standoff this shallow still reads
   add(rect(FW, FD, yTop + 0.0008, 220, 0.45));
+  for (var g = 0; g < 8; g++) {
+    var gt = (g % 4) / 3 - 0.5, gx, gz;
+    if (g < 4) { gx = gt * FW * 0.62; gz = (g < 2 ? -1 : 1) * FD / 2; }
+    else { gx = (g < 6 ? -1 : 1) * FW / 2; gz = gt * FD * 0.62; }
+    if (g < 4) gz = (g < 2 ? -1 : 1) * FD / 2, gx = ((g % 2) * 2 - 1) * FW * 0.26;
+    else gz = ((g % 2) * 2 - 1) * FD * 0.26, gx = (g < 6 ? -1 : 1) * FW / 2;
+    add(PC.line({ a: [gx, yTop + 0.0008, gz], b: [gx, yF, gz], perUnit: 900, tone: 0.85 }));
+  }
   // vent filter on one frame bar
   add(PC.T(PC.box({ w: 9 * S, h: fh * 0.8, d: 4 * S, n: 380, tone: 0.55 }), { pos: [FW * 0.22, yF + fh / 2, -(FD / 2 + 1.6 * S)] }));
   add(PC.T(PC.boxEdges({ w: 9 * S, h: fh * 0.8, d: 4 * S, perUnit: 420, tone: 1 }), { pos: [FW * 0.22, yF + fh / 2, -(FD / 2 + 1.6 * S)] }));

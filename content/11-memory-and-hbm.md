@@ -11,9 +11,9 @@
     "concentration": "Extreme",
     "chokepointScore": 5,
     "leaders": [
-      {"name": "SK hynix", "country": "KR", "share": "First to complete HBM4 development, at over 10 Gbps per pin"},
-      {"name": "Samsung", "country": "KR", "share": "Hwaseong and Pyeongtaek; HBM4 in production"},
-      {"name": "Micron", "country": "US", "share": "HBM4 at over 11 Gbps per pin and more than 2.8 TB/s per stack"}
+      {"name": "SK hynix", "country": "KR", "share": "63.2% of HBM revenue, 2025; first to complete HBM4, at over 10 Gbps per pin"},
+      {"name": "Samsung", "country": "KR", "share": "19.3% of HBM revenue, 2025; Hwaseong and Pyeongtaek"},
+      {"name": "Micron", "country": "US", "share": "17.4% of HBM revenue, 2025; HBM4 above 11 Gbps per pin"}
     ],
     "countries": [
       {"code": "KR", "note": "SK hynix Cheongju and Icheon; Samsung Pyeongtaek and Hwaseong"},
@@ -35,7 +35,9 @@
     {"fact": "HBM package height rises from 720 to 775 micrometres starting with HBM4; hybrid bonding cuts the bond pitch from about 20 micrometres to under 1", "source": "https://news.skhynix.com/en/tech-note-series-ep2/"},
     {"fact": "BofA estimates the 2026 HBM market at $54.6 billion, up 58% year on year, with HBM3E about two thirds of shipments", "source": "https://news.skhynix.com/en/2026-market-outlook-focus-on-the-hbm-led-memory-supercycle/"},
     {"fact": "Nvidia Rubin VR200 carries up to 288 GB of HBM4 at up to 22 TB/s using 12-high stacks", "source": "https://developer.nvidia.com/blog/inside-nvidia-rubin-gpu-architecture-powering-the-era-of-agentic-ai/"},
-    {"fact": "BIS controls HBM with bandwidth density above 2 GB/s per square millimetre of package area under ECCN 3A090.c", "source": "https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-direct-product-rule-additions-entity-list-modifications"}
+    {"fact": "BIS controls HBM with bandwidth density above 2 GB/s per square millimetre of package area under ECCN 3A090.c", "source": "https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-direct-product-rule-additions-entity-list-modifications"},
+    {"fact": "SK hynix's July 2026 US prospectus splits 2025 HBM revenue between SK hynix at 63.2%, Samsung at 19.3% and Micron at 17.4%, putting Korean suppliers at 82.5% of the market", "source": "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm"},
+    {"fact": "The same filing puts SK hynix at 29.1% of DRAM including HBM in the first quarter of 2026 and says three firms hold more than 90% of DRAM revenue", "source": "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm"}
   ],
   "figures": [
     {
@@ -53,6 +55,14 @@
       "unit": "$B",
       "data": [["2025", 34.6], ["2026", 54.6]],
       "source": {"label": "BofA estimate cited in SK hynix 2026 market outlook", "url": "https://news.skhynix.com/en/2026-market-outlook-focus-on-the-hbm-led-memory-supercycle/"}
+    },
+    {
+      "id": "hbm-suppliers",
+      "type": "stack",
+      "title": "Global HBM revenue by supplier, 2025",
+      "unit": "%",
+      "data": [["SK hynix (KR)", 63.2], ["Samsung (KR)", 19.3], ["Micron (US)", 17.4]],
+      "source": {"label": "SK hynix Form 424B4 prospectus, 10 July 2026, on IDC data", "url": "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm"}
     }
   ]
 }
@@ -102,6 +112,10 @@ DRAM is a three-firm oligopoly, and HBM is the same three firms reordered: SK hy
 
 SK hynix built its lead by being first through Nvidia qualification, and expects roughly 70 percent of Rubin HBM4 in 2026 ([source](https://news.skhynix.com/en/2026-market-outlook-focus-on-the-hbm-led-memory-supercycle/)). The Korean core is now growing an American edge: SK hynix broke ground on a $4 billion packaging plant in West Lafayette, Indiana in August 2026 ([source](https://www.purdue.edu/newsroom/2026/Q3/sk-hynix-breaks-ground-on-4-billion-advanced-packaging-production-facility-in-purdue-research-park/)). Micron packages in Taichung and Singapore.
 
+How the three divide the market is on the record because SK hynix registered shares in the United States. Its July 2026 prospectus prints the split: of 2025 HBM revenue, SK hynix took 63.2 percent, Samsung 19.3 and Micron 17.4, which puts the two Korean suppliers at 82.5 percent of the world's HBM ([source](https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm)). The filing attributes the figures to IDC, and they move fast. In 2024 the same three stood at 56.4, 37.8 and 5.8: Samsung halved and Micron tripled inside a year, on qualification wins rather than on capacity. By the first quarter of 2026 Micron was at 23.1 percent and Korea down to 76.9.
+
+{{figure:hbm-suppliers}}
+
 {{figure:hbm-revenue}}
 
 BofA puts the 2026 HBM market at $54.6 billion, up 58 percent on the year ([source](https://news.skhynix.com/en/2026-market-outlook-focus-on-the-hbm-led-memory-supercycle/)). HBM is sold forward, so that revenue is contracted long before the wafers exist, and every wafer converted to HBM is a wafer not making commodity DRAM. That is the mechanism by which AI demand raises the price of a laptop.
@@ -125,4 +139,4 @@ China's answer is CXMT, and it is behind. We think the gap is real but closing f
 
 ## Takeaways
 
-HBM is the hardest chokepoint in the chain after lithography, and unlike lithography it is also the most expensive component in the box. Three firms, two of them Korean, supply all of it. The binding constraint is no longer bandwidth alone but heat and height inside a 775-micrometre cube ([source](https://news.skhynix.com/en/tech-note-series-ep2/)), and hybrid bonding, the fix, is two generations away. Meanwhile the export control on HBM is the cleanest instrument in the whole American toolkit, because a single bandwidth-density threshold catches every part worth buying ([source](https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-direct-product-rule-additions-entity-list-modifications)).
+HBM is the hardest chokepoint in the chain after lithography, and unlike lithography it is also the most expensive component in the box. Three firms supply all of it, and the two Korean ones sold 82.5 percent of it in 2025 ([source](https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm)). The binding constraint is no longer bandwidth alone but heat and height inside a 775-micrometre cube ([source](https://news.skhynix.com/en/tech-note-series-ep2/)), and hybrid bonding, the fix, is two generations away. Meanwhile the export control on HBM is the cleanest instrument in the whole American toolkit, because a single bandwidth-density threshold catches every part worth buying ([source](https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-direct-product-rule-additions-entity-list-modifications)).
