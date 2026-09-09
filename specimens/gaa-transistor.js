@@ -4,7 +4,8 @@
  * actually use (imec, TSMC N2, Samsung SF2):
  *   sheet thickness 6 nm, sheet width 30 nm, sheet length 28 nm;
  *   three sheets, 10 nm of gate metal in each gap;
- *   gate length 15 nm, inner spacers 5 nm at each end of every gap.
+ *   gate length 15 nm, inner spacers 5 nm at each end of every gap,
+ *   and a 48 nm contacted gate pitch, so the device repeats every 48 nm.
  * The sheet is five times wider than it is thick, which is the ratio that
  * matters: a nanosheet is a ribbon, not a wire.
  *
@@ -26,7 +27,7 @@ PC.register('gaa-transistor', function (p) {
   var yStackTop = y0[2] + sT;                   // 38
   var gX = Lg / 2, spX = gX + sp;               // gate +/-7.5, spacer out to +/-12.5
   var gY0 = -11, gY1 = 45, gZ = sW / 2 + 4;     // gate box, 4 nm proud of the sheet edges
-  var epiX0 = spX, epiX1 = 32, epiZ = 17;
+  var epiX0 = spX, epiX1 = 24, epiZ = 17;   // gate centre to epi edge is 24 nm: a 48 nm contacted gate pitch
   var parts = [];
   function add(c) { parts.push(c); }
   function acc(c, a) { return PC.accent(c, a); }
@@ -46,10 +47,10 @@ PC.register('gaa-transistor', function (p) {
   }
 
   // ---------- substrate and the isolation the stack sits on ----------
-  add(boxAt(-36, -23, -25, 36, -16, 25, { n: 2400, tone: 0.11 }));
-  add(edgesAt(-36, -23, -25, 36, -16, 25, 6, 0.65));
-  add(boxAt(-33, -16, -22, 33, -11, 22, { n: 1100, tone: 0.20 }));      // bottom dielectric isolation
-  add(edgesAt(-33, -16, -22, 33, -11, 22, 6, 0.75));
+  add(boxAt(-30, -23, -25, 30, -16, 25, { n: 2000, tone: 0.11 }));
+  add(edgesAt(-30, -23, -25, 30, -16, 25, 6, 0.65));
+  add(boxAt(-27, -16, -22, 27, -11, 22, { n: 900, tone: 0.20 }));       // bottom dielectric isolation
+  add(edgesAt(-27, -16, -22, 27, -11, 22, 6, 0.75));
 
   // ---------- the three silicon nanosheets ----------
   y0.forEach(function (yb) {
@@ -89,8 +90,8 @@ PC.register('gaa-transistor', function (p) {
   });
 
   // ---------- source and drain epitaxy: faceted blocks grown off the sheet ends ----------
-  var shape = [[0.125, -0.130], [0.165, -0.170], [0.280, -0.170], [0.320, -0.130],
-               [0.320, 0.130], [0.280, 0.170], [0.165, 0.170], [0.125, 0.130]];
+  var shape = [[0.125, -0.130], [0.163, -0.170], [0.202, -0.170], [0.240, -0.130],
+               [0.240, 0.130], [0.202, 0.170], [0.163, 0.170], [0.125, 0.130]];
   [-1, 1].forEach(function (s) {
     var epi = PC.thin(PC.extrude({ shape: shape, h: 0.42, tone: 0.20 }), 0.46);
     add(PC.T(epi, { scale: [s * 100, 100, 100], pos: [0, 19, 0] }));
@@ -103,9 +104,9 @@ PC.register('gaa-transistor', function (p) {
 
   // ---------- contacts landing on the source, the drain and the gate ----------
   [-1, 1].forEach(function (s) {
-    var a = s > 0 ? 17 : -29, c = s > 0 ? 29 : -17;
-    add(boxAt(a, 40, -11, c, 48, 11, { n: 620, tone: 0.18, faces: ['py', 'px', 'nx', 'pz', 'nz'] }));
-    add(edgesAt(a, 40, -11, c, 48, 11, 9, 0.9));
+    var a = s > 0 ? 14.5 : -23, c = s > 0 ? 23 : -14.5;
+    add(boxAt(a, 40, -10, c, 48, 10, { n: 520, tone: 0.18, faces: ['py', 'px', 'nx', 'pz', 'nz'] }));
+    add(edgesAt(a, 40, -10, c, 48, 10, 9, 0.9));
   });
   add(boxAt(-5, gY1, -8, 5, 51, 8, { n: 520, tone: 0.18, faces: ['py', 'px', 'nx', 'pz', 'nz'] }));
   add(edgesAt(-5, gY1, -8, 5, 51, 8, 9, 0.9));

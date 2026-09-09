@@ -3,7 +3,7 @@
   "id": "lithography",
   "number": 5,
   "title": "Lithography",
-  "oneLiner": "The most concentrated stage in the chain. One firm in the Netherlands builds every EUV scanner on Earth, and it shipped 48 of them in 2025.",
+  "oneLiner": "The most concentrated stage in the chain. One firm in the Netherlands builds every EUV scanner on Earth, it shipped 48 of them in 2025, and each one costs around $200 million.",
   "plain": "Lithography is photographic printing, shrunk. A stencil of one layer of the circuit is held up to a lamp, and the machine projects that image onto a silicon wafer coated in a light-sensitive film, four times smaller than the stencil. Finer circuits need shorter-wavelength light, and the shortest light now in use is absorbed by air and by glass, so the whole machine runs in a vacuum and every lens has to be a mirror. Only one company has ever built such a machine, which is why a single Dutch firm is a chokepoint.",
   "specimen": "euv-scanner",
   "specimenCaption": "Right: an EUV scanner in cross-section. Tin plasma source at the bottom left, collector mirror, reticle stage at the top, six-mirror projection optics, wafer stage at the bottom right.",
@@ -11,7 +11,7 @@
     "concentration": "Extreme",
     "chokepointScore": 5,
     "leaders": [
-      {"name": "ASML", "country": "NL", "share": "100% of EUV; 48% of its own 2025 system revenue was EUV, 42% ArF immersion"},
+      {"name": "ASML", "country": "NL", "share": "100% of EUV and above 80% of DUV; 48% of its own 2025 system revenue was EUV, 42% ArF immersion"},
       {"name": "Nikon", "country": "JP", "share": "22 new semiconductor scanners in FY ended March 2026, against a market Nikon sizes at 570 units"},
       {"name": "Canon", "country": "JP", "share": "i-line and KrF steppers, plus the only commercial nanoimprint tool"}
     ],
@@ -23,7 +23,7 @@
     ],
     "chinaStatus": "No EUV has ever been sold to a customer in China, and CSIS judges the technology firmly out of reach despite state investment. A Shanghai firm, Aishengna, began producing domestic immersion DUV scanners in 2026. SMEE, the older domestic supplier, holds about 4% of the global i-line market and nothing above it.",
     "usStatus": "No domestic scanner maker. Washington controls access through Dutch licensing, US-origin subsystems and entity-list rules.",
-    "costSignal": "48 EUV systems inside EUR 32.7bn of 2025 net sales; ASML does not publish per-system prices",
+    "costSignal": "About $60M for a DUV scanner, around $200M for a 0.33 NA EUV tool and $350-400M for High-NA, on Reuters' reporting; ASML itself does not publish per-system prices",
     "substitution": {"years": "10+", "why": "ASML built its first EUV prototype in 2001 and needed nearly two decades and billions of euros before commercial chips shipped in 2019, and it still depends on Zeiss optics that no one else can make."}
   },
   "keyFacts": [
@@ -35,7 +35,8 @@
     {"fact": "An EUV source drops molten tin 50,000 times a second and hits each droplet with a low-intensity pulse and then a vaporising one", "source": "https://www.asml.com/en/technology/lithography-principles/light-and-lasers"},
     {"fact": "ASML demonstrated the first 1,000-watt EUV light source in April 2025, and customers had run more than 400,000 wafers on High NA systems by the end of that year", "source": "https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf"},
     {"fact": "ASML recognized four EXE (High NA) and 44 NXE systems in 2025, against two EXE and 42 NXE in 2024", "source": "https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf"},
-    {"fact": "ASML lists 5,100 suppliers in its 2025 annual report", "source": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm"}
+    {"fact": "ASML lists 5,100 suppliers in its 2025 annual report", "source": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm"},
+    {"fact": "Reuters puts a DUV scanner at roughly $60 million, a standard EUV tool at around $200 million and a High-NA system at $350 million to $400 million, and ASML's DUV share above 80%", "source": "https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/"}
   ],
   "figures": [
     {
@@ -45,6 +46,14 @@
       "unit": "tools",
       "data": [["2023", 53], ["2024", 44], ["2025", 48]],
       "source": {"label": "ASML annual reports 2024 and 2025", "url": "https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf"}
+    },
+    {
+      "id": "tool-price",
+      "type": "bars",
+      "title": "What one lithography system costs. High-NA is quoted as a $350-400M range; the bar shows the low end",
+      "unit": "$M",
+      "data": [["DUV scanner", 60], ["EUV, 0.33 NA", 200], ["High-NA EUV", 350]],
+      "source": {"label": "Reuters, The $400 million ASML 'printers', July 2026", "url": "https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/"}
     },
     {
       "id": "litho-mix",
@@ -83,7 +92,7 @@ When one exposure cannot resolve a pitch, the fab splits the layer across two, t
 
 ### Deep ultraviolet
 
-DUV means excimer laser light: 248 nm from krypton fluoride, 193 nm from argon fluoride, dry or through water. These tools still dominate by volume. Of ASML's 327 systems in 2025, 131 were ArF immersion, 78 KrF, 54 i-line and 16 ArF dry ([source](https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf)).
+DUV means excimer laser light: 248 nm from krypton fluoride, 193 nm from argon fluoride, dry or through water. These tools still dominate by volume. Of ASML's 327 systems in 2025, 131 were ArF immersion, 78 KrF, 54 i-line and 16 ArF dry ([source](https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf)). A DUV scanner costs roughly $60 million, and this is the one tier where ASML has named competitors, Nikon and Canon, though it still holds above 80% of the segment ([source](https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/)).
 
 Immersion is the contested tier. A fab needs NXT:2000i-class scanners to reach leading-edge logic through multipatterning, and that is where Dutch export licensing draws its line.
 
@@ -95,7 +104,9 @@ Source power sets output. The TWINSCAN NXE:3800E now ships at its full specifica
 
 ### High-NA EUV
 
-High-NA raises numerical aperture from 0.33 to 0.55 and cuts the smallest printable feature from 13 nm to 8 nm ([source](https://www.asml.com/en/company/stories/2024/5-things-high-na-euv)). The optics are anamorphic, demagnifying 4x in one direction and 8x in the other, which halves the exposure field and doubles the number of exposures needed to cover a wafer ([source](https://www.asml.com/en/company/stories/2024/5-things-high-na-euv)). The second-generation TWINSCAN EXE:5200B runs at 175 wafers per hour, 60 percent above the first-generation EXE:5000 ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf)).
+High-NA raises numerical aperture from 0.33 to 0.55 and cuts the smallest printable feature from 13 nm to 8 nm ([source](https://www.asml.com/en/company/stories/2024/5-things-high-na-euv)). The optics are anamorphic, demagnifying 4x in one direction and 8x in the other, which halves the exposure field and doubles the number of exposures needed to cover a wafer ([source](https://www.asml.com/en/company/stories/2024/5-things-high-na-euv)). The second-generation TWINSCAN EXE:5200B runs at 175 wafers per hour, 60 percent above the first-generation EXE:5000 ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf)). The price moves with the aperture. ASML does not publish per-system prices, but Reuters puts a 0.33 NA EUV tool at around $200 million and a High-NA machine, of which only a handful have been built, at $350 million to $400 million ([source](https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/)).
+
+{{figure:tool-price}}
 
 Adoption splits two ways.
 
@@ -153,4 +164,4 @@ For AI accelerators the leverage is in EUV. It prints the tightest-pitch layers,
 
 ## Takeaways
 
-One firm, in one Dutch town, using mirrors from one German optics house, gates the resolution of every leading-edge AI chip. The tool count is small enough to track by hand: 48 EUV systems recognized in 2025, four of them High-NA ([source](https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf)). Export controls have cut China's share of ASML system sales from 41% in 2024 to 33% in 2025 ([source](https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf)), and China's answer is domestic immersion DUV plus an EUV prototype that has not yet made a chip. Nothing on the horizon changes the shape of this bottleneck before 2030.
+One firm, in one Dutch town, using mirrors from one German optics house, gates the resolution of every leading-edge AI chip. The tool count is small enough to track by hand: 48 EUV systems recognized in 2025, four of them High-NA ([source](https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf)), at around $200 million and $350 million to $400 million apiece ([source](https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/)). Export controls have cut China's share of ASML system sales from 41% in 2024 to 33% in 2025 ([source](https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf)), and China's answer is domestic immersion DUV plus an EUV prototype that has not yet made a chip. Nothing on the horizon changes the shape of this bottleneck before 2030.
