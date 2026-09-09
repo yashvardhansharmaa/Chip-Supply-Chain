@@ -123,9 +123,9 @@ small { font-size: 0.85em; }
   z-index: 5; pointer-events: none;
   display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
 }
-.stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.stage canvas { position: relative; flex: 1 1 0; min-height: 0; width: 100%; align-self: stretch; display: block; margin-top: 12px; }
 .stage figcaption {
-  position: relative; z-index: 1; margin: 0 0 26px; max-width: 46ch; text-align: center;
+  position: relative; z-index: 1; flex: none; margin: 14px 0 26px; max-width: 46ch; text-align: center;
   font-family: var(--font-mono); font-size: 11.5px; line-height: 1.5; letter-spacing: 0.02em; color: var(--muted);
   padding: 0 24px;
 }
@@ -150,6 +150,7 @@ small { font-size: 0.85em; }
 
 /* ---------- prose ---------- */
 .prose { max-width: var(--measure); }
+.view[data-view="geopolitics"] { --measure: 29.5em; } /* the essay reads a little wider than the chapters */
 .prose h3 { font-family: var(--font-display); font-weight: 600; font-size: 27px; line-height: 1.15; letter-spacing: -0.002em; margin: 1.9em 0 0.65em; max-width: var(--measure); scroll-margin-top: calc(var(--masthead) + 16px); }
 .prose h4 { font-family: var(--font-display); font-weight: 600; font-size: 20px; line-height: 1.25; margin: 1.7em 0 0.5em; max-width: var(--measure); scroll-margin-top: calc(var(--masthead) + 16px); }
 .prose > p, .prose > ul, .prose > ol, .prose blockquote { max-width: var(--measure); }
@@ -480,6 +481,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 .plate-kpis .k { display: block; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
 .plate-kpis .v { display: block; font-family: var(--font-display); font-weight: 600; font-size: 27px; line-height: 1.05; letter-spacing: 0.005em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
 .plate-kpis .v.cost { font-size: 22px; }
+.plate-kpis .v.cost.long { font-family: var(--font-body); font-weight: 500; font-size: 15.5px; line-height: 1.35; letter-spacing: 0; }
 .plate-kpis .v small { font-size: 14px; font-weight: 500; color: var(--muted); margin-left: 4px; }
 .plate-kpis .v.Extreme { color: var(--accent-ink); }
 .plate-kpis .sub { display: block; font-family: var(--font-mono); font-size: 10.5px; line-height: 1.5; color: var(--muted); margin-top: 8px; }
@@ -516,8 +518,8 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
   .tabs a { padding: 5px 7px; font-size: 12px; }
   .column { padding: 0 18px; }
   .stage { position: sticky; top: var(--masthead); width: 100%; height: 38vh; min-height: 250px; z-index: 6; background: color-mix(in srgb, var(--bg) 92%, transparent); border-bottom: 1px solid var(--line); }
-  .stage canvas { height: calc(100% - 34px); }
-  .stage figcaption { margin-bottom: 7px; font-size: 10px; line-height: 1.3; padding: 0 14px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .stage canvas { margin-top: 4px; }
+  .stage figcaption { margin: 4px 0 7px; font-size: 10px; line-height: 1.3; padding: 0 14px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .stage .stage-tag { top: 8px; left: 14px; }
   .wordmark b { font-size: 18px; }
   .hero { padding-top: 22px; }

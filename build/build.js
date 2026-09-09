@@ -202,13 +202,19 @@ function nameplate(card, title) {
   const countries = (card.countries || []).map((c) => `<li><span class="chip">${esc(c.code)}</span><span class="who">${esc(COUNTRY[c.code] || c.code)}</span>${c.note ? ` <span class="note">${esc(c.note)}</span>` : ''}</li>`).join('');
   const sub = card.substitution || {};
   const score = +card.chokepointScore || 0;
-  const cost = String(card.costSignal || '').split(/;\s|\.\s/);
+  // Cost signal: lead with the number when the sentence starts with one; a sentence that does not gets the small reading face, never the display size
+  const costSegs = String(card.costSignal || '').split(/;\s|\.\s/);
+  let costHead = costSegs[0] || '', costRest = costSegs.slice(1).join('. ');
+  const numLead = costHead.match(/^((?:about |roughly |up to |from |over |under |~|≈)?(?:US)?[$€£¥]?\d[\d,.]*\+?(?:\s?(?:-|–|to)\s?[$€£¥]?\d[\d,.]*)?\s?(?:[kKMBT]n?|bn|mn|billion|million|trillion|%)?)\s+(.+)$/i);
+  if (numLead && costHead.length > 30) { costRest = numLead[2] + (costRest ? '. ' + costRest : ''); costHead = numLead[1]; }
+  const costLong = costHead.length > 30;
+  const cost = [costHead, costRest];
   return `<section class="plate" aria-label="Chokepoint nameplate${title ? ' for ' + esc(title) : ''}">
 <header class="plate-head"><span class="label">Chokepoint nameplate</span><span class="plate-score">${pips(score)}<span><b>${score || '—'}</b> / 5</span><span class="sr-only">Chokepoint score ${score} of 5</span></span></header>
 <div class="plate-kpis">
 <div><span class="k">Concentration</span><b class="v ${esc(card.concentration || '')}">${esc(card.concentration || '—')}</b></div>
 <div><span class="k">Time to substitute</span><b class="v">${esc(sub.years || '—')}${sub.years && !/year/i.test(sub.years) ? '<small>years</small>' : ''}</b></div>
-<div><span class="k">Cost signal</span><b class="v cost">${esc(cost[0] || '—')}</b>${cost.length > 1 ? `<span class="sub">${esc(cost.slice(1).join('. '))}</span>` : ''}</div>
+<div><span class="k">Cost signal</span><b class="v cost${costLong ? ' long' : ''}">${esc(cost[0] || '—')}</b>${cost[1] ? `<span class="sub">${esc(cost[1])}</span>` : ''}</div>
 </div>
 <dl class="plate-rows">
 ${leaders ? `<div class="row"><dt>Who leads</dt><dd><ul>${leaders}</ul></dd></div>` : ''}
