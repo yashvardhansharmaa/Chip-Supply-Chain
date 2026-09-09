@@ -783,17 +783,17 @@
     "target": "Training and inference",
     "process": {
       "foundry": "TSMC",
-      "node": "N2 (8 XCDs) plus N3 (2 I/O dies and 2 fabric-and-cache dies)",
+      "node": "N2 plus N3 (AMD states TSMC 2 nm and 3 nm lithography; it has not published the die-by-die split)",
       "country": "TW"
     },
     "die": {
-      "count": 12,
+      "count": null,
       "areaMm2Each": null,
-      "transistorsB": 320,
+      "transistorsB": null,
       "reticleLimited": false
     },
     "package": {
-      "type": "CoWoS-L, described by AMD as the largest chip ever built on it",
+      "type": "CoWoS-L, with 3D hybrid-bonded compute dies",
       "assembler": "TSMC",
       "sizeMm": null
     },
@@ -978,8 +978,12 @@
         "url": "https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era"
       },
       {
-        "label": "StorageReview: MI455X and Helios specifications",
-        "url": "https://www.storagereview.com/news/amd-mi455x-and-helios-432gb-hbm4-72-gpu-racks-and-a-real-answer-to-vera-rubin"
+        "label": "AMD Instinct MI455X product page",
+        "url": "https://www.amd.com/en/products/accelerators/instinct/mi400/mi455x.html"
+      },
+      {
+        "label": "AMD: Introducing CDNA 5 and the Helios rackscale solution",
+        "url": "https://rocm.blogs.amd.com/ecosystems-and-partners/cdna5-helios/README.html"
       },
       {
         "label": "AMD Instinct MI455X GPU datasheet",
@@ -1015,7 +1019,7 @@
     },
     "memory": {
       "type": "HBM3E",
-      "stacks": 8,
+      "stacks": null,
       "capacityGB": 192,
       "bandwidthTBs": 7.38,
       "suppliers": [
@@ -1130,10 +1134,6 @@
       {
         "label": "Google blog: Ironwood is generally available",
         "url": "https://blog.google/products/google-cloud/ironwood-google-tpu-things-to-know/"
-      },
-      {
-        "label": "ServeTheHome hands-on with the Ironwood package",
-        "url": "https://www.servethehome.com/this-is-the-google-tpu-v7-ironwood-chip/"
       }
     ]
   },
@@ -1149,7 +1149,7 @@
     "target": "Inference",
     "process": {
       "foundry": "TSMC",
-      "node": "2 nm class (reported; Google does not disclose the node)",
+      "node": null,
       "country": "TW"
     },
     "die": {
@@ -1179,14 +1179,14 @@
     "tdpW": null,
     "interconnect": {
       "chipToChip": "Boardfly high-radix fabric, maximum seven hops",
-      "scaleUp": "up to 1,024 chips per pod (Google's figure; The Next Platform reports 1,152)",
+      "scaleUp": "up to 1,024 active chips per pod, in 36 groups of 8 boards",
       "scaleOut": "Virgo fabric, 47 Pb/s bisection across 134,000 chips"
     },
     "systemIntegrators": [],
     "priceEstimate": null,
     "bomEstimate": null,
     "exportStatus": "Not sold as merchant silicon; same posture as Ironwood.",
-    "notes": "The inference half of Google's split eighth generation, designed with MediaTek rather than Broadcom, and the first TPU with no SparseCores at all: it trades embedding hardware for 384 MB of on-chip Vmem and a dedicated collectives engine. Its stablemate TPU 8t (Sunfish) is the Broadcom-designed training part with two compute dies and 216 GB.",
+    "notes": "The inference half of Google's split eighth generation, and the first TPU with no SparseCores at all: it trades embedding hardware for 384 MB of on-chip Vmem and a dedicated Collectives Acceleration Engine that cuts collective latency about fivefold. Its stablemate TPU 8t is the training part, with 216 GB of HBM at 6,528 GB/s, 12.6 PFLOPS of FP4 and a 3D torus reaching 9,600 chips. Google has named no design partner, node, packaging, TDP or availability date for either chip.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -1260,10 +1260,6 @@
       {
         "label": "Google Cloud: TPU 8t and TPU 8i technical deep dive",
         "url": "https://cloud.google.com/blog/products/compute/tpu-8t-and-tpu-8i-technical-deep-dive"
-      },
-      {
-        "label": "The Next Platform on TPU 8",
-        "url": "https://www.nextplatform.com/compute/2026/04/24/with-tpu-8-google-makes-genai-systems-much-better-not-just-bigger/"
       }
     ]
   },
@@ -1398,7 +1394,7 @@
     "target": "Inference",
     "process": {
       "foundry": "TSMC",
-      "node": "N3P",
+      "node": "N3 (Microsoft says 'the latest TSMC N3 process technology'; it has not named the variant)",
       "country": "TW"
     },
     "die": {
@@ -1413,31 +1409,29 @@
       "sizeMm": null
     },
     "memory": {
-      "type": "HBM3E (12-high) plus 272 MB on-die SRAM",
-      "stacks": 6,
+      "type": "HBM3E plus 272 MB on-die SRAM",
+      "stacks": null,
       "capacityGB": 216,
       "bandwidthTBs": 7,
-      "suppliers": [
-        "SK hynix"
-      ]
+      "suppliers": []
     },
     "compute": {
       "fp16TFLOPS": null,
-      "fp8TFLOPS": 5000,
-      "fp4TFLOPS": 10000,
-      "precisionNote": "Microsoft states 'over 10 petaFLOPS' FP4 and 'over 5 petaFLOPS' FP8; The Next Platform gives 10.15 PFLOPS FP4 and 5.07 PFLOPS FP8 on the tensor units plus 1.27 PFLOPS BF16 on the vector units, which is not comparable to a tensor-core FP16 rate and is therefore left out of the FP16 field. Dense versus sparse not stated."
+      "fp8TFLOPS": 5050,
+      "fp4TFLOPS": 10100,
+      "precisionNote": "Microsoft's architecture deep dive states 10.1 PetaOPS FP4 and says FP4 throughput is 2x FP8 and 8x BF16, which gives 5.05 PFLOPS FP8; its launch post says 'over 10 petaFLOPS' FP4 and 'over 5 petaFLOPS' FP8. Dense versus sparse is not stated, and Microsoft publishes no tensor-core FP16 rate."
     },
     "tdpW": 750,
     "interconnect": {
-      "chipToChip": "2.8 TB/s bidirectional dedicated scale-up per chip, 8 Ethernet lanes across 4 network planes, proprietary Maia AI transport protocol",
-      "scaleUp": "four accelerators per tray in a fully connected non-switched quad; up to 6,144 accelerators",
+      "chipToChip": "on-die NIC, 1.4 TB/s unidirectional and 2.8 TB/s bidirectional Ethernet scale-up per chip, running Microsoft's AI Transport Layer protocol",
+      "scaleUp": "Fully Connected Quad of four accelerators on switchless direct links, then a switched tier to 6,144 accelerators",
       "scaleOut": "the same Ethernet fabric; there is no separate scale-out network"
     },
     "systemIntegrators": [],
     "priceEstimate": null,
     "bomEstimate": null,
     "exportStatus": "Not sold as merchant silicon; deployed only in Azure regions.",
-    "notes": "The odd one out among 2026 flagships: a single monolithic die of roughly 820 to 836 mm2 rather than a chiplet package, sitting just under the single-exposure reticle limit. It is also all-Ethernet, with no proprietary scale-up cable plant, and it shipped roughly six months later than Microsoft first planned.",
+    "notes": "The odd one out among 2026 flagships: a single monolithic die of about 820 mm2 rather than a chiplet package, sitting just under the single-exposure reticle limit. It is also all-Ethernet, with an on-die NIC and no proprietary scale-up cable plant, and it shipped roughly six months later than Microsoft first planned.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -1501,12 +1495,12 @@
         "url": "https://blogs.microsoft.com/blog/2026/01/26/maia-200-the-ai-accelerator-built-for-inference/"
       },
       {
-        "label": "ServeTheHome: Microsoft's Maia 200 at Hot Chips 2026",
-        "url": "https://www.servethehome.com/microsofts-maia-200-accelerator-at-hot-chips-2026/"
+        "label": "Microsoft: Deep dive into the Maia 200 architecture",
+        "url": "https://techcommunity.microsoft.com/blog/azureinfrastructureblog/deep-dive-into-the-maia-200-architecture/4489312"
       },
       {
-        "label": "The Next Platform on the Braga Maia 200",
-        "url": "https://www.nextplatform.com/2026/01/28/microsoft-takes-on-other-clouds-with-braga-maia-200-ai-compute-engines/"
+        "label": "Hot Chips 2026: MAIA 200, A Data Center Scale AI system (Microsoft)",
+        "url": "https://hc2026.hotchips.org/assets/program/conference/day2/HC2026.Microsoft.PrashantRanjan.v04.pdf"
       }
     ]
   },
