@@ -1027,6 +1027,8 @@
       host.innerHTML = s;
       host.setAttribute('data-anim', this.drawn || reduced ? '0' : '1');
       this.drawn = true;
+      // entries scroll clear of the sticky strip, so the page needs its real height
+      document.documentElement.style.setProperty('--tl-h', (window.innerWidth >= 900 ? H + 12 : 0) + 'px');
     },
     wireStrip: function () {
       var self = this, strip = $('#tl-strip');
