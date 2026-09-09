@@ -92,7 +92,7 @@ What disciplines the work is not the licence fee but the cost of a mistake. A ph
 
 ### Merchant GPU versus custom ASIC
 
-Nvidia designs Blackwell once and sells it to everyone, which buys the customer software and resale value. A custom accelerator is narrower and cheaper on the workload it was built for: Google claims 44% lower cost of ownership per Ironwood chip than a GB200 server, on trade-press figures ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)).
+Nvidia designs Blackwell once and sells it to everyone, which buys the customer software and resale value. A custom accelerator is narrower and tuned to the workload it was built for. Google's seventh-generation TPU, Ironwood, carries 192 GB of memory per chip, six times its predecessor's, and delivers twice the performance per watt ([source](https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/ironwood-tpu-age-of-inference/)).
 
 ### The EDA flow
 
@@ -106,7 +106,7 @@ No one writes an accelerator from scratch: CPU cores, interface controllers and 
 
 ### Chiplets
 
-Reticle limits ended the single-die accelerator. Modern parts are chiplets joined by a die-to-die link, and UCIe lets those links come from different vendors: version 3.0 adds 48 and 64 GT/s data rates ([source](https://www.uciexpress.org/specifications)). Broadcom's 3.5D XDSiP goes furthest, at more than 6,000 mm2 of silicon per package ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)).
+Reticle limits ended the single-die accelerator. Modern parts are chiplets joined by a die-to-die link, and UCIe lets those links come from different vendors: version 3.0 adds 48 and 64 GT/s data rates ([source](https://www.uciexpress.org/specifications)). Broadcom's 3.5D XDSiP goes furthest, packing more than 6,000 mm2 of silicon and 12 HBM stacks into one package ([source](https://docs.broadcom.com/doc/3-5d-xdsip-platform-technology)).
 
 ## Who makes it
 
@@ -114,21 +114,13 @@ The EDA and design IP market was about $18 billion in 2025, and Synopsys, Cadenc
 
 {{figure:eda-share}}
 
-Design services are tighter still. Broadcom and Marvell hold roughly 95% of custom AI ASIC co-design, on trade-press estimates ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)), and Broadcom alone booked $16.7 billion of AI semiconductor revenue in the third quarter of fiscal 2026, up 221% ([source](https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm)). Below them sit the Taiwanese houses that take a netlist to tape-out on TSMC's newest nodes; Alchip reported $992 million of revenue in 2025 ([source](https://www.alchip.com/en/Investors/financials/)). The engineers are spread wider than the firms: India alone holds nearly 20% of the world's chip designers ([source](https://www.pib.gov.in/PressReleasePage.aspx?PRID=2148393)).
+Design services are tighter still, and Broadcom is the name on most of the deals. It booked $16.7 billion of AI semiconductor revenue in the third quarter of fiscal 2026, up 221% ([source](https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm)). Its customers no longer hide the arrangement. In October 2025 OpenAI and Broadcom said they would deploy 10 gigawatts of OpenAI-designed accelerators, with Broadcom supplying the silicon implementation and the Ethernet around it ([source](https://investors.broadcom.com/news-releases/news-release-details/openai-and-broadcom-announce-strategic-collaboration-deploy-10)). In April 2026 Broadcom extended its Meta partnership to multiple gigawatts of MTIA and the first 2 nm AI accelerator ([source](https://investors.broadcom.com/news-releases/news-release-details/broadcom-announces-extended-partnership-meta-deploy-technology)).
 
-| Chip | Owner | Design partner | Process |
-|---|---|---|---|
-| TPU v7 Ironwood | Google | Broadcom and MediaTek | TSMC N3P |
-| MTIA 300 series | Meta | Broadcom | TSMC 3 nm |
-| Trainium3 | AWS (Annapurna Labs) | Marvell, Alchip | TSMC 3 nm |
-| Maia 200 | Microsoft | Marvell | TSMC 3 nm |
-| Custom accelerator | OpenAI | Broadcom | 3 nm and 2 nm |
-
-Per Tom's Hardware, May 2026 ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)).
+The pattern holds down the stack. Below Broadcom and Marvell sit the Taiwanese houses that take a netlist to tape-out on TSMC's newest nodes; Alchip reported $992 million of revenue in 2025 ([source](https://www.alchip.com/en/Investors/financials/)). The engineers are spread wider than the firms: India alone holds nearly 20% of the world's chip designers ([source](https://www.pib.gov.in/PressReleasePage.aspx?PRID=2148393)).
 
 ## The chokepoint
 
-In late May 2025 the Bureau of Industry and Security ordered Synopsys, Cadence and Siemens EDA to stop selling design tools and services to China ([source](https://www.design-reuse.com/news/202528998-synopsys-cadence-and-siemens-resume-eda-supply-to-china/)). Synopsys got its letter on 29 May and a rescinding letter on 2 July, after trade talks in which Washington eased technology restrictions ([source](https://www.sec.gov/Archives/edgar/data/883241/000119312525155294/d80081d8k.htm)).
+In late May 2025 the Bureau of Industry and Security told the EDA vendors to stop selling to China. Cadence got its letter on 23 May: exporting design software classified 3D991 and 3E991 to any party in China, or to a Chinese military end user anywhere, now needed a licence ([source](https://www.sec.gov/Archives/edgar/data/813672/000081367225000093/cdns-20250702.htm)). Synopsys got its letter on 29 May and a rescinding letter on 2 July, after trade talks in which Washington eased technology restrictions ([source](https://www.sec.gov/Archives/edgar/data/883241/000119312525155294/d80081d8k.htm)).
 
 The lever works, and needs no allied coordination and no lead time. It is also expensive: it speeds the substitution it was meant to prevent, and Synopsys's China revenue fell from 16% of the total in fiscal 2024 to 12% in fiscal 2025 ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
 

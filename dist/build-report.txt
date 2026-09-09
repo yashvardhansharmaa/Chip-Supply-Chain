@@ -1,13 +1,13 @@
-built 2026-09-09T14:19:28.179Z
-source tiers: A 190 · B 12 · C 0 · D 148 · unclassified 0
+built 2026-09-09T14:21:00.114Z
+source tiers: A 195 · B 12 · C 0 · D 147 · unclassified 0
 chapters: 17 + geopolitics
-words: 22264
-sources: 350
+words: 22302
+sources: 354
 landscape: 19 chips · suppliers: 220 · timeline: 45 · matrix: 20 · glossary: 74 · controls: 40 · exposure: 103
 specimens: boule-and-wafer, cowos-exploded, die-floorplan, euv-scanner, foup, gaa-transistor, gas-cabinet, globe, gpu-baseboard, hbm-stack, package, photomask, probe-card, process-chamber, rack, sem-column, substrate-layers, wafer-cost, wafer
-size: 1509 KB
+size: 1512 KB
   01 introduction-and-goals: 935 words, 8 sources (D 0, ? 0), 2 figures
-  02 design-and-eda: 1116 words, 12 sources (D 3, ? 0), 3 figures
+  02 design-and-eda: 1154 words, 16 sources (D 2, ? 0), 3 figures
   03 silicon-and-wafers: 1133 words, 13 sources (D 6, ? 0), 2 figures
   04 chemicals-gases-and-photoresist: 1143 words, 16 sources (D 4, ? 0), 2 figures
   05 lithography: 1287 words, 23 sources (D 10, ? 0), 3 figures
