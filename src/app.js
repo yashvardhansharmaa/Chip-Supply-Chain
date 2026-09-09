@@ -535,16 +535,17 @@
       { label: 'Price estimate', hint: ['semianalysis', 'price', 'rack', 'press release'], long: true, text: function (c) { return c.priceEstimate ? esc(c.priceEstimate) : null; } },
       { label: 'Export status', hint: ['federal register', 'entity list', 'institute for progress', 'mofcom'], long: true, text: function (c) { return c.exportStatus ? esc(c.exportStatus) : null; } }
     ],
-    sourceFor: function (c, row) { // the chip's sources are not tagged per field, so match the row's subject against the labels
-      var srcs = c.sources || []; if (!srcs.length) return null;
+    sourceTitle: function (c, row) { // the chip's sources are not tagged per field, so match the row's subject against the labels
+      var srcs = c.sources || []; if (!srcs.length) return '';
       var hints = row.hint || [];
       for (var h = 0; h < hints.length; h++) for (var i = 0; i < srcs.length; i++) {
-        if ((srcs[i].label || '').toLowerCase().indexOf(hints[h]) >= 0) return srcs[i];
+        if ((srcs[i].label || '').toLowerCase().indexOf(hints[h]) >= 0) return 'Source: ' + (srcs[i].label || srcs[i].url);
       }
-      return srcs[0];
+      // nothing in the list is about this row, so list the chip's sources rather than claim one of them
+      return 'Sources for the ' + c.name + ': ' + srcs.map(function (x) { return x.label || x.url; }).join(' · ');
     },
     cellHTML: function (c, row, max, marker, multi) {
-      var s = this.sourceFor(c, row), title = s ? 'Source: ' + (s.label || s.url) : '', inner;
+      var title = this.sourceTitle(c, row), inner;
       if (row.num) {
         var v = row.num(c);
         if (v == null) inner = this.nil();
