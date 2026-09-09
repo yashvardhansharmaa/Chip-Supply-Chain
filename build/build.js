@@ -196,21 +196,27 @@ function wordCount(body) {
 
 /* ---------------- nameplate ---------------- */
 function pips(n) { let s = '<span class="pips" aria-hidden="true">'; for (let i = 1; i <= 5; i++) s += `<i class="${i <= n ? 'on' : ''}"></i>`; return s + '</span>'; }
-function nameplate(card) {
+function nameplate(card, title) {
   if (!card) return '';
-  const leaders = (card.leaders || []).map((l) => `<span class="cc">${esc(l.country || '')}</span>${esc(l.name)}${l.share ? ` <span style="color:var(--muted)">${esc(l.share)}</span>` : ''}`).join('<span class="sep">·</span>');
-  const countries = (card.countries || []).map((c) => `<span class="cc">${esc(c.code)}</span>${esc(COUNTRY[c.code] || c.code)}${c.note ? ` <span style="color:var(--muted)">${esc(c.note)}</span>` : ''}`).join('<span class="sep">·</span>');
+  const leaders = (card.leaders || []).map((l) => `<li><span class="cc">${esc(l.country || '')}</span><span class="who">${esc(l.name)}</span>${l.share ? ` <span class="note">${esc(l.share)}</span>` : ''}</li>`).join('');
+  const countries = (card.countries || []).map((c) => `<li><span class="cc">${esc(c.code)}</span><span class="who">${esc(COUNTRY[c.code] || c.code)}</span>${c.note ? ` <span class="note">${esc(c.note)}</span>` : ''}</li>`).join('');
   const sub = card.substitution || {};
-  return `<dl class="nameplate">
-<div><dt>Concentration</dt><dd><span class="conc ${esc(card.concentration || '')}">${esc(card.concentration || '—')}</span></dd></div>
-<div><dt>Chokepoint score</dt><dd>${pips(+card.chokepointScore || 0)}<span class="num">${card.chokepointScore || '—'} / 5</span><span class="sr-only">${card.chokepointScore || 0} of 5</span></dd></div>
-<div class="wide"><dt>Who leads</dt><dd>${leaders || '—'}</dd></div>
-<div class="wide"><dt>Where it is made</dt><dd>${countries || '—'}</dd></div>
-<div><dt>Cost signal</dt><dd>${esc(card.costSignal || '—')}</dd></div>
-<div><dt>Time to substitute</dt><dd><b>${esc(sub.years || '—')}${sub.years && !/year/i.test(sub.years) ? ' years' : ''}</b>${sub.why ? `<span class="why">${esc(sub.why)}</span>` : ''}</dd></div>
-${card.chinaStatus ? `<div><dt>China</dt><dd>${esc(card.chinaStatus)}</dd></div>` : ''}
-${card.usStatus ? `<div><dt>United States</dt><dd>${esc(card.usStatus)}</dd></div>` : ''}
-</dl>`;
+  const score = +card.chokepointScore || 0;
+  const cost = String(card.costSignal || '').split(/;\s|\.\s/);
+  return `<section class="plate" aria-label="Chokepoint nameplate${title ? ' for ' + esc(title) : ''}">
+<header class="plate-head"><span class="label">Chokepoint nameplate</span><span class="plate-score">${pips(score)}<span><b>${score || '—'}</b> / 5</span><span class="sr-only">Chokepoint score ${score} of 5</span></span></header>
+<div class="plate-kpis">
+<div><span class="k">Concentration</span><b class="v ${esc(card.concentration || '')}">${esc(card.concentration || '—')}</b></div>
+<div><span class="k">Time to substitute</span><b class="v">${esc(sub.years || '—')}${sub.years && !/year/i.test(sub.years) ? '<small>years</small>' : ''}</b></div>
+<div><span class="k">Cost signal</span><b class="v cost">${esc(cost[0] || '—')}</b>${cost.length > 1 ? `<span class="sub">${esc(cost.slice(1).join('. '))}</span>` : ''}</div>
+</div>
+<dl class="plate-rows">
+${leaders ? `<div class="row"><dt>Who leads</dt><dd><ul>${leaders}</ul></dd></div>` : ''}
+${countries ? `<div class="row"><dt>Where it is made</dt><dd><ul>${countries}</ul></dd></div>` : ''}
+${sub.why ? `<div class="row"><dt>Why substitution is slow</dt><dd class="why">${esc(sub.why)}</dd></div>` : ''}
+</dl>
+${card.chinaStatus || card.usStatus ? `<div class="plate-status">${card.chinaStatus ? `<div><span class="k">China</span><p>${esc(card.chinaStatus)}</p></div>` : ''}${card.usStatus ? `<div><span class="k">United States</span><p>${esc(card.usStatus)}</p></div>` : ''}</div>` : ''}
+</section>`;
 }
 
 /* ---------------- chapters ---------------- */
@@ -232,6 +238,15 @@ chapters.sort((a, b) => a.number - b.number);
 if (!chapters.length) warn('no chapters found; building with a placeholder');
 
 const pad = (n) => String(n).padStart(2, '0');
+const SHORT = { 'design-and-eda': 'Design', 'silicon-and-wafers': 'Silicon', 'chemicals-gases-and-photoresist': 'Chemicals', lithography: 'Litho', 'photomasks-and-pellicles': 'Masks', 'deposition-and-etch': 'Dep + etch', 'metrology-and-inspection': 'Metrology', 'transistors-and-front-end': 'Transistor', 'foundries-and-fabs': 'Foundry', 'memory-and-hbm': 'Memory', 'advanced-packaging': 'Packaging', 'substrates-and-pcbs': 'Substrate', 'test-and-assembly': 'Test', 'systems-and-networking': 'Systems', 'data-centers-and-power': 'Power', 'introduction-and-goals': 'Intro', 'component-costs': 'Costs', geopolitics: 'Geopolitics' };
+const WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty'];
+const word = (n) => WORDS[n] || String(n);
+const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+const isStage = (ch) => ch.number >= 2 && ch.number <= 16;
+const stages = chapters.filter(isStage);
+function chainTrack(chs, currentId) {
+  return `<ol class="chain-track">${chs.map((c) => { const sc = +((c.meta.card || {}).chokepointScore || 0); return `<li class="stage-cell" data-score="${sc}" data-id="${esc(c.id)}"${c.id === currentId ? ' aria-current="true"' : ''}><a href="#${esc(c.id)}" title="${esc(c.title)}"><span class="n">${pad(c.number)}</span><span class="bar"><i></i></span><span class="t">${esc(SHORT[c.id] || c.title)}</span></a></li>`; }).join('')}</ol>`;
+}
 const textOf = (html) => String(html || '').replace(/<sup class="cite">[\s\S]*?<\/sup>/g, '').replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
 const norm = (t) => textOf(t).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 // Pull the Takeaways block out of the body so it can lead the chapter as "In short".
@@ -241,39 +256,43 @@ function splitTakeaways(html) {
   return { body: html.replace(m[0], ''), inShort: m[1].trim() };
 }
 // Replace the paragraph that repeats meta.plain with a highlighted "In plain terms" box (or insert one after the first h3).
+// Remove the paragraph that repeats meta.plain from the body; the head shows it as the "In plain terms" box.
 function plainBox(html, plain, ctx) {
-  if (!plain) return html;
+  if (!plain) return { html, box: '' };
   const key = norm(plain).slice(0, 60);
-  const box = `<div class="plain"><span class="label">In plain terms</span><p>${inline(plain, ctx)}</p></div>`;
   let done = false;
-  html = html.replace(/<p>([\s\S]*?)<\/p>/g, (whole, inner) => { if (!done && key && norm(inner).slice(0, 60) === key) { done = true; return box; } return whole; });
-  if (!done) { const i = html.indexOf('</h3>'); html = i >= 0 ? html.slice(0, i + 5) + '\n' + box + html.slice(i + 5) : box + html; }
-  return html;
+  html = html.replace(/<p>([\s\S]*?)<\/p>/g, (whole, inner) => { if (!done && key && norm(inner).slice(0, 60) === key) { done = true; return ''; } return whole; });
+  return { html, box: `<div class="plain"><span class="label">In plain terms</span><p>${inline(plain, ctx)}</p></div>` };
 }
 function chapterHTML(ch) {
   const m = ch.meta, mins = Math.max(1, Math.round(ch.words / 230));
   const specimen = m.specimen || 'wafer';
   const parts = splitTakeaways(ch.html);
-  const body = plainBox(parts.body, m.plain, { id: ch.id, cites: ch.cites, figures: [] });
+  const pb = plainBox(parts.body, m.plain, { id: ch.id, cites: ch.cites, figures: [] });
   ch.inShort = parts.inShort;
   const sources = ch.cites.length ? `<details class="chapter-sources"><summary>Sources for this chapter (${ch.cites.length})</summary><ol>${ch.cites.map((c) => `<li>${tierTag(c.url)}<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url.length > 96 ? c.url.slice(0, 94) + '…' : c.url)}</a><span class="host">${esc(host(c.url))}</span></li>`).join('')}</ol></details>` : '';
+  const stageIdx = stages.findIndex((c) => c.id === ch.id);
+  const next = stageIdx >= 0 ? stages[stageIdx + 1] : null;
+  const tile = stageIdx >= 0 ? `<div class="ch-tile"><span class="k">Stage</span><span class="v">${pad(stageIdx + 1)}</span><span class="of">of ${stages.length}</span></div>` : `<div class="ch-tile"><span class="k">${ch.number === 1 ? 'Start' : 'Analysis'}</span><span class="v">${pad(ch.number)}</span><span class="of">of ${chapters.length}</span></div>`;
+  const chain = stageIdx >= 0 ? `<div class="chain chain--compact" aria-label="Where this stage sits in the chain">${chainTrack(stages, ch.id)}<p class="chain-foot"><span>You are here: <b>stage ${pad(stageIdx + 1)} of ${stages.length}</b></span><span>${next ? `Next: ${pad(next.number)} ${esc(next.title)}` : 'Last stage in the chain'}</span></p></div>` : '';
   return `<article class="chapter" id="${esc(ch.id)}" data-specimen="${esc(specimen)}" data-number="${pad(ch.number)}" data-title="${esc(ch.title)}" data-caption="${esc(m.specimenCaption || '')}">
 <header class="chapter-head">
-<div class="chapter-num" aria-hidden="true">${pad(ch.number)}</div>
-<h2 class="chapter-title"><span class="sr-only">Chapter ${ch.number}: </span>${esc(ch.title)}</h2>
-${m.oneLiner ? `<p class="chapter-lede">${esc(m.oneLiner)}</p>` : ''}
-<div class="chapter-meta"><span class="label">${ch.words.toLocaleString('en-US')} words · ${mins} min</span><span class="label">Specimen: ${esc(specimen.replace(/-/g, ' '))}</span></div>
-${nameplate(m.card)}
+${chain}
+<div class="ch-id">${tile}<div><h2 class="ch-title"><span class="sr-only">Chapter ${ch.number}: </span>${esc(ch.title)}</h2>${m.oneLiner ? `<p class="ch-lede">${esc(m.oneLiner)}</p>` : ''}<p class="ch-meta"><span class="label">${ch.words.toLocaleString('en-US')} words / ${mins} min</span><span class="label">Specimen: ${esc(specimen.replace(/-/g, ' '))}</span></p></div></div>
 ${parts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${parts.inShort}</section>` : ''}
+${nameplate(m.card, ch.title)}
+${pb.box}
 </header>
-<div class="prose">${body}${sources}</div>
+<div class="prose">${pb.html}${sources}</div>
 </article>`;
 }
 const chaptersHTML = chapters.length ? chapters.map(chapterHTML).join('\n') : `<article class="chapter" id="placeholder" data-specimen="wafer" data-number="01" data-title="Placeholder"><header class="chapter-head"><div class="chapter-num">01</div><h2 class="chapter-title">Chapters are being written</h2></header><div class="prose"><p>Content agents have not delivered yet. This is a shell build.</p></div></article>`;
 
 const contentsHTML = chapters.map((ch) => `<div class="item"><span class="n">${pad(ch.number)}</span><a class="t" href="#${esc(ch.id)}">${esc(ch.title)}</a><ul>${ch.headings.filter((h) => !/^takeaways?$/i.test(h.text)).map((h) => `<li><a href="#${esc(h.id)}">${esc(h.text)}</a></li>`).join('')}</ul></div>`).join('') +
   (geo ? `<div class="item"><span class="n">${pad(chapters.length + 1)}</span><a class="t" href="#/geopolitics">Geopolitics</a><ul>${geo.headings.slice(0, 6).map((h) => `<li><a href="#/geopolitics">${esc(h.text)}</a></li>`).join('')}</ul></div>` : '');
-const railHTML = chapters.map((ch) => `<li data-id="${esc(ch.id)}"><a href="#${esc(ch.id)}" title="${esc(ch.title)}"><i></i><span>${esc(ch.title)}</span></a></li>`).join('');
+const railHTML = chainTrack(stages, null);
+const score5 = stages.filter((c) => +((c.meta.card || {}).chokepointScore || 0) >= 5).length;
+const thesisHTML = `${cap(word(stages.length))} stages turn sand into a GPU. <span class="q">${cap(word(score5))}</span> of them come down to three firms or fewer.`;
 
 /* ---------------- data ---------------- */
 const landscape = readJSON(path.join(root, 'data', 'landscape.json'), []);
@@ -306,7 +325,8 @@ if (geo) {
   geoDek = geo.meta.oneLiner || geoDek;
   const sources = geo.cites.length ? `<details class="chapter-sources"><summary>Sources for this essay (${geo.cites.length})</summary><ol>${geo.cites.map((c) => `<li><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url.length > 96 ? c.url.slice(0, 94) + '…' : c.url)}</a><span class="host">${esc(host(c.url))}</span></li>`).join('')}</ol></details>` : '';
   const gparts = splitTakeaways(geo.html); geo.inShort = gparts.inShort;
-  geoBody = nameplate(geo.meta.card) + (gparts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${gparts.inShort}</section>` : '') + `<p class="label" style="margin:10px 0 26px">${geo.words.toLocaleString('en-US')} words · ${Math.max(1, Math.round(geo.words / 230))} min</p>` + plainBox(gparts.body, geo.meta.plain, { id: 'geopolitics', cites: geo.cites, figures: [] }) + sources;
+  const gpb = plainBox(gparts.body, geo.meta.plain, { id: 'geopolitics', cites: geo.cites, figures: [] });
+  geoBody = (gparts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${gparts.inShort}</section>` : '') + nameplate(geo.meta.card, 'Geopolitics') + gpb.box + `<p class="label" style="margin:10px 0 26px">${geo.words.toLocaleString('en-US')} words / ${Math.max(1, Math.round(geo.words / 230))} min</p>` + gpb.html + sources;
 }
 
 /* ---------------- sources view ---------------- */
@@ -342,7 +362,7 @@ const glossaryHTML = glossary.length ? glossary.slice().sort((a, b) => a.term.lo
 
 /* ---------------- assemble ---------------- */
 const totalWords = all.reduce((a, c) => a + c.words, 0);
-const credits = `Made by <b>Yashvardhan Sharma</b> with Claude (Fable 5.1 directing Opus agents). September 2026. ${all.length ? `${all.length} chapters · ${totalWords.toLocaleString('en-US')} words · ${all.reduce((a, c) => a + c.cites.length, 0)} sources` : ''}. In the tradition of <a href="https://www.humanityslastmachine.com/" target="_blank" rel="noopener">Humanity's Last Machine</a> and CSET's supply-chain work.`;
+const credits = `Made by <b>Yashvardhan Sharma</b> with Claude (Fable 5.1 directing Opus agents). ${all.length} chapters, ${totalWords.toLocaleString('en-US')} words. In the tradition of <a href="https://www.humanityslastmachine.com/" target="_blank" rel="noopener">Humanity's Last Machine</a> and CSET's supply-chain work.`;
 const footer = `<p>Chokepoints · A deep dive on the AI chip supply chain · Made by Yashvardhan Sharma with Claude · ${new Date().toISOString().slice(0, 10)}</p><p>Every number on this site links to its source. Corrections and additions are welcome. Built with a dependency-free point-cloud renderer; no scans, no tracking.</p>`;
 const suppliersIntro = suppliers.length ? `${suppliers.length} firms across the chain, from polysilicon to liquid cooling, with what each one makes, where it is based and how hard it would be to replace. Filter by category, country or chokepoint status; copy the result as CSV.` : 'The supplier database has not been delivered yet.';
 
@@ -358,6 +378,9 @@ const data = { landscape, landscapeNotes, suppliers, timeline, matrix, controls,
 let html = read(path.join(root, 'src', 'template.html'));
 const fill = (k, v) => { html = html.split(`{{${k}}}`).join(v); };
 fill('STYLES', read(path.join(root, 'src', 'styles.css')));
+const totalCites = all.reduce((a, c) => a + c.cites.length, 0);
+const claimsHTML = `<div><b class="num">${stages.length}</b><span>Stages from<br>quartz to a rack</span></div><div class="of-five"><b class="num">${score5}</b><span>Score 5 of 5<br>for concentration</span></div><div><b class="num">${totalCites}</b><span>Sources, one<br>per claim</span></div>`;
+fill('THESIS', thesisHTML); fill('CLAIMS', claimsHTML); fill('CHAIN', chainTrack(stages, null));
 fill('RAIL', railHTML); fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits); fill('FOOTER', footer);
 fill('SUPPLIERS_INTRO', suppliersIntro); fill('GEO_DEK', esc(geoDek)); fill('GEO_BODY', geoBody); fill('SOURCES', sourcesHTML);
 fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));

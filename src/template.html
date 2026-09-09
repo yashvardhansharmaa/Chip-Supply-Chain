@@ -4,7 +4,7 @@
 <meta name="description" content="A deep dive on the AI chip supply chain: every stage from sand to a rack in a data center, with a 3D specimen of each stage beside the text.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..900;1,62..125,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&display=swap">
 <style>
 {{STYLES}}
 </style>
@@ -31,8 +31,8 @@
     </nav>
   </header>
 
-  <nav class="rail" aria-label="Progress through the chain" data-show="0">
-    <ol>{{RAIL}}</ol>
+  <nav class="rail chain chain--compact" aria-label="Progress through the chain" data-show="0">
+    {{RAIL}}
   </nav>
   <button class="to-top" type="button" data-show="0">Back to top</button>
 
@@ -45,11 +45,16 @@
   <main>
     <section class="view column" data-view="stack">
       <div class="hero" data-specimen="package" data-caption="An AI accelerator package: two reticle-sized logic dies and eight HBM stacks on a silicon interposer, on a build-up substrate. Highlighted: the HBM.">
-        <div class="eyebrow"><i></i><span class="label">A deep dive on the AI chip supply chain</span></div>
-        <h1>Chokepoints</h1>
-        <p class="dek">Every AI chip is a supply chain. This maps it component by component, from <em>polysilicon to a liquid-cooled rack</em>, with the machine that makes each stage drawn beside the text.</p>
+        <p class="eyebrow"><i></i><span class="label">A component-level map of the AI chip supply chain</span><span class="sep">/</span><span class="label">September 2026</span></p>
+        <h1 class="thesis">{{THESIS}}</h1>
+        <p class="dek">Chokepoints walks the chain one stage at a time and scores each one: what the stage does, who can actually do it, what the tool costs, and how long a substitute would take to build. Every number links to its source.</p>
+        <div class="claims">{{CLAIMS}}</div>
         <p class="credits">{{CREDITS}}</p>
         <div class="scroll-hint"><svg viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1v15M1.5 10.5 7 16l5.5-5.5"/></svg><span>Scroll for the stack</span></div>
+      </div>
+      <div class="chain" id="chain">
+        <div class="chain-head"><h2>The chain, scored</h2><p>Bar height is the chokepoint score, 1 to 5.</p><div class="chain-key"><span><i style="background:var(--bar-5)"></i>5 of 5</span><span><i style="background:var(--bar-4)"></i>4</span><span><i style="background:var(--bar-3)"></i>3 or less</span></div></div>
+        {{CHAIN}}
       </div>
       <div class="contents" id="contents">
         <h2>Contents</h2>

@@ -490,8 +490,8 @@
       if (this.index) return this.index;
       var idx = [];
       $$('[data-view="stack"] .chapter').forEach(function (ch) {
-        var title = (ch.querySelector('.chapter-title') || {}).textContent || ch.id;
-        idx.push({ kind: 'Chapter', title: title.replace(/^Chapter \d+: /, ''), text: (ch.querySelector('.chapter-lede') || {}).textContent || '', href: '#' + ch.id });
+        var title = (ch.querySelector('.ch-title') || {}).textContent || ch.id;
+        idx.push({ kind: 'Chapter', title: title.replace(/^Chapter \d+: /, ''), text: (ch.querySelector('.ch-lede') || {}).textContent || '', href: '#' + ch.id });
         $$('.prose h3[id], .prose h4[id]', ch).forEach(function (h) {
           var t = '', p = h.nextElementSibling;
           while (p && !/^H[1-4]$/.test(p.tagName) && t.length < 900) { if (/^(P|DIV|UL|OL|TABLE)$/.test(p.tagName)) t += ' ' + p.textContent; p = p.nextElementSibling; }
