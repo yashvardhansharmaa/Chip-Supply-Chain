@@ -700,6 +700,7 @@
     try { var only = new URLSearchParams(location.search).get('only'); if (only && document.getElementById(only)) { document.documentElement.classList.add('dbg-only'); document.getElementById(only).classList.add('only'); } } catch (e) { }
     Theme.init();
     Glossary.init();
+    Tip.init();
     Tools.init();
     var setMast = function () { var m = $('.masthead'), root = document.documentElement; if (!m) return; root.style.removeProperty('--masthead'); root.style.setProperty('--masthead', m.offsetHeight + 'px'); }; // the masthead wraps on phones, so the sticky offsets follow its real height
     setMast(); window.addEventListener('resize', setMast); window.addEventListener('load', setMast);

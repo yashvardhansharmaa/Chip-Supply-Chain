@@ -222,6 +222,10 @@ function normaliseDate(raw) {
   if ((m = s.match(/^(\d{8})$/))) return `${m[1].slice(0, 4)}-${m[1].slice(4, 6)}-${m[1].slice(6, 8)}`;
   // D:20240115... (PDF date)
   if ((m = s.match(/^D:(\d{4})(\d{2})(\d{2})/))) return `${m[1]}-${m[2]}-${m[3]}`;
+  // Drupal's "Tue, 10/11/2022 - 12:00" (US month/day/year), used by CSIS.
+  if ((m = s.match(/(?:^|,\s*)(\d{1,2})\/(\d{1,2})\/((?:19|20)\d{2})/))) {
+    return `${m[3]}-${m[1].padStart(2, '0')}-${m[2].padStart(2, '0')}`;
+  }
   const d = new Date(s);
   if (!isNaN(d.getTime()) && d.getFullYear() > 1990 && d.getFullYear() < 2100) {
     return d.toISOString().slice(0, 10);
@@ -264,13 +268,21 @@ function extractFromHtml(html) {
     /<meta[^>]+name=["']pubdate["'][^>]+content=["']([^"']+)["']/i,
     /<meta[^>]+name=["']sailthru\.date["'][^>]+content=["']([^"']+)["']/i,
     /<meta[^>]+property=["']og:published_time["'][^>]+content=["']([^"']+)["']/i,
+    // Pagefind index metadata (Epoch AI and other Astro sites)
+    /<meta[^>]+property=["']pagefind:date["'][^>]*content=["']([^"']+)["']/i,
+    /<meta[^>]+data-pagefind-meta=["']date\[content\]["'][^>]*content=["']([^"']+)["']/i,
+    // Nikkei / Newsvault style
+    /<meta[^>]+name=["']nv-pub-date["'][^>]+content=["']([^"']+)["']/i,
+    /<meta[^>]+name=["']sc:publication_date["'][^>]+content=["']([^"']+)["']/i,
+    /<meta[^>]+name=["']datePublished["'][^>]+content=["']([^"']+)["']/i,
     /<time[^>]+datetime=["']([^"']+)["']/i,
   ]);
   out.date = normaliseDate(dateRaw);
 
   if (!out.date) {
-    // JSON-LD datePublished
-    const ld = html.match(/"datePublished"\s*:\s*"([^"]+)"/i);
+    // JSON-LD datePublished, then a bare "date" field
+    const ld =
+      html.match(/"datePublished"\s*:\s*"([^"]+)"/i) || html.match(/"date"\s*:\s*"((?:19|20)\d{2}[^"]{0,25})"/i);
     if (ld) out.date = normaliseDate(ld[1]);
   }
   if (!out.date) {
@@ -760,10 +772,13 @@ async function main() {
   // Re-run extraction over anything already cached whose body we kept, so an
   // improved extractor benefits old entries without re-fetching.
   console.error('Re-extracting cached bodies...');
+  const forceReextract = args.includes('--reextract');
   let reExtracted = 0;
   for (const url of urls) {
     const rec = readCache(url);
-    if (!rec || (rec.extracted && rec.extracted.title)) continue;
+    if (!rec) continue;
+    const complete = rec.extracted && rec.extracted.title && rec.extracted.date;
+    if (complete && !forceReextract) continue;
     const pdf = bodyPath(url, '.pdf');
     const html = bodyPath(url, '.html');
     try {

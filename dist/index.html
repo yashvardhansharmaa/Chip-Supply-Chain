@@ -213,6 +213,15 @@ sup.cite a:hover { text-decoration: underline; }
 .tl li .d { font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.06em; display: block; }
 
 /* chapter sources */
+/* glossary terms in the prose: a dotted rule under the word, and one shared popover */
+.gl-term { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; text-align: inherit; cursor: help; text-decoration: underline; text-decoration-style: dotted; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.gl-term:hover, .gl-term[aria-describedby] { text-decoration-style: solid; }
+.gl-tip { position: fixed; z-index: 50; width: max-content; max-width: min(340px, calc(100vw - 16px)); background: var(--bg-2); border: 1px solid var(--line-2); border-radius: 4px; box-shadow: var(--shadow); padding: 12px 15px 13px; }
+.gl-tip b { display: block; font-family: var(--font-display); font-weight: 700; font-size: 15.5px; line-height: 1.2; margin-bottom: 6px; }
+.gl-tip p { font-family: var(--font-body); font-size: 14.5px; line-height: 1.45; color: var(--ink-2); margin: 0 0 10px; }
+.gl-tip a { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink); text-decoration: none; }
+.gl-tip a:hover { text-decoration: underline; }
+
 /* previous / next, at the foot of every chapter */
 .prevnext { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 2.8em 0 0; }
 .prevnext .pn { display: block; text-decoration: none; color: var(--ink); background: var(--bg-2); border: 1px solid var(--line); border-radius: 3px; padding: 11px 15px 13px; min-width: 0; }
@@ -645,6 +654,8 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
   .inshort p { font-size: 19px; }
   .prevnext { grid-template-columns: 1fr; }
   .prevnext .next { grid-column: 1; text-align: left; }
+  /* the popover becomes a sheet across the foot of the screen, above the specimen strip */
+  .gl-tip.is-sheet { left: 10px; right: 10px; top: auto; width: auto; max-width: none; }
   .spec-kpis { grid-template-columns: 1fr 1fr; }
   .spec-kpis div:nth-child(2n) { border-right: 0; }
   .spec-kpis div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
@@ -8486,6 +8497,7 @@ PC.register('wafer', function (p) {
     try { var only = new URLSearchParams(location.search).get('only'); if (only && document.getElementById(only)) { document.documentElement.classList.add('dbg-only'); document.getElementById(only).classList.add('only'); } } catch (e) { }
     Theme.init();
     Glossary.init();
+    Tip.init();
     Tools.init();
     var setMast = function () { var m = $('.masthead'), root = document.documentElement; if (!m) return; root.style.removeProperty('--masthead'); root.style.setProperty('--masthead', m.offsetHeight + 'px'); }; // the masthead wraps on phones, so the sticky offsets follow its real height
     setMast(); window.addEventListener('resize', setMast); window.addEventListener('load', setMast);

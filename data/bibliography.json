@@ -20,11 +20,11 @@
     "accessed": "2026-09-09"
   },
   "https://ai.meta.com/blog/meta-mtia-scale-ai-chips-for-billions/": {
-    "title": "Meta mtia scale ai chips for billions (Meta website)",
+    "title": "Four MTIA Chips in Two Years: Scaling AI Experiences for Billions",
     "publisher": "Meta",
+    "date": "2026-03-11",
     "type": "article",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://amkor.com/": {
     "title": "Semiconductor Packaging & Test Services",
@@ -633,11 +633,10 @@
     "accessed": "2026-09-09"
   },
   "https://industrial.panasonic.com/ww/products/pt/megtron": {
-    "title": "Megtron (Panasonic Industry website)",
+    "title": "Multi-layer Circuit Board Materials for ICT infrastructure equipment \"MEGTRON\" series",
     "publisher": "Panasonic Industry",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://inferencex.semianalysis.com/blog/vera-rubin-nvl72-vs-gb200-nvl72-inference": {
     "title": "Vera Rubin NVL72 vs GB200 NVL72? Inference TCO & Architecture Analysis",
@@ -653,32 +652,31 @@
     "accessed": "2026-09-09"
   },
   "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf": {
-    "title": "TSMC 2Q24 Transcript (TSMC website)",
-    "publisher": "TSMC",
-    "type": "pdf",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "title": "Q2 2024 Taiwan Semiconductor Manufacturing Co Ltd Earnings Call (Chinese, English) — edited transcript",
+    "publisher": "Refinitiv StreetEvents (transcript of a TSMC earnings call), via TSMC",
+    "date": "2024-07-18",
+    "type": "transcript",
+    "accessed": "2026-09-09"
   },
   "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf": {
-    "title": "TSMC 3Q25 Transcript (TSMC website)",
-    "publisher": "TSMC",
-    "type": "pdf",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "title": "Q3 2025 Taiwan Semiconductor Manufacturing Co Ltd Earnings Call (Chinese, English) — edited transcript",
+    "publisher": "Refinitiv StreetEvents (transcript of a TSMC earnings call), via TSMC",
+    "date": "2025-10-16",
+    "type": "transcript",
+    "accessed": "2026-09-09"
   },
   "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf": {
-    "title": "TSMC 2Q26 Transcript (TSMC website)",
-    "publisher": "TSMC",
-    "type": "pdf",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "title": "Q2 2026 Taiwan Semiconductor Manufacturing Co Ltd Earnings Call (Chinese, English) — edited transcript",
+    "publisher": "LSEG StreetEvents (transcript of a TSMC earnings call), via TSMC",
+    "date": "2026-07-16",
+    "type": "transcript",
+    "accessed": "2026-09-09"
   },
   "https://investor.tsmc.com/static/annualReports/2025/english/index.html": {
-    "title": "Index (TSMC website)",
+    "title": "TSMC 2025 Annual Report",
     "publisher": "TSMC",
-    "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "type": "report",
+    "accessed": "2026-09-09"
   },
   "https://investor.tsmc.com/static/annualReports/2025/english/pdf/2025_tsmc_ar_e_ch5.pdf": {
     "title": "2025 tsmc ar e ch5 (TSMC website)",
@@ -688,60 +686,57 @@
     "unverified": true
   },
   "https://investors.arm.com/": {
-    "title": "Arm home page",
+    "title": "Investor Relations – Arm®",
     "publisher": "Arm",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://investors.broadcom.com/news-releases/news-release-details/broadcom-announces-extended-partnership-meta-deploy-technology": {
-    "title": "Broadcom announces extended partnership meta deploy technology (Broadcom website)",
+    "title": "Broadcom Announces Extended Partnership with Meta to Deploy Technology to Support Multi-Gigawatts of Meta's Custom Silicon, MTIA",
     "publisher": "Broadcom",
+    "date": "2026-04-14",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://investors.broadcom.com/news-releases/news-release-details/broadcom-ships-tomahawk-5-industrys-highest-bandwidth-switch": {
-    "title": "Broadcom ships tomahawk 5 industrys highest bandwidth switch (Broadcom website)",
+    "title": "Broadcom Ships Tomahawk 5, Industry's Highest Bandwidth Switch Chip to Accelerate AI/ML Workloads",
     "publisher": "Broadcom",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://investors.broadcom.com/news-releases/news-release-details/openai-and-broadcom-announce-strategic-collaboration-deploy-10": {
-    "title": "Openai and broadcom announce strategic collaboration deploy 10 (Broadcom website)",
+    "title": "OpenAI and Broadcom announce strategic collaboration to deploy 10 gigawatts of OpenAI-designed AI accelerators",
     "publisher": "Broadcom",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://investors.micron.com/news/press-release/2025/Micron-Technology-Inc--Reports-Results-for-the-Fourth-Quarter-and-Full-Year-of-Fiscal-2025-09-23-2025/default.aspx": {
-    "title": "Default (Micron Technology website)",
+    "title": "Micron Technology, Inc. Reports Results for the Fourth Quarter and Full Year of Fiscal 2025",
     "publisher": "Micron Technology",
+    "date": "2025-09-23",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Results-for-the-Third-Quarter-of-Fiscal-2026/default.aspx": {
-    "title": "Default (Micron Technology website)",
+    "title": "Micron Technology, Inc. Reports Record Results for the Third Quarter of Fiscal 2026",
     "publisher": "Micron Technology",
+    "date": "2026-06-24",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://investors.ontoinnovation.com/news/news-details/2026/Onto-Innovation-Completes-Strategic-Investment-in-Rigaku-Holdings-Corporation/default.aspx": {
-    "title": "Default (Onto Innovation website)",
+    "title": "Onto Innovation Completes Strategic Investment in Rigaku Holdings Corporation",
     "publisher": "Onto Innovation",
+    "date": "2026-08-10",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://investors.ontoinnovation.com/news/news-details/2026/Onto-Innovation-Reports-2025-Fourth-Quarter-and-Full-Year-Results/default.aspx": {
-    "title": "Default (Onto Innovation website)",
+    "title": "Onto Innovation Reports 2025 Fourth Quarter and Full Year Results",
     "publisher": "Onto Innovation",
+    "date": "2026-02-19",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://investors.teradyne.com/news-events/press-releases/detail/433/teradyne-reports-fourth-quarter-and-full-year-2025-results": {
     "title": "Teradyne Reports Fourth Quarter and Full Year 2025 Results",
@@ -758,25 +753,23 @@
     "accessed": "2026-09-09"
   },
   "https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced": {
-    "title": "Amkor technology breaks ground new semiconductor advanced (Amkor Technology website)",
+    "title": "Amkor Technology Breaks Ground on New Semiconductor Advanced Packaging and Test Campus in Arizona; Expands Investment to $7 Billion",
     "publisher": "Amkor Technology",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://ir.amkor.com/news-releases/news-release-details/tsmc-and-amkor-technology-announce-long-term-partnership": {
-    "title": "Tsmc and amkor technology announce long term partnership (Amkor Technology website)",
+    "title": "TSMC and Amkor Technology Announce Long Term Partnership to Accelerate Advanced Packaging in the United States",
     "publisher": "Amkor Technology",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-third-quarter-2026-results": {
-    "title": "Applied materials announces third quarter 2026 results (Applied Materials website)",
+    "title": "Applied Materials Announces Third Quarter 2026 Results",
     "publisher": "Applied Materials",
+    "date": "2026-08-13",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://ir.kla.com/news-events/press-releases/detail/518/kla-corporation-reports-fiscal-2026-fourth-quarter-and-full": {
     "title": "KLA CORPORATION REPORTS FISCAL 2026 FOURTH QUARTER AND FULL YEAR RESULTS",
@@ -1041,46 +1034,46 @@
     "accessed": "2026-09-09"
   },
   "https://pr.tsmc.com/english/news/3174": {
-    "title": "News 3174 (TSMC website)",
+    "title": "Amkor and TSMC to Expand Partnership and Collaborate on Advanced Packaging in Arizona",
     "publisher": "TSMC",
+    "date": "2024-10-04",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://pr.tsmc.com/english/news/3210": {
-    "title": "News 3210 (TSMC website)",
+    "title": "TSMC Intends to Expand Its Investment in the United States to US$165 Billion to Power the Future of AI",
     "publisher": "TSMC",
+    "date": "2025-03-04",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://pr.tsmc.com/english/news/3228": {
-    "title": "News 3228 (TSMC website)",
+    "title": "TSMC Unveils Next-Generation A14 Process at North America Technology Symposium",
     "publisher": "TSMC",
+    "date": "2025-04-24",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://pr.tsmc.com/english/news/3302": {
-    "title": "News 3302 (TSMC website)",
+    "title": "TSMC Debuts A13 Technology at 2026 North America Technology Symposium",
     "publisher": "TSMC",
+    "date": "2026-04-23",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://pr.tsmc.com/english/news/3326": {
-    "title": "News 3326 (TSMC website)",
+    "title": "TSMC Reports Second Quarter EPS of NT$27.25",
     "publisher": "TSMC",
+    "date": "2026-07-16",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://pr.tsmc.com/english/news/3338": {
-    "title": "News 3338 (TSMC website)",
+    "title": "ASML and TSMC Announce Initiative to Pioneer Industry Transition to Large-Format Photomasks for High NA EUV",
     "publisher": "TSMC",
+    "date": "2026-09-08",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf": {
     "title": "The Mineral Industry of China in 2020-2021",
@@ -1118,11 +1111,10 @@
     "accessed": "2026-09-09"
   },
   "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv": {
-    "title": "Provision",
-    "publisher": "Githubusercontent",
+    "title": "ETO Chip Explorer source data: provision.csv",
+    "publisher": "Center for Security and Emerging Technology (CSET) / Emerging Technology Observatory",
     "type": "dataset",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://rebellions.ai/": {
     "title": "Rebellions",
@@ -1446,11 +1438,10 @@
     "accessed": "2026-09-09"
   },
   "https://www.amphenol.com/markets/it-datacom": {
-    "title": "It datacom (Amphenol website)",
+    "title": "IT Datacom",
     "publisher": "Amphenol",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.ansys.com/products/semiconductors": {
     "title": "Semiconductors (Ansys website)",
@@ -1460,25 +1451,22 @@
     "unverified": true
   },
   "https://www.appliedmaterials.com/eu/en/product-library/kinex-integrated-die-to-wafer-hybrid-bonding-system.html": {
-    "title": "Kinex integrated die to wafer hybrid bonding system (Applied Materials website)",
+    "title": "Kinex",
     "publisher": "Applied Materials",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.appliedmaterials.com/us/en/semiconductor.html": {
-    "title": "Semiconductor (Applied Materials website)",
+    "title": "Semiconductor Systems",
     "publisher": "Applied Materials",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.arista.com/en/solutions/ai-networking": {
-    "title": "Ai networking (Arista Networks website)",
+    "title": "AI Networking Center",
     "publisher": "Arista Networks",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.asetek.com/data-center/": {
     "title": "Data center (Asetek website)",
@@ -1624,25 +1612,25 @@
     "accessed": "2026-09-09"
   },
   "https://www.azcommerce.com/news-events/news/2026/7/tsmc-announcement/": {
-    "title": "Tsmc announcement (Arizona Commerce Authority website)",
+    "title": "TSMC Announces Additional $100 Billion Investment in Arizona",
     "publisher": "Arizona Commerce Authority",
+    "date": "2026-07-16",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.bcg.com/publications/2023/navigating-the-semiconductor-manufacturing-costs": {
-    "title": "Navigating the semiconductor manufacturing costs (Boston Consulting Group website)",
+    "title": "Navigating the Costly Economics of Chip Making",
     "publisher": "Boston Consulting Group",
+    "date": "2023-09-28",
     "type": "report",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.bcg.com/publications/2024/emerging-resilience-in-semiconductor-supply-chain": {
-    "title": "Emerging resilience in semiconductor supply chain (Boston Consulting Group website)",
+    "title": "Emerging Resilience in the Semiconductor Supply Chain",
     "publisher": "Boston Consulting Group",
+    "date": "2024-05-08",
     "type": "report",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.besi.com/fileadmin/data/Investor_Relations/_Semi__Annual_Reports/Annual_Report_2021.pdf": {
     "title": "Annual Report 2021 The Future of Innovation",
@@ -1818,11 +1806,10 @@
     "accessed": "2026-09-09"
   },
   "https://www.cisco.com/site/us/en/products/networking/silicon-one/index.html": {
-    "title": "Index (Cisco Systems website)",
+    "title": "Cisco Silicon One – Processors for Unified Network Architecture",
     "publisher": "Cisco Systems",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.coherent.com/networking": {
     "title": "Networking | Coherent",
@@ -1844,25 +1831,24 @@
     "accessed": "2026-09-09"
   },
   "https://www.commerce.gov/news/press-releases/2024/12/biden-harris-administration-announces-chips-incentives-awards": {
-    "title": "Biden harris administration announces chips incentives awards (U.S. Department of Commerce website)",
+    "title": "Biden-Harris Administration Announces CHIPS Incentives Awards with GlobalWafers to Support Domestic Production of Silicon Wafers",
     "publisher": "U.S. Department of Commerce",
+    "date": "2024-12-17",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.commerce.gov/news/press-releases/2025/11/statement-uae-and-saudi-chip-exports": {
-    "title": "Statement uae and saudi chip exports (U.S. Department of Commerce website)",
+    "title": "Statement on UAE and Saudi Chip Exports",
     "publisher": "U.S. Department of Commerce",
+    "date": "2025-11",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.congress.gov/bill/119th-congress/senate-bill/1705/text": {
-    "title": "Text (U.S. Congress website)",
-    "publisher": "U.S. Congress",
+    "title": "S.1705 – Chip Security Act, 119th Congress (2025-2026), bill text",
+    "publisher": "U.S. Congress (Congress.gov, Library of Congress)",
     "type": "regulation",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.constellationenergy.com/news/2025/constellation-ahead-of-schedule-for-launch-of-crane-clean-energy-center.html": {
     "title": "Constellation Ahead of Schedule for Launch of Crane Clean Energy Center",
@@ -1879,11 +1865,10 @@
     "accessed": "2026-09-09"
   },
   "https://www.corning.com/worldwide/en/products/communication-networks.html": {
-    "title": "Communication networks (Corning website)",
+    "title": "Corning Optical Communications: Fiber Optic Connectivity Solutions",
     "publisher": "Corning",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.credosemi.com/products/": {
     "title": "Products - Credo",
@@ -1992,11 +1977,10 @@
     "accessed": "2026-09-09"
   },
   "https://www.eaton.com/us/en-us/markets/data-centers.html": {
-    "title": "Data centers (Eaton website)",
+    "title": "Data centers: digitalization and efficiency",
     "publisher": "Eaton",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-734/section-734.4": {
     "title": "Federal Register :: Request Access",
@@ -2295,11 +2279,10 @@
     "accessed": "2026-09-09"
   },
   "https://www.foxconn.com/": {
-    "title": "Hon Hai Precision Industry (Foxconn) home page",
+    "title": "首頁 — 鴻海科技集團 (Hon Hai Technology Group home page)",
     "publisher": "Hon Hai Precision Industry (Foxconn)",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.fujifilm.com/jp/en/news/hq/11842": {
     "title": "Fujifilm Launches EUV Resist and EUV Developer",
@@ -2357,25 +2340,25 @@
     "unverified": true
   },
   "https://www.globenewswire.com/news-release/2024/07/08/2909540/0/en/applied-materials-unveils-chip-wiring-innovations-for-more-energy-efficient-computing.html": {
-    "title": "Applied materials unveils chip wiring innovations for more energy efficient computing (GlobeNewswire website)",
-    "publisher": "GlobeNewswire",
+    "title": "Applied Materials Unveils Chip Wiring Innovations for More Energy-Efficient Computing",
+    "publisher": "GlobeNewswire (release by Applied Materials)",
+    "date": "2024-07-08",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.globenewswire.com/news-release/2025/12/10/3203040/0/en/Photronics-Reports-Full-Year-and-Fourth-Quarter-Fiscal-2025-Results.html": {
-    "title": "Photronics Reports Full Year and Fourth Quarter Fiscal 2025 Results (GlobeNewswire website)",
-    "publisher": "GlobeNewswire",
+    "title": "Photronics Reports Full Year and Fourth Quarter Fiscal 2025 Results",
+    "publisher": "GlobeNewswire (release by Photronics)",
+    "date": "2025-12-10",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.globenewswire.com/news-release/2026/08/13/3344890/0/en/applied-materials-announces-third-quarter-2026-results.html": {
-    "title": "Applied materials announces third quarter 2026 results (GlobeNewswire website)",
-    "publisher": "GlobeNewswire",
+    "title": "Applied Materials Announces Third Quarter 2026 Results",
+    "publisher": "GlobeNewswire (release by Applied Materials)",
+    "date": "2026-08-13",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.government.nl/documents/2025/11/19/update-on-invoking-goods-availability-act": {
     "title": "Update on invoking Goods Availability Act",
@@ -2466,11 +2449,10 @@
     "accessed": "2026-09-09"
   },
   "https://www.hitachi-hightech.com/global/en/products/semiconductor-manufacturing/": {
-    "title": "Semiconductor manufacturing (Hitachi High-Tech website)",
+    "title": "Semiconductor Manufacturing Equipment",
     "publisher": "Hitachi High-Tech",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.hitachienergy.com/products-and-solutions/transformers": {
     "title": "Transformers | Hitachi Energy",
@@ -2504,11 +2486,10 @@
     "accessed": "2026-09-09"
   },
   "https://www.hpe.com/us/en/servers.html": {
-    "title": "Servers (Hewlett Packard Enterprise website)",
+    "title": "Compute Solutions",
     "publisher": "Hewlett Packard Enterprise",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.hscpoly.com/": {
     "title": "Home - Hemlock Semiconductor",
@@ -2518,11 +2499,10 @@
     "accessed": "2026-09-09"
   },
   "https://www.huahonggrace.com/": {
-    "title": "Hua Hong Semiconductor home page",
+    "title": "华虹宏力半导体有限公司 (Hua Hong Grace Semiconductor home page)",
     "publisher": "Hua Hong Semiconductor",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.huawei.com/en/news/2025/9/hc-superpod-innovation": {
     "title": "Huawei Launches Open-Access SuperPoD Architecture for All-Scenario Computing - Huawei",
@@ -2534,12 +2514,6 @@
     "title": "Groundbreaking SuperPoD Interconnect: Leading a New Paradigm for AI Infrastructure - Huawei",
     "publisher": "Huawei",
     "type": "press release",
-    "accessed": "2026-09-09"
-  },
-  "https://www.humanityslastmachine.com/": {
-    "title": "Humanity's Last Machine",
-    "publisher": "Humanityslastmachine",
-    "type": "page",
     "accessed": "2026-09-09"
   },
   "https://www.hygon.cn/": {
@@ -2678,18 +2652,17 @@
     "accessed": "2026-09-09"
   },
   "https://www.intel.com/content/www/us/en/content-details/817486/intel-gaudi-3-ai-accelerator-white-paper.html": {
-    "title": "Intel gaudi 3 ai accelerator white paper (Intel website)",
+    "title": "Intel® Gaudi® 3 AI Accelerator White Paper",
     "publisher": "Intel",
-    "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "date": "2025-07-14",
+    "type": "report",
+    "accessed": "2026-09-09"
   },
   "https://www.intel.com/content/www/us/en/foundry/overview.html": {
-    "title": "Overview (Intel website)",
-    "publisher": "Intel",
+    "title": "Semiconductor Manufacturing Company for the AI Era",
+    "publisher": "Intel Foundry",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.intel.com/content/www/us/en/newsroom/news/intel-foundry/intel-foundry-asml-accelerate-industry-readiness-for-high-na-euv.html": {
     "title": "Intel foundry asml accelerate industry readiness for high na euv (Intel website)",
@@ -2706,11 +2679,11 @@
     "unverified": true
   },
   "https://www.intel.com/pressroom/archive/releases/2007/20070128comp.htm": {
-    "title": "20070128comp (Intel website)",
+    "title": "Intel's Transistor Technology Breakthrough Represents Biggest Change to Computer Chips in 40 Years",
     "publisher": "Intel",
-    "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "date": "2007-01-27",
+    "type": "press release",
+    "accessed": "2026-09-09"
   },
   "https://www.inventec.com/": {
     "title": "英業達",
@@ -2728,29 +2701,28 @@
     "title": "JCET Group home page",
     "publisher": "JCET Group",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.jcetglobal.com/en/site/news-detail?id=1952": {
-    "title": "News detail (JCET Group website)",
+    "title": "JCET Releases 2024 Annual Report, Achieves Record-High Revenue",
     "publisher": "JCET Group",
-    "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "date": "2025-04-20",
+    "type": "press release",
+    "accessed": "2026-09-09"
   },
   "https://www.jedec.org/news/pressreleases/jedec%C2%AE-and-industry-leaders-collaborate-release-jesd270-4-hbm4-standard-advancing": {
-    "title": "Jedec® and industry leaders collaborate release jesd270 4 hbm4 standard advancing (JEDEC Solid State Technology Association website)",
+    "title": "JEDEC® and Industry Leaders Collaborate to Release JESD270-4 HBM4 Standard: Advancing Bandwidth, Efficiency, and Capacity for AI and HPC",
     "publisher": "JEDEC Solid State Technology Association",
+    "date": "2025-04-16",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.jedec.org/news/pressreleases/new-jedec%C2%AE-sphbm4-standard-enables-hbm4-class-bandwidth-organic-substrates": {
-    "title": "New jedec® sphbm4 standard enables hbm4 class bandwidth organic substrates (JEDEC Solid State Technology Association website)",
+    "title": "New JEDEC® SPHBM4 Standard Enables HBM4-Class Bandwidth on Organic Substrates",
     "publisher": "JEDEC Solid State Technology Association",
+    "date": "2026-07-13",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.jenoptik.com/markets/semiconductor-equipment": {
     "title": "Optical systems as the key to your semiconductor technology",
@@ -2896,11 +2868,10 @@
     "accessed": "2026-09-09"
   },
   "https://www.marvell.com/company/investor-relations.html": {
-    "title": "Investor relations (Marvell Technology website)",
+    "title": "Investor Relations, Marvell Technology, Inc. (MRVL)",
     "publisher": "Marvell Technology",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.metax-tech.com/en/": {
     "title": "MetaX",
@@ -3054,11 +3025,10 @@
     "accessed": "2026-09-09"
   },
   "https://www.npc.com.tw/": {
-    "title": "Nan Ya PCB home page",
-    "publisher": "Nan Ya PCB",
+    "title": "南亞塑膠工業股份有限公司 (Nan Ya Plastics Corporation home page)",
+    "publisher": "Nan Ya Plastics Corporation",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.nsig.com/en/": {
     "title": "National Silicon Industry Group (NSIG) home page",
@@ -3161,11 +3131,10 @@
     "accessed": "2026-09-09"
   },
   "https://www.primarius-tech.com/en/": {
-    "title": "Primarius Technologies home page",
+    "title": "PRIMARIUS",
     "publisher": "Primarius Technologies",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-fourth-quarter-and-the-full-year-of-2025-302679779.html": {
     "title": "ASE Technology Holding Co., Ltd. Reports Its Unaudited Consolidated Financial Results for the Fourth Quarter and the Full Year of 2025",
@@ -3255,21 +3224,24 @@
     "accessed": "2026-09-09"
   },
   "https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/": {
-    "title": "reuters.com",
+    "title": "Explainer: The $400 million ASML 'printers' key for the AI chip boom",
     "publisher": "Reuters",
-    "type": "page",
+    "date": "2026-01-28",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/": {
-    "title": "reuters.com",
+    "title": "China starts production of home-grown immersion DUV chipmaking tools, source says",
     "publisher": "Reuters",
-    "type": "page",
+    "date": "2026-07-28",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://www.reuters.com/world/china/how-china-built-its-manhattan-project-rival-west-ai-chips-2025-12-17/": {
-    "title": "reuters.com",
+    "title": "How China built its 'Manhattan Project' to rival the West in AI chips",
     "publisher": "Reuters",
-    "type": "page",
+    "date": "2025-12-17",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://www.rieti.go.jp/en/columns/v01_0201.html": {
@@ -3767,18 +3739,18 @@
     "unverified": true
   },
   "https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025": {
-    "title": "SEMI Reports Global Semiconductor Equipment Billings Reached 135 Billion in 2025 (SEMI website)",
+    "title": "SEMI Reports Global Semiconductor Equipment Billings Reached $135 Billion in 2025, Up 15% Year-on-Year",
     "publisher": "SEMI",
-    "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "date": "2026-04-07",
+    "type": "press release",
+    "accessed": "2026-09-09"
   },
   "https://www.semi.org/en/news-media-press-releases/semi-press-releases/global-semiconductor-fab-capacity-projected-to-expand-6%25-in-2024-and-7%25-in-2025-semi-reports": {
-    "title": "Global semiconductor fab capacity projected to expand 6% in 2024 and 7% in 2025 semi reports (SEMI website)",
+    "title": "Global Semiconductor Fab Capacity Projected to Expand 6% in 2024 and 7% in 2025, SEMI Reports",
     "publisher": "SEMI",
+    "date": "2024-06-18",
     "type": "press release",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/": {
     "title": "Global Annual Semiconductor Sales Increase 25.6% to $791.7 Billion in 2025 - Semiconductor Industry Association",
@@ -3901,18 +3873,16 @@
     "unverified": true
   },
   "https://www.smics.com/en/site/mask": {
-    "title": "Mask (SMIC website)",
+    "title": "Mask Service",
     "publisher": "SMIC",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.smics.com/en/site/news_read/7951": {
-    "title": "News read 7951 (SMIC website)",
+    "title": "SMIC Announces 2025 Annual Results",
     "publisher": "SMIC",
-    "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "type": "press release",
+    "accessed": "2026-09-09"
   },
   "https://www.soitec.com/en/products": {
     "title": "Products | Soitec",
@@ -3979,11 +3949,10 @@
     "accessed": "2026-09-09"
   },
   "https://www.supermicro.com/en/products/gpu": {
-    "title": "Gpu (Supermicro website)",
+    "title": "GPU Servers For AI, Deep / Machine Learning & HPC",
     "publisher": "Supermicro",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.suss.com/en/products-solutions": {
     "title": "Products / Solutions",
@@ -4085,32 +4054,28 @@
     "accessed": "2026-09-09"
   },
   "https://www.tsmc.com/english/dedicatedFoundry/manufacturing/fab_capacity": {
-    "title": "Fab capacity (TSMC website)",
+    "title": "Fab Capacity",
     "publisher": "TSMC",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.tsmc.com/english/dedicatedFoundry/manufacturing/gigafab": {
-    "title": "Gigafab (TSMC website)",
+    "title": "GIGAFAB® Facilities",
     "publisher": "TSMC",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm": {
-    "title": "L 2nm (TSMC website)",
+    "title": "2nm Technology",
     "publisher": "TSMC",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech": {
-    "title": "Platform HPC tech advancedTech (TSMC website)",
+    "title": "HPC Platform – Advanced Technologies",
     "publisher": "TSMC",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.ttm.com/": {
     "title": "Advanced PCB Manufacturer & RF Supplier",
@@ -4194,11 +4159,10 @@
     "accessed": "2026-09-09"
   },
   "https://www.wacker.com/cms/en-us/products/product-groups/polysilicon/polysilicon.html": {
-    "title": "Polysilicon (Wacker Chemie website)",
+    "title": "Polysilicon",
     "publisher": "Wacker Chemie",
     "type": "page",
-    "accessed": "2026-09-09",
-    "unverified": true
+    "accessed": "2026-09-09"
   },
   "https://www.whitehouse.gov/fact-sheets/2025/05/fact-sheet-president-donald-j-trump-secures-200-billion-in-new-u-s-uae-deals-and-accelerates-previously-committed-1-4-trillion-uae-investment/": {
     "title": "Fact Sheet: President Donald J. Trump Secures $200 Billion in New U.S.-UAE Deals and Accelerates Previously Committed $1.4 Trillion UAE Investment",
