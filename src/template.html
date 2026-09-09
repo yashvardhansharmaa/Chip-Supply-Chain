@@ -56,6 +56,7 @@
         <h1 class="thesis">{{THESIS}}</h1>
         <p class="dek">{{SUBTITLE}}</p>
       </div>
+      {{START_HERE}}
       <div class="chain" id="chain">
         <div class="chain-head"><h2>The chain, scored</h2><p>Bar height is the chokepoint score, 1 to 5.</p><div class="chain-key"><span><i style="background:var(--bar-5)"></i>5 of 5</span><span><i style="background:var(--bar-4)"></i>4</span><span><i style="background:var(--bar-3)"></i>3 or less</span></div></div>
         {{CHAIN}}
@@ -138,6 +139,11 @@
       <p class="matrix-note" id="exposure-note">{{EXPOSURE_NOTE}}</p>
       </div>
     </section>
+
+    <section class="view column wide" data-view="walk" hidden>{{WALK}}</section>
+    <section class="view column wide" data-view="methods" hidden>{{METHODS}}</section>
+    <section class="view column wide" data-view="summary-a" hidden>{{SUMMARY_A}}</section>
+    <section class="view column wide" data-view="summary-b" hidden>{{SUMMARY_B}}</section>
 
     <section class="view column wide" data-view="glossary" hidden>
       <div class="view-head">

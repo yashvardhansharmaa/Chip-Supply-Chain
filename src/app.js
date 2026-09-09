@@ -193,7 +193,8 @@
   };
 
   /* ---------------- router ---------------- */
-  var VIEWS = ['stack', 'briefing', 'landscape', 'suppliers', 'geopolitics', 'controls', 'exposure', 'glossary', 'sources'];
+  var VIEWS = ['stack', 'briefing', 'landscape', 'suppliers', 'geopolitics', 'controls', 'exposure', 'glossary', 'sources', 'walk', 'methods', 'summary-a', 'summary-b'];
+  var MODULE_VIEWS = {}; // modules register { activate(), stage: bool } per view through window.CP.register
   var Router = {
     current: null,
     init: function () {
@@ -204,7 +205,7 @@
       this.route();
     },
     route: function () {
-      var h = location.hash || '#/', m = h.match(/^#\/([a-z]+)/), v = 'stack';
+      var h = location.hash || '#/', m = h.match(/^#\/([a-z-]+)/), v = 'stack';
       if (m && VIEWS.indexOf(m[1]) >= 0) v = m[1];
       var sub = null; // the Controls page has two sections; #/exposure opens the second
       if (v === 'exposure') { v = 'controls'; sub = 'exposure'; } else if (v === 'controls') sub = 'thresholds';
@@ -217,7 +218,9 @@
       $$('.view').forEach(function (s) { s.hidden = s.getAttribute('data-view') !== v; });
       $$('.tabs a').forEach(function (a) { var dv = a.getAttribute('data-view'); var on = dv === v; if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
       var rail = $('.rail'); if (rail && v !== 'stack') rail.setAttribute('data-show', '0');
-      Stage.setVisible(v === 'stack' || v === 'landscape' || v === 'geopolitics');
+      var mv = MODULE_VIEWS[v];
+      Stage.setVisible(v === 'stack' || v === 'landscape' || v === 'geopolitics' || !!(mv && mv.stage));
+      if (mv && mv.activate) { try { mv.activate(); } catch (err) { console.warn('view module failed', v, err); } }
       if (v === 'landscape') Landscape.activate();
       else if (v === 'geopolitics') Geo.activate();
       else if (v === 'suppliers') Suppliers.activate();
@@ -236,7 +239,7 @@
         }
         Sections.update();
       }
-      document.title = v === 'stack' ? 'Compute Chokepoints' : 'Compute Chokepoints · ' + { briefing: 'Summary', landscape: 'AI Chips', suppliers: 'Suppliers', geopolitics: 'Geopolitics', controls: sub === 'exposure' ? 'China exposure' : 'Controls', glossary: 'Glossary', sources: 'Sources' }[v];
+      document.title = v === 'stack' ? 'Compute Chokepoints' : 'Compute Chokepoints · ' + { briefing: 'Summary', landscape: 'AI Chips', suppliers: 'Suppliers', geopolitics: 'Geopolitics', controls: sub === 'exposure' ? 'China exposure' : 'Controls', walk: 'How a GPU is made', methods: 'Methods', 'summary-a': 'Summary A', 'summary-b': 'Summary B', glossary: 'Glossary', sources: 'Sources' }[v];
     }
   };
 
@@ -617,6 +620,9 @@
     }
   };
 
+  // public surface for the module files concatenated after this one (src/modules/*.js)
+  window.CP = { Stage: Stage, Router: Router, Sections: Sections, Tools: Tools, Band: Band, DATA: DATA, $: $, $$: $$, esc: esc, narrow: narrow,
+    register: function (view, def) { MODULE_VIEWS[view] = def; if (Router.current === view && def.activate) def.activate(); } };
   function boot() {
     // QA aid: ?only=<chapter-id> shows just that chapter at the top of the page (screenshots in a hidden pane only paint the first frame)
     try { var only = new URLSearchParams(location.search).get('only'); if (only && document.getElementById(only)) { document.documentElement.classList.add('dbg-only'); document.getElementById(only).classList.add('only'); } } catch (e) { }
