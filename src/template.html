@@ -95,17 +95,17 @@
       <div class="sup-wrap"><table class="sup" id="sup-table"></table></div>
     </section>
 
-    <section class="view column" data-view="geopolitics" hidden data-specimen="globe" data-caption="The world with the chain's chokepoint towns pinned in copper, taller where the link is narrower, and the towns building substitutes pinned in ink: Beijing, Wuhan, Shenzhen, Hefei and Dresden.">
+    <section class="view column" data-view="geopolitics" hidden data-specimen="globe" data-caption="The chain's chokepoint towns, pinned in copper and taller where fewer suppliers exist. The towns building substitutes are pinned in dark: Beijing, Wuhan, Shenzhen, Hefei and Dresden.">
       <div class="view-head">
         <h2>Geopolitics</h2>
         <p class="dek">{{GEO_DEK}}</p>
       </div>
       <div class="prose">{{GEO_BODY}}</div>
       <h3 class="label" style="margin: 44px 0 6px">Who holds each stage</h3>
-      <p style="max-width: 66ch; color: var(--ink-2); font-size: 17px">Share of each segment by country. Darker cells are larger shares. We convert firm shares to country shares where needed; hover a row for the method and source.</p>
+      <p style="max-width: 66ch; color: var(--ink-2); font-size: 17px">How much of each segment each country holds. Darker cells are larger shares. Where the source counts firms, we credit each firm's share to its home country; hover a row for the method and the source.</p>
       <div class="matrix-wrap"><table class="matrix" id="matrix"></table></div>
       <p class="matrix-note" id="matrix-note"></p>
-      <h3 class="label" style="margin: 44px 0 6px">The control regime, event by event</h3>
+      <h3 class="label" style="margin: 44px 0 6px">The contest, event by event</h3>
       <div id="tl-filters" class="chips tl-filters" role="group" aria-label="Filter events"></div>
       <ol class="timeline" id="timeline"></ol>
     </section>
@@ -120,22 +120,22 @@
 
     <section class="view column wide" data-view="controls" hidden>
       <div class="view-head">
-        <h2>The Controls</h2>
+        <h2>Export Controls</h2>
         <p class="dek">{{CONTROLS_DEK}}</p>
       </div>
-      <nav class="subtabs" id="controls-subtabs" aria-label="Controls sections"><a href="#/controls" data-sub="thresholds" aria-current="true">Threshold map</a><a href="#/exposure" data-sub="exposure">China exposure, from filings</a></nav>
+      <nav class="subtabs" id="controls-subtabs" aria-label="Controls sections"><a href="#/controls" data-sub="thresholds" aria-current="true">Licence thresholds</a><a href="#/exposure" data-sub="exposure">China revenue share</a></nav>
       <div class="sub" data-sub="thresholds">
-      <h3 class="label" style="margin: 10px 0 6px">Threshold map</h3>
-      <p class="controls-intro">Every quantitative line that decides whether a chip or a tool needs a licence: the parameter, the value, where it applies, its status and the rule that set it. Filter by regime.</p>
+      <h3 class="label" style="margin: 10px 0 6px">Licence thresholds</h3>
+      <p class="controls-intro">Every number that decides whether a chip or a tool needs an export licence: what is measured, the value, where the rule applies, whether it is still in force, and the rule that set it. Filter by regime.</p>
       <div id="controls-chips" class="chips" role="group" aria-label="Filter by regime"></div>
       <div class="sup-toolbar"><span class="count" id="controls-count"></span></div>
       <div class="sup-wrap"><table class="sup" id="controls-table"></table></div>
       </div>
       <div class="sub" data-sub="exposure" hidden>
-      <h3 class="label" style="margin: 10px 0 6px">China exposure, from filings</h3>
-      <p class="controls-intro">Share of each controlled-tool or chip vendor's revenue that came from China, computed from the absolute figures in the company's own filings. The ranking compares each firm's latest fiscal year with its first; the panels trace every year against the three US rule dates. Hover a point for the filed figures, click it for the filing.</p>
+      <h3 class="label" style="margin: 10px 0 6px">China share of revenue, from company filings</h3>
+      <p class="controls-intro">How much of each firm's revenue came from China, worked out from the absolute figures in its own filings. The ranking compares each firm's first year on file with its latest; the panels below trace every year against the three US rule dates. Hover a point for the filed figures, click it to open the filing.</p>
       <div id="exposure-viz">{{EXPOSURE_VIZ}}</div>
-      <details class="table-view"><summary>Table view</summary><div class="matrix-wrap"><table class="matrix" id="exposure-table"></table></div></details>
+      <details class="table-view"><summary>Show the same figures as a table</summary><div class="matrix-wrap"><table class="matrix" id="exposure-table"></table></div></details>
       <p class="matrix-note" id="exposure-note">{{EXPOSURE_NOTE}}</p>
       </div>
     </section>
@@ -148,7 +148,7 @@
     <section class="view column wide" data-view="glossary" hidden>
       <div class="view-head">
         <h2>Glossary</h2>
-        <p class="dek">{{GLOSSARY_COUNT}} terms in plain language, each with one line on why it matters for policy or investment and a link to the chapter where it lives.</p>
+        <p class="dek">{{GLOSSARY_COUNT}} terms in plain language, each with a line on why it matters for policy or investment and a link to the chapter where it comes up.</p>
       </div>
       <div class="filters"><input id="gl-search" type="search" placeholder="Filter terms…" aria-label="Filter glossary"></div>
       <dl class="glossary" id="glossary">{{GLOSSARY}}</dl>

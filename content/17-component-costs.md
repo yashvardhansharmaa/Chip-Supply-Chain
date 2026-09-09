@@ -72,12 +72,12 @@ Building a Blackwell B200 costs about $6,400. Nvidia sells it for $30,000 to $40
 
 ## How it works
 
-An accelerator's bill of materials works like a car's. The engine is the famous part, but the battery, the gearbox and the assembly line are what the bill is made of. The logic chip everyone names is about a seventh of the cost of building one, the stacked memory beside it is nearly half, and the packaging that binds them costs more than the chip. Those parts come from very few firms, which is where a regulator has the most purchase.
+A bill of materials is the list of parts inside a product and what each one costs to build. For an AI accelerator, the famous logic chip is the cheap part, about a seventh of the total. The stacked memory beside it is nearly half, and the packaging that wires the two together costs more than the chip. Three firms in the world make that memory and one Taiwanese firm does that packaging, so the costliest parts are also the scarcest, and that is where a government has the most purchase.
 
-Die cost is set by the wafer price, the number of dies that fit on a wafer, and the share of those that work.
+Three numbers set the cost of a die, the finished rectangle of circuitry cut out of a wafer: the price of the wafer, how many dies fit on it, and how many of those work.
 
 - **Wafer price.** TSMC does not publish it. Epoch AI's model of Blackwell's custom TSMC 4NP process ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)) assumes about $17,000 for a 300 mm wafer ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
-- **Dies per wafer.** A wafer is a circle and dies are rectangles, so an 800 mm2 die, near the largest a scanner can print in one shot, steps out to 68 whole dies.
+- **Dies per wafer.** A wafer is a circle and dies are rectangles, so the edge of the disc goes to waste: an 800 mm2 die, near the largest a scanner can print in one shot, fits 68 times.
 - **Yield.** Defects land at random, so a bigger die is likelier to catch one. Epoch AI models the Blackwell die at 40 to 70 percent good, centred on 60 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
 
 Run those three numbers and the two dies inside a B200 come to about $900, 14 percent of the build ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Doubling the wafer price moves the whole bill by a few hundred dollars.
@@ -86,11 +86,11 @@ Run those three numbers and the two dies inside a B200 come to about $900, 14 pe
 
 ### Memory is the bill
 
-The 192 GB of HBM3E beside those dies is the single largest line: about $2,900, 45 percent of the build, at $14 to $17 per gigabyte ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). It is also the line the buyer controls least. Three firms make HBM and they sell every stack they can build; Micron's gross margin, further down this page, shows what that is worth to a seller.
+The 192 GB of high-bandwidth memory stacked beside those dies, sold as HBM3E, is the single largest line: about $2,900, 45 percent of the build, at $14 to $17 per gigabyte ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). It is also the line Nvidia controls least. Three firms make that memory and they sell every stack they can build; Micron's gross margin, further down this page, shows what that is worth to a seller.
 
 ### Packaging, substrate and test
 
-CoWoS-L packaging adds about $1,100, more than the logic dies it carries ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Packaging yield runs 65 to 95 percent, and a package that fails after memory attach throws away the dies and the HBM with it, adding roughly $1,000 to every B200 that ships ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Substrate, board, test and assembly add $480 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). See Advanced packaging on why that capacity binds first.
+CoWoS-L, the TSMC process that mounts the dies and the memory stacks on one carrier and wires them together, adds about $1,100, more than the logic dies it carries ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Packaging yield runs 65 to 95 percent, and a package that fails after the memory goes on throws away the dies and the memory with it, adding roughly $1,000 to every B200 that ships ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Substrate, board, test and assembly add $480 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). See Advanced packaging for why that capacity binds first.
 
 ### The B200 bill of materials
 
@@ -104,15 +104,15 @@ CoWoS-L packaging adds about $1,100, more than the logic dies it carries ([sourc
 | Manufacturing cost | ~$6,400 | $5,700-7,300 |
 | Selling price | $30,000-40,000 | |
 
-Epoch AI builds these as distributions, not point estimates, deriving the packaging line from TSMC's advanced packaging revenue and Nvidia's share of CoWoS capacity ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Nothing of that quality exists for the H100 or Rubin, so the table carries one generation only.
+Epoch AI models each line as a range rather than a single figure, deriving the packaging line from TSMC's advanced packaging revenue and Nvidia's share of CoWoS capacity ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Nothing of that quality exists for the H100 or Rubin, so the table carries one generation only.
 
 {{figure:b200-bom}}
 
 ### From package to rack to cluster
 
-At rack scale the useful number becomes cost of ownership. SemiAnalysis puts a Vera Rubin NVL72 at $3.57 per GPU-hour against $1.84 for a GB200 and $2.36 for a GB300 in the operator case ([source](https://inferencex.semianalysis.com/blog/vera-rubin-nvl72-vs-gb200-nvl72-inference)). Each generation costs its owner more per GPU-hour than the last, and the buyer pays because throughput rises faster than the hourly rate.
+Buy a whole rack and the number that matters becomes what an hour of it costs to own. For an operator that owns the rack, SemiAnalysis puts a Vera Rubin NVL72 at $3.57 per GPU-hour, against $1.84 for a GB200 and $2.36 for a GB300 ([source](https://inferencex.semianalysis.com/blog/vera-rubin-nvl72-vs-gb200-nvl72-inference)). Each generation costs its owner more per GPU-hour than the last, and buyers pay because throughput rises faster than the rate.
 
-One level up again, a 100,000 H100 cluster carries over $4B of server capex, draws about 150 MW, burns 1.59 TWh a year, pays $123.9M for power and needs 98,304 optical transceivers ([source](https://newsletter.semianalysis.com/p/100000-h100-clusters-power-network)).
+One level up, a 100,000 H100 cluster carries over $4B of server capex, draws about 150 MW, burns 1.59 TWh a year, pays $123.9M for power and needs 98,304 optical transceivers ([source](https://newsletter.semianalysis.com/p/100000-h100-clusters-power-network)).
 
 ## Who captures the value
 
@@ -135,23 +135,23 @@ SK hynix publishes no gross margin. Its operating margin hit 76 percent in the J
 
 {{figure:gross-margins}}
 
-Design, inspection and leading-edge wafers earn 50 to 75 points, substrates 36, assembly and test 17 to 21. In 2026 memory passed all of them. Micron's gross margin was 39.8 percent for the year to August 2025 ([source](https://investors.micron.com/news/press-release/2025/Micron-Technology-Inc--Reports-Results-for-the-Fourth-Quarter-and-Full-Year-of-Fiscal-2025-09-23-2025/default.aspx)) and 84.6 percent in the quarter to May 2026 ([source](https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Results-for-the-Third-Quarter-of-Fiscal-2026/default.aspx)), so the margin moved upstream to Nvidia's suppliers.
+Design, inspection and leading-edge wafers earn gross margins of 50 to 75 percent, substrates 36, assembly and test 17 to 21. In 2026 memory passed all of them: Micron earned 39.8 percent for the year to August 2025 ([source](https://investors.micron.com/news/press-release/2025/Micron-Technology-Inc--Reports-Results-for-the-Fourth-Quarter-and-Full-Year-of-Fiscal-2025-09-23-2025/default.aspx)) and 84.6 percent in the quarter to May 2026 ([source](https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Results-for-the-Third-Quarter-of-Fiscal-2026/default.aspx)). The margin moved up the chain, to Nvidia's suppliers.
 
-The industry totals disagree with each other, which sets the error bar on this section. WSTS forecast $772 billion of global semiconductor sales for 2025 ([source](https://www.wsts.org/76/103/Global-Semiconductor-Market-Approaches-1T-in-2026)) and SIA counted $791.7 billion ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)). WSTS puts 2026 at $975 billion, with memory and logic each growing more than 30 percent ([source](https://www.wsts.org/76/103/Global-Semiconductor-Market-Approaches-1T-in-2026)). Below those totals sit $135.1B of equipment billings ([source](https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025)), and capex at Alphabet, Amazon, Meta, Microsoft and Oracle of $448.3B in 2025, tracking $770B in 2026 ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)).
+The two bodies that count this industry disagree, which sets the error bar here. World Semiconductor Trade Statistics forecast $772 billion of global chip sales for 2025 ([source](https://www.wsts.org/76/103/Global-Semiconductor-Market-Approaches-1T-in-2026)); the Semiconductor Industry Association counted $791.7 billion ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)). The forecasters put 2026 at $975 billion, with memory and logic each growing more than 30 percent ([source](https://www.wsts.org/76/103/Global-Semiconductor-Market-Approaches-1T-in-2026)). Below those totals sit $135.1B of equipment billings ([source](https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025)) and $448.3B of 2025 capital spending at Alphabet, Amazon, Meta, Microsoft and Oracle, on track for $770B in 2026 ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)).
 
 {{figure:market-2025}}
 
 ## The chokepoint
 
-Per unit of compute, logic still gets cheaper. Everything wrapped around the die gets dearer. HBM is 45 percent of a B200 build ([source](https://epoch.ai/data-insights/b200-cost-breakdown)), packaging and its scrap cost more than twice the logic dies, and a GB300 NVL72 rack already draws 142 kW ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
+Per unit of compute, logic keeps getting cheaper and everything wrapped around it gets dearer. Memory is 45 percent of a B200 build ([source](https://epoch.ai/data-insights/b200-cost-breakdown)), packaging and its scrap cost more than twice the logic dies, and a GB300 NVL72 rack already draws 142 kW ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
 
 | Stage | Class | Why |
 |---|---|---|
 | EUV lithography | Structurally expensive | One supplier; price set by a twenty-year optics curve. |
 | Masks and pellicles | Structurally expensive | Scales with layer count; every design pays again. |
 | Metrology and inspection | Structurally expensive | Inspection time rises faster than throughput. |
-| HBM | Structurally expensive | Stacking and TSVs cut good die per wafer. |
-| Advanced packaging, CoWoS-L | Structurally expensive | 65 to 95 percent packaging yield; scrap kills dies and HBM. |
+| HBM | Structurally expensive | Stacking and through-silicon vias cut good die per wafer. |
+| Advanced packaging, CoWoS-L | Structurally expensive | 65 to 95 percent packaging yield; scrap destroys dies and memory. |
 | Power and cooling plant | Structurally expensive | Priced by grid queues and turbine lead times. |
 | Leading-edge logic wafers | Compressible with scale | Defect density and utilisation improve through a ramp. |
 | Design and EDA | Compressible with scale | Engineering cost amortises across volume. |
@@ -167,12 +167,12 @@ The classification is ours; its yield and margin figures are cited above.
 ## Key evaluation criteria
 
 - **Cost per good die.** A 30 percent wafer price rise at constant yield is survivable. A ten-point yield drop on an 800 mm2 die is not.
-- **HBM dollars per gigabyte, and gigabytes per part.** The largest line on the bill, set by three firms.
-- **Packaging yield.** A package that fails after memory attach destroys the most valuable parts inside it ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
-- **Share of the bill the vendor does not control.** Nvidia sets its own margin but buys HBM, CoWoS and substrates at another firm's price.
+- **Memory dollars per gigabyte, and gigabytes per part.** The largest line on the bill, set by three firms.
+- **Packaging yield.** Every point lost throws away finished dies and the memory attached to them ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
+- **Share of the bill the vendor does not control.** Nvidia sets its own margin but buys memory, packaging and substrates at another firm's price.
 - **Rack watts.** Past about 140 kW a rack, power and cooling capex grows faster than accelerator capex ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
-- **Compressibility class.** The test is whether the line falls when volume doubles. If it does not, capacity is the constraint.
+- **Compressibility class.** Does the line fall when volume doubles? If not, capacity is the constraint.
 
 ## Takeaways
 
-On a B200 the logic dies are 14 percent of the build, HBM 45, and packaging with its scrap another 33 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Nvidia's 75 percent gross margin is the most visible number in the chain ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027)), and a custom ASIC can attack it by buying the same wafers and the same HBM. The lines underneath are harder to attack. HBM stacking yield, CoWoS interposer yield and the megawatts do not get cheaper as volume rises, and that is why we treat them as chokepoints.
+On a B200 the logic dies are 14 percent of the build, memory 45, and packaging with its scrap another 33 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Nvidia's 75 percent gross margin is the most visible number in the chain ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027)), and a custom chip can attack it by buying the same wafers and the same memory. The lines underneath are harder to attack: memory stacking yield, CoWoS interposer yield and the megawatts do not get cheaper as volume rises, which is why we treat them as chokepoints.
