@@ -164,6 +164,30 @@
     }
   };
 
+
+  /* ---------------- phone specimen strip: a bottom bar with a live thumbnail; Show expands it; Contents opens the sheet ---------------- */
+  var Band = {
+    el: null, collapsed: true,
+    init: function () {
+      var self = this; this.el = $('.stage'); if (!this.el) return;
+      var toggle = $('.stage-toggle'), menu = $('.stage-menu'), sheet = $('#sheet');
+      this.set(true);
+      if (toggle) toggle.addEventListener('click', function () { self.set(!self.collapsed); });
+      var open = function (v) { if (!sheet) return; sheet.hidden = !v; document.documentElement.style.overflow = v ? 'hidden' : ''; if (v) { var c = $('.sheet-close'); if (c) c.focus(); } };
+      if (menu) menu.addEventListener('click', function () { open(true); });
+      if (sheet) {
+        sheet.addEventListener('click', function (e) { if (e.target.closest('a') || e.target.closest('.sheet-close')) { open(false); self.set(true); } });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) open(false); });
+      }
+      window.addEventListener('resize', function () { if (!narrow()) { open(false); self.set(true); } });
+    },
+    set: function (collapsed) {
+      this.collapsed = collapsed;
+      this.el.setAttribute('data-collapsed', collapsed ? '1' : '0');
+      var t = $('.stage-toggle'); if (t) { t.textContent = collapsed ? 'Show' : 'Hide'; t.setAttribute('aria-expanded', collapsed ? 'false' : 'true'); }
+    }
+  };
+
   /* ---------------- router ---------------- */
   var VIEWS = ['stack', 'briefing', 'landscape', 'suppliers', 'geopolitics', 'controls', 'exposure', 'glossary', 'sources'];
   var Router = {
@@ -595,9 +619,10 @@
     Theme.init();
     Glossary.init();
     Tools.init();
-    var setMast = function () { var m = $('.masthead'), root = document.documentElement; if (!m) return; root.style.removeProperty('--masthead'); root.style.setProperty('--masthead', m.offsetHeight + 'px'); var st = $('.stage'); var band = st && getComputedStyle(st).position === 'sticky' ? st.offsetHeight : 0; root.style.setProperty('--band', band + 'px'); }; // the masthead wraps on phones, so the sticky offsets follow its real height
+    var setMast = function () { var m = $('.masthead'), root = document.documentElement; if (!m) return; root.style.removeProperty('--masthead'); root.style.setProperty('--masthead', m.offsetHeight + 'px'); }; // the masthead wraps on phones, so the sticky offsets follow its real height
     setMast(); window.addEventListener('resize', setMast); window.addEventListener('load', setMast);
     Stage.init();
+    Band.init();
     Router.init();
     Sections.init();
     // warm the cache for the next chapters while idle

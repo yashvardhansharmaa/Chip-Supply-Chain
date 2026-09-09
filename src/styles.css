@@ -21,6 +21,7 @@
   --font-display: "IBM Plex Sans Condensed", "Archivo", "Helvetica Neue", Arial, sans-serif;
   --font-body: "Newsreader", "Source Serif 4", Georgia, "Times New Roman", serif;
   --font-mono: "IBM Plex Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --band: 0px; /* height of the sticky specimen band on phones; anchors add it to their offset */
   --measure: 26em; /* Newsreader's zero is wide: 26em measures about 65 characters; 66ch measured 90 */
   --bar-5: var(--accent); --bar-4: #3a434c; --bar-3: #b3b9be;
   --col: 58%;
@@ -55,7 +56,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+@media (prefers-reduced-motion: reduce) { .stage { transition: none; } html { scroll-behavior: auto; } }
 body {
   margin: 0;
   background: var(--bg);
@@ -420,6 +421,8 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 @media (max-width: 1240px) { .wordmark span { display: none; } .tabs a { padding: 7px 7px; font-size: 13px; } }
 @media (max-width: 1060px) { .tabs a { padding: 7px 5px; font-size: 12.5px; } .tabs { gap: 2px; } }
 
+.stage .stage-actions, .sheet { display: none; }
+
 /* ---------- China exposure charts ---------- */
 .ex-legend { display: flex; flex-wrap: wrap; gap: 6px 20px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin: 14px 0 6px; }
 .ex-legend i { display: inline-block; vertical-align: middle; margin-right: 7px; width: 10px; height: 10px; border-radius: 50%; box-sizing: border-box; }
@@ -569,14 +572,38 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
   .tabs a { padding: 5px 8px; font-size: 12.5px; }
   .chapter .chain--compact, .chapter .chain-foot { display: none; }
   .column { padding: 0 18px; }
-  .stage { position: sticky; top: var(--masthead); width: 100%; height: 32vh; min-height: 220px; z-index: 6; background: color-mix(in srgb, var(--bg) 92%, transparent); border-bottom: 1px solid var(--line); }
-  .stage canvas { margin-top: 4px; }
-  .stage figcaption { margin: 4px 0 7px; font-size: 10px; line-height: 1.3; padding: 0 14px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .stage .stage-tag { top: 8px; left: 14px; }
+  :root { --band: 0px; }
+  /* the specimen becomes a bottom strip, like a dashboard bar: a live thumbnail, where you are, Contents and Show; tap Show to expand */
+  .stage { position: fixed; top: auto; bottom: 0; left: 0; right: 0; width: 100%; height: 64px; min-height: 0; margin: 0; z-index: 35; background: var(--bg); border-top: 1px solid var(--line-2); border-bottom: 0; box-shadow: 0 -6px 18px rgba(0, 0, 0, 0.06); pointer-events: auto; display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; grid-template-rows: 64px; align-items: center; column-gap: 10px; padding: 0 10px 0 6px; overflow: hidden; transition: height 0.25s var(--ease); }
+  .stage canvas { grid-column: 1; grid-row: 1; width: 56px; height: 56px; margin: 0; align-self: center; }
+  .stage .stage-tag { position: static; grid-column: 2; grid-row: 1; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .stage .stage-actions { display: flex; gap: 6px; grid-column: 3; grid-row: 1; }
+  .stage .stage-actions button { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); background: var(--bg-2); border: 1px solid var(--line-2); border-radius: 3px; padding: 8px 10px; cursor: pointer; }
+  .stage figcaption { display: none; }
+  .stage[data-collapsed="0"] { height: min(46vh, 380px); grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: 44px minmax(0, 1fr) auto; padding: 0 12px 8px; }
+  .stage[data-collapsed="0"] canvas { grid-column: 1 / -1; grid-row: 2; width: 100%; height: 100%; }
+  .stage[data-collapsed="0"] .stage-tag { grid-column: 1; grid-row: 1; }
+  .stage[data-collapsed="0"] .stage-actions { grid-column: 2; grid-row: 1; }
+  .stage[data-collapsed="0"] figcaption { display: -webkit-box; grid-column: 1 / -1; grid-row: 3; margin: 6px 0 0; padding: 0; max-width: none; text-align: left; font-size: 10.5px; line-height: 1.35; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  body { padding-bottom: 76px; }
+  /* the contents sheet */
+  .sheet { display: block; position: fixed; inset: 0; z-index: 60; background: var(--bg); overflow-y: auto; padding: 14px 16px 90px; }
+  .sheet[hidden] { display: none; }
+  .sheet-head { display: flex; justify-content: space-between; align-items: center; margin: 0 0 14px; }
+  .sheet-head b { font-family: var(--font-display); font-size: 20px; }
+  .sheet-close { font-size: 22px; line-height: 1; background: none; border: 1px solid var(--line-2); border-radius: 3px; width: 36px; height: 36px; color: var(--ink); }
+  .sheet-pages { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 18px; }
+  .sheet-pages a { font-family: var(--font-display); font-weight: 600; font-size: 13.5px; padding: 7px 11px; border: 1px solid var(--line-2); border-radius: 3px; color: var(--ink); text-decoration: none; }
+  .sheet-chapters { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .sheet-chapters a { display: grid; grid-template-columns: 34px 1fr auto; align-items: baseline; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+  .sheet-chapters .n { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+  .sheet-chapters .t { font-family: var(--font-display); font-weight: 600; font-size: 15.5px; }
+  .sheet-chapters .s { font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); }
+  .sheet-chapters .s.hi { color: var(--accent-ink); font-weight: 600; }
   .wordmark b { font-size: 18px; }
   .hero { padding-top: 22px; }
   .rail { display: none; }
-  .to-top { right: 12px; top: auto; bottom: 16px; }
+  .to-top { right: 12px; top: auto; bottom: 80px; }
   .ch-id { grid-template-columns: 1fr; gap: 14px; }
   .ch-tile { width: 92px; }
   .ch-title { font-size: 38px; }
