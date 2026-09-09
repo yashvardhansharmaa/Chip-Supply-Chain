@@ -1,0 +1,16 @@
+{
+  "url": "https://www.fujifilm.com/jp/en/news/hq/11942",
+  "status": 200,
+  "finalUrl": "https://www.fujifilm.com/jp/en/news/hq/11942",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Mon, 07 Sep 2026 12:29:25 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:28.819Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Fujifilm to Enhance its Production Capacity of Advanced Semiconductor Material CMP Slurries at the Kumamoto Site",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "Fujifilm to Enhance its Production Capacity of Advanced Semiconductor Material CMP Slurries at the Kumamoto Site | Fujifilm [Japan]"
+  }
+}

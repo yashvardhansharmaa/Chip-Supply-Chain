@@ -1,0 +1,16 @@
+{
+  "url": "https://www.rapidus.inc/en/",
+  "status": 200,
+  "finalUrl": "https://www.rapidus.inc/en/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:05.039Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Rapidus Corporation",
+    "date": "2026-07-31",
+    "siteName": "Rapidus Corporation",
+    "rawTitle": "Rapidus Corporation | World's Most Advanced 2nm Semiconductor"
+  }
+}

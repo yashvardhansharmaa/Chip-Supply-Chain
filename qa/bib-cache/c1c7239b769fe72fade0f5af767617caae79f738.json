@@ -1,0 +1,16 @@
+{
+  "url": "https://www.government.nl/latest/news/2024/09/06/the-netherlands-expands-export-control-measure-advanced-semiconductor-manufacturing-equipment",
+  "status": 200,
+  "finalUrl": "https://www.government.nl/latest/news/2024/09/06/the-netherlands-expands-export-control-measure-advanced-semiconductor-manufacturing-equipment",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:33.572Z",
+  "extracted": {
+    "kind": "html",
+    "title": "The Netherlands expands export control measure for advanced semiconductor manufacturing equipment",
+    "date": "2024-09-06",
+    "siteName": null,
+    "rawTitle": "The Netherlands expands export control measure for advanced semiconductor manufacturing equipment | Government.nl"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "url": "https://www.asm.com/media/yvxbavwe/20260303-asm-reports-q4-and-full-year-2025-results.pdf",
+  "status": 200,
+  "finalUrl": "https://www.asm.com/media/yvxbavwe/20260303-asm-reports-q4-and-full-year-2025-results.pdf",
+  "contentType": "application/pdf",
+  "lastModified": "Tue, 03 Mar 2026 17:04:33 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:02.225Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": "Press Release Q4, 2025 text",
+    "date": "2026-03-03",
+    "firstLine": null
+  }
+}

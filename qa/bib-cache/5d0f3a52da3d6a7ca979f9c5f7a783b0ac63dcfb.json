@@ -1,0 +1,16 @@
+{
+  "url": "https://www.coherent.com/networking",
+  "status": 200,
+  "finalUrl": "https://www.coherent.com/networking",
+  "contentType": "text/html;charset=utf-8",
+  "lastModified": "Wed, 09 Sep 2026 09:25:39 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:08.715Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Networking | Coherent",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "Networking | Coherent"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "url": "https://www.agc.com/en/news/detail/1203819_2814.html",
+  "status": 200,
+  "finalUrl": "https://www.agc.com/en/news/detail/1203819_2814.html",
+  "contentType": "text/html",
+  "lastModified": "Fri, 28 Aug 2026 08:02:20 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:58.758Z",
+  "extracted": {
+    "kind": "html",
+    "title": "AGC to Boost Production Capacity of EUVL Photomask Blanks ｜ News ｜ AGC",
+    "date": null,
+    "siteName": "AGC",
+    "rawTitle": "AGC to Boost Production Capacity of EUVL Photomask Blanks ｜ News ｜ AGC"
+  }
+}

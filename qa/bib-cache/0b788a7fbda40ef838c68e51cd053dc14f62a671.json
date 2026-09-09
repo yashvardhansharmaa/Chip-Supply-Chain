@@ -1,0 +1,16 @@
+{
+  "url": "https://www.asml.com/en/technology/lithography-principles/light-and-lasers",
+  "status": 200,
+  "finalUrl": "https://www.asml.com/en/technology/lithography-principles/light-and-lasers",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:03.348Z",
+  "extracted": {
+    "kind": "html",
+    "title": "All about light and lasers in lithography",
+    "date": null,
+    "siteName": "ASML",
+    "rawTitle": "Light & lasers - Lithography principles| ASML"
+  }
+}

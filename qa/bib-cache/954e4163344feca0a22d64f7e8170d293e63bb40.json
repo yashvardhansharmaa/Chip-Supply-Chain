@@ -1,0 +1,16 @@
+{
+  "url": "https://www.nvidia.com/en-us/data-center/gb300-nvl72/",
+  "status": 200,
+  "finalUrl": "https://www.nvidia.com/en-us/data-center/gb300-nvl72/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Thu, 03 Sep 2026 13:03:36 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:00.429Z",
+  "extracted": {
+    "kind": "html",
+    "title": "NVIDIA GB300 NVL72",
+    "date": null,
+    "siteName": "NVIDIA",
+    "rawTitle": "Designed for AI Reasoning Performance & Efficiency | NVIDIA GB300 NVL72"
+  }
+}

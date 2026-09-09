@@ -1,0 +1,16 @@
+{
+  "url": "https://www.guc-asic.com/en/",
+  "status": 200,
+  "finalUrl": "https://www.guc-asic.com/en",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:38.285Z",
+  "extracted": {
+    "kind": "html",
+    "title": "guc",
+    "date": null,
+    "siteName": "guc",
+    "rawTitle": "guc"
+  }
+}

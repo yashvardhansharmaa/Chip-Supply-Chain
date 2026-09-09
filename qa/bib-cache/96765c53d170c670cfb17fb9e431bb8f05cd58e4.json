@@ -1,0 +1,16 @@
+{
+  "url": "https://www.phoenix.gov/newsroom/ced-news/tsmc-announces-additional--100-billion-investment-in-arizona.html",
+  "status": 200,
+  "finalUrl": "https://www.phoenix.gov/newsroom/ced-news/tsmc-announces-additional--100-billion-investment-in-arizona.html",
+  "contentType": "text/html;charset=utf-8",
+  "lastModified": "Wed, 09 Sep 2026 18:23:01 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:01.990Z",
+  "extracted": {
+    "kind": "html",
+    "title": "TSMC Announces Additional $100 Billion Investment In Arizona",
+    "date": null,
+    "siteName": "City of Phoenix",
+    "rawTitle": "TSMC Announces Additional $100 Billion Investment In Arizona | City of Phoenix"
+  }
+}

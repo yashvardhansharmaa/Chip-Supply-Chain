@@ -1,0 +1,16 @@
+{
+  "url": "https://www.aehr.com/products/",
+  "status": 200,
+  "finalUrl": "https://www.aehr.com/solutions/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Wed, 09 Sep 2026 04:33:45 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:57.276Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Solutions",
+    "date": "2024-10-04",
+    "siteName": "Aehr Test Systems",
+    "rawTitle": "Wafer Level Test & Burn-in - Aehr Test Systems | Solutions"
+  }
+}

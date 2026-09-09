@@ -1,0 +1,16 @@
+{
+  "url": "https://www.ttm.com/",
+  "status": 200,
+  "finalUrl": "https://www.ttm.com/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Wed, 09 Sep 2026 07:45:16 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:26.306Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Advanced PCB Manufacturer & RF Supplier",
+    "date": "2026-09-01",
+    "siteName": null,
+    "rawTitle": "Advanced PCB Manufacturer & RF Supplier | TTM Technologies"
+  }
+}

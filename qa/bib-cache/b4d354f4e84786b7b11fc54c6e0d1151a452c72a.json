@@ -1,0 +1,16 @@
+{
+  "url": "https://www.horiba.com/int/semiconductor/",
+  "status": 200,
+  "finalUrl": "https://www.horiba.com/int/semiconductor/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:39.285Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Semiconductor | HORIBA",
+    "date": "2026-03-26",
+    "siteName": null,
+    "rawTitle": "Semiconductor | HORIBA"
+  }
+}

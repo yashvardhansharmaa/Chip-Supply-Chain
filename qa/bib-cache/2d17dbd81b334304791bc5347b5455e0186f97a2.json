@@ -1,0 +1,16 @@
+{
+  "url": "https://www.jiccapital.co.jp/en/news/.assets/E_20250217_JIC_JICC_PressRelease.pdf",
+  "status": 200,
+  "finalUrl": "https://www.jiccapital.co.jp/en/news/.assets/E_20250217_JIC_JICC_PressRelease.pdf",
+  "contentType": "application/pdf",
+  "lastModified": "Mon, 17 Feb 2025 12:02:41 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:52.350Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": null,
+    "date": "2025-02-17",
+    "firstLine": null,
+    "dateModified": "2025-02-17"
+  }
+}

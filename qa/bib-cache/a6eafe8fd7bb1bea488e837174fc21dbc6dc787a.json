@@ -1,0 +1,16 @@
+{
+  "url": "https://www.innolight.com/en/",
+  "status": 200,
+  "finalUrl": "https://www.innolight.com/en/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:50.588Z",
+  "extracted": {
+    "kind": "html",
+    "title": "InnoLight Technology - The World's Leading Developer and Manufacturer of High-speed Optical Transceivers",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "InnoLight Technology - The World's Leading Developer and Manufacturer of High-speed Optical Transceivers"
+  }
+}

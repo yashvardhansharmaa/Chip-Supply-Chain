@@ -1,0 +1,16 @@
+{
+  "url": "https://www.broadcom.com/company/news/product-releases/63626",
+  "status": 200,
+  "finalUrl": "https://www.broadcom.com/company/news/product-releases/63626",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Wed, 09 Sep 2026 12:05:21 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:06.972Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Broadcom Announces Tomahawk® 6 – Davisson, the Industry’s First 102.4-Tbps Ethernet Switch with Co-Packaged Optics",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "Broadcom Announces Tomahawk® 6 – Davisson, the Industry’s First 102.4-Tbps Ethernet Switch with Co-Packaged Optics"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "url": "https://www.emdgroup.com/",
+  "status": 200,
+  "finalUrl": "https://www.emdgroup.com/en",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Tue, 08 Sep 2026 18:04:55 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:32.765Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Vibrant Science & Technology - EMD Group",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "English Home - Merck KGaA, Darmstadt, Germany"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "url": "https://www.accton.com/",
+  "status": 200,
+  "finalUrl": "https://www.accton.com/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:56.472Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Accton Technology – Premier Networking and Computing Infrastructure Solutions",
+    "date": null,
+    "siteName": "Accton Technology",
+    "rawTitle": "Accton Technology – Premier Networking and Computing Infrastructure Solutions"
+  }
+}

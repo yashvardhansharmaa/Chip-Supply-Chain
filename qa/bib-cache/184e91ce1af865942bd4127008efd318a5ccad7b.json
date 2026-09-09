@@ -1,0 +1,16 @@
+{
+  "url": "https://www.luxshare-ict.com/en/",
+  "status": 200,
+  "finalUrl": "https://www.luxshare-ict.com/en/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Wed, 09 Sep 2026 07:43:42 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:56.056Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Luxshare-Making the World a Better Place by Embracing Technologies",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "Luxshare-Making the World a Better Place by Embracing Technologies"
+  }
+}

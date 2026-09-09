@@ -1,0 +1,16 @@
+{
+  "url": "https://www.govinfo.gov/content/pkg/FR-2025-09-30/pdf/2025-19001.pdf",
+  "status": 200,
+  "finalUrl": "https://www.govinfo.gov/content/pkg/FR-2025-09-30/pdf/2025-19001.pdf",
+  "contentType": "application/pdf",
+  "lastModified": "Fri, 21 Nov 2025 15:57:12 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:35.966Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": "Layer 1",
+    "date": "2025-09-30",
+    "firstLine": "47201 Federal RegisterControl(s) Country chart (see Supp. No. 1 to part 738) AT applies to tech-nology for devel-opment, produc-tion, operation, in-stallation, mainte-nance, repair, over-haul, or refu",
+    "dateModified": "2025-09-30"
+  }
+}

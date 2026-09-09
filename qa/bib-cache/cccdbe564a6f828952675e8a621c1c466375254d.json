@@ -1,0 +1,16 @@
+{
+  "url": "https://www.nvidia.com/en-us/data-center/hgx/",
+  "status": 200,
+  "finalUrl": "https://www.nvidia.com/en-us/data-center/hgx/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Thu, 03 Sep 2026 12:51:56 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:00.582Z",
+  "extracted": {
+    "kind": "html",
+    "title": "NVIDIA HGX Platform",
+    "date": null,
+    "siteName": "NVIDIA",
+    "rawTitle": "NVIDIA HGX Platform | NVIDIA"
+  }
+}

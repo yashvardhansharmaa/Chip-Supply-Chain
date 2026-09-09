@@ -1,0 +1,16 @@
+{
+  "url": "https://www.soitec.com/home/group",
+  "status": 200,
+  "finalUrl": "https://www.soitec.com/home/group",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Tue, 08 Sep 2026 10:22:50 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:20.029Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Soitec | Key figures",
+    "date": null,
+    "siteName": "Default",
+    "rawTitle": "Soitec | Key figures"
+  }
+}

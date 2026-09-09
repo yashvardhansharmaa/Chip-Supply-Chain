@@ -1,0 +1,16 @@
+{
+  "url": "https://www.iluvatar.com/",
+  "status": 200,
+  "finalUrl": "https://www.iluvatar.com/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:49.489Z",
+  "extracted": {
+    "kind": "html",
+    "title": "天数智芯",
+    "date": null,
+    "siteName": "天数智芯",
+    "rawTitle": "天数智芯"
+  }
+}

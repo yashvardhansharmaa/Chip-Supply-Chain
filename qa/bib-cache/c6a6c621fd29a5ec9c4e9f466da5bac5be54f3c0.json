@@ -1,0 +1,16 @@
+{
+  "url": "https://www.primarius-tech.com/en/",
+  "status": 200,
+  "finalUrl": "https://www.primarius-tech.com/en/",
+  "contentType": "text/html",
+  "lastModified": "Mon, 31 Jul 2023 07:44:47 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:02.927Z",
+  "extracted": {
+    "kind": "html",
+    "title": null,
+    "date": null,
+    "siteName": null,
+    "rawTitle": null
+  }
+}

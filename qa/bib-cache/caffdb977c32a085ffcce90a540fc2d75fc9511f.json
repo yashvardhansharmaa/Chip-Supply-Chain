@@ -1,0 +1,16 @@
+{
+  "url": "https://www.soulbrain.co.kr/en/",
+  "status": 200,
+  "finalUrl": "https://www.soulbrain.co.kr/en/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Wed, 09 Sep 2026 18:23:20 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:21.210Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Soulbrain",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "Soulbrain"
+  }
+}

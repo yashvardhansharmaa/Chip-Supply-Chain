@@ -1,0 +1,16 @@
+{
+  "url": "https://www.stella-chemifa.co.jp/",
+  "status": 200,
+  "finalUrl": "https://www.stella-chemifa.co.jp/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:21.149Z",
+  "extracted": {
+    "kind": "html",
+    "title": "ステラケミファ株式会社",
+    "date": "2026-09-01",
+    "siteName": "ステラケミファ株式会社",
+    "rawTitle": "ステラケミファ株式会社"
+  }
+}

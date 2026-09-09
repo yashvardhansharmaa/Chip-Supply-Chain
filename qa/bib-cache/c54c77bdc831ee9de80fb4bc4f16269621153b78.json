@@ -1,0 +1,16 @@
+{
+  "url": "https://www.asml.com/en/news/press-releases/2026/high-na-euv-reaches-new-readiness-milestone",
+  "status": 200,
+  "finalUrl": "https://www.asml.com/en/news/press-releases/2026/high-na-euv-reaches-new-readiness-milestone",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:02.895Z",
+  "extracted": {
+    "kind": "html",
+    "title": "High NA EUV reaches new readiness milestone with first high-volume Logic product",
+    "date": "2026-07-15",
+    "siteName": "ASML",
+    "rawTitle": "High NA EUV reaches new readiness milestone with first high-volume Logic product"
+  }
+}

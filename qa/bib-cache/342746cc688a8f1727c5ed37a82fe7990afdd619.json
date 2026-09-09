@@ -1,0 +1,16 @@
+{
+  "url": "https://www.jcetglobal.com/en/site/news-detail?id=1952",
+  "status": 403,
+  "finalUrl": "https://www.jcetglobal.com/en/site/news-detail?id=1952",
+  "contentType": "text/html; charset=iso-8859-1",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:50.899Z",
+  "extracted": {
+    "kind": "html",
+    "title": "403 Forbidden",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "403 Forbidden"
+  }
+}

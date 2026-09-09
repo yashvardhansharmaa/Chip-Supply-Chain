@@ -1,0 +1,16 @@
+{
+  "url": "https://www.huawei.com/en/news/2025/9/hc-superpod-innovation",
+  "status": 200,
+  "finalUrl": "https://www.huawei.com/en/news/2025/9/hc-superpod-innovation",
+  "contentType": "text/html",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:42.797Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Huawei Launches Open-Access SuperPoD Architecture for All-Scenario Computing - Huawei",
+    "date": null,
+    "siteName": "Huawei",
+    "rawTitle": "Huawei Launches Open-Access SuperPoD Architecture for All-Scenario Computing - Huawei"
+  }
+}

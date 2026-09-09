@@ -1,0 +1,16 @@
+{
+  "url": "https://www.morita-kagaku.co.jp/",
+  "status": 200,
+  "finalUrl": "https://www.morita-kagaku.co.jp/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:57.625Z",
+  "extracted": {
+    "kind": "html",
+    "title": "森田化学工業株式会社",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "森田化学工業株式会社"
+  }
+}

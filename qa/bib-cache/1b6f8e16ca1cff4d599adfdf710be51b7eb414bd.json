@@ -1,0 +1,16 @@
+{
+  "url": "https://www.kinsus.com.tw/en/",
+  "status": 200,
+  "finalUrl": "https://www.kinsus.com.tw/en/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:53.324Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Home",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "Home"
+  }
+}

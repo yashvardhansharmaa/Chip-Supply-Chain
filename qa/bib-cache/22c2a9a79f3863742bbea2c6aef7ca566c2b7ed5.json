@@ -1,0 +1,16 @@
+{
+  "url": "https://www.mpi-corporation.com/ast/",
+  "status": 200,
+  "finalUrl": "https://www.mpi-corporation.com/ast/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Wed, 09 Sep 2026 17:04:16 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:57.859Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Advanced Semiconductor Test - MPI Corporation",
+    "date": null,
+    "siteName": "MPI Corporation",
+    "rawTitle": "Advanced Semiconductor Test - MPI Corporation"
+  }
+}

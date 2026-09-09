@@ -1,0 +1,15 @@
+{
+  "url": "https://www.agc.com/en/ir/library/outline/pdf/reference.pdf",
+  "status": 200,
+  "finalUrl": "https://www.agc.com/en/ir/library/outline/pdf/reference.pdf",
+  "contentType": "application/pdf",
+  "lastModified": "Fri, 29 May 2026 08:41:56 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:59.489Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": null,
+    "date": null,
+    "firstLine": null
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "url": "https://www.smee.com.cn/",
+  "status": 200,
+  "finalUrl": "https://www.smee.com.cn/",
+  "contentType": "text/html;charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:20.037Z",
+  "extracted": {
+    "kind": "html",
+    "title": "上海微电子装备(集团)股份有限公司",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "上海微电子装备(集团)股份有限公司"
+  }
+}

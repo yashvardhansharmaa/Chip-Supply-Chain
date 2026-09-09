@@ -1,0 +1,16 @@
+{
+  "url": "https://www.pti.com.tw/en/",
+  "status": 200,
+  "finalUrl": "https://www.pti.com.tw/en/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:04.112Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Home - Powertech Technology Inc.",
+    "date": null,
+    "siteName": "Powertech Technology Inc.",
+    "rawTitle": "Home - Powertech Technology Inc."
+  }
+}

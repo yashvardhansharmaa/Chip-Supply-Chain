@@ -1,0 +1,16 @@
+{
+  "url": "https://www.rambus.com/interface-ip/",
+  "status": 200,
+  "finalUrl": "https://www.rambus.com/interface-ip/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Wed, 09 Sep 2026 18:19:20 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:03.365Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Interface IP",
+    "date": "2019-07-22",
+    "siteName": "Rambus",
+    "rawTitle": "Interface IP - Rambus"
+  }
+}

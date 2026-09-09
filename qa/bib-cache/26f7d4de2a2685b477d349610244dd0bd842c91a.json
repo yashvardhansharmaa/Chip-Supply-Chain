@@ -1,0 +1,16 @@
+{
+  "url": "https://www.government.nl/documents/2025/11/19/update-on-invoking-goods-availability-act",
+  "status": 200,
+  "finalUrl": "https://www.government.nl/documents/2025/11/19/update-on-invoking-goods-availability-act",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:33.125Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Update on invoking Goods Availability Act",
+    "date": "2025-11-19",
+    "siteName": null,
+    "rawTitle": "Update on invoking Goods Availability Act | Government.nl"
+  }
+}

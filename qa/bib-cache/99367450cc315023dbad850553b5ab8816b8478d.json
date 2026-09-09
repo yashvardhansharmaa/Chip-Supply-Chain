@@ -1,0 +1,16 @@
+{
+  "url": "https://www.coolitsystems.com/data-center/",
+  "status": 200,
+  "finalUrl": "https://www.coolitsystems.com/resources/news/data-center-cooling-systems-guide/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Wed, 09 Sep 2026 13:35:13 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:10.674Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Data Center Cooling Systems: Beginner’s Technical Guide",
+    "date": "2025-12-03",
+    "siteName": "CoolIT Systems",
+    "rawTitle": "Data Center Cooling Systems: Beginner’s Technical Guide"
+  }
+}

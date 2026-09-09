@@ -1,0 +1,15 @@
+{
+  "url": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/ir/library/securities/asset/Annual-Securities-Report-FY2025-EN.pdf",
+  "status": 200,
+  "finalUrl": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/ir/library/securities/asset/Annual-Securities-Report-FY2025-EN.pdf",
+  "contentType": "application/pdf",
+  "lastModified": "Wed, 24 Jun 2026 02:28:08 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:53.365Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": null,
+    "date": null,
+    "firstLine": null
+  }
+}

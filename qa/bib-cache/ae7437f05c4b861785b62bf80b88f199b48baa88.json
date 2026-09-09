@@ -1,0 +1,16 @@
+{
+  "url": "https://www.sumitomo-chem.co.jp/",
+  "status": 200,
+  "finalUrl": "https://www.sumitomo-chem.co.jp/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:22.230Z",
+  "extracted": {
+    "kind": "html",
+    "title": "住友化学株式会社",
+    "date": null,
+    "siteName": "住友化学株式会社",
+    "rawTitle": "住友化学株式会社"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "url": "https://www.nipponsanso-hd.co.jp/",
+  "status": 200,
+  "finalUrl": "https://jp.nipponsanso.com/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:01.587Z",
+  "extracted": {
+    "kind": "html",
+    "title": "日本酸素ホールディングス株式会社",
+    "date": null,
+    "siteName": "Nippon Sanso Holdings Corporation",
+    "rawTitle": "日本酸素ホールディングス株式会社"
+  }
+}

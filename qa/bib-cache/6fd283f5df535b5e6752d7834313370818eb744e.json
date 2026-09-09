@@ -1,0 +1,16 @@
+{
+  "url": "https://www.suss.com/en/products-solutions",
+  "status": 200,
+  "finalUrl": "https://www.suss.com/en/products-solutions",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:21.709Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Products / Solutions",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "Precision systems for semiconductor lithography, wafer bonding, and photomask processing | SUSS"
+  }
+}

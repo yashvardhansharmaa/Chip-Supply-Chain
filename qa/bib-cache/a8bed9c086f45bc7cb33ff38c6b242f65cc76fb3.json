@@ -1,0 +1,16 @@
+{
+  "url": "https://www.airproducts.com/industries/electronics",
+  "status": 403,
+  "finalUrl": "https://www.airproducts.com/industries/electronics",
+  "contentType": "text/html",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:58.573Z",
+  "extracted": {
+    "kind": "html",
+    "title": "ERROR: The request could not be satisfied",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "ERROR: The request could not be satisfied"
+  }
+}

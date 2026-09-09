@@ -1,0 +1,16 @@
+{
+  "url": "https://www.besi.com/fileadmin/data/Investor_Relations/_Semi__Annual_Reports/Annual_Report_2021.pdf",
+  "status": 200,
+  "finalUrl": "https://www.besi.com/fileadmin/data/Investor_Relations/_Semi__Annual_Reports/Annual_Report_2021.pdf",
+  "contentType": "application/pdf",
+  "lastModified": "Thu, 24 Feb 2022 12:46:48 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:04.888Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": "Logo_Besi_def",
+    "date": "2013-04-09",
+    "firstLine": null,
+    "dateModified": "2013-04-09"
+  }
+}

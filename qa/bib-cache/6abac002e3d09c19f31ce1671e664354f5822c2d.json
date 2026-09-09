@@ -1,0 +1,16 @@
+{
+  "url": "https://www.nvidia.com/en-us/data-center/vera-rubin-nvl72/",
+  "status": 200,
+  "finalUrl": "https://www.nvidia.com/en-us/data-center/vera-rubin-nvl72/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Tue, 08 Sep 2026 21:03:42 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:00.710Z",
+  "extracted": {
+    "kind": "html",
+    "title": "NVIDIA Vera Rubin NVL72",
+    "date": null,
+    "siteName": "NVIDIA",
+    "rawTitle": "Rack-Scale Agentic AI Supercomputer | NVIDIA Vera Rubin NVL72"
+  }
+}

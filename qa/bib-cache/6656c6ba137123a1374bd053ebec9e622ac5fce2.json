@@ -1,0 +1,16 @@
+{
+  "url": "https://www.innolight.com/about",
+  "status": 200,
+  "finalUrl": "https://www.innolight.com/about",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:49.818Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Overview",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "Overview"
+  }
+}

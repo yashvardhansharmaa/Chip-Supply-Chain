@@ -1,0 +1,16 @@
+{
+  "url": "https://www.rand.org/pubs/perspectives/PEA4012-1.html",
+  "status": 200,
+  "finalUrl": "https://www.rand.org/pubs/perspectives/PEA4012-1.html",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:03.510Z",
+  "extracted": {
+    "kind": "html",
+    "title": "China",
+    "date": "2025-06-26",
+    "siteName": null,
+    "rawTitle": "Full Stack: China's Evolving Industrial Policy for AI | RAND"
+  }
+}

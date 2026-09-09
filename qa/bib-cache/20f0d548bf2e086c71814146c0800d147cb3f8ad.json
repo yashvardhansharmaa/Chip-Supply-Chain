@@ -1,0 +1,17 @@
+{
+  "url": "https://www.cerebras.ai/product-chip",
+  "status": 200,
+  "finalUrl": "https://www.cerebras.ai/chip",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:08.072Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Product - Chip - Cerebras",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "Product - Chip - Cerebras",
+    "dateModified": "2026-08-31"
+  }
+}

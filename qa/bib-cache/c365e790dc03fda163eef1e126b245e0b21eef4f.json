@@ -1,0 +1,16 @@
+{
+  "url": "https://www.inventec.com/",
+  "status": 200,
+  "finalUrl": "https://www.inventec.com/zh-TW",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:52.030Z",
+  "extracted": {
+    "kind": "html",
+    "title": "英業達",
+    "date": null,
+    "siteName": "英業達",
+    "rawTitle": "英業達"
+  }
+}

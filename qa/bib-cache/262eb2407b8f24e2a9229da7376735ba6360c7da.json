@@ -1,0 +1,16 @@
+{
+  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+  "status": 403,
+  "finalUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+  "contentType": "text/html",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:12.239Z",
+  "extracted": {
+    "kind": "html",
+    "title": "SEC.gov | Your Request Originates from an Undeclared Automated Tool",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "SEC.gov | Your Request Originates from an Undeclared Automated Tool"
+  }
+}

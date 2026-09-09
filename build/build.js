@@ -16,7 +16,7 @@ const COUNTRY_COLOR = { US: 1, NL: 2, TW: 3, JP: 4, KR: 5, CN: 6, DE: 7, 'EU-oth
 /* ---------------- source tiers ---------------- */
 const tiersRaw = readJSON(path.join(root, 'data', 'source-tiers.json'), {});
 const tierOf = (url) => { const h = host(url); for (const t of ['A', 'B', 'C', 'D']) { if ((tiersRaw[t] || []).some((d) => h === d || h.endsWith('.' + d))) return t; } return '?'; };
-const TIER_LABEL = { A: 'Primary or institutional', B: 'Established analyst or top-tier press', C: 'Specialist press or named analyst', D: 'Below the bar', '?': 'Unclassified' };
+const TIER_LABEL = { A: 'Primary or institutional', B: 'SemiAnalysis, Reuters, the Financial Times or Nikkei Asia', C: 'Not cited under the current policy', D: 'Not cited under the current policy', '?': 'Unclassified' };
 const tierTag = (url) => { const t = tierOf(url); return `<span class="tier tier-${t}" title="${TIER_LABEL[t]}">${t}</span>`; };
 const tierCounts = (cites) => { const c = { A: 0, B: 0, C: 0, D: 0, '?': 0 }; cites.forEach((x) => { c[tierOf(x.url)]++; }); return c; };
 
@@ -398,7 +398,7 @@ if (geo) {
 
 /* ---------------- sources view ---------------- */
 const all = chapters.concat(geo ? [geo] : []);
-const sourcesHTML = `<div class="tier-key">Every source is graded by how close it is to the evidence: <span class="tier tier-A">A</span> primary or institutional · <span class="tier tier-B">B</span> established analyst or top-tier press · <span class="tier tier-C">C</span> specialist press or named analyst. Anything below C is not cited.</div>` +
+const sourcesHTML = `<div class="tier-key">Every source is one of two kinds: <span class="tier tier-A">A</span> primary or institutional (company filings and investor materials, governments and regulators, standards bodies, universities and labs, and research institutions such as CSET, CSIS, SIA, SEMI and Epoch AI) · <span class="tier tier-B">B</span> one of four named exceptions: SemiAnalysis, Reuters, the Financial Times and Nikkei Asia. Nothing else is cited.</div>` +
   all.map((ch) => { const tc = tierCounts(ch.cites); return `<h3>${pad(ch.number)} · ${esc(ch.title)} <span class="label">${ch.cites.length} sources · A ${tc.A} · B ${tc.B} · C ${tc.C}${tc.D ? ' · below bar ' + tc.D : ''}${tc['?'] ? ' · unclassified ' + tc['?'] : ''}</span></h3><ol>${ch.cites.map((c) => `<li>${tierTag(c.url)}<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url)}</a></li>`).join('')}</ol>`; }).join('') +
   (matrixNotes ? `<h3>Method: the country-share matrix</h3><div class="prose">${markdown(matrixNotes, { id: 'matrix-notes', cites: [], figures: [] }).html}</div>` : '') +
   (controlsNotes ? `<h3>Method: the licence thresholds</h3><div class="prose">${markdown(controlsNotes, { id: 'controls-notes', cites: [], figures: [] }).html}</div>` : '') +

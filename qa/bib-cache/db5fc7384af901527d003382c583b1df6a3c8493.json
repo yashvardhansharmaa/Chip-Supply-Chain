@@ -1,0 +1,16 @@
+{
+  "url": "https://www.imec-int.com/en/articles/imec-puts-complementary-fet-cfet-logic-technology-roadmap",
+  "status": 200,
+  "finalUrl": "https://www.imec-int.com/en/articles/imec-puts-complementary-fet-cfet-logic-technology-roadmap",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:47.157Z",
+  "extracted": {
+    "kind": "html",
+    "title": "CFET (complementary FET)",
+    "date": null,
+    "siteName": "imec",
+    "rawTitle": "CFET (complementary FET) | imec"
+  }
+}

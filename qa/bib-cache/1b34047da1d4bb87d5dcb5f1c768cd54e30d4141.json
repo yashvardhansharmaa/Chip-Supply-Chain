@@ -1,0 +1,16 @@
+{
+  "url": "https://www.jabil.com/",
+  "status": 200,
+  "finalUrl": "https://www.jabil.com/",
+  "contentType": "text/html;charset=utf-8",
+  "lastModified": "Wed, 09 Sep 2026 18:01:21 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:50.359Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Jabil | Engineering, Supply Chain & Manufacturing Solutions",
+    "date": null,
+    "siteName": "Jabil.com",
+    "rawTitle": "Jabil | Engineering, Supply Chain & Manufacturing Solutions | Jabil"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "url": "https://www.ims.co.at/",
+  "status": 200,
+  "finalUrl": "https://www.ims.co.at/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Tue, 08 Sep 2026 08:25:09 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:48.535Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Home - IMS Nanofabrication GmbH",
+    "date": "2019-01-04",
+    "siteName": "IMS Nanofabrication GmbH",
+    "rawTitle": "Home - IMS Nanofabrication GmbH"
+  }
+}

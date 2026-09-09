@@ -1,0 +1,16 @@
+{
+  "url": "https://www.chromaate.com/",
+  "status": 200,
+  "finalUrl": "https://www.chromaate.com/en/index",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:11.526Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Chroma ATE Inc. | Global",
+    "date": null,
+    "siteName": "Chroma ATE Inc. | Global",
+    "rawTitle": "Chroma ATE Inc. | Global"
+  }
+}

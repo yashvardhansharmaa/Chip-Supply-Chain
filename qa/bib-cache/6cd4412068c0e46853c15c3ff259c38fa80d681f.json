@@ -1,0 +1,16 @@
+{
+  "url": "https://www.jsr.co.jp/jsr_e/news/2021/20210917.html",
+  "status": 200,
+  "finalUrl": "https://www.jsr.co.jp/jsr_e/news/2021/20210917.html",
+  "contentType": "text/html",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:52.132Z",
+  "extracted": {
+    "kind": "html",
+    "title": "JSR Agrees to Acquire EUV Pioneer Inpria Corporation | 2021 | News",
+    "date": "2021-09-17",
+    "siteName": "JSR Corporation",
+    "rawTitle": "JSR Agrees to Acquire EUV Pioneer Inpria Corporation | 2021 | News | JSR Corporation"
+  }
+}

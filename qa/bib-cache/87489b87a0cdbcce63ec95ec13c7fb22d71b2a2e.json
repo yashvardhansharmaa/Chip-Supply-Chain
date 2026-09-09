@@ -1,0 +1,16 @@
+{
+  "url": "https://www.screen.co.jp/spe/en/products",
+  "status": 200,
+  "finalUrl": "https://www.screen.co.jp/spe/en/products",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:10.237Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Products",
+    "date": "2018-12-18",
+    "siteName": "SCREEN Semiconductor Solutions Co., Ltd.",
+    "rawTitle": "Products | SCREEN Semiconductor Solutions Co., Ltd."
+  }
+}

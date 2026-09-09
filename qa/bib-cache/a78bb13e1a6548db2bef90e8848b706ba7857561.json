@@ -1,0 +1,16 @@
+{
+  "url": "https://www.micron.com/products/memory/hbm/hbm4",
+  "status": 200,
+  "finalUrl": "https://www.micron.com/products/memory/hbm/hbm4",
+  "contentType": "text/html;charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:56.310Z",
+  "extracted": {
+    "kind": "html",
+    "title": "HBM4",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "HBM4 | Micron Technology Inc."
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "url": "https://www.hanmisemi.com/en/product/index.html",
+  "status": 200,
+  "finalUrl": "https://www.hanmisemi.com/en/product/index.html",
+  "contentType": "text/html",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:37.315Z",
+  "extracted": {
+    "kind": "html",
+    "title": "HANMI Semiconductor",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "HANMI Semiconductor"
+  }
+}

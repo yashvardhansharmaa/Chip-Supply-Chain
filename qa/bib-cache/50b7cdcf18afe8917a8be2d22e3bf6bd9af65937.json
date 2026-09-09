@@ -1,0 +1,16 @@
+{
+  "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2148393",
+  "status": 200,
+  "finalUrl": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2148393&reg=48&lang=2",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:04.121Z",
+  "extracted": {
+    "kind": "html",
+    "title": "India’s Semiconductor Vision Gathers Momentum with 3nm Chip Design and Large-Scale Talent Development Initiatives",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "Press Release Page | Press Information Bureau"
+  }
+}

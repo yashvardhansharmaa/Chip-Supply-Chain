@@ -1,0 +1,16 @@
+{
+  "url": "https://www.gevernova.com/gas-power",
+  "status": 200,
+  "finalUrl": "https://www.gevernova.com/gas-power",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Wed, 09 Sep 2026 00:13:39 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:29.178Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Gas Power | GE Vernova",
+    "date": null,
+    "siteName": "GE Vernova",
+    "rawTitle": "Gas Power | GE Vernova"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "url": "https://www.nuflare.co.jp/",
+  "status": 200,
+  "finalUrl": "https://www.nuflare.co.jp/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:01.148Z",
+  "extracted": {
+    "kind": "html",
+    "title": "株式会社ニューフレアテクノロジー",
+    "date": "2022-08-24",
+    "siteName": "株式会社ニューフレアテクノロジー",
+    "rawTitle": "株式会社ニューフレアテクノロジー"
+  }
+}

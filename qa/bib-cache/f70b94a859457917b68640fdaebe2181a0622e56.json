@@ -1,0 +1,16 @@
+{
+  "url": "https://www.entegris.com/en/home/products.html",
+  "status": 200,
+  "finalUrl": "https://www.entegris.com/en/home/products.html",
+  "contentType": "text/html;charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:24.137Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Product Catalog",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "Product Catalog | Entegris"
+  }
+}

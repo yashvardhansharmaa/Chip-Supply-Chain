@@ -1,0 +1,16 @@
+{
+  "url": "https://www.asml.com/en/company/about-asml/locations/san-diego",
+  "status": 200,
+  "finalUrl": "https://www.asml.com/en/company/about-asml/locations/san-diego",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:02.753Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Explore ASML San Diego",
+    "date": null,
+    "siteName": "ASML",
+    "rawTitle": "ASML San Diego - Locations | ASML"
+  }
+}

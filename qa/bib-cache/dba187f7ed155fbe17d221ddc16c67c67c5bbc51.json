@@ -1,0 +1,16 @@
+{
+  "url": "https://www.amec-inc.com/news/708.html",
+  "status": 200,
+  "finalUrl": "https://www.amec-inc.com/news/708.html",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Wed, 09 Sep 2026 18:22:01 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:02.377Z",
+  "extracted": {
+    "kind": "html",
+    "title": "中微公司成功举办2025年度业绩说明会-新闻活动-中微公司",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "中微公司成功举办2025年度业绩说明会-新闻活动-中微公司"
+  }
+}

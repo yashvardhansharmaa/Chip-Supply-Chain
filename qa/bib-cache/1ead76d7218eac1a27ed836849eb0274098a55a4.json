@@ -1,0 +1,16 @@
+{
+  "url": "https://www.inpria.com/",
+  "status": 200,
+  "finalUrl": "https://www.inpria.com/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:49.675Z",
+  "extracted": {
+    "kind": "html",
+    "title": "INPRIA | A world leader world leader in metal oxide photoresist design, development and manufacturing",
+    "date": null,
+    "siteName": "Inpria",
+    "rawTitle": "INPRIA | A world leader world leader in metal oxide photoresist design, development and manufacturing"
+  }
+}

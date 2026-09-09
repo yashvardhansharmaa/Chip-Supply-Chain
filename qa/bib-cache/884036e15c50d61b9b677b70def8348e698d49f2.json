@@ -1,0 +1,16 @@
+{
+  "url": "https://www.hygon.cn/",
+  "status": 200,
+  "finalUrl": "https://www.hygon.cn/",
+  "contentType": "text/html",
+  "lastModified": "Fri, 24 Apr 2026 07:58:33 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:44.107Z",
+  "extracted": {
+    "kind": "html",
+    "title": "海光--用“芯”计算未来",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "海光--用“芯”计算未来"
+  }
+}

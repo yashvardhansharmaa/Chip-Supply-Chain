@@ -1,0 +1,16 @@
+{
+  "url": "https://www.pfeiffer-vacuum.com/",
+  "status": 200,
+  "finalUrl": "https://www.pfeiffervacuum.com/us/en/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Wed, 09 Sep 2026 05:32:47 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:02.075Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Pioneering Vacuum Technology",
+    "date": null,
+    "siteName": "Pioneering Vacuum Technology | Pfeiffer United States",
+    "rawTitle": "Pioneering Vacuum Technology | Pfeiffer United States"
+  }
+}

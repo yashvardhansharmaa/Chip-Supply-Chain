@@ -1,0 +1,16 @@
+{
+  "url": "https://www.novami.com/",
+  "status": 200,
+  "finalUrl": "https://www.novami.com/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:59.635Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Home page",
+    "date": "2023-01-06",
+    "siteName": "Nova",
+    "rawTitle": "Nova -Metrology Solutions for Semiconductors Manufacturing"
+  }
+}

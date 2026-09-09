@@ -1,0 +1,16 @@
+{
+  "url": "https://www.lamresearch.com/products/",
+  "status": 200,
+  "finalUrl": "https://www.lamresearch.com/products/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Wed, 09 Sep 2026 18:22:53 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:53.708Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Products - Lam Research",
+    "date": "2017-08-02",
+    "siteName": "Lam Research",
+    "rawTitle": "Products - Lam Research"
+  }
+}

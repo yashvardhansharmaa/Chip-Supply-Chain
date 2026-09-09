@@ -1,0 +1,16 @@
+{
+  "url": "https://www.ercot.com/files/docs/2026/03/12/March-TAC-Report.pdf",
+  "status": 200,
+  "finalUrl": "https://www.ercot.com/files/docs/2026/03/12/March-TAC-Report.pdf",
+  "contentType": "application/pdf",
+  "lastModified": "Thu, 12 Mar 2026 17:05:00 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:25.676Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": "PowerPoint Presentation",
+    "date": "2026-03-11",
+    "firstLine": null,
+    "dateModified": "2026-03-11"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "url": "https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/product-briefs/amd-instinct-mi355x-gpu-brochure.pdf",
+  "status": 200,
+  "finalUrl": "https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/product-briefs/amd-instinct-mi355x-gpu-brochure.pdf",
+  "contentType": "application/pdf",
+  "lastModified": "Fri, 27 Mar 2026 01:18:47 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:01.072Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": "AMD_Tech_Lockup_Template",
+    "date": "2025-10-01",
+    "firstLine": "1The -1 or 4",
+    "dateModified": "2022-11-02"
+  }
+}

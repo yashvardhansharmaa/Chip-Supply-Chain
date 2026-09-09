@@ -1,0 +1,16 @@
+{
+  "url": "https://www.sandisk.com/company/newsroom",
+  "status": 200,
+  "finalUrl": "https://www.sandisk.com/company/newsroom",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:05.920Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Newsroom | Sandisk",
+    "date": null,
+    "siteName": "Sandisk",
+    "rawTitle": "Newsroom | Sandisk"
+  }
+}

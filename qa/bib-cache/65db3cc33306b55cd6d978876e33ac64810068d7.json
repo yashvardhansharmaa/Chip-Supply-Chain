@@ -1,0 +1,16 @@
+{
+  "url": "https://www.cohu.com/",
+  "status": 200,
+  "finalUrl": "https://www.cohu.com/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:11.203Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Home | Cohu",
+    "date": "2015-02-18",
+    "siteName": "cohu.com",
+    "rawTitle": "Home | Cohu"
+  }
+}

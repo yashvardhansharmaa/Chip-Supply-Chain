@@ -1,0 +1,16 @@
+{
+  "url": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf",
+  "status": 200,
+  "finalUrl": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf",
+  "contentType": "application/pdf",
+  "lastModified": "Tue, 23 Sep 2025 00:33:59 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:36.248Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": "Layer 1",
+    "date": "2024-12-05",
+    "firstLine": "96790 Federal RegisterDEPARTMENT OF COMMERCE Bureau of Industry and Security 15 CFR Parts 732, 734, 736, 740, 742, 744, 746, 758, 762, 772, and 774 [Docket No. 241126 0302] RIN 0694 AJ74 Foreign-Produ",
+    "dateModified": "2024-11-30"
+  }
+}

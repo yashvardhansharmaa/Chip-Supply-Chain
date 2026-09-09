@@ -1,0 +1,16 @@
+{
+  "url": "https://www.govinfo.gov/content/pkg/FR-2025-11-12/pdf/2025-19846.pdf",
+  "status": 200,
+  "finalUrl": "https://www.govinfo.gov/content/pkg/FR-2025-11-12/pdf/2025-19846.pdf",
+  "contentType": "application/pdf",
+  "lastModified": "Tue, 11 Nov 2025 05:55:17 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:36.040Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": "Layer 1",
+    "date": "2025-11-11",
+    "firstLine": "This section of the FEDERAL REGISTERcontains regulatory documents having generalapplicability and legal effect, most of whichare keyed to and codified in the Code ofFederal Regulations, which is publi",
+    "dateModified": "2025-11-11"
+  }
+}

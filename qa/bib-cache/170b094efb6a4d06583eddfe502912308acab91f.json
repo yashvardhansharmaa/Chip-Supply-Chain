@@ -1,0 +1,16 @@
+{
+  "url": "https://www.nidec.com/en/product/search/category/B101/",
+  "status": 200,
+  "finalUrl": "https://www.nidec.com/en/product/search/category/B101/",
+  "contentType": "text/html",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:58.467Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Small-size and precision motors",
+    "date": null,
+    "siteName": "NIDEC CORPORATION",
+    "rawTitle": "Small-size and precision motors | NIDEC CORPORATION"
+  }
+}

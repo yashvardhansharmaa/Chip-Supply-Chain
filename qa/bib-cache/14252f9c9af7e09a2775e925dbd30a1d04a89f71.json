@@ -1,0 +1,16 @@
+{
+  "url": "https://www.govinfo.gov/content/pkg/FR-2022-10-13/pdf/2022-21658.pdf",
+  "status": 200,
+  "finalUrl": "https://www.govinfo.gov/content/pkg/FR-2022-10-13/pdf/2022-21658.pdf",
+  "contentType": "application/pdf",
+  "lastModified": "Mon, 22 Sep 2025 20:50:37 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:35.875Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": "Layer 1",
+    "date": "2024-05-29",
+    "firstLine": "62186 Federal RegisterDEPARTMENT OF COMMERCE Bureau of Industry and Security 15 CFR Parts 734, 736, 740, 742, 744, 762, 772, and 774 [Docket No. 220930 0204] RIN 0694 AI94 Implementation of Additional",
+    "dateModified": "2024-05-29"
+  }
+}

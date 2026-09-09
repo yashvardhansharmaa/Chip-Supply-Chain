@@ -1,0 +1,16 @@
+{
+  "url": "https://www.amd.com/en/newsroom/press-releases/2025-3-31-amd-completes-acquisition-of-zt-systems.html",
+  "status": 200,
+  "finalUrl": "https://newsroom.amd.com/news/amd-completes-acquisition-of-zt-systems/",
+  "contentType": "text/html",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:01.364Z",
+  "extracted": {
+    "kind": "html",
+    "title": "AMD Completes Acquisition of ZT Systems",
+    "date": "2025-03-31",
+    "siteName": "AMD Newsroom",
+    "rawTitle": "AMD Completes Acquisition of ZT Systems - AMD Newsroom"
+  }
+}

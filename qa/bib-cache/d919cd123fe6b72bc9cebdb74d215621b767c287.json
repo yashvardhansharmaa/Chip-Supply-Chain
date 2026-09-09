@@ -1,0 +1,16 @@
+{
+  "url": "https://www.amd.com/content/dam/amd/en/documents/products/accelerators/instinct/amd-instinct-mi455x_brochure.pdf",
+  "status": 200,
+  "finalUrl": "https://www.amd.com/content/dam/amd/en/documents/products/accelerators/instinct/amd-instinct-mi455x_brochure.pdf",
+  "contentType": "application/pdf",
+  "lastModified": "Thu, 23 Jul 2026 19:33:06 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:01.403Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": "AMD Instinct 455X GPU",
+    "date": "2026-07-20",
+    "firstLine": "1MI400-006MI400-008551006610066100664",
+    "dateModified": "2022-11-02"
+  }
+}

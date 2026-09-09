@@ -1,0 +1,16 @@
+{
+  "url": "https://www.uciexpress.org/specifications",
+  "status": 200,
+  "finalUrl": "https://www.uciexpress.org/specifications",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:25.446Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Specifications | UCIe Consortium",
+    "date": null,
+    "siteName": "UCIe Consortium",
+    "rawTitle": "Specifications | UCIe Consortium"
+  }
+}

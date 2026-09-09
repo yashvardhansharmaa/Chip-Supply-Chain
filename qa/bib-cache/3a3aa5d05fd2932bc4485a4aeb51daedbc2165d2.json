@@ -1,0 +1,16 @@
+{
+  "url": "https://www.mgc.co.jp/",
+  "status": 200,
+  "finalUrl": "https://www.mgc.co.jp/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:55.876Z",
+  "extracted": {
+    "kind": "html",
+    "title": "三菱ガス化学株式会社",
+    "date": null,
+    "siteName": "三菱ガス化学株式会社公式ホームページ",
+    "rawTitle": "三菱ガス化学株式会社"
+  }
+}

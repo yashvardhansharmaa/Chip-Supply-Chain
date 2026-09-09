@@ -1,0 +1,16 @@
+{
+  "url": "https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm",
+  "status": 403,
+  "finalUrl": "https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:25.306Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Attention Required!",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "Attention Required! | Cloudflare"
+  }
+}

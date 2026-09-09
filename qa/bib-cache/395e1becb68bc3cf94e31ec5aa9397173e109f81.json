@@ -1,0 +1,16 @@
+{
+  "url": "https://www.infineon.com/",
+  "status": 200,
+  "finalUrl": "https://www.infineon.com/",
+  "contentType": "text/html;charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:48.703Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Semiconductor & System Solutions",
+    "date": "2026-09-03",
+    "siteName": null,
+    "rawTitle": "Semiconductor & System Solutions | Infineon Technologies"
+  }
+}

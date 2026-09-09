@@ -1,0 +1,16 @@
+{
+  "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf",
+  "status": 200,
+  "finalUrl": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf",
+  "contentType": "application/pdf",
+  "lastModified": "Mon, 22 Sep 2025 22:40:00 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:35.833Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": "Layer 1",
+    "date": "2024-05-28",
+    "firstLine": "73424 Federal RegisterDEPARTMENT OF COMMERCE Bureau of Industry and Security 15 CFR Parts 734, 736, 740, 742, 744, 772, and 774 [Docket No. 231013 0246] RIN 0694 AJ23 Export Controls on Semiconductor ",
+    "dateModified": "2023-10-23"
+  }
+}

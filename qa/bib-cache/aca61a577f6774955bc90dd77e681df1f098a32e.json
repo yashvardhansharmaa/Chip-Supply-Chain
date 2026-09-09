@@ -1,0 +1,16 @@
+{
+  "url": "https://www.sifive.com/",
+  "status": 200,
+  "finalUrl": "https://www.sifive.com/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:15.745Z",
+  "extracted": {
+    "kind": "html",
+    "title": "SiFive - Leading the RISC-V Revolution",
+    "date": null,
+    "siteName": "SiFive",
+    "rawTitle": "SiFive - Leading the RISC-V Revolution"
+  }
+}

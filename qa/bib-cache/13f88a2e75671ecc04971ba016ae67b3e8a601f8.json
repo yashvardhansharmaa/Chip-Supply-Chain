@@ -1,0 +1,16 @@
+{
+  "url": "https://www.trumpf.com/en_US/solutions/applications/euv-lithography/",
+  "status": 200,
+  "finalUrl": "https://www.trumpf.com/en_US/solutions/applications/euv-lithography/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:23:25.052Z",
+  "extracted": {
+    "kind": "html",
+    "title": "How is EUV radiation generated?",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "Generation of EUV radiation | TRUMPF"
+  }
+}

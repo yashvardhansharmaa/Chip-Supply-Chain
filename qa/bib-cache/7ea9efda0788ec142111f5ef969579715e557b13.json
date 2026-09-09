@@ -1,0 +1,16 @@
+{
+  "url": "https://www.kns.com/en-us/products",
+  "status": 200,
+  "finalUrl": "https://www.kns.com/404?item=%2fproducts&user=extranet%5cAnonymous&site=kns",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:56.881Z",
+  "extracted": {
+    "kind": "html",
+    "title": "K&S - 404",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "K&S - 404"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "url": "https://www.asml.com/",
+  "status": 200,
+  "finalUrl": "https://www.asml.com/en",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:02.709Z",
+  "extracted": {
+    "kind": "html",
+    "title": "ASML | The world's supplier to the semiconductor industry",
+    "date": null,
+    "siteName": "ASML",
+    "rawTitle": "ASML | The world's supplier to the semiconductor industry"
+  }
+}

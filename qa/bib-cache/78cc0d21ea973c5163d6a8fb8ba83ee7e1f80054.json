@@ -1,0 +1,16 @@
+{
+  "url": "https://www.asml.com/en/news/stories/2022/the-euv-pellicle-indistinguishable-from-magic",
+  "status": 200,
+  "finalUrl": "https://www.asml.com/en/company/stories/2022/the-euv-pellicle-indistinguishable-from-magic",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:03.486Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Indistinguishable from magic: the EUV pellicle",
+    "date": "2022-09-14",
+    "siteName": "ASML",
+    "rawTitle": "Indistinguishable from magic: the EUV pellicle – Stories | ASML"
+  }
+}

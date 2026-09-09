@@ -1,0 +1,16 @@
+{
+  "url": "https://www.credosemi.com/products/",
+  "status": 200,
+  "finalUrl": "https://credosemi.com/products/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Wed, 09 Sep 2026 18:22:11 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:22:11.898Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Products - Credo",
+    "date": "2025-08-29",
+    "siteName": "Credo",
+    "rawTitle": "Products - Credo"
+  }
+}
