@@ -125,7 +125,7 @@ Physical assembly belongs to Taiwan. Foxconn, Quanta, Wistron and Inventec build
 
 ## The chokepoint
 
-Most of this layer is not a chokepoint. At least five capable ODMs on three continents screw racks together, and power shelves, busbars, cables and connectors have many suppliers. If Foxconn stopped tomorrow, Quanta and Wiwynn would absorb the volume within a couple of quarters.
+Most of this layer is not a chokepoint. At least five capable ODMs on three continents screw racks together, and power shelves, busbars, cables and connectors have many suppliers. If Foxconn stopped tomorrow, Quanta and Wistron would absorb the volume within a couple of quarters.
 
 Three things are genuinely narrow.
 
