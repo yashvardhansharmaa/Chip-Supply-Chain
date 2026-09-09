@@ -38,7 +38,7 @@
     "chapter": "geopolitics",
     "source": "https://cset.georgetown.edu/article/bis-2023-update-explainer/",
     "sourceTier": "A",
-    "alsoSee": ["https://www.klgates.com/US-Government-Revises-Comprehensive-Export-Controls-on-Semiconductors-and-Semiconductor-Manufacturing-Equipment-10-27-2023"],
+    "alsoSee": ["https://www.federalregister.gov/documents/2023/10/25/2023-23055/implementation-of-additional-export-controls-certain-advanced-computing-items-supercomputer-and"],
     "note": "Added on 17 November 2023 to stop the obvious workaround to a pure throughput cap: build a smaller, cheaper die and ship more of them. It catches efficient small accelerators that a raw TPP line would let through. It is also the parameter most sensitive to packaging choices, because what counts as die area for a chiplet part is a judgement call."
   },
   {
@@ -77,9 +77,9 @@
     "status": "In force",
     "amendedBy": ["2024-12-02", "2025-01-15"],
     "chapter": "geopolitics",
-    "source": "https://www.klgates.com/US-Government-Revises-Comprehensive-Export-Controls-on-Semiconductors-and-Semiconductor-Manufacturing-Equipment-10-27-2023",
-    "sourceTier": "B",
-    "alsoSee": ["https://cset.georgetown.edu/article/bis-2023-update-explainer/"],
+    "source": "https://www.federalregister.gov/documents/2023/10/25/2023-23055/implementation-of-additional-export-controls-certain-advanced-computing-items-supercomputer-and",
+    "sourceTier": "A",
+    "alsoSee": ["https://cset.georgetown.edu/article/bis-2023-update-explainer/", "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-742/section-742.6"],
     "note": "The grey band. It exists so that BIS learns about chips just under the main line rather than banning them, and it is what turns the control from a wall into a notification regime for workstation and mid-range parts. It catches gaming and professional cards with real AI throughput; it misses anything a designer can push below TPP 1600."
   },
   {
@@ -319,30 +319,30 @@
     "status": "In force",
     "amendedBy": ["2024-12-02"],
     "chapter": "lithography",
-    "source": "https://www.klgates.com/US-Government-Revises-Comprehensive-Export-Controls-on-Semiconductors-and-Semiconductor-Manufacturing-Equipment-10-27-2023",
-    "sourceTier": "B",
-    "alsoSee": ["https://www.federalregister.gov/documents/2023/10/25/2023-23049/export-controls-on-semiconductor-manufacturing-items"],
+    "source": "https://www.federalregister.gov/documents/2023/10/25/2023-23049/export-controls-on-semiconductor-manufacturing-items",
+    "sourceTier": "A",
+    "alsoSee": ["https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-742/section-742.6"],
     "note": "Overlay, not resolution, is the parameter that separates a usable advanced-logic scanner from a mature-node one, because multipatterning lives or dies on layer-to-layer alignment. The 1.50 nm tier tracks ASML's top immersion tools and the 2.4 nm tier reaches down into the older immersion fleet the Dutch controls also cover."
   },
   {
     "id": "3b001-litho-zero-de-minimis",
     "regime": "US EAR",
-    "instrument": "15 CFR 734.4 de minimis rule as applied to ECCN 3B001.f.1.b.2.b",
+    "instrument": "15 CFR 734.4(a)(3) de minimis rule as applied to advanced-node lithography equipment",
     "scope": "Foreign-made lithography equipment containing US content",
     "parameter": "De minimis US-origin content threshold",
     "operator": "=",
     "value": 0,
     "unit": "% US-origin controlled content",
-    "alternative": "Standard de minimis for D:5 is 25% for most items and 10% for some; here any US content at all makes the foreign tool subject to the EAR, unless the exporting country controls the item itself, which currently means only Japan",
+    "alternative": "Standard de minimis for D:5 is 25% for most items and 10% for some; here any US content at all makes the foreign tool subject to the EAR, unless the country from which the foreign-made item was first exported has the commodity on its own control list. The eCFR text names two: Japan, which added ArF-wet lithography and other advanced semiconductor manufacturing equipment to its control list on 23 July 2023, and the Netherlands, which did so on 9 September 2024",
     "destinations": "For the development or production of advanced-node integrated circuits, in Macau or Country Group D:5",
     "licensePolicy": "Presumption of denial",
     "effectiveDate": "2023-11-17",
     "status": "In force",
     "amendedBy": ["2024-12-02"],
     "chapter": "lithography",
-    "source": "https://www.klgates.com/US-Government-Revises-Comprehensive-Export-Controls-on-Semiconductors-and-Semiconductor-Manufacturing-Equipment-10-27-2023",
-    "sourceTier": "B",
-    "note": "A zero threshold is the strongest form an export control takes: it converts every American screw, laser or controller inside a foreign scanner into US jurisdiction. It is aimed squarely at ASML and at any future non-US scanner builder, and its carve-out for countries with equivalent controls is the mechanism that rewards allied alignment."
+    "source": "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-734/section-734.4",
+    "sourceTier": "A",
+    "note": "A zero threshold is the strongest form an export control takes: it converts every American screw, laser or controller inside a foreign scanner into US jurisdiction. It is aimed squarely at ASML and at any future non-US scanner builder, and its carve-out for countries with equivalent controls is the mechanism that rewards allied alignment. Read the rule rather than a summary of it: the current eCFR text of 734.4(a)(3) keys the zero threshold to equipment meeting the ECCN 3B993.f.1 parameters when it is destined for the development or production of advanced-node integrated circuits, and carries the Japanese and Dutch control-list dates in a footnote."
   },
   {
     "id": "3b001-etch",
@@ -424,7 +424,7 @@
     "chapter": "metrology-and-inspection",
     "source": "https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-produced-direct-product-rule-additions-and-refinements-to-controls-for-advanced-computing",
     "sourceTier": "A",
-    "alsoSee": ["https://www.hklaw.com/en/insights/publications/2024/12/us-strengthens-export-controls-on-advanced-computing-items"],
+    "alsoSee": ["https://www.federalregister.gov/documents/2023/10/25/2023-23049/export-controls-on-semiconductor-manufacturing-items", "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-742/section-742.6"],
     "note": "One of only two ECCNs, with 3B001.a.4, that the December 2024 semiconductor equipment foreign direct product rule names in its product scope, which makes actinic mask inspection one of the two narrowest and hardest points in the whole equipment fence."
   },
   {
@@ -566,8 +566,8 @@
     "chapter": "lithography",
     "source": "https://www.government.nl/latest/news/2024/09/06/the-netherlands-expands-export-control-measure-advanced-semiconductor-manufacturing-equipment",
     "sourceTier": "A",
-    "alsoSee": ["https://www.trendforce.com/news/2024/09/09/news-netherlands-expands-export-control-over-asmls-two-duv-machines-effective-on-september-7th/", "https://www.cnbc.com/2024/09/06/netherlands-expands-export-curbs-on-advanced-chip-tools.html"],
-    "note": "The government.nl announcement describes the measure but does not name the models; the NXT:1970i and NXT:1980i identifications come from TrendForce and CNBC. The significance is jurisdictional as much as technical: the Netherlands took the licensing decision back from the United States for tools it builds."
+    "alsoSee": ["https://www.sec.gov/Archives/edgar/data/937966/000093796625000009/asml-20241231.htm"],
+    "note": "The government.nl announcement describes the measure without naming the models. ASML names them itself: its Form 20-F for 2024 records that the Dutch government's requirement of 6 September 2024, in effect from 7 September, means ASML must apply to The Hague rather than to Washington for export licences for its TWINSCAN NXT:1970i and 1980i immersion systems, and for specially designed parts, software and technology for them outside the EU. The Dutch requirement was already in place for the NXT:2000i and later immersion tools. The significance is jurisdictional as much as technical: the Netherlands took the licensing decision back from the United States for tools it builds."
   },
   {
     "id": "jp-meti-23-items",
@@ -587,7 +587,7 @@
     "chapter": "deposition-and-etch",
     "source": "https://www.csis.org/analysis/csis-translation-updated-japanese-export-controls-high-performance-semiconductor",
     "sourceTier": "A",
-    "alsoSee": ["https://sanctionsnews.bakermckenzie.com/japan-to-strengthen-its-export-control-regulations-to-control-various-semiconductor-manufacturing-equipment-/"],
+    "alsoSee": ["https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-734/section-734.4"],
     "note": "Japan's contribution to the fence, and the reason the US zero de minimis rule for lithography has a carve-out for Japanese-controlled items. Written as a country-neutral list to avoid naming China, which is why it applies worldwide and then exempts the 42 destinations Japan trusts."
   },
   {

@@ -26,14 +26,15 @@
     ],
     "chinaStatus": "China's back end is far stronger than its front end. JCET alone billed RMB 35.96 billion in 2024, and Chinese suppliers gained share in packaging and test tools while gaining none in ALD or lithography. Almost none of it is silicon-interposer 2.5D for AI accelerators.",
     "usStatus": "No domestic CoWoS at volume. Amkor is building a $7B packaging and test plant in Peoria with up to $407M of CHIPS funding, production from early 2028.",
-    "costSignal": "No public wafer counts. TSMC told investors CoWoS capacity would grow at a 60% CAGR and that it doubled in 2025; it still will not publish the absolute number",
+    "costSignal": "No public wafer counts. TSMC guided investors to a 60% CAGR in CoWoS capacity and adds more every year, but will not publish the absolute number",
     "substitution": {"years": "3-5", "why": "The unit process steps are not exotic. What is scarce is the yielded integration of a 5.5-reticle interposer with its HBM stacks, and a tool base large enough to do it at the volume Nvidia alone orders."}
   },
   "keyFacts": [
     {"fact": "A scanner's maximum exposure field is 26 mm by 33 mm, or 858 mm2", "source": "https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe3400c"},
     {"fact": "TSMC is now producing 5.5-reticle CoWoS, having certified it in 2025 and started volume production in 2026", "source": "https://pr.tsmc.com/english/news/3302"},
     {"fact": "CoWoS-S silicon interposers reach 3.3x reticle size, about 2,700 mm2; larger designs must use CoWoS-R or CoWoS-L", "source": "https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm"},
-    {"fact": "TSMC told its 2024 symposium that CoWoS capacity would grow at a 60% CAGR over the following years, and in October 2025 still would not give an absolute 2026 number", "source": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf"},
+    {"fact": "TSMC told its 2024 symposium that CoWoS capacity would grow at a 60% CAGR over the following years, and C.C. Wei said in July 2024 that he could not reach supply and demand balance", "source": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf"},
+    {"fact": "In October 2025 Wei would still not give an absolute CoWoS number for 2026, and said Amkor's Arizona plant would open before TSMC's own two packaging fabs there", "source": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf"},
     {"fact": "A 14-reticle CoWoS carrying about 10 large compute dies and 20 HBM stacks is slated for production in 2028, with more than 14 reticles in 2029 and a 40-reticle System-on-Wafer the same year", "source": "https://pr.tsmc.com/english/news/3302"},
     {"fact": "ASE Technology Holding billed NT$645.4 billion in 2025 with assembly and test revenue up 23%; Amkor billed $6.71 billion, up 6%", "source": "https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-fourth-quarter-and-the-full-year-of-2025-302679779.html"},
     {"fact": "JCET, China's largest OSAT, billed RMB 35.96 billion in 2024, up 21.2%", "source": "https://www.jcetglobal.com/en/site/news-detail?id=1952"},
@@ -99,9 +100,9 @@ TSMC's SoIC and Intel's Foveros bond dies face to face, copper pad to copper pad
 
 Panel-level packaging swaps the round wafer for a rectangular panel and wastes far less area; see Test and assembly. JEDEC published SPHBM4 on 13 July 2026: HBM4's DRAM on a base die carrying 512 data signals instead of 2,048, which relaxes bump pitch enough to mount HBM on a standard organic substrate ([source](https://www.jedec.org/news/pressreleases/new-jedec%C2%AE-sphbm4-standard-enables-hbm4-class-bandwidth-organic-substrates)). If it works at volume it relieves the industry's most constrained process.
 
-## Capacity and allocation
+## Capacity
 
-TSMC does not publish a CoWoS wafer number, and that silence is itself the story. At its 2024 symposium it told investors capacity would grow at a 60 percent compound rate. Asked at the July 2024 earnings call when supply would meet demand, C.C. Wei said he could not reach balance, hoped for 2025 or 2026, and expected supply to stay very tight ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf)).
+TSMC does not publish a CoWoS wafer number, and that silence is itself the story. At its 2024 symposium it told investors the capacity would grow at a 60 percent compound rate, and at the July 2024 earnings call C.C. Wei said he could not reach supply and demand balance, hoped to by 2025 or 2026, and expected supply to stay very tight ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf)).
 
 Fifteen months later the answer had not changed. In October 2025 Wei said only that TSMC was working very hard to narrow the gap, would add capacity again in 2026, and would give the real number the following year ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf)). Front end and back end were both, in his word, tight. A company that reports monthly revenue to the exchange will not say how many interposers it can build, because the number is the constraint.
 
@@ -142,4 +143,4 @@ TSMC's roadmap makes the chokepoint worse before it gets better.
 
 ## Takeaways
 
-Advanced packaging is the second great chokepoint after lithography, and it is a capacity problem, not a physics problem: the steps are known, there are not enough lines. TSMC has doubled CoWoS capacity, promised a 60 percent compound growth rate, and still cannot say when supply meets demand. China can package chips but not the 2.5D structures AI accelerators need, and the American alternatives do not start until 2028.
+Advanced packaging is the second great chokepoint after lithography, and it is a capacity problem, not a physics problem: the steps are known, there are not enough lines. TSMC has guided to 60 percent compound growth in CoWoS capacity, added more every year, and still cannot say when supply meets demand. China can package chips but not the 2.5D structures AI accelerators need, and the American alternatives do not start until 2028.
