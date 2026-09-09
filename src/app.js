@@ -184,6 +184,8 @@
       if (sheet) {
         sheet.addEventListener('click', function (e) { if (e.target.closest('a') || e.target.closest('.sheet-close')) { open(false); self.set(true); } });
         document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) open(false); });
+        // Back and Forward leave the sheet standing over the new view with the page still locked, so close it on any route change
+        window.addEventListener('hashchange', function () { if (!sheet.hidden) open(false); });
       }
       window.addEventListener('resize', function () { if (!narrow()) { open(false); self.set(true); } });
     },
