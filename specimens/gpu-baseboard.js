@@ -46,11 +46,18 @@ PC.register('gpu-baseboard', function (p) {
       g.push(PC.T(PC.plane({ w: b[2], d: b[3], tone: 0.42 }), { pos: [b[0], yT, b[1]] }));
     });
     g.push(outline(MW - 2 * kerb, MD - 2 * kerb, yT + 0.001, 0, 0, 340, 1));
-    // the package lid: a pale plate standing a little above the frame's floor
-    var yL = yT - 0.014;
-    g.push(PC.T(PC.box({ w: LW, h: 0.02, d: LD, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 620, tone: 0.26 }), { pos: [0, yL, 0] }));
-    g.push(PC.T(PC.boxEdges({ w: LW, h: 0.02, d: LD, perUnit: 380, tone: 1 }), { pos: [0, yL, 0] }));
-    g.push(outline(LW * 0.62, LD * 0.5, yL + 0.011, 0, 0, 300, 0.55));
+    // the package inside the frame: substrate, then the machined metal lid
+    var yL = yT - 0.016;
+    g.push(PC.T(PC.plane({ w: LW + 0.048, d: LD + 0.042, n: 420, tone: 0.5 }), { pos: [0, yL - 0.011, 0] }));
+    g.push(outline(LW + 0.048, LD + 0.042, yL - 0.010, 0, 0, 330, 0.95));
+    g.push(PC.T(PC.box({ w: LW, h: 0.022, d: LD, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 480, tone: 0.2 }), { pos: [0, yL, 0] }));
+    g.push(PC.T(PC.boxEdges({ w: LW, h: 0.022, d: LD, perUnit: 420, tone: 1 }), { pos: [0, yL, 0] }));
+    // brushed finish, so the lid reads as metal rather than as bare board
+    for (var bl = 0; bl < 13; bl++) {
+      var bz = (bl - 6) * LD * 0.068;
+      g.push(PC.line({ a: [-LW * 0.44, yL + 0.012, bz], b: [LW * 0.44, yL + 0.012, bz], perUnit: 330, tone: 0.42 }));
+    }
+    g.push(outline(LW * 0.56, LD * 0.44, yL + 0.013, 0, 0, 340, 0.8));
     // eight retention screws around the frame
     var sc = [];
     [-1, 1].forEach(function (sx) {
@@ -125,42 +132,47 @@ PC.register('gpu-baseboard', function (p) {
   parts.push(PC.merge.apply(null, traces));
 
   // ---------- voltage-regulator banks down the long edges ----------
+  // Kept low and open: they should read as a rhythm at the rim, not as a fence.
   function stage(x, z, w, h, d) {
-    parts.push(PC.T(PC.box({ w: w, h: h, d: d, n: 150, tone: 0.55 }), { pos: [x, top + h / 2, z] }));
-    parts.push(PC.T(PC.boxEdges({ w: w, h: h, d: d, perUnit: 320, tone: 1 }), { pos: [x, top + h / 2, z] }));
+    parts.push(PC.T(PC.box({ w: w, h: h, d: d, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 110, tone: 0.46 }), { pos: [x, top + h / 2, z] }));
+    parts.push(PC.T(PC.boxEdges({ w: w, h: h, d: d, perUnit: 260, tone: 0.85 }), { pos: [x, top + h / 2, z] }));
   }
-  var vz = BD / 2 - 0.052;
-  for (var i2 = 0; i2 < 22; i2++) {
-    var vx = (i2 - 10.5) * 0.066;
-    stage(vx, -vz, 0.042, 0.030, 0.042);
-    stage(vx, vz, 0.042, 0.030, 0.042);
+  var vz = BD / 2 - 0.050;
+  for (var i2 = 0; i2 < 13; i2++) {
+    var vx = (i2 - 6) * 0.085;
+    stage(vx, -vz, 0.044, 0.026, 0.044);
+    stage(vx, vz, 0.044, 0.026, 0.044);
   }
-  // bulk capacitors: two clusters of cans at the power end
-  for (i2 = 0; i2 < 18; i2++) {
-    var cx = -BW / 2 + 0.028 + (i2 % 2) * 0.040, cz = (Math.floor(i2 / 2) - 4) * 0.056;
-    parts.push(PC.T(PC.cylinder({ r: 0.015, h: 0.036, caps: false, n: 150, tone: 0.5 }), { pos: [cx, top + 0.018, cz] }));
-    parts.push(PC.T(PC.circle({ r: 0.015, perUnit: 520, tone: 1 }), { pos: [cx, top + 0.036, cz] }));
+  // bulk capacitors: two rows of cans between the regulators and the modules
+  for (i2 = 0; i2 < 20; i2++) {
+    var cx = (i2 % 10 - 4.5) * 0.088, cz = (i2 < 10 ? -1 : 1) * (BD / 2 - 0.112);
+    parts.push(PC.T(PC.cylinder({ r: 0.014, h: 0.030, caps: false, n: 120, tone: 0.46 }), { pos: [cx, top + 0.015, cz] }));
+    parts.push(PC.T(PC.circle({ r: 0.014, perUnit: 460, tone: 0.95 }), { pos: [cx, top + 0.030, cz] }));
   }
 
-  // ---------- power blades and the high-density edge connectors ----------
-  // Two power blades at the left end, six signal connectors along the front.
+  // ---------- power blades at one end, the high-density connectors at the other ----------
   [-1, 1].forEach(function (s) {
-    var px = -BW / 2 + 0.115, pz = s * 0.20;
-    parts.push(PC.T(PC.box({ w: 0.07, h: 0.052, d: 0.14, n: 460, tone: 0.5 }), { pos: [px, top + 0.026, pz] }));
-    parts.push(PC.T(PC.boxEdges({ w: 0.07, h: 0.052, d: 0.14, perUnit: 340, tone: 1 }), { pos: [px, top + 0.026, pz] }));
-    for (var k = 0; k < 5; k++) {
-      var kz = pz + (k - 2) * 0.026;
-      parts.push(PC.line({ a: [px - 0.03, top + 0.053, kz], b: [px + 0.03, top + 0.053, kz], perUnit: 420, tone: 0.9 }));
+    var px = -BW / 2 + 0.062, pz = s * 0.17;
+    parts.push(PC.T(PC.box({ w: 0.084, h: 0.058, d: 0.20, n: 620, tone: 0.5 }), { pos: [px, top + 0.029, pz] }));
+    parts.push(PC.T(PC.boxEdges({ w: 0.084, h: 0.058, d: 0.20, perUnit: 340, tone: 1 }), { pos: [px, top + 0.029, pz] }));
+    for (var k = 0; k < 7; k++) {
+      var kz = pz + (k - 3) * 0.026;
+      parts.push(PC.line({ a: [px - 0.036, top + 0.059, kz], b: [px + 0.036, top + 0.059, kz], perUnit: 460, tone: 0.9 }));
     }
   });
-  var cw = 0.155, ch = 0.048, cd = 0.038, cz2 = BD / 2 - 0.108;
-  for (i2 = 0; i2 < 6; i2++) {
-    var x2 = (i2 - 2.5) * 0.212;
-    parts.push(PC.T(PC.box({ w: cw, h: ch, d: cd, n: 420, tone: 0.5 }), { pos: [x2, top + ch / 2, cz2] }));
-    parts.push(PC.T(PC.boxEdges({ w: cw, h: ch, d: cd, perUnit: 340, tone: 1 }), { pos: [x2, top + ch / 2, cz2] }));
-    for (var k2 = 0; k2 < 18; k2++) {
-      var px2 = x2 + (k2 - 8.5) * (cw * 0.88 / 17);
-      parts.push(PC.line({ a: [px2, top + 0.007, cz2 + cd / 2], b: [px2, top + ch - 0.009, cz2 + cd / 2], perUnit: 280, tone: 0.72 }));
+  var cw = 0.052, ch = 0.050, cd = 0.185, cx2 = BW / 2 - 0.042;
+  for (i2 = 0; i2 < 4; i2++) {
+    var z2 = (i2 - 1.5) * 0.245;
+    parts.push(PC.T(PC.box({ w: cw, h: ch, d: cd, n: 420, tone: 0.5 }), { pos: [cx2, top + ch / 2, z2] }));
+    parts.push(PC.T(PC.boxEdges({ w: cw, h: ch, d: cd, perUnit: 340, tone: 1 }), { pos: [cx2, top + ch / 2, z2] }));
+    for (var k2 = 0; k2 < 20; k2++) {
+      var pz2 = z2 + (k2 - 9.5) * (cd * 0.88 / 19);
+      parts.push(PC.line({ a: [cx2 + cw / 2, top + 0.008, pz2], b: [cx2 + cw / 2, top + ch - 0.010, pz2], perUnit: 280, tone: 0.72 }));
+    }
+    // the differential pairs that leave the board through it
+    for (k2 = 0; k2 < 5; k2++) {
+      var oz = z2 + (k2 - 2) * 0.030;
+      parts.push(PC.polyline({ pts: [[cx2 - cw / 2, top + 0.002, oz], [0.72, top + 0.002, oz], [0.70, top + 0.002, oz * 0.86]], perUnit: 240, tone: 0.4 }));
     }
   }
 

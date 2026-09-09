@@ -135,12 +135,12 @@ PC.register('euv-scanner', function (p) {
 
   /* ---------- vacuum vessels ---------- */
 
-  add(vessel(1.56, 2.72, 1.15, -0.52, 0.10, 3000));                 // illuminator
-  add(vessel(1.46, 3.10, 1.22, 0.80, -0.04, 3600));                 // projection optics box
-  add(vessel(1.86, 0.52, 0.98, 0.06, 1.94, 1300));                  // reticle stage chamber
+  add(vessel(1.52, 2.76, 1.15, -0.57, 0.10, 3000));                 // illuminator
+  add(vessel(1.46, 3.14, 1.22, 0.92, -0.06, 3600));                 // projection optics box
+  add(vessel(1.74, 0.48, 0.98, 0.10, 1.90, 1250));                  // reticle stage chamber
   // frame ribs across the POB so it reads as a stiff optical bench, not a crate
   for (i = -1; i <= 1; i += 2) {
-    add(PC.T(PC.polyline({ pts: [[-0.73, 0, 0], [0.73, 0, 0]], perUnit: 210, tone: 0.55 }), { rot: [Math.PI / 2, 0, 0], pos: [0.80, i * 0.92, -0.61] }));
+    add(PC.T(PC.polyline({ pts: [[-0.73, 0, 0], [0.73, 0, 0]], perUnit: 210, tone: 0.55 }), { rot: [Math.PI / 2, 0, 0], pos: [0.92, i * 0.94, -0.61] }));
   }
 
   /* ---------- source vessel, collector, tin ---------- */
@@ -201,7 +201,7 @@ PC.register('euv-scanner', function (p) {
 
   /* ---------- wafer stage (TWINSCAN: expose here, measure alongside) ---------- */
 
-  var W = NODE[11].p, wafR = 0.235;
+  var W = NODE[11].p, wafR = 0.235, wafDx = 0.78;
   function chuck(cx, exposed) {
     var g = [];
     g.push(PC.T(PC.disc({ r: wafR, n: 700, tone: 0.2 }), { pos: [cx, W[1], 0] }));
@@ -213,18 +213,18 @@ PC.register('euv-scanner', function (p) {
     return PC.merge.apply(null, g);
   }
   add(chuck(W[0], true));
-  add(chuck(W[0] + 0.72, false));
+  add(chuck(W[0] + wafDx, false));
   // stage bridge, rails and granite base
-  add(PC.T(PC.box({ w: 1.58, h: 0.10, d: 0.66, faces: ['py', 'px', 'nx', 'nz'], n: 1500, tone: 0.22 }), { pos: [W[0] + 0.36, W[1] - 0.135, 0] }));
-  add(PC.T(PC.boxEdges({ w: 1.58, h: 0.10, d: 0.66, perUnit: 170, tone: 0.9 }), { pos: [W[0] + 0.36, W[1] - 0.135, 0] }));
+  add(PC.T(PC.box({ w: 1.66, h: 0.10, d: 0.66, faces: ['py', 'px', 'nx', 'nz'], n: 1500, tone: 0.22 }), { pos: [W[0] + wafDx / 2, W[1] - 0.135, 0] }));
+  add(PC.T(PC.boxEdges({ w: 1.66, h: 0.10, d: 0.66, perUnit: 170, tone: 0.9 }), { pos: [W[0] + wafDx / 2, W[1] - 0.135, 0] }));
   for (i = -1; i <= 1; i += 2) {
-    add(PC.T(PC.box({ w: 1.86, h: 0.04, d: 0.06, n: 420, tone: 0.42 }), { pos: [W[0] + 0.36, W[1] - 0.208, i * 0.24] }));
-    add(PC.T(PC.line({ a: [-0.93, 0, 0], b: [0.93, 0, 0], perUnit: 190, tone: 0.85 }), { pos: [W[0] + 0.36, W[1] - 0.188, i * 0.24] }));
+    add(PC.T(PC.box({ w: 1.86, h: 0.04, d: 0.06, n: 420, tone: 0.42 }), { pos: [W[0] + wafDx / 2, W[1] - 0.208, i * 0.24] }));
+    add(PC.T(PC.line({ a: [-0.93, 0, 0], b: [0.93, 0, 0], perUnit: 190, tone: 0.85 }), { pos: [W[0] + wafDx / 2, W[1] - 0.188, i * 0.24] }));
   }
 
   /* ---------- base frame ---------- */
 
-  var bw = 3.42, bx = -0.22, by = -2.16;
+  var bw = 3.66, bx = -0.16, by = -2.16;
   add(PC.T(PC.box({ w: bw, h: 0.20, d: 1.36, faces: ['py', 'pz', 'nz', 'px', 'nx'], n: 4200, tone: 0.24 }), { pos: [bx, by, 0] }));
   add(PC.T(PC.boxEdges({ w: bw, h: 0.20, d: 1.36, perUnit: 190, tone: 0.9 }), { pos: [bx, by, 0] }));
   for (i = 0; i < 4; i++) {
@@ -233,11 +233,11 @@ PC.register('euv-scanner', function (p) {
     add(PC.T(PC.cylinder({ r: 0.085, h: 0.24, n: 400, tone: 0.4 }), { pos: [lx, by - 0.22, -0.50] }));
   }
   // turbopumps slung under the two big vessels
-  var pumpAt = [[-0.52, -1.50], [0.80, -1.76]];
+  var pumpAt = [[-0.57, -1.52], [0.92, -1.80]];
   for (i = 0; i < pumpAt.length; i++) {
-    add(PC.T(PC.cylinder({ r: 0.145, h: 0.26, n: 900, tone: 0.3 }), { pos: [pumpAt[i][0], pumpAt[i][1], -0.42] }));
-    add(PC.T(PC.circle({ r: 0.175, perUnit: 260, tone: 0.85 }), { pos: [pumpAt[i][0], pumpAt[i][1] + 0.13, -0.42] }));
-    add(PC.T(PC.circle({ r: 0.145, perUnit: 220, tone: 0.65 }), { pos: [pumpAt[i][0], pumpAt[i][1] - 0.13, -0.42] }));
+    add(PC.T(PC.cylinder({ r: 0.145, h: 0.26, n: 900, tone: 0.3 }), { pos: [pumpAt[i][0], pumpAt[i][1], -0.44] }));
+    add(PC.T(PC.circle({ r: 0.175, perUnit: 260, tone: 0.85 }), { pos: [pumpAt[i][0], pumpAt[i][1] + 0.13, -0.44] }));
+    add(PC.T(PC.circle({ r: 0.145, perUnit: 220, tone: 0.65 }), { pos: [pumpAt[i][0], pumpAt[i][1] - 0.13, -0.44] }));
   }
 
   /* ---------- the 13.5 nm light ---------- */

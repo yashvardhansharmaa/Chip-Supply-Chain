@@ -1399,9 +1399,9 @@
     },
     "die": {
       "count": 1,
-      "areaMm2Each": 820,
+      "areaMm2Each": null,
       "transistorsB": 140,
-      "reticleLimited": true
+      "reticleLimited": null
     },
     "package": {
       "type": null,
@@ -1497,10 +1497,6 @@
       {
         "label": "Microsoft: Deep dive into the Maia 200 architecture",
         "url": "https://techcommunity.microsoft.com/blog/azureinfrastructureblog/deep-dive-into-the-maia-200-architecture/4489312"
-      },
-      {
-        "label": "Hot Chips 2026: MAIA 200, A Data Center Scale AI system (Microsoft)",
-        "url": "https://hc2026.hotchips.org/assets/program/conference/day2/HC2026.Microsoft.PrashantRanjan.v04.pdf"
       }
     ]
   },
@@ -1532,18 +1528,18 @@
     },
     "memory": {
       "type": "HBM3E",
-      "stacks": 8,
-      "capacityGB": 288,
-      "bandwidthTBs": 9.4,
+      "stacks": null,
+      "capacityGB": null,
+      "bandwidthTBs": null,
       "suppliers": []
     },
     "compute": {
       "fp16TFLOPS": null,
-      "fp8TFLOPS": 6000,
-      "fp4TFLOPS": 12000,
-      "precisionNote": "From Meta's Hot Chips 2026 disclosure: 12 PFLOPS FP4 and about 6 PFLOPS FP8, with 8 HBM3E stacks at 9.4 TB/s. Meta's own blog gives only ratios, quoting 400 percent higher FP8 FLOPS and 51 percent higher HBM bandwidth than MTIA 300, and publishes no absolute figures. Dense versus sparse not stated."
+      "fp8TFLOPS": null,
+      "fp4TFLOPS": null,
+      "precisionNote": "Meta's own blog gives only ratios, quoting 400 percent higher FP8 FLOPS and 51 percent higher HBM bandwidth than MTIA 300, and publishes no absolute figures. The absolute numbers Meta showed at Hot Chips 2026 sit in a registration-gated deck, so they are not used here."
     },
-    "tdpW": 1200,
+    "tdpW": null,
     "interconnect": {
       "chipToChip": "1.2 TB/s scale-up per accelerator",
       "scaleUp": "72 accelerators in one rack as a single scale-up domain over a switched Ethernet backplane, four accelerators per tray",
@@ -1653,10 +1649,6 @@
       {
         "label": "Meta AI blog: MTIA, scale AI chips for billions",
         "url": "https://ai.meta.com/blog/meta-mtia-scale-ai-chips-for-billions/"
-      },
-      {
-        "label": "Hot Chips 2026: Meta's Custom AI Silicon, from Recommendation to Dual-Mandate with GenAI",
-        "url": "https://hc2026.hotchips.org/assets/program/conference/day2/HC2026.Meta.LokeChenSingh.V06.pdf"
       },
       {
         "label": "Engineering at Meta: MTIA 300, Meta's first training chip with built-in NICs",

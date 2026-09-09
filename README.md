@@ -21,12 +21,12 @@ The whole site compiles to **one self-contained HTML file** (`dist/index.html`).
 ```
 brief/        editorial, editing, source-policy, data-schema and specimen briefs (the contracts the workers followed)
 content/      one markdown file per chapter, JSON front matter + body, inline ([source](url)) citations
-data/         landscape.json, suppliers.json, export-controls-timeline.json, chokepoint-matrix.json, control-thresholds.json, exposure.json, glossary.json, source-tiers.json
+data/         landscape.json (+ landscape-layouts.json, package layouts merged by chip id), suppliers.json, export-controls-timeline.json, chokepoint-matrix.json, control-thresholds.json, exposure.json, glossary.json, source-tiers.json
 specimens/    one JS file per 3D specimen, built from src/kit.js primitives
 src/          kit.js (point-cloud primitives), app.js (runtime), styles.css (design system), template.html
-build/        build.js (markdown -> HTML, figures -> SVG, assembles dist/index.html), preview.js (renders a specimen to PNG)
+build/        build.js (markdown -> HTML, figures -> SVG, assembles dist/index.html), preview.js (renders a specimen to PNG), audit-data-sources.js
 dist/         index.html (the site) and build-report.txt
-qa/           specimen preview PNGs
+qa/           specimen preview PNGs (qa/before/ holds the pre-redesign renders), fact-check and source-audit logs, design memo
 ```
 
 ## Build
@@ -53,9 +53,9 @@ python3 -m http.server 8765 --directory dist   # then open http://localhost:8765
 
 ## Writing and sourcing standards
 
-- `brief/SOURCE_POLICY.md` defines four source tiers; Tier D (market-research SEO sites, financial aggregators, personal blogs) is never cited, and the build report counts any that slip through.
+- `brief/SOURCE_POLICY.md` is strict: only Tier A sources (company filings and investor materials, governments and regulators, standards bodies, universities and labs, and institutional research such as CSET, CSIS, SIA, SEMI, WSTS and Epoch AI) plus four named exceptions (SemiAnalysis, Reuters, the Financial Times, Nikkei Asia). Market-research firms and the rest of the press are not cited. The build report counts any disallowed chapter citation and `node build/audit-data-sources.js` does the same for the data files; both stand at zero.
 - `.claude/skills/writing-well/SKILL.md` is the prose standard, distilled from William Zinsser's *On Writing Well*; every chapter went through it.
 
 ## Credits
 
-Made by Yashvardhan Sharma with Claude in September 2026 (Fable 5.1 as orchestrator and designer, Opus agents writing chapters, compiling datasets and modelling specimens). Every figure links to a public source. Not investment advice.
+Made by Yashvardhan Sharma with Claude in September 2026 (Fable 5.1 as orchestrator and designer, Opus agents writing chapters, compiling datasets and modelling specimens). Inspired by [Humanity's Last Machine](https://www.humanityslastmachine.com/) and [CSET's semiconductor supply-chain work](https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/). Every figure links to a public source. Not investment advice.

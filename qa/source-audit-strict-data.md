@@ -513,3 +513,7 @@ Six hosts, all Tier A by category:
   Ironwood, Maia 200 and MTIA 400 still draw 8, 6 and 8 HBM sites respectively even though those
   stack counts are now null. Nothing in the build reads a stack count from a layout, and
   redrawing them was out of scope, but whoever owns the figures should know.
+
+## Follow-up: gated Hot Chips 2026 decks (9 September 2026, orchestrator)
+
+Both `hc2026.hotchips.org` PDFs return 401 in a real browser as well, so they were dropped. Nulled: `microsoft-maia-200.die.areaMm2Each` and `die.reticleLimited`; `meta-mtia-400.memory.stacks`, `memory.capacityGB`, `memory.bandwidthTBs`, `compute.fp8TFLOPS`, `compute.fp4TFLOPS`, `tdpW`. The two sentences in `landscape-notes.md` that carried those numbers were cut; the MTIA 400 note now says the absolute figures sit in a gated deck. Microsoft's and Meta's public posts were checked for the same numbers and do not carry them.
