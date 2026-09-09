@@ -60,7 +60,7 @@
 ---
 # Introduction and Goals
 
-An AI accelerator is not a chip. It is a stack of about a dozen separately manufactured objects, and only one company in the world can currently assemble them at volume.
+An AI accelerator is not a chip. It is a stack of roughly a dozen separately made parts, and only one company in the world can currently assemble them at volume.
 
 This site takes that package apart, one chapter per stage, from the sand that becomes a silicon wafer to the liquid-cooled rack on a data center floor. Each chapter answers the same three questions: how does this stage work, where do the trade-offs sit, and who controls it and how hard would it be to replace them.
 

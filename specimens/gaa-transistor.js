@@ -62,6 +62,17 @@ PC.register('gaa-transistor', function (p) {
   add(PC.T(PC.boxEdges({ w: gateLen, h: gateH, d: gateD, perUnit: 420, tone: 1 }), { pos: [0, gateY, 0] }));
   // the wrap: outline the gate metal filling the space under, between and over the sheets
   for (i = 0; i < 4; i++) add(rect(gateLen, gateD, (i - 0.5) * pitch, 340, 0.9));
+  // inner spacers: the dielectric plugs that seal the gate off from the epitaxy,
+  // one in every gap on both sides of the gate
+  var isW = 4 * nm, gapH = pitch - sheetT;
+  for (i = 0; i < 4; i++) {
+    var yg = (i - 0.5) * pitch;
+    [1, -1].forEach(function (s) {
+      var xc = s * (gateLen / 2 + isW / 2);
+      add(PC.T(PC.box({ w: isW, h: gapH, d: sheetW, faces: ['px', 'nx', 'py', 'ny'], n: 300, tone: 0.55 }), { pos: [xc, yg, 0] }));
+      add(PC.T(PC.boxEdges({ w: isW, h: gapH, d: sheetW, perUnit: 160, tone: 0.8 }), { pos: [xc, yg, 0] }));
+    });
+  }
 
   // ---------- epitaxial source and drain: diamond prisms over the sheet ends ----------
   var epiHH = 21 * nm, epiWW = 24 * nm, epiLen = 24 * nm, epiY = pitch, epiX = 33 * nm;
@@ -95,6 +106,6 @@ PC.register('gaa-transistor', function (p) {
     cloud: PC.merge.apply(null, parts),
     spin: 0.12,
     tilt: [0.3, -0.38, 0],
-    caption: 'A gate-all-around nanosheet transistor roughly 120 nm across: three silicon channels stacked one above another, a gate wrapping every face of all three, epitaxial source and drain diamonds at the ends, and copper contacts rising to the wiring above.'
+    caption: 'A gate-all-around nanosheet transistor roughly 120 nm across: three silicon channels stacked one above another, a gate wrapping every face of all three, epitaxial source and drain diamonds at the ends, inner spacers sealing the gate off from them, and copper contacts rising to the wiring above.'
   };
 });

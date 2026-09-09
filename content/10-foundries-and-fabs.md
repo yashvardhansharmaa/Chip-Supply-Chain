@@ -135,7 +135,7 @@ That stacks three risks on one island:
 - **Resource.** Drought and grid margin both bind. TSMC consumed 8.4 percent of Taiwan's electricity in 2023, and S&P Global projects 23.7 percent by 2030 ([source](https://www.taipeitimes.com/News/taiwan/archives/2025/04/11/2003834993)).
 - **Political.** A blockade or conflict would remove most sub-5 nm capacity from the world market at once, with no substitute available inside a decade. See Geopolitics.
 
-Diversification is real but slow. The Arizona ramp has depended on engineers rotated in from Taiwan, and a fab is not just a building. It is a workforce that has run one specific process for years.
+Diversification is real but slow. The Arizona ramp has leaned on engineers rotated in from Taiwan, and the wage, permitting and construction-cost gap shows up in the premium customers pay ([source](https://www.eetasia.com/tsmc-ends-era-of-cheap-transistors-with-5-10-price-hikes-for-advanced-nodes/)). A fab is not just a building. It is a workforce that has run one specific process for years.
 
 ## Key evaluation criteria
 

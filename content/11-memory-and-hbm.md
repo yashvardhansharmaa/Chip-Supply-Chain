@@ -116,7 +116,7 @@ DRAM is a three-firm oligopoly, and HBM is the same three firms reordered. In 1Q
 
 SK hynix built the lead by being first through every Nvidia qualification, and Samsung lost two years failing them. Jensen Huang confirmed in June 2026 that all three had passed certification for Vera Rubin ([source](https://finance.yahoo.com/sectors/technology/articles/nvidia-certifies-samsung-sk-hynix-133001560.html)), though SK hynix still expects roughly 70 percent of Rubin HBM4 in 2026 ([source](https://news.skhynix.com/en/2026-market-outlook-focus-on-the-hbm-led-memory-supercycle/)).
 
-This is a Korean industry with American and Japanese edges:
+The Korean core is now growing an American and a Japanese edge:
 
 - **SK hynix** concentrates HBM in Cheongju, and broke ground on a $4 billion packaging plant in West Lafayette, Indiana in August 2026 ([source](https://www.purdue.edu/newsroom/2026/Q3/sk-hynix-breaks-ground-on-4-billion-advanced-packaging-production-facility-in-purdue-research-park/)).
 - **Micron** packages in Taichung and Singapore, and broke ground in July 2026 on a 1.5 trillion yen Hiroshima expansion for 1-gamma DRAM and HBM4 ([source](https://www.trendforce.com/news/2026/07/06/news-micron-breaks-ground-on-hiroshima-fab-expansion-scaling-1%CE%B3-dram-and-hbm-output-as-equipment-set-for-2h28/)).
