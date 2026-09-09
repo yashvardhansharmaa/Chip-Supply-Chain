@@ -150,8 +150,8 @@ Each generation on TSMC's roadmap asks more of the interposer.
 - **Package yield** — nobody publishes it, and it decides whether a generation ships on time.
 - **Warpage control** — the expansion mismatch between die, bridge, interposer and substrate that broke early CoWoS-L and gets harder as packages grow ([source](https://semianalysis.com/2024/08/04/nvidias-blackwell-reworked-shipment/)).
 - **HBM stacks supported** — about 20 on the 14-reticle package due in 2028 ([source](https://pr.tsmc.com/english/news/3302)).
-- **Bonder throughput** — thermocompression and hybrid bonding are slow and serial, and three or four firms hold the tools ([source](https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/)).
-- **Substrate size** — a 14-reticle interposer needs an organic substrate that will not warp under it, which pushes ABF build-up film to its limits; see Substrates and PCBs.
+- **Bonder throughput** — thermocompression and hybrid bonding place one die at a time and are slow, and three or four firms hold the tools ([source](https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/)).
+- **Substrate size** — a 14-reticle interposer needs a resin substrate that will not warp under it, which pushes ABF build-up film to its limits; see Substrates and PCBs.
 
 ## Takeaways
 
