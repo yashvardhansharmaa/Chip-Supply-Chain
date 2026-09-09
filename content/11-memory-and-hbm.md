@@ -133,7 +133,7 @@ China's answer is CXMT, which is behind. We think the gap is closing from a base
 - **Bandwidth per stack** — the number that sets inference throughput. Over 1.2 TB/s on HBM3E, over 2 TB/s on HBM4 ([source](https://blogs.sw.siemens.com/semiconductor-packaging/2026/04/24/hbm3e-hbm4-ic-design-guide/)).
 - **Capacity per stack** — sets how large a model and cache fit on one accelerator. Up to 64 GB at 16-high ([source](https://www.jedec.org/news/pressreleases/jedec%C2%AE-and-industry-leaders-collaborate-release-jesd270-4-hbm4-standard-advancing)).
 - **Stack height** — 775 micrometres for HBM4, which is what limits layer count before the cooling plate ([source](https://news.skhynix.com/en/tech-note-series-ep2/)).
-- **Stack yield** — one bad die scraps the cube, so yield, not wafer cost, sets the price.
+- **Stack yield** — one bad die scraps the cube, so yield sets the price more than wafer cost does.
 - **Thermal path** — the base die runs hottest, and every added layer raises resistance to the heatsink above.
 - **Qualification** — passing Nvidia's data-rate bar, above 10 Gb/s rather than JEDEC's 8 ([source](https://news.skhynix.com/en/sk-hynix-completes-worlds-first-hbm4-development-and-readies-mass-production/)).
 

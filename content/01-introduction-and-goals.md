@@ -74,7 +74,7 @@ The money followed. Capex at the five largest hyperscalers went from $162.3 bill
 
 {{figure:compute-growth}}
 
-What the money buys is a rack. One Nvidia GB300 NVL72 holds 72 GPUs and 36 CPUs, 20 TB of GPU memory and 576 TB/s of memory bandwidth ([source](https://www.nvidia.com/en-us/data-center/gb300-nvl72/)). A different supplier sets every one of those numbers.
+The money buys racks. One Nvidia GB300 NVL72 holds 72 GPUs and 36 CPUs, 20 TB of GPU memory and 576 TB/s of memory bandwidth ([source](https://www.nvidia.com/en-us/data-center/gb300-nvl72/)), and a different supplier sets every one of those numbers.
 
 ## The chain in one paragraph
 
