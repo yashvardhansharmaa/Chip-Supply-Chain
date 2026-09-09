@@ -77,14 +77,14 @@ PC.register('sem-column', function (p) {
     g.push(PC.T(PC.cylinder({ r: rBore, h: h, caps: false, n: Math.round(nHouse * 0.2), tone: 0.3 }), { pos: [0, mid, 0] }));
     g.push(ring(rOut, y0), ring(rOut, y1));
     // yoke in section
-    g.push(face(rBore, rOut, y0, y1, 0.42));
+    g.push(face(rBore, rOut, y0, y1, 0.30, 2.1));
     g.push(faceEdge(rBore, rOut, y0, y1, 1));
     // the coil window
     var c0 = rBore + (rOut - rBore) * 0.30, c1 = rOut - (rOut - rBore) * 0.14;
     var w0 = y0 + h * 0.16, w1 = y1 - h * 0.16;
-    g.push(face(c0, c1, w0, w1, 0.72, 4.4));
+    g.push(face(c0, c1, w0, w1, 0.46, 2.2));
     g.push(faceEdge(c0, c1, w0, w1, 1, 380));
-    for (var k = 1; k < 4; k++) g.push(faceLine(c0, c1, w0 + (w1 - w0) * k / 4, 0.85));
+    for (var k = 1; k < 4; k++) g.push(faceLine(c0, c1, w0 + (w1 - w0) * k / 4, 0.75));
     // pole pieces: the narrow gap that does the focusing
     g.push(faceLine(rBore, rBore + (rOut - rBore) * 0.34, mid - 0.028, 1));
     g.push(faceLine(rBore, rBore + (rOut - rBore) * 0.34, mid + 0.028, 1));
@@ -95,7 +95,7 @@ PC.register('sem-column', function (p) {
   function aperture(y, r, hole, tn) {
     return PC.merge(
       cut(PC.T(PC.disc({ r: r, rIn: hole, n: 620, tone: tn == null ? 0.55 : tn }), { pos: [0, y, 0] })),
-      face(hole, r, y - 0.004, y + 0.004, 0.85, 5),
+      face(hole, r, y - 0.004, y + 0.004, 0.7, 3),
       ring(r, y + 0.002, 320, 0.95), ringFull(hole, y + 0.002, 1100, 1)
     );
   }
@@ -104,21 +104,21 @@ PC.register('sem-column', function (p) {
 
   add(cut(PC.T(PC.cylinder({ r: 0.20, h: 0.26, caps: false, n: 2200, tone: 0.26 }), { pos: [0, 1.23, 0] })));
   add(cut(PC.T(PC.cone({ r1: 0.20, r2: 0.10, h: 0.11, n: 1100, tone: 0.26 }), { pos: [0, 1.415, 0] })));
-  add(face(0.085, 0.20, 1.10, 1.36, 0.4), faceEdge(0.085, 0.20, 1.10, 1.36, 1));
+  add(face(0.085, 0.20, 1.10, 1.36, 0.30, 2.1), faceEdge(0.085, 0.20, 1.10, 1.36, 1));
   add(ring(0.20, 1.10), ring(0.20, 1.36), ring(0.10, 1.47, 300, 0.9));
   // stepped ceramic insulator stack and the HV cable
-  for (var q = 0; q < 4; q++) {
-    var iy = 1.47 + q * 0.062, irr = 0.098 - q * 0.011;
-    add(PC.T(PC.cylinder({ r: irr, h: 0.050, n: 700, tone: 0.3 }), { pos: [0, iy + 0.025, 0] }));
-    add(ringFull(irr, iy + 0.050, 340, 0.9));
+  for (var q = 0; q < 3; q++) {
+    var iy = 1.47 + q * 0.082, irr = 0.100 - q * 0.017;
+    add(PC.T(PC.cylinder({ r: irr, h: 0.070, n: 900, tone: 0.3 }), { pos: [0, iy + 0.035, 0] }));
+    add(ringFull(irr, iy + 0.070, 340, 0.9));
     add(ringFull(irr, iy, 300, 0.75));
   }
-  add(PC.T(PC.cylinder({ r: 0.040, h: 0.14, caps: false, n: 420, tone: 0.34 }), { pos: [0, 1.79, 0] }));
-  add(ringFull(0.040, 1.86, 380, 0.95));
+  add(PC.T(PC.cylinder({ r: 0.040, h: 0.13, caps: false, n: 420, tone: 0.34 }), { pos: [0, 1.785, 0] }));
+  add(ringFull(0.040, 1.85, 380, 0.95));
   // Schottky emitter on the axis, with suppressor and extractor
   add(PC.accent(PC.T(PC.cone({ r1: 0.003, r2: 0.026, h: 0.048, n: 260, tone: 1 }), { pos: [0, 1.292, 0] }), 1));
   add(PC.accent(PC.T(PC.sphere({ r: 0.010, n: 90 }), { pos: [0, 1.266, 0] }), 1));
-  add(face(0.026, 0.062, 1.316, 1.336, 0.7, 5), faceEdge(0.026, 0.062, 1.316, 1.336, 1, 380));
+  add(face(0.026, 0.062, 1.316, 1.336, 0.6, 3), faceEdge(0.026, 0.062, 1.316, 1.336, 1, 380));
   add(aperture(1.205, 0.075, 0.010, 0.5));
   add(aperture(1.120, 0.085, 0.012, 0.5));
   // ion pump hanging off the gun
@@ -130,13 +130,13 @@ PC.register('sem-column', function (p) {
 
   /* ---------- column ---------- */
 
-  add(tube(0.098, 0.72, 1.10, 1600, 0.24), face(0.088, 0.098, 0.72, 1.10, 0.45), ring(0.098, 0.72, 340, 0.9));
+  add(tube(0.098, 0.72, 1.10, 1600, 0.24), face(0.088, 0.098, 0.72, 1.10, 0.36, 2.4), ring(0.098, 0.72, 340, 0.9));
   add(lens(0.48, 0.72, 0.34, 0.098, 3200));                       // condenser 1
-  add(tube(0.096, 0.36, 0.48, 700, 0.24), face(0.086, 0.096, 0.36, 0.48, 0.45));
+  add(tube(0.096, 0.36, 0.48, 700, 0.24), face(0.086, 0.096, 0.36, 0.48, 0.36, 2.4));
   add(ring(0.096, 0.48, 340, 0.9), ring(0.096, 0.36, 340, 0.9));
   add(aperture(0.435, 0.10, 0.008, 0.6));                          // beam-limiting aperture
   add(lens(0.12, 0.36, 0.32, 0.094, 3000));                        // condenser 2
-  add(tube(0.094, -0.06, 0.12, 900, 0.24), face(0.084, 0.094, -0.06, 0.12, 0.45));
+  add(tube(0.094, -0.06, 0.12, 900, 0.24), face(0.084, 0.094, -0.06, 0.12, 0.36, 2.4));
   // stigmator: eight saddle blocks around the tube
   for (var i = 0; i < 8; i++) {
     var a = i * Math.PI / 4 + 0.15, d = a - AC;
@@ -149,14 +149,14 @@ PC.register('sem-column', function (p) {
   // scan and deflection coils
   add(tube(0.20, -0.26, -0.10, 1200, 0.24));
   add(ring(0.20, -0.10), ring(0.20, -0.26));
-  add(face(0.094, 0.20, -0.26, -0.10, 0.4), faceEdge(0.094, 0.20, -0.26, -0.10, 1));
-  add(face(0.118, 0.184, -0.238, -0.122, 0.72, 4.4), faceEdge(0.118, 0.184, -0.238, -0.122, 1, 380));
-  for (i = 1; i < 3; i++) add(faceLine(0.118, 0.184, -0.238 + 0.116 * i / 3, 0.85));
+  add(face(0.094, 0.20, -0.26, -0.10, 0.30, 2.1), faceEdge(0.094, 0.20, -0.26, -0.10, 1));
+  add(face(0.118, 0.184, -0.238, -0.122, 0.46, 2.2), faceEdge(0.118, 0.184, -0.238, -0.122, 1, 380));
+  for (i = 1; i < 3; i++) add(faceLine(0.118, 0.184, -0.238 + 0.116 * i / 3, 0.75));
   // objective lens and its conical pole piece
   add(lens(-0.56, -0.30, 0.44, 0.115, 4000));
   add(cut(PC.T(PC.cone({ r1: 0.145, r2: 0.44, h: 0.19, n: 2600, tone: 0.26 }), { pos: [0, -0.665, 0] })));
   add(cut(PC.T(PC.cylinder({ r: 0.145, h: 0.055, caps: false, n: 500, tone: 0.26 }), { pos: [0, -0.788, 0] })));
-  add(face(0.105, 0.145, -0.815, -0.76, 0.42));
+  add(face(0.105, 0.145, -0.815, -0.76, 0.32, 2.1));
   add(PC.polyline({
     pts: [[0.105 * Math.cos(A0), -0.815, 0.105 * Math.sin(A0)], [0.145 * Math.cos(A0), -0.815, 0.145 * Math.sin(A0)],
           [0.44 * Math.cos(A0), -0.56, 0.44 * Math.sin(A0)], [0.105 * Math.cos(A0), -0.56, 0.105 * Math.sin(A0)]],
@@ -169,7 +169,7 @@ PC.register('sem-column', function (p) {
   }));
   add(ring(0.44, -0.56), ringFull(0.115, -0.815, 460, 1));
   // ring detector under the pole piece, and its signal arm
-  add(PC.T(PC.disc({ r: 0.175, rIn: 0.052, n: 1300, tone: 0.4 }), { pos: [0, -0.855, 0] }));
+  add(PC.T(PC.disc({ r: 0.175, rIn: 0.052, n: 1000, tone: 0.3 }), { pos: [0, -0.855, 0] }));
   add(ringFull(0.175, -0.853, 380, 0.95), ringFull(0.052, -0.853, 560, 0.95));
   for (i = 0; i < 24; i++) {
     var da = i * Math.PI * 2 / 24;
@@ -181,28 +181,28 @@ PC.register('sem-column', function (p) {
   /* ---------- wafer and X-Y stage ---------- */
 
   var yW = -0.98, wafR = 0.40;
-  add(PC.T(PC.disc({ r: wafR, n: 2800, tone: 0.28 }), { pos: [0, yW, 0] }));
+  add(PC.T(PC.disc({ r: wafR, n: 2400, tone: 0.2 }), { pos: [0, yW, 0] }));
   add(ringFull(wafR, yW + 0.002, 520, 1));
   var dg = [];
   for (var gx = -4; gx <= 4; gx++) for (var gz = -4; gz <= 4; gz++) {
     var cx = gx * 0.092, cz = gz * 0.076;
     if (cx * cx + cz * cz > (wafR - 0.055) * (wafR - 0.055)) continue;
-    dg.push(PC.polyline({ pts: [[cx - 0.044, 0, cz - 0.036], [cx + 0.044, 0, cz - 0.036], [cx + 0.044, 0, cz + 0.036], [cx - 0.044, 0, cz + 0.036]], closed: true, perUnit: 150, tone: 0.6 }));
+    dg.push(PC.polyline({ pts: [[cx - 0.044, 0, cz - 0.036], [cx + 0.044, 0, cz - 0.036], [cx + 0.044, 0, cz + 0.036], [cx - 0.044, 0, cz + 0.036]], closed: true, perUnit: 110, tone: 0.45 }));
   }
   add(PC.T(PC.merge.apply(null, dg), { pos: [0, yW + 0.003, 0] }));
   // chuck, Y slide, X slide, granite base: a stage that reads as a stage
-  add(PC.T(PC.cylinder({ r: wafR + 0.028, h: 0.050, n: 1800, tone: 0.24 }), { pos: [0, yW - 0.027, 0] }));
+  add(PC.T(PC.cylinder({ r: wafR + 0.028, h: 0.050, n: 1500, tone: 0.18 }), { pos: [0, yW - 0.027, 0] }));
   add(ringFull(wafR + 0.028, yW - 0.052, 340, 0.9));
-  add(PC.T(PC.box({ w: 0.98, h: 0.070, d: 0.86, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 2200, tone: 0.22 }), { pos: [0, yW - 0.088, 0] }));
+  add(PC.T(PC.box({ w: 0.98, h: 0.070, d: 0.86, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 1900, tone: 0.17 }), { pos: [0, yW - 0.088, 0] }));
   add(PC.T(PC.boxEdges({ w: 0.98, h: 0.070, d: 0.86, perUnit: 300, tone: 0.92 }), { pos: [0, yW - 0.088, 0] }));
-  add(PC.T(PC.box({ w: 1.26, h: 0.070, d: 0.62, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 2200, tone: 0.20 }), { pos: [0, yW - 0.165, 0] }));
+  add(PC.T(PC.box({ w: 1.26, h: 0.070, d: 0.62, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 1900, tone: 0.15 }), { pos: [0, yW - 0.165, 0] }));
   add(PC.T(PC.boxEdges({ w: 1.26, h: 0.070, d: 0.62, perUnit: 300, tone: 0.92 }), { pos: [0, yW - 0.165, 0] }));
   for (i = -1; i <= 1; i += 2) {
     add(PC.T(PC.box({ w: 1.34, h: 0.036, d: 0.060, n: 520, tone: 0.45 }), { pos: [0, yW - 0.222, i * 0.34] }));
     add(PC.T(PC.line({ a: [-0.67, 0, 0], b: [0.67, 0, 0], perUnit: 300, tone: 0.9 }), { pos: [0, yW - 0.204, i * 0.34] }));
     add(PC.T(PC.box({ w: 0.055, h: 0.034, d: 0.72, n: 420, tone: 0.45 }), { pos: [i * 0.42, yW - 0.128, 0] }));
   }
-  add(PC.T(PC.box({ w: 1.44, h: 0.085, d: 1.14, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 3000, tone: 0.18 }), { pos: [0, yW - 0.282, 0] }));
+  add(PC.T(PC.box({ w: 1.44, h: 0.085, d: 1.14, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 2600, tone: 0.14 }), { pos: [0, yW - 0.282, 0] }));
   add(PC.T(PC.boxEdges({ w: 1.44, h: 0.085, d: 1.14, perUnit: 280, tone: 0.9 }), { pos: [0, yW - 0.282, 0] }));
   // interferometer mirror bars on two sides of the chuck: this is a metrology tool
   add(PC.T(PC.box({ w: 0.020, h: 0.055, d: 0.80, n: 480, tone: 0.62 }), { pos: [-wafR - 0.048, yW - 0.020, 0] }));

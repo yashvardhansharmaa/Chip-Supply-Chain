@@ -76,21 +76,21 @@ Think of the receipt for a new car. The engine is the famous part, but the batte
 
 Die cost has three inputs.
 
-- **Wafer price.** TSMC does not publish it, and nobody with an allowed source does either. Epoch AI's model of Blackwell's custom TSMC 4NP process ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)) assumes about $17,000 for a 300 mm wafer ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
+- **Wafer price.** TSMC does not publish it. Epoch AI's model of Blackwell's custom TSMC 4NP process ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)) assumes about $17,000 for a 300 mm wafer ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
 - **Dies per wafer.** A wafer is a circle and dies are rectangles, so an 800 mm2 die, near the largest a scanner can print in one shot, steps out to 68 whole dies.
 - **Yield.** Defects land at random, so a bigger die is likelier to catch one. Epoch AI models the Blackwell die at 40 to 70 percent good, centred on 60 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
 
-Run those three numbers and the two dies inside a B200 come to about $900, 14 percent of the build ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Doubling the wafer price moves the whole bill by a few hundred dollars. Nothing else on the receipt is that forgiving.
+Run those three numbers and the two dies inside a B200 come to about $900, 14 percent of the build ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Doubling the wafer price moves the whole bill by a few hundred dollars.
 
 ## Variants and trade-offs (the BOMs)
 
 ### Memory is the bill
 
-The 192 GB of HBM3E beside those dies is the single largest line: about $2,900, 45 percent of the build, at $14 to $17 per gigabyte ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). It is also the line the buyer controls least. Three firms make HBM, they sell every stack they can build, and what that does to a seller's economics turns up further down this page in Micron's gross margin.
+The 192 GB of HBM3E beside those dies is the single largest line: about $2,900, 45 percent of the build, at $14 to $17 per gigabyte ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). It is also the line the buyer controls least. Three firms make HBM and they sell every stack they can build; Micron's gross margin, further down this page, shows what that is worth to a seller.
 
 ### Packaging, substrate and test
 
-CoWoS-L packaging adds about $1,100, more than the logic dies it carries ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Then comes the line nobody quotes. Packaging yield runs 65 to 95 percent, and a package that fails after memory attach throws away the dies and the HBM with it, adding roughly $1,000 to every B200 that ships ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Substrate, board, test and assembly add $480 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). See Advanced packaging on why that capacity binds first.
+CoWoS-L packaging adds about $1,100, more than the logic dies it carries ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Packaging yield runs 65 to 95 percent, and a package that fails after memory attach throws away the dies and the HBM with it, adding roughly $1,000 to every B200 that ships ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Substrate, board, test and assembly add $480 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). See Advanced packaging on why that capacity binds first.
 
 ### The B200 bill of materials
 
@@ -110,7 +110,7 @@ Epoch AI builds these as distributions, not point estimates, deriving the packag
 
 ### From package to rack to cluster
 
-Rubin moves the argument up a level, and the number that survives up there is cost of ownership rather than bill of materials. SemiAnalysis puts a Vera Rubin NVL72 at $3.57 per GPU-hour against $1.84 for a GB200 and $2.36 for a GB300 in the operator case ([source](https://inferencex.semianalysis.com/blog/vera-rubin-nvl72-vs-gb200-nvl72-inference)). Each generation costs its owner more per GPU-hour than the last, and the buyer pays because throughput rises faster than the hourly rate.
+At rack scale the useful number becomes cost of ownership. SemiAnalysis puts a Vera Rubin NVL72 at $3.57 per GPU-hour against $1.84 for a GB200 and $2.36 for a GB300 in the operator case ([source](https://inferencex.semianalysis.com/blog/vera-rubin-nvl72-vs-gb200-nvl72-inference)). Each generation costs its owner more per GPU-hour than the last, and the buyer pays because throughput rises faster than the hourly rate.
 
 One level up again, a 100,000 H100 cluster carries over $4B of server capex, draws about 150 MW, burns 1.59 TWh a year, pays $123.9M for power and needs 98,304 optical transceivers ([source](https://newsletter.semianalysis.com/p/100000-h100-clusters-power-network)).
 

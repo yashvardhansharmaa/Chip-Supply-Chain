@@ -83,7 +83,7 @@ A buried oxide separates a thin device layer from the bulk, and Soitec's Smart C
 
 ## Who makes it
 
-Siltronic's own map of the chain puts five major suppliers behind the entire $11.4 billion wafer market ([source](https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf)). CSET names them: Shin-Etsu, SUMCO, GlobalWafers, Siltronic and SK Siltron, headquartered in Japan, Taiwan, Germany and South Korea ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
+Siltronic's own map of the chain puts five major suppliers behind the whole market ([source](https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf)). CSET names them: Shin-Etsu, SUMCO, GlobalWafers, Siltronic and SK Siltron, headquartered in Japan, Taiwan, Germany and South Korea ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 
 {{figure:wafer-concentration}}
 
@@ -110,7 +110,7 @@ China dominates polysilicon and barely registers in wafers. As of 2021 Chinese f
 
 Advanced-node 300 mm wafers rest on tacit know-how rather than on any machine a rival could buy, and 300 mm carried 99.7 percent of world fab capacity at 45 nm and below as of 2021 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). A new source must be proved out per device and per fab, which takes quarters, while incumbent contracts run years.
 
-The last increase in wafer size, to 300 mm, happened in 2002 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). Bigger discs also make lithography a bigger share of the bill: photolithography takes half the cost of processing a 300 mm wafer against a quarter of a 150 mm one ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). The push to 450 mm never reached production, and every leading-edge chip is still made on 300 mm.
+The last increase in wafer size, to 300 mm, happened in 2002 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). Bigger discs make lithography a bigger share of the bill: photolithography takes half the cost of processing a 300 mm wafer against a quarter of a 150 mm one ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). The push to 450 mm never reached production, and every leading-edge chip is still made on 300 mm.
 
 AI accelerators make the wafer's job harder. One killer defect ruins far more silicon on a reticle-limited GPU die than on a small one, and EUV's shallow depth of focus (see Lithography) means flatness must hold across the whole disc rather than on average.
 
