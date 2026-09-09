@@ -90,6 +90,9 @@ NOTES FOR THE PORT
   --amber:      #c0810c;
   --amber-ink:  #7d5405;
   --amber-soft: rgba(192, 129, 12, 0.12);
+  --bar-5: var(--amber);
+  --bar-4: #39424a;
+  --bar-3: #b3b9be;
 
   --display: "IBM Plex Sans Condensed", "Archivo", "Helvetica Neue", Arial, sans-serif;
   --body:    "Newsreader", Georgia, "Times New Roman", serif;
@@ -113,6 +116,7 @@ NOTES FOR THE PORT
     --ink: #e8eaeb; --ink-2: #bcc3c8; --muted: #869097;
     --line: #262d32; --line-2: #39424a;
     --amber: #e0a92e; --amber-ink: #efc161; --amber-soft: rgba(224, 169, 46, 0.15);
+    --bar-4: #6b757d; --bar-3: #3b444b;
     color-scheme: dark;
   }
 }
@@ -121,6 +125,7 @@ NOTES FOR THE PORT
   --ink: #e8eaeb; --ink-2: #bcc3c8; --muted: #869097;
   --line: #262d32; --line-2: #39424a;
   --amber: #e0a92e; --amber-ink: #efc161; --amber-soft: rgba(224, 169, 46, 0.15);
+  --bar-4: #6b757d; --bar-3: #3b444b;
   color-scheme: dark;
 }
 
@@ -271,10 +276,10 @@ b, strong { font-weight: 600; }
 .stage-cell { display: flex; flex-direction: column; gap: 6px; min-width: 0; padding-bottom: 5px; position: relative; }
 .stage-cell .n { font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; color: var(--muted); font-variant-numeric: tabular-nums; }
 .stage-cell .bar { height: 46px; display: flex; align-items: flex-end; }
-.stage-cell .bar i { display: block; width: 100%; background: var(--line-2); }
-.stage-cell[data-score="5"] .bar i { height: 100%; background: var(--amber); }
-.stage-cell[data-score="4"] .bar i { height: 66%; background: var(--ink-2); }
-.stage-cell[data-score="3"] .bar i { height: 38%; background: var(--line-2); }
+.stage-cell .bar i { display: block; width: 100%; background: var(--bar-3); }
+.stage-cell[data-score="5"] .bar i { height: 100%; background: var(--bar-5); }
+.stage-cell[data-score="4"] .bar i { height: 66%; background: var(--bar-4); }
+.stage-cell[data-score="3"] .bar i { height: 38%; background: var(--bar-3); }
 .stage-cell .t {
   font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.05em; text-transform: uppercase;
   color: var(--ink-2); line-height: 1.25; overflow-wrap: anywhere;
@@ -423,7 +428,7 @@ sup.cite a:hover { text-decoration: underline; }
   background-image: linear-gradient(90deg, transparent calc(33.333% - 1px), var(--line) calc(33.333% - 1px), var(--line) 33.333%, transparent 33.333%),
                     linear-gradient(90deg, transparent calc(66.666% - 1px), var(--line) calc(66.666% - 1px), var(--line) 66.666%, transparent 66.666%);
 }
-.bar-track i { display: block; height: 100%; background: var(--ink-2); width: var(--w); }
+.bar-track i { display: block; height: 100%; background: var(--bar-4); width: var(--w); }
 .bar-row.hot .bar-track i { background: var(--amber); }
 .bar-row.hot .bv { color: var(--amber-ink); font-weight: 600; }
 .bar-axis { display: grid; grid-template-columns: 46px 1fr 46px; gap: 12px; margin-top: 7px; }
@@ -545,9 +550,9 @@ sup.cite a:hover { text-decoration: underline; }
       <h2>The chain, scored</h2>
       <p>Bar height is the chokepoint score, 1 to 5.</p>
       <div class="chain-key">
-        <span><i style="background:var(--amber)"></i>5 of 5</span>
-        <span><i style="background:var(--ink-2)"></i>4</span>
-        <span><i style="background:var(--line-2)"></i>3</span>
+        <span><i style="background:var(--bar-5)"></i>5 of 5</span>
+        <span><i style="background:var(--bar-4)"></i>4</span>
+        <span><i style="background:var(--bar-3)"></i>3</span>
       </div>
     </div>
     <ol class="chain-track">

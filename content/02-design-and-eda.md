@@ -96,7 +96,7 @@ Nvidia designs Blackwell once and sells it to everyone, which buys the customer 
 
 ### The EDA flow
 
-Three complete flows exist, and they are not interchangeable. A team commits to one vendor's chain because the foundry certifies reference flows against specific tool versions, and timing signed off in one tool is not accepted in another. Inside each segment the grip is tighter still: Synopsys alone holds more than 90% of static timing ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
+Three complete flows exist, and they do not mix. A team commits to one vendor's chain because the foundry certifies reference flows against specific tool versions, and timing signed off in one tool is not accepted in another. Inside each segment the grip is tighter still: Synopsys alone holds more than 90% of static timing ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
 
 {{figure:tool-lock}}
 
@@ -106,7 +106,7 @@ No one writes an accelerator from scratch: CPU cores, interface controllers and 
 
 ### Chiplets
 
-Reticle limits ended the single-die accelerator. Modern parts are chiplets joined by a die-to-die link, and UCIe lets those links come from different vendors: UCIe 3.0 adds 48 and 64 GT/s data rates ([source](https://www.uciexpress.org/specifications)). Broadcom's 3.5D XDSiP goes furthest, at more than 6,000 mm2 of silicon per package ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)).
+Reticle limits ended the single-die accelerator. Modern parts are chiplets joined by a die-to-die link, and UCIe lets those links come from different vendors: version 3.0 adds 48 and 64 GT/s data rates ([source](https://www.uciexpress.org/specifications)). Broadcom's 3.5D XDSiP goes furthest, at more than 6,000 mm2 of silicon per package ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)).
 
 ## Who makes it
 
@@ -114,7 +114,7 @@ The EDA and design IP market was about $18 billion in 2025, and Synopsys, Cadenc
 
 {{figure:eda-share}}
 
-Design services are tighter still. Broadcom and Marvell hold roughly 95% of custom AI ASIC co-design, on trade-press estimates ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)), and Broadcom alone booked $16.7 billion of AI semiconductor revenue in the third quarter of fiscal 2026, up 221% in a year ([source](https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm)). Below them sit the Taiwanese houses that take a netlist to tape-out on TSMC's newest nodes; Alchip reported $992 million of revenue in 2025 ([source](https://www.alchip.com/en/Investors/financials/)). The engineers are spread wider than the firms: India alone holds nearly 20% of the world's chip designers ([source](https://www.pib.gov.in/PressReleasePage.aspx?PRID=2148393)).
+Design services are tighter still. Broadcom and Marvell hold roughly 95% of custom AI ASIC co-design, on trade-press estimates ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)), and Broadcom alone booked $16.7 billion of AI semiconductor revenue in the third quarter of fiscal 2026, up 221% ([source](https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm)). Below them sit the Taiwanese houses that take a netlist to tape-out on TSMC's newest nodes; Alchip reported $992 million of revenue in 2025 ([source](https://www.alchip.com/en/Investors/financials/)). The engineers are spread wider than the firms: India alone holds nearly 20% of the world's chip designers ([source](https://www.pib.gov.in/PressReleasePage.aspx?PRID=2148393)).
 
 | Chip | Owner | Design partner | Process |
 |---|---|---|---|
@@ -134,7 +134,7 @@ The lever works, and needs no allied coordination and no lead time. It is also e
 
 China's answer is real but partial. Empyrean holds about half the domestic market among more than 100 Chinese EDA firms, and analysts place it in the global second tier ([source](https://www.scmp.com/tech/article/3315237/chinas-top-player-empyrean-eyes-opportunities-us-chip-curbs-design-software)). None has a certified, complete digital flow for a 5 nm-class accelerator, and the gap is foundry-validated corner cases, not features.
 
-So China can architect an accelerator: Huawei's Ascend 910C targets 600,000 units in 2026 and Cambricon plans to triple output to 500,000 chips ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)). It cannot design one at the leading edge without foreign tools, or build what it designs without foreign equipment.
+China can architect an accelerator: Huawei's Ascend 910C targets 600,000 units in 2026 and Cambricon plans to triple output to 500,000 chips ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)). It cannot design one at the leading edge without foreign tools, or build what it designs without foreign equipment.
 
 ## Key evaluation criteria
 
@@ -147,4 +147,4 @@ So China can architect an accelerator: Huawei's Ascend 910C targets 600,000 unit
 
 ## Takeaways
 
-Three vendors sell every complete design flow used at the leading edge ([source](https://newsletter.semianalysis.com/p/eda-market-primer)). Design is cheap next to what it commits: tens of millions of dollars of engineering and masks direct tens of billions of dollars of fab capacity ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)). It is the fastest lever a government can pull, and the one China is closest to neutralising. Closest is not close. And a growing share of the world's accelerators are designed not by the company whose name is on them but by Broadcom, Marvell and a few Taiwanese houses.
+Three vendors sell every complete design flow used at the leading edge ([source](https://newsletter.semianalysis.com/p/eda-market-primer)). Design is cheap next to what it commits: tens of millions of dollars of engineering and masks direct tens of billions of fab capacity ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)). It is the fastest lever a government can pull, and the one China is closest to neutralising. Closest is not close. And a growing share of the world's accelerators are designed not by the company whose name is on them but by Broadcom, Marvell and a few Taiwanese houses.

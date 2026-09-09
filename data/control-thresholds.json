@@ -333,7 +333,7 @@
     "operator": "=",
     "value": 0,
     "unit": "% US-origin controlled content",
-    "alternative": "Standard de minimis for D:5 is 25% for most items and 10% for some; here any US content at all makes the foreign tool subject to the EAR, unless the exporting country controls the item itself — currently only Japan",
+    "alternative": "Standard de minimis for D:5 is 25% for most items and 10% for some; here any US content at all makes the foreign tool subject to the EAR, unless the exporting country controls the item itself, which currently means only Japan",
     "destinations": "For the development or production of advanced-node integrated circuits, in Macau or Country Group D:5",
     "licensePolicy": "Presumption of denial",
     "effectiveDate": "2023-11-17",
@@ -506,7 +506,7 @@
     "source": "https://www.federalregister.gov/documents/2025/09/30/2025-19001/expansion-of-end-user-controls-to-cover-affiliates-of-certain-listed-entities",
     "sourceTier": "A",
     "alsoSee": ["https://www.federalregister.gov/documents/2025/11/12/2025-19846/one-year-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed-entities"],
-    "note": "The single largest expansion of the Entity List's reach, and the fastest reversal: stayed on 10 November 2025 as part of the one-year US-China truce and due to snap back on 9 November 2026 unless extended. Watch this date — it is the most consequential scheduled event in the map."
+    "note": "The single largest expansion of the Entity List's reach, and the fastest reversal: stayed on 10 November 2025 as part of the one-year US-China truce and due to snap back on 9 November 2026 unless extended. Watch this date. It is the most consequential scheduled event in the map."
   },
   {
     "id": "entity-list-affiliates-suspension",
@@ -699,7 +699,7 @@
     "operator": "=",
     "value": null,
     "unit": "moved into Country Group A:5; removed from Country Groups D:3 and D:4",
-    "alternative": "Licence requirements for ECCN 3A090.a and 4A090.a are retained for the UAE except where the ultimate consignee and end user is a UAE government entity or an approved commercial entity listed in Supplement No. 8 to Part 740 — currently two UAE firms (G42 and Core42) and eight US-headquartered AI companies with their subsidiaries. Strategic Trade Authorization becomes available for approved entities.",
+    "alternative": "Licence requirements for ECCN 3A090.a and 4A090.a are retained for the UAE except where the ultimate consignee and end user is a UAE government entity or an approved commercial entity listed in Supplement No. 8 to Part 740, currently two UAE firms (G42 and Core42) and eight US-headquartered AI companies with their subsidiaries. Strategic Trade Authorization becomes available for approved entities.",
     "destinations": "United Arab Emirates",
     "licensePolicy": "Case-by-case with written assurances; authorisation for the two UAE-headquartered firms expires on 6 April 2027 unless they become US-headquartered",
     "effectiveDate": "2026-07-10",
@@ -748,7 +748,7 @@
     "chapter": "geopolitics",
     "source": "https://digital-strategy.ec.europa.eu/en/faqs/general-purpose-ai-models-ai-act-questions-answers",
     "sourceTier": "A",
-    "note": "The only compute threshold in the map that is in force on the model side, and it sits an order of magnitude below the US figure. Commission enforcement powers over GPAI providers began on 2 August 2026, and Article 51(3) lets the Commission move the number by delegated act — which makes it the most likely of all these figures to change without a legislature."
+    "note": "The only compute threshold in the map that is in force on the model side, and it sits an order of magnitude below the US figure. Commission enforcement powers over GPAI providers began on 2 August 2026, and Article 51(3) lets the Commission move the number by delegated act, which makes it the most likely of all these figures to change without a legislature."
   },
   {
     "id": "us-model-reporting-1e26",
