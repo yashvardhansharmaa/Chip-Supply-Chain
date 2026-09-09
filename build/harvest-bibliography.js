@@ -1177,7 +1177,7 @@ const PUBLISHERS = {
   'shinko.co.jp': 'Shinko Electric Industries',
   'unimicron.com': 'Unimicron Technology',
   'kinsus.com.tw': 'Kinsus Interconnect Technology',
-  'npc.com.tw': 'Nan Ya PCB',
+  'npc.com.tw': 'Nan Ya Plastics Corporation', // the site cited for Nan Ya PCB is the parent company's
   'samsungsem.com': 'Samsung Electro-Mechanics',
   'm.samsungsem.com': 'Samsung Electro-Mechanics',
   'ats.net': 'AT&S',
@@ -1498,5 +1498,140 @@ const MANUAL = {
     title: 'ETO Chip Explorer source data: provision.csv',
     publisher: 'Center for Security and Emerging Technology (CSET) / Emerging Technology Observatory',
     type: 'dataset',
+  },
+  'https://www.commerce.gov/news/press-releases/2024/12/biden-harris-administration-announces-chips-incentives-awards': {
+    title: 'Biden-Harris Administration Announces CHIPS Incentives Awards with GlobalWafers to Support Domestic Production of Silicon Wafers',
+    publisher: 'U.S. Department of Commerce',
+    date: '2024-12-17',
+    type: 'press release',
+  },
+  'https://www.commerce.gov/news/press-releases/2025/11/statement-uae-and-saudi-chip-exports': {
+    title: 'Statement on UAE and Saudi Chip Exports',
+    publisher: 'U.S. Department of Commerce',
+    date: '2025-11',
+    type: 'press release',
+  },
+
+  // --- TSMC investor documents (site refuses scripted requests; PDFs read
+  //     directly, so these titles and event dates are the documents' own)
+  'https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf': {
+    title: 'Q2 2024 Taiwan Semiconductor Manufacturing Co Ltd Earnings Call (Chinese, English) — edited transcript',
+    publisher: 'Refinitiv StreetEvents (transcript of a TSMC earnings call), via TSMC',
+    date: '2024-07-18',
+    type: 'transcript',
+  },
+  'https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf': {
+    title: 'Q3 2025 Taiwan Semiconductor Manufacturing Co Ltd Earnings Call (Chinese, English) — edited transcript',
+    publisher: 'Refinitiv StreetEvents (transcript of a TSMC earnings call), via TSMC',
+    date: '2025-10-16',
+    type: 'transcript',
+  },
+  'https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf': {
+    title: 'Q2 2026 Taiwan Semiconductor Manufacturing Co Ltd Earnings Call (Chinese, English) — edited transcript',
+    publisher: 'LSEG StreetEvents (transcript of a TSMC earnings call), via TSMC',
+    date: '2026-07-16',
+    type: 'transcript',
+  },
+  'https://investor.tsmc.com/static/annualReports/2025/english/index.html': {
+    title: 'TSMC 2025 Annual Report',
+    publisher: 'TSMC',
+    type: 'report',
+  },
+
+  // --- company pages read in the browser after the fetcher was refused
+  'https://industrial.panasonic.com/ww/products/pt/megtron': {
+    title: 'Multi-layer Circuit Board Materials for ICT infrastructure equipment "MEGTRON" series',
+    publisher: 'Panasonic Industry',
+    type: 'page',
+  },
+  'https://www.amphenol.com/markets/it-datacom': {
+    title: 'IT Datacom',
+    publisher: 'Amphenol',
+    type: 'page',
+  },
+  'https://www.appliedmaterials.com/us/en/semiconductor.html': {
+    title: 'Semiconductor Systems',
+    publisher: 'Applied Materials',
+    type: 'page',
+  },
+  'https://www.appliedmaterials.com/eu/en/product-library/kinex-integrated-die-to-wafer-hybrid-bonding-system.html': {
+    title: 'Kinex',
+    publisher: 'Applied Materials',
+    type: 'page',
+  },
+  'https://www.arista.com/en/solutions/ai-networking': {
+    title: 'AI Networking Center',
+    publisher: 'Arista Networks',
+    type: 'page',
+  },
+  'https://www.cisco.com/site/us/en/products/networking/silicon-one/index.html': {
+    title: 'Cisco Silicon One – Processors for Unified Network Architecture',
+    publisher: 'Cisco Systems',
+    type: 'page',
+  },
+  'https://www.corning.com/worldwide/en/products/communication-networks.html': {
+    title: 'Corning Optical Communications: Fiber Optic Connectivity Solutions',
+    publisher: 'Corning',
+    type: 'page',
+  },
+  'https://www.eaton.com/us/en-us/markets/data-centers.html': {
+    title: 'Data centers: digitalization and efficiency',
+    publisher: 'Eaton',
+    type: 'page',
+  },
+  'https://www.foxconn.com/': {
+    title: '首頁 — 鴻海科技集團 (Hon Hai Technology Group home page)',
+    publisher: 'Hon Hai Precision Industry (Foxconn)',
+    type: 'page',
+  },
+  'https://www.hitachi-hightech.com/global/en/products/semiconductor-manufacturing/': {
+    title: 'Semiconductor Manufacturing Equipment',
+    publisher: 'Hitachi High-Tech',
+    type: 'page',
+  },
+  'https://www.hpe.com/us/en/servers.html': {
+    title: 'Compute Solutions',
+    publisher: 'Hewlett Packard Enterprise',
+    type: 'page',
+  },
+  'https://www.huahonggrace.com/': {
+    title: '华虹宏力半导体有限公司 (Hua Hong Grace Semiconductor home page)',
+    publisher: 'Hua Hong Semiconductor',
+    type: 'page',
+  },
+  'https://www.intel.com/content/www/us/en/foundry/overview.html': {
+    title: 'Semiconductor Manufacturing Company for the AI Era',
+    publisher: 'Intel Foundry',
+    type: 'page',
+  },
+  'https://www.jcetglobal.com/en/': {
+    title: 'JCET Group home page',
+    publisher: 'JCET Group',
+    type: 'page',
+  },
+  'https://www.marvell.com/company/investor-relations.html': {
+    title: 'Investor Relations, Marvell Technology, Inc. (MRVL)',
+    publisher: 'Marvell Technology',
+    type: 'page',
+  },
+  'https://www.npc.com.tw/': {
+    title: '南亞塑膠工業股份有限公司 (Nan Ya Plastics Corporation home page)',
+    publisher: 'Nan Ya Plastics Corporation',
+    type: 'page',
+  },
+  'https://www.primarius-tech.com/en/': {
+    title: 'PRIMARIUS',
+    publisher: 'Primarius Technologies',
+    type: 'page',
+  },
+  'https://www.supermicro.com/en/products/gpu': {
+    title: 'GPU Servers For AI, Deep / Machine Learning & HPC',
+    publisher: 'Supermicro',
+    type: 'page',
+  },
+  'https://www.wacker.com/cms/en-us/products/product-groups/polysilicon/polysilicon.html': {
+    title: 'Polysilicon',
+    publisher: 'Wacker Chemie',
+    type: 'page',
   },
 };

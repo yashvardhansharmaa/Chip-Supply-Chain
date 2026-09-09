@@ -482,6 +482,72 @@
       });
     }
   };
+  /* ---------------- glossary popover: one panel, shared by every .gl-term in the prose ----------------
+     The definitions already sit in the page, in the Glossary view, so nothing is duplicated. */
+  var Tip = {
+    el: null, btn: null, defs: null, timer: null,
+    def: function (term) {
+      if (!this.defs) {
+        this.defs = {};
+        $$('#glossary .gl-entry[data-term]').forEach(function (e) {
+          var p = e.querySelector('dd p'), dt = e.querySelector('dt');
+          if (p && dt) this.defs[e.getAttribute('data-term')] = { term: dt.firstChild.textContent.trim(), plain: p.textContent };
+        }, this);
+      }
+      return this.defs[term];
+    },
+    panel: function () {
+      if (this.el) return this.el;
+      var t = document.createElement('div');
+      t.className = 'gl-tip'; t.id = 'gl-tip'; t.hidden = true; t.setAttribute('role', 'tooltip');
+      document.body.appendChild(t);
+      var self = this;
+      t.addEventListener('mouseenter', function () { clearTimeout(self.timer); });
+      t.addEventListener('mouseleave', function () { self.hide(); });
+      this.el = t; return t;
+    },
+    show: function (btn) {
+      var d = this.def(btn.getAttribute('data-term'));
+      if (!d) return;
+      clearTimeout(this.timer);
+      var t = this.panel();
+      t.innerHTML = '<b>' + esc(d.term) + '</b><p>' + esc(d.plain) + '</p><a href="#/glossary">Glossary →</a>';
+      t.hidden = false;
+      this.btn = btn; btn.setAttribute('aria-describedby', 'gl-tip');
+      if (narrow()) { // a sheet at the foot of the screen, clear of the specimen strip
+        t.classList.add('is-sheet');
+        var st = $('.stage'), h = st ? st.getBoundingClientRect().height : 0;
+        t.style.left = ''; t.style.top = ''; t.style.bottom = Math.round(h + 10) + 'px';
+        return;
+      }
+      t.classList.remove('is-sheet'); t.style.bottom = '';
+      var r = btn.getBoundingClientRect(), w = t.offsetWidth, hh = t.offsetHeight;
+      var left = Math.max(8, Math.min(r.left + r.width / 2 - w / 2, window.innerWidth - w - 8));
+      var top = r.top - hh - 10;
+      if (top < 8) top = Math.min(r.bottom + 10, window.innerHeight - hh - 8); // no room above: sit below
+      t.style.left = Math.round(left) + 'px'; t.style.top = Math.round(top) + 'px';
+    },
+    hide: function () {
+      clearTimeout(this.timer);
+      if (this.btn) { this.btn.removeAttribute('aria-describedby'); this.btn = null; }
+      if (this.el) this.el.hidden = true;
+    },
+    later: function () { var self = this; clearTimeout(this.timer); this.timer = setTimeout(function () { self.hide(); }, 220); },
+    init: function () {
+      var self = this, term = function (e) { return e.target.closest ? e.target.closest('.gl-term') : null; };
+      document.addEventListener('mouseover', function (e) { var b = term(e); if (b) self.show(b); });
+      document.addEventListener('mouseout', function (e) { if (term(e)) self.later(); });
+      document.addEventListener('focusin', function (e) { var b = term(e); if (b) self.show(b); else if (self.el && !self.el.contains(e.target)) self.hide(); });
+      document.addEventListener('click', function (e) {
+        var b = term(e);
+        if (b) { if (self.btn === b && self.el && !self.el.hidden) self.hide(); else self.show(b); return; }
+        if (!self.el || !self.el.contains(e.target)) self.hide();
+      });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && self.el && !self.el.hidden) { var b = self.btn; self.hide(); if (b) b.focus(); } });
+      window.addEventListener('scroll', function () { if (self.el && !self.el.hidden && !self.el.classList.contains('is-sheet')) self.hide(); }, { passive: true });
+    }
+  };
+
   /* ---------------- controls view: threshold map + China exposure (rendered only if the section exists) ---------------- */
   var Controls = {
     built: false,
