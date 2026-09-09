@@ -4,7 +4,8 @@ Audit of every citation URL in `data/suppliers.json`, `data/landscape.json`,
 `data/landscape-notes.md` and `data/export-controls-timeline.json` against
 `brief/SOURCE_POLICY.md`. Tiers are assigned from `data/source-tiers.json`.
 
-Status: IN PROGRESS (written incrementally).
+Run: 9 September 2026. Status: complete. All four files validate as JSON and
+`node build/build.js` succeeds.
 
 ## Tier counts before
 
@@ -26,13 +27,29 @@ Of the 5 unmapped timeline URLs, 1 is an official PRC State Council page
 (Tier A), 2 are IEA policy-database mirrors of MOFCOM announcements and 2 are
 Global Times, PRC state media.
 
+## Tier counts after
+
+| File | URLs | A | B | C | D | unmapped |
+|---|---|---|---|---|---|---|
+| suppliers.json | 220 | 208 | 12 | 0 | 0 | 0 |
+| landscape.json (`sources`) | 60 | 31 | 15 | 14 | 0 | 0 |
+| landscape-notes.md | 60 | 31 | 15 | 14 | 0 | 0 |
+| export-controls-timeline.json | 45 | 38 | 7 | 0 | 0 | 0 |
+
+No Tier D and no unclassified URL remains in any of the four files. The 13
+Tier D and 1 unclassified citations still reported by `dist/build-report.txt`
+are all in `content/` chapters, which are outside this pass.
+
+The 14 remaining Tier C citations in `landscape.json` / `landscape-notes.md`
+are Hot Chips write-ups, hands-on teardowns and analyst detail for parts whose
+vendors publish no specification at all (Google TPU v7 and 8i, Microsoft Maia
+200, Meta MTIA 400, Cerebras CS-4, Moore Threads MTT S5000, AMD MI355X
+interconnect and MI455X die composition, Nvidia B300 HBM stack height). No
+Tier A or B source covers those facts, so under SOURCE_POLICY they stay at
+Tier C. Where the prose did not already attribute the claim in text, that is
+flagged under "Residual items" below rather than silently rewritten.
+
 ## Replacements
-
-(filled in below as work proceeds)
-
-## Claims downgraded or removed
-
-(filled in below as work proceeds)
 
 ### suppliers.json — Tokyo Electron
 - Old: `https://japan-earnings.com/companies/8035/` (Tier D, transcript/earnings mirror)
