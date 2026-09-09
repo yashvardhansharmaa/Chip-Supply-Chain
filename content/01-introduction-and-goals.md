@@ -64,6 +64,16 @@ An AI accelerator is a stack of roughly a dozen separately made parts, and only 
 
 This site takes that package apart, one chapter per stage, from the sand that becomes a wafer to the liquid-cooled rack it ends up in. Every chapter covers how the stage works, where the trade-offs sit, and which firms control it and how hard they would be to replace.
 
+## How to read this site
+
+Every chapter opens with a chokepoint card, and three fields on it matter most.
+
+- **Concentration.** How many firms credibly supply this stage: Extreme, High, Moderate or Low.
+- **Chokepoint score.** A 1 means many substitutes. A 5 means a single point of failure, where losing one supplier stops leading-edge production worldwide.
+- **Substitution time.** Our estimate of how long a well-funded state or firm would need to stand up an alternative. It is the most opinionated number on the card.
+
+The card also gives China's position and the United States', and the chapters run in process order.
+
 ## Why AI chips?
 
 Compute used to train frontier AI models has grown 4 to 5 times a year since 2010 ([source](https://epoch.ai/publications/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year)). No other part of the semiconductor industry has faced demand rising that fast for that long.
@@ -95,23 +105,6 @@ All three HBM suppliers were effectively sold out, and component spending by tho
 The counter-case is just as empirical. DeepSeek-V3 trained on 14.8 trillion tokens for 2.788 million H800 GPU-hours, an order of magnitude below what comparable Western models were thought to cost ([source](https://arxiv.org/abs/2412.19437)). The compute needed to reach a fixed performance level halves roughly every eight months, with a 95 percent confidence interval of 5 to 14 months ([source](https://epoch.ai/blog/algorithmic-progress-in-language-models)).
 
 Neither finding cancels the other. Cheaper inference has raised total compute consumption, and the supply chain still sets how much AI exists and which governments can switch it off.
-
-## How to read this site
-
-Every chapter opens with a chokepoint card, and three fields on it matter most.
-
-- **Concentration.** How many firms credibly supply this stage: Extreme, High, Moderate or Low.
-- **Chokepoint score.** A 1 means many substitutes. A 5 means a single point of failure, where losing one supplier stops leading-edge production worldwide.
-- **Substitution time.** Our estimate of how long a well-funded state or firm would need to stand up an alternative. It is the most opinionated number on the card.
-
-The card also gives China's position and the United States', and the chapters run in process order.
-
-## What we are not doing
-
-- **No investment advice.** We are not forecasting share prices.
-- **No policy recommendation.** The geopolitics chapter describes export controls and their effects; it does not argue for them.
-- **No fab manual.** Where process detail would run past what a non-specialist can use, we stop.
-- **No unsourced numbers.** Every number carries a link to its source, with the year. Where good sources disagree we give the range and cite both.
 
 ## Takeaways
 

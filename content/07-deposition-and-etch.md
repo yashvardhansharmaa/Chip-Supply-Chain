@@ -6,7 +6,7 @@
   "oneLiner": "Lithography prints the pattern. Deposition and etch build the thing, over a thousand steps per wafer, and this is the one tool segment where China has taken real share.",
   "plain": "If lithography is the printing, this is the building. A chip is built like a layer cake: lay down a film a few atoms thick, print a pattern on it, burn away what the pattern does not protect, and repeat more than a thousand times. The film has to reach the bottom of a hole hundreds of times deeper than it is wide, and the burn has to eat one material and leave the one beside it. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.",
   "specimen": "process-chamber",
-  "specimenCaption": "Right: a plasma process chamber in cross-section. Gas showerhead at the top, wafer clamped to an electrostatic chuck, RF electrodes above and below, turbopump and exhaust at the bottom.",
+  "specimenCaption": "Right: a plasma process chamber cut in half. Gas plenum and showerhead at the top, a 300 mm wafer on its electrostatic chuck inside the focus ring below, the plasma between them in amber, the slit valve in the wall, and the gate valve and turbopump under the floor.",
   "card": {
     "concentration": "High",
     "chokepointScore": 4,
