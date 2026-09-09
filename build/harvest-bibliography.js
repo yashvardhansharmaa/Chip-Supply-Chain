@@ -1682,4 +1682,44 @@ const MANUAL = {
     publisher: 'Wacker Chemie',
     type: 'page',
   },
+
+  // --- BIS press releases. The page is a JavaScript shell whose <title> is the
+  //     .gov banner's "Lock"; headline and dateline read from the rendered page.
+  'https://www.bis.gov/press-release/applied-materials-pay-252-million-penalty-bis-illegally-exporting-semiconductor-manufacturing-equipment': {
+    title: 'Applied Materials to Pay $252 Million Penalty to BIS for Illegally Exporting Semiconductor Manufacturing Equipment',
+    publisher: 'U.S. Bureau of Industry and Security',
+    date: '2026-02-11',
+    type: 'press release',
+  },
+  'https://www.bis.gov/press-release/commerce-strengthens-export-controls-restrict-chinas-capability-produce-advanced-semiconductors-military': {
+    title: "Commerce Strengthens Export Controls to Restrict China's Capability to Produce Advanced Semiconductors for Military Applications",
+    publisher: 'U.S. Bureau of Industry and Security',
+    date: '2024-12-02',
+    type: 'press release',
+  },
+  'https://www.bis.gov/press-release/department-commerce-announces-rescission-biden-era-artificial-intelligence-diffusion-rule-strengthens': {
+    title: 'Department of Commerce Announces Rescission of Biden-Era Artificial Intelligence Diffusion Rule, Strengthens Chip-Related Export Controls',
+    publisher: 'U.S. Bureau of Industry and Security',
+    date: '2025-05-13',
+    type: 'press release',
+  },
+  // Redirects to the release above; same document under an older slug.
+  'https://www.bis.gov/press-release/department-commerce-rescinds-biden-era-artificial-intelligence-diffusion-rule-strengthens-chip-related': {
+    title: 'Department of Commerce Announces Rescission of Biden-Era Artificial Intelligence Diffusion Rule, Strengthens Chip-Related Export Controls',
+    publisher: 'U.S. Bureau of Industry and Security',
+    date: '2025-05-13',
+    type: 'press release',
+  },
+  'https://www.bis.gov/press-release/department-commerce-closes-export-controls-loophole-foreign-owned-semiconductor-fabs-china': {
+    title: 'Department of Commerce Closes Export Controls Loophole for Foreign-Owned Semiconductor Fabs in China',
+    publisher: 'U.S. Bureau of Industry and Security',
+    date: '2025-08-29',
+    type: 'press release',
+  },
+  'https://www.bis.gov/press-release/department-commerce-revises-license-review-policy-semiconductors-exported-china': {
+    title: 'Department of Commerce Revises License Review Policy for Semiconductors Exported to China',
+    publisher: 'U.S. Bureau of Industry and Security',
+    date: '2026-01-13',
+    type: 'press release',
+  },
 };

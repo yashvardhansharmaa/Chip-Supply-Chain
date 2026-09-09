@@ -346,7 +346,7 @@ function prevNext(ch) {
   if (i < 0) return '';
   const prev = seq[i - 1], next = seq[i + 1];
   if (!prev && !next) return '';
-  const link = (c, dir, label) => (c ? `<a class="pn ${dir}" href="${chapterHref(c)}"><span class="label">${label}</span><span class="t"><span class="n">${pad(c.number)}</span>${esc(c.title)}</span></a>` : '');
+  const link = (c, dir, label) => (c ? `<a class="pn ${dir}" href="${chapterHref(c)}"><span class="label">${label}</span><span class="t"><span class="n">${pad(c.number)}</span> ${esc(c.title)}</span></a>` : '');
   return `<nav class="prevnext" aria-label="Previous and next chapter">${link(prev, 'prev', 'Previous')}${link(next, 'next', 'Next')}</nav>`;
 }
 function chapterHTML(ch) {
