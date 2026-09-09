@@ -55,11 +55,11 @@ PC.register('foup', function (p) {
   function faceZ(w, h, pos, n, tn) {
     return PC.T(PC.plane({ w: w, d: h, n: n, tone: tn }), { rot: [Math.PI / 2, 0, 0], pos: pos });
   }
-  function rectZ(w, h, pos, per, tn) {
+  function rectZ(w, h, pos, per, tn) {          // pts are already in the XY plane, so no rotation
     return PC.T(PC.polyline({
       pts: [[-w / 2, -h / 2, 0], [w / 2, -h / 2, 0], [w / 2, h / 2, 0], [-w / 2, h / 2, 0]],
       closed: true, perUnit: per, tone: tn
-    }), { rot: [Math.PI / 2, 0, 0], pos: pos });
+    }), { pos: pos });
   }
 
   // ---------- the moulded shell, front face left open for the door ----------
@@ -92,7 +92,7 @@ PC.register('foup', function (p) {
   // ---------- 25 wafers on their slot teeth ----------
   for (var i = 0; i < slots; i++) {
     var y = y1 + i * pitch, isAcc = (i === accentSlot);
-    var disc = PC.disc({ r: rW, n: isAcc ? 2600 : 1150, tone: isAcc ? 0.4 : 0.20 });
+    var disc = PC.disc({ r: rW, n: isAcc ? 1900 : 380, tone: isAcc ? 0.34 : 0.14 });
     var rim = PC.circle({ r: rW, perUnit: isAcc ? 1.5 : 0.9, tone: isAcc ? 1 : 0.82 });
     add(PC.T(isAcc ? PC.accent(disc, 0.34) : disc, { pos: [0, y, 0] }));
     add(PC.T(isAcc ? PC.accent(rim, 1) : rim, { pos: [0, y, 0] }));

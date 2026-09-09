@@ -73,13 +73,13 @@
 ---
 # Advanced Packaging
 
-A lithography scanner prints a rectangle 26 mm by 33 mm, or 858 mm2, in one exposure ([source](https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe3400c)). Every AI accelerator worth buying is bigger than that, so the industry cuts its chips into pieces and stitches them back together on a slab of silicon. Through 2024 and 2025, how many of those slabs TSMC could build set how many accelerators the world got.
+A lithography scanner prints a rectangle 26 mm by 33 mm, or 858 mm2, in one exposure ([source](https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe3400c)). Every AI accelerator worth buying is bigger than that. Packaging is how the industry got around the reticle, and through 2024 and 2025 it was what capped how many accelerators the world could build.
 
 ## How it works
 
 A chip package is a printed circuit board shrunk to the size of a playing card and built to the tolerances of a chip. A lithography machine can print only a rectangle about the size of a postage stamp in one shot, so a modern accelerator is cut into pieces and stitched back together on a shared slab of silicon, with its memory a few millimetres away. Slab, chips and board all expand at different rates when heated, so the finished package warps and the joints crack. Getting that right in volume is why nearly every AI accelerator is packaged by one company in Taiwan.
 
-The reticle limit is why logic is cut into chiplets. HBM adds a second reason: its 1,024-bit or 2,048-bit interface is too wide for an organic substrate to route, so the memory has to sit beside the logic on a shared silicon carrier, the interposer.
+HBM gives a second reason to split the package. Its 1,024-bit or 2,048-bit interface is too wide for an organic substrate to route, so the memory has to sit beside the logic on a shared silicon carrier, the interposer.
 
 CoWoS builds it in two passes, chip-on-wafer and then wafer-on-substrate. TSMC makes a thin silicon wafer carrying wiring and through-silicon vias but no transistors, bonds logic dies and HBM stacks face down onto it with microbumps at 30 to 40 micron pitch, then dices the interposer out and attaches it to an organic build-up substrate.
 
@@ -95,9 +95,9 @@ The unit processes are ordinary. One joint cracked by thermal cycling, though, k
 
 ### 2.5D: silicon, RDL and bridges
 
-TSMC has run CoWoS in volume since 2012 ([source](https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm)). CoWoS-S gives the finest wiring, but its interposer is a monolithic die whose yield falls as area grows. CoWoS-L replaces the slab with a redistribution layer carrying silicon bridges only where dense wiring is needed. Intel's EMIB embeds the same bridge idea in the organic substrate instead, and is the one credible second source when CoWoS is tight.
+TSMC has run CoWoS in volume since 2012 ([source](https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm)). CoWoS-S wires most finely, but its interposer is one monolithic die whose yield falls as area grows, so CoWoS-L replaces the slab with a redistribution layer carrying silicon bridges only where the wiring is dense. Intel's EMIB embeds the same bridge idea in the organic substrate, and is the one credible second source when CoWoS is tight.
 
-Blackwell was the first high-volume design on CoWoS-L, and it went badly. Bridges, dies, organic interposer and substrate all expand at different rates, so the package warps, and the bridges between the two compute dies carry a 10 TB/s link that has to be placed to a tolerance the warping fights ([source](https://semianalysis.com/2024/08/04/nvidias-blackwell-reworked-shipment/)). TSMC certified the 5.5-reticle version in 2025 and now produces it ([source](https://pr.tsmc.com/english/news/3302)).
+Blackwell was the first high-volume design on CoWoS-L, and it went badly. Bridges, dies, organic interposer and substrate all expand at different rates, so the package warps, and the bridges between the two compute dies carry a 10 TB/s link that has to be placed to a tolerance the warping fights ([source](https://semianalysis.com/2024/08/04/nvidias-blackwell-reworked-shipment/)).
 
 ### 3D: SoIC, Foveros, X-Cube
 
@@ -109,9 +109,9 @@ Panel-level packaging swaps the round wafer for a rectangular panel and wastes f
 
 ## Capacity
 
-TSMC does not publish a CoWoS wafer number, and the omission is deliberate. At its 2024 symposium it told investors the capacity would grow at a 60 percent compound rate, and at the July 2024 earnings call C.C. Wei said he could not reach supply and demand balance, hoped to by 2025 or 2026, and expected supply to stay very tight ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf)).
+TSMC does not publish a CoWoS wafer number, and the omission is deliberate. At its 2024 symposium it told investors capacity would grow at a 60 percent compound rate, and on the July 2024 earnings call C.C. Wei said he could not reach supply and demand balance and expected supply to stay very tight ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf)).
 
-Fifteen months later the answer had not changed. In October 2025 Wei said only that TSMC was working very hard to narrow the gap, would add capacity again in 2026, and would give the real number the following year ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf)). Front end and back end were both, in his word, tight. A company that reports monthly revenue to the exchange will not say how many interposers it can build.
+Fifteen months later the answer had not changed. In October 2025 Wei would say only that TSMC was working hard to narrow the gap, would add capacity again in 2026, would give the real number the following year, and that front end and back end were both, in his word, tight ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf)). A company that reports monthly revenue to the exchange will not say how many interposers it can build.
 
 The split is public even though the total is not. Epoch AI models each designer's component consumption against global supply and puts Nvidia at 60.3 percent of the world's CoWoS capacity in 2025, with a 90 percent confidence interval of 56.5 to 64.3; Google took 13.5, AMD 8.4 and Amazon 7.4 ([source](https://epoch.ai/data-insights/ai-chip-supply-chain-constraints)). Those four absorbed around 90 percent of all CoWoS and all HBM by value, while taking about 12 percent of the world's advanced logic wafers. Packaging had been built almost entirely for those four buyers, which is why it ran out while logic wafers did not.
 
@@ -123,7 +123,7 @@ The ordering has since flipped. SemiAnalysis reported in March 2026 that front-e
 
 {{figure:cowos-reticles}}
 
-The word packaging covers two different industries. The 2.5D work for AI accelerators happens inside TSMC's own backend fabs in Taiwan. Everything else goes to outsourced assembly and test firms: ASE Technology Holding, the largest, billed NT$645.4 billion in 2025, with its assembly and test business up 23 percent, and Amkor, the largest American one, billed $6.71 billion ([source](https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-fourth-quarter-and-the-full-year-of-2025-302679779.html)) ([source](https://www.sec.gov/Archives/edgar/data/1047127/000104712726000007/amkr123125erex-991.htm)).
+The word packaging covers two different industries. TSMC does the 2.5D work for AI accelerators in its own backend fabs; everything else goes to outsourced assembly and test firms. ASE Technology Holding, the largest, billed NT$645.4 billion in 2025, with its assembly and test business up 23 percent, and Amkor, the largest American one, billed $6.71 billion ([source](https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-fourth-quarter-and-the-full-year-of-2025-302679779.html)) ([source](https://www.sec.gov/Archives/edgar/data/1047127/000104712726000007/amkr123125erex-991.htm)).
 
 The tools are a narrower chokepoint than the assembly houses.
 

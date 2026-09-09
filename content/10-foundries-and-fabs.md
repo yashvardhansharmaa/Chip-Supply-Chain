@@ -112,7 +112,7 @@ SEMI forecast China at 10.1 million wafers a month in 2025, the most of any regi
 
 {{figure:capacity-by-region}}
 
-That stacks three risks on one island. We think the first two are manageable and the third is not:
+Three risks stack on one island, and we think only the third is unmanageable:
 
 - **Seismic.** Taiwan sits on an active plate boundary, and a tool knocked out of calibration scraps the work in progress across a whole fab.
 - **Power.** A gigafab is a large industrial load on a small island grid. We think grid margin, not silicon, sets how fast Taiwan can add fabs.
@@ -123,7 +123,7 @@ Diversification is real and slow. The hard part of a fab is a workforce that has
 ## Key evaluation criteria
 
 - **Leading-edge share** — TSMC's 77 percent of wafer revenue from 7 nm and below is why it can self-fund the next node ([source](https://www.sec.gov/Archives/edgar/data/0001046179/000104617926000451/a2q26e_withguidancexfinal.htm)).
-- **Yield at ramp** — the difference between a profitable node and a subsidised one. Intel Foundry's loss is a yield story, not a demand story.
+- **Yield at ramp** — the difference between a profitable node and a subsidised one. Intel Foundry's loss comes from yield, not from a shortage of demand.
 - **Ten-year cost of ownership** — $35 to $43 billion for a fab finished in 2026, and rising ([source](https://www.bcg.com/publications/2023/navigating-the-semiconductor-manufacturing-costs)).
 - **Utilisation** — SMIC's 93.5 percent shows what a captive home market does for loading, and not for margins ([source](https://www.smics.com/en/site/news_read/7951)).
 - **Customer concentration** — an IDM-owned foundry competes with its customers, which caps who trusts it with a flagship design.
