@@ -109,14 +109,14 @@ China has mask capability at trailing nodes and nothing at the leading edge. SMI
 
 ## The chokepoint
 
-This stage scores a 5 for the reason lithography does, on a fraction of the money. Two firms supply the blanks, one certifies them, and neither business is big enough to attract a funded entrant. AGC's whole EUV blank business was aiming at ¥40 billion of annual sales, and it took a METI supply-chain subsidy to add 30 percent of capacity ([source](https://www.agc.com/en/news/detail/1203819_2814.html)). Nobody starts from scratch at that size, to serve four customers, with a two-decade defect-learning curve ahead.
+This stage scores a 5 for the reason lithography does, on a fraction of the money. Two firms supply the blanks, one certifies them, and neither business is big enough to attract a funded entrant. AGC's whole EUV blank business was aiming at ¥40 billion of annual sales, and it took a METI supply-chain subsidy to add 30 percent of capacity ([source](https://www.agc.com/en/news/detail/1203819_2814.html)). Nobody starts from scratch at that size, to serve a handful of customers, with a two-decade defect-learning curve ahead.
 
 Pellicles are the open sore. A decade on, no membrane is transparent, tough and long-lived at once, so fabs trade throughput against defect risk. We think a production carbon nanotube pellicle would move EUV cost per wafer more than any scanner improvement.
 
 ## Key evaluation criteria
 
 - **Blank defectivity** — buried particles in the multilayer cannot be repaired, so blank yield sets mask yield.
-- **Write time and placement** — multi-beam writers make dense curvilinear EUV patterns affordable; resist speed on the mask is the next wall ([source](https://www.intc.com/news-events/press-releases/detail/1645/intel-to-sell-minority-stake-in-ims-nanofabrication)).
+- **Write time and placement** — multi-beam writers make dense curvilinear EUV patterns affordable, and Intel calls IMS the established industry leader in them ([source](https://www.intc.com/news-events/press-releases/detail/1645/intel-to-sell-minority-stake-in-ims-nanofabrication)).
 - **Actinic inspectability** — only a 13.5 nm inspection sees what the scanner sees, and only Lasertec sells one ([source](https://www.lasertec.co.jp/en/ir/plan/message.html)).
 - **Pellicle transmission and lifetime** — transmission counts twice, and the best demonstrated carbon nanotube membranes pass 97% in a single crossing ([source](https://www.imec-int.com/en/press/imec-demonstrates-cnt-pellicle-utilization-euv-scanner)).
 - **Mask-set cost per node** — $10M to $40M at the leading edge, which decides which designs can use it ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)).

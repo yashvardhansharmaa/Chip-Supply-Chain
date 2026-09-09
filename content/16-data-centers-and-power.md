@@ -37,7 +37,7 @@
     {"fact": "The five largest US hyperscalers spent $448.3B of capex in 2025; on that trend they reach $770B in 2026", "source": "https://epoch.ai/data-insights/hyperscaler-capex-trend"},
     {"fact": "ERCOT was tracking about 474 GW of large loads seeking interconnection in June 2026, about 90% of it data centers", "source": "https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf"},
     {"fact": "Only 9,042 MW of ERCOT large load had received Approval to Energize as of March 2026", "source": "https://www.ercot.com/files/docs/2026/03/12/March-TAC-Report.pdf"},
-    {"fact": "Large power transformer lead times of 36 months are commonly quoted and reach 60 months; before the pandemic an order took under a year, and 82% of US units are imported", "source": "https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf"},
+    {"fact": "Large power transformer lead times of 36 months are commonly quoted and reach 60 months; before the pandemic an order took under a year, and 82% of units put into US service in 2019 were imported", "source": "https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf"},
     {"fact": "GE Vernova's gas power equipment backlog and slot reservations grew from 100 GW to 116 GW, with output rising from 20 GW a year in 2026 to 24 GW in 2028 and 30 GW in 2030", "source": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm"},
     {"fact": "EIA expects US electricity use to grow 1% in 2026 and 3% in 2027, the strongest four-year growth since 2000", "source": "https://www.eia.gov/pressroom/releases/press582.php"}
   ],
@@ -133,7 +133,7 @@ The gap between announced and energised capacity is the whole story. ERCOT was t
 
 Then the equipment, where the lead times bind.
 
-- **Large power transformers.** Thirty-six-month lead times are commonly quoted and the worst reach 60, against under a year before the pandemic; 82% of the units installed in the United States are imported ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)).
+- **Large power transformers.** Thirty-six-month lead times are commonly quoted and the worst reach 60, against under a year before the pandemic; 82% of the units put into US service in 2019 were imported ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)).
 - **Gas turbines.** GE Vernova will build 20 GW of turbines this year and is working toward 30 GW a year in 2030, against a book of 116 GW ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)). Six years of output is already spoken for.
 - **Firm new generation.** The one reactor restart with a data center buyer behind it, the 835 MW Crane plant, shut in 2019 and is still waiting on its licence ([source](https://www.energy.gov/articles/energy-department-closes-loan-restart-nuclear-power-plant-pennsylvania)).
 

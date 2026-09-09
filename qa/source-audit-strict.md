@@ -88,3 +88,188 @@ Tier A: `docs.broadcom.com`, `investors.broadcom.com`, `pubs.usgs.gov`, `wacker.
 ## Verification notes
 
 Every replacement was fetched and read before it was cited, except two pages that refuse automated fetching but whose text was confirmed through search against the same domain: the Commerce CHIPS award release and semi.org. The SEC and Commerce URLs return 403 to a generic browser user agent and 200 to a declared one; both pages are live. No Reuters, FT or Nikkei page was cited, since none of the headlines or RSS snippets found for the deleted numbers stated the figures.
+
+---
+
+# Chapters 04, 05 and 06 — strict re-sourcing, 9 September 2026
+
+Scope: `content/04-chemicals-gases-and-photoresist.md`, `content/05-lithography.md`, `content/06-photomasks-and-pellicles.md`. Build after the pass: `04 D 0 · ? 0`, `05 D 0 · ? 0`, `06 D 0 · ? 0`, no build warnings, front matter parses, figure markers match front matter, `plain` byte-identical to the first paragraph under "How it works" in all three.
+
+## 04 Chemicals, Gases and Photoresist
+
+Words before 1,143 · after 1,182. Figures: both kept (`resist-country` CSET, `germanium-price` USGS).
+
+### Replacements
+
+| Old (disallowed) | New (allowed) | What changed |
+|---|---|---|
+| `evertiq.com/news/55596` — JSR ~27% of photoresist; JIC took >84% for ~¥900bn | `jiccapital.co.jp/en/news/.assets/E_20240417_JIC_JICC_PressRelease.pdf` (Tier A, company/state fund release) | Share number deleted (no allowed source states it). Ownership corrected from "more than 84 percent" to the filed **84.36%**, at **¥4,350 a share**, tender offer closing **16 April 2024**. The ~¥900bn deal value is not in the release and was dropped. JSR's self-description now cites `jsr.co.jp/jsr_e/products/em/`. |
+| `pillsburylaw.com` — China banned Ga/Ge/Sb to the US on 3 Dec 2024, suspended 9 Nov 2025 until 27 Nov 2026 | `pubs.usgs.gov/periodicals/mcs2026/mcs2026-gallium.pdf` (Tier A) | USGS states "In November 2025, China lifted its ban on gallium exports to the United States for 1 year." The precise start and end dates (9 Nov 2025 / 27 Nov 2026) and the military-end-user carve-out are not in any allowed source and were deleted; the claim now reads "lifted the gallium ban for one year" in November 2025. Added USGS's **99% of world primary low-purity gallium production**. |
+| `sfa-oxford.com` — China runs >40% of global air separation capacity (used twice: prose and the "byproduct exposure" criterion) | Prose: `csis.org` (already cited). Criterion: `pubs.usgs.gov/.../mcs2026-gallium.pdf` | The 40% air-separation figure is deleted outright. The neon paragraph now ends on what CSIS does say: buyers had stockpiled since 2014 and East Asian chipmakers reported adequate neon from China. The byproduct criterion now rests on USGS: gallium recovered mostly from bauxite refining, germanium from zinc concentrates. |
+| `kirkland.com` — EU revised its PFAS dossier on 20 Aug 2025 with a risk-based option "judged proportionate for electronics", decision likely 2027, effect late 2028 | `echa.europa.eu/-/echa-supports-pfas-restriction-with-targeted-derogations` (Tier A regulator; domain added) | Kept the 20 August 2025 revision and the >5,600 comments. Deleted the 2027 decision and late-2028 effect dates and the "proportionate for electronics" characterisation. Now: ECHA's committees back an EU-wide restriction **with targeted derogations**, scientific evaluation due to finish **by the end of 2026**. |
+
+### Deletions (no allowed source)
+
+- JSR's ~27% share of the photoresist market, and the ~¥900bn value of the JIC buyout.
+- "China now runs more than 40 percent of global air separation capacity."
+- The 3 December 2024 / 9 November 2025 / 27 November 2026 date triple and the military-end-user exception on China's critical-minerals ban.
+- The EU PFAS decision (2027) and effect (late 2028) dates.
+
+### Front matter
+
+`card.leaders` JSR note rewritten (share out, JIC ownership in). `card.chinaStatus` now cites USGS's 99% gallium share and August 2023 licensing instead of the pillsbury dating. `keyFacts` entries 2 and 7 replaced to match the new sources. `costSignal` unchanged (SEMI figures).
+
+## 05 Lithography
+
+Words before 1,287 · after 1,351. Figures: all three kept; all three already sourced to ASML annual report / Q4 2025 investor deck.
+
+### Replacements
+
+| Old (disallowed) | New (allowed) | What changed |
+|---|---|---|
+| `bits-chips.com` — NXE:3800E above 220 wph at 30 mJ/cm2 with 0.9 nm overlay | `ourbrand.asml.com/.../asml-2025-annual-report-strategic-report-section.pdf` (Tier A) | ASML's own words: full specification is **220 wafers per hour**, a **37% improvement on the NXE:3600D**. "Above 220" corrected to "220 at full specification". The **0.9 nm overlay** figure is deleted — ASML publishes no overlay number for this tool that I could read (the product page renders its specs as animated digit rolls). |
+| `heise.de` — 50,000 tin droplets/s, ~600 W today, 1,000 W demonstrated February 2026; also the Zeiss, Trumpf, San Diego and VDL supplier bullets | `asml.com/en/technology/lithography-principles/light-and-lasers`; `ourbrand.asml.com/.../strategic-report-section.pdf`; `zeiss.com/.../euv-lithography.html`; `trumpf.com/en_US/products/lasers/euv-drive-laser/`; `asml.com/en/company/about-asml/locations/san-diego`; `vdlgroep.com/.../vdl-etg-builds-complex-frames-for-zeiss` | 50,000 droplets/s confirmed on ASML's own page, with the pre-pulse/main-pulse detail. The 1,000 W milestone is **April 2025**, not February 2026, per ASML's annual report. "About 600 W today" deleted. Supplier bullets gained real content from each supplier's own site: Zeiss makes the illumination system and six-mirror projection optics; Trumpf's CO2 laser amplifies to **40 kW** and fires **50,000 pulses a second**; ASML San Diego (ex-Cymer) designs the LPP source and builds the droplet generator; VDL ETG builds the mirror frames. |
+| `trendforce.com` (two URLs) — ten High-NA systems at four customers, 135 wph in acceptance testing; Intel >1m High-NA wafers | `ourbrand.asml.com/.../strategic-report-section.pdf`; `ourbrand.asml.com/.../financial-performance-section.pdf`; `asml.com/en/news/press-releases/2026/high-na-euv-reaches-new-readiness-milestone`; `intel.com/.../intel-foundry-asml-accelerate-industry-readiness-for-high-na-euv.html` | Installed-base count replaced with filed numbers: **four EXE and 44 NXE systems recognized in 2025** (two EXE in 2024) and **more than 400,000 wafers run on High NA by end-2025**. Throughput corrected from 135 wph to ASML's **175 wafers per hour, 60% above the EXE:5000**. Intel's **more than one million High-NA wafers** now comes from Intel's own newsroom, and its high-volume-manufacturing first from ASML's press release. |
+| `marklapedus.substack.com` — 8 nm at 0.55 NA / 13 nm at 0.33 NA, anamorphic field halving, TSMC 2030, Samsung 2028 | `asml.com/en/company/stories/2024/5-things-high-na-euv`; `pr.tsmc.com/english/news/3338` | Resolution and the 4x/8x anamorphic field halving now from ASML, which adds that it **doubles the number of exposures** per wafer. TSMC's **2030** high-volume date is now TSMC's own, along with the **2031 pilot mask line** and **12-inch High-NA in production by 2033**. Samsung's 2028 DRAM plan is deleted; no allowed source states it. |
+| `semiengineering.com` (two URLs) — High-NA price $350–400M; every EUV node in HVM still used single patterning as of mid-2025 | none | Both deleted; see below. |
+| `internationaltradeinsights.com` — US–China deal suspended the Affiliates Rule for a year from 10 Nov 2025 | `federalregister.gov/documents/2025/11/12/2025-19846/...` (Tier A) | Same fact from the rule itself, with the exact window: **10 November 2025 to 9 November 2026**. |
+| `caixinglobal.com` — ASML expects about 20% China revenue for 2026 | none | Deleted; ASML's Q4 2025 press release and 2025 annual report give no 2026 China share. |
+| `cnbc.com` — China's share cut from 41% in 2024 toward a guided 20% in 2026 | `ourbrand.asml.com/.../2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf` (Tier A, already cited) | Takeaway now runs **41% (2024) to 33% (2025)** only. |
+
+### Deletions (no allowed source)
+
+- **Tool prices: ~$250M for a Low-NA EUV system and $350–400M for High-NA.** The $250M carried a Reuters URL whose headline does not state the figure; Reuters refuses automated fetching, so under the strict rule it is unverified. A Reuters explainer headline stating "$250 million ASML 'printer'" (28 Jan 2026) and one stating "$400 million ASML 'printers'" both exist in Google News RSS, but neither resolves to a `reuters.com` URL I could confirm, so nothing was cited. `card.costSignal` was rewritten to "48 EUV systems inside EUR 32.7bn of 2025 net sales; ASML does not publish per-system prices."
+- 0.9 nm matched-machine overlay on the NXE:3800E; ~600 W current source power; the 330 wph by 2030 roadmap target.
+- Ten High-NA systems at four customers; 135 wph acceptance-test figure.
+- Samsung's 2028 High-NA plan for DRAM.
+- "As of mid-2025 every EUV node in high-volume production still used single patterning."
+- Aishengna's ¥7bn capitalisation, its plan of about five machines in 2026 and 20 in 2027, and ASML's ~16% China share in H1 2026 — all carried by a Reuters article whose headline states the qualitative fact ("China starts production of home-grown immersion DUV chipmaking tools") but none of the numbers. The Reuters citation is kept for the qualitative claim only, and CSIS now supplies a comparator: **SMEE holds about 4% of the global i-line market**.
+- Beijing's 2028 target and the 2030 estimate for a working Chinese EUV chip, for the same reason; the Reuters citation is kept for the prototype's existence.
+
+### Front matter
+
+`card.chinaStatus` rewritten around CSIS and the Reuters headline claim. `card.costSignal` replaced. `keyFacts` 4, 5, 6, 7 and 8 replaced with ASML annual-report and asml.com facts; the Reuters H1-2026 China share fact removed.
+
+## 06 Photomasks and Pellicles
+
+Words before 1,103 · after 1,151. Figures: `mask-set-cost` kept (SemiAnalysis, Tier B). **`blank-share` removed** with its `{{figure:blank-share}}` marker and its front-matter entry.
+
+### Replacements
+
+| Old (disallowed) | New (allowed) | What changed |
+|---|---|---|
+| `dri.co.jp` (QY Research) — EUV mask blank market $259.25M in 2024, AGC and Hoya 93.7% of revenue. Cited in the lede, the Blanks section, The chokepoint, Takeaways, keyFacts and the `blank-share` figure. | `agc.com/en/news/detail/1203819_2814.html`; `hoya.com/ir/2025/en/review/it.html` (both Tier A) | Market size and share percentages deleted. In their place, each duopolist's own words: AGC says it is **the world's only EUV blank maker covering every step from glass material to coating**, raised capacity **about 30% in 2025** on a METI supply-chain-programme line, and was **aiming for more than ¥40 billion of sales** in that business; Hoya says it holds **an exceptionally high share** of mask blanks and expects customers to move gradually toward multi-sourcing EUV blanks. |
+| `marklapedus.substack.com` — High-NA halves the printable field | `asml.com/en/company/stories/2024/5-things-high-na-euv` | Same claim from ASML, plus its own point that the half field **doubles the exposures** needed per wafer. |
+| `semiengineering.com` (two URLs) — 90% transmission pellicle costs ~20% of throughput; polysilicon DUV filter costs another ~20%; Micron runs bare and cleans more often; CNT membranes survive fewer than 10,000 exposures and can shatter; D2S on startups proving designs on 193 nm immersion; 15 nm assist features | `asml.com/en/news/stories/2022/the-euv-pellicle-indistinguishable-from-magic`; `imec-int.com/en/press/imec-demonstrates-cnt-pellicle-utilization-euv-scanner`; `jp.mitsuichemicals.com/.../2024_0528_1` (already cited) | The pellicle section is rebuilt on primary sources: ASML's membrane is **13 nm thick**, must hold at **500C in vacuum**, and every photon it absorbs is customer productivity lost; the light crosses it twice, so absorption counts double. Imec has exposed CNT pellicles on an **NXE:3300** with **single-pass transmission up to 97%** and imaging impact "low and correctable". Mitsui's **92%+ transmittance** and **1,000 W** targets are unchanged. |
+
+### Deletions (no allowed source)
+
+- **The $259.25 million EUV mask blank market and the 93.7%/94% two-firm revenue share**, and with them the `blank-share` figure, its marker and its front-matter entry. This was the chapter's headline number: the `oneLiner` and The chokepoint section both led on it. Both were rewritten around AGC's and Hoya's own statements.
+- The 20% throughput cost of a 90%-transmission pellicle and the further ~20% for a DUV filter.
+- Micron running EUV without pellicles and holding duplicate masks.
+- CNT membranes surviving fewer than 10,000 wafer exposures, and shattering inside the scanner.
+- D2S's claim that AI startups prove designs on 193 nm immersion first, and the 15 nm assist-feature resist wall.
+
+### Front matter
+
+`oneLiner` rewritten (dollar market size out; "a business worth tens of billions of yen" in). `plain` and the matching first paragraph of "How it works" both changed, identically, from "a market worth a few hundred million dollars" to "a small and obscure business", since the dollar figure no longer has a source. `card.leaders` AGC and Hoya notes rewritten to their own self-descriptions. `keyFacts` 1 and 2 replaced; the pellicle-throughput fact replaced by the ASML and imec facts. `card.costSignal` unchanged (SemiAnalysis mask-set range, Tier B).
+
+## Domains added to `data/source-tiers.json`
+
+Tier A: `echa.europa.eu` (European Chemicals Agency, an EU regulator). Every other new citation in these three chapters uses a domain already listed under A, or Reuters / SemiAnalysis under B.
+
+## Verification notes
+
+All ASML annual-report figures were read out of the filed PDFs directly (`pymupdf` on the downloaded `ourbrand.asml.com` files) after the fetcher returned them as unparsed binary; the SEC HTML copy of the same report corroborates the 220 wph, 175 wph, 400,000-wafer, 1,000-watt and 5,100-supplier numbers. The USGS mineral commodity summaries were downloaded with an explicit user agent (`pubs.usgs.gov` returns 403 otherwise) and read in full. ECHA (`echa.europa.eu`) sits behind a WAF that refuses both the fetcher and curl; its two PFAS pages were confirmed through search results quoting the pages themselves, and the claim was kept to what those quotes state. ASML's product pages for the NXE:3800E and EXE:5200B render their headline specs as animated digit rolls and yield no numbers to a fetcher, which is why the annual report is cited for throughput instead.
+
+Reuters was fetched and refused (`reuters.com` is not accessible to the crawler), so the strict rule was applied: the two Reuters articles already in chapter 05 are kept only for the claims their headlines carry — "China starts production of home-grown immersion DUV chipmaking tools" and "How China built its 'Manhattan Project' to rival the West in AI chips" — both confirmed verbatim in Google News RSS. Every number those articles carried has been deleted.
+
+---
+
+## 18 · Geopolitics
+
+Words before: 2,392. Words after: 2,676. Build: D 20 → D 0. Figures: 3 before, 3 after (none removed).
+
+### Replacements
+
+1. **Taiwan's leading-edge concentration.** TrendForce, 2023 country capacity split → The Stimson Center, "Why Taiwan Fears 'America First' Risks Eroding Its 'Silicon Shield'" (stimson.org, 10 October 2025). Used in `keyFacts`, the chokepoint table, the table's basis bullets and the Taiwan section.
+   Changed: the metric, not just the source. "68% of world capacity at 16/14 nm and below in 2023, against 12% for the US, 11% for Korea, 8% for China" becomes Stimson's two figures, "78% of the global foundry market and 92% of the manufacturing capacity for the most advanced chips". No allowed source publishes a country split at a named node; CSET's is 5 nm in 2022, SIA/BCG's is below-10 nm in 2021, and SEMI publishes total capacity only. The table row "Logic at 16/14 nm and below · 68% · capacity, 2023" is replaced by two rows, "The most advanced logic · 92%" and "Foundry, all nodes · 78%". `card.leaders` for Taiwan was rewritten to match. The lost detail is the US, Korea and China comparison, which nothing allowed carries.
+
+2. **Big Fund III.** Caixin Global → RAND, "Full Stack: China's Evolving Industrial Policy for AI" (rand.org). Used in `keyFacts`, `card.costSignal` and the industrial-policy section.
+   Changed: "registered in May 2024 at 344 billion yuan, about $47.5 billion, aimed at equipment and materials" becomes RAND's "the latest round reaching $47 billion". The yuan figure, the registration date and the equipment-and-materials mandate all go; no allowed source carries them. A Reuters headline of 27 May 2024 does state "$47.5 bln", but the article returns 401 to every fetch and the canonical URL could not be confirmed from the Google News RSS token, so RAND was used instead.
+
+3. **CHIPS Act awards.** Manufacturing Dive award tracker → GAO-26-107882, "Semiconductors: Information on Projects Funded to Strengthen U.S. Supply Chain" (files.gao.gov, 11 December 2025). Source of the `chips-awards` figure and of the body sentence.
+   Changed, and the old numbers were wrong. Direct funding finalised was **$30.9 billion to 19 companies for 40 projects as of July 2025**, not "roughly $23 billion across two dozen awards by mid-2026". Four bars in the figure moved to GAO's filed amounts: Micron 6.2 → **6.44** (and up one rank, above TSMC), TSMC 6.6 → **6.565**, GlobalFoundries 1.5 → **1.587**, Texas Instruments 1.6 → **1.61**, Intel 7.87 → **7.865**, Samsung 4.7 → **4.745**. The six smaller bars were already correct. Added GAO's median: the awards cover 14.2 percent of each project's capital cost. The "Predicted winners" bullet reading "$23 billion of grants will not" now reads $31 billion.
+
+4. **HBM and DRAM shares.** Counterpoint Research, quarterly DRAM and HBM market share → SK hynix Form 424B4, its US listing prospectus (sec.gov).
+   Changed: the country figure becomes a company figure, because that is what a filing can support. "HBM · South Korea · 83% · revenue, 2026" becomes "HBM · South Korea · 56% · SK hynix alone, revenue, 1Q26", from the prospectus's 56.4 percent. `card.leaders` for South Korea moves from "83% of HBM revenue and 63% of DRAM revenue" to SK hynix's own 56 percent of HBM and 29 percent of DRAM. **Deleted:** Korea's combined HBM and DRAM shares and the Samsung 33 percent split. The basis bullet now says so plainly.
+
+5. **October 2023 performance-density rule.** K&L Gates client alert → CSET, "Explainer: The Commerce Department's October 2023 Export Control Update" (cset.georgetown.edu). Policy says cite the rule, not the law firm; CSET's explainer is the closer read of it.
+   Changed: the thresholds are confirmed unchanged (4,800 TPP, or 1,600 TPP with performance density 5.92), but the sentence no longer names the A800 and H800. CSET says BIS removed the interconnect-speed parameter that chip designers had used to build China-compliant parts, without naming those two products, so the sentence now says what CSET says.
+
+6. **The 15 percent revenue share.** PBS NewsHour → Nvidia Form 10-Q for the quarter ended 27 July 2025 (sec.gov).
+   Changed, and materially softened. "Nvidia and AMD agreed to hand the government 15 percent of their China revenue on the H20 and MI308" is not what the filing says. Nvidia's own words: US officials "have expressed an expectation that the USG will receive 15% of the revenue generated from licensed H20 sales", and "the USG has not published a regulation codifying such requirement". The essay now quotes that and says no regulation codifies it. **Deleted:** AMD and the MI308, which the Nvidia filing cannot support. `card.usStatus` and the `control-timeline` entry were reworded to match ("US officials seek 15% of licensed H20 sales").
+   Corrected in passing: the same paragraph said the April 2025 licence requirement "cost Nvidia up to $5.5 billion in charges", which was the 8-K's forward estimate. The 10-Q records the actual charge, **$4.5 billion**. The 8-K citation is retained for the licence requirement itself.
+
+7. **Section 232 tariff.** EY Global Tax News → Federal Register, "Adjusting Imports of Semiconductors, Semiconductor Manufacturing Equipment, and Their Derivative Products" (federalregister.gov, doc. 2026-01052).
+   Changed: the rate and date are confirmed (25 percent ad valorem, effective 12:01 a.m. on 15 January 2026), and the exemption list is now the proclamation's own and is longer than the essay claimed: US data centres, repairs and replacements, research and development, startups, non-data-centre consumer applications, civil industrial applications and public-sector use.
+
+8. **Validated End-User revocation.** TrendForce → Federal Register, "Revocation of Validated End-User Authorizations in the People's Republic of China" (federalregister.gov, doc. 2025-16735).
+   Changed on three points. **Intel Semiconductor (Dalian) was revoked too**, and the essay named only Samsung and SK hynix. The rule was published 2 September 2025 and takes effect 31 December 2025. And "annual reviews now allow maintenance but not expansion" is replaced by the rule's own policy: BIS intends to license these fabs to keep operating, and does not intend to license capacity expansion or technology upgrades. The annual-review framing was TrendForce's, not the rule's.
+
+9. **Nexperia.** ioplus.nl → government.nl, the minister's own announcement of 12 October 2025 and his update of 19 November 2025.
+   Changed, and the essay had two errors. The order was invoked on **30 September 2025**, not "in October", which makes it the same day as the BIS affiliates rule rather than "days after" it; the essay now makes that coincidence the point. And the Dutch government did not "seize Nexperia from China's Wingtech": the minister invoked the Goods Availability Act, citing governance failures that threatened to move technology off European soil, and government.nl does not mention Wingtech at all. **Deleted:** the seizure framing, Wingtech, "China blocked exports from Nexperia's Chinese plants" and "European car lines began stopping within weeks", none of which any allowed source carries. What survives is that Nexperia's parts run European car lines and that both measures were suspended within about six weeks.
+
+10. **MOFCOM Announcement 18.** Clark Hill client alert → the announcement itself on english.mofcom.gov.cn.
+    Changed: now dated **4 April 2025** and the seven elements are named from the text (samarium, gadolinium, terbium, dysprosium, lutetium, scandium, yttrium), in metal, oxide, compound and finished-magnet form.
+
+11. **The October 2025 rare-earth package.** Clark Hill → CSET's translation of MOFCOM Notice 2025 No. 61 (cset.georgetown.edu).
+    Changed: "six more announcements in October reached processing technology and foreign goods containing Chinese-origin material" becomes the one provision the translation actually carries, dated 9 October 2025: a Chinese export licence is required for foreign-made goods containing Chinese rare earths worth 0.1 percent or more of the item's value. **Deleted:** the count of six announcements and the processing-technology controls.
+
+12. **The November 2025 suspension.** Clark Hill (used twice, here and in "What to watch") → CSIS, "The U.S.-China Trade Truce Has Not Solved the Gallium Problem" (csis.org).
+    Changed and narrowed. CSIS supports only that MOFCOM's Document No. 72 suspended the gallium and dual-use ban for one year after the Trump-Xi APEC meeting. **Deleted:** the suspension of the October package, the claim that the seven-element regime and the military-end-user ban "stay permanent", and the two dated expiry deadlines. The line "Nothing was repealed. The controls were paused, with the expiry dates published" becomes "Nothing was repealed. One ban was paused for twelve months; the licensing regimes stand." The "What to watch" bullet loses "10 and 27 November 2026" and now reads "November 2026".
+
+13. **China's domestic-chip mandate.** SCMP → Nvidia Form 10-Q for the quarter ended 26 July 2026 (sec.gov).
+    **Deleted the number.** No allowed source supports "publicly owned computing centres were told in 2025 to source more than half their chips at home". A Reuters headline of 5 November 2025 states a stronger and differently shaped claim ("China bans foreign AI chips from state-funded data centres, sources say") with no figure, so it was not used. The sentence is rebuilt on what Nvidia's filing says: Chinese regulators discouraged customers from buying, importing or using its data-centre products, and endorsed an action plan setting performance-per-watt and bandwidth standards for accelerators in Chinese data centres.
+
+14. **Nvidia's H200 shipments to China.** SCMP → the same 10-Q, plus Nvidia's Q2 FY2027 results release (nvidianews.nvidia.com).
+    Changed: every element is now first-party and one is new. The filing says licences began in **February 2026**, that the PRC government restricted the sales, that Nvidia took a **$0.4 billion** H200 charge, and that the shipments it did make "account for less than 1% of Data Center revenue in our most recent quarter". The $89.0 billion data-centre figure and "not assuming any Data Center compute revenue from China" come from the results release.
+
+15. **CXMT.** Seoul Economic Daily → SemiAnalysis, "Huawei Ascend production ramp" (Tier B).
+    **Deleted the number.** "CXMT passed 10 percent of the global DRAM market and is sampling HBM3" has no allowed source; the 10 percent traces to Counterpoint and reaches the press from there. Replaced with the SemiAnalysis figure that matters more to this essay's argument: CXMT's HBM output should reach about 2 million stacks in 2026, enough for 250,000 to 300,000 more Ascend 910C packages. `card.chinaStatus` was rewritten to match.
+
+16. **Taiwan's N-2 rule.** Taiwan News → Stimson (as above).
+    Changed and weakened, because no allowed source describes the statute. **Deleted:** the N-2 rule by name, the amended Industrial Innovation Act, "two generations behind" and the 18 December 2025 reaffirmation. Stimson supports the substance one notch softer: Taiwan prohibits overseas production of its most advanced semiconductors, so chips made by Taiwanese firms in the United States are a generation behind those made at home, and Arizona is not expected to reach 2 nm before 2028. The "What to watch" bullet now reads "Taiwan's ban on making its newest chips abroad".
+
+17. **Gulf chip authorisations.** Just Security → US Department of Commerce, "Statement on UAE and Saudi Chip Exports" (commerce.gov, 20 November 2025).
+    Changed: Commerce's own wording is "up to 35,000" **GB300s** each to G42 and HUMAIN, conditioned on security and reporting requirements that BIS monitors. **Deleted:** "about 100 MW apiece", which Commerce does not state.
+
+18. **Malaysia's permit regime.** Baker McKenzie sanctions blog → MITI's own press statement of 14 July 2025 (miti.gov.my).
+    Changed: both the permit and the 30-day notice are confirmed from the ministry, with the mechanism named. The permit covers export, transhipment **and transit**; the 30 days' advance notification is the catch-all clause, Section 12 of the Strategic Trade Act 2010.
+
+19. **The Chip Security Act.** Americans for Responsible Innovation (ari.us) → the bill text, S.1705, on congress.gov.
+    Changed: the bill's own operative provision is now cited, that Commerce must require location verification on covered chips within 180 days of enactment. **Deleted:** "the Senate folded it into the FY2027 defence bill". No allowed source confirms it; the research note already marked it headline-only. The House Foreign Affairs 42-0 vote keeps its huizenga.house.gov citation, and "It is not law yet" still closes the paragraph.
+
+20. **SMIC's 5 nm plans.** TrendForce → SemiAnalysis (Tier B), same newsletter as above.
+    **Deleted the number.** The "What to watch" bullet rested on an explicitly unconfirmed plan to lift 7 and 5 nm output fivefold to 100,000 wafers a month. It is replaced by the SemiAnalysis capacity series already cited elsewhere in the chapter, 45,000 wafers a month at end-2025, 60,000 in 2026 and 80,000 in 2027, with yield as the thing to watch.
+
+### Deletions beyond the twenty
+
+- **The 1 June 2026 ownership bullet** (Al Jazeera). The research note records no Federal Register rule for it, only a headline. Deleted as a dated item; the claim survives in better form, because Nvidia's 8-K of 9 April 2025 shows the licence requirement already reaching "companies headquartered or with an ultimate parent" in China. That is now a clause in the H20 paragraph, and the list above it says "Three moves" instead of "Four".
+- **The 2.5D advanced packaging row** in the chokepoint table (TrendForce, "60-75%, TSMC capacity share, 2026") and its basis bullet, and **"TSMC alone will run 120,000 to 140,000 CoWoS wafers a month in 2026 against 50,000 to 60,000 at every OSAT partner combined"** in the Taiwan section, and **"TSMC runs roughly two-thirds of world CoWoS capacity"** from `card.leaders`. See the note below; this is the loss that matters most.
+
+### The number the argument missed most
+
+The CoWoS capacity split. The essay's case is that reshoring moves wafers but not packaging, and the 120,000-to-50,000 comparison was the evidence. No allowed source will supply it. Epoch AI says outright that there are no public disclosures or estimates of advanced-packaging share; SemiAnalysis's March 2026 piece discusses CoWoS without quantifying capacity; TSMC's annual report does not break it out. What TSMC will say is on the record and is now what the section rests on: asked in October 2025 how much CoWoS capacity he would add in 2026, C.C. Wei said only that the company was "working very hard to narrow the gap between the demand and supply" and that front-end and back-end capacity alike were "very tight", and TSMC's two Arizona packaging fabs trail an OSAT partner already breaking ground there. The argument survives on the chairman's refusal to give a number; it is weaker than it was, and the table now says so in a line of its own.
+
+### Discrepancy found and left alone
+
+The table row "Logic at 28 nm and above · China · 38% · capacity, 2025" and the matching `card.leaders` entry are cited to CSIS, which is Tier A, so the build does not flag them. But the CSIS piece says Chinese capacity is "now accounting for about half of global capacity", not 38 percent. The 38 percent appears to be a TrendForce series. Out of scope for this pass, since the citation is allowed; flagged here for whoever reconciles the mature-node figure across chapters 10 and 18.
+
+### Domains added to data/source-tiers.json
+
+Tier A: `gao.gov`, `files.gao.gov`, `miti.gov.my`. Already listed and used unchanged: `stimson.org`, `rand.org`, `congress.gov`, `commerce.gov`, `federalregister.gov`, `english.mofcom.gov.cn`, `cset.georgetown.edu`, `csis.org`, `government.nl`, `sec.gov`, `investor.tsmc.com`, `nvidianews.nvidia.com`. Nothing added to Tier B.
+
+### Verification notes
+
+Every replacement URL was read before it was cited. WebFetch was the default. Three hosts refuse it and were read another way: SEC EDGAR and the TSMC transcript PDF with a declared user agent through curl (the Nvidia 10-Qs, the Nvidia 8-K and the SK hynix 424B4 were read in full and the quoted sentences extracted from the filing text), and RAND likewise. One page, the Commerce statement on UAE and Saudi chip exports, sits behind Cloudflare and returns 403 to both WebFetch and curl; its text was confirmed through search against commerce.gov itself and matches the figure recorded independently in `qa/research-notes-gulf-sea-smuggling.md`. No Reuters, FT or Nikkei page is cited in this chapter: the two candidates found (Reuters on Big Fund III, Reuters on state data centres) either could not be resolved to a canonical URL or carried no number in the headline.

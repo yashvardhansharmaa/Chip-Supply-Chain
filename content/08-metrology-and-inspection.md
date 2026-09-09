@@ -22,10 +22,10 @@
       {"code": "NL", "note": "ASML YieldStar and HMI e-beam, Veldhoven and San Jose"},
       {"code": "JP", "note": "Hitachi High-Tech CD-SEM; Lasertec mask inspection; Rigaku X-ray"},
       {"code": "IL", "note": "Nova (Rehovot) and Camtek (Migdal Haemek)"},
-      {"code": "CN", "note": "Wuhan Jingce and other domestic entrants; near-zero share in mask and packaging inspection as of 2019"}
+      {"code": "CN", "note": "Domestic entrants only; 3.4% of CD measuring and none of mask or packaging inspection as of 2019"}
     ],
     "chinaStatus": "The weakest Chinese position of any major tool segment. As of 2019 domestic firms held 3.4% of CD measuring, 1.3% of defect inspection and none of mask or packaging inspection. CSET's 2026 survey of Chinese share gains runs through deposition, etch, CMP, lithography, packaging and test, and does not cover process control at all.",
-    "usStatus": "KLA is the largest process-control supplier worldwide, on its own reported share and on customer spending. The December 2024 rule swept metrology and inspection tools for patterned 300 mm wafers into the controlled list at a 21 nm defect threshold.",
+    "usStatus": "KLA is the largest process-control supplier worldwide, at roughly seven times its nearest rival on its own reported share. The December 2024 rule swept metrology and inspection tools for patterned 300 mm wafers into the controlled list at a 21 nm defect threshold.",
     "costSignal": "KLA's fiscal 2026 revenue was $13.58B against a wafer equipment market of roughly $120B in calendar 2025, so process control is around a tenth of fab tool spending.",
     "substitution": {"years": "10+", "why": "Sensitivity comes from optics, electron columns and decades of defect libraries. China gained real share in etch and deposition between 2019 and 2024; in process control it held almost nothing in 2019 and nobody has published a gain since."}
   },
@@ -89,11 +89,11 @@ Optical carries the volume; e-beam catches what optical cannot see. How many waf
 
 ## Who makes it
 
-KLA is the segment. Fiscal 2026 revenue was $13.579 billion, after $12.156 billion in fiscal 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0000319201/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json)), and it says it gained share again in 2025 across mask, optical wafer and e-beam inspection ([source](https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf)).
+KLA is the segment. Fiscal 2026 revenue was $13.579 billion, after $12.156 billion in fiscal 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0000319201/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json)), and says it gained share again in 2025 across mask, optical wafer and e-beam inspection ([source](https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf)).
 
 The rest is specialised, not second. None of them publishes a segment share.
 
-- **Applied Materials** sells e-beam review, CD-SEM and film metrology, and is the only rival with a comparable spread of process steps.
+- **Applied Materials** sells e-beam review, CD-SEM and film metrology, next to the deposition and etch tools that create the defects.
 - **Nova** took $880.6 million in 2025 on optical film and dimensional metrology ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0001109345/us-gaap/Revenues.json)).
 - **Onto Innovation** turned over $1,005.3 million in 2025 ([source](https://investors.ontoinnovation.com/news/news-details/2026/Onto-Innovation-Reports-2025-Fourth-Quarter-and-Full-Year-Results/default.aspx)) and **Camtek** $496.1 million ([source](https://www.sec.gov/Archives/edgar/data/1109138/000117891326000549/zk2634405.htm)).
 
@@ -109,7 +109,7 @@ The moat is analytics as much as optics: inspection throws up far more candidate
 
 The AI packaging build-out is the fastest-growing part of this segment. KLA took the number one position in advanced wafer-level packaging process control in 2025, adding 14 points ([source](https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf)), and expects about $1.1 billion of packaging process control revenue in 2026, more than 70 percent growth ([source](https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf)). Onto signed a volume purchase agreement worth over $240 million with an HBM maker for 2D inspection and 3D bump metrology through 2027 ([source](https://investors.ontoinnovation.com/news/news-details/2026/Onto-Innovation-Reports-2025-Fourth-Quarter-and-Full-Year-Results/default.aspx)).
 
-China has made less progress here than anywhere else in the tool chain. In 2019 Chinese firms held 3.4 percent of CD measurement, 1.3 percent of defect inspection and none of photomask or packaging inspection ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). CSET's 2026 audit of where China gained runs through deposition, etch, CMP, lithography, packaging and test, and never reaches process control ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). Read that as an absence of evidence, not proof of nothing, but no one has published a Chinese gain in this segment.
+China has made less progress here than anywhere else in the tool chain. In 2019 Chinese firms held 3.4 percent of CD measurement, 1.3 percent of defect inspection and none of photomask or packaging inspection ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). CSET's 2026 audit of where China gained runs through deposition, etch, CMP, lithography, packaging and test, and never reaches process control ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). That is an absence of evidence rather than evidence of absence. But nobody has published a Chinese gain here.
 
 The December 2024 rule wrote process control into the export lists. It controls patterned-wafer defect inspection and metrology for 300 mm wafers that can find defects of 21 nm or smaller using light below 400 nm, or an electron beam resolving 1.65 nm, or a cold field emission source, or two or more beams ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)). A foreign direct product rule carries the same reach to tools built outside the United States ([source](https://www.bis.gov/press-release/commerce-strengthens-export-controls-restrict-chinas-capability-produce-advanced-semiconductors-military)).
 

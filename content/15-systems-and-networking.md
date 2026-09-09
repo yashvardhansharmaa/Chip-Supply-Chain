@@ -53,7 +53,7 @@
       "type": "bars",
       "title": "Broadcom Tomahawk switching capacity on one chip",
       "unit": "Tbps",
-      "data": [["Tomahawk 4 (2020)", 25.6], ["Tomahawk 5 (2022)", 51.2], ["Tomahawk 6 (2025)", 102.4]],
+      "data": [["Tomahawk 4", 25.6], ["Tomahawk 5", 51.2], ["Tomahawk 6", 102.4]],
       "source": {"label": "Broadcom product releases for Tomahawk 4, 5 and 6", "url": "https://www.broadcom.com/company/news/product-releases/64031"}
     }
   ]
@@ -93,7 +93,7 @@ Broadcom doubled merchant switch capacity every generation: 25.6 Tbps on one chi
 
 {{figure:switch-bandwidth}}
 
-Nvidia now sells both sides of the argument. It credits Blackwell 300, InfiniBand, Spectrum-X Ethernet and NVLink together for a $75.2 billion data center quarter ([source](https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000051/q1fy27pr.htm)), which is a fair description of a market that stopped choosing one fabric.
+Nvidia now sells both sides of the argument. It tells its own investors that a $75.2 billion data center quarter came from Blackwell 300 plus demand for "InfiniBand, Spectrum-X Ethernet, and NVLink" ([source](https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm)), which is a fair description of a market that stopped picking one fabric.
 
 ### Optics: pluggable, then co-packaged
 
