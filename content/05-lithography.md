@@ -28,7 +28,8 @@
   },
   "keyFacts": [
     {"fact": "ASML recognized 48 EUV systems in revenue in 2025, versus 44 in 2024 and 53 in 2023", "source": "https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf"},
-    {"fact": "ASML total net sales were EUR 32.7 billion in 2025 at a 52.8% gross margin, with 2026 guidance of EUR 34 to 39 billion", "source": "https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf"},
+    {"fact": "ASML total net sales were EUR 32.7 billion in 2025 at a 52.8% gross margin", "source": "https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf"},
+    {"fact": "In July 2026 ASML raised its 2026 guidance to EUR 43 to 45 billion of net sales at a 54 to 56% gross margin", "source": "https://ourbrand.asml.com/asset/c8dbf3fc-4c5e-4406-83f6-27694b138245/Press-Release-Financial-Results-Q2-2026.pdf"},
     {"fact": "EUV was 48% of ASML net system sales in 2025; China was 33% of net system sales, down from 41% in 2024", "source": "https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf"},
     {"fact": "The TWINSCAN NXE:3800E reaches its full 220 wafers-per-hour specification, a 37% improvement on the NXE:3600D", "source": "https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf"},
     {"fact": "An EUV source drops molten tin 50,000 times a second and hits each droplet with a low-intensity pulse and then a vaporising one", "source": "https://www.asml.com/en/technology/lithography-principles/light-and-lasers"},
@@ -107,7 +108,7 @@ ASML recognized four EXE systems in revenue in 2025, against two in 2024 ([sourc
 
 ## Who makes it
 
-ASML took EUR 32.7 billion in net sales in 2025 at a 52.8% gross margin, and guides to EUR 34 to 39 billion for 2026 ([source](https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf)). It is an integrator with 5,100 suppliers ([source](https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm)). Four carry the EUV machine.
+ASML took EUR 32.7 billion in net sales in 2025 at a 52.8% gross margin ([source](https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf)), and in July 2026 raised its 2026 guidance to EUR 43 to 45 billion at a 54 to 56% gross margin ([source](https://ourbrand.asml.com/asset/c8dbf3fc-4c5e-4406-83f6-27694b138245/Press-Release-Financial-Results-Q2-2026.pdf)). It is an integrator with 5,100 suppliers ([source](https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm)). Four carry the EUV machine.
 
 - **Zeiss SMT**, Oberkochen, makes the illumination system and the six-mirror projection optics ([source](https://www.zeiss.com/semiconductor-manufacturing-technology/inspiring-technology/euv-lithography.html)).
 - **Trumpf**, Ditzingen, makes the carbon dioxide drive laser, which amplifies a few watts to as much as 40 kilowatts and fires 50,000 pulses a second ([source](https://www.trumpf.com/en_US/products/lasers/euv-drive-laser/)).

@@ -217,80 +217,61 @@
   },
   {
     "segment": "DRAM manufacturing",
-    "metric": "Revenue share",
-    "year": 2026,
-    "shares": {
-      "KR": 63,
-      "US": 24,
-      "CN": 10,
-      "TW": 3
-    },
-    "note": "Counterpoint's Q2 2026 DRAM revenue shares: Samsung 38, SK hynix 25, Micron 24, CXMT 10, Nanya 2, others 1. Converted by company headquarters, so KR is Samsung plus SK hynix, US is Micron, CN is CXMT, TW is Nanya plus Winbond and PSMC's small consumer DRAM lines. TrendForce's independent count for the same quarter, on a $154.7bn industry, is close enough to corroborate: Samsung 39.4, SK hynix 24.9, Micron 23.3. Headquarters is not fab location: Micron's bit output comes mostly from Taiwan and Japan, and both Korean firms run large fabs in China. The quarter is an extreme one, in the middle of a memory price spike that lifted industry revenue 59.5 percent sequentially, so shares move faster than capacity does.",
-    "source": "https://counterpointresearch.com/en/insights/global-dram-and-hbm-market-share",
+    "metric": "No published country split",
+    "year": null,
+    "shares": null,
+    "note": "Shares withdrawn on 9 September 2026. The quarterly DRAM revenue splits in circulation are published by market-research firms, which this project no longer cites, and the split cannot be rebuilt from allowed sources: Micron discloses DRAM revenue in its filings, but Samsung reports memory as one line inside Device Solutions rather than splitting DRAM from NAND, SK hynix does not separate the two in its filed statements, and CXMT published nothing until its 2026 Shanghai listing. What allowed sources support is the structure rather than the shares. Nvidia's annual report names its memory suppliers as SK hynix, Micron and Samsung, which is the merchant DRAM base that AI accelerators actually draw on, so the Korean and American positions are large and the Chinese one is not yet inside AI systems. SemiAnalysis models CXMT at 9 percent of global DRAM bit shipments in 2025, rising to 12 percent by 2027; that is a bit share rather than a revenue share, and it sits in DDR4 and consumer parts rather than the server DDR5 and HBM that AI buyers compete for.",
+    "source": "https://newsletter.semianalysis.com/p/chinas-cxmt-is-set-to-challenge-dram",
     "aiCritical": true,
-    "trend": "CXMT has gone from negligible in 2021 to about 10 percent of global DRAM revenue, entirely at DDR4 and consumer nodes, while the three incumbents shifted capacity toward HBM and server DDR5."
+    "trend": "China's entry is the live variable. SemiAnalysis models CXMT's share of DRAM bit shipments rising from 9 percent in 2025 to 12 percent in 2027, while the three incumbents move capacity toward HBM and server DDR5 and memory prices run through a once-in-decades spike."
   },
   {
     "segment": "HBM",
-    "metric": "Revenue share",
-    "year": 2026,
-    "shares": {
-      "KR": 83,
-      "US": 17
-    },
-    "note": "Counterpoint's Q2 2026 HBM revenue shares: SK hynix 50, Samsung 33, Micron 18, normalised from 101 to 100. KR is SK hynix plus Samsung, US is Micron. There are no other suppliers: HBM is a three-firm market and two of the three are Korean. The Samsung number is volatile because it reflects an early HBM4 qualification win; a year earlier, in Q2 2025, the split was SK hynix 64, Micron 21, Samsung 15. China has no HBM production that clears export-control and performance thresholds, which is the binding constraint on Huawei's Ascend line. Note that the base-die under HBM4 is now a logic die, which pulls TSMC and Samsung Foundry into a segment that used to be pure memory.",
-    "source": "https://counterpointresearch.com/en/insights/global-dram-and-hbm-market-share",
+    "metric": "No published country split",
+    "year": null,
+    "shares": null,
+    "note": "Shares withdrawn on 9 September 2026. HBM revenue shares are published quarterly by market-research firms and by nobody this project is allowed to cite; no filing, regulator or institutional researcher breaks HBM out by supplier or by country. The structure is on the record and is what matters here. Nvidia's annual report names SK hynix, Micron and Samsung as its memory suppliers, and those three are the whole of HBM: two Korean, one American, no fourth. China has no HBM production that clears both the export-control thresholds and the performance bar, which is the binding constraint on Huawei's Ascend line and the reason Huawei designed its own HiBL and HiZQ stacks. HBM is itself a controlled item under ECCN 3A090.c, so the segment is unusual in being both extremely concentrated and directly regulated. Note also that the base die under HBM4 is now a logic die, which pulls TSMC and Samsung Foundry into a segment that used to be pure memory.",
+    "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
     "aiCritical": true,
-    "trend": "SK hynix's share has fallen from about 64 percent to 50 percent since mid-2025 as Samsung qualified HBM4, but Korea's combined share has risen, not fallen."
+    "trend": "A three-firm market since HBM began shipping in volume, with the ranking among the three moving on qualification wins rather than on capacity; the durable fact is that two of the three are Korean and none is Chinese."
   },
   {
     "segment": "Advanced packaging (2.5D/3D)",
-    "metric": "Capacity share, site estimate",
-    "year": 2025,
-    "shares": {
-      "TW": 82,
-      "US": 7,
-      "KR": 6,
-      "CN": 3,
-      "JP": 1,
-      "Other": 1
-    },
-    "note": "CHOKEPOINTS estimate derived from TrendForce CoWoS capacity reporting (TSMC roughly 120,000 to 140,000 wafers a month in 2026 against 50,000 to 60,000 at OSAT partners), not a published country split. Silicon-interposer and die-stacking capacity, meaning CoWoS, InFO, SoIC, EMIB, Foveros and I-Cube, rather than all packaging. TW is TSMC, which is the overwhelming majority, plus ASE/SPIL and Powertech taking spillover; TrendForce reports CoWoS has been short since 2023 with most capacity absorbed by Nvidia, and that TSMC plans to expand CoWoS by over 60 percent by 2027. US is Intel's EMIB and Foveros lines in Arizona and New Mexico plus Amkor's Arizona build; Google and Meta are moving some ASIC packaging to Intel EMIB. KR is Samsung I-Cube and SK hynix's HBM stacking. CN is JCET and TongFu, which are constrained by export controls on the tools. This is a modelled estimate; no vendor publishes 2.5D capacity by country.",
-    "source": "https://www.trendforce.com/news/2026/06/15/news-tsmc-cowos-supply-demand-gap-reportedly-seen-narrowing-from-20-to-10-by-end-2026-as-capacity-expands/",
+    "metric": "No published country split",
+    "year": null,
+    "shares": null,
+    "note": "Shares withdrawn on 9 September 2026. The previous figures were a CHOKEPOINTS estimate built on a market-research firm's CoWoS capacity reporting, and no allowed source publishes 2.5D or 3D packaging capacity by country: not TSMC, which discloses advanced packaging only inside its overall capital plan, not SEMI, not SIA, and not CSET, whose explorer covers advanced-packaging tools rather than advanced-packaging capacity. What is documented is dependence. Nvidia's annual report states that it uses CoWoS technology for packaging and names TSMC and Samsung as its foundries, and TSMC's CoWoS lines are in Taiwan; the American additions are Intel's EMIB and Foveros lines in Arizona, Oregon and New Mexico and Amkor's Arizona build, and the Korean ones are Samsung I-Cube and SK hynix's HBM stacking. Treat the geography as overwhelmingly Taiwanese and unmeasured rather than as a number.",
+    "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
     "aiCritical": true,
-    "trend": "Taiwan's share has fallen only slightly since 2021 despite heavy US investment, and advanced packaging has replaced wafer capacity as the binding constraint on AI accelerator output."
+    "trend": "Advanced packaging has replaced wafer capacity as the binding constraint on AI accelerator output, and the capacity being added outside Taiwan is real but small against TSMC's base."
   },
   {
-    "segment": "OSAT (assembly & test)",
-    "metric": "Revenue share",
-    "year": 2024,
+    "segment": "Assembly, test and packaging (ATP)",
+    "metric": "Capacity share, site location",
+    "year": 2022,
     "shares": {
-      "TW": 54,
-      "CN": 28.6,
-      "US": 15.2,
-      "KR": 2.2
+      "CN": 30,
+      "TW": 28,
+      "Other": 20,
+      "KR": 9,
+      "JP": 6,
+      "EU-other": 3,
+      "US": 3
     },
-    "note": "Share of the top ten OSATs, which billed $41.56bn in 2024 on TrendForce's count. Firm revenues converted to country by headquarters: TW is ASE at $18.54bn, Powertech $2.28bn, KYEC $0.91bn and ChipMOS $0.71bn; CN is JCET $5.00bn, TongFu $3.32bn, Huatian $2.01bn and WiseRoad $1.56bn, the last being Chinese private-equity-controlled but operating largely out of Malaysia; US is Amkor at $6.32bn; KR is Hana Micron at $0.92bn. Headquarters badly overstates the US and understates Southeast Asia, because Amkor's plants are in Korea, the Philippines, Vietnam and China, and SIA/BCG put Malaysia, Singapore and Vietnam at about a fifth of global assembly capacity by location. Denominator is the top ten, not the whole market, so smaller firms are excluded rather than pooled into Other.",
-    "source": "https://www.trendforce.com/presscenter/news/20250513-12577.html",
+    "note": "Rebuilt on 9 September 2026. The previous row ranked the top ten OSATs by revenue on a market-research firm's count, which this project no longer cites. This is a different and better measure: ATP site capacity by country on a $95bn market in 2022, from the stage-level data in CSET's ETO Supply Chain Explorer, which takes it from SIA. Two differences from the old row matter. It is by site rather than by headquarters, so Amkor's plants count in Korea, the Philippines, Vietnam and China rather than in the United States, which is why the US column falls to 3. And it counts captive assembly and test inside IDMs and foundries alongside the merchant OSATs, which is most of what Taiwan, Korea and Japan are doing here. The 20-point 'various countries' bucket is not attributed in the source; SIA and BCG put Malaysia, Singapore and Vietnam at about a fifth of global assembly capacity by location, which is consistent with reading it as Southeast Asia. Columns sum to 99 because of rounding in the source.",
+    "source": "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv",
     "aiCritical": false,
-    "trend": "Chinese OSATs grew at double digits through 2024 while ASE and Amkor were flat, lifting China's share of the top ten from roughly a quarter toward thirty percent."
+    "trend": "China has the largest single share of assembly and test capacity by site and has been adding it faster than anyone else, which is why the export controls reach packaging tools as well as wafer tools."
   },
   {
     "segment": "IC substrates",
-    "metric": "Revenue share",
-    "year": 2024,
-    "shares": {
-      "TW": 30,
-      "JP": 29,
-      "KR": 22,
-      "CN": 11,
-      "Other": 2,
-      "AT": 6
-    },
-    "note": "Flip-chip and ABF organic substrates plus wire-bond BGA. Firm-to-country mapping: TW is Unimicron, Nan Ya PCB and Kinsus; JP is Ibiden and Shinko Electric Industries; KR is Samsung Electro-Mechanics, LG Innotek, Simmtech and Daeduck; CN is Shennan Circuits, Zhen Ding and AKM Meadville; AT is AT&S of Austria. There is no US-headquartered volume supplier, which is why US is zero. The AI-relevant sub-segment is narrower and more concentrated than this: for the very large, high-layer-count ABF substrates used under CoWoS packages, Ibiden, Shinko, Unimicron and AT&S account for the large majority, and TSMC has publicly flagged ABF substrates as the next bottleneck after CoWoS. Modelled from company disclosures rather than a single published table.",
-    "source": "https://www.trendforce.com/presscenter/news/20260430-13028.html",
+    "metric": "No published country split",
+    "year": null,
+    "shares": null,
+    "note": "Shares withdrawn on 9 September 2026. The previous split came from a market-research firm this project no longer cites, and no allowed source publishes substrate revenue by country: CSET's supply-chain work lists the substrate suppliers by country but gives no shares for that node, and the firms themselves report substrates inside broader electronics segments. The supplier set is the useful part and it is stable: Unimicron, Nan Ya PCB and Kinsus in Taiwan; Ibiden and Shinko Electric Industries in Japan; Samsung Electro-Mechanics, LG Innotek, Simmtech and Daeduck in Korea; AT&S in Austria; Shennan Circuits and Zhen Ding in China. There is no US-headquartered volume supplier. The AI-relevant sub-segment is narrower still: the very large, high-layer-count ABF substrates that sit under CoWoS packages come from a handful of Japanese, Taiwanese and Austrian plants, and substrates are the constraint most often named after CoWoS itself.",
+    "source": "https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/",
     "aiCritical": true,
-    "trend": "Chinese substrate makers have roughly doubled their share since 2021 at mature grades, while Japan and Austria have held the high-layer-count ABF business that AI packages need."
+    "trend": "Chinese suppliers have grown at mature grades while Japan and Austria have held the high-layer-count ABF business that AI packages need; no allowed source measures the movement."
   },
   {
     "segment": "AI accelerator design",
@@ -302,24 +283,19 @@
       "TW": 1,
       "Other": 1
     },
-    "note": "Revenue of AI accelerator silicon attributed to the country of the firm that owns the design, merchant and captive combined. US is Nvidia, whose data-centre revenue was roughly $190bn in the year to January 2026 out of $215.9bn total, plus AMD's Instinct line, plus the custom ASIC programmes that Broadcom ($63.9bn total revenue FY2025, with AI silicon a large and fast-growing slice) and Marvell design for Google, Meta, OpenAI and Amazon, plus Intel Gaudi. Google TPU and AWS Trainium revenue is credited to the US because the design owner is US even though Broadcom, Alchip and MediaTek do much of the physical implementation; crediting the design-service houses instead would move a few points to TW. CN is Huawei HiSilicon Ascend, Cambricon, Biren, Moore Threads and MetaX; TrendForce expects domestic parts to reach about half of China's own AI chip market in 2026, which is consistent with about 5 percent globally. Design location, not fabrication location: almost all of the US column is manufactured in Taiwan.",
+    "note": "Revenue of AI accelerator silicon attributed to the country of the firm that owns the design, merchant and captive combined. US is Nvidia, whose data-centre revenue was roughly $190bn in the year to January 2026 out of $215.9bn total, plus AMD's Instinct line, plus the custom ASIC programmes that Broadcom ($63.9bn total revenue FY2025, with AI silicon a large and fast-growing slice) and Marvell design for Google, Meta, OpenAI and Amazon, plus Intel Gaudi. Google TPU and AWS Trainium revenue is credited to the US because the design owner is US even though Broadcom, Alchip and MediaTek do much of the physical implementation; crediting the design-service houses instead would move a few points to TW. CN is Huawei HiSilicon Ascend, Cambricon, Biren, Moore Threads and MetaX. CSIS's work on China's localisation drive, the source for this row, is the basis for the Chinese column: domestic parts are taking a fast-growing share of China's own AI chip market while remaining a small share of the world's, which is what about 5 percent globally reflects. The Chinese figure is the softest number in the row. Design location, not fabrication location: almost all of the US column is manufactured in Taiwan.",
     "source": "https://www.csis.org/analysis/chinas-localization-drive-semiconductors-gains-impetus-allied-chip-export-controls",
     "aiCritical": true,
-    "trend": "US share has stayed above 90 percent since 2021, but the internal mix has shifted from Nvidia-only toward hyperscaler ASICs, which TrendForce expects to be about 28 percent of AI server shipments in 2026."
+    "trend": "US share has stayed above 90 percent since 2021, but the internal mix has shifted from Nvidia-only toward hyperscaler ASICs designed with Broadcom, Marvell and Alchip; no allowed source publishes the merchant-versus-ASIC split, so no figure is given for it here."
   },
   {
     "segment": "Server assembly",
-    "metric": "Revenue share",
-    "year": 2025,
-    "shares": {
-      "TW": 70,
-      "US": 18,
-      "CN": 10,
-      "Other": 2
-    },
-    "note": "AI server and rack-scale system integration, attributed to the headquarters of the ODM or OEM that builds the system. TW is Hon Hai/Foxconn, Quanta, Wistron and its Wiwynn subsidiary, Inventec, Pegatron and Gigabyte, which between them build most of the world's GB200 and GB300 NVL72 racks. US is Dell, HPE and Supermicro. CN is Inspur, Lenovo, H3C and Sugon, selling largely into the domestic market. Headquarters is a long way from assembly location here: the Taiwanese ODMs do final rack integration in Mexico, Texas, Wisconsin, Thailand, Vietnam and Taiwan, so a location-based cut would move a large share into the US and Other columns. TrendForce values 2027 NVL72 rack output above $710bn, which gives a sense of how much value now sits in this stage. Modelled estimate.",
-    "source": "https://www.trendforce.com/presscenter/news/20260828-13204.html",
+    "metric": "No published country split",
+    "year": null,
+    "shares": null,
+    "note": "Shares withdrawn on 9 September 2026. AI server and rack integration shares are published by market-research firms and by no one this project can cite; the ODMs report consolidated revenue and do not break out AI systems, and no government or institutional source measures the stage. Nvidia's annual report is the allowed anchor for what can be said: it names Hon Hai Precision Industry, Wistron and Fabrinet among the contract manufacturers that perform assembly, testing and packaging for it, states that its supply chain is currently concentrated in Asia, and says it is expanding into the United States and Latin America. Read that as a heavily Taiwanese ODM base whose physical assembly footprint is moving toward North America under tariff and customer pressure, with Dell, HPE and Supermicro in the American column and Inspur, Lenovo, H3C and Sugon selling into the Chinese domestic market. The number that used to sit here was a modelled estimate resting on a single disallowed source.",
+    "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
     "aiCritical": true,
-    "trend": "Taiwanese ODM share of AI system build has held near 70 percent since 2021 while the physical assembly footprint moved sharply toward North America under tariff and customer pressure."
+    "trend": "Headquarters and assembly location have been diverging since 2023: the Taiwanese ODMs still design and win the racks, while more of the physical integration happens in Mexico, Texas and Wisconsin."
   }
 ]

@@ -369,3 +369,106 @@ Reuters is not fetchable. Two Reuters items were found that bear on chapter 15 �
 ## Domains added to `data/source-tiers.json` under A
 
 `ualinkconsortium.org` and `ultraethernet.org` (standards bodies), `fcc.gov` (regulator; covers `docs.fcc.gov`), `energy.gov` and `eia.gov` (US government), `ercot.com` (the Texas system operator, cited here only for its own reports to the Texas Senate under PUCT oversight), `honhai.com` and `constellationenergy.com` (company investor materials). `investors.broadcom.com` and `pubs.usgs.gov` were already covered by existing entries.
+
+---
+
+# Chapters 07, 08 and 12 — strict re-sourcing, 9 September 2026
+
+Editor: source-quality pass on Deposition and Etch, Metrology and Inspection, and Advanced Packaging. All three now report `D 0` in `dist/build-report.txt`. Every URL in the front matter and the body resolves to Tier A or to one of the four Tier B exceptions.
+
+## 07 Deposition and Etch
+
+Words before 1,127 · after 1,165. Figures 3 before, 3 after.
+
+### Replacements
+
+- **SEMI equipment billings** — `semiconductor-digest.com` → `semi.org`, *SEMI Reports Global Semiconductor Equipment Billings Reached $135 Billion in 2025*. Used in two keyFacts, the `equipment-billings` figure source and two body sentences. Numbers hold: $135.1B in 2025, up 15% from $117.1B in 2024. Added SEMI's wafer-processing detail, up 12%, which the trade write-up had dropped.
+- **China's 2025 equipment spending** — same swap. $49.3B held, but the framing changed. The old sentence paired it with "China, Taiwan and Korea together took 79 percent". SEMI's own release carries the sharper fact: China's spending *fell* 0.5% while Taiwan's rose 90% to a record $31.5B. The chapter now says that instead, because it is the same source and a better point.
+- **AMEC 2025 results** — `trendforce.com` → `amec-inc.com`, AMEC's own 2025 results briefing. Revenue corrected from "RMB 12.38 billion" to RMB 12.385 billion; the 36.6% growth rate holds. Replaced the deleted figures below with AMEC's own R&D disclosure, RMB 3.744 billion at 30.2% of sales, which makes the same point about state-backed intensity with a filed number.
+- **December 2024 export rule** — `cov.com` (law-firm client alert) → `bis.gov`, Commerce's own announcement, alongside the Federal Register text already cited. **The number was wrong.** The alert was paraphrased as "added eight ECCNs". BIS says it controlled *24 types of semiconductor manufacturing equipment and 3 types of software tools*. The 140 Entity List additions checked out (BIS: 140 additions and 14 modifications).
+- **`tel-tool-share` figure label** — "Gartner via Tokyo Electron FY2026 Q4 presentation" → "Tokyo Electron FY2026 Q4 results presentation". The URL was already `tel.com` and unchanged; only the label changed, so the citation names the allowed source rather than the disallowed research firm inside it. I re-read the deck: the CY2025 share chart gives coater/developer 91%, CVD 38%, oxidation/diffusion 31%, deposition systems 27%, dry etch 23%, cleaning 20%, ALD 15%. All match. One series was relabelled "Batch deposition" → "Deposition systems" to match TEL's own wording. The same in-text change was made where the body said "Gartner numbers in Tokyo Electron's own deck".
+- **`china-tool-share` figure label** — "CSET analysis of TechInsights equipment data" → "CSET, Inside Beijing's Chipmaking Offensive". URL unchanged. All eight values re-verified against the CSET article: dry stripping 35, dry etch 11, CMP 11, PVD 10, etch and clean 9, deposition 7, CVD 7, i-line lithography 4.
+
+### Deletions (no allowed source)
+
+- AMEC's 2025 net profit of RMB 2.11 billion.
+- AMEC's cumulative etch-tool shipments "past 6,800 units". AMEC's own briefing does not give the figure and I would not carry it from the trade report.
+
+## 08 Metrology and Inspection
+
+Words before 1,132 · after 1,178. Figures 2 before, 2 after (one removed, one built).
+
+### Replacements
+
+- **KLA's market share** — `drrobertcastellano.substack.com` had the chapter's headline number: 64.1% of metrology and inspection in 2025, up from 55.0% in 2020. **No allowed source publishes a percentage share for this market.** KLA does not, its rivals do not, and neither CSET nor SEMI breaks it out. The number is deleted from the oneLiner, the `plain` paragraph, the lead, the leaders card and the takeaway. The claim is rebuilt on what KLA tells its own shareholders in the Q3 FY2026 letter: its process control share is "approximately 7x greater than the nearest competitor" and has grown 360 basis points since 2021. That is a weaker statement of the same fact, and it is Tier A.
+- **Nova's share** — same Substack, 4.3% in 2025. Deleted. Nova's revenue, $880.6 million, stays and is cited to SEC XBRL, which was already the second citation on that sentence.
+- **Applied Materials' share** — `drrobertcastellano.substack.com/p/klas-market-share-growth-in-process`, "a peak near 13 percent … to under 8 percent in 2024". Deleted with no replacement; Applied Materials does not report a process-control share. The bullet is rewritten to say what it sells and where it sits in the flow.
+- **Advanced-packaging revenue keyFact** — the $635 million 2025 base was cited to the Q4 FY2026 letter, which does not contain it; it is in the Q3 letter. Reworded to the Q4 letter's own numbers: about $1.1 billion in calendar 2026, up more than 70%, almost twice the growth of the advanced packaging market.
+- **December 2024 controls on process control** — `cov.com` and `hklaw.com` (two law-firm alerts) → the rule itself on `govinfo.gov` plus `bis.gov` for the foreign direct product rule. This is a straight upgrade: the alerts were paraphrased as "extended controls to metrology and inspection for patterned 300 mm wafers", and the rule gives the actual threshold, ECCN 3B993.q.1 — patterned-wafer defect inspection or metrology for wafers 300 mm and above, detecting defects of 21 nm or smaller, with a light source below 400 nm, or an electron beam resolving 1.65 nm or better, or a cold field emission source, or two or more beams. The chapter now carries the threshold.
+- **CSET's 2026 review** — the citation was allowed but **the claim was not supported.** The chapter said CSET's survey of Chinese equipment gains "reports nothing here", which reads as evidence that China gained nothing. I re-read the article: it never covers process control at all. Its segments are CMP, dry etch and clean, deposition, lithography, advanced packaging, assembly, test, and handlers and probers. The sentence now says the survey never reaches process control, and calls that an absence of evidence rather than evidence of absence. The `chinaStatus`, `substitution` and takeaway lines were softened to match.
+- **`plain` paragraph** — the last sentence changed in both places, byte-identical: "One American firm sells two-thirds of the machines that do the looking" → "One American firm sells about seven times as many of those machines as its nearest rival." Verified equal to the first paragraph under "How it works" after the edit.
+
+### Deletions (no allowed source)
+
+- The whole Wuhan Jingce sentence: "the clearest domestic contender, selling front-end inspection alongside back-end test on guided 2025 net profit of RMB 80 million to 90 million" (`trendforce.com`). Its Shenzhen filings are Tier A and reachable, but they report in 万元 and I could not verify the profit guidance as stated, so the sentence goes rather than the number alone. The company name was also removed from the CN country note, which now carries only the CSET-backed claim.
+
+### Figures
+
+- **Removed `pc-share`** ("Metrology and inspection market share, 2020 and 2025": KLA 55.0 → 64.1, Nova 2.5 → 4.3). Every value came from the disallowed Substack and none can be rebuilt. Front-matter entry and `{{figure:pc-share}}` marker both removed.
+- **Built `pc-segments`** ("Process control market by tool family, 2019", $B): optical inspection 3.0, CD-SEM 1.6, mask inspection 0.94, overlay and film metrology 0.54. Every value is from the CSET supply-chain issue brief, which the body already cites four times in the section the figure now sits under. It does the same structural work the old figure did — showing where the money is — without a share number nobody publishes.
+
+## 12 Advanced Packaging
+
+Words before 1,133 · after 1,317. Figures 2 before, 2 after (both replaced).
+
+Nine of this chapter's fourteen citations were disallowed. It needed the most rebuilding.
+
+### Replacements
+
+- **Reticle field size** — `tomshardware.com` → `asml.com`, the TWINSCAN NXE:3400C product page, which specifies a maximum exposure field of 26 × 33 mm. 858 mm2 is the product of those two.
+- **5.5-reticle CoWoS** — `tomshardware.com` → `pr.tsmc.com` (2026 technology symposium release) and TSMC's 2025 annual report. **Two numbers were wrong or unsupported.** The chapter said TSMC "mass-produces 5.5-reticle packages carrying 12 HBM3E or HBM4 stacks at yields over 98%". TSMC's annual report says CoWoS-L at 3.5-reticle has been in production since 2024, that the 5.5-reticle version was certified in 2025 and enters volume production in 2026, and that 9.5-reticle is "in development" with no year. The symposium release says TSMC is "now producing" 5.5-reticle. So the timing is corrected and the ">98% yield" and "12 HBM stacks" figures are gone (see Deletions).
+- **The 2027–2029 roadmap** — three `tomshardware.com` citations → `pr.tsmc.com`. TSMC's own release: a 14-reticle CoWoS carrying about ten large compute dies and 20 HBM stacks in 2028, more than 14 reticles in 2029, and a 40-reticle System-on-Wafer the same year. The 2027 line ("a 9.5-reticle interposer supporting 12 HBM5 stacks") loses its year, because TSMC gives none. "12,020 mm2, roughly the area of a compact disc" becomes "roughly 12,000 mm2", which is 14 × 858 mm2 from the ASML field size.
+- **Blackwell's CoWoS-L trouble** — three `3dincites.com` citations → `semianalysis.com`, *Nvidia's Blackwell Reworked* (Tier B). SemiAnalysis gives the mechanism directly: thermal-expansion mismatch between dies, embedded bridges, organic interposer and substrate causing warpage, and the bridges carrying the 10 TB/s die-to-die link needing placement accuracy the rest of the package fights. Better than the paraphrase it replaces.
+- **CoWoS capacity** — three `trendforce.com` citations (35,000 wafers a month in 2024; 75,000 in 2025; 120,000–140,000 in 2026 plus 50,000–60,000 from OSAT partners, narrowing the gap from 20% to 10%). **No allowed source publishes a CoWoS wafer count, because TSMC will not.** All the absolute numbers are deleted. The section is rebuilt from TSMC's own earnings transcripts on `investor.tsmc.com`: the 60% CAGR TSMC gave at its 2024 symposium, C.C. Wei in July 2024 saying he could not reach supply-demand balance and expected supply to stay very tight, and Wei in October 2025 still declining to give a 2026 number. The refusal is now the point of the section.
+- **Card `costSignal`** — "TSMC forecasts CoWoS capacity growing at over 80% CAGR from 2022 to 2027" (unsourced, and above what TSMC has said). Corrected to TSMC's own figure of 60%, from the 2Q24 transcript.
+- **OSAT revenue** — `trendforce.com` "Top 10 OSAT companies of 2024" (total $41.56B; ASE 44.6%, Amkor 15.2%, JCET 12.0%, Tongfu 8.0%, Powertech 5.5%, HT-Tech 4.8%) → filed results. ASE Technology Holding: NT$645.4 billion in 2025 with assembly and test revenue up 23%, from ASE's own results release. Amkor: $6.71 billion in 2025, up 6%, from its SEC 8-K. JCET: RMB 35.96 billion in 2024, up 21.2%, from JCET's own annual-results release. The top-ten total and every share percentage are gone, because they are one firm's construction of a peer set and no filing reproduces them.
+- **Amkor Peoria** — `trendforce.com` → `ir.amkor.com`, Amkor's own groundbreaking release. Gained detail: the October 2025 groundbreaking date and the CHIPS award of up to $407 million, both of which were only in the card before. Added TSMC's 3Q25 transcript, where Wei confirms the OSAT partner's Arizona plant opens ahead of TSMC's own two packaging fabs.
+- **Hybrid bonding** — `tomshardware.com` (SK hynix's first mass-production order, Applied Materials and Besi tools in one inline system for about 20 billion won or $15 million) → `appliedmaterials.com` for the Kinex system, which Applied built with Besi, and `news.skhynix.com` for SK hynix's own tech note, which says full hybrid bonding adoption most likely arrives at HBM4E or HBM5, where stacks pass 20 layers. The price is gone; the technical claim is stronger.
+- **China's back end** — `trendforce.com` ("JCET, Tongfu and HT-Tech together took about 25% of top-10 OSAT revenue") → JCET's own RMB 35.96 billion, plus CSET on Chinese share gains in packaging and test tools against no gain in ALD. Same argument, filed numbers.
+- **Substrate size criterion** — `tomshardware.com` ("the 120 mm by 150 mm substrate planned for 2027") → no allowed source. The criterion is kept and rewritten around what the 14-reticle interposer implies for ABF build-up film, with no dimension.
+
+### Deletions (no allowed source)
+
+- Nvidia's reservation of 800,000 to 850,000 wafers of TSMC's 2026 CoWoS capacity, "more than half of the total". This is the biggest loss in the three chapters; see below.
+- The CoWoS capacity ladder, 35,000 → 75,000 → 120,000–140,000 wafers a month, and the OSAT partners' 50,000–60,000.
+- The supply gap narrowing "from about 20% to about 10%".
+- Package yield "over 98%" on 5.5-reticle CoWoS.
+- "12 HBM3E or HBM4 stacks" on the package in production today, and "24 HBM5E stacks" in 2029.
+- The 120 mm by 150 mm substrate.
+
+### Figures
+
+- **Removed `cowos-capacity`** ("TSMC CoWoS capacity, thousand wafers per month": 35 / 75 / 130). Every value came from TrendForce press releases and the 2026 point was a midpoint of a range. Nothing allowed can rebuild it.
+- **Removed `osat-share`** ("Share of top-10 OSAT revenue, 2024"). Same reason: the peer set and every share is TrendForce's.
+- **Built `cowos-reticles`** ("CoWoS interposer size on TSMC's roadmap", reticles): 3.5 in 2024, 5.5 in production 2026, 9.5 in development, 14 in 2028. From TSMC's 2025 annual report and its 2026 symposium release.
+- **Built `china-backend-tools`** ("China-based suppliers' share of back-end tool segments, 2024", %): linear and discrete test 69, burn-in test 9, advanced packaging tools 7, SoC test 5, and ALD at 1 for contrast, labelled in the source line as under 1%. All from CSET. It carries the chapter's China argument, which previously rested on a TrendForce share table.
+
+## The number the argument leaned on
+
+**Nvidia's 800,000 to 850,000 reserved CoWoS wafers for 2026, more than half of TSMC's total.** The chapter had a section called "Capacity and allocation" and the allocation half was built on that one figure: it was how the chapter showed that the chokepoint is not only narrow but spoken for. Nvidia does not disclose it, TSMC does not disclose customer allocation, and SemiAnalysis's numbers sit behind a paywall. The section is now called "Capacity" and argues from TSMC's silence instead — two earnings calls fifteen months apart in which C.C. Wei declines to give a wafer number or a date when supply meets demand. It is a good argument, but it is a different one, and the chapter no longer tells the reader how much of the world's advanced packaging Nvidia has bought.
+
+Two smaller ones: **KLA's 64.1% share** was chapter 08's headline, its oneLiner and the last line of its `plain` paragraph, and "roughly seven times its nearest rival" is a genuinely vaguer claim. And **CoWoS yield above 98%** was the evidence that TSMC had recovered from the Blackwell packaging failure; the chapter now says only that TSMC certified the 5.5-reticle version and produces it.
+
+## Domains added to data/source-tiers.json
+
+None. Every domain cited across the three chapters was already listed under Tier A or Tier B: `semi.org`, `bis.gov`, `amec-inc.com`, `asml.com`, `pr.tsmc.com`, `investor.tsmc.com`, `3dfabric.tsmc.com`, `ir.amkor.com`, `jcetglobal.com`, `prnewswire.com`, `news.skhynix.com`, `appliedmaterials.com`, `sec.gov`, `data.sec.gov`, `govinfo.gov`, `cset.georgetown.edu`, `tel.com`, `asm.com`, `asmpt.com`, `jedec.org`, `azcommerce.com`, `globenewswire.com`, `newsroom.lamresearch.com`, `investors.ontoinnovation.com`, `d1io3yog0oux5.cloudfront.net`, `web.ece.ucsb.edu`, and under Tier B `semianalysis.com` and `newsletter.semianalysis.com`.
+
+## Verification notes
+
+Every replacement was read before it was cited. Three hosts refuse WebFetch and were handled differently. `semi.org` returns 403; its release was verified through search against semi.org itself and cross-checked line by line against the identical SEMI release on `prnewswire.com` ($135.1B from $117.1B, wafer processing +12%, China $49.3B down 0.5%, Taiwan +90% to $31.5B, China plus Taiwan plus Korea 79% against 74%), and the semi.org URL is cited because it is the institution's own. `amec-inc.com` returns an empty body to the fetcher; its 2025 figures were verified through search against amec-inc.com and are internally consistent (RMB 3.744bn of R&D over RMB 12.385bn of revenue is the stated 30.2%). `federalregister.gov` redirects automated traffic to an unblock page, so the December 2024 rule was read as the `govinfo.gov` PDF instead.
+
+PDFs that came back as binary through the fetcher — the two KLA shareholder letters, the Tokyo Electron results transcript, the TSMC 2Q24 and 3Q25 earnings transcripts, the TSMC 2025 annual report, and the Federal Register rule — were extracted locally and read as text, and every quoted number was taken from that text.
+
+No Reuters, FT or Nikkei page is cited in these three chapters. Reuters is blocked to this fetcher and no headline or feed snippet carried a number these chapters needed, so nothing was cited on a snippet alone.
+
+One thing left alone: `newsletter.semianalysis.com/p/disco-corporation-the-world-leader` in the grinding and dicing bullet was already Tier B and is untouched.
