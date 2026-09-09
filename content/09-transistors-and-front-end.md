@@ -11,9 +11,9 @@
     "concentration": "Extreme",
     "chokepointScore": 5,
     "leaders": [
-      {"name": "TSMC", "country": "TW", "share": "N2 in volume since 4Q25; 77% of wafer revenue from 7 nm and below in 2Q26"},
-      {"name": "Intel", "country": "US", "share": "18A in high-volume manufacturing; 18A-P in risk production"},
-      {"name": "Samsung Foundry", "country": "KR", "share": "SF2 family; SF2Z with backside power slated for 2027"},
+      {"name": "TSMC", "country": "TW", "share": "N2 in volume production since 4Q25, the first nanosheet node"},
+      {"name": "Intel", "country": "US", "share": "18A in high-volume manufacturing; 18A-P adds 9% performance at the same power"},
+      {"name": "Samsung Foundry", "country": "KR", "share": "SF2 family; SF2Z adds backside power"},
       {"name": "SMIC", "country": "CN", "share": "N+2 and N+3 built with DUV multipatterning, no EUV"},
       {"name": "Rapidus", "country": "JP", "share": "State-backed 2 nm entrant targeting mass production in 2027"}
     ],
@@ -24,52 +24,43 @@
       {"code": "JP", "note": "Rapidus Chitose, Hokkaido"},
       {"code": "CN", "note": "SMIC Shanghai and Beijing 300 mm lines"}
     ],
-    "chinaStatus": "SMIC ships an N+3 node measured at 113.4 MTr/mm2 using self-aligned quadruple and double patterning instead of EUV. Cost per wafer runs 40 to 50 percent above TSMC's EUV equivalent and yields are far below.",
+    "chinaStatus": "SMIC ships an N+3 node measured at 113.4 MTr/mm2 using self-aligned quadruple and double patterning instead of EUV. Its minimum metal pitch is tighter than Intel 18A's, which is what a decade of state money buys without an EUV scanner.",
     "usStatus": "Intel is the only US-owned leading-edge front end. It brought gate-all-around and backside power to market together on 18A and is the first to run High-NA EUV in high-volume manufacturing.",
-    "costSignal": "About $30,000 per N2 wafer against roughly $20,000 to $27,000 at N3, the first node transition where cost per transistor rises",
+    "costSignal": "No foundry publishes leading-edge wafer prices. The public signal is TSMC's own density gain per node step, which falls from 1.2x at N2P to about 1.1x at A16",
     "substitution": {"years": "10+", "why": "A 2 nm-class flow is over a thousand process steps tuned against a specific tool set; SMIC has spent a decade and tens of billions to reach a node TSMC retired in 2019."}
   },
   "keyFacts": [
     {"fact": "TSMC N2 entered volume production in 4Q25, its first nanosheet gate-all-around node", "source": "https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm"},
-    {"fact": "N2 gives 10-15% more speed at the same power or 25-30% less power at the same speed versus N3E, with about 15% higher density on mixed designs", "source": "https://semiwiki.com/forum/threads/tsmc-quietly-begins-volume-production-of-2nm-class-chips.24283/"},
-    {"fact": "TSMC A14 is planned for production in 2028 with up to 15% more speed, up to 30% less power and more than 20% higher logic density than N2", "source": "https://pr.tsmc.com/english/news/3228"},
-    {"fact": "TSMC A16 with Super Power Rail backside power delivers 8-10% more speed, 15-20% less power and 8-10% more density than N2P", "source": "https://semiwiki.com/semiconductor-manufacturers/tsmc/370949-tsmc-a16-backside-power-at-vlsi-2026/"},
+    {"fact": "TSMC N2P delivers 18% more speed at the same power, 36% less power at the same speed, 1.2x logic density and 1.15x chip density over N3E", "source": "https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech"},
+    {"fact": "TSMC A16 with Super Power Rail backside power delivers 8-10% more speed, 15-20% less power and up to 1.10x chip density over N2P", "source": "https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech"},
+    {"fact": "TSMC A14 enters production in 2028 with up to 15% more speed, up to 30% less power and more than 20% higher logic density than N2", "source": "https://pr.tsmc.com/english/news/3228"},
+    {"fact": "TSMC A13, a direct shrink of A14 giving 6% area savings, is planned for 2029, as is A12 with Super Power Rail", "source": "https://pr.tsmc.com/english/news/3302"},
     {"fact": "Intel 18A shipped gate-all-around and backside power together, giving an 11% routed area reduction and a 10x reduction in dynamic voltage droop", "source": "https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future"},
-    {"fact": "SRAM bit cell area was flat at 0.021 um2 from N5 through N3E and falls to 0.0175 um2 at N2", "source": "https://semiwiki.com/forum/threads/sram-scaling-isnt-dead-after-all-%E2%80%94-tsmcs-2nm-process-tech-claims-major-improvements.21414/"},
-    {"fact": "Reaching 7 nm with DUV requires about 34 lithography steps against nine with EUV, and SMIC's cost per wafer runs 40-50% above TSMC's", "source": "https://www.eetimes.com/china-invests-billions-to-close-critical-chokepoints/"},
-    {"fact": "SMIC N+3 measures a 57 nm contacted gate pitch and a 32.5 nm minimum metal pitch, for 113.4 MTr/mm2", "source": "https://newsletter.semianalysis.com/p/steel-smic-n3-teardown"},
-    {"fact": "China's EUV prototype makes EUV light but has not produced a working chip; Beijing targets functional chips in 2028, with 2030 seen as more realistic", "source": "https://www.trendforce.com/news/2025/12/18/news-china-reportedly-builds-euv-prototype-using-older-asml-components-eyes-2028-chipmaking/"}
+    {"fact": "SMIC N+3 measures a 57 nm contacted gate pitch and a 32.5 nm minimum metal pitch, for 113.4 MTr/mm2, against 107.7 for TSMC N6", "source": "https://newsletter.semianalysis.com/p/steel-smic-n3-teardown"},
+    {"fact": "China's third National Integrated Circuit Fund raised 344 billion yuan, about $47 billion, in May 2024", "source": "https://asia.nikkei.com/spotlight/supply-chain/china-launches-47bn-chip-fund-to-counter-u.s.-restrictions"},
+    {"fact": "China has announced $43 billion for domestic EUV development; CSIS judges working EUV systems still out of reach", "source": "https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography"}
   ],
   "figures": [
     {
       "id": "node-roadmap",
       "type": "timeline",
-      "title": "TSMC logic roadmap beyond N2, as presented April 2026",
+      "title": "TSMC logic roadmap beyond N2, from TSMC's own announcements",
       "unit": "",
       "data": [
-        ["2027-01-01", "A16 volume production, Super Power Rail backside power"],
         ["2028-01-01", "N2U, 3-4% faster or 8-10% lower power than N2P"],
-        ["2028-01-01", "A14, second-generation nanosheet"],
-        ["2029-01-01", "A13, a 3% shrink of A14 for about 6% more density"],
-        ["2029-01-01", "A12, full node with NanoFlex Pro, no High-NA EUV"]
+        ["2028-01-01", "A14, up to 15% faster and more than 20% denser than N2"],
+        ["2029-01-01", "A13, a direct shrink of A14 for 6% area savings"],
+        ["2029-01-01", "A12, A14 platform with Super Power Rail backside power"]
       ],
-      "source": {"label": "TrendForce on TSMC's 2026 North America Technology Symposium", "url": "https://www.trendforce.com/news/2026/04/23/news-tsmc-unveils-latest-roadmap-a12-a13-set-for-2029-without-high-na-euv-a16-volume-production-delayed-to-2027/"}
+      "source": {"label": "TSMC, 2026 North America Technology Symposium", "url": "https://pr.tsmc.com/english/news/3302"}
     },
     {
       "id": "density-by-node",
       "type": "bars",
-      "title": "Transistor density, high-density standard cells, estimated from IEDM disclosures",
-      "unit": "MTr/mm2",
-      "data": [["Samsung SF2", 231], ["Intel 18A", 238], ["TSMC N2", 313]],
-      "source": {"label": "TechInsights estimates reported by Tom's Hardware; no foundry publishes a comparable figure", "url": "https://www.tomshardware.com/tech-industry/intels-18a-and-tsmcs-n2-process-nodes-compared-intel-is-faster-but-tsmc-is-denser"}
-    },
-    {
-      "id": "sram-bitcell",
-      "type": "bars",
-      "title": "TSMC high-density SRAM bit cell area by node",
-      "unit": "um2 (smaller is better)",
-      "data": [["N5", 0.021], ["N3", 0.021], ["N3E", 0.021], ["N2", 0.0175]],
-      "source": {"label": "TSMC IEDM disclosures, summarised on SemiWiki", "url": "https://semiwiki.com/forum/threads/sram-scaling-isnt-dead-after-all-%E2%80%94-tsmcs-2nm-process-tech-claims-major-improvements.21414/"}
+      "title": "TSMC's published density gain, node over node",
+      "unit": "x versus the baseline node",
+      "data": [["N2P logic vs N3E", 1.2], ["N2P chip vs N3E", 1.15], ["A16 chip vs N2P", 1.1]],
+      "source": {"label": "TSMC advanced technologies, HPC platform", "url": "https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech"}
     }
   ]
 }
@@ -98,9 +89,9 @@ A planar transistor puts the gate on one side of a flat channel and loses contro
 
 A nanosheet lays the channel back down, stacks two to four thin sheets and threads gate metal around each one. Width is continuous again, which TSMC sells as NanoFlex.
 
-N2 entered volume production in the fourth quarter of 2025, TSMC's first nanosheet node ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm)). Against N3E it buys 10 to 15 percent more speed at the same power, 25 to 30 percent less power at the same speed, or about 15 percent more density ([source](https://semiwiki.com/forum/threads/tsmc-quietly-begins-volume-production-of-2nm-class-chips.24283/)). Intel's RibbonFET shipped on 18A, and 18A-P adds another 9 percent performance at the same power ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)).
+N2 entered volume production in the fourth quarter of 2025, TSMC's first nanosheet node ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm)). TSMC rates the follow-on N2P at 18 percent more speed at the same power, 36 percent less power at the same speed, and 1.2 times the logic density of N3E ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech)). Intel's RibbonFET shipped on 18A, and 18A-P adds another 9 percent performance at the same power ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)).
 
-Cross-foundry density figures are estimates, not disclosures. TechInsights puts N2's high-density cells at 313 million transistors per square millimetre, against 238 for 18A and 231 for Samsung SF2 ([source](https://www.tomshardware.com/tech-industry/intels-18a-and-tsmcs-n2-process-nodes-compared-intel-is-faster-but-tsmc-is-denser)).
+Read those numbers as marketing until someone measures the silicon. Each foundry picks its own baseline, and none publishes a density figure you can set against a rival's.
 
 {{figure:density-by-node}}
 
@@ -108,19 +99,19 @@ Cross-foundry density figures are estimates, not disclosures. TechInsights puts 
 
 Power and signal normally share one copper stack, where wide power rails crowd out routing. Backside power builds a separate network on the wafer's thinned back.
 
-Intel shipped it first as PowerVia: on 18A, an 11 percent cut in routed area and a tenfold cut in dynamic voltage droop ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)). TSMC's Super Power Rail lands the network on the source and drain rather than a buried rail: harder, and worth more. Against N2P, A16 gives 8 to 10 percent more speed, 15 to 20 percent less power and 8 to 10 percent more density ([source](https://semiwiki.com/semiconductor-manufacturers/tsmc/370949-tsmc-a16-backside-power-at-vlsi-2026/)).
+Intel shipped it first as PowerVia: on 18A, an 11 percent cut in routed area and a tenfold cut in dynamic voltage droop ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)). TSMC's Super Power Rail lands the network on the source and drain rather than a buried rail, which is harder to build and worth more: against N2P, A16 gives 8 to 10 percent more speed, 15 to 20 percent less power and up to 1.10 times the chip density ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech)). SemiAnalysis puts the generic gain at 15 to 20 percent on power for high-performance designs ([source](https://newsletter.semianalysis.com/p/clash-of-the-foundries)).
 
 {{figure:node-roadmap}}
 
 ### CFET and what comes after
 
-imec expects complementary FETs to stack the n-type and p-type devices, side by side today, and roughly halve a CMOS pair's area beyond the 1 nm nodes ([source](https://www.imec-int.com/en/articles/imec-puts-complementary-fet-cfet-logic-technology-roadmap)).
+imec expects complementary FETs to stack the n-type and p-type devices, which sit side by side today, and roughly halve a CMOS pair's area beyond the 1 nm nodes ([source](https://www.imec-int.com/en/articles/imec-puts-complementary-fet-cfet-logic-technology-roadmap)).
 
 ## The back end of line
 
-Wiring is now as hard as the transistor. Copper needs a tantalum nitride barrier that eats most of a narrow trench, and below about 40 nm of width scattering pushes its resistivity far above the 1.7 microhm-cm bulk figure ([source](https://www.patsnap.com/resources/blog/articles/ruthenium-interconnects-at-sub-10nm-beol-nodes/)). Copper keeps the wide levels; two metals are taking the narrow ones:
+Wiring is now as hard as the transistor. Copper needs a barrier, a liner and a cap to stop it diffusing into the dielectric, and those layers eat a large share of the line once the critical metal pitches fall below 20 nm ([source](https://www.imec-int.com/en/articles/semi-damascene-metallization-inflection-point-back-end-line-processing)). Two metals are taking the narrow levels:
 
-- **Ruthenium** needs no barrier and beats copper below roughly 10 to 17 nm of line width ([source](https://www.patsnap.com/resources/blog/articles/ruthenium-interconnects-at-sub-10nm-beol-nodes/)).
+- **Ruthenium** runs without a barrier, which is why imec builds its semi-damascene scheme around it and has demonstrated ruthenium lines at a 16 nm pitch ([source](https://www.imec-int.com/en/press/imec-demonstrates-16nm-pitch-ru-lines-record-low-resistance-obtained-using-semi-damascene)).
 - **Molybdenum** conducts worse in bulk, 5.3 against copper's 1.68 microhm-cm, but in thin films beats tungsten by up to 30 percent with no barrier, moving it into contacts ([source](https://blog.entegris.com/molybdenums-role-in-ultra-fast-computing-the-metal-behind-the-speed)).
 
 ## Who makes it
@@ -129,35 +120,27 @@ Three companies build gate-all-around nodes with EUV: TSMC, Intel and Samsung. S
 
 Node names mean nothing physical. SMIC's N+3, sold as 5 nm-class, has a 32.5 nm minimum metal pitch, tighter than Intel 18A's 36 nm, and yields 113.4 MTr/mm2 against 107.7 for TSMC's N6 ([source](https://newsletter.semianalysis.com/p/steel-smic-n3-teardown)).
 
-AI accelerators sit a node behind: a reticle-limited die needs a mature process to yield. Blackwell uses TSMC 4NP ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)); Rubin moves to 3 nm ([source](https://www.isaiahresearch.com/Insight/Detail/107)).
+AI accelerators sit a node behind: a reticle-limited die needs a mature process to yield. Blackwell uses a custom TSMC 4NP ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)).
 
-SRAM is the scaling failure that hurts AI chips most. The high-density bit cell sat at 0.021 square micrometres from N5 through N3E, then fell to 0.0175 at N2 ([source](https://semiwiki.com/forum/threads/sram-scaling-isnt-dead-after-all-%E2%80%94-tsmcs-2nm-process-tech-claims-major-improvements.21414/)). Logic shrank; cache did not, which is much of why accelerators push memory off-die. See Memory and HBM.
-
-{{figure:sram-bitcell}}
-
-Cost has turned. An N2 wafer runs about $30,000 against roughly $20,000 at N3, which EE Times calls the first node transition where cost per transistor rises ([source](https://www.eetasia.com/tsmc-ends-era-of-cheap-transistors-with-5-10-price-hikes-for-advanced-nodes/)). TrendForce prices N3 higher, $25,000 to $27,000, and puts the N2 rise at 10 to 20 percent ([source](https://www.trendforce.com/news/2025/10/08/news-tsmc-2nm-reportedly-up-10-20-far-below-rumored-50-3-7nm-to-rise-single-digit-in-2026/)).
+SRAM is the scaling failure that hurts AI chips most. TSMC claims 22 percent more SRAM density from N3E to N2, but the gain comes from the periphery, not the bit cell ([source](https://newsletter.semianalysis.com/p/clash-of-the-foundries)). Logic shrank; cache did not, which is much of why accelerators push memory off-die. See Memory and HBM.
 
 ## The chokepoint
 
 The front end is not a single chokepoint the way EUV is. It is where every other chokepoint gets cashed in, and what is scarce is the recipe.
 
-China shows what that recipe costs without EUV. Reaching 7 nm with DUV takes about 34 lithography steps where EUV needs nine, SMIC's wafer cost runs 40 to 50 percent above TSMC's, and its 7 nm yields sit below 50 percent, with 5 nm projected at 30 to 40 against TSMC's 80 to 90 ([source](https://www.eetimes.com/china-invests-billions-to-close-critical-chokepoints/)). Money is not the constraint: the third National Integrated Circuit Fund holds 344 billion yuan, $47.5 billion ([source](https://www.eetimes.com/china-invests-billions-to-close-critical-chokepoints/)). Tools are:
-
-- **Immersion DUV.** Yuliangsheng, a Shanghai state firm, began building domestic immersion scanners in 2026 at single-digit volumes ([source](https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/)). SMIC has tested one since September 2025; it prints 28 nm in one exposure, 7 nm-class only by multipatterning ([source](https://www.trendforce.com/news/2026/07/28/news-china-reportedly-starts-mass-producing-immersion-duv-tools-smic-hua-hong-cxmt-deliveries-expected-this-year/)).
-- **EUV.** A prototype assembled from older ASML parts makes EUV light but no working chip yet ([source](https://www.trendforce.com/news/2025/12/18/news-china-reportedly-builds-euv-prototype-using-older-asml-components-eyes-2028-chipmaking/)).
-- **Timing.** Beijing wants chips off that prototype in 2028; 2030 is realistic ([source](https://www.trendforce.com/news/2025/12/18/news-china-reportedly-builds-euv-prototype-using-older-asml-components-eyes-2028-chipmaking/)). China has announced $43 billion for domestic EUV, which CSIS reads as out of reach ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).
+China shows what that recipe costs. Money is not the constraint: the third National Integrated Circuit Fund raised 344 billion yuan, about $47 billion, in May 2024 ([source](https://asia.nikkei.com/spotlight/supply-chain/china-launches-47bn-chip-fund-to-counter-u.s.-restrictions)). Tools are. A Shanghai state firm began building domestic immersion scanners in 2026, at single-digit annual volumes ([source](https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/)), which is enough to keep SMIC's DUV multipatterning lines running and nothing like enough to replace ASML. EUV is further off again: China has announced $43 billion for domestic development, and CSIS still reads working systems as out of reach ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).
 
 See Lithography and Geopolitics.
 
 ## Key evaluation criteria
 
 - **Electrostatic control** — how far the gate wraps the channel. Sets off-state leakage and the minimum supply voltage.
-- **Density** — transistors per square millimetre, comparable only within one library type.
-- **Interconnect resistance** — below 10 to 17 nm of line width the wire, not the transistor, sets the delay ([source](https://www.patsnap.com/resources/blog/articles/ruthenium-interconnects-at-sub-10nm-beol-nodes/)).
-- **Power delivery** — IR drop across the die. Backside power buys back area and cuts droop tenfold.
-- **SRAM scaling** — flat since N5. Sets how much cache an accelerator can afford.
-- **Cost per transistor** — rising at the leading edge for the first time.
+- **Density** — transistors per square millimetre, comparable only within one library type and one foundry's own baseline.
+- **Interconnect resistance** — below a 20 nm metal pitch the wire, not the transistor, sets the delay ([source](https://www.imec-int.com/en/articles/semi-damascene-metallization-inflection-point-back-end-line-processing)).
+- **Power delivery** — IR drop across the die. Backside power buys back area and cuts droop tenfold ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)).
+- **SRAM scaling** — the bit cell has stopped shrinking, which sets how much cache an accelerator can afford.
+- **Cost per transistor** — no foundry publishes wafer prices, so read the shrinking density gain per node as the proxy. We think this is the first era where cost per transistor rises.
 
 ## Takeaways
 
-Every gain since the FinFET era has been bought with process steps and new materials, not geometry. Three companies can run a 2 nm-class flow; only TSMC runs it at scale for merchant customers. SRAM's refusal to shrink is why accelerators keep their memory off the logic die. China can reach 5 nm-class geometry without EUV, at half the yield and half again the cost: a business only a state can fund ([source](https://www.eetimes.com/china-invests-billions-to-close-critical-chokepoints/)).
+Every gain since the FinFET era has been bought with process steps and new materials, not geometry. TSMC's own numbers show the density gain per node step falling from 1.2 times at N2P to about 1.1 at A16 ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech)). Three companies can run a 2 nm-class flow, and only TSMC runs it at scale for merchant customers. SRAM's refusal to shrink is why accelerators keep their memory off the logic die. China can reach 5 nm-class geometry without EUV, and CSIS still reads working EUV systems as out of reach, which is the gap the export controls defend ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).

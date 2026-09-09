@@ -24,7 +24,7 @@
       {"code": "IL", "note": "Annapurna Labs, the AWS design house behind Trainium and Graviton"},
       {"code": "IN", "note": "Nearly 20% of the world's chip design engineers, on the Indian government's count"}
     ],
-    "chinaStatus": "Can design competitive accelerators. Cannot yet run a complete leading-edge digital flow on domestic EDA tools; Empyrean is the strongest local vendor and sits in the global second tier. Access to US and German tools was cut off for five weeks in 2025 and restored.",
+    "chinaStatus": "Can design competitive accelerators. Cannot yet run a complete leading-edge digital flow on domestic EDA tools, and CSET judges that Chinese EDA firms cannot support designs at those nodes. Access to US and German tools was cut off for five weeks in 2025 and restored.",
     "usStatus": "Owns the two largest EDA vendors and the dominant ASIC design houses, and controls Siemens EDA's US-origin technology through export licensing. This is the fastest-acting lever in the entire chain.",
     "costSignal": "A 3 nm photomask set runs about $40M, and startups have taken a 7 nm design all the way to tape-out for $50-75M",
     "substitution": {"years": "5-10", "why": "Replacing one point tool is feasible. Replacing a signed-off flow means rebuilding foundry-certified reference flows, timing and extraction models, and twenty years of accumulated corner cases."}
@@ -32,10 +32,11 @@
   "keyFacts": [
     {"fact": "The EDA and design IP market was about $18B in 2025, with Synopsys, Cadence and Siemens EDA holding over 85%", "source": "https://newsletter.semianalysis.com/p/eda-market-primer"},
     {"fact": "A photomask set costs over $1M at 28 nm, over $10M at 7 nm and about $40M at 3 nm; startups have built leading-edge 7 nm chips end to end for $50-75M", "source": "https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor"},
-    {"fact": "BIS restricted EDA sales to China by letter received 29 May 2025 and rescinded it on 2 July 2025", "source": "https://www.sec.gov/Archives/edgar/data/883241/000119312525155294/d80081d8k.htm"},
+    {"fact": "BIS restricted EDA sales to China by letters received 23 and 29 May 2025 and rescinded them on 2 July 2025", "source": "https://www.sec.gov/Archives/edgar/data/813672/000081367225000093/cdns-20250702.htm"},
     {"fact": "Arm reported $4.92B revenue and $2.61B of royalty revenue in fiscal 2026", "source": "https://newsroom.arm.com/news/arm-q4-fye26-results"},
     {"fact": "Broadcom booked $16.7B of AI semiconductor revenue in Q3 FY2026, up 221% year on year", "source": "https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm"},
-    {"fact": "Broadcom and Marvell together hold roughly 95% of the custom AI ASIC co-design market", "source": "https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia"},
+    {"fact": "OpenAI and Broadcom announced a collaboration to deploy 10 gigawatts of OpenAI-designed AI accelerators", "source": "https://investors.broadcom.com/news-releases/news-release-details/openai-and-broadcom-announce-strategic-collaboration-deploy-10"},
+    {"fact": "Broadcom's 3.5D XDSiP packages more than 6,000 mm2 of silicon and 12 HBM stacks in one device", "source": "https://docs.broadcom.com/doc/3-5d-xdsip-platform-technology"},
     {"fact": "Alchip reported $992M of revenue in 2025", "source": "https://www.alchip.com/en/Investors/financials/"},
     {"fact": "UCIe 3.0 adds 48 GT/s and 64 GT/s die-to-die data rates", "source": "https://www.uciexpress.org/specifications"},
     {"fact": "India is home to nearly 20% of the world's chip design engineers", "source": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2148393"}
@@ -124,9 +125,9 @@ In late May 2025 the Bureau of Industry and Security told the EDA vendors to sto
 
 The lever works, and needs no allied coordination and no lead time. It is also expensive: it speeds the substitution it was meant to prevent, and Synopsys's China revenue fell from 16% of the total in fiscal 2024 to 12% in fiscal 2025 ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
 
-China's answer is real but partial. Empyrean holds about half the domestic market among more than 100 Chinese EDA firms, and analysts place it in the global second tier ([source](https://www.scmp.com/tech/article/3315237/chinas-top-player-empyrean-eyes-opportunities-us-chip-curbs-design-software)). None has a certified, complete digital flow for a 5 nm-class accelerator, and the gap is foundry-validated corner cases, not features.
+China's answer is real but partial. CSET puts it flatly: Chinese designers rely on US tools for all their chip designs, US firms are the only ones selling the full-spectrum software a leading-edge chip needs, and Chinese EDA firms cannot yet support designs at those nodes ([source](https://cset.georgetown.edu/article/semiconductors-more-u-s-leverage-more-bad-news-for-beijing-part-3/)). No domestic vendor has a certified, complete digital flow for a 5 nm-class accelerator, and the gap is foundry-validated corner cases, not features.
 
-China can architect an accelerator: Huawei's Ascend 910C targets 600,000 units in 2026 and Cambricon plans to triple output to 500,000 chips ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)). It cannot design one at the leading edge without foreign tools, or build what it designs without foreign equipment.
+China can architect an accelerator. It cannot design one at the leading edge without foreign tools, or build what it designs without foreign equipment: SMIC's 7 nm capacity is tight enough that Huawei has to choose between its phone chips and its AI chips ([source](https://cset.georgetown.edu/publication/pushing-the-limits-huaweis-ai-chip-tests-u-s-export-controls/)).
 
 ## Key evaluation criteria
 
