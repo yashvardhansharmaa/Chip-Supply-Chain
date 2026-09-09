@@ -54,7 +54,7 @@ module.exports = function (ctx) {
     const prev = steps[i - 1];
     const next = steps[i + 1];
     const stage = si >= 0 ? `Stage ${si + 1} of ${stages.length}` : '';
-    return `<li class="wk-step" id="${esc(stepId(ch.id))}" data-title="${esc(ch.title)}">
+    return `<li class="wk-step" id="${esc(stepId(ch.id))}" data-title="${esc(ch.title)}" data-specimen="${esc((ch.meta && ch.meta.specimen) || '')}" data-caption="${esc((ch.meta && ch.meta.specimenCaption) || '')}">
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">${pad(ch.number)}</span></div>
 <div class="wk-block">
 <p class="wk-where"><span class="label">Chapter ${pad(ch.number)}</span>${stage ? `<span class="label wk-stage">${esc(stage)}</span>` : ''}</p>

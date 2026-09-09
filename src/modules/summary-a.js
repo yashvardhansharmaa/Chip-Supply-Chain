@@ -39,7 +39,7 @@
 
   function bind() {
     if (bound) return;
-    root = $('.view[data-view="summary-a"] .sa');
+    root = $('.view:not([hidden]) .sa') || $('.sa');
     if (!root) return;
     map = $('.sa-map', root);
     bound = true;
@@ -70,4 +70,5 @@
   }
 
   CP.register('summary-a', { stage: false, activate: bind });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bind); else bind();
 })();
