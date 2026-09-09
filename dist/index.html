@@ -903,7 +903,9 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
   color: var(--muted); margin-left: 10px; vertical-align: 6px;
 }
 .timeline .tl-e { padding: 11px 0 12px; scroll-margin-top: calc(var(--masthead) + var(--tl-h, 0px) + 20px); }
-.timeline .tl-e.is-target { background: var(--accent-soft); box-shadow: inset 2px 0 0 var(--accent); }
+/* the entry you jumped to, marked until you pick another; the negative margin keeps the grid in line */
+.timeline .tl-e.is-target { background: var(--accent-soft); box-shadow: inset 2px 0 0 var(--accent); padding-left: 12px; margin-left: -12px; }
+.timeline .tl-body { line-height: 1.3; } /* the "More" button sits on this line box, so keep it tight */
 .timeline .cat { display: block; margin-bottom: 3px; }
 .timeline .tl-e h4 { font-size: 16.5px; line-height: 1.24; margin-bottom: 3px; }
 .timeline .tl-gist { font-family: var(--font-body); font-size: 15.5px; line-height: 1.45; color: var(--ink-2); margin: 0 0 5px; max-width: 76ch; }
@@ -8424,8 +8426,8 @@ PC.register('wafer', function (p) {
       if (!svg || !items.length) return;
       var mast = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--masthead')) || 56;
       var probe = mast + (window.innerWidth >= 900 ? svg.getBoundingClientRect().height : 0) + 26;
-      var at = 0;
-      for (var i = 0; i < items.length; i++) { if (items[i].getBoundingClientRect().top <= probe) at = i; else break; }
+      var at = 0; // the first entry still crossing the reading line: the one the reader is on
+      for (var i = 0; i < items.length; i++) { at = i; if (items[i].getBoundingClientRect().bottom > probe) break; }
       if (at === this.at) return;
       this.at = at;
       var dots = svg.querySelectorAll('.tl-dot'), ring = svg.querySelector('.tl-ring'), d = dots[at];
