@@ -189,7 +189,7 @@
         }
         Sections.update();
       }
-      document.title = v === 'stack' ? 'Chokepoints' : 'Chokepoints — ' + { landscape: 'Landscape', suppliers: 'Suppliers', geopolitics: 'Geopolitics', sources: 'Sources' }[v];
+      document.title = v === 'stack' ? 'Chokepoints' : 'Chokepoints · ' + { landscape: 'Landscape', suppliers: 'Suppliers', geopolitics: 'Geopolitics', sources: 'Sources' }[v];
     }
   };
 
@@ -222,7 +222,7 @@
         this.currentId = id;
         var num = best.getAttribute('data-number');
         Stage.show(best.getAttribute('data-specimen'), null, best.getAttribute('data-caption') ? esc(best.getAttribute('data-caption')) : null,
-          num ? 'Specimen <b>' + num + '</b> — ' + esc(best.getAttribute('data-title') || '') : 'Specimen <b>00</b> — the whole chip');
+          num ? 'Specimen <b>' + num + '</b> · ' + esc(best.getAttribute('data-title') || '') : 'Specimen <b>00</b> · the whole chip');
         var seen = true;
         this.railItems.forEach(function (li) {
           var on = li.getAttribute('data-id') === id;
@@ -290,7 +290,7 @@
     showStage: function (c) {
       var lay = c.layout || null, hb = (c.memory && c.memory.stacks) || 0;
       var cap = lay && lay.waferScale ? 'Wafer-scale: one ' + esc(c.name) + ' is a whole 300 mm wafer.' : esc(c.name) + ': ' + ((c.die && c.die.count) || 1) + ' logic die' + (((c.die && c.die.count) || 1) > 1 ? 's' : '') + (hb ? ' and ' + hb + ' ' + esc((c.memory && c.memory.type) || 'HBM') + ' stacks' : '') + ' on ' + esc((c.package && c.package.type) || 'the package') + '.';
-      Stage.show('package', lay ? { layout: lay } : null, cap, 'Landscape — <b>' + esc(c.name) + '</b>');
+      Stage.show('package', lay ? { layout: lay } : null, cap, 'Landscape · <b>' + esc(c.name) + '</b>');
     },
     buildCompare: function () {
       var cols = [['Chip', function (c) { return '<b>' + esc(c.name) + '</b> <span class="cc">' + esc(c.vendor) + '</span>'; }],
@@ -381,7 +381,7 @@
     built: false, cat: null,
     activate: function () {
       if (!this.built) this.build();
-      Stage.show('globe', null, null, 'Geopolitics — <b>the map</b>');
+      Stage.show('globe', null, null, 'Geopolitics · <b>the map</b>');
       var sec = $('[data-view="geopolitics"]');
       if (sec && sec.getAttribute('data-caption')) $('#stage-caption').textContent = sec.getAttribute('data-caption');
     },
@@ -429,8 +429,9 @@
     // warm the cache for the next chapters while idle
     var names = $$('[data-view="stack"] [data-specimen]').map(function (el) { return el.getAttribute('data-specimen'); });
     var i = 0;
-    var warm = function () { if (i >= names.length) return; try { Stage.build(names[i++], null); } catch (e) { } (window.requestIdleCallback || setTimeout)(warm, 200); };
-    (window.requestIdleCallback || setTimeout)(warm, 1200);
+    var idle = window.requestIdleCallback ? function (f, ms) { requestIdleCallback(f, { timeout: ms * 3 }); } : function (f, ms) { setTimeout(f, ms); };
+    var warm = function () { if (i >= names.length) return; try { Stage.build(names[i++], null); } catch (e) { } idle(warm, 250); };
+    idle(warm, 1200);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();

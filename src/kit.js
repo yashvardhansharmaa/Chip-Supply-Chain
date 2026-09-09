@@ -53,18 +53,20 @@
   PC.cylinder = function (o) {
     var r = o.r, h = o.h, ri = o.rIn || 0, caps = o.caps !== false, w = tone(o);
     var parts = [];
-    var nSide = o.n || area(2 * Math.PI * r * h);
+    // when n is given, split it across side, inner wall and caps by surface area
+    var aSide = 2 * Math.PI * r * h, aIn = ri > 0 ? 2 * Math.PI * ri * h : 0, aCap = caps ? 2 * Math.PI * (r * r - ri * ri) : 0, aTot = aSide + aIn + aCap;
+    var nSide = o.n ? Math.max(4, Math.round(o.n * aSide / aTot)) : area(aSide);
     var side = alloc(nSide);
     for (var i = 0; i < nSide; i++) { var th = rnd() * Math.PI * 2; put(side, i, r * Math.cos(th), (rnd() - 0.5) * h, r * Math.sin(th), w); }
     parts.push(side);
     if (ri > 0) {
-      var nIn = o.n ? Math.round(o.n * ri / r) : area(2 * Math.PI * ri * h);
+      var nIn = o.n ? Math.max(4, Math.round(o.n * aIn / aTot)) : area(aIn);
       var inner = alloc(nIn);
       for (i = 0; i < nIn; i++) { th = rnd() * Math.PI * 2; put(inner, i, ri * Math.cos(th), (rnd() - 0.5) * h, ri * Math.sin(th), w); }
       parts.push(inner);
     }
     if (caps) {
-      var capN = o.n ? Math.round(o.n * (r * r - ri * ri) / (2 * r * h)) : undefined;
+      var capN = o.n ? Math.max(4, Math.round(o.n * aCap / aTot / 2)) : undefined;
       var top = PC.disc({ r: r, rIn: ri, n: capN, tone: w });
       parts.push(PC.T(top, { pos: [0, h / 2, 0] }));
       parts.push(PC.T(PC.disc({ r: r, rIn: ri, n: capN, tone: w }), { pos: [0, -h / 2, 0] }));

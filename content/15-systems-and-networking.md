@@ -136,7 +136,7 @@ Optical module assembly is a fourth case, and a different kind. It is concentrat
 
 ## Key evaluation criteria
 
-- **Scale-up domain size** — how many accelerators share one coherent fabric. 72 for NVL72 and Helios, up to 1,024 in the UALink spec, 9,216 for an Ironwood superpod ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)).
+- **Scale-up domain size** — how many accelerators share one coherent fabric. Up to 1,024 in the UALink spec ([source](https://www.sdxcentral.com/news/ualink-consortium-releases-200g-10-specification-for-ai-accelerator-interconnects/)) and 9,216 for an Ironwood superpod ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)).
 - **Bandwidth per accelerator** — the number that limits tensor parallelism. NVLink 6 is 3,600 GB/s ([source](https://www.nvidia.com/en-us/data-center/nvlink/)).
 - **Picojoules per bit** — optics dominate network power at 800G and above; co-packaging is worth roughly 3.5x ([source](https://www.globenewswire.com/news-release/2025/10/08/3163429/19933/en/Broadcom-Announces-Tomahawk-6-Davisson-the-Industry-s-First-102-4-Tbps-Ethernet-Switch-with-Co-Packaged-Optics.html)).
 - **Serviceability** — co-packaged optics trade field-replaceable modules for a switch you must return whole when a channel fails.
