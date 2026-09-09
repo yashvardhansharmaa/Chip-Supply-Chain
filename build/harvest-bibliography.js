@@ -225,16 +225,19 @@ const JUNK_TITLE = new RegExp(`(${WALL_TITLE.source})|(${GENERIC_TITLE.source})`
 // replaced a hand-written pattern list to avoid.
 function metaTag(html, key) {
   const k = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const attr = `(?:name|property|itemprop)\\s*=\\s*(["'])${k}\\1`;
-  const content = `content\\s*=\\s*(["'])([\\s\\S]*?)\\2`;
+  // Named groups keep the two orderings (attr-then-content, content-then-attr)
+  // from renumbering the backreferences that close each quote.
+  const attr = `(?:name|property|itemprop)\\s*=\\s*(?<aq>["'])${k}\\k<aq>`;
+  const content = `content\\s*=\\s*(?<cq>["'])(?<val>[\\s\\S]*?)\\k<cq>`;
   for (const re of [
     new RegExp(`<meta[^>]*?${attr}[^>]*?${content}[^>]*>`, 'i'),
     new RegExp(`<meta[^>]*?${content}[^>]*?${attr}[^>]*>`, 'i'),
   ]) {
     const m = html.match(re);
-    if (m) {
-      const v = decodeEntities((m[3] || m[2] || '').trim());
-      if (v && !/^%%.*%%$/.test(v)) return v;
+    if (m && m.groups) {
+      const v = decodeEntities((m.groups.val || '').trim());
+      // Some sites ship an unrendered template placeholder here.
+      if (v && !/^%%.*%%$/.test(v) && !/^\{\{.*\}\}$/.test(v)) return v;
     }
   }
   return null;
@@ -816,6 +819,9 @@ async function main() {
     const html = bodyPath(url, '.html');
     try {
       if (fs.existsSync(pdf)) {
+        // Re-reading a PDF costs a Python process and, for a 15 MB annual
+        // report, real time. Only do it when the last read produced nothing.
+        if (rec.extracted && rec.extracted.via === 'pymupdf' && rec.extracted.title) continue;
         rec.extracted = { kind: 'pdf', ...extractPdf(url, fs.readFileSync(pdf)) };
       } else if (fs.existsSync(html)) {
         rec.extracted = { kind: 'html', ...extractFromHtml(fs.readFileSync(html, 'utf8')) };
