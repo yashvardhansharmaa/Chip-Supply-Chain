@@ -52,7 +52,7 @@
       "type": "bars",
       "title": "Top 10 OSAT revenue share, 2024",
       "unit": "%",
-      "data": [["ASE", 44.6], ["Amkor", 15.2], ["JCET", 12], ["Tongfu", 8], ["Powertech", 5.5], ["Huatian", 4.8], ["WiseRoad", 3.7], ["Hana Micron", 2.2], ["KYEC", 2.2], ["ChipMOS", 1.7]],
+      "data": [["ASE", 44.6], ["Amkor", 15.2], ["JCET", 12], ["Tongfu", 8], ["Powertech", 5.5], ["Huatian (HT-Tech)", 4.8], ["WiseRoad", 3.7], ["Hana Micron", 2.2], ["KYEC", 2.2], ["ChipMOS", 1.7]],
       "source": {"label": "TrendForce", "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html"}
     },
     {
@@ -68,7 +68,7 @@
 ---
 # Test and Assembly
 
-Everything before this chapter makes dies. The back end decides which of them are allowed into a package, and by 2026 that judgement is worth more than the packaging. A finished AI accelerator carries two reticle-sized logic dies and eight or more HBM stacks that were each expensive before assembly, and one bad die condemns all of them. Advantest makes the point plainly: among the 400 to 600 steps in semiconductor manufacturing, test is the only one that handles electricity ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf)).
+Everything before this chapter makes dies. The back end decides which of them are allowed into a package, and by 2026 that judgement is worth more than the packaging. A finished AI accelerator carries several reticle-sized logic dies and a ring of high-bandwidth memory stacks, each of them expensive before assembly, and one bad die condemns all of them. Advantest makes the point plainly: among the 400 to 600 steps in semiconductor manufacturing, test is the only one that handles electricity ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf)).
 
 ## How it works
 
@@ -84,7 +84,7 @@ Burn-in is the blunt instrument for that: run the part hot and at voltage for ho
 
 ### Wafer sort and known-good die
 
-Probe cards are the hard part. For HBM the card has to contact a stack of eight, twelve or even sixteen DRAM dies assembled with advanced packaging, at speed and with signal integrity intact ([source](https://www.sec.gov/Archives/edgar/data/1039399/000103939926000009/form-20251227.htm)). For a reticle-sized logic die the card must hold thousands of needles within microns of a single plane across an area the size of a postage stamp, survive hundreds of thousands of touchdowns, and do it at temperature. Cards are custom to the device, so each new part means a new card and a new qualification.
+Probe cards are the hard part. For HBM the card has to contact a stack of eight, twelve or even sixteen DRAM dies assembled with advanced packaging, at speed and with signal integrity intact ([source](https://www.sec.gov/Archives/edgar/data/1039399/000103939926000009/form-20251227.htm)). For a reticle-sized logic die the card must hold every needle in the same plane across the whole die, survive repeated touchdowns without drifting, and do it at temperature. Cards are custom to the device, so each new part means a new card and a new qualification.
 
 Wafer-level burn-in is the newer answer. Aehr's lead AI production customer is shifting burn-in from system level to entirely wafer level for accelerators used in training and inference, and each FOX-XP system processes nine 300 mm wafers at once ([source](https://www.aehr.com/2026/07/aehr-test-systems-reports-fiscal-2026-fourth-quarter-and-full-year-financial-results-with-record-quarterly-bookings-and-100-million-effective-backlog/)) ([source](https://www.aehr.com/2026/08/aehr-receives-22-million-follow-on-order-for-ai-processor-wafer-level-burn-in-systems/)).
 
@@ -108,7 +108,7 @@ Bonding is where the money is moving. Kulicke and Soffa did US$654.1 million in 
 
 ## The back end's geography
 
-Outsourced assembly and test is a Taiwanese business with a large Chinese challenger. The top ten OSATs billed US$41.56 billion in 2024, up 3%, led by ASE at 44.6% and US$18.54 billion, Amkor at 15.2%, JCET at 12%, Tongfu at 8% and Powertech at 5.5% ([source](https://www.trendforce.com/presscenter/news/20250513-12577.html)). Four of the ten are Chinese. Beyond the named firms, Malaysia handles about 13% of global assembly, test and packaging and the Philippines about 10% ([source](https://www.z2data.com/insights/which-countries-does-the-world-rely-on-for-chip-assembly-packaging)).
+Outsourced assembly and test is a Taiwanese business with a large Chinese challenger. The top ten OSATs billed US$41.56 billion in 2024, up 3%, led by ASE at 44.6% and US$18.54 billion, Amkor at 15.2%, JCET at 12%, Tongfu at 8% and Powertech at 5.5% ([source](https://www.trendforce.com/presscenter/news/20250513-12577.html)). Four of the ten are Chinese. Beyond the named firms, a December 2025 supply-chain analysis puts Malaysia at about 13% of global assembly, test and packaging and the Philippines at about 10% ([source](https://www.z2data.com/insights/which-countries-does-the-world-rely-on-for-chip-assembly-packaging)).
 
 The money is moving fast. ASE, Powertech and KYEC together plan roughly NT$370 billion of capital spending in 2026, with ASE raising its budget from US$7 billion to US$8.5 billion and Powertech and KYEC each lifting theirs to NT$50 billion ([source](https://www.trendforce.com/news/2026/05/05/news-ase-powertech-kyec-capex-may-hit-nt370b-this-year-as-ai-drives-record-osat-investment/)). Powertech is putting NT$70 billion into fan-out panel-level packaging on 510 by 515 mm panels, yielding 45 to 90 units per panel and scaling from 1,000 panels a month to 5,000 by 2028, with 2027 capacity already booked by AMD and Broadcom ([source](https://www.trendforce.com/news/2026/08/31/news-powertech-plans-nt70b-push-for-worlds-first-panel-level-ai-chip-packaging-in-2027-potentially-ahead-of-tsmc/)). Amkor, at US$6.71 billion of revenue in 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0001047127/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json)), broke ground on a US$7 billion Arizona packaging plant in October 2025 ([source](https://www.trendforce.com/news/2025/10/14/news-amkor-breaks-ground-on-usd-7-billion-advanced-semiconductor-packaging-facility-in-arizona/)) and signed a ten-year Arizona partnership with TSMC in June 2026 ([source](https://www.trendforce.com/news/2026/06/17/news-tsmc-amkor-forge-10-year-arizona-advanced-packaging-partnership-to-complete-the-u-s-chip-supply-chain/)).
 
@@ -126,7 +126,7 @@ The back end is also the part of the chain China is closest to owning. Chinese O
 
 - **Test coverage** is what you actually buy. Higher coverage catches more latent failures before they reach an irreplaceable package.
 - **Test time per part** sets throughput and cost. Large dies, HBM stacks and chiplets all push it up, which is why tester revenue grew faster than unit volumes in 2025.
-- **Probe card planarity and life** decide sort economics. Thousands of needles must stay coplanar within microns across hundreds of thousands of touchdowns.
+- **Probe card planarity and life** decide sort economics. Every needle has to stay coplanar over a full die and hold that alignment across a long touchdown count.
 - **Thermal control** matters more every generation. A kilowatt-class accelerator has to be held at temperature in the socket while it is tested at speed.
 - **Capacity and geography** are the practical constraint. Taiwan, China, Malaysia and the Philippines hold most of the floor space, and new capacity takes years.
 
