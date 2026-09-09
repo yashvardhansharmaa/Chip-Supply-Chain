@@ -69,7 +69,7 @@
 ---
 # Deposition and Etch
 
-Applied Materials and Lam Research, the two largest suppliers of deposition and etch tools, booked $28.4 billion and $23.2 billion of revenue in their latest fiscal years ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0000006951/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json)) ([source](https://www.sec.gov/Archives/edgar/data/707549/000070754926000033/lrcx_exhibitx991xq4x2026.htm)).
+Applied Materials and Lam Research, the two largest deposition and etch suppliers, booked $28.4 billion and $23.2 billion of revenue in their latest fiscal years ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0000006951/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json)) ([source](https://www.sec.gov/Archives/edgar/data/707549/000070754926000033/lrcx_exhibitx991xq4x2026.htm)).
 
 ## How it works
 
@@ -77,7 +77,7 @@ If lithography is the printing, this is the building. A chip is built like a lay
 
 CSET puts a single chip at more than 1,000 process steps, with the part-finished product crossing international borders 70 or more times ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 
-Most of it happens in a vacuum chamber with a plasma in it: a radio-frequency field strips electrons off a process gas, and the ions and radicals do the chemistry. Change the gas, pressure, power and temperature and the same hardware adds material or removes it. That is why export controls here are written as process specifications, not as bans on machines.
+Most of it happens in a vacuum chamber: a radio-frequency field strips electrons off a process gas, and the ions and radicals do the chemistry. Change the gas, pressure, power and temperature and the same hardware adds material or removes it. That is why export controls here are written as process specifications, not as bans on machines.
 
 ## Variants and trade-offs
 
@@ -148,4 +148,4 @@ This is a real chokepoint but a softer one than lithography. Three or four credi
 
 ## Takeaways
 
-Deposition and etch are the volume business of a fab: over a thousand steps per wafer, four American, Japanese and Dutch firms taking most of the money, and no monopoly of the kind ASML holds in lithography. The AI roadmap raises difficulty faster than tool count, because gate-all-around, HBM and backside power want better selectivity and deeper holes, not more chambers. China has closed the gap fastest here and slowest in ALD, which is where the next two logic nodes are won.
+Deposition and etch are the volume business of a fab: over a thousand steps per wafer, four American, Japanese and Dutch firms taking most of the money, and no monopoly like ASML's in lithography. The AI roadmap raises difficulty faster than tool count, because gate-all-around, HBM and backside power want better selectivity and deeper holes, not more chambers. China has closed the gap fastest here and slowest in ALD, which is where the next two logic nodes are won.

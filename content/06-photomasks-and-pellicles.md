@@ -121,7 +121,7 @@ China has mask capability at trailing nodes and nothing at the leading edge. SMI
 
 ## The chokepoint
 
-This stage scores a 5 for the reason lithography does, on a fraction of the money. Two firms supply the blanks, one certifies them, and neither business is big enough to attract a funded entrant. Nobody builds a $259 million business from scratch to serve four customers with a two-decade defect curve ahead ([source](https://www.dri.co.jp/auto/report/qyr/250206-euv-mask-blanks-global-market-share-and.html)).
+This stage scores a 5 for the reason lithography does, on a fraction of the money. Two firms supply the blanks, one certifies them, and neither business is big enough to attract a funded entrant. Nobody builds a $259 million business from scratch to serve four customers with a two-decade defect-learning curve ahead ([source](https://www.dri.co.jp/auto/report/qyr/250206-euv-mask-blanks-global-market-share-and.html)).
 
 Pellicles are the open sore. A decade on, no membrane is transparent, tough and long-lived at once, and running bare pushes the cost into mask spend and scanner downtime. We think a production carbon nanotube pellicle would move EUV cost per wafer more than any scanner improvement.
 
