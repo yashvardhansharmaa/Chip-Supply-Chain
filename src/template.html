@@ -79,12 +79,21 @@
     <section class="view column" data-view="landscape" hidden data-specimen="package">
       <div class="view-head">
         <h2>AI Chips</h2>
-        <p class="dek">The chips that train and run AI models in 2026, with the foundry, process node, memory supplier and packaging plant behind each one. Pick one and the specimen beside the text redraws to that chip's real die and memory layout.</p>
+        <p class="dek">The chips that train and run AI models in 2026, with the foundry, process node, memory supplier and packaging plant behind each one. Pick two to four and the page sets their specs side by side and draws their packages at one scale. Click a package to redraw the specimen beside the text.</p>
       </div>
-      <div id="picker" class="picker" role="group" aria-label="Choose a chip"></div>
-      <div id="spec" class="spec" aria-live="polite"></div>
-      <h3 class="label" style="margin: 30px 0 10px">All chips side by side</h3>
-      <div class="compare-wrap"><table class="compare" id="compare"></table></div>
+      <div id="picker" class="picker cx-picker" role="group" aria-label="Choose two to four chips to compare"></div>
+      <div class="cx-bar">
+        <span class="count cx-count" id="cx-count" aria-live="polite"></span>
+        <button type="button" class="btn ghost cx-clear" id="cx-clear">Clear</button>
+      </div>
+      <h3 class="label cx-h">Packages at one scale</h3>
+      <p class="cx-sub">Every plan is drawn at the same millimetres per pixel, so a bigger package looks bigger. Click one to focus that chip.</p>
+      <div class="cx-key" id="cx-key"></div>
+      <div id="cx-plans" class="cx-plans"></div>
+      <h3 class="label cx-h">Specs side by side</h3>
+      <div id="cx-table-wrap" class="cx-tablewrap"><table class="cx-table" id="cx-table"></table></div>
+      <div id="cx-foot" class="cx-foot"></div>
+      <div id="cx-notes" class="cx-notes"></div>
     </section>
 
     <section class="view column wide" data-view="suppliers" hidden>
