@@ -1,7 +1,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Chokepoints</title>
-<meta name="description" content="A deep dive on the AI chip supply chain: every stage from sand to a rack in a data center, with a 3D specimen of each stage beside the text.">
+<meta name="description" content="The AI chip supply chain, stage by stage: who makes each part, how concentrated each stage is, and what a substitute would cost. Every stage has a 3D specimen beside the text.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&display=swap">
@@ -47,7 +47,7 @@
       <div class="hero" data-specimen="package" data-caption="An AI accelerator package: two reticle-sized logic dies and eight HBM stacks on a silicon interposer, on a build-up substrate. Highlighted: the HBM.">
         <p class="eyebrow"><i></i><span class="label">A component-level map of the AI chip supply chain</span><span class="sep">/</span><span class="label">September 2026</span></p>
         <h1 class="thesis">{{THESIS}}</h1>
-        <p class="dek">Chokepoints walks the chain one stage at a time and scores each one: what the stage does, who can actually do it, what the tool costs, and how long a substitute would take to build. Every number links to its source.</p>
+        <p class="dek">Eighteen stages, one chapter each, scored on how few firms can do the work. What the stage does, who can do it, what it costs, and how long a substitute would take to build. Every number links to its source.</p>
         <div class="claims">{{CLAIMS}}</div>
         <p class="credits">{{CREDITS}}</p>
         <div class="scroll-hint"><svg viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1v15M1.5 10.5 7 16l5.5-5.5"/></svg><span>Scroll for the stack</span></div>
@@ -67,7 +67,7 @@
     <section class="view column" data-view="landscape" hidden data-specimen="package">
       <div class="view-head">
         <h2>AI Chips</h2>
-        <p class="dek">The accelerators that matter in 2026, with the supply chain behind each one: which foundry, which node, whose memory, which packaging line. Pick a chip; the package beside the text follows its real die and HBM layout.</p>
+        <p class="dek">The accelerators that matter in 2026, with the foundry, node, memory supplier and packaging line behind each one. Pick a chip and the package beside the text follows its real die and HBM layout.</p>
       </div>
       <div id="picker" class="picker" role="group" aria-label="Choose a chip"></div>
       <div id="spec" class="spec" aria-live="polite"></div>
@@ -108,7 +108,7 @@
     <section class="view column wide" data-view="briefing" hidden>
       <div class="view-head">
         <h2>Summary</h2>
-        <p class="dek">The whole chain in one sitting: for every stage, the plain-language explanation, the conclusions, the chokepoint score and who leads. Read it before you regulate the chain, invest in it, or build on it. Each card links to the full chapter.</p>
+        <p class="dek">The whole chain in one sitting: for every stage, the plain-language explanation, the conclusions, the chokepoint score and who leads. Each card links to the full chapter.</p>
       </div>
       <div class="briefing">{{BRIEFING}}</div>
     </section>
@@ -119,7 +119,7 @@
         <p class="dek">{{CONTROLS_DEK}}</p>
       </div>
       <h3 class="label" style="margin: 10px 0 6px">Threshold map</h3>
-      <p class="controls-intro">Every quantitative line that decides whether a chip or a tool needs a licence, as data rather than prose: the parameter, the value, where it applies, its status and the rule that set it. Filter by regime.</p>
+      <p class="controls-intro">Every quantitative line that decides whether a chip or a tool needs a licence: the parameter, the value, where it applies, its status and the rule that set it. Filter by regime.</p>
       <div id="controls-chips" class="chips" role="group" aria-label="Filter by regime"></div>
       <div class="sup-toolbar"><span class="count" id="controls-count"></span></div>
       <div class="sup-wrap"><table class="sup" id="controls-table"></table></div>

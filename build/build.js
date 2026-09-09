@@ -292,7 +292,7 @@ ${pb.box}
 <div class="prose">${pb.html}${sources}</div>
 </article>`;
 }
-const chaptersHTML = chapters.length ? chapters.map(chapterHTML).join('\n') : `<article class="chapter" id="placeholder" data-specimen="wafer" data-number="01" data-title="Placeholder"><header class="chapter-head"><div class="chapter-num">01</div><h2 class="chapter-title">Chapters are being written</h2></header><div class="prose"><p>Content agents have not delivered yet. This is a shell build.</p></div></article>`;
+const chaptersHTML = chapters.length ? chapters.map(chapterHTML).join('\n') : `<article class="chapter" id="placeholder" data-specimen="wafer" data-number="01" data-title="Placeholder"><header class="chapter-head"><div class="chapter-num">01</div><h2 class="chapter-title">No chapters yet</h2></header><div class="prose"><p>No chapters found. This is a shell build.</p></div></article>`;
 
 const contentsHTML = chapters.map((ch) => `<div class="item"><span class="n">${pad(ch.number)}</span><a class="t" href="#${esc(ch.id)}">${esc(ch.title)}</a><ul>${ch.headings.filter((h) => !/^takeaways?$/i.test(h.text)).map((h) => `<li><a href="#${esc(h.id)}">${esc(h.text)}</a></li>`).join('')}</ul></div>`).join('') +
   (geo ? `<div class="item"><span class="n">${pad(chapters.length + 1)}</span><a class="t" href="#/geopolitics">Geopolitics</a><ul>${geo.headings.slice(0, 6).map((h) => `<li><a href="#/geopolitics">${esc(h.text)}</a></li>`).join('')}</ul></div>` : '');
@@ -330,7 +330,7 @@ const controlsNotes = read(path.join(root, 'data', 'control-thresholds-notes.md'
 const exposureNotes = read(path.join(root, 'data', 'exposure-notes.md'));
 
 /* ---------------- geopolitics view ---------------- */
-let geoBody = '<p>The geopolitics essay has not been delivered yet.</p>', geoDek = 'Who holds each chokepoint, how the export-control campaign has unfolded since 2018, and where the chips actually go.';
+let geoBody = '<p>The geopolitics essay is not written yet.</p>', geoDek ='Who holds each chokepoint, how the export-control campaign has unfolded since 2018, and where the chips actually go.';
 if (geo) {
   geoDek = geo.meta.oneLiner || geoDek;
   const sources = geo.cites.length ? `<details class="chapter-sources"><summary>Sources for this essay (${geo.cites.length})</summary><ol>${geo.cites.map((c) => `<li><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url.length > 96 ? c.url.slice(0, 94) + '…' : c.url)}</a><span class="host">${esc(host(c.url))}</span></li>`).join('')}</ol></details>` : '';
@@ -346,7 +346,7 @@ const sourcesHTML = `<div class="tier-key"><span class="tier tier-A">A</span> pr
   (matrixNotes ? `<h3>Method: the country-share matrix</h3><div class="prose">${markdown(matrixNotes, { id: 'matrix-notes', cites: [], figures: [] }).html}</div>` : '') +
   (controlsNotes ? `<h3>Method: the threshold map</h3><div class="prose">${markdown(controlsNotes, { id: 'controls-notes', cites: [], figures: [] }).html}</div>` : '') +
   (exposureNotes ? `<h3>Method: the exposure series</h3><div class="prose">${markdown(exposureNotes, { id: 'exposure-notes', cites: [], figures: [] }).html}</div>` : '') +
-  `<h3>How this site was made</h3><div class="prose"><p>Chokepoints was made by Yashvardhan Sharma with Claude in September 2026. Yashvardhan set the brief, direction and standards. Claude did the research, writing, design and code: Fable 5.1 orchestrated and designed, and Opus agents wrote the chapters, compiled the datasets and modelled the specimens. Every number links to a public source, and we redraw the figures from those sources. The specimens are procedural point clouds built from primitives, not scans, with proportions taken from published dimensions. Treat the text and data as a starting point for your own diligence, not as investment advice.</p></div>`;
+  `<h3>How this site was made</h3><div class="prose"><p>Chokepoints was made by Yashvardhan Sharma with Claude in September 2026. Yashvardhan set the brief, direction and standards. Claude did the research, writing, design and code: Fable 5.1 orchestrated and designed, and Opus agents wrote the chapters, compiled the datasets and modelled the specimens. Every number links to a public source, and we redraw the figures from those sources. The specimens are procedural point clouds built from primitives, with proportions taken from published dimensions. None of them is a scan. Treat the text and data as a starting point for your own diligence, not as investment advice.</p></div>`;
 
 /* ---------------- briefing (all the "in short" blocks on one page) ---------------- */
 const briefingHTML = all.map((ch) => {
@@ -368,13 +368,13 @@ const chapterTitle = (id) => { const c = all.find((x) => x.id === id); return c 
 const glossaryHTML = glossary.length ? glossary.slice().sort((a, b) => a.term.localeCompare(b.term)).map((g) => `<div class="gl-entry" data-text="${esc((g.term + ' ' + (g.aka || '') + ' ' + g.plain + ' ' + (g.why || '')).toLowerCase())}">
 <dt>${esc(g.term)}${g.aka ? `<span class="aka">${esc(g.aka)}</span>` : ''}</dt>
 <dd><p>${esc(g.plain)}</p>${g.why ? `<p class="why">${esc(g.why)}</p>` : ''}${g.chapter && chapterTitle(g.chapter) ? `<a class="gl-link" href="${g.chapter === 'geopolitics' ? '#/geopolitics' : '#' + esc(g.chapter)}">${esc(chapterTitle(g.chapter))} →</a>` : ''}</dd>
-</div>`).join('') : '<p>The glossary has not been delivered yet.</p>';
+</div>`).join('') : '<p>The glossary is not written yet.</p>';
 
 /* ---------------- assemble ---------------- */
 const totalWords = all.reduce((a, c) => a + c.words, 0);
 const credits = `Made by <b>Yashvardhan Sharma</b> with Claude. Inspired by <a href="https://www.humanityslastmachine.com/" target="_blank" rel="noopener">Humanity's Last Machine</a> and <a href="https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/" target="_blank" rel="noopener">CSET's supply-chain work</a>.`;
-const footer = `<p>Chokepoints · A deep dive on the AI chip supply chain · Made by Yashvardhan Sharma with Claude · ${new Date().toISOString().slice(0, 10)}</p><p>Every number on this site links to its source. Corrections and additions are welcome. Built with a dependency-free point-cloud renderer; no scans, no tracking.</p>`;
-const suppliersIntro = suppliers.length ? `${suppliers.length} firms across the chain, from polysilicon to liquid cooling, with what each one makes, where it is based and how hard it would be to replace. Filter by category, country or chokepoint status; copy the result as CSV.` : 'The supplier database has not been delivered yet.';
+const footer = `<p>Chokepoints · The AI chip supply chain, stage by stage · Made by Yashvardhan Sharma with Claude · ${new Date().toISOString().slice(0, 10)}</p><p>Every number on this site links to its source. Corrections and additions are welcome. Built with a dependency-free point-cloud renderer. No scans and no tracking.</p>`;
+const suppliersIntro = suppliers.length ? `${suppliers.length} firms across the chain, with what each one makes, where it is based and how hard it would be to replace. Filter by category, country or chokepoint status; copy the result as CSV.` : 'The supplier database is not compiled yet.';
 
 const kit = read(path.join(root, 'src', 'kit.js')) || '';
 const specDir = path.join(root, 'specimens');
@@ -389,12 +389,12 @@ let html = read(path.join(root, 'src', 'template.html'));
 const fill = (k, v) => { html = html.split(`{{${k}}}`).join(v); };
 fill('STYLES', read(path.join(root, 'src', 'styles.css')));
 const totalCites = all.reduce((a, c) => a + c.cites.length, 0);
-const claimsHTML = `<div><b class="num">${stages.length}</b><span>Stages from<br>quartz to a rack</span></div><div class="of-five"><b class="num">${score5}</b><span>Score 5 of 5<br>for concentration</span></div><div><b class="num">${totalCites}</b><span>Sources, one<br>per claim</span></div>`;
+const claimsHTML = `<div><b class="num">${stages.length}</b><span>Stages, quartz<br>to a finished rack</span></div><div class="of-five"><b class="num">${score5}</b><span>Score 5 of 5<br>for concentration</span></div><div><b class="num">${totalCites}</b><span>Sources, one<br>per claim</span></div>`;
 fill('THESIS', thesisHTML); fill('CLAIMS', claimsHTML); fill('CHAIN', chainTrack(stages, null));
 fill('RAIL', railHTML); fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits); fill('FOOTER', footer);
 fill('SUPPLIERS_INTRO', suppliersIntro); fill('GEO_DEK', esc(geoDek)); fill('GEO_BODY', geoBody); fill('SOURCES', sourcesHTML);
 fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));
-fill('CONTROLS_DEK', controls.length ? `${controls.length} thresholds across ${[...new Set(controls.map((c) => c.regime))].length} regimes, and China revenue exposure for ${[...new Set(exposure.map((e) => e.firm))].length} controlled-tool and chip vendors from their own filings. The control surface of the chain in two tables.` : 'The threshold map and exposure series are being compiled.');
+fill('CONTROLS_DEK', controls.length ? `${controls.length} thresholds across ${[...new Set(controls.map((c) => c.regime))].length} regimes, and China revenue exposure for ${[...new Set(exposure.map((e) => e.firm))].length} controlled-tool and chip vendors from their own filings.` : 'The threshold map and exposure series are being compiled.');
 fill('EXPOSURE_NOTE', exposure.length ? 'Shares computed from filed absolute figures; bases differ by firm (ship-to, bill-to or headquarters) and are stated in each row. Method notes are on the <a href="#/sources">Sources</a> page.' : '');
 fill('KIT', kit); fill('SPECIMENS', specimens);
 fill('DATA', JSON.stringify(data).replace(/<\/script/gi, '<\\/script'));

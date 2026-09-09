@@ -112,7 +112,7 @@ Licensing once asked who was buying and why; country-wide prohibition asks only 
 - **Memory.** SK hynix's US listing prospectus, which puts its HBM share at 56.4 percent of revenue and its DRAM share at 29.1 percent in the first quarter of 2026 ([source](https://www.sec.gov/Archives/edgar/data/0002120882/000119312526299963/d32785d424b4.htm)). Samsung holds most of the rest, and no source we trust splits it.
 - **Design and mature nodes.** CSIS ([source](https://www.csis.org/analysis/chinas-localization-drive-semiconductors-gains-impetus-allied-chip-export-controls)).
 
-Advanced packaging belongs in that table but is missing: nobody publishes a capacity split, and TSMC will not give one.
+Advanced packaging belongs in that table, but nobody publishes a capacity split and TSMC will not give one.
 
 No country in the table is self-sufficient, so controls bite in both directions.
 
@@ -138,7 +138,7 @@ Three moves set the current settlement.
 
 ## Allies: the Netherlands, Japan, Korea and Europe
 
-Unilateral tool controls would only transfer the sales, so the campaign has always depended on The Hague and Tokyo.
+Unilateral tool controls would only transfer the sales, so the campaign depends on The Hague and Tokyo.
 
 - **The Netherlands.** Licensing of advanced DUV took effect on 1 September 2023, widened in September 2024 ([source](https://www.government.nl/latest/news/2024/09/06/the-netherlands-expands-export-control-measure-advanced-semiconductor-manufacturing-equipment)), and from 1 April 2025 reached measurement and inspection tools ([source](https://www.government.nl/latest/news/2025/01/15/klever-export-controls-on-advanced-semiconductor-manufacturing-equipment-to-be-tightened)).
 - **Japan.** Controls on advanced manufacturing equipment took effect on 23 July 2023 and apply to all destinations rather than naming China ([source](https://www.csis.org/analysis/csis-translation-updated-japanese-export-controls-high-performance-semiconductor)).
@@ -159,7 +159,7 @@ China's retaliation goes at the inputs rather than the chips. Micron was first, 
 
 Nothing was repealed: one ban was paused for twelve months and the licensing regimes stand.
 
-The blunter lever is demand. Chinese regulators discouraged customers from buying, importing or using Nvidia's data-centre products, and endorsed an action plan setting performance-per-watt and bandwidth standards for accelerators in Chinese data centres. When Washington did license H200 sales in February 2026, Beijing restricted them, and the shipments Nvidia managed came to less than 1 percent of data-centre revenue ([source](https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm)). That quarter's data-centre revenue was $89.0 billion, and the next quarter's guidance assumed no China compute revenue at all ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027)).
+The blunter lever is demand. Chinese regulators discouraged customers from buying, importing or using Nvidia's data-centre products, and endorsed an action plan setting performance-per-watt and bandwidth standards for accelerators in Chinese data centres. When Washington did license H200 sales in February 2026, Beijing restricted them, and Nvidia's shipments came to less than 1 percent of data-centre revenue ([source](https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm)). That quarter's data-centre revenue was $89.0 billion, and the next quarter's guidance assumed no China compute revenue at all ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027)).
 
 Chinese tool vendors went from 10 to 15 percent of their home market before 2022 to 25 percent in 2024 and 35 percent in 2025, and hold about 40 percent of domestic etch and deposition ([source](https://www.csis.org/analysis/chinas-localization-drive-semiconductors-gains-impetus-allied-chip-export-controls)).
 
@@ -177,7 +177,7 @@ Tariffs became the second instrument. The 2026 US-Taiwan trade agreement cuts th
 
 Europe's first Chips Act did not produce a leading-edge fab, and the Chips Act 2.0 proposal adopted on 3 June 2026 widens state aid and shifts the emphasis from supply to demand without changing that ([source](https://digital-strategy.ec.europa.eu/en/library/proposal-chips-act-20)). Japan chose a national champion instead: Rapidus verified 2 nm gate-all-around transistors on its Chitose pilot line in 2025 and raised another 267.6 billion yen, about $1.7 billion, targeting mass production in 2027 ([source](https://www.rapidus.inc/en/news_topics/information/rapidus-secures-267-6-billion-yen-in-funding-from-japan-government-and-private-sector-companies/)).
 
-China spends more and spends differently. The latest round of its National Integrated Circuit Industry Investment Fund, the Big Fund, reached $47 billion ([source](https://www.rand.org/pubs/perspectives/PEA4012-1.html)). Cumulative state funding since 2014 is estimated at $150 billion, roughly triple the CHIPS authorisation ([source](https://www.csis.org/analysis/chinas-localization-drive-semiconductors-gains-impetus-allied-chip-export-controls)). The money has produced a domestic tool industry rather than a leading-edge node.
+China spends more, and differently. The latest round of its National Integrated Circuit Industry Investment Fund, the Big Fund, reached $47 billion ([source](https://www.rand.org/pubs/perspectives/PEA4012-1.html)). Cumulative state funding since 2014 is estimated at $150 billion, roughly triple the CHIPS authorisation ([source](https://www.csis.org/analysis/chinas-localization-drive-semiconductors-gains-impetus-allied-chip-export-controls)). The money has produced a domestic tool industry rather than a leading-edge node.
 
 {{figure:chips-awards}}
 

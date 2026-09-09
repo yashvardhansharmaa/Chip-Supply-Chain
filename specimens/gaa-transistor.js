@@ -26,7 +26,7 @@ PC.register('gaa-transistor', function (p) {
   var yStackTop = y0[2] + sT;                   // 38
   var gX = Lg / 2, spX = gX + sp;               // gate +/-7.5, spacer out to +/-12.5
   var gY0 = -11, gY1 = 45, gZ = sW / 2 + 4;     // gate box, 4 nm proud of the sheet edges
-  var epiX0 = spX, epiX1 = 27, epiZ = 17;
+  var epiX0 = spX, epiX1 = 30.5, epiZ = 17;
   var parts = [];
   function add(c) { parts.push(c); }
   function acc(c, a) { return PC.accent(c, a); }
@@ -46,31 +46,34 @@ PC.register('gaa-transistor', function (p) {
   }
 
   // ---------- substrate and the isolation the stack sits on ----------
-  add(boxAt(-32, -30, -24, 32, -15, 24, { n: 5200, tone: 0.13 }));
-  add(edgesAt(-32, -30, -24, 32, -15, 24, 6, 0.7));
-  add(boxAt(-30, -15, -22, 30, -11, 22, { n: 1600, tone: 0.24 }));      // bottom dielectric isolation
-  add(edgesAt(-30, -15, -22, 30, -11, 22, 6, 0.8));
+  add(boxAt(-34, -26, -23, 34, -16, 23, { n: 3200, tone: 0.11 }));
+  add(edgesAt(-34, -26, -23, 34, -16, 23, 6, 0.65));
+  add(boxAt(-31, -16, -21, 31, -11, 21, { n: 1200, tone: 0.20 }));      // bottom dielectric isolation
+  add(edgesAt(-31, -16, -21, 31, -11, 21, 6, 0.75));
 
   // ---------- the three silicon nanosheets ----------
   y0.forEach(function (yb) {
     add(boxAt(-sL / 2, yb, -sW / 2, sL / 2, yb + sT, sW / 2,
-      { n: 1500, tone: 0.30, faces: ['py', 'pz', 'nz', 'px', 'nx'] }));
-    add(edgesAt(-sL / 2, yb, -sW / 2, sL / 2, yb + sT, sW / 2, 9, 1));
+      { n: 2000, tone: 0.36, faces: ['py', 'pz', 'nz', 'px', 'nx'] }));
+    add(edgesAt(-sL / 2, yb, -sW / 2, sL / 2, yb + sT, sW / 2, 13, 1));
+    for (var q = -1; q <= 1; q++) {
+      add(PC.line({ a: [-sL / 2, yb + sT, q * 8], b: [sL / 2, yb + sT, q * 8], perUnit: 7, tone: 0.45 }));
+    }
   });
 
   // ---------- the gate: a cage of metal wrapping every sheet on four sides ----------
   // the metal that fills each gap, drawn on the two faces you can see it through
   var bands = [[gY0, y0[0]], [y0[0] + sT, y0[1]], [y0[1] + sT, y0[2]], [yStackTop, gY1]];
   bands.forEach(function (b) {
-    [-1, 1].forEach(function (s) { add(acc(faceZ(-gX, b[0], gX, b[1], s * gZ, 620, 1), 0.30)); });
+    [-1, 1].forEach(function (s) { add(acc(faceZ(-gX, b[0], gX, b[1], s * gZ, 520, 1), 0.40)); });
     [-1, 1].forEach(function (s) {                                     // and the same gap, seen end on
       add(acc(PC.T(PC.plane({ w: b[1] - b[0], d: 2 * gZ, n: 260, tone: 1 }),
         { rot: [0, 0, Math.PI / 2], pos: [s * gX, (b[0] + b[1]) / 2, 0] }), 0.22));
     });
-    add(acc(edgesAt(-gX, b[0], -gZ, gX, b[1], gZ, 5, 1), 0.55));
+    add(acc(edgesAt(-gX, b[0], -gZ, gX, b[1], gZ, 6, 1), 0.7));
   });
   add(acc(boxAt(-gX, gY0, -gZ, gX, gY1, gZ, { n: 900, tone: 1, faces: ['py'] }), 0.34));
-  add(acc(edgesAt(-gX, gY0, -gZ, gX, gY1, gZ, 11, 1), 1));
+  add(acc(edgesAt(-gX, gY0, -gZ, gX, gY1, gZ, 15, 1), 1));
   // the metal that runs around the sheet edges: two thin walls just outside them
   [-1, 1].forEach(function (s) {
     add(acc(faceZ(-gX, y0[0], gX, yStackTop, s * (sW / 2 + 1.2), 340, 1), 0.34));
@@ -83,33 +86,29 @@ PC.register('gaa-transistor', function (p) {
       add(boxAt(a, b[0], -sW / 2, c, b[1], sW / 2, { n: 420, tone: 0.34 }));
       add(edgesAt(a, b[0], -sW / 2, c, b[1], sW / 2, 8, 0.9));
     });
-    // the low-k gate spacer above the stack
-    var a2 = s > 0 ? gX : -spX, c2 = s > 0 ? spX : -gX;
-    add(boxAt(a2, yStackTop, -gZ, c2, gY1, gZ, { n: 620, tone: 0.22 }));
-    add(edgesAt(a2, yStackTop, -gZ, c2, gY1, gZ, 7, 0.75));
   });
 
   // ---------- source and drain epitaxy: faceted blocks grown off the sheet ends ----------
-  var shape = [[0.125, -0.130], [0.165, -0.170], [0.230, -0.170], [0.270, -0.130],
-               [0.270, 0.130], [0.230, 0.170], [0.165, 0.170], [0.125, 0.130]];
+  var shape = [[0.125, -0.130], [0.165, -0.170], [0.265, -0.170], [0.305, -0.130],
+               [0.305, 0.130], [0.265, 0.170], [0.165, 0.170], [0.125, 0.130]];
   [-1, 1].forEach(function (s) {
-    var epi = PC.thin(PC.extrude({ shape: shape, h: 0.42, tone: 0.30 }), 0.42);
+    var epi = PC.thin(PC.extrude({ shape: shape, h: 0.42, tone: 0.22 }), 0.40);
     add(PC.T(epi, { scale: [s * 100, 100, 100], pos: [0, 19, 0] }));
     var ring = shape.map(function (q) { return [s * q[0] * 100, 0, q[1] * 100]; });
     [-2, 40].forEach(function (yy) {
-      add(PC.T(PC.polyline({ pts: ring, closed: true, perUnit: 7, tone: 0.95 }), { pos: [0, yy, 0] }));
+      add(PC.T(PC.polyline({ pts: ring, closed: true, perUnit: 8, tone: 0.9 }), { pos: [0, yy, 0] }));
     });
-    ring.forEach(function (q) { add(PC.line({ a: [q[0], -2, q[2]], b: [q[0], 40, q[2]], perUnit: 7, tone: 0.8 })); });
+    ring.forEach(function (q) { add(PC.line({ a: [q[0], -2, q[2]], b: [q[0], 40, q[2]], perUnit: 7, tone: 0.7 })); });
   });
 
   // ---------- contacts landing on the source, the drain and the gate ----------
   [-1, 1].forEach(function (s) {
-    var a = s > 0 ? 14 : -25, c = s > 0 ? 25 : -14;
-    add(boxAt(a, 40, -13, c, 58, 13, { n: 1400, tone: 0.20, faces: ['py', 'px', 'nx', 'pz', 'nz'] }));
-    add(edgesAt(a, 40, -13, c, 58, 13, 8, 0.95));
+    var a = s > 0 ? 16 : -28, c = s > 0 ? 28 : -16;
+    add(boxAt(a, 40, -11, c, 52, 11, { n: 900, tone: 0.18, faces: ['py', 'px', 'nx', 'pz', 'nz'] }));
+    add(edgesAt(a, 40, -11, c, 52, 11, 9, 0.95));
   });
-  add(boxAt(-5, gY1, -8, 5, 60, 8, { n: 900, tone: 0.20, faces: ['py', 'px', 'nx', 'pz', 'nz'] }));
-  add(edgesAt(-5, gY1, -8, 5, 60, 8, 8, 0.95));
+  add(boxAt(-5, gY1, -8, 5, 54, 8, { n: 700, tone: 0.18, faces: ['py', 'px', 'nx', 'pz', 'nz'] }));
+  add(edgesAt(-5, gY1, -8, 5, 54, 8, 9, 0.95));
 
   return {
     cloud: PC.merge.apply(null, parts),
