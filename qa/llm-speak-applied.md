@@ -301,7 +301,7 @@ a source:
 - `TSMC certified the 5.5-reticle version in 2025 and now produces it.` — the table row, the roadmap figure and the criteria bullet all carry 5.5x; this was the fourth rendering, and it sat in the middle of the paragraph about Blackwell going badly.
 - The `**Now.**` roadmap bullet, for the same reason: `{{figure:cowos-reticles}}` plots 3.5 → 5.5 → 9.5 → 14 directly above it.
 - `SK hynix expects full adoption only at HBM4E or HBM5, where stacks pass 20 layers` removed from the hybrid-bonding bullet. The sentence and its citation live in chapter 11, where the HBM roadmap is the subject; here the bullet is about who builds the bonder. This is the one source-count change in the pass (20 → 19); the number went with its citation and nothing is left unsourced.
-- `Also cut or compressed: "the second great chokepoint after lithography", "Demand is as narrow as supply", "the industry's most constrained process", "China's back end is much stronger than its front end" (a verbatim echo of the nameplate's `chinaStatus`), and the fabs-and-R&D-centre detail in the Arizona paragraph, which belongs to chapter 10.`
+- Also cut or compressed: "the second great chokepoint after lithography", "Demand is as narrow as supply", "the industry's most constrained process", "China's back end is much stronger than its front end" (a verbatim echo of the nameplate's `chinaStatus` field), and the fabs-and-R&D-centre detail in the Arizona paragraph, which belongs to chapter 10.
 
 **Skipped / left because changing it would change a fact**
 

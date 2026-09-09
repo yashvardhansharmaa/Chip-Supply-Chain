@@ -6,7 +6,7 @@
   "oneLiner": "China makes almost all of the world's polysilicon and almost none of the wafers that matter. Five firms in Japan, Taiwan, Germany and South Korea hold the 300 mm substrate every AI accelerator starts on.",
   "plain": "Sand is melted and then pulled slowly out of the melt like a candle being dipped, except what comes out is a single crystal, one cylinder in which every atom sits on the same repeating grid. That cylinder is sliced into discs 300 millimetres across and polished until nothing on the surface stands more than a few atoms proud. The silicon has to be pure to about one foreign atom in a hundred billion, and the flatness has to hold right to the edge. Only five firms can do it reliably, and none of them is American or Chinese.",
   "specimen": "boule-and-wafer",
-  "specimenCaption": "Right: a Czochralski ingot and a 300 mm wafer. Seed crystal and narrow neck at the top, the shoulder where the crystal opens out to full diameter, the cylindrical body, and a polished wafer sliced from that body.",
+  "specimenCaption": "Right: a Czochralski ingot and the wafers cut from it. A seed crystal on a 10 mm neck at the top, the crown where the crystal opens out to full diameter, 1.5 m of ground 300 mm body and the cropped tail. The wafers at its foot are as wide as the ingot: a quarter of a tonne of one crystal, hung from a neck the width of a finger.",
   "card": {
     "concentration": "High",
     "chokepointScore": 4,

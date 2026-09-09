@@ -6,7 +6,7 @@
   "oneLiner": "Three companies can build a 2 nm-class switch. Geometry stopped scaling for free about a decade ago, and everything since has been bought with process steps.",
   "plain": "A transistor is a valve on a pipe. Current runs along a silicon channel, and a voltage on the gate above it opens or shuts the flow. Make the channel short enough and the valve stops sealing: current leaks through even when the gate says off, so a chip burns power doing nothing. The fix is to wrap the gate around all four sides of the channel, which takes about a thousand process steps in exact order. Three companies can run that sequence, which is why a regulator can name them.",
   "specimen": "gaa-transistor",
-  "specimenCaption": "Right: a gate-all-around nanosheet transistor. Three stacked silicon sheets run source to drain, the gate metal wraps all four sides of each sheet, inner spacers isolate the gate from the source and drain epitaxy, and the contacts land on top.",
+  "specimenCaption": "Right: a gate-all-around nanosheet transistor. Three stacked silicon sheets run from source to drain, the gate metal in amber wraps all four sides of each sheet, inner spacers keep the gate off the source and drain epitaxy, and the contacts land on top.",
   "card": {
     "concentration": "Extreme",
     "chokepointScore": 5,

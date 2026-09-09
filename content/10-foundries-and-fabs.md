@@ -6,7 +6,7 @@
   "oneLiner": "TSMC runs six factories big enough to be called gigafabs. All six are in Taiwan, and they hold 13 of the 17 million wafers a year the company can make.",
   "plain": "A foundry is a print shop for chips. Other companies send in designs, and the foundry runs them through the same building on the same tools. What makes it hard is that the building costs tens of billions of dollars, the air inside has to be cleaner than an operating theatre, and a wafer crosses hundreds of machines over several months without ever touching that air. Nobody sells enough chips to fill a shop like that alone, so the world shares a few of them, and most of the newest ones sit in Taiwan.",
   "specimen": "foup",
-  "specimenCaption": "Right: a front-opening unified pod, the sealed carrier that moves 25 wafers between tools. Wafers never touch fab air; the FOUP is the cleanroom.",
+  "specimenCaption": "Right: a front-opening unified pod, the sealed carrier that moves 25 wafers between tools, barely wider than the 300 mm wafers inside it. Wafers never touch fab air: the FOUP is the cleanroom, and the fab around it is the corridor.",
   "card": {
     "concentration": "Extreme",
     "chokepointScore": 5,

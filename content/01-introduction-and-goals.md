@@ -5,8 +5,8 @@
   "title": "Introduction and Goals",
   "oneLiner": "A component-level map of the hardware that makes AI chips, from sand to a rack. Eighteen stages, and the handful of firms that own each one.",
   "plain": "Building an AI chip, the kind that trains and runs an artificial intelligence model, is like building a car in which the engine, the gearbox and the wheels each come from a single factory somewhere in the world, with no second factory able to make them. About a dozen separately manufactured objects, each from a different country, are stacked into one finished package. Most of those objects have one or two credible suppliers, and replacing any of them takes years rather than months. That is why a rule written in one capital city can slow computing everywhere.",
-  "specimen": "package",
-  "specimenCaption": "Right: an AI accelerator package. Two logic dies in the centre, eight HBM stacks flanking them, all sitting on a silicon interposer that sits on an organic substrate. Every chapter of this site explains one layer of this object or one machine that made it.",
+  "specimen": "wafer",
+  "specimenCaption": "Right: a polished 300 mm wafer, its 57 whole exposure fields ruled by scribe streets, the orientation notch drawn six times life size and one field in amber. Every chapter explains one step this disc passes through on its way to a rack.",
   "card": {
     "concentration": "Extreme",
     "chokepointScore": 5,
