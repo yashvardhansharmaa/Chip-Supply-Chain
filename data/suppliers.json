@@ -1021,7 +1021,7 @@
     "aiRelevance": "The main non-Japanese source of leading-edge wafers and the one adding capacity inside the United States.",
     "revenueUSDb": 1.924,
     "revenueYear": 2025,
-    "source": "https://www.globalwafers.com/en"
+    "source": "https://www.sas-globalwafers.com/"
   },
   {
     "name": "Siltronic",
@@ -1209,7 +1209,7 @@
     "aiRelevance": "Supplies the bulk wet chemicals Korean memory fabs consume in HBM production.",
     "revenueUSDb": 2.521,
     "revenueYear": 2025,
-    "source": "https://www.ocichem.com/"
+    "source": "https://www.oci.co.kr/"
   },
   {
     "name": "JSR Corporation",
@@ -3645,7 +3645,7 @@
     "aiRelevance": "Wire bonding still dominates memory module and mature-node assembly around AI systems.",
     "revenueUSDb": 0.654,
     "revenueYear": 2025,
-    "source": "https://www.kns.com/en-us/products"
+    "source": "https://www.kns.com/"
   },
   {
     "name": "EV Group",
@@ -3840,7 +3840,7 @@
     "aiRelevance": "Supplies both the package substrate and the server boards that carry AI accelerators.",
     "revenueUSDb": 1.275,
     "revenueYear": 2025,
-    "source": "https://www.npc.com.tw/"
+    "source": "https://www.nanyapcb.com.tw/"
   },
   {
     "name": "AT&S",
@@ -4152,7 +4152,7 @@
     "aiRelevance": "The second source for the test capacity that gates AI chip output.",
     "revenueUSDb": 3.19,
     "revenueYear": 2025,
-    "source": "https://www.teradyne.com/semiconductor-test/"
+    "source": "https://www.teradyne.com/"
   },
   {
     "name": "FormFactor",
@@ -4585,7 +4585,7 @@
     "aiRelevance": "The second Western source of laser chips for the optics that link AI accelerators.",
     "revenueUSDb": 3.014,
     "revenueYear": 2026,
-    "source": "https://www.lumentum.com/en/cloud-and-ai"
+    "source": "https://www.lumentum.com/"
   },
   {
     "name": "Fabrinet",
@@ -5102,7 +5102,7 @@
     "aiRelevance": "An early liquid cooling specialist in a market that AI rack density made mainstream.",
     "revenueUSDb": 0.042,
     "revenueYear": 2025,
-    "source": "https://www.asetek.com/data-center/"
+    "source": "https://www.asetek.com/"
   },
   {
     "name": "Hitachi Energy",
