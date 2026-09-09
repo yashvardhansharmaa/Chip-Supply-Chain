@@ -1,0 +1,16 @@
+{
+  "url": "https://amkor.com/",
+  "status": 200,
+  "finalUrl": "https://amkor.com/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Tue, 08 Sep 2026 20:41:38 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:10.638Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Semiconductor Packaging & Test Services",
+    "date": "2017-11-08",
+    "siteName": "Amkor Technology",
+    "rawTitle": "Semiconductor Packaging & Test Services | Amkor Technology"
+  }
+}

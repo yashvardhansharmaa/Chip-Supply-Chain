@@ -1,0 +1,16 @@
+{
+  "url": "https://blogs.microsoft.com/blog/2026/01/26/maia-200-the-ai-accelerator-built-for-inference/",
+  "status": 200,
+  "finalUrl": "https://blogs.microsoft.com/blog/2026/01/26/maia-200-the-ai-accelerator-built-for-inference/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Mon, 26 Jan 2026 08:52:44 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:12.779Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Maia 200: The AI accelerator built for inference - The Official Microsoft Blog",
+    "date": "2026-01-26",
+    "siteName": "The Official Microsoft Blog",
+    "rawTitle": "Maia 200: The AI accelerator built for inference - The Official Microsoft Blog"
+  }
+}

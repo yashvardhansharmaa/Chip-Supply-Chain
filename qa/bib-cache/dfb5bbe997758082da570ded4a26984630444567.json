@@ -1,0 +1,16 @@
+{
+  "url": "https://news.skhynix.com/en/sk-hynix-completes-worlds-first-hbm4-development-and-readies-mass-production/",
+  "status": 200,
+  "finalUrl": "https://news.skhynix.com/en/sk-hynix-completes-worlds-first-hbm4-development-and-readies-mass-production/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:42.426Z",
+  "extracted": {
+    "kind": "html",
+    "title": "SK hynix Completes World’s First HBM4 Development and Readies Mass Production",
+    "date": null,
+    "siteName": "SK hynix Newsroom",
+    "rawTitle": "SK hynix Completes World’s First HBM4 Development and Readies Mass Production – SK hynix Newsroom"
+  }
+}

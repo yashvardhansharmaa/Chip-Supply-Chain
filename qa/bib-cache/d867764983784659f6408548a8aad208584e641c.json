@@ -1,0 +1,15 @@
+{
+  "url": "https://bidenwhitehouse.archives.gov/wp-content/uploads/2021/06/100-day-supply-chain-review-report.pdf",
+  "status": 200,
+  "finalUrl": "https://bidenwhitehouse.archives.gov/wp-content/uploads/2021/06/100-day-supply-chain-review-report.pdf",
+  "contentType": "application/pdf",
+  "lastModified": "Mon, 23 Jun 2025 18:45:15 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:12.590Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": null,
+    "date": "2021-06-07",
+    "firstLine": null
+  }
+}

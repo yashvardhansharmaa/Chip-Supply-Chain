@@ -1,0 +1,16 @@
+{
+  "url": "https://gf.com/",
+  "status": 200,
+  "finalUrl": "https://gf.com/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Wed, 09 Sep 2026 18:17:21 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:19.237Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Semiconductor manufacturing",
+    "date": "2026-09-09",
+    "siteName": "GlobalFoundries",
+    "rawTitle": "Semiconductor manufacturing | GlobalFoundries"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "url": "https://jp.mitsuichemicals.com/",
+  "status": 200,
+  "finalUrl": "https://jp.mitsuichemicals.com/jp/index.htm",
+  "contentType": "text/html;charset=utf-8",
+  "lastModified": "Wed, 09 Sep 2026 18:01:45 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:42.278Z",
+  "extracted": {
+    "kind": "html",
+    "title": "三井化学株式会社",
+    "date": null,
+    "siteName": "三井化学株式会社",
+    "rawTitle": "三井化学株式会社 | 三井化学株式会社"
+  }
+}

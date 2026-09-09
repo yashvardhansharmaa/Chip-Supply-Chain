@@ -1,0 +1,16 @@
+{
+  "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-silicon.pdf",
+  "status": 200,
+  "finalUrl": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-silicon.pdf",
+  "contentType": "application/pdf",
+  "lastModified": "Thu, 05 Feb 2026 23:48:51 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:46.553Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": "Silicon",
+    "date": "2026-02-05",
+    "firstLine": "-3% wasFLCMeme2024202520242025WWWW474798981601701901802323",
+    "dateModified": "2026-02-05"
+  }
+}

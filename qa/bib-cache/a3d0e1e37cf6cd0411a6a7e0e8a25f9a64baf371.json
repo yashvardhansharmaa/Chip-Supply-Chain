@@ -1,0 +1,16 @@
+{
+  "url": "https://docs.broadcom.com/doc/3-5d-xdsip-platform-technology",
+  "status": 200,
+  "finalUrl": "https://docs.broadcom.com/doc/3-5d-xdsip-platform-technology",
+  "contentType": "application/pdf",
+  "lastModified": "Wed, 09 Sep 2026 18:21:17 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:17.545Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": "Slide 1",
+    "date": "2024-12-04",
+    "firstLine": "\u0001\u0007=z2qHA\u001d \u0001\u0007=z2qHA\u001d",
+    "dateModified": "2024-12-04"
+  }
+}

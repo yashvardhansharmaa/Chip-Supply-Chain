@@ -1,0 +1,16 @@
+{
+  "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gallium.pdf",
+  "status": 200,
+  "finalUrl": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gallium.pdf",
+  "contentType": "application/pdf",
+  "lastModified": "Thu, 05 Feb 2026 23:48:45 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:45.835Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": "Gallium",
+    "date": "2026-02-05",
+    "firstLine": "20242025e20254839551,600ee666e100848900e1,70:7i-5050:---3G-",
+    "dateModified": "2026-02-05"
+  }
+}

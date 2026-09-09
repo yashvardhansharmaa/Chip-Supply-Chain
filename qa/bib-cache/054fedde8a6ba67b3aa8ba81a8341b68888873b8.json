@@ -1,0 +1,16 @@
+{
+  "url": "https://nvidianews.nvidia.com/news/nvidia-spectrum-x-co-packaged-optics-networking-switches-ai-factories",
+  "status": 200,
+  "finalUrl": "https://nvidianews.nvidia.com/news/nvidia-spectrum-x-co-packaged-optics-networking-switches-ai-factories",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:43.486Z",
+  "extracted": {
+    "kind": "html",
+    "title": "NVIDIA Announces Spectrum-X Photonics, Co-Packaged Optics Networking Switches to Scale AI Factories to Millions of GPUs",
+    "date": null,
+    "siteName": "NVIDIA Newsroom",
+    "rawTitle": "NVIDIA Announces Spectrum-X Photonics, Co-Packaged Optics Networking Switches to Scale AI Factories to Millions of GPUs | NVIDIA Newsroom"
+  }
+}

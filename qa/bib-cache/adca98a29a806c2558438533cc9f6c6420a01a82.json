@@ -1,0 +1,16 @@
+{
+  "url": "https://epoch.ai/blog/algorithmic-progress-in-language-models",
+  "status": 200,
+  "finalUrl": "https://epoch.ai/publications/algorithmic-progress-in-language-models",
+  "contentType": "text/html",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:18.867Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Algorithmic progress in language models",
+    "date": null,
+    "siteName": "Epoch AI",
+    "rawTitle": "Algorithmic progress in language models | Epoch AI"
+  }
+}

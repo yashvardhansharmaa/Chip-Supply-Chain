@@ -1,0 +1,16 @@
+{
+  "url": "https://corp.mediatek.com/investor-relations",
+  "status": 200,
+  "finalUrl": "https://www.mediatek.com/investor-relations",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Wed, 09 Sep 2026 10:38:16 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:14.202Z",
+  "extracted": {
+    "kind": "html",
+    "title": "MediaTek | MediaTek Investor Relations",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "MediaTek | MediaTek Investor Relations"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "url": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf",
+  "status": 200,
+  "finalUrl": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf",
+  "contentType": "application/pdf",
+  "lastModified": "Wed, 20 Sep 2023 03:27:53 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:14.912Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": "The Semiconductor Supply Chain - Issue Brief",
+    "date": "2021-01-21",
+    "firstLine": null,
+    "dateModified": "2023-09-19"
+  }
+}

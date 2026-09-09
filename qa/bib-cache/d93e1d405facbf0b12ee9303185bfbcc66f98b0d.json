@@ -1,0 +1,16 @@
+{
+  "url": "https://nvidianews.nvidia.com/news/nvidia-announces-strategic-partnership-with-lumentum-to-develop-state-of-the-art-optics-technology",
+  "status": 200,
+  "finalUrl": "https://nvidianews.nvidia.com/news/nvidia-announces-strategic-partnership-with-lumentum-to-develop-state-of-the-art-optics-technology",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:43.505Z",
+  "extracted": {
+    "kind": "html",
+    "title": "NVIDIA Announces Strategic Partnership With Lumentum to Develop State-of-the-Art Optics Technology",
+    "date": null,
+    "siteName": "NVIDIA Newsroom",
+    "rawTitle": "NVIDIA Announces Strategic Partnership With Lumentum to Develop State-of-the-Art Optics Technology | NVIDIA Newsroom"
+  }
+}

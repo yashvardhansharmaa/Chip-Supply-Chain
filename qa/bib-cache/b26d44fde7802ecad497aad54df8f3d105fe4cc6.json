@@ -1,0 +1,16 @@
+{
+  "url": "https://ats.net/",
+  "status": 200,
+  "finalUrl": "https://ats.net/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:15.198Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Advanced Technologies & Solutions",
+    "date": "2022-10-31",
+    "siteName": "AT&S",
+    "rawTitle": "Advanced Technologies & Solutions | AT&S"
+  }
+}

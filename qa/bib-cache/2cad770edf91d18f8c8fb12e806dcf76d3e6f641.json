@@ -1,0 +1,16 @@
+{
+  "url": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026",
+  "status": 200,
+  "finalUrl": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:43.425Z",
+  "extracted": {
+    "kind": "html",
+    "title": "NVIDIA Announces Financial Results for Fourth Quarter and Fiscal 2026",
+    "date": null,
+    "siteName": "NVIDIA Newsroom",
+    "rawTitle": "NVIDIA Announces Financial Results for Fourth Quarter and Fiscal 2026 | NVIDIA Newsroom"
+  }
+}

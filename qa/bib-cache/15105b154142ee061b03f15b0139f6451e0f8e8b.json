@@ -1,0 +1,16 @@
+{
+  "url": "https://ourbrand.asml.com/asset/c8dbf3fc-4c5e-4406-83f6-27694b138245/Press-Release-Financial-Results-Q2-2026.pdf",
+  "status": 200,
+  "finalUrl": "https://ourbrand.asml.com/asset/c8dbf3fc-4c5e-4406-83f6-27694b138245/Press-Release-Financial-Results-Q2-2026.pdf",
+  "contentType": "application/pdf",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:44.995Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": "Press Release Financial Results Q2 2026",
+    "date": "2026-07-14",
+    "firstLine": null,
+    "dateModified": "2026-07-14"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "url": "https://en.mthreads.com/product/S5000",
+  "status": 200,
+  "finalUrl": "https://en.mthreads.com/product/S5000",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:19.077Z",
+  "extracted": {
+    "kind": "html",
+    "title": "MTT S5000 | Universal GPU for AI Training and Inference",
+    "date": null,
+    "siteName": "Moore Threads | Full-Stack AI, Accelerate Computing for a Better World",
+    "rawTitle": "MTT S5000 | Universal GPU for AI Training and Inference | Moore Threads"
+  }
+}

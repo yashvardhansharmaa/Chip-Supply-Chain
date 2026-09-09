@@ -1,0 +1,16 @@
+{
+  "url": "https://asia.nikkei.com/spotlight/supply-chain/china-launches-47bn-chip-fund-to-counter-u.s.-restrictions",
+  "status": 200,
+  "finalUrl": "https://asia.nikkei.com/spotlight/supply-chain/china-launches-47bn-chip-fund-to-counter-u.s.-restrictions",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:12.416Z",
+  "extracted": {
+    "kind": "html",
+    "title": "China launches $47bn chip fund to counter U.S. restrictions",
+    "date": "2024-05-27",
+    "siteName": "Nikkei Asia",
+    "rawTitle": "China launches $47bn chip fund to counter U.S. restrictions - Nikkei Asia"
+  }
+}

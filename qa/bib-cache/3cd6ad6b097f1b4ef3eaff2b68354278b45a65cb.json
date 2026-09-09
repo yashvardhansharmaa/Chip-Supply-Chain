@@ -1,0 +1,16 @@
+{
+  "url": "https://lightmatter.co/products/passage/",
+  "status": 200,
+  "finalUrl": "https://lightmatter.co/products/passage/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Wed, 09 Sep 2026 18:21:41 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:41.533Z",
+  "extracted": {
+    "kind": "html",
+    "title": "3D Photonics for AI Applications",
+    "date": null,
+    "siteName": "Lightmatter®",
+    "rawTitle": "3D Photonics for AI Applications | Passage™"
+  }
+}

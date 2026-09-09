@@ -1,0 +1,16 @@
+{
+  "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf",
+  "status": 403,
+  "finalUrl": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:20.329Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Attention Required!",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "Attention Required! | Cloudflare"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "url": "https://blogs.nvidia.com/blog/nvidia-ceo-promotes-ai-in-dc-and-china/",
+  "status": 200,
+  "finalUrl": "https://blogs.nvidia.com/blog/nvidia-ceo-promotes-ai-in-dc-and-china/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:13.580Z",
+  "extracted": {
+    "kind": "html",
+    "title": "NVIDIA CEO Jensen Huang Promotes AI in Washington, DC and China",
+    "date": "2025-07-15",
+    "siteName": "NVIDIA Blog",
+    "rawTitle": "NVIDIA CEO Jensen Huang Promotes AI in Washington, DC and China | NVIDIA Blog"
+  }
+}

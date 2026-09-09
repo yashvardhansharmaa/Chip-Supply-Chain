@@ -1,0 +1,16 @@
+{
+  "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf",
+  "status": 200,
+  "finalUrl": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf",
+  "contentType": "application/pdf",
+  "lastModified": "Thu, 05 Feb 2026 23:48:45 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:45.932Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": "Germanium",
+    "date": "2026-02-05",
+    "firstLine": ":gG-de5 7on 55% ons,5dems202282618:7 been-on:7--and:---Ce1Data have2",
+    "dateModified": "2026-02-05"
+  }
+}

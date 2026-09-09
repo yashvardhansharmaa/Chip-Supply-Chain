@@ -1,0 +1,16 @@
+{
+  "url": "https://m.samsungsem.com/global/newsroom/news/view.do?id=10462",
+  "status": 200,
+  "finalUrl": "https://m.samsungsem.com/global/newsroom/news/view.do?id=10462",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:42.372Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Samsung Electro-Mechanics, Q2 2026 Business Results | News | Newsroom",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "Samsung Electro-Mechanics, Q2 2026 Business Results | News | Newsroom | SAMSUNG ELECTRO-MECHANICS"
+  }
+}

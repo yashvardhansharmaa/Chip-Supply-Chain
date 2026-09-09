@@ -1,0 +1,16 @@
+{
+  "url": "https://openai.com/index/openai-and-broadcom-announce-strategic-collaboration/",
+  "status": 200,
+  "finalUrl": "https://openai.com/index/openai-and-broadcom-announce-strategic-collaboration/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:44.376Z",
+  "extracted": {
+    "kind": "html",
+    "title": "OpenAI and Broadcom announce strategic collaboration to deploy 10 gigawatts of OpenAI-designed AI accelerators",
+    "date": "2026-09-09",
+    "siteName": "OpenAI",
+    "rawTitle": "OpenAI and Broadcom announce strategic collaboration to deploy 10 gigawatts of OpenAI-designed AI accelerators | OpenAI"
+  }
+}

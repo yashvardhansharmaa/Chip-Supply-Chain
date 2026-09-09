@@ -1,0 +1,16 @@
+{
+  "url": "https://pr.tsmc.com/english/news/3210",
+  "status": 403,
+  "finalUrl": "https://pr.tsmc.com/english/news/3210",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:44.975Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Attention Required!",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "Attention Required! | Cloudflare"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "url": "https://digital-strategy.ec.europa.eu/en/library/proposal-chips-act-20",
+  "status": 200,
+  "finalUrl": "https://digital-strategy.ec.europa.eu/en/library/proposal-chips-act-20",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": "Wed, 09 Sep 2026 18:03:36 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:16.178Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Proposal for the Chips Act 2.0",
+    "date": null,
+    "siteName": "Shaping Europe’s digital future",
+    "rawTitle": "Proposal for the Chips Act 2.0 | Shaping Europe’s digital future"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "url": "https://english.www.gov.cn/news/202405/29/content_WS66569746c6d0868f4e8e7987.html",
+  "status": 200,
+  "finalUrl": "https://english.www.gov.cn/news/202405/29/content_WS66569746c6d0868f4e8e7987.html",
+  "contentType": "text/html;charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:18.889Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Six banks to invest in big way in IC fund",
+    "date": "2024-05-29",
+    "siteName": null,
+    "rawTitle": "Six banks to invest in big way in IC fund"
+  }
+}

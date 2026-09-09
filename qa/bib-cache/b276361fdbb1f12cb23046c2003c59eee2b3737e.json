@@ -1,0 +1,15 @@
+{
+  "url": "https://download.intel.com/newsroom/archive/2025/en-us-2023-09-18-intel-unveils-industryleading-glass-substrates-to-meet-demand-for-more-powerful-compute.pdf",
+  "status": 200,
+  "finalUrl": "https://download.intel.com/newsroom/archive/2025/en-us-2023-09-18-intel-unveils-industryleading-glass-substrates-to-meet-demand-for-more-powerful-compute.pdf",
+  "contentType": "application/pdf",
+  "lastModified": "Wed, 05 Feb 2025 21:01:02 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:18.236Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": "Intel Unveils Industry-Leading Glass Substrates to Meet Demand for...",
+    "date": "2025-01-31",
+    "firstLine": null
+  }
+}

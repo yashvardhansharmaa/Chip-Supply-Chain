@@ -1,0 +1,16 @@
+{
+  "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000021535/us-gaap/RevenueFromContractWithCustomerIncludingAssessedTax.json",
+  "status": 200,
+  "finalUrl": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000021535/us-gaap/RevenueFromContractWithCustomerIncludingAssessedTax.json",
+  "contentType": "application/json",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:15.244Z",
+  "extracted": {
+    "kind": "html",
+    "title": null,
+    "date": null,
+    "siteName": null,
+    "rawTitle": null
+  }
+}

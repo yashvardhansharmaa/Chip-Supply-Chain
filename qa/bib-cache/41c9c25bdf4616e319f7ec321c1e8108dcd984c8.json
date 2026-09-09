@@ -1,0 +1,16 @@
+{
+  "url": "https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack",
+  "status": 200,
+  "finalUrl": "https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:13.666Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Inside the Ironwood TPU codesigned AI stack",
+    "date": "2025-11-06",
+    "siteName": "Google Cloud Blog",
+    "rawTitle": "Inside the Ironwood TPU codesigned AI stack | Google Cloud Blog"
+  }
+}

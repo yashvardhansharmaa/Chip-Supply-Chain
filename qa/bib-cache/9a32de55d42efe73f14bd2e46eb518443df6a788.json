@@ -1,0 +1,16 @@
+{
+  "url": "https://global.canon/en/news/2024/20240926.html",
+  "status": 200,
+  "finalUrl": "https://global.canon/en/news/2024/20240926.html",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:20.199Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Canon delivers FPA -1200NZ2C nanoimprint lithography system for semiconductor manufacturing to the Texas Institute for Electronics",
+    "date": null,
+    "siteName": "Canon Global",
+    "rawTitle": "Canon delivers FPA -1200NZ2C nanoimprint lithography system for semiconductor manufacturing to the Texas Institute for Electronics | Canon Global"
+  }
+}

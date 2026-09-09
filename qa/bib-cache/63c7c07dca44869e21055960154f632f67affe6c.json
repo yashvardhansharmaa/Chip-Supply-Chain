@@ -1,0 +1,16 @@
+{
+  "url": "https://openai.com/index/jalapeno-first-results/",
+  "status": 200,
+  "finalUrl": "https://openai.com/index/jalapeno-first-results/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:44.746Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Jalapeño’s first results show industry-leading speed and efficiency in AI inference",
+    "date": "2026-09-09",
+    "siteName": "OpenAI",
+    "rawTitle": "Jalapeño’s first results show industry-leading speed and efficiency in AI inference | OpenAI"
+  }
+}

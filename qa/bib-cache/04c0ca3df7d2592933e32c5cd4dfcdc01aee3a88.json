@@ -1,0 +1,16 @@
+{
+  "url": "https://samsungsem.com/global/newsroom/news/view.do?id=9850",
+  "status": 200,
+  "finalUrl": "https://samsungsem.com/global/newsroom/news/view.do?id=9850",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:48.952Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Samsung Electro-Mechanics Signs MOU with Sumitomo Chemical Group to Establish a Joint Venture for ‘Glass Core’ Used in Package Substrates | News | Newsroom",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "Samsung Electro-Mechanics Signs MOU with Sumitomo Chemical Group to Establish a Joint Venture for ‘Glass Core’ Used in Package Substrates | News | Newsroom | SAMSUNG ELECTRO-MECHANICS"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "url": "https://ontoinnovation.com/products",
+  "status": 200,
+  "finalUrl": "https://ontoinnovation.com/products/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:44.224Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Products - Onto Innovation",
+    "date": "2025-04-02",
+    "siteName": "Onto Innovation",
+    "rawTitle": "Products - Onto Innovation"
+  }
+}

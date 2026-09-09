@@ -1,0 +1,16 @@
+{
+  "url": "https://groq.com/",
+  "status": 200,
+  "finalUrl": "https://groq.com/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:19.365Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Groq is the premier neocloud for fast inference",
+    "date": null,
+    "siteName": "Groq",
+    "rawTitle": "Groq is the premier neocloud for fast inference"
+  }
+}

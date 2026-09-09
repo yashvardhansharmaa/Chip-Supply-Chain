@@ -1,0 +1,16 @@
+{
+  "url": "https://www.adeka.co.jp/",
+  "status": 200,
+  "finalUrl": "https://www.adeka.co.jp/",
+  "contentType": "text/html",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:54.334Z",
+  "extracted": {
+    "kind": "html",
+    "title": "株式会社ＡＤＥＫＡ（アデカ）",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "株式会社ＡＤＥＫＡ（アデカ）"
+  }
+}

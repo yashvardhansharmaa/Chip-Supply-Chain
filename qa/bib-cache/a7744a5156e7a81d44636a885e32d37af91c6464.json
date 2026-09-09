@@ -1,0 +1,16 @@
+{
+  "url": "https://newsroom.arm.com/news/arm-q4-fye26-results",
+  "status": 200,
+  "finalUrl": "https://newsroom.arm.com/news/arm-q4-fye26-results",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:43.135Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Arm delivers record-breaking quarter and full-year results",
+    "date": "2026-05-06",
+    "siteName": "Arm Newsroom",
+    "rawTitle": "Arm delivers record-breaking quarter and full-year results - Arm Newsroom"
+  }
+}

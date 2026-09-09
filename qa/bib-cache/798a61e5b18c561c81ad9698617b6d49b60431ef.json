@@ -1,0 +1,16 @@
+{
+  "url": "http://exportcontrol.mofcom.gov.cn/article/zcfg/gnzcfg/zcfggzqd/202307/847.html",
+  "status": 200,
+  "finalUrl": "http://exportcontrol.mofcom.gov.cn/article/zcfg/gnzcfg/zcfggzqd/202307/847.html",
+  "contentType": "text/html",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:11.253Z",
+  "extracted": {
+    "kind": "html",
+    "title": "中国出口管制信息网",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "中国出口管制信息网"
+  }
+}

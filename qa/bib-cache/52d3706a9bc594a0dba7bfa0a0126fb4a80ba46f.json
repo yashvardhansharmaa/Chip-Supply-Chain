@@ -1,0 +1,15 @@
+{
+  "url": "https://docs.fcc.gov/public/attachments/FCC-26-50A1.pdf",
+  "status": 200,
+  "finalUrl": "https://docs.fcc.gov/public/attachments/FCC-26-50A1.pdf",
+  "contentType": "application/pdf; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:18.566Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": null,
+    "date": null,
+    "firstLine": null
+  }
+}

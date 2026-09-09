@@ -1,0 +1,16 @@
+{
+  "url": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60",
+  "status": 200,
+  "finalUrl": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60",
+  "contentType": "text/html",
+  "lastModified": "Tue, 16 Dec 2025 21:38:36 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:13.522Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Supply Chain Explorer: Advanced Chips",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "Supply Chain Explorer: Advanced Chips"
+  }
+}

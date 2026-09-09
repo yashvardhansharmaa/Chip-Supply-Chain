@@ -1,0 +1,16 @@
+{
+  "url": "https://about.fb.com/news/meta-partners-with-broadcom/",
+  "status": 200,
+  "finalUrl": "https://about.fb.com/news/2026/04/meta-partners-with-broadcom-to-co-develop-custom-ai-silicon/",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:11.721Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Meta Partners With Broadcom to Co-Develop Custom AI Silicon",
+    "date": "2026-04-14",
+    "siteName": "Meta Newsroom",
+    "rawTitle": "Meta Partners With Broadcom to Co-Develop Custom AI Silicon"
+  }
+}

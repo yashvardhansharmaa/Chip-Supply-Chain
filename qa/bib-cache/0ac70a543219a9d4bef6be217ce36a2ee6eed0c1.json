@@ -1,0 +1,16 @@
+{
+  "url": "https://techcommunity.microsoft.com/blog/azureinfrastructureblog/deep-dive-into-the-maia-200-architecture/4489312",
+  "status": 200,
+  "finalUrl": "https://techcommunity.microsoft.com/blog/azureinfrastructureblog/deep-dive-into-the-maia-200-architecture/4489312",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:52.312Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Deep dive into the Maia 200 architecture",
+    "date": "2026-01-26",
+    "siteName": "TECHCOMMUNITY.MICROSOFT.COM",
+    "rawTitle": "Deep dive into the Maia 200 architecture | Microsoft Community Hub"
+  }
+}

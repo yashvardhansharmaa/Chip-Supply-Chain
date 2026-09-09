@@ -1,0 +1,16 @@
+{
+  "url": "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv",
+  "status": 200,
+  "finalUrl": "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv",
+  "contentType": "text/plain; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:46.337Z",
+  "extracted": {
+    "kind": "html",
+    "title": null,
+    "date": null,
+    "siteName": null,
+    "rawTitle": null
+  }
+}

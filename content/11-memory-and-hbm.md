@@ -29,7 +29,7 @@
   },
   "keyFacts": [
     {"fact": "HBM4 sets a 2,048-bit interface with 32 channels, 2 TB/s per stack at 8 Gb/s per pin, and up to 64 GB per stack", "source": "https://www.jedec.org/news/pressreleases/jedec%C2%AE-and-industry-leaders-collaborate-release-jesd270-4-hbm4-standard-advancing"},
-    {"fact": "A single HBM cube's data interface is 1,024 bits wide across 32 channels, 16 times wider than a standard DDR5 module", "source": "https://www.micron.com/products/memory/hbm"},
+    {"fact": "A single HBM cube's data interface is 1,024 bits wide, which Micron counts as 32 independent channels (the JEDEC standard calls them 16 channels of two pseudo-channels each), 16 times wider than a standard DDR5 module", "source": "https://www.micron.com/products/memory/hbm"},
     {"fact": "Micron HBM4 runs a 2,048-pin bus above 11.0 Gbps for more than 2.8 TB/s per stack, over double the previous generation", "source": "https://www.micron.com/products/memory/hbm/hbm4"},
     {"fact": "SK hynix completed HBM4 development in September 2025 at over 10 Gbps per pin, above the JEDEC standard of 8 Gbps, using Advanced MR-MUF", "source": "https://news.skhynix.com/en/sk-hynix-completes-worlds-first-hbm4-development-and-readies-mass-production/"},
     {"fact": "HBM package height rises from 720 to 775 micrometres starting with HBM4; hybrid bonding cuts the bond pitch from about 20 micrometres to under 1", "source": "https://news.skhynix.com/en/tech-note-series-ep2/"},
@@ -83,7 +83,7 @@ Answering a prompt is where the width earns its cost. Training reuses each store
 
 | Generation | Interface | Bandwidth per stack | Capacity per stack |
 |---|---|---|---|
-| HBM3E | 1,024-bit, 16 channels | over 1.2 TB/s | 24 GB (8 chips), 36 GB (12 chips) |
+| HBM3E | 1,024-bit, 16 channels (32 pseudo-channels) | over 1.2 TB/s | 24 GB (8 chips), 36 GB (12 chips) |
 | HBM4 | 2,048-bit, 32 channels | over 2.0 TB/s, up to 3.3 TB/s | up to 64 GB (16 chips, 32 Gb dies) |
 
 ### HBM3E

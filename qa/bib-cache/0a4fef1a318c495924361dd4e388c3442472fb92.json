@@ -1,0 +1,16 @@
+{
+  "url": "https://arxiv.org/pdf/1912.09075",
+  "status": 200,
+  "finalUrl": "https://arxiv.org/pdf/1912.09075",
+  "contentType": "application/pdf",
+  "lastModified": "Wed, 11 Aug 2021 04:26:11 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:10.689Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": null,
+    "date": "2019-12-19",
+    "firstLine": "IAc8dt=»dõp d^ÉÝ\u0018\"YO]oæ·ë\u001f¯",
+    "dateModified": "2019-12-19"
+  }
+}

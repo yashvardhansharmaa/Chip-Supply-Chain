@@ -1,0 +1,16 @@
+{
+  "url": "https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html",
+  "status": 200,
+  "finalUrl": "https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html",
+  "contentType": "text/html",
+  "lastModified": "Tue, 19 May 2026 19:29:11 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:17.526Z",
+  "extracted": {
+    "kind": "html",
+    "title": "System Hardware & Components",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "System Hardware & Components — NVIDIA NVL72 AI Factory"
+  }
+}

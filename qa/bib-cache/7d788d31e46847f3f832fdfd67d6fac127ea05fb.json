@@ -1,0 +1,16 @@
+{
+  "url": "https://cloud.google.com/tpu",
+  "status": 200,
+  "finalUrl": "https://cloud.google.com/tpu",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:13.944Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Tensor Processing Units (TPUs)",
+    "date": null,
+    "siteName": "Google Cloud",
+    "rawTitle": "Tensor Processing Units (TPUs) | Google Cloud"
+  }
+}

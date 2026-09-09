@@ -1,0 +1,16 @@
+{
+  "url": "https://newsletter.semianalysis.com/p/eda-market-primer",
+  "status": 200,
+  "finalUrl": "https://newsletter.semianalysis.com/p/eda-market-primer",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:42.790Z",
+  "extracted": {
+    "kind": "html",
+    "title": "EDA Market Primer",
+    "date": "2026-05-21",
+    "siteName": null,
+    "rawTitle": "EDA Market Primer"
+  }
+}

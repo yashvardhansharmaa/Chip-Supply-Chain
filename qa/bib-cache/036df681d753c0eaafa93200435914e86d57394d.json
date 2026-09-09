@@ -1,0 +1,16 @@
+{
+  "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf",
+  "status": 403,
+  "finalUrl": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf",
+  "contentType": "text/html; charset=utf-8",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:20.306Z",
+  "extracted": {
+    "kind": "html",
+    "title": "Attention Required!",
+    "date": null,
+    "siteName": null,
+    "rawTitle": "Attention Required! | Cloudflare"
+  }
+}

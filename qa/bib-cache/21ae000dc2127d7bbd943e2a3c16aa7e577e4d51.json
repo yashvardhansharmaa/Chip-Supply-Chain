@@ -1,0 +1,16 @@
+{
+  "url": "https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2021_con_quarter04_all.pdf",
+  "status": 200,
+  "finalUrl": "https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2021_con_quarter04_all.pdf",
+  "contentType": "application/pdf",
+  "lastModified": "Thu, 17 Feb 2022 09:10:19 GMT",
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:20.988Z",
+  "extracted": {
+    "kind": "pdf",
+    "title": "Microsoft Word - SEC_20214Q_Consolidated_Review Report_v1.docx",
+    "date": "2022-02-17",
+    "firstLine": "'''",
+    "dateModified": "2022-02-17"
+  }
+}

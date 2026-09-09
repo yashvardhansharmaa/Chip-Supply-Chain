@@ -1,0 +1,16 @@
+{
+  "url": "https://data.sec.gov/api/xbrl/companyconcept/CIK0001109345/us-gaap/Revenues.json",
+  "status": 200,
+  "finalUrl": "https://data.sec.gov/api/xbrl/companyconcept/CIK0001109345/us-gaap/Revenues.json",
+  "contentType": "application/json",
+  "lastModified": null,
+  "error": null,
+  "fetchedAt": "2026-09-09T18:21:15.560Z",
+  "extracted": {
+    "kind": "html",
+    "title": null,
+    "date": null,
+    "siteName": null,
+    "rawTitle": null
+  }
+}
