@@ -77,64 +77,62 @@ PC.register('rack', function (p) {
   var tW = 0.522, tD = 0.98, tH = U * 0.90, fz = front - 0.012;
   var computeY = [], switchY = [], powerY = [];
 
+  // A 1U front panel is only about ten pixels tall at the size the site
+  // draws this, so each tray gets one idea and nothing more: two module
+  // bays for compute, one long port band for a switch, six modules for a
+  // power shelf. Anything denser sums to a black band.
   slots.forEach(function (sl) {
     var ty = sl.y, k = sl.kind;
     // the tray body: side rails running back and a sparse lid, so the depth
     // reads without filling the cabinet with haze
-    parts.push(PC.line({ a: [-tW / 2, ty, fz - 0.02], b: [-tW / 2, ty, back + 0.10], perUnit: 70, tone: 0.35 }));
-    parts.push(PC.line({ a: [tW / 2, ty, fz - 0.02], b: [tW / 2, ty, back + 0.10], perUnit: 70, tone: 0.35 }));
-    parts.push(PC.T(PC.plane({ w: tW, d: tD, n: 110, tone: 0.13 }), { pos: [0, ty + tH / 2, (fz - 0.02 + back + 0.10) / 2] }));
-    // the front panel
-    var isPower = (k === 'power');
-    parts.push(fPlane(tW, tH, 0, ty, fz, isPower ? 300 : 620, isPower ? 0.22 : 0.36));
-    parts.push(fOut(tW, tH, 0, ty, fz + 0.002, 340, 1));
+    parts.push(PC.line({ a: [-tW / 2, ty, fz - 0.02], b: [-tW / 2, ty, back + 0.10], perUnit: 60, tone: 0.32 }));
+    parts.push(PC.line({ a: [tW / 2, ty, fz - 0.02], b: [tW / 2, ty, back + 0.10], perUnit: 60, tone: 0.32 }));
+    parts.push(PC.T(PC.plane({ w: tW, d: tD, n: 55, tone: 0.11 }), { pos: [0, ty + tH / 2, (fz - 0.02 + back + 0.10) / 2] }));
 
     if (k === 'compute') {
       computeY.push(ty);
-      // two module bays, each with a pull handle, plus four network cages
+      parts.push(fPlane(tW, tH, 0, ty, fz, 150, 0.24));
+      parts.push(fOut(tW, tH, 0, ty, fz + 0.002, 150, 0.9));
       [-1, 1].forEach(function (s) {
-        var bx = s * 0.135, bw = 0.20, bh = tH * 0.70;
-        parts.push(fPlane(bw, bh, bx, ty, fz + 0.003, 300, 0.5));
-        parts.push(fOut(bw, bh, bx, ty, fz + 0.004, 380, 1));
-        parts.push(fOut(0.026, bh * 0.62, bx - s * (bw / 2 - 0.022), ty, fz + 0.005, 420, 1));
+        var bx = s * 0.132, bw = 0.205, bh = tH * 0.68;
+        parts.push(fOut(bw, bh, bx, ty, fz + 0.004, 150, 0.85));
+        parts.push(PC.line({
+          a: [bx - s * (bw / 2 - 0.014), ty - bh / 2, fz + 0.005],
+          b: [bx - s * (bw / 2 - 0.014), ty + bh / 2, fz + 0.005], perUnit: 320, tone: 0.9
+        }));
       });
-      for (var c = 0; c < 4; c++) {
-        var cx = (c - 1.5) * 0.028;
-        parts.push(fOut(0.020, tH * 0.34, cx, ty, fz + 0.005, 460, 0.95));
-      }
-      parts.push(PC.T(PC.dots({ nx: 4, nz: 1, sx: 0.010, tone: 0.9 }), { pos: [-tW / 2 + 0.028, ty, fz + 0.006] }));
+      parts.push(PC.T(PC.dots({ nx: 3, nz: 1, sx: 0.011, tone: 0.9 }), { pos: [-tW / 2 + 0.026, ty, fz + 0.006] }));
     } else if (k === 'switch') {
       switchY.push(ty);
-      // switch tray: a long band of cage ports between two handles
-      parts.push(fPlane(tW * 0.78, tH * 0.60, 0, ty, fz + 0.003, 420, 0.5));
-      parts.push(fOut(tW * 0.78, tH * 0.60, 0, ty, fz + 0.004, 400, 1));
-      for (var g = 0; g < 18; g++) {
-        var gx = (g - 8.5) * (tW * 0.0415);
-        parts.push(fOut(0.015, tH * 0.40, gx, ty, fz + 0.005, 420, 0.95));
+      parts.push(fPlane(tW, tH, 0, ty, fz, 170, 0.30));
+      parts.push(fOut(tW, tH, 0, ty, fz + 0.002, 150, 0.9));
+      parts.push(fOut(tW * 0.80, tH * 0.52, 0, ty, fz + 0.004, 170, 1));
+      for (var g = 0; g < 11; g++) {
+        var gx = (g - 5) * (tW * 0.066);
+        parts.push(PC.line({ a: [gx, ty - tH * 0.24, fz + 0.005], b: [gx, ty + tH * 0.24, fz + 0.005], perUnit: 260, tone: 0.8 }));
       }
-      [-1, 1].forEach(function (s) {
-        parts.push(fOut(0.030, tH * 0.72, s * (tW / 2 - 0.028), ty, fz + 0.004, 420, 1));
-      });
     } else if (k === 'power') {
       powerY.push(ty);
       // six power-supply modules, in copper: this rack's chokepoint is the
       // electricity, not the silicon
-      parts.push(PC.accent(fPlane(tW - 0.02, tH * 0.86, 0, ty, fz + 0.003, 900), 0.62));
+      parts.push(PC.accent(fPlane(tW, tH, 0, ty, fz, 190), 0.5));
+      parts.push(PC.accent(fOut(tW, tH, 0, ty, fz + 0.002, 150), 1));
       for (var q = 0; q < 6; q++) {
-        var qx = (q - 2.5) * ((tW - 0.03) / 6);
-        parts.push(PC.accent(fOut((tW - 0.05) / 6, tH * 0.80, qx, ty, fz + 0.005, 460), 1));
-        parts.push(PC.accent(fOut(0.016, tH * 0.36, qx + 0.028, ty, fz + 0.006, 460), 1));
-        parts.push(PC.T(PC.accent(PC.dots({ nx: 2, nz: 1, sx: 0.009 }), 1), { pos: [qx - 0.026, ty, fz + 0.006] }));
+        var qx = (q - 2.5) * ((tW - 0.02) / 6);
+        parts.push(PC.accent(fOut((tW - 0.05) / 6, tH * 0.74, qx, ty, fz + 0.004, 150), 1));
+        parts.push(PC.line({ a: [qx + 0.022, ty - tH * 0.30, fz + 0.005], b: [qx + 0.022, ty + tH * 0.30, fz + 0.005], perUnit: 300, tone: 0.85 }));
       }
-      parts.push(PC.accent(fOut(tW - 0.02, tH * 0.86, 0, ty, fz + 0.004, 420), 1));
     } else if (k === 'mgmt') {
-      // management switch: two rows of small ports
-      for (var r = 0; r < 2; r++) for (var m = 0; m < 24; m++) {
-        parts.push(fOut(0.013, tH * 0.28, (m - 11.5) * 0.0195, ty + (r - 0.5) * tH * 0.36, fz + 0.004, 420, 0.9));
+      parts.push(fPlane(tW, tH, 0, ty, fz, 150, 0.24));
+      parts.push(fOut(tW, tH, 0, ty, fz + 0.002, 150, 0.9));
+      for (var r = 0; r < 2; r++) {
+        var ry = ty + (r - 0.5) * tH * 0.40;
+        for (var m = 0; m < 20; m++) {
+          parts.push(PC.line({ a: [(m - 9.5) * 0.024, ry - tH * 0.13, fz + 0.004], b: [(m - 9.5) * 0.024, ry + tH * 0.13, fz + 0.004], perUnit: 280, tone: 0.85 }));
+        }
       }
     } else {
-      // coolant distribution unit: two hose ports and a control panel
-      parts.push(fPlane(tW * 0.9, tH * 0.7, 0, ty, fz + 0.003, 260, 0.3));
+      parts.push(fPlane(tW, tH, 0, ty, fz, 120, 0.20));
     }
   });
 

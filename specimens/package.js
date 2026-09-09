@@ -118,7 +118,7 @@ PC.register('package', function (p) {
   var pitch = 2.8 * S;
   add(PC.T(PC.dots({
     nx: Math.max(6, Math.floor(subW / pitch) - 1), nz: Math.max(6, Math.floor(subD / pitch) - 1),
-    sx: pitch, sz: pitch, tone: 0.4
+    sx: pitch, sz: pitch, tone: 0.3
   }), { pos: [0, -subH / 2 - Y(0.5), 0] }));
 
   // --- stiffener ring: a metal frame on the substrate edge, no lid over the dies ---
@@ -149,7 +149,7 @@ PC.register('package', function (p) {
   var baseH = base.length ? Y(hBase) : 0;
   base.forEach(function (b) {
     var w = b.w * S, d = b.h * S, x = b.x * S, z = -b.y * S;
-    add(PC.T(PC.box({ w: w, h: baseH, d: d, faces: ['py', 'px', 'nx', 'pz', 'nz'], tone: 0.4 }), { pos: [x, yIpTop + baseH / 2, z] }));
+    add(PC.T(PC.box({ w: w, h: baseH, d: d, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: PC.area(w * d * 1.2 + 2 * (w + d) * baseH), tone: 0.42 }), { pos: [x, yIpTop + baseH / 2, z] }));
     add(PC.T(PC.boxEdges({ w: w, h: baseH, d: d, perUnit: 300, tone: 0.9 }), { pos: [x, yIpTop + baseH / 2, z] }));
     // hybrid-bond pad field on the exposed shoulder of the base die
     add(PC.T(PC.dots({ nx: Math.max(4, Math.round(w / (1.4 * S))), nz: Math.max(4, Math.round(d / (1.4 * S))), sx: 1.4 * S, tone: 0.34 }), { pos: [x, yIpTop + baseH + 0.002, z] }));
@@ -163,7 +163,7 @@ PC.register('package', function (p) {
     });
     var w = dd.w * S, d = dd.h * S, x = dd.x * S, z = -dd.y * S;
     var yb = yIpTop + (onBase ? baseH : 0), yc = yb + dieH / 2, yt = yb + dieH;
-    add(PC.T(PC.box({ w: w, h: dieH, d: d, faces: ['py', 'px', 'nx', 'pz', 'nz'], tone: 0.5 }), { pos: [x, yc, z] }));
+    add(PC.T(PC.box({ w: w, h: dieH, d: d, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: PC.area(w * d * 2.4 + 2 * (w + d) * dieH), tone: 0.5 }), { pos: [x, yc, z] }));
     add(PC.T(PC.boxEdges({ w: w, h: dieH, d: d, perUnit: 380, tone: 1 }), { pos: [x, yc, z] }));
     // floorplan on the die top: memory PHY strips down the long edges and a core block grid
     var fp = [], phy = Math.min(w, d) * 0.13, mx = w / 2 - phy, mz = d / 2;
