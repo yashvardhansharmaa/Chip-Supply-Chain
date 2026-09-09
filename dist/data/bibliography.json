@@ -487,21 +487,18 @@
   "https://english.mofcom.gov.cn/News/SpokesmansRemarks/art/2025/art_ae8ca3f16ddb475cb3a9b51a025887c9.html": {
     "title": "MOFCOM Spokesperson’s Remarks on Measures Concerning the Unreliable Entity List",
     "publisher": "Ministry of Commerce of the People's Republic of China",
-    "date": "2025-10-16",
     "type": "press release",
     "accessed": "2026-09-09"
   },
   "https://english.mofcom.gov.cn/Policies/AnnouncementsOrders/art/2025/art_0dd87cbee7b045bf93fabe6ab2faceee.html": {
     "title": "Announcement No.18 of 2025 of The Ministry of Commerce and The General Administration of Customs of The People’s Republic of China Announcing the decision to implement export control on some medium and heavy rare earth related items",
     "publisher": "Ministry of Commerce of the People's Republic of China",
-    "date": "2025-06-17",
     "type": "page",
     "accessed": "2026-09-09"
   },
   "https://english.www.gov.cn/news/202405/29/content_WS66569746c6d0868f4e8e7987.html": {
     "title": "Six banks to invest in big way in IC fund",
     "publisher": "The State Council of the People's Republic of China",
-    "date": "2024-05-29",
     "type": "press release",
     "accessed": "2026-09-09"
   },
@@ -527,14 +524,14 @@
     "accessed": "2026-09-09"
   },
   "https://epoch.ai/data-insights/b200-cost-breakdown": {
-    "title": "NVIDIA",
+    "title": "NVIDIA's B200 costs around $6,400 to produce",
     "publisher": "Epoch AI",
     "date": "2025-12-10",
     "type": "page",
     "accessed": "2026-09-09"
   },
   "https://epoch.ai/data-insights/hyperscaler-capex-trend": {
-    "title": "Hyperscaler capex has quadrupled since GPT-4",
+    "title": "Hyperscaler capex has quadrupled since GPT-4's release",
     "publisher": "Epoch AI",
     "date": "2026-02-26",
     "type": "page",
@@ -1277,10 +1274,11 @@
     "accessed": "2026-09-09"
   },
   "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf": {
-    "title": "K\u0004\u001bïpÓêS\u0013?>óëTI\"0\u001fÂE\u0016>Agw¨®FÀò£ZiUaÉÝÚ n9¡®=`FMId\u000f\u0018\u0015§\u0007D0p»ghÂ`~Ýv0ÕÄ\u0016ìaI\u000f·#¾ËÀ0Å \bàN\"B\u0004·9¿\u001cö!\u0002Ñ\u000e\u0005éßÂñýZmÅ\u0011ø®+\u0004yªÂ÷Å",
+    "title": "JE BIZ 260427 note (Advantest website)",
     "publisher": "Advantest",
     "type": "pdf",
-    "accessed": "2026-09-09"
+    "accessed": "2026-09-09",
+    "unverified": true
   },
   "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_slide.pdf": {
     "title": "FY25 (Period Ended March 31st, 2026) Financial Briefing",
@@ -1695,38 +1693,44 @@
     "accessed": "2026-09-09"
   },
   "https://www.bis.gov/press-release/applied-materials-pay-252-million-penalty-bis-illegally-exporting-semiconductor-manufacturing-equipment": {
-    "title": "Lock",
+    "title": "Applied Materials to Pay $252 Million Penalty to BIS for Illegally Exporting Semiconductor Manufacturing Equipment",
     "publisher": "U.S. Bureau of Industry and Security",
+    "date": "2026-02-11",
     "type": "press release",
     "accessed": "2026-09-09"
   },
   "https://www.bis.gov/press-release/commerce-strengthens-export-controls-restrict-chinas-capability-produce-advanced-semiconductors-military": {
-    "title": "Lock",
+    "title": "Commerce Strengthens Export Controls to Restrict China's Capability to Produce Advanced Semiconductors for Military Applications",
     "publisher": "U.S. Bureau of Industry and Security",
+    "date": "2024-12-02",
     "type": "press release",
     "accessed": "2026-09-09"
   },
   "https://www.bis.gov/press-release/department-commerce-announces-rescission-biden-era-artificial-intelligence-diffusion-rule-strengthens": {
-    "title": "Lock",
+    "title": "Department of Commerce Announces Rescission of Biden-Era Artificial Intelligence Diffusion Rule, Strengthens Chip-Related Export Controls",
     "publisher": "U.S. Bureau of Industry and Security",
+    "date": "2025-05-13",
     "type": "press release",
     "accessed": "2026-09-09"
   },
   "https://www.bis.gov/press-release/department-commerce-closes-export-controls-loophole-foreign-owned-semiconductor-fabs-china": {
-    "title": "Lock",
+    "title": "Department of Commerce Closes Export Controls Loophole for Foreign-Owned Semiconductor Fabs in China",
     "publisher": "U.S. Bureau of Industry and Security",
+    "date": "2025-08-29",
     "type": "press release",
     "accessed": "2026-09-09"
   },
   "https://www.bis.gov/press-release/department-commerce-rescinds-biden-era-artificial-intelligence-diffusion-rule-strengthens-chip-related": {
-    "title": "Lock",
+    "title": "Department of Commerce Announces Rescission of Biden-Era Artificial Intelligence Diffusion Rule, Strengthens Chip-Related Export Controls",
     "publisher": "U.S. Bureau of Industry and Security",
+    "date": "2025-05-13",
     "type": "press release",
     "accessed": "2026-09-09"
   },
   "https://www.bis.gov/press-release/department-commerce-revises-license-review-policy-semiconductors-exported-china": {
-    "title": "Lock",
+    "title": "Department of Commerce Revises License Review Policy for Semiconductors Exported to China",
     "publisher": "U.S. Bureau of Industry and Security",
+    "date": "2026-01-13",
     "type": "press release",
     "accessed": "2026-09-09"
   },
@@ -2955,7 +2959,6 @@
   "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_01c15948864a45d186abb146fe30a42b.html": {
     "title": "商务部公告2026年第37号 公布对原产于日本的进口二氯二氢硅反倾销调查的初步裁定",
     "publisher": "Ministry of Commerce of the People's Republic of China",
-    "date": "2026-09-07",
     "type": "page",
     "accessed": "2026-09-09"
   },
@@ -3221,7 +3224,7 @@
     "accessed": "2026-09-09"
   },
   "https://www.rand.org/pubs/perspectives/PEA4012-1.html": {
-    "title": "China",
+    "title": "China's Evolving Industrial Policy for AI",
     "publisher": "RAND Corporation",
     "date": "2025-06-26",
     "type": "page",
@@ -3984,7 +3987,7 @@
     "accessed": "2026-09-09"
   },
   "https://www.technoprobe.com/": {
-    "title": "%%sitename%%",
+    "title": "Technoprobe - Innovation Begins with us",
     "publisher": "Technoprobe",
     "type": "page",
     "accessed": "2026-09-09"

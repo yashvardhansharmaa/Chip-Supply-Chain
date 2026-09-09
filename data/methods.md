@@ -2,7 +2,7 @@
 
 ## What this site is, and who made it
 
-Compute Chokepoints follows the AI chip in the order it is built, from the quartz that becomes a wafer to the liquid-cooled rack. Each chapter says how one stage works, which firms control it, and how hard they would be to replace. Beside the chapters sit the datasets: the supplier list, the accelerator specs, the export-control timeline, the licence thresholds, the China share of revenue from company filings, and the glossary. The table below counts them all.
+Compute Chokepoints follows the AI chip in the order it is built, from the quartz that becomes a wafer to the liquid-cooled rack. Each chapter says how one stage works, which firms control it, and how hard they would be to replace. Beside the chapters sit the datasets, every one of them listed with its file and its size in the table below.
 
 Yashvardhan Sharma made it with Claude in September 2026. He set the brief, the direction and the standards; Claude did the research, writing, design and code. It follows Humanity's Last Machine and the semiconductor supply-chain work of CSET, the Center for Security and Emerging Technology, both linked in the credits at the foot of the home page.
 
@@ -10,7 +10,7 @@ The whole thing compiles to one HTML file. No framework, no runtime dependencies
 
 ## The chokepoint score
 
-Every chapter opens with a chokepoint card, and three fields on it carry judgment rather than measurement: the chokepoint score, the concentration band and the substitution time. No one publishes any of them. We wrote them; here is how.
+Three fields on every chapter's chokepoint card carry judgment rather than measurement: the chokepoint score, the concentration band and the substitution time. No one publishes any of them. We wrote them; here is how.
 
 The score runs from 1 to 5. It asks one question: what happens to leading-edge AI chip production if the leaders of this stage stop shipping?
 
@@ -22,9 +22,9 @@ The score runs from 1 to 5. It asks one question: what happens to leading-edge A
 | 2 | Many suppliers, and the scarce input is something another industry already sells at volume. | Not used. |
 | 1 | Many substitutes. A buyer switches supplier inside one purchase cycle. | Not used. |
 
-The chain was chosen for its narrow points, so nothing here scores 1 or 2, and even the widest stage, systems and networking, scores a 3.
+Nothing here scores 1 or 2: the chain was chosen for its narrow points.
 
-The score is not the substitution clock in disguise. Metrology and inspection would take ten years or more to replace and scores a 4, because several firms build a good film metrology tool and the leader's hold is concentration rather than physics. Advanced packaging would take three to five years and scores a 5, because TSMC does effectively all the chip-on-wafer-on-substrate packaging (CoWoS) the leading accelerators need. The test is the failure mode, not the calendar.
+The score is not the substitution clock in disguise. Metrology and inspection would take ten years or more to replace and scores a 4, because several firms build a good film metrology tool and the leader's hold is concentration rather than physics. Advanced packaging would take three to five years and scores a 5, because TSMC does effectively all the chip-on-wafer-on-substrate packaging (CoWoS) the leading accelerators need.
 
 ### Concentration
 
@@ -46,11 +46,11 @@ Read those sentences and four constraints do the work. Know-how that was never w
 
 ### Who owns these three numbers
 
-Yashvardhan Sharma does. Claude set each score, band and range while writing the chapter, under his brief and his standards, and he is answerable for all of them. They are editorial judgments. Where a chapter argues its own score, the argument sits in the section headed "The chokepoint"; you are welcome to reach a different number from the same evidence.
+Yashvardhan Sharma does. Claude set each score, band and range while writing the chapter, under his brief and his standards, and he is answerable for all of them. Where a chapter argues its own score, the argument sits in the section headed "The chokepoint"; you are welcome to reach a different number from the same evidence.
 
 ## Where the numbers come from
 
-The sourcing rule is strict, and it is the site's strongest claim to being a reference. Every number must trace to a Tier A source or to one of four named Tier B exceptions. There is no Tier C.
+The sourcing rule is strict, and it is what makes the site a reference rather than an essay. Every number must trace to a Tier A source or to one of four named Tier B exceptions. There is no Tier C.
 
 **Tier A** is primary and institutional: company filings and investor materials on the company's own domain or on SEC EDGAR; governments, regulators, courts and legislatures, including the Federal Register, eCFR, BIS, DOJ, MOFCOM, METI, government.nl, the EU institutions and Congress; standards bodies such as JEDEC, UCIe and RISC-V; universities and national labs, including imec, LBNL and arXiv; and research institutions with named methods and public funding or governance: CSET and its ETO data, CSIS, SIA and SIA/BCG, SEMI, WSTS, Epoch AI, RAND, Brookings, CFR, IFP, Stimson and USGS.
 
@@ -58,7 +58,7 @@ The sourcing rule is strict, and it is the site's strongest claim to being a ref
 
 Everything else is disallowed: every other analyst and market-research firm, TrendForce, Gartner, IDC, Yole, TechInsights, Dell'Oro, Omdia and the rest; all other press, Bloomberg, the Wall Street Journal, the New York Times and every trade title among them; law-firm client alerts, where we cite the rule itself instead; market-research SEO sites; financial-data aggregators; and personal or anonymous blogs.
 
-To see a source's tier, open the Sources page: every citation is listed by chapter and tagged **A** or **B**. In a chapter, the footnote number is the source and links straight to the document. The domain map behind the tags is a file you can read, `data/source-tiers.json`, served next to this page.
+To see a source's tier, open the Sources page: every citation is listed by chapter and tagged **A** or **B**. In a chapter, the footnote number is the source and links straight to the document. The domain map behind the tags is a file you can read: `data/source-tiers.json`.
 
 When a number has no allowed source, one of three things happens.
 
@@ -72,7 +72,7 @@ That is not a hypothetical. When the rule tightened on 9 September 2026, five ro
 
 Sometimes an allowed source is repeating a number from a disallowed one. The site cites it anyway, and says so where the number appears.
 
-**SK hynix and IDC.** SK hynix's Form 424B4 prospectus of 10 July 2026 prints the world's HBM and DRAM shares and credits IDC for them. An IDC report is not citable here. A registered prospectus is a company filing, and SK hynix has adopted these figures as its own description of the market it competes in, with securities-law liability attached. The chart label reads "SK hynix Form 424B4 prospectus, 10 July 2026, on IDC data", and the matrix note repeats the reasoning, so no one reads the numbers as SK hynix's own measurement.
+**SK hynix and IDC.** SK hynix's Form 424B4 prospectus of 10 July 2026 prints the world's HBM and DRAM shares and credits IDC for them. An IDC report is not citable here. A registered prospectus is a company filing, and SK hynix has adopted these figures as its own description of the market it competes in, with securities-law liability attached. The chart label reads "SK hynix Form 424B4 prospectus, 10 July 2026, on IDC data", and the matrix note repeats the reasoning.
 
 **KLA and Gartner.** KLA's March 2026 investor day puts its own 2024 share of the process control market at 56.5 percent, six and a half times its nearest competitor, and footnotes the slide to Gartner. The chapter attributes the figure to KLA rather than stating it flatly, and prints CSET's independent count of 57.2 percent for the same year beside it.
 

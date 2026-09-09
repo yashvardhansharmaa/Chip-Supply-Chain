@@ -222,12 +222,20 @@ function cleanTitle(t) {
 
 // Titles a bot wall or an error page serves instead of the document's own.
 const WALL_TITLE =
-  /^(access denied|just a moment|forbidden|403|404|401|429|error\b|page not found|not found|attention required|are you a robot|robot check|请稍候|security check|redirecting|challenge|blocked|service unavailable|bad gateway|site maintenance|sec\.gov \|)/i;
+  /^(access denied|just a moment|forbidden|403|404|401|429|error\b|page not found|not found|attention required|are you a robot|robot check|请稍候|security check|redirecting|challenge|blocked|service unavailable|bad gateway|site maintenance|sec\.gov \||azure waf|cloudflare|incapsula|request rejected|the request could not be satisfied)/i;
 
-// Real page titles that name no document: a bare "Home", "Index", "Untitled".
-const GENERIC_TITLE = /^(home|home ?page|index|untitled|document|default|welcome|main|top)$/i;
+// "K&S - 404", "Something | Page not found": the error marker can also come last.
+const WALL_SUFFIX = /[\s|–—-]+(404|page not found|not found|error)\s*$/i;
 
-const JUNK_TITLE = new RegExp(`(${WALL_TITLE.source})|(${GENERIC_TITLE.source})`, 'i');
+// Real page titles that name no document: a bare "Home", "Index", "Untitled",
+// or a language switcher's label standing in for the page.
+const GENERIC_TITLE =
+  /^(home|home ?page|index|untitled|document|default|welcome|main|top|english|en|global)$/i;
+
+const JUNK_TITLE = new RegExp(
+  `(${WALL_TITLE.source})|(${GENERIC_TITLE.source})|(${WALL_SUFFIX.source})`,
+  'i'
+);
 
 // Pull the content of a <meta> tag. `key` is the attribute value to look for
 // (og:title, article:published_time, ...) matched on name=, property=, or
@@ -890,7 +898,9 @@ async function main() {
     // thing: it is still the document's own words.
     if (ex && ex.kind === 'html' && (!title || JUNK_TITLE.test(title)) && ex.rawTitle) {
       const raw = ex.rawTitle.replace(/\s*[|–—-]\s*$/, '').trim();
-      if (raw && raw.length > 6 && !WALL_TITLE.test(raw) && !GENERIC_TITLE.test(raw)) title = raw;
+      if (raw && raw.length > 6 && !WALL_TITLE.test(raw) && !WALL_SUFFIX.test(raw) && !GENERIC_TITLE.test(raw)) {
+        title = raw;
+      }
     }
     if (!title || title.length < 3 || JUNK_TITLE.test(title) || looksLikeMojibake(title)) {
       title = null;
@@ -1203,7 +1213,8 @@ const PUBLISHERS = {
   'hscpoly.com': 'Hemlock Semiconductor',
   'wacker.com': 'Wacker Chemie',
   'tokuyama.co.jp': 'Tokuyama Corporation',
-  'ocichem.com': 'OCI Company',
+  // ocichem.com belongs to Ocichem S.R.L., not the Korean OCI the site cites.
+  'ocichem.com': 'Ocichem S.R.L.',
   'sumitomo-chem.co.jp': 'Sumitomo Chemical',
   'jsr.co.jp': 'JSR Corporation',
   'tok.co.jp': 'Tokyo Ohka Kogyo',
