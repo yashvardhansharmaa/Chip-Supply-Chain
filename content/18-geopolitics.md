@@ -53,10 +53,10 @@
     {
       "id": "chips-awards",
       "type": "bars",
-      "title": "CHIPS Act direct funding awarded, by firm",
+      "title": "CHIPS Act direct funding awarded, by firm, as of July 2025",
       "unit": "$B",
-      "data": [["Intel", 7.87], ["TSMC", 6.6], ["Micron", 6.2], ["Samsung", 4.7], ["Texas Instruments", 1.6], ["GlobalFoundries", 1.5], ["SK hynix", 0.458], ["Amkor", 0.407], ["GlobalWafers", 0.406], ["Hemlock Semiconductor", 0.325]],
-      "source": {"label": "Manufacturing Dive CHIPS award tracker", "url": "https://www.manufacturingdive.com/news/chips-and-science-act-tracker-semiconductor-manufacturing/734039/"}
+      "data": [["Intel", 7.865], ["Micron", 6.44], ["TSMC", 6.565], ["Samsung", 4.745], ["Texas Instruments", 1.61], ["GlobalFoundries", 1.587], ["SK hynix", 0.458], ["Amkor", 0.407], ["GlobalWafers", 0.406], ["Hemlock Semiconductor", 0.325]],
+      "source": {"label": "GAO-26-107882, Semiconductors: Information on Projects Funded to Strengthen U.S. Supply Chain", "url": "https://files.gao.gov/reports/GAO-26-107882/index.html"}
     },
     {
       "id": "control-timeline",
@@ -69,7 +69,7 @@
         ["2024-12-02", "24 tool types, HBM controls, 140 entity listings"],
         ["2025-01-15", "AI Diffusion rule published, three country tiers"],
         ["2025-05-13", "AI Diffusion rescinded"],
-        ["2025-08-11", "15% revenue share attached to H20 licences"],
+        ["2025-08-11", "US officials seek 15% of licensed H20 sales"],
         ["2026-01-13", "H200 and MI325X moved to case-by-case review"]
       ],
       "source": {"label": "BIS press releases and Federal Register rules", "url": "https://www.bis.gov/news-updates"}
@@ -100,20 +100,21 @@ The yard has not stayed small. Licensing once asked who was buying and why; coun
 | Etch and clean | United States | 53% | revenue, 2025 |
 | Photoresist | Japan | 75% | revenue, 2024 |
 | Silicon wafers | Japan | 51% | revenue, 2025 |
-| Logic at 16/14 nm and below | Taiwan | 68% | capacity, 2023 |
-| 2.5D advanced packaging | Taiwan | 60-75% | TSMC capacity share, 2026 |
-| HBM | South Korea | 83% | revenue, 2026 |
+| The most advanced logic | Taiwan | 92% | capacity, 2025 |
+| Foundry, all nodes | Taiwan | 78% | market share, 2025 |
+| HBM | South Korea | 56% | SK hynix alone, revenue, 1Q26 |
 | AI accelerator design | United States | 93% | revenue, 2025 |
 | Logic at 28 nm and above | China | 38% | capacity, 2025 |
 
 - **Equipment.** CSET's ETO Supply Chain Explorer, TechInsights 2025 revenue by parent-company headquarters ([source](https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv)).
 - **Materials.** CSET's 2021 segment map ([source](https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/)).
-- **Leading-edge capacity.** TrendForce's 2023 country split ([source](https://www.trendforce.com/presscenter/news/20231214-11959.html)).
-- **Memory.** Counterpoint's Q2 2026 figures: SK hynix 50 percent of HBM revenue, Samsung 33 ([source](https://counterpointresearch.com/en/insights/global-dram-and-hbm-market-share)).
+- **Taiwan.** The Stimson Center's count of Taiwanese foundry share and of capacity for the most advanced chips ([source](https://www.stimson.org/2025/why-taiwan-fears-america-first-risks-eroding-its-silicon-shield/)).
+- **Memory.** SK hynix's own US listing prospectus, which puts its HBM revenue share at 56.4 percent and its DRAM share at 29.1 percent in the first quarter of 2026 ([source](https://www.sec.gov/Archives/edgar/data/0002120882/000119312526299963/d32785d424b4.htm)). Samsung is the other Korean supplier; no allowed source splits the rest.
 - **Design and mature nodes.** CSIS ([source](https://www.csis.org/analysis/chinas-localization-drive-semiconductors-gains-impetus-allied-chip-export-controls)).
-- **Packaging.** Our estimate, from TSMC's CoWoS capacity against its OSAT partners' ([source](https://www.trendforce.com/news/2026/06/15/news-tsmc-cowos-supply-demand-gap-reportedly-seen-narrowing-from-20-to-10-by-end-2026-as-capacity-expands/)).
 
-No country in that table is independent, which is why controls work and why they hurt whoever imposes them.
+Advanced packaging is missing from that table because no source we accept publishes a capacity split for it. It belongs there. TSMC will not give a number, and its silence is itself a reading of how tight the queue is.
+
+No country in the table is independent, which is why controls work and why they hurt whoever imposes them.
 
 ## The US export-control campaign, 2018 to today
 
@@ -121,18 +122,17 @@ The regime was built one rule at a time, each closing a gap the last one left.
 
 - **17 August 2020, the Foreign Direct Product Rule.** The Entity List cut Huawei and 68 affiliates off from US technology in May 2019 ([source](https://www.federalregister.gov/documents/2019/05/21/2019-10616/addition-of-entities-to-the-entity-list)), so Huawei bought foreign-made chips instead; Commerce then extended the restriction to any foreign item made with US technology and bound for Huawei ([source](https://www.federalregister.gov/documents/2020/08/20/2020-18213/addition-of-huawei-non-us-affiliates-to-the-entity-list-the-removal-of-temporary-general-license-and)). That is what makes American controls extraterritorial, and everything since is a variation on it.
 - **7 October 2022, the break.** New ECCNs 3A090 and 3B090 capped exportable AI chips and set fab thresholds at 16 nm FinFET logic, 18 nm half-pitch DRAM and 128-layer NAND ([source](https://www.csis.org/analysis/choking-chinas-access-future-ai)). They also barred US persons from servicing advanced Chinese fabs, emptying them of American engineers within days ([source](https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor)).
-- **17 October 2023, the density fix.** Nvidia's A800 and H800 had cut interconnect bandwidth to slip under the 2022 line while keeping the compute, so BIS added total processing performance and performance density, catching anything at 4,800 TPP or at 1,600 TPP with density 5.92 ([source](https://www.klgates.com/US-Government-Revises-Comprehensive-Export-Controls-on-Semiconductors-and-Semiconductor-Manufacturing-Equipment-10-27-2023)).
+- **17 October 2023, the density fix.** Chip designers had tuned interconnect speed to slip under the 2022 line while keeping the compute, so BIS deleted that parameter and put two in its place: total processing performance and performance density. A data-centre chip now needs a licence at 4,800 TPP, or at 1,600 TPP with a density of 5.92 ([source](https://cset.georgetown.edu/article/bis-2023-update-explainer/)).
 - **2 December 2024, the widest package.** 24 equipment types, three software tools, the first controls on high-bandwidth memory and 140 Entity List additions ([source](https://www.bis.gov/press-release/commerce-strengthens-export-controls-restrict-chinas-capability-produce-advanced-semiconductors-military)).
 - **15 January 2025, AI Diffusion.** A rule sorting the world into three tiers of compute allocation ([source](https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion)), pulled on 13 May, two days before compliance began ([source](https://www.bis.gov/press-release/department-commerce-announces-rescission-biden-era-artificial-intelligence-diffusion-rule-strengthens)). No tiered replacement has appeared since.
 
-The H20 sequence shows the drift. A China licence requirement on 9 April 2025 cost Nvidia up to $5.5 billion in charges ([source](https://www.sec.gov/Archives/edgar/data/1045810/000104581025000082/nvda-20250409.htm)). Licences resumed in July, and in August Nvidia and AMD agreed to hand the government 15 percent of their China revenue on the H20 and MI308 in exchange ([source](https://www.pbs.org/newshour/politics/under-new-unusual-agreement-u-s-will-get-a-15-cut-of-nvidia-and-amd-chip-sales-to-china)).
+The H20 sequence shows the drift. On 9 April 2025 the government told Nvidia it needed a licence to ship the H20 to China, to D:5 countries, and to any company headquartered or ultimately owned there ([source](https://www.sec.gov/Archives/edgar/data/1045810/000104581025000082/nvda-20250409.htm)). Note the last clause: the rule follows ownership, so a Chinese firm cannot buy through a subsidiary abroad. Nvidia took a $4.5 billion charge on H20 inventory it could no longer sell. Licences came back in August, and with them a price: US officials, Nvidia's filing says, "have expressed an expectation that the USG will receive 15% of the revenue generated from licensed H20 sales", though no regulation codifies it ([source](https://www.sec.gov/Archives/edgar/data/1045810/000104581025000209/nvda-20250727.htm)).
 
-Four moves have set the current settlement.
+Three moves have set the current settlement.
 
 - **13 January 2026.** BIS moved the H200 and AMD MI325X to case-by-case review, with third-party testing and a cap at 50 percent of what the exporter ships to US customers ([source](https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities)).
-- **15 January 2026.** A Section 232 proclamation put a 25 percent tariff on the same class of chips, exempting US data centres, research and startups ([source](https://globaltaxnews.ey.com/news/2026-0209-us-section-232-proclamation-imposes-25-percent-tariff-on-certain-semiconductors)).
+- **15 January 2026.** A Section 232 proclamation put a 25 percent tariff on the same class of chips, then exempted almost every American use of them: data centres, repairs, research, startups, consumer and industrial applications, and the public sector ([source](https://www.federalregister.gov/documents/2026/01/20/2026-01052/adjusting-imports-of-semiconductors-semiconductor-manufacturing-equipment-and-their-derivative)).
 - **12 February 2026.** Applied Materials paid $252 million, the statutory maximum, over $126 million of ion implanters routed through Korea to an Entity-Listed Chinese customer ([source](https://www.bis.gov/press-release/applied-materials-pay-252-million-penalty-bis-illegally-exporting-semiconductor-manufacturing-equipment)).
-- **1 June 2026.** The licence requirement follows ownership, so Chinese-headquartered firms cannot buy Blackwell-class parts through overseas subsidiaries ([source](https://www.aljazeera.com/economy/2026/6/1/us-says-ban-on-ai-chip-shipments-applies-to-chinese-firms-outside-china)).
 
 {{figure:control-timeline}}
 
@@ -142,9 +142,9 @@ Unilateral tool controls would only transfer the sales, so the campaign has alwa
 
 - **The Netherlands.** Licensing of advanced DUV took effect on 1 September 2023, widened in September 2024 ([source](https://www.government.nl/latest/news/2024/09/06/the-netherlands-expands-export-control-measure-advanced-semiconductor-manufacturing-equipment)), and from 1 April 2025 reached measurement and inspection tools, moving the fence beyond lithography ([source](https://www.government.nl/latest/news/2025/01/15/klever-export-controls-on-advanced-semiconductor-manufacturing-equipment-to-be-tightened)).
 - **Japan.** Controls on advanced manufacturing equipment took effect on 23 July 2023 and apply regardless of destination rather than naming China ([source](https://www.csis.org/analysis/csis-translation-updated-japanese-export-controls-high-performance-semiconductor)).
-- **South Korea.** BIS ended the Validated End-User status that let Samsung and SK hynix run their China fabs without individual licences on 31 December 2025; annual reviews now allow maintenance but not expansion ([source](https://www.trendforce.com/news/2025/12/30/news-samsung-sk-hynix-escape-worst-case-as-china-veu-ends-annual-review-risks-loom)).
+- **South Korea.** BIS revoked the Validated End-User status that let Samsung, SK hynix and Intel run their China fabs without individual licences, effective 31 December 2025. It will license them to keep those fabs running; it will not license expansion or a technology upgrade ([source](https://www.federalregister.gov/documents/2025/09/02/2025-16735/revocation-of-validated-end-user-authorizations-in-the-peoples-republic-of-china)).
 
-In October 2025, days after a BIS rule extended entity-list restrictions to any subsidiary half-owned by a listed firm ([source](https://www.federalregister.gov/documents/2025/09/30/2025-19001/expansion-of-end-user-controls-to-cover-affiliates-of-certain-listed-entities)), the Dutch government seized Nexperia from China's Wingtech. China blocked exports from Nexperia's Chinese plants, European car lines began stopping within weeks, and both the Dutch order and the BIS rule were suspended in November ([source](https://ioplus.nl/en/posts/dutch-government-suspends-intervention-at-chipmaker-nexperia)) ([source](https://www.federalregister.gov/documents/2025/11/12/2025-19846/one-year-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed-entities)). Europe's leverage at the leading edge does not reach the mature nodes its car industry runs on.
+On 30 September 2025, the day a BIS rule extended entity-list restrictions to any subsidiary half-owned by a listed firm ([source](https://www.federalregister.gov/documents/2025/09/30/2025-19001/expansion-of-end-user-controls-to-cover-affiliates-of-certain-listed-entities)), the Dutch economy minister invoked the Goods Availability Act against Nexperia, a Nijmegen chipmaker whose parts run European car lines. He cited governance failures that threatened to move technology off Dutch and European soil ([source](https://www.government.nl/latest/news/2025/10/12/minister-of-economic-affairs-invokes-goods-availability-act)). Both measures lasted about six weeks: BIS suspended its rule for a year on 10 November ([source](https://www.federalregister.gov/documents/2025/11/12/2025-19846/one-year-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed-entities)), and the minister suspended his order on 19 November ([source](https://www.government.nl/documents/2025/11/19/update-on-invoking-goods-availability-act)). Europe's leverage at the leading edge does not reach the mature nodes its car industry runs on.
 
 The MATCH Act, introduced on 8 April 2026, would ban immersion DUV sales to China, name CXMT, Hua Hong, Huawei, SMIC and YMTC in statute, and give allies 150 days to match before the US extends the Foreign Direct Product Rule alone ([source](https://www.foreign.senate.gov/press/rep/release/risch-ricketts-kim-introduce-match-act-level-the-global-playing-field-for-us-tech)).
 
@@ -153,14 +153,15 @@ The MATCH Act, introduced on 8 April 2026, would ban immersion DUV sales to Chin
 China's retaliation is asymmetric by design: it does not attack chips, it attacks the inputs beneath them. Micron was first, failed in a Cyberspace Administration security review on 21 May 2023 and cut off from critical infrastructure buyers ([source](https://www.csis.org/analysis/micron-aggression-right-response-beijings-ban-us-chipmaker)). The minerals followed.
 
 - **3 December 2024.** MOFCOM Notice 46 banned exports of gallium, germanium, antimony and superhard materials to the United States, one day after the American chip rules ([source](https://cset.georgetown.edu/publication/china-rare-earth-export-ban/)).
-- **2025.** Announcement 18 put seven medium and heavy rare earths under licensing; six more announcements in October reached processing technology and foreign goods containing Chinese-origin material ([source](https://www.clarkhill.com/news-events/news/china-hits-pause-on-rare-earth-export-controls-and-what-it-means-for-supply-chains/)).
-- **November 2025.** MOFCOM suspended the October package and the gallium ban for a year, while the seven-element licensing regime and the ban on sales to US military end users stay permanent ([source](https://www.clarkhill.com/news-events/news/china-hits-pause-on-rare-earth-export-controls-and-what-it-means-for-supply-chains/)).
+- **4 April 2025.** Announcement 18 put seven medium and heavy rare earths under licensing: samarium, gadolinium, terbium, dysprosium, lutetium, scandium and yttrium, in metal, alloy, oxide, compound, target and magnet form ([source](https://english.mofcom.gov.cn/Policies/AnnouncementsOrders/art/2025/art_0dd87cbee7b045bf93fabe6ab2faceee.html)).
+- **9 October 2025.** A further announcement reached foreign-made goods containing Chinese rare earths worth 0.1 percent or more of their value, which put an export licence between a foreign firm and its own product ([source](https://cset.georgetown.edu/publication/mofcom-notice-2025-61/)).
+- **November 2025.** After Trump and Xi met at APEC, MOFCOM suspended the gallium ban for a year ([source](https://www.csis.org/analysis/us-china-trade-truce-has-not-solved-gallium-problem)).
 
-Nothing was repealed. The controls were paused, with the expiry dates published.
+Nothing was repealed. One ban was paused for twelve months; the licensing regimes stand.
 
-Demand-side policy has been the most effective lever. Publicly owned computing centres were told in 2025 to source more than half their chips at home ([source](https://www.scmp.com/tech/tech-war/article/3322119/china-mandates-more-domestic-ai-chips-data-centres-cut-reliance-nvidia)). Nvidia's first H200 shipments under the new licences came to less than 1 percent of $89 billion of data-centre revenue in the quarter to 26 July 2026, and its guidance assumes zero China compute revenue ([source](https://www.scmp.com/tech/big-tech/article/3365383/nvidia-ships-first-h200s-china-forecasts-no-data-centre-computing-revenue)).
+The blunter lever is demand. Beijing has told its buyers to look elsewhere, and Nvidia's own filing records the result: Chinese regulators discouraged customers from buying, importing or using its data-centre products, and endorsed an action plan setting performance-per-watt and memory-bandwidth standards for accelerators in new and renovated Chinese data centres. When Washington did license H200 sales in February 2026, Beijing restricted them, and the shipments Nvidia managed came to less than 1 percent of data-centre revenue ([source](https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm)). That quarter's data-centre revenue was $89.0 billion, and the next quarter's guidance assumed no China compute revenue at all ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027)).
 
-Chinese tool vendors went from 10 to 15 percent of their home market before 2022 to 25 to 35 percent in 2024 and 2025, and hold about 40 percent of domestic etch and deposition ([source](https://www.csis.org/analysis/chinas-localization-drive-semiconductors-gains-impetus-allied-chip-export-controls)). CXMT passed 10 percent of the global DRAM market and is sampling HBM3 ([source](https://en.sedaily.com/finance/2026/09/04/chinas-cxmt-tops-10-percent-of-dram-market-nears-sk-hynix)).
+Chinese tool vendors went from 10 to 15 percent of their home market before 2022 to 25 percent in 2024 and 35 percent in 2025, and hold about 40 percent of domestic etch and deposition ([source](https://www.csis.org/analysis/chinas-localization-drive-semiconductors-gains-impetus-allied-chip-export-controls)).
 
 The leading edge is where it stalls. SMIC runs 7 nm-class logic on multipatterned immersion DUV at an estimated 45,000 advanced-node wafers a month, and Huawei shipped about 805,000 Ascend units in 2025 ([source](https://newsletter.semianalysis.com/p/huawei-ascend-production-ramp)). The binding constraint is memory: a stockpile of roughly 13 million HBM stacks, most bought from Samsung before the December 2024 rules bit, supports about 1.6 million Ascend 910C packages, and domestic HBM will not close that gap in 2026 ([source](https://newsletter.semianalysis.com/p/huawei-ascend-production-ramp)).
 
