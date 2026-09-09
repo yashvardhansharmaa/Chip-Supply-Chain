@@ -209,11 +209,11 @@
   },
   {
     "date": "2025-08-11",
-    "actor": "US (White House), Nvidia and AMD",
-    "title": "15 percent China revenue share for export licences",
-    "summary": "Nvidia agreed to hand the US government 15 percent of its revenue from H20 sales in China and AMD the same share of MI308 revenue, in exchange for export licences. The arrangement, first reported by the Financial Times, has no known precedent in US export control practice, and trade lawyers questioned its legality given the constitutional bar on export taxes. A former Commerce official called it \"astonishing\" and warned that companies were being allowed to buy their way past export controls. It set the template for the 25 percent share later applied to H200 sales.",
+    "actor": "US (White House) and Nvidia",
+    "title": "A 15 percent revenue expectation attached to China licences",
+    "summary": "The US government granted licences in August 2025 that allowed Nvidia to ship H20 products to certain China-based customers. Nvidia's annual report records the condition that came with them: USG officials expressed an expectation that the government would receive 15 percent or more of the revenue generated from licensed sales of its products, but, in the company's words, \"the USG did not publish a regulation codifying such requirement\". There is no rule, no Federal Register notice and no published legal basis for the payment. Nvidia booked about $60 million of H20 revenue under those licences before Chinese buyers were discouraged from taking the part. AMD was described at the time as accepting the same terms for its MI308, but AMD has filed no comparable statement, so only Nvidia's disclosure is recorded here.",
     "category": "US export control",
-    "source": "https://www.aljazeera.com/economy/2025/8/11/nvidia-amd-to-pay-15-of-china-chip-sales-to-us-government-reports-say"
+    "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
   },
   {
     "date": "2025-08-22",
@@ -230,6 +230,14 @@
     "summary": "BIS revoked the Validated End User authorisations that let Intel Semiconductor (Dalian), Samsung China Semiconductor and SK hynix Semiconductor (China) receive US equipment for their China fabs under a general authorisation rather than individual licences. The companies had 120 days after publication, to 31 December 2025, to obtain licences. BIS said it would license the operation of existing fabs but would not approve capacity expansion or technology upgrades in China, and estimated the change would generate about 1,000 extra licence applications a year.",
     "category": "US export control",
     "source": "https://www.bis.gov/press-release/department-commerce-closes-export-controls-loophole-foreign-owned-semiconductor-fabs-china"
+  },
+  {
+    "date": "2025-09-18",
+    "actor": "Huawei",
+    "title": "Huawei announces the Ascend 950 series with its own HBM",
+    "summary": "At Huawei Connect in Shanghai, Eric Xu set out an Ascend roadmap of three new series over three years: the Ascend 950, 960 and 970. The 950 splits in two around memory rather than compute. The Ascend 950PR, for the prefill stage of inference and for recommendation systems, uses HiBL 1.0, a Huawei-designed high bandwidth memory that the company presents as cheaper than HBM3E and HBM4E; Huawei said it would be available in the first quarter of 2026 as computing cards and in SuperPoD servers. The Ascend 950DT, for decode and training, uses HiZQ 2.0 with 144 GB of memory, 4 TB/s of memory bandwidth and 2 TB/s of interconnect bandwidth. Designing its own HBM is the point: high bandwidth memory above the control thresholds cannot be sold to Huawei, and no Chinese merchant supplier makes it.",
+    "category": "Corporate",
+    "source": "https://www.huawei.com/en/news/2025/9/hc-xu-keynote-speech"
   },
   {
     "date": "2025-09-29",
@@ -266,10 +274,10 @@
   {
     "date": "2025-12-08",
     "actor": "US (White House)",
-    "title": "Trump clears H200 sales to China for a 25 percent cut",
-    "summary": "President Trump announced he would allow Nvidia to sell the H200 to approved customers in China, with 25 percent of the sales paid to the US government, and said Xi Jinping had responded positively. The H200 is roughly six times the compute of the H20 it replaces in the China line-up. Blackwell-generation parts, including the cut-down B30A that Nvidia had pitched to Washington, remained barred. The decision reversed the position that only heavily degraded China-specific SKUs could ship.",
+    "title": "Trump clears H200 sales to China",
+    "summary": "President Trump announced that the United States would allow the H200 and similar products to be shipped to approved customers in China. BIS implemented the announcement with a rule on 13 January 2026, moving licence applications for the Nvidia H200, the AMD MI325X and similar chips from a presumption of denial to case-by-case review, on conditions: the applicant must show that the exports will not reduce the global semiconductor capacity available to US customers, that the Chinese purchaser has adopted sufficient security procedures, and that the item has passed independent third-party testing in the United States. The \"cut\" attached to the deal is a tariff rather than a royalty. Nvidia's filings state that the licences require each H200 to pass a US inspection before shipment, so any H200 shipped under the programme is subject to a 25 percent tariff on importation into the United States, which the company says it has been unable to pass on to customers.",
     "category": "US export control",
-    "source": "https://www.aljazeera.com/economy/2025/12/9/trump-clears-way-for-sale-of-powerful-nvidia-h200-chips-to-china"
+    "source": "https://www.bis.gov/press-release/department-commerce-revises-license-review-policy-semiconductors-exported-china"
   },
   {
     "date": "2026-01-14",
@@ -289,11 +297,11 @@
   },
   {
     "date": "2026-01-15",
-    "actor": "US and Taiwan",
-    "title": "US-Taiwan investment agreement on semiconductors",
-    "summary": "Washington and Taipei signed an agreement under which Taiwanese semiconductor, electronics, AI and energy firms will invest at least $250 billion in the United States, backed by a further $250 billion of Taiwanese government credit guarantees for supply-chain investment. In exchange the US cut its general reciprocal tariff on Taiwanese goods from 20 to 15 percent and zeroed rates on generic pharmaceuticals, aircraft components and some natural resources, with Taiwan the first partner to secure the most favourable Section 232 treatment for semiconductors. Taiwanese firms building US capacity may import up to 2.5 times planned capacity duty-free during construction and 1.5 times once complete, and Taiwan's economy minister projected leading-edge AI chip capacity splitting roughly 85-15 between Taiwan and the US by 2030. The broader Agreement on Reciprocal Trade followed on 13 February 2026.",
+    "actor": "US and Taiwan (AIT and TECRO)",
+    "title": "US-Taiwan memorandum of understanding on investment",
+    "summary": "The American Institute in Taiwan and the Taipei Economic and Cultural Representative Office signed a memorandum of understanding on Taiwan-US investment, in which the United States committed to modify certain Section 232 tariffs on Taiwanese goods. Commerce and the US Trade Representative implemented the tariff elements on 28 May 2026, amending the tariff schedule for Taiwanese automobile parts, timber, lumber and wood derivative products and removing derivative Section 232 steel, aluminium and copper tariffs from Taiwanese aircraft components. A broader Agreement on Reciprocal Trade was signed by the two offices on 12 February 2026 but had not entered into force when the implementing notice was published. The headline investment totals and the semiconductor-specific terms reported at signing do not appear in the published US implementing documents and are not recorded here.",
     "category": "Industrial policy",
-    "source": "https://www.aljazeera.com/news/2026/1/16/taiwan-and-us-seal-deal-to-lower-tariffs-boost-chip-investment"
+    "source": "https://www.federalregister.gov/documents/2026/05/28/2026-10571/implementing-certain-tariff-related-elements-of-a-trade-and-security-agreement-between-the-american"
   },
   {
     "date": "2026-02-12",
@@ -312,30 +320,6 @@
     "source": "https://www.justice.gov/opa/pr/three-charged-conspiring-unlawfully-divert-cutting-edge-us-artificial-intelligence"
   },
   {
-    "date": "2026-03-20",
-    "actor": "Huawei",
-    "title": "Huawei launches the Ascend 950PR with its own HBM",
-    "summary": "Huawei unveiled the Ascend 950PR and the Atlas 350 accelerator card at its China Partner Conference, the first Ascend part to use Huawei's own high bandwidth memory, branded HiBL 1.0, with 112 GB of capacity and about 1.4 TB/s of bandwidth at 600 W. Huawei claims 1.56 petaflops of FP4, roughly 2.8 times the Nvidia H20, at about 1.5 times the power. The die is made on SMIC's N+3 process, a 5 nm-class node reached with multi-patterned DUV. Reuters reported mass production began in April 2026 against a full-year target of 750,000 units.",
-    "category": "Corporate",
-    "source": "https://www.trendforce.com/news/2026/03/23/news-huawei-debuts-atlas-350-on-ascend-950pr-with-in-house-hbm-touting-2-8x-h20-performance/"
-  },
-  {
-    "date": "2026-05-31",
-    "actor": "US (BIS)",
-    "title": "Chip licence requirement extended to Chinese firms' overseas units",
-    "summary": "BIS issued guidance confirming that the licence requirement for advanced computing items applies to any entity headquartered in Country Group D:5 or Macau, or whose ultimate parent is headquartered there, even when the buying entity sits outside those jurisdictions. The clarification closed the route by which Chinese AI companies had been buying Nvidia and AMD systems through subsidiaries in Malaysia, Singapore and the UAE. Nvidia said it already complied. Reporting put the volume that had moved this way in the hundreds of thousands of accelerators.",
-    "category": "US export control",
-    "source": "https://www.aljazeera.com/economy/2026/6/1/us-says-ban-on-ai-chip-shipments-applies-to-chinese-firms-outside-china"
-  },
-  {
-    "date": "2026-07-09",
-    "actor": "China (NDRC)",
-    "title": "Beijing rations H200 imports rather than banning them",
-    "summary": "After Washington cleared H200 exports in January, Chinese customs were told to refuse the chips and Nvidia's suppliers paused H200 component output on 17 January 2026. Beijing then reversed course, letting selected firms including Alibaba, ByteDance and DeepSeek apply to the NDRC for limited purchases and requiring each buyer to justify why a domestic part would not do. By mid-August ByteDance and Tencent had each taken delivery of roughly 10,000 H200s, the first meaningful volumes. Commerce's Jeffrey Kessler nonetheless told Congress on 14 July that actual shipments remained trivial against about $10 billion of approved licences.",
-    "category": "China countermeasure",
-    "source": "https://www.scmp.com/tech/policy/article/3360027/game-changer-why-china-finally-letting-its-ai-firms-buy-nvidia-h200"
-  },
-  {
     "date": "2026-07-10",
     "actor": "US (BIS)",
     "title": "UAE moved to Country Group A:5",
@@ -344,12 +328,12 @@
     "source": "https://www.federalregister.gov/documents/2026/07/14/2026-14132/enhanced-favorable-treatment-for-the-united-arab-emirates-under-the-export-administration"
   },
   {
-    "date": "2026-08-24",
-    "actor": "Taiwan (Keelung District Prosecutors)",
-    "title": "Taiwan indicts nine over Blackwell server smuggling",
-    "summary": "Prosecutors in Keelung charged nine people, including a distribution manager at Nvidia's Taiwan office, two sales managers at Supermicro Taiwan and the chief executive of the distributor Albatron Technology, over the resale to China of Supermicro AI servers fitted with Nvidia B300 GPUs. Of 130 servers shipped under the scheme, customs intercepted 56 and 74 reached buyers in China, 50 routed through Indonesia, 16 sent directly and 8 through a shell company in Japan and then Hong Kong. It was Taiwan's first major prosecution of its own nationals for AI hardware diversion and landed five months after the US Super Micro indictment.",
-    "category": "Corporate",
-    "source": "https://www.pbs.org/newshour/world/taiwan-charges-9-over-illegal-ai-server-exports-to-china-including-nvidia-and-super-micro-staffers"
+    "date": "2026-08-26",
+    "actor": "China (PRC government) and Nvidia",
+    "title": "PRC restrictions leave the H200 licences largely unused",
+    "summary": "Nvidia's quarterly filing for the period to 26 July 2026 records what the January opening actually produced. The US government began granting licences in February 2026 to ship small amounts of H200 to specific China-based customers, but, in the company's words, \"such sales were restricted by the PRC government, and we have been unable to sell all the products for which we have licenses\". Nvidia took a $0.4 billion charge in the first half of fiscal 2027 for excess H200 inventory and purchase obligations, and shipped only a fraction of what the licences allowed: less than 1 percent of data-centre revenue in the quarter. China including Hong Kong accounted for $7.9 billion of the quarter's $96.2 billion of revenue, against $4.0 billion a year earlier, so the China business is real and is almost entirely not the H200. Beijing's own instruments here are not published; the effect is on the record in a US filing.",
+    "category": "China countermeasure",
+    "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm"
   },
   {
     "date": "2026-09-07",

@@ -12,10 +12,10 @@
     "chokepointScore": 5,
     "leaders": [
       {"name": "TSMC", "country": "TW", "share": "Effectively all CoWoS for leading AI accelerators"},
-      {"name": "ASE Technology", "country": "TW", "share": "44.6% of top-10 OSAT revenue, 2024"},
-      {"name": "Amkor", "country": "US", "share": "15.2% of top-10 OSAT revenue, 2024"},
-      {"name": "JCET", "country": "CN", "share": "12.0% of top-10 OSAT revenue, 2024"},
-      {"name": "Powertech", "country": "TW", "share": "5.5% of top-10 OSAT revenue, 2024"}
+      {"name": "ASE Technology", "country": "TW", "share": "NT$645.4B revenue, 2025; largest OSAT"},
+      {"name": "Amkor", "country": "US", "share": "$6.71B net sales, 2025; largest American OSAT"},
+      {"name": "JCET", "country": "CN", "share": "RMB 35.96B revenue, 2024; largest Chinese OSAT"},
+      {"name": "ASMPT", "country": "SG", "share": "$532.1M advanced packaging revenue, 2025; thermocompression bonders"}
     ],
     "countries": [
       {"code": "TW", "note": "TSMC AP fabs and the OSAT cluster; almost all 2.5D capacity for AI accelerators"},
@@ -24,45 +24,38 @@
       {"code": "NL", "note": "Besi hybrid and die bonders"},
       {"code": "JP", "note": "Disco grinders and dicers; TEL and Shibaura bonding tools"}
     ],
-    "chinaStatus": "China's back end is far stronger than its front end. JCET, Tongfu and HT-Tech together took about 25% of top-10 OSAT revenue in 2024, but almost none of it is silicon-interposer 2.5D for AI accelerators.",
+    "chinaStatus": "China's back end is far stronger than its front end. JCET alone billed RMB 35.96 billion in 2024, and Chinese suppliers gained share in packaging and test tools while gaining none in ALD or lithography. Almost none of it is silicon-interposer 2.5D for AI accelerators.",
     "usStatus": "No domestic CoWoS at volume. Amkor is building a $7B packaging and test plant in Peoria with up to $407M of CHIPS funding, production from early 2028.",
-    "costSignal": "TSMC forecasts CoWoS capacity growing at over 80% CAGR from 2022 to 2027",
-    "substitution": {"years": "3-5", "why": "The unit process steps are not exotic. What is scarce is the yielded integration of a 5.5-reticle interposer with twelve HBM stacks, and the tool base to do it at 130,000 wafers a month."}
+    "costSignal": "No public wafer counts. TSMC told investors CoWoS capacity would grow at a 60% CAGR and that it doubled in 2025; it still will not publish the absolute number",
+    "substitution": {"years": "3-5", "why": "The unit process steps are not exotic. What is scarce is the yielded integration of a 5.5-reticle interposer with its HBM stacks, and a tool base large enough to do it at the volume Nvidia alone orders."}
   },
   "keyFacts": [
-    {"fact": "One reticle is 26 mm by 33 mm (858 mm2); TSMC is mass-producing 5.5-reticle CoWoS packages at over 98% yield with up to 12 HBM3E/HBM4 stacks", "source": "https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump"},
+    {"fact": "A scanner's maximum exposure field is 26 mm by 33 mm, or 858 mm2", "source": "https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe3400c"},
+    {"fact": "TSMC is now producing 5.5-reticle CoWoS, having certified it in 2025 and started volume production in 2026", "source": "https://pr.tsmc.com/english/news/3302"},
     {"fact": "CoWoS-S silicon interposers reach 3.3x reticle size, about 2,700 mm2; larger designs must use CoWoS-R or CoWoS-L", "source": "https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm"},
-    {"fact": "TSMC's monthly CoWoS capacity reached 35,000 wafers in 2024", "source": "https://www.trendforce.com/news/2024/12/13/news-tsmc-ramps-up-cowos-capacity-across-taiwan-projected-to-nearly-triple-by-2026/"},
-    {"fact": "TSMC CoWoS monthly capacity was set to reach a record 75,000 wafers in 2025, nearly double 2024", "source": "https://www.trendforce.com/news/2025/01/02/news-tsmc-set-to-expand-cowos-capacity-to-record-75000-wafers-in-2025-doubling-2024-output/"},
-    {"fact": "TSMC CoWoS capacity is set to reach 120,000-140,000 wafers a month in 2026; adding 50,000-60,000 from OSAT partners takes industry capacity toward 200,000, narrowing the supply gap from about 20% to about 10%", "source": "https://www.trendforce.com/news/2026/06/15/news-tsmc-cowos-supply-demand-gap-reportedly-seen-narrowing-from-20-to-10-by-end-2026-as-capacity-expands/"},
-    {"fact": "Nvidia has reserved about 800,000 to 850,000 wafers of TSMC's 2026 CoWoS capacity, more than 50% of the total", "source": "https://www.trendforce.com/news/2026/08/05/news-tsmc-reportedly-expands-outsourcing-of-key-cowos-front-end-step-to-osats-amid-rising-nvidia-asic-demand/"},
-    {"fact": "Top-10 OSAT revenue was $41.56B in 2024; ASE took 44.6% and Amkor 15.2%", "source": "https://www.trendforce.com/presscenter/news/20250513-12577.html"},
+    {"fact": "TSMC told its 2024 symposium that CoWoS capacity would grow at a 60% CAGR over the following years, and in October 2025 still would not give an absolute 2026 number", "source": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf"},
+    {"fact": "A 14-reticle CoWoS carrying about 10 large compute dies and 20 HBM stacks is slated for production in 2028, with more than 14 reticles in 2029 and a 40-reticle System-on-Wafer the same year", "source": "https://pr.tsmc.com/english/news/3302"},
+    {"fact": "ASE Technology Holding billed NT$645.4 billion in 2025 with assembly and test revenue up 23%; Amkor billed $6.71 billion, up 6%", "source": "https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-fourth-quarter-and-the-full-year-of-2025-302679779.html"},
+    {"fact": "JCET, China's largest OSAT, billed RMB 35.96 billion in 2024, up 21.2%", "source": "https://www.jcetglobal.com/en/site/news-detail?id=1952"},
     {"fact": "ASMPT advanced packaging revenue was $532.1M in 2025, up 30.2%, with TCB revenue up about 146%; it targets 35-40% of the TCB market", "source": "https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/"},
+    {"fact": "Amkor broke ground in Peoria, Arizona in October 2025 on a $7B two-phase packaging and test campus, with up to $407M of CHIPS funding and production from early 2028", "source": "https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced"},
     {"fact": "TSMC's Arizona commitment reached $265 billion covering 10 fabs and 2 advanced packaging facilities", "source": "https://www.azcommerce.com/news-events/news/2026/7/tsmc-announcement/"}
   ],
   "figures": [
     {
-      "id": "cowos-capacity",
+      "id": "cowos-reticles",
       "type": "bars",
-      "title": "TSMC CoWoS capacity, thousand wafers per month",
-      "unit": "k wpm",
-      "data": [["2024", 35], ["2025", 75], ["2026", 130]],
-      "source": {"label": "TrendForce press releases, December 2024, January 2025 and June 2026 (2026 is the midpoint of 120,000-140,000)", "url": "https://www.trendforce.com/news/2026/06/15/news-tsmc-cowos-supply-demand-gap-reportedly-seen-narrowing-from-20-to-10-by-end-2026-as-capacity-expands/"}
-    },
-    {
-      "id": "osat-share",
-      "type": "stack",
-      "title": "Share of top-10 OSAT revenue, 2024",
-      "unit": "%",
-      "data": [["ASE (TW)", 44.6], ["Amkor (US)", 15.2], ["JCET (CN)", 12.0], ["Tongfu (CN)", 8.0], ["Powertech (TW)", 5.5], ["HT-Tech (CN)", 4.8], ["Others in top 10", 9.9]],
-      "source": {"label": "TrendForce, Top 10 OSAT companies of 2024", "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html"}
+      "title": "CoWoS interposer size on TSMC's roadmap",
+      "unit": "reticles",
+      "data": [["2024, CoWoS-L", 3.5], ["2026, in production", 5.5], ["In development", 9.5], ["2028", 14]],
+      "source": {"label": "TSMC 2025 annual report and 2026 technology symposium", "url": "https://pr.tsmc.com/english/news/3302"}
     }
   ]
 }
 ---
 # Advanced Packaging
 
-A lithography scanner prints a rectangle 26 mm by 33 mm, or 858 mm2, in one exposure ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)). Every AI accelerator worth buying is bigger than that. Packaging is how the industry escaped the reticle. It is now the tightest constraint in the chain.
+A lithography scanner prints a rectangle 26 mm by 33 mm, or 858 mm2, in one exposure ([source](https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe3400c)). Every AI accelerator worth buying is bigger than that. Packaging is how the industry escaped the reticle. It is now the tightest constraint in the chain.
 
 ## How it works
 
@@ -80,19 +73,19 @@ None of it is novel physics. But one joint cracked by thermal cycling kills a bo
 |---|---|---|---|
 | CoWoS-S | Full silicon interposer | 3.3x reticle, about 2,700 mm2 | H100-class parts |
 | CoWoS-R | Organic RDL interposer | Above 3.3x reticle | Cost-sensitive, fewer HBM |
-| CoWoS-L | RDL interposer with local silicon bridges | Reported up to 6x reticle | Blackwell, Rubin |
+| CoWoS-L | RDL interposer with local silicon bridges | 5.5x reticle in production, 9.5x in development | Blackwell, Rubin |
 
 TSMC has run CoWoS in volume since 2012 ([source](https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm)).
 
 ### 2.5D: silicon, RDL and bridges
 
-CoWoS-S gives the finest wiring, but its interposer is a monolithic die whose yield falls as area grows. CoWoS-L replaces the slab with a redistribution layer carrying silicon bridges only where dense wiring is needed ([source](https://www.3dincites.com/2024/10/iftle-607-why-nvidias-blackwell-is-having-issues-with-tsmc-cowos-l-technology/)). Intel's EMIB embeds the same bridge idea in the organic substrate instead, and is the one credible second source when CoWoS is tight.
+CoWoS-S gives the finest wiring, but its interposer is a monolithic die whose yield falls as area grows. CoWoS-L replaces the slab with a redistribution layer carrying silicon bridges only where dense wiring is needed. Intel's EMIB embeds the same bridge idea in the organic substrate instead, and is the one credible second source when CoWoS is tight.
 
-Blackwell was the first product on CoWoS-L, and it went badly. Analysts traced the failures to expansion mismatch between the chiplets, the bridges, the interposer and the substrate; Nvidia redesigned the GPU's top metal and bumps to recover yield ([source](https://www.3dincites.com/2024/10/iftle-607-why-nvidias-blackwell-is-having-issues-with-tsmc-cowos-l-technology/)). Two years later TSMC mass-produces 5.5-reticle packages carrying 12 HBM3E or HBM4 stacks at yields over 98% ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)).
+Blackwell was the first high-volume design on CoWoS-L, and it went badly. The bridges expand at a different rate from the dies, the organic interposer and the substrate, and the package warps; the bridges between the two compute dies carry a 10 TB/s link and have to be placed to a tolerance the rest of the package fights ([source](https://semianalysis.com/2024/08/04/nvidias-blackwell-reworked-shipment/)). TSMC certified the 5.5-reticle version in 2025 and now produces it ([source](https://pr.tsmc.com/english/news/3302)).
 
 ### 3D: SoIC, Foveros, X-Cube
 
-TSMC's SoIC and Intel's Foveros bond dies face to face, copper pad to copper pad with no solder, taking interconnect pitch far below what microbumps allow. Heat decides the layout: the bottom die overheats and the top is hard to power, so 3D designs often put cache underneath rather than compute ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)).
+TSMC's SoIC and Intel's Foveros bond dies face to face, copper pad to copper pad with no solder, taking interconnect pitch far below what microbumps allow. TSMC put 3 nm SoIC into volume production in 2025 ([source](https://investor.tsmc.com/static/annualReports/2025/english/pdf/2025_tsmc_ar_e_ch5.pdf)) and has an A14-on-A14 version due in 2029 with 1.8 times the die-to-die I/O density of the 2 nm generation ([source](https://pr.tsmc.com/english/news/3302)). Heat decides the layout: the bottom die overheats and the top is hard to power, so 3D designs often put cache underneath rather than compute.
 
 ### The escape routes
 
@@ -100,17 +93,15 @@ Panel-level packaging swaps the round wafer for a rectangular panel and wastes f
 
 ## Capacity and allocation
 
-{{figure:cowos-capacity}}
+TSMC does not publish a CoWoS wafer number, and that silence is itself the story. At its 2024 symposium it told investors capacity would grow at a 60 percent compound rate. Asked at the July 2024 earnings call when supply would meet demand, C.C. Wei said he could not reach balance, hoped for 2025 or 2026, and expected supply to stay very tight ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf)).
 
-TSMC ran 35,000 CoWoS wafers a month in 2024 ([source](https://www.trendforce.com/news/2024/12/13/news-tsmc-ramps-up-cowos-capacity-across-taiwan-projected-to-nearly-triple-by-2026/)) and a record 75,000 in 2025 ([source](https://www.trendforce.com/news/2025/01/02/news-tsmc-set-to-expand-cowos-capacity-to-record-75000-wafers-in-2025-doubling-2024-output/)). It is heading for 120,000 to 140,000 by the end of 2026, with OSAT partners adding another 50,000 to 60,000. That takes industry capacity toward 200,000 a month and narrows the supply gap from about 20% to about 10%. TSMC forecasts more than 80% CAGR from 2022 to 2027 ([source](https://www.trendforce.com/news/2026/06/15/news-tsmc-cowos-supply-demand-gap-reportedly-seen-narrowing-from-20-to-10-by-end-2026-as-capacity-expands/)).
-
-Nvidia has reserved 800,000 to 850,000 of those wafers for 2026, more than half of TSMC's total ([source](https://www.trendforce.com/news/2026/08/05/news-tsmc-reportedly-expands-outsourcing-of-key-cowos-front-end-step-to-osats-amid-rising-nvidia-asic-demand/)). AMD and the custom-silicon programmes take the rest.
+Fifteen months later the answer had not changed. In October 2025 Wei said only that TSMC was working very hard to narrow the gap, would add capacity again in 2026, and would give the real number the following year ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf)). Front end and back end were both, in his word, tight. A company that reports monthly revenue to the exchange will not say how many interposers it can build, because the number is the constraint.
 
 ## Who makes it
 
-{{figure:osat-share}}
+{{figure:cowos-reticles}}
 
-Two industries share the word packaging. The 2.5D work for AI accelerators happens inside TSMC's own backend fabs in Taiwan. Everything else goes to outsourced assembly and test firms; the top ten billed $41.56 billion in 2024, ASE alone $18.54 billion ([source](https://www.trendforce.com/presscenter/news/20250513-12577.html)).
+Two industries share the word packaging. The 2.5D work for AI accelerators happens inside TSMC's own backend fabs in Taiwan. Everything else goes to outsourced assembly and test firms. ASE Technology Holding, the largest, billed NT$645.4 billion in 2025, with its assembly and test business up 23 percent; Amkor, the largest American one, billed $6.71 billion ([source](https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-fourth-quarter-and-the-full-year-of-2025-302679779.html)) ([source](https://www.sec.gov/Archives/edgar/data/1047127/000104712726000007/amkr123125erex-991.htm)).
 
 The tools are a narrower chokepoint than the OSATs, and bonding is the narrowest.
 
