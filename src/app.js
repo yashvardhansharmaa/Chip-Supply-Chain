@@ -807,7 +807,7 @@
         '<span class="c2">What they make</span>' + sortBtn('country', 'Country', 'c3') + sortBtn('founded', 'Founded', 'c4') +
         sortBtn('chokepoint', 'Level', 'c5') + '<span class="c6"></span></div>';
       rows.forEach(function (r, i) {
-        var tag = [r.nativeName, r.ticker].filter(Boolean).join(' · '), id = 'sup-d-' + i;
+        var tag = [r.nativeName, /^private$/i.test(r.ticker || '') ? '' : r.ticker].filter(Boolean).join(' · '), id = 'sup-d-' + i;
         html += '<div class="sup-row" data-i="' + i + '" style="--i:' + Math.min(i, 40) + '">' +
           '<button type="button" class="sup-head" aria-expanded="false" aria-controls="' + id + '">' +
           '<span class="c1"><b>' + esc(r.name) + '</b>' + (tag ? '<em>' + esc(tag) + '</em>' : '') + '</span>' +
@@ -842,7 +842,7 @@
       }
       return '<div class="sup-detail-body">' + (r.role ? '<p class="sup-role">' + esc(r.role) + '</p>' : '') +
         (facts.length ? '<dl class="sup-facts">' + facts.map(function (f) { return '<dt>' + f[0] + '</dt><dd>' + f[1] + '</dd>'; }).join('') + '</dl>' : '') +
-        (r.source ? '<a class="sup-src" href="' + safeUrl(r.source) + '" target="_blank" rel="noopener">Source for ' + esc(r.name) + '</a>' : '') + '</div>';
+        (r.source ? '<a class="sup-src" href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" aria-label="Source for ' + esc(r.name) + '">Source</a>' : '') + '</div>';
     },
 
     /* ---- detailed table: every field, as before ---- */
@@ -1263,7 +1263,25 @@
       if (band) return this.OPS[band[1]];
       return o.replace(/>=/g, '≥').replace(/<=/g, '≤');
     },
+    // Rows whose operator and value fields do not read as a sentence get a written headline (see qa/redesign-content.md).
+    OVERRIDE: {
+      '3a090b-tpp': 'TPP 2,400 to 4,800',
+      '4a090-computers': 'Contains a chip at 4,800 TPP or above',
+      'aicd-transistor-count': '30 billion transistors',
+      '3b001-litho-zero-de-minimis': 'Zero de minimis, so any US content counts',
+      'entity-list-affiliates-suspension': 'Stayed 12 months, to 9 November 2026',
+      'nl-duv-nxt2000i': 'TWINSCAN NXT:2000i and later',
+      'nl-duv-nxt1970i-1980i': 'Includes TWINSCAN NXT:1970i and 1980i',
+      'ai-diffusion-country-cap': '790 million TPP per country',
+      'ai-diffusion-nveu-allocation': '5.06 billion TPP per company',
+      'ai-diffusion-lpp': '26.9 million TPP a year per buyer',
+      'ai-diffusion-model-weights': 'Training compute > 10\u00b2\u2076 operations',
+      'eu-ai-act-gpai-compute': 'Training compute > 10\u00b2\u2075 FLOP',
+      'us-model-reporting-1e26': 'Training compute > 10\u00b2\u2076 operations',
+      'us-compute-cluster-reporting': 'Cluster compute > 10\u00b2\u2070 operations per second'
+    },
     headline: function (t) {
+      if (t.id && this.OVERRIDE[t.id]) return this.OVERRIDE[t.id];
       var p = t.paramShort || t.parameter || '', u = this.unitOf(t);
       if (t.value == null || t.value === '') return p;
       return p + ' ' + this.op(t.operator) + ' ' + this.fmtVal(t.value, u) + (u && u !== '%' ? ' ' + u : '');
@@ -1408,8 +1426,8 @@
       $$('#glossary .gl-entry').forEach(function (el) { idx.push({ kind: 'Glossary', title: el.querySelector('dt').firstChild.textContent, text: el.querySelector('dd p').textContent, href: '#/glossary', el: el }); });
       (DATA.suppliers || []).forEach(function (r) { idx.push({ kind: 'Supplier', title: r.name, text: r.category + ' · ' + cname(r.country) + (r.role ? ' · ' + r.role : ''), href: '#/suppliers', q: r.name }); });
       (DATA.landscape || []).forEach(function (c) { idx.push({ kind: 'Chip', title: c.vendor + ' ' + c.name, text: ((c.process || {}).node || '') + ' · ' + ((c.memory || {}).type || '') + ' · ' + (c.status || ''), href: '#/landscape', chip: c.id }); });
-      (DATA.timeline || []).forEach(function (e) { idx.push({ kind: 'Event ' + e.date, title: e.title, text: e.summary || '', href: '#geopolitics' }); });
-      (DATA.controls || []).forEach(function (t) { idx.push({ kind: 'Export rule', title: t.instrument + (t.parameter ? ' · ' + t.parameter : ''), text: [t.scope, t.destinations, t.note].filter(Boolean).join(' · '), href: '#/controls' }); });
+      (DATA.timeline || []).forEach(function (e) { idx.push({ kind: 'Event ' + e.date, title: e.title, text: e.summary || '', href: '#/controls' }); });
+      (DATA.controls || []).forEach(function (t) { idx.push({ kind: 'Export rule', title: t.instrument + (t.parameter ? ' · ' + t.parameter : ''), text: [t.scope, t.destinations, t.note].filter(Boolean).join(' · '), href: '#/thresholds' }); });
       (DATA.exposure || []).forEach(function (r) { if (r.chinaShare != null) idx.push({ kind: 'China revenue', title: r.firm + ' ' + r.fiscalYear, text: 'China was ' + r.chinaShare + '% of revenue' + (r.basis ? ' · ' + r.basis : ''), href: '#/exposure' }); });
       var self = this;
       idx.forEach(function (i) {
