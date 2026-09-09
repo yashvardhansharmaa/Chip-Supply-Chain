@@ -5,12 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Wed, 09 Sep 2026 06:15:40 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:22:00.205Z",
+  "fetchedAt": "2026-09-09T18:31:31.291Z",
   "extracted": {
     "kind": "pdf",
-    "title": null,
+    "title": "Note: This document has been translated from the Japanese original for reference purposes only. In the event of any",
+    "metaTitle": null,
+    "firstLine": "Note: This document has been translated from the Japanese original for reference purposes only. In the event of any",
+    "author": null,
+    "subject": null,
+    "pages": 27,
     "date": "2026-05-01",
-    "firstLine": "&&ÿÿÿÿÿÿÿÿÿUTU'$$ÿÿÿÿÿÿÿÿÿÿÿÿ½¾¿&$$ùùùÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ,++ÿÿÿÿÿÿÿÿÿ&$$><>QQS&&ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ^^a\\Z[ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿµµ¸'&&ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿèèè¹¹¹ôôõÿÿÿÿÿÿÿÿÿ½",
-    "dateModified": "2026-05-01"
+    "dateModified": "2026-05-01",
+    "via": "pymupdf"
   }
 }

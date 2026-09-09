@@ -5,11 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Wed, 14 May 2025 02:19:22 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:21:55.516Z",
+  "fetchedAt": "2026-09-09T18:31:27.907Z",
   "extracted": {
     "kind": "pdf",
-    "title": null,
-    "date": null,
-    "firstLine": "\u0004kKdËG²Ü¡_éßbúi\u001dºYÙß\u0003y\u0012ÑÈØñ^eÄx:\u0007\u0012oP¦ýëÒÂ½«À"
+    "title": "Investors Guide April 25, 2025",
+    "metaTitle": null,
+    "firstLine": "Investors Guide April 25, 2025",
+    "author": null,
+    "subject": null,
+    "pages": 16,
+    "date": "2025-05-13",
+    "dateModified": "2025-05-13",
+    "via": "pymupdf"
   }
 }

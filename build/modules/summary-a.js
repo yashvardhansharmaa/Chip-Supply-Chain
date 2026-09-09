@@ -170,7 +170,8 @@ module.exports = function (ctx) {
 
   const townDots = towns.map((t) => {
     const label = t.sub ? `${t.name} — building substitutes: ${t.note}` : `${t.name} — ${t.ch ? t.ch.title + ' (' + t.ch.score + '/5)' : ''}`;
-    return `<span class="sa-town${t.sub ? ' sa-town--sub' : ''}" data-cc="${esc(t.cc)}" data-r="${t.sub ? 2 : t.score}" style="left:${pctX(t.lon)}%;top:${pctY(t.lat)}%" title="${esc(label)}" aria-hidden="true"></span>`;
+    const d = t.sub ? 7 : 4 + t.score; // pin size follows the chokepoint score, as the globe's pin height does
+    return `<span class="sa-town${t.sub ? ' sa-town--sub' : ''}" data-cc="${esc(t.cc)}" style="left:${pctX(t.lon)}%;top:${pctY(t.lat)}%;--d:${d}px" title="${esc(label)}" aria-hidden="true"></span>`;
   }).join('');
 
   /* ---------------- per-country figures ---------------- */
@@ -241,11 +242,13 @@ ${china}
   }
 
   const DEFAULT_CC = 'TW';
+  // marker area is proportional to the number of chapter cards that name the country, with a floor big enough to tap
   const markers = PRIMARY.map((cc) => {
     const a = anchors[cc], n = NUDGE[cc] || a;
     if (!a) return '';
     const d = info[cc];
-    return `<button type="button" class="sa-marker" data-cc="${cc}" data-w="${d.named.length}" data-hard="${d.top5 ? 1 : 0}" style="left:${pctX(n[1])}%;top:${pctY(n[0])}%" aria-pressed="${cc === DEFAULT_CC}"><span class="sa-marker-dot"><span class="sa-marker-cc">${cc}</span></span><span class="sr-only">${esc(d.name)}: ${d.named.length} of the ${chapters.length} chapters name it</span></button>`;
+    const dia = Math.max(22, Math.round(8.25 * Math.sqrt(d.named.length)));
+    return `<button type="button" class="sa-marker" data-cc="${cc}" data-hard="${d.top5 ? 1 : 0}" style="left:${pctX(n[1])}%;top:${pctY(n[0])}%;--d:${dia}px" aria-pressed="${cc === DEFAULT_CC}"><span class="sa-marker-dot"><span class="sa-marker-cc" aria-hidden="true">${cc}</span></span><span class="sr-only">${esc(d.name)}: named in ${d.named.length} of the ${chapters.length} chapters</span></button>`;
   }).join('');
 
   const chips = PRIMARY.concat(SECONDARY).map((cc) =>

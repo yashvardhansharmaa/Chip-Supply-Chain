@@ -5,12 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Thu, 05 Feb 2026 23:48:51 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:21:46.553Z",
+  "fetchedAt": "2026-09-09T18:31:19.053Z",
   "extracted": {
     "kind": "pdf",
-    "title": "Silicon",
+    "title": "Mineral Commodity Summaries 2026",
+    "metaTitle": "Mineral Commodity Summaries 2026",
+    "firstLine": "Prepared by Emily K. Schnebele [(703) 648–4945, eschnebele@usgs.gov]",
+    "author": "U.S. Geological Survey",
+    "subject": "Mineral Commodity Summaries 2026",
+    "pages": 2,
     "date": "2026-02-05",
-    "firstLine": "-3% wasFLCMeme2024202520242025WWWW474798981601701901802323",
-    "dateModified": "2026-02-05"
+    "dateModified": "2026-02-05",
+    "via": "pymupdf"
   }
 }

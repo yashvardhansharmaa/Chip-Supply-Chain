@@ -464,3 +464,147 @@ Expansions:
 - Institutions named in full on first use: "ERCOT, the grid operator for most of Texas", "The Energy Information Administration". "Approved to energise" became "approved to switch on".
 - "The hyperscalers pay for it" became "The largest data center operators pay for it", and the figure title "Capital expenditure by hyperscaler, 2025" became "Capital spending by the five largest US data center operators, 2025". "Token" is now glossed once, as "the chunk of text a model reads or writes".
 - `specimenCaption` ends "the part of the machine that waits on the grid" instead of the riddle "the part with the queue in front of it".
+
+## 17 Component Costs
+
+Body words 1,250 to 1,279 (range 1,050 to 1,350). Front matter parses; `plain` byte-identical to the first paragraph under "How it works"; all three figure markers present; no em dashes; build clean, D 0, 21 sources unchanged.
+
+This chapter talks to a reader who knows money better than silicon, so the pass spent words naming the parts and took them back out of the machinery.
+
+Precision, and an actor for every verb:
+
+- "It is also the line the buyer controls least" became "Nvidia controls it least of all", which names the buyer the sentence was hiding.
+- "At rack scale the useful number becomes cost of ownership" became "Buy a whole rack and the number that matters is the cost of a GPU-hour". "In the operator case" moved to the front of the SemiAnalysis sentence as "For an operator that owns the machine", so the qualifier survives where it can be read.
+- "Die cost is set by the wafer price, the number of dies that fit on a wafer, and the share of those that work" became "Three numbers set the cost of a die: the price of the wafer, how many dies fit on it, and how many of those work."
+- "an 800 mm2 die ... steps out to 68 whole dies" became "fits 68 times", after "so the edge of the disc goes to waste" replaced the bare geometry.
+- "Micron's gross margin was 39.8 percent" became "Micron earned 39.8 percent", and "so the margin moved upstream to Nvidia's suppliers" became its own sentence, "The margin moved up the chain, to Nvidia's suppliers."
+- Takeaways: "a custom ASIC can attack it" became "a custom chip can attack it".
+
+Expansions, each a gloss on a term already in the text, never a new claim:
+
+- "die" now carries "the finished rectangle of circuitry cut out of a wafer".
+- "CoWoS-L packaging adds about $1,100" became "CoWoS-L, the TSMC process that mounts dies and memory on one carrier and wires them together, adds about $1,100".
+- "The 192 GB of HBM3E beside those dies" became "The 192 GB of high-bandwidth memory beside those dies, sold as HBM3E".
+- WSTS and SIA spelled out as World Semiconductor Trade Statistics and the Semiconductor Industry Association, in the body, the key facts and the figure note. "The industry totals disagree with each other" became "The two bodies that count this industry disagree".
+- "earn 50 to 75 points" became "earn gross margins of 50 to 75 percent"; "distributions, not point estimates" became "each line as a range rather than a single figure"; "a package that fails after memory attach" became "a package that fails after the memory goes on".
+- Compressibility table: "TSVs" became "through-silicon vias", "scrap kills dies and HBM" became "scrap destroys dies and memory".
+- Front matter: the `countries` notes lost OSAT, HBM and ABF ("outsourced assembly and test", "High-bandwidth memory", "Ajinomoto build-up film and the substrates made from it"); `substitution.why` lost ASIC and became two active sentences; `chinaStatus` lost "pay a worse cost structure" for "dodge Nvidia's margin and pay for it elsewhere"; `specimenCaption` says "high-bandwidth memory" and "stacked to scale from the bottom up" instead of "from the foot".
+
+Cuts:
+
+- "Micron's gross margin, further down this page, shows what that is worth to a seller" (15 words), because "Who captures the value" makes the same point two screens later with the numbers attached.
+- "Memory is 45 percent of a B200 build" from "The chokepoint", which was the third statement of that figure in the chapter; the Epoch citation moved onto the packaging claim beside it, so no number lost its source.
+- "One level up again" to "One level up"; "carries over $4B of server capex" to "costs over $4B in servers"; "The test is whether the line falls when volume doubles" to "Does the line fall when volume doubles?"
+
+Left alone:
+
+- "Doubling the wafer price moves the whole bill by a few hundred dollars." The claim is derived rather than cited, and restating the arithmetic would mean adding a number, so it stands as pass 2 left it. Flagged here for whoever owns the sourcing.
+- Both tables, every heading, and the row labels "EUV lithography" and "HBM", which are table structure rather than prose.
+
+## 18 Geopolitics
+
+Body words 2,493 to 2,493 (range 1,800 to 2,500). Front matter parses; `plain` byte-identical to the first paragraph under "The shape of the contest"; all three figure markers present; no em dashes; build clean, D 0, 54 sources unchanged.
+
+The count did not move, and that is the honest summary: about 130 words of plain-English expansion went in and about 130 words of wordiness and repetition came out. The chapter had already been cut twice, so the fat left was in its acronyms rather than its sentences.
+
+Expansions, all glosses on terms the chapter already used:
+
+- "the Entity List" now carries "Commerce's roster of buyers that need a licence".
+- "New ECCNs 3A090 and 3B090" became "Two new export classifications, 3A090 and 3B090".
+- "BIS" is now introduced as "Commerce's Bureau of Industry and Security (BIS)" at first use, then abbreviated.
+- "4,800 TPP, or at 1,600 TPP" became "4,800 points of that performance score, or at 1,600", after the two parameters are named in the sentence before.
+- "to D:5 countries" became "to the D:5 group of arms-embargoed countries"; "A Section 232 proclamation" became "A national-security proclamation under Section 232"; "into A:5" now carries "the tier that holds Washington's close allies".
+- "MOFCOM Notice 46" became "Notice 46, from China's Ministry of Commerce", and the November entry now says "the ministry" and "the Asia-Pacific summit" rather than "MOFCOM" and "APEC".
+- "SMIC runs 7 nm-class logic on multipatterned immersion DUV" became "SMIC prints 7 nm-class logic on older deep-ultraviolet scanners, exposing each layer several times because it cannot buy the finer light", which is the largest single expansion in the chapter.
+- "CXMT's own HBM" became "CXMT, China's own memory maker"; "PRC entities" became "Chinese entities"; "The House Select Committee" became "The House select committee on China"; "an OSAT partner" became "an assembly and test partner"; "immersion DUV sales" became "sales of immersion deep-ultraviolet scanners".
+- "front-end and back-end capacity were 'very tight'" became "wafer and packaging capacity both 'very tight'", which is the same quotation with the trade's two words translated.
+- Predicted winners and Takeaways: "HBM or CoWoS" became "memory stacking or advanced packaging", "EUV, EUV resist and HBM at scale" became "Extreme-ultraviolet machines, their resist and high-bandwidth memory at scale", "no wafer, HBM or OSAT industry" became "no wafer, memory or assembly industry".
+- Front matter: `leaders` lost EUV, DUV, HBM and "process control"; `countries` lost EDA; `chinaStatus` and `substitution.why` lost EUV and HBM; the second key fact now reads "Since 15 January 2026 Commerce has reviewed H200 and MI325X sales to China case by case" instead of the actorless "are reviewed case by case".
+
+Cuts and actives:
+
+- "In 2022 the goal changed" became "In 2022 Washington changed the goal"; "The regime was built one rule at a time" became "Commerce built the regime one rule at a time"; "Cumulative state funding since 2014 is estimated at $150 billion" became "CSIS puts cumulative state funding since 2014 at $150 billion"; "Arizona is not expected to reach 2 nm" became "nobody expects Arizona to reach 2 nm".
+- The 55-word Nexperia sentence split in two, and "Neither measure lasted" lost its second "suspended".
+- "The rule follows ownership, so a Chinese firm cannot buy through a subsidiary abroad" folded into the sentence above it, which already said "headquartered or ultimately owned there": "so no Chinese buyer could route the order through a foreign subsidiary".
+- The closing paragraph of "Predicted winners" dropped the four percentages it was restating from earlier in the chapter, each of which is cited where it first appears: "A 25 percent tariff, an expected 15 percent cut of licensed sales, a 9.9 percent equity stake and a case-by-case licence queue" became "tariffs, equity stakes, a cut of licensed sales and a licence queue".
+- "Europe's position at the leading edge does not reach the mature nodes its car industry runs on" became "Europe holds a chokepoint at the leading edge and none at the mature nodes its car industry runs on", which says the same thing without the double negative.
+- Smaller: "were meant to push China backwards, not just slow it" to "aimed to push China backwards rather than merely slow it"; "Export controls on minerals followed" to "Mineral controls followed"; "the catch-all clause of its Strategic Trade Act" to "its Strategic Trade Act"; "Taiwan's ban on making its newest chips abroad, against the $250 billion investment commitment" to "Taiwan's overseas-production ban against its $250 billion investment promise".
+
+Left alone, and flagged:
+
+- "Chinese regulators discouraged customers from buying, importing or using Nvidia's data-centre products, and endorsed performance-per-watt and bandwidth standards for accelerators in Chinese data centres." This is the one sentence in the chapter that carries factual claims with no citation. It was not mine to delete and I could not source it, so it is flagged here for the source editor.
+- The chokepoint table, including the rows still labelled "EUV lithography", "DUV lithography" and "HBM".
+- The quotation from Nvidia's filing, including "USG".
+
+## data/landscape-notes.md
+
+Words 3,132 to 3,233. Nineteen chip panels, read by researchers, so the pass added definitions where a non-specialist would stall and took out the slack elsewhere; the file grew by about 100 words, all of it explanation.
+
+Expansions:
+
+- "the design that made reticle-crossing normal" became "the design that made it normal to build a chip larger than one lithography exposure"; "Two reticle-limited compute dies" became "Two compute dies, each as large as one lithography exposure allows"; "a reticle-sized inference ASIC" became "an inference part the size of one lithography exposure"; and the Cerebras panel now defines the reticle limit in place, as "the largest rectangle a scanner can print in one shot".
+- "hybrid-bonded onto two N6 I/O dies" became "bonded copper to copper onto two N6 input-output dies".
+- "specifically to hold KV cache" became "to hold the key-value cache that a model builds up as it answers"; Groq's "KV cache" likewise.
+- "The rest of the uplift is in attention" became "The rest of the gain is in attention, the step that decides which earlier words a model looks at".
+- "4,000 tokens per second of single-GPU prefill and 1,000 per second of decode" now names both passes: "prefill, the pass that reads the prompt" and "decode, the pass that writes the answer".
+- "merchant accelerator" and "merchant AI accelerator" became "accelerator sold on the open market"; "not a China-specific SKU" became "not a China-specific model"; "a 20-build-up-layer ABF substrate" became "a 20-layer build-up substrate"; "six copper RDL layers" became "six copper wiring layers".
+- Acronyms retired in favour of words: TDP to "power draw" or "power figure" in four panels, ODM to "the system builder", NIC to "network interface", SoC to "the whole system on chip", BIS to "the Bureau of Industry and Security", MOFCOM to "China's Ministry of Commerce", TPP to "points of total processing performance".
+
+Actives and cuts:
+
+- "Boards and racks are built by Foxconn, Quanta, Wistron, Wiwynn and Supermicro" became "Foxconn, Quanta, Wistron, Wiwynn and Supermicro build the boards and racks".
+- "the B30A ... was blocked in November 2025" became "Washington blocked the purpose-built B30A ... in November 2025"; "the RTX Pro 6000D was rejected by Beijing" became "Beijing rejected the RTX Pro 6000D".
+- "HBM allocation between Samsung and SK hynix is disputed between analysts" became "analysts disagree over how the memory orders split between Samsung and SK hynix".
+- "Note the two configurations:" became "The part ships in two configurations:"; "What it does document is the MUSA stack" became "It does document the MUSA stack"; "The 2026 development is that Groq's roadmap product is now" became "In 2026 Groq's roadmap product became".
+- "a single monolithic die" became "one die"; "which is what forced liquid cooling to become the default rather than an option" became "which made liquid cooling the default rather than an option"; "It drops SparseCores entirely" became "It drops SparseCores".
+- Three sentences over 50 words were split: the Trainium3 packaging sentence, the Groq wafer-cost sentence and the Jalapeño supply-chain sentence.
+- "The 910C is the clearest case in the industry of a domestic chip that materially is not one" became "The 910C is the industry's clearest case of a domestic chip that is not really domestic."
+
+## data/chokepoint-matrix-notes.md
+
+Words 1,508 to 1,508, with the expansions paid for out of the wordiness.
+
+Expansions: CSET spelled out as "Georgetown's Center for Security and Emerging Technology" on first use; SIA and BCG as "The Semiconductor Industry Association and Boston Consulting Group"; ETO as "the Emerging Technology Observatory (ETO) Supply Chain Explorer"; ATP as "assembly, test and packaging"; OSAT as "outsourced assembly and test"; IDMs as "the assembly that chipmakers and foundries do in-house"; ODMs as "the contract manufacturers"; EDA as "the design-software arm" and "design software"; EUV as "extreme-ultraviolet"; "2.5D capacity" as "interposer-based (2.5D) capacity"; and "a client-rendered app" as "the explorer draws its charts in the browser".
+
+Actives: "was read row by row" to "we read ... row by row"; "were all checked" to "we checked"; "The figures are modelled" to "We model the figures"; "that is flagged in the segment note" to "the segment note says so"; "That is recorded in the row's note" to "The row's note records it"; "it has been emptied instead" to "we emptied it instead"; "had to be rolled forward" to "We rolled the sub-5 nm figure forward"; "is not used" to "we do not use it"; "are called out in the segment notes" to "the segment notes call them out".
+
+Cuts: the Amkor example appeared twice, in the assembly-and-test paragraph and again under headquarters conversion; the second instance now reads "a headquarters cut erases Southeast Asia, which does about a fifth of the world's assembly", which is the part the first instance did not say. Also "Memory is the clearest illustration of why the distinction matters" to "Memory shows why the distinction matters"; "which was a market-research count" kept but "It also completely misses" to "It also misses"; "The 38 used here" to "The 38 in the table"; "is a function of" to "depends on"; "Micron is US but fabs most of its bits" to "Micron is American but makes most of its bits".
+
+## data/control-thresholds-notes.md
+
+Words 768 to 804. A short file that was already precise; the growth is all acronym expansion.
+
+- "ECCN 3A090.a catches a chip at TPP 4800" became "Export classification 3A090.a catches a chip at 4,800 points of total processing performance (TPP)", and the same treatment ran through the 2026 entry and the closing list.
+- "BIS added ECCN 3A090.c and set the HBM line" became "the Bureau of Industry and Security (BIS) added export classification 3A090.c and set the line for high-bandwidth memory".
+- "the current eCFR text" became "the current text in the electronic Code of Federal Regulations (eCFR)"; "A Section 232 proclamation" became "A national-security proclamation under Section 232"; "Article 51(3)" became "Article 51(3) of the AI Act".
+- "The zero de minimis entry is the clearest case" now defines the term in place: "where no amount of American content is too small to trigger control".
+- Fixes: "holds 40 quantitative thresholds ... Each object records one number" became "holds the 40 thresholds ... Each entry records one threshold", because a third of the file's entries carry no number at all and the old wording contradicted the file's own third paragraph. "Read four fields first" became "Start with four things", since what follows is four groups and seven fields. "It expires in two months and reimposes automatically" became "The stay expires in two months and the rule comes back automatically", which gives each verb the right subject.
+- Actives and cuts: "the detail was checked against the rule text and corrected" to "we checked the detail ... and corrected it"; "The third group carries most of the regime's reach, and it is the group that catches people out" to "The third group carries most of the regime's reach and catches people out"; "for United States end use" to "for American use".
+
+## data/exposure-notes.md
+
+Words 726 to 729.
+
+- The Nvidia restatement sentence was the hardest line in the file to read: "FY2025 China revenue was $17,108m, 13.1%, on the old billing basis and is $25,048m, 19.2%, restated" became "was $17,108m, or 13.1 percent, on the old billing basis, and $25,048m, or 19.2 percent, restated".
+- The 90-word Samsung sentence split in three. "on the company's investor-relations asset host" became "on its own investor-relations site"; "Samsung is the one firm here that is not an SEC registrant" became "the one firm here that files with no US regulator"; "The figures were checked against those documents" became "We checked the figures against those documents".
+- "`chinaShare` is computed here from the filed absolute figures, never copied from" became "We compute `chinaShare` from the filed absolute figures, never copying".
+- "DART" now carries "Korea's disclosure system".
+- The ASM International note said the disclosure "is neither absolute nor on a total-revenue basis", which contradicted the quotation printed beside it; it now says what the reader can check: "which gives no absolute figure and sets equipment sales against a total-revenue denominator".
+- Smaller: "where a controlled tool physically lands" to "where a controlled tool lands"; "No China line appears anywhere in it" to "No China line appears in it"; "Veeco is absent from that file and is classed as" to "Veeco does not appear there, so this file classes it as".
+
+## data/glossary.json
+
+Twenty-four edits across 23 of the 74 entries. The `plain` and `why` fields together fall from 4,970 words to 4,938. JSON parses; the entry count is still 74.
+
+Definitions that repeated themselves:
+
+- FLOPS: the `plain` field ended "One teraflop, written TFLOPS, is a trillion operations per second", which the term line already says as "a TFLOPS is a trillion of them". Cut.
+- HBM: "A single HBM chip moves data roughly thirty times faster" became "One such stack moves data roughly thirty times faster", which also removes the acronym and fixes "chip", since the entry has just defined a stack.
+
+`why` lines that were two sentences became one, as the brief asks: gate-all-around ("The transistor of the 2 nanometre generation. Only TSMC, Intel and Samsung can build it in volume" became "Only TSMC, Intel and Samsung can build the 2 nanometre generation's transistor in volume"), HBM and OSAT. No `why` field now runs to more than one sentence.
+
+Acronyms inside the definitions, where the reader had to know the term to read its own entry: ALD to "Atomic layer deposition", EUV to "extreme ultraviolet" twice, DUV to "Immersion deep ultraviolet", "merchant chips" to "chips bought on the open market", and the BIS entry no longer uses "BIS" twice in the line that explains what BIS does.
+
+Openers varied, because seven `why` lines began "It is": the foreign direct product rule now opens "This rule is what makes US controls extraterritorial"; hybrid bonding, "Taller, cooler memory stacks wait on this step"; memory wall, "This gap is why"; multipatterning, "China reaches advanced processes this way"; NVL72, "AI capacity is now bought and priced by the rack"; NVLink, "A genuine single-vendor chokepoint"; silicon shield, "The central and contested assumption behind Taiwan policy". Four `plain` fields opened "A chip"; the ASIC entry now opens "A one-customer chip", and the parallel between fabless and integrated device manufacturer was left in place because it teaches the pair.
+
+Passives and clutter: "Their combined capital spending is guided at" to "They have guided to"; "the cost of catching a bad one late is what is pushing testing" to "pushes testing"; "the word is used interchangeably with photomask" to "the word means the same as photomask"; "a material share of an accelerator's cost" to "a real share"; "the enabling step for high bandwidth memory" to "what make high bandwidth memory possible"; "solving this would move the cost of EUV" to "would cut the cost of that printing".

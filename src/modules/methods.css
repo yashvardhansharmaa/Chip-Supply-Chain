@@ -60,7 +60,7 @@
 
 @media (max-width: 900px) {
   .mt-tables { display: block; }
-  .mt-tables .mt-table-wrap { margin-bottom: 34px; }
+  .mt-block { margin-bottom: 38px; }
   .mt-note-file { margin-left: 0; flex-basis: 100%; padding-left: 1.9em; }
   .mt-note-body { padding-left: 0; }
   .mt-log li { grid-template-columns: 1fr; gap: 4px; }

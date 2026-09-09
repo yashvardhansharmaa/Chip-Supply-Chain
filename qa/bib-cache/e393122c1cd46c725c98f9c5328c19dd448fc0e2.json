@@ -5,11 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Tue, 28 Apr 2026 02:48:57 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:21:57.777Z",
+  "fetchedAt": "2026-09-09T18:31:28.623Z",
   "extracted": {
     "kind": "pdf",
-    "title": null,
-    "date": null,
-    "firstLine": null
+    "title": "Integrated Annual Report 2025",
+    "metaTitle": null,
+    "firstLine": "Integrated Annual Report 2025",
+    "author": null,
+    "subject": null,
+    "pages": 71,
+    "date": "2025-12-03",
+    "dateModified": "2026-04-28",
+    "via": "pymupdf"
   }
 }

@@ -5,12 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Thu, 05 Feb 2026 23:48:45 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:21:45.932Z",
+  "fetchedAt": "2026-09-09T18:31:18.212Z",
   "extracted": {
     "kind": "pdf",
-    "title": "Germanium",
+    "title": "Mineral Commodity Summaries 2026",
+    "metaTitle": "Mineral Commodity Summaries 2026",
+    "firstLine": "Prepared by Amy C. Tolcin [(703) 648–4940, atolcin@usgs.gov]",
+    "author": "U.S. Geological Survey",
+    "subject": "Mineral Commodity Summaries 2026",
+    "pages": 2,
     "date": "2026-02-05",
-    "firstLine": ":gG-de5 7on 55% ons,5dems202282618:7 been-on:7--and:---Ce1Data have2",
-    "dateModified": "2026-02-05"
+    "dateModified": "2026-02-05",
+    "via": "pymupdf"
   }
 }

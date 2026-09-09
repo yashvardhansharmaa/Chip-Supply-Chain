@@ -5,11 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Wed, 09 Sep 2026 06:30:13 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:22:00.719Z",
+  "fetchedAt": "2026-09-09T18:31:31.741Z",
   "extracted": {
     "kind": "pdf",
     "title": "Microsoft PowerPoint - 20260630_presentation_E.pptx",
+    "metaTitle": "Microsoft PowerPoint - 20260630_presentation_E.pptx",
+    "firstLine": "June 30, 2026 Genjin Mago",
+    "author": "飯村　新人",
+    "subject": null,
+    "pages": 35,
     "date": "2026-06-30",
-    "firstLine": null
+    "dateModified": "2026-06-30",
+    "via": "pymupdf"
   }
 }

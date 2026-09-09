@@ -5,12 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Thu, 23 Jul 2026 19:33:06 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:22:01.403Z",
+  "fetchedAt": "2026-09-09T18:31:32.291Z",
   "extracted": {
     "kind": "pdf",
     "title": "AMD Instinct 455X GPU",
+    "metaTitle": "AMD Instinct 455X GPU",
+    "firstLine": "DATASHEET: AMD INSTINCT MI455X GPU PID # 5158303",
+    "author": null,
+    "subject": "Leading-Edge GPU for generative AI, inference, training, and high performance computing",
+    "pages": 2,
     "date": "2026-07-20",
-    "firstLine": "1MI400-006MI400-008551006610066100664",
-    "dateModified": "2022-11-02"
+    "dateModified": "2026-07-21",
+    "via": "pymupdf"
   }
 }

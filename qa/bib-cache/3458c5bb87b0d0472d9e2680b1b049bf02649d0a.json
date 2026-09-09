@@ -5,12 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": null,
   "error": null,
-  "fetchedAt": "2026-09-09T18:21:44.964Z",
+  "fetchedAt": "2026-09-09T18:31:18.361Z",
   "extracted": {
     "kind": "pdf",
-    "title": "ASML 2025 Annual Report  Strategic report section",
+    "title": "ASML 2025 Annual Report",
+    "metaTitle": "ASML 2025 Annual Report",
+    "firstLine": "Strategic report",
+    "author": "anonymous",
+    "subject": null,
+    "pages": 72,
     "date": "2026-02-24",
-    "firstLine": "Pon the SEC s website at http://www.sec.gov. The 2025 Annual Report based on EU-IFRS is also available on the website of the AFM at /w",
-    "dateModified": "2026-02-24"
+    "dateModified": "2026-02-24",
+    "via": "pymupdf"
   }
 }

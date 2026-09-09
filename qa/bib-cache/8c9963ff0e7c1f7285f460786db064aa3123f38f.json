@@ -5,11 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Mon, 27 Apr 2026 06:33:12 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:21:56.284Z",
+  "fetchedAt": "2026-09-09T18:31:28.426Z",
   "extracted": {
     "kind": "pdf",
-    "title": null,
-    "date": null,
-    "firstLine": null
+    "title": "FY25 (Period Ended March 31st, 2026) Financial Briefing",
+    "metaTitle": null,
+    "firstLine": "FY25 (Period Ended March 31st, 2026) Financial Briefing",
+    "author": null,
+    "subject": null,
+    "pages": 24,
+    "date": "2026-04-27",
+    "dateModified": "2026-04-27",
+    "via": "pymupdf"
   }
 }

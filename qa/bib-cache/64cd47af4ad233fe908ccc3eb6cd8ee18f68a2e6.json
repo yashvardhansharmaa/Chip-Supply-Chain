@@ -5,12 +5,17 @@
   "contentType": "application/pdf",
   "lastModified": "Wed, 18 Feb 2026 15:35:36 GMT",
   "error": null,
-  "fetchedAt": "2026-09-09T18:21:46.128Z",
+  "fetchedAt": "2026-09-09T18:31:18.037Z",
   "extracted": {
     "kind": "pdf",
     "title": "The Mineral Industry of China in 2020-2021",
+    "metaTitle": "The Mineral Industry of China in 2020-2021",
+    "firstLine": "2023 Minerals Yearbook U.S. Department of the Interior",
+    "author": "USGS National Minerals Information Center",
+    "subject": null,
+    "pages": 44,
     "date": "2026-02-17",
-    "firstLine": "U.S. Department of the InteriorU.S. Geological SurveyFebruary 2026U.S. Government.as noted in the text. Permission to reproduce copyrighted itemsresources, natural hazards, and the environment visit o",
-    "dateModified": "2005-02-09"
+    "dateModified": "2026-02-17",
+    "via": "pymupdf"
   }
 }
