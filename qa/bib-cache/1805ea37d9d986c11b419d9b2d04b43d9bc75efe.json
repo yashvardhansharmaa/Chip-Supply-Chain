@@ -1,10 +1,16 @@
 {
   "url": "https://www.asmpt.com/en/investor-relations/news-events/asmpt-secures-additional-orders-for-fifteen-chip-to-substrate-thermo-compression-bonding-tools-driven-by-ai-tailwind/",
-  "status": 0,
+  "status": 200,
   "finalUrl": "https://www.asmpt.com/en/investor-relations/news-events/asmpt-secures-additional-orders-for-fifteen-chip-to-substrate-thermo-compression-bonding-tools-driven-by-ai-tailwind/",
-  "contentType": null,
+  "contentType": "text/html; charset=utf-8",
   "lastModified": null,
-  "error": "This operation was aborted",
-  "fetchedAt": "2026-09-09T18:22:23.235Z",
-  "extracted": null
+  "error": null,
+  "fetchedAt": "2026-09-09T18:26:32.166Z",
+  "extracted": {
+    "kind": "html",
+    "title": "ASMPT Secures Additional Orders for Fifteen Chip-to-Substrate Thermo-Compression Bonding Tools Driven by AI Tailwind",
+    "date": "2025-12-22",
+    "siteName": null,
+    "rawTitle": "ASMPT Secures Additional Orders for Fifteen Chip-to-Substrate Thermo-Compression Bonding Tools Driven by AI Tailwind | ASMPT Corporate"
+  }
 }

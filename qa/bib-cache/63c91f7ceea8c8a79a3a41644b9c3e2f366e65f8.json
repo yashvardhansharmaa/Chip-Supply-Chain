@@ -1,10 +1,16 @@
 {
   "url": "https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/",
-  "status": 0,
+  "status": 200,
   "finalUrl": "https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/",
-  "contentType": null,
+  "contentType": "text/html; charset=utf-8",
   "lastModified": null,
-  "error": "This operation was aborted",
-  "fetchedAt": "2026-09-09T18:22:23.129Z",
-  "extracted": null
+  "error": null,
+  "fetchedAt": "2026-09-09T18:26:32.060Z",
+  "extracted": {
+    "kind": "html",
+    "title": "ASMPT Announces 2025 Annual Results AI-Driven Structural Growth Underpins Group Performance",
+    "date": "2026-03-04",
+    "siteName": null,
+    "rawTitle": "ASMPT Announces 2025 Annual Results AI-Driven Structural Growth Underpins Group Performance | ASMPT Corporate"
+  }
 }
