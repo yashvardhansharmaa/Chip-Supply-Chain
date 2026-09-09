@@ -61,7 +61,7 @@
 ---
 # Advanced Packaging
 
-A lithography scanner prints a rectangle 26 mm by 33 mm, or 858 mm2, in one exposure ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)). Every AI accelerator worth buying is bigger than that. Packaging is how the industry escaped the reticle, and it is now the tightest constraint in the chain.
+A lithography scanner prints a rectangle 26 mm by 33 mm, or 858 mm2, in one exposure ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)). Every AI accelerator worth buying is bigger than that. Packaging is how the industry escaped the reticle. It is now the tightest constraint in the chain.
 
 ## How it works
 
@@ -69,7 +69,7 @@ Think of a printed circuit board shrunk to the size of a playing card and built 
 
 The reticle limit is why logic is cut into chiplets. HBM adds a second reason: its 1,024-bit or 2,048-bit interface is too wide for an organic substrate to route, so the memory must sit on a shared silicon carrier beside the logic. That carrier is the interposer.
 
-CoWoS builds it in two steps. TSMC makes a thin silicon wafer carrying wiring and through-silicon vias but no transistors, then bonds logic dies and HBM stacks face down onto it with microbumps at 30 to 40 micron pitch: chip-on-wafer. It dices the populated interposer out, attaches it to an organic build-up substrate with larger C4 bumps, and caps it: wafer-on-substrate.
+CoWoS builds it in two steps. TSMC makes a thin silicon wafer carrying wiring and through-silicon vias but no transistors, then bonds logic dies and HBM stacks face down onto it with microbumps at 30 to 40 micron pitch: chip-on-wafer. It dices the populated interposer out and attaches it to an organic build-up substrate: wafer-on-substrate.
 
 None of it is novel physics. But one joint cracked by thermal cycling kills a body holding eight qualified HBM stacks and two of the most expensive logic dies ever made.
 
@@ -85,13 +85,13 @@ TSMC has run CoWoS in volume since 2012 ([source](https://3dfabric.tsmc.com/engl
 
 ### 2.5D: silicon, RDL and bridges
 
-CoWoS-S puts one slab of silicon under everything. It gives the finest wiring, but the interposer is a monolithic die whose yield falls as area grows. CoWoS-L replaces the slab with a redistribution layer carrying silicon bridges only where dense wiring is needed ([source](https://www.3dincites.com/2024/10/iftle-607-why-nvidias-blackwell-is-having-issues-with-tsmc-cowos-l-technology/)). Intel's EMIB embeds the same bridge idea in the organic substrate instead, and is the one credible second source when CoWoS is tight.
+CoWoS-S gives the finest wiring, but its interposer is a monolithic die whose yield falls as area grows. CoWoS-L replaces the slab with a redistribution layer carrying silicon bridges only where dense wiring is needed ([source](https://www.3dincites.com/2024/10/iftle-607-why-nvidias-blackwell-is-having-issues-with-tsmc-cowos-l-technology/)). Intel's EMIB embeds the same bridge idea in the organic substrate instead, and is the one credible second source when CoWoS is tight.
 
-Blackwell was the first product on CoWoS-L, and it went badly. Analysts traced the failures to expansion mismatch between the GPU chiplets, the bridges, the interposer and the substrate; Nvidia redesigned the GPU's top metal and bumps to recover yield ([source](https://www.3dincites.com/2024/10/iftle-607-why-nvidias-blackwell-is-having-issues-with-tsmc-cowos-l-technology/)). Two years later TSMC mass-produces 5.5-reticle packages carrying 12 HBM3E or HBM4 stacks at yields over 98% ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)).
+Blackwell was the first product on CoWoS-L, and it went badly. Analysts traced the failures to expansion mismatch between the chiplets, the bridges, the interposer and the substrate; Nvidia redesigned the GPU's top metal and bumps to recover yield ([source](https://www.3dincites.com/2024/10/iftle-607-why-nvidias-blackwell-is-having-issues-with-tsmc-cowos-l-technology/)). Two years later TSMC mass-produces 5.5-reticle packages carrying 12 HBM3E or HBM4 stacks at yields over 98% ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)).
 
 ### 3D: SoIC, Foveros, X-Cube
 
-TSMC's SoIC and Intel's Foveros bond dies face to face, copper pad to copper pad with no solder, taking interconnect pitch far below what microbumps allow. Heat decides the layout: the bottom die overheats and the top is hard to power, so many 3D designs put cache underneath rather than compute ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)).
+TSMC's SoIC and Intel's Foveros bond dies face to face, copper pad to copper pad with no solder, taking interconnect pitch far below what microbumps allow. Heat decides the layout: the bottom die overheats and the top is hard to power, so 3D designs often put cache underneath rather than compute ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)).
 
 ### The escape routes
 
@@ -109,7 +109,7 @@ Nvidia has reserved 800,000 to 850,000 of those wafers for 2026, more than half 
 
 {{figure:osat-share}}
 
-Two industries share the word packaging. The 2.5D work for AI accelerators happens almost entirely inside TSMC's own backend fabs in Taiwan. Everything else goes to outsourced assembly and test firms; the top ten billed $41.56 billion in 2024, ASE alone $18.54 billion ([source](https://www.trendforce.com/presscenter/news/20250513-12577.html)).
+Two industries share the word packaging. The 2.5D work for AI accelerators happens inside TSMC's own backend fabs in Taiwan. Everything else goes to outsourced assembly and test firms; the top ten billed $41.56 billion in 2024, ASE alone $18.54 billion ([source](https://www.trendforce.com/presscenter/news/20250513-12577.html)).
 
 The tools are a narrower chokepoint than the OSATs, and bonding is the narrowest.
 
@@ -125,11 +125,9 @@ China's back end is much stronger than its front end. JCET, Tongfu and HT-Tech t
 
 TSMC's roadmap makes the chokepoint worse before it gets better.
 
-- **2027.** A 9.5-reticle interposer supporting 12 HBM5 stacks on a 120 mm by 150 mm substrate ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)).
+- **2027.** A 9.5-reticle interposer supporting 12 HBM5 stacks ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)).
 - **2028.** A 14-reticle interposer with 20 HBM5 modules and, we think, ten to twenty compute chiplets ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)).
 - **2029.** More than 14 reticles with up to 24 HBM5E stacks, which at 12,020 mm2 is roughly the area of a compact disc ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)).
-
-Optics arrive on the same platform. TSMC's COUPE stacks an electrical die on a photonic die with SoIC-X, targets volume production in 2026 and claims 5 to 10 times better power efficiency than pluggable modules ([source](https://www.trendforce.com/news/2026/04/01/news-silicon-photonics-race-intensifies-as-tsmc-targets-2026-coupe-production-samsung-eyes-2029-cpo-turnkey/)).
 
 ## Key evaluation criteria
 
@@ -142,4 +140,4 @@ Optics arrive on the same platform. TSMC's COUPE stacks an electrical die on a p
 
 ## Takeaways
 
-Advanced packaging is the second great chokepoint after lithography, and unlike lithography it is a capacity problem, not a physics problem: the steps are known, there are not enough lines. CoWoS capacity roughly quadrupled between 2024 and 2026 and is still short, with Nvidia holding more than half of it. China can package chips but cannot build the 2.5D structures AI accelerators need, and the American alternatives do not start production until 2028.
+Advanced packaging is the second great chokepoint after lithography, and it is a capacity problem, not a physics problem: the steps are known, there are not enough lines. CoWoS capacity roughly quadrupled between 2024 and 2026 and is still short, with Nvidia holding more than half of it. China can package chips but not the 2.5D structures AI accelerators need, and the American alternatives do not start until 2028.
