@@ -92,7 +92,7 @@ When one exposure cannot resolve a pitch, the fab splits the layer across two, t
 
 ### Deep ultraviolet
 
-DUV means excimer laser light: 248 nm from krypton fluoride, 193 nm from argon fluoride, dry or through water. They still dominate by volume: of ASML's 327 systems in 2025, 131 were ArF immersion, 78 KrF, 54 i-line and 16 ArF dry ([source](https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf)). A DUV scanner costs roughly $60 million. This is the one tier with named competitors, Nikon and Canon, and ASML still holds above 80% of it ([source](https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/)).
+DUV means excimer laser light: 248 nm from krypton fluoride, 193 nm from argon fluoride, dry or through water. These tools still dominate by volume: of ASML's 327 systems in 2025, 131 were ArF immersion, 78 KrF, 54 i-line and 16 ArF dry ([source](https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf)). A DUV scanner costs roughly $60 million. This is the one tier with named competitors, Nikon and Canon, and ASML still holds above 80% of it ([source](https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/)).
 
 Immersion is the contested tier: a fab needs NXT:2000i-class scanners to reach leading-edge logic through multipatterning, and that is where Dutch export licensing draws its line.
 
@@ -110,7 +110,7 @@ ASML does not publish per-system prices. Reuters puts a 0.33 NA EUV tool at arou
 
 {{figure:tool-price}}
 
-Intel and TSMC have split on it.
+Intel and TSMC have split on High-NA:
 
 - **Intel Foundry** is first to ship a high-volume logic product made with High-NA, on Intel 18A, and first to install and accept an EXE:5200B ([source](https://www.asml.com/en/news/press-releases/2026/high-na-euv-reaches-new-readiness-milestone)), having processed more than a million High-NA wafers ([source](https://www.intel.com/content/www/us/en/newsroom/news/intel-foundry/intel-foundry-asml-accelerate-industry-readiness-for-high-na-euv.html)).
 - **TSMC** held off and now says it will use High-NA in high-volume manufacturing from 2030 ([source](https://pr.tsmc.com/english/news/3338)).
@@ -121,7 +121,7 @@ ASML recognized four EXE systems in revenue in 2025, against two in 2024 ([sourc
 
 ## Who makes it
 
-ASML took EUR 32.7 billion in net sales in 2025 at a 52.8% gross margin ([source](https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf)), and in July 2026 guided 2026 to EUR 43 to 45 billion at 54 to 56% ([source](https://ourbrand.asml.com/asset/c8dbf3fc-4c5e-4406-83f6-27694b138245/Press-Release-Financial-Results-Q2-2026.pdf)). It is an integrator with 5,100 suppliers ([source](https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm)). Four of them carry the EUV machine:
+ASML took EUR 32.7 billion in net sales in 2025 at a 52.8% gross margin ([source](https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf)), and in July 2026 raised its forecast for the year to EUR 43 to 45 billion at 54 to 56% ([source](https://ourbrand.asml.com/asset/c8dbf3fc-4c5e-4406-83f6-27694b138245/Press-Release-Financial-Results-Q2-2026.pdf)). It is an integrator with 5,100 suppliers ([source](https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm)). Four of them carry the EUV machine:
 
 - **Zeiss SMT**, Oberkochen, makes the illumination system and the six-mirror projection optics ([source](https://www.zeiss.com/semiconductor-manufacturing-technology/inspiring-technology/euv-lithography.html)).
 - **Trumpf**, Ditzingen, makes the carbon dioxide drive laser, which amplifies a few watts to as much as 40 kilowatts and fires 50,000 pulses a second ([source](https://www.trumpf.com/en_US/products/lasers/euv-drive-laser/)).

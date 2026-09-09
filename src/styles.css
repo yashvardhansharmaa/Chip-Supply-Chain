@@ -325,8 +325,7 @@ sup.cite a:hover { text-decoration: underline; }
 .brief-meta .pips i.on { background: var(--accent); border-color: var(--accent); }
 .brief-meta .conc { font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); }
 .brief-meta .conc.Extreme { color: var(--accent-ink); }
-.brief-plain { font-size: 16.5px; line-height: 1.5; color: var(--ink); margin: 0; padding: 12px 14px 2px; border-left: 3px solid var(--accent); background: var(--accent-soft); }
-.brief-plain::before { content: "In plain terms"; display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); margin-bottom: 4px; }
+.brief-lede { font-family: var(--font-body); font-size: 17px; line-height: 1.45; color: var(--ink); margin: 0 0 4px; }
 .brief-short p { font-size: 15.5px; line-height: 1.5; color: var(--ink-2); margin: 0 0 0.6em; }
 .brief-leaders { font-size: 13.5px; color: var(--ink-2); margin: 0; padding-top: 8px; border-top: 1px dashed var(--line-2); }
 .brief-leaders .label { margin-right: 6px; }
