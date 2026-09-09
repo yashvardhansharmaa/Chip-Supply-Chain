@@ -1,0 +1,312 @@
+#!/usr/bin/env node
+/* CHOKEPOINTS build: content/*.md + data/*.json + specimens/*.js + src/* -> dist/index.html (one self-contained file) */
+const fs = require('fs');
+const path = require('path');
+
+const root = path.resolve(__dirname, '..');
+const read = (p) => fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : null;
+const readJSON = (p, fallback) => { const s = read(p); if (!s) return fallback; try { return JSON.parse(s); } catch (e) { warn(`bad JSON in ${path.basename(p)}: ${e.message}`); return fallback; } };
+const warnings = [];
+const warn = (m) => { warnings.push(m); console.warn('warn: ' + m); };
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const slug = (s) => String(s).toLowerCase().replace(/[’'"]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+const COUNTRY = { US: 'United States', NL: 'Netherlands', JP: 'Japan', TW: 'Taiwan', KR: 'South Korea', CN: 'China', DE: 'Germany', CH: 'Switzerland', GB: 'United Kingdom', FR: 'France', IL: 'Israel', SG: 'Singapore', MY: 'Malaysia', AT: 'Austria', IT: 'Italy', BE: 'Belgium', IN: 'India', AE: 'UAE', SA: 'Saudi Arabia', CA: 'Canada', SE: 'Sweden', FI: 'Finland', IE: 'Ireland', TH: 'Thailand', VN: 'Vietnam', PH: 'Philippines', MX: 'Mexico', 'EU-other': 'Other Europe', Other: 'Other' };
+const COUNTRY_COLOR = { US: 1, NL: 2, TW: 3, JP: 4, KR: 5, CN: 6, DE: 7, 'EU-other': 8, Other: 8, 'United States': 1, Netherlands: 2, Taiwan: 3, Japan: 4, 'South Korea': 5, Korea: 5, China: 6, Germany: 7, Europe: 8, 'Other Europe': 8, Other: 8, 'Rest of world': 8, 'Others': 8 };
+
+/* ---------------- front matter ---------------- */
+function parseChapter(src, file) {
+  const m = src.match(/^---json\s*\n([\s\S]*?)\n---\s*\n?/);
+  if (!m) { warn(`${file}: no ---json front matter`); return { meta: {}, body: src }; }
+  let meta = {};
+  try { meta = JSON.parse(m[1]); } catch (e) { warn(`${file}: front matter JSON error: ${e.message}`); }
+  return { meta, body: src.slice(m[0].length) };
+}
+
+/* ---------------- inline markdown ---------------- */
+function inline(text, ctx) {
+  let s = esc(text);
+  // code spans
+  s = s.replace(/`([^`]+)`/g, (_, c) => `<code>${c}</code>`);
+  // citations: ([source](url)) or [source](url)
+  s = s.replace(/\(\s*\[(?:source|Source|src)\]\((https?:[^)\s]+)\)\s*\)/g, (_, url) => cite(url, ctx));
+  s = s.replace(/\[(?:source|Source|src)\]\((https?:[^)\s]+)\)/g, (_, url) => cite(url, ctx));
+  // links
+  s = s.replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, (_, t, url) => `<a href="${url}" target="_blank" rel="noopener">${t}</a>`);
+  // internal anchors [text](#id)
+  s = s.replace(/\[([^\]]+)\]\(#([^)\s]+)\)/g, (_, t, id) => `<a href="#${id}">${t}</a>`);
+  // bold / italic
+  s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  s = s.replace(/(^|[^*\w])\*([^*\n]+)\*(?!\w)/g, '$1<em>$2</em>');
+  s = s.replace(/(^|[^_\w])_([^_\n]+)_(?!\w)/g, '$1<em>$2</em>');
+  // leftover google-docs heading anchors
+  s = s.replace(/\s*\{#[^}]*\}/g, '');
+  return s;
+}
+function cite(url, ctx) {
+  url = url.replace(/&amp;/g, '&');
+  let i = ctx.cites.findIndex((c) => c.url === url);
+  if (i < 0) { ctx.cites.push({ url }); i = ctx.cites.length - 1; }
+  return `<sup class="cite"><a href="${esc(url)}" target="_blank" rel="noopener" title="${esc(host(url))}">${i + 1}</a></sup>`;
+}
+function host(url) { try { return new URL(url).hostname.replace(/^www\./, ''); } catch (e) { return url; } }
+
+/* ---------------- figures ---------------- */
+function fmtNum(v) { if (typeof v !== 'number') return esc(v); return Math.abs(v) >= 1000 ? v.toLocaleString('en-US') : (Number.isInteger(v) ? String(v) : v.toFixed(1)); }
+function figure(f, ctx) {
+  if (!f) return '';
+  const title = `<p class="fig-title">${esc(f.title)}${f.unit ? `<span class="unit">${esc(f.unit)}</span>` : ''}</p>`;
+  const source = f.source && f.source.url ? `<p class="fig-source">Source: <a href="${esc(f.source.url)}" target="_blank" rel="noopener">${esc(f.source.label || host(f.source.url))}</a></p>` : (f.source && f.source.label ? `<p class="fig-source">Source: ${esc(f.source.label)}</p>` : '');
+  if (f.source && f.source.url) cite(f.source.url, ctx);
+  let body = '';
+  const data = Array.isArray(f.data) ? f.data.filter((d) => Array.isArray(d) && d.length >= 2) : [];
+  if (f.type === 'bars') {
+    const max = Math.max(...data.map((d) => +d[1] || 0), 1e-9);
+    const rowH = 26, labelW = 176, barX = labelW + 8, barW = 330, W = 600, H = data.length * rowH + 6;
+    let svg = `<svg class="bars" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(f.title)}">`;
+    data.forEach((d, i) => {
+      const y = i * rowH + 3, w = Math.max(2, (+d[1] || 0) / max * barW);
+      svg += `<text x="${labelW}" y="${y + 13}" text-anchor="end">${esc(String(d[0]).slice(0, 26))}</text><rect class="track" x="${barX}" y="${y}" width="${barW}" height="16" rx="1"/><rect class="bar" x="${barX}" y="${y}" width="${w.toFixed(1)}" height="16" rx="1"/><text class="val" x="${barX + w + 8}" y="${y + 13}">${fmtNum(d[1])}${f.unit === '%' ? '%' : ''}</text>`;
+    });
+    svg += `<line class="axis" x1="${barX}" y1="0" x2="${barX}" y2="${H}"/></svg>`;
+    body = svg + tableFallback(data, f);
+  } else if (f.type === 'stack') {
+    const total = data.reduce((a, d) => a + (+d[1] || 0), 0) || 1;
+    let seen = 0;
+    const colorOf = (name) => { const c = COUNTRY_COLOR[name]; if (c) return c; seen += 1; return ((seen - 1) % 8) + 1; };
+    const segs = data.map((d) => ({ name: d[0], v: +d[1] || 0, c: colorOf(d[0]) }));
+    body = `<div class="stack-bar" role="img" aria-label="${esc(f.title)}">` + segs.map((s) => `<i style="flex:${(s.v / total * 100).toFixed(2)} 0 0;background:var(--c${s.c})" title="${esc(s.name)}: ${fmtNum(s.v)}${f.unit === '%' ? '%' : ''}"></i>`).join('') + `</div>` +
+      `<div class="stack-legend">` + segs.map((s) => `<span style="--sw:var(--c${s.c})">${esc(s.name)}<b>${fmtNum(s.v)}${f.unit === '%' ? '%' : ''}</b></span>`).join('') + `</div>`;
+  } else if (f.type === 'timeline') {
+    body = `<ol class="tl">` + data.map((d) => `<li><span class="d">${esc(d[0])}</span>${esc(d[1])}</li>`).join('') + `</ol>`;
+  } else {
+    warn(`${ctx.id}: unknown figure type ${f.type}`);
+    return '';
+  }
+  return `<figure class="figure" id="fig-${esc(ctx.id)}-${esc(f.id)}">${title}${body}${source}</figure>`;
+}
+function tableFallback(data, f) {
+  return `<table class="sr-only"><caption>${esc(f.title)}</caption><tbody>${data.map((d) => `<tr><th scope="row">${esc(d[0])}</th><td>${fmtNum(d[1])}${f.unit ? ' ' + esc(f.unit) : ''}</td></tr>`).join('')}</tbody></table>`;
+}
+
+/* ---------------- block markdown ---------------- */
+function markdown(src, ctx) {
+  const lines = src.replace(/\r/g, '').split('\n');
+  const out = [];
+  const headings = [];
+  let i = 0, inTakeaways = false, para = [];
+  const flushPara = () => { if (para.length) { out.push(`<p>${inline(para.join(' '), ctx)}</p>`); para = []; } };
+  const closeTakeaways = () => { if (inTakeaways) { out.push('</div>'); inTakeaways = false; } };
+  while (i < lines.length) {
+    let line = lines[i];
+    const t = line.trim();
+    if (!t) { flushPara(); i++; continue; }
+    // headings
+    let hm = t.match(/^(#{1,4})\s+(.*)$/);
+    if (hm) {
+      flushPara();
+      const level = hm[1].length;
+      let text = hm[2].replace(/\s*\{#[^}]*\}\s*$/, '').replace(/\*\*/g, '').trim();
+      if (level === 1) { i++; continue; } // chapter title comes from front matter
+      const id = `${ctx.id}--${slug(text)}`;
+      if (level === 2) {
+        closeTakeaways();
+        if (/^takeaways?$/i.test(text)) { out.push(`<div class="takeaways"><h3 id="${id}">Takeaways</h3>`); inTakeaways = true; i++; continue; }
+        headings.push({ id, text });
+        out.push(`<h3 id="${id}">${inline(text, ctx)}</h3>`);
+      } else if (level === 3) out.push(`<h4 id="${id}">${inline(text, ctx)}</h4>`);
+      else out.push(`<h5 id="${id}">${inline(text, ctx)}</h5>`);
+      i++; continue;
+    }
+    // figure marker
+    let fm = t.match(/^\{\{\s*figure:\s*([\w-]+)\s*\}\}$/);
+    if (fm) {
+      flushPara();
+      const f = (ctx.figures || []).find((x) => x.id === fm[1]);
+      if (!f) warn(`${ctx.id}: figure ${fm[1]} not found in front matter`);
+      out.push(figure(f, ctx));
+      i++; continue;
+    }
+    // hr
+    if (/^(-{3,}|\*{3,}|_{3,})$/.test(t)) { flushPara(); out.push('<hr>'); i++; continue; }
+    // table
+    if (t.startsWith('|') && i + 1 < lines.length && /^\|?\s*:?-{2,}/.test(lines[i + 1].trim())) {
+      flushPara();
+      const rows = [];
+      while (i < lines.length && lines[i].trim().startsWith('|')) { rows.push(lines[i].trim()); i++; }
+      const cells = (r) => r.replace(/^\|/, '').replace(/\|$/, '').split('|').map((c) => c.trim());
+      const head = cells(rows[0]);
+      let html = `<div class="table-wrap"><table><thead><tr>${head.map((h) => `<th>${inline(h, ctx)}</th>`).join('')}</tr></thead><tbody>`;
+      for (let r = 2; r < rows.length; r++) { const cs = cells(rows[r]); html += `<tr>${cs.map((c) => `<td>${inline(c, ctx)}</td>`).join('')}</tr>`; }
+      out.push(html + '</tbody></table></div>');
+      continue;
+    }
+    // blockquote
+    if (t.startsWith('>')) {
+      flushPara();
+      const q = [];
+      while (i < lines.length && lines[i].trim().startsWith('>')) { q.push(lines[i].trim().replace(/^>\s?/, '')); i++; }
+      out.push(`<blockquote><p>${inline(q.join(' '), ctx)}</p></blockquote>`);
+      continue;
+    }
+    // lists
+    let lm = line.match(/^(\s*)([-*+]|\d+[.)])\s+(.*)$/);
+    if (lm) {
+      flushPara();
+      const items = [];
+      while (i < lines.length) {
+        const l = lines[i];
+        const mm = l.match(/^(\s*)([-*+]|\d+[.)])\s+(.*)$/);
+        if (mm) { items.push({ depth: mm[1].replace(/\t/g, '  ').length >= 2 ? 1 : 0, ordered: /\d/.test(mm[2]), text: mm[3] }); i++; }
+        else if (l.trim() && /^\s{2,}/.test(l) && items.length) { items[items.length - 1].text += ' ' + l.trim(); i++; }
+        else break;
+      }
+      const tag = items[0].ordered ? 'ol' : 'ul';
+      let html = `<${tag}>`, open = false;
+      items.forEach((it, k) => {
+        if (it.depth === 1) {
+          if (!open) { html = html.replace(/<\/li>$/, ''); html += `<${it.ordered ? 'ol' : 'ul'}>`; open = true; }
+          html += `<li>${inline(it.text, ctx)}</li>`;
+          const next = items[k + 1];
+          if (!next || next.depth === 0) { html += `</${it.ordered ? 'ol' : 'ul'}></li>`; open = false; }
+        } else {
+          html += `<li>${inline(it.text, ctx)}</li>`;
+        }
+      });
+      out.push(html + `</${tag}>`);
+      continue;
+    }
+    para.push(t);
+    i++;
+  }
+  flushPara();
+  closeTakeaways();
+  return { html: out.join('\n'), headings };
+}
+
+function wordCount(body) {
+  return body.replace(/\{\{[^}]*\}\}/g, '').replace(/\(\[source\]\([^)]*\)\)/g, '').replace(/https?:\S+/g, '').split(/\s+/).filter((w) => /\w/.test(w)).length;
+}
+
+/* ---------------- nameplate ---------------- */
+function pips(n) { let s = '<span class="pips" aria-hidden="true">'; for (let i = 1; i <= 5; i++) s += `<i class="${i <= n ? 'on' : ''}"></i>`; return s + '</span>'; }
+function nameplate(card) {
+  if (!card) return '';
+  const leaders = (card.leaders || []).map((l) => `<span class="cc">${esc(l.country || '')}</span>${esc(l.name)}${l.share ? ` <span style="color:var(--muted)">${esc(l.share)}</span>` : ''}`).join('<span class="sep">·</span>');
+  const countries = (card.countries || []).map((c) => `<span class="cc">${esc(c.code)}</span>${esc(COUNTRY[c.code] || c.code)}${c.note ? ` <span style="color:var(--muted)">${esc(c.note)}</span>` : ''}`).join('<span class="sep">·</span>');
+  const sub = card.substitution || {};
+  return `<dl class="nameplate">
+<div><dt>Concentration</dt><dd><span class="conc ${esc(card.concentration || '')}">${esc(card.concentration || '—')}</span></dd></div>
+<div><dt>Chokepoint score</dt><dd>${pips(+card.chokepointScore || 0)}<span class="num">${card.chokepointScore || '—'} / 5</span><span class="sr-only">${card.chokepointScore || 0} of 5</span></dd></div>
+<div class="wide"><dt>Who leads</dt><dd>${leaders || '—'}</dd></div>
+<div class="wide"><dt>Where it is made</dt><dd>${countries || '—'}</dd></div>
+<div><dt>Cost signal</dt><dd>${esc(card.costSignal || '—')}</dd></div>
+<div><dt>Time to substitute</dt><dd><b>${esc(sub.years || '—')}${sub.years && !/year/i.test(sub.years) ? ' years' : ''}</b>${sub.why ? `<span class="why">${esc(sub.why)}</span>` : ''}</dd></div>
+${card.chinaStatus ? `<div class="wide"><dt>China</dt><dd>${esc(card.chinaStatus)}</dd></div>` : ''}
+${card.usStatus ? `<div class="wide"><dt>United States</dt><dd>${esc(card.usStatus)}</dd></div>` : ''}
+</dl>`;
+}
+
+/* ---------------- chapters ---------------- */
+const contentDir = path.join(root, 'content');
+const files = fs.existsSync(contentDir) ? fs.readdirSync(contentDir).filter((f) => /^\d\d-.*\.md$/.test(f)).sort() : [];
+const chapters = [];
+let geo = null;
+for (const f of files) {
+  const { meta, body } = parseChapter(read(path.join(contentDir, f)), f);
+  const id = meta.id || f.replace(/^\d\d-/, '').replace(/\.md$/, '');
+  const ctx = { id, cites: [], figures: meta.figures || [] };
+  const { html, headings } = markdown(body, ctx);
+  const words = wordCount(body);
+  const ch = { file: f, id, meta, html, headings, words, cites: ctx.cites, number: meta.number || chapters.length + 1, title: meta.title || id };
+  (meta.figures || []).forEach((fig) => { if (!body.includes(`{{figure:${fig.id}}}`)) warn(`${id}: figure ${fig.id} defined but never placed`); });
+  if (id === 'geopolitics') geo = ch; else chapters.push(ch);
+}
+chapters.sort((a, b) => a.number - b.number);
+if (!chapters.length) warn('no chapters found; building with a placeholder');
+
+const pad = (n) => String(n).padStart(2, '0');
+function chapterHTML(ch) {
+  const m = ch.meta, mins = Math.max(1, Math.round(ch.words / 230));
+  const specimen = m.specimen || 'wafer';
+  const sources = ch.cites.length ? `<details class="chapter-sources"><summary>Sources for this chapter (${ch.cites.length})</summary><ol>${ch.cites.map((c) => `<li><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url.length > 96 ? c.url.slice(0, 94) + '…' : c.url)}</a><span class="host">${esc(host(c.url))}</span></li>`).join('')}</ol></details>` : '';
+  return `<article class="chapter" id="${esc(ch.id)}" data-specimen="${esc(specimen)}" data-number="${pad(ch.number)}" data-title="${esc(ch.title)}" data-caption="${esc(m.specimenCaption || '')}">
+<header class="chapter-head">
+<div class="chapter-num" aria-hidden="true">${pad(ch.number)}</div>
+<h2 class="chapter-title"><span class="sr-only">Chapter ${ch.number}: </span>${esc(ch.title)}</h2>
+${m.oneLiner ? `<p class="chapter-lede">${esc(m.oneLiner)}</p>` : ''}
+<div class="chapter-meta"><span class="label">${ch.words.toLocaleString('en-US')} words · ${mins} min</span><span class="label">Specimen: ${esc(specimen.replace(/-/g, ' '))}</span></div>
+${nameplate(m.card)}
+</header>
+<div class="prose">${ch.html}${sources}</div>
+</article>`;
+}
+const chaptersHTML = chapters.length ? chapters.map(chapterHTML).join('\n') : `<article class="chapter" id="placeholder" data-specimen="wafer" data-number="01" data-title="Placeholder"><header class="chapter-head"><div class="chapter-num">01</div><h2 class="chapter-title">Chapters are being written</h2></header><div class="prose"><p>Content agents have not delivered yet. This is a shell build.</p></div></article>`;
+
+const contentsHTML = chapters.map((ch) => `<div class="item"><span class="n">${pad(ch.number)}</span><a class="t" href="#${esc(ch.id)}">${esc(ch.title)}</a><ul>${ch.headings.filter((h) => !/^takeaways?$/i.test(h.text)).map((h) => `<li><a href="#${esc(h.id)}">${esc(h.text)}</a></li>`).join('')}</ul></div>`).join('') +
+  (geo ? `<div class="item"><span class="n">${pad(chapters.length + 1)}</span><a class="t" href="#/geopolitics">Geopolitics</a><ul>${geo.headings.slice(0, 6).map((h) => `<li><a href="#/geopolitics">${esc(h.text)}</a></li>`).join('')}</ul></div>` : '');
+const railHTML = chapters.map((ch) => `<li data-id="${esc(ch.id)}"><a href="#${esc(ch.id)}" title="${esc(ch.title)}"><i></i><span>${esc(ch.title)}</span></a></li>`).join('');
+
+/* ---------------- data ---------------- */
+const landscape = readJSON(path.join(root, 'data', 'landscape.json'), []);
+const suppliers = readJSON(path.join(root, 'data', 'suppliers.json'), []);
+const timeline = readJSON(path.join(root, 'data', 'export-controls-timeline.json'), []);
+const matrix = readJSON(path.join(root, 'data', 'chokepoint-matrix.json'), []);
+// landscape notes: "## <heading>" blocks matched to chips by id or name
+const landscapeNotes = {};
+const notesSrc = read(path.join(root, 'data', 'landscape-notes.md'));
+if (notesSrc && landscape.length) {
+  const blocks = notesSrc.split(/^##\s+/m).slice(1);
+  for (const b of blocks) {
+    const nl = b.indexOf('\n'); const head = b.slice(0, nl).trim().toLowerCase(); const text = b.slice(nl + 1).trim();
+    const chip = landscape.find((c) => head.includes(c.id) || head.includes(c.name.toLowerCase()) || (c.family && head.includes(c.family.toLowerCase()) && head.includes(c.vendor.toLowerCase())));
+    if (chip) { const ctx = { id: 'landscape-' + chip.id, cites: [], figures: [] }; landscapeNotes[chip.id] = markdown(text, ctx).html; }
+  }
+  const missing = landscape.filter((c) => !landscapeNotes[c.id]).map((c) => c.id);
+  if (missing.length) warn('landscape notes missing for: ' + missing.join(', '));
+}
+const matrixNotes = read(path.join(root, 'data', 'chokepoint-matrix-notes.md'));
+
+/* ---------------- geopolitics view ---------------- */
+let geoBody = '<p>The geopolitics essay has not been delivered yet.</p>', geoDek = 'Who holds each chokepoint, how the export-control campaign has unfolded since 2018, and where the chips actually go.';
+if (geo) {
+  geoDek = geo.meta.oneLiner || geoDek;
+  const sources = geo.cites.length ? `<details class="chapter-sources"><summary>Sources for this essay (${geo.cites.length})</summary><ol>${geo.cites.map((c) => `<li><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url.length > 96 ? c.url.slice(0, 94) + '…' : c.url)}</a><span class="host">${esc(host(c.url))}</span></li>`).join('')}</ol></details>` : '';
+  geoBody = nameplate(geo.meta.card) + `<p class="label" style="margin:10px 0 26px">${geo.words.toLocaleString('en-US')} words · ${Math.max(1, Math.round(geo.words / 230))} min</p>` + geo.html + sources;
+}
+
+/* ---------------- sources view ---------------- */
+const all = chapters.concat(geo ? [geo] : []);
+const sourcesHTML = all.map((ch) => `<h3>${pad(ch.number)} · ${esc(ch.title)}</h3><ol>${ch.cites.map((c) => `<li><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url)}</a></li>`).join('')}</ol>`).join('') +
+  (matrixNotes ? `<h3>Method: the country-share matrix</h3><div class="prose">${markdown(matrixNotes, { id: 'matrix-notes', cites: [], figures: [] }).html}</div>` : '') +
+  `<h3>How this site was made</h3><div class="prose"><p>Chokepoints was researched, written, designed and built in September 2026 by Claude (Fable 5.1 as orchestrator and designer, with Opus agents writing chapters, compiling datasets and modelling the specimens) for Yashvardhan Sharma. Every number links to a public source; figures are redrawn from those sources. The specimens are procedural point clouds built from primitives, not scans, and their proportions follow published dimensions. Text and data are offered as a starting point for your own diligence, not as investment advice.</p></div>`;
+
+/* ---------------- assemble ---------------- */
+const totalWords = all.reduce((a, c) => a + c.words, 0);
+const credits = `Researched, written and built by Claude — Fable 5.1 directing Opus agents — for <a href="https://x.com/" rel="noopener">Yashvardhan Sharma</a>. September 2026. ${all.length ? `${all.length} chapters · ${totalWords.toLocaleString('en-US')} words · ${all.reduce((a, c) => a + c.cites.length, 0)} sources` : ''}. In the tradition of <a href="https://www.humanityslastmachine.com/" target="_blank" rel="noopener">Humanity's Last Machine</a> and CSET's supply-chain work.`;
+const footer = `<p>Chokepoints · A deep dive on the AI chip supply chain · ${new Date().toISOString().slice(0, 10)}</p><p>Every figure on this site links to its source. Corrections and additions are welcome. Built with a dependency-free point-cloud renderer; no scans, no tracking.</p>`;
+const suppliersIntro = suppliers.length ? `${suppliers.length} firms across the chain, from polysilicon to liquid cooling, with what each one makes, where it is based and how hard it would be to replace. Filter by category, country or chokepoint status; copy the result as CSV.` : 'The supplier database has not been delivered yet.';
+
+const kit = read(path.join(root, 'src', 'kit.js')) || '';
+const specDir = path.join(root, 'specimens');
+const specimens = fs.existsSync(specDir) ? fs.readdirSync(specDir).filter((f) => f.endsWith('.js')).sort().map((f) => `/* ${f} */\n(function(PC){\n${read(path.join(specDir, f))}\n})(window.PC);`).join('\n') : '';
+const specNames = new Set((specimens.match(/PC\.register\('([\w-]+)'/g) || []).map((s) => s.match(/'([\w-]+)'/)[1]));
+all.forEach((ch) => { const s = ch.meta.specimen; if (s && !specNames.has(s)) warn(`${ch.id}: specimen "${s}" is not built yet`); });
+['package', 'globe'].forEach((s) => { if (!specNames.has(s)) warn(`specimen "${s}" (used by hero/geopolitics) is not built yet`); });
+
+const data = { landscape, landscapeNotes, suppliers, timeline, matrix, chapters: all.map((c) => ({ id: c.id, number: c.number, title: c.title, specimen: c.meta.specimen })) };
+let html = read(path.join(root, 'src', 'template.html'));
+const fill = (k, v) => { html = html.split(`{{${k}}}`).join(v); };
+fill('STYLES', read(path.join(root, 'src', 'styles.css')));
+fill('RAIL', railHTML); fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits); fill('FOOTER', footer);
+fill('SUPPLIERS_INTRO', suppliersIntro); fill('GEO_DEK', esc(geoDek)); fill('GEO_BODY', geoBody); fill('SOURCES', sourcesHTML);
+fill('KIT', kit); fill('SPECIMENS', specimens);
+fill('DATA', JSON.stringify(data).replace(/<\/script/gi, '<\\/script'));
+fill('APP', read(path.join(root, 'src', 'app.js')));
+
+fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
+fs.writeFileSync(path.join(root, 'dist', 'index.html'), html);
+const report = [`built ${new Date().toISOString()}`, `chapters: ${chapters.length}${geo ? ' + geopolitics' : ''}`, `words: ${totalWords}`, `sources: ${all.reduce((a, c) => a + c.cites.length, 0)}`,
+  `landscape: ${landscape.length} chips · suppliers: ${suppliers.length} · timeline: ${timeline.length} · matrix: ${matrix.length}`, `specimens: ${[...specNames].join(', ')}`,
+  `size: ${(html.length / 1024).toFixed(0)} KB`, ...all.map((c) => `  ${pad(c.number)} ${c.id}: ${c.words} words, ${c.cites.length} sources, ${(c.meta.figures || []).length} figures`), ...warnings.map((w) => 'WARN ' + w)].join('\n');
+fs.writeFileSync(path.join(root, 'dist', 'build-report.txt'), report);
+console.log(report);
