@@ -37,7 +37,7 @@
     {"fact": "Tomahawk 6 Davisson uses 16 co-packaged 6.4 Tbps optical engines and cuts optical interconnect power roughly 3.5x versus pluggable modules", "source": "https://www.globenewswire.com/news-release/2025/10/08/3163429/19933/en/Broadcom-Announces-Tomahawk-6-Davisson-the-Industry-s-First-102-4-Tbps-Ethernet-Switch-with-Co-Packaged-Optics.html"},
     {"fact": "InnoLight and Eoptolink together supply more than 60% of 800G-and-above optical modules", "source": "https://www.caixinglobal.com/2026-08-05/us-drafts-ban-on-chinese-optical-modules-exposing-mutual-supply-chain-risks-102471268.html"},
     {"fact": "Transceiver demand exceeded supply by roughly a factor of two in early 2026 because of indium phosphide constraints", "source": "https://futurumgroup.com/insights/nvidias-4b-optics-bet-signals-photonics-as-ais-next-bottleneck/"},
-    {"fact": "Broadcom's AI semiconductor revenue was $16.7B in Q3 fiscal 2026, up 221% year over year, with custom XPUs 73% of it", "source": "https://finance.yahoo.com/technology/ai/articles/broadcom-q3-earnings-call-highlights-230318650.html"}
+    {"fact": "Broadcom's AI semiconductor revenue was $16.7B in Q3 fiscal 2026, up 221% year over year and 54% quarter over quarter", "source": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm"}
   ],
   "figures": [
     {

@@ -4,7 +4,7 @@
   "number": 7,
   "title": "Deposition and Etch",
   "oneLiner": "Lithography prints the pattern. Deposition and etch build the thing, over a thousand steps per wafer, and this is the one tool segment where China has taken real share.",
-  "plain": "If lithography is the printing, this is the building. A chip is built like a layer cake: lay down a film a few atoms thick, print a pattern on it, burn away everything the pattern does not protect, and repeat more than a thousand times. The film has to reach the bottom of a hole hundreds of times deeper than it is wide, and the burn has to eat one material and leave the one beside it. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.",
+  "plain": "If lithography is the printing, this is the building. A chip is built like a layer cake: lay down a film a few atoms thick, print a pattern on it, burn away what the pattern does not protect, and repeat more than a thousand times. The film has to reach the bottom of a hole hundreds of times deeper than it is wide, and the burn has to eat one material and leave the one beside it. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closest to matching them here.",
   "specimen": "process-chamber",
   "specimenCaption": "Right: a plasma process chamber in cross-section. Gas showerhead at the top, wafer clamped to an electrostatic chuck, RF electrodes above and below, turbopump and exhaust at the bottom.",
   "card": {
@@ -73,7 +73,7 @@ Applied Materials and Lam Research, the two largest suppliers of deposition and 
 
 ## How it works
 
-If lithography is the printing, this is the building. A chip is built like a layer cake: lay down a film a few atoms thick, print a pattern on it, burn away everything the pattern does not protect, and repeat more than a thousand times. The film has to reach the bottom of a hole hundreds of times deeper than it is wide, and the burn has to eat one material and leave the one beside it. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.
+If lithography is the printing, this is the building. A chip is built like a layer cake: lay down a film a few atoms thick, print a pattern on it, burn away what the pattern does not protect, and repeat more than a thousand times. The film has to reach the bottom of a hole hundreds of times deeper than it is wide, and the burn has to eat one material and leave the one beside it. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closest to matching them here.
 
 CSET puts a single chip at more than 1,000 process steps, with the part-finished product crossing international borders 70 or more times ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 
@@ -93,7 +93,6 @@ Most of it happens in a vacuum chamber with a plasma in it: a radio-frequency fi
 - **Conductor etch** cuts gates, metals and silicon, $6.5 billion in 2019, led by Lam ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 - **Dielectric etch** cuts the oxides and nitrides between them, $4.3 billion in 2019, led by Tokyo Electron ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 - **High-aspect-ratio etch** is what memory lives or dies by: a 3D NAND channel or DRAM capacitor is a hole far deeper than it is wide that has to come out straight. Lam chills the wafer to sharpen the profile, and says Cryo 3.0 holds critical-dimension deviation under 0.1 percent down channels 10 microns deep ([source](https://newsroom.lamresearch.com/2024-07-31-Lam-Research-Introduces-Lam-Cryo-TM-3-0-Cryogenic-Etch-Technology-to-Accelerate-Scaling-of-3D-NAND-for-the-AI-Era)).
-- **Atomic layer etch** removes a monolayer per cycle, slowly and expensively, so it goes only where nothing else will do.
 
 Three AI-specific pulls.
 
@@ -105,7 +104,7 @@ Three AI-specific pulls.
 
 ## Who makes it
 
-SEMI put global equipment billings at $135.1 billion in 2025, up 15 percent from $117.1 billion ([source](https://www.semiconductor-digest.com/semi-reports-global-semiconductor-equipment-billings-reached-135-billion-in-2025-up-15-year-on-year/)). Tokyo Electron sees $150 billion to $170 billion a year in 2026 and 2027, with leading-edge spending up more than 30 percent ([source](https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf)).
+SEMI put global equipment billings at $135.1 billion in 2025, up 15 percent from $117.1 billion ([source](https://www.semiconductor-digest.com/semi-reports-global-semiconductor-equipment-billings-reached-135-billion-in-2025-up-15-year-on-year/)).
 
 Within deposition and etch there is no single ASML. Gartner numbers in Tokyo Electron's own deck put it at 23 percent of dry etch, 27 percent of batch deposition and 15 percent of ALD in 2025, against 91 percent of coater/developer ([source](https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf)). A near-monopoly in track tools; an ordinary share in etch and deposition.
 
@@ -149,4 +148,4 @@ This is a real chokepoint but a softer one than lithography. Three or four credi
 
 ## Takeaways
 
-Deposition and etch are the volume business of a fab: over a thousand steps per wafer, four American, Japanese and Dutch firms taking most of the money, and no monopoly of the kind ASML holds in lithography. The AI roadmap raises difficulty faster than tool count, because gate-all-around, HBM and backside power want better selectivity and deeper holes, not more chambers. China has closed the gap fastest here, into double digits in dry etch, and least in ALD, where the next two logic nodes are won.
+Deposition and etch are the volume business of a fab: over a thousand steps per wafer, four American, Japanese and Dutch firms taking most of the money, and no monopoly of the kind ASML holds in lithography. The AI roadmap raises difficulty faster than tool count, because gate-all-around, HBM and backside power want better selectivity and deeper holes, not more chambers. China has closed the gap fastest here and slowest in ALD, which is where the next two logic nodes are won.

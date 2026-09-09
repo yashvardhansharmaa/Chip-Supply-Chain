@@ -295,6 +295,10 @@ if (notesSrc && landscape.length) {
   if (missing.length) warn('landscape notes missing for: ' + missing.join(', '));
 }
 const matrixNotes = read(path.join(root, 'data', 'chokepoint-matrix-notes.md'));
+const controls = readJSON(path.join(root, 'data', 'control-thresholds.json'), []);
+const exposure = readJSON(path.join(root, 'data', 'exposure.json'), []);
+const controlsNotes = read(path.join(root, 'data', 'control-thresholds-notes.md'));
+const exposureNotes = read(path.join(root, 'data', 'exposure-notes.md'));
 
 /* ---------------- geopolitics view ---------------- */
 let geoBody = '<p>The geopolitics essay has not been delivered yet.</p>', geoDek = 'Who holds each chokepoint, how the export-control campaign has unfolded since 2018, and where the chips actually go.';
@@ -310,6 +314,8 @@ const all = chapters.concat(geo ? [geo] : []);
 const sourcesHTML = `<div class="tier-key"><span class="tier tier-A">A</span> primary or institutional · <span class="tier tier-B">B</span> established analyst or top-tier press · <span class="tier tier-C">C</span> specialist press or named analyst</div>` +
   all.map((ch) => { const tc = tierCounts(ch.cites); return `<h3>${pad(ch.number)} · ${esc(ch.title)} <span class="label">${ch.cites.length} sources · A ${tc.A} · B ${tc.B} · C ${tc.C}${tc.D ? ' · below bar ' + tc.D : ''}${tc['?'] ? ' · unclassified ' + tc['?'] : ''}</span></h3><ol>${ch.cites.map((c) => `<li>${tierTag(c.url)}<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url)}</a></li>`).join('')}</ol>`; }).join('') +
   (matrixNotes ? `<h3>Method: the country-share matrix</h3><div class="prose">${markdown(matrixNotes, { id: 'matrix-notes', cites: [], figures: [] }).html}</div>` : '') +
+  (controlsNotes ? `<h3>Method: the threshold map</h3><div class="prose">${markdown(controlsNotes, { id: 'controls-notes', cites: [], figures: [] }).html}</div>` : '') +
+  (exposureNotes ? `<h3>Method: the exposure series</h3><div class="prose">${markdown(exposureNotes, { id: 'exposure-notes', cites: [], figures: [] }).html}</div>` : '') +
   `<h3>How this site was made</h3><div class="prose"><p>Chokepoints was made by Yashvardhan Sharma with Claude in September 2026. Yashvardhan set the brief, direction and standards. Claude did the research, writing, design and code: Fable 5.1 orchestrated and designed, and Opus agents wrote the chapters, compiled the datasets and modelled the specimens. Every number links to a public source, and we redraw the figures from those sources. The specimens are procedural point clouds built from primitives, not scans, with proportions taken from published dimensions. Treat the text and data as a starting point for your own diligence, not as investment advice.</p></div>`;
 
 /* ---------------- briefing (all the "in short" blocks on one page) ---------------- */
@@ -348,13 +354,15 @@ const specNames = new Set((specimens.match(/PC\.register\('([\w-]+)'/g) || []).m
 all.forEach((ch) => { const s = ch.meta.specimen; if (s && !specNames.has(s)) warn(`${ch.id}: specimen "${s}" is not built yet`); });
 ['package', 'globe'].forEach((s) => { if (!specNames.has(s)) warn(`specimen "${s}" (used by hero/geopolitics) is not built yet`); });
 
-const data = { landscape, landscapeNotes, suppliers, timeline, matrix, chapters: all.map((c) => ({ id: c.id, number: c.number, title: c.title, specimen: c.meta.specimen })) };
+const data = { landscape, landscapeNotes, suppliers, timeline, matrix, controls, exposure, chapters: all.map((c) => ({ id: c.id, number: c.number, title: c.title, specimen: c.meta.specimen })) };
 let html = read(path.join(root, 'src', 'template.html'));
 const fill = (k, v) => { html = html.split(`{{${k}}}`).join(v); };
 fill('STYLES', read(path.join(root, 'src', 'styles.css')));
 fill('RAIL', railHTML); fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits); fill('FOOTER', footer);
 fill('SUPPLIERS_INTRO', suppliersIntro); fill('GEO_DEK', esc(geoDek)); fill('GEO_BODY', geoBody); fill('SOURCES', sourcesHTML);
 fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));
+fill('CONTROLS_DEK', controls.length ? `${controls.length} thresholds across ${[...new Set(controls.map((c) => c.regime))].length} regimes, and China revenue exposure for ${[...new Set(exposure.map((e) => e.firm))].length} controlled-tool and chip vendors from their own filings. The control surface of the chain in two tables.` : 'The threshold map and exposure series are being compiled.');
+fill('EXPOSURE_NOTE', exposure.length ? 'Shares computed from filed absolute figures; bases differ by firm (ship-to, bill-to or headquarters) and are stated in each row. Method notes are on the <a href="#/sources">Sources</a> page.' : '');
 fill('KIT', kit); fill('SPECIMENS', specimens);
 fill('DATA', JSON.stringify(data).replace(/<\/script/gi, '<\\/script'));
 fill('APP', read(path.join(root, 'src', 'app.js')));
@@ -363,7 +371,7 @@ fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
 fs.writeFileSync(path.join(root, 'dist', 'index.html'), html);
 const tierTotal = tierCounts([].concat(...all.map((c) => c.cites)));
 const report = [`built ${new Date().toISOString()}`, `source tiers: A ${tierTotal.A} · B ${tierTotal.B} · C ${tierTotal.C} · D ${tierTotal.D} · unclassified ${tierTotal['?']}`, `chapters: ${chapters.length}${geo ? ' + geopolitics' : ''}`, `words: ${totalWords}`, `sources: ${all.reduce((a, c) => a + c.cites.length, 0)}`,
-  `landscape: ${landscape.length} chips · suppliers: ${suppliers.length} · timeline: ${timeline.length} · matrix: ${matrix.length} · glossary: ${glossary.length}`, `specimens: ${[...specNames].join(', ')}`,
+  `landscape: ${landscape.length} chips · suppliers: ${suppliers.length} · timeline: ${timeline.length} · matrix: ${matrix.length} · glossary: ${glossary.length} · controls: ${controls.length} · exposure: ${exposure.length}`, `specimens: ${[...specNames].join(', ')}`,
   `size: ${(html.length / 1024).toFixed(0)} KB`, ...all.map((c) => { const tc = tierCounts(c.cites); return `  ${pad(c.number)} ${c.id}: ${c.words} words, ${c.cites.length} sources (D ${tc.D}, ? ${tc['?']}), ${(c.meta.figures || []).length} figures`; }), ...warnings.map((w) => 'WARN ' + w)].join('\n');
 fs.writeFileSync(path.join(root, 'dist', 'build-report.txt'), report);
 console.log(report);
