@@ -208,8 +208,8 @@ module.exports = function (ctx) {
     const top = d.segs[0];
     const subject = theName(cc, true);
     const lede = top
-      ? `${subject} holds ${num(top.v)}% of ${lc(top.seg)}${top.rank === 1 ? ', the largest share of any country' : ''}, and is named in ${word(d.named.length)} of the ${chapters.length} chapter cards.`
-      : `${subject} is named in ${word(d.named.length)} of the ${chapters.length} chapter cards${d.firms.length ? `, and ${word(d.firms.length)} of the ${totalFirms} firms in the supplier list ${d.firms.length > 1 ? 'are' : 'is'} based there` : ''}.`;
+      ? `${subject} holds ${num(top.v)}% of ${lc(top.seg)}${top.rank === 1 ? ', more than any other country' : ''}, and is named on ${word(d.named.length)} of the ${chapters.length} chokepoint cards.`
+      : `${subject} is named on ${word(d.named.length)} of the ${chapters.length} chokepoint cards${d.firms.length ? `, and ${word(d.firms.length)} of the ${totalFirms} firms in the supplier list ${d.firms.length > 1 ? 'are' : 'is'} based there` : ''}.`;
 
     // up to three segment shares: anything it leads, or holds a tenth of
     const shares = d.segs.filter((s) => s.rank === 1 || s.v >= 10).slice(0, 3).map((s) => {
@@ -231,14 +231,14 @@ module.exports = function (ctx) {
       const rows = [geo, lit, first5].filter((c, i, a) => c && c.chinaStatus && a.indexOf(c) === i);
       // the first sentence of each card's China line; the chapter link carries the rest
       const first = (s) => { const m2 = String(s).match(/^[\s\S]*?[.!?](?=\s+[A-Z"'(]|$)/); return (m2 ? m2[0] : String(s)).trim(); };
-      china = `<div class="sa-china"><span class="label">Where China stands, from the chapter cards</span>${rows.map((c) => `<p><a href="${href(c)}">${esc(c.title)}</a> ${esc(first(c.chinaStatus))}</p>`).join('')}</div>`;
+      china = `<div class="sa-china"><span class="label">Where China stands, from the chokepoint cards</span>${rows.map((c) => `<p><a href="${href(c)}">${esc(c.title)}</a> ${esc(first(c.chinaStatus))}</p>`).join('')}</div>`;
     }
 
     const townLine = d.towns.length
       ? `<a href="#/geopolitics">${word(d.towns.length)} chokepoint town${d.towns.length > 1 ? 's' : ''}: ${d.towns.map((t) => esc(t.name)).join(', ')}</a>`
       : '';
     const firmLine = d.firms.length
-      ? `<a href="#/suppliers">${d.firms.length} firm${d.firms.length > 1 ? 's' : ''} in the supplier list${d.topCats.length ? ', mostly ' + d.topCats.map((c) => esc(lcCat(c))).join(', ') : ''}</a>`
+      ? `<a href="#/suppliers">${d.firms.length} firm${d.firms.length > 1 ? 's' : ''} in the supplier list${d.topCats.length ? ', led by ' + d.topCats.map((c) => esc(lcCat(c))).join(', ') : ''}</a>`
       : '<span>No firm in the supplier list is based here</span>';
 
     return `<article class="sa-panel" data-cc="${cc}"${open ? '' : ' hidden'}>
@@ -257,10 +257,10 @@ ${china}
     if (!a) return '';
     const d = info[cc];
     const dia = Math.max(22, Math.round(8.25 * Math.sqrt(d.named.length)));
-    return `<button type="button" class="sa-marker" data-cc="${cc}" data-hard="${d.top5 ? 1 : 0}" style="left:${pctX(n[1])}%;top:${pctY(n[0])}%;--d0:${dia}px" aria-pressed="${cc === DEFAULT_CC}" aria-label="${esc(d.name)}: named in ${d.named.length} of the ${chapters.length} chapters"><span class="sa-marker-dot"><span class="sa-marker-cc" aria-hidden="true">${cc}</span></span></button>`;
+    return `<button type="button" class="sa-marker" data-cc="${cc}" data-hard="${d.top5 ? 1 : 0}" style="left:${pctX(n[1])}%;top:${pctY(n[0])}%;--d0:${dia}px" aria-pressed="${cc === DEFAULT_CC}" aria-label="${esc(d.name)}: named on ${d.named.length} of the ${chapters.length} chokepoint cards"><span class="sa-marker-dot"><span class="sa-marker-cc" aria-hidden="true">${cc}</span></span></button>`;
   }).join('');
 
-  const chip = (cc) => `<button type="button" class="sa-chip${PRIMARY.indexOf(cc) < 0 ? ' sa-chip--minor' : ''}" data-cc="${cc}" aria-pressed="${cc === DEFAULT_CC}" title="${esc(info[cc].name)} is named in ${info[cc].named.length} of the ${chapters.length} chapter cards">${esc(info[cc].name)}<small>${info[cc].named.length}</small></button>`;
+  const chip = (cc) => `<button type="button" class="sa-chip${PRIMARY.indexOf(cc) < 0 ? ' sa-chip--minor' : ''}" data-cc="${cc}" aria-pressed="${cc === DEFAULT_CC}" title="${esc(info[cc].name)} is named on ${info[cc].named.length} of the ${chapters.length} chokepoint cards">${esc(info[cc].name)}<small>${info[cc].named.length}</small></button>`;
   const chips = `<div class="sa-chiprow"><span class="label">Pinned on the map</span><div class="sa-chipset" role="group" aria-label="Countries pinned on the map">${PRIMARY.map(chip).join('')}</div></div>`
     + `<div class="sa-chiprow"><span class="label">Also in the chain</span><div class="sa-chipset" role="group" aria-label="Other countries in the chain">${SECONDARY.map(chip).join('')}</div></div>`;
 
@@ -321,7 +321,7 @@ ${led ? `<div class="sa-stage-leaders"><span class="label">Who leads</span><ul>$
 <section class="sa-mapwrap" aria-label="The chain, country by country">
 <div class="sa-map-head">
 <h3 class="sa-h">Pick a country</h3>
-<p class="sa-sub">Copper pins are the chain's ${word(sites.length)} chokepoint towns, taller pins for the harder stages; dark pins are the ${word(towns.length - sites.length)} towns building substitutes. Markers sit beside crowded coasts, joined to the country by a line.</p>
+<p class="sa-sub">Copper pins mark the chain's ${word(sites.length)} chokepoint towns, taller where the stage is harder to replace; dark pins mark the ${word(towns.length - sites.length)} towns building substitutes. Where a coast is crowded, the marker sits offshore on a line back to its country.</p>
 </div>
 <div class="sa-grid">
 <div class="sa-map" data-cc="${DEFAULT_CC}">
@@ -330,7 +330,7 @@ ${svg}
 </div>
 <div class="sa-panels" aria-live="polite">${panels}</div>
 <div class="sa-chips">${chips}</div>
-<p class="sa-legend"><span class="sa-lg sa-lg--big"></span>Marker area: how many of the ${chapters.length} chapter cards name the country<span class="sa-lg sa-lg--hard"></span>Heavier ring: named by a stage scored 5 of 5<span class="sa-lg sa-lg--pin"></span>Chokepoint town<span class="sa-lg sa-lg--sub"></span>Town building a substitute</p>
+<p class="sa-legend"><span class="sa-lg sa-lg--big"></span>Marker area: how many of the ${chapters.length} chokepoint cards name the country<span class="sa-lg sa-lg--hard"></span>Heavier ring: named by a stage that scores 5 of 5<span class="sa-lg sa-lg--pin"></span>Chokepoint town<span class="sa-lg sa-lg--sub"></span>Town building a substitute</p>
 </div>
 </section>
 
@@ -357,7 +357,7 @@ ${svg}
   // the home page: the map alone, with two ways onward
   const mapStart = html.indexOf('<section class="sa-mapwrap"'), mapEnd = html.indexOf('</section>', mapStart) + '</section>'.length;
   const homeMap = `<div class="sa sa--home">${html.slice(mapStart, mapEnd)}
-<nav class="sa-exits" aria-label="Where to go next"><a class="sa-exit" href="#/intro"><b>Intro</b><span>${ctx.cap(word(Math.max(1, Math.round(ctx.all.reduce((a, c) => a + (c.meta.plain || '').split(/\s+/).length, 0) / 230))))} minutes, one plain paragraph per stage, with the 3D specimens.</span></a><a class="sa-exit" href="#/chain"><b>The Chain</b><span>Every stage in full: ${chapters.length} chapters, every number linked to its source.</span></a></nav>
+<nav class="sa-exits" aria-label="Where to go next"><a class="sa-exit" href="#/intro"><b>Intro</b><span>${ctx.cap(word(Math.max(1, Math.round(ctx.all.reduce((a, c) => a + (c.meta.plain || '').split(/\s+/).length, 0) / 230))))} minutes: one plain paragraph per stage, each beside its 3D specimen.</span></a><a class="sa-exit" href="#/chain"><b>The Chain</b><span>Every stage in full: ${chapters.length} chapters, every number linked to its source.</span></a></nav>
 </div>`;
   return { SUMMARY_A: html, HOME_MAP: homeMap };
 };
