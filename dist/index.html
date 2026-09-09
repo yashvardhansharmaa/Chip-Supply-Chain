@@ -7697,7 +7697,7 @@ PC.register('wafer', function (p) {
       if (!span) return 1;
       var k = Math.min((narrow() ? 148 : 196) / span, 2.6);
       var free = (room || 0) - sel.length * 40; // padding and gaps between the cards
-      if (total > 0 && free > 80) k = Math.min(k, free / total);
+      if (!narrow() && total > 0 && free > 80) k = Math.min(k, free / total); // on phones the row scrolls instead of shrinking
       return k;
     },
     rects: function (list, cls) {
