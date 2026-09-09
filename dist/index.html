@@ -8306,13 +8306,19 @@ PC.register('wafer', function (p) {
       this.el = t; return t;
     },
     show: function (btn) {
-      var d = this.def(btn.getAttribute('data-term'));
+      var self = this, d = this.def(btn.getAttribute('data-term'));
       if (!d) return;
       clearTimeout(this.timer);
       var t = this.panel();
       t.innerHTML = '<b>' + esc(d.term) + '</b><p>' + esc(d.plain) + '</p><a href="#/glossary">Glossary →</a>';
       t.hidden = false;
       this.btn = btn; btn.setAttribute('aria-describedby', 'gl-tip');
+      this.place(btn);
+      // focus may scroll the term into view after this frame, so settle the position once more
+      if (window.requestAnimationFrame) requestAnimationFrame(function () { if (self.btn === btn) self.place(btn); });
+    },
+    place: function (btn) {
+      var t = this.panel();
       if (narrow()) { // a sheet at the foot of the screen, clear of the specimen strip
         t.classList.add('is-sheet');
         var st = $('.stage'), h = st ? st.getBoundingClientRect().height : 0;
@@ -8323,7 +8329,8 @@ PC.register('wafer', function (p) {
       var r = btn.getBoundingClientRect(), w = t.offsetWidth, hh = t.offsetHeight;
       var left = Math.max(8, Math.min(r.left + r.width / 2 - w / 2, window.innerWidth - w - 8));
       var top = r.top - hh - 10;
-      if (top < 8) top = Math.min(r.bottom + 10, window.innerHeight - hh - 8); // no room above: sit below
+      if (top < 8) top = r.bottom + 10; // no room above: sit below
+      top = Math.max(8, Math.min(top, window.innerHeight - hh - 8)); // and never off the screen
       t.style.left = Math.round(left) + 'px'; t.style.top = Math.round(top) + 'px';
     },
     hide: function () {
@@ -8343,7 +8350,13 @@ PC.register('wafer', function (p) {
         if (!self.el || !self.el.contains(e.target)) self.hide();
       });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && self.el && !self.el.hidden) { var b = self.btn; self.hide(); if (b) b.focus(); } });
-      window.addEventListener('scroll', function () { if (self.el && !self.el.hidden && !self.el.classList.contains('is-sheet')) self.hide(); }, { passive: true });
+      // follow the term while the page scrolls; let go once it has left the screen
+      window.addEventListener('scroll', function () {
+        if (!self.btn || !self.el || self.el.hidden || self.el.classList.contains('is-sheet')) return;
+        var r = self.btn.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > window.innerHeight) self.hide(); else self.place(self.btn);
+      }, { passive: true });
+      window.addEventListener('resize', function () { if (self.btn && self.el && !self.el.hidden) self.place(self.btn); });
     }
   };
 
