@@ -46,7 +46,7 @@
       <div class="hero" data-specimen="package" data-caption="An AI accelerator package: two reticle-sized logic dies and eight HBM stacks on a silicon interposer, on a build-up substrate. Highlighted: the HBM.">
         <div class="eyebrow"><i></i><span class="label">A deep dive on the AI chip supply chain</span></div>
         <h1>Chokepoints</h1>
-        <p class="dek">Every AI chip is a supply chain. This is a component-level map of that chain, from <em>polysilicon to a liquid-cooled rack</em>, with the machine that makes each stage drawn beside the text.</p>
+        <p class="dek">Every AI chip is a supply chain. This maps it component by component, from <em>polysilicon to a liquid-cooled rack</em>, with the machine that makes each stage drawn beside the text.</p>
         <p class="credits">{{CREDITS}}</p>
         <div class="scroll-hint"><svg viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1v15M1.5 10.5 7 16l5.5-5.5"/></svg><span>Scroll for the stack</span></div>
       </div>
@@ -61,7 +61,7 @@
     <section class="view column" data-view="landscape" hidden data-specimen="package">
       <div class="view-head">
         <h2>The Landscape</h2>
-        <p class="dek">The accelerators that matter in 2026, with the supply chain behind each one: which foundry, which node, whose memory, which packaging line. Pick a chip; the package beside the text is drawn from its real die and HBM layout.</p>
+        <p class="dek">The accelerators that matter in 2026, with the supply chain behind each one: which foundry, which node, whose memory, which packaging line. Pick a chip; the package beside the text follows its real die and HBM layout.</p>
       </div>
       <div id="picker" class="picker" role="group" aria-label="Choose a chip"></div>
       <div id="spec" class="spec" aria-live="polite"></div>
@@ -91,7 +91,7 @@
       </div>
       <div class="prose">{{GEO_BODY}}</div>
       <h3 class="label" style="margin: 44px 0 6px">Who holds each stage</h3>
-      <p style="max-width: 66ch; color: var(--ink-2); font-size: 17px">Share of each segment by country. Darker cells are larger shares. Shares are converted from firm shares where needed; hover a row for the method and source.</p>
+      <p style="max-width: 66ch; color: var(--ink-2); font-size: 17px">Share of each segment by country. Darker cells are larger shares. We convert firm shares to country shares where needed; hover a row for the method and source.</p>
       <div class="matrix-wrap"><table class="matrix" id="matrix"></table></div>
       <p class="matrix-note" id="matrix-note"></p>
       <h3 class="label" style="margin: 44px 0 6px">The control regime, event by event</h3>
@@ -102,7 +102,7 @@
     <section class="view column wide" data-view="briefing" hidden>
       <div class="view-head">
         <h2>The Briefing</h2>
-        <p class="dek">The whole chain in one sitting: for every stage, the plain-language explanation, the conclusions, the chokepoint score and who leads. Written for readers who need to understand the chain before they regulate it, invest in it, or build on it. Each card links to the full chapter.</p>
+        <p class="dek">The whole chain in one sitting: for every stage, the plain-language explanation, the conclusions, the chokepoint score and who leads. Read it before you regulate the chain, invest in it, or build on it. Each card links to the full chapter.</p>
       </div>
       <div class="briefing">{{BRIEFING}}</div>
     </section>
@@ -110,7 +110,7 @@
     <section class="view column wide" data-view="glossary" hidden>
       <div class="view-head">
         <h2>Glossary</h2>
-        <p class="dek">{{GLOSSARY_COUNT}} terms, each defined for a reader with no engineering background, with one line on why it matters for policy or investment and a link to the chapter where it lives.</p>
+        <p class="dek">{{GLOSSARY_COUNT}} terms in plain language, each with one line on why it matters for policy or investment and a link to the chapter where it lives.</p>
       </div>
       <div class="filters"><input id="gl-search" type="search" placeholder="Filter terms…" aria-label="Filter glossary"></div>
       <dl class="glossary" id="glossary">{{GLOSSARY}}</dl>

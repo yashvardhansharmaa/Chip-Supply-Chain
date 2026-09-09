@@ -69,7 +69,7 @@ Think of a printed circuit board shrunk to the size of a playing card and built 
 
 The reticle limit is why logic is cut into chiplets. HBM adds a second reason: its 1,024-bit or 2,048-bit interface is too wide for an organic substrate to route, so the memory must sit on a shared silicon carrier beside the logic. That carrier is the interposer.
 
-CoWoS builds it in two steps. TSMC makes a thin silicon wafer carrying wiring and through-silicon vias but no transistors, then bonds logic dies and HBM stacks face down onto it with microbumps at 30 to 40 micron pitch: chip-on-wafer. It dices the populated interposer out and attaches it to an organic build-up substrate: wafer-on-substrate.
+CoWoS builds it in two steps. TSMC makes a thin silicon wafer carrying wiring and through-silicon vias but no transistors, then bonds logic dies and HBM stacks face down onto it with microbumps at 30 to 40 micron pitch: chip-on-wafer. It dices the interposer out and attaches it to an organic build-up substrate: wafer-on-substrate.
 
 None of it is novel physics. But one joint cracked by thermal cycling kills a body holding eight qualified HBM stacks and two of the most expensive logic dies ever made.
 
@@ -95,7 +95,7 @@ TSMC's SoIC and Intel's Foveros bond dies face to face, copper pad to copper pad
 
 ### The escape routes
 
-Panel-level packaging swaps the round wafer for a rectangular panel, wasting far less area; see Test and assembly. JEDEC published SPHBM4 on 13 July 2026: HBM4's DRAM on a base die carrying 512 data signals instead of 2,048, which relaxes bump pitch enough to mount HBM on a standard organic substrate ([source](https://www.jedec.org/news/pressreleases/new-jedec%C2%AE-sphbm4-standard-enables-hbm4-class-bandwidth-organic-substrates)). If it works at volume it relieves the industry's most constrained process.
+Panel-level packaging swaps the round wafer for a rectangular panel and wastes far less area; see Test and assembly. JEDEC published SPHBM4 on 13 July 2026: HBM4's DRAM on a base die carrying 512 data signals instead of 2,048, which relaxes bump pitch enough to mount HBM on a standard organic substrate ([source](https://www.jedec.org/news/pressreleases/new-jedec%C2%AE-sphbm4-standard-enables-hbm4-class-bandwidth-organic-substrates)). If it works at volume it relieves the industry's most constrained process.
 
 ## Capacity and allocation
 
@@ -114,10 +114,10 @@ Two industries share the word packaging. The 2.5D work for AI accelerators happe
 The tools are a narrower chokepoint than the OSATs, and bonding is the narrowest.
 
 - **Thermocompression bonding.** ASMPT's advanced packaging revenue reached $532.1 million in 2025, with TCB revenue up about 146%; it targets 35 to 40% of a market it puts at $1.6 billion by 2028 ([source](https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/)).
-- **Hybrid bonding.** A two-supplier market: SK hynix's first mass-production order was one inline system pairing Applied Materials and Besi tools for about 20 billion won, or $15 million ([source](https://www.tomshardware.com/tech-industry/semiconductors/sk-hynix-says-hybrid-bonding-wont-be-ready-for-hbm4e-as-ai-memory-runs-into-a-775-micron-ceiling)).
-- **Grinding and dicing.** Disco dominates the steps that thin wafers and singulate packages; see Test and assembly ([source](https://newsletter.semianalysis.com/p/disco-corporation-the-world-leader)).
+- **Hybrid bonding.** A two-supplier market: SK hynix's first mass-production order paired Applied Materials and Besi tools in one inline system for about 20 billion won, or $15 million ([source](https://www.tomshardware.com/tech-industry/semiconductors/sk-hynix-says-hybrid-bonding-wont-be-ready-for-hbm4e-as-ai-memory-runs-into-a-775-micron-ceiling)).
+- **Grinding and dicing.** Disco dominates the steps that thin wafers and cut packages apart; see Test and assembly ([source](https://newsletter.semianalysis.com/p/disco-corporation-the-world-leader)).
 
-TSMC's Arizona commitment reached $265 billion in July 2026, covering 10 fabs, two advanced packaging plants and an R&D centre ([source](https://www.azcommerce.com/news-events/news/2026/7/tsmc-announcement/)). Amkor's $7 billion Peoria plant, with TSMC as its process partner, starts production in early 2028 ([source](https://www.trendforce.com/news/2025/10/14/news-amkor-breaks-ground-on-usd-7-billion-advanced-semiconductor-packaging-facility-in-arizona/)). Neither replaces Taiwan this decade.
+TSMC's Arizona commitment reached $265 billion in July 2026: 10 fabs, two advanced packaging plants and an R&D centre ([source](https://www.azcommerce.com/news-events/news/2026/7/tsmc-announcement/)). Amkor's $7 billion Peoria plant, with TSMC as process partner, starts production in early 2028 ([source](https://www.trendforce.com/news/2025/10/14/news-amkor-breaks-ground-on-usd-7-billion-advanced-semiconductor-packaging-facility-in-arizona/)). Neither replaces Taiwan this decade.
 
 ## The chokepoint
 
@@ -133,7 +133,7 @@ TSMC's roadmap makes the chokepoint worse before it gets better.
 
 - **Interposer area** — the ceiling on how much logic and memory fit. 3.3x reticle for CoWoS-S, 5.5x in production today ([source](https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm)).
 - **Package yield** — over 98% on 5.5-reticle CoWoS, after a much worse start on Blackwell ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)).
-- **Warpage control** — the expansion mismatch that broke early CoWoS-L is the recurring failure mode as packages grow ([source](https://www.3dincites.com/2024/10/iftle-607-why-nvidias-blackwell-is-having-issues-with-tsmc-cowos-l-technology/)).
+- **Warpage control** — the expansion mismatch that broke early CoWoS-L recurs as packages grow ([source](https://www.3dincites.com/2024/10/iftle-607-why-nvidias-blackwell-is-having-issues-with-tsmc-cowos-l-technology/)).
 - **HBM stacks supported** — 12 today, 20 planned for 2028, 24 for 2029 ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)).
 - **Bonder throughput** — thermocompression and hybrid bonding are slow and serial, and three or four firms hold the tools ([source](https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/)).
 - **Substrate size** — the 120 mm by 150 mm substrate planned for 2027 pushes the limits of ABF build-up film, see Substrates and PCBs ([source](https://www.tomshardware.com/tech-industry/semiconductors/tsmcs-details-next-gen-cowos-roadmap-over-14-reticle-packages-and-48x-leap-in-compute-power-expected-by-2029-massive-size-enables-24-hbm5e-stacks-and-additional-memory-bandwidth-jump)).

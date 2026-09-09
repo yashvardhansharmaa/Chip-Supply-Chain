@@ -271,7 +271,7 @@ b, strong { font-weight: 600; }
   font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.05em; text-transform: uppercase;
   color: var(--ink-2); line-height: 1.25; overflow-wrap: anywhere;
 }
-.chain-track { border-bottom: 1px solid var(--line-2); }
+.stage-cell .bar { border-bottom: 1px solid var(--line-2); }
 .stage-cell[aria-current="true"] .n,
 .stage-cell[aria-current="true"] .t { color: var(--ink); font-weight: 600; }
 .stage-cell[aria-current="true"]::after {
@@ -282,8 +282,9 @@ b, strong { font-weight: 600; }
 .chain--compact { padding: 0; border-top: 0; margin-bottom: 34px; }
 .chain--compact .chain-track { gap: 2px; }
 .chain--compact .stage-cell .bar { height: 26px; }
-.chain--compact .stage-cell .t { display: none; }
-.chain--compact .stage-cell[aria-current="true"] .t { display: block; }
+/* keep the label line reserved on every cell so the row stays on one baseline */
+.chain--compact .stage-cell .t { visibility: hidden; }
+.chain--compact .stage-cell[aria-current="true"] .t { visibility: visible; }
 .chain--compact .chain-foot {
   display: flex; justify-content: space-between; gap: 12px; margin-top: 8px;
   font-family: var(--mono); font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted);
@@ -310,8 +311,8 @@ b, strong { font-weight: 600; }
   margin: -6px 0 14px;
 }
 .ch-lede {
-  font-size: clamp(20px, 1.62vw, 24px); line-height: 1.4; color: var(--ink-2);
-  max-width: 44ch; font-weight: 350;
+  font-size: clamp(19px, 1.55vw, 22.5px); line-height: 1.42; color: var(--ink-2);
+  max-width: 46ch; font-weight: 350;
 }
 .ch-meta { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 16px; }
 
@@ -500,41 +501,25 @@ sup.cite a:hover { text-decoration: underline; }
     <figure class="stage">
       <div class="stage-tag lab"><span>Specimen <b>00</b> / the whole chip</span><span>Placeholder</span></div>
       <div class="stage-art">
-        <svg viewBox="0 0 360 300" role="img" aria-label="Placeholder for the AI accelerator package specimen">
+        <svg viewBox="0 0 360 260" role="img" aria-label="Placeholder for the AI accelerator package specimen">
           <defs>
             <pattern id="stipA" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(14)">
-              <circle cx="1.4" cy="1.4" r="0.75" fill="currentColor"/>
+              <circle cx="1.4" cy="1.4" r="0.8" fill="currentColor"/>
             </pattern>
           </defs>
-          <g opacity="0.34" fill="url(#stipA)">
-            <!-- substrate -->
-            <path d="M180 34 L340 118 L180 264 L20 118 Z"/>
-          </g>
-          <g opacity="0.62" fill="url(#stipA)">
-            <!-- interposer -->
-            <path d="M180 68 L300 130 L180 224 L60 130 Z"/>
-          </g>
-          <g opacity="0.9" fill="url(#stipA)">
-            <!-- two logic dies -->
-            <path d="M180 96 L228 124 L180 152 L132 124 Z"/>
-            <path d="M180 140 L228 168 L180 196 L132 168 Z"/>
-          </g>
-          <g opacity="0.5" stroke="currentColor" stroke-width="0.75" fill="none">
-            <path d="M180 34 L340 118 L180 264 L20 118 Z"/>
-            <path d="M180 68 L300 130 L180 224 L60 130 Z"/>
-            <path d="M180 96 L228 124 L180 152 L132 124 Z"/>
-            <path d="M180 140 L228 168 L180 196 L132 168 Z"/>
-          </g>
-          <!-- eight HBM stacks -->
-          <g opacity="0.85" fill="url(#stipA)" stroke="currentColor" stroke-width="0.6">
-            <path d="M118 112 L142 126 L124 140 L100 126 Z"/>
-            <path d="M100 130 L124 144 L106 158 L82 144 Z"/>
-            <path d="M82 148 L106 162 L88 176 L64 162 Z"/>
-            <path d="M136 158 L160 172 L142 186 L118 172 Z"/>
-            <path d="M242 112 L266 126 L248 140 L218 126 Z" transform="translate(-6,0)"/>
-            <path d="M254 130 L278 144 L260 158 L230 144 Z" transform="translate(-6,0)"/>
-            <path d="M266 148 L290 162 L272 176 L242 162 Z" transform="translate(-6,0)"/>
-            <path d="M212 158 L236 172 L218 186 L188 172 Z"/>
+          <!-- plan view, squashed and rotated into an isometric-ish read -->
+          <g transform="translate(180 130) scale(1 0.58) rotate(45)" stroke="currentColor" fill="url(#stipA)">
+            <g opacity="0.22" stroke-width="1"><rect x="-112" y="-112" width="224" height="224"/></g>
+            <g opacity="0.4"  stroke-width="1"><rect x="-86" y="-72" width="172" height="144"/></g>
+            <!-- two reticle-sized logic dies -->
+            <g opacity="0.9"  stroke-width="1.1"><rect x="-35" y="-48" width="33" height="96"/><rect x="2" y="-48" width="33" height="96"/></g>
+            <!-- eight HBM stacks, four each side -->
+            <g opacity="0.78" stroke-width="1">
+              <rect x="-80" y="-48" width="38" height="20"/><rect x="-80" y="-22" width="38" height="20"/>
+              <rect x="-80" y="4"   width="38" height="20"/><rect x="-80" y="30"  width="38" height="20"/>
+              <rect x="42"  y="-48" width="38" height="20"/><rect x="42"  y="-22" width="38" height="20"/>
+              <rect x="42"  y="4"   width="38" height="20"/><rect x="42"  y="30"  width="38" height="20"/>
+            </g>
           </g>
         </svg>
       </div>
@@ -726,8 +711,8 @@ sup.cite a:hover { text-decoration: underline; }
             <circle cx="1.4" cy="1.4" r="0.75" fill="currentColor"/>
           </pattern>
         </defs>
-        <!-- frame -->
-        <g opacity="0.26" fill="url(#stipB)">
+        <!-- vacuum vessel -->
+        <g opacity="0.1" fill="url(#stipB)">
           <rect x="22" y="26" width="256" height="330" rx="4"/>
         </g>
         <!-- reticle stage, top -->
