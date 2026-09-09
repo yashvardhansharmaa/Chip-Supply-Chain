@@ -67,7 +67,7 @@ Every AI accelerator begins as a disc of silicon so pure and so flat that the in
 
 Sand is melted and then pulled slowly out of the melt like a candle being dipped, except what comes out is a single crystal, one cylinder in which every atom sits on the same repeating grid. That cylinder is sliced into discs 300 millimetres across and polished until nothing on the surface stands more than a few atoms proud. The silicon has to be pure to about one foreign atom in a hundred billion, and the flatness has to hold right to the edge. Only five firms can do it reliably, and none of them is American or Chinese.
 
-Silicon starts as quartzite reduced with carbon in an arc furnace, then turned into trichlorosilane gas, distilled and decomposed onto heated filaments in a bell jar. That Siemens process grows the grey polysilicon rods everything downstream is made from. Solar cells tolerate nine nines of purity; electronics demand eleven ([source](https://www.pv-magazine.com/2025/11/25/china-dominates-global-polysilicon-capacity-says-bernreuter-research/)). Those two orders of magnitude separate a commodity from a chokepoint.
+Silicon starts as quartzite reduced with carbon in an arc furnace, then turned into trichlorosilane gas, distilled and decomposed onto heated filaments in a bell jar. That Siemens process grows the grey polysilicon rods everything downstream is made from. The same rods feed solar cells and chips, but not at the same grade: only the ultra-high-purity semiconductor grade is any use here ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-silicon.pdf)). Solar and electronic polysilicon are separate industries with separate suppliers, and the distance between them separates a commodity from a chokepoint.
 
 The polysilicon is melted at about 1,420 degrees Celsius and pulled into a single crystal by the Czochralski method, starting with a thin neck that starves out dislocations at the seed. Boron or phosphorus in the melt sets resistivity and conductivity type. Wafering is subtraction: the ingot is sliced with a wire saw, lapped, etched and mirror-polished with colloidal silica, and epitaxial wafers get a further layer of near-perfect silicon grown on top at about 1,200 degrees Celsius ([source](https://www.sumcosi.com/english/products/process/)). Almost every step throws material away.
 
@@ -83,14 +83,14 @@ A buried oxide separates a thin device layer from the bulk, and Soitec's Smart C
 
 ## Who makes it
 
-Five firms hold more than 90 percent of the global wafer market: Shin-Etsu, SUMCO, GlobalWafers, Siltronic and SK Siltron ([source](https://www.koreajoongangdaily.com/business/doosan-to-buy-sk-siltron-in-23-trillion-won-chip-deal/12803658)).
+Five firms supply the whole market. Siltronic's own map of the chain puts five major suppliers behind $11.4 billion of wafer revenue ([source](https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf)), and CSET names them: Shin-Etsu, SUMCO, GlobalWafers, Siltronic and SK Siltron, headquartered in Japan, Taiwan, Germany and South Korea ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 
 {{figure:wafer-concentration}}
 
 Their 2025 results split the field: an AI boom, a mature-node hangover.
 
 - **Shin-Etsu.** Electronics Materials sold ¥750.3 billion in the nine months to December 2025, on strong AI-related wafer demand ([source](https://www.shinetsu.co.jp/wp-content/uploads/2025/07/20260127_con_E.pdf)).
-- **SUMCO.** Shelved a ¥225 billion plan for two new fabs, upgrading existing lines instead, after its state subsidy fell from ¥75 billion to ¥19.3 billion ([source](https://www.trendforce.com/news/2026/04/06/news-sumco-delays-construction-of-two-silicon-wafer-fabs-amid-market-shift/)).
+- **SUMCO.** Sold ¥409.7 billion and still lost ¥11.8 billion, as operating profit fell from ¥36.9 billion to ¥1.3 billion while it added leading-edge 300 mm capacity and reorganised its weak 200 mm lines ([source](https://www.sumcosi.com/english/pdf/ir/library/shareholders/27/pdf/nc_e_27.pdf)).
 - **Siltronic.** Lost €77.9 million on €1,346.7 million of sales while spending €369.1 million on its Singapore fab ([source](https://www.siltronic.com/en/press/press-releases/siltronic-ag-robust-business-performance-in-2025-demonstrates-resilience-despite-challenging-conditions.html)).
 - **GlobalWafers.** NT$60.6 billion of revenue, down 3.24 percent in local currency ([source](https://www.sas-globalwafers.com/en/gwc_news_en_20260303/)).
 

@@ -12,10 +12,10 @@
     "chokepointScore": 5,
     "leaders": [
       {"name": "United States", "country": "US", "share": "93% of AI accelerator design revenue; 72% of process control and 60% of deposition tool revenue"},
-      {"name": "Taiwan", "country": "TW", "share": "68% of capacity at 16/14 nm and below as of 2023; TSMC runs roughly two-thirds of world CoWoS capacity"},
+      {"name": "Taiwan", "country": "TW", "share": "78% of the global foundry market and 92% of capacity for the most advanced chips"},
       {"name": "China", "country": "CN", "share": "38% of 28 nm-and-above logic capacity; about 10% of deposition and etch tool revenue"},
       {"name": "Netherlands", "country": "NL", "share": "100% of EUV and 95% of DUV lithography revenue"},
-      {"name": "South Korea", "country": "KR", "share": "83% of HBM revenue and 63% of DRAM revenue"}
+      {"name": "South Korea", "country": "KR", "share": "SK hynix alone took 56% of HBM and 29% of DRAM revenue in 1Q26"}
     ],
     "countries": [
       {"code": "US", "note": "Design, EDA, three of five tool segments, and the export-control authority itself"},
@@ -24,19 +24,19 @@
       {"code": "NL", "note": "ASML lithography, the hardest single chokepoint in the chain"},
       {"code": "JP", "note": "Photoresist, silicon wafers, etch and clean tools, and Rapidus"}
     ],
-    "chinaStatus": "Blocked at the leading edge and substituting fast below it. Domestic tools took 25 to 35 percent of China's own equipment market by 2025 and about 40 percent in etch and deposition; SMIC runs 7 nm-class logic without EUV at roughly 45,000 advanced-node wafers a month; CXMT passed 10 percent of global DRAM. No EUV, no HBM at scale, no path to either before 2028.",
-    "usStatus": "Holds design, EDA and most process tools, and uses the Foreign Direct Product Rule to reach foreign-made goods. Has traded parts of the fence for revenue and investment since 2025: a 15 percent cut of H20 sales, a 9.9 percent equity stake in Intel, a 25 percent tariff on advanced chips, and case-by-case H200 licences.",
-    "costSignal": "$52.7B authorised under the CHIPS Act against 344 billion yuan, about $47.5B, in China's Big Fund III alone",
+    "chinaStatus": "Blocked at the leading edge and substituting fast below it. Domestic tools went from 25 percent of China's own equipment market in 2024 to 35 percent in 2025, and about 40 percent in etch and deposition; SMIC runs 7 nm-class logic without EUV at roughly 45,000 advanced-node wafers a month; CXMT's 2026 HBM output covers 250,000 to 300,000 Ascend packages. No EUV, no HBM at scale, no path to either before 2028.",
+    "usStatus": "Holds design, EDA and most process tools, and uses the Foreign Direct Product Rule to reach foreign-made goods. Has traded parts of the fence for revenue and investment since 2025: an expected 15 percent cut of licensed H20 sales, a 9.9 percent equity stake in Intel, a 25 percent tariff on advanced chips, and case-by-case H200 licences.",
+    "costSignal": "$52.7B authorised under the CHIPS Act against about $47B in the latest round of China's Big Fund alone",
     "substitution": {"years": "10+", "why": "China can copy mature tools in three to five years, but EUV optics, EUV resist and HBM stacking each took two decades and a supplier ecosystem that a single national programme cannot conjure."}
   },
   "keyFacts": [
-    {"fact": "Taiwan held 68% of world capacity at 16/14 nm and below in 2023, against 12% for the US, 11% for Korea and 8% for China", "source": "https://www.trendforce.com/presscenter/news/20231214-11959.html"},
+    {"fact": "Taiwan's foundries hold 78% of the global foundry market and 92% of the manufacturing capacity for the most advanced chips", "source": "https://www.stimson.org/2025/why-taiwan-fears-america-first-risks-eroding-its-silicon-shield/"},
     {"fact": "ASML's China share of net system sales fell from 41% in 2024 to 33% in 2025", "source": "https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf"},
     {"fact": "The 2 December 2024 rules covered 24 types of equipment and 3 software tools, added HBM controls, and made 140 Entity List additions", "source": "https://www.bis.gov/press-release/commerce-strengthens-export-controls-restrict-chinas-capability-produce-advanced-semiconductors-military"},
     {"fact": "From 15 January 2026 the H200 and MI325X are reviewed case by case for China, capped at 50% of US shipments", "source": "https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities"},
     {"fact": "The US government holds 433.3 million Intel shares, a 9.9% stake bought at $20.47 for $8.9 billion", "source": "https://www.intc.com/news-events/press-releases/detail/1748/intel-and-trump-administration-reach-historic-agreement-to"},
-    {"fact": "China's Big Fund III was registered at 344 billion yuan, about $47.5 billion, in May 2024", "source": "https://www.caixinglobal.com/2024-05-28/china-piles-475-billion-into-big-fund-iii-to-boost-chip-development-102200633.html"},
-    {"fact": "Chinese-made tools went from 10-15% of China's domestic equipment market before 2022 to 25-35% in 2024-25, and about 40% in etch and deposition", "source": "https://www.csis.org/analysis/chinas-localization-drive-semiconductors-gains-impetus-allied-chip-export-controls"},
+    {"fact": "The latest round of China's Big Fund reached $47 billion", "source": "https://www.rand.org/pubs/perspectives/PEA4012-1.html"},
+    {"fact": "Chinese-made tools went from 10-15% of China's domestic equipment market before 2022 to 25% in 2024 and 35% in 2025, and about 40% in etch and deposition", "source": "https://www.csis.org/analysis/chinas-localization-drive-semiconductors-gains-impetus-allied-chip-export-controls"},
     {"fact": "SMIC's capacity at 7 nm and below is estimated at 45,000 wafers a month at end-2025, rising to 60,000 in 2026; Huawei shipped about 805,000 Ascend units in 2025", "source": "https://newsletter.semianalysis.com/p/huawei-ascend-production-ramp"},
     {"fact": "Applied Materials paid a $252 million BIS penalty in February 2026 over $126 million of ion implanters shipped to an Entity-Listed Chinese customer", "source": "https://www.bis.gov/press-release/applied-materials-pay-252-million-penalty-bis-illegally-exporting-semiconductor-manufacturing-equipment"},
     {"fact": "TSMC's Arizona commitment reached $265 billion on 16 July 2026 after a second $100 billion tranche for at least four more 2 nm-class fabs", "source": "https://www.phoenix.gov/newsroom/ced-news/tsmc-announces-additional--100-billion-investment-in-arizona.html"}

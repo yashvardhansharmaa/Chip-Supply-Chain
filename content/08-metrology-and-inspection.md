@@ -3,19 +3,19 @@
   "id": "metrology-and-inspection",
   "number": 8,
   "title": "Metrology and Inspection",
-  "oneLiner": "Nobody builds a fab around process control, and every fab fails without it. One American firm holds roughly 64% of the market and about seven times the share of its nearest rival.",
-  "plain": "Every chip factory is really a quality-control operation. Machines print and build a pattern a thousand times over, and after many of those steps another machine looks at the wafer: are the lines the right width, did this layer land on the last one, has a speck of dirt killed a circuit. On a die as big as an AI accelerator, halving the number of stray specks lifts the share of working chips from about half to about seven in ten. One American firm sells two-thirds of the machines that do the looking.",
+  "oneLiner": "Nobody builds a fab around process control, and every fab fails without it. One American firm holds about seven times the share of its nearest rival, and is still pulling away.",
+  "plain": "Every chip factory is really a quality-control operation. Machines print and build a pattern a thousand times over, and after many of those steps another machine looks at the wafer: are the lines the right width, did this layer land on the last one, has a speck of dirt killed a circuit. On a die as big as an AI accelerator, halving the number of stray specks lifts the share of working chips from about half to about seven in ten. One American firm sells about seven times as many of those machines as its nearest rival.",
   "specimen": "sem-column",
   "specimenCaption": "Right: a scanning electron microscope column over a wafer. Electron gun at the top, condenser and objective lenses, deflection coils, secondary electron detector, wafer on a precision stage.",
   "card": {
     "concentration": "High",
     "chokepointScore": 4,
     "leaders": [
-      {"name": "KLA", "country": "US", "share": "64.1% of metrology and inspection, 2025"},
-      {"name": "Applied Materials", "country": "US", "share": "under 8% of metrology and inspection, 2024"},
+      {"name": "KLA", "country": "US", "share": "About 7x the process control share of its nearest rival; $13.58B revenue, FY2026"},
+      {"name": "Applied Materials", "country": "US", "share": "Process diagnostics and control: e-beam review, CD-SEM and film metrology"},
       {"name": "ASML", "country": "NL", "share": "YieldStar overlay metrology and HMI multibeam e-beam inspection"},
       {"name": "Onto Innovation", "country": "US", "share": "$1.01B revenue, 2025"},
-      {"name": "Nova", "country": "IL", "share": "4.3% of metrology and inspection, 2025"}
+      {"name": "Nova", "country": "IL", "share": "$880.6M revenue, 2025; optical film and dimensional metrology"}
     ],
     "countries": [
       {"code": "US", "note": "KLA (Milpitas), Onto Innovation (Wilmington, MA), Applied Materials"},
@@ -24,29 +24,29 @@
       {"code": "IL", "note": "Nova (Rehovot) and Camtek (Migdal Haemek)"},
       {"code": "CN", "note": "Wuhan Jingce and other domestic entrants; near-zero share in mask and packaging inspection as of 2019"}
     ],
-    "chinaStatus": "The weakest Chinese position of any major tool segment. As of 2019 domestic firms held 3.4% of CD measuring, 1.3% of defect inspection and none of mask or packaging inspection; CSET's 2026 survey of China's equipment gains reported none in process control.",
-    "usStatus": "KLA is the single largest process-control supplier worldwide. The December 2024 rule swept metrology and inspection tools for patterned 300 mm wafers into the controlled list.",
+    "chinaStatus": "The weakest Chinese position of any major tool segment. As of 2019 domestic firms held 3.4% of CD measuring, 1.3% of defect inspection and none of mask or packaging inspection. CSET's 2026 survey of Chinese share gains runs through deposition, etch, CMP, lithography, packaging and test, and does not cover process control at all.",
+    "usStatus": "KLA is the largest process-control supplier worldwide, on its own reported share and on customer spending. The December 2024 rule swept metrology and inspection tools for patterned 300 mm wafers into the controlled list at a 21 nm defect threshold.",
     "costSignal": "KLA's fiscal 2026 revenue was $13.58B against a wafer equipment market of roughly $120B in calendar 2025, so process control is around a tenth of fab tool spending.",
-    "substitution": {"years": "10+", "why": "Sensitivity comes from optics, electron columns and decades of defect libraries. China gained share in etch and deposition between 2019 and 2024 and gained none here."}
+    "substitution": {"years": "10+", "why": "Sensitivity comes from optics, electron columns and decades of defect libraries. China gained real share in etch and deposition between 2019 and 2024; in process control it held almost nothing in 2019 and nobody has published a gain since."}
   },
   "keyFacts": [
     {"fact": "Die yield is (1 + D0A/a) to the power minus a, with a of 3 to 4 for modern CMOS, so defect density and die area alone set the ceiling", "source": "https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf"},
-    {"fact": "KLA's share of metrology and inspection rose from 55.0% in 2020 to 64.1% in 2025", "source": "https://drrobertcastellano.substack.com/p/kla-camtek-and-nova-three-ways-to"},
+    {"fact": "KLA took the number one position in advanced wafer-level packaging process control in calendar 2025, adding 14 percentage points of share and growing that revenue about 70%", "source": "https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf"},
     {"fact": "KLA's process control share has grown 360 basis points since 2021 and is about 7x the nearest competitor", "source": "https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf"},
     {"fact": "KLA fiscal 2026 revenue was $13.579 billion, up from $12.156 billion in fiscal 2025", "source": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000319201/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json"},
     {"fact": "ASML's HMI eScan 1100 uses 25 electron beams for up to 15x the throughput of single-beam e-beam inspection and finds patterning defects down to 7 nm", "source": "https://www.asml.com/en/products/metrology-and-inspection-systems/hmi-escan-1100"},
-    {"fact": "KLA expects advanced packaging process control revenue of about $1.1 billion in calendar 2026, up more than 70%, from about $635 million in 2025", "source": "https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf"},
+    {"fact": "KLA expects advanced packaging process control systems revenue of about $1.1 billion in calendar 2026, up more than 70% year-over-year and almost twice the growth rate of the advanced packaging market", "source": "https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf"},
     {"fact": "Onto Innovation signed a volume purchase agreement of over $240 million with an HBM maker for Dragonfly 2D inspection and 3D bump metrology through 2027", "source": "https://investors.ontoinnovation.com/news/news-details/2026/Onto-Innovation-Reports-2025-Fourth-Quarter-and-Full-Year-Results/default.aspx"},
     {"fact": "Camtek 2025 revenue was a record $496.1 million, up 16% from $429.2 million", "source": "https://www.sec.gov/Archives/edgar/data/1109138/000117891326000549/zk2634405.htm"}
   ],
   "figures": [
     {
-      "id": "pc-share",
+      "id": "pc-segments",
       "type": "bars",
-      "title": "Metrology and inspection market share, 2020 and 2025",
-      "unit": "%",
-      "data": [["KLA 2020", 55.0], ["KLA 2025", 64.1], ["Nova 2020", 2.5], ["Nova 2025", 4.3]],
-      "source": {"label": "The Information Network data, via Semiconductor Deep Dive", "url": "https://drrobertcastellano.substack.com/p/kla-camtek-and-nova-three-ways-to"}
+      "title": "Process control market by tool family, 2019",
+      "unit": "$B",
+      "data": [["Optical inspection", 3.0], ["CD-SEM", 1.6], ["Mask inspection", 0.94], ["Overlay and film metrology", 0.54]],
+      "source": {"label": "CSET, The Semiconductor Supply Chain", "url": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"}
     },
     {
       "id": "kla-mix",
@@ -61,11 +61,11 @@
 ---
 # Metrology and Inspection
 
-No fab is built around its inspection tools. Every fab fails without them. Process control is the quietest chokepoint in this chain and one of the tightest: on The Information Network's data KLA held 64.1 percent of metrology and inspection in 2025 ([source](https://drrobertcastellano.substack.com/p/kla-camtek-and-nova-three-ways-to)), roughly seven times its nearest competitor ([source](https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf)).
+No fab is built around its inspection tools. Every fab fails without them. Process control is the quietest chokepoint in this chain and one of the tightest: KLA tells its shareholders it holds roughly seven times the share of its nearest competitor, and has added 360 basis points since 2021 ([source](https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf)).
 
 ## How it works
 
-Every chip factory is really a quality-control operation. Machines print and build a pattern a thousand times over, and after many of those steps another machine looks at the wafer: are the lines the right width, did this layer land on the last one, has a speck of dirt killed a circuit. On a die as big as an AI accelerator, halving the number of stray specks lifts the share of working chips from about half to about seven in ten. One American firm sells two-thirds of the machines that do the looking.
+Every chip factory is really a quality-control operation. Machines print and build a pattern a thousand times over, and after many of those steps another machine looks at the wafer: are the lines the right width, did this layer land on the last one, has a speck of dirt killed a circuit. On a die as big as an AI accelerator, halving the number of stray specks lifts the share of working chips from about half to about seven in ten. One American firm sells about seven times as many of those machines as its nearest rival.
 
 A wafer loses value two ways: gross-area defects from mishandling, misalignment or over-etching, and spot defects from the process itself, the stray material and airborne particles that kill one circuit ([source](https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf)).
 
