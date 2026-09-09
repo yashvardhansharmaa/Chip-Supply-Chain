@@ -1520,13 +1520,13 @@
       "country": "TW"
     },
     "die": {
-      "count": 5,
+      "count": null,
       "areaMm2Each": null,
       "transistorsB": null,
       "reticleLimited": null
     },
     "package": {
-      "type": null,
+      "type": "Multi-chiplet; Meta states MTIA 400 combines two compute chiplets and has not published the full chiplet count",
       "assembler": "Broadcom (advanced packaging, per Meta)",
       "sizeMm": null
     },
@@ -1541,7 +1541,7 @@
       "fp16TFLOPS": null,
       "fp8TFLOPS": 6000,
       "fp4TFLOPS": 12000,
-      "precisionNote": "Meta quotes 400 percent higher FP8 FLOPS than the 1.2 PFLOPS MTIA 300, giving about 6 PFLOPS FP8; the Hot Chips 2026 talk gave 12 PFLOPS FP4 and 8 HBM3E stacks at 9.4 TB/s, where Data Center Dynamics reports 9.2 TB/s. Dense versus sparse not stated."
+      "precisionNote": "From Meta's Hot Chips 2026 disclosure: 12 PFLOPS FP4 and about 6 PFLOPS FP8, with 8 HBM3E stacks at 9.4 TB/s. Meta's own blog gives only ratios, quoting 400 percent higher FP8 FLOPS and 51 percent higher HBM bandwidth than MTIA 300, and publishes no absolute figures. Dense versus sparse not stated."
     },
     "tdpW": 1200,
     "interconnect": {
@@ -1555,7 +1555,7 @@
     "priceEstimate": null,
     "bomEstimate": null,
     "exportStatus": "Not sold at all; consumed entirely inside Meta datacenters.",
-    "notes": "Meta now ships a new accelerator roughly every six months, and MTIA 400 is the second of four generations announced at once. Broadcom supplies the XPU design platform, the advanced packaging and the Ethernet, which makes Meta the third hyperscaler whose silicon roadmap runs through one vendor.",
+    "notes": "Meta now ships a new accelerator roughly every six months, and MTIA 400 is the second of four generations announced at once. Broadcom supplies the XPU design platform, the advanced packaging and the Ethernet, which makes Meta the third hyperscaler whose silicon roadmap runs through one vendor. Meta publishes no node, die area, transistor count or HBM supplier, and gives its own performance figures only as ratios to MTIA 300.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -1655,12 +1655,12 @@
         "url": "https://ai.meta.com/blog/meta-mtia-scale-ai-chips-for-billions/"
       },
       {
-        "label": "ServeTheHome: Meta's MTIA custom AI silicon at Hot Chips 2026",
-        "url": "https://www.servethehome.com/metas-mtia-custom-ai-silicon-at-hot-chips-2026/"
+        "label": "Hot Chips 2026: Meta's Custom AI Silicon, from Recommendation to Dual-Mandate with GenAI",
+        "url": "https://hc2026.hotchips.org/assets/program/conference/day2/HC2026.Meta.LokeChenSingh.V06.pdf"
       },
       {
-        "label": "Data Center Dynamics: Meta unveils next four generations of MTIA",
-        "url": "https://www.datacenterdynamics.com/en/news/meta-unveils-next-four-generations-of-its-mtia-chip/"
+        "label": "Engineering at Meta: MTIA 300, Meta's first training chip with built-in NICs",
+        "url": "https://engineering.fb.com/2026/08/24/networking-traffic/mtia-300-meta-training-chip-built-in-nics/"
       },
       {
         "label": "Meta: partnership with Broadcom",
@@ -1778,10 +1778,6 @@
       ]
     },
     "sources": [
-      {
-        "label": "ServeTheHome: OpenAI Jalapeño platform powered by Broadcom",
-        "url": "https://www.servethehome.com/openai-jalapeno-intelligence-platform-shown-powered-by-broadcom/"
-      },
       {
         "label": "OpenAI and Broadcom announce a 10 GW collaboration",
         "url": "https://openai.com/index/openai-and-broadcom-announce-strategic-collaboration/"
@@ -1972,15 +1968,15 @@
       "suppliers": []
     },
     "compute": {
-      "fp16TFLOPS": 125000,
+      "fp16TFLOPS": null,
       "fp8TFLOPS": null,
       "fp4TFLOPS": null,
-      "precisionNote": "Cerebras's headline for the WSE-3 Turbo is 250 PFLOPS of AI compute, double the original WSE-3. ServeTheHome's Hot Chips 2026 coverage describes that as sparse FP16, which implies 125 PFLOPS dense; the figure here is the dense reading. Cerebras publishes no FP8 or FP4 numbers."
+      "precisionNote": "Cerebras quotes 250 PFLOPS of AI compute per WSE-3 Turbo, double the original WSE-3, and names no precision and no dense-versus-sparse basis for it. Because the format is unstated the figure cannot be placed in a precision row, and Cerebras publishes no FP16, FP8 or FP4 numbers."
     },
     "tdpW": null,
     "interconnect": {
-      "chipToChip": "On-wafer fabric at 53 PB/s; 2.4 Tb/s aggregate off-wafer per device",
-      "scaleUp": "CS-4 rack: three WSE-3 Turbo wafers, 132 GB SRAM, 750 PFLOPS sparse FP16, about 2 microseconds wafer to wafer",
+      "chipToChip": "On-wafer fabric at 53.5 PB/s; 2.4 Tb/s aggregate off-wafer per device",
+      "scaleUp": "CS-4 rack: three WSE-3 Turbo wafers, 132 GB SRAM, 750 PFLOPS aggregate AI compute, about 2 microseconds wafer to wafer",
       "scaleOut": "RoCEv2 Ethernet, with MemoryX and SwarmX for weight streaming"
     },
     "systemIntegrators": [],
@@ -2007,12 +2003,12 @@
         "url": "https://www.cerebras.ai/blog/introducing-cerebras-cs-4"
       },
       {
-        "label": "ServeTheHome: Cerebras WSE-3 Turbo and CS-4",
-        "url": "https://www.servethehome.com/cerebras-intros-faster-wse-3-turbo-processor-and-first-rack-scale-cs-4-system/"
+        "label": "Cerebras CS-4 system page",
+        "url": "https://www.cerebras.ai/cs4"
       },
       {
-        "label": "ServeTheHome: Cerebras at Hot Chips 2026",
-        "url": "https://www.servethehome.com/cerebras-talks-going-rack-scale-with-their-wses-at-hot-chips-2026/"
+        "label": "Cerebras: Ultrafast frontier inference, the Hot Chips 2026 deep dive",
+        "url": "https://www.cerebras.ai/blog/ultrafast-frontier-inference-cerebras-deep-dive-at-hot-chips-2026"
       }
     ]
   },
@@ -2113,7 +2109,7 @@
     "target": "Training and inference, in practice inference-weighted",
     "process": {
       "foundry": "SMIC (intended) and TSMC (in much of the installed base)",
-      "node": "SMIC N+2 7 nm class; TechInsights teardowns found TSMC N7 dies",
+      "node": "SMIC N+2 7 nm class as intended; SemiAnalysis judges most 910B and 910C dies were actually made on TSMC N7",
       "country": "CN"
     },
     "die": {
@@ -2138,10 +2134,10 @@
       ]
     },
     "compute": {
-      "fp16TFLOPS": 800,
+      "fp16TFLOPS": 781,
       "fp8TFLOPS": null,
       "fp4TFLOPS": null,
-      "precisionNote": "Analyst-reported, not a vendor datasheet and not independently measured. TrendForce gives about 800 TFLOPS FP16; SemiAnalysis's CloudMatrix 384 figure of 300 PFLOPS dense BF16 across 384 chips implies about 781 TFLOPS per chip. A 320 TFLOPS figure also circulates and appears to be a mislabelled 910B number."
+      "precisionNote": "Derived, not a vendor datasheet and not independently measured: SemiAnalysis's CloudMatrix 384 figure of 300 PFLOPS dense BF16 across 384 chips implies about 781 TFLOPS per chip. Huawei publishes no per-chip figure for the 910C."
     },
     "tdpW": null,
     "interconnect": {
@@ -2238,12 +2234,8 @@
         "url": "https://newsletter.semianalysis.com/p/huawei-ai-cloudmatrix-384-chinas-answer-to-nvidia-gb200-nvl72"
       },
       {
-        "label": "TrendForce on 910C mass shipment and packaging",
-        "url": "https://www.trendforce.com/news/2025/04/22/news-huaweis-910c-ai-chip-reportedly-gears-up-for-mass-shipment-in-may-amid-u-s-curbs-on-nvidia/"
-      },
-      {
-        "label": "SCMP: Beijing blacklists TechInsights over Huawei chip teardowns",
-        "url": "https://www.scmp.com/tech/tech-war/article/3328414/beijing-targets-consultancy-does-teardown-reports-huawei-chips-tech-war-widens"
+        "label": "MOFCOM spokesperson on the Unreliable Entity List measures naming TechInsights",
+        "url": "https://english.mofcom.gov.cn/News/SpokesmansRemarks/art/2025/art_ae8ca3f16ddb475cb3a9b51a025887c9.html"
       }
     ]
   },
@@ -2254,7 +2246,7 @@
     "vendor": "Huawei (HiSilicon)",
     "vendorCountry": "CN",
     "announced": "2025-09",
-    "shipping": "2026-Q2",
+    "shipping": "2026-Q1",
     "status": "Shipping",
     "target": "Prefill inference and recommendation",
     "process": {
@@ -2276,8 +2268,8 @@
     "memory": {
       "type": "HiBL 1.0, Huawei's own high-bandwidth memory",
       "stacks": null,
-      "capacityGB": 112,
-      "bandwidthTBs": 1.4,
+      "capacityGB": null,
+      "bandwidthTBs": null,
       "suppliers": [
         "Huawei"
       ]
@@ -2285,10 +2277,10 @@
     "compute": {
       "fp16TFLOPS": null,
       "fp8TFLOPS": 1000,
-      "fp4TFLOPS": 1560,
-      "precisionNote": "Vendor-claimed. Huawei's roadmap gives 1 PFLOPS in FP8, MXFP8 and its own HiF8 format and 2 PFLOPS in MXFP4 for the 950PR die; the shipping Atlas 350 card is quoted at 1.56 PFLOPS FP4 with 112 GB at 1.4 TB/s and 600 W. Card-level and die-level figures differ and Huawei has not reconciled them. A 128 GB / 1.6 TB/s figure also circulates as the 950PR baseline."
+      "fp4TFLOPS": 2000,
+      "precisionNote": "Vendor-claimed, from Huawei's own Connect 2025 roadmap: 1 PFLOPS in FP8, MXFP8 and Huawei's HiF8 format, and 2 PFLOPS in MXFP4, for the 950PR die. Huawei has published no memory capacity or bandwidth for the 950PR, and no dense-versus-sparse basis."
     },
-    "tdpW": 600,
+    "tdpW": null,
     "interconnect": {
       "chipToChip": "UnifiedBus 2.0, 2 TB/s per chip",
       "scaleUp": "Atlas 950 SuperPoD, up to 8,192 chips, 1,152 TB memory, 16 PB/s interconnect (Q4 2026 target, built on the 950DT)",
@@ -2352,12 +2344,8 @@
         "url": "https://www.huawei.com/en/news/2025/9/hc-xu-keynote-speech"
       },
       {
-        "label": "TrendForce: Huawei debuts Atlas 350 on Ascend 950PR",
-        "url": "https://www.trendforce.com/news/2026/03/23/news-huawei-debuts-atlas-350-on-ascend-950pr-with-in-house-hbm-touting-2-8x-h20-performance/"
-      },
-      {
-        "label": "TrendForce: Huawei unveils Ascend 950 with in-house HBM",
-        "url": "https://www.trendforce.com/news/2025/09/18/news-huawei-unveils-ascend-950-with-in-house-hbm-in-2026-touts-superpod-to-rival-nvidia/"
+        "label": "Huawei: open-access SuperPoD architecture, including the Atlas 350 card on Ascend 950PR",
+        "url": "https://www.huawei.com/en/news/2025/9/hc-superpod-innovation"
       }
     ]
   },
