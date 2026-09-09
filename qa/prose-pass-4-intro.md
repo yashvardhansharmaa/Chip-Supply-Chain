@@ -229,7 +229,7 @@ Only string literals and HTML text; no code, placeholder, class or data attribut
   full", because the closing line one row above already says "That is the chain".
 - **Left as they are, having been read against the same standard:** the title "How a GPU is made"
   (plain, concrete, and it matches the document title set in `src/app.js`); the meta line
-  "18 paragraphs · 1,803 words · about 8 min", which is already three plain facts and now carries
+  "18 paragraphs · 1,801 words · about 8 min", which is already three plain facts and now carries
   the minute count the dek deliberately does not; the labels "Who leads", "Chokepoint" and
   "not scored"; "Read the chapter", which is the clearest thing a link out of a step can say when
   read on its own; and "That is the chain, end to end."
@@ -252,8 +252,8 @@ Only string literals and HTML text; no code, placeholder, class or data attribut
 | `node build/build.js` | clean, no warnings |
 | Source tiers | A 322 · B 22 · **D 0** · unclassified 0, and D 0 on every chapter line |
 
-Site word count fell from 23,581 to 23,527; the walk itself from 1,850 to 1,803 words, about eight
-minutes either way. No number, firm, country, claim or citation was added; six facts already carried
+Site word count fell from 23,581 to 23,527; the eighteen paragraphs on this page from 1,855 to
+1,801 words, about eight minutes either way. No number, firm, country, claim or citation was added; six facts already carried
 by a neighbouring paragraph were dropped from the paragraph that repeated them.
 
 ## 4. The eighteen bridges, final
