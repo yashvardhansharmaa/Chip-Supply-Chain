@@ -307,7 +307,7 @@
     "ownership": "Public",
     "role": "Designs the Blackwell and Rubin GPUs, the NVLink scale-up fabric and the NVL72 rack systems that most AI training and a large share of inference runs on. It also sells the CUDA software stack that locks the ecosystem in.",
     "chokepoint": "Critical",
-    "shareNote": "About 81% of AI accelerator revenue in 2025, projected at about 75% for 2026",
+    "shareNote": null,
     "customers": [
       "Microsoft",
       "Meta",
@@ -319,7 +319,7 @@
     "aiRelevance": "Nvidia is the demand signal the whole chain plans around, from CoWoS bookings to HBM allocation to grid interconnect queues.",
     "revenueUSDb": 215.938,
     "revenueYear": 2026,
-    "source": "https://siliconanalysts.com/analysis/nvidia-ai-accelerator-market-share-2024-2026"
+    "source": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026"
   },
   {
     "name": "AMD",
@@ -1374,9 +1374,9 @@
       "SK hynix"
     ],
     "aiRelevance": "Domestic resist supply reduces the leverage Japanese export policy has over Korean HBM output.",
-    "revenueUSDb": 0.891,
-    "revenueYear": 2025,
-    "source": "https://stockanalysis.com/quote/kosdaq/005290/"
+    "revenueUSDb": null,
+    "revenueYear": null,
+    "source": "https://www.trendforce.com/news/2023/12/27/insights-analysis-of-the-global-photoresist-market-in-2023/"
   },
   {
     "name": "Soulbrain",
@@ -2215,7 +2215,7 @@
     "ownership": "Public",
     "role": "Makes the ultra-flat low-thermal-expansion glass blanks coated with 40 to 50 molybdenum-silicon layer pairs that become EUV photomasks. Blank defect levels are the gating item for EUV mask yield.",
     "chokepoint": "Critical",
-    "shareNote": "About 34% of EUV mask blanks; Hoya and AGC together hold about 93% (2024)",
+    "shareNote": null,
     "customers": [
       "TSMC",
       "Samsung",
@@ -2226,7 +2226,7 @@
     "aiRelevance": "Every EUV layer on an AI accelerator is printed from a mask that started as a Hoya or AGC blank.",
     "revenueUSDb": 6.161,
     "revenueYear": 2026,
-    "source": "https://www.intelmarketresearch.com/euv-mask-blanks-market-11463"
+    "source": "https://www.hoya.com/ir/2026/en/review/it.html"
   },
   {
     "name": "AGC Inc.",
@@ -2240,7 +2240,7 @@
     "ownership": "Public",
     "role": "The other supplier of EUV mask blanks and a major maker of synthetic quartz substrates and photomask glass. Its glass expertise comes from a much larger architectural and automotive glass business.",
     "chokepoint": "Critical",
-    "shareNote": "Over 59% of EUV mask blanks; AGC and Hoya together hold about 93% (2024)",
+    "shareNote": null,
     "customers": [
       "TSMC",
       "Samsung",
@@ -2250,7 +2250,7 @@
     "aiRelevance": "A two-firm duopoly supplies the substrate for every EUV mask in production.",
     "revenueUSDb": 13.385,
     "revenueYear": 2025,
-    "source": "https://www.intelmarketresearch.com/euv-mask-blanks-market-11463"
+    "source": "https://www.agc.com/en/news/detail/1201109_2814.html"
   },
   {
     "name": "Photronics",
@@ -2409,7 +2409,7 @@
     "ownership": "Public",
     "role": "The dominant supplier of process control equipment: optical and electron beam wafer inspection, reticle inspection, overlay and film metrology. Its tools find the defects that determine yield on large dies.",
     "chokepoint": "Critical",
-    "shareNote": "Over 56% of the process control, metrology and inspection segment, and over 85% of optical wafer inspection (2025)",
+    "shareNote": "56.5% of the process control market, about 6.5 times the nearest competitor, on Gartner data published in KLA’s 2026 investor day (2024 share, restated for CY2025)",
     "customers": [
       "TSMC",
       "Samsung",
@@ -2420,7 +2420,7 @@
     "aiRelevance": "A reticle-sized AI die has so much area that a small change in defect density swings yield and cost sharply.",
     "revenueUSDb": 13.579,
     "revenueYear": 2026,
-    "source": "https://www.maximizemarketresearch.com/news/kla-corporation-semiconductor-wafer-inspection/"
+    "source": "https://d1io3yog0oux5.cloudfront.net/_7791115a123b86b3f10b1a5eb5210224/klatencor/db/1167/10630/presentation/2026+Investor+Day_Khan_Final_IR+copy.pdf"
   },
   {
     "name": "Lasertec",
@@ -2434,7 +2434,7 @@
     "ownership": "Public",
     "role": "The only supplier of actinic inspection tools, which inspect EUV mask blanks and patterned masks using 13.5 nm light rather than a visible-light proxy. Phase defects buried in the multilayer are invisible to any other method.",
     "chokepoint": "Critical",
-    "shareNote": "Effectively 100% of EUV mask blank inspection, per a 2026 analysis covering results through December 2025",
+    "shareNote": null,
     "customers": [
       "TSMC",
       "Samsung",
@@ -2445,7 +2445,7 @@
     "aiRelevance": "Every EUV mask blank used for an AI chip is qualified on a Lasertec system.",
     "revenueUSDb": 1.498,
     "revenueYear": 2026,
-    "source": "https://japan-earnings.com/analysis/2026/04/6920-lasertec-analysis-20260428/"
+    "source": "https://www.lasertec.co.jp/en/ir/plan/message.html"
   },
   {
     "name": "Hitachi High-Tech",
@@ -2681,7 +2681,7 @@
     "ownership": "Public",
     "role": "Makes the coater/developer track that applies photoresist and develops it after exposure, and which is physically linked to every scanner in a fab, plus etch, deposition, cleaning and wafer bonding systems.",
     "chokepoint": "Critical",
-    "shareNote": "Roughly 90-92% of the global coater/developer market and close to 100% for EUV tracks, per a 2026 company profile",
+    "shareNote": "91% of the world coater/developer (track) market in CY2025, on Gartner data published in Tokyo Electron’s own results presentation",
     "customers": [
       "TSMC",
       "Samsung",
@@ -2692,7 +2692,7 @@
     "aiRelevance": "An EUV scanner cannot run without a TEL track bolted to it, which makes the track as hard a dependency as the scanner.",
     "revenueUSDb": 15.886,
     "revenueYear": 2026,
-    "source": "https://japan-earnings.com/companies/8035/"
+    "source": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4presentations-e.pdf"
   },
   {
     "name": "ASM International",
@@ -3327,7 +3327,7 @@
     "ownership": "Public; includes Siliconware Precision Industries (SPIL)",
     "role": "The largest outsourced assembly and test provider, packaging and testing chips for fabless firms and foundries, with growing 2.5D and fan-out capacity for AI parts. It absorbed SPIL in 2018.",
     "chokepoint": "Important",
-    "shareNote": "Largest OSAT at about 28% of the market (2024)",
+    "shareNote": "Largest OSAT worldwide: $18.54B of 2024 revenue, close to 45% of the combined revenue of the top ten OSATs (TrendForce)",
     "customers": [
       "Nvidia",
       "AMD",
@@ -3338,7 +3338,7 @@
     "aiRelevance": "As TSMC's CoWoS capacity saturates, ASE takes overflow assembly and test work for AI packages.",
     "revenueUSDb": 20.489,
     "revenueYear": 2025,
-    "source": "https://www.congruencemarketinsights.com/report/outsourced-semiconductor-assembly-and-test-market"
+    "source": "https://www.trendforce.com/presscenter/news/20250513-12577.html"
   },
   {
     "name": "Amkor Technology",
@@ -3454,7 +3454,7 @@
     "aiRelevance": "Part of the domestic packaging base that Chinese AI accelerators depend on.",
     "revenueUSDb": 2.559,
     "revenueYear": 2025,
-    "source": "https://stockanalysis.com/quote/she/002185/"
+    "source": "https://disc.static.szse.cn/disc/disk03/finalpage/2026-03-31/a0209878-88e7-443c-b062-6a33047d9c98.PDF"
   },
   {
     "name": "King Yuan Electronics",
@@ -3610,7 +3610,7 @@
     "ownership": "Public",
     "role": "Makes the dicing saws, laser dicers and back-grinders that cut wafers into dies and thin them for stacking. Thinning wafers to tens of micrometres is what makes HBM and 3D stacking possible.",
     "chokepoint": "Critical",
-    "shareNote": "Estimated 70-80% of dicing saws and about 70% of wafer-thinning grinders (2025)",
+    "shareNote": null,
     "customers": [
       "TSMC",
       "Samsung",
@@ -3621,7 +3621,7 @@
     "aiRelevance": "Every AI die and every HBM layer passes through a Disco grinder and dicer.",
     "revenueUSDb": 2.84,
     "revenueYear": 2026,
-    "source": "https://en.tmt-blog.jp/articles/company-disco-en"
+    "source": "https://www.disco.co.jp/eg/ir/library/doc/fr/fr20260422.pdf"
   },
   {
     "name": "Kulicke and Soffa",
@@ -3708,7 +3708,7 @@
     "ownership": "Public",
     "role": "Makes Ajinomoto Build-up Film, the insulating layer used between the copper layers of flip-chip package substrates. The material came out of amino acid chemistry and has no meaningful substitute in production.",
     "chokepoint": "Critical",
-    "shareNote": "More than 95% of the global ABF build-up film market (2025 base year)",
+    "shareNote": "Over 95% of the ABF build-up film market, per Ajinomoto’s June 2026 electronic materials briefing",
     "customers": [
       "Ibiden",
       "Shinko Electric",
@@ -3719,7 +3719,7 @@
     "aiRelevance": "Every large AI package substrate is built up from layers of one Japanese food company's film.",
     "revenueUSDb": 10.296,
     "revenueYear": 2026,
-    "source": "https://www.businessresearchinsights.com/market-reports/ajinomoto-build-up-film-abf-market-122893"
+    "source": "https://www.ajinomoto.co.jp/company/en/ir/event/business_briefing/main/011117/teaserItems1/01/linkList/03/link/20260630_presentation_E.pdf"
   },
   {
     "name": "Ibiden",
@@ -4116,7 +4116,7 @@
     "ownership": "Public",
     "role": "The leading maker of automated test equipment for logic and memory, including the V93000 platform used to test AI accelerators and the testers used for HBM. Test time on AI dies is long and rising.",
     "chokepoint": "Critical",
-    "shareNote": "Roughly 66% of the SoC tester market in 2025, up from 56% the year before",
+    "shareNote": "66% of the SoC tester market in CY2025, up from 56% in CY2024, on Advantest’s own tester market share report",
     "customers": [
       "TSMC",
       "Nvidia",
@@ -4127,7 +4127,7 @@
     "aiRelevance": "Tester capacity has become a genuine constraint on AI accelerator and HBM shipments.",
     "revenueUSDb": 7.337,
     "revenueYear": 2026,
-    "source": "https://www.wing.vc/content/the-chip-testing-bottleneck"
+    "source": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_slide.pdf"
   },
   {
     "name": "Teradyne",
