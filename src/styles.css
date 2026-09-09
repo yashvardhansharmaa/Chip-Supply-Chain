@@ -444,6 +444,9 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 
 .made { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.03em; color: var(--muted); margin: 40px 0 20px; max-width: var(--measure); }
 
+.hero--home { padding-bottom: 12px; }
+.column.wide[data-view="home"] { width: 100%; }
+
 /* ---------- China exposure charts ---------- */
 .ex-legend { display: flex; flex-wrap: wrap; gap: 6px 20px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin: 14px 0 6px; }
 .ex-legend i { display: inline-block; vertical-align: middle; margin-right: 7px; width: 10px; height: 10px; border-radius: 50%; box-sizing: border-box; }

@@ -5,6 +5,7 @@
   "title": "Advanced Packaging",
   "oneLiner": "Lithography stopped being the limit on chip size in 2022. What replaced it is how large an interposer TSMC can build, and through 2025 how many it could build a month.",
   "plain": "Packaging wires finished chips into one component and mounts them on a board the size of a playing card, built to the tolerances of a chip. A lithography machine can print only a rectangle about the size of a postage stamp in one shot, so a modern accelerator is cut into pieces and stitched back together on a shared slab of silicon, with its memory a few millimetres away. Slab, chips and board all expand at different rates when heated, so the package warps and the joints crack. Getting that right in volume is why TSMC packages nearly every AI accelerator, in Taiwan.",
+  "bridge": "The die and the memory cube are still separate objects; packaging sets them side by side on one slab of silicon and wires them together.",
   "specimen": "cowos-exploded",
   "specimenCaption": "Right: a CoWoS package pulled apart. A stiffener frame at the top, then two reticle-sized logic dies and eight HBM stacks, microbumps, the silicon interposer with its vertical vias and the wiring that stitches the dies together and fans out to the memory, then the larger solder bumps beneath it and the resin build-up substrate at the bottom.",
   "card": {

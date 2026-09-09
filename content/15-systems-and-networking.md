@@ -5,6 +5,7 @@
   "title": "Systems and Networking",
   "oneLiner": "A finished package is useless until it is bolted to a baseboard, fed a thousand amps and wired to seventy-one siblings. Many firms can do the bolting; few can make the lasers.",
   "plain": "This stage turns finished chips into a machine. It bolts each package onto a board, feeds it more than a thousand amps, and wires it to seventy-one neighbours so that a training run sees one computer instead of seventy-two. A cluster runs only as fast as its slowest link, and copper carries a signal a few metres at most, so the longer links have to become light. Many firms can bolt racks together. Far fewer can make the lasers that carry the light, and that is where this layer is tight.",
+  "bridge": "One good package is still one chip; training runs need many, so each is bolted to a board and wired to its neighbours.",
   "specimen": "gpu-baseboard",
   "specimenCaption": "Right: an eight-GPU baseboard. Four accelerator modules per side, the two NVLink switch chips in amber down the centre, voltage regulator banks along the long edges, and the connectors that carry traffic off the board to the rest of the cluster.",
   "card": {

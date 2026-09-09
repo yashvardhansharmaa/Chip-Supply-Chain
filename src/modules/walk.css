@@ -190,3 +190,5 @@
   .wk-rail, .wk-pn { display: none !important; }
   .wk-step { break-inside: avoid; }
 }
+
+.wk-bridge { font-family: var(--font-body); font-style: italic; font-size: 16.5px; line-height: 1.5; color: var(--ink-2); margin: 0 0 8px; max-width: var(--measure); }

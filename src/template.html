@@ -23,11 +23,10 @@
   <header class="masthead">
     <a class="wordmark" href="#/"><b>Compute Chokepoints</b><span>The AI chip supply chain</span></a>
     <nav class="tabs" aria-label="Sections">
-      <a href="#/" data-view="stack" aria-current="page">The Chain</a>
-      <a href="#/briefing" data-view="briefing">Summary</a>
+      <a href="#/intro" data-view="walk">Intro</a>
+      <a href="#/chain" data-view="stack">The Chain</a>
       <a href="#/landscape" data-view="landscape">AI Chips</a>
       <a href="#/suppliers" data-view="suppliers">Suppliers</a>
-      <a href="#/geopolitics" data-view="geopolitics">Geopolitics</a>
       <a href="#/controls" data-view="controls">Export Controls</a>
       <a href="#/glossary" data-view="glossary">Glossary</a>
       <a href="#/sources" data-view="sources">Sources</a>
@@ -51,12 +50,16 @@
   </figure>
 
   <main>
-    <section class="view column" data-view="stack">
-      <div class="hero" data-specimen="package" data-caption="One AI chip package: two logic dies, each as big as a lithography machine can print, with eight stacks of high-bandwidth memory (highlighted) on a silicon interposer above the substrate.">
+    <section class="view column wide" data-view="home">
+      <div class="hero hero--home">
         <h1 class="thesis">{{THESIS}}</h1>
         <p class="dek">{{SUBTITLE}}</p>
       </div>
-      {{START_HERE}}
+      {{HOME_MAP}}
+      <footer class="site-footer">{{FOOTER}}</footer>
+    </section>
+
+    <section class="view column" data-view="stack" hidden>
       <div class="chain" id="chain">
         <div class="chain-head"><h2>The chain, scored</h2><p>One bar per stage. The taller the bar, the harder that stage would be to replace: the chokepoint score, 1 to 5.</p><div class="chain-key"><span><i style="background:var(--bar-5)"></i>5 of 5</span><span><i style="background:var(--bar-4)"></i>4</span><span><i style="background:var(--bar-3)"></i>3 or less</span></div></div>
         {{CHAIN}}
@@ -66,6 +69,10 @@
         <div class="contents-grid">{{CONTENTS}}</div>
       </div>
       {{CHAPTERS}}
+      <article class="chapter chapter--essay" id="geopolitics" data-specimen="globe" data-number="18" data-title="Geopolitics" data-caption="The chain's chokepoint towns, pinned in copper and taller where fewer suppliers exist. The towns building substitutes are pinned in dark: Beijing, Wuhan, Shenzhen, Hefei and Dresden.">
+        <div class="ch-id"><div class="ch-tile"><span class="k">Chapter</span><span class="v">18</span><span class="of">the contest</span></div><div><h2 class="ch-title"><span class="sr-only">Chapter 18: </span>Geopolitics</h2><p class="ch-lede">{{GEO_DEK}}</p></div></div>
+        <div class="prose">{{GEO_BODY}}</div>
+      </article>
       <footer class="site-footer">{{FOOTER}}</footer>
     </section>
 
@@ -95,36 +102,19 @@
       <div class="sup-wrap"><table class="sup" id="sup-table"></table></div>
     </section>
 
-    <section class="view column" data-view="geopolitics" hidden data-specimen="globe" data-caption="The chain's chokepoint towns, pinned in copper and taller where fewer suppliers exist. The towns building substitutes are pinned in dark: Beijing, Wuhan, Shenzhen, Hefei and Dresden.">
-      <div class="view-head">
-        <h2>Geopolitics</h2>
-        <p class="dek">{{GEO_DEK}}</p>
-      </div>
-      <div class="prose">{{GEO_BODY}}</div>
-      <h3 class="label" style="margin: 44px 0 6px">Who holds each stage</h3>
-      <p style="max-width: 66ch; color: var(--ink-2); font-size: 17px">How much of each segment each country holds. Darker cells are larger shares. Where the source counts firms, we credit each firm's share to its home country; hover a row for the method and the source.</p>
-      <div class="matrix-wrap"><table class="matrix" id="matrix"></table></div>
-      <p class="matrix-note" id="matrix-note"></p>
-      <h3 class="label" style="margin: 44px 0 6px">The contest, event by event</h3>
-      <div id="tl-filters" class="chips tl-filters" role="group" aria-label="Filter events"></div>
-      <ol class="timeline" id="timeline"></ol>
-    </section>
-
-    <section class="view column wide" data-view="briefing" hidden>
-      <div class="view-head">
-        <h2>Summary</h2>
-        <p class="dek">The whole chain in one sitting: for every stage, what we found, its chokepoint score and who leads it. Each card opens the full chapter.</p>
-      </div>
-      <div class="briefing">{{BRIEFING}}</div>
-    </section>
-
     <section class="view column wide" data-view="controls" hidden>
       <div class="view-head">
         <h2>Export Controls</h2>
         <p class="dek">{{CONTROLS_DEK}}</p>
       </div>
-      <nav class="subtabs" id="controls-subtabs" aria-label="Controls sections"><a href="#/controls" data-sub="thresholds" aria-current="true">Licence thresholds</a><a href="#/exposure" data-sub="exposure">China revenue share</a></nav>
-      <div class="sub" data-sub="thresholds">
+      <nav class="subtabs" id="controls-subtabs" aria-label="Controls sections"><a href="#/controls" data-sub="timeline" aria-current="true">What the rules did</a><a href="#/thresholds" data-sub="thresholds">Licence thresholds</a><a href="#/exposure" data-sub="exposure">China revenue share</a></nav>
+      <div class="sub" data-sub="timeline">
+      <h3 class="label" style="margin: 10px 0 6px">What the rules did, dated</h3>
+      <p class="controls-intro">Every export-control move since 2019 that touched the AI chip chain, in plain words and in order: the United States, the Netherlands, Japan and China. Filter by type.</p>
+      <div id="tl-filters" class="chips tl-filters" role="group" aria-label="Filter events"></div>
+      <ol class="timeline" id="timeline"></ol>
+      </div>
+      <div class="sub" data-sub="thresholds" hidden>
       <h3 class="label" style="margin: 10px 0 6px">Licence thresholds</h3>
       <p class="controls-intro">Every number that decides whether a chip or a tool needs an export licence: what is measured, the value, where the rule applies, whether it is still in force, and the rule that set it. Filter by regime.</p>
       <div id="controls-chips" class="chips" role="group" aria-label="Filter by regime"></div>
@@ -140,10 +130,8 @@
       </div>
     </section>
 
-    <section class="view column wide" data-view="walk" hidden>{{WALK}}</section>
+    <section class="view column" data-view="walk" hidden>{{WALK}}</section>
     <section class="view column wide" data-view="methods" hidden>{{METHODS}}</section>
-    <section class="view column wide" data-view="summary-a" hidden>{{SUMMARY_A}}</section>
-    <section class="view column wide" data-view="summary-b" hidden>{{SUMMARY_B}}</section>
 
     <section class="view column wide" data-view="glossary" hidden>
       <div class="view-head">

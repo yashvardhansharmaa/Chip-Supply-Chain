@@ -5,6 +5,7 @@
   "title": "Introduction and Goals",
   "oneLiner": "A part-by-part map of the hardware that makes AI chips, from sand to a finished server rack: fifteen stages, and the handful of firms that own each one.",
   "plain": "An AI chip, the kind that trains and runs artificial intelligence models, is assembled rather than made in one place. A packaging line stacks about a dozen separately manufactured objects, each from a different country, into one finished package. It is like building a car whose engine, gearbox and wheels each come from a single factory, with no second factory anywhere able to make them. Most of those objects have one or two credible suppliers, and replacing any of them takes years rather than months. That is why a rule written in one capital city can slow computing everywhere.",
+  "bridge": "This walk follows one AI chip in order, from the first design file to the powered rack; the paragraph below is the whole chain at once.",
   "specimen": "wafer",
   "specimenCaption": "Right: a polished 300 mm wafer. Its 57 whole exposure fields, each a complete print of one chip pattern, are separated by the scribe streets where the saw will cut; the notch that fixes the wafer's orientation is drawn six times life size, and one field is amber. Every chapter explains one step this disc passes through on its way to a rack.",
   "card": {

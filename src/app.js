@@ -193,7 +193,8 @@
   };
 
   /* ---------------- router ---------------- */
-  var VIEWS = ['stack', 'briefing', 'landscape', 'suppliers', 'geopolitics', 'controls', 'exposure', 'glossary', 'sources', 'walk', 'methods', 'summary-a', 'summary-b'];
+  var VIEWS = ['home', 'stack', 'chain', 'intro', 'walk', 'briefing', 'landscape', 'suppliers', 'geopolitics', 'controls', 'thresholds', 'exposure', 'glossary', 'sources', 'methods'];
+  var ALIAS = { chain: 'stack', intro: 'walk', briefing: 'walk', geopolitics: 'stack', 'summary-a': 'home', 'summary-b': 'home' };
   var MODULE_VIEWS = {}; // modules register { activate(), stage: bool } per view through window.CP.register
   var Router = {
     current: null,
@@ -205,10 +206,13 @@
       this.route();
     },
     route: function () {
-      var h = location.hash || '#/', m = h.match(/^#\/([a-z-]+)/), v = 'stack';
+      var h = location.hash || '#/', m = h.match(/^#\/([a-z-]+)/), bare = h.replace(/^#/, '');
+      var v = (bare === '' || bare === '/') ? 'home' : 'stack'; // the site opens on the map; a bare chapter anchor opens the chain
       if (m && VIEWS.indexOf(m[1]) >= 0) v = m[1];
-      var sub = null; // the Controls page has two sections; #/exposure opens the second
-      if (v === 'exposure') { v = 'controls'; sub = 'exposure'; } else if (v === 'controls') sub = 'thresholds';
+      var anchor = v === 'geopolitics' ? 'geopolitics' : (!m && h.length > 1 ? decodeURIComponent(h.slice(1)) : null);
+      if (ALIAS[v]) v = ALIAS[v];
+      var sub = null; // the Export Controls page has three sections
+      if (v === 'exposure') { v = 'controls'; sub = 'exposure'; } else if (v === 'thresholds') { v = 'controls'; sub = 'thresholds'; } else if (v === 'controls') sub = 'timeline';
       var changed = v !== this.current || sub !== this.currentSub;
       this.current = v; this.currentSub = sub;
       if (sub) {
@@ -219,16 +223,15 @@
       $$('.tabs a').forEach(function (a) { var dv = a.getAttribute('data-view'); var on = dv === v; if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
       var rail = $('.rail'); if (rail && v !== 'stack') rail.setAttribute('data-show', '0');
       var mv = MODULE_VIEWS[v];
-      Stage.setVisible(v === 'stack' || v === 'landscape' || v === 'geopolitics' || !!(mv && mv.stage));
+      Stage.setVisible(v === 'stack' || v === 'landscape' || v === 'walk' || !!(mv && mv.stage));
       if (mv && mv.activate) { try { mv.activate(); } catch (err) { console.warn('view module failed', v, err); } }
       if (v === 'landscape') Landscape.activate();
-      else if (v === 'geopolitics') Geo.activate();
       else if (v === 'suppliers') Suppliers.activate();
-      else if (v === 'controls') Controls.activate();
-      if (changed && m) window.scrollTo(0, 0);
-      if (v === 'stack') {
-        if (!m && h.length > 1) {
-          var el = document.getElementById(decodeURIComponent(h.slice(1)));
+      else if (v === 'controls') { Controls.activate(); if (!Geo.built) Geo.build(); }
+      if (changed && m && !anchor) window.scrollTo(0, 0);
+      if (v === 'stack' || v === 'walk') {
+        if (anchor) {
+          var el = document.getElementById(anchor);
           if (el) {
             if (!this.booted) { // first load: jump, do not animate 30,000 px
               var root = document.documentElement, prev = root.style.scrollBehavior;
@@ -239,7 +242,7 @@
         }
         Sections.update();
       }
-      document.title = v === 'stack' ? 'Compute Chokepoints' : 'Compute Chokepoints · ' + { briefing: 'Summary', landscape: 'AI Chips', suppliers: 'Suppliers', geopolitics: 'Geopolitics', controls: sub === 'exposure' ? 'China revenue share' : 'Export controls', walk: 'How a GPU is made', methods: 'Methods', 'summary-a': 'Summary A', 'summary-b': 'Summary B', glossary: 'Glossary', sources: 'Sources' }[v];
+      document.title = v === 'home' ? 'Compute Chokepoints' : 'Compute Chokepoints · ' + { stack: 'The Chain', walk: 'Intro', landscape: 'AI Chips', suppliers: 'Suppliers', controls: sub === 'exposure' ? 'China revenue share' : sub === 'thresholds' ? 'Licence thresholds' : 'Export controls', walk: 'How a GPU is made', methods: 'Methods', 'summary-a': 'Summary A', 'summary-b': 'Summary B', glossary: 'Glossary', sources: 'Sources' }[v];
     }
   };
 
@@ -249,6 +252,7 @@
     init: function () {
       var self = this;
       this.items = $$('[data-view="stack"] [data-specimen]');
+      this.walkItems = $$('[data-view="walk"] [data-specimen]');
       this.railItems = $$('.rail li');
       window.addEventListener('scroll', function () { self.update(); }, { passive: true });
       window.addEventListener('resize', function () { self.update(); });
@@ -256,13 +260,14 @@
       this.update();
     },
     update: function () {
-      if (Router.current !== 'stack') return;
+      if (Router.current !== 'stack' && Router.current !== 'walk') return;
+      var items = Router.current === 'walk' ? this.walkItems : this.items;
       var vh = window.innerHeight, probe = narrow() ? vh * 0.55 : vh * 0.42, best = null, bestTop = -Infinity;
-      for (var i = 0; i < this.items.length; i++) {
-        var r = this.items[i].getBoundingClientRect();
-        if (r.top <= probe && r.top > bestTop) { best = this.items[i]; bestTop = r.top; }
+      for (var i = 0; i < items.length; i++) {
+        var r = items[i].getBoundingClientRect();
+        if (r.top <= probe && r.top > bestTop) { best = items[i]; bestTop = r.top; }
       }
-      if (!best) best = this.items[0];
+      if (!best) best = items[0];
       if (!best) return;
       var r2 = best.getBoundingClientRect();
       var p = r2.height > vh ? Math.max(0, Math.min(1, (probe - r2.top) / (r2.height - vh * 0.3))) : 0;
@@ -447,8 +452,8 @@
         html += '<tr title="' + esc((s.note || '') + (s.source ? ' Source: ' + s.source : '')) + '"><td>' + esc(s.segment) + '<small>' + esc((s.metric || '') + (s.year ? ' · ' + s.year : '')) + (s.aiCritical ? ' · AI-critical' : '') + '</small></td>' +
           used.map(function (c) { var v = (s.shares || {})[c] || 0; return '<td><span class="cell' + (v ? '' : ' zero') + '" style="--v:' + Math.round(Math.min(100, v) * 0.85) + '"' + (v === max && v > 0 ? ' data-hi="1"' : '') + '>' + (v ? Math.round(v) + '%' : '·') + '</span></td>'; }).join('') + '</tr>';
       });
-      $('#matrix').innerHTML = html + '</tbody>';
-      $('#matrix-note').innerHTML = mx.length ? 'Each segment shows what is measured and in which year. ' + (DATA.matrixNotesHtml ? '' : '') + 'Sources are on the <a href="#/sources">Sources</a> page.' : 'The matrix has no data to show.';
+      if ($('#matrix')) $('#matrix').innerHTML = html + '</tbody>';
+      if ($('#matrix-note')) $('#matrix-note').innerHTML = mx.length ? 'Each segment shows what is measured and in which year. ' + (DATA.matrixNotesHtml ? '' : '') + 'Sources are on the <a href="#/sources">Sources</a> page.' : 'The matrix has no data to show.';
       // timeline
       var tl = (DATA.timeline || []).slice().sort(function (a, b) { return a.date < b.date ? -1 : 1; });
       var cats = {}; tl.forEach(function (e) { cats[e.category] = (cats[e.category] || 0) + 1; });
@@ -581,7 +586,7 @@
         var chTitle = {}; (DATA.chapters || []).forEach(function (c) { chTitle[c.id] = c.title; });
         var chapterChip = function (id) {
           if (!id || !chTitle[id]) return '';
-          return '<a class="chip chip-ch" href="' + (id === 'geopolitics' ? '#/geopolitics' : '#' + esc(id)) + '" title="Read the chapter: ' + esc(chTitle[id]) + '">' + esc(chTitle[id]) + '</a>';
+          return '<a class="chip chip-ch" href="' + ('#' + esc(id)) + '" title="Read the chapter: ' + esc(chTitle[id]) + '">' + esc(chTitle[id]) + '</a>';
         };
         var render = function () {
           var rows = th.filter(function (t) { return !sel || t.regime === sel; });
@@ -643,11 +648,11 @@
           idx.push({ kind: title.replace(/^Chapter \d+: /, ''), title: h.textContent.replace(/#$/, ''), text: t.replace(/\s+/g, ' ').trim().slice(0, 900), href: '#' + h.id });
         });
       });
-      (DATA.chapters || []).filter(function (c) { return c.id === 'geopolitics'; }).forEach(function () { idx.push({ kind: 'Essay', title: 'Geopolitics', text: 'Who holds each chokepoint, the export-control campaign, China\'s response, the Gulf and smuggling.', href: '#/geopolitics' }); });
+      (DATA.chapters || []).filter(function (c) { return c.id === 'geopolitics'; }).forEach(function () { idx.push({ kind: 'Essay', title: 'Geopolitics', text: 'Who holds each chokepoint, the export-control campaign, China\'s response, the Gulf and smuggling.', href: '#/controls' }); });
       $$('#glossary .gl-entry').forEach(function (el) { idx.push({ kind: 'Glossary', title: el.querySelector('dt').firstChild.textContent, text: el.querySelector('dd p').textContent, href: '#/glossary', el: el }); });
       (DATA.suppliers || []).forEach(function (r) { idx.push({ kind: 'Supplier', title: r.name, text: r.category + ' · ' + cname(r.country) + (r.role ? ' · ' + r.role : ''), href: '#/suppliers', q: r.name }); });
       (DATA.landscape || []).forEach(function (c) { idx.push({ kind: 'Chip', title: c.vendor + ' ' + c.name, text: ((c.process || {}).node || '') + ' · ' + ((c.memory || {}).type || '') + ' · ' + (c.status || ''), href: '#/landscape', chip: c.id }); });
-      (DATA.timeline || []).forEach(function (e) { idx.push({ kind: 'Event ' + e.date, title: e.title, text: e.summary || '', href: '#/geopolitics' }); });
+      (DATA.timeline || []).forEach(function (e) { idx.push({ kind: 'Event ' + e.date, title: e.title, text: e.summary || '', href: '#geopolitics' }); });
       (DATA.controls || []).forEach(function (t) { idx.push({ kind: 'Export rule', title: t.instrument + (t.parameter ? ' · ' + t.parameter : ''), text: [t.scope, t.destinations, t.note].filter(Boolean).join(' · '), href: '#/controls' }); });
       (DATA.exposure || []).forEach(function (r) { if (r.chinaShare != null) idx.push({ kind: 'China revenue', title: r.firm + ' ' + r.fiscalYear, text: 'China was ' + r.chinaShare + '% of revenue' + (r.basis ? ' · ' + r.basis : ''), href: '#/exposure' }); });
       var self = this;

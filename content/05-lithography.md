@@ -5,6 +5,7 @@
   "title": "Lithography",
   "oneLiner": "The most concentrated stage in the chain. One firm in the Netherlands builds every extreme ultraviolet scanner in the world, the machine that prints the finest circuit layers. It shipped 48 of them in 2025, at around $200 million each.",
   "plain": "Lithography prints the pattern of a circuit onto the chip. It is photography, shrunk: the machine holds a stencil of one layer up to a lamp and projects it, four times smaller, onto a silicon wafer coated in a light-sensitive film. Finer circuits need shorter wavelengths, and the shortest light now in use is absorbed by air and by glass, so the machine runs in a vacuum and every lens has to be a mirror. Only one company has ever built such a machine, and it is Dutch, which is why export controls on advanced chipmaking run through one firm.",
+  "bridge": "Coated and ready, the wafer goes under a lamp, where a stencil of the circuit is projected down onto the light-sensitive film.",
   "specimen": "euv-scanner",
   "specimenCaption": "Right: an extreme ultraviolet scanner in cross-section. Tin plasma source at the bottom left, collector and three illuminator mirrors, the mask, or reticle, held pattern-down at the top, six projection mirrors, the wafer stage at the bottom right, and in copper the 13.5 nm light itself.",
   "card": {

@@ -5,6 +5,7 @@
   "title": "Deposition and Etch",
   "oneLiner": "Lithography prints the pattern; deposition and etch build the chip itself, over a thousand steps per wafer. This is the one tool segment where China has taken real share.",
   "plain": "Deposition and etch build the chip itself, like a layer cake: lay down a film a few atoms thick, print a pattern on it, burn away everything the pattern does not protect, then do it again, more than a thousand times over. The film has to reach the bottom of a hole hundreds of times deeper than it is wide, and the burn has to eat one material and leave the one beside it untouched. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.",
+  "bridge": "Printing leaves a pattern in the resist, not a circuit; the machines around it lay down film and burn away whatever the pattern leaves exposed.",
   "specimen": "process-chamber",
   "specimenCaption": "Right: a plasma process chamber cut in half. Gas enters through the plenum and showerhead at the top, a 300 mm wafer sits below on an electrostatic chuck inside its focus ring, the plasma glows amber between them, the slit valve in the wall is where the wafer goes in and out, and the gate valve and turbopump under the floor hold the vacuum.",
   "card": {

@@ -339,7 +339,7 @@ function glossaryWrap(html) {
 }
 
 // The reading spine: the numbered chapters, then the geopolitics essay, which sits on its own route.
-const chapterHref = (c) => (c.id === 'geopolitics' ? '#/geopolitics' : '#' + esc(c.id));
+const chapterHref = (c) => '#' + esc(c.id); // the essay is chapter 18 inside the chain
 function prevNext(ch) {
   const seq = chapters.concat(geo ? [geo] : []);
   const i = seq.findIndex((c) => c.id === ch.id);
@@ -373,7 +373,7 @@ ${nameplate(m.card, ch.title)}
 }
 const chaptersHTML = chapters.length ? chapters.map(chapterHTML).join('\n') : `<article class="chapter" id="placeholder" data-specimen="wafer" data-number="01" data-title="Placeholder"><header class="chapter-head"><div class="chapter-num">01</div><h2 class="chapter-title">No chapters yet</h2></header><div class="prose"><p>No chapters found. This is a shell build.</p></div></article>`;
 
-const contentsHTML = chapters.map((ch) => `<div class="item"><span class="n">${pad(ch.number)}</span><a class="t" href="#${esc(ch.id)}">${esc(ch.title)}</a><ul>${ch.headings.filter((h) => !/^takeaways?$/i.test(h.text)).map((h) => `<li><a href="#${esc(h.id)}">${esc(h.text)}</a></li>`).join('')}</ul></div>`).join('') +
+const contentsHTML = all.map((ch) => `<div class="item"><span class="n">${pad(ch.number)}</span><a class="t" href="#${esc(ch.id)}">${esc(ch.title)}</a><ul>${ch.headings.filter((h) => !/^takeaways?$/i.test(h.text)).map((h) => `<li><a href="#${esc(h.id)}">${esc(h.text)}</a></li>`).join('')}</ul></div>`).join('') +
   (geo ? `<div class="item"><span class="n">${pad(chapters.length + 1)}</span><a class="t" href="#/geopolitics">Geopolitics</a><ul>${geo.headings.slice(0, 6).map((h) => `<li><a href="#/geopolitics">${esc(h.text)}</a></li>`).join('')}</ul></div>` : '');
 const railHTML = chainTrack(stages, null);
 const score5 = stages.filter((c) => +((c.meta.card || {}).chokepointScore || 0) >= 5).length;
@@ -484,7 +484,7 @@ const sourcesHTML = `<div class="tier-key">Every source is one of two kinds: <sp
 const briefingHTML = all.map((ch) => {
   const c = ch.meta.card || {};
   const leaders = (c.leaders || []).slice(0, 3).map((l) => `${esc(l.name)}${l.country ? ` <span class="chip">${esc(l.country)}</span>` : ''}`).join(' · ');
-  const href = ch.id === 'geopolitics' ? '#/geopolitics' : `#${esc(ch.id)}`;
+  const href = ch.id === 'geopolitics' ? '#geopolitics' : `#${esc(ch.id)}`;
   return `<article class="brief-card" id="brief-${esc(ch.id)}">
 <div class="brief-head"><span class="n">${pad(ch.number)}</span><a href="${href}" class="t">${esc(ch.title)}</a>
 <span class="brief-meta">${c.chokepointScore ? pips(+c.chokepointScore) + `<span class="num">${c.chokepointScore}/5</span>` : ''}${c.concentration ? `<span class="conc ${esc(c.concentration)}">${esc(c.concentration)}</span>` : ''}</span></div>
@@ -498,7 +498,7 @@ ${leaders ? `<p class="brief-leaders"><span class="label">Who leads</span> ${lea
 const chapterTitle = (id) => { const c = all.find((x) => x.id === id); return c ? c.title : null; };
 const glossaryHTML = glossary.length ? glossary.slice().sort((a, b) => a.term.localeCompare(b.term)).map((g) => `<div class="gl-entry" data-term="${esc(String(g.term).toLowerCase())}" data-text="${esc((g.term + ' ' + (g.aka || '') + ' ' + g.plain + ' ' + (g.why || '')).toLowerCase())}">
 <dt>${esc(g.term)}${g.aka ? `<span class="aka">${esc(g.aka)}</span>` : ''}</dt>
-<dd><p>${esc(g.plain)}</p>${g.why ? `<p class="why">${esc(g.why)}</p>` : ''}${g.chapter && chapterTitle(g.chapter) ? `<a class="gl-link" href="${g.chapter === 'geopolitics' ? '#/geopolitics' : '#' + esc(g.chapter)}">${esc(chapterTitle(g.chapter))} →</a>` : ''}</dd>
+<dd><p>${esc(g.plain)}</p>${g.why ? `<p class="why">${esc(g.why)}</p>` : ''}${g.chapter && chapterTitle(g.chapter) ? `<a class="gl-link" href="${g.chapter === 'geopolitics' ? '#geopolitics' : '#' + esc(g.chapter)}">${esc(chapterTitle(g.chapter))} →</a>` : ''}</dd>
 </div>`).join('') : '<p>The glossary is not written yet.</p>';
 
 /* ---------------- assemble ---------------- */
@@ -530,8 +530,8 @@ for (const f of modDir(path.join(root, 'build', 'modules')).filter((x) => x.ends
 const totalCites = all.reduce((a, c) => a + c.cites.length, 0);
 const claimsHTML = `<div><b class="num">${stages.length}</b><span>Stages, quartz<br>to a finished rack</span></div><div class="of-five"><b class="num">${score5}</b><span>Score 5 of 5<br>for concentration</span></div><div><b class="num">${totalCites}</b><span>Sources, one<br>per claim</span></div>`;
 fill('THESIS', thesisHTML); fill('SUBTITLE', subtitleHTML); fill('CLAIMS', claimsHTML); fill('CHAIN', chainTrack(stages, null));
-const sheetPages = [['#/briefing', 'Summary'], ['#/landscape', 'AI Chips'], ['#/suppliers', 'Suppliers'], ['#/geopolitics', 'Geopolitics'], ['#/controls', 'Controls'], ['#/glossary', 'Glossary'], ['#/sources', 'Sources']].map((p) => `<a href="${p[0]}">${p[1]}</a>`).join('');
-const sheetChapters = all.map((ch) => { const sc = +((ch.meta.card || {}).chokepointScore || 0); return `<li><a href="${ch.id === 'geopolitics' ? '#/geopolitics' : '#' + esc(ch.id)}"><span class="n">${pad(ch.number)}</span><span class="t">${esc(ch.title)}</span><span class="s${sc >= 5 ? ' hi' : ''}">${sc ? sc + ' / 5' : ''}</span></a></li>`; }).join('');
+const sheetPages = [['#/intro', 'Intro'], ['#/chain', 'The Chain'], ['#/landscape', 'AI Chips'], ['#/suppliers', 'Suppliers'], ['#/controls', 'Export Controls'], ['#/glossary', 'Glossary'], ['#/sources', 'Sources'], ['#/methods', 'Methods']].map((p) => `<a href="${p[0]}">${p[1]}</a>`).join('');
+const sheetChapters = all.map((ch) => { const sc = +((ch.meta.card || {}).chokepointScore || 0); return `<li><a href="${ch.id === 'geopolitics' ? '#geopolitics' : '#' + esc(ch.id)}"><span class="n">${pad(ch.number)}</span><span class="t">${esc(ch.title)}</span><span class="s${sc >= 5 ? ' hi' : ''}">${sc ? sc + ' / 5' : ''}</span></a></li>`; }).join('');
 fill('SHEET_PAGES', sheetPages); fill('SHEET_CHAPTERS', sheetChapters);
 fill('RAIL', railHTML); fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits); fill('FOOTER', footer);
 fill('SUPPLIERS_INTRO', suppliersIntro); fill('GEO_DEK', esc(geoDek)); fill('GEO_BODY', geoBody); fill('SOURCES', sourcesHTML);

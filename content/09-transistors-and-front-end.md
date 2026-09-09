@@ -5,6 +5,7 @@
   "title": "Transistors and the Front End",
   "oneLiner": "Three companies can build a 2 nm-class switch. Shrinking stopped paying for itself about a decade ago, and every gain since has been bought with extra process steps.",
   "plain": "The front end of a chip factory builds the switches. Each one is a valve on a pipe: current runs along a silicon channel, and a voltage on the gate above it opens or shuts the flow. Make the channel short enough and the valve stops sealing, so current leaks through even when the gate is off and the chip burns power doing nothing. The fix is to wrap the gate around all four sides of the channel, which takes about a thousand steps in exact order. Only TSMC, Intel and Samsung can run that sequence, which is why an export rule can name them all.",
+  "bridge": "Layer by layer, those films add up to something: in the right order they become transistors, the switches a chip computes with.",
   "specimen": "gaa-transistor",
   "specimenCaption": "Right: a gate-all-around nanosheet transistor. Three stacked silicon sheets run from the source at one end to the drain at the other, the gate metal in amber wraps all four sides of each sheet, inner spacers keep that metal from touching the two ends, and the contacts land on top.",
   "card": {

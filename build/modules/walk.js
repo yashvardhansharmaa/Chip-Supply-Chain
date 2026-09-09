@@ -54,10 +54,11 @@ module.exports = function (ctx) {
     const prev = steps[i - 1];
     const next = steps[i + 1];
     const stage = si >= 0 ? `Stage ${si + 1} of ${stages.length}` : '';
-    return `<li class="wk-step" id="${esc(stepId(ch.id))}" data-title="${esc(ch.title)}" data-specimen="${esc((ch.meta && ch.meta.specimen) || '')}" data-caption="${esc((ch.meta && ch.meta.specimenCaption) || '')}">
+    return `<li class="wk-step" id="${esc(stepId(ch.id))}" data-title="${esc(ch.title)}" data-number="${pad(ch.number)}" data-specimen="${esc((ch.meta && ch.meta.specimen) || '')}" data-caption="${esc((ch.meta && ch.meta.specimenCaption) || '')}">
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">${pad(ch.number)}</span></div>
 <div class="wk-block">
 <p class="wk-where"><span class="label">Chapter ${pad(ch.number)}</span>${stage ? `<span class="label wk-stage">${esc(stage)}</span>` : ''}</p>
+${ch.meta && ch.meta.bridge ? `<p class="wk-bridge">${esc(ch.meta.bridge)}</p>` : ''}
 <h3 class="wk-t">${esc(ch.title)}</h3>
 <p class="wk-p">${esc(plainOf(ch.id))}</p>
 ${leadersHTML(c)}
@@ -84,7 +85,7 @@ ${list}
 </ol>
 <div class="wk-end">
 <p class="wk-end-t">That is the chain, end to end.</p>
-<p class="wk-end-links"><a href="#contents">All ${word(steps.length)} chapters in full</a><a href="#/briefing">The one-page summary</a><a href="#/sources">Sources and method</a></p>
+<p class="wk-end-links"><a href="#/chain">The whole chain, ${word(steps.length)} chapters in full</a><a href="#/">Where it is made: the map</a><a href="#/sources">Sources and method</a></p>
 </div>
 </div>`;
 

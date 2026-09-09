@@ -5,6 +5,7 @@
   "title": "Metrology and Inspection",
   "oneLiner": "Nobody builds a fab around process control, and no fab works without it. One American firm holds about 57% of the market, roughly seven times its nearest rival, and is still pulling away.",
   "plain": "This stage is the factory's quality control. Machines build a chip in a thousand steps, and after many of them another machine inspects the wafer: are the lines the right width, did this layer land on the last one, has a speck of dirt killed a circuit. On a die as big as an AI accelerator, halving the stray specks lifts the share of working chips from about half to about seven in ten. One American firm sells seven times as many of those machines as its nearest rival, so a fab cut off from it can buy every other tool and still not learn why its chips fail.",
+  "bridge": "Every one of those layers can land wrong, so between them the wafer goes to a machine that measures it and hunts for specks.",
   "specimen": "sem-column",
   "specimenCaption": "Right: a scanning electron microscope column over a wafer, cut in half, with the electron beam in copper. The electron gun sits at the top under its high-voltage insulator, the condenser and objective lenses are magnets drawn as iron yokes round their coils, then the scan coils, a ring-shaped detector, and the wafer on a precision stage.",
   "card": {
