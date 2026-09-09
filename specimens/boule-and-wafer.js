@@ -13,19 +13,19 @@ PC.register('boule-and-wafer', function (p) {
   var parts = [], i, y, a;
 
   // ---------- tail cone ----------
-  parts.push(PC.T(PC.cone({ r1: 0, r2: R, h: yBody0 - yTip, n: 1800, tone: 0.32 }),
+  parts.push(PC.T(PC.cone({ r1: 0, r2: R, h: yBody0 - yTip, n: 2600, tone: 0.30 }),
     { pos: [bx, (yTip + yBody0) / 2, 0] }));
   for (i = 1; i <= 3; i++) {
     parts.push(PC.T(PC.circle({ r: R * i / 3.6, perUnit: 150, tone: 0.55 }), { pos: [bx, yTip + 0.055 * i, 0] }));
   }
 
   // ---------- body ----------
-  parts.push(PC.T(PC.cylinder({ r: R, h: yBody1 - yBody0, caps: false, n: 26000, tone: 0.28 }),
+  parts.push(PC.T(PC.cylinder({ r: R, h: yBody1 - yBody0, caps: false, n: 36000, tone: 0.23 }),
     { pos: [bx, (yBody0 + yBody1) / 2, 0] }));
   // growth striations: faint rings, spaced well clear of each other
   for (i = 0; i <= 14; i++) {
     y = yBody0 + 0.02 + (yBody1 - yBody0 - 0.04) * i / 14;
-    parts.push(PC.T(PC.circle({ r: R * 1.002, perUnit: 150, tone: 0.38 }), { pos: [bx, y, 0] }));
+    parts.push(PC.T(PC.circle({ r: R * 1.002, perUnit: 190, tone: 0.34 }), { pos: [bx, y, 0] }));
   }
   // the four flat facets that run the length of a <100> ingot
   for (i = 0; i < 4; i++) {
@@ -33,7 +33,7 @@ PC.register('boule-and-wafer', function (p) {
     parts.push(PC.line({
       a: [bx + R * 1.004 * Math.cos(a), yBody0 + 0.06, R * 1.004 * Math.sin(a)],
       b: [bx + R * 1.004 * Math.cos(a), yBody1 - 0.06, R * 1.004 * Math.sin(a)],
-      perUnit: 180, tone: 0.5
+      perUnit: 230, tone: 0.42
     }));
   }
   // where the body is cropped and sliced: three kerf rings above the tail
@@ -66,7 +66,7 @@ PC.register('boule-and-wafer', function (p) {
   // ---------- one wafer standing on edge, leaning back (accent) ----------
   var lean = 0.13;
   var wafer = PC.merge(
-    PC.T(PC.accent(PC.disc({ r: R, n: 2400, tone: 1 }), 0.30), { pos: [0, 0.005, 0] }),
+    PC.T(PC.accent(PC.disc({ r: R, n: 3800, tone: 1 }), 0.26), { pos: [0, 0.005, 0] }),
     PC.accent(PC.cylinder({ r: R, h: 0.010, caps: false, n: 800, tone: 1 }), 0.75),
     PC.T(PC.accent(PC.circle({ r: R, perUnit: 420 }), 1), { pos: [0, 0.005, 0] }),
     PC.T(PC.accent(PC.circle({ r: R, perUnit: 300 }), 0.8), { pos: [0, -0.005, 0] }),
@@ -85,13 +85,13 @@ PC.register('boule-and-wafer', function (p) {
 
   // ---------- a short stack of wafers lying flat ----------
   var sx = 0.38, sz = 0.26, pitch = 0.024;
-  for (i = 0; i < 5; i++) {
+  for (i = 0; i < 7; i++) {
     y = yTip + 0.008 + i * pitch;
     parts.push(PC.T(PC.cylinder({ r: R, h: 0.009, caps: false, n: 190, tone: 0.34 }), { pos: [sx, y, sz] }));
     parts.push(PC.T(PC.circle({ r: R, perUnit: 160, tone: 0.95 }), { pos: [sx, y + 0.0045, sz] }));
   }
-  parts.push(PC.T(PC.disc({ r: R, n: 1700, tone: 0.32 }), { pos: [sx, yTip + 0.008 + 4 * pitch + 0.0045, sz] }));
-  parts.push(PC.T(PC.circle({ r: R * 0.80, perUnit: 150, tone: 0.5 }), { pos: [sx, yTip + 0.008 + 4 * pitch + 0.006, sz] }));
+  parts.push(PC.T(PC.disc({ r: R, n: 2400, tone: 0.30 }), { pos: [sx, yTip + 0.008 + 6 * pitch + 0.0045, sz] }));
+  parts.push(PC.T(PC.circle({ r: R * 0.80, perUnit: 150, tone: 0.5 }), { pos: [sx, yTip + 0.008 + 6 * pitch + 0.006, sz] }));
 
   return {
     cloud: PC.merge.apply(null, parts),

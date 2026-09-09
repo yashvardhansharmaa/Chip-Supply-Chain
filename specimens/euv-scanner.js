@@ -119,7 +119,7 @@ PC.register('euv-scanner', function (p) {
   }
 
   // collector mirror + tin plasma + drive laser + droplets
-  add(mirror(COLL, [1, 0], CR, { sag: CSAG, rIn: CHOLE, n: 4200, tone: 0.45, mount: false }));
+  add(mirror(COLL, [1, 0], CR, { sag: CSAG, rIn: CHOLE, n: 3400, tone: 0.42, mount: false }));
   add(PC.T(PC.circle({ r: CR * 0.66, perUnit: 240, tone: 0.4 }), { rot: [0, 0, Math.PI / 2], pos: [COLL[0] + 0.075, COLL[1], 0] }));
   add(PC.accent(PC.T(PC.sphere({ r: 0.045, n: 700 }), { pos: [PLASMA[0], PLASMA[1], 0] }), 1));
   add(PC.accent(PC.T(PC.sphere({ r: 0.10, n: 500 }), { pos: [PLASMA[0], PLASMA[1], 0] }), 0.35));
@@ -185,16 +185,10 @@ PC.register('euv-scanner', function (p) {
 
   // ---------- wafer stage ----------
   var W = NODE[11].p, wafR = 0.33;
-  add(PC.T(PC.cylinder({ r: wafR, h: 0.02, n: 1400, tone: 0.34 }), { pos: [W[0], W[1] - 0.01, 0] }));
-  add(PC.T(PC.circle({ r: wafR, perUnit: 620, tone: 1 }), { pos: [W[0], W[1] + 0.002, 0] }));
-  var dg = [];
-  for (var gx = -3; gx <= 3; gx++) for (var gz = -3; gz <= 3; gz++) {
-    var cx = gx * 0.092, cz = gz * 0.076;
-    if (cx * cx + cz * cz > (wafR - 0.055) * (wafR - 0.055)) continue;
-    dg.push(PC.polyline({ pts: [[cx - 0.044, 0, cz - 0.037], [cx + 0.044, 0, cz - 0.037], [cx + 0.044, 0, cz + 0.037], [cx - 0.044, 0, cz + 0.037]], closed: true, perUnit: 150, tone: 0.7 }));
-  }
-  add(PC.T(PC.merge.apply(null, dg), { pos: [W[0], W[1] + 0.004, 0] }));
-  add(PC.T(PC.accent(PC.plane({ w: 0.088, d: 0.074, n: 800 }), 0.9), { pos: [W[0], W[1] + 0.008, 0] }));
+  add(PC.T(PC.disc({ r: wafR, n: 700, tone: 0.3 }), { pos: [W[0], W[1], 0] }));
+  add(PC.T(PC.circle({ r: wafR, perUnit: 380, tone: 1 }), { pos: [W[0], W[1] + 0.002, 0] }));
+  add(PC.T(PC.circle({ r: wafR * 0.62, perUnit: 200, tone: 0.5 }), { pos: [W[0], W[1] + 0.003, 0] }));
+  add(PC.T(PC.accent(PC.plane({ w: 0.10, d: 0.085, n: 700 }), 0.95), { pos: [W[0], W[1] + 0.008, 0] }));
   add(PC.T(PC.cylinder({ r: wafR * 0.9, h: 0.06, n: 900, tone: 0.24 }), { pos: [W[0], W[1] - 0.05, 0] }));
   add(PC.T(PC.box({ w: 1.02, h: 0.13, d: 0.80, faces: ['py', 'px', 'pz'], n: 1600, tone: 0.24 }), { pos: [W[0], W[1] - 0.145, 0] }));
   add(PC.T(PC.boxEdges({ w: 1.02, h: 0.13, d: 0.80, perUnit: 150, tone: 0.9 }), { pos: [W[0], W[1] - 0.145, 0] }));

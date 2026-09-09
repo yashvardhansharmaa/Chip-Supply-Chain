@@ -412,6 +412,14 @@ sup.cite a:hover { text-decoration: underline; }
 .gl-link { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-ink); text-decoration: none; }
 @media (max-width: 900px) { .glossary { grid-template-columns: 1fr; } .briefing { grid-template-columns: 1fr; } }
 
+/* ---------- source tiers ---------- */
+.tier { display: inline-block; font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.06em; width: 18px; height: 18px; line-height: 16px; text-align: center; border: 1px solid var(--line-2); border-radius: 2px; margin-right: 8px; color: var(--ink-2); vertical-align: 1px; }
+.tier-A { border-color: var(--ink); color: var(--ink); }
+.tier-B { border-color: var(--line-2); }
+.tier-C { border-style: dashed; color: var(--muted); }
+.tier-D, .tier-\? { border-color: var(--c6); color: var(--c6); }
+.tier-key { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); margin: 6px 0 10px; }
+
 /* ---------- sources view ---------- */
 .sources-list h3 { font-family: var(--font-display); font-weight: 700; font-stretch: 88%; font-size: 20px; margin: 28px 0 10px; }
 .sources-list ol { padding-left: 2.2em; font-size: 14px; line-height: 1.5; color: var(--ink-2); }

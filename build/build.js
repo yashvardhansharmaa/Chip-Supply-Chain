@@ -13,6 +13,13 @@ const slug = (s) => String(s).toLowerCase().replace(/[’'"]/g, '').replace(/[^a
 const COUNTRY = { US: 'United States', NL: 'Netherlands', JP: 'Japan', TW: 'Taiwan', KR: 'South Korea', CN: 'China', DE: 'Germany', CH: 'Switzerland', GB: 'United Kingdom', FR: 'France', IL: 'Israel', SG: 'Singapore', MY: 'Malaysia', AT: 'Austria', IT: 'Italy', BE: 'Belgium', IN: 'India', AE: 'UAE', SA: 'Saudi Arabia', CA: 'Canada', SE: 'Sweden', FI: 'Finland', IE: 'Ireland', TH: 'Thailand', VN: 'Vietnam', PH: 'Philippines', MX: 'Mexico', 'EU-other': 'Other Europe', Other: 'Other' };
 const COUNTRY_COLOR = { US: 1, NL: 2, TW: 3, JP: 4, KR: 5, CN: 6, DE: 7, 'EU-other': 8, Other: 8, 'United States': 1, Netherlands: 2, Taiwan: 3, Japan: 4, 'South Korea': 5, Korea: 5, China: 6, Germany: 7, Europe: 8, 'Other Europe': 8, Other: 8, 'Rest of world': 8, 'Others': 8 };
 
+/* ---------------- source tiers ---------------- */
+const tiersRaw = readJSON(path.join(root, 'data', 'source-tiers.json'), {});
+const tierOf = (url) => { const h = host(url); for (const t of ['A', 'B', 'C', 'D']) { if ((tiersRaw[t] || []).some((d) => h === d || h.endsWith('.' + d))) return t; } return '?'; };
+const TIER_LABEL = { A: 'Primary or institutional', B: 'Established analyst or top-tier press', C: 'Specialist press or named analyst', D: 'Below the bar', '?': 'Unclassified' };
+const tierTag = (url) => { const t = tierOf(url); return `<span class="tier tier-${t}" title="${TIER_LABEL[t]}">${t}</span>`; };
+const tierCounts = (cites) => { const c = { A: 0, B: 0, C: 0, D: 0, '?': 0 }; cites.forEach((x) => { c[tierOf(x.url)]++; }); return c; };
+
 /* ---------------- front matter ---------------- */
 function parseChapter(src, file) {
   const m = src.match(/^---json\s*\n([\s\S]*?)\n---\s*\n?/);
@@ -249,7 +256,7 @@ function chapterHTML(ch) {
   const parts = splitTakeaways(ch.html);
   const body = plainBox(parts.body, m.plain, { id: ch.id, cites: ch.cites, figures: [] });
   ch.inShort = parts.inShort;
-  const sources = ch.cites.length ? `<details class="chapter-sources"><summary>Sources for this chapter (${ch.cites.length})</summary><ol>${ch.cites.map((c) => `<li><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url.length > 96 ? c.url.slice(0, 94) + '…' : c.url)}</a><span class="host">${esc(host(c.url))}</span></li>`).join('')}</ol></details>` : '';
+  const sources = ch.cites.length ? `<details class="chapter-sources"><summary>Sources for this chapter (${ch.cites.length})</summary><ol>${ch.cites.map((c) => `<li>${tierTag(c.url)}<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url.length > 96 ? c.url.slice(0, 94) + '…' : c.url)}</a><span class="host">${esc(host(c.url))}</span></li>`).join('')}</ol></details>` : '';
   return `<article class="chapter" id="${esc(ch.id)}" data-specimen="${esc(specimen)}" data-number="${pad(ch.number)}" data-title="${esc(ch.title)}" data-caption="${esc(m.specimenCaption || '')}">
 <header class="chapter-head">
 <div class="chapter-num" aria-hidden="true">${pad(ch.number)}</div>
@@ -300,7 +307,8 @@ if (geo) {
 
 /* ---------------- sources view ---------------- */
 const all = chapters.concat(geo ? [geo] : []);
-const sourcesHTML = all.map((ch) => `<h3>${pad(ch.number)} · ${esc(ch.title)}</h3><ol>${ch.cites.map((c) => `<li><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url)}</a></li>`).join('')}</ol>`).join('') +
+const sourcesHTML = `<div class="tier-key"><span class="tier tier-A">A</span> primary or institutional · <span class="tier tier-B">B</span> established analyst or top-tier press · <span class="tier tier-C">C</span> specialist press or named analyst</div>` +
+  all.map((ch) => { const tc = tierCounts(ch.cites); return `<h3>${pad(ch.number)} · ${esc(ch.title)} <span class="label">${ch.cites.length} sources · A ${tc.A} · B ${tc.B} · C ${tc.C}${tc.D ? ' · below bar ' + tc.D : ''}${tc['?'] ? ' · unclassified ' + tc['?'] : ''}</span></h3><ol>${ch.cites.map((c) => `<li>${tierTag(c.url)}<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url)}</a></li>`).join('')}</ol>`; }).join('') +
   (matrixNotes ? `<h3>Method: the country-share matrix</h3><div class="prose">${markdown(matrixNotes, { id: 'matrix-notes', cites: [], figures: [] }).html}</div>` : '') +
   `<h3>How this site was made</h3><div class="prose"><p>Chokepoints was researched, written, designed and built in September 2026 by Claude (Fable 5.1 as orchestrator and designer, with Opus agents writing chapters, compiling datasets and modelling the specimens) for Yashvardhan Sharma. Every number links to a public source; figures are redrawn from those sources. The specimens are procedural point clouds built from primitives, not scans, and their proportions follow published dimensions. Text and data are offered as a starting point for your own diligence, not as investment advice.</p></div>`;
 
@@ -353,8 +361,9 @@ fill('APP', read(path.join(root, 'src', 'app.js')));
 
 fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
 fs.writeFileSync(path.join(root, 'dist', 'index.html'), html);
-const report = [`built ${new Date().toISOString()}`, `chapters: ${chapters.length}${geo ? ' + geopolitics' : ''}`, `words: ${totalWords}`, `sources: ${all.reduce((a, c) => a + c.cites.length, 0)}`,
+const tierTotal = tierCounts([].concat(...all.map((c) => c.cites)));
+const report = [`built ${new Date().toISOString()}`, `source tiers: A ${tierTotal.A} · B ${tierTotal.B} · C ${tierTotal.C} · D ${tierTotal.D} · unclassified ${tierTotal['?']}`, `chapters: ${chapters.length}${geo ? ' + geopolitics' : ''}`, `words: ${totalWords}`, `sources: ${all.reduce((a, c) => a + c.cites.length, 0)}`,
   `landscape: ${landscape.length} chips · suppliers: ${suppliers.length} · timeline: ${timeline.length} · matrix: ${matrix.length} · glossary: ${glossary.length}`, `specimens: ${[...specNames].join(', ')}`,
-  `size: ${(html.length / 1024).toFixed(0)} KB`, ...all.map((c) => `  ${pad(c.number)} ${c.id}: ${c.words} words, ${c.cites.length} sources, ${(c.meta.figures || []).length} figures`), ...warnings.map((w) => 'WARN ' + w)].join('\n');
+  `size: ${(html.length / 1024).toFixed(0)} KB`, ...all.map((c) => { const tc = tierCounts(c.cites); return `  ${pad(c.number)} ${c.id}: ${c.words} words, ${c.cites.length} sources (D ${tc.D}, ? ${tc['?']}), ${(c.meta.figures || []).length} figures`; }), ...warnings.map((w) => 'WARN ' + w)].join('\n');
 fs.writeFileSync(path.join(root, 'dist', 'build-report.txt'), report);
 console.log(report);
