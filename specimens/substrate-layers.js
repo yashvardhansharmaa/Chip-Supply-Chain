@@ -159,8 +159,14 @@ PC.register('substrate-layers', function (p) {
     [-1, 1].forEach(function (sg) { caps.push(seg([sg * (sw / 2 + 0.028), yT, cv], [sg * (sw / 2 + 0.056), yT, cv], 520, 0.9)); });
   }
   add(cut(PC.merge.apply(null, caps)));
-  // bottom: the ball grid
-  add(cut(PC.T(PC.dots({ nx: 44, nz: 31, sx: W * 0.955 / 44, sz: D * 0.94 / 31, per: 6, tone: 0.55 }), { pos: [0, -top - 0.014, 0] })));
+  // bottom: the ball grid, drawn as balls so the underside is scalloped in
+  // silhouette rather than flat
+  var ball = PC.T(PC.sphere({ r: 0.0092, thetaMax: Math.PI / 2, n: 7, tone: 0.6 }), { scale: [1, -1, 1] });
+  var bx = 40, bz = 28, bsx = W * 0.955 / bx, bsz = D * 0.94 / bz, balls = [];
+  for (var gx = 0; gx < bx; gx++) for (var gz = 0; gz < bz; gz++) {
+    balls.push(PC.T(ball, { pos: [(gx - (bx - 1) / 2) * bsx, -top - 0.001, (gz - (bz - 1) / 2) * bsz] }));
+  }
+  add(cut(PC.merge.apply(null, balls)));
 
   return {
     cloud: PC.merge.apply(null, parts),
