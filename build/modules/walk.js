@@ -75,9 +75,9 @@ ${leadersHTML(c)}
   const WALK = `<div class="wk">
 <div class="wk-rail" id="wk-rail" data-show="0" aria-hidden="true" hidden><div class="wk-rail-bar"><i></i></div><p class="wk-rail-line"><span class="wk-rail-n"></span><span class="wk-rail-t"></span></p></div>
 <header class="wk-head">
-<p class="label wk-eyebrow">Start here · no background needed</p>
+<p class="label wk-eyebrow">Start here</p>
 <h2 class="wk-title">How a GPU is made</h2>
-<p class="wk-dek">Each of the ${word(steps.length)} chapters has one paragraph written without jargon. Here they are, in order, unedited.</p>
+<p class="wk-dek">One plain paragraph from each of the ${word(steps.length)} chapters, in the order a chip is made, then what it costs and who controls it. No jargon, no background, one sitting.</p>
 <p class="wk-meta"><span class="label">${steps.length} paragraphs</span><span class="label">${walkWords.toLocaleString('en-US')} words</span><span class="label">about ${mins} min</span></p>
 </header>
 <ol class="wk-list">
@@ -85,7 +85,7 @@ ${list}
 </ol>
 <div class="wk-end">
 <p class="wk-end-t">That is the chain, end to end.</p>
-<p class="wk-end-links"><a href="#/chain">The whole chain, ${word(steps.length)} chapters in full</a><a href="#/">Where it is made: the map</a><a href="#/sources">Sources and method</a></p>
+<p class="wk-end-links"><a href="#/chain">All ${word(steps.length)} chapters in full</a><a href="#/">Where it is made: the map</a><a href="#/sources">Sources and method</a></p>
 </div>
 </div>`;
 

@@ -4,8 +4,8 @@
   "number": 12,
   "title": "Advanced Packaging",
   "oneLiner": "Lithography stopped being the limit on chip size in 2022. What replaced it is how large an interposer TSMC can build, and through 2025 how many it could build a month.",
-  "plain": "Packaging wires finished chips into one component and mounts them on a board the size of a playing card, built to the tolerances of a chip. A lithography machine can print only a rectangle about the size of a postage stamp in one shot, so a modern accelerator is cut into pieces and stitched back together on a shared slab of silicon, with its memory a few millimetres away. Slab, chips and board all expand at different rates when heated, so the package warps and the joints crack. Getting that right in volume is why TSMC packages nearly every AI accelerator, in Taiwan.",
-  "bridge": "The die and the memory cube are still separate objects; packaging sets them side by side on one slab of silicon and wires them together.",
+  "plain": "Packaging wires finished chips into one component and mounts them on a base built to the tolerances of a chip. A lithography machine can print only a rectangle about the size of a postage stamp in one shot, so a modern accelerator is cut into pieces and stitched back together on a shared slab of silicon, with its memory a few millimetres away. Slab, chips and base all expand at different rates when heated, so the package warps and the joints crack. Getting that right in volume is hard enough that nearly every AI accelerator is packaged by TSMC, in Taiwan.",
+  "bridge": "Logic and memory are still two separate objects, made in different countries, and the next stage exists to close the distance between them.",
   "specimen": "cowos-exploded",
   "specimenCaption": "Right: a CoWoS package pulled apart. A stiffener frame at the top, then two reticle-sized logic dies and eight HBM stacks, microbumps, the silicon interposer with its vertical vias and the wiring that stitches the dies together and fans out to the memory, then the larger solder bumps beneath it and the resin build-up substrate at the bottom.",
   "card": {
@@ -78,7 +78,7 @@ A lithography scanner prints a rectangle 26 mm by 33 mm, or 858 mm2, in one expo
 
 ## How it works
 
-Packaging wires finished chips into one component and mounts them on a board the size of a playing card, built to the tolerances of a chip. A lithography machine can print only a rectangle about the size of a postage stamp in one shot, so a modern accelerator is cut into pieces and stitched back together on a shared slab of silicon, with its memory a few millimetres away. Slab, chips and board all expand at different rates when heated, so the package warps and the joints crack. Getting that right in volume is why TSMC packages nearly every AI accelerator, in Taiwan.
+Packaging wires finished chips into one component and mounts them on a base built to the tolerances of a chip. A lithography machine can print only a rectangle about the size of a postage stamp in one shot, so a modern accelerator is cut into pieces and stitched back together on a shared slab of silicon, with its memory a few millimetres away. Slab, chips and base all expand at different rates when heated, so the package warps and the joints crack. Getting that right in volume is hard enough that nearly every AI accelerator is packaged by TSMC, in Taiwan.
 
 High bandwidth memory gives a second reason to split the package: its 1,024-bit or 2,048-bit connection is too wide for a resin base board to carry, so the memory sits beside the logic on a shared silicon carrier, the interposer.
 
