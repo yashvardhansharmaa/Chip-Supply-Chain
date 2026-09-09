@@ -82,7 +82,7 @@ A wafer loses value two ways: whole regions ruined by mishandling, misalignment 
 
 The second kind follows an equation: die yield is (1 + D0A/a) to the power minus a, where D0 is defects per square centimetre, A is die area and a is a clustering constant of 3 to 4. Yield falls faster than area rises: at a defect density of 0.8 a 1 square centimetre die yields 49 percent and a 2 by 2 centimetre die 11 percent, so the bigger die costs about twenty times as much ([source](https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf)).
 
-An 8 square centimetre die, about as much as one exposure can print, yields about 49 percent at a defect density of 0.10 and about 69 percent at 0.05. Getting from one to the other is yield learning: find which of the thousand-odd steps is losing dies, fix it, move on.
+Run that equation with a clustering constant of 3 for an 8 square centimetre die, about as much as one exposure can print, and it yields about 49 percent at a defect density of 0.10 and about 69 percent at 0.05 ([source](https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf)). Getting from one to the other is yield learning: find which of the thousand-odd steps is losing dies, fix it, move on.
 
 ## Variants and trade-offs
 

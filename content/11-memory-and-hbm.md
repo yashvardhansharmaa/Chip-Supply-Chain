@@ -83,8 +83,8 @@ Answering a prompt is where the width earns its cost. Training reuses each store
 
 | Generation | Interface | Bandwidth per stack | Capacity per stack |
 |---|---|---|---|
-| HBM3E | 1,024-bit, 16 channels | over 1.2 TB/s | 24 GB (8-high), 36 GB (12-high) |
-| HBM4 | 2,048-bit, 32 channels | over 2.0 TB/s, up to 3.3 TB/s | up to 64 GB (16-high, 32 Gb dies) |
+| HBM3E | 1,024-bit, 16 channels | over 1.2 TB/s | 24 GB (8 chips), 36 GB (12 chips) |
+| HBM4 | 2,048-bit, 32 channels | over 2.0 TB/s, up to 3.3 TB/s | up to 64 GB (16 chips, 32 Gb dies) |
 
 ### HBM3E
 
@@ -102,7 +102,7 @@ HBM4's other change is commercial. The chip at the bottom of the stack is now a 
 
 - **Drill and thin.** Etch vertical holes, the through-silicon vias, into a memory wafer, fill them with copper, then grind the wafer from behind until the copper comes through.
 - **Stack and join.** SK hynix uses Advanced MR-MUF, which melts the solder bumps between stacked chips and moulds a filler around them in one pass, holding heat and warping in check ([source](https://news.skhynix.com/en/sk-hynix-completes-worlds-first-hbm4-development-and-readies-mass-production/)).
-- **Stay under the ceiling.** A finished cube is capped at 775 micrometres, under a millimetre, raised from 720 for HBM4, because a stack taller than the processor beside it would foul the cooling plate ([source](https://news.skhynix.com/en/tech-note-series-ep2/)).
+- **Stay under the ceiling.** HBM4 raised the cap on a finished cube from 720 micrometres to 775, still under a millimetre, because a stack taller than the processor beside it would foul the cooling plate ([source](https://news.skhynix.com/en/tech-note-series-ep2/)).
 
 Hybrid bonding is the next step and it is not ready. Pressing copper pad straight onto copper pad, with no solder and no filler, would cut the spacing between connections from about 20 micrometres to under 1, but SK hynix expects full-scale adoption only at HBM4E or HBM5, where stacks pass twenty layers ([source](https://news.skhynix.com/en/tech-note-series-ep2/)).
 

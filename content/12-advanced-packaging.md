@@ -111,7 +111,7 @@ Panel-level packaging swaps the round wafer for a rectangular panel and wastes f
 
 TSMC does not publish a CoWoS wafer number, and will not. Its 2024 symposium told investors capacity would grow at a 60 percent compound rate, and on the July 2024 earnings call C.C. Wei said he could not reach supply and demand balance ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf)).
 
-In October 2025 he would still say only that TSMC would add capacity again in 2026, give the real figure the year after, and that front end and back end were both, in his word, tight ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf)).
+In October 2025 Wei would still say only that TSMC would add capacity again in 2026, give the real figure the year after, and that front end and back end were both, in his word, tight ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf)).
 
 The split is public; the total is not. Epoch AI weighs each designer's component use against world supply and puts Nvidia at 60.3 percent of all CoWoS in 2025, with a 90 percent confidence interval of 56.5 to 64.3; Google took 13.5, AMD 8.4 and Amazon 7.4 ([source](https://epoch.ai/data-insights/ai-chip-supply-chain-constraints)). Those four absorbed around 90 percent of all CoWoS and all HBM by value while taking about 12 percent of the world's advanced logic wafers, which is why packaging ran out and logic did not.
 
@@ -127,7 +127,7 @@ The word packaging covers two industries. TSMC does the 2.5D work, chips side by
 
 The tools are a narrower chokepoint than the assembly houses.
 
-- **Thermocompression bonding.** Pressing dies together under heat and force. ASMPT's advanced packaging revenue reached $532.1 million in 2025, that line up about 146 percent; it targets 35 to 40 percent of a market it puts at $1.6 billion by 2028 ([source](https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/)).
+- **Thermocompression bonding.** Pressing dies together under heat and force. ASMPT's advanced packaging revenue reached $532.1 million in 2025, with the bonder line up about 146 percent; it targets 35 to 40 percent of a market it puts at $1.6 billion by 2028 ([source](https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/)).
 - **Hybrid bonding.** Solder disappears and copper pads meet directly. Applied Materials built its Kinex bonder with Besi, which makes the placement head ([source](https://www.appliedmaterials.com/eu/en/product-library/kinex-integrated-die-to-wafer-hybrid-bonding-system.html)).
 - **Grinding and dicing.** Disco dominates the steps that thin wafers and cut packages apart; see Test and assembly ([source](https://newsletter.semianalysis.com/p/disco-corporation-the-world-leader)).
 
