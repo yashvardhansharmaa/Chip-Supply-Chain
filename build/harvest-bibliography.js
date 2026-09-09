@@ -235,11 +235,15 @@ const JUNK_TITLE = new RegExp(`(${WALL_TITLE.source})|(${GENERIC_TITLE.source})`
 // containing an apostrophe ("NVIDIA's B200...") is not cut short — the bug this
 // replaced a hand-written pattern list to avoid.
 function metaTag(html, key) {
+  // Cheap reject first: without this, a key that is absent from a 400 KB page
+  // still costs a full backtracking scan for every candidate <meta.
+  if (!html.includes(key)) return null;
   const k = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   // Named groups keep the two orderings (attr-then-content, content-then-attr)
-  // from renumbering the backreferences that close each quote.
+  // from renumbering the backreferences that close each quote. The value is
+  // bounded and excludes angle brackets so it cannot run past its own tag.
   const attr = `(?:name|property|itemprop)\\s*=\\s*(?<aq>["'])${k}\\k<aq>`;
-  const content = `content\\s*=\\s*(?<cq>["'])(?<val>[\\s\\S]*?)\\k<cq>`;
+  const content = `content\\s*=\\s*(?<cq>["'])(?<val>[^<>]{0,600}?)\\k<cq>`;
   for (const re of [
     new RegExp(`<meta[^>]*?${attr}[^>]*?${content}[^>]*>`, 'i'),
     new RegExp(`<meta[^>]*?${content}[^>]*?${attr}[^>]*>`, 'i'),
