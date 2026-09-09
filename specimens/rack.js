@@ -35,7 +35,7 @@ PC.register('rack', function (p) {
   parts.push(PC.T(PC.boxEdges({ w: W, h: H, d: D, perUnit: 180, tone: 0.95 }), { pos: [0, H / 2, 0] }));
   [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(function (q) {
     var x = q[0] * (W / 2 - post / 2), z = q[1] * (D / 2 - post / 2);
-    parts.push(PC.T(PC.box({ w: post, h: H, d: post, faces: ['px', 'nx', 'pz', 'nz'], n: 1500, tone: 0.42 }), { pos: [x, H / 2, z] }));
+    parts.push(PC.T(PC.box({ w: post, h: H, d: post, faces: ['px', 'nx', 'pz', 'nz'], n: 1700, tone: 0.48 }), { pos: [x, H / 2, z] }));
     parts.push(PC.T(PC.boxEdges({ w: post, h: H, d: post, perUnit: 110, tone: 0.85 }), { pos: [x, H / 2, z] }));
   });
   // plinth and top cap: solid, so the rack has a foot and a lid
@@ -54,7 +54,10 @@ PC.register('rack', function (p) {
     var sx = s * (W / 2 - 0.004), pw = D - 0.10, ph = H - 0.22, py = 0.09 + ph / 2;
     parts.push(PC.T(PC.polyline({ pts: rect(pw, ph), closed: true, perUnit: 200, tone: 0.85 }), { rot: SPX, pos: [sx, py, 0] }));
     parts.push(PC.T(PC.polyline({ pts: rect(pw - 0.05, ph - 0.05), closed: true, perUnit: 150, tone: 0.5 }), { rot: SPX, pos: [sx, py, 0] }));
-    parts.push(PC.T(PC.dots({ nx: 40, nz: 17, sx: (ph - 0.10) / 39, sz: (pw - 0.10) / 16, tone: 0.3 }), { rot: [0, 0, Math.PI / 2], pos: [sx, py, 0] }));
+    parts.push(PC.T(PC.dots({ nx: 26, nz: 11, sx: (ph - 0.12) / 25, sz: (pw - 0.12) / 10, tone: 0.22 }), { rot: [0, 0, Math.PI / 2], pos: [sx, py, 0] }));
+    for (var rl = 1; rl < 4; rl++) {
+      parts.push(PC.line({ a: [sx, 0.09 + rl * ph / 4, -pw / 2], b: [sx, 0.09 + rl * ph / 4, pw / 2], perUnit: 150, tone: 0.4 }));
+    }
   });
 
   // ---------- the stack ----------
@@ -91,8 +94,8 @@ PC.register('rack', function (p) {
 
     if (k === 'compute') {
       computeY.push(ty);
-      parts.push(fPlane(tW, tH, 0, ty, fz, 150, 0.24));
-      parts.push(fOut(tW, tH, 0, ty, fz + 0.002, 150, 0.9));
+      parts.push(fPlane(tW, tH, 0, ty, fz, 200, 0.23));
+      parts.push(fOut(tW, tH, 0, ty, fz + 0.002, 150, 0.85));
       [-1, 1].forEach(function (s) {
         var bx = s * 0.132, bw = 0.205, bh = tH * 0.68;
         parts.push(fOut(bw, bh, bx, ty, fz + 0.004, 150, 0.85));
@@ -104,8 +107,8 @@ PC.register('rack', function (p) {
       parts.push(PC.T(PC.dots({ nx: 3, nz: 1, sx: 0.011, tone: 0.9 }), { pos: [-tW / 2 + 0.026, ty, fz + 0.006] }));
     } else if (k === 'switch') {
       switchY.push(ty);
-      parts.push(fPlane(tW, tH, 0, ty, fz, 170, 0.30));
-      parts.push(fOut(tW, tH, 0, ty, fz + 0.002, 150, 0.9));
+      parts.push(fPlane(tW, tH, 0, ty, fz, 330, 0.46));
+      parts.push(fOut(tW, tH, 0, ty, fz + 0.002, 190, 1));
       parts.push(fOut(tW * 0.80, tH * 0.52, 0, ty, fz + 0.004, 170, 1));
       for (var g = 0; g < 11; g++) {
         var gx = (g - 5) * (tW * 0.066);
@@ -115,7 +118,7 @@ PC.register('rack', function (p) {
       powerY.push(ty);
       // six power-supply modules, in copper: this rack's chokepoint is the
       // electricity, not the silicon
-      parts.push(PC.accent(fPlane(tW, tH, 0, ty, fz, 190), 0.5));
+      parts.push(PC.accent(fPlane(tW, tH, 0, ty, fz, 220), 0.6));
       parts.push(PC.accent(fOut(tW, tH, 0, ty, fz + 0.002, 150), 1));
       for (var q = 0; q < 6; q++) {
         var qx = (q - 2.5) * ((tW - 0.02) / 6);
@@ -151,6 +154,8 @@ PC.register('rack', function (p) {
   parts.push(fOut(tW + 0.036, apH, 0, apY, front - 0.002, 260, 1));
   [-1, 1].forEach(function (s) {
     parts.push(fPlane(0.032, apH, s * (tW / 2 + 0.034), apY, front - 0.002, 900, 0.32));
+    parts.push(fPlane(W - 0.02, (s > 0 ? H - 0.062 - (apY + apH / 2) : apY - apH / 2 - 0.09) - 0.004,
+      0, s > 0 ? (apY + apH / 2 + H - 0.062) / 2 : (0.09 + apY - apH / 2) / 2, front - 0.002, 1500, 0.3));
   });
 
   // ---------- rear: the NVLink cartridge, the busbar and the manifold ----------
