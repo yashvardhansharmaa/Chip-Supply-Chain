@@ -23,12 +23,12 @@
   <header class="masthead">
     <a class="wordmark" href="#/"><b>Compute Chokepoints</b><span>The AI chip supply chain</span></a>
     <nav class="tabs" aria-label="Sections">
-      <a href="#/" data-view="stack" aria-current="page">The Stack</a>
+      <a href="#/" data-view="stack" aria-current="page">The Chain</a>
       <a href="#/briefing" data-view="briefing">Summary</a>
       <a href="#/landscape" data-view="landscape">AI Chips</a>
       <a href="#/suppliers" data-view="suppliers">Suppliers</a>
       <a href="#/geopolitics" data-view="geopolitics">Geopolitics</a>
-      <a href="#/controls" data-view="controls">Controls</a>
+      <a href="#/controls" data-view="controls">Export Controls</a>
       <a href="#/glossary" data-view="glossary">Glossary</a>
       <a href="#/sources" data-view="sources">Sources</a>
       <button class="theme-toggle" type="button" aria-label="Switch to dark mode">
@@ -52,13 +52,13 @@
 
   <main>
     <section class="view column" data-view="stack">
-      <div class="hero" data-specimen="package" data-caption="An AI accelerator package: two reticle-sized logic dies and eight HBM stacks on a silicon interposer, on a build-up substrate. Highlighted: the HBM.">
+      <div class="hero" data-specimen="package" data-caption="One AI chip package: two logic dies, each as big as a lithography machine can print, with eight stacks of high-bandwidth memory (highlighted) on a silicon interposer above the substrate.">
         <h1 class="thesis">{{THESIS}}</h1>
         <p class="dek">{{SUBTITLE}}</p>
       </div>
       {{START_HERE}}
       <div class="chain" id="chain">
-        <div class="chain-head"><h2>The chain, scored</h2><p>Bar height is the chokepoint score, 1 to 5.</p><div class="chain-key"><span><i style="background:var(--bar-5)"></i>5 of 5</span><span><i style="background:var(--bar-4)"></i>4</span><span><i style="background:var(--bar-3)"></i>3 or less</span></div></div>
+        <div class="chain-head"><h2>The chain, scored</h2><p>One bar per stage. The taller the bar, the harder that stage would be to replace: the chokepoint score, 1 to 5.</p><div class="chain-key"><span><i style="background:var(--bar-5)"></i>5 of 5</span><span><i style="background:var(--bar-4)"></i>4</span><span><i style="background:var(--bar-3)"></i>3 or less</span></div></div>
         {{CHAIN}}
       </div>
       <div class="contents" id="contents">
@@ -72,7 +72,7 @@
     <section class="view column" data-view="landscape" hidden data-specimen="package">
       <div class="view-head">
         <h2>AI Chips</h2>
-        <p class="dek">The accelerators that matter in 2026, with the foundry, node, memory supplier and packaging line behind each one. Pick a chip and the package beside the text follows its real die and HBM layout.</p>
+        <p class="dek">The chips that train and run AI models in 2026, with the foundry, process node, memory supplier and packaging plant behind each one. Pick one and the specimen beside the text redraws to that chip's real die and memory layout.</p>
       </div>
       <div id="picker" class="picker" role="group" aria-label="Choose a chip"></div>
       <div id="spec" class="spec" aria-live="polite"></div>
@@ -113,7 +113,7 @@
     <section class="view column wide" data-view="briefing" hidden>
       <div class="view-head">
         <h2>Summary</h2>
-        <p class="dek">The whole chain in one sitting: for every stage, the conclusions, the chokepoint score and who leads. Each card links to the full chapter.</p>
+        <p class="dek">The whole chain in one sitting: for every stage, what we found, its chokepoint score and who leads it. Each card opens the full chapter.</p>
       </div>
       <div class="briefing">{{BRIEFING}}</div>
     </section>

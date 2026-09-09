@@ -3,49 +3,49 @@
   "id": "design-and-eda",
   "number": 2,
   "title": "Chip Design, EDA and IP",
-  "oneLiner": "The cheapest stage in the chain by capital and one of the most concentrated by vendor. Three software firms sell the tools that every leading-edge AI accelerator passes through.",
-  "plain": "Designing a chip is like drawing the street plan of a city of billions of buildings, where every road has to be walkable in less than a billionth of a second. No one draws it by hand. The layout is generated, checked and signed off by software sold by three companies, and a foundry will only accept a design that has passed their particular tools. Once the plan goes to the factory, changing one street costs a new set of printing plates and several months. Withhold the software and the design cannot be manufactured.",
+  "oneLiner": "The cheapest stage in the chain to fund and one of the most concentrated. Three software firms sell the tools that every leading-edge AI accelerator passes through.",
+  "plain": "Chip design turns an idea for a processor into a complete blueprint, with every one of billions of transistors placed and wired. It is like drawing the street plan of a city that size, where every road has to be walkable in less than a billionth of a second. No one draws it by hand. Software from three companies, Synopsys, Cadence and Siemens, generates the layout, checks it and signs it off, and a chip factory accepts only designs that have passed those tools. Changing one street afterwards costs a fresh set of printing stencils and several months. Withhold the software and the design cannot be made.",
   "specimen": "die-floorplan",
-  "specimenCaption": "Right: the floorplan of a GPU die, one whole reticle field of 26 by 33 mm. 144 compute tiles fill the centre in eight clusters, the L2 cache splits them in a band across the middle, HBM PHYs run along the two long edges, and the amber strip on the short edge is the die-to-die interface, facing a sliver of the neighbouring chiplet.",
+  "specimenCaption": "Right: the floorplan of a GPU die, one whole reticle field of 26 by 33 mm, the largest patch a scanner can print in a single exposure. 144 compute tiles fill the centre in eight clusters, the L2 cache splits them in a band across the middle, the high-bandwidth memory interfaces run along the two long edges, and the amber strip on the short edge is the link to the chiplet next door, a second die in the same package.",
   "card": {
     "concentration": "Extreme",
     "chokepointScore": 4,
     "leaders": [
-      {"name": "Synopsys", "country": "US", "share": "$8B revenue in 2025 including Ansys; 90%+ of static timing"},
-      {"name": "Cadence", "country": "US", "share": "$5.30B revenue in 2025; 55-60% of hardware emulation"},
-      {"name": "Siemens EDA", "country": "DE", "share": "$2.2-2.5B revenue in 2025; 85%+ of physical verification"},
-      {"name": "Arm", "country": "GB", "share": "~50% of CPU compute among top hyperscalers, FYE26"},
-      {"name": "Broadcom", "country": "US", "share": "$16.7B of AI semiconductor revenue in Q3 FY2026"}
+      {"name": "Synopsys", "country": "US", "share": "$8B revenue in 2025 including Ansys; 90%+ of the timing-signoff market"},
+      {"name": "Cadence", "country": "US", "share": "$5.30B revenue in 2025; 55-60% of the hardware emulator market"},
+      {"name": "Siemens EDA", "country": "DE", "share": "$2.2-2.5B revenue in 2025; 85%+ of physical verification, the final layout check"},
+      {"name": "Arm", "country": "GB", "share": "About 50% of processor compute at the top cloud firms, fiscal 2026"},
+      {"name": "Broadcom", "country": "US", "share": "$16.7B of AI chip revenue in the third quarter of fiscal 2026"}
     ],
     "countries": [
       {"code": "US", "note": "Synopsys, Cadence, Broadcom, Marvell, Nvidia, AMD; Siemens EDA's main sites"},
-      {"code": "GB", "note": "Arm CPU and interconnect IP, Cambridge"},
-      {"code": "TW", "note": "Alchip, Global Unichip, MediaTek design services and tape-out"},
+      {"code": "GB", "note": "Arm processor and interconnect designs, licensed from Cambridge"},
+      {"code": "TW", "note": "Alchip, Global Unichip and MediaTek: design services that carry a chip to the factory"},
       {"code": "IL", "note": "Annapurna Labs, the AWS design house behind Trainium and Graviton"},
       {"code": "IN", "note": "Nearly 20% of the world's chip design engineers, on the Indian government's count"}
     ],
-    "chinaStatus": "Can design competitive accelerators. Cannot yet run a complete leading-edge digital flow on domestic EDA tools, and CSET judges that Chinese EDA firms cannot support designs at those nodes. Access to US and German tools was cut off for five weeks in 2025 and restored.",
-    "usStatus": "Owns the two largest EDA vendors and the dominant ASIC design houses, and controls Siemens EDA's US-origin technology through export licensing.",
-    "costSignal": "A 3 nm photomask set runs about $40M, and startups have taken a 7 nm design all the way to tape-out for $50-75M",
-    "substitution": {"years": "5-10", "why": "Replacing one point tool is feasible. Replacing a signed-off flow means rebuilding foundry-certified reference flows, timing and extraction models, and twenty years of accumulated corner cases."}
+    "chinaStatus": "Designs competitive accelerators, but cannot yet run a complete leading-edge flow on domestic design software, and CSET at Georgetown University judges that Chinese vendors cannot support designs at those nodes. Washington cut off access to US and German tools for five weeks in 2025, then restored it.",
+    "usStatus": "Owns the two largest design-software vendors and the dominant custom-chip design houses, and controls the US-origin technology inside Siemens EDA through export licences.",
+    "costSignal": "A 3 nm photomask set runs about $40M, and startups have taken a 7 nm design all the way to the factory for $50-75M",
+    "substitution": {"years": "5-10", "why": "Swapping one tool is feasible. Replacing a whole certified flow means rebuilding the foundry-approved recipes, the timing and electrical models behind them, and twenty years of accumulated fixes for rare failure cases."}
   },
   "keyFacts": [
-    {"fact": "The EDA and design IP market was about $18B in 2025, with Synopsys, Cadence and Siemens EDA holding over 85%", "source": "https://newsletter.semianalysis.com/p/eda-market-primer"},
+    {"fact": "The market for chip design software and licensed circuit blocks was about $18B in 2025, with Synopsys, Cadence and Siemens EDA holding over 85%", "source": "https://newsletter.semianalysis.com/p/eda-market-primer"},
     {"fact": "A photomask set costs over $1M at 28 nm, over $10M at 7 nm and about $40M at 3 nm; startups have built leading-edge 7 nm chips end to end for $50-75M", "source": "https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor"},
-    {"fact": "BIS restricted EDA sales to China by letters received 23 and 29 May 2025 and rescinded them on 2 July 2025", "source": "https://www.sec.gov/Archives/edgar/data/813672/000081367225000093/cdns-20250702.htm"},
+    {"fact": "The US Bureau of Industry and Security restricted design-software sales to China in letters received 23 and 29 May 2025, then rescinded them on 2 July 2025", "source": "https://www.sec.gov/Archives/edgar/data/813672/000081367225000093/cdns-20250702.htm"},
     {"fact": "Arm reported $4.92B revenue and $2.61B of royalty revenue in fiscal 2026", "source": "https://newsroom.arm.com/news/arm-q4-fye26-results"},
     {"fact": "Broadcom booked $16.7B of AI semiconductor revenue in Q3 FY2026, up 221% year on year", "source": "https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm"},
     {"fact": "OpenAI and Broadcom announced a collaboration to deploy 10 gigawatts of OpenAI-designed AI accelerators", "source": "https://investors.broadcom.com/news-releases/news-release-details/openai-and-broadcom-announce-strategic-collaboration-deploy-10"},
-    {"fact": "Broadcom's 3.5D XDSiP packages more than 6,000 mm2 of silicon and 12 HBM stacks in one device", "source": "https://docs.broadcom.com/doc/3-5d-xdsip-platform-technology"},
+    {"fact": "Broadcom's 3.5D XDSiP packages more than 6,000 mm2 of silicon and 12 high-bandwidth memory stacks in one device", "source": "https://docs.broadcom.com/doc/3-5d-xdsip-platform-technology"},
     {"fact": "Alchip reported $992M of revenue in 2025", "source": "https://www.alchip.com/en/Investors/financials/"},
-    {"fact": "UCIe 3.0 adds 48 GT/s and 64 GT/s die-to-die data rates", "source": "https://www.uciexpress.org/specifications"},
+    {"fact": "UCIe 3.0, the open standard for links between chiplets, adds 48 GT/s and 64 GT/s data rates", "source": "https://www.uciexpress.org/specifications"},
     {"fact": "India is home to nearly 20% of the world's chip design engineers", "source": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2148393"}
   ],
   "figures": [
     {
       "id": "eda-share",
       "type": "stack",
-      "title": "EDA and design IP revenue share, 2025. Synopsys includes Ansys",
+      "title": "Design software and licensed-block revenue share, 2025. Synopsys includes Ansys",
       "unit": "%",
       "data": [["Synopsys", 44], ["Cadence", 29], ["Siemens EDA", 13], ["All others", 14]],
       "source": {"label": "SemiAnalysis, EDA Market Primer, May 2026", "url": "https://newsletter.semianalysis.com/p/eda-market-primer"}
@@ -53,7 +53,7 @@
     {
       "id": "mask-cost",
       "type": "bars",
-      "title": "What one photomask set costs, by node ($M). The 28 nm and 7 nm figures are floors",
+      "title": "What one photomask set costs, by node ($M). The 28 nm and 7 nm figures are minimums",
       "unit": "$M",
       "data": [["28 nm", 1], ["7 nm", 10], ["3 nm", 40]],
       "source": {"label": "SemiAnalysis, The Dark Side of the Semiconductor Design Renaissance, July 2022", "url": "https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor"}
@@ -61,7 +61,7 @@
     {
       "id": "tool-lock",
       "type": "bars",
-      "title": "Leading vendor's share of its own EDA segment, 2025",
+      "title": "Each leading vendor's share of its own design-software segment, 2025",
       "unit": "%",
       "data": [["Static timing (Synopsys PrimeTime)", 90], ["Physical verification (Siemens Calibre)", 85], ["Synthesis (Synopsys Design Compiler)", 85], ["Emulation (Cadence Palladium)", 58]],
       "source": {"label": "SemiAnalysis, EDA Market Primer, May 2026", "url": "https://newsletter.semianalysis.com/p/eda-market-primer"}
@@ -71,21 +71,21 @@
 ---
 # Chip Design, EDA and IP
 
-Design is the only stage in this chain with no factory. It is also the one a foreign government can shut off fastest, and in 2025 one did: for five weeks, every Chinese chip designer lost the software that turns a design into something a factory can print.
+Design is the only stage in this chain with no factory, and the one a foreign government can shut off fastest. In 2025 one did: for five weeks, every Chinese chip designer lost the software that turns a design into something a factory can print.
 
 ## How it works
 
-Designing a chip is like drawing the street plan of a city of billions of buildings, where every road has to be walkable in less than a billionth of a second. No one draws it by hand. The layout is generated, checked and signed off by software sold by three companies, and a foundry will only accept a design that has passed their particular tools. Once the plan goes to the factory, changing one street costs a new set of printing plates and several months. Withhold the software and the design cannot be manufactured.
+Chip design turns an idea for a processor into a complete blueprint, with every one of billions of transistors placed and wired. It is like drawing the street plan of a city that size, where every road has to be walkable in less than a billionth of a second. No one draws it by hand. Software from three companies, Synopsys, Cadence and Siemens, generates the layout, checks it and signs it off, and a chip factory accepts only designs that have passed those tools. Changing one street afterwards costs a fresh set of printing stencils and several months. Withhold the software and the design cannot be made.
 
 The sequence is the same at every design house:
 
-- **Architecture.** Engineers fix the machine's shape: the matrix-multiply unit's width, the SRAM beside it, the HBM stacks on the edges.
-- **RTL.** Register-transfer-level code in SystemVerilog fixes what every register holds on every clock edge.
-- **Verification.** The largest headcount line in most projects: simulation, formal proofs, and emulators that boot firmware before silicon exists.
-- **Physical design.** Synthesis maps the code onto the foundry's standard cells, then placement, routing, timing closure and signoff.
-- **Tape-out.** Mask data preparation and optical proximity correction turn the layout into pattern files for the mask shop.
+- **Architecture.** Engineers fix the machine's shape: how wide the matrix-multiply unit is, how much fast on-chip memory sits beside it, how many high-bandwidth memory stacks line the edges.
+- **RTL.** Register-transfer-level code, written in the hardware language SystemVerilog, fixes what every register holds on every tick of the clock.
+- **Verification.** The biggest team on most projects: simulation, formal proofs, and emulators that boot the firmware before any silicon exists.
+- **Physical design.** Software maps the code onto the foundry's prebuilt logic cells, then places them, wires them together and proves the timing holds.
+- **Tape-out.** The handover. Mask data preparation and optical proximity correction, which pre-distorts each shape so it prints true, turn the layout into pattern files for the mask shop.
 
-The licence fee is not what disciplines the work; a mistake costs a mask set. A photomask set passes $1 million at 28 nm, $10 million at 7 nm and about $40 million at 3 nm, and a whole leading-edge chip has gone from design to tape-out on TSMC 7 nm for $50 million to $75 million, everything included ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)).
+The discipline comes from the cost of a mistake, which is a whole new mask set. One set passes $1 million at 28 nm, $10 million at 7 nm and about $40 million at 3 nm, and a whole leading-edge chip has gone from design to tape-out on TSMC 7 nm for $50 million to $75 million, everything included ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)).
 
 {{figure:mask-cost}}
 

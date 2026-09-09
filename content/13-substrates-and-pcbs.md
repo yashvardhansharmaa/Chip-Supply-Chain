@@ -64,7 +64,7 @@
 ---
 # Substrates and PCBs
 
-On TSMC's July 2026 earnings call, chief executive C.C. Wei said packaging capacity is now so tight that it limits customers' growth ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf)). The silicon interposer that wires chips to each other inside a package reaches only a few millimetres. Past its edge the chain turns to epoxy and glass: a build-up substrate, a printed circuit board of thirty layers, then a rack.
+On TSMC's July 2026 earnings call, chief executive C.C. Wei said packaging capacity is now so tight that it limits customers' growth ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf)). The silicon interposer that wires chips together inside a package spans a few millimetres. Past its edge the chain turns to epoxy and glass: a build-up substrate, a printed circuit board of thirty layers, then a rack.
 
 ## How it works
 
@@ -78,11 +78,11 @@ Silicon and epoxy swell at different rates when heated, so the larger the packag
 
 ### BT substrates
 
-Bismaleimide-triazine laminate, or BT, is the cheaper and older family. It still wins on unit volume and suits memory stacks and mobile parts, but it cannot hold the fine wiring or the flatness that a logic die as large as a lithography machine can print demands.
+Bismaleimide-triazine laminate, or BT, is the cheaper and older family. It still wins on unit volume and suits memory stacks and mobile parts, but it cannot hold the fine wiring or the flatness a large logic die needs.
 
 ### ABF build-up substrates
 
-Ajinomoto Build-up Film, or ABF, is the insulating sheet between the copper layers, and it sits under every high-end CPU, GPU and AI accelerator. A major chipmaker first used it in 1999, and Ajinomoto calls it the de facto standard in package development ever since ([source](https://www.ajinomoto.co.jp/company/en/ir/event/business_briefing/main/01113/teaserItems1/01/linkList/00/link/3_ICT_E.pdf)). Asked on the company's own site whether its share of that film market was nearer 30 or 50 percent, the electronic materials division answered: "More like 95% market share," and said practically all high-performance computers and servers rely on the film ([source](https://www.ajinomoto.com/stories/the-ajinomoto-groups-unexpected-role-in-semiconductor-manufacturing-the-insulating-film-abf-born-from-aminoscience)).
+Ajinomoto Build-up Film, or ABF, is the insulating sheet between the copper layers, and it sits under every high-end CPU, GPU and AI accelerator. A major chipmaker first used it in 1999, and Ajinomoto calls it the de facto standard in package development ever since ([source](https://www.ajinomoto.co.jp/company/en/ir/event/business_briefing/main/01113/teaserItems1/01/linkList/00/link/3_ICT_E.pdf)). Asked on the company's own site whether its share was nearer 30 or 50 percent, the electronic materials division answered: "More like 95% market share," and said practically all high-performance computers and servers rely on it ([source](https://www.ajinomoto.com/stories/the-ajinomoto-groups-unexpected-role-in-semiconductor-manufacturing-the-insulating-film-abf-born-from-aminoscience)).
 
 {{figure:abf-layers}}
 
@@ -90,14 +90,14 @@ Ajinomoto Build-up Film, or ABF, is the insulating sheet between the copper laye
 
 Swap the resin core for glass and most of the swelling problem goes away, which is why everyone is trying.
 
-- **Intel** announced glass substrates in September 2023 for the latter part of this decade, arguing that organic materials run into shrinkage and warping limits as packages grow ([source](https://download.intel.com/newsroom/archive/2025/en-us-2023-09-18-intel-unveils-industryleading-glass-substrates-to-meet-demand-for-more-powerful-compute.pdf)).
-- **Samsung Electro-Mechanics** signed a joint venture with Sumitomo Chemical in November 2025 to make glass core, with a main agreement due in 2026 and mass production after 2027 ([source](https://samsungsem.com/global/newsroom/news/view.do?id=9850)).
+- **Intel** announced glass substrates in September 2023 for the latter part of this decade ([source](https://download.intel.com/newsroom/archive/2025/en-us-2023-09-18-intel-unveils-industryleading-glass-substrates-to-meet-demand-for-more-powerful-compute.pdf)).
+- **Samsung Electro-Mechanics** signed a joint venture with Sumitomo Chemical in November 2025 to make glass core, with mass production after 2027 ([source](https://samsungsem.com/global/newsroom/news/view.do?id=9850)).
 
 Both programmes point past 2027, so glass answers the next problem rather than this one.
 
 ## The materials underneath
 
-Ajinomoto's film is a rounding error in a food company's accounts and a chokepoint in everyone else's. The Healthcare and Others segment that carries electronic materials lifted business profit 45.1% to JPY 66.2 billion in the year to March 2026, and Ajinomoto credits those materials for most of the rise ([source](https://www.ajinomoto.co.jp/company/en/ir/library/result/main/014/teaserItems1/0/linkList/06/link/FY25Q4_Tanshin_E.pdf)). Capacity comes slowly: about JPY 25 billion of growth investment from fiscal 2023, sized against demand out to 2030, with the resin varnish mixed in Japan and the coating of it into film contracted out ([source](https://www.ajinomoto.co.jp/company/en/ir/event/business_briefing/main/01113/teaserItems1/01/linkList/00/link/3_ICT_E.pdf)).
+Ajinomoto's film is a rounding error in a food company's accounts and a chokepoint in everyone else's. The Healthcare and Others segment that carries electronic materials lifted business profit 45.1% to JPY 66.2 billion in the year to March 2026, and Ajinomoto credits the materials for most of that ([source](https://www.ajinomoto.co.jp/company/en/ir/library/result/main/014/teaserItems1/0/linkList/06/link/FY25Q4_Tanshin_E.pdf)). Capacity comes slowly: about JPY 25 billion of growth investment from fiscal 2023, sized against demand out to 2030 ([source](https://www.ajinomoto.co.jp/company/en/ir/event/business_briefing/main/01113/teaserItems1/01/linkList/00/link/3_ICT_E.pdf)).
 
 One layer down, the core tells the same story. Nitto Boseki's T-glass is stiff and barely swells when heated, which is what a dense package substrate needs ([source](https://www.nittobo.co.jp/eng/business/electronicmaterials/t-glass.htm)). The company claims an overwhelming advantage in quality and capacity for low-expansion glass, says demand has run two to three times ahead of the plan it wrote for fiscal 2024 to 2027, and is spending JPY 80 billion over those four years to catch up ([source](https://www.nittobo.co.jp/eng/ir/pdf/Nittobo_Integrated-Report_2025.pdf)). Apple and Qualcomm are among the customers worried about Japanese glass cloth supply ([source](https://asia.nikkei.com/business/technology/tech-asia/apple-and-qualcomm-fret-over-strained-supplies-of-japan-s-glass-cloth)).
 
@@ -105,19 +105,19 @@ China is attacking this layer, and Nitto Boseki says so itself: it names Chinese
 
 ## Who makes it
 
-The plants that build substrates for other firms are an entirely Asian oligopoly, and every large one is expanding. The White House's 2021 hundred-day supply chain review listed build-up substrate among the materials commenters flagged as vulnerable, and named the makers as Ibiden, Shinko, Nanya, Samsung, Unimicron, Shennan Circuits, Zhuhai Yueya and AKM. Not one is American ([source](https://bidenwhitehouse.archives.gov/wp-content/uploads/2021/06/100-day-supply-chain-review-report.pdf)).
+The plants that build substrates for other firms are an Asian oligopoly, and every large one is expanding. The White House's 2021 hundred-day supply chain review recorded build-up substrate among the materials commenters called vulnerable, and named the makers as Ibiden, Shinko, Nanya, Samsung, Unimicron, Shennan Circuits, Zhuhai Yueya and AKM. Not one is American ([source](https://bidenwhitehouse.archives.gov/wp-content/uploads/2021/06/100-day-supply-chain-review-report.pdf)).
 
 - **Ibiden** will invest about JPY 500 billion from fiscal 2026 to fiscal 2028, starting with JPY 220 billion at its Gama plant and mass production from fiscal 2027 ([source](https://www.ibiden.com/company/2026/02/notice-regarding-capital-investment-plan-for-high-performance-ic-package-substrates.html)). In May 2026 management said it typically takes close to 100 percent of a new generation of interposer substrates at launch and loses 20 to 30 points three to six months later. On silicon-bridge substrates, it said, wiring the underside is hard enough that it expects to keep its technical lead through fiscal 2030 ([source](https://www.ibiden.com/ir/items/en_QA_FY25Q4.pdf)).
-- **Unimicron** took NT$42.9 billion of sales in the second quarter of 2026, 52% of it build-up substrates and 61% of it AI data centre work, and spent NT$11.7 billion on plant and equipment in the half ([source](https://www.unimicron.com/files/money/Earnings/en/2026-Q2-consolidated-en.pdf)).
+- **Unimicron** took NT$42.9 billion of sales in the second quarter of 2026, 52% of it build-up substrates and 61% of it AI data centre work ([source](https://www.unimicron.com/files/money/Earnings/en/2026-Q2-consolidated-en.pdf)).
 - **Samsung Electro-Mechanics** grew package solution sales 37% year on year to KRW 771.6 billion in the second quarter, on substrates for AI accelerators and server processors ([source](https://m.samsungsem.com/global/newsroom/news/view.do?id=10462)).
 
-Shinko changed hands: Fujitsu sold its 50.02% stake to a fund run by the state-backed Japan Investment Corporation, with Mitsui Chemicals and Dai Nippon Printing as co-investors ([source](https://www.jiccapital.co.jp/en/news/.assets/E_20250217_JIC_JICC_PressRelease.pdf)).
+Shinko changed hands: Fujitsu sold its 50.02% stake to a fund run by the state-backed Japan Investment Corporation ([source](https://www.jiccapital.co.jp/en/news/.assets/E_20250217_JIC_JICC_PressRelease.pdf)).
 
 {{figure:unimicron-mix}}
 
 ## The boards under the GPU
 
-Under the substrate is a board that has become an engineering problem of its own. TTM Technologies says it regularly builds printed circuit boards of more than 30 layers and can go past 70 ([source](https://www.sec.gov/Archives/edgar/data/1116942/000119312526051976/ttmi-20251229.htm)). Those layers carry hundreds of amps to the GPUs and carry network traffic between racks, so how little signal the laminate soaks up becomes a first-order design variable.
+TTM Technologies says it regularly builds printed circuit boards of more than 30 layers and can go past 70 ([source](https://www.sec.gov/Archives/edgar/data/1116942/000119312526051976/ttmi-20251229.htm)). Those layers carry hundreds of amps to the GPUs and route traffic between them fast enough that how little signal the laminate soaks up becomes a main design constraint.
 
 Data centre computing was 24% of TTM's US$2.91 billion of fiscal 2025 revenue, against 14% two years earlier ([source](https://www.sec.gov/Archives/edgar/data/1116942/000119312526051976/ttmi-20251229.htm)) ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0001116942/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json)). It names its competition as mostly Chinese and Taiwanese ([source](https://www.sec.gov/Archives/edgar/data/1116942/000119312526051976/ttmi-20251229.htm)). The hedge is Southeast Asia, where Thailand has built an AI board industry ([source](https://asia.nikkei.com/business/technology/tech-asia/thailand-carves-out-a-less-glamorous-ai-niche-printed-circuit-boards)).
 
@@ -131,7 +131,7 @@ Flatness breaks first as packages grow. TSMC has told investors that its CoWoS p
 
 - **Layer count** sets how much current and how many signals the substrate can carry. Each added layer is another chance to lose the part.
 - **Body size** drives everything else. Once a body is much larger than the dies it carries, warping and handling decide what can be built, not the wiring.
-- **Coefficient of thermal expansion**, how much a material swells when heated, must be close enough to silicon that the package survives repeated heating and cooling. That is what T-glass buys and why its supply matters.
+- **Coefficient of thermal expansion**, how much a material swells when heated, must be close enough to silicon that the package survives repeated heating and cooling, which is what T-glass buys and why its supply matters.
 - **Dielectric properties**, how much signal the core laminate soaks up, set the speeds the substrate and the board underneath can run.
 - **Qualification time** is what protects the incumbents. Approving a second supplier for a film or a laminate takes years.
 

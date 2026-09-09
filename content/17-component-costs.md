@@ -4,9 +4,9 @@
   "number": 17,
   "title": "Component Costs",
   "oneLiner": "Follow the money through an AI accelerator and the silicon turns out to be the cheap part. Memory and packaging are the bill.",
-  "plain": "An accelerator's bill of materials works like a car's. The engine is the famous part, but the battery, the gearbox and the assembly line are what the bill is made of. The logic chip everyone names is about a seventh of the cost of building one, the stacked memory beside it is nearly half, and the packaging that binds them costs more than the chip. Those parts come from very few firms, which is where a regulator has the most purchase.",
+  "plain": "A bill of materials is the list of parts inside a product and what each one costs to build. For an AI accelerator, the famous logic chip is the cheap part, about a seventh of the total. The stacked memory beside it is nearly half, and the packaging that wires the two together costs more than the chip. Three firms in the world make that memory and one Taiwanese firm does that packaging, so the costliest parts are also the scarcest, and that is where a government has the most purchase.",
   "specimen": "wafer-cost",
-  "specimenCaption": "Right: the cost of one B200, stacked to scale from the foot: $2,900 of HBM in amber, $1,100 of CoWoS packaging, $1,000 of packaging yield loss drawn hollow because it ships nothing, $900 of logic dies and $480 of substrate, board and test. About $6,400 in all, for a part that sells for $30,000 to $40,000.",
+  "specimenCaption": "Right: the cost of one B200, stacked to scale from the bottom up: $2,900 of high-bandwidth memory in amber, $1,100 of CoWoS packaging, $1,000 of packaging yield loss drawn hollow because it ships nothing, $900 of logic dies and $480 of substrate, board and test. About $6,400 in all, for a part that sells for $30,000 to $40,000.",
   "card": {
     "concentration": "High",
     "chokepointScore": 4,
@@ -17,26 +17,26 @@
       {"name": "ASE Technology", "country": "TW", "share": "21.0% gross margin, the thin end of the chain"}
     ],
     "countries": [
-      {"code": "US", "note": "Accelerator design and the largest single margin pool"},
-      {"code": "TW", "note": "Wafers, CoWoS packaging, OSAT and server assembly"},
-      {"code": "KR", "note": "HBM, now the single largest line on the bill of materials"},
-      {"code": "JP", "note": "ABF substrate film and build-up substrates"},
+      {"code": "US", "note": "Accelerator design and the largest single pool of profit"},
+      {"code": "TW", "note": "Wafers, CoWoS packaging, outsourced assembly and test, and server build"},
+      {"code": "KR", "note": "High-bandwidth memory, the single largest line on the bill"},
+      {"code": "JP", "note": "Ajinomoto build-up film and the substrates made from it"},
       {"code": "NL", "note": "Lithography, the largest single line in fab capital cost"}
     ],
-    "chinaStatus": "Domestic accelerators avoid the Nvidia margin but pay a worse cost structure: no CoWoS-class capacity at volume, HBM sourced from stockpiles or CXMT's early product, and yields on SMIC N+2 that make the die the expensive part rather than the cheap one.",
-    "usStatus": "Captures the design margin and the equipment margin. Owns almost none of the wafer, HBM, substrate or assembly cost lines, which is why export controls target access rather than production.",
-    "costSignal": "~$6,400 of manufacturing cost inside a B200 that sells for $30,000 to $40,000; HBM alone is $2,900 of it",
-    "substitution": {"years": "3-5", "why": "Nvidia's margin is contestable by custom ASICs on the same TSMC and HBM inputs, but the HBM and CoWoS lines underneath it are not, because they are set by physically scarce capacity."}
+    "chinaStatus": "Domestic accelerators dodge Nvidia's margin and pay for it elsewhere: no advanced packaging at volume, memory bought from stockpiles or from CXMT's early product, and yields on SMIC's N+2 process that make the die the expensive part rather than the cheap one.",
+    "usStatus": "Captures the design and equipment margins and almost none of the wafer, memory, substrate or assembly cost, which is why its export controls target access rather than production.",
+    "costSignal": "~$6,400 of manufacturing cost inside a B200 that sells for $30,000 to $40,000; memory alone is $2,900 of it",
+    "substitution": {"years": "3-5", "why": "A custom chip built on the same TSMC wafers and the same memory can attack Nvidia's margin. The memory and packaging lines underneath cannot be attacked that way, because physically scarce capacity sets them."}
   },
   "keyFacts": [
     {"fact": "A B200 costs about $6,400 to build, in a range of $5,700 to $7,300, and sells for $30,000 to $40,000", "source": "https://epoch.ai/data-insights/b200-cost-breakdown"},
-    {"fact": "HBM3E is $2,900 of that $6,400, at $14 to $17 per gigabyte; the logic dies are $900", "source": "https://epoch.ai/data-insights/b200-cost-breakdown"},
+    {"fact": "High-bandwidth memory (HBM3E) is $2,900 of that $6,400, at $14 to $17 per gigabyte; the logic dies are $900", "source": "https://epoch.ai/data-insights/b200-cost-breakdown"},
     {"fact": "Epoch AI's B200 model assumes a $17,000 4NP wafer, two roughly 800 mm2 compute chiplets and a die yield of 40 to 70 percent centred on 60", "source": "https://epoch.ai/data-insights/b200-cost-breakdown"},
     {"fact": "SemiAnalysis puts Vera Rubin NVL72 ownership at $3.57 per GPU-hour, against $1.84 for GB200 and $2.36 for GB300", "source": "https://inferencex.semianalysis.com/blog/vera-rubin-nvl72-vs-gb200-nvl72-inference"},
     {"fact": "Micron's GAAP gross margin went from 39.8% for fiscal 2025 to 84.6% in the quarter to May 2026", "source": "https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Results-for-the-Third-Quarter-of-Fiscal-2026/default.aspx"},
     {"fact": "Nvidia earned a 71.1% GAAP gross margin on $193.7B of data centre revenue in fiscal 2026, and 75.0% in the quarter to July 2026", "source": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026"},
     {"fact": "A 100,000 H100 cluster needs about 150 MW and burns 1.59 TWh per year", "source": "https://newsletter.semianalysis.com/p/100000-h100-clusters-power-network"},
-    {"fact": "SIA counted $791.7B of global semiconductor sales in 2025; WSTS forecasts $975B for 2026, with memory and logic each growing more than 30%", "source": "https://www.wsts.org/76/103/Global-Semiconductor-Market-Approaches-1T-in-2026"}
+    {"fact": "The Semiconductor Industry Association counted $791.7B of global semiconductor sales in 2025; World Semiconductor Trade Statistics forecasts $975B for 2026, with memory and logic each growing more than 30%", "source": "https://www.wsts.org/76/103/Global-Semiconductor-Market-Approaches-1T-in-2026"}
   ],
   "figures": [
     {
@@ -45,7 +45,7 @@
       "title": "Where the ~$6,400 of B200 manufacturing cost goes, 2026",
       "unit": "$",
       "data": [["HBM3E, 192 GB", 2900], ["CoWoS-L packaging", 1100], ["Packaging yield loss", 1000], ["Logic die, two on 4NP", 900], ["Substrate, board, test", 480]],
-      "source": {"label": "Epoch AI B200 cost model, from a $17,000 4NP wafer, 40-70% die yield, $14-17 per GB of HBM and packaging derived from TSMC advanced packaging revenue", "url": "https://epoch.ai/data-insights/b200-cost-breakdown"}
+      "source": {"label": "Epoch AI B200 cost model, from a $17,000 4NP wafer, 40-70% die yield, $14-17 per GB of memory, and a packaging line derived from TSMC's advanced packaging revenue", "url": "https://epoch.ai/data-insights/b200-cost-breakdown"}
     },
     {
       "id": "gross-margins",
@@ -61,7 +61,7 @@
       "title": "Size of each layer of the chain, 2025",
       "unit": "$B",
       "data": [["Semiconductor sales", 792], ["Hyperscaler capex", 448], ["Nvidia data centre revenue", 194], ["Semiconductor equipment", 135]],
-      "source": {"label": "SIA on semiconductor sales; Epoch AI on capex at Alphabet, Amazon, Meta, Microsoft and Oracle; Nvidia FY2026 results; SEMI on equipment billings", "url": "https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/"}
+      "source": {"label": "Semiconductor Industry Association on chip sales; Epoch AI on capital spending at Alphabet, Amazon, Meta, Microsoft and Oracle; Nvidia FY2026 results; SEMI on equipment billings", "url": "https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/"}
     }
   ]
 }
