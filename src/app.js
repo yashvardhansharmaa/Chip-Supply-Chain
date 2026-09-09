@@ -242,7 +242,7 @@
         }
         Sections.update();
       }
-      document.title = v === 'home' ? 'Compute Chokepoints' : 'Compute Chokepoints · ' + { stack: 'The Chain', walk: 'Intro', landscape: 'AI Chips', suppliers: 'Suppliers', controls: sub === 'exposure' ? 'China revenue share' : sub === 'thresholds' ? 'Licence thresholds' : 'Export controls', walk: 'How a GPU is made', methods: 'Methods', 'summary-a': 'Summary A', 'summary-b': 'Summary B', glossary: 'Glossary', sources: 'Sources' }[v];
+      document.title = v === 'home' ? 'Compute Chokepoints' : 'Compute Chokepoints · ' + { stack: 'The Chain', walk: 'Intro', landscape: 'AI Chips', suppliers: 'Suppliers', controls: sub === 'exposure' ? 'China revenue share' : sub === 'thresholds' ? 'Licence thresholds' : 'Export Controls', walk: 'How a GPU is made', methods: 'Methods', 'summary-a': 'Summary A', 'summary-b': 'Summary B', glossary: 'Glossary', sources: 'Sources' }[v];
     }
   };
 
