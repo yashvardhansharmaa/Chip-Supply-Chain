@@ -2802,34 +2802,27 @@ PC.register('euv-scanner', function (p) {
       var y = sag * (rr / r) * (rr / r), q = s / 2 - pad;
       g.push(PC.T(PC.polyline({
         pts: [[cx - q, y, cz - q], [cx + q, y, cz - q], [cx + q, y, cz + q], [cx - q, y, cz + q]],
-        closed: true, perUnit: 300, tone: 0.95
+        closed: true, perUnit: 210, tone: 0.95
       }), {}));
     }
     return g.length ? PC.merge.apply(null, g) : null;
   }
 
-  // A mirror at 2-D point q, its concave face pointing along the in-plane normal nv.
+  // A mirror blank at 2-D point q, its concave face pointing along the in-plane
+  // normal nv. In section a mirror is nearly edge-on, so it is drawn as a solid
+  // disc of Zerodur with a hollowed front face: a crescent, the way an optical
+  // layout draws one.
   function mirror(q, nv, r, o) {
     o = o || {};
-    var sag = o.sag == null ? r * 0.14 : o.sag;
-    var th = Math.atan2(-nv[0], nv[1]);
-    var g = [dish(r, sag, o.rIn || 0, o.n || Math.round(2400 * r * r + 340), o.tone == null ? 0.5 : o.tone)];
-    g.push(PC.T(PC.circle({ r: r, perUnit: 700, tone: 1 }), { pos: [0, sag, 0] }));
-    g.push(PC.T(PC.circle({ r: r * 0.985, perUnit: 320, tone: 0.6 }), { pos: [0, sag * 0.97, 0] })); // multilayer rim
-    if (o.rIn) g.push(PC.T(PC.circle({ r: o.rIn, perUnit: 620, tone: 1 }), { pos: [0, 0.004, 0] }));
+    var sag = o.sag == null ? r * 0.15 : o.sag;
+    var th = Math.atan2(-nv[0], nv[1]), t = o.thick == null ? r * 0.22 : o.thick;
+    var g = [dish(r, sag, o.rIn || 0, o.n || Math.round(2400 * r * r + 240), o.tone == null ? 0.6 : o.tone)];
+    g.push(PC.T(PC.cylinder({ r: r, h: t, caps: false, n: Math.round(1400 * r * t + 60), tone: 0.2 }), { pos: [0, -t / 2, 0] }));
+    g.push(PC.T(PC.disc({ r: r, rIn: o.rIn || 0, n: Math.round(1100 * r * r + 60), tone: 0.16 }), { pos: [0, -t, 0] }));
+    g.push(PC.T(PC.circle({ r: r, perUnit: 175, tone: 1 }), { pos: [0, sag, 0] }));       // front rim
+    g.push(PC.T(PC.circle({ r: r, perUnit: 110, tone: 0.5 }), { pos: [0, -t, 0] }));      // back rim
+    if (o.rIn) g.push(PC.T(PC.circle({ r: o.rIn, perUnit: 260, tone: 1 }), { pos: [0, 0.004, 0] }));
     if (o.facets) { var f = facets(r, sag, o.facets); if (f) g.push(f); }
-    if (o.mount !== false) {
-      // three-strut kinematic mount behind the blank
-      for (var m = 0; m < 3; m++) {
-        var ph = m * Math.PI * 2 / 3 + 0.5;
-        g.push(PC.line({
-          a: [r * 0.62 * Math.cos(ph), -0.006, r * 0.62 * Math.sin(ph)],
-          b: [r * 0.16 * Math.cos(ph), -r * 0.42, r * 0.16 * Math.sin(ph)],
-          perUnit: 260, tone: 0.75
-        }));
-      }
-      g.push(PC.T(PC.cylinder({ r: r * 0.2, h: r * 0.16, n: Math.round(900 * r), tone: 0.4 }), { pos: [0, -r * 0.48, 0] }));
-    }
     return PC.T(PC.merge.apply(null, g), { rot: [0, 0, th], pos: [q[0], q[1], 0] });
   }
 
@@ -2894,11 +2887,11 @@ PC.register('euv-scanner', function (p) {
   /* ---------- vacuum vessels ---------- */
 
   add(vessel(1.56, 2.72, 1.15, -0.52, 0.10, 3000));                 // illuminator
-  add(vessel(1.52, 3.04, 1.28, 0.83, -0.04, 3600));                 // projection optics box
-  add(vessel(1.94, 0.60, 1.02, 0.06, 1.98, 1500));                  // reticle stage chamber
+  add(vessel(1.46, 3.10, 1.22, 0.80, -0.04, 3600));                 // projection optics box
+  add(vessel(1.86, 0.52, 0.98, 0.06, 1.94, 1300));                  // reticle stage chamber
   // frame ribs across the POB so it reads as a stiff optical bench, not a crate
   for (i = -1; i <= 1; i += 2) {
-    add(PC.T(PC.polyline({ pts: [[-0.76, 0, 0], [0.76, 0, 0]], perUnit: 210, tone: 0.55 }), { rot: [Math.PI / 2, 0, 0], pos: [0.83, i * 0.86, -0.64] }));
+    add(PC.T(PC.polyline({ pts: [[-0.73, 0, 0], [0.73, 0, 0]], perUnit: 210, tone: 0.55 }), { rot: [Math.PI / 2, 0, 0], pos: [0.80, i * 0.92, -0.61] }));
   }
 
   /* ---------- source vessel, collector, tin ---------- */
@@ -2920,10 +2913,10 @@ PC.register('euv-scanner', function (p) {
   add(PC.accent(PC.T(PC.sphere({ r: 0.036, n: 620 }), { pos: [PLASMA[0], PLASMA[1], 0] }), 1));
   add(PC.accent(PC.T(PC.sphere({ r: 0.085, n: 420 }), { pos: [PLASMA[0], PLASMA[1], 0] }), 0.3));
   // infrared drive laser, in ink: it is not the EUV
-  add(PC.line({ a: [-2.28, PLASMA[1], 0], b: [PLASMA[0] - 0.04, PLASMA[1], 0], perUnit: 130, tone: 0.42 }));
-  add(section(PC.T(PC.cylinder({ r: 0.09, h: 0.24, n: 700, tone: 0.4 }), { rot: [0, 0, -Math.PI / 2], pos: [-2.06, PLASMA[1], 0] })));
-  add(PC.T(PC.boxEdges({ w: 0.30, h: 0.34, d: 0.34, perUnit: 240, tone: 0.85 }), { pos: [-2.33, PLASMA[1], 0] }));
-  add(PC.T(PC.box({ w: 0.30, h: 0.34, d: 0.34, faces: ['nz', 'ny', 'nx'], n: 900, tone: 0.2 }), { pos: [-2.33, PLASMA[1], 0] }));
+  add(PC.line({ a: [-2.14, PLASMA[1], 0], b: [PLASMA[0] - 0.04, PLASMA[1], 0], perUnit: 130, tone: 0.42 }));
+  add(section(PC.T(PC.cylinder({ r: 0.09, h: 0.24, n: 700, tone: 0.4 }), { rot: [0, 0, -Math.PI / 2], pos: [-2.03, PLASMA[1], 0] })));
+  add(PC.T(PC.boxEdges({ w: 0.26, h: 0.30, d: 0.30, perUnit: 240, tone: 0.85 }), { pos: [-2.02, PLASMA[1], 0] }));
+  add(PC.T(PC.box({ w: 0.26, h: 0.30, d: 0.30, faces: ['nz', 'ny', 'nx'], n: 800, tone: 0.2 }), { pos: [-2.02, PLASMA[1], 0] }));
   // droplet generator above, tin catcher below: a stream of 30 um droplets
   add(section(PC.T(PC.cylinder({ r: 0.05, h: 0.30, n: 620, tone: 0.42 }), { pos: [PLASMA[0], PLASMA[1] + 0.72, 0] })));
   var drop = [];
@@ -2940,34 +2933,34 @@ PC.register('euv-scanner', function (p) {
 
   /* ---------- reticle and reticle stage ---------- */
 
-  var R = NODE[4].p, rw = 0.40, rd = 0.34;
-  add(PC.T(PC.box({ w: rw, h: 0.035, d: rd, n: 2200, tone: 0.55 }), { pos: [R[0], R[1] + 0.018, 0] }));
-  add(PC.T(PC.boxEdges({ w: rw, h: 0.035, d: rd, perUnit: 900, tone: 1 }), { pos: [R[0], R[1] + 0.018, 0] }));
+  var R = NODE[4].p, rw = 0.62, rd = 0.50;
+  add(PC.T(PC.box({ w: rw, h: 0.05, d: rd, n: 1900, tone: 0.34 }), { pos: [R[0], R[1] + 0.023, 0] }));
+  add(PC.T(PC.boxEdges({ w: rw, h: 0.05, d: rd, perUnit: 420, tone: 1 }), { pos: [R[0], R[1] + 0.023, 0] }));
   // the patterned field on the underside, 4x the printed 26 x 33 mm
   add(PC.T(PC.polyline({
     pts: [[-rw * 0.33, 0, -rd * 0.42], [rw * 0.33, 0, -rd * 0.42], [rw * 0.33, 0, rd * 0.42], [-rw * 0.33, 0, rd * 0.42]],
-    closed: true, perUnit: 700, tone: 1
+    closed: true, perUnit: 420, tone: 1
   }), { pos: [R[0], R[1] - 0.001, 0] }));
   // electrostatic chuck and the short-stroke stage above it
-  add(PC.T(PC.box({ w: rw * 1.12, h: 0.09, d: rd * 1.12, faces: ['py', 'px', 'nx', 'nz'], n: 1400, tone: 0.34 }), { pos: [R[0], R[1] + 0.082, 0] }));
-  add(PC.T(PC.boxEdges({ w: rw * 1.12, h: 0.09, d: rd * 1.12, perUnit: 320, tone: 0.95 }), { pos: [R[0], R[1] + 0.082, 0] }));
+  add(PC.T(PC.box({ w: rw * 1.08, h: 0.085, d: rd * 1.08, faces: ['py', 'px', 'nx', 'nz'], n: 1100, tone: 0.24 }), { pos: [R[0], R[1] + 0.088, 0] }));
+  add(PC.T(PC.boxEdges({ w: rw * 1.08, h: 0.085, d: rd * 1.08, perUnit: 260, tone: 0.95 }), { pos: [R[0], R[1] + 0.088, 0] }));
   // scan rails: the reticle runs four times faster than the wafer
   for (i = -1; i <= 1; i += 2) {
-    add(PC.T(PC.box({ w: 1.62, h: 0.045, d: 0.055, n: 640, tone: 0.5 }), { pos: [R[0], R[1] + 0.16, i * 0.30] }));
-    add(PC.T(PC.line({ a: [-0.81, 0, 0], b: [0.81, 0, 0], perUnit: 230, tone: 0.9 }), { pos: [R[0], R[1] + 0.184, i * 0.30] }));
+    add(PC.T(PC.box({ w: 1.62, h: 0.045, d: 0.055, n: 640, tone: 0.5 }), { pos: [R[0], R[1] + 0.155, i * 0.32] }));
+    add(PC.T(PC.line({ a: [-0.81, 0, 0], b: [0.81, 0, 0], perUnit: 230, tone: 0.9 }), { pos: [R[0], R[1] + 0.179, i * 0.32] }));
   }
 
   /* ---------- wafer stage (TWINSCAN: expose here, measure alongside) ---------- */
 
-  var W = NODE[11].p, wafR = 0.21;
+  var W = NODE[11].p, wafR = 0.235;
   function chuck(cx, exposed) {
     var g = [];
-    g.push(PC.T(PC.disc({ r: wafR, n: 620, tone: 0.28 }), { pos: [cx, W[1], 0] }));
-    g.push(PC.T(PC.circle({ r: wafR, perUnit: 420, tone: 1 }), { pos: [cx, W[1] + 0.002, 0] }));
+    g.push(PC.T(PC.disc({ r: wafR, n: 700, tone: 0.2 }), { pos: [cx, W[1], 0] }));
+    g.push(PC.T(PC.circle({ r: wafR, perUnit: 260, tone: 1 }), { pos: [cx, W[1] + 0.002, 0] }));
     g.push(PC.T(PC.circle({ r: wafR * 0.66, perUnit: 190, tone: 0.45 }), { pos: [cx, W[1] + 0.003, 0] }));
-    g.push(PC.T(PC.cylinder({ r: wafR * 1.08, h: 0.075, n: 900, tone: 0.24 }), { pos: [cx, W[1] - 0.042, 0] }));
-    g.push(PC.T(PC.circle({ r: wafR * 1.08, perUnit: 240, tone: 0.8 }), { pos: [cx, W[1] - 0.079, 0] }));
-    if (exposed) g.push(PC.T(PC.accent(PC.plane({ w: 0.062, d: 0.05, n: 620 }), 0.95), { pos: [cx, W[1] + 0.006, 0] }));
+    g.push(PC.T(PC.cylinder({ r: wafR * 1.08, h: 0.075, n: 700, tone: 0.16 }), { pos: [cx, W[1] - 0.042, 0] }));
+    g.push(PC.T(PC.circle({ r: wafR * 1.08, perUnit: 150, tone: 0.7 }), { pos: [cx, W[1] - 0.079, 0] }));
+    if (exposed) g.push(PC.T(PC.accent(PC.plane({ w: 0.082, d: 0.066, n: 900 }), 1), { pos: [cx, W[1] + 0.006, 0] }));
     return PC.merge.apply(null, g);
   }
   add(chuck(W[0], true));
@@ -2982,7 +2975,7 @@ PC.register('euv-scanner', function (p) {
 
   /* ---------- base frame ---------- */
 
-  var bw = 3.72, bx = -0.28, by = -2.14;
+  var bw = 3.42, bx = -0.22, by = -2.16;
   add(PC.T(PC.box({ w: bw, h: 0.20, d: 1.36, faces: ['py', 'pz', 'nz', 'px', 'nx'], n: 4200, tone: 0.24 }), { pos: [bx, by, 0] }));
   add(PC.T(PC.boxEdges({ w: bw, h: 0.20, d: 1.36, perUnit: 190, tone: 0.9 }), { pos: [bx, by, 0] }));
   for (i = 0; i < 4; i++) {
@@ -2991,7 +2984,7 @@ PC.register('euv-scanner', function (p) {
     add(PC.T(PC.cylinder({ r: 0.085, h: 0.24, n: 400, tone: 0.4 }), { pos: [lx, by - 0.22, -0.50] }));
   }
   // turbopumps slung under the two big vessels
-  var pumpAt = [[-0.52, -1.46], [0.83, -1.72]];
+  var pumpAt = [[-0.52, -1.50], [0.80, -1.76]];
   for (i = 0; i < pumpAt.length; i++) {
     add(PC.T(PC.cylinder({ r: 0.145, h: 0.26, n: 900, tone: 0.3 }), { pos: [pumpAt[i][0], pumpAt[i][1], -0.42] }));
     add(PC.T(PC.circle({ r: 0.175, perUnit: 260, tone: 0.85 }), { pos: [pumpAt[i][0], pumpAt[i][1] + 0.13, -0.42] }));
@@ -3630,125 +3623,188 @@ PC.register('globe', function (p) {
 })(window.PC);}catch(e){console.warn('specimen globe.js failed to load', e);}
 </script><script>/* gpu-baseboard.js */
 try{(function(PC){
-/* Specimen: an eight-GPU baseboard.
- * Eight accelerator packages in two rows of four, each drawn in the same visual
- * language as the `package` specimen (substrate, interposer, two logic dies,
- * eight HBM stacks with copper tops), four NVSwitch chips in copper down the
- * spine between the rows, connectors, power stages and mounting holes.
+/* Specimen: an eight-GPU baseboard, drawn from the HGX B200 layout.
+ *
+ * Reference: Nvidia's HGX B200 universal baseboard as photographed by
+ * ServeTheHome at Computex 2024. Eight SXM modules in two rows of four,
+ * the two rows flipped so their land grids face inward, and TWO NVLink
+ * switch chips (not four, as on H100) sitting in the middle of the board
+ * to shorten the traces. Each module is a bolted retention frame with a
+ * bare metal lid inside it, a land-grid array beside it and printed
+ * corner fiducials; voltage-regulator banks line the long edges and the
+ * high-density connectors run along the front.
+ *
+ * The two switch chips are in copper: they are the part of this board
+ * that has exactly one supplier.
  */
 PC.register('gpu-baseboard', function (p) {
   var parts = [];
-  var BW = 1.94, BD = 1.30, BH = 0.055;        // board: roughly 600 x 400 mm
-  var yBoard = 0, boardTop = BH / 2;
+  // ~510 x 400 mm board. Vertical relief is true to scale: the module
+  // frames stand about 30 mm proud of a 6 mm board.
+  var BW = 1.52, BD = 1.18, BH = 0.046;
+  var top = BH / 2;
 
-  // ---------- board ----------
-  parts.push(PC.T(PC.plane({ w: BW, d: BD, n: 17000, tone: 0.27 }), { pos: [0, boardTop, 0] }));
-  parts.push(PC.box({ w: BW, h: BH, d: BD, faces: ['px', 'nx', 'pz', 'nz'], n: 3400, tone: 0.42 }));
-  parts.push(PC.boxEdges({ w: BW, h: BH, d: BD, perUnit: 300, tone: 1 }));
-
-  // ---------- one accelerator package, drawn the way `package` draws it ----------
-  // mm -> units, then vertical dimensions exaggerated ~4x so the stack reads at this size
-  var S = 0.00327, E = 4;                      // mm -> units; E exaggerates the heights
-  function pkg(px, pz) {
-    var sub = 110 * S, ip = 85 * S;
-    var subH = 1.8 * E * S, ipH = 0.9 * E * S, dieH = 1.1 * E * S, hbmH = 1.6 * E * S;
-    var y0 = boardTop, ySubTop = y0 + subH;
-    var g = [];
-    // substrate slab
-    g.push(PC.T(PC.box({ w: sub, h: subH, d: sub, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 1200, tone: 0.4 }), { pos: [0, y0 + subH / 2, 0] }));
-    g.push(PC.T(PC.boxEdges({ w: sub, h: subH, d: sub, perUnit: 230, tone: 1 }), { pos: [0, y0 + subH / 2, 0] }));
-    // interposer
-    var yIp = ySubTop + ipH / 2;
-    g.push(PC.T(PC.box({ w: ip, h: ipH, d: ip, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 700, tone: 0.46 }), { pos: [0, yIp, 0] }));
-    g.push(PC.T(PC.boxEdges({ w: ip, h: ipH, d: ip, perUnit: 240, tone: 1 }), { pos: [0, yIp, 0] }));
-    var yTop = ySubTop + ipH;
-    // two logic dies
-    [-13, 13].forEach(function (dx) {
-      var w = 26 * S, d = 32 * S;
-      g.push(PC.T(PC.box({ w: w, h: dieH, d: d, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 300, tone: 0.58 }), { pos: [dx * S, yTop + dieH / 2, 0] }));
-      g.push(PC.T(PC.boxEdges({ w: w, h: dieH, d: d, perUnit: 280, tone: 1 }), { pos: [dx * S, yTop + dieH / 2, 0] }));
-      g.push(PC.T(PC.polyline({ pts: [[-w * 0.36, 0, -d * 0.38], [w * 0.36, 0, -d * 0.38], [w * 0.36, 0, d * 0.38], [-w * 0.36, 0, d * 0.38]], closed: true, perUnit: 240, tone: 0.9 }), { pos: [dx * S, yTop + dieH + 0.0012, 0] }));
-    });
-    // decoupling capacitors scattered on the substrate around the interposer
-    g.push(PC.T(PC.dots({ nx: 13, nz: 2, sx: sub * 0.072, sz: 0.018, per: 2, tone: 0.8 }), { pos: [0, y0 + subH + 0.001, -sub * 0.42] }));
-    g.push(PC.T(PC.dots({ nx: 13, nz: 2, sx: sub * 0.072, sz: 0.018, per: 2, tone: 0.8 }), { pos: [0, y0 + subH + 0.001, sub * 0.42] }));
-    // eight HBM stacks, four each side, copper tops
-    [-34, 34].forEach(function (hx) {
-      [31, 10.4, -10.4, -31].forEach(function (hz) {
-        var w = 11 * S, d = 12 * S, x = hx * S, z = -hz * S, yc = yTop + hbmH / 2;
-        var ring = [[-w / 2, 0, -d / 2], [w / 2, 0, -d / 2], [w / 2, 0, d / 2], [-w / 2, 0, d / 2]];
-        g.push(PC.T(PC.box({ w: w, h: hbmH, d: d, faces: ['px', 'nx', 'pz', 'nz'], n: 150, tone: 0.5 }), { pos: [x, yc, z] }));
-        for (var k = 1; k <= 3; k++) {
-          g.push(PC.T(PC.polyline({ pts: ring, closed: true, perUnit: 170, tone: 0.9 }), { pos: [x, yTop + hbmH * k / 4, z] }));
-        }
-        g.push(PC.T(PC.accent(PC.plane({ w: w * 0.9, d: d * 0.9, n: 40 }), 0.55), { pos: [x, yTop + hbmH, z] }));
-        g.push(PC.T(PC.accent(PC.polyline({ pts: ring, closed: true, perUnit: 300 }), 1), { pos: [x, yTop + hbmH + 0.001, z] }));
-      });
-    });
-    return PC.T(PC.merge.apply(null, g), { pos: [px, 0, pz] });
+  function rect(w, d) {
+    return [[-w / 2, 0, -d / 2], [w / 2, 0, -d / 2], [w / 2, 0, d / 2], [-w / 2, 0, d / 2]];
+  }
+  function outline(w, d, y, x, z, per, tn) {
+    return PC.T(PC.polyline({ pts: rect(w, d), closed: true, perUnit: per, tone: tn }), { pos: [x, y, z] });
   }
 
-  var colX = [-0.675, -0.225, 0.225, 0.675], rowZ = [-0.415, 0.415];
-  for (var c = 0; c < 4; c++) for (var r = 0; r < 2; r++) parts.push(pkg(colX[c], rowZ[r]));
+  // ---------- the board ----------
+  parts.push(PC.T(PC.plane({ w: BW, d: BD, n: 15000, tone: 0.2 }), { pos: [0, top, 0] }));
+  parts.push(PC.box({ w: BW, h: BH, d: BD, faces: ['px', 'nx', 'pz', 'nz'], n: 3200, tone: 0.44 }));
+  parts.push(PC.boxEdges({ w: BW, h: BH, d: BD, perUnit: 300, tone: 1 }));
 
-  // ---------- four NVSwitch chips down the spine, in copper ----------
-  var swW = 0.185, swH = 0.028, swX = [-0.5175, -0.1725, 0.1725, 0.5175];
+  // ---------- one SXM module ----------
+  var MW = 0.31, MD = 0.30, MH = 0.066;        // retention frame
+  var LW = 0.175, LD = 0.205;                  // the bare lid inside it
+  function module(mx, mz, sideSign) {
+    var g = [], y0 = top, yc = y0 + MH / 2, yT = y0 + MH;
+    // the frame: a low kerbed box, open in the middle
+    g.push(PC.T(PC.box({ w: MW, h: MH, d: MD, faces: ['px', 'nx', 'pz', 'nz'], n: 1500, tone: 0.5 }), { pos: [0, yc, 0] }));
+    g.push(PC.T(PC.boxEdges({ w: MW, h: MH, d: MD, perUnit: 300, tone: 1 }), { pos: [0, yc, 0] }));
+    // the top face of the frame, with its inner opening left dark
+    var kerb = 0.032;
+    [[0, (MD - kerb) / 2, MW, kerb], [0, -(MD - kerb) / 2, MW, kerb],
+     [(MW - kerb) / 2, 0, kerb, MD - 2 * kerb], [-(MW - kerb) / 2, 0, kerb, MD - 2 * kerb]].forEach(function (b) {
+      g.push(PC.T(PC.plane({ w: b[2], d: b[3], tone: 0.42 }), { pos: [b[0], yT, b[1]] }));
+    });
+    g.push(outline(MW - 2 * kerb, MD - 2 * kerb, yT + 0.001, 0, 0, 340, 1));
+    // the package lid: a pale plate standing a little above the frame's floor
+    var yL = yT - 0.014;
+    g.push(PC.T(PC.box({ w: LW, h: 0.02, d: LD, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 620, tone: 0.26 }), { pos: [0, yL, 0] }));
+    g.push(PC.T(PC.boxEdges({ w: LW, h: 0.02, d: LD, perUnit: 380, tone: 1 }), { pos: [0, yL, 0] }));
+    g.push(outline(LW * 0.62, LD * 0.5, yL + 0.011, 0, 0, 300, 0.55));
+    // eight retention screws around the frame
+    var sc = [];
+    [-1, 1].forEach(function (sx) {
+      [-1, 1].forEach(function (sz) {
+        sc.push([sx * (MW / 2 - 0.017), sz * (MD / 2 - 0.017)]);
+        sc.push([sx * (MW / 2 - 0.017), sz * (MD * 0.15)]);
+      });
+    });
+    sc.forEach(function (s) {
+      g.push(PC.T(PC.circle({ r: 0.011, perUnit: 620, tone: 1 }), { pos: [s[0], yT + 0.002, s[1]] }));
+      g.push(PC.T(PC.disc({ r: 0.006, n: 26, tone: 0.8 }), { pos: [s[0], yT + 0.002, s[1]] }));
+    });
+    // printed corner fiducials on the board, just outside the frame
+    [-1, 1].forEach(function (sx) {
+      [-1, 1].forEach(function (sz) {
+        var fx = sx * (MW / 2 + 0.013), fz = sz * (MD / 2 + 0.013);
+        g.push(PC.line({ a: [fx, y0 + 0.001, fz], b: [fx - sx * 0.030, y0 + 0.001, fz], perUnit: 620, tone: 0.95 }));
+        g.push(PC.line({ a: [fx, y0 + 0.001, fz], b: [fx, y0 + 0.001, fz - sz * 0.030], perUnit: 620, tone: 0.95 }));
+      });
+    });
+    // the land-grid array, on the inboard side: the two rows of four are
+    // flipped so every module's connector faces the switches
+    var gz = sideSign * (MD / 2 + 0.055);
+    g.push(PC.T(PC.plane({ w: 0.20, d: 0.052, n: 300, tone: 0.34 }), { pos: [0, y0 + 0.001, gz] }));
+    g.push(outline(0.20, 0.052, y0 + 0.002, 0, gz, 380, 0.9));
+    g.push(PC.T(PC.dots({ nx: 22, nz: 6, sx: 0.0082, sz: 0.0073, per: 2, tone: 0.85 }), { pos: [0, y0 + 0.003, gz] }));
+    return PC.T(PC.merge.apply(null, g), { pos: [mx, 0, mz] });
+  }
+
+  var colX = [-0.525, -0.175, 0.175, 0.525], rowZ = 0.318;
+  for (var c = 0; c < 4; c++) {
+    parts.push(module(colX[c], -rowZ, 1));
+    parts.push(module(colX[c], rowZ, -1));
+  }
+
+  // ---------- two NVLink switch chips in the middle, in copper ----------
+  var SW = 0.30, SD = 0.235, SH = 0.05, swX = [-0.175, 0.175];
   swX.forEach(function (x) {
-    parts.push(PC.T(PC.box({ w: swW, h: swH, d: swW, faces: ['px', 'nx', 'pz', 'nz'], n: 700, tone: 0.5 }), { pos: [x, boardTop + swH / 2, 0] }));
-    parts.push(PC.T(PC.boxEdges({ w: swW, h: swH, d: swW, perUnit: 320, tone: 1 }), { pos: [x, boardTop + swH / 2, 0] }));
-    parts.push(PC.T(PC.accent(PC.plane({ w: swW * 0.82, d: swW * 0.82, n: 620 }), 0.8), { pos: [x, boardTop + swH, 0] }));
-    parts.push(PC.T(PC.accent(PC.polyline({ pts: [[-swW * 0.41, 0, -swW * 0.41], [swW * 0.41, 0, -swW * 0.41], [swW * 0.41, 0, swW * 0.41], [-swW * 0.41, 0, swW * 0.41]], closed: true, perUnit: 420 }), 1), { pos: [x, boardTop + swH + 0.001, 0] }));
-    // the switch die and its port rows, drawn in ink over the copper lid
-    parts.push(PC.T(PC.polyline({ pts: [[-swW * 0.26, 0, -swW * 0.3], [swW * 0.26, 0, -swW * 0.3], [swW * 0.26, 0, swW * 0.3], [-swW * 0.26, 0, swW * 0.3]], closed: true, perUnit: 400, tone: 1 }), { pos: [x, boardTop + swH + 0.002, 0] }));
-    parts.push(PC.T(PC.dots({ nx: 4, nz: 6, sx: swW * 0.14, sz: swW * 0.1, per: 2, tone: 0.9 }), { pos: [x, boardTop + swH + 0.002, 0] }));
+    var yc = top + SH / 2, yT = top + SH;
+    parts.push(PC.T(PC.box({ w: SW, h: SH, d: SD, faces: ['px', 'nx', 'pz', 'nz'], n: 1100, tone: 0.5 }), { pos: [x, yc, 0] }));
+    parts.push(PC.T(PC.boxEdges({ w: SW, h: SH, d: SD, perUnit: 320, tone: 1 }), { pos: [x, yc, 0] }));
+    // copper lid: the switch package's heat spreader
+    parts.push(PC.T(PC.accent(PC.plane({ w: SW - 0.05, d: SD - 0.05, n: 1650 }), 0.72), { pos: [x, yT, 0] }));
+    parts.push(PC.accent(outline(SW - 0.05, SD - 0.05, yT + 0.002, x, 0, 460, 1), 1));
+    parts.push(PC.accent(outline(SW - 0.10, SD - 0.10, yT + 0.003, x, 0, 340, 1), 0.85));
+    // the die footprint drawn in ink over the copper, with its port rows
+    parts.push(outline(SW * 0.42, SD * 0.44, yT + 0.004, x, 0, 460, 1));
+    for (var q = 0; q < 5; q++) {
+      var qz = (q - 2) * SD * 0.082;
+      parts.push(PC.line({ a: [x - SW * 0.19, yT + 0.004, qz], b: [x + SW * 0.19, yT + 0.004, qz], perUnit: 420, tone: 0.85 }));
+    }
+    // retention screws
+    [-1, 1].forEach(function (sx) {
+      [-1, 1].forEach(function (sz) {
+        parts.push(PC.T(PC.circle({ r: 0.011, perUnit: 600, tone: 1 }), { pos: [x + sx * (SW / 2 - 0.017), yT + 0.002, sz * (SD / 2 - 0.017)] }));
+      });
+    });
   });
-
-  // NVLink traces fanning from each switch out to the package rows
+  // fan-out traces from each switch to the land grids of both rows
   var traces = [];
   swX.forEach(function (x) {
-    for (var i = 0; i < 5; i++) {
-      var o = (i - 2) * 0.022;
-      traces.push(PC.polyline({ pts: [[x + o, boardTop + 0.002, -swW / 2], [x + o, boardTop + 0.002, -0.24], [x + o * 3.2, boardTop + 0.002, -0.30]], perUnit: 220, tone: 0.45 }));
-      traces.push(PC.polyline({ pts: [[x + o, boardTop + 0.002, swW / 2], [x + o, boardTop + 0.002, 0.24], [x + o * 3.2, boardTop + 0.002, 0.30]], perUnit: 220, tone: 0.45 }));
+    for (var i = 0; i < 7; i++) {
+      var o = (i - 3) * 0.020;
+      [1, -1].forEach(function (s) {
+        traces.push(PC.polyline({
+          pts: [[x + o, top + 0.002, s * SD / 2], [x + o, top + 0.002, s * 0.132], [x + o * 1.9 + (x > 0 ? 0.09 : -0.09), top + 0.002, s * 0.163]],
+          perUnit: 260, tone: 0.4
+        }));
+      });
     }
   });
   parts.push(PC.merge.apply(null, traces));
 
-  // ---------- connectors along the front edge ----------
-  var cw = 0.20, ch = 0.075, cd = 0.055, cz = BD / 2 - 0.055;
-  for (var i2 = 0; i2 < 6; i2++) {
-    var x2 = (i2 - 2.5) * 0.27;
-    parts.push(PC.T(PC.box({ w: cw, h: ch, d: cd, n: 620, tone: 0.5 }), { pos: [x2, boardTop + ch / 2, cz] }));
-    parts.push(PC.T(PC.boxEdges({ w: cw, h: ch, d: cd, perUnit: 320, tone: 1 }), { pos: [x2, boardTop + ch / 2, cz] }));
-    for (var k2 = 0; k2 < 16; k2++) {
-      var px2 = x2 + (k2 - 7.5) * (cw * 0.9 / 15);
-      parts.push(PC.line({ a: [px2, boardTop + 0.008, cz + cd / 2], b: [px2, boardTop + ch - 0.012, cz + cd / 2], perUnit: 300, tone: 0.7 }));
+  // ---------- voltage-regulator banks down the long edges ----------
+  function stage(x, z, w, h, d) {
+    parts.push(PC.T(PC.box({ w: w, h: h, d: d, n: 150, tone: 0.55 }), { pos: [x, top + h / 2, z] }));
+    parts.push(PC.T(PC.boxEdges({ w: w, h: h, d: d, perUnit: 320, tone: 1 }), { pos: [x, top + h / 2, z] }));
+  }
+  var vz = BD / 2 - 0.052;
+  for (var i2 = 0; i2 < 22; i2++) {
+    var vx = (i2 - 10.5) * 0.066;
+    stage(vx, -vz, 0.042, 0.030, 0.042);
+    stage(vx, vz, 0.042, 0.030, 0.042);
+  }
+  // bulk capacitors: two clusters of cans at the power end
+  for (i2 = 0; i2 < 18; i2++) {
+    var cx = -BW / 2 + 0.028 + (i2 % 2) * 0.040, cz = (Math.floor(i2 / 2) - 4) * 0.056;
+    parts.push(PC.T(PC.cylinder({ r: 0.015, h: 0.036, caps: false, n: 150, tone: 0.5 }), { pos: [cx, top + 0.018, cz] }));
+    parts.push(PC.T(PC.circle({ r: 0.015, perUnit: 520, tone: 1 }), { pos: [cx, top + 0.036, cz] }));
+  }
+
+  // ---------- power blades and the high-density edge connectors ----------
+  // Two power blades at the left end, six signal connectors along the front.
+  [-1, 1].forEach(function (s) {
+    var px = -BW / 2 + 0.115, pz = s * 0.20;
+    parts.push(PC.T(PC.box({ w: 0.07, h: 0.052, d: 0.14, n: 460, tone: 0.5 }), { pos: [px, top + 0.026, pz] }));
+    parts.push(PC.T(PC.boxEdges({ w: 0.07, h: 0.052, d: 0.14, perUnit: 340, tone: 1 }), { pos: [px, top + 0.026, pz] }));
+    for (var k = 0; k < 5; k++) {
+      var kz = pz + (k - 2) * 0.026;
+      parts.push(PC.line({ a: [px - 0.03, top + 0.053, kz], b: [px + 0.03, top + 0.053, kz], perUnit: 420, tone: 0.9 }));
+    }
+  });
+  var cw = 0.155, ch = 0.048, cd = 0.038, cz2 = BD / 2 - 0.108;
+  for (i2 = 0; i2 < 6; i2++) {
+    var x2 = (i2 - 2.5) * 0.212;
+    parts.push(PC.T(PC.box({ w: cw, h: ch, d: cd, n: 420, tone: 0.5 }), { pos: [x2, top + ch / 2, cz2] }));
+    parts.push(PC.T(PC.boxEdges({ w: cw, h: ch, d: cd, perUnit: 340, tone: 1 }), { pos: [x2, top + ch / 2, cz2] }));
+    for (var k2 = 0; k2 < 18; k2++) {
+      var px2 = x2 + (k2 - 8.5) * (cw * 0.88 / 17);
+      parts.push(PC.line({ a: [px2, top + 0.007, cz2 + cd / 2], b: [px2, top + ch - 0.009, cz2 + cd / 2], perUnit: 280, tone: 0.72 }));
     }
   }
 
-  // ---------- power stages along the back edge and the two ends ----------
-  function stage(x, z) {
-    parts.push(PC.T(PC.box({ w: 0.058, h: 0.042, d: 0.05, n: 230, tone: 0.55 }), { pos: [x, boardTop + 0.021, z] }));
-    parts.push(PC.T(PC.boxEdges({ w: 0.058, h: 0.042, d: 0.05, perUnit: 320, tone: 1 }), { pos: [x, boardTop + 0.021, z] }));
-  }
-  for (i2 = 0; i2 < 14; i2++) stage((i2 - 6.5) * 0.075, -BD / 2 + 0.05);
-  for (i2 = 0; i2 < 5; i2++) { stage(-BW / 2 + 0.048, (i2 - 2) * 0.085); stage(BW / 2 - 0.048, (i2 - 2) * 0.085); }
-
-  // ---------- mounting holes ----------
+  // ---------- mounting holes and a silkscreen border ----------
   var holes = [];
   [-1, 1].forEach(function (sx) {
     [-1, 1].forEach(function (sz) {
-      holes.push(PC.T(PC.circle({ r: 0.034, perUnit: 460, tone: 1 }), { pos: [sx * (BW / 2 - 0.06), boardTop + 0.002, sz * (BD / 2 - 0.055)] }));
-      holes.push(PC.T(PC.circle({ r: 0.034, perUnit: 460, tone: 1 }), { pos: [sx * 0.45, boardTop + 0.002, sz * (BD / 2 - 0.055)] }));
+      holes.push(PC.T(PC.circle({ r: 0.028, perUnit: 520, tone: 1 }), { pos: [sx * (BW / 2 - 0.042), top + 0.002, sz * (BD / 2 - 0.030)] }));
+      holes.push(PC.T(PC.circle({ r: 0.028, perUnit: 520, tone: 1 }), { pos: [sx * 0.352, top + 0.002, sz * (BD / 2 - 0.030)] }));
     });
   });
   parts.push(PC.merge.apply(null, holes));
+  parts.push(outline(BW - 0.016, BD - 0.016, top + 0.001, 0, 0, 240, 0.5));
 
   return {
     cloud: PC.merge.apply(null, parts),
     spin: 0.1,
     tilt: [0.55, -0.6, 0],
-    caption: 'An eight-GPU baseboard: eight accelerator packages in two rows of four, each with two logic dies and eight HBM stacks (copper tops), wired through four NVSwitch chips down the middle, also in copper. Connectors run along the front edge and power stages around the rim.'
+    caption: 'An eight-GPU baseboard, about 510 by 400 mm: eight accelerator modules bolted into retention frames in two rows of four, flipped so their land grids face the middle, where the two NVLink switch chips sit in copper. Voltage-regulator banks line the long edges; the high-density connectors run along the front.'
   };
 });
 

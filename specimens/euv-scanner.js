@@ -51,34 +51,27 @@ PC.register('euv-scanner', function (p) {
       var y = sag * (rr / r) * (rr / r), q = s / 2 - pad;
       g.push(PC.T(PC.polyline({
         pts: [[cx - q, y, cz - q], [cx + q, y, cz - q], [cx + q, y, cz + q], [cx - q, y, cz + q]],
-        closed: true, perUnit: 300, tone: 0.95
+        closed: true, perUnit: 210, tone: 0.95
       }), {}));
     }
     return g.length ? PC.merge.apply(null, g) : null;
   }
 
-  // A mirror at 2-D point q, its concave face pointing along the in-plane normal nv.
+  // A mirror blank at 2-D point q, its concave face pointing along the in-plane
+  // normal nv. In section a mirror is nearly edge-on, so it is drawn as a solid
+  // disc of Zerodur with a hollowed front face: a crescent, the way an optical
+  // layout draws one.
   function mirror(q, nv, r, o) {
     o = o || {};
-    var sag = o.sag == null ? r * 0.14 : o.sag;
-    var th = Math.atan2(-nv[0], nv[1]);
-    var g = [dish(r, sag, o.rIn || 0, o.n || Math.round(2400 * r * r + 340), o.tone == null ? 0.5 : o.tone)];
-    g.push(PC.T(PC.circle({ r: r, perUnit: 700, tone: 1 }), { pos: [0, sag, 0] }));
-    g.push(PC.T(PC.circle({ r: r * 0.985, perUnit: 320, tone: 0.6 }), { pos: [0, sag * 0.97, 0] })); // multilayer rim
-    if (o.rIn) g.push(PC.T(PC.circle({ r: o.rIn, perUnit: 620, tone: 1 }), { pos: [0, 0.004, 0] }));
+    var sag = o.sag == null ? r * 0.15 : o.sag;
+    var th = Math.atan2(-nv[0], nv[1]), t = o.thick == null ? r * 0.22 : o.thick;
+    var g = [dish(r, sag, o.rIn || 0, o.n || Math.round(2400 * r * r + 240), o.tone == null ? 0.6 : o.tone)];
+    g.push(PC.T(PC.cylinder({ r: r, h: t, caps: false, n: Math.round(1400 * r * t + 60), tone: 0.2 }), { pos: [0, -t / 2, 0] }));
+    g.push(PC.T(PC.disc({ r: r, rIn: o.rIn || 0, n: Math.round(1100 * r * r + 60), tone: 0.16 }), { pos: [0, -t, 0] }));
+    g.push(PC.T(PC.circle({ r: r, perUnit: 175, tone: 1 }), { pos: [0, sag, 0] }));       // front rim
+    g.push(PC.T(PC.circle({ r: r, perUnit: 110, tone: 0.5 }), { pos: [0, -t, 0] }));      // back rim
+    if (o.rIn) g.push(PC.T(PC.circle({ r: o.rIn, perUnit: 260, tone: 1 }), { pos: [0, 0.004, 0] }));
     if (o.facets) { var f = facets(r, sag, o.facets); if (f) g.push(f); }
-    if (o.mount !== false) {
-      // three-strut kinematic mount behind the blank
-      for (var m = 0; m < 3; m++) {
-        var ph = m * Math.PI * 2 / 3 + 0.5;
-        g.push(PC.line({
-          a: [r * 0.62 * Math.cos(ph), -0.006, r * 0.62 * Math.sin(ph)],
-          b: [r * 0.16 * Math.cos(ph), -r * 0.42, r * 0.16 * Math.sin(ph)],
-          perUnit: 260, tone: 0.75
-        }));
-      }
-      g.push(PC.T(PC.cylinder({ r: r * 0.2, h: r * 0.16, n: Math.round(900 * r), tone: 0.4 }), { pos: [0, -r * 0.48, 0] }));
-    }
     return PC.T(PC.merge.apply(null, g), { rot: [0, 0, th], pos: [q[0], q[1], 0] });
   }
 
@@ -143,11 +136,11 @@ PC.register('euv-scanner', function (p) {
   /* ---------- vacuum vessels ---------- */
 
   add(vessel(1.56, 2.72, 1.15, -0.52, 0.10, 3000));                 // illuminator
-  add(vessel(1.52, 3.04, 1.28, 0.83, -0.04, 3600));                 // projection optics box
-  add(vessel(1.94, 0.60, 1.02, 0.06, 1.98, 1500));                  // reticle stage chamber
+  add(vessel(1.46, 3.10, 1.22, 0.80, -0.04, 3600));                 // projection optics box
+  add(vessel(1.86, 0.52, 0.98, 0.06, 1.94, 1300));                  // reticle stage chamber
   // frame ribs across the POB so it reads as a stiff optical bench, not a crate
   for (i = -1; i <= 1; i += 2) {
-    add(PC.T(PC.polyline({ pts: [[-0.76, 0, 0], [0.76, 0, 0]], perUnit: 210, tone: 0.55 }), { rot: [Math.PI / 2, 0, 0], pos: [0.83, i * 0.86, -0.64] }));
+    add(PC.T(PC.polyline({ pts: [[-0.73, 0, 0], [0.73, 0, 0]], perUnit: 210, tone: 0.55 }), { rot: [Math.PI / 2, 0, 0], pos: [0.80, i * 0.92, -0.61] }));
   }
 
   /* ---------- source vessel, collector, tin ---------- */
@@ -169,10 +162,10 @@ PC.register('euv-scanner', function (p) {
   add(PC.accent(PC.T(PC.sphere({ r: 0.036, n: 620 }), { pos: [PLASMA[0], PLASMA[1], 0] }), 1));
   add(PC.accent(PC.T(PC.sphere({ r: 0.085, n: 420 }), { pos: [PLASMA[0], PLASMA[1], 0] }), 0.3));
   // infrared drive laser, in ink: it is not the EUV
-  add(PC.line({ a: [-2.28, PLASMA[1], 0], b: [PLASMA[0] - 0.04, PLASMA[1], 0], perUnit: 130, tone: 0.42 }));
-  add(section(PC.T(PC.cylinder({ r: 0.09, h: 0.24, n: 700, tone: 0.4 }), { rot: [0, 0, -Math.PI / 2], pos: [-2.06, PLASMA[1], 0] })));
-  add(PC.T(PC.boxEdges({ w: 0.30, h: 0.34, d: 0.34, perUnit: 240, tone: 0.85 }), { pos: [-2.33, PLASMA[1], 0] }));
-  add(PC.T(PC.box({ w: 0.30, h: 0.34, d: 0.34, faces: ['nz', 'ny', 'nx'], n: 900, tone: 0.2 }), { pos: [-2.33, PLASMA[1], 0] }));
+  add(PC.line({ a: [-2.14, PLASMA[1], 0], b: [PLASMA[0] - 0.04, PLASMA[1], 0], perUnit: 130, tone: 0.42 }));
+  add(section(PC.T(PC.cylinder({ r: 0.09, h: 0.24, n: 700, tone: 0.4 }), { rot: [0, 0, -Math.PI / 2], pos: [-2.03, PLASMA[1], 0] })));
+  add(PC.T(PC.boxEdges({ w: 0.26, h: 0.30, d: 0.30, perUnit: 240, tone: 0.85 }), { pos: [-2.02, PLASMA[1], 0] }));
+  add(PC.T(PC.box({ w: 0.26, h: 0.30, d: 0.30, faces: ['nz', 'ny', 'nx'], n: 800, tone: 0.2 }), { pos: [-2.02, PLASMA[1], 0] }));
   // droplet generator above, tin catcher below: a stream of 30 um droplets
   add(section(PC.T(PC.cylinder({ r: 0.05, h: 0.30, n: 620, tone: 0.42 }), { pos: [PLASMA[0], PLASMA[1] + 0.72, 0] })));
   var drop = [];
@@ -189,34 +182,34 @@ PC.register('euv-scanner', function (p) {
 
   /* ---------- reticle and reticle stage ---------- */
 
-  var R = NODE[4].p, rw = 0.40, rd = 0.34;
-  add(PC.T(PC.box({ w: rw, h: 0.035, d: rd, n: 2200, tone: 0.55 }), { pos: [R[0], R[1] + 0.018, 0] }));
-  add(PC.T(PC.boxEdges({ w: rw, h: 0.035, d: rd, perUnit: 900, tone: 1 }), { pos: [R[0], R[1] + 0.018, 0] }));
+  var R = NODE[4].p, rw = 0.62, rd = 0.50;
+  add(PC.T(PC.box({ w: rw, h: 0.05, d: rd, n: 1900, tone: 0.34 }), { pos: [R[0], R[1] + 0.023, 0] }));
+  add(PC.T(PC.boxEdges({ w: rw, h: 0.05, d: rd, perUnit: 420, tone: 1 }), { pos: [R[0], R[1] + 0.023, 0] }));
   // the patterned field on the underside, 4x the printed 26 x 33 mm
   add(PC.T(PC.polyline({
     pts: [[-rw * 0.33, 0, -rd * 0.42], [rw * 0.33, 0, -rd * 0.42], [rw * 0.33, 0, rd * 0.42], [-rw * 0.33, 0, rd * 0.42]],
-    closed: true, perUnit: 700, tone: 1
+    closed: true, perUnit: 420, tone: 1
   }), { pos: [R[0], R[1] - 0.001, 0] }));
   // electrostatic chuck and the short-stroke stage above it
-  add(PC.T(PC.box({ w: rw * 1.12, h: 0.09, d: rd * 1.12, faces: ['py', 'px', 'nx', 'nz'], n: 1400, tone: 0.34 }), { pos: [R[0], R[1] + 0.082, 0] }));
-  add(PC.T(PC.boxEdges({ w: rw * 1.12, h: 0.09, d: rd * 1.12, perUnit: 320, tone: 0.95 }), { pos: [R[0], R[1] + 0.082, 0] }));
+  add(PC.T(PC.box({ w: rw * 1.08, h: 0.085, d: rd * 1.08, faces: ['py', 'px', 'nx', 'nz'], n: 1100, tone: 0.24 }), { pos: [R[0], R[1] + 0.088, 0] }));
+  add(PC.T(PC.boxEdges({ w: rw * 1.08, h: 0.085, d: rd * 1.08, perUnit: 260, tone: 0.95 }), { pos: [R[0], R[1] + 0.088, 0] }));
   // scan rails: the reticle runs four times faster than the wafer
   for (i = -1; i <= 1; i += 2) {
-    add(PC.T(PC.box({ w: 1.62, h: 0.045, d: 0.055, n: 640, tone: 0.5 }), { pos: [R[0], R[1] + 0.16, i * 0.30] }));
-    add(PC.T(PC.line({ a: [-0.81, 0, 0], b: [0.81, 0, 0], perUnit: 230, tone: 0.9 }), { pos: [R[0], R[1] + 0.184, i * 0.30] }));
+    add(PC.T(PC.box({ w: 1.62, h: 0.045, d: 0.055, n: 640, tone: 0.5 }), { pos: [R[0], R[1] + 0.155, i * 0.32] }));
+    add(PC.T(PC.line({ a: [-0.81, 0, 0], b: [0.81, 0, 0], perUnit: 230, tone: 0.9 }), { pos: [R[0], R[1] + 0.179, i * 0.32] }));
   }
 
   /* ---------- wafer stage (TWINSCAN: expose here, measure alongside) ---------- */
 
-  var W = NODE[11].p, wafR = 0.21;
+  var W = NODE[11].p, wafR = 0.235;
   function chuck(cx, exposed) {
     var g = [];
-    g.push(PC.T(PC.disc({ r: wafR, n: 620, tone: 0.28 }), { pos: [cx, W[1], 0] }));
-    g.push(PC.T(PC.circle({ r: wafR, perUnit: 420, tone: 1 }), { pos: [cx, W[1] + 0.002, 0] }));
+    g.push(PC.T(PC.disc({ r: wafR, n: 700, tone: 0.2 }), { pos: [cx, W[1], 0] }));
+    g.push(PC.T(PC.circle({ r: wafR, perUnit: 260, tone: 1 }), { pos: [cx, W[1] + 0.002, 0] }));
     g.push(PC.T(PC.circle({ r: wafR * 0.66, perUnit: 190, tone: 0.45 }), { pos: [cx, W[1] + 0.003, 0] }));
-    g.push(PC.T(PC.cylinder({ r: wafR * 1.08, h: 0.075, n: 900, tone: 0.24 }), { pos: [cx, W[1] - 0.042, 0] }));
-    g.push(PC.T(PC.circle({ r: wafR * 1.08, perUnit: 240, tone: 0.8 }), { pos: [cx, W[1] - 0.079, 0] }));
-    if (exposed) g.push(PC.T(PC.accent(PC.plane({ w: 0.062, d: 0.05, n: 620 }), 0.95), { pos: [cx, W[1] + 0.006, 0] }));
+    g.push(PC.T(PC.cylinder({ r: wafR * 1.08, h: 0.075, n: 700, tone: 0.16 }), { pos: [cx, W[1] - 0.042, 0] }));
+    g.push(PC.T(PC.circle({ r: wafR * 1.08, perUnit: 150, tone: 0.7 }), { pos: [cx, W[1] - 0.079, 0] }));
+    if (exposed) g.push(PC.T(PC.accent(PC.plane({ w: 0.082, d: 0.066, n: 900 }), 1), { pos: [cx, W[1] + 0.006, 0] }));
     return PC.merge.apply(null, g);
   }
   add(chuck(W[0], true));
@@ -231,7 +224,7 @@ PC.register('euv-scanner', function (p) {
 
   /* ---------- base frame ---------- */
 
-  var bw = 3.72, bx = -0.28, by = -2.14;
+  var bw = 3.42, bx = -0.22, by = -2.16;
   add(PC.T(PC.box({ w: bw, h: 0.20, d: 1.36, faces: ['py', 'pz', 'nz', 'px', 'nx'], n: 4200, tone: 0.24 }), { pos: [bx, by, 0] }));
   add(PC.T(PC.boxEdges({ w: bw, h: 0.20, d: 1.36, perUnit: 190, tone: 0.9 }), { pos: [bx, by, 0] }));
   for (i = 0; i < 4; i++) {
@@ -240,7 +233,7 @@ PC.register('euv-scanner', function (p) {
     add(PC.T(PC.cylinder({ r: 0.085, h: 0.24, n: 400, tone: 0.4 }), { pos: [lx, by - 0.22, -0.50] }));
   }
   // turbopumps slung under the two big vessels
-  var pumpAt = [[-0.52, -1.46], [0.83, -1.72]];
+  var pumpAt = [[-0.52, -1.50], [0.80, -1.76]];
   for (i = 0; i < pumpAt.length; i++) {
     add(PC.T(PC.cylinder({ r: 0.145, h: 0.26, n: 900, tone: 0.3 }), { pos: [pumpAt[i][0], pumpAt[i][1], -0.42] }));
     add(PC.T(PC.circle({ r: 0.175, perUnit: 260, tone: 0.85 }), { pos: [pumpAt[i][0], pumpAt[i][1] + 0.13, -0.42] }));
