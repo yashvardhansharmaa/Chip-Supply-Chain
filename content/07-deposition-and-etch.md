@@ -4,7 +4,7 @@
   "number": 7,
   "title": "Deposition and Etch",
   "oneLiner": "Lithography prints the pattern. Deposition and etch build the thing, over a thousand steps per wafer, and this is the one tool segment where China has taken real share.",
-  "plain": "If lithography is the printing, this is the building. A chip is built like a layer cake: lay down a film a few atoms thick, print a pattern on it, burn away what the pattern does not protect, and repeat more than a thousand times. The film has to reach the bottom of a hole hundreds of times deeper than it is wide, and the burn has to eat one material and leave the one beside it. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closest to matching them here.",
+  "plain": "If lithography is the printing, this is the building. A chip is built like a layer cake: lay down a film a few atoms thick, print a pattern on it, burn away what the pattern does not protect, and repeat more than a thousand times. The film has to reach the bottom of a hole hundreds of times deeper than it is wide, and the burn has to eat one material and leave the one beside it. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.",
   "specimen": "process-chamber",
   "specimenCaption": "Right: a plasma process chamber in cross-section. Gas showerhead at the top, wafer clamped to an electrostatic chuck, RF electrodes above and below, turbopump and exhaust at the bottom.",
   "card": {
@@ -73,7 +73,7 @@ Applied Materials and Lam Research, the two largest suppliers of deposition and 
 
 ## How it works
 
-If lithography is the printing, this is the building. A chip is built like a layer cake: lay down a film a few atoms thick, print a pattern on it, burn away what the pattern does not protect, and repeat more than a thousand times. The film has to reach the bottom of a hole hundreds of times deeper than it is wide, and the burn has to eat one material and leave the one beside it. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closest to matching them here.
+If lithography is the printing, this is the building. A chip is built like a layer cake: lay down a film a few atoms thick, print a pattern on it, burn away what the pattern does not protect, and repeat more than a thousand times. The film has to reach the bottom of a hole hundreds of times deeper than it is wide, and the burn has to eat one material and leave the one beside it. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.
 
 CSET puts a single chip at more than 1,000 process steps, with the part-finished product crossing international borders 70 or more times ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 
@@ -96,8 +96,8 @@ Most of it happens in a vacuum chamber with a plasma in it: a radio-frequency fi
 
 Three AI-specific pulls.
 
-- **Gate-all-around** needs isotropic etch, which cuts sideways, to release the silicon nanosheets from the silicon-germanium between them ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)).
-- **HBM** needs through-silicon vias, holes driven clean through the die so it can be stacked ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
+- **Gate-all-around** needs isotropic etch, which cuts sideways, to release the silicon nanosheets from the silicon-germanium between them, and BIS ties its dry etch controls to exactly that ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)).
+- **HBM** needs deep through-silicon vias, which BIS defines as etch at 10:1 or greater above 7 microns per minute ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
 - **Backside power delivery** adds thinning, backside vias and a second metal stack. Applied Materials expects it to add about $1 billion per 100,000 wafer starts a month to its wiring business ([source](https://www.globenewswire.com/news-release/2024/07/08/2909540/0/en/applied-materials-unveils-chip-wiring-innovations-for-more-energy-efficient-computing.html)).
 
 {{figure:tel-tool-share}}
@@ -143,7 +143,7 @@ This is a real chokepoint but a softer one than lithography. Three or four credi
 - **Selectivity** — how hard the process attacks one material and spares another. BIS controls wet processing at a silicon-germanium-to-silicon ratio of 100:1 ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)).
 - **Conformality and aspect ratio** — whether a film reaches the bottom of a deep hole. Controls start at 10:1 for TSV etch and 200:1 for 3D DRAM deposition ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
 - **Uniformity** — variation across a 300 mm wafer, with under 2 percent treated as an advanced-manufacturing marker ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
-- **Throughput** — wafers per hour, which sets cost per layer; BIS states 7 microns per minute for high-volume TSV work ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
+- **Throughput** — wafers per hour, which sets cost per layer and decides how many lots a fab can run.
 - **Particles and chamber matching** — the defect budget these tools consume, measured by the tools in the next chapter.
 
 ## Takeaways

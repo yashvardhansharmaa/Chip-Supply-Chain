@@ -58,7 +58,7 @@
       "HPE",
       "Lenovo"
     ],
-    "priceEstimate": "$30,000-40,000 per GPU module; roughly $60,000-70,000 for a GB200 superchip (one Grace CPU plus two B200)",
+    "priceEstimate": "$30,000-40,000 per GPU, the range Jensen Huang gave CNBC in March 2024",
     "bomEstimate": null,
     "exportStatus": "Controlled. Dense FP8 of 4,500 TFLOPS puts total processing performance near 36,000, well above the 21,000 TPP ceiling in the BIS rule effective 15 January 2026, so it is not licensable to China or Macau.",
     "notes": "The first reticle-crossing Nvidia data center GPU: two 4NP dies fused by a 10 TB/s NV-HBI link and presented to software as one GPU. It set the template every 2025-2026 part copies, and it is the reason CoWoS-L capacity became the binding constraint on AI compute.",
@@ -151,8 +151,8 @@
         "url": "https://www.nvidia.com/en-us/data-center/dgx-b200/"
       },
       {
-        "label": "Modal on B200 purchase pricing, citing Jensen Huang",
-        "url": "https://modal.com/blog/nvidia-b200-pricing"
+        "label": "CNBC: Jensen Huang on Blackwell pricing",
+        "url": "https://www.cnbc.com/2024/03/19/nvidias-blackwell-ai-chip-will-cost-more-than-30000-ceo-says.html"
       }
     ]
   },
@@ -817,10 +817,10 @@
       ]
     },
     "compute": {
-      "fp16TFLOPS": 5030,
-      "fp8TFLOPS": 20130,
-      "fp4TFLOPS": 40260,
-      "precisionNote": "AMD-quoted peak: 40.26 PFLOPS MXFP4, 20.13 PFLOPS MXFP6 and MXFP8, 5.03 PFLOPS FP16/BF16 matrix. AMD did not state dense versus sparse for this part; the equivalent MI355X figures are dense."
+      "fp16TFLOPS": 5033,
+      "fp8TFLOPS": 20133,
+      "fp4TFLOPS": 40265,
+      "precisionNote": "AMD datasheet peak theoretical: 40,265 TFLOPS OCP MXFP4, 20,133 TFLOPS OCP MXFP6, MXFP8 and FP8, and 5,033 TFLOPS matrix FP16, BF16 and INT8. The datasheet's separate structured-sparsity column doubles FP16, BF16 and INT8 to 10,066 TFLOPS and lists no sparsity figure for the four-bit and eight-bit formats."
     },
     "tdpW": null,
     "interconnect": {
@@ -990,8 +990,8 @@
         "url": "https://www.storagereview.com/news/amd-mi455x-and-helios-432gb-hbm4-72-gpu-racks-and-a-real-answer-to-vera-rubin"
       },
       {
-        "label": "XenoSpectrum on the MI455X launch",
-        "url": "https://xenospectrum.com/en/amd-mi455x-helios-launch/"
+        "label": "AMD Instinct MI455X GPU datasheet",
+        "url": "https://www.amd.com/content/dam/amd/en/documents/products/accelerators/instinct/amd-instinct-mi455x_brochure.pdf"
       }
     ]
   },
@@ -1719,7 +1719,7 @@
       "fp16TFLOPS": null,
       "fp8TFLOPS": null,
       "fp4TFLOPS": null,
-      "precisionNote": "OpenAI has published no per-precision FLOPS and argues explicitly that peak FLOPS are the wrong metric, quoting delivered throughput instead: about 1,500 tokens per second per user on open-weight models and about 700 on DeepSeek, at 1.7 GHz on lab parts with 1.8 GHz targeted."
+      "precisionNote": "OpenAI has published no per-precision FLOPS figures and says it will detail the architecture and performance over the coming months."
     },
     "tdpW": 700,
     "interconnect": {
@@ -1795,10 +1795,6 @@
       {
         "label": "ServeTheHome: OpenAI Jalapeño platform powered by Broadcom",
         "url": "https://www.servethehome.com/openai-jalapeno-intelligence-platform-shown-powered-by-broadcom/"
-      },
-      {
-        "label": "Hot Chips 2026 notes on the Jalapeño presentation",
-        "url": "https://taekim.substack.com/p/hot-chips-openai-jalapeno-presentation"
       },
       {
         "label": "OpenAI and Broadcom announce a 10 GW collaboration",

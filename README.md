@@ -11,15 +11,17 @@ The whole site compiles to **one self-contained HTML file** (`dist/index.html`).
 - **Landscape**: 19 AI accelerators with full spec sheets and a package render drawn from each chip's die and HBM layout.
 - **Suppliers**: 220 firms, filterable by category, country and chokepoint status, exportable as CSV.
 - **Geopolitics**: the essay, a country-by-segment share matrix, and a 45-event export-control timeline.
+- **Controls**: a machine-readable threshold map (every quantitative line in the US, Dutch, Japanese, EU and Chinese regimes, with status and source) and a China-exposure series computed from company filings.
 - **Glossary**: 74 terms defined for policy readers.
 - **Sources**: every citation, tagged by source tier (see `brief/SOURCE_POLICY.md`).
+- Research tools: site search (Ctrl+K or `/`), permalinks on every section, copy-as-CSV/JSON on every dataset, and a citation block with BibTeX.
 
 ## Layout
 
 ```
 brief/        editorial, editing, source-policy, data-schema and specimen briefs (the contracts the workers followed)
 content/      one markdown file per chapter, JSON front matter + body, inline ([source](url)) citations
-data/         landscape.json (accelerators), suppliers.json, export-controls-timeline.json, chokepoint-matrix.json
+data/         landscape.json, suppliers.json, export-controls-timeline.json, chokepoint-matrix.json, control-thresholds.json, exposure.json, glossary.json, source-tiers.json
 specimens/    one JS file per 3D specimen, built from src/kit.js primitives
 src/          kit.js (point-cloud primitives), app.js (runtime), styles.css (design system), template.html
 build/        build.js (markdown -> HTML, figures -> SVG, assembles dist/index.html), preview.js (renders a specimen to PNG)
@@ -48,6 +50,11 @@ python3 -m http.server 8765 --directory dist   # then open http://localhost:8765
 - Chapters live in `content/NN-slug.md`. The front matter (`---json … ---`) carries the chokepoint card, key facts and figure data; the body is markdown. Citations are `([source](https://…))` right after the sentence they support. `{{figure:id}}` places a figure from the front matter.
 - Add a specimen by registering it in `specimens/<name>.js` with `PC.register('<name>', fn)` and pointing a chapter's `specimen` field at it. Preview it with `node build/preview.js <name>`.
 - Data files follow `brief/DATA_SCHEMAS.md`.
+
+## Writing and sourcing standards
+
+- `brief/SOURCE_POLICY.md` defines four source tiers; Tier D (market-research SEO sites, financial aggregators, personal blogs) is never cited, and the build report counts any that slip through.
+- `.claude/skills/writing-well/SKILL.md` is the prose standard, distilled from William Zinsser's *On Writing Well*; every chapter went through it.
 
 ## Credits
 

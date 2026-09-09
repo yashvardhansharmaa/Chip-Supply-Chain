@@ -174,7 +174,8 @@ b, strong { font-weight: 600; }
   font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.09em;
   text-transform: uppercase; color: var(--muted);
 }
-.tabs { display: flex; gap: 2px; align-items: center; }
+.tabs { display: flex; gap: 2px; align-items: center; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
 .tabs a {
   font-family: var(--display); font-weight: 500; font-size: 15px; letter-spacing: 0.015em;
   text-decoration: none; padding: 6px 11px; border-radius: 3px;
@@ -440,7 +441,8 @@ sup.cite a:hover { text-decoration: underline; }
 @media (max-width: 900px) {
   :root { --col: 100%; --masthead: 54px; --pad: 18px; }
   body { font-size: 17.5px; }
-  .tabs { display: none; }
+  .tabs a { font-size: 13.5px; padding: 5px 8px; }
+  .wordmark span { display: none; }
   .spread { grid-template-columns: 1fr; }
   .hero .spread { min-height: 0; }
   .hero-text { padding-top: 26px; }
@@ -449,7 +451,7 @@ sup.cite a:hover { text-decoration: underline; }
     border-left: 0; border-top: 1px solid var(--line);
     padding: 16px 18px 18px;
   }
-  .stage-art { min-height: 190px; }
+  .stage-art { min-height: 0; height: 230px; padding: 10px 0; }
   .chain-track { grid-template-columns: repeat(5, 1fr); gap: 3px 8px; row-gap: 14px; border-bottom: 0; }
   .stage-cell { border-bottom: 1px solid var(--line-2); }
   .chain-key { margin-left: 0; flex-basis: 100%; }
