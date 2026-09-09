@@ -146,7 +146,7 @@ PC.register('substrate-layers', function (p) {
   }
   var sw = 0.82, sd = 0.53, yT = top + 0.003;
   add(cut(PC.T(PC.polyline({ pts: [[-sw / 2, 0, -sd / 2], [sw / 2, 0, -sd / 2], [sw / 2, 0, sd / 2], [-sw / 2, 0, sd / 2]], closed: true, perUnit: 360, tone: 1 }), { pos: [0, yT, 0] })));
-  add(cut(PC.T(PC.dots({ nx: 46, nz: 30, sx: sw / 47, sz: sd / 31, per: 2, tone: 0.58 }), { pos: [0, yT, 0] })));
+  add(cut(PC.T(PC.dots({ nx: 46, nz: 30, sx: sw / 47, sz: sd / 31, per: 3, tone: 0.58 }), { pos: [0, yT, 0] })));
   var caps = [];
   for (var q = 0; q < 30; q++) {
     var cu = (q - 14.5) * (W * 0.94 / 30);

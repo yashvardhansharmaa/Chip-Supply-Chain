@@ -88,12 +88,10 @@ PC.register('boule-and-wafer', function (p) {
     var edge = PC.cylinder({ r: R, h: 0.0034, caps: false, n: accent ? 700 : 420, tone: accent ? 0.75 : 0.45 });
     var ring = PC.circle({ r: R * 0.965, perUnit: accent ? 220 : 130, tone: accent ? 0.45 : 0.25 });
     var c = PC.merge(
-      PC.T(accent ? PC.accent(face, face[3]) : face, { pos: [0, 0.0017, 0] }),
-      accent ? PC.accent(edge, 0.72) : edge,
-      PC.T(accent ? PC.accent(rim, 1) : rim, { pos: [0, 0.0017, 0] }),
-      PC.T(accent ? PC.accent(ring, 0.45) : ring, { pos: [0, 0.0019, 0] })
+      PC.T(face, { pos: [0, 0.0017, 0] }), edge,
+      PC.T(rim, { pos: [0, 0.0017, 0] }), PC.T(ring, { pos: [0, 0.0019, 0] })
     );
-    if (accent) { for (var j = 3; j < c.length; j += 4) if (c[j] < 2) c[j] += 2; }
+    if (accent) { for (var j = 3; j < c.length; j += 4) c[j] = 2 + Math.min(1, c[j] * 1.15); }
     var keep = [];                                    // the orientation notch
     for (var k = 0; k < c.length; k += 4) {
       if (c[k + 2] > R - 0.011 + Math.abs(c[k])) continue;

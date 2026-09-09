@@ -48,8 +48,8 @@ PC.register('wafer-cost', function (p) {
   }
 
   // ---------- the plinth ----------
-  var PW = 1.06, PH = 0.05;
-  parts.push(PC.T(PC.plane({ w: PW, d: PW, n: 8200, tone: 0.15 }), { pos: [0, PH / 2, 0] }));
+  var PW = 0.90, PH = 0.042;
+  parts.push(PC.T(PC.plane({ w: PW, d: PW, n: 6200, tone: 0.15 }), { pos: [0, PH / 2, 0] }));
   parts.push(PC.box({ w: PW, h: PH, d: PW, faces: ['px', 'nx', 'pz', 'nz'], n: 2000, tone: 0.36 }));
   parts.push(PC.boxEdges({ w: PW, h: PH, d: PW, perUnit: 300, tone: 1 }));
   for (var gi = 1; gi < 12; gi++) {
@@ -138,11 +138,9 @@ PC.register('wafer-cost', function (p) {
   var grid = [];
   for (var d = 1000; d < 6380; d += 1000) {
     var gy = PH + d * S;
-    grid.push(ring(CW + 0.13, gy, 130, 0.32));
-    [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(function (q) {
-      var cx = q[0] * (CW + 0.13) / 2, cz = q[1] * (CW + 0.13) / 2;
-      grid.push(PC.line({ a: [cx, gy, cz], b: [cx * 1.18, gy, cz * 1.18], perUnit: 420, tone: 0.9 }));
-    });
+    grid.push(ring(CW + 0.11, gy, 150, 0.38));
+    var cx = -(CW + 0.11) / 2, cz = -(CW + 0.11) / 2;
+    grid.push(PC.line({ a: [cx, gy, cz], b: [-(CW / 2 + 0.155), gy, -(CW / 2 + 0.155)], perUnit: 460, tone: 1 }));
   }
   parts.push(PC.merge.apply(null, grid));
 
@@ -161,7 +159,7 @@ PC.register('wafer-cost', function (p) {
   return {
     cloud: PC.merge.apply(null, parts),
     spin: 0.09,
-    tilt: [0.30, -0.62, 0],
+    tilt: [0.16, -0.62, 0],
     caption: 'What it costs to build one B200, stacked to scale: $2,900 of high-bandwidth memory in copper at the foot, $1,100 of CoWoS packaging, $1,000 of packaging yield loss drawn hollow because it ships nothing, $900 of logic die and $480 of board, power and test. About $6,400 in all, for a part that sells for thirty to forty thousand. The rule is graduated every $500.'
   };
 });
