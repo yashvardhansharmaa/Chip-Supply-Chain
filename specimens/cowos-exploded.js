@@ -26,7 +26,7 @@ PC.register('cowos-exploded', function (p) {
   var hbmZ = [-19 * S, -6.4 * S, 6.4 * S, 19 * S];
   var ipW = 82 * S, ipD = 53 * S;
   var subW = 100 * S, subD = 72 * S;
-  var subH = 0.10, ipH = 0.048, dieH = 0.068, hbmH = 0.082, frH = 0.055;
+  var subH = 0.10, ipH = 0.058, dieH = 0.068, hbmH = 0.082, frH = 0.055;
   var gap = 0.075;
   var parts = [];
   function add(c) { if (c) parts.push(c); }
@@ -78,8 +78,8 @@ PC.register('cowos-exploded', function (p) {
 
   // ---------- 3. the silicon interposer: the chokepoint, in copper ----------
   var ipY = ipBot + ipH / 2;
-  add(PC.T(PC.plane({ w: ipW, d: ipD, n: 5200, tone: 0.26 }), { pos: [0, ipTop, 0] }));
-  add(PC.T(PC.accent(PC.box({ w: ipW, h: ipH, d: ipD, faces: ['px', 'nx', 'pz', 'nz'], n: 2600 }), 0.55), { pos: [0, ipY, 0] }));
+  add(PC.T(PC.accent(PC.plane({ w: ipW, d: ipD, n: 5200 }), 0.3), { pos: [0, ipTop, 0] }));
+  add(PC.T(PC.accent(PC.box({ w: ipW, h: ipH, d: ipD, faces: ['px', 'nx', 'pz', 'nz'], n: 3000 }), 0.62), { pos: [0, ipY, 0] }));
   add(PC.T(PC.accent(PC.boxEdges({ w: ipW, h: ipH, d: ipD, perUnit: 320 }), 1), { pos: [0, ipY, 0] }));
   // the through-silicon vias, a field of them across the whole slab
   var tv = 3.4 * S;

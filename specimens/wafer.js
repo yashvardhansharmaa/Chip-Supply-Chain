@@ -9,7 +9,7 @@
  * notch (no flat above 200 mm), about 3 mm of edge exclusion where no usable
  * die is printed, and a rounded bevel at the apex of the edge. One unit here is
  * 150 mm, so R = 1. Two things are drawn larger than life or they would be
- * invisible at 570 px: the thickness (x2.3) and the notch (x4).
+ * invisible at 570 px: the thickness (x2.3) and the notch (x6).
  *
  * The exposure field is one full reticle, 26 x 33 mm, which is 0.173 x 0.220
  * units. About 70 whole fields fit inside the exclusion circle. One of them is
@@ -45,7 +45,7 @@ PC.register('wafer', function (p) {
     var u = x * 0.50 + z * 0.87;                       // distance along the light axis
     var band = Math.exp(-((u + 0.12) * (u + 0.12)) / 0.30);
     var r2 = x * x + z * z;
-    return (0.130 + 0.320 * band) * (1 - 0.24 * r2 * r2 * r2 * r2);
+    return (0.115 + 0.365 * band) * (1 - 0.26 * r2 * r2 * r2 * r2);
   }
 
   // ---------- the wafer body ----------
@@ -116,8 +116,17 @@ PC.register('wafer', function (p) {
   // ---------- one field in copper: the largest pattern a scanner prints at once ----------
   if (accentCell) {
     var ax = accentCell[0], az = accentCell[1];
-    parts.push(PC.T(PC.accent(PC.plane({ w: fw * 0.82, d: fh * 0.86, n: 2300 }), 0.62),
+    parts.push(PC.T(PC.accent(PC.plane({ w: fw * 0.82, d: fh * 0.86, n: 1900 }), 0.42),
       { pos: [ax, yTop + 0.0007, az] }));
+    // a hint of the floorplan inside the one field the reader is meant to look into
+    for (var q = -3; q <= 3; q++) {
+      parts.push(PC.T(PC.accent(PC.line({
+        a: [-fw * 0.41, 0, q * fh * 0.115], b: [fw * 0.41, 0, q * fh * 0.115], perUnit: 420
+      }), 0.85), { pos: [ax, yTop + 0.0009, az] }));
+    }
+    parts.push(PC.T(PC.accent(PC.line({
+      a: [0, 0, -fh * 0.42], b: [0, 0, fh * 0.42], perUnit: 420
+    }), 0.85), { pos: [ax, yTop + 0.0009, az] }));
     parts.push(PC.T(PC.accent(PC.polyline({
       pts: [[-fw / 2, 0, -fh / 2], [fw / 2, 0, -fh / 2], [fw / 2, 0, fh / 2], [-fw / 2, 0, fh / 2]],
       closed: true, perUnit: 620

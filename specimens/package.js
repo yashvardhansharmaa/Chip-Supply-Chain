@@ -112,13 +112,13 @@ PC.register('package', function (p) {
   var yIpTop = y0 + ipH;          // the plane the dies and stacks sit on
 
   // --- substrate: walls, edges, ball grid, and only the top that is actually exposed ---
-  add(PC.box({ w: subW, h: subH, d: subD, faces: ['px', 'nx', 'pz', 'nz'], tone: 0.4 }));
-  add(PC.boxEdges({ w: subW, h: subH, d: subD, perUnit: 300, tone: 0.85 }));
-  add(PC.T(frame(subW, subD, stack.w * S * 1.02, stack.h * S * 1.02, 0.22, 0.55), { pos: [0, y0, 0] }));
+  add(PC.box({ w: subW, h: subH, d: subD, faces: ['px', 'nx', 'pz', 'nz'], n: 9000, tone: 0.28 }));
+  add(PC.boxEdges({ w: subW, h: subH, d: subD, perUnit: 230, tone: 0.7 }));
+  add(PC.T(frame(subW, subD, stack.w * S * 1.02, stack.h * S * 1.02, 0.14, 0.4), { pos: [0, y0, 0] }));
   var pitch = 2.8 * S;
   add(PC.T(PC.dots({
     nx: Math.max(6, Math.floor(subW / pitch) - 1), nz: Math.max(6, Math.floor(subD / pitch) - 1),
-    sx: pitch, sz: pitch, per: 2, tone: 0.55
+    sx: pitch, sz: pitch, tone: 0.4
   }), { pos: [0, -subH / 2 - Y(0.5), 0] }));
 
   // --- stiffener ring: a metal frame on the substrate edge, no lid over the dies ---
@@ -126,34 +126,34 @@ PC.register('package', function (p) {
   var gapMm = 3.2;
   var ringIn = [Math.min(ringOut[0] - 8 * S, (stack.w + 2 * gapMm) * S), Math.min(ringOut[1] - 8 * S, (stack.h + 2 * gapMm) * S)];
   var rh = Y(hIp + hDie + 0.7), yr = y0 + rh / 2;
-  add(PC.T(PC.box({ w: ringOut[0], h: rh, d: ringOut[1], faces: ['px', 'nx', 'pz', 'nz'], tone: 0.44 }), { pos: [0, yr, 0] }));
-  add(PC.T(PC.box({ w: ringIn[0], h: rh, d: ringIn[1], faces: ['px', 'nx', 'pz', 'nz'], tone: 0.3 }), { pos: [0, yr, 0] }));
-  add(PC.T(frame(ringOut[0], ringOut[1], ringIn[0], ringIn[1], 0.5, 0.8), { pos: [0, y0 + rh, 0] }));
-  add(PC.T(outline(ringOut[0], ringOut[1], 1, 340), { pos: [0, y0 + rh + 0.002, 0] }));
-  add(PC.T(outline(ringIn[0], ringIn[1], 1, 340), { pos: [0, y0 + rh + 0.002, 0] }));
-  add(PC.T(outline(ringIn[0], ringIn[1], 0.5, 260), { pos: [0, y0 + 0.002, 0] }));
+  add(PC.T(PC.box({ w: ringOut[0], h: rh, d: ringOut[1], faces: ['px', 'nx', 'pz', 'nz'], n: 4200, tone: 0.3 }), { pos: [0, yr, 0] }));
+  add(PC.T(PC.box({ w: ringIn[0], h: rh, d: ringIn[1], faces: ['px', 'nx', 'pz', 'nz'], n: 3600, tone: 0.22 }), { pos: [0, yr, 0] }));
+  add(PC.T(frame(ringOut[0], ringOut[1], ringIn[0], ringIn[1], 0.26, 0.45), { pos: [0, y0 + rh, 0] }));
+  add(PC.T(outline(ringOut[0], ringOut[1], 0.75, 240), { pos: [0, y0 + rh + 0.002, 0] }));
+  add(PC.T(outline(ringIn[0], ringIn[1], 0.8, 240), { pos: [0, y0 + rh + 0.002, 0] }));
+  add(PC.T(outline(ringIn[0], ringIn[1], 0.45, 200), { pos: [0, y0 + 0.002, 0] }));
 
   // --- interposers ---
   ips.forEach(function (r) {
     var w = r.w * S, d = r.h * S, x = r.x * S, z = -r.y * S;
-    add(PC.T(PC.box({ w: w, h: ipH, d: d, faces: ['px', 'nx', 'pz', 'nz'], tone: 0.5 }), { pos: [x, y0 + ipH / 2, z] }));
-    add(PC.T(PC.boxEdges({ w: w, h: ipH, d: d, perUnit: 300, tone: 1 }), { pos: [x, y0 + ipH / 2, z] }));
+    add(PC.T(PC.box({ w: w, h: ipH, d: d, faces: ['px', 'nx', 'pz', 'nz'], n: 3000, tone: 0.42 }), { pos: [x, y0 + ipH / 2, z] }));
+    add(PC.T(PC.boxEdges({ w: w, h: ipH, d: d, perUnit: 260, tone: 0.85 }), { pos: [x, y0 + ipH / 2, z] }));
     // through-silicon vias on the exposed silicon
     var vp = 2.1 * S;
-    add(PC.T(PC.dots({ nx: Math.floor(w / vp), nz: Math.floor(d / vp), sx: vp, tone: 0.3 }), { pos: [x, yIpTop + 0.002, z] }));
+    add(PC.T(PC.dots({ nx: Math.floor(w / vp), nz: Math.floor(d / vp), sx: vp, tone: 0.24 }), { pos: [x, yIpTop + 0.002, z] }));
   });
 
   // --- base / IO dies, with the compute chiplets stepped up on top of them ---
   var baseH = base.length ? Y(hBase) : 0;
   base.forEach(function (b) {
     var w = b.w * S, d = b.h * S, x = b.x * S, z = -b.y * S;
-    add(PC.T(PC.box({ w: w, h: baseH, d: d, faces: ['py', 'px', 'nx', 'pz', 'nz'], tone: 0.5 }), { pos: [x, yIpTop + baseH / 2, z] }));
-    add(PC.T(PC.boxEdges({ w: w, h: baseH, d: d, perUnit: 300, tone: 0.95 }), { pos: [x, yIpTop + baseH / 2, z] }));
+    add(PC.T(PC.box({ w: w, h: baseH, d: d, faces: ['py', 'px', 'nx', 'pz', 'nz'], tone: 0.4 }), { pos: [x, yIpTop + baseH / 2, z] }));
+    add(PC.T(PC.boxEdges({ w: w, h: baseH, d: d, perUnit: 300, tone: 0.9 }), { pos: [x, yIpTop + baseH / 2, z] }));
     // hybrid-bond pad field on the exposed shoulder of the base die
-    add(PC.T(PC.dots({ nx: Math.max(4, Math.round(w / (1.6 * S))), nz: Math.max(4, Math.round(d / (1.6 * S))), sx: 1.6 * S, tone: 0.32 }), { pos: [x, yIpTop + baseH + 0.002, z] }));
+    add(PC.T(PC.dots({ nx: Math.max(4, Math.round(w / (1.4 * S))), nz: Math.max(4, Math.round(d / (1.4 * S))), sx: 1.4 * S, tone: 0.34 }), { pos: [x, yIpTop + baseH + 0.002, z] }));
   });
 
-  // --- logic dies and chiplets ---
+  // --- logic dies and chiplets: the busiest ink in the picture ---
   var dieH = Y(hDie);
   dies.forEach(function (dd) {
     var onBase = base.some(function (b) {
@@ -161,24 +161,34 @@ PC.register('package', function (p) {
     });
     var w = dd.w * S, d = dd.h * S, x = dd.x * S, z = -dd.y * S;
     var yb = yIpTop + (onBase ? baseH : 0), yc = yb + dieH / 2, yt = yb + dieH;
-    add(PC.T(PC.box({ w: w, h: dieH, d: d, faces: ['py', 'px', 'nx', 'pz', 'nz'], tone: 0.74 }), { pos: [x, yc, z] }));
-    add(PC.T(PC.boxEdges({ w: w, h: dieH, d: d, perUnit: 340, tone: 1 }), { pos: [x, yc, z] }));
-    // a hint of floorplan on the die top: a core outline and a block grid
-    add(PC.T(outline(w * 0.84, d * 0.84, 0.95, 240), { pos: [x, yt + 0.002, z] }));
-    var nx = Math.max(2, Math.round(dd.w / 4.2)), nz = Math.max(2, Math.round(dd.h / 3.4));
-    add(PC.T(PC.dots({ nx: nx, nz: nz, sx: w * 0.8 / nx, sz: d * 0.8 / nz, per: 2, tone: 0.45 }), { pos: [x, yt + 0.002, z] }));
+    add(PC.T(PC.box({ w: w, h: dieH, d: d, faces: ['py', 'px', 'nx', 'pz', 'nz'], tone: 0.5 }), { pos: [x, yc, z] }));
+    add(PC.T(PC.boxEdges({ w: w, h: dieH, d: d, perUnit: 380, tone: 1 }), { pos: [x, yc, z] }));
+    // floorplan on the die top: memory PHY strips down the long edges and a core block grid
+    var fp = [], phy = Math.min(w, d) * 0.13, mx = w / 2 - phy, mz = d / 2;
+    fp.push(outline(w - 2 * phy, d * 0.94, 0.85, 240));
+    fp.push(PC.line({ a: [-mx, 0, -mz * 0.94], b: [-mx, 0, mz * 0.94], perUnit: 200, tone: 0.55 }));
+    fp.push(PC.line({ a: [mx, 0, -mz * 0.94], b: [mx, 0, mz * 0.94], perUnit: 200, tone: 0.55 }));
+    var nx = Math.max(2, Math.round(dd.w / 6)), nz = Math.max(2, Math.round(dd.h / 5));
+    var bw = (w - 2 * phy) * 0.92 / nx, bd = d * 0.88 / nz;
+    for (var a = 0; a < nx; a++) for (var b2 = 0; b2 < nz; b2++) {
+      fp.push(PC.T(outline(bw * 0.84, bd * 0.84, 0.7, 190), { pos: [(a - (nx - 1) / 2) * bw, 0, (b2 - (nz - 1) / 2) * bd] }));
+    }
+    // PHY bumps along both long edges
+    fp.push(PC.T(PC.dots({ nx: 2, nz: nz * 3, sx: phy * 0.5, sz: d * 0.9 / (nz * 3), tone: 0.5 }), { pos: [-w / 2 + phy / 2, 0, 0] }));
+    fp.push(PC.T(PC.dots({ nx: 2, nz: nz * 3, sx: phy * 0.5, sz: d * 0.9 / (nz * 3), tone: 0.5 }), { pos: [w / 2 - phy / 2, 0, 0] }));
+    add(PC.T(PC.merge.apply(null, fp), { pos: [x, yt + 0.003, z] }));
   });
 
   // --- HBM stacks: layered boxes with amber tops ---
   var hbmH = Y(hHbm), layers = 8;
   hbm.forEach(function (h) {
     var w = h.w * S, d = h.h * S, x = h.x * S, z = -h.y * S;
-    add(PC.T(PC.box({ w: w, h: hbmH, d: d, faces: ['px', 'nx', 'pz', 'nz'], tone: 0.5 }), { pos: [x, yIpTop + hbmH / 2, z] }));
+    add(PC.T(PC.box({ w: w, h: hbmH, d: d, faces: ['px', 'nx', 'pz', 'nz'], tone: 0.4 }), { pos: [x, yIpTop + hbmH / 2, z] }));
     for (var k = 1; k <= layers; k++) {
-      add(PC.T(outline(w, d, 0.95, 210), { pos: [x, yIpTop + hbmH * k / (layers + 1), z] }));
+      add(PC.T(outline(w, d, 0.8, 190), { pos: [x, yIpTop + hbmH * k / (layers + 1), z] }));
     }
-    add(PC.T(PC.accent(PC.plane({ w: w * 0.97, d: d * 0.97 }), 0.7), { pos: [x, yIpTop + hbmH, z] }));
-    add(PC.T(PC.accent(outline(w, d, 1, 340)), { pos: [x, yIpTop + hbmH + 0.002, z] }));
+    add(PC.T(PC.accent(PC.plane({ w: w * 0.94, d: d * 0.94 }), 0.55), { pos: [x, yIpTop + hbmH, z] }));
+    add(PC.T(PC.accent(outline(w, d, 1, 320)), { pos: [x, yIpTop + hbmH + 0.002, z] }));
   });
 
   var nd = dies.length, nh = hbm.length, nb = base.length, ni = ips.length;
