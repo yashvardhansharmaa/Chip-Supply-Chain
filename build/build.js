@@ -198,8 +198,8 @@ function wordCount(body) {
 function pips(n) { let s = '<span class="pips" aria-hidden="true">'; for (let i = 1; i <= 5; i++) s += `<i class="${i <= n ? 'on' : ''}"></i>`; return s + '</span>'; }
 function nameplate(card, title) {
   if (!card) return '';
-  const leaders = (card.leaders || []).map((l) => `<li><span class="cc">${esc(l.country || '')}</span><span class="who">${esc(l.name)}</span>${l.share ? ` <span class="note">${esc(l.share)}</span>` : ''}</li>`).join('');
-  const countries = (card.countries || []).map((c) => `<li><span class="cc">${esc(c.code)}</span><span class="who">${esc(COUNTRY[c.code] || c.code)}</span>${c.note ? ` <span class="note">${esc(c.note)}</span>` : ''}</li>`).join('');
+  const leaders = (card.leaders || []).map((l) => `<li><span class="chip">${esc(l.country || '')}</span><span class="who">${esc(l.name)}</span>${l.share ? ` <span class="note">${esc(l.share)}</span>` : ''}</li>`).join('');
+  const countries = (card.countries || []).map((c) => `<li><span class="chip">${esc(c.code)}</span><span class="who">${esc(COUNTRY[c.code] || c.code)}</span>${c.note ? ` <span class="note">${esc(c.note)}</span>` : ''}</li>`).join('');
   const sub = card.substitution || {};
   const score = +card.chokepointScore || 0;
   const cost = String(card.costSignal || '').split(/;\s|\.\s/);
@@ -341,7 +341,7 @@ const sourcesHTML = `<div class="tier-key"><span class="tier tier-A">A</span> pr
 /* ---------------- briefing (all the "in short" blocks on one page) ---------------- */
 const briefingHTML = all.map((ch) => {
   const c = ch.meta.card || {};
-  const leaders = (c.leaders || []).slice(0, 3).map((l) => `${esc(l.name)}${l.country ? ` <span class="cc">${esc(l.country)}</span>` : ''}`).join(' · ');
+  const leaders = (c.leaders || []).slice(0, 3).map((l) => `${esc(l.name)}${l.country ? ` <span class="chip">${esc(l.country)}</span>` : ''}`).join(' · ');
   const href = ch.id === 'geopolitics' ? '#/geopolitics' : `#${esc(ch.id)}`;
   return `<article class="brief-card" id="brief-${esc(ch.id)}">
 <div class="brief-head"><span class="n">${pad(ch.number)}</span><a href="${href}" class="t">${esc(ch.title)}</a>

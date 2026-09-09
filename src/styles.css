@@ -329,7 +329,7 @@ sup.cite a:hover { text-decoration: underline; }
 .brief-short p { font-size: 15.5px; line-height: 1.5; color: var(--ink-2); margin: 0 0 0.6em; }
 .brief-leaders { font-size: 13.5px; color: var(--ink-2); margin: 0; padding-top: 8px; border-top: 1px dashed var(--line-2); }
 .brief-leaders .label { margin-right: 6px; }
-.brief-leaders .cc { font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); }
+.brief-leaders .chip { margin-left: 2px; }
 
 /* ---------- glossary ---------- */
 .glossary { margin: 10px 0 50px; display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
@@ -491,7 +491,8 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 .plate-rows ul { list-style: none; margin: 0; padding: 0; }
 .plate-rows li { padding-left: 32px; text-indent: -32px; margin-bottom: 8px; }
 .plate-rows li:last-child { margin-bottom: 0; }
-.cc { display: inline-block; width: 24px; text-align: center; text-indent: 0; margin-right: 8px; font-family: var(--font-mono); font-size: 9.5px; font-weight: 500; letter-spacing: 0.04em; border: 1px solid var(--line-2); border-radius: 2px; padding: 1px 0 2px; color: var(--ink-2); vertical-align: 1px; }
+.chip { display: inline-block; width: 24px; text-align: center; text-indent: 0; margin-right: 8px; font-family: var(--font-mono); font-size: 9.5px; font-weight: 500; letter-spacing: 0.04em; border: 1px solid var(--line-2); border-radius: 2px; padding: 1px 0 2px; color: var(--ink-2); vertical-align: 1px; }
+.cc { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; }
 .plate-rows .who { font-weight: 600; }
 .plate-rows .note { color: var(--muted); font-size: 14.5px; }
 .plate-rows .why { color: var(--ink-2); font-size: 15px; }
