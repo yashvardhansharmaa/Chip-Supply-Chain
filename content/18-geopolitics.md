@@ -13,7 +13,7 @@
     "leaders": [
       {"name": "United States", "country": "US", "share": "93% of AI accelerator design revenue; 72% of process control and 60% of deposition tool revenue"},
       {"name": "Taiwan", "country": "TW", "share": "78% of the global foundry market and 92% of capacity for the most advanced chips"},
-      {"name": "China", "country": "CN", "share": "38% of 28 nm-and-above logic capacity; about 10% of deposition and etch tool revenue"},
+      {"name": "China", "country": "CN", "share": "about half of world capacity for mature-node and commodity chips; about 10% of deposition and etch tool revenue"},
       {"name": "Netherlands", "country": "NL", "share": "100% of EUV and 95% of DUV lithography revenue"},
       {"name": "South Korea", "country": "KR", "share": "SK hynix alone took 56% of HBM and 29% of DRAM revenue in 1Q26"}
     ],
@@ -104,7 +104,7 @@ The yard has not stayed small. Licensing once asked who was buying and why; coun
 | Foundry, all nodes | Taiwan | 78% | market share, 2025 |
 | HBM | South Korea | 56% | SK hynix alone, revenue, 1Q26 |
 | AI accelerator design | United States | 93% | revenue, 2025 |
-| Logic at 28 nm and above | China | 38% | capacity, 2025 |
+| Mature-node and commodity chips | China | about half | capacity, 2025 |
 
 - **Equipment.** CSET's ETO Supply Chain Explorer, TechInsights 2025 revenue by parent-company headquarters ([source](https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv)).
 - **Materials.** CSET's 2021 segment map ([source](https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/)).

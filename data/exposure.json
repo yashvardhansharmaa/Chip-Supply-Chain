@@ -1128,7 +1128,8 @@
     "currency": "KRW million",
     "chinaShare": 11.8,
     "basis": "Regional information in the segment note, reported to the Management Committee; share computed from the filed absolute figures",
-    "source": "https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2023_con_quarter04_all.pdf"
+    "source": "https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2023_con_quarter04_all.pdf",
+    "note": "Taken from the comparative column of Samsung's audited consolidated financial statements for 2023, which is where the 2022 figures are restated on the current basis. Samsung is not an SEC registrant, so its own investor-relations posting of the statements is the filing."
   },
   {
     "firm": "Samsung Electronics",
@@ -1156,7 +1157,8 @@
     "currency": "KRW million",
     "chinaShare": 14.6,
     "basis": "Regional information in the segment note, reported to the Management Committee; share computed from the filed absolute figures",
-    "source": "https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2025_con_quarter04_all.pdf"
+    "source": "https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2025_con_quarter04_all.pdf",
+    "note": "Taken from the comparative column of Samsung's audited consolidated financial statements for 2025. Samsung is not an SEC registrant, so its own investor-relations posting of the statements is the filing."
   },
   {
     "firm": "Samsung Electronics",
