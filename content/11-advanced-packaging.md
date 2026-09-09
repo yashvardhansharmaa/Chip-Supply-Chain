@@ -1,7 +1,7 @@
 ---json
 {
   "id": "advanced-packaging",
-  "number": 12,
+  "number": 11,
   "title": "Advanced Packaging",
   "oneLiner": "Lithography stopped being the limit on chip size in 2022. What replaced it is how large an interposer TSMC can build, and through 2025 how many it could build a month.",
   "plain": "Packaging wires finished chips into one component and mounts them on a base built to the tolerances of a chip. A lithography machine can print only a rectangle about the size of a postage stamp in one shot, so a modern accelerator is cut into pieces and stitched back together on a shared slab of silicon, with its memory a few millimetres away. Slab, chips and base all expand at different rates when heated, so the package warps and the joints crack. Getting that right in volume is hard enough that nearly every AI accelerator is packaged by TSMC, in Taiwan.",

@@ -268,7 +268,7 @@ const SHORT = { 'design-and-eda': 'Design', 'silicon-and-wafers': 'Silicon', 'ch
 const WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty'];
 const word = (n) => WORDS[n] || String(n);
 const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
-const isStage = (ch) => ch.number >= 2 && ch.number <= 16;
+const isStage = (ch) => ch.number >= 1 && ch.number <= 15; // chapters 1 to 15 are the stages; 16 is costs, 17 the essay
 const stages = chapters.filter(isStage);
 function chainTrack(chs, currentId) {
   return `<ol class="chain-track">${chs.map((c) => { const sc = +((c.meta.card || {}).chokepointScore || 0); return `<li class="stage-cell" data-score="${sc}" data-id="${esc(c.id)}"${c.id === currentId ? ' aria-current="true"' : ''}><a href="#${esc(c.id)}" title="${esc(c.title)}"><span class="n">${pad(c.number)}</span><span class="bar"><i></i></span><span class="t">${esc(SHORT[c.id] || c.title)}</span></a></li>`; }).join('')}</ol>`;

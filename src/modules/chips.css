@@ -136,3 +136,6 @@
   .cx-long { min-width: 172px; max-width: 220px; }
   .cx-note-body { font-size: 16px; }
 }
+
+/* nothing selected: only the picker and its prompt stay */
+section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="landscape"][data-empty="1"] .cx-plans, section[data-view="landscape"][data-empty="1"] .cx-tablewrap, section[data-view="landscape"][data-empty="1"] .cx-foot, section[data-view="landscape"][data-empty="1"] .cx-notes, section[data-view="landscape"][data-empty="1"] .export-bar, section[data-view="landscape"][data-empty="1"] .cx-plans-head, section[data-view="landscape"][data-empty="1"] .cx-table-head, section[data-view="landscape"][data-empty="1"] .cx-h, section[data-view="landscape"][data-empty="1"] .cx-sub { display: none; }

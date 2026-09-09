@@ -129,7 +129,7 @@
       slot.spinBase = -this.spin; // each specimen starts from its own tilt
       this.scrollAngle = 0;
     },
-    setVisible: function (v) { this.active = v; this.fig.setAttribute('data-hidden', v ? '0' : '1'); if (v) this.resize(); },
+    setVisible: function (v) { var self = this; this.active = v; this.fig.setAttribute('data-hidden', v ? '0' : '1'); if (v) { this.resize(); requestAnimationFrame(function () { self.resize(); }); } },
     draw: function (slot, op, extraRot, sc) {
       var gl = this.gl, aspect = this.w / this.h;
       var P = perspective(34 * Math.PI / 180, aspect, 0.1, 40);
@@ -248,7 +248,7 @@
 
   /* ---------------- section tracking (stack view) ---------------- */
   var Sections = {
-    items: [], currentId: null, heroBottom: 0,
+    items: [], walkItems: [], currentId: null, heroBottom: 0,
     init: function () {
       var self = this;
       this.items = $$('[data-view="stack"] [data-specimen]');
@@ -262,6 +262,7 @@
     update: function () {
       if (Router.current !== 'stack' && Router.current !== 'walk') return;
       var items = Router.current === 'walk' ? this.walkItems : this.items;
+      if (!items || !items.length) return; // before init, or a view with nothing to track
       var vh = window.innerHeight, probe = narrow() ? vh * 0.55 : vh * 0.42, best = null, bestTop = -Infinity;
       for (var i = 0; i < items.length; i++) {
         var r = items[i].getBoundingClientRect();
@@ -379,9 +380,8 @@
       var c = this.byId(id); if (!c) return;
       var at = this.picked.indexOf(id);
       if (at >= 0) {
-        if (this.picked.length === 1) { this.say('At least one chip stays selected.'); return; }
         this.picked.splice(at, 1);
-        if (this.sel === id) this.sel = this.picked[0];
+        if (this.sel === id) this.sel = this.picked[0] || null;
       } else {
         if (this.picked.length >= this.max) { this.say('Four is the limit. Click a selected chip to remove it.'); return; }
         this.picked.push(id);
@@ -389,7 +389,7 @@
       }
       this.hint = '';
       this.render();
-      this.showStage(this.byId(this.sel));
+      if (this.sel) this.showStage(this.byId(this.sel));
     },
     focus: function (id) {
       var c = this.byId(id); if (!c) return;
@@ -408,10 +408,7 @@
       this.showStage(c);
     },
     clear: function () {
-      var keep = (this.sel && this.byId(this.sel)) ? this.sel : this.picked[0];
-      this.picked = keep ? [keep] : [];
-      this.sel = keep || null;
-      this.hint = 'Down to one chip. Pick another to compare.';
+      this.picked = []; this.sel = null; this.hint = '';
       this.render();
     },
 
@@ -431,7 +428,8 @@
     },
     renderCount: function () {
       var el = $('#cx-count'); if (!el) return;
-      el.innerHTML = '<b>' + this.picked.length + '</b> of ' + this.max + ' chips selected' + (this.hint ? ' · <i>' + esc(this.hint) + '</i>' : '');
+      el.innerHTML = this.picked.length ? '<b>' + this.picked.length + '</b> of ' + this.max + ' chips selected' + (this.hint ? ' · <i>' + esc(this.hint) + '</i>' : '') : 'No chip selected. Pick one to see its specs, or two to four to compare them.';
+      var sec = $('section[data-view="landscape"]'); if (sec) sec.setAttribute('data-empty', this.picked.length ? '0' : '1');
     },
 
     /* ---- package plans, all at one millimetres-per-pixel scale ---- */

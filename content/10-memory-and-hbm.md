@@ -1,7 +1,7 @@
 ---json
 {
   "id": "memory-and-hbm",
-  "number": 11,
+  "number": 10,
   "title": "Memory and HBM",
   "oneLiner": "Three firms make every HBM stack in the world. The cube is the largest block of silicon in an AI package, and the cooling plate above it now caps its height.",
   "plain": "High bandwidth memory is where an AI chip keeps the numbers it is working on, and it is built to hand them over fast. It stacks up to sixteen memory chips into a cube, drills copper wires straight down through them, and sets the cube beside the processor. Stacking is the hard part: each chip is ground down until the copper comes through the back, the cube must stay under a fixed height or it fouls the cooling plate, and one bad layer ruins the rest. Only SK hynix, Samsung and Micron have made it work, and a single line in an American export rule reaches all three.",

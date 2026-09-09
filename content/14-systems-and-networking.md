@@ -1,7 +1,7 @@
 ---json
 {
   "id": "systems-and-networking",
-  "number": 15,
+  "number": 14,
   "title": "Systems and Networking",
   "oneLiner": "A finished package is useless until it is bolted to a baseboard, fed a thousand amps and wired to seventy-one siblings. Many firms can do the bolting; few can make the lasers.",
   "plain": "A rack is where finished chips become one machine. Builders bolt each package onto a board, feed it more than a thousand amps, and wire it to seventy-one neighbours so that a training run sees one computer instead of seventy-two. A cluster runs only as fast as its slowest link, and copper carries a signal a few metres at most, so the longer links have to become light. Many firms can bolt racks together. Far fewer can make the lasers that carry the light, and that is where the chain narrows.",

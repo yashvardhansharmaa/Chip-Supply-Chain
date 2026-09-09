@@ -1,7 +1,7 @@
 ---json
 {
   "id": "deposition-and-etch",
-  "number": 7,
+  "number": 6,
   "title": "Deposition and Etch",
   "oneLiner": "Lithography prints the pattern; deposition and etch build the chip itself, over a thousand steps per wafer. This is the one tool segment where China has taken real share.",
   "plain": "Deposition and etch build the chip itself, like a layer cake: lay down a film a few atoms thick, print a pattern on it, burn away everything the pattern does not protect, then do it again, more than a thousand times over. The film has to reach the bottom of a hole hundreds of times deeper than it is wide, and the burn has to eat one material and leave the one beside it untouched. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.",

@@ -1,7 +1,7 @@
 ---json
 {
   "id": "silicon-and-wafers",
-  "number": 3,
+  "number": 2,
   "title": "Silicon and Wafers",
   "oneLiner": "China makes almost all of the world's polysilicon and almost none of the wafers that matter. Five firms in Japan, Taiwan, Germany and South Korea hold the 300 mm wafer every AI accelerator starts on.",
   "plain": "Every chip starts as a wafer: a mirror-polished disc of silicon 300 millimetres across. A furnace melts purified sand, and a machine pulls a cylinder out of the melt the way a candle is dipped, except that what comes out is a single crystal, every atom on the same repeating grid. Saws slice that cylinder into discs, polished until nothing on the surface stands more than a few atoms proud. Fewer than one atom in a hundred billion may be anything but silicon, and the flatness has to hold right to the edge. Only five firms can do it reliably, and none of them is American or Chinese.",

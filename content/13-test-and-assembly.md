@@ -1,7 +1,7 @@
 ---json
 {
   "id": "test-and-assembly",
-  "number": 14,
+  "number": 13,
   "title": "Test and Assembly",
   "oneLiner": "Assembly and test decide which dies are allowed into a package that costs more than a car. One Japanese firm now sells two thirds of the world's chip testers.",
   "plain": "Before a chip can be sold, a machine has to interrogate it and check every answer. Thousands of needles land on pads on the wafer and drive test patterns into each chip; the tester marks the ones that answer wrong, and they never leave. This matters more each year because of arithmetic: a modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them. So the industry tests earlier, hotter and longer than it used to, and two firms, one Japanese and one American, sell most of the machines that do it.",

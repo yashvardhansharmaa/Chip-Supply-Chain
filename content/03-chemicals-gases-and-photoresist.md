@@ -1,7 +1,7 @@
 ---json
 {
   "id": "chemicals-gases-and-photoresist",
-  "number": 4,
+  "number": 3,
   "title": "Chemicals, Gases and Photoresist",
   "oneLiner": "A few hundred molecules stand between a blank wafer and a working chip. Japan makes about 90% of the photoresist, and the two times this layer has been squeezed, no fab stopped: the countries hit stockpiled and built substitutes instead.",
   "plain": "Photoresist is photographic film for chips. A coating machine spreads a film thinner than a soap bubble across the wafer, light shines through a stencil, and the exposed parts dissolve away, leaving a pattern the next machine can etch. A few hundred other gases and liquids deposit, strip and clean around it. All of it has to be clean to about one stray metal atom in a trillion, and each formula is approved for one factory and one product at a time. That is why nine tenths of the world's photoresist comes from Japan, and a second source takes years rather than weeks.",

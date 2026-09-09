@@ -1,7 +1,7 @@
 ---json
 {
   "id": "substrates-and-pcbs",
-  "number": 13,
+  "number": 12,
   "title": "Substrates and PCBs",
   "oneLiner": "A Japanese food company makes 95 percent of the insulating film inside high-end chip packages, and a Japanese textile company weaves the glass cloth beneath it.",
   "plain": "A package substrate is the adapter between a chip and the circuit board under it. The chip's connections come out finer than a human hair; the board works in millimetres. The substrate is built like plywood: a stiff core of glass cloth and resin, thin sheets of epoxy film pressed onto both faces, holes burned through each sheet by laser, and copper plated into the holes. Every added layer is another hole that can fail. A handful of firms build these substrates, and the film and the glass cloth each come from a single Japanese supplier, so a shortage here stops accelerators shipping.",

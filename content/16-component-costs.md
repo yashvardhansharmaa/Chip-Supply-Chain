@@ -1,7 +1,7 @@
 ---json
 {
   "id": "component-costs",
-  "number": 17,
+  "number": 16,
   "title": "Component Costs",
   "oneLiner": "Follow the money through an AI accelerator and the silicon turns out to be the cheap part. Memory and packaging are the bill.",
   "plain": "A bill of materials is the list of parts inside a product and what each one costs to build. For an AI accelerator, the famous logic chip is the cheap part, about a seventh of the total. The stacked memory beside it is nearly half, and the packaging that wires the two together costs more than the chip. Three firms in the world make that memory and one Taiwanese firm does that packaging, so the costliest parts are also the scarcest, and that is where a government has the most purchase.",

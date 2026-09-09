@@ -1,7 +1,7 @@
 ---json
 {
   "id": "photomasks-and-pellicles",
-  "number": 6,
+  "number": 5,
   "title": "Photomasks and Pellicles",
   "oneLiner": "A business worth tens of billions of yen sits under every leading-edge chip. Two Japanese firms make almost all the blank plates that EUV masks are built on, one Japanese firm inspects them, and the dust cover meant to protect them is still not in production.",
   "plain": "A photomask is the printing plate for one layer of a chip. One plate prints the same layer on wafer after wafer, so it shapes millions of chips. No glass is transparent to the short light now in use, so the plate is not a window but a mirror of about forty pairs of ultrathin layers, and any speck of dust on it repeats on every wafer it prints. Two Japanese firms make almost all of those mirrors. An obscure business almost nobody has heard of can hold up every leading-edge chip in the world.",

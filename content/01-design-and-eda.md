@@ -1,7 +1,7 @@
 ---json
 {
   "id": "design-and-eda",
-  "number": 2,
+  "number": 1,
   "title": "Chip Design, EDA and IP",
   "oneLiner": "The cheapest stage in the chain to fund and one of the most concentrated. Three software firms sell the tools that every leading-edge AI accelerator passes through.",
   "plain": "Chip design turns an idea for a processor into a complete blueprint, with every one of billions of transistors placed and wired. That is the street plan of a city that size, and every road has to be walkable in less than a billionth of a second. No one draws it by hand. Software from three companies, Synopsys, Cadence and Siemens, generates the layout, checks it and signs it off, and a chip factory accepts only designs that have passed those tools. Changing one street afterwards costs a fresh set of printing stencils and several months. Withhold the software and the design cannot be made.",

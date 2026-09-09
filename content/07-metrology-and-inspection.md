@@ -1,7 +1,7 @@
 ---json
 {
   "id": "metrology-and-inspection",
-  "number": 8,
+  "number": 7,
   "title": "Metrology and Inspection",
   "oneLiner": "Nobody builds a fab around process control, and no fab works without it. One American firm holds about 57% of the market, roughly seven times its nearest rival, and is still pulling away.",
   "plain": "Metrology and inspection are the factory's quality control. Between the steps that build a chip, another machine looks the wafer over: are the lines the right width, did this layer land on the last one, has a speck of dirt killed a circuit. On a die as big as an AI accelerator, halving the stray specks lifts the share of working chips from about half to about seven in ten. One American firm sells seven times as many of those machines as its nearest rival, so a fab cut off from it can buy every other tool and still not learn why its chips fail.",

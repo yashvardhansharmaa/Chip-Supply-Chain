@@ -1,7 +1,7 @@
 ---json
 {
   "id": "transistors-and-front-end",
-  "number": 9,
+  "number": 8,
   "title": "Transistors and the Front End",
   "oneLiner": "Three companies can build a 2 nm-class switch. Shrinking stopped paying for itself about a decade ago, and every gain since has been bought with extra process steps.",
   "plain": "The front end of a chip factory builds the switches. Each one is a valve on a pipe: current runs along a silicon channel, and a voltage on the gate above it opens or shuts the flow. Make the channel short enough and the valve stops sealing, so current leaks through even when the gate is off and the chip burns power doing nothing. The fix is to wrap the gate around all four sides of the channel, a sequence that has to run in exact order. Only TSMC, Intel and Samsung can do it, a list short enough for an export rule to name in full.",

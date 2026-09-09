@@ -60,9 +60,15 @@
     </section>
 
     <section class="view column" data-view="stack" hidden>
-      <div class="chain" id="chain">
-        <div class="chain-head"><h2>The chain, scored</h2><p>One bar per stage. The taller the bar, the harder that stage is to replace: the chokepoint score, 1 to 5.</p><div class="chain-key"><span><i style="background:var(--bar-5)"></i>5 of 5</span><span><i style="background:var(--bar-4)"></i>4</span><span><i style="background:var(--bar-3)"></i>3 or less</span></div></div>
-        {{CHAIN}}
+      <div class="howto" id="howto">
+        <h2>How to read a chapter</h2>
+        <p>Every chapter opens with a chokepoint card. Three fields on it matter most.</p>
+        <ul>
+          <li><b>Concentration.</b> How many firms credibly supply this stage: Extreme, High, Moderate or Low.</li>
+          <li><b>Chokepoint score.</b> 1 means many substitutes. 5 means a single point of failure, where losing one supplier stops leading-edge production worldwide.</li>
+          <li><b>Substitution time.</b> Our estimate of how long a well-funded state or firm would need to stand up an alternative. It is the most opinionated number on the card.</li>
+        </ul>
+        <p>The card also gives China's position and the United States'. The chapters run in process order, and every number links to its source. The scoring method is on the <a href="#/methods">Methods</a> page.</p>
       </div>
       <div class="contents" id="contents">
         <h2>Contents</h2>
@@ -70,7 +76,7 @@
       </div>
       {{CHAPTERS}}
       <article class="chapter chapter--essay" id="geopolitics" data-specimen="globe" data-number="18" data-title="Geopolitics" data-caption="The chain's chokepoint towns, pinned in copper and taller where fewer suppliers exist. The towns building substitutes are pinned in dark: Beijing, Wuhan, Shenzhen, Hefei and Dresden.">
-        <div class="ch-id"><div class="ch-tile"><span class="k">Chapter</span><span class="v">18</span><span class="of">the contest</span></div><div><h2 class="ch-title"><span class="sr-only">Chapter 18: </span>Geopolitics</h2><p class="ch-lede">{{GEO_DEK}}</p></div></div>
+        <div class="ch-id"><div class="ch-tile"><span class="k">Chapter</span><span class="v">17</span><span class="of">the contest</span></div><div><h2 class="ch-title"><span class="sr-only">Chapter 18: </span>Geopolitics</h2><p class="ch-lede">{{GEO_DEK}}</p></div></div>
         <div class="prose">{{GEO_BODY}}</div>
       </article>
       <footer class="site-footer">{{FOOTER}}</footer>
@@ -84,7 +90,7 @@
       <div id="picker" class="picker cx-picker" role="group" aria-label="Choose two to four chips to compare"></div>
       <div class="cx-bar">
         <span class="count cx-count" id="cx-count" aria-live="polite"></span>
-        <button type="button" class="btn ghost cx-clear" id="cx-clear">Clear all but one</button>
+        <button type="button" class="btn ghost cx-clear" id="cx-clear">Clear</button>
       </div>
       <h3 class="label cx-h">Packages at one scale</h3>
       <p class="cx-sub">Every package is drawn from above at one scale, so a bigger one looks bigger. The logic dies do the computing, the memory stacks feed them, the interposer is the silicon slab that wires the two together, and the substrate is the card underneath. Click a package to highlight that chip in the table and open its notes.</p>
