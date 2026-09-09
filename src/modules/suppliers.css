@@ -83,7 +83,7 @@
 .sup-list[hidden], .sup-wrap[hidden] { display: none; }
 
 .sup-hrow, .sup-head {
-  display: grid; grid-template-columns: minmax(148px, 1.2fr) minmax(0, 1.9fr) minmax(112px, 1fr) 56px 92px 20px;
+  display: grid; grid-template-columns: minmax(148px, 1.2fr) minmax(0, 1.9fr) minmax(112px, 1fr) 56px 104px 20px;
   gap: 0 16px; align-items: baseline; width: 100%; text-align: left;
 }
 .sup-hrow { padding: 7px 10px 7px 12px; background: var(--bg-2); border-bottom: 1px solid var(--line-2); }
