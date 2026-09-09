@@ -2251,7 +2251,7 @@
     "target": "Prefill inference and recommendation",
     "process": {
       "foundry": "SMIC",
-      "node": "N+3 7 nm class (reported)",
+      "node": null,
       "country": "CN"
     },
     "die": {
@@ -2292,7 +2292,7 @@
     "priceEstimate": null,
     "bomEstimate": null,
     "exportStatus": "Huawei is on the US Entity List; SMIC has no EUV and reaches these nodes with DUV multipatterning. The December 2024 US rule barring SK hynix, Micron and Samsung from shipping HBM2 or newer to China is the direct reason Huawei built HiBL and HiZQ in-house.",
-    "notes": "The first Huawei accelerator to ship with Huawei's own high-bandwidth memory instead of stockpiled Korean HBM, which is the most consequential claim on its roadmap. It launched as the Atlas 350 card in March 2026 and went to mass production in April, hitting the Q1 2026 date Huawei announced.",
+    "notes": "The first Huawei accelerator to ship with Huawei's own high-bandwidth memory instead of stockpiled Korean HBM, which is the most consequential claim on its roadmap. Huawei sells it as the Atlas 350 card, which it says can run alone or four-way over UnifiedBus, and dated it to the first quarter of 2026.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -2386,7 +2386,7 @@
       "fp16TFLOPS": null,
       "fp8TFLOPS": null,
       "fp4TFLOPS": null,
-      "precisionNote": "Cambricon publishes no specifications for this part. Third-party reporting puts it at roughly 80 percent of an Nvidia A100 and 15 to 20 percent above the Siyuan 290, with no per-precision figures available."
+      "precisionNote": "Cambricon publishes no specifications for this part: its own site carries no product page for the Siyuan 590, and no per-precision figures are available from any allowed source."
     },
     "tdpW": null,
     "interconnect": {
@@ -2401,8 +2401,8 @@
     ],
     "priceEstimate": null,
     "bomEstimate": null,
-    "exportStatus": "Cambricon has been on the US Entity List since 15 December 2022. Its output is gated by SMIC N+2 capacity shared with Huawei and other domestic designers, and it is one of two named launch customers for CXMT's domestic HBM3E.",
-    "notes": "The purest read on the SMIC bottleneck, because unlike Huawei, Cambricon has no smuggled TSMC die bank to fall back on. Revenue was RMB 6.5B for all of 2025 and RMB 6.0B in the first half of 2026 alone, almost entirely cloud accelerators, while its next part, the Siyuan 690, slipped by about a year.",
+    "exportStatus": "Cambricon has been on the US Entity List since 16 December 2022, which cuts it off from US-origin technology. Its output is gated by SMIC capacity shared with Huawei and other domestic designers.",
+    "notes": "The purest read on the SMIC bottleneck, because unlike Huawei, Cambricon has no smuggled TSMC die bank to fall back on. It discloses almost nothing: its own site still lists only the MLU270 and MLU370, with no product page for the 590 or the newer 690.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -2454,12 +2454,8 @@
         "url": "https://www.cambricon.com/"
       },
       {
-        "label": "TrendForce: Cambricon remains China's top AI chip startup, faces SMIC limits",
-        "url": "https://www.trendforce.com/news/2025/12/15/insights-cambricon-remains-chinas-top-ai-chip-startup-rumored-2026-triple-output-faces-smic-limits/"
-      },
-      {
-        "label": "TrendForce: China GPU race, Cambricon turns profitable in 2025",
-        "url": "https://www.trendforce.com/news/2026/03/09/news-china-gpu-race-intensifies-cambricon-turns-profitable-in-2025-moore-threads-metax-narrow-losses/"
+        "label": "Federal Register: Additions and Revisions to the Entity List, effective 16 December 2022 (adds the Cambricon entities)",
+        "url": "https://www.federalregister.gov/documents/2022/12/19/2022-27151/additions-and-revisions-to-the-entity-list-and-conforming-removal-from-the-unverified-list"
       }
     ]
   },
@@ -2500,7 +2496,7 @@
       "fp16TFLOPS": null,
       "fp8TFLOPS": null,
       "fp4TFLOPS": null,
-      "precisionNote": "Vendor-claimed 'up to 1,000 TFLOPS dense AI compute' with no format named, so it cannot be assigned to a precision row. The part supports FP8 through FP64 with hardware acceleration for Transformer and MoE layers."
+      "precisionNote": "Moore Threads publishes no peak FLOPS for the MTT S5000. Its own product page claims full-precision support from FP8 to FP64 on the PH100 'Pinghu' chip, at least 4,000 tokens per second single-GPU prefill and at least 1,000 tokens per second decode, and 95 percent linear scaling at 10,000-GPU cluster scale. No independent benchmark exists."
     },
     "tdpW": null,
     "interconnect": {
@@ -2512,7 +2508,7 @@
     "priceEstimate": null,
     "bomEstimate": null,
     "exportStatus": "Chinese design; no US Entity List placement verified. Depends on domestic foundry capacity and on the same HBM embargo as its peers.",
-    "notes": "The clearest demonstration that Chinese accelerator demand is now policy-driven rather than benchmark-driven: Moore Threads went from a RMB 1B annual loss to quarterly profit in about two quarters on R&D equal to 87 percent of revenue, without any independent benchmark of its silicon. Its real product is software compatibility, with day-zero support for DeepSeek V4 and Qwen 3.5 through the FlagOS stack.",
+    "notes": "A Chinese full-function GPU sold on software compatibility rather than measured silicon. Moore Threads discloses no node, foundry, memory configuration, TDP or price for the MTT S5000, and no independent benchmark exists; what it does publish is native support for PyTorch, Megatron-LM, vLLM and SGLang through its MUSA stack, which is how Chinese accelerators substitute for CUDA in practice.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -2560,16 +2556,12 @@
     },
     "sources": [
       {
-        "label": "TrendForce: Moore Threads turns profitable in 1Q26",
-        "url": "https://www.trendforce.com/news/2026/04/28/news-moore-threads-reportedly-turns-profitable-in-1q26-but-remains-loss-making-in-2025-as-rd-hits-rmb-1-3b/"
+        "label": "Moore Threads MTT S5000 product page",
+        "url": "https://en.mthreads.com/product/S5000"
       },
       {
-        "label": "TrendForce: China's GPU trio, Moore Threads, MetaX and Cambricon",
-        "url": "https://www.trendforce.com/news/2025/10/07/news-chinas-gpu-trio-rise-as-nvidia-retreats-decoding-moore-threads-metax-and-cambricon/"
-      },
-      {
-        "label": "TechNode: Moore Threads completes full adaptation of Qwen3.5",
-        "url": "https://technode.com/2026/02/19/moore-threads-completes-full-adaptation-of-qwen3-5-model/"
+        "label": "Moore Threads MTT KUAE cluster page",
+        "url": "https://en.mthreads.com/product/KUAE"
       }
     ]
   }
