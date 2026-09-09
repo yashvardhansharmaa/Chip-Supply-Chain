@@ -164,8 +164,8 @@ small { font-size: 0.85em; }
 /* ---------- prose ---------- */
 .prose { max-width: var(--measure); }
 .view[data-view="geopolitics"] { --measure: 29.5em; } /* the essay reads a little wider than the chapters */
-.prose h3 { font-family: var(--font-display); font-weight: 600; font-size: 27px; line-height: 1.15; letter-spacing: -0.002em; margin: 1.9em 0 0.65em; max-width: var(--measure); scroll-margin-top: calc(var(--masthead) + 16px); }
-.prose h4 { font-family: var(--font-display); font-weight: 600; font-size: 20px; line-height: 1.25; margin: 1.7em 0 0.5em; max-width: var(--measure); scroll-margin-top: calc(var(--masthead) + 16px); }
+.prose h3 { font-family: var(--font-display); font-weight: 600; font-size: 27px; line-height: 1.15; letter-spacing: -0.002em; margin: 1.9em 0 0.65em; max-width: var(--measure); scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 16px); }
+.prose h4 { font-family: var(--font-display); font-weight: 600; font-size: 20px; line-height: 1.25; margin: 1.7em 0 0.5em; max-width: var(--measure); scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 16px); }
 .prose > p, .prose > ul, .prose > ol, .prose blockquote { max-width: var(--measure); }
 .prose h5 { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 1.6em 0 0.5em; }
 .prose ul, .prose ol { padding-left: 1.3em; margin: 0 0 1.15em; }
@@ -504,7 +504,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 .rail li.done .bar i { opacity: 0.55; }
 
 /* ---------- chapter head ---------- */
-.chapter { padding: clamp(48px, 8vh, 84px) 0 24px; border-top: 1px solid var(--line); scroll-margin-top: calc(var(--masthead) + 12px); }
+.chapter { padding: clamp(48px, 8vh, 84px) 0 24px; border-top: 1px solid var(--line); scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 12px); }
 .chapter-head { margin-bottom: 8px; }
 .ch-id { display: grid; grid-template-columns: 92px 1fr; gap: 24px; align-items: start; margin-bottom: 26px; }
 .ch-tile { border: 1px solid var(--line-2); border-radius: 3px; background: var(--bg-2); text-align: center; padding: 9px 4px 10px; overflow: hidden; }
@@ -568,12 +568,19 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 @media (max-width: 900px) {
   :root { --col: 100%; --masthead: 52px; }
   body { font-size: 17px; }
-  .masthead { padding: 0 14px; height: auto; min-height: 52px; flex-wrap: nowrap; gap: 10px; }
+  .masthead { padding: 6px 14px 0; height: auto; min-height: 52px; flex-wrap: wrap; gap: 0 8px; align-items: center; }
+  .wordmark { flex: 1 1 auto; min-width: 0; }
   .wordmark span { display: none; }
-  .tabs { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; -webkit-overflow-scrolling: touch; }
-  .tabs a { padding: 5px 7px; font-size: 12px; }
+  .wordmark b { white-space: nowrap; font-size: 17px; }
+  .masthead .search-btn, .masthead .theme-toggle { position: absolute; top: 8px; } /* the buttons live inside the tab strip; on phones they pin to the first row */
+  .masthead .theme-toggle { right: 14px; }
+  .masthead .search-btn { right: 54px; }
+  .wordmark { padding-right: 92px; }
+  .tabs { order: 3; flex: 0 0 100%; width: 100%; flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; -webkit-overflow-scrolling: touch; margin: 2px 0 0; padding: 0 0 6px; }
+  .tabs a { padding: 5px 8px; font-size: 12.5px; }
+  .chapter .chain--compact, .chapter .chain-foot { display: none; }
   .column { padding: 0 18px; }
-  .stage { position: sticky; top: var(--masthead); width: 100%; height: 38vh; min-height: 250px; z-index: 6; background: color-mix(in srgb, var(--bg) 92%, transparent); border-bottom: 1px solid var(--line); }
+  .stage { position: sticky; top: var(--masthead); width: 100%; height: 32vh; min-height: 220px; z-index: 6; background: color-mix(in srgb, var(--bg) 92%, transparent); border-bottom: 1px solid var(--line); }
   .stage canvas { margin-top: 4px; }
   .stage figcaption { margin: 4px 0 7px; font-size: 10px; line-height: 1.3; padding: 0 14px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .stage .stage-tag { top: 8px; left: 14px; }
@@ -2098,7 +2105,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 <p><strong>Advantest FY2021 and FY2022.</strong> The audited note reports Japan, Americas, Europe and one Asia line, as does Integrated Annual Report 2023. The FY2023 to FY2025 rows come from Advantest's own reports, where those three regions reconcile to the audited note.</p>
 <p><strong>Nova</strong> discloses China only as a rounded percentage of total sales. Its rows carry <code>chinaRevenue: null</code> and a <code>chinaShare</code> taken from the filing. Treat it as one significant figure.</p>
 <p><strong>Applied Materials FY2026 and Micron FY2026</strong> are not yet filed.</p>
-<p>Categories match <code>data/suppliers.json</code> where the firm appears. Veeco is absent from that file and is classed as <code>Deposition &amp; Etch</code>.</p></div><h3>How this site was made</h3><div class="prose"><p>Compute Chokepoints was made by Yashvardhan Sharma with Claude in September 2026. Yashvardhan set the brief, direction and standards. Claude did the research, writing, design and code: Fable 5.1 orchestrated and designed, and Opus agents wrote the chapters, compiled the datasets and modelled the specimens. Every number links to a public source, and we redraw the figures from those sources. The specimens are procedural point clouds built from primitives, with proportions taken from published dimensions. None of them is a scan. Treat the text and data as a starting point for your own diligence, not as investment advice.</p></div></div>
+<p>Categories match <code>data/suppliers.json</code> where the firm appears. Veeco is absent from that file and is classed as <code>Deposition &amp; Etch</code>.</p></div><h3>How this site was made</h3><div class="prose"><p>Compute Chokepoints was made by Yashvardhan Sharma with Claude in September 2026. Yashvardhan set the brief, the direction and the standards; Claude did the research, writing, design and code. Every number links to a public source, and the 3D specimens are procedural models built from published dimensions, not scans. Treat the text and data as a starting point for your own diligence, not as investment advice.</p></div></div>
     </section>
   </main>
 </div>
@@ -6685,7 +6692,7 @@ PC.register('wafer', function (p) {
     Theme.init();
     Glossary.init();
     Tools.init();
-    var setMast = function () { var m = $('.masthead'), root = document.documentElement; if (!m) return; root.style.removeProperty('--masthead'); root.style.setProperty('--masthead', m.offsetHeight + 'px'); }; // the masthead wraps on phones, so the sticky offsets follow its real height
+    var setMast = function () { var m = $('.masthead'), root = document.documentElement; if (!m) return; root.style.removeProperty('--masthead'); root.style.setProperty('--masthead', m.offsetHeight + 'px'); var st = $('.stage'); var band = st && getComputedStyle(st).position === 'sticky' ? st.offsetHeight : 0; root.style.setProperty('--band', band + 'px'); }; // the masthead wraps on phones, so the sticky offsets follow its real height
     setMast(); window.addEventListener('resize', setMast); window.addEventListener('load', setMast);
     Stage.init();
     Router.init();

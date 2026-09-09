@@ -595,7 +595,7 @@
     Theme.init();
     Glossary.init();
     Tools.init();
-    var setMast = function () { var m = $('.masthead'), root = document.documentElement; if (!m) return; root.style.removeProperty('--masthead'); root.style.setProperty('--masthead', m.offsetHeight + 'px'); }; // the masthead wraps on phones, so the sticky offsets follow its real height
+    var setMast = function () { var m = $('.masthead'), root = document.documentElement; if (!m) return; root.style.removeProperty('--masthead'); root.style.setProperty('--masthead', m.offsetHeight + 'px'); var st = $('.stage'); var band = st && getComputedStyle(st).position === 'sticky' ? st.offsetHeight : 0; root.style.setProperty('--band', band + 'px'); }; // the masthead wraps on phones, so the sticky offsets follow its real height
     setMast(); window.addEventListener('resize', setMast); window.addEventListener('load', setMast);
     Stage.init();
     Router.init();
