@@ -4,28 +4,28 @@
   "number": 15,
   "title": "Systems and Networking",
   "oneLiner": "A finished package is useless until it is bolted to a baseboard, fed a thousand amps and wired to seventy-one siblings. Many firms can do the bolting; few can make the lasers.",
-  "plain": "A cluster runs only as fast as its slowest link, so this stage is built to keep every accelerator in step. It bolts each finished package onto a board, feeds it more than a thousand amps, and wires it to seventy-one neighbours so that a training run sees one machine instead of seventy-two. Copper carries a signal a few metres at most, so the longer links have to become light, and light needs lasers. That is why the tightest supply in this layer is a laser material.",
+  "plain": "This stage turns finished chips into a machine. It bolts each package onto a board, feeds it more than a thousand amps, and wires it to seventy-one neighbours so that a training run sees one computer instead of seventy-two. A cluster runs only as fast as its slowest link, and copper carries a signal a few metres at most, so the longer links have to become light. Many firms can bolt racks together. Far fewer can make the lasers that carry the light, and that is where this layer is tight.",
   "specimen": "gpu-baseboard",
-  "specimenCaption": "Right: an eight-GPU baseboard. Four accelerator modules per side, the two NVLink switch chips in amber down the centre, voltage regulator banks along the long edges, and the connectors that carry scale-out traffic off the board.",
+  "specimenCaption": "Right: an eight-GPU baseboard. Four accelerator modules per side, the two NVLink switch chips in amber down the centre, voltage regulator banks along the long edges, and the connectors that carry traffic off the board to the rest of the cluster.",
   "card": {
     "concentration": "High",
     "chokepointScore": 3,
     "leaders": [
-      {"name": "Nvidia", "country": "US", "share": "NVLink and NVSwitch scale-up; InfiniBand and Spectrum-X Ethernet"},
-      {"name": "Broadcom", "country": "US", "share": "Merchant switch silicon (Tomahawk, Jericho) and most custom AI accelerators"},
+      {"name": "Nvidia", "country": "US", "share": "NVLink and NVSwitch for links inside a rack; InfiniBand and Spectrum-X Ethernet between racks"},
+      {"name": "Broadcom", "country": "US", "share": "Switch chips sold to all comers (Tomahawk, Jericho) and most custom AI accelerators"},
       {"name": "Foxconn", "country": "TW", "share": "Largest AI rack assembler; builds in Taiwan, Mexico, Texas"},
       {"name": "InnoLight", "country": "CN", "share": "High-speed optical modules; plants in Suzhou, Taiwan and Thailand"},
-      {"name": "Coherent", "country": "US", "share": "Indium phosphide lasers and datacom transceivers"}
+      {"name": "Coherent", "country": "US", "share": "Indium phosphide lasers and data centre transceivers"}
     ],
     "countries": [
-      {"code": "US", "note": "Switch and accelerator silicon, InP lasers, system design"},
-      {"code": "TW", "note": "ODM design and rack integration; high-layer-count PCBs"},
+      {"code": "US", "note": "Switch and accelerator silicon, indium phosphide lasers, system design"},
+      {"code": "TW", "note": "Contract design and rack assembly; high-layer-count circuit boards"},
       {"code": "CN", "note": "Optical module assembly and test; most of the world's indium"},
       {"code": "TH", "note": "Chinese module makers' offshore transceiver plants"},
       {"code": "MX", "note": "Rack integration for the North American market"}
     ],
     "chinaStatus": "Holds the two ends of the optical link that the United States does not. Chinese firms assemble high-speed modules at scale, mostly from Thai and Suzhou plants, and China accounts for about 70% of world indium production, the feedstock for the lasers inside them.",
-    "usStatus": "Owns the switch silicon, the scale-up protocols and the laser fabs, but almost none of the rack assembly. Nvidia's partners began US rack production in Houston and Dallas in 2025, and the FCC moved in July 2026 against imported gear carrying Covered List components.",
+    "usStatus": "Owns the switch silicon, the protocols that link accelerators inside a rack, and the laser fabs, but almost none of the rack assembly. Nvidia's partners began US rack production in Houston and Dallas in 2025, and the Federal Communications Commission moved in July 2026 against imported gear containing parts from firms on its Covered List.",
     "costSignal": "Nvidia put $2B each into Coherent and Lumentum in March 2026 to buy indium phosphide laser capacity",
     "substitution": {"years": "2-3", "why": "Rack assembly and switch boxes have many credible builders, but indium phosphide laser fabs take 18 to 24 months to ramp and there are only a handful of them."}
   },
@@ -61,37 +61,37 @@
 ---
 # Systems and Networking
 
-A package computes nothing until it is wired into a machine. Bolting it down, powering it and linking it to its neighbours is a separate industry from making it.
+A package computes nothing until it is wired into a machine, and bolting it down, powering it and linking it to its neighbours is a separate industry from making it.
 
 ## How it works
 
-A cluster runs only as fast as its slowest link, so this stage is built to keep every accelerator in step. It bolts each finished package onto a board, feeds it more than a thousand amps, and wires it to seventy-one neighbours so that a training run sees one machine instead of seventy-two. Copper carries a signal a few metres at most, so the longer links have to become light, and light needs lasers. That is why the tightest supply in this layer is a laser material.
+This stage turns finished chips into a machine. It bolts each package onto a board, feeds it more than a thousand amps, and wires it to seventy-one neighbours so that a training run sees one computer instead of seventy-two. A cluster runs only as fast as its slowest link, and copper carries a signal a few metres at most, so the longer links have to become light. Many firms can bolt racks together. Far fewer can make the lasers that carry the light, and that is where this layer is tight.
 
-An accelerator ships as a module, not a bare chip: SXM in Nvidia's world, the OCP Accelerator Module in the open one. Eight bolt onto a baseboard carrying their power and the switch chips that let them reach each other at full speed.
+An accelerator ships as a module, not a bare chip: Nvidia calls its version SXM, and the open-standards world has the Open Compute Project's accelerator module. Eight bolt onto a baseboard that carries their power and the switch chips letting them reach each other at full speed.
 
-Rack-scale systems dissolve the baseboard. An Nvidia GB300 NVL72 holds 18 compute trays plus nine NVLink switch trays, 72 GPUs in all, and draws up to 142 kW ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)); Rubin keeps that shape ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
+Rack-scale systems do away with the baseboard. An Nvidia GB300 NVL72 holds 18 compute trays plus nine switch trays, 72 GPUs in all, and draws up to 142 kW ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)); Rubin keeps that shape ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
 
-Every AI cluster runs two networks that are not interchangeable. Scale-up joins a few dozen accelerators into one memory-coherent domain at terabytes per second; scale-out joins thousands of those domains at hundreds of gigabits per second. Model parallelism lives on scale-up, so its bandwidth sets how large a model you can shard.
+Every AI cluster runs two networks that are not interchangeable. Scale-up binds a few dozen accelerators tightly enough that they can read each other's memory, at terabytes per second; scale-out joins thousands of those groups at hundreds of gigabits per second. A model too big for one accelerator is split across the scale-up group, so that group's bandwidth sets how large a model can be trained.
 
 ## Variants and trade-offs
 
 ### Scale-up: NVLink, UALink and Google's torus
 
-The architectures differ in how many accelerators share one coherent domain.
+The designs differ in how many accelerators can share one pool of memory.
 
-- **NVLink and NVSwitch.** Nvidia's per-GPU bandwidth went from 900 GB/s in NVLink 4 to 1,800 in NVLink 5 and 3,600 in NVLink 6; the rack fabric moves 130 TB/s on Blackwell and 260 TB/s on Rubin ([source](https://www.nvidia.com/en-us/data-center/nvlink/)).
-- **UALink.** The open answer runs 200 Gb/s per lane, four lanes to a station for 800 Gb/s, and addresses up to 1,024 endpoints in a pod ([source](https://ualinkconsortium.org/blog/ualink-200g-1-0-specification-overview-802/)).
-- **Google's 3D torus.** Ironwood, the seventh-generation TPU, wires 64 chips per rack and uses optical circuit switches to stitch cubes into superpods of 9,216 chips, trading latency for the ability to route around a failed rack in software ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)).
+- **NVLink and NVSwitch.** Nvidia's per-GPU bandwidth went from 900 GB/s in NVLink 4 to 1,800 in NVLink 5 and 3,600 in NVLink 6; the rack's own network moves 130 TB/s on Blackwell and 260 TB/s on Rubin ([source](https://www.nvidia.com/en-us/data-center/nvlink/)).
+- **UALink.** The open answer runs 200 Gb/s per lane, four lanes to a port for 800 Gb/s, and can address up to 1,024 endpoints in one group ([source](https://ualinkconsortium.org/blog/ualink-200g-1-0-specification-overview-802/)).
+- **Google's 3D torus.** Ironwood, the seventh generation of Google's own TPU accelerator, wires 64 chips to a rack and uses optical switches to stitch cubes of racks into superpods of 9,216 chips, trading latency for the ability to route around a failed rack in software ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)).
 
 {{figure:nvlink-bandwidth}}
 
 ### Scale-out: InfiniBand versus Ethernet
 
-InfiniBand owned this layer when AI clusters were small and homogeneous. Ethernet took it back on raw capacity first: Broadcom doubled merchant switch bandwidth every generation, from 25.6 Tbps on one chip in Tomahawk 4 ([source](https://www.broadcom.com/company/news/product-releases/52756)) to 51.2 in Tomahawk 5 ([source](https://investors.broadcom.com/news-releases/news-release-details/broadcom-ships-tomahawk-5-industrys-highest-bandwidth-switch)) and 102.4 in Tomahawk 6 ([source](https://www.broadcom.com/company/news/product-releases/64031)). Then the Ultra Ethernet Consortium published its 1.0 stack in June 2025, standardising the load balancing, congestion control and lossless behaviour InfiniBand had by birth ([source](https://ultraethernet.org/ultra-ethernet-consortium-uec-launches-specification-1-0-transforming-ethernet-for-ai-and-hpc-at-scale/)).
+InfiniBand, the specialised network supercomputers grew up on, owned this layer when AI clusters were small and alike. Ethernet took it back on raw capacity first: Broadcom doubled the bandwidth of the switch chips it sells to all comers every generation, from 25.6 Tbps on one chip in Tomahawk 4 ([source](https://www.broadcom.com/company/news/product-releases/52756)) to 51.2 in Tomahawk 5 ([source](https://investors.broadcom.com/news-releases/news-release-details/broadcom-ships-tomahawk-5-industrys-highest-bandwidth-switch)) and 102.4 in Tomahawk 6 ([source](https://www.broadcom.com/company/news/product-releases/64031)). Then the Ultra Ethernet Consortium published its 1.0 specification in June 2025, standardising the load balancing, congestion control and lossless behaviour InfiniBand had from the start ([source](https://ultraethernet.org/ultra-ethernet-consortium-uec-launches-specification-1-0-transforming-ethernet-for-ai-and-hpc-at-scale/)).
 
 {{figure:switch-bandwidth}}
 
-Nvidia sells both sides of the argument, telling investors that a $75.2 billion data center quarter came from Blackwell 300 plus demand for "InfiniBand, Spectrum-X Ethernet, and NVLink" ([source](https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm)), because large buyers run both fabrics.
+Nvidia sells both sides of the argument, telling investors that a $75.2 billion data center quarter came from Blackwell 300 plus demand for "InfiniBand, Spectrum-X Ethernet, and NVLink" ([source](https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm)), because large buyers run both networks.
 
 ### Optics: pluggable, then co-packaged
 

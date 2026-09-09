@@ -3,31 +3,31 @@
   "id": "chemicals-gases-and-photoresist",
   "number": 4,
   "title": "Chemicals, Gases and Photoresist",
-  "oneLiner": "A few hundred molecules stand between a blank wafer and a working chip. Japan makes about 90% of the photoresist, and the two times this layer has been squeezed, no fab stopped: the targets stockpiled and built substitutes instead.",
-  "plain": "Photoresist is photographic film for chips. A wafer is coated with a film thinner than a soap bubble, light shines through a stencil, and the exposed parts dissolve away, leaving a pattern the next machine can etch. A few hundred other gases and liquids deposit, strip and clean around it. All of it must be clean to about one stray metal atom in a trillion, and each formula is approved for one factory and one product at a time. That is why nine tenths of the world's photoresist comes from Japan, and a second source takes years, not weeks.",
+  "oneLiner": "A few hundred molecules stand between a blank wafer and a working chip. Japan makes about 90% of the photoresist, and the two times this layer has been squeezed, no fab stopped: the countries hit stockpiled and built substitutes instead.",
+  "plain": "Photoresist is photographic film for chips. A coating machine spreads a film thinner than a soap bubble across the wafer, light shines through a stencil, and the exposed parts dissolve away, leaving a pattern the next machine can etch. A few hundred other gases and liquids deposit, strip and clean around it. All of it has to be clean to about one stray metal atom in a trillion, and each formula is approved for one factory and one product at a time. That is why nine tenths of the world's photoresist comes from Japan, and a second source takes years rather than weeks.",
   "specimen": "gas-cabinet",
-  "specimenCaption": "Right: a specialty gas cabinet beside a bulk liquid cylinder. Purge and process lines, the double-block-and-bleed panel, pressure gauges and the point-of-use filter between cylinder and chamber, in amber.",
+  "specimenCaption": "Right: a specialty gas cabinet beside a bulk liquid cylinder. It shows the purge and process lines, the double-block-and-bleed valve panel that isolates the cylinder before anyone opens it, the pressure gauges, and in amber the point-of-use filter between cylinder and chamber.",
   "card": {
     "concentration": "High",
     "chokepointScore": 4,
     "leaders": [
-      {"name": "JSR", "country": "JP", "share": "Owner of Inpria's metal-oxide EUV resist; 84% held by Japan's state-backed JIC since April 2024"},
-      {"name": "Tokyo Ohka Kogyo", "country": "JP", "share": "Top-five resist maker; ¥139.7bn sales in H1 FY2026"},
+      {"name": "JSR", "country": "JP", "share": "Owner of Inpria's metal-oxide resist for extreme-ultraviolet printing; 84% held by Japan Investment Corporation, a state-backed fund, since April 2024"},
+      {"name": "Tokyo Ohka Kogyo", "country": "JP", "share": "Top-five resist maker; ¥139.7bn of sales in the first half of fiscal 2026"},
       {"name": "Air Liquide", "country": "FR", "share": "€2,465m of electronics revenue in 2025, 9.1% of group sales"},
-      {"name": "Entegris", "country": "US", "share": "$3.20bn 2025 revenue in filtration, CMP, delivery and carriers"},
-      {"name": "JX Advanced Metals", "country": "JP", "share": "~65% of semiconductor sputtering targets"}
+      {"name": "Entegris", "country": "US", "share": "$3.20bn of 2025 revenue in filters, polishing slurries, gas delivery and wafer carriers"},
+      {"name": "JX Advanced Metals", "country": "JP", "share": "About 65% of sputtering targets, the metal slugs that supply chip wiring"}
     ],
     "countries": [
-      {"code": "JP", "note": "Photoresist, high-purity HF, sputtering targets, CMP slurries"},
-      {"code": "US", "note": "Entegris filters and FOUPs, DuPont CMP, Air Products gases"},
+      {"code": "JP", "note": "Photoresist, ultra-pure hydrofluoric acid, sputtering targets, polishing slurries"},
+      {"code": "US", "note": "Entegris filters and wafer carriers, DuPont polishing slurries, Air Products gases"},
       {"code": "FR", "note": "Air Liquide electronics gases and precursors"},
-      {"code": "KR", "note": "SK Materials NF3, Dongjin resist, on-site gas for memory fabs"},
-      {"code": "CN", "note": "Gallium, germanium and antimony refining; growing wet chemicals and CMP"}
+      {"code": "KR", "note": "SK Materials nitrogen trifluoride, Dongjin resist, on-site gas for memory fabs"},
+      {"code": "CN", "note": "Gallium, germanium and antimony refining; growing wet chemicals and polishing slurries"}
     ],
-    "chinaStatus": "Cannot make EUV or leading-edge ArF resist and held under 5% of the photoresist market as of 2021. It refines 99% of the world's primary low-purity gallium and has used export licensing on gallium and germanium since August 2023.",
-    "usStatus": "Strong in filtration, containers, CMP and delivery systems through Entegris, DuPont and Air Products. Nearly absent from advanced photoresist since Inpria was bought by JSR.",
+    "chinaStatus": "Cannot make resist for extreme-ultraviolet or leading-edge 193 nm printing, and held under 5% of the photoresist market as of 2021. It refines 99% of the world's primary low-purity gallium and has licensed exports of gallium and germanium since August 2023.",
+    "usStatus": "Strong in filters, containers, polishing slurries and gas delivery through Entegris, DuPont and Air Products. Nearly absent from advanced photoresist since JSR bought Inpria.",
     "costSignal": "Wafer fabrication materials were a $45.8bn market in 2025 and packaging materials $27.4bn, $73.2bn between them",
-    "substitution": {"years": "3-7", "why": "Formulations are qualified per process per fab and metals impurities are measured in parts per trillion, so a second source takes years of joint development rather than a purchase order."}
+    "substitution": {"years": "3-7", "why": "Every formula is qualified for one process at one fab, and metal impurities are counted in parts per trillion, so a second source takes years of joint development rather than a purchase order."}
   },
   "keyFacts": [
     {"fact": "Japan holds about 90% of world semiconductor photoresist production, and China could not make EUV resists (as of 2021)", "source": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"},
@@ -67,11 +67,11 @@ A modern fab is a chemical plant with lithography attached. Air Liquide alone su
 
 Photoresist is photographic film for chips. A wafer is coated with a film thinner than a soap bubble, light shines through a stencil, and the exposed parts dissolve away, leaving a pattern the next machine can etch. A few hundred other gases and liquids deposit, strip and clean around it. All of it must be clean to about one stray metal atom in a trillion, and each formula is approved for one factory and one product at a time. That is why nine tenths of the world's photoresist comes from Japan, and a second source takes years, not weeks.
 
-Since the 1990s the workhorse has been the chemically amplified resist: one photon releases one acid molecule, which catalyses hundreds of reactions in a post-exposure bake. That lets a scanner expose a wafer in milliseconds, at 248 nm for KrF and 193 nm for ArF immersion.
+Since the 1990s the workhorse has been the chemically amplified resist: one photon releases one acid molecule, which then drives hundreds of reactions in a bake after exposure. That lets a scanner expose a wafer in milliseconds, at 248 nm from a krypton fluoride laser or 193 nm from an argon fluoride laser shining through water.
 
-Extreme ultraviolet breaks that bargain (see Lithography). A 13.5 nm photon carries about fourteen times the energy of a 193 nm one, so a dose has far fewer of them, and where they land shows up as line-edge roughness and missing contacts. Resist makers answered by absorbing more of the light: metal-oxide resists built on tin-oxo clusters take up EUV far better than carbon films, which is why JSR bought Inpria in 2021 ([source](https://www.jsr.co.jp/jsr_e/news/2021/20210917.html)).
+Extreme ultraviolet breaks that bargain (see Lithography). A 13.5 nm photon carries about fourteen times the energy of a 193 nm one, so the same dose of light arrives as far fewer photons, and the luck of where each one lands shows up as ragged line edges and missing contact holes. Resist makers answered by absorbing more of the light: metal-oxide resists, built on clusters of tin and oxygen, take up extreme ultraviolet far better than carbon films, which is why JSR bought Inpria in 2021 ([source](https://www.jsr.co.jp/jsr_e/news/2021/20210917.html)).
 
-Everything else puts material on the wafer, takes it off, or keeps it clean. Bulk gases arrive by the tonne; specialty gases in grams, from silane for deposition to nitrogen trifluoride, cracked in a plasma to strip chamber walls. Hydrofluoric acid cleans, slurries flatten, sputtering targets supply the interconnect metal, filters and carriers keep contamination out.
+Everything else puts material on the wafer, takes it off, or keeps it clean. Bulk gases arrive by the tonne; specialty gases in grams, from silane for deposition to nitrogen trifluoride, split apart in a plasma to strip the chamber walls. Hydrofluoric acid cleans, polishing slurries flatten each layer, sputtering targets supply the metal for the wiring, and filters and carriers keep contamination out.
 
 ## Variants and trade-offs
 
@@ -79,9 +79,9 @@ Everything else puts material on the wafer, takes it off, or keeps it clean. Bul
 |---|---|---|---|
 | i-line novolak | 365 nm | Packaging, mature nodes | Resolution |
 | KrF chemically amplified | 248 nm | Implant layers, thick films | Resolution |
-| ArF immersion CAR | 193 nm | Most critical layers below 28 nm | Needs multipatterning |
-| EUV chemically amplified | 13.5 nm | Leading-edge single-exposure layers | Photon shot noise |
-| EUV metal-oxide | 13.5 nm | High-NA and tight-pitch layers | Cost, defectivity, outgassing |
+| ArF immersion chemically amplified | 193 nm | Most critical layers below 28 nm | Needs several exposures per layer |
+| EUV chemically amplified | 13.5 nm | Leading-edge single-exposure layers | Shot noise from too few photons |
+| EUV metal-oxide | 13.5 nm | High-NA tools, tightest pitches | Cost, defects, outgassing |
 
 Resist classes are not substitutes; each is tied to a scanner and a layer ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 
@@ -93,13 +93,13 @@ Japan produced about 90 percent of the world's semiconductor photoresist as of 2
 
 JSR is no longer a public company. A vehicle of Japan Investment Corporation, a state-backed fund, took 84.36 percent of its shares at ¥4,350 each in a tender offer that closed on 16 April 2024, then delisted it ([source](https://www.jiccapital.co.jp/en/news/.assets/E_20240417_JIC_JICC_PressRelease.pdf)).
 
-Tokyo Ohka Kogyo sold ¥139,668 million in the first half of fiscal 2026, up 25.1 percent on AI server demand ([source](https://www.tok.co.jp/application/files/7417/8598/0069/q2_2612_en.pdf)). Fujifilm added 30 percent of CMP slurry capacity at Kumamoto in January 2025 ([source](https://www.fujifilm.com/jp/en/news/hq/11942)) and EUV resist lines at Shizuoka and Pyeongtaek that October ([source](https://www.fujifilm.com/jp/en/news/hq/11842)).
+Tokyo Ohka Kogyo sold ¥139,668 million in the first half of fiscal 2026, up 25.1 percent on AI server demand ([source](https://www.tok.co.jp/application/files/7417/8598/0069/q2_2612_en.pdf)). Fujifilm lifted its polishing-slurry capacity at Kumamoto by 30 percent in January 2025 ([source](https://www.fujifilm.com/jp/en/news/hq/11942)) and opened extreme-ultraviolet resist lines at Shizuoka and Pyeongtaek that October ([source](https://www.fujifilm.com/jp/en/news/hq/11842)).
 
 The layer is bigger than it looks: wafer fabrication materials sold $45.8 billion in 2025, packaging materials $27.4 billion ([source](https://www.prnewswire.com/news-releases/global-semiconductor-materials-market-revenue-reaches-record-73-2-billion-in-2025--semi-reports-302768700.html)).
 
 Gases are a Western-led oligopoly: Linde, Air Liquide, Air Products, Nippon Sanso and Messer. Air Liquide's electronics arm alone sold €2,465 million in 2025, 9.1 percent of group revenue ([source](https://www.airliquide.com/group/activities/electronics)). Under them sit single-molecule specialists: SK Materials in nitrogen trifluoride, Kanto Denka in fluorine chemistry, Stella Chemifa and Morita in ultra-high-purity hydrofluoric acid.
 
-The consumables are narrower again. As of 2021 five firms held more than 60 percent of wet chemicals, and DuPont and Cabot Microelectronics about 56 percent of a $790 million CMP slurry market ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). One metal is tighter than all of them: JX Advanced Metals holds about 65 percent of the world sputtering-target market ([source](https://www.jx-nmm.com/english/company/glance/)).
+The consumables are narrower again. As of 2021 five firms held more than 60 percent of wet chemicals, and DuPont and Cabot Microelectronics about 56 percent of a $790 million market in polishing slurries ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). One material is tighter than all of them: JX Advanced Metals holds about 65 percent of the world sputtering-target market ([source](https://www.jx-nmm.com/english/company/glance/)).
 
 ## The chokepoint
 
