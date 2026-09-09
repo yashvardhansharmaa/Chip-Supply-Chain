@@ -238,7 +238,7 @@ module.exports = function (ctx) {
       ? `<a href="#/geopolitics">${word(d.towns.length)} chokepoint town${d.towns.length > 1 ? 's' : ''}: ${d.towns.map((t) => esc(t.name)).join(', ')}</a>`
       : '';
     const firmLine = d.firms.length
-      ? `<a href="#/suppliers">${d.firms.length} firm${d.firms.length > 1 ? 's' : ''} in the supplier list${d.topCats.length ? ', led by ' + d.topCats.map((c) => esc(lcCat(c))).join(', ') : ''}</a>`
+      ? `<a href="#/suppliers">${d.firms.length} firm${d.firms.length > 1 ? 's' : ''} in the supplier list${d.topCats.length ? ', led by ' + d.topCats.map((c) => esc(lcCat(c))).join('; ') : ''}</a>`
       : '<span>No firm in the supplier list is based here</span>';
 
     return `<article class="sa-panel" data-cc="${cc}"${open ? '' : ' hidden'}>

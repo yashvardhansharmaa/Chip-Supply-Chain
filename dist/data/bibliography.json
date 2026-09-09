@@ -37,56 +37,56 @@
     "title": "DeepSeek-V3 Technical Report",
     "publisher": "arXiv",
     "date": "2024-12-27",
-    "type": "page",
+    "type": "report",
     "accessed": "2026-09-09"
   },
   "https://arxiv.org/abs/2506.12708": {
     "title": "Serving Large Language Models on Huawei CloudMatrix384",
     "publisher": "arXiv",
     "date": "2025-06-15",
-    "type": "page",
+    "type": "report",
     "accessed": "2026-09-09"
   },
   "https://arxiv.org/pdf/1912.09075": {
     "title": "The refined EUV mask model I.A. MAKHOTKIN1*, M. WU1, V. SOLTWISCH2, F. SCHOLZE2, V. PHILIPSEN1",
     "publisher": "arXiv",
     "date": "2019-12-19",
-    "type": "page",
+    "type": "report",
     "accessed": "2026-09-09"
   },
   "https://asia.nikkei.com/business/tech/semiconductors/china-chip-material-makers-battle-japan-rivals-for-73bn-market": {
     "title": "China chip material makers battle Japan rivals for $73bn market",
     "publisher": "Nikkei Asia",
     "date": "2026-07-01",
-    "type": "page",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://asia.nikkei.com/business/tech/semiconductors/powertech-eyes-world-s-first-panel-level-packaging-for-ai-chips-in-2027": {
     "title": "Powertech eyes world's first panel-level packaging for AI chips in 2027",
     "publisher": "Nikkei Asia",
     "date": "2026-08-27",
-    "type": "page",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://asia.nikkei.com/business/technology/tech-asia/apple-and-qualcomm-fret-over-strained-supplies-of-japan-s-glass-cloth": {
     "title": "Apple and Qualcomm fret over strained supplies of Japan's glass cloth",
     "publisher": "Nikkei Asia",
     "date": "2026-01-14",
-    "type": "page",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://asia.nikkei.com/business/technology/tech-asia/thailand-carves-out-a-less-glamorous-ai-niche-printed-circuit-boards": {
     "title": "Thailand carves out a less-glamorous AI niche: printed circuit boards",
     "publisher": "Nikkei Asia",
     "date": "2025-09-03",
-    "type": "page",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://asia.nikkei.com/spotlight/supply-chain/china-launches-47bn-chip-fund-to-counter-u.s.-restrictions": {
     "title": "China launches $47bn chip fund to counter U.S. restrictions",
     "publisher": "Nikkei Asia",
     "date": "2024-05-27",
-    "type": "page",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://ats.net/": {
@@ -521,21 +521,21 @@
     "title": "Advanced packaging and HBM, not logic dies, were the bottlenecks on AI chip production in 2025",
     "publisher": "Epoch AI",
     "date": "2026-03-12",
-    "type": "page",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://epoch.ai/data-insights/b200-cost-breakdown": {
     "title": "NVIDIA's B200 costs around $6,400 to produce",
     "publisher": "Epoch AI",
     "date": "2025-12-10",
-    "type": "page",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://epoch.ai/data-insights/hyperscaler-capex-trend": {
     "title": "Hyperscaler capex has quadrupled since GPT-4's release",
     "publisher": "Epoch AI",
     "date": "2026-02-26",
-    "type": "page",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand": {
@@ -613,7 +613,7 @@
     "title": "Should the US Sell Blackwell Chips to China?",
     "publisher": "Institute for Progress",
     "date": "2025-10-25",
-    "type": "page",
+    "type": "report",
     "accessed": "2026-09-09"
   },
   "https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2021_con_quarter04_all.pdf": {
@@ -653,7 +653,7 @@
   "https://inferencex.semianalysis.com/chips/mi355x": {
     "title": "AMD Instinct MI355X Specs, Pricing & AI Inference Benchmarks",
     "publisher": "SemiAnalysis",
-    "type": "page",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf": {
@@ -854,84 +854,84 @@
     "title": "100,000 H100 Clusters: Power, Network Topology, Ethernet vs InfiniBand, Reliability, Failures, Checkpointing",
     "publisher": "SemiAnalysis",
     "date": "2024-06-17",
-    "type": "page",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://newsletter.semianalysis.com/p/aws-trainium3-deep-dive-a-potential": {
     "title": "AWS Trainium3 Deep Dive",
     "publisher": "SemiAnalysis",
     "date": "2025-12-04",
-    "type": "page",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://newsletter.semianalysis.com/p/clash-of-the-foundries": {
     "title": "Clash of the Foundries: Gate All Around + Backside Power at 2nm",
     "publisher": "SemiAnalysis",
     "date": "2024-10-01",
-    "type": "page",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://newsletter.semianalysis.com/p/disco-corporation-the-world-leader": {
     "title": "DISCO Corporation, The World Leader In Semiconductor Capital Equipment For Cutting, Grinding, Polishing",
     "publisher": "SemiAnalysis",
     "date": "2022-07-19",
-    "type": "page",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://newsletter.semianalysis.com/p/eda-market-primer": {
     "title": "EDA Market Primer",
     "publisher": "SemiAnalysis",
     "date": "2026-05-21",
-    "type": "page",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://newsletter.semianalysis.com/p/groq-inference-tokenomics-speed-but": {
     "title": "Groq Inference Tokenomics: Speed, But At What Cost?",
     "publisher": "SemiAnalysis",
     "date": "2024-02-21",
-    "type": "page",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://newsletter.semianalysis.com/p/huawei-ai-cloudmatrix-384-chinas-answer-to-nvidia-gb200-nvl72": {
     "title": "Huawei AI CloudMatrix 384",
     "publisher": "SemiAnalysis",
     "date": "2025-04-16",
-    "type": "page",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://newsletter.semianalysis.com/p/huawei-ascend-production-ramp": {
     "title": "Huawei Ascend Production Ramp: Die Banks, TSMC Continued Production, HBM is The Bottleneck",
     "publisher": "SemiAnalysis",
     "date": "2025-09-08",
-    "type": "page",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://newsletter.semianalysis.com/p/openai-jalapeno-better-than-nvidia": {
     "title": "OpenAI Jalapeño: Better Than Nvidia Blackwell",
     "publisher": "SemiAnalysis",
     "date": "2026-08-25",
-    "type": "page",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://newsletter.semianalysis.com/p/steel-smic-n3-teardown": {
     "title": "Is SMIC N+3’s Metal Pitch Smaller than Intel 18A’s?",
     "publisher": "SemiAnalysis",
     "date": "2026-06-14",
-    "type": "page",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor": {
     "title": "The Dark Side Of The Semiconductor Design Renaissance – Fixed Costs Soaring Due To Photomask Sets, Verification, and Validation",
     "publisher": "SemiAnalysis",
     "date": "2022-07-24",
-    "type": "page",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage": {
     "title": "The Great AI Silicon Shortage",
     "publisher": "SemiAnalysis",
     "date": "2026-03-12",
-    "type": "page",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://newsroom.arm.com/news/arm-q4-fye26-results": {
@@ -1158,7 +1158,7 @@
     "title": "Nvidia's Blackwell Reworked - Shipment Delays & GB200A Reworked Platforms",
     "publisher": "SemiAnalysis",
     "date": "2024-08-04",
-    "type": "page",
+    "type": "article",
     "accessed": "2026-09-09"
   },
   "https://semiconductor.samsung.com/foundry/": {
@@ -1806,7 +1806,7 @@
     "title": "U.S.-Taiwan Trade Agreement Leaves Major Questions Open",
     "publisher": "Council on Foreign Relations",
     "date": "2026-02-13",
-    "type": "page",
+    "type": "report",
     "accessed": "2026-09-09"
   },
   "https://www.chipbond.com.tw/en/": {
@@ -3229,7 +3229,7 @@
     "title": "China's Evolving Industrial Policy for AI",
     "publisher": "RAND Corporation",
     "date": "2025-06-26",
-    "type": "page",
+    "type": "report",
     "accessed": "2026-09-09"
   },
   "https://www.rapidus.inc/en/": {
@@ -3941,14 +3941,14 @@
     "title": "China’s Germanium and Gallium Export Restrictions: Consequences for the United States",
     "publisher": "Stimson Center",
     "date": "2025-03-19",
-    "type": "page",
+    "type": "report",
     "accessed": "2026-09-09"
   },
   "https://www.stimson.org/2025/why-taiwan-fears-america-first-risks-eroding-its-silicon-shield/": {
     "title": "Why Taiwan Fears ‘America First’ Risks Eroding Its ‘Silicon Shield’",
     "publisher": "Stimson Center",
     "date": "2025-10-10",
-    "type": "page",
+    "type": "report",
     "accessed": "2026-09-09"
   },
   "https://www.sumcosi.com/english/pdf/ir/library/shareholders/27/pdf/nc_e_27.pdf": {
