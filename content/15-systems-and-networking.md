@@ -69,13 +69,13 @@
 ---
 # Systems and Networking
 
-A package computes nothing until it is wired into a machine. This is where the chip supply chain meets the electrical and optical one, and where the binding constraint has moved from silicon to lasers.
+A package computes nothing until it is wired into a machine. This is where the chip supply chain meets the electrical and optical one, and where the binding constraint moved from silicon to lasers.
 
 ## How it works
 
 Think of a rowing eight. The crew only goes fast if every oar moves together, so the boat is built to keep them in step. This stage does the same for chips: it bolts each finished package onto a board, feeds it more than a thousand amps, and wires it to seventy-one neighbours so that a training run sees one machine instead of seventy-two. Copper carries a signal a few metres at most, so the longer links have to become light, and light needs lasers. That is why the tightest supply in this layer is a laser material, not a chip.
 
-An accelerator ships as a module, not a bare chip: SXM in Nvidia's world, the OCP Accelerator Module in the open one. Eight bolt onto a baseboard that carries their power and the switch chips that let them reach each other at full speed.
+An accelerator ships as a module, not a bare chip: SXM in Nvidia's world, the OCP Accelerator Module in the open one. Eight bolt onto a baseboard carrying their power and the switch chips that let them reach each other at full speed.
 
 Rack-scale systems dissolve the baseboard. An Nvidia GB300 NVL72 holds 18 compute trays plus nine NVLink switch trays, 72 GPUs in all, and draws up to 142 kW ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)). Rubin keeps the same shape ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
 
@@ -95,11 +95,11 @@ Three architectures matter, and they differ in how many accelerators share one c
 
 ### Scale-out: InfiniBand versus Ethernet
 
-InfiniBand owned this layer when AI clusters were small and homogeneous. It has lost. Ethernet took more than two-thirds of AI back-end switch revenue across 2025 ([source](https://www.delloro.com/news/ethernet-more-than-doubles-size-of-infiniband-as-the-leading-fabric-for-ai-scale-out-networks-in-2025/)), and extended that lead in the first quarter of 2026 even as InfiniBand rebounded ([source](https://www.delloro.com/news/ethernet-extends-lead-in-ai-scale-out-networks-despite-strong-infiniband-rebound/)).
+InfiniBand owned this layer when AI clusters were small and homogeneous. It has lost. Ethernet took more than two-thirds of AI back-end switch revenue across 2025 ([source](https://www.delloro.com/news/ethernet-more-than-doubles-size-of-infiniband-as-the-leading-fabric-for-ai-scale-out-networks-in-2025/)), and extended it in the first quarter of 2026 even as InfiniBand rebounded ([source](https://www.delloro.com/news/ethernet-extends-lead-in-ai-scale-out-networks-despite-strong-infiniband-rebound/)).
 
 {{figure:ai-fabric-share}}
 
-Two things caused the flip. Broadcom's Tomahawk 6 put 102.4 Tbps of switching on one chip, double the previous generation ([source](https://www.broadcom.com/company/news/product-releases/64031)). And the Ultra Ethernet Consortium standardised the lossless, congestion-aware behaviour InfiniBand had by birth. Celestica then led AI back-end Ethernet switching in the first quarter of 2026, ahead of Nvidia, Arista and Cisco ([source](https://www.delloro.com/news/ethernet-extends-lead-in-ai-scale-out-networks-despite-strong-infiniband-rebound/)): whitebox builders on merchant silicon outsell the networking brands.
+Two things caused the flip. Broadcom's Tomahawk 6 put 102.4 Tbps of switching on one chip, double the previous generation ([source](https://www.broadcom.com/company/news/product-releases/64031)). And the Ultra Ethernet Consortium standardised the lossless, congestion-aware behaviour InfiniBand had by birth. Celestica led AI back-end Ethernet switching in the first quarter of 2026, ahead of Nvidia, Arista and Cisco ([source](https://www.delloro.com/news/ethernet-extends-lead-in-ai-scale-out-networks-despite-strong-infiniband-rebound/)): whitebox builders on merchant silicon outsell the networking brands.
 
 ### Optics: pluggable, then co-packaged
 
@@ -123,8 +123,8 @@ Most of this layer is not a chokepoint. At least five capable ODMs on three cont
 
 Three things are genuinely narrow.
 
-- **Indium phosphide laser capacity.** A materials problem, not a design problem, and a cheque cannot buy epitaxy tools faster than they can be installed ([source](https://futurumgroup.com/insights/nvidias-4b-optics-bet-signals-photonics-as-ais-next-bottleneck/)).
-- **NVSwitch.** No one else sells a merchant scale-up switch with NVLink's bandwidth, which is precisely what UALink exists to change ([source](https://www.sdxcentral.com/news/ualink-consortium-releases-200g-10-specification-for-ai-accelerator-interconnects/)).
+- **Indium phosphide laser capacity.** A materials problem, not a design problem: a cheque cannot buy epitaxy tools faster than they can be installed ([source](https://futurumgroup.com/insights/nvidias-4b-optics-bet-signals-photonics-as-ais-next-bottleneck/)).
+- **NVSwitch.** No one else sells a merchant scale-up switch with NVLink's bandwidth, which is what UALink exists to change ([source](https://www.sdxcentral.com/news/ualink-consortium-releases-200g-10-specification-for-ai-accelerator-interconnects/)).
 - **High-layer-count PCBs.** The boards and the low-loss copper-clad laminate under them are concentrated in Taiwan and Japan; see Substrates and PCBs.
 
 Optical module assembly is a fourth case of a different kind: concentrated but not technically hard. InnoLight moved assembly to Thailand in 2019 and Eoptolink in 2020, soon after the tariffs began ([source](https://www.caixinglobal.com/2026-08-05/us-drafts-ban-on-chinese-optical-modules-exposing-mutual-supply-chain-risks-102471268.html)). Geography here is a policy artefact, not a physical one.
@@ -134,7 +134,7 @@ Optical module assembly is a fourth case of a different kind: concentrated but n
 - **Scale-up domain size** — how many accelerators share one coherent fabric. Up to 1,024 in the UALink spec ([source](https://www.sdxcentral.com/news/ualink-consortium-releases-200g-10-specification-for-ai-accelerator-interconnects/)) and 9,216 for an Ironwood superpod ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)).
 - **Bandwidth per accelerator** — the number that limits tensor parallelism. NVLink 6 is 3,600 GB/s ([source](https://www.nvidia.com/en-us/data-center/nvlink/)).
 - **Picojoules per bit** — optics dominate network power at 800G and above; co-packaging is worth roughly 3.5x ([source](https://www.globenewswire.com/news-release/2025/10/08/3163429/19933/en/Broadcom-Announces-Tomahawk-6-Davisson-the-Industry-s-First-102-4-Tbps-Ethernet-Switch-with-Co-Packaged-Optics.html)).
-- **Serviceability** — co-packaged optics trade field-replaceable modules for a switch you must return whole when a channel fails.
+- **Serviceability** — co-packaged optics trade field-replaceable modules for a switch you return whole when a channel fails.
 - **Supply concentration** — count the suppliers of the laser, not the module.
 
 ## Takeaways

@@ -165,8 +165,7 @@ small { font-size: 0.85em; }
 /* ---------- chapters ---------- */
 .chapter { padding: clamp(56px, 12vh, 120px) 0 24px; border-top: 1px solid var(--line); scroll-margin-top: calc(var(--masthead) + 12px); }
 .chapter-head { margin-bottom: 30px; }
-.chapter-num { font-family: var(--font-display); font-weight: 900; font-stretch: 62%; font-size: clamp(72px, 9vw, 128px); line-height: 0.85; color: var(--bg-3); letter-spacing: 0.02em; margin-bottom: -0.18em; user-select: none; }
-:root[data-theme="dark"] .chapter-num { color: var(--bg-3); }
+.chapter-num { font-family: var(--font-display); font-weight: 900; font-stretch: 62%; font-size: clamp(72px, 9vw, 128px); line-height: 0.85; color: color-mix(in srgb, var(--ink) 14%, var(--bg)); letter-spacing: 0.02em; margin-bottom: -0.18em; user-select: none; }
 .chapter-title { font-family: var(--font-display); font-weight: 800; font-stretch: 84%; font-size: clamp(38px, 4.2vw, 56px); line-height: 1.02; letter-spacing: 0.005em; margin-bottom: 14px; position: relative; }
 .chapter-lede { font-size: 21px; line-height: 1.45; color: var(--ink-2); max-width: 36ch; margin-bottom: 22px; }
 .chapter-meta { display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 20px; }
@@ -200,8 +199,8 @@ small { font-size: 0.85em; }
 
 /* ---------- prose ---------- */
 .prose { max-width: var(--measure); }
-.prose h3 { font-family: var(--font-display); font-weight: 700; font-stretch: 90%; font-size: 26px; line-height: 1.15; margin: 2.2em 0 0.7em; scroll-margin-top: calc(var(--masthead) + 16px); }
-.prose h4 { font-family: var(--font-display); font-weight: 650; font-stretch: 94%; font-size: 19px; line-height: 1.25; margin: 1.8em 0 0.5em; scroll-margin-top: calc(var(--masthead) + 16px); }
+.prose h3 { font-family: var(--font-body); font-weight: 600; font-size: 28px; line-height: 1.15; letter-spacing: -0.005em; margin: 2.2em 0 0.7em; scroll-margin-top: calc(var(--masthead) + 16px); }
+.prose h4 { font-family: var(--font-body); font-weight: 600; font-size: 21px; line-height: 1.25; margin: 1.8em 0 0.5em; scroll-margin-top: calc(var(--masthead) + 16px); }
 .prose h5 { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 1.6em 0 0.5em; }
 .prose ul, .prose ol { padding-left: 1.3em; margin: 0 0 1.15em; }
 .prose li { margin-bottom: 0.45em; }
@@ -233,7 +232,7 @@ sup.cite a:hover { text-decoration: underline; }
 .figure .fig-source a { color: var(--muted); }
 .bars text { font-family: var(--font-mono); font-size: 11.5px; fill: var(--ink-2); }
 .bars text.val { fill: var(--ink); font-weight: 500; }
-.bars rect.track { fill: var(--bg-3); }
+.bars rect.track { fill: color-mix(in srgb, var(--ink) 5%, transparent); }
 .bars rect.bar { fill: var(--accent); }
 .bars line.axis { stroke: var(--line-2); stroke-width: 1; }
 .stack-bar { display: flex; height: 26px; gap: 2px; border-radius: 2px; overflow: hidden; }
@@ -462,9 +461,10 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 @media (max-width: 900px) {
   :root { --col: 100%; --masthead: 52px; }
   body { font-size: 17px; }
-  .masthead { padding: 0 14px; }
+  .masthead { padding: 0 14px; height: auto; min-height: var(--masthead); flex-wrap: wrap; row-gap: 0; padding-top: 6px; padding-bottom: 6px; }
   .wordmark span { display: none; }
-  .tabs a { padding: 6px 8px; font-size: 12.5px; }
+  .tabs { flex-wrap: wrap; overflow: visible; justify-content: flex-end; row-gap: 2px; }
+  .tabs a { padding: 5px 7px; font-size: 12px; }
   .column { padding: 0 18px; }
   .stage { position: sticky; top: var(--masthead); width: 100%; height: 38vh; min-height: 250px; z-index: 6; background: color-mix(in srgb, var(--bg) 92%, transparent); border-bottom: 1px solid var(--line); }
   .stage canvas { height: calc(100% - 34px); }
@@ -472,7 +472,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
   .stage .stage-tag { top: 8px; left: 14px; }
   .wordmark b { font-size: 18px; }
   .hero { padding-top: 22px; }
-  .hero h1 { font-size: clamp(48px, 14.5vw, 84px); }
+  .hero h1 { font-size: clamp(40px, 12.6vw, 76px); overflow-wrap: normal; }
   .rail { display: none; }
   .to-top { right: 12px; top: auto; bottom: 16px; }
   .chapter-num { font-size: 64px; }

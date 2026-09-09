@@ -70,7 +70,7 @@
 ---
 # Chip Design, EDA and IP
 
-Design is the only stage in this chain with no fab, no cleanroom and no hazardous gas. It is also the one a foreign government can shut off fastest. In May 2025 the US Commerce Department wrote three letters, and for five weeks every Chinese chip designer lost the software that turns a design into something a factory can print.
+Design is the only stage in this chain with no fab, no cleanroom and no hazardous gas. It is also the one a foreign government can shut off fastest, and in 2025 one did: for five weeks, every Chinese chip designer lost the software that turns a design into something a factory can print.
 
 ## How it works
 
@@ -78,13 +78,13 @@ Designing a chip is like drawing the street plan of a city of billions of buildi
 
 A design runs through five phases.
 
-- **Architecture.** Engineers fix the machine's shape: the matrix-multiply unit's width, the SRAM beside it, the HBM stacks on the edges. Most of the die is one tile repeated.
+- **Architecture.** Engineers fix the machine's shape: the matrix-multiply unit's width, the SRAM beside it, the HBM stacks on the edges.
 - **RTL.** Register-transfer-level code in SystemVerilog fixes what every register holds on every clock edge.
-- **Verification.** The largest headcount line in most projects: simulation, formal proofs over blocks, and emulators that boot firmware before silicon exists.
-- **Physical design.** Synthesis maps the code onto the foundry's standard cells, then placement, clock trees, routing, timing closure and signoff.
+- **Verification.** The largest headcount line in most projects: simulation, formal proofs, and emulators that boot firmware before silicon exists.
+- **Physical design.** Synthesis maps the code onto the foundry's standard cells, then placement, routing, timing closure and signoff.
 - **Tape-out.** Mask data preparation and optical proximity correction turn the layout into pattern files for the mask shop.
 
-What disciplines the work is not the licence fee but the cost of a mistake. A photomask set passes $1 million at 28 nm, $10 million at 7 nm and about $40 million at 3 nm. Whole chips cost less than the headline estimates: SemiAnalysis has seen startups carry a leading-edge design to tape-out on TSMC 7 nm for $50 million to $75 million, software and validation included ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)).
+What disciplines the work is not the licence fee but the cost of a mistake. A photomask set passes $1 million at 28 nm, $10 million at 7 nm and about $40 million at 3 nm. Whole chips cost less than the headline estimates: SemiAnalysis has seen startups take a leading-edge design to tape-out on TSMC 7 nm for $50 million to $75 million, everything included ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)).
 
 {{figure:mask-cost}}
 
@@ -92,21 +92,21 @@ What disciplines the work is not the licence fee but the cost of a mistake. A ph
 
 ### Merchant GPU versus custom ASIC
 
-Nvidia designs Blackwell once and sells it to everyone, which buys the customer a software ecosystem and a resale market. A custom accelerator is narrower and cheaper on the one workload it was built for: Google claims about 44% lower cost of ownership per Ironwood chip than a GB200 server, on trade-press figures ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)).
+Nvidia designs Blackwell once and sells it to everyone, which buys the customer software and resale value. A custom accelerator is narrower and cheaper on the workload it was built for: Google claims 44% lower cost of ownership per Ironwood chip than a GB200 server, on trade-press figures ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)).
 
 ### The EDA flow
 
-Three complete flows exist, and they are not interchangeable. A team commits to one vendor's chain because the foundry certifies reference flows against specific tool versions, and timing signed off in one tool is not accepted in another. Inside each segment the grip is tighter than the headline share: Synopsys alone holds more than 90% of static timing ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
+Three complete flows exist, and they are not interchangeable. A team commits to one vendor's chain because the foundry certifies reference flows against specific tool versions, and timing signed off in one tool is not accepted in another. Inside each segment the grip is tighter still: Synopsys alone holds more than 90% of static timing ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
 
 {{figure:tool-lock}}
 
 ### Buy the IP or build it
 
-No one writes an accelerator from scratch: CPU cores, interface controllers and the blocks that drive HBM are licensed. Arm supplies most of the CPU side, with $4.92 billion of revenue, $2.61 billion of royalties and roughly 50% of CPU compute among the top hyperscalers in fiscal 2026 ([source](https://newsroom.arm.com/news/arm-q4-fye26-results)). The HBM PHY is the hardest block to buy, because it must close timing across thousands of microbumps into a stacked memory die. RISC-V is the housekeeping core, and Nvidia now uses it in all of its GPUs ([source](https://riscv.org/blog/shd-forecast-2026/)).
+No one writes an accelerator from scratch: CPU cores, interface controllers and the blocks that drive HBM are licensed. Arm supplies most of the CPU side, with $4.92 billion of revenue, $2.61 billion of royalties and roughly 50% of CPU compute among the top hyperscalers in fiscal 2026 ([source](https://newsroom.arm.com/news/arm-q4-fye26-results)). The HBM PHY is the hardest block to buy: it must close timing across thousands of microbumps into a stacked memory die. RISC-V is the housekeeping core, and Nvidia now uses it in every GPU ([source](https://riscv.org/blog/shd-forecast-2026/)).
 
 ### Chiplets
 
-Reticle limits ended the single-die accelerator. Modern parts are chiplets joined by a die-to-die link, and UCIe lets those links come from different vendors: UCIe 3.0 adds 48 GT/s and 64 GT/s data rates ([source](https://www.uciexpress.org/specifications)). Broadcom's 3.5D XDSiP goes furthest, at more than 6,000 mm2 of silicon per package ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)). See Advanced packaging.
+Reticle limits ended the single-die accelerator. Modern parts are chiplets joined by a die-to-die link, and UCIe lets those links come from different vendors: UCIe 3.0 adds 48 and 64 GT/s data rates ([source](https://www.uciexpress.org/specifications)). Broadcom's 3.5D XDSiP goes furthest, at more than 6,000 mm2 of silicon per package ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)).
 
 ## Who makes it
 
@@ -114,7 +114,7 @@ The EDA and design IP market was about $18 billion in 2025, and Synopsys, Cadenc
 
 {{figure:eda-share}}
 
-Design services are tighter still. Broadcom and Marvell hold roughly 95% of custom AI ASIC co-design, on trade-press estimates ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)), and Broadcom alone booked $16.7 billion of AI semiconductor revenue in the third quarter of fiscal 2026, up 221% in a year ([source](https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm)). Below them sit the Taiwanese houses that take a netlist to tape-out on TSMC's newest nodes; Alchip reported $992 million of revenue in 2025 ([source](https://www.alchip.com/en/Investors/financials/)). The engineers are spread wider than the firms: India alone is home to nearly 20% of the world's chip designers ([source](https://www.pib.gov.in/PressReleasePage.aspx?PRID=2148393)).
+Design services are tighter still. Broadcom and Marvell hold roughly 95% of custom AI ASIC co-design, on trade-press estimates ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)), and Broadcom alone booked $16.7 billion of AI semiconductor revenue in the third quarter of fiscal 2026, up 221% in a year ([source](https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm)). Below them sit the Taiwanese houses that take a netlist to tape-out on TSMC's newest nodes; Alchip reported $992 million of revenue in 2025 ([source](https://www.alchip.com/en/Investors/financials/)). The engineers are spread wider than the firms: India alone holds nearly 20% of the world's chip designers ([source](https://www.pib.gov.in/PressReleasePage.aspx?PRID=2148393)).
 
 | Chip | Owner | Design partner | Process |
 |---|---|---|---|
@@ -124,11 +124,11 @@ Design services are tighter still. Broadcom and Marvell hold roughly 95% of cust
 | Maia 200 | Microsoft | Marvell | TSMC 3 nm |
 | Custom accelerator | OpenAI | Broadcom | 3 nm and 2 nm |
 
-Design partners and processes per Tom's Hardware, May 2026 ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)).
+Design partners per Tom's Hardware, May 2026 ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)).
 
 ## The chokepoint
 
-In late May 2025 the Bureau of Industry and Security ordered Synopsys, Cadence and Siemens EDA to stop selling design tools and services to China ([source](https://www.design-reuse.com/news/202528998-synopsys-cadence-and-siemens-resume-eda-supply-to-china/)). Synopsys got its letter on 29 May and a rescinding letter on 2 July, after trade talks in which Washington agreed to ease technology restrictions ([source](https://www.sec.gov/Archives/edgar/data/883241/000119312525155294/d80081d8k.htm)).
+In late May 2025 the Bureau of Industry and Security ordered Synopsys, Cadence and Siemens EDA to stop selling design tools and services to China ([source](https://www.design-reuse.com/news/202528998-synopsys-cadence-and-siemens-resume-eda-supply-to-china/)). Synopsys got its letter on 29 May and a rescinding letter on 2 July, after trade talks in which Washington eased technology restrictions ([source](https://www.sec.gov/Archives/edgar/data/883241/000119312525155294/d80081d8k.htm)).
 
 The lever works, and needs no allied coordination and no lead time. It is also expensive: it speeds the substitution it was meant to prevent, and Synopsys's China revenue fell from 16% of the total in fiscal 2024 to 12% in fiscal 2025 ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
 
@@ -140,11 +140,11 @@ So China can architect an accelerator: Huawei's Ascend 910C targets 600,000 unit
 
 - **Flow completeness.** How many steps a vendor covers from RTL to signoff. A point tool is replaceable; a signed-off flow is not.
 - **Foundry certification.** Whether the foundry has validated that tool version against its reference flow and process design kit. Without it, signoff is refused.
-- **Verification throughput.** Simulation cycles and emulator capacity per day, which sets schedule more than any other input.
+- **Verification throughput.** Simulation cycles and emulator capacity per day, which sets schedule more than anything else.
 - **IP availability at node.** Whether the CPU, SerDes, PCIe and HBM PHY blocks are silicon-proven on that process.
 - **Design services depth.** Whether a partner can take a netlist to tape-out on the newest node.
-- **Legal exposure.** The share of the flow that is US-origin technology, and so subject to export licensing.
+- **Legal exposure.** How much of the flow is US-origin technology, and so subject to export licensing.
 
 ## Takeaways
 
-Three vendors sell every complete design flow used at the leading edge ([source](https://newsletter.semianalysis.com/p/eda-market-primer)). Design is cheap next to what it commits: tens of millions of dollars of engineering and masks direct tens of billions of dollars of fab capacity ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)). It is the fastest lever a government can pull, and the one China is closest to neutralising. Closest is not close. And a growing share of the world's accelerators are designed not by the company whose name is on them but by Broadcom, Marvell and a few Taiwanese design houses.
+Three vendors sell every complete design flow used at the leading edge ([source](https://newsletter.semianalysis.com/p/eda-market-primer)). Design is cheap next to what it commits: tens of millions of dollars of engineering and masks direct tens of billions of dollars of fab capacity ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)). It is the fastest lever a government can pull, and the one China is closest to neutralising. Closest is not close. And a growing share of the world's accelerators are designed not by the company whose name is on them but by Broadcom, Marvell and a few Taiwanese houses.

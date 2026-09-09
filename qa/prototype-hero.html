@@ -393,7 +393,8 @@ b, strong { font-weight: 600; }
 
 /* ---------------------------------------------------------------- prose */
 .prose { padding-bottom: clamp(56px, 9vh, 96px); }
-.prose p { margin-bottom: 1.15em; max-width: var(--measure); }
+.prose p { margin-bottom: 1.15em; }
+.prose > p { max-width: var(--measure); }
 .prose h3 {
   font-family: var(--display); font-weight: 600; font-size: 27px; line-height: 1.15;
   letter-spacing: -0.002em; margin: 1.9em 0 0.65em; max-width: var(--measure);
