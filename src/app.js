@@ -709,7 +709,7 @@
       var sw = function (lv) { return '<span class="sup-lg"><i class="sup-dot lv-' + lv + '" style="--s:9px"></i>' + lv + '</span>'; };
       $('#sup-legend').innerHTML = 'Bigger dot, more firms. The fill is the most severe level in that cell: ' +
         sw('Critical') + sw('Important') + sw('Contested') + sw('Diversified') +
-        '. Click a dot to filter the list, and again to clear.';
+        '<span class="sup-lg-note">Click a dot to filter the list, and again to clear.</span>';
 
       host.addEventListener('click', function (e) { var b = e.target.closest('.sup-cell'); if (b) self.pickCell(b); });
       host.addEventListener('mouseover', function (e) { var b = e.target.closest('.sup-cell'); if (b) self.showTip(b); });
@@ -910,25 +910,202 @@
       // timeline
       var tl = (DATA.timeline || []).slice().sort(function (a, b) { return a.date < b.date ? -1 : 1; });
       var cats = {}; tl.forEach(function (e) { cats[e.category] = (cats[e.category] || 0) + 1; });
-      var self = this, chips = $('#tl-filters');
-      chips.innerHTML = Object.keys(cats).map(function (c) { return '<button type="button" data-cat="' + esc(c) + '" aria-pressed="false">' + esc(c) + '<b>' + cats[c] + '</b></button>'; }).join('');
-      chips.addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; var c = b.getAttribute('data-cat'); self.cat = self.cat === c ? null : c; $$('button', chips).forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-cat') === self.cat ? 'true' : 'false'); }); self.renderTimeline(tl); });
-      this.renderTimeline(tl);
+      var self = this, chips = $('#tl-filters'), order = this.CATS.map(function (c) { return c.name; });
+      this.tl = tl;
+      var names = Object.keys(cats).sort(function (a, b) { var ia = order.indexOf(a), ib = order.indexOf(b); return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib); });
+      chips.innerHTML = names.map(function (c) { return '<button type="button" class="tl-chip ' + self.CATS[self.lane(c)].cls + '" data-cat="' + esc(c) + '" aria-pressed="false">' + esc(c) + '<b>' + cats[c] + '</b></button>'; }).join('');
+      chips.addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; var c = b.getAttribute('data-cat'); self.cat = self.cat === c ? null : c; $$('button', chips).forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-cat') === self.cat ? 'true' : 'false'); }); self.renderTimeline(); });
+      var all = $('#tl-all'); if (all) all.addEventListener('click', function () { self.setFull(!self.full); });
+      var list = $('#timeline');
+      list.addEventListener('click', function (e) { var b = e.target.closest ? e.target.closest('.tl-more') : null; if (b) self.setOpen(b, b.getAttribute('aria-expanded') !== 'true'); });
+      this.wireStrip();
+      window.addEventListener('scroll', function () { if (Router.current === 'controls') self.spy(); }, { passive: true });
+      window.addEventListener('resize', function () { clearTimeout(self.rz); self.rz = setTimeout(function () { self.stripW = 0; self.sync(); }, 160); }, { passive: true });
+      this.renderTimeline();
     },
-    renderTimeline: function (tl) {
-      var self = this, html = '', year = null;
-      var cls = function (c) { c = c || ''; return /China/i.test(c) ? 'cn' : /Allied/i.test(c) ? 'ally' : /Industrial/i.test(c) ? 'policy' : /Corporate/i.test(c) ? 'corp' : ''; };
-      self.visible = tl.filter(function (e) { return !self.cat || e.category === self.cat; });
-      tl.forEach(function (e) {
-        if (self.cat && e.category !== self.cat) return;
+    /* one sentence per entry: the data's own gist, or the first sentence of the summary */
+    gistOf: function (e) {
+      if (e.gist) return e.gist;
+      var s = String(e.summary || '').trim(), m = s.match(/^[\s\S]*?[.!?](?=\s|$)/), t = (m ? m[0] : s).trim();
+      if (t.length > 140) t = t.slice(0, 139).replace(/\s+\S*$/, '') + '…';
+      return t;
+    },
+    renderTimeline: function () {
+      var self = this, tl = this.tl || [], html = '', year = null, list = $('#timeline');
+      var rows = tl.filter(function (e) { return !self.cat || e.category === self.cat; });
+      this.visible = rows;
+      var counts = {};
+      rows.forEach(function (e) { var y = (e.date || '').slice(0, 4); counts[y] = (counts[y] || 0) + 1; });
+      rows.forEach(function (e, i) {
         var y = (e.date || '').slice(0, 4);
-        if (y !== year) { year = y; html += '<li style="border:0;display:block;padding:0"><div class="year-label">' + esc(y) + '</div></li>'; }
+        if (y !== year) {
+          year = y;
+          html += '<li class="tl-year"><div class="year-label">' + esc(y) + '</div><span class="tl-n">' + counts[y] + (counts[y] === 1 ? ' move' : ' moves') + '</span></li>';
+        }
         var d = new Date(e.date + 'T00:00:00');
         var ds = isNaN(d) ? esc(e.date) : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-        html += '<li><div class="d"><b>' + ds + '</b>' + esc(e.actor || '') + '</div><div><span class="cat ' + cls(e.category) + '">' + esc(e.category || '') + '</span><h4>' + esc(e.title) + '</h4><p>' + esc(e.summary || '') + '</p>' + (e.source ? '<a class="src" href="' + safeUrl(e.source) + '" target="_blank" rel="noopener">' + esc(e.source.replace(/^https?:\/\//, '').split('/')[0]) + '</a>' : '') + '</div></li>';
+        var host = e.source ? e.source.replace(/^https?:\/\//, '').split('/')[0] : '';
+        html += '<li class="tl-e" id="tl-e' + i + '" data-i="' + i + '">' +
+          '<div class="d"><b>' + ds + '</b>' + esc(e.actor || '') + '</div>' +
+          '<div class="tl-body"><span class="cat ' + self.CATS[self.lane(e.category)].cls + '">' + esc(e.category || '') + '</span>' +
+          '<h4>' + esc(e.title) + '</h4><p class="tl-gist">' + esc(self.gistOf(e)) + '</p>' +
+          '<button type="button" class="tl-more" aria-expanded="false" aria-controls="tl-p' + i + '">More</button>' +
+          '<div class="tl-panel" id="tl-p' + i + '" hidden><p>' + esc(e.summary || '') + '</p>' +
+          (host ? '<a class="src" href="' + safeUrl(e.source) + '" target="_blank" rel="noopener">' + esc(host) + '</a>' : '') +
+          '</div></div></li>';
       });
-      $('#timeline').innerHTML = html || '<li><p>No events in this category.</p></li>';
-      $('#timeline').dispatchEvent(new CustomEvent('cp:rows'));
+      list.innerHTML = html || '<li class="tl-empty"><p>No events in this category.</p></li>';
+      this.items = $$('.tl-e', list);
+      if (this.full) this.setFull(true);
+      this.reveal();
+      this.strip();
+      this.at = -1; this.atDot = -1; this.spy();
+      list.dispatchEvent(new CustomEvent('cp:rows'));
+    },
+    setOpen: function (btn, open) {
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.textContent = open ? 'Less' : 'More';
+      var p = document.getElementById(btn.getAttribute('aria-controls'));
+      if (p) p.hidden = !open;
+    },
+    setFull: function (on) {
+      var self = this;
+      this.full = !!on;
+      var b = $('#tl-all'); if (b) b.setAttribute('aria-pressed', this.full ? 'true' : 'false');
+      $$('#timeline .tl-more').forEach(function (btn) { self.setOpen(btn, self.full); });
+    },
+    /* entries rise into view once; with no observer they simply stay readable */
+    reveal: function () {
+      if (reduced || !window.IntersectionObserver || !this.items.length) return;
+      if (this.io) this.io.disconnect();
+      var io = new IntersectionObserver(function (ents) {
+        for (var i = 0; i < ents.length; i++) if (ents[i].isIntersecting) { ents[i].target.classList.add('is-in'); io.unobserve(ents[i].target); }
+      }, { rootMargin: '0px 0px -24px 0px' });
+      this.items.forEach(function (el) { io.observe(el); });
+      this.io = io;
+    },
+    /* ---- minimap strip: one dot per event, five lanes, year axis ---- */
+    strip: function () {
+      var self = this, host = $('#tl-strip');
+      if (!host) return;
+      var w = Math.round(host.getBoundingClientRect().width);
+      this.stripW = w;
+      if (!w) { host.innerHTML = ''; return; } // the sub-tab is hidden: draw it when it opens
+      var rows = this.visible || [], all = this.tl || [];
+      var small = w < 700;
+      var padL = small ? 46 : 106, padR = small ? 12 : 18;
+      var laneH = small ? 13 : 18, top = small ? 18 : 24;
+      var axisY = top + laneH * 5 + 6, H = axisY + (small ? 18 : 20);
+      var x0 = padL, x1 = Math.max(padL + 40, w - padR);
+      var mi = function (d) { d = String(d || ''); return (parseInt(d.slice(0, 4), 10) - 2018) * 12 + (parseInt(d.slice(5, 7), 10) - 1); };
+      var span = 12; all.forEach(function (e) { span = Math.max(span, mi(e.date)); });
+      var X = function (d) { var v = mi(d); return x0 + (Math.max(0, Math.min(span, isNaN(v) ? 0 : v)) / span) * (x1 - x0); };
+      var s = '<svg class="tl-svg" width="' + w + '" height="' + H + '" viewBox="0 0 ' + w + ' ' + H + '" role="img" aria-label="Every move on one strip: five lanes by kind, 2018 to now">';
+      for (var i = 0; i < 5; i++) {
+        var ly = top + laneH * i + laneH / 2;
+        s += '<rect class="tl-base" x="' + x0 + '" y="' + (ly - 0.5) + '" width="' + (x1 - x0) + '" height="1"></rect>' +
+          '<text class="tl-lane ' + this.CATS[i].cls + '" x="' + (x0 - (small ? 7 : 11)) + '" y="' + (ly + 3.4) + '" text-anchor="end">' + esc(small ? this.CATS[i].short : this.CATS[i].label) + '</text>';
+      }
+      this.RULES.forEach(function (r) {
+        var rx = X(r.date);
+        s += '<line class="tl-rule" x1="' + rx.toFixed(1) + '" y1="' + (top - 5) + '" x2="' + rx.toFixed(1) + '" y2="' + (axisY - 2) + '"></line>' +
+          '<text class="tl-rlab" x="' + rx.toFixed(1) + '" y="' + (top - 10) + '" text-anchor="middle">' + esc(small ? r.short : r.label) + '</text>';
+      });
+      for (var yy = 2018; yy <= 2018 + Math.floor(span / 12); yy++) {
+        var xt = X(yy + '-01-01');
+        s += '<line class="tl-tick" x1="' + xt.toFixed(1) + '" y1="' + axisY + '" x2="' + xt.toFixed(1) + '" y2="' + (axisY + 4) + '"></line>' +
+          '<text class="tl-ylab" data-y="' + yy + '" x="' + xt.toFixed(1) + '" y="' + (axisY + 15) + '" text-anchor="middle">' + (small ? '’' + String(yy).slice(2) : yy) + '</text>';
+      }
+      var n = Math.max(1, rows.length - 1);
+      rows.forEach(function (e, k) {
+        var ln = self.lane(e.category), cy = top + laneH * ln + laneH / 2, cx = X(e.date);
+        var d = new Date(e.date + 'T00:00:00');
+        var ds = isNaN(d) ? e.date : d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+        s += '<circle class="tl-dot ' + self.CATS[ln].cls + '" cx="' + cx.toFixed(1) + '" cy="' + cy + '" r="' + (small ? 3.6 : 3.4) + '" data-i="' + k + '" tabindex="' + (k ? '-1' : '0') + '" role="button" aria-label="' + esc(ds + ': ' + e.title) + '" style="--d:' + Math.round(k / n * 420) + 'ms"></circle>';
+      });
+      s += '<circle class="tl-ring" cx="-20" cy="-20" r="6.6" opacity="0"></circle></svg>';
+      host.innerHTML = s;
+      host.setAttribute('data-anim', this.drawn || reduced ? '0' : '1');
+      this.drawn = true;
+    },
+    wireStrip: function () {
+      var self = this, strip = $('#tl-strip');
+      if (!strip) return;
+      var dot = function (e) { return e.target && e.target.closest ? e.target.closest('.tl-dot') : null; };
+      strip.addEventListener('mouseover', function (e) { var d = dot(e); if (d) self.showTip(d); });
+      strip.addEventListener('mouseout', function (e) { if (dot(e)) self.hideTip(); });
+      strip.addEventListener('focusin', function (e) { var d = dot(e); if (d) self.showTip(d); });
+      strip.addEventListener('focusout', function () { self.hideTip(); });
+      strip.addEventListener('click', function (e) { var d = dot(e); if (d) self.jump(parseInt(d.getAttribute('data-i'), 10)); });
+      strip.addEventListener('keydown', function (ev) {
+        var d = dot(ev), k = ev.key;
+        if (!d) return;
+        var i = parseInt(d.getAttribute('data-i'), 10), last = (self.visible || []).length - 1, to = -1;
+        if (k === 'Enter' || k === ' ' || k === 'Spacebar') { ev.preventDefault(); self.jump(i); return; }
+        if (k === 'ArrowRight' || k === 'ArrowDown') to = Math.min(last, i + 1);
+        else if (k === 'ArrowLeft' || k === 'ArrowUp') to = Math.max(0, i - 1);
+        else if (k === 'Home') to = 0;
+        else if (k === 'End') to = last;
+        if (to < 0) return;
+        ev.preventDefault();
+        var nx = strip.querySelector('.tl-dot[data-i="' + to + '"]');
+        if (nx) { d.setAttribute('tabindex', '-1'); nx.setAttribute('tabindex', '0'); nx.focus(); }
+      });
+    },
+    showTip: function (d) {
+      var e = (this.visible || [])[parseInt(d.getAttribute('data-i'), 10)];
+      if (!e) return;
+      if (!this.tip) { var t = document.createElement('div'); t.className = 'tl-tip'; t.setAttribute('role', 'tooltip'); document.body.appendChild(t); this.tip = t; }
+      var dt = new Date(e.date + 'T00:00:00');
+      this.tip.innerHTML = '<b>' + esc(isNaN(dt) ? e.date : dt.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })) + '</b>' + esc(e.title);
+      this.tip.hidden = false;
+      var r = d.getBoundingClientRect(), x = r.left + r.width / 2 + window.scrollX;
+      this.tip.style.left = Math.max(8, Math.min(x - this.tip.offsetWidth / 2, window.scrollX + window.innerWidth - this.tip.offsetWidth - 8)) + 'px';
+      this.tip.style.top = (r.top + window.scrollY - this.tip.offsetHeight - 9) + 'px';
+    },
+    hideTip: function () { if (this.tip) this.tip.hidden = true; },
+    jump: function (i) {
+      var el = document.getElementById('tl-e' + i);
+      if (!el) return;
+      var btn = el.querySelector('.tl-more');
+      if (btn && btn.getAttribute('aria-expanded') !== 'true') this.setOpen(btn, true);
+      el.classList.add('is-in');
+      $$('#timeline .is-target').forEach(function (x) { x.classList.remove('is-target'); });
+      el.classList.add('is-target');
+      el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    },
+    /* the dot of the entry nearest the top of the reading area, kept in step with the scroll */
+    spy: function () {
+      var self = this;
+      if (this.tickQ) return;
+      this.tickQ = true;
+      var run = function () { self.tickQ = false; self.spyNow(); };
+      if (window.requestAnimationFrame) window.requestAnimationFrame(run); else window.setTimeout(run, 32);
+    },
+    spyNow: function () {
+      var svg = $('#tl-strip .tl-svg'), items = this.items || [];
+      if (!svg || !items.length) return;
+      var mast = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--masthead')) || 56;
+      var probe = mast + (window.innerWidth >= 900 ? svg.getBoundingClientRect().height : 0) + 26;
+      var at = 0;
+      for (var i = 0; i < items.length; i++) { if (items[i].getBoundingClientRect().top <= probe) at = i; else break; }
+      if (at === this.at) return;
+      this.at = at;
+      var dots = svg.querySelectorAll('.tl-dot'), ring = svg.querySelector('.tl-ring'), d = dots[at];
+      if (!d) return;
+      if (dots[this.atDot]) { dots[this.atDot].classList.remove('is-at'); dots[this.atDot].setAttribute('tabindex', '-1'); }
+      d.classList.add('is-at'); d.setAttribute('tabindex', '0');
+      this.atDot = at;
+      if (ring) { ring.setAttribute('cx', d.getAttribute('cx')); ring.setAttribute('cy', d.getAttribute('cy')); ring.setAttribute('opacity', '1'); }
+      var yy = String((this.visible[at] || {}).date || '').slice(0, 4), labs = svg.querySelectorAll('.tl-ylab');
+      for (var j = 0; j < labs.length; j++) labs[j].classList.toggle('is-on', labs[j].getAttribute('data-y') === yy);
+    },
+    /* the strip is drawn from its own width, so redraw it whenever the sub-tab opens or the window changes */
+    sync: function () {
+      var host = $('#tl-strip');
+      if (!host) return;
+      if (Math.round(host.getBoundingClientRect().width) !== this.stripW) this.strip();
+      this.at = -1; this.spy();
     }
   };
 
@@ -1024,8 +1201,95 @@
 
   /* ---------------- controls view: threshold map + China exposure (rendered only if the section exists) ---------------- */
   var Controls = {
-    built: false,
-    activate: function () { if (!this.built) this.build(); },
+    built: false, inBoard: false,
+    activate: function () { if (!this.built) this.build(); if (Geo.built) Geo.sync(); this.enter(); },
+    /* the board's groups, in reading order: what is controlled, then who, then trade */
+    KINDS: [['chips', 'Chips'], ['memory', 'Memory'], ['tools', 'Chipmaking tools'], ['fabs', 'Fabs and nodes'],
+      ['systems', 'Systems and clouds'], ['models', 'Models'], ['entities', 'Entities and ownership'],
+      ['trade', 'Tariffs'], ['china', 'China’s countermeasures'], ['other', 'Other']],
+    /* until every row carries a kind, read one off the rule's own words; first match wins */
+    GUESS: [['china', /mofcom|rare[ -]earth|(^| )cn-/], ['trade', /tariff|section ?232|ad valorem/],
+      ['entities', /entity|affiliate|ownership|footnote/], ['models', /model|gpai|ai act|training compute/],
+      ['tools', /3b00|euv|litho|etch|deposit|overlay|nxt|meti|\bsme\b|mask|scanner/],
+      ['memory', /hbm|dram|nand|memory/], ['systems', /diffusion|cluster|supercomputer|4a090|computers|data ?cent/],
+      ['chips', /3a090|\btpp\b|aicd|advanced computing|shipment|accelerator/],
+      ['fabs', /node|transistor|\bfab|nanometre|nanometer/]],
+    kindOf: function (t) {
+      if (t.kind) return t.kind;
+      var hay = ((t.id || '') + ' ' + (t.instrument || '') + ' ' + (t.parameter || '') + ' ' + (t.scope || '') + ' ' + (t.regime || '')).toLowerCase();
+      for (var i = 0; i < this.GUESS.length; i++) if (this.GUESS[i][1].test(hay)) return this.GUESS[i][0];
+      return 'other';
+    },
+    /* a short unit for the headline; the long one is the parameter's definition and stays in Details */
+    unitOf: function (t) {
+      if (t.unitShort != null) return t.unitShort;
+      var u = String(t.unit || '');
+      if (u.charAt(0) === '%') return '%';
+      return (u && u.length <= 14 && !/[,;]/.test(u)) ? u : '';
+    },
+    SUP: ['⁰', '¹', '²', '³', '⁴', '⁵', '⁶', '⁷', '⁸', '⁹'],
+    sup: function (n) {
+      var s = String(n), o = '', i;
+      for (i = 0; i < s.length; i++) o += (s.charAt(i) === '-' ? '⁻' : this.SUP[+s.charAt(i)] || s.charAt(i));
+      return o;
+    },
+    fmtVal: function (v, unit) {
+      if (v == null || v === '') return '';
+      if (typeof v !== 'number' || !isFinite(v)) return String(v);
+      if (unit === '%') return String(v) + '%';
+      var a = Math.abs(v);
+      if (a >= 1e20) {
+        var ex = Math.round(Math.log(a) / Math.LN10), base = v / Math.pow(10, ex);
+        return (Math.abs(base - 1) < 1e-6 ? '' : String(Number(base.toFixed(2))) + ' × ') + '10' + this.sup(ex);
+      }
+      if (a >= 1e9) return String(Number((v / 1e9).toFixed(2))) + ' billion';
+      if (a >= 1e6) return String(Number((v / 1e6).toFixed(2))) + ' million';
+      if (v === Math.round(v)) return v.toLocaleString('en-US');
+      return String(v);
+    },
+    OPS: { '>=': '≥', '<=': '≤', '>': '>', '<': '<', '=': '=' },
+    op: function (o) {
+      o = String(o == null ? '' : o).trim();
+      return this.OPS[o] || o.replace(/>=/g, '≥').replace(/<=/g, '≤');
+    },
+    headline: function (t) {
+      var p = t.paramShort || t.parameter || '', u = this.unitOf(t);
+      if (t.value == null || t.value === '') return p;
+      return p + ' ' + this.op(t.operator) + ' ' + this.fmtVal(t.value, u) + (u && u !== '%' ? ' ' + u : '');
+    },
+    stClass: function (s) {
+      s = String(s || '');
+      return /propos/i.test(s) ? 'is-prop' : /suspend|stay/i.test(s) ? 'is-susp'
+        : /supersed|rescind|expired/i.test(s) ? 'is-old' : /force/i.test(s) ? 'is-force' : 'is-other';
+    },
+    card: function (t, chapterChip, i) {
+      var u = this.unitOf(t), det = [];
+      if (t.regime) det.push(['Regime', t.regime]);
+      if (t.destinations) det.push(['Destinations', t.destinations]);
+      if (t.licensePolicy) det.push(['Licence policy', t.licensePolicy]);
+      if (t.alternative) det.push(['Alternative test', t.alternative]);
+      if (t.unit && t.unit !== u) det.push(['What is measured', t.unit]);
+      if (t.amendedBy && t.amendedBy.length) det.push(['Amended', t.amendedBy.join(', ')]);
+      if (t.note) det.push(['Note', t.note]);
+      var dl = det.map(function (d) { return '<dt>' + esc(d[0]) + '</dt><dd>' + esc(d[1]) + '</dd>'; }).join('');
+      var src = t.source ? '<a class="th-src" href="' + safeUrl(t.source) + '" target="_blank" rel="noopener">Read the rule</a>' : '';
+      return '<article class="th-card" style="--d:' + Math.min(500, i * 20) + 'ms">' +
+        '<h5 class="th-head">' + esc(this.headline(t)) + '</h5>' +
+        '<div class="th-inst">' + esc(t.instrument || '') + '</div>' +
+        (t.scope ? '<p class="th-scope">' + esc(t.scope) + '</p>' : '') +
+        '<div class="th-meta"><span class="th-st ' + this.stClass(t.status) + '">' + esc(t.status || '') + '</span>' +
+        (t.effectiveDate ? '<span class="th-from">from ' + esc(t.effectiveDate) + '</span>' : '') + '</div>' +
+        chapterChip(t.chapter) +
+        (dl || src ? '<details class="th-det"><summary>Details</summary><dl>' + dl + '</dl>' + src + '</details>' : '') +
+        '</article>';
+    },
+    /* the cards animate the first time the sub-tab is actually on screen */
+    enter: function () {
+      var sub = $('.view[data-view="controls"] .sub[data-sub="thresholds"]'), board = $('#th-board');
+      if (!sub || !board || sub.hidden || this.inBoard) return;
+      this.inBoard = true;
+      if (!reduced) board.setAttribute('data-in', '1');
+    },
     build: function () {
       this.built = true;
       var th = DATA.controls || [], ex = DATA.exposure || [];
