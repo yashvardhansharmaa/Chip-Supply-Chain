@@ -347,6 +347,11 @@
         plans.addEventListener('click', function (e) { var b = e.target.closest('button[data-id]'); if (b) self.focus(b.getAttribute('data-id')); });
         plans.addEventListener('keydown', function (e) { self.arrows(e, $$('button[data-id]', plans)); });
       }
+      var rt = null;
+      window.addEventListener('resize', function () {
+        if (Router.current !== 'landscape') return;
+        clearTimeout(rt); rt = setTimeout(function () { self.renderPlans(); }, 160);
+      });
       var tb = $('#cx-table');
       if (tb) tb.addEventListener('click', function (e) {
         var j = e.target.closest('button[data-notes]');
@@ -442,11 +447,14 @@
       });
       return (w && h) ? [w, h] : null;
     },
-    scaleFor: function (sel) {
-      var self = this, span = 0;
-      sel.forEach(function (c) { var b = self.planBounds(c.layout); if (b) span = Math.max(span, b[0], b[1]); });
+    scaleFor: function (sel, room) { // one scale for every plan on screen: the widest part sets it, and the row fits the column when it can
+      var self = this, span = 0, total = 0;
+      sel.forEach(function (c) { var b = self.planBounds(c.layout); if (b) { span = Math.max(span, b[0], b[1]); total += b[0]; } });
       if (!span) return 1;
-      return Math.min((narrow() ? 148 : 196) / span, 2.6);
+      var k = Math.min((narrow() ? 148 : 196) / span, 2.6);
+      var free = (room || 0) - sel.length * 40; // padding and gaps between the cards
+      if (total > 0 && free > 80) k = Math.min(k, free / total);
+      return k;
     },
     rects: function (list, cls) {
       var self = this;
@@ -475,7 +483,7 @@
         g += this.rects(L.dies, 'cx-die');
         g += this.rects(L.hbm, 'cx-hbm');
       }
-      return '<svg class="cx-plan-svg" width="' + Math.max(16, Math.round(W * k)) + '" height="' + Math.max(16, Math.round(H * k)) +
+      return '<svg class="cx-plan-svg" width="' + Math.max(16, this.mm(W * k)) + '" height="' + Math.max(16, this.mm(H * k)) +
         '" viewBox="' + this.mm(-W / 2) + ' ' + this.mm(-H / 2) + ' ' + this.mm(W) + ' ' + this.mm(H) + '" aria-hidden="true" focusable="false">' + g + '</svg>';
     },
     planSize: function (c) {
@@ -492,7 +500,7 @@
     },
     renderPlans: function () {
       var self = this, host = $('#cx-plans'); if (!host) return;
-      var sel = this.selection(), k = this.scaleFor(sel);
+      var sel = this.selection(), k = this.scaleFor(sel, host.clientWidth);
       host.innerHTML = sel.map(function (c) {
         var L = c.layout || {}, tip = L.note || (c.package || {}).type || '';
         return '<button type="button" class="cx-plan" data-id="' + esc(c.id) + '" aria-pressed="' + (c.id === self.sel ? 'true' : 'false') + '"' + (tip ? ' title="' + esc(tip) + '"' : '') + '>' +
@@ -544,7 +552,7 @@
           var best = row.better === 'high' && max > 0 && v === max;
           inner = '<span class="cx-v' + (best ? ' is-best' : '') + '">' + esc(this.nf(v)) + '</span>' + (marker || '') +
             (row.sub ? '<span class="cx-2">' + esc(row.sub(c)) + '</span>' : '') +
-            (multi && max > 0 ? '<span class="cx-bar"><i style="width:' + Math.round(Math.max(0, v) / max * 100) + '%"></i></span>' : '');
+            (multi && max > 0 ? '<span class="cx-meter"><i style="width:' + Math.round(Math.max(0, v) / max * 100) + '%"></i></span>' : '');
         }
       } else {
         var t = row.text(c);

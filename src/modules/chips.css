@@ -99,8 +99,8 @@
 .cx-v.is-best { font-weight: 700; }
 .cx-2 { display: block; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; color: var(--muted); margin-top: 3px; }
 .cx-nil { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
-.cx-bar { display: block; height: 3px; max-width: 118px; margin-top: 7px; background: var(--line); border-radius: 2px; }
-.cx-bar i { display: block; height: 100%; background: var(--bar-4); border-radius: 2px; }
+.cx-meter { display: block; height: 3px; max-width: 118px; margin-top: 7px; background: var(--line); border-radius: 2px; }
+.cx-meter i { display: block; height: 100%; background: var(--bar-4); border-radius: 2px; }
 .cx-long { font-size: 13px; line-height: 1.45; min-width: 190px; max-width: 280px; white-space: normal; }
 .cx-fn { font-family: var(--font-mono); font-size: 9px; color: var(--muted); vertical-align: super; margin-left: 2px; }
 
