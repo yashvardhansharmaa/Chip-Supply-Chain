@@ -181,6 +181,10 @@ function cleanTitle(t) {
   return s || null;
 }
 
+// Titles a bot wall or an error page serves instead of the document's own.
+const JUNK_TITLE =
+  /^(access denied|just a moment|error|forbidden|403|404|401|429|page not found|not found|attention required|are you a robot|robot check|请稍候|security check|redirecting|loading|untitled|document|home|index|sec\.gov \| |challenge|blocked|service unavailable|bad gateway|site maintenance|你的连接不是私密连接)/i;
+
 function metaContent(html, patterns) {
   for (const re of patterns) {
     const m = html.match(re);
@@ -376,6 +380,162 @@ function titleFromPath(url) {
   }
 }
 
+// --------------------------------------------------- authoritative resolvers
+// Two sources answer with structured metadata rather than a scraped page, so
+// they get their own pass: the Federal Register document API and the SEC's
+// EDGAR submissions API. Both are the publisher's own record of the document.
+
+const FR_DOC_RE = /(?:\/documents\/\d{4}\/\d{2}\/\d{2}\/|\/pdf\/)((?:19|20)\d{2}-\d{3,6})(?:\/|\.pdf)/;
+
+function frDocNumber(url) {
+  const m = url.match(FR_DOC_RE);
+  return m ? m[1] : null;
+}
+
+async function jsonGet(url, cacheKey) {
+  const p = path.join(CACHE_DIR, cacheKey + '.json');
+  if (fs.existsSync(p)) {
+    try {
+      return JSON.parse(fs.readFileSync(p, 'utf8'));
+    } catch {}
+  }
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
+  try {
+    const res = await fetch(url, {
+      signal: controller.signal,
+      headers: { 'User-Agent': UA, Accept: 'application/json' },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    fs.mkdirSync(CACHE_DIR, { recursive: true });
+    fs.writeFileSync(p, JSON.stringify(data));
+    return data;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function resolveFederalRegister(urls) {
+  const out = {};
+  const targets = urls.filter((u) => /federalregister\.gov|govinfo\.gov\/content\/pkg\/FR-/.test(u) && frDocNumber(u));
+  for (const url of targets) {
+    const num = frDocNumber(url);
+    const doc = await jsonGet(
+      `https://www.federalregister.gov/api/v1/documents/${num}.json?fields[]=title&fields[]=publication_date&fields[]=type&fields[]=agencies&fields[]=document_number`,
+      'fr-' + num
+    );
+    if (!doc || !doc.title) continue;
+    const agencies = (doc.agencies || []).map((a) => a.name).filter(Boolean);
+    const isGovinfo = url.includes('govinfo.gov');
+    out[url] = {
+      title: doc.title,
+      publisher: isGovinfo
+        ? 'U.S. Government Publishing Office (Federal Register)'
+        : agencies.length
+          ? `Federal Register (${agencies.join('; ')})`
+          : 'Federal Register',
+      date: doc.publication_date || null,
+      type: isGovinfo ? 'pdf' : 'regulation',
+    };
+  }
+  return out;
+}
+
+// /Archives/edgar/data/<cik>/<accession-without-dashes>/<file>
+const SEC_RE = /\/Archives\/edgar\/data\/(\d+)\/(\d{18})\/?(.*)$/;
+
+function secParts(url) {
+  const m = url.match(SEC_RE);
+  if (!m) return null;
+  return { cik: String(parseInt(m[1], 10)), accession: m[2], file: m[3] || '' };
+}
+
+function accessionDashed(a) {
+  return `${a.slice(0, 10)}-${a.slice(10, 12)}-${a.slice(12)}`;
+}
+
+// A form type plus the period it covers, in the terms EDGAR itself uses.
+function secTitle(company, form, reportDate, filingDate, description) {
+  const period = reportDate || filingDate || null;
+  let what = `Form ${form}`;
+  if (/10-K/.test(form)) what = `Form ${form} annual report`;
+  else if (/10-Q/.test(form)) what = `Form ${form} quarterly report`;
+  else if (/20-F/.test(form)) what = `Form ${form} annual report`;
+  else if (/^8-K/.test(form)) what = `Form ${form} current report`;
+  else if (/^6-K/.test(form)) what = `Form ${form} report of foreign private issuer`;
+  else if (/424B/.test(form)) what = `Form ${form} prospectus`;
+  let t = `${company}, ${what}`;
+  if (period) t += /10-K|20-F/.test(form) ? ` for the period ended ${period}` : ` for the period ended ${period}`;
+  if (description && description.length < 90 && !/^Form/i.test(description)) {
+    t += ` (${description})`;
+  }
+  return t;
+}
+
+async function resolveSec(urls) {
+  const out = {};
+  const targets = urls.filter((u) => /(^|\/\/)(www\.)?sec\.gov\//.test(u) && secParts(u));
+  const byCik = new Map();
+  for (const url of targets) {
+    const p = secParts(url);
+    if (!byCik.has(p.cik)) byCik.set(p.cik, []);
+    byCik.get(p.cik).push({ url, ...p });
+  }
+
+  for (const [cik, items] of byCik) {
+    const padded = cik.padStart(10, '0');
+    const sub = await jsonGet(`https://data.sec.gov/submissions/CIK${padded}.json`, 'sec-CIK' + padded);
+    if (!sub) continue;
+    const company = sub.name || null;
+
+    // Index every filing this company has on file, recent plus the archives.
+    const index = new Map();
+    const addBlock = (b) => {
+      if (!b || !b.accessionNumber) return;
+      for (let i = 0; i < b.accessionNumber.length; i++) {
+        index.set(b.accessionNumber[i].replace(/-/g, ''), {
+          form: b.form[i],
+          filingDate: b.filingDate[i],
+          reportDate: b.reportDate ? b.reportDate[i] : null,
+          primaryDocDescription: b.primaryDocDescription ? b.primaryDocDescription[i] : null,
+        });
+      }
+    };
+    addBlock(sub.filings && sub.filings.recent);
+
+    const missing = () => items.some((it) => !index.has(it.accession));
+    if (missing() && sub.filings && Array.isArray(sub.filings.files)) {
+      for (const f of sub.filings.files) {
+        if (!missing()) break;
+        const extra = await jsonGet(`https://data.sec.gov/submissions/${f.name}`, 'sec-' + f.name.replace(/\.json$/, ''));
+        addBlock(extra);
+      }
+    }
+
+    for (const it of items) {
+      const f = index.get(it.accession);
+      if (!f || !company) continue;
+      // R##.htm files are single statements inside the XBRL financial report.
+      const rMatch = it.file.match(/^R(\d+)\.htm$/i);
+      let title = secTitle(company, f.form, f.reportDate, f.filingDate, f.primaryDocDescription);
+      if (rMatch) {
+        title = `${secTitle(company, f.form, f.reportDate, f.filingDate, null)} (financial statement R${rMatch[1]})`;
+      }
+      out[it.url] = {
+        title,
+        publisher: `U.S. Securities and Exchange Commission (filing by ${company})`,
+        date: f.filingDate || null,
+        type: 'filing',
+        accession: accessionDashed(it.accession),
+      };
+    }
+  }
+  return out;
+}
+
 // ------------------------------------------------------------------- driving
 
 async function pool(items, n, worker) {
@@ -446,6 +606,14 @@ async function main() {
     writeCache(url, record);
   });
 
+  // -------------------------------------------------- authoritative passes
+  console.error('Resolving Federal Register documents...');
+  const frResolved = await resolveFederalRegister(urls);
+  console.error(`  ${Object.keys(frResolved).length} resolved`);
+  console.error('Resolving SEC EDGAR filings...');
+  const secResolved = await resolveSec(urls);
+  console.error(`  ${Object.keys(secResolved).length} resolved`);
+
   // ------------------------------------------------------------ assemble
   const overrides = MANUAL;
 
@@ -454,6 +622,7 @@ async function main() {
 
   for (const url of urls) {
     const ov = overrides[url];
+    const auth = secResolved[url] || frResolved[url] || null;
     const rec = readCache(url);
     const ex = rec && rec.extracted;
     let title = null;
@@ -468,16 +637,25 @@ async function main() {
       }
       date = ex.date || null;
     }
-    if (!title || title.length < 3 || /^(access denied|just a moment|error|forbidden|404|page not found|attention required)/i.test(title)) {
-      title = titleFromPath(url);
+    if (!title || title.length < 3 || JUNK_TITLE.test(title)) {
+      title = null;
+      date = null;
       unverified = true;
     }
 
+    // The publisher's own structured record beats anything scraped off a page.
+    if (auth) {
+      title = auth.title;
+      date = auth.date || date;
+      unverified = false;
+    }
+    if (!title) title = titleFromPath(url);
+
     const entry = {
       title,
-      publisher: guessPublisher(url, ex),
+      publisher: (auth && auth.publisher) || guessPublisher(url, ex),
       date: date || null,
-      type: guessType(url, rec),
+      type: (auth && auth.type) || guessType(url, rec),
       accessed: ACCESSED,
     };
     if (unverified) entry.unverified = true;

@@ -1,0 +1,192 @@
+/* ==========================================================================
+   The ten-minute walk (#/walk) and the start-here block on the landing page.
+   Tokens only; every class is prefixed wk-.
+   ========================================================================== */
+
+/* ---------- the walk: head ---------- */
+.wk { padding-bottom: 30px; }
+.wk-head { padding: clamp(32px, 6vh, 68px) 0 4px; }
+.wk-eyebrow { display: block; margin: 0 0 13px; }
+.wk-title {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(38px, 5vw, 64px); line-height: 1;
+  text-transform: uppercase; letter-spacing: 0.01em;
+  margin: 0 0 15px;
+}
+.wk-dek { font-size: 19px; line-height: 1.5; color: var(--ink-2); max-width: 34em; margin: 0 0 18px; }
+.wk-meta { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0; }
+.wk-meta .label { position: relative; }
+.wk-meta .label + .label::before { content: "·"; position: absolute; left: -11px; color: var(--line-2); }
+
+/* ---------- the walk: the numbered spine ---------- */
+.wk-list { list-style: none; margin: 34px 0 0; padding: 0; }
+.wk-step {
+  display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 0 24px;
+  scroll-margin-top: calc(var(--masthead) + 66px);
+}
+.wk-block { min-width: 0; padding: 0 0 46px; }
+
+.wk-mark { position: relative; }
+.wk-mark::before { /* the spine: one hairline segment per step, joined into a continuous line */
+  content: ""; position: absolute; right: 6px; top: 0; height: 100%; width: 1px; background: var(--line);
+}
+.wk-mark::after { /* the node on the line, level with the chapter label */
+  content: ""; position: absolute; right: 3px; top: 4px; width: 7px; height: 7px;
+  box-sizing: border-box; border-radius: 50%; background: var(--bg); border: 1.5px solid var(--line-2);
+  transition: background 0.2s, border-color 0.2s;
+}
+.wk-list .wk-step:last-child .wk-mark::before { height: 26px; }
+.wk-n {
+  position: absolute; right: 22px; top: 0;
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums; color: var(--muted);
+}
+.wk-step.is-past .wk-mark::after { background: var(--ink-2); border-color: var(--ink-2); }
+.wk-step.is-past .wk-n { color: var(--ink-2); }
+.wk-step.is-here .wk-mark::after { background: var(--accent); border-color: var(--accent); }
+.wk-step.is-here .wk-n { color: var(--accent-ink); font-weight: 500; }
+
+/* ---------- the walk: one block ---------- */
+.wk-where { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0 0 7px; }
+.wk-where .wk-stage { position: relative; }
+.wk-where .wk-stage::before { content: "·"; position: absolute; left: -10px; color: var(--line-2); }
+.wk-t {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(24px, 2.4vw, 31px); line-height: 1.06; letter-spacing: -0.004em;
+  margin: 0 0 13px; max-width: 15em;
+}
+.wk-p { max-width: var(--measure); line-height: 1.6; margin: 0 0 16px; }
+
+.wk-leaders {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 11px;
+  max-width: var(--measure); margin: 0 0 15px;
+  font-size: 15.5px; line-height: 1.5; color: var(--ink-2);
+}
+.wk-leaders .label { flex: 0 0 auto; }
+.wk-lead { font-weight: 600; color: var(--ink); }
+.wk-lead .chip { margin: 0 0 0 7px; }
+.wk-sep { font-style: normal; color: var(--line-2); }
+
+.wk-foot {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 10px 20px;
+  max-width: var(--measure); padding-top: 12px; border-top: 1px solid var(--line);
+}
+.wk-score {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-family: var(--font-mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+}
+.wk-pips { display: inline-flex; gap: 4px; }
+.wk-pips i { display: block; box-sizing: border-box; width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--line-2); }
+/* the chain strip's colours: amber only at 5 of 5 */
+.wk-score[data-rank="3"] .wk-pips i.on { background: var(--bar-3); border-color: var(--bar-3); }
+.wk-score[data-rank="4"] .wk-pips i.on { background: var(--bar-4); border-color: var(--bar-4); }
+.wk-score[data-rank="5"] .wk-pips i.on { background: var(--bar-5); border-color: var(--bar-5); }
+.wk-sc b { color: var(--ink); font-weight: 600; font-size: 13px; }
+.wk-score[data-rank="5"] .wk-sc, .wk-score[data-rank="5"] .wk-sc b { color: var(--accent-ink); }
+.wk-read {
+  margin-left: auto; font-family: var(--font-display); font-weight: 600;
+  font-size: 14px; letter-spacing: 0.02em; white-space: nowrap;
+  text-decoration: none; border-bottom: 1px solid var(--line-2); padding-bottom: 1px;
+}
+.wk-read::after { content: " \2192"; color: var(--muted); }
+.wk-read:hover { color: var(--accent-ink); border-bottom-color: var(--accent); }
+
+/* previous / next: phones only, at the end of each block */
+.wk-pn { display: none; }
+
+/* ---------- the walk: the end ---------- */
+.wk-end { margin-top: 6px; padding-top: 22px; border-top: 1px solid var(--line-2); max-width: var(--measure); }
+.wk-end-t { font-family: var(--font-display); font-weight: 600; font-size: 21px; line-height: 1.25; margin: 0 0 12px; }
+.wk-end-links { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 0; }
+.wk-end-links a {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-2); text-decoration: none; border: 1px solid var(--line-2); border-radius: 3px; padding: 8px 11px;
+}
+.wk-end-links a:hover { color: var(--accent-ink); border-color: var(--accent); }
+
+/* ---------- the walk: the thin progress rail (shown by src/modules/walk.js) ---------- */
+.wk-rail {
+  position: fixed; left: 0; right: 0; top: var(--masthead); z-index: 30;
+  padding: 8px clamp(16px, 4vw, 56px) 9px;
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+  transform: translateY(-110%); opacity: 0;
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+}
+.wk-rail[data-show="1"] { transform: none; opacity: 1; }
+.wk-rail-bar { height: 2px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.wk-rail-bar i { display: block; height: 100%; width: 0; background: var(--accent); }
+.wk-rail-line {
+  display: flex; align-items: baseline; gap: 12px; margin: 7px 0 0; min-width: 0;
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted);
+}
+.wk-rail-n { flex: 0 0 auto; color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+.wk-rail-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---------- start here: the landing-page chooser, under the hero ---------- */
+.wk-sh { border-top: 1px solid var(--line); padding: 16px 0 24px; }
+.wk-sh-h { display: block; margin: 0 0 12px; }
+.wk-sh-list { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 16px; margin: 0; padding: 0; }
+.wk-sh-list li { display: flex; flex-direction: column; min-width: 0; }
+.wk-sh-item {
+  flex: 1 1 auto; display: block; text-decoration: none;
+  border: 1px solid var(--line); border-radius: 3px; background: var(--bg-2);
+  padding: 11px 13px 13px; transition: border-color 0.15s, background 0.15s;
+}
+.wk-sh-item:hover { border-color: var(--line-2); background: var(--bg-3); }
+.wk-sh-t {
+  display: block; font-family: var(--font-display); font-weight: 700;
+  font-size: 15px; line-height: 1.2; letter-spacing: 0.01em; margin: 0 0 5px; text-wrap: balance;
+}
+.wk-sh-t::after { content: " \2192"; color: var(--muted); font-weight: 400; }
+.wk-sh-item:hover .wk-sh-t { color: var(--accent-ink); }
+.wk-sh-d { display: block; font-size: 14px; line-height: 1.4; color: var(--ink-2); }
+.wk-sh-more {
+  align-self: flex-start; margin-top: 6px;
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--line-2);
+}
+.wk-sh-more:hover { color: var(--accent-ink); border-bottom-color: var(--accent); }
+.wk-sh-more::after { content: " \2192"; }
+
+/* ---------- narrow ---------- */
+@media (max-width: 760px) {
+  .wk-sh-list { grid-template-columns: 1fr; gap: 8px; }
+  .wk-sh-t { font-size: 15.5px; }
+}
+@media (max-width: 900px) {
+  /* the number moves into the "Chapter 03" label; the spine keeps its line and node */
+  .wk-step { grid-template-columns: 20px minmax(0, 1fr); gap: 0 14px; scroll-margin-top: calc(var(--masthead) + 60px); }
+  .wk-block { padding-bottom: 38px; }
+  .wk-n { display: none; }
+  .wk-mark::before { right: auto; left: 3px; }
+  .wk-mark::after { right: auto; left: 0; }
+  .wk-dek { font-size: 17.5px; }
+  .wk-t { font-size: 26px; max-width: none; }
+  .wk-foot { gap: 10px 14px; }
+  .wk-read { margin-left: 0; }
+
+  .wk-pn { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 18px 0 0; }
+  .wk-pn a {
+    display: block; min-width: 0; text-decoration: none;
+    border: 1px solid var(--line-2); border-radius: 3px; background: var(--bg-2); padding: 9px 11px 10px;
+  }
+  .wk-pn a:hover { border-color: var(--accent); }
+  .wk-pn .wk-next { text-align: right; }
+  .wk-pn .label { display: block; margin-bottom: 3px; }
+  .wk-pn-t { display: block; font-family: var(--font-display); font-weight: 600; font-size: 14px; line-height: 1.25; overflow-wrap: anywhere; }
+  .wk-end-links a { font-size: 10.5px; padding: 8px 9px; }
+}
+@media (max-width: 420px) {
+  .wk-title { font-size: 33px; }
+  .wk-t { font-size: 23px; }
+  .wk-pn-t { font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wk-rail { transition: none; }
+}
+@media print {
+  .wk-rail, .wk-pn { display: none !important; }
+  .wk-step { break-inside: avoid; }
+}
