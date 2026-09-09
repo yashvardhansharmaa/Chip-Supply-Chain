@@ -1,10 +1,20 @@
-/* Specimen: the world, with the chokepoint sites pinned.
- * A sparse sphere under a faint graticule, coastlines drawn as dense polylines
- * from a coarse hand-written lat/lon table, and copper pins standing off the
- * surface at the two dozen towns the whole industry passes through.
+/* Specimen: the world, with the chain's chokepoint sites pinned.
+ *
+ * The land is filled, not outlined: continents are point-in-polygon fields
+ * of ink over a paler ocean, with the coastline drawn on top, so the
+ * shapes read as mass at the size the site draws this. A graticule of
+ * meridians every 30 degrees and parallels every 20 sits under both.
+ *
+ * Nineteen sites carry copper pins. Pin height is proportional to the
+ * chokepoint score of the chapter that site belongs to (0.055 per point),
+ * so the tallest pins stand over lithography, foundry, memory and
+ * packaging towns and the shorter ones over design, assembly and power.
  *
  * lat/lon -> xyz with Y up:  x = cos(lat) sin(lon), y = sin(lat), z = cos(lat) cos(lon)
- * so longitude 0 faces +Z and longitude 90E faces +X.
+ * so longitude 0 faces +Z and longitude 90E faces +X. The tilt below puts
+ * the first view over the Malacca Strait at about 3N 100E, which is the
+ * only place on Earth from which Taiwan, Korea, Japan, the Chinese coast,
+ * Penang, Singapore, Bengaluru and Abu Dhabi are visible at once.
  */
 PC.register('globe', function (p) {
   var parts = [], RAD = Math.PI / 180;
@@ -14,10 +24,10 @@ PC.register('globe', function (p) {
     return [c * Math.sin(b), Math.sin(a) * r, c * Math.cos(b)];
   }
 
-  // Walk a lat/lon list, unwrapping across the antimeridian and subdividing so no
-  // chord cuts inside the sphere by a visible amount.
-  function densify(list, r, step) {
-    var pts = [[list[0][0], list[0][1]]], prev = list[0][1], i, k;
+  // Unwrap a lat/lon ring across the antimeridian so its longitudes run
+  // continuously; both the coastline and the fill test use the same copy.
+  function unwrap(list) {
+    var pts = [[list[0][0], list[0][1]]], prev = list[0][1], i;
     for (i = 1; i < list.length; i++) {
       var lon = list[i][1];
       while (lon - prev > 180) lon -= 360;
@@ -25,7 +35,11 @@ PC.register('globe', function (p) {
       pts.push([list[i][0], lon]);
       prev = lon;
     }
-    var out = [];
+    return pts;
+  }
+
+  function densify(pts, r, step) {
+    var out = [], i, k;
     for (i = 0; i < pts.length - 1; i++) {
       var a = pts[i], b = pts[i + 1];
       var dLat = b[0] - a[0], dLon = (b[1] - a[1]) * Math.cos((a[0] + b[0]) / 2 * RAD);
@@ -36,24 +50,6 @@ PC.register('globe', function (p) {
     return out;
   }
 
-  function draw(list, r, per, tn) {
-    return PC.polyline({ pts: densify(list, r, 1.4), perUnit: per, tone: tn });
-  }
-
-  // ---------- the globe itself ----------
-  parts.push(PC.sphere({ r: 1, n: 26000, tone: 0.19 }));
-  // A sparse graticule: eight meridians stopped short of the poles so they do not
-  // knot together there, and parallels every twenty degrees.
-  var grat = [], g;
-  for (g = -60; g <= 60; g += 20) {
-    var cl = Math.cos(g * RAD);
-    grat.push(PC.T(PC.circle({ r: cl, perUnit: 175, tone: g === 0 ? 0.3 : 0.13 }), { pos: [0, Math.sin(g * RAD), 0] }));
-  }
-  for (g = 0; g < 360; g += 45) grat.push(draw([[-72, g], [72, g]], 1.0, 175, 0.13));
-  parts.push(PC.merge.apply(null, grat));
-
-  // ---------- coastlines ----------
-  var RC = 1.012;
   var LAND = [
     // Eurasia: Iberia -> Baltic -> Scandinavia -> Siberian Arctic -> Kamchatka ->
     // Korea -> China -> Indochina -> Malaya -> India -> Arabia -> Levant -> Greece -> Iberia
@@ -178,38 +174,130 @@ PC.register('globe', function (p) {
     [[18.6, 120.8], [16.0, 119.8], [14.3, 120.2], [13.8, 123.0], [15.5, 121.5], [17.5, 122.3], [18.6, 120.8]],
     [[9.8, 124.0], [7.0, 124.0], [5.9, 125.4], [7.3, 126.5], [9.8, 126.0], [9.8, 124.0]]
   ];
+
+  // Two of the rings are water inside Eurasia, not land: the Black Sea and
+  // the Caspian. Anything inside them is subtracted from the fill.
+  var HOLES = [1, 2];
+  // Taiwan and the Japanese islands are small enough at this scale that
+  // they need a denser fill and a heavier coast to survive.
+  var DENSE = { 10: 1, 11: 1, 12: 1, 13: 1, 14: 1.7 };
+
+  // ---------- prepare the rings ----------
+  var rings = [];
+  for (var c = 0; c < LAND.length; c++) {
+    var pts = unwrap(LAND[c]);
+    var b = { latMin: 90, latMax: -90, lonMin: 1e9, lonMax: -1e9 };
+    for (var i = 0; i < pts.length; i++) {
+      if (pts[i][0] < b.latMin) b.latMin = pts[i][0];
+      if (pts[i][0] > b.latMax) b.latMax = pts[i][0];
+      if (pts[i][1] < b.lonMin) b.lonMin = pts[i][1];
+      if (pts[i][1] > b.lonMax) b.lonMax = pts[i][1];
+    }
+    rings.push({ pts: pts, b: b, hole: HOLES.indexOf(c) >= 0, dense: DENSE[c] || 1 });
+  }
+
+  function inside(ring, lat, lon) {
+    var b = ring.b;
+    while (lon < b.lonMin) lon += 360;
+    while (lon > b.lonMax) lon -= 360;
+    if (lon < b.lonMin || lat < b.latMin || lat > b.latMax) return false;
+    var pts = ring.pts, m = pts.length, hit = false;
+    for (var q = 0, w = m - 1; q < m; w = q++) {
+      if ((pts[q][0] > lat) !== (pts[w][0] > lat) &&
+          lon < (pts[w][1] - pts[q][1]) * (lat - pts[q][0]) / (pts[w][0] - pts[q][0]) + pts[q][1]) hit = !hit;
+    }
+    return hit;
+  }
+
+  // ---------- the ocean ----------
+  var RS = 1.0, RF = 1.006, RC = 1.013;
+  parts.push(PC.sphere({ r: RS, n: 17000, tone: 0.11 }));
+
+  // ---------- the graticule ----------
+  var grat = [], g;
+  for (g = -60; g <= 60; g += 20) {
+    var cl = Math.cos(g * RAD);
+    grat.push(PC.T(PC.circle({ r: cl * RS, perUnit: 150, tone: g === 0 ? 0.30 : 0.15 }), { pos: [0, Math.sin(g * RAD) * RS, 0] }));
+  }
+  for (g = 0; g < 360; g += 30) {
+    grat.push(PC.polyline({ pts: densify([[-78, g], [78, g]], RS, 1.6), perUnit: 150, tone: g === 0 ? 0.24 : 0.15 }));
+  }
+  parts.push(PC.merge.apply(null, grat));
+
+  // ---------- land fill ----------
+  // Rejection-sampled inside each ring's bounding box, equal-area in
+  // sin(latitude), at a fixed number of points per steradian.
+  var DENSITY = 6100, fill = [], n = 0;
+  var alloc = new Float32Array(46000 * 4);
+  for (c = 0; c < rings.length; c++) {
+    var R = rings[c];
+    if (R.hole) continue;
+    var s0 = Math.sin(R.b.latMin * RAD), s1 = Math.sin(R.b.latMax * RAD);
+    var boxArea = (s1 - s0) * (R.b.lonMax - R.b.lonMin) * RAD;
+    var trials = Math.round(boxArea * DENSITY * R.dense);
+    for (var t = 0; t < trials && n < 46000; t++) {
+      var s = s0 + PC.rnd() * (s1 - s0);
+      var lat = Math.asin(s) / RAD, lon = R.b.lonMin + PC.rnd() * (R.b.lonMax - R.b.lonMin);
+      if (!inside(R, lat, lon)) continue;
+      if (c === 0 && (inside(rings[1], lat, lon) || inside(rings[2], lat, lon))) continue;
+      var v = ll(lat, lon, RF);
+      alloc[n * 4] = v[0]; alloc[n * 4 + 1] = v[1]; alloc[n * 4 + 2] = v[2];
+      alloc[n * 4 + 3] = 0.34;
+      n++;
+    }
+  }
+  parts.push(alloc.subarray(0, n * 4));
+
+  // ---------- coastlines ----------
   var coast = [];
-  for (var c = 0; c < LAND.length; c++) coast.push(draw(LAND[c], RC, 1450, 1));
+  for (c = 0; c < rings.length; c++) {
+    coast.push(PC.polyline({
+      pts: densify(rings[c].pts, RC, 1.2),
+      perUnit: 900 * rings[c].dense,
+      tone: rings[c].hole ? 0.7 : 1
+    }));
+  }
   parts.push(PC.merge.apply(null, coast));
 
-  // ---------- chokepoint pins ----------
-  // name, lat, lon, pin height (varied so neighbouring towns stay separate)
+  // ---------- the chokepoint pins ----------
+  // name, lat, lon, the chapter it belongs to, that chapter's chokepoint score
   var SITES = [
-    ['Veldhoven', 51.42, 5.40, 0.27], ['Oberkochen', 48.78, 10.10, 0.13], ['Dresden', 51.05, 13.74, 0.20],
-    ['San Diego', 32.72, -117.16, 0.18], ['Hillsboro', 45.52, -122.99, 0.23], ['Boise', 43.62, -116.20, 0.12],
-    ['Phoenix', 33.45, -112.07, 0.25], ['Austin', 30.27, -97.74, 0.15],
-    ['Hsinchu', 24.80, 120.97, 0.27], ['Tainan', 22.99, 120.21, 0.12], ['Kaohsiung', 22.63, 120.30, 0.19],
-    ['Icheon', 37.28, 127.44, 0.25], ['Pyeongtaek', 36.99, 127.11, 0.14],
-    ['Kumamoto', 32.80, 130.71, 0.21], ['Yokkaichi', 34.97, 136.62, 0.15], ['Tokyo', 35.68, 139.69, 0.26],
-    ['Shanghai', 31.23, 121.47, 0.17], ['Beijing', 39.90, 116.41, 0.24], ['Wuhan', 30.59, 114.31, 0.11],
-    ['Shenzhen', 22.54, 114.06, 0.22], ['Penang', 5.41, 100.34, 0.13], ['Singapore', 1.35, 103.82, 0.21],
-    ['Bengaluru', 12.97, 77.59, 0.18], ['Abu Dhabi', 24.45, 54.38, 0.16]
+    ['Veldhoven', 51.42, 5.40, 5],       // 05 lithography
+    ['Oberkochen', 48.78, 10.10, 5],     // 05 lithography optics
+    ['Hsinchu', 24.80, 120.97, 5],       // 10 foundries
+    ['Tainan', 22.99, 120.21, 5],        // 10 foundries
+    ['Kaohsiung', 22.63, 120.30, 5],     // 12 advanced packaging
+    ['Icheon', 37.28, 127.44, 5],        // 11 memory
+    ['Pyeongtaek', 36.99, 127.11, 5],    // 11 memory
+    ['Kumamoto', 32.80, 130.71, 5],      // 10 foundries
+    ['Yokkaichi', 34.97, 136.62, 5],     // 11 memory
+    ['Tokyo', 35.68, 139.69, 4],         // 07 deposition and etch
+    ['Shanghai', 31.23, 121.47, 5],      // 10 foundries
+    ['Penang', 5.41, 100.34, 4],         // 14 test and assembly
+    ['Singapore', 1.35, 103.82, 4],      // 14 test and assembly
+    ['Bengaluru', 12.97, 77.59, 4],      // 02 design and EDA
+    ['Abu Dhabi', 24.45, 54.38, 4],      // 16 data centers and power
+    ['Hillsboro', 45.52, -122.99, 5],    // 09 transistors and the front end
+    ['Phoenix', 33.45, -112.07, 5],      // 10 foundries
+    ['Austin', 30.27, -97.74, 4],        // 02 design and EDA
+    ['Boise', 43.62, -116.20, 5]         // 11 memory
   ];
 
   var pins = [];
   SITES.forEach(function (s) {
-    var lat = s[1], lon = s[2], h = s[3];
-    var a = ll(lat, lon, 1.0), b = ll(lat, lon, 1.0 + h);
-    pins.push(PC.line({ a: a, b: b, perUnit: 1600 }));
-    pins.push(PC.T(PC.sphere({ r: 0.018, n: 190 }), { pos: b }));
-    pins.push(PC.T(PC.T(PC.circle({ r: 0.032, perUnit: 950 }), { pos: [0, 1.004, 0] }), { rot: [Math.PI / 2 - lat * RAD, lon * RAD, 0] }));
+    var lat = s[1], lon = s[2], h = 0.055 * s[3];
+    var a = ll(lat, lon, RS), b = ll(lat, lon, RS + h);
+    pins.push(PC.line({ a: a, b: b, perUnit: 1500 }));
+    pins.push(PC.T(PC.sphere({ r: 0.0155, n: 130 }), { pos: b }));
+    // a ring on the ground, laid flat on the sphere at that point
+    pins.push(PC.T(PC.T(PC.circle({ r: 0.030, perUnit: 900 }), { pos: [0, RS + 0.004, 0] }), { rot: [Math.PI / 2 - lat * RAD, lon * RAD, 0] }));
   });
   parts.push(PC.accent(PC.merge.apply(null, pins), 1));
 
   return {
     cloud: PC.merge.apply(null, parts),
     spin: 0.06,
-    tilt: [0.78, -1.12, 0],
-    caption: 'The world with the chokepoints pinned in copper: Veldhoven and Oberkochen in Europe, Hsinchu, Tainan and Kaohsiung on Taiwan, Icheon and Pyeongtaek in Korea, Kumamoto, Yokkaichi and Tokyo in Japan, the Chinese fabs, Penang and Singapore, Bengaluru and Abu Dhabi, and, round the far side, the American sites from Hillsboro to Austin.'
+    tilt: [-0.30, -1.75, 0],
+    caption: 'The world with nineteen chokepoint towns pinned in copper, the pins standing in proportion to how narrow each town’s link in the chain is. The first view looks down on the Malacca Strait: Hsinchu, Tainan and Kaohsiung on Taiwan, Icheon and Pyeongtaek in Korea, Kumamoto, Yokkaichi and Tokyo in Japan, Shanghai, Penang, Singapore, Bengaluru and Abu Dhabi. Veldhoven, Oberkochen and the four American sites come round as it turns.'
   };
 });

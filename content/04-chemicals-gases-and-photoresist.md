@@ -106,7 +106,7 @@ The consumables are tighter still. As of 2021 five firms held more than 60 perce
 
 ## The chokepoint
 
-Twice since 2019 a supplier country has been cut off, and neither time did a fab stop.
+Twice since 2019 the industry has lost a supplier country, and neither time did a fab stop.
 
 In July 2019 Japan put photoresist, hydrogen fluoride and fluorinated polyimide under individual export licences for South Korea. It had supplied more than 90 percent of Korean imports of two of the three, and hydrogen fluoride exports fell 87.9 percent ([source](https://www.rieti.go.jp/en/columns/v01_0201.html)). Korea then spent five years funding domestic substitutes, which is what materials controls usually produce.
 
@@ -118,7 +118,7 @@ None of this touches silicon logic. Germanium goes into fibre optics, infrared o
 
 {{figure:germanium-price}}
 
-The slower risk is regulatory. The five member states behind the EU's PFAS restriction published a revised proposal on 20 August 2025, after working through more than 5,600 comments, and ECHA's committees now back an EU-wide restriction with targeted derogations rather than a flat ban, with the scientific evaluation due to finish by the end of 2026 ([source](https://echa.europa.eu/-/echa-supports-pfas-restriction-with-targeted-derogations)). Photoacid generators, etch gases, chamber liners, pump seals and filter membranes are all fluorinated. A carve-out looks likely, but it is not law yet.
+The slower risk is regulatory. The five member states behind the EU's PFAS restriction published a revised proposal on 20 August 2025, after working through more than 5,600 comments ([source](https://echa.europa.eu/-/echa-supports-pfas-restriction-with-targeted-derogations)). ECHA's committees now back an EU-wide restriction with targeted derogations instead of a flat ban, and the scientific evaluation is due to finish by the end of 2026 ([source](https://echa.europa.eu/-/echa-supports-pfas-restriction-with-targeted-derogations)). Photoacid generators, etch gases, chamber liners, pump seals and filter membranes are all fluorinated. We think a carve-out is likely, but it is not law yet.
 
 ## Key evaluation criteria
 
@@ -130,4 +130,4 @@ The slower risk is regulatory. The five member states behind the EU's PFAS restr
 
 ## Takeaways
 
-Photoresist is the sharpest point here: about 90 percent Japanese ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)), with one of the largest suppliers now 84 percent owned by a Japanese state fund ([source](https://www.jiccapital.co.jp/en/news/.assets/E_20240417_JIC_JICC_PressRelease.pdf)). Individual molecules are far more concentrated than the industry selling them: neon and nitrogen trifluoride come from a handful of plants. China's gallium, germanium and antimony controls are real leverage over compound semiconductors and optics, but not over a silicon GPU, and the gallium suspension runs for one year from November 2025 ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gallium.pdf)). Watch the qualification cycle, not the spot price: every disruption so far was absorbed within a year, and each added a second source somewhere.
+Photoresist is the sharpest point here: about 90 percent Japanese ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)), with one of the largest suppliers now 84 percent owned by a Japanese state fund ([source](https://www.jiccapital.co.jp/en/news/.assets/E_20240417_JIC_JICC_PressRelease.pdf)). Individual molecules are far more concentrated than the industry selling them: neon and nitrogen trifluoride come from a handful of plants. China's gallium, germanium and antimony controls are real leverage over compound semiconductors and optics, but not over a silicon GPU, and the gallium suspension runs for one year from November 2025 ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gallium.pdf)). Watch the qualification cycle rather than the spot price. Every disruption so far was absorbed within a year, and each one added a second source somewhere.

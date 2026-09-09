@@ -82,7 +82,7 @@ PC.register('sem-column', function (p) {
     // the coil window
     var c0 = rBore + (rOut - rBore) * 0.30, c1 = rOut - (rOut - rBore) * 0.14;
     var w0 = y0 + h * 0.16, w1 = y1 - h * 0.16;
-    g.push(face(c0, c1, w0, w1, 0.46, 2.2));
+    g.push(face(c0, c1, w0, w1, 0.40, 1.8));
     g.push(faceEdge(c0, c1, w0, w1, 1, 380));
     for (var k = 1; k < 4; k++) g.push(faceLine(c0, c1, w0 + (w1 - w0) * k / 4, 0.75));
     // pole pieces: the narrow gap that does the focusing
@@ -150,7 +150,7 @@ PC.register('sem-column', function (p) {
   add(tube(0.20, -0.26, -0.10, 1200, 0.24));
   add(ring(0.20, -0.10), ring(0.20, -0.26));
   add(face(0.094, 0.20, -0.26, -0.10, 0.30, 2.1), faceEdge(0.094, 0.20, -0.26, -0.10, 1));
-  add(face(0.118, 0.184, -0.238, -0.122, 0.46, 2.2), faceEdge(0.118, 0.184, -0.238, -0.122, 1, 380));
+  add(face(0.118, 0.184, -0.238, -0.122, 0.40, 1.8), faceEdge(0.118, 0.184, -0.238, -0.122, 1, 380));
   for (i = 1; i < 3; i++) add(faceLine(0.118, 0.184, -0.238 + 0.116 * i / 3, 0.75));
   // objective lens and its conical pole piece
   add(lens(-0.56, -0.30, 0.44, 0.115, 4000));
@@ -182,7 +182,16 @@ PC.register('sem-column', function (p) {
 
   var yW = -0.98, wafR = 0.40;
   add(PC.T(PC.disc({ r: wafR, n: 2400, tone: 0.2 }), { pos: [0, yW, 0] }));
-  add(ringFull(wafR, yW + 0.002, 520, 1));
+  var wr = ringFull(wafR, yW + 0.002, 560, 1), wk = [];
+  for (i = 0; i < wr.length; i += 4) {                                  // bite a notch out of the rim
+    var nx = wr[i] - wafR * Math.cos(-1.05), nz = wr[i + 2] - wafR * Math.sin(-1.05);
+    if (nx * nx + nz * nz < 0.030 * 0.030) continue;
+    wk.push(wr[i], wr[i + 1], wr[i + 2], wr[i + 3]);
+  }
+  add(new Float32Array(wk));
+  add(PC.polyline({ pts: [[wafR * Math.cos(-1.05) - 0.026, yW + 0.002, wafR * Math.sin(-1.05) + 0.014],
+                          [wafR * Math.cos(-1.05) - 0.004, yW + 0.002, wafR * Math.sin(-1.05)],
+                          [wafR * Math.cos(-1.05) - 0.026, yW + 0.002, wafR * Math.sin(-1.05) - 0.014]], perUnit: 700, tone: 1 }));
   var dg = [];
   for (var gx = -4; gx <= 4; gx++) for (var gz = -4; gz <= 4; gz++) {
     var cx = gx * 0.092, cz = gz * 0.076;
@@ -195,15 +204,13 @@ PC.register('sem-column', function (p) {
   add(ringFull(wafR + 0.028, yW - 0.052, 340, 0.9));
   add(PC.T(PC.box({ w: 0.98, h: 0.070, d: 0.86, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 1900, tone: 0.17 }), { pos: [0, yW - 0.088, 0] }));
   add(PC.T(PC.boxEdges({ w: 0.98, h: 0.070, d: 0.86, perUnit: 300, tone: 0.92 }), { pos: [0, yW - 0.088, 0] }));
-  add(PC.T(PC.box({ w: 1.26, h: 0.070, d: 0.62, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 1900, tone: 0.15 }), { pos: [0, yW - 0.165, 0] }));
-  add(PC.T(PC.boxEdges({ w: 1.26, h: 0.070, d: 0.62, perUnit: 300, tone: 0.92 }), { pos: [0, yW - 0.165, 0] }));
   for (i = -1; i <= 1; i += 2) {
-    add(PC.T(PC.box({ w: 1.34, h: 0.036, d: 0.060, n: 520, tone: 0.45 }), { pos: [0, yW - 0.222, i * 0.34] }));
-    add(PC.T(PC.line({ a: [-0.67, 0, 0], b: [0.67, 0, 0], perUnit: 300, tone: 0.9 }), { pos: [0, yW - 0.204, i * 0.34] }));
-    add(PC.T(PC.box({ w: 0.055, h: 0.034, d: 0.72, n: 420, tone: 0.45 }), { pos: [i * 0.42, yW - 0.128, 0] }));
+    add(PC.T(PC.box({ w: 1.30, h: 0.034, d: 0.056, n: 520, tone: 0.45 }), { pos: [0, yW - 0.147, i * 0.33] }));
+    add(PC.T(PC.line({ a: [-0.65, 0, 0], b: [0.65, 0, 0], perUnit: 300, tone: 0.9 }), { pos: [0, yW - 0.130, i * 0.33] }));
+    add(PC.T(PC.box({ w: 0.050, h: 0.032, d: 0.70, n: 420, tone: 0.45 }), { pos: [i * 0.41, yW - 0.128, 0] }));
   }
-  add(PC.T(PC.box({ w: 1.44, h: 0.085, d: 1.14, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 2600, tone: 0.14 }), { pos: [0, yW - 0.282, 0] }));
-  add(PC.T(PC.boxEdges({ w: 1.44, h: 0.085, d: 1.14, perUnit: 280, tone: 0.9 }), { pos: [0, yW - 0.282, 0] }));
+  add(PC.T(PC.box({ w: 1.42, h: 0.090, d: 1.10, faces: ['py', 'px', 'nx', 'pz', 'nz'], n: 2800, tone: 0.14 }), { pos: [0, yW - 0.210, 0] }));
+  add(PC.T(PC.boxEdges({ w: 1.42, h: 0.090, d: 1.10, perUnit: 280, tone: 0.9 }), { pos: [0, yW - 0.210, 0] }));
   // interferometer mirror bars on two sides of the chuck: this is a metrology tool
   add(PC.T(PC.box({ w: 0.020, h: 0.055, d: 0.80, n: 480, tone: 0.62 }), { pos: [-wafR - 0.048, yW - 0.020, 0] }));
   add(PC.T(PC.boxEdges({ w: 0.020, h: 0.055, d: 0.80, perUnit: 340, tone: 1 }), { pos: [-wafR - 0.048, yW - 0.020, 0] }));
@@ -221,8 +228,8 @@ PC.register('sem-column', function (p) {
     for (i = 0; i < ENV.length; i++) pts.push(ax ? [s * ENV[i][1], ENV[i][0], 0] : [0, ENV[i][0], s * ENV[i][1]]);
     env.push(PC.polyline({ pts: pts, perUnit: 260, tone: 1 }));
   }
-  add(PC.accent(PC.merge.apply(null, env), 0.6));
-  add(PC.accent(PC.line({ a: [0, 1.268, 0], b: [0, yW, 0], perUnit: 320, tone: 1 }), 0.7));
+  add(PC.accent(PC.merge.apply(null, env), 0.72));
+  add(PC.accent(PC.line({ a: [0, 1.268, 0], b: [0, yW, 0], perUnit: 320, tone: 1 }), 0.85));
   add(PC.accent(PC.T(PC.disc({ r: 0.016, n: 200 }), { pos: [0, yW + 0.006, 0] }), 1));
   add(PC.accent(PC.T(PC.circle({ r: 0.050, perUnit: 800 }), { pos: [0, yW + 0.005, 0] }), 0.85));
   var se = [];

@@ -38,17 +38,17 @@ PC.register('die-floorplan', function (p) {
   function vline(x, z0, z1, per, tn) { return PC.line({ a: [x, yTop, z0], b: [x, yTop, z1], perUnit: per, tone: tn }); }
 
   // ---------- the slab ----------
-  add(PC.T(PC.box({ w: W, h: T, d: D, faces: ['px', 'nx', 'pz', 'nz'], n: 5200, tone: 0.30 }), { pos: [0, 0, 0] }));
+  add(PC.T(PC.box({ w: W, h: T, d: D, faces: ['px', 'nx', 'pz', 'nz'], n: 2600, tone: 0.22 }), { pos: [0, 0, 0] }));
   add(fill(-W / 2, -D / 2, W / 2, D / 2, 13000, 0.10));            // the field between blocks
   add(rect(-W / 2, -D / 2, W / 2, D / 2, 46, 1));                  // die edge
-  add(rect(-W / 2 + 0.45, -D / 2 + 0.45, W / 2 - 0.45, D / 2 - 0.45, 22, 0.55));   // seal ring
+  add(rect(-W / 2 + 0.30, -D / 2 + 0.30, W / 2 - 0.30, D / 2 - 0.30, 22, 0.55));   // seal ring
 
   // ---------- memory: 6 controllers and their HBM PHY down each long edge ----------
   var phyW = 2.5, mcW = 1.5;
   [-1, 1].forEach(function (s) {
-    var xa = s * (W / 2 - phyW), xb = s * (W / 2 - 0.55);          // PHY, hard against the edge
+    var xa = s * (W / 2 - phyW), xb = s * (W / 2 - 0.78);          // PHY, hard against the edge
     for (var m = 0; m < 6; m++) {
-      var z0 = -15.4 + m * 5.15, z1 = z0 + 4.7;
+      var z0 = -13.6 + m * 4.55, z1 = z0 + 4.1;
       add(fill(Math.min(xa, xb), z0, Math.max(xa, xb), z1, 620, 0.34));
       add(rect(Math.min(xa, xb), z0, Math.max(xa, xb), z1, 30, 0.95));
       for (var k = 1; k <= 7; k++) {                               // the PHY's repeated lanes
@@ -115,15 +115,11 @@ PC.register('die-floorplan', function (p) {
   }
   add(PC.accent(hline(-11.9, 11.9, -13.85, 30, 1), 0.55));         // the bus behind it
   // the neighbouring die, cut off: its edge, its own interface and one row of tiles
-  var nz1 = -D / 2 - 0.55, nz0 = nz1 - 3.2;
-  add(fill(-W / 2, nz0, W / 2, nz1, 1400, 0.09));
-  add(rect(-W / 2, nz0, W / 2, nz1, 40, 0.7));
-  add(PC.accent(fill(-11.9, nz1 - 1.9, 11.9, nz1, 1500, 1), 0.24));
-  add(PC.accent(rect(-11.9, nz1 - 1.9, 11.9, nz1, 30, 1), 0.7));
-  for (var t = 0; t < 12; t++) {
-    var tx = -9.5 + t * 1.6;
-    add(rect(tx, nz0 + 0.2, tx + 1.25, nz1 - 2.2, 18, 0.45));
-  }
+  var nz1 = -D / 2 - 0.35, nz0 = nz1 - 2.3;
+  add(fill(-W / 2, nz0, W / 2, nz1, 800, 0.08));
+  add(rect(-W / 2, nz0, W / 2, nz1, 34, 0.55));
+  add(PC.accent(fill(-11.9, nz1 - 1.85, 11.9, nz1, 1400, 1), 0.22));
+  add(PC.accent(rect(-11.9, nz1 - 1.85, 11.9, nz1, 26, 1), 0.6));
 
   return {
     cloud: PC.merge.apply(null, parts),
@@ -132,7 +128,7 @@ PC.register('die-floorplan', function (p) {
     caption: 'The floorplan of a GPU die: 26 by 33 mm, one whole reticle field. ' +
       '144 compute tiles sit in eight clusters, four above the L2 cache band and four below; ' +
       'twelve memory controllers and their HBM PHYs run down the two long edges; the PCI Express ' +
-      'interface and the NVLink ports line the top edge. The copper strip along the bottom edge is ' +
-      'the die-to-die interface, and the sliver beyond it is the neighbouring die it talks to.'
+      'interface and the NVLink ports fill one short edge. The copper strip on the other short edge is ' +
+      'the die-to-die interface, and the sliver past it is the edge of the die it talks to.'
   };
 });

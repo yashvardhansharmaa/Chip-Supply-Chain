@@ -126,9 +126,9 @@ SRAM is the scaling failure that hurts AI chips most. TSMC claims 22 percent mor
 
 ## The chokepoint
 
-The front end is not a single chokepoint the way EUV is. It is where every other chokepoint gets cashed in, and what is scarce is the recipe.
+No single machine makes the front end a chokepoint. The scarce thing is the recipe: which steps, in which order, on which tools.
 
-China shows what that recipe costs. Money is not the constraint: the third National Integrated Circuit Fund raised 344 billion yuan, about $47 billion, in May 2024 ([source](https://asia.nikkei.com/spotlight/supply-chain/china-launches-47bn-chip-fund-to-counter-u.s.-restrictions)). Tools are. A Shanghai state firm began building domestic immersion scanners in 2026, at single-digit annual volumes ([source](https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/)), which is enough to keep SMIC's DUV multipatterning lines running and nothing like enough to replace ASML. EUV is further off again: China has announced $43 billion for domestic development, and CSIS still reads working systems as out of reach ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).
+China shows what that recipe costs. It has the money. The third National Integrated Circuit Fund raised 344 billion yuan, about $47 billion, in May 2024 ([source](https://asia.nikkei.com/spotlight/supply-chain/china-launches-47bn-chip-fund-to-counter-u.s.-restrictions)). What it lacks is tools. A Shanghai state firm began building domestic immersion scanners in 2026, at single-digit annual volumes ([source](https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/)), enough to keep SMIC's DUV multipatterning lines running and nowhere near enough to replace ASML. EUV is further off again: China has announced $43 billion for domestic development, and CSIS still reads working systems as out of reach ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).
 
 See Lithography and Geopolitics.
 

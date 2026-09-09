@@ -92,9 +92,9 @@ Most of it happens in a vacuum chamber: a radio-frequency field strips electrons
 
 - **Conductor etch** cuts gates, metals and silicon, $6.5 billion in 2019, led by Lam ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 - **Dielectric etch** cuts the oxides and nitrides between them, $4.3 billion in 2019, led by Tokyo Electron ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
-- **High-aspect-ratio etch** is what memory lives or dies by: a 3D NAND channel or DRAM capacitor is a hole far deeper than it is wide that has to come out straight. Lam chills the wafer to sharpen the profile, and says Cryo 3.0 holds critical-dimension deviation under 0.1 percent down channels 10 microns deep ([source](https://newsroom.lamresearch.com/2024-07-31-Lam-Research-Introduces-Lam-Cryo-TM-3-0-Cryogenic-Etch-Technology-to-Accelerate-Scaling-of-3D-NAND-for-the-AI-Era)).
+- **High-aspect-ratio etch** decides whether memory works at all: a 3D NAND channel or DRAM capacitor is a hole far deeper than it is wide that has to come out straight. Lam chills the wafer to sharpen the profile, and says Cryo 3.0 holds critical-dimension deviation under 0.1 percent down channels 10 microns deep ([source](https://newsroom.lamresearch.com/2024-07-31-Lam-Research-Introduces-Lam-Cryo-TM-3-0-Cryogenic-Etch-Technology-to-Accelerate-Scaling-of-3D-NAND-for-the-AI-Era)).
 
-Three AI-specific pulls.
+AI raises the difficulty in three specific places.
 
 - **Gate-all-around** needs isotropic etch, which cuts sideways, to release the silicon nanosheets from the silicon-germanium between them, and BIS ties its dry etch controls to exactly that ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)).
 - **HBM** needs deep through-silicon vias, which BIS defines as etch at 10:1 or greater above 7 microns per minute ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
@@ -106,7 +106,7 @@ Three AI-specific pulls.
 
 SEMI put global equipment billings at $135.1 billion in 2025, up 15 percent from $117.1 billion, with wafer processing equipment up 12 percent ([source](https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025)).
 
-Within deposition and etch there is no single ASML. The share chart in Tokyo Electron's own results presentation puts it at 23 percent of dry etch, 27 percent of deposition systems and 15 percent of ALD in 2025, against 91 percent of coater/developer ([source](https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf)). A near-monopoly in track tools; an ordinary share in etch and deposition.
+Within deposition and etch there is no single ASML. The share chart in Tokyo Electron's own results presentation puts it at 23 percent of dry etch, 27 percent of deposition systems and 15 percent of ALD in 2025, against 91 percent of coater/developer ([source](https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf)).
 
 ASM International is the specialist. Its 2025 revenue was a record EUR 3.2 billion, driven by customers building 2 nm gate-all-around capacity, with molybdenum ALD entering volume production ([source](https://www.asm.com/media/yvxbavwe/20260303-asm-reports-q4-and-full-year-2025-results.pdf)).
 
@@ -121,7 +121,7 @@ China is the largest customer and the fastest-improving competitor at once. It b
 - **Applied Materials**: 28 percent in the third fiscal quarter of 2026, down from 35 percent ([source](https://www.globenewswire.com/news-release/2026/08/13/3344890/0/en/applied-materials-announces-third-quarter-2026-results.html)).
 - **ASM International**: more than 30 percent of 2025 revenue ([source](https://www.asm.com/media/yvxbavwe/20260303-asm-reports-q4-and-full-year-2025-results.pdf)).
 
-Domestic toolmakers cut both ways. Between 2019 and 2024 China-based suppliers went from 2 to 7 percent of deposition and from under 3 to about 9 percent of etch and clean, 11 percent in dry etch alone. In ALD they gained nothing and stayed under 1 percent ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). AMEC, the biggest of them, turned over RMB 12.385 billion in 2025, up 36.6 percent, and spent RMB 3.744 billion on research, 30.2 percent of sales ([source](https://www.amec-inc.com/news/708.html)).
+Between 2019 and 2024 China-based suppliers went from 2 to 7 percent of deposition and from under 3 to about 9 percent of etch and clean, 11 percent in dry etch alone. In ALD they gained nothing and stayed under 1 percent ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). AMEC, the biggest of them, turned over RMB 12.385 billion in 2025, up 36.6 percent, and spent RMB 3.744 billion on research, 30.2 percent of sales ([source](https://www.amec-inc.com/news/708.html)).
 
 The controls tightened in four moves.
 
@@ -130,7 +130,7 @@ The controls tightened in four moves.
 - **December 2024.** BIS controlled 24 more types of equipment and three types of software, added 140 entities and wrote a foreign direct product rule that reaches tools built outside the United States ([source](https://www.bis.gov/press-release/commerce-strengthens-export-controls-restrict-chinas-capability-produce-advanced-semiconductors-military)). The new entries take in TSV etch and deposition into features deeper than 200:1 ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
 - **September 2025.** The Affiliates Rule extended Entity List restrictions to any company at least 50 percent owned by a listed entity ([source](https://www.govinfo.gov/content/pkg/FR-2025-09-30/pdf/2025-19001.pdf)); BIS then stayed it to 9 November 2026 ([source](https://www.govinfo.gov/content/pkg/FR-2025-11-12/pdf/2025-19846.pdf)).
 
-Enforcement has bite: Applied Materials took a $253 million charge to settle an export controls matter ([source](https://www.globenewswire.com/news-release/2026/08/13/3344890/0/en/applied-materials-announces-third-quarter-2026-results.html)).
+Applied Materials took a $253 million charge to settle an export controls matter ([source](https://www.globenewswire.com/news-release/2026/08/13/3344890/0/en/applied-materials-announces-third-quarter-2026-results.html)).
 
 {{figure:china-tool-share}}
 
@@ -148,4 +148,4 @@ This is a real chokepoint but a softer one than lithography. Three or four credi
 
 ## Takeaways
 
-Deposition and etch are the volume business of a fab: over a thousand steps per wafer, four American, Japanese and Dutch firms taking most of the money, and no monopoly like ASML's in lithography. The AI roadmap raises difficulty faster than tool count, because gate-all-around, HBM and backside power want better selectivity and deeper holes, not more chambers. China has closed the gap fastest here and slowest in ALD, which is where the next two logic nodes are won.
+Deposition and etch are the volume business of a fab: over a thousand steps per wafer, four American, Japanese and Dutch firms taking most of the money, and no monopoly like ASML's in lithography. The AI roadmap raises difficulty faster than tool count, because gate-all-around, HBM and backside power want better selectivity and deeper holes, not more chambers. China has closed the gap fastest here and slowest in ALD, the tool the next two logic nodes depend on.

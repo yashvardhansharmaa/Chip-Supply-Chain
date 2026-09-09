@@ -105,19 +105,22 @@ PC.register('probe-card', function (p) {
 
   // the probes themselves: an area array over a two-by-two block of dies,
   // bowed between the guide plates
-  var needles = [], nx = 8, nz = 10;
+  var needles = [], nx = 7, nz = 6;
   for (var gx = -1; gx <= 0; gx++) for (var gz = -1; gz <= 0; gz++) {
     var ox = (gx + 0.5) * dw, oz = (gz + 0.5) * dh;
     for (var a1 = 0; a1 < nx; a1++) for (var b1 = 0; b1 < nz; b1++) {
-      var qx = ox + (a1 - (nx - 1) / 2) * (dw * 0.80 / (nx - 1));
-      var qz = oz + (b1 - (nz - 1) / 2) * (dh * 0.80 / (nz - 1));
-      var th = PC.rnd() * Math.PI * 2, bo = 0.011 + PC.rnd() * 0.006;
+      var qx = ox + (a1 - (nx - 1) / 2) * (dw * 0.82 / (nx - 1));
+      var qz = oz + (b1 - (nz - 1) / 2) * (dh * 0.82 / (nz - 1));
+      var th = PC.rnd() * Math.PI * 2, bo = 0.012 + PC.rnd() * 0.007;
+      // the shank, faint, so a few hundred wires stay grey rather than black
       needles.push(PC.polyline({
-        pts: [[qx, yTip, qz], [qx, yLo + tG * 0.4, qz],
+        pts: [[qx, yTip + 0.022, qz], [qx, yLo + tG * 0.4, qz],
               [qx + bo * Math.cos(th), (yLoTop + yUp) / 2, qz + bo * Math.sin(th)],
               [qx, yUp + tG * 0.6, qz], [qx, yUpTop + 0.004, qz]],
-        perUnit: 150, tone: 0.5
+        perUnit: 105, tone: 0.32
       }));
+      // the tip, where it touches the pad
+      needles.push(seg([qx, yTip, qz], [qx, yTip + 0.024, qz], 340, 0.75));
     }
   }
   add(PC.merge.apply(null, needles));
