@@ -97,7 +97,7 @@ The individual steps are ordinary. But one cracked joint scraps a package holdin
 
 TSMC has run CoWoS in volume since 2012 ([source](https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm)). CoWoS-S wires most finely, but its interposer is one unbroken piece of silicon whose yield falls as the area grows, so CoWoS-L replaces the slab with fine wiring and small silicon bridges only where the wiring is dense. Intel's EMIB buries the same bridge idea in the resin substrate, and is the one credible second source when CoWoS is tight.
 
-Blackwell was the first high-volume design on CoWoS-L, and it went badly. The bridges carry the 10 TB/s link between the two compute dies, and they have to be placed to a tolerance that the package's warping fights ([source](https://semianalysis.com/2024/08/04/nvidias-blackwell-reworked-shipment/)).
+Blackwell was the first high-volume design on CoWoS-L, and it went badly. The bridges carrying the 10 TB/s link between the two compute dies have to be placed to a tolerance that the package's warping fights ([source](https://semianalysis.com/2024/08/04/nvidias-blackwell-reworked-shipment/)).
 
 ### 3D: SoIC, Foveros, X-Cube
 
@@ -111,9 +111,9 @@ Panel-level packaging swaps the round wafer for a rectangular panel and wastes f
 
 TSMC does not publish a CoWoS wafer number, and will not. Its 2024 symposium told investors capacity would grow at a 60 percent compound rate, and on the July 2024 earnings call C.C. Wei said he could not reach supply and demand balance ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf)).
 
-Fifteen months later he had still not given one. In October 2025 he would say only that TSMC would add capacity again in 2026, give the real figure the year after, and that front end and back end were both, in his word, tight ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf)).
+In October 2025 he would still say only that TSMC would add capacity again in 2026, give the real figure the year after, and that front end and back end were both, in his word, tight ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf)).
 
-The split is public; the total is not. Epoch AI weighs each designer's component use against world supply and puts Nvidia at 60.3 percent of the world's CoWoS in 2025, with a 90 percent confidence interval of 56.5 to 64.3; Google took 13.5, AMD 8.4 and Amazon 7.4 ([source](https://epoch.ai/data-insights/ai-chip-supply-chain-constraints)). Those four absorbed around 90 percent of all CoWoS and all HBM by value while taking about 12 percent of the world's advanced logic wafers, which is why packaging ran out and logic did not.
+The split is public; the total is not. Epoch AI weighs each designer's component use against world supply and puts Nvidia at 60.3 percent of all CoWoS in 2025, with a 90 percent confidence interval of 56.5 to 64.3; Google took 13.5, AMD 8.4 and Amazon 7.4 ([source](https://epoch.ai/data-insights/ai-chip-supply-chain-constraints)). Those four absorbed around 90 percent of all CoWoS and all HBM by value while taking about 12 percent of the world's advanced logic wafers, which is why packaging ran out and logic did not.
 
 {{figure:cowos-buyers}}
 
