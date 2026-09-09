@@ -62,7 +62,7 @@
 
 An AI accelerator is a stack of roughly a dozen separately made parts, and only one company in the world can assemble them at volume.
 
-This site takes that package apart, one chapter per stage, from the sand that becomes a wafer to the liquid-cooled rack it ends up in. Every chapter answers three questions: how the stage works, where the trade-offs sit, and who controls it and how hard they are to replace.
+This site takes that package apart, one chapter per stage, from the sand that becomes a wafer to the liquid-cooled rack it ends up in. Every chapter answers three questions: how the stage works, where the trade-offs sit, and which firms control it and how hard they would be to replace.
 
 ## Why AI chips?
 
@@ -92,7 +92,7 @@ The case for hardware as the binding constraint is empirical. In 2025 the four l
 
 All three HBM suppliers were effectively sold out, and component spending by those four designers rose from $22 billion in 2024 to $52 billion in 2025 ([source](https://epoch.ai/blog/introducing-the-ai-chip-components-explorer)). Sixty to 95 percent of measured performance gains in language models trace to scaling compute and data rather than to algorithms ([source](https://epoch.ai/blog/algorithmic-progress-in-language-models)).
 
-The counter-case is just as empirical. DeepSeek-V3 trained on 14.8 trillion tokens for 2.788 million H800 GPU-hours, an order of magnitude below what comparable Western models were understood to cost ([source](https://arxiv.org/abs/2412.19437)). The compute needed to reach a fixed performance level halves roughly every eight months, with a 95 percent confidence interval of 5 to 14 months ([source](https://epoch.ai/blog/algorithmic-progress-in-language-models)).
+The counter-case is just as empirical. DeepSeek-V3 trained on 14.8 trillion tokens for 2.788 million H800 GPU-hours, an order of magnitude below what comparable Western models were thought to cost ([source](https://arxiv.org/abs/2412.19437)). The compute needed to reach a fixed performance level halves roughly every eight months, with a 95 percent confidence interval of 5 to 14 months ([source](https://epoch.ai/blog/algorithmic-progress-in-language-models)).
 
 Both are true, and they do not cancel. Cheaper inference has raised total compute consumption rather than lowered it. The supply chain sets how much AI exists, who can afford it, and which governments can switch it off.
 

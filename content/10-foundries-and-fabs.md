@@ -96,7 +96,7 @@ Most wafers are not leading-edge. SEMI expects the foundry segment alone to reac
 
 TSMC intends to spend $165 billion in the United States, adding $100 billion in March 2025 to the $65 billion already committed in Phoenix, for three more fabs, two packaging plants and an R&D centre ([source](https://pr.tsmc.com/english/news/3210)). That is the largest foreign direct investment in US history, and it still does not move a gigafab.
 
-Allocation matters as much as capacity. TSMC does not auction it; it books it years ahead against prepayments, so the queue for a node is set before the node exists. The binding constraint is usually packaging, not wafers. See Advanced packaging.
+Allocation matters as much as capacity. TSMC does not auction capacity; it books it years ahead against prepayments, so the queue for a node is set before the node exists. The binding constraint is usually packaging, not wafers. See Advanced packaging.
 
 ## Who makes it
 

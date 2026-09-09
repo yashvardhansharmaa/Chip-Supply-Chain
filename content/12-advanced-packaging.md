@@ -26,7 +26,7 @@
     ],
     "chinaStatus": "China's back end is far stronger than its front end. JCET alone billed RMB 35.96 billion in 2024, and Chinese suppliers gained share in packaging and test tools while gaining none in ALD or lithography. Almost none of it is silicon-interposer 2.5D for AI accelerators.",
     "usStatus": "No domestic CoWoS at volume. Amkor is building a $7B packaging and test plant in Peoria with up to $407M of CHIPS funding, production from early 2028.",
-    "costSignal": "No public wafer counts. TSMC guided investors to a 60% CAGR in CoWoS capacity and adds more every year, but will not publish the absolute number",
+    "costSignal": "No public wafer counts. TSMC guided investors to a 60% CAGR in CoWoS capacity and adds more every year, but will not publish the absolute number. Epoch AI estimates Nvidia alone consumed 60.3% of the world's CoWoS capacity in 2025",
     "substitution": {"years": "3-5", "why": "The unit process steps are not exotic. What is scarce is the yielded integration of a 5.5-reticle interposer with its HBM stacks, and a tool base large enough to do it at the volume Nvidia alone orders."}
   },
   "keyFacts": [
