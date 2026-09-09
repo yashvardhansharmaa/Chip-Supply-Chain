@@ -4402,6 +4402,7 @@ try{(function(PC){
  * Default (no params): the two-die, eight-HBM Blackwell-style layout.
  */
 PC.register('package', function (p) {
+  var plan = !!(p && p.plan); // the AI Chips page asks for a near top-down view so layouts compare across chips
   var L = (p && p.layout) || {
     interposer: [78, 50],
     dies: [{ x: -13.5, y: 0, w: 26, h: 32.5 }, { x: 13.5, y: 0, w: 26, h: 32.5 }],
@@ -4468,7 +4469,7 @@ PC.register('package', function (p) {
     add(PC.T(PC.accent(outline(side, side, 1, 520), 0.95), { pos: [0, yTopW + 0.003, 0] }));
     add(PC.T(PC.accent(PC.circle({ r: R * 0.997, perUnit: 260 }), 0.5), { pos: [0, yTopW, 0] }));
     return {
-      cloud: PC.merge.apply(null, parts), spin: 0.1, tilt: [0.95, -0.5, 0],
+      cloud: PC.merge.apply(null, parts), spin: plan ? 0.07 : 0.1, tilt: plan ? [1.32, 0, 0] : [0.95, -0.5, 0], turntable: plan,
       caption: 'A wafer-scale processor: a ' + Math.round(side / S) + ' mm square (amber) cut from a '
         + (L.diameterMm || 300) + ' mm wafer, its ' + live + '-die grid left in place and wired together across the scribe lines. No interposer, no HBM.'
     };
@@ -4595,7 +4596,7 @@ PC.register('package', function (p) {
     + ', inside a lid-less stiffener ring, with the ball grid below.';
 
   PC.density = d0;
-  return { cloud: PC.merge.apply(null, parts), spin: 0.1, tilt: [0.55, -0.7, 0], caption: cap };
+  return { cloud: PC.merge.apply(null, parts), spin: plan ? 0.07 : 0.1, tilt: plan ? [1.32, 0, 0] : [0.55, -0.7, 0], turntable: plan, caption: cap };
 });
 
 })(window.PC);}catch(e){console.warn('specimen package.js failed to load', e);}
@@ -6239,7 +6240,7 @@ PC.register('wafer', function (p) {
       try { spec = PC.build(name, params); } catch (e) { console.warn('specimen failed:', name, e.message); return null; }
       var gl = this.gl, vbo = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, vbo); gl.bufferData(gl.ARRAY_BUFFER, spec.cloud, gl.STATIC_DRAW);
-      var slot = { key: key, vbo: vbo, n: PC.count(spec.cloud), spin: spec.spin, tilt: spec.tilt, caption: spec.caption, spinBase: 0 };
+      var slot = { key: key, vbo: vbo, n: PC.count(spec.cloud), spin: spec.spin, tilt: spec.tilt, turntable: !!spec.turntable, caption: spec.caption, spinBase: 0 };
       this.cache[key] = slot;
       return slot;
     },
@@ -6262,7 +6263,11 @@ PC.register('wafer', function (p) {
       // pull the camera back on narrow (portrait) stages so the bounding sphere fits the width too
       var V = translate(0, 0, -3.8 * Math.max(1, 0.98 / aspect)); // 3.8 keeps the unit sphere inside 89% of the canvas height, including perspective
       var t = slot.tilt;
-      var M = mul(rotZ(t[2]), mul(rotY(t[1] + this.spin + slot.spinBase + this.scrollAngle + extraRot), rotX(t[0])));
+      // turntable specimens spin about their own vertical axis before the tilt (a plan view rotating in its plane); the rest spin about the world axis
+      var idle = this.spin + slot.spinBase;
+      var M = slot.turntable
+        ? mul(rotZ(t[2]), mul(rotY(t[1] + this.scrollAngle + extraRot), mul(rotX(t[0]), rotY(idle))))
+        : mul(rotZ(t[2]), mul(rotY(t[1] + idle + this.scrollAngle + extraRot), rotX(t[0])));
       M = mul(M, scale(sc));
       var MVP = mul(P, mul(V, M));
       gl.uniformMatrix4fv(this.loc.uMVP, false, new Float32Array(MVP));
@@ -6459,7 +6464,7 @@ PC.register('wafer', function (p) {
     showStage: function (c) {
       var lay = c.layout || null, hb = (c.memory && c.memory.stacks) || 0;
       var cap = lay && lay.waferScale ? 'Wafer-scale: one ' + esc(c.name) + ' is a whole 300 mm wafer.' : esc(c.name) + ': ' + ((c.die && c.die.count) || 1) + ' logic die' + (((c.die && c.die.count) || 1) > 1 ? 's' : '') + (hb ? ' and ' + hb + ' ' + esc((c.memory && c.memory.type) || 'HBM') + ' stacks' : '') + ' on ' + esc((c.package && c.package.type) || 'the package') + '.';
-      Stage.show('package', lay ? { layout: lay } : null, cap, 'AI chips · <b>' + esc(c.name) + '</b>');
+      Stage.show('package', lay ? { layout: lay, plan: true } : { plan: true }, cap, 'AI chips · <b>' + esc(c.name) + '</b>');
     },
     buildCompare: function () {
       var cols = [['Chip', function (c) { return '<b>' + esc(c.name) + '</b> <span class="cc">' + esc(c.vendor) + '</span>'; }],

@@ -21,6 +21,7 @@
  * Default (no params): the two-die, eight-HBM Blackwell-style layout.
  */
 PC.register('package', function (p) {
+  var plan = !!(p && p.plan); // the AI Chips page asks for a near top-down view so layouts compare across chips
   var L = (p && p.layout) || {
     interposer: [78, 50],
     dies: [{ x: -13.5, y: 0, w: 26, h: 32.5 }, { x: 13.5, y: 0, w: 26, h: 32.5 }],
@@ -87,7 +88,7 @@ PC.register('package', function (p) {
     add(PC.T(PC.accent(outline(side, side, 1, 520), 0.95), { pos: [0, yTopW + 0.003, 0] }));
     add(PC.T(PC.accent(PC.circle({ r: R * 0.997, perUnit: 260 }), 0.5), { pos: [0, yTopW, 0] }));
     return {
-      cloud: PC.merge.apply(null, parts), spin: 0.1, tilt: [0.95, -0.5, 0],
+      cloud: PC.merge.apply(null, parts), spin: plan ? 0.07 : 0.1, tilt: plan ? [1.32, 0, 0] : [0.95, -0.5, 0], turntable: plan,
       caption: 'A wafer-scale processor: a ' + Math.round(side / S) + ' mm square (amber) cut from a '
         + (L.diameterMm || 300) + ' mm wafer, its ' + live + '-die grid left in place and wired together across the scribe lines. No interposer, no HBM.'
     };
@@ -214,5 +215,5 @@ PC.register('package', function (p) {
     + ', inside a lid-less stiffener ring, with the ball grid below.';
 
   PC.density = d0;
-  return { cloud: PC.merge.apply(null, parts), spin: 0.1, tilt: [0.55, -0.7, 0], caption: cap };
+  return { cloud: PC.merge.apply(null, parts), spin: plan ? 0.07 : 0.1, tilt: plan ? [1.32, 0, 0] : [0.55, -0.7, 0], turntable: plan, caption: cap };
 });
