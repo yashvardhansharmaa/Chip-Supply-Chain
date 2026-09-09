@@ -676,6 +676,147 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
   .chapter { break-before: page; }
 }
 
+/* module: chips.css */
+/* AI Chips: compare two to four accelerators.
+   Plans and table share one grammar: ink is silicon, amber is memory, and amber marks only
+   the focused chip, never a winning number. Row leaders are bold; bars use --bar-4. */
+
+/* ---------- picker ---------- */
+.cx-picker button { padding-left: 30px; position: relative; }
+.cx-picker button::before {
+  content: ""; position: absolute; left: 10px; top: 11px; width: 12px; height: 12px;
+  border: 1px solid var(--line-2); border-radius: 2px; background: var(--bg);
+}
+.cx-picker button[aria-pressed="true"]::before { border-color: var(--bg); }
+.cx-picker button[aria-pressed="true"]::after {
+  content: "✓"; position: absolute; left: 12px; top: 9px;
+  font: 500 11px/1.2 var(--font-mono); color: var(--ink);
+}
+.cx-picker button[data-focus="1"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+
+.cx-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: -12px 0 26px; }
+.cx-count { margin-right: auto; }
+.cx-count b { font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--ink); }
+.cx-count i { font-style: normal; color: var(--ink-2); }
+.cx-clear { padding: 6px 11px; }
+.cx-h { display: block; margin: 30px 0 4px; }
+.cx-sub { font-size: 15px; color: var(--muted); margin: 0 0 12px; max-width: 58ch; }
+
+/* ---------- key and scale bar ---------- */
+.cx-key {
+  display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; margin: 0 0 10px;
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted);
+}
+.cx-key span { display: inline-flex; align-items: center; gap: 6px; }
+.cx-sw { width: 10px; height: 10px; border-radius: 1px; display: inline-block; }
+.cx-sw.die { background: var(--ink); }
+.cx-sw.hbm { background: var(--accent); }
+.cx-sw.int { background: var(--bg-3); border: 1px solid var(--line-2); }
+.cx-sw.sub { background: var(--bg-2); border: 1px solid var(--line-2); }
+.cx-scale { margin-left: auto; }
+.cx-scale i { display: inline-block; height: 5px; border: 1px solid var(--muted); border-top: 0; }
+
+/* ---------- package plans, one scale ---------- */
+.cx-plans {
+  display: flex; align-items: stretch; gap: 20px; max-width: 100%;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  padding: 6px 2px 14px; margin-bottom: 6px;
+}
+.cx-plan {
+  flex: 0 0 auto; display: flex; flex-direction: column; gap: 8px; text-align: left;
+  padding: 8px 10px 10px; border: 1px solid transparent; border-radius: 3px;
+}
+.cx-plan:hover { border-color: var(--line-2); background: var(--bg-2); }
+.cx-plan[aria-pressed="true"] { border-color: var(--accent); background: var(--bg-2); }
+.cx-plan-name b { display: block; font-family: var(--font-display); font-weight: 700; font-size: 16px; line-height: 1.1; }
+.cx-plan-name em {
+  display: block; font-style: normal; font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-top: 2px;
+}
+.cx-plan-art { display: flex; align-items: flex-end; flex: 1 1 auto; min-height: 0; }
+.cx-plan-size { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; color: var(--muted); }
+.cx-plan-svg { display: block; max-width: none; }
+.cx-plan-svg rect, .cx-plan-svg circle, .cx-plan-svg line { vector-effect: non-scaling-stroke; }
+.cx-substrate { fill: var(--bg-2); stroke: var(--line-2); stroke-width: 1; }
+.cx-interposer { fill: var(--bg-3); stroke: var(--line-2); stroke-width: 1; }
+.cx-base { fill: var(--ink); opacity: 0.3; }
+.cx-die { fill: var(--ink); }
+.cx-hbm { fill: var(--accent); }
+.cx-wafer { fill: var(--bg-2); stroke: var(--line-2); stroke-width: 1; stroke-dasharray: 4 3; }
+.cx-grid { stroke: var(--bg); stroke-width: 0.6; opacity: 0.55; }
+
+/* ---------- the side-by-side table ---------- */
+.cx-tablewrap {
+  max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--line); border-radius: 2px;
+}
+.cx-table { border-collapse: collapse; width: 100%; font-size: 14px; font-variant-numeric: tabular-nums; }
+.cx-table th, .cx-table td { padding: 9px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.cx-table tr:last-child th, .cx-table tr:last-child td { border-bottom: 0; }
+.cx-table td { color: var(--ink-2); }
+.cx-rowhead {
+  position: sticky; left: 0; z-index: 1; background: var(--bg); min-width: 128px;
+  font-family: var(--font-mono); font-size: 10.5px; font-weight: 500; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--muted); white-space: nowrap;
+  border-right: 1px solid var(--line);
+}
+.cx-table thead th { background: var(--bg-2); border-bottom: 1px solid var(--line-2); vertical-align: bottom; }
+.cx-table thead .cx-rowhead { background: var(--bg-2); }
+.cx-col { min-width: 152px; }
+.cx-col.is-focus { box-shadow: inset 0 -2px 0 var(--accent); }
+.cx-colhead { display: block; text-align: left; }
+.cx-colhead b { display: block; font-family: var(--font-display); font-weight: 700; font-size: 17px; line-height: 1.1; }
+.cx-colhead span { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
+.cx-colhead:hover b { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 0.18em; }
+.cx-jump {
+  margin-top: 7px; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--line-2); padding-bottom: 1px;
+}
+.cx-jump:hover { color: var(--ink); border-color: var(--ink-2); }
+.cx-table td.is-focus { background: var(--bg-2); }
+.cx-v { font-family: var(--font-display); font-weight: 500; font-size: 17px; color: var(--ink); }
+.cx-v.is-best { font-weight: 700; }
+.cx-2 { display: block; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; color: var(--muted); margin-top: 3px; }
+.cx-nil { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.cx-bar { display: block; height: 3px; max-width: 118px; margin-top: 7px; background: var(--line); border-radius: 2px; }
+.cx-bar i { display: block; height: 100%; background: var(--bar-4); border-radius: 2px; }
+.cx-long { font-size: 13px; line-height: 1.45; min-width: 190px; max-width: 280px; white-space: normal; }
+.cx-fn { font-family: var(--font-mono); font-size: 9px; color: var(--muted); vertical-align: super; margin-left: 2px; }
+
+/* ---------- footnotes and notes ---------- */
+.cx-foot { margin: 14px 0 0; }
+.cx-fns { margin: 8px 0 0; padding-left: 20px; font-size: 14.5px; line-height: 1.5; color: var(--ink-2); }
+.cx-fns li { margin-bottom: 8px; }
+.cx-fns b { font-family: var(--font-display); font-weight: 700; color: var(--ink); }
+.cx-notes { margin: 24px 0 56px; }
+.cx-note { border-top: 1px solid var(--line); }
+.cx-note:last-child { border-bottom: 1px solid var(--line); }
+.cx-note summary { display: flex; align-items: baseline; gap: 10px; padding: 12px 0; list-style: none; }
+.cx-note summary::-webkit-details-marker { display: none; }
+.cx-note summary::before {
+  content: "+"; font-family: var(--font-mono); font-size: 13px; color: var(--muted); width: 12px; flex: 0 0 12px;
+}
+.cx-note[open] summary::before { content: "−"; }
+.cx-note summary b { font-family: var(--font-display); font-weight: 700; font-size: 18px; }
+.cx-note summary span { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.cx-note-body { padding: 0 0 6px 22px; font-size: 16.5px; line-height: 1.55; color: var(--ink-2); }
+.cx-note-body p:last-child { margin-bottom: 0.6em; }
+.cx-srcs { padding-left: 22px; font-family: var(--font-mono); font-size: 11px; color: var(--muted); overflow-wrap: anywhere; }
+.cx-srcs a { color: var(--muted); margin-right: 14px; }
+
+@media (max-width: 900px) {
+  .cx-picker button { min-width: 116px; }
+  .cx-plans { gap: 14px; }
+  .cx-sub { font-size: 14.5px; }
+  .cx-table { font-size: 13.5px; }
+  .cx-table th, .cx-table td { padding: 8px 10px; }
+  .cx-rowhead { min-width: 112px; }
+  .cx-col { min-width: 138px; }
+  .cx-long { min-width: 172px; max-width: 220px; }
+  .cx-note-body { font-size: 16px; }
+}
+
+
 /* module: methods.css */
 /* Methods (#/methods): reading measure for the text, wider room for the rubric and the as-of tables. */
 
