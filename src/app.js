@@ -707,9 +707,9 @@
       host.innerHTML = h;
 
       var sw = function (lv) { return '<span class="sup-lg"><i class="sup-dot lv-' + lv + '" style="--s:9px"></i>' + lv + '</span>'; };
-      $('#sup-legend').innerHTML = 'Bigger dot, more firms. The fill is the most severe level in that cell: ' +
+      $('#sup-legend').innerHTML = 'Bigger dot, more firms. Fill is the most severe level in the cell: ' +
         sw('Critical') + sw('Important') + sw('Contested') + sw('Diversified') +
-        '<span class="sup-lg-note">Click a dot to filter the list, and again to clear.</span>';
+        '<span class="sup-lg-note">· Click a dot to filter the list, and again to clear.</span>';
 
       host.addEventListener('click', function (e) { var b = e.target.closest('.sup-cell'); if (b) self.pickCell(b); });
       host.addEventListener('mouseover', function (e) { var b = e.target.closest('.sup-cell'); if (b) self.showTip(b); });
@@ -1307,10 +1307,32 @@
           if (!id || !chTitle[id]) return '';
           return '<a class="chip chip-ch" href="' + ('#' + esc(id)) + '" title="Read the chapter: ' + esc(chTitle[id]) + '">' + esc(chTitle[id]) + '</a>';
         };
+        var jump = $('#th-jump'), board = $('#th-board');
+        if (jump) jump.addEventListener('click', function (e) {
+          var b = e.target.closest('button'); if (!b) return;
+          var g = document.getElementById('th-g-' + b.getAttribute('data-g'));
+          if (g) g.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+        });
+        var renderBoard = function (rows) {
+          if (!board) return;
+          var by = {}, bh = '', jh = '', n = 0;
+          rows.forEach(function (t) { var k = self.kindOf(t); (by[k] = by[k] || []).push(t); });
+          self.KINDS.forEach(function (kd) {
+            var group = by[kd[0]];
+            if (!group || !group.length) return;
+            jh += '<button type="button" data-g="' + esc(kd[0]) + '">' + esc(kd[1]) + '<b>' + group.length + '</b></button>';
+            bh += '<section class="th-group" id="th-g-' + esc(kd[0]) + '"><h4 class="th-gh">' + esc(kd[1]) + '<span>' + group.length + '</span></h4><div class="th-cards">' +
+              group.map(function (t) { return self.card(t, chapterChip, n++); }).join('') + '</div></section>';
+          });
+          board.innerHTML = bh || '<p class="th-empty">No thresholds under this regime.</p>';
+          if (jump) jump.innerHTML = jh;
+          board.dispatchEvent(new CustomEvent('cp:rows'));
+        };
         var render = function () {
           var rows = th.filter(function (t) { return !sel || t.regime === sel; });
           self.visible = rows;
-          tbl.innerHTML = '<thead><tr><th>Legal instrument</th><th>Scope</th><th>Threshold</th><th>Destinations and licence policy</th><th>Status</th><th>Source</th></tr></thead><tbody>' + rows.map(function (t) {
+          renderBoard(rows);
+          tbl.innerHTML ='<thead><tr><th>Legal instrument</th><th>Scope</th><th>Threshold</th><th>Destinations and licence policy</th><th>Status</th><th>Source</th></tr></thead><tbody>' + rows.map(function (t) {
             var thr = (t.parameter ? esc(t.parameter) + ' ' : '') + (t.operator ? esc(t.operator) + ' ' : '') + (t.value != null ? '<b class="num">' + (typeof t.value === 'number' ? t.value.toLocaleString('en-US') : esc(t.value)) + '</b>' : '') + (t.unit ? ' <span class="cc">' + esc(t.unit) + '</span>' : '') + (t.alternative ? '<br><span class="cc" style="color:var(--muted)">' + esc(t.alternative) + '</span>' : '');
             var st = esc(t.status || ''), cls = /force/i.test(st) ? 'Critical' : /suspend/i.test(st) ? 'Contested' : /rescind|expired/i.test(st) ? 'Diversified' : 'Important';
             return '<tr><td class="name"><b>' + esc(t.instrument) + '</b><span>' + esc(t.regime) + (t.effectiveDate ? ' · from ' + esc(t.effectiveDate) : '') + '</span>' + chapterChip(t.chapter) + '</td><td>' + esc(t.scope || '') + '</td><td>' + thr + '</td><td class="role">' + esc(t.destinations || '') + (t.licensePolicy ? '<br><span class="cc" style="color:var(--muted)">' + esc(t.licensePolicy) + '</span>' : '') + (t.note ? '<br>' + esc(t.note) : '') + '</td><td><span class="chk ' + cls + '">' + st + '</span>' + (t.amendedBy && t.amendedBy.length ? '<br><span class="cc" style="color:var(--muted)">amended ' + esc(t.amendedBy.join(', ')) + '</span>' : '') + '</td><td>' + (t.source ? '<a class="cc" href="' + safeUrl(t.source) + '" target="_blank" rel="noopener">source</a>' : '') + '</td></tr>';
@@ -1483,7 +1505,7 @@
       addExport('#cx-table-wrap', 'the chips you picked', Landscape.exportRows, 'before'); // a live array: Landscape keeps it in step with the selection
       addExport('#matrix', 'country-share matrix', DATA.matrix, 'before');
       addExport('#timeline', 'export-control timeline', function () { return Geo.visible || DATA.timeline; }, 'before');
-      addExport('#controls-table', 'licence thresholds', function () { return Controls.visible || DATA.controls; }, 'before');
+      addExport('#th-board', 'licence thresholds', function () { return Controls.visible || DATA.controls; }, 'before'); // the board is the page now; the table sits behind a toggle
       addExport('#exposure-table', 'China revenue share by firm and year', DATA.exposure, 'before');
       // cite-this block in the footer
       var foot = $('.site-footer');
