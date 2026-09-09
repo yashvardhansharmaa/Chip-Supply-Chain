@@ -8,7 +8,7 @@
 module.exports = function (ctx) {
   const { all, stages, data, esc, pad, word, cap, wordCount } = ctx;
 
-  const steps = all.slice().sort((a, b) => (a.number || 0) - (b.number || 0));
+  const steps = all.filter((c) => c.id !== 'introduction-and-goals').slice().sort((a, b) => (a.number || 0) - (b.number || 0)); // the walk starts with chip design; the site's own introduction stays in The Chain
   const card = Object.create(null);
   (data.chapters || []).forEach((c) => { card[c.id] = c; });
 
