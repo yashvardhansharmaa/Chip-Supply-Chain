@@ -51,9 +51,9 @@ PC.register('gas-cabinet', function (p) {
   // exhaust plenum and duct
   parts.push(at(PC.box({ w: 0.72, h: 0.20, d: 0.48, n: 2200, tone: 0.42 }), CBX, CTOP + 0.10, -0.02));
   parts.push(at(PC.boxEdges({ w: 0.72, h: 0.20, d: 0.48, perUnit: 220, tone: 1 }), CBX, CTOP + 0.10, -0.02));
-  parts.push(at(PC.cylinder({ r: 0.095, h: 0.28, caps: false, n: 1300, tone: 0.42 }), CBX, CTOP + 0.34, -0.02));
-  parts.push(at(PC.circle({ r: 0.095, perUnit: 240, tone: 1 }), CBX, CTOP + 0.48, -0.02));
-  parts.push(at(PC.torus({ R: 0.115, r: 0.016, n: 500, tone: 0.7 }), CBX, CTOP + 0.22, -0.02));
+  parts.push(at(PC.cylinder({ r: 0.082, h: 0.40, caps: false, n: 1600, tone: 0.44 }), CBX, CTOP + 0.40, -0.02));
+  parts.push(at(PC.circle({ r: 0.082, perUnit: 240, tone: 1 }), CBX, CTOP + 0.60, -0.02));
+  parts.push(at(PC.torus({ R: 0.102, r: 0.016, n: 500, tone: 0.7 }), CBX, CTOP + 0.22, -0.02));
   // two cylinder restraint bars across the front of the bottles
   [0.62, 1.20].forEach(function (by) {
     parts.push(at(PC.box({ w: 1.00, h: 0.045, d: 0.045, n: 260, tone: 0.55 }), CBX, by, 0.05));
@@ -66,8 +66,8 @@ PC.register('gas-cabinet', function (p) {
   for (i = 0; i < 3; i++) {
     x = CBX + cylX[i];
     var b0 = CFL, b1 = CFL + cylH[i], sh = b1 + 0.12;
-    parts.push(at(PC.cylinder({ r: CR, h: cylH[i], caps: false, n: 3000, tone: 0.38 }), x, (b0 + b1) / 2, cz));
-    parts.push(at(PC.cone({ r1: CR, r2: 0.036, h: 0.12, n: 620, tone: 0.46 }), x, b1 + 0.06, cz));
+    parts.push(at(PC.cylinder({ r: CR, h: cylH[i], caps: false, n: 5200, tone: 0.48 }), x, (b0 + b1) / 2, cz));
+    parts.push(at(PC.cone({ r1: CR, r2: 0.036, h: 0.12, n: 900, tone: 0.5 }), x, b1 + 0.06, cz));
     parts.push(at(PC.circle({ r: CR * 1.004, perUnit: 220, tone: 1 }), x, b1, cz));          // shoulder line
     // a painted band and a label plate on the body
     parts.push(at(PC.circle({ r: CR * 1.004, perUnit: 200, tone: 0.8 }), x, b1 - 0.10, cz));
@@ -119,17 +119,19 @@ PC.register('gas-cabinet', function (p) {
       { scale: [1, 0.52, 1], rot: [0, 0, -sg * Math.PI / 2], pos: [TX + sg * TL / 2, TY, TZ] }));
     parts.push(ringYZ(TR * 1.004, 260, 1, TX + sg * TL / 2, TY, TZ));
   });
-  [-0.46, -0.16, 0.16, 0.46].forEach(function (dx) {                                          // stiffening ribs
-    parts.push(ringYZ(TR * 1.006, 190, 0.6, TX + dx, TY, TZ));
+  [-0.40, 0.0, 0.40].forEach(function (dx) {                                                   // stiffening ribs
+    parts.push(ringYZ(TR * 1.006, 170, 0.5, TX + dx, TY, TZ));
   });
   parts.push(PC.line({ a: [TX - TL / 2, TY + TR * 1.004, TZ], b: [TX + TL / 2, TY + TR * 1.004, TZ], perUnit: 200, tone: 0.55 }));
   // saddle legs and floor rails
   [-1, 1].forEach(function (sg) {
     var lx = TX + sg * 0.44;
-    parts.push(PC.T(PC.box({ w: 0.085, h: 0.55, d: 0.62, faces: ['px', 'nx', 'pz', 'nz'], n: 1300, tone: 0.4 }), { pos: [lx, 0.275, TZ] }));
-    parts.push(PC.T(PC.boxEdges({ w: 0.085, h: 0.55, d: 0.62, perUnit: 200, tone: 1 }), { pos: [lx, 0.275, TZ] }));
-    parts.push(PC.T(PC.box({ w: 0.14, h: 0.05, d: 0.74, n: 260, tone: 0.5 }), { pos: [lx, 0.025, TZ] }));
+    parts.push(PC.T(PC.box({ w: 0.085, h: 0.55, d: 0.42, faces: ['px', 'nx', 'pz', 'nz'], n: 1000, tone: 0.4 }), { pos: [lx, 0.275, TZ] }));
+    parts.push(PC.T(PC.boxEdges({ w: 0.085, h: 0.55, d: 0.42, perUnit: 200, tone: 1 }), { pos: [lx, 0.275, TZ] }));
+    parts.push(PC.T(PC.box({ w: 0.16, h: 0.05, d: 0.54, n: 240, tone: 0.5 }), { pos: [lx, 0.025, TZ] }));
   });
+  parts.push(PC.T(PC.box({ w: 0.94, h: 0.06, d: 0.06, n: 200, tone: 0.5 }), { pos: [TX, 0.13, TZ] }));
+  parts.push(PC.T(PC.boxEdges({ w: 0.94, h: 0.06, d: 0.06, perUnit: 200, tone: 0.95 }), { pos: [TX, 0.13, TZ] }));
   // vent stack, relief valve and the outlet manifold slung under the tank
   parts.push(PC.T(PC.cylinder({ r: 0.052, h: 0.40, caps: false, n: 700, tone: 0.45 }), { pos: [TX - 0.28, TY + TR + 0.18, TZ] }));
   parts.push(PC.T(PC.circle({ r: 0.052, perUnit: 230, tone: 1 }), { pos: [TX - 0.28, TY + TR + 0.38, TZ] }));

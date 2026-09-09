@@ -15,7 +15,7 @@ PC.register('photomask', function (p) {
   }
 
   // ---------- the blank ----------
-  add(PC.T(PC.plane({ w: B, d: B, n: 12000, tone: 0.33 }), { pos: [0, yTop, 0] }));
+  add(PC.T(PC.plane({ w: B, d: B, n: 10000, tone: 0.26 }), { pos: [0, yTop, 0] }));
   add(PC.box({ w: B, h: T, d: B, faces: ['px', 'nx', 'pz', 'nz', 'ny'], n: 7000, tone: 0.26 }));
   add(PC.boxEdges({ w: B, h: T, d: B, perUnit: 300, tone: 0.95 }));
   // the Mo/Si multilayer: three fine lines just under the top edge of every side
@@ -45,18 +45,19 @@ PC.register('photomask', function (p) {
     var w = (bk.c1 - bk.c0 + 1) * cw - 4 * S, d = (bk.r1 - bk.r0 + 1) * cd - 4 * S;
     var x0 = ((bk.c0 + bk.c1) / 2 - (COLS - 1) / 2) * cw, z0 = ((bk.r0 + bk.r1) / 2 - (ROWS - 1) / 2) * cd;
     var style = bi % 4;
-    pat.push(PC.T(rect(w, d, 0, 260, 0.9), { pos: [x0, yPat, z0] }));
+    pat.push(PC.T(rect(w, d, 0, 340, 0.95), { pos: [x0, yPat, z0] }));
     if (style === 0) {           // fine line array (logic standard cells)
-      var horiz = bi % 8 < 4, span = horiz ? d : w, nl = Math.max(6, Math.round(span / (3.4 * S)));
+      var horiz = bi % 8 < 4, span = horiz ? d : w, nl = Math.max(6, Math.round(span / (2.7 * S)));
       for (var k = 0; k < nl; k++) {
         var t = (k / (nl - 1) - 0.5) * 0.88;
         pat.push(PC.T(horiz
-          ? PC.line({ a: [-w * 0.44, 0, t * d], b: [w * 0.44, 0, t * d], perUnit: 170, tone: 1 })
-          : PC.line({ a: [t * w, 0, -d * 0.44], b: [t * w, 0, d * 0.44], perUnit: 170, tone: 1 }),
+          ? PC.line({ a: [-w * 0.44, 0, t * d], b: [w * 0.44, 0, t * d], perUnit: 250, tone: 1 })
+          : PC.line({ a: [t * w, 0, -d * 0.44], b: [t * w, 0, d * 0.44], perUnit: 250, tone: 1 }),
           { pos: [x0, yPat, z0] }));
       }
     } else if (style === 1) {    // dense array block (memory)
-      pat.push(PC.T(PC.dots({ nx: Math.round(w / (3.0 * S)), nz: Math.round(d / (3.0 * S)), sx: 3.0 * S, tone: 0.95 }), { pos: [x0, yPat, z0] }));
+      pat.push(PC.T(PC.plane({ w: w * 0.94, d: d * 0.94, n: Math.round(w * d * 3000), tone: 0.3 }), { pos: [x0, yPat, z0] }));
+      pat.push(PC.T(PC.dots({ nx: Math.round(w / (2.2 * S)), nz: Math.round(d / (2.2 * S)), sx: 2.2 * S, tone: 1 }), { pos: [x0, yPat, z0] }));
       pat.push(PC.T(rect(w * 0.55, d * 0.55, 0, 220, 1), { pos: [x0, yPat, z0] }));
     } else if (style === 2) {    // nested rings (pad / analogue macro)
       for (var q = 1; q <= 3; q++) pat.push(PC.T(rect(w * q / 3.6, d * q / 3.6, 0, 240, 1), { pos: [x0, yPat, z0] }));
@@ -65,7 +66,7 @@ PC.register('photomask', function (p) {
       var nb = Math.max(3, Math.round(d / (9 * S)));
       for (var b = 0; b < nb; b++) {
         var zz = (b / (nb - 1) - 0.5) * d * 0.76;
-        pat.push(PC.T(PC.plane({ w: w * 0.88, d: d * 0.055, n: Math.round(w * 900), tone: 1 }), { pos: [x0, yPat, z0 + zz] }));
+        pat.push(PC.T(PC.plane({ w: w * 0.88, d: d * 0.055, n: Math.round(w * 1500), tone: 1 }), { pos: [x0, yPat, z0 + zz] }));
       }
     }
   }
@@ -104,7 +105,7 @@ PC.register('photomask', function (p) {
   // filter/vent port on one frame bar
   add(PC.accent(PC.T(PC.box({ w: 9 * S, h: fh * 0.8, d: 5 * S, n: 500, tone: 1 }), { pos: [FW * 0.22, yF + fh / 2, -(FD / 2 + 2 * S)] }), 0.9));
   // the membrane itself: a whisper of a plane inside the frame
-  add(PC.T(PC.plane({ w: FW - 2 * bar, d: FD - 2 * bar, n: 3000, tone: 0.17 }), { pos: [0, yF + fh, 0] }));
+  add(PC.T(PC.plane({ w: FW - 2 * bar, d: FD - 2 * bar, n: 7000, tone: 0.16 }), { pos: [0, yF + fh, 0] }));
 
   return {
     cloud: PC.merge.apply(null, parts),

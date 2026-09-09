@@ -4,6 +4,7 @@
   "number": 2,
   "title": "Chip Design, EDA and IP",
   "oneLiner": "The cheapest stage in the chain by capital and one of the most concentrated by vendor. Three software firms sell the tools that every leading-edge AI accelerator passes through.",
+  "plain": "Designing a chip is like drawing the street plan of a city of billions of buildings, where every road has to be walkable in less than a billionth of a second. No one draws it by hand. The layout is generated, checked and signed off by software sold by three companies, and a foundry will only accept a design that has passed their particular tools. Once the plan goes to the factory, changing one street costs a new set of printing plates and several months. That is why cutting off the software cuts off the chip.",
   "specimen": "die-floorplan",
   "specimenCaption": "Right: the floorplan of a GPU die. Replicated compute tiles fill the centre, SRAM banks sit between them, HBM PHYs run along the two long edges, and the die-to-die interface faces the neighbouring chiplet.",
   "card": {
@@ -68,25 +69,23 @@
 ---
 # Chip Design, EDA and IP
 
-Design is the only stage in this chain with no fab, no cleanroom and no hazardous gas. It is also, by one measure, the stage a foreign government can shut off fastest. In May 2025 the US Commerce Department wrote three letters and, for five weeks, every Chinese chip designer lost access to the software that turns a design into a manufacturable layout.
+Design is the only stage in this chain with no fab, no cleanroom and no hazardous gas. It is also the stage a foreign government can shut off fastest. In May 2025 the US Commerce Department wrote three letters and, for five weeks, every Chinese chip designer lost access to the software that turns a design into a manufacturable layout.
 
 The whole stage costs a few hundred million dollars per chip. The equipment it feeds costs hundreds of billions. That asymmetry is why it matters.
 
 ## How it works
 
+Designing a chip is like drawing the street plan of a city of billions of buildings, where every road has to be walkable in less than a billionth of a second. No one draws it by hand. The layout is generated, checked and signed off by software sold by three companies, and a foundry will only accept a design that has passed their particular tools. Once the plan goes to the factory, changing one street costs a new set of printing plates and several months. That is why cutting off the software cuts off the chip.
+
 An AI accelerator design runs through five phases.
 
-**Architecture.** Engineers fix the shape of the machine: how wide the matrix-multiply unit is, how much SRAM sits next to it, how many HBM stacks hang off the edges, how the on-die network moves activations. Most of an accelerator die is replication. Google's TPU v7 Ironwood is built from two TensorCores with 256x256 multiply units plus four SparseCores, tiled and repeated ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)).
+- **Architecture.** Engineers fix the shape of the machine: how wide the matrix-multiply unit is, how much SRAM sits beside it, how many HBM stacks hang off the edges, and how the on-die network moves activations. Most of the die is one tile repeated, and Google's TPU v7 Ironwood is two TensorCores with 256x256 multiply units plus four SparseCores ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)).
+- **RTL.** The architecture is written as register-transfer-level code in SystemVerilog, describing what every register holds on every clock edge.
+- **Verification.** The largest headcount line in most projects. Simulation catches ordinary bugs, formal methods prove properties exhaustively over small blocks, and hardware emulators run the whole design fast enough to boot real firmware and real models before silicon exists.
+- **Physical design.** Synthesis maps the code onto standard cells from the foundry's library, then floorplanning, placement, clock tree synthesis, routing and timing closure, then signoff: parasitic extraction, static timing analysis, power and IR-drop analysis, and design-rule checks.
+- **Tape-out.** The layout goes through mask data preparation and optical proximity correction, and the resulting pattern files go to the foundry to be written into a mask set. After that, changing anything costs a new mask and a new lot.
 
-**RTL.** The architecture is written as register-transfer-level code in SystemVerilog, describing what every register holds on every clock edge.
-
-**Verification.** The largest headcount line in most projects. Simulation catches ordinary bugs, formal methods prove properties exhaustively over small blocks, and hardware emulators run the whole design orders of magnitude faster than software so real firmware and real models can be booted before silicon exists.
-
-**Physical design.** Synthesis maps RTL onto standard cells from the foundry's library. Then floorplanning, placement, clock tree synthesis, routing, and timing closure, followed by signoff: parasitic extraction, static timing analysis, power and IR-drop analysis, and design-rule and layout-versus-schematic checks.
-
-**Tape-out.** The layout goes through mask data preparation and optical proximity correction, and the resulting pattern files go to the foundry to be written into a mask set. After that, changing anything costs a new mask and a new lot.
-
-The headline cost numbers are contested. IBS puts a 7 nm design at $257 million, a 5 nm design at $479 million and a 3 nm design at $585 million ([source](https://siliconanalysts.com/market-data/nre-design-cost)). Practitioners argue those figures run high: IBS's own 16/14 nm estimate moved from about $310 million to about $106 million between its 2014 and 2018 charts, and discounting the later numbers by a similar factor puts a 5 nm design nearer $280 million and a 7 nm design nearer $160 million ([source](https://semiengineering.com/what-will-that-chip-cost/)). Treat the IBS series as an upper bound and the shape of the curve, not the level, as the reliable part.
+The headline cost numbers are contested. IBS puts a 7 nm design at $257 million, a 5 nm design at $479 million and a 3 nm design at $585 million ([source](https://siliconanalysts.com/market-data/nre-design-cost)). Practitioners argue those figures run high: IBS's own 16/14 nm estimate fell from about $310 million to about $106 million between its 2014 and 2018 charts, and discounting the later numbers by a similar factor puts a 5 nm design nearer $280 million and a 7 nm design nearer $160 million ([source](https://semiengineering.com/what-will-that-chip-cost/)). Treat the IBS series as an upper bound, and the shape of the curve rather than its level as the reliable part.
 
 {{figure:design-cost}}
 
@@ -98,19 +97,19 @@ A merchant part like Nvidia's Blackwell is designed once and amortised across ev
 
 ### The EDA flow
 
-There are three full flows in the world and they are not interchangeable. A design team commits to a vendor's synthesis, place-and-route and signoff chain because the foundry certifies reference flows against specific tool versions, and because timing signed off in one tool is not accepted in another. The lock-in shows up at the segment level: Synopsys holds more than 90% of static timing analysis and 84-85% of synthesis, Siemens EDA holds more than 85% of physical verification with Calibre, and Cadence holds 55-60% of hardware emulation with Palladium ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
+There are three complete flows in the world and they are not interchangeable. A design team commits to one vendor's synthesis, place-and-route and signoff chain because the foundry certifies reference flows against specific tool versions, and because timing signed off in one tool is not accepted in another. The lock-in is tighter inside segments than the headline share suggests: Synopsys holds more than 90% of static timing analysis and 84-85% of synthesis, Siemens EDA more than 85% of physical verification with Calibre, and Cadence 55-60% of hardware emulation with Palladium ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
 
 {{figure:tool-lock}}
 
 ### Buy the IP or build it
 
-No one writes an accelerator from scratch. The CPU cores, the PCIe and Ethernet controllers, the memory controllers and the physical-layer blocks that drive HBM are licensed. Arm supplies most of the CPU side: it reported $4.92 billion of revenue in fiscal 2026 with $2.61 billion of royalties, and says Arm architectures now account for roughly 50% of CPU compute among the top hyperscalers ([source](https://newsroom.arm.com/news/arm-q4-fye26-results)). Synopsys and Cadence sell the interface IP, and an HBM PHY is among the hardest blocks to get right because it must close timing across thousands of microbumps into a stacked memory die.
+No one writes an accelerator from scratch. The CPU cores, the PCIe and Ethernet controllers, the memory controllers and the physical-layer blocks that drive HBM are licensed. Arm supplies most of the CPU side, reporting $4.92 billion of revenue and $2.61 billion of royalties in fiscal 2026 and saying its architectures account for roughly 50% of CPU compute among the top hyperscalers ([source](https://newsroom.arm.com/news/arm-q4-fye26-results)). Synopsys and Cadence sell the interface IP, and an HBM PHY is among the hardest blocks to get right because it must close timing across thousands of microbumps into a stacked memory die.
 
-RISC-V is the open alternative, and its role in AI silicon is larger than its unit share suggests. The SHD Group forecasts 35.9 billion RISC-V SoC units by 2031, of which AI accelerators would be about 9.06 billion units but roughly $222 billion of a $318 billion total, close to 70% of revenue ([source](https://riscv.org/blog/shd-forecast-2026/)). Nvidia has said it now uses RISC-V microcontrollers in all of its GPUs ([source](https://riscv.org/blog/shd-forecast-2026/)). RISC-V is mostly not the main compute core. It is the housekeeping core scattered across the die.
+RISC-V is the open alternative, and on AI silicon it is mostly the housekeeping core scattered across the die rather than the main compute core. Nvidia has said it now uses RISC-V microcontrollers in all of its GPUs, and one forecast puts AI accelerators at roughly $222 billion of a $318 billion RISC-V chip market by 2031, close to 70% of the revenue ([source](https://riscv.org/blog/shd-forecast-2026/)).
 
 ### Chiplets
 
-Reticle limits ended the single-die accelerator. Modern parts are chiplets joined by a die-to-die link, and UCIe is the standard that lets those links come from different vendors. UCIe 3.0 adds 48 GT/s and 64 GT/s data rates ([source](https://www.uciexpress.org/specifications)). Broadcom's 3.5D XDSiP platform pushes this furthest, supporting packages of more than 6,000 mm2 of silicon with up to twelve HBM stacks; its first 2 nm compute SoC on the platform combines four N2 compute dies, one I/O die and six HBM modules ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)). See Advanced packaging for what happens to those pieces next.
+Reticle limits ended the single-die accelerator. Modern parts are chiplets joined by a die-to-die link, and UCIe is the standard that lets those links come from different vendors. UCIe 3.0 adds 48 GT/s and 64 GT/s data rates ([source](https://www.uciexpress.org/specifications)). Broadcom's 3.5D XDSiP platform pushes this furthest, supporting packages of more than 6,000 mm2 of silicon with up to twelve HBM stacks ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)). See Advanced packaging for what happens to those pieces next.
 
 ## Who makes it
 
@@ -118,7 +117,7 @@ The EDA and design IP market was about $18 billion in 2025. Synopsys booked roug
 
 {{figure:eda-share}}
 
-Design services are more concentrated still. Broadcom and Marvell hold roughly 95% of the custom AI ASIC co-design market ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)). Broadcom reported $16.7 billion of AI semiconductor revenue in its third quarter of fiscal 2026, up 221% year on year, with custom XPUs making up 73% of it, and guided to about $58 billion for the full fiscal year ([source](https://finance.yahoo.com/technology/ai/articles/broadcom-q3-earnings-call-highlights-230318650.html)). Marvell projects up to $11 billion of AI ASIC revenue in 2026 ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)).
+Design services are more concentrated still. Broadcom and Marvell hold roughly 95% of the custom AI ASIC co-design market ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)). Broadcom reported $16.7 billion of AI semiconductor revenue in its third quarter of fiscal 2026, with custom XPUs making up 73% of it ([source](https://finance.yahoo.com/technology/ai/articles/broadcom-q3-earnings-call-highlights-230318650.html)). Marvell projects up to $11 billion of AI ASIC revenue in 2026 ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)).
 
 | Chip | Owner | Design partner | Process |
 |---|---|---|---|
@@ -134,15 +133,19 @@ Below the top two sit the Taiwanese design service firms that take a hyperscaler
 
 ## Where the designers sit
 
-Architecture and program ownership are concentrated in the United States, at Nvidia, AMD, Broadcom, Marvell and the hyperscalers' own silicon groups. Israel is the second centre: AWS's entire custom silicon line runs out of Annapurna Labs, the Israeli design house Amazon bought in 2015 ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)). India holds the largest pool of implementation and verification engineers, roughly 125,000 chip design engineers, close to 20% of the global design workforce and second only to the United States ([source](https://www.semiconhunt.com/article/india-employs-20-percent-global-chip-design-workforce-125000-engineers/)). Taiwan supplies the physical implementation and tape-out layer next to the foundry. China has deep architecture talent at Huawei's HiSilicon and Cambricon but has been cut off from the newest process nodes.
+- **United States.** Architecture and program ownership, at Nvidia, AMD, Broadcom, Marvell and the hyperscalers' own silicon groups.
+- **Israel.** AWS's entire custom silicon line runs out of Annapurna Labs, the design house Amazon bought in 2015 ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)).
+- **India.** The largest pool of implementation and verification engineers, roughly 125,000 of them, close to 20% of the global design workforce and second only to the United States ([source](https://www.semiconhunt.com/article/india-employs-20-percent-global-chip-design-workforce-125000-engineers/)).
+- **Taiwan.** The physical implementation and tape-out layer, next to the foundry.
+- **China.** Deep architecture talent at Huawei's HiSilicon and Cambricon, cut off from the newest process nodes.
 
 ## The chokepoint
 
 In late May 2025 the Bureau of Industry and Security ordered Synopsys, Cadence and Siemens EDA to halt exports of design tools and services to China ([source](https://www.design-reuse.com/news/202528998-synopsys-cadence-and-siemens-resume-eda-supply-to-china/)). Synopsys received its letter on 29 May 2025, and on 2 July 2025 received a further letter rescinding the restriction with immediate effect ([source](https://www.sec.gov/Archives/edgar/data/883241/000119312525155294/d80081d8k.htm)). All three vendors resumed supply within days, after June trade talks in which Washington agreed to ease technology restrictions ([source](https://www.design-reuse.com/news/202528998-synopsys-cadence-and-siemens-resume-eda-supply-to-china/)). The restriction lasted about five weeks.
 
-Two things follow. First, this lever works: it needs no allied coordination, no shipping interdiction and no lead time. Second, it was expensive to pull, because it was reversible only by giving something up, and because it accelerates exactly the substitution it was meant to prevent. Synopsys's China revenue fell from 16% of the total in fiscal 2024 to 12% in fiscal 2025, and Cadence has guided China to 12-13% of fiscal 2026 revenue ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
+Two things follow. The lever works: it needs no allied coordination, no shipping interdiction and no lead time. It was also expensive to pull, because it was reversible only by giving something up, and because it accelerates exactly the substitution it was meant to prevent. Synopsys's China revenue fell from 16% of the total in fiscal 2024 to 12% in fiscal 2025, and Cadence has guided China to 12-13% of fiscal 2026 revenue ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
 
-China's domestic answer is real but partial. Empyrean is the strongest local vendor, holding about half of the domestic market among more than 100 Chinese EDA firms, and is the only Chinese company that industry analysts place in the global second tier alongside Ansys and Keysight, while the three leaders hold roughly 80% of the global market ([source](https://www.scmp.com/tech/article/3315237/chinas-top-player-empyrean-eyes-opportunities-us-chip-curbs-design-software)). Primarius covers device modelling and circuit simulation; Semitronix covers yield and test-chip analysis. Together they cover point tools and mature nodes well. What none of them has is a certified, complete digital flow for a 5 nm-class accelerator, and that gap is measured in foundry-validated corner cases rather than in features.
+China's domestic answer is real but partial. Empyrean holds about half of the domestic market among more than 100 Chinese EDA firms, and is the only Chinese company industry analysts place in the global second tier, while the three leaders hold roughly 80% of the global market ([source](https://www.scmp.com/tech/article/3315237/chinas-top-player-empyrean-eyes-opportunities-us-chip-curbs-design-software)). Primarius covers device modelling and circuit simulation; Semitronix covers yield and test-chip analysis. Together they cover point tools and mature nodes well. What none of them has is a certified, complete digital flow for a 5 nm-class accelerator, and that gap is measured in foundry-validated corner cases rather than in features.
 
 So the answer on China is narrow. It can architect an accelerator: Huawei's Ascend 910C targets 600,000 units in 2026 and Cambricon plans to triple output to 500,000 chips ([source](https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia)). What it cannot do is design at the leading edge without foreign tools, or manufacture what it designs without foreign equipment. Design is the link where China is closest to independence and still not there.
 
