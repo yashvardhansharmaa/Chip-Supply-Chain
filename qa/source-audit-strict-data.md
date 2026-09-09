@@ -517,3 +517,129 @@ Six hosts, all Tier A by category:
 ## Follow-up: gated Hot Chips 2026 decks (9 September 2026, orchestrator)
 
 Both `hc2026.hotchips.org` PDFs return 401 in a real browser as well, so they were dropped. Nulled: `microsoft-maia-200.die.areaMm2Each` and `die.reticleLimited`; `meta-mtia-400.memory.stacks`, `memory.capacityGB`, `memory.bandwidthTBs`, `compute.fp8TFLOPS`, `compute.fp4TFLOPS`, `tdpW`. The two sentences in `landscape-notes.md` that carried those numbers were cut; the MTIA 400 note now says the absolute figures sit in a gated deck. Microsoft's and Meta's public posts were checked for the same numbers and do not carry them.
+
+---
+
+# Second search (9 September 2026) · the five null matrix rows
+
+The strict pass emptied five rows of `data/chokepoint-matrix.json`. This is the second, deeper look at
+each. Two rows were rebuilt, three stay null. `node -e "JSON.parse(...)"` passes;
+`node build/audit-data-sources.js` reports 0 disallowed and exits 0; shares sum to 100.1 (DRAM) and
+99.9 (HBM), both within the schema's "roughly 100".
+
+## Rebuilt · DRAM manufacturing
+
+**Searched.** SEC EDGAR full-text and submissions API for SK hynix, Micron and Samsung; Micron's
+10-K and earnings-call prepared remarks; `news.samsung.com`; CSIS *AI Has a Memory Problem* (25 June
+2026); CSET's ETO provision table; CRS R47508; SIA.
+
+**Found.** SK hynix Inc. (CIK 0002120882) filed a Form 424B4 prospectus on 10 July 2026 for its US
+registration. Under "Competitive Landscape" it prints "Global DRAM Market Shares by Revenue (includes
+HBM)" for 2021–2025 and 1Q26. The chart is a filed exhibit image; it was downloaded from EDGAR
+(`g32785g29a29.jpg`) and read directly:
+
+| | SK hynix | Samsung | Micron | Others |
+|---|---|---|---|---|
+| 2021A | 28.3% | 43.1% | 22.7% | 5.9% |
+| 2022A | 27.7% | 42.7% | 24.2% | 5.4% |
+| 2023A | 29.9% | 42.1% | 22.6% | 5.3% |
+| 2024A | 33.4% | 40.6% | 20.9% | 5.1% |
+| 2025A | 34.8% | 34.5% | 23.5% | 7.3% |
+| 1Q26A | 29.1% | 38.7% | 22.3% | 9.9% |
+
+The prose beside it adds that three firms hold "more than 90% of market share by revenue in the first
+quarter of 2026".
+
+**Row now reads.** Metric "Revenue share", year 2025, KR 69.3 (SK hynix 34.8 + Samsung 34.5), US 23.5
+(Micron), Other 7.3. Converted by parent-company headquarters, the matrix convention. Full-year 2025
+actuals were used rather than 1Q26 because 2026 is a price spike and a single quarter of revenue share
+would be a snapshot of pricing. The note carries three caveats: revenue not bits; headquarters not
+production (Micron fabs most of its bits in Taiwan and Japan); and "Others" is unattributed in the
+source, so it is left in the Other column rather than split between CXMT, Nanya, Winbond and PSMC.
+
+## Rebuilt · HBM
+
+**Found in the same filing**, second chart, "Global HBM Market Shares by Revenue" (`g32785g29b29.jpg`):
+2024A SK hynix 56.4 / Samsung 37.8 / Micron 5.8; 2025A 63.2 / 19.3 / 17.4; 1Q26A 56.4 / 20.5 / 23.1.
+
+**Row now reads.** Metric "Revenue share", year 2025, KR 82.5, US 17.4. Sums to 99.9 on the source's own
+rounding. No fourth supplier and no Chinese column, which is the substance of the row. The note records
+the 2024 and 1Q26 columns so the reader can see Korea falling from 94.2 to 82.5 to 76.9 as Micron
+qualified.
+
+**The attribution caveat, for both rows.** The prospectus sources both charts to IDC, which is a
+market-research firm this project does not cite. The figures are used because the vehicle is a
+registered prospectus — a company filing, explicitly Tier A — in which SK hynix adopts them as its own
+description of its market under securities-law liability. Both row notes say this in plain terms rather
+than presenting the numbers as SK hynix's own measurement. If the client would rather not accept a
+filing's third-party attribution, both rows go back to null and nothing else in the table changes.
+
+## Still null · Advanced packaging (2.5D/3D)
+
+**Searched.** CSET's ETO provision table, read row by row (there is no advanced-packaging *capacity*
+node; `N109 Fabrication tools (for advanced packaging)`, `N76 Packaging tools` and `N70 Assembly
+inspection tools` are tool markets, and the ATP stage node is already used by another row); SEMI; SIA
+and SIA/BCG; TSMC's transcripts and annual report; CSIS; Epoch AI; SemiAnalysis previews.
+
+**Not found, and the reason is structural.** Nobody measures 2.5D or 3D packaging capacity by country.
+What the search did turn up is the best available measure of the segment's narrowness, from the demand
+side: Epoch AI's data insight of 12 March 2026 estimates Nvidia at 60.3 percent of world CoWoS capacity
+in 2025 (90% CI 56.5–64.3), Google 13.5, AMD 8.4, Amazon 7.4, other 10.4, with the four together at
+around 90 percent of CoWoS and HBM by value against about 12 percent of advanced logic dies. That is a
+split by buyer, not by producing country, so it cannot fill the row. It is written into the note, and
+the row's `source` now points at Epoch rather than at Nvidia's 10-K, because Epoch is the stronger
+statement of the same fact. `shares` stays null.
+
+The wafers-per-month ladder that would let anyone build this row from scratch (roughly 13–16k WPM at
+end-2023, 35–40k at end-2024, 65–75k at end-2025) appears in Epoch's methodology, but Epoch states there
+that it takes those benchmarks from SemiWiki and TrendForce. That is a relay of disallowed data through
+an allowed host, so it is not used, and the "where the numbers are weakest" section of the notes now
+says so explicitly.
+
+## Still null · IC substrates
+
+**Searched.** ETO provision table; CSET's 2021 supply-chain report; the White House hundred-day supply
+chain review of June 2021 (250 pages, downloaded and searched for Ajinomoto, ABF, build-up, substrate,
+Ibiden, Unimicron); METI's semiconductor strategy decks; SEMI; Ibiden, Unimicron, Shinko, Samsung
+Electro-Mechanics and AT&S investor materials.
+
+**Not found, now verified rather than assumed.** ETO's provision table does contain a `Substrates`
+node. Every one of its eleven rows has an empty `share_provided` field: it names AKM, Ibiden, NanYa,
+Samsung, Shennan Circuits, Shinko and Zhuhai Yueya against CHN, JPN, KOR and TWN for 2019, and gives no
+percentages and no source string. The White House review names the same firms in the same way and adds
+that commenters flagged ABF substrate as a vulnerability, again without shares. METI's public English
+decks discuss packaging strategy and subsidies but publish no substrate world share.
+
+**Changed.** `shares` stays null. The note now records both checks by name so the next reader does not
+repeat them, and adds the one firm-level number that did surface — Ibiden's own statement that it takes
+close to 100 percent of a new interposer-substrate generation at launch and loses 20 to 30 points three
+to six months later. The row's `source` moves from CSET's 2021 report to the White House review, which
+is the document that actually names the supplier set and the vulnerability.
+
+## Still null · Server assembly
+
+**Searched.** CSET, *Big Tech in Taiwan* (July 2025, downloaded and searched); CSIS, *Mapping the
+Semiconductor Supply Chain* and *Why Taiwan Matters*; Epoch AI's chip-owner documentation and its piece
+on Nvidia in the US GDP statistics; Nvidia's FY2026 10-K; SIA.
+
+**Not found.** No allowed source splits AI server or rack integration by country. The nearest things
+are Nvidia's own disclosure that around a fifth of its revenue is billed to Taiwan-headquartered
+customers and its estimate that 76 percent of that data-centre revenue ends with customers in the
+United States and Europe — which is a billing geography, not an assembly geography — and CSET's
+observation that US firms rely on Taiwanese suppliers operating in Taiwan, China and elsewhere. Neither
+is a share.
+
+**Changed.** `shares` stays null; the note now names the three sources checked so the negative result
+is on the record. Source unchanged (Nvidia's annual report).
+
+## Domain added to data/source-tiers.json under A
+
+`bidenwhitehouse.archives.gov`, the archived White House host that now serves the June 2021 hundred-day
+supply chain review. `whitehouse.gov` was already listed but the audit script matches hosts by exact
+name or dot-suffix, and the archive host is neither.
+
+## Files touched in this pass
+
+`data/chokepoint-matrix.json` (five rows), `data/chokepoint-matrix-notes.md` (the "rows with no
+shares", "where the numbers come from", "metric" and "where the numbers are weakest" sections),
+`data/source-tiers.json` (one domain), and the three chapters logged in `qa/source-audit-strict.md`.

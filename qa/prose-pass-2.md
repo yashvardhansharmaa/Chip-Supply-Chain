@@ -126,8 +126,7 @@ Machine-prose removed:
 - Abstract noun where a plain clause worked. "The lock-in is stickiness:" became "What holds a customer is the cost of leaving:". "This is not lithography. No single tool has a single supplier." became "Unlike lithography, no tool here has a single supplier."
 - Aphoristic paragraph ending. "a small share of the revenue sitting on the critical path of all of it" became "That is a small share of the money for a step every chip has to pass through."
 - Chiasmus in the Takeaways. "the least likely part of this chain to be controlled by export policy, and the most likely to be reshaped by it" became "so export policy has less grip here than anywhere else in the chain". Also cut "quietly" from "Advantest has quietly turned a duopoly into a two-thirds share", and "actually" from the test-coverage criterion.
-- Jargon for a general reader: "before dies are singulated" became "before dies are cut from the wafer"; "irreplaceable package" became "a package that cannot be rewor
-ked"; "the tightest niche of all" became "the tightest niche".
+- Jargon for a general reader: "before dies are singulated" became "before dies are cut from the wafer"; "irreplaceable package" became "a package that cannot be reworked"; "the tightest niche of all" became "the tightest niche".
 - Long sentence with three citations split in two (the Amkor and TSMC Arizona sentence), so each half keeps its own source.
 
 Left alone:

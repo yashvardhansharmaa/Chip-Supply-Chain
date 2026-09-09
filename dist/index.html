@@ -3268,8 +3268,8 @@ PC.register('gaa-transistor', function (p) {
   // ---------- the three silicon nanosheets ----------
   y0.forEach(function (yb) {
     add(boxAt(-sL / 2, yb, -sW / 2, sL / 2, yb + sT, sW / 2,
-      { n: 2000, tone: 0.36, faces: ['py', 'pz', 'nz', 'px', 'nx'] }));
-    add(edgesAt(-sL / 2, yb, -sW / 2, sL / 2, yb + sT, sW / 2, 13, 1));
+      { n: 4400, tone: 0.30, faces: ['py', 'pz', 'nz', 'px', 'nx'] }));
+    add(edgesAt(-sL / 2, yb, -sW / 2, sL / 2, yb + sT, sW / 2, 9, 0.9));
     for (var q = -1; q <= 1; q++) {
       add(PC.line({ a: [-sL / 2, yb + sT, q * 8], b: [sL / 2, yb + sT, q * 8], perUnit: 7, tone: 0.45 }));
     }
@@ -3286,7 +3286,7 @@ PC.register('gaa-transistor', function (p) {
     });
     add(acc(edgesAt(-gX, b[0], -gZ, gX, b[1], gZ, 6, 1), 0.7));
   });
-  add(acc(boxAt(-gX, gY0, -gZ, gX, gY1, gZ, { n: 900, tone: 1, faces: ['py'] }), 0.34));
+  add(acc(boxAt(-gX, gY0, -gZ, gX, gY1, gZ, { n: 420, tone: 1, faces: ['py'] }), 0.24));
   add(acc(edgesAt(-gX, gY0, -gZ, gX, gY1, gZ, 15, 1), 1));
   // the metal that runs around the sheet edges: two thin walls just outside them
   [-1, 1].forEach(function (s) {
@@ -3306,7 +3306,7 @@ PC.register('gaa-transistor', function (p) {
   var shape = [[0.125, -0.130], [0.165, -0.170], [0.280, -0.170], [0.320, -0.130],
                [0.320, 0.130], [0.280, 0.170], [0.165, 0.170], [0.125, 0.130]];
   [-1, 1].forEach(function (s) {
-    var epi = PC.thin(PC.extrude({ shape: shape, h: 0.42, tone: 0.30 }), 0.52);
+    var epi = PC.thin(PC.extrude({ shape: shape, h: 0.42, tone: 0.20 }), 0.46);
     add(PC.T(epi, { scale: [s * 100, 100, 100], pos: [0, 19, 0] }));
     var ring = shape.map(function (q) { return [s * q[0] * 100, 0, q[1] * 100]; });
     [-2, 40].forEach(function (yy) {
@@ -3327,7 +3327,7 @@ PC.register('gaa-transistor', function (p) {
   return {
     cloud: PC.merge.apply(null, parts),
     spin: 0.12,
-    tilt: [0.46, -0.72, 0],
+    tilt: [0.52, -0.76, 0],
     caption: 'A gate-all-around nanosheet transistor, drawn at the dimensions a 2 nm-class node ' +
       'uses: three silicon sheets 6 nm thick and 30 nm wide, stacked 10 nm apart, running from the ' +
       'source epitaxy on one side to the drain epitaxy on the other. The copper cage is the gate. ' +
