@@ -129,12 +129,12 @@ Flatness breaks first as packages grow. TSMC has told investors that its CoWoS p
 
 ## Key evaluation criteria
 
-- **Layer count** sets how much current and how many signals the substrate can carry. Each added build-up layer multiplies the yield risk.
-- **Body size** drives everything else. Once a body is much larger than the dies it carries, warpage and handling set the process window rather than wiring.
-- **Coefficient of thermal expansion** must be close enough to silicon that the package survives thermal cycling, which is what T-glass buys and why its supply matters.
-- **Dielectric properties** of the core laminate set achievable signal rates on both the substrate and the board underneath.
-- **Qualification time** is what protects the incumbents. Second-sourcing a film or a laminate takes years.
+- **Layer count** sets how much current and how many signals the substrate can carry. Each added layer is another chance to lose the part.
+- **Body size** drives everything else. Once a body is much larger than the dies it carries, warping and handling decide what can be built, not the wiring.
+- **Coefficient of thermal expansion**, how much a material swells when heated, must be close enough to silicon that the package survives repeated heating and cooling. That is what T-glass buys and why its supply matters.
+- **Dielectric properties**, how much signal the core laminate soaks up, set the speeds the substrate and the board underneath can run.
+- **Qualification time** is what protects the incumbents. Approving a second supplier for a film or a laminate takes years.
 
 ## Takeaways
 
-TSMC says packaging capacity already caps what its customers can ship, and the two materials that make a substrate possible come from single Japanese suppliers: Ajinomoto puts its own film at 95 percent of the market it serves, and Nitto Boseki claims an overwhelming advantage in the glass cloth beneath it. Substrate fabs in Japan, Taiwan and Korea are spending billions, but film and glass cloth expand on a slower clock than GPUs do. Glass cores fix the physics eventually; on Intel's and Samsung's own dates, they do not fix 2027.
+TSMC says packaging capacity already caps what its customers can ship, and the two materials that make a substrate possible come from single Japanese suppliers: Ajinomoto puts its own film at 95 percent of that market, and Nitto Boseki claims an overwhelming advantage in the glass cloth beneath it. Substrate plants in Japan, Taiwan and Korea are spending billions, but film and glass cloth add capacity on a slower clock than GPUs do. Glass cores fix the physics eventually; on Intel's and Samsung's own dates, they do not fix 2027.
