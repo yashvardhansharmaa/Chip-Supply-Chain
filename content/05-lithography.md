@@ -100,7 +100,7 @@ Immersion is the contested tier: a fab needs NXT:2000i-class scanners to reach l
 
 The 13.5 nm light comes from dropping molten tin into a vacuum vessel 50,000 times a second and hitting each droplet twice, with a low-intensity pulse to flatten it and then one that vaporises it into plasma ([source](https://www.asml.com/en/technology/lithography-principles/light-and-lasers)). A collector mirror hands the light to a six-mirror projection system from Zeiss, which also builds the illumination optics ([source](https://www.zeiss.com/semiconductor-manufacturing-technology/inspiring-technology/euv-lithography.html)). The largest mirrors are a metre across and polished smooth to tens of picometres ([source](https://www.asml.com/en/technology/lithography-principles/lenses-and-mirrors)).
 
-Source power sets output: the TWINSCAN NXE:3800E now ships at its full 220 wafers per hour, 37 percent better than the NXE:3600D, on a stronger source, a new wafer handler and faster stages ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf)). In April 2025 ASML ran the first 1,000-watt EUV source ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf)).
+Source power sets output, and ASML ran the first 1,000-watt EUV source in April 2025 ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf)). The TWINSCAN NXE:3800E now ships at its full 220 wafers per hour, 37 percent better than the NXE:3600D, on a stronger source, a new wafer handler and faster stages ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf)).
 
 ### High-NA EUV
 
@@ -136,7 +136,7 @@ The Japanese incumbents are specialists now. Nikon sold 22 new semiconductor sca
 
 ## Controls and China's answer
 
-Export controls keep ASML from shipping EUV to Chinese foundries, and CSIS judges the technology out of reach there despite state spending ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)). Below EUV, the restrictions arrived in this order.
+Export controls keep ASML from shipping EUV to Chinese foundries, and CSIS judges the technology out of reach there despite state spending ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)). Below EUV, the restrictions arrived in this order:
 
 - **Dutch national licensing** of advanced DUV took effect on 1 September 2023, and The Hague widened it on 6 September 2024 ([source](https://www.government.nl/latest/news/2024/09/06/the-netherlands-expands-export-control-measure-advanced-semiconductor-manufacturing-equipment)).
 - **A partial licence revocation** disclosed on 1 January 2024 stopped NXT:2050i and NXT:2100i shipments to a few Chinese customers ([source](https://www.asml.com/en/news/press-releases/2023/statement-regarding-partial-revocation-export-license)).
@@ -146,7 +146,7 @@ The effect shows in ASML's mix: China was 41% of net system sales in 2024 and 33
 
 On DUV, China's answer is real. Reuters reported in July 2026 that the Shanghai state firm Aishengna has started producing home-grown immersion DUV tools ([source](https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/)). Set that against the incumbent: SMEE is strongest in i-line, and even there holds about four percent of the world market ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).
 
-On EUV the record is thinner. Reuters reported in December 2025 that a Shenzhen team of former ASML engineers had built a prototype that makes extreme ultraviolet light but no working chip ([source](https://www.reuters.com/world/china/how-china-built-its-manhattan-project-rival-west-ai-chips-2025-12-17/)). Between the light and a printed chip sit the mirrors, and only Zeiss makes them to that figure. Claims of Huawei EUV mass production in 2026 remain unverified.
+On EUV the record is thinner, and claims of Huawei EUV mass production in 2026 remain unverified. Reuters reported in December 2025 that a Shenzhen team of former ASML engineers had built a prototype that makes extreme ultraviolet light but no working chip ([source](https://www.reuters.com/world/china/how-china-built-its-manhattan-project-rival-west-ai-chips-2025-12-17/)). Between the light and a printed chip sit the mirrors, and only Zeiss makes them to that figure.
 
 {{figure:asml-region}}
 

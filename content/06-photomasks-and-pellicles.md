@@ -63,7 +63,7 @@ Every EUV layer on an AI accelerator needs a defect-free reticle, built on a bla
 
 A photomask is the printing plate for one layer of a chip. The machine shrinks its picture four times onto the wafer, so one plate stamps that layer millions of times. No glass is transparent to the short light now in use, so the plate is not a window but a mirror of about forty pairs of ultrathin layers, and any speck of dust on it repeats on every chip. Two Japanese firms make almost all of those mirrors, which is why a small and obscure business sits under every leading-edge chip.
 
-A DUV mask is transmissive: quartz carrying a light-shielding film such as molybdenum silicide ([source](https://www.shinetsu.co.jp/en/products/electronics-materials/photomask-blanks/)). An EUV mask is a mirror, about 40 molybdenum and silicon bilayers of 7 nm period on low-expansion glass under a tantalum absorber ([source](https://arxiv.org/pdf/1912.09075)). Making the plate a mirror creates its own problems:
+A DUV mask is transmissive: quartz carrying a light-shielding film such as molybdenum silicide, and Shin-Etsu supplies those blanks ([source](https://www.shinetsu.co.jp/en/products/electronics-materials/photomask-blanks/)). An EUV mask is a mirror, about 40 molybdenum and silicon bilayers of 7 nm period on low-expansion glass under a tantalum absorber ([source](https://arxiv.org/pdf/1912.09075)). Making the plate a mirror creates its own problems:
 
 - **Mask 3D effects.** Light strikes the stack at an angle, so software must pre-compensate the distortion.
 - **Write precision.** The absorber has to be cut to single-digit nanometre placement.

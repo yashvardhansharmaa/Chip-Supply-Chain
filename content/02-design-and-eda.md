@@ -77,7 +77,7 @@ Design is the only stage in this chain with no factory. It is also the one a for
 
 Designing a chip is like drawing the street plan of a city of billions of buildings, where every road has to be walkable in less than a billionth of a second. No one draws it by hand. The layout is generated, checked and signed off by software sold by three companies, and a foundry will only accept a design that has passed their particular tools. Once the plan goes to the factory, changing one street costs a new set of printing plates and several months. Withhold the software and the design cannot be manufactured.
 
-A design starts as an architecture and ends as pattern files for the mask shop.
+The sequence is the same at every design house:
 
 - **Architecture.** Engineers fix the machine's shape: the matrix-multiply unit's width, the SRAM beside it, the HBM stacks on the edges.
 - **RTL.** Register-transfer-level code in SystemVerilog fixes what every register holds on every clock edge.
@@ -115,7 +115,9 @@ The EDA and design IP market was about $18 billion in 2025, and Synopsys, Cadenc
 
 {{figure:eda-share}}
 
-Design services are narrower again, and Broadcom is the name on most of the deals. It booked $16.7 billion of AI semiconductor revenue in the third quarter of fiscal 2026, up 221% ([source](https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm)). Its customers no longer hide the arrangement. In October 2025 OpenAI and Broadcom said they would deploy 10 gigawatts of OpenAI-designed accelerators, with Broadcom supplying the silicon implementation and the Ethernet around it ([source](https://investors.broadcom.com/news-releases/news-release-details/openai-and-broadcom-announce-strategic-collaboration-deploy-10)). In April 2026 Broadcom extended its Meta partnership to multiple gigawatts of MTIA and the first 2 nm AI accelerator ([source](https://investors.broadcom.com/news-releases/news-release-details/broadcom-announces-extended-partnership-meta-deploy-technology)).
+Design services are narrower again, and Broadcom is the name on most of the deals. It booked $16.7 billion of AI semiconductor revenue in the third quarter of fiscal 2026, up 221% ([source](https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm)).
+
+Its customers no longer hide the arrangement. In October 2025 OpenAI and Broadcom said they would deploy 10 gigawatts of OpenAI-designed accelerators, with Broadcom supplying the silicon implementation and the Ethernet around it ([source](https://investors.broadcom.com/news-releases/news-release-details/openai-and-broadcom-announce-strategic-collaboration-deploy-10)). In April 2026 Broadcom extended its Meta partnership to multiple gigawatts of MTIA and the first 2 nm AI accelerator ([source](https://investors.broadcom.com/news-releases/news-release-details/broadcom-announces-extended-partnership-meta-deploy-technology)).
 
 Below Broadcom and Marvell sit the Taiwanese houses that take a netlist to tape-out on TSMC's newest nodes; Alchip reported $992 million of revenue in 2025 ([source](https://www.alchip.com/en/Investors/financials/)). The engineers are spread wider than the firms: India alone holds nearly 20% of the world's chip designers ([source](https://www.pib.gov.in/PressReleasePage.aspx?PRID=2148393)).
 
