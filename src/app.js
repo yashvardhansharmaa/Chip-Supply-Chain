@@ -188,7 +188,7 @@
     set: function (collapsed) {
       this.collapsed = collapsed;
       this.el.setAttribute('data-collapsed', collapsed ? '1' : '0');
-      var t = $('.stage-toggle'); if (t) { t.textContent = collapsed ? 'Show' : 'Hide'; t.setAttribute('aria-expanded', collapsed ? 'false' : 'true'); }
+      var t = $('.stage-toggle'); if (t) { t.textContent = collapsed ? 'Expand' : 'Collapse'; t.setAttribute('aria-expanded', collapsed ? 'false' : 'true'); }
     }
   };
 
@@ -239,7 +239,7 @@
         }
         Sections.update();
       }
-      document.title = v === 'stack' ? 'Compute Chokepoints' : 'Compute Chokepoints · ' + { briefing: 'Summary', landscape: 'AI Chips', suppliers: 'Suppliers', geopolitics: 'Geopolitics', controls: sub === 'exposure' ? 'China exposure' : 'Controls', walk: 'How a GPU is made', methods: 'Methods', 'summary-a': 'Summary A', 'summary-b': 'Summary B', glossary: 'Glossary', sources: 'Sources' }[v];
+      document.title = v === 'stack' ? 'Compute Chokepoints' : 'Compute Chokepoints · ' + { briefing: 'Summary', landscape: 'AI Chips', suppliers: 'Suppliers', geopolitics: 'Geopolitics', controls: sub === 'exposure' ? 'China revenue share' : 'Export controls', walk: 'How a GPU is made', methods: 'Methods', 'summary-a': 'Summary A', 'summary-b': 'Summary B', glossary: 'Glossary', sources: 'Sources' }[v];
     }
   };
 
@@ -323,14 +323,14 @@
         '<div><b>' + (m.capacityGB != null ? m.capacityGB + '<small>GB</small>' : '—') + '</b><span>' + esc(m.type || 'Memory') + '</span></div>' +
         '<div><b>' + (m.bandwidthTBs != null ? m.bandwidthTBs + '<small>TB/s</small>' : '—') + '</b><span>Bandwidth</span></div>' +
         '<div><b>' + (cp.fp8TFLOPS != null ? Math.round(cp.fp8TFLOPS).toLocaleString('en-US') : (cp.fp16TFLOPS != null ? Math.round(cp.fp16TFLOPS).toLocaleString('en-US') : '—')) + '<small>' + (cp.fp8TFLOPS != null ? 'FP8 TFLOPS' : 'FP16 TFLOPS') + '</small></b><span>Dense compute</span></div>' +
-        '<div><b>' + (c.tdpW != null ? c.tdpW + '<small>W</small>' : '—') + '</b><span>TDP</span></div></div>' +
+        '<div><b>' + (c.tdpW != null ? c.tdpW + '<small>W</small>' : '—') + '</b><span>Power (TDP)</span></div></div>' +
         '<div class="spec-groups">' +
         '<h4>Silicon</h4><dl>' + r('Foundry', pr.foundry ? pr.foundry + (pr.country ? ' (' + cname(pr.country) + ')' : '') : null) + r('Process node', pr.node) + r('Dies', d.count) + r('Die area', d.areaMm2Each, 'mm² each') + r('Transistors', d.transistorsB, 'billion') + r('Reticle-limited', d.reticleLimited == null ? null : (d.reticleLimited ? 'Yes' : 'No')) + '</dl>' +
         '<h4>Package</h4><dl>' + r('Type', p.type) + r('Assembled by', p.assembler) + r('Package size', p.sizeMm) + '</dl>' +
         '<h4>Memory</h4><dl>' + r('Type', m.type) + r('Stacks', m.stacks) + r('Capacity', m.capacityGB, 'GB') + r('Bandwidth', m.bandwidthTBs, 'TB/s') + r('Suppliers', (m.suppliers || []).join(', ') || null) + '</dl>' +
-        '<h4>Compute</h4><dl>' + r('FP16 / BF16', cp.fp16TFLOPS, 'TFLOPS') + r('FP8', cp.fp8TFLOPS, 'TFLOPS') + r('FP4', cp.fp4TFLOPS, 'TFLOPS') + r('Note', cp.precisionNote) + r('TDP', c.tdpW, 'W') + '</dl>' +
-        '<h4>System</h4><dl>' + r('Chip to chip', ic.chipToChip) + r('Scale-up', ic.scaleUp) + r('Scale-out', ic.scaleOut) + r('System builders', (c.systemIntegrators || []).join(', ') || null) + r('Target', c.target) + '</dl>' +
-        '<h4>Economics and policy</h4><dl>' + r('Price estimate', c.priceEstimate) + r('BOM estimate', c.bomEstimate) + r('Export status', c.exportStatus) + r('Announced', c.announced) + r('Shipping', c.shipping) + '</dl>' +
+        '<h4>Compute</h4><dl>' + r('FP16 / BF16', cp.fp16TFLOPS, 'TFLOPS') + r('FP8', cp.fp8TFLOPS, 'TFLOPS') + r('FP4', cp.fp4TFLOPS, 'TFLOPS') + r('Note', cp.precisionNote) + r('Power (TDP)', c.tdpW, 'W') + '</dl>' +
+        '<h4>System</h4><dl>' + r('Chip to chip', ic.chipToChip) + r('Scale-up (inside a rack)', ic.scaleUp) + r('Scale-out (rack to rack)', ic.scaleOut) + r('System builders', (c.systemIntegrators || []).join(', ') || null) + r('Built for', c.target) + '</dl>' +
+        '<h4>Economics and policy</h4><dl>' + r('Price estimate', c.priceEstimate) + r('Bill of materials, estimated', c.bomEstimate) + r('Export status', c.exportStatus) + r('Announced', c.announced) + r('Shipping', c.shipping) + '</dl>' +
         '</div>' +
         (note || c.notes ? '<div class="spec-notes"><span class="label">In the supply chain</span>' + (note ? note : '<p>' + esc(c.notes) + '</p>') + '</div>' : '') +
         (c.sources && c.sources.length ? '<div class="spec-sources">' + c.sources.map(function (s) { return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.label || s.url) + '</a>'; }).join('') + '</div>' : '');
@@ -344,7 +344,7 @@
     },
     buildCompare: function () {
       var cols = [['Chip', function (c) { return '<b>' + esc(c.name) + '</b> <span class="cc">' + esc(c.vendor) + '</span>'; }],
-        ['Node', function (c) { return esc((c.process || {}).node || '—') + ' · ' + esc((c.process || {}).foundry || ''); }],
+        ['Process node', function (c) { return esc((c.process || {}).node || '—') + ' · ' + esc((c.process || {}).foundry || ''); }],
         ['Dies', function (c) { return (c.die || {}).count != null ? c.die.count : '—'; }],
         ['Transistors', function (c) { return (c.die || {}).transistorsB != null ? c.die.transistorsB + ' B' : '—'; }],
         ['Package', function (c) { return esc((c.package || {}).type || '—'); }],
@@ -352,7 +352,7 @@
         ['Capacity', function (c) { return (c.memory || {}).capacityGB != null ? c.memory.capacityGB + ' GB' : '—'; }],
         ['Bandwidth', function (c) { return (c.memory || {}).bandwidthTBs != null ? c.memory.bandwidthTBs + ' TB/s' : '—'; }],
         ['FP8 dense', function (c) { return (c.compute || {}).fp8TFLOPS != null ? Math.round(c.compute.fp8TFLOPS).toLocaleString('en-US') : '—'; }],
-        ['TDP', function (c) { return c.tdpW != null ? c.tdpW + ' W' : '—'; }],
+        ['Power (TDP)', function (c) { return c.tdpW != null ? c.tdpW + ' W' : '—'; }],
         ['Status', function (c) { return esc(c.status || '') + (c.shipping ? ' ' + esc(c.shipping) : ''); }]];
       var html = '<thead><tr>' + cols.map(function (c) { return '<th>' + c[0] + '</th>'; }).join('') + '</tr></thead><tbody>';
       this.chips.forEach(function (ch) { html += '<tr>' + cols.map(function (c) { return '<td>' + c[1](ch) + '</td>'; }).join('') + '</tr>'; });
@@ -402,14 +402,14 @@
     render: function () {
       var rows = this.filtered(), self = this;
       var th = function (k, label) { return '<th><button type="button" data-sort="' + k + '"' + (self.sortKey === k ? ' aria-sort="' + (self.sortDir > 0 ? 'ascending' : 'descending') + '"' : '') + '>' + label + '</button></th>'; };
-      var html = '<thead><tr>' + th('name', 'Supplier') + th('category', 'Category') + th('country', 'Country') + th('founded', 'Founded') + th('chokepoint', 'Chokepoint') + '<th>What they make and why it matters</th><th>Customers</th></tr></thead><tbody>';
+      var html = '<thead><tr>' + th('name', 'Supplier') + th('category', 'Category') + th('country', 'Country') + th('founded', 'Founded') + th('chokepoint', 'Chokepoint level') + '<th>What they make and why it matters</th><th>Customers</th></tr></thead><tbody>';
       rows.forEach(function (r) {
         html += '<tr><td class="name"><b>' + esc(r.name) + '</b><span>' + esc([r.nativeName, r.ticker].filter(Boolean).join(' · ')) + '</span></td>' +
           '<td>' + esc(r.category) + (r.subcategory ? '<br><span class="cc" style="color:var(--muted)">' + esc(r.subcategory) + '</span>' : '') + '</td>' +
           '<td><span class="cc">' + esc(r.country) + '</span> ' + esc(r.city || '') + '</td>' +
           '<td class="num">' + (r.founded || '—') + '</td>' +
           '<td><span class="chk ' + esc(r.chokepoint || '') + '">' + esc(r.chokepoint || '') + '</span>' + (r.shareNote ? '<br><span class="cc" style="color:var(--muted)">' + esc(r.shareNote) + '</span>' : '') + '</td>' +
-          '<td class="role">' + esc(r.role || '') + (r.source ? ' <a href="' + esc(r.source) + '" target="_blank" rel="noopener" class="cc" aria-label="Source for ' + esc(r.name) + '">src</a>' : '') + '</td>' +
+          '<td class="role">' + esc(r.role || '') + (r.source ? ' <a href="' + esc(r.source) + '" target="_blank" rel="noopener" class="cc" aria-label="Source for ' + esc(r.name) + '">source</a>' : '') + '</td>' +
           '<td style="font-size:13px;color:var(--ink-2)">' + esc((r.customers || []).join(', ')) + '</td></tr>';
       });
       $('#sup-table').innerHTML = html + '</tbody>';

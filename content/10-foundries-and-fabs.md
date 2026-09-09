@@ -62,7 +62,7 @@
 ---
 # Foundries and Fabs
 
-TSMC calls a plant a GIGAFAB once it runs more than 100,000 wafers a month, each a 300 mm disc, twelve inches across. It operates six of them, their combined output passed 13 million 12-inch equivalent wafers in 2025, and every one is in Taiwan ([source](https://www.tsmc.com/english/dedicatedFoundry/manufacturing/gigafab)).
+TSMC calls a plant a GIGAFAB once it runs more than 100,000 wafers a month, each a 300 mm disc, twelve inches across. It operates six of them, and every one is in Taiwan ([source](https://www.tsmc.com/english/dedicatedFoundry/manufacturing/gigafab)).
 
 ## How it works
 
@@ -70,13 +70,13 @@ A foundry is a print shop for chips: other companies send in designs, and the fo
 
 TSMC, founded in 1987, invented the pure-play model: it builds chips for other companies and promises never to compete with them. BCG puts the ten-year cost of owning a fab completed in 2026 at $35 to $43 billion, a third to two thirds above one finished three years earlier ([source](https://www.bcg.com/publications/2023/navigating-the-semiconductor-manufacturing-costs)).
 
-Every plant TSMC and its subsidiaries run came to more than 17 million 12-inch equivalent wafers a year in 2025 ([source](https://www.tsmc.com/english/dedicatedFoundry/manufacturing/fab_capacity)). The Taiwanese gigafabs hold 13 million of that; Arizona, Kumamoto, Nanjing and Washington hold the rest.
+Every plant TSMC and its subsidiaries run came to more than 17 million 12-inch equivalent wafers a year in 2025 ([source](https://www.tsmc.com/english/dedicatedFoundry/manufacturing/fab_capacity)). The six Taiwanese gigafabs hold 13 million of that ([source](https://www.tsmc.com/english/dedicatedFoundry/manufacturing/gigafab)); Arizona, Kumamoto, Nanjing and Washington hold the rest.
 
 ## Variants and trade-offs
 
 ### Pure-play foundries
 
-TSMC and UMC build only for others. Chips at 7 nm and below were 77 percent of TSMC's wafer revenue in the second quarter of 2026, split 33 percent at 5 nm, 30 at 3 nm and 3 at 2 nm, on revenue of $40.20 billion at a 67.7 percent gross margin ([source](https://www.sec.gov/Archives/edgar/data/0001046179/000104617926000451/a2q26e_withguidancexfinal.htm)). No other foundry earns that margin, so none can fund the next node out of cash flow.
+TSMC and UMC build only for others. Chips at 7 nm and below, meaning the newest processes, were 77 percent of TSMC's wafer revenue in the second quarter of 2026, split 33 percent at 5 nm, 30 at 3 nm and 3 at 2 nm, on revenue of $40.20 billion at a 67.7 percent gross margin ([source](https://www.sec.gov/Archives/edgar/data/0001046179/000104617926000451/a2q26e_withguidancexfinal.htm)). No other foundry earns that margin, so none can fund the next node out of cash flow.
 
 {{figure:foundry-share}}
 
@@ -90,7 +90,7 @@ SMIC, Hua Hong and Rapidus exist because a government decided they should. SMIC'
 
 ### Mature-node capacity
 
-Most wafers are not leading-edge. SEMI expects foundries alone to reach 12.7 million wafers a month by 2026, with the fastest growth in China ([source](https://www.semi.org/en/news-media-press-releases/semi-press-releases/global-semiconductor-fab-capacity-projected-to-expand-6%25-in-2024-and-7%25-in-2025-semi-reports)). Those lines make power devices, analogue chips and microcontrollers, and compete on price rather than density.
+Most wafers are not leading-edge. The industry association SEMI expects foundries alone to reach 12.7 million wafers a month by 2026, with the fastest growth in China ([source](https://www.semi.org/en/news-media-press-releases/semi-press-releases/global-semiconductor-fab-capacity-projected-to-expand-6%25-in-2024-and-7%25-in-2025-semi-reports)). Those lines make power devices, analogue chips and microcontrollers, and compete on price rather than density.
 
 ## Capacity and cost
 
