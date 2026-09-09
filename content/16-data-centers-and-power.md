@@ -3,19 +3,19 @@
   "id": "data-centers-and-power",
   "number": 16,
   "title": "Data Centers and Power",
-  "oneLiner": "The chips are no longer what a buildout waits on. A large transformer takes three years, turbine output does not reach 30 GW a year until 2030, and Texas has fifty times more large load queued than it has approved to switch on.",
-  "plain": "A domestic hair dryer pours about two kilowatts of heat out of a hand-sized nozzle. One rack of AI chips draws seventy of them in a box the size of a wardrobe, and every watt turns into heat that has to be carried away in water rather than air. Feeding and cooling that box is what a modern data center does. The building is the easy part. Getting the electricity to the door is the hard one, because the transformers, switchgear and turbines that connect a site to the grid are ordered years in advance.",
+  "oneLiner": "The chips are no longer what a buildout waits for. A large transformer takes three years, turbine output does not reach 30 GW a year until 2030, and Texas has fifty times more large load queued than it has approved to switch on.",
+  "plain": "A data center's job is to feed and cool the machines inside it. The scale has changed: a hair dryer pours about two kilowatts of heat out of a hand-sized nozzle, and one rack of AI chips draws seventy of them in a box the size of a wardrobe, every watt of it turning into heat that has to be carried away in water rather than air. The building is the easy part. Getting the electricity to the door is the hard one, because the transformers, switchgear and turbines that connect a site to the grid come from a few suppliers and are ordered years in advance.",
   "specimen": "rack",
-  "specimenCaption": "Right: a liquid-cooled 72-GPU rack. Eighteen compute trays above and below nine NVLink switch trays, the NVLink cable cartridge filling the back, cold-plate manifolds up the side, and in amber the power shelves at top and bottom and the busbar they feed, the part with the queue in front of it.",
+  "specimenCaption": "Right: a liquid-cooled 72-GPU rack. Eighteen compute trays above and below nine NVLink switch trays, the NVLink cable cartridge filling the back, cold-plate manifolds up the side, and in amber the power shelves at top and bottom with the busbar they feed, the part of the machine that waits on the grid.",
   "card": {
     "concentration": "High",
     "chokepointScore": 4,
     "leaders": [
-      {"name": "GE Vernova", "country": "US", "share": "116 GW of gas power equipment backlog and slot reservations at mid-2026"},
-      {"name": "Hitachi Energy", "country": "CH", "share": "Large power transformers and HV switchgear"},
+      {"name": "GE Vernova", "country": "US", "share": "116 GW of gas equipment backlog and reserved factory slots at mid-2026"},
+      {"name": "Hitachi Energy", "country": "CH", "share": "Large power transformers and high-voltage switchgear"},
       {"name": "Siemens Energy", "country": "DE", "share": "Grid technologies, transformers, turbines"},
       {"name": "Vertiv", "country": "US", "share": "Data center power and cooling systems; NVIDIA gigawatt AI factory partner"},
-      {"name": "Schneider Electric", "country": "FR", "share": "Electrical distribution and cooling; NVIDIA 800 VDC ecosystem partner"}
+      {"name": "Schneider Electric", "country": "FR", "share": "Electrical distribution and cooling; partner in NVIDIA's 800-volt DC designs"}
     ],
     "countries": [
       {"code": "US", "note": "Most new AI capacity; ERCOT and PJM carry the load growth"},
@@ -25,14 +25,14 @@
       {"code": "JP", "note": "Hitachi group transformer manufacturing"}
     ],
     "chinaStatus": "Power is not China's binding constraint. It has surplus generation, a large domestic transformer and switchgear industry, and can energise sites quickly. Its AI buildout is limited by accelerator supply, not megawatts.",
-    "usStatus": "Holds the demand and the capital but not the equipment lead times. Transformers and turbines are both multi-year queues, most large power transformers are imported, and no restarted reactor is running yet.",
-    "costSignal": "Transformer lead times of 36 months, against under a year before 2020; GE Vernova's gas backlog and slot reservations grew from 100 GW to 116 GW in 2026",
+    "usStatus": "Has the demand and the capital but cannot shorten the equipment queues. Transformers and turbines are both multi-year waits, most large power transformers are imported, and no restarted reactor is running yet.",
+    "costSignal": "Transformer lead times of 36 months, against under a year before 2020; GE Vernova's gas backlog and reserved slots grew from 100 GW to 116 GW in 2026",
     "substitution": {"years": "4-6", "why": "Large power transformer lead times of 36 months are commonly quoted and can reach 60, GE Vernova is building toward 30 GW of annual turbine output only by 2030, and the one reactor restart with a data center buyer behind it is still waiting on its licence."}
   },
   "keyFacts": [
     {"fact": "A GB300 NVL72 rack draws up to 142 kW, fed by eight 33 kW power shelves", "source": "https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html"},
-    {"fact": "NVIDIA's 800 VDC architecture is drawn for racks from 100 kW to over 1 MW, with megawatt racks from 2027, because 54 VDC distribution hits physical limits past about 200 kW", "source": "https://developer.nvidia.com/blog/nvidia-800-v-hvdc-architecture-will-power-the-next-generation-of-ai-factories/"},
-    {"fact": "Nvidia's Kyber rack will hold 576 Rubin Ultra GPUs in 2027 on an 800 VDC bus that carries over 150% more power through the same copper", "source": "https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin"},
+    {"fact": "NVIDIA's 800-volt DC architecture is drawn for racks from 100 kW to over 1 MW, with megawatt racks from 2027, because the 54-volt distribution in today's racks hits physical limits past about 200 kW", "source": "https://developer.nvidia.com/blog/nvidia-800-v-hvdc-architecture-will-power-the-next-generation-of-ai-factories/"},
+    {"fact": "Nvidia's Kyber rack will hold 576 Rubin Ultra GPUs in 2027 on an 800-volt DC bus that carries over 150% more power through the same copper", "source": "https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin"},
     {"fact": "US data centers used 176 TWh in 2023, 4.4% of US electricity, and are projected at 325 to 580 TWh by 2028, or 6.7% to 12%", "source": "https://newscenter.lbl.gov/2025/01/15/berkeley-lab-report-evaluates-increase-in-electricity-demand-from-data-centers/"},
     {"fact": "The five largest US hyperscalers spent $448.3B of capex in 2025; on that trend they reach $770B in 2026", "source": "https://epoch.ai/data-insights/hyperscaler-capex-trend"},
     {"fact": "ERCOT was tracking about 474 GW of large loads seeking interconnection in June 2026, about 90% of it data centers", "source": "https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf"},

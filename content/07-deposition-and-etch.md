@@ -3,18 +3,18 @@
   "id": "deposition-and-etch",
   "number": 7,
   "title": "Deposition and Etch",
-  "oneLiner": "Lithography prints the pattern. Deposition and etch build the thing, over a thousand steps per wafer, and this is the one tool segment where China has taken real share.",
-  "plain": "If lithography is the printing, this is the building. A chip is built like a layer cake: lay down a film a few atoms thick, print a pattern on it, burn away what the pattern does not protect, and repeat more than a thousand times. The film has to reach the bottom of a hole hundreds of times deeper than it is wide, and the burn has to eat one material and leave the one beside it. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.",
+  "oneLiner": "Lithography prints the pattern; deposition and etch build the chip itself, over a thousand steps per wafer. This is the one tool segment where China has taken real share.",
+  "plain": "Deposition and etch build the chip itself, like a layer cake: lay down a film a few atoms thick, print a pattern on it, burn away everything the pattern does not protect, then do it again, more than a thousand times over. The film has to reach the bottom of a hole hundreds of times deeper than it is wide, and the burn has to eat one material and leave the one beside it untouched. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.",
   "specimen": "process-chamber",
-  "specimenCaption": "Right: a plasma process chamber cut in half. Gas plenum and showerhead at the top, a 300 mm wafer on its electrostatic chuck inside the focus ring below, the plasma between them in amber, the slit valve in the wall, and the gate valve and turbopump under the floor.",
+  "specimenCaption": "Right: a plasma process chamber cut in half. Gas enters through the plenum and showerhead at the top, a 300 mm wafer sits below on an electrostatic chuck inside its focus ring, the plasma glows amber between them, the slit valve in the wall is where the wafer goes in and out, and the gate valve and turbopump under the floor hold the vacuum.",
   "card": {
     "concentration": "High",
     "chokepointScore": 4,
     "leaders": [
-      {"name": "Applied Materials", "country": "US", "share": "$28.4B revenue, FY2025; leader in PVD, CVD and epitaxy"},
-      {"name": "Lam Research", "country": "US", "share": "$23.2B revenue, FY2026; leader in dry etch and metal ALD"},
-      {"name": "Tokyo Electron", "country": "JP", "share": "23% of dry etch, 38% of CVD, CY2025"},
-      {"name": "ASM International", "country": "NL", "share": "€3.2B revenue, 2025; single-wafer ALD leader"},
+      {"name": "Applied Materials", "country": "US", "share": "$28.4B revenue, fiscal 2025; leader in physical and chemical vapour deposition and in epitaxy"},
+      {"name": "Lam Research", "country": "US", "share": "$23.2B revenue, fiscal 2026; leader in dry etch and in metal atomic layer deposition"},
+      {"name": "Tokyo Electron", "country": "JP", "share": "23% of dry etch and 38% of chemical vapour deposition, 2025"},
+      {"name": "ASM International", "country": "NL", "share": "€3.2B revenue, 2025; leader in single-wafer atomic layer deposition"},
       {"name": "Naura", "country": "CN", "share": "5th largest equipment vendor worldwide, 2025 estimate"}
     ],
     "countries": [
@@ -24,10 +24,10 @@
       {"code": "KR", "note": "Large buyer; Semes and local suppliers in wet processing"},
       {"code": "CN", "note": "Naura, AMEC, Piotech; largest equipment market at $49.3B in 2025"}
     ],
-    "chinaStatus": "The strongest Chinese position in any tool segment. China-based suppliers held about 11% of dry etch and 7% of deposition in 2024, but under 1% of ALD.",
-    "usStatus": "Two of the three largest suppliers are American. Washington controls dry etch, ALD and high-aspect-ratio deposition tools by ECCN and by foreign direct product rule.",
+    "chinaStatus": "The strongest Chinese position in any tool segment. China-based suppliers held about 11% of dry etch and 7% of deposition in 2024, but under 1% of atomic layer deposition.",
+    "usStatus": "Two of the three largest suppliers are American. Washington controls dry etch, atomic layer deposition and deep-hole deposition tools by export classification number, and by a rule that reaches tools built outside the United States from US technology.",
     "costSignal": "No public list prices. Global semiconductor equipment billings were $135.1B in 2025, with wafer processing up 12%.",
-    "substitution": {"years": "5-10", "why": "Chinese firms have matched conductor and dielectric etch at mature nodes, but selectivity, particle control and chamber matching at 2 nm remain out of reach, and ALD share is under 1%."}
+    "substitution": {"years": "5-10", "why": "Chinese firms have matched metal and insulator etch at mature nodes, but at 2 nm they still cannot cut one material while sparing the next, keep particles out, or make one chamber behave like the next. Their ALD share is under 1%."}
   },
   "keyFacts": [
     {"fact": "Producing one chip takes more than 1,000 process steps and 70 or more border crossings (CSET, 2021)", "source": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"},
@@ -43,7 +43,7 @@
     {
       "id": "equipment-billings",
       "type": "bars",
-      "title": "Global semiconductor equipment billings",
+      "title": "What the world spent on chipmaking equipment",
       "unit": "$B",
       "data": [["2024", 117.1], ["2025", 135.1]],
       "source": {"label": "SEMI, Worldwide Semiconductor Equipment Market Statistics", "url": "https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025"}
@@ -51,7 +51,7 @@
     {
       "id": "tel-tool-share",
       "type": "bars",
-      "title": "Tokyo Electron world market share by tool type, CY2025",
+      "title": "Tokyo Electron world market share by tool type, 2025",
       "unit": "%",
       "data": [["Coater/developer", 91], ["CVD", 38], ["Oxidation/diffusion", 31], ["Deposition systems", 27], ["Dry etch", 23], ["Cleaning", 20], ["ALD", 15]],
       "source": {"label": "Tokyo Electron FY2026 Q4 results presentation", "url": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf"}
@@ -73,31 +73,31 @@ Applied Materials and Lam Research, the two largest deposition and etch supplier
 
 ## How it works
 
-If lithography is the printing, this is the building. A chip is built like a layer cake: lay down a film a few atoms thick, print a pattern on it, burn away what the pattern does not protect, and repeat more than a thousand times. The film has to reach the bottom of a hole hundreds of times deeper than it is wide, and the burn has to eat one material and leave the one beside it. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.
+Deposition and etch build the chip itself, like a layer cake: lay down a film a few atoms thick, print a pattern on it, burn away everything the pattern does not protect, then do it again, more than a thousand times over. The film has to reach the bottom of a hole hundreds of times deeper than it is wide, and the burn has to eat one material and leave the one beside it untouched. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.
 
 CSET puts a single chip at more than 1,000 process steps, with the part-finished product crossing international borders 70 or more times ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 
-Most of those steps happen in a vacuum chamber: a radio-frequency field strips electrons off a process gas, and the ions and radicals do the chemistry. Change the gas, pressure, power and temperature and the same hardware adds material or removes it. That is why the export controls here name process specifications rather than machines.
+Most of those steps happen in a vacuum chamber: a radio-frequency field strips electrons off a process gas, and the charged fragments left over do the chemistry. Change the gas, the pressure, the power and the temperature, and the same hardware either adds material or takes it away. That is why the export controls here name process specifications rather than machines.
 
 ## Variants and trade-offs
 
 ### Deposition families
 
-- **Physical vapour deposition** sputters atoms off a target onto the wafer, the workhorse for metal barriers and seed layers, $2.4 billion in 2019 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
+- **Physical vapour deposition** knocks atoms off a solid target and lands them on the wafer, the workhorse for metal barriers and seed layers, $2.4 billion in 2019 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 - **Chemical vapour deposition** reacts gases at the wafer surface to grow a film; the plasma-enhanced version runs cooler, $3.5 billion in 2019 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
-- **Atomic layer deposition** lays down a fraction of a monolayer at a time, so it coats vertical walls and horizontal floors alike. US regulators call it the basis for 3D scaling in 3D DRAM, 3D NAND and gate-all-around logic ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)); ASM International leads it, $1.6 billion in 2019 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
-- **Epitaxy and electroplating** grow the strained silicon-germanium source and drain and fill the copper trenches ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
+- **Atomic layer deposition** lays down less than one atomic layer at a time, so it coats vertical walls as evenly as horizontal floors. US regulators call it the basis for 3D scaling in 3D DRAM, 3D NAND and gate-all-around logic ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)); ASM International leads it, $1.6 billion in 2019 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
+- **Epitaxy and electroplating** grow the strained silicon-germanium source and drain, and fill the copper wiring trenches ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 
 ### Etch families
 
 - **Conductor etch** cuts gates, metals and silicon, $6.5 billion in 2019, led by Lam ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
-- **Dielectric etch** cuts the oxides and nitrides between them, $4.3 billion in 2019, led by Tokyo Electron ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
+- **Dielectric etch** cuts the insulating oxides and nitrides between them, $4.3 billion in 2019, led by Tokyo Electron ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 - **High-aspect-ratio etch** decides whether memory works at all: a 3D NAND channel or DRAM capacitor is a hole far deeper than it is wide that has to come out straight. Lam chills the wafer to sharpen the profile, and says Cryo 3.0 holds critical-dimension deviation under 0.1 percent down channels 10 microns deep ([source](https://newsroom.lamresearch.com/2024-07-31-Lam-Research-Introduces-Lam-Cryo-TM-3-0-Cryogenic-Etch-Technology-to-Accelerate-Scaling-of-3D-NAND-for-the-AI-Era)).
 
 AI hardware asks for sideways cuts, deeper holes and a second metal stack on the wafer's back.
 
 - **Gate-all-around** needs isotropic etch, which cuts sideways, to release the silicon nanosheets from the silicon-germanium between them, and BIS ties its dry etch controls to exactly that ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)).
-- **HBM** needs deep through-silicon vias, which BIS defines as etch at 10:1 or greater above 7 microns per minute ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
+- **HBM** needs holes etched straight through the silicon so chips can be stacked and wired, which BIS controls at 10:1 or deeper above 7 microns a minute ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
 - **Backside power delivery** adds thinning, backside vias and a second metal stack. Applied Materials expects it to add about $1 billion per 100,000 wafer starts a month to its wiring business ([source](https://www.globenewswire.com/news-release/2024/07/08/2909540/0/en/applied-materials-unveils-chip-wiring-innovations-for-more-energy-efficient-computing.html)).
 
 {{figure:tel-tool-share}}
@@ -136,15 +136,15 @@ The rules reach the vendors too: Applied Materials took a $253 million charge to
 
 ## The chokepoint
 
-This is a real chokepoint but a softer one than lithography. Three or four credible vendors exist for most etch and deposition steps. The narrow points are ALD, where China holds under 1 percent ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)), and the extreme aspect ratios HBM and 3D memory need. That is where the December 2024 rule aims ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
+This is a real chokepoint but a softer one than lithography. Three or four credible vendors exist for most etch and deposition steps. The narrow points are ALD, where China holds under 1 percent ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)), and the extremely deep, narrow holes that HBM and 3D memory need. That is where the December 2024 rule aims ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
 
 ## Key evaluation criteria
 
 - **Selectivity** — how hard the process attacks one material and spares another. BIS controls wet processing at a silicon-germanium-to-silicon ratio of 100:1 ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)).
-- **Conformality and aspect ratio** — whether a film reaches the bottom of a deep hole. Controls start at 10:1 for TSV etch and 200:1 for 3D DRAM deposition ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
+- **Conformality and aspect ratio** — whether a film reaches the bottom of a hole, and how deep that hole is against its width. Controls start at 10:1 for TSV etch and 200:1 for 3D DRAM deposition ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
 - **Uniformity** — variation across a 300 mm wafer, with under 2 percent treated as an advanced-manufacturing marker ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
 - **Throughput** — wafers per hour, which sets cost per layer and decides how many lots a fab can run.
-- **Particles and chamber matching** — the defect budget these tools consume, measured by the tools in the next chapter.
+- **Particles and chamber matching** — how much of the defect budget these tools eat, and whether one chamber behaves like the next; the tools in the next chapter measure it.
 
 ## Takeaways
 
