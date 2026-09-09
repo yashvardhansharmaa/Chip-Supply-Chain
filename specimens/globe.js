@@ -176,7 +176,7 @@ PC.register('globe', function (p) {
     [[9.8, 124.0], [7.0, 124.0], [5.9, 125.4], [7.3, 126.5], [9.8, 126.0], [9.8, 124.0]]
   ];
   var coast = [];
-  for (var c = 0; c < LAND.length; c++) coast.push(draw(LAND[c], RC, 780, 1));
+  for (var c = 0; c < LAND.length; c++) coast.push(draw(LAND[c], RC, 1450, 1));
   parts.push(PC.merge.apply(null, coast));
 
   // ---------- chokepoint pins ----------
@@ -197,16 +197,16 @@ PC.register('globe', function (p) {
   SITES.forEach(function (s) {
     var lat = s[1], lon = s[2], h = s[3];
     var a = ll(lat, lon, 1.0), b = ll(lat, lon, 1.0 + h);
-    pins.push(PC.line({ a: a, b: b, perUnit: 1500 }));
-    pins.push(PC.T(PC.sphere({ r: 0.016, n: 150 }), { pos: b }));
-    pins.push(PC.T(PC.T(PC.circle({ r: 0.028, perUnit: 900 }), { pos: [0, 1.004, 0] }), { rot: [Math.PI / 2 - lat * RAD, lon * RAD, 0] }));
+    pins.push(PC.line({ a: a, b: b, perUnit: 1600 }));
+    pins.push(PC.T(PC.sphere({ r: 0.018, n: 190 }), { pos: b }));
+    pins.push(PC.T(PC.T(PC.circle({ r: 0.032, perUnit: 950 }), { pos: [0, 1.004, 0] }), { rot: [Math.PI / 2 - lat * RAD, lon * RAD, 0] }));
   });
   parts.push(PC.accent(PC.merge.apply(null, pins), 1));
 
   return {
     cloud: PC.merge.apply(null, parts),
     spin: 0.06,
-    tilt: [0.42, -1.25, 0],
+    tilt: [0.78, -1.12, 0],
     caption: 'The world with the chokepoints pinned in copper: Veldhoven and Oberkochen in Europe, Hsinchu, Tainan and Kaohsiung on Taiwan, Icheon and Pyeongtaek in Korea, Kumamoto, Yokkaichi and Tokyo in Japan, the Chinese fabs, Penang and Singapore, Bengaluru and Abu Dhabi, and, round the far side, the American sites from Hillsboro to Austin.'
   };
 });

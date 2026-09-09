@@ -4,6 +4,7 @@
   "number": 11,
   "title": "Memory and HBM",
   "oneLiner": "Three firms make every HBM stack on Earth. In a two-GPU package the memory is about 90% of the silicon, and it now sets the price of the machine.",
+  "plain": "Think of a cook who can chop faster than anyone can fetch ingredients. The fix is not a faster runner but a wider door, so high bandwidth memory stacks up to sixteen memory chips into a cube, drills copper wires straight down through them, and sits the cube a few millimetres from the processor. Stacking is the hard part: each chip is ground thinner than a human hair, the whole cube must stay under a fixed height so it does not foul the cooling plate, and one bad layer ruins all of them. Three firms in the world can do it.",
   "specimen": "hbm-stack",
   "specimenCaption": "Right: a 12-high HBM stack, exploded. A logic base die at the bottom, twelve thinned DRAM dies above it, through-silicon vias running the full height of the cube, microbumps between every layer, molding compound filling the gaps.",
   "card": {
