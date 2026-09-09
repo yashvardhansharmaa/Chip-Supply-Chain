@@ -180,6 +180,20 @@ function decodeEntities(s) {
     .replace(/&([a-zA-Z]+);/g, (m, n) => (n in named ? named[n] : m));
 }
 
+// A PDF with a broken font encoding yields mojibake rather than text. Reject a
+// string where too much of it is control characters or lone accented bytes,
+// which is what that failure looks like — real CJK or European titles score low
+// here because their letters are not interleaved with control codes.
+function looksLikeMojibake(s) {
+  if (!s) return false;
+  const chars = [...s];
+  if (chars.length < 8) return false;
+  const ctrl = chars.filter((c) => c.codePointAt(0) < 32 || (c.codePointAt(0) >= 127 && c.codePointAt(0) < 160)).length;
+  const latin1Odd = chars.filter((c) => /[ -ÿ]/.test(c)).length;
+  const wordish = chars.filter((c) => /[\p{L}\p{N}\s]/u.test(c)).length;
+  return ctrl / chars.length > 0.05 || latin1Odd / chars.length > 0.25 || wordish / chars.length < 0.6;
+}
+
 function cleanTitle(t) {
   if (!t) return null;
   let s = decodeEntities(t)
@@ -857,7 +871,7 @@ async function main() {
       const raw = ex.rawTitle.replace(/\s*[|–—-]\s*$/, '').trim();
       if (raw && raw.length > 6 && !WALL_TITLE.test(raw) && !GENERIC_TITLE.test(raw)) title = raw;
     }
-    if (!title || title.length < 3 || JUNK_TITLE.test(title)) {
+    if (!title || title.length < 3 || JUNK_TITLE.test(title) || looksLikeMojibake(title)) {
       title = null;
       date = null;
       unverified = true;
