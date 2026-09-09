@@ -64,7 +64,7 @@
 ---
 # Substrates and PCBs
 
-On TSMC's July 2026 earnings call, chief executive C.C. Wei said the company's packaging capacity is now so tight that it limits its customers' growth ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf)). The interposer carries signals a few millimetres. Everything after it is organic chemistry: an epoxy build-up substrate, then a printed circuit board with thirty layers, then a rack.
+On TSMC's July 2026 earnings call, chief executive C.C. Wei said the company's packaging capacity is now so tight that it limits its customers' growth ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf)). A silicon interposer carries signals a few millimetres. Everything after it is organic chemistry: an epoxy build-up substrate, then a printed circuit board with thirty layers, then a rack.
 
 ## How it works
 
@@ -130,7 +130,7 @@ Flatness breaks first as packages grow. TSMC has told investors its CoWoS roadma
 ## Key evaluation criteria
 
 - **Layer count** sets how much current and how many signals the substrate can carry. Each added build-up layer multiplies the yield risk.
-- **Body size** drives everything else. Once a body is much larger than the dies it carries, warpage and handling, not wiring, set the process window.
+- **Body size** drives everything else. Once a body is much larger than the dies it carries, warpage and handling set the process window rather than wiring.
 - **Coefficient of thermal expansion** must be close enough to silicon that the package survives thermal cycling, which is what T-glass buys and why its supply matters.
 - **Dielectric properties** of the core laminate set achievable signal rates on both the substrate and the board underneath.
 - **Qualification time** is what protects the incumbents. Second-sourcing a film or a laminate takes years.

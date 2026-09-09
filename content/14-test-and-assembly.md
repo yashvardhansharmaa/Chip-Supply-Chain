@@ -76,7 +76,7 @@ Semiconductor manufacturing runs to 400 to 600 steps, and Advantest counts test 
 
 Before a chip can be sold, a machine has to interrogate it and check every answer. Needles finer than a hair land on pads on the wafer and drive test patterns into each chip; the ones that answer wrong are marked and never leave. It matters more each year because of arithmetic: a modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them. So the industry tests earlier, hotter and longer than it used to, and two companies sell most of the machines that do it.
 
-Each round of test catches failures the round before it cannot.
+Each round of test catches failures the round before it cannot see.
 
 - **Wafer sort.** Thousands of needles land on the pads of each die while a tester drives patterns in and checks the answers; failures never leave the wafer.
 - **Burn-in.** Run the part hot and at voltage for hours to force early failures out before assembly.
@@ -103,7 +103,7 @@ Advantest puts its own share at about 65% of a US$9.0 billion tester market in 2
 
 {{figure:tester-market}}
 
-Below the two testers, each segment has its own leader.
+Below the two testers the floor breaks into separate niches with separate suppliers.
 
 - **Probe cards.** FormFactor took US$785.0 million in fiscal 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0001039399/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json)); Technoprobe grew 15.7% to EUR 628.4 million, 38% of it from AI, and plans to double capacity by the end of 2027 ([source](https://technoprobe.com/wp-content/uploads/2026/03/PR-FY-2025_.pdf)).
 - **Handlers and burn-in.** Cohu took US$453.0 million in fiscal 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0000021535/us-gaap/RevenueFromContractWithCustomerIncludingAssessedTax.json)); Aehr did US$50.0 million in fiscal 2026 but booked a record US$60.7 million in the fourth quarter alone and guides to US$130 million to US$150 million in fiscal 2027 ([source](https://www.aehr.com/2026/07/aehr-test-systems-reports-fiscal-2026-fourth-quarter-and-full-year-financial-results-with-record-quarterly-bookings-and-100-million-effective-backlog/)).

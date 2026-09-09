@@ -197,7 +197,7 @@ The House Select Committee's median estimate is 140,000 chips smuggled to PRC en
 
 These are our judgments, not any source's.
 
-- **Taiwan and Korea.** They keep what they hold. Nothing in the policy stack moves leading-edge logic, HBM or CoWoS off an island and a peninsula before 2030, and reshoring adds capacity elsewhere without subtracting it there.
+- **Taiwan and Korea.** Nothing in the policy stack moves leading-edge logic, HBM or CoWoS off an island and a peninsula before 2030, and reshoring adds capacity elsewhere without subtracting it there.
 - **The Netherlands and Japan.** Their tool makers are the fence, so they gain a say in who gets what and lose the business that paid for it: Tokyo Electron's China share fell from 47.4 to 26.8 percent of quarterly sales in two years ([source](https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf)).
 - **The United States.** It holds 93 percent of accelerator design revenue and will keep it. It has not built a wafer, HBM or OSAT industry, and $30.9 billion of grants will not.
 - **China.** Mature nodes, sub-leading-edge tools, DRAM and NAND are going domestic on a visible timetable. EUV, EUV resist and HBM at scale are not, and the stockpile arithmetic caps Ascend output near a million units a year.
