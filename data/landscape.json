@@ -634,7 +634,7 @@
     "priceEstimate": null,
     "bomEstimate": null,
     "exportStatus": "The chip drawn to the 2023 line rather than around it. Dense FP16 of 148 TFLOPS gives a total processing performance of 2,368, below the 4,800 in 3A090.a; if it uses the 814 mm2 Hopper die, performance density works out at about 2.9, under the 3.2 that would have pulled it into 3A090.b. SemiAnalysis called this straddling the line on peak performance and performance density at once. It did not last: on 9 April 2025 the US government told Nvidia that the H20, and any circuit matching its memory or interconnect bandwidth, needed a licence for China indefinitely, and Nvidia booked up to $5.5 billion of charges for inventory and purchase commitments.",
-    "notes": "Nvidia’s third attempt at a compliant China part, and the one that showed the limits of designing to a threshold: a chip built to sit inside the rules still needed a licence eighteen months later. Nvidia publishes no datasheet, no die area, no stack count and no NVLink rate for it, so almost everything here comes from Epoch AI’s database rather than from the vendor. The 96 GB of HBM3 implies six 16 GB stacks on a die that carries six stack sites, but Nvidia has not confirmed that.",
+    "notes": "Nvidia’s third attempt at a compliant China part, and the one that showed the limits of designing to a threshold: a chip built to sit inside the rules still needed a licence eighteen months later. Nvidia publishes no datasheet, no die area, no stack count and no NVLink rate for it, so almost everything here comes from Epoch AI’s database rather than from the vendor. The 96 GB of HBM3 implies six 16 GB stacks on a die that carries six stack sites, but Nvidia has not confirmed that. SemiAnalysis reported working samples in November 2023 and mass production within a month, which is where the shipping quarter above comes from.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -768,7 +768,7 @@
     "priceEstimate": null,
     "bomEstimate": null,
     "exportStatus": "Controlled since 17 October 2023. Total processing performance of 15,832 is more than three times the 4,800 threshold, so the H800 only ever cleared the October 2022 rule because that rule required the 4,800 and the 600 GB/s interconnect together. Removing the interconnect parameter caught it immediately, along with the A800. Epoch AI’s read is that the cut cost less than it looks: 400 GB/s is still enough to hide communication behind useful work in a frontier training run, so on FLOP per second per dollar the H800 was about as good as the H100.",
-    "notes": "The most consequential of the China variants, because it is the chip DeepSeek-era Chinese training runs were built on. Its interconnect figure is the one number on this page that two allowed sources contradict each other on: CSIS says 300 GB/s and Epoch AI says 400 GB/s. Both are recorded above rather than averaged. Nvidia has published nothing about the part.",
+    "notes": "The China variant that cost Chinese buyers the least in practice. Epoch AI’s calculation is that the H800 was about as good as the H100 on training FLOP per second per dollar, because 400 GB/s of NVLink is still enough to hide communication behind useful work; the loss shows up in long-context inference instead. Its interconnect figure is the one number on this page that two allowed sources contradict each other on: CSIS says 300 GB/s and Epoch AI says 400 GB/s. Both are recorded above rather than averaged. Nvidia has published nothing about the part, and Epoch AI dates it to 21 March 2023.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -844,6 +844,10 @@
       {
         "label": "Nvidia developer blog: inside the Hopper architecture",
         "url": "https://developer.nvidia.com/blog/nvidia-hopper-architecture-in-depth/"
+      },
+      {
+        "label": "Epoch AI machine learning hardware database (ml_hardware.csv)",
+        "url": "https://epoch.ai/data/machine-learning-hardware"
       }
     ]
   },
@@ -896,7 +900,7 @@
     "priceEstimate": null,
     "bomEstimate": null,
     "exportStatus": "Built to evade one number, then caught by a different one. The A800 kept the A100’s arithmetic, so its total processing performance stayed at 4,992, above the 4,800 line; what Nvidia changed was the other half of the October 2022 test, which controlled a chip only if it also had an aggregate bidirectional transfer rate of 600 GB/s or more. Cutting NVLink to 400 GB/s put it outside the rule. On 17 October 2023 BIS deleted the interconnect parameter and added a performance density test, and CSET notes that the deleted parameter was the same one around which Nvidia had designed its China-specific chips. The A800 has been controlled since.",
-    "notes": "The clearest case on the site of a product designed against a regulation rather than a workload. Nvidia’s own 8-K of 31 August 2022 had already said the licence would extend to any future chip meeting both peak performance and chip-to-chip thresholds roughly equivalent to the A100, and the A800 answers that by failing only one of the two. Commerce Secretary Gina Raimondo’s reply, quoted by CSIS, was that if a chip is redesigned around a cut line to enable AI, she would control it the next day.",
+    "notes": "The clearest case on the site of a product designed against a regulation rather than a workload. Nvidia’s own 8-K of 31 August 2022 had already said the licence would extend to any future chip meeting both peak performance and chip-to-chip thresholds roughly equivalent to the A100, and the A800 answers that by failing only one of the two. Commerce Secretary Gina Raimondo’s reply, quoted by CSIS, was that if a chip is redesigned around a cut line to enable AI, she would control it the next day. Epoch AI dates the A800 variants to August and November 2022.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -1024,7 +1028,7 @@
     "priceEstimate": null,
     "bomEstimate": null,
     "exportStatus": "Controlled and never licensable to China. Dense FP8 of 1,979 TFLOPS gives a total processing performance of 15,832 (TPP = 8 x FP8 TFLOPS), more than three times the 4,800 threshold in 3A090.a, and performance density is about 19.4. NVLink 4 at 900 GB/s also cleared the 600 GB/s interconnect test in the original October 2022 rule, so the H100 failed both halves of that rule at once. Nvidia was told on 26 August 2022, before the chip shipped, that it would need a licence.",
-    "notes": "The chip the 2023 and 2024 build-out ran on, and the one every China variant is measured against. Nvidia states that the full GH100 carries six HBM3 or HBM2e stack sites and that the SXM5 part uses five of them for 80 GB. The H200 that follows it is the same die with 141 GB of HBM3E, which is why the H200 rather than the H100 became the chip Washington eventually let into China.",
+    "notes": "The chip the 2023 and 2024 build-out ran on, and the one every China variant is measured against. Nvidia states that the full GH100 carries six HBM3 or HBM2e stack sites and that the SXM5 part uses five of them for 80 GB. The H200 that follows it is the same die with 141 GB of HBM3E, which is why the H200 rather than the H100 became the chip Washington eventually let into China. Nvidia’s 8-K of 31 August 2022 still calls the H100 forthcoming, and Epoch AI dates the SXM5 part to September 2022.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -1092,6 +1096,10 @@
       {
         "label": "Federal Register, 13 October 2022: the rule that created ECCN 3A090 (govinfo PDF)",
         "url": "https://www.govinfo.gov/content/pkg/FR-2022-10-13/pdf/2022-21658.pdf"
+      },
+      {
+        "label": "Epoch AI machine learning hardware database (ml_hardware.csv)",
+        "url": "https://epoch.ai/data/machine-learning-hardware"
       }
     ]
   },
@@ -1144,7 +1152,7 @@
     "priceEstimate": null,
     "bomEstimate": null,
     "exportStatus": "Controlled, and the chip the whole regime was drawn around. Dense FP16 of 312 TFLOPS gives a total processing performance of 4,992 (TPP = 16 x FP16 TFLOPS), 192 points above the 4,800 threshold BIS wrote into ECCN 3A090 on 7 October 2022; that first rule also required an aggregate bidirectional transfer rate of 600 GB/s or more, which NVLink 3 meets exactly. Nvidia had already been told on 26 August 2022 that the A100 and the forthcoming H100 needed a licence for China, Hong Kong and Russia, along with any future chip meeting thresholds roughly equivalent to the A100. Performance density is 4,992 divided by 826 mm2, about 6.0, so the chip is also caught by the second limb of 3A090.a added in October 2023.",
-    "notes": "The reference point for every threshold since. BIS set the October 2022 line just under the A100 on both axes it used, peak performance and chip-to-chip bandwidth, which is why the A800 exists at all. Nvidia describes five active HBM2 stacks on the 40 GB SXM4 board, so the 80 GB part carries the same five sites at 16 GB each in HBM2e; Nvidia names no memory supplier and it publishes no package dimensions and no list price.",
+    "notes": "The reference point for every threshold since. BIS set the October 2022 line just under the A100 on both axes it used, peak performance and chip-to-chip bandwidth, which is why the A800 exists at all. Nvidia describes five active HBM2 stacks on the 40 GB SXM4 board, so the 80 GB part carries the same five sites at 16 GB each in HBM2e; Nvidia names no memory supplier, no package dimensions and no list price. Epoch AI dates the SXM4 A100 to 14 May 2020 and the 80 GB version to 16 November 2020.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -1216,6 +1224,10 @@
       {
         "label": "Federal Register, 25 October 2023: TPP and performance density replace the interconnect test (govinfo PDF)",
         "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23055.pdf"
+      },
+      {
+        "label": "Epoch AI machine learning hardware database (ml_hardware.csv)",
+        "url": "https://epoch.ai/data/machine-learning-hardware"
       }
     ]
   },
@@ -2561,7 +2573,7 @@
     "systemIntegrators": [],
     "priceEstimate": null,
     "bomEstimate": null,
-    "exportStatus": "Not sold as merchant silicon. Total processing performance is 3,152 (16 x 197), below the 4,800 in ECCN 3A090.a, which makes it the only chip on this page that clears the headline threshold on arithmetic alone. It would not clear the second test: Epoch AI puts the die at 325 mm2, which gives a performance density near 9.7, well above the 5.92 that pulls any chip of 1,600 TPP or more into 3A090.a. Google does not publish the die area, so that second figure rests on Epoch rather than the vendor.",
+    "exportStatus": "Not sold as merchant silicon. Total processing performance is 3,152 (16 x 197), one of four chips on this page below the 4,800 in ECCN 3A090.a, alongside the H20, the TPU v4 and MTIA v2. It would not clear the second test: Epoch AI puts the die at 325 mm2, which gives a performance density near 9.7, well above the 5.92 that pulls any chip of 1,600 TPP or more into 3A090.a. Google does not publish the die area, so that second figure rests on Epoch rather than the vendor.",
     "notes": "The cheap TPU, sold on performance per dollar rather than peak: Google quotes it at 0.65 times the cost of ownership of the v4 for the same work. It is also the clearest illustration of why BIS added a density test in October 2023. A chip can sit under the 4,800 line and still be worth controlling, because 256 of them in a pod deliver 50.63 PFLOPs. Google publishes compute, memory and fabric numbers for its TPUs and nothing else: no foundry, no process node, no die area, no transistor count, no package type and no HBM stack count. Those fields are empty here rather than filled from unofficial reporting.",
     "layout": {
       "unit": "mm",
