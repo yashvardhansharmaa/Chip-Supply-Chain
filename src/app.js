@@ -1706,12 +1706,13 @@
         '<span>TPP = 2 × MACs × bit length on dense datasheet figures; a site calculation.</span></p>' +
         '<div class="th-rtip" id="th-rtip" role="tooltip" hidden></div>';
       if (!reduced) host.setAttribute('data-in', '1');
-      this.wireRuler(host);
+      if (!this.rulerWired) { this.rulerWired = true; this.wireRuler(host); } // the host survives a redraw, so wire it once
     },
     wireRuler: function (host) {
-      var tip = $('#th-rtip');
       var mk = function (e) { return e.target && e.target.closest ? e.target.closest('.th-mk') : null; };
+      var hide = function () { var t = $('#th-rtip'); if (t) t.hidden = true; };
       var show = function (g) {
+        var tip = $('#th-rtip'); // the ruler is redrawn when the sub-tab opens, so find the panel each time
         if (!tip) return;
         tip.textContent = g.getAttribute('data-tip') || '';
         tip.hidden = false;
@@ -1720,9 +1721,9 @@
         tip.style.top = Math.max(0, r.top - h.top - tip.offsetHeight - 8) + 'px';
       };
       host.addEventListener('mouseover', function (e) { var g = mk(e); if (g) show(g); });
-      host.addEventListener('mouseout', function (e) { if (mk(e) && tip) tip.hidden = true; });
+      host.addEventListener('mouseout', function (e) { if (mk(e)) hide(); });
       host.addEventListener('focusin', function (e) { var g = mk(e); if (g) show(g); });
-      host.addEventListener('focusout', function () { if (tip) tip.hidden = true; });
+      host.addEventListener('focusout', hide);
       host.addEventListener('click', function (e) { if (mk(e)) location.hash = '#/landscape'; });
       host.addEventListener('keydown', function (e) { if ((e.key === 'Enter' || e.key === ' ') && mk(e)) { e.preventDefault(); location.hash = '#/landscape'; } });
     },
