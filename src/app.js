@@ -201,7 +201,7 @@
 
   /* ---------------- router ---------------- */
   var VIEWS = ['home', 'stack', 'chain', 'intro', 'walk', 'briefing', 'landscape', 'suppliers', 'geopolitics', 'controls', 'thresholds', 'exposure', 'glossary', 'sources']; // retired routes (methods, summary-a, summary-b) are unknown and go home
-  var ALIAS = { chain: 'stack', intro: 'walk', briefing: 'walk', geopolitics: 'stack' };
+  var ALIAS = { chain: 'stack', intro: 'walk', briefing: 'walk', geopolitics: 'stack', thresholds: 'controls' }; // the licence-thresholds tab was retired; its route lands on the board
   var MODULE_VIEWS = {}; // modules register { activate(), stage: bool } per view through window.CP.register
   var Router = {
     current: null,
@@ -224,7 +224,7 @@
       }
       if (ALIAS[v]) v = ALIAS[v];
       var sub = null; // the Export Controls page has three sections
-      if (v === 'exposure') { v = 'controls'; sub = 'exposure'; } else if (v === 'thresholds') { v = 'controls'; sub = 'thresholds'; } else if (v === 'controls') sub = 'timeline';
+      if (v === 'exposure') { v = 'controls'; sub = 'exposure'; } else if (v === 'controls') sub = 'timeline';
       var changed = v !== this.current || sub !== this.currentSub;
       this.current = v; this.currentSub = sub;
       if (sub) {
@@ -254,7 +254,7 @@
         }
         Sections.update();
       }
-      var label = { stack: 'The Chain', walk: 'Intro', landscape: 'AI Chips', suppliers: 'Suppliers', controls: sub === 'exposure' ? 'China revenue share' : sub === 'thresholds' ? 'Licence thresholds' : 'Export Controls', glossary: 'Glossary', sources: 'Sources' }[v];
+      var label = { stack: 'The Chain', walk: 'Intro', landscape: 'AI Chips', suppliers: 'Suppliers', controls: sub === 'exposure' ? 'China revenue share' : 'Export Controls', glossary: 'Glossary', sources: 'Sources' }[v];
       document.title = (v === 'home' || !label) ? 'Compute Chokepoints' : 'Compute Chokepoints · ' + label;
     }
   };
@@ -1530,267 +1530,11 @@
 
   /* ---------------- controls view: threshold map + China exposure (rendered only if the section exists) ---------------- */
   var Controls = {
-    built: false, inBoard: false,
-    activate: function () { if (!this.built) this.build(); if (Geo.built) Geo.sync(); this.enter(); },
-    /* the board's groups, in reading order: what is controlled, then who, then trade */
-    KINDS: [['chips', 'Chips'], ['memory', 'Memory'], ['tools', 'Chipmaking tools'], ['fabs', 'Fabs and nodes'],
-      ['systems', 'Systems and clouds'], ['models', 'Models'], ['entities', 'Entities and ownership'],
-      ['trade', 'Tariffs'], ['china', 'China’s countermeasures'], ['other', 'Other']],
-    /* until every row carries a kind, read one off the rule's own words; first match wins */
-    GUESS: [['china', /mofcom|rare[ -]earth|(^| )cn-/], ['trade', /tariff|section ?232|ad valorem/],
-      ['entities', /entity|affiliate|ownership|footnote/], ['models', /model|gpai|ai act|training compute/],
-      ['tools', /3b00|euv|litho|etch|deposit|overlay|nxt|meti|\bsme\b|mask|scanner/],
-      ['memory', /hbm|dram|nand|memory/], ['systems', /diffusion|cluster|supercomputer|4a090|computers|data ?cent/],
-      ['chips', /3a090|\btpp\b|aicd|advanced computing|shipment|accelerator/],
-      ['fabs', /node|transistor|\bfab|nanometre|nanometer/]],
-    kindOf: function (t) {
-      if (t.kind) return t.kind;
-      var hay = ((t.id || '') + ' ' + (t.instrument || '') + ' ' + (t.parameter || '') + ' ' + (t.scope || '') + ' ' + (t.regime || '')).toLowerCase();
-      for (var i = 0; i < this.GUESS.length; i++) if (this.GUESS[i][1].test(hay)) return this.GUESS[i][0];
-      return 'other';
-    },
-    /* a short unit for the headline; the long one is the parameter's definition and stays in Details */
-    unitOf: function (t) {
-      if (t.unitShort != null) return t.unitShort;
-      var u = String(t.unit || '');
-      if (u.charAt(0) === '%') return '%';
-      return (u && u.length <= 14 && !/[,;]/.test(u)) ? u : '';
-    },
-    SUP: ['⁰', '¹', '²', '³', '⁴', '⁵', '⁶', '⁷', '⁸', '⁹'],
-    sup: function (n) {
-      var s = String(n), o = '', i;
-      for (i = 0; i < s.length; i++) o += (s.charAt(i) === '-' ? '⁻' : this.SUP[+s.charAt(i)] || s.charAt(i));
-      return o;
-    },
-    fmtVal: function (v, unit) {
-      if (v == null || v === '') return '';
-      if (typeof v !== 'number' || !isFinite(v)) return String(v);
-      if (unit === '%') return String(v) + '%';
-      var a = Math.abs(v);
-      if (a >= 1e20) {
-        var ex = Math.round(Math.log(a) / Math.LN10), base = v / Math.pow(10, ex);
-        return (Math.abs(base - 1) < 1e-6 ? '' : String(Number(base.toFixed(2))) + ' × ') + '10' + this.sup(ex);
-      }
-      if (a >= 1e9) return String(Number((v / 1e9).toFixed(2))) + ' billion';
-      if (a >= 1e6) return String(Number((v / 1e6).toFixed(2))) + ' million';
-      if (v === Math.round(v)) return v.toLocaleString('en-US');
-      return String(v);
-    },
-    OPS: { '>=': '≥', '<=': '≤', '>': '>', '<': '<', '=': '=' },
-    op: function (o) {
-      o = String(o == null ? '' : o).trim();
-      if (this.OPS[o]) return this.OPS[o];
-      var band = o.match(/^(>=|<=|>|<|=)(\s|$)/); // ">= and <" is a band: the headline carries its floor, Details the rest
-      if (band) return this.OPS[band[1]];
-      return o.replace(/>=/g, '≥').replace(/<=/g, '≤');
-    },
-    // Rows whose operator and value fields do not read as a sentence get a written headline (see qa/redesign-content.md).
-    OVERRIDE: {
-      '3a090b-tpp': 'TPP 2,400 to 4,800',
-      '4a090-computers': 'Contains a chip at 4,800 TPP or above',
-      'aicd-transistor-count': '30 billion transistors',
-      '3b001-litho-zero-de-minimis': 'Zero de minimis, so any US content counts',
-      'entity-list-affiliates-suspension': 'Stayed 12 months, to 9 November 2026',
-      'nl-duv-nxt2000i': 'TWINSCAN NXT:2000i and later',
-      'nl-duv-nxt1970i-1980i': 'Includes TWINSCAN NXT:1970i and 1980i',
-      'ai-diffusion-country-cap': '790 million TPP per country',
-      'ai-diffusion-nveu-allocation': '5.06 billion TPP per company',
-      'ai-diffusion-lpp': '26.9 million TPP a year per buyer',
-      'ai-diffusion-model-weights': 'Training compute > 10\u00b2\u2076 operations',
-      'eu-ai-act-gpai-compute': 'Training compute > 10\u00b2\u2075 FLOP',
-      'us-model-reporting-1e26': 'Training compute > 10\u00b2\u2076 operations',
-      'us-compute-cluster-reporting': 'Cluster compute > 10\u00b2\u2070 operations per second'
-    },
-    headline: function (t) {
-      if (t.id && this.OVERRIDE[t.id]) return this.OVERRIDE[t.id];
-      var p = t.paramShort || t.parameter || '', u = this.unitOf(t);
-      if (t.value == null || t.value === '') return p;
-      return p + ' ' + this.op(t.operator) + ' ' + this.fmtVal(t.value, u) + (u && u !== '%' ? ' ' + u : '');
-    },
-    stClass: function (s) {
-      s = String(s || '');
-      return /propos/i.test(s) ? 'is-prop' : /suspend|stay/i.test(s) ? 'is-susp'
-        : /supersed|rescind|expired/i.test(s) ? 'is-old' : /force/i.test(s) ? 'is-force' : 'is-other';
-    },
-    card: function (t, chapterChip, i) {
-      var u = this.unitOf(t), det = [];
-      if (t.regime) det.push(['Regime', t.regime]);
-      if (t.destinations) det.push(['Destinations', t.destinations]);
-      if (t.licensePolicy) det.push(['Licence policy', t.licensePolicy]);
-      if (t.alternative) det.push(['Alternative test', t.alternative]);
-      if (t.unit && t.unit !== u) det.push(['What is measured', t.unit]);
-      if (t.amendedBy && t.amendedBy.length) det.push(['Amended', t.amendedBy.join(', ')]);
-      if (t.note) det.push(['Note', t.note]);
-      var dl = det.map(function (d) { return '<dt>' + esc(d[0]) + '</dt><dd>' + esc(d[1]) + '</dd>'; }).join('');
-      var src = t.source ? '<a class="th-src" href="' + safeUrl(t.source) + '" target="_blank" rel="noopener">Read the rule</a>' : '';
-      return '<article class="th-card" style="--d:' + Math.min(500, i * 20) + 'ms">' +
-        '<h5 class="th-head">' + esc(this.headline(t)) + '</h5>' +
-        '<div class="th-inst">' + esc(t.instrument || '') + '</div>' +
-        (t.scope ? '<p class="th-scope">' + esc(t.scope) + '</p>' : '') +
-        '<div class="th-meta"><span class="th-st ' + this.stClass(t.status) + '">' + esc(t.status || '') + '</span>' +
-        (t.effectiveDate ? '<span class="th-from">from ' + esc(t.effectiveDate) + '</span>' : '') + '</div>' +
-        chapterChip(t.chapter) +
-        (dl || src ? '<details class="th-det"><summary>Details</summary><dl>' + dl + '</dl>' + src + '</details>' : '') +
-        '</article>';
-    },
-    /* ---- the ruler: every chip's total processing performance against the three licence lines ----
-       Behind ?ruler=1 until the client has seen it. TPP is a site calculation, not a vendor figure. */
-    LINES: [
-      { tpp: 1600, text: 'TPP 1,600 · with density ≥ 5.92' },
-      { tpp: 4800, text: 'TPP 4,800 · 3A090.a, licence, presumption of denial' },
-      { tpp: 21000, text: 'TPP 21,000 · China sales reviewed case by case below this, since 15 Jan 2026' }
-    ],
-    TICKS: [1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000],
-    /* TPP = 2 × MACs × bit length: the datasheet's dense figure times the bits it was quoted at */
-    tppOf: function (c) {
-      var m = c.compute || {}, best = 0, from = '';
-      var take = function (v, mult, name) {
-        if (typeof v === 'number' && isFinite(v) && v > 0 && v * mult > best) { best = v * mult; from = mult + ' × ' + v.toLocaleString('en-US') + ' dense ' + name + ' TFLOPS'; }
-      };
-      take(m.fp8TFLOPS, 8, 'FP8'); take(m.fp16TFLOPS, 16, 'FP16'); take(m.fp4TFLOPS, 4, 'FP4');
-      return best ? { tpp: best, from: from } : null;
-    },
-    ruler: function () {
-      var self = this, host = $('#th-ruler');
-      if (!host) return;
-      var on = false;
-      try { on = /[?&]ruler=1(&|$)/.test(location.search); } catch (e) { on = false; }
-      var rows = on ? (DATA.landscape || []).map(function (c) {
-        var t = self.tppOf(c);
-        return t ? { name: String(c.name || '').replace(/\s*\([^)]*\)\s*$/, ''), vendor: c.vendor || '', cn: c.vendorCountry === 'CN', tpp: t.tpp, from: t.from } : null;
-      }).filter(Boolean).sort(function (a, b) { return a.tpp - b.tpp; }) : [];
-      if (!rows.length) { if (host.parentNode) host.parentNode.removeChild(host); return; }
-      var W = Math.max(880, Math.round(host.getBoundingClientRect().width) || 880), padL = 14, padR = 16;
-      var lo = 1000, hi = Math.max(26000, rows[rows.length - 1].tpp * 1.2);
-      var l0 = Math.log(lo) / Math.LN10, l1 = Math.log(hi) / Math.LN10, span = l1 - l0;
-      var X = function (v) { return padL + Math.max(0, Math.min(1, (Math.log(v) / Math.LN10 - l0) / span)) * (W - padL - padR); };
-      var rows3 = [12, 27, 42], bandTop = 64, axisY = 104, laneY = axisY + 24, step = 22, LANES = 5;
-      var H = laneY + step * (LANES - 1) + 10;
-      var fmt = function (v) { return Math.round(v).toLocaleString('en-US'); };
-      var s = '<svg class="th-rsvg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Every chip’s total processing performance on a log scale, against the three licence lines">';
-      s += '<rect class="th-band amber" x="' + X(4800).toFixed(1) + '" y="' + bandTop + '" width="' + (X(21000) - X(4800)).toFixed(1) + '" height="' + (axisY - bandTop) + '"></rect>';
-      s += '<rect class="th-band ink" x="' + X(21000).toFixed(1) + '" y="' + bandTop + '" width="' + (W - padR - X(21000)).toFixed(1) + '" height="' + (axisY - bandTop) + '"></rect>';
-      this.LINES.forEach(function (L, i) {
-        var x = X(L.tpp), w = L.text.length * 6.0, end = x + w > W - padR;
-        s += '<line class="th-rline" x1="' + x.toFixed(1) + '" y1="8" x2="' + x.toFixed(1) + '" y2="' + axisY + '"></line>' +
-          '<text class="th-rlab" x="' + (end ? x - 6 : x + 6).toFixed(1) + '" y="' + rows3[i] + '" text-anchor="' + (end ? 'end' : 'start') + '">' + esc(L.text) + '</text>';
-      });
-      s += '<line class="th-raxis" x1="' + padL + '" y1="' + axisY + '" x2="' + (W - padR) + '" y2="' + axisY + '"></line>';
-      this.TICKS.forEach(function (t) {
-        if (t > hi) return;
-        var x = X(t);
-        s += '<line class="th-rtick" x1="' + x.toFixed(1) + '" y1="' + (axisY - 4) + '" x2="' + x.toFixed(1) + '" y2="' + axisY + '"></line>' +
-          '<text class="th-rtl" x="' + x.toFixed(1) + '" y="' + (bandTop - 7) + '" text-anchor="middle">' + fmt(t) + '</text>';
-      });
-      // labels in up to five lanes: the first lane where this one clears the last label already in it
-      var last = [], lastW = [], i2;
-      for (i2 = 0; i2 < LANES; i2++) { last.push(-1e9); lastW.push(0); }
-      rows.forEach(function (r, k) {
-        var label = r.name + ' · ' + fmt(r.tpp), w = label.length * 6.4;
-        var x = X(r.tpp), lx = Math.max(padL, Math.min(x, W - padR - w)), ln = 0, q, best = 0;
-        for (ln = 0; ln < LANES; ln++) if (lx - last[ln] >= Math.max(70, lastW[ln] + 16)) break;
-        if (ln >= LANES) { // every lane is busy here: take the emptiest and push this label clear of it
-          for (q = 1; q < LANES; q++) if (last[q] + lastW[q] < last[best] + lastW[best]) best = q;
-          ln = best;
-          lx = Math.min(W - padR - w, Math.max(lx, last[ln] + Math.max(70, lastW[ln] + 16)));
-        }
-        last[ln] = lx; lastW[ln] = w;
-        var y = laneY + step * ln, cls = r.cn ? 'cn' : (r.tpp < 21000 ? 'lo' : 'hi');
-        var tip = r.name + ' · ' + (r.vendor || '') + ' · TPP ' + fmt(r.tpp) + ' · ' + r.from;
-        s += '<g class="th-mk ' + cls + '" tabindex="0" role="button" data-tip="' + esc(tip) + '" aria-label="' + esc(tip) + '" style="--d:' + Math.min(420, k * 26) + 'ms">' +
-          '<polyline class="th-lead" points="' + x.toFixed(1) + ',' + (axisY + 4) + ' ' + x.toFixed(1) + ',' + (y - 8) + ' ' + (lx + 2).toFixed(1) + ',' + (y - 8) + ' ' + (lx + 2).toFixed(1) + ',' + (y - 5) + '"></polyline>' +
-          '<circle class="th-dot" cx="' + x.toFixed(1) + '" cy="' + axisY + '" r="4"></circle>' +
-          '<text class="th-mlab" x="' + lx.toFixed(1) + '" y="' + y + '">' + esc(label) + '</text></g>';
-      });
-      host.innerHTML = '<div class="th-rscroll">' + s + '</svg></div>' +
-        '<p class="th-rlegend"><b class="cn">Made in China, not subject</b><b class="lo">Reviewed case by case</b><b class="hi">Controlled, denied</b>' +
-        '<span>TPP = 2 × MACs × bit length on dense datasheet figures; a site calculation.</span></p>' +
-        '<div class="th-rtip" id="th-rtip" role="tooltip" hidden></div>';
-      if (!reduced) host.setAttribute('data-in', '1');
-      if (!this.rulerWired) { this.rulerWired = true; this.wireRuler(host); } // the host survives a redraw, so wire it once
-    },
-    wireRuler: function (host) {
-      var mk = function (e) { return e.target && e.target.closest ? e.target.closest('.th-mk') : null; };
-      var hide = function () { var t = $('#th-rtip'); if (t) t.hidden = true; };
-      var show = function (g) {
-        var tip = $('#th-rtip'); // the ruler is redrawn when the sub-tab opens, so find the panel each time
-        if (!tip) return;
-        tip.textContent = g.getAttribute('data-tip') || '';
-        tip.hidden = false;
-        var r = g.getBoundingClientRect(), h = host.getBoundingClientRect();
-        tip.style.left = Math.max(0, Math.min(r.left + r.width / 2 - h.left - tip.offsetWidth / 2, h.width - tip.offsetWidth)) + 'px';
-        tip.style.top = Math.max(0, r.top - h.top - tip.offsetHeight - 8) + 'px';
-      };
-      host.addEventListener('mouseover', function (e) { var g = mk(e); if (g) show(g); });
-      host.addEventListener('mouseout', function (e) { if (mk(e)) hide(); });
-      host.addEventListener('focusin', function (e) { var g = mk(e); if (g) show(g); });
-      host.addEventListener('focusout', hide);
-      host.addEventListener('click', function (e) { if (mk(e)) location.hash = '#/landscape'; });
-      host.addEventListener('keydown', function (e) { if ((e.key === 'Enter' || e.key === ' ') && mk(e)) { e.preventDefault(); location.hash = '#/landscape'; } });
-    },
-    /* the cards animate the first time the sub-tab is actually on screen */
-    enter: function () {
-      var sub = $('.view[data-view="controls"] .sub[data-sub="thresholds"]'), board = $('#th-board');
-      if (!sub || !board || sub.hidden) return;
-      var r = $('#th-ruler'); // the ruler is drawn from its own width, which is zero while the sub-tab is closed
-      if (r && Math.round(r.getBoundingClientRect().width) !== this.rulerW) { this.rulerW = Math.round(r.getBoundingClientRect().width); this.ruler(); }
-      if (this.inBoard) return;
-      this.inBoard = true;
-      if (!reduced) board.setAttribute('data-in', '1');
-    },
-    build: function () {
+    built: false,
+    activate: function () { if (!this.built) this.build(); if (Geo.built) Geo.sync(); },
+    build: function () { // the China revenue share sub-tab: tooltips on the charts and the table behind the toggle
       this.built = true;
-      this.ruler();
-      var th = DATA.controls || [], ex = DATA.exposure || [];
-      var tbl = $('#controls-table');
-      if (tbl) {
-        var regimes = {}; th.forEach(function (t) { regimes[t.regime] = (regimes[t.regime] || 0) + 1; });
-        var chips = $('#controls-chips'), self = this, sel = null;
-        if (chips) {
-          chips.innerHTML = Object.keys(regimes).map(function (r) { return '<button type="button" data-r="' + esc(r) + '" aria-pressed="false">' + esc(r) + '<b>' + regimes[r] + '</b></button>'; }).join('');
-          chips.addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; sel = sel === b.getAttribute('data-r') ? null : b.getAttribute('data-r'); $$('button', chips).forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-r') === sel ? 'true' : 'false'); }); render(); });
-        }
-        // every threshold names the chapter it belongs to; show it as a chip that jumps there
-        var chTitle = {}; (DATA.chapters || []).forEach(function (c) { chTitle[c.id] = c.title; });
-        var chapterChip = function (id) {
-          if (!id || !chTitle[id]) return '';
-          return '<a class="chip chip-ch" href="' + ('#' + esc(id)) + '" title="Read the chapter: ' + esc(chTitle[id]) + '">' + esc(chTitle[id]) + '</a>';
-        };
-        var jump = $('#th-jump'), board = $('#th-board');
-        if (jump) jump.addEventListener('click', function (e) {
-          var b = e.target.closest('button'); if (!b) return;
-          var g = document.getElementById('th-g-' + b.getAttribute('data-g'));
-          if (g) g.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
-        });
-        var renderBoard = function (rows) {
-          if (!board) return;
-          var by = {}, bh = '', jh = '', n = 0;
-          rows.forEach(function (t) { var k = self.kindOf(t); (by[k] = by[k] || []).push(t); });
-          self.KINDS.forEach(function (kd) {
-            var group = by[kd[0]];
-            if (!group || !group.length) return;
-            jh += '<button type="button" data-g="' + esc(kd[0]) + '">' + esc(kd[1]) + '<b>' + group.length + '</b></button>';
-            bh += '<section class="th-group" id="th-g-' + esc(kd[0]) + '"><h4 class="th-gh">' + esc(kd[1]) + '<span>' + group.length + '</span></h4><div class="th-cards">' +
-              group.map(function (t) { return self.card(t, chapterChip, n++); }).join('') + '</div></section>';
-          });
-          board.innerHTML = bh || '<p class="th-empty">No thresholds under this regime.</p>';
-          if (jump) jump.innerHTML = jh;
-          board.dispatchEvent(new CustomEvent('cp:rows'));
-        };
-        var render = function () {
-          var rows = th.filter(function (t) { return !sel || t.regime === sel; });
-          self.visible = rows;
-          renderBoard(rows);
-          tbl.innerHTML ='<thead><tr><th>Legal instrument</th><th>Scope</th><th>Threshold</th><th>Destinations and licence policy</th><th>Status</th><th>Source</th></tr></thead><tbody>' + rows.map(function (t) {
-            var thr = (t.parameter ? esc(t.parameter) + ' ' : '') + (t.operator ? esc(t.operator) + ' ' : '') + (t.value != null ? '<b class="num">' + (typeof t.value === 'number' ? t.value.toLocaleString('en-US') : esc(t.value)) + '</b>' : '') + (t.unit ? ' <span class="cc">' + esc(t.unit) + '</span>' : '') + (t.alternative ? '<br><span class="cc" style="color:var(--muted)">' + esc(t.alternative) + '</span>' : '');
-            var st = esc(t.status || ''), cls = /force/i.test(st) ? 'Critical' : /suspend/i.test(st) ? 'Contested' : /rescind|expired/i.test(st) ? 'Diversified' : 'Important';
-            return '<tr><td class="name"><b>' + esc(t.instrument) + '</b><span>' + esc(t.regime) + (t.effectiveDate ? ' · from ' + esc(t.effectiveDate) : '') + '</span>' + chapterChip(t.chapter) + '</td><td>' + esc(t.scope || '') + '</td><td>' + thr + '</td><td class="role">' + esc(t.destinations || '') + (t.licensePolicy ? '<br><span class="cc" style="color:var(--muted)">' + esc(t.licensePolicy) + '</span>' : '') + (t.note ? '<br>' + esc(t.note) : '') + '</td><td><span class="chk ' + cls + '">' + st + '</span>' + (t.amendedBy && t.amendedBy.length ? '<br><span class="cc" style="color:var(--muted)">amended ' + esc(t.amendedBy.join(', ')) + '</span>' : '') + '</td><td>' + (t.source ? '<a class="cc" href="' + safeUrl(t.source) + '" target="_blank" rel="noopener">source</a>' : '') + '</td></tr>';
-          }).join('') + '</tbody>';
-          tbl.dispatchEvent(new CustomEvent('cp:rows'));
-          var c = $('#controls-count'); if (c) c.textContent = 'Showing ' + rows.length + ' of ' + th.length + ' thresholds';
-        };
-        render();
-      }
+      var ex = DATA.exposure || [];
       var viz = $('#exposure-viz');
       if (viz && viz.firstElementChild) { // tooltips on the exposure charts
         var tip = document.createElement('div'); tip.className = 'ex-tip'; tip.hidden = true; document.body.appendChild(tip);
@@ -1847,7 +1591,6 @@
       (DATA.suppliers || []).forEach(function (r) { idx.push({ kind: 'Supplier', title: r.name, text: r.category + ' · ' + cname(r.country) + (r.role ? ' · ' + r.role : ''), href: '#/suppliers', q: r.name }); });
       (DATA.landscape || []).forEach(function (c) { idx.push({ kind: 'Chip', title: c.vendor + ' ' + c.name, text: ((c.process || {}).node || '') + ' · ' + ((c.memory || {}).type || '') + ' · ' + (c.status || ''), href: '#/landscape', chip: c.id }); });
       (DATA.timeline || []).forEach(function (e) { idx.push({ kind: 'Event ' + e.date, title: e.title, text: e.summary || '', href: '#/controls' }); });
-      (DATA.controls || []).forEach(function (t) { idx.push({ kind: 'Export rule', title: t.instrument + (t.parameter ? ' · ' + t.parameter : ''), text: [t.scope, t.destinations, t.note].filter(Boolean).join(' · '), href: '#/thresholds' }); });
       (DATA.exposure || []).forEach(function (r) { if (r.chinaShare != null) idx.push({ kind: 'China revenue', title: r.firm + ' ' + r.fiscalYear, text: 'China was ' + r.chinaShare + '% of revenue' + (r.basis ? ' · ' + r.basis : ''), href: '#/exposure' }); });
       var self = this;
       idx.forEach(function (i) {
@@ -1954,7 +1697,6 @@
       addExport('#cx-table-wrap', 'the chips you picked', Landscape.exportRows, 'before'); // a live array: Landscape keeps it in step with the selection
       addExport('#matrix', 'country-share matrix', DATA.matrix, 'before');
       addExport('#timeline', 'export-control timeline', function () { return Geo.visible || DATA.timeline; }, 'before');
-      addExport('#th-board', 'licence thresholds', function () { return Controls.visible || DATA.controls; }, 'before'); // the board is the page now; the table sits behind a toggle
       addExport('#exposure-table', 'China revenue share by firm and year', DATA.exposure, 'before');
       // cite-this block in the footer
       var foot = $('.site-footer');

@@ -518,7 +518,7 @@ const specNames = new Set((specimens.match(/PC\.register\('([\w-]+)'/g) || []).m
 all.forEach((ch) => { const s = ch.meta.specimen; if (s && !specNames.has(s)) warn(`${ch.id}: specimen "${s}" is not built yet`); });
 ['package', 'globe'].forEach((s) => { if (!specNames.has(s)) warn(`specimen "${s}" (used by hero/geopolitics) is not built yet`); });
 
-const data = { landscape, landscapeNotes, suppliers, timeline, matrix, controls, flows, exposure, chapters: all.map((c) => { const card = c.meta.card || {}; return { id: c.id, number: c.number, title: c.title, specimen: c.meta.specimen, oneLiner: c.meta.oneLiner || '', plain: c.meta.plain || '', score: +card.chokepointScore || 0, concentration: card.concentration || '', leaders: card.leaders || [], countries: card.countries || [], substitution: card.substitution || {}, chinaStatus: card.chinaStatus || '', usStatus: card.usStatus || '' }; }) };
+const data = { landscape, landscapeNotes, suppliers, timeline, matrix, flows, exposure, chapters: all.map((c) => { const card = c.meta.card || {}; return { id: c.id, number: c.number, title: c.title, specimen: c.meta.specimen, oneLiner: c.meta.oneLiner || '', plain: c.meta.plain || '', score: +card.chokepointScore || 0, concentration: card.concentration || '', leaders: card.leaders || [], countries: card.countries || [], substitution: card.substitution || {}, chinaStatus: card.chinaStatus || '', usStatus: card.usStatus || '' }; }) };
 let html = read(path.join(root, 'src', 'template.html'));
 const fill = (k, v) => { html = html.split(`{{${k}}}`).join(v); };
 const modDir = (d) => (fs.existsSync(d) ? fs.readdirSync(d).filter((f) => !f.startsWith('.')).sort() : []);
@@ -539,7 +539,7 @@ fill('SHEET_PAGES', sheetPages); fill('SHEET_CHAPTERS', sheetChapters);
 fill('RAIL', railHTML); fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits); fill('FOOTER', footer);
 fill('SUPPLIERS_INTRO', suppliersIntro); fill('GEO_DEK', esc(geoDek)); fill('GEO_BODY', geoBody); fill('SOURCES', sourcesHTML);
 fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));
-fill('CONTROLS_DEK', controls.length ? `Every move since 2018, the numbers that trigger a licence, and each firm's China sales from its own filings.` : 'The licence thresholds and the revenue series are being compiled.');
+fill('CONTROLS_DEK', `Every move since 2018, what can still flow to China, and each firm's China sales from its own filings.`);
 fill('EXPOSURE_VIZ', exposureViz(exposure));
 fill('EXPOSURE_NOTE', exposure.length ? 'Shares are computed from the absolute figures each firm filed. Firms count China differently: where the goods ship, where they are billed, or where the customer is based. Each row says which.' : '');
 fill('KIT', kit); fill('SPECIMENS', specimens);

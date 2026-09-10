@@ -11,7 +11,7 @@ The whole site compiles to **one self-contained HTML file** (`dist/index.html`).
 - **AI Chips** (`#/landscape`): 19 AI accelerators with full spec sheets and a package render drawn from each chip's die and HBM layout.
 - **Suppliers**: 220 firms drawn as a pipeline that narrows at the chokepoints, then ranked by stage, thinnest first, with every firm named and opening in place; the full table and a CSV export one click away.
 - **Geopolitics**: the essay, a country-by-segment share matrix, and a 45-event export-control timeline.
-- **Export Controls**: the board, nine things that move across the chokepoint with their state as of any date and each one's own history, the 43 moves behind it in date order, the 40 licence thresholds as cards led by their number (table and exports behind a toggle), and a China revenue share series computed from company filings.
+- **Export Controls**: the board, nine things that move across the chokepoint with their state as of any date and each one's own history, the 43 moves behind it in date order, and a China revenue share series computed from company filings.
 - **Glossary**: 74 terms defined for policy readers.
 - **Sources**: every citation, tagged by source tier (see `brief/SOURCE_POLICY.md`).
 - Research tools: site search (Ctrl+K or `/`), permalinks on every section, copy-as-CSV/JSON on every dataset, and a citation block with BibTeX.
