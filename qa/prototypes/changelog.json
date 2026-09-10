@@ -1,5 +1,53 @@
 [
   {
+    "date": "2026-09-10",
+    "summary": "Restored this page as Data and methods, off the tabs: the scope, the rubric, and the four dataset notes, which were served but unreachable."
+  },
+  {
+    "date": "2026-09-10",
+    "summary": "Rebuilt the home page as the route of one chip: fifteen stops, one per stage, then a line on each country."
+  },
+  {
+    "date": "2026-09-10",
+    "summary": "Renamed the Intro tab Start here and removed the Sources page. Each chapter keeps its own source list."
+  },
+  {
+    "date": "2026-09-10",
+    "summary": "Shipped what six navigation testers found: footnote cards, glossary popovers, a legend and an as-of date on the board, and The Chain as a PDF."
+  },
+  {
+    "date": "2026-09-10",
+    "summary": "Replaced the supplier stream with ribbons from eight countries to the twenty stages, and took AI Chips to 35 accelerators."
+  },
+  {
+    "date": "2026-09-10",
+    "summary": "Removed the licence thresholds tab from Export Controls. The file stays in the repository and is documented on this page."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Rebuilt Export Controls as the board: nine things that move across the chokepoint, each with its state and the rule that set it."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Redesigned Export Controls and Suppliers after the client found both too much text. Timeline entries gained a one-sentence gist."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Removed the Methods page at the client's request, which left the site with no scope statement and no published rubric."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Ran performance, security and reliability audits and four reader re-tests, and fixed the nine bugs they found."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Delivered the first tier of the reader tests: the front door, the walk through the chain, the bibliography and ranked search."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Set the site structure: home is the world map, Start here the plain paragraphs, The Chain all seventeen chapters."
+  },
+  {
     "date": "2026-09-09",
     "summary": "Added the Methods page: the scoring rubric, the sourcing rule, how estimates are labelled, what the site does not cover, and the four dataset notes moved from the Sources page. Added a print stylesheet that keeps a chapter's sources and charts on paper."
   },
