@@ -407,6 +407,7 @@ if (notesSrc && landscape.length) {
 }
 const matrixNotes = read(path.join(root, 'data', 'chokepoint-matrix-notes.md'));
 const controls = readJSON(path.join(root, 'data', 'control-thresholds.json'), []);
+const flows = readJSON(path.join(root, 'data', 'control-flows.json'), null); // the nine things that move across the chokepoint, with dated states (may not exist yet)
 const exposure = readJSON(path.join(root, 'data', 'exposure.json'), []);
 const controlsNotes = read(path.join(root, 'data', 'control-thresholds-notes.md'));
 const exposureNotes = read(path.join(root, 'data', 'exposure-notes.md'));
@@ -517,7 +518,7 @@ const specNames = new Set((specimens.match(/PC\.register\('([\w-]+)'/g) || []).m
 all.forEach((ch) => { const s = ch.meta.specimen; if (s && !specNames.has(s)) warn(`${ch.id}: specimen "${s}" is not built yet`); });
 ['package', 'globe'].forEach((s) => { if (!specNames.has(s)) warn(`specimen "${s}" (used by hero/geopolitics) is not built yet`); });
 
-const data = { landscape, landscapeNotes, suppliers, timeline, matrix, controls, exposure, chapters: all.map((c) => { const card = c.meta.card || {}; return { id: c.id, number: c.number, title: c.title, specimen: c.meta.specimen, oneLiner: c.meta.oneLiner || '', plain: c.meta.plain || '', score: +card.chokepointScore || 0, concentration: card.concentration || '', leaders: card.leaders || [], countries: card.countries || [], substitution: card.substitution || {}, chinaStatus: card.chinaStatus || '', usStatus: card.usStatus || '' }; }) };
+const data = { landscape, landscapeNotes, suppliers, timeline, matrix, controls, flows, exposure, chapters: all.map((c) => { const card = c.meta.card || {}; return { id: c.id, number: c.number, title: c.title, specimen: c.meta.specimen, oneLiner: c.meta.oneLiner || '', plain: c.meta.plain || '', score: +card.chokepointScore || 0, concentration: card.concentration || '', leaders: card.leaders || [], countries: card.countries || [], substitution: card.substitution || {}, chinaStatus: card.chinaStatus || '', usStatus: card.usStatus || '' }; }) };
 let html = read(path.join(root, 'src', 'template.html'));
 const fill = (k, v) => { html = html.split(`{{${k}}}`).join(v); };
 const modDir = (d) => (fs.existsSync(d) ? fs.readdirSync(d).filter((f) => !f.startsWith('.')).sort() : []);
