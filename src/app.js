@@ -864,10 +864,12 @@
       el.style.top = (sr.bottom - m.top + 6) + 'px';                     // under the drawing, so it never covers the stream
       var hi = $('.sup-colhi');
       if (hi) { hi.setAttribute('x', hit.getAttribute('x')); hi.setAttribute('width', hit.getAttribute('width')); hi.setAttribute('data-focus', focused ? '1' : '0'); hi.hidden = false; }
+      $$('.sup-lab').forEach(function (g) { if (+g.getAttribute('data-i') === i) g.setAttribute('data-hot', '1'); else g.removeAttribute('data-hot'); });
     },
     hideTip: function () {
       var el = $('#sup-tip'); if (el) el.hidden = true;
       var hi = $('.sup-colhi'); if (hi) hi.hidden = true;
+      $$('.sup-lab[data-hot]').forEach(function (g) { g.removeAttribute('data-hot'); });
       this.tipAt = -1;
     },
     goStage: function (i) { // the pipeline is the ladder's index: a stage sends you to its rung

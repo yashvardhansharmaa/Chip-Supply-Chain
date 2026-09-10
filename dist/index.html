@@ -1492,10 +1492,12 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 .sup-crit { fill: var(--accent); }                        /* one square, one Critical firm */
 .sup-crit-drop { stroke: var(--accent); stroke-opacity: 0.34; stroke-width: 1; stroke-dasharray: 2 3; }
 .sup-hit { fill: transparent; cursor: pointer; outline: none; }
-.sup-colhi { fill: var(--ink); opacity: 0.07; pointer-events: none; }
-.sup-colhi[data-focus="1"] { opacity: 0.13; }
+.sup-colhi { fill: var(--ink); opacity: 0.1; pointer-events: none; }
+.sup-colhi[data-focus="1"] { opacity: 0.17; }
 .sup-lab-t { font-family: var(--font-display); fill: var(--ink-2); text-anchor: middle; }
 .sup-lab-n { font-family: var(--font-mono); font-size: 10px; fill: var(--muted); text-anchor: middle; font-variant-numeric: tabular-nums; }
+.sup-lab[data-hot="1"] .sup-lab-t { fill: var(--ink); font-weight: 600; }
+.sup-lab[data-hot="1"] .sup-lab-n { fill: var(--ink-2); }
 .sup-lab[data-lit="1"] .sup-lab-t { fill: var(--accent-ink); font-weight: 600; }
 .sup-lab[data-lit="1"] .sup-lab-n { fill: var(--accent-ink); }
 .sup-flow text, .sup-crit, .sup-crit-drop { pointer-events: none; }
@@ -8335,10 +8337,12 @@ PC.register('wafer', function (p) {
       el.style.top = (sr.bottom - m.top + 6) + 'px';                     // under the drawing, so it never covers the stream
       var hi = $('.sup-colhi');
       if (hi) { hi.setAttribute('x', hit.getAttribute('x')); hi.setAttribute('width', hit.getAttribute('width')); hi.setAttribute('data-focus', focused ? '1' : '0'); hi.hidden = false; }
+      $$('.sup-lab').forEach(function (g) { if (+g.getAttribute('data-i') === i) g.setAttribute('data-hot', '1'); else g.removeAttribute('data-hot'); });
     },
     hideTip: function () {
       var el = $('#sup-tip'); if (el) el.hidden = true;
       var hi = $('.sup-colhi'); if (hi) hi.hidden = true;
+      $$('.sup-lab[data-hot]').forEach(function (g) { g.removeAttribute('data-hot'); });
       this.tipAt = -1;
     },
     goStage: function (i) { // the pipeline is the ladder's index: a stage sends you to its rung
