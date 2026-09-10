@@ -880,8 +880,8 @@
     },
 
     /* ---- filters ---- */
-    setFilters: function (cat, country, scroll) {
-      this.cat = cat || null; this.country = country || '';
+    setCountry: function (c, scroll) {
+      this.country = (c === this.country ? '' : c) || '';
       this.sync(); this.render();
       if (scroll) { var t = $('#sup-toolbar'); if (t) t.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' }); }
     },
@@ -892,30 +892,28 @@
       try { localStorage.setItem('cp-sup-mode', m); } catch (e) { }
       this.sync(); this.render();
     },
-    sync: function () { // every control and the matrix show the same state
-      var self = this, on = this.country === '__other' ? 'Other' : this.country;
-      $$('#sup-chips button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-cat') === self.cat ? 'true' : 'false'); });
-      var csel = $('#sup-cat'); if (csel) csel.value = this.cat || '';
+    sync: function () { // every control, the pipeline and the ladder show the same state
+      var self = this, on = this.country === '__other' ? 'Other' : this.country, lad = this.mode === 'ladder';
       var sel = $('#sup-country'); if (sel) sel.value = this.country || '';
       $$('.sup-mode').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-mode') === self.mode ? 'true' : 'false'); });
-      $('#sup-list').hidden = this.mode !== 'compact';
-      $('#sup-wrap').hidden = this.mode !== 'detailed';
-      $$('.sup-cell').forEach(function (b) {
-        if (self.cat && b.getAttribute('data-cat') === self.cat && b.getAttribute('data-cc') === on) b.setAttribute('data-on', '1');
-        else b.removeAttribute('data-on');
-      });
+      $('#sup-ladder').hidden = !lad;
+      $('#sup-ladder-h').hidden = !lad;
+      $('#sup-wrap').hidden = lad;
+      $$('.sup-band').forEach(function (p) { if (on && p.getAttribute('data-c') === on) p.setAttribute('data-on', '1'); else p.removeAttribute('data-on'); });
+      var pipe = $('#sup-pipe'); if (pipe) pipe.setAttribute('data-filtered', on ? '1' : '0');
     },
     countryLabel: function () { return this.country === '__other' ? 'Other countries' : cname(this.country); },
+    filtering: function () { return !!(this.country || this.chk || this.q); },
+    match: function (r) {
+      if (this.country === '__other') { if (this.CO.indexOf(r.country) >= 0) return false; }
+      else if (this.country && r.country !== this.country) return false;
+      if (this.chk && r.chokepoint !== this.chk) return false;
+      if (this.q) { var hay = [r.name, r.nativeName, r.city, r.ticker, r.role, r.subcategory, (r.customers || []).join(' '), cname(r.country)].join(' ').toLowerCase(); if (hay.indexOf(this.q) < 0) return false; }
+      return true;
+    },
     filtered: function () {
       var self = this, CHK = this.RANK;
-      var out = this.rows.filter(function (r) {
-        if (self.cat && r.category !== self.cat) return false;
-        if (self.country === '__other') { if (self.MAIN.indexOf(r.country) >= 0) return false; }
-        else if (self.country && r.country !== self.country) return false;
-        if (self.chk && r.chokepoint !== self.chk) return false;
-        if (self.q) { var hay = [r.name, r.nativeName, r.city, r.ticker, r.role, r.subcategory, (r.customers || []).join(' '), cname(r.country)].join(' ').toLowerCase(); if (hay.indexOf(self.q) < 0) return false; }
-        return true;
-      });
+      var out = this.rows.filter(function (r) { return self.match(r); });
       var k = this.sortKey, d = this.sortDir;
       out.sort(function (a, b) {
         var va = k === 'chokepoint' ? CHK[a.chokepoint] : (k === 'country' ? cname(a.country) : a[k]);
@@ -928,43 +926,64 @@
     },
     render: function () {
       var rows = this.filtered();
-      this.shown = rows;
       $('#sup-count').textContent = 'Showing ' + rows.length + ' of ' + this.rows.length + ' suppliers' +
-        (this.cat ? ' · ' + this.cat : '') + (this.country ? ' · ' + this.countryLabel() : '') + (this.chk ? ' · ' + this.chk : '');
-      if (this.mode === 'compact') this.renderList(rows); else this.renderTable(rows);
+        (this.country ? ' · ' + this.countryLabel() : '') + (this.chk ? ' · ' + this.chk : '');
+      if (this.mode === 'table') this.renderTable(rows); else this.applyFilter();
     },
 
-    /* ---- compact list: one line a firm, opening in place ---- */
-    renderList: function (rows) {
-      var self = this;
-      var sortBtn = function (k, label, cls) {
-        return '<button type="button" class="' + cls + '" data-sort="' + k + '"' + (self.sortKey === k ? ' aria-sort="' + (self.sortDir > 0 ? 'ascending' : 'descending') + '"' : '') + '>' + label + '</button>';
-      };
-      var html = '<div class="sup-hrow"><span class="sup-hlab">Sort</span>' + sortBtn('name', 'Supplier', 'c1') +
-        '<span class="c2">What they make</span>' + sortBtn('country', 'Country', 'c3') + sortBtn('founded', 'Founded', 'c4') +
-        sortBtn('chokepoint', 'Level', 'c5') + '<span class="c6"></span></div>';
-      rows.forEach(function (r, i) {
-        var tag = [r.nativeName, /^private$/i.test(r.ticker || '') ? '' : r.ticker].filter(Boolean).join(' · '), id = 'sup-d-' + i;
-        html += '<div class="sup-row" data-i="' + i + '" style="--i:' + Math.min(i, 40) + '">' +
-          '<button type="button" class="sup-head" aria-expanded="false" aria-controls="' + id + '">' +
-          '<span class="c1"><b>' + esc(r.name) + '</b>' + (tag ? '<em>' + esc(tag) + '</em>' : '') + '</span>' +
-          '<span class="c2">' + esc(r.subcategory || '') + '</span>' +
-          '<span class="c3"><i>' + esc(r.country) + '</i>' + (r.city ? ' ' + esc(r.city) : '') + '</span>' +
-          '<span class="c4">' + (r.founded || '—') + '</span>' +
-          '<span class="c5"><span class="chk ' + esc(r.chokepoint || '') + '">' + esc(r.chokepoint || '') + '</span></span>' +
-          '<span class="c6"><i class="sup-chev" aria-hidden="true"></i></span>' +
-          '</button><div class="sup-detail" id="' + id + '"><div class="sup-detail-in"></div></div></div>';
+    /* ---- the ladder: the stages ranked thinnest first, every firm named ---- */
+    ladderOrder: function () { // fewest firms first, then the stage with more Critical firms, then chain order
+      return this.stages.slice().sort(function (a, b) {
+        return (a.n - b.n) || (b.crit.length - a.crit.length) || (a.i - b.i);
       });
-      $('#sup-list').innerHTML = html;
     },
-    toggleRow: function (head) {
-      var row = head.parentNode, open = row.getAttribute('data-open') === '1';
-      if (!open) {
-        var body = $('.sup-detail-in', row);
-        if (body && !body.getAttribute('data-filled')) { body.innerHTML = this.detail(this.shown[+row.getAttribute('data-i')]); body.setAttribute('data-filled', '1'); }
-      }
-      row.setAttribute('data-open', open ? '0' : '1');
-      head.setAttribute('aria-expanded', open ? 'false' : 'true');
+    buildLadder: function () {
+      var self = this, html = '';
+      this.ladderOrder().forEach(function (s, r) {
+        var names = s.rows.slice().sort(function (a, b) {
+          return (self.RANK[a.chokepoint] - self.RANK[b.chokepoint]) || String(a.name).localeCompare(String(b.name));
+        }).map(function (f) {
+          return '<span class="sup-nw" data-r="' + f._ix + '"><button type="button" class="sup-name lv-' + esc(f.chokepoint || 'Important') +
+            '" aria-expanded="false" aria-controls="' + s.id + '-p">' + esc(f.name) + '<i class="sup-cc">' + esc(f.country) + '</i></button></span>';
+        }).join('');
+        html += '<section class="sup-rung" id="' + s.id + '" data-i="' + s.i + '" data-crit="' + s.crit.length + '" aria-labelledby="' + s.id + '-h">' +
+          '<span class="sup-rank" aria-hidden="true">' + (r < 9 ? '0' : '') + (r + 1) + '</span>' +
+          '<div class="sup-rung-head"><h3 class="sup-rung-name" id="' + s.id + '-h">' + esc(s.name) + '</h3>' +
+          '<p class="sup-rung-n">' + s.n + ' firms' + (s.crit.length ? ' · ' + s.crit.length + ' critical' : '') + '</p></div>' +
+          '<p class="sup-names">' + names + '</p>' +
+          '<div class="sup-panel" id="' + s.id + '-p"><div class="sup-panel-in"></div></div></section>';
+      });
+      $('#sup-ladder').innerHTML = html;
+    },
+    applyFilter: function () { // the rungs never move; the filters only hide names and change the count
+      var self = this, on = this.filtering();
+      $$('.sup-rung').forEach(function (rung) {
+        var items = $$('.sup-nw', rung), hits = 0, last = null;
+        items.forEach(function (w) {
+          var ok = self.match(self.rows[+w.getAttribute('data-r')]);
+          w.hidden = !ok; w.classList.remove('is-last');
+          if (ok) { hits++; last = w; }
+        });
+        if (last) last.classList.add('is-last');
+        var crit = +rung.getAttribute('data-crit');
+        $('.sup-rung-n', rung).textContent = on ? hits + ' of ' + items.length + ' firms' : items.length + ' firms' + (crit ? ' · ' + crit + ' critical' : '');
+        rung.setAttribute('data-empty', hits ? '0' : '1');
+        var open = $('.sup-name[aria-expanded="true"]', rung);
+        if (open && (!hits || open.parentNode.hidden)) self.closePanel(rung);
+      });
+    },
+    openName: function (btn) {
+      var rung = btn.closest('.sup-rung'), panel = $('.sup-panel', rung);
+      var was = btn.getAttribute('aria-expanded') === 'true';
+      this.closePanel(rung);
+      if (was) return;                                                   // one panel a rung: clicking the open name shuts it
+      $('.sup-panel-in', panel).innerHTML = this.detail(this.rows[+btn.parentNode.getAttribute('data-r')]);
+      btn.setAttribute('aria-expanded', 'true');
+      panel.setAttribute('data-open', '1');
+    },
+    closePanel: function (rung) {
+      var p = $('.sup-panel', rung); if (p) p.removeAttribute('data-open');
+      $$('.sup-name[aria-expanded="true"]', rung).forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
     },
     detail: function (r) {
       if (!r) return '';
@@ -977,7 +996,11 @@
         var v = (r.revenueUSDb >= 10 ? r.revenueUSDb.toFixed(1) : r.revenueUSDb.toFixed(2)).replace(/0+$/, '').replace(/\.$/, '');
         facts.push(['Revenue', '$' + v + 'B' + (r.revenueYear ? ' (' + esc(r.revenueYear) + ')' : '')]);
       }
-      return '<div class="sup-detail-body">' + (r.role ? '<p class="sup-role">' + esc(r.role) + '</p>' : '') +
+      var tag = [r.subcategory, cname(r.country) + (r.city ? ', ' + r.city : ''), /^private$/i.test(r.ticker || '') ? '' : r.ticker].filter(Boolean).join(' · ');
+      return '<div class="sup-detail-body">' +
+        '<p class="sup-detail-h">' + esc(r.name) + (r.chokepoint ? ' <span class="chk ' + esc(r.chokepoint) + '">' + esc(r.chokepoint) + '</span>' : '') +
+        (tag ? '<em>' + esc(tag) + '</em>' : '') + '</p>' +
+        (r.role ? '<p class="sup-role">' + esc(r.role) + '</p>' : '') +
         (facts.length ? '<dl class="sup-facts">' + facts.map(function (f) { return '<dt>' + f[0] + '</dt><dd>' + f[1] + '</dd>'; }).join('') + '</dl>' : '') +
         (r.source ? '<a class="sup-src" href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" aria-label="Source for ' + esc(r.name) + '">Source</a>' : '') + '</div>';
     },

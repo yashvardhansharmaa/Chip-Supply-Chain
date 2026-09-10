@@ -827,13 +827,130 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 
 
 /* module: controls.css */
-/* Export Controls: the timeline minimap and the threshold board.
-   The strip is the page's index — five lanes by kind, one dot per move, the three US rule dates ruled
-   through — and the list under it is one line per move until the reader asks for more. Colour follows
-   the .timeline .cat classes, so a chip, a lane label and a dot of the same kind are the same colour. */
+/* Export Controls: the board of flows, the year scrubber and the threshold board.
+   The board is the page's index — nine things that move across the chokepoint, each with its state on
+   the scrubber's date — and every row opens into its own history. By date keeps the plain chronology
+   with a compact board riding the scroll. Colour follows the .timeline .cat classes, so a chip, a
+   category tag and a history entry of the same kind are the same colour. */
 
 /* ---------- shared chrome ---------- */
 .controls-intro { margin: 0 0 16px; }
+.cf-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; }
+.cf-top .controls-intro { margin-bottom: 12px; max-width: 62ch; }
+.cf-modes { display: flex; gap: 0; flex: 0 0 auto; margin-top: 12px; }
+.cf-mode {
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 6px 13px; border: 1px solid var(--line-2); background: var(--bg-2); color: var(--muted); cursor: pointer;
+  transition: color 150ms var(--ease), background-color 150ms var(--ease);
+}
+.cf-mode:first-child { border-radius: 3px 0 0 3px; }
+.cf-mode:last-child { border-radius: 0 3px 3px 0; border-left-width: 0; }
+.cf-mode:hover { color: var(--ink); }
+.cf-mode[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+
+/* ---------- the two columns ---------- */
+.cf[data-mode="subject"] .cf-chron { display: none; }
+
+/* ---------- the year scrubber ---------- */
+.cf-scrub { margin: 0 0 16px; }
+.cf-scrub-h { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 7px; }
+.cf-asof { font-family: var(--font-display); font-size: 14px; letter-spacing: 0.02em; color: var(--muted); margin: 0; }
+.cf-asof b { font-family: var(--font-display); font-weight: 700; font-size: 21px; color: var(--ink); margin-left: 4px; }
+.cf-now {
+  flex: 0 0 auto; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 4px 11px 5px; border: 1px solid var(--line-2); border-radius: 999px; background: var(--bg-2); color: var(--ink-2); cursor: pointer;
+}
+.cf-now:hover, .cf-now:focus-visible { border-color: var(--accent); color: var(--ink); }
+.cf-track { position: relative; padding-top: 8px; }
+.cf-years { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; border-top: 1px solid var(--line-2); }
+.cf-year {
+  display: flex; flex-direction: column; align-items: center; gap: 0; padding: 6px 1px 3px;
+  background: none; border: 0; border-right: 1px solid var(--line); color: var(--muted); cursor: pointer;
+  transition: background-color 150ms var(--ease), color 150ms var(--ease);
+}
+.cf-year:last-child { border-right: 0; }
+.cf-year:hover { background: var(--bg-2); color: var(--ink); }
+.cf-yl, .cf-ys { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.02em; }
+.cf-ys { display: none; }
+.cf-yn { font-family: var(--font-mono); font-size: 10px; color: var(--line-2); }
+.cf-year[aria-pressed="true"] { color: var(--ink); }
+.cf-year[aria-pressed="true"] .cf-yl, .cf-year[aria-pressed="true"] .cf-ys { font-weight: 600; }
+.cf-year[aria-pressed="true"] .cf-yn { color: var(--accent-ink); }
+.cf-head {
+  position: absolute; left: 0; top: 1px; width: 2px; height: 15px; background: var(--accent);
+  transition: transform 240ms var(--ease); pointer-events: none;
+}
+.cf-head::after {
+  content: ""; position: absolute; left: -3px; top: -4px; width: 8px; height: 5px;
+  background: var(--accent); clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+/* ---------- the board ---------- */
+.cf-board { margin: 0 0 34px; border-bottom: 1px solid var(--line); }
+.cf-row { position: relative; }
+.cf-btn {
+  display: grid; grid-template-columns: minmax(0, 1fr) 214px 68px 14px; align-items: center; gap: 6px 16px;
+  width: 100%; text-align: left; padding: 12px 2px 13px 0; background: none; border: 0; border-top: 1px solid var(--line); cursor: pointer;
+}
+.cf-btn:hover { background: var(--bg-2); }
+.cf-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.cf-id { min-width: 0; }
+.cf-name { font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: 0.01em; color: var(--ink); }
+.cf-route { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.05em; color: var(--muted); margin-left: 9px; white-space: nowrap; }
+.cf-what { display: block; font-family: var(--font-body); font-size: 14px; line-height: 1.35; color: var(--ink-2); margin-top: 2px; max-width: 58ch; }
+.cf-state { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1px 8px; align-items: baseline; }
+.cf-pill {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap;
+  padding: 2px 7px 3px; border: 1px solid var(--line-2); border-radius: 2px; color: var(--muted); background: transparent;
+}
+.cf-pill.is-licence { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-ink); }
+.cf-pill.is-case { border-style: dashed; border-color: var(--ink); color: var(--ink); }
+.cf-pill.is-shut { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.cf-pill.is-policy { background: var(--bg-3); }
+.cf-lab { font-family: var(--font-body); font-size: 14px; line-height: 1.3; color: var(--ink-2); }
+.cf-when { grid-column: 1 / -1; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; color: var(--muted); }
+.cf-n { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; color: var(--muted); text-align: right; white-space: nowrap; }
+.cf-caret {
+  width: 8px; height: 8px; border-right: 1.6px solid var(--line-2); border-bottom: 1.6px solid var(--line-2);
+  transform: rotate(45deg); transition: transform 200ms var(--ease); margin: -4px auto 0;
+}
+.cf-row[data-open="1"] .cf-caret { transform: rotate(225deg); margin: 3px auto 0; }
+.cf-row[data-open="1"] .cf-btn { background: var(--bg-2); }
+
+/* the drawer: 0fr to 1fr keeps the animation on the grid, and visibility keeps a shut drawer out of the tab order */
+.cf-hist { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 220ms var(--ease); }
+.cf-hist-in { overflow: hidden; min-height: 0; visibility: hidden; transition: visibility 0s linear 220ms; }
+.cf-row[data-open="1"] .cf-hist { grid-template-rows: 1fr; }
+.cf-row[data-open="1"] .cf-hist-in { visibility: visible; transition-delay: 0s; }
+
+.cf-evs { list-style: none; margin: 0; padding: 2px 0 14px; }
+.cf-ev { display: grid; grid-template-columns: 96px 96px minmax(0, 1fr); gap: 14px; padding: 10px 0 11px; border-top: 1px dashed var(--line); }
+.cf-ev:first-child { border-top: 0; }
+.cf-ev-d { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; color: var(--muted); line-height: 1.4; }
+.cf-ev-d b { display: block; font-weight: 500; font-size: 11.5px; color: var(--ink); }
+.cf-ev-d span { display: block; }
+.cf-ev-t { font-family: var(--font-display); font-weight: 700; font-size: 15.5px; line-height: 1.2; margin: 1px 0 3px; }
+.cf-ev-g { font-family: var(--font-body); font-size: 14.5px; line-height: 1.45; color: var(--ink-2); margin: 0 0 5px; max-width: 70ch; }
+.cf-hist .cat {
+  display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 2px;
+}
+.cf-hist .cat.cn { color: var(--c6); }
+.cf-hist .cat.ally { color: var(--c1); }
+.cf-hist .cat.policy { color: var(--c4); }
+.cf-hist .cat.corp { color: var(--c5); }
+.cf-hist .src { font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); }
+.cf-none { font-family: var(--font-mono); font-size: 11px; color: var(--muted); padding: 8px 0 14px; margin: 0; }
+
+/* under each year on a phone: where the flows stood when the year ended */
+.cf-sum { display: none; }
+
+@keyframes cf-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes cf-flip { from { opacity: 0; } to { opacity: 1; } }
+@keyframes cf-glow { 0%, 62% { background-color: var(--accent-soft); } 100% { background-color: transparent; } }
+.cf-board[data-in="1"] .cf-rowh { animation: cf-in 260ms var(--ease) var(--d, 0ms) backwards; }
+.cf-state.is-flip { animation: cf-flip 150ms linear; }
+.cf-row.is-changed { animation: cf-glow 600ms var(--ease); }
 
 /* ---------- timeline: filter bar ---------- */
 .tl-bar { display: flex; align-items: flex-start; gap: 10px 14px; flex-wrap: wrap; margin: 0 0 12px; }
@@ -855,46 +972,8 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 .tl-chip.policy[aria-pressed="true"]::before { background: var(--c4); }
 .tl-chip.corp[aria-pressed="true"]::before { background: var(--c5); }
 
-/* ---------- timeline: the strip ---------- */
-.tl-strip { margin: 0 0 6px; }
-.tl-svg { display: block; width: 100%; height: auto; overflow: visible; }
-.tl-base { fill: var(--line-2); transform-box: fill-box; transform-origin: left center; }
-.tl-lane {
-  font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.06em;
-  text-transform: uppercase; fill: var(--accent-ink);
-}
-.tl-lane.cn { fill: var(--c6); }
-.tl-lane.ally { fill: var(--c1); }
-.tl-lane.policy { fill: var(--c4); }
-.tl-lane.corp { fill: var(--c5); }
-.tl-rule { stroke: var(--line-2); stroke-width: 1; stroke-dasharray: 2 3; }
-.tl-rlab { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; fill: var(--muted); }
-.tl-tick { stroke: var(--line-2); stroke-width: 1; }
-.tl-ylab { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; fill: var(--muted); }
-.tl-ylab.is-on { fill: var(--ink); font-weight: 600; }
-.tl-dot {
-  fill: var(--accent-ink); stroke: transparent; stroke-width: 11; /* a finger-sized target over a small mark */
-  pointer-events: all; cursor: pointer; transform-box: fill-box; transform-origin: center;
-}
-.tl-dot.cn { fill: var(--c6); }
-.tl-dot.ally { fill: var(--c1); }
-.tl-dot.policy { fill: var(--c4); }
-.tl-dot.corp { fill: var(--c5); }
-.tl-dot:hover { transform: scale(1.45); }
-.tl-dot:focus { outline: none; }
-.tl-dot:focus-visible { transform: scale(1.45); stroke: var(--ink); stroke-width: 1.6; }
-.tl-dot.is-at { transform: scale(1.5); }
-.tl-ring { fill: none; stroke: var(--ink); stroke-width: 1.3; pointer-events: none; transition: opacity 160ms var(--ease); }
-
-.tl-tip {
-  position: absolute; z-index: 40; max-width: 300px; padding: 8px 10px;
-  background: var(--ink); color: var(--bg); font-family: var(--font-mono); font-size: 11px;
-  line-height: 1.45; border-radius: 2px; pointer-events: none; box-shadow: var(--shadow);
-}
-.tl-tip[hidden] { display: none; }
-.tl-tip b { display: block; font-family: var(--font-display); font-size: 12.5px; letter-spacing: 0.03em; color: var(--accent); margin-bottom: 3px; }
-
 /* ---------- timeline: compact entries ---------- */
+.cf-rowh { margin: 0; font-size: inherit; }
 .timeline { margin-top: 4px; }
 .timeline .tl-year { display: block; border: 0; padding: 0; }
 .timeline .tl-year .year-label { display: inline-block; font-size: 34px; margin: 22px 0 0; }
@@ -902,30 +981,27 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
   font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--muted); margin-left: 10px; vertical-align: 6px;
 }
-.timeline .tl-e { padding: 11px 0 12px; scroll-margin-top: calc(var(--masthead) + var(--tl-h, 0px) + 20px); }
+.timeline .tl-e { padding: 11px 0 12px; scroll-margin-top: calc(var(--masthead) + 20px); }
 /* the entry you jumped to, marked until you pick another; the negative margin keeps the grid in line */
 .timeline .tl-e.is-target { background: var(--accent-soft); box-shadow: inset 2px 0 0 var(--accent); padding-left: 12px; margin-left: -12px; }
 .timeline .tl-body { line-height: 1.3; } /* the "More" button sits on this line box, so keep it tight */
 .timeline .cat { display: block; margin-bottom: 3px; }
 .timeline .tl-e h4 { font-size: 16.5px; line-height: 1.24; margin-bottom: 3px; }
 .timeline .tl-gist { font-family: var(--font-body); font-size: 15.5px; line-height: 1.45; color: var(--ink-2); margin: 0 0 5px; max-width: 76ch; }
-.timeline .tl-more {
+.timeline .tl-more, .cf-hist .tl-more {
   font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--muted); background: none; border: 0; border-bottom: 1px solid var(--line-2);
   padding: 0 0 1px; cursor: pointer;
 }
-.timeline .tl-more:hover, .timeline .tl-more:focus-visible { color: var(--ink); border-bottom-color: var(--accent); }
-.timeline .tl-panel { margin: 9px 0 2px; padding-left: 13px; border-left: 2px solid var(--line); max-width: 76ch; }
-.timeline .tl-panel p { font-size: 15px; line-height: 1.55; margin: 0 0 6px; }
-.timeline .tl-panel .src { display: inline-block; }
+.timeline .tl-more:hover, .timeline .tl-more:focus-visible,
+.cf-hist .tl-more:hover, .cf-hist .tl-more:focus-visible { color: var(--ink); border-bottom-color: var(--accent); }
+.timeline .tl-panel, .cf-hist .tl-panel { margin: 9px 0 2px; padding-left: 13px; border-left: 2px solid var(--line); max-width: 76ch; }
+.timeline .tl-panel p, .cf-hist .tl-panel p { font-size: 15px; line-height: 1.55; margin: 0 0 6px; }
+.timeline .tl-panel .src, .cf-hist .tl-panel .src { display: inline-block; }
 .timeline .tl-empty { display: block; border-top: 0; padding: 18px 0; }
 
 @keyframes tl-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-@keyframes tl-dot-in { from { opacity: 0; transform: scale(0.3); } to { opacity: 1; transform: scale(1); } }
-@keyframes tl-base-in { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 .timeline .tl-e.is-in { animation: tl-in 260ms var(--ease) backwards; }
-.tl-strip[data-anim="1"] .tl-dot { animation: tl-dot-in 200ms var(--ease) var(--d, 0ms) backwards; }
-.tl-strip[data-anim="1"] .tl-base { animation: tl-base-in 260ms var(--ease) 430ms backwards; }
 
 /* ---------- thresholds: jump nav and board ---------- */
 .th-jump { display: flex; flex-wrap: wrap; gap: 2px 18px; margin: 2px 0 16px; }
@@ -993,16 +1069,76 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 @keyframes th-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .th-board[data-in="1"] .th-card { animation: th-in 260ms var(--ease) var(--d, 0ms) backwards; }
 
-/* ---------- desktop: the strip rides the top of the reading area ---------- */
+/* ---------- thresholds: the ruler (behind ?ruler=1) ---------- */
+.th-ruler { position: relative; margin: 0 0 24px; }
+.th-rscroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.th-rsvg { display: block; }
+.th-band.amber { fill: var(--accent-soft); }
+.th-band.ink { fill: var(--bg-3); }
+.th-rline { stroke: var(--accent); stroke-width: 1; stroke-dasharray: 3 3; }
+.th-rlab { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.03em; fill: var(--accent-ink); }
+.th-raxis, .th-rtick { stroke: var(--line-2); stroke-width: 1; }
+.th-rtl { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.03em; fill: var(--muted); }
+.th-lead { fill: none; stroke: var(--line-2); stroke-width: 1; }
+.th-dot { fill: var(--ink); transition: r 150ms var(--ease); }
+.th-mlab { font-family: var(--font-mono); font-size: 10.5px; fill: var(--ink-2); }
+.th-mk { cursor: pointer; }
+.th-mk.cn .th-dot, .th-mk.cn .th-mlab { fill: var(--c6); }
+.th-mk.hi .th-dot, .th-mk.hi .th-mlab { fill: var(--accent-ink); }
+.th-mk:focus { outline: none; }
+.th-mk:hover .th-mlab, .th-mk:focus-visible .th-mlab { fill: var(--ink); font-weight: 600; }
+.th-mk:hover .th-dot { r: 6; }
+.th-mk:focus-visible .th-dot { r: 6; stroke: var(--ink); stroke-width: 1.6; }
+.th-rlegend { display: flex; flex-wrap: wrap; gap: 3px 18px; margin: 7px 0 0; font-family: var(--font-mono); font-size: 10.5px; line-height: 1.5; color: var(--muted); }
+.th-rlegend b { position: relative; font-weight: 500; padding-left: 13px; color: var(--ink-2); }
+.th-rlegend b::before { content: ""; position: absolute; left: 0; top: 50%; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; background: var(--ink); }
+.th-rlegend b.cn::before { background: var(--c6); }
+.th-rlegend b.hi::before { background: var(--accent-ink); }
+.th-rtip {
+  position: absolute; z-index: 20; max-width: 320px; padding: 7px 10px;
+  background: var(--ink); color: var(--bg); font-family: var(--font-mono); font-size: 10.5px;
+  line-height: 1.45; border-radius: 2px; pointer-events: none; box-shadow: var(--shadow);
+}
+.th-rtip[hidden] { display: none; }
+@keyframes th-mk-in { from { opacity: 0; } to { opacity: 1; } }
+.th-ruler[data-in="1"] .th-mk { animation: th-mk-in 220ms var(--ease) var(--d, 0ms) backwards; }
+
+/* ---------- desktop: the chronology reads on the left, the compact board rides the scroll ---------- */
 @media (min-width: 900px) {
-  .tl-strip {
-    position: sticky; top: var(--masthead); z-index: 6;
-    background: var(--bg); border-bottom: 1px solid var(--line);
-    padding: 6px 0 5px; margin: 0 0 4px;
+  .cf[data-mode="date"] { display: flex; align-items: flex-start; gap: 34px; }
+  .cf[data-mode="date"] .cf-chron { order: 0; flex: 1 1 auto; min-width: 0; }
+  .cf[data-mode="date"] .cf-side {
+    order: 1; flex: 0 0 38%; position: sticky; top: var(--masthead); z-index: 5;
+    max-height: calc(100vh - var(--masthead) - 14px); overflow-y: auto; padding: 12px 0 6px;
+    background: var(--bg); border-left: 1px solid var(--line); padding-left: 22px;
   }
+  /* the compact board is a read-out: name, route and the pill, nothing else */
+  .cf[data-mode="date"] .cf-what, .cf[data-mode="date"] .cf-n, .cf[data-mode="date"] .cf-caret,
+  .cf[data-mode="date"] .cf-lab, .cf[data-mode="date"] .cf-when, .cf[data-mode="date"] .cf-hist { display: none; }
+  .cf[data-mode="date"] .cf-btn { grid-template-columns: minmax(0, 1fr) auto; gap: 10px; padding: 8px 2px 8px 0; }
+  .cf[data-mode="date"] .cf-name { font-size: 15px; }
+  .cf[data-mode="date"] .cf-route { display: block; margin-left: 0; margin-top: 1px; }
+  .cf[data-mode="date"] .cf-board { margin-bottom: 6px; }
+  .cf[data-mode="date"] .cf-asof b { font-size: 18px; }
 }
 
 @media (max-width: 899px) {
+  .cf[data-mode="date"] .cf-side { display: none; } /* nothing new pinned to the top of a phone screen */
+  .cf[data-mode="date"] .cf-sum { display: block; font-family: var(--font-mono); font-size: 10.5px; line-height: 1.5; color: var(--muted); margin: 3px 0 0; }
+  .cf-top { gap: 6px 12px; }
+  .cf-modes { margin-top: 0; margin-bottom: 12px; }
+  .cf-btn { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; padding: 12px 0; }
+  .cf-name { font-size: 17.5px; }
+  .cf-route { display: block; margin-left: 0; }
+  .cf-what { font-size: 13.5px; }
+  .cf-state { grid-column: 1 / -1; grid-template-columns: auto auto minmax(0, 1fr); align-items: center; gap: 0 8px; margin-top: 5px; }
+  .cf-when { grid-column: auto; }
+  .cf-n { grid-row: 1; text-align: right; }
+  .cf-caret { display: none; }
+  .cf-ev { grid-template-columns: 66px minmax(0, 1fr); gap: 4px 12px; }
+  .cf-ev-p { grid-column: 1 / -1; }
+  .cf-ev-p:empty { display: none; }
+  .cf-asof b { font-size: 19px; }
   .tl-bar { gap: 8px 10px; }
   .tl-all { width: 100%; text-align: left; }
   .timeline .tl-year .year-label { font-size: 30px; }
@@ -1016,9 +1152,15 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
   .th-jump button { flex: 0 0 auto; white-space: nowrap; }
 }
 
+@media (max-width: 560px) {
+  .cf-yl { display: none; }
+  .cf-ys { display: inline; }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .timeline .tl-e.is-in, .tl-strip .tl-dot, .tl-strip .tl-base, .th-board .th-card { animation: none; }
-  .tl-ring { transition: none; }
+  .timeline .tl-e.is-in, .th-board .th-card, .cf-board[data-in="1"] .cf-rowh,
+  .cf-state.is-flip, .cf-row.is-changed, .th-ruler[data-in="1"] .th-mk { animation: none; }
+  .cf-hist, .cf-caret, .cf-head, .th-dot, .cf-mode, .cf-year { transition: none; }
 }
 
 
@@ -1321,77 +1463,78 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 
 
 /* module: suppliers.css */
-/* Suppliers: a dot matrix over a list that opens in place.
-   Dot area is the count; fill is severity, so amber appears only where a Critical firm sits.
-   Motion is limited to the entrance of the dots, the row stagger after a filter, and the row opening. */
+/* Suppliers: the pipeline above, the ladder below.
+   The pipeline is the chain seen from the side. Thickness is the number of firms at a stage, colour is the
+   country, and the amber squares above the stream count the Critical firms. The ladder ranks the same
+   twenty stages thinnest first and names every firm in the open.
+   Motion: one left-to-right reveal of the stream, and the firm panels opening. Nothing loops. */
 
-/* ---------- the matrix ---------- */
-.sup-map { position: relative; margin: 26px 0 8px; }
-.sup-map-h { display: block; margin: 0 0 10px; }
-.sup-map-scroll { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 2px; }
-/* when the matrix is wider than its scroller, the right edge fades to say so */
-.sup-map-scroll[data-end="0"] {
-  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 22px), transparent);
-  mask-image: linear-gradient(to right, #000 calc(100% - 22px), transparent);
-}
+/* ---------- the pipeline ---------- */
+.sup-pipe { position: relative; margin: 24px 0 6px; }
+.sup-pipe-h { display: block; margin: 0 0 8px; }
+.sup-pipe-scroll { max-width: 1180px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.sup-pipe-svg { display: block; }
 
-.sup-grid { border-collapse: separate; border-spacing: 0; table-layout: fixed; width: 630px; } /* the column widths below add up to this; on a phone the scroller carries the overflow */
-.sup-grid th, .sup-grid td { padding: 0; }
-.sup-grid thead th {
-  height: 26px; vertical-align: bottom; padding-bottom: 5px; text-align: center;
-  font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; letter-spacing: 0.05em; color: var(--muted);
-}
-.sup-grid thead th.sup-gcorner { width: 242px; }
-.sup-grid thead th[scope="col"] { width: 36px; }
-.sup-grid thead th.sup-gother { width: 52px; }
-.sup-grid thead th.sup-gall { width: 48px; color: var(--ink-2); }
+/* the stream: one band a country, in the fixed order US JP CN TW KR NL DE Other */
+.sup-band { stroke: var(--bg); stroke-width: 0.6; cursor: pointer; transition: opacity 160ms linear; }
+.sup-band.c-US { fill: var(--ink); }
+.sup-band.c-JP { fill: var(--c1); }
+.sup-band.c-CN { fill: var(--c6); }
+.sup-band.c-TW { fill: var(--c3); }
+.sup-band.c-KR { fill: var(--c5); }
+.sup-band.c-NL { fill: var(--c2); }
+.sup-band.c-DE { fill: var(--c4); }
+.sup-band.c-Other { fill: var(--c8); }
+.sup-pipe[data-filtered="1"] .sup-band { opacity: 0.15; }
+.sup-pipe[data-filtered="1"] .sup-band[data-on] { opacity: 1; }
 
-/* row labels stay put while the matrix scrolls sideways on a phone */
-.sup-grid tbody th, .sup-grid tfoot th {
-  position: sticky; left: 0; z-index: 2;
-  width: 242px; max-width: 242px; padding-right: 14px; text-align: left; overflow: hidden;
-  background: var(--bg); color: var(--ink-2);
-  font-family: var(--font-display); font-weight: 500; font-size: 13px; line-height: 1.1;
-}
-.sup-grid tfoot th { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
-.sup-grid tbody tr { height: 24px; }
-.sup-grid tfoot tr { height: 27px; }
-.sup-grid tfoot th, .sup-grid tfoot td { border-top: 1px solid var(--line); }
-.sup-td { text-align: center; }
+.sup-crit { fill: var(--accent); }                        /* one square, one Critical firm */
+.sup-hit { fill: transparent; cursor: pointer; outline: none; }
+.sup-colhi { fill: var(--ink); opacity: 0.07; pointer-events: none; }
+.sup-colhi[data-focus="1"] { opacity: 0.13; }
+.sup-lab-t { font-family: var(--font-display); fill: var(--ink-2); text-anchor: middle; }
+.sup-lab-n { font-family: var(--font-mono); font-size: 10px; fill: var(--muted); text-anchor: middle; font-variant-numeric: tabular-nums; }
+.sup-lab[data-lit="1"] .sup-lab-t { fill: var(--accent-ink); font-weight: 600; }
+.sup-lab[data-lit="1"] .sup-lab-n { fill: var(--accent-ink); }
+.sup-flow text, .sup-crit { pointer-events: none; }
 
-.sup-cell { display: flex; align-items: center; justify-content: center; width: 100%; height: 24px; border-radius: 3px; }
-.sup-cell:hover { background: var(--bg-2); }
-.sup-cell[data-on="1"] { background: var(--accent-soft); box-shadow: inset 0 0 0 1.5px var(--accent); }
-.sup-dot {
-  display: block; width: var(--s, 8px); height: var(--s, 8px); border-radius: 50%; flex: 0 0 auto;
-  animation: sup-pop 240ms var(--ease) calc(var(--i, 0) * 17ms) backwards;
-}
-.sup-dot.lv-Critical { background: var(--accent); }
-.sup-dot.lv-Important { background: var(--ink); }
-.sup-dot.lv-Contested { background: var(--muted); } /* --ink-2 sits too close to --ink in dark mode */
-.sup-dot.lv-Diversified { background: transparent; border: 1.5px solid var(--line-2); }
-.sup-nil { display: block; width: 3px; height: 3px; border-radius: 50%; background: var(--line-2); opacity: 0.5; margin: 10.5px auto; }
-@keyframes sup-pop { from { transform: scale(0.01); } }
-
-.sup-gn { font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); text-align: center; font-variant-numeric: tabular-nums; }
-.sup-grid tbody td.sup-gn, .sup-grid tfoot td.sup-gn { color: var(--ink-2); }
+/* the entrance: the stream is wiped in from the left, once, on the first draw */
+.sup-wipe { transform-box: view-box; transform-origin: 0 0; }
+.sup-wipe.is-new { animation: sup-wipe 620ms var(--ease) both; }
+@keyframes sup-wipe { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 .sup-legend {
-  margin: 10px 0 0; max-width: 1180px;
-  font-family: var(--font-mono); font-size: 10.5px; line-height: 1.9; letter-spacing: 0.03em; color: var(--muted);
+  margin: 9px 0 0; max-width: 1180px;
+  font-family: var(--font-mono); font-size: 10.5px; line-height: 1.95; letter-spacing: 0.03em; color: var(--muted);
 }
-.sup-legend .sup-lg { display: inline-flex; align-items: center; gap: 5px; margin: 0 11px 0 0; white-space: nowrap; }
-.sup-legend .sup-lg-note { margin-left: 5px; }
-.sup-legend .sup-dot { animation: none; }
+.sup-lg { display: inline-flex; align-items: center; gap: 5px; margin: 0 11px 0 0; white-space: nowrap; }
+.sup-sw { display: block; width: 9px; height: 9px; border-radius: 2px; flex: 0 0 auto; }
+.sup-sw.c-US { background: var(--ink); }
+.sup-sw.c-JP { background: var(--c1); }
+.sup-sw.c-CN { background: var(--c6); }
+.sup-sw.c-TW { background: var(--c3); }
+.sup-sw.c-KR { background: var(--c5); }
+.sup-sw.c-NL { background: var(--c2); }
+.sup-sw.c-DE { background: var(--c4); }
+.sup-sw.c-Other { background: var(--c8); }
+.sup-crit-sw { display: block; width: 7px; height: 7px; background: var(--accent); flex: 0 0 auto; }
+.sup-lg-note { white-space: nowrap; }
 
 .sup-tip {
-  position: absolute; z-index: 30; min-width: 152px; max-width: 268px; padding: 8px 10px 9px;
+  position: absolute; z-index: 30; min-width: 180px; max-width: 340px; padding: 9px 11px 10px;
   background: var(--bg-2); border: 1px solid var(--line-2); border-radius: 3px; box-shadow: var(--shadow); pointer-events: none;
 }
 .sup-tip[hidden] { display: none; }
-.sup-tip b { display: block; margin-bottom: 5px; font-family: var(--font-mono); font-weight: 500; font-size: 9.5px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); }
-.sup-tip span { display: block; font-family: var(--font-display); font-size: 13px; line-height: 1.35; color: var(--ink); }
-.sup-tip .sup-tip-more { margin-top: 3px; font-family: var(--font-mono); font-size: 10px; color: var(--muted); }
+.sup-tip b { display: block; font-family: var(--font-display); font-weight: 700; font-size: 14px; line-height: 1.2; color: var(--ink); }
+.sup-tip .sup-tip-n { display: block; margin: 2px 0 7px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.sup-tip .sup-tip-co { display: flex; flex-wrap: wrap; gap: 3px 10px; }
+.sup-tip-c { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; color: var(--muted); }
+.sup-tip-c b { display: inline; font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; color: var(--ink-2); }
+.sup-tip .sup-tip-crit {
+  display: block; margin-top: 8px; padding-top: 7px; border-top: 1px solid var(--line);
+  font-family: var(--font-display); font-size: 12.5px; line-height: 1.35; color: var(--accent-ink);
+}
+.sup-tip .sup-tip-crit .sup-crit-sw { display: inline-block; margin-right: 5px; vertical-align: 1px; }
 
 /* ---------- toolbar ---------- */
 .sup-toolbar { justify-content: flex-start; scroll-margin-top: calc(var(--masthead) + 14px); }
@@ -1401,46 +1544,52 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 .sup-mode + .sup-mode { border-left: 1px solid var(--line-2); }
 .sup-mode[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
 
-/* ---------- the compact list ---------- */
-.sup-list { border-top: 1px solid var(--line-2); margin-bottom: 40px; }
-.sup-list[hidden], .sup-wrap[hidden] { display: none; }
+/* ---------- the ladder ---------- */
+.sup-ladder-h { display: block; margin: 16px 0 0; }
+.sup-ladder { border-top: 1px solid var(--line-2); margin: 8px 0 40px; }
+.sup-ladder[hidden], .sup-ladder-h[hidden], .sup-wrap[hidden] { display: none; }
 
-.sup-hrow, .sup-head {
-  display: grid; grid-template-columns: minmax(148px, 1.2fr) minmax(0, 1.9fr) minmax(112px, 1fr) 56px 104px 20px;
-  gap: 0 16px; align-items: baseline; width: 100%; text-align: left;
+.sup-rung {
+  display: grid; grid-template-columns: 74px minmax(0, 1fr); column-gap: 18px;
+  padding: 14px 12px 16px; border-bottom: 1px solid var(--line);
+  scroll-margin-top: calc(var(--masthead) + 14px);
 }
-.sup-hrow { padding: 7px 10px 7px 12px; background: var(--bg-2); border-bottom: 1px solid var(--line-2); }
-.sup-hrow > * { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); text-align: left; }
-.sup-hrow .sup-hlab { display: none; }
-.sup-hrow button:hover { color: var(--ink); }
-.sup-hrow button[aria-sort="ascending"]::after { content: " \25B2"; color: var(--accent-ink); }
-.sup-hrow button[aria-sort="descending"]::after { content: " \25BC"; color: var(--accent-ink); }
-
-.sup-row { border-bottom: 1px solid var(--line); animation: sup-fade 200ms var(--ease) calc(var(--i, 0) * 10ms) backwards; }
-@keyframes sup-fade { from { opacity: 0; transform: translateY(3px); } }
-.sup-head { padding: 8px 10px 9px 12px; }
-.sup-head:hover { background: var(--bg-2); }
-.sup-head > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.sup-head .c1 b { font-family: var(--font-display); font-weight: 650; font-size: 15px; }
-.sup-head .c1 em { font-style: normal; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.03em; color: var(--muted); margin-left: 6px; }
-.sup-head .c2 { font-size: 13.5px; color: var(--ink-2); }
-.sup-head .c3 { font-size: 13px; color: var(--muted); }
-.sup-head .c3 i { font-style: normal; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; color: var(--ink-2); }
-.sup-head .c4 { font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.sup-head .c6 { align-self: center; justify-self: end; }
-.sup-chev {
-  display: block; width: 7px; height: 7px; margin-bottom: 2px;
-  border-right: 1.5px solid var(--muted); border-bottom: 1.5px solid var(--muted);
-  transform: rotate(-45deg); transition: transform 200ms var(--ease);
+.sup-rung[data-lit="1"] { background: var(--bg-2); box-shadow: inset 3px 0 0 var(--accent); }
+.sup-rank {
+  grid-column: 1; grid-row: 1 / span 3; justify-self: end; padding-top: 2px;
+  font-family: var(--font-display); font-weight: 800; font-size: 46px; line-height: 0.84;
+  color: var(--bg-3); font-variant-numeric: tabular-nums; letter-spacing: -0.02em;
 }
-.sup-row[data-open="1"] .sup-chev { transform: rotate(45deg); }
-.sup-row[data-open="1"] { background: var(--bg-2); }
+.sup-rung[data-lit="1"] .sup-rank { color: var(--accent); opacity: 0.34; }
+.sup-rung-head { grid-column: 2; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; margin-bottom: 5px; }
+.sup-rung-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 17px; line-height: 1.15; color: var(--ink); }
+.sup-rung-n { margin: 0; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-variant-numeric: tabular-nums; }
 
-.sup-detail { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 220ms var(--ease); }
-.sup-row[data-open="1"] .sup-detail { grid-template-rows: 1fr; }
-.sup-detail-in { min-height: 0; overflow: hidden; visibility: hidden; transition: visibility 0s linear 220ms; }
-.sup-row[data-open="1"] .sup-detail-in { visibility: visible; transition-delay: 0s; }
-.sup-detail-body { padding: 0 12px 16px; }
+.sup-names { grid-column: 2; margin: 0; line-height: 1.7; }
+.sup-nw { display: inline; }
+.sup-nw[hidden] { display: none; }
+.sup-nw::after { content: ","; color: var(--muted); margin-right: 4px; }
+.sup-nw.is-last::after { content: ""; margin-right: 0; }
+.sup-name { font-family: var(--font-display); font-weight: 500; font-size: 14px; line-height: 1.3; color: var(--ink); padding: 1px 2px; margin: 0 -2px; border-radius: 2px; }
+.sup-name.lv-Critical { color: var(--accent-ink); font-weight: 700; }
+.sup-name.lv-Diversified { color: var(--muted); }
+.sup-name:hover { background: var(--bg-3); }
+.sup-name[aria-expanded="true"] { background: var(--accent-soft); box-shadow: inset 0 -1.5px 0 var(--accent); }
+.sup-cc { font-style: normal; font-family: var(--font-mono); font-weight: 400; font-size: 9.5px; letter-spacing: 0.05em; color: var(--muted); margin-left: 4px; }
+
+.sup-rung[data-empty="1"] .sup-names, .sup-rung[data-empty="1"] .sup-panel { display: none; }
+.sup-rung[data-empty="1"] { padding-bottom: 12px; }
+.sup-rung[data-empty="1"] .sup-rung-name { color: var(--muted); font-weight: 500; }
+.sup-rung[data-empty="1"] .sup-rank { color: var(--bg-2); }
+
+/* ---------- the firm panel under a rung ---------- */
+.sup-panel { grid-column: 2; display: grid; grid-template-rows: 0fr; transition: grid-template-rows 220ms var(--ease); }
+.sup-panel[data-open="1"] { grid-template-rows: 1fr; }
+.sup-panel-in { min-height: 0; overflow: hidden; visibility: hidden; transition: visibility 0s linear 220ms; }
+.sup-panel[data-open="1"] .sup-panel-in { visibility: visible; transition-delay: 0s; }
+.sup-detail-body { padding: 12px 0 4px; margin-top: 6px; border-top: 1px solid var(--line); }
+.sup-detail-h { margin: 0 0 8px; font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--ink); }
+.sup-detail-h em { font-style: normal; font-family: var(--font-mono); font-weight: 400; font-size: 10px; letter-spacing: 0.05em; color: var(--muted); margin-left: 7px; }
 .sup-role { margin: 0 0 11px; max-width: 62ch; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
 .sup-facts { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 4px 14px; margin: 0; max-width: 82ch; }
 .sup-facts dt { padding-top: 3px; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); }
@@ -1448,52 +1597,27 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 .sup-src { display: inline-block; margin-top: 11px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
 .sup-src:hover { color: var(--accent-ink); }
 
-/* the category picker is chips on a desktop and a select on a phone */
-.sup-catsel { display: none; }
-
 @media (max-width: 699px) {
-  .sup-catsel { display: block; }
-  #sup-chips { display: none; }
   .view[data-view="suppliers"] .filters { gap: 8px; }
   .view[data-view="suppliers"] .filters > * { flex: 1 1 100%; min-width: 0; }
-
-  .sup-grid { width: 418px; }
-  .sup-grid thead th.sup-gcorner { width: 118px; }
-  .sup-grid tbody th, .sup-grid tfoot th { width: 118px; max-width: 118px; padding-right: 8px; font-size: 10px; line-height: 1.05; white-space: normal; }
-  .sup-grid thead th[scope="col"] { width: 28px; font-size: 9.5px; letter-spacing: 0.01em; }
-  .sup-grid thead th.sup-gother { width: 42px; }
-  .sup-grid thead th.sup-gall { width: 34px; }
-  .sup-grid tbody tr { height: 25px; }
-  .sup-cell { height: 25px; }
-  .sup-gn { width: 34px; font-size: 9.5px; }
-  .sup-nil { margin: 11px auto; }
-  .sup-legend { line-height: 1.75; }
-
   .sup-toolbar .count { flex: 1 1 100%; margin-right: 0; }
-  .sup-hrow { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; padding: 8px 2px; }
-  .sup-hrow .sup-hlab { display: inline; }
-  .sup-hrow .c2, .sup-hrow .c6 { display: none; }
+  .sup-pipe-scroll { padding-bottom: 2px; }
+  .sup-legend { line-height: 1.85; }
+  .sup-tip { max-width: 290px; }
 
-  .sup-head {
-    grid-template-columns: minmax(0, 1fr) auto 14px;
-    grid-template-areas: "n lv ch" "w w ch" "m m ch";
-    gap: 2px 10px; align-items: start; padding: 9px 2px 10px;
-  }
-  .sup-head .c1 { grid-area: n; }
-  .sup-head .c1 b { font-size: 14.5px; }
-  .sup-head .c5 { grid-area: lv; align-self: center; }
-  .sup-head .c2 { grid-area: w; white-space: normal; font-size: 12.5px; line-height: 1.35; }
-  .sup-head .c3 { grid-area: m; font-size: 12px; }
-  .sup-head .c4 { display: none; }
-  .sup-head .c6 { grid-area: ch; align-self: center; }
-  .sup-detail-body { padding: 0 2px 14px; }
+  .sup-rung { grid-template-columns: 40px minmax(0, 1fr); column-gap: 10px; padding: 13px 10px 15px; }
+  .sup-rank { grid-row: 1; justify-self: start; padding-top: 1px; font-size: 28px; line-height: 1; }
+  .sup-rung-head { grid-column: 2; grid-row: 1; margin-bottom: 0; }
+  .sup-rung-name { font-size: 15.5px; }
+  .sup-names { grid-column: 1 / -1; grid-row: 2; margin-top: 7px; }
+  .sup-panel { grid-column: 1 / -1; grid-row: 3; }
   .sup-facts { grid-template-columns: 1fr; gap: 1px; }
   .sup-facts dd { margin-bottom: 7px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sup-dot, .sup-row { animation: none; }
-  .sup-detail, .sup-detail-in, .sup-chev { transition: none; }
+  .sup-wipe.is-new { animation: none; }
+  .sup-panel, .sup-panel-in, .sup-band { transition: none; }
 }
 
 
@@ -2826,28 +2950,27 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
         <h2>Suppliers</h2>
         <p class="dek">220 firms: what each one makes, where it sits, and how hard it would be to replace.</p>
       </div>
-      <section class="sup-map" id="sup-map" aria-labelledby="sup-map-h">
-        <h3 class="label sup-map-h" id="sup-map-h">Where the suppliers sit</h3>
-        <div class="sup-map-scroll" id="sup-map-scroll"></div>
+      <section class="sup-pipe" id="sup-pipe" aria-labelledby="sup-pipe-h">
+        <h3 class="label sup-pipe-h" id="sup-pipe-h">The chain, stage by stage</h3>
+        <div class="sup-pipe-scroll" id="sup-pipe-scroll"></div>
         <p class="sup-legend" id="sup-legend"></p>
         <div class="sup-tip" id="sup-tip" role="tooltip" hidden></div>
       </section>
       <div class="filters">
         <input id="sup-search" type="search" placeholder="Search suppliers, cities, tickers…" aria-label="Search suppliers">
-        <select id="sup-cat" class="sup-catsel" aria-label="Filter by category"><option value="">All categories</option></select>
         <select id="sup-country" aria-label="Filter by country"><option value="">All countries</option></select>
         <select id="sup-chk" aria-label="Filter by chokepoint level"><option value="">All chokepoint levels</option><option>Critical</option><option>Important</option><option>Contested</option><option>Diversified</option></select>
       </div>
-      <div id="sup-chips" class="chips" role="group" aria-label="Filter by category"></div>
       <div class="sup-toolbar" id="sup-toolbar">
         <span class="count" id="sup-count"></span>
-        <div class="sup-modes" role="group" aria-label="How much of each row to show">
-          <button type="button" class="sup-mode" data-mode="compact" aria-pressed="true">Compact</button>
-          <button type="button" class="sup-mode" data-mode="detailed" aria-pressed="false">Detailed</button>
+        <div class="sup-modes" role="group" aria-label="How to show the firms">
+          <button type="button" class="sup-mode" data-mode="ladder" aria-pressed="true">Ladder</button>
+          <button type="button" class="sup-mode" data-mode="table" aria-pressed="false">Table</button>
         </div>
         <button class="btn ghost" id="sup-copy" type="button">Copy as CSV</button>
       </div>
-      <div class="sup-list" id="sup-list"></div>
+      <h3 class="label sup-ladder-h" id="sup-ladder-h">Stages, thinnest first</h3>
+      <div class="sup-ladder" id="sup-ladder" aria-labelledby="sup-ladder-h"></div>
       <div class="sup-wrap" id="sup-wrap" hidden><table class="sup" id="sup-table"></table></div>
     </section>
 
@@ -7971,126 +8094,263 @@ PC.register('wafer', function (p) {
   };
   Landscape.initSelection();
 
-  /* ---------------- suppliers ---------------- */
+  /* ---------------- suppliers ----------------
+     Two drawings of one list. The pipeline is the chain seen from the side: the stream's thickness at a stage
+     is the number of firms there, the colour bands are countries in a fixed order, and the amber squares above
+     the stream count the Critical firms. The ladder is the same twenty stages ranked thinnest first, every firm
+     named in the open, each name opening its own panel. */
   var Suppliers = {
-    rows: DATA.suppliers || [], built: false, cat: null, country: '', chk: '', q: '', sortKey: 'name', sortDir: 1,
-    mode: 'compact', shown: [], cells: {},
-    MAIN: ['US', 'JP', 'CN', 'TW', 'KR', 'DE', 'NL', 'GB'], // the eight columns of the matrix; everything else falls into Other
+    rows: DATA.suppliers || [], built: false, country: '', chk: '', q: '', sortKey: 'name', sortDir: 1,
+    mode: 'ladder', stages: [], at: 0, tipAt: -1, drawW: 0, wiped: false,
+    CO: ['US', 'JP', 'CN', 'TW', 'KR', 'NL', 'DE'], // the band order down the stack; every other country stacks last
     LEVELS: ['Critical', 'Important', 'Contested', 'Diversified'],
     RANK: { Critical: 0, Important: 1, Contested: 2, Diversified: 3 },
     ORDER: ['Design & EDA', 'IP & Architecture', 'Silicon & Wafers', 'Photomasks', 'Lithography', 'Deposition & Etch', 'Photoresist & Materials', 'Chemicals & Gases', 'Optics & Photonics', 'Equipment Subsystems & Components', 'Metrology & Inspection', 'Foundry', 'Memory', 'Advanced Packaging & OSAT', 'Test', 'Substrates & PCBs', 'Interconnect & Networking', 'Power & Cooling', 'Systems & Servers', 'AI Accelerator Vendor'], // chain order, design first
-    activate: function () { if (!this.built) this.build(); },
+    /* the long category names would collide under a 59 px column, so the drawing uses these */
+    SHORT: {
+      'Equipment Subsystems & Components': 'Equipment subsystems', 'Advanced Packaging & OSAT': 'Advanced packaging',
+      'Interconnect & Networking': 'Interconnect', 'AI Accelerator Vendor': 'Accelerator vendors',
+      'Photoresist & Materials': 'Photoresist', 'Metrology & Inspection': 'Metrology',
+      'Deposition & Etch': 'Deposition & etch', 'Chemicals & Gases': 'Chemicals & gases',
+      'Systems & Servers': 'Systems & servers', 'Power & Cooling': 'Power & cooling',
+      'Silicon & Wafers': 'Silicon wafers', 'IP & Architecture': 'IP & architecture'
+    },
+    activate: function () { if (!this.built) this.build(); else this.fitPipe(); },
 
     build: function () {
       this.built = true;
-      var self = this, cats = {}, countries = {};
-      try { var saved = localStorage.getItem('cp-sup-mode'); if (saved === 'compact' || saved === 'detailed') this.mode = saved; } catch (e) { }
-      this.rows.forEach(function (r) { cats[r.category] = (cats[r.category] || 0) + 1; countries[r.country] = (countries[r.country] || 0) + 1; });
-      var order = this.ORDER.filter(function (c) { return cats[c]; }); // a category the data adds later lands at the end
-      Object.keys(cats).sort().forEach(function (c) { if (order.indexOf(c) < 0) order.push(c); });
-      this.order = order;
-
-      var chips = $('#sup-chips');
-      chips.innerHTML = order.map(function (c) { return '<button type="button" data-cat="' + esc(c) + '" aria-pressed="false">' + esc(c) + '<b>' + cats[c] + '</b></button>'; }).join('');
-      chips.addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; var c = b.getAttribute('data-cat'); self.setFilters(self.cat === c ? null : c, self.country, false); });
-      var csel = $('#sup-cat'); // phones get a select instead of twenty chips
-      order.forEach(function (c) { var o = document.createElement('option'); o.value = c; o.textContent = c + ' (' + cats[c] + ')'; csel.appendChild(o); });
-      csel.addEventListener('change', function () { self.setFilters(csel.value || null, self.country, false); });
+      var self = this, countries = {};
+      try { var saved = localStorage.getItem('cp-sup-mode'); if (saved === 'table' || saved === 'detailed') this.mode = 'table'; } catch (e) { }
+      this.groupStages();
 
       var sel = $('#sup-country'), other = 0;
-      Object.keys(countries).forEach(function (c) { if (self.MAIN.indexOf(c) < 0) other += countries[c]; });
+      this.rows.forEach(function (r) { countries[r.country] = (countries[r.country] || 0) + 1; });
+      Object.keys(countries).forEach(function (c) { if (self.CO.indexOf(c) < 0) other += countries[c]; });
       Object.keys(countries).sort(function (a, b) { return countries[b] - countries[a]; }).forEach(function (c) { var o = document.createElement('option'); o.value = c; o.textContent = cname(c) + ' (' + countries[c] + ')'; sel.appendChild(o); });
       if (other) { var oo = document.createElement('option'); oo.value = '__other'; oo.textContent = 'Every other country (' + other + ')'; sel.appendChild(oo); }
-      sel.addEventListener('change', function () { self.setFilters(self.cat, sel.value, false); });
+      sel.addEventListener('change', function () { self.setCountry(sel.value, false); });
 
       $('#sup-chk').addEventListener('change', function (e) { self.chk = e.target.value; self.render(); });
       var supTimer; $('#sup-search').addEventListener('input', function (e) { var v = e.target.value; clearTimeout(supTimer); supTimer = setTimeout(function () { self.q = v.trim().toLowerCase(); self.render(); }, 120); });
       $('#sup-copy').addEventListener('click', function () { self.copy(); });
       $('#sup-table').addEventListener('click', function (e) { var b = e.target.closest('button[data-sort]'); if (b) self.sortBy(b.getAttribute('data-sort')); });
-      $('#sup-list').addEventListener('click', function (e) {
-        var s = e.target.closest('button[data-sort]'); if (s) { self.sortBy(s.getAttribute('data-sort')); return; }
-        var h = e.target.closest('.sup-head'); if (h) self.toggleRow(h);
-      });
+      $('#sup-ladder').addEventListener('click', function (e) { var b = e.target.closest('.sup-name'); if (b) self.openName(b); });
       $$('.sup-mode').forEach(function (b) { b.addEventListener('click', function () { self.setMode(b.getAttribute('data-mode')); }); });
 
-      this.buildMap();
+      this.buildLadder();
+      this.legend();
+      this.drawPipe();
+      var host = $('#sup-pipe-scroll');
+      host.addEventListener('scroll', function () { self.hideTip(); });
+      var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { self.fitPipe(); }, 160); });
       this.sync();
       this.render();
     },
 
-    /* ---- the dot matrix: stages down, countries across ---- */
-    buildMap: function () {
-      var self = this, host = $('#sup-map-scroll'); if (!host) return;
-      var cols = this.MAIN.concat(['Other']), cells = {}, rowTot = {}, colTot = {}, max = 0;
-      this.rows.forEach(function (r) {
-        var c = self.MAIN.indexOf(r.country) >= 0 ? r.country : 'Other', k = r.category + '|' + c;
-        var e = cells[k] || (cells[k] = { n: 0, lv: 3, names: [] });
-        e.n++; e.names.push(r.name);
-        var rk = self.RANK[r.chokepoint]; if (rk != null && rk < e.lv) e.lv = rk;
-        rowTot[r.category] = (rowTot[r.category] || 0) + 1; colTot[c] = (colTot[c] || 0) + 1;
-        if (e.n > max) max = e.n;
+    /* every stage carries its firms, its count by country and its Critical names; the drawing reads only this */
+    groupStages: function () {
+      var self = this, by = {};
+      this.rows.forEach(function (r, i) {
+        r._ix = i; // where the row sits in the dataset, so a name button can find it again
+        var s = by[r.category] || (by[r.category] = { name: r.category, rows: [], crit: [], by: {}, n: 0 });
+        s.rows.push(r); s.n++;
+        var c = self.CO.indexOf(r.country) >= 0 ? r.country : 'Other';
+        s.by[c] = (s.by[c] || 0) + 1;
+        if (r.chokepoint === 'Critical') s.crit.push(r.name);
       });
-      this.cells = cells;
-      var dia = function (n) { return Math.max(5, Math.round(20 * Math.sqrt(n / max) * 10) / 10); }; // area, not width, carries the count
-      var label = function (c) { return c === 'Other' ? 'every other country' : cname(c); };
+      var order = this.ORDER.filter(function (c) { return by[c]; }); // a category the data adds later lands at the end
+      Object.keys(by).sort().forEach(function (c) { if (order.indexOf(c) < 0) order.push(c); });
+      this.stages = order.map(function (c, i) { var s = by[c]; s.i = i; s.short = self.SHORT[c] || c; s.id = 'sup-rung-' + i; return s; });
+    },
+    coName: function (c) { return c === 'Other' ? 'Every other country' : cname(c); },
 
-      var h = '<table class="sup-grid"><thead><tr><th class="sup-gcorner"><span class="sr-only">Stage</span></th>';
-      cols.forEach(function (c) { h += '<th scope="col"' + (c === 'Other' ? ' class="sup-gother"' : '') + ' title="' + esc(label(c)) + '">' + esc(c) + '</th>'; });
-      h += '<th scope="col" class="sup-gall" title="All countries">All</th></tr></thead><tbody>';
-      this.order.forEach(function (cat, i) {
-        h += '<tr style="--i:' + i + '"><th scope="row" title="' + esc(cat) + '">' + esc(cat) + '</th>';
-        cols.forEach(function (c) {
-          var e = cells[cat + '|' + c];
-          if (!e) { h += '<td class="sup-td"><span class="sup-nil" aria-hidden="true"></span></td>'; return; }
-          var lv = self.LEVELS[e.lv];
-          h += '<td class="sup-td"><button type="button" class="sup-cell" data-cat="' + esc(cat) + '" data-cc="' + esc(c) + '" aria-label="' + esc(cat + ', ' + label(c) + ': ' + e.n + ' supplier' + (e.n === 1 ? '' : 's') + ', most severe ' + lv) + '"><i class="sup-dot lv-' + lv + '" style="--s:' + dia(e.n) + 'px"></i></button></td>';
+    /* ---- the pipeline: the chain drawn as a pipe that narrows where the firms run out ---- */
+    fitPipe: function () {
+      var host = $('#sup-pipe-scroll'); if (!host) return;
+      if (Math.max(820, Math.round(host.clientWidth) || 820) !== this.drawW) this.drawPipe();
+    },
+    drawPipe: function () {
+      var self = this, host = $('#sup-pipe-scroll'); if (!host) return;
+      var st = this.stages, n = st.length; if (!n) return;
+      var W = Math.max(820, Math.round(host.clientWidth) || 820), tight = W < 1000;
+      this.drawW = W;
+      var padX = tight ? 24 : 34, step = (W - padX * 2) / (n - 1);
+      var x = function (i) { return padX + i * step; };
+      var maxN = 0, maxC = 0;
+      st.forEach(function (s) { if (s.n > maxN) maxN = s.n; if (s.crit.length > maxC) maxC = s.crit.length; });
+      var CS = tight ? 4.5 : 5, CG = 2, critRows = Math.ceil(maxC / 3);
+      var critBase = 6 + critRows * (CS + CG) - CG;                      // the squares are bottom-aligned on this line
+      var top = critBase + 13, streamH = tight ? 132 : 168;
+      var cy = top + streamH / 2, k = streamH / maxN;                    // px a firm: the whole scale of the drawing
+      var fs = tight ? 10 : 10.5, lh = fs + 1.5, labY = top + streamH + 16;
+      var countY = labY + lh * 2 + 3, H = Math.round(countY + 9);
+      var cols = this.CO.concat(['Other']);
+
+      var tops = {}, bots = {};
+      cols.forEach(function (c) { tops[c] = []; bots[c] = []; });
+      st.forEach(function (s) {                                          // a centred baseline, so the pipe is a silhouette
+        var y = cy - k * s.n / 2;
+        cols.forEach(function (c) { var v = k * (s.by[c] || 0); tops[c].push(y); bots[c].push(y + v); y += v; });
+      });
+
+      // cubic with flat tangents at both ends: smooth, and it never overshoots, so bands cannot cross
+      var seg = function (pts, cont) {
+        var d = (cont ? 'L' : 'M') + pts[0][0].toFixed(1) + ' ' + pts[0][1].toFixed(2), i, ax, ay, bx, by, h;
+        for (i = 1; i < pts.length; i++) {
+          ax = pts[i - 1][0]; ay = pts[i - 1][1]; bx = pts[i][0]; by = pts[i][1]; h = (bx - ax) / 2;
+          d += 'C' + (ax + h).toFixed(1) + ' ' + ay.toFixed(2) + ' ' + (bx - h).toFixed(1) + ' ' + by.toFixed(2) + ' ' + bx.toFixed(1) + ' ' + by.toFixed(2);
+        }
+        return d;
+      };
+
+      var bands = '';
+      cols.forEach(function (c) {
+        var tp = [], bt = [], i;
+        for (i = 0; i < n; i++) { tp.push([x(i), tops[c][i]]); bt.push([x(i), bots[c][i]]); }
+        bt.reverse();
+        bands += '<path class="sup-band c-' + c + '" data-c="' + c + '" d="' + seg(tp) + seg(bt, true) + 'Z"></path>';
+      });
+
+      var sq = '';
+      st.forEach(function (s, i) {                                       // one amber square a Critical firm, rows of three
+        var m = s.crit.length; if (!m) return;
+        var rows = Math.ceil(m / 3), first = m - (rows - 1) * 3, j, row, col, inRow, rw, rx, ry;
+        for (j = 0; j < m; j++) {
+          row = j < first ? 0 : 1 + Math.floor((j - first) / 3);
+          col = j < first ? j : (j - first) % 3;
+          inRow = row === 0 ? first : 3;
+          rw = inRow * CS + (inRow - 1) * CG;
+          rx = x(i) - rw / 2 + col * (CS + CG);
+          ry = critBase - CS - (rows - 1 - row) * (CS + CG);
+          sq += '<rect class="sup-crit" x="' + rx.toFixed(1) + '" y="' + ry.toFixed(1) + '" width="' + CS + '" height="' + CS + '"></rect>';
+        }
+      });
+
+      var maxLab = step - 4, labs = '';
+      st.forEach(function (s, i) {
+        labs += '<g class="sup-lab" data-i="' + i + '">';
+        self.wrapLabel(s.short, Math.max(6, Math.floor(maxLab / (fs * 0.47)))).forEach(function (t, j) {
+          labs += '<text class="sup-lab-t" x="' + x(i).toFixed(1) + '" y="' + (labY + j * lh).toFixed(1) + '">' + esc(t) + '</text>';
         });
-        h += '<td class="sup-gn">' + (rowTot[cat] || 0) + '</td></tr>';
+        labs += '<text class="sup-lab-n" x="' + x(i).toFixed(1) + '" y="' + countY.toFixed(1) + '">' + s.n + '</text></g>';
       });
-      h += '</tbody><tfoot><tr><th scope="row">All</th>';
-      cols.forEach(function (c) { h += '<td class="sup-gn">' + (colTot[c] || 0) + '</td>'; });
-      h += '<td class="sup-gn">' + this.rows.length + '</td></tr></tfoot></table>';
-      host.innerHTML = h;
 
-      var sw = function (lv) { return '<span class="sup-lg"><i class="sup-dot lv-' + lv + '" style="--s:9px"></i>' + lv + '</span>'; };
-      $('#sup-legend').innerHTML = 'Bigger dot, more firms. Fill is the most severe level in the cell: ' +
-        sw('Critical') + sw('Important') + sw('Contested') + sw('Diversified') +
-        '<span class="sup-lg-note">· Click a dot to filter the list, and again to clear.</span>';
+      var hits = '';
+      st.forEach(function (s, i) {
+        var l = i === 0 ? 0 : x(i) - step / 2, r = i === n - 1 ? W : x(i) + step / 2;
+        hits += '<rect class="sup-hit" data-i="' + i + '" x="' + l.toFixed(1) + '" y="0" width="' + (r - l).toFixed(1) + '" height="' + H +
+          '" role="button" tabindex="' + (i === self.at ? '0' : '-1') + '" aria-label="' + esc(s.name + ': ' + s.n + ' firms, ' + s.crit.length + ' critical. Show this stage in the list.') + '"></rect>';
+      });
 
-      host.addEventListener('click', function (e) { var b = e.target.closest('.sup-cell'); if (b) self.pickCell(b); });
-      host.addEventListener('mouseover', function (e) { var b = e.target.closest('.sup-cell'); if (b) self.showTip(b); });
-      host.addEventListener('mouseout', function (e) { var b = e.target.closest('.sup-cell'); if (b && !b.contains(e.relatedTarget)) self.hideTip(); });
-      host.addEventListener('focusin', function (e) { var b = e.target.closest('.sup-cell'); if (b) self.showTip(b); });
-      host.addEventListener('focusout', function () { self.hideTip(); });
-      var edge = function () { host.setAttribute('data-end', host.scrollLeft + host.clientWidth >= host.scrollWidth - 2 ? '1' : '0'); }; // a faded right edge says the matrix keeps going
-      host.addEventListener('scroll', function () { self.hideTip(); edge(); });
-      window.addEventListener('resize', edge);
-      edge();
+      host.innerHTML = '<svg class="sup-pipe-svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" role="group" aria-label="The twenty stages of the chain, drawn as a stream whose thickness is the number of firms">' +
+        '<defs><clipPath id="sup-wipe-clip"><rect class="sup-wipe' + (this.wiped ? '' : ' is-new') + '" x="0" y="0" width="' + W + '" height="' + H + '"></rect></clipPath></defs>' +
+        '<g class="sup-hits">' + hits + '</g>' +
+        '<g class="sup-flow" clip-path="url(#sup-wipe-clip)">' + bands + sq + '<g class="sup-labels" font-size="' + fs + '">' + labs + '</g></g>' +
+        '<rect class="sup-colhi" x="0" y="0" width="0" height="' + H + '" hidden></rect></svg>';
+      this.wiped = true;
+
+      // a long word would run into its neighbour, so squeeze any line that does not fit its column
+      $$('.sup-lab-t', host).forEach(function (t) {
+        var w = 0; try { w = t.getComputedTextLength(); } catch (e) { }
+        if (w > maxLab) { t.setAttribute('textLength', maxLab.toFixed(1)); t.setAttribute('lengthAdjust', 'spacingAndGlyphs'); }
+      });
+
+      var svg = $('.sup-pipe-svg', host);
+      var stageAt = function (e) {
+        var r = svg.getBoundingClientRect();
+        var px = (e.clientX - r.left) * (W / (r.width || W));
+        return Math.max(0, Math.min(n - 1, Math.round((px - padX) / step)));
+      };
+      svg.addEventListener('mousemove', function (e) { self.showTip(stageAt(e)); });
+      svg.addEventListener('mouseleave', function () { self.hideTip(); });
+      svg.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('.sup-band') : null;
+        if (b) { var c = b.getAttribute('data-c'); self.setCountry(c === 'Other' ? '__other' : c, true); return; }
+        var h = e.target.closest ? e.target.closest('.sup-hit') : null;
+        if (h) self.goStage(+h.getAttribute('data-i'));
+      });
+      svg.addEventListener('focusin', function (e) {
+        var h = e.target.closest ? e.target.closest('.sup-hit') : null; if (!h) return;
+        self.at = +h.getAttribute('data-i'); self.roving(); self.showTip(self.at, true);
+      });
+      svg.addEventListener('focusout', function () { self.hideTip(); });
+      svg.addEventListener('keydown', function (e) {
+        var h = e.target.closest ? e.target.closest('.sup-hit') : null; if (!h) return;
+        var i = +h.getAttribute('data-i'), key = e.key, j = -1;
+        if (key === 'ArrowRight' || key === 'ArrowDown') j = Math.min(n - 1, i + 1);
+        else if (key === 'ArrowLeft' || key === 'ArrowUp') j = Math.max(0, i - 1);
+        else if (key === 'Home') j = 0;
+        else if (key === 'End') j = n - 1;
+        else if (key === 'Enter' || key === ' ') { e.preventDefault(); self.goStage(i); return; }
+        if (j < 0) return;
+        e.preventDefault(); self.at = j; self.roving();
+        var t = $('.sup-hit[data-i="' + j + '"]', svg); if (!t) return;
+        var xl = x(j);                                                   // keep the focused stage inside the scroller
+        if (xl - host.scrollLeft < 70) host.scrollLeft = Math.max(0, xl - 70);
+        else if (xl - host.scrollLeft > host.clientWidth - 70) host.scrollLeft = xl - host.clientWidth + 70;
+        t.focus();
+      });
+      this.sync();
     },
-    showTip: function (btn) {
-      var e = this.cells[btn.getAttribute('data-cat') + '|' + btn.getAttribute('data-cc')], el = $('#sup-tip'), map = $('#sup-map');
-      if (!e || !el || !map) return;
-      var cc = btn.getAttribute('data-cc');
-      el.innerHTML = '<b>' + esc(btn.getAttribute('data-cat')) + ' · ' + esc(cc === 'Other' ? 'Other countries' : cname(cc)) + '</b>' +
-        e.names.slice(0, 6).map(function (n) { return '<span>' + esc(n) + '</span>'; }).join('') +
-        (e.names.length > 6 ? '<span class="sup-tip-more">+' + (e.names.length - 6) + ' more</span>' : '');
+    wrapLabel: function (text, maxChars) {                               // two lines is the budget; the rest is squeezed
+      var words = String(text).split(' '), lines = [''], i, t;
+      for (i = 0; i < words.length; i++) {
+        t = lines[lines.length - 1] ? lines[lines.length - 1] + ' ' + words[i] : words[i];
+        if (t.length <= maxChars || !lines[lines.length - 1]) lines[lines.length - 1] = t;
+        else if (lines.length < 2) lines.push(words[i]);
+        else lines[1] += ' ' + words[i];
+      }
+      return lines;
+    },
+    roving: function () { // one tab stop for the whole pipeline; the arrow keys walk the stages
+      var self = this;
+      $$('.sup-hit').forEach(function (r) { r.setAttribute('tabindex', +r.getAttribute('data-i') === self.at ? '0' : '-1'); });
+    },
+    legend: function () {
+      var self = this, h = '';
+      this.CO.concat(['Other']).forEach(function (c) { h += '<span class="sup-lg"><i class="sup-sw c-' + c + '"></i>' + esc(self.coName(c)) + '</span>'; });
+      $('#sup-legend').innerHTML = h + '<span class="sup-lg"><i class="sup-crit-sw"></i>one Critical firm</span>' +
+        '<span class="sup-lg-note">thickness = firms at that stage · click a stage for its list, a colour to filter</span>';
+    },
+    showTip: function (i, focused) {
+      var s = this.stages[i], el = $('#sup-tip'), host = $('#sup-pipe'), hit = $('.sup-hit[data-i="' + i + '"]');
+      if (!s || !el || !host || !hit) return;
+      if (this.tipAt !== i || el.hidden) {
+        var self = this, co = '';
+        this.CO.concat(['Other']).forEach(function (c) {
+          var v = s.by[c] || 0; if (!v) return;
+          co += '<span class="sup-tip-c"><i class="sup-sw c-' + c + '"></i>' + esc(c) + '<b>' + v + '</b></span>';
+        });
+        el.innerHTML = '<b>' + esc(s.name) + '</b><span class="sup-tip-n">' + s.n + ' firms</span><span class="sup-tip-co">' + co + '</span>' +
+          (s.crit.length ? '<span class="sup-tip-crit"><i class="sup-crit-sw"></i>Critical: ' + esc(s.crit.join(', ')) + '</span>' : '');
+        this.tipAt = i;
+      }
       el.hidden = false;
-      var r = btn.getBoundingClientRect(), m = map.getBoundingClientRect(), w = el.offsetWidth, hh = el.offsetHeight;
-      var left = Math.max(0, Math.min(r.left - m.left + r.width / 2 - w / 2, m.width - w));
-      var top = r.top - m.top - hh - 8;
-      if (top < 0) top = r.bottom - m.top + 8;
-      el.style.left = left + 'px'; el.style.top = top + 'px';
+      var svg = $('.sup-pipe-svg'), r = hit.getBoundingClientRect(), m = host.getBoundingClientRect();
+      var sr = svg.getBoundingClientRect(), w = el.offsetWidth;
+      el.style.left = Math.max(0, Math.min(r.left - m.left + r.width / 2 - w / 2, m.width - w)) + 'px';
+      el.style.top = (sr.bottom - m.top + 6) + 'px';                     // under the drawing, so it never covers the stream
+      var hi = $('.sup-colhi');
+      if (hi) { hi.setAttribute('x', hit.getAttribute('x')); hi.setAttribute('width', hit.getAttribute('width')); hi.setAttribute('data-focus', focused ? '1' : '0'); hi.hidden = false; }
     },
-    hideTip: function () { var el = $('#sup-tip'); if (el) el.hidden = true; },
-    pickCell: function (btn) {
-      var cat = btn.getAttribute('data-cat'), cc = btn.getAttribute('data-cc');
-      var want = cc === 'Other' ? '__other' : cc, same = this.cat === cat && this.country === want;
-      this.setFilters(same ? null : cat, same ? '' : want, !same);
+    hideTip: function () {
+      var el = $('#sup-tip'); if (el) el.hidden = true;
+      var hi = $('.sup-colhi'); if (hi) hi.hidden = true;
+      this.tipAt = -1;
+    },
+    goStage: function (i) { // the pipeline is the ladder's index: a stage sends you to its rung
+      var s = this.stages[i]; if (!s) return;
+      this.hideTip();
+      if (this.mode !== 'ladder') this.setMode('ladder');
+      $$('.sup-rung').forEach(function (el) { if (el.id === s.id) el.setAttribute('data-lit', '1'); else el.removeAttribute('data-lit'); });
+      $$('.sup-lab').forEach(function (g) { if (+g.getAttribute('data-i') === i) g.setAttribute('data-lit', '1'); else g.removeAttribute('data-lit'); });
+      var el = document.getElementById(s.id);
+      if (el) el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
     },
 
     /* ---- filters ---- */
-    setFilters: function (cat, country, scroll) {
-      this.cat = cat || null; this.country = country || '';
+    setCountry: function (c, scroll) {
+      this.country = (c === this.country ? '' : c) || '';
       this.sync(); this.render();
       if (scroll) { var t = $('#sup-toolbar'); if (t) t.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' }); }
     },
@@ -8101,30 +8361,28 @@ PC.register('wafer', function (p) {
       try { localStorage.setItem('cp-sup-mode', m); } catch (e) { }
       this.sync(); this.render();
     },
-    sync: function () { // every control and the matrix show the same state
-      var self = this, on = this.country === '__other' ? 'Other' : this.country;
-      $$('#sup-chips button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-cat') === self.cat ? 'true' : 'false'); });
-      var csel = $('#sup-cat'); if (csel) csel.value = this.cat || '';
+    sync: function () { // every control, the pipeline and the ladder show the same state
+      var self = this, on = this.country === '__other' ? 'Other' : this.country, lad = this.mode === 'ladder';
       var sel = $('#sup-country'); if (sel) sel.value = this.country || '';
       $$('.sup-mode').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-mode') === self.mode ? 'true' : 'false'); });
-      $('#sup-list').hidden = this.mode !== 'compact';
-      $('#sup-wrap').hidden = this.mode !== 'detailed';
-      $$('.sup-cell').forEach(function (b) {
-        if (self.cat && b.getAttribute('data-cat') === self.cat && b.getAttribute('data-cc') === on) b.setAttribute('data-on', '1');
-        else b.removeAttribute('data-on');
-      });
+      $('#sup-ladder').hidden = !lad;
+      $('#sup-ladder-h').hidden = !lad;
+      $('#sup-wrap').hidden = lad;
+      $$('.sup-band').forEach(function (p) { if (on && p.getAttribute('data-c') === on) p.setAttribute('data-on', '1'); else p.removeAttribute('data-on'); });
+      var pipe = $('#sup-pipe'); if (pipe) pipe.setAttribute('data-filtered', on ? '1' : '0');
     },
     countryLabel: function () { return this.country === '__other' ? 'Other countries' : cname(this.country); },
+    filtering: function () { return !!(this.country || this.chk || this.q); },
+    match: function (r) {
+      if (this.country === '__other') { if (this.CO.indexOf(r.country) >= 0) return false; }
+      else if (this.country && r.country !== this.country) return false;
+      if (this.chk && r.chokepoint !== this.chk) return false;
+      if (this.q) { var hay = [r.name, r.nativeName, r.city, r.ticker, r.role, r.subcategory, (r.customers || []).join(' '), cname(r.country)].join(' ').toLowerCase(); if (hay.indexOf(this.q) < 0) return false; }
+      return true;
+    },
     filtered: function () {
       var self = this, CHK = this.RANK;
-      var out = this.rows.filter(function (r) {
-        if (self.cat && r.category !== self.cat) return false;
-        if (self.country === '__other') { if (self.MAIN.indexOf(r.country) >= 0) return false; }
-        else if (self.country && r.country !== self.country) return false;
-        if (self.chk && r.chokepoint !== self.chk) return false;
-        if (self.q) { var hay = [r.name, r.nativeName, r.city, r.ticker, r.role, r.subcategory, (r.customers || []).join(' '), cname(r.country)].join(' ').toLowerCase(); if (hay.indexOf(self.q) < 0) return false; }
-        return true;
-      });
+      var out = this.rows.filter(function (r) { return self.match(r); });
       var k = this.sortKey, d = this.sortDir;
       out.sort(function (a, b) {
         var va = k === 'chokepoint' ? CHK[a.chokepoint] : (k === 'country' ? cname(a.country) : a[k]);
@@ -8137,43 +8395,64 @@ PC.register('wafer', function (p) {
     },
     render: function () {
       var rows = this.filtered();
-      this.shown = rows;
       $('#sup-count').textContent = 'Showing ' + rows.length + ' of ' + this.rows.length + ' suppliers' +
-        (this.cat ? ' · ' + this.cat : '') + (this.country ? ' · ' + this.countryLabel() : '') + (this.chk ? ' · ' + this.chk : '');
-      if (this.mode === 'compact') this.renderList(rows); else this.renderTable(rows);
+        (this.country ? ' · ' + this.countryLabel() : '') + (this.chk ? ' · ' + this.chk : '');
+      if (this.mode === 'table') this.renderTable(rows); else this.applyFilter();
     },
 
-    /* ---- compact list: one line a firm, opening in place ---- */
-    renderList: function (rows) {
-      var self = this;
-      var sortBtn = function (k, label, cls) {
-        return '<button type="button" class="' + cls + '" data-sort="' + k + '"' + (self.sortKey === k ? ' aria-sort="' + (self.sortDir > 0 ? 'ascending' : 'descending') + '"' : '') + '>' + label + '</button>';
-      };
-      var html = '<div class="sup-hrow"><span class="sup-hlab">Sort</span>' + sortBtn('name', 'Supplier', 'c1') +
-        '<span class="c2">What they make</span>' + sortBtn('country', 'Country', 'c3') + sortBtn('founded', 'Founded', 'c4') +
-        sortBtn('chokepoint', 'Level', 'c5') + '<span class="c6"></span></div>';
-      rows.forEach(function (r, i) {
-        var tag = [r.nativeName, /^private$/i.test(r.ticker || '') ? '' : r.ticker].filter(Boolean).join(' · '), id = 'sup-d-' + i;
-        html += '<div class="sup-row" data-i="' + i + '" style="--i:' + Math.min(i, 40) + '">' +
-          '<button type="button" class="sup-head" aria-expanded="false" aria-controls="' + id + '">' +
-          '<span class="c1"><b>' + esc(r.name) + '</b>' + (tag ? '<em>' + esc(tag) + '</em>' : '') + '</span>' +
-          '<span class="c2">' + esc(r.subcategory || '') + '</span>' +
-          '<span class="c3"><i>' + esc(r.country) + '</i>' + (r.city ? ' ' + esc(r.city) : '') + '</span>' +
-          '<span class="c4">' + (r.founded || '—') + '</span>' +
-          '<span class="c5"><span class="chk ' + esc(r.chokepoint || '') + '">' + esc(r.chokepoint || '') + '</span></span>' +
-          '<span class="c6"><i class="sup-chev" aria-hidden="true"></i></span>' +
-          '</button><div class="sup-detail" id="' + id + '"><div class="sup-detail-in"></div></div></div>';
+    /* ---- the ladder: the stages ranked thinnest first, every firm named ---- */
+    ladderOrder: function () { // fewest firms first, then the stage with more Critical firms, then chain order
+      return this.stages.slice().sort(function (a, b) {
+        return (a.n - b.n) || (b.crit.length - a.crit.length) || (a.i - b.i);
       });
-      $('#sup-list').innerHTML = html;
     },
-    toggleRow: function (head) {
-      var row = head.parentNode, open = row.getAttribute('data-open') === '1';
-      if (!open) {
-        var body = $('.sup-detail-in', row);
-        if (body && !body.getAttribute('data-filled')) { body.innerHTML = this.detail(this.shown[+row.getAttribute('data-i')]); body.setAttribute('data-filled', '1'); }
-      }
-      row.setAttribute('data-open', open ? '0' : '1');
-      head.setAttribute('aria-expanded', open ? 'false' : 'true');
+    buildLadder: function () {
+      var self = this, html = '';
+      this.ladderOrder().forEach(function (s, r) {
+        var names = s.rows.slice().sort(function (a, b) {
+          return (self.RANK[a.chokepoint] - self.RANK[b.chokepoint]) || String(a.name).localeCompare(String(b.name));
+        }).map(function (f) {
+          return '<span class="sup-nw" data-r="' + f._ix + '"><button type="button" class="sup-name lv-' + esc(f.chokepoint || 'Important') +
+            '" aria-expanded="false" aria-controls="' + s.id + '-p">' + esc(f.name) + '<i class="sup-cc">' + esc(f.country) + '</i></button></span>';
+        }).join('');
+        html += '<section class="sup-rung" id="' + s.id + '" data-i="' + s.i + '" data-crit="' + s.crit.length + '" aria-labelledby="' + s.id + '-h">' +
+          '<span class="sup-rank" aria-hidden="true">' + (r < 9 ? '0' : '') + (r + 1) + '</span>' +
+          '<div class="sup-rung-head"><h3 class="sup-rung-name" id="' + s.id + '-h">' + esc(s.name) + '</h3>' +
+          '<p class="sup-rung-n">' + s.n + ' firms' + (s.crit.length ? ' · ' + s.crit.length + ' critical' : '') + '</p></div>' +
+          '<p class="sup-names">' + names + '</p>' +
+          '<div class="sup-panel" id="' + s.id + '-p"><div class="sup-panel-in"></div></div></section>';
+      });
+      $('#sup-ladder').innerHTML = html;
+    },
+    applyFilter: function () { // the rungs never move; the filters only hide names and change the count
+      var self = this, on = this.filtering();
+      $$('.sup-rung').forEach(function (rung) {
+        var items = $$('.sup-nw', rung), hits = 0, last = null;
+        items.forEach(function (w) {
+          var ok = self.match(self.rows[+w.getAttribute('data-r')]);
+          w.hidden = !ok; w.classList.remove('is-last');
+          if (ok) { hits++; last = w; }
+        });
+        if (last) last.classList.add('is-last');
+        var crit = +rung.getAttribute('data-crit');
+        $('.sup-rung-n', rung).textContent = on ? hits + ' of ' + items.length + ' firms' : items.length + ' firms' + (crit ? ' · ' + crit + ' critical' : '');
+        rung.setAttribute('data-empty', hits ? '0' : '1');
+        var open = $('.sup-name[aria-expanded="true"]', rung);
+        if (open && (!hits || open.parentNode.hidden)) self.closePanel(rung);
+      });
+    },
+    openName: function (btn) {
+      var rung = btn.closest('.sup-rung'), panel = $('.sup-panel', rung);
+      var was = btn.getAttribute('aria-expanded') === 'true';
+      this.closePanel(rung);
+      if (was) return;                                                   // one panel a rung: clicking the open name shuts it
+      $('.sup-panel-in', panel).innerHTML = this.detail(this.rows[+btn.parentNode.getAttribute('data-r')]);
+      btn.setAttribute('aria-expanded', 'true');
+      panel.setAttribute('data-open', '1');
+    },
+    closePanel: function (rung) {
+      var p = $('.sup-panel', rung); if (p) p.removeAttribute('data-open');
+      $$('.sup-name[aria-expanded="true"]', rung).forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
     },
     detail: function (r) {
       if (!r) return '';
@@ -8186,7 +8465,11 @@ PC.register('wafer', function (p) {
         var v = (r.revenueUSDb >= 10 ? r.revenueUSDb.toFixed(1) : r.revenueUSDb.toFixed(2)).replace(/0+$/, '').replace(/\.$/, '');
         facts.push(['Revenue', '$' + v + 'B' + (r.revenueYear ? ' (' + esc(r.revenueYear) + ')' : '')]);
       }
-      return '<div class="sup-detail-body">' + (r.role ? '<p class="sup-role">' + esc(r.role) + '</p>' : '') +
+      var tag = [r.subcategory, cname(r.country) + (r.city ? ', ' + r.city : ''), /^private$/i.test(r.ticker || '') ? '' : r.ticker].filter(Boolean).join(' · ');
+      return '<div class="sup-detail-body">' +
+        '<p class="sup-detail-h">' + esc(r.name) + (r.chokepoint ? ' <span class="chk ' + esc(r.chokepoint) + '">' + esc(r.chokepoint) + '</span>' : '') +
+        (tag ? '<em>' + esc(tag) + '</em>' : '') + '</p>' +
+        (r.role ? '<p class="sup-role">' + esc(r.role) + '</p>' : '') +
         (facts.length ? '<dl class="sup-facts">' + facts.map(function (f) { return '<dt>' + f[0] + '</dt><dd>' + f[1] + '</dd>'; }).join('') + '</dl>' : '') +
         (r.source ? '<a class="sup-src" href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" aria-label="Source for ' + esc(r.name) + '">Source</a>' : '') + '</div>';
     },
@@ -8266,10 +8549,85 @@ PC.register('wafer', function (p) {
       var all = $('#tl-all'); if (all) all.addEventListener('click', function () { self.setFull(!self.full); });
       var list = $('#timeline');
       list.addEventListener('click', function (e) { var b = e.target.closest ? e.target.closest('.tl-more') : null; if (b) self.setOpen(b, b.getAttribute('aria-expanded') !== 'true'); });
-      this.wireStrip();
+      // the nine flows; without them the page is the chronology it has always been
+      this.flows = this.loadFlows();
+      tl.forEach(function (e, i) { if (!e.id) e.id = 'tl' + i; });
+      this.now = tl.length ? tl[tl.length - 1].date : new Date().toISOString().slice(0, 10);
+      this.asOf = this.now;
+      var y0 = 2018, y1 = parseInt(this.now.slice(0, 4), 10);
+      for (var y = y0; y <= y1; y++) { this.years.push(y); this.yearN[y] = 0; }
+      tl.forEach(function (e) { var yy = parseInt(String(e.date).slice(0, 4), 10); if (self.yearN[yy] != null) self.yearN[yy]++; });
+      if (this.flows) {
+        this.flows.forEach(function (f) { self.byId[f.id] = f; self.evs[f.id] = self.eventsFor(f); });
+        this.wireBoard();
+        this.renderScrub();
+        this.renderBoard();
+        var side = $('#cf-side'); if (side) side.hidden = false;
+        var sw = $('#cf-modes');
+        if (sw) {
+          sw.hidden = false;
+          sw.addEventListener('click', function (e) { var b = e.target.closest ? e.target.closest('.cf-mode') : null; if (b) self.setMode(b.getAttribute('data-mode'), true); });
+        }
+      } else {
+        var intro = $('#cf-intro'); if (intro) intro.textContent = 'Every move since 2018, newest last. Open any entry for the full account and its source.';
+      }
       window.addEventListener('scroll', function () { if (Router.current === 'controls') self.spy(); }, { passive: true });
-      window.addEventListener('resize', function () { clearTimeout(self.rz); self.rz = setTimeout(function () { self.stripW = 0; self.sync(); }, 160); }, { passive: true });
+      window.addEventListener('resize', function () { clearTimeout(self.rz); self.rz = setTimeout(function () { self.headW = 0; self.sync(); }, 160); }, { passive: true });
       this.renderTimeline();
+      this.setMode(this.flows ? (this.readMode() || 'subject') : 'date');
+    },
+    /* ---- the flows and their states ---- */
+    loadFlows: function () {
+      var raw = DATA.flows, list = null;
+      if (raw && Object.prototype.toString.call(raw) === '[object Array]') list = raw;
+      else if (raw && raw.flows && raw.flows.length) list = raw.flows;
+      if (!list || !list.length) return null;
+      list = list.slice().filter(function (f) { return f && f.id; }).sort(function (a, b) { return (a.order == null ? 99 : a.order) - (b.order == null ? 99 : b.order); });
+      list.forEach(function (f) { f.states = (f.states || []).slice().sort(function (a, b) { return String(a.date) < String(b.date) ? -1 : String(a.date) > String(b.date) ? 1 : 0; }); });
+      return list.length ? list : null;
+    },
+    /* the state of a flow as of a date: the last state set on or before it, else the flow's initial state */
+    stateAt: function (f, date) {
+      var st = f.states || [], out = null;
+      for (var i = 0; i < st.length; i++) if (st[i] && st[i].date && st[i].date <= date) out = st[i];
+      var s = out || (f.initial && typeof f.initial === 'object' ? f.initial : null);
+      if (s) return { status: s.status || 'open', label: s.label || this.STATE[s.status] || '', date: out ? out.date : (s.date || null), event: s.event };
+      var k = typeof f.initial === 'string' && f.initial ? f.initial : 'open';
+      return { status: this.STATE[k] ? k : 'open', label: this.STATE[k] || k, date: null };
+    },
+    keyOf: function (s) { return s.status + '|' + s.label + '|' + (s.date || ''); },
+    /* the moves that touched a flow: the events that name it, or the events its own states name */
+    eventsFor: function (f) {
+      var out = [], want = {};
+      (this.tl || []).forEach(function (e) { if ((e.flows || []).indexOf(f.id) >= 0) out.push(e); });
+      if (out.length) return out;
+      (f.states || []).forEach(function (s) { if (s.event) want[s.event] = 1; });
+      (this.tl || []).forEach(function (e) { if (e.id && want[e.id]) out.push(e); });
+      return out;
+    },
+    nMoves: function (f) { var n = (this.evs[f.id] || []).length; return n || (f.states || []).length; },
+    fmtDate: function (iso) {
+      var d = new Date(String(iso) + 'T00:00:00');
+      return isNaN(d) ? String(iso || '') : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    },
+    readMode: function () { try { var v = localStorage.getItem(this.MODE_KEY); return v === 'date' || v === 'subject' ? v : null; } catch (e) { return null; } },
+    saveMode: function (m) { try { localStorage.setItem(this.MODE_KEY, m); } catch (e) { } },
+    setMode: function (m, remember) {
+      var self = this, host = $('#cf');
+      if (!this.flows) m = 'date';
+      this.mode = m === 'date' ? 'date' : 'subject';
+      if (host) host.setAttribute('data-mode', this.mode);
+      $$('#cf-modes .cf-mode').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-mode') === self.mode ? 'true' : 'false'); });
+      // the compact board in By date is a read-out, not a set of drawers
+      $$('#cf-board .cf-btn').forEach(function (b) {
+        var row = b.parentNode.parentNode;
+        if (self.mode === 'subject') { b.setAttribute('aria-controls', 'cf-h-' + row.getAttribute('data-f')); b.setAttribute('aria-expanded', row.getAttribute('data-open') === '1' ? 'true' : 'false'); }
+        else { b.removeAttribute('aria-controls'); b.removeAttribute('aria-expanded'); }
+      });
+      if (remember) this.saveMode(this.mode);
+      if (this.mode === 'subject') this.setAsOf(this.now, null);
+      this.at = -1;
+      this.sync();
     },
     /* one sentence per entry: the data's own gist, or the first sentence of the summary */
     gistOf: function (e) {
@@ -8288,12 +8646,12 @@ PC.register('wafer', function (p) {
         var y = (e.date || '').slice(0, 4);
         if (y !== year) {
           year = y;
-          html += '<li class="tl-year"><div class="year-label">' + esc(y) + '</div><span class="tl-n">' + counts[y] + (counts[y] === 1 ? ' move' : ' moves') + '</span></li>';
+          html += '<li class="tl-year"><div class="year-label">' + esc(y) + '</div><span class="tl-n">' + counts[y] + (counts[y] === 1 ? ' move' : ' moves') + '</span>' + self.yearSum(y) + '</li>';
         }
         var d = new Date(e.date + 'T00:00:00');
         var ds = isNaN(d) ? esc(e.date) : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
         var host = e.source ? e.source.replace(/^https?:\/\//, '').split('/')[0] : '';
-        html += '<li class="tl-e" id="tl-e' + i + '" data-i="' + i + '">' +
+        html += '<li class="tl-e" id="tl-e' + i + '" data-i="' + i + '" data-date="' + esc(e.date || '') + '">' +
           '<div class="d"><b>' + ds + '</b>' + esc(e.actor || '') + '</div>' +
           '<div class="tl-body"><span class="cat ' + self.CATS[self.lane(e.category)].cls + '">' + esc(e.category || '') + '</span>' +
           '<h4>' + esc(e.title) + '</h4><p class="tl-gist">' + esc(self.gistOf(e)) + '</p>' +
@@ -8306,9 +8664,22 @@ PC.register('wafer', function (p) {
       this.items = $$('.tl-e', list);
       if (this.full) this.setFull(true);
       this.reveal();
-      this.strip();
-      this.at = -1; this.atDot = -1; this.spy();
+      this.at = -1; this.spy();
       list.dispatchEvent(new CustomEvent('cp:rows'));
+    },
+    /* under each year on a phone: where the nine flows stood when the year ended */
+    yearSum: function (y) {
+      var self = this, last = this.years[this.years.length - 1];
+      if (!this.flows) return '';
+      var end = parseInt(y, 10) >= last ? this.now : y + '-12-31';
+      var parts = [];
+      this.flows.forEach(function (f) {
+        var s = self.stateAt(f, end);
+        if (s.status === 'open') return;
+        parts.push(esc(f.short || f.name || f.id) + ' ' + esc(String(self.STATE[s.status] || s.status).toLowerCase()));
+      });
+      if (!parts.length) return '';
+      return '<p class="cf-sum">' + (parseInt(y, 10) >= last ? 'Now' : 'End of ' + esc(y)) + ': ' + parts.join(' · ') + '</p>';
     },
     setOpen: function (btn, open) {
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -8332,99 +8703,163 @@ PC.register('wafer', function (p) {
       this.items.forEach(function (el) { io.observe(el); });
       this.io = io;
     },
-    /* ---- minimap strip: one dot per event, five lanes, year axis ---- */
-    strip: function () {
-      var self = this, host = $('#tl-strip');
+    /* ---- the board: one row per flow, its state as of the scrubber date ---- */
+    renderBoard: function () {
+      var self = this, host = $('#cf-board');
+      if (!host || !this.flows) return;
+      host.innerHTML = this.flows.map(function (f, i) {
+        var st = self.stateAt(f, self.asOf), n = self.nMoves(f), id = esc(f.id);
+        self.keys[f.id] = self.keyOf(st);
+        return '<section class="cf-row" data-f="' + id + '" data-open="0" style="--d:' + Math.min(320, i * 34) + 'ms">' +
+          '<h4 class="cf-rowh"><button type="button" class="cf-btn" id="cf-b-' + id + '" aria-expanded="false" aria-controls="cf-h-' + id + '">' +
+          '<span class="cf-id"><span class="cf-name">' + esc(f.name || f.id) + '</span>' +
+          (f.route ? '<span class="cf-route">' + esc(f.route) + '</span>' : '') +
+          (f.what ? '<span class="cf-what">' + esc(f.what) + '</span>' : '') + '</span>' +
+          '<span class="cf-state">' + self.pillHTML(st) + '</span>' +
+          '<span class="cf-n">' + n + (n === 1 ? ' move' : ' moves') + '</span>' +
+          '<span class="cf-caret" aria-hidden="true"></span></button></h4>' +
+          '<div class="cf-hist" id="cf-h-' + id + '" role="region" aria-labelledby="cf-b-' + id + '"><div class="cf-hist-in"></div></div>' +
+          '</section>';
+      }).join('');
+      if (!reduced) host.setAttribute('data-in', '1');
+    },
+    pillHTML: function (st) {
+      var word = st.status === 'policy' ? 'Policy' : (this.STATE[st.status] || st.status);
+      return '<span class="cf-pill is-' + esc(st.status) + '">' + esc(word) + '</span>' +
+        (st.label && st.label !== word ? '<span class="cf-lab">' + esc(st.label) + '</span>' : '') +
+        '<span class="cf-when">' + esc(st.date ? this.fmtDate(st.date) : 'from the start') + '</span>';
+    },
+    /* re-read every row from the as-of date; rows that moved inside the span glow */
+    paintBoard: function (span) {
+      var self = this, host = $('#cf-board');
+      if (!host || !this.flows) return;
+      $$('.cf-row', host).forEach(function (row) {
+        var f = self.byId[row.getAttribute('data-f')];
+        if (!f) return;
+        var st = self.stateAt(f, self.asOf), key = self.keyOf(st), box = row.querySelector('.cf-state');
+        if (box && key !== self.keys[f.id]) {
+          box.innerHTML = self.pillHTML(st);
+          if (!reduced) { box.classList.remove('is-flip'); void box.offsetWidth; box.classList.add('is-flip'); }
+        }
+        self.keys[f.id] = key;
+        if (span && !reduced && self.movedIn(f, span)) { row.classList.remove('is-changed'); void row.offsetWidth; row.classList.add('is-changed'); }
+      });
+    },
+    movedIn: function (f, span) {
+      var st = f.states || [];
+      for (var i = 0; i < st.length; i++) if (st[i].date && st[i].date >= span[0] && st[i].date <= span[1]) return true;
+      return false;
+    },
+    wireBoard: function () {
+      var self = this, host = $('#cf-board');
       if (!host) return;
-      var w = Math.round(host.getBoundingClientRect().width);
-      this.stripW = w;
-      if (!w) { host.innerHTML = ''; return; } // the sub-tab is hidden: draw it when it opens
-      var rows = this.visible || [], all = this.tl || [];
-      var small = w < 700;
-      var padL = small ? 46 : 106, padR = small ? 12 : 18;
-      var laneH = small ? 13 : 18, top = small ? 18 : 24;
-      var axisY = top + laneH * 5 + 6, H = axisY + (small ? 18 : 20);
-      var x0 = padL, x1 = Math.max(padL + 40, w - padR);
-      var mi = function (d) { d = String(d || ''); return (parseInt(d.slice(0, 4), 10) - 2018) * 12 + (parseInt(d.slice(5, 7), 10) - 1); };
-      var span = 12; all.forEach(function (e) { span = Math.max(span, mi(e.date)); });
-      var X = function (d) { var v = mi(d); return x0 + (Math.max(0, Math.min(span, isNaN(v) ? 0 : v)) / span) * (x1 - x0); };
-      var s = '<svg class="tl-svg" width="' + w + '" height="' + H + '" viewBox="0 0 ' + w + ' ' + H + '" role="img" aria-label="Every move on one strip: five lanes by kind, 2018 to now">';
-      for (var i = 0; i < 5; i++) {
-        var ly = top + laneH * i + laneH / 2;
-        s += '<rect class="tl-base" x="' + x0 + '" y="' + (ly - 0.5) + '" width="' + (x1 - x0) + '" height="1"></rect>' +
-          '<text class="tl-lane ' + this.CATS[i].cls + '" x="' + (x0 - (small ? 7 : 11)) + '" y="' + (ly + 3.4) + '" text-anchor="end">' + esc(small ? this.CATS[i].short : this.CATS[i].label) + '</text>';
+      host.addEventListener('click', function (e) {
+        var m = e.target.closest ? e.target.closest('.tl-more') : null;
+        if (m) { self.setOpen(m, m.getAttribute('aria-expanded') !== 'true'); return; }
+        var b = e.target.closest ? e.target.closest('.cf-btn') : null, row = b ? b.closest('.cf-row') : null;
+        if (!row) return;
+        if (self.mode === 'date') { // the compact board is a read-out: a click takes you to the row's own history
+          self.setMode('subject', true);
+          self.toggleRow(row, true);
+          row.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+          return;
+        }
+        self.toggleRow(row, row.getAttribute('data-open') !== '1');
+      });
+      host.addEventListener('animationend', function (e) { if (e.animationName === 'cf-glow' && e.target.classList) e.target.classList.remove('is-changed'); });
+    },
+    toggleRow: function (row, open) {
+      var f = this.byId[row.getAttribute('data-f')], btn = row.querySelector('.cf-btn'), box = row.querySelector('.cf-hist-in');
+      if (!f || !box) return;
+      if (open && !box.firstChild) box.innerHTML = this.histHTML(f); // built the first time the row opens
+      row.setAttribute('data-open', open ? '1' : '0');
+      if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    },
+    /* one flow's own history: its moves in date order, the ones that changed its state marked with the pill */
+    histHTML: function (f) {
+      var self = this, evs = this.evs[f.id] || [], byEv = {};
+      (f.states || []).forEach(function (s) { if (s.event) byEv[s.event] = s; });
+      if (!evs.length) return '<p class="cf-none">No move has touched this flow yet.</p>';
+      return '<ol class="cf-evs">' + evs.map(function (e, k) {
+        var s = byEv[e.id], id = 'cf-p-' + f.id + '-' + k, d = new Date(e.date + 'T00:00:00');
+        var ds = isNaN(d) ? esc(e.date) : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        var host = e.source ? e.source.replace(/^https?:\/\//, '').split('/')[0] : '';
+        var word = s ? (s.status === 'policy' ? 'Policy' : (self.STATE[s.status] || s.status || '')) : '';
+        return '<li class="cf-ev' + (s ? ' is-move' : '') + '">' +
+          '<div class="cf-ev-p">' + (s ? '<span class="cf-pill is-' + esc(s.status || 'open') + '">' + esc(word) + '</span>' : '') + '</div>' +
+          '<div class="cf-ev-d"><b>' + ds + '</b>' + esc(String(e.date).slice(0, 4)) + '<span>' + esc(e.actor || '') + '</span></div>' +
+          '<div class="cf-ev-b"><span class="cat ' + self.CATS[self.lane(e.category)].cls + '">' + esc(e.category || '') + '</span>' +
+          '<h5 class="cf-ev-t">' + esc(e.title) + '</h5><p class="cf-ev-g">' + esc(self.gistOf(e)) + '</p>' +
+          '<button type="button" class="tl-more" aria-expanded="false" aria-controls="' + id + '">More</button>' +
+          '<div class="tl-panel" id="' + id + '" hidden><p>' + esc(e.summary || '') + '</p>' +
+          (host ? '<a class="src" href="' + safeUrl(e.source) + '" target="_blank" rel="noopener">' + esc(host) + '</a>' : '') +
+          '</div></div></li>';
+      }).join('') + '</ol>';
+    },
+    /* ---- the scrubber: the years as equal segments, a playhead, and Now ---- */
+    renderScrub: function () {
+      var self = this, host = $('#cf-scrub');
+      if (!host || !this.flows) return;
+      host.innerHTML = '<div class="cf-scrub-h"><p class="cf-asof">As of <b id="cf-asof">' + esc(this.fmtDate(this.asOf)) + '</b></p>' +
+        '<button type="button" class="cf-now" id="cf-now">Now</button></div>' +
+        '<div class="cf-track"><div class="cf-years" id="cf-years" role="group" aria-label="Set the date by year">' +
+        this.years.map(function (y) {
+          var n = self.yearN[y] || 0;
+          return '<button type="button" class="cf-year" data-y="' + y + '" aria-pressed="false" aria-label="' + y + ', ' + n + (n === 1 ? ' move' : ' moves') + '">' +
+            '<span class="cf-yl">' + y + '</span><span class="cf-ys">’' + String(y).slice(2) + '</span><span class="cf-yn">' + n + '</span></button>';
+        }).join('') + '</div><div class="cf-head" id="cf-head" aria-hidden="true"></div></div>';
+      var years = $('#cf-years'), now = $('#cf-now');
+      if (now) now.addEventListener('click', function () { self.setAsOf(self.now, [self.years[self.years.length - 1] + '-01-01', self.now]); });
+      if (years) {
+        years.addEventListener('click', function (e) { var b = e.target.closest ? e.target.closest('.cf-year') : null; if (b) self.pickYear(parseInt(b.getAttribute('data-y'), 10)); });
+        years.addEventListener('keydown', function (e) {
+          var b = e.target.closest ? e.target.closest('.cf-year') : null;
+          if (!b || (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')) return;
+          e.preventDefault();
+          var i = self.years.indexOf(parseInt(b.getAttribute('data-y'), 10));
+          var to = Math.max(0, Math.min(self.years.length - 1, i + (e.key === 'ArrowRight' ? 1 : -1)));
+          var nx = years.querySelector('.cf-year[data-y="' + self.years[to] + '"]');
+          if (nx) { nx.focus(); self.pickYear(self.years[to]); }
+        });
       }
-      this.RULES.forEach(function (r) {
-        var rx = X(r.date);
-        s += '<line class="tl-rule" x1="' + rx.toFixed(1) + '" y1="' + (top - 5) + '" x2="' + rx.toFixed(1) + '" y2="' + (axisY - 2) + '"></line>' +
-          '<text class="tl-rlab" x="' + rx.toFixed(1) + '" y="' + (top - 10) + '" text-anchor="middle">' + esc(small ? r.short : r.label) + '</text>';
-      });
-      for (var yy = 2018; yy <= 2018 + Math.floor(span / 12); yy++) {
-        var xt = X(yy + '-01-01');
-        s += '<line class="tl-tick" x1="' + xt.toFixed(1) + '" y1="' + axisY + '" x2="' + xt.toFixed(1) + '" y2="' + (axisY + 4) + '"></line>' +
-          '<text class="tl-ylab" data-y="' + yy + '" x="' + xt.toFixed(1) + '" y="' + (axisY + 15) + '" text-anchor="middle">' + (small ? '’' + String(yy).slice(2) : yy) + '</text>';
-      }
-      var n = Math.max(1, rows.length - 1);
-      rows.forEach(function (e, k) {
-        var ln = self.lane(e.category), cy = top + laneH * ln + laneH / 2, cx = X(e.date);
-        var d = new Date(e.date + 'T00:00:00');
-        var ds = isNaN(d) ? e.date : d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
-        s += '<circle class="tl-dot ' + self.CATS[ln].cls + '" cx="' + cx.toFixed(1) + '" cy="' + cy + '" r="' + (small ? 3.6 : 3.4) + '" data-i="' + k + '" tabindex="' + (k ? '-1' : '0') + '" role="button" aria-label="' + esc(ds + ': ' + e.title) + '" style="--d:' + Math.round(k / n * 420) + 'ms"></circle>';
-      });
-      s += '<circle class="tl-ring" cx="-20" cy="-20" r="6.6" opacity="0"></circle></svg>';
-      host.innerHTML = s;
-      host.setAttribute('data-anim', this.drawn || reduced ? '0' : '1');
-      this.drawn = true;
-      // entries scroll clear of the sticky strip, so the page needs its real height
-      document.documentElement.style.setProperty('--tl-h', (window.innerWidth >= 900 ? H + 12 : 0) + 'px');
+      this.markYears(); this.placeHead();
     },
-    wireStrip: function () {
-      var self = this, strip = $('#tl-strip');
-      if (!strip) return;
-      var dot = function (e) { return e.target && e.target.closest ? e.target.closest('.tl-dot') : null; };
-      strip.addEventListener('mouseover', function (e) { var d = dot(e); if (d) self.showTip(d); });
-      strip.addEventListener('mouseout', function (e) { if (dot(e)) self.hideTip(); });
-      strip.addEventListener('focusin', function (e) { var d = dot(e); if (d) self.showTip(d); });
-      strip.addEventListener('focusout', function () { self.hideTip(); });
-      strip.addEventListener('click', function (e) { var d = dot(e); if (d) self.jump(parseInt(d.getAttribute('data-i'), 10)); });
-      strip.addEventListener('keydown', function (ev) {
-        var d = dot(ev), k = ev.key;
-        if (!d) return;
-        var i = parseInt(d.getAttribute('data-i'), 10), last = (self.visible || []).length - 1, to = -1;
-        if (k === 'Enter' || k === ' ' || k === 'Spacebar') { ev.preventDefault(); self.jump(i); return; }
-        if (k === 'ArrowRight' || k === 'ArrowDown') to = Math.min(last, i + 1);
-        else if (k === 'ArrowLeft' || k === 'ArrowUp') to = Math.max(0, i - 1);
-        else if (k === 'Home') to = 0;
-        else if (k === 'End') to = last;
-        if (to < 0) return;
-        ev.preventDefault();
-        var nx = strip.querySelector('.tl-dot[data-i="' + to + '"]');
-        if (nx) { d.setAttribute('tabindex', '-1'); nx.setAttribute('tabindex', '0'); nx.focus(); }
-      });
+    pickYear: function (y) {
+      var last = this.years[this.years.length - 1];
+      this.setAsOf(y >= last ? this.now : y + '-12-31', [y + '-01-01', y + '-12-31']);
     },
-    showTip: function (d) {
-      var e = (this.visible || [])[parseInt(d.getAttribute('data-i'), 10)];
-      if (!e) return;
-      if (!this.tip) { var t = document.createElement('div'); t.className = 'tl-tip'; t.setAttribute('role', 'tooltip'); document.body.appendChild(t); this.tip = t; }
-      var dt = new Date(e.date + 'T00:00:00');
-      this.tip.innerHTML = '<b>' + esc(isNaN(dt) ? e.date : dt.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })) + '</b>' + esc(e.title);
-      this.tip.hidden = false;
-      var r = d.getBoundingClientRect(), x = r.left + r.width / 2 + window.scrollX;
-      this.tip.style.left = Math.max(8, Math.min(x - this.tip.offsetWidth / 2, window.scrollX + window.innerWidth - this.tip.offsetWidth - 8)) + 'px';
-      this.tip.style.top = (r.top + window.scrollY - this.tip.offsetHeight - 9) + 'px';
+    /* the one lever on the page: move the as-of date, and the board re-reads itself from it */
+    setAsOf: function (date, span) {
+      if (!date || !this.flows) return;
+      var prev = this.asOf;
+      this.asOf = date;
+      var lab = $('#cf-asof'); if (lab) lab.textContent = this.fmtDate(date);
+      if (!span && prev && prev !== date) span = prev < date ? [prev, date] : [date, prev];
+      this.paintBoard(prev === date ? null : span);
+      this.markYears(); this.placeHead();
     },
-    hideTip: function () { if (this.tip) this.tip.hidden = true; },
-    jump: function (i) {
-      var el = document.getElementById('tl-e' + i);
-      if (!el) return;
-      var btn = el.querySelector('.tl-more');
-      if (btn && btn.getAttribute('aria-expanded') !== 'true') this.setOpen(btn, true);
-      el.classList.add('is-in');
-      $$('#timeline .is-target').forEach(function (x) { x.classList.remove('is-target'); });
-      el.classList.add('is-target');
-      el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    markYears: function () {
+      var y = parseInt(String(this.asOf).slice(0, 4), 10);
+      $$('#cf-years .cf-year').forEach(function (b) { b.setAttribute('aria-pressed', parseInt(b.getAttribute('data-y'), 10) === y ? 'true' : 'false'); });
     },
-    /* the dot of the entry nearest the top of the reading area, kept in step with the scroll */
+    /* the as-of date as a fraction of the whole scale: the year's segment plus how far through it */
+    frac: function (date) {
+      var ys = this.years, n = ys.length, s = String(date || '');
+      if (!n) return 0;
+      var y = parseInt(s.slice(0, 4), 10), m = parseInt(s.slice(5, 7), 10) - 1, d = parseInt(s.slice(8, 10), 10);
+      var i = ys.indexOf(y);
+      if (i < 0) i = y < ys[0] ? 0 : n - 1;
+      var within = ((isNaN(m) ? 0 : m) + (isNaN(d) ? 0 : (d - 1) / 31)) / 12;
+      return (i + Math.max(0, Math.min(1, within))) / n;
+    },
+    placeHead: function () {
+      var head = $('#cf-head'), track = $('#cf-years');
+      if (!head || !track) return;
+      var w = track.getBoundingClientRect().width;
+      if (w) this.headW = w;
+      head.style.transform = 'translate3d(' + (this.frac(this.asOf) * (this.headW || w)).toFixed(1) + 'px,0,0)';
+    },
+    /* By date: the entry at the reading line sets the as-of date, so the compact board keeps pace with the scroll */
     spy: function () {
       var self = this;
       if (this.tickQ) return;
@@ -8433,29 +8868,24 @@ PC.register('wafer', function (p) {
       if (window.requestAnimationFrame) window.requestAnimationFrame(run); else window.setTimeout(run, 32);
     },
     spyNow: function () {
-      var svg = $('#tl-strip .tl-svg'), items = this.items || [];
-      if (!svg || !items.length) return;
+      var items = this.items || [], side = $('#cf-side');
+      if (!this.flows || this.mode !== 'date' || !items.length || !side || !side.offsetParent) return;
       var mast = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--masthead')) || 56;
-      var probe = mast + (window.innerWidth >= 900 ? svg.getBoundingClientRect().height : 0) + 26;
+      var probe = mast + 40;
       var at = 0; // the first entry still crossing the reading line: the one the reader is on
       for (var i = 0; i < items.length; i++) { at = i; if (items[i].getBoundingClientRect().bottom > probe) break; }
       if (at === this.at) return;
       this.at = at;
-      var dots = svg.querySelectorAll('.tl-dot'), ring = svg.querySelector('.tl-ring'), d = dots[at];
-      if (!d) return;
-      if (dots[this.atDot]) { dots[this.atDot].classList.remove('is-at'); dots[this.atDot].setAttribute('tabindex', '-1'); }
-      d.classList.add('is-at'); d.setAttribute('tabindex', '0');
-      this.atDot = at;
-      if (ring) { ring.setAttribute('cx', d.getAttribute('cx')); ring.setAttribute('cy', d.getAttribute('cy')); ring.setAttribute('opacity', '1'); }
-      var yy = String((this.visible[at] || {}).date || '').slice(0, 4), labs = svg.querySelectorAll('.tl-ylab');
-      for (var j = 0; j < labs.length; j++) labs[j].classList.toggle('is-on', labs[j].getAttribute('data-y') === yy);
+      var d = items[at].getAttribute('data-date');
+      if (d) this.setAsOf(d, null);
     },
-    /* the strip is drawn from its own width, so redraw it whenever the sub-tab opens or the window changes */
+    /* the scrubber is placed from its own width, so settle it whenever the sub-tab opens or the window changes */
     sync: function () {
-      var host = $('#tl-strip');
-      if (!host) return;
-      if (Math.round(host.getBoundingClientRect().width) !== this.stripW) this.strip();
-      this.at = -1; this.spy();
+      var self = this;
+      if (!this.flows) return;
+      this.headW = 0;
+      var run = function () { self.placeHead(); self.spy(); };
+      if (window.requestAnimationFrame) window.requestAnimationFrame(run); else window.setTimeout(run, 32);
     }
   };
 
@@ -8654,15 +9084,108 @@ PC.register('wafer', function (p) {
         (dl || src ? '<details class="th-det"><summary>Details</summary><dl>' + dl + '</dl>' + src + '</details>' : '') +
         '</article>';
     },
+    /* ---- the ruler: every chip's total processing performance against the three licence lines ----
+       Behind ?ruler=1 until the client has seen it. TPP is a site calculation, not a vendor figure. */
+    LINES: [
+      { tpp: 1600, text: 'TPP 1,600 · with density ≥ 5.92' },
+      { tpp: 4800, text: 'TPP 4,800 · 3A090.a, licence, presumption of denial' },
+      { tpp: 21000, text: 'TPP 21,000 · since 15 Jan 2026 China sales reviewed case by case below this line' }
+    ],
+    TICKS: [1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000],
+    /* TPP = 2 × MACs × bit length: the datasheet's dense figure times the bits it was quoted at */
+    tppOf: function (c) {
+      var m = c.compute || {}, best = 0, from = '';
+      var take = function (v, mult, name) {
+        if (typeof v === 'number' && isFinite(v) && v > 0 && v * mult > best) { best = v * mult; from = mult + ' × ' + v.toLocaleString('en-US') + ' dense ' + name + ' TFLOPS'; }
+      };
+      take(m.fp8TFLOPS, 8, 'FP8'); take(m.fp16TFLOPS, 16, 'FP16'); take(m.fp4TFLOPS, 4, 'FP4');
+      return best ? { tpp: best, from: from } : null;
+    },
+    ruler: function () {
+      var self = this, host = $('#th-ruler');
+      if (!host) return;
+      var on = false;
+      try { on = /[?&]ruler=1(&|$)/.test(location.search); } catch (e) { on = false; }
+      var rows = on ? (DATA.landscape || []).map(function (c) {
+        var t = self.tppOf(c);
+        return t ? { name: String(c.name || '').replace(/\s*\([^)]*\)\s*$/, ''), vendor: c.vendor || '', cn: c.vendorCountry === 'CN', tpp: t.tpp, from: t.from } : null;
+      }).filter(Boolean).sort(function (a, b) { return a.tpp - b.tpp; }) : [];
+      if (!rows.length) { if (host.parentNode) host.parentNode.removeChild(host); return; }
+      var W = Math.max(880, Math.round(host.getBoundingClientRect().width) || 880), padL = 14, padR = 16;
+      var lo = 1000, hi = Math.max(26000, rows[rows.length - 1].tpp * 1.2);
+      var l0 = Math.log(lo) / Math.LN10, l1 = Math.log(hi) / Math.LN10, span = l1 - l0;
+      var X = function (v) { return padL + Math.max(0, Math.min(1, (Math.log(v) / Math.LN10 - l0) / span)) * (W - padL - padR); };
+      var rows3 = [16, 32, 48], bandTop = 56, axisY = 100, laneY = axisY + 22, step = 22, LANES = 5;
+      var H = laneY + step * (LANES - 1) + 12;
+      var fmt = function (v) { return Math.round(v).toLocaleString('en-US'); };
+      var s = '<svg class="th-rsvg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Every chip’s total processing performance on a log scale, against the three licence lines">';
+      s += '<rect class="th-band amber" x="' + X(4800).toFixed(1) + '" y="' + bandTop + '" width="' + (X(21000) - X(4800)).toFixed(1) + '" height="' + (axisY - bandTop) + '"></rect>';
+      s += '<rect class="th-band ink" x="' + X(21000).toFixed(1) + '" y="' + bandTop + '" width="' + (W - padR - X(21000)).toFixed(1) + '" height="' + (axisY - bandTop) + '"></rect>';
+      this.LINES.forEach(function (L, i) {
+        var x = X(L.tpp), w = L.text.length * 6.0, end = x + w > W - padR;
+        s += '<line class="th-rline" x1="' + x.toFixed(1) + '" y1="8" x2="' + x.toFixed(1) + '" y2="' + axisY + '"></line>' +
+          '<text class="th-rlab" x="' + (end ? x - 6 : x + 6).toFixed(1) + '" y="' + rows3[i] + '" text-anchor="' + (end ? 'end' : 'start') + '">' + esc(L.text) + '</text>';
+      });
+      s += '<line class="th-raxis" x1="' + padL + '" y1="' + axisY + '" x2="' + (W - padR) + '" y2="' + axisY + '"></line>';
+      this.TICKS.forEach(function (t) {
+        if (t > hi) return;
+        var x = X(t);
+        s += '<line class="th-rtick" x1="' + x.toFixed(1) + '" y1="' + axisY + '" x2="' + x.toFixed(1) + '" y2="' + (axisY + 5) + '"></line>' +
+          '<text class="th-rtl" x="' + x.toFixed(1) + '" y="' + (bandTop - 6) + '" text-anchor="middle">' + fmt(t) + '</text>';
+      });
+      var last = [], i2;
+      for (i2 = 0; i2 < LANES; i2++) last.push(-1e9);
+      rows.forEach(function (r, k) {
+        var label = r.name + ' · ' + fmt(r.tpp), w = label.length * 6.0;
+        var x = X(r.tpp), lx = Math.max(padL, Math.min(x, W - padR - w)), ln = 0;
+        for (ln = 0; ln < LANES; ln++) if (lx - last[ln] >= 70) break;
+        if (ln >= LANES) ln = LANES - 1;
+        last[ln] = lx;
+        var y = laneY + step * ln, cls = r.cn ? 'cn' : (r.tpp < 21000 ? 'lo' : 'hi');
+        var tip = r.name + ' · ' + (r.vendor || '') + ' · TPP ' + fmt(r.tpp) + ' · ' + r.from;
+        s += '<g class="th-mk ' + cls + '" tabindex="0" role="button" data-tip="' + esc(tip) + '" aria-label="' + esc(tip) + '" style="--d:' + Math.min(420, k * 26) + 'ms">' +
+          '<polyline class="th-lead" points="' + x.toFixed(1) + ',' + (axisY + 4) + ' ' + x.toFixed(1) + ',' + (y - 8) + ' ' + (lx + 2).toFixed(1) + ',' + (y - 8) + ' ' + (lx + 2).toFixed(1) + ',' + (y - 5) + '"></polyline>' +
+          '<circle class="th-dot" cx="' + x.toFixed(1) + '" cy="' + axisY + '" r="4"></circle>' +
+          '<text class="th-mlab" x="' + lx.toFixed(1) + '" y="' + y + '">' + esc(label) + '</text></g>';
+      });
+      host.innerHTML = '<div class="th-rscroll">' + s + '</svg></div>' +
+        '<p class="th-rlegend"><b class="cn">Made in China, not subject</b><b class="lo">Reviewed case by case</b><b class="hi">Controlled, denied</b>' +
+        '<span>TPP = 2 × MACs × bit length on dense datasheet figures; a site calculation.</span></p>' +
+        '<div class="th-rtip" id="th-rtip" role="tooltip" hidden></div>';
+      if (!reduced) host.setAttribute('data-in', '1');
+      this.wireRuler(host);
+    },
+    wireRuler: function (host) {
+      var tip = $('#th-rtip');
+      var mk = function (e) { return e.target && e.target.closest ? e.target.closest('.th-mk') : null; };
+      var show = function (g) {
+        if (!tip) return;
+        tip.textContent = g.getAttribute('data-tip') || '';
+        tip.hidden = false;
+        var r = g.getBoundingClientRect(), h = host.getBoundingClientRect();
+        tip.style.left = Math.max(0, Math.min(r.left + r.width / 2 - h.left - tip.offsetWidth / 2, h.width - tip.offsetWidth)) + 'px';
+        tip.style.top = Math.max(0, r.top - h.top - tip.offsetHeight - 8) + 'px';
+      };
+      host.addEventListener('mouseover', function (e) { var g = mk(e); if (g) show(g); });
+      host.addEventListener('mouseout', function (e) { if (mk(e) && tip) tip.hidden = true; });
+      host.addEventListener('focusin', function (e) { var g = mk(e); if (g) show(g); });
+      host.addEventListener('focusout', function () { if (tip) tip.hidden = true; });
+      host.addEventListener('click', function (e) { if (mk(e)) location.hash = '#/landscape'; });
+      host.addEventListener('keydown', function (e) { if ((e.key === 'Enter' || e.key === ' ') && mk(e)) { e.preventDefault(); location.hash = '#/landscape'; } });
+    },
     /* the cards animate the first time the sub-tab is actually on screen */
     enter: function () {
       var sub = $('.view[data-view="controls"] .sub[data-sub="thresholds"]'), board = $('#th-board');
-      if (!sub || !board || sub.hidden || this.inBoard) return;
+      if (!sub || !board || sub.hidden) return;
+      var r = $('#th-ruler'); // the ruler is drawn from its own width, which is zero while the sub-tab is closed
+      if (r && Math.round(r.getBoundingClientRect().width) !== this.rulerW) { this.rulerW = Math.round(r.getBoundingClientRect().width); this.ruler(); }
+      if (this.inBoard) return;
       this.inBoard = true;
       if (!reduced) board.setAttribute('data-in', '1');
     },
     build: function () {
       this.built = true;
+      this.ruler();
       var th = DATA.controls || [], ex = DATA.exposure || [];
       var tbl = $('#controls-table');
       if (tbl) {
