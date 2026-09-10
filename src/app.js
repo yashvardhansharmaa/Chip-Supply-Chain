@@ -695,74 +695,188 @@
     },
     coName: function (c) { return c === 'Other' ? 'Every other country' : cname(c); },
 
-    /* ---- the dot matrix: stages down, countries across ---- */
-    buildMap: function () {
-      var self = this, host = $('#sup-map-scroll'); if (!host) return;
-      var cols = this.MAIN.concat(['Other']), cells = {}, rowTot = {}, colTot = {}, max = 0;
-      this.rows.forEach(function (r) {
-        var c = self.MAIN.indexOf(r.country) >= 0 ? r.country : 'Other', k = r.category + '|' + c;
-        var e = cells[k] || (cells[k] = { n: 0, lv: 3, names: [] });
-        e.n++; e.names.push(r.name);
-        var rk = self.RANK[r.chokepoint]; if (rk != null && rk < e.lv) e.lv = rk;
-        rowTot[r.category] = (rowTot[r.category] || 0) + 1; colTot[c] = (colTot[c] || 0) + 1;
-        if (e.n > max) max = e.n;
-      });
-      this.cells = cells;
-      var dia = function (n) { return Math.max(5, Math.round(20 * Math.sqrt(n / max) * 10) / 10); }; // area, not width, carries the count
-      var label = function (c) { return c === 'Other' ? 'every other country' : cname(c); };
+    /* ---- the pipeline: the chain drawn as a pipe that narrows where the firms run out ---- */
+    fitPipe: function () {
+      var host = $('#sup-pipe-scroll'); if (!host) return;
+      if (Math.max(820, Math.round(host.clientWidth) || 820) !== this.drawW) this.drawPipe();
+    },
+    drawPipe: function () {
+      var self = this, host = $('#sup-pipe-scroll'); if (!host) return;
+      var st = this.stages, n = st.length; if (!n) return;
+      var W = Math.max(820, Math.round(host.clientWidth) || 820), tight = W < 1000;
+      this.drawW = W;
+      var padX = tight ? 24 : 34, step = (W - padX * 2) / (n - 1);
+      var x = function (i) { return padX + i * step; };
+      var maxN = 0, maxC = 0;
+      st.forEach(function (s) { if (s.n > maxN) maxN = s.n; if (s.crit.length > maxC) maxC = s.crit.length; });
+      var CS = tight ? 4.5 : 5, CG = 2, critRows = Math.ceil(maxC / 3);
+      var critBase = 6 + critRows * (CS + CG) - CG;                      // the squares are bottom-aligned on this line
+      var top = critBase + 13, streamH = tight ? 132 : 168;
+      var cy = top + streamH / 2, k = streamH / maxN;                    // px a firm: the whole scale of the drawing
+      var fs = tight ? 10 : 10.5, lh = fs + 1.5, labY = top + streamH + 16;
+      var countY = labY + lh * 2 + 3, H = Math.round(countY + 9);
+      var cols = this.CO.concat(['Other']);
 
-      var h = '<table class="sup-grid"><thead><tr><th class="sup-gcorner"><span class="sr-only">Stage</span></th>';
-      cols.forEach(function (c) { h += '<th scope="col"' + (c === 'Other' ? ' class="sup-gother"' : '') + ' title="' + esc(label(c)) + '">' + esc(c) + '</th>'; });
-      h += '<th scope="col" class="sup-gall" title="All countries">All</th></tr></thead><tbody>';
-      this.order.forEach(function (cat, i) {
-        h += '<tr style="--i:' + i + '"><th scope="row" title="' + esc(cat) + '">' + esc(cat) + '</th>';
-        cols.forEach(function (c) {
-          var e = cells[cat + '|' + c];
-          if (!e) { h += '<td class="sup-td"><span class="sup-nil" aria-hidden="true"></span></td>'; return; }
-          var lv = self.LEVELS[e.lv];
-          h += '<td class="sup-td"><button type="button" class="sup-cell" data-cat="' + esc(cat) + '" data-cc="' + esc(c) + '" aria-label="' + esc(cat + ', ' + label(c) + ': ' + e.n + ' supplier' + (e.n === 1 ? '' : 's') + ', most severe ' + lv) + '"><i class="sup-dot lv-' + lv + '" style="--s:' + dia(e.n) + 'px"></i></button></td>';
+      var tops = {}, bots = {};
+      cols.forEach(function (c) { tops[c] = []; bots[c] = []; });
+      st.forEach(function (s) {                                          // a centred baseline, so the pipe is a silhouette
+        var y = cy - k * s.n / 2;
+        cols.forEach(function (c) { var v = k * (s.by[c] || 0); tops[c].push(y); bots[c].push(y + v); y += v; });
+      });
+
+      // cubic with flat tangents at both ends: smooth, and it never overshoots, so bands cannot cross
+      var seg = function (pts, cont) {
+        var d = (cont ? 'L' : 'M') + pts[0][0].toFixed(1) + ' ' + pts[0][1].toFixed(2), i, ax, ay, bx, by, h;
+        for (i = 1; i < pts.length; i++) {
+          ax = pts[i - 1][0]; ay = pts[i - 1][1]; bx = pts[i][0]; by = pts[i][1]; h = (bx - ax) / 2;
+          d += 'C' + (ax + h).toFixed(1) + ' ' + ay.toFixed(2) + ' ' + (bx - h).toFixed(1) + ' ' + by.toFixed(2) + ' ' + bx.toFixed(1) + ' ' + by.toFixed(2);
+        }
+        return d;
+      };
+
+      var bands = '';
+      cols.forEach(function (c) {
+        var tp = [], bt = [], i;
+        for (i = 0; i < n; i++) { tp.push([x(i), tops[c][i]]); bt.push([x(i), bots[c][i]]); }
+        bt.reverse();
+        bands += '<path class="sup-band c-' + c + '" data-c="' + c + '" d="' + seg(tp) + seg(bt, true) + 'Z"></path>';
+      });
+
+      var sq = '';
+      st.forEach(function (s, i) {                                       // one amber square a Critical firm, rows of three
+        var m = s.crit.length; if (!m) return;
+        var rows = Math.ceil(m / 3), first = m - (rows - 1) * 3, j, row, col, inRow, rw, rx, ry;
+        for (j = 0; j < m; j++) {
+          row = j < first ? 0 : 1 + Math.floor((j - first) / 3);
+          col = j < first ? j : (j - first) % 3;
+          inRow = row === 0 ? first : 3;
+          rw = inRow * CS + (inRow - 1) * CG;
+          rx = x(i) - rw / 2 + col * (CS + CG);
+          ry = critBase - CS - (rows - 1 - row) * (CS + CG);
+          sq += '<rect class="sup-crit" x="' + rx.toFixed(1) + '" y="' + ry.toFixed(1) + '" width="' + CS + '" height="' + CS + '"></rect>';
+        }
+      });
+
+      var maxLab = step - 4, labs = '';
+      st.forEach(function (s, i) {
+        labs += '<g class="sup-lab" data-i="' + i + '">';
+        self.wrapLabel(s.short, Math.max(6, Math.floor(maxLab / (fs * 0.47)))).forEach(function (t, j) {
+          labs += '<text class="sup-lab-t" x="' + x(i).toFixed(1) + '" y="' + (labY + j * lh).toFixed(1) + '">' + esc(t) + '</text>';
         });
-        h += '<td class="sup-gn">' + (rowTot[cat] || 0) + '</td></tr>';
+        labs += '<text class="sup-lab-n" x="' + x(i).toFixed(1) + '" y="' + countY.toFixed(1) + '">' + s.n + '</text></g>';
       });
-      h += '</tbody><tfoot><tr><th scope="row">All</th>';
-      cols.forEach(function (c) { h += '<td class="sup-gn">' + (colTot[c] || 0) + '</td>'; });
-      h += '<td class="sup-gn">' + this.rows.length + '</td></tr></tfoot></table>';
-      host.innerHTML = h;
 
-      var sw = function (lv) { return '<span class="sup-lg"><i class="sup-dot lv-' + lv + '" style="--s:9px"></i>' + lv + '</span>'; };
-      $('#sup-legend').innerHTML = 'Bigger dot, more firms. Fill is the most severe level in the cell: ' +
-        sw('Critical') + sw('Important') + sw('Contested') + sw('Diversified') +
-        '<span class="sup-lg-note">· Click a dot to filter the list, and again to clear.</span>';
+      var hits = '';
+      st.forEach(function (s, i) {
+        var l = i === 0 ? 0 : x(i) - step / 2, r = i === n - 1 ? W : x(i) + step / 2;
+        hits += '<rect class="sup-hit" data-i="' + i + '" x="' + l.toFixed(1) + '" y="0" width="' + (r - l).toFixed(1) + '" height="' + H +
+          '" role="button" tabindex="' + (i === self.at ? '0' : '-1') + '" aria-label="' + esc(s.name + ': ' + s.n + ' firms, ' + s.crit.length + ' critical. Show this stage in the list.') + '"></rect>';
+      });
 
-      host.addEventListener('click', function (e) { var b = e.target.closest('.sup-cell'); if (b) self.pickCell(b); });
-      host.addEventListener('mouseover', function (e) { var b = e.target.closest('.sup-cell'); if (b) self.showTip(b); });
-      host.addEventListener('mouseout', function (e) { var b = e.target.closest('.sup-cell'); if (b && !b.contains(e.relatedTarget)) self.hideTip(); });
-      host.addEventListener('focusin', function (e) { var b = e.target.closest('.sup-cell'); if (b) self.showTip(b); });
-      host.addEventListener('focusout', function () { self.hideTip(); });
-      var edge = function () { host.setAttribute('data-end', host.scrollLeft + host.clientWidth >= host.scrollWidth - 2 ? '1' : '0'); }; // a faded right edge says the matrix keeps going
-      host.addEventListener('scroll', function () { self.hideTip(); edge(); });
-      window.addEventListener('resize', edge);
-      edge();
+      host.innerHTML = '<svg class="sup-pipe-svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" role="group" aria-label="The twenty stages of the chain, drawn as a stream whose thickness is the number of firms">' +
+        '<defs><clipPath id="sup-wipe-clip"><rect class="sup-wipe' + (this.wiped ? '' : ' is-new') + '" x="0" y="0" width="' + W + '" height="' + H + '"></rect></clipPath></defs>' +
+        '<g class="sup-hits">' + hits + '</g>' +
+        '<g class="sup-flow" clip-path="url(#sup-wipe-clip)">' + bands + sq + '<g class="sup-labels" font-size="' + fs + '">' + labs + '</g></g>' +
+        '<rect class="sup-colhi" x="0" y="0" width="0" height="' + H + '" hidden></rect></svg>';
+      this.wiped = true;
+
+      // a long word would run into its neighbour, so squeeze any line that does not fit its column
+      $$('.sup-lab-t', host).forEach(function (t) {
+        var w = 0; try { w = t.getComputedTextLength(); } catch (e) { }
+        if (w > maxLab) { t.setAttribute('textLength', maxLab.toFixed(1)); t.setAttribute('lengthAdjust', 'spacingAndGlyphs'); }
+      });
+
+      var svg = $('.sup-pipe-svg', host);
+      var stageAt = function (e) {
+        var r = svg.getBoundingClientRect();
+        var px = (e.clientX - r.left) * (W / (r.width || W));
+        return Math.max(0, Math.min(n - 1, Math.round((px - padX) / step)));
+      };
+      svg.addEventListener('mousemove', function (e) { self.showTip(stageAt(e)); });
+      svg.addEventListener('mouseleave', function () { self.hideTip(); });
+      svg.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('.sup-band') : null;
+        if (b) { var c = b.getAttribute('data-c'); self.setCountry(c === 'Other' ? '__other' : c, true); return; }
+        var h = e.target.closest ? e.target.closest('.sup-hit') : null;
+        if (h) self.goStage(+h.getAttribute('data-i'));
+      });
+      svg.addEventListener('focusin', function (e) {
+        var h = e.target.closest ? e.target.closest('.sup-hit') : null; if (!h) return;
+        self.at = +h.getAttribute('data-i'); self.roving(); self.showTip(self.at, true);
+      });
+      svg.addEventListener('focusout', function () { self.hideTip(); });
+      svg.addEventListener('keydown', function (e) {
+        var h = e.target.closest ? e.target.closest('.sup-hit') : null; if (!h) return;
+        var i = +h.getAttribute('data-i'), key = e.key, j = -1;
+        if (key === 'ArrowRight' || key === 'ArrowDown') j = Math.min(n - 1, i + 1);
+        else if (key === 'ArrowLeft' || key === 'ArrowUp') j = Math.max(0, i - 1);
+        else if (key === 'Home') j = 0;
+        else if (key === 'End') j = n - 1;
+        else if (key === 'Enter' || key === ' ') { e.preventDefault(); self.goStage(i); return; }
+        if (j < 0) return;
+        e.preventDefault(); self.at = j; self.roving();
+        var t = $('.sup-hit[data-i="' + j + '"]', svg); if (!t) return;
+        var xl = x(j);                                                   // keep the focused stage inside the scroller
+        if (xl - host.scrollLeft < 70) host.scrollLeft = Math.max(0, xl - 70);
+        else if (xl - host.scrollLeft > host.clientWidth - 70) host.scrollLeft = xl - host.clientWidth + 70;
+        t.focus();
+      });
+      this.sync();
     },
-    showTip: function (btn) {
-      var e = this.cells[btn.getAttribute('data-cat') + '|' + btn.getAttribute('data-cc')], el = $('#sup-tip'), map = $('#sup-map');
-      if (!e || !el || !map) return;
-      var cc = btn.getAttribute('data-cc');
-      el.innerHTML = '<b>' + esc(btn.getAttribute('data-cat')) + ' · ' + esc(cc === 'Other' ? 'Other countries' : cname(cc)) + '</b>' +
-        e.names.slice(0, 6).map(function (n) { return '<span>' + esc(n) + '</span>'; }).join('') +
-        (e.names.length > 6 ? '<span class="sup-tip-more">+' + (e.names.length - 6) + ' more</span>' : '');
+    wrapLabel: function (text, maxChars) {                               // two lines is the budget; the rest is squeezed
+      var words = String(text).split(' '), lines = [''], i, t;
+      for (i = 0; i < words.length; i++) {
+        t = lines[lines.length - 1] ? lines[lines.length - 1] + ' ' + words[i] : words[i];
+        if (t.length <= maxChars || !lines[lines.length - 1]) lines[lines.length - 1] = t;
+        else if (lines.length < 2) lines.push(words[i]);
+        else lines[1] += ' ' + words[i];
+      }
+      return lines;
+    },
+    roving: function () { // one tab stop for the whole pipeline; the arrow keys walk the stages
+      var self = this;
+      $$('.sup-hit').forEach(function (r) { r.setAttribute('tabindex', +r.getAttribute('data-i') === self.at ? '0' : '-1'); });
+    },
+    legend: function () {
+      var self = this, h = '';
+      this.CO.concat(['Other']).forEach(function (c) { h += '<span class="sup-lg"><i class="sup-sw c-' + c + '"></i>' + esc(self.coName(c)) + '</span>'; });
+      $('#sup-legend').innerHTML = h + '<span class="sup-lg"><i class="sup-crit-sw"></i>one Critical firm</span>' +
+        '<span class="sup-lg-note">thickness = firms at that stage · click a stage for its list, a colour to filter</span>';
+    },
+    showTip: function (i, focused) {
+      var s = this.stages[i], el = $('#sup-tip'), host = $('#sup-pipe'), hit = $('.sup-hit[data-i="' + i + '"]');
+      if (!s || !el || !host || !hit) return;
+      if (this.tipAt !== i || el.hidden) {
+        var self = this, co = '';
+        this.CO.concat(['Other']).forEach(function (c) {
+          var v = s.by[c] || 0; if (!v) return;
+          co += '<span class="sup-tip-c"><i class="sup-sw c-' + c + '"></i>' + esc(c) + '<b>' + v + '</b></span>';
+        });
+        el.innerHTML = '<b>' + esc(s.name) + '</b><span class="sup-tip-n">' + s.n + ' firms</span><span class="sup-tip-co">' + co + '</span>' +
+          (s.crit.length ? '<span class="sup-tip-crit"><i class="sup-crit-sw"></i>Critical: ' + esc(s.crit.join(', ')) + '</span>' : '');
+        this.tipAt = i;
+      }
       el.hidden = false;
-      var r = btn.getBoundingClientRect(), m = map.getBoundingClientRect(), w = el.offsetWidth, hh = el.offsetHeight;
-      var left = Math.max(0, Math.min(r.left - m.left + r.width / 2 - w / 2, m.width - w));
-      var top = r.top - m.top - hh - 8;
-      if (top < 0) top = r.bottom - m.top + 8;
-      el.style.left = left + 'px'; el.style.top = top + 'px';
+      var svg = $('.sup-pipe-svg'), r = hit.getBoundingClientRect(), m = host.getBoundingClientRect();
+      var sr = svg.getBoundingClientRect(), w = el.offsetWidth;
+      el.style.left = Math.max(0, Math.min(r.left - m.left + r.width / 2 - w / 2, m.width - w)) + 'px';
+      el.style.top = (sr.bottom - m.top + 6) + 'px';                     // under the drawing, so it never covers the stream
+      var hi = $('.sup-colhi');
+      if (hi) { hi.setAttribute('x', hit.getAttribute('x')); hi.setAttribute('width', hit.getAttribute('width')); hi.setAttribute('data-focus', focused ? '1' : '0'); hi.hidden = false; }
     },
-    hideTip: function () { var el = $('#sup-tip'); if (el) el.hidden = true; },
-    pickCell: function (btn) {
-      var cat = btn.getAttribute('data-cat'), cc = btn.getAttribute('data-cc');
-      var want = cc === 'Other' ? '__other' : cc, same = this.cat === cat && this.country === want;
-      this.setFilters(same ? null : cat, same ? '' : want, !same);
+    hideTip: function () {
+      var el = $('#sup-tip'); if (el) el.hidden = true;
+      var hi = $('.sup-colhi'); if (hi) hi.hidden = true;
+      this.tipAt = -1;
+    },
+    goStage: function (i) { // the pipeline is the ladder's index: a stage sends you to its rung
+      var s = this.stages[i]; if (!s) return;
+      this.hideTip();
+      if (this.mode !== 'ladder') this.setMode('ladder');
+      $$('.sup-rung').forEach(function (el) { if (el.id === s.id) el.setAttribute('data-lit', '1'); else el.removeAttribute('data-lit'); });
+      $$('.sup-lab').forEach(function (g) { if (+g.getAttribute('data-i') === i) g.setAttribute('data-lit', '1'); else g.removeAttribute('data-lit'); });
+      var el = document.getElementById(s.id);
+      if (el) el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
     },
 
     /* ---- filters ---- */
