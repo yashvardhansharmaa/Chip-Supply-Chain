@@ -9165,13 +9165,13 @@ PC.register('wafer', function (p) {
       var last = [], lastW = [], i2;
       for (i2 = 0; i2 < LANES; i2++) { last.push(-1e9); lastW.push(0); }
       rows.forEach(function (r, k) {
-        var label = r.name + ' · ' + fmt(r.tpp), w = label.length * 6.0;
+        var label = r.name + ' · ' + fmt(r.tpp), w = label.length * 6.4;
         var x = X(r.tpp), lx = Math.max(padL, Math.min(x, W - padR - w)), ln = 0, q, best = 0;
-        for (ln = 0; ln < LANES; ln++) if (lx - last[ln] >= Math.max(70, lastW[ln] + 10)) break;
+        for (ln = 0; ln < LANES; ln++) if (lx - last[ln] >= Math.max(70, lastW[ln] + 16)) break;
         if (ln >= LANES) { // every lane is busy here: take the emptiest and push this label clear of it
           for (q = 1; q < LANES; q++) if (last[q] + lastW[q] < last[best] + lastW[best]) best = q;
           ln = best;
-          lx = Math.min(W - padR - w, Math.max(lx, last[ln] + Math.max(70, lastW[ln] + 10)));
+          lx = Math.min(W - padR - w, Math.max(lx, last[ln] + Math.max(70, lastW[ln] + 16)));
         }
         last[ln] = lx; lastW[ln] = w;
         var y = laneY + step * ln, cls = r.cn ? 'cn' : (r.tpp < 21000 ? 'lo' : 'hi');
