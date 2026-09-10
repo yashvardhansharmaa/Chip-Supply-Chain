@@ -1144,7 +1144,7 @@
     "priceEstimate": null,
     "bomEstimate": null,
     "exportStatus": "Controlled, and the chip the whole regime was drawn around. Dense FP16 of 312 TFLOPS gives a total processing performance of 4,992 (TPP = 16 x FP16 TFLOPS), 192 points above the 4,800 threshold BIS wrote into ECCN 3A090 on 7 October 2022; that first rule also required an aggregate bidirectional transfer rate of 600 GB/s or more, which NVLink 3 meets exactly. Nvidia had already been told on 26 August 2022 that the A100 and the forthcoming H100 needed a licence for China, Hong Kong and Russia, along with any future chip meeting thresholds roughly equivalent to the A100. Performance density is 4,992 divided by 826 mm2, about 6.0, so the chip is also caught by the second limb of 3A090.a added in October 2023.",
-    "notes": "The reference point for every threshold since. BIS set the October 2022 line just under the A100 on both axes it used, peak performance and chip-to-chip bandwidth, which is why the A800 exists at all. Nvidia states five active HBM2e stacks on the SXM4 board and names no memory supplier; it publishes no package dimensions and no list price.",
+    "notes": "The reference point for every threshold since. BIS set the October 2022 line just under the A100 on both axes it used, peak performance and chip-to-chip bandwidth, which is why the A800 exists at all. Nvidia describes five active HBM2 stacks on the 40 GB SXM4 board, so the 80 GB part carries the same five sites at 16 GB each in HBM2e; Nvidia names no memory supplier and it publishes no package dimensions and no list price.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -2893,7 +2893,7 @@
     "priceEstimate": null,
     "bomEstimate": null,
     "exportStatus": "Not sold as merchant silicon; consumed inside AWS and rented as EC2 Trn2 instances. Total processing performance is 10,672, and it comes from the BF16 rate (16 x 667) rather than FP8 (8 x 1,299 = 10,392), because the rule takes the highest result across precisions. Either way it is more than twice the 4,800 threshold in ECCN 3A090.a.",
-    "notes": "The chip that made AWS a credible second source, and the generation Anthropic trained on at scale. It is also a good demonstration of how the export-control arithmetic behaves: FP8 doubles the BF16 rate on most accelerators, but on Trainium2 it falls short of double, so the BF16 figure sets the total processing performance. AWS publishes compute, memory and fabric numbers and nothing about the silicon: no node, no foundry, no die count, no package and no power figure. Epoch AI puts the draw at about 500 W, which is an estimate rather than an AWS number.",
+    "notes": "The chip that made AWS a credible second source, and the generation Anthropic trained on at scale. It is also a good demonstration of how the export-control arithmetic behaves: FP8 doubles the BF16 rate on most accelerators, but on Trainium2 it falls short of double, so the BF16 figure sets the total processing performance. Epoch AI dates the part to 3 December 2024; AWS’s own documentation carries no date. AWS publishes compute, memory and fabric numbers and nothing about the silicon: no node, no foundry, no die count, no package and no power figure. Epoch AI puts the draw at about 500 W, which is an estimate rather than an AWS number.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -3082,7 +3082,7 @@
     "family": "Maia",
     "vendor": "Microsoft",
     "vendorCountry": "US",
-    "announced": "2023-11",
+    "announced": "2024-04",
     "shipping": null,
     "status": "Deployed inside Azure; superseded by Maia 200",
     "target": "Training and inference for Azure OpenAI workloads",
@@ -3125,7 +3125,7 @@
     "priceEstimate": null,
     "bomEstimate": null,
     "exportStatus": "Not sold as merchant silicon; deployed only in Azure regions. Total processing performance is 12,800 (16 x 800), well above the 4,800 threshold in ECCN 3A090.a.",
-    "notes": "Microsoft’s first accelerator, and the first silicon anywhere to implement the Microscaling data format that later became the MX standard. Microsoft published the cooling design in detail, down to the sidekick heat exchanger that sits beside the rack, and almost nothing about the chip: no memory capacity, no bandwidth, no transistor count and no throughput. The die area and power here come from Epoch AI, not from Microsoft.",
+    "notes": "Microsoft’s first accelerator, and the first silicon anywhere to implement the Microscaling data format that later became the MX standard. Microsoft published the cooling design in detail, down to the sidekick heat exchanger that sits beside the rack, and almost nothing about the chip: no memory capacity, no bandwidth, no transistor count and no throughput. The date above is that of the Azure post carrying these figures, 3 April 2024; Epoch AI records the part at August 2024, when Microsoft presented it publicly. The die area and power here come from Epoch AI, not from Microsoft.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -3990,7 +3990,7 @@
     "vendor": "Huawei (HiSilicon)",
     "vendorCountry": "CN",
     "announced": "2022",
-    "shipping": "2023",
+    "shipping": null,
     "status": "Shipping; the volume Chinese accelerator before the 910C",
     "target": "Training and inference",
     "process": {
@@ -4032,7 +4032,7 @@
     "priceEstimate": null,
     "bomEstimate": null,
     "exportStatus": "Chinese design, Chinese fab, and controlled from both directions. Huawei has been under US export controls since 2019, so the 910B cannot lawfully draw on US-origin technology, and its total processing performance of 6,400 (16 x 400) would put it above the 4,800 threshold in ECCN 3A090.a if it were a US export. Epoch AI reads its performance as similar to the A100, which is the level the October 2022 threshold was drawn to exclude.",
-    "notes": "The domestic answer to the A100, and the evidence that export controls bite. CSET finds that Huawei needed at least two years to redesign the part for SMIC and cut the number of active AI cores between the first and second generations, most likely because of yield or capacity limits on SMIC’s 7 nm line. The 910B ships in several grades, from a 910B4 at 32 GB and 800 GB/s to a 910B1 at 64 GB and 1.6 TB/s; the figures above are the top of that range. SemiAnalysis places the chip between the A100 and the H100 in performance. Huawei publishes no die area, transistor count, package detail or per-chip datasheet.",
+    "notes": "The domestic answer to the A100, and the evidence that export controls bite. CSET dates the series to 2022; no allowed source gives a first-shipment date, so that field is empty. CSET finds that Huawei needed at least two years to redesign the part for SMIC and cut the number of active AI cores between the first and second generations, most likely because of yield or capacity limits on SMIC’s 7 nm line. The 910B ships in several grades, from a 910B4 at 32 GB and 800 GB/s to a 910B1 at 64 GB and 1.6 TB/s; the figures above are the top of that range. SemiAnalysis places the chip between the A100 and the H100 in performance. Huawei publishes no die area, transistor count, package detail or per-chip datasheet.",
     "layout": {
       "unit": "mm",
       "interposer": [

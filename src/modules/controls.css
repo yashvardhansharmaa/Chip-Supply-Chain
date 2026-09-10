@@ -300,12 +300,13 @@
   .cf[data-mode="date"] .cf-sum { display: block; font-family: var(--font-mono); font-size: 10.5px; line-height: 1.5; color: var(--muted); margin: 3px 0 0; }
   .cf-top { gap: 6px 12px; }
   .cf-modes { margin-top: 0; margin-bottom: 12px; }
-  .cf-btn { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; padding: 12px 0; }
+  .cf-btn { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; padding: 12px 0; align-items: start; }
   .cf-name { font-size: 17.5px; }
   .cf-route { display: block; margin-left: 0; }
   .cf-what { font-size: 13.5px; }
-  .cf-state { grid-column: 1 / -1; margin-top: 6px; }
-  .cf-n { grid-row: 1; text-align: right; }
+  .cf-id { grid-column: 1; grid-row: 1; }
+  .cf-n { grid-column: 2; grid-row: 1; text-align: right; padding-top: 4px; }
+  .cf-state { grid-column: 1 / -1; grid-row: 2; margin-top: 6px; }
   .cf-caret { display: none; }
   .cf-ev { grid-template-columns: 66px minmax(0, 1fr); gap: 4px 12px; }
   .cf-ev-p { grid-column: 1 / -1; }
