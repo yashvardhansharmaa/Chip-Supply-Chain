@@ -40,29 +40,25 @@ Inventory taken 10 September 2026 across all 35 chips in `data/landscape.json`, 
 | nvidia-h200-china | 5 | 4 | assembler, pkgSize, fp4, price, bom |
 | amd-mi355x | 4 | 3 | dieArea, assembler, pkgSize, bom |
 
-## Filled, with the source for each
+## Filled, with the source
 
-- **Ironwood** now carries eight HBM3E stacks and two chiplets, both stated by Google: the Cloud TPU documentation says the chip "is composed of two distinct chiplets, each with its own dedicated memory space", one TensorCore, two SparseCores and 96 GB apiece, and the architecture post names the eight stacks at a peak 7.4 TB/s.
-- **Maia 200** gains 1,263 TFLOPS BF16, derived from Microsoft's own deep dive, which states 10.1 PetaOPS FP4 and that FP4 runs at twice FP8 and eight times BF16. Epoch AI reaches 1,268 by the same arithmetic.
-- **MI455X** gains 320 billion transistors from AMD's specification list, which also gives 256 work group processors, 192 MB of L2, an EAM form factor and a 23 July 2026 launch. AMD's own wording on the node, "TSMC 2nm | 3nm FinFET", replaces the hedge.
-- **Ascend 910C** gains 128 GB and 700 W from Epoch AI. **Groq** gains 215 W and 230 MB of SRAM, Epoch's record of a Groq product brief whose URL now 404s. **TPU v5e** gains the 325 mm² die Epoch gives, which the export-control paragraph already relied on. **Gaudi 2** gains TSMC as the foundry, which Intel never names.
+- **Ironwood**: eight HBM3E stacks and two chiplets, both Google's own. The Cloud TPU documentation states two chiplets, each with one TensorCore, two SparseCores and 96 GB, and the architecture post names eight stacks at 7.4 TB/s.
+- **Maia 200**: 1,263 TFLOPS BF16, from Microsoft's deep dive: 10.1 PetaOPS FP4, with FP4 at twice FP8 and eight times BF16. Epoch AI reaches 1,268 the same way.
+- **MI455X**: 320 billion transistors from AMD's specification list, whose "TSMC 2nm | 3nm FinFET" replaces the hedged node.
+- **Ascend 910C** 128 GB and 700 W, **Groq** 215 W and 230 MB of SRAM, **TPU v5e** a 325 mm2 die, **Gaudi 2** TSMC as its foundry: all from Epoch AI.
 
 ## Staying null
 
-Price and bill of materials are empty on 33 of 35 chips because no allowed source publishes either; the two exceptions are rack prices, not chip prices. Memory suppliers are empty wherever no vendor names one, which is every chip except the ones where Nvidia, AMD, AWS or Google says so. System integrators are empty for internal silicon and for the Hopper and Ampere parts, because Nvidia's product pages point to a qualified-system catalogue instead of naming partners. FP4 is empty on every pre-Blackwell architecture, which has no four-bit datapath, and FP8 on Ampere for the same reason. Google publishes no node, foundry, die area, transistor count or package for any TPU; Huawei, Cambricon and Moore Threads publish almost nothing at all. Moore Threads gives no memory figures on its own product page, so its memory row stays entirely empty.
+No allowed source publishes a chip price or a bill of materials, so both stay empty on 33 of 35. Memory suppliers stay empty wherever no vendor names one; system integrators too, since Nvidia points to a catalogue instead of partners. FP4 stays empty on every pre-Blackwell architecture, which has no four-bit datapath. Google publishes no node, foundry, die area, transistor count or package for any TPU, and Moore Threads no memory figures at all.
 
-## Corrections
+## Corrections and layouts
 
-MTIA 400 carried MTIA 300's interconnect: Meta gives 1.2 TB/s of total I/O and 200 GB/s of scale-out for the 300 and no figure of any kind for the 400, so both fields now say so, and the unsourced Quanta entry came out. The Maia 200 note gave the die as "about 820 mm²", which is Epoch's Maia 100 figure; no allowed source publishes a Maia 200 die area. Rubin's memory bandwidth splits between two Nvidia pages, 19.2 TB/s on the NVL72 table and 22 TB/s in the architecture post, and NVLink splits 3 against 3.6 TB/s; both are recorded and the table figure is kept. Three layout notes claimed vendor figures that do not exist: Moore Threads "80 GB at 1.6 TB/s", the 950PR's "stated capacity and bandwidth" and MTIA 400's "9.4 TB/s". All three are now marked estimated. Gaudi 3's 1,835 TFLOPS is the OAM module; Epoch's 1,678 is the PCIe card, and both are noted.
+MTIA 400 carried MTIA 300's interconnect: Meta gives 1.2 TB/s of I/O and 200 GB/s of scale-out for the 300 and nothing for the 400, so both now say so; an unsourced Quanta entry came out too. The Maia 200 note gave a die of about 820 mm2, which is Epoch's Maia 100 figure. Rubin's bandwidth splits between two Nvidia pages, 19.2 TB/s on the NVL72 table against 22 in the architecture post, NVLink 3 against 3.6; both recorded, the table kept. Three layout notes claimed figures no vendor gives: Moore Threads "80 GB at 1.6 TB/s", the 950PR's "stated capacity and bandwidth", MTIA 400's "9.4 TB/s". Gaudi 3's 1,835 TFLOPS is the OAM module, Epoch's 1,678 the PCIe card.
 
-## Layouts
-
-All 35 chips have a layout and every die and stack count now matches. Three did not. Ironwood is redrawn as the two chiplets Google names with four stacks each, dropping three small interconnect dies visible in package photographs. Jalapeño is redrawn as the single reticle-sized die OpenAI describes, since Broadcom's 3.5D platform was the only basis for the second die and stacked base dies. TPU 8i keeps one core die and one chiplet die, and its die-count field is now empty, because Google's phrasing gives no number.
+All 35 layouts now match their die and stack counts; three did not. Ironwood is redrawn as the two chiplets Google names, four stacks each, dropping three small dies seen in photographs. Jalapeno becomes the single reticle-sized die OpenAI describes. TPU 8i keeps one core die and one chiplet die, and its die count is now empty, because Google gives no number.
 
 ## What the client should know
 
-Epoch AI is doing heavy lifting on this page, and its own citations sometimes run back to outlets the policy bars: TechPowerUp for the H800 and A800 die sizes, TrendForce for the 910C, a Substack and a LinkedIn post for the Siyuan 590. Where the underlying citation is disallowed I left the field empty and said so in `notes`. That leaves an inconsistency worth a ruling: Maia 100's die area and power come from Epoch, while TPU v6e's Epoch power figure is refused as an estimate. One rule should govern both.
+Epoch AI does heavy lifting, and its citations sometimes run back to barred outlets: TechPowerUp for the H800 and A800 die sizes, TrendForce for the 910C, a Substack for the Siyuan 590. Where they do, the field stays empty and `notes` says why. One inconsistency needs a ruling: Maia 100's die area and power come from Epoch, while TPU v6e's Epoch power figure is refused as an estimate.
 
-Three sources resisted reading. openai.com returns 403 to automated fetching, so Jalapeño's figures rest on pages I could not open. SemiAnalysis paywalls everything past the preamble, which is where the 910C, Trainium3 and Jalapeño package detail lives. Meta's Hot Chips 2026 deck is registration-gated.
-
-Two chips are now stale. Meta has announced MTIA 450 and MTIA 500, and Google's TPU 8t is described in the same post as 8i but has no row of its own.
+openai.com returns 403 to automated fetching, so Jalapeno rests on pages I could not open; SemiAnalysis paywalls everything past its preamble. Meta has since announced MTIA 450 and 500, and Google's TPU 8t has no row of its own.
