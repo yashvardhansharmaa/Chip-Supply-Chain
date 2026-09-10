@@ -1310,20 +1310,18 @@
       if (!f || !box) return;
       if (open && !box.firstChild) box.innerHTML = this.histHTML(f); // built the first time the row opens
       var hist = row.querySelector('.cf-hist'), from = hist ? hist.getBoundingClientRect().height : 0;
-      row.setAttribute('data-open', open ? '1' : '0');
       if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
       if (!hist) return;
-      if (reduced) { hist.style.transition = ''; hist.style.gridTemplateRows = ''; return; }
-      // the drawer rests on grid-template-rows 0fr and 1fr; the run between them is driven in pixels,
-      // because a track with no resolved size does not interpolate
-      var to = open ? box.scrollHeight : 0;
-      hist.style.transition = 'none';
-      hist.style.gridTemplateRows = from + 'px';
-      void hist.offsetHeight;
-      hist.style.transition = '';
-      hist.style.gridTemplateRows = to + 'px';
-      clearTimeout(hist.cpT);
-      hist.cpT = setTimeout(function () { hist.style.transition = 'none'; hist.style.gridTemplateRows = ''; void hist.offsetHeight; hist.style.transition = ''; }, 240);
+      if (hist.cpA) { try { hist.cpA.cancel(); } catch (e) { } hist.cpA = null; }
+      if (reduced || !hist.animate) { row.setAttribute('data-open', open ? '1' : '0'); return; }
+      /* the drawer rests on grid-template-rows 0fr and 1fr, which sizes it from its own content; the run
+         between the two rests is played on the height, because an unresolved fr track will not interpolate */
+      if (open) row.setAttribute('data-open', '1');
+      var to = open ? hist.getBoundingClientRect().height : 0;
+      var a = hist.animate([{ height: from + 'px' }, { height: to + 'px' }], { duration: 230, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' });
+      hist.cpA = a;
+      a.onfinish = function () { hist.cpA = null; if (!open) row.setAttribute('data-open', '0'); };
+      a.oncancel = function () { if (!open) row.setAttribute('data-open', '0'); };
     },
     /* one flow's own history: its moves in date order, the ones that changed its state marked with the pill */
     histHTML: function (f) {

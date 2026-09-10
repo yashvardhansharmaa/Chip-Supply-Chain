@@ -918,8 +918,9 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 .cf-row[data-open="1"] .cf-caret { transform: rotate(225deg); margin: 3px auto 0; }
 .cf-row[data-open="1"] .cf-btn { background: var(--bg-2); }
 
-/* the drawer: 0fr to 1fr keeps the animation on the grid, and visibility keeps a shut drawer out of the tab order */
-.cf-hist { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 220ms var(--ease); }
+/* the drawer: 0fr and 1fr are its two rests, so it is always sized by its own content; app.js plays the
+   run between them on the height. Visibility keeps a shut drawer out of the tab order. */
+.cf-hist { display: grid; grid-template-rows: 0fr; overflow: hidden; }
 .cf-hist-in { overflow: hidden; min-height: 0; visibility: hidden; transition: visibility 0s linear 220ms; }
 .cf-row[data-open="1"] .cf-hist { grid-template-rows: 1fr; }
 .cf-row[data-open="1"] .cf-hist-in { visibility: visible; transition-delay: 0s; }
@@ -1614,7 +1615,7 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
   .sup-legend { line-height: 1.85; }
   .sup-tip { max-width: 290px; }
 
-  .sup-rung { grid-template-columns: 40px minmax(0, 1fr); column-gap: 10px; padding: 13px 10px 15px; }
+  .sup-rung { grid-template-columns: 34px minmax(0, 1fr); column-gap: 8px; padding: 13px 10px 15px; }
   .sup-rank { grid-row: 1; justify-self: start; padding-top: 1px; font-size: 28px; line-height: 1; }
   .sup-rung-head { grid-column: 2; grid-row: 1; margin-bottom: 0; }
   .sup-rung-name { font-size: 15.5px; }
@@ -8788,20 +8789,18 @@ PC.register('wafer', function (p) {
       if (!f || !box) return;
       if (open && !box.firstChild) box.innerHTML = this.histHTML(f); // built the first time the row opens
       var hist = row.querySelector('.cf-hist'), from = hist ? hist.getBoundingClientRect().height : 0;
-      row.setAttribute('data-open', open ? '1' : '0');
       if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
       if (!hist) return;
-      if (reduced) { hist.style.transition = ''; hist.style.gridTemplateRows = ''; return; }
-      // the drawer rests on grid-template-rows 0fr and 1fr; the run between them is driven in pixels,
-      // because a track with no resolved size does not interpolate
-      var to = open ? box.scrollHeight : 0;
-      hist.style.transition = 'none';
-      hist.style.gridTemplateRows = from + 'px';
-      void hist.offsetHeight;
-      hist.style.transition = '';
-      hist.style.gridTemplateRows = to + 'px';
-      clearTimeout(hist.cpT);
-      hist.cpT = setTimeout(function () { hist.style.transition = 'none'; hist.style.gridTemplateRows = ''; void hist.offsetHeight; hist.style.transition = ''; }, 240);
+      if (hist.cpA) { try { hist.cpA.cancel(); } catch (e) { } hist.cpA = null; }
+      if (reduced || !hist.animate) { row.setAttribute('data-open', open ? '1' : '0'); return; }
+      /* the drawer rests on grid-template-rows 0fr and 1fr, which sizes it from its own content; the run
+         between the two rests is played on the height, because an unresolved fr track will not interpolate */
+      if (open) row.setAttribute('data-open', '1');
+      var to = open ? hist.getBoundingClientRect().height : 0;
+      var a = hist.animate([{ height: from + 'px' }, { height: to + 'px' }], { duration: 230, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' });
+      hist.cpA = a;
+      a.onfinish = function () { hist.cpA = null; if (!open) row.setAttribute('data-open', '0'); };
+      a.oncancel = function () { if (!open) row.setAttribute('data-open', '0'); };
     },
     /* one flow's own history: its moves in date order, the ones that changed its state marked with the pill */
     histHTML: function (f) {

@@ -89,8 +89,9 @@
 .cf-row[data-open="1"] .cf-caret { transform: rotate(225deg); margin: 3px auto 0; }
 .cf-row[data-open="1"] .cf-btn { background: var(--bg-2); }
 
-/* the drawer: 0fr to 1fr keeps the animation on the grid, and visibility keeps a shut drawer out of the tab order */
-.cf-hist { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 220ms var(--ease); }
+/* the drawer: 0fr and 1fr are its two rests, so it is always sized by its own content; app.js plays the
+   run between them on the height. Visibility keeps a shut drawer out of the tab order. */
+.cf-hist { display: grid; grid-template-rows: 0fr; overflow: hidden; }
 .cf-hist-in { overflow: hidden; min-height: 0; visibility: hidden; transition: visibility 0s linear 220ms; }
 .cf-row[data-open="1"] .cf-hist { grid-template-rows: 1fr; }
 .cf-row[data-open="1"] .cf-hist-in { visibility: visible; transition-delay: 0s; }
