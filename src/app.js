@@ -872,11 +872,15 @@
     }
   };
 
-  /* ---------------- geopolitics ---------------- */
+  /* ---------------- export controls: the board of flows, the scrubber and the chronology ----------------
+     The nine flows are the page's index: each one is a thing that moves across the chokepoint, and its
+     state on any date is the last state set on or before that date. The scrubber (By subject) and the
+     scroll (By date) both do one thing — move the as-of date — and the board re-reads itself from it. */
   var Geo = {
     built: false, cat: null,
-    tl: [], visible: null, items: [], full: false, /* visible stays null until the first render so the export bar falls back to the whole set */ drawn: false, tip: null, at: -1, atDot: -1, stripW: 0, tickQ: false,
-    /* the five lanes of the minimap, in this order; the colours are the .timeline .cat classes */
+    tl: [], visible: null, items: [], full: false, /* visible stays null until the first render so the export bar falls back to the whole set */ at: -1, tickQ: false,
+    mode: 'subject', flows: null, byId: {}, evs: {}, asOf: null, now: null, years: [], yearN: {}, keys: {}, headW: 0,
+    /* the five kinds of move; the colours are the .timeline .cat classes */
     CATS: [
       { name: 'US export control', label: 'US rules', short: 'US', cls: '' },
       { name: 'China countermeasure', label: 'China', short: 'CN', cls: 'cn' },
@@ -884,20 +888,12 @@
       { name: 'Industrial policy', label: 'Policy', short: 'Pol', cls: 'policy' },
       { name: 'Corporate', label: 'Firms', short: 'Firm', cls: 'corp' }
     ],
-    RULES: [
-      { date: '2022-10-07', label: 'Oct 2022', short: '’22' },
-      { date: '2023-10-17', label: 'Oct 2023', short: '’23' },
-      { date: '2024-12-02', label: 'Dec 2024', short: '’24' }
-    ],
+    /* the five states a flow can be in, and the word the pill carries */
+    STATE: { open: 'Open', licence: 'Licence', 'case': 'Case by case', shut: 'Shut', policy: 'Policy' },
+    MODE_KEY: 'cp-cf-mode',
     lane: function (c) {
       c = c || '';
       return /China/i.test(c) ? 1 : /Allied/i.test(c) ? 2 : /Industrial/i.test(c) ? 3 : /Corporate/i.test(c) ? 4 : 0;
-    },
-    activate: function () {
-      if (!this.built) this.build();
-      Stage.show('globe', null, null, 'Geopolitics · <b>the map</b>');
-      var sec = $('section[data-view="geopolitics"]'); // the masthead link carries the same attribute; we want the view
-      if (sec && sec.getAttribute('data-caption')) $('#stage-caption').textContent = sec.getAttribute('data-caption');
     },
     build: function () {
       this.built = true;
@@ -924,10 +920,85 @@
       var all = $('#tl-all'); if (all) all.addEventListener('click', function () { self.setFull(!self.full); });
       var list = $('#timeline');
       list.addEventListener('click', function (e) { var b = e.target.closest ? e.target.closest('.tl-more') : null; if (b) self.setOpen(b, b.getAttribute('aria-expanded') !== 'true'); });
-      this.wireStrip();
+      // the nine flows; without them the page is the chronology it has always been
+      this.flows = this.loadFlows();
+      tl.forEach(function (e, i) { if (!e.id) e.id = 'tl' + i; });
+      this.now = tl.length ? tl[tl.length - 1].date : new Date().toISOString().slice(0, 10);
+      this.asOf = this.now;
+      var y0 = 2018, y1 = parseInt(this.now.slice(0, 4), 10);
+      for (var y = y0; y <= y1; y++) { this.years.push(y); this.yearN[y] = 0; }
+      tl.forEach(function (e) { var yy = parseInt(String(e.date).slice(0, 4), 10); if (self.yearN[yy] != null) self.yearN[yy]++; });
+      if (this.flows) {
+        this.flows.forEach(function (f) { self.byId[f.id] = f; self.evs[f.id] = self.eventsFor(f); });
+        this.wireBoard();
+        this.renderScrub();
+        this.renderBoard();
+        var side = $('#cf-side'); if (side) side.hidden = false;
+        var sw = $('#cf-modes');
+        if (sw) {
+          sw.hidden = false;
+          sw.addEventListener('click', function (e) { var b = e.target.closest ? e.target.closest('.cf-mode') : null; if (b) self.setMode(b.getAttribute('data-mode'), true); });
+        }
+      } else {
+        var intro = $('#cf-intro'); if (intro) intro.textContent = 'Every move since 2018, newest last. Open any entry for the full account and its source.';
+      }
       window.addEventListener('scroll', function () { if (Router.current === 'controls') self.spy(); }, { passive: true });
-      window.addEventListener('resize', function () { clearTimeout(self.rz); self.rz = setTimeout(function () { self.stripW = 0; self.sync(); }, 160); }, { passive: true });
+      window.addEventListener('resize', function () { clearTimeout(self.rz); self.rz = setTimeout(function () { self.headW = 0; self.sync(); }, 160); }, { passive: true });
       this.renderTimeline();
+      this.setMode(this.flows ? (this.readMode() || 'subject') : 'date');
+    },
+    /* ---- the flows and their states ---- */
+    loadFlows: function () {
+      var raw = DATA.flows, list = null;
+      if (raw && Object.prototype.toString.call(raw) === '[object Array]') list = raw;
+      else if (raw && raw.flows && raw.flows.length) list = raw.flows;
+      if (!list || !list.length) return null;
+      list = list.slice().filter(function (f) { return f && f.id; }).sort(function (a, b) { return (a.order == null ? 99 : a.order) - (b.order == null ? 99 : b.order); });
+      list.forEach(function (f) { f.states = (f.states || []).slice().sort(function (a, b) { return String(a.date) < String(b.date) ? -1 : String(a.date) > String(b.date) ? 1 : 0; }); });
+      return list.length ? list : null;
+    },
+    /* the state of a flow as of a date: the last state set on or before it, else the flow's initial state */
+    stateAt: function (f, date) {
+      var st = f.states || [], out = null;
+      for (var i = 0; i < st.length; i++) if (st[i] && st[i].date && st[i].date <= date) out = st[i];
+      var s = out || (f.initial && typeof f.initial === 'object' ? f.initial : null);
+      if (s) return { status: s.status || 'open', label: s.label || this.STATE[s.status] || '', date: out ? out.date : (s.date || null), event: s.event };
+      var k = typeof f.initial === 'string' && f.initial ? f.initial : 'open';
+      return { status: this.STATE[k] ? k : 'open', label: this.STATE[k] || k, date: null };
+    },
+    keyOf: function (s) { return s.status + '|' + s.label + '|' + (s.date || ''); },
+    /* the moves that touched a flow: the events that name it, or the events its own states name */
+    eventsFor: function (f) {
+      var out = [], want = {};
+      (this.tl || []).forEach(function (e) { if ((e.flows || []).indexOf(f.id) >= 0) out.push(e); });
+      if (out.length) return out;
+      (f.states || []).forEach(function (s) { if (s.event) want[s.event] = 1; });
+      (this.tl || []).forEach(function (e) { if (e.id && want[e.id]) out.push(e); });
+      return out;
+    },
+    nMoves: function (f) { var n = (this.evs[f.id] || []).length; return n || (f.states || []).length; },
+    fmtDate: function (iso) {
+      var d = new Date(String(iso) + 'T00:00:00');
+      return isNaN(d) ? String(iso || '') : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    },
+    readMode: function () { try { var v = localStorage.getItem(this.MODE_KEY); return v === 'date' || v === 'subject' ? v : null; } catch (e) { return null; } },
+    saveMode: function (m) { try { localStorage.setItem(this.MODE_KEY, m); } catch (e) { } },
+    setMode: function (m, remember) {
+      var self = this, host = $('#cf');
+      if (!this.flows) m = 'date';
+      this.mode = m === 'date' ? 'date' : 'subject';
+      if (host) host.setAttribute('data-mode', this.mode);
+      $$('#cf-modes .cf-mode').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-mode') === self.mode ? 'true' : 'false'); });
+      // the compact board in By date is a read-out, not a set of drawers
+      $$('#cf-board .cf-btn').forEach(function (b) {
+        var row = b.parentNode.parentNode;
+        if (self.mode === 'subject') { b.setAttribute('aria-controls', 'cf-h-' + row.getAttribute('data-f')); b.setAttribute('aria-expanded', row.getAttribute('data-open') === '1' ? 'true' : 'false'); }
+        else { b.removeAttribute('aria-controls'); b.removeAttribute('aria-expanded'); }
+      });
+      if (remember) this.saveMode(this.mode);
+      if (this.mode === 'subject') this.setAsOf(this.now, null);
+      this.at = -1;
+      this.sync();
     },
     /* one sentence per entry: the data's own gist, or the first sentence of the summary */
     gistOf: function (e) {

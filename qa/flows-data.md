@@ -1,6 +1,6 @@
 # The board: nine flows from 43 events
 
-43 events now carry `id` and `flows`. 48 memberships, 41 states.
+Every event carries `id` and `flows`: 48 memberships, 41 states.
 
 ## State sequences
 
@@ -14,18 +14,17 @@
 - `diffusion`: open → licence (2025-01-13) → case (2025-05-13) → case (2025-05-15) → case (2026-07-10)
 - `industrial`: open → policy (2022-08-09) → policy (2024-05-24) → policy (2025-03-03) → policy (2025-08-22) → policy (2026-01-14) → policy (2026-01-15)
 
-A state is the tightest gate standing on the flow's goods at that date, not the delta. Otherwise a row loosens on an event that tightened it.
+A state gives the tightest gate then standing, not the delta, so no row loosens on an event that tightened it.
 
-## Placed differently from the sketch
+## Changes from the sketch
 
-- **Super Micro (2026-03-19)** to `ai-chips`, not `entity`. The summary names no listed firm: it is $2.5 billion of GPU servers diverted to China, so it is chip-control enforcement.
-- **Applied Materials (2026-02-12)** to `entity` and `us-tools`. The goods were ion implanters, which is the tools flow; the gate broken was SMIC's listing.
-- **Dichlorosilane duties (2026-09-07)** are in `china-market` with no state. Anti-dumping deposits are not a gate, and none of the five statuses fits.
-- **Foundry due diligence (2025-01-16)** is in `ai-chips` with no state. It puts a duty on foundries; it does not move the China gate.
-- **Section 232 (2026-01-14)** stayed in `industrial` alone, though the same 25 percent tariff falls on H200s bound for China; **PRC H200 restrictions (2026-08-26)** stayed in `china-market` alone, though they decide what the ai-chips gate is worth.
+- **Super Micro (2026-03-19)** to `ai-chips`, not `entity`: the summary names no listed firm, only GPU servers diverted to China.
+- **Applied Materials (2026-02-12)** to `entity` and `us-tools`: the goods were ion implanters.
+- **Dichlorosilane (2026-09-07)** and **foundry due diligence (2025-01-16)** are members with no state. Duties are not a gate; the diligence rule binds foundries, not the China gate.
+- **Section 232 (2026-01-14)** stayed in `industrial` alone, though its tariff falls on H200s bound for China.
 
-## Statuses the summary left unclear
+## Unclear statuses
 
-- **2026-08-26**: the summary says Beijing's instruments are not published. `shut` is read off the effect Nvidia filed: licensed stock unsold, $0.4 billion written down.
-- **2023-10-17 and 2025-04-09**: both are licence requirements in the text. Recorded `shut` because each closed the last part that still moved. `licence` would draw them as a loosening.
-- **2025-07-14**: the same summary carries Beijing discouraging buyers, which is `china-market` material inside a US action. Left in `ai-chips`.
+- **2026-08-26**: Beijing's instrument is unpublished. `shut` reads off the effect Nvidia filed, licensed stock unsold. Kept in `china-market` alone.
+- **2023-10-17, 2025-04-09**: licence requirements in the text, recorded `shut` because each closed the last part still moving.
+- **2025-07-14**: the summary also has Beijing discouraging buyers, `china-market` material inside a US action. Left in `ai-chips`.

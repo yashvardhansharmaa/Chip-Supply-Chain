@@ -8218,11 +8218,15 @@ PC.register('wafer', function (p) {
     }
   };
 
-  /* ---------------- geopolitics ---------------- */
+  /* ---------------- export controls: the board of flows, the scrubber and the chronology ----------------
+     The nine flows are the page's index: each one is a thing that moves across the chokepoint, and its
+     state on any date is the last state set on or before that date. The scrubber (By subject) and the
+     scroll (By date) both do one thing — move the as-of date — and the board re-reads itself from it. */
   var Geo = {
     built: false, cat: null,
-    tl: [], visible: null, items: [], full: false, /* visible stays null until the first render so the export bar falls back to the whole set */ drawn: false, tip: null, at: -1, atDot: -1, stripW: 0, tickQ: false,
-    /* the five lanes of the minimap, in this order; the colours are the .timeline .cat classes */
+    tl: [], visible: null, items: [], full: false, /* visible stays null until the first render so the export bar falls back to the whole set */ at: -1, tickQ: false,
+    mode: 'subject', flows: null, byId: {}, evs: {}, asOf: null, now: null, years: [], yearN: {}, keys: {}, headW: 0,
+    /* the five kinds of move; the colours are the .timeline .cat classes */
     CATS: [
       { name: 'US export control', label: 'US rules', short: 'US', cls: '' },
       { name: 'China countermeasure', label: 'China', short: 'CN', cls: 'cn' },
@@ -8230,20 +8234,12 @@ PC.register('wafer', function (p) {
       { name: 'Industrial policy', label: 'Policy', short: 'Pol', cls: 'policy' },
       { name: 'Corporate', label: 'Firms', short: 'Firm', cls: 'corp' }
     ],
-    RULES: [
-      { date: '2022-10-07', label: 'Oct 2022', short: '’22' },
-      { date: '2023-10-17', label: 'Oct 2023', short: '’23' },
-      { date: '2024-12-02', label: 'Dec 2024', short: '’24' }
-    ],
+    /* the five states a flow can be in, and the word the pill carries */
+    STATE: { open: 'Open', licence: 'Licence', 'case': 'Case by case', shut: 'Shut', policy: 'Policy' },
+    MODE_KEY: 'cp-cf-mode',
     lane: function (c) {
       c = c || '';
       return /China/i.test(c) ? 1 : /Allied/i.test(c) ? 2 : /Industrial/i.test(c) ? 3 : /Corporate/i.test(c) ? 4 : 0;
-    },
-    activate: function () {
-      if (!this.built) this.build();
-      Stage.show('globe', null, null, 'Geopolitics · <b>the map</b>');
-      var sec = $('section[data-view="geopolitics"]'); // the masthead link carries the same attribute; we want the view
-      if (sec && sec.getAttribute('data-caption')) $('#stage-caption').textContent = sec.getAttribute('data-caption');
     },
     build: function () {
       this.built = true;
