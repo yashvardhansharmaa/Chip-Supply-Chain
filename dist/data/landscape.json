@@ -586,7 +586,7 @@
     ]
   },
   {
-    "id": "h20",
+    "id": "nvidia-h20",
     "name": "H20 (HGX H20, China variant)",
     "family": "Hopper",
     "vendor": "Nvidia",
@@ -720,7 +720,7 @@
     ]
   },
   {
-    "id": "h800",
+    "id": "nvidia-h800",
     "name": "H800 (China variant of the H100)",
     "family": "Hopper",
     "vendor": "Nvidia",
@@ -852,7 +852,7 @@
     ]
   },
   {
-    "id": "a800",
+    "id": "nvidia-a800",
     "name": "A800 (China variant of the A100)",
     "family": "Ampere",
     "vendor": "Nvidia",
@@ -980,7 +980,7 @@
     ]
   },
   {
-    "id": "h100",
+    "id": "nvidia-h100",
     "name": "H100 (SXM5)",
     "family": "Hopper",
     "vendor": "Nvidia",
@@ -1104,7 +1104,7 @@
     ]
   },
   {
-    "id": "a100",
+    "id": "nvidia-a100",
     "name": "A100 (80 GB SXM)",
     "family": "Ampere",
     "vendor": "Nvidia",
@@ -1638,7 +1638,7 @@
     ]
   },
   {
-    "id": "mi325x",
+    "id": "amd-mi325x",
     "name": "Instinct MI325X",
     "family": "CDNA 3 (MI300 series)",
     "vendor": "AMD",
@@ -1840,7 +1840,7 @@
     ]
   },
   {
-    "id": "mi300x",
+    "id": "amd-mi300x",
     "name": "Instinct MI300X",
     "family": "CDNA 3 (MI300 series)",
     "vendor": "AMD",
@@ -2318,7 +2318,7 @@
     ]
   },
   {
-    "id": "tpu-v6e",
+    "id": "google-tpu-v6e",
     "name": "TPU v6e (Trillium)",
     "family": "TPU",
     "vendor": "Google",
@@ -2416,7 +2416,7 @@
     ]
   },
   {
-    "id": "tpu-v5p",
+    "id": "google-tpu-v5p",
     "name": "TPU v5p",
     "family": "TPU",
     "vendor": "Google",
@@ -2526,7 +2526,7 @@
     ]
   },
   {
-    "id": "tpu-v5e",
+    "id": "google-tpu-v5e",
     "name": "TPU v5e",
     "family": "TPU",
     "vendor": "Google",
@@ -2628,7 +2628,7 @@
     ]
   },
   {
-    "id": "tpu-v4",
+    "id": "google-tpu-v4",
     "name": "TPU v4",
     "family": "TPU",
     "vendor": "Google",
@@ -2857,7 +2857,7 @@
     ]
   },
   {
-    "id": "trainium2",
+    "id": "aws-trainium2",
     "name": "Trainium2",
     "family": "Trainium",
     "vendor": "Amazon (Annapurna Labs)",
@@ -3089,7 +3089,7 @@
     ]
   },
   {
-    "id": "maia-100",
+    "id": "microsoft-maia-100",
     "name": "Maia 100",
     "family": "Maia",
     "vendor": "Microsoft",
@@ -3359,7 +3359,7 @@
     ]
   },
   {
-    "id": "mtia-v2",
+    "id": "meta-mtia-v2",
     "name": "MTIA v2",
     "family": "MTIA",
     "vendor": "Meta",
@@ -3703,7 +3703,7 @@
     ]
   },
   {
-    "id": "gaudi2",
+    "id": "intel-gaudi2",
     "name": "Gaudi 2",
     "family": "Gaudi",
     "vendor": "Intel",
@@ -3996,7 +3996,7 @@
     ]
   },
   {
-    "id": "ascend-910b",
+    "id": "huawei-ascend-910b",
     "name": "Ascend 910B",
     "family": "Ascend",
     "vendor": "Huawei (HiSilicon)",
