@@ -352,14 +352,14 @@ ${svg}
 
 <section class="sa-cta">
 <a class="sa-cta-main" href="#chain">Read the whole chain, stage by stage <span>${stages.length} stages · ${chapters.length} chapters</span></a>
-<p class="sa-cta-links"><a href="#/landscape">AI Chips</a> <a href="#/controls">Export Controls</a> <a href="#/sources">Sources</a></p>
+<p class="sa-cta-links"><a href="#/landscape">AI Chips</a> <a href="#/controls">Export Controls</a></p>
 </section>
 </div>`;
 
   // the home page: the map alone, with two ways onward
   const mapStart = html.indexOf('<section class="sa-mapwrap"'), mapEnd = html.indexOf('</section>', mapStart) + '</section>'.length;
   const homeMap = `<div class="sa sa--home">${html.slice(mapStart, mapEnd)}
-<nav class="sa-exits" aria-label="Where to go next"><a class="sa-exit" href="#/intro"><b>Intro</b><span>${ctx.cap(word(Math.max(1, Math.round(ctx.all.reduce((a, c) => a + (c.meta.plain || '').split(/\s+/).length, 0) / 230))))} minutes: one plain paragraph per stage, each beside its 3D specimen.</span></a><a class="sa-exit" href="#/chain"><b>The Chain</b><span>Every stage in full: ${ctx.all.length} chapters, every number linked to its source.</span></a></nav>
+<nav class="sa-exits" aria-label="Where to go next"><a class="sa-exit" href="#/intro"><b>Start here</b><span>${ctx.cap(word(Math.max(1, Math.round(ctx.all.reduce((a, c) => a + (c.meta.plain || '').split(/\s+/).length, 0) / 230))))} minutes: one plain paragraph per stage, each beside its 3D specimen.</span></a><a class="sa-exit" href="#/chain"><b>The Chain</b><span>Every stage in full: ${ctx.all.length} chapters, every number linked to its source.</span></a></nav>
 </div>`;
   return { SUMMARY_A: html, HOME_MAP: homeMap };
 };

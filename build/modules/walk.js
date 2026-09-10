@@ -93,7 +93,7 @@ ${list}
 </ol>
 <div class="wk-end">
 <p class="wk-end-t">That is the chain, end to end.</p>
-<p class="wk-end-links"><a href="#/chain">All ${word(steps.length)} chapters in full</a><a href="#/">Where it is made: the map</a><a href="#/sources">Sources and method</a></p>
+<p class="wk-end-links"><a href="#/chain">All ${word(steps.length)} chapters in full</a><a href="#/">Where it is made: the map</a><a href="#/controls">What the rules did: the board</a></p>
 </div>
 </div>`;
 
@@ -103,7 +103,7 @@ ${list}
 <ul class="wk-sh-list">
 <li><a class="wk-sh-item" href="#/walk"><b class="wk-sh-t">${cap(word(mins))} minutes: how a GPU is made</b><span class="wk-sh-d">Every chapter's plainest paragraph, in order.</span></a></li>
 <li><a class="wk-sh-item" href="#contents"><b class="wk-sh-t">The whole chain, ${steps.length} chapters</b><span class="wk-sh-d">The full text, ${siteWords.toLocaleString('en-US')} words.</span></a></li>
-<li><a class="wk-sh-item" href="#/sources"><b class="wk-sh-t">Data and sources for researchers</b><span class="wk-sh-d">${siteCites.toLocaleString('en-US')} sources${thresholds ? `, ${thresholds} licence thresholds` : ''}.</span></a><a class="wk-sh-more" href="#/controls">Export controls</a></li>
+<li><a class="wk-sh-item" href="#/controls"><b class="wk-sh-t">Data and sources for researchers</b><span class="wk-sh-d">${siteCites.toLocaleString('en-US')} sources${thresholds ? `, ${thresholds} licence thresholds` : ''}.</span></a><a class="wk-sh-more" href="#/controls">Export controls</a></li>
 </ul>
 </section>`;
 

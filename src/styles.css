@@ -213,6 +213,7 @@ sup.cite a:hover { text-decoration: underline; }
 /* glossary terms in the prose: a dotted rule under the word, and one shared popover */
 .gl-term { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; text-align: inherit; cursor: help; text-decoration: underline; text-decoration-style: dotted; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .gl-term:hover, .gl-term[aria-describedby] { text-decoration-style: solid; }
+.site-footer .sources-key { margin: 10px 0 0; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.03em; line-height: 1.7; color: var(--muted); max-width: 90ch; }
 .site-footer .updated { display: block; margin-top: 8px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
 .gl-tip { position: fixed; z-index: 50; width: max-content; max-width: min(340px, calc(100vw - 16px)); background: var(--bg-2); border: 1px solid var(--line-2); border-radius: 4px; box-shadow: var(--shadow); padding: 12px 15px 13px; }
 .gl-tip b { display: block; font-family: var(--font-display); font-weight: 700; font-size: 15.5px; line-height: 1.2; margin-bottom: 6px; }
