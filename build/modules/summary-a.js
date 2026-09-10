@@ -76,7 +76,7 @@ const EQUIPMENT = ['Lithography', 'Deposition & Etch', 'Metrology & Inspection',
 module.exports = function (ctx) {
   const esc = ctx.esc, word = ctx.word, warn = ctx.warn, data = ctx.data;
   const chapters = data.chapters || [];
-  const stages = chapters.filter((c) => c.number >= 2 && c.number <= 16);
+  const stages = chapters.filter((c) => c.number >= 1 && c.number <= 15); // the fifteen stages of the chain; 16 is component costs, 17 the essay
   const matrix = (data.matrix || []).filter((r) => r.shares);
   const suppliers = data.suppliers || [];
   const exposure = data.exposure || [];

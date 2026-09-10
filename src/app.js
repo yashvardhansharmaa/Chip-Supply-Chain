@@ -346,10 +346,20 @@
     },
     buildUI: function () {
       this.built = true;
-      var self = this, pk = $('#picker'), html = '', last = null;
-      this.chips.forEach(function (c) {
-        if (c.vendorCountry !== last) { html += '<div class="group">' + esc(cname(c.vendorCountry)) + '</div>'; last = c.vendorCountry; }
-        html += '<button type="button" data-id="' + esc(c.id) + '" aria-pressed="false"><b>' + esc(c.name) + '</b><span>' + esc(c.vendor) + (c.family && c.family !== c.name ? ' · ' + esc(c.family) : '') + '</span></button>';
+      var self = this, pk = $('#picker'), html = '';
+      // countries in the order they first appear, China last; within a country one row per maker, chips in data order (newest first)
+      var ccs = [], byCC = {};
+      this.chips.forEach(function (c) { var cc = c.vendorCountry || '??'; if (!byCC[cc]) { byCC[cc] = { vendors: [], byV: {} }; ccs.push(cc); } var g = byCC[cc]; if (!g.byV[c.vendor]) { g.byV[c.vendor] = []; g.vendors.push(c.vendor); } g.byV[c.vendor].push(c); });
+      ccs.sort(function (a, b) { return (a === 'CN') - (b === 'CN'); });
+      ccs.forEach(function (cc) {
+        var g = byCC[cc];
+        html += '<div class="group" data-cc="' + esc(cc) + '">' + esc(cname(cc)) + '</div>';
+        g.vendors.forEach(function (v) {
+          html += '<div class="vrow"><span class="vname">' + esc(v) + '</span><div class="vchips">' + g.byV[v].map(function (c) {
+            var sub = c.family && c.family !== c.name ? c.family : (c.announced ? String(c.announced).slice(0, 4) : '');
+            return '<button type="button" data-id="' + esc(c.id) + '" data-cc="' + esc(cc) + '" aria-pressed="false"><b>' + esc(c.name) + '</b>' + (sub ? '<span>' + esc(sub) + '</span>' : '') + '</button>';
+          }).join('') + '</div></div>';
+        });
       });
       pk.innerHTML = html;
       pk.addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) self.toggle(b.getAttribute('data-id')); });
@@ -1450,6 +1460,69 @@
   };
   /* ---------------- glossary popover: one panel, shared by every .gl-term in the prose ----------------
      The definitions already sit in the page, in the Glossary view, so nothing is duplicated. */
+  /* ---------------- footnote popovers: hover or focus a citation number for the full source; click opens it ---------------- */
+  var Cite = {
+    el: null, a: null, timer: null, at: 0,
+    panel: function () {
+      if (this.el) return this.el;
+      var t = document.createElement('div');
+      t.className = 'ct-tip'; t.id = 'ct-tip'; t.hidden = true; t.setAttribute('role', 'tooltip');
+      document.body.appendChild(t);
+      var self = this;
+      t.addEventListener('mouseenter', function () { clearTimeout(self.timer); });
+      t.addEventListener('mouseleave', function () { self.later(); });
+      this.el = t; return t;
+    },
+    show: function (a) {
+      var self = this, d = a.dataset || {}, t = this.panel(), hostName = '';
+      clearTimeout(this.timer);
+      try { hostName = new URL(a.href).hostname.replace(/^www\./, ''); } catch (e) { hostName = ''; }
+      var meta = [d.p, d.d].filter(Boolean).join(' · ');
+      t.innerHTML = (d.tier ? '<span class="tier tier-' + esc(d.tier) + '" title="Source tier ' + esc(d.tier) + '">' + esc(d.tier) + '</span>' : '') +
+        '<b>' + esc(d.t || hostName || a.href) + '</b>' + (meta ? '<p>' + esc(meta) + '</p>' : '') +
+        '<a href="' + safeUrl(a.href) + '" target="_blank" rel="noopener">Open the source' + (hostName ? ' · ' + esc(hostName) : '') + ' ↗</a>';
+      t.hidden = false;
+      this.a = a; this.at = Date.now(); a.setAttribute('aria-describedby', 'ct-tip');
+      this.place(a);
+      if (window.requestAnimationFrame) requestAnimationFrame(function () { if (self.a === a) self.place(a); });
+    },
+    place: function (a) {
+      var t = this.panel();
+      if (narrow()) { // a sheet at the foot of the screen, clear of the specimen strip
+        t.classList.add('is-sheet');
+        var st = $('.stage'), h = st ? st.getBoundingClientRect().height : 0;
+        t.style.left = ''; t.style.top = ''; t.style.bottom = Math.round(h + 10) + 'px';
+        return;
+      }
+      t.classList.remove('is-sheet'); t.style.bottom = '';
+      var r = a.getBoundingClientRect(), w = t.offsetWidth, hh = t.offsetHeight;
+      var left = Math.max(8, Math.min(r.left + r.width / 2 - w / 2, window.innerWidth - w - 8));
+      var top = r.top - hh - 10;
+      if (top < 8) top = r.bottom + 10;
+      top = Math.max(8, Math.min(top, window.innerHeight - hh - 8));
+      t.style.left = Math.round(left) + 'px'; t.style.top = Math.round(top) + 'px';
+    },
+    hide: function () {
+      clearTimeout(this.timer);
+      if (this.a) { this.a.removeAttribute('aria-describedby'); this.a = null; }
+      if (this.el) this.el.hidden = true;
+    },
+    later: function () { var self = this; clearTimeout(this.timer); this.timer = setTimeout(function () { self.hide(); }, 260); },
+    init: function () {
+      var self = this, mark = function (e) { return e.target && e.target.closest ? e.target.closest('sup.cite a') : null; };
+      document.addEventListener('mouseover', function (e) { var a = mark(e); if (a) self.show(a); });
+      document.addEventListener('mouseout', function (e) { if (mark(e)) self.later(); });
+      document.addEventListener('focusin', function (e) { var a = mark(e); if (a) self.show(a); else if (self.el && !self.el.contains(e.target)) self.hide(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && self.el && !self.el.hidden) { var a = self.a; self.hide(); if (a) a.focus(); } });
+      window.addEventListener('scroll', function () {
+        if (!self.a || !self.el || self.el.hidden || self.el.classList.contains('is-sheet')) return;
+        var r = self.a.getBoundingClientRect(), gone = r.bottom < 0 || r.top > window.innerHeight;
+        if (gone && Date.now() - self.at > 600) self.hide(); else self.place(self.a);
+      }, { passive: true });
+      window.addEventListener('resize', function () { if (self.a && self.el && !self.el.hidden) self.place(self.a); });
+    }
+  };
+
   var Tip = {
     el: null, btn: null, defs: null, timer: null, at: 0,
     def: function (term) {
@@ -1712,7 +1785,7 @@
     try { var only = new URLSearchParams(location.search).get('only'); if (only && document.getElementById(only)) { document.documentElement.classList.add('dbg-only'); document.getElementById(only).classList.add('only'); } } catch (e) { }
     Theme.init();
     Glossary.init();
-    Tip.init();
+    Tip.init(); Cite.init();
     Tools.init();
     var setMast = function () { var m = $('.masthead'), root = document.documentElement; if (!m) return; root.style.removeProperty('--masthead'); root.style.setProperty('--masthead', m.offsetHeight + 'px'); }; // the masthead wraps on phones, so the sticky offsets follow its real height
     setMast(); window.addEventListener('resize', setMast); window.addEventListener('load', setMast);

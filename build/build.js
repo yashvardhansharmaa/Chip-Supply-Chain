@@ -74,8 +74,9 @@ function cite(url, ctx) {
   url = url.replace(/&amp;/g, '&');
   let i = ctx.cites.findIndex((c) => c.url === url);
   if (i < 0) { ctx.cites.push({ url }); i = ctx.cites.length - 1; }
-  const t = bibLabel(url);
-  return `<sup class="cite"><a href="${esc(url)}" target="_blank" rel="noopener" title="${esc(t ? t + ' · ' + host(url) : host(url))}">${i + 1}</a></sup>`;
+  const b = bibOf(url) || {}, tier = tierOf(url), when = bibDate(b.date);
+  const label = [b.title || host(url), b.publisher, when].filter(Boolean).join(' · ');
+  return `<sup class="cite"><a href="${esc(url)}" target="_blank" rel="noopener" data-t="${esc(b.title || '')}" data-p="${esc(b.publisher || '')}" data-d="${esc(when)}" data-tier="${esc(tier)}" aria-label="Source ${i + 1}: ${esc(label)}">${i + 1}</a></sup>`;
 }
 function host(url) { try { return new URL(url).hostname.replace(/^www\./, ''); } catch (e) { return url; } }
 
