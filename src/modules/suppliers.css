@@ -8,7 +8,12 @@
 .sup-pipe { position: relative; margin: 24px 0 6px; }
 .sup-pipe-h { display: block; margin: 0 0 8px; }
 .sup-pipe-scroll { max-width: 1180px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-.sup-pipe-svg { display: block; }
+.sup-pipe-scroll[data-end="0"] {                          /* the drawing runs past the edge, so the edge fades */
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 26px), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - 26px), transparent);
+}
+/* the site caps every svg at the column width; this one keeps its drawn width and the container scrolls */
+.sup-pipe-svg { display: block; max-width: none; }
 
 /* the stream: one band a country, in the fixed order US JP CN TW KR NL DE Other */
 .sup-band { stroke: var(--bg); stroke-width: 0.6; cursor: pointer; transition: opacity 160ms linear; }
@@ -56,7 +61,7 @@
 .sup-sw.c-DE { background: var(--c4); }
 .sup-sw.c-Other { background: var(--c8); }
 .sup-crit-sw { display: block; width: 7px; height: 7px; background: var(--accent); flex: 0 0 auto; }
-.sup-lg-note { white-space: nowrap; }
+.sup-lg-note { display: inline; }
 
 .sup-tip {
   position: absolute; z-index: 30; min-width: 180px; max-width: 340px; padding: 9px 11px 10px;

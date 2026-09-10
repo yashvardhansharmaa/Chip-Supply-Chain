@@ -711,7 +711,7 @@
       st.forEach(function (s) { if (s.n > maxN) maxN = s.n; if (s.crit.length > maxC) maxC = s.crit.length; });
       var CS = tight ? 4.5 : 5, CG = 2, critRows = Math.ceil(maxC / 3);
       var critBase = 6 + critRows * (CS + CG) - CG;                      // the squares are bottom-aligned on this line
-      var top = critBase + 13, streamH = tight ? 132 : 168;
+      var top = critBase + 13, streamH = tight ? 118 : 168;
       var cy = top + streamH / 2, k = streamH / maxN;                    // px a firm: the whole scale of the drawing
       var fs = tight ? 10 : 10.5, lh = fs + 1.5, labY = top + streamH + 16;
       var countY = labY + lh * 2 + 3, H = Math.round(countY + 9);
@@ -822,6 +822,9 @@
         else if (xl - host.scrollLeft > host.clientWidth - 70) host.scrollLeft = xl - host.clientWidth + 70;
         t.focus();
       });
+      var edge = function () { host.setAttribute('data-end', host.scrollLeft + host.clientWidth >= host.scrollWidth - 2 ? '1' : '0'); }; // a faded right edge says the chain keeps going
+      if (!host.getAttribute('data-wired')) { host.setAttribute('data-wired', '1'); host.addEventListener('scroll', edge); }
+      edge();
       this.sync();
     },
     wrapLabel: function (text, maxChars) {                               // two lines is the budget; the rest is squeezed
@@ -1306,8 +1309,21 @@
       var f = this.byId[row.getAttribute('data-f')], btn = row.querySelector('.cf-btn'), box = row.querySelector('.cf-hist-in');
       if (!f || !box) return;
       if (open && !box.firstChild) box.innerHTML = this.histHTML(f); // built the first time the row opens
+      var hist = row.querySelector('.cf-hist'), from = hist ? hist.getBoundingClientRect().height : 0;
       row.setAttribute('data-open', open ? '1' : '0');
       if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (!hist) return;
+      if (reduced) { hist.style.transition = ''; hist.style.gridTemplateRows = ''; return; }
+      // the drawer rests on grid-template-rows 0fr and 1fr; the run between them is driven in pixels,
+      // because a track with no resolved size does not interpolate
+      var to = open ? box.scrollHeight : 0;
+      hist.style.transition = 'none';
+      hist.style.gridTemplateRows = from + 'px';
+      void hist.offsetHeight;
+      hist.style.transition = '';
+      hist.style.gridTemplateRows = to + 'px';
+      clearTimeout(hist.cpT);
+      hist.cpT = setTimeout(function () { hist.style.transition = 'none'; hist.style.gridTemplateRows = ''; void hist.offsetHeight; hist.style.transition = ''; }, 240);
     },
     /* one flow's own history: its moves in date order, the ones that changed its state marked with the pill */
     histHTML: function (f) {

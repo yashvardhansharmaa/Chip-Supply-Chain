@@ -1474,7 +1474,12 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 .sup-pipe { position: relative; margin: 24px 0 6px; }
 .sup-pipe-h { display: block; margin: 0 0 8px; }
 .sup-pipe-scroll { max-width: 1180px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-.sup-pipe-svg { display: block; }
+.sup-pipe-scroll[data-end="0"] {                          /* the drawing runs past the edge, so the edge fades */
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 26px), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - 26px), transparent);
+}
+/* the site caps every svg at the column width; this one keeps its drawn width and the container scrolls */
+.sup-pipe-svg { display: block; max-width: none; }
 
 /* the stream: one band a country, in the fixed order US JP CN TW KR NL DE Other */
 .sup-band { stroke: var(--bg); stroke-width: 0.6; cursor: pointer; transition: opacity 160ms linear; }
@@ -1522,7 +1527,7 @@ section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="lands
 .sup-sw.c-DE { background: var(--c4); }
 .sup-sw.c-Other { background: var(--c8); }
 .sup-crit-sw { display: block; width: 7px; height: 7px; background: var(--accent); flex: 0 0 auto; }
-.sup-lg-note { white-space: nowrap; }
+.sup-lg-note { display: inline; }
 
 .sup-tip {
   position: absolute; z-index: 30; min-width: 180px; max-width: 340px; padding: 9px 11px 10px;
@@ -8184,7 +8189,7 @@ PC.register('wafer', function (p) {
       st.forEach(function (s) { if (s.n > maxN) maxN = s.n; if (s.crit.length > maxC) maxC = s.crit.length; });
       var CS = tight ? 4.5 : 5, CG = 2, critRows = Math.ceil(maxC / 3);
       var critBase = 6 + critRows * (CS + CG) - CG;                      // the squares are bottom-aligned on this line
-      var top = critBase + 13, streamH = tight ? 132 : 168;
+      var top = critBase + 13, streamH = tight ? 118 : 168;
       var cy = top + streamH / 2, k = streamH / maxN;                    // px a firm: the whole scale of the drawing
       var fs = tight ? 10 : 10.5, lh = fs + 1.5, labY = top + streamH + 16;
       var countY = labY + lh * 2 + 3, H = Math.round(countY + 9);
@@ -8295,6 +8300,9 @@ PC.register('wafer', function (p) {
         else if (xl - host.scrollLeft > host.clientWidth - 70) host.scrollLeft = xl - host.clientWidth + 70;
         t.focus();
       });
+      var edge = function () { host.setAttribute('data-end', host.scrollLeft + host.clientWidth >= host.scrollWidth - 2 ? '1' : '0'); }; // a faded right edge says the chain keeps going
+      if (!host.getAttribute('data-wired')) { host.setAttribute('data-wired', '1'); host.addEventListener('scroll', edge); }
+      edge();
       this.sync();
     },
     wrapLabel: function (text, maxChars) {                               // two lines is the budget; the rest is squeezed
@@ -8779,8 +8787,21 @@ PC.register('wafer', function (p) {
       var f = this.byId[row.getAttribute('data-f')], btn = row.querySelector('.cf-btn'), box = row.querySelector('.cf-hist-in');
       if (!f || !box) return;
       if (open && !box.firstChild) box.innerHTML = this.histHTML(f); // built the first time the row opens
+      var hist = row.querySelector('.cf-hist'), from = hist ? hist.getBoundingClientRect().height : 0;
       row.setAttribute('data-open', open ? '1' : '0');
       if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (!hist) return;
+      if (reduced) { hist.style.transition = ''; hist.style.gridTemplateRows = ''; return; }
+      // the drawer rests on grid-template-rows 0fr and 1fr; the run between them is driven in pixels,
+      // because a track with no resolved size does not interpolate
+      var to = open ? box.scrollHeight : 0;
+      hist.style.transition = 'none';
+      hist.style.gridTemplateRows = from + 'px';
+      void hist.offsetHeight;
+      hist.style.transition = '';
+      hist.style.gridTemplateRows = to + 'px';
+      clearTimeout(hist.cpT);
+      hist.cpT = setTimeout(function () { hist.style.transition = 'none'; hist.style.gridTemplateRows = ''; void hist.offsetHeight; hist.style.transition = ''; }, 240);
     },
     /* one flow's own history: its moves in date order, the ones that changed its state marked with the pill */
     histHTML: function (f) {
