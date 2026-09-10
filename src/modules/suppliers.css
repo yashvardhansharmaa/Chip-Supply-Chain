@@ -32,6 +32,7 @@
 .sup-crit-drop { stroke: var(--accent); stroke-opacity: 0.34; stroke-width: 1; stroke-dasharray: 2 3; }
 .sup-hit { fill: transparent; cursor: pointer; outline: none; }
 .sup-colhi { fill: var(--ink); opacity: 0.1; pointer-events: none; }
+.sup-colhi[hidden] { display: none; }
 .sup-colhi[data-focus="1"] { opacity: 0.17; }
 .sup-lab-t { font-family: var(--font-display); fill: var(--ink-2); text-anchor: middle; }
 .sup-lab-n { font-family: var(--font-mono); font-size: 10px; fill: var(--muted); text-anchor: middle; font-variant-numeric: tabular-nums; }

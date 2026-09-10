@@ -1626,6 +1626,414 @@
     ]
   },
   {
+    "id": "mi325x",
+    "name": "Instinct MI325X",
+    "family": "CDNA 3 (MI300 series)",
+    "vendor": "AMD",
+    "vendorCountry": "US",
+    "announced": "2024-10",
+    "shipping": "2024-Q4",
+    "status": "Shipping; AMD’s licensable China part under the January 2026 rule",
+    "target": "Training and inference",
+    "process": {
+      "foundry": "TSMC",
+      "node": "N5 (8 accelerator dies) plus N6 (4 I/O dies)",
+      "country": "TW"
+    },
+    "die": {
+      "count": 12,
+      "areaMm2Each": null,
+      "transistorsB": 153,
+      "reticleLimited": false
+    },
+    "package": {
+      "type": "3D package: 8 accelerator complex dies stacked on 4 I/O dies, with 8 HBM stacks around them",
+      "assembler": null,
+      "sizeMm": null
+    },
+    "memory": {
+      "type": "HBM3E",
+      "stacks": 8,
+      "capacityGB": 256,
+      "bandwidthTBs": 6,
+      "suppliers": []
+    },
+    "compute": {
+      "fp16TFLOPS": 1307.4,
+      "fp8TFLOPS": 2614.9,
+      "fp4TFLOPS": null,
+      "precisionNote": "Dense, from AMD’s footnote MI325-002: 1,307.4 TFLOPS FP16, 1,307.4 TFLOPS BF16, 2,614.9 TFLOPS FP8 and 2,614.9 TOPS INT8. Identical to the MI300X; the MI325X is the same CDNA 3 silicon with faster, larger memory. AMD’s sparsity column doubles each figure. No FP4 datapath."
+    },
+    "tdpW": 1000,
+    "interconnect": {
+      "chipToChip": "8 Infinity Fabric links, 128 GB/s peak per link",
+      "scaleUp": "8-GPU OAM baseboard, full mesh; no rack-scale fabric",
+      "scaleOut": "PCIe Gen5 x16 to the host"
+    },
+    "systemIntegrators": [],
+    "priceEstimate": null,
+    "bomEstimate": null,
+    "exportStatus": "Named in the rule. BIS’s final rule of 15 January 2026 moves exports to China and Macau from presumption of denial to case-by-case review for commodities with total processing performance below 21,000 and total DRAM bandwidth below 6,500 GB/s, and names the Nvidia H200 and the AMD MI325X as its examples. The MI325X clears both: 20,919 TPP and 6,000 GB/s. Approval is conditional on certified US supply, no diversion of foundry capacity, customer security procedures, third-party testing inside US customs territory, and a cap holding aggregate TPP shipped to China at no more than 50 percent of aggregate TPP shipped to US customers.",
+    "notes": "The same CDNA 3 silicon as the MI300X with 256 GB of HBM3E at 6 TB/s and a 1,000 W board, and the only AMD part Washington has ever named as licensable for China. Both halves of that licence sit close to the line: 20,919 against a 21,000 ceiling, 6,000 GB/s against a 6,500 GB/s ceiling. AMD publishes no list price, no die areas and no assembler.",
+    "layout": {
+      "unit": "mm",
+      "interposer": [
+        62,
+        50
+      ],
+      "base": [
+        {
+          "x": -9.5,
+          "y": 8.75,
+          "w": 18.5,
+          "h": 17
+        },
+        {
+          "x": 9.5,
+          "y": 8.75,
+          "w": 18.5,
+          "h": 17
+        },
+        {
+          "x": -9.5,
+          "y": -8.75,
+          "w": 18.5,
+          "h": 17
+        },
+        {
+          "x": 9.5,
+          "y": -8.75,
+          "w": 18.5,
+          "h": 17
+        }
+      ],
+      "dies": [
+        {
+          "x": -14,
+          "y": 7.5,
+          "w": 8,
+          "h": 14
+        },
+        {
+          "x": -5,
+          "y": 7.5,
+          "w": 8,
+          "h": 14
+        },
+        {
+          "x": 5,
+          "y": 7.5,
+          "w": 8,
+          "h": 14
+        },
+        {
+          "x": 14,
+          "y": 7.5,
+          "w": 8,
+          "h": 14
+        },
+        {
+          "x": -14,
+          "y": -7.5,
+          "w": 8,
+          "h": 14
+        },
+        {
+          "x": -5,
+          "y": -7.5,
+          "w": 8,
+          "h": 14
+        },
+        {
+          "x": 5,
+          "y": -7.5,
+          "w": 8,
+          "h": 14
+        },
+        {
+          "x": 14,
+          "y": -7.5,
+          "w": 8,
+          "h": 14
+        }
+      ],
+      "hbm": [
+        {
+          "x": -25.5,
+          "y": -17.1,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": -25.5,
+          "y": -5.7,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": -25.5,
+          "y": 5.7,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": -25.5,
+          "y": 17.1,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": 25.5,
+          "y": -17.1,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": 25.5,
+          "y": -5.7,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": 25.5,
+          "y": 5.7,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": 25.5,
+          "y": 17.1,
+          "w": 11,
+          "h": 11
+        }
+      ],
+      "substrate": [
+        76.8,
+        72
+      ]
+    },
+    "sources": [
+      {
+        "label": "AMD Instinct MI325X product page and specification list",
+        "url": "https://www.amd.com/en/products/accelerators/instinct/mi300/mi325x.html"
+      },
+      {
+        "label": "AMD: Introducing the CDNA 3 architecture (white paper)",
+        "url": "https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/white-papers/amd-cdna-3-white-paper.pdf"
+      },
+      {
+        "label": "Federal Register, 15 January 2026: case-by-case review below 21,000 TPP (govinfo PDF)",
+        "url": "https://www.govinfo.gov/content/pkg/FR-2026-01-15/pdf/2026-00789.pdf"
+      }
+    ]
+  },
+  {
+    "id": "mi300x",
+    "name": "Instinct MI300X",
+    "family": "CDNA 3 (MI300 series)",
+    "vendor": "AMD",
+    "vendorCountry": "US",
+    "announced": "2023-12",
+    "shipping": "2023-Q4",
+    "status": "Shipping; superseded by the MI325X and MI355X",
+    "target": "Training and inference",
+    "process": {
+      "foundry": "TSMC",
+      "node": "N5 (8 accelerator dies) plus N6 (4 I/O dies)",
+      "country": "TW"
+    },
+    "die": {
+      "count": 12,
+      "areaMm2Each": null,
+      "transistorsB": 153,
+      "reticleLimited": false
+    },
+    "package": {
+      "type": "3D package: 8 accelerator complex dies stacked on 4 I/O dies, with 8 HBM stacks around them",
+      "assembler": null,
+      "sizeMm": null
+    },
+    "memory": {
+      "type": "HBM3",
+      "stacks": 8,
+      "capacityGB": 192,
+      "bandwidthTBs": 5.3,
+      "suppliers": []
+    },
+    "compute": {
+      "fp16TFLOPS": 1307.4,
+      "fp8TFLOPS": 2614.9,
+      "fp4TFLOPS": null,
+      "precisionNote": "Dense, from AMD’s own footnote MI300-17: 1,307.4 TFLOPS FP16, 1,307.4 TFLOPS BF16, 2,614.9 TFLOPS FP8 and 2,614.9 TOPS INT8 at 2,100 MHz across 304 compute units. AMD’s separate structured-sparsity column doubles each of those. CDNA 3 has no FP4 datapath."
+    },
+    "tdpW": 750,
+    "interconnect": {
+      "chipToChip": "8 Infinity Fabric links, 128 GB/s peak per link",
+      "scaleUp": "8-GPU OAM baseboard, full mesh; no rack-scale fabric",
+      "scaleOut": "PCIe Gen5 x16 to the host"
+    },
+    "systemIntegrators": [],
+    "priceEstimate": null,
+    "bomEstimate": null,
+    "exportStatus": "Controlled. Total processing performance is 20,919 (8 x 2,614.9 dense FP8), four times the 4,800 threshold in ECCN 3A090.a. It also lands 81 points under the 21,000 ceiling BIS set on 15 January 2026, and its 5,300 GB/s of memory bandwidth is well under that rule’s 6,500 GB/s, so on the published numbers it falls inside the band moved to case-by-case review. The rule names the H200 and the MI325X, not the MI300X.",
+    "notes": "The first accelerator to put 192 GB on one package, a year before Nvidia matched it, and the first to break a data center GPU into a dozen chiplets: eight N5 accelerator dies bonded onto four N6 I/O dies, 153 billion transistors in all. The stack count is not printed on AMD’s page but follows from it, since the 8,192-bit memory interface is eight 1,024-bit HBM channels, and the CDNA 3 white paper says eight stacks. AMD publishes no list price, no die areas and no assembler.",
+    "layout": {
+      "unit": "mm",
+      "interposer": [
+        62,
+        50
+      ],
+      "base": [
+        {
+          "x": -9.5,
+          "y": 8.75,
+          "w": 18.5,
+          "h": 17
+        },
+        {
+          "x": 9.5,
+          "y": 8.75,
+          "w": 18.5,
+          "h": 17
+        },
+        {
+          "x": -9.5,
+          "y": -8.75,
+          "w": 18.5,
+          "h": 17
+        },
+        {
+          "x": 9.5,
+          "y": -8.75,
+          "w": 18.5,
+          "h": 17
+        }
+      ],
+      "dies": [
+        {
+          "x": -14,
+          "y": 7.5,
+          "w": 8,
+          "h": 14
+        },
+        {
+          "x": -5,
+          "y": 7.5,
+          "w": 8,
+          "h": 14
+        },
+        {
+          "x": 5,
+          "y": 7.5,
+          "w": 8,
+          "h": 14
+        },
+        {
+          "x": 14,
+          "y": 7.5,
+          "w": 8,
+          "h": 14
+        },
+        {
+          "x": -14,
+          "y": -7.5,
+          "w": 8,
+          "h": 14
+        },
+        {
+          "x": -5,
+          "y": -7.5,
+          "w": 8,
+          "h": 14
+        },
+        {
+          "x": 5,
+          "y": -7.5,
+          "w": 8,
+          "h": 14
+        },
+        {
+          "x": 14,
+          "y": -7.5,
+          "w": 8,
+          "h": 14
+        }
+      ],
+      "hbm": [
+        {
+          "x": -25.5,
+          "y": -17.1,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": -25.5,
+          "y": -5.7,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": -25.5,
+          "y": 5.7,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": -25.5,
+          "y": 17.1,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": 25.5,
+          "y": -17.1,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": 25.5,
+          "y": -5.7,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": 25.5,
+          "y": 5.7,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": 25.5,
+          "y": 17.1,
+          "w": 11,
+          "h": 11
+        }
+      ],
+      "substrate": [
+        76.8,
+        72
+      ]
+    },
+    "sources": [
+      {
+        "label": "AMD Instinct MI300X product page and specification list",
+        "url": "https://www.amd.com/en/products/accelerators/instinct/mi300/mi300x.html"
+      },
+      {
+        "label": "AMD: Introducing the CDNA 3 architecture (white paper)",
+        "url": "https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/white-papers/amd-cdna-3-white-paper.pdf"
+      },
+      {
+        "label": "Federal Register, 25 October 2023: TPP and performance density replace the interconnect test (govinfo PDF)",
+        "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23055.pdf"
+      },
+      {
+        "label": "Federal Register, 15 January 2026: case-by-case review below 21,000 TPP (govinfo PDF)",
+        "url": "https://www.govinfo.gov/content/pkg/FR-2026-01-15/pdf/2026-00789.pdf"
+      }
+    ]
+  },
+  {
     "id": "google-tpu-v7-ironwood",
     "name": "TPU v7 (Ironwood)",
     "family": "TPU",
@@ -1898,6 +2306,426 @@
     ]
   },
   {
+    "id": "tpu-v6e",
+    "name": "TPU v6e (Trillium)",
+    "family": "TPU",
+    "vendor": "Google",
+    "vendorCountry": "US",
+    "announced": "2024-05",
+    "shipping": null,
+    "status": "In service as Cloud TPU",
+    "target": "Training and inference",
+    "process": {
+      "foundry": null,
+      "node": null,
+      "country": null
+    },
+    "die": {
+      "count": null,
+      "areaMm2Each": null,
+      "transistorsB": null,
+      "reticleLimited": null
+    },
+    "package": {
+      "type": null,
+      "assembler": null,
+      "sizeMm": null
+    },
+    "memory": {
+      "type": "HBM (Google does not state the generation)",
+      "stacks": null,
+      "capacityGB": 32,
+      "bandwidthTBs": 1.638,
+      "suppliers": []
+    },
+    "compute": {
+      "fp16TFLOPS": 918,
+      "fp8TFLOPS": null,
+      "fp4TFLOPS": null,
+      "precisionNote": "Google’s v6e documentation gives 918 TFLOPs peak bf16 per chip and 1,836 TOPs peak Int8. Both are dense; Google publishes no sparsity figures. The eight-bit figure is INT8 rather than FP8, so it is recorded here in the note rather than in the FP8 field, and there is no FP4 figure."
+    },
+    "tdpW": null,
+    "interconnect": {
+      "chipToChip": "Inter-chip interconnect, 800 GB/s bidirectional per chip over four ICI ports",
+      "scaleUp": "256-chip pod in a 2D torus, 234.9 PFLOPs bf16 per pod",
+      "scaleOut": "Data center network, 25.6 Tbps per pod, four 200 Gbps NICs per eight-chip host"
+    },
+    "systemIntegrators": [],
+    "priceEstimate": null,
+    "bomEstimate": null,
+    "exportStatus": "Not sold as merchant silicon. Google consumes it internally and rents it as Cloud TPU, so the control surface is the physical shipment of racks abroad rather than a per-chip licence. Total processing performance is 14,688, whether taken from bf16 (16 x 918) or INT8 (8 x 1,836), three times the 4,800 threshold in ECCN 3A090.a.",
+    "notes": "The last TPU before Ironwood, and the one Google scaled hardest for external customers. Bandwidth pins the memory down even though Google will not: 1,638 GB/s across 32 GB works out at two stacks running near HBM3 pin speed. Google publishes compute, memory and fabric numbers for its TPUs and nothing else: no foundry, no process node, no die area, no transistor count, no package type and no HBM stack count. Those fields are empty here rather than filled from unofficial reporting. Epoch AI puts the power draw at about 380 W; that is an estimate, not a Google figure, so the TDP field is empty.",
+    "layout": {
+      "unit": "mm",
+      "interposer": [
+        50,
+        34
+      ],
+      "dies": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 24,
+          "h": 28
+        }
+      ],
+      "hbm": [
+        {
+          "x": -18.5,
+          "y": 0,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": 18.5,
+          "y": 0,
+          "w": 11,
+          "h": 11
+        }
+      ],
+      "substrate": [
+        66,
+        50
+      ]
+    },
+    "sources": [
+      {
+        "label": "Google Cloud TPU v6e (Trillium) documentation",
+        "url": "https://docs.cloud.google.com/tpu/docs/v6e"
+      },
+      {
+        "label": "Epoch AI machine learning hardware database (ml_hardware.csv)",
+        "url": "https://epoch.ai/data/machine-learning-hardware"
+      },
+      {
+        "label": "Federal Register, 25 October 2023: TPP and performance density replace the interconnect test (govinfo PDF)",
+        "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23055.pdf"
+      }
+    ]
+  },
+  {
+    "id": "tpu-v5p",
+    "name": "TPU v5p",
+    "family": "TPU",
+    "vendor": "Google",
+    "vendorCountry": "US",
+    "announced": "2023-12",
+    "shipping": null,
+    "status": "In service as Cloud TPU",
+    "target": "Training",
+    "process": {
+      "foundry": null,
+      "node": null,
+      "country": null
+    },
+    "die": {
+      "count": null,
+      "areaMm2Each": null,
+      "transistorsB": null,
+      "reticleLimited": null
+    },
+    "package": {
+      "type": null,
+      "assembler": null,
+      "sizeMm": null
+    },
+    "memory": {
+      "type": "HBM (Google does not state the generation)",
+      "stacks": null,
+      "capacityGB": 95,
+      "bandwidthTBs": 2.765,
+      "suppliers": []
+    },
+    "compute": {
+      "fp16TFLOPS": 459,
+      "fp8TFLOPS": 459,
+      "fp4TFLOPS": null,
+      "precisionNote": "Google’s v5p table gives 459 TFLOPs peak per chip for BF16 and the same 459 TFLOPs for FP8. Dropping to eight-bit buys no throughput on this part, which is the opposite of the Blackwell and CDNA generations. Both figures are dense; Google publishes no sparsity numbers and no FP4 rate. Capacity is quoted in GiB."
+    },
+    "tdpW": null,
+    "interconnect": {
+      "chipToChip": "Inter-chip interconnect, 1,200 GB/s bidirectional per chip",
+      "scaleUp": "8,960-chip pod in a 3D torus; the largest single schedulable job is 6,144 chips",
+      "scaleOut": "Data center network, 50 Gbps per chip"
+    },
+    "systemIntegrators": [],
+    "priceEstimate": null,
+    "bomEstimate": null,
+    "exportStatus": "Not sold as merchant silicon; the same posture as the rest of the TPU line. Total processing performance is 7,344, taken from BF16 (16 x 459) rather than FP8 (8 x 459 = 3,672), because the rule takes the highest result. That is above the 4,800 threshold in ECCN 3A090.a.",
+    "notes": "The training TPU of the pre-Ironwood era, and the largest coherent domain Google had built at the time: 8,960 chips in a 3D torus. It carries two TensorCores and four SparseCores per chip. Its FP8 rate matching its BF16 rate is the clearest sign that the v5 generation was designed before low precision became the axis of competition. Google publishes compute, memory and fabric numbers for its TPUs and nothing else: no foundry, no process node, no die area, no transistor count, no package type and no HBM stack count. Those fields are empty here rather than filled from unofficial reporting.",
+    "layout": {
+      "unit": "mm",
+      "interposer": [
+        52,
+        36
+      ],
+      "dies": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 25,
+          "h": 29
+        }
+      ],
+      "hbm": [
+        {
+          "x": -19.5,
+          "y": -6,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": -19.5,
+          "y": 6,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": 19.5,
+          "y": -6,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": 19.5,
+          "y": 6,
+          "w": 11,
+          "h": 11
+        }
+      ],
+      "substrate": [
+        68,
+        52
+      ]
+    },
+    "sources": [
+      {
+        "label": "Google Cloud TPU v5p documentation",
+        "url": "https://docs.cloud.google.com/tpu/docs/v5p"
+      },
+      {
+        "label": "Epoch AI machine learning hardware database (ml_hardware.csv)",
+        "url": "https://epoch.ai/data/machine-learning-hardware"
+      },
+      {
+        "label": "Federal Register, 25 October 2023: TPP and performance density replace the interconnect test (govinfo PDF)",
+        "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23055.pdf"
+      }
+    ]
+  },
+  {
+    "id": "tpu-v5e",
+    "name": "TPU v5e",
+    "family": "TPU",
+    "vendor": "Google",
+    "vendorCountry": "US",
+    "announced": "2023-08",
+    "shipping": null,
+    "status": "In service as Cloud TPU",
+    "target": "Inference and small-scale training",
+    "process": {
+      "foundry": null,
+      "node": null,
+      "country": null
+    },
+    "die": {
+      "count": null,
+      "areaMm2Each": null,
+      "transistorsB": null,
+      "reticleLimited": null
+    },
+    "package": {
+      "type": null,
+      "assembler": null,
+      "sizeMm": null
+    },
+    "memory": {
+      "type": "HBM (Google does not state the generation)",
+      "stacks": null,
+      "capacityGB": 16,
+      "bandwidthTBs": 0.86,
+      "suppliers": []
+    },
+    "compute": {
+      "fp16TFLOPS": 197,
+      "fp8TFLOPS": null,
+      "fp4TFLOPS": null,
+      "precisionNote": "Google’s v5e table gives 197 TFLOPs peak bf16 per chip and 393 TOPs peak Int8, both dense. The eight-bit figure is INT8, not FP8, so it stays in this note. Google states the memory bandwidth as 800 GiBps, which is 859 GB/s; the field above carries the converted figure."
+    },
+    "tdpW": null,
+    "interconnect": {
+      "chipToChip": "Inter-chip interconnect, 400 GB/s bidirectional per chip over four ICI ports",
+      "scaleUp": "256-chip pod in a 2D torus, 50.63 PFLOPs bf16 per pod",
+      "scaleOut": "Data center network, 6.4 Tbps per pod, two 100 Gbps NICs per eight-chip host"
+    },
+    "systemIntegrators": [],
+    "priceEstimate": null,
+    "bomEstimate": null,
+    "exportStatus": "Not sold as merchant silicon. Total processing performance is 3,152 (16 x 197), below the 4,800 in ECCN 3A090.a, which makes it the only chip on this page that clears the headline threshold on arithmetic alone. It would not clear the second test: Epoch AI puts the die at 325 mm2, which gives a performance density near 9.7, well above the 5.92 that pulls any chip of 1,600 TPP or more into 3A090.a. Google does not publish the die area, so that second figure rests on Epoch rather than the vendor.",
+    "notes": "The cheap TPU, sold on performance per dollar rather than peak: Google quotes it at 0.65 times the cost of ownership of the v4 for the same work. It is also the clearest illustration of why BIS added a density test in October 2023. A chip can sit under the 4,800 line and still be worth controlling, because 256 of them in a pod deliver 50.63 PFLOPs. Google publishes compute, memory and fabric numbers for its TPUs and nothing else: no foundry, no process node, no die area, no transistor count, no package type and no HBM stack count. Those fields are empty here rather than filled from unofficial reporting.",
+    "layout": {
+      "unit": "mm",
+      "interposer": [
+        46,
+        32
+      ],
+      "dies": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 22,
+          "h": 26
+        }
+      ],
+      "hbm": [
+        {
+          "x": -17,
+          "y": 0,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": 17,
+          "y": 0,
+          "w": 11,
+          "h": 11
+        }
+      ],
+      "substrate": [
+        62,
+        46
+      ]
+    },
+    "sources": [
+      {
+        "label": "Google Cloud TPU v5e documentation",
+        "url": "https://docs.cloud.google.com/tpu/docs/v5e"
+      },
+      {
+        "label": "Epoch AI machine learning hardware database (ml_hardware.csv)",
+        "url": "https://epoch.ai/data/machine-learning-hardware"
+      },
+      {
+        "label": "Federal Register, 25 October 2023: TPP and performance density replace the interconnect test (govinfo PDF)",
+        "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23055.pdf"
+      },
+      {
+        "label": "CSET explainer: the Commerce Department October 2023 export control update",
+        "url": "https://cset.georgetown.edu/article/bis-2023-update-explainer/"
+      }
+    ]
+  },
+  {
+    "id": "tpu-v4",
+    "name": "TPU v4",
+    "family": "TPU",
+    "vendor": "Google",
+    "vendorCountry": "US",
+    "announced": "2021-05",
+    "shipping": null,
+    "status": "In service as Cloud TPU; the oldest generation Google still documents",
+    "target": "Training and inference",
+    "process": {
+      "foundry": null,
+      "node": null,
+      "country": null
+    },
+    "die": {
+      "count": null,
+      "areaMm2Each": null,
+      "transistorsB": null,
+      "reticleLimited": null
+    },
+    "package": {
+      "type": null,
+      "assembler": null,
+      "sizeMm": null
+    },
+    "memory": {
+      "type": "HBM2",
+      "stacks": null,
+      "capacityGB": 32,
+      "bandwidthTBs": 1.2,
+      "suppliers": []
+    },
+    "compute": {
+      "fp16TFLOPS": 275,
+      "fp8TFLOPS": null,
+      "fp4TFLOPS": null,
+      "precisionNote": "Google gives a single figure, 275 teraflops per chip in bf16 or int8, with no separate eight-bit rate and no sparsity figure. Dropping to eight bits buys nothing on this part. There is no FP8 or FP4 datapath. Capacity is quoted as 32 GiB."
+    },
+    "tdpW": 192,
+    "interconnect": {
+      "chipToChip": "Inter-chip interconnect in a 3D mesh; Google does not publish a per-chip bandwidth for the v4",
+      "scaleUp": "4,096-chip pod, 1.1 exaflops bf16, 1.1 PB/s all-reduce bandwidth, 24 TB/s bisection",
+      "scaleOut": "Optical circuit switching between cubes"
+    },
+    "systemIntegrators": [],
+    "priceEstimate": null,
+    "bomEstimate": null,
+    "exportStatus": "Not sold as merchant silicon. Total processing performance is 4,400 (16 x 275), which sits 400 points below the 4,800 threshold in ECCN 3A090.a. Whether it would be caught by the density test added in October 2023 cannot be worked out from allowed sources, because Google publishes no die area.",
+    "notes": "The generation that made TPUs credible outside Google, and the only one on this page with a published power figure: Google reports measured minimum, mean and maximum draw of 90, 170 and 192 W, so the TDP field above carries the measured maximum rather than a rating. Two TensorCores per chip, HBM2 rather than the unnamed HBM of later parts, and a 3D mesh instead of the torus that came later. Google publishes compute, memory and fabric numbers for its TPUs and nothing else: no foundry, no process node, no die area, no transistor count, no package type and no HBM stack count. Those fields are empty here rather than filled from unofficial reporting.",
+    "layout": {
+      "unit": "mm",
+      "interposer": [
+        50,
+        34
+      ],
+      "dies": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 24,
+          "h": 28
+        }
+      ],
+      "hbm": [
+        {
+          "x": -18.5,
+          "y": -6,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": -18.5,
+          "y": 6,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": 18.5,
+          "y": -6,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": 18.5,
+          "y": 6,
+          "w": 11,
+          "h": 11
+        }
+      ],
+      "substrate": [
+        66,
+        50
+      ]
+    },
+    "sources": [
+      {
+        "label": "Google Cloud TPU v4 documentation",
+        "url": "https://docs.cloud.google.com/tpu/docs/v4"
+      },
+      {
+        "label": "Epoch AI machine learning hardware database (ml_hardware.csv)",
+        "url": "https://epoch.ai/data/machine-learning-hardware"
+      },
+      {
+        "label": "Federal Register, 25 October 2023: TPP and performance density replace the interconnect test (govinfo PDF)",
+        "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23055.pdf"
+      }
+    ]
+  },
+  {
     "id": "aws-trainium3",
     "name": "Trainium3",
     "family": "Trainium",
@@ -2017,6 +2845,120 @@
     ]
   },
   {
+    "id": "trainium2",
+    "name": "Trainium2",
+    "family": "Trainium",
+    "vendor": "Amazon (Annapurna Labs)",
+    "vendorCountry": "US",
+    "announced": "2024-12",
+    "shipping": "2024-Q4",
+    "status": "In service as EC2 Trn2 instances; superseded by Trainium3",
+    "target": "Training and inference",
+    "process": {
+      "foundry": null,
+      "node": null,
+      "country": null
+    },
+    "die": {
+      "count": null,
+      "areaMm2Each": null,
+      "transistorsB": null,
+      "reticleLimited": null
+    },
+    "package": {
+      "type": null,
+      "assembler": null,
+      "sizeMm": null
+    },
+    "memory": {
+      "type": "HBM (AWS states only 96 GiB of device memory at 2.9 TB/s)",
+      "stacks": null,
+      "capacityGB": 96,
+      "bandwidthTBs": 2.9,
+      "suppliers": []
+    },
+    "compute": {
+      "fp16TFLOPS": 667,
+      "fp8TFLOPS": 1299,
+      "fp4TFLOPS": null,
+      "precisionNote": "Dense, from the AWS Neuron architecture docs: eight NeuronCore-v3 deliver 1,299 FP8 TFLOPS, 667 BF16, FP16 and TF32 TFLOPS, and 181 FP32 TFLOPS, with 2,563 TFLOPS quoted for the sparse case. Trainium2 has no FP4 datapath; that arrives with Trainium3."
+    },
+    "tdpW": null,
+    "interconnect": {
+      "chipToChip": "NeuronLink-v3, 1.28 TB/s per chip; 1,024 GB/s per chip inside an instance and 256 GB/s between instances in an UltraServer",
+      "scaleUp": "Trn2 instance of 16 chips, 1,536 GiB of device memory, 46.4 TB/s and 20.8 PFLOPS FP8; Trn2 UltraServer of 64 chips",
+      "scaleOut": "Elastic Fabric Adapter, 3,200 Gbps per instance"
+    },
+    "systemIntegrators": [],
+    "priceEstimate": null,
+    "bomEstimate": null,
+    "exportStatus": "Not sold as merchant silicon; consumed inside AWS and rented as EC2 Trn2 instances. Total processing performance is 10,672, and it comes from the BF16 rate (16 x 667) rather than FP8 (8 x 1,299 = 10,392), because the rule takes the highest result across precisions. Either way it is more than twice the 4,800 threshold in ECCN 3A090.a.",
+    "notes": "The chip that made AWS a credible second source, and the generation Anthropic trained on at scale. It is also a good demonstration of how the export-control arithmetic behaves: FP8 doubles the BF16 rate on most accelerators, but on Trainium2 it falls short of double, so the BF16 figure sets the total processing performance. AWS publishes compute, memory and fabric numbers and nothing about the silicon: no node, no foundry, no die count, no package and no power figure. Epoch AI puts the draw at about 500 W, which is an estimate rather than an AWS number.",
+    "layout": {
+      "unit": "mm",
+      "interposer": [
+        52,
+        36
+      ],
+      "dies": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 24,
+          "h": 28
+        }
+      ],
+      "hbm": [
+        {
+          "x": -19.5,
+          "y": -6,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": -19.5,
+          "y": 6,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": 19.5,
+          "y": -6,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": 19.5,
+          "y": 6,
+          "w": 11,
+          "h": 11
+        }
+      ],
+      "substrate": [
+        70,
+        54
+      ]
+    },
+    "sources": [
+      {
+        "label": "AWS Neuron documentation: Trainium2 architecture",
+        "url": "https://awsdocs-neuron.readthedocs-hosted.com/en/latest/general/arch/neuron-hardware/trainium2.html"
+      },
+      {
+        "label": "AWS Neuron documentation: Trn2 instance and UltraServer architecture",
+        "url": "https://awsdocs-neuron.readthedocs-hosted.com/en/latest/general/arch/neuron-hardware/trn2-arch.html"
+      },
+      {
+        "label": "Epoch AI machine learning hardware database (ml_hardware.csv)",
+        "url": "https://epoch.ai/data/machine-learning-hardware"
+      },
+      {
+        "label": "Federal Register, 25 October 2023: TPP and performance density replace the interconnect test (govinfo PDF)",
+        "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23055.pdf"
+      }
+    ]
+  },
+  {
     "id": "microsoft-maia-200",
     "name": "Maia 200",
     "family": "Maia",
@@ -2131,6 +3073,116 @@
       {
         "label": "Microsoft: Deep dive into the Maia 200 architecture",
         "url": "https://techcommunity.microsoft.com/blog/azureinfrastructureblog/deep-dive-into-the-maia-200-architecture/4489312"
+      }
+    ]
+  },
+  {
+    "id": "maia-100",
+    "name": "Maia 100",
+    "family": "Maia",
+    "vendor": "Microsoft",
+    "vendorCountry": "US",
+    "announced": "2023-11",
+    "shipping": null,
+    "status": "Deployed inside Azure; superseded by Maia 200",
+    "target": "Training and inference for Azure OpenAI workloads",
+    "process": {
+      "foundry": "TSMC",
+      "node": "5 nm",
+      "country": "TW"
+    },
+    "die": {
+      "count": 1,
+      "areaMm2Each": 820,
+      "transistorsB": null,
+      "reticleLimited": null
+    },
+    "package": {
+      "type": "Advanced packaging from TSMC (Microsoft does not name the variant)",
+      "assembler": "TSMC",
+      "sizeMm": null
+    },
+    "memory": {
+      "type": "HBM (Microsoft publishes no generation, capacity or bandwidth)",
+      "stacks": null,
+      "capacityGB": null,
+      "bandwidthTBs": null,
+      "suppliers": []
+    },
+    "compute": {
+      "fp16TFLOPS": 800,
+      "fp8TFLOPS": null,
+      "fp4TFLOPS": null,
+      "precisionNote": "Microsoft’s launch post publishes no performance figure of any kind. The 800 TFLOPS BF16 and FP16 above comes from Epoch AI’s hardware database, which does not state whether it is dense or sparse. Microsoft’s own Inside Maia 100 post, which carried the fuller specification, no longer resolves."
+    },
+    "tdpW": 500,
+    "interconnect": {
+      "chipToChip": "Custom Ethernet-based protocol, 4.8 terabits per accelerator in aggregate",
+      "scaleUp": "Custom rack with a sidekick heat exchanger and rack-level closed-loop liquid cooling",
+      "scaleOut": "The same Ethernet fabric"
+    },
+    "systemIntegrators": [],
+    "priceEstimate": null,
+    "bomEstimate": null,
+    "exportStatus": "Not sold as merchant silicon; deployed only in Azure regions. Total processing performance is 12,800 (16 x 800), well above the 4,800 threshold in ECCN 3A090.a.",
+    "notes": "Microsoft’s first accelerator, and the first silicon anywhere to implement the Microscaling data format that later became the MX standard. Microsoft published the cooling design in detail, down to the sidekick heat exchanger that sits beside the rack, and almost nothing about the chip: no memory capacity, no bandwidth, no transistor count and no throughput. The die area and power here come from Epoch AI, not from Microsoft.",
+    "layout": {
+      "unit": "mm",
+      "interposer": [
+        56,
+        40
+      ],
+      "dies": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 28.6,
+          "h": 28.7
+        }
+      ],
+      "hbm": [
+        {
+          "x": -21,
+          "y": -6,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": -21,
+          "y": 6,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": 21,
+          "y": -6,
+          "w": 11,
+          "h": 11
+        },
+        {
+          "x": 21,
+          "y": 6,
+          "w": 11,
+          "h": 11
+        }
+      ],
+      "substrate": [
+        74,
+        58
+      ]
+    },
+    "sources": [
+      {
+        "label": "Microsoft Azure blog: Azure Maia for the era of AI",
+        "url": "https://azure.microsoft.com/en-us/blog/azure-maia-for-the-era-of-ai-from-silicon-to-software-to-systems/"
+      },
+      {
+        "label": "Epoch AI machine learning hardware database (ml_hardware.csv)",
+        "url": "https://epoch.ai/data/machine-learning-hardware"
+      },
+      {
+        "label": "Federal Register, 25 October 2023: TPP and performance density replace the interconnect test (govinfo PDF)",
+        "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23055.pdf"
       }
     ]
   },
@@ -2291,6 +3343,84 @@
       {
         "label": "Meta: partnership with Broadcom",
         "url": "https://about.fb.com/news/meta-partners-with-broadcom/"
+      }
+    ]
+  },
+  {
+    "id": "mtia-v2",
+    "name": "MTIA v2",
+    "family": "MTIA",
+    "vendor": "Meta",
+    "vendorCountry": "US",
+    "announced": "2024-04",
+    "shipping": null,
+    "status": "Deployed inside Meta datacenters; superseded by MTIA 300 and MTIA 400",
+    "target": "Ranking and recommendation inference",
+    "process": {
+      "foundry": "TSMC",
+      "node": "5 nm",
+      "country": "TW"
+    },
+    "die": {
+      "count": 1,
+      "areaMm2Each": 421,
+      "transistorsB": null,
+      "reticleLimited": false
+    },
+    "package": {
+      "type": null,
+      "assembler": null,
+      "sizeMm": "25.6 x 16.4 die"
+    },
+    "memory": {
+      "type": "LPDDR5 on the board, plus 256 MB of on-die SRAM. No HBM",
+      "stacks": 0,
+      "capacityGB": 128,
+      "bandwidthTBs": 0.2048,
+      "suppliers": []
+    },
+    "compute": {
+      "fp16TFLOPS": 177,
+      "fp8TFLOPS": null,
+      "fp4TFLOPS": null,
+      "precisionNote": "Dense. Meta’s table gives 354 TOPS INT8 and 177 TFLOPS FP16 and BF16 for the matrix engines at 1.35 GHz, with 708 and 354 quoted for the sparse case. The vector core adds 11.06 TOPS INT8, 5.53 TFLOPS FP16 and 2.76 TFLOPS FP32. There is no FP8 or FP4 datapath."
+    },
+    "tdpW": 90,
+    "interconnect": {
+      "chipToChip": "None on the package; accelerators reach the host over 8 lanes of PCIe Gen5 at 32 GB/s",
+      "scaleUp": "Up to 72 accelerators per rack: three chassis, twelve boards each, two accelerators per board",
+      "scaleOut": null
+    },
+    "systemIntegrators": [],
+    "priceEstimate": null,
+    "bomEstimate": null,
+    "exportStatus": "Not sold; consumed entirely inside Meta datacenters. Total processing performance is 2,832 (16 x 177), below the 4,800 headline threshold, but performance density on the published 421 mm2 die works out at about 6.7, above the 5.92 that pulls any chip of 1,600 TPP or more into ECCN 3A090.a under the second limb BIS added in October 2023. It is the clearest case on this page of a chip the density test catches and the headline number misses.",
+    "notes": "The one large accelerator on this page with no HBM at all: 128 GB of LPDDR5 at 204.8 GB/s, about a sixteenth of an H100’s memory bandwidth, backed by 256 MB of on-chip SRAM, in a 90 W envelope. That is a deliberate choice for ranking and recommendation work, where the model is small and the traffic is enormous. Meta also publishes what almost nobody else does: the die measures 25.6 by 16.4 mm, 421 mm2, and holds 2.35 billion gates on TSMC 5 nm.",
+    "layout": {
+      "unit": "mm",
+      "interposer": null,
+      "dies": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 25.6,
+          "h": 16.4
+        }
+      ],
+      "hbm": [],
+      "substrate": [
+        45,
+        32
+      ]
+    },
+    "sources": [
+      {
+        "label": "Meta AI blog: our next-generation Meta training and inference accelerator",
+        "url": "https://ai.meta.com/blog/next-generation-meta-training-inference-accelerator-AI-MTIA/"
+      },
+      {
+        "label": "Federal Register, 25 October 2023: TPP and performance density replace the interconnect test (govinfo PDF)",
+        "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23055.pdf"
       }
     ]
   },
@@ -2561,6 +3691,136 @@
     ]
   },
   {
+    "id": "gaudi2",
+    "name": "Gaudi 2",
+    "family": "Gaudi",
+    "vendor": "Intel",
+    "vendorCountry": "US",
+    "announced": "2022-05",
+    "shipping": "2022-Q2",
+    "status": "Superseded by Gaudi 3",
+    "target": "Training and inference",
+    "process": {
+      "foundry": null,
+      "node": "7 nm (Intel states the node in the Gaudi 3 white paper and does not name the foundry for Gaudi 2)",
+      "country": null
+    },
+    "die": {
+      "count": null,
+      "areaMm2Each": null,
+      "transistorsB": null,
+      "reticleLimited": null
+    },
+    "package": {
+      "type": "OCP OAM 1.1 mezzanine card (HL-225H)",
+      "assembler": null,
+      "sizeMm": null
+    },
+    "memory": {
+      "type": "HBM2E plus 48 MB on-die SRAM",
+      "stacks": null,
+      "capacityGB": 96,
+      "bandwidthTBs": 2.45,
+      "suppliers": []
+    },
+    "compute": {
+      "fp16TFLOPS": 450,
+      "fp8TFLOPS": 865,
+      "fp4TFLOPS": null,
+      "precisionNote": "Intel’s Gaudi 2 white paper documents the memory, the networking and the data types the chip supports, FP32, TF32, BF16, FP16 and both FP8 encodings, but publishes no TFLOPS figure at all. The 450 TFLOPS BF16 and 865 TFLOPS FP8 above come from Epoch AI’s hardware database. Neither source states dense or sparse. Gaudi 2 has no FP4 datapath."
+    },
+    "tdpW": 600,
+    "interconnect": {
+      "chipToChip": "24 on-package 100 Gbps RoCE v2 RDMA NICs, 2.4 Tbps in total, over 48 lanes of 56 Gb PAM4",
+      "scaleUp": "HLBA-225 eight-card OAM baseboard",
+      "scaleOut": "The same Ethernet ports; PCIe Gen3 or Gen4 x16 to the host"
+    },
+    "systemIntegrators": [],
+    "priceEstimate": null,
+    "bomEstimate": null,
+    "exportStatus": "Controlled. Total processing performance is 7,200, taken from BF16 (16 x 450) rather than FP8 (8 x 865 = 6,920), above the 4,800 threshold in ECCN 3A090.a.",
+    "notes": "The chip that set the Ethernet bet Gaudi 3 inherited: 24 RDMA NICs on the package, so a Gaudi cluster needs no proprietary cable plant and no InfiniBand. It also carries 48 MB of local SRAM and hardware video decoders that let it run its own pre-processing. Intel positioned it against the A100 and, unusually for a vendor, published no peak throughput figure for it, which is why the compute row here rests on Epoch AI rather than a datasheet.",
+    "layout": {
+      "unit": "mm",
+      "interposer": [
+        56,
+        40
+      ],
+      "dies": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 28,
+          "h": 29
+        }
+      ],
+      "hbm": [
+        {
+          "x": -21,
+          "y": -11.6,
+          "w": 11,
+          "h": 10.5
+        },
+        {
+          "x": -21,
+          "y": 0,
+          "w": 11,
+          "h": 10.5
+        },
+        {
+          "x": -21,
+          "y": 11.6,
+          "w": 11,
+          "h": 10.5
+        },
+        {
+          "x": 21,
+          "y": -11.6,
+          "w": 11,
+          "h": 10.5
+        },
+        {
+          "x": 21,
+          "y": 0,
+          "w": 11,
+          "h": 10.5
+        },
+        {
+          "x": 21,
+          "y": 11.6,
+          "w": 11,
+          "h": 10.5
+        }
+      ],
+      "substrate": [
+        74,
+        58
+      ]
+    },
+    "sources": [
+      {
+        "label": "Intel Gaudi 2 AI accelerators white paper",
+        "url": "https://cdrdv2-public.intel.com/839363/Intel-Gaudi2-AI-Accelerators-whitepaper.pdf"
+      },
+      {
+        "label": "Intel Gaudi architecture documentation",
+        "url": "https://docs.habana.ai/en/latest/Gaudi_Overview/Gaudi_Architecture.html"
+      },
+      {
+        "label": "Intel Gaudi 3 AI accelerator white paper (states the Gaudi 2 node)",
+        "url": "https://cdrdv2-public.intel.com/817486/gaudi-3-ai-accelerator-white-paper.pdf"
+      },
+      {
+        "label": "Epoch AI machine learning hardware database (ml_hardware.csv)",
+        "url": "https://epoch.ai/data/machine-learning-hardware"
+      },
+      {
+        "label": "Federal Register, 25 October 2023: TPP and performance density replace the interconnect test (govinfo PDF)",
+        "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23055.pdf"
+      }
+    ]
+  },
+  {
     "id": "cerebras-wse3-turbo",
     "name": "WSE-3 Turbo (CS-4)",
     "family": "Wafer Scale Engine",
@@ -2720,6 +3980,124 @@
       {
         "label": "SemiAnalysis: Groq inference tokenomics",
         "url": "https://newsletter.semianalysis.com/p/groq-inference-tokenomics-speed-but"
+      }
+    ]
+  },
+  {
+    "id": "ascend-910b",
+    "name": "Ascend 910B",
+    "family": "Ascend",
+    "vendor": "Huawei (HiSilicon)",
+    "vendorCountry": "CN",
+    "announced": "2022",
+    "shipping": "2023",
+    "status": "Shipping; the volume Chinese accelerator before the 910C",
+    "target": "Training and inference",
+    "process": {
+      "foundry": "SMIC",
+      "node": "7 nm class",
+      "country": "CN"
+    },
+    "die": {
+      "count": null,
+      "areaMm2Each": null,
+      "transistorsB": null,
+      "reticleLimited": null
+    },
+    "package": {
+      "type": null,
+      "assembler": null,
+      "sizeMm": null
+    },
+    "memory": {
+      "type": "HBM2E",
+      "stacks": null,
+      "capacityGB": 64,
+      "bandwidthTBs": 1.6,
+      "suppliers": []
+    },
+    "compute": {
+      "fp16TFLOPS": 400,
+      "fp8TFLOPS": null,
+      "fp4TFLOPS": null,
+      "precisionNote": "CSET puts the second-generation Ascend 910B series at a maximum theoretical 400 TFLOPS FP16, 80 TFLOPS above the first-generation 910, and finds that only about 75 percent of that gain is real hardware: half comes from a higher clock, a quarter from an extra vector unit per AI core, and the last quarter from a change in how Huawei counts peak performance. Huawei publishes no per-chip figure of its own. No allowed source gives an FP8 or FP4 rate."
+    },
+    "tdpW": 400,
+    "interconnect": {
+      "chipToChip": "HCCS; Epoch AI records 392 GB/s of intranode bandwidth",
+      "scaleUp": null,
+      "scaleOut": null
+    },
+    "systemIntegrators": [],
+    "priceEstimate": null,
+    "bomEstimate": null,
+    "exportStatus": "Chinese design, Chinese fab, and controlled from both directions. Huawei has been under US export controls since 2019, so the 910B cannot lawfully draw on US-origin technology, and its total processing performance of 6,400 (16 x 400) would put it above the 4,800 threshold in ECCN 3A090.a if it were a US export. Epoch AI reads its performance as similar to the A100, which is the level the October 2022 threshold was drawn to exclude.",
+    "notes": "The domestic answer to the A100, and the evidence that export controls bite. CSET finds that Huawei needed at least two years to redesign the part for SMIC and cut the number of active AI cores between the first and second generations, most likely because of yield or capacity limits on SMIC’s 7 nm line. The 910B ships in several grades, from a 910B4 at 32 GB and 800 GB/s to a 910B1 at 64 GB and 1.6 TB/s; the figures above are the top of that range. SemiAnalysis places the chip between the A100 and the H100 in performance. Huawei publishes no die area, transistor count, package detail or per-chip datasheet.",
+    "layout": {
+      "unit": "mm",
+      "interposer": [
+        50,
+        34
+      ],
+      "dies": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 24,
+          "h": 28
+        }
+      ],
+      "hbm": [
+        {
+          "x": -18,
+          "y": -5.6,
+          "w": 11,
+          "h": 10.5
+        },
+        {
+          "x": -18,
+          "y": 5.6,
+          "w": 11,
+          "h": 10.5
+        },
+        {
+          "x": 18,
+          "y": -5.6,
+          "w": 11,
+          "h": 10.5
+        },
+        {
+          "x": 18,
+          "y": 5.6,
+          "w": 11,
+          "h": 10.5
+        }
+      ],
+      "substrate": [
+        66,
+        50
+      ]
+    },
+    "sources": [
+      {
+        "label": "CSET: Pushing the Limits, Huawei’s AI chip tests US export controls",
+        "url": "https://cset.georgetown.edu/publication/pushing-the-limits-huaweis-ai-chip-tests-u-s-export-controls/"
+      },
+      {
+        "label": "Epoch AI machine learning hardware database (ml_hardware.csv)",
+        "url": "https://epoch.ai/data/machine-learning-hardware"
+      },
+      {
+        "label": "Epoch AI: what did US export controls mean for China’s AI capabilities?",
+        "url": "https://epoch.ai/gradient-updates/us-export-controls-china-ai"
+      },
+      {
+        "label": "SemiAnalysis: Nvidia’s new China AI chips circumvent US restrictions (public preamble only; the specification tables are behind the paywall)",
+        "url": "https://newsletter.semianalysis.com/p/nvidias-new-china-ai-chips-circumvent"
+      },
+      {
+        "label": "Federal Register, 13 October 2022: the rule that created ECCN 3A090 (govinfo PDF)",
+        "url": "https://www.govinfo.gov/content/pkg/FR-2022-10-13/pdf/2022-21658.pdf"
       }
     ]
   },

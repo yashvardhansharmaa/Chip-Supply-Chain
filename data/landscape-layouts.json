@@ -1744,5 +1744,703 @@
       "https://developer.nvidia.com/blog/nvidia-hopper-architecture-in-depth/"
     ],
     "note": "Inferred, not stated. Nvidia publishes no H20 package information at all. Epoch AI gives 96 GB of HBM3, and Nvidia’s Hopper post says the full GH100 carries six HBM stack sites, so this is drawn as one Hopper die with six 16 GB stacks, three per long edge, in the same arrangement as the H200. Every dimension is estimated."
+  },
+  "tpu-v6e": {
+    "unit": "mm",
+    "interposer": [
+      50,
+      34
+    ],
+    "dies": [
+      {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 28
+      }
+    ],
+    "hbm": [
+      {
+        "x": -18.5,
+        "y": 0,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 18.5,
+        "y": 0,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      66,
+      50
+    ],
+    "estimated": true,
+    "sources": [
+      "https://docs.cloud.google.com/tpu/docs/v6e"
+    ],
+    "note": "Estimated. Google states one TensorCore, 32 GB of HBM and 1,638 GB/s per chip, and nothing about the package. Two stacks divide the capacity into 16 GB each and the bandwidth into 819 GB/s each, which is one HBM3 stack at 6.4 Gbps, so the chip is drawn with a single compute die and one stack per long edge. Every dimension is estimated."
+  },
+  "tpu-v5p": {
+    "unit": "mm",
+    "interposer": [
+      52,
+      36
+    ],
+    "dies": [
+      {
+        "x": 0,
+        "y": 0,
+        "w": 25,
+        "h": 29
+      }
+    ],
+    "hbm": [
+      {
+        "x": -19.5,
+        "y": -6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -19.5,
+        "y": 6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 19.5,
+        "y": -6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 19.5,
+        "y": 6,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      68,
+      52
+    ],
+    "estimated": true,
+    "sources": [
+      "https://docs.cloud.google.com/tpu/docs/v5p"
+    ],
+    "note": "Estimated. Google states 95 GiB of HBM at 2,765 GB/s and two TensorCores per chip, and publishes nothing about the package. Four stacks are the smallest count that divides 96 GB evenly at 24 GB each, so the chip is drawn as one compute die with two stacks per long edge. Every dimension, and the stack count itself, is estimated."
+  },
+  "tpu-v5e": {
+    "unit": "mm",
+    "interposer": [
+      46,
+      32
+    ],
+    "dies": [
+      {
+        "x": 0,
+        "y": 0,
+        "w": 22,
+        "h": 26
+      }
+    ],
+    "hbm": [
+      {
+        "x": -17,
+        "y": 0,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 17,
+        "y": 0,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      62,
+      46
+    ],
+    "estimated": true,
+    "sources": [
+      "https://docs.cloud.google.com/tpu/docs/v5e"
+    ],
+    "note": "Estimated. Google states one TensorCore, 16 GB of HBM and 800 GiBps per chip, and nothing about the package. Two stacks of 8 GB is the smallest arrangement that fits, so the chip is drawn with one compute die and one stack per long edge. Every dimension is estimated."
+  },
+  "tpu-v4": {
+    "unit": "mm",
+    "interposer": [
+      50,
+      34
+    ],
+    "dies": [
+      {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 28
+      }
+    ],
+    "hbm": [
+      {
+        "x": -18.5,
+        "y": -6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -18.5,
+        "y": 6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 18.5,
+        "y": -6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 18.5,
+        "y": 6,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      66,
+      50
+    ],
+    "estimated": true,
+    "sources": [
+      "https://docs.cloud.google.com/tpu/docs/v4"
+    ],
+    "note": "Estimated. Google states 32 GiB of HBM2 at 1,200 GB/s and two TensorCores per chip, and publishes no package information. Four 8 GB stacks at 300 GB/s each is the arrangement that fits both numbers, so the chip is drawn with one compute die and two stacks per long edge. Every dimension is estimated."
+  },
+  "mi300x": {
+    "unit": "mm",
+    "interposer": [
+      62,
+      50
+    ],
+    "base": [
+      {
+        "x": -9.5,
+        "y": 8.75,
+        "w": 18.5,
+        "h": 17
+      },
+      {
+        "x": 9.5,
+        "y": 8.75,
+        "w": 18.5,
+        "h": 17
+      },
+      {
+        "x": -9.5,
+        "y": -8.75,
+        "w": 18.5,
+        "h": 17
+      },
+      {
+        "x": 9.5,
+        "y": -8.75,
+        "w": 18.5,
+        "h": 17
+      }
+    ],
+    "dies": [
+      {
+        "x": -14,
+        "y": 7.5,
+        "w": 8,
+        "h": 14
+      },
+      {
+        "x": -5,
+        "y": 7.5,
+        "w": 8,
+        "h": 14
+      },
+      {
+        "x": 5,
+        "y": 7.5,
+        "w": 8,
+        "h": 14
+      },
+      {
+        "x": 14,
+        "y": 7.5,
+        "w": 8,
+        "h": 14
+      },
+      {
+        "x": -14,
+        "y": -7.5,
+        "w": 8,
+        "h": 14
+      },
+      {
+        "x": -5,
+        "y": -7.5,
+        "w": 8,
+        "h": 14
+      },
+      {
+        "x": 5,
+        "y": -7.5,
+        "w": 8,
+        "h": 14
+      },
+      {
+        "x": 14,
+        "y": -7.5,
+        "w": 8,
+        "h": 14
+      }
+    ],
+    "hbm": [
+      {
+        "x": -25.5,
+        "y": -17.1,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -25.5,
+        "y": -5.7,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -25.5,
+        "y": 5.7,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -25.5,
+        "y": 17.1,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 25.5,
+        "y": -17.1,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 25.5,
+        "y": -5.7,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 25.5,
+        "y": 5.7,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 25.5,
+        "y": 17.1,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      76.8,
+      72
+    ],
+    "estimated": true,
+    "sources": [
+      "https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/white-papers/amd-cdna-3-white-paper.pdf",
+      "https://www.amd.com/en/products/accelerators/instinct/mi300/mi300x.html"
+    ],
+    "note": "AMD’s CDNA 3 white paper states eight accelerator complex dies stacked vertically on four I/O dies and eight HBM stacks, which fixes the arrangement: two accelerator dies per I/O die in a two-by-two grid, four stacks to a side. The OAM outline is carried over from the MI355X layout in this dataset; AMD publishes no dimensions, so every rectangle is estimated."
+  },
+  "mi325x": {
+    "unit": "mm",
+    "interposer": [
+      62,
+      50
+    ],
+    "base": [
+      {
+        "x": -9.5,
+        "y": 8.75,
+        "w": 18.5,
+        "h": 17
+      },
+      {
+        "x": 9.5,
+        "y": 8.75,
+        "w": 18.5,
+        "h": 17
+      },
+      {
+        "x": -9.5,
+        "y": -8.75,
+        "w": 18.5,
+        "h": 17
+      },
+      {
+        "x": 9.5,
+        "y": -8.75,
+        "w": 18.5,
+        "h": 17
+      }
+    ],
+    "dies": [
+      {
+        "x": -14,
+        "y": 7.5,
+        "w": 8,
+        "h": 14
+      },
+      {
+        "x": -5,
+        "y": 7.5,
+        "w": 8,
+        "h": 14
+      },
+      {
+        "x": 5,
+        "y": 7.5,
+        "w": 8,
+        "h": 14
+      },
+      {
+        "x": 14,
+        "y": 7.5,
+        "w": 8,
+        "h": 14
+      },
+      {
+        "x": -14,
+        "y": -7.5,
+        "w": 8,
+        "h": 14
+      },
+      {
+        "x": -5,
+        "y": -7.5,
+        "w": 8,
+        "h": 14
+      },
+      {
+        "x": 5,
+        "y": -7.5,
+        "w": 8,
+        "h": 14
+      },
+      {
+        "x": 14,
+        "y": -7.5,
+        "w": 8,
+        "h": 14
+      }
+    ],
+    "hbm": [
+      {
+        "x": -25.5,
+        "y": -17.1,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -25.5,
+        "y": -5.7,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -25.5,
+        "y": 5.7,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -25.5,
+        "y": 17.1,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 25.5,
+        "y": -17.1,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 25.5,
+        "y": -5.7,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 25.5,
+        "y": 5.7,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 25.5,
+        "y": 17.1,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      76.8,
+      72
+    ],
+    "estimated": true,
+    "sources": [
+      "https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/white-papers/amd-cdna-3-white-paper.pdf",
+      "https://www.amd.com/en/products/accelerators/instinct/mi300/mi325x.html"
+    ],
+    "note": "The MI300X package with 12-high HBM3E in place of HBM3: AMD’s CDNA 3 white paper covers both the MI300X and the MI325X and states eight accelerator dies on four I/O dies with eight HBM stacks. Drawn identically to the MI300X, and every dimension is estimated."
+  },
+  "trainium2": {
+    "unit": "mm",
+    "interposer": [
+      52,
+      36
+    ],
+    "dies": [
+      {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 28
+      }
+    ],
+    "hbm": [
+      {
+        "x": -19.5,
+        "y": -6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -19.5,
+        "y": 6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 19.5,
+        "y": -6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 19.5,
+        "y": 6,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      70,
+      54
+    ],
+    "estimated": true,
+    "sources": [
+      "https://awsdocs-neuron.readthedocs-hosted.com/en/latest/general/arch/neuron-hardware/trainium2.html"
+    ],
+    "note": "Estimated. AWS states 96 GiB of device memory at 2.9 TB/s and eight NeuronCore-v3, and publishes no die count and no package information. Four 24 GB stacks divide the capacity evenly, so the chip is drawn as one compute rectangle with two stacks per long edge. Every dimension, including the die count, is estimated; the Trainium3 layout in this dataset shows the two-sub-assembly arrangement AWS moved to later."
+  },
+  "gaudi2": {
+    "unit": "mm",
+    "interposer": [
+      56,
+      40
+    ],
+    "dies": [
+      {
+        "x": 0,
+        "y": 0,
+        "w": 28,
+        "h": 29
+      }
+    ],
+    "hbm": [
+      {
+        "x": -21,
+        "y": -11.6,
+        "w": 11,
+        "h": 10.5
+      },
+      {
+        "x": -21,
+        "y": 0,
+        "w": 11,
+        "h": 10.5
+      },
+      {
+        "x": -21,
+        "y": 11.6,
+        "w": 11,
+        "h": 10.5
+      },
+      {
+        "x": 21,
+        "y": -11.6,
+        "w": 11,
+        "h": 10.5
+      },
+      {
+        "x": 21,
+        "y": 0,
+        "w": 11,
+        "h": 10.5
+      },
+      {
+        "x": 21,
+        "y": 11.6,
+        "w": 11,
+        "h": 10.5
+      }
+    ],
+    "substrate": [
+      74,
+      58
+    ],
+    "estimated": true,
+    "sources": [
+      "https://cdrdv2-public.intel.com/839363/Intel-Gaudi2-AI-Accelerators-whitepaper.pdf",
+      "https://cdrdv2-public.intel.com/817486/gaudi-3-ai-accelerator-white-paper.pdf"
+    ],
+    "note": "Estimated. Intel states 96 GB of HBM2E at 2.45 TB/s and an OCP OAM 1.1 mezzanine card, and gives no die count and no dimensions. Six 16 GB stacks divide the capacity evenly, and Intel describes Gaudi 3 as the generation that moved to two compute dies, so Gaudi 2 is drawn as one die with three stacks per long edge. Every dimension is estimated."
+  },
+  "ascend-910b": {
+    "unit": "mm",
+    "interposer": [
+      50,
+      34
+    ],
+    "dies": [
+      {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 28
+      }
+    ],
+    "hbm": [
+      {
+        "x": -18,
+        "y": -5.6,
+        "w": 11,
+        "h": 10.5
+      },
+      {
+        "x": -18,
+        "y": 5.6,
+        "w": 11,
+        "h": 10.5
+      },
+      {
+        "x": 18,
+        "y": -5.6,
+        "w": 11,
+        "h": 10.5
+      },
+      {
+        "x": 18,
+        "y": 5.6,
+        "w": 11,
+        "h": 10.5
+      }
+    ],
+    "substrate": [
+      66,
+      50
+    ],
+    "estimated": true,
+    "sources": [
+      "https://cset.georgetown.edu/publication/pushing-the-limits-huaweis-ai-chip-tests-u-s-export-controls/"
+    ],
+    "note": "Estimated. This is one half of the Ascend 910C layout in this dataset, which is drawn as two 910B-class sub-assemblies on a shared substrate: a single compute die with four HBM2E stacks on its own silicon interposer. Huawei publishes no die area, package photograph or dimension, so every rectangle is estimated."
+  },
+  "maia-100": {
+    "unit": "mm",
+    "interposer": [
+      56,
+      40
+    ],
+    "dies": [
+      {
+        "x": 0,
+        "y": 0,
+        "w": 28.6,
+        "h": 28.7
+      }
+    ],
+    "hbm": [
+      {
+        "x": -21,
+        "y": -6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -21,
+        "y": 6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 21,
+        "y": -6,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 21,
+        "y": 6,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      74,
+      58
+    ],
+    "estimated": true,
+    "sources": [
+      "https://azure.microsoft.com/en-us/blog/azure-maia-for-the-era-of-ai-from-silicon-to-software-to-systems/",
+      "https://epoch.ai/data/machine-learning-hardware"
+    ],
+    "note": "Estimated, and more so than most. Microsoft says only that Maia 100 is one of the largest processors made on the 5 nm node with advanced packaging from TSMC; Epoch AI gives the die area as 820 mm2, drawn here as a 28.6 mm square. Microsoft publishes no memory configuration, so the four stacks are the smallest arrangement consistent with an HBM inference part of this size, and the stack count itself is a guess flagged as such rather than a sourced figure."
+  },
+  "mtia-v2": {
+    "unit": "mm",
+    "interposer": null,
+    "dies": [
+      {
+        "x": 0,
+        "y": 0,
+        "w": 25.6,
+        "h": 16.4
+      }
+    ],
+    "hbm": [],
+    "substrate": [
+      45,
+      32
+    ],
+    "estimated": true,
+    "sources": [
+      "https://ai.meta.com/blog/next-generation-meta-training-inference-accelerator-AI-MTIA/"
+    ],
+    "note": "The only fully published die outline on this page: Meta gives the MTIA v2 die as 25.6 by 16.4 mm, 421 mm2, on TSMC 5 nm. There is no HBM and no interposer, because the 128 GB of LPDDR5 sits on the board rather than on the package, so the die is drawn flip-chipped straight onto a build-up substrate. Only the substrate rectangle is estimated."
   }
 }

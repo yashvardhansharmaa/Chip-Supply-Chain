@@ -865,13 +865,13 @@
       var sr = svg.getBoundingClientRect(), w = el.offsetWidth;
       el.style.left = Math.max(0, Math.min(r.left - m.left + r.width / 2 - w / 2, m.width - w)) + 'px';
       el.style.top = (sr.bottom - m.top + 6) + 'px';                     // under the drawing, so it never covers the stream
-      var hi = $('.sup-colhi');
-      if (hi) { hi.setAttribute('x', hit.getAttribute('x')); hi.setAttribute('width', hit.getAttribute('width')); hi.setAttribute('data-focus', focused ? '1' : '0'); hi.hidden = false; }
+      var hi = $('.sup-colhi'); // an SVG element has no .hidden property, so the attribute does the hiding
+      if (hi) { hi.setAttribute('x', hit.getAttribute('x')); hi.setAttribute('width', hit.getAttribute('width')); hi.setAttribute('data-focus', focused ? '1' : '0'); hi.removeAttribute('hidden'); }
       $$('.sup-lab').forEach(function (g) { if (+g.getAttribute('data-i') === i) g.setAttribute('data-hot', '1'); else g.removeAttribute('data-hot'); });
     },
     hideTip: function () {
       var el = $('#sup-tip'); if (el) el.hidden = true;
-      var hi = $('.sup-colhi'); if (hi) hi.hidden = true;
+      var hi = $('.sup-colhi'); if (hi) hi.setAttribute('hidden', 'hidden');
       $$('.sup-lab[data-hot]').forEach(function (g) { g.removeAttribute('data-hot'); });
       this.tipAt = -1;
     },
