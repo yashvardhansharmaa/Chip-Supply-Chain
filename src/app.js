@@ -255,7 +255,7 @@
         }
         Sections.update();
       }
-      var label = { stack: 'The Chain', walk: 'Start here', landscape: 'AI Chips', suppliers: 'Suppliers', controls: sub === 'exposure' ? 'China revenue share' : 'Export Controls', glossary: 'Glossary' }[v];
+      var label = { stack: 'The Chain', walk: 'Start here', landscape: 'AI Chips', suppliers: 'Suppliers', controls: sub === 'exposure' ? 'China revenue share' : 'Export Controls', glossary: 'Look up' }[v];
       document.title = (v === 'home' || !label) ? 'Compute Chokepoints' : 'Compute Chokepoints · ' + label;
     }
   };
@@ -1607,15 +1607,8 @@
   };
 
   /* ---------------- boot ---------------- */
-  var Glossary = {
-    init: function () {
-      var inp = $('#gl-search'); if (!inp) return;
-      inp.addEventListener('input', function () {
-        var q = inp.value.trim().toLowerCase();
-        $$('#glossary .gl-entry').forEach(function (el) { el.hidden = !!q && (el.getAttribute('data-text') || '').indexOf(q) < 0; });
-      });
-    }
-  };
+  /* the Look up page lives in src/modules/lookup.js and registers itself for the glossary view */
+
   /* ---------------- glossary popover: one panel, shared by every .gl-term in the prose ----------------
      The definitions already sit in the page, in the Glossary view, so nothing is duplicated. */
   /* ---------------- footnote popovers: hover or focus a citation number for the full source; click opens it ---------------- */
@@ -1708,7 +1701,7 @@
       if (!d) return;
       clearTimeout(this.timer);
       var t = this.panel();
-      t.innerHTML = '<b>' + esc(d.term) + '</b><p>' + esc(d.plain) + '</p><a href="#/glossary">Open the glossary →</a>';
+      t.innerHTML = '<b>' + esc(d.term) + '</b><p>' + esc(d.plain) + '</p><a href="#gl-' + String(d.term).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '">Look it up →</a>';
       t.hidden = false;
       this.btn = btn; this.at = Date.now(); btn.setAttribute('aria-describedby', 'gl-tip');
       this.place(btn);
@@ -1818,7 +1811,7 @@
         });
       });
       (DATA.chapters || []).filter(function (c) { return c.id === 'geopolitics'; }).forEach(function () { idx.push({ kind: 'Essay', title: 'Geopolitics', text: 'Who holds each chokepoint, the export-control campaign, China\'s response, the Gulf and smuggling.', href: '#/controls' }); });
-      $$('#glossary .gl-entry').forEach(function (el) { idx.push({ kind: 'Glossary', title: el.querySelector('dt').firstChild.textContent, text: el.querySelector('dd p').textContent, href: '#/glossary', el: el }); });
+      $$('#glossary .gl-entry').forEach(function (el) { idx.push({ kind: 'Glossary', title: el.querySelector('dt').firstChild.textContent, text: el.querySelector('dd p').textContent, href: '#' + el.id }); });
       (DATA.suppliers || []).forEach(function (r) { idx.push({ kind: 'Supplier', title: r.name, text: r.category + ' · ' + cname(r.country) + (r.role ? ' · ' + r.role : ''), href: '#/suppliers', q: r.name }); });
       (DATA.landscape || []).forEach(function (c) { idx.push({ kind: 'Chip', title: c.vendor + ' ' + c.name, text: ((c.process || {}).node || '') + ' · ' + ((c.memory || {}).type || '') + ' · ' + (c.status || ''), href: '#/landscape', chip: c.id }); });
       (DATA.timeline || []).forEach(function (e) { idx.push({ kind: 'Event ' + e.date, title: e.title, text: e.summary || '', href: '#/controls' }); });
@@ -1938,12 +1931,11 @@
 
   // public surface for the module files concatenated after this one (src/modules/*.js)
   window.CP = { Stage: Stage, Router: Router, Sections: Sections, Tools: Tools, Band: Band, DATA: DATA, $: $, $$: $$, esc: esc, narrow: narrow, safeUrl: safeUrl, cname: cname, reduced: reduced,
-    register: function (view, def) { MODULE_VIEWS[view] = def; if (Router.current === view && def.activate) def.activate(); } };
+    Landscape: Landscape, Suppliers: Suppliers, register: function (view, def) { MODULE_VIEWS[view] = def; if (Router.current === view && def.activate) def.activate(); } };
   function boot() {
     // QA aid: ?only=<chapter-id> shows just that chapter at the top of the page (screenshots in a hidden pane only paint the first frame)
     try { var only = new URLSearchParams(location.search).get('only'); if (only && document.getElementById(only)) { document.documentElement.classList.add('dbg-only'); document.getElementById(only).classList.add('only'); } } catch (e) { }
     Theme.init();
-    Glossary.init();
     Tip.init(); Cite.init();
     var printBtn = $('#print-page'); if (printBtn) printBtn.addEventListener('click', function () { window.print(); });
     (function () { // the phone tab strip fades at its right edge while there is more to scroll

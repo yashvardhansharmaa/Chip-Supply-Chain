@@ -1,0 +1,210 @@
+/* Look up (#/glossary): one list of every term, firm and chip on the left; the entry on the right,
+   then the places the site uses it. Terms are the glossary entries already in the page (the popovers read
+   them too); firm and chip cards are drawn from DATA at the moment of selection; the passages are found by
+   scanning the chapters, the board, the AI chips and the supplier list for the entry's name. */
+(function () {
+  var CP = window.CP; if (!CP) return;
+  var $ = CP.$, $$ = CP.$$, esc = CP.esc, DATA = CP.DATA || {}, cname = CP.cname, narrow = CP.narrow, reduced = CP.reduced;
+
+  var Lookup = {
+    built: false, selected: null, timer: null, cursor: -1, paras: null,
+
+    init: function () {
+      var self = this, inp = $('#gl-search'), list = $('#lk-items'); if (!inp || !list || this.built) return;
+      this.built = true;
+      inp.addEventListener('input', function () { clearTimeout(self.timer); self.timer = setTimeout(function () { self.filter(inp.value); }, 80); });
+      inp.addEventListener('focus', function () { $('#lk-list').classList.add('is-open'); });
+      inp.addEventListener('keydown', function (e) {
+        var vis = self.visible();
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+          e.preventDefault(); if (!vis.length) return;
+          self.cursor = e.key === 'ArrowDown' ? Math.min(vis.length - 1, self.cursor + 1) : Math.max(0, self.cursor - 1);
+          self.select(vis[self.cursor].id, true);
+        } else if (e.key === 'Enter') { e.preventDefault(); if (vis.length) { self.select(vis[Math.max(0, self.cursor)].id, true); inp.blur(); $('#lk-list').classList.remove('is-open'); } }
+        else if (e.key === 'Escape') { inp.value = ''; self.filter(''); }
+      });
+      list.addEventListener('click', function (e) {
+        var li = e.target.closest ? e.target.closest('li[id]') : null; if (!li) return;
+        self.select(li.id, true); $('#lk-list').classList.remove('is-open'); if (narrow()) inp.blur();
+      });
+      document.addEventListener('click', function (e) { if (narrow() && !e.target.closest('#lk-list')) $('#lk-list').classList.remove('is-open'); });
+      $$('#lk-rest [data-go]').forEach(function (b) { b.addEventListener('click', function () { self.select(b.getAttribute('data-go'), true); }); });
+      this.filter('');
+    },
+
+    activate: function () {
+      this.init();
+      var h = (location.hash || '').replace(/^#/, ''), el = h && document.getElementById(h);
+      if (el && (el.closest('#lk-items') || (el.classList && el.classList.contains('gl-entry')))) this.select(h, false);
+    },
+
+    items: function () { return $$('#lk-items li'); },
+    visible: function () { return this.items().filter(function (li) { return !li.hidden; }); },
+
+    filter: function (q) {
+      q = String(q || '').trim().toLowerCase(); var self = this;
+      var words = q.split(/\s+/).filter(Boolean), n = 0, all = this.items();
+      all.forEach(function (li) {
+        var t = li.getAttribute('data-text') || '', name = li.querySelector('.lk-name').textContent.toLowerCase();
+        var ok = !q || words.every(function (w) { return t.indexOf(w) >= 0; });
+        li.hidden = !ok; if (ok) n++;
+        li.classList.toggle('is-name', !!q && name.indexOf(q) >= 0);
+      });
+      // names that contain the query rise to the top, so "H100" is not buried under every firm that sells to Nvidia
+      if (q) { var list = $('#lk-items'); this.visible().filter(function (li) { return li.classList.contains('is-name'); }).reverse().forEach(function (li) { list.insertBefore(li, list.firstChild); }); }
+      else { var list2 = $('#lk-items'); all.slice().sort(function (a, b) { return a.querySelector('.lk-name').textContent.localeCompare(b.querySelector('.lk-name').textContent, 'en', { sensitivity: 'base' }); }).forEach(function (li) { list2.appendChild(li); }); }
+      this.cursor = -1;
+      var c = $('#lk-count'), terms = $$('#lk-items li[data-kind="term"]').length, firms = $$('#lk-items li[data-kind="firm"]').length, chips = $$('#lk-items li[data-kind="chip"]').length;
+      if (c) c.textContent = q ? (n ? n + ' of ' + all.length + ' entries' : 'No entry matches. The passages below search the whole site.') : all.length + ' entries · ' + terms + ' terms · ' + firms + ' firms · ' + chips + ' chips';
+      $('#lk-list').classList.toggle('is-open', !!q || document.activeElement === $('#gl-search'));
+      if (q && !n) this.showRaw(q); // no entry, but the site may still mention it: a tool model, a place, a person
+      else if (q && n && (!this.selected || document.getElementById(this.selected).hidden)) this.select(this.visible()[0].id, true);
+    },
+
+    /* ---------- selection ---------- */
+    select: function (id, push) {
+      if (/^gl-/.test(id)) id = 'lk-term-' + id.slice(3); // a glossary entry's own id (popovers, search, old links) names the same row
+      var li = document.getElementById(id); if (!li || !li.closest('#lk-items')) return;
+      var kind = li.getAttribute('data-kind'), key = li.getAttribute('data-key');
+      if (!kind) return;
+      this.selected = id;
+      this.items().forEach(function (x) { x.classList.toggle('is-on', x.id === id); x.setAttribute('aria-selected', x.id === id ? 'true' : 'false'); });
+      if (li.scrollIntoView && !narrow()) li.scrollIntoView({ block: 'nearest' });
+      $('#lk-rest').hidden = true;
+      var entry = null, name = li.querySelector('.lk-name').textContent, patterns = [name];
+      $$('#glossary .gl-entry').forEach(function (e) { e.hidden = true; });
+      var card = $('#lk-card'); card.hidden = true; card.innerHTML = '';
+      if (kind === 'term') {
+        entry = document.getElementById(key); if (entry) { entry.hidden = false; var aka = entry.querySelector('.aka'); if (aka) aka.textContent.split(/[;,]/).forEach(function (a) { a = a.trim(); if (a.length >= 3 && a.toLowerCase() !== name.toLowerCase()) patterns.push(a); }); }
+      } else if (kind === 'firm') {
+        var r = (DATA.suppliers || []).filter(function (x) { return x.name === key; })[0];
+        if (r) { card.innerHTML = this.firmCard(r); card.hidden = false; if (r.nativeName) patterns.push(r.nativeName); }
+      } else if (kind === 'chip') {
+        var c = (DATA.landscape || []).filter(function (x) { return x.id === key; })[0];
+        if (c) { card.innerHTML = this.chipCard(c); card.hidden = false; patterns = [c.name.replace(/\s*\(.*\)$/, '')]; if (c.family && c.family.length >= 3) patterns.push(c.family); }
+      }
+      this.wire(card);
+      this.mentions(patterns, kind, key);
+      var anchor = kind === 'term' ? key : id;
+      if (push && location.hash !== '#' + anchor) history.replaceState(null, '', '#' + anchor);
+      if (narrow()) { var top = $('#lk-entry'); if (top) top.scrollIntoView({ block: 'start', behavior: reduced ? 'auto' : 'smooth' }); }
+    },
+
+    showRaw: function (q) {
+      this.selected = null;
+      this.items().forEach(function (x) { x.classList.remove('is-on'); });
+      $$('#glossary .gl-entry').forEach(function (e) { e.hidden = true; });
+      var card = $('#lk-card'); card.hidden = false; card.innerHTML = '<div class="lk-noentry"><b>' + esc(q) + '</b><p>No entry of its own. Here is where the site mentions it.</p></div>';
+      $('#lk-rest').hidden = true;
+      this.mentions([q], 'raw', q);
+    },
+
+    /* ---------- cards ---------- */
+    firmCard: function (r) {
+      var meta = [r.category, r.subcategory].filter(Boolean).join(' · ');
+      var where = [r.city, cname(r.country)].filter(Boolean).join(', ');
+      var facts = [];
+      if (where) facts.push(['Based in', where]);
+      if (r.founded) facts.push(['Founded', String(r.founded)]);
+      if (r.ownership || r.ticker) facts.push(['Ownership', [r.ownership, r.ticker ? 'ticker ' + r.ticker : ''].filter(Boolean).join(', ')]);
+      if (r.revenueUSDb != null) facts.push(['Revenue', '$' + (Math.round(r.revenueUSDb * 10) / 10).toLocaleString('en-US') + 'bn' + (r.revenueYear ? ', ' + r.revenueYear : '')]);
+      if (r.customers && r.customers.length) facts.push(['Named customers', r.customers.join(', ')]);
+      return '<article class="lk-card lk-card--firm">' +
+        '<p class="lk-kind">Firm' + (r.chokepoint ? ' · <span class="lk-chk lk-chk--' + esc(String(r.chokepoint).toLowerCase()) + '">' + esc(r.chokepoint) + '</span>' : '') + '</p>' +
+        '<h3>' + esc(r.name) + (r.nativeName ? ' <span class="lk-native">' + esc(r.nativeName) + '</span>' : '') + '</h3>' +
+        (meta ? '<p class="lk-meta">' + esc(meta) + '</p>' : '') +
+        (r.role ? '<p class="lk-lede">' + esc(r.role) + '</p>' : '') +
+        (r.shareNote ? '<p class="lk-p">' + esc(r.shareNote) + '</p>' : '') +
+        (r.aiRelevance ? '<p class="lk-p lk-why">' + esc(r.aiRelevance) + '</p>' : '') +
+        (facts.length ? '<dl class="lk-facts">' + facts.map(function (f) { return '<div><dt>' + esc(f[0]) + '</dt><dd>' + esc(f[1]) + '</dd></div>'; }).join('') + '</dl>' : '') +
+        '<p class="lk-links"><a href="#/suppliers" data-sup="' + esc(r.name) + '">See it among the suppliers →</a>' + (r.source && CP.safeUrl(r.source) ? ' <a href="' + esc(CP.safeUrl(r.source)) + '" target="_blank" rel="noopener">Company page ↗</a>' : '') + '</p>' +
+        '</article>';
+    },
+
+    chipCard: function (c) {
+      var p = c.process || {}, m = c.memory || {}, comp = c.compute || {};
+      var facts = [];
+      if (c.announced || c.shipping) facts.push(['Announced / shipping', [c.announced, c.shipping].filter(Boolean).join(' / ')]);
+      if (p.node || p.foundry) facts.push(['Made by', [p.foundry, p.node, p.country ? cname(p.country) : ''].filter(Boolean).join(', ')]);
+      if (m.type) facts.push(['Memory', [m.type, m.stacks ? m.stacks + ' stacks' : '', m.capacityGB ? m.capacityGB + ' GB' : '', m.bandwidthTBs ? m.bandwidthTBs + ' TB/s' : ''].filter(Boolean).join(', ')]);
+      var fp = []; if (comp.fp16TFLOPS) fp.push('FP16 ' + comp.fp16TFLOPS.toLocaleString('en-US')); if (comp.fp8TFLOPS) fp.push('FP8 ' + comp.fp8TFLOPS.toLocaleString('en-US')); if (comp.fp4TFLOPS) fp.push('FP4 ' + comp.fp4TFLOPS.toLocaleString('en-US'));
+      if (fp.length) facts.push(['Dense TFLOPS', fp.join(' · ')]);
+      if (c.tdpW) facts.push(['Power', c.tdpW + ' W']);
+      if (c.target) facts.push(['Built for', c.target]);
+      return '<article class="lk-card lk-card--chip">' +
+        '<p class="lk-kind">AI chip · ' + esc(c.vendor) + (c.vendorCountry ? ', ' + esc(cname(c.vendorCountry)) : '') + '</p>' +
+        '<h3>' + esc(c.vendor + ' ' + c.name) + '</h3>' +
+        (c.status ? '<p class="lk-meta">' + esc(c.status) + '</p>' : '') +
+        (c.notes ? '<p class="lk-lede">' + esc(c.notes) + '</p>' : '') +
+        (c.exportStatus ? '<p class="lk-p lk-why"><b>Export status.</b> ' + esc(c.exportStatus) + '</p>' : '') +
+        (facts.length ? '<dl class="lk-facts">' + facts.map(function (f) { return '<div><dt>' + esc(f[0]) + '</dt><dd>' + esc(f[1]) + '</dd></div>'; }).join('') + '</dl>' : '') +
+        '<p class="lk-links"><a href="#/landscape" data-chip="' + esc(c.id) + '">Open it on AI Chips →</a></p>' +
+        '</article>';
+    },
+
+    wire: function (root) {
+      var self = this;
+      $$('a[data-sup]', root).forEach(function (a) { a.addEventListener('click', function () { var q = a.getAttribute('data-sup'); setTimeout(function () { var s = $('#sup-search'); if (s) { s.value = q; s.dispatchEvent(new Event('input')); } }, 60); }); });
+      $$('a[data-chip]', root).forEach(function (a) { a.addEventListener('click', function () { var id = a.getAttribute('data-chip'); setTimeout(function () { if (window.CP.Landscape && CP.Landscape.select) CP.Landscape.select(id); else if (typeof Landscape !== 'undefined') Landscape.select(id); }, 60); }); });
+      $$('a[data-para]', root).forEach(function (a) { a.addEventListener('click', function (e) {
+        e.preventDefault(); var i = +a.getAttribute('data-para'), p = self.paras[i]; if (!p) return;
+        location.hash = '#' + p.chapter;
+        setTimeout(function () { p.el.scrollIntoView({ block: 'center', behavior: reduced ? 'auto' : 'smooth' }); p.el.classList.add('lk-flash'); setTimeout(function () { p.el.classList.remove('lk-flash'); }, 2600); }, 140);
+      }); });
+    },
+
+    /* ---------- where the site uses it ---------- */
+    textOf: function (node) { // like textContent, but an element boundary counts as a space
+      var s = ''; for (var i = 0; i < node.childNodes.length; i++) { var n = node.childNodes[i]; if (n.nodeType === 3) s += n.nodeValue; else if (n.nodeType === 1) s += ' ' + this.textOf(n) + ' '; } return s;
+    },
+
+    corpus: function () {
+      if (this.paras) return this.paras; var out = [], self = this;
+      $$('.view[data-view="stack"] article.chapter').forEach(function (ch) {
+        var id = ch.id, title = ch.getAttribute('data-title') || id, num = ch.getAttribute('data-number') || '';
+        $$('p, li', ch).forEach(function (el) {
+          if (el.closest('.chapter-sources, .plate-head, .chain, .brief-head, figure, .chapter-nav, nav')) return;
+          var clone = el.cloneNode(true); $$('sup.cite, .gl-tip', clone).forEach(function (s) { s.parentNode.removeChild(s); });
+          var text = self.textOf(clone).replace(/\s+/g, ' ').replace(/\s+([.,;:])/g, '$1').trim();
+          if (text.length > 40) out.push({ chapter: id, title: title, num: num, el: el, text: text });
+        });
+      });
+      this.paras = out; return out;
+    },
+
+    regex: function (patterns, loose) { // loose: a typed query matches as a prefix, so "NXT:1980" finds "NXT:1980i"
+      var parts = patterns.map(function (p) { p = String(p).trim(); if (!p) return null; var e = p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); var bounded = /^[A-Za-z0-9]/.test(p) && /[A-Za-z0-9)]$/.test(p); return bounded ? '\\b' + e + (loose ? '' : '(?![A-Za-z0-9])') : e; }).filter(Boolean);
+      if (!parts.length) return null;
+      return new RegExp(parts.join('|'), 'gi');
+    },
+
+    sentence: function (text, re) {
+      re.lastIndex = 0; var m = re.exec(text); if (!m) return null;
+      var start = text.lastIndexOf('. ', m.index); start = start < 0 ? 0 : start + 2;
+      var end = text.indexOf('. ', m.index + m[0].length); end = end < 0 ? text.length : end + 1;
+      var s = text.slice(start, end).trim();
+      if (s.length > 320) { var a = Math.max(0, m.index - start - 140); s = (a ? '… ' : '') + s.slice(a, a + 300).trim() + ' …'; }
+      return s;
+    },
+
+    mentions: function (patterns, kind, key) {
+      var self = this, re = this.regex(patterns, kind === 'raw'), box = $('#lk-mentions'); if (!box) return;
+      if (!re) { box.hidden = true; return; }
+      var hits = [], mark = function (s) { return esc(s).replace(re, function (x) { return '<mark>' + x + '</mark>'; }); };
+      this.corpus().forEach(function (p, i) { var s = self.sentence(p.text, re); if (s) hits.push({ src: 'Chapter ' + p.num, sub: p.title, html: mark(s), href: '#' + p.chapter, para: i }); });
+      (Array.isArray(DATA.timeline) ? DATA.timeline : ((DATA.timeline || {}).events || [])).forEach(function (e) { var t = [e.gist || '', e.title || '', e.summary || ''].join(' '); re.lastIndex = 0; if (!re.test(t)) return; var s = self.sentence(e.gist && (re.lastIndex = 0, re.test(e.gist)) ? e.gist : (e.summary || e.title), re) || e.title; hits.push({ src: 'The board', sub: e.date, html: mark(s), href: '#/controls' }); });
+      (Array.isArray(DATA.flows) ? DATA.flows : ((DATA.flows || {}).flows || [])).forEach(function (f) { (f.states || []).forEach(function (st) { re.lastIndex = 0; if (st.label && re.test(st.label)) hits.push({ src: 'The board', sub: f.name, html: mark(st.label), href: '#/controls' }); }); });
+      (DATA.landscape || []).forEach(function (c) { if (kind === 'chip' && c.id === key) return; var t = [c.notes || '', c.exportStatus || ''].join(' '); var s = self.sentence(t, re); if (s) hits.push({ src: 'AI Chips', sub: c.vendor + ' ' + c.name, html: mark(s), href: '#/landscape', chip: c.id }); });
+      (DATA.suppliers || []).forEach(function (r) { if (kind === 'firm' && r.name === key) return; var t = [r.role || '', r.shareNote || '', r.aiRelevance || ''].join(' '); var s = self.sentence(t, re); if (s) hits.push({ src: 'Suppliers', sub: r.name, html: mark(s), href: '#/suppliers', sup: r.name }); });
+      if (!hits.length) { box.hidden = false; box.innerHTML = '<h3 class="lk-h">Where the site uses it</h3><p class="lk-none">Nowhere else yet.</p>'; return; }
+      var shown = hits.slice(0, 12);
+      box.hidden = false;
+      box.innerHTML = '<h3 class="lk-h">Where the site uses it <span class="lk-n">' + hits.length + (hits.length === 1 ? ' place' : ' places') + (hits.length > shown.length ? ', first ' + shown.length : '') + '</span></h3><ul class="lk-men">' +
+        shown.map(function (h) { var attrs = h.para != null ? ' data-para="' + h.para + '"' : h.chip ? ' data-chip="' + esc(h.chip) + '"' : h.sup ? ' data-sup="' + esc(h.sup) + '"' : ''; return '<li><a href="' + esc(h.href) + '"' + attrs + '><span class="lk-src"><b>' + esc(h.src) + '</b>' + esc(h.sub) + '</span><span class="lk-txt">' + h.html + '</span></a></li>'; }).join('') + '</ul>';
+      this.wire(box);
+    }
+  };
+
+  CP.Lookup = Lookup;
+  CP.register('glossary', { activate: function () { Lookup.activate(); }, stage: false });
+})();

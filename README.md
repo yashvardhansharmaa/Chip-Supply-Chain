@@ -12,7 +12,7 @@ The whole site compiles to **one self-contained HTML file** (`dist/index.html`).
 - **Suppliers**: 220 firms as ribbons from eight countries to the twenty stages (amber where a Critical firm sits), then ranked by stage, thinnest first, with every firm named and opening in place; the full table and a CSV export one click away.
 - **Geopolitics**: the essay, a country-by-segment share matrix, and a 45-event export-control timeline.
 - **Export Controls**: the board, nine things that move across the chokepoint with their state as of any date and each one's own history, the 43 moves behind it in date order, and a China revenue share series computed from company filings.
-- **Glossary**: 74 terms defined for policy readers.
+- **Look up (terms, firms and chips)**: 74 terms defined for policy readers.
 - **Home**: the route of one chip across fifteen towns on a world map, three doors, and one line on each country's leverage opening its panel of shares, stages and firms. The Chain can be downloaded as a PDF (`build/pdf.py`).
 - **Sources**: every citation number opens a card with the document's title, publisher, date and tier, and each chapter ends with its own source list (policy in `brief/SOURCE_POLICY.md`). Tabs: Start here, The Chain, AI Chips, Suppliers, Export Controls, Glossary.
 - Research tools: site search (Ctrl+K or `/`), permalinks on every section, copy-as-CSV/JSON on every dataset, and a citation block with BibTeX.

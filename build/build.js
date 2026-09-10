@@ -537,12 +537,20 @@ for (const f of modDir(path.join(root, 'build', 'modules')).filter((x) => x.ends
 const totalCites = all.reduce((a, c) => a + c.cites.length, 0);
 const claimsHTML = `<div><b class="num">${stages.length}</b><span>Stages, quartz<br>to a finished rack</span></div><div class="of-five"><b class="num">${score5}</b><span>Score 5 of 5<br>for concentration</span></div><div><b class="num">${totalCites}</b><span>Sources, one<br>per claim</span></div>`;
 fill('THESIS', thesisHTML); fill('SUBTITLE', subtitleHTML); fill('CLAIMS', claimsHTML); fill('CHAIN', chainTrack(stages, null));
-const sheetPages = [['#/', 'Home'], ['#/intro', 'Start here'], ['#/chain', 'The Chain'], ['#/landscape', 'AI Chips'], ['#/suppliers', 'Suppliers'], ['#/controls', 'Export Controls'], ['#/glossary', 'Glossary']].map((p) => `<a href="${p[0]}">${p[1]}</a>`).join('');
+const sheetPages = [['#/', 'Home'], ['#/intro', 'Start here'], ['#/chain', 'The Chain'], ['#/landscape', 'AI Chips'], ['#/suppliers', 'Suppliers'], ['#/controls', 'Export Controls'], ['#/glossary', 'Look up']].map((p) => `<a href="${p[0]}">${p[1]}</a>`).join('');
 const sheetChapters = all.map((ch) => { const sc = +((ch.meta.card || {}).chokepointScore || 0); return `<li><a href="${ch.id === 'geopolitics' ? '#geopolitics' : '#' + esc(ch.id)}"><span class="n">${pad(ch.number)}</span><span class="t">${esc(ch.title)}</span><span class="s${sc >= 5 ? ' hi' : ''}">${sc ? sc + ' / 5' : ''}</span></a></li>`; }).join('');
 fill('SHEET_PAGES', sheetPages); fill('SHEET_CHAPTERS', sheetChapters);
 fill('RAIL', railHTML); fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits); fill('FOOTER', footer);
 fill('SUPPLIERS_INTRO', suppliersIntro); fill('BUILT', builtStr); fill('GEO_DEK', esc(geoDek)); fill('GEO_BODY', geoBody);
 fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));
+// the Look up page: one list of every term, firm and chip, alphabetical, each with the kind a reader would call it
+const lkSlug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const lkItems = [];
+glossary.forEach((g) => lkItems.push({ kind: 'term', id: 'lk-term-' + lkSlug(g.term), key: 'gl-' + lkSlug(g.term), name: g.term, label: g.chapter === 'geopolitics' ? 'export control' : 'term', text: [g.term, g.aka || '', g.plain].join(' ') }));
+suppliers.forEach((r) => lkItems.push({ kind: 'firm', id: 'lk-firm-' + lkSlug(r.name), name: r.name, label: r.category || 'firm', key: r.name, text: [r.name, r.nativeName || '', r.city || '', COUNTRY[r.country] || r.country || '', r.ticker || '', r.category || '', r.subcategory || '', r.role || ''].join(' ') }));
+landscape.forEach((c) => lkItems.push({ kind: 'chip', id: 'lk-chip-' + lkSlug(c.id), name: `${c.vendor} ${c.name}`, label: 'AI chip', key: c.id, text: [c.vendor, c.name, c.family || '', (c.process || {}).node || '', (c.memory || {}).type || ''].join(' ') }));
+lkItems.sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }));
+fill('LOOKUP_LIST', lkItems.map((i) => `<li id="${esc(i.id)}" data-kind="${i.kind}" data-key="${esc(i.key || i.name)}" data-text="${esc(i.text.toLowerCase().replace(/\s+/g, ' '))}"><button type="button"><span class="lk-name">${esc(i.name)}</span><span class="lk-lab">${esc(i.label)}</span></button></li>`).join(''));
 fill('CONTROLS_DEK', `Every move since 2018, what can still flow to China, and each firm's China sales from its own filings.`);
 fill('EXPOSURE_VIZ', exposureViz(exposure));
 fill('EXPOSURE_NOTE', exposure.length ? 'Shares are computed from the absolute figures each firm filed. Firms count China differently: where the goods ship, where they are billed, or where the customer is based. Each row says which.' : '');
