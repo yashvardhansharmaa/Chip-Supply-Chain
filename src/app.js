@@ -1176,7 +1176,7 @@
       if (this.flows) {
         this.flows.forEach(function (f) { self.byId[f.id] = f; self.evs[f.id] = self.eventsFor(f); });
         var lead = $('#cf-intro'); // the count is the data's, not the copy's: the editor may split a flow
-        if (lead) lead.textContent = this.numWord(this.flows.length) + ' things move across the chokepoint. Each row gives the licence outcome it stands in today. Open one for the moves that set it.';
+        if (lead) lead.textContent = this.numWord(this.flows.length) + ' things move across the chokepoint, each with the licence outcome it stands in today.';
         this.wireBoard();
         this.renderScrub();
         this.renderBoard();

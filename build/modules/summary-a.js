@@ -376,7 +376,7 @@ ${svg}
 <section class="sa-strip">
 <div class="sa-map-head">
 <h3 class="sa-h">The chain in one strip</h3>
-<p class="sa-sub">One tile per stage, in order. Bar height is the stage's concentration: Extreme, High or Moderate. Hover or tap a stage for what it is and who leads it.</p>
+<p class="sa-sub">Bar height is the stage's concentration: Extreme, High or Moderate.</p>
 </div>
 <ol class="sa-tiles">${tiles}</ol>
 <div class="sa-details">${details}</div>
@@ -419,16 +419,16 @@ ${svg}
     return `<li><button type="button" class="sa-role" data-cc="${cc}" aria-pressed="${cc === DEFAULT_CC}"><span class="sa-role-name">${esc(COUNTRY[cc] || cc)}</span><span class="sa-role-meta">${meta}</span><span class="sa-role-line">${esc(ROLE[cc])}</span></button></li>`;
   }).join('');
   const mins = Math.max(1, Math.round(ctx.all.reduce((a, c) => a + (c.meta.plain || '').split(/\s+/).length, 0) / 230));
-  const doors = `<nav class="sa-doors" aria-label="Where to start"><a class="sa-door" href="#/intro"><span class="sa-door-k">${esc(ctx.cap(word(mins)))} minutes</span><b>Start here</b><span>One plain paragraph per stage, beside its 3D specimen.</span></a><a class="sa-door" href="#/chain"><span class="sa-door-k">${esc(ctx.cap(word(chapters.length)))} chapters</span><b>The Chain</b><span>Every stage in full, every number linked to its source.</span></a><a class="sa-door" href="#/controls"><span class="sa-door-k">Since 2018</span><b>Export controls</b><span>Every rule so far, and what can still flow to China today.</span></a></nav>`;
+  const doors = `<nav class="sa-doors" aria-label="Where to start"><a class="sa-door" href="#/intro"><span class="sa-door-k">${esc(ctx.cap(word(mins)))} minutes</span><b>Start here</b><span>One plain paragraph per stage, beside its 3D specimen.</span></a><a class="sa-door" href="#/chain"><span class="sa-door-k">${esc(ctx.cap(word(chapters.length)))} chapters</span><b>The Chain</b><span>Every stage in full, from design to the data centre.</span></a><a class="sa-door" href="#/controls"><span class="sa-door-k">Since 2018</span><b>Export controls</b><span>Every rule so far, and what can still flow to China today.</span></a></nav>`;
   const homeMap = `<div class="sa sa--home">
 ${doors}
 <section class="sa-route-wrap" aria-label="The route of one chip">
-<div class="sa-map-head"><h3 class="sa-h">The route of one chip</h3><p class="sa-sub">${ctx.cap(word(routeStops.length))} stops, from design in California to the data centre in Virginia, at the town that leads each stage. Each stop opens its chapter.</p></div>
+<div class="sa-map-head"><h3 class="sa-h">The route of one chip</h3><p class="sa-sub">${ctx.cap(word(routeStops.length))} stops, from design in California to the data centre in Virginia, at the town that leads each stage.</p></div>
 <div class="sa-map sa-map--route">${routeSvg}<div class="sa-overlay">${stopBtns}</div></div>
 <ol class="sa-strip-stops">${strip}</ol>
 </section>
 <section class="sa-leverage" aria-label="What leverage does each country have">
-<div class="sa-map-head"><h3 class="sa-h">What leverage does each country have?</h3><p class="sa-sub">One line each, in the chapters' own words. Pick a country for its shares, its stages and its firms.</p></div>
+<div class="sa-map-head"><h3 class="sa-h">What leverage does each country have?</h3></div>
 <div class="sa-lev-grid"><ul class="sa-roles">${roles}</ul><div class="sa-panels" aria-live="polite">${panels}</div></div>
 </section>
 </div>`;

@@ -87,7 +87,7 @@
     "term": "Concentration",
     "aka": "concentration band; Extreme, High, Moderate, Low",
     "plain": "The site's four-band judgment of how many firms could credibly supply a stage today, taken at the narrowest step inside it. Extreme means three or fewer, or one firm holding more than half the stage. High means four to six, with the top two taking most of the revenue. Moderate means seven or more, none of them dominant. Low means many, with the scarce input something another industry sells at volume. Where the country-share matrix carries a figure for the segment, the top country's share is a second check, and the supplier count wins when the two disagree.",
-    "why": "It is the first label on every chokepoint card and sets the bar height in the chain strip, so a reader should know it is a judgment made from supplier counts, not a published measurement.",
+    "why": "It is the first label on every chokepoint card and sets the bar height in the chain strip. It is a judgment made from supplier counts, not a published measurement.",
     "chapter": null
   },
   {
@@ -157,7 +157,7 @@
     "term": "EAR",
     "aka": "Export Administration Regulations",
     "plain": "The body of US rules that governs the export of commercial and dual-use goods, software and technology, written and enforced by the Bureau of Industry and Security. They run from 15 CFR part 730 to part 774: part 734 sets what they cover, part 742 the licence requirements, part 744 the end-use and end-user controls, part 740 the exceptions and part 764 the penalties.",
-    "why": "Almost every rule on this site is an amendment to these regulations. They are changed by a notice in the Federal Register, not by an act of Congress, which is why a threshold can move in a week.",
+    "why": "Almost every rule on the board amends these regulations. They are changed by a notice in the Federal Register, not by an act of Congress, which is why a threshold can move in a week.",
     "chapter": "geopolitics"
   },
   {
@@ -367,7 +367,7 @@
     "term": "License Exception LPP",
     "aka": "LPP, Low Processing Performance",
     "plain": "An exception created at 15 CFR 740.29 by the AI Diffusion Rule of January 2025 (90 FR 4544), which would have let limited quantities of advanced chips go to most destinations without a licence. Compliance was not required until 15 May 2025 and the framework was rescinded on 13 May, so it never bound anyone.",
-    "why": "It is worth knowing because it is still cited. LPP, AIA and ACM belong to a rule that was published, given an effective date and withdrawn before the compliance date, which is a pattern this site has to show rather than hide.",
+    "why": "LPP, AIA and ACM belong to a rule that was published, given an effective date and withdrawn before its compliance date. They are still cited, so they keep an entry.",
     "chapter": "geopolitics"
   },
   {
@@ -486,7 +486,7 @@
     "term": "presumption of denial",
     "aka": "",
     "plain": "A licence review policy, not a ban. An application may be filed and will be considered, but the reviewing agencies start from the position that it should be refused, and the exporter has to displace that. It is the policy for advanced computing chips going to China and Macau under 15 CFR 742.6(b)(10), and for most Entity List entries.",
-    "why": "It is the distinction that decides whether a company files at all. A presumption of denial is not the same as a prohibition, and the two were run together on this site until September 2026.",
+    "why": "It is the distinction that decides whether a company files at all: under a presumption of denial an application can still be made, under a prohibition it cannot.",
     "chapter": "geopolitics"
   },
   {
@@ -563,7 +563,7 @@
     "term": "Substitutability",
     "aka": "Easy, Moderate, Hard, Very hard",
     "plain": "The site's rating of how hard it would be for a well-funded state or firm, starting today, to stand up an alternative to the leaders of a stage, judged against four written tests. Easy: a qualified second source ships today at the leading node. Moderate: a second source exists but is not yet qualified at the leading node, about two to five years to close the gap. Hard: no second source at the leading node, five to ten years, and the path is known. Very hard: no second source, and the path runs through physics, decades of unwritten know-how or protected IP, ten years or more, and nobody has repeated it yet. The clock always times the same actor and runs to qualification, not to a prototype.",
-    "why": "It replaced the 1 to 5 chokepoint score in September 2026, because the score mostly restated concentration. It is the most opinionated field on the card, so its four tests are written down here.",
+    "why": "It is the one field on the card that rests on judgment rather than a count, so its four tests are spelled out above.",
     "chapter": null
   },
   {
