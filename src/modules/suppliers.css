@@ -163,3 +163,21 @@
   .sup-wipe.is-new { animation: none; }
   .sup-panel, .sup-panel-in, .sup-band { transition: none; }
 }
+
+/* ---------- the ribbons ---------- */
+.sup-rib { stroke: none; opacity: 0.3; cursor: pointer; transition: opacity 160ms linear; }
+.sup-rib.is-crit { fill: var(--accent); opacity: 0.82; }
+.sup-pipe-svg[data-hot="1"] .sup-rib { opacity: 0.08; }
+.sup-pipe-svg[data-hot="1"] .sup-rib[data-hot="1"] { opacity: 0.95; }
+.sup-pipe[data-filtered="1"] .sup-rib { opacity: 0.1; }
+.sup-pipe[data-filtered="1"] .sup-rib[data-on] { opacity: 0.9; }
+.sup-cnode.c-US { fill: var(--ink); } .sup-cnode.c-JP { fill: var(--c1); } .sup-cnode.c-CN { fill: var(--c6); } .sup-cnode.c-TW { fill: var(--c3); }
+.sup-cnode.c-KR { fill: var(--c5); } .sup-cnode.c-NL { fill: var(--c2); } .sup-cnode.c-DE { fill: var(--c4); } .sup-cnode.c-Other { fill: var(--c8); }
+.sup-snode { fill: var(--ink-2); }
+.sup-chit { fill: transparent; cursor: pointer; }
+.sup-clab { font-family: var(--font-display); font-weight: 600; fill: var(--ink); text-anchor: end; }
+.sup-clab .sup-cn { font-family: var(--font-mono); font-weight: 400; font-size: 10px; fill: var(--muted); }
+.sup-lab-t { text-anchor: start; }
+.sup-lab .sup-lab-n { font-family: var(--font-mono); font-size: 10px; fill: var(--muted); }
+.sup-tip-stages { font-family: var(--font-display); font-size: 12.5px; line-height: 1.45; color: var(--ink-2); }
+.sup-tip-stages b { font-weight: 700; color: var(--ink); }

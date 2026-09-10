@@ -233,5 +233,14 @@
 /* ---------- the board's legend ---------- */
 .cf-legend { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; line-height: 1.75; color: var(--muted); margin: 12px 0 0; }
 .cf-legend b { font-weight: 600; color: var(--ink-2); }
-.cf[data-mode="date"] .cf-legend { display: none; }
 .cf-lab .gl-term { font: inherit; color: inherit; }
+
+/* ---------- histories: the state's own label, and an honest gutter ---------- */
+.cf-ev-lab { display: block; margin-top: 5px; font-family: var(--font-mono); font-size: 10.5px; line-height: 1.4; color: var(--ink-2); max-width: 150px; }
+.cf-ev-none { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+/* ---------- the years look like buttons and meet a fingertip ---------- */
+.cf-year { border: 1px solid var(--line); border-right-width: 1px; background: var(--bg-2); border-radius: 2px; min-height: 44px; margin: 0 1px; }
+.cf-year:hover { border-color: var(--line-2); }
+.cf-year[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.cf-now, .cf-mode { min-height: 34px; }
+@media (max-width: 899px) { .cf-now, .cf-mode { min-height: 44px; } .cf-year { min-height: 48px; } }

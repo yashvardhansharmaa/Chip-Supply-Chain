@@ -9,7 +9,7 @@ The whole site compiles to **one self-contained HTML file** (`dist/index.html`).
 - **The Chain**: 17 chapters (the 15 stages of the chain, component costs and a geopolitics essay), each opening with a chokepoint card, an "In short" summary and an "In plain terms" paragraph for readers with no technical background, with a procedural 3D specimen of the stage beside the text.
 - **Summary** (`#/briefing`): every chapter's plain-language explanation, conclusions and chokepoint score on one page.
 - **AI Chips** (`#/landscape`): 19 AI accelerators with full spec sheets and a package render drawn from each chip's die and HBM layout.
-- **Suppliers**: 220 firms drawn as a pipeline that narrows at the chokepoints, then ranked by stage, thinnest first, with every firm named and opening in place; the full table and a CSV export one click away.
+- **Suppliers**: 220 firms as ribbons from eight countries to the twenty stages (amber where a Critical firm sits), then ranked by stage, thinnest first, with every firm named and opening in place; the full table and a CSV export one click away.
 - **Geopolitics**: the essay, a country-by-segment share matrix, and a 45-event export-control timeline.
 - **Export Controls**: the board, nine things that move across the chokepoint with their state as of any date and each one's own history, the 43 moves behind it in date order, and a China revenue share series computed from company filings.
 - **Glossary**: 74 terms defined for policy readers.

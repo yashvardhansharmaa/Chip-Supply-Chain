@@ -617,34 +617,16 @@
     ],
     "dies": [
       {
-        "x": -11.5,
-        "y": -5,
-        "w": 22,
-        "h": 26
+        "x": -15,
+        "y": 0,
+        "w": 26,
+        "h": 34
       },
       {
-        "x": 11.5,
-        "y": -5,
-        "w": 22,
-        "h": 26
-      },
-      {
-        "x": 0,
-        "y": 23,
-        "w": 20,
-        "h": 9
-      },
-      {
-        "x": -28.5,
-        "y": 23,
-        "w": 12,
-        "h": 9
-      },
-      {
-        "x": 28.5,
-        "y": 23,
-        "w": 12,
-        "h": 9
+        "x": 15,
+        "y": 0,
+        "w": 26,
+        "h": 34
       }
     ],
     "hbm": [
@@ -703,11 +685,11 @@
     ],
     "estimated": true,
     "sources": [
-      "https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack",
       "https://docs.cloud.google.com/tpu/docs/tpu7x",
+      "https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack",
       "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/ironwood-tpu-age-of-inference/"
     ],
-    "note": "Google states eight HBM3E stacks and 192 GiB per chip; the two compute chiplets in the middle and the three small interconnect dies along the top edge are read off published package photographs, and all dimensions are estimated."
+    "note": "The part counts are Google's own: two distinct chiplets, each a self-contained unit with one TensorCore, two SparseCores and 96 GB of HBM, and eight HBM3E stacks for 192 GiB at a peak 7.4 TB/s per chip. That fixes the arrangement as one chiplet and four stacks on each side. Package photographs also show three smaller interconnect dies, which are not drawn because Google names only the two chiplets. All dimensions are estimated."
   },
   "google-tpu-8i": {
     "unit": "mm",
@@ -775,7 +757,7 @@
     "sources": [
       "https://cloud.google.com/blog/products/compute/tpu-8t-and-tpu-8i-technical-deep-dive"
     ],
-    "note": "The inference half of the eighth-generation TPU is described as one compute die, one I/O die and six HBM stacks feeding 288 GB at 8.6 TB/s; nothing physical has been published, so the whole layout is estimated from that part count."
+    "note": "Google's wording is that each TPU 8i chip has two Tensor Cores on core dies and one Collectives Acceleration Engine on the chiplet die, which is why one core die and one chiplet die are drawn; it gives no die count, no HBM generation and no stack count, so six stacks are inferred from the published 288 GB at 8,601 GB/s. Every dimension is estimated."
   },
   "aws-trainium3": {
     "unit": "mm",
@@ -905,7 +887,7 @@
       "https://blogs.microsoft.com/blog/2026/01/26/maia-200-the-ai-accelerator-built-for-inference/",
       "https://techcommunity.microsoft.com/blog/azureinfrastructureblog/deep-dive-into-the-maia-200-architecture/4489312"
     ],
-    "note": "Microsoft gives 140 billion transistors on N3P, 216 GB of HBM3E and 272 MB of SRAM but says nothing about the package; six stacks divide the capacity evenly at 36 GB each, so this is drawn as one large die with three stacks per edge and every dimension is estimated."
+    "note": "Microsoft gives 140 billion transistors on TSMC's N3 process, 216 GB of co-packaged HBM3E at 7 TB/s and 272 MB of on-die SRAM, and says nothing about the package or the die; six stacks divide the capacity evenly at 36 GB each, so this is drawn as one large die with three stacks per edge and every dimension, including the die area, is estimated."
   },
   "meta-mtia-400": {
     "unit": "mm",
@@ -1004,82 +986,62 @@
       "https://ai.meta.com/blog/meta-mtia-scale-ai-chips-for-billions/",
       "https://engineering.fb.com/2026/08/24/networking-traffic/mtia-300-meta-training-chip-built-in-nics/"
     ],
-    "note": "MTIA 400 is a multi-chip package with two compute chiplets, two network/IO chiplets and a host SoC die around eight HBM3E stacks; Meta has published the part count and the 9.4 TB/s figure but no dimensions, so the layout is estimated."
+    "note": "Estimated throughout. Meta says only that MTIA 400 combines two compute chiplets, and describes the sibling MTIA 300 as one compute chiplet, two network chiplets and several HBM stacks; it publishes no chiplet total, no HBM stack count, no capacity, no bandwidth and no dimensions for MTIA 400. The drawing carries that shape over from MTIA 300 with the compute half doubled: two compute chiplets, two network chiplets and a host die around eight stacks."
   },
   "openai-jalapeno": {
     "unit": "mm",
     "interposer": [
-      78,
+      58,
       44
-    ],
-    "base": [
-      {
-        "x": -13.5,
-        "y": 0,
-        "w": 26,
-        "h": 33
-      },
-      {
-        "x": 13.5,
-        "y": 0,
-        "w": 26,
-        "h": 33
-      }
     ],
     "dies": [
       {
-        "x": -13.5,
+        "x": 0,
         "y": 0,
-        "w": 23,
-        "h": 29
-      },
-      {
-        "x": 13.5,
-        "y": 0,
-        "w": 23,
-        "h": 29
+        "w": 26,
+        "h": 31
       }
     ],
     "hbm": [
       {
-        "x": -33.5,
+        "x": -21,
         "y": -12.6,
         "w": 11,
         "h": 12
       },
       {
-        "x": -33.5,
+        "x": -21,
         "y": 0,
         "w": 11,
         "h": 12
       },
       {
-        "x": -33.5,
+        "x": -21,
         "y": 12.6,
         "w": 11,
         "h": 12
       },
       {
-        "x": 33.5,
+        "x": 21,
         "y": -12.6,
         "w": 11,
         "h": 12
       },
       {
-        "x": 33.5,
+        "x": 21,
         "y": 0,
         "w": 11,
         "h": 12
       },
       {
-        "x": 33.5,
+        "x": 21,
         "y": 12.6,
         "w": 11,
         "h": 12
       }
     ],
     "substrate": [
-      96,
+      76,
       62
     ],
     "estimated": true,
@@ -1088,7 +1050,7 @@
       "https://openai.com/index/openai-and-broadcom-announce-strategic-collaboration/",
       "https://newsletter.semianalysis.com/p/openai-jalapeno-better-than-nvidia"
     ],
-    "note": "Broadcom builds Jalapeno on its 3.5D face-to-face platform, so the compute dies are stacked on base dies inside a 2.5D package; 216 GB at 15.4 TB/s divides cleanly into six 12-high HBM4 stacks, and the die count, sizes and interposer are estimated."
+    "note": "Estimated throughout. OpenAI publishes nothing physical about the part, so this is drawn as the single reticle-sized compute die it describes, with six HBM stacks three to a side. Broadcom builds Jalapeno on its 3.5D face-to-face platform, which would put a base die under the compute die, but no allowed source states a die count, so none is drawn and the die-count field in the landscape data is empty."
   },
   "intel-gaudi3": {
     "unit": "mm",
@@ -1352,7 +1314,7 @@
       "https://www.huawei.com/en/news/2025/9/hc-xu-keynote-speech",
       "https://www.huawei.com/en/news/2025/9/hc-superpod-innovation"
     ],
-    "note": "Huawei says the 950PR is the first Ascend with its own HiBL 1.0 stacked memory and reports a monolithic compute die rather than the stitched pair of the 910C; four stacks fit the stated capacity and bandwidth, and everything here is estimated."
+    "note": "Estimated throughout, including the stack count. Huawei names HiBL 1.0 as the memory and publishes no capacity and no bandwidth for the 950PR, so nothing here is fixed by a published number; four stacks are drawn as the smallest arrangement consistent with a part Huawei positions below the 950DT, which it does document at 144 GB and 4 TB/s. Huawei reports a single Ascend 950 die shared by both variants rather than the stitched pair of the 910C."
   },
   "cambricon-siyuan-590": {
     "unit": "mm",
@@ -1402,7 +1364,7 @@
     "sources": [
       "https://www.cambricon.com/"
     ],
-    "note": "Cambricon publishes neither the die count nor the memory configuration for the MLU590; this is the smallest arrangement consistent with a single SMIC 7 nm-class die and the reported HBM capacity, and every number is estimated."
+    "note": "Estimated throughout. Cambricon publishes no die count, memory type, capacity or bandwidth for the MLU590, and no allowed source supplies any of them; one SMIC 7 nm-class die with four stacks is drawn as a plausible shape and nothing here is sourced."
   },
   "moore-threads-mtt-s5000": {
     "unit": "mm",
@@ -1452,7 +1414,7 @@
     "sources": [
       "https://en.mthreads.com/product/S5000"
     ],
-    "note": "Moore Threads gives 80 GB at 1.6 TB/s, which is about four HBM2E-class stacks, and nothing else; the single die and all dimensions are estimated."
+    "note": "Estimated throughout. Moore Threads publishes no memory type, capacity, bandwidth, die count, node or package for the MTT S5000; its product page names only the PH100 chip, OAM compute modules and an eight-GPU MTT MGX platform. One die with four stacks is drawn as a plausible shape for a part in this class and nothing here is sourced."
   },
   "nvidia-a100": {
     "unit": "mm",

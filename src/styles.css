@@ -462,6 +462,8 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 .hero--home { padding-bottom: 12px; }
 .column.wide[data-view="home"] { width: 100%; }
 
+.howto .howto-dl { display: flex; gap: 8px; flex-wrap: wrap; margin: 6px 0 12px; }
+.howto .howto-dl .btn { text-decoration: none; }
 .howto { max-width: var(--measure); margin: 8px 0 44px; padding: 18px 20px 6px; border: 1px solid var(--line); border-radius: 4px; background: var(--bg-2); }
 .howto h2 { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
 .howto p, .howto li { font-size: 16.5px; line-height: 1.5; }

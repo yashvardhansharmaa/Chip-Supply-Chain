@@ -29,6 +29,7 @@
   .view.column:not([hidden]), .view.column.wide:not([hidden]) { width: 100%; max-width: none; padding: 0; }
   #app { padding-top: 0; }
   body { background: #fff; color: #000; font-size: 10.5pt; }
+  body::before { display: none !important; } /* the wafer grain is a page-sized alpha layer; printed, it costs a megabyte a page */
   .prose, .prose > p, .prose > ul, .prose > ol, .prose h3, .prose h4, .mt-prose > p, .mt-log p, .mt-cites { max-width: none; }
 
   /* Collapsed source lists and method notes open on paper. */
