@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Print a view of the built site to a PDF with headless Chrome over the DevTools protocol.
-usage: python3 build/pdf.py <url> <out.pdf> [--wait 6] [--eval <js>]
+usage: python3 build/pdf.py <url> <out.pdf> [--wait 6] [--eval <js>] [--title <running header>]
 The site's print stylesheet (src/modules/print.css) does the layout: screen furniture off, one chapter per page, sources open.
 """
 import json, subprocess, sys, time, urllib.request, os, base64
@@ -35,8 +35,13 @@ try:
     time.sleep(wait)
     if ev:
         send('Runtime.evaluate', {'expression': ev, 'awaitPromise': True, 'returnByValue': True}); time.sleep(0.8)
-    pdf = send('Page.printToPDF', {'printBackground': True, 'preferCSSPageSize': True, 'paperWidth': 8.27, 'paperHeight': 11.69,
-                                   'displayHeaderFooter': False, 'transferMode': 'ReturnAsBase64'})
+    title = opt('--title', 'Compute Chokepoints · The Chain')
+    style = "font-family: Menlo, 'DejaVu Sans Mono', monospace; font-size: 7.5px; letter-spacing: 0.04em; color: #5b646d; width: 100%; padding: 0 20mm; display: flex; justify-content: space-between; align-items: center;"
+    header = '<div style="' + style + ' margin-top: 6mm;"><span>' + title + '</span><span>' + time.strftime('%-d %B %Y') + '</span></div>'
+    footer = '<div style="' + style + ' margin-bottom: 6mm;"><span>yashvardhansharmaa.github.io/chokepoints</span><span><span class="pageNumber"></span> / <span class="totalPages"></span></span></div>'
+    pdf = send('Page.printToPDF', {'printBackground': True, 'preferCSSPageSize': False, 'paperWidth': 8.27, 'paperHeight': 11.69,
+                                   'marginTop': 0.75, 'marginBottom': 0.72, 'marginLeft': 0.79, 'marginRight': 0.79,
+                                   'displayHeaderFooter': True, 'headerTemplate': header, 'footerTemplate': footer, 'transferMode': 'ReturnAsBase64'})
     if 'data' not in pdf: sys.exit('print failed: ' + json.dumps(pdf)[:300])
     open(out, 'wb').write(base64.b64decode(pdf['data']))
     print('wrote', out, round(os.path.getsize(out) / 1e6, 2), 'MB')

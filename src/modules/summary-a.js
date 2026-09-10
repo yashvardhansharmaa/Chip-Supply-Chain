@@ -13,7 +13,7 @@
   function selectCountry(cc, fromMap) {
     if (!cc || !$('.sa-panel[data-cc="' + cc + '"]', root)) return;
     if (map) map.setAttribute('data-cc', cc);
-    $$('.sa-marker, .sa-chip', root).forEach(function (b) {
+    $$('.sa-marker, .sa-chip, .sa-role', root).forEach(function (b) {
       b.setAttribute('aria-pressed', b.getAttribute('data-cc') === cc ? 'true' : 'false');
     });
     $$('.sa-town', root).forEach(function (t) {
@@ -47,7 +47,7 @@
     root.addEventListener('click', function (e) {
       var marker = e.target.closest ? e.target.closest('.sa-marker, .sa-town') : null;
       if (marker) { if (marker.getAttribute('data-dead')) return; selectCountry(marker.getAttribute('data-cc'), true); return; }
-      var chip = e.target.closest ? e.target.closest('.sa-chip') : null;
+      var chip = e.target.closest ? e.target.closest('.sa-chip, .sa-role') : null;
       if (chip) { selectCountry(chip.getAttribute('data-cc'), false); return; }
       var tile = e.target.closest ? e.target.closest('.sa-tile') : null;
       if (tile) selectStage(tile.getAttribute('data-id'));
@@ -63,6 +63,26 @@
         b.addEventListener('focus', function () { selectCountry(b.getAttribute('data-cc'), false); });
       });
     }
+
+
+    // the route's stops: a card on hover or focus with the stage, its town, who leads it and the score
+    var tip = null;
+    var showStop = function (a) {
+      if (!tip) { tip = document.createElement('div'); tip.className = 'sa-stop-tip'; tip.setAttribute('role', 'tooltip'); tip.hidden = true; document.body.appendChild(tip); }
+      var d = a.dataset;
+      tip.innerHTML = '<b>' + a.querySelector('span').textContent + ' · ' + d.title + '</b><span>' + d.town + (d.lead ? ' · ' + d.lead : '') + '</span><span class="sa-stop-tip-s">Chokepoint score ' + d.score + ' of 5 · click for the chapter</span>';
+      tip.hidden = false;
+      var r = a.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight;
+      var left = Math.max(8, Math.min(r.left + r.width / 2 - w / 2, window.innerWidth - w - 8)), top = r.top - h - 10;
+      if (top < 8) top = r.bottom + 10;
+      tip.style.left = Math.round(left) + 'px'; tip.style.top = Math.round(top + window.scrollY) + 'px';
+      $$('.sa-stopcard', root).forEach(function (c) { c.classList.toggle('is-hot', c.getAttribute('href') === a.getAttribute('href')); });
+    };
+    var hideStop = function () { if (tip) tip.hidden = true; $$('.sa-stopcard.is-hot', root).forEach(function (c) { c.classList.remove('is-hot'); }); };
+    root.addEventListener('mouseover', function (e) { var a = e.target.closest ? e.target.closest('.sa-stop') : null; if (a) showStop(a); });
+    root.addEventListener('mouseout', function (e) { if (e.target.closest && e.target.closest('.sa-stop')) hideStop(); });
+    root.addEventListener('focusin', function (e) { var a = e.target.closest ? e.target.closest('.sa-stop') : null; if (a) showStop(a); else hideStop(); });
+    window.addEventListener('scroll', function () { hideStop(); }, { passive: true });
 
     // the panel opens on the country the build marked; make the pins agree
     var open = $('.sa-panel:not([hidden])', root);

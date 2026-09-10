@@ -1,6 +1,6 @@
 /* Print: a chapter printed to PDF keeps its sources, its charts and a line saying where it came from. */
 
-@page { margin: 18mm; }
+@page { size: A4; margin: 19mm 20mm 18mm; }
 
 @media print {
   /* Dark mode must not print as dark ink. Light tokens for paper, whatever the reader was using. */
@@ -10,7 +10,7 @@
     --line: #c6cacd; --line-2: #a4aaaf;
     --accent: #8a5f0b; --accent-ink: #6b4a08; --accent-soft: rgba(138, 95, 11, 0.12);
     --bar-5: #8a5f0b; --bar-4: #3a434c; --bar-3: #adb3b8;
-    --shadow: none; --masthead: 0px; --band: 0px;
+    --shadow: none; --masthead: 0px; --band: 0px; --col: 100%; --measure: 132mm;
     color-scheme: light;
   }
 
@@ -21,7 +21,8 @@
      back-to-top, search dialog, hover tooltips and the copy buttons. */
   .masthead, .tabs, .search-btn, .theme-toggle, .skip,
   .stage, .stage-actions, .stage-tag, .sheet,
-  .rail, .to-top, #cp-search, .ex-tip, .export-bar, .permalink { display: none !important; }
+  .rail, .to-top, #cp-search, .ex-tip, .ct-tip, .gl-tip, .export-bar, .permalink,
+  .howto-dl, .prevnext, .ch-meta, .chain--compact, .chain-foot { display: none !important; }
 
   /* Every view that is on screen prints, full width. Hidden views stay hidden. */
   .view[hidden] { display: none !important; }
@@ -30,7 +31,10 @@
   #app { padding-top: 0; }
   body { background: #fff; color: #000; font-size: 10.5pt; }
   body::before { display: none !important; } /* the wafer grain is a page-sized alpha layer; printed, it costs a megabyte a page */
-  .prose, .prose > p, .prose > ul, .prose > ol, .prose h3, .prose h4, .mt-prose > p, .mt-log p, .mt-cites { max-width: none; }
+  /* a reading measure of about 72 characters, left-aligned, the way a report reads */
+  .column, .chapter, .prose { width: 100%; max-width: none; padding: 0; margin-left: 0; }
+  .prose > p, .prose > ul, .prose > ol, .prose h3, .prose h4, .inshort p, .plain p, .ch-lede { max-width: 132mm; }
+  .mt-prose > p, .mt-log p, .mt-cites { max-width: 132mm; }
 
   /* Collapsed source lists and method notes open on paper. */
   details { display: block; }
@@ -44,7 +48,20 @@
 
   /* One chapter per page, and blocks that must not be split across the fold. */
   .chapter { break-before: page; }
-  .chapter:first-of-type { break-before: auto; }
+  .print-only { display: block !important; }
+  .print-title { break-after: page; min-height: 230mm; display: flex !important; flex-direction: column; justify-content: flex-end; padding-bottom: 20mm; }
+  .print-title .pt-k { font-family: var(--font-mono); font-size: 9pt; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin: 0 0 6mm; }
+  .print-title .pt-h { font-family: var(--font-display); font-weight: 800; font-size: 44pt; line-height: 1; margin: 0 0 6mm; letter-spacing: -0.01em; }
+  .print-title .pt-sub { font-family: var(--font-body); font-size: 15pt; color: var(--ink-2); margin: 0 0 14mm; }
+  .print-title .pt-what { font-family: var(--font-body); font-size: 12pt; margin: 0 0 2mm; }
+  .print-title .pt-by { font-family: var(--font-display); font-weight: 600; font-size: 12pt; margin: 0 0 10mm; }
+  .print-title .pt-meta { font-family: var(--font-mono); font-size: 8.5pt; color: var(--muted); margin: 0; }
+  .howto { break-inside: avoid; }
+  .contents { break-after: page; }
+  .contents .item { break-inside: avoid; }
+  .gl-term { border-bottom: 0 !important; text-decoration: none !important; background: none !important; color: inherit !important; }
+  sup.cite { margin-left: 1px; }
+  sup.cite a { padding: 0; background: none !important; }
   .view-head { break-after: avoid; padding-top: 0; }
   .plate, .figure, .inshort, .plain, .brief-card, .gl-entry, .mt-note, .mt-log li { break-inside: avoid; }
   h1, h2, h3, h4, .ch-title, .ch-lede { break-after: avoid; }
@@ -54,18 +71,4 @@
   a[href] { text-decoration: none; color: inherit; }
   .prose sup.cite a { color: var(--accent-ink); }
 
-  /* Where the page came from. Browsers cannot inject a date from CSS; anything that sets
-     body[data-printed] gets it printed here too, and the build date is in the site footer. */
-  body::after {
-    content: "Compute Chokepoints · yashvardhansharmaa.github.io/chokepoints";
-    display: block;
-    margin-top: 14mm;
-    padding-top: 4mm;
-    border-top: 1px solid var(--line);
-    font-family: var(--font-mono);
-    font-size: 8.5pt;
-    letter-spacing: 0.04em;
-    color: var(--muted);
-  }
-  body[data-printed]::after { content: "Compute Chokepoints · yashvardhansharmaa.github.io/chokepoints · " attr(data-printed); }
 }

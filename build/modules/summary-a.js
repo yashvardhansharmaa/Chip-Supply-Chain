@@ -48,6 +48,41 @@ const COUNTRY = {
 const PRIMARY = ['US', 'NL', 'DE', 'JP', 'TW', 'KR', 'CN', 'MY', 'SG'];
 const SECONDARY = ['GB', 'IL', 'IN', 'FR', 'AT', 'CH', 'TH'];
 
+/* One stop per stage for the home map's route: the town that leads the stage, by the site's own
+ * chapter cards (the first-named leader's headquarters or main site). Editorial, like TOWN_CC. */
+const STOPS = [
+  ['design-and-eda', 'San Jose', 37.34, -121.89, 'US', -14, -8],
+  ['silicon-and-wafers', 'Tokyo', 35.68, 139.69, 'JP', -16, -14],
+  ['chemicals-gases-and-photoresist', 'Kawasaki', 35.53, 139.70, 'JP', 6, -22],
+  ['lithography', 'Veldhoven', 51.42, 5.40, 'NL', 0, 0],
+  ['photomasks-and-pellicles', 'Yokohama', 35.44, 139.64, 'JP', -4, 14],
+  ['deposition-and-etch', 'Santa Clara', 37.35, -121.95, 'US', 10, -14],
+  ['metrology-and-inspection', 'Milpitas', 37.43, -121.90, 'US', 0, 12],
+  ['transistors-and-front-end', 'Hsinchu', 24.80, 120.97, 'TW', -14, -8],
+  ['foundries-and-fabs', 'Tainan', 22.99, 120.21, 'TW', -16, 10],
+  ['memory-and-hbm', 'Icheon', 37.28, 127.44, 'KR', 0, 0],
+  ['advanced-packaging', 'Kaohsiung', 22.63, 120.30, 'TW', 10, 12],
+  ['substrates-and-pcbs', 'Ogaki', 35.36, 136.62, 'JP', -22, 6],
+  ['test-and-assembly', 'Penang', 5.41, 100.34, 'MY', 0, 0],
+  ['systems-and-networking', 'Taipei', 25.03, 121.56, 'TW', 14, -10],
+  ['data-centers-and-power', 'Ashburn', 39.04, -77.49, 'US', 0, 0]
+];
+/* One line on each country's leverage, in the words the chapters use. Editorial. */
+const ROLE = {
+  US: 'Designs the chips and makes most of the tools; the biggest buyer',
+  NL: 'The only maker of EUV scanners, the machines that print the finest layers',
+  JP: 'Wafers, photoresist, masks and etch tools: the materials no fab runs without',
+  TW: 'Makes nearly every leading-edge chip and packages most of them',
+  KR: 'Memory, including the high-bandwidth stacks every accelerator needs',
+  DE: 'The optics inside every EUV scanner; specialty chemicals',
+  CN: 'The largest market, now building its own tools, memory and chips',
+  MY: 'Test and assembly, the last stop before the server',
+  SG: 'Test, assembly and mature-node fabs',
+  GB: 'Arm and the other processor designs most chips license',
+  IL: 'Metrology and inspection tools, and chip design centres',
+  AT: 'The mask writers and substrates two 5-of-5 stages depend on'
+};
+
 /* Which chapter each matrix segment belongs to. */
 const SEG_CH = {
   'EDA software': 'design-and-eda', 'Core IP': 'design-and-eda', 'AI accelerator design': 'design-and-eda',
@@ -356,10 +391,44 @@ ${svg}
 </section>
 </div>`;
 
-  // the home page: the map alone, with two ways onward
-  const mapStart = html.indexOf('<section class="sa-mapwrap"'), mapEnd = html.indexOf('</section>', mapStart) + '</section>'.length;
-  const homeMap = `<div class="sa sa--home">${html.slice(mapStart, mapEnd)}
-<nav class="sa-exits" aria-label="Where to go next"><a class="sa-exit" href="#/intro"><b>Start here</b><span>${ctx.cap(word(Math.max(1, Math.round(ctx.all.reduce((a, c) => a + (c.meta.plain || '').split(/\s+/).length, 0) / 230))))} minutes: one plain paragraph per stage, each beside its 3D specimen.</span></a><a class="sa-exit" href="#/chain"><b>The Chain</b><span>Every stage in full: ${ctx.all.length} chapters, every number linked to its source.</span></a></nav>
+  // the home page: three doors, the route of one chip, the strip of stops, and each country's leverage with its panel
+  const stopOf = {}; STOPS.forEach((st) => { stopOf[st[0]] = st; });
+  const routeStops = stages.map((c) => ({ c, st: stopOf[c.id] })).filter((x) => { if (!x.st) warn('summary-a: no stop for ' + x.c.id); return !!x.st; });
+  const XY = (st) => [px(st[3]) + st[5], py(st[2]) + st[6]];
+  const arc = (a, b) => { const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2, dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy) || 1, k = 0.18;
+    return `M${a[0].toFixed(1)},${a[1].toFixed(1)} Q${(mx - dy / L * L * k).toFixed(1)},${(my + dx / L * L * k).toFixed(1)} ${b[0].toFixed(1)},${b[1].toFixed(1)}`; };
+  let route = '', tails = '';
+  routeStops.forEach((x, i) => {
+    const a = XY(x.st);
+    if (i < routeStops.length - 1) route += `<path class="sa-route" d="${arc(a, XY(routeStops[i + 1].st))}"/>`;
+    if (x.st[5] || x.st[6]) tails += `<line class="sa-tail" x1="${px(x.st[3])}" y1="${py(x.st[2])}" x2="${a[0].toFixed(1)}" y2="${a[1].toFixed(1)}"/>`;
+  });
+  const routeSvg = svg.replace('</svg>', `<g class="sa-routes">${route}${tails}</g></svg>`);
+  const stopBtns = routeStops.map((x) => {
+    const a = XY(x.st), lead = ((x.c.leaders || [])[0] || {}).name || '';
+    return `<a class="sa-stop" data-cc="${x.st[4]}" href="${href(x.c)}" style="left:${(a[0] / VW * 100).toFixed(2)}%;top:${(a[1] / VH * 100).toFixed(2)}%" data-title="${esc(x.c.title)}" data-town="${esc(x.st[1])}, ${esc(COUNTRY[x.st[4]] || x.st[4])}" data-lead="${esc(lead)}" data-score="${x.c.score}" aria-label="Stop ${x.c.number}, ${esc(x.c.title)}: ${esc(x.st[1])}${lead ? ', led by ' + esc(lead) : ''}, chokepoint score ${x.c.score} of 5. Read the chapter."><span>${x.c.number}</span></a>`;
+  }).join('');
+  const strip = routeStops.map((x) => `<a class="sa-stopcard" data-cc="${x.st[4]}" href="${href(x.c)}"><span class="sa-stopcard-n">${String(x.c.number).padStart(2, '0')}</span><span class="sa-stopcard-t">${esc(x.c.title.replace(/ and /g, ' & '))}</span><span class="sa-stopcard-w">${esc(x.st[1])} · ${x.st[4]}</span></a>`).join('');
+  const ledBy = {}; stages.forEach((c) => { const first = (c.countries || [])[0]; if (first) (ledBy[first.code] = ledBy[first.code] || []).push(c); });
+  const roleOrder = Object.keys(ROLE).filter((cc) => info[cc]).sort((a, b) => ((ledBy[b] || []).length - (ledBy[a] || []).length) || (info[b].named.length - info[a].named.length));
+  const roles = roleOrder.map((cc) => {
+    const led = ledBy[cc] || [], five = led.filter((c) => c.score === 5).length;
+    const meta = led.length ? `leads ${word(led.length)} stage${led.length > 1 ? 's' : ''}${five ? `, ${word(five)} at 5 of 5` : ''}` : `named on ${word(info[cc].named.length)} stage${info[cc].named.length === 1 ? '' : 's'}`;
+    return `<li><button type="button" class="sa-role" data-cc="${cc}" aria-pressed="${cc === DEFAULT_CC}"><span class="sa-role-name">${esc(COUNTRY[cc] || cc)}</span><span class="sa-role-meta">${meta}</span><span class="sa-role-line">${esc(ROLE[cc])}</span></button></li>`;
+  }).join('');
+  const mins = Math.max(1, Math.round(ctx.all.reduce((a, c) => a + (c.meta.plain || '').split(/\s+/).length, 0) / 230));
+  const doors = `<nav class="sa-doors" aria-label="Where to start"><a class="sa-door" href="#/intro"><span class="sa-door-k">${esc(ctx.cap(word(mins)))} minutes</span><b>Start here</b><span>One plain paragraph per stage, beside its 3D specimen.</span></a><a class="sa-door" href="#/chain"><span class="sa-door-k">${esc(ctx.cap(word(chapters.length)))} chapters</span><b>The Chain</b><span>Every stage in full, every number linked to its source.</span></a><a class="sa-door" href="#/controls"><span class="sa-door-k">What can still flow</span><b>The board</b><span>Nine flows across the chokepoint and their state today.</span></a></nav>`;
+  const homeMap = `<div class="sa sa--home">
+${doors}
+<section class="sa-route-wrap" aria-label="The route of one chip">
+<div class="sa-map-head"><h3 class="sa-h">The route of one chip</h3><p class="sa-sub">${ctx.cap(word(routeStops.length))} stops, from design in California to the data centre in Virginia, at the town that leads each stage. Hover a stop for the stage; click for its chapter.</p></div>
+<div class="sa-map sa-map--route">${routeSvg}<div class="sa-overlay">${stopBtns}</div></div>
+<ol class="sa-strip-stops">${strip}</ol>
+</section>
+<section class="sa-leverage" aria-label="What leverage does each country have">
+<div class="sa-map-head"><h3 class="sa-h">What leverage does each country have?</h3><p class="sa-sub">One line each, in the chapters' own words. Pick a country for its shares, its stages and its firms.</p></div>
+<div class="sa-lev-grid"><ul class="sa-roles">${roles}</ul><div class="sa-panels" aria-live="polite">${panels}</div></div>
+</section>
 </div>`;
   return { SUMMARY_A: html, HOME_MAP: homeMap };
 };

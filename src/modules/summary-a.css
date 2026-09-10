@@ -222,3 +222,51 @@
 .sa-est { font-family: var(--font-mono); font-style: normal; font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-left: 6px; }
 
 .sa-town[data-dead="1"] { cursor: default; }
+
+/* ---------- the home page: doors, the route, the strip, leverage ---------- */
+.sa-doors { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 10px 0 34px; }
+.sa-door { display: block; border: 1px solid var(--line-2); background: var(--bg-2); border-radius: 3px; padding: 14px 16px 15px; text-decoration: none; color: var(--ink); transition: border-color 0.15s; }
+.sa-door:hover, .sa-door:focus-visible { border-color: var(--ink); }
+.sa-door-k { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); margin-bottom: 6px; }
+.sa-door b { display: block; font-family: var(--font-display); font-weight: 700; font-size: 19px; margin-bottom: 3px; }
+.sa-door span:last-child { font-size: 14.5px; color: var(--ink-2); }
+.sa-route-wrap .sa-map { display: block; }
+.sa-route { fill: none; stroke: var(--accent-ink); stroke-width: 1; opacity: 0.4; }
+.sa-tail { stroke: var(--ink-2); stroke-width: 0.8; }
+.sa-stop { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; background: var(--ink); color: var(--bg); border: 1.5px solid var(--bg); display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 10.5px; text-decoration: none; transition: transform 0.15s var(--ease); z-index: 3; }
+.sa-stop[data-cc="JP"] { background: var(--c1); } .sa-stop[data-cc="NL"] { background: var(--c2); } .sa-stop[data-cc="TW"] { background: var(--c3); } .sa-stop[data-cc="KR"] { background: var(--c5); } .sa-stop[data-cc="MY"] { background: var(--c8); } .sa-stop[data-cc="CN"] { background: var(--c6); }
+.sa-stop:hover, .sa-stop:focus-visible { transform: scale(1.25); z-index: 4; outline: none; box-shadow: 0 0 0 2px var(--accent); }
+.sa-stop-tip { position: absolute; z-index: 50; max-width: 300px; padding: 9px 11px 10px; background: var(--ink); color: var(--bg); border-radius: 3px; font-family: var(--font-mono); font-size: 11px; line-height: 1.45; pointer-events: none; box-shadow: var(--shadow); }
+.sa-stop-tip[hidden] { display: none; }
+.sa-stop-tip b { display: block; font-family: var(--font-display); font-size: 13.5px; letter-spacing: 0.02em; margin-bottom: 3px; color: var(--bg); }
+.sa-stop-tip span { display: block; opacity: 0.85; }
+.sa-stop-tip .sa-stop-tip-s { margin-top: 4px; color: var(--accent); opacity: 1; }
+.sa-strip-stops { list-style: none; margin: 12px 0 0; padding: 0; display: grid; grid-template-columns: repeat(15, 1fr); gap: 6px; }
+.sa-stopcard { display: block; border-top: 2px solid var(--ink); padding: 6px 4px 0; text-decoration: none; color: var(--ink); min-width: 0; }
+.sa-stopcard[data-cc="JP"] { border-color: var(--c1); } .sa-stopcard[data-cc="NL"] { border-color: var(--c2); } .sa-stopcard[data-cc="TW"] { border-color: var(--c3); } .sa-stopcard[data-cc="KR"] { border-color: var(--c5); } .sa-stopcard[data-cc="MY"] { border-color: var(--c8); }
+.sa-stopcard:hover .sa-stopcard-t, .sa-stopcard.is-hot .sa-stopcard-t, .sa-stopcard:focus-visible .sa-stopcard-t { color: var(--accent-ink); }
+.sa-stopcard-n { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--muted); }
+.sa-stopcard-t { display: block; font-family: var(--font-display); font-weight: 600; font-size: 12.5px; line-height: 1.15; margin: 2px 0 3px; }
+.sa-stopcard-w { display: block; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.02em; color: var(--muted); }
+.sa-leverage { margin-top: 40px; }
+.sa-lev-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr); gap: 30px; align-items: start; }
+.sa-roles { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-2); }
+.sa-role { display: grid; grid-template-columns: 150px 1fr; grid-template-areas: "name line" "meta line"; gap: 0 14px; width: 100%; text-align: left; padding: 9px 8px 10px; margin: 0; border: 0; border-bottom: 1px solid var(--line); background: none; color: var(--ink); cursor: pointer; align-items: baseline; }
+.sa-role:hover, .sa-role:focus-visible { background: var(--bg-2); outline: none; }
+.sa-role[aria-pressed="true"] { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
+.sa-role-name { grid-area: name; font-family: var(--font-display); font-weight: 700; font-size: 15.5px; }
+.sa-role-meta { grid-area: meta; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.05em; color: var(--muted); }
+.sa-role-line { grid-area: line; font-family: var(--font-body); font-size: 14.5px; line-height: 1.4; color: var(--ink-2); align-self: center; }
+.sa--home .sa-panels { margin: 0; }
+@media (max-width: 899px) {
+  .sa-doors { grid-template-columns: 1fr; gap: 8px; margin: 6px 0 24px; }
+  .sa-door { padding: 11px 13px 12px; }
+  .sa-stop { width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; pointer-events: none; border-width: 1px; } /* on a phone the map is small: the dots mark the route and the strip below is the tappable list */
+  .sa-stop span { display: none; }
+  .sa-tail { display: none; }
+  .sa-strip-stops { grid-template-columns: repeat(5, 1fr); gap: 8px 6px; }
+  .sa-lev-grid { grid-template-columns: 1fr; gap: 18px; }
+  .sa-role { grid-template-columns: 1fr; grid-template-areas: "name" "meta" "line"; gap: 2px; }
+  .sa-role-line { margin-top: 2px; }
+}
+@media (prefers-reduced-motion: reduce) { .sa-stop { transition: none; } }
