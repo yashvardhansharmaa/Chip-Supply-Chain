@@ -1,0 +1,54 @@
+<meta charset="utf-8"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600;800&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
+<style>
+:root{--bg:#edeff0;--bg-2:#e4e7e9;--bg-3:#d9dde0;--ink:#12161a;--ink-2:#3a434c;--muted:#5b646d;--line:#cbd0d4;--line-2:#b6bcc1;--accent:#c98a12;--accent-ink:#7a5406;--accent-soft:rgba(201,138,18,.14);
+--font-display:"IBM Plex Sans Condensed",Arial,sans-serif;--font-body:"Newsreader",Georgia,serif;--font-mono:"IBM Plex Mono",Menlo,monospace}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.5}
+.wrap{padding:36px 44px 40px;max-width:1080px}
+h1{font-family:var(--font-display);font-weight:800;font-size:30px;line-height:1.05;margin:0 0 6px;letter-spacing:-.01em}
+.dek{color:var(--ink-2);margin:0 0 22px;font-size:17px}
+.k{font-family:var(--font-mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.mono{font-family:var(--font-mono)}
+.note{font-family:var(--font-mono);font-size:11px;color:var(--muted);line-height:1.5;margin-top:14px;max-width:760px}
+.tag{display:inline-block;font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border:1px solid var(--line-2);border-radius:3px;color:var(--ink-2);margin-left:8px;vertical-align:middle}
+.tag.new{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-ink)}
+</style><style>
+.plate{border:1px solid var(--line-2);border-radius:4px;background:var(--bg-2);box-shadow:0 1px 0 rgba(18,22,26,.06),0 8px 24px rgba(18,22,26,.08);overflow:hidden;margin:0 0 10px}
+.plate-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px 18px;background:var(--bg-3);border-bottom:1px solid var(--line-2)}
+.plate-score{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:12px;color:var(--muted)}
+.plate-score>b{color:var(--ink);font-weight:600;font-size:13px}
+.pips{display:inline-flex;gap:3px}.pips b{width:7px;height:12px;background:var(--accent);border-radius:1px}
+.plate-score.m2{gap:8px}.pill{display:inline-flex;align-items:baseline;gap:7px;padding:4px 9px;border:1px solid var(--line-2);border-radius:3px;background:var(--bg-2)}
+.pill b{color:var(--ink);font-weight:600;font-size:12px}.pill .yr{font-size:10px;color:var(--muted)}
+.plate-kpis{display:grid;grid-template-columns:repeat(3,1fr)}
+.plate-kpis>div{padding:15px 18px 16px;border-right:1px solid var(--line);min-width:0}.plate-kpis>div:last-child{border-right:0}
+.plate-kpis .k{display:block;margin-bottom:8px}
+.plate-kpis .v{display:block;font-family:var(--font-display);font-weight:600;font-size:27px;line-height:1.05;letter-spacing:.005em}
+.plate-kpis .v.cost{font-size:22px}.plate-kpis .v small{font-size:14px;font-weight:500;color:var(--muted);margin-left:4px}.plate-kpis .v.Extreme{color:var(--accent-ink)}
+.plate-kpis .sub{display:block;font-family:var(--font-mono);font-size:10.5px;line-height:1.5;color:var(--muted);margin-top:8px}
+.two{display:grid;grid-template-columns:1fr;gap:26px}
+h2{font-family:var(--font-display);font-size:14px;font-weight:600;margin:0 0 8px;color:var(--ink-2);letter-spacing:.02em}
+.strip{display:flex;gap:6px;align-items:flex-end;margin:6px 0 0}
+.cell{width:52px;text-align:center}.cell .bar{height:34px;background:var(--bg-3);border:1px solid var(--line-2);display:flex;align-items:flex-end;border-radius:2px;overflow:hidden}
+.cell .bar i{display:block;width:100%;background:var(--ink-2)}
+.cell .t{font-family:var(--font-mono);font-size:9.5px;color:var(--muted);margin-top:4px}
+.cell .n{font-family:var(--font-mono);font-size:10px;color:var(--ink);margin-top:2px}
+</style><div class="wrap">
+<h1>What replaces the 1 to 5 score</h1>
+<p class="dek">Two labels the reader can check, on the EUV lithography card. Measured concentration, then rated substitutability.</p>
+<div class="two">
+<div><h2>Today <span class="tag">score restates the concentration band</span></h2><section class="plate">
+<header class="plate-head"><span class="label k" style="font-size:11px">Chokepoint card</span><span class="plate-score"><i class="pips"><b></b><b></b><b></b><b></b><b></b></i><b>5</b> / 5</span></header>
+<div class="plate-kpis"><div><span class="k">Concentration</span><b class="v Extreme">Extreme</b></div>
+       <div><span class="k">Substitution time</span><b class="v">10+<small>years</small></b></div>
+       <div><span class="k">Price or market size</span><b class="v cost">$380m per scanner</b><span class="sub">High-NA EUV list price, ASML 2024 annual report</span></div></div></section></div>
+<div><h2>Proposed <span class="tag new">one measured, one rated</span></h2><section class="plate">
+<header class="plate-head"><span class="label k" style="font-size:11px">Chokepoint card</span><span class="plate-score m2"><span class="pill"><span class="k">Concentration</span> <b>Top 2 hold 100%</b> <span class="yr">2025</span></span><span class="pill"><span class="k">Substitutability</span> <b>Very hard</b> <span class="yr">rated</span></span></span></header>
+<div class="plate-kpis"><div><span class="k">Concentration</span><b class="v Extreme">HHI 10,000</b><span class="sub">1 supplier of EUV scanners. Top country NL 100%, top 2 100% (2025, measured, ASML Form 20-F)</span></div>
+       <div><span class="k">Substitutability</span><b class="v">Very hard <small>4 of 4</small></b><span class="sub">No qualified second source. Physics-limited (light source, optics). Inventor took 17 years. Clock: a well-funded state actor, 10+ years</span></div>
+       <div><span class="k">Price or market size</span><b class="v cost">$380m per scanner</b><span class="sub">High-NA EUV list price, ASML 2024 annual report</span></div></div></section>
+<p class="note">Concentration is computed from the matrix row: HHI over country shares (0 to 10,000) and the top-2 share, with the year and the basis (measured, derived, estimate, relayed). Substitutability is a 4-band rating against four written tests: a qualified second source exists (easy); a second source exists but is not qualified for the leading node (moderate); no second source, replaceable by a well-funded state actor in 5 to 10 years (hard); physics- or IP-limited, 10+ years (very hard). The actor on the clock is always the same: a well-funded state or firm standing up an alternative. Each card shows its scoring line.</p>
+</div>
+<div><h2>The chain strip with the new measure</h2>
+<div class="strip"><div class="cell"><div class="bar"><i style="height:29.580000000000002px"></i></div><div class="t">EDA</div><div class="n">87%</div></div><div class="cell"><div class="bar"><i style="height:29.92px"></i></div><div class="t">Core IP</div><div class="n">88%</div></div><div class="cell"><div class="bar"><i style="height:22.78px"></i></div><div class="t">Wafers</div><div class="n">67%</div></div><div class="cell"><div class="bar"><i style="height:28.220000000000002px"></i></div><div class="t">Resist</div><div class="n">83%</div></div><div class="cell"><div class="bar"><i style="height:14.620000000000001px"></i></div><div class="t">Gases</div><div class="n">43%</div></div><div class="cell"><div class="bar"><i style="height:34px"></i></div><div class="t">EUV</div><div class="n">100%</div></div><div class="cell"><div class="bar"><i style="height:34px"></i></div><div class="t">DUV</div><div class="n">100%</div></div><div class="cell"><div class="bar"><i style="height:25.262px"></i></div><div class="t">Deposit.</div><div class="n">74.3%</div></div><div class="cell"><div class="bar"><i style="height:28.968000000000004px"></i></div><div class="t">Etch</div><div class="n">85.2%</div></div><div class="cell"><div class="bar"><i style="height:29.172px"></i></div><div class="t">Metrology</div><div class="n">85.8%</div></div><div class="cell"><div class="bar"><i style="height:31.62px"></i></div><div class="t">Masks</div><div class="n">93%</div></div><div class="cell"><div class="bar"><i style="height:28.560000000000002px"></i></div><div class="t">Leading</div><div class="n">84%</div></div><div class="cell"><div class="bar"><i style="height:22.1px"></i></div><div class="t">Mature</div><div class="n">65%</div></div><div class="cell"><div class="bar"><i style="height:31.552px"></i></div><div class="t">DRAM</div><div class="n">92.8%</div></div><div class="cell"><div class="bar"><i style="height:33.966px"></i></div><div class="t">HBM</div><div class="n">99.9%</div></div></div>
+<p class="note">Bars are the top-2 country share per segment, in chain order, from the matrix (names shortened). Amber could mark segments whose HHI exceeds 5,000. The strip keeps its job as navigation; the number under each cell is the same on the card, in the CSV and in the note.</p></div>
+</div></div>

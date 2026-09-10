@@ -1,6 +1,35 @@
-/* Print: a chapter printed to PDF keeps its sources, its charts and a line saying where it came from. */
+/* Print: the report. A 9.5 pt page, one chapter per page, every source a footnote at the foot
+   of the page it is cited on, and a running head in the margin.
+   Footnotes and margin boxes need Paged.js, which build/pdf.py injects from build/vendor/ after
+   the page has loaded; src/modules/print.js writes each note from the citation's data-* fields
+   and puts the class cp-print on <html>. Without Paged.js (the browser's own Print) the page
+   still prints and each chapter keeps its source list at its end.
+   Everything below is inside @page or @media print: the screen site must not change. */
 
-@page { size: A4; margin: 19mm 20mm 18mm; }
+@page {
+  size: A4;
+  margin: 17mm 20mm 16mm;
+
+  /* Running heads and folios. Chrome ignores margin boxes when it prints the page itself,
+     so the browser's own header and footer still serve that path.
+     One string() to a box: Paged.js passes strings through a custom property, and two of them
+     in one box cancel each other out, so the head is the chapter's own "Chapter 4: Lithography". */
+  @top-left { content: string(chapter); }
+  @top-right { content: "Compute Chokepoints"; }
+  @bottom-left { content: "yashvardhansharmaa.github.io/chokepoints"; }
+  @bottom-right { content: counter(page) " / " counter(pages); }
+
+  /* The foot of the page: a hairline, then the notes. */
+  @footnote { margin-top: 4mm; padding-top: 2.2mm; border-top: 0.4pt solid #b9bec2; }
+}
+
+/* The title page carries no head and no folio. */
+@page :first {
+  @top-left { content: none; }
+  @top-right { content: none; }
+  @bottom-left { content: none; }
+  @bottom-right { content: none; }
+}
 
 @media print {
   /* Dark mode must not print as dark ink. Light tokens for paper, whatever the reader was using. */
@@ -29,12 +58,89 @@
   .view:not([hidden]) { display: block; min-height: 0; }
   .view.column:not([hidden]), .view.column.wide:not([hidden]) { width: 100%; max-width: none; padding: 0; }
   #app { padding-top: 0; }
-  body { background: #fff; color: #000; font-size: 10.5pt; }
   body::before { display: none !important; } /* the wafer grain is a page-sized alpha layer; printed, it costs a megabyte a page */
-  /* a reading measure of about 72 characters, left-aligned, the way a report reads */
+
+  /* ---------- the type ramp for paper ----------
+     Screen sizes are in px and far too large at this measure; every step of the ramp is set
+     here in points against a 9.5 pt body, so the hierarchy holds on the page. */
+  body { background: #fff; color: #000; font-size: 9.5pt; line-height: 1.42; }
+  /* a reading measure of about 75 characters, left-aligned, the way a report reads */
   .column, .chapter, .prose { width: 100%; max-width: none; padding: 0; margin-left: 0; }
   .prose > p, .prose > ul, .prose > ol, .prose h3, .prose h4, .inshort p, .plain p, .ch-lede { max-width: 132mm; }
   .mt-prose > p, .mt-log p, .mt-cites { max-width: 132mm; }
+  .prose > p, .prose > ul, .prose > ol, .prose blockquote { font-size: 9.5pt; line-height: 1.42; }
+  .prose li { margin-bottom: 0.3em; }
+  .prose blockquote { padding-left: 4mm; border-left-width: 1.5pt; }
+  .prose code { font-size: 0.86em; }
+
+  .ch-title { font-size: 23pt; line-height: 1.02; margin: -1mm 0 3mm; }
+  .ch-lede { font-size: 11.8pt; line-height: 1.36; max-width: 118mm; }
+  .ch-tile { padding: 2mm 1mm 2.2mm; }
+  .ch-tile .v { font-size: 24pt; margin: 0.6mm 0 0.4mm; }
+  .ch-tile .k, .ch-tile .of { font-size: 6.4pt; }
+  .ch-id { grid-template-columns: 22mm 1fr; gap: 6mm; margin-bottom: 5mm; }
+  .prose h3 { font-size: 14pt; line-height: 1.16; margin: 6mm 0 2mm; }
+  .prose h4 { font-size: 11pt; line-height: 1.25; margin: 4.5mm 0 1.6mm; }
+  .prose h5 { font-size: 7.6pt; margin: 4mm 0 1.4mm; }
+  .label, .plate-head .label { font-size: 7pt; }
+
+  /* the two boxes that carry the argument in plain words */
+  .inshort { margin: 6mm 0 7mm; border-left-width: 3pt; padding-left: 5mm; }
+  .inshort p { font-size: 11.5pt; line-height: 1.45; margin-bottom: 1.6mm; }
+  .plain { margin: 6mm 0 7mm; padding: 3mm 5mm 3.4mm; border-left-width: 2.5pt; max-width: 132mm; }
+  .plain p { font-size: 10pt; line-height: 1.5; }
+
+  /* the chokepoint card */
+  .plate { margin-bottom: 7mm; box-shadow: none; }
+  .plate-head { padding: 2mm 4mm; }
+  .plate-score { font-size: 7.4pt; }
+  .plate-score b { font-size: 8pt; }
+  .pips i { width: 6.5pt; height: 6.5pt; border-width: 1pt; }
+  .plate-kpis > div { padding: 3mm 4mm 3.2mm; }
+  .plate-kpis .k, .plate-status .k, .plate-rows dt { font-size: 6.4pt; margin-bottom: 1.6mm; }
+  .plate-kpis .v { font-size: 15.5pt; line-height: 1.06; }
+  .plate-kpis .v.cost { font-size: 13pt; }
+  .plate-kpis .v.cost.long { font-size: 9.5pt; line-height: 1.3; }
+  .plate-kpis .v small { font-size: 8pt; }
+  .plate-kpis .sub { font-size: 6.8pt; line-height: 1.45; margin-top: 1.6mm; }
+  .plate-rows .row { grid-template-columns: 32mm 1fr; gap: 5mm; padding: 2.4mm 4mm; }
+  .plate-rows dd { font-size: 9.2pt; line-height: 1.4; }
+  .plate-rows li { padding-left: 7mm; text-indent: -7mm; margin-bottom: 1.4mm; }
+  .plate-rows .note { font-size: 8.6pt; }
+  .plate-rows .why { font-size: 9pt; }
+  .plate-status > div { padding: 2.6mm 4mm 3mm; }
+  .plate-status p { font-size: 8.8pt; line-height: 1.45; }
+  .chip { font-size: 6.4pt; width: 6mm; }
+  .cc { font-size: 7pt; }
+
+  /* tables and figures: they may fill the column, never spill off it */
+  .table-wrap { overflow: visible; margin: 3mm 0 4mm; }
+  .prose table { font-size: 8.6pt; line-height: 1.32; }
+  .prose th, .prose td { padding: 1.4mm 2.6mm; }
+  .prose th { font-size: 6.8pt; }
+  .figure { margin: 4mm 0 5mm; padding: 3mm 3.5mm 2.6mm; }
+  .figure .fig-title { font-size: 9.5pt; margin-bottom: 2.4mm; }
+  .figure .fig-title .unit { font-size: 6.8pt; }
+  .figure .fig-source { font-size: 6.8pt; margin-top: 2mm; }
+  .stack-legend { font-size: 7pt; gap: 1mm 4mm; margin-top: 2mm; }
+  .tl li { font-size: 8.6pt; }
+  .tl li .d { font-size: 6.8pt; }
+  figure svg, .figure svg, #exposure-viz svg { max-width: 100%; height: auto; }
+
+  /* how to read, and the contents as a report's contents: one line a chapter, with its page */
+  .howto { margin: 0 0 8mm; padding: 3.4mm 4mm 1mm; }
+  .howto h2 { font-size: 7.4pt; margin-bottom: 2.4mm; }
+  .howto p, .howto li { font-size: 9pt; line-height: 1.45; }
+  .contents { break-after: page; padding: 4mm 0 0; margin-top: 6mm; }
+  .contents h2 { font-size: 14pt; margin-bottom: 4mm; }
+  .contents-grid { display: block; }
+  .contents-grid .item { break-inside: avoid; display: flex; align-items: baseline; gap: 4mm;
+    border-bottom: 0.3pt solid var(--line); padding: 1.3mm 0; }
+  .contents-grid .n { font-size: 7.4pt; }
+  .contents-grid .t { flex: 1; display: flex; justify-content: space-between; gap: 6mm;
+    margin: 0; font-size: 9.5pt; letter-spacing: 0.03em; }
+  .contents-grid .item ul { display: none; } /* the section list is the site's; the page wants the spine */
+  .contents-grid .t::after { content: target-counter(attr(href url), page); font-family: var(--font-mono); font-weight: 400; font-size: 7.6pt; color: var(--muted); }
 
   /* Collapsed source lists and method notes open on paper. */
   details { display: block; }
@@ -42,22 +148,23 @@
   details:not([open]) > *:not(summary) { display: block !important; }
   details::details-content { content-visibility: visible !important; display: block !important; block-size: auto !important; }
   .chapter-sources, .mt-note { break-inside: avoid; }
-  .chapter-sources ol, .mt-cites { font-size: 8.5pt; }
+  .chapter-sources ol, .mt-cites { font-size: 7.6pt; }
   .chapter-sources li, .mt-cites li { overflow-wrap: anywhere; }
   .chapter-sources summary::before, .mt-note > summary::before { content: ""; }
+  /* with real footnotes, the list at the end of the chapter would say everything twice */
+  .cp-print .chapter-sources { display: none !important; }
 
   /* One chapter per page, and blocks that must not be split across the fold. */
-  .chapter { break-before: page; }
+  .chapter { break-before: page; padding: 0 0 4mm; border-top: 0; }
   .print-only { display: block !important; }
-  .print-title { break-after: page; min-height: 230mm; display: flex !important; flex-direction: column; justify-content: flex-end; padding-bottom: 20mm; }
+  .print-title { break-after: page; min-height: 232mm; display: flex !important; flex-direction: column; justify-content: flex-end; padding-bottom: 16mm; }
   .print-title .pt-k { font-family: var(--font-mono); font-size: 9pt; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin: 0 0 6mm; }
-  .print-title .pt-h { font-family: var(--font-display); font-weight: 800; font-size: 44pt; line-height: 1; margin: 0 0 6mm; letter-spacing: -0.01em; }
-  .print-title .pt-sub { font-family: var(--font-body); font-size: 15pt; color: var(--ink-2); margin: 0 0 14mm; }
-  .print-title .pt-what { font-family: var(--font-body); font-size: 12pt; margin: 0 0 2mm; }
-  .print-title .pt-by { font-family: var(--font-display); font-weight: 600; font-size: 12pt; margin: 0 0 10mm; }
-  .print-title .pt-meta { font-family: var(--font-mono); font-size: 8.5pt; color: var(--muted); margin: 0; }
+  .print-title .pt-h { font-family: var(--font-display); font-weight: 800; font-size: 42pt; line-height: 1; margin: 0 0 6mm; letter-spacing: -0.01em; }
+  .print-title .pt-sub { font-family: var(--font-body); font-size: 14pt; color: var(--ink-2); margin: 0 0 13mm; max-width: 130mm; }
+  .print-title .pt-what { font-family: var(--font-body); font-size: 11pt; margin: 0 0 2mm; }
+  .print-title .pt-by { font-family: var(--font-display); font-weight: 600; font-size: 11pt; margin: 0 0 9mm; }
+  .print-title .pt-meta { font-family: var(--font-mono); font-size: 8pt; color: var(--muted); margin: 0; }
   .howto { break-inside: avoid; }
-  .contents { break-after: page; }
   .contents .item { break-inside: avoid; }
   .gl-term { border-bottom: 0 !important; text-decoration: none !important; background: none !important; color: inherit !important; }
   sup.cite { margin-left: 1px; }
@@ -67,8 +174,49 @@
   h1, h2, h3, h4, .ch-title, .ch-lede { break-after: avoid; }
   thead { display: table-header-group; }
   tr { break-inside: avoid; }
-  figure svg, .figure svg, #exposure-viz svg { max-width: 100%; height: auto; }
   a[href] { text-decoration: none; color: inherit; }
   .prose sup.cite a { color: var(--accent-ink); }
+  .site-footer { break-before: page; font-size: 8pt; }
+  .site-footer .sources-key, .site-footer .updated { font-size: 7.2pt; }
 
+  /* ---------- footnotes ----------
+     print.js writes one .fn beside every citation from its data-* fields; Paged.js floats it to
+     the foot of the page the superscript landed on. The superscript in the text is the call, so
+     Paged.js's own call and marker are turned off and the note carries its own number. */
+  .fn { float: footnote; }
+  .fn::footnote-call { content: none; }
+  .fn::footnote-marker { content: ""; }
+  .fn[data-note] { font-family: var(--font-body); font-size: 7.8pt; line-height: 1.28; color: var(--ink-2); }
+  .pagedjs_footnote_inner_content .fn {
+    display: block; list-style: none;
+    padding-left: 6mm; text-indent: -6mm; margin: 0 0 1.1mm;
+    overflow-wrap: anywhere;
+  }
+  .pagedjs_footnote_inner_content .fn:last-child { margin-bottom: 0; }
+  .fn-n { font-family: var(--font-mono); font-size: 6.8pt; color: var(--ink); }
+  .fn-t { color: var(--ink); }
+  .fn-m { color: var(--muted); }
+  .fn-tier { font-family: var(--font-mono); font-size: 6pt; letter-spacing: 0.06em; color: var(--muted); border: 0.4pt solid var(--line-2); border-radius: 1pt; padding: 0 0.8mm; }
+  .fn-u { font-family: var(--font-mono); font-size: 6.6pt; color: var(--muted); }
+  /* a note that Paged.js could not move stays in the text; it must not print as loose words */
+  .pagedjs_page_content .fn { display: none !important; }
+
+  /* the hairline above the notes is short, the width of a thumb, like the report this follows */
+  .pagedjs_footnote_content { border-top: 0 !important; position: relative; }
+  .pagedjs_footnote_content::before { content: ""; position: absolute; top: 0; left: 0; width: 42mm; border-top: 0.4pt solid #b9bec2; }
+
+  /* ---------- running heads ----------
+     the h2 carries "Chapter 4: " for screen readers, which makes it the running head already */
+  .ch-title { string-set: chapter content(text); }
+  .pagedjs_margin-top-left > .pagedjs_margin-content::after,
+  .pagedjs_margin-top-right > .pagedjs_margin-content::after,
+  .pagedjs_margin-bottom-left > .pagedjs_margin-content::after,
+  .pagedjs_margin-bottom-right > .pagedjs_margin-content::after {
+    font-family: var(--font-mono); font-size: 7.5pt; letter-spacing: 0.06em; color: #5b646d; white-space: nowrap;
+  }
+  .pagedjs_margin-top-left > .pagedjs_margin-content::after,
+  .pagedjs_margin-top-right > .pagedjs_margin-content::after { padding-top: 8mm; }
+  .pagedjs_margin-bottom-left > .pagedjs_margin-content::after,
+  .pagedjs_margin-bottom-right > .pagedjs_margin-content::after { padding-bottom: 4mm; }
+  .pagedjs_page { background: #fff; }
 }

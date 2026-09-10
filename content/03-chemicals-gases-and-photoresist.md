@@ -3,7 +3,7 @@
   "id": "chemicals-gases-and-photoresist",
   "number": 3,
   "title": "Chemicals, Gases and Photoresist",
-  "oneLiner": "A few hundred molecules stand between a blank wafer and a working chip. Japan makes about 90% of the photoresist, and the two times this layer has been squeezed, no fab stopped: the countries hit stockpiled and built substitutes instead.",
+  "oneLiner": "A few hundred molecules stand between a blank wafer and a working chip. Japan makes about four-fifths of the photoresist, and the two times this layer has been squeezed, no fab stopped: the countries hit stockpiled and built substitutes instead.",
   "plain": "Photoresist is photographic film for chips. A coating machine spreads a film thinner than a soap bubble across the wafer, light shines through a stencil, and the exposed parts dissolve away, leaving a pattern the next machine can etch. A few hundred other gases and liquids deposit, strip and clean around it. All of it has to be clean to about one stray metal atom in a trillion, and each formula is approved for one factory and one product at a time. That is why nine tenths of the world's photoresist comes from Japan, and a second source takes years rather than weeks.",
   "bridge": "A bare disc records nothing, so before any light reaches it the wafer is coated in a chemical that reacts where the beam lands.",
   "specimen": "gas-cabinet",
@@ -28,7 +28,7 @@
     "chinaStatus": "Cannot make resist for extreme-ultraviolet or leading-edge 193 nm printing, and held under 5% of the photoresist market as of 2021. It refines 99% of the world's primary low-purity gallium and has licensed exports of gallium and germanium since August 2023.",
     "usStatus": "Strong in filters, containers, polishing slurries and gas delivery through Entegris, DuPont and Air Products. Nearly absent from advanced photoresist since JSR bought Inpria.",
     "costSignal": "Wafer fabrication materials were a $45.8bn market in 2025 and packaging materials $27.4bn, $73.2bn between them",
-    "substitution": {"years": "3-7", "why": "Every formula is qualified for one process at one fab, and metal impurities are counted in parts per trillion, so a second source takes years of joint development rather than a purchase order."}
+    "substitutability": {"band": "Moderate", "test": "Rated on the hardest input, photoresist: Japan makes about four-fifths of it, and Korea's substitution took five years", "why": "Photoresist is the sharpest point here, about four-fifths Japanese, and each formula is approved for one layer of one product at one fab, so a second source is joint development rather than a purchase order. When Japan put resist under individual licence for Korea in 2019, Korea kept its fabs running and spent five years funding domestic substitutes, which is the clock a well-funded actor should expect: two to five years, and closer to five at the leading node."}
   },
   "keyFacts": [
     {"fact": "Japan holds about 90% of world semiconductor photoresist production, and China could not make EUV resists (as of 2021)", "source": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"},
@@ -88,7 +88,7 @@ Resist classes are not substitutes; each is tied to a scanner and a layer ([sour
 
 ## Who makes it
 
-Japan produced about 90 percent of the world's semiconductor photoresist as of 2021, the rest mostly in the United States and South Korea ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
+Japan produced about 90 percent of the world's semiconductor photoresist as of 2021, the rest mostly in the United States and South Korea ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). A later survey by Fuji Keizai, relayed in the December 2025 strategy deck of Japan's Ministry of Economy, Trade and Industry, puts Japan at 78 percent in 2023, the United States at 13 and South Korea at 6, with China inside the small remainder ([source](https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf)).
 
 {{figure:resist-country}}
 
@@ -128,4 +128,4 @@ The slower risk is regulatory. The five member states behind the European Union'
 
 ## Takeaways
 
-Photoresist is the sharpest point here: about 90 percent Japanese ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)), with one of the largest suppliers now 84 percent owned by a Japanese state fund ([source](https://www.jiccapital.co.jp/en/news/.assets/E_20240417_JIC_JICC_PressRelease.pdf)). Individual molecules are far more concentrated than the industry selling them: neon and nitrogen trifluoride come from a handful of plants. China's gallium, germanium and antimony controls bite on non-silicon chips and optics but not on a silicon GPU, and the gallium suspension runs for one year from November 2025 ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gallium.pdf)). The qualification cycle matters more than the spot price, because every disruption so far was absorbed within a year and each one added a second source somewhere.
+Photoresist is the sharpest point here: about 90 percent Japanese in 2021 and 78 percent in 2023 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)) ([source](https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf)), with one of the largest suppliers now 84 percent owned by a Japanese state fund ([source](https://www.jiccapital.co.jp/en/news/.assets/E_20240417_JIC_JICC_PressRelease.pdf)). Individual molecules are far more concentrated than the industry selling them: neon and nitrogen trifluoride come from a handful of plants. China's gallium, germanium and antimony controls bite on non-silicon chips and optics but not on a silicon GPU, and the gallium suspension runs for one year from November 2025 ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gallium.pdf)). The qualification cycle matters more than the spot price, because every disruption so far was absorbed within a year and each one added a second source somewhere.

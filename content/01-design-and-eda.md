@@ -12,8 +12,8 @@
     "concentration": "Extreme",
     "chokepointScore": 4,
     "leaders": [
-      {"name": "Synopsys", "country": "US", "share": "$8B revenue in 2025 including Ansys; 90%+ of the timing-signoff market"},
-      {"name": "Cadence", "country": "US", "share": "$5.30B revenue in 2025; 55-60% of the hardware emulator market"},
+      {"name": "Synopsys", "country": "US", "share": "$7.05B revenue in the fiscal year ended 31 October 2025, Ansys included from July; 90%+ of the timing-signoff market"},
+      {"name": "Cadence", "country": "US", "share": "$5.30B revenue in calendar 2025; 55-60% of the hardware emulator market"},
       {"name": "Siemens EDA", "country": "DE", "share": "$2.2-2.5B revenue in 2025; 85%+ of physical verification, the final layout check"},
       {"name": "Arm", "country": "GB", "share": "About 50% of processor compute at the top cloud firms, fiscal 2026"},
       {"name": "Broadcom", "country": "US", "share": "$16.7B of AI chip revenue in the third quarter of fiscal 2026"}
@@ -28,10 +28,11 @@
     "chinaStatus": "Designs competitive accelerators, but cannot yet run a complete leading-edge flow on domestic design software, and CSET at Georgetown University judges that Chinese vendors cannot support designs at those nodes. Washington cut off access to US and German tools for five weeks in 2025, then restored it.",
     "usStatus": "Owns the two largest design-software vendors and the dominant custom-chip design houses, and controls the US-origin technology inside Siemens EDA through export licences.",
     "costSignal": "A 3 nm photomask set runs about $40M, and startups have taken a 7 nm design all the way to the factory for $50-75M",
-    "substitution": {"years": "5-10", "why": "Swapping one tool is feasible. Replacing a whole certified flow means rebuilding the foundry-approved recipes, the timing and electrical models behind them, and twenty years of accumulated fixes for rare failure cases."}
+    "substitutability": {"band": "Hard", "test": "Three certified flows exist and none mixes; a fourth has to be written and foundry-certified, not bought", "why": "Three complete flows exist and they do not mix: the foundry certifies specific tool versions, and timing signed off in one tool is not accepted in another. A well-funded state building a fourth starts from a blank sheet and spends five to ten years on the rare failure cases a foundry has already validated, and CSET judges that Chinese vendors cannot yet support designs at those nodes."}
   },
   "keyFacts": [
     {"fact": "The market for chip design software and licensed circuit blocks was about $18B in 2025, with Synopsys, Cadence and Siemens EDA holding over 85%", "source": "https://newsletter.semianalysis.com/p/eda-market-primer"},
+    {"fact": "Synopsys reported $7.054B of revenue for fiscal year 2025, the twelve months to 31 October 2025, of which Ansys contributed $756.6M after the July close", "source": "https://www.sec.gov/Archives/edgar/data/883241/000119312525314200/d29055dex991.htm"},
     {"fact": "A photomask set costs over $1M at 28 nm, over $10M at 7 nm and about $40M at 3 nm; startups have built leading-edge 7 nm chips end to end for $50-75M", "source": "https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor"},
     {"fact": "The US Bureau of Industry and Security restricted design-software sales to China in letters received 23 and 29 May 2025, then rescinded them on 2 July 2025", "source": "https://www.sec.gov/Archives/edgar/data/813672/000081367225000093/cdns-20250702.htm"},
     {"fact": "Arm reported $4.92B revenue and $2.61B of royalty revenue in fiscal 2026", "source": "https://newsroom.arm.com/news/arm-q4-fye26-results"},
@@ -113,6 +114,8 @@ The reticle limit, the largest area a scanner can print in one exposure, ended t
 ## Who makes it
 
 Design software and licensed blocks were an $18 billion market in 2025, and Synopsys, Cadence and Siemens EDA took more than 85% of it, with no other vendor above 5% in any core category ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
+
+Synopsys is the largest. Its own results put revenue at $7.054 billion for the fiscal year to 31 October 2025, with Ansys, bought that July, contributing $756.6 million ([source](https://www.sec.gov/Archives/edgar/data/883241/000119312525314200/d29055dex991.htm)). Cadence, whose year ends in December, took $5.30 billion in calendar 2025 ([source](https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/R115.htm)). The two years do not line up, so any total for this market depends on where the line is drawn and on how much of Ansys it carries.
 
 {{figure:eda-share}}
 

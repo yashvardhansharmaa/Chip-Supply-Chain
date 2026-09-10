@@ -94,8 +94,8 @@
 .sa-fact-v small { display: block; font-size: 9.5px; font-weight: 400; color: var(--muted); text-align: right; letter-spacing: 0.04em; }
 .sa-fact-note { display: block; font-size: 13.5px; line-height: 1.4; color: var(--muted); margin-top: 2px; }
 .sa-sc { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; margin-left: 7px; padding: 1px 4px; border-radius: 2px; color: var(--bg); background: var(--bar-3); vertical-align: 1px; }
-.sa-sc[data-score="5"] { background: var(--bar-5); }
-.sa-sc[data-score="4"] { background: var(--bar-4); }
+.sa-sc[data-band="4"] { background: var(--bar-5); }
+.sa-sc[data-band="3"] { background: var(--bar-4); }
 
 .sa-china { margin: 14px 0 0; padding: 12px 12px 4px; background: var(--bg); border-left: 2px solid var(--accent); }
 .sa-china .label { display: block; margin-bottom: 7px; }
@@ -134,9 +134,9 @@
 .sa-tile-n { font-family: var(--font-mono); font-size: 10px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .sa-tile-bar { display: flex; align-items: flex-end; height: 62px; border-bottom: 1px solid var(--line-2); }
 .sa-tile-bar i { display: block; width: 100%; height: 22%; background: var(--bar-3); transition: height 0.25s var(--ease); }
-.sa-tile[data-score="5"] .sa-tile-bar i { height: 100%; background: var(--bar-5); }
-.sa-tile[data-score="4"] .sa-tile-bar i { height: 66%; background: var(--bar-4); }
-.sa-tile[data-score="3"] .sa-tile-bar i { height: 38%; background: var(--bar-3); }
+.sa-tile[data-band="4"] .sa-tile-bar i { height: 100%; background: var(--bar-5); }
+.sa-tile[data-band="3"] .sa-tile-bar i { height: 66%; background: var(--bar-4); }
+.sa-tile[data-band="2"] .sa-tile-bar i { height: 38%; background: var(--bar-3); }
 .sa-tile-t { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink-2); line-height: 1.2; }
 .sa-tile:hover .sa-tile-t, .sa-tile:hover .sa-tile-n { color: var(--ink); }
 .sa-tile[aria-pressed="true"] .sa-tile-n, .sa-tile[aria-pressed="true"] .sa-tile-t { color: var(--ink); font-weight: 700; }
@@ -220,6 +220,7 @@
 @media (max-width: 700px) { .sa-exits { grid-template-columns: 1fr; } }
 
 .sa-est { font-family: var(--font-mono); font-style: normal; font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-left: 6px; }
+.sa-est--basis { text-transform: none; letter-spacing: 0.02em; }
 
 .sa-town[data-dead="1"] { cursor: default; }
 

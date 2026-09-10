@@ -1,0 +1,134 @@
+[
+  {
+    "date": "2026-09-10",
+    "summary": "Restored this page as Data and methods, off the tabs: the scope, the rubric, and the four dataset notes, which were served but unreachable."
+  },
+  {
+    "date": "2026-09-10",
+    "summary": "Rebuilt the home page as the route of one chip: fifteen stops, one per stage, then a line on each country."
+  },
+  {
+    "date": "2026-09-10",
+    "summary": "Renamed the Intro tab Start here and removed the Sources page. Each chapter keeps its own source list."
+  },
+  {
+    "date": "2026-09-10",
+    "summary": "Shipped what six navigation testers found: footnote cards, glossary popovers, a legend and an as-of date on the board, and The Chain as a PDF."
+  },
+  {
+    "date": "2026-09-10",
+    "summary": "Replaced the supplier stream with ribbons from eight countries to the twenty stages, and took AI Chips to 35 accelerators."
+  },
+  {
+    "date": "2026-09-10",
+    "summary": "Removed the licence thresholds tab from Export Controls. The file stays in the repository and is documented on this page."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Rebuilt Export Controls as the board: nine things that move across the chokepoint, each with its state and the rule that set it."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Redesigned Export Controls and Suppliers after the client found both too much text. Timeline entries gained a one-sentence gist."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Removed the Methods page at the client's request, which left the site with no scope statement and no published rubric."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Ran performance, security and reliability audits and four reader re-tests, and fixed the nine bugs they found."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Delivered the first tier of the reader tests: the front door, the walk through the chain, the bibliography and ranked search."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Set the site structure: home is the world map, Start here the plain paragraphs, The Chain all seventeen chapters."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Added the Methods page: the scoring rubric, the sourcing rule, how estimates are labelled, what the site does not cover, and the four dataset notes moved from the Sources page. Added a print stylesheet that keeps a chapter's sources and charts on paper."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Opened the build to modules: a new page no longer means editing the main build script. Reserved routes for a front door, a ten-minute walk through the chain, and this page."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Rebuilt the site for phones: the specimen became a fixed strip at the foot of the screen with a live thumbnail and a Show control, the Contents opened as a full-screen sheet, and the masthead split into two rows with the search and theme buttons pinned."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Redrew every package on AI Chips from above, turning in its own plane, so one chip's die and memory layout sit beside another's."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Fixed the defects the reader tests found: a missing doctype and language attribute, screen-reader tables overflowing the phone layout, a stage count that read 15 in one place and 18 in another, muted text below the contrast threshold, labels under 10 pixels, a missing skip link, and a CSV export that dropped any field missing from the first row. Started serving the datasets as files beside the page."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Ran four read-only reader tests, a generalist, a researcher, a policy staffer and an information architect, and merged them into one revision plan. Nothing on the site changed that pass."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Cut the hero to a title and a subtitle. Redrew the China revenue series as a ranking and a grid of small charts with the table behind a toggle, and gave it its own route under Export Controls."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Made the summary cards lead with the one-liner instead of the plain-language paragraph. Rewrote every specimen caption to match the redesigned specimens, and put the wafer on chapter 1."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Renamed the site Compute Chokepoints."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Tightened the source rule to Tier A plus four named exceptions, SemiAnalysis, Reuters, the Financial Times and Nikkei Asia, and re-sourced the whole site against it. Chapters and datasets came out at zero disallowed citations. Five rows of the country-share matrix lost their numbers; a second search the same day recovered two from a company filing. Added an audit script that checks the datasets on every run."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Ported the design: a thesis hero, the scored chain strip as a fixed rail, the chokepoint card, In short at the top of every chapter, and the IBM Plex Sans Condensed, Newsreader and IBM Plex Mono type stack. Fixed the specimen overlapping its caption and widened the measure on the geopolitics essay."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Compiled the China revenue series: 20 firms and 103 firm-years, every share computed from the absolute figures in the filings rather than copied from a filing's own percentage."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Built the licence threshold map, every number that triggers a licence in the US, Dutch, Japanese, EU and Chinese regimes, with method notes, and edited the geopolitics essay down to length."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Added the Export Controls view, site search, permalinks on every section, copy-as-CSV and copy-as-JSON on the datasets, and a citation block."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Adopted the writing standard distilled from Zinsser's On Writing Well and ran every chapter through it, then through a second pass for AI-flavoured phrasing."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Published the export-control timeline, running from 2018 to September 2026, and the first draft of the geopolitics essay."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Added the source policy and tagged every citation by tier, and wrote the glossary: 74 terms in plain language, each linked to the chapter it comes from."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Added the Summary and Glossary views, the In short opener and the In plain terms box on every chapter, the compact chokepoint card, and the first round of fact-check corrections."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Compiled the first datasets: 19 accelerators with their specs and package layouts, and 220 suppliers across the chain."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Built the design system, the runtime and the build pipeline, and wrote the first chapters from the research notes."
+  },
+  {
+    "date": "2026-09-09",
+    "summary": "Started the project: the editorial brief, the data schemas, the point-cloud kit the 3D specimens are drawn with, and the specimen preview tool."
+  }
+]

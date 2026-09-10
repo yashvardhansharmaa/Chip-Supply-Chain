@@ -1,6 +1,6 @@
-# Control thresholds: how to read the map
+# Control thresholds: how to read the file
 
-`data/control-thresholds.json` holds the 40 thresholds that govern AI chips and the machines that make them. Each entry records one threshold and the instrument that carries it.
+`data/control-thresholds.json` holds the 40 thresholds that govern AI chips and the machines that make them. Each entry records one threshold and the instrument that carries it. The site no longer draws this file as a page (the licence-thresholds view was removed on 10 September 2026 to keep Export Controls short); it ships as data, with `frCitation` and `cfr` on every row, for readers who want the numbers behind the board.
 
 Start with four things. `parameter`, `operator`, `value` and `unit` are the threshold itself. `status` says whether it binds: In force, Suspended, Superseded, Rescinded, or Proposed, never in force. `destinations` names who the threshold applies to, which usually matters more than the number itself. `licensePolicy` says what happens to an application that crosses the line, and the gap between "presumption of denial" and "case-by-case" is the gap between a ban and a queue.
 

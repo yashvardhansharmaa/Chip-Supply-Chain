@@ -2,7 +2,7 @@
 
 ## What "China revenue" means
 
-Three bases sit behind the same word, and they are not interchangeable.
+Four bases sit behind the same word, and they are not interchangeable.
 
 **Ship-to** attributes revenue to the customer facility that received the goods. Every equipment and materials vendor here uses it except Besi. It is closest to where a controlled tool lands.
 
@@ -12,7 +12,11 @@ Three bases sit behind the same word, and they are not interchangeable.
 
 Synopsys allocates by where the licence seats sit, Cadence by where the product is used. Samsung reports the region of its own operating units rather than a customer split, and the figure covers phones, displays and Harman alongside memory.
 
-Every row in the file cites a filing or an investor document on the company's own domain. Samsung is the one firm here that files with no US regulator, so its rows point at the audited consolidated statements Samsung publishes on its own investor-relations site. The FY2022 and FY2024 rows read the comparative column of the following year's statements, and say so. We checked the figures against those documents: FY2025 revenue of KRW 333,605,938 million and FY2024 of KRW 300,870,903 million, with the regional lines that give the China numbers, all appear in the statements cited.
+**Selling-entity location** is a fourth basis, and SK hynix uses it. Its note is headed 지역별(법인소재지 기준) 매출액: revenue by region on the basis of where the entity that booked the sale sits, not where the customer is. The China line is what its mainland-China sales companies sold, and the group's Hong Kong subsidiary is a separate entity in the same filing, so Hong Kong is not in it. A stack made in Icheon and sold by the US arm to an American customer counts as US revenue, wherever the finished server is racked. That is why SK hynix's China share can fall while its China revenue climbs: between 2023 and 2025 China went from KRW 10.1 trillion to 19.1 trillion, but the US line went from 15.4 to 66.9 trillion as HBM shipped, and the share fell eleven points.
+
+Every row in the file cites a filing or an investor document on the company's own domain. Two firms file with no US regulator. Samsung's rows point at the audited consolidated statements Samsung publishes on its own investor-relations site; the FY2022 and FY2024 rows read the comparative column of the following year's statements, and say so. We checked the figures against those documents: FY2025 revenue of KRW 333,605,938 million and FY2024 of KRW 300,870,903 million, with the regional lines that give the China numbers, all appear in the statements cited.
+
+SK hynix files with DART, the disclosure system run by Korea's Financial Supervisory Service, which the source rule admitted as a statutory filing system on 10 September 2026. Its five rows come from the 지역별 매출액 table in the consolidated-statement notes of the 사업보고서 for each year, in Korean, and each row's note quotes the Korean line and its figure so a reader without the language can find the number. The receipt numbers on dart.fss.or.kr are 20220322000590 for 2021, 20230321001209 for 2022, 20240319000684 for 2023, 20250319000665 for 2024 and 20260317000635 for 2025. The 2023 to 2025 figures also appear in English, in note 24(3) of the Form 424B4 prospectus SK hynix filed with the SEC in July 2026, and they match to the won. The half-year report to 30 June 2026, receipt 20260814003509, puts China at KRW 32,478,276 million of 131,895,033 million, 24.6 per cent; that is six months rather than a year, so it sits in the FY2025 row's note and not in a row of its own.
 
 We compute `chinaShare` from the filed absolute figures, never copying a filing's own percentage. Nova is the one exception below.
 
@@ -30,12 +34,10 @@ Chinese fabs bought ahead of the October 2022 and October 2023 US rules and the 
 
 **ASM International.** Note 22 of the 2025 annual report gives United States, Europe and Asia only. The narrative says China equipment sales were "more than 30% of total ASM revenue" in 2025, which gives no absolute figure and sets equipment sales against a total-revenue denominator.
 
-**SK hynix.** The English earnings releases give revenue and the DRAM and NAND segments but no geographic split. The audited statements go to DART, Korea's disclosure system, in Korean, and not to the company's own site.
-
 **Advantest FY2021 and FY2022.** The audited note reports Japan, Americas, Europe and one Asia line, as does the Integrated Annual Report 2023. The FY2023 to FY2025 rows come from Advantest's own reports, where those three regions reconcile to the audited note.
 
 **Nova** discloses China only as a rounded percentage of total sales. Its rows carry `chinaRevenue: null` and a `chinaShare` taken from the filing. Treat it as one significant figure.
 
-**Applied Materials FY2026 and Micron FY2026** are not yet filed.
+**Applied Materials FY2026 and Micron FY2026** had not been filed when this note was last checked (10 September 2026); the series adds them when they are.
 
 Categories match `data/suppliers.json` where the firm appears. Veeco does not appear there, so this file classes it as `Deposition & Etch`.

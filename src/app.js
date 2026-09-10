@@ -200,7 +200,7 @@
   };
 
   /* ---------------- router ---------------- */
-  var VIEWS = ['home', 'stack', 'chain', 'intro', 'walk', 'briefing', 'landscape', 'suppliers', 'geopolitics', 'controls', 'thresholds', 'exposure', 'glossary', 'sources']; // retired routes (methods, summary-a, summary-b) are unknown and go home
+  var VIEWS = ['home', 'stack', 'chain', 'intro', 'walk', 'briefing', 'landscape', 'suppliers', 'geopolitics', 'controls', 'thresholds', 'exposure', 'glossary', 'sources', 'methods']; // methods is off the tabs: the footer links it. Retired routes (summary-a, summary-b) are unknown and go home
   var ALIAS = { chain: 'stack', intro: 'walk', briefing: 'walk', geopolitics: 'stack', thresholds: 'controls', sources: 'stack' }; // the Sources page was retired; its sources sit at the end of each chapter // the licence-thresholds tab was retired; its route lands on the board
   var MODULE_VIEWS = {}; // modules register { activate(), stage: bool } per view through window.CP.register
   var Router = {
@@ -255,7 +255,7 @@
         }
         Sections.update();
       }
-      var label = { stack: 'The Chain', walk: 'Start here', landscape: 'AI Chips', suppliers: 'Suppliers', controls: sub === 'exposure' ? 'China revenue share' : 'Export Controls', glossary: 'Glossary' }[v];
+      var label = { stack: 'The Chain', walk: 'Start here', landscape: 'AI Chips', suppliers: 'Suppliers', controls: sub === 'exposure' ? 'China revenue share' : 'Export Controls', glossary: 'Glossary', methods: 'Data and methods' }[v];
       document.title = (v === 'home' || !label) ? 'Compute Chokepoints' : 'Compute Chokepoints · ' + label;
     }
   };
@@ -1066,9 +1066,10 @@
   };
 
   /* ---------------- export controls: the board of flows, the scrubber and the chronology ----------------
-     The nine flows are the page's index: each one is a thing that moves across the chokepoint, and its
-     state on any date is the last state set on or before that date. The scrubber (By subject) and the
-     scroll (By date) both do one thing — move the as-of date — and the board re-reads itself from it. */
+     Each flow is a thing that moves across the chokepoint, and its state on any date is the last state
+     that took effect on or before that date. Every date the board sorts or compares on is the effective
+     date; the announcement date is printed beside it and never orders anything. The scrubber (By subject)
+     and the scroll (By date) both do one thing — move the as-of date — and the board re-reads itself. */
   var Geo = {
     built: false, cat: null,
     tl: [], visible: null, items: [], full: false, /* visible stays null until the first render so the export bar falls back to the whole set */ at: -1, tickQ: false,
@@ -1081,9 +1082,45 @@
       { name: 'Industrial policy', label: 'Policy', short: 'Pol', cls: 'policy' },
       { name: 'Corporate', label: 'Firms', short: 'Firm', cls: 'corp' }
     ],
-    /* the five states a flow can be in, and the word the pill carries */
-    STATE: { open: 'Open', licence: 'Licence', 'case': 'Case by case', shut: 'Shut', policy: 'Policy' },
+    /* the licence outcome a flow stands in, and the word the pill carries. Four of them are outcomes an
+       exporter can act on; Policy is the off-ramp for money and tariffs, which gate nothing. */
+    STATE: { open: 'No licence', 'case': 'Case by case', denial: 'Presumption of denial', prohibited: 'Prohibited', policy: 'Policy' },
+    /* the board's first schema had five states that did not map to outcomes: a licence and a listing are
+       one fact, and "shut" covered both a presumption of denial and a ban. Old data still reads. */
+    OLD_STATE: { licence: 'denial', shut: 'prohibited' },
+    /* the instrument behind a move, in a word */
+    INSTRUMENT: {
+      rule: 'Rule', 'entity-listing': 'Listing', 'denial-order': 'Denial order', 'licence-policy': 'Licence policy',
+      'licence-exception': 'Exception', enforcement: 'Enforcement', countermeasure: 'Countermeasure',
+      'investment-screening': 'Screening', 'industrial-policy': 'Policy', corporate: 'Corporate', pending: 'Pending'
+    },
     MODE_KEY: 'cp-cf-mode',
+    NUMWORD: ['no', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve'],
+    numWord: function (n) { return this.NUMWORD[n] || String(n); },
+    /* an unknown status reads as open rather than breaking the row */
+    norm: function (s) { var k = String(s || 'open'); if (this.OLD_STATE[k]) k = this.OLD_STATE[k]; return this.STATE[k] ? k : 'open'; },
+    word: function (s) { return this.STATE[this.norm(s)]; },
+    instWord: function (v) {
+      var k = String(v || '');
+      if (!k) return '';
+      if (this.INSTRUMENT[k]) return this.INSTRUMENT[k];
+      k = k.replace(/-/g, ' '); // an instrument the data invents still reads
+      return k.charAt(0).toUpperCase() + k.slice(1);
+    },
+    /* "89 FR 96790 · 15 CFR 742.6(b)(10)" from whatever half of it the data holds */
+    citeText: function (c) {
+      if (!c) return '';
+      return [c.fr, c.cfr].filter(function (x) { return x; }).join(' · ');
+    },
+    /* the citation as a link when it has a URL, as plain mono when it does not, as nothing when the data is silent */
+    citeHTML: function (c, cls) {
+      var t = this.citeText(c);
+      if (!t) return '';
+      var u = c && c.url ? safeUrl(c.url) : '';
+      return u && u !== '#'
+        ? '<a class="' + cls + '" href="' + u + '" target="_blank" rel="noopener">' + esc(t) + '</a>'
+        : '<span class="' + cls + '">' + esc(t) + '</span>';
+    },
     lane: function (c) {
       c = c || '';
       return /China/i.test(c) ? 1 : /Allied/i.test(c) ? 2 : /Industrial/i.test(c) ? 3 : /Corporate/i.test(c) ? 4 : 0;
@@ -1113,7 +1150,7 @@
       var all = $('#tl-all'); if (all) all.addEventListener('click', function () { self.setFull(!self.full); });
       var list = $('#timeline');
       list.addEventListener('click', function (e) { var b = e.target.closest ? e.target.closest('.tl-more') : null; if (b) self.setOpen(b, b.getAttribute('aria-expanded') !== 'true'); });
-      // the nine flows; without them the page is the chronology it has always been
+      // the flows; without them the page is the chronology it has always been
       this.flows = this.loadFlows();
       tl.forEach(function (e, i) { if (!e.id) e.id = 'tl' + i; });
       this.now = tl.length ? tl[tl.length - 1].date : new Date().toISOString().slice(0, 10);
@@ -1123,6 +1160,8 @@
       tl.forEach(function (e) { var yy = parseInt(String(e.date).slice(0, 4), 10); if (self.yearN[yy] != null) self.yearN[yy]++; });
       if (this.flows) {
         this.flows.forEach(function (f) { self.byId[f.id] = f; self.evs[f.id] = self.eventsFor(f); });
+        var lead = $('#cf-intro'); // the count is the data's, not the copy's: the editor may split a flow
+        if (lead) lead.textContent = this.numWord(this.flows.length) + ' things move across the chokepoint. Each row gives the licence outcome it stands in today. Open one for the moves that set it.';
         this.wireBoard();
         this.renderScrub();
         this.renderBoard();
@@ -1141,25 +1180,50 @@
       this.setMode(this.flows ? (this.readMode() || 'subject') : 'date');
     },
     /* ---- the flows and their states ---- */
+    rawFlows: function () { // the file may be a bare array or { flows: [...] }; either reads
+      var raw = DATA.flows;
+      if (raw && Object.prototype.toString.call(raw) === '[object Array]') return raw;
+      if (raw && raw.flows && raw.flows.length) return raw.flows;
+      return null;
+    },
     loadFlows: function () {
-      var raw = DATA.flows, list = null;
-      if (raw && Object.prototype.toString.call(raw) === '[object Array]') list = raw;
-      else if (raw && raw.flows && raw.flows.length) list = raw.flows;
+      var list = this.rawFlows();
       if (!list || !list.length) return null;
       list = list.slice().filter(function (f) { return f && f.id; }).sort(function (a, b) { return (a.order == null ? 99 : a.order) - (b.order == null ? 99 : b.order); });
-      list.forEach(function (f) { f.states = (f.states || []).slice().sort(function (a, b) { return String(a.date) < String(b.date) ? -1 : String(a.date) > String(b.date) ? 1 : 0; }); });
+      list.forEach(function (f) { f.states = Geo.sortStates(f.states); });
       return list.length ? list : null;
     },
-    /* the state of a flow as of a date: the last state set on or before it, else the flow's initial state */
-    stateAt: function (f, date) {
-      var st = f.states || [], out = null;
-      for (var i = 0; i < st.length; i++) if (st[i] && st[i].date && st[i].date <= date) out = st[i];
-      var s = out || (f.initial && typeof f.initial === 'object' ? f.initial : null);
-      if (s) return { status: s.status || 'open', label: s.label || this.STATE[s.status] || '', date: out ? out.date : (s.date || null), event: s.event };
-      var k = typeof f.initial === 'string' && f.initial ? f.initial : 'open';
-      return { status: this.STATE[k] ? k : 'open', label: this.STATE[k] || k, date: null };
+    /* states run on their effective date, never on the day the rule was announced */
+    sortStates: function (st) {
+      return (st || []).slice().sort(function (a, b) { return String(a.date) < String(b.date) ? -1 : String(a.date) > String(b.date) ? 1 : 0; });
     },
-    keyOf: function (s) { return s.status + '|' + s.label + '|' + (s.date || ''); },
+    /* the state of a flow as of a date: the last state that took effect on or before it, else the flow's
+       initial state. A stay that has not yet lapsed marks the state suspended; once it lapses the
+       outcome underneath returns on its own. */
+    stateAt: function (f, date) {
+      var st = f.states || [], out = null, s, k;
+      for (var i = 0; i < st.length; i++) if (st[i] && st[i].date && st[i].date <= date) out = st[i];
+      s = out || (f.initial && typeof f.initial === 'object' ? f.initial : null);
+      if (!s) {
+        k = this.norm(typeof f.initial === 'string' ? f.initial : 'open');
+        return { status: k, label: this.STATE[k], date: null, announced: null, suspendedUntil: null, suspended: false, cite: null, event: null };
+      }
+      k = this.norm(s.status);
+      return {
+        status: k,
+        label: s.label || this.STATE[k],
+        date: out ? out.date : (s.date || null),
+        announced: s.announced || null, // missing: the effective date stands for both
+        suspendedUntil: s.suspendedUntil || null,
+        suspended: !!(s.suspendedUntil && String(s.suspendedUntil) >= String(date)),
+        cite: s.cite || null, // missing: nothing is printed
+        event: s.event || null
+      };
+    },
+    keyOf: function (s) {
+      return s.status + '|' + s.label + '|' + (s.date || '') + '|' + (s.announced || '') +
+        '|' + (s.suspended ? s.suspendedUntil : '') + '|' + this.citeText(s.cite) + '|' + ((s.cite && s.cite.url) || '');
+    },
     /* the moves that touched a flow: the events that name it, or the events its own states name */
     eventsFor: function (f) {
       var out = [], want = {};
@@ -1184,7 +1248,8 @@
       $$('#cf-modes .cf-mode').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-mode') === self.mode ? 'true' : 'false'); });
       // the compact board in By date is a read-out, not a set of drawers
       $$('#cf-board .cf-btn').forEach(function (b) {
-        var row = b.parentNode.parentNode;
+        var row = b.closest ? b.closest('.cf-row') : b.parentNode.parentNode;
+        if (!row) return;
         if (self.mode === 'subject') { b.setAttribute('aria-controls', 'cf-h-' + row.getAttribute('data-f')); b.setAttribute('aria-expanded', row.getAttribute('data-open') === '1' ? 'true' : 'false'); }
         else { b.removeAttribute('aria-controls'); b.removeAttribute('aria-expanded'); }
       });
@@ -1215,10 +1280,14 @@
         var d = new Date(e.date + 'T00:00:00');
         var ds = isNaN(d) ? esc(e.date) : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
         var host = e.source ? e.source.replace(/^https?:\/\//, '').split('/')[0] : '';
+        var eff = e.effectiveDate && e.effectiveDate !== e.date ? e.effectiveDate : null; // a rule takes force after it is announced
+        var inst = self.instWord(e.instrument), cite = self.citeText({ fr: e.frCitation, cfr: e.cfr });
         html += '<li class="tl-e" id="tl-e' + i + '" data-i="' + i + '" data-date="' + esc(e.date || '') + '">' +
-          '<div class="d"><b>' + ds + '</b>' + esc(e.actor || '') + '</div>' +
-          '<div class="tl-body"><span class="cat ' + self.CATS[self.lane(e.category)].cls + '">' + esc(e.category || '') + '</span>' +
+          '<div class="d"><b>' + ds + '</b>' + (eff ? '<span class="tl-eff">in force ' + esc(self.fmtDate(eff)) + '</span>' : '') + esc(e.actor || '') + '</div>' +
+          '<div class="tl-body"><span class="cf-ev-tags"><span class="cat ' + self.CATS[self.lane(e.category)].cls + '">' + esc(e.category || '') + '</span>' +
+          (inst ? '<span class="cf-inst">' + esc(inst) + '</span>' : '') + '</span>' +
           '<h4>' + esc(e.title) + '</h4><p class="tl-gist">' + esc(self.gistOf(e)) + '</p>' +
+          (cite ? self.citeHTML({ fr: e.frCitation, cfr: e.cfr, url: e.source }, 'cf-ev-cite') : '') +
           '<button type="button" class="tl-more" aria-expanded="false" aria-controls="tl-p' + i + '">More</button>' +
           '<div class="tl-panel" id="tl-p' + i + '" hidden><p>' + esc(e.summary || '') + '</p>' +
           (host ? '<a class="src" href="' + safeUrl(e.source) + '" target="_blank" rel="noopener">' + esc(host) + '</a>' : '') +
@@ -1231,16 +1300,22 @@
       this.at = -1; this.spy();
       list.dispatchEvent(new CustomEvent('cp:rows'));
     },
-    /* under each year on a phone: where the nine flows stood when the year ended */
+    /* under each year on a phone: where the flows stood when the year ended, counted by outcome. A stay
+       counts under the outcome it holds up, and is named again on its own. */
     yearSum: function (y) {
       var self = this, last = this.years[this.years.length - 1];
       if (!this.flows) return '';
       var end = parseInt(y, 10) >= last ? this.now : y + '-12-31';
-      var counts = {}, order = ['shut', 'licence', 'case', 'policy'], parts = [];
-      this.flows.forEach(function (f) { var s = self.stateAt(f, end); if (s.status !== 'open') counts[s.status] = (counts[s.status] || 0) + 1; });
-      order.forEach(function (k) { if (counts[k]) parts.push(counts[k] + ' ' + esc(String(self.STATE[k] || k).toLowerCase())); });
+      var counts = {}, order = ['prohibited', 'denial', 'case', 'policy'], parts = [], susp = 0;
+      this.flows.forEach(function (f) {
+        var s = self.stateAt(f, end);
+        if (s.status !== 'open') counts[s.status] = (counts[s.status] || 0) + 1;
+        if (s.suspendedUntil && String(s.suspendedUntil) >= String(end)) susp++;
+      });
+      order.forEach(function (k) { if (counts[k]) parts.push(counts[k] + ' ' + esc(String(self.STATE[k]).toLowerCase())); });
+      if (susp) parts.push(susp + ' suspended');
       if (!parts.length) return '';
-      return '<p class="cf-sum">' + (parseInt(y, 10) >= last ? 'Now' : 'End of ' + esc(y)) + ': ' + parts.join(' · ') + ' of nine flows</p>';
+      return '<p class="cf-sum">' + (parseInt(y, 10) >= last ? 'Now' : 'End of ' + esc(y)) + ' · ' + parts.join(' · ') + ' · of ' + this.flows.length + ' flows</p>';
     },
     setOpen: function (btn, open) {
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -1264,7 +1339,9 @@
       this.items.forEach(function (el) { io.observe(el); });
       this.io = io;
     },
-    /* ---- the board: one row per flow, its state as of the scrubber date ---- */
+    /* ---- the board: one row per flow, its state as of the scrubber date ----
+       The whole header opens the row, so the button is laid over it rather than wrapped around it: the
+       citation is a link, and a link may not sit inside a button. */
     renderBoard: function () {
       var self = this, host = $('#cf-board');
       if (!host || !this.flows) return;
@@ -1272,17 +1349,23 @@
         var st = self.stateAt(f, self.asOf), n = self.nMoves(f), id = esc(f.id);
         self.keys[f.id] = self.keyOf(st);
         return '<section class="cf-row" data-f="' + id + '" data-open="0" style="--d:' + Math.min(320, i * 34) + 'ms">' +
-          '<h4 class="cf-rowh"><button type="button" class="cf-btn" id="cf-b-' + id + '" aria-expanded="false" aria-controls="cf-h-' + id + '">' +
+          '<h4 class="cf-rowh">' +
+          '<button type="button" class="cf-btn" id="cf-b-' + id + '" aria-expanded="false" aria-controls="cf-h-' + id + '" aria-label="' + esc(self.rowLabel(f, st, n)) + '"></button>' +
           '<span class="cf-id"><span class="cf-name">' + esc(f.name || f.id) + '</span>' +
           (f.route ? '<span class="cf-route">' + esc(f.route) + '</span>' : '') +
           (f.what ? '<span class="cf-what">' + esc(f.what) + '</span>' : '') + '</span>' +
           '<span class="cf-state">' + self.pillHTML(st) + '</span>' +
           '<span class="cf-n">' + n + (n === 1 ? ' move' : ' moves') + '</span>' +
-          '<span class="cf-caret" aria-hidden="true"></span></button></h4>' +
+          '<span class="cf-caret" aria-hidden="true"></span></h4>' +
           '<div class="cf-hist" id="cf-h-' + id + '" role="region" aria-labelledby="cf-b-' + id + '"><div class="cf-hist-in"></div></div>' +
           '</section>';
       }).join('');
       if (!reduced) host.setAttribute('data-in', '1');
+    },
+    /* the row read aloud: the button carries no text of its own, so it says what the row says */
+    rowLabel: function (f, st, n) {
+      return [f.name || f.id, f.route, this.STATE[st.status] + (st.suspended ? ', suspended until ' + this.fmtDate(st.suspendedUntil) : ''),
+      st.date ? 'from ' + this.fmtDate(st.date) : 'open since 2018', n + (n === 1 ? ' move' : ' moves')].filter(function (x) { return x; }).join(', ');
     },
     /* the glossary's own terms inside a state label become popover buttons, so TPP and the Entity List are defined in place */
     GLOSS: [[/\bTPP\b/g, 'tpp', 'TPP'], [/\bEntity List\b/g, 'entity list', 'Entity List'], [/\bFDPR\b/g, 'foreign direct product rule', 'FDPR'], [/\bforeign direct product rule\b/gi, 'foreign direct product rule', 'foreign direct product rule'], [/\blicen[cs]e exception\b/gi, 'license exception', 'licence exception']],
@@ -1292,11 +1375,18 @@
       this.GLOSS.forEach(function (g) { out = out.replace(g[0], '<span class="gl-term gl-term--inline" data-term="' + g[1] + '">' + g[2] + '</span>'); });
       return out;
     },
+    /* the pill, the stay beside it, the label, the two dates and the citation */
     pillHTML: function (st) {
-      var word = st.status === 'policy' ? 'Policy' : (this.STATE[st.status] || st.status);
-      return '<span class="cf-pill is-' + esc(st.status) + '">' + esc(word) + '</span>' +
+      var word = this.STATE[st.status];
+      var dates = st.date ? 'from ' + this.fmtDate(st.date) : 'open since 2018';
+      if (st.announced && st.date && st.announced !== st.date) dates += ' · announced ' + this.fmtDate(st.announced);
+      return '<span class="cf-pills">' +
+        '<span class="cf-pill is-' + esc(st.status) + (st.suspended ? ' is-suspended' : '') + '">' + esc(word) + '</span>' +
+        (st.suspended ? '<span class="cf-susp">Suspended until ' + esc(this.fmtDate(st.suspendedUntil)) + '</span>' : '') +
+        '</span>' +
         (st.label && st.label !== word ? '<span class="cf-lab">' + this.gloss(st.label) + '</span>' : '') +
-        '<span class="cf-when">' + esc(st.date ? this.fmtDate(st.date) : 'open since 2018') + '</span>';
+        '<span class="cf-when">' + esc(dates) + '</span>' +
+        this.citeHTML(st.cite, 'cf-cite');
     },
     /* re-read every row from the as-of date; rows that moved inside the span glow */
     paintBoard: function (span) {
@@ -1308,6 +1398,8 @@
         var st = self.stateAt(f, self.asOf), key = self.keyOf(st), box = row.querySelector('.cf-state');
         if (box && key !== self.keys[f.id]) {
           box.innerHTML = self.pillHTML(st);
+          var btn = row.querySelector('.cf-btn');
+          if (btn) btn.setAttribute('aria-label', self.rowLabel(f, st, self.nMoves(f)));
           if (!reduced) { box.classList.remove('is-flip'); void box.offsetWidth; box.classList.add('is-flip'); }
         }
         self.keys[f.id] = key;
@@ -1358,36 +1450,60 @@
       a.oncancel = function () { if (!open) row.setAttribute('data-open', '0'); };
     },
     /* one flow's own history: its moves in date order, the ones that changed its state marked with the pill */
-    boardRows: function () { // the nine flows as of the board's date, one row each, for the export; works before the board is built, so the export bar can exist at boot
-      var self = this, flows = this.flows || ((DATA.flows && DATA.flows.flows) || []);
+    boardRows: function () { // every flow as of the board's date, one row each, for the export; works before the board is built, so the export bar can exist at boot
+      var self = this, flows = this.flows || this.rawFlows() || [];
       var tl = DATA.timeline || [], byEv = {}; tl.forEach(function (e) { if (e.id) byEv[e.id] = e; });
       var last = tl.reduce(function (m, e) { return e.date > m ? e.date : m; }, ''), asOf = this.asOf || last;
       return flows.map(function (f) {
-        var st = { status: f.initial || 'open', label: '', date: '', event: '' };
-        (f.states || []).forEach(function (x) { if (x.date <= asOf) st = x; });
-        var ev = st.event ? byEv[st.event] : null, moves = tl.filter(function (e) { return (e.flows || []).indexOf(f.id) >= 0; }).length;
-        return { flow: f.name, route: f.route, asOf: asOf, state: (self.STATE && self.STATE[st.status]) || st.status, label: st.label || '', since: st.date || '', setBy: ev ? ev.title : '', source: ev ? ev.source : '', moves: moves };
+        var st = self.stateAt({ id: f.id, initial: f.initial, states: self.sortStates(f.states) }, asOf);
+        var ev = st.event ? byEv[st.event] : null, c = st.cite || {};
+        var moves = tl.filter(function (e) { return (e.flows || []).indexOf(f.id) >= 0; }).length;
+        return {
+          flow: f.name, route: f.route, asOf: asOf, state: self.STATE[st.status], label: st.label || '',
+          since: st.date || '', announced: st.announced || '', suspendedUntil: st.suspendedUntil || '',
+          setBy: ev ? ev.title : '', fr: c.fr || '', cfr: c.cfr || '', url: c.url || '', source: ev ? ev.source : '', moves: moves
+        };
       });
     },
     histHTML: function (f) {
       var self = this, evs = this.evs[f.id] || [], byEv = {};
       (f.states || []).forEach(function (s) { if (s.event) byEv[s.event] = s; });
-      if (!evs.length) return '<p class="cf-none">No move has touched this flow yet.</p>';
-      return '<ol class="cf-evs">' + evs.map(function (e, k) {
+      var body = evs.length ? '<ol class="cf-evs">' + evs.map(function (e, k) {
         var s = byEv[e.id], id = 'cf-p-' + f.id + '-' + k;
-        var ds = self.fmtDate(e.date);
+        var eff = e.effectiveDate && e.effectiveDate !== e.date ? e.effectiveDate : null;
         var host = e.source ? e.source.replace(/^https?:\/\//, '').split('/')[0] : '';
-        var word = s ? (s.status === 'policy' ? 'Policy' : (self.STATE[s.status] || s.status || '')) : '';
+        var word = s ? self.word(s.status) : '';
+        var sCite = s ? self.citeText(s.cite) : '', eCite = self.citeText({ fr: e.frCitation, cfr: e.cfr });
+        var inst = self.instWord(e.instrument);
         return '<li class="cf-ev' + (s ? ' is-move' : '') + '">' +
-          '<div class="cf-ev-p">' + (s ? '<span class="cf-pill is-' + esc(s.status || 'open') + '">' + esc(word) + '</span>' + (s.label ? '<span class="cf-ev-lab">' + self.gloss(s.label) + '</span>' : '') : '<span class="cf-ev-none">no change</span>') + '</div>' +
-          '<div class="cf-ev-d"><b>' + esc(ds) + '</b><span>' + esc(e.actor || '') + '</span></div>' +
-          '<div class="cf-ev-b"><span class="cat ' + self.CATS[self.lane(e.category)].cls + '">' + esc(e.category || '') + '</span>' +
+          '<div class="cf-ev-p">' + (s
+            ? '<span class="cf-pill is-' + esc(self.norm(s.status)) + '">' + esc(word) + '</span>' +
+            (s.label ? '<span class="cf-ev-lab">' + self.gloss(s.label) + '</span>' : '') +
+            (s.suspendedUntil ? '<span class="cf-susp">Suspended until ' + esc(self.fmtDate(s.suspendedUntil)) + '</span>' : '') +
+            (s.date && s.date !== (eff || e.date) ? '<span class="cf-ev-from">from ' + esc(self.fmtDate(s.date)) + '</span>' : '') +
+            (sCite && sCite !== eCite ? self.citeHTML(s.cite, 'cf-ev-cite') : '')
+            : '<span class="cf-ev-none">no change</span>') + '</div>' +
+          '<div class="cf-ev-d">' +
+          (eff ? '<span class="cf-ev-k">announced</span>' : '') + '<b>' + esc(self.fmtDate(e.date)) + '</b>' +
+          (eff ? '<span class="cf-ev-k">in force</span><b>' + esc(self.fmtDate(eff)) + '</b>' : '') +
+          '<span>' + esc(e.actor || '') + '</span></div>' +
+          '<div class="cf-ev-b"><span class="cf-ev-tags"><span class="cat ' + self.CATS[self.lane(e.category)].cls + '">' + esc(e.category || '') + '</span>' +
+          (inst ? '<span class="cf-inst">' + esc(inst) + '</span>' : '') + '</span>' +
           '<h5 class="cf-ev-t">' + esc(e.title) + '</h5><p class="cf-ev-g">' + esc(self.gistOf(e)) + '</p>' +
+          (eCite ? self.citeHTML({ fr: e.frCitation, cfr: e.cfr, url: e.source }, 'cf-ev-cite') : '') +
           '<button type="button" class="tl-more" aria-expanded="false" aria-controls="' + id + '">More</button>' +
           '<div class="tl-panel" id="' + id + '" hidden><p>' + esc(e.summary || '') + '</p>' +
           (host ? '<a class="src" href="' + safeUrl(e.source) + '" target="_blank" rel="noopener">' + esc(host) + '</a>' : '') +
           '</div></div></li>';
-      }).join('') + '</ol>';
+      }).join('') + '</ol>' : '<p class="cf-none">No move has touched this flow yet.</p>';
+      return body + this.chapterHTML(f);
+    },
+    /* the chapter that tells this flow's story, when the data names one */
+    chapterHTML: function (f) {
+      if (!f.chapter) return ''; // no chapter, no link
+      var t = (DATA.chapters || []).filter(function (c) { return c.id === f.chapter; })[0];
+      return '<p class="cf-chapter"><a href="' + safeUrl('#' + f.chapter) + '">Read the chapter</a>' +
+        (t ? '<span class="cf-chapter-n">' + esc(t.title) + '</span>' : '') + '</p>';
     },
     /* ---- the scrubber: the years as equal segments, a playhead, and Now ---- */
     renderScrub: function () {

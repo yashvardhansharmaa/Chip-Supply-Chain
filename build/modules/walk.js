@@ -19,13 +19,11 @@ module.exports = function (ctx) {
   const stepId = (id) => '/walk/' + id;
   const stageIndex = (id) => stages.findIndex((s) => s.id === id);
 
-  /* the score, shown the way the scored chain strip shows it: five pips, amber at 5, ink at 4, grey below */
-  const rank = (n) => (n >= 5 ? '5' : n >= 4 ? '4' : '3');
-  function scoreHTML(n) {
-    if (!n) return '<span class="wk-score"><button type="button" class="gl-term label wk-score-term" data-term="chokepoint score">Chokepoint</button><span class="wk-sc">not scored</span></span>';
-    let pips = '';
-    for (let i = 1; i <= 5; i++) pips += `<i${i <= n ? ' class="on"' : ''}></i>`;
-    return `<span class="wk-score" data-rank="${rank(n)}"><span class="label">Chokepoint</span><span class="wk-pips" aria-hidden="true">${pips}</span><span class="wk-sc"><b>${n}</b> / 5</span></span>`;
+  /* the concentration band, shown the way the chain strip shows it: amber at Extreme, ink at High, grey below */
+  const RANK = { Extreme: '5', High: '4', Moderate: '3', Low: '3' };
+  function bandHTML(c) {
+    if (!c.band) return '';
+    return `<span class="wk-score" data-rank="${RANK[c.band] || '3'}"><button type="button" class="gl-term label wk-score-term" data-term="concentration">Concentration</button><span class="wk-sc"><b>${esc(c.band)}</b></span></span>`;
   }
 
   /* who leads: at most three, name then country code, in the site's chip */
@@ -70,7 +68,7 @@ module.exports = function (ctx) {
 ${ctx.glossaryWrap ? ctx.glossaryWrap(`<p class="wk-p">${esc(plainOf(ch.id))}</p>`) : `<p class="wk-p">${esc(plainOf(ch.id))}</p>`}
 ${factsHTML(ch)}
 ${leadersHTML(c)}
-<div class="wk-foot">${scoreHTML(+c.score || 0)}<a class="wk-read" href="${esc(chapterHref(ch.id))}">Read the chapter</a></div>
+<div class="wk-foot">${bandHTML(c)}<a class="wk-read" href="${esc(chapterHref(ch.id))}">Read the chapter</a></div>
 <nav class="wk-pn" aria-label="Step ${i + 1} of ${steps.length}">${
       prev ? `<a class="wk-prev" href="#${esc(stepId(prev.id))}"><span class="label">Previous</span><span class="wk-pn-t">${esc(prev.title)}</span></a>` : '<span></span>'
     }${

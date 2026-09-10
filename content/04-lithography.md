@@ -22,10 +22,10 @@
       {"code": "US", "note": "ASML light-source research and manufacturing, San Diego"},
       {"code": "JP", "note": "Nikon and Canon deep ultraviolet scanners and steppers"}
     ],
-    "chinaStatus": "No EUV scanner has ever been sold to a customer in China, and CSIS judges the technology firmly out of reach despite state investment. A Shanghai firm, Aishengna, started building domestic immersion DUV scanners in 2026. SMEE, the older domestic supplier, holds about 4% of the global i-line market, the coarsest tier, and nothing above it.",
+    "chinaStatus": "No EUV scanner has ever been sold to a customer in China, and CSIS judges the technology firmly out of reach despite state investment. Shanghai Aishengna Electronic Technology Group, a state-owned firm registered in 2023, started producing domestic immersion DUV scanners in 2026. SMEE, the older domestic supplier, holds about 4% of the global i-line market, the coarsest tier, and nothing above it.",
     "usStatus": "No domestic scanner maker. Washington controls access through Dutch licensing, US-origin subsystems and entity-list rules.",
     "costSignal": "About $200M for a standard EUV scanner, $350-400M for the newer High-NA version and about $60M for a DUV tool, on Reuters' reporting; ASML does not publish per-system prices",
-    "substitution": {"years": "10+", "why": "ASML built its first EUV prototype in 2001 and needed nearly two decades and billions of euros before commercial chips shipped in 2019. It still depends on Zeiss mirrors that no one else can make."}
+    "substitutability": {"band": "Very hard", "test": "No second EUV source; only Zeiss can polish the mirrors, and a funded Chinese team has light but no printed chip", "why": "A well-funded state starting today would have to reproduce metre-wide mirrors polished to within tens of picometres and a source that hits tin droplets 50,000 times a second, not merely assemble a scanner. The best-funded attempt so far has made extreme-ultraviolet light and no chip, CSIS reads working systems as out of reach, and no announced programme changes this before 2030."}
   },
   "keyFacts": [
     {"fact": "ASML recognized 48 EUV systems in revenue in 2025, versus 44 in 2024 and 53 in 2023", "source": "https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf"},
@@ -145,7 +145,7 @@ Export controls bar EUV from Chinese foundries, and CSIS judges the technology o
 
 The controls show in the mix: China was 41% of ASML's net system sales in 2024 and 33% in 2025 ([source](https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf)).
 
-On DUV, China's answer is real. Reuters reported in July 2026 that the Shanghai state firm Aishengna has started producing home-grown immersion DUV tools ([source](https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/)). SMEE, the incumbent, is strongest in i-line and even there holds about four percent of the world market ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).
+On DUV, China's answer is real. Reuters reported in July 2026, on one unnamed source, that Shanghai Aishengna Electronic Technology Group has started producing home-grown immersion DUV tools. The firm was registered in August 2023 with 7 billion yuan of capital and two state shareholders, Shanghai Electric Holding and a Shanghai International Trust subsidiary, has no website, and has taken in teams from SMEE and the startup Yuliangsheng ([source](https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/)). SMEE, the incumbent, is strongest in i-line and even there holds about four percent of the world market ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).
 
 On EUV the record is thinner, and claims of Huawei mass production in 2026 remain unverified. Reuters reported in December 2025 that a Shenzhen team of former ASML engineers had built a prototype that makes extreme ultraviolet light but no chip ([source](https://www.reuters.com/world/china/how-china-built-its-manhattan-project-rival-west-ai-chips-2025-12-17/)). Between that light and a printed chip sit the mirrors, and only Zeiss can polish them.
 
@@ -153,7 +153,7 @@ On EUV the record is thinner, and claims of Huawei mass production in 2026 remai
 
 ## The chokepoint
 
-Lithography scores a 5 because the failure mode is total: if ASML stops shipping, nothing at the leading edge gets printed. Substitution takes decades, and even ASML could not rebuild itself quickly, since Zeiss makes its optics and Trumpf its drive laser.
+Concentration here is extreme and substitution very hard, because the failure mode is total: if ASML stops shipping, nothing at the leading edge gets printed. Even ASML could not rebuild itself quickly, since Zeiss makes its optics and Trumpf its drive laser.
 
 For AI accelerators, EUV is the point of control. It prints the finest layers, the ones that set how densely transistors and wires pack, and TSMC expects the number of layers needing High-NA to rise as AI designs grow more complex ([source](https://pr.tsmc.com/english/news/3338)). Every added layer is more time on a tool nobody else builds.
 

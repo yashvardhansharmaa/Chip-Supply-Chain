@@ -27,7 +27,7 @@
     "chinaStatus": "Domestic accelerators dodge Nvidia's margin and pay for it elsewhere: no advanced packaging at volume, memory bought from stockpiles or from CXMT's early product, and yields on SMIC's N+2 process that make the die the expensive part rather than the cheap one.",
     "usStatus": "Captures the design and equipment margins and almost none of the wafer, memory, substrate or assembly cost, which is why its export controls target access rather than production.",
     "costSignal": "~$6,400 of manufacturing cost inside a B200 that sells for $30,000 to $40,000; memory alone is $2,900 of it",
-    "substitution": {"years": "3-5", "why": "A custom chip built on the same TSMC wafers and the same memory can attack Nvidia's margin. The memory and packaging lines underneath cannot be attacked that way, because physically scarce capacity sets them."}
+    "substitutability": {"band": "Moderate", "test": "The margin is substitutable and the inputs under it are not: custom parts ship on the same wafers and memory", "why": "A well-funded buyer can commission a custom accelerator on the same TSMC wafers and the same memory and take back most of Nvidia's margin, and several already have. What it cannot substitute is what sits underneath: the memory at 45 percent of the build, and packaging and its scrap at more than twice the logic dies, both set by physically scarce capacity. Two to five years to a custom part, and no such clock for the lines beneath it."}
   },
   "keyFacts": [
     {"fact": "A B200 costs about $6,400 to build, in a range of $5,700 to $7,300, and sells for $30,000 to $40,000", "source": "https://epoch.ai/data-insights/b200-cost-breakdown"},

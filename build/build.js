@@ -218,13 +218,16 @@ function wordCount(body) {
 }
 
 /* ---------------- nameplate ---------------- */
-function pips(n) { let s = '<span class="pips" aria-hidden="true">'; for (let i = 1; i <= 5; i++) s += `<i class="${i <= n ? 'on' : ''}"></i>`; return s + '</span>'; }
+const BANDS = { Extreme: 4, High: 3, Moderate: 2, Low: 1 };
+const SUBS = { 'Very hard': 4, Hard: 3, Moderate: 2, Easy: 1 };
+const SUBWORD = { 'Very hard': 'Very hard to substitute', Hard: 'Hard to substitute', Moderate: 'Moderately hard to substitute', Easy: 'Easy to substitute' };
 function nameplate(card, title) {
   if (!card) return '';
   const leaders = (card.leaders || []).map((l) => `<li><span class="chip">${esc(l.country || '')}</span><span class="who">${esc(l.name)}</span>${l.share ? ` <span class="note">${esc(l.share)}</span>` : ''}</li>`).join('');
   const countries = (card.countries || []).map((c) => `<li><span class="chip">${esc(c.code)}</span><span class="who">${esc(COUNTRY[c.code] || c.code)}</span>${c.note ? ` <span class="note">${esc(c.note)}</span>` : ''}</li>`).join('');
   const sub = card.substitution || {};
-  const score = +card.chokepointScore || 0;
+  const sb = card.substitutability && card.substitutability.band ? card.substitutability : null;
+  const conc = card.concentration || '';
   // Cost signal: lead with the number when the sentence starts with one; a sentence that does not gets the small reading face, never the display size
   const costSegs = String(card.costSignal || '').split(/;\s|\.\s/);
   let costHead = costSegs[0] || '', costRest = costSegs.slice(1).join('. ');
@@ -233,16 +236,16 @@ function nameplate(card, title) {
   const costLong = costHead.length > 30;
   const cost = [costHead, costRest];
   return `<section class="plate" aria-label="Chokepoint card${title ? ' for ' + esc(title) : ''}">
-<header class="plate-head"><span class="label">Chokepoint card</span><span class="plate-score">${pips(score)}<button type="button" class="gl-term plate-score-term" data-term="chokepoint score"><b>${score || '—'}</b> / 5</button><span class="sr-only">Chokepoint score ${score} of 5</span></span></header>
+<header class="plate-head"><span class="label">Chokepoint card</span><span class="plate-tags">${conc ? `<button type="button" class="gl-term ptag ptag-conc" data-band="${BANDS[conc] || 0}" data-term="concentration">${esc(conc)} concentration</button>` : ''}${sb ? `<button type="button" class="gl-term ptag ptag-sub" data-band="${SUBS[sb.band] || 0}" data-term="substitutability">${esc(SUBWORD[sb.band] || sb.band)}</button>` : (sub.years ? `<span class="ptag ptag-sub">${esc(sub.years)} years to substitute</span>` : '')}</span></header>
 <div class="plate-kpis">
 <div><span class="k">Concentration</span><b class="v ${esc(card.concentration || '')}">${esc(card.concentration || '—')}</b></div>
-<div><span class="k">Substitution time</span><b class="v">${esc(sub.years || '—')}${sub.years && !/year/i.test(sub.years) ? '<small>years</small>' : ''}</b></div>
+${sb ? `<div><span class="k">Substitutability</span><b class="v sub-${SUBS[sb.band] || 0}">${esc(sb.band)}</b>${sb.test ? `<span class="sub">${esc(sb.test)}</span>` : ''}</div>` : `<div><span class="k">Substitution time</span><b class="v">${esc(sub.years || '—')}${sub.years && !/year/i.test(sub.years) ? '<small>years</small>' : ''}</b></div>`}
 <div><span class="k">Price or market size</span><b class="v cost${costLong ? ' long' : ''}">${esc(cost[0] || '—')}</b>${cost[1] ? `<span class="sub">${esc(cost[1])}</span>` : ''}</div>
 </div>
 <dl class="plate-rows">
 ${leaders ? `<div class="row"><dt>Who leads</dt><dd><ul>${leaders}</ul></dd></div>` : ''}
 ${countries ? `<div class="row"><dt>Where it is made</dt><dd><ul>${countries}</ul></dd></div>` : ''}
-${sub.why ? `<div class="row"><dt>Why substitution is slow</dt><dd class="why">${esc(sub.why)}</dd></div>` : ''}
+${(sb && sb.why) || sub.why ? `<div class="row"><dt>Why substitution is ${sb && SUBS[sb.band] <= 2 ? 'possible' : 'slow'}</dt><dd class="why">${esc((sb && sb.why) || sub.why)}</dd></div>` : ''}
 </dl>
 ${card.chinaStatus || card.usStatus ? `<div class="plate-status">${card.chinaStatus ? `<div><span class="k">Where China stands</span><p>${esc(card.chinaStatus)}</p></div>` : ''}${card.usStatus ? `<div><span class="k">Where the US stands</span><p>${esc(card.usStatus)}</p></div>` : ''}</div>` : ''}
 </section>`;
@@ -274,7 +277,7 @@ const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
 const isStage = (ch) => ch.number >= 1 && ch.number <= 15; // chapters 1 to 15 are the stages; 16 is costs, 17 the essay
 const stages = chapters.filter(isStage);
 function chainTrack(chs, currentId) {
-  return `<ol class="chain-track">${chs.map((c) => { const sc = +((c.meta.card || {}).chokepointScore || 0); return `<li class="stage-cell" data-score="${sc}" data-id="${esc(c.id)}"${c.id === currentId ? ' aria-current="true"' : ''}><a href="#${esc(c.id)}" title="${esc(c.title)}"><span class="n">${pad(c.number)}</span><span class="bar"><i></i></span><span class="t">${esc(SHORT[c.id] || c.title)}</span></a></li>`; }).join('')}</ol>`;
+  return `<ol class="chain-track">${chs.map((c) => { const cb = (c.meta.card || {}).concentration || ''; return `<li class="stage-cell" data-band="${BANDS[cb] || 0}" data-id="${esc(c.id)}"${c.id === currentId ? ' aria-current="true"' : ''}><a href="#${esc(c.id)}" title="${esc(c.title)}${cb ? ' · ' + esc(cb) + ' concentration' : ''}"><span class="n">${pad(c.number)}</span><span class="bar"><i></i></span><span class="t">${esc(SHORT[c.id] || c.title)}</span></a></li>`; }).join('')}</ol>`;
 }
 const textOf = (html) => String(html || '').replace(/<sup class="cite">[\s\S]*?<\/sup>/g, '').replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
 const norm = (t) => textOf(t).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
@@ -490,7 +493,7 @@ const briefingHTML = all.map((ch) => {
   const href = ch.id === 'geopolitics' ? '#geopolitics' : `#${esc(ch.id)}`;
   return `<article class="brief-card" id="brief-${esc(ch.id)}">
 <div class="brief-head"><span class="n">${pad(ch.number)}</span><a href="${href}" class="t">${esc(ch.title)}</a>
-<span class="brief-meta">${c.chokepointScore ? pips(+c.chokepointScore) + `<span class="num">${c.chokepointScore}/5</span>` : ''}${c.concentration ? `<span class="conc ${esc(c.concentration)}">${esc(c.concentration)}</span>` : ''}</span></div>
+<span class="brief-meta">${c.concentration ? `<span class="conc ${esc(c.concentration)}">${esc(c.concentration)}</span>` : ''}</span></div>
 ${ch.meta.oneLiner ? `<p class="brief-lede">${esc(ch.meta.oneLiner)}</p>` : ''}
 ${ch.inShort ? `<div class="brief-short">${ch.inShort.replace(/<sup class="cite">[\s\S]*?<\/sup>/g, '').replace(/\s+([.,;:])/g, '$1')}</div>` : ''}
 ${leaders ? `<p class="brief-leaders"><span class="label">Who leads</span> ${leaders}</p>` : ''}
@@ -519,7 +522,7 @@ const specNames = new Set((specimens.match(/PC\.register\('([\w-]+)'/g) || []).m
 all.forEach((ch) => { const s = ch.meta.specimen; if (s && !specNames.has(s)) warn(`${ch.id}: specimen "${s}" is not built yet`); });
 ['package', 'globe'].forEach((s) => { if (!specNames.has(s)) warn(`specimen "${s}" (used by hero/geopolitics) is not built yet`); });
 
-const data = { landscape, landscapeNotes, suppliers, timeline, matrix, flows, exposure, chapters: all.map((c) => { const card = c.meta.card || {}; return { id: c.id, number: c.number, title: c.title, specimen: c.meta.specimen, oneLiner: c.meta.oneLiner || '', plain: c.meta.plain || '', score: +card.chokepointScore || 0, concentration: card.concentration || '', leaders: card.leaders || [], countries: card.countries || [], substitution: card.substitution || {}, chinaStatus: card.chinaStatus || '', usStatus: card.usStatus || '' }; }) };
+const data = { landscape, landscapeNotes, suppliers, timeline, matrix, flows, exposure, chapters: all.map((c) => { const card = c.meta.card || {}; return { id: c.id, number: c.number, title: c.title, specimen: c.meta.specimen, oneLiner: c.meta.oneLiner || '', plain: c.meta.plain || '', score: +card.chokepointScore || 0, concentration: card.concentration || '', band: card.concentration || '', bandRank: BANDS[card.concentration] || 0, substitutability: card.substitutability || null, leaders: card.leaders || [], countries: card.countries || [], substitution: card.substitution || {}, chinaStatus: card.chinaStatus || '', usStatus: card.usStatus || '' }; }) };
 let html = read(path.join(root, 'src', 'template.html'));
 const fill = (k, v) => { html = html.split(`{{${k}}}`).join(v); };
 const modDir = (d) => (fs.existsSync(d) ? fs.readdirSync(d).filter((f) => !f.startsWith('.')).sort() : []);

@@ -28,7 +28,7 @@
     "chinaStatus": "SMIC runs two in-house mask shops in Shanghai, but only for the older g-line, i-line, KrF and ArF tools. There is no Chinese EUV blank, no Chinese tool that inspects a mask at EUV wavelength and no Chinese multi-beam writer.",
     "usStatus": "Photronics is the largest mask maker selling to outside customers and KLA supplies inspection tools, but no US firm makes an EUV blank or an EUV-wavelength inspection tool.",
     "costSignal": "A leading-edge mask set runs roughly $10M to $40M, depending on the node and on whose estimate you take",
-    "substitution": {"years": "5-10", "why": "AGC and Hoya took two decades to get EUV blanks clean enough, and Lasertec's inspection tools have no alternative at all."}
+    "substitutability": {"band": "Hard", "test": "Three firms make EUV blanks and one sells the actinic inspection tool; three have already walked the path", "why": "AGC and Hoya took two decades to learn the forty-layer blank, but that is the inventor's clock, not the buyer's. Three firms have now done it and the structure of the plate is published, so a well-funded entrant is copying rather than inventing: five to ten years to a qualified blank, and the harder half is Lasertec's actinic inspection, the only tool that sees a mask at the wavelength the scanner uses. What kept entrants out was a business too small to fund, and that is the barrier money removes."}
   },
   "keyFacts": [
     {"fact": "AGC calls itself the world's only maker of EUV mask blanks handling every step from glass material to coating, and expanded capacity by about 30% in 2025 under a METI supply-chain programme", "source": "https://www.agc.com/en/news/detail/1203819_2814.html"},
@@ -112,7 +112,7 @@ SMIC runs two in-house mask shops in Shanghai, for g-line, i-line, KrF and ArF t
 
 ## The chokepoint
 
-This stage scores a 5 for the reason lithography does, on a fraction of the money. Three firms supply EUV blanks worldwide on AGC's own count ([source](https://www.agc.com/en/hub/pr/the-japanese-glass-behind-next-generation-chips.html)), one firm certifies them, and neither business is big enough to attract a funded entrant. Nobody starts from scratch at ¥40 billion of annual sales, to serve a handful of customers, with twenty years of defect learning ahead ([source](https://www.agc.com/en/news/detail/1203819_2814.html)).
+Concentration here is extreme, as it is in lithography, on a fraction of the money. Three firms supply EUV blanks worldwide on AGC's own count ([source](https://www.agc.com/en/hub/pr/the-japanese-glass-behind-next-generation-chips.html)), one firm certifies them, and neither business is big enough to attract a funded entrant. Nobody starts from scratch at ¥40 billion of annual sales, to serve a handful of customers, with twenty years of defect learning ahead ([source](https://www.agc.com/en/news/detail/1203819_2814.html)). That is why substitution here rates hard and not very hard: what has kept the count at three is money rather than physics.
 
 Pellicles are the unsolved part. A decade on, no membrane is transparent, tough and long-lived at once, so fabs trade throughput against defect risk. We think a production carbon nanotube pellicle would move EUV cost per wafer more than any scanner improvement.
 

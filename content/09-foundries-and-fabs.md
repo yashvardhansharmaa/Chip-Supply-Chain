@@ -28,7 +28,7 @@
     "chinaStatus": "SMIC and Hua Hong are the largest domestic foundries. SMIC turned over $9.327 billion in 2025 at 93.5% utilisation, but it cannot buy an EUV scanner, which caps it below the leading edge. China is forecast to hold more installed capacity than any other region, and almost none of it is advanced.",
     "usStatus": "Intel Foundry is the only US-owned leading-edge foundry and lost $2.089 billion on $5.8 billion of revenue in 2Q26. The federal government holds a 9.9% passive equity stake in Intel.",
     "costSignal": "BCG puts the ten-year cost of owning a fab completed in 2026 at $35-43 billion; TSMC intends to spend $165 billion in the United States alone",
-    "substitution": {"years": "5-10", "why": "TSMC's six gigafabs are all in Taiwan and took decades to build; Arizona, Kumamoto and Nanjing are subsidiaries, and none of them is a gigafab."}
+    "substitutability": {"band": "Hard", "test": "Intel and Samsung run leading nodes, but no gigafab has been built outside Taiwan and the slow part is the crews", "why": "Money buys the building: BCG puts the ten-year cost of a fab finished in 2026 at $35 to $43 billion, and Intel and Samsung already run leading-node lines, so a well-funded actor is copying a known path. What it cannot buy quickly is a workforce that has run one process for years, which is why TSMC has yet to build a gigafab anywhere but Taiwan. Five to ten years for a line, and longer for the volume."}
   },
   "keyFacts": [
     {"fact": "7 nm and below was 77% of TSMC's wafer revenue in 2Q26, on revenue of $40.20 billion at a 67.7% gross margin", "source": "https://www.sec.gov/Archives/edgar/data/0001046179/000104617926000451/a2q26e_withguidancexfinal.htm"},

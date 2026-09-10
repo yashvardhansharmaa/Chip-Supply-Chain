@@ -60,7 +60,7 @@
     ],
     "priceEstimate": null,
     "bomEstimate": null,
-    "exportStatus": "Controlled. Dense FP8 of 4,500 TFLOPS puts total processing performance near 36,000, well above the 21,000 TPP ceiling in the BIS rule effective 15 January 2026, so it is not licensable to China or Macau.",
+    "exportStatus": "Controlled. Dense FP8 of 4,500 TFLOPS puts total processing performance near 36,000, well above the 21,000 TPP ceiling in the BIS rule effective 15 January 2026, so an export to China or Macau needs a licence and is reviewed with a presumption of denial under 15 CFR 742.6(b)(10). An application may still be filed.",
     "notes": "The first reticle-crossing Nvidia data center GPU: two 4NP dies fused by a 10 TB/s NV-HBI link and presented to software as one GPU. It set the template every 2025-2026 part copies, and it is the reason CoWoS-L capacity became the binding constraint on AI compute. Nvidia publishes no die area, no package dimensions and no list price for the part. Epoch AI records the HGX B200 board at 180 GB and 7.7 TB/s per GPU against the 192 GB and 8 TB/s of the module Nvidia quotes, which is the same board-versus-module split noted above.",
     "layout": {
       "unit": "mm",
@@ -153,6 +153,10 @@
       {
         "label": "Epoch AI machine learning hardware database (ml_hardware.csv)",
         "url": "https://epoch.ai/data/machine-learning-hardware"
+      },
+      {
+        "label": "15 CFR 742.6(b)(10), licence review policy for advanced computing items (eCFR)",
+        "url": "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-742/section-742.6"
       }
     ]
   },
@@ -217,7 +221,7 @@
     ],
     "priceEstimate": null,
     "bomEstimate": null,
-    "exportStatus": "Controlled. Far above the 21,000 TPP and 6,500 GB/s memory-bandwidth ceilings in the BIS rule effective 15 January 2026; not licensable to China or Macau.",
+    "exportStatus": "Controlled. Far above the 21,000 TPP and 6,500 GB/s memory-bandwidth ceilings in the BIS rule effective 15 January 2026, so China and Macau need a licence that is reviewed with a presumption of denial under 15 CFR 742.6(b)(10). Applications may be filed.",
     "notes": "Same two-die 4NP silicon as B200 but with 12-high HBM3E stacks lifting capacity to 288 GB, and a tensor core retuned for NVFP4 and for the softmax step in attention. Eight 36 GB stacks give the 288 GB, which is the configuration Micron, SK hynix and Samsung built 12-high HBM3E for. Nvidia publishes no die area, no package dimensions and no list price. As with the B200 the board and the module differ: Epoch AI records an HGX B300 at 270 GB, 7.7 TB/s and 1,100 W, against the 288 GB, 8 TB/s and 1,400 W of the GB300 configuration above.",
     "layout": {
       "unit": "mm",
@@ -310,6 +314,10 @@
       {
         "label": "Epoch AI machine learning hardware database (ml_hardware.csv)",
         "url": "https://epoch.ai/data/machine-learning-hardware"
+      },
+      {
+        "label": "15 CFR 742.6(b)(10), licence review policy for advanced computing items (eCFR)",
+        "url": "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-742/section-742.6"
       }
     ]
   },
@@ -372,7 +380,7 @@
     ],
     "priceEstimate": "Vera Rubin NVL72 rack reported at $7.8M to $8.8M, roughly $108,000 to $122,000 per GPU including CPUs, networking and the rack itself",
     "bomEstimate": null,
-    "exportStatus": "Controlled. Not licensable to China or Macau under the BIS advanced-computing rules; performance is an order of magnitude above the January 2026 licensing thresholds.",
+    "exportStatus": "Controlled. Performance is an order of magnitude above the January 2026 licensing thresholds, so a licence for China or Macau is required and reviewed with a presumption of denial under 15 CFR 742.6(b)(10). Applications may be filed.",
     "notes": "The first HBM4 part in volume, and the first Nvidia GPU where memory rather than logic dominates the bill of materials. Nvidia qualified all three HBM vendors for it, and the shipping spec is 288 GB per GPU. Two Nvidia sources give different memory bandwidths: the Vera Rubin NVL72 specification table says 19.2 TB/s per GPU, and Nvidia's Rubin architecture post says up to 22 TB/s; the table figure is carried above and both are recorded here. The same split runs through NVLink, at 3 TB/s on the table and 3.6 TB/s in the architecture material. Nvidia publishes 336 billion transistors, 224 streaming multiprocessors and 896 Tensor Cores, and no node, no die area, no package dimensions and no board power, so those fields are empty. It publishes no FP16 or BF16 rate either; Epoch AI's database carries 4,000 TFLOPS dense BF16 for the Vera Rubin superchip, which does not sit in the usual two-to-one ratio with the published 17,500 TFLOPS FP8, so it is recorded here rather than in the compute row.",
     "layout": {
       "unit": "mm",
@@ -457,6 +465,10 @@
       {
         "label": "Nvidia technical blog: Inside the Rubin GPU architecture",
         "url": "https://developer.nvidia.com/blog/inside-nvidia-rubin-gpu-architecture-powering-the-era-of-agentic-ai/"
+      },
+      {
+        "label": "15 CFR 742.6(b)(10), licence review policy for advanced computing items (eCFR)",
+        "url": "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-742/section-742.6"
       }
     ]
   },
@@ -1035,7 +1047,7 @@
     "systemIntegrators": [],
     "priceEstimate": null,
     "bomEstimate": null,
-    "exportStatus": "Controlled and never licensable to China. Dense FP8 of 1,979 TFLOPS gives a total processing performance of 15,832 (TPP = 8 x FP8 TFLOPS), more than three times the 4,800 threshold in 3A090.a, and performance density is about 19.4. NVLink 4 at 900 GB/s also cleared the 600 GB/s interconnect test in the original October 2022 rule, so the H100 failed both halves of that rule at once. Nvidia was told on 26 August 2022, before the chip shipped, that it would need a licence.",
+    "exportStatus": "Controlled since before it shipped. An export to China needs a licence, which BIS reviews with a presumption of denial under 15 CFR 742.6(b)(10) rather than refusing outright, so applications may be filed. Dense FP8 of 1,979 TFLOPS gives a total processing performance of 15,832 (TPP = 8 x FP8 TFLOPS), more than three times the 4,800 threshold in 3A090.a, and performance density is about 19.4. NVLink 4 at 900 GB/s also cleared the 600 GB/s interconnect test in the original October 2022 rule, so the H100 failed both halves of that rule at once. Nvidia was told on 26 August 2022, before the chip shipped, that it would need a licence.",
     "notes": "The chip the 2023 and 2024 build-out ran on, and the one every China variant is measured against. Nvidia states that the full GH100 carries six HBM3 or HBM2e stack sites and that the SXM5 part uses five of them for 80 GB. The H200 that follows it is the same die with 141 GB of HBM3E, which is why the H200 rather than the H100 became the chip Washington eventually let into China. Nvidia’s 8-K of 31 August 2022 still calls the H100 forthcoming, and Epoch AI dates the SXM5 part to September 2022. Nvidia names no OEM or ODM partner on the product page, pointing instead to a qualified-system catalogue, so the system-integrator list is empty here and on the other Hopper and Ampere entries rather than filled from trade reporting.",
     "layout": {
       "unit": "mm",
@@ -1108,6 +1120,10 @@
       {
         "label": "Epoch AI machine learning hardware database (ml_hardware.csv)",
         "url": "https://epoch.ai/data/machine-learning-hardware"
+      },
+      {
+        "label": "15 CFR 742.6(b)(10), licence review policy for advanced computing items (eCFR)",
+        "url": "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-742/section-742.6"
       }
     ]
   },
@@ -1477,7 +1493,7 @@
     "systemIntegrators": [],
     "priceEstimate": "Helios rack reported at about $5.25M, roughly $73,000 per GPU including CPUs, networking and the rack",
     "bomEstimate": null,
-    "exportStatus": "Controlled. Far above the January 2026 China licensing thresholds; not licensable to China or Macau.",
+    "exportStatus": "Controlled. Far above the January 2026 China licensing thresholds, so a licence for China or Macau is required and reviewed with a presumption of denial under 15 CFR 742.6(b)(10). Applications may be filed.",
     "notes": "AMD's first rack-scale answer to NVL72, and the first merchant accelerator on TSMC N2. Its 432 GB of HBM4 across 12 stacks is 50 percent more memory than Rubin carries, which is the whole positioning: win on capacity per package and on an open Ethernet-based scale-up fabric rather than NVLink. AMD's specification list gives 320 billion transistors, 256 work group processors, a 2,400 MHz peak engine clock, 192 MB of L2, an Enhanced Accelerator Module form factor, direct liquid cooling and a launch date of 23 July 2026, and it publishes no total board power, no die count and no die areas; the same page compares the part against a 288 GB, 22 TB/s competitor, which is Nvidia's Rubin.",
     "layout": {
       "unit": "mm",
@@ -1642,6 +1658,10 @@
       {
         "label": "AMD Instinct MI455X GPU datasheet",
         "url": "https://www.amd.com/content/dam/amd/en/documents/products/accelerators/instinct/amd-instinct-mi455x_brochure.pdf"
+      },
+      {
+        "label": "15 CFR 742.6(b)(10), licence review policy for advanced computing items (eCFR)",
+        "url": "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-742/section-742.6"
       }
     ]
   },
@@ -3636,7 +3656,7 @@
     ],
     "priceEstimate": null,
     "bomEstimate": null,
-    "exportStatus": "Controlled; above the BIS advanced-computing thresholds and not licensable to China.",
+    "exportStatus": "Controlled; above the BIS advanced-computing thresholds, so an export to China needs a licence, reviewed with a presumption of denial under 15 CFR 742.6(b)(10). Applications may be filed.",
     "notes": "The only merchant AI accelerator to bet entirely on standard Ethernet rather than a proprietary scale-up fabric, with 24 200-gigabit RoCE ports on the package. It is also the end of the line: Intel cancelled Falcon Shores as a commercial product, and its 2026 pipeline is Crescent Island, an inference GPU with 160 GB of LPDDR5X, with the rack-scale Jaguar Shores due in 2027. Intel publishes no die area, transistor count, package dimensions, HBM supplier or list price for it, and does not name the foundry or the node; the node above is Epoch AI's.",
     "layout": {
       "unit": "mm",
@@ -3725,6 +3745,10 @@
       {
         "label": "Epoch AI machine learning hardware database (ml_hardware.csv)",
         "url": "https://epoch.ai/data/machine-learning-hardware"
+      },
+      {
+        "label": "15 CFR 742.6(b)(10), licence review policy for advanced computing items (eCFR)",
+        "url": "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-742/section-742.6"
       }
     ]
   },
@@ -4557,8 +4581,8 @@
     "systemIntegrators": [],
     "priceEstimate": null,
     "bomEstimate": null,
-    "exportStatus": "Chinese design; no US Entity List placement verified. Depends on domestic foundry capacity and on the same HBM embargo as its peers.",
-    "notes": "A Chinese full-function GPU sold on software compatibility rather than measured silicon. Its own product page names the PH100 “Pinghu” chip, OAM compute modules and an eight-GPU MTT MGX platform, and claims full-precision support from FP8 to FP64, at least 4,000 tokens per second single-GPU prefill, at least 1,000 tokens per second decode and over 74 percent of the performance of leading international flagship products. It publishes no foundry, node, memory type, capacity, bandwidth, TDP, transistor count, die count, package or price, and no allowed source supplies any of them, so every one of those fields is empty. What it does publish is native support for PyTorch, Megatron-LM, vLLM and SGLang through its MUSA stack, which is how Chinese accelerators substitute for CUDA in practice.",
+    "exportStatus": "Chinese design, and on the US Entity List. BIS added Moore Thread Intelligent Technology (Beijing) Co., Ltd., listed with the aliases Moore Threads and Mo'er Xianchen, together with its Chengdu affiliate, effective 17 October 2023: a licence is required for all items subject to the EAR, with a presumption of denial (Entity List Additions, 88 FR 71991). It also depends on domestic foundry capacity and on the same HBM embargo as its peers.",
+    "notes": "A Chinese full-function GPU sold on software compatibility rather than measured silicon. Its own product page names the PH100 “Pinghu” chip, OAM compute modules and an eight-GPU MTT MGX platform, and claims full-precision support from FP8 to FP64, at least 4,000 tokens per second single-GPU prefill, at least 1,000 tokens per second decode and over 74 percent of the performance of leading international flagship products. It publishes no foundry, node, memory type, capacity, bandwidth, TDP, transistor count, die count, package or price, and no allowed source supplies any of them, so every one of those fields is empty. What it does publish is native support for PyTorch, Megatron-LM, vLLM and SGLang through its MUSA stack, which is how Chinese accelerators substitute for CUDA in practice. The company has been on the US Entity List since 17 October 2023, so it cannot lawfully buy US-origin technology without a licence that would be reviewed with a presumption of denial.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -4612,6 +4636,10 @@
       {
         "label": "Moore Threads MTT KUAE cluster page",
         "url": "https://en.mthreads.com/product/KUAE"
+      },
+      {
+        "label": "Federal Register: Entity List Additions, 88 FR 71991, effective 17 October 2023 (adds the Moore Thread entities)",
+        "url": "https://www.federalregister.gov/documents/2023/10/19/2023-23048/entity-list-additions"
       }
     ]
   }

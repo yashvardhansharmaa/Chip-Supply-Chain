@@ -72,8 +72,8 @@
         <p>Every chapter opens with a chokepoint card. Three fields on it matter most.</p>
         <ul>
           <li><b>Concentration.</b> How many firms credibly supply this stage: Extreme, High, Moderate or Low.</li>
-          <li><b>Chokepoint score.</b> 1 means many substitutes. 5 means a single point of failure, where losing one supplier stops leading-edge production worldwide.</li>
-          <li><b>Substitution time.</b> Our estimate of how long a well-funded state or firm would need to stand up an alternative. It is the most opinionated number on the card.</li>
+          <li><b>Substitutability.</b> How hard it would be for a well-funded state or firm to stand up an alternative: Easy, Moderate, Hard or Very hard, rated against <a href="#/methods">four written tests</a>. It is the most opinionated field on the card.</li>
+          <li><b>Price or market size.</b> What one unit costs, or what the stage earns in a year, from filings.</li>
         </ul>
         <p>The card also gives China's position and the United States'. The chapters run in process order, and every number links to its source.</p>
         <p class="howto-dl"><a class="btn ghost" href="compute-chokepoints-the-chain.pdf" download>Download the chain as a PDF</a> <button type="button" class="btn ghost" id="print-page">Print this page</button></p>
@@ -151,7 +151,7 @@
       <div class="cf-top">
         <div>
           <h3 class="label" style="margin: 10px 0 6px">What can still flow, and when it stopped</h3>
-          <p class="controls-intro" id="cf-intro">Nine things move across the chokepoint. Pick one to see its state and its history.</p>
+          <p class="controls-intro" id="cf-intro">Each row is a thing that moves across the chokepoint, and the licence outcome it stands in today. Open one for the moves that set it.</p>
         </div>
         <div class="cf-modes" id="cf-modes" role="group" aria-label="How to read the moves" hidden><button type="button" class="cf-mode" data-mode="subject" aria-pressed="true">By subject</button><button type="button" class="cf-mode" data-mode="date" aria-pressed="false">By date</button></div>
       </div>
@@ -159,7 +159,14 @@
         <div class="cf-side" id="cf-side" hidden>
           <div class="cf-scrub" id="cf-scrub"></div>
           <div class="cf-board" id="cf-board"></div>
-          <p class="cf-legend"><b>Open</b> no restriction · <b>Licence</b> a licence is required, often with a presumption of denial · <b>Case by case</b> each application reviewed on its own · <b>Shut</b> banned, denied or listed · <b>Policy</b> money or tariffs, not a gate</p>
+          <ul class="cf-legend" aria-label="What each state means">
+            <li><span class="cf-pill is-open">No licence</span><span>None needed.</span></li>
+            <li><span class="cf-pill is-case">Case by case</span><span>A licence is required, and each application is judged on its own.</span></li>
+            <li><span class="cf-pill is-denial">Presumption of denial</span><span>A licence is required and will normally be refused. An Entity List listing sits here.</span></li>
+            <li><span class="cf-pill is-prohibited">Prohibited</span><span>No licence to be had, or a flat ban.</span></li>
+            <li><span class="cf-pill is-policy">Policy</span><span>Money and tariffs, not a gate.</span></li>
+            <li><span class="cf-susp">Suspended</span><span>The instrument is stayed until a date. The outcome beside it returns when the stay ends.</span></li>
+          </ul>
         </div>
         <div class="cf-chron" id="cf-chron">
           <div class="tl-bar"><div id="tl-filters" class="chips tl-filters" role="group" aria-label="Filter events"></div><button type="button" class="btn ghost tl-all" id="tl-all" aria-pressed="false">Show full summaries</button></div>
@@ -186,6 +193,8 @@
       <div class="filters"><input id="gl-search" type="search" placeholder="Filter terms…" aria-label="Filter glossary"></div>
       <dl class="glossary" id="glossary">{{GLOSSARY}}</dl>
     </section>
+
+    <section class="view column" data-view="methods" hidden>{{METHODS}}</section>
 
   </main>
 </div>

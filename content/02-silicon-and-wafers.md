@@ -28,7 +28,7 @@
     "chinaStatus": "Made about 93% of the world's polysilicon in 2023, but 98% of that was solar-grade, too impure for chips. Held under 1% of the 300 mm wafer market as of 2021, and supplies only 12% of the wafers its own 300 mm fabs consume.",
     "usStatus": "No US-headquartered volume wafer maker. Hemlock supplies polysilicon from Michigan; GlobalWafers took a CHIPS award of up to $406m for a $3.5bn Texas plant that opened in May 2025.",
     "costSignal": "The entire world market was $11.4bn of wafer revenue on 12,973 million square inches shipped in 2025",
-    "substitution": {"years": "5-10", "why": "Crystal pulling and final polish rest on know-how that was never written down, and each new wafer line has to be re-qualified for every chip at every fab before one production wafer ships."}
+    "substitutability": {"band": "Moderate", "test": "Five firms already qualify at 300 mm, but a fab has to requalify a new source for every chip it makes", "why": "Five firms qualify leading-edge 300 mm today, so losing one leaves four, and GlobalWafers showed money can still build a line: a $3.5 billion plant in Texas, the first of its kind in the United States in over twenty years. What sets the clock is qualification, which a fab runs per chip and counts in quarters, against contracts already fixed years ahead, so a well-funded actor closes the gap in two to five years rather than in months."}
   },
   "keyFacts": [
     {"fact": "Worldwide silicon wafer shipments rose 5.8% to 12,973 million square inches in 2025 while revenue fell 1.2% to $11.4 billion", "source": "https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html"},
