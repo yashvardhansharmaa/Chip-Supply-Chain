@@ -12,6 +12,7 @@
     init: function () {
       var self = this, inp = $('#gl-search'), list = $('#lk-items'); if (!inp || !list || this.built) return;
       this.built = true;
+      $$('#glossary .gl-entry').forEach(function (e) { e.hidden = true; }); // nothing is chosen yet; the prompt stands alone
       inp.addEventListener('input', function () { clearTimeout(self.timer); self.timer = setTimeout(function () { self.filter(inp.value); }, 80); });
       inp.addEventListener('focus', function () { $('#lk-list').classList.add('is-open'); });
       inp.addEventListener('keydown', function (e) {
