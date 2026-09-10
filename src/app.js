@@ -255,7 +255,7 @@
         }
         Sections.update();
       }
-      var label = { stack: 'The Chain', walk: 'Start here', landscape: 'AI Chips', suppliers: 'Suppliers', controls: sub === 'exposure' ? 'China revenue share' : 'Export Controls', glossary: 'Look up' }[v];
+      var label = { stack: 'The Chain', walk: 'Start here', landscape: 'AI Chips', suppliers: 'Suppliers', controls: sub === 'exposure' ? 'China revenue share' : 'Export Controls', glossary: 'Index' }[v];
       document.title = (v === 'home' || !label) ? 'Compute Chokepoints' : 'Compute Chokepoints · ' + label;
     }
   };
@@ -1870,7 +1870,7 @@
       var self = this, box = $('#cp-search');
       if (!box) {
         box = document.createElement('div'); box.id = 'cp-search'; box.hidden = true; box.setAttribute('role', 'dialog'); box.setAttribute('aria-label', 'Search the site');
-        box.innerHTML = '<div class="cp-search-panel"><input type="search" placeholder="Search chapters, glossary, suppliers, chips, rules and events…" aria-label="Search"><ol class="cp-search-results"></ol><p class="cp-search-hint">Type to search · Enter opens the first result · Esc closes</p></div>';
+        box.innerHTML = '<div class="cp-search-panel"><input type="search" placeholder="Search chapters, terms, suppliers, chips, rules and events…" aria-label="Search"><ol class="cp-search-results"></ol><p class="cp-search-hint">Type to search · Enter opens the first result · Esc closes</p></div>';
         document.body.appendChild(box);
         var inp = $('input', box), list = $('ol', box);
         box.addEventListener('click', function (e) { if (e.target === box) self.close(); });

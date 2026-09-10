@@ -537,7 +537,7 @@ for (const f of modDir(path.join(root, 'build', 'modules')).filter((x) => x.ends
 const totalCites = all.reduce((a, c) => a + c.cites.length, 0);
 const claimsHTML = `<div><b class="num">${stages.length}</b><span>Stages, quartz<br>to a finished rack</span></div><div class="of-five"><b class="num">${score5}</b><span>Score 5 of 5<br>for concentration</span></div><div><b class="num">${totalCites}</b><span>Sources, one<br>per claim</span></div>`;
 fill('THESIS', thesisHTML); fill('SUBTITLE', subtitleHTML); fill('CLAIMS', claimsHTML); fill('CHAIN', chainTrack(stages, null));
-const sheetPages = [['#/', 'Home'], ['#/intro', 'Start here'], ['#/chain', 'The Chain'], ['#/landscape', 'AI Chips'], ['#/suppliers', 'Suppliers'], ['#/controls', 'Export Controls'], ['#/glossary', 'Look up']].map((p) => `<a href="${p[0]}">${p[1]}</a>`).join('');
+const sheetPages = [['#/', 'Home'], ['#/intro', 'Start here'], ['#/chain', 'The Chain'], ['#/landscape', 'AI Chips'], ['#/suppliers', 'Suppliers'], ['#/controls', 'Export Controls'], ['#/glossary', 'Index']].map((p) => `<a href="${p[0]}">${p[1]}</a>`).join('');
 const sheetChapters = all.map((ch) => { const sc = +((ch.meta.card || {}).chokepointScore || 0); return `<li><a href="${ch.id === 'geopolitics' ? '#geopolitics' : '#' + esc(ch.id)}"><span class="n">${pad(ch.number)}</span><span class="t">${esc(ch.title)}</span><span class="s${sc >= 5 ? ' hi' : ''}">${sc ? sc + ' / 5' : ''}</span></a></li>`; }).join('');
 fill('SHEET_PAGES', sheetPages); fill('SHEET_CHAPTERS', sheetChapters);
 fill('RAIL', railHTML); fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits); fill('FOOTER', footer);
