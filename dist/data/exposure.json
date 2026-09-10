@@ -794,7 +794,7 @@
     "chinaShare": 21.0,
     "basis": "Sales by geographic area disclosed only as a percentage of total sales; the share is as filed, not computed, and Nova files no absolute China revenue line",
     "source": "https://www.sec.gov/Archives/edgar/data/1109345/000117891323000775/R82.htm",
-    "note": "Total revenue from the consolidated statements of operations in the same filing; China revenue is not disclosed in absolute terms, so chinaRevenue is null."
+    "note": "Total revenue from the consolidated statements of operations in the same filing; China revenue is not disclosed in absolute terms, only as a share, so no absolute figure is given here."
   },
   {
     "firm": "Nova",

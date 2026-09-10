@@ -93,7 +93,7 @@
     <section class="view column" data-view="landscape" hidden data-specimen="package">
       <div class="view-head">
         <h2>AI Chips</h2>
-        <p class="dek">The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026, with the foundry, process node, memory supplier and packaging plant behind each one. Pick two to four chips: the page sets their specs side by side and draws their packages at one scale. The specimen beside the text follows whichever chip you click.</p>
+        <p class="dek">The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026, with the foundry, process node, memory supplier and packaging plant behind each one. Pick two to four chips. The page sets their specs side by side and draws their packages at one scale. The specimen beside the text follows whichever chip you click.</p>
       </div>
       <div id="picker" class="picker cx-picker" role="group" aria-label="Choose two to four chips to compare"></div>
       <div class="cx-bar">
@@ -117,7 +117,7 @@
         <p class="dek">{{SUPPLIERS_INTRO}}</p>
       </div>
       <section class="sup-pipe" id="sup-pipe" aria-labelledby="sup-pipe-h">
-        <h3 class="label sup-pipe-h" id="sup-pipe-h">Who feeds what: countries to stages</h3>
+        <h3 class="label sup-pipe-h" id="sup-pipe-h">Which countries feed which stages</h3>
         <div class="sup-pipe-scroll" id="sup-pipe-scroll"></div>
         <p class="sup-legend" id="sup-legend"></p>
         <div class="sup-tip" id="sup-tip" role="tooltip" hidden></div>
@@ -153,7 +153,7 @@
           <h3 class="label" style="margin: 10px 0 6px">What can still flow, and when it stopped</h3>
           <p class="controls-intro" id="cf-intro">Each row is a thing that moves across the chokepoint, and the licence outcome it stands in today. Open one for the moves that set it.</p>
         </div>
-        <div class="cf-modes" id="cf-modes" role="group" aria-label="How to read the moves" hidden><button type="button" class="cf-mode" data-mode="subject" aria-pressed="true">By subject</button><button type="button" class="cf-mode" data-mode="date" aria-pressed="false">By date</button></div>
+        <div class="cf-modes" id="cf-modes" role="group" aria-label="How to read the moves" hidden><button type="button" class="cf-mode" data-mode="subject" aria-pressed="false">By subject</button><button type="button" class="cf-mode" data-mode="date" aria-pressed="true">By date</button></div>
       </div>
       <div class="cf" id="cf" data-mode="date">
         <div class="cf-side" id="cf-side" hidden>
@@ -188,7 +188,7 @@
     <section class="view column wide" data-view="glossary" hidden>
       <div class="view-head">
         <h2>Index</h2>
-        <p class="dek">Terms, firms and chips in one place. Type a name and get what it is, what it does, and where this site uses it.</p>
+        <p class="dek">Terms, firms and chips in one place. Type a name and get what it is, what it does, and where the site uses it.</p>
       </div>
       <div class="lk">
         <aside class="lk-list" id="lk-list">
@@ -198,7 +198,7 @@
           <p class="lk-count" id="lk-count"></p>
         </aside>
         <div class="lk-entry" id="lk-entry">
-          <div class="lk-rest" id="lk-rest"><p>Type a name, or browse the list.</p><p class="lk-try">Try <button type="button" data-go="lk-firm-applied-materials">Applied Materials</button> <button type="button" data-go="gl-foreign-direct-product-rule">FDPR</button> <button type="button" data-go="lk-chip-nvidia-h100">H100</button> <button type="button" data-go="gl-cowos">CoWoS</button> <button type="button" data-go="gl-entity-list">Entity List</button></p></div>
+          <div class="lk-rest" id="lk-rest"><p>Type a name, or browse the list.</p><p class="lk-try"><span class="lk-try-k">Try</span></p></div>
           <dl class="glossary" id="glossary">{{GLOSSARY}}</dl>
           <div id="lk-card" hidden></div>
           <section class="lk-mentions" id="lk-mentions" hidden></section>

@@ -43,7 +43,7 @@
 .cf-year:hover { background: var(--bg-2); color: var(--ink); }
 .cf-yl, .cf-ys { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.02em; }
 .cf-ys { display: none; }
-.cf-yn { font-family: var(--font-mono); font-size: 10px; color: var(--line-2); }
+.cf-yn { font-family: var(--font-mono); font-size: 10px; color: var(--muted); }
 .cf-year[aria-pressed="true"] { color: var(--ink); }
 .cf-year[aria-pressed="true"] .cf-yl, .cf-year[aria-pressed="true"] .cf-ys { font-weight: 600; }
 .cf-year[aria-pressed="true"] .cf-yn { color: var(--accent-ink); }

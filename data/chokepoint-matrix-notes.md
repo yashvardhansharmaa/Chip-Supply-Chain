@@ -1,6 +1,6 @@
 # How the chokepoint matrix was built
 
-This table follows a format that CSET, Georgetown's Center for Security and Emerging Technology, established in 2021, when Khan, Mann and Peterson published a single page of country shares by supply chain segment and made the geography of the industry legible for the first time ([source](https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/)). Their Table 1 covered eight segments on 2019 data. The Semiconductor Industry Association and Boston Consulting Group did the same for fabrication capacity, first in 2021 and again in 2024 ([source](https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf)). This version extends the idea to twenty segments and pulls each one forward to the newest figure available in September 2026.
+This matrix follows a format that CSET, Georgetown's Center for Security and Emerging Technology, established in 2021, when Khan, Mann and Peterson published a single page of country shares by supply chain segment and made the geography of the industry legible for the first time ([source](https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/)). Their Table 1 covered eight segments on 2019 data. The Semiconductor Industry Association and Boston Consulting Group did the same for fabrication capacity, first in 2021 and again in 2024 ([source](https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf)). This version extends the idea to twenty segments and pulls each one forward to the newest figure available in September 2026.
 
 ## Where the numbers come from
 
@@ -14,7 +14,7 @@ Assembly, test and packaging comes from the ETO file, at the stage level rather 
 
 ## Basis and sources
 
-Every row gained five fields on 10 September 2026, so that a reader can tell what kind of number they are looking at without reading the note.
+Every row gained six fields on 10 September 2026, so that a reader can tell what kind of number they are looking at without reading the note.
 
 `basis` says how the shares were obtained, and takes one of four values.
 
@@ -41,7 +41,7 @@ Three cautions. Both columns inherit whatever the row's `metric` is, so a revenu
 
 ## The rows with no shares
 
-On 9 September 2026 the source rule tightened to Tier A plus four named exceptions, and five rows lost their numbers because the only splits published for them came from market-research firms this project no longer cites. A second, deeper search the same day recovered two of the five. Advanced packaging, IC substrates and server assembly still carry `shares: null` and render as dots.
+On 9 September 2026 the source rule tightened to Tier A plus four named exceptions, and five rows lost their numbers because the only splits published for them came from market-research firms this project no longer cites. A second, deeper search the same day recovered two of the five. Advanced packaging, IC substrates and server assembly still carry `shares: null`, so no country panel can show them.
 
 The two that came back are DRAM and HBM, and they came from a filing rather than a report. SK hynix registered shares in the United States in July 2026, and its Form 424B4 prospectus prints two charts, `Global DRAM Market Shares by Revenue (includes HBM)` and `Global HBM Market Shares by Revenue`, with actuals for 2024, 2025 and the first quarter of 2026 ([source](https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm)). Both rows use the 2025 actuals converted to country by parent-company headquarters. The prospectus attributes the underlying figures to IDC, and that attribution is the whole reason to be careful here: an IDC report is not citable under this rule, but a registered prospectus is a company filing, and SK hynix has adopted these numbers as its own description of the market it competes in, with securities-law liability attached. Both row notes say so plainly rather than presenting the figures as SK hynix's own measurement.
 

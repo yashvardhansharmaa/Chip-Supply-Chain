@@ -62,10 +62,13 @@ function inline(text, ctx) {
   s = s.replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, (_, t, url) => `<a href="${url}" target="_blank" rel="noopener">${t}</a>`);
   // internal anchors [text](#id)
   s = s.replace(/\[([^\]]+)\]\(#([^)\s]+)\)/g, (_, t, id) => `<a href="#${id}">${t}</a>`);
-  // bold / italic
+  // bold / italic, with every tag made so far held aside: a URL's underscore must never open an italic
+  const held = [];
+  s = s.replace(/<[^>]+>/g, (m) => { held.push(m); return '\u0001' + (held.length - 1) + '\u0001'; });
   s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
   s = s.replace(/(^|[^*\w])\*([^*\n]+)\*(?!\w)/g, '$1<em>$2</em>');
   s = s.replace(/(^|[^_\w])_([^_\n]+)_(?!\w)/g, '$1<em>$2</em>');
+  s = s.replace(/\u0001(\d+)\u0001/g, (_, i) => held[+i]);
   // leftover google-docs heading anchors
   s = s.replace(/\s*\{#[^}]*\}/g, '');
   return s;
@@ -221,6 +224,7 @@ function wordCount(body) {
 const BANDS = { Extreme: 4, High: 3, Moderate: 2, Low: 1 };
 const SUBS = { 'Very hard': 4, Hard: 3, Moderate: 2, Easy: 1 };
 const SUBWORD = { 'Very hard': 'Very hard to substitute', Hard: 'Hard to substitute', Moderate: 'Moderately hard to substitute', Easy: 'Easy to substitute' };
+const SPECIMEN_NAME = { 'boule-and-wafer': 'boule and wafer', 'cowos-exploded': 'CoWoS package, exploded', 'die-floorplan': 'die floorplan', 'euv-scanner': 'EUV scanner', foup: 'wafer carrier (FOUP)', 'gaa-transistor': 'gate-all-around transistor', 'gas-cabinet': 'gas cabinet', globe: 'globe', 'gpu-baseboard': 'GPU baseboard', 'hbm-stack': 'HBM stack', package: 'chip package', photomask: 'photomask', 'probe-card': 'probe card', 'process-chamber': 'process chamber', rack: 'server rack', 'sem-column': 'electron microscope column', 'substrate-layers': 'substrate layers', 'wafer-cost': 'wafer cost', wafer: 'wafer' };
 function nameplate(card, title) {
   if (!card) return '';
   const leaders = (card.leaders || []).map((l) => `<li><span class="chip">${esc(l.country || '')}</span><span class="who">${esc(l.name)}</span>${l.share ? ` <span class="note">${esc(l.share)}</span>` : ''}</li>`).join('');
@@ -369,7 +373,7 @@ function chapterHTML(ch) {
   return `<article class="chapter" id="${esc(ch.id)}" data-specimen="${esc(specimen)}" data-number="${pad(ch.number)}" data-title="${esc(ch.title)}" data-caption="${esc(m.specimenCaption || '')}">
 <header class="chapter-head">
 ${chain}
-<div class="ch-id">${tile}<div><h2 class="ch-title"><span class="sr-only">Chapter ${ch.number}: </span>${esc(ch.title)}</h2>${m.oneLiner ? `<p class="ch-lede">${esc(m.oneLiner)}</p>` : ''}<p class="ch-meta"><span class="label">${ch.words.toLocaleString('en-US')} words / ${mins} min</span><span class="label">Specimen: ${esc(specimen.replace(/-/g, ' '))}</span></p></div></div>
+<div class="ch-id">${tile}<div><h2 class="ch-title"><span class="sr-only">Chapter ${ch.number}: </span>${esc(ch.title)}</h2>${m.oneLiner ? `<p class="ch-lede">${esc(m.oneLiner)}</p>` : ''}<p class="ch-meta"><span class="label">${ch.words.toLocaleString('en-US')} words / ${mins} min</span><span class="label">Specimen: ${esc(SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' '))}</span></p></div></div>
 ${pb.box}
 ${parts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${parts.inShort}</section>` : ''}
 ${nameplate(m.card, ch.title)}
@@ -435,15 +439,15 @@ function exposureViz(rows) {
   const xs = (v) => L + (v / YMAX) * (R - L);
   const H = top + firms.length * RH + 8;
   let d = `<div class="ex-legend"><span><i class="lg-first"></i>First fiscal year on file</span><span><i class="lg-last"></i>Latest fiscal year</span><span><i class="lg-peak"></i>Highest year</span><span>Axis: China's share of revenue, 0 to 60%</span></div>`;
-  d += `<svg class="ex-rank" viewBox="0 0 ${RW} ${H}" role="img" aria-label="China share of revenue by firm: first fiscal year on file against the latest">`;
+  d += `<svg class="ex-rank" viewBox="0 0 ${RW} ${H}" role="group" aria-label="China share of revenue by firm: first fiscal year on file against the latest">`;
   [0, 20, 40, 60].forEach((v) => { d += `<line x1="${xs(v)}" y1="${top - 6}" x2="${xs(v)}" y2="${H - 6}" class="grid"/><text x="${xs(v)}" y="${top - 12}" class="tick" text-anchor="middle">${v}%</text>`; });
   firms.forEach((f, i) => {
     const y = top + i * RH + RH / 2, a = xs(f.first.chinaShare), b = xs(f.last.chinaShare);
     d += `<text x="${L - 14}" y="${y + 4}" class="name" text-anchor="end">${esc(f.firm)}</text>`;
     d += `<line x1="${Math.min(a, b).toFixed(1)}" y1="${y}" x2="${Math.max(a, b).toFixed(1)}" y2="${y}" class="link"/>`;
     if (f.peak !== f.first && f.peak !== f.last) d += `<line x1="${xs(f.peak.chinaShare).toFixed(1)}" y1="${y - 7}" x2="${xs(f.peak.chinaShare).toFixed(1)}" y2="${y + 7}" class="peak"/>`;
-    d += `<a href="${safeUrl(f.first.source || '#')}" target="_blank" rel="noopener"><circle cx="${a.toFixed(1)}" cy="${y}" r="4.2" class="dot first" ${attrs(f.first)}/></a>`;
-    d += `<a href="${safeUrl(f.last.source || '#')}" target="_blank" rel="noopener"><circle cx="${b.toFixed(1)}" cy="${y}" r="4.8" class="dot last" ${attrs(f.last)}/></a>`;
+    d += `<a href="${safeUrl(f.first.source || '#')}" target="_blank" rel="noopener" aria-label="${esc(f.firm)} ${esc(f.first.fiscalYear)}: ${pct(f.first.chinaShare)} from China, opens the filing"><circle cx="${a.toFixed(1)}" cy="${y}" r="4.2" class="dot first" ${attrs(f.first)}/></a>`;
+    d += `<a href="${safeUrl(f.last.source || '#')}" target="_blank" rel="noopener" aria-label="${esc(f.firm)} ${esc(f.last.fiscalYear)}: ${pct(f.last.chinaShare)} from China, opens the filing"><circle cx="${b.toFixed(1)}" cy="${y}" r="4.8" class="dot last" ${attrs(f.last)}/></a>`;
     const right = b >= a;
     d += `<text x="${(b + (right ? 10 : -10)).toFixed(1)}" y="${y + 4}" class="val" text-anchor="${right ? 'start' : 'end'}">${pct(f.last.chinaShare)}</text>`;
   });
@@ -457,11 +461,11 @@ function exposureViz(rows) {
     const line = pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
     const area = line + ` L${pts[pts.length - 1][0].toFixed(1)} ${py1} L${pts[0][0].toFixed(1)} ${py1} Z`;
     let s = `<figure class="ex-panel"><figcaption><b>${esc(f.firm)}</b><span>${esc(f.meta.category || '')}${f.meta.country ? ' · ' + esc(f.meta.country) : ''}</span></figcaption>`;
-    s += `<svg viewBox="0 0 ${PW} ${PH}" role="img" aria-label="${esc(f.firm)}: China share of revenue by fiscal year, ${esc(f.first.fiscalYear)} to ${esc(f.last.fiscalYear)}">`;
+    s += `<svg viewBox="0 0 ${PW} ${PH}" role="group" aria-label="${esc(f.firm)}: China share of revenue by fiscal year, ${esc(f.first.fiscalYear)} to ${esc(f.last.fiscalYear)}">`;
     [20, 40, 60].forEach((v) => { s += `<line x1="${px0}" y1="${Y(v).toFixed(1)}" x2="${px1}" y2="${Y(v).toFixed(1)}" class="grid"/>`; });
     rules.forEach((r) => { s += `<line x1="${X(r[0]).toFixed(1)}" y1="${py0 - 4}" x2="${X(r[0]).toFixed(1)}" y2="${py1}" class="rule"/>`; });
     s += `<line x1="${px0}" y1="${py1}" x2="${px1}" y2="${py1}" class="axis"/><path d="${area}" class="area"/><path d="${line}" class="line"/>`;
-    f.rows.forEach((r, i) => { const p = pts[i]; s += `<a href="${safeUrl(r.source || '#')}" target="_blank" rel="noopener"><circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${r === f.peak ? 3.6 : 2.8}" class="pt${r === f.peak ? ' peak' : ''}" ${attrs(r)}/></a>`; });
+    f.rows.forEach((r, i) => { const p = pts[i]; s += `<a href="${safeUrl(r.source || '#')}" target="_blank" rel="noopener" aria-label="${esc(f.firm)} ${esc(r.fiscalYear)}: ${pct(r.chinaShare)} from China, opens the filing"><circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${r === f.peak ? 3.6 : 2.8}" class="pt${r === f.peak ? ' peak' : ''}" ${attrs(r)}/></a>`; });
     const lp = pts[pts.length - 1];
     s += `<text x="${(lp[0] - 6).toFixed(1)}" y="${Math.max(10, lp[1] - 7).toFixed(1)}" class="val" text-anchor="end">${pct(f.last.chinaShare)}</text>`;
     s += `<text x="${px0}" y="${PH - 4}" class="tick">${esc(f.first.fiscalYear)}</text><text x="${px1}" y="${PH - 4}" class="tick" text-anchor="end">${esc(f.last.fiscalYear)}</text></svg></figure>`;
@@ -511,8 +515,8 @@ const glossaryHTML = glossary.length ? glossary.slice().sort((a, b) => a.term.lo
 const totalWords = all.reduce((a, c) => a + c.words, 0);
 const credits = `Made by <b>Yashvardhan Sharma</b> with Claude. Inspired by <a href="https://www.humanityslastmachine.com/" target="_blank" rel="noopener">Humanity's Last Machine</a> and <a href="https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/" target="_blank" rel="noopener">CSET's supply-chain work</a>.`;
 const builtOn = new Date(); const builtStr = `${builtOn.getDate()} ${MONTHS[builtOn.getMonth()]} ${builtOn.getFullYear()}`;
-const footer = `<p class="credits">${credits}<span class="updated">Updated ${builtStr}</span></p><p class="sources-key">Sources: <span class="tier tier-A">A</span> company filings, governments, standards bodies, universities and research institutions; <span class="tier tier-B">B</span> SemiAnalysis, Reuters, the Financial Times and Nikkei Asia. Nothing else is cited. Hover any footnote for the document; each chapter ends with its own source list.</p>`;
-const suppliersIntro = suppliers.length ? `${suppliers.length} firms: what each one makes, where it sits, and how hard it would be to replace.` : 'The supplier database is not compiled yet.';
+const footer = `<p class="credits">${credits}<span class="updated">Updated ${builtStr}</span></p><p class="sources-key">Every source here is one of two kinds. <span class="tier tier-A">A</span> company filings, governments, standards bodies, universities and research institutions; <span class="tier tier-B">B</span> SemiAnalysis, Reuters, the Financial Times and Nikkei Asia. Nothing else is cited. Hover any footnote for the document; each chapter ends with its own source list.</p>`;
+const suppliersIntro = suppliers.length ? `What each of the ${suppliers.length} firms makes, where it sits, and how hard it would be to replace.` : 'The supplier list is not compiled yet.';
 
 const kit = read(path.join(root, 'src', 'kit.js')) || '';
 const specDir = path.join(root, 'specimens');

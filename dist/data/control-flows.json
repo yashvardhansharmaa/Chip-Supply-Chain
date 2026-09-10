@@ -91,7 +91,7 @@
         {
           "date": "2026-01-15",
           "status": "denial",
-          "label": "Case by case below 21,000 TPP and 6,500 GB/s",
+          "label": "Denial above 21,000 TPP or 6,500 GB/s DRAM bandwidth",
           "event": "2026-01-15-h200-case-by-case",
           "cite": {
             "fr": "91 FR 1685",
@@ -220,7 +220,7 @@
           "date": "2025-04-01",
           "announced": "2025-01-15",
           "status": "case",
-          "label": "Dutch measuring and inspection tools added",
+          "label": "Dutch licence extended to measuring and inspection tools",
           "event": "2025-04-01-dutch-metrology",
           "cite": {
             "fr": "Staatscourant, 15 January 2025",
@@ -243,7 +243,7 @@
           "date": "2024-12-31",
           "announced": "2024-12-02",
           "status": "denial",
-          "label": "Licence for stacks above 2 GB/s per mm²",
+          "label": "Denial for stacks above 2 GB/s per mm²",
           "event": "2024-12-02-hbm-package",
           "cite": {
             "fr": "89 FR 96790",
@@ -258,7 +258,7 @@
       "id": "entity",
       "name": "US goods and technology",
       "route": "US → listed Chinese firms",
-      "what": "Anything subject to the EAR, from processors to design software, when a listed party is to the transaction. The review policy is written into each listing.",
+      "what": "Anything subject to the EAR, from processors to design software, when a listed firm is a party to the transaction. The review policy is written into each listing.",
       "order": 5,
       "chapter": "geopolitics",
       "initial": "open",
@@ -338,7 +338,7 @@
           "date": "2020-12-18",
           "announced": "2020-12-22",
           "status": "denial",
-          "label": "SMIC listed; case by case above 10 nanometres",
+          "label": "SMIC listed; denial at 10 nanometres and below",
           "event": "2020-12-18-smic-listed",
           "cite": {
             "fr": "85 FR 83416",
@@ -386,7 +386,7 @@
           "date": "2025-11-10",
           "announced": "2025-11-12",
           "status": "denial",
-          "suspendedUntil": "2026-11-10",
+          "suspendedUntil": "2026-11-09",
           "label": "Affiliates rule stayed to 9 November 2026",
           "event": "2025-11-10-one-year-truce",
           "cite": {
@@ -443,7 +443,7 @@
           "date": "2025-11-09",
           "status": "prohibited",
           "suspendedUntil": "2026-11-27",
-          "label": "Ban stayed; ordinary licensing until 27 November 2026",
+          "label": "Ban stayed; general licences issued to US end users",
           "event": "2025-11-10-one-year-truce",
           "cite": {
             "fr": "MOFCOM Announcement 2025 No. 72",
@@ -522,7 +522,7 @@
       "id": "china-market",
       "name": "Foreign chips inside China",
       "route": "US and Japan → China's market",
-      "what": "American memory and Nvidia accelerators sold inside China. These are Chinese measures on Chinese buyers, not export controls.",
+      "what": "American memory and Nvidia accelerators sold inside China, plus a Japanese deposition gas. These are Chinese measures on Chinese buyers, not export controls.",
       "order": 8,
       "chapter": "geopolitics",
       "initial": "open",
@@ -530,7 +530,7 @@
         {
           "date": "2023-05-21",
           "status": "prohibited",
-          "label": "Cybersecurity review bars Micron from critical infrastructure buyers",
+          "label": "Cybersecurity review bars Micron from critical information infrastructure",
           "event": "2023-05-21-micron-barred",
           "cite": {
             "fr": "Cybersecurity Review Office notice, 21 May 2023",
@@ -618,7 +618,7 @@
         {
           "date": "2022-08-09",
           "status": "policy",
-          "label": "$52.7 billion, with a China expansion bar",
+          "label": "CHIPS Act: $52.7 billion, with a China expansion bar",
           "event": "2022-08-09-chips-act",
           "cite": {
             "fr": "Public Law 117-167",
@@ -638,7 +638,7 @@
         {
           "date": "2024-05-24",
           "status": "policy",
-          "label": "China's third fund: 344 billion yuan",
+          "label": "China's third chip fund: 344 billion yuan",
           "event": "2024-05-24-big-fund-three",
           "cite": {
             "url": "https://english.www.gov.cn/news/202405/29/content_WS66569746c6d0868f4e8e7987.html"

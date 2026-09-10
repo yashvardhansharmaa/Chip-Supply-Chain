@@ -77,7 +77,7 @@ Every plant TSMC and its subsidiaries run came to more than 17 million 12-inch e
 
 ### Pure-play foundries
 
-TSMC and UMC build only for others. Chips at 7 nm and below, meaning the newest processes, were 77 percent of TSMC's wafer revenue in the second quarter of 2026, split 33 percent at 5 nm, 30 at 3 nm and 3 at 2 nm, on revenue of $40.20 billion at a 67.7 percent gross margin ([source](https://www.sec.gov/Archives/edgar/data/0001046179/000104617926000451/a2q26e_withguidancexfinal.htm)). No other foundry earns that margin, so none can fund the next node out of cash flow.
+TSMC and UMC build only for others. Chips at 7 nm and below, meaning the newest processes, were 77 percent of TSMC's wafer revenue in the second quarter of 2026, split 33 percent at 5 nm, 30 at 3 nm, 11 at 7 nm and 3 at 2 nm, on revenue of $40.20 billion at a 67.7 percent gross margin ([source](https://www.sec.gov/Archives/edgar/data/0001046179/000104617926000451/a2q26e_withguidancexfinal.htm)). No other foundry earns that margin, so none can fund the next node out of cash flow.
 
 {{figure:foundry-share}}
 
@@ -123,12 +123,12 @@ Diversification is real and slow. The hard part of a fab is a workforce that has
 
 ## Key evaluation criteria
 
-- **Leading-edge share** — TSMC's 77 percent of wafer revenue from 7 nm and below is why it can self-fund the next node ([source](https://www.sec.gov/Archives/edgar/data/0001046179/000104617926000451/a2q26e_withguidancexfinal.htm)).
-- **Yield at ramp** — how many good chips a new process gives in its first year, which separates a profitable node from a subsidised one. Intel Foundry's loss comes from yield rather than from weak demand.
-- **Ten-year cost of ownership** — $35 to $43 billion for a fab finished in 2026, and rising ([source](https://www.bcg.com/publications/2023/navigating-the-semiconductor-manufacturing-costs)).
-- **Utilisation** — how full the lines run. SMIC's 93.5 percent shows what a captive home market does for volume, and not for margins ([source](https://www.smics.com/en/site/news_read/7951)).
-- **Customer concentration** — a foundry owned by a chipmaker competes with its own customers, which caps who will trust it with a flagship design.
-- **Geographic exposure** — how much of a buyer's supply sits on one island, one grid, one fault system.
+- **Leading-edge share.** TSMC's 77 percent of wafer revenue from 7 nm and below is why it can self-fund the next node ([source](https://www.sec.gov/Archives/edgar/data/0001046179/000104617926000451/a2q26e_withguidancexfinal.htm)).
+- **Yield at ramp.** How many good chips a new process gives in its first year, which separates a profitable node from a subsidised one. Intel Foundry's loss comes from yield rather than from weak demand.
+- **Ten-year cost of ownership.** $35 to $43 billion for a fab finished in 2026, and rising ([source](https://www.bcg.com/publications/2023/navigating-the-semiconductor-manufacturing-costs)).
+- **Utilisation.** How full the lines run. SMIC's 93.5 percent shows what a captive home market does for volume, and not for margins ([source](https://www.smics.com/en/site/news_read/7951)).
+- **Customer concentration.** A foundry owned by a chipmaker competes with its own customers, which caps who will trust it with a flagship design.
+- **Geographic exposure.** How much of a buyer's supply sits on one island, one grid, one fault system.
 
 ## Takeaways
 

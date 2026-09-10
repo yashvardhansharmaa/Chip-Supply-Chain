@@ -3,7 +3,7 @@
   "id": "deposition-and-etch",
   "number": 6,
   "title": "Deposition and Etch",
-  "oneLiner": "Lithography prints the pattern; deposition and etch build the chip itself, over a thousand steps per wafer. This is the one tool segment where China has taken real share.",
+  "oneLiner": "Lithography prints the pattern; deposition and etch do the rest, over a thousand steps per wafer. This is the one tool segment where China has taken real share.",
   "plain": "Deposition and etch build the chip itself, like a layer cake: lay down a film a few atoms thick, print a pattern on it, burn away everything the pattern does not protect, then do it again, more than a thousand times over. The film has to reach the bottom of a hole hundreds of times deeper than it is wide, and the burn has to eat one material and leave the one beside it untouched. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.",
   "bridge": "A printed pattern is not yet a circuit, and the machines that turn it into one run more often than anything else in the fab.",
   "specimen": "process-chamber",
@@ -141,12 +141,12 @@ This is a real chokepoint but a softer one than lithography. Three or four credi
 
 ## Key evaluation criteria
 
-- **Selectivity** — how hard the process attacks one material and spares another. BIS controls wet processing at a silicon-germanium-to-silicon ratio of 100:1 ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)).
-- **Conformality and aspect ratio** — whether a film reaches the bottom of a hole, and how deep that hole is against its width. Controls start at 10:1 for TSV etch and 200:1 for 3D DRAM deposition ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
-- **Uniformity** — variation across a 300 mm wafer, with under 2 percent treated as an advanced-manufacturing marker ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
-- **Throughput** — wafers per hour, which sets cost per layer and decides how many lots a fab can run.
-- **Particles and chamber matching** — how much of the defect budget these tools eat, and whether one chamber behaves like the next; the tools in the next chapter measure it.
+- **Selectivity.** How hard the process attacks one material and spares another. BIS controls wet processing at a silicon-germanium-to-silicon ratio of 100:1 ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)).
+- **Conformality and aspect ratio.** Whether a film reaches the bottom of a hole, and how deep that hole is against its width. Controls start at 10:1 for TSV etch and 200:1 for 3D DRAM deposition ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
+- **Uniformity.** Variation across a 300 mm wafer, with under 2 percent treated as an advanced-manufacturing marker ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
+- **Throughput.** Wafers per hour, which sets cost per layer and decides how many lots a fab can run.
+- **Particles and chamber matching.** How much of the defect budget these tools eat, and whether one chamber behaves like the next; the tools in the next chapter measure it.
 
 ## Takeaways
 
-Deposition and etch are the volume business of a fab: over a thousand steps per wafer, four American, Japanese and Dutch firms taking most of the money, and no monopoly like ASML's in lithography. The AI roadmap raises difficulty faster than tool count, because gate-all-around, HBM and backside power need better selectivity and deeper holes rather than more chambers. China has closed the gap fastest here and slowest in ALD, the tool the next two logic nodes depend on.
+Deposition and etch are the volume business of a fab: over a thousand steps per wafer, four American, Japanese and Dutch firms taking most of the money, and no monopoly like ASML's in lithography. The AI roadmap raises difficulty faster than tool count, because gate-all-around, HBM and backside power need better selectivity and deeper holes rather than more chambers. China has closed the gap fastest here and slowest in ALD, the tool gate-all-around logic depends on.

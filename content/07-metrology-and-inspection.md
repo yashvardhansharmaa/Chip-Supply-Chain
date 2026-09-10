@@ -29,7 +29,7 @@
     "chinaStatus": "The weakest Chinese position of any major tool segment. In 2019 domestic firms held 3.4% of line-width measurement, 1.3% of defect inspection and none of mask or packaging inspection; in 2024 they were still at 0.8% of the whole process control tool market. CSET's 2026 survey of Chinese share gains runs through deposition, etch, polishing, lithography, packaging and test, and never reaches process control.",
     "usStatus": "KLA is the largest process-control supplier in the world. It puts its own 2024 share at 56.5%, or 6.5 times its nearest rival; CSET's Supply Chain Explorer puts it at 57.2% of the same year's market. US firms take 72% of the segment, Japanese firms 15%. The December 2024 rule pulled inspection and measurement tools for patterned 300 mm wafers onto the controlled list, at a threshold of 21 nm defects.",
     "costSignal": "A $13.4B process control tool market in 2024, about 57% of it KLA's. KLA's fiscal 2026 revenue was $13.58B against a wafer equipment market of roughly $120B in 2025, so process control is around a tenth of what a fab spends on tools.",
-    "substitutability": {"band": "Moderate", "test": "A named second source in every family; KLA sets the standard, and losing it costs yield learning, not the line", "why": "This is a chokepoint of concentration rather than of physics: Applied Materials, Lasertec, Hitachi High-Tech, ASML, Nova, Onto and Camtek all ship qualified tools, and three of them lead a family outright. A well-funded actor that can buy them loses sensitivity and speed of yield learning rather than the ability to run a fab, and closes the gap in two to five years. An actor that cannot buy is on a far longer clock: Chinese firms were still at 0.8 percent of the segment in 2024."}
+    "substitutability": {"band": "Moderate", "test": "A named second source in every family; KLA sets the standard, and losing it costs yield learning, not the line", "why": "This is a chokepoint of concentration rather than of physics: seven other firms ship qualified tools, and three of them lead a family outright. A well-funded actor that can buy them loses sensitivity and speed of yield learning rather than the ability to run a fab, and closes the gap in two to five years. An actor that cannot buy is on a far longer clock: Chinese firms were still at 0.8 percent of the segment in 2024."}
   },
   "keyFacts": [
     {"fact": "Die yield is (1 + D0A/a) to the power minus a, with a of 3 to 4 for modern CMOS, so defect density and die area alone set the ceiling", "source": "https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf"},
@@ -73,7 +73,7 @@
 ---
 # Metrology and Inspection
 
-Process control is about a tenth of what a fab spends on tools, out of a wafer equipment market of roughly $120 billion in 2025 ([source](https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf)). KLA takes more than half of that tenth. At its March 2026 investor day it put its own 2024 share at 56.5%, six and a half times its nearest competitor ([source](https://d1io3yog0oux5.cloudfront.net/_7791115a123b86b3f10b1a5eb5210224/klatencor/db/1166/10653/file/2026+Investor+Day+Master+Final_IR+copy.pdf)); CSET, counting the same year independently, gets 57.2% ([source](https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60)).
+Process control is about a tenth of what a fab spends on tools, out of a wafer equipment market of roughly $120 billion in 2025 ([source](https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf)). KLA takes more than half of that tenth. At its March 2026 investor day it put its own 2024 share at 56.5 percent, six and a half times its nearest competitor ([source](https://d1io3yog0oux5.cloudfront.net/_7791115a123b86b3f10b1a5eb5210224/klatencor/db/1166/10653/file/2026+Investor+Day+Master+Final_IR+copy.pdf)); CSET, counting the same year independently, gets 57.2 percent ([source](https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60)).
 
 ## How it works
 
@@ -133,11 +133,11 @@ Process control is a chokepoint of concentration rather than of physics. Several
 
 ## Key evaluation criteria
 
-- **Sensitivity** — the smallest killer defect a tool can find. ASML's multibeam system is specified to 7 nm patterning defects ([source](https://www.asml.com/en/products/metrology-and-inspection-systems/hmi-escan-1100)).
-- **Throughput** — wafers per hour, which decides how many lots you can afford to look at; multibeam buys up to 15x over single-beam ([source](https://www.asml.com/en/products/metrology-and-inspection-systems/hmi-escan-1100)).
-- **Nuisance rate** — the share of flagged events that turn out not to be real defects, which is what AI classification attacks.
-- **Sampling plan** — how many wafers and sites per lot, a cost decision as much as a physics one, and what sets the price of process control.
-- **Time to result** — how fast a measurement reaches the process engineer, which sets the speed of yield learning.
+- **Sensitivity.** The smallest killer defect a tool can find. ASML's multibeam system is specified to 7 nm patterning defects ([source](https://www.asml.com/en/products/metrology-and-inspection-systems/hmi-escan-1100)).
+- **Throughput.** Wafers per hour, which decides how many lots you can afford to look at; multibeam buys up to 15x over single-beam ([source](https://www.asml.com/en/products/metrology-and-inspection-systems/hmi-escan-1100)).
+- **Nuisance rate.** The share of flagged events that turn out not to be real defects, which is what AI classification attacks.
+- **Sampling plan.** How many wafers and sites per lot. This is a cost decision as much as a physics one, and it sets what process control costs the fab.
+- **Time to result.** How fast a measurement reaches the process engineer, which sets the speed of yield learning.
 
 ## Takeaways
 

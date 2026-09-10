@@ -91,7 +91,7 @@ ${list}
 </ol>
 <div class="wk-end">
 <p class="wk-end-t">That is the chain, end to end.</p>
-<p class="wk-end-links"><a href="#/chain">All ${word(steps.length)} chapters in full</a><a href="#/">Where it is made: the map</a><a href="#/controls">What the rules did: the board</a></p>
+<p class="wk-end-links"><a href="#/chain">All ${word(steps.length)} chapters in full</a><a href="#/">The route of one chip</a><a href="#/controls">What the rules did</a></p>
 </div>
 </div>`;
 

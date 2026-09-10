@@ -29,9 +29,24 @@
         self.select(li.id, true); $('#lk-list').classList.remove('is-open'); if (narrow()) inp.blur();
       });
       document.addEventListener('click', function (e) { if (narrow() && !e.target.closest('#lk-list')) $('#lk-list').classList.remove('is-open'); });
-      $$('#lk-rest [data-go]').forEach(function (b) { b.addEventListener('click', function () { self.select(b.getAttribute('data-go'), true); }); });
       var br = $('#lk-browse'); if (br) br.addEventListener('click', function () { var open = !$('#lk-list').classList.contains('is-open'); $('#lk-list').classList.toggle('is-open', open); br.setAttribute('aria-expanded', open ? 'true' : 'false'); });
+      this.suggest();
       this.filter('');
+    },
+
+    /* five things to try, drawn afresh on every load: two terms, two firms that matter, one chip */
+    suggest: function () {
+      var self = this, box = $('#lk-rest .lk-try'); if (!box) return;
+      var pick = function (arr, n) { var a = arr.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a.slice(0, n); };
+      var items = this.items();
+      var terms = items.filter(function (li) { return li.getAttribute('data-kind') === 'term' && li.querySelector('.lk-name').textContent.length <= 22; });
+      var big = {}; (DATA.suppliers || []).forEach(function (r) { if (r.chokepoint === 'Critical' || r.chokepoint === 'Important') big[r.name] = 1; });
+      var firms = items.filter(function (li) { return li.getAttribute('data-kind') === 'firm' && big[li.getAttribute('data-key')]; });
+      var chips = items.filter(function (li) { return li.getAttribute('data-kind') === 'chip'; });
+      var chosen = pick(terms, 2).concat(pick(firms, 2), pick(chips, 1)); chosen = pick(chosen, chosen.length);
+      var label = box.querySelector('.lk-try-k') ? box.querySelector('.lk-try-k').outerHTML : 'Try';
+      box.innerHTML = label + ' ' + chosen.map(function (li) { var name = li.querySelector('.lk-name').textContent.replace(/^(Nvidia|AMD|Google|AWS|Microsoft|Meta|Intel|Huawei|Cambricon|Moore Threads|OpenAI|Cerebras|Groq) /, '').replace(/\s*\(.*\)$/, ''); return '<button type="button" data-go="' + esc(li.id) + '">' + esc(name) + '</button>'; }).join(' ');
+      $$('[data-go]', box).forEach(function (b) { b.addEventListener('click', function () { self.select(b.getAttribute('data-go'), true); }); });
     },
 
     activate: function () {
@@ -57,7 +72,7 @@
       else { var list2 = $('#lk-items'); all.slice().sort(function (a, b) { return a.querySelector('.lk-name').textContent.localeCompare(b.querySelector('.lk-name').textContent, 'en', { sensitivity: 'base' }); }).forEach(function (li) { list2.appendChild(li); }); }
       this.cursor = -1;
       var c = $('#lk-count'), terms = $$('#lk-items li[data-kind="term"]').length, firms = $$('#lk-items li[data-kind="firm"]').length, chips = $$('#lk-items li[data-kind="chip"]').length;
-      if (c) c.textContent = q ? (n ? n + ' of ' + all.length + ' entries' : 'No entry matches. The passages below search the whole site.') : all.length + ' entries · ' + terms + ' terms · ' + firms + ' firms · ' + chips + ' chips';
+      if (c) c.textContent = q ? (n ? n + ' of ' + all.length + ' entries' : 'No entry matches. Anything the site says about it is below.') : all.length + ' entries · ' + terms + ' terms · ' + firms + ' firms · ' + chips + ' chips';
       $('#lk-list').classList.toggle('is-open', !!q || document.activeElement === $('#gl-search'));
       if (q && !n) this.showRaw(q); // no entry, but the site may still mention it: a tool model, a place, a person
       else if (q && n && (!this.selected || document.getElementById(this.selected).hidden)) this.select(this.visible()[0].id, true);
@@ -101,7 +116,7 @@
       $$('#glossary .gl-entry').forEach(function (e) { e.hidden = true; });
       var near = this.nearest(q);
       var card = $('#lk-card'); card.hidden = false;
-      card.innerHTML = '<div class="lk-noentry"><b>' + esc(q) + '</b><p>No entry of its own. Here is where the site mentions it.</p>' + (near.length ? '<p class="lk-near">Did you mean ' + near.map(function (li) { return '<button type="button" data-go="' + esc(li.id) + '">' + esc(li.querySelector('.lk-name').textContent) + '</button>'; }).join(' ') + '</p>' : '') + '</div>';
+      card.innerHTML = '<div class="lk-noentry"><b>' + esc(q) + '</b><p>No entry of its own.</p>' + (near.length ? '<p class="lk-near">Did you mean ' + near.map(function (li) { return '<button type="button" data-go="' + esc(li.id) + '">' + esc(li.querySelector('.lk-name').textContent) + '</button>'; }).join(' ') + '</p>' : '') + '</div>';
       $$('[data-go]', card).forEach(function (b) { b.addEventListener('click', function () { var inp = $('#gl-search'); inp.value = ''; self.filter(''); self.select(b.getAttribute('data-go'), true); }); });
       $('#lk-rest').hidden = true;
       this.mentions([q], 'raw', q);
@@ -220,7 +235,7 @@
       (Array.isArray(DATA.flows) ? DATA.flows : ((DATA.flows || {}).flows || [])).forEach(function (f) { (f.states || []).forEach(function (st) { re.lastIndex = 0; if (st.label && re.test(st.label)) hits.push({ src: 'The board', sub: f.name, html: mark(st.label), href: '#/controls' }); }); });
       (DATA.landscape || []).forEach(function (c) { if (kind === 'chip' && c.id === key) return; var t = [c.notes || '', c.exportStatus || ''].join(' '); var s = self.sentence(t, re); if (s) hits.push({ src: 'AI Chips', sub: c.vendor + ' ' + c.name, html: mark(s), href: '#/landscape', chip: c.id }); });
       (DATA.suppliers || []).forEach(function (r) { if (kind === 'firm' && r.name === key) return; var t = [r.role || '', r.shareNote || '', r.aiRelevance || ''].join(' '); var s = self.sentence(t, re); if (s) hits.push({ src: 'Suppliers', sub: r.name, html: mark(s), href: '#/suppliers', sup: r.name }); });
-      if (!hits.length) { box.hidden = false; box.innerHTML = '<h3 class="lk-h">Where the site uses it</h3><p class="lk-none">' + (kind === 'firm' ? 'Only in the supplier list so far.' : kind === 'chip' ? 'Only on the AI Chips page so far.' : kind === 'term' ? 'Only here so far.' : 'Nowhere on the site.') + '</p>'; return; }
+      if (!hits.length) { box.hidden = false; box.innerHTML = '<h3 class="lk-h">Where the site uses it</h3><p class="lk-none">' + (kind === 'firm' ? 'Only in the supplier list so far.' : kind === 'chip' ? 'Only on the AI Chips page so far.' : kind === 'term' ? 'Only in this entry so far.' : 'Nowhere on the site.') + '</p>'; return; }
       var LIMIT = 12, all = hits.length;
       var row = function (h) { var attrs = h.para != null ? ' data-para="' + h.para + '"' : h.chip ? ' data-chip="' + esc(h.chip) + '"' : h.sup ? ' data-sup="' + esc(h.sup) + '"' : ''; return '<li><a href="' + esc(h.href) + '"' + attrs + '><span class="lk-src"><b>' + esc(h.src) + '</b>' + esc(h.sub) + '</span><span class="lk-txt">' + h.html + '</span></a></li>'; };
       box.hidden = false;

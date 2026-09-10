@@ -73,7 +73,7 @@
 ---
 # Chip Design, EDA and IP
 
-Design is the only stage in this chain with no factory, and the one a foreign government can shut off fastest. In 2025 one did: for five weeks, every Chinese chip designer lost the software that turns a design into something a factory can print.
+Design is the only stage in this chain with no factory, and the one a foreign government can shut off fastest. In 2025 one did. For five weeks, every Chinese chip designer lost the software that turns a design into something a factory can print.
 
 ## How it works
 
@@ -99,13 +99,13 @@ Nvidia designs Blackwell once and sells it to everyone, so the buyer gets mature
 
 ### The EDA flow
 
-Three complete flows exist, and they do not mix. A team commits to one vendor's chain because the foundry certifies its reference recipes against specific tool versions, and timing signed off in one tool is not accepted in another. Inside each step the grip is tighter still: Synopsys alone holds more than 90% of static timing analysis, the check that proves a chip will run at its rated speed ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
+Three complete flows exist, and they do not mix. A team commits to one vendor's chain because the foundry certifies its reference recipes against specific tool versions, and timing signed off in one tool is not accepted in another. Inside each step the grip is tighter still: Synopsys alone holds more than 90 percent of static timing analysis, the check that proves a chip will run at its rated speed ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
 
 {{figure:tool-lock}}
 
 ### Buy the IP or build it
 
-No one writes an accelerator from scratch. Design houses license the processor cores, the interface controllers and the blocks that drive high-bandwidth memory. Arm supplies most of the processor side: $4.92 billion of revenue, $2.61 billion of it royalties, and roughly 50% of processor compute at the top cloud firms in fiscal 2026 ([source](https://newsroom.arm.com/news/arm-q4-fye26-results)). The hardest block to buy is the memory interface, which has to hold its timing across thousands of microscopic solder bumps into a stacked memory die. RISC-V, the open instruction set that needs no licence, is the housekeeping core, and Nvidia now uses it in every GPU ([source](https://riscv.org/blog/shd-forecast-2026/)).
+No one writes an accelerator from scratch. Design houses license the processor cores, the interface controllers and the blocks that drive high-bandwidth memory. Arm supplies most of the processor side: $4.92 billion of revenue, $2.61 billion of it royalties, and roughly 50 percent of processor compute at the top cloud firms in fiscal 2026 ([source](https://newsroom.arm.com/news/arm-q4-fye26-results)). The hardest block to buy is the memory interface, which has to hold its timing across thousands of microscopic solder bumps into a stacked memory die. RISC-V, the open instruction set that needs no licence, handles the housekeeping, and Nvidia now uses it in every GPU ([source](https://riscv.org/blog/shd-forecast-2026/)).
 
 ### Chiplets
 
@@ -113,27 +113,27 @@ The reticle limit, the largest area a scanner can print in one exposure, ended t
 
 ## Who makes it
 
-Design software and licensed blocks were an $18 billion market in 2025, and Synopsys, Cadence and Siemens EDA took more than 85% of it, with no other vendor above 5% in any core category ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
+Design software and licensed blocks were an $18 billion market in 2025, and Synopsys, Cadence and Siemens EDA took more than 85 percent of it, with no other vendor above 5 percent in any core category ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
 
 Synopsys is the largest. Its own results put revenue at $7.054 billion for the fiscal year to 31 October 2025, with Ansys, bought that July, contributing $756.6 million ([source](https://www.sec.gov/Archives/edgar/data/883241/000119312525314200/d29055dex991.htm)). Cadence, whose year ends in December, took $5.30 billion in calendar 2025 ([source](https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/R115.htm)). The two years do not line up, so any total for this market depends on where the line is drawn and on how much of Ansys it carries.
 
 {{figure:eda-share}}
 
-Design services, where one firm turns another's specification into a manufacturable chip, are narrower again, and Broadcom's name is on most of the deals. It booked $16.7 billion of AI semiconductor revenue in the third quarter of fiscal 2026, up 221% ([source](https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm)).
+Design services, where one firm turns another's specification into a manufacturable chip, are narrower again, and Broadcom's name is on most of the deals. It booked $16.7 billion of AI semiconductor revenue in the third quarter of fiscal 2026, up 221 percent ([source](https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm)).
 
 Its customers no longer hide the arrangement. In October 2025 OpenAI and Broadcom said they would deploy 10 gigawatts of OpenAI-designed accelerators, with Broadcom turning the design into silicon and supplying the Ethernet networking around it ([source](https://investors.broadcom.com/news-releases/news-release-details/openai-and-broadcom-announce-strategic-collaboration-deploy-10)). In April 2026 Broadcom extended its Meta partnership to multiple gigawatts of MTIA, Meta's in-house chip, and the first 2 nm AI accelerator ([source](https://investors.broadcom.com/news-releases/news-release-details/broadcom-announces-extended-partnership-meta-deploy-technology)).
 
-Below Broadcom and Marvell sit the Taiwanese houses that carry a customer's circuit list all the way to a finished mask set on TSMC's newest nodes; Alchip reported $992 million of revenue in 2025 ([source](https://www.alchip.com/en/Investors/financials/)). The engineers are spread wider than the firms: India alone holds nearly 20% of the world's chip designers ([source](https://www.pib.gov.in/PressReleasePage.aspx?PRID=2148393)).
+Below Broadcom and Marvell sit the Taiwanese houses that carry a customer's circuit list all the way to a finished mask set on TSMC's newest nodes; Alchip reported $992 million of revenue in 2025 ([source](https://www.alchip.com/en/Investors/financials/)). The engineers are spread wider than the firms: India alone holds nearly 20 percent of the world's chip designers ([source](https://www.pib.gov.in/PressReleasePage.aspx?PRID=2148393)).
 
 ## The chokepoint
 
 In late May 2025 the US Bureau of Industry and Security, the agency that writes export licences, told the design-software vendors to stop selling to China. Cadence got its letter on 23 May: exporting design software classified 3D991 and 3E991 to any party in China, or to a Chinese military end user anywhere, now needed a licence ([source](https://www.sec.gov/Archives/edgar/data/813672/000081367225000093/cdns-20250702.htm)). Synopsys got its letter on 29 May and a rescinding letter on 2 July, after trade talks in which Washington eased technology restrictions ([source](https://www.sec.gov/Archives/edgar/data/883241/000119312525155294/d80081d8k.htm)).
 
-Washington can pull this lever alone, and at once. It also costs something: it speeds up the substitution it was meant to prevent, and Synopsys's China revenue fell from 16% of the total in fiscal 2024 to 12% in fiscal 2025 ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
+Washington can pull this lever alone, and at once. It also costs something: it speeds up the substitution it was meant to prevent, and Synopsys's China revenue fell from 16 percent of the total in fiscal 2024 to 12 percent in fiscal 2025 ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
 
 China's answer is real but partial. CSET at Georgetown University puts it flatly: Chinese designers rely on US tools for all their chip designs, US firms alone sell the full range of software a leading-edge chip needs, and Chinese vendors cannot yet support designs at those nodes ([source](https://cset.georgetown.edu/article/semiconductors-more-u-s-leverage-more-bad-news-for-beijing-part-3/)). No domestic vendor has a certified, complete flow for a 5 nm-class accelerator, and the gap is in the rare failure cases a foundry has already validated rather than in features.
 
-China can architect an accelerator. It cannot finish one at the leading edge without foreign tools, or build what it designs without foreign equipment: SMIC's 7 nm capacity is tight enough that Huawei has to choose between its phone chips and its AI chips ([source](https://cset.georgetown.edu/publication/pushing-the-limits-huaweis-ai-chip-tests-u-s-export-controls/)).
+China can design an accelerator. It cannot finish one at the leading edge without foreign tools, or build what it designs without foreign equipment: SMIC's 7 nm capacity is tight enough that Huawei has to choose between its phone chips and its AI chips ([source](https://cset.georgetown.edu/publication/pushing-the-limits-huaweis-ai-chip-tests-u-s-export-controls/)).
 
 ## Key evaluation criteria
 

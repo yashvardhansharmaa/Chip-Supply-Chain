@@ -102,7 +102,7 @@
 .sup-rank {
   grid-column: 1; grid-row: 1 / span 3; justify-self: end; padding-top: 2px;
   font-family: var(--font-display); font-weight: 800; font-size: 46px; line-height: 0.84;
-  color: var(--bg-3); font-variant-numeric: tabular-nums; letter-spacing: -0.02em;
+  color: var(--ink-2); font-variant-numeric: tabular-nums; letter-spacing: -0.02em;
 }
 .sup-rung[data-lit="1"] .sup-rank { color: var(--accent); opacity: 0.34; }
 .sup-rung-head { grid-column: 2; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; margin-bottom: 5px; }

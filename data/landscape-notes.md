@@ -4,6 +4,45 @@ Spec-panel copy for `data/landscape.json`. One section per chip, keyed by `id`. 
 
 ---
 
+## Supported formats
+
+Not spec-panel copy: the build matches each `##` heading to a chip and ignores this one. It records what sits behind `compute.support` in `data/landscape.json`, which the AI Chips table reads to decide what an empty cell says.
+
+Every chip carries `support` for the three formats the table shows, `fp16`, `fp8` and `fp4`, and each is in one of three states.
+
+- **yes**, the hardware runs the format. Where the vendor publishes a rate the cell carries the number; where it does not, the cell reads *not published*.
+- **no**, the hardware has no datapath for it. The cell reads *not supported*, and the chip's `precisionNote` quotes the document that lists what the part does run.
+- **unknown**, nothing allowed settles it. The cell reads *not published*, and the note says what is missing.
+
+A **no** needs a document that enumerates the chip's data types: a datasheet table, an architecture post, an ISA or compiler page, a white paper, or a vendor statement. A missing figure is never enough on its own. Twenty-seven cells across twenty chips changed from *not published* to *not supported* on 10 September 2026; fifteen more stayed *not published* because no allowed document settles them.
+
+### Marked unsupported, and the document behind each
+
+| Chip | Format | The line that settles it |
+|---|---|---|
+| A100, A800 | FP8, FP4 | Nvidia, inside the Ampere architecture: "Third-generation Tensor Cores add support for TF32, BF16, FP64, INT8, INT4, and binary data types" |
+| H100, H200, H800, H20 | FP4 | Nvidia, inside the Hopper architecture: "The FP8, FP16, BF16, TF32, FP64, and INT8 MMA data types are supported" |
+| MI300X, MI325X | FP4 | AMD CDNA 3 white paper, the matrix table: Matrix FP64, FP32, TF32, FP16, BF16, FP8 and INT8, and the string FP4 nowhere in the document |
+| TPU v4 | FP8, FP4 | Google Cloud TPU v4 documentation: "Peak compute per chip 275 teraflops (bf16 or int8)" |
+| TPU v5e | FP8, FP4 | Google Cloud TPU v5e documentation: "Peak compute per chip (bf16) 197 TFLOPs", "Peak compute per chip (Int8) 393 TOPs", and no other row |
+| TPU v5p | FP4 | Google Cloud TPU v5p documentation: BF16 and FP8 rows and nothing four-bit |
+| TPU v6e | FP4 | Google Cloud TPU v6e documentation: bf16 and Int8 rows only |
+| TPU v7 (Ironwood) | FP4 | Google Cloud tpu7x documentation: BF16 and FP8 rows only, and the eighth-generation deep dive dating the format, "TPU 8t introduces native 4-bit floating point (FP4)" |
+| Trainium2 | FP4 | AWS Neuron Trainium2 architecture: FP8, BF16, FP16, TF32 and FP32, with MXFP4 arriving on Trainium3 |
+| MTIA v2 | FP8, FP4 | Meta's MTIA v2 table: "354 TFLOPS/s (INT8)" and "177 TFLOPS/s (FP16/BF16)", dense, with the sparse pair above them and no float smaller than 16-bit |
+| Gaudi 3 | FP4 | Intel Gaudi 3 white paper: "The Intel Gaudi 3 AI accelerator MME supports all the key AI compute datatypes: FP8 (both E4M3 and E5M2), BF16, FP16, TF32 and FP32" |
+| Gaudi 2 | FP4 | Intel Gaudi documentation: "Gaudi 2 supports all popular data types required for deep learning: FP32, TF32, BF16, FP16 & FP8 (both E4M3 and E5M2)" |
+| Ascend 910B, 910C | FP8, FP4 | Huawei Connect 2025 keynote: "Compared with the Ascend 910B and Ascend 910C, our newer chips – starting with the Ascend 950 chips – … will support more data formats, including FP32, HF32, FP16, BF16, FP8, MXFP8, HiF8, MXFP4, and HiF4" |
+| MTT S5000 | FP4 | Moore Threads product page: "full-precision compute support from FP8 to FP64" |
+
+### Left unknown, and why
+
+TPU v6e FP8, because two Google pages disagree: the v6e page lists bf16 and Int8 and no FP8, while the tpu7x comparison table prints an FP8 row of 918 TFLOPs for v6e, which is the bf16 figure repeated. TPU 8i FP16 and FP8, because Google names FP4 for the eighth generation and no other format. Maia 100 FP8 and FP4, because Microsoft calls the part "the first implementation of the Microscaling (MX) data format" without saying which MX types it implements, and the post that carried the specification no longer resolves. MTIA 400 FP16, because Meta names MX8 and MX4 for that generation and no 16-bit type. WSE-3 Turbo FP8 and FP4, because Cerebras's data-formats page lists FP32, FP16, cbfloat16 and bfloat16 for the CS platform but predates the CS-4 and is software documentation rather than a datasheet. Groq FP4, because Groq publishes no data-type list at all. Jalapeño and the Siyuan 590, because neither vendor publishes anything.
+
+The three-state rule cuts the other way too. Rubin runs FP16 and BF16 and Nvidia publishes no matrix rate for either; Huawei lists FP16 and BF16 among the 950 formats and gives no figure; Moore Threads claims FP8 through FP64 and publishes no FLOPS at all; Groq's own first-generation brief carried an FP16 number that Epoch AI still records. All of those read *not published*, which is what they are.
+
+---
+
 ## Nvidia B200
 `nvidia-b200`
 
@@ -172,7 +211,7 @@ The one large accelerator on this page with no HBM at all: 128 GB of LPDDR5 at 2
 ## Gaudi 2
 `intel-gaudi2`
 
-The chip that set the Ethernet bet Gaudi 3 inherited: 24 RDMA NICs on the package, so a Gaudi cluster needs no proprietary cable plant and no InfiniBand. It also carries 48 MB of local SRAM and hardware video decoders that let it run its own pre-processing. Intel positioned it against the A100 and, unusually for a vendor, published no peak throughput figure for it, which is why the compute row here rests on Epoch AI rather than a datasheet. Epoch also supplies the foundry, TSMC, which Intel does not name; its 826 mm2 die figure for the part is not carried here, because it is exactly the A100 figure and the citation behind it is an archived page rather than a primary document.
+The chip that set the Ethernet bet Gaudi 3 inherited: 24 RDMA NICs on the package, so a Gaudi cluster needs no proprietary cable plant and no InfiniBand. It also carries 48 MB of local SRAM and hardware video decoders that let it run its own pre-processing. Intel positioned it against the A100 and never gave it a datasheet, but it did publish the arithmetic in passing: the comparison table in Intel’s Gaudi 3 white paper records the older part at 432 TFLOPS BF16 and 865 TFLOPS FP8 on the matrix engines, and those are the figures above, in place of the 450 TFLOPS BF16 that Epoch AI carries and that this page used until 10 September 2026. Epoch also supplies the foundry, TSMC, which Intel does not name; its 826 mm2 die figure for the part is not carried here, because it is exactly the A100 figure and the citation behind it is an archived page rather than a primary document.
 
 ## Ascend 910B
 `huawei-ascend-910b`

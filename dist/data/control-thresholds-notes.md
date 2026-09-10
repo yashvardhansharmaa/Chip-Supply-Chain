@@ -18,7 +18,7 @@ On 2 December 2024 the Bureau of Industry and Security (BIS) added export classi
 
 On 29 September 2025 the affiliates rule extended the Entity List to any company owned 50 percent or more, in aggregate, by a listed entity. Six weeks later BIS stayed the rule until 9 November 2026 under the truce with Beijing. China suspended its own 0.1 percent rare-earth de minimis rule the same day.
 
-On 15 January 2026 two instruments took effect together. BIS moved chips below 21,000 points of total processing performance and below 6,500 GB/s of memory bandwidth from presumption of denial to case-by-case review for China and Macau, capping shipments at 50 percent of what the same product ships for American use. A national-security proclamation under Section 232 put a 25 percent tariff on covered chips entering the country. China may now buy the H200, and pays for it twice.
+On 15 January 2026 two instruments took effect together. BIS moved chips below 21,000 points of total processing performance and below 6,500 GB/s of memory bandwidth from presumption of denial to case-by-case review for China and Macau, capping shipments at 50 percent of what the same product ships for American use. A national-security proclamation under Section 232 put a 25 percent tariff on covered chips entering the country.
 
 ## The three most likely to move next
 

@@ -219,7 +219,7 @@
 .sa-exit span { display: block; font-family: var(--font-body); font-size: 15.5px; line-height: 1.45; color: var(--ink-2); }
 @media (max-width: 700px) { .sa-exits { grid-template-columns: 1fr; } }
 
-.sa-est { font-family: var(--font-mono); font-style: normal; font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-left: 6px; }
+.sa-est { font-family: var(--font-mono); font-style: normal; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); margin-left: 6px; }
 .sa-est--basis { text-transform: none; letter-spacing: 0.02em; }
 
 .sa-town[data-dead="1"] { cursor: default; }
@@ -235,7 +235,7 @@
 .sa-route { fill: none; stroke: var(--accent-ink); stroke-width: 1; opacity: 0.4; }
 .sa-tail { stroke: var(--ink-2); stroke-width: 0.8; }
 .sa-stop { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; background: var(--ink); color: var(--bg); border: 1.5px solid var(--bg); display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 10.5px; text-decoration: none; transition: transform 0.15s var(--ease); z-index: 3; }
-.sa-stop[data-cc="JP"] { background: var(--c1); } .sa-stop[data-cc="NL"] { background: var(--c2); } .sa-stop[data-cc="TW"] { background: var(--c3); } .sa-stop[data-cc="KR"] { background: var(--c5); } .sa-stop[data-cc="MY"] { background: var(--c8); } .sa-stop[data-cc="CN"] { background: var(--c6); }
+.sa-stop[data-cc="JP"] { box-shadow: 0 0 0 3px var(--c1); } .sa-stop[data-cc="NL"] { box-shadow: 0 0 0 3px var(--c2); } .sa-stop[data-cc="TW"] { box-shadow: 0 0 0 3px var(--c3); } .sa-stop[data-cc="KR"] { box-shadow: 0 0 0 3px var(--c5); } .sa-stop[data-cc="MY"] { box-shadow: 0 0 0 3px var(--c8); } .sa-stop[data-cc="CN"] { box-shadow: 0 0 0 3px var(--c6); }
 .sa-stop:hover, .sa-stop:focus-visible { transform: scale(1.25); z-index: 4; outline: none; box-shadow: 0 0 0 2px var(--accent); }
 .sa-stop-tip { position: absolute; z-index: 50; max-width: 300px; padding: 9px 11px 10px; background: var(--ink); color: var(--bg); border-radius: 3px; font-family: var(--font-mono); font-size: 11px; line-height: 1.45; pointer-events: none; box-shadow: var(--shadow); }
 .sa-stop-tip[hidden] { display: none; }

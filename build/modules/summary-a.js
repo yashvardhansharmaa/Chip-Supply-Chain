@@ -207,11 +207,11 @@ module.exports = function (ctx) {
     leaders += `<line x1="${px(a[1])}" y1="${py(a[0])}" x2="${px(n[1])}" y2="${py(n[0])}" class="sa-leader" data-cc="${cc}"/>`;
   });
 
-  const svg = `<svg class="sa-svg" viewBox="0 0 ${VW} ${VH}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="World map: the countries that hold the AI chip supply chain, with the chain's ${sites.length} chokepoint towns pinned.">` +
+  const svg = `<svg class="sa-svg" viewBox="0 0 ${VW} ${VH}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="World map of the countries that hold the AI chip supply chain.">` +
     `<rect x="0" y="0" width="${VW}" height="${VH}" class="sa-ocean"/>${g}${land}${leaders}</svg>`;
 
   const townDots = towns.map((t) => {
-    const label = t.sub ? `${t.name} — building substitutes: ${t.note}` : `${t.name} — ${t.ch ? t.ch.title + (t.ch.band ? ' (' + t.ch.band + ' concentration)' : '') : ''}`;
+    const label = t.sub ? `${t.name}, building substitutes: ${t.note}` : `${t.name}, ${t.ch ? t.ch.title + (t.ch.band ? ' (' + t.ch.band + ' concentration)' : '') : ''}`;
     const d = t.sub ? 7 : 4 + t.score; // pin size follows the chokepoint score, as the globe's pin height does
     const live = PRIMARY.concat(SECONDARY).includes(t.cc); // a town whose country has no panel is a marker, not a button
     return `<span class="sa-town${t.sub ? ' sa-town--sub' : ''}"${live ? '' : ' data-dead="1"'} data-cc="${esc(t.cc)}" style="left:${pctX(t.lon)}%;top:${pctY(t.lat)}%;--d0:${d}px" title="${esc(label)}" aria-hidden="true"></span>`;
@@ -225,7 +225,7 @@ module.exports = function (ctx) {
     const segs = matrix.filter((r) => r.shares[cc] != null).map((r) => {
       const rank = Object.keys(r.shares).sort((a, b) => r.shares[b] - r.shares[a]).indexOf(cc) + 1;
       const basis = r.basis || (/estimate/i.test((r.metric || '') + ' ' + (r.note || '').slice(0, 40)) ? 'estimate' : '');
-      const flag = basis === 'estimate' ? 'site estimate' : basis === 'relayed' ? 'reported by ' + (r.relayedVia || 'a third party') : basis === 'derived' ? 'computed here' : '';
+      const flag = basis === 'estimate' ? 'estimated here' : basis === 'relayed' ? 'reported by ' + (r.relayedVia || 'a third party') : basis === 'derived' ? 'computed here' : '';
       return { seg: r.segment, v: r.shares[cc], year: r.asOf || r.year, rank: rank, ch: SEG_CH[r.segment] || null, estimate: basis === 'estimate', flag: flag, method: r.method || '' };
     }).sort((a, b) => b.v - a.v);
     const firms = suppliers.filter((s) => s.country === cc);
@@ -247,8 +247,8 @@ module.exports = function (ctx) {
     const top = d.segs[0];
     const subject = theName(cc, true);
     const lede = top
-      ? `${subject} holds ${num(top.v)}% of ${lc(top.seg)}${top.rank === 1 ? ', more than any other country' : ''}, and is named on ${word(d.named.length)} of the ${chapters.length} chokepoint cards.`
-      : `${subject} is named on ${word(d.named.length)} of the ${chapters.length} chokepoint cards${d.firms.length ? `, and ${word(d.firms.length)} of the ${totalFirms} firms in the supplier list ${d.firms.length > 1 ? 'are' : 'is'} based there` : ''}.`;
+      ? `${subject} holds ${num(top.v)}% of ${lc(top.seg)}${top.rank === 1 ? ', more than any other country' : ''}, and is named on ${word(d.named.length)} of the ${word(chapters.length)} chokepoint cards.`
+      : `${subject} is named on ${word(d.named.length)} of the ${word(chapters.length)} chokepoint cards${d.firms.length ? `, and ${word(d.firms.length)} of the ${totalFirms} firms in the supplier list ${d.firms.length > 1 ? 'are' : 'is'} based there` : ''}.`;
 
     // up to three segment shares: anything it leads, or holds a tenth of
     const shares = d.segs.filter((s) => s.rank === 1 || s.v >= 10).slice(0, 3).map((s) => {
@@ -410,16 +410,16 @@ ${svg}
     const a = XY(x.st), lead = ((x.c.leaders || [])[0] || {}).name || '';
     return `<a class="sa-stop" data-cc="${x.st[4]}" href="${href(x.c)}" style="left:${(a[0] / VW * 100).toFixed(2)}%;top:${(a[1] / VH * 100).toFixed(2)}%" data-title="${esc(x.c.title)}" data-town="${esc(x.st[1])}, ${esc(COUNTRY[x.st[4]] || x.st[4])}" data-lead="${esc(lead)}" data-band="${esc(x.c.band || '')}" aria-label="Stop ${x.c.number}, ${esc(x.c.title)}: ${esc(x.st[1])}${lead ? ', led by ' + esc(lead) : ''}, ${x.c.band ? x.c.band.toLowerCase() + ' concentration' : ''}. Read the chapter."><span>${x.c.number}</span></a>`;
   }).join('');
-  const strip = routeStops.map((x) => `<a class="sa-stopcard" data-cc="${x.st[4]}" href="${href(x.c)}"><span class="sa-stopcard-n">${String(x.c.number).padStart(2, '0')}</span><span class="sa-stopcard-t">${esc(x.c.title.replace(/ and /g, ' & '))}</span><span class="sa-stopcard-w">${esc(x.st[1])} · ${x.st[4]}</span></a>`).join('');
+  const strip = routeStops.map((x) => `<li><a class="sa-stopcard" data-cc="${x.st[4]}" href="${href(x.c)}"><span class="sa-stopcard-n">${String(x.c.number).padStart(2, '0')}</span><span class="sa-stopcard-t">${esc(x.c.title.replace(/ and /g, ' & '))}</span><span class="sa-stopcard-w">${esc(x.st[1])} · ${x.st[4]}</span></a></li>`).join('');
   const ledBy = {}; stages.forEach((c) => { const first = (c.countries || [])[0]; if (first) (ledBy[first.code] = ledBy[first.code] || []).push(c); });
   const roleOrder = Object.keys(ROLE).filter((cc) => info[cc]).sort((a, b) => ((ledBy[b] || []).length - (ledBy[a] || []).length) || (info[b].named.length - info[a].named.length));
   const roles = roleOrder.map((cc) => {
     const led = ledBy[cc] || [], five = led.filter((c) => c.band === 'Extreme').length;
-    const meta = led.length ? `leads ${word(led.length)} stage${led.length > 1 ? 's' : ''}${five ? `, ${word(five)} extreme` : ''}` : `named on ${word(info[cc].named.length)} stage${info[cc].named.length === 1 ? '' : 's'}`;
+    const meta = led.length ? `leads ${word(led.length)} stage${led.length > 1 ? 's' : ''}${five ? `, ${word(five)} of them extreme` : ''}` : `named on ${word(info[cc].named.length)} stage${info[cc].named.length === 1 ? '' : 's'}`;
     return `<li><button type="button" class="sa-role" data-cc="${cc}" aria-pressed="${cc === DEFAULT_CC}"><span class="sa-role-name">${esc(COUNTRY[cc] || cc)}</span><span class="sa-role-meta">${meta}</span><span class="sa-role-line">${esc(ROLE[cc])}</span></button></li>`;
   }).join('');
   const mins = Math.max(1, Math.round(ctx.all.reduce((a, c) => a + (c.meta.plain || '').split(/\s+/).length, 0) / 230));
-  const doors = `<nav class="sa-doors" aria-label="Where to start"><a class="sa-door" href="#/intro"><span class="sa-door-k">${esc(ctx.cap(word(mins)))} minutes</span><b>Start here</b><span>One plain paragraph per stage, beside its 3D specimen.</span></a><a class="sa-door" href="#/chain"><span class="sa-door-k">${esc(ctx.cap(word(chapters.length)))} chapters</span><b>The Chain</b><span>Every stage in full, every number linked to its source.</span></a><a class="sa-door" href="#/controls"><span class="sa-door-k">What can still flow</span><b>The board</b><span>Nine flows across the chokepoint and their state today.</span></a></nav>`;
+  const doors = `<nav class="sa-doors" aria-label="Where to start"><a class="sa-door" href="#/intro"><span class="sa-door-k">${esc(ctx.cap(word(mins)))} minutes</span><b>Start here</b><span>One plain paragraph per stage, beside its 3D specimen.</span></a><a class="sa-door" href="#/chain"><span class="sa-door-k">${esc(ctx.cap(word(chapters.length)))} chapters</span><b>The Chain</b><span>Every stage in full, every number linked to its source.</span></a><a class="sa-door" href="#/controls"><span class="sa-door-k">What can still flow</span><b>The board</b><span>Each thing that crosses the chokepoint, and where it stands today.</span></a></nav>`;
   const homeMap = `<div class="sa sa--home">
 ${doors}
 <section class="sa-route-wrap" aria-label="The route of one chip">

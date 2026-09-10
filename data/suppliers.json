@@ -35,7 +35,7 @@
     "founded": 1988,
     "ticker": "CDNS",
     "ownership": "Public",
-    "role": "The second of the three EDA vendors that matter, strong in analog and custom design, simulation and hardware emulation. Its Palladium and Protium emulation boxes are how large AI chips are verified before tapeout.",
+    "role": "The second of the three EDA vendors that matter, strong in analog and custom design, simulation and hardware emulation. Its Palladium and Protium emulation boxes are how large AI chips are verified before tape-out.",
     "chokepoint": "Critical",
     "shareNote": "About $5.30B of CY2025 EDA revenue, second behind Synopsys",
     "customers": [
@@ -71,7 +71,7 @@
       "GlobalFoundries",
       "Nvidia"
     ],
-    "aiRelevance": "Every AI die must pass Calibre physical verification before a foundry will accept the tapeout.",
+    "aiRelevance": "Every AI die must pass Calibre physical verification before a foundry will accept the tape-out.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://newsletter.semianalysis.com/p/eda-market-primer"
@@ -305,7 +305,7 @@
     "founded": 1993,
     "ticker": "NVDA",
     "ownership": "Public",
-    "role": "Designs the Blackwell and Rubin GPUs, the NVLink scale-up fabric and the NVL72 rack systems that most AI training and a large share of inference runs on. It also sells the CUDA software stack that locks the ecosystem in.",
+    "role": "Designs the Blackwell and Rubin GPUs, the NVLink scale-up fabric and the NVL72 rack systems that most AI training and a large share of inference runs on. It also sells the CUDA software stack that locks developers in.",
     "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
@@ -521,7 +521,7 @@
     "founded": 2003,
     "ticker": "3661.TW",
     "ownership": "Public",
-    "role": "A design services house that takes a customer's AI accelerator architecture through physical implementation, tapeout and supply at TSMC, including 2.5D packaging integration. It is one of the few firms with production experience on reticle-limit AI dies.",
+    "role": "A design services house that takes a customer's AI accelerator architecture through physical implementation, tape-out and supply at TSMC, including 2.5D packaging integration. It is one of the few firms with production experience on reticle-limit AI dies.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -554,7 +554,7 @@
       "Tesla",
       "NXP"
     ],
-    "aiRelevance": "GUC is the fastest route from an AI architecture to silicon on a leading TSMC node with CoWoS attached.",
+    "aiRelevance": "Global Unichip is the fastest route from an AI architecture to silicon on a leading-edge TSMC node with CoWoS attached.",
     "revenueUSDb": 1.084,
     "revenueYear": 2025,
     "source": "https://www.guc-asic.com/en/"
@@ -914,7 +914,7 @@
     "founded": 2020,
     "ticker": "Private",
     "ownership": "Private; merged with SK Telecom's Sapeon in 2024; SK Group and Arm are investors",
-    "role": "South Korea's leading AI chip startup, building the Rebel inference accelerator with Samsung Foundry and SK hynix HBM. It is the national champion for Korean AI silicon.",
+    "role": "An AI chip startup building the Rebel inference accelerator with Samsung Foundry and SK hynix HBM. It is the national champion for Korean AI silicon.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -959,7 +959,7 @@
     "founded": 1926,
     "ticker": "4063.T",
     "ownership": "Public",
-    "role": "The largest maker of 300 mm silicon wafers, the blank substrate every logic and memory die is built on. It is also a leading supplier of ArF and EUV photoresist and of photomask pellicles, so it touches three separate stages of the chain.",
+    "role": "The largest maker of 300 mm silicon wafers, the blank substrate every logic and memory die is built on. It also supplies ArF and EUV photoresist and photomask pellicles, so it touches three separate stages of the chain.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1104,7 +1104,7 @@
     "founded": 2015,
     "ticker": "688126.SS",
     "ownership": "Public (Shanghai STAR Market); state-backed, National IC Fund investor",
-    "role": "China's leading silicon wafer group, including Shanghai Zing Semiconductor for 300 mm and Okmetic in Finland for specialty wafers. It is the domestic answer to reliance on Japanese wafer supply.",
+    "role": "China's largest silicon wafer group, including Shanghai Zing Semiconductor for 300 mm and Okmetic in Finland for specialty wafers. It is the domestic answer to reliance on Japanese wafer supply.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -1221,7 +1221,7 @@
     "founded": 1957,
     "ticker": "Private",
     "ownership": "Taken private by the Japan Investment Corporation in 2024",
-    "role": "One of the largest photoresist makers and a leader in EUV resist, the light-sensitive polymer that records the pattern on the wafer. Japan's state investment fund bought it outright to keep the technology under national control.",
+    "role": "One of the largest photoresist makers and a main source of EUV resist, the light-sensitive polymer that records the pattern on the wafer. Japan's state investment fund bought it outright to keep the technology under national control.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1245,7 +1245,7 @@
     "founded": 1936,
     "ticker": "4186.T",
     "ownership": "Public",
-    "role": "A leading photoresist supplier across KrF, ArF immersion and EUV, plus developers, strippers and thick-film resists used in advanced packaging. It has been supplying resist since the earliest days of the industry.",
+    "role": "Supplies photoresist across KrF, ArF immersion and EUV, plus developers, strippers and thick-film resists used in advanced packaging. It has been supplying resist since the earliest days of the industry.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1373,7 +1373,7 @@
       "Samsung",
       "SK hynix"
     ],
-    "aiRelevance": "Domestic resist supply reduces the leverage Japanese export policy has over Korean HBM output.",
+    "aiRelevance": "Domestic resist supply makes Korean HBM output less exposed to Japanese export policy.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.dongjin.com/en/business/semiconductor.php"
@@ -1629,7 +1629,7 @@
     "founded": 1998,
     "ticker": "Private",
     "ownership": "Formerly SK Materials; majority stake sold to Hahn & Company by SK Inc.",
-    "role": "A leading producer of nitrogen trifluoride, the gas used to clean deposition chambers, plus tungsten hexafluoride and other specialty etch gases. Chamber cleaning gas consumption scales with deposition throughput.",
+    "role": "Produces nitrogen trifluoride, the gas used to clean deposition chambers, plus tungsten hexafluoride and other specialty etch gases. Chamber cleaning gas consumption scales with deposition throughput.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1748,7 +1748,7 @@
     "founded": 1984,
     "ticker": "ASML",
     "ownership": "Public",
-    "role": "The only maker of extreme ultraviolet lithography scanners, and the leading maker of immersion deep ultraviolet scanners. Every chip below roughly 7 nm is patterned on an ASML EUV machine.",
+    "role": "The only maker of extreme ultraviolet lithography scanners, and the largest maker of immersion deep ultraviolet scanners. Every chip below roughly 7 nm is patterned on an ASML EUV machine.",
     "chokepoint": "Critical",
     "shareNote": "Sole supplier of EUV lithography systems; shipped 48 EUV and 131 immersion DUV systems in 2025",
     "customers": [
@@ -1759,7 +1759,7 @@
       "Micron",
       "Rapidus"
     ],
-    "aiRelevance": "Access to EUV is the single sharpest dividing line between fabs that can build leading-edge AI logic and fabs that cannot.",
+    "aiRelevance": "Access to EUV divides the fabs that can build leading-edge AI logic from the fabs that cannot.",
     "revenueUSDb": 37.972,
     "revenueYear": 2025,
     "source": "https://www.asml.com/en/investors/annual-report"
@@ -2383,7 +2383,7 @@
     "founded": 1912,
     "ticker": "4183.T",
     "ownership": "Public",
-    "role": "Supplies EUV pellicles, the thin membranes that keep particles off a photomask while it is exposed. EUV pellicles must transmit over 90% of 13.5 nm light and survive high source power, and only a few sources exist.",
+    "role": "Supplies EUV pellicles, the thin membranes that keep particles off a photomask while it is exposed. EUV pellicles must transmit over 90 percent of 13.5 nm light and survive high source power, and only a few sources exist.",
     "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
@@ -2407,7 +2407,7 @@
     "founded": 1975,
     "ticker": "KLAC",
     "ownership": "Public",
-    "role": "The dominant supplier of process control equipment: optical and electron beam wafer inspection, reticle inspection, overlay and film metrology. Its tools find the defects that determine yield on large dies.",
+    "role": "Supplies process control equipment: optical and electron beam wafer inspection, reticle inspection, overlay and film metrology. Its tools find the defects that determine yield on large dies.",
     "chokepoint": "Critical",
     "shareNote": "56.5% of the process control market in 2024, about 6.5 times the nearest competitor, on Gartner data published in KLA's 2026 investor day",
     "customers": [
@@ -2457,7 +2457,7 @@
     "founded": 1947,
     "ticker": "Private",
     "ownership": "Wholly owned subsidiary of Hitachi",
-    "role": "The leading supplier of critical dimension scanning electron microscopes, which measure feature widths after lithography and etch, plus plasma etch systems and electron beam review tools.",
+    "role": "The largest supplier of critical dimension scanning electron microscopes, which measure feature widths after lithography and etch, plus plasma etch systems and electron beam review tools.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2557,7 +2557,7 @@
     "founded": 1997,
     "ticker": "140860.KQ",
     "ownership": "Public (KOSDAQ)",
-    "role": "The leading maker of automated atomic force microscopes for fabs, used to measure surface roughness, step height and defect profiles at sub-nanometre resolution. It acquired Accurion and part of the AFM market from Bruker.",
+    "role": "Makes the automated atomic force microscopes fabs use to measure surface roughness, step height and defect profiles at sub-nanometre resolution. It acquired Accurion and part of the AFM market from Bruker.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2581,7 +2581,7 @@
     "founded": 2014,
     "ticker": "688361.SS",
     "ownership": "Public (Shanghai STAR Market); state-backed investors",
-    "role": "China's leading domestic maker of wafer defect inspection and film metrology tools, aiming to replace KLA systems in Chinese fabs. Its coverage is strongest at mature nodes.",
+    "role": "China's largest domestic maker of wafer defect inspection and film metrology tools, aiming to replace KLA systems in Chinese fabs. Its coverage is strongest at mature nodes.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -2629,7 +2629,7 @@
     "founded": 1967,
     "ticker": "AMAT",
     "ownership": "Public",
-    "role": "The largest semiconductor equipment company by breadth, supplying physical and chemical vapour deposition, epitaxy, ion implantation, chemical mechanical planarisation and electron beam inspection. It owns more process steps than any other vendor.",
+    "role": "Supplies physical and chemical vapour deposition, epitaxy, ion implantation, chemical mechanical planarisation and electron beam inspection. It owns more process steps than any other vendor.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2654,7 +2654,7 @@
     "founded": 1980,
     "ticker": "LRCX",
     "ownership": "Public",
-    "role": "The leading supplier of plasma etch systems, particularly the high aspect ratio etch used to drill 3D NAND channels and DRAM capacitors, plus ALD, electroplating and cryogenic etch tools.",
+    "role": "The largest supplier of plasma etch systems, particularly the high aspect ratio etch used to drill 3D NAND channels and DRAM capacitors, plus ALD, electroplating and cryogenic etch tools.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2689,7 +2689,7 @@
       "SK hynix",
       "Micron"
     ],
-    "aiRelevance": "An EUV scanner cannot run without a TEL track bolted to it, which makes the track as hard a dependency as the scanner.",
+    "aiRelevance": "An EUV scanner cannot run without a Tokyo Electron track bolted to it, which makes the track as hard a dependency as the scanner.",
     "revenueUSDb": 15.886,
     "revenueYear": 2026,
     "source": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4presentations-e.pdf"
@@ -2704,7 +2704,7 @@
     "founded": 1968,
     "ticker": "ASM.AS",
     "ownership": "Public",
-    "role": "The leading supplier of atomic layer deposition, which grows films one atomic layer at a time and is how gate-all-around transistors and high-k dielectrics are built. It also supplies epitaxy and plasma-enhanced ALD.",
+    "role": "Makes the atomic layer deposition tools that grow films one atomic layer at a time, which is how gate-all-around transistors and high-k dielectrics are built. It also supplies epitaxy and plasma-enhanced ALD.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2825,7 +2825,7 @@
     "founded": 1868,
     "ticker": "7735.T",
     "ownership": "Public",
-    "role": "The leading supplier of single-wafer and batch cleaning systems, which remove particles and residues between almost every process step. Cleaning is the most frequently repeated operation in a fab.",
+    "role": "Makes the single-wafer and batch cleaning systems that remove particles and residues between almost every process step. Cleaning is the most frequently repeated operation in a fab.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2933,7 +2933,7 @@
       "Rebellions",
       "Ambarella"
     ],
-    "aiRelevance": "A credible second leading-edge foundry is the main structural hedge against Taiwan concentration.",
+    "aiRelevance": "A credible second leading-edge foundry is the main hedge against Taiwan concentration.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://semiconductor.samsung.com/foundry/"
@@ -3113,7 +3113,7 @@
     "founded": 1983,
     "ticker": "000660.KS",
     "ownership": "Public; part of SK Group",
-    "role": "The leading supplier of high bandwidth memory and Nvidia's principal HBM source, alongside a large conventional DRAM and NAND business including Solidigm. HBM is stacked DRAM connected by through-silicon vias.",
+    "role": "The largest supplier of high bandwidth memory and Nvidia's principal HBM source, alongside a large conventional DRAM and NAND business including Solidigm. HBM is stacked DRAM connected by through-silicon vias.",
     "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
@@ -3123,7 +3123,7 @@
       "Microsoft",
       "Google"
     ],
-    "aiRelevance": "HBM capacity allocation between SK hynix, Samsung and Micron effectively decides how many accelerators ship.",
+    "aiRelevance": "HBM capacity allocation between SK hynix, Samsung and Micron decides how many accelerators ship.",
     "revenueUSDb": 72.451,
     "revenueYear": 2025,
     "source": "https://news.skhynix.com/en/sk-hynix-announces-fy25-financial-results/"
@@ -3148,7 +3148,7 @@
       "Microsoft",
       "Apple"
     ],
-    "aiRelevance": "Samsung is the only firm that makes HBM, logic at leading edge and packaging under one roof.",
+    "aiRelevance": "Samsung is the only firm that makes HBM, logic at the leading edge and packaging under one roof.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://semiconductor.samsung.com/news-events/news/samsung-ships-industry-first-commercial-hbm4-with-ultimate-performance-for-ai-computing/"
@@ -3633,7 +3633,7 @@
     "founded": 1951,
     "ticker": "KLIC",
     "ownership": "Public",
-    "role": "The leading maker of wire bonders, the workhorse of low-cost packaging, and a developer of thermocompression and fluxless bonding systems for advanced packages.",
+    "role": "Makes wire bonders, the workhorse of low-cost packaging, and is developing thermocompression and fluxless bonding systems for advanced packages.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4114,7 +4114,7 @@
     "founded": 1954,
     "ticker": "6857.T",
     "ownership": "Public",
-    "role": "The leading maker of automated test equipment for logic and memory, including the V93000 platform used to test AI accelerators and the testers used for HBM. Test time on AI dies is long and rising.",
+    "role": "Makes automated test equipment for logic and memory, including the V93000 platform used to test AI accelerators and the testers used for HBM. Test time on AI dies is long and rising.",
     "chokepoint": "Critical",
     "shareNote": "66% of the SoC tester market in CY2025, up from 56% in CY2024, on Advantest's own tester market share report",
     "customers": [

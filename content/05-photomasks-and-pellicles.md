@@ -4,7 +4,7 @@
   "number": 5,
   "title": "Photomasks and Pellicles",
   "oneLiner": "A business worth tens of billions of yen sits under every leading-edge chip. Two Japanese firms make almost all the blank plates that EUV masks are built on, one Japanese firm inspects them, and the dust cover meant to protect them is still not in production.",
-  "plain": "A photomask is the printing plate for one layer of a chip. One plate prints the same layer on wafer after wafer, so it shapes millions of chips. No glass is transparent to the short light now in use, so the plate is not a window but a mirror of about forty pairs of ultrathin layers, and any speck of dust on it repeats on every wafer it prints. Two Japanese firms make almost all of those mirrors. An obscure business almost nobody has heard of can hold up every leading-edge chip in the world.",
+  "plain": "A photomask is the printing plate for one layer of a chip. One plate prints the same layer on wafer after wafer, so it shapes millions of chips. No glass is transparent to the short light now in use, so the plate is not a window but a mirror of about forty pairs of ultrathin layers, and any speck of dust on it repeats on every wafer it prints. Two Japanese firms make almost all of those mirrors. A business almost nobody has heard of can hold up every leading-edge chip in the world.",
   "bridge": "Look next at the stencil itself, because everything the machine prints is decided by what is written on that one plate.",
   "specimen": "photomask",
   "specimenCaption": "A six-inch EUV mask, or reticle, with its pellicle dust cover. Low-thermal-expansion glass at the base, the molybdenum and silicon multilayer mirror in copper round the top edge, a tantalum absorber carrying the pattern, and the membrane held 2.5 mm off the surface on four glued pads, far enough that a particle landing on it prints out of focus.",
@@ -62,7 +62,7 @@ Every EUV layer on an AI accelerator needs a flawless mask, built on a blank pla
 
 ## How it works
 
-A photomask is the printing plate for one layer of a chip. One plate prints the same layer on wafer after wafer, so it shapes millions of chips. No glass is transparent to the short light now in use, so the plate is not a window but a mirror of about forty pairs of ultrathin layers, and any speck of dust on it repeats on every wafer it prints. Two Japanese firms make almost all of those mirrors. An obscure business almost nobody has heard of can hold up every leading-edge chip in the world.
+A photomask is the printing plate for one layer of a chip. One plate prints the same layer on wafer after wafer, so it shapes millions of chips. No glass is transparent to the short light now in use, so the plate is not a window but a mirror of about forty pairs of ultrathin layers, and any speck of dust on it repeats on every wafer it prints. Two Japanese firms make almost all of those mirrors. A business almost nobody has heard of can hold up every leading-edge chip in the world.
 
 A deep ultraviolet mask lets light through: quartz carrying a light-blocking film such as molybdenum silicide, and Shin-Etsu supplies those blanks ([source](https://www.shinetsu.co.jp/en/products/electronics-materials/photomask-blanks/)). An EUV mask reflects instead, about 40 molybdenum and silicon layer pairs, 7 nm to a pair, laid on low-expansion glass under a tantalum absorber that carries the pattern ([source](https://arxiv.org/pdf/1912.09075)). Making the plate a mirror creates its own problems:
 
@@ -76,13 +76,13 @@ High-NA scanners halve the patch of wafer one exposure covers and double the exp
 
 ### Blanks
 
-The blank is where two decades of learning sit: laying down forty layer pairs across a six-inch plate, even to within less than an angstrom, a tenth of a nanometre, with no particle buried anywhere underneath. Nobody publishes a market share for the business, but AGC counts the suppliers. It says it is one of three companies worldwide that supply EUV blanks, and the only one that handles every material and process itself ([source](https://www.agc.com/en/hub/pr/the-japanese-glass-behind-next-generation-chips.html)). Its own data book lists EUV photomask blanks among the products where AGC holds the No.1 position worldwide ([source](https://www.agc.com/en/ir/library/outline/pdf/reference.pdf)).
+The blank is where two decades of learning sit: laying down forty layer pairs across a six-inch plate, flat to within less than an angstrom, a tenth of a nanometre, with no particle buried anywhere underneath. Nobody publishes a market share for the business, but AGC counts the suppliers. It says it is one of three companies worldwide that supply EUV blanks, and the only one that handles every material and process itself ([source](https://www.agc.com/en/hub/pr/the-japanese-glass-behind-next-generation-chips.html)). Its own data book lists EUV photomask blanks among the products where AGC holds the No.1 position worldwide ([source](https://www.agc.com/en/ir/library/outline/pdf/reference.pdf)).
 
 Hoya says its share of the mask blank market is exceptionally high, and expects customers to move gradually toward multi-sourcing EUV blanks ([source](https://www.hoya.com/ir/2025/en/review/it.html)). AGC raised its EUV blank capacity by about 30 percent in 2025, on a line in Fukushima funded under a METI supply-chain programme, and was aiming for more than ¥40 billion of sales in the business ([source](https://www.agc.com/en/news/detail/1203819_2814.html)).
 
 ### Writers
 
-An electron-beam writer cuts the pattern into a sensitive coating on the blank. Multi-beam writers fire many beams at once, which is what lets a dense EUV mask finish in a usable time, and two firms make them: IMS Nanofabrication of Vienna and Japan's NuFlare. Intel calls IMS the established leader, and sold roughly 10% of it to TSMC in September 2023 at a valuation near $4.3 billion ([source](https://www.intc.com/news-events/press-releases/detail/1645/intel-to-sell-minority-stake-in-ims-nanofabrication)).
+An electron-beam writer cuts the pattern into a sensitive coating on the blank. Multi-beam writers fire many beams at once, which is what lets a dense EUV mask finish in a usable time, and two firms make them: IMS Nanofabrication of Vienna and Japan's NuFlare. Intel calls IMS the established leader, and sold roughly 10 percent of it to TSMC in September 2023 at a valuation near $4.3 billion ([source](https://www.intc.com/news-events/press-releases/detail/1645/intel-to-sell-minority-stake-in-ims-nanofabrication)).
 
 ### Inspection and repair
 
@@ -92,7 +92,7 @@ A mask defect costs yield on every wafer that mask prints, so fabs check masks t
 
 A pellicle is a thin membrane on a frame above the mask. Particles land on it rather than on the pattern, too far out of focus to print.
 
-EUV makes that hard. ASML's membrane is 13 nanometres thick, has to hold together at 500C in vacuum, and every photon it absorbs is light that never reaches the wafer ([source](https://www.asml.com/en/news/stories/2022/the-euv-pellicle-indistinguishable-from-magic)). The light crosses it twice, on the way in and on the way back off the mirror, so absorption counts double.
+EUV makes that hard. ASML's membrane is 13 nanometres thick, has to hold together at 500 degrees Celsius in vacuum, and every photon it absorbs is light that never reaches the wafer ([source](https://www.asml.com/en/news/stories/2022/the-euv-pellicle-indistinguishable-from-magic)). The light crosses it twice, on the way in and on the way back off the mirror, so absorption counts double.
 
 Carbon nanotube membranes are the intended fix, still short of production in a leading-edge fab. Imec has mounted them on reticles and exposed them in an NXE:3300 scanner, measuring single-pass transmission up to 97 percent and finding the effect on imaging low and correctable ([source](https://www.imec-int.com/en/press/imec-demonstrates-cnt-pellicle-utilization-euv-scanner)). Mitsui Chemicals, licensed by ASML, is building capacity at Iwakuni-Ohtake for membranes above 92 percent transmittance that can stand sources above 1,000 W ([source](https://jp.mitsuichemicals.com/en/release/2024/2024_0528_1/index.htm)).
 
@@ -118,11 +118,11 @@ Pellicles are the unsolved part. A decade on, no membrane is transparent, tough 
 
 ## Key evaluation criteria
 
-- **Blank defectivity** — particles buried in the multilayer cannot be repaired, so blank yield sets mask yield.
-- **Write time and placement** — multi-beam writers make dense, curved EUV patterns affordable, and Intel calls IMS the established industry leader in them ([source](https://www.intc.com/news-events/press-releases/detail/1645/intel-to-sell-minority-stake-in-ims-nanofabrication)).
-- **Actinic inspectability** — only a 13.5 nm inspection sees what the scanner sees, and only Lasertec sells one ([source](https://www.lasertec.co.jp/en/ir/plan/message.html)).
-- **Pellicle transmission and lifetime** — transmission counts twice, and the best demonstrated carbon nanotube membranes pass 97% in a single crossing ([source](https://www.imec-int.com/en/press/imec-demonstrates-cnt-pellicle-utilization-euv-scanner)).
-- **Mask-set cost per node** — $10M to $40M at the leading edge, which decides which designs can use it ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)).
+- **Blank defectivity.** Particles buried in the multilayer cannot be repaired, so blank yield sets mask yield.
+- **Write time and placement.** Multi-beam writers make dense, curved EUV patterns affordable, and Intel calls IMS the established industry leader in them ([source](https://www.intc.com/news-events/press-releases/detail/1645/intel-to-sell-minority-stake-in-ims-nanofabrication)).
+- **Actinic inspectability.** Only a 13.5 nm inspection sees what the scanner sees, and only Lasertec sells one ([source](https://www.lasertec.co.jp/en/ir/plan/message.html)).
+- **Pellicle transmission and lifetime.** Transmission counts twice, and the best demonstrated carbon nanotube membranes pass 97 percent in a single crossing ([source](https://www.imec-int.com/en/press/imec-demonstrates-cnt-pellicle-utilization-euv-scanner)).
+- **Mask-set cost per node.** $10M to $40M at the leading edge, which decides which designs can use it ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)).
 
 ## Takeaways
 

@@ -62,7 +62,7 @@
 ---
 # Silicon and Wafers
 
-The whole world market for silicon wafers came to $11.4 billion of revenue on 12,973 million square inches in 2025 ([source](https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html)). That is a small fraction of Nvidia's data center revenue, and every leading-edge chip behind that revenue was built on one of these discs.
+The whole world market for silicon wafers came to $11.4 billion of revenue on 12,973 million square inches in 2025 ([source](https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html)). That is a small fraction of Nvidia's data centre revenue, and every leading-edge chip behind it was built on one of these discs.
 
 ## How it works
 
@@ -125,4 +125,4 @@ AI accelerators make the wafer's job harder. One fatal defect ruins far more sil
 
 ## Takeaways
 
-The wafer is the cheapest critical input in the AI chain and among the most concentrated: five firms and $11.4 billion of revenue sit under every leading-edge chip ([source](https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf)) ([source](https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html)). China's polysilicon dominance is real but in the wrong grade, and its 300 mm position is small ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). The epitaxial mix matters more than the square inches, because that is where AI demand lands and where the incumbents make money. The failed move to 450 mm showed that this layer changes over decades.
+The wafer is a cheap input and a concentrated one: five firms and $11.4 billion of revenue sit under every leading-edge chip ([source](https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf)) ([source](https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html)). China's polysilicon dominance is real but in the wrong grade, and its 300 mm position is small ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). The epitaxial mix matters more than the square inches, because that is where AI demand lands and where the incumbents make money. The failed move to 450 mm showed that this layer changes over decades.

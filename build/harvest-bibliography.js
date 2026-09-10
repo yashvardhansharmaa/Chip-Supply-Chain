@@ -1666,7 +1666,7 @@ const MANUAL = {
     type: 'page',
   },
   'https://www.amphenol.com/markets/it-datacom': {
-    title: 'IT Datacom',
+    title: 'Amphenol, IT and datacom market page',
     publisher: 'Amphenol',
     type: 'page',
   },
@@ -1676,7 +1676,7 @@ const MANUAL = {
     type: 'page',
   },
   'https://www.appliedmaterials.com/eu/en/product-library/kinex-integrated-die-to-wafer-hybrid-bonding-system.html': {
-    title: 'Kinex',
+    title: 'Applied Materials, Kinex integrated die-to-wafer hybrid bonding system product page',
     publisher: 'Applied Materials',
     type: 'page',
   },
@@ -1701,7 +1701,7 @@ const MANUAL = {
     type: 'page',
   },
   'https://www.foxconn.com/': {
-    title: '首頁 — 鴻海科技集團 (Hon Hai Technology Group home page)',
+    title: 'Hon Hai Precision Industry (Foxconn), company website (鴻海科技集團)',
     publisher: 'Hon Hai Precision Industry (Foxconn)',
     type: 'page',
   },
@@ -1716,7 +1716,7 @@ const MANUAL = {
     type: 'page',
   },
   'https://www.huahonggrace.com/': {
-    title: '华虹宏力半导体有限公司 (Hua Hong Grace Semiconductor home page)',
+    title: 'Hua Hong Semiconductor, company website (华虹宏力半导体有限公司)',
     publisher: 'Hua Hong Semiconductor',
     type: 'page',
   },
@@ -1726,7 +1726,7 @@ const MANUAL = {
     type: 'page',
   },
   'https://www.jcetglobal.com/en/': {
-    title: 'JCET Group home page',
+    title: 'JCET Group, company website',
     publisher: 'JCET Group',
     type: 'page',
   },
@@ -1741,7 +1741,7 @@ const MANUAL = {
     type: 'page',
   },
   'https://www.primarius-tech.com/en/': {
-    title: 'PRIMARIUS',
+    title: 'Primarius Technologies, company website',
     publisher: 'Primarius Technologies',
     type: 'page',
   },
@@ -1751,7 +1751,7 @@ const MANUAL = {
     type: 'page',
   },
   'https://www.wacker.com/cms/en-us/products/product-groups/polysilicon/polysilicon.html': {
-    title: 'Polysilicon',
+    title: 'Wacker Chemie, polysilicon product page',
     publisher: 'Wacker Chemie',
     type: 'page',
   },
@@ -1794,5 +1794,924 @@ const MANUAL = {
     publisher: 'U.S. Bureau of Industry and Security',
     date: '2026-01-13',
     type: 'press release',
+  },
+
+  // ---------------------------------------------------------------------
+  // Bibliography pass, 10 September 2026. Scraping left these entries with a
+  // title a reader could not use: a CMS heading ('Home | ASM'), the authoring
+  // program ('PowerPoint Presentation', 'Microsoft Word - ...'), a file name
+  // ('fy26q4presentations-e'), a bare company name, or a title only in
+  // Chinese, Japanese or Korean. Each title below was written from the
+  // document itself - cover page, first slide, headline and dateline - in
+  // English, with the original in parentheses where the document is in
+  // another language. A date is given only where the document states one;
+  // date: null clears a page-modification timestamp the fetcher mistook for
+  // a publication date.
+
+  // --- government notices, laws and rules (title translated; original in parentheses)
+  'http://exportcontrol.mofcom.gov.cn/article/zcfg/gnzcfg/zcfggzqd/202307/847.html': {
+    title: 'MOFCOM and General Administration of Customs announcement, export controls on gallium- and germanium-related items (对镓、锗相关物项实施出口管制)',
+    publisher: 'Ministry of Commerce of the People\'s Republic of China',
+    date: '2023-07-03',
+    type: 'regulation',
+  },
+  'https://exportcontrol.mofcom.gov.cn/article/zcfg/gnzcfg/flfg/202111/226.html': {
+    title: 'Export Control Law of the People\'s Republic of China (中华人民共和国出口管制法)',
+    publisher: 'Ministry of Commerce of the People\'s Republic of China',
+    date: '2020-10-17',
+    type: 'regulation',
+  },
+  'https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_b1ec77dd3f0d4762952904df7cdaadec.html': {
+    title: 'MOFCOM and GAC Announcement 2025 No. 70, suspending the October 2025 export-control measures, Announcements Nos. 55 to 58, 61 and 62 (商务部、海关总署公告2025年第70号)',
+    date: '2025-11-07',
+    type: 'regulation',
+  },
+  'https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_01c15948864a45d186abb146fe30a42b.html': {
+    title: 'MOFCOM Announcement 2026 No. 37, preliminary determination in the anti-dumping investigation into dichlorosilane imported from Japan (商务部公告2026年第37号)',
+    date: '2026-09-07',
+    type: 'regulation',
+  },
+  'https://www.cac.gov.cn/2023-05/21/c_1686348043518073.htm': {
+    title: 'Cyberspace Administration of China, notice on the cybersecurity review of Micron products (美光公司在华销售的产品未通过网络安全审查), 21 May 2023',
+    publisher: 'Cyberspace Administration of China',
+    date: '2023-05-21',
+    type: 'regulation',
+  },
+  'https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf': {
+    title: 'METI, Semiconductor and digital industry strategy: future direction (半導体・デジタル産業戦略の今後の方向性), 23 December 2025',
+    publisher: 'Ministry of Economy, Trade and Industry (Japan)',
+    date: '2025-12-23',
+    type: 'pdf',
+  },
+  'https://echa.europa.eu/-/echa-supports-pfas-restriction-with-targeted-derogations': {
+    title: 'ECHA supports PFAS restriction with targeted derogations',
+    publisher: 'European Chemicals Agency',
+    date: '2026-03-26',
+    type: 'press release',
+  },
+
+  // --- filings (company, document type, period)
+  'https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2021_con_quarter04_all.pdf': {
+    title: 'Samsung Electronics, consolidated financial statements, fourth quarter 2021',
+    publisher: 'Samsung Electronics',
+    date: '2022-02-17',
+    type: 'filing',
+  },
+  'https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2025_con_quarter04_all.pdf': {
+    title: 'Samsung Electronics, consolidated financial statements, fourth quarter 2025',
+    publisher: 'Samsung Electronics',
+    date: '2026-02-12',
+    type: 'filing',
+  },
+  'https://disc.static.szse.cn/disc/disk03/finalpage/2026-03-31/a0209878-88e7-443c-b062-6a33047d9c98.PDF': {
+    title: 'Tianshui Huatian Technology, 2025 annual report (2025年年度报告)',
+    publisher: 'Shenzhen Stock Exchange',
+    date: '2026-03-30',
+    type: 'filing',
+  },
+  'https://www.screen.co.jp/download_file/view/6d6c7bf6-ec75-4f44-82d6-b67d0052b45a/451': {
+    title: 'SCREEN Holdings, securities report (有価証券報告書), 81st fiscal year',
+    publisher: 'SCREEN Holdings',
+    date: '2022-06-27',
+    type: 'filing',
+  },
+  'https://www.screen.co.jp/download_file/view/95fd5713-120c-43ce-ab1c-83791af24040/1857': {
+    title: 'SCREEN Holdings, securities report (有価証券報告書), 83rd fiscal year',
+    publisher: 'SCREEN Holdings',
+    date: '2024-06-20',
+    type: 'filing',
+  },
+  'https://www.screen.co.jp/download_file/view/7e03d9a8-88eb-4a7d-ab77-509eba1422ac/2540': {
+    title: 'SCREEN Holdings, securities report (有価証券報告書), 85th fiscal year',
+    publisher: 'SCREEN Holdings',
+    date: '2026-06-23',
+    type: 'filing',
+  },
+  'https://dart.fss.or.kr/report/viewer.do?rcpNo=20220322000590&dcmNo=8490476&eleId=20&offset=345759&length=564559&dtd=dart3.xsd': {
+    title: 'SK hynix, notes to the consolidated financial statements (연결재무제표 주석), 74th fiscal year, 2021',
+    publisher: 'Financial Supervisory Service (DART)',
+    date: '2022-03-22',
+    type: 'filing',
+  },
+  'https://dart.fss.or.kr/report/viewer.do?rcpNo=20230321001209&dcmNo=9083795&eleId=20&offset=336980&length=497577&dtd=dart3.xsd': {
+    title: 'SK hynix, notes to the consolidated financial statements (연결재무제표 주석), 75th fiscal year, 2022',
+    publisher: 'Financial Supervisory Service (DART)',
+    date: '2023-03-21',
+    type: 'filing',
+  },
+  'https://dart.fss.or.kr/report/viewer.do?rcpNo=20240319000684&dcmNo=9731387&eleId=49&offset=1689059&length=20688&dtd=dart4.xsd': {
+    title: 'SK hynix, revenue note to the consolidated financial statements (매출액), fiscal year 2023',
+    publisher: 'Financial Supervisory Service (DART)',
+    date: '2024-03-19',
+    type: 'filing',
+  },
+  'https://dart.fss.or.kr/report/viewer.do?rcpNo=20250319000665&dcmNo=10428620&eleId=48&offset=1773970&length=22955&dtd=dart4.xsd': {
+    title: 'SK hynix, revenue note to the consolidated financial statements (매출액), fiscal year 2024',
+    publisher: 'Financial Supervisory Service (DART)',
+    date: '2025-03-19',
+    type: 'filing',
+  },
+  'https://dart.fss.or.kr/report/viewer.do?rcpNo=20260317000635&dcmNo=11132576&eleId=48&offset=2673284&length=29807&dtd=dart4.xsd': {
+    title: 'SK hynix, revenue note to the consolidated financial statements (매출액), fiscal year 2025',
+    publisher: 'Financial Supervisory Service (DART)',
+    date: '2026-03-17',
+    type: 'filing',
+  },
+
+  // --- slide decks and investor documents (deck name read off the first slide)
+  'https://www.ercot.com/files/docs/2026/03/12/March-TAC-Report.pdf': {
+    title: 'Electric Reliability Council of Texas, Large Load Interconnection Status Update, 13 March 2026',
+    date: '2026-03-13',
+    type: 'pdf',
+  },
+  'https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf': {
+    title: 'Electric Reliability Council of Texas, ERCOT update to the Senate Committee on Business and Commerce, 29 July 2026',
+    date: '2026-07-29',
+    type: 'pdf',
+  },
+  'https://www.ajinomoto.co.jp/company/en/ir/event/business_briefing/main/011117/teaserItems1/01/linkList/03/link/20260630_presentation_E.pdf': {
+    title: 'Ajinomoto, Growth Strategy for the Electronic Materials Business, 30 June 2026',
+    publisher: 'Ajinomoto',
+    date: '2026-06-30',
+    type: 'pdf',
+  },
+  'https://www.ajinomoto.co.jp/company/en/ir/event/business_briefing/main/01113/teaserItems1/01/linkList/00/link/3_ICT_E.pdf': {
+    title: 'Ajinomoto, Business Briefing: ABF-Based Growth Strategy in ICT, 12 June 2023',
+    publisher: 'Ajinomoto',
+    date: '2023-06-12',
+    type: 'pdf',
+  },
+  'https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4presentations-e.pdf': {
+    title: 'Tokyo Electron, FY2026 (April 2025 to March 2026) financial announcement, 30 April 2026',
+    publisher: 'Tokyo Electron',
+    date: '2026-04-30',
+    type: 'pdf',
+  },
+  'https://www.ibiden.com/ir/items/en_QA_FY25Q4.pdf': {
+    title: 'Ibiden, questions and answers from the financial presentation for the year ended 31 March 2026',
+    publisher: 'Ibiden',
+    date: '2026-05-12',
+    type: 'pdf',
+  },
+  'https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf': {
+    title: 'Advantest, presentation notes for the FY2025 (year ended 31 March 2026) results briefing, 27 April 2026',
+    publisher: 'Advantest',
+    date: '2026-04-27',
+    type: 'pdf',
+  },
+  'https://technoprobe.com/wp-content/uploads/2026/03/PR-FY-2025_.pdf': {
+    title: 'Technoprobe, press release: the Board of Directors approves the draft statutory and consolidated annual report as at 31 December 2025',
+    publisher: 'Technoprobe',
+    date: '2026-03-18',
+    type: 'press release',
+  },
+  'https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/white-papers/amd-cdna-3-white-paper.pdf': {
+    title: 'AMD CDNA 3 Architecture: The All-New AMD GPU Architecture for the Modern Era of HPC and AI',
+    publisher: 'AMD',
+    date: null,
+    type: 'pdf',
+  },
+  'https://www.semiconductors.org/wp-content/uploads/2021/05/BCG-x-SIA-Strengthening-the-Global-Semiconductor-Value-Chain-April-2021_1.pdf': {
+    title: 'Strengthening the Global Semiconductor Supply Chain in an Uncertain Era',
+    publisher: 'Boston Consulting Group and Semiconductor Industry Association',
+    date: '2021-04',
+    type: 'report',
+  },
+  'https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf': {
+    title: 'Behrooz Parhami, Dependable Computing: A Multilevel Approach, part 2',
+    publisher: 'University of California, Santa Barbara',
+    date: '2020-10-11',
+    type: 'pdf',
+  },
+
+  // --- press releases and articles whose page title carried a site-name tail
+  'https://www.agc.com/en/news/detail/1201109_2814.html': {
+    title: 'AGC to Make Drastic Expansion to Supply System for EUVL Mask Blanks',
+    publisher: 'AGC',
+    date: '2020-07-27',
+    type: 'press release',
+  },
+  'https://www.agc.com/en/news/detail/1203819_2814.html': {
+    title: 'AGC to Boost Production Capacity of EUVL Photomask Blanks',
+    publisher: 'AGC',
+    date: '2023-04-27',
+    type: 'press release',
+  },
+  'https://www.agc.com/en/hub/pr/the-japanese-glass-behind-next-generation-chips.html': {
+    title: 'The Japanese glass behind next-generation chips',
+    publisher: 'AGC',
+    date: null,
+    type: 'article',
+  },
+  'https://www.hoya.com/ir/2026/en/review/it.html': {
+    title: 'HOYA, Information Technology business, review of operations, Integrated Report 2026',
+    publisher: 'HOYA',
+    date: null,
+    type: 'report',
+  },
+  'https://www.ibiden.com/company/2026/02/notice-regarding-capital-investment-plan-for-high-performance-ic-package-substrates.html': {
+    title: 'Ibiden, Notice Regarding Capital Investment Plan for High-Performance IC Package Substrates',
+    publisher: 'Ibiden',
+    date: '2026-02-03',
+    type: 'press release',
+  },
+  'https://www.sumcosi.com/english/products/process/': {
+    title: 'SUMCO, production processes page',
+    publisher: 'SUMCO',
+    date: null,
+    type: 'page',
+  },
+  'https://www.sumcosi.com/english/products/': {
+    title: 'SUMCO, products page',
+    publisher: 'SUMCO',
+    date: null,
+    type: 'page',
+  },
+  'https://www.amec-inc.com/news/708.html': {
+    title: 'AMEC holds its 2025 annual results briefing (中微公司成功举办2025年度业绩说明会)',
+    publisher: 'Advanced Micro-Fabrication Equipment (AMEC)',
+    date: '2026-04-01',
+    type: 'press release',
+  },
+  'https://www.intel.com/content/www/us/en/newsroom/news/intel-foundry/intel-foundry-asml-accelerate-industry-readiness-for-high-na-euv.html': {
+    title: 'Intel Foundry and ASML Accelerate Industry Readiness for High-NA EUV',
+    publisher: 'Intel',
+    date: '2026-09-07',
+    type: 'press release',
+  },
+  'https://ai.meta.com/blog/next-generation-meta-training-inference-accelerator-AI-MTIA/': {
+    title: 'Our next generation Meta Training and Inference Accelerator',
+    publisher: 'Meta',
+    date: '2024-04-10',
+    type: 'article',
+  },
+  'https://www.rieti.go.jp/en/columns/v01_0201.html': {
+    title: 'The impact of export controls on international trade: evidence from the Japan–Korea trade dispute in the semiconductor industry',
+    publisher: 'Research Institute of Economy, Trade and Industry (Japan)',
+    date: '2023-05-08',
+    type: 'article',
+  },
+  'https://www.vdlgroep.com/en/vdl-groep/innovation-projects/vdl-etg-builds-complex-frames-for-zeiss': {
+    title: 'VDL Groep, VDL ETG builds complex frames for Zeiss, innovation project page',
+    publisher: 'VDL Groep',
+    date: null,
+    type: 'page',
+  },
+
+  // --- product and section pages (page title alone said nothing)
+  'https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm': {
+    title: 'TSMC, CoWoS technology page',
+    publisher: 'TSMC',
+    date: null,
+    type: 'page',
+  },
+  'https://www.micron.com/products/memory/hbm/hbm3e': {
+    title: 'Micron, HBM3E product page',
+    publisher: 'Micron Technology',
+    date: null,
+    type: 'page',
+  },
+  'https://www.micron.com/products/memory/hbm/hbm4': {
+    title: 'Micron, HBM4 product page',
+    publisher: 'Micron Technology',
+    date: null,
+    type: 'page',
+  },
+  'https://www.intel.com/content/www/us/en/products/details/processors/ai-accelerators.html': {
+    title: 'Intel, AI accelerators product page',
+    publisher: 'Intel',
+    date: null,
+    type: 'page',
+  },
+  'https://www.airproducts.com/industries/electronics': {
+    title: 'Air Products, electronics industry page',
+    publisher: 'Air Products',
+    date: null,
+    type: 'page',
+  },
+  'https://www.ansys.com/products/semiconductors': {
+    title: 'Ansys, semiconductor products page',
+    publisher: 'Ansys',
+    date: null,
+    type: 'page',
+  },
+  'https://www.camtek.com/products/': {
+    title: 'Camtek, products page',
+    publisher: 'Camtek',
+    date: null,
+    type: 'page',
+  },
+  'https://www.dongjin.com/en/business/semiconductor.php': {
+    title: 'Dongjin Semichem, semiconductor materials page',
+    publisher: 'Dongjin Semichem',
+    date: null,
+    type: 'page',
+  },
+  'https://www.qct.io/solution/index/AI-Solutions': {
+    title: 'Quanta Cloud Technology, AI solutions page',
+    publisher: 'Quanta Cloud Technology',
+    date: null,
+    type: 'page',
+  },
+  'https://www.se.com/us/en/work/solutions/for-business/data-centers-and-networks/': {
+    title: 'Schneider Electric, data centers and networks page',
+    publisher: 'Schneider Electric',
+    date: null,
+    type: 'page',
+  },
+  'https://www.umc.com/en/Product/technologies/Overview': {
+    title: 'UMC, process technologies overview page',
+    publisher: 'United Microelectronics Corporation (UMC)',
+    date: null,
+    type: 'page',
+  },
+  'https://www.vdlgroep.com/en/markets/semiconductor': {
+    title: 'VDL Groep, semiconductor market page',
+    publisher: 'VDL Groep',
+    date: null,
+    type: 'page',
+  },
+  'https://www.wistron.com/en/Business/Solutions': {
+    title: 'Wistron, business solutions page',
+    publisher: 'Wistron',
+    date: null,
+    type: 'page',
+  },
+  'https://www.aehr.com/products/': {
+    title: 'Aehr Test Systems, products page',
+    publisher: 'Aehr Test Systems',
+    date: null,
+    type: 'page',
+  },
+  'https://www.evgroup.com/products/': {
+    title: 'EV Group, products page',
+    publisher: 'EV Group',
+    date: null,
+    type: 'page',
+  },
+  'https://www.siemens-energy.com/global/en/home/products-services/product-offerings.html': {
+    title: 'Siemens Energy, product offerings page',
+    publisher: 'Siemens Energy',
+    date: null,
+    type: 'page',
+  },
+  'https://www.siltronic.com/en/products': {
+    title: 'Siltronic, products page',
+    publisher: 'Siltronic',
+    date: null,
+    type: 'page',
+  },
+  'https://www.screen.co.jp/spe/en/products': {
+    title: 'SCREEN Semiconductor Solutions, products page',
+    publisher: 'SCREEN Holdings',
+    date: null,
+    type: 'page',
+  },
+  'https://www.mks.com/semiconductor': {
+    title: 'MKS Instruments, semiconductor page',
+    publisher: 'MKS Instruments',
+    date: null,
+    type: 'page',
+  },
+  'https://www.innolight.com/about': {
+    title: 'InnoLight Technology, company overview page',
+    publisher: 'InnoLight Technology',
+    date: null,
+    type: 'page',
+  },
+  'https://www.eoptolink.com/about-us/contacts': {
+    title: 'Eoptolink Technology, contacts page',
+    publisher: 'Eoptolink Technology',
+    date: null,
+    type: 'page',
+  },
+  'https://www.nanya.com/en/Product': {
+    title: 'Nanya Technology, products page',
+    publisher: 'Nanya Technology',
+    date: null,
+    type: 'page',
+  },
+  'https://www.mjc.co.jp/en/products/': {
+    title: 'Micronics Japan, products and services page (製品・サービス)',
+    publisher: 'Micronics Japan (MJC)',
+    date: null,
+    type: 'page',
+  },
+  'https://www.lginnotek.com/product/substrate.do': {
+    title: 'LG Innotek, substrate products page (LG이노텍)',
+    publisher: 'LG Innotek',
+    date: null,
+    type: 'page',
+  },
+
+  // --- company home pages cited for what the firm does
+  'https://jp.mitsuichemicals.com/': {
+    title: 'Mitsui Chemicals, company website (三井化学株式会社)',
+    publisher: 'Mitsui Chemicals',
+    date: null,
+    type: 'page',
+  },
+  'https://rebellions.ai/': {
+    title: 'Rebellions, company website',
+    publisher: 'Rebellions',
+    date: null,
+    type: 'page',
+  },
+  'https://tenstorrent.com/': {
+    title: 'Tenstorrent, company website',
+    publisher: 'Tenstorrent',
+    date: null,
+    type: 'page',
+  },
+  'https://www.adeka.co.jp/': {
+    title: 'ADEKA, company website (株式会社ADEKA)',
+    publisher: 'ADEKA Corporation',
+    date: null,
+    type: 'page',
+  },
+  'https://www.advancedenergy.com/': {
+    title: 'Advanced Energy Industries, company website',
+    publisher: 'Advanced Energy Industries',
+    date: null,
+    type: 'page',
+  },
+  'https://www.airliquide.com/': {
+    title: 'Air Liquide, company website',
+    publisher: 'Air Liquide',
+    date: null,
+    type: 'page',
+  },
+  'https://www.asetek.com/': {
+    title: 'Asetek, company website',
+    publisher: 'Asetek',
+    date: null,
+    type: 'page',
+  },
+  'https://www.asm.com/': {
+    title: 'ASM International, company website',
+    publisher: 'ASM International',
+    date: null,
+    type: 'page',
+  },
+  'https://www.birentech.com/': {
+    title: 'Biren Technology, company website (壁仞科技)',
+    publisher: 'Biren Technology',
+    date: null,
+    type: 'page',
+  },
+  'https://www.cambricon.com/': {
+    title: 'Cambricon Technologies, company website (寒武纪)',
+    publisher: 'Cambricon Technologies',
+    date: null,
+    type: 'page',
+  },
+  'https://www.chipbond.com.tw/en/': {
+    title: 'Chipbond Technology, company website',
+    publisher: 'Chipbond Technology',
+    date: null,
+    type: 'page',
+  },
+  'https://www.cohu.com/': {
+    title: 'Cohu, company website',
+    publisher: 'Cohu',
+    date: null,
+    type: 'page',
+  },
+  'https://www.comet.tech/': {
+    title: 'Comet Group, company website',
+    publisher: 'Comet Group',
+    date: null,
+    type: 'page',
+  },
+  'https://www.dupont.com/': {
+    title: 'DuPont, company website',
+    publisher: 'DuPont',
+    date: null,
+    type: 'page',
+  },
+  'https://www.edwardsvacuum.com/': {
+    title: 'Edwards Vacuum, company website',
+    publisher: 'Edwards Vacuum',
+    date: null,
+    type: 'page',
+  },
+  'https://www.empyrean.com.cn/': {
+    title: 'Empyrean Technology, company website (华大九天)',
+    publisher: 'Empyrean Technology',
+    date: null,
+    type: 'page',
+  },
+  'https://www.etched.com/': {
+    title: 'Etched, company website',
+    publisher: 'Etched',
+    date: null,
+    type: 'page',
+  },
+  'https://www.fabrinet.com/': {
+    title: 'Fabrinet, company website',
+    publisher: 'Fabrinet',
+    date: null,
+    type: 'page',
+  },
+  'https://www.fujimiinc.co.jp/': {
+    title: 'Fujimi Incorporated, company website (フジミインコーポレーテッド)',
+    publisher: 'Fujimi Incorporated',
+    date: null,
+    type: 'page',
+  },
+  'https://www.gce.com.tw/en/': {
+    title: 'Gold Circuit Electronics, company website (金像電子)',
+    publisher: 'Gold Circuit Electronics',
+    date: null,
+    type: 'page',
+  },
+  'https://www.guc-asic.com/en/': {
+    title: 'Global Unichip Corporation, company website',
+    publisher: 'Global Unichip Corporation (GUC)',
+    date: null,
+    type: 'page',
+  },
+  'https://www.hisilicon.com/': {
+    title: 'HiSilicon, company website (海思)',
+    publisher: 'HiSilicon',
+    date: null,
+    type: 'page',
+  },
+  'https://www.hscpoly.com/': {
+    title: 'Hemlock Semiconductor, company website',
+    publisher: 'Hemlock Semiconductor',
+    date: null,
+    type: 'page',
+  },
+  'https://www.hygon.cn/': {
+    title: 'Hygon Information Technology, company website (海光)',
+    publisher: 'Hygon Information Technology',
+    date: null,
+    type: 'page',
+  },
+  'https://www.iluvatar.com/': {
+    title: 'Iluvatar CoreX, company website (天数智芯)',
+    publisher: 'Iluvatar CoreX',
+    date: null,
+    type: 'page',
+  },
+  'https://www.ims.co.at/': {
+    title: 'IMS Nanofabrication, company website',
+    publisher: 'IMS Nanofabrication',
+    date: null,
+    type: 'page',
+  },
+  'https://www.inventec.com/': {
+    title: 'Inventec, company website (英業達)',
+    publisher: 'Inventec',
+    date: null,
+    type: 'page',
+  },
+  'https://www.kantodenka.co.jp/': {
+    title: 'Kanto Denka Kogyo, company website (関東電化工業)',
+    publisher: 'Kanto Denka Kogyo',
+    date: null,
+    type: 'page',
+  },
+  'https://www.kinsus.com.tw/en/': {
+    title: 'Kinsus Interconnect Technology, company website',
+    publisher: 'Kinsus Interconnect Technology',
+    date: null,
+    type: 'page',
+  },
+  'https://www.kokusai-electric.com/': {
+    title: 'Kokusai Electric, company website (株式会社KOKUSAI ELECTRIC)',
+    publisher: 'Kokusai Electric',
+    date: null,
+    type: 'page',
+  },
+  'https://www.kyec.com.tw/en/': {
+    title: 'King Yuan Electronics, company website (京元電子)',
+    publisher: 'King Yuan Electronics (KYEC)',
+    date: null,
+    type: 'page',
+  },
+  'https://www.lumentum.com/': {
+    title: 'Lumentum, company website',
+    publisher: 'Lumentum',
+    date: null,
+    type: 'page',
+  },
+  'https://www.metax-tech.com/en/': {
+    title: 'MetaX, company website',
+    publisher: 'MetaX',
+    date: null,
+    type: 'page',
+  },
+  'https://www.mgc.co.jp/': {
+    title: 'Mitsubishi Gas Chemical, company website (三菱ガス化学株式会社)',
+    publisher: 'Mitsubishi Gas Chemical',
+    date: null,
+    type: 'page',
+  },
+  'https://www.morita-kagaku.co.jp/': {
+    title: 'Morita Chemical Industries, company website (森田化学工業株式会社)',
+    publisher: 'Morita Chemical Industries',
+    date: null,
+    type: 'page',
+  },
+  'https://www.mthreads.com/': {
+    title: 'Moore Threads, company website (摩尔线程)',
+    publisher: 'Moore Threads',
+    date: null,
+    type: 'page',
+  },
+  'https://www.nanyapcb.com.tw/': {
+    title: 'Nan Ya Printed Circuit Board, company website',
+    publisher: 'Nan Ya Printed Circuit Board',
+    date: null,
+    type: 'page',
+  },
+  'https://www.naura.com/en/': {
+    title: 'NAURA Technology Group, company website (北方华创)',
+    publisher: 'NAURA Technology Group',
+    date: null,
+    type: 'page',
+  },
+  'https://www.nikon.com/': {
+    title: 'Nikon, company website',
+    publisher: 'Nikon',
+    date: null,
+    type: 'page',
+  },
+  'https://www.nipponsanso-hd.co.jp/': {
+    title: 'Nippon Sanso Holdings, company website (日本酸素ホールディングス株式会社)',
+    publisher: 'Nippon Sanso Holdings',
+    date: null,
+    type: 'page',
+  },
+  'https://www.nsig.com/en/': {
+    title: 'National Silicon Industry Group, company website',
+    publisher: 'National Silicon Industry Group (NSIG)',
+    date: null,
+    type: 'page',
+  },
+  'https://www.nuflare.co.jp/': {
+    title: 'NuFlare Technology, company website (株式会社ニューフレアテクノロジー)',
+    publisher: 'NuFlare Technology',
+    date: null,
+    type: 'page',
+  },
+  'https://www.oci.co.kr/': {
+    title: 'OCI, company website (OCI 주식회사)',
+    publisher: 'OCI',
+    date: null,
+    type: 'page',
+  },
+  'https://www.pti.com.tw/en/': {
+    title: 'Powertech Technology, company website',
+    publisher: 'Powertech Technology',
+    date: null,
+    type: 'page',
+  },
+  'https://www.resonac.com/': {
+    title: 'Resonac, company website (レゾナック)',
+    publisher: 'Resonac',
+    date: null,
+    type: 'page',
+  },
+  'https://www.samsungsem.com/': {
+    title: 'Samsung Electro-Mechanics, company website (삼성전기)',
+    publisher: 'Samsung Electro-Mechanics',
+    date: null,
+    type: 'page',
+  },
+  'https://www.sas-globalwafers.com/': {
+    title: 'GlobalWafers, company website',
+    publisher: 'GlobalWafers',
+    date: null,
+    type: 'page',
+  },
+  'https://www.semes.com/en/': {
+    title: 'SEMES, company website',
+    publisher: 'SEMES',
+    date: null,
+    type: 'page',
+  },
+  'https://www.semitronix.com/': {
+    title: 'Semitronix, company website',
+    publisher: 'Semitronix',
+    date: null,
+    type: 'page',
+  },
+  'https://www.shinetsu.co.jp/': {
+    title: 'Shin-Etsu Chemical, company website',
+    publisher: 'Shin-Etsu Chemical',
+    date: null,
+    type: 'page',
+  },
+  'https://www.sk.com/en/': {
+    title: 'SK Group, company website',
+    publisher: 'SK Group',
+    date: null,
+    type: 'page',
+  },
+  'https://www.sksiltron.com/': {
+    title: 'SK siltron, company website',
+    publisher: 'SK siltron',
+    date: null,
+    type: 'page',
+  },
+  'https://www.skspecialty.com/': {
+    title: 'SK specialty, company website (SK스페셜티)',
+    publisher: 'SK specialty',
+    date: null,
+    type: 'page',
+  },
+  'https://www.skyverse.com/': {
+    title: 'Skyverse Technology, company website',
+    publisher: 'Skyverse Technology',
+    date: null,
+    type: 'page',
+  },
+  'https://www.smee.com.cn/': {
+    title: 'Shanghai Micro Electronics Equipment, company website (上海微电子装备集团股份有限公司)',
+    publisher: 'Shanghai Micro Electronics Equipment (SMEE)',
+    date: null,
+    type: 'page',
+  },
+  'https://www.smics.com/': {
+    title: 'SMIC, company website',
+    publisher: 'SMIC',
+    date: null,
+    type: 'page',
+  },
+  'https://www.soulbrain.co.kr/en/': {
+    title: 'Soulbrain, company website',
+    publisher: 'Soulbrain',
+    date: null,
+    type: 'page',
+  },
+  'https://www.stella-chemifa.co.jp/': {
+    title: 'Stella Chemifa, company website (ステラケミファ株式会社)',
+    publisher: 'Stella Chemifa',
+    date: null,
+    type: 'page',
+  },
+  'https://www.sumitomo-chem.co.jp/': {
+    title: 'Sumitomo Chemical, company website (住友化学株式会社)',
+    publisher: 'Sumitomo Chemical',
+    date: null,
+    type: 'page',
+  },
+  'https://www.teradyne.com/': {
+    title: 'Teradyne, company website',
+    publisher: 'Teradyne',
+    date: null,
+    type: 'page',
+  },
+  'https://www.tfme.com/': {
+    title: 'Tongfu Microelectronics, company website (通富微电子股份有限公司)',
+    publisher: 'Tongfu Microelectronics',
+    date: null,
+    type: 'page',
+  },
+  'https://www.tokuyama.co.jp/': {
+    title: 'Tokuyama Corporation, company website',
+    publisher: 'Tokuyama Corporation',
+    date: null,
+    type: 'page',
+  },
+  'https://www.toppan.com/': {
+    title: 'TOPPAN, company website (TOPPANグループサイト)',
+    publisher: 'TOPPAN',
+    date: null,
+    type: 'page',
+  },
+  'https://www.unimicron.com/': {
+    title: 'Unimicron Technology, company website',
+    publisher: 'Unimicron Technology',
+    date: null,
+    type: 'page',
+  },
+  'https://www.winbond.com/': {
+    title: 'Winbond Electronics, company website',
+    publisher: 'Winbond Electronics',
+    date: null,
+    type: 'page',
+  },
+  'https://www.wuspcb.com/en/': {
+    title: 'Wus Printed Circuit, company website',
+    publisher: 'Wus Printed Circuit',
+    date: null,
+    type: 'page',
+  },
+  'https://www.ymtc.com/en/': {
+    title: 'Yangtze Memory Technologies, company website',
+    publisher: 'Yangtze Memory Technologies (YMTC)',
+    date: null,
+    type: 'page',
+  },
+
+  // ---------------------------------------------------------------------
+  // Same pass, second sweep. Three eCFR sections came back as the site's
+  // 'Request Access' wall and a few pages gave the site navigation instead of
+  // the headline; the rest below are press releases and rules that state a
+  // date the fetcher did not find. Section headings were read from the eCFR
+  // structure API, datelines from the release itself.
+
+  // --- titles that were a bot wall or the site navigation
+  'https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-734/section-734.4': {
+    title: '15 CFR 734.4, De minimis U.S. content',
+    type: 'regulation',
+  },
+  'https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-734/section-734.9': {
+    title: '15 CFR 734.9, Foreign-Direct Product (FDP) Rules',
+    type: 'regulation',
+  },
+  'https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-742/section-742.6': {
+    title: '15 CFR 742.6, Regional stability',
+    type: 'regulation',
+  },
+  'https://www.sandisk.com/company/newsroom': {
+    title: 'Sandisk, newsroom',
+    publisher: 'SanDisk',
+    type: 'page',
+  },
+  'https://www.bis.gov/news-updates': {
+    title: 'U.S. Bureau of Industry and Security, news and updates',
+    type: 'page',
+  },
+  'https://m.samsungsem.com/global/newsroom/news/view.do?id=10462': {
+    title: 'Samsung Electro-Mechanics, Q2 2026 business results',
+    publisher: 'Samsung Electro-Mechanics',
+    date: '2026-07-30',
+    type: 'press release',
+  },
+  'https://samsungsem.com/global/newsroom/news/view.do?id=9850': {
+    title: 'Samsung Electro-Mechanics Signs MOU with Sumitomo Chemical Group to Establish a Joint Venture for Glass Core Used in Package Substrates',
+    publisher: 'Samsung Electro-Mechanics',
+    date: '2025-11-05',
+    type: 'press release',
+  },
+  'https://www.disco.co.jp/eg/news/corp/20251215_1.html': {
+    title: 'DISCO develops the DFD6080 fully automatic dicing saw for work sizes up to 400 mm square (最大400mm角のパッケージ切断に対応したダイシングソー「DFD6080」を開発)',
+    publisher: 'DISCO Corporation',
+    date: '2025-12-15',
+    type: 'press release',
+  },
+
+  // --- dates read off the document (the fetcher found none)
+  'https://english.www.gov.cn/news/202312/27/content_WS658b72afc6d0868f4e8e28ba.html': {
+    date: '2023-12-27',
+  },
+  'https://english.www.gov.cn/news/202405/29/content_WS66569746c6d0868f4e8e7987.html': {
+    date: '2024-05-29',
+  },
+  'https://global.canon/en/news/2024/20240926.html': {
+    date: '2024-09-26',
+  },
+  'https://newsroom.lamresearch.com/2024-07-31-Lam-Research-Introduces-Lam-Cryo-TM-3-0-Cryogenic-Etch-Technology-to-Accelerate-Scaling-of-3D-NAND-for-the-AI-Era': {
+    date: '2024-07-31',
+  },
+  'https://newsroom.lamresearch.com/2026-07-29-Lam-Research-Corporation-Reports-Financial-Results-for-the-Quarter-Ended-June-28,-2026': {
+    date: '2026-07-29',
+  },
+  'https://www.fujifilm.com/jp/en/news/hq/11842': {
+    date: '2024-10-29',
+  },
+  'https://www.fujifilm.com/jp/en/news/hq/11942': {
+    date: '2024-12-05',
+  },
+  'https://www.honhai.com/en-us/press-center/press-releases/latest-news/1978': {
+    date: '2026-03-16',
+  },
+  'https://www.huawei.com/en/news/2025/9/hc-superpod-innovation': {
+    date: '2025-09-18',
+  },
+  'https://www.huawei.com/en/news/2025/9/hc-xu-keynote-speech': {
+    date: '2025-09-18',
+  },
+  'https://www.imec-int.com/en/press/imec-demonstrates-16nm-pitch-ru-lines-record-low-resistance-obtained-using-semi-damascene': {
+    date: '2025-06-03',
+  },
+  'https://www.imec-int.com/en/press/imec-demonstrates-cnt-pellicle-utilization-euv-scanner': {
+    date: '2020-10-06',
+  },
+  'https://www.phoenix.gov/newsroom/ced-news/tsmc-announces-additional--100-billion-investment-in-arizona.html': {
+    date: '2026-07-16',
+  },
+  'https://www.besi.com/investor-relations/press-releases/2025/details-1/be-semiconductor-industries-nv-announces-q2-26-and-h1-26-results/': {
+    date: '2026-07-23',
+  },
+  'https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026': {
+    date: '2026-02-25',
+  },
+  'https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027': {
+    date: '2026-08-26',
+  },
+  'https://nvidianews.nvidia.com/news/nvidia-and-coherent-announce-strategic-partnership-to-develop-optics-technology-to-scale-next-generation-data-center-architecture': {
+    date: '2026-03-02',
+  },
+  'https://nvidianews.nvidia.com/news/nvidia-announces-strategic-partnership-with-lumentum-to-develop-state-of-the-art-optics-technology': {
+    date: '2026-03-02',
+  },
+  'https://nvidianews.nvidia.com/news/nvidia-spectrum-x-co-packaged-optics-networking-switches-ai-factories': {
+    date: '2025-03-18',
   },
 };

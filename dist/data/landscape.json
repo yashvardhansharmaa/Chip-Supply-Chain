@@ -40,7 +40,12 @@
       "fp16TFLOPS": 2250,
       "fp8TFLOPS": 4500,
       "fp4TFLOPS": 9000,
-      "precisionNote": "Dense, no sparsity, derived from Nvidia's HGX B200 board table (8 GPUs: 36 PFLOPS FP16/BF16 and 72 PFLOPS FP8 with sparsity, 72 PFLOPS FP4 dense). The hotter GB200 NVL72 variant reaches 10,000 dense FP4 TFLOPS per GPU; HGX B200 baseboards ship 180 GB per GPU rather than 192 GB."
+      "support": {
+        "fp16": "yes",
+        "fp8": "yes",
+        "fp4": "yes"
+      },
+      "precisionNote": "Dense, no sparsity, derived from Nvidia’s HGX B200 board table (8 GPUs: 36 PFLOPS FP16/BF16 and 72 PFLOPS FP8 with sparsity, 72 PFLOPS FP4 dense). The hotter GB200 NVL72 variant reaches 10,000 dense FP4 TFLOPS per GPU; HGX B200 baseboards ship 180 GB per GPU rather than 192 GB. All three formats are supported and published: the HGX table carries FP4, FP8/FP6, INT8, FP16/BF16, TF32, FP32 and FP64 rows for the board."
     },
     "tdpW": 1000,
     "interconnect": {
@@ -201,7 +206,12 @@
       "fp16TFLOPS": 2250,
       "fp8TFLOPS": 5000,
       "fp4TFLOPS": 15000,
-      "precisionNote": "Dense. Derived from Nvidia's GB300 NVL72 table: 1,080.2 PFLOPS dense NVFP4 and 720 PFLOPS FP8/FP6 with sparsity across 72 GPUs. FP16 is derived from the HGX B300 board figure and is unchanged from B200; the Blackwell Ultra uplift is in FP4 and in attention softmax throughput."
+      "support": {
+        "fp16": "yes",
+        "fp8": "yes",
+        "fp4": "yes"
+      },
+      "precisionNote": "Dense. Derived from Nvidia’s GB300 NVL72 table: 1,080.2 PFLOPS dense NVFP4 and 720 PFLOPS FP8/FP6 with sparsity across 72 GPUs. FP16 is derived from the HGX B300 board figure and is unchanged from B200; the Blackwell Ultra uplift is in FP4 and in attention softmax throughput. This row is the NVL72 part: the air-cooled HGX B300 baseboard is slower, at 108 PFLOPS dense FP4 across eight GPUs, or 13,500 per GPU. All three formats are supported and published."
     },
     "tdpW": 1400,
     "interconnect": {
@@ -362,7 +372,12 @@
       "fp16TFLOPS": null,
       "fp8TFLOPS": 17500,
       "fp4TFLOPS": 35000,
-      "precisionNote": "Dense, derived from Nvidia's Vera Rubin NVL72 table (2,520 PFLOPS dense NVFP4 training and 1,260 PFLOPS dense FP8/FP6 across 72 GPUs). Nvidia separately quotes 50 PFLOPS per GPU of NVFP4 inference with sparsity. No FP16/BF16 figure has been published."
+      "support": {
+        "fp16": "yes",
+        "fp8": "yes",
+        "fp4": "yes"
+      },
+      "precisionNote": "Dense, derived from Nvidia’s Vera Rubin NVL72 table (2,520 PFLOPS dense NVFP4 training and 1,260 PFLOPS dense FP8/FP6 across 72 GPUs). Nvidia separately quotes 50 PFLOPS per GPU of NVFP4 inference with sparsity. FP16 and BF16 are supported but unpublished: the Rubin architecture post tabulates BF16/FP16 exponential throughput per SM against Blackwell and gives no peak matrix rate, so the FP16 cell reads not published rather than not supported."
     },
     "tdpW": null,
     "interconnect": {
@@ -513,7 +528,12 @@
       "fp16TFLOPS": 989,
       "fp8TFLOPS": 1979,
       "fp4TFLOPS": null,
-      "precisionNote": "Dense. Nvidia's H200 SXM page quotes 1,979 TFLOPS BF16 and 3,958 TFLOPS FP8 with sparsity; halved here. Hopper has no FP4 tensor core."
+      "support": {
+        "fp16": "yes",
+        "fp8": "yes",
+        "fp4": "no"
+      },
+      "precisionNote": "Dense. Nvidia’s H200 SXM page quotes 1,979 TFLOPS BF16 and 3,958 TFLOPS FP8 with sparsity; halved here. Hopper has no four-bit datapath: Nvidia’s Hopper architecture post lists the tensor-core types, “The FP8, FP16, BF16, TF32, FP64, and INT8 MMA data types are supported”, and names no FP4, so the FP4 cell reads not supported rather than not published."
     },
     "tdpW": 700,
     "interconnect": {
@@ -602,6 +622,10 @@
       {
         "label": "Institute for Progress on the B30A decision",
         "url": "https://ifp.org/the-b30a-decision/"
+      },
+      {
+        "label": "Nvidia developer blog: inside the Hopper architecture",
+        "url": "https://developer.nvidia.com/blog/nvidia-hopper-architecture-in-depth/"
       }
     ]
   },
@@ -642,7 +666,12 @@
       "fp16TFLOPS": 148,
       "fp8TFLOPS": null,
       "fp4TFLOPS": null,
-      "precisionNote": "Dense, from Epoch AI’s hardware database, which records 148 TFLOPS FP16 and BF16 for the HGX H20. Nvidia has never published an H20 datasheet, and no allowed source gives a separate FP8 figure, so that field is empty. Epoch AI describes the part as a scaled-down H200 in every variable except arithmetic, where it reaches only about 15 percent of the H200."
+      "support": {
+        "fp16": "yes",
+        "fp8": "yes",
+        "fp4": "no"
+      },
+      "precisionNote": "Dense, from Epoch AI’s hardware database, which records 148 TFLOPS FP16 and BF16 for the HGX H20. Nvidia has never published an H20 datasheet, and no allowed source gives a separate FP8 figure. FP8 is supported all the same: the H20 is a cut-down Hopper part, and Nvidia’s Hopper post lists FP8 among the supported MMA types, so that cell reads not published. Hopper has no four-bit datapath: Nvidia’s Hopper architecture post lists the tensor-core types, “The FP8, FP16, BF16, TF32, FP64, and INT8 MMA data types are supported”, and names no FP4, so the FP4 cell reads not supported rather than not published. Epoch AI describes the part as a scaled-down H200 in every variable except arithmetic, where it reaches only about 15 percent of the H200."
     },
     "tdpW": 400,
     "interconnect": {
@@ -776,7 +805,12 @@
       "fp16TFLOPS": 989,
       "fp8TFLOPS": 1979,
       "fp4TFLOPS": null,
-      "precisionNote": "Dense, and identical to the H100. Epoch AI states that the H800 had exactly the same arithmetic performance as the H100 and records 989 TFLOPS dense FP16; the FP8 figure is the H100’s, halved from Nvidia’s sparse 3,958. Nvidia published no H800 datasheet outside China."
+      "support": {
+        "fp16": "yes",
+        "fp8": "yes",
+        "fp4": "no"
+      },
+      "precisionNote": "Dense, and identical to the H100. Epoch AI states that the H800 had exactly the same arithmetic performance as the H100 and records 989 TFLOPS dense FP16; the FP8 figure is the H100’s, halved from Nvidia’s sparse 3,958. Nvidia published no H800 datasheet outside China. Hopper has no four-bit datapath: Nvidia’s Hopper architecture post lists the tensor-core types, “The FP8, FP16, BF16, TF32, FP64, and INT8 MMA data types are supported”, and names no FP4, so the FP4 cell reads not supported rather than not published."
     },
     "tdpW": 700,
     "interconnect": {
@@ -908,7 +942,12 @@
       "fp16TFLOPS": 312,
       "fp8TFLOPS": null,
       "fp4TFLOPS": null,
-      "precisionNote": "Dense, and identical to the A100: CSIS describes the A800 as a modified version of the A100 in which only the interconnect was changed, and Epoch AI’s hardware database records the same 312 TFLOPS dense FP16. Nvidia never published an A800 datasheet outside China, so no vendor figure exists."
+      "support": {
+        "fp16": "yes",
+        "fp8": "no",
+        "fp4": "no"
+      },
+      "precisionNote": "Dense, and identical to the A100: CSIS describes the A800 as a modified version of the A100 in which only the interconnect was changed, and Epoch AI’s hardware database records the same 312 TFLOPS dense FP16. Nvidia never published an A800 datasheet outside China, so no vendor figure exists. Ampere has neither an eight- nor a four-bit float datapath: Nvidia’s Ampere architecture post states that “Third-generation Tensor Cores add support for TF32, BF16, FP64, INT8, INT4, and binary data types”, so the FP8 and FP4 cells read not supported rather than not published."
     },
     "tdpW": 400,
     "interconnect": {
@@ -996,6 +1035,10 @@
       {
         "label": "Nvidia A100 product page and spec table",
         "url": "https://www.nvidia.com/en-us/data-center/a100/"
+      },
+      {
+        "label": "Nvidia developer blog: inside the Ampere architecture",
+        "url": "https://developer.nvidia.com/blog/nvidia-ampere-architecture-in-depth/"
       }
     ]
   },
@@ -1036,7 +1079,12 @@
       "fp16TFLOPS": 989,
       "fp8TFLOPS": 1979,
       "fp4TFLOPS": null,
-      "precisionNote": "Dense. Nvidia’s H100 spec table quotes 1,979 TFLOPS FP16 and BF16 and 3,958 TFLOPS FP8 for the SXM part, both marked with sparsity; halved here. Nvidia’s own Hopper architecture post rounds the dense peaks to 1,000 and 2,000 TFLOPS. Hopper has no FP4 tensor core."
+      "support": {
+        "fp16": "yes",
+        "fp8": "yes",
+        "fp4": "no"
+      },
+      "precisionNote": "Dense. Nvidia’s H100 spec table quotes 1,979 TFLOPS FP16 and BF16 and 3,958 TFLOPS FP8 for the SXM part, both marked with sparsity; halved here, and the Hopper post’s own dense table gives 1,000 and 2,000 TFLOPS. Hopper has no four-bit datapath: Nvidia’s Hopper architecture post lists the tensor-core types, “The FP8, FP16, BF16, TF32, FP64, and INT8 MMA data types are supported”, and names no FP4, so the FP4 cell reads not supported rather than not published."
     },
     "tdpW": 700,
     "interconnect": {
@@ -1164,7 +1212,12 @@
       "fp16TFLOPS": 312,
       "fp8TFLOPS": null,
       "fp4TFLOPS": null,
-      "precisionNote": "Dense. Nvidia’s A100 spec table gives 312 TFLOPS FP16 and BF16 tensor core and 624 TOPS INT8 for both the SXM and PCIe parts, with the doubled figures (624 TFLOPS and 1,248 TOPS) marked with sparsity. Ampere has no FP8 or FP4 tensor datapath, so those two fields are empty rather than zero."
+      "support": {
+        "fp16": "yes",
+        "fp8": "no",
+        "fp4": "no"
+      },
+      "precisionNote": "Dense. Nvidia’s A100 spec table gives 312 TFLOPS FP16 and BF16 tensor core and 624 TOPS INT8 for both the SXM and PCIe parts, with the doubled figures (624 TFLOPS and 1,248 TOPS) marked with sparsity. Ampere has neither an eight- nor a four-bit float datapath: Nvidia’s Ampere architecture post states that “Third-generation Tensor Cores add support for TF32, BF16, FP64, INT8, INT4, and binary data types”, so the FP8 and FP4 cells read not supported rather than not published."
     },
     "tdpW": 400,
     "interconnect": {
@@ -1296,7 +1349,12 @@
       "fp16TFLOPS": 2516,
       "fp8TFLOPS": 5033,
       "fp4TFLOPS": 10066,
-      "precisionNote": "Dense matrix across 256 compute units. AMD also quotes double these figures with structured sparsity, up to 20,133 TFLOPS FP4."
+      "support": {
+        "fp16": "yes",
+        "fp8": "yes",
+        "fp4": "yes"
+      },
+      "precisionNote": "Dense matrix across 256 compute units, checked against AMD’s datasheet, which prints FP16 MATRIX 2.5166 PFLOPS, BFLOAT16 2.5166, MXFP8 and OCP-FP8 5.0332, INT8 MATRIX 5.0332 POPS and MXFP4 10.0663 PFLOPS, with a separate structured-sparsity column that doubles them to 20,133 TFLOPS FP4. All three formats are supported and published."
     },
     "tdpW": 1400,
     "interconnect": {
@@ -1482,7 +1540,12 @@
       "fp16TFLOPS": 5033,
       "fp8TFLOPS": 20133,
       "fp4TFLOPS": 40265,
-      "precisionNote": "AMD datasheet peak theoretical: 40,265 TFLOPS OCP MXFP4, 20,133 TFLOPS OCP MXFP6, MXFP8 and FP8, and 5,033 TFLOPS matrix FP16, BF16 and INT8. The datasheet's separate structured-sparsity column doubles FP16, BF16 and INT8 to 10,066 TFLOPS and lists no sparsity figure for the four-bit and eight-bit formats."
+      "support": {
+        "fp16": "yes",
+        "fp8": "yes",
+        "fp4": "yes"
+      },
+      "precisionNote": "AMD datasheet peak theoretical: 40,265 TFLOPS OCP MXFP4, 20,133 TFLOPS OCP MXFP6, MXFP8 and FP8, and 5,033 TFLOPS matrix FP16, BF16 and INT8. The datasheet’s separate structured-sparsity column doubles FP16, BF16 and INT8 to 10,066 TFLOPS and lists no sparsity figure for the four- and eight-bit formats. All three formats are supported and published."
     },
     "tdpW": null,
     "interconnect": {
@@ -1702,7 +1765,12 @@
       "fp16TFLOPS": 1307.4,
       "fp8TFLOPS": 2614.9,
       "fp4TFLOPS": null,
-      "precisionNote": "Dense, from AMD’s footnote MI325-002: 1,307.4 TFLOPS FP16, 1,307.4 TFLOPS BF16, 2,614.9 TFLOPS FP8 and 2,614.9 TOPS INT8. Identical to the MI300X; the MI325X is the same CDNA 3 silicon with faster, larger memory. AMD’s sparsity column doubles each figure. No FP4 datapath."
+      "support": {
+        "fp16": "yes",
+        "fp8": "yes",
+        "fp4": "no"
+      },
+      "precisionNote": "Dense, from AMD’s footnote MI325-002: 1,307.4 TFLOPS FP16, 1,307.4 TFLOPS BF16, 2,614.9 TFLOPS FP8 and 2,614.9 TOPS INT8. Identical to the MI300X; the MI325X is the same CDNA 3 silicon with faster, larger memory. AMD’s sparsity column doubles each figure. CDNA 3 has no four-bit datapath: AMD’s CDNA 3 white paper tabulates every matrix type the architecture runs, Matrix FP64, FP32, TF32, FP16, BF16, FP8 and INT8, and the string FP4 appears nowhere in the document, so the FP4 cell reads not supported."
     },
     "tdpW": 1000,
     "interconnect": {
@@ -1908,7 +1976,12 @@
       "fp16TFLOPS": 1307.4,
       "fp8TFLOPS": 2614.9,
       "fp4TFLOPS": null,
-      "precisionNote": "Dense, from AMD’s own footnote MI300-17: 1,307.4 TFLOPS FP16, 1,307.4 TFLOPS BF16, 2,614.9 TFLOPS FP8 and 2,614.9 TOPS INT8 at 2,100 MHz across 304 compute units. AMD’s separate structured-sparsity column doubles each of those. CDNA 3 has no FP4 datapath."
+      "support": {
+        "fp16": "yes",
+        "fp8": "yes",
+        "fp4": "no"
+      },
+      "precisionNote": "Dense, from AMD’s own footnote MI300-17: 1,307.4 TFLOPS FP16, 1,307.4 TFLOPS BF16, 2,614.9 TFLOPS FP8 and 2,614.9 TOPS INT8 at 2,100 MHz across 304 compute units, the same figures the CDNA 3 white paper tabulates. AMD’s separate structured-sparsity column doubles each of those. CDNA 3 has no four-bit datapath: AMD’s CDNA 3 white paper tabulates every matrix type the architecture runs, Matrix FP64, FP32, TF32, FP16, BF16, FP8 and INT8, and the string FP4 appears nowhere in the document, so the FP4 cell reads not supported."
     },
     "tdpW": 750,
     "interconnect": {
@@ -2121,7 +2194,12 @@
       "fp16TFLOPS": 2307,
       "fp8TFLOPS": 4614,
       "fp4TFLOPS": null,
-      "precisionNote": "Google's Cloud TPU documentation gives peak per-chip compute of 2,307 TFLOPS BF16 and 4,614 TFLOPS FP8. These are dense; Google publishes no sparsity figures, and the four SparseCores are embedding-lookup engines rather than structured-sparsity units. No FP4 figure published."
+      "support": {
+        "fp16": "yes",
+        "fp8": "yes",
+        "fp4": "no"
+      },
+      "precisionNote": "Google’s Cloud TPU documentation gives peak per-chip compute of 2,307 TFLOPS BF16 and 4,614 TFLOPS FP8, the only two precisions the tpu7x table carries. These are dense; Google publishes no sparsity figures, and the four SparseCores are embedding-lookup engines rather than structured-sparsity units. Four-bit arithmetic arrives with the next generation, not this one: Google’s eighth-generation deep dive says “TPU 8t introduces native 4-bit floating point (FP4)”, so the FP4 cell reads not supported rather than not published."
     },
     "tdpW": null,
     "interconnect": {
@@ -2228,6 +2306,10 @@
       {
         "label": "Google Cloud blog: inside the Ironwood TPU and its co-designed stack",
         "url": "https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack"
+      },
+      {
+        "label": "Google Cloud: TPU 8t and TPU 8i technical deep dive",
+        "url": "https://cloud.google.com/blog/products/compute/tpu-8t-and-tpu-8i-technical-deep-dive"
       }
     ]
   },
@@ -2268,7 +2350,12 @@
       "fp16TFLOPS": null,
       "fp8TFLOPS": null,
       "fp4TFLOPS": 10100,
-      "precisionNote": "Google publishes a 10.1 PFLOPS FP4 peak and has not published FP8 or BF16 figures for this part, nor stated dense versus sparse. Third-party FP8 and BF16 numbers in circulation are derived by halving and are not official."
+      "support": {
+        "fp16": "unknown",
+        "fp8": "unknown",
+        "fp4": "yes"
+      },
+      "precisionNote": "Google publishes a 10.1 PFLOPS FP4 peak and no other precision for this part, and does not state dense versus sparse. FP4 is the only format it names for either eighth-generation chip, and it publishes no list of supported data types, so the FP16 and FP8 cells read not published: nothing shows whether the hardware carries those paths. Third-party FP8 and BF16 numbers in circulation are derived by halving and are not official."
     },
     "tdpW": null,
     "interconnect": {
@@ -2394,7 +2481,12 @@
       "fp16TFLOPS": 918,
       "fp8TFLOPS": null,
       "fp4TFLOPS": null,
-      "precisionNote": "Google’s v6e documentation gives 918 TFLOPs peak bf16 per chip and 1,836 TOPs peak Int8. Both are dense; Google publishes no sparsity figures. The eight-bit figure is INT8 rather than FP8, so it is recorded here in the note rather than in the FP8 field, and there is no FP4 figure."
+      "support": {
+        "fp16": "yes",
+        "fp8": "unknown",
+        "fp4": "no"
+      },
+      "precisionNote": "Google’s v6e documentation gives 918 TFLOPs peak bf16 per chip and 1,836 TOPs peak Int8, both dense, and lists no FP8 row; the eight-bit figure is INT8, so it stays in this note rather than the FP8 field. Two Google pages disagree about whether the part has an FP8 path at all: the tpu7x table prints “Peak compute per chip (FP8) (TFLOPs) … 918” for v6e, which is the bf16 figure repeated and buys no throughput. Nothing settles it, so the FP8 cell reads not published rather than not supported. FP4 is a different matter: no Google page gives v6e a four-bit rate, and Google dates native FP4 to the eighth generation, so that cell reads not supported."
     },
     "tdpW": null,
     "interconnect": {
@@ -2452,6 +2544,10 @@
       {
         "label": "Federal Register, 25 October 2023: TPP and performance density replace the interconnect test (govinfo PDF)",
         "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23055.pdf"
+      },
+      {
+        "label": "Google Cloud TPU v7 (tpu7x) documentation, which tabulates v5p, v6e and TPU7x side by side",
+        "url": "https://docs.cloud.google.com/tpu/docs/tpu7x"
       }
     ]
   },
@@ -2492,7 +2588,12 @@
       "fp16TFLOPS": 459,
       "fp8TFLOPS": 459,
       "fp4TFLOPS": null,
-      "precisionNote": "Google’s v5p table gives 459 TFLOPs peak per chip for BF16 and the same 459 TFLOPs for FP8. Dropping to eight-bit buys no throughput on this part, which is the opposite of the Blackwell and CDNA generations. Both figures are dense; Google publishes no sparsity numbers and no FP4 rate. Capacity is quoted in GiB."
+      "support": {
+        "fp16": "yes",
+        "fp8": "yes",
+        "fp4": "no"
+      },
+      "precisionNote": "Google’s v5p table gives 459 TFLOPs peak per chip for BF16 and the same 459 TFLOPs for FP8. Dropping to eight-bit buys no throughput on this part, which is the opposite of the Blackwell and CDNA generations, but Google prints the FP8 row, so the format is supported and published. Both figures are dense; Google publishes no sparsity numbers. No Google page gives the v5p a four-bit rate and Google dates native FP4 to the eighth generation, so the FP4 cell reads not supported. Capacity is quoted in GiB."
     },
     "tdpW": null,
     "interconnect": {
@@ -2602,7 +2703,12 @@
       "fp16TFLOPS": 197,
       "fp8TFLOPS": null,
       "fp4TFLOPS": null,
-      "precisionNote": "Google’s v5e table gives 197 TFLOPs peak bf16 per chip and 393 TOPs peak Int8, both dense. The eight-bit figure is INT8, not FP8, so it stays in this note. Google states the memory bandwidth as 800 GiBps, which is 859 GB/s; the field above carries the converted figure."
+      "support": {
+        "fp16": "yes",
+        "fp8": "no",
+        "fp4": "no"
+      },
+      "precisionNote": "Google’s v5e table gives 197 TFLOPs peak bf16 per chip and 393 TOPs peak Int8, both dense, and no other precision. The eight-bit path is INT8 rather than FP8, so eight-bit work on a v5e runs as integer quantisation and not in hardware floating point; the FP8 cell reads not supported. There is no four-bit rate on any Google page for this part either, and Google dates native FP4 to the eighth generation. Google states the memory bandwidth as 800 GiBps, which is 859 GB/s; the field above carries the converted figure."
     },
     "tdpW": null,
     "interconnect": {
@@ -2704,7 +2810,12 @@
       "fp16TFLOPS": 275,
       "fp8TFLOPS": null,
       "fp4TFLOPS": null,
-      "precisionNote": "Google gives a single figure, 275 teraflops per chip in bf16 or int8, with no separate eight-bit rate and no sparsity figure. Dropping to eight bits buys nothing on this part. There is no FP8 or FP4 datapath. Capacity is quoted as 32 GiB."
+      "support": {
+        "fp16": "yes",
+        "fp8": "no",
+        "fp4": "no"
+      },
+      "precisionNote": "Google gives a single figure, “275 teraflops (bf16 or int8)” per chip, and names no other format. Dropping to eight bits buys nothing on this part, and the eight-bit path is integer: there is no FP8 and no FP4 datapath, so both cells read not supported rather than not published. Capacity is quoted as 32 GiB."
     },
     "tdpW": 192,
     "interconnect": {
@@ -2817,7 +2928,12 @@
       "fp16TFLOPS": 671,
       "fp8TFLOPS": 2517,
       "fp4TFLOPS": 2517,
-      "precisionNote": "Dense, from the AWS Neuron architecture docs: 671 TFLOPS dense BF16/FP16/TF32 (2,517 with 4x structured sparsity), 2,517 TFLOPS MXFP8 and 2,517 TFLOPS MXFP4. FP4 buys no throughput over FP8 on this part."
+      "support": {
+        "fp16": "yes",
+        "fp8": "yes",
+        "fp4": "yes"
+      },
+      "precisionNote": "Dense, from the AWS Neuron architecture docs: 671 TFLOPS dense BF16/FP16/TF32 (2,517 with 4x structured sparsity), and 2,517 TFLOPS for MXFP8 and MXFP4 alike. FP4 buys no throughput over FP8 on this part, but the datapath is there and AWS publishes the figure."
     },
     "tdpW": null,
     "interconnect": {
@@ -2937,7 +3053,12 @@
       "fp16TFLOPS": 667,
       "fp8TFLOPS": 1299,
       "fp4TFLOPS": null,
-      "precisionNote": "Dense, from the AWS Neuron architecture docs: eight NeuronCore-v3 deliver 1,299 FP8 TFLOPS, 667 BF16, FP16 and TF32 TFLOPS, and 181 FP32 TFLOPS, with 2,563 TFLOPS quoted for the sparse case. Trainium2 has no FP4 datapath; that arrives with Trainium3."
+      "support": {
+        "fp16": "yes",
+        "fp8": "yes",
+        "fp4": "no"
+      },
+      "precisionNote": "Dense, from the AWS Neuron architecture docs: eight NeuronCore-v3 deliver 1,299 FP8 TFLOPS, 667 BF16, FP16 and TF32 TFLOPS, and 181 FP32 TFLOPS, with 2,563 TFLOPS quoted for the sparse case. That list, FP8, BF16, FP16, TF32 and FP32, is the whole of what the page documents; no four-bit type appears, and MXFP4 arrives one generation later, on Trainium3. The FP4 cell reads not supported rather than not published."
     },
     "tdpW": null,
     "interconnect": {
@@ -3051,7 +3172,12 @@
       "fp16TFLOPS": 1263,
       "fp8TFLOPS": 5050,
       "fp4TFLOPS": 10100,
-      "precisionNote": "Microsoft's architecture deep dive states 10.1 PetaOPS FP4 and that FP4 throughput on Maia 200 is 2x that of FP8 and 8x that of BF16, which gives 5,050 TFLOPS FP8 and 1,263 TFLOPS BF16; its launch post says 'over 10 petaFLOPS' FP4 and 'over 5 petaFLOPS' FP8. Epoch AI's database carries the same arithmetic at 1,268 TFLOPS BF16. Dense versus sparse is not stated, and Microsoft publishes no separate tensor-core FP16 rate."
+      "support": {
+        "fp16": "yes",
+        "fp8": "yes",
+        "fp4": "yes"
+      },
+      "precisionNote": "Microsoft’s architecture deep dive states 10.1 PetaOPS FP4 and that FP4 throughput on Maia 200 is 2x that of FP8 and 8x that of BF16, which gives 5,050 TFLOPS FP8 and 1,263 TFLOPS BF16; its launch post says “over 10 petaFLOPS” FP4 and “over 5 petaFLOPS” FP8. Epoch AI’s database carries the same arithmetic at 1,268 TFLOPS BF16. All three formats are supported; dense versus sparse is not stated, and Microsoft publishes no separate tensor-core FP16 rate."
     },
     "tdpW": 750,
     "interconnect": {
@@ -3169,7 +3295,12 @@
       "fp16TFLOPS": 800,
       "fp8TFLOPS": null,
       "fp4TFLOPS": null,
-      "precisionNote": "Microsoft’s launch post publishes no performance figure of any kind. The 800 TFLOPS BF16 and FP16 above comes from Epoch AI’s hardware database, which does not state whether it is dense or sparse. Microsoft’s own Inside Maia 100 post, which carried the fuller specification, no longer resolves."
+      "support": {
+        "fp16": "yes",
+        "fp8": "unknown",
+        "fp4": "unknown"
+      },
+      "precisionNote": "Microsoft’s launch post publishes no performance figure of any kind. The 800 TFLOPS BF16 and FP16 above comes from Epoch AI’s hardware database, which does not state whether it is dense or sparse. The eight- and four-bit cells read not published rather than not supported: Microsoft calls Maia 100 “the first implementation of the Microscaling (MX) data format”, a standard that spans MXFP8, MXFP6 and MXFP4, but never says which of those types the chip implements, and the Inside Maia 100 post that carried the fuller specification no longer resolves."
     },
     "tdpW": 500,
     "interconnect": {
@@ -3279,7 +3410,12 @@
       "fp16TFLOPS": null,
       "fp8TFLOPS": null,
       "fp4TFLOPS": null,
-      "precisionNote": "Meta's own blog gives only ratios, quoting 400 percent higher FP8 FLOPS and 51 percent higher HBM bandwidth than MTIA 300, and publishes no absolute figure for either part. MTIA 300's own post gives 216 GB of HBM3E but no bandwidth and no FLOPS, so the ratios cannot be resolved into numbers. The absolute figures Meta showed at Hot Chips 2026 sit in a registration-gated deck, so they are not used here."
+      "support": {
+        "fp16": "unknown",
+        "fp8": "yes",
+        "fp4": "yes"
+      },
+      "precisionNote": "Meta’s own blog gives only ratios, quoting 400 percent higher FP8 FLOPS and 51 percent higher HBM bandwidth than MTIA 300, and publishes no absolute figure for either part, so the ratios cannot be resolved into numbers. The formats themselves are on the record: Meta writes that MTIA 400 “supports enhanced versions of MX8 and MX4, which are important low-precision formats”, so eight- and four-bit floats both read not published rather than not supported. It names no 16-bit rate or type for this generation. The absolute figures Meta showed at Hot Chips 2026 sit in a registration-gated deck, so they are not used here."
     },
     "tdpW": null,
     "interconnect": {
@@ -3437,7 +3573,12 @@
       "fp16TFLOPS": 177,
       "fp8TFLOPS": null,
       "fp4TFLOPS": null,
-      "precisionNote": "Dense. Meta’s table gives 354 TOPS INT8 and 177 TFLOPS FP16 and BF16 for the matrix engines at 1.35 GHz, with 708 and 354 quoted for the sparse case. The vector core adds 11.06 TOPS INT8, 5.53 TFLOPS FP16 and 2.76 TFLOPS FP32. There is no FP8 or FP4 datapath."
+      "support": {
+        "fp16": "yes",
+        "fp8": "no",
+        "fp4": "no"
+      },
+      "precisionNote": "Dense. Meta’s table gives 354 TOPS INT8 and 177 TFLOPS FP16 and BF16 for the matrix engines at 1.35 GHz, with 708 and 354 quoted for the sparse case. The vector core adds 11.06 TOPS INT8, 5.53 TFLOPS FP16 and 2.76 TFLOPS FP32. INT8 and FP16/BF16 are the only types the table carries: there is no FP8 and no FP4 datapath, so both cells read not supported rather than not published."
     },
     "tdpW": 90,
     "interconnect": {
@@ -3515,7 +3656,12 @@
       "fp16TFLOPS": null,
       "fp8TFLOPS": null,
       "fp4TFLOPS": null,
-      "precisionNote": "OpenAI publishes no per-precision FLOPS and argues peak FLOPS is the wrong metric, quoting delivered throughput instead. On SemiAnalysis's InferenceX benchmark the part returns over 700 tokens per second per user on DeepSeek R1 at concurrency 1 and about 1,400 on Kimi-K2.5 and GPT-OSS."
+      "support": {
+        "fp16": "unknown",
+        "fp8": "unknown",
+        "fp4": "unknown"
+      },
+      "precisionNote": "OpenAI publishes no per-precision FLOPS and argues peak FLOPS is the wrong metric, quoting delivered throughput instead, and it publishes no list of the formats the part runs, so all three cells read not published. On SemiAnalysis’s InferenceX benchmark the part returns over 700 tokens per second per user on DeepSeek R1 at concurrency 1 and about 1,400 on Kimi-K2.5 and GPT-OSS."
     },
     "tdpW": 700,
     "interconnect": {
@@ -3639,7 +3785,12 @@
       "fp16TFLOPS": 1835,
       "fp8TFLOPS": 1835,
       "fp4TFLOPS": null,
-      "precisionNote": "Intel's Gaudi documentation quotes 1.8 PFLOPS for both FP8 and BF16 across 8 matrix multiplication engines and 64 tensor processor cores spread over two compute dies. Dense. Epoch AI records 1,678 TFLOPS for the same two formats, which is the figure for the lower-clocked PCIe card rather than the OAM module; the OAM figure is carried above and both are recorded. Gaudi 3 has no FP4 datapath, which is the main reason it fell out of contention for 2026 inference work."
+      "support": {
+        "fp16": "yes",
+        "fp8": "yes",
+        "fp4": "no"
+      },
+      "precisionNote": "Intel’s Gaudi documentation quotes 1.8 PFLOPS for both FP8 and BF16 across 8 matrix multiplication engines and 64 tensor processor cores spread over two compute dies. Dense. The white paper’s own Table 5 gives 1,678 TFLOPS for FP8 and BF16, 459 for FP16 (signed) and TF32 and 229 for FP32, and Epoch AI records the same 1,678; that is the lower-clocked PCIe card, and the OAM figure is carried above. Gaudi 3 has no four-bit datapath, which is the main reason it fell out of contention for 2026 inference work: the white paper states that “the Intel Gaudi 3 AI accelerator MME supports all the key AI compute datatypes: FP8 (both E4M3 and E5M2), BF16, FP16, TF32 and FP32” and never mentions FP4, so that cell reads not supported."
     },
     "tdpW": 900,
     "interconnect": {
@@ -3749,6 +3900,10 @@
       {
         "label": "15 CFR 742.6(b)(10), licence review policy for advanced computing items (eCFR)",
         "url": "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-742/section-742.6"
+      },
+      {
+        "label": "Intel Gaudi 3 AI accelerator white paper (PDF)",
+        "url": "https://cdrdv2-public.intel.com/817486/gaudi-3-ai-accelerator-white-paper.pdf"
       }
     ]
   },
@@ -3786,10 +3941,15 @@
       "suppliers": []
     },
     "compute": {
-      "fp16TFLOPS": 450,
+      "fp16TFLOPS": 432,
       "fp8TFLOPS": 865,
       "fp4TFLOPS": null,
-      "precisionNote": "Intel’s Gaudi 2 white paper documents the memory, the networking and the data types the chip supports, FP32, TF32, BF16, FP16 and both FP8 encodings, but publishes no TFLOPS figure at all. The 450 TFLOPS BF16 and 865 TFLOPS FP8 above come from Epoch AI’s hardware database. Neither source states dense or sparse. Gaudi 2 has no FP4 datapath."
+      "support": {
+        "fp16": "yes",
+        "fp8": "yes",
+        "fp4": "no"
+      },
+      "precisionNote": "Intel publishes no Gaudi 2 datasheet of its own, but its Gaudi 3 white paper tabulates the two parts together and gives Gaudi 2 432 TFLOPS BF16 MME and 865 TFLOPS FP8 MME; those are the figures above. Epoch AI’s hardware database carries 450 TFLOPS BF16 and the same 865 FP8, and the 450 was in this field until this pass replaced it with Intel’s own number. Neither source states dense or sparse. The Gaudi documentation lists the types: “Gaudi 2 supports all popular data types required for deep learning: FP32, TF32, BF16, FP16 & FP8 (both E4M3 and E5M2)”, with no four-bit format, so the FP4 cell reads not supported rather than not published."
     },
     "tdpW": 600,
     "interconnect": {
@@ -3800,8 +3960,8 @@
     "systemIntegrators": [],
     "priceEstimate": null,
     "bomEstimate": null,
-    "exportStatus": "Controlled. Total processing performance is 7,200, taken from BF16 (16 x 450) rather than FP8 (8 x 865 = 6,920), above the 4,800 threshold in ECCN 3A090.a.",
-    "notes": "The chip that set the Ethernet bet Gaudi 3 inherited: 24 RDMA NICs on the package, so a Gaudi cluster needs no proprietary cable plant and no InfiniBand. It also carries 48 MB of local SRAM and hardware video decoders that let it run its own pre-processing. Intel positioned it against the A100 and, unusually for a vendor, published no peak throughput figure for it, which is why the compute row here rests on Epoch AI rather than a datasheet. Epoch AI also gives the foundry as TSMC and the die as 826 mm2; the foundry is carried above and the die area is not, because 826 mm2 is exactly the A100 figure and Epoch's citation for the row is an archived page rather than a primary document. Intel publishes no die count, die area, transistor count, HBM stack count or memory supplier.",
+    "exportStatus": "Controlled. Total processing performance is 6,920, taken from FP8 (8 x 865) rather than BF16 (16 x 432 = 6,912), above the 4,800 threshold in ECCN 3A090.a.",
+    "notes": "The chip that set the Ethernet bet Gaudi 3 inherited: 24 RDMA NICs on the package, so a Gaudi cluster needs no proprietary cable plant and no InfiniBand. It also carries 48 MB of local SRAM and hardware video decoders that let it run its own pre-processing. Intel positioned it against the A100 and never gave it a datasheet of its own; the compute row here comes from the comparison table in Intel's Gaudi 3 white paper, which records the older part at 432 TFLOPS BF16 and 865 TFLOPS FP8. Epoch AI also gives the foundry as TSMC and the die as 826 mm2; the foundry is carried above and the die area is not, because 826 mm2 is exactly the A100 figure and Epoch's citation for the row is an archived page rather than a primary document. Intel publishes no die count, die area, transistor count, HBM stack count or memory supplier.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -3919,7 +4079,12 @@
       "fp16TFLOPS": null,
       "fp8TFLOPS": null,
       "fp4TFLOPS": null,
-      "precisionNote": "Cerebras quotes 250 PFLOPS of AI compute per WSE-3 Turbo, double the original WSE-3, and names no precision and no dense-versus-sparse basis for it. Because the format is unstated the figure cannot be placed in a precision row, and Cerebras publishes no FP16, FP8 or FP4 numbers."
+      "support": {
+        "fp16": "yes",
+        "fp8": "unknown",
+        "fp4": "unknown"
+      },
+      "precisionNote": "Cerebras quotes 250 PFLOPS of AI compute per WSE-3 Turbo, double the original WSE-3, and names no precision and no dense-versus-sparse basis for it, so the figure cannot be placed in a precision row. Cerebras’s developer documentation does list what the platform runs, “The CS system offers support for the following data formats”, FP32, FP16, cbfloat16 and bfloat16, which puts FP16 in the supported-but-unpublished column. That page is the training-software documentation for the CS platform and predates the CS-4, and Cerebras publishes no data-type list for the WSE-3 Turbo, so the FP8 and FP4 cells read not published rather than not supported."
     },
     "tdpW": null,
     "interconnect": {
@@ -3957,6 +4122,10 @@
       {
         "label": "Cerebras: Ultrafast frontier inference, the Hot Chips 2026 deep dive",
         "url": "https://www.cerebras.ai/blog/ultrafast-frontier-inference-cerebras-deep-dive-at-hot-chips-2026"
+      },
+      {
+        "label": "Cerebras developer documentation: supported precisions and data formats",
+        "url": "https://training-api.cerebras.ai/en/rel-2.3.1/wsc/how_to_guides/cs-1-data-formats.html"
       }
     ]
   },
@@ -3997,7 +4166,12 @@
       "fp16TFLOPS": null,
       "fp8TFLOPS": 1230,
       "fp4TFLOPS": null,
-      "precisionNote": "Derived, not published per chip: Groq quotes 315 PFLOPS of FP8 inference compute and 40 PB/s of SRAM bandwidth per 256-LPU rack, which is about 1,230 TFLOPS FP8 and 156 TB/s per accelerator. Dense versus sparse not stated. Groq publishes no FP16 or FP4 figure. Groq's own LPU page puts on-chip SRAM bandwidth at 'upwards of 80 terabytes per second', roughly half the rack-derived figure, so the two Groq pages do not agree and both are recorded here."
+      "support": {
+        "fp16": "yes",
+        "fp8": "yes",
+        "fp4": "unknown"
+      },
+      "precisionNote": "Derived, not published per chip: Groq quotes 315 PFLOPS of FP8 inference compute and 40 PB/s of SRAM bandwidth per 256-LPU rack, which is about 1,230 TFLOPS FP8 and 156 TB/s per accelerator. Dense versus sparse not stated. FP16 is supported but no current figure exists: Epoch AI records 188 TFLOPS FP16 and 750 TOPS INT8 for the first-generation GroqChip from a Groq product brief whose URL no longer resolves, and mixing that generation’s arithmetic with a rack-derived FP8 figure would misstate the part, so the cell stays empty. Groq names no four-bit format anywhere, but publishes no data-type list either, so FP4 reads not published rather than not supported. Groq’s own LPU page puts on-chip SRAM bandwidth at “upwards of 80 terabytes per second”, roughly half the rack-derived figure, so the two Groq pages do not agree and both are recorded here."
     },
     "tdpW": 215,
     "interconnect": {
@@ -4086,7 +4260,12 @@
       "fp16TFLOPS": 400,
       "fp8TFLOPS": null,
       "fp4TFLOPS": null,
-      "precisionNote": "CSET puts the second-generation Ascend 910B series at a maximum theoretical 400 TFLOPS FP16, 80 TFLOPS above the first-generation 910, and finds that only about 75 percent of that gain is real hardware: half comes from a higher clock, a quarter from an extra vector unit per AI core, and the last quarter from a change in how Huawei counts peak performance. Huawei publishes no per-chip figure of its own. No allowed source gives an FP8 or FP4 rate."
+      "support": {
+        "fp16": "yes",
+        "fp8": "no",
+        "fp4": "no"
+      },
+      "precisionNote": "CSET puts the second-generation Ascend 910B series at a maximum theoretical 400 TFLOPS FP16, 80 TFLOPS above the first-generation 910, and finds that only about 75 percent of that gain is real hardware: half comes from a higher clock, a quarter from an extra vector unit per AI core, and the last quarter from a change in how Huawei counts peak performance. Huawei publishes no per-chip figure of its own. Huawei’s own roadmap makes the absence explicit: “Compared with the Ascend 910B and Ascend 910C, our newer chips – starting with the Ascend 950 chips – … will support more data formats, including FP32, HF32, FP16, BF16, FP8, MXFP8, HiF8, MXFP4, and HiF4.” Eight- and four-bit floats arrive with the 950 series, so the FP8 and FP4 cells read not supported rather than not published."
     },
     "tdpW": 400,
     "interconnect": {
@@ -4164,6 +4343,10 @@
       {
         "label": "Federal Register, 13 October 2022: the rule that created ECCN 3A090 (govinfo PDF)",
         "url": "https://www.govinfo.gov/content/pkg/FR-2022-10-13/pdf/2022-21658.pdf"
+      },
+      {
+        "label": "Huawei Connect 2025 keynote: the Ascend roadmap",
+        "url": "https://www.huawei.com/en/news/2025/9/hc-xu-keynote-speech"
       }
     ]
   },
@@ -4207,7 +4390,12 @@
       "fp16TFLOPS": 781,
       "fp8TFLOPS": null,
       "fp4TFLOPS": null,
-      "precisionNote": "Derived, not a vendor datasheet and not independently measured: SemiAnalysis's CloudMatrix 384 figure of 300 PFLOPS dense BF16 across 384 chips implies about 781 TFLOPS per chip. Huawei publishes no per-chip figure for the 910C."
+      "support": {
+        "fp16": "yes",
+        "fp8": "no",
+        "fp4": "no"
+      },
+      "precisionNote": "Derived, not a vendor datasheet and not independently measured: SemiAnalysis’s CloudMatrix 384 figure of 300 PFLOPS dense BF16 across 384 chips implies about 781 TFLOPS per chip, and Epoch AI records 800. Huawei publishes no per-chip figure for the 910C. Huawei’s own roadmap makes the absence explicit: “Compared with the Ascend 910B and Ascend 910C, our newer chips – starting with the Ascend 950 chips – … will support more data formats, including FP32, HF32, FP16, BF16, FP8, MXFP8, HiF8, MXFP4, and HiF4.” Eight- and four-bit floats arrive with the 950 series, so the FP8 and FP4 cells read not supported rather than not published."
     },
     "tdpW": 700,
     "interconnect": {
@@ -4310,6 +4498,10 @@
       {
         "label": "Epoch AI machine learning hardware database (ml_hardware.csv)",
         "url": "https://epoch.ai/data/machine-learning-hardware"
+      },
+      {
+        "label": "Huawei Connect 2025 keynote: the Ascend roadmap",
+        "url": "https://www.huawei.com/en/news/2025/9/hc-xu-keynote-speech"
       }
     ]
   },
@@ -4352,7 +4544,12 @@
       "fp16TFLOPS": null,
       "fp8TFLOPS": 1000,
       "fp4TFLOPS": 2000,
-      "precisionNote": "Vendor-claimed, from Huawei's own Connect 2025 roadmap: 1 PFLOPS in FP8, MXFP8 and Huawei's HiF8 format, and 2 PFLOPS in MXFP4, for the 950PR die. Huawei has published no memory capacity or bandwidth for the 950PR, and no dense-versus-sparse basis."
+      "support": {
+        "fp16": "yes",
+        "fp8": "yes",
+        "fp4": "yes"
+      },
+      "precisionNote": "Vendor-claimed, from Huawei’s own Connect 2025 roadmap: 1 PFLOPS in FP8, MXFP8 and Huawei’s HiF8 format, and 2 PFLOPS in MXFP4, for the 950PR die. The same keynote lists the formats the 950 chips run, “FP32, HF32, FP16, BF16, FP8, MXFP8, HiF8, MXFP4, and HiF4”, so FP16 is supported but carries no published rate. Huawei has published no memory capacity or bandwidth for the 950PR, and no dense-versus-sparse basis."
     },
     "tdpW": null,
     "interconnect": {
@@ -4460,7 +4657,12 @@
       "fp16TFLOPS": null,
       "fp8TFLOPS": null,
       "fp4TFLOPS": null,
-      "precisionNote": "Cambricon publishes no specifications for this part: its own site carries no product page for the Siyuan 590, and no per-precision figures are available from any allowed source."
+      "support": {
+        "fp16": "unknown",
+        "fp8": "unknown",
+        "fp4": "unknown"
+      },
+      "precisionNote": "Cambricon publishes no specifications for this part: its own site carries no product page for the Siyuan 590, no per-precision figures are available from any allowed source, and no document lists the data types the chip runs, so all three cells read not published rather than not supported."
     },
     "tdpW": null,
     "interconnect": {
@@ -4570,7 +4772,12 @@
       "fp16TFLOPS": null,
       "fp8TFLOPS": null,
       "fp4TFLOPS": null,
-      "precisionNote": "Moore Threads publishes no peak FLOPS for the MTT S5000. Its own product page claims full-precision support from FP8 to FP64 on the PH100 'Pinghu' chip, at least 4,000 tokens per second single-GPU prefill and at least 1,000 tokens per second decode, and 95 percent linear scaling at 10,000-GPU cluster scale. No independent benchmark exists."
+      "support": {
+        "fp16": "yes",
+        "fp8": "yes",
+        "fp4": "no"
+      },
+      "precisionNote": "Moore Threads publishes no peak FLOPS for the MTT S5000. Its own product page states the range instead, “full-precision compute support from FP8 to FP64” on the PH100 “Pinghu” chip, so FP16 and FP8 are supported but unpublished, while four-bit arithmetic sits outside the range the vendor claims and the FP4 cell reads not supported. The page also claims at least 4,000 tokens per second single-GPU prefill, at least 1,000 tokens per second decode, and 95 percent linear scaling at 10,000-GPU cluster scale. No independent benchmark exists."
     },
     "tdpW": null,
     "interconnect": {
