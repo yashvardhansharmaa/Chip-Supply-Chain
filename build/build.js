@@ -487,7 +487,7 @@ if (geo) {
 
 /* ---------------- sources view ---------------- */
 const all = chapters.concat(geo ? [geo] : []);
-const sourcesHTML = `<div class="tier-key">Every source here is one of two kinds. <span class="tier tier-A">A</span> primary or institutional: company filings and investor materials, governments and regulators, standards bodies, universities and national labs, and research institutions that publish their methods. <span class="tier tier-B">B</span> four named exceptions: SemiAnalysis, Reuters, the Financial Times and Nikkei Asia. Nothing else is cited.</div>` +
+const sourcesHTML = `<div class="tier-key"><span class="tier tier-A">A</span> primary or institutional: company filings and investor materials, governments and regulators, standards bodies, universities and national labs, and research institutions that publish their methods. <span class="tier tier-B">B</span> four named exceptions: SemiAnalysis, Reuters, the Financial Times and Nikkei Asia. Nothing else is cited.</div>` +
   all.map((ch) => { const tc = tierCounts(ch.cites); return `<h3>${pad(ch.number)} · ${esc(ch.title)} <span class="label">${ch.cites.length} sources · A ${tc.A} · B ${tc.B}${tc.C + tc.D ? ' · disallowed ' + (tc.C + tc.D) : ''}${tc['?'] ? ' · unclassified ' + tc['?'] : ''}</span></h3><ol>${ch.cites.map((c) => `<li>${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol>`; }).join('');
 
 /* ---------------- briefing (all the "in short" blocks on one page) ---------------- */

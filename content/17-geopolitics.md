@@ -200,8 +200,6 @@ The House select committee on China puts the median estimate at 140,000 chips sm
 
 ## Who gains and who pays
 
-These are our judgments.
-
 - **Taiwan and Korea.** Nothing in the policy mix moves leading-edge logic, memory stacking or advanced packaging off an island and a peninsula before 2030; reshoring adds capacity elsewhere without subtracting it there.
 - **The Netherlands and Japan.** Their tool makers are the fence, so they gain a say in who gets what and lose the business that paid for it: Tokyo Electron's China share fell from 47.4 to 26.8 percent of quarterly sales in two years ([source](https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf)).
 - **The United States.** It holds 93 percent of accelerator design revenue and will keep it. It has built no wafer, memory or assembly industry, and $30.9 billion of grants will not.

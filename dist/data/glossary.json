@@ -87,7 +87,7 @@
     "term": "Concentration",
     "aka": "concentration band; Extreme, High, Moderate, Low",
     "plain": "The site's four-band judgment of how many firms could credibly supply a stage today, taken at the narrowest step inside it. Extreme means three or fewer, or one firm holding more than half the stage. High means four to six, with the top two taking most of the revenue. Moderate means seven or more, none of them dominant. Low means many, with the scarce input something another industry sells at volume. Where the country-share matrix carries a figure for the segment, the top country's share is a second check, and the supplier count wins when the two disagree.",
-    "why": "It is the first label on every chokepoint card and sets the bar height in the chain strip. It is a judgment made from supplier counts, not a published measurement.",
+    "why": "It is the first label on every chokepoint card and sets the bar height in the chain strip.",
     "chapter": null
   },
   {
@@ -122,7 +122,7 @@
     "term": "denial order",
     "aka": "",
     "plain": "An enforcement order, not a licence policy. Under 15 CFR 764.3 it suspends or revokes a named party's outstanding licences and bars exports, reexports and in-country transfers of any item subject to the EAR to or by that party. There is no application to file. Orders can be issued outright or suspended and later activated.",
-    "why": "It is the only instrument here that stops trade absolutely. The order activated against ZTE in April 2018 halted most of the company's production within weeks and was terminated 89 days later on settlement (83 FR 17644; 83 FR 34825).",
+    "why": "It is the only instrument that stops trade absolutely. The order activated against ZTE in April 2018 halted most of the company's production within weeks and was terminated 89 days later on settlement (83 FR 17644; 83 FR 34825).",
     "chapter": "geopolitics"
   },
   {
@@ -563,7 +563,7 @@
     "term": "Substitutability",
     "aka": "Easy, Moderate, Hard, Very hard",
     "plain": "The site's rating of how hard it would be for a well-funded state or firm, starting today, to stand up an alternative to the leaders of a stage, judged against four written tests. Easy: a qualified second source ships today at the leading node. Moderate: a second source exists but is not yet qualified at the leading node, about two to five years to close the gap. Hard: no second source at the leading node, five to ten years, and the path is known. Very hard: no second source, and the path runs through physics, decades of unwritten know-how or protected IP, ten years or more, and nobody has repeated it yet. The clock always times the same actor and runs to qualification, not to a prototype.",
-    "why": "It is the one field on the card that rests on judgment rather than a count, so its four tests are spelled out above.",
+    "why": "It says how long a rival or a government would need to replace a stage, which is the question the export debate turns on.",
     "chapter": null
   },
   {

@@ -112,7 +112,7 @@ SMIC runs two in-house mask shops in Shanghai, for g-line, i-line, KrF and ArF t
 
 ## The chokepoint
 
-Concentration here is extreme, as it is in lithography, on a fraction of the money. Three firms supply EUV blanks worldwide on AGC's own count ([source](https://www.agc.com/en/hub/pr/the-japanese-glass-behind-next-generation-chips.html)), one firm certifies them, and neither business is big enough to attract a funded entrant. Nobody starts from scratch at ¥40 billion of annual sales, to serve a handful of customers, with twenty years of defect learning ahead ([source](https://www.agc.com/en/news/detail/1203819_2814.html)). That is why substitution here rates hard and not very hard: what has kept the count at three is money rather than physics.
+Concentration here is extreme, as it is in lithography, on a fraction of the money. Three firms supply EUV blanks worldwide, AGC says ([source](https://www.agc.com/en/hub/pr/the-japanese-glass-behind-next-generation-chips.html)), one firm certifies them, and neither business is big enough to attract a funded entrant. Nobody starts from scratch at ¥40 billion of annual sales, to serve a handful of customers, with twenty years of defect learning ahead ([source](https://www.agc.com/en/news/detail/1203819_2814.html)). That is why substitution here rates hard and not very hard: what has kept the count at three is money rather than physics.
 
 Pellicles are the unsolved part. A decade on, no membrane is transparent, tough and long-lived at once, so fabs trade throughput against defect risk. We think a production carbon nanotube pellicle would move EUV cost per wafer more than any scanner improvement.
 

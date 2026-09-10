@@ -113,7 +113,7 @@ SEMI forecast China at 10.1 million wafers a month in 2025, the most of any regi
 
 {{figure:capacity-by-region}}
 
-Three risks stack on one island, and we think only the third is unmanageable:
+Three risks stack on one island, and only the third looks unmanageable:
 
 - **Seismic.** Taiwan sits on an active plate boundary, and a tool knocked out of calibration scraps the work in progress across a whole fab.
 - **Power.** A gigafab is a large industrial load on a small island grid. We think spare generating capacity, rather than anything about silicon, sets how fast Taiwan can add fabs.
