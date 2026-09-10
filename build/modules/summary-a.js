@@ -178,7 +178,8 @@ module.exports = function (ctx) {
   const townDots = towns.map((t) => {
     const label = t.sub ? `${t.name} — building substitutes: ${t.note}` : `${t.name} — ${t.ch ? t.ch.title + ' (' + t.ch.score + '/5)' : ''}`;
     const d = t.sub ? 7 : 4 + t.score; // pin size follows the chokepoint score, as the globe's pin height does
-    return `<span class="sa-town${t.sub ? ' sa-town--sub' : ''}" data-cc="${esc(t.cc)}" style="left:${pctX(t.lon)}%;top:${pctY(t.lat)}%;--d0:${d}px" title="${esc(label)}" aria-hidden="true"></span>`;
+    const live = PRIMARY.concat(SECONDARY).includes(t.cc); // a town whose country has no panel is a marker, not a button
+    return `<span class="sa-town${t.sub ? ' sa-town--sub' : ''}"${live ? '' : ' data-dead="1"'} data-cc="${esc(t.cc)}" style="left:${pctX(t.lon)}%;top:${pctY(t.lat)}%;--d0:${d}px" title="${esc(label)}" aria-hidden="true"></span>`;
   }).join('');
 
   /* ---------------- per-country figures ---------------- */

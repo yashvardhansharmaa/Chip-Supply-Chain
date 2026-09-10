@@ -213,6 +213,7 @@ sup.cite a:hover { text-decoration: underline; }
 /* glossary terms in the prose: a dotted rule under the word, and one shared popover */
 .gl-term { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; text-align: inherit; cursor: help; text-decoration: underline; text-decoration-style: dotted; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .gl-term:hover, .gl-term[aria-describedby] { text-decoration-style: solid; }
+.site-footer .updated { display: block; margin-top: 8px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
 .gl-tip { position: fixed; z-index: 50; width: max-content; max-width: min(340px, calc(100vw - 16px)); background: var(--bg-2); border: 1px solid var(--line-2); border-radius: 4px; box-shadow: var(--shadow); padding: 12px 15px 13px; }
 .gl-tip b { display: block; font-family: var(--font-display); font-weight: 700; font-size: 15.5px; line-height: 1.2; margin-bottom: 6px; }
 .gl-tip p { font-family: var(--font-body); font-size: 14.5px; line-height: 1.45; color: var(--ink-2); margin: 0 0 10px; }
@@ -651,7 +652,15 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
   .wordmark b { font-size: 18px; }
   .hero { padding-top: 22px; }
   .rail { display: none; }
-  .to-top { right: 12px; top: auto; bottom: 144px; }
+  .to-top { display: none; } /* on phones the Top button sits in the bottom strip, so the pill never floats over the text */
+  .masthead:has(.tabs[data-end="0"])::after { content: ""; position: absolute; right: 0; bottom: 0; width: 34px; height: 36px; background: linear-gradient(to right, transparent, var(--bg)); pointer-events: none; } /* the tab strip scrolls: fade its edge while more tabs hide to the right */
+  .stage-top { display: none; }
+  body:has(.to-top[data-show="1"]) .stage-top { display: inline-block; }
+  /* without WebGL the strip keeps its buttons (Contents, Top) so the phone still has its navigation */
+  .stage[data-hidden="1"] { display: grid; height: 48px; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: 1fr; padding: 0 12px; }
+  .stage[data-hidden="1"] canvas, .stage[data-hidden="1"] figcaption, .stage[data-hidden="1"] .stage-tag, .stage[data-hidden="1"] .stage-toggle { display: none; }
+  .stage[data-hidden="1"] .stage-actions { grid-column: 2; grid-row: 1; align-self: center; }
+  body:has(.stage[data-hidden="1"]) { padding-bottom: 64px; }
   .ch-id { grid-template-columns: 1fr; gap: 14px; }
   .ch-tile { width: 92px; }
   .ch-title { font-size: 38px; }

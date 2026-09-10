@@ -508,7 +508,8 @@ const glossaryHTML = glossary.length ? glossary.slice().sort((a, b) => a.term.lo
 /* ---------------- assemble ---------------- */
 const totalWords = all.reduce((a, c) => a + c.words, 0);
 const credits = `Made by <b>Yashvardhan Sharma</b> with Claude. Inspired by <a href="https://www.humanityslastmachine.com/" target="_blank" rel="noopener">Humanity's Last Machine</a> and <a href="https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/" target="_blank" rel="noopener">CSET's supply-chain work</a>.`;
-const footer = `<p class="credits">${credits}</p>`;
+const builtOn = new Date(); const builtStr = `${builtOn.getDate()} ${MONTHS[builtOn.getMonth()]} ${builtOn.getFullYear()}`;
+const footer = `<p class="credits">${credits}<span class="updated">Updated ${builtStr}</span></p>`;
 const suppliersIntro = suppliers.length ? `${suppliers.length} firms: what each one makes, where it sits, and how hard it would be to replace.` : 'The supplier database is not compiled yet.';
 
 const kit = read(path.join(root, 'src', 'kit.js')) || '';
@@ -526,7 +527,7 @@ const modDir = (d) => (fs.existsSync(d) ? fs.readdirSync(d).filter((f) => !f.sta
 const moduleCSS = modDir(path.join(root, 'src', 'modules')).filter((f) => f.endsWith('.css')).map((f) => `\n/* module: ${f} */\n` + read(path.join(root, 'src', 'modules', f))).join('\n');
 fill('STYLES', read(path.join(root, 'src', 'styles.css')) + moduleCSS);
 // build modules: build/modules/*.js each export a function (ctx) returning { PLACEHOLDER: html, ... }
-const ctx = { root, fs, path, all, chapters, geo, stages, data, esc, pad, word, cap, read, readJSON, markdown, inline, tierOf, wordCount, warn };
+const ctx = { root, fs, path, all, chapters, geo, stages, data, esc, pad, word, cap, read, readJSON, markdown, inline, tierOf, wordCount, warn, glossaryWrap };
 for (const f of modDir(path.join(root, 'build', 'modules')).filter((x) => x.endsWith('.js'))) {
   try { const out = require(path.join(root, 'build', 'modules', f))(ctx) || {}; Object.keys(out).forEach((k) => fill(k, String(out[k]))); }
   catch (e) { warn(`build module ${f} failed: ${e.message}`); }
@@ -534,7 +535,7 @@ for (const f of modDir(path.join(root, 'build', 'modules')).filter((x) => x.ends
 const totalCites = all.reduce((a, c) => a + c.cites.length, 0);
 const claimsHTML = `<div><b class="num">${stages.length}</b><span>Stages, quartz<br>to a finished rack</span></div><div class="of-five"><b class="num">${score5}</b><span>Score 5 of 5<br>for concentration</span></div><div><b class="num">${totalCites}</b><span>Sources, one<br>per claim</span></div>`;
 fill('THESIS', thesisHTML); fill('SUBTITLE', subtitleHTML); fill('CLAIMS', claimsHTML); fill('CHAIN', chainTrack(stages, null));
-const sheetPages = [['#/intro', 'Intro'], ['#/chain', 'The Chain'], ['#/landscape', 'AI Chips'], ['#/suppliers', 'Suppliers'], ['#/controls', 'Export Controls'], ['#/glossary', 'Glossary'], ['#/sources', 'Sources']].map((p) => `<a href="${p[0]}">${p[1]}</a>`).join('');
+const sheetPages = [['#/', 'Home'], ['#/intro', 'Intro'], ['#/chain', 'The Chain'], ['#/landscape', 'AI Chips'], ['#/suppliers', 'Suppliers'], ['#/controls', 'Export Controls'], ['#/glossary', 'Glossary'], ['#/sources', 'Sources']].map((p) => `<a href="${p[0]}">${p[1]}</a>`).join('');
 const sheetChapters = all.map((ch) => { const sc = +((ch.meta.card || {}).chokepointScore || 0); return `<li><a href="${ch.id === 'geopolitics' ? '#geopolitics' : '#' + esc(ch.id)}"><span class="n">${pad(ch.number)}</span><span class="t">${esc(ch.title)}</span><span class="s${sc >= 5 ? ' hi' : ''}">${sc ? sc + ' / 5' : ''}</span></a></li>`; }).join('');
 fill('SHEET_PAGES', sheetPages); fill('SHEET_CHAPTERS', sheetChapters);
 fill('RAIL', railHTML); fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits); fill('FOOTER', footer);

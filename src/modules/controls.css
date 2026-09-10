@@ -229,3 +229,9 @@
   .cf-state.is-flip, .cf-row.is-changed { animation: none; }
   .cf-hist, .cf-caret, .cf-head, .cf-mode, .cf-year { transition: none; }
 }
+
+/* ---------- the board's legend ---------- */
+.cf-legend { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; line-height: 1.75; color: var(--muted); margin: 12px 0 0; }
+.cf-legend b { font-weight: 600; color: var(--ink-2); }
+.cf[data-mode="date"] .cf-legend { display: none; }
+.cf-lab .gl-term { font: inherit; color: inherit; }

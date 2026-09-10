@@ -233,6 +233,7 @@
       }
       $$('.view').forEach(function (s) { s.hidden = s.getAttribute('data-view') !== v; });
       $$('.tabs a').forEach(function (a) { var dv = a.getAttribute('data-view'); var on = dv === v; if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+      if (narrow()) { var onTab = $('.tabs a[aria-current="page"]'); if (onTab && onTab.scrollIntoView) onTab.scrollIntoView({ block: 'nearest', inline: 'nearest' }); } // the phone tab strip scrolls; keep the current tab in view
       var rail = $('.rail'); if (rail && v !== 'stack') rail.setAttribute('data-show', '0');
       var mv = MODULE_VIEWS[v];
       Stage.setVisible(v === 'stack' || v === 'landscape' || v === 'walk' || !!(mv && mv.stage));
@@ -270,9 +271,15 @@
       window.addEventListener('scroll', function () { self.update(); }, { passive: true });
       window.addEventListener('resize', function () { self.update(); });
       $('.to-top').addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' }); });
+      var stageTop = $('.stage-top'); if (stageTop) stageTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' }); }); // on phones Top lives in the bottom strip, clear of the text
       this.update();
     },
     update: function () {
+      var toTop = $('.to-top'); // Back to top (and the phone strip's Top button, which follows it) on every long page, not only the chain
+      if (toTop) {
+        var contentsEl = Router.current === 'stack' ? $('#contents') : null;
+        toTop.setAttribute('data-show', (contentsEl ? contentsEl.getBoundingClientRect().bottom < 0 : window.scrollY > window.innerHeight * 0.8) ? '1' : '0');
+      }
       if (Router.current !== 'stack' && Router.current !== 'walk') return;
       var items = Router.current === 'walk' ? this.walkItems : this.items;
       if (!items || !items.length) return; // before init, or a view with nothing to track
@@ -299,10 +306,9 @@
           li.classList.toggle('done', seen && !on);
         });
       }
-      var contents = $('#contents'), rail = $('.rail'), top = $('.to-top');
+      var contents = $('#contents'), rail = $('.rail');
       var past = contents ? contents.getBoundingClientRect().bottom < 0 : window.scrollY > vh;
       if (rail) rail.setAttribute('data-show', past ? '1' : '0');
-      if (top) top.setAttribute('data-show', past ? '1' : '0');
     }
   };
 
@@ -1282,10 +1288,18 @@
       }).join('');
       if (!reduced) host.setAttribute('data-in', '1');
     },
+    /* the glossary's own terms inside a state label become popover buttons, so TPP and the Entity List are defined in place */
+    GLOSS: [[/\bTPP\b/g, 'tpp', 'TPP'], [/\bEntity List\b/g, 'entity list', 'Entity List'], [/\bFDPR\b/g, 'foreign direct product rule', 'FDPR'], [/\bforeign direct product rule\b/gi, 'foreign direct product rule', 'foreign direct product rule'], [/\blicen[cs]e exception\b/gi, 'license exception', 'licence exception']],
+    gloss: function (text) {
+      var out = esc(text);
+      // a span, not a button: the label sits inside the row's own button, and a button cannot nest inside a button
+      this.GLOSS.forEach(function (g) { out = out.replace(g[0], '<span class="gl-term gl-term--inline" data-term="' + g[1] + '">' + g[2] + '</span>'); });
+      return out;
+    },
     pillHTML: function (st) {
       var word = st.status === 'policy' ? 'Policy' : (this.STATE[st.status] || st.status);
       return '<span class="cf-pill is-' + esc(st.status) + '">' + esc(word) + '</span>' +
-        (st.label && st.label !== word ? '<span class="cf-lab">' + esc(st.label) + '</span>' : '') +
+        (st.label && st.label !== word ? '<span class="cf-lab">' + this.gloss(st.label) + '</span>' : '') +
         '<span class="cf-when">' + esc(st.date ? this.fmtDate(st.date) : 'from the start') + '</span>';
     },
     /* re-read every row from the as-of date; rows that moved inside the span glow */
@@ -1798,6 +1812,11 @@
     Theme.init();
     Glossary.init();
     Tip.init(); Cite.init();
+    (function () { // the phone tab strip fades at its right edge while there is more to scroll
+      var tabs = $('.tabs'); if (!tabs) return;
+      var edge = function () { tabs.setAttribute('data-end', tabs.scrollLeft + tabs.clientWidth >= tabs.scrollWidth - 2 ? '1' : '0'); };
+      tabs.addEventListener('scroll', edge, { passive: true }); window.addEventListener('resize', edge); edge();
+    })();
     Tools.init();
     var setMast = function () { var m = $('.masthead'), root = document.documentElement; if (!m) return; root.style.removeProperty('--masthead'); root.style.setProperty('--masthead', m.offsetHeight + 'px'); }; // the masthead wraps on phones, so the sticky offsets follow its real height
     setMast(); window.addEventListener('resize', setMast); window.addEventListener('load', setMast);

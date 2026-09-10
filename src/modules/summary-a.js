@@ -46,7 +46,7 @@
 
     root.addEventListener('click', function (e) {
       var marker = e.target.closest ? e.target.closest('.sa-marker, .sa-town') : null;
-      if (marker) { selectCountry(marker.getAttribute('data-cc'), true); return; }
+      if (marker) { if (marker.getAttribute('data-dead')) return; selectCountry(marker.getAttribute('data-cc'), true); return; }
       var chip = e.target.closest ? e.target.closest('.sa-chip') : null;
       if (chip) { selectCountry(chip.getAttribute('data-cc'), false); return; }
       var tile = e.target.closest ? e.target.closest('.sa-tile') : null;
