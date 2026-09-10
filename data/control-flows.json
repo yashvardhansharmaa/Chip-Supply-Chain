@@ -8,15 +8,56 @@
       "order": 1,
       "initial": "open",
       "states": [
-        { "date": "2022-08-31", "status": "licence", "label": "Licence for A100 and H100", "event": "2022-08-31-a100-h100-licence" },
-        { "date": "2022-10-07", "status": "licence", "label": "Licence above 4,800 TPP with 600 GB/s", "event": "2022-10-07-october-rules" },
-        { "date": "2023-10-17", "status": "shut", "label": "Density test closes the A800 and H800", "event": "2023-10-17-density-test" },
-        { "date": "2025-04-09", "status": "shut", "label": "Even the China-legal H20 stopped", "event": "2025-04-09-h20-licence" },
-        { "date": "2025-07-14", "status": "case", "label": "H20 licences to be granted again", "event": "2025-07-14-h20-restored" },
-        { "date": "2025-08-11", "status": "case", "label": "H20 licensed, with a 15 percent expectation", "event": "2025-08-11-fifteen-percent" },
-        { "date": "2025-12-08", "status": "case", "label": "H200 cleared for approved Chinese customers", "event": "2025-12-08-h200-cleared" },
-        { "date": "2026-01-15", "status": "case", "label": "Case by case below 21,000 TPP", "event": "2026-01-15-h200-case-by-case" }
-      ]
+        {
+          "date": "2022-08-31",
+          "status": "licence",
+          "label": "Licence for A100 and H100",
+          "event": "2022-08-31-a100-h100-licence"
+        },
+        {
+          "date": "2022-10-07",
+          "status": "licence",
+          "label": "Licence above 4,800 TPP with 600 GB/s",
+          "event": "2022-10-07-october-rules"
+        },
+        {
+          "date": "2023-10-17",
+          "status": "shut",
+          "label": "Density test closes the A800 and H800",
+          "event": "2023-10-17-density-test"
+        },
+        {
+          "date": "2025-04-09",
+          "status": "shut",
+          "label": "Even the China-legal H20 stopped",
+          "event": "2025-04-09-h20-licence"
+        },
+        {
+          "date": "2025-07-14",
+          "status": "case",
+          "label": "H20 licences to be granted again",
+          "event": "2025-07-14-h20-restored"
+        },
+        {
+          "date": "2025-08-11",
+          "status": "case",
+          "label": "H20 licensed, with a 15 percent expectation",
+          "event": "2025-08-11-fifteen-percent"
+        },
+        {
+          "date": "2025-12-08",
+          "status": "case",
+          "label": "H200 cleared for approved Chinese customers",
+          "event": "2025-12-08-h200-cleared"
+        },
+        {
+          "date": "2026-01-15",
+          "status": "case",
+          "label": "Case by case below 21,000 TPP",
+          "event": "2026-01-15-h200-case-by-case"
+        }
+      ],
+      "short": "AI chips"
     },
     {
       "id": "us-tools",
@@ -26,11 +67,32 @@
       "order": 2,
       "initial": "open",
       "states": [
-        { "date": "2022-10-07", "status": "licence", "label": "Licence for advanced logic, DRAM and NAND tools", "event": "2022-10-07-october-rules" },
-        { "date": "2023-10-17", "status": "licence", "label": "Licence, with tighter equipment thresholds", "event": "2023-10-17-density-test" },
-        { "date": "2024-12-02", "status": "licence", "label": "Licence for 24 more tool types", "event": "2024-12-02-hbm-package" },
-        { "date": "2025-08-29", "status": "licence", "label": "Foreign fabs in China now need licences", "event": "2025-08-29-veu-revoked" }
-      ]
+        {
+          "date": "2022-10-07",
+          "status": "licence",
+          "label": "Licence for advanced logic, DRAM and NAND tools",
+          "event": "2022-10-07-october-rules"
+        },
+        {
+          "date": "2023-10-17",
+          "status": "licence",
+          "label": "Licence, with tighter equipment thresholds",
+          "event": "2023-10-17-density-test"
+        },
+        {
+          "date": "2024-12-02",
+          "status": "licence",
+          "label": "Licence for 24 more tool types",
+          "event": "2024-12-02-hbm-package"
+        },
+        {
+          "date": "2025-08-29",
+          "status": "licence",
+          "label": "Foreign fabs in China now need licences",
+          "event": "2025-08-29-veu-revoked"
+        }
+      ],
+      "short": "US tools"
     },
     {
       "id": "allies",
@@ -40,10 +102,26 @@
       "order": 3,
       "initial": "open",
       "states": [
-        { "date": "2023-07-23", "status": "licence", "label": "Licence, 23 tool categories", "event": "2023-07-23-japan-tools" },
-        { "date": "2023-09-01", "status": "licence", "label": "Dutch licence for advanced immersion DUV", "event": "2023-09-01-dutch-licence" },
-        { "date": "2024-09-06", "status": "licence", "label": "Dutch licensing extended to mid-range immersion", "event": "2024-09-06-dutch-extension" }
-      ]
+        {
+          "date": "2023-07-23",
+          "status": "licence",
+          "label": "Licence, 23 tool categories",
+          "event": "2023-07-23-japan-tools"
+        },
+        {
+          "date": "2023-09-01",
+          "status": "licence",
+          "label": "Dutch licence for advanced immersion DUV",
+          "event": "2023-09-01-dutch-licence"
+        },
+        {
+          "date": "2024-09-06",
+          "status": "licence",
+          "label": "Dutch licensing extended to mid-range immersion",
+          "event": "2024-09-06-dutch-extension"
+        }
+      ],
+      "short": "Allied tools"
     },
     {
       "id": "hbm",
@@ -53,8 +131,14 @@
       "order": 4,
       "initial": "open",
       "states": [
-        { "date": "2024-12-02", "status": "licence", "label": "Licence for HBM2E and above, anywhere", "event": "2024-12-02-hbm-package" }
-      ]
+        {
+          "date": "2024-12-02",
+          "status": "licence",
+          "label": "Licence for HBM2E and above, anywhere",
+          "event": "2024-12-02-hbm-package"
+        }
+      ],
+      "short": "HBM"
     },
     {
       "id": "entity",
@@ -64,15 +148,56 @@
       "order": 5,
       "initial": "open",
       "states": [
-        { "date": "2018-04-15", "status": "shut", "label": "Denial order bars all US exports to ZTE", "event": "2018-04-15-zte-denial" },
-        { "date": "2018-10-30", "status": "shut", "label": "Fujian Jinhua listed; presumption of denial", "event": "2018-10-30-jinhua-listed" },
-        { "date": "2019-05-16", "status": "shut", "label": "Huawei and 68 affiliates listed", "event": "2019-05-16-huawei-listed" },
-        { "date": "2020-05-15", "status": "shut", "label": "Reaches foreign fabs making Huawei's designs", "event": "2020-05-15-huawei-fdpr" },
-        { "date": "2020-08-17", "status": "shut", "label": "Any chip made with US tools caught", "event": "2020-08-17-fdpr-broadened" },
-        { "date": "2020-12-18", "status": "shut", "label": "SMIC listed; denial at 10 nm and below", "event": "2020-12-18-smic-listed" },
-        { "date": "2025-09-29", "status": "shut", "label": "Subsidiaries of listed firms caught worldwide", "event": "2025-09-29-affiliates-rule" },
-        { "date": "2025-11-10", "status": "shut", "label": "Affiliates rule suspended for a year", "event": "2025-11-10-one-year-truce" }
-      ]
+        {
+          "date": "2018-04-15",
+          "status": "shut",
+          "label": "Denial order bars all US exports to ZTE",
+          "event": "2018-04-15-zte-denial"
+        },
+        {
+          "date": "2018-10-30",
+          "status": "shut",
+          "label": "Fujian Jinhua listed; presumption of denial",
+          "event": "2018-10-30-jinhua-listed"
+        },
+        {
+          "date": "2019-05-16",
+          "status": "shut",
+          "label": "Huawei and 68 affiliates listed",
+          "event": "2019-05-16-huawei-listed"
+        },
+        {
+          "date": "2020-05-15",
+          "status": "shut",
+          "label": "Reaches foreign fabs making Huawei's designs",
+          "event": "2020-05-15-huawei-fdpr"
+        },
+        {
+          "date": "2020-08-17",
+          "status": "shut",
+          "label": "Any chip made with US tools caught",
+          "event": "2020-08-17-fdpr-broadened"
+        },
+        {
+          "date": "2020-12-18",
+          "status": "shut",
+          "label": "SMIC listed; denial at 10 nm and below",
+          "event": "2020-12-18-smic-listed"
+        },
+        {
+          "date": "2025-09-29",
+          "status": "shut",
+          "label": "Subsidiaries of listed firms caught worldwide",
+          "event": "2025-09-29-affiliates-rule"
+        },
+        {
+          "date": "2025-11-10",
+          "status": "shut",
+          "label": "Affiliates rule suspended for a year",
+          "event": "2025-11-10-one-year-truce"
+        }
+      ],
+      "short": "Entity List"
     },
     {
       "id": "minerals",
@@ -82,12 +207,38 @@
       "order": 6,
       "initial": "open",
       "states": [
-        { "date": "2023-07-03", "status": "licence", "label": "Licence for gallium and germanium items", "event": "2023-07-03-gallium-germanium" },
-        { "date": "2024-12-03", "status": "shut", "label": "Gallium, germanium and antimony banned to the US", "event": "2024-12-03-minerals-ban" },
-        { "date": "2025-04-04", "status": "shut", "label": "Rare earths licensed; US ban still standing", "event": "2025-04-04-rare-earths" },
-        { "date": "2025-10-09", "status": "shut", "label": "Control reaches foreign goods above 0.1 percent", "event": "2025-10-09-rare-earth-reach" },
-        { "date": "2025-11-10", "status": "licence", "label": "Suspended for a year; general licences issued", "event": "2025-11-10-one-year-truce" }
-      ]
+        {
+          "date": "2023-07-03",
+          "status": "licence",
+          "label": "Licence for gallium and germanium items",
+          "event": "2023-07-03-gallium-germanium"
+        },
+        {
+          "date": "2024-12-03",
+          "status": "shut",
+          "label": "Gallium, germanium and antimony banned to the US",
+          "event": "2024-12-03-minerals-ban"
+        },
+        {
+          "date": "2025-04-04",
+          "status": "shut",
+          "label": "Rare earths licensed; US ban still standing",
+          "event": "2025-04-04-rare-earths"
+        },
+        {
+          "date": "2025-10-09",
+          "status": "shut",
+          "label": "Control reaches foreign goods above 0.1 percent",
+          "event": "2025-10-09-rare-earth-reach"
+        },
+        {
+          "date": "2025-11-10",
+          "status": "licence",
+          "label": "Suspended for a year; general licences issued",
+          "event": "2025-11-10-one-year-truce"
+        }
+      ],
+      "short": "Minerals"
     },
     {
       "id": "china-market",
@@ -97,9 +248,20 @@
       "order": 7,
       "initial": "open",
       "states": [
-        { "date": "2023-05-21", "status": "shut", "label": "Micron barred from critical information infrastructure", "event": "2023-05-21-micron-barred" },
-        { "date": "2026-08-26", "status": "shut", "label": "H200 purchases restricted; licences go unused", "event": "2026-08-26-h200-unused" }
-      ]
+        {
+          "date": "2023-05-21",
+          "status": "shut",
+          "label": "Micron barred from critical information infrastructure",
+          "event": "2023-05-21-micron-barred"
+        },
+        {
+          "date": "2026-08-26",
+          "status": "shut",
+          "label": "H200 purchases restricted; licences go unused",
+          "event": "2026-08-26-h200-unused"
+        }
+      ],
+      "short": "China's market"
     },
     {
       "id": "diffusion",
@@ -109,11 +271,32 @@
       "order": 8,
       "initial": "open",
       "states": [
-        { "date": "2025-01-13", "status": "licence", "label": "Country caps; licence above the threshold", "event": "2025-01-13-diffusion-rule" },
-        { "date": "2025-05-13", "status": "case", "label": "Caps gone; country-by-country deals instead", "event": "2025-05-13-diffusion-rescinded" },
-        { "date": "2025-05-15", "status": "case", "label": "Gulf flows agreed under security conditions", "event": "2025-05-15-gulf-deals" },
-        { "date": "2026-07-10", "status": "case", "label": "Approved lists replace caps for the UAE", "event": "2026-07-10-uae-group-a5" }
-      ]
+        {
+          "date": "2025-01-13",
+          "status": "licence",
+          "label": "Country caps; licence above the threshold",
+          "event": "2025-01-13-diffusion-rule"
+        },
+        {
+          "date": "2025-05-13",
+          "status": "case",
+          "label": "Caps gone; country-by-country deals instead",
+          "event": "2025-05-13-diffusion-rescinded"
+        },
+        {
+          "date": "2025-05-15",
+          "status": "case",
+          "label": "Gulf flows agreed under security conditions",
+          "event": "2025-05-15-gulf-deals"
+        },
+        {
+          "date": "2026-07-10",
+          "status": "case",
+          "label": "Approved lists replace caps for the UAE",
+          "event": "2026-07-10-uae-group-a5"
+        }
+      ],
+      "short": "Rest of world"
     },
     {
       "id": "industrial",
@@ -123,13 +306,44 @@
       "order": 9,
       "initial": "open",
       "states": [
-        { "date": "2022-08-09", "status": "policy", "label": "$52.7 billion, with a China expansion bar", "event": "2022-08-09-chips-act" },
-        { "date": "2024-05-24", "status": "policy", "label": "China's third fund: 344 billion yuan", "event": "2024-05-24-big-fund-three" },
-        { "date": "2025-03-03", "status": "policy", "label": "TSMC raises US investment to $165 billion", "event": "2025-03-03-tsmc-investment" },
-        { "date": "2025-08-22", "status": "policy", "label": "Washington takes 9.9 percent of Intel", "event": "2025-08-22-intel-stake" },
-        { "date": "2026-01-14", "status": "policy", "label": "25 percent tariff on chips crossing America", "event": "2026-01-14-section-232" },
-        { "date": "2026-01-15", "status": "policy", "label": "Taiwan wins tariff relief, nothing on chips", "event": "2026-01-15-us-taiwan-mou" }
-      ]
+        {
+          "date": "2022-08-09",
+          "status": "policy",
+          "label": "$52.7 billion, with a China expansion bar",
+          "event": "2022-08-09-chips-act"
+        },
+        {
+          "date": "2024-05-24",
+          "status": "policy",
+          "label": "China's third fund: 344 billion yuan",
+          "event": "2024-05-24-big-fund-three"
+        },
+        {
+          "date": "2025-03-03",
+          "status": "policy",
+          "label": "TSMC raises US investment to $165 billion",
+          "event": "2025-03-03-tsmc-investment"
+        },
+        {
+          "date": "2025-08-22",
+          "status": "policy",
+          "label": "Washington takes 9.9 percent of Intel",
+          "event": "2025-08-22-intel-stake"
+        },
+        {
+          "date": "2026-01-14",
+          "status": "policy",
+          "label": "25 percent tariff on chips crossing America",
+          "event": "2026-01-14-section-232"
+        },
+        {
+          "date": "2026-01-15",
+          "status": "policy",
+          "label": "Taiwan wins tariff relief, nothing on chips",
+          "event": "2026-01-15-us-taiwan-mou"
+        }
+      ],
+      "short": "Money"
     }
   ]
 }
