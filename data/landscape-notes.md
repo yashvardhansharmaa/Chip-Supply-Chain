@@ -98,3 +98,83 @@ Almost nothing about the Siyuan 590 is public: Cambricon's own site still lists 
 `moore-threads-mtt-s5000`
 
 Moore Threads builds the MTT S5000 on its PH100 chip in what it calls the Pinghu architecture, and claims full-precision support from FP8 to FP64, at least 4,000 tokens per second of single-GPU prefill, the pass that reads the prompt, and 1,000 per second of decode, the pass that writes the answer, and 95 percent linear scaling at ten-thousand-GPU scale ([source](https://en.mthreads.com/product/S5000)). It publishes no peak FLOPS, no node, no foundry, no memory configuration, no power figure and no price, and no independent benchmark exists, which is what selling a Chinese accelerator on software compatibility rather than on measured silicon looks like. It does document the MUSA stack and its adaptation to PyTorch, Megatron-LM, vLLM and SGLang, which is how Chinese accelerators substitute for CUDA in practice, and the KUAE cluster product that packages the parts up to ten thousand GPUs ([source](https://en.mthreads.com/product/KUAE)).
+
+## H20 (HGX H20, China variant)
+`nvidia-h20`
+
+Nvidia’s third attempt at a compliant China part, and the one that showed the limits of designing to a threshold: a chip built to sit inside the rules still needed a licence eighteen months later. Nvidia publishes no datasheet, no die area, no stack count and no NVLink rate for it, so almost everything here comes from Epoch AI’s database rather than from the vendor. The 96 GB of HBM3 implies six 16 GB stacks on a die that carries six stack sites, but Nvidia has not confirmed that. SemiAnalysis reported working samples in November 2023 and mass production within a month, which is where the shipping quarter above comes from.
+
+## H800 (China variant of the H100)
+`nvidia-h800`
+
+The China variant that cost Chinese buyers the least in practice. Epoch AI’s calculation is that the H800 was about as good as the H100 on training FLOP per second per dollar, because 400 GB/s of NVLink is still enough to hide communication behind useful work; the loss shows up in long-context inference instead. Its interconnect figure is the one number on this page that two allowed sources contradict each other on: CSIS says 300 GB/s and Epoch AI says 400 GB/s. Both are recorded above rather than averaged. Nvidia has published nothing about the part, and Epoch AI dates it to 21 March 2023.
+
+## A800 (China variant of the A100)
+`nvidia-a800`
+
+The clearest case on the site of a product designed against a regulation rather than a workload. Nvidia’s own 8-K of 31 August 2022 had already said the licence would extend to any future chip meeting both peak performance and chip-to-chip thresholds roughly equivalent to the A100, and the A800 answers that by failing only one of the two. Commerce Secretary Gina Raimondo’s reply, quoted by CSIS, was that if a chip is redesigned around a cut line to enable AI, she would control it the next day. Epoch AI dates the A800 variants to August and November 2022.
+
+## H100 (SXM5)
+`nvidia-h100`
+
+The chip the 2023 and 2024 build-out ran on, and the one every China variant is measured against. Nvidia states that the full GH100 carries six HBM3 or HBM2e stack sites and that the SXM5 part uses five of them for 80 GB. The H200 that follows it is the same die with 141 GB of HBM3E, which is why the H200 rather than the H100 became the chip Washington eventually let into China. Nvidia’s 8-K of 31 August 2022 still calls the H100 forthcoming, and Epoch AI dates the SXM5 part to September 2022.
+
+## A100 (80 GB SXM)
+`nvidia-a100`
+
+The reference point for every threshold since. BIS set the October 2022 line just under the A100 on both axes it used, peak performance and chip-to-chip bandwidth, which is why the A800 exists at all. Nvidia describes five active HBM2 stacks on the 40 GB SXM4 board, so the 80 GB part carries the same five sites at 16 GB each in HBM2e; Nvidia names no memory supplier, no package dimensions and no list price. Epoch AI dates the SXM4 A100 to 14 May 2020 and the 80 GB version to 16 November 2020.
+
+## Instinct MI325X
+`amd-mi325x`
+
+The same CDNA 3 silicon as the MI300X with 256 GB of HBM3E at 6 TB/s and a 1,000 W board, and the only AMD part Washington has ever named as licensable for China. Both halves of that licence sit close to the line: 20,919 against a 21,000 ceiling, 6,000 GB/s against a 6,500 GB/s ceiling. AMD publishes no list price, no die areas and no assembler.
+
+## Instinct MI300X
+`amd-mi300x`
+
+The first accelerator to put 192 GB on one package, a year before Nvidia matched it, and the first to break a data center GPU into a dozen chiplets: eight N5 accelerator dies bonded onto four N6 I/O dies, 153 billion transistors in all. The stack count is not printed on AMD’s page but follows from it, since the 8,192-bit memory interface is eight 1,024-bit HBM channels, and the CDNA 3 white paper says eight stacks. AMD publishes no list price, no die areas and no assembler.
+
+## TPU v6e (Trillium)
+`google-tpu-v6e`
+
+The last TPU before Ironwood, and the one Google scaled hardest for external customers. Bandwidth pins the memory down even though Google will not: 1,638 GB/s across 32 GB works out at two stacks running near HBM3 pin speed. Google publishes compute, memory and fabric numbers for its TPUs and nothing else: no foundry, no process node, no die area, no transistor count, no package type and no HBM stack count. Those fields are empty here rather than filled from unofficial reporting. Epoch AI puts the power draw at about 380 W; that is an estimate, not a Google figure, so the TDP field is empty.
+
+## TPU v5p
+`google-tpu-v5p`
+
+The training TPU of the pre-Ironwood era, and the largest coherent domain Google had built at the time: 8,960 chips in a 3D torus. It carries two TensorCores and four SparseCores per chip. Its FP8 rate matching its BF16 rate is the clearest sign that the v5 generation was designed before low precision became the axis of competition. Google publishes compute, memory and fabric numbers for its TPUs and nothing else: no foundry, no process node, no die area, no transistor count, no package type and no HBM stack count. Those fields are empty here rather than filled from unofficial reporting.
+
+## TPU v5e
+`google-tpu-v5e`
+
+The cheap TPU, sold on performance per dollar rather than peak: Google quotes it at 0.65 times the cost of ownership of the v4 for the same work. It is also the clearest illustration of why BIS added a density test in October 2023. A chip can sit under the 4,800 line and still be worth controlling, because 256 of them in a pod deliver 50.63 PFLOPs. Google publishes compute, memory and fabric numbers for its TPUs and nothing else: no foundry, no process node, no die area, no transistor count, no package type and no HBM stack count. Those fields are empty here rather than filled from unofficial reporting.
+
+## TPU v4
+`google-tpu-v4`
+
+The generation that made TPUs credible outside Google, and the only one on this page with a published power figure: Google reports measured minimum, mean and maximum draw of 90, 170 and 192 W, so the TDP field above carries the measured maximum rather than a rating. Two TensorCores per chip, HBM2 rather than the unnamed HBM of later parts, and a 3D mesh instead of the torus that came later. Google publishes compute, memory and fabric numbers for its TPUs and nothing else: no foundry, no process node, no die area, no transistor count, no package type and no HBM stack count. Those fields are empty here rather than filled from unofficial reporting.
+
+## Trainium2
+`aws-trainium2`
+
+The chip that made AWS a credible second source, and the generation Anthropic trained on at scale. It is also a good demonstration of how the export-control arithmetic behaves: FP8 doubles the BF16 rate on most accelerators, but on Trainium2 it falls short of double, so the BF16 figure sets the total processing performance. Epoch AI dates the part to 3 December 2024; AWS’s own documentation carries no date. AWS publishes compute, memory and fabric numbers and nothing about the silicon: no node, no foundry, no die count, no package and no power figure. Epoch AI puts the draw at about 500 W, which is an estimate rather than an AWS number.
+
+## Maia 100
+`microsoft-maia-100`
+
+Microsoft’s first accelerator, and the first silicon anywhere to implement the Microscaling data format that later became the MX standard. Microsoft published the cooling design in detail, down to the sidekick heat exchanger that sits beside the rack, and almost nothing about the chip: no memory capacity, no bandwidth, no transistor count and no throughput. The date above is that of the Azure post carrying these figures, 3 April 2024; Epoch AI records the part at August 2024, when Microsoft presented it publicly. The die area and power here come from Epoch AI, not from Microsoft.
+
+## MTIA v2
+`meta-mtia-v2`
+
+The one large accelerator on this page with no HBM at all: 128 GB of LPDDR5 at 204.8 GB/s, about a sixteenth of an H100’s memory bandwidth, backed by 256 MB of on-chip SRAM, in a 90 W envelope. That is a deliberate choice for ranking and recommendation work, where the model is small and the traffic is enormous. Meta also publishes what almost nobody else does: the die measures 25.6 by 16.4 mm, 421 mm2, and holds 2.35 billion gates on TSMC 5 nm.
+
+## Gaudi 2
+`intel-gaudi2`
+
+The chip that set the Ethernet bet Gaudi 3 inherited: 24 RDMA NICs on the package, so a Gaudi cluster needs no proprietary cable plant and no InfiniBand. It also carries 48 MB of local SRAM and hardware video decoders that let it run its own pre-processing. Intel positioned it against the A100 and, unusually for a vendor, published no peak throughput figure for it, which is why the compute row here rests on Epoch AI rather than a datasheet.
+
+## Ascend 910B
+`huawei-ascend-910b`
+
+The domestic answer to the A100, and the evidence that export controls bite. CSET dates the series to 2022; no allowed source gives a first-shipment date, so that field is empty. CSET finds that Huawei needed at least two years to redesign the part for SMIC and cut the number of active AI cores between the first and second generations, most likely because of yield or capacity limits on SMIC’s 7 nm line. The 910B ships in several grades, from a 910B4 at 32 GB and 800 GB/s to a 910B1 at 64 GB and 1.6 TB/s; the figures above are the top of that range. SemiAnalysis places the chip between the A100 and the H100 in performance. Huawei publishes no die area, transistor count, package detail or per-chip datasheet.

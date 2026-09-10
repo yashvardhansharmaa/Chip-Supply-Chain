@@ -1454,7 +1454,7 @@
     ],
     "note": "Moore Threads gives 80 GB at 1.6 TB/s, which is about four HBM2E-class stacks, and nothing else; the single die and all dimensions are estimated."
   },
-  "a100": {
+  "nvidia-a100": {
     "unit": "mm",
     "interposer": [
       55,
@@ -1511,7 +1511,7 @@
     ],
     "note": "Nvidia states one 826 mm2 GA100 die and five active HBM2e stacks. An odd number of stacks cannot be shared evenly between the two long edges, so they are drawn three to one edge and two to the other. Nvidia publishes no package dimensions, so the die rectangle (26 x 31.8 mm, the published area), the interposer and the substrate are estimated."
   },
-  "h100": {
+  "nvidia-h100": {
     "unit": "mm",
     "interposer": [
       54,
@@ -1568,7 +1568,7 @@
     ],
     "note": "Nvidia states one 814 mm2 GH100 die, six HBM stack sites on the full chip and five HBM3 stacks active on the H100 SXM5. The five are drawn three to one edge and two to the other; the sixth site is left empty. Nvidia publishes no package dimensions, so the interposer and substrate rectangles are estimated."
   },
-  "a800": {
+  "nvidia-a800": {
     "unit": "mm",
     "interposer": [
       55,
@@ -1625,7 +1625,7 @@
     ],
     "note": "Physically the A100 package: the same 826 mm2 GA100 die and five active HBM2e stacks, since only the NVLink rate was changed for the China market. Drawn identically to the A100, and every dimension is estimated because Nvidia publishes none."
   },
-  "h800": {
+  "nvidia-h800": {
     "unit": "mm",
     "interposer": [
       54,
@@ -1682,7 +1682,7 @@
     ],
     "note": "Physically the H100 package: the same 814 mm2 GH100 die and five active HBM3 stacks, since only the NVLink rate was changed. Drawn identically to the H100, and every dimension is estimated."
   },
-  "h20": {
+  "nvidia-h20": {
     "unit": "mm",
     "interposer": [
       54,
@@ -1745,7 +1745,7 @@
     ],
     "note": "Inferred, not stated. Nvidia publishes no H20 package information at all. Epoch AI gives 96 GB of HBM3, and Nvidia’s Hopper post says the full GH100 carries six HBM stack sites, so this is drawn as one Hopper die with six 16 GB stacks, three per long edge, in the same arrangement as the H200. Every dimension is estimated."
   },
-  "tpu-v6e": {
+  "google-tpu-v6e": {
     "unit": "mm",
     "interposer": [
       50,
@@ -1783,7 +1783,7 @@
     ],
     "note": "Estimated. Google states one TensorCore, 32 GB of HBM and 1,638 GB/s per chip, and nothing about the package. Two stacks divide the capacity into 16 GB each and the bandwidth into 819 GB/s each, which is one HBM3 stack at 6.4 Gbps, so the chip is drawn with a single compute die and one stack per long edge. Every dimension is estimated."
   },
-  "tpu-v5p": {
+  "google-tpu-v5p": {
     "unit": "mm",
     "interposer": [
       52,
@@ -1833,7 +1833,7 @@
     ],
     "note": "Estimated. Google states 95 GiB of HBM at 2,765 GB/s and two TensorCores per chip, and publishes nothing about the package. Four stacks are the smallest count that divides 96 GB evenly at 24 GB each, so the chip is drawn as one compute die with two stacks per long edge. Every dimension, and the stack count itself, is estimated."
   },
-  "tpu-v5e": {
+  "google-tpu-v5e": {
     "unit": "mm",
     "interposer": [
       46,
@@ -1871,7 +1871,7 @@
     ],
     "note": "Estimated. Google states one TensorCore, 16 GB of HBM and 800 GiBps per chip, and nothing about the package. Two stacks of 8 GB is the smallest arrangement that fits, so the chip is drawn with one compute die and one stack per long edge. Every dimension is estimated."
   },
-  "tpu-v4": {
+  "google-tpu-v4": {
     "unit": "mm",
     "interposer": [
       50,
@@ -1921,7 +1921,7 @@
     ],
     "note": "Estimated. Google states 32 GiB of HBM2 at 1,200 GB/s and two TensorCores per chip, and publishes no package information. Four 8 GB stacks at 300 GB/s each is the arrangement that fits both numbers, so the chip is drawn with one compute die and two stacks per long edge. Every dimension is estimated."
   },
-  "mi300x": {
+  "amd-mi300x": {
     "unit": "mm",
     "interposer": [
       62,
@@ -2064,7 +2064,7 @@
     ],
     "note": "AMD’s CDNA 3 white paper states eight accelerator complex dies stacked vertically on four I/O dies and eight HBM stacks, which fixes the arrangement: two accelerator dies per I/O die in a two-by-two grid, four stacks to a side. The OAM outline is carried over from the MI355X layout in this dataset; AMD publishes no dimensions, so every rectangle is estimated."
   },
-  "mi325x": {
+  "amd-mi325x": {
     "unit": "mm",
     "interposer": [
       62,
@@ -2207,7 +2207,7 @@
     ],
     "note": "The MI300X package with 12-high HBM3E in place of HBM3: AMD’s CDNA 3 white paper covers both the MI300X and the MI325X and states eight accelerator dies on four I/O dies with eight HBM stacks. Drawn identically to the MI300X, and every dimension is estimated."
   },
-  "trainium2": {
+  "aws-trainium2": {
     "unit": "mm",
     "interposer": [
       52,
@@ -2257,7 +2257,7 @@
     ],
     "note": "Estimated. AWS states 96 GiB of device memory at 2.9 TB/s and eight NeuronCore-v3, and publishes no die count and no package information. Four 24 GB stacks divide the capacity evenly, so the chip is drawn as one compute rectangle with two stacks per long edge. Every dimension, including the die count, is estimated; the Trainium3 layout in this dataset shows the two-sub-assembly arrangement AWS moved to later."
   },
-  "gaudi2": {
+  "intel-gaudi2": {
     "unit": "mm",
     "interposer": [
       56,
@@ -2320,7 +2320,7 @@
     ],
     "note": "Estimated. Intel states 96 GB of HBM2E at 2.45 TB/s and an OCP OAM 1.1 mezzanine card, and gives no die count and no dimensions. Six 16 GB stacks divide the capacity evenly, and Intel describes Gaudi 3 as the generation that moved to two compute dies, so Gaudi 2 is drawn as one die with three stacks per long edge. Every dimension is estimated."
   },
-  "ascend-910b": {
+  "huawei-ascend-910b": {
     "unit": "mm",
     "interposer": [
       50,
@@ -2370,7 +2370,7 @@
     ],
     "note": "Estimated. This is one half of the Ascend 910C layout in this dataset, which is drawn as two 910B-class sub-assemblies on a shared substrate: a single compute die with four HBM2E stacks on its own silicon interposer. Huawei publishes no die area, package photograph or dimension, so every rectangle is estimated."
   },
-  "maia-100": {
+  "microsoft-maia-100": {
     "unit": "mm",
     "interposer": [
       56,
@@ -2421,7 +2421,7 @@
     ],
     "note": "Estimated, and more so than most. Microsoft says only that Maia 100 is one of the largest processors made on the 5 nm node with advanced packaging from TSMC; Epoch AI gives the die area as 820 mm2, drawn here as a 28.6 mm square. Microsoft publishes no memory configuration, so the four stacks are the smallest arrangement consistent with an HBM inference part of this size, and the stack count itself is a guess flagged as such rather than a sourced figure."
   },
-  "mtia-v2": {
+  "meta-mtia-v2": {
     "unit": "mm",
     "interposer": null,
     "dies": [
