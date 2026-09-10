@@ -1,4 +1,4 @@
-/* WALK  — the view at #/walk: "How a GPU is made", the site's 18 plain-language paragraphs in order.
+/* WALK  — the view at #/walk: "How AI chips are made", the site's 18 plain-language paragraphs in order.
    START_HERE — the three-way chooser on the landing page, directly under the hero.
 
    Nothing here is written from memory. Every paragraph, name, country code, score and count is read
@@ -82,7 +82,7 @@ ${leadersHTML(c)}
 <div class="wk-rail" id="wk-rail" data-show="0" aria-hidden="true" hidden><div class="wk-rail-bar"><i></i></div><p class="wk-rail-line"><span class="wk-rail-n"></span><span class="wk-rail-t"></span></p></div>
 <header class="wk-head">
 <p class="label wk-eyebrow">Start here</p>
-<h2 class="wk-title">How a GPU is made</h2>
+<h2 class="wk-title">How AI chips are made</h2>
 <p class="wk-dek">One plain paragraph from each of the ${word(steps.length)} chapters, in the order a chip is made, then what it costs and who controls it. No jargon, no background, one sitting.</p>
 <p class="wk-meta"><span class="label">${steps.length} paragraphs</span><span class="label">${walkWords.toLocaleString('en-US')} words</span><span class="label">about ${mins} min</span></p>
 </header>

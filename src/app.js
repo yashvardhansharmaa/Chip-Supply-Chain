@@ -326,11 +326,9 @@
     /* ---- data ---- */
     byId: function (id) { for (var i = 0; i < this.chips.length; i++) if (this.chips[i].id === id) return this.chips[i]; return null; },
     selection: function () { var self = this, out = []; this.picked.forEach(function (id) { var c = self.byId(id); if (c) out.push(c); }); return out; },
-    initSelection: function () { // the page opens in comparison mode on the two best-documented parts
+    initSelection: function () { // the page opens with nothing chosen
       var self = this;
-      ['nvidia-b200', 'amd-mi355x'].forEach(function (id) { if (self.byId(id)) self.picked.push(id); });
-      for (var i = 0; this.picked.length < 2 && i < this.chips.length; i++) if (this.picked.indexOf(this.chips[i].id) < 0) this.picked.push(this.chips[i].id);
-      this.sel = this.picked[0] || null;
+      this.picked = []; this.sel = null; // the page opens with nothing chosen: the reader picks the chips to compare
       this.syncExport();
     },
     syncExport: function () { // Tools' copy buttons read this array at click time
@@ -1804,7 +1802,7 @@
     buildIndex: function () {
       if (this.index) return this.index;
       var idx = [];
-      idx.push({ kind: 'Start here', title: 'How a GPU is made', text: 'One plain paragraph per stage, in order, with the specimens: the chain in one sitting', href: '#/intro' });
+      idx.push({ kind: 'Start here', title: 'How AI chips are made', text: 'One plain paragraph per stage, in order, with the specimens: the chain in one sitting', href: '#/intro' });
       (DATA.chapters || []).forEach(function (c) { if (c.plain && c.id !== 'introduction-and-goals') idx.push({ kind: 'Start here', title: c.title + ', in plain terms', text: c.plain, href: '#/walk/' + c.id }); });
       $$('[data-view="stack"] .chapter').forEach(function (ch) {
         var title = (ch.querySelector('.ch-title') || {}).textContent || ch.id;

@@ -35,9 +35,7 @@ Found and fixed: the home strip's stop list held anchors without list items; the
 ## Left for the author
 
 - Chapter 7 states "49 percent" for two different dies two sentences apart (both correct).
-- ASMPT's bonder market: $1.6bn by 2028 in chapter 11, $1bn by 2027 in chapter 13 (different vendor statements).
 - The Dutch equipment tightening is dated 7 September 2024 in the timeline (Staatscourant) and 9 September in the eCFR footnote.
-- Start here is titled "How a GPU is made" while the hero says "How AI chips are made".
 - 25 of the 50 board summaries run over 90 words; every overrun is cited fact.
 - TPU v6e FP8 support could not be settled from Google's pages.
 - "License Exception" keeps the EAR's American spelling in four glossary term names.
