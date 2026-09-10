@@ -8304,7 +8304,7 @@ PC.register('wafer', function (p) {
     },
     renderCount: function () {
       var el = $('#cx-count'); if (!el) return;
-      el.innerHTML = this.picked.length ? '<b>' + this.picked.length + '</b> of ' + this.max + ' chips selected' + (this.hint ? ' · <i>' + esc(this.hint) + '</i>' : '') : 'No chip selected. Pick one to see its specs, or two to four to compare them.';
+      el.innerHTML = this.picked.length ? '<b>' + this.picked.length + '</b> of ' + this.max + ' chips selected' + (this.hint ? ' · <i>' + esc(this.hint) + '</i>' : '') : '';
       var sec = $('section[data-view="landscape"]'); if (sec) sec.setAttribute('data-empty', this.picked.length ? '0' : '1');
     },
 
@@ -8381,7 +8381,7 @@ PC.register('wafer', function (p) {
           '<span class="cx-plan-name"><b>' + esc(c.name) + '</b><em>' + esc(c.vendor) + '</em></span>' +
           '<span class="cx-plan-art">' + self.planSVG(c, k) + '</span>' +
           '<span class="cx-plan-size">' + esc(self.planSize(c)) + '</span></button>';
-      }).join('') || '<p class="cx-nil">No chip selected.</p>';
+      }).join('') || '';
       var key = $('#cx-key');
       if (key) key.innerHTML = '<span><i class="cx-sw die"></i>logic die</span><span><i class="cx-sw hbm"></i>memory stack</span><span><i class="cx-sw int"></i>interposer</span><span><i class="cx-sw sub"></i>substrate</span>' + this.scaleKey(k);
     },
