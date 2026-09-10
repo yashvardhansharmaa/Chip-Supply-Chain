@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Social card — Compute Chokepoints</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,300..700&display=swap">
+<style>
+:root{
+  --bg:#edeff0; --bg-3:#d9dde0;
+  --ink:#12161a; --ink-2:#3a434c; --muted:#5b646d;
+  --line:#cbd0d4; --line-2:#b6bcc1;
+  --accent:#c98a12;
+  --font-display:"IBM Plex Sans Condensed",Arial,sans-serif;
+  --font-body:"Newsreader",Georgia,serif;
+  --font-mono:"IBM Plex Mono",Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+.card{
+  position:relative;width:1200px;height:630px;background:var(--bg);color:var(--ink);
+  padding:56px 64px 52px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;
+}
+.card::before{ /* the site's own matte grain */
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0.09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+.card > *{position:relative;z-index:1}
+
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:24px}
+.lock{display:flex;align-items:center;gap:14px}
+.lock .mk{width:30px;height:30px;display:block;flex:0 0 auto}
+.lock .stk{display:flex;flex-direction:column;gap:3px;line-height:1;color:var(--ink)}
+.lock b{font-family:var(--font-display);font-weight:700;font-size:23px;letter-spacing:.05em;text-transform:uppercase}
+.lock span{font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;color:var(--ink-2);text-transform:uppercase}
+.stamp{font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;padding-top:5px}
+
+.mid{margin:0}
+.mid h1{
+  font-family:var(--font-display);font-weight:700;font-size:92px;line-height:.98;letter-spacing:-.006em;
+  margin:0 0 24px;max-width:12.6ch;
+}
+.mid p{font-family:var(--font-body);font-size:30px;line-height:1.34;color:var(--ink-2);margin:0;max-width:34ch}
+
+.foot{display:flex;flex-direction:column;gap:15px}
+.railhead{display:flex;align-items:baseline;justify-content:space-between;font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.railhead b{color:var(--ink);font-weight:500}
+.rail{display:grid;grid-template-columns:repeat(15,1fr);gap:5px;align-items:end}
+.cell{display:flex;flex-direction:column;gap:7px;min-width:0}
+.cell .bar{height:66px;display:flex;align-items:flex-end;border-bottom:1px solid var(--line-2)}
+.cell .bar i{display:block;width:100%;background:var(--ink-2)}
+.cell[data-b="4"] .bar i{height:100%;background:var(--accent)}
+.cell[data-b="3"] .bar i{height:66%;background:var(--ink-2)}
+.cell .t{display:none}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="top">
+    <div class="lock">
+      <svg class="mk" viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="1" y="13" width="4" height="8" fill="#12161a"/>
+        <rect x="7" y="8" width="4" height="13" fill="#12161a"/>
+        <rect x="13" y="1" width="4" height="20" fill="#c98a12"/>
+        <rect x="19" y="8" width="4" height="13" fill="#12161a"/>
+        <rect x="0" y="21.4" width="24" height="1" fill="#b6bcc1"/>
+      </svg>
+      <span class="stk"><b>Compute Chokepoints</b><span>The AI chip supply chain</span></span>
+    </div>
+    <div class="stamp">Updated 10 September 2026</div>
+  </div>
+
+  <div class="mid">
+    <h1>How AI chips are made</h1>
+    <p>Every stage of the supply chain, and who controls it.</p>
+  </div>
+
+  <div class="foot">
+    <div class="railhead"><span>Seventeen chapters</span><span><b>Nothing else is cited.</b></span></div>
+    <div class="rail">
+      <div class="cell" data-b="4"><span class="bar"><i></i></span><span class="t">Design</span></div>
+      <div class="cell" data-b="3"><span class="bar"><i></i></span><span class="t">Silicon</span></div>
+      <div class="cell" data-b="3"><span class="bar"><i></i></span><span class="t">Chemicals</span></div>
+      <div class="cell" data-b="4"><span class="bar"><i></i></span><span class="t">Litho</span></div>
+      <div class="cell" data-b="4"><span class="bar"><i></i></span><span class="t">Masks</span></div>
+      <div class="cell" data-b="3"><span class="bar"><i></i></span><span class="t">Dep / etch</span></div>
+      <div class="cell" data-b="3"><span class="bar"><i></i></span><span class="t">Metrology</span></div>
+      <div class="cell" data-b="4"><span class="bar"><i></i></span><span class="t">Front end</span></div>
+      <div class="cell" data-b="4"><span class="bar"><i></i></span><span class="t">Foundry</span></div>
+      <div class="cell" data-b="4"><span class="bar"><i></i></span><span class="t">Memory</span></div>
+      <div class="cell" data-b="4"><span class="bar"><i></i></span><span class="t">Packaging</span></div>
+      <div class="cell" data-b="4"><span class="bar"><i></i></span><span class="t">Substrate</span></div>
+      <div class="cell" data-b="3"><span class="bar"><i></i></span><span class="t">Test</span></div>
+      <div class="cell" data-b="3"><span class="bar"><i></i></span><span class="t">Systems</span></div>
+      <div class="cell" data-b="3"><span class="bar"><i></i></span><span class="t">Power</span></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

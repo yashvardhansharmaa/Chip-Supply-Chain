@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Wordmark options — Compute Chokepoints</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,300..700&display=swap">
+<style>
+:root{
+  --bg:#edeff0; --bg-2:#e4e7e9; --bg-3:#d9dde0;
+  --ink:#12161a; --ink-2:#3a434c; --muted:#5b646d;
+  --line:#cbd0d4; --line-2:#b6bcc1;
+  --accent:#c98a12; --accent-ink:#7a5406;
+  --font-display:"IBM Plex Sans Condensed",Arial,sans-serif;
+  --font-body:"Newsreader",Georgia,serif;
+  --font-mono:"IBM Plex Mono",Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg-2);color:var(--ink);font-family:var(--font-body);font-size:15px}
+.wrap{padding:26px 34px 40px}
+h1{font-family:var(--font-display);font-weight:700;font-size:20px;letter-spacing:.04em;text-transform:uppercase;margin:0 0 4px}
+.sub{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 24px}
+.opt{margin:0 0 26px}
+.cap{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 7px}
+.cap b{color:var(--ink);font-weight:500}
+.note{font-family:var(--font-body);font-size:14px;color:var(--ink-2);margin:8px 0 0;max-width:74ch}
+
+/* the real masthead shell */
+.bar{height:56px;background:var(--bg);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 34px}
+.tabs{display:flex;gap:4px;align-items:center}
+.tabs a{font-family:var(--font-display);font-weight:600;font-size:13.5px;letter-spacing:.02em;text-decoration:none;padding:7px 11px;border:1px solid transparent;border-radius:3px;color:var(--ink-2);white-space:nowrap}
+.tabs a.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn{width:34px;height:34px;border:1px solid var(--line-2);border-radius:3px;display:inline-grid;place-items:center;margin-left:6px}
+.btn svg{width:16px;height:16px;stroke:var(--ink-2);fill:none;stroke-width:1.6}
+
+/* --- shared wordmark bits --- */
+.wm{display:flex;align-items:baseline;gap:12px;text-decoration:none;color:inherit}
+.wm b{font-family:var(--font-display);font-weight:700;font-size:21px;letter-spacing:.06em;text-transform:uppercase}
+.wm span{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+
+/* 0 — current */
+.wm0 b{font-weight:700;font-size:21px;letter-spacing:.06em}
+.wm0 span{color:var(--muted);font-size:11px}
+
+/* 1 — set solid: tighter tracking, hairline rule, tagline raised to ink-2 */
+.wm1{gap:0}
+.wm1 b{font-weight:700;font-size:21px;letter-spacing:.018em}
+.wm1 i{display:inline-block;width:1px;height:15px;background:var(--line-2);margin:0 13px;transform:translateY(1px)}
+.wm1 span{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.085em;color:var(--ink-2);text-transform:uppercase}
+
+/* 2 — weight break: the noun carries the weight, no tagline in the bar */
+.wm2 b{font-weight:700;font-size:22px;letter-spacing:.045em}
+.wm2 b em{font-style:normal;font-weight:400;color:var(--ink-2)}
+
+/* 3 — notch mark + two-line stack */
+.wm3{align-items:center;gap:12px}
+.wm3 .mk{flex:0 0 auto;width:24px;height:24px;display:block}
+.wm3 .stk{display:flex;flex-direction:column;gap:1px;line-height:1;color:var(--ink)}
+.wm3 .stk b{font-family:var(--font-display);font-weight:700;font-size:17.5px;letter-spacing:.045em;text-transform:uppercase}
+.wm3 .stk span{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.095em;color:var(--ink-2);text-transform:uppercase}
+
+/* phone shells: exactly 375 px, two rows, buttons pinned as the live CSS pins them */
+.phones{display:flex;gap:20px;flex-wrap:wrap}
+.ph{width:375px;background:var(--bg);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.ph .r1{position:relative;padding:8px 14px 0;min-height:38px}
+.ph .r1 .slot{padding-right:92px}
+.ph .r1 .btn{position:absolute;top:4px;width:30px;height:30px;margin:0}
+.ph .r1 .b-theme{right:14px}
+.ph .r1 .b-find{right:50px}
+.ph .r2{display:flex;gap:2px;padding:4px 10px 7px;overflow:hidden}
+.ph .r2 a{font-family:var(--font-display);font-weight:600;font-size:11.5px;padding:6px 6px;color:var(--ink-2);text-decoration:none;white-space:nowrap}
+.ph .r2 a.on{background:var(--ink);color:var(--bg);border-radius:3px}
+.ph .wm b{white-space:nowrap}
+.ph .wm0 b,.ph .wm1 b{font-size:17px}
+.ph .wm0 span,.ph .wm1 span,.ph .wm1 i{display:none}
+.ph .wm2 b{font-size:17px}
+.ph .wm3 .stk b{font-size:14px}
+.ph .wm3 .stk span{font-size:8.5px}
+.ovf{outline:1px dashed var(--accent);outline-offset:2px}
+.rule{border:0;border-top:1px solid var(--line-2);margin:34px 0 26px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Wordmark in the masthead</h1>
+<p class="sub">Four bars at the live masthead height, 56 px, on the wafer ground. Text is the site's own.</p>
+
+<div class="opt">
+  <p class="cap">Now — <b>condensed 700, tracking 0.06em, mono tagline in muted</b></p>
+  <div class="bar">
+    <a class="wm wm0" href="#"><b>Compute Chokepoints</b><span>The AI chip supply chain</span></a>
+    <nav class="tabs"><a href="#">Start here</a><a href="#">The Chain</a><a href="#">AI Chips</a><a href="#">Suppliers</a><a class="on" href="#">Export Controls</a><a href="#">Index</a>
+      <span class="btn"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg></span>
+      <span class="btn"><svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></span></nav>
+  </div>
+</div>
+
+<div class="opt">
+  <p class="cap">A — <b>Set solid: tracking 0.018em, hairline rule, tagline lifted to secondary ink</b></p>
+  <div class="bar">
+    <a class="wm wm1" href="#"><b>Compute Chokepoints</b><i></i><span>The AI chip supply chain</span></a>
+    <nav class="tabs"><a href="#">Start here</a><a href="#">The Chain</a><a href="#">AI Chips</a><a href="#">Suppliers</a><a class="on" href="#">Export Controls</a><a href="#">Index</a>
+      <span class="btn"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg></span>
+      <span class="btn"><svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></span></nav>
+  </div>
+</div>
+
+<div class="opt">
+  <p class="cap">B — <b>Weight break: COMPUTE in 400, CHOKEPOINTS in 700, no tagline in the bar</b></p>
+  <div class="bar">
+    <a class="wm wm2" href="#"><b><em>Compute</em> Chokepoints</b></a>
+    <nav class="tabs"><a href="#">Start here</a><a href="#">The Chain</a><a href="#">AI Chips</a><a href="#">Suppliers</a><a class="on" href="#">Export Controls</a><a href="#">Index</a>
+      <span class="btn"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg></span>
+      <span class="btn"><svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></span></nav>
+  </div>
+</div>
+
+<div class="opt">
+  <p class="cap">C — <b>Notch mark plus two-line stack: the phone lockup used at every width</b></p>
+  <div class="bar">
+    <a class="wm wm3" href="#">
+      <svg class="mk" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="13" width="4" height="8" fill="#12161a"/><rect x="7" y="8" width="4" height="13" fill="#12161a"/><rect x="13" y="1" width="4" height="20" fill="#c98a12"/><rect x="19" y="8" width="4" height="13" fill="#12161a"/><rect x="0" y="21.4" width="24" height="1" fill="#b6bcc1"/></svg>
+      <span class="stk"><b>Compute Chokepoints</b><span>The AI chip supply chain</span></span>
+    </a>
+    <nav class="tabs"><a href="#">Start here</a><a href="#">The Chain</a><a href="#">AI Chips</a><a href="#">Suppliers</a><a class="on" href="#">Export Controls</a><a href="#">Index</a>
+      <span class="btn"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg></span>
+      <span class="btn"><svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></span></nav>
+  </div>
+</div>
+
+<hr class="rule">
+<h1>The same four on the phone masthead</h1>
+<p class="sub">Each shell is exactly 375 px wide, two rows, with the search and theme buttons pinned where the live CSS pins them.</p>
+<div class="phones">
+  <div class="ph">
+    <div class="r1"><div class="slot"><a class="wm wm0" href="#"><b>Compute Chokepoints</b><span>The AI chip supply chain</span></a></div>
+      <span class="btn b-find"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg></span>
+      <span class="btn b-theme"><svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></span></div>
+    <div class="r2"><a href="#">Start here</a><a href="#">The Chain</a><a href="#">AI Chips</a><a href="#">Suppliers</a><a class="on" href="#">Export Controls</a><a href="#">Index</a></div>
+  </div>
+  <div class="ph">
+    <div class="r1"><div class="slot"><a class="wm wm1" href="#"><b>Compute Chokepoints</b><i></i><span>The AI chip supply chain</span></a></div>
+      <span class="btn b-find"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg></span>
+      <span class="btn b-theme"><svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></span></div>
+    <div class="r2"><a href="#">Start here</a><a href="#">The Chain</a><a href="#">AI Chips</a><a href="#">Suppliers</a><a class="on" href="#">Export Controls</a><a href="#">Index</a></div>
+  </div>
+  <div class="ph">
+    <div class="r1"><div class="slot"><a class="wm wm2" href="#"><b><em>Compute</em> Chokepoints</b></a></div>
+      <span class="btn b-find"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg></span>
+      <span class="btn b-theme"><svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></span></div>
+    <div class="r2"><a href="#">Start here</a><a href="#">The Chain</a><a href="#">AI Chips</a><a href="#">Suppliers</a><a class="on" href="#">Export Controls</a><a href="#">Index</a></div>
+  </div>
+  <div class="ph">
+    <div class="r1"><div class="slot"><a class="wm wm3" href="#">
+      <svg class="mk" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="13" width="4" height="8" fill="#12161a"/><rect x="7" y="8" width="4" height="13" fill="#12161a"/><rect x="13" y="1" width="4" height="20" fill="#c98a12"/><rect x="19" y="8" width="4" height="13" fill="#12161a"/><rect x="0" y="21.4" width="24" height="1" fill="#b6bcc1"/></svg>
+      <span class="stk"><b>Compute Chokepoints</b><span>The AI chip supply chain</span></span></a></div>
+      <span class="btn b-find"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg></span>
+      <span class="btn b-theme"><svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></span></div>
+    <div class="r2"><a href="#">Start here</a><a href="#">The Chain</a><a href="#">AI Chips</a><a href="#">Suppliers</a><a class="on" href="#">Export Controls</a><a href="#">Index</a></div>
+  </div>
+</div>
+</div>
+</body>
+</html>
