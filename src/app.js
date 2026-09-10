@@ -845,7 +845,7 @@
       var self = this, h = '';
       this.CO.concat(['Other']).forEach(function (c) { h += '<span class="sup-lg"><i class="sup-sw c-' + c + '"></i>' + esc(self.coName(c)) + '</span>'; });
       $('#sup-legend').innerHTML = h + '<span class="sup-lg"><i class="sup-crit-sw"></i>one Critical firm</span>' +
-        '<span class="sup-lg-note">thickness = firms at that stage · click a stage for its list, a colour to filter</span>';
+        '<span class="sup-lg-note">Thickness is the number of firms at a stage. Click a stage for its list, or a colour to filter by country</span>';
     },
     showTip: function (i, focused) {
       var s = this.stages[i], el = $('#sup-tip'), host = $('#sup-pipe'), hit = $('.sup-hit[data-i="' + i + '"]');
@@ -1638,7 +1638,7 @@
     LINES: [
       { tpp: 1600, text: 'TPP 1,600 · with density ≥ 5.92' },
       { tpp: 4800, text: 'TPP 4,800 · 3A090.a, licence, presumption of denial' },
-      { tpp: 21000, text: 'TPP 21,000 · since 15 Jan 2026 China sales reviewed case by case below this line' }
+      { tpp: 21000, text: 'TPP 21,000 · China sales reviewed case by case below this, since 15 Jan 2026' }
     ],
     TICKS: [1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000],
     /* TPP = 2 × MACs × bit length: the datasheet's dense figure times the bits it was quoted at */
