@@ -23,7 +23,7 @@
 .lk-rest .lk-try button:hover { border-color: var(--ink); }
 
 /* the selected glossary entry becomes the card */
-.lk-entry .glossary { margin: 0; }
+.lk-entry .glossary { margin: 0; columns: 1; column-count: 1; column-gap: 0; display: block; }
 .lk-entry .gl-entry { border: 1px solid var(--line-2); border-radius: 4px; background: var(--bg-2); padding: 18px 22px 16px; box-shadow: var(--shadow); border-top: 1px solid var(--line-2); }
 .lk-entry .gl-entry dt { font-size: 26px; line-height: 1.05; font-weight: 800; }
 .lk-entry .gl-entry dt .aka { margin: 6px 0 12px; }
