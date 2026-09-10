@@ -1017,12 +1017,12 @@
         var y = (e.date || '').slice(0, 4);
         if (y !== year) {
           year = y;
-          html += '<li class="tl-year"><div class="year-label">' + esc(y) + '</div><span class="tl-n">' + counts[y] + (counts[y] === 1 ? ' move' : ' moves') + '</span></li>';
+          html += '<li class="tl-year"><div class="year-label">' + esc(y) + '</div><span class="tl-n">' + counts[y] + (counts[y] === 1 ? ' move' : ' moves') + '</span>' + self.yearSum(y) + '</li>';
         }
         var d = new Date(e.date + 'T00:00:00');
         var ds = isNaN(d) ? esc(e.date) : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
         var host = e.source ? e.source.replace(/^https?:\/\//, '').split('/')[0] : '';
-        html += '<li class="tl-e" id="tl-e' + i + '" data-i="' + i + '">' +
+        html += '<li class="tl-e" id="tl-e' + i + '" data-i="' + i + '" data-date="' + esc(e.date || '') + '">' +
           '<div class="d"><b>' + ds + '</b>' + esc(e.actor || '') + '</div>' +
           '<div class="tl-body"><span class="cat ' + self.CATS[self.lane(e.category)].cls + '">' + esc(e.category || '') + '</span>' +
           '<h4>' + esc(e.title) + '</h4><p class="tl-gist">' + esc(self.gistOf(e)) + '</p>' +
@@ -1035,9 +1035,22 @@
       this.items = $$('.tl-e', list);
       if (this.full) this.setFull(true);
       this.reveal();
-      this.strip();
-      this.at = -1; this.atDot = -1; this.spy();
+      this.at = -1; this.spy();
       list.dispatchEvent(new CustomEvent('cp:rows'));
+    },
+    /* under each year on a phone: where the nine flows stood when the year ended */
+    yearSum: function (y) {
+      var self = this, last = this.years[this.years.length - 1];
+      if (!this.flows) return '';
+      var end = parseInt(y, 10) >= last ? this.now : y + '-12-31';
+      var parts = [];
+      this.flows.forEach(function (f) {
+        var s = self.stateAt(f, end);
+        if (s.status === 'open') return;
+        parts.push(esc(f.short || f.name || f.id) + ' ' + esc(String(self.STATE[s.status] || s.status).toLowerCase()));
+      });
+      if (!parts.length) return '';
+      return '<p class="cf-sum">' + (parseInt(y, 10) >= last ? 'Now' : 'End of ' + esc(y)) + ': ' + parts.join(' · ') + '</p>';
     },
     setOpen: function (btn, open) {
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -1061,75 +1074,98 @@
       this.items.forEach(function (el) { io.observe(el); });
       this.io = io;
     },
-    /* ---- minimap strip: one dot per event, five lanes, year axis ---- */
-    strip: function () {
-      var self = this, host = $('#tl-strip');
-      if (!host) return;
-      var w = Math.round(host.getBoundingClientRect().width);
-      this.stripW = w;
-      if (!w) { host.innerHTML = ''; return; } // the sub-tab is hidden: draw it when it opens
-      var rows = this.visible || [], all = this.tl || [];
-      var small = w < 700;
-      var padL = small ? 46 : 106, padR = small ? 12 : 18;
-      var laneH = small ? 13 : 18, top = small ? 18 : 24;
-      var axisY = top + laneH * 5 + 6, H = axisY + (small ? 18 : 20);
-      var x0 = padL, x1 = Math.max(padL + 40, w - padR);
-      var mi = function (d) { d = String(d || ''); return (parseInt(d.slice(0, 4), 10) - 2018) * 12 + (parseInt(d.slice(5, 7), 10) - 1); };
-      var span = 12; all.forEach(function (e) { span = Math.max(span, mi(e.date)); });
-      var X = function (d) { var v = mi(d); return x0 + (Math.max(0, Math.min(span, isNaN(v) ? 0 : v)) / span) * (x1 - x0); };
-      var s = '<svg class="tl-svg" width="' + w + '" height="' + H + '" viewBox="0 0 ' + w + ' ' + H + '" role="img" aria-label="Every move on one strip: five lanes by kind, 2018 to now">';
-      for (var i = 0; i < 5; i++) {
-        var ly = top + laneH * i + laneH / 2;
-        s += '<rect class="tl-base" x="' + x0 + '" y="' + (ly - 0.5) + '" width="' + (x1 - x0) + '" height="1"></rect>' +
-          '<text class="tl-lane ' + this.CATS[i].cls + '" x="' + (x0 - (small ? 7 : 11)) + '" y="' + (ly + 3.4) + '" text-anchor="end">' + esc(small ? this.CATS[i].short : this.CATS[i].label) + '</text>';
-      }
-      this.RULES.forEach(function (r) {
-        var rx = X(r.date);
-        s += '<line class="tl-rule" x1="' + rx.toFixed(1) + '" y1="' + (top - 5) + '" x2="' + rx.toFixed(1) + '" y2="' + (axisY - 2) + '"></line>' +
-          '<text class="tl-rlab" x="' + rx.toFixed(1) + '" y="' + (top - 10) + '" text-anchor="middle">' + esc(small ? r.short : r.label) + '</text>';
-      });
-      for (var yy = 2018; yy <= 2018 + Math.floor(span / 12); yy++) {
-        var xt = X(yy + '-01-01');
-        s += '<line class="tl-tick" x1="' + xt.toFixed(1) + '" y1="' + axisY + '" x2="' + xt.toFixed(1) + '" y2="' + (axisY + 4) + '"></line>' +
-          '<text class="tl-ylab" data-y="' + yy + '" x="' + xt.toFixed(1) + '" y="' + (axisY + 15) + '" text-anchor="middle">' + (small ? '’' + String(yy).slice(2) : yy) + '</text>';
-      }
-      var n = Math.max(1, rows.length - 1);
-      rows.forEach(function (e, k) {
-        var ln = self.lane(e.category), cy = top + laneH * ln + laneH / 2, cx = X(e.date);
-        var d = new Date(e.date + 'T00:00:00');
-        var ds = isNaN(d) ? e.date : d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
-        s += '<circle class="tl-dot ' + self.CATS[ln].cls + '" cx="' + cx.toFixed(1) + '" cy="' + cy + '" r="' + (small ? 3.6 : 3.4) + '" data-i="' + k + '" tabindex="' + (k ? '-1' : '0') + '" role="button" aria-label="' + esc(ds + ': ' + e.title) + '" style="--d:' + Math.round(k / n * 420) + 'ms"></circle>';
-      });
-      s += '<circle class="tl-ring" cx="-20" cy="-20" r="6.6" opacity="0"></circle></svg>';
-      host.innerHTML = s;
-      host.setAttribute('data-anim', this.drawn || reduced ? '0' : '1');
-      this.drawn = true;
-      // entries scroll clear of the sticky strip, so the page needs its real height
-      document.documentElement.style.setProperty('--tl-h', (window.innerWidth >= 900 ? H + 12 : 0) + 'px');
+    /* ---- the board: one row per flow, its state as of the scrubber date ---- */
+    renderBoard: function () {
+      var self = this, host = $('#cf-board');
+      if (!host || !this.flows) return;
+      host.innerHTML = this.flows.map(function (f, i) {
+        var st = self.stateAt(f, self.asOf), n = self.nMoves(f), id = esc(f.id);
+        self.keys[f.id] = self.keyOf(st);
+        return '<section class="cf-row" data-f="' + id + '" data-open="0" style="--d:' + Math.min(320, i * 34) + 'ms">' +
+          '<h4 class="cf-rowh"><button type="button" class="cf-btn" id="cf-b-' + id + '" aria-expanded="false" aria-controls="cf-h-' + id + '">' +
+          '<span class="cf-id"><span class="cf-name">' + esc(f.name || f.id) + '</span>' +
+          (f.route ? '<span class="cf-route">' + esc(f.route) + '</span>' : '') +
+          (f.what ? '<span class="cf-what">' + esc(f.what) + '</span>' : '') + '</span>' +
+          '<span class="cf-state">' + self.pillHTML(st) + '</span>' +
+          '<span class="cf-n">' + n + (n === 1 ? ' move' : ' moves') + '</span>' +
+          '<span class="cf-caret" aria-hidden="true"></span></button></h4>' +
+          '<div class="cf-hist" id="cf-h-' + id + '" role="region" aria-labelledby="cf-b-' + id + '"><div class="cf-hist-in"></div></div>' +
+          '</section>';
+      }).join('');
+      if (!reduced) host.setAttribute('data-in', '1');
     },
-    wireStrip: function () {
-      var self = this, strip = $('#tl-strip');
-      if (!strip) return;
-      var dot = function (e) { return e.target && e.target.closest ? e.target.closest('.tl-dot') : null; };
-      strip.addEventListener('mouseover', function (e) { var d = dot(e); if (d) self.showTip(d); });
-      strip.addEventListener('mouseout', function (e) { if (dot(e)) self.hideTip(); });
-      strip.addEventListener('focusin', function (e) { var d = dot(e); if (d) self.showTip(d); });
-      strip.addEventListener('focusout', function () { self.hideTip(); });
-      strip.addEventListener('click', function (e) { var d = dot(e); if (d) self.jump(parseInt(d.getAttribute('data-i'), 10)); });
-      strip.addEventListener('keydown', function (ev) {
-        var d = dot(ev), k = ev.key;
-        if (!d) return;
-        var i = parseInt(d.getAttribute('data-i'), 10), last = (self.visible || []).length - 1, to = -1;
-        if (k === 'Enter' || k === ' ' || k === 'Spacebar') { ev.preventDefault(); self.jump(i); return; }
-        if (k === 'ArrowRight' || k === 'ArrowDown') to = Math.min(last, i + 1);
-        else if (k === 'ArrowLeft' || k === 'ArrowUp') to = Math.max(0, i - 1);
-        else if (k === 'Home') to = 0;
-        else if (k === 'End') to = last;
-        if (to < 0) return;
-        ev.preventDefault();
-        var nx = strip.querySelector('.tl-dot[data-i="' + to + '"]');
-        if (nx) { d.setAttribute('tabindex', '-1'); nx.setAttribute('tabindex', '0'); nx.focus(); }
+    pillHTML: function (st) {
+      var word = st.status === 'policy' ? 'Policy' : (this.STATE[st.status] || st.status);
+      return '<span class="cf-pill is-' + esc(st.status) + '">' + esc(word) + '</span>' +
+        (st.label && st.label !== word ? '<span class="cf-lab">' + esc(st.label) + '</span>' : '') +
+        '<span class="cf-when">' + esc(st.date ? this.fmtDate(st.date) : 'from the start') + '</span>';
+    },
+    /* re-read every row from the as-of date; rows that moved inside the span glow */
+    paintBoard: function (span) {
+      var self = this, host = $('#cf-board');
+      if (!host || !this.flows) return;
+      $$('.cf-row', host).forEach(function (row) {
+        var f = self.byId[row.getAttribute('data-f')];
+        if (!f) return;
+        var st = self.stateAt(f, self.asOf), key = self.keyOf(st), box = row.querySelector('.cf-state');
+        if (box && key !== self.keys[f.id]) {
+          box.innerHTML = self.pillHTML(st);
+          if (!reduced) { box.classList.remove('is-flip'); void box.offsetWidth; box.classList.add('is-flip'); }
+        }
+        self.keys[f.id] = key;
+        if (span && !reduced && self.movedIn(f, span)) { row.classList.remove('is-changed'); void row.offsetWidth; row.classList.add('is-changed'); }
       });
+    },
+    movedIn: function (f, span) {
+      var st = f.states || [];
+      for (var i = 0; i < st.length; i++) if (st[i].date && st[i].date >= span[0] && st[i].date <= span[1]) return true;
+      return false;
+    },
+    wireBoard: function () {
+      var self = this, host = $('#cf-board');
+      if (!host) return;
+      host.addEventListener('click', function (e) {
+        var m = e.target.closest ? e.target.closest('.tl-more') : null;
+        if (m) { self.setOpen(m, m.getAttribute('aria-expanded') !== 'true'); return; }
+        var b = e.target.closest ? e.target.closest('.cf-btn') : null, row = b ? b.closest('.cf-row') : null;
+        if (!row) return;
+        if (self.mode === 'date') { // the compact board is a read-out: a click takes you to the row's own history
+          self.setMode('subject', true);
+          self.toggleRow(row, true);
+          row.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+          return;
+        }
+        self.toggleRow(row, row.getAttribute('data-open') !== '1');
+      });
+      host.addEventListener('animationend', function (e) { if (e.animationName === 'cf-glow' && e.target.classList) e.target.classList.remove('is-changed'); });
+    },
+    toggleRow: function (row, open) {
+      var f = this.byId[row.getAttribute('data-f')], btn = row.querySelector('.cf-btn'), box = row.querySelector('.cf-hist-in');
+      if (!f || !box) return;
+      if (open && !box.firstChild) box.innerHTML = this.histHTML(f); // built the first time the row opens
+      row.setAttribute('data-open', open ? '1' : '0');
+      if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    },
+    /* one flow's own history: its moves in date order, the ones that changed its state marked with the pill */
+    histHTML: function (f) {
+      var self = this, evs = this.evs[f.id] || [], byEv = {};
+      (f.states || []).forEach(function (s) { if (s.event) byEv[s.event] = s; });
+      if (!evs.length) return '<p class="cf-none">No move has touched this flow yet.</p>';
+      return '<ol class="cf-evs">' + evs.map(function (e, k) {
+        var s = byEv[e.id], id = 'cf-p-' + f.id + '-' + k, d = new Date(e.date + 'T00:00:00');
+        var ds = isNaN(d) ? esc(e.date) : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        var host = e.source ? e.source.replace(/^https?:\/\//, '').split('/')[0] : '';
+        var word = s ? (s.status === 'policy' ? 'Policy' : (self.STATE[s.status] || s.status || '')) : '';
+        return '<li class="cf-ev' + (s ? ' is-move' : '') + '">' +
+          '<div class="cf-ev-p">' + (s ? '<span class="cf-pill is-' + esc(s.status || 'open') + '">' + esc(word) + '</span>' : '') + '</div>' +
+          '<div class="cf-ev-d"><b>' + ds + '</b>' + esc(String(e.date).slice(0, 4)) + '<span>' + esc(e.actor || '') + '</span></div>' +
+          '<div class="cf-ev-b"><span class="cat ' + self.CATS[self.lane(e.category)].cls + '">' + esc(e.category || '') + '</span>' +
+          '<h5 class="cf-ev-t">' + esc(e.title) + '</h5><p class="cf-ev-g">' + esc(self.gistOf(e)) + '</p>' +
+          '<button type="button" class="tl-more" aria-expanded="false" aria-controls="' + id + '">More</button>' +
+          '<div class="tl-panel" id="' + id + '" hidden><p>' + esc(e.summary || '') + '</p>' +
+          (host ? '<a class="src" href="' + safeUrl(e.source) + '" target="_blank" rel="noopener">' + esc(host) + '</a>' : '') +
+          '</div></div></li>';
+      }).join('') + '</ol>';
     },
     showTip: function (d) {
       var e = (this.visible || [])[parseInt(d.getAttribute('data-i'), 10)];
