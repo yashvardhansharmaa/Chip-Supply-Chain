@@ -368,7 +368,7 @@ sup.cite a:hover { text-decoration: underline; }
 
 /* ---------- glossary ---------- */
 .glossary { margin: 10px 0 50px; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr)); gap: 0 40px; } /* min() keeps the column inside the page on a 320 px phone */
-.gl-entry { display: grid; grid-template-columns: 1fr; padding: 14px 0; border-top: 1px solid var(--line); break-inside: avoid; }
+.gl-entry { display: grid; grid-template-columns: 1fr; padding: 14px 0; border-top: 1px solid var(--line); break-inside: avoid; scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 14px); } /* #gl-<term> links land clear of the masthead */
 .gl-entry dt { font-family: var(--font-display); font-weight: 700; font-size: 18px; margin-bottom: 4px; }
 .gl-entry dt .aka { display: block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--muted); font-weight: 400; margin-top: 2px; }
 .gl-entry dd { margin: 0; }

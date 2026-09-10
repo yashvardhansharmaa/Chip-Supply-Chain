@@ -500,7 +500,7 @@ ${leaders ? `<p class="brief-leaders"><span class="label">Who leads</span> ${lea
 
 /* ---------------- glossary ---------------- */
 const chapterTitle = (id) => { const c = all.find((x) => x.id === id); return c ? c.title : null; };
-const glossaryHTML = glossary.length ? glossary.slice().sort((a, b) => a.term.localeCompare(b.term)).map((g) => `<div class="gl-entry" data-term="${esc(String(g.term).toLowerCase())}" data-text="${esc((g.term + ' ' + (g.aka || '') + ' ' + g.plain + ' ' + (g.why || '')).toLowerCase())}">
+const glossaryHTML = glossary.length ? glossary.slice().sort((a, b) => a.term.localeCompare(b.term)).map((g) => `<div class="gl-entry" id="gl-${esc(String(g.term).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''))}" data-term="${esc(String(g.term).toLowerCase())}" data-text="${esc((g.term + ' ' + (g.aka || '') + ' ' + g.plain + ' ' + (g.why || '')).toLowerCase())}">
 <dt>${esc(g.term)}${g.aka ? `<span class="aka">${esc(g.aka)}</span>` : ''}</dt>
 <dd><p>${esc(g.plain)}</p>${g.why ? `<p class="why">${esc(g.why)}</p>` : ''}${g.chapter && chapterTitle(g.chapter) ? `<a class="gl-link" href="${g.chapter === 'geopolitics' ? '#geopolitics' : '#' + esc(g.chapter)}">${esc(chapterTitle(g.chapter))} →</a>` : ''}</dd>
 </div>`).join('') : '<p>The glossary is not written yet.</p>';
@@ -554,7 +554,9 @@ fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
 fs.writeFileSync(path.join(root, 'dist', 'index.html'), html);
 // the datasets are served next to the page so the method notes' links resolve and researchers can fetch them directly
 fs.mkdirSync(path.join(root, 'dist', 'data'), { recursive: true });
-fs.readdirSync(path.join(root, 'data')).filter((f) => /\.(json|md)$/.test(f)).forEach((f) => fs.copyFileSync(path.join(root, 'data', f), path.join(root, 'dist', 'data', f)));
+const dataFiles = fs.readdirSync(path.join(root, 'data')).filter((f) => /\.(json|md)$/.test(f));
+fs.readdirSync(path.join(root, 'dist', 'data')).forEach((f) => { if (!dataFiles.includes(f)) fs.unlinkSync(path.join(root, 'dist', 'data', f)); }); // a retired dataset must not linger in the published folder
+dataFiles.forEach((f) => fs.copyFileSync(path.join(root, 'data', f), path.join(root, 'dist', 'data', f)));
 const tierTotal = tierCounts([].concat(...all.map((c) => c.cites)));
 const report = [`built ${new Date().toISOString()}`, `source tiers: A ${tierTotal.A} · B ${tierTotal.B} · disallowed ${tierTotal.C + tierTotal.D} · unclassified ${tierTotal['?']}`, `chapters: ${chapters.length}${geo ? ' + geopolitics' : ''}`, `words: ${totalWords}`, `sources: ${all.reduce((a, c) => a + c.cites.length, 0)}`,
   `landscape: ${landscape.length} chips · suppliers: ${suppliers.length} · timeline: ${timeline.length} · matrix: ${matrix.length} · glossary: ${glossary.length} · controls: ${controls.length} · exposure: ${exposure.length}`, `specimens: ${[...specNames].join(', ')}`,

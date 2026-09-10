@@ -1,32 +1,32 @@
 # Findability: from outside, and inside
 
-Read 10 September 2026 against `dist/index.html` (2,000 KB, 22,629 words, 336 sources) and the copy on :8765. Search results come from `CP.Tools.search()` run in headless Chrome.
+Read 10 September against `dist/index.html` (2,000 KB, 22,629 words, 336 sources). Search results from `CP.Tools.search()` in headless Chrome.
 
 ## Findings, ranked by effect
 
-**1. The site has no address.** *(2 days)* One file, hash routes, one URL. The head carries a title and a description and nothing else: no Open Graph, no Twitter card, no canonical, no favicon, no sitemap, no robots.txt, no structured data. A hash never reaches a server, so a link to a chapter, the board or the glossary unfurls in Slack as "Compute Chokepoints" plus the same generic line, with no image; on X, with no `twitter:card` and no image, it degrades to a bare link. Google sees one page about seventeen subjects — a page competing with itself.
+**1. The site has no address.** *(2 days)* One file, hash routes, one URL. The head carries a title and a description and nothing else: no Open Graph, no Twitter card, no canonical, no favicon, no sitemap, no robots.txt, no structured data. A hash never reaches a server, so a link to a chapter, the board or the glossary unfurls in Slack as "Compute Chokepoints" plus the same generic line and no image; on X, with no card tag, as a bare link. Google sees one page about seventeen subjects, competing with itself.
 
-**2. The home page does not say where to go.** *(1 hour)* Home is the hero's two lines, the map and two exits, Intro and The Chain. Nothing on it points to Export Controls, AI Chips, the Glossary or Sources; the tab row is the only route, and it does not say what any tab costs in minutes. Meanwhile `build/modules/walk.js` already returns a `START_HERE` block — a three-way chooser (ten minutes / the whole chain / data and sources) — and `src/template.html` has no `{{START_HERE}}` placeholder, so the build drops it silently. Its CSS ships. Adding the placeholder is a one-line fix.
+**2. The home page does not say where to go.** *(1 hour)* Home is the hero's two lines, the map and two exits, Intro and The Chain. Nothing on it points to Export Controls, AI Chips, the Glossary or Sources, or says what any costs in minutes. Meanwhile `build/modules/walk.js` already returns a `START_HERE` block — a three-way chooser (ten minutes / the whole chain / data and sources) — and `src/template.html` has no `{{START_HERE}}` placeholder, so the build drops it while shipping its CSS. Adding the placeholder is a one-line fix.
 
-**3. The data pages are islands.** *(half a day)* Chapter prose holds 191 links and every one goes to another chapter. None go to Suppliers, Export Controls, AI Chips, China revenue or Sources. The return path is worse: Suppliers draws 220 firms and links to no chapter; Export Controls carries 289 outbound source links and no chapter link (that connection existed before the thresholds tab was cut); Sources groups 336 citations under seventeen chapter headings and links to none of them. Only the glossary is sewn in — 227 popovers out, 69 chapter links back.
+**3. The data pages are islands.** *(half a day)* Chapter prose holds 191 links, every one to another chapter. None go to Suppliers, Export Controls, AI Chips, China revenue or Sources. The return path is worse: Suppliers draws 220 firms and links to no chapter; Export Controls carries 289 source links and no chapter link (that connection existed before the thresholds tab was cut); Sources groups 336 citations under seventeen chapter headings and links to none. Only the glossary is sewn in — 227 popovers out, 69 links back.
 
-**4. Search ranks the wrong things.** *(3 hours)* The index holds 657 entries and finds names well: ASML, CoWoS, pellicle, SMIC, AI diffusion rule all rank first. Four faults.
+**4. Search ranks the wrong things.** *(3 hours)* The index holds 657 entries and finds names well: ASML, CoWoS, pellicle, SMIC and AI diffusion rule all rank first. Four faults.
 - 103 China-revenue rows are indexed one per firm-year, all pointing at `#/exposure`. "ASML" returns the supplier, then ASML FY2021, FY2022, FY2023, FY2024. Collapse to one row per firm.
-- The chokepoint card is not indexed. "concentration", "substitution time", "5 of 5" and "single point of failure" return noise, though every card carries those fields. "how long to replace ASML" returns the supplier and four revenue rows; the answer, 10+ years, is on the Lithography card.
-- Sources are not indexed: "CSET" returns four chapter sections and no bibliography.
+- The chokepoint card is not indexed. "concentration", "substitution time", "5 of 5" and "single point of failure" return noise. "how long to replace ASML" returns the supplier and four revenue rows; the answer, 10+ years, is on the Lithography card.
+- Sources are not indexed: "CSET" returns four chapter sections, no bibliography.
 - Terms match as substrings anywhere, so "what should the US do" ranks the glossary entry *etch* first, on "us" inside a word. Require a word boundary under three letters.
 
-**5. Timeline hits land on the page, not the entry.** *(1 hour)* All 43 event results go to the top of `#/controls`. Every event already carries a stable `id` in `data/export-controls-timeline.json`; put those ids on the rendered entries and scroll to them.
+**5. Timeline hits land on the page, not the entry.** *(1 hour)* All 43 event results go to the top of `#/controls`. Every event carries a stable `id` in `data/export-controls-timeline.json`; put those on the rendered entries and scroll to them.
 
-**6. Tab names and order.** *(renames, minutes; reorder, hours)* "Intro" is the weakest label on the bar: the page it opens calls itself "Start here — How a GPU is made" and takes ten minutes, but a first visitor reads "Intro" as throat-clearing and skips it. "AI Chips" names a topic, not the comparison tool it is. On a 390 px phone the row is 439 px against 362 px of space, so Sources sits off-screen with nothing to say it is there.
+**6. Tab names and order.** *(renames, minutes; reorder, hours)* "Intro" is the weakest label on the bar. The page it opens calls itself "Start here — How a GPU is made" and takes ten minutes, but a first visitor reads "Intro" as throat-clearing and skips it. "AI Chips" names a topic, not the comparison tool it is. On a 390 px phone the row is 439 px against 362 px of space, so Sources sits off-screen with no cue that it exists.
 
-**7. Small breaks.** *(an hour together)* Geopolitics appears twice in Contents, both numbered 17. Glossary entries have no ids, so no term can be linked. On a phone the Contents sheet's only trigger sits inside `.stage`, which the CSS hides outright when WebGL is unavailable — no contents, no rail, no "where am I".
+**7. Small breaks.** *(an hour)* Geopolitics appears twice in Contents, both numbered 17. Glossary entries have no ids, so no term can be linked. On a phone the Contents sheet's only trigger sits inside `.stage`, which the CSS hides outright when WebGL is unavailable — no contents, no rail, no "where am I".
 
-What already works: the chapter head is the best wayfinding on the site (chain strip, "You are here: Lithography, stage 4 of 15", next stage, previous/next at the foot); `document.title` tracks the view; the sheet lists all seven pages and seventeen scored chapters; `/` and Ctrl+K open search; back-to-top appears past the contents.
+What works: the chapter head ("You are here: Lithography, stage 4 of 15", chain strip, previous/next); `document.title`; the sheet; `/` and Ctrl+K; back-to-top.
 
 ## The twenty questions
 
-F = first visit, R = researcher, P = policy reader. Clicks count from a cold arrival at `/`.
+F first visit, R researcher, P policy reader. Clicks count from a cold arrival at `/`.
 
 | # | | Question | Where the answer is | Clicks |
 |---|---|---|---|---|
@@ -53,9 +53,9 @@ F = first visit, R = researcher, P = policy reader. Clicks count from a cold arr
 
 ## The architecture to move to
 
-**Sitemap, phase one (~45 real URLs).** `/` · `/how-ai-chips-are-made/` (the Intro) · `/chain/` and `/chain/<chapter>/` ×17 · `/ai-chips/` · `/suppliers/` and `/suppliers/<stage>/` ×20 · `/export-controls/`, `/export-controls/timeline/`, `/export-controls/china-revenue/` · `/glossary/` (anchor per term) · `/sources/` · `/sitemap.xml`, `/robots.txt`. Phase two adds `/ai-chips/<chip>/` ×35 and `/export-controls/<event-id>/` ×43, all of which already have stable ids. Each page keeps the whole app and boots to its own view, so the JS need not change. Chapter title: `Lithography: one firm builds every EUV scanner — Compute Chokepoints`; description: the chapter's existing `oneLiner`, which is already one sentence with a number in it. Give every page an OG image of its specimen. Plausible targets: "how AI chips are made", "AI chip supply chain", "who makes HBM", "EUV scanner price", "CoWoS capacity", "AI diffusion rule", "October 7 2022 export controls", "Nvidia China revenue by year", plus 75 definitional queries against the glossary anchors.
+**Sitemap, phase one (~45 URLs).** `/` · `/how-ai-chips-are-made/` (the Intro) · `/chain/` and `/chain/<chapter>/` ×17 · `/ai-chips/` · `/suppliers/` and `/suppliers/<stage>/` ×20 · `/export-controls/`, `/export-controls/timeline/`, `/export-controls/china-revenue/` · `/glossary/`, an anchor per term · `/sources/` · `/sitemap.xml`, `/robots.txt`. Phase two adds `/ai-chips/<chip>/` ×35 and `/export-controls/<event-id>/` ×43; both already have stable ids. Each page ships the whole app and boots to its own view, so the JS need not change. Chapter title: `Lithography: one firm builds every EUV scanner — Compute Chokepoints`; description: the chapter's own `oneLiner`; OG image: its specimen. Plausible targets: "how AI chips are made", "who makes HBM", "EUV scanner price", "CoWoS capacity", "AI diffusion rule", "October 7 2022 export controls", "Nvidia China revenue by year", plus 75 definitional queries against the glossary anchors.
 
-**Home's job:** say what the site claims and open three doors — ten minutes, the whole chain, the data — with the map underneath as evidence, not as the only exit.
+**Home's job:** say what the site claims and open three doors — ten minutes, the whole chain, the data — with the map under them as evidence, not as the only exit.
 
 **Top-level names:** Start here · The Chain · Chips · Suppliers · Export Controls · Glossary · Sources.
 
@@ -63,4 +63,4 @@ F = first visit, R = researcher, P = policy reader. Clicks count from a cold arr
 
 ## The next two days
 
-Spend day one on the export: teach `build.js` to write a directory per route with per-page `<title>`, `description`, canonical, OG and Twitter tags, a specimen image, plus `sitemap.xml` and `robots.txt`, and have the router boot from the path as well as the hash. Spend the morning of day two on the cheap internal wins, in this order: wire `{{START_HERE}}`, put chapter links on the Suppliers ladder, the board and the Sources headings, give timeline entries and glossary terms real ids, and fix the duplicate Geopolitics row. Spend the afternoon on search: collapse the revenue rows to one per firm, index the chokepoint-card fields and the bibliography, require a word boundary for short terms, and land event hits on the entry. That order is deliberate — the export is the only item that changes whether anyone arrives at all, and everything after it decides whether they find the second page.
+Day one is the export: teach `build.js` to write a directory per route with its own `<title>`, description, canonical, OG and Twitter tags and specimen image, plus `sitemap.xml` and `robots.txt`, and let the router boot from the path as well as the hash. Day two, morning, the cheap internal wins: wire `{{START_HERE}}`; put chapter links on the Suppliers ladder, the board and the Sources headings; give timeline entries and glossary terms real ids; drop the duplicate Geopolitics row. Afternoon, search: collapse the revenue rows to one per firm, index the card fields and the bibliography, require a word boundary for short terms, land event hits on the entry. The order is deliberate — the export decides whether anyone arrives, the rest whether they reach a second page.

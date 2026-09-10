@@ -641,7 +641,7 @@
      the stream count the Critical firms. The ladder is the same twenty stages ranked thinnest first, every firm
      named in the open, each name opening its own panel. */
   var Suppliers = {
-    rows: DATA.suppliers || [], built: false, country: '', chk: '', q: '', sortKey: 'name', sortDir: 1,
+    rows: DATA.suppliers || [], built: false, stage: '', country: '', chk: '', q: '', sortKey: 'name', sortDir: 1,
     mode: 'ladder', stages: [], at: 0, tipAt: -1, drawW: 0, wiped: false,
     CO: ['US', 'JP', 'CN', 'TW', 'KR', 'NL', 'DE'], // the band order down the stack; every other country stacks last
     LEVELS: ['Critical', 'Important', 'Contested', 'Diversified'],
@@ -674,6 +674,7 @@
       $('#sup-chk').addEventListener('change', function (e) { self.chk = e.target.value; self.render(); });
       var supTimer; $('#sup-search').addEventListener('input', function (e) { var v = e.target.value; clearTimeout(supTimer); supTimer = setTimeout(function () { self.q = v.trim().toLowerCase(); self.render(); }, 120); });
       $('#sup-copy').addEventListener('click', function () { self.copy(); });
+      var allStages = $('#sup-allstages'); if (allStages) allStages.addEventListener('click', function () { self.clearStage(); });
       $('#sup-table').addEventListener('click', function (e) { var b = e.target.closest('button[data-sort]'); if (b) self.sortBy(b.getAttribute('data-sort')); });
       $('#sup-ladder').addEventListener('click', function (e) { var b = e.target.closest('.sup-name'); if (b) self.openName(b); });
       $$('.sup-mode').forEach(function (b) { b.addEventListener('click', function () { self.setMode(b.getAttribute('data-mode')); }); });
@@ -885,14 +886,23 @@
       $$('.sup-lab[data-hot]').forEach(function (g) { g.removeAttribute('data-hot'); });
       this.tipAt = -1;
     },
-    goStage: function (i) { // the pipeline is the ladder's index: a stage sends you to its rung
+    goStage: function (i) { // the pipeline is the ladder's index: a stage filters the list to its firms and sends you to its rung; click it again to clear
       var s = this.stages[i]; if (!s) return;
       this.hideTip();
+      var off = this.stage === s.name;
+      this.stage = off ? '' : s.name;
       if (this.mode !== 'ladder') this.setMode('ladder');
-      $$('.sup-rung').forEach(function (el) { if (el.id === s.id) el.setAttribute('data-lit', '1'); else el.removeAttribute('data-lit'); });
-      $$('.sup-lab').forEach(function (g) { if (+g.getAttribute('data-i') === i) g.setAttribute('data-lit', '1'); else g.removeAttribute('data-lit'); });
+      $$('.sup-rung').forEach(function (el) { if (!off && el.id === s.id) el.setAttribute('data-lit', '1'); else el.removeAttribute('data-lit'); });
+      $$('.sup-lab').forEach(function (g) { if (!off && +g.getAttribute('data-i') === i) g.setAttribute('data-lit', '1'); else g.removeAttribute('data-lit'); });
+      this.render();
+      if (off) return;
       var el = document.getElementById(s.id);
       if (el) el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    },
+    clearStage: function () {
+      this.stage = '';
+      $$('.sup-rung[data-lit], .sup-lab[data-lit]').forEach(function (el) { el.removeAttribute('data-lit'); });
+      this.render();
     },
 
     /* ---- filters ---- */
@@ -919,8 +929,9 @@
       var pipe = $('#sup-pipe'); if (pipe) pipe.setAttribute('data-filtered', on ? '1' : '0');
     },
     countryLabel: function () { return this.country === '__other' ? 'Other countries' : cname(this.country); },
-    filtering: function () { return !!(this.country || this.chk || this.q); },
+    filtering: function () { return !!this.stage || !!(this.country || this.chk || this.q); },
     match: function (r) {
+      if (this.stage && r.category !== this.stage) return false; // a stage picked on the pipeline filters the list and the export
       if (this.country === '__other') { if (this.CO.indexOf(r.country) >= 0) return false; }
       else if (this.country && r.country !== this.country) return false;
       if (this.chk && r.chokepoint !== this.chk) return false;
@@ -943,7 +954,8 @@
     render: function () {
       var rows = this.filtered();
       $('#sup-count').textContent = 'Showing ' + rows.length + ' of ' + this.rows.length + ' suppliers' +
-        (this.country ? ' · ' + this.countryLabel() : '') + (this.chk ? ' · ' + this.chk : '');
+        (this.stage ? ' · ' + this.stage : '') + (this.country ? ' · ' + this.countryLabel() : '') + (this.chk ? ' · ' + this.chk : '');
+      var allBtn = $('#sup-allstages'); if (allBtn) allBtn.hidden = !this.stage;
       if (this.mode === 'table') this.renderTable(rows); else this.applyFilter();
     },
 
