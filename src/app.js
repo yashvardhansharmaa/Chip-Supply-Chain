@@ -625,52 +625,75 @@
   };
   Landscape.initSelection();
 
-  /* ---------------- suppliers ---------------- */
+  /* ---------------- suppliers ----------------
+     Two drawings of one list. The pipeline is the chain seen from the side: the stream's thickness at a stage
+     is the number of firms there, the colour bands are countries in a fixed order, and the amber squares above
+     the stream count the Critical firms. The ladder is the same twenty stages ranked thinnest first, every firm
+     named in the open, each name opening its own panel. */
   var Suppliers = {
-    rows: DATA.suppliers || [], built: false, cat: null, country: '', chk: '', q: '', sortKey: 'name', sortDir: 1,
-    mode: 'compact', shown: [], cells: {},
-    MAIN: ['US', 'JP', 'CN', 'TW', 'KR', 'DE', 'NL', 'GB'], // the eight columns of the matrix; everything else falls into Other
+    rows: DATA.suppliers || [], built: false, country: '', chk: '', q: '', sortKey: 'name', sortDir: 1,
+    mode: 'ladder', stages: [], at: 0, tipAt: -1, drawW: 0, wiped: false,
+    CO: ['US', 'JP', 'CN', 'TW', 'KR', 'NL', 'DE'], // the band order down the stack; every other country stacks last
     LEVELS: ['Critical', 'Important', 'Contested', 'Diversified'],
     RANK: { Critical: 0, Important: 1, Contested: 2, Diversified: 3 },
     ORDER: ['Design & EDA', 'IP & Architecture', 'Silicon & Wafers', 'Photomasks', 'Lithography', 'Deposition & Etch', 'Photoresist & Materials', 'Chemicals & Gases', 'Optics & Photonics', 'Equipment Subsystems & Components', 'Metrology & Inspection', 'Foundry', 'Memory', 'Advanced Packaging & OSAT', 'Test', 'Substrates & PCBs', 'Interconnect & Networking', 'Power & Cooling', 'Systems & Servers', 'AI Accelerator Vendor'], // chain order, design first
-    activate: function () { if (!this.built) this.build(); },
+    /* the long category names would collide under a 59 px column, so the drawing uses these */
+    SHORT: {
+      'Equipment Subsystems & Components': 'Equipment subsystems', 'Advanced Packaging & OSAT': 'Advanced packaging',
+      'Interconnect & Networking': 'Interconnect', 'AI Accelerator Vendor': 'Accelerator vendors',
+      'Photoresist & Materials': 'Photoresist', 'Metrology & Inspection': 'Metrology',
+      'Deposition & Etch': 'Deposition & etch', 'Chemicals & Gases': 'Chemicals & gases',
+      'Systems & Servers': 'Systems & servers', 'Power & Cooling': 'Power & cooling',
+      'Silicon & Wafers': 'Silicon wafers', 'IP & Architecture': 'IP & architecture'
+    },
+    activate: function () { if (!this.built) this.build(); else this.fitPipe(); },
 
     build: function () {
       this.built = true;
-      var self = this, cats = {}, countries = {};
-      try { var saved = localStorage.getItem('cp-sup-mode'); if (saved === 'compact' || saved === 'detailed') this.mode = saved; } catch (e) { }
-      this.rows.forEach(function (r) { cats[r.category] = (cats[r.category] || 0) + 1; countries[r.country] = (countries[r.country] || 0) + 1; });
-      var order = this.ORDER.filter(function (c) { return cats[c]; }); // a category the data adds later lands at the end
-      Object.keys(cats).sort().forEach(function (c) { if (order.indexOf(c) < 0) order.push(c); });
-      this.order = order;
-
-      var chips = $('#sup-chips');
-      chips.innerHTML = order.map(function (c) { return '<button type="button" data-cat="' + esc(c) + '" aria-pressed="false">' + esc(c) + '<b>' + cats[c] + '</b></button>'; }).join('');
-      chips.addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; var c = b.getAttribute('data-cat'); self.setFilters(self.cat === c ? null : c, self.country, false); });
-      var csel = $('#sup-cat'); // phones get a select instead of twenty chips
-      order.forEach(function (c) { var o = document.createElement('option'); o.value = c; o.textContent = c + ' (' + cats[c] + ')'; csel.appendChild(o); });
-      csel.addEventListener('change', function () { self.setFilters(csel.value || null, self.country, false); });
+      var self = this, countries = {};
+      try { var saved = localStorage.getItem('cp-sup-mode'); if (saved === 'table' || saved === 'detailed') this.mode = 'table'; } catch (e) { }
+      this.groupStages();
 
       var sel = $('#sup-country'), other = 0;
-      Object.keys(countries).forEach(function (c) { if (self.MAIN.indexOf(c) < 0) other += countries[c]; });
+      this.rows.forEach(function (r) { countries[r.country] = (countries[r.country] || 0) + 1; });
+      Object.keys(countries).forEach(function (c) { if (self.CO.indexOf(c) < 0) other += countries[c]; });
       Object.keys(countries).sort(function (a, b) { return countries[b] - countries[a]; }).forEach(function (c) { var o = document.createElement('option'); o.value = c; o.textContent = cname(c) + ' (' + countries[c] + ')'; sel.appendChild(o); });
       if (other) { var oo = document.createElement('option'); oo.value = '__other'; oo.textContent = 'Every other country (' + other + ')'; sel.appendChild(oo); }
-      sel.addEventListener('change', function () { self.setFilters(self.cat, sel.value, false); });
+      sel.addEventListener('change', function () { self.setCountry(sel.value, false); });
 
       $('#sup-chk').addEventListener('change', function (e) { self.chk = e.target.value; self.render(); });
       var supTimer; $('#sup-search').addEventListener('input', function (e) { var v = e.target.value; clearTimeout(supTimer); supTimer = setTimeout(function () { self.q = v.trim().toLowerCase(); self.render(); }, 120); });
       $('#sup-copy').addEventListener('click', function () { self.copy(); });
       $('#sup-table').addEventListener('click', function (e) { var b = e.target.closest('button[data-sort]'); if (b) self.sortBy(b.getAttribute('data-sort')); });
-      $('#sup-list').addEventListener('click', function (e) {
-        var s = e.target.closest('button[data-sort]'); if (s) { self.sortBy(s.getAttribute('data-sort')); return; }
-        var h = e.target.closest('.sup-head'); if (h) self.toggleRow(h);
-      });
+      $('#sup-ladder').addEventListener('click', function (e) { var b = e.target.closest('.sup-name'); if (b) self.openName(b); });
       $$('.sup-mode').forEach(function (b) { b.addEventListener('click', function () { self.setMode(b.getAttribute('data-mode')); }); });
 
-      this.buildMap();
+      this.buildLadder();
+      this.legend();
+      this.drawPipe();
+      var host = $('#sup-pipe-scroll');
+      host.addEventListener('scroll', function () { self.hideTip(); });
+      var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { self.fitPipe(); }, 160); });
       this.sync();
       this.render();
     },
+
+    /* every stage carries its firms, its count by country and its Critical names; the drawing reads only this */
+    groupStages: function () {
+      var self = this, by = {};
+      this.rows.forEach(function (r, i) {
+        r._ix = i; // where the row sits in the dataset, so a name button can find it again
+        var s = by[r.category] || (by[r.category] = { name: r.category, rows: [], crit: [], by: {}, n: 0 });
+        s.rows.push(r); s.n++;
+        var c = self.CO.indexOf(r.country) >= 0 ? r.country : 'Other';
+        s.by[c] = (s.by[c] || 0) + 1;
+        if (r.chokepoint === 'Critical') s.crit.push(r.name);
+      });
+      var order = this.ORDER.filter(function (c) { return by[c]; }); // a category the data adds later lands at the end
+      Object.keys(by).sort().forEach(function (c) { if (order.indexOf(c) < 0) order.push(c); });
+      this.stages = order.map(function (c, i) { var s = by[c]; s.i = i; s.short = self.SHORT[c] || c; s.id = 'sup-rung-' + i; return s; });
+    },
+    coName: function (c) { return c === 'Other' ? 'Every other country' : cname(c); },
 
     /* ---- the dot matrix: stages down, countries across ---- */
     buildMap: function () {
@@ -1455,15 +1478,108 @@
         (dl || src ? '<details class="th-det"><summary>Details</summary><dl>' + dl + '</dl>' + src + '</details>' : '') +
         '</article>';
     },
+    /* ---- the ruler: every chip's total processing performance against the three licence lines ----
+       Behind ?ruler=1 until the client has seen it. TPP is a site calculation, not a vendor figure. */
+    LINES: [
+      { tpp: 1600, text: 'TPP 1,600 · with density ≥ 5.92' },
+      { tpp: 4800, text: 'TPP 4,800 · 3A090.a, licence, presumption of denial' },
+      { tpp: 21000, text: 'TPP 21,000 · since 15 Jan 2026 China sales reviewed case by case below this line' }
+    ],
+    TICKS: [1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000],
+    /* TPP = 2 × MACs × bit length: the datasheet's dense figure times the bits it was quoted at */
+    tppOf: function (c) {
+      var m = c.compute || {}, best = 0, from = '';
+      var take = function (v, mult, name) {
+        if (typeof v === 'number' && isFinite(v) && v > 0 && v * mult > best) { best = v * mult; from = mult + ' × ' + v.toLocaleString('en-US') + ' dense ' + name + ' TFLOPS'; }
+      };
+      take(m.fp8TFLOPS, 8, 'FP8'); take(m.fp16TFLOPS, 16, 'FP16'); take(m.fp4TFLOPS, 4, 'FP4');
+      return best ? { tpp: best, from: from } : null;
+    },
+    ruler: function () {
+      var self = this, host = $('#th-ruler');
+      if (!host) return;
+      var on = false;
+      try { on = /[?&]ruler=1(&|$)/.test(location.search); } catch (e) { on = false; }
+      var rows = on ? (DATA.landscape || []).map(function (c) {
+        var t = self.tppOf(c);
+        return t ? { name: String(c.name || '').replace(/\s*\([^)]*\)\s*$/, ''), vendor: c.vendor || '', cn: c.vendorCountry === 'CN', tpp: t.tpp, from: t.from } : null;
+      }).filter(Boolean).sort(function (a, b) { return a.tpp - b.tpp; }) : [];
+      if (!rows.length) { if (host.parentNode) host.parentNode.removeChild(host); return; }
+      var W = Math.max(880, Math.round(host.getBoundingClientRect().width) || 880), padL = 14, padR = 16;
+      var lo = 1000, hi = Math.max(26000, rows[rows.length - 1].tpp * 1.2);
+      var l0 = Math.log(lo) / Math.LN10, l1 = Math.log(hi) / Math.LN10, span = l1 - l0;
+      var X = function (v) { return padL + Math.max(0, Math.min(1, (Math.log(v) / Math.LN10 - l0) / span)) * (W - padL - padR); };
+      var rows3 = [16, 32, 48], bandTop = 56, axisY = 100, laneY = axisY + 22, step = 22, LANES = 5;
+      var H = laneY + step * (LANES - 1) + 12;
+      var fmt = function (v) { return Math.round(v).toLocaleString('en-US'); };
+      var s = '<svg class="th-rsvg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Every chip’s total processing performance on a log scale, against the three licence lines">';
+      s += '<rect class="th-band amber" x="' + X(4800).toFixed(1) + '" y="' + bandTop + '" width="' + (X(21000) - X(4800)).toFixed(1) + '" height="' + (axisY - bandTop) + '"></rect>';
+      s += '<rect class="th-band ink" x="' + X(21000).toFixed(1) + '" y="' + bandTop + '" width="' + (W - padR - X(21000)).toFixed(1) + '" height="' + (axisY - bandTop) + '"></rect>';
+      this.LINES.forEach(function (L, i) {
+        var x = X(L.tpp), w = L.text.length * 6.0, end = x + w > W - padR;
+        s += '<line class="th-rline" x1="' + x.toFixed(1) + '" y1="8" x2="' + x.toFixed(1) + '" y2="' + axisY + '"></line>' +
+          '<text class="th-rlab" x="' + (end ? x - 6 : x + 6).toFixed(1) + '" y="' + rows3[i] + '" text-anchor="' + (end ? 'end' : 'start') + '">' + esc(L.text) + '</text>';
+      });
+      s += '<line class="th-raxis" x1="' + padL + '" y1="' + axisY + '" x2="' + (W - padR) + '" y2="' + axisY + '"></line>';
+      this.TICKS.forEach(function (t) {
+        if (t > hi) return;
+        var x = X(t);
+        s += '<line class="th-rtick" x1="' + x.toFixed(1) + '" y1="' + axisY + '" x2="' + x.toFixed(1) + '" y2="' + (axisY + 5) + '"></line>' +
+          '<text class="th-rtl" x="' + x.toFixed(1) + '" y="' + (bandTop - 6) + '" text-anchor="middle">' + fmt(t) + '</text>';
+      });
+      var last = [], i2;
+      for (i2 = 0; i2 < LANES; i2++) last.push(-1e9);
+      rows.forEach(function (r, k) {
+        var label = r.name + ' · ' + fmt(r.tpp), w = label.length * 6.0;
+        var x = X(r.tpp), lx = Math.max(padL, Math.min(x, W - padR - w)), ln = 0;
+        for (ln = 0; ln < LANES; ln++) if (lx - last[ln] >= 70) break;
+        if (ln >= LANES) ln = LANES - 1;
+        last[ln] = lx;
+        var y = laneY + step * ln, cls = r.cn ? 'cn' : (r.tpp < 21000 ? 'lo' : 'hi');
+        var tip = r.name + ' · ' + (r.vendor || '') + ' · TPP ' + fmt(r.tpp) + ' · ' + r.from;
+        s += '<g class="th-mk ' + cls + '" tabindex="0" role="button" data-tip="' + esc(tip) + '" aria-label="' + esc(tip) + '" style="--d:' + Math.min(420, k * 26) + 'ms">' +
+          '<polyline class="th-lead" points="' + x.toFixed(1) + ',' + (axisY + 4) + ' ' + x.toFixed(1) + ',' + (y - 8) + ' ' + (lx + 2).toFixed(1) + ',' + (y - 8) + ' ' + (lx + 2).toFixed(1) + ',' + (y - 5) + '"></polyline>' +
+          '<circle class="th-dot" cx="' + x.toFixed(1) + '" cy="' + axisY + '" r="4"></circle>' +
+          '<text class="th-mlab" x="' + lx.toFixed(1) + '" y="' + y + '">' + esc(label) + '</text></g>';
+      });
+      host.innerHTML = '<div class="th-rscroll">' + s + '</svg></div>' +
+        '<p class="th-rlegend"><b class="cn">Made in China, not subject</b><b class="lo">Reviewed case by case</b><b class="hi">Controlled, denied</b>' +
+        '<span>TPP = 2 × MACs × bit length on dense datasheet figures; a site calculation.</span></p>' +
+        '<div class="th-rtip" id="th-rtip" role="tooltip" hidden></div>';
+      if (!reduced) host.setAttribute('data-in', '1');
+      this.wireRuler(host);
+    },
+    wireRuler: function (host) {
+      var tip = $('#th-rtip');
+      var mk = function (e) { return e.target && e.target.closest ? e.target.closest('.th-mk') : null; };
+      var show = function (g) {
+        if (!tip) return;
+        tip.textContent = g.getAttribute('data-tip') || '';
+        tip.hidden = false;
+        var r = g.getBoundingClientRect(), h = host.getBoundingClientRect();
+        tip.style.left = Math.max(0, Math.min(r.left + r.width / 2 - h.left - tip.offsetWidth / 2, h.width - tip.offsetWidth)) + 'px';
+        tip.style.top = Math.max(0, r.top - h.top - tip.offsetHeight - 8) + 'px';
+      };
+      host.addEventListener('mouseover', function (e) { var g = mk(e); if (g) show(g); });
+      host.addEventListener('mouseout', function (e) { if (mk(e) && tip) tip.hidden = true; });
+      host.addEventListener('focusin', function (e) { var g = mk(e); if (g) show(g); });
+      host.addEventListener('focusout', function () { if (tip) tip.hidden = true; });
+      host.addEventListener('click', function (e) { if (mk(e)) location.hash = '#/landscape'; });
+      host.addEventListener('keydown', function (e) { if ((e.key === 'Enter' || e.key === ' ') && mk(e)) { e.preventDefault(); location.hash = '#/landscape'; } });
+    },
     /* the cards animate the first time the sub-tab is actually on screen */
     enter: function () {
       var sub = $('.view[data-view="controls"] .sub[data-sub="thresholds"]'), board = $('#th-board');
-      if (!sub || !board || sub.hidden || this.inBoard) return;
+      if (!sub || !board || sub.hidden) return;
+      var r = $('#th-ruler'); // the ruler is drawn from its own width, which is zero while the sub-tab is closed
+      if (r && Math.round(r.getBoundingClientRect().width) !== this.rulerW) { this.rulerW = Math.round(r.getBoundingClientRect().width); this.ruler(); }
+      if (this.inBoard) return;
       this.inBoard = true;
       if (!reduced) board.setAttribute('data-in', '1');
     },
     build: function () {
       this.built = true;
+      this.ruler();
       var th = DATA.controls || [], ex = DATA.exposure || [];
       var tbl = $('#controls-table');
       if (tbl) {
