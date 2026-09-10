@@ -1167,29 +1167,70 @@
           '</div></div></li>';
       }).join('') + '</ol>';
     },
-    showTip: function (d) {
-      var e = (this.visible || [])[parseInt(d.getAttribute('data-i'), 10)];
-      if (!e) return;
-      if (!this.tip) { var t = document.createElement('div'); t.className = 'tl-tip'; t.setAttribute('role', 'tooltip'); document.body.appendChild(t); this.tip = t; }
-      var dt = new Date(e.date + 'T00:00:00');
-      this.tip.innerHTML = '<b>' + esc(isNaN(dt) ? e.date : dt.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })) + '</b>' + esc(e.title);
-      this.tip.hidden = false;
-      var r = d.getBoundingClientRect(), x = r.left + r.width / 2 + window.scrollX;
-      this.tip.style.left = Math.max(8, Math.min(x - this.tip.offsetWidth / 2, window.scrollX + window.innerWidth - this.tip.offsetWidth - 8)) + 'px';
-      this.tip.style.top = (r.top + window.scrollY - this.tip.offsetHeight - 9) + 'px';
+    /* ---- the scrubber: the years as equal segments, a playhead, and Now ---- */
+    renderScrub: function () {
+      var self = this, host = $('#cf-scrub');
+      if (!host || !this.flows) return;
+      host.innerHTML = '<div class="cf-scrub-h"><p class="cf-asof">As of <b id="cf-asof">' + esc(this.fmtDate(this.asOf)) + '</b></p>' +
+        '<button type="button" class="cf-now" id="cf-now">Now</button></div>' +
+        '<div class="cf-track"><div class="cf-years" id="cf-years" role="group" aria-label="Set the date by year">' +
+        this.years.map(function (y) {
+          var n = self.yearN[y] || 0;
+          return '<button type="button" class="cf-year" data-y="' + y + '" aria-pressed="false" aria-label="' + y + ', ' + n + (n === 1 ? ' move' : ' moves') + '">' +
+            '<span class="cf-yl">' + y + '</span><span class="cf-ys">’' + String(y).slice(2) + '</span><span class="cf-yn">' + n + '</span></button>';
+        }).join('') + '</div><div class="cf-head" id="cf-head" aria-hidden="true"></div></div>';
+      var years = $('#cf-years'), now = $('#cf-now');
+      if (now) now.addEventListener('click', function () { self.setAsOf(self.now, [self.years[self.years.length - 1] + '-01-01', self.now]); });
+      if (years) {
+        years.addEventListener('click', function (e) { var b = e.target.closest ? e.target.closest('.cf-year') : null; if (b) self.pickYear(parseInt(b.getAttribute('data-y'), 10)); });
+        years.addEventListener('keydown', function (e) {
+          var b = e.target.closest ? e.target.closest('.cf-year') : null;
+          if (!b || (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')) return;
+          e.preventDefault();
+          var i = self.years.indexOf(parseInt(b.getAttribute('data-y'), 10));
+          var to = Math.max(0, Math.min(self.years.length - 1, i + (e.key === 'ArrowRight' ? 1 : -1)));
+          var nx = years.querySelector('.cf-year[data-y="' + self.years[to] + '"]');
+          if (nx) { nx.focus(); self.pickYear(self.years[to]); }
+        });
+      }
+      this.markYears(); this.placeHead();
     },
-    hideTip: function () { if (this.tip) this.tip.hidden = true; },
-    jump: function (i) {
-      var el = document.getElementById('tl-e' + i);
-      if (!el) return;
-      var btn = el.querySelector('.tl-more');
-      if (btn && btn.getAttribute('aria-expanded') !== 'true') this.setOpen(btn, true);
-      el.classList.add('is-in');
-      $$('#timeline .is-target').forEach(function (x) { x.classList.remove('is-target'); });
-      el.classList.add('is-target');
-      el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    pickYear: function (y) {
+      var last = this.years[this.years.length - 1];
+      this.setAsOf(y >= last ? this.now : y + '-12-31', [y + '-01-01', y + '-12-31']);
     },
-    /* the dot of the entry nearest the top of the reading area, kept in step with the scroll */
+    /* the one lever on the page: move the as-of date, and the board re-reads itself from it */
+    setAsOf: function (date, span) {
+      if (!date || !this.flows) return;
+      var prev = this.asOf;
+      this.asOf = date;
+      var lab = $('#cf-asof'); if (lab) lab.textContent = this.fmtDate(date);
+      if (!span && prev && prev !== date) span = prev < date ? [prev, date] : [date, prev];
+      this.paintBoard(prev === date ? null : span);
+      this.markYears(); this.placeHead();
+    },
+    markYears: function () {
+      var y = parseInt(String(this.asOf).slice(0, 4), 10);
+      $$('#cf-years .cf-year').forEach(function (b) { b.setAttribute('aria-pressed', parseInt(b.getAttribute('data-y'), 10) === y ? 'true' : 'false'); });
+    },
+    /* the as-of date as a fraction of the whole scale: the year's segment plus how far through it */
+    frac: function (date) {
+      var ys = this.years, n = ys.length, s = String(date || '');
+      if (!n) return 0;
+      var y = parseInt(s.slice(0, 4), 10), m = parseInt(s.slice(5, 7), 10) - 1, d = parseInt(s.slice(8, 10), 10);
+      var i = ys.indexOf(y);
+      if (i < 0) i = y < ys[0] ? 0 : n - 1;
+      var within = ((isNaN(m) ? 0 : m) + (isNaN(d) ? 0 : (d - 1) / 31)) / 12;
+      return (i + Math.max(0, Math.min(1, within))) / n;
+    },
+    placeHead: function () {
+      var head = $('#cf-head'), track = $('#cf-years');
+      if (!head || !track) return;
+      var w = track.getBoundingClientRect().width;
+      if (w) this.headW = w;
+      head.style.transform = 'translate3d(' + (this.frac(this.asOf) * (this.headW || w)).toFixed(1) + 'px,0,0)';
+    },
+    /* By date: the entry at the reading line sets the as-of date, so the compact board keeps pace with the scroll */
     spy: function () {
       var self = this;
       if (this.tickQ) return;
@@ -1198,29 +1239,24 @@
       if (window.requestAnimationFrame) window.requestAnimationFrame(run); else window.setTimeout(run, 32);
     },
     spyNow: function () {
-      var svg = $('#tl-strip .tl-svg'), items = this.items || [];
-      if (!svg || !items.length) return;
+      var items = this.items || [], side = $('#cf-side');
+      if (!this.flows || this.mode !== 'date' || !items.length || !side || !side.offsetParent) return;
       var mast = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--masthead')) || 56;
-      var probe = mast + (window.innerWidth >= 900 ? svg.getBoundingClientRect().height : 0) + 26;
+      var probe = mast + 40;
       var at = 0; // the first entry still crossing the reading line: the one the reader is on
       for (var i = 0; i < items.length; i++) { at = i; if (items[i].getBoundingClientRect().bottom > probe) break; }
       if (at === this.at) return;
       this.at = at;
-      var dots = svg.querySelectorAll('.tl-dot'), ring = svg.querySelector('.tl-ring'), d = dots[at];
-      if (!d) return;
-      if (dots[this.atDot]) { dots[this.atDot].classList.remove('is-at'); dots[this.atDot].setAttribute('tabindex', '-1'); }
-      d.classList.add('is-at'); d.setAttribute('tabindex', '0');
-      this.atDot = at;
-      if (ring) { ring.setAttribute('cx', d.getAttribute('cx')); ring.setAttribute('cy', d.getAttribute('cy')); ring.setAttribute('opacity', '1'); }
-      var yy = String((this.visible[at] || {}).date || '').slice(0, 4), labs = svg.querySelectorAll('.tl-ylab');
-      for (var j = 0; j < labs.length; j++) labs[j].classList.toggle('is-on', labs[j].getAttribute('data-y') === yy);
+      var d = items[at].getAttribute('data-date');
+      if (d) this.setAsOf(d, null);
     },
-    /* the strip is drawn from its own width, so redraw it whenever the sub-tab opens or the window changes */
+    /* the scrubber is placed from its own width, so settle it whenever the sub-tab opens or the window changes */
     sync: function () {
-      var host = $('#tl-strip');
-      if (!host) return;
-      if (Math.round(host.getBoundingClientRect().width) !== this.stripW) this.strip();
-      this.at = -1; this.spy();
+      var self = this;
+      if (!this.flows) return;
+      this.headW = 0;
+      var run = function () { self.placeHead(); self.spy(); };
+      if (window.requestAnimationFrame) window.requestAnimationFrame(run); else window.setTimeout(run, 32);
     }
   };
 
