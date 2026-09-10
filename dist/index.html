@@ -9143,8 +9143,8 @@ PC.register('wafer', function (p) {
       var lo = 1000, hi = Math.max(26000, rows[rows.length - 1].tpp * 1.2);
       var l0 = Math.log(lo) / Math.LN10, l1 = Math.log(hi) / Math.LN10, span = l1 - l0;
       var X = function (v) { return padL + Math.max(0, Math.min(1, (Math.log(v) / Math.LN10 - l0) / span)) * (W - padL - padR); };
-      var rows3 = [16, 32, 48], bandTop = 56, axisY = 100, laneY = axisY + 22, step = 22, LANES = 5;
-      var H = laneY + step * (LANES - 1) + 12;
+      var rows3 = [12, 27, 42], bandTop = 64, axisY = 104, laneY = axisY + 24, step = 22, LANES = 5;
+      var H = laneY + step * (LANES - 1) + 10;
       var fmt = function (v) { return Math.round(v).toLocaleString('en-US'); };
       var s = '<svg class="th-rsvg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Every chip’s total processing performance on a log scale, against the three licence lines">';
       s += '<rect class="th-band amber" x="' + X(4800).toFixed(1) + '" y="' + bandTop + '" width="' + (X(21000) - X(4800)).toFixed(1) + '" height="' + (axisY - bandTop) + '"></rect>';
@@ -9158,17 +9158,22 @@ PC.register('wafer', function (p) {
       this.TICKS.forEach(function (t) {
         if (t > hi) return;
         var x = X(t);
-        s += '<line class="th-rtick" x1="' + x.toFixed(1) + '" y1="' + axisY + '" x2="' + x.toFixed(1) + '" y2="' + (axisY + 5) + '"></line>' +
-          '<text class="th-rtl" x="' + x.toFixed(1) + '" y="' + (bandTop - 6) + '" text-anchor="middle">' + fmt(t) + '</text>';
+        s += '<line class="th-rtick" x1="' + x.toFixed(1) + '" y1="' + (axisY - 4) + '" x2="' + x.toFixed(1) + '" y2="' + axisY + '"></line>' +
+          '<text class="th-rtl" x="' + x.toFixed(1) + '" y="' + (bandTop - 7) + '" text-anchor="middle">' + fmt(t) + '</text>';
       });
-      var last = [], i2;
-      for (i2 = 0; i2 < LANES; i2++) last.push(-1e9);
+      // labels in up to five lanes: the first lane where this one clears the last label already in it
+      var last = [], lastW = [], i2;
+      for (i2 = 0; i2 < LANES; i2++) { last.push(-1e9); lastW.push(0); }
       rows.forEach(function (r, k) {
         var label = r.name + ' · ' + fmt(r.tpp), w = label.length * 6.0;
-        var x = X(r.tpp), lx = Math.max(padL, Math.min(x, W - padR - w)), ln = 0;
-        for (ln = 0; ln < LANES; ln++) if (lx - last[ln] >= 70) break;
-        if (ln >= LANES) ln = LANES - 1;
-        last[ln] = lx;
+        var x = X(r.tpp), lx = Math.max(padL, Math.min(x, W - padR - w)), ln = 0, q, best = 0;
+        for (ln = 0; ln < LANES; ln++) if (lx - last[ln] >= Math.max(70, lastW[ln] + 10)) break;
+        if (ln >= LANES) { // every lane is busy here: take the emptiest and push this label clear of it
+          for (q = 1; q < LANES; q++) if (last[q] + lastW[q] < last[best] + lastW[best]) best = q;
+          ln = best;
+          lx = Math.min(W - padR - w, Math.max(lx, last[ln] + Math.max(70, lastW[ln] + 10)));
+        }
+        last[ln] = lx; lastW[ln] = w;
         var y = laneY + step * ln, cls = r.cn ? 'cn' : (r.tpp < 21000 ? 'lo' : 'hi');
         var tip = r.name + ' · ' + (r.vendor || '') + ' · TPP ' + fmt(r.tpp) + ' · ' + r.from;
         s += '<g class="th-mk ' + cls + '" tabindex="0" role="button" data-tip="' + esc(tip) + '" aria-label="' + esc(tip) + '" style="--d:' + Math.min(420, k * 26) + 'ms">' +
