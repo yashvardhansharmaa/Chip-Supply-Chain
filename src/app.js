@@ -746,6 +746,7 @@
       st.forEach(function (s, i) {                                       // one amber square a Critical firm, rows of three
         var m = s.crit.length; if (!m) return;
         var rows = Math.ceil(m / 3), first = m - (rows - 1) * 3, j, row, col, inRow, rw, rx, ry;
+        sq += '<line class="sup-crit-drop" x1="' + x(i).toFixed(1) + '" y1="' + (critBase + 3) + '" x2="' + x(i).toFixed(1) + '" y2="' + (cy - k * s.n / 2 - 3).toFixed(1) + '"></line>';
         for (j = 0; j < m; j++) {
           row = j < first ? 0 : 1 + Math.floor((j - first) / 3);
           col = j < first ? j : (j - first) % 3;
