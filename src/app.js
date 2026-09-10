@@ -1162,7 +1162,7 @@
         else { b.removeAttribute('aria-controls'); b.removeAttribute('aria-expanded'); }
       });
       if (remember) this.saveMode(this.mode);
-      if (this.mode === 'subject') this.setAsOf(this.now, null);
+      if (this.mode === 'subject') this.setAsOf(this.now, [this.now, this.now]); // back to now, without flashing the whole board
       this.at = -1;
       this.sync();
     },
