@@ -1453,5 +1453,296 @@
       "https://en.mthreads.com/product/S5000"
     ],
     "note": "Moore Threads gives 80 GB at 1.6 TB/s, which is about four HBM2E-class stacks, and nothing else; the single die and all dimensions are estimated."
+  },
+  "a100": {
+    "unit": "mm",
+    "interposer": [
+      55,
+      39
+    ],
+    "dies": [
+      {
+        "x": 0,
+        "y": 0,
+        "w": 26,
+        "h": 31.8
+      }
+    ],
+    "hbm": [
+      {
+        "x": -20.5,
+        "y": -11.8,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -20.5,
+        "y": 0,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -20.5,
+        "y": 11.8,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 20.5,
+        "y": -5.9,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 20.5,
+        "y": 5.9,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      73,
+      57
+    ],
+    "estimated": true,
+    "sources": [
+      "https://developer.nvidia.com/blog/nvidia-ampere-architecture-in-depth/",
+      "https://www.nvidia.com/en-us/data-center/a100/"
+    ],
+    "note": "Nvidia states one 826 mm2 GA100 die and five active HBM2e stacks. An odd number of stacks cannot be shared evenly between the two long edges, so they are drawn three to one edge and two to the other. Nvidia publishes no package dimensions, so the die rectangle (26 x 31.8 mm, the published area), the interposer and the substrate are estimated."
+  },
+  "h100": {
+    "unit": "mm",
+    "interposer": [
+      54,
+      38
+    ],
+    "dies": [
+      {
+        "x": 0,
+        "y": 0,
+        "w": 26,
+        "h": 31.5
+      }
+    ],
+    "hbm": [
+      {
+        "x": -20,
+        "y": -11.8,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -20,
+        "y": 0,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -20,
+        "y": 11.8,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 20,
+        "y": -5.9,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 20,
+        "y": 5.9,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      72,
+      56
+    ],
+    "estimated": true,
+    "sources": [
+      "https://developer.nvidia.com/blog/nvidia-hopper-architecture-in-depth/",
+      "https://www.nvidia.com/en-us/data-center/h100/"
+    ],
+    "note": "Nvidia states one 814 mm2 GH100 die, six HBM stack sites on the full chip and five HBM3 stacks active on the H100 SXM5. The five are drawn three to one edge and two to the other; the sixth site is left empty. Nvidia publishes no package dimensions, so the interposer and substrate rectangles are estimated."
+  },
+  "a800": {
+    "unit": "mm",
+    "interposer": [
+      55,
+      39
+    ],
+    "dies": [
+      {
+        "x": 0,
+        "y": 0,
+        "w": 26,
+        "h": 31.8
+      }
+    ],
+    "hbm": [
+      {
+        "x": -20.5,
+        "y": -11.8,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -20.5,
+        "y": 0,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -20.5,
+        "y": 11.8,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 20.5,
+        "y": -5.9,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 20.5,
+        "y": 5.9,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      73,
+      57
+    ],
+    "estimated": true,
+    "sources": [
+      "https://www.csis.org/analysis/where-chips-fall-us-export-controls-under-biden-administration-2022-2024",
+      "https://developer.nvidia.com/blog/nvidia-ampere-architecture-in-depth/"
+    ],
+    "note": "Physically the A100 package: the same 826 mm2 GA100 die and five active HBM2e stacks, since only the NVLink rate was changed for the China market. Drawn identically to the A100, and every dimension is estimated because Nvidia publishes none."
+  },
+  "h800": {
+    "unit": "mm",
+    "interposer": [
+      54,
+      38
+    ],
+    "dies": [
+      {
+        "x": 0,
+        "y": 0,
+        "w": 26,
+        "h": 31.5
+      }
+    ],
+    "hbm": [
+      {
+        "x": -20,
+        "y": -11.8,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -20,
+        "y": 0,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -20,
+        "y": 11.8,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 20,
+        "y": -5.9,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 20,
+        "y": 5.9,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      72,
+      56
+    ],
+    "estimated": true,
+    "sources": [
+      "https://www.csis.org/analysis/where-chips-fall-us-export-controls-under-biden-administration-2022-2024",
+      "https://developer.nvidia.com/blog/nvidia-hopper-architecture-in-depth/"
+    ],
+    "note": "Physically the H100 package: the same 814 mm2 GH100 die and five active HBM3 stacks, since only the NVLink rate was changed. Drawn identically to the H100, and every dimension is estimated."
+  },
+  "h20": {
+    "unit": "mm",
+    "interposer": [
+      54,
+      38
+    ],
+    "dies": [
+      {
+        "x": 0,
+        "y": 0,
+        "w": 26,
+        "h": 31.5
+      }
+    ],
+    "hbm": [
+      {
+        "x": -20,
+        "y": -11.8,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -20,
+        "y": 0,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -20,
+        "y": 11.8,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 20,
+        "y": -11.8,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 20,
+        "y": 0,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 20,
+        "y": 11.8,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      72,
+      56
+    ],
+    "estimated": true,
+    "sources": [
+      "https://epoch.ai/data/machine-learning-hardware",
+      "https://developer.nvidia.com/blog/nvidia-hopper-architecture-in-depth/"
+    ],
+    "note": "Inferred, not stated. Nvidia publishes no H20 package information at all. Epoch AI gives 96 GB of HBM3, and Nvidia’s Hopper post says the full GH100 carries six HBM stack sites, so this is drawn as one Hopper die with six 16 GB stacks, three per long edge, in the same arrangement as the H200. Every dimension is estimated."
   }
 }

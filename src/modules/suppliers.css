@@ -121,9 +121,9 @@
 .sup-cc { font-style: normal; font-family: var(--font-mono); font-weight: 400; font-size: 9.5px; letter-spacing: 0.05em; color: var(--muted); margin-left: 4px; }
 
 .sup-rung[data-empty="1"] .sup-names, .sup-rung[data-empty="1"] .sup-panel { display: none; }
-.sup-rung[data-empty="1"] { padding-bottom: 12px; }
+.sup-rung[data-empty="1"] { padding-top: 9px; padding-bottom: 10px; }   /* nothing matches here: collapse to the header */
 .sup-rung[data-empty="1"] .sup-rung-name { color: var(--muted); font-weight: 500; }
-.sup-rung[data-empty="1"] .sup-rank { color: var(--bg-2); }
+.sup-rung[data-empty="1"] .sup-rank { color: var(--bg-2); font-size: 27px; }
 
 /* ---------- the firm panel under a rung ---------- */
 .sup-panel { grid-column: 2; display: grid; grid-template-rows: 0fr; transition: grid-template-rows 220ms var(--ease); }
