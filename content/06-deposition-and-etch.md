@@ -1,71 +1,71 @@
 ---json
 {
-  "id": "deposition-and-etch",
-  "number": 6,
-  "title": "Deposition and Etch",
-  "oneLiner": "Lithography prints the pattern; deposition and etch do the rest, over a thousand steps per wafer. This is the one tool segment where China has taken real share.",
-  "plain": "Deposition and etch build the chip itself, like a layer cake: lay down a film a few atoms thick, print a pattern on it, burn away everything the pattern does not protect, then do it again, more than a thousand times over. The film has to reach the bottom of a hole hundreds of times deeper than it is wide, and the burn has to eat one material and leave the one beside it untouched. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.",
-  "bridge": "A printed pattern is not yet a circuit, and the machines that turn it into one run more often than anything else in the fab.",
-  "specimen": "process-chamber",
-  "specimenCaption": "A plasma process chamber cut in half. Gas enters through the plenum and showerhead at the top, a 300 mm wafer sits below on an electrostatic chuck inside its focus ring, the plasma glows amber between them, the slit valve in the wall is where the wafer goes in and out, and the gate valve and turbopump under the floor hold the vacuum.",
-  "card": {
-    "concentration": "High",
-    "chokepointScore": 4,
-    "leaders": [
-      {"name": "Applied Materials", "country": "US", "share": "$28.4B revenue, fiscal 2025; leader in physical and chemical vapour deposition and in epitaxy"},
-      {"name": "Lam Research", "country": "US", "share": "$23.2B revenue, fiscal 2026; leader in dry etch and in metal atomic layer deposition"},
-      {"name": "Tokyo Electron", "country": "JP", "share": "23% of dry etch and 38% of chemical vapour deposition, 2025"},
-      {"name": "ASM International", "country": "NL", "share": "€3.2B revenue, 2025; leader in single-wafer atomic layer deposition"},
-      {"name": "Naura", "country": "CN", "share": "5th largest equipment vendor worldwide, 2025 estimate"}
-    ],
-    "countries": [
-      {"code": "US", "note": "Applied Materials (Santa Clara), Lam Research (Fremont)"},
-      {"code": "JP", "note": "Tokyo Electron, Kokusai Electric, Hitachi High-Tech"},
-      {"code": "NL", "note": "ASM International, Almere; ALD and epitaxy"},
-      {"code": "KR", "note": "Large buyer; Semes and local suppliers in wet processing"},
-      {"code": "CN", "note": "Naura, AMEC, Piotech; largest equipment market at $49.3B in 2025"}
-    ],
-    "chinaStatus": "The strongest Chinese position in any tool segment. China-based suppliers held about 11% of dry etch and 7% of deposition in 2024, but under 1% of atomic layer deposition.",
-    "usStatus": "Two of the three largest suppliers are American. Washington controls dry etch, atomic layer deposition and deep-hole deposition tools by export classification number, and by a rule that reaches tools built outside the United States from US technology.",
-    "costSignal": "No public list prices. Global semiconductor equipment billings were $135.1B in 2025, with wafer processing up 12%.",
-    "substitutability": {"band": "Moderate", "test": "Three or four vendors qualify at most etch and deposition steps; atomic layer deposition is the thin one", "why": "For most steps a buyer has three or four qualified vendors, so the work is requalification rather than invention, two to five years at the leading node. The exception is atomic layer deposition, where Chinese suppliers stayed under 1 percent across the same five years they took real share in etch. A well-funded actor that is not fenced out buys from ASM International, Lam, Tokyo Electron and Applied Materials and starts from a qualified tool, which is why China's clock here is the long one."}
-  },
-  "keyFacts": [
-    {"fact": "Producing one chip takes more than 1,000 process steps and 70 or more border crossings (CSET, 2021)", "source": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"},
-    {"fact": "Global semiconductor equipment billings reached $135.1B in 2025, up 15% from $117.1B in 2024, with wafer processing equipment up 12% (SEMI)", "source": "https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025"},
-    {"fact": "China bought $49.3B of semiconductor equipment in 2025, still the largest single market but down 0.5%, while Taiwan rose 90% to a record $31.5B (SEMI)", "source": "https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025"},
-    {"fact": "Tokyo Electron held 23% of dry etch, 38% of CVD and 15% of ALD worldwide in CY2025, against 91% of coater/developer, on the share chart in its own FY2026 results presentation", "source": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf"},
-    {"fact": "China-based suppliers reached 7% of deposition and about 11% of dry etch in 2024, from 2% and under 3% in 2019", "source": "https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/"},
-    {"fact": "AMEC 2025 revenue was RMB 12.385 billion, up 36.6%, with R&D at RMB 3.744 billion or 30.2% of sales and thin-film tool revenue up 224%", "source": "https://www.amec-inc.com/news/708.html"},
-    {"fact": "BIS controls TSV etch tools at aspect ratios of 10:1 or greater with etch rates above 7 microns per minute (ECCN 3B001.c.4)", "source": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf"},
-    {"fact": "Lam Research fiscal 2026 revenue was $23.23 billion, up 26% from $18.44 billion", "source": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000033/lrcx_exhibitx991xq4x2026.htm"}
-  ],
-  "figures": [
-    {
-      "id": "equipment-billings",
-      "type": "bars",
-      "title": "What the world spent on chipmaking equipment",
-      "unit": "$B",
-      "data": [["2024", 117.1], ["2025", 135.1]],
-      "source": {"label": "SEMI, Worldwide Semiconductor Equipment Market Statistics", "url": "https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025"}
-    },
-    {
-      "id": "tel-tool-share",
-      "type": "bars",
-      "title": "Tokyo Electron world market share by tool type, 2025",
-      "unit": "%",
-      "data": [["Coater/developer", 91], ["CVD", 38], ["Oxidation/diffusion", 31], ["Deposition systems", 27], ["Dry etch", 23], ["Cleaning", 20], ["ALD", 15]],
-      "source": {"label": "Tokyo Electron FY2026 Q4 results presentation", "url": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf"}
-    },
-    {
-      "id": "china-tool-share",
-      "type": "bars",
-      "title": "China-based suppliers' share of global tool segments, 2024",
-      "unit": "%",
-      "data": [["Dry stripping", 35], ["Dry etch", 11], ["CMP", 11], ["PVD", 10], ["Etch and clean", 9], ["Deposition", 7], ["CVD", 7], ["Lithography (i-line)", 4]],
-      "source": {"label": "CSET, Inside Beijing’s Chipmaking Offensive", "url": "https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/"}
-    }
-  ]
+ "id": "deposition-and-etch",
+ "number": 6,
+ "title": "Deposition and Etch",
+ "oneLiner": "Lithography prints the pattern; deposition and etch do the rest, over a thousand steps per wafer. This is the one tool segment where China has taken real share.",
+ "plain": "Deposition and etch build the chip itself, like a layer cake: lay down a film a few atoms thick, print a pattern on it, burn away everything the pattern does not protect, then do it again, more than a thousand times over. The film has to reach the bottom of a hole hundreds of times deeper than it is wide, and the burn has to eat one material and leave the one beside it untouched. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.",
+ "bridge": "A printed pattern is not yet a circuit, and the machines that turn it into one run more often than anything else in the fab.",
+ "specimen": "process-chamber",
+ "specimenCaption": "A plasma process chamber cut in half. Gas enters through the plenum and showerhead at the top, a 300 mm wafer sits below on an electrostatic chuck inside its focus ring, the plasma glows amber between them, the slit valve in the wall is where the wafer goes in and out, and the gate valve and turbopump under the floor hold the vacuum.",
+ "card": {
+ "concentration": "High",
+ "chokepointScore": 4,
+ "leaders": [
+ {"name": "Applied Materials", "country": "US", "share": "$28.4B revenue, fiscal 2025; leader in physical and chemical vapour deposition and in epitaxy"},
+ {"name": "Lam Research", "country": "US", "share": "$23.2B revenue, fiscal 2026; leader in dry etch and in metal atomic layer deposition"},
+ {"name": "Tokyo Electron", "country": "JP", "share": "23% of dry etch and 38% of chemical vapour deposition, 2025"},
+ {"name": "ASM International", "country": "NL", "share": "€3.2B revenue, 2025; leader in single-wafer atomic layer deposition"},
+ {"name": "Naura", "country": "CN", "share": "5th largest equipment vendor worldwide, 2025 estimate"}
+ ],
+ "countries": [
+ {"code": "US", "note": "Applied Materials (Santa Clara), Lam Research (Fremont)"},
+ {"code": "JP", "note": "Tokyo Electron, Kokusai Electric, Hitachi High-Tech"},
+ {"code": "NL", "note": "ASM International, Almere; ALD and epitaxy"},
+ {"code": "KR", "note": "Large buyer; Semes and local suppliers in wet processing"},
+ {"code": "CN", "note": "Naura, AMEC, Piotech; largest equipment market at $49.3B in 2025"}
+ ],
+ "chinaStatus": "The strongest Chinese position in any tool segment. China-based suppliers held about 11% of dry etch and 7% of deposition in 2024, but under 1% of atomic layer deposition.",
+ "usStatus": "Two of the three largest suppliers are American. Washington controls dry etch, atomic layer deposition and deep-hole deposition tools by export classification number, and by a rule that reaches tools built outside the United States from US technology.",
+ "costSignal": "No public list prices. Global semiconductor equipment billings were $135.1B in 2025, with wafer processing up 12%.",
+ "substitutability": {"band": "Moderate", "test": "Three or four vendors qualify at most etch and deposition steps; atomic layer deposition is the thin one", "why": "For most steps a buyer has three or four qualified vendors, so the work is requalification rather than invention, two to five years at the leading node. The exception is atomic layer deposition, where Chinese suppliers stayed under 1 percent across the same five years they took real share in etch. A well-funded actor that is not fenced out buys from ASM International, Lam, Tokyo Electron and Applied Materials and starts from a qualified tool, which is why China's clock here is the long one."}
+ },
+ "keyFacts": [
+ {"fact": "Producing one chip takes more than 1,000 process steps and 70 or more border crossings (CSET, 2021)", "source": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"},
+ {"fact": "Global semiconductor equipment billings reached $135.1B in 2025, up 15% from $117.1B in 2024, with wafer processing equipment up 12% (SEMI)", "source": "https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025"},
+ {"fact": "China bought $49.3B of semiconductor equipment in 2025, still the largest single market but down 0.5%, while Taiwan rose 90% to a record $31.5B (SEMI)", "source": "https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025"},
+ {"fact": "Tokyo Electron held 23% of dry etch, 38% of CVD and 15% of ALD worldwide in CY2025, against 91% of coater/developer, on the share chart in its own FY2026 results presentation", "source": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf"},
+ {"fact": "China-based suppliers reached 7% of deposition and about 11% of dry etch in 2024, from 2% and under 3% in 2019", "source": "https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/"},
+ {"fact": "AMEC 2025 revenue was RMB 12.385 billion, up 36.6%, with R&D at RMB 3.744 billion or 30.2% of sales and thin-film tool revenue up 224%", "source": "https://www.amec-inc.com/news/708.html"},
+ {"fact": "BIS controls TSV etch tools at aspect ratios of 10:1 or greater with etch rates above 7 microns per minute (ECCN 3B001.c.4)", "source": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf"},
+ {"fact": "Lam Research fiscal 2026 revenue was $23.23 billion, up 26% from $18.44 billion", "source": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000033/lrcx_exhibitx991xq4x2026.htm"}
+ ],
+ "figures": [
+ {
+ "id": "equipment-billings",
+ "type": "bars",
+ "title": "What the world spent on chipmaking equipment",
+ "unit": "$B",
+ "data": [["2024", 117.1], ["2025", 135.1]],
+ "source": {"label": "SEMI, Worldwide Semiconductor Equipment Market Statistics", "url": "https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025"}
+ },
+ {
+ "id": "tel-tool-share",
+ "type": "bars",
+ "title": "Tokyo Electron world market share by tool type, 2025",
+ "unit": "%",
+ "data": [["Coater/developer", 91], ["CVD", 38], ["Oxidation/diffusion", 31], ["Deposition systems", 27], ["Dry etch", 23], ["Cleaning", 20], ["ALD", 15]],
+ "source": {"label": "Tokyo Electron FY2026 Q4 results presentation", "url": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf"}
+ },
+ {
+ "id": "china-tool-share",
+ "type": "bars",
+ "title": "China-based suppliers' share of global tool segments, 2024",
+ "unit": "%",
+ "data": [["Dry stripping", 35], ["Dry etch", 11], ["CMP", 11], ["PVD", 10], ["Etch and clean", 9], ["Deposition", 7], ["CVD", 7], ["Lithography (i-line)", 4]],
+ "source": {"label": "CSET, Inside Beijing’s Chipmaking Offensive", "url": "https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/"}
+ }
+ ]
 }
 ---
 # Deposition and Etch
@@ -124,7 +124,7 @@ China is the largest customer and the fastest-improving competitor. It bought $4
 
 Between 2019 and 2024 China-based suppliers went from 2 to 7 percent of deposition and from under 3 to about 9 percent of etch and clean, 11 percent in dry etch alone. In ALD they gained nothing and stayed under 1 percent ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). AMEC, the biggest of them, turned over RMB 12.385 billion in 2025, up 36.6 percent, and spent RMB 3.744 billion on research, 30.2 percent of sales ([source](https://www.amec-inc.com/news/708.html)).
 
-The controls tightened in stages.
+Washington tightened these rules four times between 2022 and 2025.
 
 - **October 2022.** The 7 October interim final rule put manufacturing equipment and US person support under licence and widened foreign-produced item rules for 28 listed Chinese entities ([source](https://www.govinfo.gov/content/pkg/FR-2022-10-13/pdf/2022-21658.pdf)).
 - **October 2023.** The rule effective 17 November rewrote the equipment entries, adding isotropic and anisotropic dry etch (ECCN 3B001.c.1), spatial ALD (3B001.d.9), low-fluorine tungsten ALD and CVD (3B001.d.10) and carbon hard mask PECVD (3B001.d.5) ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)).
@@ -137,7 +137,7 @@ The rules reach the vendors too: Applied Materials took a $253 million charge to
 
 ## The chokepoint
 
-This is a real chokepoint but a softer one than lithography. Three or four credible vendors exist for most etch and deposition steps. The narrow points are ALD, where China holds under 1 percent ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)), and the extremely deep, narrow holes that HBM and 3D memory need. That is where the December 2024 rule aims ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
+The chokepoint is real but softer than lithography's. Three or four credible vendors exist for most etch and deposition steps. The narrow points are ALD, where China holds under 1 percent ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)), and the extremely deep, narrow holes that HBM and 3D memory need. That is where the December 2024 rule aims ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
 
 ## Key evaluation criteria
 
@@ -145,7 +145,7 @@ This is a real chokepoint but a softer one than lithography. Three or four credi
 - **Conformality and aspect ratio.** Whether a film reaches the bottom of a hole, and how deep that hole is against its width. Controls start at 10:1 for TSV etch and 200:1 for 3D DRAM deposition ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
 - **Uniformity.** Variation across a 300 mm wafer, with under 2 percent treated as an advanced-manufacturing marker ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
 - **Throughput.** Wafers per hour, which sets cost per layer and decides how many lots a fab can run.
-- **Particles and chamber matching.** How much of the defect budget these tools eat, and whether one chamber behaves like the next; the tools in the next chapter measure it.
+- **Particles and chamber matching.** How much of the defect budget these tools eat, and whether one chamber behaves like the next, which metrology and inspection measure (see [Metrology and inspection](#metrology-and-inspection)).
 
 ## Takeaways
 

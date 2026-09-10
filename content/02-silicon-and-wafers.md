@@ -1,63 +1,63 @@
 ---json
 {
-  "id": "silicon-and-wafers",
-  "number": 2,
-  "title": "Silicon and Wafers",
-  "oneLiner": "China makes almost all of the world's polysilicon and almost none of the wafers that matter. Five firms in Japan, Taiwan, Germany and South Korea hold the 300 mm wafer every AI accelerator starts on.",
-  "plain": "Every chip starts as a wafer: a mirror-polished disc of silicon 300 millimetres across. A furnace melts purified sand, and a machine pulls a cylinder out of the melt the way a candle is dipped, except that what comes out is a single crystal, every atom on the same repeating grid. Saws slice that cylinder into discs, polished until nothing on the surface stands more than a few atoms proud. Fewer than one atom in a hundred billion may be anything but silicon, and the flatness has to hold right to the edge. Only five firms can do it reliably, and none of them is American or Chinese.",
-  "bridge": "Nothing in a file computes; the drawing has to be printed onto something, and that something is a disc of pure silicon.",
-  "specimen": "boule-and-wafer",
-  "specimenCaption": "A Czochralski ingot, one crystal pulled whole from molten silicon, and the wafers cut from it. A seed crystal on a 10 mm neck at the top, the crown where the crystal opens out to full diameter, 1.5 m of body ground to a true 300 mm, and the cropped tail. The wafers at its foot are as wide as the ingot: a quarter of a tonne of one crystal, hung from a neck the width of a finger.",
-  "card": {
-    "concentration": "High",
-    "chokepointScore": 4,
-    "leaders": [
-      {"name": "Shin-Etsu Handotai", "country": "JP", "share": "Largest supplier; the parent's electronics materials arm sold ¥750.3bn from April to December 2025"},
-      {"name": "SUMCO", "country": "JP", "share": "¥409.7bn of 2025 net sales, but an ¥11.8bn loss"},
-      {"name": "GlobalWafers", "country": "TW", "share": "NT$60.6bn revenue in 2025"},
-      {"name": "SK Siltron", "country": "KR", "share": "One of the five firms behind the whole wafer market"},
-      {"name": "Siltronic", "country": "DE", "share": "€1,346.7m revenue in 2025"}
-    ],
-    "countries": [
-      {"code": "JP", "note": "Shin-Etsu and SUMCO crystal growth and polishing"},
-      {"code": "TW", "note": "GlobalWafers headquarters and plants"},
-      {"code": "DE", "note": "Siltronic Burghausen and Freiberg; Wacker semiconductor-grade polysilicon"},
-      {"code": "KR", "note": "SK Siltron, being sold to Doosan"},
-      {"code": "US", "note": "Hemlock polysilicon in Michigan; GlobalWafers Sherman, Texas and St Peters, Missouri"}
-    ],
-    "chinaStatus": "Made about 93% of the world's polysilicon in 2023, but 98% of that was solar-grade, too impure for chips. Held under 1% of the 300 mm wafer market as of 2021, and supplies only 12% of the wafers its own 300 mm fabs consume.",
-    "usStatus": "No US-headquartered volume wafer maker. Hemlock supplies polysilicon from Michigan; GlobalWafers took a CHIPS award of up to $406m for a $3.5bn Texas plant that opened in May 2025.",
-    "costSignal": "The entire world market was $11.4bn of wafer revenue on 12,973 million square inches shipped in 2025",
-    "substitutability": {"band": "Moderate", "test": "Five firms already qualify at 300 mm, but a fab has to requalify a new source for every chip it makes", "why": "Five firms qualify leading-edge 300 mm today, so losing one leaves four, and GlobalWafers showed money can still build a line: a $3.5 billion plant in Texas, the first of its kind in the United States in over twenty years. What sets the clock is qualification, which a fab runs per chip and counts in quarters, against contracts already fixed years ahead, so a well-funded actor closes the gap in two to five years rather than in months."}
-  },
-  "keyFacts": [
-    {"fact": "Worldwide silicon wafer shipments rose 5.8% to 12,973 million square inches in 2025 while revenue fell 1.2% to $11.4 billion", "source": "https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html"},
-    {"fact": "Five major suppliers stand behind the entire $11.4bn semiconductor silicon wafer market", "source": "https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf"},
-    {"fact": "300 mm wafers carry 99.7% of world fab capacity able to make chips at 45 nm and below (as of 2021)", "source": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"},
-    {"fact": "China produced 1.50 Mt of polysilicon in 2023, about 93% of world output, of which 98% was solar-grade and 2% electronic-grade", "source": "https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf"},
-    {"fact": "Electronic-grade silicon is a $1.4bn market with five major suppliers: Wacker, Hemlock, OCI, Tokuyama and Mitsubishi", "source": "https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf"},
-    {"fact": "SUMCO's 2025 net sales were ¥409.7bn, but operating profit fell to ¥1.3bn from ¥36.9bn and it lost ¥11.8bn", "source": "https://www.sumcosi.com/english/pdf/ir/library/shareholders/27/pdf/nc_e_27.pdf"},
-    {"fact": "Siltronic booked a €77.9m net loss in 2025 on €1,346.7m of sales, with capex of €369.1m concentrated on its Singapore fab", "source": "https://www.siltronic.com/en/press/press-releases/siltronic-ag-robust-business-performance-in-2025-demonstrates-resilience-despite-challenging-conditions.html"},
-    {"fact": "Chinese producers supply 12% of the wafers consumed by China's own 300 mm fabs and 18% at 200 mm and below", "source": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"}
-  ],
-  "figures": [
-    {
-      "id": "wafer-concentration",
-      "type": "stack",
-      "title": "Silicon wafer market by supplier headquarters. Five firms, four countries, no US producer",
-      "unit": "%",
-      "data": [["Japan", 56], ["Taiwan", 16], ["Europe", 14], ["South Korea", 10], ["China", 4], ["United States", 0]],
-      "source": {"label": "CSET, The Semiconductor Supply Chain, January 2021", "url": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"}
-    },
-    {
-      "id": "polysilicon-grade",
-      "type": "stack",
-      "title": "China's polysilicon output by grade, 2023. China made about 93% of the world's 1.5 million tonnes that year",
-      "unit": "%",
-      "data": [["Solar-grade", 98], ["Electronic-grade", 2]],
-      "source": {"label": "USGS Minerals Yearbook, China, 2023", "url": "https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf"}
-    }
-  ]
+ "id": "silicon-and-wafers",
+ "number": 2,
+ "title": "Silicon and Wafers",
+ "oneLiner": "China makes almost all of the world's polysilicon and almost none of the wafers that matter. Five firms in Japan, Taiwan, Germany and South Korea hold the 300 mm wafer every AI accelerator starts on.",
+ "plain": "Every chip starts as a wafer: a mirror-polished disc of silicon 300 millimetres across. A furnace melts purified sand, and a machine pulls a cylinder out of the melt the way a candle is dipped, except that what comes out is a single crystal, every atom on the same repeating grid. Saws slice that cylinder into discs, polished until nothing on the surface stands more than a few atoms proud. Fewer than one atom in a hundred billion may be anything but silicon, and the flatness has to hold right to the edge. Only five firms can do it reliably, and none of them is American or Chinese.",
+ "bridge": "Nothing in a file computes; the drawing has to be printed onto something, and that something is a disc of pure silicon.",
+ "specimen": "boule-and-wafer",
+ "specimenCaption": "A Czochralski ingot, one crystal pulled whole from molten silicon, and the wafers cut from it. A seed crystal on a 10 mm neck at the top, the crown where the crystal opens out to full diameter, 1.5 m of body ground to a true 300 mm, and the cropped tail. The wafers at its foot are as wide as the ingot: a quarter of a tonne of one crystal, hung from a neck the width of a finger.",
+ "card": {
+ "concentration": "High",
+ "chokepointScore": 4,
+ "leaders": [
+ {"name": "Shin-Etsu Handotai", "country": "JP", "share": "Largest supplier; the parent's electronics materials arm sold ¥750.3bn from April to December 2025"},
+ {"name": "SUMCO", "country": "JP", "share": "¥409.7bn of 2025 net sales, but an ¥11.8bn loss"},
+ {"name": "GlobalWafers", "country": "TW", "share": "NT$60.6bn revenue in 2025"},
+ {"name": "SK Siltron", "country": "KR", "share": "One of the five firms behind the whole wafer market"},
+ {"name": "Siltronic", "country": "DE", "share": "€1,346.7m revenue in 2025"}
+ ],
+ "countries": [
+ {"code": "JP", "note": "Shin-Etsu and SUMCO crystal growth and polishing"},
+ {"code": "TW", "note": "GlobalWafers headquarters and plants"},
+ {"code": "DE", "note": "Siltronic Burghausen and Freiberg; Wacker semiconductor-grade polysilicon"},
+ {"code": "KR", "note": "SK Siltron, being sold to Doosan"},
+ {"code": "US", "note": "Hemlock polysilicon in Michigan; GlobalWafers Sherman, Texas and St Peters, Missouri"}
+ ],
+ "chinaStatus": "Made about 93% of the world's polysilicon in 2023, but 98% of that was solar-grade, too impure for chips. Held under 1% of the 300 mm wafer market as of 2021, and supplies only 12% of the wafers its own 300 mm fabs consume.",
+ "usStatus": "No US-headquartered volume wafer maker. Hemlock supplies polysilicon from Michigan; GlobalWafers took a CHIPS award of up to $406m for a $3.5bn Texas plant that opened in May 2025.",
+ "costSignal": "The entire world market was $11.4bn of wafer revenue on 12,973 million square inches shipped in 2025",
+ "substitutability": {"band": "Moderate", "test": "Five firms already qualify at 300 mm, but a fab has to requalify a new source for every chip it makes", "why": "Five firms qualify leading-edge 300 mm today, so losing one leaves four, and GlobalWafers showed money can still build a line: a $3.5 billion plant in Texas, the first of its kind in the United States in over twenty years. Qualification sets the clock, run per chip and counted in quarters against contracts already fixed years ahead, so a well-funded actor closes the gap in two to five years rather than in months."}
+ },
+ "keyFacts": [
+ {"fact": "Worldwide silicon wafer shipments rose 5.8% to 12,973 million square inches in 2025 while revenue fell 1.2% to $11.4 billion", "source": "https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html"},
+ {"fact": "Five major suppliers stand behind the entire $11.4bn semiconductor silicon wafer market", "source": "https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf"},
+ {"fact": "300 mm wafers carry 99.7% of world fab capacity able to make chips at 45 nm and below (as of 2021)", "source": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"},
+ {"fact": "China produced 1.50 Mt of polysilicon in 2023, about 93% of world output, of which 98% was solar-grade and 2% electronic-grade", "source": "https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf"},
+ {"fact": "Electronic-grade silicon is a $1.4bn market with five major suppliers: Wacker, Hemlock, OCI, Tokuyama and Mitsubishi", "source": "https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf"},
+ {"fact": "SUMCO's 2025 net sales were ¥409.7bn, but operating profit fell to ¥1.3bn from ¥36.9bn and it lost ¥11.8bn", "source": "https://www.sumcosi.com/english/pdf/ir/library/shareholders/27/pdf/nc_e_27.pdf"},
+ {"fact": "Siltronic booked a €77.9m net loss in 2025 on €1,346.7m of sales, with capex of €369.1m concentrated on its Singapore fab", "source": "https://www.siltronic.com/en/press/press-releases/siltronic-ag-robust-business-performance-in-2025-demonstrates-resilience-despite-challenging-conditions.html"},
+ {"fact": "Chinese producers supply 12% of the wafers consumed by China's own 300 mm fabs and 18% at 200 mm and below", "source": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"}
+ ],
+ "figures": [
+ {
+ "id": "wafer-concentration",
+ "type": "stack",
+ "title": "Silicon wafer market by supplier headquarters. Five firms, four countries, no US producer",
+ "unit": "%",
+ "data": [["Japan", 56], ["Taiwan", 16], ["Europe", 14], ["South Korea", 10], ["China", 4], ["United States", 0]],
+ "source": {"label": "CSET, The Semiconductor Supply Chain, January 2021", "url": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"}
+ },
+ {
+ "id": "polysilicon-grade",
+ "type": "stack",
+ "title": "China's polysilicon output by grade, 2023. China made about 93% of the world's 1.5 million tonnes that year",
+ "unit": "%",
+ "data": [["Solar-grade", 98], ["Electronic-grade", 2]],
+ "source": {"label": "USGS Minerals Yearbook, China, 2023", "url": "https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf"}
+ }
+ ]
 }
 ---
 # Silicon and Wafers
@@ -95,7 +95,7 @@ Their 2025 results split between an AI boom and a slump in the older, mature nod
 - **Siltronic.** Lost €77.9 million on €1,346.7 million of sales while spending €369.1 million on its Singapore fab ([source](https://www.siltronic.com/en/press/press-releases/siltronic-ag-robust-business-performance-in-2025-demonstrates-resilience-despite-challenging-conditions.html)).
 - **GlobalWafers.** NT$60.6 billion of revenue, down 3.24 percent in local currency ([source](https://www.sas-globalwafers.com/en/gwc_news_en_20260303/)).
 
-Price explains the gap: area shipped rose 5.8 percent in 2025 while revenue fell 1.2 percent ([source](https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html)). Wafers sell on multi-year agreements that fix price and volume years ahead, so a demand spike never reaches the invoice.
+Area shipped rose 5.8 percent in 2025 while revenue fell 1.2 percent ([source](https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html)). Wafers sell on multi-year agreements that fix price and volume years ahead, so a demand spike never reaches the invoice.
 
 The raw material is a separate map. China made 1.50 million tonnes of polysilicon in 2023, about 93 percent of world output ([source](https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf)). Almost none of it can go into a chip: solar-grade material was 98 percent of that output and electronic-grade 2 percent ([source](https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf)).
 
@@ -103,11 +103,11 @@ The raw material is a separate map. China made 1.50 million tonnes of polysilico
 
 Siltronic sizes electronic-grade silicon at $1.4 billion, with five major suppliers, none of them Chinese: Wacker, Hemlock, OCI, Tokuyama and Mitsubishi ([source](https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf)).
 
-Crystal growth and polishing sit in Japan, Taiwan, Germany and South Korea, with no major US-headquartered producer as of 2021 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). That is starting to change. GlobalWafers opened a $3.5 billion plant in Sherman, Texas in May 2025, the first production line of its kind built in the United States in over twenty years, and announced another $4 billion for phases three and four the same day ([source](https://www.sas-globalwafers.com/en/gwc_news_en_20250516/)). Washington had awarded it up to $406 million under the CHIPS incentives programme ([source](https://www.commerce.gov/news/press-releases/2024/12/biden-harris-administration-announces-chips-incentives-awards)).
+Crystal growth and polishing sit in Japan, Taiwan, Germany and South Korea, with no major US-headquartered producer as of 2021 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). GlobalWafers opened a $3.5 billion plant in Sherman, Texas in May 2025, the first production line of its kind built in the United States in over twenty years, and announced another $4 billion for phases three and four the same day ([source](https://www.sas-globalwafers.com/en/gwc_news_en_20250516/)). Washington had awarded it up to $406 million under the CHIPS incentives programme ([source](https://www.commerce.gov/news/press-releases/2024/12/biden-harris-administration-announces-chips-incentives-awards)).
 
 ## The chokepoint
 
-China dominates polysilicon and barely registers in wafers. As of 2021 Chinese firms held under 5 percent of the wafer market and under 1 percent of 300 mm ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). They cannot even feed their own fabs: Chinese producers supplied 12 percent of the wafers consumed by China's 300 mm fabs, against 18 percent at 200 mm and below ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). That is the base domestic makers are building from.
+China dominates polysilicon and barely registers in wafers. As of 2021 Chinese firms held under 5 percent of the wafer market and under 1 percent of 300 mm ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). They cannot even feed their own fabs: Chinese producers supplied 12 percent of the wafers consumed by China's 300 mm fabs, against 18 percent at 200 mm and below ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 
 Leading-edge 300 mm wafers rest on know-how that was never written down rather than on any machine a rival could buy, and 300 mm carried 99.7 percent of world fab capacity at 45 nm and below as of 2021 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). A fab has to qualify each new wafer source for every chip it makes, which takes quarters, while the contracts already in place run for years.
 

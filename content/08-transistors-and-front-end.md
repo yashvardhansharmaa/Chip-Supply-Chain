@@ -1,69 +1,69 @@
 ---json
 {
-  "id": "transistors-and-front-end",
-  "number": 8,
-  "title": "Transistors and the Front End",
-  "oneLiner": "Three companies can build a 2 nm-class switch. Shrinking stopped paying for itself about a decade ago, and every gain since has been bought with extra process steps.",
-  "plain": "The front end of a chip factory builds the switches. Each one is a valve on a pipe: current runs along a silicon channel, and a voltage on the gate above it opens or shuts the flow. Make the channel short enough and the valve stops sealing, so current leaks through even when the gate is off and the chip burns power doing nothing. The fix is to wrap the gate around all four sides of the channel, a sequence that has to run in exact order. Only TSMC, Intel and Samsung can do it, a list short enough for an export rule to name in full.",
-  "bridge": "Measured and clean, the layers mean nothing on their own; laid in the right order they become switches.",
-  "specimen": "gaa-transistor",
-  "specimenCaption": "A gate-all-around nanosheet transistor. Three stacked silicon sheets run from the source at one end to the drain at the other, the gate metal in amber wraps all four sides of each sheet, inner spacers keep that metal from touching the two ends, and the contacts land on top.",
-  "card": {
-    "concentration": "Extreme",
-    "chokepointScore": 5,
-    "leaders": [
-      {"name": "TSMC", "country": "TW", "share": "N2 in volume production since 4Q25, the first nanosheet node"},
-      {"name": "Intel", "country": "US", "share": "18A in high-volume manufacturing; 18A-P adds 9% performance at the same power"},
-      {"name": "Samsung Foundry", "country": "KR", "share": "SF2 family; SF2Z adds backside power"},
-      {"name": "SMIC", "country": "CN", "share": "N+2 and N+3, printed in several passes on older deep-ultraviolet tools, no EUV"},
-      {"name": "Rapidus", "country": "JP", "share": "State-backed 2 nm entrant targeting mass production in 2027"}
-    ],
-    "countries": [
-      {"code": "TW", "note": "TSMC N2 at Fab 20 Hsinchu and Fab 22 Kaohsiung"},
-      {"code": "US", "note": "Intel 18A at Fab 52, Arizona; TSMC Arizona on N4 and N3"},
-      {"code": "KR", "note": "Samsung Hwaseong and Pyeongtaek"},
-      {"code": "JP", "note": "Rapidus Chitose, Hokkaido"},
-      {"code": "CN", "note": "SMIC Shanghai and Beijing 300 mm lines"}
-    ],
-    "chinaStatus": "SMIC ships an N+3 node measured at 113.4 million transistors per square millimetre, printing each layer in two or four passes because it cannot buy an extreme-ultraviolet scanner. Its narrowest wires sit closer together than Intel 18A's, which is what a decade of state money buys without one.",
-    "usStatus": "Intel runs the only leading-edge transistor line owned by an American company. It brought gate-all-around and backside power to market together on 18A and is the first to run High-NA EUV in high-volume manufacturing.",
-    "costSignal": "No foundry publishes leading-edge wafer prices, so the public signal is TSMC's own density gain per node, which falls from 1.2x at N2P to about 1.1x at A16",
-    "substitutability": {"band": "Hard", "test": "Three firms run gate-all-around at the leading node and none sells the recipe; Rapidus is trying it on state money", "why": "The scarce thing is the recipe: which steps, in which order, on which tools. Three firms have written one, so the path is known, and Rapidus is the live test of what it costs a well-funded state from a standing start, at 267.6 billion yen and a 2027 date. An actor that can buy extreme-ultraviolet scanners is on a five to ten year clock; China, which cannot, has reached 5 nm-class geometry by printing each layer several times and stays capped below the leading edge."}
-  },
-  "keyFacts": [
-    {"fact": "TSMC N2 entered volume production in 4Q25, its first nanosheet gate-all-around node", "source": "https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm"},
-    {"fact": "TSMC N2P delivers 18% more speed at the same power, 36% less power at the same speed, 1.2x logic density and 1.15x chip density over N3E", "source": "https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech"},
-    {"fact": "TSMC A16 with Super Power Rail backside power delivers 8-10% more speed, 15-20% less power and up to 1.10x chip density over N2P", "source": "https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech"},
-    {"fact": "TSMC A14 enters production in 2028 with up to 15% more speed, up to 30% less power and more than 20% higher logic density than N2", "source": "https://pr.tsmc.com/english/news/3228"},
-    {"fact": "TSMC A13, a direct shrink of A14 giving 6% area savings, is planned for 2029, as is A12 with Super Power Rail", "source": "https://pr.tsmc.com/english/news/3302"},
-    {"fact": "Intel 18A shipped gate-all-around and backside power together, giving an 11% routed area reduction and a 10x reduction in dynamic voltage droop", "source": "https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future"},
-    {"fact": "SMIC N+3 measures a 57 nm contacted gate pitch and a 32.5 nm minimum metal pitch, for 113.4 million transistors per square millimetre, against 107.7 for TSMC N6", "source": "https://newsletter.semianalysis.com/p/steel-smic-n3-teardown"},
-    {"fact": "China's third National Integrated Circuit Fund raised 344 billion yuan, about $47 billion, in May 2024", "source": "https://asia.nikkei.com/spotlight/supply-chain/china-launches-47bn-chip-fund-to-counter-u.s.-restrictions"},
-    {"fact": "China has announced $43 billion for domestic EUV development; CSIS judges working EUV systems still out of reach", "source": "https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography"}
-  ],
-  "figures": [
-    {
-      "id": "node-roadmap",
-      "type": "timeline",
-      "title": "TSMC's logic roadmap beyond N2, from its own announcements",
-      "unit": "",
-      "data": [
-        ["2028-01-01", "N2U, 3-4% faster or 8-10% lower power than N2P"],
-        ["2028-01-01", "A14, up to 15% faster and more than 20% denser than N2"],
-        ["2029-01-01", "A13, a direct shrink of A14 for 6% area savings"],
-        ["2029-01-01", "A12, the A14 platform with Super Power Rail backside power"]
-      ],
-      "source": {"label": "TSMC, 2026 North America Technology Symposium", "url": "https://pr.tsmc.com/english/news/3302"}
-    },
-    {
-      "id": "density-by-node",
-      "type": "bars",
-      "title": "TSMC's published density gain, node over node",
-      "unit": "x versus the baseline node",
-      "data": [["N2P logic vs N3E", 1.2], ["N2P chip vs N3E", 1.15], ["A16 chip vs N2P", 1.1]],
-      "source": {"label": "TSMC advanced technologies, HPC platform", "url": "https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech"}
-    }
-  ]
+ "id": "transistors-and-front-end",
+ "number": 8,
+ "title": "Transistors and the Front End",
+ "oneLiner": "Three companies can build a 2 nm-class switch. Shrinking stopped paying for itself about a decade ago, and every gain since has been bought with extra process steps.",
+ "plain": "The front end of a chip factory builds the switches. Each one is a valve on a pipe: current runs along a silicon channel, and a voltage on the gate above it opens or shuts the flow. Make the channel short enough and the valve stops sealing, so current leaks through even when the gate is off and the chip burns power doing nothing. The fix is to wrap the gate around all four sides of the channel, a sequence that has to run in exact order. Only TSMC, Intel and Samsung can do it, a list short enough for an export rule to name in full.",
+ "bridge": "Measured and clean, the layers mean nothing on their own; laid in the right order they become switches.",
+ "specimen": "gaa-transistor",
+ "specimenCaption": "A gate-all-around nanosheet transistor. Three stacked silicon sheets run from the source at one end to the drain at the other, the gate metal in amber wraps all four sides of each sheet, inner spacers keep that metal from touching the two ends, and the contacts land on top.",
+ "card": {
+ "concentration": "Extreme",
+ "chokepointScore": 5,
+ "leaders": [
+ {"name": "TSMC", "country": "TW", "share": "N2 in volume production since 4Q25, the first nanosheet node"},
+ {"name": "Intel", "country": "US", "share": "18A in high-volume manufacturing; 18A-P adds 9% performance at the same power"},
+ {"name": "Samsung Foundry", "country": "KR", "share": "SF2 family; SF2Z adds backside power"},
+ {"name": "SMIC", "country": "CN", "share": "N+2 and N+3, printed in several passes on older deep-ultraviolet tools, no EUV"},
+ {"name": "Rapidus", "country": "JP", "share": "State-backed 2 nm entrant targeting mass production in 2027"}
+ ],
+ "countries": [
+ {"code": "TW", "note": "TSMC N2 at Fab 20 Hsinchu and Fab 22 Kaohsiung"},
+ {"code": "US", "note": "Intel 18A at Fab 52, Arizona; TSMC Arizona on N4 and N3"},
+ {"code": "KR", "note": "Samsung Hwaseong and Pyeongtaek"},
+ {"code": "JP", "note": "Rapidus Chitose, Hokkaido"},
+ {"code": "CN", "note": "SMIC Shanghai and Beijing 300 mm lines"}
+ ],
+ "chinaStatus": "SMIC ships an N+3 node measured at 113.4 million transistors per square millimetre, printing each layer in two or four passes because it cannot buy an extreme-ultraviolet scanner. Its narrowest wires sit closer together than Intel 18A's, which is what a decade of state money buys without one.",
+ "usStatus": "Intel runs the only leading-edge transistor line owned by an American company. It brought gate-all-around and backside power to market together on 18A and is the first to run High-NA EUV in high-volume manufacturing.",
+ "costSignal": "No foundry publishes leading-edge wafer prices, so the public signal is TSMC's own density gain per node, which falls from 1.2x at N2P to about 1.1x at A16",
+ "substitutability": {"band": "Hard", "test": "Three firms run gate-all-around at the leading node and none sells the recipe; Rapidus is trying it on state money", "why": "The scarce thing is the recipe: which steps, in which order, on which tools. Three firms have written one, so the path is known, and Rapidus is the live test of what it costs a well-funded state from a standing start, at 267.6 billion yen and a 2027 date. An actor that can buy extreme-ultraviolet scanners is on a five to ten year clock; China, which cannot, has reached 5 nm-class geometry by printing each layer several times and stays capped below the leading edge."}
+ },
+ "keyFacts": [
+ {"fact": "TSMC N2 entered volume production in 4Q25, its first nanosheet gate-all-around node", "source": "https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm"},
+ {"fact": "TSMC N2P delivers 18% more speed at the same power, 36% less power at the same speed, 1.2x logic density and 1.15x chip density over N3E", "source": "https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech"},
+ {"fact": "TSMC A16 with Super Power Rail backside power delivers 8-10% more speed, 15-20% less power and up to 1.10x chip density over N2P", "source": "https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech"},
+ {"fact": "TSMC A14 enters production in 2028 with up to 15% more speed, up to 30% less power and more than 20% higher logic density than N2", "source": "https://pr.tsmc.com/english/news/3228"},
+ {"fact": "TSMC A13, a direct shrink of A14 giving 6% area savings, is planned for 2029, as is A12 with Super Power Rail", "source": "https://pr.tsmc.com/english/news/3302"},
+ {"fact": "Intel 18A shipped gate-all-around and backside power together, giving an 11% routed area reduction and a 10x reduction in dynamic voltage droop", "source": "https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future"},
+ {"fact": "SMIC N+3 measures a 57 nm contacted gate pitch and a 32.5 nm minimum metal pitch, for 113.4 million transistors per square millimetre, against 107.7 for TSMC N6", "source": "https://newsletter.semianalysis.com/p/steel-smic-n3-teardown"},
+ {"fact": "China's third National Integrated Circuit Fund raised 344 billion yuan, about $47 billion, in May 2024", "source": "https://asia.nikkei.com/spotlight/supply-chain/china-launches-47bn-chip-fund-to-counter-u.s.-restrictions"},
+ {"fact": "China has announced $43 billion for domestic EUV development; CSIS judges working EUV systems still out of reach", "source": "https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography"}
+ ],
+ "figures": [
+ {
+ "id": "node-roadmap",
+ "type": "timeline",
+ "title": "TSMC's logic roadmap beyond N2, from its own announcements",
+ "unit": "",
+ "data": [
+ ["2028-01-01", "N2U, 3-4% faster or 8-10% lower power than N2P"],
+ ["2028-01-01", "A14, up to 15% faster and more than 20% denser than N2"],
+ ["2029-01-01", "A13, a direct shrink of A14 for 6% area savings"],
+ ["2029-01-01", "A12, the A14 platform with Super Power Rail backside power"]
+ ],
+ "source": {"label": "TSMC, 2026 North America Technology Symposium", "url": "https://pr.tsmc.com/english/news/3302"}
+ },
+ {
+ "id": "density-by-node",
+ "type": "bars",
+ "title": "TSMC's published density gain, node over node",
+ "unit": "x versus the baseline node",
+ "data": [["N2P logic vs N3E", 1.2], ["N2P chip vs N3E", 1.15], ["A16 chip vs N2P", 1.1]],
+ "source": {"label": "TSMC advanced technologies, HPC platform", "url": "https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech"}
+ }
+ ]
 }
 ---
 # Transistors and the Front End
@@ -92,7 +92,7 @@ A nanosheet lays the channel back down, stacks two to four thin sheets and threa
 
 N2 entered volume production in the fourth quarter of 2025, TSMC's first nanosheet node ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm)). TSMC rates the follow-on N2P at 18 percent more speed at the same power, 36 percent less power at the same speed, and 1.2 times the logic density of N3E ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech)). Intel's RibbonFET shipped on 18A, and 18A-P adds another 9 percent performance at the same power ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)).
 
-Those numbers are vendor claims until someone measures the silicon. Each foundry picks its own baseline, and none publishes a density figure you can set against a rival's.
+Those numbers are vendor claims until someone measures the silicon. Each foundry picks its own baseline, and none publishes a density figure that can be set against a rival's.
 
 {{figure:density-by-node}}
 
@@ -140,7 +140,7 @@ See [Lithography](#lithography) and [Geopolitics](#geopolitics).
 - **Interconnect resistance.** Below a 20 nm wire spacing the wire rather than the transistor sets the delay ([source](https://www.imec-int.com/en/articles/semi-damascene-metallization-inflection-point-back-end-line-processing)).
 - **Power delivery.** The voltage lost carrying power across the die. Backside power buys back area and cuts the droop tenfold ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)).
 - **SRAM scaling.** The cell that holds one bit has stopped shrinking, which caps how much cache an accelerator can afford.
-- **Cost per transistor.** No foundry publishes wafer prices, so the shrinking density gain per node is the proxy. We think this is the first era where cost per transistor rises.
+- **Cost per transistor.** No foundry publishes wafer prices, so the shrinking density gain per node is the proxy. On that proxy, cost per transistor is rising for the first time.
 
 ## Takeaways
 

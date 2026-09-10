@@ -1,64 +1,64 @@
 ---json
 {
-  "id": "foundries-and-fabs",
-  "number": 9,
-  "title": "Foundries and Fabs",
-  "oneLiner": "TSMC runs six plants that each print more than 100,000 wafers a month. All six are in Taiwan, and they hold 13 of the 17 million wafers a year the company can make.",
-  "plain": "A foundry is a print shop for chips: other companies send in designs, and the foundry runs them through the same building on the same tools. The building costs tens of billions of dollars, the air inside is cleaner than an operating theatre, and a wafer crosses hundreds of machines over several months without ever touching that air. No design house sells enough of one product to fill a shop like that, so the world shares a handful of them. TSMC runs the biggest, and all six of its largest plants sit in Taiwan, which is why one island's politics reaches the whole chip supply.",
-  "bridge": "The designers of the chip own none of these machines; they rent time in someone else's building, and that building is a business of its own.",
-  "specimen": "foup",
-  "specimenCaption": "A front-opening unified pod, the sealed carrier that moves 25 wafers between tools, barely wider than the 300 mm wafers inside it. Wafers never touch fab air: the FOUP is the cleanroom, and the fab around it is the corridor.",
-  "card": {
-    "concentration": "Extreme",
-    "chokepointScore": 5,
-    "leaders": [
-      {"name": "TSMC", "country": "TW", "share": "77% of wafer revenue from 7 nm and below, 2Q26; six gigafabs, all in Taiwan"},
-      {"name": "Intel Foundry", "country": "US", "share": "$5.8bn revenue and a $2.089bn operating loss, 2Q26"},
-      {"name": "Samsung Foundry", "country": "KR", "share": "Hwaseong and Pyeongtaek; a minimum $17bn build-out at Taylor, Texas"},
-      {"name": "SMIC", "country": "CN", "share": "$9.327bn revenue in 2025 at 93.5% utilisation"},
-      {"name": "Rapidus", "country": "JP", "share": "State-backed 2 nm entrant, Chitose"}
-    ],
-    "countries": [
-      {"code": "TW", "note": "TSMC's six gigafabs and UMC; N2 and N3 for every leading AI accelerator"},
-      {"code": "KR", "note": "Samsung Foundry, Hwaseong and Pyeongtaek"},
-      {"code": "CN", "note": "SMIC and Hua Hong; the largest installed capacity of any region, almost all of it on older nodes"},
-      {"code": "US", "note": "Intel Foundry, GlobalFoundries, TSMC Arizona, Samsung Taylor"},
-      {"code": "JP", "note": "TSMC Kumamoto, Rapidus Chitose"}
-    ],
-    "chinaStatus": "SMIC and Hua Hong are the largest domestic foundries. SMIC turned over $9.327 billion in 2025 at 93.5% utilisation, but it cannot buy an EUV scanner, which caps it below the leading edge. China is forecast to hold more installed capacity than any other region, and almost none of it is advanced.",
-    "usStatus": "Intel Foundry is the only US-owned leading-edge foundry and lost $2.089 billion on $5.8 billion of revenue in 2Q26. The federal government holds a 9.9% passive equity stake in Intel.",
-    "costSignal": "BCG puts the ten-year cost of owning a fab completed in 2026 at $35-43 billion; TSMC intends to spend $165 billion in the United States alone",
-    "substitutability": {"band": "Hard", "test": "Intel and Samsung run leading nodes, but no gigafab has been built outside Taiwan and the slow part is the crews", "why": "Money buys the building: BCG puts the ten-year cost of a fab finished in 2026 at $35 to $43 billion, and Intel and Samsung already run leading-node lines, so a well-funded actor is copying a known path. What it cannot buy quickly is a workforce that has run one process for years, which is why TSMC has yet to build a gigafab anywhere but Taiwan. Five to ten years for a line, and longer for the volume."}
-  },
-  "keyFacts": [
-    {"fact": "7 nm and below was 77% of TSMC's wafer revenue in 2Q26, on revenue of $40.20 billion at a 67.7% gross margin", "source": "https://www.sec.gov/Archives/edgar/data/0001046179/000104617926000451/a2q26e_withguidancexfinal.htm"},
-    {"fact": "TSMC defines a GIGAFAB as a 300 mm fab running more than 100,000 wafers a month; it operates six, whose combined capacity exceeded 13 million 12-inch equivalent wafers in 2025", "source": "https://www.tsmc.com/english/dedicatedFoundry/manufacturing/gigafab"},
-    {"fact": "Annual capacity of all facilities TSMC and its subsidiaries manage exceeded 17 million 12-inch equivalent wafers in 2025", "source": "https://www.tsmc.com/english/dedicatedFoundry/manufacturing/fab_capacity"},
-    {"fact": "TSMC intends to invest US$165 billion in the United States, adding $100 billion in March 2025 to $65 billion already committed in Phoenix, for three new fabs, two packaging plants and an R&D centre", "source": "https://pr.tsmc.com/english/news/3210"},
-    {"fact": "The US government bought 433.3 million Intel shares at $20.47 for $8.9 billion, a 9.9% passive stake", "source": "https://www.intc.com/news-events/press-releases/detail/1748/intel-and-trump-administration-reach-historic-agreement-to"},
-    {"fact": "Intel Foundry had $5.8 billion of 2Q26 revenue and a $2.089 billion operating loss", "source": "https://www.intc.com/news-events/press-releases/detail/1776/intel-reports-second-quarter-2026-financial-results"},
-    {"fact": "SMIC revenue rose 16.2% to $9.327 billion in 2025 at 93.5% average utilisation, with monthly capacity above 1 million 8-inch-equivalent wafers", "source": "https://www.smics.com/en/site/news_read/7951"},
-    {"fact": "SEMI forecast China at 10.1 million wafers per month of installed capacity in 2025 against Taiwan's 5.8 million, out of a global 33.7 million", "source": "https://www.semi.org/en/news-media-press-releases/semi-press-releases/global-semiconductor-fab-capacity-projected-to-expand-6%25-in-2024-and-7%25-in-2025-semi-reports"},
-    {"fact": "The US share of sub-10 nm logic capacity is projected to rise from near zero in 2022 to 28% in 2032, on $2.3 trillion of new fab investment 2024-2032", "source": "https://www.bcg.com/publications/2024/emerging-resilience-in-semiconductor-supply-chain"}
-  ],
-  "figures": [
-    {
-      "id": "foundry-share",
-      "type": "stack",
-      "title": "TSMC wafer revenue by node, 2Q26",
-      "unit": "% of wafer revenue",
-      "data": [["2 nm", 3], ["3 nm", 30], ["5 nm", 33], ["7 nm", 11], ["10 nm and above", 23]],
-      "source": {"label": "TSMC 2Q26 results, filed with the SEC", "url": "https://www.sec.gov/Archives/edgar/data/0001046179/000104617926000451/a2q26e_withguidancexfinal.htm"}
-    },
-    {
-      "id": "capacity-by-region",
-      "type": "bars",
-      "title": "Installed wafer fab capacity by region, 2025 forecast, all nodes",
-      "unit": "million 8-inch-equivalent wafers per month",
-      "data": [["China", 10.1], ["Taiwan", 5.8], ["South Korea", 5.4], ["Japan", 4.7], ["Americas", 3.2], ["Europe and Mideast", 2.7], ["SE Asia", 1.8]],
-      "source": {"label": "SEMI World Fab Forecast", "url": "https://www.semi.org/en/news-media-press-releases/semi-press-releases/global-semiconductor-fab-capacity-projected-to-expand-6%25-in-2024-and-7%25-in-2025-semi-reports"}
-    }
-  ]
+ "id": "foundries-and-fabs",
+ "number": 9,
+ "title": "Foundries and Fabs",
+ "oneLiner": "TSMC runs six plants that each print more than 100,000 wafers a month. All six are in Taiwan, and they hold 13 of the 17 million wafers a year the company can make.",
+ "plain": "A foundry is a print shop for chips: other companies send in designs, and the foundry runs them through the same building on the same tools. The building costs tens of billions of dollars, the air inside is cleaner than an operating theatre, and a wafer crosses hundreds of machines over several months without ever touching that air. No design house sells enough of one product to fill a shop like that, so the world shares a handful of them. TSMC runs the biggest, and all six of its largest plants sit in Taiwan, which is why one island's politics reaches the whole chip supply.",
+ "bridge": "The designers of the chip own none of these machines; they rent time in someone else's building, and that building is a business of its own.",
+ "specimen": "foup",
+ "specimenCaption": "A front-opening unified pod, the sealed carrier that moves 25 wafers between tools, barely wider than the 300 mm wafers inside it. Wafers never touch fab air: the FOUP is the cleanroom, and the fab around it is the corridor.",
+ "card": {
+ "concentration": "Extreme",
+ "chokepointScore": 5,
+ "leaders": [
+ {"name": "TSMC", "country": "TW", "share": "77% of wafer revenue from 7 nm and below, 2Q26; six gigafabs, all in Taiwan"},
+ {"name": "Intel Foundry", "country": "US", "share": "$5.8bn revenue and a $2.089bn operating loss, 2Q26"},
+ {"name": "Samsung Foundry", "country": "KR", "share": "Hwaseong and Pyeongtaek; a minimum $17bn build-out at Taylor, Texas"},
+ {"name": "SMIC", "country": "CN", "share": "$9.327bn revenue in 2025 at 93.5% utilisation"},
+ {"name": "Rapidus", "country": "JP", "share": "State-backed 2 nm entrant, Chitose"}
+ ],
+ "countries": [
+ {"code": "TW", "note": "TSMC's six gigafabs and UMC; N2 and N3 for every leading AI accelerator"},
+ {"code": "KR", "note": "Samsung Foundry, Hwaseong and Pyeongtaek"},
+ {"code": "CN", "note": "SMIC and Hua Hong; the largest installed capacity of any region, almost all of it on older nodes"},
+ {"code": "US", "note": "Intel Foundry, GlobalFoundries, TSMC Arizona, Samsung Taylor"},
+ {"code": "JP", "note": "TSMC Kumamoto, Rapidus Chitose"}
+ ],
+ "chinaStatus": "SMIC and Hua Hong are the largest domestic foundries. SMIC turned over $9.327 billion in 2025 at 93.5% utilisation, but it cannot buy an EUV scanner, which caps it below the leading edge. China is forecast to hold more installed capacity than any other region, and almost none of it is advanced.",
+ "usStatus": "Intel Foundry is the only US-owned leading-edge foundry and lost $2.089 billion on $5.8 billion of revenue in 2Q26. The federal government holds a 9.9% passive equity stake in Intel.",
+ "costSignal": "BCG puts the ten-year cost of owning a fab completed in 2026 at $35-43 billion; TSMC intends to spend $165 billion in the United States alone",
+ "substitutability": {"band": "Hard", "test": "Intel and Samsung run leading nodes, but no gigafab has been built outside Taiwan and the slow part is the crews", "why": "Money buys the building: BCG puts the ten-year cost of a fab finished in 2026 at $35 to $43 billion, and Intel and Samsung already run leading-node lines, so a well-funded actor is copying a known path. What it cannot buy quickly is a workforce that has run one process for years, which is why TSMC has yet to build a gigafab anywhere but Taiwan. Five to ten years for a line, and longer for the volume."}
+ },
+ "keyFacts": [
+ {"fact": "7 nm and below was 77% of TSMC's wafer revenue in 2Q26, on revenue of $40.20 billion at a 67.7% gross margin", "source": "https://www.sec.gov/Archives/edgar/data/0001046179/000104617926000451/a2q26e_withguidancexfinal.htm"},
+ {"fact": "TSMC defines a GIGAFAB as a 300 mm fab running more than 100,000 wafers a month; it operates six, whose combined capacity exceeded 13 million 12-inch equivalent wafers in 2025", "source": "https://www.tsmc.com/english/dedicatedFoundry/manufacturing/gigafab"},
+ {"fact": "Annual capacity of all facilities TSMC and its subsidiaries manage exceeded 17 million 12-inch equivalent wafers in 2025", "source": "https://www.tsmc.com/english/dedicatedFoundry/manufacturing/fab_capacity"},
+ {"fact": "TSMC intends to invest US$165 billion in the United States, adding $100 billion in March 2025 to $65 billion already committed in Phoenix, for three new fabs, two packaging plants and an R&D centre", "source": "https://pr.tsmc.com/english/news/3210"},
+ {"fact": "The US government bought 433.3 million Intel shares at $20.47 for $8.9 billion, a 9.9% passive stake", "source": "https://www.intc.com/news-events/press-releases/detail/1748/intel-and-trump-administration-reach-historic-agreement-to"},
+ {"fact": "Intel Foundry had $5.8 billion of 2Q26 revenue and a $2.089 billion operating loss", "source": "https://www.intc.com/news-events/press-releases/detail/1776/intel-reports-second-quarter-2026-financial-results"},
+ {"fact": "SMIC revenue rose 16.2% to $9.327 billion in 2025 at 93.5% average utilisation, with monthly capacity above 1 million 8-inch-equivalent wafers", "source": "https://www.smics.com/en/site/news_read/7951"},
+ {"fact": "SEMI forecast China at 10.1 million wafers per month of installed capacity in 2025 against Taiwan's 5.8 million, out of a global 33.7 million", "source": "https://www.semi.org/en/news-media-press-releases/semi-press-releases/global-semiconductor-fab-capacity-projected-to-expand-6%25-in-2024-and-7%25-in-2025-semi-reports"},
+ {"fact": "The US share of sub-10 nm logic capacity is projected to rise from near zero in 2022 to 28% in 2032, on $2.3 trillion of new fab investment 2024-2032", "source": "https://www.bcg.com/publications/2024/emerging-resilience-in-semiconductor-supply-chain"}
+ ],
+ "figures": [
+ {
+ "id": "foundry-share",
+ "type": "stack",
+ "title": "TSMC wafer revenue by node, 2Q26",
+ "unit": "% of wafer revenue",
+ "data": [["2 nm", 3], ["3 nm", 30], ["5 nm", 33], ["7 nm", 11], ["10 nm and above", 23]],
+ "source": {"label": "TSMC 2Q26 results, filed with the SEC", "url": "https://www.sec.gov/Archives/edgar/data/0001046179/000104617926000451/a2q26e_withguidancexfinal.htm"}
+ },
+ {
+ "id": "capacity-by-region",
+ "type": "bars",
+ "title": "Installed wafer fab capacity by region, 2025 forecast, all nodes",
+ "unit": "million 8-inch-equivalent wafers per month",
+ "data": [["China", 10.1], ["Taiwan", 5.8], ["South Korea", 5.4], ["Japan", 4.7], ["Americas", 3.2], ["Europe and Mideast", 2.7], ["SE Asia", 1.8]],
+ "source": {"label": "SEMI World Fab Forecast", "url": "https://www.semi.org/en/news-media-press-releases/semi-press-releases/global-semiconductor-fab-capacity-projected-to-expand-6%25-in-2024-and-7%25-in-2025-semi-reports"}
+ }
+ ]
 }
 ---
 # Foundries and Fabs
@@ -91,7 +91,7 @@ SMIC, Hua Hong and Rapidus exist because a government decided they should. SMIC'
 
 ### Mature-node capacity
 
-Most wafers are not leading-edge. The industry association SEMI expects foundries alone to reach 12.7 million wafers a month by 2026, with the fastest growth in China ([source](https://www.semi.org/en/news-media-press-releases/semi-press-releases/global-semiconductor-fab-capacity-projected-to-expand-6%25-in-2024-and-7%25-in-2025-semi-reports)). Those lines make power devices, analogue chips and microcontrollers, and compete on price rather than density.
+Most wafers come off older lines. The industry association SEMI expects foundries alone to reach 12.7 million wafers a month by 2026, with the fastest growth in China ([source](https://www.semi.org/en/news-media-press-releases/semi-press-releases/global-semiconductor-fab-capacity-projected-to-expand-6%25-in-2024-and-7%25-in-2025-semi-reports)). Those lines make power devices, analogue chips and microcontrollers, and compete on price rather than density.
 
 ## Capacity and cost
 
@@ -113,10 +113,10 @@ SEMI forecast China at 10.1 million wafers a month in 2025, the most of any regi
 
 {{figure:capacity-by-region}}
 
-Three risks stack on one island, and only the third looks unmanageable:
+Three risks stack on one island:
 
 - **Seismic.** Taiwan sits on an active plate boundary, and a tool knocked out of calibration scraps the work in progress across a whole fab.
-- **Power.** A gigafab is a large industrial load on a small island grid. We think spare generating capacity, rather than anything about silicon, sets how fast Taiwan can add fabs.
+- **Power.** A gigafab is a large industrial load on a small island grid. Spare generating capacity, rather than anything about silicon, sets how fast Taiwan can add fabs.
 - **Political.** A blockade or conflict would remove most sub-5 nm capacity from the world market at once, with no substitute available inside a decade. See [Geopolitics](#geopolitics).
 
 Diversification is real and slow. The hard part of a fab is a workforce that has run one process for years, and TSMC has yet to build a gigafab anywhere but Taiwan ([source](https://www.tsmc.com/english/dedicatedFoundry/manufacturing/gigafab)).

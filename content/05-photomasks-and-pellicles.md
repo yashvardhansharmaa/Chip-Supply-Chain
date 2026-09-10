@@ -1,59 +1,59 @@
 ---json
 {
-  "id": "photomasks-and-pellicles",
-  "number": 5,
-  "title": "Photomasks and Pellicles",
-  "oneLiner": "A business worth tens of billions of yen sits under every leading-edge chip. Two Japanese firms make almost all the blank plates that EUV masks are built on, one Japanese firm inspects them, and the dust cover meant to protect them is still not in production.",
-  "plain": "A photomask is the printing plate for one layer of a chip. One plate prints the same layer on wafer after wafer, so it shapes millions of chips. No glass is transparent to the short light now in use, so the plate is not a window but a mirror of about forty pairs of ultrathin layers, and any speck of dust on it repeats on every wafer it prints. Two Japanese firms make almost all of those mirrors. A business almost nobody has heard of can hold up every leading-edge chip in the world.",
-  "bridge": "Look next at the stencil itself, because everything the machine prints is decided by what is written on that one plate.",
-  "specimen": "photomask",
-  "specimenCaption": "A six-inch EUV mask, or reticle, with its pellicle dust cover. Low-thermal-expansion glass at the base, the molybdenum and silicon multilayer mirror in copper round the top edge, a tantalum absorber carrying the pattern, and the membrane held 2.5 mm off the surface on four glued pads, far enough that a particle landing on it prints out of focus.",
-  "card": {
-    "concentration": "Extreme",
-    "chokepointScore": 5,
-    "leaders": [
-      {"name": "AGC", "country": "JP", "share": "Ranks itself No.1 worldwide in EUV mask blanks and counts three suppliers in all; targeted over ¥40bn of blank sales by 2025"},
-      {"name": "Hoya", "country": "JP", "share": "Says its share of mask blanks is exceptionally high, and expects to keep its lead as customers add second sources"},
-      {"name": "Lasertec", "country": "JP", "share": "The only supplier of EUV mask inspection at the wavelength the scanner itself uses; JPY 230.5bn revenue in the year to June 2026"},
-      {"name": "IMS Nanofabrication", "country": "AT", "share": "Intel calls it the established industry leader in multi-beam mask writers, the machines that cut the pattern"},
-      {"name": "Photronics", "country": "US", "share": "Largest mask maker selling to outside customers; $849.3M revenue in fiscal 2025"}
-    ],
-    "countries": [
-      {"code": "JP", "note": "Mask blanks (AGC, Hoya), DUV blanks (Shin-Etsu), inspection (Lasertec), writers (NuFlare), pellicles (Mitsui Chemicals)"},
-      {"code": "AT", "note": "IMS Nanofabrication multi-beam mask writers, Vienna"},
-      {"code": "DE", "note": "Zeiss mask repair and metrology"},
-      {"code": "US", "note": "Photronics merchant mask shops, KLA inspection"},
-      {"code": "TW", "note": "TSMC's in-house mask shop, and a 10% stake in IMS"}
-    ],
-    "chinaStatus": "SMIC runs two in-house mask shops in Shanghai, but only for the older g-line, i-line, KrF and ArF tools. There is no Chinese EUV blank, no Chinese tool that inspects a mask at EUV wavelength and no Chinese multi-beam writer.",
-    "usStatus": "Photronics is the largest mask maker selling to outside customers and KLA supplies inspection tools, but no US firm makes an EUV blank or an EUV-wavelength inspection tool.",
-    "costSignal": "A leading-edge mask set runs roughly $10M to $40M, depending on the node and on whose estimate you take",
-    "substitutability": {"band": "Hard", "test": "Three firms make EUV blanks and one sells the actinic inspection tool; three have already walked the path", "why": "AGC and Hoya took two decades to learn the forty-layer blank, but that is the inventor's clock, not the buyer's. Three firms have now done it and the structure of the plate is published, so a well-funded entrant is copying rather than inventing: five to ten years to a qualified blank, and the harder half is Lasertec's actinic inspection, the only tool that sees a mask at the wavelength the scanner uses. What kept entrants out was a business too small to fund, and that is the barrier money removes."}
-  },
-  "keyFacts": [
-    {"fact": "AGC calls itself the world's only maker of EUV mask blanks handling every step from glass material to coating, and expanded capacity by about 30% in 2025 under a METI supply-chain programme", "source": "https://www.agc.com/en/news/detail/1203819_2814.html"},
-    {"fact": "Hoya says it holds an exceptionally high share of the mask blank market and expects customers to move gradually toward multi-sourcing EUV blanks", "source": "https://www.hoya.com/ir/2025/en/review/it.html"},
-    {"fact": "AGC says it is one of three companies worldwide that supply photomask blanks for EUV lithography, and the only one that handles every material and process itself", "source": "https://www.agc.com/en/hub/pr/the-japanese-glass-behind-next-generation-chips.html"},
-    {"fact": "AGC's own data book lists EUV lithography photomask blanks as a No.1 worldwide position, on AGC's fiscal 2026 estimates", "source": "https://www.agc.com/en/ir/library/outline/pdf/reference.pdf"},
-    {"fact": "An EUV mask reflector is about 40 Mo/Si bilayers of 7 nm period, capped with 3 nm of ruthenium, under a 58 nm TaBN plus 2 nm TaBO absorber", "source": "https://arxiv.org/pdf/1912.09075"},
-    {"fact": "ASML's EUV pellicle is a membrane 13 nm thick that must survive 500C in vacuum, and every photon it absorbs costs customer productivity", "source": "https://www.asml.com/en/news/stories/2022/the-euv-pellicle-indistinguishable-from-magic"},
-    {"fact": "Imec exposed carbon nanotube pellicles with up to 97% single-pass EUV transmission on an NXE:3300 scanner, with low and correctable imaging impact", "source": "https://www.imec-int.com/en/press/imec-demonstrates-cnt-pellicle-utilization-euv-scanner"},
-    {"fact": "Mitsui Chemicals' carbon nanotube pellicles target 92% or higher EUV transmittance and sources above 1,000 W", "source": "https://jp.mitsuichemicals.com/en/release/2024/2024_0528_1/index.htm"},
-    {"fact": "Mask sets cost beyond $1M at 28 nm, beyond $10M at 7 nm and approach $40M at 3 nm (2022 estimate)", "source": "https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor"},
-    {"fact": "IMS Nanofabrication was valued at about $4.3 billion when TSMC bought roughly 10% in September 2023", "source": "https://www.intc.com/news-events/press-releases/detail/1645/intel-to-sell-minority-stake-in-ims-nanofabrication"},
-    {"fact": "Lasertec reported JPY 230.5 billion of net sales and JPY 237.5 billion of orders in the year to June 2026", "source": "https://www.lasertec.co.jp/en/ir/plan/message.html"},
-    {"fact": "Photronics, the largest merchant mask maker, had $849.3 million of revenue in fiscal 2025, of which $615.1 million was IC masks", "source": "https://www.globenewswire.com/news-release/2025/12/10/3203040/0/en/Photronics-Reports-Full-Year-and-Fourth-Quarter-Fiscal-2025-Results.html"}
-  ],
-  "figures": [
-    {
-      "id": "mask-set-cost",
-      "type": "bars",
-      "title": "Cost of one mask set by node, 2022 estimates",
-      "unit": "$M",
-      "data": [["28 nm", 1], ["7 nm", 10], ["3 nm", 40]],
-      "source": {"label": "SemiAnalysis", "url": "https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor"}
-    }
-  ]
+ "id": "photomasks-and-pellicles",
+ "number": 5,
+ "title": "Photomasks and Pellicles",
+ "oneLiner": "A business worth tens of billions of yen sits under every leading-edge chip. Two Japanese firms make almost all the blank plates that EUV masks are built on, one Japanese firm inspects them, and the dust cover meant to protect them is still not in production.",
+ "plain": "A photomask is the printing plate for one layer of a chip. One plate prints the same layer on wafer after wafer, so it shapes millions of chips. No glass is transparent to the short light now in use, so the plate is not a window but a mirror of about forty pairs of ultrathin layers, and any speck of dust on it repeats on every wafer it prints. Two Japanese firms make almost all of those mirrors. A business almost nobody has heard of can hold up every leading-edge chip in the world.",
+ "bridge": "Look next at the stencil itself, because everything the machine prints is decided by what is written on that one plate.",
+ "specimen": "photomask",
+ "specimenCaption": "A six-inch EUV mask, or reticle, with its pellicle dust cover. Low-thermal-expansion glass at the base, the molybdenum and silicon multilayer mirror in copper round the top edge, a tantalum absorber carrying the pattern, and the membrane held 2.5 mm off the surface on four glued pads, far enough that a particle landing on it prints out of focus.",
+ "card": {
+ "concentration": "Extreme",
+ "chokepointScore": 5,
+ "leaders": [
+ {"name": "AGC", "country": "JP", "share": "Ranks itself No.1 worldwide in EUV mask blanks and counts three suppliers in all; targeted over ¥40bn of blank sales by 2025"},
+ {"name": "Hoya", "country": "JP", "share": "Says its share of mask blanks is exceptionally high, and expects to keep its lead as customers add second sources"},
+ {"name": "Lasertec", "country": "JP", "share": "The only supplier of EUV mask inspection at the wavelength the scanner itself uses; JPY 230.5bn revenue in the year to June 2026"},
+ {"name": "IMS Nanofabrication", "country": "AT", "share": "Intel calls it the established industry leader in multi-beam mask writers, the machines that cut the pattern"},
+ {"name": "Photronics", "country": "US", "share": "Largest mask maker selling to outside customers; $849.3M revenue in fiscal 2025"}
+ ],
+ "countries": [
+ {"code": "JP", "note": "Mask blanks (AGC, Hoya), DUV blanks (Shin-Etsu), inspection (Lasertec), writers (NuFlare), pellicles (Mitsui Chemicals)"},
+ {"code": "AT", "note": "IMS Nanofabrication multi-beam mask writers, Vienna"},
+ {"code": "DE", "note": "Zeiss mask repair and metrology"},
+ {"code": "US", "note": "Photronics merchant mask shops, KLA inspection"},
+ {"code": "TW", "note": "TSMC's in-house mask shop, and a 10% stake in IMS"}
+ ],
+ "chinaStatus": "SMIC runs two in-house mask shops in Shanghai, but only for the older g-line, i-line, KrF and ArF tools. There is no Chinese EUV blank, no Chinese tool that inspects a mask at EUV wavelength and no Chinese multi-beam writer.",
+ "usStatus": "Photronics is the largest mask maker selling to outside customers and KLA supplies inspection tools, but no US firm makes an EUV blank or an EUV-wavelength inspection tool.",
+ "costSignal": "A leading-edge mask set runs roughly $10M to $40M, depending on the node and on the estimate",
+ "substitutability": {"band": "Hard", "test": "Three firms make EUV blanks and one sells the actinic inspection tool; three have already walked the path", "why": "AGC and Hoya took two decades to learn the forty-layer blank, but that is the inventor's clock, not the buyer's. Three firms have now done it and the structure of the plate is published, so a well-funded entrant is copying rather than inventing: five to ten years to a qualified blank, and the harder half is Lasertec's actinic inspection, the only tool that sees a mask at the wavelength the scanner uses. Entrants stayed out because the business was too small to fund, which is the one barrier money removes."}
+ },
+ "keyFacts": [
+ {"fact": "AGC calls itself the world's only maker of EUV mask blanks handling every step from glass material to coating, and expanded capacity by about 30% in 2025 under a METI supply-chain programme", "source": "https://www.agc.com/en/news/detail/1203819_2814.html"},
+ {"fact": "Hoya says it holds an exceptionally high share of the mask blank market and expects customers to move gradually toward multi-sourcing EUV blanks", "source": "https://www.hoya.com/ir/2025/en/review/it.html"},
+ {"fact": "AGC says it is one of three companies worldwide that supply photomask blanks for EUV lithography, and the only one that handles every material and process itself", "source": "https://www.agc.com/en/hub/pr/the-japanese-glass-behind-next-generation-chips.html"},
+ {"fact": "AGC's own data book lists EUV lithography photomask blanks as a No.1 worldwide position, on AGC's fiscal 2026 estimates", "source": "https://www.agc.com/en/ir/library/outline/pdf/reference.pdf"},
+ {"fact": "An EUV mask reflector is about 40 Mo/Si bilayers of 7 nm period, capped with 3 nm of ruthenium, under a 58 nm TaBN plus 2 nm TaBO absorber", "source": "https://arxiv.org/pdf/1912.09075"},
+ {"fact": "ASML's EUV pellicle is a membrane 13 nm thick that must survive 500C in vacuum, and every photon it absorbs costs customer productivity", "source": "https://www.asml.com/en/news/stories/2022/the-euv-pellicle-indistinguishable-from-magic"},
+ {"fact": "Imec exposed carbon nanotube pellicles with up to 97% single-pass EUV transmission on an NXE:3300 scanner, with low and correctable imaging impact", "source": "https://www.imec-int.com/en/press/imec-demonstrates-cnt-pellicle-utilization-euv-scanner"},
+ {"fact": "Mitsui Chemicals' carbon nanotube pellicles target 92% or higher EUV transmittance and sources above 1,000 W", "source": "https://jp.mitsuichemicals.com/en/release/2024/2024_0528_1/index.htm"},
+ {"fact": "Mask sets cost beyond $1M at 28 nm, beyond $10M at 7 nm and approach $40M at 3 nm (2022 estimate)", "source": "https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor"},
+ {"fact": "IMS Nanofabrication was valued at about $4.3 billion when TSMC bought roughly 10% in September 2023", "source": "https://www.intc.com/news-events/press-releases/detail/1645/intel-to-sell-minority-stake-in-ims-nanofabrication"},
+ {"fact": "Lasertec reported JPY 230.5 billion of net sales and JPY 237.5 billion of orders in the year to June 2026", "source": "https://www.lasertec.co.jp/en/ir/plan/message.html"},
+ {"fact": "Photronics, the largest merchant mask maker, had $849.3 million of revenue in fiscal 2025, of which $615.1 million was IC masks", "source": "https://www.globenewswire.com/news-release/2025/12/10/3203040/0/en/Photronics-Reports-Full-Year-and-Fourth-Quarter-Fiscal-2025-Results.html"}
+ ],
+ "figures": [
+ {
+ "id": "mask-set-cost",
+ "type": "bars",
+ "title": "Cost of one mask set by node, 2022 estimates",
+ "unit": "$M",
+ "data": [["28 nm", 1], ["7 nm", 10], ["3 nm", 40]],
+ "source": {"label": "SemiAnalysis", "url": "https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor"}
+ }
+ ]
 }
 ---
 # Photomasks and Pellicles
@@ -112,9 +112,9 @@ SMIC runs two in-house mask shops in Shanghai, for g-line, i-line, KrF and ArF t
 
 ## The chokepoint
 
-Concentration here is extreme, as it is in lithography, on a fraction of the money. Three firms supply EUV blanks worldwide, AGC says ([source](https://www.agc.com/en/hub/pr/the-japanese-glass-behind-next-generation-chips.html)), one firm certifies them, and neither business is big enough to attract a funded entrant. Nobody starts from scratch at ¥40 billion of annual sales, to serve a handful of customers, with twenty years of defect learning ahead ([source](https://www.agc.com/en/news/detail/1203819_2814.html)). That is why substitution here rates hard and not very hard: what has kept the count at three is money rather than physics.
+Mask blanks are as concentrated as lithography, on a fraction of the money. Three firms supply EUV blanks worldwide, AGC says ([source](https://www.agc.com/en/hub/pr/the-japanese-glass-behind-next-generation-chips.html)), one firm certifies them, and neither business is big enough to attract a funded entrant. Nobody starts from scratch at ¥40 billion of annual sales, to serve a handful of customers, with twenty years of defect learning ahead ([source](https://www.agc.com/en/news/detail/1203819_2814.html)). What has kept the count at three is money rather than physics.
 
-Pellicles are the unsolved part. A decade on, no membrane is transparent, tough and long-lived at once, so fabs trade throughput against defect risk. We think a production carbon nanotube pellicle would move EUV cost per wafer more than any scanner improvement.
+Pellicles are the unsolved part. A decade on, no membrane is transparent, tough and long-lived at once, so fabs trade throughput against defect risk. A production carbon nanotube pellicle would move EUV cost per wafer more than any scanner improvement.
 
 ## Key evaluation criteria
 
