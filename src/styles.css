@@ -464,9 +464,13 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 .column.wide[data-view="home"] { width: 100%; }
 
 .print-only { display: none; }
+.howto ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px 26px; margin: 4px 0 8px; padding-left: 0; list-style: none; }
+.howto ul li { padding-left: 0; text-indent: 0; }
+.howto > p { max-width: none; }
+@media (max-width: 899px) { .howto ul { grid-template-columns: 1fr; } }
 .howto .howto-dl { display: flex; gap: 8px; flex-wrap: wrap; margin: 6px 0 12px; }
 .howto .howto-dl .btn { text-decoration: none; }
-.howto { max-width: var(--measure); margin: 8px 0 44px; padding: 18px 20px 6px; border: 1px solid var(--line); border-radius: 4px; background: var(--bg-2); }
+.howto { max-width: none; margin: 8px 0 44px; padding: 18px 20px 6px; border: 1px solid var(--line); border-radius: 4px; background: var(--bg-2); }
 .howto h2 { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
 .howto p, .howto li { font-size: 16.5px; line-height: 1.5; }
 .howto ul { padding-left: 18px; margin: 0 0 12px; }

@@ -10,6 +10,10 @@ Only two tiers may be cited. Everything else is disallowed and must be replaced 
 
 Company filings and investor materials (SEC EDGAR, annual reports, investor decks and earnings releases on the company's own domain), governments, regulators, courts and legislatures (Federal Register, eCFR, BIS, DOJ, MOFCOM, METI, government.nl, EU institutions, Congress), standards bodies (JEDEC, UCIe, RISC-V), universities and national labs (imec, LBNL, arXiv), and research institutions with named methodologies and public funding or governance: CSET and its ETO data, CSIS, SIA and SIA/BCG reports, SEMI, WSTS, Epoch AI, RAND, Brookings, CFR, IFP, Stimson, USGS.
 
+## Inherited numbers (added 10 September 2026)
+
+A figure that a Tier A institution publishes but attributes to a disallowed firm (IDC in SK hynix's prospectus, TechInsights inside CSET's ETO explorer, Gartner in KLA's deck) may be cited from the Tier A document, and must say so: in prose ("IDC, as reported in SK hynix's prospectus") and in data (`basis: "relayed"`, `relayedVia: "IDC"`). The disallowed firm's own publication is still not a source. Every dataset row carries a `basis` field: `measured` (the source states the number), `derived` (computed from figures the sources state; the method is in the note), `estimate` (the site's own judgment; the reasoning is in the note), or `relayed`.
+
 ## Tier B — the four named exceptions
 
 SemiAnalysis (newsletter.semianalysis.com, inferencex.semianalysis.com), Reuters, the Financial Times, and Nikkei Asia. Nothing else.
