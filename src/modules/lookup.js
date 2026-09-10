@@ -29,6 +29,7 @@
       });
       document.addEventListener('click', function (e) { if (narrow() && !e.target.closest('#lk-list')) $('#lk-list').classList.remove('is-open'); });
       $$('#lk-rest [data-go]').forEach(function (b) { b.addEventListener('click', function () { self.select(b.getAttribute('data-go'), true); }); });
+      var br = $('#lk-browse'); if (br) br.addEventListener('click', function () { var open = !$('#lk-list').classList.contains('is-open'); $('#lk-list').classList.toggle('is-open', open); br.setAttribute('aria-expanded', open ? 'true' : 'false'); });
       this.filter('');
     },
 
@@ -68,20 +69,22 @@
       var kind = li.getAttribute('data-kind'), key = li.getAttribute('data-key');
       if (!kind) return;
       this.selected = id;
-      this.items().forEach(function (x) { x.classList.toggle('is-on', x.id === id); x.setAttribute('aria-selected', x.id === id ? 'true' : 'false'); });
+      this.items().forEach(function (x) { x.classList.toggle('is-on', x.id === id); if (x.id === id) x.setAttribute('aria-current', 'true'); else x.removeAttribute('aria-current'); });
       if (li.scrollIntoView && !narrow()) li.scrollIntoView({ block: 'nearest' });
       $('#lk-rest').hidden = true;
-      var entry = null, name = li.querySelector('.lk-name').textContent, patterns = [name];
+      var entry = null, name = li.querySelector('.lk-name').textContent, patterns = kind === 'chip' ? [] : [name];
+      (li.getAttribute('data-alias') || '').split('|').forEach(function (a) { if (a) patterns.push(a); });
       $$('#glossary .gl-entry').forEach(function (e) { e.hidden = true; });
       var card = $('#lk-card'); card.hidden = true; card.innerHTML = '';
       if (kind === 'term') {
-        entry = document.getElementById(key); if (entry) { entry.hidden = false; var aka = entry.querySelector('.aka'); if (aka) aka.textContent.split(/[;,]/).forEach(function (a) { a = a.trim(); if (a.length >= 3 && a.toLowerCase() !== name.toLowerCase()) patterns.push(a); }); }
+        entry = document.getElementById(key); if (entry) entry.hidden = false;
       } else if (kind === 'firm') {
         var r = (DATA.suppliers || []).filter(function (x) { return x.name === key; })[0];
-        if (r) { card.innerHTML = this.firmCard(r); card.hidden = false; if (r.nativeName) patterns.push(r.nativeName); }
+        if (r) { card.innerHTML = this.firmCard(r); card.hidden = false; }
       } else if (kind === 'chip') {
         var c = (DATA.landscape || []).filter(function (x) { return x.id === key; })[0];
-        if (c) { card.innerHTML = this.chipCard(c); card.hidden = false; patterns = [c.name.replace(/\s*\(.*\)$/, '')]; if (c.family && c.family.length >= 3) patterns.push(c.family); }
+        if (c) { card.innerHTML = this.chipCard(c); card.hidden = false; }
+        if (!patterns.length) patterns = [name];
       }
       this.wire(card);
       this.mentions(patterns, kind, key);
@@ -91,12 +94,28 @@
     },
 
     showRaw: function (q) {
+      var self = this;
       this.selected = null;
       this.items().forEach(function (x) { x.classList.remove('is-on'); });
       $$('#glossary .gl-entry').forEach(function (e) { e.hidden = true; });
-      var card = $('#lk-card'); card.hidden = false; card.innerHTML = '<div class="lk-noentry"><b>' + esc(q) + '</b><p>No entry of its own. Here is where the site mentions it.</p></div>';
+      var near = this.nearest(q);
+      var card = $('#lk-card'); card.hidden = false;
+      card.innerHTML = '<div class="lk-noentry"><b>' + esc(q) + '</b><p>No entry of its own. Here is where the site mentions it.</p>' + (near.length ? '<p class="lk-near">Did you mean ' + near.map(function (li) { return '<button type="button" data-go="' + esc(li.id) + '">' + esc(li.querySelector('.lk-name').textContent) + '</button>'; }).join(' ') + '</p>' : '') + '</div>';
+      $$('[data-go]', card).forEach(function (b) { b.addEventListener('click', function () { var inp = $('#gl-search'); inp.value = ''; self.filter(''); self.select(b.getAttribute('data-go'), true); }); });
       $('#lk-rest').hidden = true;
       this.mentions([q], 'raw', q);
+    },
+
+    nearest: function (q) { // names a typo away: an edit distance of one or two against each word of each name
+      q = q.toLowerCase(); if (q.length < 4) return [];
+      var dist = function (a, b) { var m = a.length, n = b.length, prev = [], cur = [], i, j; for (j = 0; j <= n; j++) prev[j] = j; for (i = 1; i <= m; i++) { cur = [i]; for (j = 1; j <= n; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); prev = cur; } return prev[n]; };
+      var scored = [];
+      this.items().forEach(function (li) {
+        var name = li.querySelector('.lk-name').textContent.toLowerCase(), best = dist(q, name);
+        name.split(/[\s()\-]+/).forEach(function (w) { if (w.length >= 3) best = Math.min(best, dist(q, w)); });
+        if (best <= (q.length >= 8 ? 3 : 2)) scored.push({ li: li, d: best });
+      });
+      return scored.sort(function (a, b) { return a.d - b.d; }).slice(0, 5).map(function (x) { return x.li; });
     },
 
     /* ---------- cards ---------- */
@@ -164,7 +183,7 @@
         var id = ch.id, title = ch.getAttribute('data-title') || id, num = ch.getAttribute('data-number') || '';
         $$('p, li', ch).forEach(function (el) {
           if (el.closest('.chapter-sources, .plate-head, .chain, .brief-head, figure, .chapter-nav, nav')) return;
-          var clone = el.cloneNode(true); $$('sup.cite, .gl-tip', clone).forEach(function (s) { s.parentNode.removeChild(s); });
+          var clone = el.cloneNode(true); $$('sup.cite, .gl-tip, .chip', clone).forEach(function (s) { s.parentNode.removeChild(s); });
           var text = self.textOf(clone).replace(/\s+/g, ' ').replace(/\s+([.,;:])/g, '$1').trim();
           if (text.length > 40) out.push({ chapter: id, title: title, num: num, el: el, text: text });
         });
@@ -173,9 +192,13 @@
     },
 
     regex: function (patterns, loose) { // loose: a typed query matches as a prefix, so "NXT:1980" finds "NXT:1980i"
-      var parts = patterns.map(function (p) { p = String(p).trim(); if (!p) return null; var e = p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); var bounded = /^[A-Za-z0-9]/.test(p) && /[A-Za-z0-9)]$/.test(p); return bounded ? '\\b' + e + (loose ? '' : '(?![A-Za-z0-9])') : e; }).filter(Boolean);
+      var parts = patterns.map(function (p) { p = String(p).trim(); if (!p) return null; var e = p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); var bounded = /^[A-Za-z0-9]/.test(p) && /[A-Za-z0-9)]$/.test(p);
+        // a short alias like "Arm" or "ASE" must keep its capitals, or it matches "arm" and "ease"; longer names may be written either way
+        if (p.length <= 4 && /[A-Z]/.test(p) && !loose) e = e.split('').map(function (ch) { return /[a-z]/i.test(ch) ? (/[A-Z]/.test(ch) ? ch : '[' + ch + ch.toUpperCase() + ']') : ch; }).join('');
+        return bounded ? '\\b' + e + (loose ? '' : '(?![A-Za-z0-9])') : e; }).filter(Boolean);
       if (!parts.length) return null;
-      return new RegExp(parts.join('|'), 'gi');
+      var short = patterns.some(function (p) { return String(p).trim().length <= 4 && /[A-Z]/.test(p); });
+      return new RegExp(parts.join('|'), short && !loose ? 'g' : 'gi');
     },
 
     sentence: function (text, re) {
@@ -196,11 +219,12 @@
       (Array.isArray(DATA.flows) ? DATA.flows : ((DATA.flows || {}).flows || [])).forEach(function (f) { (f.states || []).forEach(function (st) { re.lastIndex = 0; if (st.label && re.test(st.label)) hits.push({ src: 'The board', sub: f.name, html: mark(st.label), href: '#/controls' }); }); });
       (DATA.landscape || []).forEach(function (c) { if (kind === 'chip' && c.id === key) return; var t = [c.notes || '', c.exportStatus || ''].join(' '); var s = self.sentence(t, re); if (s) hits.push({ src: 'AI Chips', sub: c.vendor + ' ' + c.name, html: mark(s), href: '#/landscape', chip: c.id }); });
       (DATA.suppliers || []).forEach(function (r) { if (kind === 'firm' && r.name === key) return; var t = [r.role || '', r.shareNote || '', r.aiRelevance || ''].join(' '); var s = self.sentence(t, re); if (s) hits.push({ src: 'Suppliers', sub: r.name, html: mark(s), href: '#/suppliers', sup: r.name }); });
-      if (!hits.length) { box.hidden = false; box.innerHTML = '<h3 class="lk-h">Where the site uses it</h3><p class="lk-none">Nowhere else yet.</p>'; return; }
-      var shown = hits.slice(0, 12);
+      if (!hits.length) { box.hidden = false; box.innerHTML = '<h3 class="lk-h">Where the site uses it</h3><p class="lk-none">' + (kind === 'firm' ? 'Only in the supplier list so far.' : kind === 'chip' ? 'Only on the AI Chips page so far.' : kind === 'term' ? 'Only here so far.' : 'Nowhere on the site.') + '</p>'; return; }
+      var LIMIT = 12, all = hits.length;
+      var row = function (h) { var attrs = h.para != null ? ' data-para="' + h.para + '"' : h.chip ? ' data-chip="' + esc(h.chip) + '"' : h.sup ? ' data-sup="' + esc(h.sup) + '"' : ''; return '<li><a href="' + esc(h.href) + '"' + attrs + '><span class="lk-src"><b>' + esc(h.src) + '</b>' + esc(h.sub) + '</span><span class="lk-txt">' + h.html + '</span></a></li>'; };
       box.hidden = false;
-      box.innerHTML = '<h3 class="lk-h">Where the site uses it <span class="lk-n">' + hits.length + (hits.length === 1 ? ' place' : ' places') + (hits.length > shown.length ? ', first ' + shown.length : '') + '</span></h3><ul class="lk-men">' +
-        shown.map(function (h) { var attrs = h.para != null ? ' data-para="' + h.para + '"' : h.chip ? ' data-chip="' + esc(h.chip) + '"' : h.sup ? ' data-sup="' + esc(h.sup) + '"' : ''; return '<li><a href="' + esc(h.href) + '"' + attrs + '><span class="lk-src"><b>' + esc(h.src) + '</b>' + esc(h.sub) + '</span><span class="lk-txt">' + h.html + '</span></a></li>'; }).join('') + '</ul>';
+      box.innerHTML = '<h3 class="lk-h">Where the site uses it <span class="lk-n">' + all + (all === 1 ? ' place' : ' places') + '</span></h3><ul class="lk-men">' + hits.slice(0, LIMIT).map(row).join('') + '</ul>' + (all > LIMIT ? '<p class="lk-more"><button type="button">Show all ' + all + '</button></p>' : '');
+      var more = $('.lk-more button', box); if (more) more.addEventListener('click', function () { $('.lk-men', box).innerHTML = hits.map(row).join(''); more.parentNode.removeChild(more); self.wire(box); });
       this.wire(box);
     }
   };

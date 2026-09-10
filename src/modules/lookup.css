@@ -13,6 +13,12 @@
 #lk-items .lk-lab { flex: none; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); max-width: 46%; text-align: right; line-height: 1.3; }
 #lk-items li.is-on button { background: var(--ink); color: var(--bg); }
 #lk-items li.is-on .lk-lab { color: var(--line-2); }
+.lk-browse { display: none; width: 100%; font: inherit; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 10px 14px; border: 0; border-bottom: 1px solid var(--line-2); background: var(--bg-3); color: var(--ink-2); text-align: left; cursor: pointer; }
+.lk-more { margin: 10px 0 0; }
+.lk-more button, .lk-near button { font: inherit; font-family: var(--font-display); font-weight: 600; font-size: 13.5px; padding: 5px 10px; border: 1px solid var(--line-2); border-radius: 3px; background: var(--bg-2); color: var(--ink); cursor: pointer; }
+.lk-more button:hover, .lk-near button:hover { border-color: var(--ink); }
+.lk-near { margin: 12px 0 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.lk-near button { text-transform: none; letter-spacing: 0; }
 .lk-count { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; color: var(--muted); padding: 8px 14px 10px; margin: 0; border-top: 1px solid var(--line); }
 
 .lk-entry { min-width: 0; max-width: 760px; }
@@ -69,6 +75,8 @@
 @media (max-width: 760px) {
   .lk { grid-template-columns: 1fr; gap: 18px; }
   .lk-list { position: static; }
+  .lk-browse { display: block; }
+  .lk-list.is-open .lk-browse { border-bottom-color: var(--line); }
   #lk-items { display: none; max-height: 44vh; min-height: 0; }
   .lk-list.is-open #lk-items { display: block; }
   .lk-count { display: none; }

@@ -1811,7 +1811,7 @@
         });
       });
       (DATA.chapters || []).filter(function (c) { return c.id === 'geopolitics'; }).forEach(function () { idx.push({ kind: 'Essay', title: 'Geopolitics', text: 'Who holds each chokepoint, the export-control campaign, China\'s response, the Gulf and smuggling.', href: '#/controls' }); });
-      $$('#glossary .gl-entry').forEach(function (el) { idx.push({ kind: 'Glossary', title: el.querySelector('dt').firstChild.textContent, text: el.querySelector('dd p').textContent, href: '#' + el.id }); });
+      $$('#glossary .gl-entry').forEach(function (el) { idx.push({ kind: 'Term', title: el.querySelector('dt').firstChild.textContent, text: el.querySelector('dd p').textContent, href: '#' + el.id }); });
       (DATA.suppliers || []).forEach(function (r) { idx.push({ kind: 'Supplier', title: r.name, text: r.category + ' · ' + cname(r.country) + (r.role ? ' · ' + r.role : ''), href: '#/suppliers', q: r.name }); });
       (DATA.landscape || []).forEach(function (c) { idx.push({ kind: 'Chip', title: c.vendor + ' ' + c.name, text: ((c.process || {}).node || '') + ' · ' + ((c.memory || {}).type || '') + ' · ' + (c.status || ''), href: '#/landscape', chip: c.id }); });
       (DATA.timeline || []).forEach(function (e) { idx.push({ kind: 'Event ' + e.date, title: e.title, text: e.summary || '', href: '#/controls' }); });
@@ -1827,7 +1827,7 @@
     },
     norm: function (s) { return String(s == null ? '' : s).toLowerCase().replace(/[‐-―]/g, '-').replace(/[-_/,;:()]+/g, ' ').replace(/\s+/g, ' ').trim(); },
     STOP: { a: 1, an: 1, and: 1, are: 1, as: 1, at: 1, be: 1, by: 1, do: 1, does: 1, for: 1, from: 1, how: 1, in: 1, is: 1, it: 1, its: 1, of: 1, on: 1, or: 1, that: 1, the: 1, this: 1, to: 1, was: 1, what: 1, when: 1, where: 1, which: 1, who: 1, why: 1, with: 1 },
-    KIND: { Glossary: 20, Chapter: 10, Essay: 8 },
+    KIND: { Term: 20, Chapter: 10, Essay: 8 },
     // Rank rather than filter: an exact title first, then a title word, then the glossary, then body text.
     search: function (raw) {
       var self = this, idx = this.buildIndex(), qn = this.norm(raw);
@@ -1860,7 +1860,7 @@
       out.sort(function (a, b) { return b.s - a.s || a.i.tn.length - b.i.tn.length || a.o - b.o; });
       if (out.length) return { hits: out.slice(0, 14).map(function (x) { return x.i; }), note: '' };
       // nothing matched: offer the glossary entries that share the longest opening run of letters
-      var near = idx.filter(function (i) { return i.kind === 'Glossary'; }).map(function (i) {
+      var near = idx.filter(function (i) { return i.kind === 'Term'; }).map(function (i) {
         var n = 0; while (n < qn.length && n < i.tn.length && qn.charAt(n) === i.tn.charAt(n)) n++;
         return { i: i, n: n };
       }).sort(function (a, b) { return b.n - a.n || a.i.tn.length - b.i.tn.length; }).slice(0, 3);
