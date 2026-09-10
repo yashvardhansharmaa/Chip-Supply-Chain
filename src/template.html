@@ -140,15 +140,28 @@
       </div>
       <nav class="subtabs" id="controls-subtabs" aria-label="Controls sections"><a href="#/controls" data-sub="timeline" aria-current="true">What the rules did</a><a href="#/thresholds" data-sub="thresholds">Licence thresholds</a><a href="#/exposure" data-sub="exposure">China revenue share</a></nav>
       <div class="sub" data-sub="timeline">
-      <h3 class="label" style="margin: 10px 0 6px">Every move since 2018, in order</h3>
-      <p class="controls-intro">Five kinds of move on one strip. Click a dot to read its entry.</p>
-      <div class="tl-bar"><div id="tl-filters" class="chips tl-filters" role="group" aria-label="Filter events"></div><button type="button" class="btn ghost tl-all" id="tl-all" aria-pressed="false">Show full summaries</button></div>
-      <div class="tl-strip" id="tl-strip"></div>
-      <ol class="timeline" id="timeline"></ol>
+      <div class="cf-top">
+        <div>
+          <h3 class="label" style="margin: 10px 0 6px">Every move since 2018</h3>
+          <p class="controls-intro" id="cf-intro">Nine things move across the chokepoint. Pick one to see its state and its history.</p>
+        </div>
+        <div class="cf-modes" id="cf-modes" role="group" aria-label="How to read the moves" hidden><button type="button" class="cf-mode" data-mode="subject" aria-pressed="true">By subject</button><button type="button" class="cf-mode" data-mode="date" aria-pressed="false">By date</button></div>
+      </div>
+      <div class="cf" id="cf" data-mode="date">
+        <div class="cf-side" id="cf-side" hidden>
+          <div class="cf-scrub" id="cf-scrub"></div>
+          <div class="cf-board" id="cf-board"></div>
+        </div>
+        <div class="cf-chron" id="cf-chron">
+          <div class="tl-bar"><div id="tl-filters" class="chips tl-filters" role="group" aria-label="Filter events"></div><button type="button" class="btn ghost tl-all" id="tl-all" aria-pressed="false">Show full summaries</button></div>
+          <ol class="timeline" id="timeline"></ol>
+        </div>
+      </div>
       </div>
       <div class="sub" data-sub="thresholds" hidden>
       <h3 class="label" style="margin: 10px 0 6px">The numbers that trigger a licence</h3>
       <p class="controls-intro">Each card is one rule: what is measured, the limit, and whether it still binds.</p>
+      <div class="th-ruler" id="th-ruler"></div>
       <div id="controls-chips" class="chips" role="group" aria-label="Filter by regime"></div>
       <nav class="th-jump" id="th-jump" aria-label="Jump to a group"></nav>
       <div class="th-board" id="th-board"></div>
