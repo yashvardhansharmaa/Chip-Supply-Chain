@@ -8903,9 +8903,10 @@ PC.register('wafer', function (p) {
       var at = 0; // the first entry still crossing the reading line: the one the reader is on
       for (var i = 0; i < items.length; i++) { at = i; if (items[i].getBoundingClientRect().bottom > probe) break; }
       if (at === this.at) return;
+      var step = this.at >= 0 && Math.abs(at - this.at) <= 2; // reading, not jumping: a jump would flash the whole board
       this.at = at;
       var d = items[at].getAttribute('data-date');
-      if (d) this.setAsOf(d, null);
+      if (d) this.setAsOf(d, step ? null : [d, d]);
     },
     /* the scrubber is placed from its own width, so settle it whenever the sub-tab opens or the window changes */
     sync: function () {
