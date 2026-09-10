@@ -677,7 +677,7 @@
       this.rows.forEach(function (r) { countries[r.country] = (countries[r.country] || 0) + 1; });
       Object.keys(countries).forEach(function (c) { if (self.CO.indexOf(c) < 0) other += countries[c]; });
       Object.keys(countries).sort(function (a, b) { return countries[b] - countries[a]; }).forEach(function (c) { var o = document.createElement('option'); o.value = c; o.textContent = cname(c) + ' (' + countries[c] + ')'; sel.appendChild(o); });
-      if (other) { var oo = document.createElement('option'); oo.value = '__other'; oo.textContent = 'Every other country (' + other + ')'; sel.appendChild(oo); }
+      if (other) { var oo = document.createElement('option'); oo.value = '__other'; oo.textContent = 'Other countries (' + other + ')'; sel.appendChild(oo); }
       sel.addEventListener('change', function () { self.setCountry(sel.value, false); });
 
       $('#sup-chk').addEventListener('change', function (e) { self.chk = e.target.value; self.render(); });
@@ -713,7 +713,8 @@
       Object.keys(by).sort().forEach(function (c) { if (order.indexOf(c) < 0) order.push(c); });
       this.stages = order.map(function (c, i) { var s = by[c]; s.i = i; s.short = self.SHORT[c] || c; s.id = 'sup-rung-' + i; return s; });
     },
-    coName: function (c) { return c === 'Other' ? 'Every other country' : cname(c); },
+    coName: function (c) { return c === 'Other' ? 'Other' : cname(c); },
+    otherNames: function (rows) { var seen = {}; rows.forEach(function (r) { if (this.CO.indexOf(r.country) < 0) seen[cname(r.country)] = 1; }, this); return Object.keys(seen).sort(); }, // the real countries behind an Other band or ribbon
 
     /* ---- the pipeline: the chain drawn as a pipe that narrows where the firms run out ---- */
     fitPipe: function () {
@@ -756,7 +757,7 @@
       cols.forEach(function (c) {
         var yy = ly[c], mid = (yy[0] + yy[1]) / 2;
         nodesL += '<rect class="sup-cnode c-' + c + '" data-c="' + c + '" x="' + x0 + '" y="' + yy[0].toFixed(1) + '" width="' + wL + '" height="' + Math.max(1.5, yy[1] - yy[0]).toFixed(1) + '"></rect>' +
-          '<text class="sup-clab" x="' + (x0 - 10) + '" y="' + (mid + 4.5).toFixed(1) + '" font-size="' + fsL + '">' + esc(self.coName(c) === 'Every other country' ? 'Other' : self.coName(c)) + '<tspan class="sup-cn"> ' + cTot[c] + '</tspan></text>';
+          '<text class="sup-clab" x="' + (x0 - 10) + '" y="' + (mid + 4.5).toFixed(1) + '" font-size="' + fsL + '">' + esc(self.coName(c)) + '<tspan class="sup-cn"> ' + cTot[c] + '</tspan></text>';
         hitsL += '<rect class="sup-chit" data-c="' + c + '" x="0" y="' + Math.max(0, yy[0] - 4).toFixed(1) + '" width="' + (x0 + wL + 6) + '" height="' + Math.max(18, yy[1] - yy[0] + 8).toFixed(1) + '"></rect>';
       });
       var nodesR = '', labs = '', hits = '';
@@ -774,7 +775,7 @@
         '<g class="sup-chits">' + hitsL + '</g><g class="sup-hits">' + hits + '</g></svg>';
       // the country labels must sit above the hit rects to stay crisp, but the hits must catch the pointer: labels go last, pointer-events off
       var svg = $('.sup-pipe-svg', host);
-      var clabs = ''; cols.forEach(function (c) { var yy = ly[c], mid = (yy[0] + yy[1]) / 2; clabs += '<text class="sup-clab" x="' + (x0 - 10) + '" y="' + (mid + 4.5).toFixed(1) + '" font-size="' + fsL + '">' + esc(self.coName(c) === 'Every other country' ? 'Other' : self.coName(c)) + '<tspan class="sup-cn"> ' + cTot[c] + '</tspan></text>'; });
+      var clabs = ''; cols.forEach(function (c) { var yy = ly[c], mid = (yy[0] + yy[1]) / 2; clabs += '<text class="sup-clab" x="' + (x0 - 10) + '" y="' + (mid + 4.5).toFixed(1) + '" font-size="' + fsL + '">' + esc(self.coName(c)) + '<tspan class="sup-cn"> ' + cTot[c] + '</tspan></text>'; });
       $$('.sup-clab', svg).forEach(function (t) { t.parentNode.removeChild(t); });
       svg.insertAdjacentHTML('beforeend', '<g class="sup-clabs" pointer-events="none">' + clabs + '</g>');
       this.wiped = true;
@@ -873,7 +874,9 @@
       var by = {}; rows.forEach(function (r) { by[r.category] = (by[r.category] || 0) + 1; });
       var stages = this.stages.filter(function (s) { return by[s.name]; }).map(function (s) { return esc(s.short) + ' <b>' + by[s.name] + '</b>'; });
       var crit = rows.filter(function (r) { return r.chokepoint === 'Critical'; }).map(function (r) { return r.name; });
+      var others = c === 'Other' ? this.otherNames(rows) : [];
       el.innerHTML = '<b>' + esc(this.coName(c)) + '</b><span class="sup-tip-n">' + rows.length + ' firms across ' + stages.length + ' stages</span>' +
+        (others.length ? '<span class="sup-tip-co">' + esc(others.join(', ')) + '</span>' : '') +
         '<span class="sup-tip-co sup-tip-stages">' + stages.join(' · ') + '</span>' +
         (crit.length ? '<span class="sup-tip-crit"><i class="sup-crit-sw"></i>Critical: ' + esc(crit.join(', ')) + '</span>' : '');
       this.tipAt(el, anchor, false);
@@ -881,8 +884,10 @@
     showRibTip: function (c, i, anchor) { // a ribbon: the firms of one country at one stage
       var self = this, s = this.stages[i], el = $('#sup-tip'); if (!s || !el) return;
       var rows = s.rows.filter(function (r) { return (self.CO.indexOf(r.country) >= 0 ? r.country : 'Other') === c; });
-      var names = rows.map(function (r) { return (r.chokepoint === 'Critical' ? '<b>' + esc(r.name) + '</b>' : esc(r.name)); });
-      el.innerHTML = '<b>' + esc(this.coName(c)) + ' → ' + esc(s.name) + '</b><span class="sup-tip-n">' + rows.length + (rows.length === 1 ? ' firm' : ' firms') + (names.some(function (x) { return x.indexOf('<b>') === 0; }) ? ' · bold is Critical' : '') + '</span>' +
+      var isOther = c === 'Other';
+      var names = rows.map(function (r) { var n = (r.chokepoint === 'Critical' ? '<b>' + esc(r.name) + '</b>' : esc(r.name)); return isOther ? n + ' <small>(' + esc(cname(r.country)) + ')</small>' : n; });
+      var others = isOther ? this.otherNames(rows) : [];
+      el.innerHTML = '<b>' + esc(this.coName(c)) + ' → ' + esc(s.name) + '</b><span class="sup-tip-n">' + rows.length + (rows.length === 1 ? ' firm' : ' firms') + (others.length ? ' from ' + esc(others.join(', ')) : '') + (names.some(function (x) { return x.indexOf('<b>') === 0; }) ? ' · bold is Critical' : '') + '</span>' +
         '<span class="sup-tip-co sup-tip-stages">' + names.join(', ') + '</span><span class="sup-tip-more">Click to show these firms</span>';
       var host = $('#sup-pipe'), m = host.getBoundingClientRect(), r = anchor.getBoundingClientRect();
       el.hidden = false;
