@@ -421,7 +421,7 @@ ${svg}
   const homeMap = `<div class="sa sa--home">
 ${doors}
 <section class="sa-route-wrap" aria-label="The route of one chip">
-<div class="sa-map-head"><h3 class="sa-h">The route of one chip</h3><p class="sa-sub">${ctx.cap(word(routeStops.length))} stops, from design in California to the data centre in Virginia, at the town that leads each stage. Hover a stop for the stage; click for its chapter.</p></div>
+<div class="sa-map-head"><h3 class="sa-h">The route of one chip</h3><p class="sa-sub">${ctx.cap(word(routeStops.length))} stops, from design in California to the data centre in Virginia, at the town that leads each stage. Each stop opens its chapter.</p></div>
 <div class="sa-map sa-map--route">${routeSvg}<div class="sa-overlay">${stopBtns}</div></div>
 <ol class="sa-strip-stops">${strip}</ol>
 </section>
