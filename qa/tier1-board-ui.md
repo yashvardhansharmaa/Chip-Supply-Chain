@@ -18,11 +18,10 @@ Ordering runs on the effective date; `announced` sorts nothing.
 
 ## Fallbacks, all tested
 
-Old statuses map on, `licence` to denial and `shut` to prohibited; anything unknown reads as open. No
-`cite`, nothing printed. No `announced`, the effective date stands alone. No `chapter`, no link. A lapsed
-`suspendedUntil`, no tag and no count. `flows` may be a bare array or `{ flows: [] }` and `initial` a
-string or an object. The count drives the copy, so ten flows read "Ten things move across the
-chokepoint".
+`licence` reads as denial, `shut` as prohibited, anything unknown as open. No `cite`, nothing printed; a
+`cite` holding only a URL links the document's host. No `announced`, the effective date stands alone. No
+`chapter`, no link. A lapsed `suspendedUntil`, no tag and no count. `flows` may be a bare array or
+`{ flows: [] }`, `initial` a string or an object. Ten flows read "Ten things move across the chokepoint".
 
 ## What the data could still supply
 

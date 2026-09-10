@@ -4,8 +4,10 @@
 usage: python3 build/pdf.py <url> <out.pdf> [--wait 6] [--eval <js>] [--title <running header>]
                             [--only N] [--timeout 420] [--no-paged]
 
-The page is laid out by Paged.js (build/vendor/paged.polyfill.js, pinned, injected from here
-because the site has no bundler). Paged.js is what makes the two things Chrome cannot do alone:
+The page is laid out by Paged.js, injected from here because the site has no bundler. It is pinned
+at build/vendor/paged.polyfill.js: v0.4.3, https://unpkg.com/pagedjs@0.4.3/dist/paged.polyfill.js,
+sha256 f59f361802416c770d549a647958649af2cf6601999924bc00e4f507dad5269f.
+Paged.js is what makes the two things Chrome cannot do alone:
 each source printed as a footnote at the foot of the page its superscript falls on, and running
 heads and folios in the page margins. src/modules/print.css is the stylesheet; src/modules/print.js
 writes each note at print time from the data-* fields already on every citation.

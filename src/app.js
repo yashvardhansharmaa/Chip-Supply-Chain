@@ -1112,9 +1112,16 @@
       if (!c) return '';
       return [c.fr, c.cfr].filter(function (x) { return x; }).join(' · ');
     },
-    /* the citation as a link when it has a URL, as plain mono when it does not, as nothing when the data is silent */
-    citeHTML: function (c, cls) {
+    /* what the citation line reads. A URL with no citation text falls back to the document's host, so
+       the link is not lost; a cite the data has not written at all reads as nothing. */
+    citeLabel: function (c) {
       var t = this.citeText(c);
+      if (t) return t;
+      var u = c && c.url ? safeUrl(c.url) : '';
+      return u && u !== '#' ? String(c.url).replace(/^https?:\/\//, '').split('/')[0] : '';
+    },
+    citeHTML: function (c, cls) {
+      var t = this.citeLabel(c);
       if (!t) return '';
       var u = c && c.url ? safeUrl(c.url) : '';
       return u && u !== '#'
@@ -1473,7 +1480,7 @@
         var eff = e.effectiveDate && e.effectiveDate !== e.date ? e.effectiveDate : null;
         var host = e.source ? e.source.replace(/^https?:\/\//, '').split('/')[0] : '';
         var word = s ? self.word(s.status) : '';
-        var sCite = s ? self.citeText(s.cite) : '', eCite = self.citeText({ fr: e.frCitation, cfr: e.cfr });
+        var sCite = s ? self.citeLabel(s.cite) : '', eCite = self.citeText({ fr: e.frCitation, cfr: e.cfr });
         var inst = self.instWord(e.instrument);
         return '<li class="cf-ev' + (s ? ' is-move' : '') + '">' +
           '<div class="cf-ev-p">' + (s
