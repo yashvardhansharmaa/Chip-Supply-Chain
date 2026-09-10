@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Screenshot a page with headless Chrome over the DevTools protocol, with real device emulation.
-usage: python3 build/shoot.py <url> <out.png> [--mobile] [--width 1366] [--height 900] [--full] [--wait 4]
+usage: python3 build/shoot.py <url> <out.png> [--mobile] [--width 1366] [--height 900] [--full] [--wait 4] [--eval <js>]
 --mobile emulates a 390x844 phone at 2x with touch; --full captures the whole document height.
 """
 import json, subprocess, sys, time, urllib.request, os, signal
@@ -12,7 +12,7 @@ mobile = '--mobile' in args
 def opt(name, default):
     return type(default)(args[args.index(name) + 1]) if name in args else default
 width = opt('--width', 390 if mobile else 1366); height = opt('--height', 844 if mobile else 900)
-full = '--full' in args; wait = opt('--wait', 4.0)
+full = '--full' in args; wait = opt('--wait', 4.0); ev = opt('--eval', '')  # --eval runs a script (may return a promise) before the shot, e.g. to hover a footnote
 port = 9333
 chrome = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 proc = subprocess.Popen([chrome, '--headless=new', '--disable-gpu', '--hide-scrollbars', '--no-first-run', '--no-default-browser-check',
@@ -42,6 +42,8 @@ try:
         h = min(int(h), 12000)
         send('Emulation.setDeviceMetricsOverride', {'width': width, 'height': h, 'deviceScaleFactor': 2 if mobile else 1, 'mobile': mobile})
         time.sleep(1.0)
+    if ev:
+        send('Runtime.evaluate', {'expression': ev, 'awaitPromise': True, 'returnByValue': True}); time.sleep(0.6)
     shot = send('Page.captureScreenshot', {'format': 'png', 'captureBeyondViewport': bool(full)})
     if 'data' not in shot: sys.exit('capture failed: ' + json.dumps(shot)[:300])
     import base64; open(out, 'wb').write(base64.b64decode(shot['data']))
