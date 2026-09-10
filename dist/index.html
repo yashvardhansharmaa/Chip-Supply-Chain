@@ -8808,13 +8808,13 @@ PC.register('wafer', function (p) {
       (f.states || []).forEach(function (s) { if (s.event) byEv[s.event] = s; });
       if (!evs.length) return '<p class="cf-none">No move has touched this flow yet.</p>';
       return '<ol class="cf-evs">' + evs.map(function (e, k) {
-        var s = byEv[e.id], id = 'cf-p-' + f.id + '-' + k, d = new Date(e.date + 'T00:00:00');
-        var ds = isNaN(d) ? esc(e.date) : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        var s = byEv[e.id], id = 'cf-p-' + f.id + '-' + k;
+        var ds = self.fmtDate(e.date);
         var host = e.source ? e.source.replace(/^https?:\/\//, '').split('/')[0] : '';
         var word = s ? (s.status === 'policy' ? 'Policy' : (self.STATE[s.status] || s.status || '')) : '';
         return '<li class="cf-ev' + (s ? ' is-move' : '') + '">' +
           '<div class="cf-ev-p">' + (s ? '<span class="cf-pill is-' + esc(s.status || 'open') + '">' + esc(word) + '</span>' : '') + '</div>' +
-          '<div class="cf-ev-d"><b>' + ds + '</b>' + esc(String(e.date).slice(0, 4)) + '<span>' + esc(e.actor || '') + '</span></div>' +
+          '<div class="cf-ev-d"><b>' + esc(ds) + '</b><span>' + esc(e.actor || '') + '</span></div>' +
           '<div class="cf-ev-b"><span class="cat ' + self.CATS[self.lane(e.category)].cls + '">' + esc(e.category || '') + '</span>' +
           '<h5 class="cf-ev-t">' + esc(e.title) + '</h5><p class="cf-ev-g">' + esc(self.gistOf(e)) + '</p>' +
           '<button type="button" class="tl-more" aria-expanded="false" aria-controls="' + id + '">More</button>' +
