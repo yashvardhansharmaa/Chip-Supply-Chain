@@ -95,7 +95,7 @@ When one exposure cannot resolve a pattern, the fab prints the layer with two, t
 
 Deep ultraviolet (DUV) light comes from gas lasers: 248 nanometres from krypton fluoride (KrF), 193 from argon fluoride (ArF), shone through air or water. These tools still dominate by volume: of ASML's 327 systems in 2025, 131 were ArF immersion, 78 KrF, 54 the older, coarser i-line and 16 ArF dry ([source](https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf)). A DUV scanner costs roughly $60 million. DUV is the one tier with named competitors, Nikon and Canon, and ASML still holds above 80 percent of it ([source](https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/)).
 
-Immersion is the contested tier. Without EUV, a fab needs NXT:2000i-class scanners and several passes per layer to reach leading-edge logic, and that is where Dutch export licensing draws its line.
+Immersion is the contested tier, because without EUV a fab needs NXT:2000i-class scanners and several passes per layer to reach leading-edge logic, and that is where Dutch export licensing draws its line.
 
 ### Extreme ultraviolet
 
@@ -131,7 +131,7 @@ ASML took EUR 32.7 billion in net sales in 2025 at a 52.8 percent gross margin (
 
 Zeiss mirror polishing and coating, not final assembly in Veldhoven, caps EUV output.
 
-Nikon and Canon are specialists now. Nikon sold 22 new scanners in the year to March 2026, into a market it sizes at 570 units, and lost money on Precision Equipment ([source](https://www.nikon.com/content/dam/web-assets/nikoncom/company/local/global/en/ir/ir_library/result/pdf/2026/26_all_e.pdf)). Canon's bet is nanoimprint: the FPA-1200NZ2C stamps the pattern instead of projecting it, down to a 14 nm linewidth ([source](https://global.canon/en/news/2024/20240926.html)). No leading-edge logic customer has taken it up.
+Nikon and Canon are specialists now. Nikon sold 22 new scanners in the year to March 2026, into a market it sizes at 570 units, and lost money on Precision Equipment ([source](https://www.nikon.com/content/dam/web-assets/nikoncom/company/local/global/en/ir/ir_library/result/pdf/2026/26_all_e.pdf)). Canon's bet is nanoimprint, where the FPA-1200NZ2C stamps the pattern instead of projecting it, down to a 14 nm linewidth ([source](https://global.canon/en/news/2024/20240926.html)). No leading-edge logic customer has taken it up.
 
 {{figure:litho-mix}}
 
@@ -141,11 +141,11 @@ Export controls bar EUV from Chinese foundries, and CSIS judges the technology o
 
 - **Dutch national licensing** of advanced DUV took effect on 1 September 2023, and The Hague widened it on 6 September 2024 ([source](https://www.government.nl/latest/news/2024/09/06/the-netherlands-expands-export-control-measure-advanced-semiconductor-manufacturing-equipment)).
 - **A partial licence revocation** disclosed on 1 January 2024 stopped NXT:2050i and NXT:2100i shipments to a few Chinese customers ([source](https://www.asml.com/en/news/press-releases/2023/statement-regarding-partial-revocation-export-license)).
-- **The BIS Affiliates Rule** extended entity-list controls to 50%-owned subsidiaries from 29 September 2025 ([source](https://www.federalregister.gov/documents/2025/09/30/2025-19001/expansion-of-end-user-controls-to-cover-affiliates-of-certain-listed-entities)), then BIS suspended it to 9 November 2026 ([source](https://www.federalregister.gov/documents/2025/11/12/2025-19846/one-year-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed-entities)).
+- **The BIS Affiliates Rule** extended entity-list controls to 50 percent-owned subsidiaries from 29 September 2025 ([source](https://www.federalregister.gov/documents/2025/09/30/2025-19001/expansion-of-end-user-controls-to-cover-affiliates-of-certain-listed-entities)), then BIS suspended it to 9 November 2026 ([source](https://www.federalregister.gov/documents/2025/11/12/2025-19846/one-year-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed-entities)).
 
 China fell from 41 percent of ASML's net system sales in 2024 to 33 percent in 2025 ([source](https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf)).
 
-On DUV, China's answer is real. Reuters reported in July 2026, on one unnamed source, that Shanghai Aishengna Electronic Technology Group has started producing home-grown immersion DUV tools. The firm was registered in August 2023 with 7 billion yuan of capital and two state shareholders, Shanghai Electric Holding and a Shanghai International Trust subsidiary. It has no website, and has taken in teams from SMEE and the startup Yuliangsheng ([source](https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/)). SMEE, the incumbent, is strongest in i-line and even there holds about four percent of the world market ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).
+On DUV, Reuters reported in July 2026, on one unnamed source, that Shanghai Aishengna Electronic Technology Group has started producing home-grown immersion DUV tools. The firm was registered in August 2023 with 7 billion yuan of capital and two state shareholders, Shanghai Electric Holding and a Shanghai International Trust subsidiary. It has no website, and has taken in teams from SMEE and the startup Yuliangsheng ([source](https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/)). SMEE, the incumbent, is strongest in i-line and even there holds about four percent of the world market ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).
 
 On EUV the record is thinner, and claims of Huawei mass production in 2026 remain unverified. Reuters reported in December 2025 that a Shenzhen team of former ASML engineers had built a prototype that makes extreme ultraviolet light but no chip ([source](https://www.reuters.com/world/china/how-china-built-its-manhattan-project-rival-west-ai-chips-2025-12-17/)). Between that light and a printed chip sit the mirrors, and only Zeiss can polish them.
 
@@ -153,7 +153,7 @@ On EUV the record is thinner, and claims of Huawei mass production in 2026 remai
 
 ## The chokepoint
 
-The failure mode is total: if ASML stops shipping, nothing at the leading edge gets printed. Even ASML could not rebuild itself quickly, since Zeiss makes its optics and Trumpf its drive laser.
+If ASML stops shipping, nothing at the leading edge gets printed, and even ASML could not rebuild itself quickly, since Zeiss makes its optics and Trumpf its drive laser.
 
 For AI accelerators, EUV is the point of control. It prints the finest layers, the ones that set how densely transistors and wires pack, and TSMC expects the number of layers needing High-NA to rise as AI designs grow more complex ([source](https://pr.tsmc.com/english/news/3338)). Every added layer is more time on a tool nobody else builds.
 

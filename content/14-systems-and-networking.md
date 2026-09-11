@@ -110,7 +110,7 @@ Physical assembly belongs to Taiwan. Foxconn booked NT$8.1 trillion of revenue i
 
 ## The chokepoint
 
-Most of this layer has many suppliers. Several capable contract manufacturers on three continents screw racks together, and the power shelves, copper busbars, cables and connectors have many suppliers. If Foxconn stopped tomorrow, Quanta and Wistron would absorb the volume in a couple of quarters.
+Several capable contract manufacturers on three continents screw racks together, and the power shelves, copper busbars, cables and connectors have many suppliers. If Foxconn stopped tomorrow, Quanta and Wistron would absorb the volume in a couple of quarters.
 
 The parts that cannot be replaced that fast sit underneath the assembly.
 

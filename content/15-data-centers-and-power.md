@@ -30,7 +30,7 @@
       {
         "name": "Vertiv",
         "country": "US",
-        "share": "Data center power and cooling systems; NVIDIA gigawatt AI factory partner"
+        "share": "Data centre power and cooling systems; NVIDIA gigawatt AI factory partner"
       },
       {
         "name": "Schneider Electric",
@@ -60,7 +60,7 @@
         "note": "Hitachi group transformer manufacturing"
       }
     ],
-    "chinaStatus": "Power is not China's binding constraint. It has surplus generation, a large domestic transformer and switchgear industry, and can energise sites quickly. Its AI buildout is limited by accelerator supply, not megawatts.",
+    "chinaStatus": "China has surplus generation, a large domestic transformer and switchgear industry, and can energise sites quickly. Its AI buildout is limited by accelerator supply, not megawatts.",
     "usStatus": "Has the demand and the capital but cannot shorten the equipment queues. Transformers and turbines are both multi-year waits, most large power transformers are imported, and no restarted reactor is running yet.",
     "costSignal": "Transformer lead times of 36 months, against under a year before 2020; GE Vernova's gas backlog and reserved slots grew from 100 GW to 116 GW in 2026",
     "substitutability": {
@@ -83,15 +83,15 @@
       "source": "https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin"
     },
     {
-      "fact": "US data centers used 176 TWh in 2023, 4.4% of US electricity, and are projected at 325 to 580 TWh by 2028, or 6.7% to 12%",
+      "fact": "US data centres used 176 TWh in 2023, 4.4% of US electricity, and are projected at 325 to 580 TWh by 2028, or 6.7% to 12%",
       "source": "https://newscenter.lbl.gov/2025/01/15/berkeley-lab-report-evaluates-increase-in-electricity-demand-from-data-centers/"
     },
     {
-      "fact": "The five largest US data center operators spent $448.3B of capital in 2025; on that trend they reach $770B in 2026",
+      "fact": "The five largest US data centre operators spent $448.3B of capital in 2025; on that trend they reach $770B in 2026",
       "source": "https://epoch.ai/data-insights/hyperscaler-capex-trend"
     },
     {
-      "fact": "ERCOT was tracking about 474 GW of large loads seeking interconnection in June 2026, about 90% of it data centers",
+      "fact": "ERCOT was tracking about 474 GW of large loads seeking interconnection in June 2026, about 90% of it data centres",
       "source": "https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf"
     },
     {
@@ -115,7 +115,7 @@
     {
       "id": "hyperscaler-capex",
       "type": "bars",
-      "title": "Capital spending by the five largest US data center operators, 2025",
+      "title": "Capital spending by the five largest US data centre operators, 2025",
       "unit": "$B",
       "data": [
         [
@@ -171,7 +171,7 @@
     {
       "id": "us-dc-electricity",
       "type": "bars",
-      "title": "US data center electricity use, actual and 2028 projection range",
+      "title": "US data centre electricity use, actual and 2028 projection range",
       "unit": "TWh",
       "data": [
         [
@@ -199,7 +199,7 @@
   ]
 }
 ---
-# Data Centers and Power
+# Data Centres and Power
 
 For thirty years the semiconductor industry set the pace and everything downstream followed. A wafer clears a leading-edge fab in months; a large power transformer takes three years, and before 2020 the same order took under one ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)).
 

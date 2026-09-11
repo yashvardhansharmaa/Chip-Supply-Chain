@@ -73,7 +73,7 @@
 ---
 # Metrology and Inspection
 
-Process control is about a tenth of what a fab spends on tools, out of a wafer equipment market of roughly $120 billion in 2025 ([source](https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf)). KLA takes more than half of that tenth. At its March 2026 investor day it put its own 2024 share at 56.5 percent, six and a half times its nearest competitor ([source](https://d1io3yog0oux5.cloudfront.net/_7791115a123b86b3f10b1a5eb5210224/klatencor/db/1166/10653/file/2026+Investor+Day+Master+Final_IR+copy.pdf)); CSET, counting the same year independently, gets 57.2 percent ([source](https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60)).
+Process control is about a tenth of what a fab spends on tools, out of a wafer equipment market of roughly $120 billion in 2025 ([source](https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf)). At its March 2026 investor day KLA put its own 2024 share at 56.5 percent, six and a half times its nearest competitor ([source](https://d1io3yog0oux5.cloudfront.net/_7791115a123b86b3f10b1a5eb5210224/klatencor/db/1166/10653/file/2026+Investor+Day+Master+Final_IR+copy.pdf)); CSET, counting the same year independently, gets 57.2 percent ([source](https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60)).
 
 ## How it works
 
@@ -129,7 +129,7 @@ The December 2024 rule wrote process control into the export lists. It controls 
 
 ## The chokepoint
 
-Process control is a chokepoint of concentration rather than of physics. Several firms can build a good film metrology tool, but one firm sets the standard across nearly the whole flow, and its lead is widening. A sanctioned fab can buy scanners and etchers on the grey market and still fail to get production going: without sensitive inspection it cannot find out why its yield is low.
+Process control is a chokepoint of concentration rather than of physics. Several firms can build a good film metrology tool, but one firm sets the standard across nearly the whole flow, and its lead is widening. A sanctioned fab can buy scanners and etchers on the grey market and still fail to get production going, because without sensitive inspection it cannot find out why its yield is low.
 
 ## Key evaluation criteria
 

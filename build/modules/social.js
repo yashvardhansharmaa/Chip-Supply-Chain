@@ -86,7 +86,7 @@ function manifest(root) {
     { slug: 'chips', route: '#/landscape', eyebrow: `${SITE} · AI Chips`, title: 'AI Chips', line: 'The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026.', description: 'The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026, with the foundry, process node, memory supplier and packaging plant behind each one.' },
     { slug: 'suppliers', route: '#/suppliers', eyebrow: `${SITE} · Suppliers`, title: 'Suppliers', line: `What each of the ${suppliers.length || 220} firms makes, where it sits, and how hard it would be to replace.` },
     { slug: 'export-controls', route: '#/controls', eyebrow: `${SITE} · Export Controls`, title: 'Export Controls', line: "Every move since 2018, what can still flow to China, and each firm's China sales." },
-    { slug: 'index', route: '#/glossary', eyebrow: `${SITE} · Index`, title: 'Index', line: 'Every term, firm and chip, with the passages that use them.' },
+    { slug: 'index', route: '#/glossary', eyebrow: `${SITE} · Index`, title: 'Index', line: 'Every term, firm, chip and country, with the passages that use them.' },
   ];
   for (const v of views) pages.push({ kind: 'view', body: v.description || v.line, linkText: 'Open the page', ...v, description: describe(v.description || v.line) });
   return pages;

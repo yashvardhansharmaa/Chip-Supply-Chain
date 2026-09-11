@@ -3,7 +3,7 @@
   "id": "advanced-packaging",
   "number": 11,
   "title": "Advanced Packaging",
-  "oneLiner": "Lithography stopped being the limit on chip size in 2022. What replaced it is how large an interposer TSMC can build, and through 2025 how many it could build a month.",
+  "oneLiner": "Lithography stopped being the limit on chip size in 2022. The limit now is how large an interposer TSMC can build, and through 2025 how many it could build a month.",
   "plain": "Packaging wires finished chips into one component and mounts them on a base built to the tolerances of a chip. A lithography machine can print only a rectangle about the size of a postage stamp in one shot, so a modern accelerator is cut into pieces and stitched back together on a shared slab of silicon, with its memory a few millimetres away. Slab, chips and base all expand at different rates when heated, so the package warps and the joints crack. Getting that right in volume is hard enough that nearly every AI accelerator is packaged by TSMC, in Taiwan.",
   "bridge": "Logic and memory are still two separate objects, made in different countries, and the next stage exists to close the distance between them.",
   "specimen": "cowos-exploded",
@@ -28,7 +28,7 @@
     "chinaStatus": "China's back end is far stronger than its front end. JCET alone billed RMB 35.96 billion in 2024, and Chinese suppliers gained share in packaging and test tools while gaining none in atomic layer deposition or lithography. Almost none of it is silicon-interposer 2.5D for AI accelerators.",
     "usStatus": "No domestic CoWoS at volume. Amkor is building a $7B packaging and test plant in Peoria with up to $407M of CHIPS funding, production from early 2028.",
     "costSignal": "No public wafer counts. TSMC guided investors to 60% compound annual growth in CoWoS capacity and adds more every year, but will not publish the absolute number. Epoch AI estimates Nvidia alone consumed 60.3% of the world's CoWoS capacity in 2025",
-    "substitutability": {"band": "Moderate", "test": "The steps are ordinary and Intel's EMIB is a credible second source; what is scarce is yield at Nvidia's volume", "why": "The individual steps are not exotic, and Intel's EMIB does the same job when CoWoS is tight. What a well-funded actor has to buy is enough bonders and enough learning to get a 5.5-reticle interposer and its memory stacks out working at the volume Nvidia alone orders. Amkor's Peoria campus is the live test, producing from early 2028, which puts the clock at two to five years."}
+    "substitutability": {"band": "Moderate", "test": "The steps are ordinary and Intel's EMIB is a credible second source; the shortage is yield at Nvidia's volume", "why": "The individual steps are not exotic, and Intel's EMIB does the same job when CoWoS is tight. A well-funded actor has to buy enough bonders and enough learning to get a 5.5-reticle interposer and its memory stacks out working at the volume Nvidia alone orders. Amkor's Peoria campus is the live test, producing from early 2028, which puts the clock at two to five years."}
   },
   "keyFacts": [
     {"fact": "A scanner's maximum exposure field is 26 mm by 33 mm, or 858 mm2", "source": "https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe3400c"},
@@ -132,7 +132,7 @@ The tools are a narrower chokepoint than the assembly houses.
 - **Hybrid bonding.** Solder disappears and copper pads meet directly. Applied Materials built its Kinex bonder with Besi, which makes the placement head ([source](https://www.appliedmaterials.com/eu/en/product-library/kinex-integrated-die-to-wafer-hybrid-bonding-system.html)).
 - **Grinding and dicing.** Disco dominates the steps that thin wafers and cut packages apart; see [Test and assembly](#test-and-assembly) ([source](https://newsletter.semianalysis.com/p/disco-corporation-the-world-leader)).
 
-America is building, slowly. TSMC's Arizona commitment reached $265 billion in July 2026 and covers two advanced packaging plants alongside 10 fabs ([source](https://www.azcommerce.com/news-events/news/2026/7/tsmc-announcement/)). Amkor broke ground in Peoria in October 2025 on a $7 billion campus, backed by up to $407 million of CHIPS money, producing from early 2028 ([source](https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced)), and Wei confirms it will open before TSMC's own two do ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf)).
+TSMC's Arizona commitment reached $265 billion in July 2026 and covers two advanced packaging plants alongside 10 fabs ([source](https://www.azcommerce.com/news-events/news/2026/7/tsmc-announcement/)). Amkor broke ground in Peoria in October 2025 on a $7 billion campus, backed by up to $407 million of CHIPS money, producing from early 2028 ([source](https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced)), and Wei confirms it will open before TSMC's own two do ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf)).
 
 ## The chokepoint
 

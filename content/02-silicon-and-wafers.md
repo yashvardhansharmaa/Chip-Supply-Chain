@@ -97,7 +97,7 @@ Their 2025 results split between an AI boom and a slump in the older, mature nod
 
 Area shipped rose 5.8 percent in 2025 while revenue fell 1.2 percent ([source](https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html)). Wafers sell on multi-year agreements that fix price and volume years ahead, so a demand spike never reaches the invoice.
 
-The raw material is a separate map. China made 1.50 million tonnes of polysilicon in 2023, about 93 percent of world output ([source](https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf)). Almost none of it can go into a chip: solar-grade material was 98 percent of that output and electronic-grade 2 percent ([source](https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf)).
+China made 1.50 million tonnes of polysilicon, the raw material, in 2023, about 93 percent of world output ([source](https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf)). Solar-grade material was 98 percent of that output and electronic-grade 2 percent ([source](https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf)), so almost none of it can go into a chip.
 
 {{figure:polysilicon-grade}}
 
@@ -107,13 +107,13 @@ Crystal growth and polishing sit in Japan, Taiwan, Germany and South Korea, with
 
 ## The chokepoint
 
-China dominates polysilicon and barely registers in wafers. As of 2021 Chinese firms held under 5 percent of the wafer market and under 1 percent of 300 mm ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). They cannot even feed their own fabs: Chinese producers supplied 12 percent of the wafers consumed by China's 300 mm fabs, against 18 percent at 200 mm and below ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
+China dominates polysilicon and barely registers in wafers. As of 2021 Chinese firms held under 5 percent of the wafer market and under 1 percent of 300 mm ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). Chinese producers supplied 12 percent of the wafers consumed by China's own 300 mm fabs, against 18 percent at 200 mm and below ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 
 Leading-edge 300 mm wafers rest on know-how that was never written down rather than on any machine a rival could buy, and 300 mm carried 99.7 percent of world fab capacity at 45 nm and below as of 2021 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). A fab has to qualify each new wafer source for every chip it makes, which takes quarters, while the contracts already in place run for years.
 
 The last increase in wafer size, to 300 mm, happened in 2002 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). Bigger discs make printing a bigger share of the bill: photolithography takes half the cost of processing a 300 mm wafer against a quarter of a 150 mm one ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). The push to 450 mm never reached production, and every leading-edge chip is still made on 300 mm.
 
-AI accelerators make the wafer's job harder. One fatal defect ruins far more silicon on a GPU die that fills a whole printed field than on a small chip, and extreme-ultraviolet printing has almost no depth of focus to give (see [Lithography](#lithography)), so flatness has to hold everywhere on the disc rather than on average.
+One fatal defect ruins far more silicon on a GPU die that fills a whole printed field than on a small chip, and extreme-ultraviolet printing has almost no depth of focus to give (see [Lithography](#lithography)), so flatness has to hold everywhere on the disc rather than on average.
 
 ## Key evaluation criteria
 

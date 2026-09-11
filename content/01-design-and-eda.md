@@ -99,7 +99,7 @@ Nvidia designs Blackwell once and sells it to everyone, so the buyer gets mature
 
 ### The EDA flow
 
-Three complete flows exist, and they do not mix. A team commits to one vendor's chain because the foundry certifies its reference recipes against specific tool versions, and timing signed off in one tool is not accepted in another. Inside each step the grip is tighter still: Synopsys alone holds more than 90 percent of static timing analysis, the check that proves a chip will run at its rated speed ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
+Three complete flows exist, and they do not mix. A team commits to one vendor's chain because the foundry certifies its reference recipes against specific tool versions, and timing signed off in one tool is not accepted in another. Synopsys alone holds more than 90 percent of static timing analysis, the check that proves a chip will run at its rated speed ([source](https://newsletter.semianalysis.com/p/eda-market-primer)), so inside each step the grip is tighter still.
 
 {{figure:tool-lock}}
 
@@ -123,7 +123,7 @@ Design services, where one firm turns another's specification into a manufactura
 
 In October 2025 OpenAI and Broadcom said they would deploy 10 gigawatts of OpenAI-designed accelerators, with Broadcom turning the design into silicon and supplying the Ethernet networking around it ([source](https://investors.broadcom.com/news-releases/news-release-details/openai-and-broadcom-announce-strategic-collaboration-deploy-10)). In April 2026 Broadcom extended its Meta partnership to multiple gigawatts of MTIA, Meta's in-house chip, and the first 2 nm AI accelerator ([source](https://investors.broadcom.com/news-releases/news-release-details/broadcom-announces-extended-partnership-meta-deploy-technology)).
 
-Below Broadcom and Marvell sit the Taiwanese houses that carry a customer's circuit list all the way to a finished mask set on TSMC's newest nodes; Alchip reported $992 million of revenue in 2025 ([source](https://www.alchip.com/en/Investors/financials/)). The engineers are spread wider than the firms: India alone holds nearly 20 percent of the world's chip designers ([source](https://www.pib.gov.in/PressReleasePage.aspx?PRID=2148393)).
+Below Broadcom and Marvell sit the Taiwanese houses that carry a customer's circuit list all the way to a finished mask set on TSMC's newest nodes; Alchip reported $992 million of revenue in 2025 ([source](https://www.alchip.com/en/Investors/financials/)). The engineers are spread wider than the firms, and India alone holds nearly 20 percent of the world's chip designers ([source](https://www.pib.gov.in/PressReleasePage.aspx?PRID=2148393)).
 
 ## The chokepoint
 
@@ -131,7 +131,7 @@ In late May 2025 the US Bureau of Industry and Security, the agency that writes 
 
 Washington can pull this lever alone, and at once. It also speeds up the substitution it was meant to prevent: Synopsys's China revenue fell from 16 percent of the total in fiscal 2024 to 12 percent in fiscal 2025 ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
 
-China's answer is real but partial. CSET at Georgetown University puts it flatly: Chinese designers rely on US tools for all their chip designs, US firms alone sell the full range of software a leading-edge chip needs, and Chinese vendors cannot yet support designs at those nodes ([source](https://cset.georgetown.edu/article/semiconductors-more-u-s-leverage-more-bad-news-for-beijing-part-3/)). No domestic vendor has a certified, complete flow for a 5 nm-class accelerator, and the gap is in the rare failure cases a foundry has already validated rather than in features.
+CSET at Georgetown University finds that Chinese designers rely on US tools for all their chip designs, that US firms alone sell the full range of software a leading-edge chip needs, and that Chinese vendors cannot yet support designs at those nodes ([source](https://cset.georgetown.edu/article/semiconductors-more-u-s-leverage-more-bad-news-for-beijing-part-3/)). No domestic vendor has a certified, complete flow for a 5 nm-class accelerator, and the gap is in the rare failure cases a foundry has already validated rather than in features.
 
 China can design an accelerator. It cannot finish one at the leading edge without foreign tools, or build what it designs without foreign equipment: SMIC's 7 nm capacity is tight enough that Huawei has to choose between its phone chips and its AI chips ([source](https://cset.georgetown.edu/publication/pushing-the-limits-huaweis-ai-chip-tests-u-s-export-controls/)).
 

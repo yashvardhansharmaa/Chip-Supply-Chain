@@ -3,7 +3,7 @@
  "id": "chemicals-gases-and-photoresist",
  "number": 3,
  "title": "Chemicals, Gases and Photoresist",
- "oneLiner": "A few hundred molecules stand between a blank wafer and a working chip. Japan makes about four-fifths of the photoresist, and the two times this layer has been squeezed, no fab stopped: the countries hit stockpiled and built substitutes instead.",
+ "oneLiner": "A few hundred molecules stand between a blank wafer and a working chip. Japan makes about four-fifths of the photoresist, and the two times this layer has been squeezed, no fab stopped, because the countries hit stockpiled and built substitutes instead.",
  "plain": "Photoresist is photographic film for chips. A coating machine spreads a film thinner than a soap bubble across the wafer, light shines through a stencil, and the exposed parts dissolve away, leaving a pattern the next machine can etch. A few hundred other gases and liquids deposit, strip and clean around it. All of it has to be clean to about one stray metal atom in a trillion, and each formula is approved for one factory and one product at a time. That is why nine tenths of the world's photoresist comes from Japan, and a second source takes years rather than weeks.",
  "bridge": "A bare disc records nothing, so before any light reaches it the wafer is coated in a chemical that reacts where the beam lands.",
  "specimen": "gas-cabinet",
@@ -92,7 +92,7 @@ Japan produced about 90 percent of the world's semiconductor photoresist as of 2
 
 {{figure:resist-country}}
 
-JSR is no longer a public company. A vehicle of Japan Investment Corporation, a state-backed fund, took 84.36 percent of its shares at ¥4,350 each in a tender offer that closed on 16 April 2024, then delisted it ([source](https://www.jiccapital.co.jp/en/news/.assets/E_20240417_JIC_JICC_PressRelease.pdf)).
+A vehicle of Japan Investment Corporation, a state-backed fund, took 84.36 percent of JSR's shares at ¥4,350 each in a tender offer that closed on 16 April 2024, then delisted it ([source](https://www.jiccapital.co.jp/en/news/.assets/E_20240417_JIC_JICC_PressRelease.pdf)).
 
 Tokyo Ohka Kogyo sold ¥139,668 million in the first half of fiscal 2026, up 25.1 percent on AI server demand ([source](https://www.tok.co.jp/application/files/7417/8598/0069/q2_2612_en.pdf)). Fujifilm lifted its polishing-slurry capacity at Kumamoto by 30 percent in January 2025 ([source](https://www.fujifilm.com/jp/en/news/hq/11942)) and opened extreme-ultraviolet resist lines at Shizuoka and Pyeongtaek that October ([source](https://www.fujifilm.com/jp/en/news/hq/11842)).
 
@@ -100,7 +100,7 @@ Wafer fabrication materials sold $45.8 billion in 2025 and packaging materials $
 
 Gases are a Western-led oligopoly: Linde, Air Liquide, Air Products, Nippon Sanso and Messer. Air Liquide's electronics arm alone sold €2,465 million in 2025, 9.1 percent of group revenue ([source](https://www.airliquide.com/group/activities/electronics)). Under them sit single-molecule specialists: SK Materials in nitrogen trifluoride, Kanto Denka in fluorine chemistry, Stella Chemifa and Morita in ultra-high-purity hydrofluoric acid.
 
-The consumables are narrower again. As of 2021 five firms held more than 60 percent of wet chemicals, and DuPont and Cabot Microelectronics about 56 percent of a $790 million market in polishing slurries ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). JX Advanced Metals is tighter than any of them, holding about 65 percent of the world sputtering-target market ([source](https://www.jx-nmm.com/english/company/glance/)).
+As of 2021 five firms held more than 60 percent of wet chemicals, and DuPont and Cabot Microelectronics about 56 percent of a $790 million market in polishing slurries ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). JX Advanced Metals is tighter than any of them, holding about 65 percent of the world sputtering-target market ([source](https://www.jx-nmm.com/english/company/glance/)).
 
 ## The chokepoint
 
@@ -116,7 +116,7 @@ Neither metal goes into a silicon logic chip. Germanium goes into fibre optics, 
 
 {{figure:germanium-price}}
 
-The slower risk is regulatory. The five member states behind the European Union's proposed restriction on PFAS, the long-lived fluorinated chemicals, published a revised text on 20 August 2025, after working through more than 5,600 comments ([source](https://echa.europa.eu/-/echa-supports-pfas-restriction-with-targeted-derogations)). The committees of ECHA, the EU chemicals agency, now back an EU-wide restriction with targeted exemptions rather than a flat ban, and the scientific evaluation is due to finish by the end of 2026 ([source](https://echa.europa.eu/-/echa-supports-pfas-restriction-with-targeted-derogations)). These chemicals are everywhere in a fab: photoacid generators, etch gases, chamber liners, pump seals and filter membranes are all fluorinated. An exemption is likely, but nothing is law yet.
+The slower risk is the European Union's proposed restriction on PFAS, the long-lived fluorinated chemicals. The five member states behind it published a revised text on 20 August 2025, after working through more than 5,600 comments ([source](https://echa.europa.eu/-/echa-supports-pfas-restriction-with-targeted-derogations)). The committees of ECHA, the EU chemicals agency, now back an EU-wide restriction with targeted exemptions rather than a flat ban, and the scientific evaluation is due to finish by the end of 2026 ([source](https://echa.europa.eu/-/echa-supports-pfas-restriction-with-targeted-derogations)). These chemicals are everywhere in a fab: photoacid generators, etch gases, chamber liners, pump seals and filter membranes are all fluorinated. An exemption is likely, but nothing is law yet.
 
 ## Key evaluation criteria
 

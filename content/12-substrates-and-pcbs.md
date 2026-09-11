@@ -41,7 +41,7 @@
     {"fact": "Nitto Boseki plans JPY 80 billion of capital spending over the four years of its fiscal 2024 to 2027 plan and says demand has risen two to three times since the plan was set", "source": "https://www.nittobo.co.jp/eng/ir/pdf/Nittobo_Integrated-Report_2025.pdf"},
     {"fact": "Ibiden will invest about JPY 500 billion from fiscal 2026 to fiscal 2028 in high-performance IC package substrates, JPY 220 billion of it in a first phase at the Gama plant", "source": "https://www.ibiden.com/company/2026/02/notice-regarding-capital-investment-plan-for-high-performance-ic-package-substrates.html"},
     {"fact": "Build-up substrates were 52% of Unimicron's Q2 2026 sales of NT$42.9 billion, and AI data centre work was 61%", "source": "https://www.unimicron.com/files/money/Earnings/en/2026-Q2-consolidated-en.pdf"},
-    {"fact": "TTM Technologies took US$2.91 billion of revenue in fiscal 2025 and regularly builds boards of more than 30 layers, up to over 70", "source": "https://www.sec.gov/Archives/edgar/data/1116942/000119312526051976/ttmi-20251229.htm"}
+    {"fact": "TTM Technologies took $2.91 billion of revenue in fiscal 2025 and regularly builds boards of more than 30 layers, up to over 70", "source": "https://www.sec.gov/Archives/edgar/data/1116942/000119312526051976/ttmi-20251229.htm"}
   ],
   "figures": [
     {
@@ -89,7 +89,7 @@ Ajinomoto Build-up Film, or ABF, is the insulating sheet between the copper laye
 
 ### Glass core substrates
 
-Swap the resin core for glass and most of the swelling problem goes away, which is why everyone is trying.
+A glass core in place of resin removes most of the swelling problem, which is why everyone is trying.
 
 - **Intel** announced glass substrates in September 2023 for the latter part of this decade ([source](https://download.intel.com/newsroom/archive/2025/en-us-2023-09-18-intel-unveils-industryleading-glass-substrates-to-meet-demand-for-more-powerful-compute.pdf)).
 - **Samsung Electro-Mechanics** signed a joint venture with Sumitomo Chemical in November 2025 to make glass core, with mass production after 2027 ([source](https://samsungsem.com/global/newsroom/news/view.do?id=9850)).
@@ -124,7 +124,7 @@ Data centre computing was 24 percent of TTM's $2.91 billion of fiscal 2025 reven
 
 ## The chokepoint
 
-Money can expand an oligopoly of substrate plants, and it is being spent. The single points of failure are one layer down: one company's film and one company's glass cloth, both Japanese, both running flat out, both adding capacity on building schedules measured in years while AI demand compounds quarterly.
+Money can expand an oligopoly of substrate plants, and it is being spent. The single points of failure are one layer down: one company's film and one company's glass cloth, both Japanese, both running flat out and adding capacity on building schedules measured in years while AI demand compounds quarterly.
 
 Flatness breaks first as packages grow. TSMC has told investors that its CoWoS packaging roadmap goes beyond 14 times the area a lithography machine can print in one shot ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf)). Bigger bodies mean more warping, more layers, more holes that can break the circuit, and lower yield on a part that is already expensive before a die touches it.
 
@@ -134,7 +134,7 @@ Flatness breaks first as packages grow. TSMC has told investors that its CoWoS p
 - **Body size** drives everything else. Once a body is much larger than the dies it carries, warping and handling decide what can be built, not the wiring.
 - **Coefficient of thermal expansion**, how much a material swells when heated, must be close enough to silicon that the package survives repeated heating and cooling, which is what T-glass buys and why its supply matters.
 - **Dielectric properties**, how much signal the core laminate soaks up, set the speeds the substrate and the board underneath can run.
-- **Qualification time** is what protects the incumbents. Approving a second supplier for a film or a laminate takes years.
+- **Qualification time** protects the incumbents. Approving a second supplier for a film or a laminate takes years.
 
 ## Takeaways
 

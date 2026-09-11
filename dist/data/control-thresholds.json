@@ -3,7 +3,7 @@
     "id": "3a090a-tpp",
     "regime": "US EAR",
     "instrument": "ECCN 3A090.a",
-    "scope": "Advanced computing integrated circuits: datacentre AI accelerators and GPUs",
+    "scope": "Advanced computing integrated circuits: data centre AI accelerators and GPUs",
     "parameter": "Total processing performance (TPP)",
     "operator": ">=",
     "value": 4800,
@@ -28,7 +28,7 @@
     "alsoSee": [
       "https://cset.georgetown.edu/article/bis-2023-update-explainer/"
     ],
-    "note": "This is the master line for AI chips. It catches every current training-class accelerator (H100, H200, B200, MI300 and their successors) because TPP scales with both throughput and the precision at which the part is quoted. It misses nothing at the top and quite a lot in the middle: a chip can be cut below 4800 by trimming clocks or disabling units while keeping most of its usefulness for inference, which is how the H800 and later the H20 were built.",
+    "note": "The master line for AI chips. It catches every current training-class accelerator (H100, H200, B200, MI300 and their successors) because TPP scales with both throughput and the precision at which the part is quoted. It misses nothing at the top and quite a lot in the middle: a chip can be cut below 4800 by trimming clocks or disabling units while keeping most of its usefulness for inference, which is how the H800 and later the H20 were built.",
     "kind": "chips",
     "paramShort": "TPP",
     "unitShort": ""
@@ -411,7 +411,7 @@
     "cfr": "15 CFR 772.1; 744.23",
     "source": "https://www.bis.gov/ear/title-15/subtitle-b/chapter-vii/subchapter-c/part-744/ss-74423-supercomputer-advanced-node",
     "sourceTier": "A",
-    "note": "A catch-all that works on installations rather than parts: even uncontrolled components need a licence if you know they are going into a Chinese machine of this size. The volume test, 41,600 cubic feet, is roughly a large machine room, and it is what stops the rule from being evaded by spreading the same compute across a bigger building.",
+    "note": "A catch-all that works on installations rather than parts: even uncontrolled components need a licence if the exporter knows they are going into a Chinese machine of this size. The volume test, 41,600 cubic feet, is roughly a large machine room, and it is what stops the rule from being evaded by spreading the same compute across a bigger building.",
     "kind": "systems",
     "paramShort": "Double-precision compute",
     "unitShort": "petaflops"
@@ -468,7 +468,7 @@
     "cfr": "15 CFR 734.4(a)(3)",
     "source": "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-734/section-734.4",
     "sourceTier": "A",
-    "note": "A zero threshold is the strongest form an export control takes: it converts every American screw, laser or controller inside a foreign scanner into US jurisdiction. It is aimed squarely at ASML and at any future non-US scanner builder, and its carve-out for countries with equivalent controls is the mechanism that rewards allied alignment. Read the rule rather than a summary of it: the current eCFR text of 734.4(a)(3) keys the zero threshold to equipment meeting the ECCN 3B993.f.1 parameters when it is destined for the development or production of advanced-node integrated circuits, and carries the Japanese and Dutch control-list dates in a footnote.",
+    "note": "A zero threshold is the strongest form an export control takes: it converts every American screw, laser or controller inside a foreign scanner into US jurisdiction. It is aimed squarely at ASML and at any future non-US scanner builder, and its carve-out for countries with equivalent controls is the mechanism that rewards allied alignment. The current eCFR text of 734.4(a)(3) keys the zero threshold to equipment meeting the ECCN 3B993.f.1 parameters when it is destined for the development or production of advanced-node integrated circuits, and carries the Japanese and Dutch control-list dates in a footnote.",
     "kind": "tools",
     "paramShort": "US-origin content",
     "unitShort": "%"
@@ -617,7 +617,7 @@
     "cfr": "15 CFR 734.9(h)",
     "source": "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-734/section-734.9",
     "sourceTier": "A",
-    "note": "This is what makes the American control map extraterritorial. A chip designed in China and fabricated in Taiwan on tools built in Japan is still subject to US law, because somewhere in the toolchain sits US technology. It has no numeric threshold of its own; it borrows 3A090's.",
+    "note": "The rule that makes the American control map extraterritorial. A chip designed in China and fabricated in Taiwan on tools built in Japan is still subject to US law, because somewhere in the toolchain sits US technology. It has no numeric threshold of its own; it borrows 3A090's.",
     "kind": "chips",
     "paramShort": "Direct product of US technology",
     "unitShort": ""
@@ -701,7 +701,7 @@
     "alsoSee": [
       "https://www.federalregister.gov/documents/2025/11/12/2025-19846/one-year-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed-entities"
     ],
-    "note": "The single largest expansion of the Entity List's reach, and the fastest reversal: stayed on 10 November 2025 as part of the one-year US-China truce and due to snap back on 9 November 2026 unless extended. Watch this date. It is the most consequential scheduled event in the map.",
+    "note": "The single largest expansion of the Entity List's reach, and the fastest reversal: stayed on 10 November 2025 as part of the one-year US-China truce and due to snap back on 9 November 2026 unless extended. It is the most consequential scheduled date in the map.",
     "kind": "entities",
     "paramShort": "Ownership share",
     "unitShort": "%"
@@ -833,7 +833,7 @@
     "cfr": "15 CFR 742.6(a)(6); part 740, supplement no. 5",
     "source": "https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion",
     "sourceTier": "A",
-    "note": "The most ambitious threshold ever written into the regime: a numeric compute quota for entire countries. Published 15 January 2025, never enforced, rescinded 13 May 2025 with BIS instructing enforcement officials to stand down before the 15 May compliance date. Kept here because the numbers define what a compute quota would look like if one returns.",
+    "note": "The most ambitious threshold ever written into the regime: a numeric compute quota for entire countries. Published 15 January 2025, never enforced, rescinded 13 May 2025 with BIS instructing enforcement officials to stand down before the 15 May compliance date. Kept in the map because the numbers define what a compute quota would look like if one returns.",
     "kind": "chips",
     "paramShort": "Country TPP allocation",
     "unitShort": "TPP"
@@ -860,7 +860,7 @@
     "cfr": "15 CFR 748.15",
     "source": "https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion",
     "sourceTier": "A",
-    "note": "The schedule is the interesting part: allocations rose eightfold over three years, an explicit assumption about how fast the world outside the allied core should be allowed to grow its compute. No later rule has replaced that assumption with another number.",
+    "note": "Allocations rose eightfold over three years, an explicit assumption about how fast the world outside the allied core should be allowed to grow its compute. No later rule has replaced that assumption with another number.",
     "kind": "chips",
     "paramShort": "Company TPP allocation",
     "unitShort": "TPP"
@@ -887,7 +887,7 @@
     "cfr": "15 CFR 748.15",
     "source": "https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion",
     "sourceTier": "A",
-    "note": "A control on where American compute physically sits rather than on who buys it. The 50% domestic-retention condition for US firms reappears in a different form in the January 2026 H200 rule, which suggests the idea survived the rescission even though the rule did not.",
+    "note": "A control on where American compute physically sits rather than on who buys it. The 50 percent domestic-retention condition for US firms reappears in a different form in the January 2026 H200 rule, which suggests the idea survived the rescission even though the rule did not.",
     "kind": "chips",
     "paramShort": "Share outside Tier 1",
     "unitShort": "%"
@@ -1044,7 +1044,7 @@
     "alsoSee": [
       "https://www.federalregister.gov/documents/2025/01/31/2025-02172/removing-barriers-to-american-leadership-in-artificial-intelligence"
     ],
-    "note": "As of September 2026 the United States has no compute-based reporting threshold in force for AI models, only for the chips that train them. This is the gap in the map: the chip side is governed to five significant figures and the model side is not governed at all.",
+    "note": "As of September 2026 the United States has no compute-based reporting threshold in force for AI models, only for the chips that train them: the chip side is governed to five significant figures and the model side not at all.",
     "kind": "models",
     "paramShort": "Training compute",
     "unitShort": "operations"
@@ -1096,7 +1096,7 @@
     "frCitation": "MOFCOM Announcement 2025 No. 61",
     "source": "https://cset.georgetown.edu/publication/mofcom-notice-2025-61/",
     "sourceTier": "A",
-    "note": "Included because it is the only non-US threshold in the map that reaches outside its own jurisdiction, and because 0.1% is stricter than any American de minimis figure except the zero applied to lithography. Its suspension expires at the same time as the affiliates rule stay, which is why the two must be read together.",
+    "note": "Included because it is the only non-US threshold in the map that reaches outside its own jurisdiction, and because 0.1 percent is stricter than any American de minimis figure except the zero applied to lithography. Its suspension expires at the same time as the affiliates rule stay, which is why the two must be read together.",
     "kind": "china",
     "paramShort": "Chinese content by value",
     "unitShort": "%"

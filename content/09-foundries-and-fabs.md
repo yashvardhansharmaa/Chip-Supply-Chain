@@ -34,7 +34,7 @@
  {"fact": "7 nm and below was 77% of TSMC's wafer revenue in 2Q26, on revenue of $40.20 billion at a 67.7% gross margin", "source": "https://www.sec.gov/Archives/edgar/data/0001046179/000104617926000451/a2q26e_withguidancexfinal.htm"},
  {"fact": "TSMC defines a GIGAFAB as a 300 mm fab running more than 100,000 wafers a month; it operates six, whose combined capacity exceeded 13 million 12-inch equivalent wafers in 2025", "source": "https://www.tsmc.com/english/dedicatedFoundry/manufacturing/gigafab"},
  {"fact": "Annual capacity of all facilities TSMC and its subsidiaries manage exceeded 17 million 12-inch equivalent wafers in 2025", "source": "https://www.tsmc.com/english/dedicatedFoundry/manufacturing/fab_capacity"},
- {"fact": "TSMC intends to invest US$165 billion in the United States, adding $100 billion in March 2025 to $65 billion already committed in Phoenix, for three new fabs, two packaging plants and an R&D centre", "source": "https://pr.tsmc.com/english/news/3210"},
+ {"fact": "TSMC intends to invest $165 billion in the United States, adding $100 billion in March 2025 to $65 billion already committed in Phoenix, for three new fabs, two packaging plants and an R&D centre", "source": "https://pr.tsmc.com/english/news/3210"},
  {"fact": "The US government bought 433.3 million Intel shares at $20.47 for $8.9 billion, a 9.9% passive stake", "source": "https://www.intc.com/news-events/press-releases/detail/1748/intel-and-trump-administration-reach-historic-agreement-to"},
  {"fact": "Intel Foundry had $5.8 billion of 2Q26 revenue and a $2.089 billion operating loss", "source": "https://www.intc.com/news-events/press-releases/detail/1776/intel-reports-second-quarter-2026-financial-results"},
  {"fact": "SMIC revenue rose 16.2% to $9.327 billion in 2025 at 93.5% average utilisation, with monthly capacity above 1 million 8-inch-equivalent wafers", "source": "https://www.smics.com/en/site/news_read/7951"},
@@ -83,7 +83,7 @@ TSMC and UMC build only for others. Chips at 7 nm and below, meaning the newest 
 
 ### Integrated device makers turned foundry
 
-Intel and Samsung design and sell their own chips and rent out capacity too. That is harder: customers dislike handing designs to a competitor, and the house products take the best capacity. Intel Foundry booked $5.8 billion of revenue in the second quarter of 2026, up 31 percent, against a $2.089 billion operating loss ([source](https://www.intc.com/news-events/press-releases/detail/1776/intel-reports-second-quarter-2026-financial-results)).
+Intel and Samsung design and sell their own chips and rent out capacity too. That is harder, because customers dislike handing designs to a competitor and the house products take the best capacity. Intel Foundry booked $5.8 billion of revenue in the second quarter of 2026, up 31 percent, against a $2.089 billion operating loss ([source](https://www.intc.com/news-events/press-releases/detail/1776/intel-reports-second-quarter-2026-financial-results)).
 
 ### National champions
 
@@ -97,13 +97,13 @@ Most wafers come off older lines. The industry association SEMI expects foundrie
 
 TSMC intends to spend $165 billion in the United States, adding $100 billion in March 2025 to the $65 billion already committed in Phoenix, for three more fabs, two packaging plants and an R&D centre ([source](https://pr.tsmc.com/english/news/3210)). That is the largest foreign direct investment in US history, and it still does not move a gigafab.
 
-Allocation matters as much as capacity. TSMC does not auction capacity; it books it years ahead against prepayments, so the queue for a node is set before the node exists. Through 2024 and 2025 the binding constraint was packaging rather than wafers. See [Advanced packaging](#advanced-packaging).
+TSMC does not auction capacity; it books it years ahead against prepayments, so the queue for a node is set before the node exists. Through 2024 and 2025 the binding constraint was packaging rather than wafers. See [Advanced packaging](#advanced-packaging).
 
 ## Who makes it
 
 Intel is now partly state-owned. In August 2025 Washington bought 433.3 million newly issued Intel shares at $20.47, or $8.9 billion, for a 9.9 percent stake, paid out of $5.7 billion of unpaid CHIPS Act grants and $3.2 billion from the Secure Enclave programme. The stake carries no control, and it came with a five-year warrant for a further 5 percent that Washington can exercise only if Intel drops below 51 percent ownership of the foundry business ([source](https://www.intc.com/news-events/press-releases/detail/1748/intel-and-trump-administration-reach-historic-agreement-to)). That makes the warrant an option on Intel keeping its fabs.
 
-Intel's technical position improved in 2026. It reached high-volume manufacturing on part of Panther Lake using ASML's High-NA extreme ultraviolet scanners, the first company to do so, and put 18A-P into risk production, the trial runs a process goes through before it is signed off ([source](https://www.intc.com/news-events/press-releases/detail/1776/intel-reports-second-quarter-2026-financial-results)). The commercial position has not caught up: 14A depends on winning external customers first.
+Intel's technical position improved in 2026. It reached high-volume manufacturing on part of Panther Lake using ASML's High-NA extreme ultraviolet scanners, the first company to do so, and put 18A-P into risk production, the trial runs a process goes through before it is signed off ([source](https://www.intc.com/news-events/press-releases/detail/1776/intel-reports-second-quarter-2026-financial-results)). The commercial position has not caught up, since 14A depends on winning external customers first.
 
 Samsung's bet outside Korea is Taylor, Texas: a committed minimum of $17 billion, $6 billion of buildings and $11 billion of equipment, for leading-edge and mature logic ([source](https://semiconductor.samsung.com/sas/company/taylor/)).
 
@@ -119,7 +119,7 @@ Three risks stack on one island:
 - **Power.** A gigafab is a large industrial load on a small island grid. Spare generating capacity, rather than anything about silicon, sets how fast Taiwan can add fabs.
 - **Political.** A blockade or conflict would remove most sub-5 nm capacity from the world market at once, with no substitute available inside a decade. See [Geopolitics](#geopolitics).
 
-Diversification is real and slow. The hard part of a fab is a workforce that has run one process for years, and TSMC has yet to build a gigafab anywhere but Taiwan ([source](https://www.tsmc.com/english/dedicatedFoundry/manufacturing/gigafab)).
+Diversification is slow because the hard part of a fab is a workforce that has run one process for years, and TSMC has yet to build a gigafab anywhere but Taiwan ([source](https://www.tsmc.com/english/dedicatedFoundry/manufacturing/gigafab)).
 
 ## Key evaluation criteria
 

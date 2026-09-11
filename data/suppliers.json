@@ -357,7 +357,7 @@
     "founded": 1968,
     "ticker": "INTC",
     "ownership": "Public; the US government took a large equity stake in 2025",
-    "role": "Designs Xeon server CPUs, which still host most AI clusters, and the Gaudi accelerator line. Its product business is separate from Intel Foundry, which is listed here as its own entry.",
+    "role": "Designs Xeon server CPUs, which still host most AI clusters, and the Gaudi accelerator line. Its product business is separate from Intel Foundry, which has its own entry.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -569,7 +569,7 @@
     "founded": 1997,
     "ticker": "2454.TW",
     "ownership": "Public",
-    "role": "Best known for mobile SoCs, MediaTek has become a serious custom AI ASIC vendor and works on Google's TPU programme. It brings high-volume advanced-node design capability to the custom silicon market.",
+    "role": "Best known for mobile SoCs, MediaTek has become a custom AI ASIC vendor and works on Google's TPU programme. It brings high-volume advanced-node design capability to the custom silicon market.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -3997,7 +3997,7 @@
     "founded": 2006,
     "ticker": "300476.SZ",
     "ownership": "Public (Shenzhen ChiNext)",
-    "role": "Makes high-layer-count printed circuit boards and has become a significant supplier of AI accelerator baseboards and switch boards to the server ODMs.",
+    "role": "Makes high-layer-count printed circuit boards and supplies AI accelerator baseboards and switch boards to the server ODMs.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [

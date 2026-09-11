@@ -92,7 +92,7 @@ A mask defect costs yield on every wafer that mask prints, so fabs check masks t
 
 A pellicle is a thin membrane on a frame above the mask. Particles land on it rather than on the pattern, too far out of focus to print.
 
-EUV makes that hard. ASML's membrane is 13 nanometres thick, has to hold together at 500 degrees Celsius in vacuum, and every photon it absorbs is light that never reaches the wafer ([source](https://www.asml.com/en/news/stories/2022/the-euv-pellicle-indistinguishable-from-magic)). The light crosses it twice, on the way in and on the way back off the mirror, so absorption counts double.
+ASML's EUV membrane is 13 nanometres thick, has to hold together at 500 degrees Celsius in vacuum, and every photon it absorbs is light that never reaches the wafer ([source](https://www.asml.com/en/news/stories/2022/the-euv-pellicle-indistinguishable-from-magic)). The light crosses it twice, on the way in and on the way back off the mirror, so absorption counts double.
 
 Carbon nanotube membranes are the intended fix, still short of production in a leading-edge fab. Imec has mounted them on reticles and exposed them in an NXE:3300 scanner, measuring single-pass transmission up to 97 percent and finding the effect on imaging low and correctable ([source](https://www.imec-int.com/en/press/imec-demonstrates-cnt-pellicle-utilization-euv-scanner)). Mitsui Chemicals, licensed by ASML, is building capacity at Iwakuni-Ohtake for membranes above 92 percent transmittance that can stand sources above 1,000 W ([source](https://jp.mitsuichemicals.com/en/release/2024/2024_0528_1/index.htm)).
 
@@ -114,7 +114,7 @@ SMIC runs two in-house mask shops in Shanghai, for g-line, i-line, KrF and ArF t
 
 Mask blanks are as concentrated as lithography, on a fraction of the money. Three firms supply EUV blanks worldwide, AGC says ([source](https://www.agc.com/en/hub/pr/the-japanese-glass-behind-next-generation-chips.html)), one firm certifies them, and neither business is big enough to attract a funded entrant. Nobody starts from scratch at ¥40 billion of annual sales, to serve a handful of customers, with twenty years of defect learning ahead ([source](https://www.agc.com/en/news/detail/1203819_2814.html)). What has kept the count at three is money rather than physics.
 
-Pellicles are the unsolved part. A decade on, no membrane is transparent, tough and long-lived at once, so fabs trade throughput against defect risk. A production carbon nanotube pellicle would move EUV cost per wafer more than any scanner improvement.
+A decade on, no pellicle membrane is transparent, tough and long-lived at once, so fabs trade throughput against defect risk. A production carbon nanotube pellicle would move EUV cost per wafer more than any scanner improvement.
 
 ## Key evaluation criteria
 

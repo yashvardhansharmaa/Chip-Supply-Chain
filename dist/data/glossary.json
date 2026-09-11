@@ -87,13 +87,13 @@
     "term": "compute threshold",
     "aka": "training compute threshold",
     "plain": "A line drawn at the arithmetic used to train a model rather than at the hardware that trains it. The 2023 US executive order on AI set its reporting line at \"any model that was trained using a quantity of computing power greater than 10^26 integer or floating-point operations\" (Executive Order 14110, section 4.2(b)(i), 88 FR 75191). The same number became an export control in January 2025: ECCN 4E091 covers \"'Parameters' for an artificial intelligence model trained utilizing 10^26 or more 'operations'\", and 15 CFR 742.6(a)(13) requires a licence for them to every destination worldwide. Europe drew its line an order of magnitude lower, at a cumulative training run \"greater than 10^25\" floating point operations, in Article 51(2) of the EU AI Act.",
-    "why": "Every other threshold here measures a chip. This one measures the model the chips train, which is the only place the rules reach a capability rather than a box. The two numbers also disagree by a factor of ten, and Article 51(3) lets the European Commission move its figure by delegated act, so the model-level line is the one most likely to shift.",
+    "why": "Every other control threshold measures a chip. This one measures the model the chips train, which is the only place the rules reach a capability rather than a box. The two numbers also disagree by a factor of ten, and Article 51(3) lets the European Commission move its figure by delegated act, so the model-level line is the one most likely to shift.",
     "chapter": "geopolitics"
   },
   {
     "term": "Concentration",
     "aka": "concentration band; Extreme, High, Moderate, Low",
-    "plain": "The site's four-band judgment of how many firms could credibly supply a stage today, taken at the narrowest step inside it. Extreme means three or fewer, or one firm holding more than half the stage. High means four to six, with the top two taking most of the revenue. Moderate means seven or more, none of them dominant. Low means many, with the scarce input something another industry sells at volume. Where the country-share matrix carries a figure for the segment, the top country's share is a second check, and the supplier count wins when the two disagree.",
+    "plain": "A four-band judgement of how many firms could credibly supply a stage today, taken at the narrowest step inside it. Extreme means three or fewer, or one firm holding more than half the stage. High means four to six, with the top two taking most of the revenue. Moderate means seven or more, none of them dominant. Low means many, with the scarce input something another industry sells at volume. Where the country-share matrix carries a figure for the segment, the top country's share is a second check, and the supplier count wins when the two disagree.",
     "why": "The fewer the firms that can do a stage, the more one accident or one licence decision moves the whole chain.",
     "chapter": null
   },
@@ -248,7 +248,7 @@
     "term": "foreign direct product rule",
     "aka": "FDPR, FDP rule",
     "plain": "A US rule that pulls a foreign-made item under American control when two tests are both met: a product scope, meaning the item is the direct product of specified US technology or software, or was made by a plant that is; and a destination or end-user scope, meaning it is going somewhere or to someone the rule names. Both halves are needed. The mechanics are in 15 CFR 734.9.",
-    "why": "This is what makes US controls extraterritorial. Without it a listed buyer could order the same chip from a supplier outside America; with it, a chip made in Taiwan on American tools for a listed Chinese firm needs a US licence.",
+    "why": "The rule is what makes US controls extraterritorial. Without it a listed buyer could order the same chip from a supplier outside America; with it, a chip made in Taiwan on American tools for a listed Chinese firm needs a US licence.",
     "chapter": "geopolitics"
   },
   {
@@ -359,7 +359,7 @@
   {
     "term": "License Exception ACA",
     "aka": "ACA, Advanced Computing Authorized",
-    "plain": "The companion to NAC in 15 CFR 740.8, added in December 2024. It authorises the same classes of advanced computing chips worldwide except to Macau and Country Group D:5 entities, without a notification, and allows some transfers within those destinations. Like NAC, it does not reach the datacentre parts that meet the 3A090.a parameters, which need a licence to any destination worldwide.",
+    "plain": "The companion to NAC in 15 CFR 740.8, added in December 2024. It authorises the same classes of advanced computing chips worldwide except to Macau and Country Group D:5 entities, without a notification, and allows some transfers within those destinations. Like NAC, it does not reach the data centre parts that meet the 3A090.a parameters, which need a licence to any destination worldwide.",
     "why": "The split matters for anyone reading an older table: before December 2024 there was one exception, NAC, and it did both jobs. Confusing the two puts a shipment to Germany through a notification it does not need.",
     "chapter": "geopolitics"
   },
@@ -464,7 +464,7 @@
   {
     "term": "pellicle",
     "aka": "",
-    "plain": "A thin transparent membrane held a few millimetres above a photomask so that dust settles on it rather than on the pattern, far enough out of focus that it does not print. It is a lens cap you can shoot through.",
+    "plain": "A thin transparent membrane held a few millimetres above a photomask so that dust settles on it rather than on the pattern, far enough out of focus that it does not print. It is a lens cap a photographer can shoot through.",
     "why": "No membrane yet survives extreme ultraviolet light while passing enough of it, so fabs trade printing speed against defect risk product by product, and solving this would cut the cost of that printing more than any machine upgrade.",
     "chapter": "photomasks-and-pellicles"
   },
@@ -569,7 +569,7 @@
   {
     "term": "Substitutability",
     "aka": "Easy, Moderate, Hard, Very hard",
-    "plain": "The site's rating of how hard it would be for a well-funded state or firm, starting today, to stand up an alternative to the leaders of a stage, judged against four written tests. Easy: a qualified second source ships today at the leading node. Moderate: a second source exists but is not yet qualified at the leading node, about two to five years to close the gap. Hard: no second source at the leading node, five to ten years, and the path is known. Very hard: no second source, and the path runs through physics, decades of unwritten know-how or protected IP, ten years or more, and nobody has repeated it yet. The clock always times the same actor and runs to qualification, not to a prototype.",
+    "plain": "A four-band rating of how hard it would be for a well-funded state or firm, starting today, to stand up an alternative to the leaders of a stage, judged against four written tests. Easy: a qualified second source ships today at the leading node. Moderate: a second source exists but is not yet qualified at the leading node, about two to five years to close the gap. Hard: no second source at the leading node, five to ten years, and the path is known. Very hard: no second source, and the path runs through physics, decades of unwritten know-how or protected IP, ten years or more, and nobody has repeated it yet. The clock always times the same actor and runs to qualification, not to a prototype.",
     "why": "It says how long a rival or a government would need to replace a stage, which is the question the export debate turns on.",
     "chapter": null
   },

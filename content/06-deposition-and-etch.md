@@ -3,7 +3,7 @@
  "id": "deposition-and-etch",
  "number": 6,
  "title": "Deposition and Etch",
- "oneLiner": "Lithography prints the pattern; deposition and etch do the rest, over a thousand steps per wafer. This is the one tool segment where China has taken real share.",
+ "oneLiner": "Lithography prints the pattern; deposition and etch do the rest, over a thousand steps per wafer, and it is the one tool segment where China has taken real share.",
  "plain": "Deposition and etch build the chip itself, like a layer cake: lay down a film a few atoms thick, print a pattern on it, burn away everything the pattern does not protect, then do it again, more than a thousand times over. The film has to reach the bottom of a hole hundreds of times deeper than it is wide, and the burn has to eat one material and leave the one beside it untouched. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.",
  "bridge": "A printed pattern is not yet a circuit, and the machines that turn it into one run more often than anything else in the fab.",
  "specimen": "process-chamber",
@@ -109,7 +109,7 @@ SEMI put global equipment billings at $135.1 billion in 2025, up 15 percent from
 
 Within deposition and etch there is no single ASML. The share chart in Tokyo Electron's own results presentation puts it at 23 percent of dry etch, 27 percent of deposition systems and 15 percent of ALD in 2025, against 91 percent of coater/developer ([source](https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf)).
 
-ASM International is the specialist. Its 2025 revenue reached a record EUR 3.2 billion as customers built 2 nm gate-all-around capacity, with molybdenum ALD entering volume production ([source](https://www.asm.com/media/yvxbavwe/20260303-asm-reports-q4-and-full-year-2025-results.pdf)).
+ASM International, the atomic layer deposition specialist, reached a record EUR 3.2 billion of revenue in 2025 as customers built 2 nm gate-all-around capacity, with molybdenum ALD entering volume production ([source](https://www.asm.com/media/yvxbavwe/20260303-asm-reports-q4-and-full-year-2025-results.pdf)).
 
 {{figure:equipment-billings}}
 
@@ -131,7 +131,7 @@ Washington tightened these rules four times between 2022 and 2025.
 - **December 2024.** BIS controlled 24 more types of equipment and three types of software, added 140 entities and wrote a foreign direct product rule that reaches tools built outside the United States ([source](https://www.bis.gov/press-release/commerce-strengthens-export-controls-restrict-chinas-capability-produce-advanced-semiconductors-military)). The new entries take in TSV etch and deposition into features deeper than 200:1 ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
 - **September 2025.** The Affiliates Rule extended Entity List restrictions to any company at least 50 percent owned by a listed entity ([source](https://www.govinfo.gov/content/pkg/FR-2025-09-30/pdf/2025-19001.pdf)); BIS then stayed it to 9 November 2026 ([source](https://www.govinfo.gov/content/pkg/FR-2025-11-12/pdf/2025-19846.pdf)).
 
-The rules reach the vendors too: Applied Materials took a $253 million charge to settle an export controls matter ([source](https://www.globenewswire.com/news-release/2026/08/13/3344890/0/en/applied-materials-announces-third-quarter-2026-results.html)).
+Applied Materials took a $253 million charge to settle an export controls matter ([source](https://www.globenewswire.com/news-release/2026/08/13/3344890/0/en/applied-materials-announces-third-quarter-2026-results.html)), so the rules reach the vendors as well as their customers.
 
 {{figure:china-tool-share}}
 
