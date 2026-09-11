@@ -1,0 +1,66 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>cover B — masthead and full-bleed band</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,400&display=swap">
+<style>
+  :root {
+    --ink: #12161a; --ink-2: #22272b; --muted: #5b646d;
+    --wafer: #edeff0; --line: #b9bec2;
+    --display: "IBM Plex Sans Condensed", Arial, sans-serif;
+    --body: "Newsreader", Georgia, serif;
+    --mono: "IBM Plex Mono", Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #fff; }
+  .sheet {
+    position: relative; width: 210mm; height: 297mm; overflow: hidden;
+    background: #fff; color: var(--ink);
+  }
+
+  /* masthead */
+  .mast { position: absolute; left: 20mm; right: 20mm; top: 17mm; }
+  .k {
+    font-family: var(--mono); font-size: 8.5pt; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin: 0 0 3mm;
+  }
+  .mast .rule { border-top: 0.5pt solid var(--line); }
+
+  /* the band: edge to edge */
+  .band {
+    position: absolute; left: 0; right: 0; top: 36mm; height: 150mm;
+    background: var(--wafer) url(art-b.png) left top / 100% 100% no-repeat;
+  }
+
+  .type { position: absolute; left: 20mm; right: 20mm; top: 186mm; }
+  .h {
+    font-family: var(--display); font-weight: 700; font-size: 56pt; line-height: 0.9;
+    letter-spacing: -0.018em; margin: 14mm 0 6mm; color: var(--ink);
+  }
+  .sub {
+    font-family: var(--body); font-weight: 400; font-size: 14.5pt; line-height: 1.3;
+    color: var(--ink-2); margin: 0; max-width: 118mm;
+  }
+
+  .foot { position: absolute; left: 20mm; right: 20mm; bottom: 16mm; }
+  .by { font-family: var(--display); font-weight: 600; font-size: 11pt; margin: 0 0 1.6mm; }
+  .what { font-family: var(--body); font-size: 11pt; color: var(--ink-2); margin: 0 0 4mm; }
+  .meta { font-family: var(--mono); font-size: 7.6pt; color: var(--muted); margin: 0; }
+</style>
+<div class="sheet">
+  <div class="mast">
+    <p class="k">Compute Chokepoints</p>
+    <div class="rule"></div>
+  </div>
+  <div class="band"></div>
+  <div class="type">
+    <h1 class="h">How AI chips<br>are made</h1>
+    <p class="sub">Every stage of the supply chain, and who controls it.</p>
+  </div>
+  <div class="foot">
+    <p class="what">The Chain: seventeen chapters.</p>
+    <p class="by">Yashvardhan Sharma with Claude</p>
+    <p class="meta">Printed from yashvardhansharmaa.github.io/chokepoints · Updated 10 September 2026</p>
+  </div>
+</div>
