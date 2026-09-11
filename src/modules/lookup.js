@@ -1,7 +1,8 @@
-/* Look up (#/glossary): one list of every term, firm and chip on the left; the entry on the right,
+/* Look up (#/glossary): one list of every term, firm, chip and country on the left; the entry on the right,
    then the places the site uses it. Terms are the glossary entries already in the page (the popovers read
-   them too); firm and chip cards are drawn from DATA at the moment of selection; the passages are found by
-   scanning the chapters, the board, the AI chips and the supplier list for the entry's name. */
+   them too); firm, chip and country cards are drawn from DATA at the moment of selection (a country's card
+   from the chapter cards, the country-share matrix, the supplier list and the home page's role line); the
+   passages are found by scanning the chapters, the board, the AI chips and the supplier list for the entry's name. */
 (function () {
   var CP = window.CP; if (!CP) return;
   var $ = CP.$, $$ = CP.$$, esc = CP.esc, DATA = CP.DATA || {}, cname = CP.cname, narrow = CP.narrow, reduced = CP.reduced;
@@ -34,7 +35,7 @@
       this.filter('');
     },
 
-    /* five things to try, drawn afresh on every load: two terms, two firms that matter, one chip */
+    /* six things to try, drawn afresh on every load: two terms, two firms that matter, one chip, one country */
     suggest: function () {
       var self = this, box = $('#lk-rest .lk-try'); if (!box) return;
       var pick = function (arr, n) { var a = arr.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a.slice(0, n); };
@@ -43,7 +44,8 @@
       var big = {}; (DATA.suppliers || []).forEach(function (r) { if (r.chokepoint === 'Critical' || r.chokepoint === 'Important') big[r.name] = 1; });
       var firms = items.filter(function (li) { return li.getAttribute('data-kind') === 'firm' && big[li.getAttribute('data-key')]; });
       var chips = items.filter(function (li) { return li.getAttribute('data-kind') === 'chip'; });
-      var chosen = pick(terms, 2).concat(pick(firms, 2), pick(chips, 1)); chosen = pick(chosen, chosen.length);
+      var countries = items.filter(function (li) { return li.getAttribute('data-kind') === 'country'; });
+      var chosen = pick(terms, 2).concat(pick(firms, 2), pick(chips, 1), pick(countries, 1)); chosen = pick(chosen, chosen.length);
       var label = box.querySelector('.lk-try-k') ? box.querySelector('.lk-try-k').outerHTML : 'Try';
       box.innerHTML = label + ' ' + chosen.map(function (li) { var name = li.querySelector('.lk-name').textContent.replace(/^(Nvidia|AMD|Google|AWS|Microsoft|Meta|Intel|Huawei|Cambricon|Moore Threads|OpenAI|Cerebras|Groq) /, '').replace(/\s*\(.*\)$/, ''); return '<button type="button" data-go="' + esc(li.id) + '">' + esc(name) + '</button>'; }).join(' ');
       $$('[data-go]', box).forEach(function (b) { b.addEventListener('click', function () { self.select(b.getAttribute('data-go'), true); }); });
@@ -65,14 +67,17 @@
         var t = li.getAttribute('data-text') || '', name = li.querySelector('.lk-name').textContent.toLowerCase();
         var ok = !q || words.every(function (w) { return t.indexOf(w) >= 0; });
         li.hidden = !ok; if (ok) n++;
-        li.classList.toggle('is-name', !!q && name.indexOf(q) >= 0);
+        // a name that contains the query, or an alias that starts with it ("dutch", "prc", "foxconn"), counts as a name hit
+        var al = (li.getAttribute('data-alias') || '').toLowerCase().split('|');
+        li.classList.toggle('is-name', !!q && (name.indexOf(q) >= 0 || al.some(function (a) { return a && a.indexOf(q) === 0; })));
+        li.classList.toggle('is-exact', !!q && (name === q || al.indexOf(q) >= 0)); // "us", "uk", "tsmc": the entry that goes by exactly that
       });
-      // names that contain the query rise to the top, so "H100" is not buried under every firm that sells to Nvidia
-      if (q) { var list = $('#lk-items'); this.visible().filter(function (li) { return li.classList.contains('is-name'); }).reverse().forEach(function (li) { list.insertBefore(li, list.firstChild); }); }
+      // names that contain the query rise to the top, so "H100" is not buried under every firm that sells to Nvidia; an exact name or alias tops them
+      if (q) { var list = $('#lk-items'); this.visible().filter(function (li) { return li.classList.contains('is-name'); }).reverse().forEach(function (li) { list.insertBefore(li, list.firstChild); }); this.visible().filter(function (li) { return li.classList.contains('is-exact'); }).reverse().forEach(function (li) { list.insertBefore(li, list.firstChild); }); }
       else { var list2 = $('#lk-items'); all.slice().sort(function (a, b) { return a.querySelector('.lk-name').textContent.localeCompare(b.querySelector('.lk-name').textContent, 'en', { sensitivity: 'base' }); }).forEach(function (li) { list2.appendChild(li); }); }
       this.cursor = -1;
-      var c = $('#lk-count'), terms = $$('#lk-items li[data-kind="term"]').length, firms = $$('#lk-items li[data-kind="firm"]').length, chips = $$('#lk-items li[data-kind="chip"]').length;
-      if (c) c.textContent = q ? (n ? n + ' of ' + all.length + ' entries' : 'No entry matches.') : all.length + ' entries · ' + terms + ' terms · ' + firms + ' firms · ' + chips + ' chips';
+      var c = $('#lk-count'), terms = $$('#lk-items li[data-kind="term"]').length, firms = $$('#lk-items li[data-kind="firm"]').length, chips = $$('#lk-items li[data-kind="chip"]').length, countries = $$('#lk-items li[data-kind="country"]').length;
+      if (c) c.textContent = q ? (n ? n + ' of ' + all.length + ' entries' : 'No entry matches.') : all.length + ' entries · ' + terms + ' terms · ' + firms + ' firms · ' + chips + ' chips' + (countries ? ' · ' + countries + ' countries' : '');
       $('#lk-list').classList.toggle('is-open', !!q || document.activeElement === $('#gl-search'));
       if (q && !n) this.showRaw(q); // no entry, but the site may still mention it: a tool model, a place, a person
       else if (q && n && (!this.selected || document.getElementById(this.selected).hidden)) this.select(this.visible()[0].id, true);
@@ -101,6 +106,9 @@
         var c = (DATA.landscape || []).filter(function (x) { return x.id === key; })[0];
         if (c) { card.innerHTML = this.chipCard(c); card.hidden = false; }
         if (!patterns.length) patterns = [name];
+      } else if (kind === 'country') {
+        var co = (DATA.countries || []).filter(function (x) { return x.code === key; })[0];
+        if (co) { card.innerHTML = this.countryCard(co); card.hidden = false; }
       }
       this.wire(card);
       this.mentions(patterns, kind, key);
@@ -177,9 +185,67 @@
         '</article>';
     },
 
+    /* a country: the home page's one line on its leverage, the stages it leads or holds a share of, the chokepoint
+       cards that name it, and its firms by category with the Critical ones named. Every figure is computed from DATA. */
+    countryCard: function (co) {
+      var cc = co.code, self = this, chapters = DATA.chapters || [];
+      var num = function (v) { return Math.round(v) === v ? String(v) : String(Math.round(v * 10) / 10); };
+      var chHref = function (ch) { return ch.id === 'geopolitics' ? '#/geopolitics' : '#' + ch.id; };
+      var stages = chapters.filter(function (ch) { return ch.number >= 1 && ch.number <= 15; });
+      var named = chapters.filter(function (ch) { return (ch.countries || []).some(function (x) { return x.code === cc; }); })
+        .sort(function (a, b) { return (b.bandRank || 0) - (a.bandRank || 0) || a.number - b.number; });
+      var led = stages.filter(function (ch) { var f = (ch.countries || [])[0]; return f && f.code === cc; });
+      var extreme = led.filter(function (ch) { return ch.band === 'Extreme'; }).length;
+      // shares: every matrix row that carries the country, largest first; rows under one percent are folded into one line
+      var segs = (DATA.matrix || []).filter(function (r) { return r.shares && r.shares[cc] != null; }).map(function (r) {
+        var rank = Object.keys(r.shares).sort(function (a, b) { return r.shares[b] - r.shares[a]; }).indexOf(cc) + 1;
+        var basis = r.basis === 'relayed' ? 'reported by ' + (r.relayedVia || 'a third party') : r.basis === 'derived' ? 'computed' : (r.basis || '');
+        return { seg: r.segment, v: r.shares[cc], rank: rank, basis: basis, year: String(r.asOf || r.year || ''), method: r.method || '' };
+      }).sort(function (a, b) { return b.v - a.v; });
+      var big = segs.filter(function (s) { return s.rank === 1 || s.v >= 1; }), small = segs.filter(function (s) { return s.rank !== 1 && s.v < 1; });
+      // firms by category, the Critical ones named; each name opens that firm's entry
+      var firmId = {}; this.items().forEach(function (li) { if (li.getAttribute('data-kind') === 'firm') firmId[li.getAttribute('data-key')] = li.id; });
+      var firms = (DATA.suppliers || []).filter(function (r) { return r.country === cc; }), cats = {};
+      firms.forEach(function (r) { (cats[r.category || 'Other'] = cats[r.category || 'Other'] || []).push(r); });
+      var catNames = Object.keys(cats).sort(function (a, b) { return cats[b].length - cats[a].length || a.localeCompare(b); });
+      var critical = firms.filter(function (r) { return r.chokepoint === 'Critical'; }).length;
+      var meta = [];
+      if (led.length === 1) meta.push('leads 1 stage' + (extreme ? ', of extreme concentration' : ''));
+      else if (led.length) meta.push('leads ' + led.length + ' stages' + (extreme ? ', ' + (extreme === led.length ? 'all' : extreme) + ' of them extreme' : ''));
+      meta.push('named on ' + named.length + ' of ' + chapters.length + ' chokepoint cards');
+      if (firms.length) meta.push(firms.length + (firms.length === 1 ? ' firm' : ' firms') + ' in the supplier list' + (critical ? ', ' + critical + ' Critical' : ''));
+      var h = '<article class="lk-card lk-card--country">' +
+        '<p class="lk-kind">Country · ' + esc(cc) + '</p>' +
+        '<h3>' + esc(co.name) + '</h3>' +
+        '<p class="lk-meta">' + esc(meta.join(' · ')) + '</p>' +
+        (co.role ? '<p class="lk-lede">' + esc(co.role) + '.</p>' : '');
+      if (segs.length) {
+        h += '<h4 class="lk-h lk-h--in">Share of each segment</h4><ul class="lk-shares">' + big.map(function (s) {
+          var m = [s.rank === 1 ? 'largest share' : 'rank ' + s.rank, s.basis, s.year].filter(Boolean).join(' · ');
+          return '<li class="lk-share' + (s.rank === 1 ? ' is-lead' : '') + '"' + (s.method ? ' title="' + esc(s.method) + '"' : '') + '><span class="lk-share-bar" style="--w:' + Math.min(100, s.v) + '%"></span><span class="lk-share-k">' + esc(s.seg) + '</span><span class="lk-share-v">' + num(s.v) + '%</span><span class="lk-share-m">' + esc(m) + '</span></li>';
+        }).join('') + '</ul>' + (small.length ? '<p class="lk-small">Under 1%: ' + esc(small.map(function (s) { return s.seg; }).join(', ')) + '.</p>' : '');
+      }
+      if (named.length) {
+        h += '<h4 class="lk-h lk-h--in">On the chokepoint cards</h4><ul class="lk-cards">' + named.map(function (ch) {
+          var note = ((ch.countries || []).filter(function (x) { return x.code === cc; })[0] || {}).note || '';
+          return '<li><a href="' + esc(chHref(ch)) + '"><span class="lk-card-t">' + esc(ch.title) + '</span>' + (ch.band ? '<b class="lk-band lk-band--' + esc(String(ch.band).toLowerCase()) + '">' + esc(ch.band) + '</b>' : '') + (note ? '<span class="lk-card-n">' + esc(note) + '</span>' : '') + '</a></li>';
+        }).join('') + '</ul>';
+      }
+      if (firms.length) {
+        h += '<h4 class="lk-h lk-h--in">In the supplier list <span class="lk-n">' + firms.length + ' across ' + catNames.length + (catNames.length === 1 ? ' category' : ' categories') + '</span></h4><ul class="lk-stages">' + catNames.map(function (cat) {
+          var rows = cats[cat], crit = rows.filter(function (r) { return r.chokepoint === 'Critical'; });
+          return '<li><span class="lk-stage-k">' + esc(cat) + '</span><span class="lk-stage-c">' + rows.length + '</span>' + (crit.length ? '<span class="lk-stage-f">' + crit.map(function (r) { return firmId[r.name] ? '<button type="button" class="lk-go" data-go="' + esc(firmId[r.name]) + '">' + esc(r.name) + '</button>' : esc(r.name); }).join(' ') + '</span>' : '') + '</li>';
+        }).join('') + '</ul>';
+      }
+      h += '<p class="lk-links">' + (co.panel ? '<a href="#/home?country=' + esc(cc) + '">See its leverage on the home page →</a>' : '') + (firms.length ? '<a href="#/suppliers" data-supcc="' + esc(cc) + '">Its firms in the supplier list →</a>' : '') + '</p></article>';
+      return h;
+    },
+
     wire: function (root) {
       var self = this;
       $$('a[data-sup]', root).forEach(function (a) { a.addEventListener('click', function () { var q = a.getAttribute('data-sup'); setTimeout(function () { var s = $('#sup-search'); if (s) { s.value = q; s.dispatchEvent(new Event('input')); } }, 60); }); });
+      $$('a[data-supcc]', root).forEach(function (a) { a.addEventListener('click', function () { var cc = a.getAttribute('data-supcc'); setTimeout(function () { var S = CP.Suppliers; if (S && S.setCountry && S.country !== cc) S.setCountry(cc, false); }, 60); }); });
+      $$('button[data-go]', root).forEach(function (b) { b.addEventListener('click', function () { var inp = $('#gl-search'); if (inp && inp.value) { inp.value = ''; self.filter(''); } self.select(b.getAttribute('data-go'), true); }); });
       $$('a[data-chip]', root).forEach(function (a) { a.addEventListener('click', function () { var id = a.getAttribute('data-chip'); setTimeout(function () { if (window.CP.Landscape && CP.Landscape.select) CP.Landscape.select(id); else if (typeof Landscape !== 'undefined') Landscape.select(id); }, 60); }); });
       $$('a[data-para]', root).forEach(function (a) { a.addEventListener('click', function (e) {
         e.preventDefault(); var i = +a.getAttribute('data-para'), p = self.paras[i]; if (!p) return;

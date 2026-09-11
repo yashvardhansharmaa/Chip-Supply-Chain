@@ -420,7 +420,11 @@ ${svg}
   }).join('');
   const mins = Math.max(1, Math.round(ctx.all.reduce((a, c) => a + (c.meta.plain || '').split(/\s+/).length, 0) / 230));
   const doors = `<nav class="sa-doors" aria-label="Where to start"><a class="sa-door" href="#/intro"><span class="sa-door-k">${esc(ctx.cap(word(mins)))} minutes</span><b>Start here</b><span>One plain paragraph per stage, beside its 3D specimen.</span></a><a class="sa-door" href="#/chain"><span class="sa-door-k">${esc(ctx.cap(word(chapters.length)))} chapters</span><b>The Chain</b><span>Every stage in full, in process order.</span></a><a class="sa-door" href="#/controls"><span class="sa-door-k">Since 2018</span><b>Export controls</b><span>Every rule so far, and what can still flow to China today.</span></a></nav>`;
+  const whyMD = `What an AI system can do tracks the computing power spent training it. The compute behind the largest models has grown four to five times a year since 2010, [source](https://epoch.ai/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year) and the machines that train them now cost billions of dollars and draw as much power as a mid-sized city. [source](https://epoch.ai/blog/trends-in-ai-supercomputers) The firms building at that scale say their aim is artificial general intelligence, systems that outperform people at most economically valuable work. [source](https://openai.com/charter) Compute is also unevenly held: about three quarters of the world's AI supercomputer capacity sits in the United States and 15 percent in China, and companies own 80 percent of it, up from 40 percent in 2019. [source](https://epoch.ai/blog/trends-in-ai-supercomputers) Governments have made it the handle on the whole field. The European Union presumes systemic risk above 10^25 training operations, [source](https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng) and American export controls are written in chip performance. [source](https://www.federalregister.gov/documents/2023/10/25/2023-23055/implementation-of-additional-export-controls-certain-advanced-computing-items-supercomputer-and) Every one of those chips passes through the fifteen stages below.`;
+  const whyHTML = ctx.markdown(whyMD, { id: 'home-why', cites: [], figures: [] }).html.replace(/\s+(<sup class="cite">)/g, '$1').replace('10^25', '10<sup>25</sup>');
+  const why = `<section class="sa-why" aria-label="Why compute matters"><p class="label sa-why-k">Why compute matters</p>${whyHTML}</section>`;
   const homeMap = `<div class="sa sa--home">
+${why}
 ${doors}
 <section class="sa-route-wrap" aria-label="The route of one chip">
 <div class="sa-map-head"><h3 class="sa-h">The route of one chip</h3><p class="sa-sub">${ctx.cap(word(routeStops.length))} stops, from design in California to the data centre in Virginia, at the town that leads each stage.</p></div>
@@ -434,3 +438,4 @@ ${doors}
 </div>`;
   return { SUMMARY_A: html, HOME_MAP: homeMap };
 };
+module.exports.ROLE = ROLE; // the Index's country cards read the same lines (build.js, LOOKUP_LIST)

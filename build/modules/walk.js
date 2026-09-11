@@ -23,7 +23,7 @@ module.exports = function (ctx) {
   const RANK = { Extreme: '5', High: '4', Moderate: '3', Low: '3' };
   function bandHTML(c) {
     if (!c.band) return '';
-    return `<span class="wk-score" data-rank="${RANK[c.band] || '3'}"><button type="button" class="gl-term label wk-score-term" data-term="concentration">Concentration</button><span class="wk-sc"><b>${esc(c.band)}</b></span></span>`;
+    return `<span class="wk-score" data-rank="${RANK[c.band] || '3'}"><button type="button" class="gl-term label wk-score-term" data-term="concentration" data-note="${esc((ctx.BAND_NOTE || {})[c.band] || '')}" data-head="${esc(c.band)} concentration">Concentration</button><span class="wk-sc"><b>${esc(c.band)}</b></span></span>`;
   }
 
   /* who leads: at most three, name then country code, in the site's chip */

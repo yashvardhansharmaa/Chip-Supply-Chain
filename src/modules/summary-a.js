@@ -89,6 +89,20 @@
     if (open) selectCountry(open.getAttribute('data-cc'), false);
   }
 
+  // #/home?country=JP opens the home page on that country's leverage panel (the Index's country cards link here)
+  function fromHash() {
+    var m = (location.hash || '').match(/[?&]country=([A-Za-z]{2})\b/);
+    if (!m) return;
+    bind(); if (!root) return;
+    var cc = m[1].toUpperCase();
+    if (!$('.sa-panel[data-cc="' + cc + '"]', root)) return;
+    selectCountry(cc, false);
+    var lev = $('.sa-leverage', root); // the router resets the scroll after activation; the panel comes into view after it
+    if (lev) setTimeout(function () { lev.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' }); }, 80);
+  }
+
+  CP.SummaryA = { selectCountry: selectCountry };
   CP.register('summary-a', { stage: false, activate: bind });
+  CP.register('home', { stage: false, activate: fromHash });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bind); else bind();
 })();

@@ -1710,7 +1710,12 @@
       if (!d) return;
       clearTimeout(this.timer);
       var t = this.panel();
-      t.innerHTML = '<b>' + esc(d.term) + '</b><p>' + esc(d.plain) + '</p><a href="#gl-' + String(d.term).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '">Look it up →</a>';
+      var ds = btn.dataset || {}, slug = String(d.term).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      if (ds.note) { // a rating tag: the band's own sentence, then this stage's test, then the full entry
+        t.innerHTML = '<b>' + esc(ds.head || btn.textContent.trim()) + '</b><p>' + esc(ds.note) + '</p>' + (ds.test ? '<p class="gl-tip-test"><span class="label">This stage</span>' + esc(ds.test) + '.</p>' : '') + '<a href="#gl-' + slug + '">How ' + esc(String(d.term).toLowerCase()) + ' is rated →</a>';
+      } else {
+        t.innerHTML = '<b>' + esc(d.term) + '</b><p>' + esc(d.plain) + '</p><a href="#gl-' + slug + '">Look it up →</a>';
+      }
       t.hidden = false;
       this.btn = btn; this.at = Date.now(); btn.setAttribute('aria-describedby', 'gl-tip');
       this.place(btn);
