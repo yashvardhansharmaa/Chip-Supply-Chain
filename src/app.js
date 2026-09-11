@@ -256,6 +256,9 @@
       }
       var label = { stack: 'The Chain', landscape: 'AI Chips', suppliers: 'Suppliers', controls: sub === 'exposure' ? 'China revenue share' : 'Export Controls', glossary: 'Index' }[v];
       document.title = (v === 'home' || !label) ? 'Chip Supply Chain' : 'Chip Supply Chain · ' + label;
+      // one page view per route change (the counter counts the first load itself)
+      var gc = window.goatcounter;
+      if (gc && gc.path) { var pth = gc.path(); if (this.counted === undefined) this.counted = pth; else if (pth !== this.counted && gc.count) { this.counted = pth; try { gc.count(); } catch (err) { } } }
     }
   };
 

@@ -2271,6 +2271,8 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent-ink); text-
 /* apply a saved theme before first paint */
 (function(){try{var q=/[?&]theme=(light|dark)/.exec(location.search);var t=q?q[1]:localStorage.getItem('cp-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
+<script>window.goatcounter={path:function(){return (location.hash||'').replace(/^#\/?/,'/').replace(/\?.*$/,'')||'/';}};</script>
+<script async src="https://gc.zgo.at/count.js" data-goatcounter="https://yashvardhan.goatcounter.com/count"></script>
 </head>
 <body>
 <a class="skip" href="#app">Skip to content</a>
@@ -8235,6 +8237,9 @@ PC.register('wafer', function (p) {
       }
       var label = { stack: 'The Chain', landscape: 'AI Chips', suppliers: 'Suppliers', controls: sub === 'exposure' ? 'China revenue share' : 'Export Controls', glossary: 'Index' }[v];
       document.title = (v === 'home' || !label) ? 'Chip Supply Chain' : 'Chip Supply Chain · ' + label;
+      // one page view per route change (the counter counts the first load itself)
+      var gc = window.goatcounter;
+      if (gc && gc.path) { var pth = gc.path(); if (this.counted === undefined) this.counted = pth; else if (pth !== this.counted && gc.count) { this.counted = pth; try { gc.count(); } catch (err) { } } }
     }
   };
 
