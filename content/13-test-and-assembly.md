@@ -4,7 +4,7 @@
   "number": 13,
   "title": "Test and Assembly",
   "oneLiner": "Assembly and test decide which dies are allowed into a package that costs more than a car. One Japanese firm now sells two thirds of the world's chip testers.",
-  "plain": "Before a chip can be sold, a machine has to interrogate it and check every answer. Thousands of needles land on pads on the wafer and drive test patterns into each chip; the tester marks the ones that answer wrong, and they never leave. The stakes rise each year for a simple reason: a modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them. So the industry tests earlier, hotter and longer than it used to, and two firms, one Japanese and one American, sell most of the machines that do it.",
+  "plain": "Before a chip can be sold, a machine has to interrogate it and check every answer. Thousands of needles land on pads on the wafer and drive test patterns into each chip; the tester marks the ones that answer wrong, and they never leave. A modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them. So the industry tests earlier, hotter and longer than it used to, and two firms, one Japanese and one American, sell most of the machines that do it.",
   "bridge": "Nothing yet proves that any of it works, and a package this far along is worth too much to guess about.",
   "specimen": "probe-card",
   "specimenCaption": "A probe card over a wafer. A printed circuit board carries the tester's signals to a micro-machined probe head whose needles land on pads a few tens of micrometres across, all of them within microns of the same plane.",
@@ -28,7 +28,7 @@
     "chinaStatus": "Assembly and test is where China is most competitive. Georgetown's CSET counts four of the top ten assembly and test firms by 2024 revenue as China-headquartered, and their equipment is far less tightly controlled than lithography or deposition.",
     "usStatus": "Strong in test equipment and probe cards through Teradyne, FormFactor, Cohu and Aehr, weak in assembly capacity. Amkor is building a US$7 billion packaging and test campus in Arizona and has a long-term partnership with TSMC to fill it.",
     "costSignal": "ASE and Amkor alone billed US$27.3 billion in 2025; ASE spent US$4.1 billion on machinery and buildings in the first half of 2026",
-    "substitutability": {"band": "Moderate", "test": "No tool here has a single supplier; the lock is the cost of rebuilding a test environment, not a missing tool", "why": "Advantest and Teradyne take about 80 percent between them, but both ship qualified testers and the niches under them have several suppliers each. What holds a customer is Advantest's own argument, that changing tester vendor means rebuilding the whole development, evaluation and production test environment. A well-funded actor pays that cost once and is through it in two to five years, which is also why four of the top ten assembly and test firms are already Chinese."}
+    "substitutability": {"band": "Moderate", "test": "No tool here has a single supplier; the lock is the cost of rebuilding a test environment, not a missing tool", "why": "Advantest and Teradyne take about 80 percent between them, but both ship qualified testers and the niches under them have several suppliers each. A customer stays because changing tester vendor means rebuilding the whole development, evaluation and production test environment, which is Advantest's own pitch to investors. A well-funded actor pays that cost once and is through it in two to five years, which is also why four of the top ten assembly and test firms are already Chinese."}
   },
   "keyFacts": [
     {"fact": "Advantest estimates its overall tester market share at about 65% in CY2025, with 66% of logic chip test (up about 10 points year on year) and about 60% of memory test", "source": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf"},
@@ -75,7 +75,7 @@ Semiconductor manufacturing runs to 400 to 600 steps, and Advantest counts test 
 
 ## How it works
 
-Before a chip can be sold, a machine has to interrogate it and check every answer. Thousands of needles land on pads on the wafer and drive test patterns into each chip; the tester marks the ones that answer wrong, and they never leave. This matters more each year because of arithmetic: a modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them. So the industry tests earlier, hotter and longer than it used to, and two firms, one Japanese and one American, sell most of the machines that do it.
+Before a chip can be sold, a machine has to interrogate it and check every answer. Thousands of needles land on pads on the wafer and drive test patterns into each chip; the tester marks the ones that answer wrong, and they never leave. A modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them. So the industry tests earlier, hotter and longer than it used to, and two firms, one Japanese and one American, sell most of the machines that do it.
 
 Each round of test catches failures the round before it cannot see.
 
@@ -84,7 +84,7 @@ Each round of test catches failures the round before it cannot see.
 - **Final test.** The tester runs the packaged part again, because packaging adds failures of its own.
 - **System-level test.** The finished part sits in a socket and runs something close to a real workload, because some failures appear only when everything runs at once.
 
-What changed is the value of proving a die good before it is packaged. Aehr screens for early and hidden failures before dies are cut from the wafer, so a weak processor never reaches high-bandwidth memory and an expensive substrate ([source](https://www.aehr.com/2026/08/aehr-receives-22-million-follow-on-order-for-ai-processor-wafer-level-burn-in-systems/)). Its lead AI customer is moving burn-in off the finished system and onto the wafer, nine 300 mm wafers at a time ([source](https://www.aehr.com/2026/07/aehr-test-systems-reports-fiscal-2026-fourth-quarter-and-full-year-financial-results-with-record-quarterly-bookings-and-100-million-effective-backlog/)).
+Proving a die good before it is packaged is now worth far more. Aehr screens for early and hidden failures before dies are cut from the wafer, so a weak processor never reaches high-bandwidth memory and an expensive substrate ([source](https://www.aehr.com/2026/08/aehr-receives-22-million-follow-on-order-for-ai-processor-wafer-level-burn-in-systems/)). Its lead AI customer is moving burn-in off the finished system and onto the wafer, nine 300 mm wafers at a time ([source](https://www.aehr.com/2026/07/aehr-test-systems-reports-fiscal-2026-fourth-quarter-and-full-year-financial-results-with-record-quarterly-bookings-and-100-million-effective-backlog/)).
 
 ## Variants and trade-offs
 
@@ -125,13 +125,13 @@ Amkor took $6.71 billion of revenue in 2025 ([source](https://data.sec.gov/api/x
 
 ## The chokepoint
 
-Unlike lithography, no tool here has a single supplier. What holds a customer is the cost of leaving. Advantest argues that switching tester vendor means rebuilding the whole development, evaluation and production test environment, which is why share moves slowly ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf)).
+Unlike lithography, no tool here has a single supplier. Advantest argues that switching tester vendor means rebuilding the whole development, evaluation and production test environment, which is why share moves slowly ([source](https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf)).
 
-This is also the part of the chain China is closest to owning, because assembly, dicing, bonding and test tools sit outside the export control lines drawn around lithography and deposition. ASE and Amkor billed $27.3 billion between them in 2025, against industry sales of $791.7 billion ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)), a small share of the money for a step every chip has to pass through.
+Assembly and test is also the part of the chain China is closest to owning, because assembly, dicing, bonding and test tools sit outside the export control lines drawn around lithography and deposition. ASE and Amkor billed $27.3 billion between them in 2025, against industry sales of $791.7 billion ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)), a small share of the money for a step every chip has to pass through.
 
 ## Key evaluation criteria
 
-- **Test coverage** is what you buy: the share of hidden failures caught before they reach a package that cannot be taken apart.
+- **Test coverage** is the share of hidden failures caught before they reach a package that cannot be taken apart.
 - **Test time per part** sets throughput and cost, and large dies, memory stacks and chiplets all push it up.
 - **Probe card flatness and life** decide what wafer sort costs. Every needle must stay in the same plane across a full die and hold that over a long life.
 - **Thermal control** matters more every generation. A kilowatt-class accelerator has to be held at temperature in the socket while it is tested at speed.

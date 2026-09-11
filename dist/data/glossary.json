@@ -84,10 +84,17 @@
     "chapter": "introduction-and-goals"
   },
   {
+    "term": "compute threshold",
+    "aka": "training compute threshold",
+    "plain": "A line drawn at the arithmetic used to train a model rather than at the hardware that trains it. The 2023 US executive order on AI set its reporting line at \"any model that was trained using a quantity of computing power greater than 10^26 integer or floating-point operations\" (Executive Order 14110, section 4.2(b)(i), 88 FR 75191). The same number became an export control in January 2025: ECCN 4E091 covers \"'Parameters' for an artificial intelligence model trained utilizing 10^26 or more 'operations'\", and 15 CFR 742.6(a)(13) requires a licence for them to every destination worldwide. Europe drew its line an order of magnitude lower, at a cumulative training run \"greater than 10^25\" floating point operations, in Article 51(2) of the EU AI Act.",
+    "why": "Every other threshold here measures a chip. This one measures the model the chips train, which is the only place the rules reach a capability rather than a box. The two numbers also disagree by a factor of ten, and Article 51(3) lets the European Commission move its figure by delegated act, so the model-level line is the one most likely to shift.",
+    "chapter": "geopolitics"
+  },
+  {
     "term": "Concentration",
     "aka": "concentration band; Extreme, High, Moderate, Low",
     "plain": "The site's four-band judgment of how many firms could credibly supply a stage today, taken at the narrowest step inside it. Extreme means three or fewer, or one firm holding more than half the stage. High means four to six, with the top two taking most of the revenue. Moderate means seven or more, none of them dominant. Low means many, with the scarce input something another industry sells at volume. Where the country-share matrix carries a figure for the segment, the top country's share is a second check, and the supplier count wins when the two disagree.",
-    "why": "It is the first label on every chokepoint card and sets the bar height in the chain strip.",
+    "why": "The fewer the firms that can do a stage, the more one accident or one licence decision moves the whole chain.",
     "chapter": null
   },
   {
@@ -157,7 +164,7 @@
     "term": "EAR",
     "aka": "Export Administration Regulations",
     "plain": "The body of US rules that governs the export of commercial and dual-use goods, software and technology, written and enforced by the Bureau of Industry and Security. They run from 15 CFR part 730 to part 774: part 734 sets what they cover, part 742 the licence requirements, part 744 the end-use and end-user controls, part 740 the exceptions and part 764 the penalties.",
-    "why": "Almost every rule on the board amends these regulations. They are changed by a notice in the Federal Register, not by an act of Congress, which is why a threshold can move in a week.",
+    "why": "Almost every American export rule on chips and chip tools amends these regulations. They are changed by a notice in the Federal Register, not by an act of Congress, which is why a threshold can move in a week.",
     "chapter": "geopolitics"
   },
   {
@@ -304,7 +311,7 @@
     "term": "hyperscaler",
     "aka": "",
     "plain": "One of the handful of companies that run data centres at global scale and buy computing hardware by the gigawatt: Amazon, Microsoft, Google, Meta and, on most definitions, Oracle.",
-    "why": "They commit capital years before the hardware exists, and their spending plans are the number every firm in this chain plans against.",
+    "why": "They commit capital years before the hardware exists.",
     "chapter": "data-centers-and-power"
   },
   {
@@ -338,36 +345,36 @@
   {
     "term": "known-good die",
     "aka": "KGD",
-    "plain": "A bare chip tested thoroughly enough, before assembly, to be trusted inside something expensive. In an ordinary product a marginal chip costs you one chip; inside a stacked package it can destroy thirty.",
+    "plain": "A bare chip tested thoroughly enough, before assembly, to be trusted inside something expensive. In an ordinary product a marginal chip costs one chip; inside a stacked package it can destroy thirty.",
     "why": "As packages grow toward ten logic chips and twenty memory stacks, the cost of catching a bad one late pushes testing and burn-in back onto the wafer.",
     "chapter": "test-and-assembly"
   },
   {
     "term": "license exception",
     "aka": "licence exception",
-    "plain": "A written carve-out in export rules that lets a shipment go without an individual licence, if it meets stated conditions. The ones that matter for AI chips are NAC and ACA (15 CFR 740.8), HBM (740.25), IEC for allied countries that adopt matching controls (740.24), and RPL for servicing and spare parts (740.10).",
+    "plain": "A written carve-out in export rules that lets a shipment go without an individual licence, if it meets stated conditions. The ones that matter for AI chips are NAC and ACA (15 CFR 740.8), HBM (740.25), AIA and LPP, which carry the top band of accelerators to allies and in small volumes elsewhere (740.27 and 740.29), IEC for allied countries that adopt matching controls (740.24), and RPL for servicing and spare parts (740.10).",
     "why": "Exceptions are how a control regime is tuned without rewriting it, and how Washington rewards allies: License Exception IEC, added in September 2024, is open only to countries that have imposed equivalent national controls (89 FR 72926).",
     "chapter": "geopolitics"
   },
   {
     "term": "License Exception ACA",
     "aka": "ACA, Advanced Computing Authorized",
-    "plain": "The companion to NAC in 15 CFR 740.8, added in December 2024. It authorises the same classes of advanced computing chips worldwide except to Macau and Country Group D:5 entities, without a notification, and allows some transfers within those destinations.",
+    "plain": "The companion to NAC in 15 CFR 740.8, added in December 2024. It authorises the same classes of advanced computing chips worldwide except to Macau and Country Group D:5 entities, without a notification, and allows some transfers within those destinations. Like NAC, it does not reach the datacentre parts that meet the 3A090.a parameters, which need a licence to any destination worldwide.",
     "why": "The split matters for anyone reading an older table: before December 2024 there was one exception, NAC, and it did both jobs. Confusing the two puts a shipment to Germany through a notification it does not need.",
     "chapter": "geopolitics"
   },
   {
     "term": "License Exception HBM",
     "aka": "",
-    "plain": "The exception at 15 CFR 740.25 for high bandwidth memory under ECCN 3A090.c with a bandwidth density below 3.3 GB/s per square millimetre. It is open only to exporters headquartered in the United States or in Country Group A:5, and only for stacks bought by the designer of the chip they will be packaged with and shipped straight to the packaging site.",
-    "why": "It is what keeps a Chinese packaging house in the supply chain for an American or allied designer while the same stacks may not be sold to a Chinese customer. It was written into the December 2024 rule that first controlled HBM (89 FR 96790).",
+    "plain": "The exception at 15 CFR 740.25 that carries ECCN 3A090.c memory into the one place a licence is needed. The Commerce Control List applies the regional stability control on 3A090.c only \"to or within Macau or a destination specified in Country Group D:5\", so a stack sold to an allied packaging house needs no licence at any density. Inside China, 740.25(c) authorises co-packaging only below a memory bandwidth density of 3.3 GB/s per square millimetre.",
+    "why": "It is what keeps a Chinese packaging house in the supply chain for an American or allied designer while the same stacks may not be sold to a Chinese customer. The exporter must be headquartered in the United States or Country Group A:5, and the stacks must be bought by the designer of the chip they will be packaged with and shipped straight to the packaging site. It was written into the December 2024 rule that first controlled HBM (89 FR 96790).",
     "chapter": "geopolitics"
   },
   {
     "term": "License Exception LPP",
     "aka": "LPP, Low Processing Performance",
-    "plain": "An exception created at 15 CFR 740.29 by the AI Diffusion Rule of January 2025 (90 FR 4544), which would have let limited quantities of advanced chips go to most destinations without a licence. Compliance was not required until 15 May 2025 and the framework was rescinded on 13 May, so it never bound anyone.",
-    "why": "LPP, AIA and ACM belong to a rule that was published, given an effective date and withdrawn before its compliance date. They are still cited, so they keep an entry.",
+    "plain": "The exception at 15 CFR 740.29, created by the AI Diffusion Rule of January 2025 (90 FR 4544). It authorises up to 26,900,000 cumulative total processing performance of advanced computing chips a year to one ultimate consignee, to any destination except Macau, Country Group D:5 and consignees headquartered in either. It does not authorise transfers within a country.",
+    "why": "BIS announced on 13 May 2025 that it would not enforce the diffusion framework and would replace it, but withdrew no text. LPP, AIA (740.27), ACM (740.28), the nineteen destinations in supplement no. 5 to part 740 and the 790,000,000 TPP per-country allocation at 742.6(b)(10)(iii)(B) are all in the eCFR today, their source notes ending at 90 FR 5309. The presumption of approval beside them at 742.6(b)(10)(iii)(A)(2) runs on that same supplement, so the framework still does work.",
     "chapter": "geopolitics"
   },
   {
@@ -464,7 +471,7 @@
   {
     "term": "performance density",
     "aka": "",
-    "plain": "A chip's TPP divided by the area of its logic dies in square millimetres, memory stacks excluded. It is a second test, not a replacement: it only applies to a chip that already reaches 1,600 TPP, and it catches parts that spread the same computing power over more silicon. It is the test that replaced the 2022 interconnect-bandwidth criterion.",
+    "plain": "A chip's TPP divided by the area of its logic dies in square millimetres, memory stacks excluded. It applies only to a chip that already reaches 1,600 TPP, and it catches parts that spread the same computing power over more silicon. It is the test that replaced the 2022 interconnect-bandwidth criterion.",
     "why": "It closed the gap the A800 and H800 used, and it is the clearest case of a control written as a formula rather than a product name. The threshold is 5.92 in ECCN 3A090.a (88 FR 73458).",
     "chapter": "geopolitics"
   },

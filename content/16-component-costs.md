@@ -27,7 +27,7 @@
     "chinaStatus": "Domestic accelerators dodge Nvidia's margin and pay for it elsewhere: no advanced packaging at volume, memory bought from stockpiles or from CXMT's early product, and yields on SMIC's N+2 process that make the die the expensive part rather than the cheap one.",
     "usStatus": "Captures the design and equipment margins and almost none of the wafer, memory, substrate or assembly cost, which is why its export controls target access rather than production.",
     "costSignal": "~$6,400 of manufacturing cost inside a B200 that sells for $30,000 to $40,000; memory alone is $2,900 of it",
-    "substitutability": {"band": "Moderate", "test": "The margin is substitutable and the inputs under it are not: custom parts ship on the same wafers and memory", "why": "A well-funded buyer can commission a custom accelerator on the same TSMC wafers and the same memory and take back most of Nvidia's margin, and several already have. What it cannot substitute is what sits underneath: the memory at 45 percent of the build, and packaging and its scrap at more than twice the logic dies, both set by physically scarce capacity. Two to five years to a custom part, and no such clock for the lines beneath it."}
+    "substitutability": {"band": "Moderate", "test": "The margin is substitutable and the inputs under it are not: custom parts ship on the same wafers and memory", "why": "A well-funded buyer can commission a custom accelerator on the same TSMC wafers and the same memory and take back most of Nvidia's margin, and several already have. It cannot substitute what sits underneath: the memory at 45 percent of the build, and packaging and its scrap at more than twice the logic dies, both set by physically scarce capacity. Two to five years to a custom part, and no such clock for the lines beneath it."}
   },
   "keyFacts": [
     {"fact": "A B200 costs about $6,400 to build, in a range of $5,700 to $7,300, and sells for $30,000 to $40,000", "source": "https://epoch.ai/data-insights/b200-cost-breakdown"},
@@ -69,19 +69,19 @@
 ---
 # Component Costs
 
-Building a Blackwell B200 costs about $6,400. Nvidia sells it for $30,000 to $40,000 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Follow that $6,400 and you learn which stages are expensive because of physics, which because capacity is short, and which because one firm can charge.
+Building a Blackwell B200 costs about $6,400. Nvidia sells it for $30,000 to $40,000 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). That $6,400 splits into stages that are expensive because of physics, because capacity is short, or because one firm can charge.
 
 ## How it works
 
 A bill of materials is the list of parts inside a product and what each one costs to build. For an AI accelerator, the famous logic chip is the cheap part, about a seventh of the total. The stacked memory beside it is nearly half, and the packaging that wires the two together costs more than the chip. Three firms in the world make that memory and one Taiwanese firm does that packaging, so the costliest parts are also the scarcest, and that is where a government has the most purchase.
 
-Three numbers set the cost of a die, the finished rectangle of circuitry cut out of a wafer: the price of the wafer, how many dies fit on it, and how many of those work.
+Three numbers set the cost of a die, the finished rectangle of circuitry cut out of a wafer.
 
 - **Wafer price.** TSMC does not publish it. Epoch AI's model of Blackwell's custom TSMC 4NP process ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)) assumes about $17,000 for a 300 mm wafer ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
 - **Dies per wafer.** A wafer is a circle and dies are rectangles, so the edge of the disc goes to waste: an 800 mm2 die, near the largest a scanner can print in one shot, fits 68 times.
 - **Yield.** Defects land at random, so a bigger die is likelier to catch one. Epoch AI models the Blackwell die at 40 to 70 percent good, centred on 60 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
 
-Run those three numbers and the two dies inside a B200 come to about $900, 14 percent of the build ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Doubling the wafer price moves the whole bill by a few hundred dollars.
+Those three numbers put the two dies inside a B200 at about $900, 14 percent of the build ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Doubling the wafer price moves the whole bill by a few hundred dollars.
 
 ## Variants and trade-offs
 
@@ -105,13 +105,13 @@ CoWoS-L, the TSMC process that mounts dies and memory on one carrier and wires t
 | Manufacturing cost | ~$6,400 | $5,700-7,300 |
 | Selling price | $30,000-40,000 | |
 
-Epoch AI models each line as a range rather than a single figure, deriving the packaging line from TSMC's advanced packaging revenue and Nvidia's share of CoWoS capacity ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Nothing of that quality exists for the H100 or Rubin, so the table carries one generation only.
+Epoch AI models each line as a range rather than a single figure, deriving the packaging line from TSMC's advanced packaging revenue and Nvidia's share of CoWoS capacity ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Nothing of that quality exists for the H100 or Rubin.
 
 {{figure:b200-bom}}
 
 ### From package to rack to cluster
 
-Buy a whole rack and the number that matters is the cost of a GPU-hour. For an operator that owns the machine, SemiAnalysis puts a Vera Rubin NVL72 at $3.57, against $1.84 for a GB200 and $2.36 for a GB300 ([source](https://inferencex.semianalysis.com/blog/vera-rubin-nvl72-vs-gb200-nvl72-inference)). Each generation costs its owner more per hour than the last, and buyers pay because throughput rises faster than the rate.
+At rack scale the number that matters is the cost of a GPU-hour. For an operator that owns the machine, SemiAnalysis puts a Vera Rubin NVL72 at $3.57, against $1.84 for a GB200 and $2.36 for a GB300 ([source](https://inferencex.semianalysis.com/blog/vera-rubin-nvl72-vs-gb200-nvl72-inference)). Each generation costs its owner more per hour than the last, and buyers pay because throughput rises faster than the rate.
 
 One level up, a 100,000 H100 cluster costs over $4 billion in servers, draws about 150 MW, burns 1.59 TWh a year, pays $123.9 million for power and needs 98,304 optical transceivers ([source](https://newsletter.semianalysis.com/p/100000-h100-clusters-power-network)).
 
@@ -138,7 +138,7 @@ SK hynix publishes no gross margin. Its operating margin hit 76 percent in the J
 
 Design, inspection and leading-edge wafers earn gross margins of 50 to 75 percent, substrates 36, assembly and test 17 to 21. In 2026 memory passed all of them: Micron earned 39.8 percent for the year to August 2025 ([source](https://investors.micron.com/news/press-release/2025/Micron-Technology-Inc--Reports-Results-for-the-Fourth-Quarter-and-Full-Year-of-Fiscal-2025-09-23-2025/default.aspx)) and 84.6 percent in the quarter to May 2026 ([source](https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Results-for-the-Third-Quarter-of-Fiscal-2026/default.aspx)). The margin moved up the chain, to Nvidia's suppliers.
 
-The two bodies that count this industry disagree, which sets the error bar here. World Semiconductor Trade Statistics forecast $772 billion of global chip sales for 2025 ([source](https://www.wsts.org/76/103/Global-Semiconductor-Market-Approaches-1T-in-2026)); the Semiconductor Industry Association counted $791.7 billion ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)). The forecasters put 2026 at $975 billion, with memory and logic each growing more than 30 percent ([source](https://www.wsts.org/76/103/Global-Semiconductor-Market-Approaches-1T-in-2026)). Below those totals sit $135.1 billion of equipment billings ([source](https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025)) and $448.3 billion of 2025 capital spending at Alphabet, Amazon, Meta, Microsoft and Oracle, on track for $770 billion in 2026 ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)).
+The two bodies that count this industry disagree. World Semiconductor Trade Statistics forecast $772 billion of global chip sales for 2025 ([source](https://www.wsts.org/76/103/Global-Semiconductor-Market-Approaches-1T-in-2026)); the Semiconductor Industry Association counted $791.7 billion ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)). The forecasters put 2026 at $975 billion, with memory and logic each growing more than 30 percent ([source](https://www.wsts.org/76/103/Global-Semiconductor-Market-Approaches-1T-in-2026)). Below those totals sit $135.1 billion of equipment billings ([source](https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025)) and $448.3 billion of 2025 capital spending at Alphabet, Amazon, Meta, Microsoft and Oracle, on track for $770 billion in 2026 ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)).
 
 {{figure:market-2025}}
 
@@ -163,7 +163,7 @@ Per unit of compute, logic keeps getting cheaper and everything wrapped around i
 | Wafers and bulk gases | Already commoditised | Multi-supplier, long-qualified, thin spreads. |
 | Rack integration (ODM) | Already commoditised | Low-teens margins on specified content. |
 
-The classification is ours; its yield and margin figures are cited above.
+The classification is ours.
 
 ## Key evaluation criteria
 

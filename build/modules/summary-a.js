@@ -225,7 +225,7 @@ module.exports = function (ctx) {
     const segs = matrix.filter((r) => r.shares[cc] != null).map((r) => {
       const rank = Object.keys(r.shares).sort((a, b) => r.shares[b] - r.shares[a]).indexOf(cc) + 1;
       const basis = r.basis || (/estimate/i.test((r.metric || '') + ' ' + (r.note || '').slice(0, 40)) ? 'estimate' : '');
-      const flag = basis === 'estimate' ? 'estimated here' : basis === 'relayed' ? 'reported by ' + (r.relayedVia || 'a third party') : basis === 'derived' ? 'computed here' : '';
+      const flag = basis === 'estimate' ? 'estimate' : basis === 'relayed' ? 'reported by ' + (r.relayedVia || 'a third party') : basis === 'derived' ? 'computed' : '';
       return { seg: r.segment, v: r.shares[cc], year: r.asOf || r.year, rank: rank, ch: SEG_CH[r.segment] || null, estimate: basis === 'estimate', flag: flag, method: r.method || '' };
     }).sort((a, b) => b.v - a.v);
     const firms = suppliers.filter((s) => s.country === cc);
@@ -270,7 +270,7 @@ module.exports = function (ctx) {
       const rows = [geo, lit, first5].filter((c, i, a) => c && c.chinaStatus && a.indexOf(c) === i);
       // the first sentence of each card's China line; the chapter link carries the rest
       const first = (s) => { const m2 = String(s).match(/^[\s\S]*?[.!?](?=\s+[A-Z"'(]|$)/); return (m2 ? m2[0] : String(s)).trim(); };
-      china = `<div class="sa-china"><span class="label">Where China stands, from the chokepoint cards</span>${rows.map((c) => `<p><a href="${href(c)}">${esc(c.title)}</a> ${esc(first(c.chinaStatus))}</p>`).join('')}</div>`;
+      china = `<div class="sa-china"><span class="label">Where China stands</span>${rows.map((c) => `<p><a href="${href(c)}">${esc(c.title)}</a> ${esc(first(c.chinaStatus))}</p>`).join('')}</div>`;
     }
 
     const townLine = d.towns.length
@@ -278,7 +278,7 @@ module.exports = function (ctx) {
       : '';
     const firmLine = d.firms.length
       ? `<a href="#/suppliers">${d.firms.length} firm${d.firms.length > 1 ? 's' : ''} in the supplier list${d.topCats.length ? ', led by ' + d.topCats.map((c) => esc(lcCat(c))).join('; ') : ''}</a>`
-      : '<span>No firm in the supplier list is based here</span>';
+      : '<span>No firm in the supplier list</span>';
 
     return `<article class="sa-panel" data-cc="${cc}"${open ? '' : ' hidden'}>
 <header class="sa-panel-head"><span class="sa-panel-cc">${cc}</span><h4>${esc(d.name)}</h4></header>
@@ -408,7 +408,7 @@ ${svg}
   const routeSvg = svg.replace('</svg>', `<g class="sa-routes">${route}${tails}</g></svg>`);
   const stopBtns = routeStops.map((x) => {
     const a = XY(x.st), lead = ((x.c.leaders || [])[0] || {}).name || '';
-    return `<a class="sa-stop" data-cc="${x.st[4]}" href="${href(x.c)}" style="left:${(a[0] / VW * 100).toFixed(2)}%;top:${(a[1] / VH * 100).toFixed(2)}%" data-title="${esc(x.c.title)}" data-town="${esc(x.st[1])}, ${esc(COUNTRY[x.st[4]] || x.st[4])}" data-lead="${esc(lead)}" data-band="${esc(x.c.band || '')}" aria-label="Stop ${x.c.number}, ${esc(x.c.title)}: ${esc(x.st[1])}${lead ? ', led by ' + esc(lead) : ''}, ${x.c.band ? x.c.band.toLowerCase() + ' concentration' : ''}. Read the chapter."><span>${x.c.number}</span></a>`;
+    return `<a class="sa-stop" data-cc="${x.st[4]}" href="${href(x.c)}" style="left:${(a[0] / VW * 100).toFixed(2)}%;top:${(a[1] / VH * 100).toFixed(2)}%" data-title="${esc(x.c.title)}" data-town="${esc(x.st[1])}, ${esc(COUNTRY[x.st[4]] || x.st[4])}" data-lead="${esc(lead)}" data-band="${esc(x.c.band || '')}" aria-label="Stop ${x.c.number}, ${esc(x.c.title)}: ${esc(x.st[1])}${lead ? ', led by ' + esc(lead) : ''}, ${x.c.band ? x.c.band.toLowerCase() + ' concentration' : ''}."><span>${x.c.number}</span></a>`;
   }).join('');
   const strip = routeStops.map((x) => `<li><a class="sa-stopcard" data-cc="${x.st[4]}" href="${href(x.c)}"><span class="sa-stopcard-n">${String(x.c.number).padStart(2, '0')}</span><span class="sa-stopcard-t">${esc(x.c.title.replace(/ and /g, ' & '))}</span><span class="sa-stopcard-w">${esc(x.st[1])} · ${x.st[4]}</span></a></li>`).join('');
   const ledBy = {}; stages.forEach((c) => { const first = (c.countries || [])[0]; if (first) (ledBy[first.code] = ledBy[first.code] || []).push(c); });
@@ -419,7 +419,7 @@ ${svg}
     return `<li><button type="button" class="sa-role" data-cc="${cc}" aria-pressed="${cc === DEFAULT_CC}"><span class="sa-role-name">${esc(COUNTRY[cc] || cc)}</span><span class="sa-role-meta">${meta}</span><span class="sa-role-line">${esc(ROLE[cc])}</span></button></li>`;
   }).join('');
   const mins = Math.max(1, Math.round(ctx.all.reduce((a, c) => a + (c.meta.plain || '').split(/\s+/).length, 0) / 230));
-  const doors = `<nav class="sa-doors" aria-label="Where to start"><a class="sa-door" href="#/intro"><span class="sa-door-k">${esc(ctx.cap(word(mins)))} minutes</span><b>Start here</b><span>One plain paragraph per stage, beside its 3D specimen.</span></a><a class="sa-door" href="#/chain"><span class="sa-door-k">${esc(ctx.cap(word(chapters.length)))} chapters</span><b>The Chain</b><span>Every stage in full, from design to the data centre.</span></a><a class="sa-door" href="#/controls"><span class="sa-door-k">Since 2018</span><b>Export controls</b><span>Every rule so far, and what can still flow to China today.</span></a></nav>`;
+  const doors = `<nav class="sa-doors" aria-label="Where to start"><a class="sa-door" href="#/intro"><span class="sa-door-k">${esc(ctx.cap(word(mins)))} minutes</span><b>Start here</b><span>One plain paragraph per stage, beside its 3D specimen.</span></a><a class="sa-door" href="#/chain"><span class="sa-door-k">${esc(ctx.cap(word(chapters.length)))} chapters</span><b>The Chain</b><span>Every stage in full, in process order.</span></a><a class="sa-door" href="#/controls"><span class="sa-door-k">Since 2018</span><b>Export controls</b><span>Every rule so far, and what can still flow to China today.</span></a></nav>`;
   const homeMap = `<div class="sa sa--home">
 ${doors}
 <section class="sa-route-wrap" aria-label="The route of one chip">

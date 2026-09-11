@@ -66,7 +66,7 @@
     "substitutability": {
       "band": "Moderate",
       "test": "Several qualified vendors; the wait is a three-year transformer queue and six years of booked turbines, not skill",
-      "why": "Nothing here is unbuilt. Nine firms sell the power and cooling equipment for Nvidia's gigawatt designs, so a buyer can get the kit and haggle over the price. What a well-funded actor cannot shorten is the queue: large power transformers run to 36-month lead times against under a year before 2020, and GE Vernova's book is close to six years of turbine output, which puts new capacity two to five years out rather than one purchase cycle."
+      "why": "Nothing here is unbuilt. Nine firms sell the power and cooling equipment for Nvidia's gigawatt designs, so a buyer can get the kit and haggle over the price. A well-funded actor cannot shorten the queue: large power transformers run to 36-month lead times against under a year before 2020, and GE Vernova's book is close to six years of turbine output, which puts new capacity two to five years out rather than one purchase cycle."
     }
   },
   "keyFacts": [
@@ -201,7 +201,7 @@
 ---
 # Data Centers and Power
 
-For thirty years the semiconductor industry set the pace and everything downstream followed. That has flipped. A wafer clears a leading-edge fab in months; a large power transformer takes three years, and before 2020 the same order took under one ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)).
+For thirty years the semiconductor industry set the pace and everything downstream followed. A wafer clears a leading-edge fab in months; a large power transformer takes three years, and before 2020 the same order took under one ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)).
 
 ## How it works
 
@@ -209,7 +209,7 @@ A data centre's job is to feed and cool the machines inside it. The scale has ch
 
 A rack is now the unit of AI compute. A GB300 NVL72 draws up to 142 kW through eight 33 kW power shelves, more than ten times a conventional enterprise rack in the same floor area ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
 
-Everything else follows from that number. Utility power steps down through a substation, then through switchgear, battery-backed supplies and distribution boards, before it reaches the busbar at the back of the rack. Each stage has its own lead time.
+Utility power steps down through a substation, then through switchgear, battery-backed supplies and distribution boards, before it reaches the busbar at the back of the rack. Each stage has its own lead time.
 
 Heat leaves in water. Cold plates on the GPU packages pass it to a building loop that dumps it outdoors, and Nvidia's Vera Rubin racks run 45 °C supply water, warm enough that many sites can skip chillers ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
 
@@ -223,7 +223,7 @@ Nvidia is also moving rack distribution to 800 volts of direct current, which pu
 - **Direct-to-chip liquid.** The default for anything Blackwell-class or later; every serious AI hall is now plumbed.
 - **Immersion.** Higher density still, but hard to service and barely used at scale.
 
-Cooling is not the bottleneck. Nvidia names nine firms supplying data centre power and cooling systems for its gigawatt reference designs, among them ABB, Eaton, Hitachi Energy, Mitsubishi Electric, Schneider Electric, Siemens and Vertiv ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)). With nine suppliers, a buyer can get the kit and haggle over the price.
+Cooling is not the bottleneck. Nvidia names nine firms supplying data centre power and cooling systems for its gigawatt reference designs, among them ABB, Eaton, Hitachi Energy, Mitsubishi Electric, Schneider Electric, Siemens and Vertiv ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
 
 ### Rack power
 
@@ -267,7 +267,7 @@ Behind that queue sit the equipment lead times.
 - **Gas turbines.** GE Vernova will build 20 GW of turbines this year and is working toward 30 GW a year in 2030, against a book of 116 GW, close to six years of output ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
 - **Firm new generation**, the kind that runs whatever the weather. The one reactor restart with a data centre buyer behind it, the 835 MW Crane plant, shut in 2019 and is still waiting on its licence ([source](https://www.energy.gov/articles/energy-department-closes-loan-restart-nuclear-power-plant-pennsylvania)).
 
-Set that against the chip chain, where foundry and memory capacity have repeatedly expanded within a couple of years of the order. Money buys silicon capacity faster than it buys power capacity, and that difference decides how much of the 2026 capital spending turns into working compute.
+The chip chain moves faster: foundry and memory capacity have repeatedly expanded within a couple of years of the order. Money buys silicon capacity faster than it buys power capacity, and that difference decides how much of the 2026 capital spending turns into working compute.
 
 ## Key evaluation criteria
 

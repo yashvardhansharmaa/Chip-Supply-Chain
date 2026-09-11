@@ -172,7 +172,7 @@
     "cfr": "15 CFR 740.25",
     "source": "https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-produced-direct-product-rule-additions-and-refinements-to-controls-for-advanced-computing",
     "sourceTier": "A",
-    "note": "The valve that keeps the legitimate HBM trade flowing while 3A090.c stays broad. The gap between the 2 GB/s/mm² control line and the 3.3 GB/s/mm² exception ceiling is the space in which ordinary HBM3 packaging logistics happen; anything above 3.3 needs a licence even for allied supply chains.",
+    "note": "The valve that keeps the legitimate HBM trade flowing while 3A090.c stays broad. The gap between the 2 GB/s/mm² control line and the 3.3 GB/s/mm² exception ceiling is the space in which ordinary HBM3 packaging logistics happen; the RS control on 3A090.c applies only to Macau and Country Group D:5, so allied shipments need no licence at any density; the 3.3 GB/s per mm² ceiling in 740.25(c) governs co-packaging inside China.",
     "kind": "memory",
     "paramShort": "Memory bandwidth density",
     "unitShort": "GB/s per mm²"

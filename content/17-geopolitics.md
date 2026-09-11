@@ -28,7 +28,7 @@
     "chinaStatus": "Blocked at the leading edge and substituting fast below it. Domestic tools went from 25 percent of China's own equipment market in 2024 to 35 percent in 2025, and about 40 percent in etch and deposition; SMIC runs 7 nm-class logic without extreme-ultraviolet machines at roughly 45,000 advanced-node wafers a month; CXMT's 2026 memory output covers 250,000 to 300,000 Ascend packages. Neither those machines nor high-bandwidth memory at scale is in reach before 2028.",
     "usStatus": "Holds chip design, design software and most process tools, and uses the Foreign Direct Product Rule to reach foreign-made goods. Has traded parts of the fence for revenue and investment since 2025: an expected 15 percent cut of licensed H20 sales, a 9.9 percent equity stake in Intel, a 25 percent tariff on advanced chips, and case-by-case H200 licences.",
     "costSignal": "$52.7B authorised under the CHIPS Act against about $47B in the latest round of China's Big Fund alone",
-    "substitutability": {"band": "Very hard", "test": "Rated at the chain's hardest link: one country holds 100 percent of EUV and no substitute is in reach before 2028", "why": "This card rates the chain at its hardest stage rather than averaging it, because a chain fails at its narrowest point. A well-funded state can copy mature tools in a few years, and China's domestic tools went from 25 percent of its own equipment market in 2024 to 35 percent in 2025. Extreme-ultraviolet machines and high-bandwidth memory at scale are the two it cannot reach before 2028, and an actor still able to buy from ASML and the memory makers is buying rather than building, so this clock belongs to whoever is fenced out."}
+    "substitutability": {"band": "Very hard", "test": "Rated at the chain's hardest link: one country holds 100 percent of EUV and no substitute is in reach before 2028", "why": "A well-funded state can copy mature tools in a few years, and China's domestic tools went from 25 percent of its own equipment market in 2024 to 35 percent in 2025. Extreme-ultraviolet machines and high-bandwidth memory at scale are the two it cannot reach before 2028, and an actor still able to buy from ASML and the memory makers is buying rather than building, so this clock belongs to whoever is fenced out."}
   },
   "keyFacts": [
     {"fact": "Taiwan's foundries hold 78% of the global foundry market on the Taiwan Semiconductor Industry Association's 2025 count; the 92% often quoted for the most advanced chips is a February 2024 US International Trade Commission figure that the same Stimson explainer relays", "source": "https://www.stimson.org/2025/why-taiwan-fears-america-first-risks-eroding-its-silicon-shield/"},
@@ -72,7 +72,7 @@
         ["2025-01-15", "AI Diffusion rule published, three country tiers"],
         ["2025-05-13", "AI Diffusion rescinded"],
         ["2025-08-11", "US officials seek 15% of licensed H20 sales"],
-        ["2026-01-13", "H200 and MI325X moved to case-by-case review"]
+        ["2026-01-13", "H200 and MI325X case-by-case review announced, effective 15 January"]
       ],
       "source": {"label": "BIS press releases and Federal Register rules", "url": "https://www.bis.gov/news-updates"}
     }
@@ -81,7 +81,7 @@
 ---
 # Geopolitics
 
-Washington's control regime and Beijing's answer to it are both unfinished. What follows is a status report on each.
+Washington's control regime and Beijing's answer to it are both unfinished.
 
 ## The shape of the contest
 
@@ -98,8 +98,8 @@ In 2022 Washington changed the goal from staying a generation ahead to "as large
 | Metrology and inspection | United States | 72% | revenue, 2025 |
 | Deposition | United States | 60% | revenue, 2025 |
 | Etch and clean | United States | 53% | revenue, 2025 |
-| Photoresist | Japan | 75% | revenue, 2024 |
-| Silicon wafers | Japan | 51% | revenue, 2025 |
+| Photoresist | Japan | 78.4% | revenue, 2023 |
+| Silicon wafers | Japan | 53% | revenue, 2023 |
 | Leading-edge logic, 5 nm and below | Taiwan | 72% | capacity, 2025, site estimate |
 | Foundry, all nodes | Taiwan | 78% | market share, 2025 |
 | HBM | South Korea | 82.5% | revenue, 2025: SK hynix 63.2, Samsung 19.3, Micron 17.4 |
@@ -107,13 +107,13 @@ In 2022 Washington changed the goal from staying a generation ahead to "as large
 | Mature logic, 28 nm and above | China | 38% | capacity, 2025, site estimate |
 
 - **Equipment.** CSET's ETO Supply Chain Explorer, TechInsights 2025 revenue by parent-company headquarters ([source](https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv)).
-- **Materials.** CSET's 2021 segment map ([source](https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/)).
+- **Materials.** Country shares of photoresist and silicon wafers as Japan's Ministry of Economy, Trade and Industry published them in December 2025, from Fuji Keizai's materials survey, by parent-company headquarters ([source](https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf)). Japan held 76.7 percent of photoresist in 2021 and 78.4 in 2023, and 52.4 percent of wafers against 53.0, so neither position is moving.
 - **Taiwan.** The 78 percent is the Taiwan Semiconductor Industry Association's 2025 count, as the Stimson Center gives it ([source](https://www.stimson.org/2025/why-taiwan-fears-america-first-risks-eroding-its-silicon-shield/)). The 72 percent is our own estimate for capacity at 5 nm and below, rolled forward from the 2022 industry baseline because nobody publishes a current measurement ([source](https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf)). The 92 percent quoted more often is a February 2024 US International Trade Commission figure, relayed by that same Stimson piece, on a wider reading of "most advanced" ([source](https://www.stimson.org/2025/why-taiwan-fears-america-first-risks-eroding-its-silicon-shield/)).
-- **Memory.** SK hynix's US listing prospectus splits 2025 high-bandwidth memory revenue between SK hynix at 63.2 percent, Samsung at 19.3 and Micron at 17.4, so Korea holds 82.5; by the first quarter of 2026 Korea was down to 76.9 ([source](https://www.sec.gov/Archives/edgar/data/0002120882/000119312526299963/d32785d424b4.htm)). The underlying figures are IDC's, and the prospectus relays them, which is what makes them usable here.
+- **Memory.** SK hynix's US listing prospectus splits 2025 high-bandwidth memory revenue between SK hynix at 63.2 percent, Samsung at 19.3 and Micron at 17.4, so Korea holds 82.5; by the first quarter of 2026 Korea was down to 76.9 ([source](https://www.sec.gov/Archives/edgar/data/0002120882/000119312526299963/d32785d424b4.htm)). The underlying figures are IDC's, relayed by the prospectus.
 - **Design.** CSIS ([source](https://www.csis.org/analysis/chinas-localization-drive-semiconductors-gains-impetus-allied-chip-export-controls)).
 - **China's mature nodes.** The 38 percent is our own reading of logic capacity at 28 nm and above. It sits between the 2022 industry measurement ([source](https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf)) and CSIS's finding that China now holds about half of global mature-node capacity, on a broader definition that sweeps in discrete, analog and power chips ([source](https://www.csis.org/analysis/chinas-localization-drive-semiconductors-gains-impetus-allied-chip-export-controls)).
 
-Advanced packaging belongs in that table, but nobody publishes a capacity split and TSMC will not give one. No country in the table is self-sufficient, so controls bite in both directions.
+Advanced packaging belongs in that table, but nobody publishes a capacity split and TSMC will not give one. No country is self-sufficient, so controls bite in both directions.
 
 ## The US export-control campaign, 2018 to today
 
@@ -123,17 +123,27 @@ Commerce built the regime one rule at a time, each closing a gap the last one le
 - **7 October 2022, the break.** Two new export classifications, 3A090 and 3B090, capped exportable AI chips and set fab thresholds at 16 nm FinFET logic, 18 nm half-pitch DRAM and 128-layer NAND ([source](https://www.csis.org/analysis/choking-chinas-access-future-ai)). They also barred US persons from servicing advanced Chinese fabs, emptying them of American engineers within days ([source](https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor)).
 - **17 October 2023, the density fix.** Chip designers had tuned interconnect speed to slip under the 2022 line while keeping the compute, so Commerce's Bureau of Industry and Security (BIS) dropped that parameter for two others: total processing performance and performance density. A data-centre chip now needs a licence at 4,800 points of that performance score, or at 1,600 with a density of 5.92 ([source](https://cset.georgetown.edu/article/bis-2023-update-explainer/)).
 - **2 December 2024, the widest package.** 24 equipment types, three software tools, the first controls on high-bandwidth memory and 140 Entity List additions ([source](https://www.bis.gov/press-release/commerce-strengthens-export-controls-restrict-chinas-capability-produce-advanced-semiconductors-military)).
-- **15 January 2025, AI Diffusion.** A rule sorting the world into three tiers of compute allocation ([source](https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion)), pulled on 13 May, two days before it bound ([source](https://www.bis.gov/press-release/department-commerce-announces-rescission-biden-era-artificial-intelligence-diffusion-rule-strengthens)). No tiered replacement has appeared.
+- **15 January 2025, AI Diffusion.** A rule requiring a licence for the top band of accelerators, 3A090.a and 4A090.a, to any destination worldwide, then reopening it by exception: License Exception AIA to the nineteen destinations named in supplement no. 5 to part 740, License Exception LPP in capped volumes elsewhere, nothing to China ([source](https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion)). BIS said on 13 May that it would not enforce the framework, two days before the compliance date ([source](https://www.bis.gov/press-release/department-commerce-announces-rescission-biden-era-artificial-intelligence-diffusion-rule-strengthens)). It withdrew none of the text. The worldwide licence requirement, License Exceptions AIA, ACM and LPP, supplement no. 5 and the 790 million TPP per-country allocation all stand in the Code today, and BIS says it enforces the requirement only against Country Groups D:1, D:4 and D:5 and against firms headquartered in D:5 or Macau ([source](https://www.federalregister.gov/documents/2026/07/14/2026-14132/enhanced-favorable-treatment-for-the-united-arab-emirates-under-the-export-administration)) ([source](https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-742/section-742.6)). No tiered replacement has appeared; bilateral deals took the place of the caps.
 
-The H20 sequence shows the drift. On 9 April 2025 the government told Nvidia it needed a licence to ship the H20 to China, to the D:5 group of arms-embargoed countries, and to any company headquartered or ultimately owned there, so no Chinese buyer could route the order through a foreign subsidiary ([source](https://www.sec.gov/Archives/edgar/data/1045810/000104581025000082/nvda-20250409.htm)). Nvidia took a $4.5 billion charge on stock it could no longer sell. Licences came back in August at a price: US officials, the filing says, "have expressed an expectation that the USG will receive 15 percent of the revenue generated from licensed H20 sales", though no regulation codifies it ([source](https://www.sec.gov/Archives/edgar/data/1045810/000104581025000209/nvda-20250727.htm)).
+On 9 April 2025 the government told Nvidia it needed a licence to ship the H20 to China, to the D:5 group of arms-embargoed countries, and to any company headquartered or ultimately owned there, so no Chinese buyer could route the order through a foreign subsidiary ([source](https://www.sec.gov/Archives/edgar/data/1045810/000104581025000082/nvda-20250409.htm)). Nvidia took a $4.5 billion charge on stock it could no longer sell. Licences came back in August at a price: US officials, the filing says, "have expressed an expectation that the USG will receive 15 percent of the revenue generated from licensed H20 sales", though no regulation codifies it ([source](https://www.sec.gov/Archives/edgar/data/1045810/000104581025000209/nvda-20250727.htm)).
 
 Early 2026 set the current settlement.
 
-- **13 January 2026.** BIS moved the H200 and AMD MI325X to case-by-case review, with third-party testing and a cap at 50 percent of what the exporter ships to US customers ([source](https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities)).
+- **13 January 2026, effective 15 January.** BIS announced on 13 January that it would move the H200 and AMD MI325X to case-by-case review, with third-party testing and a cap at 50 percent of what the exporter ships to US customers ([source](https://www.bis.gov/press-release/department-commerce-revises-license-review-policy-semiconductors-exported-china)). The rule, at 91 FR 1685, took effect on publication two days later ([source](https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities)).
 - **15 January 2026.** A national-security proclamation under Section 232 put a 25 percent tariff on the same class of chips, then exempted almost every American use, from data centres to startups ([source](https://www.federalregister.gov/documents/2026/01/20/2026-01052/adjusting-imports-of-semiconductors-semiconductor-manufacturing-equipment-and-their-derivative)).
 - **12 February 2026.** Applied Materials paid $252 million, the statutory maximum, over $126 million of ion implanters routed through Korea to an Entity-Listed Chinese customer ([source](https://www.bis.gov/press-release/applied-materials-pay-252-million-penalty-bis-illegally-exporting-semiconductor-manufacturing-equipment)).
 
 {{figure:control-timeline}}
+
+## Cloud and remote access
+
+Renting a chip is not exporting it. An export, at 15 CFR 734.13, is a shipment or transmission out of the United States or a release of technology or source code to a foreign person, so a Singapore data centre selling time on an H200 already installed there moves nothing across a border ([source](https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-734/section-734.13)).
+
+The rules reach that trade through the people holding the chips. A January 2026 licence for China or Macau is conditioned on the applicant getting the consignee's know-your-customer procedures and its list of Infrastructure-as-a-Service customers in Belarus, China, Cuba, Iran, Macau, North Korea, Russia and Venezuela, "necessary to prevent unauthorized remote access from end users described in paragraph (dd)(1)(iv)", and on a promise that no algorithm trained on the chips is served back to those users ([source](https://www.govinfo.gov/content/pkg/FR-2026-01-15/html/2026-00789.htm)).
+
+The diffusion rule went at the other end, the output. It classified frontier model weights as ECCN 4E091, warned American cloud providers that training such a model for the US subsidiary of a foreign-headquartered customer raises a red flag that the weights will leave without a licence, and barred its validated end users from training one abroad, while saying that API access to a model, and rented capacity for inference, "are not prohibited" ([source](https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion)).
+
+So the controls reach the chip, the weights above the line, and the promises a licensed consignee signs. Compute sold by the hour on chips lawfully installed abroad sits outside them.
 
 ## Allies: the Netherlands, Japan, Korea and Europe
 
@@ -188,7 +198,7 @@ Taiwan is the concentration risk that no policy has reduced. Its foundries hold 
 
 The silicon shield argument holds that this concentration deters invasion: destroying TSMC would cost an aggressor more than the island is worth. The counter is that staying irreplaceable gives Taipei reason to slow the diversification Washington wants. Taiwan bars the overseas production of its most advanced chips, so what TSMC builds in the United States runs a generation behind what it builds at home, and nobody expects Arizona to reach 2 nm before 2028 ([source](https://www.stimson.org/2025/why-taiwan-fears-america-first-risks-eroding-its-silicon-shield/)).
 
-Arizona narrows the gap in wafers, and TSMC has two advanced packaging fabs planned there ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf)). But a fab without its Taiwanese mask shops, chemical suppliers and trained crews is not a substitute. We think the shield is real and weakening, and that diversification is not keeping up.
+Arizona narrows the gap in wafers, and TSMC has two advanced packaging fabs planned there ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf)). But a fab without its Taiwanese mask shops, chemical suppliers and trained crews is not a substitute. The shield is real and weakening, and diversification is not keeping up.
 
 ## Where the chips go: the Gulf, Southeast Asia, and smuggling
 

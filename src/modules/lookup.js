@@ -72,7 +72,7 @@
       else { var list2 = $('#lk-items'); all.slice().sort(function (a, b) { return a.querySelector('.lk-name').textContent.localeCompare(b.querySelector('.lk-name').textContent, 'en', { sensitivity: 'base' }); }).forEach(function (li) { list2.appendChild(li); }); }
       this.cursor = -1;
       var c = $('#lk-count'), terms = $$('#lk-items li[data-kind="term"]').length, firms = $$('#lk-items li[data-kind="firm"]').length, chips = $$('#lk-items li[data-kind="chip"]').length;
-      if (c) c.textContent = q ? (n ? n + ' of ' + all.length + ' entries' : 'No entry matches. Anything the site says about it is below.') : all.length + ' entries · ' + terms + ' terms · ' + firms + ' firms · ' + chips + ' chips';
+      if (c) c.textContent = q ? (n ? n + ' of ' + all.length + ' entries' : 'No entry matches.') : all.length + ' entries · ' + terms + ' terms · ' + firms + ' firms · ' + chips + ' chips';
       $('#lk-list').classList.toggle('is-open', !!q || document.activeElement === $('#gl-search'));
       if (q && !n) this.showRaw(q); // no entry, but the site may still mention it: a tool model, a place, a person
       else if (q && n && (!this.selected || document.getElementById(this.selected).hidden)) this.select(this.visible()[0].id, true);
@@ -116,7 +116,7 @@
       $$('#glossary .gl-entry').forEach(function (e) { e.hidden = true; });
       var near = this.nearest(q);
       var card = $('#lk-card'); card.hidden = false;
-      card.innerHTML = '<div class="lk-noentry"><b>' + esc(q) + '</b><p>No entry of its own.</p>' + (near.length ? '<p class="lk-near">Did you mean ' + near.map(function (li) { return '<button type="button" data-go="' + esc(li.id) + '">' + esc(li.querySelector('.lk-name').textContent) + '</button>'; }).join(' ') + '</p>' : '') + '</div>';
+      card.innerHTML = '<div class="lk-noentry"><b>' + esc(q) + '</b><p>No entry.</p>' + (near.length ? '<p class="lk-near">Did you mean ' + near.map(function (li) { return '<button type="button" data-go="' + esc(li.id) + '">' + esc(li.querySelector('.lk-name').textContent) + '</button>'; }).join(' ') + '</p>' : '') + '</div>';
       $$('[data-go]', card).forEach(function (b) { b.addEventListener('click', function () { var inp = $('#gl-search'); inp.value = ''; self.filter(''); self.select(b.getAttribute('data-go'), true); }); });
       $('#lk-rest').hidden = true;
       this.mentions([q], 'raw', q);
@@ -152,7 +152,7 @@
         (r.shareNote ? '<p class="lk-p">' + esc(r.shareNote) + '</p>' : '') +
         (r.aiRelevance ? '<p class="lk-p lk-why">' + esc(r.aiRelevance) + '</p>' : '') +
         (facts.length ? '<dl class="lk-facts">' + facts.map(function (f) { return '<div><dt>' + esc(f[0]) + '</dt><dd>' + esc(f[1]) + '</dd></div>'; }).join('') + '</dl>' : '') +
-        '<p class="lk-links"><a href="#/suppliers" data-sup="' + esc(r.name) + '">See it among the suppliers →</a>' + (r.source && CP.safeUrl(r.source) ? ' <a href="' + esc(CP.safeUrl(r.source)) + '" target="_blank" rel="noopener">Company page ↗</a>' : '') + '</p>' +
+        '<p class="lk-links"><a href="#/suppliers" data-sup="' + esc(r.name) + '">In the supplier list →</a>' + (r.source && CP.safeUrl(r.source) ? ' <a href="' + esc(CP.safeUrl(r.source)) + '" target="_blank" rel="noopener">Company page ↗</a>' : '') + '</p>' +
         '</article>';
     },
 
@@ -173,7 +173,7 @@
         (c.notes ? '<p class="lk-lede">' + esc(c.notes) + '</p>' : '') +
         (c.exportStatus ? '<p class="lk-p lk-why"><b>Export status.</b> ' + esc(c.exportStatus) + '</p>' : '') +
         (facts.length ? '<dl class="lk-facts">' + facts.map(function (f) { return '<div><dt>' + esc(f[0]) + '</dt><dd>' + esc(f[1]) + '</dd></div>'; }).join('') + '</dl>' : '') +
-        '<p class="lk-links"><a href="#/landscape" data-chip="' + esc(c.id) + '">Open it on AI Chips →</a></p>' +
+        '<p class="lk-links"><a href="#/landscape" data-chip="' + esc(c.id) + '">On AI Chips →</a></p>' +
         '</article>';
     },
 
@@ -235,11 +235,11 @@
       (Array.isArray(DATA.flows) ? DATA.flows : ((DATA.flows || {}).flows || [])).forEach(function (f) { (f.states || []).forEach(function (st) { re.lastIndex = 0; if (st.label && re.test(st.label)) hits.push({ src: 'The board', sub: f.name, html: mark(st.label), href: '#/controls' }); }); });
       (DATA.landscape || []).forEach(function (c) { if (kind === 'chip' && c.id === key) return; var t = [c.notes || '', c.exportStatus || ''].join(' '); var s = self.sentence(t, re); if (s) hits.push({ src: 'AI Chips', sub: c.vendor + ' ' + c.name, html: mark(s), href: '#/landscape', chip: c.id }); });
       (DATA.suppliers || []).forEach(function (r) { if (kind === 'firm' && r.name === key) return; var t = [r.role || '', r.shareNote || '', r.aiRelevance || ''].join(' '); var s = self.sentence(t, re); if (s) hits.push({ src: 'Suppliers', sub: r.name, html: mark(s), href: '#/suppliers', sup: r.name }); });
-      if (!hits.length) { box.hidden = false; box.innerHTML = '<h3 class="lk-h">Where the site uses it</h3><p class="lk-none">' + (kind === 'firm' ? 'Only in the supplier list so far.' : kind === 'chip' ? 'Only on the AI Chips page so far.' : kind === 'term' ? 'Only in this entry so far.' : 'Nowhere on the site.') + '</p>'; return; }
+      if (!hits.length) { box.hidden = false; box.innerHTML = '<h3 class="lk-h">Where it appears</h3><p class="lk-none">' + (kind === 'firm' ? 'Only in the supplier list.' : kind === 'chip' ? 'Only on the AI Chips page.' : kind === 'term' ? 'Only in this entry.' : 'Nowhere else.') + '</p>'; return; }
       var LIMIT = 12, all = hits.length;
       var row = function (h) { var attrs = h.para != null ? ' data-para="' + h.para + '"' : h.chip ? ' data-chip="' + esc(h.chip) + '"' : h.sup ? ' data-sup="' + esc(h.sup) + '"' : ''; return '<li><a href="' + esc(h.href) + '"' + attrs + '><span class="lk-src"><b>' + esc(h.src) + '</b>' + esc(h.sub) + '</span><span class="lk-txt">' + h.html + '</span></a></li>'; };
       box.hidden = false;
-      box.innerHTML = '<h3 class="lk-h">Where the site uses it <span class="lk-n">' + all + (all === 1 ? ' place' : ' places') + '</span></h3><ul class="lk-men">' + hits.slice(0, LIMIT).map(row).join('') + '</ul>' + (all > LIMIT ? '<p class="lk-more"><button type="button">Show all ' + all + '</button></p>' : '');
+      box.innerHTML = '<h3 class="lk-h">Where it appears <span class="lk-n">' + all + (all === 1 ? ' place' : ' places') + '</span></h3><ul class="lk-men">' + hits.slice(0, LIMIT).map(row).join('') + '</ul>' + (all > LIMIT ? '<p class="lk-more"><button type="button">Show all ' + all + '</button></p>' : '');
       var more = $('.lk-more button', box); if (more) more.addEventListener('click', function () { $('.lk-men', box).innerHTML = hits.map(row).join(''); more.parentNode.removeChild(more); self.wire(box); });
       this.wire(box);
     }

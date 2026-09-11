@@ -787,7 +787,7 @@
       "Chinese cloud operators",
       "Domestic server OEMs"
     ],
-    "aiRelevance": "Part of the cohort of Chinese GPU startups that listed in 2025 and 2026 to fund domestic AI silicon.",
+    "aiRelevance": "One of the Chinese GPU startups that listed in 2025 and 2026 to fund domestic AI silicon.",
     "revenueUSDb": 0.244,
     "revenueYear": 2025,
     "source": "https://www.metax-tech.com/en/"
@@ -809,7 +809,7 @@
       "Chinese cloud operators",
       "Chinese universities"
     ],
-    "aiRelevance": "Another domestic substitution vendor competing for the Chinese training market that Nvidia can no longer serve.",
+    "aiRelevance": "A domestic vendor competing for the Chinese training market that Nvidia can no longer serve.",
     "revenueUSDb": 0.154,
     "revenueYear": 2025,
     "source": "https://www.iluvatar.com/"
@@ -1080,7 +1080,7 @@
     "founded": 1992,
     "ticker": "SOI.PA",
     "ownership": "Public",
-    "role": "Makes engineered substrates using its Smart Cut layer transfer process, mainly silicon-on-insulator for RF and automotive chips and piezoelectric-on-insulator for filters. Its exposure to data-centre AI is indirect.",
+    "role": "Makes engineered substrates using its Smart Cut layer transfer process, mainly silicon-on-insulator for RF and automotive chips and piezoelectric-on-insulator for filters.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2614,7 +2614,7 @@
       "YMTC",
       "BOE"
     ],
-    "aiRelevance": "Another piece of China's effort to build a full domestic toolset rather than importing process control.",
+    "aiRelevance": "China's effort to build process control at home rather than import it.",
     "revenueUSDb": 0.498,
     "revenueYear": 2025,
     "source": "https://www.wuhanjingce.com/en/"
@@ -3451,7 +3451,7 @@
       "Chinese fabless firms",
       "Automotive and consumer OEMs"
     ],
-    "aiRelevance": "Part of the domestic packaging base that Chinese AI accelerators depend on.",
+    "aiRelevance": "Domestic packaging capacity that Chinese AI accelerators depend on.",
     "revenueUSDb": 2.559,
     "revenueYear": 2025,
     "source": "https://disc.static.szse.cn/disc/disk03/finalpage/2026-03-31/a0209878-88e7-443c-b062-6a33047d9c98.PDF"
@@ -4981,7 +4981,7 @@
       "CoreWeave",
       "Digital Realty"
     ],
-    "aiRelevance": "A 132 kW rack cannot be air cooled, so the coolant distribution unit is now as critical as the server itself.",
+    "aiRelevance": "A 132 kW rack cannot be air cooled, so the coolant distribution unit now matters as much as the server itself.",
     "revenueUSDb": 10.23,
     "revenueYear": 2025,
     "source": "https://www.vertiv.com/"

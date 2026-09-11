@@ -338,7 +338,7 @@
       var wrap = $('#cx-table-wrap'), bar = wrap && wrap.previousElementSibling;
       if (bar && bar.classList && bar.classList.contains('export-bar')) {
         var n = bar.querySelector('.count');
-        if (n) n.textContent = rows.length + (rows.length === 1 ? ' row' : ' rows') + ' · the chips you picked';
+        if (n) n.textContent = rows.length + (rows.length === 1 ? ' row' : ' rows') + ' · chips compared';
       }
     },
 
@@ -410,7 +410,7 @@
         this.picked.splice(at, 1);
         if (this.sel === id) this.sel = this.picked[0] || null;
       } else {
-        if (this.picked.length >= this.max) { this.say('Four is the limit. Click a selected chip to remove it.'); return; }
+        if (this.picked.length >= this.max) { this.say('Four is the limit.'); return; }
         this.picked.push(id);
         this.sel = id;
       }
@@ -437,7 +437,7 @@
     clear: function () {
       this.picked = []; this.sel = null; this.hint = '';
       this.render();
-      Stage.show('package', { plan: true }, 'An AI accelerator package, drawn from above. Pick a chip to see its own layout.', 'AI chips · <b>pick a chip</b>');
+      Stage.show('package', { plan: true }, 'An AI accelerator package, drawn from above.', 'AI chips · <b>package</b>');
     },
 
     /* ---- render ---- */
@@ -767,7 +767,7 @@
         labs += '<g class="sup-lab" data-i="' + i + '"><text class="sup-lab-t" x="' + (x1 + wR + 8) + '" y="' + (mid + 4).toFixed(1) + '" font-size="' + fsR + '">' + esc(s.short) + '<tspan class="sup-lab-n"> ' + s.n + '</tspan></text></g>';
         var top = Math.min(yy[0], mid - 9), hgt = Math.max(18, yy[1] - yy[0]);
         hits += '<rect class="sup-hit" data-i="' + i + '" x="' + (x1 - 6) + '" y="' + top.toFixed(1) + '" width="' + (W - x1 + 6) + '" height="' + hgt.toFixed(1) +
-          '" role="button" tabindex="' + (i === self.at ? '0' : '-1') + '" aria-label="' + esc(s.name + ': ' + s.n + ' firms, ' + s.crit.length + ' critical. Show this stage in the list.') + '"></rect>';
+          '" role="button" tabindex="' + (i === self.at ? '0' : '-1') + '" aria-label="' + esc(s.name + ': ' + s.n + ' firms, ' + s.crit.length + ' critical.') + '"></rect>';
       });
       host.innerHTML = '<svg class="sup-pipe-svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" role="group" aria-label="Countries to stages: a ribbon for every country and stage pairing, its width the number of firms, amber where one is Critical">' +
         '<defs><clipPath id="sup-wipe-clip"><rect class="sup-wipe' + (this.wiped ? '' : ' is-new') + '" x="0" y="0" width="' + W + '" height="' + H + '"></rect></clipPath></defs>' +
@@ -843,7 +843,7 @@
       var self = this, h = '';
       this.CO.concat(['Other']).forEach(function (c) { h += '<span class="sup-lg"><i class="sup-sw c-' + c + '"></i>' + esc(self.coName(c)) + '</span>'; });
       $('#sup-legend').innerHTML = h + '<span class="sup-lg"><i class="sup-crit-sw"></i>holds a Critical firm</span>' +
-        '<span class="sup-lg-note">Ribbon width is the number of firms a country has at a stage. Click a country or a stage to filter the list; click a ribbon for both.</span>';
+        '<span class="sup-lg-note">Ribbon width is the number of firms a country has at a stage.</span>';
     },
     tipAt: function (el, anchor, alignRight) { // place #sup-tip beside an element of the drawing, inside #sup-pipe
       var host = $('#sup-pipe'); if (!host || !anchor) return;
@@ -888,7 +888,7 @@
       var names = rows.map(function (r) { var n = (r.chokepoint === 'Critical' ? '<b>' + esc(r.name) + '</b>' : esc(r.name)); return isOther ? n + ' <small>(' + esc(cname(r.country)) + ')</small>' : n; });
       var others = isOther ? this.otherNames(rows) : [];
       el.innerHTML = '<b>' + esc(this.coName(c)) + ' → ' + esc(s.name) + '</b><span class="sup-tip-n">' + rows.length + (rows.length === 1 ? ' firm' : ' firms') + (others.length ? ' from ' + esc(others.join(', ')) : '') + (names.some(function (x) { return x.indexOf('<b>') === 0; }) ? ' · bold is Critical' : '') + '</span>' +
-        '<span class="sup-tip-co sup-tip-stages">' + names.join(', ') + '</span><span class="sup-tip-more">Click to show these firms</span>';
+        '<span class="sup-tip-co sup-tip-stages">' + names.join(', ') + '</span>';
       var host = $('#sup-pipe'), m = host.getBoundingClientRect(), r = anchor.getBoundingClientRect();
       el.hidden = false;
       var left = Math.max(0, Math.min((r.left + r.right) / 2 - m.left - el.offsetWidth / 2, m.width - el.offsetWidth));
@@ -966,7 +966,7 @@
     },
     render: function () {
       var rows = this.filtered();
-      $('#sup-count').textContent = 'Showing ' + rows.length + ' of ' + this.rows.length + ' suppliers' +
+      $('#sup-count').textContent = (rows.length === this.rows.length ? rows.length + ' suppliers' : rows.length + ' of ' + this.rows.length + ' suppliers') +
         (this.stage ? ' · ' + this.stage : '') + (this.country ? ' · ' + this.countryLabel() : '') + (this.chk ? ' · ' + this.chk : '');
       var allBtn = $('#sup-allstages'); if (allBtn) allBtn.hidden = !this.stage;
       if (this.mode === 'table') this.renderTable(rows); else this.applyFilter();
@@ -1050,7 +1050,7 @@
     renderTable: function (rows) {
       var self = this;
       var th = function (k, label) { return '<th><button type="button" data-sort="' + k + '"' + (self.sortKey === k ? ' aria-sort="' + (self.sortDir > 0 ? 'ascending' : 'descending') + '"' : '') + '>' + label + '</button></th>'; };
-      var html = '<thead><tr>' + th('name', 'Supplier') + th('category', 'Category') + th('country', 'Country') + th('founded', 'Founded') + th('chokepoint', 'Chokepoint level') + '<th>What they make and why it matters</th><th>Customers</th></tr></thead><tbody>';
+      var html = '<thead><tr>' + th('name', 'Supplier') + th('category', 'Category') + th('country', 'Country') + th('founded', 'Founded') + th('chokepoint', 'Chokepoint level') + '<th>What they make</th><th>Customers</th></tr></thead><tbody>';
       rows.forEach(function (r) {
         html += '<tr><td class="name"><b>' + esc(r.name) + '</b><span>' + esc([r.nativeName, r.ticker].filter(Boolean).join(' · ')) + '</span></td>' +
           '<td>' + esc(r.category) + (r.subcategory ? '<br><span class="cc" style="color:var(--muted)">' + esc(r.subcategory) + '</span>' : '') + '</td>' +
@@ -1176,7 +1176,7 @@
       if (this.flows) {
         this.flows.forEach(function (f) { self.byId[f.id] = f; self.evs[f.id] = self.eventsFor(f); });
         var lead = $('#cf-intro'); // the count is the data's, not the copy's: the editor may split a flow
-        if (lead) lead.textContent = this.numWord(this.flows.length) + ' things move across the chokepoint, each with the licence outcome it stands in today.';
+        if (lead) lead.textContent = this.numWord(this.flows.length) + ' things move across the chokepoint.';
         this.wireBoard();
         this.renderScrub();
         this.renderBoard();
@@ -1596,6 +1596,10 @@
       if (!this.flows || this.mode !== 'date' || !items.length || !side || !side.offsetParent) return;
       var mast = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--masthead')) || 56;
       var probe = mast + Math.round((window.innerHeight - mast) * 0.3); // the reading line sits a third of the way down, not at the masthead
+      if (items[0].getBoundingClientRect().top > probe) { // the reader has not reached the chronology yet: the board shows today
+        if (this.at !== -1 || this.asOf !== this.now) { this.at = -1; this.setAsOf(this.now, [this.now, this.now]); }
+        return;
+      }
       var at = 0; // the first entry still crossing the reading line: the one the reader is on
       for (var i = 0; i < items.length; i++) { at = i; if (items[i].getBoundingClientRect().bottom > probe) break; }
       if (at === this.at) return;
@@ -1639,7 +1643,7 @@
       var meta = [d.p, d.d].filter(Boolean).join(' · ');
       t.innerHTML = (d.tier ? '<span class="tier tier-' + esc(d.tier) + '" title="Source tier ' + esc(d.tier) + '">' + esc(d.tier) + '</span>' : '') +
         '<b>' + esc(d.t || hostName || a.href) + '</b>' + (meta ? '<p>' + esc(meta) + '</p>' : '') +
-        '<a href="' + safeUrl(a.href) + '" target="_blank" rel="noopener">Open the source' + (hostName ? ' · ' + esc(hostName) : '') + ' ↗</a>';
+        '<a href="' + safeUrl(a.href) + '" target="_blank" rel="noopener">' + (hostName ? esc(hostName) : 'Source') + ' ↗</a>';
       t.hidden = false;
       this.a = a; this.at = Date.now(); a.setAttribute('aria-describedby', 'ct-tip');
       this.place(a);
@@ -1774,7 +1778,7 @@
         var showTip = function (c) {
           var d = c.dataset, cur = (d.cur || '').replace(/\s*million\s*/i, '');
           var money = d.china && d.total ? ' · ' + (cur ? cur + ' ' : '') + fmtM(d.china) + ' of ' + fmtM(d.total) : '';
-          tip.innerHTML = '<b>' + esc(d.firm) + ' · ' + esc(d.fy) + '</b>China was ' + esc(d.share) + '% of revenue' + money + (d.basis ? '<br>' + esc(d.basis) : '') + '<br>Click to open the filing';
+          tip.innerHTML = '<b>' + esc(d.firm) + ' · ' + esc(d.fy) + '</b>China was ' + esc(d.share) + '% of revenue' + money + (d.basis ? '<br>' + esc(d.basis) : '');
           tip.hidden = false;
           var r = c.getBoundingClientRect(), x = r.left + r.width / 2 + window.scrollX, y = r.top + window.scrollY;
           tip.style.left = Math.max(8, Math.min(x - tip.offsetWidth / 2, window.scrollX + window.innerWidth - tip.offsetWidth - 8)) + 'px';
@@ -1807,7 +1811,7 @@
     buildIndex: function () {
       if (this.index) return this.index;
       var idx = [];
-      idx.push({ kind: 'Start here', title: 'How AI chips are made', text: 'One plain paragraph per stage, in order, with the specimens: the chain in one sitting', href: '#/intro' });
+      idx.push({ kind: 'Start here', title: 'How AI chips are made', text: 'One plain paragraph per stage, in order, with the specimens', href: '#/intro' });
       (DATA.chapters || []).forEach(function (c) { if (c.plain && c.id !== 'introduction-and-goals') idx.push({ kind: 'Start here', title: c.title + ', in plain terms', text: c.plain, href: '#/walk/' + c.id }); });
       $$('[data-view="stack"] .chapter').forEach(function (ch) {
         var title = (ch.querySelector('.ch-title') || {}).textContent || ch.id;
@@ -1872,13 +1876,13 @@
         var n = 0; while (n < qn.length && n < i.tn.length && qn.charAt(n) === i.tn.charAt(n)) n++;
         return { i: i, n: n };
       }).sort(function (a, b) { return b.n - a.n || a.i.tn.length - b.i.tn.length; }).slice(0, 3);
-      return { hits: near.map(function (x) { return x.i; }), note: 'Nothing matches. The nearest entries in the Index.' };
+      return { hits: near.map(function (x) { return x.i; }), note: 'Nothing matches. Nearest terms:' };
     },
     open: function () {
       var self = this, box = $('#cp-search');
       if (!box) {
-        box = document.createElement('div'); box.id = 'cp-search'; box.hidden = true; box.setAttribute('role', 'dialog'); box.setAttribute('aria-label', 'Search the site');
-        box.innerHTML = '<div class="cp-search-panel"><input type="search" placeholder="Search chapters, terms, suppliers, chips and events…" aria-label="Search"><ol class="cp-search-results"></ol><p class="cp-search-hint">Type to search · Enter opens the first result · Esc closes</p></div>';
+        box = document.createElement('div'); box.id = 'cp-search'; box.hidden = true; box.setAttribute('role', 'dialog'); box.setAttribute('aria-label', 'Search');
+        box.innerHTML = '<div class="cp-search-panel"><input type="search" placeholder="Search chapters, terms, suppliers, chips and events…" aria-label="Search"><ol class="cp-search-results"></ol><p class="cp-search-hint">Enter opens the first result · Esc closes</p></div>';
         document.body.appendChild(box);
         var inp = $('input', box), list = $('ol', box);
         box.addEventListener('click', function (e) { if (e.target === box) self.close(); });
@@ -1889,7 +1893,7 @@
           if (!q) { list.innerHTML = ''; return; }
           var res = self.search(q), hits = res.hits;
           list.innerHTML = (res.note ? '<li class="none">' + esc(res.note) + '</li>' : '') +
-            (hits.map(function (h, k) { return '<li><a href="' + safeUrl(h.href) + '" data-k="' + k + '"><span class="k">' + esc(h.kind) + '</span><b>' + esc(h.title) + '</b><span class="t">' + esc(h.text.slice(0, 140)) + '</span></a></li>'; }).join('') || (res.note ? '' : '<li class="none">Nothing matches. Try fewer words.</li>'));
+            (hits.map(function (h, k) { return '<li><a href="' + safeUrl(h.href) + '" data-k="' + k + '"><span class="k">' + esc(h.kind) + '</span><b>' + esc(h.title) + '</b><span class="t">' + esc(h.text.slice(0, 140)) + '</span></a></li>'; }).join('') || (res.note ? '' : '<li class="none">Nothing matches.</li>'));
           list.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { var h = hits[+a.getAttribute('data-k')]; self.close(true); if (h.chip) setTimeout(function () { Landscape.select(h.chip); }, 60); if (h.q) setTimeout(function () { var s = $('#sup-search'); if (s) { s.value = h.q; s.dispatchEvent(new Event('input')); } }, 60); if (h.el) setTimeout(function () { h.el.scrollIntoView({ block: 'center' }); }, 60); }); });
         });
       }
@@ -1905,7 +1909,7 @@
     init: function () {
       var self = this;
       // search button in the masthead
-      var nav = $('.tabs'), btn = document.createElement('button'); btn.type = 'button'; btn.className = 'search-btn'; btn.setAttribute('aria-label', 'Search'); btn.title = 'Search the site (Ctrl+K, or press /)';
+      var nav = $('.tabs'), btn = document.createElement('button'); btn.type = 'button'; btn.className = 'search-btn'; btn.setAttribute('aria-label', 'Search'); btn.title = 'Search (Ctrl+K, or press /)';
       btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>';
       btn.addEventListener('click', function () { self.open(); });
       if (nav) nav.insertBefore(btn, $('.theme-toggle'));
@@ -1926,14 +1930,14 @@
         b[1].addEventListener('click', function () { copy(JSON.stringify(get(), null, 1), b[1], 'Copy as JSON'); });
         if (where === 'after') host.insertAdjacentElement('afterend', bar); else host.insertAdjacentElement('beforebegin', bar);
       };
-      addExport('#cx-table-wrap', 'the chips you picked', Landscape.exportRows, 'before'); // a live array: Landscape keeps it in step with the selection
+      addExport('#cx-table-wrap', 'chips compared', Landscape.exportRows, 'before'); // a live array: Landscape keeps it in step with the selection
       addExport('#matrix', 'country-share matrix', DATA.matrix, 'before');
       addExport('#cf', 'chokepoint board', function () { return Geo.boardRows ? Geo.boardRows() : []; }, 'before'); // visible in both modes
       addExport('#timeline', 'export-control timeline', function () { return Geo.visible || DATA.timeline; }, 'before');
       addExport('#exposure-table', 'China revenue share by firm and year', DATA.exposure, 'before');
       // cite-this block in the footer
-      var foot = $('.site-footer');
-      if (foot) { var d = new Date().toISOString().slice(0, 10); foot.insertAdjacentHTML('beforeend', '<details class="cite"><summary>Cite this site</summary><pre>Sharma, Y. with Claude. Compute Chokepoints: the AI chip supply chain, stage by stage. September 2026. https://yashvardhansharmaa.github.io/chokepoints/ (accessed ' + d + ').</pre><pre>@misc{chokepoints2026,\n  title  = {Compute Chokepoints: the AI chip supply chain, stage by stage},\n  author = {Sharma, Yashvardhan and Claude},\n  year   = {2026},\n  month  = {September},\n  url    = {https://yashvardhansharmaa.github.io/chokepoints/},\n  note   = {Accessed ' + d + '}\n}</pre></details>'); }
+      var d0 = new Date().toISOString().slice(0, 10);
+      $$('.site-footer').forEach(function (foot) { var d = d0; foot.insertAdjacentHTML('beforeend', '<details class="cite"><summary>How to cite</summary><pre>Sharma, Y. with Claude. Compute Chokepoints: the AI chip supply chain, stage by stage. September 2026. https://yashvardhansharmaa.github.io/chokepoints/ (accessed ' + d + ').</pre><pre>@misc{chokepoints2026,\n  title  = {Compute Chokepoints: the AI chip supply chain, stage by stage},\n  author = {Sharma, Yashvardhan and Claude},\n  year   = {2026},\n  month  = {September},\n  url    = {https://yashvardhansharmaa.github.io/chokepoints/},\n  note   = {Accessed ' + d + '}\n}</pre></details>'); });
     }
   };
 

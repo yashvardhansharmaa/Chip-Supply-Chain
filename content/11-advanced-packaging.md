@@ -114,11 +114,11 @@ TSMC does not publish a CoWoS wafer number, and will not. At its 2024 symposium 
 
 In October 2025 Wei would still say only that TSMC would add capacity again in 2026 and give the real figure the year after, and that front end and back end were both, in his word, tight ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf)).
 
-The split is public; the total is not. Epoch AI weighs each designer's component use against world supply and puts Nvidia at 60.3 percent of all CoWoS in 2025, with a 90 percent confidence interval of 56.5 to 64.3; Google took 13.5, AMD 8.4 and Amazon 7.4 ([source](https://epoch.ai/data-insights/ai-chip-supply-chain-constraints)). Those four absorbed around 90 percent of all CoWoS and all HBM by value while taking about 12 percent of the world's advanced logic wafers, which is why packaging ran out and logic did not.
+Epoch AI weighs each designer's component use against world supply and puts Nvidia at 60.3 percent of all CoWoS in 2025, with a 90 percent confidence interval of 56.5 to 64.3; Google took 13.5, AMD 8.4 and Amazon 7.4 ([source](https://epoch.ai/data-insights/ai-chip-supply-chain-constraints)). Those four absorbed around 90 percent of all CoWoS and all HBM by value while taking about 12 percent of the world's advanced logic wafers, which is why packaging ran out and logic did not.
 
 {{figure:cowos-buyers}}
 
-The ordering has since flipped. SemiAnalysis reported in March 2026 that front-end wafers are now the dominant bottleneck and CoWoS is easing, partly because TSMC has no reason to build interposer lines its N3 output cannot feed ([source](https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage)). The queue has eased; the concentration has not.
+SemiAnalysis reported in March 2026 that front-end wafers are now the dominant bottleneck and CoWoS is easing, partly because TSMC has no reason to build interposer lines its N3 output cannot feed ([source](https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage)).
 
 ## Who makes it
 

@@ -4,7 +4,7 @@
       "id": "ai-chips",
       "name": "Advanced AI chips",
       "route": "US → China",
-      "what": "Datacentre accelerators: the A100, H100, the cut-down A800, H800, H20 and H200, and the Blackwell parts. The pill follows the headline parts, which sit above the January 2026 band; the labels say where the band falls.",
+      "what": "Datacentre accelerators: the A100, H100, the cut-down A800, H800, H20 and H200, and the Blackwell parts, all of them above the January 2026 band.",
       "order": 1,
       "chapter": "geopolitics",
       "initial": "open",
@@ -234,7 +234,7 @@
       "id": "hbm",
       "name": "High-bandwidth memory",
       "route": "Korea and US → China",
-      "what": "Memory stacks above 2 GB per second per square millimetre, wherever they are made, plus the foreign stacks caught by the direct product rule. Licence Exception HBM still carries stacks to a Chinese packaging house for an American or allied designer.",
+      "what": "Memory stacks above 2 GB per second per square millimetre, wherever they are made, plus the foreign stacks caught by the direct product rule. The licence requirement runs only to Macau and Country Group D:5, and the review splits inside them: approval is presumed for buyers in China or Macau that are not headquartered there, denial for those that are. Licence Exception HBM still carries stacks to a Chinese packaging house for an American or allied designer.",
       "order": 4,
       "chapter": "memory-and-hbm",
       "initial": "open",
@@ -243,11 +243,11 @@
           "date": "2024-12-31",
           "announced": "2024-12-02",
           "status": "denial",
-          "label": "Denial for stacks above 2 GB/s per mm²",
+          "label": "Denial for Chinese-headquartered buyers, approval for the rest",
           "event": "2024-12-02-hbm-package",
           "cite": {
             "fr": "89 FR 96790",
-            "cfr": "15 CFR 742.6(a)(6); 740.25",
+            "cfr": "15 CFR 742.6(a)(6)(i)(B), (b)(10)(ii); 740.25",
             "url": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/html/2024-28270.htm"
           }
         }
@@ -402,7 +402,7 @@
       "id": "minerals",
       "name": "Critical minerals to America",
       "route": "China → United States",
-      "what": "Gallium, germanium, antimony, superhard materials and graphite sold to American buyers. Everywhere else is a separate row.",
+      "what": "Gallium, germanium, antimony, superhard materials and graphite sold to American buyers.",
       "order": 6,
       "chapter": "chemicals-gases-and-photoresist",
       "initial": "open",
@@ -553,8 +553,8 @@
     {
       "id": "diffusion",
       "name": "AI chips to the rest of the world",
-      "route": "US → everyone else",
-      "what": "The same accelerators sold to allies, the Gulf and everyone else. No licence to Country Groups A:5 and A:6; a licence for the D:1, D:4 and D:5 destinations that are not also A:5 or A:6.",
+      "route": "US → every other destination",
+      "what": "The top band of accelerators, ECCNs 3A090.a and 4A090.a, which need a licence to or within any destination worldwide. License Exception AIA carries them to the nineteen destinations in supplement no. 5 to part 740, and License Exception LPP up to 26,900,000 TPP a year per consignee elsewhere. Applications from the nineteen are reviewed with a presumption of approval; the rest run against a per-country allocation of 790,000,000 TPP through 2027.",
       "order": 9,
       "chapter": "geopolitics",
       "initial": "open",
@@ -562,29 +562,30 @@
         {
           "date": "2025-01-13",
           "announced": "2025-01-15",
-          "status": "open",
-          "label": "Country caps published; compliance deferred to 15 May",
+          "status": "case",
+          "label": "Licence required worldwide; AIA covers nineteen destinations, LPP elsewhere",
           "event": "2025-01-13-diffusion-rule",
           "cite": {
             "fr": "90 FR 4544",
-            "cfr": "15 CFR 740.27",
+            "cfr": "15 CFR 742.6(a)(6)(iii)(A); 740.27; 740.29",
             "url": "https://www.govinfo.gov/content/pkg/FR-2025-01-15/html/2025-00636.htm"
           }
         },
         {
           "date": "2025-05-13",
-          "status": "open",
-          "label": "Caps rescinded two days before they bound",
+          "status": "case",
+          "label": "BIS stops enforcing; the text stays in the CFR",
           "event": "2025-05-13-diffusion-rescinded",
           "cite": {
             "url": "https://www.bis.gov/press-release/department-commerce-rescinds-biden-era-artificial-intelligence-diffusion-rule-strengthens-chip-related",
-            "fr": "BIS press release, 13 May 2025"
+            "fr": "BIS press release, 13 May 2025",
+            "cfr": "15 CFR 742.6(a)(6)(iii)(A)"
           }
         },
         {
           "date": "2025-05-15",
-          "status": "open",
-          "label": "Gulf volumes agreed under bilateral security conditions",
+          "status": "case",
+          "label": "Bilateral deals replace the caps; the licence stands",
           "event": "2025-05-15-gulf-deals",
           "cite": {
             "url": "https://www.whitehouse.gov/fact-sheets/2025/05/fact-sheet-president-donald-j-trump-secures-200-billion-in-new-u-s-uae-deals-and-accelerates-previously-committed-1-4-trillion-uae-investment/",
@@ -594,12 +595,12 @@
         {
           "date": "2026-07-10",
           "announced": "2026-07-14",
-          "status": "open",
-          "label": "UAE joins A:5; approved consignees replace caps",
+          "status": "case",
+          "label": "UAE joins A:5; named consignees ship licence-free",
           "event": "2026-07-10-uae-group-a5",
           "cite": {
             "fr": "91 FR 43034",
-            "cfr": "15 CFR 742.6(a)(6)",
+            "cfr": "15 CFR 742.6(a)(6)(iii)(A) and (B); supplement no. 8 to part 740",
             "url": "https://www.govinfo.gov/content/pkg/FR-2026-07-14/html/2026-14132.htm"
           }
         }

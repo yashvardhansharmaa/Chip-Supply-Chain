@@ -267,7 +267,7 @@
     "chinaShare": 37.6,
     "basis": "Geographical distribution of revenue billed to customers; share computed from the filed absolute figures",
     "source": "https://www.besi.com/fileadmin/data/Investor_Relations/_Semi__Annual_Reports/Annual_Report_2021.pdf",
-    "note": "Bill-to, not ship-to: Besi states the split is of revenue billed to customers."
+    "note": "Besi's split is bill-to, where the equipment vendors around it are ship-to."
   },
   {
     "firm": "BE Semiconductor Industries",
@@ -794,7 +794,7 @@
     "chinaShare": 21.0,
     "basis": "Sales by geographic area disclosed only as a percentage of total sales; the share is as filed, not computed, and Nova files no absolute China revenue line",
     "source": "https://www.sec.gov/Archives/edgar/data/1109345/000117891323000775/R82.htm",
-    "note": "Total revenue from the consolidated statements of operations in the same filing; China revenue is not disclosed in absolute terms, only as a share, so no absolute figure is given here."
+    "note": "Total revenue from the consolidated statements of operations in the same filing."
   },
   {
     "firm": "Nova",
@@ -809,7 +809,7 @@
     "chinaShare": 28.0,
     "basis": "Sales by geographic area disclosed only as a percentage of total sales; the share is as filed, not computed, and Nova files no absolute China revenue line",
     "source": "https://www.sec.gov/Archives/edgar/data/1109345/000117891323000775/R82.htm",
-    "note": "China revenue not disclosed in absolute terms."
+    "note": ""
   },
   {
     "firm": "Nova",
@@ -824,7 +824,7 @@
     "chinaShare": 36.0,
     "basis": "Sales by geographic area disclosed only as a percentage of total sales; the share is as filed, not computed, and Nova files no absolute China revenue line",
     "source": "https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/R84.htm",
-    "note": "China revenue not disclosed in absolute terms."
+    "note": ""
   },
   {
     "firm": "Nova",
@@ -839,7 +839,7 @@
     "chinaShare": 39.0,
     "basis": "Sales by geographic area disclosed only as a percentage of total sales; the share is as filed, not computed, and Nova files no absolute China revenue line",
     "source": "https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/R84.htm",
-    "note": "China revenue not disclosed in absolute terms."
+    "note": ""
   },
   {
     "firm": "Nova",
@@ -854,7 +854,7 @@
     "chinaShare": 33.0,
     "basis": "Sales by geographic area disclosed only as a percentage of total sales; the share is as filed, not computed, and Nova files no absolute China revenue line",
     "source": "https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/R84.htm",
-    "note": "China revenue not disclosed in absolute terms."
+    "note": ""
   },
   {
     "firm": "Nvidia",
@@ -1174,7 +1174,7 @@
     "chinaShare": 19.7,
     "basis": "Revenue by region based on the location of the selling entity, which is SK hynix's own operating units rather than the customer; the China line is the mainland-China sales subsidiaries, the Hong Kong subsidiary being a separate entity in the same filing; share computed from the filed absolute figures",
     "source": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260317000635&dcmNo=11132576&eleId=48&offset=2673284&length=29807&dtd=dart4.xsd",
-    "note": "중국 19,136,237백만원, 지역 합계 97,146,675백만원: 사업보고서 2025, 연결재무제표 주석 24. 매출액 (연결), 지역별 매출액에 대한 공시. The same two figures appear in English as note 24(3) of SK hynix's Form 424B4 prospectus of July 2026. The half-year report to 30 June 2026 puts China at 32,478,276 of 131,895,033백만원, 24.6%; that is six months and is not a row here."
+    "note": "중국 19,136,237백만원, 지역 합계 97,146,675백만원: 사업보고서 2025, 연결재무제표 주석 24. 매출액 (연결), 지역별 매출액에 대한 공시. The same two figures appear in English as note 24(3) of SK hynix's Form 424B4 prospectus of July 2026. The half-year report to 30 June 2026 puts China at 32,478,276 of 131,895,033백만원, 24.6%, which covers six months and is not comparable with the full-year figures."
   },
   {
     "firm": "Samsung Electronics",

@@ -72,7 +72,7 @@ An accelerator ships as a module, not a bare chip: Nvidia calls its version SXM,
 
 Rack-scale systems do away with the baseboard. An Nvidia GB300 NVL72 holds 18 compute trays plus nine switch trays, 72 GPUs in all, and draws up to 142 kW ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)); Rubin keeps that shape ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
 
-Every AI cluster runs two networks that are not interchangeable. Scale-up binds a few dozen accelerators tightly enough that they can read each other's memory, at terabytes per second; scale-out joins thousands of those groups at hundreds of gigabits per second. A model too big for one accelerator gets split across the scale-up group, so that group's bandwidth sets the size of model you can train.
+Every AI cluster runs two networks that are not interchangeable. Scale-up binds a few dozen accelerators tightly enough that they can read each other's memory, at terabytes per second; scale-out joins thousands of those groups at hundreds of gigabits per second. A model too big for one accelerator gets split across the scale-up group, so that group's bandwidth sets the size of model that can be trained.
 
 ## Variants and trade-offs
 
@@ -112,7 +112,7 @@ Physical assembly belongs to Taiwan. Foxconn booked NT$8.1 trillion of revenue i
 
 Most of this layer has many suppliers. Several capable contract manufacturers on three continents screw racks together, and the power shelves, copper busbars, cables and connectors have many suppliers. If Foxconn stopped tomorrow, Quanta and Wistron would absorb the volume in a couple of quarters.
 
-What cannot be replaced that fast sits underneath the assembly.
+The parts that cannot be replaced that fast sit underneath the assembly.
 
 - **Indium phosphide laser capacity.** The shortage is in material and fab space: Nvidia's answer was to buy into two laser makers rather than place a bigger order ([source](https://nvidianews.nvidia.com/news/nvidia-and-coherent-announce-strategic-partnership-to-develop-optics-technology-to-scale-next-generation-data-center-architecture)), and the indium under it is 70 percent Chinese ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-indium.pdf)).
 - **NVSwitch.** Nobody else sells a scale-up switch of NVLink's bandwidth to all comers, which is what UALink exists to change ([source](https://ualinkconsortium.org/blog/ualink-200g-1-0-specification-overview-802/)).
@@ -125,7 +125,7 @@ Optical module assembly is a separate case: concentrated, but not technically ha
 - **Scale-up domain size** is how many accelerators share one pool of memory: up to 1,024 endpoints in the UALink spec ([source](https://ualinkconsortium.org/blog/ualink-200g-1-0-specification-overview-802/)) and 9,216 for an Ironwood superpod ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)).
 - **Bandwidth per accelerator** limits how far one model can be split across chips. NVLink 6 is 3,600 GB/s ([source](https://www.nvidia.com/en-us/data-center/nvlink/)).
 - **Picojoules per bit** is the energy cost of moving data. Optics dominate network power at 800 gigabits and above, and co-packaging is more than 3.5 times better than plug-in modules ([source](https://www.broadcom.com/company/news/product-releases/63626)).
-- **Serviceability** falls with co-packaged optics, which trade field-replaceable modules for a switch you return whole when a channel fails.
+- **Serviceability** falls with co-packaged optics, which trade field-replaceable modules for a switch that goes back whole when a channel fails.
 - **Supply concentration** sits under the assembly: many firms assemble the modules; far fewer can make the lasers inside them.
 
 ## Takeaways

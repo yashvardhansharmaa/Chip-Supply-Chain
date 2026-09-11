@@ -70,7 +70,7 @@
     var showStop = function (a) {
       if (!tip) { tip = document.createElement('div'); tip.className = 'sa-stop-tip'; tip.setAttribute('role', 'tooltip'); tip.hidden = true; document.body.appendChild(tip); }
       var d = a.dataset;
-      tip.innerHTML = '<b>' + a.querySelector('span').textContent + ' · ' + d.title + '</b><span>' + d.town + (d.lead ? ' · ' + d.lead : '') + '</span><span class="sa-stop-tip-s">' + (d.band ? d.band + ' concentration · ' : '') + 'click for the chapter</span>';
+      tip.innerHTML = '<b>' + a.querySelector('span').textContent + ' · ' + d.title + '</b><span>' + d.town + (d.lead ? ' · ' + d.lead : '') + '</span>' + (d.band ? '<span class="sa-stop-tip-s">' + d.band + ' concentration</span>' : '');
       tip.hidden = false;
       var r = a.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight;
       var left = Math.max(8, Math.min(r.left + r.width / 2 - w / 2, window.innerWidth - w - 8)), top = r.top - h - 10;

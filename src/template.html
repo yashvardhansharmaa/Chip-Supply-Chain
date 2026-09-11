@@ -69,13 +69,13 @@
       </section>
       <div class="howto" id="howto">
         <h2>How to read a chapter</h2>
-        <p>Every chapter opens with a chokepoint card. Three fields on it matter most.</p>
+        <p>Every chapter opens with a chokepoint card.</p>
         <ul>
           <li><b>Concentration.</b> How many firms credibly supply this stage: Extreme, High, Moderate or Low.</li>
-          <li><b>Substitutability.</b> How hard it would be for a well-funded state or firm to stand up an alternative: Easy, Moderate, Hard or Very hard, rated against four written tests.</li>
-          <li><b>Price or market size.</b> What one unit costs, or what the stage earns in a year, from filings.</li>
+          <li><b>Substitutability.</b> How hard it would be for a well-funded state or firm to stand up an alternative: Easy, Moderate, Hard or Very hard, rated against four tests.</li>
+          <li><b>Price or market size.</b> What one unit costs, or what the stage earns in a year.</li>
         </ul>
-        <p>The card also gives China's position and the United States'. The chapters run in process order, and every number links to its source.</p>
+        <p>The card also gives China's position and the United States'. The chapters run in process order.</p>
         <p class="howto-dl"><a class="btn ghost" href="compute-chokepoints-the-chain.pdf" download>Download the chain as a PDF</a> <button type="button" class="btn ghost" id="print-page">Print this page</button></p>
       </div>
       <div class="contents" id="contents">
@@ -93,7 +93,7 @@
     <section class="view column" data-view="landscape" hidden data-specimen="package">
       <div class="view-head">
         <h2>AI Chips</h2>
-        <p class="dek">The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026, with the foundry, process node, memory supplier and packaging plant behind each one. Pick two to four chips.</p>
+        <p class="dek">The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026, with the foundry, process node, memory supplier and packaging plant behind each one. Two to four at a time.</p>
       </div>
       <div id="picker" class="picker cx-picker" role="group" aria-label="Choose two to four chips to compare"></div>
       <div class="cx-bar">
@@ -101,7 +101,7 @@
         <button type="button" class="btn ghost cx-clear" id="cx-clear">Clear</button>
       </div>
       <h3 class="label cx-h">Packages at one scale</h3>
-      <p class="cx-sub">Every package is drawn from above at one scale. The logic dies do the computing, the memory stacks feed them, the interposer is the silicon slab that wires the two together, and the substrate is the card underneath.</p>
+      <p class="cx-sub">The logic dies do the computing, the memory stacks feed them, the interposer is the silicon slab that wires the two together, and the substrate is the card underneath.</p>
       <div class="cx-key" id="cx-key"></div>
       <div id="cx-plans" class="cx-plans"></div>
       <h3 class="label cx-h">Specs side by side</h3>
@@ -130,7 +130,7 @@
       <div class="sup-toolbar" id="sup-toolbar">
         <span class="count" id="sup-count"></span>
         <button class="btn ghost sup-allstages" id="sup-allstages" type="button" hidden>All stages</button>
-        <div class="sup-modes" role="group" aria-label="How to show the firms">
+        <div class="sup-modes" role="group" aria-label="Firm list layout">
           <button type="button" class="sup-mode" data-mode="ladder" aria-pressed="true">Ladder</button>
           <button type="button" class="sup-mode" data-mode="table" aria-pressed="false">Table</button>
         </div>
@@ -153,7 +153,7 @@
           <h3 class="label" style="margin: 10px 0 6px">What can still flow, and when it stopped</h3>
           <p class="controls-intro" id="cf-intro">Each row is a thing that moves across the chokepoint, and the licence outcome it stands in today.</p>
         </div>
-        <div class="cf-modes" id="cf-modes" role="group" aria-label="How to read the moves" hidden><button type="button" class="cf-mode" data-mode="subject" aria-pressed="false">By subject</button><button type="button" class="cf-mode" data-mode="date" aria-pressed="true">By date</button></div>
+        <div class="cf-modes" id="cf-modes" role="group" aria-label="Order the moves" hidden><button type="button" class="cf-mode" data-mode="subject" aria-pressed="false">By subject</button><button type="button" class="cf-mode" data-mode="date" aria-pressed="true">By date</button></div>
       </div>
       <div class="cf" id="cf" data-mode="date">
         <div class="cf-side" id="cf-side" hidden>
@@ -176,9 +176,8 @@
       </div>
       <div class="sub" data-sub="exposure" hidden>
       <h3 class="label" style="margin: 10px 0 6px">China share of revenue, from company filings</h3>
-      <p class="controls-intro">Each firm's China revenue share, year by year, as filed.</p>
       <div id="exposure-viz">{{EXPOSURE_VIZ}}</div>
-      <details class="table-view"><summary>Show the same figures as a table</summary><div class="matrix-wrap"><table class="matrix" id="exposure-table"></table></div></details>
+      <details class="table-view"><summary>The same figures as a table</summary><div class="matrix-wrap"><table class="matrix" id="exposure-table"></table></div></details>
       <p class="matrix-note" id="exposure-note">{{EXPOSURE_NOTE}}</p>
       </div>
     </section>
@@ -188,7 +187,7 @@
     <section class="view column wide" data-view="glossary" hidden>
       <div class="view-head">
         <h2>Index</h2>
-        <p class="dek">Every term, firm and chip on the site, with the passages that use it.</p>
+        <p class="dek">Every term, firm and chip, with the passages that use them.</p>
       </div>
       <div class="lk">
         <aside class="lk-list" id="lk-list">
@@ -198,7 +197,7 @@
           <p class="lk-count" id="lk-count"></p>
         </aside>
         <div class="lk-entry" id="lk-entry">
-          <div class="lk-rest" id="lk-rest"><p>Type a name, or browse the list.</p><p class="lk-try"><span class="lk-try-k">Try</span></p></div>
+          <div class="lk-rest" id="lk-rest"><p>Type a name.</p><p class="lk-try"><span class="lk-try-k">Try</span></p></div>
           <dl class="glossary" id="glossary">{{GLOSSARY}}</dl>
           <div id="lk-card" hidden></div>
           <section class="lk-mentions" id="lk-mentions" hidden></section>

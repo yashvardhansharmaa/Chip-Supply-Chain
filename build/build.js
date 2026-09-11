@@ -365,11 +365,11 @@ function chapterHTML(ch) {
   const parts = splitTakeaways(ch.html);
   const pb = plainBox(parts.body, m.plain, { id: ch.id, cites: ch.cites, figures: [] });
   ch.inShort = parts.inShort;
-  const sources = ch.cites.length ? `<details class="chapter-sources"><summary>Sources for this chapter (${ch.cites.length})</summary><ol>${ch.cites.map((c) => `<li>${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol></details>` : '';
+  const sources = ch.cites.length ? `<details class="chapter-sources"><summary>Sources (${ch.cites.length})</summary><ol>${ch.cites.map((c) => `<li>${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol></details>` : '';
   const stageIdx = stages.findIndex((c) => c.id === ch.id);
   const next = stageIdx >= 0 ? stages[stageIdx + 1] : null;
   const tile = stageIdx >= 0 ? `<div class="ch-tile"><span class="k">Chapter</span><span class="v">${pad(ch.number)}</span><span class="of">stage ${stageIdx + 1} of ${stages.length}</span></div>` : `<div class="ch-tile"><span class="k">Chapter</span><span class="v">${pad(ch.number)}</span><span class="of">${ch.number === 1 ? 'the map' : 'the costs'}</span></div>`;
-  const chain = stageIdx >= 0 ? `<div class="chain chain--compact" aria-label="Where this stage sits in the chain">${chainTrack(stages, ch.id)}<p class="chain-foot"><span>You are here: <b>${esc(ch.title)}</b>, stage ${stageIdx + 1} of ${stages.length}</span><span>${next ? `Next: ${pad(next.number)} ${esc(next.title)}` : 'Last stage in the chain'}</span></p></div>` : '';
+  const chain = stageIdx >= 0 ? `<div class="chain chain--compact" aria-label="Where this stage sits in the chain">${chainTrack(stages, ch.id)}<p class="chain-foot"><span><b>${esc(ch.title)}</b>, stage ${stageIdx + 1} of ${stages.length}</span><span>${next ? `Next: ${pad(next.number)} ${esc(next.title)}` : 'Last stage in the chain'}</span></p></div>` : '';
   return `<article class="chapter" id="${esc(ch.id)}" data-specimen="${esc(specimen)}" data-number="${pad(ch.number)}" data-title="${esc(ch.title)}" data-caption="${esc(m.specimenCaption || '')}">
 <header class="chapter-head">
 ${chain}
@@ -479,7 +479,7 @@ function exposureViz(rows) {
 let geoBody = '<p>The geopolitics essay is not written yet.</p>', geoDek ='Who holds each chokepoint, how the export-control campaign has unfolded since 2018, and where the chips actually go.';
 if (geo) {
   geoDek = geo.meta.oneLiner || geoDek;
-  const sources = geo.cites.length ? `<details class="chapter-sources"><summary>Sources for this essay (${geo.cites.length})</summary><ol>${geo.cites.map((c) => `<li>${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol></details>` : '';
+  const sources = geo.cites.length ? `<details class="chapter-sources"><summary>Sources (${geo.cites.length})</summary><ol>${geo.cites.map((c) => `<li>${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol></details>` : '';
   const gparts = splitTakeaways(geo.html); geo.inShort = gparts.inShort;
   const gpb = plainBox(gparts.body, geo.meta.plain, { id: 'geopolitics', cites: geo.cites, figures: [] });
   geoBody = gpb.box + (gparts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${gparts.inShort}</section>` : '') + nameplate(geo.meta.card, 'Geopolitics') + `<p class="label" style="margin:10px 0 26px">${geo.words.toLocaleString('en-US')} words / ${Math.max(1, Math.round(geo.words / 230))} min</p>` + glossaryWrap(gpb.html) + prevNext(geo) + sources;
@@ -559,9 +559,9 @@ suppliers.forEach((r) => lkItems.push({ kind: 'firm', id: 'lk-firm-' + lkSlug(r.
 landscape.forEach((c) => { const al = []; const bare = c.name.replace(/\s*\(.*\)$/, ''); al.push(bare); bare.split(/\s+/).forEach((t) => { if (/\d/.test(t) && t.length >= 3 && t !== bare) al.push(t); }); const paren = (c.name.match(/\(([^)]*)\)/) || [])[1] || ''; paren.split(/[\s,]+/).forEach((t) => { if ((/^[A-Z][a-z]{3,}$/.test(t) && !/variant|configuration|China|licensed|of|the/i.test(t)) || (/\d/.test(t) && t.length >= 4)) al.push(t); }); if (c.family && c.family.length >= 5 && !/^(TPU|Ascend|Siyuan|Pinghu)\b/.test(c.family) && !/\(/.test(c.family)) al.push(c.family); lkItems.push({ kind: 'chip', id: 'lk-chip-' + lkSlug(c.id), name: `${c.vendor} ${c.name}`, alias: al.filter((x, i, arr) => arr.indexOf(x) === i), label: 'AI chip', key: c.id, text: [c.vendor, c.name, c.family || '', (c.process || {}).node || '', (c.memory || {}).type || ''].join(' ') }); });
 lkItems.sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }));
 fill('LOOKUP_LIST', lkItems.map((i) => `<li id="${esc(i.id)}" data-kind="${i.kind}" data-key="${esc(i.key || i.name)}"${i.alias && i.alias.length ? ` data-alias="${esc(i.alias.join('|'))}"` : ''} data-text="${esc(i.text.toLowerCase().replace(/\s+/g, ' '))}"><button type="button"><span class="lk-name">${esc(i.name)}</span><span class="lk-lab">${esc(i.label)}</span></button></li>`).join(''));
-fill('CONTROLS_DEK', `Every move since 2018, what can still flow to China, and each firm's China sales as filed.`);
+fill('CONTROLS_DEK', `Every move since 2018, what can still flow to China, and each firm's China sales.`);
 fill('EXPOSURE_VIZ', exposureViz(exposure));
-fill('EXPOSURE_NOTE', exposure.length ? 'Shares are computed from the absolute figures each firm filed. Firms count China differently: where the goods ship, where they are billed, or where the customer is based. Each row says which.' : '');
+fill('EXPOSURE_NOTE', exposure.length ? 'Shares are computed from the absolute figures each firm filed. Firms count China differently: where the goods ship, where they are billed, or where the customer is based.' : '');
 fill('KIT', kit); fill('SPECIMENS', specimens);
 fill('DATA', JSON.stringify(data).replace(/<\/script/gi, '<\\/script'));
 const moduleJS = modDir(path.join(root, 'src', 'modules')).filter((f) => f.endsWith('.js')).map((f) => `\n/* module: ${f} */\ntry {\n${read(path.join(root, 'src', 'modules', f)).replace(/<\/script/gi, '<\\/script')}\n} catch (e) { console.warn('module ${f} failed', e); }`).join('\n');

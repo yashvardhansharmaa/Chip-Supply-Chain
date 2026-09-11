@@ -43,7 +43,7 @@ module.exports = function (ctx) {
   const factsHTML = (ch) => {
     const facts = ((ch.meta && ch.meta.keyFacts) || []).filter((k) => k && k.fact && okUrl(k.source)).slice(0, 2);
     if (!facts.length) return '';
-    return `<ul class="wk-facts" aria-label="Two sourced facts">${facts.map((k) => { const e = bib[k.source] || {}; const t = e.title ? `${e.title}${e.publisher ? ', ' + e.publisher : ''}${e.date ? ', ' + e.date : ''}` : k.source; return `<li>${esc(k.fact)} <a class="wk-src" href="${esc(k.source)}" target="_blank" rel="noopener" title="${esc(t)}">source</a></li>`; }).join('')}</ul>`;
+    return `<ul class="wk-facts" aria-label="Two facts from the chapter">${facts.map((k) => { const e = bib[k.source] || {}; const t = e.title ? `${e.title}${e.publisher ? ', ' + e.publisher : ''}${e.date ? ', ' + e.date : ''}` : k.source; return `<li>${esc(k.fact)} <a class="wk-src" href="${esc(k.source)}" target="_blank" rel="noopener" title="${esc(t)}">source</a></li>`; }).join('')}</ul>`;
   };
   const walkWords = steps.reduce((a, c) => a + wordCount(plainOf(c.id)), 0);
   const mins = Math.max(1, Math.round(walkWords / 230));
@@ -90,7 +90,6 @@ ${leadersHTML(c)}
 ${list}
 </ol>
 <div class="wk-end">
-<p class="wk-end-t">That is the chain, end to end.</p>
 <p class="wk-end-links"><a href="#/chain">All ${word(steps.length)} chapters in full</a><a href="#/">The route of one chip</a><a href="#/controls">What the rules did</a></p>
 </div>
 </div>`;
