@@ -37,7 +37,6 @@
   <header class="masthead">
     <a class="wordmark" href="#/"><b>Compute Chokepoints</b><span>The AI chip supply chain</span></a>
     <nav class="tabs" aria-label="Sections">
-      <a href="#/intro" data-view="walk">Start here</a>
       <a href="#/chain" data-view="stack">The Chain</a>
       <a href="#/landscape" data-view="landscape">AI Chips</a>
       <a href="#/suppliers" data-view="suppliers">Suppliers</a>
@@ -63,15 +62,6 @@
   </figure>
 
   <main>
-    <section class="view column wide" data-view="home">
-      <div class="hero hero--home">
-        <h1 class="thesis">{{THESIS}}</h1>
-        <p class="dek">{{SUBTITLE}}</p>
-      </div>
-      {{HOME_MAP}}
-      <footer class="site-footer">{{FOOTER}}</footer>
-    </section>
-
     <section class="view column" data-view="stack" hidden>
       <section class="print-only print-title" aria-hidden="true">
         <img class="pt-plate" src="print-title.png" alt="">
@@ -201,7 +191,7 @@
       </div>
     </section>
 
-    <section class="view column" data-view="walk" hidden>{{WALK}}</section>
+    <section class="view column" data-view="walk" hidden>{{WALK}}<div class="wk-after">{{HOME_MAP}}</div></section>
 
     <section class="view column wide" data-view="glossary" hidden>
       <div class="view-head">

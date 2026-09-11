@@ -101,7 +101,7 @@
     if (lev) setTimeout(function () { lev.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' }); }, 80);
   }
 
-  CP.SummaryA = { selectCountry: selectCountry };
+  CP.SummaryA = { selectCountry: selectCountry, fromHash: fromHash };
   CP.register('summary-a', { stage: false, activate: bind });
   CP.register('home', { stage: false, activate: fromHash });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bind); else bind();

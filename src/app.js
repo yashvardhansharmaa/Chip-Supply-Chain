@@ -201,7 +201,7 @@
 
   /* ---------------- router ---------------- */
   var VIEWS = ['home', 'stack', 'chain', 'intro', 'walk', 'briefing', 'landscape', 'suppliers', 'geopolitics', 'controls', 'thresholds', 'exposure', 'glossary', 'sources'];
-  var ALIAS = { chain: 'stack', intro: 'walk', briefing: 'walk', geopolitics: 'stack', thresholds: 'controls', sources: 'stack' }; // the Sources page was retired; its sources sit at the end of each chapter // the licence-thresholds tab was retired; its route lands on the board
+  var ALIAS = { chain: 'stack', home: 'walk', intro: 'walk', briefing: 'walk', geopolitics: 'stack', thresholds: 'controls', sources: 'stack' }; // the Sources page was retired; its sources sit at the end of each chapter // the licence-thresholds tab was retired; its route lands on the board
   var MODULE_VIEWS = {}; // modules register { activate(), stage: bool } per view through window.CP.register
   var Router = {
     current: null,
@@ -214,9 +214,10 @@
     },
     route: function () {
       var h = location.hash || '#/', m = h.match(/^#\/([a-z-]+)/), bare = h.replace(/^#/, '');
-      var v = (bare === '' || bare === '/' || m) ? 'home' : 'stack'; // the site opens on the map; an unknown #/route goes home; a bare chapter anchor opens the chain
+      var atHome = bare === '' || bare === '/' || bare.indexOf('/?') === 0; // '#/?country=JP' is the home page with a query
+      var v = (atHome || m) ? 'walk' : 'stack'; // the site opens on the walk (trial, 11 Sept 2026); an unknown #/route goes home; a bare chapter anchor opens the chain
       if (m && VIEWS.indexOf(m[1]) >= 0) v = m[1];
-      var anchor = v === 'geopolitics' ? 'geopolitics' : ((!m && bare && bare !== '/') ? dec(bare) : null);
+      var anchor = v === 'geopolitics' ? 'geopolitics' : ((!m && bare && !atHome) ? dec(bare) : null);
       if (anchor && !m) { // a bare anchor belongs to whichever view holds it; one that sits outside them all (the skip link's #app) leaves the view alone
         var target = document.getElementById(anchor), host = target && target.closest ? target.closest('.view[data-view]') : null;
         if (host) v = host.getAttribute('data-view');
@@ -255,7 +256,7 @@
         }
         Sections.update();
       }
-      var label = { stack: 'The Chain', walk: 'Start here', landscape: 'AI Chips', suppliers: 'Suppliers', controls: sub === 'exposure' ? 'China revenue share' : 'Export Controls', glossary: 'Index' }[v];
+      var label = { stack: 'The Chain', landscape: 'AI Chips', suppliers: 'Suppliers', controls: sub === 'exposure' ? 'China revenue share' : 'Export Controls', glossary: 'Index' }[v];
       document.title = (v === 'home' || !label) ? 'Compute Chokepoints' : 'Compute Chokepoints · ' + label;
     }
   };

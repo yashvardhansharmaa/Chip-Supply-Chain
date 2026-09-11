@@ -225,10 +225,6 @@
 .sa-town[data-dead="1"] { cursor: default; }
 
 /* ---------- the home page: doors, the route, the strip, leverage ---------- */
-.sa-why { max-width: 68ch; margin: 0 0 30px; }
-.sa-why-k { margin: 0 0 8px; color: var(--muted); }
-.sa-why p:not(.label) { font-family: var(--font-body); font-size: 18px; line-height: 1.6; color: var(--ink); margin: 0; }
-.sa-why sup.cite { line-height: 0; }
 .sa-doors { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 10px 0 34px; }
 .sa-door { display: block; border: 1px solid var(--line-2); background: var(--bg-2); border-radius: 3px; padding: 14px 16px 15px; text-decoration: none; color: var(--ink); transition: border-color 0.15s; }
 .sa-door:hover, .sa-door:focus-visible { border-color: var(--ink); }

@@ -196,3 +196,8 @@
 .wk-facts li { font-family: var(--font-body); font-size: 15px; line-height: 1.45; color: var(--ink-2); margin: 0 0 6px; }
 .wk-facts .wk-src { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-ink); text-decoration: none; margin-left: 6px; }
 .wk-facts .wk-src:hover { text-decoration: underline; }
+
+/* the home map and the leverage list ride under the walk at the wide column's width; the specimen strip is hidden there */
+.wk-after { width: min(100vw, 1180px); max-width: none; margin-top: 30px; padding-right: clamp(16px, 4vw, 56px); }
+.wk-after .sa { padding-bottom: 40px; }
+@media (max-width: 760px) { .wk-after { width: 100%; padding-right: 0; } }
