@@ -77,6 +77,9 @@
       if (marker) { if (marker.getAttribute('data-dead')) return; selectCountry(marker.getAttribute('data-cc'), true); return; }
       var chip = e.target.closest ? e.target.closest('.sa-chip, .sa-role') : null;
       if (chip) { selectCountry(chip.getAttribute('data-cc'), false); return; }
+      // a stop on the map or in the strip opens its country's panel here; the panel's rows lead to the chapters
+      var stop = e.target.closest ? e.target.closest('.sa-stop, .sa-stopcard') : null;
+      if (stop && stop.getAttribute('data-cc')) { e.preventDefault(); selectCountry(stop.getAttribute('data-cc'), true); return; }
       var tile = e.target.closest ? e.target.closest('.sa-tile') : null;
       if (tile) selectStage(tile.getAttribute('data-id'));
     });

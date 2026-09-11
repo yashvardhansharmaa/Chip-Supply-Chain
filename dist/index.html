@@ -54,19 +54,6 @@
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   color-scheme: light;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #101315; --bg-2: #171b1e; --bg-3: #1f2529;
-    --ink: #e7e9ea; --ink-2: #c0c7cc; --muted: #8b959d;
-    --line: #2a3137; --line-2: #3a434a;
-    --accent: #e6ad2f; --accent-ink: #f0c25a; --accent-soft: rgba(230, 173, 47, 0.16);
-    --c1: #2a78d6; --c2: #de5d2a; --c3: #1baf7a; --c4: #bf8310; --c5: #5b4bc0; --c6: #e34948; --c7: #008300; --c8: #7f8890;
-    --stage-ink: 231, 233, 234; --stage-accent: 230, 173, 47;
-    --shadow: 0 1px 0 rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
-    --bar-4: #c0c7cc; --bar-3: #4a535b;
-    color-scheme: dark;
-  }
-}
 :root[data-theme="dark"] {
   --bg: #101315; --bg-2: #171b1e; --bg-3: #1f2529;
   --ink: #e7e9ea; --ink-2: #c0c7cc; --muted: #8b959d;
@@ -2292,6 +2279,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent-ink); text-
   <header class="masthead">
     <a class="wordmark" href="#/"><b>Chip Supply Chain</b><span>Every stage, and who controls it</span></a>
     <nav class="tabs" aria-label="Sections">
+      <a href="#/" data-view="walk">Home</a>
       <a href="#/chain" data-view="stack">The Chain</a>
       <a href="#/landscape" data-view="landscape">AI Chips</a>
       <a href="#/suppliers" data-view="suppliers">Suppliers</a>
@@ -3429,7 +3417,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent-ink); text-
           <button type="button" class="sup-mode" data-mode="ladder" aria-pressed="true">Ladder</button>
           <button type="button" class="sup-mode" data-mode="table" aria-pressed="false">Table</button>
         </div>
-        <button class="btn ghost" id="sup-copy" type="button">Copy as CSV</button>
+        <button class="btn ghost" id="sup-copy" type="button">Copy table</button>
       </div>
       <h3 class="label sup-ladder-h" id="sup-ladder-h">Stages, thinnest first</h3>
       <div class="sup-ladder" id="sup-ladder" aria-labelledby="sup-ladder-h"></div>
@@ -8007,8 +7995,7 @@ PC.register('wafer', function (p) {
   var Theme = {
     current: function () {
       var s = document.documentElement.getAttribute('data-theme');
-      if (s) return s;
-      return (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+      return s || 'light'; // light unless the reader chose dark with the toggle
     },
     apply: function (t) {
       document.documentElement.setAttribute('data-theme', t);
@@ -8026,7 +8013,6 @@ PC.register('wafer', function (p) {
     init: function () {
       var self = this;
       $('.theme-toggle').addEventListener('click', function () { self.apply(self.current() === 'dark' ? 'light' : 'dark'); });
-      if (window.matchMedia) matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () { self.sync(); });
       this.sync();
     }
   };
@@ -9077,10 +9063,10 @@ PC.register('wafer', function (p) {
     },
     copy: function () {
       var rows = this.filtered(), cols = ['name', 'nativeName', 'category', 'subcategory', 'country', 'city', 'founded', 'ticker', 'ownership', 'chokepoint', 'shareNote', 'role', 'customers', 'revenueUSDb', 'revenueYear', 'source'];
-      var q = function (v) { if (v == null) return ''; if (Array.isArray(v)) v = v.join('; '); v = String(v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
-      var csv = cols.join(',') + '\n' + rows.map(function (r) { return cols.map(function (c) { return q(r[c]); }).join(','); }).join('\n');
+      var q = function (v) { if (v == null) return ''; if (Array.isArray(v)) v = v.join('; '); return String(v).replace(/[\t\n\r]+/g, ' '); }; // tab-separated: a spreadsheet splits it on paste
+      var csv = cols.join('\t') + '\n' + rows.map(function (r) { return cols.map(function (c) { return q(r[c]); }).join('\t'); }).join('\n');
       var btn = $('#sup-copy');
-      var done = function (ok) { btn.textContent = ok ? 'Copied ' + rows.length + ' rows' : 'Copy failed'; setTimeout(function () { btn.textContent = 'Copy as CSV'; }, 2200); };
+      var done = function (ok) { btn.textContent = ok ? 'Copied ' + rows.length + ' rows' : 'Copy failed'; setTimeout(function () { btn.textContent = 'Copy table'; }, 2200); };
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(csv).then(function () { done(true); }, function () { done(false); });
       else done(false);
     }
@@ -9949,15 +9935,15 @@ PC.register('wafer', function (p) {
       });
       // dataset export buttons (copy to clipboard: JSON or CSV)
       var copy = function (text, btn, label) { var done = function (ok) { btn.textContent = ok ? 'Copied' : 'Copy failed'; setTimeout(function () { btn.textContent = label; }, 2000); }; if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); }); else done(false); };
-      var toCSV = function (rows) { if (!rows.length) return ''; var cols = []; rows.forEach(function (r) { Object.keys(r).forEach(function (k) { if (cols.indexOf(k) < 0) cols.push(k); }); }); var q = function (v) { if (v == null) return ''; if (typeof v === 'object') v = JSON.stringify(v); v = String(v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }; return cols.join(',') + '\n' + rows.map(function (r) { return cols.map(function (c) { return q(r[c]); }).join(','); }).join('\n'); };
+      var toCSV = function (rows) { if (!rows.length) return ''; var cols = []; rows.forEach(function (r) { Object.keys(r).forEach(function (k) { if (cols.indexOf(k) < 0) cols.push(k); }); }); var q = function (v) { if (v == null) return ''; if (typeof v === 'object') v = JSON.stringify(v); return String(v).replace(/[\t\n\r]+/g, ' '); }; return cols.join('\t') + '\n' + rows.map(function (r) { return cols.map(function (c) { return q(r[c]); }).join('\t'); }).join('\n'); }; // tab-separated, so a spreadsheet splits the columns on paste
       var addExport = function (anchorSel, name, rows, where) {
         var get = typeof rows === 'function' ? rows : function () { return rows; }; // a function means: whatever the table currently shows
         var host = $(anchorSel); if (!host || !get() || !get().length) return;
         var bar = document.createElement('div'); bar.className = 'export-bar';
-        bar.innerHTML = '<span class="count">' + get().length + ' rows · ' + esc(name) + '</span><button type="button" class="btn ghost">Copy as CSV</button><button type="button" class="btn ghost">Copy as JSON</button>';
+        bar.innerHTML = '<span class="count">' + get().length + ' rows · ' + esc(name) + '</span><button type="button" class="btn ghost">Copy table</button><button type="button" class="btn ghost">Copy as JSON</button>';
         var b = bar.querySelectorAll('button'), countEl = bar.querySelector('.count');
         host.addEventListener('cp:rows', function () { countEl.textContent = get().length + ' rows · ' + name; });
-        b[0].addEventListener('click', function () { copy(toCSV(get()), b[0], 'Copy as CSV'); });
+        b[0].addEventListener('click', function () { copy(toCSV(get()), b[0], 'Copy table'); });
         b[1].addEventListener('click', function () { copy(JSON.stringify(get(), null, 1), b[1], 'Copy as JSON'); });
         if (where === 'after') host.insertAdjacentElement('afterend', bar); else host.insertAdjacentElement('beforebegin', bar);
       };
@@ -10557,6 +10543,9 @@ try {
       if (marker) { if (marker.getAttribute('data-dead')) return; selectCountry(marker.getAttribute('data-cc'), true); return; }
       var chip = e.target.closest ? e.target.closest('.sa-chip, .sa-role') : null;
       if (chip) { selectCountry(chip.getAttribute('data-cc'), false); return; }
+      // a stop on the map or in the strip opens its country's panel here; the panel's rows lead to the chapters
+      var stop = e.target.closest ? e.target.closest('.sa-stop, .sa-stopcard') : null;
+      if (stop && stop.getAttribute('data-cc')) { e.preventDefault(); selectCountry(stop.getAttribute('data-cc'), true); return; }
       var tile = e.target.closest ? e.target.closest('.sa-tile') : null;
       if (tile) selectStage(tile.getAttribute('data-id'));
     });
