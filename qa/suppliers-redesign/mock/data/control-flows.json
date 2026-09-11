@@ -1,0 +1,691 @@
+{
+  "flows": [
+    {
+      "id": "ai-chips",
+      "name": "Advanced AI chips",
+      "route": "US → China",
+      "what": "Datacentre accelerators: the A100, H100, the cut-down A800, H800, H20 and H200, and the Blackwell parts, all of them above the January 2026 band.",
+      "order": 1,
+      "chapter": "geopolitics",
+      "initial": "open",
+      "states": [
+        {
+          "date": "2022-08-26",
+          "announced": "2022-08-31",
+          "status": "case",
+          "label": "Licence for A100 and H100, by letter",
+          "event": "2022-08-31-a100-h100-licence",
+          "cite": {
+            "fr": "NVIDIA Form 8-K, 31 August 2022",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581022000146/nvda-20220826.htm"
+          }
+        },
+        {
+          "date": "2022-10-21",
+          "announced": "2022-10-07",
+          "status": "denial",
+          "label": "Denial above 4,800 TPP with 600 GB/s",
+          "event": "2022-10-07-october-rules",
+          "cite": {
+            "fr": "87 FR 62186",
+            "cfr": "15 CFR 742.6(b)(10)",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2022-10-13/html/2022-21658.htm"
+          }
+        },
+        {
+          "date": "2023-11-17",
+          "announced": "2023-10-17",
+          "status": "denial",
+          "label": "Density test closes the A800 and H800",
+          "event": "2023-10-17-density-test",
+          "cite": {
+            "fr": "88 FR 73458",
+            "cfr": "15 CFR 742.6(a)(6)",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/html/2023-23055.htm"
+          }
+        },
+        {
+          "date": "2025-01-16",
+          "announced": "2025-01-15",
+          "status": "denial",
+          "label": "Foundries must vet the designers who tape out",
+          "event": "2025-01-16-foundry-diligence",
+          "cite": {
+            "fr": "90 FR 5298",
+            "cfr": "15 CFR 744.23",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2025-01-16/html/2025-00711.htm"
+          }
+        },
+        {
+          "date": "2025-04-09",
+          "announced": "2025-04-15",
+          "status": "denial",
+          "label": "Even the China-legal H20 stopped, by letter",
+          "event": "2025-04-09-h20-licence",
+          "cite": {
+            "fr": "NVIDIA Form 8-K, 15 April 2025",
+            "cfr": "15 CFR 744.23",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000082/nvda-20250409.htm"
+          }
+        },
+        {
+          "date": "2025-07-14",
+          "status": "denial",
+          "label": "H20 licences granted again; Blackwell still denied",
+          "event": "2025-07-14-h20-restored",
+          "cite": {
+            "url": "https://blogs.nvidia.com/blog/nvidia-ceo-promotes-ai-in-dc-and-china/",
+            "fr": "NVIDIA statement, 14 July 2025"
+          }
+        },
+        {
+          "date": "2025-08-11",
+          "status": "denial",
+          "label": "China licences carry a 15 percent revenue expectation",
+          "event": "2025-08-11-fifteen-percent",
+          "cite": {
+            "fr": "NVIDIA Form 10-K, FY2026",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+          }
+        },
+        {
+          "date": "2026-01-15",
+          "status": "denial",
+          "label": "Denial above 21,000 TPP or 6,500 GB/s DRAM bandwidth",
+          "event": "2026-01-15-h200-case-by-case",
+          "cite": {
+            "fr": "91 FR 1685",
+            "cfr": "15 CFR 742.6(b)(10)(iii)",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2026-01-15/html/2026-00789.htm"
+          },
+          "announced": "2026-01-13"
+        }
+      ],
+      "short": "AI chips"
+    },
+    {
+      "id": "us-tools",
+      "name": "Chipmaking tools",
+      "route": "US → China",
+      "what": "Semiconductor manufacturing equipment and the software that runs it. A licence is needed; applications for advanced fabs meet a presumption of denial, the rest are weighed case by case.",
+      "order": 2,
+      "chapter": "deposition-and-etch",
+      "initial": "open",
+      "states": [
+        {
+          "date": "2022-10-21",
+          "announced": "2022-10-07",
+          "status": "case",
+          "label": "Licence for advanced logic, DRAM and NAND tools",
+          "event": "2022-10-07-october-rules",
+          "cite": {
+            "fr": "87 FR 62186",
+            "cfr": "15 CFR 742.6(a)(6)",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2022-10-13/html/2022-21658.htm"
+          }
+        },
+        {
+          "date": "2023-11-17",
+          "announced": "2023-10-17",
+          "status": "case",
+          "label": "Licence, with tighter equipment thresholds",
+          "event": "2023-10-17-density-test",
+          "cite": {
+            "fr": "88 FR 73424",
+            "cfr": "15 CFR 742.6(a)(6)",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/html/2023-23049.htm"
+          }
+        },
+        {
+          "date": "2024-09-06",
+          "status": "case",
+          "label": "Gate-all-around and quantum tools controlled worldwide",
+          "event": "2024-09-06-gaafet-quantum",
+          "cite": {
+            "fr": "89 FR 72926",
+            "cfr": "15 CFR 742.6(a)(10)",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2024-09-06/html/2024-19633.htm"
+          }
+        },
+        {
+          "date": "2024-12-31",
+          "announced": "2024-12-02",
+          "status": "case",
+          "label": "Licence for more deposition, etch and inspection tools",
+          "event": "2024-12-02-hbm-package",
+          "cite": {
+            "fr": "89 FR 96790",
+            "cfr": "15 CFR 742.6(a)(6)",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/html/2024-28270.htm"
+          }
+        },
+        {
+          "date": "2025-12-31",
+          "announced": "2025-08-29",
+          "status": "case",
+          "label": "Foreign-owned fabs in China lose their VEU cover",
+          "event": "2025-08-29-veu-revoked",
+          "cite": {
+            "fr": "90 FR 42321",
+            "cfr": "15 CFR part 748, supplement no. 7",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2025-09-02/html/2025-16735.htm"
+          }
+        }
+      ],
+      "short": "US tools"
+    },
+    {
+      "id": "allies",
+      "name": "Allied controls",
+      "route": "Netherlands and Japan → China",
+      "what": "Advanced immersion DUV scanners, the measuring and inspection tools that go with them, and 23 categories of Japanese equipment.",
+      "order": 3,
+      "chapter": "lithography",
+      "initial": "open",
+      "states": [
+        {
+          "date": "2023-07-23",
+          "announced": "2023-05-23",
+          "status": "case",
+          "label": "Japan licenses 23 categories of chipmaking equipment",
+          "event": "2023-07-23-japan-tools",
+          "cite": {
+            "fr": "METI, amended export trade control order",
+            "url": "https://www.csis.org/analysis/csis-translation-updated-japanese-export-controls-high-performance-semiconductor"
+          }
+        },
+        {
+          "date": "2023-09-01",
+          "status": "case",
+          "label": "Dutch licence for advanced immersion DUV scanners",
+          "event": "2023-09-01-dutch-licence",
+          "cite": {
+            "url": "https://www.asml.com/en/news/press-releases/2023/statement-regarding-export-control-regulations-dutch-government",
+            "fr": "ASML statement, 30 June 2023"
+          },
+          "announced": "2023-06-30"
+        },
+        {
+          "date": "2024-09-07",
+          "announced": "2024-09-06",
+          "status": "case",
+          "label": "Dutch licensing extended to mid-range immersion tools",
+          "event": "2024-09-06-dutch-extension",
+          "cite": {
+            "fr": "Staatscourant 2024, 29008",
+            "url": "https://www.government.nl/latest/news/2024/09/06/the-netherlands-expands-export-control-measure-advanced-semiconductor-manufacturing-equipment"
+          }
+        },
+        {
+          "date": "2025-04-01",
+          "announced": "2025-01-15",
+          "status": "case",
+          "label": "Dutch licence extended to measuring and inspection tools",
+          "event": "2025-04-01-dutch-metrology",
+          "cite": {
+            "fr": "Staatscourant, 15 January 2025",
+            "url": "https://www.government.nl/latest/news/2025/01/15/klever-export-controls-on-advanced-semiconductor-manufacturing-equipment-to-be-tightened"
+          }
+        }
+      ],
+      "short": "Allied tools"
+    },
+    {
+      "id": "hbm",
+      "name": "High-bandwidth memory",
+      "route": "Korea and US → China",
+      "what": "Memory stacks above 2 GB per second per square millimetre, wherever they are made, plus the foreign stacks caught by the direct product rule. The licence requirement runs only to Macau and Country Group D:5, and the review splits inside them: approval is presumed for buyers in China or Macau that are not headquartered there, denial for those that are. Licence Exception HBM still carries stacks to a Chinese packaging house for an American or allied designer.",
+      "order": 4,
+      "chapter": "memory-and-hbm",
+      "initial": "open",
+      "states": [
+        {
+          "date": "2024-12-31",
+          "announced": "2024-12-02",
+          "status": "denial",
+          "label": "Denial for Chinese-headquartered buyers, approval for the rest",
+          "event": "2024-12-02-hbm-package",
+          "cite": {
+            "fr": "89 FR 96790",
+            "cfr": "15 CFR 742.6(a)(6)(i)(B), (b)(10)(ii); 740.25",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/html/2024-28270.htm"
+          }
+        }
+      ],
+      "short": "HBM"
+    },
+    {
+      "id": "entity",
+      "name": "US goods and technology",
+      "route": "US → listed Chinese firms",
+      "what": "Anything subject to the EAR, from processors to design software, when a listed firm is a party to the transaction. The review policy is written into each listing.",
+      "order": 5,
+      "chapter": "geopolitics",
+      "initial": "open",
+      "states": [
+        {
+          "date": "2018-04-15",
+          "announced": "2018-04-23",
+          "status": "prohibited",
+          "label": "Denial order bars all US exports to ZTE",
+          "event": "2018-04-15-zte-denial",
+          "cite": {
+            "fr": "83 FR 17644",
+            "cfr": "15 CFR part 766",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2018-04-23/html/2018-08354.htm"
+          }
+        },
+        {
+          "date": "2018-07-13",
+          "announced": "2018-07-23",
+          "status": "open",
+          "label": "Order terminated on settlement; ZTE off the list",
+          "event": "2018-07-13-zte-order-terminated",
+          "cite": {
+            "fr": "83 FR 34825",
+            "cfr": "15 CFR part 766",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2018-07-23/html/2018-15633.htm"
+          }
+        },
+        {
+          "date": "2018-10-30",
+          "status": "denial",
+          "label": "Fujian Jinhua listed; presumption of denial",
+          "event": "2018-10-30-jinhua-listed",
+          "cite": {
+            "fr": "83 FR 54519",
+            "cfr": "15 CFR 744.11",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2018-10-30/html/2018-23693.htm"
+          }
+        },
+        {
+          "date": "2019-05-16",
+          "announced": "2019-05-21",
+          "status": "denial",
+          "label": "Huawei and 68 affiliates listed",
+          "event": "2019-05-16-huawei-listed",
+          "cite": {
+            "fr": "84 FR 22961",
+            "cfr": "15 CFR 744.11",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2019-05-21/html/2019-10616.htm"
+          }
+        },
+        {
+          "date": "2020-05-15",
+          "announced": "2020-05-19",
+          "status": "denial",
+          "label": "Reaches foreign fabs making Huawei's designs",
+          "event": "2020-05-15-huawei-fdpr",
+          "cite": {
+            "fr": "85 FR 29849",
+            "cfr": "15 CFR 736.2(b)(3)(vi)",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2020-05-19/html/2020-10856.htm"
+          }
+        },
+        {
+          "date": "2020-08-17",
+          "announced": "2020-08-20",
+          "status": "denial",
+          "label": "Any chip made with US tools caught",
+          "event": "2020-08-17-fdpr-broadened",
+          "cite": {
+            "fr": "85 FR 51596",
+            "cfr": "15 CFR 736.2(b)(3)(vi)",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2020-08-20/html/2020-18213.htm"
+          }
+        },
+        {
+          "date": "2020-12-18",
+          "announced": "2020-12-22",
+          "status": "denial",
+          "label": "SMIC listed; denial at 10 nanometres and below",
+          "event": "2020-12-18-smic-listed",
+          "cite": {
+            "fr": "85 FR 83416",
+            "cfr": "15 CFR 744.11",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2020-12-22/html/2020-28031.htm"
+          }
+        },
+        {
+          "date": "2023-10-17",
+          "announced": "2023-10-19",
+          "status": "denial",
+          "label": "Biren and Moore Threads listed",
+          "event": "2023-10-17-entity-additions",
+          "cite": {
+            "fr": "88 FR 71991",
+            "cfr": "15 CFR 744.11",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-19/html/2023-23048.htm"
+          }
+        },
+        {
+          "date": "2025-03-25",
+          "announced": "2025-03-28",
+          "status": "denial",
+          "label": "Twelve more listed for AI and supercomputers",
+          "event": "2025-03-25-entity-additions",
+          "cite": {
+            "fr": "90 FR 14046",
+            "cfr": "15 CFR 744.11",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2025-03-28/html/2025-05427.htm"
+          }
+        },
+        {
+          "date": "2025-09-29",
+          "announced": "2025-09-30",
+          "status": "denial",
+          "label": "Subsidiaries of listed firms caught worldwide",
+          "event": "2025-09-29-affiliates-rule",
+          "cite": {
+            "fr": "90 FR 47201",
+            "cfr": "15 CFR 744.11(a)(1)",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2025-09-30/html/2025-19001.htm"
+          }
+        },
+        {
+          "date": "2025-11-10",
+          "announced": "2025-11-12",
+          "status": "denial",
+          "suspendedUntil": "2026-11-09",
+          "label": "Affiliates rule stayed to 9 November 2026",
+          "event": "2025-11-10-one-year-truce",
+          "cite": {
+            "fr": "90 FR 50857",
+            "cfr": "15 CFR 744.11(a)(1)",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2025-11-12/html/2025-19846.htm"
+          }
+        }
+      ],
+      "short": "Entity List"
+    },
+    {
+      "id": "minerals",
+      "name": "Critical minerals to America",
+      "route": "China → United States",
+      "what": "Gallium, germanium, antimony, superhard materials and graphite sold to American buyers.",
+      "order": 6,
+      "chapter": "chemicals-gases-and-photoresist",
+      "initial": "open",
+      "states": [
+        {
+          "date": "2020-12-01",
+          "announced": "2020-10-17",
+          "status": "open",
+          "label": "China's Export Control Law builds the licensing machinery",
+          "event": "2020-12-01-china-export-control-law",
+          "cite": {
+            "fr": "Export Control Law of the People's Republic of China",
+            "url": "https://exportcontrol.mofcom.gov.cn/article/zcfg/gnzcfg/flfg/202111/226.html"
+          }
+        },
+        {
+          "date": "2023-08-01",
+          "announced": "2023-07-03",
+          "status": "case",
+          "label": "Licence for gallium and germanium items",
+          "event": "2023-07-03-gallium-germanium",
+          "cite": {
+            "fr": "MOFCOM and GAC Announcement 2023 No. 23",
+            "url": "http://exportcontrol.mofcom.gov.cn/article/zcfg/gnzcfg/zcfggzqd/202307/847.html"
+          }
+        },
+        {
+          "date": "2024-12-03",
+          "status": "prohibited",
+          "label": "Exports to America not permitted, in principle",
+          "event": "2024-12-03-minerals-ban",
+          "cite": {
+            "fr": "MOFCOM Announcement 2024 No. 46",
+            "url": "https://cset.georgetown.edu/publication/china-rare-earth-export-ban/"
+          }
+        },
+        {
+          "date": "2025-11-09",
+          "status": "prohibited",
+          "suspendedUntil": "2026-11-27",
+          "label": "Ban stayed; general licences issued to US end users",
+          "event": "2025-11-10-one-year-truce",
+          "cite": {
+            "fr": "MOFCOM Announcement 2025 No. 72",
+            "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_b1ec77dd3f0d4762952904df7cdaadec.html"
+          }
+        }
+      ],
+      "short": "Minerals to US"
+    },
+    {
+      "id": "minerals-world",
+      "name": "Critical minerals to everyone else",
+      "route": "China → the rest of the world",
+      "what": "The same gallium, germanium and antimony, plus seven medium and heavy rare earths, sold anywhere but America. A licence, not a ban.",
+      "order": 7,
+      "chapter": "chemicals-gases-and-photoresist",
+      "initial": "open",
+      "states": [
+        {
+          "date": "2020-12-01",
+          "announced": "2020-10-17",
+          "status": "open",
+          "label": "China's Export Control Law builds the licensing machinery",
+          "event": "2020-12-01-china-export-control-law",
+          "cite": {
+            "fr": "Export Control Law of the People's Republic of China",
+            "url": "https://exportcontrol.mofcom.gov.cn/article/zcfg/gnzcfg/flfg/202111/226.html"
+          }
+        },
+        {
+          "date": "2023-08-01",
+          "announced": "2023-07-03",
+          "status": "case",
+          "label": "Licence for gallium and germanium items",
+          "event": "2023-07-03-gallium-germanium",
+          "cite": {
+            "fr": "MOFCOM and GAC Announcement 2023 No. 23",
+            "url": "http://exportcontrol.mofcom.gov.cn/article/zcfg/gnzcfg/zcfggzqd/202307/847.html"
+          }
+        },
+        {
+          "date": "2025-04-04",
+          "status": "case",
+          "label": "Seven medium and heavy rare earths added",
+          "event": "2025-04-04-rare-earths",
+          "cite": {
+            "fr": "MOFCOM and GAC Announcement 2025 No. 18",
+            "url": "https://english.mofcom.gov.cn/Policies/AnnouncementsOrders/art/2025/art_0dd87cbee7b045bf93fabe6ab2faceee.html"
+          }
+        },
+        {
+          "date": "2025-10-09",
+          "status": "case",
+          "label": "Reach claimed over foreign goods above 0.1 percent",
+          "event": "2025-10-09-rare-earth-reach",
+          "cite": {
+            "fr": "MOFCOM Announcement 2025 No. 61",
+            "url": "https://cset.georgetown.edu/publication/mofcom-notice-2025-61/"
+          }
+        },
+        {
+          "date": "2025-11-07",
+          "status": "case",
+          "suspendedUntil": "2026-11-10",
+          "label": "Stayed on 7 November, before it ever bound",
+          "event": "2025-11-10-one-year-truce",
+          "cite": {
+            "fr": "MOFCOM and GAC Announcement 2025 No. 70",
+            "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_b1ec77dd3f0d4762952904df7cdaadec.html"
+          }
+        }
+      ],
+      "short": "Minerals elsewhere"
+    },
+    {
+      "id": "china-market",
+      "name": "Foreign chips inside China",
+      "route": "US and Japan → China's market",
+      "what": "American memory and Nvidia accelerators sold inside China, plus a Japanese deposition gas. These are Chinese measures on Chinese buyers, not export controls.",
+      "order": 8,
+      "chapter": "geopolitics",
+      "initial": "open",
+      "states": [
+        {
+          "date": "2023-05-21",
+          "status": "prohibited",
+          "label": "Cybersecurity review bars Micron from critical information infrastructure",
+          "event": "2023-05-21-micron-barred",
+          "cite": {
+            "fr": "Cybersecurity Review Office notice, 21 May 2023",
+            "url": "https://www.cac.gov.cn/2023-05/21/c_1686348043518073.htm"
+          }
+        },
+        {
+          "date": "2026-08-26",
+          "status": "prohibited",
+          "label": "Reported curbs leave H200 licences unused; nothing published",
+          "event": "2026-08-26-h200-unused",
+          "cite": {
+            "fr": "NVIDIA Form 10-Q, Q2 FY2027",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm"
+          }
+        }
+      ],
+      "short": "China's market"
+    },
+    {
+      "id": "diffusion",
+      "name": "AI chips to the rest of the world",
+      "route": "US → every other destination",
+      "what": "The top band of accelerators, ECCNs 3A090.a and 4A090.a, which need a licence to or within any destination worldwide. License Exception AIA carries them to the nineteen destinations in supplement no. 5 to part 740, and License Exception LPP up to 26,900,000 TPP a year per consignee elsewhere. Applications from the nineteen are reviewed with a presumption of approval; the rest run against a per-country allocation of 790,000,000 TPP through 2027.",
+      "order": 9,
+      "chapter": "geopolitics",
+      "initial": "open",
+      "states": [
+        {
+          "date": "2025-01-13",
+          "announced": "2025-01-15",
+          "status": "case",
+          "label": "Licence required worldwide; AIA covers nineteen destinations, LPP elsewhere",
+          "event": "2025-01-13-diffusion-rule",
+          "cite": {
+            "fr": "90 FR 4544",
+            "cfr": "15 CFR 742.6(a)(6)(iii)(A); 740.27; 740.29",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2025-01-15/html/2025-00636.htm"
+          }
+        },
+        {
+          "date": "2025-05-13",
+          "status": "case",
+          "label": "BIS stops enforcing; the text stays in the CFR",
+          "event": "2025-05-13-diffusion-rescinded",
+          "cite": {
+            "url": "https://www.bis.gov/press-release/department-commerce-rescinds-biden-era-artificial-intelligence-diffusion-rule-strengthens-chip-related",
+            "fr": "BIS press release, 13 May 2025",
+            "cfr": "15 CFR 742.6(a)(6)(iii)(A)"
+          }
+        },
+        {
+          "date": "2025-05-15",
+          "status": "case",
+          "label": "Bilateral deals replace the caps; the licence stands",
+          "event": "2025-05-15-gulf-deals",
+          "cite": {
+            "url": "https://www.whitehouse.gov/fact-sheets/2025/05/fact-sheet-president-donald-j-trump-secures-200-billion-in-new-u-s-uae-deals-and-accelerates-previously-committed-1-4-trillion-uae-investment/",
+            "fr": "White House fact sheet, 15 May 2025"
+          }
+        },
+        {
+          "date": "2026-07-10",
+          "announced": "2026-07-14",
+          "status": "case",
+          "label": "UAE joins A:5; named consignees ship licence-free",
+          "event": "2026-07-10-uae-group-a5",
+          "cite": {
+            "fr": "91 FR 43034",
+            "cfr": "15 CFR 742.6(a)(6)(iii)(A) and (B); supplement no. 8 to part 740",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2026-07-14/html/2026-14132.htm"
+          }
+        }
+      ],
+      "short": "Rest of world"
+    },
+    {
+      "id": "industrial",
+      "name": "Money, stakes and tariffs",
+      "route": "at home",
+      "what": "Subsidies, state investment funds, government equity, procurement bars and tariffs. None of these is a licence gate.",
+      "order": 10,
+      "chapter": "geopolitics",
+      "initial": "open",
+      "states": [
+        {
+          "date": "2022-08-09",
+          "status": "policy",
+          "label": "CHIPS Act: $52.7 billion, with a China expansion bar",
+          "event": "2022-08-09-chips-act",
+          "cite": {
+            "fr": "Public Law 117-167",
+            "url": "https://www.govinfo.gov/app/details/PLAW-117publ167"
+          }
+        },
+        {
+          "date": "2022-12-23",
+          "status": "policy",
+          "label": "Federal procurement bar on SMIC, CXMT and YMTC from 2027",
+          "event": "2022-12-23-ndaa-5949",
+          "cite": {
+            "fr": "Public Law 117-263, section 5949",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2024-05-03/html/2024-08735.htm"
+          }
+        },
+        {
+          "date": "2024-05-24",
+          "status": "policy",
+          "label": "China's third chip fund: 344 billion yuan",
+          "event": "2024-05-24-big-fund-three",
+          "cite": {
+            "url": "https://english.www.gov.cn/news/202405/29/content_WS66569746c6d0868f4e8e7987.html"
+          }
+        },
+        {
+          "date": "2025-03-03",
+          "status": "policy",
+          "label": "TSMC raises US investment to $165 billion",
+          "event": "2025-03-03-tsmc-investment",
+          "cite": {
+            "url": "https://pr.tsmc.com/english/news/3210"
+          }
+        },
+        {
+          "date": "2025-08-22",
+          "status": "policy",
+          "label": "Washington takes 9.9 percent of Intel",
+          "event": "2025-08-22-intel-stake",
+          "cite": {
+            "fr": "Intel Form 8-K, 22 August 2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086325000129/0000050863-25-000129-index.htm"
+          }
+        },
+        {
+          "date": "2026-01-15",
+          "announced": "2026-01-14",
+          "status": "policy",
+          "label": "25 percent tariff on chips crossing America",
+          "event": "2026-01-14-section-232",
+          "cite": {
+            "fr": "91 FR 2443",
+            "url": "https://www.govinfo.gov/content/pkg/FR-2026-01-20/html/2026-01052.htm"
+          }
+        },
+        {
+          "date": "2026-01-15",
+          "status": "policy",
+          "label": "Taiwan wins tariff relief, nothing on chips",
+          "event": "2026-01-15-us-taiwan-mou",
+          "cite": {
+            "url": "https://www.federalregister.gov/documents/2026/05/28/2026-10571/implementing-certain-tariff-related-elements-of-a-trade-and-security-agreement-between-the-american"
+          }
+        }
+      ],
+      "short": "Money"
+    }
+  ]
+}
