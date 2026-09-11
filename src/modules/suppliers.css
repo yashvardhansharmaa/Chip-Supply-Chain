@@ -164,9 +164,17 @@
   .sup-panel, .sup-panel-in, .sup-band { transition: none; }
 }
 
+/* ---------- the two tabs under the atlas ---------- */
+.sup-tabs { margin: 34px 0 0; }
+.sup-tab .filters { margin-top: 18px; }
+.sup-tab .sup-pipe { margin-top: 18px; }
+
 /* ---------- the ribbons ---------- */
 .sup-rib { stroke: none; opacity: 0.3; cursor: pointer; transition: opacity 160ms linear; }
 .sup-rib.is-crit { fill: var(--accent); opacity: 0.82; }
+/* the country chosen on the atlas lights its ribbons; hovering and the firm filter override it */
+.sup-pipe[data-lit="1"] .sup-rib { opacity: 0.1; }
+.sup-pipe[data-lit="1"] .sup-rib[data-lit] { opacity: 0.9; }
 .sup-pipe-svg[data-hot="1"] .sup-rib { opacity: 0.08; }
 .sup-pipe-svg[data-hot="1"] .sup-rib[data-hot="1"] { opacity: 0.95; }
 .sup-pipe[data-filtered="1"] .sup-rib { opacity: 0.1; }

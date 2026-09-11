@@ -86,7 +86,7 @@
           <li><b>Substitutability.</b> How hard it would be for a well-funded state or firm to stand up an alternative: Easy, Moderate, Hard or Very hard, rated against four tests.</li>
           <li><b>Price or market size.</b> What one unit costs, or what the stage earns in a year.</li>
         </ul>
-        <p>The card also gives China's position and the United States'. The chapters run in process order.</p>
+        <p>The card also gives where China and the United States stand. The chapters run in process order.</p>
         <p class="howto-dl"><a class="btn ghost" href="chip-supply-chain-the-chain.pdf" download>Download the chain as a PDF</a> <button type="button" class="btn ghost" id="print-page">Print this page</button></p>
       </div>
       <div class="contents" id="contents">
@@ -128,12 +128,8 @@
         <p class="dek">{{SUPPLIERS_INTRO}}</p>
       </div>
       {{HOME_MAP}}
-      <section class="sup-pipe" id="sup-pipe" aria-labelledby="sup-pipe-h">
-        <h3 class="label sup-pipe-h" id="sup-pipe-h">Which countries feed which stages</h3>
-        <div class="sup-pipe-scroll" id="sup-pipe-scroll"></div>
-        <p class="sup-legend" id="sup-legend"></p>
-        <div class="sup-tip" id="sup-tip" role="tooltip" hidden></div>
-      </section>
+      <nav class="subtabs sup-tabs" aria-label="Firms by stage or by country"><a href="#/suppliers" data-tab="stage" aria-current="true">By stage</a><a href="#/suppliers?tab=country" data-tab="country">By country</a></nav>
+      <div class="sup-tab" data-tab="stage">
       <div class="filters">
         <input id="sup-search" type="search" placeholder="Search suppliers, cities, tickers…" aria-label="Search suppliers">
         <select id="sup-country" aria-label="Filter by country"><option value="">All countries</option></select>
@@ -151,6 +147,15 @@
       <h3 class="label sup-ladder-h" id="sup-ladder-h">Stages, thinnest first</h3>
       <div class="sup-ladder" id="sup-ladder" aria-labelledby="sup-ladder-h"></div>
       <div class="sup-wrap" id="sup-wrap" hidden><table class="sup" id="sup-table"></table></div>
+      </div>
+      <div class="sup-tab" data-tab="country" hidden>
+      <section class="sup-pipe" id="sup-pipe" aria-labelledby="sup-pipe-h">
+        <h3 class="label sup-pipe-h" id="sup-pipe-h">Which countries feed which stages</h3>
+        <div class="sup-pipe-scroll" id="sup-pipe-scroll"></div>
+        <p class="sup-legend" id="sup-legend"></p>
+        <div class="sup-tip" id="sup-tip" role="tooltip" hidden></div>
+      </section>
+      </div>
     </section>
 
     <section class="view column wide" data-view="controls" hidden>

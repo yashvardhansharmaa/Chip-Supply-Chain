@@ -224,14 +224,13 @@
 
 .sa-town[data-dead="1"] { cursor: default; }
 
-/* ---------- the home page: doors, the route, the strip, leverage ---------- */
+/* ---------- the atlas on the Suppliers page: the route, the strip, what each country makes ---------- */
 .sa-doors { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 10px 0 34px; }
 .sa-door { display: block; border: 1px solid var(--line-2); background: var(--bg-2); border-radius: 3px; padding: 14px 16px 15px; text-decoration: none; color: var(--ink); transition: border-color 0.15s; }
 .sa-door:hover, .sa-door:focus-visible { border-color: var(--ink); }
 .sa-door-k { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); margin-bottom: 6px; }
 .sa-door b { display: block; font-family: var(--font-display); font-weight: 700; font-size: 19px; margin-bottom: 3px; }
 .sa-door span:last-child { font-size: 14.5px; color: var(--ink-2); }
-.sa-route-wrap .sa-map { display: block; }
 .sa-route { fill: none; stroke: var(--accent-ink); stroke-width: 1; opacity: 0.4; }
 .sa-tail { stroke: var(--ink-2); stroke-width: 0.8; }
 .sa-stop { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; background: var(--ink); color: var(--bg); border: 1.5px solid var(--bg); display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 10.5px; text-decoration: none; transition: transform 0.15s var(--ease); z-index: 3; }
@@ -249,25 +248,90 @@
 .sa-stopcard-n { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--muted); }
 .sa-stopcard-t { display: block; font-family: var(--font-display); font-weight: 600; font-size: 12.5px; line-height: 1.15; margin: 2px 0 3px; }
 .sa-stopcard-w { display: block; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.02em; color: var(--muted); }
-.sa-leverage { margin-top: 40px; }
-.sa-lev-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr); gap: 30px; align-items: start; }
-.sa-roles { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-2); }
-.sa-role { display: grid; grid-template-columns: 150px 1fr; grid-template-areas: "name line" "meta line"; gap: 0 14px; width: 100%; text-align: left; padding: 9px 8px 10px; margin: 0; border: 0; border-bottom: 1px solid var(--line); background: none; color: var(--ink); cursor: pointer; align-items: baseline; }
-.sa-role:hover, .sa-role:focus-visible { background: var(--bg-2); outline: none; }
-.sa-role[aria-pressed="true"] { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
-.sa-role-name { grid-area: name; font-family: var(--font-display); font-weight: 700; font-size: 15.5px; }
-.sa-role-meta { grid-area: meta; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.05em; color: var(--muted); }
-.sa-role-line { grid-area: line; font-family: var(--font-body); font-size: 14.5px; line-height: 1.4; color: var(--ink-2); align-self: center; }
-.sa--home .sa-panels { margin: 0; }
+
+/* the plate: chips across the top, the caption, the map with the panel at its right, the strip as the footer */
+.sa--atlas { padding-bottom: 0; }
+.atlas { margin-top: 8px; border: 1px solid var(--line); border-radius: 3px; background: var(--bg-2); }
+.atlas-bar { display: flex; align-items: center; gap: 14px; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+.atlas-bar-l { flex: 0 0 auto; color: var(--ink); }
+.sa-roles { display: flex; flex-wrap: wrap; gap: 5px; margin: 0; padding: 0; list-style: none; }
+.sa-role { display: inline-flex; align-items: baseline; margin: 0; padding: 6px 9px 7px; border: 1px solid var(--line-2); border-radius: 2px; background: var(--bg); color: var(--ink-2); cursor: pointer; }
+.sa-role:hover { background: var(--bg-3); color: var(--ink); }
+.sa-role:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.sa-role-name { font-family: var(--font-display); font-size: 13.5px; font-weight: 600; line-height: 1.1; }
+.sa-role-meta, .sa-role-line { display: none; }
+.sa-role[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.atlas-caption { margin: 0; padding: 9px 14px 10px; border-bottom: 1px solid var(--line); font-size: 15px; line-height: 1.4; color: var(--ink-2); }
+.atlas-caption-name { font-family: var(--font-display); font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink); margin-right: 6px; }
+.atlas-caption-meta { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.05em; color: var(--muted); margin-right: 10px; }
+.atlas-body { display: grid; grid-template-columns: minmax(0, 1fr) 360px; grid-template-rows: auto auto; align-items: stretch; }
+.atlas .sa-map { grid-column: 1; grid-row: 1; border: 0; border-right: 1px solid var(--line); border-radius: 0; background: transparent; }
+.atlas .sa-svg { border-radius: 0; }
+.atlas .sa-strip-stops { grid-column: 1; grid-row: 2; margin: 0; padding: 12px 12px 14px; border-top: 1px solid var(--line); border-right: 1px solid var(--line); gap: 12px 8px; grid-template-columns: repeat(8, minmax(0, 1fr)); }
+.atlas .sa-panels { grid-column: 2; grid-row: 1 / span 2; position: relative; min-width: 0; }
+.atlas .sa-panel { position: absolute; inset: 0; max-height: none; overflow: auto; border: 0; border-radius: 0; padding: 16px 16px 14px; }
+.atlas .sa-panels[data-more="1"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 40px; background: linear-gradient(to bottom, transparent, var(--bg-2)); pointer-events: none; }
+.atlas .sa-panel-head h4 { font-size: 25px; }
+.atlas .sa-panel-lede { font-size: 15.5px; margin: 8px 0 12px; }
+.atlas .sa-fact a, .atlas .sa-fact-in { padding: 7px 2px; }
+.atlas .sa-panel-foot { margin-top: 10px; }
+
+/* the chosen country lifts out of the route: its stops ring in amber and carry their towns, the other stops and the arcs dim */
+.atlas .sa-stop:not(.is-on) { opacity: 0.42; box-shadow: none; background: var(--ink-2); }
+.atlas .sa-stop:not(.is-on):hover, .atlas .sa-stop:not(.is-on):focus-visible { opacity: 1; box-shadow: 0 0 0 2px var(--accent); }
+.atlas .sa-route { opacity: 0.22; }
+.atlas .sa-tail { opacity: 0.45; }
+.atlas .sa-stop.is-on { background: var(--ink); box-shadow: 0 0 0 3px var(--accent); transform: scale(1.16); z-index: 5; }
+.atlas .sa-stop.is-on:hover, .atlas .sa-stop.is-on:focus-visible { transform: scale(1.25); z-index: 6; }
+.atlas .sa-stop.is-on::after { content: attr(data-place); }
+.sa-stop::after {
+  content: none; position: absolute; left: 27px; top: 50%; transform: translateY(-50%); white-space: nowrap;
+  font-family: var(--font-mono); font-weight: 600; font-size: 10.5px; letter-spacing: 0.04em; color: var(--ink);
+  background: color-mix(in srgb, var(--bg-2) 88%, transparent); padding: 2px 5px; border-radius: 2px; pointer-events: none;
+}
+/* where a country's towns crowd, the build gives each label a side (data-lab) so none covers a stop or another label */
+.sa-stop[data-lab="l"]::after { left: auto; right: 27px; }
+.sa-stop[data-lab="d"]::after { left: 50%; top: 24px; transform: translateX(-50%); }
+.sa-stop[data-lab="u"]::after { left: 50%; top: auto; bottom: 24px; transform: translateX(-50%); }
+.sa-stop[data-lab="rd"]::after { top: calc(50% + 11px); }
+.sa-stop[data-lab="ru"]::after { top: calc(50% - 11px); }
+.sa-stop[data-lab="ld"]::after { left: auto; right: 27px; top: calc(50% + 11px); }
+.sa-stop[data-lab="lu"]::after { left: auto; right: 27px; top: calc(50% - 11px); }
+.sa-stop[data-lab="dr"]::after { left: 3px; top: 24px; transform: none; }
+.sa-stop[data-lab="dl"]::after { left: auto; right: 3px; top: 24px; transform: none; }
+.sa-stop[data-lab="ur"]::after { left: 3px; top: auto; bottom: 24px; transform: none; }
+.sa-stop[data-lab="ul"]::after { left: auto; right: 3px; top: auto; bottom: 24px; transform: none; }
+
+/* the strip agrees with the map: the chosen country's cards carry the amber bar, the rest go quiet */
+.atlas .sa-stopcard:not(.is-on) { border-top-color: var(--line-2); }
+.atlas .sa-stopcard:not(.is-on) .sa-stopcard-t, .atlas .sa-stopcard:not(.is-on) .sa-stopcard-w { color: var(--muted); }
+.atlas .sa-stopcard.is-on { border-top: 3px solid var(--accent); padding-top: 5px; }
+.atlas .sa-stopcard.is-on .sa-stopcard-t { color: var(--ink); }
+.atlas .sa-stopcard:hover .sa-stopcard-t, .atlas .sa-stopcard.is-hot .sa-stopcard-t, .atlas .sa-stopcard:focus-visible .sa-stopcard-t { color: var(--accent-ink); }
+
 @media (max-width: 899px) {
   .sa-doors { grid-template-columns: 1fr; gap: 8px; margin: 6px 0 24px; }
   .sa-door { padding: 11px 13px 12px; }
+  /* the plate stacks on a phone: the chips scroll sideways, then the caption, the map, the panel and the strip */
+  .atlas-bar { flex-direction: column; align-items: stretch; gap: 8px; padding: 10px 0 9px 12px; }
+  .sa-roles { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 2px 12px 3px 0; scrollbar-width: none; }
+  .sa-roles::-webkit-scrollbar { display: none; }
+  .sa-role { flex: 0 0 auto; padding: 5px 8px 6px; }
+  .sa-role-name { font-size: 13px; }
+  .atlas-caption { padding: 8px 12px 9px; font-size: 14.5px; }
+  .atlas-caption-line { display: block; margin-top: 2px; }
+  .atlas-body { grid-template-columns: 1fr; grid-template-rows: none; }
+  .atlas .sa-map, .atlas .sa-panels, .atlas .sa-strip-stops { grid-column: 1; grid-row: auto; }
+  .atlas .sa-map { order: 1; margin: 0; border: 0; }
+  .atlas .sa-panels { order: 2; border-top: 1px solid var(--line); }
+  .atlas .sa-strip-stops { order: 3; padding: 10px 12px 12px; border-right: 0; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px 6px; }
+  .atlas .sa-panel { position: static; overflow: visible; padding: 16px 12px 14px; }
+  .atlas .sa-panels[data-more="1"]::after { content: none; }
   .sa-stop { width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; pointer-events: none; border-width: 1px; } /* on a phone the map is small: the dots mark the route and the strip below is the tappable list */
   .sa-stop span { display: none; }
+  .sa-stop::after { display: none; }
+  .atlas .sa-stop:not(.is-on) { opacity: 0.5; }
+  .atlas .sa-stop.is-on { transform: none; box-shadow: 0 0 0 2px var(--accent); width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; }
   .sa-tail { display: none; }
-  .sa-strip-stops { grid-template-columns: repeat(5, 1fr); gap: 8px 6px; }
-  .sa-lev-grid { grid-template-columns: 1fr; gap: 18px; }
-  .sa-role { grid-template-columns: 1fr; grid-template-areas: "name" "meta" "line"; gap: 2px; }
-  .sa-role-line { margin-top: 2px; }
 }
 @media (prefers-reduced-motion: reduce) { .sa-stop { transition: none; } }

@@ -666,7 +666,25 @@
       'Systems & Servers': 'Systems & servers', 'Power & Cooling': 'Power & cooling',
       'Silicon & Wafers': 'Silicon wafers', 'IP & Architecture': 'IP & architecture'
     },
-    activate: function () { if (!this.built) this.build(); else this.fitPipe(); },
+    activate: function () {
+      this.setTab(/[?&]tab=country\b/.test(location.hash || '') ? 'country' : 'stage'); // #/suppliers?tab=country opens the ribbons
+      if (!this.built) this.build(); else this.fitPipe();
+    },
+    /* two tabs under the atlas: the ladder by stage, the ribbons by country */
+    setTab: function (tab) {
+      this.tab = tab;
+      $$('.sup-tab').forEach(function (d) { d.hidden = d.getAttribute('data-tab') !== tab; });
+      $$('.sup-tabs a').forEach(function (a) { if (a.getAttribute('data-tab') === tab) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+    },
+    toStage: function () { // the ribbons index the ladder, which lives on the other tab
+      if (this.tab === 'stage') return;
+      this.setTab('stage');
+      if (/[?&]tab=country\b/.test(location.hash || '')) history.replaceState(null, '', '#/suppliers');
+    },
+    light: function (cc) { // the atlas's chosen country lights its ribbons; a country set in the firm filter takes over
+      this.lit = this.CO.indexOf(cc) >= 0 ? cc : '';
+      if (this.built) this.sync();
+    },
 
     build: function () {
       this.built = true;
@@ -723,7 +741,7 @@
       if (Math.max(820, Math.round(host.clientWidth) || 820) !== this.drawW) this.drawPipe();
     },
     drawPipe: function () { // the ribbons: countries on the left, the twenty stages on the right, a ribbon for every pairing, its width the firms
-      var self = this, host = $('#sup-pipe-scroll'); if (!host) return;
+      var self = this, host = $('#sup-pipe-scroll'); if (!host || !host.clientWidth) return; // under the other tab it has no width; it is drawn when its tab opens
       var st = this.stages, n = st.length; if (!n) return;
       var W = Math.max(820, Math.round(host.clientWidth) || 820), tight = W < 1000;
       this.drawW = W;
@@ -910,6 +928,7 @@
       $$('.sup-lab').forEach(function (g) { if (!off && +g.getAttribute('data-i') === i) g.setAttribute('data-lit', '1'); else g.removeAttribute('data-lit'); });
       this.render();
       if (off) return;
+      this.toStage();
       var el = document.getElementById(s.id);
       if (el) el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
     },
@@ -923,7 +942,7 @@
     setCountry: function (c, scroll) {
       this.country = (c === this.country ? '' : c) || '';
       this.sync(); this.render();
-      if (scroll) { var t = $('#sup-toolbar'); if (t) t.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' }); }
+      if (scroll) { this.toStage(); var t = $('#sup-toolbar'); if (t) t.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' }); }
     },
     sortBy: function (k) { if (this.sortKey === k) this.sortDir = -this.sortDir; else { this.sortKey = k; this.sortDir = 1; } this.render(); },
     setMode: function (m) {
@@ -940,7 +959,9 @@
       $('#sup-ladder-h').hidden = !lad;
       $('#sup-wrap').hidden = lad;
       $$('.sup-band').forEach(function (p) { if (on && p.getAttribute('data-c') === on) p.setAttribute('data-on', '1'); else p.removeAttribute('data-on'); });
-      var pipe = $('#sup-pipe'); if (pipe) pipe.setAttribute('data-filtered', on ? '1' : '0');
+      var lit = on ? '' : (this.lit || '');
+      $$('.sup-rib').forEach(function (p) { if (lit && p.getAttribute('data-c') === lit) p.setAttribute('data-lit', '1'); else p.removeAttribute('data-lit'); });
+      var pipe = $('#sup-pipe'); if (pipe) { pipe.setAttribute('data-filtered', on ? '1' : '0'); pipe.setAttribute('data-lit', lit ? '1' : '0'); }
     },
     countryLabel: function () { return this.country === '__other' ? 'Other countries' : cname(this.country); },
     filtering: function () { return !!this.stage || !!(this.country || this.chk || this.q); },

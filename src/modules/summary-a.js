@@ -1,7 +1,8 @@
-/* summary-a: the map-first summary at #/summary-a.
- * The page is rendered whole by build/modules/summary-a.js; this file only
- * switches which country panel and which stage detail is on show. Everything
- * is a real button, so keyboard and screen readers get the same page. */
+/* summary-a: the atlas on the Suppliers page (and the map-first summary at #/summary-a).
+ * The plate is rendered whole by build/modules/summary-a.js; this file only
+ * switches which country is chosen: its chips, its stops and strip cards, the
+ * caption and its panel. Everything is a real button, so keyboard and screen
+ * readers get the same page. */
 (function () {
   var CP = window.CP;
   if (!CP) return;
@@ -9,6 +10,22 @@
   var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var hoverable = !window.matchMedia || matchMedia('(hover: hover)').matches;
   var root = null, map = null, bound = false;
+
+  // the caption under the chips reads the chosen country's name, meta and role line from its own chip
+  function caption(cc) {
+    var cap = $('.atlas-caption', root), role = $('.sa-role[data-cc="' + cc + '"]', root);
+    if (!cap || !role) return;
+    ['name', 'meta', 'line'].forEach(function (k) {
+      var to = $('.atlas-caption-' + k, cap), from = $('.sa-role-' + k, role);
+      if (to && from) to.textContent = from.textContent;
+    });
+  }
+
+  // a panel taller than the plate scrolls inside it; the fade at its foot stays until the reader reaches the end
+  function more(panel) {
+    if (!panel || !panel.parentNode) return;
+    panel.parentNode.setAttribute('data-more', panel.scrollHeight - panel.clientHeight - panel.scrollTop > 6 ? '1' : '0');
+  }
 
   function selectCountry(cc, fromMap) {
     if (!cc || !$('.sa-panel[data-cc="' + cc + '"]', root)) return;
@@ -19,13 +36,24 @@
     $$('.sa-town', root).forEach(function (t) {
       t.classList.toggle('is-on', t.getAttribute('data-cc') === cc);
     });
+    // the route answers: the chosen country's stops ring in amber and carry their towns, its cards in the strip take the amber bar
+    $$('.sa-stop, .sa-stopcard', root).forEach(function (el) {
+      el.classList.toggle('is-on', el.getAttribute('data-cc') === cc);
+    });
+    caption(cc);
     $$('.sa-panel', root).forEach(function (p) { p.hidden = p.getAttribute('data-cc') !== cc; });
     var panel = $('.sa-panel[data-cc="' + cc + '"]', root);
-    if (panel) panel.scrollTop = 0;
-    // on phones the panel is under the map, so bring it into view after a tap
-    if (fromMap && panel && window.innerWidth < 900) {
-      var top = panel.getBoundingClientRect().top;
-      if (top > window.innerHeight - 120) panel.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'nearest' });
+    if (panel) { panel.scrollTop = 0; more(panel); }
+    // the ribbons on the By country tab light the same country
+    if (CP.Suppliers && CP.Suppliers.light) CP.Suppliers.light(cc);
+    if (window.innerWidth < 900) {
+      var chip = $('.sa-role[data-cc="' + cc + '"]', root); // the chip row scrolls sideways on a phone: keep the chosen chip in view
+      if (chip && chip.scrollIntoView) chip.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      // on phones the panel is under the map, so bring it into view after a tap
+      if (fromMap && panel) {
+        var top = panel.getBoundingClientRect().top;
+        if (top > window.innerHeight - 120) panel.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'nearest' });
+      }
     }
   }
 
@@ -64,6 +92,9 @@
       });
     }
 
+    // the panel's inner scroll: the fade at its foot goes once the end is in view
+    root.addEventListener('scroll', function (e) { if (e.target.classList && e.target.classList.contains('sa-panel')) more(e.target); }, true);
+    window.addEventListener('resize', function () { more($('.sa-panel:not([hidden])', root)); });
 
     // the route's stops: a card on hover or focus with the stage, its town, who leads it and the score
     var tip = null;
@@ -84,12 +115,12 @@
     root.addEventListener('focusin', function (e) { var a = e.target.closest ? e.target.closest('.sa-stop') : null; if (a) showStop(a); else hideStop(); });
     window.addEventListener('scroll', function () { hideStop(); }, { passive: true });
 
-    // the panel opens on the country the build marked; make the pins agree
+    // the panel opens on the country the build marked; make the chips, the stops and the strip agree
     var open = $('.sa-panel:not([hidden])', root);
     if (open) selectCountry(open.getAttribute('data-cc'), false);
   }
 
-  // #/suppliers?country=JP opens the Suppliers page on that country's leverage panel (the Index's country cards link here)
+  // #/suppliers?country=JP opens the Suppliers page with that country chosen on the plate (the Index's country cards link here)
   function fromHash() {
     var m = (location.hash || '').match(/[?&]country=([A-Za-z]{2})\b/);
     if (!m) return;
@@ -97,8 +128,13 @@
     var cc = m[1].toUpperCase();
     if (!$('.sa-panel[data-cc="' + cc + '"]', root)) return;
     selectCountry(cc, false);
-    var lev = $('.sa-leverage', root); // the router resets the scroll after activation; the panel comes into view after it
-    if (lev) setTimeout(function () { lev.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' }); }, 80);
+    // the router resets the scroll after activation; after that, bring the plate in if it is off screen, or the panel on a phone, where it sits under the map
+    setTimeout(function () {
+      var narrow = window.innerWidth < 900, target = narrow ? $('.sa-panel[data-cc="' + cc + '"]', root) : $('.atlas', root);
+      if (!target) return;
+      var top = target.getBoundingClientRect().top;
+      if (narrow || top < 0 || top > window.innerHeight * 0.6) target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    }, 80);
   }
 
   CP.SummaryA = { selectCountry: selectCountry, fromHash: fromHash };

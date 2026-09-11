@@ -67,7 +67,7 @@ const STOPS = [
   ['systems-and-networking', 'Taipei', 25.03, 121.56, 'TW', 14, -10],
   ['data-centers-and-power', 'Ashburn', 39.04, -77.49, 'US', 0, 0]
 ];
-/* One line on each country's leverage, in the words the chapters use. Editorial. */
+/* One line on what each country makes, in the words the chapters use. Editorial. */
 const ROLE = {
   US: 'Designs the chips and makes most of the tools; the biggest buyer',
   NL: 'The only maker of EUV scanners, the machines that print the finest layers',
@@ -107,6 +107,54 @@ const SHORT = {
 };
 
 const EQUIPMENT = ['Lithography', 'Deposition & Etch', 'Metrology & Inspection', 'Test', 'Advanced Packaging & OSAT', 'Equipment Subsystems & Components'];
+
+/* Where a stop's town label sits when the country is chosen. The label is 10.5 px mono at the stop's 1.16 scale,
+ * so in drawing units (one unit is about a pixel at the plate's width) it starts 19 from the centre, stands 17 tall
+ * and runs 7.3 a character plus its padding. Right is the default; the rest are tried in this order when right
+ * would cover another stop, another label or the edge of the map. Each entry gives the label's top-left corner. */
+const LAB_H = 17, LAB_GAP = 19, LAB_V = 15;
+const LAB = {
+  r: (x, y, w) => [x + LAB_GAP, y - LAB_H / 2], l: (x, y, w) => [x - LAB_GAP - w, y - LAB_H / 2],
+  d: (x, y, w) => [x - w / 2, y + LAB_V], u: (x, y, w) => [x - w / 2, y - LAB_V - LAB_H],
+  rd: (x, y, w) => [x + LAB_GAP, y + 2], ru: (x, y, w) => [x + LAB_GAP, y - 2 - LAB_H],
+  ld: (x, y, w) => [x - LAB_GAP - w, y + 2], lu: (x, y, w) => [x - LAB_GAP - w, y - 2 - LAB_H],
+  dr: (x, y, w) => [x - 8, y + LAB_V], dl: (x, y, w) => [x + 8 - w, y + LAB_V],
+  ur: (x, y, w) => [x - 8, y - LAB_V - LAB_H], ul: (x, y, w) => [x + 8 - w, y - LAB_V - LAB_H]
+};
+const LAB_ORDER = Object.keys(LAB);
+/* A side for every stop's label. Only one country's labels show at a time, so each country is solved on its own:
+ * every combination of sides is tried (at most four stops a country, so a few thousand) and the one that covers the
+ * least is kept, counting the area a label lays over a stop (its own country's at the ringed size), over another
+ * label (twice) or past the edge of the map (ten times). Where nothing overlaps, that is the first clear layout in
+ * preference order. The Bay Area's three stops sit within 25 units of one another, so a few units of a ring under
+ * a label's translucent ground is the best there is; the warning fires only when a layout covers far more. */
+function labelSides(stops, VW, VH, warn) {
+  const overlap = (a, b) => Math.max(0, Math.min(a[2], b[2]) - Math.max(a[0], b[0])) * Math.max(0, Math.min(a[3], b[3]) - Math.max(a[1], b[1]));
+  const box = (s, side) => { const p = LAB[side](s.x, s.y, s.w); return [p[0], p[1], p[0] + s.w, p[1] + LAB_H]; };
+  const sides = {};
+  const byCC = {};
+  stops.forEach((s) => { (byCC[s.cc] = byCC[s.cc] || []).push(s); });
+  Object.keys(byCC).forEach((cc) => {
+    const own = byCC[cc].slice().sort((a, b) => a.x - b.x || a.y - b.y);
+    const cost = (s, b, placed) => {
+      let c = 0;
+      c += 10 * (overlap(b, [0, 0, VW, VH]) < (b[2] - b[0]) * (b[3] - b[1]) ? (b[2] - b[0]) * (b[3] - b[1]) - overlap(b, [0, 0, VW, VH]) : 0);
+      stops.forEach((o) => { if (o === s) return; const r = o.cc === cc ? 14 : 11; c += overlap(b, [o.x - r, o.y - r, o.x + r, o.y + r]); });
+      placed.forEach((p) => { c += 2 * overlap(b, p); });
+      return c;
+    };
+    let best = null, bestCost = Infinity;
+    const walk = (i, placed, sofar, acc) => {
+      if (acc >= bestCost) return;
+      if (i === own.length) { best = sofar; bestCost = acc; return; }
+      LAB_ORDER.forEach((side) => { const b = box(own[i], side); walk(i + 1, placed.concat([b]), sofar.concat([side]), acc + cost(own[i], b, placed)); });
+    };
+    walk(0, [], [], 0);
+    if (bestCost > 200) warn('summary-a: the town labels for ' + cc + ' cover ' + Math.round(bestCost) + ' square units of the map at best');
+    own.forEach((s, i) => { sides[s.key] = best[i]; });
+  });
+  return sides;
+}
 
 module.exports = function (ctx) {
   const esc = ctx.esc, word = ctx.word, warn = ctx.warn, data = ctx.data;
@@ -393,7 +441,7 @@ ${svg}
 </section>
 </div>`;
 
-  // the home page: three doors, the route of one chip, the strip of stops, and each country's leverage with its panel
+  // the atlas on the Suppliers page: the route of one chip, its strip of stops, and what each country makes, with its panel
   const stopOf = {}; STOPS.forEach((st) => { stopOf[st[0]] = st; });
   const routeStops = stages.map((c) => ({ c, st: stopOf[c.id] })).filter((x) => { if (!x.st) warn('summary-a: no stop for ' + x.c.id); return !!x.st; });
   const XY = (st) => [px(st[3]) + st[5], py(st[2]) + st[6]];
@@ -406,29 +454,32 @@ ${svg}
     if (x.st[5] || x.st[6]) tails += `<line class="sa-tail" x1="${px(x.st[3])}" y1="${py(x.st[2])}" x2="${a[0].toFixed(1)}" y2="${a[1].toFixed(1)}"/>`;
   });
   const routeSvg = svg.replace('</svg>', `<g class="sa-routes">${route}${tails}</g></svg>`);
+  // the chosen country's stops carry their town names; the label sides are solved so none covers a stop or another label
+  const sides = labelSides(routeStops.map((x) => { const a = XY(x.st); return { key: x.c.id, cc: x.st[4], x: a[0], y: a[1], w: x.st[1].length * 7.3 + 12 }; }), VW, VH, warn);
   const stopBtns = routeStops.map((x) => {
-    const a = XY(x.st), lead = ((x.c.leaders || [])[0] || {}).name || '';
-    return `<a class="sa-stop" data-cc="${x.st[4]}" href="${href(x.c)}" style="left:${(a[0] / VW * 100).toFixed(2)}%;top:${(a[1] / VH * 100).toFixed(2)}%" data-title="${esc(x.c.title)}" data-town="${esc(x.st[1])}, ${esc(COUNTRY[x.st[4]] || x.st[4])}" data-lead="${esc(lead)}" data-band="${esc(x.c.band || '')}" aria-label="Stop ${x.c.number}, ${esc(x.c.title)}: ${esc(x.st[1])}${lead ? ', led by ' + esc(lead) : ''}, ${x.c.band ? x.c.band.toLowerCase() + ' concentration' : ''}."><span>${x.c.number}</span></a>`;
+    const a = XY(x.st), lead = ((x.c.leaders || [])[0] || {}).name || '', side = sides[x.c.id] || 'r';
+    return `<a class="sa-stop${x.st[4] === DEFAULT_CC ? ' is-on' : ''}" data-cc="${x.st[4]}" href="${href(x.c)}" style="left:${(a[0] / VW * 100).toFixed(2)}%;top:${(a[1] / VH * 100).toFixed(2)}%" data-place="${esc(x.st[1])}"${side === 'r' ? '' : ` data-lab="${side}"`} data-title="${esc(x.c.title)}" data-town="${esc(x.st[1])}, ${esc(COUNTRY[x.st[4]] || x.st[4])}" data-lead="${esc(lead)}" data-band="${esc(x.c.band || '')}" aria-label="Stop ${x.c.number}, ${esc(x.c.title)}: ${esc(x.st[1])}${lead ? ', led by ' + esc(lead) : ''}, ${x.c.band ? x.c.band.toLowerCase() + ' concentration' : ''}."><span>${x.c.number}</span></a>`;
   }).join('');
-  const strip = routeStops.map((x) => `<li><a class="sa-stopcard" data-cc="${x.st[4]}" href="${href(x.c)}"><span class="sa-stopcard-n">${String(x.c.number).padStart(2, '0')}</span><span class="sa-stopcard-t">${esc(x.c.title.replace(/ and /g, ' & '))}</span><span class="sa-stopcard-w">${esc(x.st[1])} · ${x.st[4]}</span></a></li>`).join('');
+  const strip = routeStops.map((x) => `<li><a class="sa-stopcard${x.st[4] === DEFAULT_CC ? ' is-on' : ''}" data-cc="${x.st[4]}" href="${href(x.c)}"><span class="sa-stopcard-n">${String(x.c.number).padStart(2, '0')}</span><span class="sa-stopcard-t">${esc(x.c.title.replace(/ and /g, ' & '))}</span><span class="sa-stopcard-w">${esc(x.st[1])} · ${x.st[4]}</span></a></li>`).join('');
   const ledBy = {}; stages.forEach((c) => { const first = (c.countries || [])[0]; if (first) (ledBy[first.code] = ledBy[first.code] || []).push(c); });
   const roleOrder = Object.keys(ROLE).filter((cc) => info[cc]).sort((a, b) => ((ledBy[b] || []).length - (ledBy[a] || []).length) || (info[b].named.length - info[a].named.length));
-  const roles = roleOrder.map((cc) => {
+  const metaOf = (cc) => {
     const led = ledBy[cc] || [], five = led.filter((c) => c.band === 'Extreme').length;
-    const meta = led.length ? `leads ${word(led.length)} stage${led.length > 1 ? 's' : ''}${five ? `, ${word(five)} of them extreme` : ''}` : `named on ${word(info[cc].named.length)} stage${info[cc].named.length === 1 ? '' : 's'}`;
-    return `<li><button type="button" class="sa-role" data-cc="${cc}" aria-pressed="${cc === DEFAULT_CC}"><span class="sa-role-name">${esc(COUNTRY[cc] || cc)}</span><span class="sa-role-meta">${meta}</span><span class="sa-role-line">${esc(ROLE[cc])}</span></button></li>`;
-  }).join('');
-  const mins = Math.max(1, Math.round(ctx.all.reduce((a, c) => a + (c.meta.plain || '').split(/\s+/).length, 0) / 230));
-  const doors = `<nav class="sa-doors" aria-label="Where to start"><a class="sa-door" href="#/intro"><span class="sa-door-k">${esc(ctx.cap(word(mins)))} minutes</span><b>Start here</b><span>One plain paragraph per stage, beside its 3D specimen.</span></a><a class="sa-door" href="#/chain"><span class="sa-door-k">${esc(ctx.cap(word(chapters.length)))} chapters</span><b>The Chain</b><span>Every stage in full, in process order.</span></a><a class="sa-door" href="#/controls"><span class="sa-door-k">Since 2018</span><b>Export controls</b><span>Every rule so far, and what can still flow to China today.</span></a></nav>`;
-  const homeMap = `<div class="sa sa--home">
-<section class="sa-route-wrap" id="the-route" aria-label="The route of one chip">
-<div class="sa-map-head"><h3 class="sa-h">The route of one chip</h3><p class="sa-sub">${ctx.cap(word(routeStops.length))} stops, from design in California to the data centre in Virginia, at the town that leads each stage.</p></div>
-<div class="sa-map sa-map--route">${routeSvg}<div class="sa-overlay">${stopBtns}</div></div>
+    return led.length ? `leads ${word(led.length)} stage${led.length > 1 ? 's' : ''}${five ? `, ${word(five)} of them extreme` : ''}` : `named on ${word(info[cc].named.length)} stage${info[cc].named.length === 1 ? '' : 's'}`;
+  };
+  // the country chips keep the meta and the role line in their markup; the chip shows the name and the caption below reads the rest
+  const roles = roleOrder.map((cc) => `<li><button type="button" class="sa-role" data-cc="${cc}" aria-pressed="${cc === DEFAULT_CC}"><span class="sa-role-name">${esc(COUNTRY[cc] || cc)}</span><span class="sa-role-meta">${metaOf(cc)}</span><span class="sa-role-line">${esc(ROLE[cc])}</span></button></li>`).join('');
+  const caption = `<p class="atlas-caption"><b class="atlas-caption-name">${esc(COUNTRY[DEFAULT_CC])}</b> <span class="atlas-caption-meta">${metaOf(DEFAULT_CC)}</span> <span class="atlas-caption-line">${esc(ROLE[DEFAULT_CC])}</span></p>`;
+  const homeMap = `<div class="sa sa--home sa--atlas">
+<section class="atlas" id="the-route" aria-labelledby="atlas-h">
+<h3 class="sr-only" id="atlas-h">What each country makes</h3>
+<div class="atlas-bar"><span class="label atlas-bar-l">The route of one chip</span><ul class="sa-roles" aria-label="Countries">${roles}</ul></div>
+${caption}
+<div class="atlas-body">
+<div class="sa-map sa-map--route" data-cc="${DEFAULT_CC}">${routeSvg}<div class="sa-overlay">${stopBtns}</div></div>
 <ol class="sa-strip-stops">${strip}</ol>
-</section>
-<section class="sa-leverage" aria-label="What leverage does each country have">
-<div class="sa-map-head"><h3 class="sa-h">What leverage does each country have?</h3></div>
-<div class="sa-lev-grid"><ul class="sa-roles">${roles}</ul><div class="sa-panels" aria-live="polite">${panels}</div></div>
+<div class="sa-panels" aria-live="polite">${panels}</div>
+</div>
 </section>
 </div>`;
   return { SUMMARY_A: html, HOME_MAP: homeMap };
