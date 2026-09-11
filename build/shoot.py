@@ -12,7 +12,7 @@ mobile = '--mobile' in args
 def opt(name, default):
     return type(default)(args[args.index(name) + 1]) if name in args else default
 width = opt('--width', 390 if mobile else 1366); height = opt('--height', 844 if mobile else 900)
-full = '--full' in args; wait = opt('--wait', 4.0); ev = opt('--eval', '')  # --eval runs a script (may return a promise) before the shot, e.g. to hover a footnote
+full = '--full' in args; printmedia = '--print' in args; wait = opt('--wait', 4.0); ev = opt('--eval', '')  # --eval runs a script (may return a promise) before the shot, e.g. to hover a footnote
 port = 9333
 chrome = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 proc = subprocess.Popen([chrome, '--headless=new', '--disable-gpu', '--hide-scrollbars', '--no-first-run', '--no-default-browser-check',
@@ -36,6 +36,7 @@ try:
         send('Emulation.setTouchEmulationEnabled', {'enabled': True})
         send('Emulation.setUserAgentOverride', {'userAgent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1'})
     send('Page.enable'); send('Page.navigate', {'url': url})
+    if printmedia: send('Emulation.setEmulatedMedia', {'media': 'print'})
     time.sleep(wait)
     if full:
         h = send('Runtime.evaluate', {'expression': 'document.documentElement.scrollHeight', 'returnByValue': True})['result']['value']

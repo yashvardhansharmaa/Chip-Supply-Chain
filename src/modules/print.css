@@ -163,6 +163,9 @@
   .print-title .pt-sub { font-family: var(--font-body); font-size: 14pt; color: var(--ink-2); margin: 0 0 13mm; max-width: 130mm; }
   .print-title .pt-what { font-family: var(--font-body); font-size: 11pt; margin: 0 0 2mm; }
   .print-title .pt-by { font-family: var(--font-display); font-weight: 600; font-size: 11pt; margin: 0 0 9mm; }
+  .print-title .pt-art { margin: 10mm 0 8mm; break-inside: avoid; }
+  .print-title .pt-art img { display: block; width: 132mm; height: auto; margin: 0; }
+  .print-title .pt-art figcaption { font-family: var(--font-mono); font-size: 7.5pt; line-height: 1.45; color: var(--muted); max-width: 132mm; margin-top: 3mm; }
   .print-title .pt-meta { font-family: var(--font-mono); font-size: 8pt; color: var(--muted); margin: 0; }
   .howto { break-inside: avoid; }
   .contents .item { break-inside: avoid; }

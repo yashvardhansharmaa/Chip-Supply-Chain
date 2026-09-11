@@ -545,7 +545,9 @@ const sheetPages = [['#/', 'Home'], ['#/intro', 'Start here'], ['#/chain', 'The 
 const sheetChapters = all.map((ch) => { const sc = +((ch.meta.card || {}).chokepointScore || 0); return `<li><a href="${ch.id === 'geopolitics' ? '#geopolitics' : '#' + esc(ch.id)}"><span class="n">${pad(ch.number)}</span><span class="t">${esc(ch.title)}</span><span class="s${sc >= 5 ? ' hi' : ''}">${sc ? sc + ' / 5' : ''}</span></a></li>`; }).join('');
 fill('SHEET_PAGES', sheetPages); fill('SHEET_CHAPTERS', sheetChapters);
 fill('RAIL', railHTML); fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits); fill('FOOTER', footer);
-fill('SUPPLIERS_INTRO', suppliersIntro); fill('BUILT', builtStr); fill('GEO_DEK', esc(geoDek)); fill('GEO_BODY', geoBody);
+fill('SUPPLIERS_INTRO', suppliersIntro); fill('BUILT', builtStr);
+// the PDF title page's art ships beside the page
+for (const asset of ['print-title.png']) { const from = path.join(root, 'build', 'assets', asset); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', asset)); } fill('GEO_DEK', esc(geoDek)); fill('GEO_BODY', geoBody);
 fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));
 // the Look up page: one list of every term, firm and chip, alphabetical, each with the kind a reader would call it
 const lkSlug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');

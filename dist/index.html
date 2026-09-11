@@ -1420,6 +1420,9 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent-ink); text-
   .print-title .pt-sub { font-family: var(--font-body); font-size: 14pt; color: var(--ink-2); margin: 0 0 13mm; max-width: 130mm; }
   .print-title .pt-what { font-family: var(--font-body); font-size: 11pt; margin: 0 0 2mm; }
   .print-title .pt-by { font-family: var(--font-display); font-weight: 600; font-size: 11pt; margin: 0 0 9mm; }
+  .print-title .pt-art { margin: 10mm 0 8mm; break-inside: avoid; }
+  .print-title .pt-art img { display: block; width: 132mm; height: auto; margin: 0; }
+  .print-title .pt-art figcaption { font-family: var(--font-mono); font-size: 7.5pt; line-height: 1.45; color: var(--muted); max-width: 132mm; margin-top: 3mm; }
   .print-title .pt-meta { font-family: var(--font-mono); font-size: 8pt; color: var(--muted); margin: 0; }
   .howto { break-inside: avoid; }
   .contents .item { break-inside: avoid; }
@@ -2303,6 +2306,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent-ink); text-
         <p class="pt-k">Compute Chokepoints</p>
         <h1 class="pt-h">How AI chips are made</h1>
         <p class="pt-sub">Every stage of the supply chain, and who controls it.</p>
+        <figure class="pt-art"><img src="print-title.png" alt=""><figcaption>The floorplan of one GPU die: 144 compute tiles in eight clusters, the cache in a band across the middle, the memory interfaces along the long edges, the link to the chiplet next door in amber.</figcaption></figure>
         <p class="pt-what">The Chain: seventeen chapters.</p>
         <p class="pt-by">Yashvardhan Sharma with Claude</p>
         <p class="pt-meta">Printed from yashvardhansharmaa.github.io/chokepoints · Updated 10 September 2026</p>
