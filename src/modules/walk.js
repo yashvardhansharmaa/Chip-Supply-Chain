@@ -6,7 +6,6 @@
 
   var rail, fill, num, label, list, steps = [], total = 0;
   var setUp = false, queued = false, at = -1, first = true;
-  var wasPast = false;
 
   function head() { // the masthead is measured at runtime, so read it rather than assume 56
     var v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--masthead'));
@@ -47,11 +46,6 @@
     var box = list.getBoundingClientRect();
 
     rail.setAttribute('data-show', box.top < line && box.bottom > line - 60 ? '1' : '0');
-    // past the last step the map and the country panels take the full width, so the specimen strip goes
-    // the tail (route map, leverage) starts as soon as it enters the lower part of the screen, so the strip never overlaps it
-    var after = list.parentNode.querySelector('.wk-after'), ab = after ? after.getBoundingClientRect() : null;
-    var past = ab ? ab.top < window.innerHeight * 0.55 : box.bottom < line - 40;
-    if (past !== wasPast) { wasPast = past; CP.Stage.setVisible(!past); document.body.classList.toggle('wk-past', past); }
     var p = Math.max(0, Math.min(1, (line - box.top) / Math.max(1, box.height)));
     fill.style.width = (p * 100).toFixed(1) + '%';
 
@@ -91,8 +85,7 @@
       // the router scrolls to the top right after this returns, so land the jump on the next task,
       // not the next frame — a background tab gets no frames
       window.setTimeout(function () { jump(cold); }, 0);
-      at = -1; wasPast = false;
-      if (CP.SummaryA && CP.SummaryA.fromHash) CP.SummaryA.fromHash();
+      at = -1;
       soon(update);
     }
   });

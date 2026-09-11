@@ -89,7 +89,7 @@ ${leadersHTML(c)}
 ${list}
 </ol>
 <div class="wk-end">
-<p class="wk-end-links"><a href="#/chain">All ${word(steps.length)} chapters in full</a><a href="#/controls">What the rules did</a></p>
+<p class="wk-end-links"><a href="#/chain">All ${word(steps.length)} chapters in full</a><a href="#/suppliers">Where each stage happens</a><a href="#/controls">What the rules did</a></p>
 </div>
 </div>`;
 

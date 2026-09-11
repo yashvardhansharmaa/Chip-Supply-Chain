@@ -22,6 +22,10 @@ import websocket  # websocket-client
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 args = sys.argv[1:]
 url, out = args[0], args[1]
+def site_host():
+    js = 'process.stdout.write(require(%s).host)' % json.dumps(os.path.join(ROOT, 'build', 'site.js'))
+    return subprocess.run(['node', '-e', js], capture_output=True, text=True, check=True).stdout.strip()
+
 def opt(name, default):
     return type(default)(args[args.index(name) + 1]) if name in args else default
 def flag(name):
@@ -86,11 +90,11 @@ try:
         return summary
 
     def print_pdf(css_page_size):
-        title = opt('--title', 'Compute Chokepoints · The Chain')
+        title = opt('--title', 'Chip Supply Chain · The Chain')
         style = ("font-family: Menlo, 'DejaVu Sans Mono', monospace; font-size: 7.5px; letter-spacing: 0.04em;"
                  " color: #5b646d; width: 100%; padding: 0 20mm; display: flex; justify-content: space-between; align-items: center;")
         header = '<div style="' + style + ' margin-top: 6mm;"><span>' + title + '</span><span>' + time.strftime('%-d %B %Y') + '</span></div>'
-        footer = ('<div style="' + style + ' margin-bottom: 6mm;"><span>yashvardhansharmaa.github.io/chokepoints</span>'
+        footer = ('<div style="' + style + ' margin-bottom: 6mm;"><span>' + site_host() + '</span>'
                   '<span><span class="pageNumber"></span> / <span class="totalPages"></span></span></div>')
         params = {'printBackground': True, 'transferMode': 'ReturnAsBase64'}
         if css_page_size:

@@ -15,7 +15,7 @@
      One string() to a box: Paged.js passes strings through a custom property, and two of them
      in one box cancel each other out, so the head is the chapter's own "Chapter 4: Lithography". */
   @top-left { content: string(chapter); }
-  @top-right { content: "Compute Chokepoints"; }
+  @top-right { content: "Chip Supply Chain"; }
   @bottom-left { content: "yashvardhansharmaa.github.io/chokepoints"; }
   @bottom-right { content: counter(page) " / " counter(pages); }
 

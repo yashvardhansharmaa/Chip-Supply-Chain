@@ -89,7 +89,7 @@
     if (open) selectCountry(open.getAttribute('data-cc'), false);
   }
 
-  // #/home?country=JP opens the home page on that country's leverage panel (the Index's country cards link here)
+  // #/suppliers?country=JP opens the Suppliers page on that country's leverage panel (the Index's country cards link here)
   function fromHash() {
     var m = (location.hash || '').match(/[?&]country=([A-Za-z]{2})\b/);
     if (!m) return;
@@ -103,6 +103,6 @@
 
   CP.SummaryA = { selectCountry: selectCountry, fromHash: fromHash };
   CP.register('summary-a', { stage: false, activate: bind });
-  CP.register('home', { stage: false, activate: fromHash });
+  CP.register('suppliers', { stage: false, activate: function () { bind(); fromHash(); } });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bind); else bind();
 })();

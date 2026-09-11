@@ -3,22 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Compute Chokepoints</title>
+<title>Chip Supply Chain</title>
 <meta name="description" content="The AI chip supply chain, stage by stage: who makes each part, how concentrated each stage is, and what a substitute would cost. Every stage has a 3D specimen beside the text.">
-<link rel="canonical" href="https://yashvardhansharmaa.github.io/chokepoints/">
-<meta property="og:site_name" content="Compute Chokepoints">
+<link rel="canonical" href="{{SITE_URL}}">
+<meta property="og:site_name" content="Chip Supply Chain">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Compute Chokepoints">
+<meta property="og:title" content="Chip Supply Chain">
 <meta property="og:description" content="The AI chip supply chain, stage by stage: who makes each part, how concentrated each stage is, and what a substitute would cost. Every stage has a 3D specimen beside the text.">
-<meta property="og:url" content="https://yashvardhansharmaa.github.io/chokepoints/">
-<meta property="og:image" content="https://yashvardhansharmaa.github.io/chokepoints/cards/home.png">
+<meta property="og:url" content="{{SITE_URL}}">
+<meta property="og:image" content="{{SITE_URL}}cards/home.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Compute Chokepoints. How AI chips are made, and who controls each stage.">
+<meta property="og:image:alt" content="Chip Supply Chain. How AI chips are made, and who controls each stage.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Compute Chokepoints">
+<meta name="twitter:title" content="Chip Supply Chain">
 <meta name="twitter:description" content="The AI chip supply chain, stage by stage: who makes each part, how concentrated each stage is, and what a substitute would cost. Every stage has a 3D specimen beside the text.">
-<meta name="twitter:image" content="https://yashvardhansharmaa.github.io/chokepoints/cards/home.png">
+<meta name="twitter:image" content="{{SITE_URL}}cards/home.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,400&display=swap">
@@ -35,7 +35,7 @@
 <div class="sheet" id="sheet" role="dialog" aria-label="Contents" hidden><div class="sheet-head"><b>Contents</b><button type="button" class="sheet-close" aria-label="Close">×</button></div><nav class="sheet-pages">{{SHEET_PAGES}}</nav><ol class="sheet-chapters">{{SHEET_CHAPTERS}}</ol></div>
 <div id="app">
   <header class="masthead">
-    <a class="wordmark" href="#/"><b>Compute Chokepoints</b><span>The AI chip supply chain</span></a>
+    <a class="wordmark" href="#/"><b>Chip Supply Chain</b><span>Every stage, and who controls it</span></a>
     <nav class="tabs" aria-label="Sections">
       <a href="#/chain" data-view="stack">The Chain</a>
       <a href="#/landscape" data-view="landscape">AI Chips</a>
@@ -66,7 +66,7 @@
       <section class="print-only print-title" aria-hidden="true">
         <img class="pt-plate" src="print-title.png" alt="">
         <div class="pt-type">
-          <p class="pt-k">Compute Chokepoints</p>
+          <p class="pt-k">Chip Supply Chain</p>
           <h1 class="pt-h">How AI chips<br>are made</h1>
           <p class="pt-sub">Every stage of the supply chain, and who controls it.</p>
         </div>
@@ -75,7 +75,7 @@
             <p class="pt-by">Yashvardhan Sharma with Claude</p>
             <p class="pt-what">The Chain: seventeen chapters.</p>
           </div>
-          <p class="pt-meta">Printed from yashvardhansharmaa.github.io/chokepoints · Updated {{BUILT}}</p>
+          <p class="pt-meta">Printed from {{SITE_HOST}} · Updated {{BUILT}}</p>
         </div>
       </section>
       <div class="howto" id="howto">
@@ -87,7 +87,7 @@
           <li><b>Price or market size.</b> What one unit costs, or what the stage earns in a year.</li>
         </ul>
         <p>The card also gives China's position and the United States'. The chapters run in process order.</p>
-        <p class="howto-dl"><a class="btn ghost" href="compute-chokepoints-the-chain.pdf" download>Download the chain as a PDF</a> <button type="button" class="btn ghost" id="print-page">Print this page</button></p>
+        <p class="howto-dl"><a class="btn ghost" href="chip-supply-chain-the-chain.pdf" download>Download the chain as a PDF</a> <button type="button" class="btn ghost" id="print-page">Print this page</button></p>
       </div>
       <div class="contents" id="contents">
         <h2>Contents</h2>
@@ -127,6 +127,7 @@
         <h2>Suppliers</h2>
         <p class="dek">{{SUPPLIERS_INTRO}}</p>
       </div>
+      {{HOME_MAP}}
       <section class="sup-pipe" id="sup-pipe" aria-labelledby="sup-pipe-h">
         <h3 class="label sup-pipe-h" id="sup-pipe-h">Which countries feed which stages</h3>
         <div class="sup-pipe-scroll" id="sup-pipe-scroll"></div>
@@ -191,7 +192,7 @@
       </div>
     </section>
 
-    <section class="view column" data-view="walk" hidden>{{WALK}}<div class="wk-after">{{HOME_MAP}}</div></section>
+    <section class="view column" data-view="walk" hidden>{{WALK}}</section>
 
     <section class="view column wide" data-view="glossary" hidden>
       <div class="view-head">

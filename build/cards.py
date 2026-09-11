@@ -58,7 +58,7 @@ body { background: var(--bg); color: var(--ink); font-family: "IBM Plex Sans Con
     <div class="rule"></div>
     <p class="line">%(line)s</p>
   </div>
-  <p class="foot"><i></i><span>yashvardhansharmaa.github.io/chokepoints</span></p>
+  <p class="foot"><i></i><span>%(host)s</span></p>
 </div>
 </body>
 </html>
@@ -90,6 +90,10 @@ def eyebrow_html(s):
     return ' · '.join(['<b>%s</b>' % esc(parts[0])] + [esc(p) for p in parts[1:]])
 
 
+def site_host():
+    js = "process.stdout.write(require(%s).host)" % json.dumps(os.path.join(ROOT, 'build', 'site.js'))
+    return subprocess.run(['node', '-e', js], capture_output=True, text=True, check=True).stdout.strip()
+
 def manifest():
     js = "process.stdout.write(JSON.stringify(require(%s).manifest()))" % json.dumps(os.path.join(ROOT, 'build', 'modules', 'social.js'))
     return json.loads(subprocess.check_output(['node', '-e', js], cwd=ROOT))
@@ -108,6 +112,8 @@ def shrink(path):
 
 def main():
     pages = manifest()
+    global HOST
+    HOST = site_host()
     if only:
         pages = [p for p in pages if p['slug'] in only]
     os.makedirs(OUT, exist_ok=True)
@@ -141,7 +147,7 @@ def main():
         send('Emulation.setDeviceMetricsOverride', {'width': W, 'height': H, 'deviceScaleFactor': 1, 'mobile': False})
         send('Page.enable')
         for i, p in enumerate(pages):
-            html = TEMPLATE % {'eyebrow': eyebrow_html(p['eyebrow']), 'title': esc(p['title']), 'line': esc(p['line']), 'title_px': 104}
+            html = TEMPLATE % {'eyebrow': eyebrow_html(p['eyebrow']), 'title': esc(p['title']), 'line': esc(p['line']), 'title_px': 104, 'host': HOST}
             src = os.path.join(tmp, p['slug'] + '.html')
             open(src, 'w').write(html)
             send('Page.navigate', {'url': 'file://' + src})

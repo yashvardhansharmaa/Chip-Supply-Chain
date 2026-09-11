@@ -13,7 +13,7 @@ That rule sits at one stage out of fifteen. An AI accelerator passes through all
 
 I work on compute governance, and for two years I have wanted one place that lays this out end to end, with the numbers attached to the documents they came from. The work exists. CSET mapped the chain. SIA and SEMI count it. The firms file it. Every rule sits in the Federal Register. But it is scattered across a hundred PDFs, and most of it was written for people who already knew the vocabulary.
 
-So I built the place: [Compute Chokepoints](https://yashvardhansharmaa.github.io/chokepoints/).
+So I built the place: [Chip Supply Chain](https://yashvardhansharmaa.github.io/chokepoints/).
 
 ## What is on it
 
@@ -41,7 +41,7 @@ Tell me where it is wrong. A share that is stale, a firm that is misfiled, a rul
 
 If you teach, brief, or write on any of this, use it. It is free, it has no ads, and it will stay that way.
 
-[Compute Chokepoints](https://yashvardhansharmaa.github.io/chokepoints/)
+[Chip Supply Chain](https://yashvardhansharmaa.github.io/chokepoints/)
 
 ---
 

@@ -10,8 +10,8 @@
    card and the page never disagree about a title or a line. It reads content/*.md itself so it needs no
    build context. Nothing here fills a template placeholder; the module returns {}. */
 
-const BASE = 'https://yashvardhansharmaa.github.io/chokepoints/';
-const SITE = 'Compute Chokepoints';
+const BASE = require('../site.js').url;
+const SITE = 'Chip Supply Chain';
 const SUBWORD = { 'Very hard': 'Very hard to substitute', Hard: 'Hard to substitute', Moderate: 'Moderately hard to substitute', Easy: 'Easy to substitute' };
 const TILE = { 16: 'The costs', 17: 'The contest' }; // what the chapter tile says for the two chapters that are not stages
 
