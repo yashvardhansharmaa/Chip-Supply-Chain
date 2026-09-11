@@ -1,6 +1,6 @@
 /* SOCIAL: one real URL per chapter and per view, so a pasted link unfurls with its own title, text and card.
 
-   dist/c/<slug>/index.html is a small static page: title, description, canonical, Open Graph and Twitter
+   dist/<slug>/index.html is a small static page: title, description, canonical, Open Graph and Twitter
    tags, the chapter's plain paragraph as visible text, then a meta refresh and a location.replace to the
    hash route on the main page. Unfurlers read the tags; people are redirected. The card images come from
    build/assets/cards/<slug>.png (rendered by `python3 build/cards.py`, not on every build) and are copied
@@ -50,7 +50,7 @@ function readChapters(root, fs, path) {
   return out.sort((a, b) => a.number - b.number);
 }
 
-/* Every page: slug (the folder under dist/c/), kind, eyebrow, title, line (the one line under the title on the card),
+/* Every page: slug (the folder under dist/), kind, eyebrow, title, line (the one line under the title on the card),
    description (the meta text), body (visible text on the static page), route (the hash URL on the main page). */
 function manifest(root) {
   const fs = require('fs'), path = require('path');
@@ -93,7 +93,7 @@ function manifest(root) {
 }
 
 function pageHTML(p) {
-  const url = BASE + 'c/' + p.slug + '/';
+  const url = BASE + p.slug + '/';
   const target = BASE + p.route;
   const image = BASE + 'cards/' + p.slug + '.png';
   const title = p.kind === 'chapter' ? `${p.title} · ${SITE}` : (p.slug === 'home' ? SITE : `${p.title} · ${SITE}`);
@@ -146,7 +146,7 @@ module.exports = function (ctx) {
   const pages = manifest(root);
   const dist = path.join(root, 'dist');
   for (const p of pages) {
-    const dir = path.join(dist, 'c', p.slug);
+    const dir = path.join(dist, p.slug);
     fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(path.join(dir, 'index.html'), pageHTML(p));
   }

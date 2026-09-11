@@ -48,7 +48,9 @@
 
     rail.setAttribute('data-show', box.top < line && box.bottom > line - 60 ? '1' : '0');
     // past the last step the map and the country panels take the full width, so the specimen strip goes
-    var past = box.bottom < line - 40;
+    // the tail (route map, leverage) starts as soon as it enters the lower part of the screen, so the strip never overlaps it
+    var after = list.parentNode.querySelector('.wk-after'), ab = after ? after.getBoundingClientRect() : null;
+    var past = ab ? ab.top < window.innerHeight * 0.55 : box.bottom < line - 40;
     if (past !== wasPast) { wasPast = past; CP.Stage.setVisible(!past); document.body.classList.toggle('wk-past', past); }
     var p = Math.max(0, Math.min(1, (line - box.top) / Math.max(1, box.height)));
     fill.style.width = (p * 100).toFixed(1) + '%';

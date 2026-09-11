@@ -82,14 +82,14 @@ ${leadersHTML(c)}
 <div class="wk-rail" id="wk-rail" data-show="0" aria-hidden="true" hidden><div class="wk-rail-bar"><i></i></div><p class="wk-rail-line"><span class="wk-rail-n"></span><span class="wk-rail-t"></span></p></div>
 <header class="wk-head">
 <h2 class="wk-title">How AI chips are made</h2>
-<p class="wk-dek">An introduction to the entire supply chain in ${mins} minutes.</p>
+<p class="wk-dek">An introduction to the entire semiconductor supply chain.</p>
 <p class="wk-meta"><span class="label">${steps.length} paragraphs</span><span class="label">${walkWords.toLocaleString('en-US')} words</span><span class="label">about ${mins} min</span></p>
 </header>
 <ol class="wk-list">
 ${list}
 </ol>
 <div class="wk-end">
-<p class="wk-end-links"><a href="#/chain">All ${word(steps.length)} chapters in full</a><a href="#the-route">The route of one chip</a><a href="#/controls">What the rules did</a></p>
+<p class="wk-end-links"><a href="#/chain">All ${word(steps.length)} chapters in full</a><a href="#/controls">What the rules did</a></p>
 </div>
 </div>`;
 

@@ -50,7 +50,7 @@
      back-to-top, search dialog, hover tooltips and the copy buttons. */
   .masthead, .tabs, .search-btn, .theme-toggle, .skip,
   .stage, .stage-actions, .stage-tag, .sheet,
-  .rail, .to-top, #cp-search, .ex-tip, .ct-tip, .gl-tip, .export-bar, .permalink,
+  .rail, .to-top, #cp-search, .ex-tip, .ct-tip, .gl-tip, .export-bar, .permalink, .ch-copy,
   .howto-dl, .prevnext, .ch-meta, .chain--compact, .chain-foot { display: none !important; }
 
   /* Every view that is on screen prints, full width. Hidden views stay hidden. */

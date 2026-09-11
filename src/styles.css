@@ -561,7 +561,10 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus { opacity: 1; }
 .ch-tile .of { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
 .ch-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(44px, 4.8vw, 68px); line-height: 0.96; letter-spacing: -0.006em; margin: -6px 0 14px; }
 .ch-lede { font-size: clamp(19px, 1.5vw, 22px); line-height: 1.42; color: var(--ink-2); max-width: 20em; font-weight: 350; margin: 0; }
-.ch-meta { display: flex; gap: 18px; flex-wrap: wrap; margin: 16px 0 0; }
+.ch-meta { display: flex; gap: 18px; flex-wrap: wrap; margin: 16px 0 0; align-items: baseline; }
+.ch-copy { font: inherit; background: none; border: 0; padding: 0; cursor: pointer; color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2); }
+.ch-copy:hover { text-decoration-color: var(--accent); }
+.ch-copy[data-done] { color: var(--muted); text-decoration: none; }
 .inshort { margin: 30px 0 36px; border-left: 4px solid var(--ink); padding-left: 24px; }
 .inshort h3 { margin: 0 0 10px; }
 .inshort p { font-size: 22px; line-height: 1.5; color: var(--ink); max-width: var(--measure); margin: 0 0 0.6em; }
