@@ -1175,8 +1175,6 @@
       tl.forEach(function (e) { var yy = parseInt(String(e.date).slice(0, 4), 10); if (self.yearN[yy] != null) self.yearN[yy]++; });
       if (this.flows) {
         this.flows.forEach(function (f) { self.byId[f.id] = f; self.evs[f.id] = self.eventsFor(f); });
-        var lead = $('#cf-intro'); // the count is the data's, not the copy's: the editor may split a flow
-        if (lead) lead.textContent = this.numWord(this.flows.length) + ' things move across the chokepoint.';
         this.wireBoard();
         this.renderScrub();
         this.renderBoard();
@@ -1187,7 +1185,6 @@
           sw.addEventListener('click', function (e) { var b = e.target.closest ? e.target.closest('.cf-mode') : null; if (b) self.setMode(b.getAttribute('data-mode'), true); });
         }
       } else {
-        var intro = $('#cf-intro'); if (intro) intro.textContent = 'Every move since 2018, newest last. Open any entry for the full account and its source.';
       }
       window.addEventListener('scroll', function () { if (Router.current === 'controls') self.spy(); }, { passive: true });
       window.addEventListener('resize', function () { clearTimeout(self.rz); self.rz = setTimeout(function () { self.headW = 0; self.sync(); }, 160); }, { passive: true });

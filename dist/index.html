@@ -3319,8 +3319,6 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent-ink); text-
       <div class="sub" data-sub="timeline">
       <div class="cf-top">
         <div>
-          <h3 class="label" style="margin: 10px 0 6px">What can still flow, and when it stopped</h3>
-          <p class="controls-intro" id="cf-intro">Each row is a thing that moves across the chokepoint, and the licence outcome it stands in today.</p>
         </div>
         <div class="cf-modes" id="cf-modes" role="group" aria-label="Order the moves" hidden><button type="button" class="cf-mode" data-mode="subject" aria-pressed="false">By subject</button><button type="button" class="cf-mode" data-mode="date" aria-pressed="true">By date</button></div>
       </div>
@@ -9034,8 +9032,6 @@ PC.register('wafer', function (p) {
       tl.forEach(function (e) { var yy = parseInt(String(e.date).slice(0, 4), 10); if (self.yearN[yy] != null) self.yearN[yy]++; });
       if (this.flows) {
         this.flows.forEach(function (f) { self.byId[f.id] = f; self.evs[f.id] = self.eventsFor(f); });
-        var lead = $('#cf-intro'); // the count is the data's, not the copy's: the editor may split a flow
-        if (lead) lead.textContent = this.numWord(this.flows.length) + ' things move across the chokepoint.';
         this.wireBoard();
         this.renderScrub();
         this.renderBoard();
@@ -9046,7 +9042,6 @@ PC.register('wafer', function (p) {
           sw.addEventListener('click', function (e) { var b = e.target.closest ? e.target.closest('.cf-mode') : null; if (b) self.setMode(b.getAttribute('data-mode'), true); });
         }
       } else {
-        var intro = $('#cf-intro'); if (intro) intro.textContent = 'Every move since 2018, newest last. Open any entry for the full account and its source.';
       }
       window.addEventListener('scroll', function () { if (Router.current === 'controls') self.spy(); }, { passive: true });
       window.addEventListener('resize', function () { clearTimeout(self.rz); self.rz = setTimeout(function () { self.headW = 0; self.sync(); }, 160); }, { passive: true });
