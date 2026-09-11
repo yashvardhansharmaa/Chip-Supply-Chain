@@ -163,8 +163,6 @@ Per unit of compute, logic keeps getting cheaper and everything wrapped around i
 | Wafers and bulk gases | Already commoditised | Multi-supplier, long-qualified, thin spreads. |
 | Rack integration (ODM) | Already commoditised | Low-teens margins on specified content. |
 
-The three classes are a judgement rather than a measurement.
-
 ## Key evaluation criteria
 
 - **Cost per good die.** A 30 percent wafer price rise at constant yield is survivable. A ten-point yield drop on an 800 mm2 die is not.
