@@ -83,7 +83,7 @@ ${leadersHTML(c)}
 <header class="wk-head">
 <p class="label wk-eyebrow">Start here</p>
 <h2 class="wk-title">How AI chips are made</h2>
-<p class="wk-dek">One plain paragraph from each of the ${word(steps.length)} chapters, in the order a chip is made, then what it costs and who controls it.</p>
+<p class="wk-dek">An introduction to the entire supply chain in ${mins} minutes.</p>
 <p class="wk-meta"><span class="label">${steps.length} paragraphs</span><span class="label">${walkWords.toLocaleString('en-US')} words</span><span class="label">about ${mins} min</span></p>
 </header>
 <ol class="wk-list">
