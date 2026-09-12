@@ -4,7 +4,7 @@
  "number": 1,
  "title": "Chip Design, EDA and IP",
  "oneLiner": "The cheapest stage in the chain to fund and one of the most concentrated. Three software firms sell the tools that every leading-edge AI accelerator passes through.",
- "plain": "Chip design turns an idea for a processor into a complete blueprint, with every one of billions of transistors placed and wired. That is the street plan of a city that size, and every road has to be walkable in less than a billionth of a second. No one draws it by hand. Software from three companies, Synopsys, Cadence and Siemens, generates the layout, checks it and signs it off, and a chip factory accepts only designs that have passed those tools. Changing one street afterwards costs a fresh set of printing stencils and several months. Withhold the software and the design cannot be made.",
+ "plain": "Chip design turns an idea for a processor into a complete blueprint. A chip holds billions of transistors, tiny electrical switches, and the blueprint fixes where each one sits and how it is wired to the others. A signal has to cross those wires in less than a billionth of a second. No one draws a plan like that by hand. Software from three companies, Synopsys, Cadence and Siemens, lays it out, checks it and signs it off, and a chip factory accepts only designs that have passed those tools. Changing the plan after that costs a fresh set of the stencils the factory prints from, and several months. Withhold the software and the design cannot be made.",
  "bridge": "The chain starts before any material does, when a company still has nothing but an idea for a processor.",
  "specimen": "die-floorplan",
  "specimenCaption": "The floorplan of a GPU die, one whole reticle field of 26 by 33 mm, the largest patch a scanner can print in a single exposure. 144 compute tiles fill the centre in eight clusters, the L2 cache splits them in a band across the middle, the high-bandwidth memory interfaces run along the two long edges, and the amber strip on the short edge is the link to the chiplet next door, a second die in the same package.",
@@ -77,7 +77,7 @@ Design is the only stage in this chain with no factory, and the one a foreign go
 
 ## How it works
 
-Chip design turns an idea for a processor into a complete blueprint, with every one of billions of transistors placed and wired. That is the street plan of a city that size, and every road has to be walkable in less than a billionth of a second. No one draws it by hand. Software from three companies, Synopsys, Cadence and Siemens, generates the layout, checks it and signs it off, and a chip factory accepts only designs that have passed those tools. Changing one street afterwards costs a fresh set of printing stencils and several months. Withhold the software and the design cannot be made.
+Chip design turns an idea for a processor into a complete blueprint. A chip holds billions of transistors, tiny electrical switches, and the blueprint fixes where each one sits and how it is wired to the others. A signal has to cross those wires in less than a billionth of a second. No one draws a plan like that by hand. Software from three companies, Synopsys, Cadence and Siemens, lays it out, checks it and signs it off, and a chip factory accepts only designs that have passed those tools. Changing the plan after that costs a fresh set of the stencils the factory prints from, and several months. Withhold the software and the design cannot be made.
 
 The sequence is the same at every design house:
 

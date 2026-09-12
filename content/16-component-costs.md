@@ -4,7 +4,7 @@
   "number": 16,
   "title": "The Economics of AI Chips",
   "oneLiner": "Inside an AI accelerator the silicon is the cheap part. Memory and packaging are the bill.",
-  "plain": "A bill of materials is the list of parts inside a product and what each one costs to build. For an AI accelerator, the famous logic chip is the cheap part, about a seventh of the total. The stacked memory beside it is nearly half, and the packaging that wires the two together costs more than the chip. Three firms in the world make that memory and one Taiwanese firm does that packaging, so the costliest parts are also the scarcest, and that is where a government has the most purchase.",
+  "plain": "A bill of materials is the list of parts inside a product and what each one costs to build. For an AI accelerator, the processor itself, the chip that does the calculating, is the cheap part, about a seventh of the total. The stacked memory beside it is nearly half, and the packaging that wires the two together costs more than the chip. Three firms in the world make that memory and one Taiwanese firm does that packaging, so the costliest parts are also the scarcest, and that is where a government's rules bite hardest.",
   "bridge": "The physical chain ends at a powered rack, and the next question is which part of it holds the money.",
   "specimen": "wafer-cost",
   "specimenCaption": "The cost of one B200, stacked to scale from the bottom up: $2,900 of high-bandwidth memory in amber, $1,100 of CoWoS packaging, $1,000 of packaging yield loss drawn hollow because it ships nothing, $900 of logic dies and $480 of substrate, board and test. About $6,400 in all, for a part that sells for $30,000 to $40,000.",
@@ -164,7 +164,7 @@ Building a Blackwell B200 costs about $6,400. Nvidia sells it for $30,000 to $40
 
 ## How it works
 
-A bill of materials is the list of parts inside a product and what each one costs to build. For an AI accelerator, the famous logic chip is the cheap part, about a seventh of the total. The stacked memory beside it is nearly half, and the packaging that wires the two together costs more than the chip. Three firms in the world make that memory and one Taiwanese firm does that packaging, so the costliest parts are also the scarcest, and that is where a government has the most purchase.
+A bill of materials is the list of parts inside a product and what each one costs to build. For an AI accelerator, the processor itself, the chip that does the calculating, is the cheap part, about a seventh of the total. The stacked memory beside it is nearly half, and the packaging that wires the two together costs more than the chip. Three firms in the world make that memory and one Taiwanese firm does that packaging, so the costliest parts are also the scarcest, and that is where a government's rules bite hardest.
 
 Three numbers set the cost of a die, the finished rectangle of circuitry cut out of a wafer.
 
