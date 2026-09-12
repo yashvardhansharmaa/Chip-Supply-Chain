@@ -298,3 +298,9 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent-ink); text-
 .cf-year[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
 .cf-now, .cf-mode { min-height: 34px; }
 @media (max-width: 899px) { .cf-now, .cf-mode { min-height: 44px; } .cf-year { min-height: 48px; } }
+
+/* the line above the board that points down to the chronology */
+.cf-jump { margin: 0; }
+.cf-jump-btn { font: inherit; font-family: var(--font-body); font-size: 16px; line-height: 1.4; color: var(--ink-2); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+.cf-jump-btn:hover, .cf-jump-btn:focus-visible { color: var(--ink); text-decoration-color: var(--accent); outline: none; }
+#timeline { scroll-margin-top: calc(var(--masthead) + 16px); }

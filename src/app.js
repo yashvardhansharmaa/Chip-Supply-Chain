@@ -1960,22 +1960,24 @@
       // dataset export buttons (copy to clipboard: JSON or CSV)
       var copy = function (text, btn, label) { var done = function (ok) { btn.textContent = ok ? 'Copied' : 'Copy failed'; setTimeout(function () { btn.textContent = label; }, 2000); }; if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); }); else done(false); };
       var toCSV = function (rows) { if (!rows.length) return ''; var cols = []; rows.forEach(function (r) { Object.keys(r).forEach(function (k) { if (cols.indexOf(k) < 0) cols.push(k); }); }); var q = function (v) { if (v == null) return ''; if (typeof v === 'object') v = JSON.stringify(v); return String(v).replace(/[\t\n\r]+/g, ' '); }; return cols.join('\t') + '\n' + rows.map(function (r) { return cols.map(function (c) { return q(r[c]); }).join('\t'); }).join('\n'); }; // tab-separated, so a spreadsheet splits the columns on paste
-      var addExport = function (anchorSel, name, rows, where) {
+      var addExport = function (anchorSel, name, rows, where, quiet) { // quiet: a button label; buttons only, no row count
         var get = typeof rows === 'function' ? rows : function () { return rows; }; // a function means: whatever the table currently shows
         var host = $(anchorSel); if (!host || !get() || !get().length) return;
-        var bar = document.createElement('div'); bar.className = 'export-bar';
-        bar.innerHTML = '<span class="count">' + get().length + ' rows · ' + esc(name) + '</span><button type="button" class="btn ghost">Copy table</button><button type="button" class="btn ghost">Copy as JSON</button>';
+        var bar = document.createElement('div'); bar.className = 'export-bar' + (quiet ? ' export-bar--quiet' : '');
+        bar.innerHTML = (quiet ? '' : '<span class="count">' + get().length + ' rows · ' + esc(name) + '</span>') + '<button type="button" class="btn ghost">' + esc(quiet || 'Copy table') + '</button><button type="button" class="btn ghost">Copy as JSON</button>';
         var b = bar.querySelectorAll('button'), countEl = bar.querySelector('.count');
-        host.addEventListener('cp:rows', function () { countEl.textContent = get().length + ' rows · ' + name; });
-        b[0].addEventListener('click', function () { copy(toCSV(get()), b[0], 'Copy table'); });
+        host.addEventListener('cp:rows', function () { if (countEl) countEl.textContent = get().length + ' rows · ' + name; });
+        b[0].addEventListener('click', function () { copy(toCSV(get()), b[0], quiet || 'Copy table'); });
         b[1].addEventListener('click', function () { copy(JSON.stringify(get(), null, 1), b[1], 'Copy as JSON'); });
         if (where === 'after') host.insertAdjacentElement('afterend', bar); else host.insertAdjacentElement('beforebegin', bar);
       };
       addExport('#cx-table-wrap', 'chips compared', Landscape.exportRows, 'before'); // a live array: Landscape keeps it in step with the selection
       addExport('#matrix', 'country-share matrix', DATA.matrix, 'before');
-      addExport('#cf', 'chokepoint board', function () { return Geo.boardRows ? Geo.boardRows() : []; }, 'before'); // visible in both modes
-      addExport('#timeline', 'export-control timeline', function () { return Geo.visible || DATA.timeline; }, 'before');
+      addExport('#cf', 'chokepoint board', function () { return Geo.boardRows ? Geo.boardRows() : []; }, 'before', 'Copy board'); // visible in both modes
+      addExport('#timeline', 'export-control timeline', function () { return Geo.visible || DATA.timeline; }, 'before', 'Copy timeline');
       addExport('#exposure-table', 'China revenue share by firm and year', DATA.exposure, 'before');
+      // the line above the board that takes a reader down to the chronology
+      document.addEventListener('click', function (e) { var j = e.target.closest ? e.target.closest('.cf-jump-btn') : null; if (!j) return; var t = $('#timeline'); if (t) t.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' }); });
       // cite-this block in the footer
       var d0 = new Date().toISOString().slice(0, 10), canon = (document.querySelector('link[rel=canonical]') || {}).href || (location.origin + location.pathname);
       $$('.site-footer').forEach(function (foot) { var d = d0; foot.insertAdjacentHTML('beforeend', '<details class="cite"><summary>How to cite</summary><pre>Sharma, Y. with Claude. Chip Supply Chain: how AI chips are made, stage by stage. September 2026. ' + canon + ' (accessed ' + d + ').</pre><pre>@misc{chipsupplychain2026,\n  title  = {Chip Supply Chain: how AI chips are made, stage by stage},\n  author = {Sharma, Yashvardhan and Claude},\n  year   = {2026},\n  month  = {September},\n  url    = {' + canon + '},\n  note   = {Accessed ' + d + '}\n}</pre></details>'); });
