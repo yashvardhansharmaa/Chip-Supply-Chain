@@ -2109,6 +2109,8 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent-ink); text-
   font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em;
   font-variant-numeric: tabular-nums; color: var(--muted);
 }
+.wk-step.is-past .wk-mark::before { background: var(--accent); }
+.wk-step.is-here .wk-mark::before { background: linear-gradient(to bottom, var(--accent) var(--wk-fill, 0%), var(--line) var(--wk-fill, 0%)); }
 .wk-step.is-past .wk-mark::after { background: var(--ink-2); border-color: var(--ink-2); }
 .wk-step.is-past .wk-n { color: var(--ink-2); }
 .wk-step.is-here .wk-mark::after { background: var(--accent); border-color: var(--accent); }
@@ -10673,6 +10675,9 @@ try {
 
     var cur = 0;
     for (var i = 0; i < total; i++) if (steps[i].getBoundingClientRect().top <= line) cur = i;
+    // the spine fills to the reading line: past steps in full, the current step to the fraction read
+    var r = steps[cur].getBoundingClientRect(), f = Math.max(0, Math.min(1, (line - r.top) / Math.max(1, r.height)));
+    steps[cur].style.setProperty('--wk-fill', (f * 100).toFixed(1) + '%');
     if (cur === at) return;
     at = cur;
     for (var j = 0; j < total; j++) {

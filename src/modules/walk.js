@@ -51,6 +51,9 @@
 
     var cur = 0;
     for (var i = 0; i < total; i++) if (steps[i].getBoundingClientRect().top <= line) cur = i;
+    // the spine fills to the reading line: past steps in full, the current step to the fraction read
+    var r = steps[cur].getBoundingClientRect(), f = Math.max(0, Math.min(1, (line - r.top) / Math.max(1, r.height)));
+    steps[cur].style.setProperty('--wk-fill', (f * 100).toFixed(1) + '%');
     if (cur === at) return;
     at = cur;
     for (var j = 0; j < total; j++) {

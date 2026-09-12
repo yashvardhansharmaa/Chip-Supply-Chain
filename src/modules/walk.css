@@ -41,6 +41,8 @@
   font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em;
   font-variant-numeric: tabular-nums; color: var(--muted);
 }
+.wk-step.is-past .wk-mark::before { background: var(--accent); }
+.wk-step.is-here .wk-mark::before { background: linear-gradient(to bottom, var(--accent) var(--wk-fill, 0%), var(--line) var(--wk-fill, 0%)); }
 .wk-step.is-past .wk-mark::after { background: var(--ink-2); border-color: var(--ink-2); }
 .wk-step.is-past .wk-n { color: var(--ink-2); }
 .wk-step.is-here .wk-mark::after { background: var(--accent); border-color: var(--accent); }
