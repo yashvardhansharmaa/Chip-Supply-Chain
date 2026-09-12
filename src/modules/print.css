@@ -158,23 +158,24 @@
   .chapter { break-before: page; padding: 0 0 4mm; border-top: 0; }
   .print-only { display: block !important; }
   /* ---------- the cover ----------
-     A4 portrait. The plate of die floorplan starts on the left type margin and bleeds off the
-     top and the right of the sheet; the amber chiplet link runs down its left edge, so the plate,
-     the accent, the title and the foot rule all hang on one line 20mm in. Everything below the
-     plate is type: eyebrow, title, subtitle, then the colophon at the foot. No running head:
-     @page :first empties the margin boxes. */
+     A4 portrait, the wafer cover (qa/cover-wafer.md). The 300 mm wafer in plan view, drawn by
+     build/cover-art.py, sits centred as one object on the white sheet: 164mm across, 23mm in from
+     either side, 14mm from the head, notch at the foot, no plate and no bleed. Beneath it the
+     seven lines of type: eyebrow, title, subtitle, then the colophon at the foot under one
+     hairline. No running head: @page :first empties the margin boxes. */
   .print-title { break-after: page; min-height: 258mm; display: flex !important; flex-direction: column; padding-bottom: 0; }
-  .print-title .pt-plate {
+  .print-title .pt-art {
     align-self: flex-start; display: block;
-    width: 190mm; height: 158mm; max-width: none;   /* 20mm past the right margin, up into the top */
-    margin: -17mm 0 0 0; background: #edeff0;
+    width: 164mm; height: auto; max-width: none;
+    margin: -3mm 0 0 3mm;               /* the page margin is 17mm top and 20mm sides: 14mm and 23mm from the trim */
+    background: none;
     break-inside: avoid; break-after: avoid;
   }
   .print-title .pt-type { margin: 0; }
-  .print-title .pt-k { font-family: var(--font-mono); font-weight: 500; font-size: 8.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #5b646d; margin: 12mm 0 7mm; }
+  .print-title .pt-k { font-family: var(--font-mono); font-weight: 500; font-size: 8.5pt; letter-spacing: 0.18em; text-transform: uppercase; color: #5b646d; margin: 16mm 0 7mm; }
   .print-title .pt-h { font-family: var(--font-display); font-weight: 700; font-size: 68pt; line-height: 0.88; margin: 0 0 7mm; letter-spacing: -0.018em; color: #12161a; }
   .print-title .pt-sub { font-family: var(--font-body); font-weight: 400; font-size: 14.5pt; line-height: 1.3; color: var(--ink-2); margin: 0; max-width: 118mm; }
-  .print-title .pt-foot { margin-top: auto; padding-top: 10mm; }
+  .print-title .pt-foot { margin-top: auto; padding-top: 4mm; }   /* the cover fills the 264mm box to within 2mm; more and the print line spills to page 2 */
   .print-title .pt-row { display: flex; justify-content: space-between; align-items: baseline; gap: 8mm;
     border-top: 0.5pt solid #b9bec2; padding-top: 3.5mm; }
   .print-title .pt-by { font-family: var(--font-display); font-weight: 600; font-size: 11pt; margin: 0; }

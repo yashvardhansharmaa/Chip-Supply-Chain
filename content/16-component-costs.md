@@ -2,7 +2,7 @@
 {
   "id": "component-costs",
   "number": 16,
-  "title": "What a Rack Costs",
+  "title": "The Economics of AI Chips",
   "oneLiner": "Inside an AI accelerator the silicon is the cheap part. Memory and packaging are the bill.",
   "plain": "A bill of materials is the list of parts inside a product and what each one costs to build. For an AI accelerator, the famous logic chip is the cheap part, about a seventh of the total. The stacked memory beside it is nearly half, and the packaging that wires the two together costs more than the chip. Three firms in the world make that memory and one Taiwanese firm does that packaging, so the costliest parts are also the scarcest, and that is where a government has the most purchase.",
   "bridge": "The physical chain ends at a powered rack, and the next question is which part of it holds the money.",
