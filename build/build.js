@@ -380,7 +380,7 @@ ${chain}
 <div class="ch-id">${tile}<div><h2 class="ch-title"><span class="sr-only">Chapter ${ch.number}: </span>${esc(ch.title)}</h2>${m.oneLiner ? `<p class="ch-lede">${esc(m.oneLiner)}</p>` : ''}<p class="ch-meta"><span class="label">${ch.words.toLocaleString('en-US')} words / ${mins} min</span><span class="label">Specimen: ${esc(SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' '))}</span><button type="button" class="label ch-copy" data-copy="${SITE.url}${esc(ch.id)}/" aria-label="Copy a link to this chapter">Copy link</button></p></div></div>
 ${pb.box}
 ${parts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${parts.inShort}</section>` : ''}
-${nameplate(m.card, ch.title)}
+${isStage(ch) ? nameplate(m.card, ch.title) : ''}
 </header>
 <div class="prose">${glossaryWrap(pb.html)}${prevNext(ch)}${sources}</div>
 </article>`;
@@ -486,7 +486,7 @@ if (geo) {
   const sources = geo.cites.length ? `<details class="chapter-sources"><summary>Sources (${geo.cites.length})</summary><ol>${geo.cites.map((c) => `<li>${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol></details>` : '';
   const gparts = splitTakeaways(geo.html); geo.inShort = gparts.inShort;
   const gpb = plainBox(gparts.body, geo.meta.plain, { id: 'geopolitics', cites: geo.cites, figures: [] });
-  geoBody = gpb.box + (gparts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${gparts.inShort}</section>` : '') + nameplate(geo.meta.card, 'Geopolitics') + `<p class="label" style="margin:10px 0 26px">${geo.words.toLocaleString('en-US')} words / ${Math.max(1, Math.round(geo.words / 230))} min</p>` + glossaryWrap(gpb.html) + prevNext(geo) + sources;
+  geoBody = gpb.box + (gparts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${gparts.inShort}</section>` : '') + `<p class="label" style="margin:10px 0 26px">${geo.words.toLocaleString('en-US')} words / ${Math.max(1, Math.round(geo.words / 230))} min</p>` + glossaryWrap(gpb.html) + prevNext(geo) + sources;
 }
 
 /* ---------------- sources view ---------------- */

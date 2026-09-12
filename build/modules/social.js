@@ -64,8 +64,9 @@ function manifest(root) {
     const eyebrow = si >= 0
       ? `${SITE} · Chapter ${pad(c.number)} · Stage ${si + 1} of ${stages.length}`
       : `${SITE} · Chapter ${pad(c.number)}${TILE[c.number] ? ' · ' + TILE[c.number] : ''}`;
-    const conc = c.card.concentration || '';
-    const sub = (c.card.substitutability || {}).band || '';
+    const card = c.card || {};
+    const conc = card.concentration || '';
+    const sub = (card.substitutability || {}).band || '';
     const band = conc ? `${conc} concentration${sub ? ' · ' + (SUBWORD[sub] || sub) : ''}` : '';
     pages.push({
       slug: c.id, kind: 'chapter', number: c.number, eyebrow, title: c.title,

@@ -8,40 +8,51 @@
   "bridge": "What is left is not how a chip gets built but who can stop it, and that answer is written into law.",
   "specimen": "globe",
   "specimenCaption": "The world with the chain's chokepoint sites marked. Veldhoven and Oberkochen for lithography, Hsinchu and Tainan for leading-edge logic, Icheon and Pyeongtaek for high-bandwidth memory, Shanghai and Wuhan for China's substitution effort, and the Gulf and Southeast Asian hubs the finished accelerators now flow through.",
-  "card": {
-    "concentration": "Extreme",
-    "chokepointScore": 5,
-    "leaders": [
-      {"name": "United States", "country": "US", "share": "93% of AI accelerator design revenue; 72% of measurement and inspection and 60% of deposition tool revenue"},
-      {"name": "Taiwan", "country": "TW", "share": "78% of the world's contract chipmaking in 2025, and an estimated 72% of capacity at 5 nm and below"},
-      {"name": "China", "country": "CN", "share": "38% of world capacity for logic at 28 nm and above in 2025; about 10% of deposition and etch tool revenue"},
-      {"name": "Netherlands", "country": "NL", "share": "100% of extreme-ultraviolet and 95% of deep-ultraviolet lithography revenue"},
-      {"name": "South Korea", "country": "KR", "share": "82.5% of high-bandwidth memory revenue in 2025, SK hynix 63.2 and Samsung 19.3, and 69.3% of the wider DRAM market"}
-    ],
-    "countries": [
-      {"code": "US", "note": "Chip design, design software, three of five tool segments, and the export-control authority itself"},
-      {"code": "TW", "note": "Leading-edge logic and advanced packaging, and the concentration risk no policy has reduced"},
-      {"code": "CN", "note": "Mature-node capacity, critical minerals, and the target of the whole regime"},
-      {"code": "NL", "note": "ASML lithography, the hardest single chokepoint in the chain"},
-      {"code": "JP", "note": "Photoresist, silicon wafers, etch and clean tools, and Rapidus"}
-    ],
-    "chinaStatus": "Blocked at the leading edge and substituting fast below it. Domestic tools went from 25 percent of China's own equipment market in 2024 to 35 percent in 2025, and about 40 percent in etch and deposition; SMIC runs 7 nm-class logic without extreme-ultraviolet machines at roughly 45,000 advanced-node wafers a month; CXMT's 2026 memory output covers 250,000 to 300,000 Ascend packages. Neither those machines nor high-bandwidth memory at scale is in reach before 2028.",
-    "usStatus": "Holds chip design, design software and most process tools, and uses the Foreign Direct Product Rule to reach foreign-made goods. Has traded parts of the fence for revenue and investment since 2025: an expected 15 percent cut of licensed H20 sales, a 9.9 percent equity stake in Intel, a 25 percent tariff on advanced chips, and case-by-case H200 licences.",
-    "costSignal": "$52.7B authorised under the CHIPS Act against about $47B in the latest round of China's Big Fund alone",
-    "substitutability": {"band": "Very hard", "test": "Rated at the chain's hardest link: one country holds 100 percent of EUV and no substitute is in reach before 2028", "why": "A well-funded state can copy mature tools in a few years, and China's domestic tools went from 25 percent of its own equipment market in 2024 to 35 percent in 2025. Extreme-ultraviolet machines and high-bandwidth memory at scale are the two it cannot reach before 2028, and an actor still able to buy from ASML and the memory makers is buying rather than building, so this clock belongs to whoever is fenced out."}
-  },
   "keyFacts": [
-    {"fact": "Taiwan's foundries hold 78% of the global foundry market on the Taiwan Semiconductor Industry Association's 2025 count; the 92% often quoted for the most advanced chips is a February 2024 US International Trade Commission figure that the same Stimson explainer relays", "source": "https://www.stimson.org/2025/why-taiwan-fears-america-first-risks-eroding-its-silicon-shield/"},
-    {"fact": "SK hynix's July 2026 US prospectus puts Korean suppliers at 82.5% of 2025 HBM revenue, SK hynix 63.2 and Samsung 19.3, and at 76.9% in the first quarter of 2026; the filing relays IDC's figures", "source": "https://www.sec.gov/Archives/edgar/data/0002120882/000119312526299963/d32785d424b4.htm"},
-    {"fact": "ASML's China share of net system sales fell from 41% in 2024 to 33% in 2025", "source": "https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf"},
-    {"fact": "The 2 December 2024 rules covered 24 types of equipment and 3 software tools, added the first controls on high-bandwidth memory, and made 140 Entity List additions", "source": "https://www.bis.gov/press-release/commerce-strengthens-export-controls-restrict-chinas-capability-produce-advanced-semiconductors-military"},
-    {"fact": "Since 15 January 2026 Commerce has reviewed H200 and MI325X sales to China case by case, capped at 50% of what the exporter ships to US customers", "source": "https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities"},
-    {"fact": "The US government holds 433.3 million Intel shares, a 9.9% stake bought at $20.47 for $8.9 billion", "source": "https://www.intc.com/news-events/press-releases/detail/1748/intel-and-trump-administration-reach-historic-agreement-to"},
-    {"fact": "The latest round of China's Big Fund reached $47 billion", "source": "https://www.rand.org/pubs/perspectives/PEA4012-1.html"},
-    {"fact": "Chinese-made tools went from 10-15% of China's domestic equipment market before 2022 to 25% in 2024 and 35% in 2025, and about 40% in etch and deposition", "source": "https://www.csis.org/analysis/chinas-localization-drive-semiconductors-gains-impetus-allied-chip-export-controls"},
-    {"fact": "SMIC's capacity at 7 nm and below is estimated at 45,000 wafers a month at end-2025, rising to 60,000 in 2026; Huawei shipped about 805,000 Ascend units in 2025", "source": "https://newsletter.semianalysis.com/p/huawei-ascend-production-ramp"},
-    {"fact": "Applied Materials paid a $252 million BIS penalty in February 2026 over $126 million of ion implanters shipped to an Entity-Listed Chinese customer", "source": "https://www.bis.gov/press-release/applied-materials-pay-252-million-penalty-bis-illegally-exporting-semiconductor-manufacturing-equipment"},
-    {"fact": "TSMC's Arizona commitment reached $265 billion on 16 July 2026 after a second $100 billion tranche for at least four more 2 nm-class fabs", "source": "https://www.phoenix.gov/newsroom/ced-news/tsmc-announces-additional--100-billion-investment-in-arizona.html"}
+    {
+      "fact": "Taiwan's foundries hold 78% of the global foundry market on the Taiwan Semiconductor Industry Association's 2025 count; the 92% often quoted for the most advanced chips is a February 2024 US International Trade Commission figure that the same Stimson explainer relays",
+      "source": "https://www.stimson.org/2025/why-taiwan-fears-america-first-risks-eroding-its-silicon-shield/"
+    },
+    {
+      "fact": "SK hynix's July 2026 US prospectus puts Korean suppliers at 82.5% of 2025 HBM revenue, SK hynix 63.2 and Samsung 19.3, and at 76.9% in the first quarter of 2026; the filing relays IDC's figures",
+      "source": "https://www.sec.gov/Archives/edgar/data/0002120882/000119312526299963/d32785d424b4.htm"
+    },
+    {
+      "fact": "ASML's China share of net system sales fell from 41% in 2024 to 33% in 2025",
+      "source": "https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf"
+    },
+    {
+      "fact": "The 2 December 2024 rules covered 24 types of equipment and 3 software tools, added the first controls on high-bandwidth memory, and made 140 Entity List additions",
+      "source": "https://www.bis.gov/press-release/commerce-strengthens-export-controls-restrict-chinas-capability-produce-advanced-semiconductors-military"
+    },
+    {
+      "fact": "Since 15 January 2026 Commerce has reviewed H200 and MI325X sales to China case by case, capped at 50% of what the exporter ships to US customers",
+      "source": "https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities"
+    },
+    {
+      "fact": "The US government holds 433.3 million Intel shares, a 9.9% stake bought at $20.47 for $8.9 billion",
+      "source": "https://www.intc.com/news-events/press-releases/detail/1748/intel-and-trump-administration-reach-historic-agreement-to"
+    },
+    {
+      "fact": "The latest round of China's Big Fund reached $47 billion",
+      "source": "https://www.rand.org/pubs/perspectives/PEA4012-1.html"
+    },
+    {
+      "fact": "Chinese-made tools went from 10-15% of China's domestic equipment market before 2022 to 25% in 2024 and 35% in 2025, and about 40% in etch and deposition",
+      "source": "https://www.csis.org/analysis/chinas-localization-drive-semiconductors-gains-impetus-allied-chip-export-controls"
+    },
+    {
+      "fact": "SMIC's capacity at 7 nm and below is estimated at 45,000 wafers a month at end-2025, rising to 60,000 in 2026; Huawei shipped about 805,000 Ascend units in 2025",
+      "source": "https://newsletter.semianalysis.com/p/huawei-ascend-production-ramp"
+    },
+    {
+      "fact": "Applied Materials paid a $252 million BIS penalty in February 2026 over $126 million of ion implanters shipped to an Entity-Listed Chinese customer",
+      "source": "https://www.bis.gov/press-release/applied-materials-pay-252-million-penalty-bis-illegally-exporting-semiconductor-manufacturing-equipment"
+    },
+    {
+      "fact": "TSMC's Arizona commitment reached $265 billion on 16 July 2026 after a second $100 billion tranche for at least four more 2 nm-class fabs",
+      "source": "https://www.phoenix.gov/newsroom/ced-news/tsmc-announces-additional--100-billion-investment-in-arizona.html"
+    }
   ],
   "figures": [
     {
@@ -49,32 +60,139 @@
       "type": "bars",
       "title": "China's share of revenue at the four largest chip-tool makers, peak year and latest",
       "unit": "%",
-      "data": [["ASML, 2024", 41], ["ASML, 2025", 33], ["Applied Materials, FY2024", 37], ["Applied Materials, FY2025", 30], ["Lam Research, FY2024", 42], ["Lam Research, FY2025", 34], ["Tokyo Electron, Q4 FY2024", 47], ["Tokyo Electron, Q4 FY2026", 27]],
-      "source": {"label": "ASML Q4 2025 investor presentation, Applied Materials and Lam Research 10-K filings, Tokyo Electron Q4 FY2026 results", "url": "https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf"}
+      "data": [
+        [
+          "ASML, 2024",
+          41
+        ],
+        [
+          "ASML, 2025",
+          33
+        ],
+        [
+          "Applied Materials, FY2024",
+          37
+        ],
+        [
+          "Applied Materials, FY2025",
+          30
+        ],
+        [
+          "Lam Research, FY2024",
+          42
+        ],
+        [
+          "Lam Research, FY2025",
+          34
+        ],
+        [
+          "Tokyo Electron, Q4 FY2024",
+          47
+        ],
+        [
+          "Tokyo Electron, Q4 FY2026",
+          27
+        ]
+      ],
+      "source": {
+        "label": "ASML Q4 2025 investor presentation, Applied Materials and Lam Research 10-K filings, Tokyo Electron Q4 FY2026 results",
+        "url": "https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf"
+      }
     },
     {
       "id": "chips-awards",
       "type": "bars",
       "title": "CHIPS Act direct funding awarded, by firm, as of July 2025",
       "unit": "$B",
-      "data": [["Intel", 7.865], ["Micron", 6.44], ["TSMC", 6.565], ["Samsung", 4.745], ["Texas Instruments", 1.61], ["GlobalFoundries", 1.587], ["SK hynix", 0.458], ["Amkor", 0.407], ["GlobalWafers", 0.406], ["Hemlock Semiconductor", 0.325]],
-      "source": {"label": "GAO-26-107882, Semiconductors: Information on Projects Funded to Strengthen U.S. Supply Chain", "url": "https://files.gao.gov/reports/GAO-26-107882/index.html"}
+      "data": [
+        [
+          "Intel",
+          7.865
+        ],
+        [
+          "Micron",
+          6.44
+        ],
+        [
+          "TSMC",
+          6.565
+        ],
+        [
+          "Samsung",
+          4.745
+        ],
+        [
+          "Texas Instruments",
+          1.61
+        ],
+        [
+          "GlobalFoundries",
+          1.587
+        ],
+        [
+          "SK hynix",
+          0.458
+        ],
+        [
+          "Amkor",
+          0.407
+        ],
+        [
+          "GlobalWafers",
+          0.406
+        ],
+        [
+          "Hemlock Semiconductor",
+          0.325
+        ]
+      ],
+      "source": {
+        "label": "GAO-26-107882, Semiconductors: Information on Projects Funded to Strengthen U.S. Supply Chain",
+        "url": "https://files.gao.gov/reports/GAO-26-107882/index.html"
+      }
     },
     {
       "id": "control-timeline",
       "type": "timeline",
       "title": "Eight rule changes that shaped the regime",
       "data": [
-        ["2019-05-16", "Huawei and 68 affiliates added to the Entity List"],
-        ["2022-10-07", "First country-wide controls on AI chips and fab tools"],
-        ["2023-10-17", "Performance density added; A800 and H800 captured"],
-        ["2024-12-02", "24 tool types, HBM controls, 140 entity listings"],
-        ["2025-01-15", "AI Diffusion rule published, three country tiers"],
-        ["2025-05-13", "AI Diffusion rescinded"],
-        ["2025-08-11", "US officials seek 15% of licensed H20 sales"],
-        ["2026-01-13", "H200 and MI325X case-by-case review announced, effective 15 January"]
+        [
+          "2019-05-16",
+          "Huawei and 68 affiliates added to the Entity List"
+        ],
+        [
+          "2022-10-07",
+          "First country-wide controls on AI chips and fab tools"
+        ],
+        [
+          "2023-10-17",
+          "Performance density added; A800 and H800 captured"
+        ],
+        [
+          "2024-12-02",
+          "24 tool types, HBM controls, 140 entity listings"
+        ],
+        [
+          "2025-01-15",
+          "AI Diffusion rule published, three country tiers"
+        ],
+        [
+          "2025-05-13",
+          "AI Diffusion rescinded"
+        ],
+        [
+          "2025-08-11",
+          "US officials seek 15% of licensed H20 sales"
+        ],
+        [
+          "2026-01-13",
+          "H200 and MI325X case-by-case review announced, effective 15 January"
+        ]
       ],
-      "source": {"label": "BIS press releases and Federal Register rules", "url": "https://www.bis.gov/news-updates"}
+      "source": {
+        "label": "BIS press releases and Federal Register rules",
+        "url": "https://www.bis.gov/news-updates"
+      }
     }
   ]
 }
