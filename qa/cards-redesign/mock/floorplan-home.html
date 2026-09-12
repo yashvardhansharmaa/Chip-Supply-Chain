@@ -1,0 +1,21 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,400&display=block"><style>
+:root { --bg:#edeff0; --bg-2:#e4e7e9; --bg-3:#d9dde0; --ink:#12161a; --ink-2:#3a434c; --muted:#5b646d; --line:#cbd0d4; --line-2:#b6bcc1; --accent:#c98a12; --accent-ink:#7a5406; --accent-soft:rgba(201,138,18,0.14); }
+* { box-sizing: border-box; } html, body { margin:0; width:1200px; height:630px; overflow:hidden; }
+body { background: var(--bg); color: var(--ink); font-family: "IBM Plex Sans Condensed", "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+.card { position: relative; width:1200px; height:630px; overflow:hidden; }
+.mono { font-family: "IBM Plex Mono", Menlo, monospace; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.mono b { font-weight: 600; color: var(--ink-2); }
+.serif { font-family: "Newsreader", Georgia, serif; font-weight: 400; color: var(--ink-2); }
+.title { font-family: "IBM Plex Sans Condensed", "Helvetica Neue", Arial, sans-serif; font-weight: 600; line-height: 1.0; letter-spacing: -0.012em; margin: 0; }
+.host { position:absolute; font-family: "IBM Plex Mono", Menlo, monospace; font-size: 18px; letter-spacing: 0.04em; color: var(--muted); }
+
+.art { position:absolute; right:0; top:0; width:720px; height:630px; background: url(art-floor-home.png) 0 0 / 720px 630px no-repeat; }
+.art::before { content:""; position:absolute; inset:0; background: linear-gradient(90deg, var(--bg) 0%, rgba(237,239,240,0.92) 14%, rgba(237,239,240,0) 46%); }
+.eyebrow { position:absolute; left:72px; top:64px; font-size:21px; white-space:nowrap; }
+.title { position:absolute; left:72px; top:136px; width:700px; font-size:104px; }
+.rule { position:absolute; left:72px; width:120px; height:6px; background: var(--accent); border-radius:1px; }
+.line { position:absolute; left:72px; width:560px; font-size:31px; line-height:1.28; }
+.host { left:72px; bottom:56px; white-space:nowrap; }
+.host span { margin-left:28px; text-transform:uppercase; letter-spacing:0.08em; font-size:15px; }
+.host span i { display:inline-block; width:9px; height:9px; background:var(--accent); border-radius:50%; margin-right:9px; }
+</style></head><body><div class="card"><div class="art"></div><p class="mono eyebrow"><b>The AI chip supply chain</b></p><h1 class="title" id="title">Chip Supply Chain</h1><div class="rule" id="rule"></div><p class="serif line" id="line">How AI chips are made, and who controls each stage.</p><p class="host">chipsupplychain.org<span>17 chapters · 15 stages · 220 firms</span></p></div></body></html>

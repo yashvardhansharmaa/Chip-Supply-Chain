@@ -1,0 +1,20 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,400&display=block"><style>
+:root { --bg:#101315; --bg-2:#171b1e; --bg-3:#1f2529; --ink:#e7e9ea; --ink-2:#c0c7cc; --muted:#8b959d; --line:#2a3137; --line-2:#3a434a; --accent:#e6ad2f; --accent-ink:#f0c25a; --accent-soft:rgba(230,173,47,0.16); }
+* { box-sizing: border-box; } html, body { margin:0; width:1200px; height:630px; overflow:hidden; }
+body { background: var(--bg); color: var(--ink); font-family: "IBM Plex Sans Condensed", "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+.card { position: relative; width:1200px; height:630px; overflow:hidden; }
+.mono { font-family: "IBM Plex Mono", Menlo, monospace; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.mono b { font-weight: 600; color: var(--ink-2); }
+.serif { font-family: "Newsreader", Georgia, serif; font-weight: 400; color: var(--ink-2); }
+.title { font-family: "IBM Plex Sans Condensed", "Helvetica Neue", Arial, sans-serif; font-weight: 600; line-height: 1.0; letter-spacing: -0.012em; margin: 0; }
+.host { position:absolute; font-family: "IBM Plex Mono", Menlo, monospace; font-size: 18px; letter-spacing: 0.04em; color: var(--muted); }
+
+.art { position:absolute; right:0; top:0; width:640px; height:630px; background: url(art-dark-litho.png) center / 640px 630px no-repeat; }
+.art::before { content:""; position:absolute; inset:0; background: linear-gradient(90deg, var(--bg) 0%, rgba(16,19,21,0.85) 10%, rgba(16,19,21,0) 40%); }
+.eyebrow { position:absolute; left:72px; top:64px; font-size:21px; white-space:nowrap; }
+.title { position:absolute; left:72px; top:136px; width:640px; font-size:112px; color: var(--ink); }
+.rule { position:absolute; left:72px; width:120px; height:6px; background: var(--accent); border-radius:1px; }
+.line { position:absolute; left:72px; width:520px; font-size:31px; line-height:1.28; color: var(--ink-2); }
+.host { left:72px; bottom:56px; color: var(--muted); }
+.host span { margin-left:28px; opacity:0.8; text-transform:uppercase; letter-spacing:0.08em; font-size:15px; }
+</style></head><body><div class="card"><div class="art"></div><p class="mono eyebrow"><b>Chip Supply Chain</b> · Chapter 04 · Stage 4 of 15</p><h1 class="title" id="title">Lithography</h1><div class="rule" id="rule"></div><p class="serif line" id="line">Extreme concentration · Very hard to substitute</p><p class="host">chipsupplychain.org<span>EUV scanner, in section</span></p></div></body></html>
