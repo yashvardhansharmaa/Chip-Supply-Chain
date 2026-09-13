@@ -12,9 +12,9 @@
  "concentration": "High",
  "chokepointScore": 4,
  "leaders": [
- {"name": "Applied Materials", "country": "US", "share": "$28.4B revenue, fiscal 2025; leader in physical and chemical vapour deposition and in epitaxy"},
+ {"name": "Applied Materials", "country": "US", "share": "$28.4B revenue, fiscal 2025; leader in physical and chemical vapor deposition and in epitaxy"},
  {"name": "Lam Research", "country": "US", "share": "$23.2B revenue, fiscal 2026; leader in dry etch and in metal atomic layer deposition"},
- {"name": "Tokyo Electron", "country": "JP", "share": "23% of dry etch and 38% of chemical vapour deposition, 2025"},
+ {"name": "Tokyo Electron", "country": "JP", "share": "23% of dry etch and 38% of chemical vapor deposition, 2025"},
  {"name": "ASM International", "country": "NL", "share": "€3.2B revenue, 2025; leader in single-wafer atomic layer deposition"},
  {"name": "Naura", "country": "CN", "share": "5th largest equipment vendor worldwide, 2025 estimate"}
  ],
@@ -84,8 +84,8 @@ Most of those steps happen in a vacuum chamber: a radio-frequency field strips e
 
 ### Deposition families
 
-- **Physical vapour deposition** knocks atoms off a solid target and lands them on the wafer, the workhorse for metal barriers and seed layers, $2.4 billion in 2019 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
-- **Chemical vapour deposition** reacts gases at the wafer surface to grow a film; the plasma-enhanced version runs cooler, $3.5 billion in 2019 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
+- **Physical vapor deposition** knocks atoms off a solid target and lands them on the wafer, the workhorse for metal barriers and seed layers, $2.4 billion in 2019 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
+- **Chemical vapor deposition** reacts gases at the wafer surface to grow a film; the plasma-enhanced version runs cooler, $3.5 billion in 2019 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 - **Atomic layer deposition** lays down less than one atomic layer at a time, so it coats vertical walls as evenly as horizontal floors. US regulators call it the basis for 3D scaling in 3D DRAM, 3D NAND and gate-all-around logic ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)); ASM International leads it, $1.6 billion in 2019 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 - **Epitaxy and electroplating** grow the strained silicon-germanium source and drain, and fill the copper wiring trenches ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 
@@ -126,7 +126,7 @@ Between 2019 and 2024 China-based suppliers went from 2 to 7 percent of depositi
 
 Washington tightened these rules four times between 2022 and 2025.
 
-- **October 2022.** The 7 October interim final rule put manufacturing equipment and US person support under licence and widened foreign-produced item rules for 28 listed Chinese entities ([source](https://www.govinfo.gov/content/pkg/FR-2022-10-13/pdf/2022-21658.pdf)).
+- **October 2022.** The 7 October interim final rule put manufacturing equipment and US person support under license and widened foreign-produced item rules for 28 listed Chinese entities ([source](https://www.govinfo.gov/content/pkg/FR-2022-10-13/pdf/2022-21658.pdf)).
 - **October 2023.** The rule effective 17 November rewrote the equipment entries, adding isotropic and anisotropic dry etch (ECCN 3B001.c.1), spatial ALD (3B001.d.9), low-fluorine tungsten ALD and CVD (3B001.d.10) and carbon hard mask PECVD (3B001.d.5) ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)).
 - **December 2024.** BIS controlled 24 more types of equipment and three types of software, added 140 entities and wrote a foreign direct product rule that reaches tools built outside the United States ([source](https://www.bis.gov/press-release/commerce-strengthens-export-controls-restrict-chinas-capability-produce-advanced-semiconductors-military)). The new entries take in TSV etch and deposition into features deeper than 200:1 ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
 - **September 2025.** The Affiliates Rule extended Entity List restrictions to any company at least 50 percent owned by a listed entity ([source](https://www.govinfo.gov/content/pkg/FR-2025-09-30/pdf/2025-19001.pdf)); BIS then stayed it to 9 November 2026 ([source](https://www.govinfo.gov/content/pkg/FR-2025-11-12/pdf/2025-19846.pdf)).

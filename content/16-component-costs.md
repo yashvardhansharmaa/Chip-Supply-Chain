@@ -18,7 +18,7 @@
       "source": "https://epoch.ai/data-insights/b200-cost-breakdown"
     },
     {
-      "fact": "Epoch AI's B200 model assumes a $17,000 4NP wafer, two roughly 800 mm2 compute chiplets and a die yield of 40 to 70 percent centred on 60",
+      "fact": "Epoch AI's B200 model assumes a $17,000 4NP wafer, two roughly 800 mm2 compute chiplets and a die yield of 40 to 70 percent centered on 60",
       "source": "https://epoch.ai/data-insights/b200-cost-breakdown"
     },
     {
@@ -30,7 +30,7 @@
       "source": "https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Results-for-the-Third-Quarter-of-Fiscal-2026/default.aspx"
     },
     {
-      "fact": "Nvidia earned a 71.1% GAAP gross margin on $193.7B of data centre revenue in fiscal 2026, and 75.0% in the quarter to July 2026",
+      "fact": "Nvidia earned a 71.1% GAAP gross margin on $193.7B of data center revenue in fiscal 2026, and 75.0% in the quarter to July 2026",
       "source": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026"
     },
     {
@@ -142,7 +142,7 @@
           448
         ],
         [
-          "Nvidia data centre revenue",
+          "Nvidia data center revenue",
           194
         ],
         [
@@ -170,7 +170,7 @@ Three numbers set the cost of a die, the finished rectangle of circuitry cut out
 
 - **Wafer price.** TSMC does not publish it. Epoch AI's model of Blackwell's custom TSMC 4NP process ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)) assumes about $17,000 for a 300 mm wafer ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
 - **Dies per wafer.** A wafer is a circle and dies are rectangles, so the edge of the disc goes to waste: an 800 mm2 die, near the largest a scanner can print in one shot, fits 68 times.
-- **Yield.** Defects land at random, so a bigger die is likelier to catch one. Epoch AI models the Blackwell die at 40 to 70 percent good, centred on 60 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
+- **Yield.** Defects land at random, so a bigger die is likelier to catch one. Epoch AI models the Blackwell die at 40 to 70 percent good, centered on 60 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
 
 Those three numbers put the two dies inside a B200 at about $900, 14 percent of the build ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Doubling the wafer price moves the whole bill by a few hundred dollars.
 
@@ -245,14 +245,14 @@ Per unit of compute, logic keeps getting cheaper and everything wrapped around i
 | HBM | Structurally expensive | Stacking and through-silicon vias cut good die per wafer. |
 | Advanced packaging, CoWoS-L | Structurally expensive | 65 to 95 percent packaging yield; scrap destroys dies and memory. |
 | Power and cooling plant | Structurally expensive | Priced by grid queues and turbine lead times. |
-| Leading-edge logic wafers | Compressible with scale | Defect density and utilisation improve through a ramp. |
+| Leading-edge logic wafers | Compressible with scale | Defect density and utilization improve through a ramp. |
 | Design and EDA | Compressible with scale | Engineering cost amortises across volume. |
 | Deposition and etch tools | Compressible with scale | Credible second sources in most steps. |
 | ABF substrates | Compressible with scale | A laminate line, not a physics frontier. |
 | Optical transceivers | Compressible with scale | Copper and co-packaged optics cap the price. |
-| Test and assembly (OSAT) | Already commoditised | 17 to 21 percent margins; clears on price. |
-| Wafers and bulk gases | Already commoditised | Multi-supplier, long-qualified, thin spreads. |
-| Rack integration (ODM) | Already commoditised | Low-teens margins on specified content. |
+| Test and assembly (OSAT) | Already commoditized | 17 to 21 percent margins; clears on price. |
+| Wafers and bulk gases | Already commoditized | Multi-supplier, long-qualified, thin spreads. |
+| Rack integration (ODM) | Already commoditized | Low-teens margins on specified content. |
 
 ## Key evaluation criteria
 

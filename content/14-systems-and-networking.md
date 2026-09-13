@@ -4,10 +4,10 @@
   "number": 14,
   "title": "Systems and Networking",
   "oneLiner": "A finished package is useless until it is bolted to a baseboard, fed a thousand amps and wired to seventy-one siblings. Many firms can do the bolting; few can make the lasers.",
-  "plain": "A rack is where finished chips become one machine. Builders bolt each packaged chip onto a board, feed it more than a thousand amps of current, and wire it to seventy-one neighbours, so that a training run sees one computer instead of seventy-two. The linked machines run only as fast as their slowest link, and a copper wire can carry these signals a few metres at most, so the longer links carry them as light through glass fibre instead. Many firms can bolt racks together. Far fewer can make the lasers that produce the light, and that is where the chain narrows.",
+  "plain": "A rack is where finished chips become one machine. Builders bolt each packaged chip onto a board, feed it more than a thousand amps of current, and wire it to seventy-one neighbors, so that a training run sees one computer instead of seventy-two. The linked machines run only as fast as their slowest link, and a copper wire can carry these signals a few meters at most, so the longer links carry them as light through glass fiber instead. Many firms can bolt racks together. Far fewer can make the lasers that produce the light, and that is where the chain narrows.",
   "bridge": "A tested package is still a single chip, and the machine that trains a model is a room full of them acting as one.",
   "specimen": "gpu-baseboard",
-  "specimenCaption": "An eight-GPU baseboard. Four accelerator modules per side, the two NVLink switch chips in amber down the centre, voltage regulator banks along the long edges, and the connectors that carry traffic off the board to the rest of the cluster.",
+  "specimenCaption": "An eight-GPU baseboard. Four accelerator modules per side, the two NVLink switch chips in amber down the center, voltage regulator banks along the long edges, and the connectors that carry traffic off the board to the rest of the cluster.",
   "card": {
     "concentration": "High",
     "chokepointScore": 3,
@@ -16,7 +16,7 @@
       {"name": "Broadcom", "country": "US", "share": "Switch chips sold to all comers (Tomahawk, Jericho) and most custom AI accelerators"},
       {"name": "Foxconn", "country": "TW", "share": "Largest AI rack assembler; builds in Taiwan, Mexico, Texas"},
       {"name": "InnoLight", "country": "CN", "share": "High-speed optical modules; plants in Suzhou, Taiwan and Thailand"},
-      {"name": "Coherent", "country": "US", "share": "Indium phosphide lasers and data centre transceivers"}
+      {"name": "Coherent", "country": "US", "share": "Indium phosphide lasers and data center transceivers"}
     ],
     "countries": [
       {"code": "US", "note": "Switch and accelerator silicon, indium phosphide lasers, system design"},
@@ -66,7 +66,7 @@ A package computes nothing until it is built into a machine, and building the ma
 
 ## How it works
 
-A rack is where finished chips become one machine. Builders bolt each packaged chip onto a board, feed it more than a thousand amps of current, and wire it to seventy-one neighbours, so that a training run sees one computer instead of seventy-two. The linked machines run only as fast as their slowest link, and a copper wire can carry these signals a few metres at most, so the longer links carry them as light through glass fibre instead. Many firms can bolt racks together. Far fewer can make the lasers that produce the light, and that is where the chain narrows.
+A rack is where finished chips become one machine. Builders bolt each packaged chip onto a board, feed it more than a thousand amps of current, and wire it to seventy-one neighbors, so that a training run sees one computer instead of seventy-two. The linked machines run only as fast as their slowest link, and a copper wire can carry these signals a few meters at most, so the longer links carry them as light through glass fiber instead. Many firms can bolt racks together. Far fewer can make the lasers that produce the light, and that is where the chain narrows.
 
 An accelerator ships as a module, not a bare chip: Nvidia calls its version SXM, and the open-standards equivalent is the Open Compute Project's accelerator module. Eight bolt onto a baseboard that carries their power and the switch chips that let them reach each other at full speed.
 
@@ -88,19 +88,19 @@ The designs differ in how many accelerators can share one pool of memory.
 
 ### Scale-out: InfiniBand versus Ethernet
 
-InfiniBand, the specialised network supercomputers grew up on, owned this layer when AI clusters were small and alike. Ethernet took it back on raw capacity first: Broadcom doubled the bandwidth of the switch chips it sells to all comers every generation, from 25.6 Tbps on one chip in Tomahawk 4 ([source](https://www.broadcom.com/company/news/product-releases/52756)) to 51.2 in Tomahawk 5 ([source](https://investors.broadcom.com/news-releases/news-release-details/broadcom-ships-tomahawk-5-industrys-highest-bandwidth-switch)) and 102.4 in Tomahawk 6 ([source](https://www.broadcom.com/company/news/product-releases/64031)). Then the Ultra Ethernet Consortium published its 1.0 specification in June 2025, standardising the load balancing, congestion control and lossless behaviour InfiniBand had from the start ([source](https://ultraethernet.org/ultra-ethernet-consortium-uec-launches-specification-1-0-transforming-ethernet-for-ai-and-hpc-at-scale/)).
+InfiniBand, the specialized network supercomputers grew up on, owned this layer when AI clusters were small and alike. Ethernet took it back on raw capacity first: Broadcom doubled the bandwidth of the switch chips it sells to all comers every generation, from 25.6 Tbps on one chip in Tomahawk 4 ([source](https://www.broadcom.com/company/news/product-releases/52756)) to 51.2 in Tomahawk 5 ([source](https://investors.broadcom.com/news-releases/news-release-details/broadcom-ships-tomahawk-5-industrys-highest-bandwidth-switch)) and 102.4 in Tomahawk 6 ([source](https://www.broadcom.com/company/news/product-releases/64031)). Then the Ultra Ethernet Consortium published its 1.0 specification in June 2025, standardizing the load balancing, congestion control and lossless behavior InfiniBand had from the start ([source](https://ultraethernet.org/ultra-ethernet-consortium-uec-launches-specification-1-0-transforming-ethernet-for-ai-and-hpc-at-scale/)).
 
 {{figure:switch-bandwidth}}
 
-Nvidia sells both sides of the argument, telling investors that a $75.2 billion data centre quarter came from Blackwell 300 plus demand for "InfiniBand, Spectrum-X Ethernet, and NVLink" ([source](https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm)), because large buyers run both networks.
+Nvidia sells both sides of the argument, telling investors that a $75.2 billion data center quarter came from Blackwell 300 plus demand for "InfiniBand, Spectrum-X Ethernet, and NVLink" ([source](https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm)), because large buyers run both networks.
 
 ### Optics: pluggable, then co-packaged
 
-Every link longer than a few metres is optical, and a cluster needs several transceivers, the modules that turn electricity into light and back, for each accelerator. Their power cost is why both switch vendors are moving the optics onto the switch package itself: Broadcom's Tomahawk 6 Davisson cuts optical interconnect power by about 70 percent, more than 3.5 times better than plug-in modules ([source](https://www.broadcom.com/company/news/product-releases/63626)), and Nvidia's Spectrum-X Photonics reaches 512 ports of 800 gigabits during 2026 using four times fewer lasers ([source](https://nvidianews.nvidia.com/news/nvidia-spectrum-x-co-packaged-optics-networking-switches-ai-factories)).
+Every link longer than a few meters is optical, and a cluster needs several transceivers, the modules that turn electricity into light and back, for each accelerator. Their power cost is why both switch vendors are moving the optics onto the switch package itself: Broadcom's Tomahawk 6 Davisson cuts optical interconnect power by about 70 percent, more than 3.5 times better than plug-in modules ([source](https://www.broadcom.com/company/news/product-releases/63626)), and Nvidia's Spectrum-X Photonics reaches 512 ports of 800 gigabits during 2026 using four times fewer lasers ([source](https://nvidianews.nvidia.com/news/nvidia-spectrum-x-co-packaged-optics-networking-switches-ai-factories)).
 
 ## Who makes it
 
-Optical modules are assembled where labour and land are cheap, and the Chinese makers went offshore early. InnoLight has run a Thai plant since 2019 alongside Suzhou and Taiwan ([source](https://www.innolight.com/about)), and Eoptolink assembles in Rayong and Chonburi ([source](https://www.eoptolink.com/about-us/contacts)). The rules now follow the firm rather than the site: the Federal Communications Commission's July 2026 order bars new authorisations for devices that contain logic chips from firms on its Covered List, and the record for that rule names optical transceivers as one such component ([source](https://docs.fcc.gov/public/attachments/FCC-26-50A1.pdf)).
+Optical modules are assembled where labor and land are cheap, and the Chinese makers went offshore early. InnoLight has run a Thai plant since 2019 alongside Suzhou and Taiwan ([source](https://www.innolight.com/about)), and Eoptolink assembles in Rayong and Chonburi ([source](https://www.eoptolink.com/about-us/contacts)). The rules now follow the firm rather than the site: the Federal Communications Commission's July 2026 order bars new authorizations for devices that contain logic chips from firms on its Covered List, and the record for that rule names optical transceivers as one such component ([source](https://docs.fcc.gov/public/attachments/FCC-26-50A1.pdf)).
 
 The lasers inside those modules come from far fewer hands. Indium phosphide is the only practical material for the lasers in 800-gigabit and 1.6-terabit optics, and its feedstock is concentrated: China accounts for about 70 percent of world indium production ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-indium.pdf)). Nvidia put $2 billion into Lumentum and $2 billion into Coherent in March 2026, buying research, future capacity and access rights rather than parts ([source](https://nvidianews.nvidia.com/news/nvidia-announces-strategic-partnership-with-lumentum-to-develop-state-of-the-art-optics-technology)) ([source](https://nvidianews.nvidia.com/news/nvidia-and-coherent-announce-strategic-partnership-to-develop-optics-technology-to-scale-next-generation-data-center-architecture)).
 

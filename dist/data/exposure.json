@@ -941,7 +941,7 @@
     "chinaShare": 9.1,
     "basis": "Revenue by geographic region based on the customer's headquarters location, China including Hong Kong; share computed from the filed absolute figures",
     "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/R84.htm",
-    "note": "First year reported on the headquarters basis. The FY2026 fall reflects the H20 licence freeze and China's own procurement restrictions, not only the basis change."
+    "note": "First year reported on the headquarters basis. The FY2026 fall reflects the H20 license freeze and China's own procurement restrictions, not only the basis change."
   },
   {
     "firm": "Onto Innovation",
@@ -1260,7 +1260,7 @@
     "totalRevenue": 4204.2,
     "currency": "USD million",
     "chinaShare": 13.4,
-    "basis": "Revenue by geographic area, allocated by where the individual seats or licences are located; share computed from the filed absolute figures",
+    "basis": "Revenue by geographic area, allocated by where the individual seats or licenses are located; share computed from the filed absolute figures",
     "source": "https://www.sec.gov/Archives/edgar/data/883241/000088324122000017/R104.htm"
   },
   {
@@ -1274,7 +1274,7 @@
     "totalRevenue": 5081.5,
     "currency": "USD million",
     "chinaShare": 15.7,
-    "basis": "Revenue by geographic area, allocated by where the individual seats or licences are located; share computed from the filed absolute figures",
+    "basis": "Revenue by geographic area, allocated by where the individual seats or licenses are located; share computed from the filed absolute figures",
     "source": "https://www.sec.gov/Archives/edgar/data/883241/000088324122000017/R104.htm"
   },
   {
@@ -1288,7 +1288,7 @@
     "totalRevenue": 5318.0,
     "currency": "USD million",
     "chinaShare": 16.1,
-    "basis": "Revenue by geographic area, allocated by where the individual seats or licences are located; share computed from the filed absolute figures",
+    "basis": "Revenue by geographic area, allocated by where the individual seats or licenses are located; share computed from the filed absolute figures",
     "source": "https://www.sec.gov/Archives/edgar/data/883241/000088324125000028/R122.htm"
   },
   {
@@ -1302,7 +1302,7 @@
     "totalRevenue": 6127.4,
     "currency": "USD million",
     "chinaShare": 16.1,
-    "basis": "Revenue by geographic area, allocated by where the individual seats or licences are located; share computed from the filed absolute figures",
+    "basis": "Revenue by geographic area, allocated by where the individual seats or licenses are located; share computed from the filed absolute figures",
     "source": "https://www.sec.gov/Archives/edgar/data/883241/000088324125000028/R122.htm"
   },
   {
@@ -1316,9 +1316,9 @@
     "totalRevenue": 7054.2,
     "currency": "USD million",
     "chinaShare": 11.5,
-    "basis": "Revenue by geographic area, allocated by where the individual seats or licences are located; share computed from the filed absolute figures",
+    "basis": "Revenue by geographic area, allocated by where the individual seats or licenses are located; share computed from the filed absolute figures",
     "source": "https://www.sec.gov/Archives/edgar/data/883241/000088324125000028/R122.htm",
-    "note": "FY2025 excludes the divested Software Integrity business and includes Ansys from the July 2025 close. BIS suspended EDA export licences for China in May 2025 and lifted the suspension in July 2025."
+    "note": "FY2025 excludes the divested Software Integrity business and includes Ansys from the July 2025 close. BIS suspended EDA export licenses for China in May 2025 and lifted the suspension in July 2025."
   },
   {
     "firm": "Teradyne",

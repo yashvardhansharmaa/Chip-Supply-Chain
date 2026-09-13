@@ -9,7 +9,7 @@
     "founded": 1986,
     "ticker": "SNPS",
     "ownership": "Public",
-    "role": "Supplies the synthesis, place-and-route, verification and signoff software used to turn an AI accelerator RTL description into a manufacturable layout, plus the largest commercial silicon IP catalogue. Its 2025 acquisition of Ansys added multiphysics simulation for thermal and power integrity.",
+    "role": "Supplies the synthesis, place-and-route, verification and signoff software used to turn an AI accelerator RTL description into a manufacturable layout, plus the largest commercial silicon IP catalog. Its 2025 acquisition of Ansys added multiphysics simulation for thermal and power integrity.",
     "chokepoint": "Critical",
     "shareNote": "About $8.0B of CY2025 EDA and IP revenue including Ansys, against Cadence at $5.30B and Siemens EDA at an estimated $2.2-2.5B",
     "customers": [
@@ -111,7 +111,7 @@
     "founded": 2009,
     "ticker": "301269.SZ",
     "ownership": "Public; state-linked shareholders including China Electronics Corporation",
-    "role": "China's largest domestic EDA vendor, with a complete analog and mixed-signal design flow and partial digital coverage. It is the centrepiece of China's effort to replace the American EDA tools that export controls can switch off.",
+    "role": "China's largest domestic EDA vendor, with a complete analog and mixed-signal design flow and partial digital coverage. It is the centerpiece of China's effort to replace the American EDA tools that export controls can switch off.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -129,13 +129,13 @@
     "name": "Primarius Technologies",
     "nativeName": "概伦电子",
     "category": "Design & EDA",
-    "subcategory": "Device modelling, SPICE simulation and DTCO",
+    "subcategory": "Device modeling, SPICE simulation and DTCO",
     "country": "CN",
     "city": "Shanghai",
     "founded": 2010,
     "ticker": "688206.SS",
     "ownership": "Public (Shanghai STAR Market)",
-    "role": "Chinese EDA vendor focused on semiconductor device modelling, parameter extraction and fast SPICE simulation, the layer that connects a foundry process to a designer's simulation deck.",
+    "role": "Chinese EDA vendor focused on semiconductor device modeling, parameter extraction and fast SPICE simulation, the layer that connects a foundry process to a designer's simulation deck.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -159,7 +159,7 @@
     "founded": 2003,
     "ticker": "301095.SZ",
     "ownership": "Public (Shenzhen ChiNext)",
-    "role": "Supplies test-chip design software, on-wafer electrical test systems and yield analysis tools used to characterise and debug a new process node. It sits between EDA and metrology.",
+    "role": "Supplies test-chip design software, on-wafer electrical test systems and yield analysis tools used to characterize and debug a new process node. It sits between EDA and metrology.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -234,7 +234,7 @@
     "founded": 2017,
     "ticker": "Private",
     "ownership": "Acquired by Qualcomm under a deal announced in 2025; no longer separately listed",
-    "role": "Supplies the multi-gigabit SerDes, PCIe, UCIe and Ethernet IP that moves data between chiplets and between accelerators. Qualcomm bought it to build data-centre silicon.",
+    "role": "Supplies the multi-gigabit SerDes, PCIe, UCIe and Ethernet IP that moves data between chiplets and between accelerators. Qualcomm bought it to build data-center silicon.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -290,7 +290,7 @@
       "Renesas",
       "Texas Instruments"
     ],
-    "aiRelevance": "Supplies inference GPU IP for edge devices rather than data-centre accelerators.",
+    "aiRelevance": "Supplies inference GPU IP for edge devices rather than data-center accelerators.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.imaginationtech.com/"
@@ -382,7 +382,7 @@
     "founded": 1998,
     "ticker": "Private",
     "ownership": "Division of Alphabet Inc.",
-    "role": "Designs the Tensor Processing Unit line, now at the v7 Ironwood generation, and deploys it in its own data centres and to cloud customers. The physical design and manufacture are done with Broadcom and MediaTek at TSMC.",
+    "role": "Designs the Tensor Processing Unit line, now at the v7 Ironwood generation, and deploys it in its own data centers and to cloud customers. The physical design and manufacture are done with Broadcom and MediaTek at TSMC.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -506,7 +506,7 @@
       "Google",
       "Meta"
     ],
-    "aiRelevance": "Marvell is the credible second source for hyperscalers that do not want Broadcom to hold every custom silicon programme.",
+    "aiRelevance": "Marvell is the credible second source for hyperscalers that do not want Broadcom to hold every custom silicon program.",
     "revenueUSDb": 8.195,
     "revenueYear": 2026,
     "source": "https://www.marvell.com/company/investor-relations.html"
@@ -569,7 +569,7 @@
     "founded": 1997,
     "ticker": "2454.TW",
     "ownership": "Public",
-    "role": "Best known for mobile SoCs, MediaTek has become a custom AI ASIC vendor and works on Google's TPU programme. It brings high-volume advanced-node design capability to the custom silicon market.",
+    "role": "Best known for mobile SoCs, MediaTek has become a custom AI ASIC vendor and works on Google's TPU program. It brings high-volume advanced-node design capability to the custom silicon market.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -587,13 +587,13 @@
     "name": "Qualcomm",
     "nativeName": null,
     "category": "AI Accelerator Vendor",
-    "subcategory": "Edge AI SoCs and data-centre inference accelerators",
+    "subcategory": "Edge AI SoCs and data-center inference accelerators",
     "country": "US",
     "city": "San Diego",
     "founded": 1985,
     "ticker": "QCOM",
     "ownership": "Public",
-    "role": "Supplies Snapdragon SoCs with on-device neural engines and, from its 2025 announcement, the AI200 and AI250 rack-scale inference accelerators. Its purchase of Alphawave added the SerDes IP a data-centre part needs.",
+    "role": "Supplies Snapdragon SoCs with on-device neural engines and, from its 2025 announcement, the AI200 and AI250 rack-scale inference accelerators. Its purchase of Alphawave added the SerDes IP a data-center part needs.",
     "chokepoint": "Diversified",
     "shareNote": null,
     "customers": [
@@ -712,13 +712,13 @@
     "founded": 2014,
     "ticker": "688041.SS",
     "ownership": "Public (Shanghai STAR Market); state-linked; merging with Sugon",
-    "role": "Makes x86-compatible server CPUs derived from an AMD licence and the Deep Computing Unit accelerator line. It supplies Chinese government and state enterprise data centres.",
+    "role": "Makes x86-compatible server CPUs derived from an AMD license and the Deep Computing Unit accelerator line. It supplies Chinese government and state enterprise data centers.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
       "Sugon",
       "China Telecom",
-      "Chinese government data centres"
+      "Chinese government data centers"
     ],
     "aiRelevance": "Hygon supplies the domestic host CPUs that Chinese AI clusters need alongside domestic accelerators.",
     "revenueUSDb": 2.137,
@@ -780,7 +780,7 @@
     "founded": 2020,
     "ticker": "688802.SS",
     "ownership": "Public (Shanghai STAR Market)",
-    "role": "Chinese GPGPU designer whose Xiyun and Xisi lines target AI training and inference in domestic data centres, with a CUDA-compatible software stack.",
+    "role": "Chinese GPGPU designer whose Xiyun and Xisi lines target AI training and inference in domestic data centers, with a CUDA-compatible software stack.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -802,7 +802,7 @@
     "founded": 2015,
     "ticker": "9903.HK",
     "ownership": "Public (Hong Kong)",
-    "role": "Designs the Tiangai and Zhikai general-purpose AI accelerators for Chinese data centres, with an emphasis on compatibility with mainstream AI frameworks.",
+    "role": "Designs the Tiangai and Zhikai general-purpose AI accelerators for Chinese data centers, with an emphasis on compatibility with mainstream AI frameworks.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -856,7 +856,7 @@
       "SoftBank",
       "Saudi Aramco"
     ],
-    "aiRelevance": "Dataflow architectures trade generality for higher utilisation on transformer inference.",
+    "aiRelevance": "Dataflow architectures trade generality for higher utilization on transformer inference.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://sambanova.ai/technology/sn40l-rdu-ai-chip"
@@ -1288,7 +1288,7 @@
     "name": "Sumitomo Chemical",
     "nativeName": "住友化学",
     "category": "Photoresist & Materials",
-    "subcategory": "Photoresist and high-purity aluminium targets",
+    "subcategory": "Photoresist and high-purity aluminum targets",
     "country": "JP",
     "city": "Tokyo",
     "founded": 1913,
@@ -1388,7 +1388,7 @@
     "founded": 1986,
     "ticker": "357780.KQ",
     "ownership": "Public (KOSDAQ)",
-    "role": "Supplies high-purity hydrogen fluoride etchant, CVD precursors and cleaning chemicals to Korean memory fabs. It localised HF production after the 2019 Japanese export restrictions.",
+    "role": "Supplies high-purity hydrogen fluoride etchant, CVD precursors and cleaning chemicals to Korean memory fabs. It localized HF production after the 2019 Japanese export restrictions.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -1590,7 +1590,7 @@
       "Micron",
       "TSMC"
     ],
-    "aiRelevance": "Nitrogen consumption at a leading-edge fab is measured in hundreds of thousands of cubic metres an hour.",
+    "aiRelevance": "Nitrogen consumption at a leading-edge fab is measured in hundreds of thousands of cubic meters an hour.",
     "revenueUSDb": 12.037,
     "revenueYear": 2025,
     "source": "https://www.airproducts.com/industries/electronics"
@@ -1798,7 +1798,7 @@
     "founded": 1937,
     "ticker": "7751.T",
     "ownership": "Public",
-    "role": "Supplies i-line and KrF steppers for mature nodes and packaging, and is commercialising nanoimprint lithography, which stamps a pattern rather than projecting it. Nanoimprint avoids EUV optics entirely but has defect and throughput limits.",
+    "role": "Supplies i-line and KrF steppers for mature nodes and packaging, and is commercializing nanoimprint lithography, which stamps a pattern rather than projecting it. Nanoimprint avoids EUV optics entirely but has defect and throughput limits.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1909,7 +1909,7 @@
     "founded": 1923,
     "ticker": "Private",
     "ownership": "Private, family-owned",
-    "role": "Builds the multi-kilowatt CO2 laser amplifier chain that vaporises tin droplets to create EUV light. Each EUV scanner needs one, and Trumpf is the only supplier.",
+    "role": "Builds the multi-kilowatt CO2 laser amplifier chain that vaporizes tin droplets to create EUV light. Each EUV scanner needs one, and Trumpf is the only supplier.",
     "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
@@ -2025,7 +2025,7 @@
     "founded": 1981,
     "ticker": "AEIS",
     "ownership": "Public",
-    "role": "Makes the RF and DC power supplies and matching networks that strike and hold the plasmas used in etch and deposition, plus precision power for data-centre equipment.",
+    "role": "Makes the RF and DC power supplies and matching networks that strike and hold the plasmas used in etch and deposition, plus precision power for data-center equipment.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2034,7 +2034,7 @@
       "Tokyo Electron",
       "KLA"
     ],
-    "aiRelevance": "Plasma stability at sub-nanometre control is what makes high aspect ratio etch reproducible.",
+    "aiRelevance": "Plasma stability at sub-nanometer control is what makes high aspect ratio etch reproducible.",
     "revenueUSDb": 1.799,
     "revenueYear": 2025,
     "source": "https://www.advancedenergy.com/"
@@ -2142,7 +2142,7 @@
     "founded": 1953,
     "ticker": "6856.T",
     "ownership": "Public",
-    "role": "Supplies mass flow controllers, which meter process gases into chambers to a fraction of a percent, plus residual gas analysers and liquid concentration monitors used across the fab.",
+    "role": "Supplies mass flow controllers, which meter process gases into chambers to a fraction of a percent, plus residual gas analyzers and liquid concentration monitors used across the fab.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2286,7 +2286,7 @@
     "founded": 1900,
     "ticker": "7911.T",
     "ownership": "Public",
-    "role": "Makes advanced photomasks through its photomask arm and is building flip-chip BGA substrate capacity for AI packages. Its photomask business was reorganised as Tekscend Photomask.",
+    "role": "Makes advanced photomasks through its photomask arm and is building flip-chip BGA substrate capacity for AI packages. Its photomask business was reorganized as Tekscend Photomask.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2557,7 +2557,7 @@
     "founded": 1997,
     "ticker": "140860.KQ",
     "ownership": "Public (KOSDAQ)",
-    "role": "Makes the automated atomic force microscopes fabs use to measure surface roughness, step height and defect profiles at sub-nanometre resolution. It acquired Accurion and part of the AFM market from Bruker.",
+    "role": "Makes the automated atomic force microscopes fabs use to measure surface roughness, step height and defect profiles at sub-nanometer resolution. It acquired Accurion and part of the AFM market from Bruker.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2566,7 +2566,7 @@
       "TSMC",
       "Intel"
     ],
-    "aiRelevance": "Sub-nanometre surface control matters for hybrid bonding, where two wafers must mate atom to atom.",
+    "aiRelevance": "Sub-nanometer surface control matters for hybrid bonding, where two wafers must mate atom to atom.",
     "revenueUSDb": 0.153,
     "revenueYear": 2025,
     "source": "https://www.parksystems.com/"
@@ -2629,7 +2629,7 @@
     "founded": 1967,
     "ticker": "AMAT",
     "ownership": "Public",
-    "role": "Supplies physical and chemical vapour deposition, epitaxy, ion implantation, chemical mechanical planarisation and electron beam inspection. It owns more process steps than any other vendor.",
+    "role": "Supplies physical and chemical vapor deposition, epitaxy, ion implantation, chemical mechanical planarisation and electron beam inspection. It owns more process steps than any other vendor.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -3027,7 +3027,7 @@
       "Cisco",
       "AMD"
     ],
-    "aiRelevance": "Its silicon photonics process is used for optical interconnect components in AI data centres.",
+    "aiRelevance": "Its silicon photonics process is used for optical interconnect components in AI data centers.",
     "revenueUSDb": 6.791,
     "revenueYear": 2025,
     "source": "https://gf.com/"
@@ -3302,7 +3302,7 @@
     "founded": 1987,
     "ticker": "2344.TW",
     "ownership": "Public",
-    "role": "Makes NOR flash, specialty low-power DRAM and a customised ultra-bandwidth memory called CUBE aimed at edge AI devices that cannot afford HBM.",
+    "role": "Makes NOR flash, specialty low-power DRAM and a customized ultra-bandwidth memory called CUBE aimed at edge AI devices that cannot afford HBM.",
     "chokepoint": "Diversified",
     "shareNote": null,
     "customers": [
@@ -3608,7 +3608,7 @@
     "founded": 1937,
     "ticker": "6146.T",
     "ownership": "Public",
-    "role": "Makes the dicing saws, laser dicers and back-grinders that cut wafers into dies and thin them for stacking. Thinning wafers to tens of micrometres is what makes HBM and 3D stacking possible.",
+    "role": "Makes the dicing saws, laser dicers and back-grinders that cut wafers into dies and thin them for stacking. Thinning wafers to tens of micrometers is what makes HBM and 3D stacking possible.",
     "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
@@ -3918,13 +3918,13 @@
     "name": "Nittobo",
     "nativeName": "日東紡績株式会社",
     "category": "Substrates & PCBs",
-    "subcategory": "Low-CTE T-glass fibre and glass cloth",
+    "subcategory": "Low-CTE T-glass fiber and glass cloth",
     "country": "JP",
     "city": "Tokyo",
     "founded": 1923,
     "ticker": "3110.T",
     "ownership": "Public",
-    "role": "Weaves the ultra-fine low thermal expansion glass cloth, known as T-glass, that reinforces high-end package substrates and server boards. Its fibre keeps large substrates flat as they heat.",
+    "role": "Weaves the ultra-fine low thermal expansion glass cloth, known as T-glass, that reinforces high-end package substrates and server boards. Its fiber keeps large substrates flat as they heat.",
     "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
@@ -4069,13 +4069,13 @@
     "founded": 1978,
     "ticker": "TTMI",
     "ownership": "Public",
-    "role": "The largest North American printed circuit board maker, supplying data centre, aerospace and defence boards, including high-layer-count boards for AI and networking systems.",
+    "role": "The largest North American printed circuit board maker, supplying data center, aerospace and defense boards, including high-layer-count boards for AI and networking systems.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "Cisco",
       "Arista",
-      "Defence primes",
+      "Defense primes",
       "Hyperscale operators"
     ],
     "aiRelevance": "Provides domestic PCB capacity for AI infrastructure where supply chain origin matters.",
@@ -4189,7 +4189,7 @@
     "founded": 1996,
     "ticker": "TPRO.MI",
     "ownership": "Public; family-controlled",
-    "role": "The main European probe card maker and the closest competitor to FormFactor, specialising in vertical MEMS probe heads used for high pin count logic and HBM test.",
+    "role": "The main European probe card maker and the closest competitor to FormFactor, specializing in vertical MEMS probe heads used for high pin count logic and HBM test.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4214,7 +4214,7 @@
     "founded": 1970,
     "ticker": "6871.T",
     "ownership": "Public",
-    "role": "Makes probe cards specialised for memory wafer test, including the multi-DUT cards used to test DRAM and HBM dies in parallel, plus display test equipment.",
+    "role": "Makes probe cards specialized for memory wafer test, including the multi-DUT cards used to test DRAM and HBM dies in parallel, plus display test equipment.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4376,7 +4376,7 @@
     "name": "Arista Networks",
     "nativeName": null,
     "category": "Interconnect & Networking",
-    "subcategory": "Data centre Ethernet switches",
+    "subcategory": "Data center Ethernet switches",
     "country": "US",
     "city": "Santa Clara",
     "founded": 2004,
@@ -4406,7 +4406,7 @@
     "founded": 1984,
     "ticker": "CSCO",
     "ownership": "Public",
-    "role": "Sells data centre switches and routers and designs its own Silicon One switching ASICs, giving it a second in-house alternative to merchant switch silicon for AI fabrics.",
+    "role": "Sells data center switches and routers and designs its own Silicon One switching ASICs, giving it a second in-house alternative to merchant switch silicon for AI fabrics.",
     "chokepoint": "Diversified",
     "shareNote": null,
     "customers": [
@@ -4429,7 +4429,7 @@
     "founded": 1988,
     "ticker": "2345.TW",
     "ownership": "Public",
-    "role": "The largest contract maker of white-box data centre switches, building the hardware that hyperscalers run their own network software on. Most 800G switch boxes are built by Accton or its peers.",
+    "role": "The largest contract maker of white-box data center switches, building the hardware that hyperscalers run their own network software on. Most 800G switch boxes are built by Accton or its peers.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4502,7 +4502,7 @@
     "founded": 2008,
     "ticker": "300308.SZ",
     "ownership": "Public (Shenzhen ChiNext)",
-    "role": "The largest maker of high-speed optical transceiver modules for data centres, shipping 800G and 1.6T modules to hyperscalers. AI clusters need one or more optical modules per accelerator.",
+    "role": "The largest maker of high-speed optical transceiver modules for data centers, shipping 800G and 1.6T modules to hyperscalers. AI clusters need one or more optical modules per accelerator.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4527,7 +4527,7 @@
     "founded": 2008,
     "ticker": "300502.SZ",
     "ownership": "Public (Shenzhen ChiNext)",
-    "role": "A major supplier of 400G, 800G and 1.6T optical transceivers to cloud and AI data centre operators, and one of the fastest growing Chinese optics firms.",
+    "role": "A major supplier of 400G, 800G and 1.6T optical transceivers to cloud and AI data center operators, and one of the fastest growing Chinese optics firms.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4574,7 +4574,7 @@
     "founded": 2015,
     "ticker": "LITE",
     "ownership": "Public",
-    "role": "Supplies indium phosphide lasers, electro-absorption modulated lasers and optical modules for data centre and telecom links, and is expanding capacity for AI cluster demand.",
+    "role": "Supplies indium phosphide lasers, electro-absorption modulated lasers and optical modules for data center and telecom links, and is expanding capacity for AI cluster demand.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4622,7 +4622,7 @@
     "founded": 2015,
     "ticker": "Private",
     "ownership": "Private; investors include Nvidia, Intel Capital and AMD",
-    "role": "Builds optical input and output chiplets that put light directly into the processor package, replacing electrical SerDes with fibre at the package edge.",
+    "role": "Builds optical input and output chiplets that put light directly into the processor package, replacing electrical SerDes with fiber at the package edge.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -4661,13 +4661,13 @@
     "name": "Corning",
     "nativeName": null,
     "category": "Optics & Photonics",
-    "subcategory": "Optical fibre, cable and glass substrates",
+    "subcategory": "Optical fiber, cable and glass substrates",
     "country": "US",
     "city": "Corning",
     "founded": 1851,
     "ticker": "GLW",
     "ownership": "Public",
-    "role": "Makes the optical fibre and cabling that connects data centre halls and campuses, and develops glass substrates for semiconductor packaging. It also holds the majority stake in Hemlock Semiconductor.",
+    "role": "Makes the optical fiber and cabling that connects data center halls and campuses, and develops glass substrates for semiconductor packaging. It also holds the majority stake in Hemlock Semiconductor.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4675,7 +4675,7 @@
       "Telecom carriers",
       "AT&T"
     ],
-    "aiRelevance": "Fibre plant inside and between AI campuses is a physical prerequisite for cluster scale-out.",
+    "aiRelevance": "Fiber plant inside and between AI campuses is a physical prerequisite for cluster scale-out.",
     "revenueUSDb": 15.629,
     "revenueYear": 2025,
     "source": "https://www.corning.com/worldwide/en/products/communication-networks.html"
@@ -4749,7 +4749,7 @@
       "Meta",
       "Amazon"
     ],
-    "aiRelevance": "GPU baseboard assembly is a specialised step with few qualified suppliers worldwide.",
+    "aiRelevance": "GPU baseboard assembly is a specialized step with few qualified suppliers worldwide.",
     "revenueUSDb": 69.413,
     "revenueYear": 2025,
     "source": "https://www.wistron.com/en/Business/Solutions"
@@ -4858,7 +4858,7 @@
     "founded": 2015,
     "ticker": "HPE",
     "ownership": "Public",
-    "role": "Builds AI servers and Cray supercomputers with direct liquid cooling, and since acquiring Juniper Networks also supplies data centre networking.",
+    "role": "Builds AI servers and Cray supercomputers with direct liquid cooling, and since acquiring Juniper Networks also supplies data center networking.",
     "chokepoint": "Diversified",
     "shareNote": null,
     "customers": [
@@ -4948,7 +4948,7 @@
     "founded": 1966,
     "ticker": "JBL",
     "ownership": "Public",
-    "role": "A large contract manufacturer building AI data centre hardware including server racks, power distribution and liquid cooling components such as cold plates and manifolds.",
+    "role": "A large contract manufacturer building AI data center hardware including server racks, power distribution and liquid cooling components such as cold plates and manifolds.",
     "chokepoint": "Diversified",
     "shareNote": null,
     "customers": [
@@ -4965,13 +4965,13 @@
     "name": "Vertiv",
     "nativeName": null,
     "category": "Power & Cooling",
-    "subcategory": "Data centre power and thermal management",
+    "subcategory": "Data center power and thermal management",
     "country": "US",
     "city": "Westerville",
     "founded": 1946,
     "ticker": "VRT",
     "ownership": "Public",
-    "role": "Supplies uninterruptible power supplies, busway power distribution, coolant distribution units and liquid cooling systems for data centres, and co-develops reference power and cooling designs with Nvidia.",
+    "role": "Supplies uninterruptible power supplies, busway power distribution, coolant distribution units and liquid cooling systems for data centers, and co-develops reference power and cooling designs with Nvidia.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4996,7 +4996,7 @@
     "founded": 1836,
     "ticker": "SU.PA",
     "ownership": "Public",
-    "role": "Supplies medium and low voltage electrical distribution, uninterruptible power supplies through APC, busway and liquid cooling for data centres, plus the design software operators plan with.",
+    "role": "Supplies medium and low voltage electrical distribution, uninterruptible power supplies through APC, busway and liquid cooling for data centers, plus the design software operators plan with.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -5005,7 +5005,7 @@
       "Digital Realty",
       "Equinix"
     ],
-    "aiRelevance": "Electrical equipment lead times, especially transformers and switchgear, now gate AI data centre schedules.",
+    "aiRelevance": "Electrical equipment lead times, especially transformers and switchgear, now gate AI data center schedules.",
     "revenueUSDb": 46.672,
     "revenueYear": 2025,
     "source": "https://www.se.com/us/en/work/solutions/for-business/data-centers-and-networks/"
@@ -5020,7 +5020,7 @@
     "founded": 1911,
     "ticker": "ETN",
     "ownership": "Public",
-    "role": "Makes switchgear, busway, transformers, UPS systems and power distribution units for data centres, a segment that has become supply constrained as AI campuses scale.",
+    "role": "Makes switchgear, busway, transformers, UPS systems and power distribution units for data centers, a segment that has become supply constrained as AI campuses scale.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -5114,7 +5114,7 @@
     "founded": 2020,
     "ticker": "Private",
     "ownership": "Subsidiary of Hitachi (formerly ABB Power Grids)",
-    "role": "Makes the high voltage transformers, switchgear and grid connection equipment that data centre campuses need to draw hundreds of megawatts. Transformer lead times run to several years.",
+    "role": "Makes the high voltage transformers, switchgear and grid connection equipment that data center campuses need to draw hundreds of megawatts. Transformer lead times run to several years.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -5137,7 +5137,7 @@
     "founded": 2020,
     "ticker": "ENR.DE",
     "ownership": "Public",
-    "role": "Supplies gas turbines, grid transmission equipment and transformers, and has an order book stretching years out as data centre and electrification demand collides with limited manufacturing capacity.",
+    "role": "Supplies gas turbines, grid transmission equipment and transformers, and has an order book stretching years out as data center and electrification demand collides with limited manufacturing capacity.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -5160,7 +5160,7 @@
     "founded": 2024,
     "ticker": "GEV",
     "ownership": "Public",
-    "role": "Builds gas turbines, grid equipment and wind generation, and is a main supplier of the new generating capacity being contracted specifically to power AI data centres.",
+    "role": "Builds gas turbines, grid equipment and wind generation, and is a main supplier of the new generating capacity being contracted specifically to power AI data centers.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [

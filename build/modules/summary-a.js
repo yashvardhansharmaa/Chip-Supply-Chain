@@ -79,7 +79,7 @@ const ROLE = {
   MY: 'Test and assembly, the last stop before the server',
   SG: 'Test, assembly and mature-node fabs',
   GB: 'Arm and the other processor designs most chips license',
-  IL: 'Metrology and inspection tools, and chip design centres',
+  IL: 'Metrology and inspection tools, and chip design centers',
   AT: 'The mask writers and substrates two extreme chokepoints depend on'
 };
 
@@ -109,7 +109,7 @@ const SHORT = {
 const EQUIPMENT = ['Lithography', 'Deposition & Etch', 'Metrology & Inspection', 'Test', 'Advanced Packaging & OSAT', 'Equipment Subsystems & Components'];
 
 /* Where a stop's town label sits when the country is chosen. The label is 10.5 px mono at the stop's 1.16 scale,
- * so in drawing units (one unit is about a pixel at the plate's width) it starts 19 from the centre, stands 17 tall
+ * so in drawing units (one unit is about a pixel at the plate's width) it starts 19 from the center, stands 17 tall
  * and runs 7.3 a character plus its padding. Right is the default; the rest are tried in this order when right
  * would cover another stop, another label or the edge of the map. Each entry gives the label's top-left corner. */
 const LAB_H = 17, LAB_GAP = 19, LAB_V = 15;

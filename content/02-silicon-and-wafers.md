@@ -4,10 +4,10 @@
  "number": 2,
  "title": "Silicon and Wafers",
  "oneLiner": "China makes almost all of the world's polysilicon and almost none of the wafers that matter. Five firms in Japan, Taiwan, Germany and South Korea hold the 300 mm wafer every AI accelerator starts on.",
- "plain": "Every chip is built on a wafer, a thin round slice of silicon about 30 centimetres across. Making one starts with sand. The sand is refined until fewer than one atom in a hundred billion is anything other than silicon, then melted, and a single crystal is slowly drawn out of the melt as a long cylinder. Saws cut the cylinder into discs, and each disc is polished until its surface is flat to within a few atoms, right out to the edge. Only five companies in the world make these wafers to that standard, and none of them is American or Chinese.",
+ "plain": "Every chip is built on a wafer, a thin round slice of silicon about 30 centimeters across. Making one starts with sand. The sand is refined until fewer than one atom in a hundred billion is anything other than silicon, then melted, and a single crystal is slowly drawn out of the melt as a long cylinder. Saws cut the cylinder into discs, and each disc is polished until its surface is flat to within a few atoms, right out to the edge. Only five companies in the world make these wafers to that standard, and none of them is American or Chinese.",
  "bridge": "Nothing in a file computes; the drawing has to be printed onto something, and that something is a disc of pure silicon.",
  "specimen": "boule-and-wafer",
- "specimenCaption": "A Czochralski ingot, one crystal pulled whole from molten silicon, and the wafers cut from it. A seed crystal on a 10 mm neck at the top, the crown where the crystal opens out to full diameter, 1.5 m of body ground to a true 300 mm, and the cropped tail. The wafers at its foot are as wide as the ingot: a quarter of a tonne of one crystal, hung from a neck the width of a finger.",
+ "specimenCaption": "A Czochralski ingot, one crystal pulled whole from molten silicon, and the wafers cut from it. A seed crystal on a 10 mm neck at the top, the crown where the crystal opens out to full diameter, 1.5 m of body ground to a true 300 mm, and the cropped tail. The wafers at its foot are as wide as the ingot: a quarter of a metric ton of one crystal, hung from a neck the width of a finger.",
  "card": {
  "concentration": "High",
  "chokepointScore": 4,
@@ -52,7 +52,7 @@
  {
  "id": "polysilicon-grade",
  "type": "stack",
- "title": "China's polysilicon output by grade, 2023. China made about 93% of the world's 1.5 million tonnes that year",
+ "title": "China's polysilicon output by grade, 2023. China made about 93% of the world's 1.5 million metric tons that year",
  "unit": "%",
  "data": [["Solar-grade", 98], ["Electronic-grade", 2]],
  "source": {"label": "USGS Minerals Yearbook, China, 2023", "url": "https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf"}
@@ -62,13 +62,13 @@
 ---
 # Silicon and Wafers
 
-The whole world market for silicon wafers came to $11.4 billion of revenue on 12,973 million square inches in 2025 ([source](https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html)). That is a small fraction of Nvidia's data centre revenue, and every leading-edge chip behind it was built on one of these discs.
+The whole world market for silicon wafers came to $11.4 billion of revenue on 12,973 million square inches in 2025 ([source](https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html)). That is a small fraction of Nvidia's data center revenue, and every leading-edge chip behind it was built on one of these discs.
 
 ## How it works
 
-Every chip is built on a wafer, a thin round slice of silicon about 30 centimetres across. Making one starts with sand. The sand is refined until fewer than one atom in a hundred billion is anything other than silicon, then melted, and a single crystal is slowly drawn out of the melt as a long cylinder. Saws cut the cylinder into discs, and each disc is polished until its surface is flat to within a few atoms, right out to the edge. Only five companies in the world make these wafers to that standard, and none of them is American or Chinese.
+Every chip is built on a wafer, a thin round slice of silicon about 30 centimeters across. Making one starts with sand. The sand is refined until fewer than one atom in a hundred billion is anything other than silicon, then melted, and a single crystal is slowly drawn out of the melt as a long cylinder. Saws cut the cylinder into discs, and each disc is polished until its surface is flat to within a few atoms, right out to the edge. Only five companies in the world make these wafers to that standard, and none of them is American or Chinese.
 
-Silicon starts as quartzite, which an arc furnace strips of oxygen with carbon. Refiners then turn that into trichlorosilane gas, distil it, and decompose it onto heated filaments inside a bell jar. This Siemens process grows the grey polysilicon rods everything downstream is made from. The same process serves solar cells and chips, but only the ultra-pure semiconductor grade is any use here ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-silicon.pdf)), and the two grades are separate industries with separate suppliers.
+Silicon starts as quartzite, which an arc furnace strips of oxygen with carbon. Refiners then turn that into trichlorosilane gas, distill it, and decompose it onto heated filaments inside a bell jar. This Siemens process grows the gray polysilicon rods everything downstream is made from. The same process serves solar cells and chips, but only the ultra-pure semiconductor grade is any use here ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-silicon.pdf)), and the two grades are separate industries with separate suppliers.
 
 A grower melts the polysilicon at about 1,420 degrees Celsius and pulls a single crystal out of it by the Czochralski method, starting with a thin neck that chokes off the flaws formed at the seed. Boron or phosphorus stirred into the melt, a step called doping, sets how readily the wafer conducts and whether its charge carriers are positive or negative. A wire saw slices the ingot, then the maker laps, etches and mirror-polishes each slice with colloidal silica. Epitaxial wafers get one more layer of near-perfect silicon grown on top at about 1,200 degrees Celsius ([source](https://www.sumcosi.com/english/products/process/)), and almost every step throws material away.
 
@@ -91,19 +91,19 @@ Siltronic's own map of the chain puts five major suppliers behind the whole mark
 Their 2025 results split between an AI boom and a slump in the older, mature nodes.
 
 - **Shin-Etsu.** Its electronics materials arm sold ¥750.3 billion in the nine months to December 2025, on strong AI-related wafer demand ([source](https://www.shinetsu.co.jp/wp-content/uploads/2025/07/20260127_con_E.pdf)).
-- **SUMCO.** Sold ¥409.7 billion and still lost ¥11.8 billion, as operating profit fell from ¥36.9 billion to ¥1.3 billion while it added leading-edge 300 mm capacity and reorganised its weak 200 mm lines ([source](https://www.sumcosi.com/english/pdf/ir/library/shareholders/27/pdf/nc_e_27.pdf)).
+- **SUMCO.** Sold ¥409.7 billion and still lost ¥11.8 billion, as operating profit fell from ¥36.9 billion to ¥1.3 billion while it added leading-edge 300 mm capacity and reorganized its weak 200 mm lines ([source](https://www.sumcosi.com/english/pdf/ir/library/shareholders/27/pdf/nc_e_27.pdf)).
 - **Siltronic.** Lost €77.9 million on €1,346.7 million of sales while spending €369.1 million on its Singapore fab ([source](https://www.siltronic.com/en/press/press-releases/siltronic-ag-robust-business-performance-in-2025-demonstrates-resilience-despite-challenging-conditions.html)).
 - **GlobalWafers.** NT$60.6 billion of revenue, down 3.24 percent in local currency ([source](https://www.sas-globalwafers.com/en/gwc_news_en_20260303/)).
 
 Area shipped rose 5.8 percent in 2025 while revenue fell 1.2 percent ([source](https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html)). Wafers sell on multi-year agreements that fix price and volume years ahead, so a demand spike never reaches the invoice.
 
-China made 1.50 million tonnes of polysilicon, the raw material, in 2023, about 93 percent of world output ([source](https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf)). Solar-grade material was 98 percent of that output and electronic-grade 2 percent ([source](https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf)), so almost none of it can go into a chip.
+China made 1.50 million metric tons of polysilicon, the raw material, in 2023, about 93 percent of world output ([source](https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf)). Solar-grade material was 98 percent of that output and electronic-grade 2 percent ([source](https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf)), so almost none of it can go into a chip.
 
 {{figure:polysilicon-grade}}
 
 Siltronic sizes electronic-grade silicon at $1.4 billion, with five major suppliers, none of them Chinese: Wacker, Hemlock, OCI, Tokuyama and Mitsubishi ([source](https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf)).
 
-Crystal growth and polishing sit in Japan, Taiwan, Germany and South Korea, with no major US-headquartered producer as of 2021 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). GlobalWafers opened a $3.5 billion plant in Sherman, Texas in May 2025, the first production line of its kind built in the United States in over twenty years, and announced another $4 billion for phases three and four the same day ([source](https://www.sas-globalwafers.com/en/gwc_news_en_20250516/)). Washington had awarded it up to $406 million under the CHIPS incentives programme ([source](https://www.commerce.gov/news/press-releases/2024/12/biden-harris-administration-announces-chips-incentives-awards)).
+Crystal growth and polishing sit in Japan, Taiwan, Germany and South Korea, with no major US-headquartered producer as of 2021 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). GlobalWafers opened a $3.5 billion plant in Sherman, Texas in May 2025, the first production line of its kind built in the United States in over twenty years, and announced another $4 billion for phases three and four the same day ([source](https://www.sas-globalwafers.com/en/gwc_news_en_20250516/)). Washington had awarded it up to $406 million under the CHIPS incentives program ([source](https://www.commerce.gov/news/press-releases/2024/12/biden-harris-administration-announces-chips-incentives-awards)).
 
 ## The chokepoint
 

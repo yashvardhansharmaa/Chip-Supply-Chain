@@ -31,7 +31,7 @@ ART_W = 640                 # the art box, flush right, faded under the text col
 COL_W = 600                 # the text column, from x = 72
 LIMIT = 150 * 1024
 DENSITY = 0.8               # share of each cloud's points drawn; thinned further when a PNG is over the limit
-COLOURS = 256
+COLORS = 256
 
 args = sys.argv[1:]
 only = args[args.index('--only') + 1].split(',') if '--only' in args else None
@@ -232,10 +232,10 @@ def render_art(binpath, tilt, out, density, box=(ART_W, H), zoom=0.92, ox=0.0, o
     return len(data)
 
 
-def shrink(path, colours=COLOURS):
+def shrink(path, colors=COLORS):
     """Quantise a PNG to a palette with Pillow; the cloud is already a two-colour drawing over a flat ground."""
     from PIL import Image
-    im = Image.open(path).convert('RGB').quantize(colors=colours, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
+    im = Image.open(path).convert('RGB').quantize(colors=colors, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
     im.save(path, optimize=True)
     return os.path.getsize(path)
 

@@ -81,15 +81,15 @@ Metrology and inspection are the factory's quality control. Between the steps th
 
 A wafer loses value two ways: whole regions ruined by mishandling, misalignment or over-etching, and single circuits killed by stray material or an airborne particle ([source](https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf)).
 
-The second kind follows an equation: die yield is (1 + D0A/a) to the power minus a, where D0 is defects per square centimetre, A is die area and a is a clustering constant of 3 to 4. Yield falls faster than area rises: at a defect density of 0.8 a 1 square centimetre die yields 49 percent and a 2 by 2 centimetre die 11 percent, so the bigger die costs about twenty times as much ([source](https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf)).
+The second kind follows an equation: die yield is (1 + D0A/a) to the power minus a, where D0 is defects per square centimeter, A is die area and a is a clustering constant of 3 to 4. Yield falls faster than area rises: at a defect density of 0.8 a 1 square centimeter die yields 49 percent and a 2 by 2 centimeter die 11 percent, so the bigger die costs about twenty times as much ([source](https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf)).
 
-Run that equation with a clustering constant of 3 for an 8 square centimetre die, about as much as one exposure can print, and it yields about 49 percent at a defect density of 0.10 and about 69 percent at 0.05 ([source](https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf)). Getting from one to the other is yield learning: find which of the thousand-odd steps is losing dies, fix it, move on.
+Run that equation with a clustering constant of 3 for an 8 square centimeter die, about as much as one exposure can print, and it yields about 49 percent at a defect density of 0.10 and about 69 percent at 0.05 ([source](https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf)). Getting from one to the other is yield learning: find which of the thousand-odd steps is losing dies, fix it, move on.
 
 ## Variants and trade-offs
 
 The tools trade sensitivity against speed. All the market sizes and shares below are CSET's, for 2024 ([source](https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60)).
 
-- **Defect inspection** scans a whole wafer with light or electrons and compares each die against its neighbours. It is the largest family by a distance, $5.9 billion, and the one KLA owns outright at 84.6 percent. ASML's HMI eScan 1100 runs 25 electron beams at once, up to 15 times the speed of a single beam, and finds patterning defects down to 7 nm ([source](https://www.asml.com/en/products/metrology-and-inspection-systems/hmi-escan-1100)).
+- **Defect inspection** scans a whole wafer with light or electrons and compares each die against its neighbors. It is the largest family by a distance, $5.9 billion, and the one KLA owns outright at 84.6 percent. ASML's HMI eScan 1100 runs 25 electron beams at once, up to 15 times the speed of a single beam, and finds patterning defects down to 7 nm ([source](https://www.asml.com/en/products/metrology-and-inspection-systems/hmi-escan-1100)).
 - **Film and shape metrology** measures how thick each film is and how flat the wafer sits, without cutting it open: $2.3 billion, with KLA at 47 percent, Nova at 20.6 and Onto Innovation at 13.6. Onto paid about $720 million in August 2026 for 27 percent of Japan's X-ray maker Rigaku ([source](https://investors.ontoinnovation.com/news/news-details/2026/Onto-Innovation-Completes-Strategic-Investment-in-Rigaku-Holdings-Corporation/default.aspx)).
 - **Mask inspection and repair** gets its own tools, because a defect on a mask repeats on every die: $2.1 billion, and the one family KLA does not lead, behind Lasertec at 45.6 percent against KLA's 40.7 and Zeiss's 11.
 - **Overlay metrology** measures whether this layer sits on the one below: $907 million, split almost evenly between KLA at 54.2 percent and ASML at 45.1.
@@ -129,7 +129,7 @@ The December 2024 rule wrote process control into the export lists. It controls 
 
 ## The chokepoint
 
-Process control is a chokepoint of concentration rather than of physics. Several firms can build a good film metrology tool, but one firm sets the standard across nearly the whole flow, and its lead is widening. A sanctioned fab can buy scanners and etchers on the grey market and still fail to get production going, because without sensitive inspection it cannot find out why its yield is low.
+Process control is a chokepoint of concentration rather than of physics. Several firms can build a good film metrology tool, but one firm sets the standard across nearly the whole flow, and its lead is widening. A sanctioned fab can buy scanners and etchers on the gray market and still fail to get production going, because without sensitive inspection it cannot find out why its yield is low.
 
 ## Key evaluation criteria
 

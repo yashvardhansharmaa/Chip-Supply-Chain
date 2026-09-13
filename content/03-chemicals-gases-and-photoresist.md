@@ -28,7 +28,7 @@
  "chinaStatus": "Cannot make resist for extreme-ultraviolet or leading-edge 193 nm printing, and held under 5% of the photoresist market as of 2021. It refines 99% of the world's primary low-purity gallium and has licensed exports of gallium and germanium since August 2023.",
  "usStatus": "Strong in filters, containers, polishing slurries and gas delivery through Entegris, DuPont and Air Products. Nearly absent from advanced photoresist since JSR bought Inpria.",
  "costSignal": "Wafer fabrication materials were a $45.8bn market in 2025 and packaging materials $27.4bn, $73.2bn between them",
- "substitutability": {"band": "Moderate", "test": "Rated on the hardest input, photoresist: Japan makes about four-fifths of it, and Korea's substitution took five years", "why": "Each resist formula is approved for one layer of one product at one fab, so a second source is joint development rather than a purchase order. When Japan put resist under individual licence for Korea in 2019, Korea kept its fabs running and spent five years funding domestic substitutes, which is the clock a well-funded actor should expect: two to five years, and closer to five at the leading node."}
+ "substitutability": {"band": "Moderate", "test": "Rated on the hardest input, photoresist: Japan makes about four-fifths of it, and Korea's substitution took five years", "why": "Each resist formula is approved for one layer of one product at one fab, so a second source is joint development rather than a purchase order. When Japan put resist under individual license for Korea in 2019, Korea kept its fabs running and spent five years funding domestic substitutes, which is the clock a well-funded actor should expect: two to five years, and closer to five at the leading node."}
  },
  "keyFacts": [
  {"fact": "Japan holds about 90% of world semiconductor photoresist production, and China could not make EUV resists (as of 2021)", "source": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"},
@@ -62,7 +62,7 @@
 ---
 # Chemicals, Gases and Photoresist
 
-A modern fab is a chemical plant with lithography attached. Air Liquide alone supplies more than 200 molecules and roughly 50,000 cylinders a year ([source](https://www.airliquide.com/group/activities/electronics)). None of it costs much by the tonne, and any one of them missing stops the line.
+A modern fab is a chemical plant with lithography attached. Air Liquide alone supplies more than 200 molecules and roughly 50,000 cylinders a year ([source](https://www.airliquide.com/group/activities/electronics)). None of it costs much by the metric ton, and any one of them missing stops the line.
 
 ## How it works
 
@@ -72,7 +72,7 @@ Since the 1990s the workhorse has been the chemically amplified resist: one phot
 
 Extreme ultraviolet breaks that bargain (see [Lithography](#lithography)). A 13.5 nm photon carries about fourteen times the energy of a 193 nm one, so the same dose of light arrives as far fewer photons, and the luck of where each one lands shows up as ragged line edges and missing contact holes. Resist makers answered by absorbing more of the light: metal-oxide resists, built on clusters of tin and oxygen, take up extreme ultraviolet far better than carbon films, which is why JSR bought Inpria in 2021 ([source](https://www.jsr.co.jp/jsr_e/news/2021/20210917.html)).
 
-Everything else puts material on the wafer, takes it off, or keeps it clean. Bulk gases arrive by the tonne; specialty gases in grams, from silane for deposition to nitrogen trifluoride, split apart in a plasma to strip the chamber walls. Hydrofluoric acid cleans, polishing slurries flatten each layer, sputtering targets supply the metal for the wiring, and filters and carriers keep contamination out.
+Everything else puts material on the wafer, takes it off, or keeps it clean. Bulk gases arrive by the metric ton; specialty gases in grams, from silane for deposition to nitrogen trifluoride, split apart in a plasma to strip the chamber walls. Hydrofluoric acid cleans, polishing slurries flatten each layer, sputtering targets supply the metal for the wiring, and filters and carriers keep contamination out.
 
 ## Variants and trade-offs
 
@@ -106,13 +106,13 @@ As of 2021 five firms held more than 60 percent of wet chemicals, and DuPont and
 
 This layer has been squeezed twice since 2019, once by a government and once by a war.
 
-In July 2019 Japan put photoresist, hydrogen fluoride and fluorinated polyimide under individual export licences for South Korea. It had supplied more than 90 percent of Korean imports of two of the three, and hydrogen fluoride exports fell 87.9 percent ([source](https://www.rieti.go.jp/en/columns/v01_0201.html)). Korea kept its fabs running and spent five years funding domestic substitutes, which is what materials controls usually produce.
+In July 2019 Japan put photoresist, hydrogen fluoride and fluorinated polyimide under individual export licenses for South Korea. It had supplied more than 90 percent of Korean imports of two of the three, and hydrogen fluoride exports fell 87.9 percent ([source](https://www.rieti.go.jp/en/columns/v01_0201.html)). Korea kept its fabs running and spent five years funding domestic substitutes, which is what materials controls usually produce.
 
 In 2022 Russia invaded Ukraine, which supplied about 70 percent of the world's neon and 90 percent of the semiconductor-grade neon used by US industry ([source](https://www.csis.org/blogs/perspectives-innovation/russias-invasion-ukraine-impacts-gas-markets-critical-chip-production)). Buyers had stockpiled since the 2014 annexation of Crimea, and Korean and Japanese chipmakers reported adequate neon from China instead ([source](https://www.csis.org/blogs/perspectives-innovation/russias-invasion-ukraine-impacts-gas-markets-critical-chip-production)).
 
-China's lever is the metals rather than the process chemicals. Beijing announced export licences for gallium and germanium in July 2023, in force from August, then banned both, plus antimony and superhard materials, to the United States in December 2024 ([source](https://www.stimson.org/2025/chinas-germanium-and-gallium-export-restrictions-consequences-for-the-united-states/)). In November 2025 it lifted the gallium ban for one year ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gallium.pdf)).
+China's lever is the metals rather than the process chemicals. Beijing announced export licenses for gallium and germanium in July 2023, in force from August, then banned both, plus antimony and superhard materials, to the United States in December 2024 ([source](https://www.stimson.org/2025/chinas-germanium-and-gallium-export-restrictions-consequences-for-the-united-states/)). In November 2025 it lifted the gallium ban for one year ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gallium.pdf)).
 
-Neither metal goes into a silicon logic chip. Germanium goes into fibre optics, infrared optics, solar cells for satellites and radiation detectors ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf)); gallium into the non-silicon wafers behind radio front ends, LEDs and lasers ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gallium.pdf)). They move the price instead. Germanium metal averaged $4,100 a kilogram in 2025 against $1,392 in 2023, and US imports of the metal fell 67 percent ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf)). The US Geological Survey put the cost to US GDP of a complete ban at about $3.4 billion ([source](https://www.stimson.org/2025/chinas-germanium-and-gallium-export-restrictions-consequences-for-the-united-states/)).
+Neither metal goes into a silicon logic chip. Germanium goes into fiber optics, infrared optics, solar cells for satellites and radiation detectors ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf)); gallium into the non-silicon wafers behind radio front ends, LEDs and lasers ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-gallium.pdf)). They move the price instead. Germanium metal averaged $4,100 a kilogram in 2025 against $1,392 in 2023, and US imports of the metal fell 67 percent ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-germanium.pdf)). The US Geological Survey put the cost to US GDP of a complete ban at about $3.4 billion ([source](https://www.stimson.org/2025/chinas-germanium-and-gallium-export-restrictions-consequences-for-the-united-states/)).
 
 {{figure:germanium-price}}
 

@@ -19,7 +19,7 @@ module.exports = function (ctx) {
   const stepId = (id) => '/walk/' + id;
   const stageIndex = (id) => stages.findIndex((s) => s.id === id);
 
-  /* the concentration band, shown the way the chain strip shows it: amber at Extreme, ink at High, grey below */
+  /* the concentration band, shown the way the chain strip shows it: amber at Extreme, ink at High, gray below */
   const RANK = { Extreme: '5', High: '4', Moderate: '3', Low: '3' };
   function bandHTML(c) {
     if (!c.band) return '';
@@ -99,7 +99,7 @@ ${list}
 <ul class="wk-sh-list">
 <li><a class="wk-sh-item" href="#/walk"><b class="wk-sh-t">${cap(word(mins))} minutes: how a GPU is made</b><span class="wk-sh-d">Every chapter's plainest paragraph, in order.</span></a></li>
 <li><a class="wk-sh-item" href="#contents"><b class="wk-sh-t">The whole chain, ${steps.length} chapters</b><span class="wk-sh-d">The full text, ${siteWords.toLocaleString('en-US')} words.</span></a></li>
-<li><a class="wk-sh-item" href="#/controls"><b class="wk-sh-t">Data and sources for researchers</b><span class="wk-sh-d">${siteCites.toLocaleString('en-US')} sources${thresholds ? `, ${thresholds} licence thresholds` : ''}.</span></a><a class="wk-sh-more" href="#/controls">Export controls</a></li>
+<li><a class="wk-sh-item" href="#/controls"><b class="wk-sh-t">Data and sources for researchers</b><span class="wk-sh-d">${siteCites.toLocaleString('en-US')} sources${thresholds ? `, ${thresholds} license thresholds` : ''}.</span></a><a class="wk-sh-more" href="#/controls">Export controls</a></li>
 </ul>
 </section>`;
 

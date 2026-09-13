@@ -10,7 +10,7 @@ Four bases sit behind the same word, and they are not interchangeable.
 
 **Headquarters location** attributes revenue to the customer's corporate home. Micron has always used it. Nvidia switched to it in the FY2026 10-K and restated the two prior years: FY2025 China revenue was $17,108m, or 13.1 percent, on the old billing basis, and $25,048m, or 19.2 percent, restated. This file carries restated figures for FY2024 to FY2026 and original billing-basis figures for FY2021 to FY2023, so the series breaks between FY2023 and FY2024. Each affected row records the superseded number.
 
-Synopsys allocates by where the licence seats sit, Cadence by where the product is used. Samsung reports the region of its own operating units rather than a customer split, and the figure covers phones, displays and Harman alongside memory.
+Synopsys allocates by where the license seats sit, Cadence by where the product is used. Samsung reports the region of its own operating units rather than a customer split, and the figure covers phones, displays and Harman alongside memory.
 
 **Selling-entity location** is a fourth basis, and SK hynix uses it. Its note is headed 지역별(법인소재지 기준) 매출액: revenue by region on the basis of where the entity that booked the sale sits, not where the customer is. The China line is what its mainland-China sales companies sold, and the group's Hong Kong subsidiary is a separate entity in the same filing, so Hong Kong is not in it. A stack made in Icheon and sold by the US arm to an American customer counts as US revenue, wherever the finished server is racked. That is why SK hynix's China share can fall while its China revenue climbs: between 2023 and 2025 China went from KRW 10.1 trillion to 19.1 trillion, but the US line went from 15.4 to 66.9 trillion as HBM shipped, and the share fell eleven points.
 
@@ -26,7 +26,7 @@ SK hynix files with DART, the statutory disclosure system run by Korea's Financi
 
 ## The 2023 to 2024 surge and the decline since
 
-Chinese fabs bought ahead of the October 2022 and October 2023 US rules and the Dutch and Japanese measures that followed. Between FY2023 and FY2024 the China share rose from 25.6% to 42.2% at Lam, 27.3% to 42.8% at KLA, 27.3% to 37.2% at Applied, 23.9% to 44.4% at Tokyo Electron and 20.5% to 39.4% at SCREEN, and from 26.3% to 36.1% at ASML. The stockpile then worked itself off while AI orders from Taiwan and Korea grew the denominator, and all six now sit below their peak: Lam 33.8%, KLA 29.8%, Applied 30.1%, ASML 29.1%, Tokyo Electron 34.1%, SCREEN 38.4%. Nvidia fell from 19.2% to 9.1% as the H20 licence freeze and Beijing's procurement restrictions took hold. Onto Innovation fell furthest, from 25.0% in FY2022 to 7.0% in FY2025.
+Chinese fabs bought ahead of the October 2022 and October 2023 US rules and the Dutch and Japanese measures that followed. Between FY2023 and FY2024 the China share rose from 25.6% to 42.2% at Lam, 27.3% to 42.8% at KLA, 27.3% to 37.2% at Applied, 23.9% to 44.4% at Tokyo Electron and 20.5% to 39.4% at SCREEN, and from 26.3% to 36.1% at ASML. The stockpile then worked itself off while AI orders from Taiwan and Korea grew the denominator, and all six now sit below their peak: Lam 33.8%, KLA 29.8%, Applied 30.1%, ASML 29.1%, Tokyo Electron 34.1%, SCREEN 38.4%. Nvidia fell from 19.2% to 9.1% as the H20 license freeze and Beijing's procurement restrictions took hold. Onto Innovation fell furthest, from 25.0% in FY2022 to 7.0% in FY2025.
 
 ## Firms not covered, and why
 

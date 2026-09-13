@@ -648,7 +648,7 @@
 
   /* ---------------- suppliers ----------------
      Two drawings of one list. The pipeline is the chain seen from the side: the stream's thickness at a stage
-     is the number of firms there, the colour bands are countries in a fixed order, and the amber squares above
+     is the number of firms there, the color bands are countries in a fixed order, and the amber squares above
      the stream count the Critical firms. The ladder is the same twenty stages ranked thinnest first, every firm
      named in the open, each name opening its own panel. */
   var Suppliers = {
@@ -1105,7 +1105,7 @@
     built: false, cat: null,
     tl: [], visible: null, items: [], full: false, /* visible stays null until the first render so the export bar falls back to the whole set */ at: -1, tickQ: false,
     mode: 'date', flows: null, byId: {}, evs: {}, asOf: null, now: null, years: [], yearN: {}, keys: {}, headW: 0,
-    /* the five kinds of move; the colours are the .timeline .cat classes */
+    /* the five kinds of move; the colors are the .timeline .cat classes */
     CATS: [
       { name: 'US export control', label: 'US rules', short: 'US', cls: '' },
       { name: 'China countermeasure', label: 'China', short: 'CN', cls: 'cn' },
@@ -1113,15 +1113,15 @@
       { name: 'Industrial policy', label: 'Policy', short: 'Pol', cls: 'policy' },
       { name: 'Corporate', label: 'Firms', short: 'Firm', cls: 'corp' }
     ],
-    /* the licence outcome a flow stands in, and the word the pill carries. Four of them are outcomes an
+    /* the license outcome a flow stands in, and the word the pill carries. Four of them are outcomes an
        exporter can act on; Policy is the off-ramp for money and tariffs, which gate nothing. */
-    STATE: { open: 'No licence', 'case': 'Case by case', denial: 'Presumption of denial', prohibited: 'Prohibited', policy: 'Policy' },
-    /* the board's first schema had five states that did not map to outcomes: a licence and a listing are
+    STATE: { open: 'No license', 'case': 'Case by case', denial: 'Presumption of denial', prohibited: 'Prohibited', policy: 'Policy' },
+    /* the board's first schema had five states that did not map to outcomes: a license and a listing are
        one fact, and "shut" covered both a presumption of denial and a ban. Old data still reads. */
-    OLD_STATE: { licence: 'denial', shut: 'prohibited' },
+    OLD_STATE: { license: 'denial', shut: 'prohibited' },
     /* the instrument behind a move, in a word */
     INSTRUMENT: {
-      rule: 'Rule', 'entity-listing': 'Listing', 'denial-order': 'Denial order', 'licence-policy': 'Licence policy',
+      rule: 'Rule', 'entity-listing': 'Listing', 'denial-order': 'Denial order', 'licence-policy': 'License policy',
       'licence-exception': 'Exception', enforcement: 'Enforcement', countermeasure: 'Countermeasure',
       'investment-screening': 'Screening', 'industrial-policy': 'Policy', corporate: 'Corporate', pending: 'Pending'
     },
@@ -1403,7 +1403,7 @@
       st.date ? 'from ' + this.fmtDate(st.date) : 'open since 2018', n + (n === 1 ? ' move' : ' moves')].filter(function (x) { return x; }).join(', ');
     },
     /* the glossary's own terms inside a state label become popover buttons, so TPP and the Entity List are defined in place */
-    GLOSS: [[/\bTPP\b/g, 'tpp', 'TPP'], [/\bEntity List\b/g, 'entity list', 'Entity List'], [/\bFDPR\b/g, 'foreign direct product rule', 'FDPR'], [/\bforeign direct product rule\b/gi, 'foreign direct product rule', 'foreign direct product rule'], [/\blicen[cs]e exception\b/gi, 'license exception', 'licence exception']],
+    GLOSS: [[/\bTPP\b/g, 'tpp', 'TPP'], [/\bEntity List\b/g, 'entity list', 'Entity List'], [/\bFDPR\b/g, 'foreign direct product rule', 'FDPR'], [/\bforeign direct product rule\b/gi, 'foreign direct product rule', 'foreign direct product rule'], [/\blicen[cs]e exception\b/gi, 'license exception', 'license exception']],
     gloss: function (text) {
       var out = esc(text);
       // a span, not a button: the label sits inside the row's own button, and a button cannot nest inside a button
@@ -1823,7 +1823,7 @@
         var order = Object.keys(firms).sort(function (a, b) { var la = firms[a][ys[ys.length - 1]] || {}, lb = firms[b][ys[ys.length - 1]] || {}; return (lb.chinaShare || 0) - (la.chinaShare || 0); });
         et.innerHTML = '<thead><tr><th>Firm</th>' + ys.map(function (y) { return '<th>' + esc(y) + '</th>'; }).join('') + '</tr></thead><tbody>' + order.map(function (f) {
           var m = meta[f];
-          var basisShort = function (b) { b = (b || '').toLowerCase(); if (!b) return ''; if (/ship-to|ship to|destination|fab\)/.test(b)) return 'counted where it ships'; if (/bill|invoice/.test(b)) return 'counted where it is billed'; if (/headquarters/.test(b)) return 'counted by headquarters'; if (/seat|licen/.test(b)) return 'counted by licence seats'; if (/used|usage/.test(b)) return 'counted where it is used'; if (/own operating|operating units|own units/.test(b)) return 'counted by own units'; return 'counted by customer location'; };
+          var basisShort = function (b) { b = (b || '').toLowerCase(); if (!b) return ''; if (/ship-to|ship to|destination|fab\)/.test(b)) return 'counted where it ships'; if (/bill|invoice/.test(b)) return 'counted where it is billed'; if (/headquarters/.test(b)) return 'counted by headquarters'; if (/seat|licen/.test(b)) return 'counted by license seats'; if (/used|usage/.test(b)) return 'counted where it is used'; if (/own operating|operating units|own units/.test(b)) return 'counted by own units'; return 'counted by customer location'; };
           return '<tr><td title="' + esc(m.basis || '') + '">' + esc(f) + '<small>' + esc(m.category || '') + ' · ' + esc(cname(m.country)) + (m.basis ? ' · ' + esc(basisShort(m.basis)) : '') + '</small></td>' + ys.map(function (y) { var r = firms[f][y]; if (!r || r.chinaShare == null) return '<td><span class="cell zero" title="Not filed for this year" aria-label="Not filed for this year">·</span></td>'; return '<td><a class="cell" style="--v:' + Math.round(Math.min(100, r.chinaShare) * 1.6) + '" href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" aria-label="' + esc(f) + ' ' + esc(y) + ': ' + esc(String(r.chinaShare)) + ' percent from China, opens the filing" title="' + esc((r.chinaRevenue != null ? r.chinaRevenue.toLocaleString('en-US') + ' of ' + (r.totalRevenue || 0).toLocaleString('en-US') + ' ' + (r.currency || '') : '') + (r.note ? (r.chinaRevenue != null ? ' · ' : '') + r.note : '')) + '">' + r.chinaShare.toFixed(1) + '%</a></td>'; }).join('') + '</tr>';
         }).join('') + '</tbody>';
       }

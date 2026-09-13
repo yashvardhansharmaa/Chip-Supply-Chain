@@ -25,7 +25,7 @@
  {"code": "JP", "note": "Rapidus Chitose, Hokkaido"},
  {"code": "CN", "note": "SMIC Shanghai and Beijing 300 mm lines"}
  ],
- "chinaStatus": "SMIC ships an N+3 node measured at 113.4 million transistors per square millimetre, printing each layer in two or four passes because it cannot buy an extreme-ultraviolet scanner. Its narrowest wires sit closer together than Intel 18A's, which is what a decade of state money buys without one.",
+ "chinaStatus": "SMIC ships an N+3 node measured at 113.4 million transistors per square millimeter, printing each layer in two or four passes because it cannot buy an extreme-ultraviolet scanner. Its narrowest wires sit closer together than Intel 18A's, which is what a decade of state money buys without one.",
  "usStatus": "Intel runs the only leading-edge transistor line owned by an American company. It brought gate-all-around and backside power to market together on 18A and is the first to run High-NA EUV in high-volume manufacturing.",
  "costSignal": "No foundry publishes leading-edge wafer prices, so the public signal is TSMC's own density gain per node, which falls from 1.2x at N2P to about 1.1x at A16",
  "substitutability": {"band": "Hard", "test": "Three firms run gate-all-around at the leading node and none sells the recipe; Rapidus is trying it on state money", "why": "The scarce thing is the recipe: which steps, in which order, on which tools. Three firms have written one, so the path is known, and Rapidus is the live test of what it costs a well-funded state from a standing start, at 267.6 billion yen and a 2027 date. An actor that can buy extreme-ultraviolet scanners is on a five to ten year clock; China, which cannot, has reached 5 nm-class geometry by printing each layer several times and stays capped below the leading edge."}
@@ -37,7 +37,7 @@
  {"fact": "TSMC A14 enters production in 2028 with up to 15% more speed, up to 30% less power and more than 20% higher logic density than N2", "source": "https://pr.tsmc.com/english/news/3228"},
  {"fact": "TSMC A13, a direct shrink of A14 giving 6% area savings, is planned for 2029, as is A12 with Super Power Rail", "source": "https://pr.tsmc.com/english/news/3302"},
  {"fact": "Intel 18A shipped gate-all-around and backside power together, giving an 11% routed area reduction and a 10x reduction in dynamic voltage droop", "source": "https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future"},
- {"fact": "SMIC N+3 measures a 57 nm contacted gate pitch and a 32.5 nm minimum metal pitch, for 113.4 million transistors per square millimetre, against 107.7 for TSMC N6", "source": "https://newsletter.semianalysis.com/p/steel-smic-n3-teardown"},
+ {"fact": "SMIC N+3 measures a 57 nm contacted gate pitch and a 32.5 nm minimum metal pitch, for 113.4 million transistors per square millimeter, against 107.7 for TSMC N6", "source": "https://newsletter.semianalysis.com/p/steel-smic-n3-teardown"},
  {"fact": "China's third National Integrated Circuit Fund raised 344 billion yuan, about $47 billion, in May 2024", "source": "https://asia.nikkei.com/spotlight/supply-chain/china-launches-47bn-chip-fund-to-counter-u.s.-restrictions"},
  {"fact": "China has announced $43 billion for domestic EUV development; CSIS judges working EUV systems still out of reach", "source": "https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography"}
  ],
@@ -119,7 +119,7 @@ Wiring is now as hard as the transistor. Copper seeps into the insulator around 
 
 TSMC, Intel and Samsung build gate-all-around nodes with extreme ultraviolet lithography. SMIC builds 7 and 5 nm-class nodes without it. State-backed Rapidus targets 2 nm mass production in 2027 on 267.6 billion yen raised in February 2026 ([source](https://www.rapidus.inc/en/news_topics/information/rapidus-secures-267-6-billion-yen-in-funding-from-japan-government-and-private-sector-companies/)).
 
-Node names describe nothing physical. SMIC's N+3, sold as 5 nm-class, sets its narrowest wires 32.5 nm apart, tighter than Intel 18A's 36 nm, and reaches 113.4 million transistors per square millimetre against 107.7 for TSMC's N6 ([source](https://newsletter.semianalysis.com/p/steel-smic-n3-teardown)).
+Node names describe nothing physical. SMIC's N+3, sold as 5 nm-class, sets its narrowest wires 32.5 nm apart, tighter than Intel 18A's 36 nm, and reaches 113.4 million transistors per square millimeter against 107.7 for TSMC's N6 ([source](https://newsletter.semianalysis.com/p/steel-smic-n3-teardown)).
 
 AI accelerators sit a node behind the leading edge, because a die that large comes out working only on a process that has run for years. Blackwell uses a custom TSMC 4NP ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)).
 
@@ -136,7 +136,7 @@ See [Lithography](#lithography) and [Geopolitics](#geopolitics).
 ## Key evaluation criteria
 
 - **Electrostatic control.** How far the gate wraps the channel. It sets how much the switch leaks when off, and the lowest supply voltage it can run on.
-- **Density.** Transistors per square millimetre, comparable only inside one foundry's own numbering and for one kind of cell.
+- **Density.** Transistors per square millimeter, comparable only inside one foundry's own numbering and for one kind of cell.
 - **Interconnect resistance.** Below a 20 nm wire spacing the wire rather than the transistor sets the delay ([source](https://www.imec-int.com/en/articles/semi-damascene-metallization-inflection-point-back-end-line-processing)).
 - **Power delivery.** The voltage lost carrying power across the die. Backside power buys back area and cuts the droop tenfold ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)).
 - **SRAM scaling.** The cell that holds one bit has stopped shrinking, which caps how much cache an accelerator can afford.

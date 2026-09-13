@@ -2,7 +2,7 @@
   {
     "term": "ABF",
     "aka": "Ajinomoto Build-up Film",
-    "plain": "A sheet of epoxy resin about a hundredth of a millimetre thick, laid over the copper wiring of a chip's base board to insulate it before the next layer of wiring goes on. It comes from the Japanese food company Ajinomoto, which developed it out of its amino acid chemistry.",
+    "plain": "A sheet of epoxy resin about a hundredth of a millimeter thick, laid over the copper wiring of a chip's base board to insulate it before the next layer of wiring goes on. It comes from the Japanese food company Ajinomoto, which developed it out of its amino acid chemistry.",
     "why": "One firm supplies more than 95 percent of it, TSMC names it alongside memory as a limit on AI supply, and Ajinomoto's next new plant will not operate until 2032.",
     "chapter": "substrates-and-pcbs"
   },
@@ -10,7 +10,7 @@
     "term": "accelerator",
     "aka": "AI accelerator, XPU",
     "plain": "A chip built to do the one kind of arithmetic machine learning needs, multiplying large grids of numbers, far faster than a general-purpose processor can. Nvidia's graphics processors, Google's Tensor Processing Units and Amazon's Trainium are all accelerators.",
-    "why": "Accelerators are what the whole supply chain is for, and the unit that export licences are granted or refused for.",
+    "why": "Accelerators are what the whole supply chain is for, and the unit that export licenses are granted or refused for.",
     "chapter": "introduction-and-goals"
   },
   {
@@ -51,14 +51,14 @@
   {
     "term": "bill of materials",
     "aka": "BOM",
-    "plain": "The itemised list of every purchased part in a finished product and what each part cost, the way a builder's invoice prices lumber, wiring and fixtures separately.",
+    "plain": "The itemized list of every purchased part in a finished product and what each part cost, the way a builder's invoice prices lumber, wiring and fixtures separately.",
     "why": "On an AI accelerator the memory line alone is roughly half of manufacturing cost, so the bill of materials shows which suppliers capture the money a buyer spends.",
     "chapter": "component-costs"
   },
   {
     "term": "BIS",
     "aka": "Bureau of Industry and Security, part of the US Department of Commerce",
-    "plain": "The US government office that decides which technologies may be exported, to whom, and on what conditions. It writes the rules, issues the licences and brings the enforcement cases.",
+    "plain": "The US government office that decides which technologies may be exported, to whom, and on what conditions. It writes the rules, issues the licenses and brings the enforcement cases.",
     "why": "Almost every restriction on selling AI chips or chipmaking tools to China is a bureau rule, and the bureau can change a threshold with a Federal Register notice rather than an act of Congress.",
     "chapter": "geopolitics"
   },
@@ -86,22 +86,22 @@
   {
     "term": "compute threshold",
     "aka": "training compute threshold",
-    "plain": "A limit set on the amount of arithmetic used to train an AI model, rather than on the chips that do the arithmetic. The 2023 US executive order on AI set its reporting line at \"any model that was trained using a quantity of computing power greater than 10^26 integer or floating-point operations\" (Executive Order 14110, section 4.2(b)(i), 88 FR 75191). The same number became an export control in January 2025: ECCN 4E091 covers \"'Parameters' for an artificial intelligence model trained utilizing 10^26 or more 'operations'\", and 15 CFR 742.6(a)(13) requires a licence for them to every destination worldwide. Europe drew its line ten times lower, at a cumulative training run \"greater than 10^25\" floating point operations, in Article 51(2) of the EU AI Act.",
+    "plain": "A limit set on the amount of arithmetic used to train an AI model, rather than on the chips that do the arithmetic. The 2023 US executive order on AI set its reporting line at \"any model that was trained using a quantity of computing power greater than 10^26 integer or floating-point operations\" (Executive Order 14110, section 4.2(b)(i), 88 FR 75191). The same number became an export control in January 2025: ECCN 4E091 covers \"'Parameters' for an artificial intelligence model trained utilizing 10^26 or more 'operations'\", and 15 CFR 742.6(a)(13) requires a license for them to every destination worldwide. Europe drew its line ten times lower, at a cumulative training run \"greater than 10^25\" floating point operations, in Article 51(2) of the EU AI Act.",
     "why": "Every other control threshold measures a chip. This one measures the model the chips train, which is the only place the rules reach a capability rather than a box. The two numbers also disagree by a factor of ten, and Article 51(3) lets the European Commission move its figure by delegated act, so the model-level line is the one most likely to shift.",
     "chapter": "geopolitics"
   },
   {
     "term": "Concentration",
     "aka": "concentration band; Extreme, High, Moderate, Low",
-    "plain": "A four-band judgement of how many firms could credibly supply a stage today, taken at the narrowest step inside it. Extreme means three or fewer, or one firm holding more than half the stage. High means four to six, with the top two taking most of the revenue. Moderate means seven or more, none of them dominant. Low means many, with the scarce input something another industry sells at volume. Where a figure exists for the top country's share of the segment, it serves as a second check, and the supplier count wins when the two disagree.",
-    "why": "The fewer the firms that can do a stage, the more one accident or one licence decision moves the whole chain.",
+    "plain": "A four-band judgment of how many firms could credibly supply a stage today, taken at the narrowest step inside it. Extreme means three or fewer, or one firm holding more than half the stage. High means four to six, with the top two taking most of the revenue. Moderate means seven or more, none of them dominant. Low means many, with the scarce input something another industry sells at volume. Where a figure exists for the top country's share of the segment, it serves as a second check, and the supplier count wins when the two disagree.",
+    "why": "The fewer the firms that can do a stage, the more one accident or one license decision moves the whole chain.",
     "chapter": null
   },
   {
     "term": "Country Groups",
     "aka": "Country Group",
-    "plain": "The groups that US export rules sort the world's countries into, published as supplement no. 1 to 15 CFR part 740. A:5 and A:6 are close partners; D:1, D:4 and D:5 are the national security, missile technology and arms-embargoed groups; E:1 and E:2 are the most restricted. A country can sit in several at once, and the licence requirement usually turns on which.",
-    "why": "The licence rule for AI chips is written as country groups, not country names: a licence is needed for D:1, D:4 and D:5 destinations that are not also A:5 or A:6 (15 CFR 742.6(a)(6)). Moving the UAE into A:5 in July 2026 changed its position without naming it in the rule.",
+    "plain": "The groups that US export rules sort the world's countries into, published as supplement no. 1 to 15 CFR part 740. A:5 and A:6 are close partners; D:1, D:4 and D:5 are the national security, missile technology and arms-embargoed groups; E:1 and E:2 are the most restricted. A country can sit in several at once, and the license requirement usually turns on which.",
+    "why": "The license rule for AI chips is written as country groups, not country names: a license is needed for D:1, D:4 and D:5 destinations that are not also A:5 or A:6 (15 CFR 742.6(a)(6)). Moving the UAE into A:5 in July 2026 changed its position without naming it in the rule.",
     "chapter": "geopolitics"
   },
   {
@@ -120,15 +120,15 @@
   },
   {
     "term": "defect density",
-    "aka": "D0, defects per square centimetre",
-    "plain": "The average number of chip-killing flaws per square centimetre of processed wafer. It is a fab's quality score, inferred from how many chips come out working rather than counted directly.",
+    "aka": "D0, defects per square centimeter",
+    "plain": "The average number of chip-killing flaws per square centimeter of processed wafer. It is a fab's quality score, inferred from how many chips come out working rather than counted directly.",
     "why": "Yield falls steeply with die area multiplied by defect density, so on the reticle-sized dies AI chips use, halving defect density nearly doubles the number of saleable parts.",
     "chapter": "metrology-and-inspection"
   },
   {
     "term": "denial order",
     "aka": "",
-    "plain": "An order from BIS that shuts a named party out of trade in US-controlled items as a penalty, rather than a policy for reviewing licences. Under 15 CFR 764.3 it suspends or revokes the party's outstanding licences and bars exports, reexports and in-country transfers of any item subject to the EAR to or by that party. There is no application to file. Orders can be issued outright or suspended and later activated.",
+    "plain": "An order from BIS that shuts a named party out of trade in US-controlled items as a penalty, rather than a policy for reviewing licenses. Under 15 CFR 764.3 it suspends or revokes the party's outstanding licenses and bars exports, reexports and in-country transfers of any item subject to the EAR to or by that party. There is no application to file. Orders can be issued outright or suspended and later activated.",
     "why": "It is the only instrument that stops trade absolutely. The order activated against ZTE in April 2018 halted most of the company's production within weeks and was terminated 89 days later on settlement (83 FR 17644; 83 FR 34825).",
     "chapter": "geopolitics"
   },
@@ -156,29 +156,29 @@
   {
     "term": "DUV",
     "aka": "deep ultraviolet",
-    "plain": "Chipmaking light with a wavelength of 248 or 193 nanometres, produced by a gas laser. Flooding the gap above the wafer with ultrapure water bends the light further and sharpens the printed image, which is called immersion.",
+    "plain": "Chipmaking light with a wavelength of 248 or 193 nanometers, produced by a gas laser. Flooding the gap above the wafer with ultrapure water bends the light further and sharpens the printed image, which is called immersion.",
     "why": "Immersion deep ultraviolet is the most advanced lithography China can buy or build, which is where Dutch export licensing draws its line.",
     "chapter": "lithography"
   },
   {
     "term": "EAR",
     "aka": "Export Administration Regulations",
-    "plain": "The body of US rules that governs the export of commercial goods, software and technology, including items with both civilian and military uses, written and enforced by the Bureau of Industry and Security. They run from 15 CFR part 730 to part 774: part 734 sets what they cover, part 742 the licence requirements, part 744 the end-use and end-user controls, part 740 the exceptions and part 764 the penalties.",
+    "plain": "The body of US rules that governs the export of commercial goods, software and technology, including items with both civilian and military uses, written and enforced by the Bureau of Industry and Security. They run from 15 CFR part 730 to part 774: part 734 sets what they cover, part 742 the license requirements, part 744 the end-use and end-user controls, part 740 the exceptions and part 764 the penalties.",
     "why": "Almost every American export rule on chips and chip tools amends these regulations. They are changed by a notice in the Federal Register, not by an act of Congress, which is why a threshold can move in a week.",
     "chapter": "geopolitics"
   },
   {
     "term": "EAR99",
     "aka": "",
-    "plain": "The label for an item that falls under US export rules but is not named on the Commerce Control List, the catalogue of controlled items, from 15 CFR 734.3(c). It is a residual category, not a free pass: an EAR99 item still needs a licence if it is going to a listed party or a controlled end use.",
-    "why": "Most of what a chip plant buys is EAR99. It is the answer to \"do I need a licence?\" for the great majority of shipments, and the reason the end-user controls in part 744 matter more than the classification for many exporters.",
+    "plain": "The label for an item that falls under US export rules but is not named on the Commerce Control List, the catalog of controlled items, from 15 CFR 734.3(c). It is a residual category, not a free pass: an EAR99 item still needs a license if it is going to a listed party or a controlled end use.",
+    "why": "Most of what a chip plant buys is EAR99. It is the answer to \"do I need a license?\" for the great majority of shipments, and the reason the end-user controls in part 744 matter more than the classification for many exporters.",
     "chapter": "geopolitics"
   },
   {
     "term": "ECCN",
     "aka": "Export Control Classification Number",
-    "plain": "The catalogue number that US export rules assign to a controlled item, rather like a customs tariff code for security-sensitive technology. Number 3A090 covers advanced computing chips and 3B001 covers chipmaking equipment.",
-    "why": "An item's classification number decides whether it needs a licence, so the technical thresholds written into each number are where the policy bites.",
+    "plain": "The catalog number that US export rules assign to a controlled item, rather like a customs tariff code for security-sensitive technology. Number 3A090 covers advanced computing chips and 3B001 covers chipmaking equipment.",
+    "why": "An item's classification number decides whether it needs a license, so the technical thresholds written into each number are where the policy bites.",
     "chapter": "geopolitics"
   },
   {
@@ -191,15 +191,15 @@
   {
     "term": "end-use and end-user controls",
     "aka": "",
-    "plain": "Export rules that turn on who the buyer is and what they will do with the item, rather than on what the item is. The same tool can ship freely to one customer and need a licence that will be refused for another.",
+    "plain": "Export rules that turn on who the buyer is and what they will do with the item, rather than on what the item is. The same tool can ship freely to one customer and need a license that will be refused for another.",
     "why": "These controls reach past the product to the customer, so a company can lose access because of who owns it or what its site produces, as when US rules were extended to firms majority owned by listed entities.",
     "chapter": "geopolitics"
   },
   {
     "term": "Entity List",
     "aka": "",
-    "plain": "A published list of foreign companies, institutes and individuals that need a licence before anyone, not only an American supplier, may send them an item subject to the EAR. Each entry states its own licence review policy, so a listing is not one uniform outcome: most carry a presumption of denial, meaning the licence will normally be refused; SMIC's is case by case except for items uniquely capable of production at 10 nanometres and below. It is supplement no. 4 to 15 CFR part 744, and the licence requirement is in 15 CFR 744.11.",
-    "why": "The fastest and bluntest instrument Washington has: it names an organisation rather than a technology. Since September 2025 a listing has reached companies the listed firm half owns, though that extension is stayed to 9 November 2026 (90 FR 50857).",
+    "plain": "A published list of foreign companies, institutes and individuals that need a license before anyone, not only an American supplier, may send them an item subject to the EAR. Each entry states its own license review policy, so a listing is not one uniform outcome: most carry a presumption of denial, meaning the license will normally be refused; SMIC's is case by case except for items uniquely capable of production at 10 nanometers and below. It is supplement no. 4 to 15 CFR part 744, and the license requirement is in 15 CFR 744.11.",
+    "why": "The fastest and bluntest instrument Washington has: it names an organization rather than a technology. Since September 2025 a listing has reached companies the listed firm half owns, though that extension is stayed to 9 November 2026 (90 FR 50857).",
     "chapter": "geopolitics"
   },
   {
@@ -212,7 +212,7 @@
   {
     "term": "EUV",
     "aka": "extreme ultraviolet",
-    "plain": "Chipmaking light at a wavelength of 13.5 nanometres, made by dropping molten tin into a vacuum and hitting it with a laser 100,000 times a second to create a plasma hotter than the surface of the sun. Everything absorbs this light, including air and glass, so the machine runs in vacuum and every lens has to be a mirror.",
+    "plain": "Chipmaking light at a wavelength of 13.5 nanometers, made by dropping molten tin into a vacuum and hitting it with a laser 100,000 times a second to create a plasma hotter than the surface of the sun. Everything absorbs this light, including air and glass, so the machine runs in vacuum and every lens has to be a mirror.",
     "why": "One company, ASML, makes every extreme ultraviolet machine on Earth, none has ever been sold to China, and no leading-edge logic or advanced memory process runs without one.",
     "chapter": "lithography"
   },
@@ -220,7 +220,7 @@
     "term": "fab",
     "aka": "fabrication plant, wafer fab",
     "plain": "The factory where wafers are processed into chips. It is a cleanroom with a second building's worth of pumps, gas cabinets and water treatment underneath it, and a leading-edge one costs $15 to $25 billion and takes four to six years to build.",
-    "why": "Fab construction is the slowest and most capital-hungry part of any reshoring plan, which is why subsidy programmes on three continents target it and why the capacity they buy arrives late this decade.",
+    "why": "Fab construction is the slowest and most capital-hungry part of any reshoring plan, which is why subsidy programs on three continents target it and why the capacity they buy arrives late this decade.",
     "chapter": "foundries-and-fabs"
   },
   {
@@ -234,7 +234,7 @@
     "term": "FinFET",
     "aka": "fin field-effect transistor",
     "plain": "A transistor whose channel, the strip that current flows through, is stood on edge like a shark fin, so that the gate, the electrode that switches the current, wraps around three of its sides instead of resting on one. More contact means firmer control and less leakage when the switch is meant to be off.",
-    "why": "FinFET was the standard transistor shape from roughly 2011 until 2025, and US export rules still use 16 nanometre FinFET production as one threshold for what counts as an advanced fab.",
+    "why": "FinFET was the standard transistor shape from roughly 2011 until 2025, and US export rules still use 16 nanometer FinFET production as one threshold for what counts as an advanced fab.",
     "chapter": "transistors-and-front-end"
   },
   {
@@ -248,7 +248,7 @@
     "term": "foreign direct product rule",
     "aka": "FDPR, FDP rule",
     "plain": "A US rule that puts a foreign-made item under American control when two tests are both met. The first is about the product: the item was made directly from specified US technology or software, or in a plant that was. The second is about the destination: the item is going somewhere, or to someone, the rule names. Both halves are needed. The mechanics are in 15 CFR 734.9.",
-    "why": "The rule is what makes US controls extraterritorial. Without it a listed buyer could order the same chip from a supplier outside America; with it, a chip made in Taiwan on American tools for a listed Chinese firm needs a US licence.",
+    "why": "The rule is what makes US controls extraterritorial. Without it a listed buyer could order the same chip from a supplier outside America; with it, a chip made in Taiwan on American tools for a listed Chinese firm needs a US license.",
     "chapter": "geopolitics"
   },
   {
@@ -269,14 +269,14 @@
     "term": "gate-all-around",
     "aka": "GAA, nanosheet transistor, RibbonFET at Intel",
     "plain": "A transistor in which the gate, the electrode that switches the current, wraps all the way round the channel that current flows through, rather than touching three sides as a fin does. Surrounding the channel gives the gate full control, so the switch still turns fully off as dimensions shrink.",
-    "why": "Only TSMC, Intel and Samsung can build the 2 nanometre generation's transistor in volume, and it is what drives new demand for atomic layer deposition and sideways etching tools.",
+    "why": "Only TSMC, Intel and Samsung can build the 2 nanometer generation's transistor in volume, and it is what drives new demand for atomic layer deposition and sideways etching tools.",
     "chapter": "transistors-and-front-end"
   },
   {
     "term": "GPU",
     "aka": "graphics processing unit",
     "plain": "A processor originally built to draw video game images by doing thousands of simple calculations simultaneously. That same shape of arithmetic turned out to be what neural networks need, so this chip became the default AI processor.",
-    "why": "Nvidia holds roughly 70 percent of the AI chip market, and its graphics processors are what most export licences name.",
+    "why": "Nvidia holds roughly 70 percent of the AI chip market, and its graphics processors are what most export licenses name.",
     "chapter": "introduction-and-goals"
   },
   {
@@ -289,7 +289,7 @@
   {
     "term": "HBM",
     "aka": "high bandwidth memory",
-    "plain": "A stack of eight to sixteen memory chips, drilled through with copper columns and mounted a few millimetres from the processor so data reaches the arithmetic units far faster than it could across a motherboard. One such stack moves data roughly thirty times faster than an ordinary memory chip.",
+    "plain": "A stack of eight to sixteen memory chips, drilled through with copper columns and mounted a few millimeters from the processor so data reaches the arithmetic units far faster than it could across a motherboard. One such stack moves data roughly thirty times faster than an ordinary memory chip.",
     "why": "The most expensive line on an AI accelerator's bill of materials, made by three firms whose entire 2026 output was sold forward before the year began.",
     "chapter": "memory-and-hbm"
   },
@@ -310,7 +310,7 @@
   {
     "term": "hyperscaler",
     "aka": "",
-    "plain": "One of the handful of companies that run data centres at global scale and buy computing hardware by the gigawatt: Amazon, Microsoft, Google, Meta and, on most definitions, Oracle.",
+    "plain": "One of the handful of companies that run data centers at global scale and buy computing hardware by the gigawatt: Amazon, Microsoft, Google, Meta and, on most definitions, Oracle.",
     "why": "They commit capital years before the hardware exists.",
     "chapter": "data-centers-and-power"
   },
@@ -325,7 +325,7 @@
     "term": "in-country transfer",
     "aka": "transfer (in-country)",
     "plain": "A change in the end use or the end user of an item inside one foreign country, defined at 15 CFR 734.16. Nothing crosses a border: a server legally imported into a country for one customer is transferred when it is resold, or repurposed, for another.",
-    "why": "It is the step that catches hardware diverted after it has landed, and it is why a licence granted for a named Chinese customer does not travel with the hardware. Reexports and in-country transfers of advanced chips to Country Group D:5 keep a presumption of denial even where an export would be read case by case (91 FR 1685).",
+    "why": "It is the step that catches hardware diverted after it has landed, and it is why a license granted for a named Chinese customer does not travel with the hardware. Reexports and in-country transfers of advanced chips to Country Group D:5 keep a presumption of denial even where an export would be read case by case (91 FR 1685).",
     "chapter": "geopolitics"
   },
   {
@@ -338,7 +338,7 @@
   {
     "term": "is-informed letter",
     "aka": "",
-    "plain": "A letter from BIS to one named company imposing a licence requirement on a specific export, without any rule being published. The authority is written into the regulations themselves, for example 15 CFR 744.23(b), which lets BIS inform a person individually rather than by amending the EAR.",
+    "plain": "A letter from BIS to one named company imposing a license requirement on a specific export, without any rule being published. The authority is written into the regulations themselves, for example 15 CFR 744.23(b), which lets BIS inform a person individually rather than by amending the EAR.",
     "why": "It is how the fastest moves are made. The A100 and H100 requirement of August 2022 and the H20 requirement of April 2025 both arrived this way, and the public learned of each from the company's own filing rather than the Federal Register.",
     "chapter": "geopolitics"
   },
@@ -351,37 +351,37 @@
   },
   {
     "term": "license exception",
-    "aka": "licence exception",
-    "plain": "A written carve-out in export rules that lets a shipment go without an individual licence, if it meets stated conditions. The ones that matter for AI chips are NAC and ACA (15 CFR 740.8), HBM (740.25), AIA and LPP, which carry the top band of accelerators to allies and in small volumes elsewhere (740.27 and 740.29), IEC for allied countries that adopt matching controls (740.24), and RPL for servicing and spare parts (740.10).",
+    "aka": "license exception",
+    "plain": "A written carve-out in export rules that lets a shipment go without an individual license, if it meets stated conditions. The ones that matter for AI chips are NAC and ACA (15 CFR 740.8), HBM (740.25), AIA and LPP, which carry the top band of accelerators to allies and in small volumes elsewhere (740.27 and 740.29), IEC for allied countries that adopt matching controls (740.24), and RPL for servicing and spare parts (740.10).",
     "why": "Exceptions are how a control regime is tuned without rewriting it, and how Washington rewards allies: License Exception IEC, added in September 2024, is open only to countries that have imposed equivalent national controls (89 FR 72926).",
     "chapter": "geopolitics"
   },
   {
     "term": "License Exception ACA",
     "aka": "ACA, Advanced Computing Authorized",
-    "plain": "A carve-out in 15 CFR 740.8, added in December 2024, that lets the same classes of advanced computing chips as its companion exception NAC ship worldwide except to Macau and Country Group D:5 entities, with no advance notification, and allows some transfers within those destinations. Like NAC, it does not reach the data centre parts that meet the 3A090.a parameters, which need a licence to any destination worldwide.",
+    "plain": "A carve-out in 15 CFR 740.8, added in December 2024, that lets the same classes of advanced computing chips as its companion exception NAC ship worldwide except to Macau and Country Group D:5 entities, with no advance notification, and allows some transfers within those destinations. Like NAC, it does not reach the data center parts that meet the 3A090.a parameters, which need a license to any destination worldwide.",
     "why": "The split matters for anyone reading an older table: before December 2024 there was one exception, NAC, and it did both jobs. Confusing the two puts a shipment to Germany through a notification it does not need.",
     "chapter": "geopolitics"
   },
   {
     "term": "License Exception HBM",
     "aka": "",
-    "plain": "A carve-out at 15 CFR 740.25 that lets ECCN 3A090.c memory, high bandwidth memory, into the one region where a licence is otherwise needed. The Commerce Control List applies the regional stability control on 3A090.c only \"to or within Macau or a destination specified in Country Group D:5\", so a stack sold to an allied packaging house needs no licence at any density. Inside China, 740.25(c) authorises co-packaging, putting the memory into a package with a chip, only below a memory bandwidth density of 3.3 GB/s per square millimetre.",
+    "plain": "A carve-out at 15 CFR 740.25 that lets ECCN 3A090.c memory, high bandwidth memory, into the one region where a license is otherwise needed. The Commerce Control List applies the regional stability control on 3A090.c only \"to or within Macau or a destination specified in Country Group D:5\", so a stack sold to an allied packaging house needs no license at any density. Inside China, 740.25(c) authorizes co-packaging, putting the memory into a package with a chip, only below a memory bandwidth density of 3.3 GB/s per square millimeter.",
     "why": "It is what keeps a Chinese packaging house in the supply chain for an American or allied designer while the same stacks may not be sold to a Chinese customer. The exporter must be headquartered in the United States or Country Group A:5, and the stacks must be bought by the designer of the chip they will be packaged with and shipped straight to the packaging site. It was written into the December 2024 rule that first controlled HBM (89 FR 96790).",
     "chapter": "geopolitics"
   },
   {
     "term": "License Exception LPP",
     "aka": "LPP, Low Processing Performance",
-    "plain": "The exception at 15 CFR 740.29, created by the AI Diffusion Rule of January 2025 (90 FR 4544). It authorises advanced computing chips adding up to 26,900,000 cumulative total processing performance, the export rules' measure of computing power, a year to one ultimate consignee, the final recipient, to any destination except Macau, Country Group D:5 and consignees headquartered in either. It does not authorise transfers within a country.",
+    "plain": "The exception at 15 CFR 740.29, created by the AI Diffusion Rule of January 2025 (90 FR 4544). It authorizes advanced computing chips adding up to 26,900,000 cumulative total processing performance, the export rules' measure of computing power, a year to one ultimate consignee, the final recipient, to any destination except Macau, Country Group D:5 and consignees headquartered in either. It does not authorize transfers within a country.",
     "why": "BIS announced on 13 May 2025 that it would not enforce the diffusion framework and would replace it, but withdrew no text. LPP, AIA (740.27), ACM (740.28), the nineteen destinations in supplement no. 5 to part 740 and the 790,000,000 TPP per-country allocation at 742.6(b)(10)(iii)(B) are all in the eCFR today, their source notes ending at 90 FR 5309. The presumption of approval beside them at 742.6(b)(10)(iii)(A)(2) runs on that same supplement, so the framework still does work.",
     "chapter": "geopolitics"
   },
   {
     "term": "License Exception NAC",
     "aka": "NAC, Notified Advanced Computing",
-    "plain": "The exception at 15 CFR 740.8 that lets certain advanced computing chips ship to Macau, to Country Group D:5 and to entities headquartered there, provided the exporter notifies BIS in advance and BIS does not object. It does not cover the data centre parts that meet the 3A090.a parameters, nor the memory in 3A090.c.",
-    "why": "It is the valve in an otherwise closed door: a notification rather than a licence, for chips below the top band. Since December 2024 the section carries two exceptions, NAC for the restricted destinations and ACA for everywhere else.",
+    "plain": "The exception at 15 CFR 740.8 that lets certain advanced computing chips ship to Macau, to Country Group D:5 and to entities headquartered there, provided the exporter notifies BIS in advance and BIS does not object. It does not cover the data center parts that meet the 3A090.a parameters, nor the memory in 3A090.c.",
+    "why": "It is the valve in an otherwise closed door: a notification rather than a license, for chips below the top band. Since December 2024 the section carries two exceptions, NAC for the restricted destinations and ACA for everywhere else.",
     "chapter": "geopolitics"
   },
   {
@@ -394,7 +394,7 @@
   {
     "term": "lithography",
     "aka": "photolithography",
-    "plain": "Printing a circuit pattern onto a wafer by shining light through a patterned plate and projecting a shrunken image of it onto a light-sensitive coating. It is photography at the scale of nanometres, repeated once for every layer of the chip.",
+    "plain": "Printing a circuit pattern onto a wafer by shining light through a patterned plate and projecting a shrunken image of it onto a light-sensitive coating. It is photography at the scale of nanometers, repeated once for every layer of the chip.",
     "why": "The most concentrated stage in the chain, and the resolution a country can reach sets the ceiling on every chip it can make.",
     "chapter": "lithography"
   },
@@ -409,7 +409,7 @@
     "term": "metrology",
     "aka": "process control, when grouped with inspection",
     "plain": "Measuring what a factory actually built: how wide a printed line came out, how thick a film is, whether this layer sits exactly on top of the last one. Inspection is the related job of hunting for flaws.",
-    "why": "One firm, KLA, holds about 64 percent of this market, and a sanctioned fab that obtains other tools on the grey market still cannot work out why its yield is low.",
+    "why": "One firm, KLA, holds about 64 percent of this market, and a sanctioned fab that obtains other tools on the gray market still cannot work out why its yield is low.",
     "chapter": "metrology-and-inspection"
   },
   {
@@ -422,7 +422,7 @@
   {
     "term": "node",
     "aka": "process node, technology node, for example N2 or 18A",
-    "plain": "The name a foundry gives one generation of its manufacturing process. The number in the name stopped measuring anything on the chip decades ago: nothing on TSMC's N2 is 2 nanometres wide, and SMIC's 5 nanometre-class process has a tighter metal spacing than Intel's 18A.",
+    "plain": "The name a foundry gives one generation of its manufacturing process. The number in the name stopped measuring anything on the chip decades ago: nothing on TSMC's N2 is 2 nanometers wide, and SMIC's 5 nanometer-class process has a tighter metal spacing than Intel's 18A.",
     "why": "Because node names are marketing labels rather than measurements, rules and comparisons that lean on them are unreliable, which is why US export thresholds specify transistor type and metal spacing instead.",
     "chapter": "transistors-and-front-end"
   },
@@ -443,7 +443,7 @@
   {
     "term": "optical transceiver",
     "aka": "optical module, pluggable optics",
-    "plain": "A small device that turns electrical signals into laser light for sending down a glass fibre, and turns them back at the far end. Every network link longer than a few metres in a large AI cluster needs one at each end.",
+    "plain": "A small device that turns electrical signals into laser light for sending down a glass fiber, and turns them back at the far end. Every network link longer than a few meters in a large AI cluster needs one at each end.",
     "why": "Chinese firms supply more than half the world's high-speed modules, and the indium phosphide lasers inside them ran at roughly half of demand in early 2026.",
     "chapter": "systems-and-networking"
   },
@@ -457,21 +457,21 @@
   {
     "term": "overlay",
     "aka": "overlay error, alignment",
-    "plain": "How precisely one printed layer of a chip lands on top of the layer beneath it. The best machines hold this to under a nanometre, which is a few atoms of misalignment across a disc 300 millimetres wide.",
+    "plain": "How precisely one printed layer of a chip lands on top of the layer beneath it. The best machines hold this to under a nanometer, which is a few atoms of misalignment across a disc 300 millimeters wide.",
     "why": "Overlay is one of the specifications that separates an advanced printing machine from an ordinary one, and it gets worse every time a layer has to be printed in several passes.",
     "chapter": "metrology-and-inspection"
   },
   {
     "term": "pellicle",
     "aka": "",
-    "plain": "A thin transparent membrane held a few millimetres above a photomask so that dust settles on it rather than on the pattern, far enough out of focus that it does not print. It is a lens cap a photographer can shoot through.",
+    "plain": "A thin transparent membrane held a few millimeters above a photomask so that dust settles on it rather than on the pattern, far enough out of focus that it does not print. It is a lens cap a photographer can shoot through.",
     "why": "No membrane yet survives extreme ultraviolet light while passing enough of it, so fabs trade printing speed against defect risk product by product, and solving this would cut the cost of that printing more than any machine upgrade.",
     "chapter": "photomasks-and-pellicles"
   },
   {
     "term": "performance density",
     "aka": "",
-    "plain": "A chip's TPP, the export rules' measure of computing power, divided by the area of its logic dies in square millimetres, memory stacks excluded. It applies only to a chip that already reaches 1,600 TPP, and it catches parts that spread the same computing power over more silicon. It replaced the 2022 test, which was based on interconnect bandwidth, the speed at which a chip exchanges data with its neighbours.",
+    "plain": "A chip's TPP, the export rules' measure of computing power, divided by the area of its logic dies in square millimeters, memory stacks excluded. It applies only to a chip that already reaches 1,600 TPP, and it catches parts that spread the same computing power over more silicon. It replaced the 2022 test, which was based on interconnect bandwidth, the speed at which a chip exchanges data with its neighbors.",
     "why": "It closed the gap the A800 and H800 used, and it is the clearest case of a control written as a formula rather than a product name. The threshold is 5.92 in ECCN 3A090.a (88 FR 73458).",
     "chapter": "geopolitics"
   },
@@ -485,14 +485,14 @@
   {
     "term": "photoresist",
     "aka": "resist",
-    "plain": "A liquid polymer spun onto a wafer in a film a few tens of nanometres thick that changes how easily it dissolves wherever light strikes it. Developing it, much like developing photographic film, washes away the exposed parts and leaves the printed pattern behind.",
+    "plain": "A liquid polymer spun onto a wafer in a film a few tens of nanometers thick that changes how easily it dissolves wherever light strikes it. Developing it, much like developing photographic film, washes away the exposed parts and leaves the printed pattern behind.",
     "why": "Japan supplies most of the world's photoresist, between 75 and 90 percent on published estimates, the largest maker is now owned outright by a Japanese state fund, and each resist is approved per layer per chip per fab so switching supplier takes years.",
     "chapter": "chemicals-gases-and-photoresist"
   },
   {
     "term": "presumption of denial",
     "aka": "",
-    "plain": "A licence review policy, not a ban. An application may be filed and will be considered, but the reviewing agencies start from the position that it should be refused, and the exporter has to displace that. It is the policy for advanced computing chips going to China and Macau under 15 CFR 742.6(b)(10), and for most Entity List entries.",
+    "plain": "A license review policy, not a ban. An application may be filed and will be considered, but the reviewing agencies start from the position that it should be refused, and the exporter has to displace that. It is the policy for advanced computing chips going to China and Macau under 15 CFR 742.6(b)(10), and for most Entity List entries.",
     "why": "It is the distinction that decides whether a company files at all: under a presumption of denial an application can still be made, under a prohibition it cannot.",
     "chapter": "geopolitics"
   },
@@ -506,14 +506,14 @@
   {
     "term": "rack",
     "aka": "cabinet",
-    "plain": "The standard steel frame that computing equipment is bolted into in a data centre, roughly the size of a large refrigerator. AI systems have turned the rack from a container into the product, because an entire rack is now sold and wired as one machine.",
+    "plain": "The standard steel frame that computing equipment is bolted into in a data center, roughly the size of a large refrigerator. AI systems have turned the rack from a container into the product, because an entire rack is now sold and wired as one machine.",
     "why": "Rack power went from about 120 kilowatts in 2024 to plans for a megawatt by 2027, and each step forces changes to cooling, busbars, floor loading and the substation outside.",
     "chapter": "data-centers-and-power"
   },
   {
     "term": "reexport",
     "aka": "",
-    "plain": "Shipping an item that falls under US export rules, the EAR, from one foreign country to another, defined at 15 CFR 734.14. A Korean stack of memory moving from Korea to China is a reexport, and it needs the same US licence a shipment from Texas would.",
+    "plain": "Shipping an item that falls under US export rules, the EAR, from one foreign country to another, defined at 15 CFR 734.14. A Korean stack of memory moving from Korea to China is a reexport, and it needs the same US license a shipment from Texas would.",
     "why": "Most of the trade the controls are aimed at never touches the United States. Without a hold on reexports the rules would only bind American ports.",
     "chapter": "geopolitics"
   },
@@ -521,20 +521,20 @@
     "term": "reticle",
     "aka": "photomask",
     "plain": "The patterned plate that a lithography machine projects onto the wafer, one chip layer at a time. In practice the word means the same as photomask, with reticle stressing that the machine steps the same image repeatedly across the disc.",
-    "why": "The reticle's fixed printable area, 26 by 33 millimetres, is a hard physical limit that shapes how every large AI chip has to be designed.",
+    "why": "The reticle's fixed printable area, 26 by 33 millimeters, is a hard physical limit that shapes how every large AI chip has to be designed.",
     "chapter": "photomasks-and-pellicles"
   },
   {
     "term": "reticle limit",
     "aka": "reticle size limit",
-    "plain": "The largest chip a lithography machine can print in a single exposure, about 858 square millimetres, or 26 by 33 millimetres. It is set by the machine's optics, not by anything about the design.",
+    "plain": "The largest chip a lithography machine can print in a single exposure, about 858 square millimeters, or 26 by 33 millimeters. It is set by the machine's optics, not by anything about the design.",
     "why": "Every AI accelerator worth buying is bigger than this, so designs must be split into chiplets and rejoined inside a package, which is how advanced packaging became the industry's bottleneck.",
     "chapter": "advanced-packaging"
   },
   {
     "term": "scale-out network",
     "aka": "back-end network, cluster fabric",
-    "plain": "The network that joins thousands of accelerator groups into one cluster, running at hundreds of gigabits per second over Ethernet or InfiniBand. The technology is ordinary data centre networking; the scale is not.",
+    "plain": "The network that joins thousands of accelerator groups into one cluster, running at hundreds of gigabits per second over Ethernet or InfiniBand. The technology is ordinary data center networking; the scale is not.",
     "why": "Ethernet has taken more than two thirds of this market from InfiniBand, which moved the value to merchant switch chips and to the optical modules that carry the traffic.",
     "chapter": "systems-and-networking"
   },
@@ -563,7 +563,7 @@
     "term": "subject to the EAR",
     "aka": "",
     "plain": "The test for whether an item falls under US export rules at all. Under 15 CFR 734.3 it covers anything in the United States, anything of US origin wherever it now sits, foreign-made goods that contain more than a permitted share of controlled US content, and foreign-made goods caught by a foreign direct product rule. Nationality of the seller is not the test; the item is.",
-    "why": "The phrase decides who has to care. A Dutch or Korean firm shipping between two foreign countries can still need a US licence, because the item, not the exporter, is what the rules reach.",
+    "why": "The phrase decides who has to care. A Dutch or Korean firm shipping between two foreign countries can still need a US license, because the item, not the exporter, is what the rules reach.",
     "chapter": "geopolitics"
   },
   {
@@ -576,7 +576,7 @@
   {
     "term": "substrate",
     "aka": "package substrate, IC substrate",
-    "plain": "The small, dense circuit board that a chip package sits on, spreading the chip's microscopic connections out to the millimetre-scale solder balls a motherboard can accept. It is built up layer by layer from epoxy film, laser-drilled holes and plated copper.",
+    "plain": "The small, dense circuit board that a chip package sits on, spreading the chip's microscopic connections out to the millimeter-scale solder balls a motherboard can accept. It is built up layer by layer from epoxy film, laser-drilled holes and plated copper.",
     "why": "TSMC names substrates alongside memory as a limit on AI supply, and as packages grow, keeping a large one flat becomes harder than wiring it.",
     "chapter": "substrates-and-pcbs"
   },
@@ -597,7 +597,7 @@
   {
     "term": "TPU",
     "aka": "Tensor Processing Unit",
-    "plain": "Google's own AI chip, designed in-house rather than bought from Nvidia and used only inside Google's own data centres and cloud service. The seventh generation is called Ironwood.",
+    "plain": "Google's own AI chip, designed in-house rather than bought from Nvidia and used only inside Google's own data centers and cloud service. The seventh generation is called Ironwood.",
     "why": "The clearest evidence that a large buyer can build a real alternative to chips bought on the open market, with Google claiming a total cost per chip about 44 percent below that of the Nvidia server it replaces.",
     "chapter": "design-and-eda"
   },
@@ -618,15 +618,15 @@
   {
     "term": "VEU",
     "aka": "Validated End-User, Validated End User",
-    "plain": "An authorisation BIS grants to a named foreign facility, letting approved items ship to it without an individual licence each time. The approved facilities are listed in supplement no. 7 to 15 CFR part 748, and the procedure is 15 CFR 748.15.",
-    "why": "It is what let Intel, Samsung and SK hynix run their fabs inside China on general authority after 2022. Revoking it in 2025 did not stop those fabs; it made every shipment a licence application, and BIS said it would license operation but not expansion (90 FR 42321).",
+    "plain": "An authorization BIS grants to a named foreign facility, letting approved items ship to it without an individual license each time. The approved facilities are listed in supplement no. 7 to 15 CFR part 748, and the procedure is 15 CFR 748.15.",
+    "why": "It is what let Intel, Samsung and SK hynix run their fabs inside China on general authority after 2022. Revoking it in 2025 did not stop those fabs; it made every shipment a license application, and BIS said it would license operation but not expansion (90 FR 42321).",
     "chapter": "geopolitics"
   },
   {
     "term": "wafer",
     "aka": "silicon wafer, 300 mm wafer",
-    "plain": "The polished disc of ultrapure silicon that chips are built on, 300 millimetres across and less than a millimetre thick. Hundreds of chips are printed on one disc and cut apart at the end.",
-    "why": "Five firms hold roughly 85 percent of 300 millimetre capacity, and this $11.4 billion market sits underneath trillions of dollars of downstream value.",
+    "plain": "The polished disc of ultrapure silicon that chips are built on, 300 millimeters across and less than a millimeter thick. Hundreds of chips are printed on one disc and cut apart at the end.",
+    "why": "Five firms hold roughly 85 percent of 300 millimeter capacity, and this $11.4 billion market sits underneath trillions of dollars of downstream value.",
     "chapter": "silicon-and-wafers"
   },
   {

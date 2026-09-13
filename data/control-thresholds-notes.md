@@ -14,7 +14,7 @@ Three kinds of entry sit in the file. Some are performance lines on a product: 3
 
 Three dates did the work.
 
-On 2 December 2024 the Bureau of Industry and Security (BIS) added export classification 3A090.c and set the line for high-bandwidth memory at a bandwidth density above 2 GB/s per mm². The figure is low enough to catch every stack in production, so the entry works as a ban rather than a specification. The same rule replaced the DRAM half-pitch test of 18 nm with three measurable quantities: a cell area below 0.0026 µm², a density above 0.20 Gb/mm², or more than 3,000 through-silicon vias per die. Half-pitch is a modelled number. The replacements can be read off a die.
+On 2 December 2024 the Bureau of Industry and Security (BIS) added export classification 3A090.c and set the line for high-bandwidth memory at a bandwidth density above 2 GB/s per mm². The figure is low enough to catch every stack in production, so the entry works as a ban rather than a specification. The same rule replaced the DRAM half-pitch test of 18 nm with three measurable quantities: a cell area below 0.0026 µm², a density above 0.20 Gb/mm², or more than 3,000 through-silicon vias per die. Half-pitch is a modeled number. The replacements can be read off a die.
 
 On 29 September 2025 the affiliates rule extended the Entity List to any company owned 50 percent or more, in aggregate, by a listed entity. Six weeks later BIS stayed the rule until 9 November 2026 under the truce with Beijing. China suspended its own 0.1 percent rare-earth de minimis rule the same day.
 

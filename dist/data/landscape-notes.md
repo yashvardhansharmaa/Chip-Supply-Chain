@@ -106,7 +106,7 @@ OpenAI finished the design of Jalapeño, its first chip, in nine months: an infe
 ## Intel Gaudi 3
 `intel-gaudi3`
 
-Intel documents eight matrix multiplication engines and 64 tensor processor cores across two compute dies, 1.8 PFLOPS for both FP8 and BF16, 128 GB of HBM2E from eight stacks at 3.7 TB/s, and 24 200-gigabit RDMA NIC ports on the package ([source](https://docs.habana.ai/en/latest/Gaudi_Overview/Gaudi_Architecture.html)). Those ports are why Gaudi 3 is the only AI accelerator sold on the open market that bet entirely on standard Ethernet. Twenty-one further on-package 200 Gb/s RoCE links tie the eight cards on a baseboard together, so a Gaudi cluster needs no proprietary cable plant and no InfiniBand ([source](https://www.intel.com/content/www/us/en/content-details/817486/intel-gaudi-3-ai-accelerator-white-paper.html)). The absence that killed it is FP4: with no four-bit datapath, Gaudi 3 fell out of contention for 2026 inference work just as the market moved to four-bit arithmetic. It is also Intel's last Gaudi part. Intel cancelled Falcon Shores as a commercial product, its 2026 pipeline is Crescent Island, an Xe3P inference GPU with 160 GB of LPDDR5X rather than HBM, and the rack-scale Jaguar Shores is a 2027 part.
+Intel documents eight matrix multiplication engines and 64 tensor processor cores across two compute dies, 1.8 PFLOPS for both FP8 and BF16, 128 GB of HBM2E from eight stacks at 3.7 TB/s, and 24 200-gigabit RDMA NIC ports on the package ([source](https://docs.habana.ai/en/latest/Gaudi_Overview/Gaudi_Architecture.html)). Those ports are why Gaudi 3 is the only AI accelerator sold on the open market that bet entirely on standard Ethernet. Twenty-one further on-package 200 Gb/s RoCE links tie the eight cards on a baseboard together, so a Gaudi cluster needs no proprietary cable plant and no InfiniBand ([source](https://www.intel.com/content/www/us/en/content-details/817486/intel-gaudi-3-ai-accelerator-white-paper.html)). The absence that killed it is FP4: with no four-bit datapath, Gaudi 3 fell out of contention for 2026 inference work just as the market moved to four-bit arithmetic. It is also Intel's last Gaudi part. Intel canceled Falcon Shores as a commercial product, its 2026 pipeline is Crescent Island, an Xe3P inference GPU with 160 GB of LPDDR5X rather than HBM, and the rack-scale Jaguar Shores is a 2027 part.
 
 ## Cerebras WSE-3 Turbo (CS-4)
 `cerebras-wse3-turbo`
@@ -141,7 +141,7 @@ Moore Threads builds the MTT S5000 on its PH100 chip in what it calls the Pinghu
 ## H20 (HGX H20, China variant)
 `nvidia-h20`
 
-Nvidia’s third attempt at a compliant China part, and the one that showed the limits of designing to a threshold: a chip built to sit inside the rules still needed a licence eighteen months later. Nvidia publishes no datasheet, no die area, no stack count and no NVLink rate for it, so almost everything here comes from Epoch AI’s database rather than from the vendor. The 96 GB of HBM3 implies six 16 GB stacks on a die that carries six stack sites, but Nvidia has not confirmed that. SemiAnalysis reported working samples in November 2023 and mass production within a month, which is where the shipping quarter above comes from.
+Nvidia’s third attempt at a compliant China part, and the one that showed the limits of designing to a threshold: a chip built to sit inside the rules still needed a license eighteen months later. Nvidia publishes no datasheet, no die area, no stack count and no NVLink rate for it, so almost everything here comes from Epoch AI’s database rather than from the vendor. The 96 GB of HBM3 implies six 16 GB stacks on a die that carries six stack sites, but Nvidia has not confirmed that. SemiAnalysis reported working samples in November 2023 and mass production within a month, which is where the shipping quarter above comes from.
 
 ## H800 (China variant of the H100)
 `nvidia-h800`
@@ -151,7 +151,7 @@ The China variant that cost Chinese buyers the least in practice. Epoch AI’s c
 ## A800 (China variant of the A100)
 `nvidia-a800`
 
-The clearest case of a product designed against a regulation rather than a workload. Nvidia’s own 8-K of 31 August 2022 had already said the licence would extend to any future chip meeting both peak performance and chip-to-chip thresholds roughly equivalent to the A100, and the A800 answers that by failing only one of the two. Commerce Secretary Gina Raimondo’s reply, quoted by CSIS, was that if a chip is redesigned around a cut line to enable AI, she would control it the next day. Epoch AI dates the A800 variants to August and November 2022.
+The clearest case of a product designed against a regulation rather than a workload. Nvidia’s own 8-K of 31 August 2022 had already said the license would extend to any future chip meeting both peak performance and chip-to-chip thresholds roughly equivalent to the A100, and the A800 answers that by failing only one of the two. Commerce Secretary Gina Raimondo’s reply, quoted by CSIS, was that if a chip is redesigned around a cut line to enable AI, she would control it the next day. Epoch AI dates the A800 variants to August and November 2022.
 
 ## H100 (SXM5)
 `nvidia-h100`
@@ -166,7 +166,7 @@ The reference point for every threshold since. BIS set the October 2022 line jus
 ## Instinct MI325X
 `amd-mi325x`
 
-The same CDNA 3 silicon as the MI300X with 256 GB of HBM3E at 6 TB/s and a 1,000 W board, and the only AMD part Washington has ever named as licensable for China. Both halves of that licence sit close to the line: 20,919 against a 21,000 ceiling, 6,000 GB/s against a 6,500 GB/s ceiling. AMD publishes no list price, no die areas and no assembler.
+The same CDNA 3 silicon as the MI300X with 256 GB of HBM3E at 6 TB/s and a 1,000 W board, and the only AMD part Washington has ever named as licensable for China. Both halves of that license sit close to the line: 20,919 against a 21,000 ceiling, 6,000 GB/s against a 6,500 GB/s ceiling. AMD publishes no list price, no die areas and no assembler.
 
 ## Instinct MI300X
 `amd-mi300x`

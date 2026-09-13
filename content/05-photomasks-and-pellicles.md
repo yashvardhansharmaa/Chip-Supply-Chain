@@ -31,7 +31,7 @@
  "substitutability": {"band": "Hard", "test": "Three firms make EUV blanks and one sells the actinic inspection tool; three have already walked the path", "why": "AGC and Hoya took two decades to learn the forty-layer blank, but that is the inventor's clock, not the buyer's. Three firms have now done it and the structure of the plate is published, so a well-funded entrant is copying rather than inventing: five to ten years to a qualified blank, and the harder half is Lasertec's actinic inspection, the only tool that sees a mask at the wavelength the scanner uses. Entrants stayed out because the business was too small to fund, which is the one barrier money removes."}
  },
  "keyFacts": [
- {"fact": "AGC calls itself the world's only maker of EUV mask blanks handling every step from glass material to coating, and expanded capacity by about 30% in 2025 under a METI supply-chain programme", "source": "https://www.agc.com/en/news/detail/1203819_2814.html"},
+ {"fact": "AGC calls itself the world's only maker of EUV mask blanks handling every step from glass material to coating, and expanded capacity by about 30% in 2025 under a METI supply-chain program", "source": "https://www.agc.com/en/news/detail/1203819_2814.html"},
  {"fact": "Hoya says it holds an exceptionally high share of the mask blank market and expects customers to move gradually toward multi-sourcing EUV blanks", "source": "https://www.hoya.com/ir/2025/en/review/it.html"},
  {"fact": "AGC says it is one of three companies worldwide that supply photomask blanks for EUV lithography, and the only one that handles every material and process itself", "source": "https://www.agc.com/en/hub/pr/the-japanese-glass-behind-next-generation-chips.html"},
  {"fact": "AGC's own data book lists EUV lithography photomask blanks as a No.1 worldwide position, on AGC's fiscal 2026 estimates", "source": "https://www.agc.com/en/ir/library/outline/pdf/reference.pdf"},
@@ -67,7 +67,7 @@ A photomask is the stencil that lithography prints from, one for each layer of a
 A deep ultraviolet mask lets light through: quartz carrying a light-blocking film such as molybdenum silicide, and Shin-Etsu supplies those blanks ([source](https://www.shinetsu.co.jp/en/products/electronics-materials/photomask-blanks/)). An EUV mask reflects instead, about 40 molybdenum and silicon layer pairs, 7 nm to a pair, laid on low-expansion glass under a tantalum absorber that carries the pattern ([source](https://arxiv.org/pdf/1912.09075)). Making the plate a mirror creates its own problems:
 
 - **Mask 3D effects.** Light strikes the mirror at an angle rather than head-on, which distorts the printed shape, so software has to correct for it in advance.
-- **Write precision.** Every edge of the absorber has to sit within a few nanometres of where the design says.
+- **Write precision.** Every edge of the absorber has to sit within a few nanometers of where the design says.
 - **Particles.** Anything on the reflector prints on every wafer until someone finds it.
 
 High-NA scanners halve the patch of wafer one exposure covers and double the exposures needed, so a large die has to be stitched from two masks ([source](https://www.asml.com/en/company/stories/2024/5-things-high-na-euv)). On 8 September 2026 ASML and TSMC announced a move to 12-inch masks to remove that limit, with a pilot line in 2031 ([source](https://www.asml.com/en/news/press-releases/2026/tsmc-and-asml-announce-industry-transition-to-large-format-photomasks-for-high-na-euv)).
@@ -76,9 +76,9 @@ High-NA scanners halve the patch of wafer one exposure covers and double the exp
 
 ### Blanks
 
-The blank is where two decades of learning sit: laying down forty layer pairs across a six-inch plate, flat to within less than an angstrom, a tenth of a nanometre, with no particle buried anywhere underneath. Nobody publishes a market share for the business, but AGC counts the suppliers. It says it is one of three companies worldwide that supply EUV blanks, and the only one that handles every material and process itself ([source](https://www.agc.com/en/hub/pr/the-japanese-glass-behind-next-generation-chips.html)). Its own data book lists EUV photomask blanks among the products where AGC holds the No.1 position worldwide ([source](https://www.agc.com/en/ir/library/outline/pdf/reference.pdf)).
+The blank is where two decades of learning sit: laying down forty layer pairs across a six-inch plate, flat to within less than an angstrom, a tenth of a nanometer, with no particle buried anywhere underneath. Nobody publishes a market share for the business, but AGC counts the suppliers. It says it is one of three companies worldwide that supply EUV blanks, and the only one that handles every material and process itself ([source](https://www.agc.com/en/hub/pr/the-japanese-glass-behind-next-generation-chips.html)). Its own data book lists EUV photomask blanks among the products where AGC holds the No.1 position worldwide ([source](https://www.agc.com/en/ir/library/outline/pdf/reference.pdf)).
 
-Hoya says its share of the mask blank market is exceptionally high, and expects customers to move gradually toward multi-sourcing EUV blanks ([source](https://www.hoya.com/ir/2025/en/review/it.html)). AGC raised its EUV blank capacity by about 30 percent in 2025, on a line in Fukushima funded under a METI supply-chain programme, and was aiming for more than ¥40 billion of sales in the business ([source](https://www.agc.com/en/news/detail/1203819_2814.html)).
+Hoya says its share of the mask blank market is exceptionally high, and expects customers to move gradually toward multi-sourcing EUV blanks ([source](https://www.hoya.com/ir/2025/en/review/it.html)). AGC raised its EUV blank capacity by about 30 percent in 2025, on a line in Fukushima funded under a METI supply-chain program, and was aiming for more than ¥40 billion of sales in the business ([source](https://www.agc.com/en/news/detail/1203819_2814.html)).
 
 ### Writers
 
@@ -92,7 +92,7 @@ A mask defect costs yield on every wafer that mask prints, so fabs check masks t
 
 A pellicle is a thin membrane on a frame above the mask. Particles land on it rather than on the pattern, too far out of focus to print.
 
-ASML's EUV membrane is 13 nanometres thick, has to hold together at 500 degrees Celsius in vacuum, and every photon it absorbs is light that never reaches the wafer ([source](https://www.asml.com/en/news/stories/2022/the-euv-pellicle-indistinguishable-from-magic)). The light crosses it twice, on the way in and on the way back off the mirror, so absorption counts double.
+ASML's EUV membrane is 13 nanometers thick, has to hold together at 500 degrees Celsius in vacuum, and every photon it absorbs is light that never reaches the wafer ([source](https://www.asml.com/en/news/stories/2022/the-euv-pellicle-indistinguishable-from-magic)). The light crosses it twice, on the way in and on the way back off the mirror, so absorption counts double.
 
 Carbon nanotube membranes are the intended fix, still short of production in a leading-edge fab. Imec has mounted them on reticles and exposed them in an NXE:3300 scanner, measuring single-pass transmission up to 97 percent and finding the effect on imaging low and correctable ([source](https://www.imec-int.com/en/press/imec-demonstrates-cnt-pellicle-utilization-euv-scanner)). Mitsui Chemicals, licensed by ASML, is building capacity at Iwakuni-Ohtake for membranes above 92 percent transmittance that can stand sources above 1,000 W ([source](https://jp.mitsuichemicals.com/en/release/2024/2024_0528_1/index.htm)).
 
