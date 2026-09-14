@@ -254,7 +254,7 @@
         }
         Sections.update();
       }
-      var label = { stack: 'The Chain', landscape: 'AI Chips', suppliers: 'Suppliers', controls: sub === 'exposure' ? 'China revenue share' : 'Export Controls', glossary: 'Index' }[v];
+      var label = { stack: 'The Chain', landscape: 'AI Chips', suppliers: 'Suppliers', controls: sub === 'exposure' ? 'China revenue share' : 'Export Controls', glossary: 'Glossary' }[v];
       document.title = (v === 'home' || !label) ? 'Chip Supply Chain' : 'Chip Supply Chain · ' + label;
       // one page view per route change (the counter counts the first load itself)
       var gc = window.goatcounter;

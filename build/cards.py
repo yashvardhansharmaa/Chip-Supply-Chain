@@ -42,7 +42,7 @@ DARK = dict(bg='#101315', bg2='#171b1e', ink='#e7e9ea', ink2='#c0c7cc', muted='#
 
 # the specimen a view shows; chapters name theirs in content/*.md front matter
 VIEW_SPECIMEN = {'home': 'die-floorplan', 'intro': 'die-floorplan', 'chain': 'die-floorplan', 'chips': 'package',
-                 'suppliers': 'globe', 'export-controls': 'globe', 'index': 'wafer'}
+                 'suppliers': 'globe', 'export-controls': 'globe', 'glossary': 'wafer'}
 
 # the short label at the foot; the kit's captions run to a paragraph
 LABEL = {
