@@ -22,7 +22,7 @@
   --font-body: "Newsreader", "Source Serif 4", Georgia, "Times New Roman", serif;
   --font-mono: "IBM Plex Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --band: 0px; /* height of the sticky specimen band on phones; anchors add it to their offset */
-  --measure: 28.5em; /* about 71 characters of Newsreader; widened by half an inch on 14 Sept at the author's request, the stage column unchanged */
+  --measure: 35em; /* about 88 characters of Newsreader; widened on 14 Sept at the author's request, the stage column unchanged */
   --bar-5: var(--accent); --bar-4: #3a434c; --bar-3: #b3b9be;
   --col: 58%;
   --masthead: 56px;
@@ -140,7 +140,7 @@ small { font-size: 0.85em; }
 
 /* ---------- prose ---------- */
 .prose { max-width: var(--measure); }
-.view[data-view="geopolitics"] { --measure: 32em; } /* the essay reads a little wider than the chapters */
+.view[data-view="geopolitics"] { --measure: 38em; } /* the essay reads a little wider than the chapters */
 .prose h3 { font-family: var(--font-display); font-weight: 600; font-size: 27px; line-height: 1.15; letter-spacing: -0.002em; margin: 1.9em 0 0.65em; max-width: var(--measure); scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 16px); }
 .prose h4 { font-family: var(--font-display); font-weight: 600; font-size: 20px; line-height: 1.25; margin: 1.7em 0 0.5em; max-width: var(--measure); scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 16px); }
 .prose > p, .prose > ul, .prose > ol, .prose blockquote { max-width: var(--measure); }
