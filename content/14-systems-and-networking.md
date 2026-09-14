@@ -4,7 +4,7 @@
   "number": 14,
   "title": "Systems and Networking",
   "oneLiner": "A finished package is useless until it is bolted to a baseboard, fed a thousand amps and wired to seventy-one siblings. Many firms can do the bolting; few can make the lasers.",
-  "plain": "A rack is where finished chips become one machine. Builders bolt each packaged chip onto a board, feed it more than a thousand amps of current, and wire it to seventy-one neighbors, so that a training run sees one computer instead of seventy-two. The linked machines run only as fast as their slowest link, and a copper wire can carry these signals a few meters at most, so the longer links carry them as light through glass fiber instead. Many firms can bolt racks together. Far fewer can make the lasers that produce the light, and that is where the chain narrows.",
+  "plain": "One AI chip is not enough to train a model. So seventy-two of them are wired together in a rack, a cabinet the size of a wardrobe, and run as one computer. Each chip sits on its own board and draws more than a thousand amps. The chips have to swap results with each other all the time, and a copper wire can carry those signals only a few meters, so the longer links send them as light down glass fiber. Many companies can build the rack. Only a few can make the lasers that send the light, and that is the narrow point.",
   "bridge": "A tested package is still a single chip, and the machine that trains a model is a room full of them acting as one.",
   "specimen": "gpu-baseboard",
   "specimenCaption": "An eight-GPU baseboard. Four accelerator modules per side, the two NVLink switch chips in amber down the center, voltage regulator banks along the long edges, and the connectors that carry traffic off the board to the rest of the cluster.",
@@ -66,7 +66,7 @@ A package computes nothing until it is built into a machine, and building the ma
 
 ## How it works
 
-A rack is where finished chips become one machine. Builders bolt each packaged chip onto a board, feed it more than a thousand amps of current, and wire it to seventy-one neighbors, so that a training run sees one computer instead of seventy-two. The linked machines run only as fast as their slowest link, and a copper wire can carry these signals a few meters at most, so the longer links carry them as light through glass fiber instead. Many firms can bolt racks together. Far fewer can make the lasers that produce the light, and that is where the chain narrows.
+One AI chip is not enough to train a model. So seventy-two of them are wired together in a rack, a cabinet the size of a wardrobe, and run as one computer. Each chip sits on its own board and draws more than a thousand amps. The chips have to swap results with each other all the time, and a copper wire can carry those signals only a few meters, so the longer links send them as light down glass fiber. Many companies can build the rack. Only a few can make the lasers that send the light, and that is the narrow point.
 
 An accelerator ships as a module, not a bare chip: Nvidia calls its version SXM, and the open-standards equivalent is the Open Compute Project's accelerator module. Eight bolt onto a baseboard that carries their power and the switch chips that let them reach each other at full speed.
 
@@ -130,4 +130,4 @@ Optical module assembly is a separate case: concentrated, but not technically ha
 
 ## Takeaways
 
-The system layer is where AI hardware stops being a chip business and becomes an electrical and optical one. Assembly is competitive and can move countries in a year. The control points are NVLink-class scale-up switching, which one firm still owns ([source](https://www.nvidia.com/en-us/data-center/nvlink/)), and indium phosphide lasers, where Nvidia paid $4 billion for capacity it could not order ([source](https://nvidianews.nvidia.com/news/nvidia-announces-strategic-partnership-with-lumentum-to-develop-state-of-the-art-optics-technology)) and 70 percent of the feedstock is Chinese ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-indium.pdf)).
+At the rack, the hard parts are power and light, not silicon. Assembly is competitive and can move countries in a year. The control points are NVLink-class scale-up switching, which one firm still owns ([source](https://www.nvidia.com/en-us/data-center/nvlink/)), and indium phosphide lasers, where Nvidia paid $4 billion for capacity it could not order ([source](https://nvidianews.nvidia.com/news/nvidia-announces-strategic-partnership-with-lumentum-to-develop-state-of-the-art-optics-technology)) and 70 percent of the feedstock is Chinese ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-indium.pdf)).
