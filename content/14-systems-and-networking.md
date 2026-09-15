@@ -7,7 +7,7 @@
   "plain": "One AI chip is not enough to train a model. So seventy-two of them are wired together in a rack, a cabinet the size of a wardrobe, and run as one computer. Each chip sits on its own board and draws more than a thousand amps. The chips have to swap results with each other all the time, and a copper wire can carry those signals only a few meters, so the longer links send them as light down glass fiber. Many companies can build the rack. Only a few can make the lasers that send the light, and that is the narrow point.",
   "bridge": "A tested package is still a single chip, and the machine that trains a model is a room full of them acting as one.",
   "specimen": "gpu-baseboard",
-  "specimenCaption": "An eight-GPU baseboard. Four accelerator modules per side, the two NVLink switch chips in amber down the center, voltage regulator banks along the long edges, and the connectors that carry traffic off the board to the rest of the cluster.",
+  "specimenCaption": "An eight-GPU baseboard, the board that carries eight accelerator modules and the switch chips joining them. It is about 510 by 400 mm and drawn to scale, with the module frames standing about 30 mm proud of the board. The two amber squares in the middle are the NVLink switch chips.",
   "card": {
     "concentration": "High",
     "chokepointScore": 3,

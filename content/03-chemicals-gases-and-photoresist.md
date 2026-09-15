@@ -7,7 +7,7 @@
  "plain": "Photoresist is a coating that changes wherever light hits it, the way old photographic film did. A machine spins a coat of it, thinner than a soap bubble, across the wafer. Light shines through a stencil onto the coat, and the parts the light reached dissolve away. What remains is a pattern, and the next machine cuts that pattern into the wafer beneath, a step called etching. A few hundred other gases and liquids lay down layers, strip them off and clean the wafer between steps. All of them have to be clean to about one stray metal atom in a trillion, and each formula is approved for one factory and one product at a time, so a second source takes years rather than weeks. Nine tenths of the world's photoresist comes from Japan, and no factory can swap it out quickly.",
  "bridge": "A bare disc records nothing, so before any light reaches it the wafer is coated in a chemical that reacts where the beam lands.",
  "specimen": "gas-cabinet",
- "specimenCaption": "A specialty gas cabinet beside a bulk liquid cylinder. It shows the purge and process lines, the double-block-and-bleed valve panel that isolates the cylinder before anyone opens it, the pressure gauges, and in amber the point-of-use filter between cylinder and chamber.",
+ "specimenCaption": "A specialty gas cabinet with its door off, and a bulk liquid cylinder standing behind it. The cabinet is about 1 m wide and 1.9 m tall and holds three gas cylinders; drawn to scale. The amber panel on the back wall is the valves, regulator and gauges that control the flow.",
  "card": {
  "concentration": "High",
  "chokepointScore": 4,

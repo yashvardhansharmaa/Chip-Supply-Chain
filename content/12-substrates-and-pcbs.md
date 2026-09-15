@@ -7,7 +7,7 @@
   "plain": "A package substrate is the adapter between a chip and the circuit board under it. The chip's connections come out finer than a human hair; the board is wired in millimeters. The substrate is built up like plywood. A stiff core of glass cloth and resin sits in the middle, thin sheets of epoxy film are pressed onto both faces, a laser burns holes through each sheet, and copper is plated into the holes to carry signals from one layer to the next. Every added layer is another set of holes that can fail. A handful of firms build these substrates, and the film and the glass cloth each come from a single Japanese supplier, so a shortage here stops accelerators shipping.",
   "bridge": "Everything so far builds upward, and the base under the package now has to carry all of it down to an ordinary board.",
   "specimen": "substrate-layers",
-  "specimenCaption": "An epoxy build-up substrate with a quarter cut away. A glass-cloth core drilled through and plated with copper, eight layers of build-up film pressed onto each face, each with its own copper wiring and laser-drilled holes down to the layer below, landing pads for the chip above and solder balls underneath. The film itself is drawn in copper.",
+  "specimenCaption": "A build-up substrate, the board a chip sits on, with a quarter cut away. It is about 100 by 72 mm and 1.5 mm thick, with eighteen copper layers inside. The amber bands are the build-up film between the layers. The footprint is to scale; the thickness is exaggerated about twenty times.",
   "card": {
     "concentration": "Extreme",
     "chokepointScore": 5,

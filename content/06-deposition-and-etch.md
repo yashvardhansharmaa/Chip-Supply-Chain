@@ -7,7 +7,7 @@
  "plain": "Deposition and etch build the chip itself, one layer at a time. Deposition lays down a film a few atoms thick. Lithography prints a pattern on it. Etch then eats away everything the pattern does not protect, and the next film goes down on top. A chip takes more than a thousand of these rounds. The film has to reach the bottom of holes hundreds of times deeper than they are wide, and the etch has to eat one material and leave the one beside it untouched. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.",
  "bridge": "A printed pattern is not yet a circuit, and the machines that turn it into one run more often than anything else in the fab.",
  "specimen": "process-chamber",
- "specimenCaption": "A plasma process chamber cut in half. Gas enters through the plenum and showerhead at the top, a 300 mm wafer sits below on an electrostatic chuck inside its focus ring, the plasma glows amber between them, the slit valve in the wall is where the wafer goes in and out, and the gate valve and turbopump under the floor hold the vacuum.",
+ "specimenCaption": "A plasma etch chamber cut in half. The vessel is 500 mm across inside and holds one 300 mm wafer on the chuck at the bottom. The amber haze above the wafer is the plasma. The gap it fills is drawn about twice its true 30 to 40 mm; the rest is to scale.",
  "card": {
  "concentration": "High",
  "chokepointScore": 4,

@@ -7,7 +7,7 @@
  "plain": "Every chip is built on a wafer, a thin round slice of silicon about 30 centimeters across that carries hundreds of chips at once. Making one starts with sand, which is silicon bound to oxygen. The sand is refined until fewer than one atom in a hundred billion is anything other than silicon, then melted, and a single crystal, its atoms in one unbroken orderly pattern from end to end, is slowly drawn out of the melt as a long cylinder. Saws cut the cylinder into discs, and each disc is polished until its surface is flat to within a few atoms, right out to the edge. Only five companies in the world make these wafers to that standard, and none of them is American or Chinese.",
  "bridge": "Nothing in a file computes; the drawing has to be printed onto something, and that something is a disc of pure silicon.",
  "specimen": "boule-and-wafer",
- "specimenCaption": "A Czochralski ingot, one crystal pulled whole from molten silicon, and the wafers cut from it. A seed crystal on a 10 mm neck at the top, the crown where the crystal opens out to full diameter, 1.5 m of body ground to a true 300 mm, and the cropped tail. The wafers at its foot are as wide as the ingot: a quarter of a metric ton of one crystal, hung from a neck the width of a finger.",
+ "specimenCaption": "A silicon ingot, one crystal pulled whole from a melt, with two wafers sawn from it. It is 2.1 m long, 300 mm across and about 265 kg: taller than a door and about as heavy as three grown men, hanging from a neck about 10 mm wide. Drawn to scale. The wafer on its rim is amber.",
  "card": {
  "concentration": "High",
  "chokepointScore": 4,

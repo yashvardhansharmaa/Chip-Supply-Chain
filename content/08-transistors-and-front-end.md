@@ -7,7 +7,7 @@
  "plain": "The front end of a chip factory is the part that builds the transistors, the billions of tiny switches in every chip. Each switch is a valve. Current runs along a narrow strip of silicon called the channel, and a small voltage on a gate above the strip opens or shuts the flow. Shorter strips switch faster and more of them fit on a chip, but make the strip short enough and the valve stops sealing: current leaks through even when the gate is off, and the chip burns power doing nothing. The fix is to wrap the gate around all four sides of the strip, which takes a long sequence of steps that have to run in exact order. Only TSMC, Intel and Samsung can do it, a list short enough for an export rule to name in full.",
  "bridge": "Measured and clean, the layers mean nothing on their own; laid in the right order they become switches.",
  "specimen": "gaa-transistor",
- "specimenCaption": "A gate-all-around nanosheet transistor. Three stacked silicon sheets run from the source at one end to the drain at the other, the gate metal in amber wraps all four sides of each sheet, inner spacers keep that metal from touching the two ends, and the contacts land on top.",
+ "specimenCaption": "A gate-all-around transistor, the switch in a 2 nm-class chip, drawn at true proportions. The three silicon sheets are each 6 nm thick and 30 nm wide: a few dozen atoms from top to bottom, and roughly ten thousand times thinner than a human hair. The amber cage is the gate metal wrapping all four sides of each sheet.",
  "card": {
  "concentration": "Extreme",
  "chokepointScore": 5,

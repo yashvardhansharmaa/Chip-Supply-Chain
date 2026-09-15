@@ -7,7 +7,7 @@
   "plain": "A data center's job is to feed electricity to the machines inside it and carry away the heat they give off. The scale is now that of a power station. One rack of AI chips, a cabinet the size of a wardrobe, draws 142 kilowatts, and every watt of it comes back out as heat, more than air can carry away, so water is piped through the rack instead. A large training site already holds a hundred thousand chips, and the newest sites are planned in gigawatts. One gigawatt is the whole output of a large power station, and OpenAI's planned sites add up to more than nine of them by 2029. The building is the easy part. Getting that much electricity to the door is the hard one, because the transformers, heavy switches and turbines that connect a site to the grid come from a few suppliers and take years to arrive.",
   "bridge": "Racks like that have to stand somewhere, and the somewhere has to be built around what they consume.",
   "specimen": "rack",
-  "specimenCaption": "A liquid-cooled 72-GPU rack. Eighteen compute trays above and below nine NVLink switch trays, the NVLink cable cartridge filling the back, cold-plate manifolds up the side, and in amber the power shelves at top and bottom with the busbar they feed, the part of the machine that waits on the grid.",
+  "specimenCaption": "A liquid-cooled rack of 72 GPUs, Nvidia's GB200 NVL72. It is 2.24 m tall, 600 mm wide and about 1.36 metric tons: taller than a door, heavier than a small car, and drawing about 120 kW, roughly what a hundred homes use on average. Drawn to scale. The amber parts are the power shelves and the busbar they feed.",
   "card": {
     "concentration": "High",
     "chokepointScore": 4,

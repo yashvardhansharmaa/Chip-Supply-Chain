@@ -7,7 +7,7 @@
  "plain": "A photomask is the stencil that lithography prints from, one for each layer of a chip. The same plate prints its layer on wafer after wafer, so one plate shapes millions of chips. No glass lets the short light now in use pass through, so the plate cannot be a window. Instead it is a mirror, built up from about forty pairs of ultrathin layers, and the light bounces off it. Any speck of dust on the plate repeats on every wafer it prints. Two Japanese firms make almost all of those mirrors. A business almost nobody has heard of can hold up every advanced chip in the world.",
  "bridge": "Look next at the stencil itself, because everything the machine prints is decided by what is written on that one plate.",
  "specimen": "photomask",
- "specimenCaption": "A six-inch EUV mask, or reticle, with its pellicle dust cover. Low-thermal-expansion glass at the base, the molybdenum and silicon multilayer mirror in copper round the top edge, a tantalum absorber carrying the pattern, and the membrane held 2.5 mm off the surface on four glued pads, far enough that a particle landing on it prints out of focus.",
+ "specimenCaption": "An EUV photomask, or reticle, with its pellicle dust cover. The mask is a 152 mm square of glass, 6.35 mm thick, about the size of a small floor tile, drawn to scale. The amber band round the top edge is the mirror coating; in life it is 280 nm thick, so it is drawn far thicker than it is.",
  "card": {
  "concentration": "Extreme",
  "chokepointScore": 5,

@@ -7,7 +7,7 @@
  "plain": "Lithography prints the pattern of a circuit onto the wafer. A machine holds a stencil of one layer of the circuit up to a lamp and projects the image, four times smaller, onto the silicon. The finer the lines, the shorter the wavelength of light needed to print them. The shortest light now in use will not pass through air, so the machine has to print in a vacuum. Only one company has ever built a machine that prints with it, and it is Dutch. Export controls, the government rules on who a company may sell to, reach advanced chipmaking mainly by reaching that one firm.",
  "bridge": "Coated and still blank, the wafer goes to the machine that decides how small the circuit can be.",
  "specimen": "euv-scanner",
- "specimenCaption": "An extreme ultraviolet scanner in cross-section. Tin plasma source at the bottom left, collector and three illuminator mirrors, the mask, or reticle, held pattern-down at the top, six projection mirrors, the wafer stage at the bottom right, and in copper the 13.5 nm light itself.",
+ "specimenCaption": "An extreme ultraviolet scanner cut open along its light path. The machine is the size of a bus, weighs about 180 metric tons and ships in 40 containers. The amber thread is the 13.5 nm light, bouncing mirror to mirror from the tin plasma at bottom left to the wafer; both ends are drawn about twice their true size.",
  "card": {
  "concentration": "Extreme",
  "chokepointScore": 5,
