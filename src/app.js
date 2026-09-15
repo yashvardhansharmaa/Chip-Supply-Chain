@@ -60,7 +60,7 @@
   /* ---------------- the stage (WebGL point renderer) ---------------- */
   var Stage = {
     ok: false, gl: null, canvas: null, cache: {}, cur: null, prev: null, transStart: 0, transDur: reduced ? 1 : 1100,
-    spin: 0, scrollAngle: 0, lastT: 0, ink: [0.07, 0.09, 0.1], accent: [0.79, 0.54, 0.07], dpr: 1, w: 0, h: 0, hidden: false, active: true,
+    spin: 0, scrollAngle: 0, lastT: 0, userYaw: 0, userPitch: 0, held: false, dragging: false, ink: [0.07, 0.09, 0.1], accent: [0.79, 0.54, 0.07], dpr: 1, w: 0, h: 0, hidden: false, active: true,
     init: function () {
       this.canvas = $('#stage-canvas');
       this.fig = $('.stage');
@@ -91,6 +91,7 @@
       window.addEventListener('resize', function () { self.resize(); });
       if (window.ResizeObserver) new ResizeObserver(function () { self.resize(); }).observe(this.canvas); // the caption below the canvas changes height per specimen
       document.addEventListener('visibilitychange', function () { self.hidden = document.hidden; });
+      this.pointer();
       this.resize();
       requestAnimationFrame(function (t) { self.loop(t); });
     },
@@ -129,7 +130,7 @@
       if (this.cur && this.cur.key === slot.key) return;
       this.prev = this.cur; this.cur = slot; this.transStart = performance.now();
       slot.spinBase = -this.spin; // each specimen starts from its own tilt
-      this.scrollAngle = 0;
+      this.scrollAngle = 0; this.userYaw = 0; this.userPitch = 0;
     },
     // with no WebGL there is nothing to draw, so the figure stays hidden rather than framing an empty canvas under a stale tag
     setVisible: function (v) { var self = this; this.active = v; if (!this.fig) return; var show = v && this.ok; this.fig.setAttribute('data-hidden', show ? '0' : '1'); if (show) { this.resize(); requestAnimationFrame(function () { self.resize(); }); } },
@@ -145,6 +146,7 @@
         ? mul(rotZ(t[2]), mul(rotY(t[1] + this.scrollAngle + extraRot), mul(rotX(t[0]), rotY(idle))))
         : mul(rotZ(t[2]), mul(rotY(t[1] + idle + this.scrollAngle + extraRot), rotX(t[0])));
       M = mul(M, scale(sc));
+      if (this.userYaw || this.userPitch) M = mul(rotX(this.userPitch), mul(rotY(this.userYaw), M)); // the reader's own turn, about the world axes
       var MVP = mul(P, mul(V, M));
       gl.uniformMatrix4fv(this.loc.uMVP, false, new Float32Array(MVP));
       var size = 6.6 * this.dpr * Math.min(1.05, Math.max(0.6, this.h / (900 * this.dpr))) * Math.max(1, 0.98 / aspect);
@@ -155,6 +157,34 @@
       gl.vertexAttribPointer(this.loc.aP, 4, gl.FLOAT, false, 0, 0);
       gl.drawArrays(gl.POINTS, 0, slot.n);
     },
+    // the specimen turns under the mouse: rest on it and the idle spin pauses, drag to turn it, arrow keys turn it from the keyboard
+    pointer: function () {
+      var self = this, c = this.canvas, lx = 0, ly = 0, fine = window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
+      if (!fine) return;
+      c.setAttribute('tabindex', '0'); c.setAttribute('aria-label', '3D specimen; drag or use the arrow keys to turn it');
+      c.addEventListener('pointerenter', function (e) { if (e.pointerType !== 'touch') self.held = true; });
+      c.addEventListener('pointerleave', function () { if (!self.dragging) self.held = false; });
+      c.addEventListener('pointerdown', function (e) {
+        if (e.pointerType === 'touch' || e.button !== 0) return;
+        self.dragging = true; self.held = true; lx = e.clientX; ly = e.clientY; c.setPointerCapture(e.pointerId); c.classList.add('is-dragging'); e.preventDefault();
+      });
+      c.addEventListener('pointermove', function (e) {
+        if (!self.dragging) return;
+        self.userYaw += (e.clientX - lx) * 0.008; self.userPitch += (e.clientY - ly) * 0.008;
+        self.userPitch = Math.max(-1.2, Math.min(1.2, self.userPitch));
+        lx = e.clientX; ly = e.clientY;
+      });
+      var up = function (e) { if (!self.dragging) return; self.dragging = false; c.classList.remove('is-dragging'); if (e && e.type === 'pointercancel') self.held = false; };
+      c.addEventListener('pointerup', up); c.addEventListener('pointercancel', up);
+      c.addEventListener('keydown', function (e) {
+        var step = 0.12, k = e.key;
+        if (k === 'ArrowLeft') self.userYaw -= step; else if (k === 'ArrowRight') self.userYaw += step;
+        else if (k === 'ArrowUp') self.userPitch = Math.max(-1.2, self.userPitch - step); else if (k === 'ArrowDown') self.userPitch = Math.min(1.2, self.userPitch + step);
+        else if (k === 'Home') { self.userYaw = 0; self.userPitch = 0; } else return;
+        e.preventDefault();
+      });
+      c.addEventListener('focus', function () { self.held = true; }); c.addEventListener('blur', function () { if (!self.dragging) self.held = false; });
+    },
     loop: function (t) {
       var self = this;
       requestAnimationFrame(function (tt) { self.loop(tt); });
@@ -163,7 +193,7 @@
       var gl = this.gl;
       gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
       if (!this.cur) return;
-      if (!reduced) this.spin += (this.cur.spin || 0.1) * dt;
+      if (!reduced && !this.held) this.spin += (this.cur.spin || 0.1) * dt; // the idle turn pauses while the pointer rests on the specimen
       var k = easeOut((t - this.transStart) / this.transDur);
       if (this.prev && k < 1) this.draw(this.prev, 1 - k, 0.35 * k, 1 + 0.04 * k);
       else this.prev = null;
