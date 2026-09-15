@@ -86,7 +86,7 @@ ${leadersHTML(c)}
 <p class="wk-meta"><span class="label">${steps.length} paragraphs</span><span class="label">${walkWords.toLocaleString('en-US')} words</span><span class="label">about ${mins} min</span></p>
 <nav class="wk-tabs" aria-label="What the site covers">
 <p class="label wk-tabs-k">What the site covers</p>
-<a href="#/chain"><b class="wk-tab">The Chain</b><span>The full semiconductor supply chain explained in detail, in ${word(all.length)} chapters, with every number linked to its source.</span></a>
+<a href="#/chain"><b class="wk-tab">The Chain</b><span>The full semiconductor supply chain explained in detail, in ${word(all.length)} chapters, with all sources linked.</span></a>
 <a href="#/landscape"><b class="wk-tab">AI Chips</b><span>The specs of ${(data.landscape || []).length} AI chips from Nvidia, AMD, Google, Huawei and others, compared side by side.</span></a>
 <a href="#/suppliers"><b class="wk-tab">Suppliers</b><span>The ${(data.suppliers || []).length} companies behind the chain, on a map and stage by stage, and what each country makes.</span></a>
 <a href="#/controls"><b class="wk-tab">Export Controls</b><span>Every US and allied rule since 2018, what can still be sold to China today, and how much each company sells there.</span></a>
