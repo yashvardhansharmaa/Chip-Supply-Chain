@@ -200,11 +200,13 @@
 .wk-facts .wk-src:hover { text-decoration: underline; }
 
 
-/* the rest of the site, one line per tab, under the walk's head */
-.wk-tabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 18px; margin: 22px 0 6px; padding: 14px 0 0; border-top: 1px solid var(--line); }
-.wk-tabs a { display: block; min-width: 0; padding: 4px 0 8px; color: var(--ink-2); text-decoration: none; border-bottom: 2px solid transparent; }
-.wk-tabs a:hover, .wk-tabs a:focus-visible { color: var(--ink); border-bottom-color: var(--accent); outline: none; }
-.wk-tabs b { display: block; font-family: var(--font-display); font-weight: 600; font-size: 15px; letter-spacing: 0.01em; color: var(--ink); margin-bottom: 3px; }
+/* the five tabs, restated on the home page: each name drawn like the masthead tab it opens, one line under it */
+.wk-tabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 18px; margin: 22px 0 6px; padding: 14px 0 12px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.wk-tabs-k { grid-column: 1 / -1; margin: 0 0 12px; color: var(--muted); }
+.wk-tabs a { display: block; min-width: 0; color: var(--ink-2); text-decoration: none; }
+.wk-tabs .wk-tab { display: inline-block; font-family: var(--font-display); font-weight: 600; font-size: 14px; line-height: 1; padding: 7px 10px; border: 1px solid var(--line-2); border-radius: 3px; color: var(--ink); margin-bottom: 9px; transition: background 0.15s, color 0.15s; }
+.wk-tabs a:hover .wk-tab, .wk-tabs a:focus-visible .wk-tab { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.wk-tabs a:focus-visible { outline: none; }
 .wk-tabs span { display: block; font-size: 14px; line-height: 1.4; }
-@media (max-width: 1100px) { .wk-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 16px; } }
-@media (max-width: 720px) { .wk-tabs { grid-template-columns: 1fr; gap: 2px; } .wk-tabs a { padding: 6px 0; } }
+@media (max-width: 1100px) { .wk-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 16px; } }
+@media (max-width: 720px) { .wk-tabs { grid-template-columns: 1fr; gap: 10px; } }

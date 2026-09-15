@@ -84,12 +84,13 @@ ${leadersHTML(c)}
 <h2 class="wk-title">How AI chips are made</h2>
 <p class="wk-dek">An introduction to the entire semiconductor supply chain.</p>
 <p class="wk-meta"><span class="label">${steps.length} paragraphs</span><span class="label">${walkWords.toLocaleString('en-US')} words</span><span class="label">about ${mins} min</span></p>
-<nav class="wk-tabs" aria-label="The rest of the site">
-<a href="#/chain"><b>The Chain</b><span>${word(all.length).replace(/^./, (c) => c.toUpperCase())} chapters in full, one per stage, every number linked to its source.</span></a>
-<a href="#/landscape"><b>AI Chips</b><span>${(data.landscape || []).length} accelerators compared: foundry, node, memory, packaging and export status.</span></a>
-<a href="#/suppliers"><b>Suppliers</b><span>${(data.suppliers || []).length} firms by stage and country, and what each country makes.</span></a>
-<a href="#/controls"><b>Export Controls</b><span>Every rule since 2018, what can still flow to China, and each firm's China sales.</span></a>
-<a href="#/glossary"><b>Glossary</b><span>Every term, firm, chip and country, with the passages that use them.</span></a>
+<nav class="wk-tabs" aria-label="What the site covers">
+<p class="label wk-tabs-k">What the site covers</p>
+<a href="#/chain"><b class="wk-tab">The Chain</b><span>${word(all.length).replace(/^./, (c) => c.toUpperCase())} chapters in full, one per stage, every number linked to its source.</span></a>
+<a href="#/landscape"><b class="wk-tab">AI Chips</b><span>${(data.landscape || []).length} accelerators compared: foundry, node, memory, packaging and export status.</span></a>
+<a href="#/suppliers"><b class="wk-tab">Suppliers</b><span>${(data.suppliers || []).length} firms by stage and country, and what each country makes.</span></a>
+<a href="#/controls"><b class="wk-tab">Export Controls</b><span>Every rule since 2018, what can still flow to China, and each firm's China sales.</span></a>
+<a href="#/glossary"><b class="wk-tab">Glossary</b><span>Every term, firm, chip and country, with the passages that use them.</span></a>
 </nav>
 </header>
 <ol class="wk-list">
