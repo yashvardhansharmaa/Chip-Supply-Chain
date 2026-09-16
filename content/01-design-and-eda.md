@@ -79,15 +79,15 @@ Design is the only stage in this chain with no factory, and the one a foreign go
 
 Chip design turns an idea for a processor into a complete blueprint. A chip holds billions of transistors, tiny electrical switches, and the blueprint fixes where each one sits and how it is wired to the others. A signal has to cross those wires in less than a billionth of a second. No one draws a plan like that by hand. Software from three companies, Synopsys, Cadence and Siemens, lays it out, checks it and signs it off, and a chip factory accepts only designs that have passed those tools. The factory prints each layer of the design onto silicon through a stencil, and changing the plan after that costs a fresh set of stencils and several months. Withhold the software and the design cannot be made.
 
-The sequence is the same at every design house:
+Design runs in five stages, each one's output the next one's input, all of it in software.
 
-- **Architecture.** Engineers fix the machine's shape: how wide the matrix-multiply unit is, how much fast on-chip memory sits beside it, how many high-bandwidth memory stacks line the edges.
-- **RTL.** Register-transfer-level code, written in the hardware language SystemVerilog, fixes what every register holds on every tick of the clock.
-- **Verification.** The biggest team on most projects: simulation, formal proofs, and emulators that boot the firmware before any silicon exists.
-- **Physical design.** Software maps the code onto the foundry's prebuilt logic cells, then places them, wires them together and proves the timing holds.
-- **Tape-out.** The handover. Mask data preparation and optical proximity correction, which pre-distorts each shape so it prints true, turn the layout into pattern files for the mask shop.
+- **Architecture.** Engineers fix the shape of the machine: how wide the block that multiplies numbers is, how much fast on-chip memory sits beside it, how many high-bandwidth memory stacks line the edges. The output is a plan.
+- **RTL.** Engineers write the plan as register-transfer-level code, RTL, in the hardware language SystemVerilog. A register is a small store on the chip that holds one number, and the clock is the tick that moves every register forward together. The code says what every register holds on every tick, and the output is a text description of the whole chip.
+- **Verification.** The biggest team on most projects checks that the code does what the plan says. They run it in simulation, prove parts of it correct with mathematics, and load it into emulators, cabinets of reprogrammable chips that behave like the design, so the chip's own software can boot before any silicon exists.
+- **Physical design.** Software swaps each piece of the code for a logic cell, a small ready-made circuit the foundry has already proved it can make, then places the cells on the chip, wires them together and proves that every signal arrives in time.
+- **Tape-out.** The handover. Software turns the placed layout into pattern files for the mask shop. First it pre-distorts each shape so that it prints true, which is optical proximity correction; then it cuts the layout into the files a mask writer reads, which is mask data preparation.
 
-The discipline comes from the cost of a mistake, which is a whole new mask set. One set passes $1 million at 28 nm, $10 million at 7 nm and about $40 million at 3 nm, and a whole leading-edge chip has gone from design to tape-out on TSMC 7 nm for $50 million to $75 million, everything included ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)).
+The discipline comes from the cost of a mistake, which is a whole new mask set. One set passes $1 million at 28 nm, $10 million at 7 nm and about $40 million at 3 nm, and a whole leading-edge chip has gone from design to tape-out on TSMC 7 nm for $50 million to $75 million, everything included ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)). The nanometer labels name generations of the process, each finer than the last, and no longer measure anything.
 
 {{figure:mask-cost}}
 

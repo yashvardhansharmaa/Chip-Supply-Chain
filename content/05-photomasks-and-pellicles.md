@@ -64,13 +64,17 @@ Every EUV layer on an AI accelerator needs a flawless mask, built on a blank pla
 
 A photomask is the stencil that lithography prints from, one for each layer of a chip. The same plate prints its layer on wafer after wafer, so one plate shapes millions of chips. No glass lets the short light now in use pass through, so the plate cannot be a window. Instead it is a mirror, built up from about forty pairs of ultrathin layers, and the light bounces off it. Any speck of dust on the plate repeats on every wafer it prints. Two Japanese firms make almost all of those mirrors. A business almost nobody has heard of can hold up every advanced chip in the world.
 
-A deep ultraviolet mask lets light through: quartz carrying a light-blocking film such as molybdenum silicide, and Shin-Etsu supplies those blanks ([source](https://www.shinetsu.co.jp/en/products/electronics-materials/photomask-blanks/)). An EUV mask reflects instead, about 40 molybdenum and silicon layer pairs, 7 nm to a pair, laid on low-expansion glass under a tantalum absorber that carries the pattern ([source](https://arxiv.org/pdf/1912.09075)). Making the plate a mirror creates its own problems:
+A mask starts as a blank, a polished plate with nothing on it yet. For deep ultraviolet the blank is a window of quartz carrying a light-blocking film such as molybdenum silicide, and Shin-Etsu supplies those blanks ([source](https://www.shinetsu.co.jp/en/products/electronics-materials/photomask-blanks/)). For EUV the blank is a mirror of about 40 molybdenum and silicon layer pairs, 7 nm to a pair, laid on low-expansion glass, with a dark tantalum film on top, the absorber, that will carry the pattern ([source](https://arxiv.org/pdf/1912.09075)).
 
-- **Mask 3D effects.** Light strikes the mirror at an angle rather than head-on, which distorts the printed shape, so software has to correct for it in advance.
+The mask shop coats the blank with resist, and a mask writer draws the design into the coating with a beam of electrons, one shape at a time, over many hours, because no light draws finely enough. A wash removes the drawn resist, an etch removes the blocking film or absorber wherever the resist is gone, and the rest of the resist is stripped. The plate now passes light, or reflects it, in the exact shape of one layer of the chip, four times larger than it will print. An inspection tool compares the plate to the design, and a repair tool fixes the stray defects it finds.
+
+Making the plate a mirror creates its own problems:
+
+- **Mask 3D effects.** Light strikes the mirror at an angle rather than head-on, and the absorber has height, so its edges throw small shadows that distort the printed shape; software has to correct for it in advance.
 - **Write precision.** Every edge of the absorber has to sit within a few nanometers of where the design says.
 - **Particles.** Anything on the reflector prints on every wafer until someone finds it.
 
-High-NA scanners halve the patch of wafer one exposure covers and double the exposures needed, so a large die has to be stitched from two masks ([source](https://www.asml.com/en/company/stories/2024/5-things-high-na-euv)). On 8 September 2026 ASML and TSMC announced a move to 12-inch masks to remove that limit, with a pilot line in 2031 ([source](https://www.asml.com/en/news/press-releases/2026/tsmc-and-asml-announce-industry-transition-to-large-format-photomasks-for-high-na-euv)).
+High-NA scanners, the newest EUV machines, print finer lines with larger mirrors, and each exposure then covers half the patch of wafer, doubling the exposures needed, so a large die, one chip's rectangle, has to be stitched from two masks ([source](https://www.asml.com/en/company/stories/2024/5-things-high-na-euv)). On 8 September 2026 ASML and TSMC announced a move to 12-inch masks, larger than today's, to remove that limit, with a pilot line in 2031 ([source](https://www.asml.com/en/news/press-releases/2026/tsmc-and-asml-announce-industry-transition-to-large-format-photomasks-for-high-na-euv)).
 
 ## Variants and trade-offs
 

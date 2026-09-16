@@ -76,9 +76,15 @@ Applied Materials and Lam Research, the two largest deposition and etch supplier
 
 Deposition and etch build the chip itself, one layer at a time. Deposition lays down a film a few atoms thick. Lithography prints a pattern on it. Etch then eats away everything the pattern does not protect, and the next film goes down on top. A chip takes more than a thousand of these rounds. The film has to reach the bottom of holes hundreds of times deeper than they are wide, and the etch has to eat one material and leave the one beside it untouched. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.
 
-CSET puts a single chip at more than 1,000 process steps, with the part-finished product crossing international borders 70 or more times ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
+Both steps happen in a vacuum chamber that holds one wafer at a time. A pump empties the chamber of air, a measured flow of gas comes in, and an electric field that reverses millions of times a second, a radio-frequency field, strips electrons off the gas molecules. The gas is now a plasma, charged fragments that react far more readily than whole molecules do.
 
-Most of those steps happen in a vacuum chamber: a radio-frequency field strips electrons off a process gas, and the charged fragments left over do the chemistry. Change the gas, the pressure, the power and the temperature, and the same hardware either adds material or takes it away. That is why the export controls here name process specifications rather than machines.
+For deposition the gas carries the material wanted. The fragments land on the wafer and stick, and the film builds from the bottom up, a few atoms at a time. To coat the floor of a deep hole as thickly as its rim, the machine can work in cycles: let one gas settle in a single layer on every surface, pump it out, admit a second gas that reacts with that layer and nothing else, pump again. Each cycle adds one layer of atoms wherever the gas reached, so the film gets to the bottom of holes hundreds of times deeper than they are wide.
+
+For etch the gas attacks one material and leaves the one beside it. Wherever the photoresist pattern covers the wafer, nothing happens. Wherever it does not, the fragments react with the surface and turn it into a gas, which the pump carries away. A second field pulls the charged fragments straight down at the wafer, so the etch cuts vertically and a narrow hole keeps its width as it deepens. When the etch reaches the material underneath, which the gas was chosen not to touch, it slows almost to a stop, and the tool ends the step.
+
+Change the gas, the pressure, the power and the temperature, and the same hardware either adds material or takes it away, which is why the export controls here name process specifications rather than machines.
+
+CSET puts a single chip at more than 1,000 process steps, with the part-finished product crossing international borders 70 or more times ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 
 ## Variants and trade-offs
 

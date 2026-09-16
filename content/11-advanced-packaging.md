@@ -80,9 +80,9 @@ A lithography scanner prints a rectangle 26 mm by 33 mm, or 858 mm2, in one expo
 
 Packaging joins finished chips into one component and mounts them on a base, called a substrate, wired almost as finely as the chips themselves. A lithography machine, which prints a chip's circuits, can cover only a rectangle about the size of a postage stamp in one shot, so a modern accelerator cannot be one chip. It is made as several pieces, set side by side on a shared slab of silicon and wired together through it, with the memory a few millimeters away. Slab, chips and base all expand at different rates when heated, so the package can warp and its joints crack. Getting that right in volume is hard enough that nearly every AI accelerator is packaged by TSMC, in Taiwan.
 
-High bandwidth memory gives a second reason to split the package: its 1,024-bit or 2,048-bit connection is too wide for a resin base board to carry, so the memory sits beside the logic on a shared silicon carrier, the interposer.
+High bandwidth memory gives a second reason to split the package: its 1,024-bit or 2,048-bit connection, that many wires at once, is too wide for a resin base board to carry, so the memory sits beside the logic on a shared silicon carrier, the interposer.
 
-The name CoWoS says the order: chip onto wafer, then wafer onto substrate. TSMC makes a thin silicon wafer carrying wiring and vertical copper vias but no transistors, bonds logic dies and memory stacks face down onto it with microbumps 30 to 40 microns apart, then cuts out the interposer and attaches it to the resin substrate.
+The name CoWoS says the order: chip onto wafer, then wafer onto substrate. TSMC makes a thin silicon wafer carrying wiring and vertical copper vias, metal-filled holes that join one layer of wiring to the next, but no transistors. It bonds the logic dies and memory stacks face down onto that wafer with microbumps, dots of solder 30 to 40 microns apart, about a third of a hair's width, each dot one electrical joint. Then it cuts the interposer out of the wafer, attaches it to the resin substrate, and the substrate goes onto its board.
 
 The individual steps are ordinary. But one cracked joint scraps a package holding eight qualified HBM stacks and two of the most expensive logic dies ever made.
 

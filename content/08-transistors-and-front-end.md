@@ -74,9 +74,15 @@ A Blackwell GPU is 208 billion switches on two dies, each the largest a lithogra
 
 The front end of a chip factory is the part that builds the transistors, the billions of tiny switches in every chip. Each switch is a valve. Current runs along a narrow strip of silicon called the channel, and a small voltage on a gate above the strip opens or shuts the flow. Shorter strips switch faster and more of them fit on a chip, but make the strip short enough and the valve stops sealing: current leaks through even when the gate is off, and the chip burns power doing nothing. The fix is to wrap the gate around all four sides of the strip, which takes a long sequence of steps that have to run in exact order. Only TSMC, Intel and Samsung can do it, a list short enough for an export rule to name in full.
 
-That leak is short-channel leakage, and it has three fixes:
+The front end builds that valve in a fixed order. First it marks where each transistor will sit and fires atoms of boron or phosphorus into the silicon there, a step called ion implantation, so that those patches conduct the way the design needs.
 
-- **Better insulator.** Thicker, so less current tunnels through it, yet gripping the channel as tightly as before: Intel switched the gate insulator from silicon dioxide to hafnium at 45 nm in 2007 ([source](https://www.intel.com/pressroom/archive/releases/2007/20070128comp.htm)).
+Next it shapes the channel, in a FinFET by etching the silicon into thin fins standing up from the wafer and laying the gate over the top and both sides of each fin, three sides instead of one. In a gate-all-around transistor the fab instead grows alternating layers of silicon and silicon-germanium, cuts the stack into a narrow bar, then dissolves the silicon-germanium away, leaving thin silicon sheets held at their ends like shelves, and fills the gaps above, below and beside each sheet with gate metal, all four sides. Before the metal goes in, a film of insulator a few atoms thick is laid over every sheet, so that the gate controls the channel without touching it. Last come the contacts, small metal plugs down to the two ends of the channel and to the gate, ready for the wiring layers above.
+
+Each of those is a deposition, an etch or an implant of its own, and they have to run in exact order, since a sheet cannot be wrapped once the metal is on, nor the insulator added once it is buried.
+
+The leak the wrapping fights is short-channel leakage, and it has three fixes:
+
+- **Better insulator.** Thicker, so fewer electrons slip straight through it, yet gripping the channel as tightly as before: Intel switched the gate insulator from silicon dioxide to hafnium at 45 nm in 2007 ([source](https://www.intel.com/pressroom/archive/releases/2007/20070128comp.htm)).
 - **More gate.** Wrap gate metal around more sides of the channel, as fins and nanosheets do.
 - **Thinner channel.** Thin the silicon until no current can flow where the gate cannot reach it.
 
