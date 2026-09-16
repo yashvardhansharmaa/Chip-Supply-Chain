@@ -519,7 +519,8 @@ const glossaryHTML = glossary.length ? glossary.slice().sort((a, b) => a.term.lo
 const totalWords = all.reduce((a, c) => a + c.words, 0);
 const credits = `Made by <b><a href="https://www.linkedin.com/in/yashvardhan07/" target="_blank" rel="noopener">Yashvardhan Sharma</a></b> with Claude. Inspired by <a href="https://www.humanityslastmachine.com/" target="_blank" rel="noopener">Humanity's Last Machine</a> and <a href="https://cset.georgetown.edu/publication/the-semiconductor-supply-chain/" target="_blank" rel="noopener">CSET's supply-chain work</a>. Corrections and questions: <a href="mailto:contact@chipsupplychain.org">contact@chipsupplychain.org</a>.`;
 const builtOn = new Date(); const builtStr = `${builtOn.getDate()} ${MONTHS[builtOn.getMonth()]} ${builtOn.getFullYear()}`;
-const footer = `<p class="credits">${credits}<span class="updated">Updated ${builtStr}</span></p><p class="sources-key"><span class="tier tier-A">A</span> company filings, governments, standards bodies, universities and research institutions; <span class="tier tier-B">B</span> SemiAnalysis, Reuters, the Financial Times and Nikkei Asia.</p>`;
+const footer = `<p class="credits">${credits}<span class="updated">Updated ${builtStr}</span></p>`;
+const footerKey = footer + `<p class="sources-key"><span class="tier tier-A">A</span> company filings, governments, standards bodies, universities and research institutions; <span class="tier tier-B">B</span> SemiAnalysis, Reuters, the Financial Times and Nikkei Asia.</p>`;
 const suppliersIntro = suppliers.length ? `What each of the ${suppliers.length} firms makes, where it sits, and how hard it would be to replace.` : 'The supplier list is not compiled yet.';
 
 const kit = read(path.join(root, 'src', 'kit.js')) || '';
@@ -550,7 +551,7 @@ fill('ANALYTICS', SITE.analytics ? `<script>window.goatcounter={path:function(){
 const sheetPages = [['#/', 'Home'], ['#/intro', 'Start here'], ['#/chain', 'The Chain'], ['#/landscape', 'AI Chips'], ['#/suppliers', 'Suppliers'], ['#/controls', 'Export Controls'], ['#/glossary', 'Glossary']].map((p) => `<a href="${p[0]}">${p[1]}</a>`).join('');
 const sheetChapters = all.map((ch) => { const sc = +((ch.meta.card || {}).chokepointScore || 0); return `<li><a href="${ch.id === 'geopolitics' ? '#geopolitics' : '#' + esc(ch.id)}"><span class="n">${pad(ch.number)}</span><span class="t">${esc(ch.title)}</span><span class="s${sc >= 5 ? ' hi' : ''}">${sc ? sc + ' / 5' : ''}</span></a></li>`; }).join('');
 fill('SHEET_PAGES', sheetPages); fill('SHEET_CHAPTERS', sheetChapters);
-fill('RAIL', railHTML); fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits); fill('FOOTER', footer);
+fill('RAIL', railHTML); fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits); fill('FOOTER', footer); fill('FOOTER_KEY', footerKey);
 fill('SUPPLIERS_INTRO', suppliersIntro); fill('BUILT', builtStr);
 // the PDF title page's art ships beside the page
 for (const asset of ['print-title.png']) { const from = path.join(root, 'build', 'assets', asset); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', asset)); } fill('GEO_DEK', esc(geoDek)); fill('GEO_BODY', geoBody);
