@@ -568,7 +568,7 @@
   },
   {
     "term": "Substitutability",
-    "aka": "Easy, Moderate, Hard, Very hard",
+    "aka": "substitutability rating",
     "plain": "A four-band rating of how hard it would be for a well-funded state or firm, starting today, to build an alternative to the leaders of a stage, judged against four written tests. Easy: a second supplier is qualified, meaning approved by customers, and shipping today at the leading node, the most advanced process. Moderate: a second supplier exists but is not yet qualified at the leading node, about two to five years to close the gap. Hard: no second supplier at the leading node, five to ten years, and the path is known. Very hard: no second supplier, and the path runs through physics, decades of unwritten know-how or protected intellectual property, ten years or more, and nobody has repeated it yet. The clock always times the same actor and runs to qualification, not to a prototype.",
     "why": "It says how long a rival or a government would need to replace a stage, which is the question the export debate turns on.",
     "chapter": null
@@ -1121,7 +1121,7 @@
   },
   {
     "term": "nanometer",
-    "aka": "nm, nanometers, micron, microns, micrometer, micrometers, angstrom, angstroms, picometer, picometers",
+    "aka": "nm, nanometers, microns, micrometer, micrometers, angstrom, angstroms, picometer, picometers",
     "plain": "A nanometer is a billionth of a meter, about the width of ten atoms; a human hair is about 80,000 of them across. A micron, or micrometer, is a thousand nanometers, an angstrom is a tenth of a nanometer, and a picometer is a thousandth. Lithography light is measured in nanometers, package bumps in microns, and mirror flatness in picometers.",
     "why": "Node names such as 2 nm no longer describe any feature that size, but the physical limits of printing and stacking are still set in these units.",
     "chapter": "lithography"
