@@ -1,0 +1,45 @@
+::ffff:127.0.0.1 - - [17/Sep/2026 18:10:03] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:26:44] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:26:44] "GET /print-title.png HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:26:47] code 404, message File not found
+::ffff:127.0.0.1 - - [17/Sep/2026 18:26:47] "GET /favicon.ico HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:26:53] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:26:53] "GET /print-title.png HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:26:56] code 404, message File not found
+::ffff:127.0.0.1 - - [17/Sep/2026 18:26:56] "GET /favicon.ico HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:27:56] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:27:56] "GET /print-title.png HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:27:59] code 404, message File not found
+::ffff:127.0.0.1 - - [17/Sep/2026 18:27:59] "GET /favicon.ico HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:28:04] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:28:04] "GET /print-title.png HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:28:08] code 404, message File not found
+::ffff:127.0.0.1 - - [17/Sep/2026 18:28:08] "GET /favicon.ico HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:28:14] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:28:14] "GET /print-title.png HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:28:17] code 404, message File not found
+::ffff:127.0.0.1 - - [17/Sep/2026 18:28:17] "GET /favicon.ico HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:28:24] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:28:24] "GET /print-title.png HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:28:27] code 404, message File not found
+::ffff:127.0.0.1 - - [17/Sep/2026 18:28:27] "GET /favicon.ico HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:28:33] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:28:33] "GET /print-title.png HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:28:38] code 404, message File not found
+::ffff:127.0.0.1 - - [17/Sep/2026 18:28:38] "GET /favicon.ico HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:28:42] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:28:42] "GET /print-title.png HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:28:46] code 404, message File not found
+::ffff:127.0.0.1 - - [17/Sep/2026 18:28:46] "GET /favicon.ico HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:29:49] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:29:49] "GET /print-title.png HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:29:52] code 404, message File not found
+::ffff:127.0.0.1 - - [17/Sep/2026 18:29:52] "GET /favicon.ico HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:29:59] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:29:59] "GET /print-title.png HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:30:02] code 404, message File not found
+::ffff:127.0.0.1 - - [17/Sep/2026 18:30:02] "GET /favicon.ico HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:30:08] "GET /?theme=dark HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:30:08] "GET /print-title.png HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [17/Sep/2026 18:30:11] code 404, message File not found
+::ffff:127.0.0.1 - - [17/Sep/2026 18:30:11] "GET /favicon.ico HTTP/1.1" 404 -
