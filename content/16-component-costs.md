@@ -196,7 +196,7 @@ CoWoS-L, the TSMC process that mounts dies and memory on one carrier and wires t
 | Manufacturing cost | ~$6,400 | $5,700-7,300 |
 | Selling price | $30,000-40,000 | |
 
-Epoch AI models each line as a range rather than a single figure, deriving the packaging line from TSMC's advanced packaging revenue and Nvidia's share of CoWoS capacity ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Nothing of that quality exists for the H100 or Rubin.
+Epoch AI models each line as a range, deriving the packaging line from TSMC's advanced packaging revenue and Nvidia's share of CoWoS capacity ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Nothing of that quality exists for the H100 or Rubin.
 
 {{figure:b200-bom}}
 
@@ -248,7 +248,7 @@ Per unit of compute, logic keeps getting cheaper and everything wrapped around i
 | Leading-edge logic wafers | Compressible with scale | Defect density and utilization improve through a ramp. |
 | Design and EDA | Compressible with scale | Engineering cost amortises across volume. |
 | Deposition and etch tools | Compressible with scale | Credible second sources in most steps. |
-| ABF substrates | Compressible with scale | A laminate line, not a physics frontier. |
+| ABF substrates | Compressible with scale | A laminate line, buildable at scale. |
 | Optical transceivers | Compressible with scale | Copper and co-packaged optics cap the price. |
 | Test and assembly (OSAT) | Already commoditized | 17 to 21 percent margins; clears on price. |
 | Wafers and bulk gases | Already commoditized | Multi-supplier, long-qualified, thin spreads. |

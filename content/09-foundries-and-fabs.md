@@ -71,7 +71,7 @@ A foundry is a fab that makes chips for other companies. Those companies send in
 
 Inside, the work is one loop repeated for every layer. Wafers travel in a lot, a batch of 25 in a sealed pod called a FOUP that only a machine opens. An overhead track carries the pod from tool to tool. At each tool a robot lifts one wafer out, the tool does its one job, depositing a film, printing a pattern, etching it, cleaning it or measuring it, and the robot puts the wafer back. The pod moves on to the next tool, often across the building, and the loop starts again with the next layer. A chip takes hundreds of those visits, so a wafer spends months inside.
 
-The pod keeps the wafer clean for all of that time, because the wafer never meets the room's air, and even that air is filtered until it carries almost no dust. Every design in the building runs on the same tools because each tool is set by recipe, the list of gases, temperatures and times for one step, and a foundry offers each customer the same menu of recipes rather than a machine of its own. The tools run around the clock, since an idle tool earns nothing. The finished wafer is tested (see [Test and assembly](#test-and-assembly)), then cut and packaged.
+The pod keeps the wafer clean for all of that time, because the wafer never meets the room's air, and even that air is filtered until it carries almost no dust. Every design in the building runs on the same tools because each tool is set by recipe, the list of gases, temperatures and times for one step, and a foundry offers each customer the same menu of recipes on shared machines. The tools run around the clock, since an idle tool earns nothing. The finished wafer is tested (see [Test and assembly](#test-and-assembly)), then cut and packaged.
 
 TSMC, founded in 1987, invented the pure-play model: it builds chips for other companies and promises never to compete with them. BCG puts the ten-year cost of owning a fab completed in 2026 at $35 to $43 billion, a third to two thirds above one finished three years earlier ([source](https://www.bcg.com/publications/2023/navigating-the-semiconductor-manufacturing-costs)).
 
@@ -95,13 +95,13 @@ SMIC, Hua Hong and Rapidus exist because a government decided they should. SMIC'
 
 ### Mature-node capacity
 
-Most wafers come off older lines. The industry association SEMI expects foundries alone to reach 12.7 million wafers a month by 2026, with the fastest growth in China ([source](https://www.semi.org/en/news-media-press-releases/semi-press-releases/global-semiconductor-fab-capacity-projected-to-expand-6%25-in-2024-and-7%25-in-2025-semi-reports)). Those lines make power devices, analog chips and microcontrollers, and compete on price rather than density.
+Most wafers come off older lines. The industry association SEMI expects foundries alone to reach 12.7 million wafers a month by 2026, with the fastest growth in China ([source](https://www.semi.org/en/news-media-press-releases/semi-press-releases/global-semiconductor-fab-capacity-projected-to-expand-6%25-in-2024-and-7%25-in-2025-semi-reports)). Those lines make power devices, analog chips and microcontrollers, and compete on price.
 
 ## Capacity and cost
 
 TSMC intends to spend $165 billion in the United States, adding $100 billion in March 2025 to the $65 billion already committed in Phoenix, for three more fabs, two packaging plants and an R&D center ([source](https://pr.tsmc.com/english/news/3210)). That is the largest foreign direct investment in US history, and it still does not move a gigafab.
 
-TSMC does not auction capacity; it books it years ahead against prepayments, so the queue for a node is set before the node exists. Through 2024 and 2025 the binding constraint was packaging rather than wafers. See [Advanced packaging](#advanced-packaging).
+TSMC does not auction capacity; it books it years ahead against prepayments, so the queue for a node is set before the node exists. Through 2024 and 2025 the binding constraint was packaging. See [Advanced packaging](#advanced-packaging).
 
 ## Who makes it
 
@@ -120,7 +120,7 @@ SEMI forecast China at 10.1 million wafers a month in 2025, the most of any regi
 Three risks stack on one island:
 
 - **Seismic.** Taiwan sits on an active plate boundary, and a tool knocked out of calibration scraps the work in progress across a whole fab.
-- **Power.** A gigafab is a large industrial load on a small island grid. Spare generating capacity, rather than anything about silicon, sets how fast Taiwan can add fabs.
+- **Power.** A gigafab is a large industrial load on a small island grid. Spare generating capacity sets how fast Taiwan can add fabs.
 - **Political.** A blockade or conflict would remove most sub-5 nm capacity from the world market at once, with no substitute available inside a decade. See [Geopolitics](#geopolitics).
 
 Diversification is slow because the hard part of a fab is a workforce that has run one process for years, and TSMC has yet to build a gigafab anywhere but Taiwan ([source](https://www.tsmc.com/english/dedicatedFoundry/manufacturing/gigafab)).
@@ -128,7 +128,7 @@ Diversification is slow because the hard part of a fab is a workforce that has r
 ## Key evaluation criteria
 
 - **Leading-edge share.** TSMC's 77 percent of wafer revenue from 7 nm and below is why it can self-fund the next node ([source](https://www.sec.gov/Archives/edgar/data/0001046179/000104617926000451/a2q26e_withguidancexfinal.htm)).
-- **Yield at ramp.** How many good chips a new process gives in its first year, which separates a profitable node from a subsidized one. Intel Foundry's loss comes from yield rather than from weak demand.
+- **Yield at ramp.** How many good chips a new process gives in its first year, which separates a profitable node from a subsidized one. Intel Foundry's loss comes from yield.
 - **Ten-year cost of ownership.** $35 to $43 billion for a fab finished in 2026, and rising ([source](https://www.bcg.com/publications/2023/navigating-the-semiconductor-manufacturing-costs)).
 - **Utilization.** How full the lines run. SMIC's 93.5 percent shows what a captive home market does for volume, and not for margins ([source](https://www.smics.com/en/site/news_read/7951)).
 - **Customer concentration.** A foundry owned by a chipmaker competes with its own customers, which caps who will trust it with a flagship design.
@@ -136,4 +136,4 @@ Diversification is slow because the hard part of a fab is a workforce that has r
 
 ## Takeaways
 
-The foundry model won because leading-edge fabs are too expensive for one design house, and it concentrated because only the leader earns enough to build the next node. TSMC's six gigafabs hold 13 of the 17 million wafers a year it can make, and all six are in Taiwan ([source](https://www.tsmc.com/english/dedicatedFoundry/manufacturing/gigafab)). Intel and Samsung are credible technically and unproven commercially, and Intel is now part-owned by its government ([source](https://www.intc.com/news-events/press-releases/detail/1748/intel-and-trump-administration-reach-historic-agreement-to)). Diversification costs $165 billion and a decade in the American case alone ([source](https://pr.tsmc.com/english/news/3210)), which makes the concentration in Taiwan a fact about the 2020s and 2030s rather than a problem being solved.
+The foundry model won because leading-edge fabs are too expensive for one design house, and it concentrated because only the leader earns enough to build the next node. TSMC's six gigafabs hold 13 of the 17 million wafers a year it can make, and all six are in Taiwan ([source](https://www.tsmc.com/english/dedicatedFoundry/manufacturing/gigafab)). Intel and Samsung are credible technically and unproven commercially, and Intel is now part-owned by its government ([source](https://www.intc.com/news-events/press-releases/detail/1748/intel-and-trump-administration-reach-historic-agreement-to)). Diversification costs $165 billion and a decade in the American case alone ([source](https://pr.tsmc.com/english/news/3210)), which makes the concentration in Taiwan a fact about the 2020s and 2030s.

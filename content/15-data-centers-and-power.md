@@ -60,13 +60,13 @@
         "note": "Hitachi group transformer manufacturing"
       }
     ],
-    "chinaStatus": "China has surplus generation, a large domestic transformer and switchgear industry, and can energize sites quickly. Its AI buildout is limited by accelerator supply, not megawatts.",
+    "chinaStatus": "China has surplus generation, a large domestic transformer and switchgear industry, and can energize sites quickly. Its AI buildout is limited by accelerator supply, with megawatts to spare.",
     "usStatus": "Has the demand and the capital but cannot shorten the equipment queues. Transformers and turbines are both multi-year waits, most large power transformers are imported, and no restarted reactor is running yet.",
     "costSignal": "Transformer lead times of 36 months, against under a year before 2020; GE Vernova's gas backlog and reserved slots grew from 100 GW to 116 GW in 2026",
     "substitutability": {
       "band": "Moderate",
-      "test": "Several qualified vendors; the wait is a three-year transformer queue and six years of booked turbines, not skill",
-      "why": "Nothing here is unbuilt. Nine firms sell the power and cooling equipment for Nvidia's gigawatt designs, so a buyer can get the kit and haggle over the price. A well-funded actor cannot shorten the queue: large power transformers run to 36-month lead times against under a year before 2020, and GE Vernova's book is close to six years of turbine output, which puts new capacity two to five years out rather than one purchase cycle."
+      "test": "Several qualified vendors; the wait is a three-year transformer queue and six years of booked turbines",
+      "why": "Nothing here is unbuilt. Nine firms sell the power and cooling equipment for Nvidia's gigawatt designs, so a buyer can get the kit and haggle over the price. A well-funded actor cannot shorten the queue: large power transformers run to 36-month lead times against under a year before 2020, and GE Vernova's book is close to six years of turbine output, which puts new capacity two to five years out."
     }
   },
   "keyFacts": [
@@ -234,7 +234,7 @@ A megawatt rack changes the busbar, the floor loading, the coolant flow, the lea
 ### Where the electrons come from
 
 - **Grid interconnection.** The slow path, and the one every announced campus is queued in.
-- **Behind-the-meter gas**, generation on the site itself. The fast path, which is why campuses are sited next to gas rather than next to fiber.
+- **Behind-the-meter gas**, generation on the site itself. The fast path, which is why campuses are sited next to gas.
 - **Nuclear.** Almost entirely prospective. Constellation sold the 835 MW Crane Clean Energy Center forward to Microsoft before a spade went in ([source](https://www.constellationenergy.com/news/2025/constellation-ahead-of-schedule-for-launch-of-crane-clean-energy-center.html)). The plant shut in 2019 and is restarting on a $1 billion federal loan closed in November 2025, still subject to Nuclear Regulatory Commission approval ([source](https://www.energy.gov/articles/energy-department-closes-loan-restart-nuclear-power-plant-pennsylvania)). No restarted reactor is serving data centers yet.
 
 ## Who makes it
@@ -279,4 +279,4 @@ The chip chain moves faster: foundry and memory capacity have repeatedly expande
 
 ## Takeaways
 
-The rack became the unit of AI compute at 142 kW and is heading for a megawatt by 2027 ([source](https://developer.nvidia.com/blog/nvidia-800-v-hvdc-architecture-will-power-the-next-generation-of-ai-factories/)), which forces liquid cooling and an 800-volt bus on every serious operator ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)). Nine vendors sell the cooling equipment, so buying it is a question of price ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)). The power equipment comes with queues: transformers take three years ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)), six years of turbine output is already booked ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)), and Texas has fifty times more large load in the queue than it has approved to switch on ([source](https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf)). When an AI buildout slips, the delay is usually in the substation yard rather than the fab.
+The rack became the unit of AI compute at 142 kW and is heading for a megawatt by 2027 ([source](https://developer.nvidia.com/blog/nvidia-800-v-hvdc-architecture-will-power-the-next-generation-of-ai-factories/)), which forces liquid cooling and an 800-volt bus on every serious operator ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)). Nine vendors sell the cooling equipment, so buying it is a question of price ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)). The power equipment comes with queues: transformers take three years ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)), six years of turbine output is already booked ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)), and Texas has fifty times more large load in the queue than it has approved to switch on ([source](https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf)). When an AI buildout slips, the delay is usually in the substation yard.

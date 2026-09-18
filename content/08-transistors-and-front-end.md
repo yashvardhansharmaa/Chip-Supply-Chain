@@ -106,7 +106,7 @@ Those numbers are vendor claims until someone measures the silicon. Each foundry
 
 Power and signal share one stack of copper wiring above the transistors, where wide power rails crowd out the signal wires. Backside power grinds the wafer thin and builds a second network underneath it.
 
-Intel shipped it first as PowerVia: on 18A, an 11 percent cut in routed area and a tenfold cut in dynamic voltage droop, the sag in supply voltage when a block of logic switches on at once ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)). TSMC's Super Power Rail lands that network straight on each transistor's source and drain rather than on a buried rail, which is harder to build and buys more: against N2P, A16 gives 8 to 10 percent more speed, 15 to 20 percent less power and up to 1.10 times the chip density ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech)).
+Intel shipped it first as PowerVia: on 18A, an 11 percent cut in routed area and a tenfold cut in dynamic voltage droop, the sag in supply voltage when a block of logic switches on at once ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)). TSMC's Super Power Rail lands that network straight on each transistor's source and drain, with no buried rail between, which is harder to build and buys more: against N2P, A16 gives 8 to 10 percent more speed, 15 to 20 percent less power and up to 1.10 times the chip density ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech)).
 
 {{figure:node-roadmap}}
 
@@ -129,7 +129,7 @@ Node names describe nothing physical. SMIC's N+3, sold as 5 nm-class, sets its n
 
 AI accelerators sit a node behind the leading edge, because a die that large comes out working only on a process that has run for years. Blackwell uses a custom TSMC 4NP ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)).
 
-SRAM, the fast memory on the logic die, is the scaling failure that hurts AI chips most. TSMC claims 22 percent more SRAM density from N3E to N2, but the gain comes from the circuits around the array rather than from the cell that holds one bit ([source](https://newsletter.semianalysis.com/p/clash-of-the-foundries)), which is much of why accelerators push their memory off the die. See [Memory and HBM](#memory-and-hbm).
+SRAM, the fast memory on the logic die, is the scaling failure that hurts AI chips most. TSMC claims 22 percent more SRAM density from N3E to N2, but the gain comes from the circuits around the array, and none of it from the cell that holds one bit ([source](https://newsletter.semianalysis.com/p/clash-of-the-foundries)), which is much of why accelerators push their memory off the die. See [Memory and HBM](#memory-and-hbm).
 
 ## The chokepoint
 
@@ -143,11 +143,11 @@ See [Lithography](#lithography) and [Geopolitics](#geopolitics).
 
 - **Electrostatic control.** How far the gate wraps the channel. It sets how much the switch leaks when off, and the lowest supply voltage it can run on.
 - **Density.** Transistors per square millimeter, comparable only inside one foundry's own numbering and for one kind of cell.
-- **Interconnect resistance.** Below a 20 nm wire spacing the wire rather than the transistor sets the delay ([source](https://www.imec-int.com/en/articles/semi-damascene-metallization-inflection-point-back-end-line-processing)).
+- **Interconnect resistance.** Below a 20 nm wire spacing the wire becomes the slower part and sets the delay ([source](https://www.imec-int.com/en/articles/semi-damascene-metallization-inflection-point-back-end-line-processing)).
 - **Power delivery.** The voltage lost carrying power across the die. Backside power buys back area and cuts the droop tenfold ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)).
 - **SRAM scaling.** The cell that holds one bit has stopped shrinking, which caps how much cache an accelerator can afford.
 - **Cost per transistor.** No foundry publishes wafer prices, so the shrinking density gain per node is the proxy. On that proxy, cost per transistor is rising for the first time.
 
 ## Takeaways
 
-Foundries have bought every gain since the FinFET era with process steps and new materials rather than with geometry. TSMC's own numbers show the density gain per node falling from 1.2 times at N2P to about 1.1 at A16 ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech)). Three companies can run a 2 nm-class process, and only TSMC runs it at volume for outside customers. SRAM has stopped shrinking, which is why accelerators keep their memory off the logic die. China can reach 5 nm-class geometry without EUV, and CSIS still reads working EUV systems as out of reach, which is the gap the export controls defend ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).
+Foundries have bought every gain since the FinFET era with process steps and new materials, while geometry gave less each node. TSMC's own numbers show the density gain per node falling from 1.2 times at N2P to about 1.1 at A16 ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech)). Three companies can run a 2 nm-class process, and only TSMC runs it at volume for outside customers. SRAM has stopped shrinking, which is why accelerators keep their memory off the logic die. China can reach 5 nm-class geometry without EUV, and CSIS still reads working EUV systems as out of reach, which is the gap the export controls defend ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).

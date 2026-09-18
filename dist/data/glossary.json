@@ -30,7 +30,7 @@
   {
     "term": "ASIC",
     "aka": "application-specific integrated circuit, custom silicon, ASICs, custom accelerator, custom accelerators, custom chip, custom AI silicon, custom AI ASICs",
-    "plain": "A one-customer chip, designed for a single job rather than sold on the open market. Google's Tensor Processing Unit and Amazon's Trainium are chips of this kind; an Nvidia part sold to any customer is not.",
+    "plain": "A one-customer chip, designed for a single job and never sold on the open market. Google's Tensor Processing Unit and Amazon's Trainium are chips of this kind; an Nvidia part sold to any customer is not.",
     "why": "Custom chips are how the largest cloud buyers try to escape Nvidia's pricing, and roughly 95 percent of the work of designing them alongside the buyer runs through just two firms, Broadcom and Marvell.",
     "chapter": "design-and-eda"
   },
@@ -44,7 +44,7 @@
   {
     "term": "BGA",
     "aka": "ball grid array, FC-BGA, flip-chip BGA",
-    "plain": "A way of joining a packaged chip to a circuit board using a grid of small solder balls across the underside, rather than a row of pins around the edge. Heating the assembly melts every ball at once into a permanent joint.",
+    "plain": "A way of joining a packaged chip to a circuit board using a grid of small solder balls across the underside in place of a row of pins around the edge. Heating the assembly melts every ball at once into a permanent joint.",
     "why": "The number and spacing of those balls limit how much current and how many signals can reach a package, which matters when a single AI accelerator draws more than a thousand amps.",
     "chapter": "substrates-and-pcbs"
   },
@@ -59,7 +59,7 @@
     "term": "BIS",
     "aka": "Bureau of Industry and Security, part of the US Department of Commerce",
     "plain": "The US government office that decides which technologies may be exported, to whom, and on what conditions. It writes the rules, issues the licenses and brings the enforcement cases.",
-    "why": "Almost every restriction on selling AI chips or chipmaking tools to China is a bureau rule, and the bureau can change a threshold with a Federal Register notice rather than an act of Congress.",
+    "why": "Almost every restriction on selling AI chips or chipmaking tools to China is a bureau rule, and the bureau can change a threshold with a Federal Register notice, with no act of Congress needed.",
     "chapter": "geopolitics"
   },
   {
@@ -72,7 +72,7 @@
   {
     "term": "chiplet",
     "aka": "chiplets",
-    "plain": "One of several smaller pieces that a chip has been deliberately split into, each manufactured separately and then wired back together inside a single package. A chip built this way is a house assembled from prefabricated rooms rather than poured as one slab.",
+    "plain": "One of several smaller pieces that a chip has been deliberately split into, each manufactured separately and then wired back together inside a single package. A chip built this way is a house assembled from prefabricated rooms.",
     "why": "Splitting a design raises yield and lets a firm mix manufacturing processes, but it pushes the difficulty into packaging, which is the more constrained stage.",
     "chapter": "design-and-eda"
   },
@@ -86,8 +86,8 @@
   {
     "term": "compute threshold",
     "aka": "training compute threshold",
-    "plain": "A limit set on the amount of arithmetic used to train an AI model, rather than on the chips that do the arithmetic. The 2023 US executive order on AI set its reporting line at \"any model that was trained using a quantity of computing power greater than 10^26 integer or floating-point operations\" (Executive Order 14110, section 4.2(b)(i), 88 FR 75191). The same number became an export control in January 2025: ECCN 4E091 covers \"'Parameters' for an artificial intelligence model trained utilizing 10^26 or more 'operations'\", and 15 CFR 742.6(a)(13) requires a license for them to every destination worldwide. Europe drew its line ten times lower, at a cumulative training run \"greater than 10^25\" floating point operations, in Article 51(2) of the EU AI Act.",
-    "why": "Every other control threshold measures a chip. This one measures the model the chips train, which is the only place the rules reach a capability rather than a box. The two numbers also disagree by a factor of ten, and Article 51(3) lets the European Commission move its figure by delegated act, so the model-level line is the one most likely to shift.",
+    "plain": "A limit set on the amount of arithmetic used to train an AI model. It counts operations, whichever chips run them. The 2023 US executive order on AI set its reporting line at \"any model that was trained using a quantity of computing power greater than 10^26 integer or floating-point operations\" (Executive Order 14110, section 4.2(b)(i), 88 FR 75191). The same number became an export control in January 2025: ECCN 4E091 covers \"'Parameters' for an artificial intelligence model trained utilizing 10^26 or more 'operations'\", and 15 CFR 742.6(a)(13) requires a license for them to every destination worldwide. Europe drew its line ten times lower, at a cumulative training run \"greater than 10^25\" floating point operations, in Article 51(2) of the EU AI Act.",
+    "why": "Every other control threshold measures a chip. This one measures the model the chips train, which is the only place the rules reach a capability itself. The two numbers also disagree by a factor of ten, and Article 51(3) lets the European Commission move its figure by delegated act, so the model-level line is the one most likely to shift.",
     "chapter": "geopolitics"
   },
   {
@@ -101,7 +101,7 @@
     "term": "Country Groups",
     "aka": "Country Group, Country Group D:5, D:5, A:5, D:1, D:3, D:4, arms-embargoed countries",
     "plain": "The groups that US export rules sort the world's countries into, published as supplement no. 1 to 15 CFR part 740. A:5 and A:6 are close partners; D:1, D:4 and D:5 are the national security, missile technology and arms-embargoed groups; E:1 and E:2 are the most restricted. A country can sit in several at once, and the license requirement usually turns on which.",
-    "why": "The license rule for AI chips is written as country groups, not country names: a license is needed for D:1, D:4 and D:5 destinations that are not also A:5 or A:6 (15 CFR 742.6(a)(6)). Moving the UAE into A:5 in July 2026 changed its position without naming it in the rule.",
+    "why": "The license rule for AI chips is written in country groups: a license is needed for D:1, D:4 and D:5 destinations that are not also A:5 or A:6 (15 CFR 742.6(a)(6)). Moving the UAE into A:5 in July 2026 changed its position without naming it in the rule.",
     "chapter": "geopolitics"
   },
   {
@@ -121,14 +121,14 @@
   {
     "term": "defect density",
     "aka": "D0, defects per square centimeter",
-    "plain": "The average number of chip-killing flaws per square centimeter of processed wafer. It is a fab's quality score, inferred from how many chips come out working rather than counted directly.",
+    "plain": "The average number of chip-killing flaws per square centimeter of processed wafer. It is a fab's quality score, inferred from how many chips come out working.",
     "why": "Yield falls steeply with die area multiplied by defect density, so on the reticle-sized dies AI chips use, halving defect density nearly doubles the number of saleable parts.",
     "chapter": "metrology-and-inspection"
   },
   {
     "term": "denial order",
     "aka": "",
-    "plain": "An order from BIS that shuts a named party out of trade in US-controlled items as a penalty, rather than a policy for reviewing licenses. Under 15 CFR 764.3 it suspends or revokes the party's outstanding licenses and bars exports, reexports and in-country transfers of any item subject to the EAR to or by that party. There is no application to file. Orders can be issued outright or suspended and later activated.",
+    "plain": "An order from BIS that shuts a named party out of trade in US-controlled items, as a penalty. It is a punishment, and no license policy is involved. Under 15 CFR 764.3 it suspends or revokes the party's outstanding licenses and bars exports, reexports and in-country transfers of any item subject to the EAR to or by that party. There is no application to file. Orders can be issued outright or suspended and later activated.",
     "why": "It is the only instrument that stops trade absolutely. The order activated against ZTE in April 2018 halted most of the company's production within weeks and was terminated 89 days later on settlement (83 FR 17644; 83 FR 34825).",
     "chapter": "geopolitics"
   },
@@ -164,13 +164,13 @@
     "term": "EAR",
     "aka": "Export Administration Regulations",
     "plain": "The body of US rules that governs the export of commercial goods, software and technology, including items with both civilian and military uses, written and enforced by the Bureau of Industry and Security. They run from 15 CFR part 730 to part 774: part 734 sets what they cover, part 742 the license requirements, part 744 the end-use and end-user controls, part 740 the exceptions and part 764 the penalties.",
-    "why": "Almost every American export rule on chips and chip tools amends these regulations. They are changed by a notice in the Federal Register, not by an act of Congress, which is why a threshold can move in a week.",
+    "why": "Almost every American export rule on chips and chip tools amends these regulations. They are changed by a notice in the Federal Register, with no act of Congress, which is why a threshold can move in a week.",
     "chapter": "geopolitics"
   },
   {
     "term": "EAR99",
     "aka": "",
-    "plain": "The label for an item that falls under US export rules but is not named on the Commerce Control List, the catalog of controlled items, from 15 CFR 734.3(c). It is a residual category, not a free pass: an EAR99 item still needs a license if it is going to a listed party or a controlled end use.",
+    "plain": "The label for an item that falls under US export rules but is not named on the Commerce Control List, the catalog of controlled items, from 15 CFR 734.3(c). It is a residual category with conditions: an EAR99 item still needs a license if it is going to a listed party or a controlled end use.",
     "why": "Most of what a chip plant buys is EAR99. It is the answer to \"do I need a license?\" for the great majority of shipments, and the reason the end-user controls in part 744 matter more than the classification for many exporters.",
     "chapter": "geopolitics"
   },
@@ -191,22 +191,22 @@
   {
     "term": "end-use and end-user controls",
     "aka": "end user, end users, end-user, end use, military end user",
-    "plain": "Export rules that turn on who the buyer is and what they will do with the item, rather than on what the item is. The same tool can ship freely to one customer and need a license that will be refused for another.",
+    "plain": "Export rules that turn on who the buyer is and what they will do with the item, whatever the item is. The same tool can ship freely to one customer and need a license that will be refused for another.",
     "why": "These controls reach past the product to the customer, so a company can lose access because of who owns it or what its site produces, as when US rules were extended to firms majority owned by listed entities.",
     "chapter": "geopolitics"
   },
   {
     "term": "Entity List",
     "aka": "entity-list, Entity-Listed, Entity List additions, listed entity, listed entities, listed firm, listed firms",
-    "plain": "A published list of foreign companies, institutes and individuals that need a license before anyone, not only an American supplier, may send them an item subject to the EAR. Each entry states its own license review policy, so a listing is not one uniform outcome: most carry a presumption of denial, meaning the license will normally be refused; SMIC's is case by case except for items uniquely capable of production at 10 nanometers and below. It is supplement no. 4 to 15 CFR part 744, and the license requirement is in 15 CFR 744.11.",
-    "why": "The fastest and bluntest instrument Washington has: it names an organization rather than a technology. Since September 2025 a listing has reached companies the listed firm half owns, though that extension is stayed to 9 November 2026 (90 FR 50857).",
+    "plain": "A published list of foreign companies, institutes and individuals that need a license before anyone anywhere, American or foreign, may send them an item subject to the EAR. Each entry states its own license review policy, so a listing is not one uniform outcome: most carry a presumption of denial, meaning the license will normally be refused; SMIC's is case by case except for items uniquely capable of production at 10 nanometers and below. It is supplement no. 4 to 15 CFR part 744, and the license requirement is in 15 CFR 744.11.",
+    "why": "The fastest and bluntest instrument Washington has: it names an organization. Since September 2025 a listing has reached companies the listed firm half owns, though that extension is stayed to 9 November 2026 (90 FR 50857).",
     "chapter": "geopolitics"
   },
   {
     "term": "etch",
     "aka": "etching, etched, etches, etcher, etchers, dry etch",
     "plain": "Removing material from a wafer wherever the printed pattern says it should not be, usually by turning a gas into a plasma whose ions and fragments eat one material while leaving the material beside it alone.",
-    "why": "Stacked memory and wrap-around transistors need holes far deeper than they are wide, which is why US rules control etch tools by hole shape and selectivity rather than by product name.",
+    "why": "Stacked memory and wrap-around transistors need holes far deeper than they are wide, which is why US rules control etch tools by hole shape and selectivity.",
     "chapter": "deposition-and-etch"
   },
   {
@@ -268,7 +268,7 @@
   {
     "term": "gate-all-around",
     "aka": "GAA, nanosheet transistor, RibbonFET at Intel, nanosheet, nanosheets, RibbonFET, GAA transistor, gate-all-around transistors",
-    "plain": "A transistor in which the gate, the electrode that switches the current, wraps all the way round the channel that current flows through, rather than touching three sides as a fin does. Surrounding the channel gives the gate full control, so the switch still turns fully off as dimensions shrink.",
+    "plain": "A transistor in which the gate, the electrode that switches the current, wraps all the way round the channel that current flows through; a fin's gate touches three sides. Surrounding the channel gives the gate full control, so the switch still turns fully off as dimensions shrink.",
     "why": "Only TSMC, Intel and Samsung can build the 2 nanometer generation's transistor in volume, and it is what drives new demand for atomic layer deposition and sideways etching tools.",
     "chapter": "transistors-and-front-end"
   },
@@ -338,8 +338,8 @@
   {
     "term": "is-informed letter",
     "aka": "is informed letter, is-informed letters, by letter",
-    "plain": "A letter from BIS to one named company imposing a license requirement on a specific export, without any rule being published. The authority is written into the regulations themselves, for example 15 CFR 744.23(b), which lets BIS inform a person individually rather than by amending the EAR.",
-    "why": "It is how the fastest moves are made. The A100 and H100 requirement of August 2022 and the H20 requirement of April 2025 both arrived this way, and the public learned of each from the company's own filing rather than the Federal Register.",
+    "plain": "A letter from BIS to one named company imposing a license requirement on a specific export, without any rule being published. The authority is written into the regulations themselves, for example 15 CFR 744.23(b), which lets BIS inform a person individually, with no amendment to the EAR.",
+    "why": "It is how the fastest moves are made. The A100 and H100 requirement of August 2022 and the H20 requirement of April 2025 both arrived this way, and the public learned of each from the company's own filing.",
     "chapter": "geopolitics"
   },
   {
@@ -381,7 +381,7 @@
     "term": "License Exception NAC",
     "aka": "NAC, Notified Advanced Computing",
     "plain": "The exception at 15 CFR 740.8 that lets certain advanced computing chips ship to Macau, to Country Group D:5 and to entities headquartered there, provided the exporter notifies BIS in advance and BIS does not object. It does not cover the data center parts that meet the 3A090.a parameters, nor the memory in 3A090.c.",
-    "why": "It is the valve in an otherwise closed door: a notification rather than a license, for chips below the top band. Since December 2024 the section carries two exceptions, NAC for the restricted destinations and ACA for everywhere else.",
+    "why": "It is the valve in an otherwise closed door: a notification, with no license needed, for chips below the top band. Since December 2024 the section carries two exceptions, NAC for the restricted destinations and ACA for everywhere else.",
     "chapter": "geopolitics"
   },
   {
@@ -402,7 +402,7 @@
     "term": "memory wall",
     "aka": "",
     "plain": "The widening gap between how fast a processor can calculate and how fast memory can feed it numbers to work on. Computing speed has been roughly tripling every two years while memory bandwidth has less than doubled over the same period.",
-    "why": "This gap is why AI accelerators now spend most of their cost and silicon area on memory rather than arithmetic, and why memory suppliers have started earning margins comparable to chip designers.",
+    "why": "This gap is why AI accelerators now spend most of their cost and silicon area on memory, and why memory suppliers have started earning margins comparable to chip designers.",
     "chapter": "memory-and-hbm"
   },
   {
@@ -423,7 +423,7 @@
     "term": "node",
     "aka": "process node, technology node, for example N2 or 18A, nodes",
     "plain": "The name a foundry gives one generation of its manufacturing process. The number in the name stopped measuring anything on the chip decades ago: nothing on TSMC's N2 is 2 nanometers wide, and SMIC's 5 nanometer-class process has a tighter metal spacing than Intel's 18A.",
-    "why": "Because node names are marketing labels rather than measurements, rules and comparisons that lean on them are unreliable, which is why US export thresholds specify transistor type and metal spacing instead.",
+    "why": "Because node names are marketing labels and measure nothing, rules and comparisons that lean on them are unreliable, which is why US export thresholds specify transistor type and metal spacing.",
     "chapter": "transistors-and-front-end"
   },
   {
@@ -464,7 +464,7 @@
   {
     "term": "pellicle",
     "aka": "pellicles, EUV pellicle",
-    "plain": "A thin transparent membrane held a few millimeters above a photomask so that dust settles on it rather than on the pattern, far enough out of focus that it does not print. It is a lens cap a photographer can shoot through.",
+    "plain": "A thin transparent membrane held a few millimeters above a photomask so that dust settles on it, far enough out of focus that it does not print, and the pattern stays clean. It is a lens cap a photographer can shoot through.",
     "why": "No membrane yet survives extreme ultraviolet light while passing enough of it, so fabs trade printing speed against defect risk product by product, and solving this would cut the cost of that printing more than any machine upgrade.",
     "chapter": "photomasks-and-pellicles"
   },
@@ -472,7 +472,7 @@
     "term": "performance density",
     "aka": "",
     "plain": "A chip's TPP, the export rules' measure of computing power, divided by the area of its logic dies in square millimeters, memory stacks excluded. It applies only to a chip that already reaches 1,600 TPP, and it catches parts that spread the same computing power over more silicon. It replaced the 2022 test, which was based on interconnect bandwidth, the speed at which a chip exchanges data with its neighbors.",
-    "why": "It closed the gap the A800 and H800 used, and it is the clearest case of a control written as a formula rather than a product name. The threshold is 5.92 in ECCN 3A090.a (88 FR 73458).",
+    "why": "It closed the gap the A800 and H800 used, and it is the clearest case of a control written as a formula. The threshold is 5.92 in ECCN 3A090.a (88 FR 73458).",
     "chapter": "geopolitics"
   },
   {
@@ -492,7 +492,7 @@
   {
     "term": "presumption of denial",
     "aka": "",
-    "plain": "A license review policy, not a ban. An application may be filed and will be considered, but the reviewing agencies start from the position that it should be refused, and the exporter has to displace that. It is the policy for advanced computing chips going to China and Macau under 15 CFR 742.6(b)(10), and for most Entity List entries.",
+    "plain": "A license review policy. An application may be filed and will be considered, but the reviewing agencies start from the position that it should be refused, and the exporter has to displace that. It is the policy for advanced computing chips going to China and Macau under 15 CFR 742.6(b)(10), and for most Entity List entries.",
     "why": "It is the distinction that decides whether a company files at all: under a presumption of denial an application can still be made, under a prohibition it cannot.",
     "chapter": "geopolitics"
   },
@@ -527,7 +527,7 @@
   {
     "term": "reticle limit",
     "aka": "reticle size limit, reticle field, field size, reticle-limited, reticle size, reticles, times reticle",
-    "plain": "The largest chip a lithography machine can print in a single exposure, about 858 square millimeters, or 26 by 33 millimeters. It is set by the machine's optics, not by anything about the design.",
+    "plain": "The largest chip a lithography machine can print in a single exposure, about 858 square millimeters, or 26 by 33 millimeters. It is set by the machine's optics and is the same for every design.",
     "why": "Every AI accelerator worth buying is bigger than this, so designs must be split into chiplets and rejoined inside a package, which is how advanced packaging became the industry's bottleneck.",
     "chapter": "advanced-packaging"
   },
@@ -563,13 +563,13 @@
     "term": "subject to the EAR",
     "aka": "",
     "plain": "The test for whether an item falls under US export rules at all. Under 15 CFR 734.3 it covers anything in the United States, anything of US origin wherever it now sits, foreign-made goods that contain more than a permitted share of controlled US content, and foreign-made goods caught by a foreign direct product rule. Nationality of the seller is not the test; the item is.",
-    "why": "The phrase decides who has to care. A Dutch or Korean firm shipping between two foreign countries can still need a US license, because the item, not the exporter, is what the rules reach.",
+    "why": "The phrase decides who has to care. A Dutch or Korean firm shipping between two foreign countries can still need a US license, because the rules follow the item.",
     "chapter": "geopolitics"
   },
   {
     "term": "Substitutability",
     "aka": "substitutability rating",
-    "plain": "A four-band rating of how hard it would be for a well-funded state or firm, starting today, to build an alternative to the leaders of a stage, judged against four written tests. Easy: a second supplier is qualified, meaning approved by customers, and shipping today at the leading node, the most advanced process. Moderate: a second supplier exists but is not yet qualified at the leading node, about two to five years to close the gap. Hard: no second supplier at the leading node, five to ten years, and the path is known. Very hard: no second supplier, and the path runs through physics, decades of unwritten know-how or protected intellectual property, ten years or more, and nobody has repeated it yet. The clock always times the same actor and runs to qualification, not to a prototype.",
+    "plain": "A four-band rating of how hard it would be for a well-funded state or firm, starting today, to build an alternative to the leaders of a stage, judged against four written tests. Easy: a second supplier is qualified, meaning approved by customers, and shipping today at the leading node, the most advanced process. Moderate: a second supplier exists but is not yet qualified at the leading node, about two to five years to close the gap. Hard: no second supplier at the leading node, five to ten years, and the path is known. Very hard: no second supplier, and the path runs through physics, decades of unwritten know-how or protected intellectual property, ten years or more, and nobody has repeated it yet. The clock always times the same actor and stops at qualification, well after a prototype.",
     "why": "It says how long a rival or a government would need to replace a stage, which is the question the export debate turns on.",
     "chapter": null
   },
@@ -597,7 +597,7 @@
   {
     "term": "TPU",
     "aka": "Tensor Processing Unit, TPUs",
-    "plain": "Google's own AI chip, designed in-house rather than bought from Nvidia and used only inside Google's own data centers and cloud service. The seventh generation is called Ironwood.",
+    "plain": "Google's own AI chip, designed in-house and used only inside Google's own data centers and cloud service. The seventh generation is called Ironwood.",
     "why": "The clearest evidence that a large buyer can build a real alternative to chips bought on the open market, with Google claiming a total cost per chip about 44 percent below that of the Nvidia server it replaces.",
     "chapter": "design-and-eda"
   },
@@ -640,7 +640,7 @@
     "term": "yield",
     "aka": "die yield, yields, packaging yield, package yield, stack yield",
     "plain": "The percentage of chips on a wafer that work. Flaws land at random, so the larger the chip the more likely it is to catch one, and yield falls steeply as chips get bigger.",
-    "why": "Yield, not wafer price, sets the cost of a working AI chip, and a ten point yield drop on a reticle-sized die hurts far more than a 30 percent rise in the wafer price.",
+    "why": "Yield sets the cost of a working AI chip: a ten point yield drop on a reticle-sized die hurts far more than a 30 percent rise in the wafer price.",
     "chapter": "component-costs"
   },
   {
@@ -660,7 +660,7 @@
   {
     "term": "epitaxy",
     "aka": "epitaxial, epitaxial wafer, epitaxial wafers, epitaxial layer, epi",
-    "plain": "Epitaxy grows a fresh layer of crystal on top of a wafer, atom by atom, so the new layer continues the crystal beneath it with almost no flaws. An epitaxial wafer is a plain wafer with that extra layer, and the transistors are built in the layer rather than in the original slice.",
+    "plain": "Epitaxy grows a fresh layer of crystal on top of a wafer, atom by atom, so the new layer continues the crystal beneath it with almost no flaws. An epitaxial wafer is a plain wafer with that extra layer, and the transistors are built in that layer.",
     "why": "AI chips are built on epitaxial wafers because a big die cannot afford the defects a plain slice carries, which is where the wafer makers earn their money.",
     "chapter": "silicon-and-wafers"
   },
@@ -717,7 +717,7 @@
     "term": "plasma",
     "aka": "plasmas, plasma etch, plasma-enhanced, plasma source",
     "plain": "A plasma is a gas that has had electrons knocked off its atoms by an electric field, leaving charged fragments that react with whatever they touch. Most deposition and etch happens in a plasma inside a vacuum chamber, and the extreme ultraviolet light source is a plasma of vaporized tin.",
-    "why": "Change the gas, pressure and power in the chamber and the same plasma tool either adds a film or eats one away, which is why export rules name process recipes rather than machines.",
+    "why": "Change the gas, pressure and power in the chamber and the same plasma tool either adds a film or eats one away, which is why export rules name process recipes.",
     "chapter": "deposition-and-etch"
   },
   {
@@ -730,7 +730,7 @@
   {
     "term": "mask writer",
     "aka": "mask writers, multi-beam writer, multi-beam writers, electron-beam writer, e-beam writer, mask writing",
-    "plain": "A mask writer is the machine that cuts a chip's pattern into a photomask blank with an electron beam, one shape at a time. A dense EUV mask carries billions of shapes, so modern writers fire many beams at once to finish in hours rather than days.",
+    "plain": "A mask writer is the machine that cuts a chip's pattern into a photomask blank with an electron beam, one shape at a time. A dense EUV mask carries billions of shapes, so modern writers fire many beams at once to finish in hours.",
     "why": "IMS Nanofabrication of Vienna and NuFlare of Japan are the only two suppliers, and no Chinese firm makes one.",
     "chapter": "photomasks-and-pellicles"
   },
@@ -766,13 +766,13 @@
     "term": "critical dimension",
     "aka": "critical dimensions, CD, CD-SEM, critical-dimension, line width, line-width, line widths",
     "plain": "The critical dimension is the width of the finest printed feature on a layer, the number a lithography and etch step is judged by. A CD-SEM is an electron microscope built to measure it across a wafer without cutting anything.",
-    "why": "Hitachi holds about 69 percent of CD measurement, one of the few tool families Japan rather than the United States leads.",
+    "why": "Hitachi holds about 69 percent of CD measurement, one of the few tool families Japan leads.",
     "chapter": "metrology-and-inspection"
   },
   {
     "term": "backside power delivery",
     "aka": "backside power, backside vias, PowerVia, Super Power Rail, backside power network",
-    "plain": "Backside power delivery grinds a finished wafer thin and builds the wires that carry power on its underside, so the wiring above the transistors carries only signals. Power arrives through holes drilled up from below rather than down through the crowded top.",
+    "plain": "Backside power delivery grinds a finished wafer thin and builds the wires that carry power on its underside, so the wiring above the transistors carries only signals. Power arrives through holes drilled up from below, clear of the crowded top.",
     "why": "Intel ships it on 18A and TSMC on A16; it is one of the few remaining ways to make a chip faster without shrinking the transistor.",
     "chapter": "transistors-and-front-end"
   },
@@ -801,7 +801,7 @@
     "term": "front end",
     "aka": "front end of line, FEOL, front-end, front-end wafers",
     "plain": "The front end of line is the first half of making a chip, the steps that build the transistors in the silicon. In the industry at large, the front end means the whole wafer fab, as against the back end where chips are packaged and tested.",
-    "why": "By 2026 front-end wafers rather than packaging had become the tightest constraint on AI chip output.",
+    "why": "By 2026 front-end wafers had overtaken packaging as the tightest constraint on AI chip output.",
     "chapter": "transistors-and-front-end"
   },
   {
@@ -829,7 +829,7 @@
     "term": "ramp",
     "aka": "ramps, ramp-up, ramping, yield at ramp",
     "plain": "A ramp is the months in which a new process or product climbs from a few wafers a week to full output while the share of working chips rises. Yield is lowest at the start of the ramp and improves as engineers find which steps lose dies.",
-    "why": "Yield at ramp separates a profitable node from a subsidized one, and Intel Foundry's losses come from the ramp rather than from weak demand.",
+    "why": "Yield at ramp separates a profitable node from a subsidized one, and Intel Foundry's losses come from the ramp.",
     "chapter": "foundries-and-fabs"
   },
   {
@@ -843,7 +843,7 @@
     "term": "dicing",
     "aka": "wafer dicing, dicing saw, dicing saws, grinding, wafer grinding, grinders, wafer grinders, thinning, wafer thinning",
     "plain": "Dicing cuts a finished wafer into its individual dies with a diamond saw or a laser. Grinding, done first, thins the wafer from the back, sometimes until it is a few hundredths of a millimeter thick so it can be stacked.",
-    "why": "Disco of Japan dominates both steps, and the newest saws handle rectangular panels rather than round wafers.",
+    "why": "Disco of Japan dominates both steps, and the newest saws handle rectangular panels as well as round wafers.",
     "chapter": "test-and-assembly"
   },
   {
@@ -877,7 +877,7 @@
   {
     "term": "second source",
     "aka": "second sources, second-source, multi-sourcing, dual source, single source, sole source, single-source",
-    "plain": "A second source is a second supplier qualified for the same part or material, so that a fab can keep running if the first one stops shipping. A single-source part has none, and adding one means joint development and a fresh qualification rather than a purchase order.",
+    "plain": "A second source is a second supplier qualified for the same part or material, so that a fab can keep running if the first one stops shipping. A single-source part has none, and adding one means joint development and a fresh qualification.",
     "why": "Every disruption in this chain so far has been absorbed within a year, and each one added a second source somewhere.",
     "chapter": "chemicals-gases-and-photoresist"
   },
@@ -891,7 +891,7 @@
   {
     "term": "IP",
     "aka": "silicon IP, IP blocks, licensed blocks, licensed circuit blocks, semiconductor IP, IP catalog, intellectual property",
-    "plain": "In chip design, IP means a ready-made block of circuitry, such as a processor core or a memory interface, that a design house licenses rather than draws itself. Arm sells processor IP; others sell the blocks that talk to memory, PCIe or another chiplet.",
+    "plain": "In chip design, IP means a ready-made block of circuitry, such as a processor core or a memory interface, that a design house licenses. Arm sells processor IP; others sell the blocks that talk to memory, PCIe or another chiplet.",
     "why": "Arm's royalties reach $2.61 billion a year because nearly every AI accelerator's host processor is built on its cores.",
     "chapter": "design-and-eda"
   },
@@ -954,7 +954,7 @@
   {
     "term": "redistribution layer",
     "aka": "RDL, redistribution wiring, redistribution layers",
-    "plain": "A redistribution layer is a thin sheet of fine copper wiring, laid down in resin rather than silicon, that spreads a die's tightly spaced connections out to a wider pattern the package can handle. CoWoS-R and CoWoS-L use it in place of a full silicon interposer.",
+    "plain": "A redistribution layer is a thin sheet of fine copper wiring, laid down in resin, that spreads a die's tightly spaced connections out to a wider pattern the package can handle. CoWoS-R and CoWoS-L use it in place of a full silicon interposer.",
     "why": "Swapping silicon for redistribution wiring is how TSMC pushed packages past 3.3 times the reticle size.",
     "chapter": "advanced-packaging"
   },
@@ -996,7 +996,7 @@
   {
     "term": "base die",
     "aka": "base chip, base logic die, logic base die, HBM base die",
-    "plain": "The base die is the bottom chip of an HBM stack, the one that talks to the processor on behalf of the memory dies stacked above it. From HBM4 it is a logic chip made in a foundry rather than a memory chip.",
+    "plain": "The base die is the bottom chip of an HBM stack, the one that talks to the processor on behalf of the memory dies stacked above it. From HBM4 it is a logic chip made in a foundry.",
     "why": "That change hands TSMC a position inside a product it does not make, and ties HBM4 supply to foundry capacity.",
     "chapter": "memory-and-hbm"
   },
@@ -1073,8 +1073,8 @@
   {
     "term": "large power transformer",
     "aka": "large power transformers, transformer, transformers, switchgear, substation",
-    "plain": "A large power transformer is the machine, the size of a house, that steps grid electricity down from transmission voltage to a level a data center can use. Switchgear is the heavy switching and protection equipment around it, and together they make up the substation at the site's gate.",
-    "why": "A transformer ordered today arrives in about three years, against under a year before 2020, and that queue rather than the fab is where AI buildouts slip.",
+    "plain": "A large power transformer is the machine, the size of a house, that steps grid electricity down from transmission voltage to a level a data center can use. Switchgear is the heavy switching and protection equipment around it, and together they make up the substation at the gate of the campus.",
+    "why": "A transformer ordered today arrives in about three years, against under a year before 2020, and that queue is where AI buildouts slip.",
     "chapter": "data-centers-and-power"
   },
   {
@@ -1088,7 +1088,7 @@
     "term": "kilowatt",
     "aka": "kW, kilowatts, megawatt, MW, megawatts, gigawatt, GW, gigawatts",
     "plain": "A kilowatt is a thousand watts, about what a hair dryer draws. A megawatt is a thousand kilowatts, a gigawatt a thousand megawatts, roughly the output of one large power station. One AI rack draws 142 kilowatts; a data center campus is now sized in gigawatts.",
-    "why": "A gigawatt of accelerators is what OpenAI and Broadcom mean when they announce a deal, and power rather than chips is what limits it.",
+    "why": "A gigawatt of accelerators is what OpenAI and Broadcom mean when they announce a deal, and power is what limits it.",
     "chapter": "data-centers-and-power"
   },
   {
@@ -1101,7 +1101,7 @@
   {
     "term": "GB/s",
     "aka": "TB/s, Gb/s, Tbps, gigabytes per second, terabytes per second, gigabits per second, terabits per second",
-    "plain": "GB/s is gigabytes per second, the measure of how much data a link or a memory can move; TB/s is a thousand times more. A lowercase b, as in Gb/s or Tbps, counts bits rather than bytes, eight times smaller. One HBM stack moves over 2 TB/s; NVLink 6 gives each GPU 3,600 GB/s.",
+    "plain": "GB/s is gigabytes per second, the measure of how much data a link or a memory can move; TB/s is a thousand times more. A lowercase b, as in Gb/s or Tbps, counts bits, each an eighth of a byte. One HBM stack moves over 2 TB/s; NVLink 6 gives each GPU 3,600 GB/s.",
     "why": "The first US chip rule caught any part with a 600 GB/s link, and the 2026 rule sets a 6,500 GB/s memory ceiling.",
     "chapter": "memory-and-hbm"
   },
@@ -1130,7 +1130,7 @@
     "term": "pitch",
     "aka": "pitches, half-pitch, gate pitch, metal pitch, wire pitch, line pitch",
     "plain": "Pitch is the distance from one line on a chip to the next, center to center, so it counts the line and the gap together. Half-pitch is half that. A 16 nm pitch means lines 16 nanometers apart; the 2022 rules set a DRAM threshold at 18 nm half-pitch.",
-    "why": "Pitch, not the node name, is the honest measure of how fine a process prints.",
+    "why": "Pitch is the honest measure of how fine a process prints.",
     "chapter": "transistors-and-front-end"
   },
   {
@@ -1179,7 +1179,7 @@
     "term": "oligopoly",
     "aka": "oligopolies, duopoly, three-firm oligopoly",
     "plain": "An oligopoly is a market with only a few sellers, so each one's decisions move the price; a duopoly has two. DRAM, industrial gases, substrates and chip testers are all oligopolies.",
-    "why": "Most stages of this chain are oligopolies rather than monopolies, and the difference decides whether losing one supplier stops the line.",
+    "why": "Most stages of this chain are oligopolies, a few are monopolies, and the difference decides whether losing one supplier stops the line.",
     "chapter": "memory-and-hbm"
   },
   {
@@ -1192,7 +1192,7 @@
   {
     "term": "mature node",
     "aka": "mature nodes, mature-node, mature logic, older nodes, older lines, trailing edge",
-    "plain": "A mature node is an older chipmaking process, 28 nm and above, that has run for years and competes on price rather than density. Most of the world's wafers come off these lines, making power chips, analog parts and microcontrollers.",
+    "plain": "A mature node is an older chipmaking process, 28 nm and above, that has run for years and competes on price. Most of the world's wafers come off these lines, making power chips, analog parts and microcontrollers.",
     "why": "China holds about 38 percent of mature logic capacity and is going domestic there on a visible timetable, while the leading edge stays out of reach.",
     "chapter": "foundries-and-fabs"
   },
@@ -1207,7 +1207,7 @@
     "term": "inference",
     "aka": "inference chip, inference chips, inference accelerator, inference accelerators, training and inference",
     "plain": "Training is the run that builds an AI model, reading a vast body of text through a cluster of accelerators for weeks. Inference is using the finished model: answering a prompt. Training reuses each stored number across a huge multiplication; inference reads the whole model to produce each word and waits on memory.",
-    "why": "Inference is where memory size and speed rather than arithmetic set how many people one chip can serve, which is why HBM decides how fast a GPU runs.",
+    "why": "Inference is where memory size and speed set how many people one chip can serve, which is why HBM decides how fast a GPU runs.",
     "chapter": "memory-and-hbm"
   },
   {
@@ -1249,14 +1249,14 @@
     "term": "US person",
     "aka": "US persons, U.S. person, U.S. persons",
     "plain": "In export law a US person is any American citizen, resident or company, wherever in the world they are. Since October 2022 a US person may not service or support an advanced chip fab in China without a license.",
-    "why": "The rule emptied Chinese fabs of American engineers within days, and it reaches people rather than goods.",
+    "why": "The rule emptied Chinese fabs of American engineers within days, and it reaches people directly.",
     "chapter": "geopolitics"
   },
   {
     "term": "consignee",
     "aka": "consignees, named consignee, named consignees, ultimate consignee",
-    "plain": "The consignee is the party a shipment is sent to, the name on the export license. A named consignee, such as G42 in the United Arab Emirates, can receive controlled chips on the terms attached to its own name rather than to its country.",
-    "why": "The 2026 UAE rule attaches its favor to a list of consignees, so the deal follows the buyer rather than the border.",
+    "plain": "The consignee is the party a shipment is sent to, the name on the export license. A named consignee, such as G42 in the United Arab Emirates, can receive controlled chips on the terms attached to its own name.",
+    "why": "The 2026 UAE rule attaches its favor to a list of consignees, so the deal follows the buyer across borders.",
     "chapter": "geopolitics"
   },
   {
@@ -1291,7 +1291,7 @@
     "term": "AI Diffusion rule",
     "aka": "AI Diffusion, diffusion rule, Framework for Artificial Intelligence Diffusion, AI Diffusion framework",
     "plain": "The AI Diffusion rule, published on 15 January 2025, required a license to ship the most capable AI chips anywhere in the world, then opened exceptions: unlimited to nineteen allies, capped volumes elsewhere, nothing to China. It also controlled the weights of frontier AI models.",
-    "why": "BIS said it would not enforce it four months later but withdrew none of the text, so its license requirement and exceptions still stand.",
+    "why": "Four months later BIS said it would leave the rule unenforced, and it withdrew none of the text, so its license requirement and exceptions still stand.",
     "chapter": "geopolitics"
   },
   {
@@ -1312,14 +1312,14 @@
     "term": "METI",
     "aka": "Ministry of Economy, Trade and Industry, Japan's Ministry of Economy, Trade and Industry",
     "plain": "METI is Japan's Ministry of Economy, Trade and Industry, the ministry that writes Japan's export controls and funds its chip industry. It licensed 23 categories of chipmaking equipment in July 2023 and subsidizes Rapidus, mask-blank capacity and materials plants.",
-    "why": "Japan's controls apply to every destination rather than naming China, and METI is the office that decides them.",
+    "why": "Japan's controls apply to every destination and name no country, and METI is the office that decides them.",
     "chapter": "geopolitics"
   },
   {
     "term": "MOFCOM",
     "aka": "Ministry of Commerce, China's Ministry of Commerce",
     "plain": "MOFCOM is China's Ministry of Commerce, the ministry that writes and administers China's own export controls. Its notices put gallium, germanium, antimony and the rare earths under license and, in December 2024, banned their export to the United States.",
-    "why": "Beijing's retaliation goes at the inputs rather than the chips, and MOFCOM is the office that signs each notice.",
+    "why": "Beijing's retaliation goes at the inputs, and MOFCOM is the office that signs each notice.",
     "chapter": "geopolitics"
   },
   {
@@ -1333,7 +1333,7 @@
     "term": "Big Fund",
     "aka": "National Integrated Circuit Industry Investment Fund, National Integrated Circuit Fund, third chip fund, China's third chip fund",
     "plain": "The Big Fund is the nickname for China's National Integrated Circuit Industry Investment Fund, the state vehicle that puts government money into Chinese chip firms. Its third round, raised in May 2024, came to 344 billion yuan, about $47 billion.",
-    "why": "Cumulative state funding since 2014 is about triple the CHIPS authorization, and it has bought a tool industry rather than a leading-edge node.",
+    "why": "Cumulative state funding since 2014 is about triple the CHIPS authorization, and it has bought a tool industry and no leading-edge node.",
     "chapter": "geopolitics"
   },
   {
@@ -1374,7 +1374,7 @@
   {
     "term": "wet chemicals",
     "aka": "wet chemical, wet processing, wet clean, cleaning chemicals, process chemicals",
-    "plain": "Wet chemicals are the liquids a wafer is dipped in or sprayed with between steps: acids that strip a layer, solvents that remove resist, and ultrapure water rinses. Wet processing is any step done in liquid rather than in a plasma.",
+    "plain": "Wet chemicals are the liquids a wafer is dipped in or sprayed with between steps: acids that strip a layer, solvents that remove resist, and ultrapure water rinses. Wet processing is any step done in liquid.",
     "why": "Five firms held more than 60 percent of the market as of 2021, and BIS controls wet tools by how selectively they etch one material over another.",
     "chapter": "chemicals-gases-and-photoresist"
   },
@@ -1395,14 +1395,14 @@
   {
     "term": "metal-oxide resist",
     "aka": "metal-oxide resists, metal oxide resist, tin-oxide resist, metal-oxide EUV photoresist",
-    "plain": "A metal-oxide resist is a photoresist built on clusters of tin and oxygen rather than on carbon polymers. Tin absorbs extreme ultraviolet light far better than carbon, so the resist needs fewer photons to record a pattern and prints sharper edges at the smallest sizes.",
+    "plain": "A metal-oxide resist is a photoresist built on clusters of tin and oxygen. Tin absorbs extreme ultraviolet light far better than carbon, so the resist needs fewer photons to record a pattern and prints sharper edges at the smallest sizes.",
     "why": "JSR bought its inventor, Inpria, in 2021, and a Japanese state fund then bought JSR, so the chemistry High-NA needs sits under Japanese control.",
     "chapter": "chemicals-gases-and-photoresist"
   },
   {
     "term": "high-performance computing",
     "aka": "HPC, HPC platform, high-performance computers",
-    "plain": "High-performance computing is the industry's name for the heavy end of the market: supercomputers, AI accelerators and the server processors beside them. A foundry's HPC platform is the version of a node tuned for those chips rather than for phones.",
+    "plain": "High-performance computing is the industry's name for the heavy end of the market: supercomputers, AI accelerators and the server processors beside them. A foundry's HPC platform is the version of a node tuned for those chips.",
     "why": "AI has made HPC the largest customer for the newest nodes, the most film layers in a substrate and the most inspection time.",
     "chapter": "foundries-and-fabs"
   },

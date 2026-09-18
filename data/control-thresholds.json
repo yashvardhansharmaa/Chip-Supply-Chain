@@ -117,7 +117,7 @@
       "https://cset.georgetown.edu/article/bis-2023-update-explainer/",
       "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-742/section-742.6"
     ],
-    "note": "The gray band. It exists so that BIS learns about chips just under the main line rather than banning them, and it is what turns the control from a wall into a notification regime for workstation and mid-range parts. It catches gaming and professional cards with real AI throughput; it misses anything a designer can push below TPP 1600. Until December 2024 one exception, NAC, did both jobs; the December 2024 rule split off ACA for the unrestricted destinations.",
+    "note": "The gray band. It exists so that BIS learns about chips just under the main line while they keep shipping, and it is what turns the control from a wall into a notification regime for workstation and mid-range parts. It catches gaming and professional cards with real AI throughput; it misses anything a designer can push below TPP 1600. Until December 2024 one exception, NAC, did both jobs; the December 2024 rule split off ACA for the unrestricted destinations.",
     "kind": "chips",
     "paramShort": "TPP",
     "unitShort": ""
@@ -147,7 +147,7 @@
     "alsoSee": [
       "https://www.bis.gov/press-release/commerce-strengthens-export-controls-restrict-chinas-capability-produce-advanced-semiconductors-military"
     ],
-    "note": "Set deliberately low: 2 GB/s/mm² catches every HBM stack in production, including HBM2E, so the entry is a ban on selling HBM into China rather than a performance line. It is the control that bites hardest on Chinese accelerators, because a Chinese AI chip without HBM cannot feed its own compute.",
+    "note": "Set deliberately low: 2 GB/s/mm² catches every HBM stack in production, including HBM2E, so the entry works as a ban on selling HBM into China. It is the control that bites hardest on Chinese accelerators, because a Chinese AI chip without HBM cannot feed its own compute.",
     "kind": "memory",
     "paramShort": "Memory bandwidth density",
     "unitShort": "GB/s per mm²"
@@ -201,7 +201,7 @@
     "cfr": "15 CFR part 774, supplement no. 1, ECCN 4A090",
     "source": "https://www.federalregister.gov/documents/2023/10/25/2023-23055/implementation-of-additional-export-controls-certain-advanced-computing-items-supercomputer-and",
     "sourceTier": "A",
-    "note": "The system-level mirror of 3A090, and the entry most of the smuggling cases actually turn on, because chips move in servers. It catches assembled AI servers wherever they are built; it misses nothing technically, which is why enforcement against 4A090 is a transshipment problem rather than a classification problem.",
+    "note": "The system-level mirror of 3A090, and the entry most of the smuggling cases actually turn on, because chips move in servers. It catches assembled AI servers wherever they are built; it misses nothing technically, which is why enforcement against 4A090 is a transshipment problem.",
     "kind": "chips",
     "paramShort": "Server or rack",
     "unitShort": "TPP chip"
@@ -226,7 +226,7 @@
     "cfr": "15 CFR 742.6(b)(10)(iii)",
     "source": "https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities",
     "sourceTier": "A",
-    "note": "The first threshold in the regime that opens a door rather than closing one: it draws a second line above 3A090.a and says everything between them may be sold to China if the conditions hold. It catches the H200 and MI325X; it deliberately excludes Blackwell-class parts, which sit far above TPP 21,000.",
+    "note": "The first threshold in the regime that opens a door: it draws a second line above 3A090.a and says everything between them may be sold to China if the conditions hold. It catches the H200 and MI325X; it deliberately excludes Blackwell-class parts, which sit far above TPP 21,000.",
     "kind": "chips",
     "paramShort": "TPP",
     "unitShort": ""
@@ -251,7 +251,7 @@
     "cfr": "15 CFR 742.6(b)(10)(iii)",
     "source": "https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities",
     "sourceTier": "A",
-    "note": "A memory-bandwidth ceiling used as a proxy for training usefulness, and the first time BIS has drawn a licensing line on DRAM bandwidth rather than on compute. It concedes that a chip's value for large-model work is set as much by how fast it can feed itself as by how fast it can multiply.",
+    "note": "A memory-bandwidth ceiling used as a proxy for training usefulness, and the first time BIS has drawn a licensing line on DRAM bandwidth. It concedes that a chip's value for large-model work is set as much by how fast it can feed itself as by how fast it can multiply.",
     "kind": "chips",
     "paramShort": "Total DRAM bandwidth",
     "unitShort": "GB/s"
@@ -357,7 +357,7 @@
     "cfr": "15 CFR 772.1; 744.23",
     "source": "https://www.bis.gov/ear/title-15/subtitle-b/chapter-vii/subchapter-c/part-744/ss-74423-supercomputer-advanced-node",
     "sourceTier": "A",
-    "note": "The only threshold in the regime that is a plain count rather than a derived metric, and the easiest to verify by teardown. It catches YMTC's Xtacking lines; it has not moved since October 2022 even though the industry has gone from 128 to more than 300 layers, so the line now sits well below the state of the art.",
+    "note": "The only threshold in the regime that is a plain count, and the easiest to verify by teardown. It catches YMTC's Xtacking lines; it has not moved since October 2022 even though the industry has gone from 128 to more than 300 layers, so the line now sits well below the state of the art.",
     "kind": "fabs",
     "paramShort": "NAND layers",
     "unitShort": ""
@@ -371,7 +371,7 @@
     "operator": "<",
     "value": 0.0026,
     "unit": "µm² memory cell area; or memory density greater than 0.20 gigabits per mm²; or more than 3,000 through-silicon vias per die",
-    "alternative": "Originally written as a half-pitch of 18 nanometers or less; replaced on 2 December 2024 by these three physical measures, which BIS said match real 18 nm-class production rather than the theoretical IRDS model. The earlier numbers were a cell area below 0.0019 µm² and a density above 0.288 Gb/mm².",
+    "alternative": "Originally written as a half-pitch of 18 nanometers or less; replaced on 2 December 2024 by these three physical measures, which BIS said match real 18 nm-class production. The earlier numbers were a cell area below 0.0019 µm² and a density above 0.288 Gb/mm².",
     "destinations": "Facilities in Macau or Country Group D:5",
     "licensePolicy": "Presumption of denial for China and Macau facilities producing at or above the line",
     "effectiveDate": "2022-10-21",
@@ -411,7 +411,7 @@
     "cfr": "15 CFR 772.1; 744.23",
     "source": "https://www.bis.gov/ear/title-15/subtitle-b/chapter-vii/subchapter-c/part-744/ss-74423-supercomputer-advanced-node",
     "sourceTier": "A",
-    "note": "A catch-all that works on installations rather than parts: even uncontrolled components need a license if the exporter knows they are going into a Chinese machine of this size. The volume test, 41,600 cubic feet, is roughly a large machine room, and it is what stops the rule from being evaded by spreading the same compute across a bigger building.",
+    "note": "A catch-all that works on whole installations: even uncontrolled components need a license if the exporter knows they are going into a Chinese machine of this size. The volume test, 41,600 cubic feet, is roughly a large machine room, and it is what stops the rule from being evaded by spreading the same compute across a bigger building.",
     "kind": "systems",
     "paramShort": "Double-precision compute",
     "unitShort": "petaflops"
@@ -441,7 +441,7 @@
     "alsoSee": [
       "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-742/section-742.6"
     ],
-    "note": "Overlay, not resolution, is the parameter that separates a usable advanced-logic scanner from a mature-node one, because multipatterning lives or dies on layer-to-layer alignment. The 1.50 nm tier tracks ASML's top immersion tools and the 2.4 nm tier reaches down into the older immersion fleet the Dutch controls also cover.",
+    "note": "Overlay is the parameter that separates a usable advanced-logic scanner from a mature-node one, because multipatterning lives or dies on layer-to-layer alignment. The 1.50 nm tier tracks ASML's top immersion tools and the 2.4 nm tier reaches down into the older immersion fleet the Dutch controls also cover.",
     "kind": "tools",
     "paramShort": "Dedicated chuck overlay",
     "unitShort": "nm"
@@ -481,7 +481,7 @@
     "parameter": "Equipment designed or modified for isotropic dry etching (c.1.a) or anisotropic dry etching (c.1.c)",
     "operator": "designed for",
     "value": null,
-    "unit": "process capability, not a numeric parameter. Control is by function and by the advanced-node end use it enables",
+    "unit": "process capability, with no numeric parameter. Control is by function and by the advanced-node end use it enables",
     "alternative": "Atomic layer etching tools were added to the CCL by the 6 September 2024 rule and further paragraphs (k through n, p) were brought under national security controls on 2 December 2024",
     "destinations": "Worldwide national security and regional stability controls; license required for Macau and Country Group D:5",
     "licensePolicy": "Presumption of denial for China and Macau",
@@ -500,7 +500,7 @@
     "alsoSee": [
       "https://www.federalregister.gov/documents/2024/09/06/2024-19633/commerce-control-list-additions-and-revisions-implementation-of-controls-on-advanced-technologies"
     ],
-    "note": "Unlike the chip entries, most etch controls are functional rather than numeric: BIS names the process, not a performance figure, because etch capability is hard to reduce to one number. That makes the entry broad and hard to design around, and it is the reason Chinese etch suppliers such as AMEC became a national priority.",
+    "note": "Unlike the chip entries, most etch controls are functional: BIS names the process, because etch capability is hard to reduce to one number. That makes the entry broad and hard to design around, and it is the reason Chinese etch suppliers such as AMEC became a national priority.",
     "kind": "tools",
     "paramShort": "Designed for dry etching",
     "unitShort": ""
@@ -532,7 +532,7 @@
     "alsoSee": [
       "https://www.federalregister.gov/documents/2024/09/06/2024-19633/commerce-control-list-additions-and-revisions-implementation-of-controls-on-advanced-technologies"
     ],
-    "note": "The clearest sign that the control map is drawn around processes, not products: ECCN 3B090 was invented in October 2022 as a China-only entry and then dissolved into the general 3B001 list a year later, which multilateralised it. It catches tungsten and cobalt fill and ALD; it does not catch the older deposition tools that make up most of a mature-node fab.",
+    "note": "The clearest sign that the control map is drawn around processes: ECCN 3B090 was invented in October 2022 as a China-only entry and then dissolved into the general 3B001 list a year later, which multilateralised it. It catches tungsten and cobalt fill and ALD; it does not catch the older deposition tools that make up most of a mature-node fab.",
     "kind": "tools",
     "paramShort": "Designed for deposition",
     "unitShort": ""
@@ -557,7 +557,7 @@
     "cfr": "15 CFR part 774, supplement no. 1, ECCN 3B001.q",
     "source": "https://www.federalregister.gov/documents/2023/10/25/2023-23049/export-controls-on-semiconductor-manufacturing-items",
     "sourceTier": "A",
-    "note": "A control on the consumable rather than the machine. Since no EUV scanner has ever been exported to China, controlling EUV masks looks redundant, but it forecloses a route in which China builds or acquires a scanner and then needs a mask supply chain it does not have.",
+    "note": "A control on the consumable itself. Since no EUV scanner has ever been exported to China, controlling EUV masks looks redundant, but it forecloses a route in which China builds or acquires a scanner and then needs a mask supply chain it does not have.",
     "kind": "tools",
     "paramShort": "Designed for EUV",
     "unitShort": ""
@@ -644,7 +644,7 @@
     "cfr": "15 CFR 734.9(k)",
     "source": "https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-produced-direct-product-rule-additions-and-refinements-to-controls-for-advanced-computing",
     "sourceTier": "A",
-    "note": "Deliberately narrow: two ECCNs, not the whole 3B001 list, because a broad equipment FDPR would have hit allied toolmakers hardest. It reaches equipment that has never been near the United States and is the legal basis on which BIS can stop a Japanese or Dutch tool at the Chinese border.",
+    "note": "Deliberately narrow: two ECCNs out of the whole 3B001 list, because a broad equipment FDPR would have hit allied toolmakers hardest. It reaches equipment that has never been near the United States and is the legal basis on which BIS can stop a Japanese or Dutch tool at the Chinese border.",
     "kind": "tools",
     "paramShort": "Direct product of US tools",
     "unitShort": ""
@@ -671,7 +671,7 @@
     "cfr": "15 CFR 734.9(e)(3); part 744, supplement no. 4",
     "source": "https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-produced-direct-product-rule-additions-and-refinements-to-controls-for-advanced-computing",
     "sourceTier": "A",
-    "note": "A named-entity version of the equipment rule: instead of drawing a technical line, it draws a list. The December 2024 package attached it to a batch of 140 Entity List additions, which is how the equipment fence became a fence around specific Chinese companies rather than a specification.",
+    "note": "A named-entity version of the equipment rule: instead of drawing a technical line, it draws a list. The December 2024 package attached it to a batch of 140 Entity List additions, which is how the equipment fence became a fence around specific Chinese companies.",
     "kind": "entities",
     "paramShort": "Listed under Footnote 5",
     "unitShort": ""
@@ -686,7 +686,7 @@
     "value": 50,
     "unit": "% ownership, directly or indirectly, individually or in the aggregate",
     "alternative": "Applies to the Entity List, the Military End User list, and specified OFAC SDN designations under 15 CFR 744.8. Where several listed owners have different license requirements, the most restrictive applies. No de minimis below 50%.",
-    "destinations": "Worldwide. The test is ownership, not location",
+    "destinations": "Worldwide. The test is ownership",
     "licensePolicy": "The affiliate inherits the license requirements and review policy of its most restricted listed owner",
     "effectiveDate": "2025-09-29",
     "status": "Suspended",
@@ -752,7 +752,7 @@
     "frCitation": "Ministerial order under the Strategic Goods Decree, in force 1 September 2023",
     "source": "https://www.asml.com/en/news/press-releases/2023/statement-regarding-export-control-regulations-dutch-government",
     "sourceTier": "A",
-    "note": "The Dutch line is drawn by model number rather than by a physical parameter, which makes it unusually easy to police and unusually easy to see. NXT:2000i is where ASML's overlay performance crosses into the range that supports multipatterned advanced logic.",
+    "note": "The Dutch line is drawn by model number, which makes it unusually easy to police and unusually easy to see. NXT:2000i is where ASML's overlay performance crosses into the range that supports multipatterned advanced logic.",
     "kind": "tools",
     "paramShort": "TWINSCAN model",
     "unitShort": ""
@@ -768,7 +768,7 @@
     "unit": "TWINSCAN NXT:1970i and NXT:1980i added to the licensed list",
     "alternative": "The same order transferred licensing authority for these models from the United States to the Netherlands",
     "destinations": "Worldwide national license requirement, aimed at China",
-    "licensePolicy": "Case-by-case, decided in The Hague rather than Washington",
+    "licensePolicy": "Case-by-case, decided in The Hague",
     "effectiveDate": "2024-09-07",
     "status": "In force",
     "amendedBy": [],
@@ -779,7 +779,7 @@
     "alsoSee": [
       "https://www.sec.gov/Archives/edgar/data/937966/000093796625000009/asml-20241231.htm"
     ],
-    "note": "The government.nl announcement describes the measure without naming the models. ASML names them itself: its Form 20-F for 2024 records that the Dutch government's requirement of 6 September 2024, in effect from 7 September, means ASML must apply to The Hague rather than to Washington for export licenses for its TWINSCAN NXT:1970i and 1980i immersion systems, and for specially designed parts, software and technology for them outside the EU. The Dutch requirement was already in place for the NXT:2000i and later immersion tools. The significance is jurisdictional as much as technical: the Netherlands took the licensing decision back from the United States for tools it builds.",
+    "note": "The government.nl announcement describes the measure without naming the models. ASML names them itself: its Form 20-F for 2024 records that the Dutch government's requirement of 6 September 2024, in effect from 7 September, means ASML must apply to The Hague for export licenses for its TWINSCAN NXT:1970i and 1980i immersion systems, and for specially designed parts, software and technology for them outside the EU. The Dutch requirement was already in place for the NXT:2000i and later immersion tools. The significance is jurisdictional as much as technical: the Netherlands took the licensing decision back from the United States for tools it builds.",
     "kind": "tools",
     "paramShort": "TWINSCAN model line",
     "unitShort": ""
@@ -887,7 +887,7 @@
     "cfr": "15 CFR 748.15",
     "source": "https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion",
     "sourceTier": "A",
-    "note": "A control on where American compute physically sits rather than on who buys it. The 50 percent domestic-retention condition for US firms reappears in a different form in the January 2026 H200 rule, which suggests the idea survived the rescission even though the rule did not.",
+    "note": "A control on where American compute physically sits. The 50 percent domestic-retention condition for US firms reappears in a different form in the January 2026 H200 rule, which suggests the idea survived the rescission even though the rule did not.",
     "kind": "chips",
     "paramShort": "Share outside Tier 1",
     "unitShort": "%"
@@ -923,7 +923,7 @@
     "id": "ai-diffusion-model-weights",
     "regime": "US EAR",
     "instrument": "Framework for Artificial Intelligence Diffusion, control on closed model weights",
-    "scope": "Trained weights of closed-weight AI models, the first US export control on a model rather than a chip",
+    "scope": "Trained weights of closed-weight AI models, the first US export control on a model",
     "parameter": "Cumulative training compute",
     "operator": ">",
     "value": 1e+26,
@@ -966,7 +966,7 @@
     "cfr": "15 CFR 742.6(a)(6); part 740, supplement no. 1",
     "source": "https://www.federalregister.gov/documents/2026/07/14/2026-14132/enhanced-favorable-treatment-for-the-united-arab-emirates-under-the-export-administration",
     "sourceTier": "A",
-    "note": "The mechanism that replaced the AI Diffusion tiers: instead of a compute quota per country, a named list of approved companies per country. It catches the diversion risk by identity rather than by volume, and the April 2027 expiry for G42 and Core42 makes American incorporation the price of continued access.",
+    "note": "The mechanism that replaced the AI Diffusion tiers: instead of a compute quota per country, a named list of approved companies per country. It catches the diversion risk by identity, and the April 2027 expiry for G42 and Core42 makes American incorporation the price of continued access.",
     "kind": "entities",
     "paramShort": "Moved into Country Group A:5",
     "unitShort": ""
@@ -1030,7 +1030,7 @@
     "value": 1e+26,
     "unit": "computational operations, integer or floating point, counting one multiply-accumulate as two operations",
     "alternative": "A lower threshold of 10^23 operations was proposed for models trained primarily on biological sequence data",
-    "destinations": "US persons and companies; a reporting duty, not an export control",
+    "destinations": "US persons and companies; a reporting duty with no export bar",
     "licensePolicy": "Quarterly reporting to BIS. Proposed 11 September 2024 with the comment period closing 11 October 2024; never finalized. Its authority, Executive Order 14110, was revoked by Executive Order 14179 on 23 January 2025.",
     "effectiveDate": null,
     "status": "Proposed, never in force",
@@ -1070,7 +1070,7 @@
     "frCitation": "89 FR 73612",
     "source": "https://www.federalregister.gov/documents/2024/09/11/2024-20529/establishment-of-reporting-requirements-for-the-development-of-advanced-artificial-intelligence",
     "sourceTier": "A",
-    "note": "The only US threshold ever drawn on a data center rather than a chip or a model, and the only one that uses interconnect bandwidth as a governing parameter, the same idea BIS abandoned in ECCN 3A090 in November 2023 because it was too easy to design around.",
+    "note": "The only US threshold ever drawn on a data center, and the only one that uses interconnect bandwidth as a governing parameter, the same idea BIS abandoned in ECCN 3A090 in November 2023 because it was too easy to design around.",
     "kind": "systems",
     "paramShort": "Cluster compute",
     "unitShort": "operations per second"
@@ -1084,7 +1084,7 @@
     "operator": ">=",
     "value": 0.1,
     "unit": "% of the value of the foreign-made item",
-    "alternative": "A mirror of the US de minimis and foreign direct product logic, applied to materials rather than technology",
+    "alternative": "A mirror of the US de minimis and foreign direct product logic, applied to materials",
     "destinations": "Worldwide, with a license requirement enforced against re-export to designated end uses including advanced semiconductors",
     "licensePolicy": "License required; suspended for one year from 10 November 2025 under the US-China truce, alongside the US suspension of the affiliates rule",
     "effectiveDate": "2025-10-09",

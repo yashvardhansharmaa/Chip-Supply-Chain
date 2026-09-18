@@ -94,7 +94,7 @@ A glass core in place of resin removes most of the swelling problem, which is wh
 - **Intel** announced glass substrates in September 2023 for the latter part of this decade ([source](https://download.intel.com/newsroom/archive/2025/en-us-2023-09-18-intel-unveils-industryleading-glass-substrates-to-meet-demand-for-more-powerful-compute.pdf)).
 - **Samsung Electro-Mechanics** signed a joint venture with Sumitomo Chemical in November 2025 to make glass core, with mass production after 2027 ([source](https://samsungsem.com/global/newsroom/news/view.do?id=9850)).
 
-Both programs point past 2027, so glass answers the next problem rather than this one.
+Both programs point past 2027, so glass answers a problem still years away.
 
 ## The materials underneath
 
@@ -131,7 +131,7 @@ Flatness breaks first as packages grow. TSMC has told investors that its CoWoS p
 ## Key evaluation criteria
 
 - **Layer count** sets how much current and how many signals the substrate can carry. Each added layer is another chance to lose the part.
-- **Body size** drives everything else. Once a body is much larger than the dies it carries, warping and handling decide what can be built, not the wiring.
+- **Body size** drives everything else. Once a body is much larger than the dies it carries, warping and handling take over from the wiring in deciding what can be built.
 - **Coefficient of thermal expansion**, how much a material swells when heated, must be close enough to silicon that the package survives repeated heating and cooling, which is what T-glass buys and why its supply matters.
 - **Dielectric properties**, how much signal the core laminate soaks up, set the speeds the substrate and the board underneath can run.
 - **Qualification time** protects the incumbents. Approving a second supplier for a film or a laminate takes years.

@@ -102,7 +102,7 @@ Blackwell was the first high-volume design on CoWoS-L, and it went badly. The br
 
 ### 3D: SoIC, Foveros, X-Cube
 
-TSMC's SoIC and Intel's Foveros bond dies face to face, copper pad to copper pad with no solder, packing the connections far closer than microbumps allow. TSMC put 3 nm SoIC into volume production in 2025 ([source](https://investor.tsmc.com/static/annualReports/2025/english/pdf/2025_tsmc_ar_e_ch5.pdf)), with an A14-on-A14 version due in 2029 carrying 1.8 times as many connections between the dies as the 2 nm generation ([source](https://pr.tsmc.com/english/news/3302)). Heat decides the layout: the bottom die overheats and the top is hard to power, so 3D designs often put cache underneath rather than compute.
+TSMC's SoIC and Intel's Foveros bond dies face to face, copper pad to copper pad with no solder, packing the connections far closer than microbumps allow. TSMC put 3 nm SoIC into volume production in 2025 ([source](https://investor.tsmc.com/static/annualReports/2025/english/pdf/2025_tsmc_ar_e_ch5.pdf)), with an A14-on-A14 version due in 2029 carrying 1.8 times as many connections between the dies as the 2 nm generation ([source](https://pr.tsmc.com/english/news/3302)). Heat decides the layout: the bottom die overheats and the top is hard to power, so 3D designs often put cache underneath and compute on top.
 
 ### The escape routes
 

@@ -29,7 +29,7 @@
  "chinaStatus": "The weakest Chinese position of any major tool segment. In 2019 domestic firms held 3.4% of line-width measurement, 1.3% of defect inspection and none of mask or packaging inspection; in 2024 they were still at 0.8% of the whole process control tool market. CSET's 2026 survey of Chinese share gains runs through deposition, etch, polishing, lithography, packaging and test, and never reaches process control.",
  "usStatus": "KLA is the largest process-control supplier in the world. It puts its own 2024 share at 56.5%, or 6.5 times its nearest rival; CSET's Supply Chain Explorer puts it at 57.2% of the same year's market. US firms take 72% of the segment, Japanese firms 15%. The December 2024 rule pulled inspection and measurement tools for patterned 300 mm wafers onto the controlled list, at a threshold of 21 nm defects.",
  "costSignal": "A $13.4B process control tool market in 2024, about 57% of it KLA's. KLA's fiscal 2026 revenue was $13.58B against a wafer equipment market of roughly $120B in 2025, so process control is around a tenth of what a fab spends on tools.",
- "substitutability": {"band": "Moderate", "test": "A named second source in every family; KLA sets the standard, and losing it costs yield learning, not the line", "why": "The chokepoint is concentration rather than physics: seven other firms ship qualified tools, and three of them lead a family outright. A well-funded actor that can buy them loses sensitivity and speed of yield learning rather than the ability to run a fab, and closes the gap in two to five years. An actor that cannot buy is on a far longer clock: Chinese firms were still at 0.8 percent of the segment in 2024."}
+ "substitutability": {"band": "Moderate", "test": "A named second source in every family; KLA sets the standard, and losing it slows yield learning while the line keeps running", "why": "The chokepoint is concentration: seven other firms ship qualified tools, and three of them lead a family outright. A well-funded actor that can buy them keeps the ability to run a fab, loses sensitivity and speed of yield learning, and closes the gap in two to five years. An actor that cannot buy is on a far longer clock: Chinese firms were still at 0.8 percent of the segment in 2024."}
  },
  "keyFacts": [
  {"fact": "Die yield is (1 + D0A/a) to the power minus a, with a of 3 to 4 for modern CMOS, so defect density and die area alone set the ceiling", "source": "https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf"},
@@ -81,7 +81,7 @@ Metrology and inspection are the factory's quality control. Between the steps th
 
 An inspection tool sweeps a beam of light across the wafer, photographs it, and compares the image of each chip with the image of its neighbors. The chips on a wafer are meant to be identical, so anything that shows in one and not the others is a defect, and the tool records where it is. For faults too small for light to show, a second tool scans a beam of electrons across a small patch and builds a picture from the electrons that bounce back.
 
-A metrology tool measures rather than hunts. It shines light on a test pattern printed beside the circuits and works out from the scatter how wide the lines are and how thick the film is, and it reads marks printed in this layer and the last to measure how far the two are out of line, which is overlay.
+A metrology tool measures known shapes. It shines light on a test pattern printed beside the circuits and works out from the scatter how wide the lines are and how thick the film is, and it reads marks printed in this layer and the last to measure how far the two are out of line, which is overlay.
 
 The fab pays for all this to protect yield, the share of chips on a wafer that work. A wafer loses value two ways: whole regions ruined by mishandling, misalignment or over-etching, and single circuits killed by stray material or an airborne particle ([source](https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf)).
 
@@ -133,7 +133,7 @@ The December 2024 rule wrote process control into the export lists. It controls 
 
 ## The chokepoint
 
-Process control is a chokepoint of concentration rather than of physics. Several firms can build a good film metrology tool, but one firm sets the standard across nearly the whole flow, and its lead is widening. A sanctioned fab can buy scanners and etchers on the gray market and still fail to get production going, because without sensitive inspection it cannot find out why its yield is low.
+Process control is a chokepoint of concentration. Several firms can build a good film metrology tool, but one firm sets the standard across nearly the whole flow, and its lead is widening. A sanctioned fab can buy scanners and etchers on the gray market and still fail to get production going, because without sensitive inspection it cannot find out why its yield is low.
 
 ## Key evaluation criteria
 

@@ -209,7 +209,7 @@
     "founded": 1990,
     "ticker": "RMBS",
     "ownership": "Public",
-    "role": "Licenses the memory controller and PHY IP that connects a processor to DDR5, LPDDR and HBM, plus register clock drivers for server memory modules. It sells silicon IP rather than chips.",
+    "role": "Licenses the memory controller and PHY IP that connects a processor to DDR5, LPDDR and HBM, plus register clock drivers for server memory modules. It sells silicon IP.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -290,7 +290,7 @@
       "Renesas",
       "Texas Instruments"
     ],
-    "aiRelevance": "Supplies inference GPU IP for edge devices rather than data-center accelerators.",
+    "aiRelevance": "Supplies inference GPU IP for edge devices.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.imaginationtech.com/"
@@ -617,7 +617,7 @@
     "founded": 2016,
     "ticker": "CBRS",
     "ownership": "Public",
-    "role": "Builds the Wafer Scale Engine, a single processor covering almost an entire 300 mm wafer with on-die SRAM instead of HBM. It sells systems and inference cloud capacity rather than chips.",
+    "role": "Builds the Wafer Scale Engine, a single processor covering almost an entire 300 mm wafer with on-die SRAM instead of HBM. It sells systems and inference cloud capacity.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -641,7 +641,7 @@
     "founded": 2016,
     "ticker": "Private",
     "ownership": "Private, venture-backed",
-    "role": "Designs the Language Processing Unit, an inference chip built on large on-die SRAM and a statically scheduled architecture with no HBM. It sells tokens through its own cloud rather than selling many chips.",
+    "role": "Designs the Language Processing Unit, an inference chip built on large on-die SRAM and a statically scheduled architecture with no HBM. It sells tokens through its own cloud, and few chips.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -743,7 +743,7 @@
       "Chinese universities",
       "Domestic OEMs"
     ],
-    "aiRelevance": "Moore Threads is China's attempt at a general-purpose GPU rather than a fixed-function AI ASIC.",
+    "aiRelevance": "Moore Threads is China's attempt at a general-purpose GPU.",
     "revenueUSDb": 0.224,
     "revenueYear": 2025,
     "source": "https://www.mthreads.com/"
@@ -765,7 +765,7 @@
       "Chinese cloud operators",
       "Chinese research institutes"
     ],
-    "aiRelevance": "Biren is one of the few Chinese firms attempting a full training-class GPU rather than an inference part.",
+    "aiRelevance": "Biren is one of the few Chinese firms attempting a full training-class GPU.",
     "revenueUSDb": 0.154,
     "revenueYear": 2025,
     "source": "https://www.birentech.com/"
@@ -893,7 +893,7 @@
     "founded": 2022,
     "ticker": "Private",
     "ownership": "Private, venture-backed",
-    "role": "Designing Sohu, an ASIC that hard-wires the transformer architecture into silicon rather than running it on a programmable engine, trading flexibility for throughput per watt.",
+    "role": "Designing Sohu, an ASIC that hard-wires the transformer architecture into silicon, trading flexibility for throughput per watt.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -1089,7 +1089,7 @@
       "Qorvo",
       "Samsung"
     ],
-    "aiRelevance": "Relevant to the RF and edge silicon around AI systems rather than to the accelerators themselves.",
+    "aiRelevance": "Relevant to the RF and edge silicon around AI systems.",
     "revenueUSDb": 0.689,
     "revenueYear": 2026,
     "source": "https://www.soitec.com/en/products"
@@ -1198,7 +1198,7 @@
     "founded": 1959,
     "ticker": "010060.KS",
     "ownership": "Public",
-    "role": "Korean chemical group producing polysilicon and a range of fab chemicals including high-purity hydrogen peroxide and phosphoric acid. Most of its polysilicon output serves solar rather than semiconductor customers.",
+    "role": "Korean chemical group producing polysilicon and a range of fab chemicals including high-purity hydrogen peroxide and phosphoric acid. Most of its polysilicon output serves solar customers.",
     "chokepoint": "Diversified",
     "shareNote": null,
     "customers": [
@@ -1507,7 +1507,7 @@
     "founded": 1966,
     "ticker": "ENTG",
     "ownership": "Public",
-    "role": "Supplies the filters, purifiers, fluid handling components, wafer carriers and specialty coatings that keep contamination out of a fab, plus CMP slurries acquired with CMC Materials. Its products are consumed continuously rather than bought as capital equipment.",
+    "role": "Supplies the filters, purifiers, fluid handling components, wafer carriers and specialty coatings that keep contamination out of a fab, plus CMP slurries acquired with CMC Materials. Its products are consumed continuously.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1783,7 +1783,7 @@
       "Renesas",
       "Chinese mature-node fabs"
     ],
-    "aiRelevance": "Relevant to the mature-node parts around AI systems, not to the accelerator die itself.",
+    "aiRelevance": "Relevant to the mature-node parts around AI systems.",
     "revenueUSDb": 4.402,
     "revenueYear": 2026,
     "source": "https://www.nikon.com/"
@@ -1798,7 +1798,7 @@
     "founded": 1937,
     "ticker": "7751.T",
     "ownership": "Public",
-    "role": "Supplies i-line and KrF steppers for mature nodes and packaging, and is commercializing nanoimprint lithography, which stamps a pattern rather than projecting it. Nanoimprint avoids EUV optics entirely but has defect and throughput limits.",
+    "role": "Supplies i-line and KrF steppers for mature nodes and packaging, and is commercializing nanoimprint lithography, which stamps a pattern into the resist. Nanoimprint avoids EUV optics entirely but has defect and throughput limits.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2432,7 +2432,7 @@
     "founded": 1960,
     "ticker": "6920.T",
     "ownership": "Public",
-    "role": "The only supplier of actinic inspection tools, which inspect EUV mask blanks and patterned masks using 13.5 nm light rather than a visible-light proxy. Phase defects buried in the multilayer are invisible to any other method.",
+    "role": "The only supplier of actinic inspection tools, which inspect EUV mask blanks and patterned masks using the scanner's own 13.5 nm light. Phase defects buried in the multilayer are invisible to any other method.",
     "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
@@ -2614,7 +2614,7 @@
       "YMTC",
       "BOE"
     ],
-    "aiRelevance": "China's effort to build process control at home rather than import it.",
+    "aiRelevance": "China's effort to build process control at home.",
     "revenueUSDb": 0.498,
     "revenueYear": 2025,
     "source": "https://www.wuhanjingce.com/en/"
@@ -3002,7 +3002,7 @@
       "Chinese fabless firms",
       "Power semiconductor designers"
     ],
-    "aiRelevance": "Supplies the power management and analog parts that surround AI compute rather than the accelerators.",
+    "aiRelevance": "Supplies the power management and analog parts that surround AI compute.",
     "revenueUSDb": 2.402,
     "revenueYear": 2025,
     "source": "https://www.huahonggrace.com/"
@@ -3218,7 +3218,7 @@
       "Chinese SSD makers",
       "Chinese OEMs"
     ],
-    "aiRelevance": "NAND matters for AI storage tiers rather than for the accelerator, but Xtacking is a genuine wafer-bonding capability.",
+    "aiRelevance": "NAND matters for AI storage tiers, well away from the accelerator, but Xtacking is a genuine wafer-bonding capability.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.ymtc.com/en/"
@@ -3691,7 +3691,7 @@
       "Amkor",
       "Intel"
     ],
-    "aiRelevance": "Fan-out and 2.5D packaging need lithography on panels and reconstituted wafers, not just on silicon.",
+    "aiRelevance": "Fan-out and 2.5D packaging need lithography on panels and reconstituted wafers as well as on silicon.",
     "revenueUSDb": 0.585,
     "revenueYear": 2025,
     "source": "https://www.suss.com/en/products-solutions"
@@ -4549,7 +4549,7 @@
     "founded": 1971,
     "ticker": "COHR",
     "ownership": "Public",
-    "role": "Makes indium phosphide lasers, VCSELs, optical components and transceiver modules, and is one of the few firms that makes the laser chips inside optical modules rather than only assembling them.",
+    "role": "Makes indium phosphide lasers, VCSELs, optical components and transceiver modules, and is one of the few module makers that also makes the laser chips inside them.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4819,7 +4819,7 @@
       "Enterprises",
       "Cloud operators"
     ],
-    "aiRelevance": "One of the few US-based firms that integrates AI racks rather than outsourcing to Taiwanese ODMs.",
+    "aiRelevance": "One of the few US-based firms that integrates AI racks in-house.",
     "revenueUSDb": 39.063,
     "revenueYear": 2026,
     "source": "https://www.supermicro.com/en/products/gpu"
@@ -4843,7 +4843,7 @@
       "Enterprises",
       "Government"
     ],
-    "aiRelevance": "Enterprise AI deployment mostly arrives through the large server OEMs rather than direct from ODMs.",
+    "aiRelevance": "Enterprise AI deployment mostly arrives through the large server OEMs.",
     "revenueUSDb": 113.538,
     "revenueYear": 2026,
     "source": "https://www.dell.com/en-us/dt/solutions/artificial-intelligence/index.htm"
@@ -4904,14 +4904,14 @@
     "founded": 1994,
     "ticker": "Private",
     "ownership": "Acquired by AMD in 2025; the manufacturing operation was sold on to Sanmina",
-    "role": "Designs and validates rack-scale AI systems for hyperscalers. AMD bought it for the systems engineering team so it could ship complete racks rather than accelerator boards.",
+    "role": "Designs and validates rack-scale AI systems for hyperscalers. AMD bought it for the systems engineering team so it could ship complete racks.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "AMD",
       "Hyperscale cloud operators"
     ],
-    "aiRelevance": "Competing with Nvidia now requires shipping an integrated rack, not just a chip.",
+    "aiRelevance": "Competing with Nvidia now requires shipping an integrated rack.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.amd.com/en/newsroom/press-releases/2025-3-31-amd-completes-acquisition-of-zt-systems.html"
@@ -5145,7 +5145,7 @@
       "Independent power producers",
       "Hyperscale operators"
     ],
-    "aiRelevance": "On-site and grid generation capacity is now part of the AI buildout rather than an assumed input.",
+    "aiRelevance": "On-site and grid generation capacity is now part of the AI buildout.",
     "revenueUSDb": 45.423,
     "revenueYear": 2025,
     "source": "https://www.siemens-energy.com/global/en/home/products-services/product-offerings.html"

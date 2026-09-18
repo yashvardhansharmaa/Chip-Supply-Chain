@@ -82,7 +82,7 @@
     "chinaShare": 14.7,
     "basis": "Total net sales by geographic region (ship-to location of the customer's fab); share computed from the filed absolute figures",
     "source": "https://www.sec.gov/Archives/edgar/data/937966/000093796623000014/R68.htm",
-    "note": "Total net sales, not the narrower net system sales base on which ASML's quarterly China percentages are quoted."
+    "note": "Total net sales. ASML's quarterly China percentages are quoted on the narrower net system sales base."
   },
   {
     "firm": "ASML",
@@ -941,7 +941,7 @@
     "chinaShare": 9.1,
     "basis": "Revenue by geographic region based on the customer's headquarters location, China including Hong Kong; share computed from the filed absolute figures",
     "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/R84.htm",
-    "note": "First year reported on the headquarters basis. The FY2026 fall reflects the H20 license freeze and China's own procurement restrictions, not only the basis change."
+    "note": "First year reported on the headquarters basis. The FY2026 fall reflects the H20 license freeze and China's own procurement restrictions as well as the basis change."
   },
   {
     "firm": "Onto Innovation",
@@ -1189,7 +1189,7 @@
     "chinaShare": 16.3,
     "basis": "Regional information in the segment note, reported to the Management Committee; share computed from the filed absolute figures",
     "source": "https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2021_con_quarter04_all.pdf",
-    "note": "Group-wide, not memory alone: the figure covers phones, displays, appliances and Harman as well as semiconductors, and is the region of the reporting operations rather than a customer ship-to split."
+    "note": "Group-wide: the figure covers phones, displays, appliances and Harman as well as semiconductors, and it is the region of the reporting operations, with no customer ship-to split."
   },
   {
     "firm": "Samsung Electronics",

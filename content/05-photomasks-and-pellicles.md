@@ -28,7 +28,7 @@
  "chinaStatus": "SMIC runs two in-house mask shops in Shanghai, but only for the older g-line, i-line, KrF and ArF tools. There is no Chinese EUV blank, no Chinese tool that inspects a mask at EUV wavelength and no Chinese multi-beam writer.",
  "usStatus": "Photronics is the largest mask maker selling to outside customers and KLA supplies inspection tools, but no US firm makes an EUV blank or an EUV-wavelength inspection tool.",
  "costSignal": "A leading-edge mask set runs roughly $10M to $40M, depending on the node and on the estimate",
- "substitutability": {"band": "Hard", "test": "Three firms make EUV blanks and one sells the actinic inspection tool; three have already walked the path", "why": "AGC and Hoya took two decades to learn the forty-layer blank, but that is the inventor's clock, not the buyer's. Three firms have now done it and the structure of the plate is published, so a well-funded entrant is copying rather than inventing: five to ten years to a qualified blank, and the harder half is Lasertec's actinic inspection, the only tool that sees a mask at the wavelength the scanner uses. Entrants stayed out because the business was too small to fund, which is the one barrier money removes."}
+ "substitutability": {"band": "Hard", "test": "Three firms make EUV blanks and one sells the actinic inspection tool; three have already walked the path", "why": "AGC and Hoya took two decades to learn the forty-layer blank, but that was the inventor's clock. Three firms have now done it and the structure of the plate is published, so a well-funded entrant runs on the copier's clock: five to ten years to a qualified blank, and the harder half is Lasertec's actinic inspection, the only tool that sees a mask at the wavelength the scanner uses. Entrants stayed out because the business was too small to fund, which is the one barrier money removes."}
  },
  "keyFacts": [
  {"fact": "AGC calls itself the world's only maker of EUV mask blanks handling every step from glass material to coating, and expanded capacity by about 30% in 2025 under a METI supply-chain program", "source": "https://www.agc.com/en/news/detail/1203819_2814.html"},
@@ -70,7 +70,7 @@ The mask shop coats the blank with resist, and a mask writer draws the design in
 
 Making the plate a mirror creates its own problems:
 
-- **Mask 3D effects.** Light strikes the mirror at an angle rather than head-on, and the absorber has height, so its edges throw small shadows that distort the printed shape; software has to correct for it in advance.
+- **Mask 3D effects.** Light strikes the mirror at a slant, and the absorber has height, so its edges throw small shadows that distort the printed shape; software has to correct for it in advance.
 - **Write precision.** Every edge of the absorber has to sit within a few nanometers of where the design says.
 - **Particles.** Anything on the reflector prints on every wafer until someone finds it.
 
@@ -94,7 +94,7 @@ A mask defect costs yield on every wafer that mask prints, so fabs check masks t
 
 ### Pellicles
 
-A pellicle is a thin membrane on a frame above the mask. Particles land on it rather than on the pattern, too far out of focus to print.
+A pellicle is a thin membrane on a frame above the mask. Particles land on it, too far out of focus to print, and the pattern below stays clean.
 
 ASML's EUV membrane is 13 nanometers thick, has to hold together at 500 degrees Celsius in vacuum, and every photon it absorbs is light that never reaches the wafer ([source](https://www.asml.com/en/news/stories/2022/the-euv-pellicle-indistinguishable-from-magic)). The light crosses it twice, on the way in and on the way back off the mirror, so absorption counts double.
 
@@ -104,7 +104,7 @@ Carbon nanotube membranes are the intended fix, still short of production in a l
 
 SemiAnalysis put mask sets beyond $1 million at 28 nm, beyond $10 million at 7 nm and near $40 million at 3 nm, as of 2022 ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)).
 
-That cost decides who can use a node at all. A GPU spread over hundreds of thousands of units absorbs a $40 million mask set easily; the same set kills a custom inference chip shipping in the thousands ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)). That is why so much AI silicon converges on a handful of designs.
+That cost decides who can use a node at all. A GPU spread over hundreds of thousands of units absorbs a $40 million mask set easily; the same set kills a custom inference chip shipping in the thousands ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)). That cost pushes AI silicon onto a handful of designs.
 
 {{figure:mask-set-cost}}
 
@@ -116,7 +116,7 @@ SMIC runs two in-house mask shops in Shanghai, for g-line, i-line, KrF and ArF t
 
 ## The chokepoint
 
-Mask blanks are as concentrated as lithography, on a fraction of the money. Three firms supply EUV blanks worldwide, AGC says ([source](https://www.agc.com/en/hub/pr/the-japanese-glass-behind-next-generation-chips.html)), one firm certifies them, and neither business is big enough to attract a funded entrant. Nobody starts from scratch at ¥40 billion of annual sales, to serve a handful of customers, with twenty years of defect learning ahead ([source](https://www.agc.com/en/news/detail/1203819_2814.html)). What has kept the count at three is money rather than physics.
+Mask blanks are as concentrated as lithography, on a fraction of the money. Three firms supply EUV blanks worldwide, AGC says ([source](https://www.agc.com/en/hub/pr/the-japanese-glass-behind-next-generation-chips.html)), one firm certifies them, and neither business is big enough to attract a funded entrant. Nobody starts from scratch at ¥40 billion of annual sales, to serve a handful of customers, with twenty years of defect learning ahead ([source](https://www.agc.com/en/news/detail/1203819_2814.html)). A business too small to fund a fourth entrant has kept the count at three.
 
 A decade on, no pellicle membrane is transparent, tough and long-lived at once, so fabs trade throughput against defect risk. A production carbon nanotube pellicle would move EUV cost per wafer more than any scanner improvement.
 

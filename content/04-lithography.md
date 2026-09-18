@@ -25,7 +25,7 @@
  "chinaStatus": "No EUV scanner has ever been sold to a customer in China, and CSIS judges the technology firmly out of reach despite state investment. Shanghai Aishengna Electronic Technology Group, a state-owned firm registered in 2023, is reported to have started producing domestic immersion DUV scanners in 2026. SMEE, the older domestic supplier, holds about 4% of the global i-line market, the coarsest tier, and nothing above it.",
  "usStatus": "No domestic scanner maker. Washington controls access through Dutch licensing, US-origin subsystems and entity-list rules.",
  "costSignal": "About $200M for a standard EUV scanner, $350-400M for the newer High-NA version and about $60M for a DUV tool, on Reuters' reporting; ASML does not publish per-system prices",
- "substitutability": {"band": "Very hard", "test": "No second EUV source; only Zeiss can polish the mirrors, and a funded Chinese team has light but no printed chip", "why": "A well-funded state starting today would have to reproduce meter-wide mirrors polished to within tens of picometers and a source that hits tin droplets 50,000 times a second, not merely assemble a scanner. The best-funded attempt so far has made extreme-ultraviolet light and no chip, CSIS reads working systems as out of reach, and no announced program changes this before 2030."}
+ "substitutability": {"band": "Very hard", "test": "No second EUV source; only Zeiss can polish the mirrors, and a funded Chinese team has light but no printed chip", "why": "A well-funded state starting today would have to reproduce meter-wide mirrors polished to within tens of picometers and a source that hits tin droplets 50,000 times a second before it could assemble a scanner. The best-funded attempt so far has made extreme-ultraviolet light and no chip, CSIS reads working systems as out of reach, and no announced program changes this before 2030."}
  },
  "keyFacts": [
  {"fact": "ASML booked 48 EUV systems as revenue in 2025, versus 44 in 2024 and 53 in 2023", "source": "https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf"},
@@ -133,7 +133,7 @@ ASML took EUR 32.7 billion in net sales in 2025 at a 52.8 percent gross margin (
 - **ASML San Diego**, the former Cymer, designs the source where the laser turns tin into plasma, and builds the droplet generator ([source](https://www.asml.com/en/company/about-asml/locations/san-diego)).
 - **VDL ETG** builds the frames that suspend and position the mirrors ([source](https://www.vdlgroep.com/en/vdl-groep/innovation-projects/vdl-etg-builds-complex-frames-for-zeiss)).
 
-Zeiss mirror polishing and coating, not final assembly in Veldhoven, caps EUV output.
+Zeiss mirror polishing and coating caps EUV output. Final assembly in Veldhoven waits on the optics.
 
 Nikon and Canon are specialists now. Nikon sold 22 new scanners in the year to March 2026, into a market it sizes at 570 units, and lost money on Precision Equipment ([source](https://www.nikon.com/content/dam/web-assets/nikoncom/company/local/global/en/ir/ir_library/result/pdf/2026/26_all_e.pdf)). Canon's bet is nanoimprint, where the FPA-1200NZ2C stamps the pattern instead of projecting it, down to a 14 nm linewidth ([source](https://global.canon/en/news/2024/20240926.html)). No leading-edge logic customer has taken it up.
 

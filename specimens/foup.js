@@ -161,7 +161,7 @@ PC.register('foup', function (p) {
     caption: 'A FOUP: 388 by 342 by 332 mm, carrying twenty-five 300 mm wafers on moulded teeth ' +
       '10 mm apart. The shell is drawn translucent, as the real polycarbonate is. On the roof is ' +
       'the flange an overhead robot grips; on the front, the door with its two latch-key ports, ' +
-      'which is the only way in. The box is barely wider than the wafer it carries, and it is the ' +
-      'wafers, not the fab, that the clean air is for. One wafer is picked out in silver.'
+      'which is the only way in. The box is barely wider than the wafer it carries, and the ' +
+      'clean air is for the wafers inside it. One wafer is picked out in silver.'
   };
 });

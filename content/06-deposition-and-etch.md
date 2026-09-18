@@ -28,7 +28,7 @@
  "chinaStatus": "The strongest Chinese position in any tool segment. China-based suppliers held about 11% of dry etch and 7% of deposition in 2024, but under 1% of atomic layer deposition.",
  "usStatus": "Two of the three largest suppliers are American. Washington controls dry etch, atomic layer deposition and deep-hole deposition tools by export classification number, and by a rule that reaches tools built outside the United States from US technology.",
  "costSignal": "No public list prices. Global semiconductor equipment billings were $135.1B in 2025, with wafer processing up 12%.",
- "substitutability": {"band": "Moderate", "test": "Three or four vendors qualify at most etch and deposition steps; atomic layer deposition is the thin one", "why": "For most steps a buyer has three or four qualified vendors, so the work is requalification rather than invention, two to five years at the leading node. The exception is atomic layer deposition, where Chinese suppliers stayed under 1 percent across the same five years they took real share in etch. A well-funded actor that is not fenced out buys from ASM International, Lam, Tokyo Electron and Applied Materials and starts from a qualified tool, which is why China's clock here is the long one."}
+ "substitutability": {"band": "Moderate", "test": "Three or four vendors qualify at most etch and deposition steps; atomic layer deposition is the thin one", "why": "For most steps a buyer has three or four qualified vendors, so the work is requalification, two to five years at the leading node. The exception is atomic layer deposition, where Chinese suppliers stayed under 1 percent across the same five years they took real share in etch. A well-funded actor that is not fenced out buys from ASM International, Lam, Tokyo Electron and Applied Materials and starts from a qualified tool, which is why China's clock here is the long one."}
  },
  "keyFacts": [
  {"fact": "Producing one chip takes more than 1,000 process steps and 70 or more border crossings (CSET, 2021)", "source": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"},
@@ -82,7 +82,7 @@ For deposition the gas carries the material wanted. The fragments land on the wa
 
 For etch the gas attacks one material and leaves the one beside it. Wherever the photoresist pattern covers the wafer, nothing happens. Wherever it does not, the fragments react with the surface and turn it into a gas, which the pump carries away. A second field pulls the charged fragments straight down at the wafer, so the etch cuts vertically and a narrow hole keeps its width as it deepens. When the etch reaches the material underneath, which the gas was chosen not to touch, it slows almost to a stop, and the tool ends the step.
 
-Change the gas, the pressure, the power and the temperature, and the same hardware either adds material or takes it away, which is why the export controls here name process specifications rather than machines.
+Change the gas, the pressure, the power and the temperature, and the same hardware either adds material or takes it away, which is why the export controls here are written as process specifications.
 
 CSET puts a single chip at more than 1,000 process steps, with the part-finished product crossing international borders 70 or more times ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 
@@ -155,4 +155,4 @@ The chokepoint is real but softer than lithography's. Three or four credible ven
 
 ## Takeaways
 
-Deposition and etch are the volume business of a fab: over a thousand steps per wafer, four American, Japanese and Dutch firms taking most of the money, and no monopoly like ASML's in lithography. The AI roadmap raises difficulty faster than tool count, because gate-all-around, HBM and backside power need better selectivity and deeper holes rather than more chambers. China has closed the gap fastest here and slowest in ALD, the tool gate-all-around logic depends on.
+Deposition and etch are the volume business of a fab: over a thousand steps per wafer, four American, Japanese and Dutch firms taking most of the money, and no monopoly like ASML's in lithography. The AI roadmap raises difficulty faster than tool count, because gate-all-around, HBM and backside power ask each chamber for better selectivity and deeper holes. China has closed the gap fastest here and slowest in ALD, the tool gate-all-around logic depends on.
