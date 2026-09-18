@@ -36,7 +36,7 @@ PC.register('substrate-layers', function (p) {
     var s = [], i, k, u;
     // resin bulk behind everything
     s.push(PC.T(PC.scatter({ n: Math.round(L * H * 21000), w: L, h: H, d: 0, tone: 0.18 }), { pos: [L / 2, 0, 0] }));
-    // the build-up film: the chokepoint, so the dielectric is the copper colour
+    // the build-up film: the chokepoint, in the olive of the real film
     for (k = 1; k <= nb; k++) {
       var band = PC.scatter({ n: Math.round(L * tb * 34000), w: L, h: tb * 0.86, d: 0 });
       s.push(PC.T(PC.accent(band, 0.42), { pos: [L / 2, lay[k] - tb / 2, 0] }));
@@ -60,7 +60,7 @@ PC.register('substrate-layers', function (p) {
         while (u < L - 0.004) {
           var w = 0.004 + PC.rnd() * (k === 0 ? 0.05 : 0.028);
           if (u + w > L - 0.004) break;
-          s.push(seg([u, y, 0], [u + w, y, 0], 560, 1));
+          s.push(PC.accent2(seg([u, y, 0], [u + w, y, 0], 560, 1), 0.95));
           u += w + 0.004 + PC.rnd() * 0.02;
         }
       }
@@ -77,10 +77,10 @@ PC.register('substrate-layers', function (p) {
     for (i = 0; i < np; i++) {
       u = (i + 0.5) * L / np + (PC.rnd() - 0.5) * 0.01;
       var hw = 0.0062;
-      s.push(seg([u - hw, -cTop, 0], [u - hw, cTop, 0], 560, 0.82));
-      s.push(seg([u + hw, -cTop, 0], [u + hw, cTop, 0], 560, 0.82));
-      s.push(seg([u - hw * 2.6, cTop, 0], [u + hw * 2.6, cTop, 0], 560, 0.9));
-      s.push(seg([u - hw * 2.6, -cTop, 0], [u + hw * 2.6, -cTop, 0], 560, 0.9));
+      s.push(PC.accent2(seg([u - hw, -cTop, 0], [u - hw, cTop, 0], 560, 1), 0.82));
+      s.push(PC.accent2(seg([u + hw, -cTop, 0], [u + hw, cTop, 0], 560, 1), 0.82));
+      s.push(PC.accent2(seg([u - hw * 2.6, cTop, 0], [u + hw * 2.6, cTop, 0], 560, 1), 0.9));
+      s.push(PC.accent2(seg([u - hw * 2.6, -cTop, 0], [u + hw * 2.6, -cTop, 0], 560, 1), 0.9));
     }
     // microvias: laser-drilled, tapered, one per build-up layer, some stacked in
     // a column and some staggered as they climb
@@ -172,6 +172,10 @@ PC.register('substrate-layers', function (p) {
     cloud: PC.merge.apply(null, parts),
     spin: 0.1,
     tilt: [0.5, -0.64, 0],
-    caption: 'A flip-chip substrate with a quarter cut away. In the cut face: a glass-cloth core drilled edge to edge with plated through-holes, eight layers of build-up film laminated onto each side of it, copper traces in section on every layer, and the tapered laser-drilled microvias that climb from one layer to the next. On top, the pad field the package lands on, ringed by capacitors; underneath, the ball grid. The build-up film is the copper-coloured part: it comes from one supplier. Footprint is to scale; the thickness is exaggerated about twenty times.'
+    // colour: Ajinomoto build-up film is an olive-green to brown epoxy sheet
+    accent: [111, 122, 47], accentDark: [178, 189, 96],
+    // colour: the traces, plated through-holes and their pads are electroplated copper
+    accent2: [176, 102, 44], accent2Dark: [224, 154, 92],
+    caption: 'A flip-chip substrate with a quarter cut away. In the cut face: a glass-cloth core drilled edge to edge with plated through-holes, eight layers of build-up film laminated onto each side of it, copper traces in section on every layer, and the tapered laser-drilled microvias that climb from one layer to the next. On top, the pad field the package lands on, ringed by capacitors; underneath, the ball grid. The build-up film is the olive-green part: it comes from one supplier. Footprint is to scale; the thickness is exaggerated about twenty times.'
   };
 });

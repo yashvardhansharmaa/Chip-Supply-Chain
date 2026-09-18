@@ -69,9 +69,10 @@
                this.canvas.getContext('webgl', { alpha: true, antialias: false, premultipliedAlpha: true });
       if (!gl || !window.PC) { this.fig.setAttribute('data-hidden', '1'); return; }
       this.gl = gl;
-      var vs = 'attribute vec4 aP;uniform mat4 uMVP;uniform float uSize;uniform float uOp;uniform vec3 uInk;uniform vec3 uAcc;varying vec4 vC;' +
+      var vs = 'attribute vec4 aP;uniform mat4 uMVP;uniform float uSize;uniform float uOp;uniform vec3 uInk;uniform vec3 uAcc;uniform vec3 uAcc2;varying vec4 vC;' +
         'void main(){vec4 p=uMVP*vec4(aP.xyz,1.0);gl_Position=p;float w=aP.w;vec3 c;float a;' +
-        'if(w>=2.0){c=uAcc;a=clamp(w-2.0,0.0,1.0);}else{c=uInk;a=clamp(w,0.0,1.0);}' +
+        // three channels: ink w in [0,1], accent w in [2,3], second accent w in (3,4] (see src/kit.js)
+        'if(w>3.0){c=uAcc2;a=clamp(w-3.0,0.0,1.0);}else if(w>=2.0){c=uAcc;a=clamp(w-2.0,0.0,1.0);}else{c=uInk;a=clamp(w,0.0,1.0);}' +
         'float j=fract(sin(dot(aP.xyz,vec3(12.9898,78.233,37.719)))*43758.5453);' + // per-point size jitter: hand-stippled, not screen-toned
         'float depth=clamp((p.w-2.4)/3.2,0.0,1.0);' + // far points fade a little, which reads as depth
         'gl_PointSize=(uSize*(0.72+0.56*j))/max(p.w,0.5);vC=vec4(c,a*uOp*mix(1.0,0.62,depth));}';
@@ -81,7 +82,7 @@
       try { gl.attachShader(prog, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(prog); }
       catch (e) { this.fig.setAttribute('data-hidden', '1'); return; }
       gl.useProgram(prog);
-      this.loc = { aP: gl.getAttribLocation(prog, 'aP'), uMVP: gl.getUniformLocation(prog, 'uMVP'), uSize: gl.getUniformLocation(prog, 'uSize'), uOp: gl.getUniformLocation(prog, 'uOp'), uInk: gl.getUniformLocation(prog, 'uInk'), uAcc: gl.getUniformLocation(prog, 'uAcc') };
+      this.loc = { aP: gl.getAttribLocation(prog, 'aP'), uMVP: gl.getUniformLocation(prog, 'uMVP'), uSize: gl.getUniformLocation(prog, 'uSize'), uOp: gl.getUniformLocation(prog, 'uOp'), uInk: gl.getUniformLocation(prog, 'uInk'), uAcc: gl.getUniformLocation(prog, 'uAcc'), uAcc2: gl.getUniformLocation(prog, 'uAcc2') };
       gl.enableVertexAttribArray(this.loc.aP);
       gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA); gl.disable(gl.DEPTH_TEST);
       PC.density = narrow() ? 0.55 : (window.devicePixelRatio > 1.5 ? 0.85 : 1);
@@ -99,6 +100,17 @@
       var cs = getComputedStyle(document.documentElement);
       var p = function (v, d) { var m = (cs.getPropertyValue(v) || '').split(','); if (m.length < 3) return d; return [parseFloat(m[0]) / 255, parseFloat(m[1]) / 255, parseFloat(m[2]) / 255]; };
       this.ink = p('--stage-ink', this.ink); this.accent = p('--stage-accent', this.accent);
+      // a specimen's own colours are picked per theme: accentDark/accent2Dark when data-theme="dark", else the light
+      // colour lifted by PC.lift (HSL lightness raised to at least 0.62, hue and saturation kept); see src/kit.js
+      this.dark = document.documentElement.getAttribute('data-theme') === 'dark';
+      for (var k in this.cache) if (this.cache.hasOwnProperty(k)) this.cache[k].colors = null;
+    },
+    // the two accent colours a slot draws with, as 0..1 triplets: its own if it declares any, else the CSS accent for both
+    slotColors: function (slot) {
+      if (slot.colors) return slot.colors;
+      var r = PC.resolveColors(slot.spec, this.dark), f = function (c) { return [c[0] / 255, c[1] / 255, c[2] / 255]; };
+      slot.colors = r ? { accent: f(r.accent), accent2: f(r.accent2) } : { accent: this.accent, accent2: this.accent };
+      return slot.colors;
     },
     resize: function () {
       if (!this.ok) return;
@@ -116,7 +128,8 @@
       try { spec = PC.build(name, params); } catch (e) { console.warn('specimen failed:', name, e.message); return null; }
       var gl = this.gl, vbo = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, vbo); gl.bufferData(gl.ARRAY_BUFFER, spec.cloud, gl.STATIC_DRAW);
-      var slot = { key: key, vbo: vbo, n: PC.count(spec.cloud), spin: spec.spin, tilt: spec.tilt, turntable: !!spec.turntable, caption: spec.caption, spinBase: 0 };
+      var slot = { key: key, vbo: vbo, n: PC.count(spec.cloud), spin: spec.spin, tilt: spec.tilt, turntable: !!spec.turntable, caption: spec.caption, spinBase: 0,
+        spec: { accent: spec.accent, accent2: spec.accent2, accentDark: spec.accentDark, accent2Dark: spec.accent2Dark }, colors: null };
       this.cache[key] = slot;
       return slot;
     },
@@ -152,7 +165,8 @@
       var size = 6.6 * this.dpr * Math.min(1.05, Math.max(0.6, this.h / (900 * this.dpr))) * Math.max(1, 0.98 / aspect);
       gl.uniform1f(this.loc.uSize, size);
       gl.uniform1f(this.loc.uOp, op);
-      gl.uniform3fv(this.loc.uInk, this.ink); gl.uniform3fv(this.loc.uAcc, this.accent);
+      var col = this.slotColors(slot);
+      gl.uniform3fv(this.loc.uInk, this.ink); gl.uniform3fv(this.loc.uAcc, col.accent); gl.uniform3fv(this.loc.uAcc2, col.accent2);
       gl.bindBuffer(gl.ARRAY_BUFFER, slot.vbo);
       gl.vertexAttribPointer(this.loc.aP, 4, gl.FLOAT, false, 0, 0);
       gl.drawArrays(gl.POINTS, 0, slot.n);
@@ -1973,7 +1987,7 @@
       document.addEventListener('click', function (e) {
         var b = e.target.closest ? e.target.closest('.ch-copy') : null;
         if (!b) return;
-        var url = b.getAttribute('data-copy'), done = function () { b.textContent = 'Copied'; b.setAttribute('data-done', '1'); setTimeout(function () { b.textContent = 'Copy link'; b.removeAttribute('data-done'); }, 1600); };
+        var url = b.getAttribute('data-copy'), done = function () { b.textContent = 'Copied'; b.setAttribute('data-done', '1'); setTimeout(function () { b.textContent = 'Link to chapter'; b.removeAttribute('data-done'); }, 1600); };
         if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, function () { window.prompt('Copy this link', url); });
         else window.prompt('Copy this link', url);
       });

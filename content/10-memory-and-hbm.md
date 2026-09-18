@@ -4,10 +4,10 @@
   "number": 10,
   "title": "Memory and HBM",
   "oneLiner": "Three firms make every HBM stack in the world. The cube is the largest block of silicon in an AI package, and the cooling plate above it now caps its height.",
-  "plain": "High bandwidth memory is where an AI chip keeps the numbers it is working on, and it is built to hand them over fast. A memory maker stacks up to sixteen memory chips into a cube, drills holes straight down through the stack, and fills the holes with copper so that every layer is wired to the ones below. The cube then sits beside the processor. Stacking is the hard part. Each chip is ground so thin that the copper shows through its back, the finished cube has to fit under the plate that cools it, and one bad chip ruins the whole cube. Only SK hynix, Samsung and Micron have made it work, and a single line in an American export rule reaches all three.",
+  "plain": "High bandwidth memory, or HBM, is where an AI chip keeps the numbers it is working on, and it is built to hand them over fast. A memory maker stacks up to sixteen memory chips into a cube, drills holes straight down through the stack, and fills the holes with copper so that every layer is wired to the ones below. The cube then sits beside the processor, the chip that does the calculating. Stacking is the hard part, because each chip is ground so thin that the copper in its holes shows through its back, the finished cube has to fit under the plate that cools it, and one bad chip ruins the whole cube. Only SK hynix, Samsung and Micron have made it work, and a single line in an American export control reaches all three.",
   "bridge": "A die that computes fast still sits idle if its data arrives slowly, and nothing on the chip itself can fix that.",
   "specimen": "hbm-stack",
-  "specimenCaption": "A twelve-high HBM stack pulled apart: a logic die at the base, in amber, and twelve memory dies above it. The finished part is 11 by 12 mm and 0.72 mm tall; each memory die is ground to about 30 micrometers, thinner than a human hair. The footprint is to scale; the heights are exaggerated about fifteen times.",
+  "specimenCaption": "A twelve-high HBM stack pulled apart: a logic die at the base, in copper, and twelve memory dies above it. The finished part is 11 by 12 mm and 0.72 mm tall; each memory die is ground to about 30 micrometers, thinner than a human hair. The footprint is to scale; the heights are exaggerated about fifteen times.",
   "card": {
     "concentration": "Extreme",
     "chokepointScore": 5,
@@ -74,7 +74,7 @@ An AI accelerator is a machine for dragging numbers past arithmetic units, and a
 
 ## How it works
 
-High bandwidth memory is where an AI chip keeps the numbers it is working on, and it is built to hand them over fast. A memory maker stacks up to sixteen memory chips into a cube, drills holes straight down through the stack, and fills the holes with copper so that every layer is wired to the ones below. The cube then sits beside the processor. Stacking is the hard part. Each chip is ground so thin that the copper shows through its back, the finished cube has to fit under the plate that cools it, and one bad chip ruins the whole cube. Only SK hynix, Samsung and Micron have made it work, and a single line in an American export rule reaches all three.
+High bandwidth memory, or HBM, is where an AI chip keeps the numbers it is working on, and it is built to hand them over fast. A memory maker stacks up to sixteen memory chips into a cube, drills holes straight down through the stack, and fills the holes with copper so that every layer is wired to the ones below. The cube then sits beside the processor, the chip that does the calculating. Stacking is the hard part, because each chip is ground so thin that the copper in its holes shows through its back, the finished cube has to fit under the plate that cools it, and one bad chip ruins the whole cube. Only SK hynix, Samsung and Micron have made it work, and a single line in an American export control reaches all three.
 
 Each layer in the cube is a DRAM chip, ground thin and bonded to the one below with microbumps, dots of solder, and the whole stack sits on a base die that manages it. The copper-filled holes are TSVs, through-silicon vias, and they let a signal reach any layer without a wire around the outside.
 

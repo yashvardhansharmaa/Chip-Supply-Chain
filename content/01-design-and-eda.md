@@ -4,10 +4,10 @@
  "number": 1,
  "title": "Chip Design, EDA and IP",
  "oneLiner": "The cheapest stage in the chain to fund and one of the most concentrated. Three software firms sell the tools that every leading-edge AI accelerator passes through.",
- "plain": "Chip design turns an idea for a processor into a complete blueprint. A chip holds billions of transistors, tiny electrical switches, and the blueprint fixes where each one sits and how it is wired to the others. A signal has to cross those wires in less than a billionth of a second. No one draws a plan like that by hand. Software from three companies, Synopsys, Cadence and Siemens, lays it out, checks it and signs it off, and a chip factory accepts only designs that have passed those tools. The factory prints each layer of the design onto silicon through a stencil, and changing the plan after that costs a fresh set of stencils and several months. Withhold the software and the design cannot be made.",
+ "plain": "Chip design turns an idea for a new chip into a complete blueprint. A chip holds billions of transistors, tiny electrical switches, and the blueprint fixes where each one sits and how it is wired to the others. The chip works in ticks, and a signal has to cross those wires within one tick, less than a billionth of a second. Software from three companies, Synopsys, Cadence and Siemens, lays out a plan like that, checks it and signs it off, and a chip factory accepts only designs that have passed those tools. The factory prints each layer of the design onto silicon through a stencil, and changing the plan after that costs a fresh set of stencils and several months. Withhold the software and no new chip can be designed.",
  "bridge": "The chain starts before any material does, when a company still has nothing but an idea for a processor.",
  "specimen": "die-floorplan",
- "specimenCaption": "The floorplan of one GPU die, 26 by 33 mm, drawn to scale. That is one reticle field, the largest patch a scanner can print in one shot. The 144 compute tiles fill the center in eight clusters; the amber strip on the short edge is the link to the second die in the same package.",
+ "specimenCaption": "The floorplan of one GPU die, 26 by 33 mm, drawn to scale. That is one reticle field, the largest patch a scanner can print in one shot. The 144 compute tiles fill the center in eight clusters; the copper strip on the short edge is the link to the second die in the same package.",
  "card": {
  "concentration": "Extreme",
  "chokepointScore": 4,
@@ -77,7 +77,7 @@ Design is the only stage in this chain with no factory, and the one a foreign go
 
 ## How it works
 
-Chip design turns an idea for a processor into a complete blueprint. A chip holds billions of transistors, tiny electrical switches, and the blueprint fixes where each one sits and how it is wired to the others. A signal has to cross those wires in less than a billionth of a second. No one draws a plan like that by hand. Software from three companies, Synopsys, Cadence and Siemens, lays it out, checks it and signs it off, and a chip factory accepts only designs that have passed those tools. The factory prints each layer of the design onto silicon through a stencil, and changing the plan after that costs a fresh set of stencils and several months. Withhold the software and the design cannot be made.
+Chip design turns an idea for a new chip into a complete blueprint. A chip holds billions of transistors, tiny electrical switches, and the blueprint fixes where each one sits and how it is wired to the others. The chip works in ticks, and a signal has to cross those wires within one tick, less than a billionth of a second. Software from three companies, Synopsys, Cadence and Siemens, lays out a plan like that, checks it and signs it off, and a chip factory accepts only designs that have passed those tools. The factory prints each layer of the design onto silicon through a stencil, and changing the plan after that costs a fresh set of stencils and several months. Withhold the software and no new chip can be designed.
 
 Design runs in five stages, each one's output the next one's input, all of it in software.
 

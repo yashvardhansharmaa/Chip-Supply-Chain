@@ -137,9 +137,11 @@ PC.register('wafer', function (p) {
     cloud: PC.merge.apply(null, parts),
     spin: 0.1,
     tilt: [0.92, -0.5, 0],
+    // colour: a polished wafer is mirror silver; the picked-out field carries the faint blue of the anti-reflective coating under its resist
+    accent: [90, 134, 180], accentDark: [169, 198, 228],
     caption: 'A polished 300 mm wafer, ruled by the scribe streets between exposure fields. ' +
       whole + ' whole 26 by 33 mm fields fall inside the edge-exclusion ring; ' +
-      'the copper one is a single reticle field, the largest pattern a scanner can print in one shot. ' +
+      'the blue one is a single reticle field, the largest pattern a scanner can print in one shot. ' +
       'The V at the rim is the orientation notch, drawn six times its real size.'
   };
 });

@@ -191,6 +191,8 @@ PC.register('gpu-baseboard', function (p) {
     cloud: PC.merge.apply(null, parts),
     spin: 0.1,
     tilt: [0.55, -0.6, 0],
-    caption: 'An eight-GPU baseboard, about 510 by 400 mm: eight accelerator modules bolted into retention frames in two rows of four, flipped so their land grids face the middle, where the two NVLink switch chips sit in copper. Voltage-regulator banks line the long edges; the high-density connectors run along the front.'
+    // colour: the switch package lid is a nickel-plated copper heat spreader, so it shows nickel's cool silver, not copper
+    accent: [127, 138, 147], accentDark: [201, 209, 215],
+    caption: 'An eight-GPU baseboard, about 510 by 400 mm: eight accelerator modules bolted into retention frames in two rows of four, flipped so their land grids face the middle, where the two NVLink switch chips sit in nickel. Voltage-regulator banks line the long edges; the high-density connectors run along the front.'
   };
 });

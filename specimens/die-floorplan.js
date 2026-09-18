@@ -125,6 +125,8 @@ PC.register('die-floorplan', function (p) {
     cloud: PC.merge.apply(null, parts),
     spin: 0.11,
     tilt: [1.02, -0.32, 0],
+    // colour: the die-to-die interface is a field of copper micro-bumps and the copper bus behind them
+    accent: [176, 102, 44], accentDark: [224, 154, 92],
     caption: 'The floorplan of a GPU die: 26 by 33 mm, one whole reticle field. ' +
       '144 compute tiles sit in eight clusters, four above the L2 cache band and four below; ' +
       'twelve memory controllers and their HBM PHYs run down the two long edges; the PCI Express ' +

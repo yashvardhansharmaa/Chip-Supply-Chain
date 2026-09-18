@@ -351,6 +351,8 @@ PC.register('globe', function (p) {
     cloud: PC.merge.apply(null, parts),
     spin: 0.06,
     tilt: [-0.30, -1.75, 0],
-    caption: 'The world with nineteen chokepoint towns pinned in copper, the pins standing in proportion to how narrow each town’s link in the chain is, and five towns building substitutes pinned in ink: Beijing, Wuhan, Shenzhen, Hefei and Dresden. The first view looks down on the Malacca Strait: Hsinchu, Tainan and Kaohsiung on Taiwan, Icheon and Pyeongtaek in Korea, Kumamoto, Yokkaichi and Tokyo in Japan, Shanghai, Penang, Singapore, Bengaluru and Abu Dhabi. Veldhoven, Oberkochen and the four American sites come round as it turns.'
+    // colour: the pins are a diagram, not an object, so they take the site's own garnet
+    accent: [122, 31, 43], accentDark: [201, 83, 106],
+    caption: 'The world with nineteen chokepoint towns pinned in garnet, the pins standing in proportion to how narrow each town’s link in the chain is, and five towns building substitutes pinned in ink: Beijing, Wuhan, Shenzhen, Hefei and Dresden. The first view looks down on the Malacca Strait: Hsinchu, Tainan and Kaohsiung on Taiwan, Icheon and Pyeongtaek in Korea, Kumamoto, Yokkaichi and Tokyo in Japan, Shanghai, Penang, Singapore, Bengaluru and Abu Dhabi. Veldhoven, Oberkochen and the four American sites come round as it turns.'
   };
 });

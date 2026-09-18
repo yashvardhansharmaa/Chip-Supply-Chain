@@ -158,9 +158,9 @@ PC.register('euv-scanner', function (p) {
   add(PC.T(PC.circle({ r: 0.10, perUnit: 800, tone: 1 }), { rot: [0, 0, -Math.PI / 2], pos: [NODE[0].p[0], PLASMA[1], 0] }));
 
   add(mirror(COLL, [1, 0], CR, { sag: CSAG, rIn: CHOLE, n: 3200, tone: 0.4, mount: false }));
-  // the plasma: one bright copper node at the collector's focus
-  add(PC.accent(PC.T(PC.sphere({ r: 0.036, n: 620 }), { pos: [PLASMA[0], PLASMA[1], 0] }), 1));
-  add(PC.accent(PC.T(PC.sphere({ r: 0.085, n: 420 }), { pos: [PLASMA[0], PLASMA[1], 0] }), 0.3));
+  // the plasma: one bright violet-white node at the collector's focus
+  add(PC.accent2(PC.T(PC.sphere({ r: 0.036, n: 620 }), { pos: [PLASMA[0], PLASMA[1], 0] }), 1));
+  add(PC.accent2(PC.T(PC.sphere({ r: 0.085, n: 420 }), { pos: [PLASMA[0], PLASMA[1], 0] }), 0.3));
   // infrared drive laser, in ink: it is not the EUV
   add(PC.line({ a: [-2.14, PLASMA[1], 0], b: [PLASMA[0] - 0.04, PLASMA[1], 0], perUnit: 130, tone: 0.42 }));
   add(section(PC.T(PC.cylinder({ r: 0.09, h: 0.24, n: 700, tone: 0.4 }), { rot: [0, 0, -Math.PI / 2], pos: [-2.03, PLASMA[1], 0] })));
@@ -283,6 +283,10 @@ PC.register('euv-scanner', function (p) {
     cloud: PC.merge.apply(null, parts),
     spin: 0.08,
     tilt: [0.16, -0.38, 0],
-    caption: 'An EUV scanner cut open on its optical plane. A tin droplet is flashed into plasma at the focus of the collector dish (bottom left); the 13.5 nm light, in copper, squeezes through the intermediate focus, folds off three illuminator mirrors, strikes the reticle held pattern-down at the top, and zigzags through six projection mirrors onto the wafer. Reticle and wafer are drawn about twice oversize.'
+    // colour: 13.5 nm light is invisible; the drawing convention for an EUV beam is a pale blue-violet, the short-wave end of what the eye can see
+    accent: [107, 127, 209], accentDark: [167, 180, 245],
+    // colour: the tin plasma at the source glows violet-white to the eye, from its visible tin lines
+    accent2: [154, 126, 224], accent2Dark: [220, 208, 255],
+    caption: 'An EUV scanner cut open on its optical plane. A tin droplet is flashed into plasma at the focus of the collector dish (bottom left); the 13.5 nm light, in blue-violet, squeezes through the intermediate focus, folds off three illuminator mirrors, strikes the reticle held pattern-down at the top, and zigzags through six projection mirrors onto the wafer. Reticle and wafer are drawn about twice oversize.'
   };
 });

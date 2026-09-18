@@ -8,10 +8,11 @@ build/modules/social.js's manifest(), read through node so the card and the unfu
 Output: build/assets/cards/<slug>.png; `node build/build.js` copies the folder to dist/cards/.
 
 The card is the "Dark" direction from qa/cards-redesign: the site's dark tokens (:root[data-theme="dark"]
-in src/styles.css), the amber rule, IBM Plex Sans Condensed for the title, Newsreader for the line,
-IBM Plex Mono for the eyebrow and the domain at the foot, and on the right the chapter's own specimen,
+in src/styles.css), the garnet rule, Fraunces for the title, Source Serif 4 for the line,
+Instrument Sans for the eyebrow and the domain at the foot, and on the right the chapter's own specimen,
 the point cloud the page itself shows, dumped from src/kit.js by build/cards-art.js and drawn here with
-Pillow in pale ink with its accent points in amber, at the tilt the site opens it at. A chapter names its
+Pillow in pale ink with its accent points in the specimen's own colours (the ones it declares for the dark
+ground: see qa/specimen-colors.md), at the tilt the site opens it at. A chapter names its
 specimen in its front matter; a view takes one from VIEW_SPECIMEN below.
 
 A title that runs past two lines is shrunk until it fits in the text column, so it never reaches the art;
@@ -38,7 +39,7 @@ only = args[args.index('--only') + 1].split(',') if '--only' in args else None
 keep = '--keep' in args  # keep the temporary HTML and art files for inspection
 
 # :root[data-theme="dark"] in src/styles.css
-DARK = dict(bg='#101315', bg2='#171b1e', ink='#e7e9ea', ink2='#c0c7cc', muted='#8b959d', rule_line='#2a3137', accent='#e6ad2f')
+DARK = dict(bg='#101315', bg2='#171b1e', ink='#e7e9ea', ink2='#c0c7cc', muted='#8b959d', rule_line='#2a3137', accent='#c9536a')  # accent: the dark-ground garnet of qa/brand-redesign/DECISION.md
 
 # the specimen a view shows; chapters name theirs in content/*.md front matter
 VIEW_SPECIMEN = {'home': 'die-floorplan', 'intro': 'die-floorplan', 'chain': 'die-floorplan', 'chips': 'package',
@@ -64,23 +65,23 @@ TEMPLATE = """<!doctype html>
 <meta charset="utf-8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,400&display=block">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..600,0,0&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Instrument+Sans:wght@400;500;600&display=block">
 <style>
 :root { --bg: %(bg)s; --bg-2: %(bg2)s; --ink: %(ink)s; --ink-2: %(ink2)s; --muted: %(muted)s; --line: %(rule_line)s; --accent: %(accent)s; }
 * { box-sizing: border-box; }
 html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
-body { background: var(--bg); color: var(--ink); font-family: "IBM Plex Sans Condensed", "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { background: var(--bg); color: var(--ink); font-family: "Instrument Sans", "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
 .card { position: relative; width: 1200px; height: 630px; overflow: hidden; }
 .art { position: absolute; right: 0; top: 0; width: %(art_w)spx; height: 630px; background: url(%(art)s) 0 0 / %(art_w)spx 630px no-repeat; }
 .art::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, var(--bg) 0%%, rgba(16,19,21,0.86) 14%%, rgba(16,19,21,0) 42%%); }
 .text { position: absolute; left: 72px; top: 64px; bottom: 56px; width: %(col_w)spx; display: flex; flex-direction: column; }
-.eyebrow { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 500; font-size: 19px; line-height: 1.3; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); margin: 0; white-space: nowrap; }
+.eyebrow { font-family: "Instrument Sans", "Helvetica Neue", Arial, sans-serif; font-weight: 500; font-size: 19px; line-height: 1.3; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); margin: 0; white-space: nowrap; }
 .eyebrow b { font-weight: 600; color: var(--ink-2); }
 .mid { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: center; padding: 6px 0 20px; }
-.title { font-family: "IBM Plex Sans Condensed", "Helvetica Neue", Arial, sans-serif; font-weight: 600; font-size: %(title_px)spx; line-height: 1.02; letter-spacing: -0.012em; margin: 0; color: var(--ink); overflow-wrap: normal; }
+.title { font-family: "Fraunces", Georgia, serif; font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0; font-weight: 400; font-size: %(title_px)spx; line-height: 1.02; letter-spacing: -0.012em; margin: 0; color: var(--ink); overflow-wrap: normal; }
 .rule { flex: 0 0 auto; width: 120px; height: 6px; background: var(--accent); margin: 30px 0 26px; border-radius: 1px; }
-.line { font-family: "Newsreader", "Source Serif 4", Georgia, "Times New Roman", serif; font-weight: 400; font-size: 32px; line-height: 1.28; color: var(--ink-2); margin: 0; max-width: 540px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.foot { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 18px; line-height: 1; letter-spacing: 0.04em; color: var(--muted); margin: 0; white-space: nowrap; }
+.line { font-family: "Source Serif 4", Georgia, "Times New Roman", serif; font-weight: 400; font-size: 32px; line-height: 1.28; color: var(--ink-2); margin: 0; max-width: 540px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.foot { font-family: "Instrument Sans", "Helvetica Neue", Arial, sans-serif; font-size: 18px; line-height: 1; letter-spacing: 0.04em; color: var(--muted); margin: 0; white-space: nowrap; }
 .foot span { margin-left: 28px; font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.8; }
 </style>
 </head>
@@ -117,7 +118,7 @@ FIT_JS = """
   const text = document.querySelector('.text');
   const over = text.scrollHeight > text.clientHeight + 4 || wide() || l.scrollHeight > l.clientHeight + 2;
   const fam = (spec) => document.fonts.check(spec);  // check the weights the template uses; a weight not in the sheet reads as false
-  return JSON.stringify({ px, lpx, lines: lines(), over, fonts: [fam('600 20px "IBM Plex Sans Condensed"'), fam('400 20px "Newsreader"'), fam('500 20px "IBM Plex Mono"')] });
+  return JSON.stringify({ px, lpx, lines: lines(), over, fonts: [fam('400 20px "Fraunces"'), fam('400 20px "Source Serif 4"'), fam('500 20px "Instrument Sans"')] });
 })()
 """
 
@@ -192,13 +193,16 @@ def rot(rx, ry, rz):
     return Rz @ Ry @ Rx
 
 
-def render_art(binpath, tilt, out, density, box=(ART_W, H), zoom=0.92, ox=0.0, oy=0.0, S=1):
-    """Draw the cloud into a transparent box: pale ink points, accent points (w >= 2) in amber, far to near, the way
-    qa/cover/render.py does it. density is the share of points kept (a fixed subsample, so a re-render is repeatable).
+def render_art(binpath, tilt, out, density, box=(ART_W, H), zoom=0.92, ox=0.0, oy=0.0, S=1, colors=None):
+    """Draw the cloud into a transparent box: pale ink points, accent points (w in [2,3]) and second-accent points
+    (w in (3,4]) in the specimen's own colours (`colors` = {accent, accent2} as 0..255 triplets from cards-art.js, else
+    the card's accent for both), far to near, the way qa/cover/render.py does it. density is the share of points kept (a fixed subsample, so a re-render is repeatable).
     S is the supersample; 1 keeps the dots crisp, as on the page, and halves the PNG against S = 2."""
     import numpy as np
     from PIL import Image, ImageDraw
-    inkc, ambc = hexcol(DARK['ink']), hexcol(DARK['accent'])
+    inkc = hexcol(DARK['ink'])
+    acc1 = tuple(colors['accent']) if colors else hexcol(DARK['accent'])
+    acc2 = tuple(colors['accent2']) if colors else acc1
     data = np.fromfile(binpath, dtype=np.float32).reshape(-1, 4)
     if density < 1:
         rng = np.random.default_rng(7)
@@ -218,14 +222,15 @@ def render_art(binpath, tilt, out, density, box=(ART_W, H), zoom=0.92, ox=0.0, o
     order = np.argsort(z)
     uo, vo, wo, zo = u[order], v[order], w[order], z[order]
     zr = (zo - zo.min()) / max(1e-6, zo.max() - zo.min())
-    is_amber = wo >= 2.0
-    strength = np.where(is_amber, np.clip(wo - 2.0, 0, 1), np.clip(wo, 0, 1))
+    is_acc2 = wo > 3.0
+    is_acc = (wo >= 2.0) & ~is_acc2
+    strength = np.where(is_acc2, np.clip(wo - 3.0, 0, 1), np.where(is_acc, np.clip(wo - 2.0, 0, 1), np.clip(wo, 0, 1)))
     amin, amax = 30, 150
     alpha = amin + (amax - amin) * (0.45 * strength + 0.55 * zr)
-    alpha = np.where(is_amber, np.clip(alpha * 1.35, 0, 255), alpha)
+    alpha = np.where(is_acc | is_acc2, np.clip(alpha * 1.35, 0, 255), alpha)
     rad = (1.2 + 0.8 * zr) * S
-    for x, y, r, a, amb in zip(uo, vo, rad, alpha, is_amber):
-        d.ellipse((x - r, y - r, x + r, y + r), fill=(ambc if amb else inkc) + (int(a),))
+    for x, y, r, a, c1, c2 in zip(uo, vo, rad, alpha, is_acc, is_acc2):
+        d.ellipse((x - r, y - r, x + r, y + r), fill=(acc2 if c2 else acc1 if c1 else inkc) + (int(a),))
     if S > 1:
         img = img.resize(box, Image.LANCZOS)
     img.save(out, optimize=False)
@@ -233,7 +238,7 @@ def render_art(binpath, tilt, out, density, box=(ART_W, H), zoom=0.92, ox=0.0, o
 
 
 def shrink(path, colors=COLORS):
-    """Quantise a PNG to a palette with Pillow; the cloud is already a two-colour drawing over a flat ground."""
+    """Quantise a PNG to a palette with Pillow; the cloud is a two- or three-colour drawing over a flat ground."""
     from PIL import Image
     im = Image.open(path).convert('RGB').quantize(colors=colors, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
     im.save(path, optimize=True)
@@ -286,7 +291,8 @@ def main():
             out = os.path.join(OUT, p['slug'] + '.png')
             for attempt in range(4):
                 art = os.path.join(tmp, '%s-%s.png' % (p['slug'], attempt))
-                drawn = render_art(binpath, meta['tilt'], art, density, zoom=frame.get('zoom', 0.92), ox=frame.get('ox', 0.0), oy=frame.get('oy', 0.0))
+                drawn = render_art(binpath, meta['tilt'], art, density, zoom=frame.get('zoom', 0.92), ox=frame.get('ox', 0.0), oy=frame.get('oy', 0.0),
+                                   colors=meta.get('colors'))
                 html = TEMPLATE % dict(DARK, art_w=ART_W, col_w=COL_W, art='file://' + art, eyebrow=eyebrow_html(p['eyebrow']),
                                        title=esc(p['title']), line=esc(p['line']), title_px=104, host=host, label=esc(LABEL.get(name, name)))
                 src = os.path.join(tmp, p['slug'] + '.html')

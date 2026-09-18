@@ -164,6 +164,8 @@ PC.register('probe-card', function (p) {
     cloud: PC.merge.apply(null, parts),
     spin: 0.11,
     tilt: [0.46, -0.62, 0],
-    caption: 'A vertical probe card over a wafer: a twelve-inch circular board, wider than the wafer it tests, with the tester\'s contact rings on top and a stiffener bolted across it whose three screws bring every needle into the same plane. Under it hangs a ceramic space transformer that fans the tester\'s coarse pitch down to the pitch of the pads, and a probe head whose needles bow between two guide plates before landing on four dies at once, picked out in copper. The height between the card and the wafer is exaggerated; in the prober it is a millimetre or two.'
+    // colour: a patterned die under white light shows thin-film interference in its passivation, a blue-violet iridescence, unlike a bare polished wafer
+    accent: [91, 111, 174], accentDark: [170, 182, 234],
+    caption: 'A vertical probe card over a wafer: a twelve-inch circular board, wider than the wafer it tests, with the tester\'s contact rings on top and a stiffener bolted across it whose three screws bring every needle into the same plane. Under it hangs a ceramic space transformer that fans the tester\'s coarse pitch down to the pitch of the pads, and a probe head whose needles bow between two guide plates before landing on four dies at once, picked out in blue-violet. The height between the card and the wafer is exaggerated; in the prober it is a millimetre or two.'
   };
 });

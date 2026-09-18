@@ -156,6 +156,8 @@ PC.register('photomask', function (p) {
     cloud: PC.merge.apply(null, parts),
     spin: 0.11,
     tilt: [1.0, -0.5, 0],
-    caption: 'A six-inch EUV reticle: a 152 mm square of low-thermal-expansion glass, 6.35 mm thick, carrying a 132 x 104 mm patterned field inside its black border, with a pellicle frame held 2.5 mm off the surface on four glued pads and a membrane stretched across it. The copper band round the top edge is the molybdenum-silicon multilayer that makes the mask a mirror; forty bilayers are 280 nm thick in life, so they are drawn far thicker than they are.'
+    // colour: the Mo/Si multilayer mirror reflects only at 13.5 nm; to the eye it is near-black with a faint blue sheen, so a dark steel blue
+    accent: [62, 84, 104], accentDark: [142, 167, 192],
+    caption: 'A six-inch EUV reticle: a 152 mm square of low-thermal-expansion glass, 6.35 mm thick, carrying a 132 x 104 mm patterned field inside its black border, with a pellicle frame held 2.5 mm off the surface on four glued pads and a membrane stretched across it. The dark blue band round the top edge is the molybdenum-silicon multilayer that makes the mask a mirror; forty bilayers are 280 nm thick in life, so they are drawn far thicker than they are.'
   };
 });

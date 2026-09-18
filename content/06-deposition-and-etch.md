@@ -4,10 +4,10 @@
  "number": 6,
  "title": "Deposition and Etch",
  "oneLiner": "Lithography prints the pattern; deposition and etch do the rest, over a thousand steps per wafer, and it is the one tool segment where China has taken real share.",
- "plain": "Deposition and etch build the chip itself, one layer at a time. Deposition lays down a film a few atoms thick. Lithography prints a pattern on it. Etch then eats away everything the pattern does not protect, and the next film goes down on top. A chip takes more than a thousand of these rounds. The film has to reach the bottom of holes hundreds of times deeper than they are wide, and the etch has to eat one material and leave the one beside it untouched. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.",
+ "plain": "Deposition and etch build the chip itself, one layer at a time. Deposition lays down a film a few atoms thick. Lithography prints a pattern on it. Etch then eats away everything the pattern does not protect, and the next film goes down on top. A chip takes more than a thousand of these rounds. Some of the holes the etch cuts are hundreds of times deeper than they are wide, the shape of a finger-wide shaft dropping through several floors, and the film has to coat them right to the bottom. The etch has to eat one material and leave the one beside it untouched. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.",
  "bridge": "A printed pattern is not yet a circuit, and the machines that turn it into one run more often than anything else in the fab.",
  "specimen": "process-chamber",
- "specimenCaption": "A plasma etch chamber cut in half. The vessel is 500 mm across inside and holds one 300 mm wafer on the chuck at the bottom. The amber haze above the wafer is the plasma. The gap it fills is drawn about twice its true 30 to 40 mm; the rest is to scale.",
+ "specimenCaption": "A plasma etch chamber cut in half. The vessel is 500 mm across inside and holds one 300 mm wafer on the chuck at the bottom. The violet haze above the wafer is the plasma. The gap it fills is drawn about twice its true 30 to 40 mm; the rest is to scale.",
  "card": {
  "concentration": "High",
  "chokepointScore": 4,
@@ -74,7 +74,7 @@ Applied Materials and Lam Research, the two largest deposition and etch supplier
 
 ## How it works
 
-Deposition and etch build the chip itself, one layer at a time. Deposition lays down a film a few atoms thick. Lithography prints a pattern on it. Etch then eats away everything the pattern does not protect, and the next film goes down on top. A chip takes more than a thousand of these rounds. The film has to reach the bottom of holes hundreds of times deeper than they are wide, and the etch has to eat one material and leave the one beside it untouched. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.
+Deposition and etch build the chip itself, one layer at a time. Deposition lays down a film a few atoms thick. Lithography prints a pattern on it. Etch then eats away everything the pattern does not protect, and the next film goes down on top. A chip takes more than a thousand of these rounds. Some of the holes the etch cuts are hundreds of times deeper than they are wide, the shape of a finger-wide shaft dropping through several floors, and the film has to coat them right to the bottom. The etch has to eat one material and leave the one beside it untouched. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.
 
 Both steps happen in a vacuum chamber that holds one wafer at a time. A pump empties the chamber of air, a measured flow of gas comes in, and an electric field that reverses millions of times a second, a radio-frequency field, strips electrons off the gas molecules. The gas is now a plasma, charged fragments that react far more readily than whole molecules do.
 

@@ -7,7 +7,7 @@
  "plain": "A foundry is a fab that makes chips for other companies. Those companies send in their designs, and the foundry runs them all through the same building on the same tools. The building costs tens of billions of dollars, and the air inside is cleaner than an operating room. Even so, a wafer crosses hundreds of machines over several months inside sealed boxes, never touching that air. No chip company sells enough of one product to fill a factory like that on its own, so the world shares a handful of them. TSMC runs the biggest, and all six of its largest plants sit in Taiwan, which is why one island's politics reaches the whole chip supply.",
  "bridge": "The designers of the chip own none of these machines; they rent time in someone else's building, and that building is a business of its own.",
  "specimen": "foup",
- "specimenCaption": "A FOUP, the sealed pod that carries 25 wafers between tools. It is 388 by 342 by 332 mm, drawn to scale, and barely bigger than what it holds: the 300 mm wafers inside, each the width of a dinner plate, nearly fill it. The shell is translucent, as the real polycarbonate is. One wafer is picked out in amber.",
+ "specimenCaption": "A FOUP, the sealed pod that carries 25 wafers between tools. It is 388 by 342 by 332 mm, drawn to scale, and barely bigger than what it holds: the 300 mm wafers inside, each the width of a dinner plate, nearly fill it. The shell is translucent, as the real polycarbonate is. One wafer is picked out in silver.",
  "card": {
  "concentration": "Extreme",
  "chokepointScore": 5,

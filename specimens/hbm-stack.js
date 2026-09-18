@@ -40,9 +40,9 @@ PC.register('hbm-stack', function (p) {
 
   // ---------- molding compound: the faint shell that makes this a cube ----------
   var mH = yTop + 0.014 - baseTop, mY = baseTop + mH / 2;
-  add(PC.T(PC.box({ w: bW, h: mH, d: bD, faces: ['px', 'nx', 'pz', 'nz'], n: 4600, tone: 0.12 }), { pos: [0, mY, 0] }));
-  add(PC.T(PC.plane({ w: bW, d: bD, n: 1600, tone: 0.11 }), { pos: [0, baseTop + mH, 0] }));
-  add(PC.T(PC.boxEdges({ w: bW, h: mH, d: bD, perUnit: 190, tone: 0.3 }), { pos: [0, mY, 0] }));
+  add(PC.T(PC.accent2(PC.box({ w: bW, h: mH, d: bD, faces: ['px', 'nx', 'pz', 'nz'], n: 4600 }), 0.16), { pos: [0, mY, 0] }));
+  add(PC.T(PC.accent2(PC.plane({ w: bW, d: bD, n: 1600 }), 0.15), { pos: [0, baseTop + mH, 0] }));
+  add(PC.T(PC.accent2(PC.boxEdges({ w: bW, h: mH, d: bD, perUnit: 190 }), 0.4), { pos: [0, mY, 0] }));
 
   // ---------- the logic base die (copper) ----------
   add(PC.T(PC.plane({ w: bW, d: bD, n: 1900, tone: 0.3 }), { pos: [0, baseTop, 0] }));
@@ -95,9 +95,9 @@ PC.register('hbm-stack', function (p) {
   var tl = [], yLow = yBase - bt / 2;
   for (i = 0; i < tsv.length; i++) {
     tl.push(PC.line({ a: [tsv[i][0], yLow, tsv[i][1]], b: [tsv[i][0], yTop, tsv[i][1]], perUnit: 80, tone: 0.15 }));
-    tl.push(PC.line({ a: [tsv[i][0], yLow, tsv[i][1]], b: [tsv[i][0], baseTop, tsv[i][1]], perUnit: 260, tone: 0.55 }));
+    tl.push(PC.accent(PC.line({ a: [tsv[i][0], yLow, tsv[i][1]], b: [tsv[i][0], baseTop, tsv[i][1]], perUnit: 260 }), 0.6));
     for (var k = 0; k < dies; k++) {
-      tl.push(PC.line({ a: [tsv[i][0], lvl[k], tsv[i][1]], b: [tsv[i][0], lvl[k] + t, tsv[i][1]], perUnit: 240, tone: 0.55 }));
+      tl.push(PC.accent(PC.line({ a: [tsv[i][0], lvl[k], tsv[i][1]], b: [tsv[i][0], lvl[k] + t, tsv[i][1]], perUnit: 240 }), 0.6));
     }
   }
   add(PC.merge.apply(null, tl));
@@ -106,6 +106,10 @@ PC.register('hbm-stack', function (p) {
     cloud: PC.merge.apply(null, parts),
     spin: 0.12,
     tilt: [0.40, -0.68, 0],
+    // colour: the base die's wiring, the micro-bumps and the through-silicon vias are electroplated copper
+    accent: [176, 102, 44], accentDark: [224, 154, 92],
+    // colour: the shell round the stack is epoxy molding compound, which is black
+    accent2: [43, 39, 36], accent2Dark: [107, 101, 95],
     caption: 'A twelve-high HBM stack opened up: twelve DRAM dies of 11 by 12 mm, each ground to about thirty micrometres, lifted off the copper-coloured logic base die, with micro-bumps in every gap and through-silicon vias running the full height. The faint box around them is the molding compound that makes the finished part a cube. Footprint is to scale; thicknesses and gaps are exaggerated about fifteen times, because the real cube is only 0.72 mm tall.'
   };
 });

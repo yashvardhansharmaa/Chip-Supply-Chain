@@ -211,6 +211,8 @@ PC.register('process-chamber', function (p) {
     cloud: PC.merge.apply(null, parts),
     spin: 0.12,
     tilt: [0.3, -0.6, 0],
-    caption: 'A plasma etch chamber cut in half. Gas fills the plenum in the lid and drops through a few thousand holes in the showerhead onto a 300 mm wafer clamped to an electrostatic chuck inside its focus ring; the copper haze between them is the plasma, brightest in the sheath just above the wafer. Below the floor, the gate valve and the turbopump; in the wall, the slit valve the wafer travels through.'
+    // colour: an argon or fluorocarbon etch plasma glows violet to blue, from argon's and fluorine's visible lines
+    accent: [109, 92, 201], accentDark: [176, 164, 240],
+    caption: 'A plasma etch chamber cut in half. Gas fills the plenum in the lid and drops through a few thousand holes in the showerhead onto a 300 mm wafer clamped to an electrostatic chuck inside its focus ring; the violet haze between them is the plasma, brightest in the sheath just above the wafer. Below the floor, the gate valve and the turbopump; in the wall, the slit valve the wafer travels through.'
   };
 });

@@ -4,10 +4,10 @@
   "number": 13,
   "title": "Test and Assembly",
   "oneLiner": "Assembly and test decide which dies are allowed into a package that costs more than a car. One Japanese firm now sells two thirds of the world's chip testers.",
-  "plain": "Before a chip can be sold, a machine has to put questions to it and check every answer. While the chips are still on the wafer, thousands of needles press onto pads on each one, send in signals and read what comes back; the tester marks any chip that answers wrong, and that chip goes no further. A modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them. So the industry tests sooner, at higher temperatures and for longer than it used to, and two firms, one Japanese and one American, sell most of the machines that do it.",
+  "plain": "Before a chip can be sold, a machine has to put questions to it and check every answer. While the chips are still on the wafer, thousands of needles press onto small metal pads on each one, send in signals and read what comes back; the tester marks any chip that answers wrong, and that chip goes no further. A modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them. So the industry tests sooner, hotter and longer than it used to, to make a weak chip fail on the test bench rather than inside a finished product, and two firms, one Japanese and one American, sell most of the machines that do it.",
   "bridge": "Nothing yet proves that any of it works, and a package this far along is worth too much to guess about.",
   "specimen": "probe-card",
-  "specimenCaption": "A vertical probe card over a wafer. The card is round, about 305 mm across, a little wider than the 300 mm wafer beneath it. Thousands of needles under it land on four dies at once, picked out in amber. The gap between card and wafer is exaggerated; in life it is a millimeter or two.",
+  "specimenCaption": "A vertical probe card over a wafer. The card is round, about 305 mm across, a little wider than the 300 mm wafer beneath it. Thousands of needles under it land on four dies at once, picked out in blue-violet. The gap between card and wafer is exaggerated; in life it is a millimeter or two.",
   "card": {
     "concentration": "High",
     "chokepointScore": 4,
@@ -75,7 +75,7 @@ Semiconductor manufacturing runs to 400 to 600 steps, and Advantest counts test 
 
 ## How it works
 
-Before a chip can be sold, a machine has to put questions to it and check every answer. While the chips are still on the wafer, thousands of needles press onto pads on each one, send in signals and read what comes back; the tester marks any chip that answers wrong, and that chip goes no further. A modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them. So the industry tests sooner, at higher temperatures and for longer than it used to, and two firms, one Japanese and one American, sell most of the machines that do it.
+Before a chip can be sold, a machine has to put questions to it and check every answer. While the chips are still on the wafer, thousands of needles press onto small metal pads on each one, send in signals and read what comes back; the tester marks any chip that answers wrong, and that chip goes no further. A modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them. So the industry tests sooner, hotter and longer than it used to, to make a weak chip fail on the test bench rather than inside a finished product, and two firms, one Japanese and one American, sell most of the machines that do it.
 
 Each round of test catches failures the round before it cannot see.
 

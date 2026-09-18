@@ -1,8 +1,9 @@
 /* Export Controls: the board of flows, the year scrubber and the threshold board.
-   The board is the page's index — nine things that move across the chokepoint, each with its state on
-   the scrubber's date — and every row opens into its own history. By date keeps the plain chronology
+   The board is the page's index, nine things that move across the chokepoint, each with its state on
+   the scrubber's date, and every row opens into its own history. By date keeps the plain chronology
    with a compact board riding the scroll. Colour follows the .timeline .cat classes, so a chip, a
-   category tag and a history entry of the same kind are the same colour. */
+   category tag and a history entry of the same kind are the same color. Dates and years are set in the
+   monospace so their digits align; every other label is Instrument Sans. */
 
 /* ---------- shared chrome ---------- */
 .controls-intro { margin: 0 0 16px; }
@@ -10,12 +11,12 @@
 .cf-top .controls-intro { margin-bottom: 12px; max-width: 62ch; }
 .cf-modes { display: flex; gap: 0; flex: 0 0 auto; margin-top: 12px; }
 .cf-mode {
-  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
-  padding: 6px 13px; border: 1px solid var(--line-2); background: var(--bg-2); color: var(--muted); cursor: pointer;
+  font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 6px 13px; border: 1px solid var(--line-2); background: none; color: var(--muted); cursor: pointer;
   transition: color 150ms var(--ease), background-color 150ms var(--ease);
 }
-.cf-mode:first-child { border-radius: 3px 0 0 3px; }
-.cf-mode:last-child { border-radius: 0 3px 3px 0; border-left-width: 0; }
+.cf-mode:first-child { border-radius: 0; }
+.cf-mode:last-child { border-radius: 0; border-left-width: 0; }
 .cf-mode:hover { color: var(--ink); }
 .cf-mode[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
 
@@ -25,11 +26,11 @@
 /* ---------- the year scrubber ---------- */
 .cf-scrub { margin: 0 0 16px; }
 .cf-scrub-h { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 7px; }
-.cf-asof { font-family: var(--font-display); font-size: 14px; letter-spacing: 0.02em; color: var(--muted); margin: 0; }
-.cf-asof b { font-family: var(--font-display); font-weight: 700; font-size: 21px; color: var(--ink); margin-left: 4px; }
+.cf-asof { font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.cf-asof b { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 400; font-size: 21px; letter-spacing: 0; text-transform: none; color: var(--ink); margin-left: 6px; font-variant-numeric: tabular-nums; }
 .cf-now {
-  flex: 0 0 auto; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
-  padding: 4px 11px 5px; border: 1px solid var(--line-2); border-radius: 999px; background: var(--bg-2); color: var(--ink-2); cursor: pointer;
+  flex: 0 0 auto; font-family: var(--font-mono); font-weight: 500; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 4px 11px 5px; border: 1px solid var(--line-2); border-radius: 0; background: none; color: var(--ink-2); cursor: pointer;
 }
 .cf-now:hover, .cf-now:focus-visible { border-color: var(--accent); color: var(--ink); }
 .cf-track { position: relative; padding-top: 8px; }
@@ -40,13 +41,13 @@
   transition: background-color 150ms var(--ease), color 150ms var(--ease);
 }
 .cf-year:last-child { border-right: 0; }
-.cf-year:hover { background: var(--bg-2); color: var(--ink); }
-.cf-yl, .cf-ys { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.02em; }
+.cf-year:hover { background: none; color: var(--ink); }
+.cf-yl, .cf-ys { font-family: var(--font-code); font-size: 11px; letter-spacing: 0.02em; }
 .cf-ys { display: none; }
-.cf-yn { font-family: var(--font-mono); font-size: 10px; color: var(--muted); }
+.cf-yn { font-family: var(--font-code); font-size: 10px; color: var(--muted); }
 .cf-year[aria-pressed="true"] { color: var(--ink); }
 .cf-year[aria-pressed="true"] .cf-yl, .cf-year[aria-pressed="true"] .cf-ys { font-weight: 600; }
-.cf-year[aria-pressed="true"] .cf-yn { color: var(--accent-ink); }
+.cf-year[aria-pressed="true"] .cf-yn { color: var(--accent); }
 .cf-head {
   position: absolute; left: 0; top: 1px; width: 2px; height: 15px; background: var(--accent);
   transition: transform 240ms var(--ease); pointer-events: none;
@@ -67,29 +68,30 @@
   padding: 12px 2px 13px 0; border-top: 1px solid var(--line); font-weight: 400; text-align: left;
 }
 .cf-btn { position: absolute; inset: 0; width: 100%; height: 100%; background: none; border: 0; padding: 0; cursor: pointer; }
-.cf-rowh:hover { background: var(--bg-2); }
+.cf-rowh:hover { background: none; }
+.cf-rowh:hover .cf-name { color: var(--accent); }
 .cf-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 .cf-id { min-width: 0; }
-.cf-name { font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: 0.01em; color: var(--ink); }
+.cf-name { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: 20px; letter-spacing: 0; color: var(--ink); transition: color 0.15s; }
 .cf-route { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.05em; color: var(--muted); margin-left: 9px; white-space: nowrap; }
 .cf-what { display: block; font-family: var(--font-body); font-size: 14px; line-height: 1.35; color: var(--ink-2); margin-top: 2px; max-width: 58ch; }
 .cf-state { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; min-width: 0; }
 .cf-pills { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; }
-/* the ramp, open to prohibited: outlined muted, dashed ink, amber, solid ink */
+/* the ramp, open to prohibited: outlined muted, dashed ink, garnet, solid ink */
 .cf-pill {
-  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap;
-  padding: 2px 7px 3px; border: 1px solid var(--line-2); border-radius: 2px; color: var(--muted); background: transparent;
+  font-family: var(--font-mono); font-weight: 500; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap;
+  padding: 2px 7px 3px; border: 1px solid var(--line-2); border-radius: 0; color: var(--muted); background: transparent;
 }
 .cf-pill.is-open { border-color: var(--line-2); color: var(--muted); background: transparent; }
 .cf-pill.is-case { border-style: dashed; border-color: var(--ink); color: var(--ink); }
-.cf-pill.is-denial { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-ink); }
+.cf-pill.is-denial { background: none; border-color: var(--accent); color: var(--accent); }
 .cf-pill.is-prohibited { background: var(--ink); border-color: var(--ink); color: var(--bg); }
-.cf-pill.is-policy { background: var(--bg-3); border-color: var(--line-2); color: var(--ink-2); }
+.cf-pill.is-policy { background: none; border-color: var(--ink-2); color: var(--ink-2); }
 /* a stayed instrument: the outcome is drawn back, and the tag beside it says until when */
 .cf-pill.is-suspended { background: transparent; border-color: var(--line-2); color: var(--muted); }
 .cf-susp {
   font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.03em; white-space: nowrap;
-  padding: 2px 6px 3px; border: 1px dashed var(--line-2); border-radius: 2px; color: var(--ink-2); background: var(--bg-2);
+  padding: 2px 6px 3px; border: 1px dashed var(--line-2); border-radius: 0; color: var(--ink-2); background: none;
 }
 .cf-lab { font-family: var(--font-body); font-size: 14px; line-height: 1.3; color: var(--ink-2); }
 .cf-when { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; line-height: 1.5; color: var(--muted); }
@@ -97,14 +99,14 @@
   position: relative; z-index: 1; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.02em; line-height: 1.5;
   color: var(--muted); text-decoration-color: var(--line-2); overflow-wrap: anywhere;
 }
-a.cf-cite:hover, a.cf-cite:focus-visible { color: var(--accent-ink); text-decoration-color: var(--accent); }
+a.cf-cite:hover, a.cf-cite:focus-visible { color: var(--accent); text-decoration-color: var(--accent); }
 .cf-n { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; color: var(--muted); text-align: right; white-space: nowrap; padding-top: 4px; }
 .cf-caret {
   width: 8px; height: 8px; border-right: 1.6px solid var(--line-2); border-bottom: 1.6px solid var(--line-2);
   transform: rotate(45deg); transition: transform 200ms var(--ease); margin: 6px auto 0;
 }
 .cf-row[data-open="1"] .cf-caret { transform: rotate(225deg); margin: 12px auto 0; }
-.cf-row[data-open="1"] .cf-rowh { background: var(--bg-2); }
+.cf-row[data-open="1"] .cf-rowh { background: none; border-top-color: var(--ink); }
 
 /* the drawer: 0fr and 1fr are its two rests, so it is always sized by its own content; app.js plays the
    run between them on the height. Visibility keeps a shut drawer out of the tab order. */
@@ -116,24 +118,24 @@ a.cf-cite:hover, a.cf-cite:focus-visible { color: var(--accent-ink); text-decora
 .cf-evs { list-style: none; margin: 0; padding: 2px 0 14px; }
 .cf-ev { display: grid; grid-template-columns: 150px 108px minmax(0, 1fr); gap: 14px; padding: 10px 0 11px; border-top: 1px dashed var(--line); }
 .cf-ev:first-child { border-top: 0; }
-.cf-ev-d { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; color: var(--muted); line-height: 1.4; }
+.cf-ev-d { font-family: var(--font-code); font-size: 10.5px; letter-spacing: 0.02em; color: var(--muted); line-height: 1.4; }
 .cf-ev-d b { display: block; font-weight: 500; font-size: 11.5px; color: var(--ink); }
 .cf-ev-d span { display: block; }
 /* announced, then in force: the label above the date it belongs to */
-.cf-ev-k { font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.cf-ev-k { font-family: var(--font-mono); font-weight: 500; font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
 .cf-ev-d .cf-ev-k:first-child { margin-top: 0; }
-.cf-ev-t { font-family: var(--font-display); font-weight: 700; font-size: 15.5px; line-height: 1.2; margin: 1px 0 3px; }
+.cf-ev-t { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: 15.5px; line-height: 1.2; margin: 1px 0 3px; }
 .cf-ev-g { font-family: var(--font-body); font-size: 14.5px; line-height: 1.45; color: var(--ink-2); margin: 0 0 5px; max-width: 70ch; }
 .cf-ev-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 3px 8px; margin-bottom: 2px; }
 .cf-inst {
   font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase;
-  padding: 1px 5px 2px; border: 1px solid var(--line); border-radius: 2px; color: var(--muted); background: var(--bg-2);
+  padding: 1px 5px 2px; border: 1px solid var(--line-2); border-radius: 0; color: var(--muted); background: none;
 }
 .cf-ev-cite {
   display: block; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.02em; line-height: 1.5;
   color: var(--muted); margin: 0 0 5px; text-decoration-color: var(--line-2); overflow-wrap: anywhere;
 }
-a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent-ink); text-decoration-color: var(--accent); }
+a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-decoration-color: var(--accent); }
 .cf-ev-from { display: block; margin-top: 4px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; color: var(--muted); }
 /* the chapter that tells the flow's story, at the foot of an open row */
 .cf-chapter { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 0; padding: 0 0 16px; }
@@ -142,7 +144,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent-ink); text-
 .cf-chapter-n { font-family: var(--font-body); font-size: 14px; color: var(--muted); }
 .cf-hist .cat {
   display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--accent-ink); margin-bottom: 2px;
+  color: var(--accent); margin-bottom: 2px;
 }
 .cf-hist .cat.cn { color: var(--c6); }
 .cf-hist .cat.ally { color: var(--c1); }
@@ -169,7 +171,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent-ink); text-
 .chips button.tl-chip { padding-left: 22px; position: relative; }
 .tl-chip::before {
   content: ""; position: absolute; left: 9px; top: 50%; width: 7px; height: 7px;
-  margin-top: -3.5px; border-radius: 50%; background: var(--accent-ink);
+  margin-top: -3.5px; border-radius: 50%; background: var(--accent);
 }
 .tl-chip.cn::before { background: var(--c6); }
 .tl-chip.ally::before { background: var(--c1); }
@@ -192,7 +194,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent-ink); text-
 }
 .timeline .tl-e { padding: 11px 0 12px; scroll-margin-top: calc(var(--masthead) + 20px); }
 /* the entry you jumped to, marked until you pick another; the negative margin keeps the grid in line */
-.timeline .tl-e.is-target { background: var(--accent-soft); box-shadow: inset 2px 0 0 var(--accent); padding-left: 12px; margin-left: -12px; }
+.timeline .tl-e.is-target { background: none; box-shadow: inset 2px 0 0 var(--accent); padding-left: 12px; margin-left: -12px; }
 .timeline .tl-body { line-height: 1.3; } /* the "More" button sits on this line box, so keep it tight */
 .timeline .cat { display: block; }
 .timeline .cf-ev-tags { margin-bottom: 3px; }
@@ -208,7 +210,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent-ink); text-
 }
 .timeline .tl-more:hover, .timeline .tl-more:focus-visible,
 .cf-hist .tl-more:hover, .cf-hist .tl-more:focus-visible { color: var(--ink); border-bottom-color: var(--accent); }
-.timeline .tl-panel, .cf-hist .tl-panel { margin: 9px 0 2px; padding-left: 13px; border-left: 2px solid var(--line); max-width: 76ch; }
+.timeline .tl-panel, .cf-hist .tl-panel { margin: 9px 0 2px; padding-left: 13px; border-left: 1px solid var(--line-2); max-width: 76ch; }
 .timeline .tl-panel p, .cf-hist .tl-panel p { font-size: 15px; line-height: 1.55; margin: 0 0 6px; }
 .timeline .tl-panel .src, .cf-hist .tl-panel .src { display: inline-block; }
 .timeline .tl-empty { display: block; border-top: 0; padding: 18px 0; }
@@ -293,9 +295,9 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent-ink); text-
 .cf-ev-lab { display: block; margin-top: 5px; font-family: var(--font-mono); font-size: 10.5px; line-height: 1.4; color: var(--ink-2); max-width: 150px; }
 .cf-ev-none { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
 /* ---------- the years look like buttons and meet a fingertip ---------- */
-.cf-year { border: 1px solid var(--line); border-right-width: 1px; background: var(--bg-2); border-radius: 2px; min-height: 44px; margin: 0 1px; }
+.cf-year { border: 1px solid var(--line); border-right-width: 1px; background: none; border-radius: 0; min-height: 44px; margin: 0 1px; }
 .cf-year:hover { border-color: var(--line-2); }
-.cf-year[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.cf-year[aria-pressed="true"] { border-color: var(--accent); background: none; }
 .cf-now, .cf-mode { min-height: 34px; }
 @media (max-width: 899px) { .cf-now, .cf-mode { min-height: 44px; } .cf-year { min-height: 48px; } }
 

@@ -243,6 +243,8 @@ PC.register('sem-column', function (p) {
     cloud: PC.merge.apply(null, parts),
     spin: 0.08,
     tilt: [0.15, -0.6, 0],
-    caption: 'An electron-beam inspection column cut in half down its axis. The beam, in copper, leaves the emitter under the high-voltage insulator at the top, is squeezed by two condenser lenses and an aperture, steered by the scan coils, and focused by the objective lens onto a 300 mm wafer on the stage, where the electrons it knocks loose come back up to the ring detector. Each lens is an iron yoke wrapped round a coil, pinched to a narrow gap at the bore.'
+    // colour: an electron beam has no colour; the convention is the green of the phosphor screen it lit on every older microscope
+    accent: [58, 154, 95], accentDark: [134, 227, 168],
+    caption: 'An electron-beam inspection column cut in half down its axis. The beam, in green, leaves the emitter under the high-voltage insulator at the top, is squeezed by two condenser lenses and an aperture, steered by the scan coils, and focused by the objective lens onto a 300 mm wafer on the stage, where the electrons it knocks loose come back up to the ring detector. Each lens is an iron yoke wrapped round a coil, pinched to a narrow gap at the bore.'
   };
 });

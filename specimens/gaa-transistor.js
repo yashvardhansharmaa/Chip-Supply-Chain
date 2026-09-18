@@ -115,9 +115,11 @@ PC.register('gaa-transistor', function (p) {
     cloud: PC.merge.apply(null, parts),
     spin: 0.12,
     tilt: [0.52, -0.76, 0],
+    // colour: the gate that wraps each sheet is titanium nitride work-function metal, which in bulk is gold-bronze, around a tungsten fill
+    accent: [165, 130, 42], accentDark: [216, 181, 86],
     caption: 'A gate-all-around nanosheet transistor, drawn at the dimensions a 2 nm-class node ' +
       'uses: three silicon sheets 6 nm thick and 30 nm wide, stacked 10 nm apart, running from the ' +
-      'source epitaxy on one side to the drain epitaxy on the other. The copper cage is the gate. ' +
+      'source epitaxy on one side to the drain epitaxy on the other. The gold cage is the gate. ' +
       'It fills the gap under each sheet, over each sheet and around both edges, so the channel is ' +
       'gripped on four sides; the small blocks at the ends of each gap are the inner spacers that ' +
       'keep that metal off the epitaxy. Contacts land on top.'

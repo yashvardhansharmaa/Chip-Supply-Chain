@@ -161,6 +161,8 @@ PC.register('wafer-cost', function (p) {
     cloud: PC.merge.apply(null, parts),
     spin: 0.09,
     tilt: [0.12, -0.62, 0],
-    caption: 'What it costs to build one B200, stacked to scale: $2,900 of high-bandwidth memory in copper at the foot, $1,100 of CoWoS packaging, $1,000 of packaging yield loss drawn hollow because it ships nothing, $900 of logic die and $480 of board, power and test. About $6,400 in all, for a part that sells for thirty to forty thousand. The rule is graduated every $500.'
+    // colour: a chart, not an object, so it takes the site's own garnet
+    accent: [122, 31, 43], accentDark: [201, 83, 106],
+    caption: 'What it costs to build one B200, stacked to scale: $2,900 of high-bandwidth memory in garnet at the foot, $1,100 of CoWoS packaging, $1,000 of packaging yield loss drawn hollow because it ships nothing, $900 of logic die and $480 of board, power and test. About $6,400 in all, for a part that sells for thirty to forty thousand. The rule is graduated every $500.'
   };
 });

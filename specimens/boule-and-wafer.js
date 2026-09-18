@@ -110,11 +110,13 @@ PC.register('boule-and-wafer', function (p) {
     cloud: PC.merge.apply(null, parts),
     spin: 0.075,
     tilt: [0.16, -0.62, 0],
+    // colour: a polished wafer is a mirror; it shows the cool white of cleanroom light with the faint blue of its native oxide, so a silver leaning blue
+    accent: [111, 139, 166], accentDark: [195, 211, 226],
     caption: 'A Czochralski silicon ingot: 2.1 m of one unbroken crystal, roughly 265 kg of it, ' +
       'hanging from a seed on a neck about 10 mm across. Below the seed comes the neck, then the ' +
       'crown where the crystal opens out to 300 mm - the four heavy lines down it are the facet ' +
       'ridges of a <100> crystal - then 1.5 m of ground body ringed with growth striations, then ' +
       'the cropped tail. At its foot are two wafers sawn from that body, the one on its rim in ' +
-      'copper, each exactly as wide as the ingot it came from.'
+      'silver, each exactly as wide as the ingot it came from.'
   };
 });

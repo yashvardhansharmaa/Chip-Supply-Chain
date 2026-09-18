@@ -7,7 +7,7 @@
   "plain": "A bill of materials is the list of parts inside a product and what each one costs to build. For an AI accelerator, the processor itself, the chip that does the calculating, is the cheap part, about a seventh of the total. The stacked memory beside it is nearly half, and the packaging that wires the two together costs more than the chip. Three firms in the world make that memory and one Taiwanese firm does that packaging, so the costliest parts are also the scarcest, and that is where a government's rules bite hardest.",
   "bridge": "The physical chain ends at a powered rack, and the next question is which part of it holds the money.",
   "specimen": "wafer-cost",
-  "specimenCaption": "A chart, not an object: what it costs to build one B200, stacked as a column, each layer as tall as its share. From the foot: $2,900 of memory in amber, $1,100 of packaging, $1,000 of yield loss drawn hollow, $900 of logic dies, $480 of board and test. About $6,400 in all, for a part that sells for $30,000 to $40,000.",
+  "specimenCaption": "A chart, not an object: what it costs to build one B200, stacked as a column, each layer as tall as its share. From the foot: $2,900 of memory in garnet, $1,100 of packaging, $1,000 of yield loss drawn hollow, $900 of logic dies, $480 of board and test. About $6,400 in all, for a part that sells for $30,000 to $40,000.",
   "keyFacts": [
     {
       "fact": "A B200 costs about $6,400 to build, in a range of $5,700 to $7,300, and sells for $30,000 to $40,000",

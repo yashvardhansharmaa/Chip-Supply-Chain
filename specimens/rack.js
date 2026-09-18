@@ -116,13 +116,13 @@ PC.register('rack', function (p) {
       }
     } else if (k === 'power') {
       powerY.push(ty);
-      // six power-supply modules, in copper: this rack's chokepoint is the
+      // six power-supply modules, in grey steel: this rack's chokepoint is the
       // electricity, not the silicon
-      parts.push(PC.accent(fPlane(tW, tH, 0, ty, fz, 220), 0.6));
-      parts.push(PC.accent(fOut(tW, tH, 0, ty, fz + 0.002, 150), 1));
+      parts.push(PC.accent2(fPlane(tW, tH, 0, ty, fz, 220), 0.6));
+      parts.push(PC.accent2(fOut(tW, tH, 0, ty, fz + 0.002, 150), 1));
       for (var q = 0; q < 6; q++) {
         var qx = (q - 2.5) * ((tW - 0.02) / 6);
-        parts.push(PC.accent(fOut((tW - 0.05) / 6, tH * 0.74, qx, ty, fz + 0.004, 150), 1));
+        parts.push(PC.accent2(fOut((tW - 0.05) / 6, tH * 0.74, qx, ty, fz + 0.004, 150), 1));
         parts.push(PC.line({ a: [qx + 0.022, ty - tH * 0.30, fz + 0.005], b: [qx + 0.022, ty + tH * 0.30, fz + 0.005], perUnit: 300, tone: 0.85 }));
       }
     } else if (k === 'mgmt') {
@@ -205,6 +205,10 @@ PC.register('rack', function (p) {
     cloud: PC.merge.apply(null, parts),
     spin: 0.07,
     tilt: [0.12, -0.65, 0],
-    caption: 'A liquid-cooled rack of 72 accelerators, 2.24 m tall and drawing about 120 kW: eighteen compute trays split eight below and ten above the nine NVLink switch trays, the coolant distribution unit at the foot, and the NVLink cable cartridge filling the back. The power path is in copper — six power shelves and the vertical busbar they feed, with a clip at every tray.'
+    // colour: the busbar and its clips are bare copper bar
+    accent: [176, 102, 44], accentDark: [224, 154, 92],
+    // colour: the power shelves are grey painted steel sleds
+    accent2: [110, 115, 120], accent2Dark: [185, 190, 195],
+    caption: 'A liquid-cooled rack of 72 accelerators, 2.24 m tall and drawing about 120 kW: eighteen compute trays split eight below and ten above the nine NVLink switch trays, the coolant distribution unit at the foot, and the NVLink cable cartridge filling the back. The power path is picked out: six power shelves in grey steel and the vertical copper busbar they feed, with a clip at every tray.'
   };
 });

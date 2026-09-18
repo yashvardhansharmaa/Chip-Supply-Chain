@@ -4,10 +4,10 @@
  "number": 5,
  "title": "Photomasks and Pellicles",
  "oneLiner": "A business worth tens of billions of yen sits under every leading-edge chip. Two Japanese firms make almost all the blank plates that EUV masks are built on, one Japanese firm inspects them, and the dust cover meant to protect them is still not in production.",
- "plain": "A photomask is the stencil that lithography prints from, one for each layer of a chip. The same plate prints its layer on wafer after wafer, so one plate shapes millions of chips. No glass lets the short light now in use pass through, so the plate cannot be a window. Instead it is a mirror, built up from about forty pairs of ultrathin layers, and the light bounces off it. Any speck of dust on the plate repeats on every wafer it prints. Two Japanese firms make almost all of those mirrors. A business almost nobody has heard of can hold up every advanced chip in the world.",
+ "plain": "A photomask is the stencil that lithography prints from, one for each layer of a chip. The same plate prints its layer on wafer after wafer, so one plate shapes millions of chips. No glass lets the short light now in use pass through, so instead of a window the plate is a mirror, built up from about forty pairs of very thin layers, and the light bounces off it. A dark pattern drawn on top of the mirror soaks up the light wherever no line should print. Any speck of dust on the plate repeats on every wafer it prints. Two Japanese firms make almost all of those mirrors. A business almost nobody has heard of can hold up every advanced chip in the world.",
  "bridge": "Look next at the stencil itself, because everything the machine prints is decided by what is written on that one plate.",
  "specimen": "photomask",
- "specimenCaption": "An EUV photomask, or reticle, with its pellicle dust cover. The mask is a 152 mm square of glass, 6.35 mm thick, about the size of a small floor tile, drawn to scale. The amber band round the top edge is the mirror coating; in life it is 280 nm thick, so it is drawn far thicker than it is.",
+ "specimenCaption": "An EUV photomask, or reticle, with its pellicle dust cover. The mask is a 152 mm square of glass, 6.35 mm thick, about the size of a small floor tile, drawn to scale. The dark blue band round the top edge is the mirror coating; in life it is 280 nm thick, so it is drawn far thicker than it is.",
  "card": {
  "concentration": "Extreme",
  "chokepointScore": 5,
@@ -62,7 +62,7 @@ Every EUV layer on an AI accelerator needs a flawless mask, built on a blank pla
 
 ## How it works
 
-A photomask is the stencil that lithography prints from, one for each layer of a chip. The same plate prints its layer on wafer after wafer, so one plate shapes millions of chips. No glass lets the short light now in use pass through, so the plate cannot be a window. Instead it is a mirror, built up from about forty pairs of ultrathin layers, and the light bounces off it. Any speck of dust on the plate repeats on every wafer it prints. Two Japanese firms make almost all of those mirrors. A business almost nobody has heard of can hold up every advanced chip in the world.
+A photomask is the stencil that lithography prints from, one for each layer of a chip. The same plate prints its layer on wafer after wafer, so one plate shapes millions of chips. No glass lets the short light now in use pass through, so instead of a window the plate is a mirror, built up from about forty pairs of very thin layers, and the light bounces off it. A dark pattern drawn on top of the mirror soaks up the light wherever no line should print. Any speck of dust on the plate repeats on every wafer it prints. Two Japanese firms make almost all of those mirrors. A business almost nobody has heard of can hold up every advanced chip in the world.
 
 A mask starts as a blank, a polished plate with nothing on it yet. For deep ultraviolet the blank is a window of quartz carrying a light-blocking film such as molybdenum silicide, and Shin-Etsu supplies those blanks ([source](https://www.shinetsu.co.jp/en/products/electronics-materials/photomask-blanks/)). For EUV the blank is a mirror of about 40 molybdenum and silicon layer pairs, 7 nm to a pair, laid on low-expansion glass, with a dark tantalum film on top, the absorber, that will carry the pattern ([source](https://arxiv.org/pdf/1912.09075)).
 

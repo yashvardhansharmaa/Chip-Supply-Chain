@@ -83,7 +83,7 @@ PC.register('cowos-exploded', function (p) {
   add(PC.T(PC.accent(PC.boxEdges({ w: ipW, h: ipH, d: ipD, perUnit: 320 }), 1), { pos: [0, ipY, 0] }));
   // the through-silicon vias, a field of them across the whole slab
   var tv = 3.4 * S;
-  add(PC.T(PC.accent(PC.dots({ nx: Math.floor(ipW / tv), nz: Math.floor(ipD / tv), sx: tv, sz: tv }), 0.26), { pos: [0, ipTop + 0.003, 0] }));
+  add(PC.T(PC.accent2(PC.dots({ nx: Math.floor(ipW / tv), nz: Math.floor(ipD / tv), sx: tv, sz: tv }), 0.26), { pos: [0, ipTop + 0.003, 0] }));
   // the wiring: a dense bundle across the die-to-die seam, and a bundle out to
   // every HBM site. This is what the interposer is for.
   var rdl = [], yR = ipTop + 0.004;
@@ -99,7 +99,7 @@ PC.register('cowos-exploded', function (p) {
       rdl.push(PC.polyline({ pts: [[sg * (hbmX - hbmW * 0.36), yR, z0], [sg * (dieX + dieW / 2 + 2.4 * S), yR, z0], [sg * (dieX + dieW / 2 - 2.5 * S), yR, z1]], perUnit: 170, tone: 1 }));
     }
   });
-  add(PC.accent(PC.merge.apply(null, rdl), 0.75));
+  add(PC.accent2(PC.merge.apply(null, rdl), 0.75));
 
   // ---------- 4. the micro-bumps, one field under every chip ----------
   function chips(fn) {
@@ -157,6 +157,10 @@ PC.register('cowos-exploded', function (p) {
     cloud: PC.merge.apply(null, parts),
     spin: 0.1,
     tilt: [0.66, -0.62, 0],
-    caption: 'A CoWoS package pulled apart: a ball grid and a build-up substrate ringed with capacitors at the bottom, then the C4 bumps, then the silicon interposer in copper with its through-silicon vias and the wiring that stitches the two logic dies together and fans out to the memory, then the micro-bumps, then two reticle-sized dies and eight HBM stacks, with the stiffener frame lifted clear above. Footprints are to scale: the chips cover about 2,700 mm2, a little over three reticles. Thicknesses and gaps are exaggerated.'
+    // colour: the interposer is bare polished silicon, a mirror that reads as cool silver
+    accent: [111, 139, 166], accentDark: [195, 211, 226],
+    // colour: the redistribution wiring and micro-bumps on it are electroplated copper
+    accent2: [176, 102, 44], accent2Dark: [224, 154, 92],
+    caption: 'A CoWoS package pulled apart: a ball grid and a build-up substrate ringed with capacitors at the bottom, then the C4 bumps, then the silicon interposer in silver, with its copper wiring, its through-silicon vias and the wiring that stitches the two logic dies together and fans out to the memory, then the micro-bumps, then two reticle-sized dies and eight HBM stacks, with the stiffener frame lifted clear above. Footprints are to scale: the chips cover about 2,700 mm2, a little over three reticles. Thicknesses and gaps are exaggerated.'
   };
 });

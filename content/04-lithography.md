@@ -4,10 +4,10 @@
  "number": 4,
  "title": "Lithography",
  "oneLiner": "The most concentrated stage in the chain. One firm in the Netherlands builds every extreme ultraviolet scanner in the world, the machine that prints the finest circuit layers. It shipped 48 of them in 2025, at around $200 million each.",
- "plain": "Lithography prints the pattern of a circuit onto the wafer. A machine holds a stencil of one layer of the circuit up to a lamp and projects the image, four times smaller, onto the silicon. The finer the lines, the shorter the wavelength of light needed to print them. The shortest light now in use will not pass through air, so the machine has to print in a vacuum. Only one company has ever built a machine that prints with it, and it is Dutch. Export controls, the government rules on who a company may sell to, reach advanced chipmaking mainly by reaching that one firm.",
+ "plain": "Lithography prints the pattern of a circuit onto the wafer. A machine holds a stencil of one layer of the circuit up to a lamp and projects the image, four times smaller, onto the silicon. Light cannot draw a line much finer than its own wave, so the finer the lines, the shorter the wavelength of light needed to print them. Air soaks up the shortest light now in use, so the machine has to print in a vacuum. Only one company has ever built a machine that prints with it, and it is Dutch. Export controls are government rules on who a company may sell to. Every advanced chip passes through that firm's machines, so a rule aimed at it reaches all advanced chipmaking.",
  "bridge": "Coated and still blank, the wafer goes to the machine that decides how small the circuit can be.",
  "specimen": "euv-scanner",
- "specimenCaption": "An extreme ultraviolet scanner cut open along its light path. The machine is the size of a bus, weighs about 180 metric tons and ships in 40 containers. The amber thread is the 13.5 nm light, bouncing mirror to mirror from the tin plasma at bottom left to the wafer; both ends are drawn about twice their true size.",
+ "specimenCaption": "An extreme ultraviolet scanner cut open along its light path. The machine is the size of a bus, weighs about 180 metric tons and ships in 40 containers. The blue-violet thread is the 13.5 nm light, bouncing mirror to mirror from the violet-white tin plasma at bottom left to the wafer; both ends are drawn about twice their true size.",
  "card": {
  "concentration": "Extreme",
  "chokepointScore": 5,
@@ -81,7 +81,7 @@ Every transistor in an AI accelerator gets its shape from a machine one company 
 
 ## How it works
 
-Lithography prints the pattern of a circuit onto the wafer. A machine holds a stencil of one layer of the circuit up to a lamp and projects the image, four times smaller, onto the silicon. The finer the lines, the shorter the wavelength of light needed to print them. The shortest light now in use will not pass through air, so the machine has to print in a vacuum. Only one company has ever built a machine that prints with it, and it is Dutch. Export controls, the government rules on who a company may sell to, reach advanced chipmaking mainly by reaching that one firm.
+Lithography prints the pattern of a circuit onto the wafer. A machine holds a stencil of one layer of the circuit up to a lamp and projects the image, four times smaller, onto the silicon. Light cannot draw a line much finer than its own wave, so the finer the lines, the shorter the wavelength of light needed to print them. Air soaks up the shortest light now in use, so the machine has to print in a vacuum. Only one company has ever built a machine that prints with it, and it is Dutch. Export controls are government rules on who a company may sell to. Every advanced chip passes through that firm's machines, so a rule aimed at it reaches all advanced chipmaking.
 
 The stencil is a photomask, the film is photoresist and the machine is a scanner (see [Photomasks and pellicles](#photomasks-and-pellicles)).
 

@@ -4,10 +4,10 @@
   "number": 14,
   "title": "Systems and Networking",
   "oneLiner": "A finished package is useless until it is bolted to a baseboard, fed a thousand amps and wired to seventy-one siblings. Many firms can do the bolting; few can make the lasers.",
-  "plain": "One AI chip is not enough to train a model. So seventy-two of them are wired together in a rack, a cabinet the size of a wardrobe, and run as one computer. Each chip sits on its own board and draws more than a thousand amps. The chips have to swap results with each other all the time, and a copper wire can carry those signals only a few meters, so the longer links send them as light down glass fiber. Many companies can build the rack. Only a few can make the lasers that send the light, and that is the narrow point.",
+  "plain": "One AI chip is not enough to train a model. So seventy-two of them are wired together in a rack, a cabinet the size of a wardrobe, and run as one computer. Each chip sits on its own board and draws more than a thousand amps, several times the current a whole house is wired to carry. The chips have to swap results with each other all the time, and a copper wire can carry those signals only a few meters before they fade, so the longer links send them as light down glass fiber. Many companies can build the rack. Only a few can make the lasers that send the light, and that is the narrow point.",
   "bridge": "A tested package is still a single chip, and the machine that trains a model is a room full of them acting as one.",
   "specimen": "gpu-baseboard",
-  "specimenCaption": "An eight-GPU baseboard, the board that carries eight accelerator modules and the switch chips joining them. It is about 510 by 400 mm and drawn to scale, with the module frames standing about 30 mm proud of the board. The two amber squares in the middle are the NVLink switch chips.",
+  "specimenCaption": "An eight-GPU baseboard, the board that carries eight accelerator modules and the switch chips joining them. It is about 510 by 400 mm and drawn to scale, with the module frames standing about 30 mm proud of the board. The two nickel-grey squares in the middle are the NVLink switch chips.",
   "card": {
     "concentration": "High",
     "chokepointScore": 3,
@@ -66,7 +66,7 @@ A package computes nothing until it is built into a machine, and building the ma
 
 ## How it works
 
-One AI chip is not enough to train a model. So seventy-two of them are wired together in a rack, a cabinet the size of a wardrobe, and run as one computer. Each chip sits on its own board and draws more than a thousand amps. The chips have to swap results with each other all the time, and a copper wire can carry those signals only a few meters, so the longer links send them as light down glass fiber. Many companies can build the rack. Only a few can make the lasers that send the light, and that is the narrow point.
+One AI chip is not enough to train a model. So seventy-two of them are wired together in a rack, a cabinet the size of a wardrobe, and run as one computer. Each chip sits on its own board and draws more than a thousand amps, several times the current a whole house is wired to carry. The chips have to swap results with each other all the time, and a copper wire can carry those signals only a few meters before they fade, so the longer links send them as light down glass fiber. Many companies can build the rack. Only a few can make the lasers that send the light, and that is the narrow point.
 
 An accelerator ships as a module, the chip on a small board with its power supply and memory stacks. Nvidia calls its version SXM, and the open-standards equivalent is the Open Compute Project's accelerator module. Eight bolt onto a baseboard that carries their power and the switch chips, the traffic directors that pass data between any two modules at full speed.
 

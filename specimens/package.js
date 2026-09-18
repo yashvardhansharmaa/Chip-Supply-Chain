@@ -21,6 +21,8 @@
  * Default (no params): the two-die, eight-HBM Blackwell-style layout.
  */
 PC.register('package', function (p) {
+  // colour: the highlighted parts are bare silicon (the wafer-scale square, the exposed top die of each HBM stack), a mirror that reads as cool silver
+  var SILICON = [111, 139, 166], SILICON_DARK = [195, 211, 226];
   var plan = !!(p && p.plan); // the AI Chips page asks for a near top-down view so layouts compare across chips
   var L = (p && p.layout) || {
     interposer: [78, 50],
@@ -89,7 +91,8 @@ PC.register('package', function (p) {
     add(PC.T(PC.accent(PC.circle({ r: R * 0.997, perUnit: 260 }), 0.5), { pos: [0, yTopW, 0] }));
     return {
       cloud: PC.merge.apply(null, parts), spin: plan ? 0.07 : 0.1, tilt: plan ? [1.32, 0, 0] : [0.95, -0.5, 0], turntable: plan,
-      caption: 'A wafer-scale processor: a ' + Math.round(side / S) + ' mm square (amber) cut from a '
+      accent: SILICON, accentDark: SILICON_DARK,
+      caption: 'A wafer-scale processor: a ' + Math.round(side / S) + ' mm square (silver) cut from a '
         + (L.diameterMm || 300) + ' mm wafer, its ' + live + '-die grid left in place and wired together across the scribe lines. No interposer, no HBM.'
     };
   }
@@ -193,7 +196,7 @@ PC.register('package', function (p) {
     add(PC.T(PC.merge.apply(null, fp), { pos: [x, yt + 0.003, z] }));
   });
 
-  // --- HBM stacks: layered boxes with amber tops ---
+  // --- HBM stacks: layered boxes with silver tops ---
   var hbmH = Y(hHbm), layers = 8;
   hbm.forEach(function (h) {
     var w = h.w * S, d = h.h * S, x = h.x * S, z = -h.y * S;
@@ -209,11 +212,11 @@ PC.register('package', function (p) {
   var cap = 'An accelerator package, seen with its vertical dimensions exaggerated about '
     + VX + 'x: ' + nd + ' logic die' + (nd === 1 ? '' : 's')
     + (nb ? ' stepped up on ' + nb + ' base die' + (nb === 1 ? '' : 's') : '')
-    + (nh ? ' and ' + nh + ' HBM stack' + (nh === 1 ? '' : 's') + ' (amber tops)' : ' and no HBM')
+    + (nh ? ' and ' + nh + ' HBM stack' + (nh === 1 ? '' : 's') + ' (silver tops)' : ' and no HBM')
     + (ni === 0 ? ', flip-chipped straight onto the build-up substrate'
       : ni === 1 ? ' on a silicon interposer' : ' across ' + ni + ' separate interposers')
     + ', inside a lid-less stiffener ring, with the ball grid below.';
 
   PC.density = d0;
-  return { cloud: PC.merge.apply(null, parts), spin: plan ? 0.07 : 0.1, tilt: plan ? [1.32, 0, 0] : [0.55, -0.7, 0], turntable: plan, caption: cap };
+  return { cloud: PC.merge.apply(null, parts), spin: plan ? 0.07 : 0.1, tilt: plan ? [1.32, 0, 0] : [0.55, -0.7, 0], turntable: plan, caption: cap, accent: SILICON, accentDark: SILICON_DARK };
 });

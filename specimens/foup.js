@@ -64,7 +64,7 @@ PC.register('foup', function (p) {
 
   // ---------- the moulded shell, front face left open for the door ----------
   var shape = roundRect(0.388, 0.342, 0.045, 4);
-  var walls = PC.T(PC.extrude({ shape: shape, h: 0.332, caps: false, tone: 0.10 }),
+  var walls = PC.T(PC.accent2(PC.extrude({ shape: shape, h: 0.332, caps: false }), 0.14),
     { scale: 1000, pos: [0, H / 2, 0] });
   add(cut(walls, function (x, y, z) { return z > 145 && Math.abs(x) < 152; }));
   var shape2 = shape.map(function (q) { return [q[0] * 1000, q[1] * 1000]; });
@@ -74,7 +74,7 @@ PC.register('foup', function (p) {
     if (i % 5 !== 2) return;
     add(PC.line({ a: [q[0], 1, q[1]], b: [q[0], H - 1, q[1]], perUnit: 2.6, tone: 0.9 }));
   });
-  add(PC.T(PC.plane({ w: W - 26, d: D - 26, n: 2400, tone: 0.16 }), { pos: [0, H, 0] }));  // roof
+  add(PC.T(PC.accent2(PC.plane({ w: W - 26, d: D - 26, n: 2400 }), 0.2), { pos: [0, H, 0] }));  // roof
   // ribs across the roof, as the moulding has
   for (var r = -3; r <= 3; r++) add(PC.line({ a: [-W / 2 + 22, H + 1, r * 44], b: [W / 2 - 22, H + 1, r * 44], perUnit: 2.2, tone: 0.42 }));
 
@@ -105,7 +105,7 @@ PC.register('foup', function (p) {
 
   // ---------- the door: the part that makes it a cleanroom ----------
   var dz = D / 2 + 7, dW = 344, dH = 300, dy = H / 2 - 4;
-  add(faceZ(dW, dH, [0, dy, dz], 5600, 0.26));
+  add(PC.accent2(faceZ(dW, dH, [0, dy, dz], 5600, 0.26), 0.3));
   add(rectZ(dW, dH, [0, dy, dz + 0.5], 2.8, 1));
   add(rectZ(dW - 40, dH - 40, [0, dy, dz + 0.5], 2.0, 0.5));
   [-1, 1].forEach(function (s) {                                     // the moulded ribs on the panel
@@ -154,10 +154,14 @@ PC.register('foup', function (p) {
     cloud: PC.merge.apply(null, parts),
     spin: 0.11,
     tilt: [0.24, -0.72, 0],
+    // colour: the picked-out wafer is polished silicon, a mirror that reads as cool silver
+    accent: [111, 139, 166], accentDark: [195, 211, 226],
+    // colour: the shell, roof and door are translucent polycarbonate, a grey-blue haze in life
+    accent2: [142, 162, 184], accent2Dark: [169, 188, 207],
     caption: 'A FOUP: 388 by 342 by 332 mm, carrying twenty-five 300 mm wafers on moulded teeth ' +
       '10 mm apart. The shell is drawn translucent, as the real polycarbonate is. On the roof is ' +
       'the flange an overhead robot grips; on the front, the door with its two latch-key ports, ' +
       'which is the only way in. The box is barely wider than the wafer it carries, and it is the ' +
-      'wafers, not the fab, that the clean air is for. One wafer is picked out in copper.'
+      'wafers, not the fab, that the clean air is for. One wafer is picked out in silver.'
   };
 });

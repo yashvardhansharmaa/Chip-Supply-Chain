@@ -2,7 +2,14 @@
  * Dependency-free. Runs in Node (module.exports) and in the browser (window.PC).
  * A "cloud" is a Float32Array with stride 4: x, y, z, w.
  *   w in [0,1]  -> ink point with alpha w
- *   w in [2,3]  -> accent-colour point with alpha (w - 2)
+ *   w in [2,3]  -> accent-colour point with alpha (w - 2); w = 3 is a full accent point
+ *   w in (3,4]  -> second-accent point with alpha (w - 3), see PC.accent2
+ * A specimen may declare the colour its accent points take, as sRGB 0..255:
+ *   accent: [r, g, b]        the highlighted element's own colour on the light ground
+ *   accent2: [r, g, b]       the colour of the (3,4] channel; defaults to accent
+ *   accentDark, accent2Dark  optional overrides for the dark theme; without them the
+ *                            renderer lifts the light colour with PC.lift (see there)
+ * A specimen that declares none takes the site's accent from CSS.
  * Coordinate frame: Y up. Specimens should fit roughly inside a 2-unit box; the
  * renderer normalises the bounding box, so absolute scale does not matter, but
  * relative proportions do.
@@ -304,6 +311,37 @@
 
   PC.tone = function (c, w) { var out = new Float32Array(c); for (var i = 3; i < out.length; i += 4) out[i] = w; return out; };
   PC.accent = function (c, a) { return PC.tone(c, 2 + (a == null ? 1 : a)); };
+  // Second accent channel: w in (3,4]. Alpha is floored at 0.02 so a point never lands on
+  // w = 3 exactly, which is a full point of the first accent.
+  PC.accent2 = function (c, a) { return PC.tone(c, 3 + Math.min(1, Math.max(0.02, a == null ? 1 : a))); };
+
+  // ---------- colour helpers (shared by the site, the cards and the cover) ----------
+  // Dark-theme rule: keep the hue and saturation of the light-ground colour and raise its HSL
+  // lightness to at least minL (0.62), so a colour chosen to read against warm white also
+  // reads against the dark ground. A specimen that wants something else declares accentDark.
+  PC.lift = function (rgb, minL) {
+    var r = rgb[0] / 255, g = rgb[1] / 255, b = rgb[2] / 255, L = minL == null ? 0.62 : minL;
+    var mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, h = 0, sat = 0, d = mx - mn;
+    if (d > 0) {
+      sat = d / (1 - Math.abs(2 * l - 1));
+      if (mx === r) h = ((g - b) / d) % 6; else if (mx === g) h = (b - r) / d + 2; else h = (r - g) / d + 4;
+      h *= 60; if (h < 0) h += 360;
+    }
+    if (l >= L) return rgb.slice();
+    l = L;
+    var c = (1 - Math.abs(2 * l - 1)) * sat, x = c * (1 - Math.abs((h / 60) % 2 - 1)), m = l - c / 2, o;
+    if (h < 60) o = [c, x, 0]; else if (h < 120) o = [x, c, 0]; else if (h < 180) o = [0, c, x];
+    else if (h < 240) o = [0, x, c]; else if (h < 300) o = [x, 0, c]; else o = [c, 0, x];
+    return [Math.round((o[0] + m) * 255), Math.round((o[1] + m) * 255), Math.round((o[2] + m) * 255)];
+  };
+  // The two accent colours a built specimen draws with on the given ground, as 0..255 arrays,
+  // or null when the specimen declares none (the site then uses its CSS accent).
+  PC.resolveColors = function (s, dark) {
+    if (!s || !s.accent) return null;
+    var a = dark ? (s.accentDark || PC.lift(s.accent)) : s.accent;
+    var a2 = s.accent2 ? (dark ? (s.accent2Dark || PC.lift(s.accent2)) : s.accent2) : a;
+    return { accent: a, accent2: a2 };
+  };
 
   // Linear array: n copies stepped by offset [dx,dy,dz].
   PC.repeat = function (c, n, off) {

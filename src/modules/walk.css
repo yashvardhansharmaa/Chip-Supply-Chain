@@ -1,61 +1,69 @@
 /* ==========================================================================
-   The ten-minute walk (#/walk) and the start-here block on the landing page.
+   The ten-minute walk (#/walk, the home page) and the start-here block.
    Tokens only; every class is prefixed wk-.
+   The left edge is the ledger column (--gutter): each chapter's number sits in it, large and light, beside a
+   hairline that fills with garnet as the reader scrolls (walk.js sets --wk-fill on the current step).
    ========================================================================== */
 
-/* ---------- the walk: head ---------- */
+/* ---------- the walk: head, indented by the ledger column so the margin reads from the first line ---------- */
 .wk { padding-bottom: 30px; }
-.wk-head { padding: clamp(32px, 6vh, 68px) 0 4px; }
+.wk-head { padding: clamp(40px, 7vh, 76px) 0 4px; margin-left: calc(var(--gutter) + var(--gutter-gap)); }
 .wk-eyebrow { display: block; margin: 0 0 13px; }
 .wk-title {
-  font-family: var(--font-display); font-weight: 800;
-  font-size: clamp(38px, 5vw, 64px); line-height: 1;
-  text-transform: uppercase; letter-spacing: 0.01em;
-  margin: 0 0 15px;
+  font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
+  font-size: clamp(40px, 4.2vw, 60px); line-height: 1.02;
+  text-transform: none; letter-spacing: -0.012em;
+  margin: 0 0 16px; max-width: 12em;
 }
-.wk-dek { font-size: 19px; line-height: 1.5; color: var(--ink-2); max-width: 34em; margin: 0 0 18px; }
+.wk-dek { font-size: 20px; line-height: 1.45; color: var(--ink-2); max-width: 30em; margin: 0 0 18px; }
 .wk-meta { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0; }
 .wk-meta .label { position: relative; }
-.wk-meta .label + .label::before { content: "·"; position: absolute; left: -11px; color: var(--line-2); }
+.wk-meta .label + .label::before { content: ""; position: absolute; left: -10px; top: 2px; width: 1px; height: 10px; background: var(--line-2); }
 
-/* ---------- the walk: the numbered spine ---------- */
-.wk-list { list-style: none; margin: 34px 0 0; padding: 0; }
+/* ---------- the overview: a ruled table, name on the left, one line on the right ---------- */
+.wk-tabs { display: block; margin: 30px 0 4px; padding: 0; background: none; border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2); border-radius: 0; }
+.wk-tabs-k { margin: 0; padding: 10px 0 8px; border-bottom: 1px solid var(--line); color: var(--muted); }
+.wk-tabs a { display: grid; grid-template-columns: 172px minmax(0, 1fr); gap: 0 20px; align-items: baseline; min-width: 0; padding: 9px 0 10px; border-top: 1px solid var(--line); color: var(--ink-2); text-decoration: none; }
+.wk-tabs a:first-of-type { border-top: 0; }
+.wk-tabs .wk-tab { display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 19px; line-height: 1.2; padding: 0; margin: 0; border: 0; border-radius: 0; color: var(--ink); background: none; transition: color 0.15s; }
+.wk-tabs .wk-tab::after { content: "\00a0\2192"; color: var(--line-2); font-weight: 400; }
+.wk-tabs a:hover .wk-tab, .wk-tabs a:focus-visible .wk-tab { background: none; color: var(--accent); }
+.wk-tabs a:hover .wk-tab::after { color: var(--accent); }
+.wk-tabs a:focus-visible { outline: none; }
+.wk-tabs span { display: block; font-size: 15.5px; line-height: 1.45; }
+
+/* ---------- the walk: the ledger column ---------- */
+.wk-list { list-style: none; margin: 44px 0 0; padding: 0; }
 .wk-step {
-  display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 0 24px;
+  display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr); gap: 0 var(--gutter-gap);
   scroll-margin-top: calc(var(--masthead) + 66px);
 }
-.wk-block { min-width: 0; padding: 0 0 46px; }
+.wk-block { min-width: 0; padding: 0 0 52px; }
 
 .wk-mark { position: relative; }
-.wk-mark::before { /* the spine: one hairline segment per step, joined into a continuous line */
-  content: ""; position: absolute; right: 6px; top: 0; height: 100%; width: 1px; background: var(--line);
-}
-.wk-mark::after { /* the node on the line, level with the chapter label */
-  content: ""; position: absolute; right: 3px; top: 4px; width: 7px; height: 7px;
-  box-sizing: border-box; border-radius: 50%; background: var(--bg); border: 1.5px solid var(--line-2);
-  transition: background 0.2s, border-color 0.2s;
+.wk-mark::before { /* the hairline: one segment per step, joined into a continuous rule */
+  content: ""; position: absolute; right: 0; top: 0; height: 100%; width: 1px; background: var(--line-2);
 }
 .wk-list .wk-step:last-child .wk-mark::before { height: 26px; }
-.wk-n {
-  position: absolute; right: 22px; top: 0;
-  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em;
-  font-variant-numeric: tabular-nums; color: var(--muted);
+.wk-n { /* the number is the mark: Fraunces at its lightest weight and highest contrast */
+  position: absolute; right: 14px; top: -14px;
+  font-family: var(--font-display); font-weight: 300; font-variation-settings: var(--opsz-numeral);
+  font-size: 54px; line-height: 1; letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums lining-nums; color: var(--muted);
 }
-.wk-step.is-past .wk-mark::before { background: var(--accent); }
-.wk-step.is-here .wk-mark::before { background: linear-gradient(to bottom, var(--accent) var(--wk-fill, 0%), var(--line) var(--wk-fill, 0%)); }
-.wk-step.is-past .wk-mark::after { background: var(--ink-2); border-color: var(--ink-2); }
+.wk-step.is-past .wk-mark::before { background: var(--ink-2); }
+.wk-step.is-here .wk-mark::before { background: linear-gradient(to bottom, var(--accent) var(--wk-fill, 0%), var(--line-2) var(--wk-fill, 0%)); }
 .wk-step.is-past .wk-n { color: var(--ink-2); }
-.wk-step.is-here .wk-mark::after { background: var(--accent); border-color: var(--accent); }
-.wk-step.is-here .wk-n { color: var(--accent-ink); font-weight: 500; }
+.wk-step.is-here .wk-n { color: var(--accent); }
 
 /* ---------- the walk: one block ---------- */
-.wk-where { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0 0 7px; }
+.wk-where { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0 0 9px; }
 .wk-where .wk-stage { position: relative; }
-.wk-where .wk-stage::before { content: "·"; position: absolute; left: -10px; color: var(--line-2); }
+.wk-where .wk-stage::before { content: ""; position: absolute; left: -9px; top: 2px; width: 1px; height: 10px; background: var(--line-2); }
 .wk-t {
-  font-family: var(--font-display); font-weight: 700;
-  font-size: clamp(24px, 2.4vw, 31px); line-height: 1.06; letter-spacing: -0.004em;
-  margin: 0 0 13px; max-width: 15em;
+  font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title);
+  font-size: clamp(26px, 2.3vw, 32px); line-height: 1.1; letter-spacing: 0;
+  margin: 0 0 14px; max-width: 15em;
 }
 .wk-p { max-width: var(--measure); line-height: 1.6; margin: 0 0 16px; }
 
@@ -78,51 +86,46 @@
   font-family: var(--font-mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
 }
 .wk-pips { display: inline-flex; gap: 4px; }
-.wk-pips i { display: block; box-sizing: border-box; width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--line-2); }
-/* the chain strip's colours: amber only at 5 of 5 */
+.wk-pips i { display: block; box-sizing: border-box; width: 8px; height: 8px; border-radius: 0; border: 1.5px solid var(--line-2); }
+/* the chain strip's colors: garnet only at 5 of 5 */
 .wk-score[data-rank="3"] .wk-pips i.on { background: var(--bar-3); border-color: var(--bar-3); }
 .wk-score[data-rank="4"] .wk-pips i.on { background: var(--bar-4); border-color: var(--bar-4); }
 .wk-score[data-rank="5"] .wk-pips i.on { background: var(--bar-5); border-color: var(--bar-5); }
 .wk-sc b { color: var(--ink); font-weight: 600; font-size: 13px; }
-.wk-score[data-rank="5"] .wk-sc, .wk-score[data-rank="5"] .wk-sc b { color: var(--accent-ink); }
+.wk-score[data-rank="5"] .wk-sc, .wk-score[data-rank="5"] .wk-sc b { color: var(--accent); }
 .wk-read {
-  margin-left: auto; font-family: var(--font-display); font-weight: 600;
-  font-size: 14px; letter-spacing: 0.02em; white-space: nowrap;
+  margin-left: auto; font-family: var(--font-mono); font-weight: 500;
+  font-size: 13.5px; letter-spacing: 0.01em; white-space: nowrap;
   text-decoration: none; border-bottom: 1px solid var(--line-2); padding-bottom: 1px;
 }
 .wk-read::after { content: "\00a0\2192"; color: var(--muted); }
-.wk-read:hover { color: var(--accent-ink); border-bottom-color: var(--accent); }
+.wk-read:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.wk-read:hover::after { color: var(--accent); }
 
-/* previous / next: phones only, at the end of each block */
 .wk-pn { display: none; }
 
 /* ---------- the walk: the end ---------- */
-.wk-end { margin-top: 6px; padding-top: 22px; border-top: 1px solid var(--line-2); max-width: var(--measure); }
-.wk-end-t { font-family: var(--font-display); font-weight: 600; font-size: 21px; line-height: 1.25; margin: 0 0 12px; }
-.wk-end-links { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 0; }
+.wk-end { border-top: 1px solid var(--ink); padding: 22px 0 0; max-width: var(--measure); margin-left: calc(var(--gutter) + var(--gutter-gap)); }
+.wk-end-t { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 24px; line-height: 1.15; margin: 0 0 8px; }
+.wk-end-p { margin: 0 0 16px; color: var(--ink-2); }
+.wk-end-links { display: flex; flex-wrap: wrap; gap: 8px 10px; margin: 0; }
 .wk-end-links a {
-  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--ink-2); text-decoration: none; border: 1px solid var(--line-2); border-radius: 3px; padding: 8px 11px;
+  font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  text-decoration: none; padding: 9px 12px; border: 1px solid var(--line-2); border-radius: 0; color: var(--ink);
 }
-.wk-end-links a:hover { color: var(--accent-ink); border-color: var(--accent); }
+.wk-end-links a:hover { color: var(--accent); border-color: var(--accent); }
 
-/* ---------- the walk: the thin progress rail (shown by src/modules/walk.js) ---------- */
+/* ---------- the progress rail ---------- */
 .wk-rail {
-  position: fixed; left: 0; right: 0; top: var(--masthead); z-index: 30;
-  padding: 8px clamp(16px, 4vw, 56px) 9px;
-  background: color-mix(in srgb, var(--bg) 94%, transparent);
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--line);
-  transform: translateY(-110%); opacity: 0;
-  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+  position: fixed; left: 0; top: var(--masthead); z-index: 30; width: var(--col);
+  padding: 8px clamp(16px, 4vw, 56px) 8px clamp(16px, 3vw, 44px);
+  background: var(--bg); border-bottom: 1px solid var(--line);
+  transform: translateY(-110%); opacity: 0; transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
 }
 .wk-rail[data-show="1"] { transform: none; opacity: 1; }
-.wk-rail-bar { height: 2px; background: var(--line); border-radius: 2px; overflow: hidden; }
-.wk-rail-bar i { display: block; height: 100%; width: 0; background: var(--accent); }
-.wk-rail-line {
-  display: flex; align-items: baseline; gap: 12px; margin: 7px 0 0; min-width: 0;
-  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted);
-}
+.wk-rail-bar { height: 2px; background: var(--line); border-radius: 0; overflow: hidden; }
+.wk-rail-bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width 0.15s linear; }
+.wk-rail-line { display: flex; gap: 12px; align-items: baseline; margin: 6px 0 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.02em; color: var(--muted); }
 .wk-rail-n { flex: 0 0 auto; color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
 .wk-rail-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
@@ -133,51 +136,66 @@
 .wk-sh-list li { display: flex; flex-direction: column; min-width: 0; }
 .wk-sh-item {
   flex: 1 1 auto; display: block; text-decoration: none;
-  border: 1px solid var(--line); border-radius: 3px; background: var(--bg-2);
-  padding: 10px 12px 11px; transition: border-color 0.15s, background 0.15s;
+  border: 0; border-top: 1px solid var(--line-2); border-radius: 0; background: none;
+  padding: 10px 0 11px; transition: border-color 0.15s;
 }
-.wk-sh-item:hover { border-color: var(--line-2); background: var(--bg-3); }
+.wk-sh-item:hover { border-top-color: var(--ink); background: none; }
 .wk-sh-t {
-  display: block; font-family: var(--font-display); font-weight: 700;
-  font-size: 14.5px; line-height: 1.18; letter-spacing: 0.01em; margin: 0 0 4px; text-wrap: balance;
+  display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title);
+  font-size: 16px; line-height: 1.2; letter-spacing: 0; margin: 0 0 4px; text-wrap: balance;
 }
 .wk-sh-t::after { content: "\00a0\2192"; color: var(--muted); font-weight: 400; }
-.wk-sh-item:hover .wk-sh-t { color: var(--accent-ink); }
+.wk-sh-item:hover .wk-sh-t { color: var(--accent); }
 .wk-sh-d { display: block; font-size: 13.5px; line-height: 1.38; color: var(--ink-2); }
 .wk-sh-more {
   align-self: flex-start; margin-top: 6px;
-  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--line-2);
 }
-.wk-sh-more:hover { color: var(--accent-ink); border-bottom-color: var(--accent); }
+.wk-sh-more:hover { color: var(--accent); border-bottom-color: var(--accent); }
 .wk-sh-more::after { content: "\00a0\2192"; }
 
+/* ---------- the walk: sourced facts ---------- */
+.wk-facts { list-style: none; margin: 10px 0 4px; padding: 8px 0 6px 16px; border-left: 1px solid var(--line-2); max-width: var(--measure); }
+.wk-facts li { font-family: var(--font-body); font-size: 15.5px; line-height: 1.45; color: var(--ink-2); margin: 0 0 6px; }
+.wk-facts .wk-src { font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); text-decoration: none; margin-left: 6px; }
+.wk-facts .wk-src:hover { text-decoration: underline; }
+
 /* ---------- narrow ---------- */
+@media (max-width: 1100px) {
+  .wk-tabs a { grid-template-columns: 150px minmax(0, 1fr); }
+}
 @media (max-width: 760px) {
   .wk-sh-list { grid-template-columns: 1fr; gap: 8px; }
   .wk-sh-t { font-size: 15.5px; }
 }
 @media (max-width: 900px) {
-  /* the number moves into the "Chapter 03" label; the spine keeps its line and node */
-  .wk-step { grid-template-columns: 20px minmax(0, 1fr); gap: 0 14px; scroll-margin-top: calc(var(--masthead) + 60px); }
-  .wk-block { padding-bottom: 38px; }
-  .wk-n { display: none; }
-  .wk-mark::before { right: auto; left: 3px; }
-  .wk-mark::after { right: auto; left: 0; }
+  /* the ledger column narrows to 34 px; the number stays in it, small */
+  .wk-head { margin-left: 0; padding-top: 26px; }
+  .wk-title { font-size: 36px; max-width: none; }
   .wk-dek { font-size: 17.5px; }
-  .wk-t { font-size: 26px; max-width: none; }
+  .wk-meta .label + .label::before, .wk-where .wk-stage::before { display: none; }
+  .wk-tabs a { grid-template-columns: 1fr; gap: 2px; }
+  .wk-tabs .wk-tab { font-size: 17px; }
+  .wk-tabs span { font-size: 14.5px; }
+  .wk-list { margin-top: 30px; }
+  .wk-step { scroll-margin-top: calc(var(--masthead) + 60px); }
+  .wk-block { padding-bottom: 38px; }
+  .wk-n { display: block; right: 8px; top: -6px; font-size: 26px; }
+  .wk-t { font-size: 25px; max-width: none; }
   .wk-foot { gap: 10px 14px; }
   .wk-read { margin-left: 0; }
+  .wk-end { margin-left: 0; }
 
   .wk-pn { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 18px 0 0; }
   .wk-pn a {
     display: block; min-width: 0; text-decoration: none;
-    border: 1px solid var(--line-2); border-radius: 3px; background: var(--bg-2); padding: 9px 11px 10px;
+    border: 1px solid var(--line-2); border-radius: 0; background: none; padding: 9px 11px 10px;
   }
   .wk-pn a:hover { border-color: var(--accent); }
   .wk-pn .wk-next { text-align: right; }
   .wk-pn .label { display: block; margin-bottom: 3px; }
-  .wk-pn-t { display: block; font-family: var(--font-display); font-weight: 600; font-size: 14px; line-height: 1.25; overflow-wrap: anywhere; }
+  .wk-pn-t { display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 14.5px; line-height: 1.25; overflow-wrap: anywhere; }
   .wk-end-links a { font-size: 10.5px; padding: 8px 9px; }
 }
 @media (max-width: 420px) {
@@ -192,21 +210,3 @@
   .wk-rail, .wk-pn { display: none !important; }
   .wk-step { break-inside: avoid; }
 }
-
-
-.wk-facts { list-style: none; margin: 10px 0 4px; padding: 10px 12px 8px; border-left: 2px solid var(--line-2); max-width: var(--measure); }
-.wk-facts li { font-family: var(--font-body); font-size: 15px; line-height: 1.45; color: var(--ink-2); margin: 0 0 6px; }
-.wk-facts .wk-src { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-ink); text-decoration: none; margin-left: 6px; }
-.wk-facts .wk-src:hover { text-decoration: underline; }
-
-
-/* the five tabs, restated on the home page: each name drawn like the masthead tab it opens, one line under it */
-.wk-tabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 18px; margin: 24px 0 8px; padding: 14px 16px 14px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 4px; }
-.wk-tabs-k { grid-column: 1 / -1; margin: 0 0 10px; color: var(--muted); }
-.wk-tabs a { display: block; min-width: 0; color: var(--ink-2); text-decoration: none; }
-.wk-tabs .wk-tab { display: inline-block; font-family: var(--font-display); font-weight: 600; font-size: 14px; line-height: 1; padding: 7px 10px; border: 1px solid var(--line-2); border-radius: 3px; color: var(--ink); margin-bottom: 9px; transition: background 0.15s, color 0.15s; }
-.wk-tabs a:hover .wk-tab, .wk-tabs a:focus-visible .wk-tab { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.wk-tabs a:focus-visible { outline: none; }
-.wk-tabs span { display: block; font-size: 14px; line-height: 1.4; }
-@media (max-width: 1100px) { .wk-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 16px; } }
-@media (max-width: 720px) { .wk-tabs { grid-template-columns: 1fr; gap: 10px; } }
