@@ -1,0 +1,197 @@
+/* ============================================================
+   DARKROOM: the site lit like a lithography bay.
+   Ground: blue-black graphite. Text: warm off-white. Specimens glow pale on the dark ground,
+   their accent the sodium amber of the bay's safelight. Light theme kept for the toggle.
+   Display: Barlow Condensed. Body: Source Serif 4. Labels: JetBrains Mono.
+   ============================================================ */
+:root, :root[data-theme="dark"] {
+  --bg: #0f141a;          /* graphite blue-black */
+  --bg-2: #151b22;        /* panel */
+  --bg-3: #1c242c;        /* raised panel */
+  --ink: #ece6da;         /* warm off-white */
+  --ink-2: #c8c1b4;
+  --muted: #918b80;       /* 5.2:1 on the ground */
+  --line: #242c35;
+  --line-2: #364150;
+  --accent: #f2a93b;      /* sodium amber, 8.6:1 on the ground */
+  --accent-ink: #f6c06a;  /* the amber for small text */
+  --accent-soft: rgba(242, 169, 59, 0.11);
+  --c1: #5b9df0; --c2: #f0855c; --c3: #34cfb0; --c4: #f2c14e; --c5: #a495f2; --c6: #f26a6a; --c7: #79c45a; --c8: #8c959e;
+  --stage-ink: 236, 230, 218;
+  --stage-accent: 242, 169, 59;
+  --shadow: 0 1px 0 rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
+  --bar-5: var(--accent); --bar-4: #8a8579; --bar-3: #3b4754;
+  --font-display: "Barlow Condensed", "Archivo Narrow", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Source Serif 4", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --measure: 34em;
+  --body-weight: 430;
+  --glow: rgba(242, 169, 59, 0.10);
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --bg: #f1efea;          /* wafer grey, warmed a step */
+  --bg-2: #e8e6e0;
+  --bg-3: #ddd9d1;
+  --ink: #15191d;
+  --ink-2: #3b4148;
+  --muted: #5f656c;
+  --line: #d3d0c8;
+  --line-2: #b9b5ac;
+  --accent: #b8760a;
+  --accent-ink: #7a4f05;
+  --accent-soft: rgba(184, 118, 10, 0.12);
+  --c1: #2a78d6; --c2: #e0602a; --c3: #109c74; --c4: #b98004; --c5: #5b4bc0; --c6: #d93f3f; --c7: #2f8a1f; --c8: #7f8890;
+  --stage-ink: 21, 25, 29;
+  --stage-accent: 184, 118, 10;
+  --shadow: 0 1px 0 rgba(21, 25, 29, 0.06), 0 8px 24px rgba(21, 25, 29, 0.08);
+  --bar-4: #3b4148; --bar-3: #b3aea4;
+  --body-weight: 400;
+  --glow: rgba(184, 118, 10, 0.06);
+  color-scheme: light;
+}
+
+/* ---------- ground and type ---------- */
+body { font-weight: var(--body-weight); font-size: 19px; line-height: 1.58; }
+body::before { opacity: 0.22; }
+strong { font-weight: 640; }
+a:hover { text-decoration-color: var(--accent); }
+.label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; }
+
+/* ---------- masthead: a strip of instrument labels, no filled pills ---------- */
+.masthead { background: color-mix(in srgb, var(--bg) 90%, transparent); border-bottom-color: var(--line); }
+.wordmark b { font-family: var(--font-display); font-weight: 700; font-size: 23px; letter-spacing: 0.1em; }
+.wordmark span { letter-spacing: 0.1em; }
+.tabs a { font-family: var(--font-display); font-weight: 500; font-size: 15.5px; letter-spacing: 0.07em; text-transform: uppercase; padding: 8px 10px; border-radius: 0; border: 0; color: var(--ink-2); }
+.tabs a:hover { color: var(--ink); background: none; }
+.tabs a[aria-current="page"] { background: none; color: var(--ink); box-shadow: inset 0 -2px 0 var(--accent); }
+.theme-toggle, .search-btn { border-radius: 0; border-color: var(--line-2); color: var(--ink-2); }
+.theme-toggle:hover, .search-btn:hover { color: var(--ink); border-color: var(--ink-2); }
+
+/* ---------- the stage: the specimen lit on its own ground ---------- */
+.stage { border-left: 1px solid var(--line); }
+.stage::before { /* the pool of safelight under the specimen */
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 64% 54% at 50% 46%, var(--glow), transparent 70%),
+    linear-gradient(to bottom, transparent 0, transparent 80%, color-mix(in srgb, var(--bg-2) 60%, transparent) 100%);
+}
+.stage canvas { margin-top: 0; }
+.stage .stage-tag { top: 22px; left: 32px; font-size: 11px; letter-spacing: 0.12em; color: var(--muted); }
+.stage .stage-tag b { color: var(--accent-ink); font-weight: 500; }
+.stage .stage-tag::after { content: ""; display: block; width: 28px; height: 1px; background: var(--accent); margin-top: 10px; }
+.stage figcaption {
+  align-self: flex-start; text-align: left; max-width: 44ch; margin: 12px 0 30px; padding: 0 32px;
+  font-size: 11.5px; line-height: 1.55; letter-spacing: 0.01em; color: var(--muted);
+}
+.stage figcaption b { color: var(--ink-2); }
+@media (hover: hover) and (pointer: fine) { .stage canvas:focus-visible { box-shadow: inset 0 0 0 1px var(--accent); } }
+
+/* the home page opens on the render: a wider stage, a quieter reading panel */
+body:has(.view[data-view="walk"]:not([hidden])) { --col: 50%; }
+@media (max-width: 1100px) { body:has(.view[data-view="walk"]:not([hidden])) { --col: 56%; } }
+@media (max-width: 900px) { body:has(.view[data-view="walk"]:not([hidden])) { --col: 100%; } }
+
+/* ---------- hairlines, boxes, buttons ---------- */
+.prose hr, .contents, .chapter, .chain, .site-footer, .wk-sh, .wk-foot, .wk-end { border-color: var(--line); }
+.btn { font-family: var(--font-mono); letter-spacing: 0.1em; border-radius: 0; }
+.btn.ghost { border-color: var(--line-2); color: var(--ink-2); }
+.btn.ghost:hover { color: var(--ink); border-color: var(--ink-2); opacity: 1; }
+.chips button, .picker button, .prevnext .pn, .ct-tip, .gl-tip, .cp-search-panel, .figure, .table-wrap, .compare-wrap, .sup-wrap, .matrix-wrap, .howto, .wk-sh-item, .to-top, .filters input, .filters select, .spec, .brief-card { border-radius: 0; }
+.chips button { border-radius: 999px; }
+.prose .takeaways, .plain { border-radius: 0; }
+.prose blockquote { border-left-color: var(--accent); color: var(--ink-2); }
+.inshort { border-left: 2px solid var(--accent); padding-left: 22px; }
+.inshort p { font-weight: 400; }
+.plain { border: 0; border-left: 2px solid var(--accent); background: var(--accent-soft); padding: 14px 20px 15px 22px; }
+.plain .label { color: var(--accent-ink); }
+.plain p { font-size: 17px; }
+.prevnext .pn { background: transparent; border-color: var(--line); }
+.prevnext .pn:hover { background: var(--bg-2); border-color: var(--line-2); }
+
+/* ---------- home: the title and the overview box, ruled not boxed ---------- */
+.wk-head { padding-top: clamp(30px, 6vh, 64px); }
+.wk-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(46px, 5.6vw, 82px); line-height: 0.92; letter-spacing: 0.005em; margin: 0 0 20px; }
+.wk-dek { font-size: 21px; line-height: 1.45; color: var(--ink-2); max-width: 26em; margin-bottom: 20px; }
+.wk-meta .label { color: var(--muted); }
+.wk-tabs { margin: 30px 0 4px; padding: 20px 0 22px; gap: 0 22px; background: none; border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); border-radius: 0; }
+.wk-tabs-k { margin-bottom: 14px; }
+.wk-tabs .wk-tab { font-family: var(--font-display); font-weight: 600; font-size: 15.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); padding: 0; border: 0; border-radius: 0; margin-bottom: 8px; }
+.wk-tabs a:hover .wk-tab, .wk-tabs a:focus-visible .wk-tab { background: none; color: var(--accent-ink); border: 0; box-shadow: 0 1px 0 var(--accent); }
+.wk-tabs span { font-size: 14px; line-height: 1.42; color: var(--ink-2); }
+.wk-t { font-family: var(--font-display); font-weight: 600; font-size: clamp(26px, 2.5vw, 33px); letter-spacing: 0.005em; }
+.wk-mark::after { background: var(--bg); border-color: var(--line-2); }
+.wk-n { color: var(--muted); }
+.wk-step.is-here .wk-n { color: var(--accent-ink); }
+.wk-read { font-family: var(--font-display); font-weight: 500; font-size: 15px; letter-spacing: 0.07em; text-transform: uppercase; border-bottom-color: var(--line-2); }
+.wk-sh-item { background: transparent; border-color: var(--line); }
+.wk-sh-item:hover { background: var(--bg-2); border-color: var(--line-2); }
+.wk-sh-t { font-weight: 600; font-size: 16px; letter-spacing: 0.02em; }
+
+/* ---------- chapter head: the plate number, the title, the card ---------- */
+.ch-id { grid-template-columns: 96px 1fr; gap: 22px; }
+.ch-tile { border: 0; border-top: 1px solid var(--line-2); border-radius: 0; background: none; text-align: left; padding: 10px 0 0; }
+.ch-tile .k { letter-spacing: 0.14em; }
+.ch-tile .v { font-family: var(--font-display); font-weight: 600; font-size: 60px; line-height: 0.9; color: var(--accent-ink); margin: 6px 0 4px; }
+.ch-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(44px, 4.9vw, 70px); line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase; margin: -4px 0 16px; }
+.ch-lede { font-weight: 400; font-size: clamp(19px, 1.45vw, 21.5px); line-height: 1.42; color: var(--ink-2); }
+.ch-copy { color: var(--accent-ink); }
+.prose h3 { font-family: var(--font-display); font-weight: 600; font-size: 29px; letter-spacing: 0.005em; }
+.prose h4 { font-family: var(--font-display); font-weight: 600; font-size: 21px; }
+.prose .takeaways h3 { color: var(--accent-ink); }
+sup.cite a { color: var(--accent-ink); }
+
+/* the chokepoint card: a specimen label, amber at the head only */
+.plate { border: 1px solid var(--line-2); border-top: 2px solid var(--accent); border-radius: 0; background: var(--bg-2); box-shadow: none; }
+.plate-head { background: transparent; border-bottom-color: var(--line-2); padding: 12px 18px; }
+.plate-head .label { color: var(--accent-ink); }
+.plate-kpis .v { font-family: var(--font-display); font-weight: 600; font-size: 30px; letter-spacing: 0.01em; }
+.plate-kpis .v.cost { font-size: 24px; }
+.plate-kpis .k, .plate-rows dt, .plate-status .k { letter-spacing: 0.14em; }
+.chip { border-radius: 0; border-color: var(--line-2); }
+.ptag, .chk, .tier { border-radius: 0; }
+
+/* the chain strip and its fixed rail */
+.chain-head h2 { letter-spacing: 0.14em; }
+.stage-cell .bar { border-bottom-color: var(--line-2); }
+.stage-cell[aria-current="true"]::after { background: var(--accent); }
+.rail { background: color-mix(in srgb, var(--bg) 90%, transparent); border-bottom-color: var(--line); }
+
+/* ---------- data pages ---------- */
+.view-head h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(44px, 5.4vw, 72px); letter-spacing: 0.01em; line-height: 0.92; }
+.view-head .dek { font-size: 20px; }
+.picker button { background: transparent; border-color: var(--line-2); }
+.picker button:hover { border-color: var(--ink-2); background: var(--bg-2); }
+.picker button[aria-pressed="true"], .picker button[data-cc][aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.picker button b { font-weight: 600; font-size: 16px; letter-spacing: 0.02em; }
+.subtabs a[aria-current="true"] { border-bottom-color: var(--accent); }
+.spec-head h3, .spec-kpis b, .claims b, .brief-head .t, .timeline h4, .gl-entry dt, .sup-rung-name, .prevnext .pn .t, .contents h2, .contents-grid .t { font-family: var(--font-display); }
+.spec-head h3 { font-weight: 700; letter-spacing: 0.01em; }
+.spec-head .status.Shipping { color: var(--accent-ink); }
+.chips button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.sup-rung[data-lit="1"] { box-shadow: inset 2px 0 0 var(--accent); }
+.year-label { color: var(--bg-3); }
+.sa-map { border-radius: 0; }
+.sa-panel { border-radius: 0; }
+.sa-marker-dot { box-shadow: none; }
+.sa-town { box-shadow: 0 0 0 1px var(--bg-2), 0 0 8px 1px rgba(242, 169, 59, 0.35); }
+:root[data-theme="light"] .sa-town { box-shadow: 0 0 0 1px var(--bg-2); }
+
+/* ---------- glossary, tips, search ---------- */
+.gl-tip, .ct-tip, .cp-search-panel { background: var(--bg-3); border-color: var(--line-2); }
+.gl-tip a, .ct-tip a, .gl-link { color: var(--accent-ink); }
+
+/* ---------- phones: the stage becomes a lit strip at the foot ---------- */
+@media (max-width: 900px) {
+  .stage { border-left: 0; border-top: 1px solid var(--line-2); box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.35); }
+  .stage::before { background: linear-gradient(to right, var(--glow), transparent 40%); }
+  .stage figcaption { padding: 0; margin: 0; }
+  .stage .stage-tag { left: auto; top: auto; }
+  .stage .stage-tag::after { display: none; }
+  .stage .stage-actions button { border-radius: 0; }
+  .wk-title { font-size: 44px; }
+  .wordmark b { letter-spacing: 0.08em; }
+  .tabs a { font-size: 14px; }
+  .ch-tile { width: auto; border-top: 0; padding-top: 0; }
+  .ch-title { font-size: 40px; }
+}

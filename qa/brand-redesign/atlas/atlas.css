@@ -1,0 +1,321 @@
+/* ATLAS: the site as a mid-century scientific atlas.
+   Ground: cool pale stone. Ink: ink-blue, never black. Accent: a dull cartographic vermilion, used once per view for the thing the eye must find.
+   Tint: the pale sea-blue of an atlas ocean, for fills. Type: Bitter (display, a Clarendon-flavored slab), Source Serif 4 (text), Alegreya Sans SC (labels, figures, running heads).
+   Everything here is appended after the site's own stylesheet and only overrides. */
+
+:root {
+  --bg: #e8ecec;
+  --bg-2: #dfe4e5;
+  --bg-3: #d2d9dc;
+  --tint: #cbd8de;          /* atlas ocean; fills */
+  --land: #ddd9cb;          /* atlas land; the map only */
+  --ink: #1b2536;
+  --ink-2: #33405a;
+  --muted: #56627a;
+  --line: #bfc9ce;
+  --line-2: #9fadb5;
+  --accent: #b8432a;        /* vermilion: the selected country, Extreme, Critical */
+  --accent-ink: #8c2f1c;    /* vermilion for small text, 6.95:1 on the ground */
+  --accent-soft: rgba(184, 67, 42, 0.11);
+  /* a cartographic set of eight: Prussian blue, teal, viridian, ochre, mulberry, wine, sienna, slate */
+  --c1: #2e5d9f; --c2: #237f82; --c3: #3d8a4e; --c4: #b8901f; --c5: #6b4b9a; --c6: #7e2b45; --c7: #8a5a2b; --c8: #7a8590;
+  --stage-ink: 27, 37, 54;
+  --stage-accent: 184, 67, 42;
+  --shadow: none;
+  --font-display: "Bitter", "Zilla Slab", "Roboto Slab", Rockwell, Georgia, serif;
+  --font-body: "Source Serif 4", "Source Serif Pro", Charter, Georgia, "Times New Roman", serif;
+  --font-mono: "Alegreya Sans SC", "Source Sans 3", "Gill Sans", "Trebuchet MS", sans-serif;
+  --measure: 34em;
+  --bar-4: #33405a; --bar-3: #a9b6bd;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #151b25; --bg-2: #1b2230; --bg-3: #232c3b;
+  --tint: #1f2c3a; --land: #2c3140;
+  --ink: #e6e4dc; --ink-2: #c3c5c9; --muted: #98a2b1;
+  --line: #2e3745; --line-2: #48546a;
+  --accent: #e2694e; --accent-ink: #ee8b73; --accent-soft: rgba(226, 105, 78, 0.16);
+  --c1: #5f8fd0; --c2: #4aa7aa; --c3: #62b072; --c4: #d4ad3c; --c5: #9a7ccc; --c6: #b95a78; --c7: #b7864f; --c8: #8f9aa6;
+  --stage-ink: 230, 228, 220; --stage-accent: 226, 105, 78;
+  --shadow: none;
+  --bar-4: #c3c5c9; --bar-3: #48546a;
+  color-scheme: dark;
+}
+
+/* ---------- ground and text ---------- */
+body { font-size: 18.5px; line-height: 1.58; font-optical-sizing: auto; }
+body::before { opacity: 0.22; }
+a { text-decoration-color: var(--line-2); text-decoration-thickness: 1px; }
+a:hover { text-decoration-color: var(--accent-ink); }
+:focus-visible { outline-color: var(--accent); border-radius: 0; }
+strong { font-weight: 600; }
+
+/* small caps everywhere the site had monospace labels: the label is set in true small caps, not spaced capitals */
+.label, .num, .count, .tier-key, .chain-foot, .chain-key span, .chain-head p, .ch-tile .k, .ch-tile .of, .stage-cell .n, .stage-cell .t,
+.plate-kpis .k, .plate-rows dt, .plate-status .k, .ptag, .chip, .cc, .chk, .tier, .sup-mode, .sup-rung-n, .sup-cc, .sup-src, .sup-facts dt,
+.sa-role-meta, .atlas-caption-meta, .sa-stopcard-n, .sa-stopcard-w, .sa-panel-cc, .sa-marker-cc, .sa-fact-v small, .sa-panel-foot,
+.wk-rail-line, .wk-end-links a, .wk-sh-more, .wk-facts .wk-src, .prose h5, .prose th, .figure .fig-source, .figure .fig-title .unit,
+.site-footer, .site-footer .updated, .site-footer .sources-key, .howto h2, .to-top, .cp-search-hint, .cp-search-results .k, .stage .stage-tag,
+.ct-tip p, .ct-tip a, .gl-tip a, .sup-tip .sup-tip-n, .sup-tip-c, .stack-legend, .tl li .d, .contents-grid .n, .prevnext .pn .n, .btn, .skip,
+.stage .stage-actions button, .sheet-chapters .n, .sheet-chapters .s, .wk-n, .wk-score, .filters input, .filters select {
+  font-family: var(--font-mono); text-transform: none; letter-spacing: 0.04em; font-variant-numeric: lining-nums tabular-nums;
+}
+.label { font-size: 13px; letter-spacing: 0.05em; color: var(--muted); }
+.prose h5 { font-size: 14px; }
+.count { font-size: 13px; }
+.stage-cell .t { font-size: 10.5px; letter-spacing: 0.02em; }
+.chain-foot { font-size: 12px; }
+.chain-head h2 { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.06em; text-transform: none; }
+.howto h2 { font-size: 13px; }
+.site-footer { font-size: 13.5px; }
+.site-footer .sources-key, .site-footer .updated { font-size: 12.5px; }
+.to-top { font-size: 12.5px; border-radius: 0; background: var(--bg); }
+
+/* ---------- running head (the masthead) ---------- */
+.masthead {
+  background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none;
+  border-bottom: 1px solid var(--ink);
+  box-shadow: 0 3px 0 0 var(--bg), 0 4px 0 0 var(--line-2); /* the second rule of a double-ruled running head */
+}
+.wordmark b { font-family: var(--font-display); font-weight: 700; font-size: 19px; letter-spacing: 0.01em; text-transform: none; color: var(--ink); }
+.wordmark span { font-family: var(--font-body); font-style: italic; font-size: 13.5px; letter-spacing: 0; text-transform: none; color: var(--muted); }
+.tabs a { font-family: var(--font-mono); font-weight: 500; font-size: 15.5px; letter-spacing: 0.04em; padding: 6px 9px 5px; border: 0; border-bottom: 2px solid transparent; border-radius: 0; color: var(--ink-2); }
+.tabs a:hover { border-color: var(--line-2); color: var(--ink); }
+.tabs a[aria-current="page"] { background: transparent; color: var(--ink); border-color: var(--ink); }
+.theme-toggle, .search-btn { border-radius: 0; border-color: var(--line-2); }
+
+/* ---------- ruled margins ---------- */
+#app::after { content: ""; position: fixed; z-index: 2; pointer-events: none; top: var(--masthead); bottom: 0; left: calc(clamp(16px, 4vw, 56px) - 20px); width: 1px; background: var(--line-2); }
+.stage { border-left: 1px solid var(--line); }
+.stage figcaption { font-family: var(--font-body); font-style: italic; font-size: 13.5px; line-height: 1.45; letter-spacing: 0; color: var(--ink-2); max-width: 50ch; }
+.stage figcaption b { font-style: normal; font-family: var(--font-mono); font-weight: 500; color: var(--ink); }
+.stage .stage-tag { font-size: 13px; letter-spacing: 0.05em; }
+.stage .stage-tag b { color: var(--accent-ink); font-weight: 500; }
+.rail { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; }
+
+/* ---------- squared corners, no shadows: the page is printed, not floated ---------- */
+.plate, .ch-tile, .wk-tabs, .wk-sh-item, .btn, .ptag, .chip, .chip-ch, .chk, .tier, .filters input, .filters select, .sup-modes, .atlas, .sa-role, .figure, .table-wrap,
+.howto, .prevnext .pn, .gl-tip, .ct-tip, .sup-tip, .sa-panel, .sa-map, .sa-svg, .cp-search-panel, .plain, .prose .takeaways, .prose code, .sheet-close, .sheet-pages a,
+.wk-pn a, .stage .stage-actions button, .sa-stop-tip, .sa-panel-cc, .sa-stopcard, .wk-tabs .wk-tab, .contents-grid .t, .sup-name, .sup-rung, .skip { border-radius: 0 !important; }
+
+/* ---------- home: the title plate ---------- */
+.wk-head { padding-top: clamp(30px, 5vh, 56px); }
+.wk-head::before { /* the plate's running head: small caps above a hairline, as an atlas heads its frontispiece */
+  content: "Frontispiece \00b7 Chip Supply Chain"; display: block; font-family: var(--font-mono); font-size: 13.5px; letter-spacing: 0.06em; color: var(--muted);
+  padding-bottom: 8px; margin-bottom: 26px; border-bottom: 1px solid var(--ink);
+}
+.wk-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(40px, 4.6vw, 62px); line-height: 1.04; letter-spacing: -0.012em; text-transform: none; max-width: 12em; margin: 0 0 16px; }
+.wk-dek { font-size: 20px; line-height: 1.45; color: var(--ink-2); font-style: italic; max-width: 30em; }
+.wk-meta .label + .label::before { color: var(--line-2); }
+
+/* the "what the site covers" box becomes the atlas's table of contents: ruled, no fill */
+.wk-tabs { background: transparent; border: 0; border-top: 3px double var(--ink); border-bottom: 1px solid var(--ink); padding: 12px 0 18px; gap: 0 22px; margin-top: 26px; }
+.wk-tabs-k { color: var(--muted); margin-bottom: 12px; }
+.wk-tabs a { position: relative; padding-left: 0; }
+.wk-tabs a + a { padding-left: 16px; border-left: 1px solid var(--line); }
+.wk-tabs .wk-tab { font-family: var(--font-display); font-weight: 600; font-size: 17px; line-height: 1.2; padding: 0; border: 0; color: var(--ink); margin-bottom: 7px; }
+.wk-tabs a:hover .wk-tab, .wk-tabs a:focus-visible .wk-tab { background: transparent; color: var(--accent-ink); }
+.wk-tabs span { font-size: 14.5px; line-height: 1.4; color: var(--ink-2); }
+
+/* each step is a numbered figure */
+.wk-n { font-size: 13px; letter-spacing: 0.04em; color: var(--muted); right: 24px; white-space: nowrap; }
+.wk-n::before { content: "Fig. "; }
+.wk-mark::after { border-color: var(--ink-2); }
+.wk-step.is-here .wk-mark::after, .wk-step.is-past .wk-mark::before { background: var(--accent); border-color: var(--accent); }
+.wk-t { font-family: var(--font-display); font-weight: 600; font-size: clamp(24px, 2.3vw, 30px); line-height: 1.12; letter-spacing: -0.006em; }
+.wk-where .wk-stage::before { color: var(--line-2); }
+.wk-facts { border-left: 1px solid var(--ink-2); }
+.wk-facts li { font-size: 15.5px; }
+.wk-lead { font-weight: 600; }
+.wk-read { font-family: var(--font-mono); font-weight: 500; font-size: 15px; letter-spacing: 0.04em; border-bottom-color: var(--ink-2); }
+.wk-read:hover { color: var(--accent-ink); border-bottom-color: var(--accent); }
+.wk-sc b { font-size: 14px; }
+.wk-score[data-rank="5"] .wk-sc, .wk-score[data-rank="5"] .wk-sc b { color: var(--accent-ink); }
+.wk-end-t { font-family: var(--font-display); font-weight: 600; }
+.wk-end-links a { font-size: 13.5px; }
+.wk-rail { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; }
+.wk-rail-line { font-size: 12.5px; }
+.wk-sh-item { background: transparent; }
+.wk-sh-t { font-family: var(--font-display); font-weight: 600; }
+
+/* ---------- the chain: chapter heads as plates, cards as tables ---------- */
+.view[data-view="stack"] { counter-reset: plate; }
+.chapter { counter-increment: plate; border-top: 1px solid var(--line-2); }
+.ch-tile { background: transparent; border: 1px solid var(--ink); box-shadow: inset 0 0 0 3px var(--bg), inset 0 0 0 4px var(--ink); padding: 12px 6px 12px; }
+.ch-tile .k { font-size: 0; }
+.ch-tile .k::before { content: "Plate"; font-size: 12.5px; letter-spacing: 0.06em; color: var(--muted); }
+.ch-tile .v { font-family: var(--font-display); font-weight: 700; font-size: 46px; letter-spacing: 0; margin: 6px 0 4px; }
+.ch-tile .of { font-size: 11.5px; letter-spacing: 0.02em; }
+.ch-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(38px, 4.2vw, 58px); line-height: 1.04; letter-spacing: -0.012em; text-transform: none; margin: -4px 0 14px; }
+.ch-lede { font-style: italic; font-weight: 400; color: var(--ink-2); max-width: 24em; font-size: clamp(18px, 1.4vw, 21px); }
+.ch-copy { color: var(--accent-ink); }
+.plain { border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line); background: transparent; padding: 14px 0 16px; max-width: var(--measure); }
+.plain .label { color: var(--ink); }
+.plain p { font-size: 17.5px; }
+.inshort { border-left: 2px solid var(--accent); }
+.inshort p { font-size: 21px; line-height: 1.5; }
+.prose h3 { font-family: var(--font-display); font-weight: 600; font-size: 26px; letter-spacing: -0.006em; }
+.prose h4 { font-family: var(--font-display); font-weight: 600; font-size: 20px; }
+.prose blockquote { border-left-color: var(--ink-2); }
+.prose .takeaways { border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line); background: transparent; }
+.prose table { font-size: 15px; }
+.prose th { font-size: 13px; background: transparent; border-bottom: 1px solid var(--ink); color: var(--ink); }
+.table-wrap { border: 0; border-top: 3px double var(--ink); border-bottom: 1px solid var(--ink); }
+.figure { background: transparent; border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line); padding: 14px 0 12px; }
+.figure .fig-title { font-family: var(--font-display); font-weight: 600; }
+.figure .fig-source { font-size: 12.5px; }
+.bars text { font-family: var(--font-mono); font-size: 13px; }
+sup.cite a { font-family: var(--font-mono); color: var(--accent-ink); }
+
+/* the chokepoint card: a numbered table, double rule above, single rule below, no fill */
+.plate { border: 0; border-top: 3px double var(--ink); border-bottom: 1px solid var(--ink); background: transparent; box-shadow: none; }
+.plate-head { background: transparent; border-bottom: 1px solid var(--ink); padding: 10px 0; }
+.plate-head .label { color: var(--ink); font-size: 14px; }
+.plate-head .label::before { content: "Table " counter(plate) ". "; font-weight: 700; }
+.ptag { font-size: 12.5px; letter-spacing: 0.03em; background: transparent; border-color: var(--line-2); }
+.ptag[data-band="3"] { border-color: var(--ink-2); }
+.ptag[data-band="4"] { color: var(--accent-ink); border-color: var(--accent); background: transparent; }
+.plate-kpis > div, .plate-rows .row, .plate-status > div { padding-left: 0; }
+.plate-kpis > div:last-child, .plate-status > div:last-child { padding-right: 0; }
+.plate-kpis > div:first-child, .plate-status > div:first-child { padding-left: 0; }
+.plate-kpis > div + div, .plate-status > div + div { padding-left: 18px; }
+.plate-kpis .k, .plate-status .k, .plate-rows dt { font-size: 12.5px; letter-spacing: 0.05em; }
+.plate-kpis .v { font-family: var(--font-display); font-weight: 600; font-size: 26px; letter-spacing: 0; }
+.plate-kpis .v.cost { font-size: 22px; }
+.plate-kpis .v.cost.long { font-family: var(--font-body); font-weight: 500; font-size: 15.5px; }
+.plate-kpis .v.Extreme, .plate-kpis .v.sub-4, .brief-meta .conc.Extreme { color: var(--accent-ink); }
+.plate-kpis .sub { font-family: var(--font-body); font-size: 13.5px; line-height: 1.45; }
+.plate-rows dd { font-size: 15.5px; }
+.chip { font-size: 11.5px; letter-spacing: 0.02em; }
+.pips i.on { background: var(--accent); border-color: var(--accent); }
+
+/* the chain strip: the bars keep their bands; the labels are small caps */
+.stage-cell[aria-current="true"]::after { background: var(--ink); }
+.contents h2 { font-family: var(--font-display); font-weight: 700; }
+.contents-grid .t { font-family: var(--font-display); font-weight: 600; font-size: 17px; letter-spacing: 0; text-transform: none; }
+.contents-grid li::before { content: "\2014"; font-size: 11px; }
+.howto { background: transparent; border: 0; border-top: 3px double var(--ink); border-bottom: 1px solid var(--ink); padding-left: 0; padding-right: 0; }
+.btn { font-size: 13.5px; letter-spacing: 0.05em; padding: 7px 12px; }
+.prevnext .pn { background: transparent; border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line); padding-left: 0; padding-right: 0; }
+.prevnext .pn:hover { background: transparent; border-top-color: var(--accent); }
+.prevnext .pn .t { font-family: var(--font-display); font-weight: 600; }
+
+/* ---------- data pages: lettered plates ---------- */
+.view-head h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(38px, 4.4vw, 60px); line-height: 1.04; letter-spacing: -0.012em; text-transform: none; margin-bottom: 12px; }
+.view-head h2::before { display: block; font-family: var(--font-mono); font-weight: 400; font-size: 13.5px; letter-spacing: 0.06em; color: var(--muted); padding-bottom: 8px; margin-bottom: 22px; border-bottom: 1px solid var(--ink); max-width: min(100%, 1180px); }
+.view[data-view="landscape"] .view-head h2::before { content: "Plate A \00b7 Chip Supply Chain"; }
+.view[data-view="suppliers"] .view-head h2::before { content: "Plate B \00b7 Chip Supply Chain"; }
+.view[data-view="controls"] .view-head h2::before { content: "Plate C \00b7 Chip Supply Chain"; }
+.view[data-view="glossary"] .view-head h2::before { content: "Index \00b7 Chip Supply Chain"; }
+.view-head .dek { font-style: italic; font-size: 19.5px; }
+.filters input, .filters select { font-size: 14.5px; background: transparent; border-color: var(--line-2); }
+.sup-mode { font-size: 13px; background: transparent; }
+.sup-mode[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+
+/* the Suppliers atlas: a plate with a neatline, the countries as a legend, the caption beneath the map */
+.atlas { display: flex; flex-direction: column; background: transparent; border: 1px solid var(--ink); outline: 1px solid var(--ink); outline-offset: 3px; margin: 14px 4px 4px; }
+.atlas-bar { order: 1; border-bottom: 1px solid var(--ink); padding: 9px 14px; }
+.atlas-body { order: 2; }
+.atlas-caption { order: 3; border-bottom: 0; border-top: 1px solid var(--ink); padding: 10px 14px 11px; font-size: 15px; }
+.atlas-bar-l { color: var(--ink); font-size: 14px; }
+.atlas-bar-l::before { content: "Plate B. "; font-weight: 700; }
+.atlas-caption-name { font-family: var(--font-mono); font-weight: 700; font-size: 15px; letter-spacing: 0.05em; text-transform: none; color: var(--ink); }
+.atlas-caption-meta { font-family: var(--font-body); font-style: italic; font-size: 15px; letter-spacing: 0; color: var(--ink-2); }
+.atlas-caption-line { color: var(--ink-2); }
+.sa-roles { gap: 2px 1px; }
+.sa-role { border: 0; background: transparent; padding: 3px 6px 3px 4px; color: var(--ink-2); border-bottom: 2px solid transparent; }
+.sa-role::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 5px; vertical-align: 0; background: var(--ink); }
+.sa-role[data-cc="JP"]::before { background: var(--c1); } .sa-role[data-cc="NL"]::before { background: var(--c2); } .sa-role[data-cc="TW"]::before { background: var(--c3); }
+.sa-role[data-cc="DE"]::before { background: var(--c4); } .sa-role[data-cc="KR"]::before { background: var(--c5); } .sa-role[data-cc="CN"]::before { background: var(--c6); }
+.sa-role[data-cc="MY"]::before, .sa-role[data-cc="SG"]::before { background: var(--c7); }
+.sa-role[data-cc="IL"]::before, .sa-role[data-cc="AT"]::before, .sa-role[data-cc="GB"]::before { background: var(--c8); }
+.sa-role:hover { background: transparent; color: var(--ink); border-bottom-color: var(--line-2); }
+.sa-role[aria-pressed="true"] { background: transparent; color: var(--ink); border-color: var(--ink); }
+.sa-role-name { font-family: var(--font-mono); font-weight: 500; font-size: 14px; letter-spacing: 0.02em; }
+.atlas .sa-map { border-right: 1px solid var(--ink); }
+.sa-ocean { fill: var(--tint); }
+.sa-land { fill: var(--land); stroke: var(--ink-2); stroke-width: 0.6; }
+.sa-sea { fill: var(--tint); stroke: var(--ink-2); stroke-width: 0.4; }
+.sa-grat { stroke: var(--ink); opacity: 0.18; }
+.sa-route { stroke: var(--ink); }
+.atlas .sa-route { opacity: 0.35; }
+.sa-stop { font-family: var(--font-mono); font-weight: 700; font-size: 11px; border-color: var(--bg); }
+.sa-stop[data-cc="MY"] { box-shadow: 0 0 0 3px var(--c7); }
+.atlas .sa-stop:not(.is-on) { background: var(--ink-2); opacity: 0.5; }
+.atlas .sa-stop.is-on { background: var(--ink); box-shadow: 0 0 0 3px var(--accent); }
+.sa-stop::after { font-family: var(--font-mono); font-weight: 500; font-size: 12px; letter-spacing: 0.03em; background: color-mix(in srgb, var(--tint) 82%, transparent); }
+.atlas .sa-strip-stops { border-top: 1px solid var(--ink); border-right: 1px solid var(--ink); }
+.sa-stopcard { border-top-width: 2px; }
+.sa-stopcard[data-cc="MY"] { border-color: var(--c7); }
+.sa-stopcard-n { font-size: 11.5px; }
+.sa-stopcard-t { font-family: var(--font-display); font-weight: 600; font-size: 12.5px; }
+.sa-stopcard-w { font-size: 11px; }
+.atlas .sa-stopcard.is-on { border-top: 3px solid var(--accent); }
+.atlas .sa-panels[data-more="1"]::after { background: linear-gradient(to bottom, transparent, var(--bg)); }
+.sa-panel { background: transparent; }
+.sa-panel-cc { font-size: 12px; letter-spacing: 0.06em; color: var(--accent-ink); border-color: var(--line-2); }
+.atlas .sa-panel-head h4, .sa-panel-head h4 { font-family: var(--font-display); font-weight: 700; font-size: 24px; text-transform: none; letter-spacing: -0.006em; }
+.sa-panel-lede { font-style: italic; }
+.sa-fact a:hover { background: var(--bg-2); }
+.sa-fact-bar { background: var(--accent-soft); }
+.sa-fact-k { font-family: var(--font-display); font-weight: 600; font-size: 14.5px; }
+.sa-fact-v { font-family: var(--font-mono); font-size: 15px; letter-spacing: 0.02em; }
+.sa-fact-v small { font-size: 11px; }
+.sa-panel-foot { font-size: 13px; }
+.chk { font-size: 12px; letter-spacing: 0.03em; }
+/* the severity tag in the country panel: an outlined word, not a filled block */
+.sa-sc { font-family: var(--font-mono); font-size: 11.5px; font-weight: 500; letter-spacing: 0.04em; padding: 0 4px 1px; border-radius: 0; color: var(--muted); background: transparent; border: 1px solid var(--line-2); }
+.sa-sc[data-band="4"] { background: transparent; color: var(--accent-ink); border-color: var(--accent); }
+.sa-sc[data-band="3"] { background: transparent; color: var(--ink); border-color: var(--ink-2); }
+.chk.Critical { border-color: var(--accent); color: var(--accent-ink); background: transparent; }
+
+/* the pipeline and the ladder under the atlas */
+.sup-lab-t, .sup-clab, .sup-rung-name, .sup-detail-h, .sup-tip b { font-family: var(--font-display); }
+.sup-lab-n, .sup-clab .sup-cn, .sup-lab .sup-lab-n { font-family: var(--font-mono); font-size: 11.5px; }
+.sup-name { font-family: var(--font-body); font-weight: 500; font-size: 15px; }
+.sup-name.lv-Critical { color: var(--accent-ink); font-weight: 700; }
+.sup-rank { font-family: var(--font-display); font-weight: 700; letter-spacing: 0; }
+.sup-rung[data-lit="1"] { background: transparent; box-shadow: inset 2px 0 0 var(--accent); }
+.sup-legend { font-size: 12.5px; }
+.sup-rung-n, .sup-facts dt, .sup-src { font-size: 12.5px; }
+.sup-cc { font-size: 11px; }
+.sup-role, .sup-facts dd { font-size: 14.5px; }
+.sup-tip-stages, .sup-tip .sup-tip-crit { font-family: var(--font-body); }
+.sup-modes { border-color: var(--ink); }
+
+/* ---------- popovers, search, footer ---------- */
+.gl-tip, .ct-tip, .sup-tip, .cp-search-panel { border: 1px solid var(--ink); background: var(--bg); }
+.gl-tip b, .ct-tip b, .cp-search-results b { font-family: var(--font-display); font-weight: 600; }
+.gl-tip p { font-size: 15px; }
+.ct-tip p, .cp-search-hint, .cp-search-results .k { font-size: 12.5px; }
+.gl-tip a, .ct-tip a { font-size: 12.5px; letter-spacing: 0.05em; }
+.cp-search-results li a:hover, .cp-search-results li a:focus { background: var(--bg-2); }
+.site-footer { border-top: 3px double var(--ink); }
+.prose code { font-family: "Source Sans 3", "Alegreya Sans SC", sans-serif; }
+
+/* ---------- phones: the strip, the sheet, and no ruled margin ---------- */
+@media (max-width: 900px) {
+  #app::after { display: none; }
+  .stage { border-left: 0; border-top: 1px solid var(--ink); box-shadow: none; }
+  .masthead { box-shadow: none; }
+  .wordmark b { font-size: 17px; }
+  .tabs a { font-size: 14.5px; padding: 5px 7px 4px; }
+  .wk-head::before { font-size: 12.5px; margin-bottom: 18px; }
+  .wk-title { font-size: 36px; }
+  .wk-dek { font-size: 18px; }
+  .wk-tabs { padding: 12px 0 14px; }
+  .wk-tabs a + a { padding-left: 0; padding-top: 10px; border-left: 0; border-top: 1px solid var(--line); }
+  .stage figcaption { font-size: 12px; }
+  .ch-title { font-size: 34px; }
+  .sheet { background: var(--bg); }
+  .sheet-head b { font-family: var(--font-display); font-weight: 700; }
+  .sheet-pages a { font-family: var(--font-mono); font-weight: 500; font-size: 15px; letter-spacing: 0.04em; }
+  .sheet-chapters .t { font-family: var(--font-display); font-weight: 600; font-size: 15.5px; }
+  .sheet-chapters .n, .sheet-chapters .s { font-size: 12.5px; }
+  .sheet-chapters .s.hi { color: var(--accent-ink); }
+  .stage .stage-actions button { font-size: 12.5px; background: transparent; border-color: var(--ink-2); }
+  .atlas { margin: 12px 2px 2px; outline-offset: 2px; }
+  .atlas .sa-map { border: 0; border-bottom: 1px solid var(--ink); }
+}
+@media (max-width: 480px) { .tabs a { font-size: 13.5px; padding: 5px 5px 4px; } .wordmark b { font-size: 16px; } }
+@media print { body { background: #fff; color: #000; } }

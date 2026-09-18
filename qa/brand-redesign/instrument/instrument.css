@@ -1,0 +1,225 @@
+/* ---------- INSTRUMENT: the site as a precision instrument's manual ----------
+   Ground: white. Ink: black. Signal: the cobalt of a cleanroom gown, used for what the reader must not miss.
+   Type: Schibsted Grotesk (display and reading), Geist Mono (labels, data, the wordmark).
+   The memorable choice: the chokepoint card is a data plate, black title band, ruled fields, mono values. */
+:root {
+  --bg: #ffffff;
+  --bg-2: #f6f7f8;
+  --bg-3: #eceef0;
+  --ink: #0a0a0a;
+  --ink-2: #3d434b;
+  --muted: #5c6370;
+  --line: #dcdfe3;
+  --line-2: #9ea4ab;
+  --accent: #1e3fd6;
+  --accent-ink: #12308f;
+  --accent-soft: rgba(30, 63, 214, 0.08);
+  --c1: #0e9bc4; --c2: #ef6a1f; --c3: #2aa84a; --c4: #e0b000; --c5: #8b3fd0; --c6: #d9302c; --c7: #1c7a2e; --c8: #9aa0a6;
+  --stage-ink: 10, 10, 10;
+  --stage-accent: 30, 63, 214;
+  --shadow: none;
+  --font-display: "Schibsted Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-body: "Schibsted Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "Geist Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --measure: 34em;
+  --bar-5: var(--accent); --bar-4: #3d434b; --bar-3: #c3c8cd;
+}
+:root[data-theme="dark"] {
+  --bg: #0c0e11; --bg-2: #14171b; --bg-3: #1c2025;
+  --ink: #f2f3f4; --ink-2: #c8ccd2; --muted: #9aa1a9;
+  --line: #262b31; --line-2: #4a525b;
+  --accent: #8fa4ff; --accent-ink: #b1c0ff; --accent-soft: rgba(143, 164, 255, 0.14);
+  --c1: #22b3dc; --c2: #f07a35; --c3: #35bd5a; --c4: #e6bb1a; --c5: #a066e0; --c6: #e6433f; --c7: #2f9a44; --c8: #7d848c;
+  --stage-ink: 242, 243, 244; --stage-accent: 143, 164, 255;
+  --shadow: none;
+  --bar-4: #c8ccd2; --bar-3: #3a4148;
+}
+
+/* ground: flat, no grain */
+body::before { display: none; }
+body { font-size: 17.5px; line-height: 1.58; font-weight: 400; letter-spacing: 0.002em; }
+strong { font-weight: 700; }
+a:hover { text-decoration-color: var(--accent); }
+:focus-visible { outline-color: var(--accent); border-radius: 0; }
+
+/* square everything: an instrument has no rounded corners */
+.plate, .ptag, .chip, .tabs a, .btn, .picker button, .wk-tabs, .wk-tab, .theme-toggle, .search-btn, .ch-tile, .prevnext .pn,
+.spec, .figure, .table-wrap, .howto, .plain, .chips button, .filters input, .filters select, .sup-modes, .sa-map, .sa-svg, .sa-panel,
+.sa-chip, .gl-tip, .ct-tip, .cp-search-panel, .to-top, .wk-sh-item, .wk-end-links a, .wk-pn a, .sheet-pages a, .sheet-close,
+.stage .stage-actions button, .tier, .chk, .spec-head .status, .sa-panel-cc, .compare-wrap, .sup-wrap, .matrix-wrap, .ex-panel,
+.brief-card, .cite pre, .prose code, .prose .takeaways, .sup-name, .stack-bar, .wk-rail-bar, .skip, .ex-tip, .sup-tip { border-radius: 0; }
+
+/* labels: a touch tighter, set like engraved field names */
+.label { font-size: 11px; letter-spacing: 0.1em; }
+
+/* ---------- masthead: the wordmark as a model number ---------- */
+.masthead { background: var(--bg); border-bottom: 1px solid var(--ink); backdrop-filter: none; -webkit-backdrop-filter: none; height: 58px; }
+:root[data-theme="dark"] .masthead { border-bottom-color: var(--line-2); }
+.wordmark { gap: 14px; align-items: center; }
+.wordmark b { font-family: var(--font-mono); font-weight: 500; font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase; border: 1px solid var(--ink); padding: 6px 9px 5px; line-height: 1; }
+.wordmark span { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.1em; }
+.tabs { gap: 2px; }
+.tabs a { font-weight: 500; font-size: 14px; letter-spacing: 0; padding: 19px 11px 18px; border: 0; border-bottom: 2px solid transparent; color: var(--ink-2); }
+.tabs a:hover { color: var(--ink); border-bottom-color: var(--line-2); }
+.tabs a[aria-current="page"] { background: none; color: var(--ink); border-bottom-color: var(--accent); }
+.theme-toggle, .search-btn { border-color: var(--ink); width: 32px; height: 32px; }
+.theme-toggle svg, .search-btn svg { width: 15px; height: 15px; stroke-width: 1.5; }
+:root[data-theme="dark"] .theme-toggle, :root[data-theme="dark"] .search-btn, :root[data-theme="dark"] .wordmark b { border-color: var(--line-2); }
+
+/* ---------- the grid: hairlines that hold text, plate and specimen to one edge ---------- */
+.stage { border-left: 1px solid var(--line); }
+.stage figcaption { text-align: left; align-self: flex-start; margin: 14px 0 26px 28px; padding: 12px 24px 0 0; border-top: 1px solid var(--line); max-width: 52ch; letter-spacing: 0; }
+.stage .stage-tag b { color: var(--accent); }
+@media (hover: hover) and (pointer: fine) { .stage canvas:focus-visible { box-shadow: inset 0 0 0 1px var(--accent); } }
+.rail { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; }
+
+/* ---------- home: the walk head ---------- */
+.wk-head { padding-top: clamp(40px, 7vh, 76px); }
+.wk-title { text-transform: none; font-weight: 700; font-size: clamp(40px, 4.6vw, 64px); letter-spacing: -0.025em; line-height: 0.98; margin-bottom: 18px; max-width: 12em; }
+.wk-dek { font-size: 19px; color: var(--ink-2); max-width: 30em; }
+.wk-meta .label + .label::before { color: var(--line-2); }
+.wk-tabs { background: none; border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 14px 0 18px; gap: 0; margin-top: 30px; }
+:root[data-theme="dark"] .wk-tabs { border-color: var(--line-2); }
+.wk-tabs-k { margin-bottom: 14px; }
+.wk-tabs a { padding: 0 14px 0 0; margin-right: 14px; border-right: 1px solid var(--line); }
+.wk-tabs a:last-child { border-right: 0; margin-right: 0; padding-right: 0; }
+.wk-tabs .wk-tab { font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; line-height: 1.35; letter-spacing: 0.08em; text-transform: uppercase; border: 0; padding: 0 0 0 15px; text-indent: -15px; margin-bottom: 8px; color: var(--ink); }
+.wk-tabs .wk-tab::before { content: "\2192\00a0"; color: var(--accent); }
+.wk-tabs a:hover .wk-tab, .wk-tabs a:focus-visible .wk-tab { background: none; color: var(--accent); }
+.wk-tabs span { font-size: 14px; line-height: 1.42; color: var(--ink-2); }
+.wk-t { letter-spacing: -0.015em; }
+.wk-step.is-past .wk-mark::before, .wk-step.is-here .wk-mark::after { background-color: var(--accent); }
+.wk-read { font-weight: 500; border-bottom-color: var(--ink); }
+.wk-read:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.wk-sh-item { background: none; border-color: var(--line); }
+.wk-sh-item:hover { background: var(--bg-2); border-color: var(--ink); }
+.wk-sh-item:hover .wk-sh-t, .wk-sh-more:hover, .wk-end-links a:hover { color: var(--accent); }
+.wk-facts .wk-src { color: var(--accent); }
+
+/* ---------- landscape heads (Suppliers, AI Chips, Export Controls, Glossary) ---------- */
+.view-head h2 { text-transform: none; font-weight: 700; letter-spacing: -0.025em; font-size: clamp(38px, 4.4vw, 58px); line-height: 0.98; }
+.view-head .dek { font-size: 18px; }
+.view-head { border-bottom: 1px solid var(--ink); padding-bottom: 22px; margin-bottom: 8px; }
+:root[data-theme="dark"] .view-head { border-bottom-color: var(--line-2); }
+.hero .eyebrow i { background: var(--accent); }
+.thesis { font-weight: 700; letter-spacing: -0.02em; }
+.thesis .q, .claims .of-five b { color: var(--accent); }
+
+/* ---------- chapter head ---------- */
+.chapter { border-top: 1px solid var(--ink); }
+:root[data-theme="dark"] .chapter { border-top-color: var(--line-2); }
+.ch-id { grid-template-columns: 84px 1fr; gap: 28px; }
+.ch-tile { background: none; border: 1px solid var(--ink); padding: 8px 4px 9px; }
+:root[data-theme="dark"] .ch-tile { border-color: var(--line-2); }
+.ch-tile .v { font-weight: 700; font-size: 46px; letter-spacing: -0.02em; }
+.ch-tile .k, .ch-tile .of { letter-spacing: 0.12em; }
+.ch-title { font-weight: 700; font-size: clamp(40px, 4.4vw, 60px); letter-spacing: -0.025em; line-height: 0.98; margin-top: -4px; }
+.ch-lede { font-size: clamp(18px, 1.35vw, 20px); font-weight: 400; line-height: 1.45; max-width: 26em; }
+.ch-copy { color: var(--accent); text-decoration-color: var(--line-2); }
+.ch-copy:hover { text-decoration-color: var(--accent); }
+.plain { border: 0; border-left: 2px solid var(--accent); background: none; padding: 2px 0 4px 20px; margin: 28px 0 30px; max-width: 32em; }
+.plain .label { color: var(--accent); }
+.plain p { font-size: 17px; }
+.inshort { border-left: 2px solid var(--ink); padding-left: 20px; }
+.inshort p { font-size: 20px; line-height: 1.45; font-weight: 400; letter-spacing: -0.008em; }
+.prose h3 { font-weight: 700; letter-spacing: -0.015em; font-size: 25px; }
+.prose h4 { font-weight: 600; font-size: 19px; }
+.prose blockquote { border-left-color: var(--accent); }
+.prose .takeaways { border-left-color: var(--accent); }
+sup.cite a { color: var(--accent); }
+.tl li::before, .bars rect.bar { background: var(--accent); fill: var(--accent); }
+.figure, .table-wrap { background: none; border-color: var(--line); }
+.prose th, .compare th, .sup th, .matrix th { background: var(--bg); }
+
+/* ---------- the chokepoint card as a data plate ---------- */
+.plate { border: 1px solid var(--ink); background: var(--bg); box-shadow: none; overflow: visible; position: relative; margin: 6px 0 40px; }
+:root[data-theme="dark"] .plate { border-color: var(--line-2); }
+.plate::before, .plate::after { /* the two fixing marks of a data plate, at the top corners */
+  content: ""; position: absolute; top: -1px; width: 7px; height: 7px; border: 1px solid var(--ink); background: var(--bg);
+}
+.plate::before { left: -1px; border-right-color: transparent; border-bottom-color: transparent; }
+.plate::after { right: -1px; border-left-color: transparent; border-bottom-color: transparent; }
+.plate-head { background: var(--ink); color: var(--bg); border-bottom: 0; padding: 8px 16px; min-height: 36px; }
+.plate-head .label { color: var(--bg); letter-spacing: 0.14em; font-size: 10.5px; }
+.plate-head .ptag { background: none; color: var(--bg); border-color: rgba(255, 255, 255, 0.45); font-size: 10px; letter-spacing: 0.08em; padding: 3px 7px; }
+.plate-head .ptag[data-band="3"] { color: var(--bg); border-color: rgba(255, 255, 255, 0.8); }
+.plate-head .ptag[data-band="4"] { color: #fff; background: var(--accent); border-color: var(--accent); }
+:root[data-theme="dark"] .plate-head { background: var(--bg-3); color: var(--ink); }
+:root[data-theme="dark"] .plate-head .label, :root[data-theme="dark"] .plate-head .ptag { color: var(--ink); border-color: var(--line-2); }
+:root[data-theme="dark"] .plate-head .ptag[data-band="4"] { color: var(--bg); background: var(--accent); border-color: var(--accent); }
+.plate-kpis { border-bottom: 1px solid var(--ink); }
+:root[data-theme="dark"] .plate-kpis { border-bottom-color: var(--line-2); }
+.plate-kpis > div { padding: 13px 16px 14px; border-right: 1px solid var(--line-2); }
+.plate-kpis .k { font-size: 9.5px; letter-spacing: 0.14em; margin-bottom: 9px; }
+.plate-kpis .v { font-family: var(--font-mono); font-weight: 500; font-size: 22px; letter-spacing: -0.01em; }
+.plate-kpis .v.cost { font-size: 19px; }
+.plate-kpis .v.cost.long { font-family: var(--font-mono); font-weight: 500; font-size: 13px; }
+.plate-kpis .v small { font-family: var(--font-mono); font-size: 12px; }
+.plate-kpis .v.Extreme, .plate-kpis .v.sub-4, .brief-meta .conc.Extreme { color: var(--accent); }
+.plate-kpis .sub { font-size: 10.5px; letter-spacing: 0; }
+.plate-rows { border-bottom: 1px solid var(--ink); }
+:root[data-theme="dark"] .plate-rows { border-bottom-color: var(--line-2); }
+.plate-rows .row { grid-template-columns: 160px 1fr; padding: 12px 16px; border-bottom: 1px solid var(--line-2); }
+.plate-rows dt, .plate-status .k { font-size: 9.5px; letter-spacing: 0.14em; }
+.plate-rows dd { font-size: 15px; line-height: 1.45; }
+.plate-rows .who { font-weight: 600; }
+.plate-rows .note { font-size: 14px; }
+.plate-rows .why { font-size: 14.5px; }
+.plate-status > div { padding: 12px 16px 14px; border-right: 1px solid var(--line-2); }
+.plate-status p { font-size: 14px; }
+.chip { font-weight: 500; border-color: var(--line-2); color: var(--ink); }
+.ptag[data-band="4"] { color: var(--accent); border-color: var(--accent); background: none; }
+.ptag[data-band="3"] { border-color: var(--ink); }
+
+/* ---------- controls and buttons ---------- */
+.btn { border-radius: 0; letter-spacing: 0.1em; font-size: 11px; }
+.btn.ghost:hover, .picker button:hover, .chips button:hover, .sa-chip:hover, .filters input:focus, .filters select:focus { border-color: var(--ink); }
+.picker button, .chips button, .filters input, .filters select, .sup-mode, .sa-chip, .wk-end-links a { background: var(--bg); }
+.picker button[aria-pressed="true"], .chips button[aria-pressed="true"], .sup-mode[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.subtabs a[aria-current="true"] { border-bottom-color: var(--accent); }
+.to-top { border-color: var(--ink); }
+.spec-head .status.Shipping, .spec-groups h4, .chk.Critical, .sa-panel-cc, .gl-link, .sup-src:hover, .timeline .cat, .ct-tip a, .gl-tip a { color: var(--accent); }
+.chk.Critical { border-color: var(--accent); background: var(--accent-soft); }
+.spec-head .status.Shipping { border-color: var(--accent); }
+.spec, .brief-card, .ex-panel, .sa-panel, .sa-map, .prevnext .pn, .howto, .cite pre { background: var(--bg); }
+.prevnext .pn:hover { background: var(--bg-2); border-color: var(--ink); }
+.sa-chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+.sa-chip[aria-pressed="true"] small { color: #fff; }
+.sa-marker[aria-pressed="true"] .sa-marker-dot { background: var(--accent); border-color: var(--accent); }
+.sa-town, .sa-lg--pin, .sup-crit, .sup-crit-sw, .ex-panel .pt.peak, .ex-legend .lg-peak, .ex-legend .lg-peakdot { background: var(--accent); fill: var(--accent); }
+.sup-rung[data-lit="1"] { box-shadow: inset 2px 0 0 var(--accent); }
+.sup-rung[data-lit="1"] .sup-rank { color: var(--accent); }
+.sup-name.lv-Critical, .sup-lab[data-lit="1"] .sup-lab-t, .sup-lab[data-lit="1"] .sup-lab-n, .sup-tip .sup-tip-crit { color: var(--accent); fill: var(--accent); }
+.sup-name[aria-expanded="true"] { background: var(--accent-soft); box-shadow: inset 0 -1.5px 0 var(--accent); }
+.sup-crit-drop, .ex-rank .peak { stroke: var(--accent); }
+.sup-modes { border-color: var(--ink); }
+.sup-mode + .sup-mode { border-left-color: var(--ink); }
+.contents-grid .t:hover, .contents-grid li a:hover, .brief-head .t:hover { color: var(--accent); }
+.contents-grid .t { text-transform: none; letter-spacing: -0.01em; font-size: 18px; }
+.contents-grid li::before { content: "\2014"; font-size: 10px; }
+.stage-cell[aria-current="true"]::after { background: var(--accent); }
+.chain-head h2 { letter-spacing: 0.12em; }
+.site-footer { border-top-color: var(--ink); }
+:root[data-theme="dark"] .site-footer { border-top-color: var(--line-2); }
+.cp-search-panel { border-color: var(--ink); }
+.gl-tip, .ct-tip, .sup-tip { border-color: var(--ink); background: var(--bg); }
+.ex-tip { background: var(--ink); color: var(--bg); }
+.wk-tab, .sheet-head b { font-family: var(--font-display); }
+
+/* ---------- phones ---------- */
+@media (max-width: 1240px) { .tabs a { padding: 19px 8px 18px; } }
+@media (max-width: 900px) {
+  .masthead { height: auto; padding-top: 8px; }
+  .wordmark b { font-size: 11px; letter-spacing: 0.12em; padding: 5px 7px 4px; white-space: nowrap; }
+  .tabs { margin-top: 4px; padding-bottom: 0; }
+  .tabs a { padding: 8px 8px 9px; font-size: 13px; }
+  .wk-title { font-size: 36px; }
+  .wk-tabs { padding: 12px 0 8px; gap: 0; }
+  .wk-tabs a { border-right: 0; border-bottom: 1px solid var(--line); padding: 0 0 12px; margin: 0 0 12px; }
+  .wk-tabs a:last-child { border-bottom: 0; margin-bottom: 0; padding-bottom: 4px; }
+  .ch-title { font-size: 36px; }
+  .stage { border-left: 0; border-top: 1px solid var(--ink); box-shadow: none; }
+  .stage figcaption { border-top: 0; padding: 0; margin: 0; }
+  .plate-kpis > div, .plate-status > div { border-right: 0; border-bottom: 1px solid var(--line-2); }
+  .plate-kpis > div:last-child, .plate-status > div:last-child { border-bottom: 0; }
+}
