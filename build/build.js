@@ -169,7 +169,7 @@ function markdown(src, ctx) {
       while (i < lines.length && lines[i].trim().startsWith('|')) { rows.push(lines[i].trim()); i++; }
       const cells = (r) => r.replace(/^\|/, '').replace(/\|$/, '').split('|').map((c) => c.trim());
       const head = cells(rows[0]);
-      let html = `<div class="table-wrap"><table><thead><tr>${head.map((h) => `<th>${inline(h, ctx)}</th>`).join('')}</tr></thead><tbody>`;
+      let html = `<div class="table-wrap" tabindex="0"><table><thead><tr>${head.map((h) => `<th>${inline(h, ctx)}</th>`).join('')}</tr></thead><tbody>`;
       for (let r = 2; r < rows.length; r++) { const cs = cells(rows[r]); html += `<tr>${cs.map((c) => `<td>${inline(c, ctx)}</td>`).join('')}</tr>`; }
       out.push(html + '</tbody></table></div>');
       continue;

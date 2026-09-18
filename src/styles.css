@@ -355,10 +355,11 @@ sup.cite a:hover, sup.cite a:focus-visible { background: var(--accent-soft); tex
 .timeline .cat { font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
 .timeline .cat.cn { color: var(--c6); }
 .timeline .cat.ally { color: var(--c1); }
-.timeline .cat.policy { color: var(--c4); }
+.timeline .cat.policy { color: #7a5f06; }
+:root[data-theme="dark"] .timeline .cat.policy { color: var(--c4); }
 .timeline .cat.corp { color: var(--c5); }
 .timeline .src { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
-.year-label { font-family: var(--font-display); font-weight: 300; font-variation-settings: var(--opsz-numeral); font-size: 40px; color: var(--line-2); line-height: 1; margin: 28px 0 0; letter-spacing: -0.02em; font-variant-numeric: tabular-nums lining-nums; }
+.year-label { font-family: var(--font-display); font-weight: 300; font-variation-settings: var(--opsz-numeral); font-size: 40px; color: var(--muted); line-height: 1; margin: 28px 0 0; letter-spacing: -0.02em; font-variant-numeric: tabular-nums lining-nums; }
 .tl-filters { margin: 14px 0 6px; }
 
 /* ---------- briefing ---------- */
