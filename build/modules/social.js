@@ -71,6 +71,8 @@ function manifest(root) {
     pages.push({
       slug: c.id, kind: 'chapter', number: c.number, eyebrow, title: c.title,
       line: si >= 0 && band ? band : describe(c.plain, 140),
+      // for the card: the chapter's lede and its two ratings as tags (none for the two chapters that are not stages)
+      lede: c.oneLiner || c.plain, tags: si >= 0 && conc ? [`${conc} concentration`, SUBWORD[sub] || sub].filter(Boolean) : [],
       description: describe(c.plain), body: c.plain, route: '#' + c.id, linkText: 'Read the chapter',
     });
   }
@@ -81,7 +83,8 @@ function manifest(root) {
   const mins = Math.max(1, Math.round(walkWords / 230));
 
   const views = [
-    { slug: 'home', route: '', eyebrow: 'The AI chip supply chain', title: SITE, line: 'How AI chips are made, and who controls each stage.', description: 'How AI chips are made, and who controls each stage. The supply chain stage by stage: who makes each part, how concentrated each stage is, and what a substitute would cost.' },
+    // the home title is the site's own hero ("How AI chips are made"); the unfurl <title> and og:title still carry the site name (pageHTML)
+    { slug: 'home', route: '', eyebrow: 'The AI chip supply chain', title: 'How AI chips are made', line: 'The AI chip supply chain, stage by stage: who makes each part, how concentrated each stage is, and what a substitute would cost.', description: 'How AI chips are made, and who controls each stage. The supply chain stage by stage: who makes each part, how concentrated each stage is, and what a substitute would cost.' },
     { slug: 'intro', route: '#/intro', eyebrow: `${SITE} · Start here`, title: 'How AI chips are made', line: `An introduction to the entire supply chain in ${mins} minutes.` },
     { slug: 'chain', route: '#/chain', eyebrow: `${SITE} · The Chain`, title: 'The Chain', line: 'Every stage of the supply chain, and who controls it.', description: `Every stage of the supply chain, and who controls it. ${chapters.length} chapters, from chip design to the data center.` },
     { slug: 'chips', route: '#/landscape', eyebrow: `${SITE} · AI Chips`, title: 'AI Chips', line: 'The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026.', description: 'The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026, with the foundry, process node, memory supplier and packaging plant behind each one.' },
