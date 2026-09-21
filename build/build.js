@@ -432,28 +432,34 @@ function exposureViz(rows) {
   const firms = Object.keys(byFirm).map((f) => {
     const rs = byFirm[f].slice().sort((a, b) => tx(a.fyEnd) - tx(b.fyEnd));
     const peak = rs.reduce((m, r) => (r.chinaShare > m.chinaShare ? r : m), rs[0]);
-    return { firm: f, rows: rs, first: rs[0], last: rs[rs.length - 1], peak, meta: rs[0] };
+    const low = rs.reduce((m, r) => (r.chinaShare < m.chinaShare ? r : m), rs[0]);
+    return { firm: f, rows: rs, first: rs[0], last: rs[rs.length - 1], peak, low, meta: rs[0] };
   }).sort((a, b) => b.last.chinaShare - a.last.chinaShare);
   const T0 = 2021, T1 = 2026.6, YMAX = 60;
   const rules = [[tx('2022-10'), 'Oct 2022'], [tx('2023-10'), 'Oct 2023'], [tx('2024-12'), 'Dec 2024']];
   const pct = (v) => (v >= 10 ? Math.round(v) : Math.round(v * 10) / 10) + '%';
   const attrs = (r) => `data-firm="${esc(r.firm)}" data-fy="${esc(r.fiscalYear)}" data-share="${r.chinaShare}" data-china="${r.chinaRevenue != null ? r.chinaRevenue : ''}" data-total="${r.totalRevenue != null ? r.totalRevenue : ''}" data-cur="${esc(r.currency || '')}" data-basis="${esc(r.basis || '')}"`;
-  // ranking: first fiscal year (hollow) to latest (filled), peak year as an amber tick
+  // ranking: the grey line is the firm's full range, lowest to highest share in any year on file; the hollow dot is the
+  // first fiscal year, the filled dot the latest, and the tick at the right end marks the highest year
   const RW = 760, L = 190, R = RW - 40, RH = 24, top = 30;
   const xs = (v) => L + (v / YMAX) * (R - L);
   const H = top + firms.length * RH + 8;
-  let d = `<div class="ex-legend"><span><i class="lg-first"></i>First fiscal year on file</span><span><i class="lg-last"></i>Latest fiscal year</span><span><i class="lg-peak"></i>Highest year</span><span>Axis: China's share of revenue, 0 to 60%</span></div>`;
-  d += `<svg class="ex-rank" viewBox="0 0 ${RW} ${H}" role="group" aria-label="China share of revenue by firm: first fiscal year on file against the latest">`;
+  let d = `<div class="ex-legend"><span><i class="lg-range"></i>Range across every year on file</span><span><i class="lg-first"></i>First fiscal year</span><span><i class="lg-last"></i>Latest fiscal year</span><span><i class="lg-peak"></i>Highest year</span><span>Axis: China's share of revenue, 0 to 60%</span></div>`;
+  d += `<svg class="ex-rank" viewBox="0 0 ${RW} ${H}" role="group" aria-label="China share of revenue by firm: the range across every year on file, with the first and latest fiscal years marked">`;
   [0, 20, 40, 60].forEach((v) => { d += `<line x1="${xs(v)}" y1="${top - 6}" x2="${xs(v)}" y2="${H - 6}" class="grid"/><text x="${xs(v)}" y="${top - 12}" class="tick" text-anchor="middle">${v}%</text>`; });
   firms.forEach((f, i) => {
     const y = top + i * RH + RH / 2, a = xs(f.first.chinaShare), b = xs(f.last.chinaShare);
     d += `<text x="${L - 14}" y="${y + 4}" class="name" text-anchor="end">${esc(f.firm)}</text>`;
-    d += `<line x1="${Math.min(a, b).toFixed(1)}" y1="${y}" x2="${Math.max(a, b).toFixed(1)}" y2="${y}" class="link"/>`;
-    if (f.peak !== f.first && f.peak !== f.last) d += `<line x1="${xs(f.peak.chinaShare).toFixed(1)}" y1="${y - 7}" x2="${xs(f.peak.chinaShare).toFixed(1)}" y2="${y + 7}" class="peak"/>`;
+    const lo = xs(f.low.chinaShare), hi = xs(f.peak.chinaShare);
+    d += `<line x1="${lo.toFixed(1)}" y1="${y}" x2="${hi.toFixed(1)}" y2="${y}" class="link"><title>${esc(f.firm)}: ${pct(f.low.chinaShare)} in ${esc(f.low.fiscalYear)} to ${pct(f.peak.chinaShare)} in ${esc(f.peak.fiscalYear)}</title></line>`;
+    d += `<line x1="${hi.toFixed(1)}" y1="${y - 7}" x2="${hi.toFixed(1)}" y2="${y + 7}" class="peak"><title>Highest: ${pct(f.peak.chinaShare)} in ${esc(f.peak.fiscalYear)}</title></line>`;
     d += `<a href="${safeUrl(f.first.source || '#')}" target="_blank" rel="noopener" aria-label="${esc(f.firm)} ${esc(f.first.fiscalYear)}: ${pct(f.first.chinaShare)} from China, opens the filing"><circle cx="${a.toFixed(1)}" cy="${y}" r="4.2" class="dot first" ${attrs(f.first)}/></a>`;
     d += `<a href="${safeUrl(f.last.source || '#')}" target="_blank" rel="noopener" aria-label="${esc(f.firm)} ${esc(f.last.fiscalYear)}: ${pct(f.last.chinaShare)} from China, opens the filing"><circle cx="${b.toFixed(1)}" cy="${y}" r="4.8" class="dot last" ${attrs(f.last)}/></a>`;
-    const right = b >= a;
-    d += `<text x="${(b + (right ? 10 : -10)).toFixed(1)}" y="${y + 4}" class="val" text-anchor="${right ? 'start' : 'end'}">${pct(f.last.chinaShare)}</text>`;
+    // the latest value labels its own dot, on whichever side is clear of the other marks; otherwise past the range
+    const near = (x0, x1) => [a, hi, lo].some((o) => o > x0 && o < x1);
+    let lx, anchor;
+    if (!near(b, b + 36)) { lx = b + 10; anchor = 'start'; } else if (!near(b - 36, b)) { lx = b - 10; anchor = 'end'; } else { lx = hi + 10; anchor = 'start'; }
+    d += `<text x="${lx.toFixed(1)}" y="${y + 4}" class="val" text-anchor="${anchor}">${pct(f.last.chinaShare)}</text>`;
   });
   d += '</svg>';
   // small multiples: one panel per firm on a shared time axis and a shared 0 to 60% scale
