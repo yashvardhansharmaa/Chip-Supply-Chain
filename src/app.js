@@ -1853,9 +1853,9 @@
           tip.style.left = Math.max(8, Math.min(x - tip.offsetWidth / 2, window.scrollX + window.innerWidth - tip.offsetWidth - 8)) + 'px';
           tip.style.top = (y - tip.offsetHeight - 10) + 'px';
         };
-        viz.addEventListener('mouseover', function (e) { var c = e.target.closest && e.target.closest('circle[data-firm]'); if (c) showTip(c); });
-        viz.addEventListener('mouseout', function (e) { if (e.target.closest && e.target.closest('circle[data-firm]')) tip.hidden = true; });
-        viz.addEventListener('focusin', function (e) { var c = e.target.querySelector ? e.target.querySelector('circle[data-firm]') : null; if (c) showTip(c); });
+        viz.addEventListener('mouseover', function (e) { var c = e.target.closest && e.target.closest('[data-firm]'); if (c) showTip(c); });
+        viz.addEventListener('mouseout', function (e) { if (e.target.closest && e.target.closest('[data-firm]')) tip.hidden = true; });
+        viz.addEventListener('focusin', function (e) { var c = e.target.querySelector ? e.target.querySelector('[data-firm]') : null; if (c) showTip(c); });
         viz.addEventListener('focusout', function () { tip.hidden = true; });
       }
       var et = $('#exposure-table');

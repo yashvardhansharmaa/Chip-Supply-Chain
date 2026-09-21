@@ -494,22 +494,16 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 /* ---------- China exposure charts ---------- */
 .ex-legend { display: flex; flex-wrap: wrap; gap: 6px 20px; font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 14px 0 6px; }
 .ex-legend i { display: inline-block; vertical-align: middle; margin-right: 7px; width: 10px; height: 10px; border-radius: 50%; box-sizing: border-box; }
-.ex-legend .lg-range { width: 18px; height: 2px; border-radius: 0; background: var(--line-2); margin-right: 9px; }
-.ex-legend .lg-first { border: 1.5px solid var(--ink-2); background: var(--bg); }
-.ex-legend .lg-last { background: var(--ink); }
-.ex-legend .lg-peak { width: 2px; height: 12px; border-radius: 0; background: var(--accent); margin-left: 4px; margin-right: 11px; }
-.ex-legend .lg-rule { width: 1px; height: 12px; border-radius: 0; border-left: 1px dashed var(--ink-2); background: none; margin-left: 4px; margin-right: 12px; }
-.ex-legend .lg-peakdot { background: var(--accent); }
-.ex-rank { display: block; width: 100%; max-width: 760px; height: auto; margin: 4px 0 30px; }
-.ex-rank .grid { stroke: var(--line); }
-.ex-rank .tick, .ex-panel .tick { font-family: var(--font-mono); font-size: 10px; fill: var(--muted); }
-.ex-rank .name { font-size: 13px; fill: var(--ink); }
-.ex-rank .link { stroke: var(--line-2); stroke-width: 2; }
-.ex-rank .peak { stroke: var(--accent); stroke-width: 2; }
-.ex-rank .dot.first { fill: var(--bg); stroke: var(--ink-2); stroke-width: 1.5; }
-.ex-rank .dot.last { fill: var(--ink); }
-.ex-rank a:hover circle, .ex-panel a:hover circle { stroke: var(--accent); stroke-width: 2.5; }
-.ex-rank .val, .ex-panel .val { font-family: var(--font-mono); font-size: 11px; font-weight: 500; fill: var(--ink); }
+.ex-legend .lg-bar { width: 10px; height: 12px; border-radius: 0; background: var(--ink-2); }
+.ex-legend .lg-rule { width: 1px; height: 12px; border-radius: 0; border-left: 1px dashed var(--ink-2); background: none; }
+.ex-cat { grid-column: 1 / -1; margin: 18px 0 0; padding-bottom: 6px; border-bottom: 1px solid var(--ink); font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); }
+.ex-cat:first-child { margin-top: 4px; }
+.ex-panel .tick { font-family: var(--font-mono); font-size: 10px; fill: var(--muted); }
+.ex-panel .bar { fill: var(--line-2); }
+.ex-panel .bar.last { fill: var(--ink); }
+.ex-panel a:hover rect, .ex-panel a:hover circle { fill: var(--accent); stroke: none; }
+.ex-panel .share { font-family: var(--font-mono); font-size: 9.5px; fill: var(--ink-2); }
+.ex-panel .val { font-family: var(--font-mono); font-size: 11px; font-weight: 500; fill: var(--ink); }
 .ex-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px 22px; margin: 6px 0 12px; }
 .ex-panel { margin: 0; padding: 10px 0 6px; border: 0; border-top: 1px solid var(--line-2); border-radius: 0; background: none; }
 .ex-panel figcaption { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin: 0 0 4px; }
@@ -758,3 +752,5 @@ button.ptag { cursor: pointer; }
   #app { padding-top: 0; } .column { width: 100%; padding: 0; } body { font-size: 11pt; background: #fff; color: #000; }
   .chapter { break-before: page; }
 }
+.ex-panel .dot { fill: var(--bg); stroke: var(--ink-2); stroke-width: 1.5; }
+.ex-panel .dot.last { fill: var(--ink); }
