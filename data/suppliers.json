@@ -46,7 +46,7 @@
       "Samsung",
       "Micron"
     ],
-    "aiRelevance": "Emulation capacity is a gating item on AI chip schedules, and Cadence is one of two credible suppliers.",
+    "aiRelevance": "Emulation capacity is a limiting item on AI chip schedules, and Cadence is one of two credible suppliers.",
     "revenueUSDb": 5.297,
     "revenueYear": 2025,
     "source": "https://newsletter.semianalysis.com/p/eda-market-primer"
@@ -111,7 +111,7 @@
     "founded": 2009,
     "ticker": "301269.SZ",
     "ownership": "Public; state-linked shareholders including China Electronics Corporation",
-    "role": "China's largest domestic EDA vendor, with a complete analog and mixed-signal design flow and partial digital coverage. It is the centerpiece of China's effort to replace the American EDA tools that export controls can switch off.",
+    "role": "China's largest domestic EDA vendor, with a complete analog and mixed-signal design flow and partial digital coverage. It is the centerpiece of China's effort to replace the American EDA tools that export controls can withdraw.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -258,7 +258,7 @@
     "founded": 2015,
     "ticker": "Private",
     "ownership": "Private, venture-backed",
-    "role": "Sells RISC-V CPU cores, including vector and matrix cores used as control processors inside AI accelerators. RISC-V is the licence-free alternative to Arm and is being adopted heavily in China.",
+    "role": "Sells RISC-V CPU cores, including vector and matrix cores used as control processors inside AI accelerators. RISC-V is the license-free alternative to Arm and is being adopted heavily in China.",
     "chokepoint": "Diversified",
     "shareNote": null,
     "customers": [
@@ -305,7 +305,7 @@
     "founded": 1993,
     "ticker": "NVDA",
     "ownership": "Public",
-    "role": "Designs the Blackwell and Rubin GPUs, the NVLink scale-up fabric and the NVL72 rack systems that most AI training and a large share of inference runs on. It also sells the CUDA software stack that locks developers in.",
+    "role": "Designs the Blackwell and Rubin GPUs, the NVLink scale-up fabric and the NVL72 rack systems that most AI training and a large share of inference runs on. It also sells the CUDA software stack that ties developers to its hardware.",
     "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
@@ -456,7 +456,7 @@
     "customers": [
       "Meta Platforms"
     ],
-    "aiRelevance": "MTIA shows how much inference volume a single application company can pull off merchant GPUs.",
+    "aiRelevance": "MTIA shows how much inference volume a single application company can move off merchant GPUs.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://engineering.fb.com/"
@@ -602,7 +602,7 @@
       "Xiaomi",
       "Meta"
     ],
-    "aiRelevance": "Qualcomm is attacking inference, where memory capacity per dollar matters more than peak training FLOPS.",
+    "aiRelevance": "Qualcomm is targeting inference, where memory capacity per dollar matters more than peak training FLOPS.",
     "revenueUSDb": 44.284,
     "revenueYear": 2025,
     "source": "https://www.qualcomm.com/"
@@ -626,7 +626,7 @@
       "Argonne National Laboratory",
       "Meta"
     ],
-    "aiRelevance": "Wafer-scale integration sidesteps both HBM supply and advanced packaging capacity, the two tightest constraints in the chain.",
+    "aiRelevance": "Wafer-scale integration avoids both HBM supply and advanced packaging capacity, the two tightest constraints in the chain.",
     "revenueUSDb": 0.51,
     "revenueYear": 2025,
     "source": "https://www.cerebras.ai/product-chip"
@@ -673,7 +673,7 @@
       "China Telecom",
       "iFlytek"
     ],
-    "aiRelevance": "Ascend is the only Chinese accelerator line deployed at national scale and the benchmark for how far domestic substitution has got.",
+    "aiRelevance": "Ascend is the only Chinese accelerator line deployed at national scale and the benchmark for how far domestic substitution has come.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.hisilicon.com/"
@@ -878,7 +878,7 @@
       "Microsoft (evaluation)",
       "Enterprise inference customers"
     ],
-    "aiRelevance": "In-memory compute attacks the memory bandwidth wall that makes inference expensive.",
+    "aiRelevance": "In-memory compute addresses the memory bandwidth wall that makes inference expensive.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.d-matrix.ai/product/"
@@ -959,7 +959,7 @@
     "founded": 1926,
     "ticker": "4063.T",
     "ownership": "Public",
-    "role": "The largest maker of 300 mm silicon wafers, the blank substrate every logic and memory die is built on. It also supplies ArF and EUV photoresist and photomask pellicles, so it touches three separate stages of the chain.",
+    "role": "The largest maker of 300 mm silicon wafers, the blank substrate every logic and memory die is built on. It also supplies ArF and EUV photoresist and photomask pellicles, so it supplies three separate stages of the chain.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1183,7 +1183,7 @@
       "SUMCO",
       "TSMC"
     ],
-    "aiRelevance": "Polysilicon purity sets the floor on wafer defect density, which sets the yield on large AI dies.",
+    "aiRelevance": "Polysilicon purity sets the lowest defect density a wafer can reach, which sets the yield on large AI dies.",
     "revenueUSDb": 2.272,
     "revenueYear": 2026,
     "source": "https://www.tokuyama.co.jp/"
@@ -1317,7 +1317,7 @@
     "founded": 1802,
     "ticker": "DD",
     "ownership": "Public",
-    "role": "Supplies chemical mechanical planarisation pads, photoresist, dry film and electroplating chemistry for interconnect and packaging. Its CMP pad line is the standard consumable for wafer planarisation.",
+    "role": "Supplies chemical mechanical planarization pads, photoresist, dry film and electroplating chemistry for interconnect and packaging. Its CMP pad line is the standard consumable for wafer planarization.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1327,7 +1327,7 @@
       "Micron",
       "ASE"
     ],
-    "aiRelevance": "Every metal layer on an AI die is planarised with a CMP pad and slurry pair before the next layer goes down.",
+    "aiRelevance": "Every metal layer on an AI die is planarized with a CMP pad and slurry pair before the next layer goes down.",
     "revenueUSDb": 6.849,
     "revenueYear": 2025,
     "source": "https://www.dupont.com/"
@@ -1434,7 +1434,7 @@
     "founded": 1950,
     "ticker": "5384.T",
     "ownership": "Public",
-    "role": "Makes the abrasive slurries used to polish silicon wafers and to planarise metal and dielectric layers during chip fabrication. Slurry chemistry is tuned per process step and per customer.",
+    "role": "Makes the abrasive slurries used to polish silicon wafers and to planarize metal and dielectric layers during chip fabrication. Slurry chemistry is tuned per process step and per customer.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1443,7 +1443,7 @@
       "SUMCO",
       "Shin-Etsu Chemical"
     ],
-    "aiRelevance": "Planarisation quality limits how many metal layers can be stacked, which matters for dense AI logic and HBM.",
+    "aiRelevance": "Planarization quality limits how many metal layers can be stacked, which matters for dense AI logic and HBM.",
     "revenueUSDb": 0.451,
     "revenueYear": 2026,
     "source": "https://www.fujimiinc.co.jp/"
@@ -1806,7 +1806,7 @@
       "Toshiba",
       "Packaging and mature-node fabs"
     ],
-    "aiRelevance": "Nanoimprint is the only credible non-EUV route to sub-10 nm patterning, which makes it strategically watched.",
+    "aiRelevance": "Nanoimprint is the only credible non-EUV route to sub-10 nm patterning, which makes it closely watched.",
     "revenueUSDb": 30.066,
     "revenueYear": 2025,
     "source": "https://global.canon/"
@@ -1873,7 +1873,7 @@
       "Canon",
       "Fabs with installed DUV tools"
     ],
-    "aiRelevance": "Keeps a second source alive for DUV light, the workhorse behind multipatterning at mature and middle nodes.",
+    "aiRelevance": "Keeps a second source of DUV light in business, and DUV light is what multipatterning at mature and middle nodes runs on.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.gigaphoton.com/en/products"
@@ -1931,7 +1931,7 @@
     "founded": 1953,
     "ticker": "Private",
     "ownership": "Private, family-owned",
-    "role": "A Dutch precision manufacturing group that builds large mechanical modules, frames and vacuum assemblies for ASML scanners. It is one of the anchor suppliers in the Brainport cluster around Veldhoven.",
+    "role": "A Dutch precision manufacturing group that builds large mechanical modules, frames and vacuum assemblies for ASML scanners. It is one of the main suppliers in the Brainport cluster around Veldhoven.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2174,7 +2174,7 @@
       "Applied Materials",
       "ASE"
     ],
-    "aiRelevance": "Vacuum capacitors for high-power RF matching are made by very few firms and gate plasma etch tool builds.",
+    "aiRelevance": "Vacuum capacitors for high-power RF matching are made by very few firms and limit plasma etch tool builds.",
     "revenueUSDb": 0.565,
     "revenueYear": 2025,
     "source": "https://www.comet.tech/"
@@ -2198,7 +2198,7 @@
       "Naura",
       "SMIC"
     ],
-    "aiRelevance": "Chamber consumables are replaced on a schedule, so their supply sets a floor on fab operating capacity.",
+    "aiRelevance": "Chamber consumables are replaced on a schedule, so their supply limits fab operating capacity.",
     "revenueUSDb": 1.878,
     "revenueYear": 2026,
     "source": "https://www.ferrotec.com/products/"
@@ -2213,7 +2213,7 @@
     "founded": 1941,
     "ticker": "7741.T",
     "ownership": "Public",
-    "role": "Makes the ultra-flat low-thermal-expansion glass blanks coated with 40 to 50 molybdenum-silicon layer pairs that become EUV photomasks. Blank defect levels are the gating item for EUV mask yield.",
+    "role": "Makes the ultra-flat low-thermal-expansion glass blanks coated with 40 to 50 molybdenum-silicon layer pairs that become EUV photomasks. Blank defect levels are the limiting factor for EUV mask yield.",
     "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
@@ -2629,7 +2629,7 @@
     "founded": 1967,
     "ticker": "AMAT",
     "ownership": "Public",
-    "role": "Supplies physical and chemical vapor deposition, epitaxy, ion implantation, chemical mechanical planarisation and electron beam inspection. It owns more process steps than any other vendor.",
+    "role": "Supplies physical and chemical vapor deposition, epitaxy, ion implantation, chemical mechanical planarization and electron beam inspection. It supplies tools for more process steps than any other vendor.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2753,7 +2753,7 @@
     "founded": 2001,
     "ticker": "002371.SZ",
     "ownership": "Public (Shenzhen); state-backed, National IC Fund investor",
-    "role": "China's largest semiconductor equipment maker, with plasma etch, PVD, CVD, ALD, furnace and cleaning tools. It has grown into the global top ten equipment vendors on the back of domestic substitution.",
+    "role": "China's largest semiconductor equipment maker, with plasma etch, PVD, CVD, ALD, furnace and cleaning tools. It has grown into the global top ten equipment vendors through domestic substitution.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -2835,7 +2835,7 @@
       "Micron",
       "SK hynix"
     ],
-    "aiRelevance": "Cleaning defectivity compounds across hundreds of steps and shows up as yield loss on large AI dies.",
+    "aiRelevance": "Cleaning defectivity compounds across hundreds of steps and appears as yield loss on large AI dies.",
     "revenueUSDb": 3.938,
     "revenueYear": 2026,
     "source": "https://www.screen.co.jp/spe/en/products"
@@ -2980,7 +2980,7 @@
       "Cambricon",
       "Chinese fabless firms"
     ],
-    "aiRelevance": "SMIC's yield and capacity at 7 nm set the hard ceiling on how many domestic Chinese AI accelerators can exist.",
+    "aiRelevance": "SMIC's yield and capacity at 7 nm set the ceiling on how many domestic Chinese AI accelerators can exist.",
     "revenueUSDb": 9.327,
     "revenueYear": 2025,
     "source": "https://www.smics.com/"
@@ -3148,7 +3148,7 @@
       "Microsoft",
       "Apple"
     ],
-    "aiRelevance": "Samsung is the only firm that makes HBM, logic at the leading edge and packaging under one roof.",
+    "aiRelevance": "Samsung is the only firm that makes HBM, leading-edge logic and packaging itself.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://semiconductor.samsung.com/news-events/news/samsung-ships-industry-first-commercial-hbm4-with-ultimate-performance-for-ai-computing/"
@@ -3360,7 +3360,7 @@
       "Infineon",
       "TSMC"
     ],
-    "aiRelevance": "Domestic packaging capacity is the missing link in reshoring AI chip manufacture to the United States.",
+    "aiRelevance": "Domestic packaging capacity is what reshoring AI chip manufacture to the United States still lacks.",
     "revenueUSDb": 6.708,
     "revenueYear": 2025,
     "source": "https://amkor.com/"
@@ -3398,7 +3398,7 @@
     "founded": 1997,
     "ticker": "6239.TW",
     "ownership": "Public",
-    "role": "Specialises in memory assembly and test, including DRAM and NAND packaging, and has been adding capacity for HBM-related and logic advanced packaging work.",
+    "role": "Specializes in memory assembly and test, including DRAM and NAND packaging, and has been adding capacity for HBM-related and logic advanced packaging work.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -3490,7 +3490,7 @@
     "founded": 1997,
     "ticker": "6147.TWO",
     "ownership": "Public",
-    "role": "Specialises in gold and copper bumping and chip-on-film packaging, mainly for display driver ICs, and provides bumping services used in wider advanced packaging flows.",
+    "role": "Specializes in gold and copper bumping and chip-on-film packaging, mainly for display driver ICs, and provides bumping services used in wider advanced packaging flows.",
     "chokepoint": "Diversified",
     "shareNote": null,
     "customers": [
@@ -3633,7 +3633,7 @@
     "founded": 1951,
     "ticker": "KLIC",
     "ownership": "Public",
-    "role": "Makes wire bonders, the workhorse of low-cost packaging, and is developing thermocompression and fluxless bonding systems for advanced packages.",
+    "role": "Makes wire bonders, the standard tool of low-cost packaging, and is developing thermocompression and fluxless bonding systems for advanced packages.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -3933,7 +3933,7 @@
       "Unimicron",
       "Mitsubishi Gas Chemical"
     ],
-    "aiRelevance": "Nittobo's T-glass goes into the package substrates and boards of AI accelerators, so its weaving capacity gates board supply.",
+    "aiRelevance": "Nittobo's T-glass goes into the package substrates and boards of AI accelerators, so its weaving capacity limits board supply.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.nittobo.co.jp/eng/business/electronicmaterials/t-glass.htm"
@@ -3972,7 +3972,7 @@
     "founded": 1918,
     "ticker": "Private",
     "ownership": "Division of Panasonic Holdings",
-    "role": "Makes the Megtron series of low-loss copper-clad laminates used in high-speed server boards and switch boards, where signal loss at 112 Gbps determines whether a link closes.",
+    "role": "Makes the Megtron series of low-loss copper-clad laminates used in high-speed server boards and switch boards, where signal loss at 112 Gbps determines whether a link works.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4149,7 +4149,7 @@
       "Analog Devices",
       "Amkor"
     ],
-    "aiRelevance": "The second source for the test capacity that gates AI chip output.",
+    "aiRelevance": "The second source for the test capacity that limits AI chip output.",
     "revenueUSDb": 3.19,
     "revenueYear": 2025,
     "source": "https://www.teradyne.com/"
@@ -4286,7 +4286,7 @@
     "founded": 1977,
     "ticker": "AEHR",
     "ownership": "Public",
-    "role": "Makes wafer-level burn-in systems that stress an entire wafer at temperature and voltage to weed out early-life failures, used for silicon carbide, photonics and now AI processors.",
+    "role": "Makes wafer-level burn-in systems that stress an entire wafer at temperature and voltage to find early-life failures, used for silicon carbide, photonics and now AI processors.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4725,7 +4725,7 @@
       "Nvidia",
       "Microsoft"
     ],
-    "aiRelevance": "Quanta and its peers convert accelerators into deployable racks, and their capacity paces deployment.",
+    "aiRelevance": "Quanta and its peers convert accelerators into deployable racks, and their capacity sets the pace of deployment.",
     "revenueUSDb": 67.419,
     "revenueYear": 2025,
     "source": "https://www.qct.io/solution/index/AI-Solutions"
@@ -5005,7 +5005,7 @@
       "Digital Realty",
       "Equinix"
     ],
-    "aiRelevance": "Electrical equipment lead times, especially transformers and switchgear, now gate AI data center schedules.",
+    "aiRelevance": "Electrical equipment lead times, especially transformers and switchgear, now set AI data center schedules.",
     "revenueUSDb": 46.672,
     "revenueYear": 2025,
     "source": "https://www.se.com/us/en/work/solutions/for-business/data-centers-and-networks/"
@@ -5137,7 +5137,7 @@
     "founded": 2020,
     "ticker": "ENR.DE",
     "ownership": "Public",
-    "role": "Supplies gas turbines, grid transmission equipment and transformers, and has an order book stretching years out as data center and electrification demand collides with limited manufacturing capacity.",
+    "role": "Supplies gas turbines, grid transmission equipment and transformers, and has orders booked years ahead, because data center and electrification demand exceeds its manufacturing capacity.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [

@@ -163,7 +163,7 @@
           "date": "2025-12-31",
           "announced": "2025-08-29",
           "status": "case",
-          "label": "Foreign-owned fabs in China lose their VEU cover",
+          "label": "Foreign-owned fabs in China lose their VEU authorization",
           "event": "2025-08-29-veu-revoked",
           "cite": {
             "fr": "90 FR 42321",
@@ -411,7 +411,7 @@
           "date": "2020-12-01",
           "announced": "2020-10-17",
           "status": "open",
-          "label": "China's Export Control Law builds the licensing machinery",
+          "label": "China's Export Control Law creates the licensing system",
           "event": "2020-12-01-china-export-control-law",
           "cite": {
             "fr": "Export Control Law of the People's Republic of China",
@@ -466,7 +466,7 @@
           "date": "2020-12-01",
           "announced": "2020-10-17",
           "status": "open",
-          "label": "China's Export Control Law builds the licensing machinery",
+          "label": "China's Export Control Law creates the licensing system",
           "event": "2020-12-01-china-export-control-law",
           "cite": {
             "fr": "Export Control Law of the People's Republic of China",
@@ -497,7 +497,7 @@
         {
           "date": "2025-10-09",
           "status": "case",
-          "label": "Reach claimed over foreign goods above 0.1 percent",
+          "label": "Jurisdiction claimed over foreign goods above 0.1 percent",
           "event": "2025-10-09-rare-earth-reach",
           "cite": {
             "fr": "MOFCOM Announcement 2025 No. 61",
@@ -596,7 +596,7 @@
           "date": "2026-07-10",
           "announced": "2026-07-14",
           "status": "case",
-          "label": "UAE joins A:5; named consignees ship licence-free",
+          "label": "UAE joins A:5; named consignees ship license-free",
           "event": "2026-07-10-uae-group-a5",
           "cite": {
             "fr": "91 FR 43034",
@@ -668,7 +668,7 @@
           "date": "2026-01-15",
           "announced": "2026-01-14",
           "status": "policy",
-          "label": "25 percent tariff on chips crossing America",
+          "label": "25 percent tariff on chips passing through America",
           "event": "2026-01-14-section-232",
           "cite": {
             "fr": "91 FR 2443",

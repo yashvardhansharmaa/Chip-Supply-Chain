@@ -117,7 +117,7 @@
       "https://cset.georgetown.edu/article/bis-2023-update-explainer/",
       "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-742/section-742.6"
     ],
-    "note": "The gray band. It exists so that BIS learns about chips just under the main line while they keep shipping, and it is what turns the control from a wall into a notification regime for workstation and mid-range parts. It catches gaming and professional cards with real AI throughput; it misses anything a designer can push below TPP 1600. Until December 2024 one exception, NAC, did both jobs; the December 2024 rule split off ACA for the unrestricted destinations.",
+    "note": "The gray band. It exists so that BIS learns about chips just under the main line while they keep shipping, and it is what turns the control from a ban into a notification regime for workstation and mid-range parts. It catches gaming and professional cards with real AI throughput; it misses anything a designer can push below TPP 1600. Until December 2024 one exception, NAC, did both jobs; the December 2024 rule split off ACA for the unrestricted destinations.",
     "kind": "chips",
     "paramShort": "TPP",
     "unitShort": ""
@@ -147,7 +147,7 @@
     "alsoSee": [
       "https://www.bis.gov/press-release/commerce-strengthens-export-controls-restrict-chinas-capability-produce-advanced-semiconductors-military"
     ],
-    "note": "Set deliberately low: 2 GB/s/mm² catches every HBM stack in production, including HBM2E, so the entry works as a ban on selling HBM into China. It is the control that bites hardest on Chinese accelerators, because a Chinese AI chip without HBM cannot feed its own compute.",
+    "note": "Set deliberately low: 2 GB/s/mm² catches every HBM stack in production, including HBM2E, so the entry works as a ban on selling HBM into China. It is the control that hurts Chinese accelerators most, because a Chinese AI chip without HBM cannot feed its own compute.",
     "kind": "memory",
     "paramShort": "Memory bandwidth density",
     "unitShort": "GB/s per mm²"
@@ -172,7 +172,7 @@
     "cfr": "15 CFR 740.25",
     "source": "https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-produced-direct-product-rule-additions-and-refinements-to-controls-for-advanced-computing",
     "sourceTier": "A",
-    "note": "The valve that keeps the legitimate HBM trade flowing while 3A090.c stays broad. The gap between the 2 GB/s/mm² control line and the 3.3 GB/s/mm² exception ceiling is the space in which ordinary HBM3 packaging logistics happen; the RS control on 3A090.c applies only to Macau and Country Group D:5, so allied shipments need no license at any density; the 3.3 GB/s per mm² ceiling in 740.25(c) governs co-packaging inside China.",
+    "note": "The exception that keeps the legitimate HBM trade moving while 3A090.c stays broad. The gap between the 2 GB/s/mm² control line and the 3.3 GB/s/mm² exception ceiling is the space in which ordinary HBM3 packaging logistics happen; the RS control on 3A090.c applies only to Macau and Country Group D:5, so allied shipments need no license at any density; the 3.3 GB/s per mm² ceiling in 740.25(c) governs co-packaging inside China.",
     "kind": "memory",
     "paramShort": "Memory bandwidth density",
     "unitShort": "GB/s per mm²"
@@ -201,7 +201,7 @@
     "cfr": "15 CFR part 774, supplement no. 1, ECCN 4A090",
     "source": "https://www.federalregister.gov/documents/2023/10/25/2023-23055/implementation-of-additional-export-controls-certain-advanced-computing-items-supercomputer-and",
     "sourceTier": "A",
-    "note": "The system-level mirror of 3A090, and the entry most of the smuggling cases actually turn on, because chips move in servers. It catches assembled AI servers wherever they are built; it misses nothing technically, which is why enforcement against 4A090 is a transshipment problem.",
+    "note": "The system-level mirror of 3A090, and the entry most of the smuggling cases turn on, because chips move in servers. It catches assembled AI servers wherever they are built; it misses nothing technically, which is why enforcement against 4A090 is a transshipment problem.",
     "kind": "chips",
     "paramShort": "Server or rack",
     "unitShort": "TPP chip"
@@ -226,7 +226,7 @@
     "cfr": "15 CFR 742.6(b)(10)(iii)",
     "source": "https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities",
     "sourceTier": "A",
-    "note": "The first threshold in the regime that opens a door: it draws a second line above 3A090.a and says everything between them may be sold to China if the conditions hold. It catches the H200 and MI325X; it deliberately excludes Blackwell-class parts, which sit far above TPP 21,000.",
+    "note": "The first threshold in the regime that permits instead of denying: it draws a second line above 3A090.a and says everything between them may be sold to China if the conditions hold. It catches the H200 and MI325X; it deliberately excludes Blackwell-class parts, which sit far above TPP 21,000.",
     "kind": "chips",
     "paramShort": "TPP",
     "unitShort": ""
@@ -276,7 +276,7 @@
     "cfr": "15 CFR 742.6(b)(10)(iii); part 748, supplement no. 2, paragraph (dd)",
     "source": "https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities",
     "sourceTier": "A",
-    "note": "An industrial-policy condition dressed as an export control: China may not receive more than half of what the American market receives of the same part. It ties the size of the permitted China business to the size of the US business, so the cap grows as US data-center demand grows.",
+    "note": "An industrial-policy condition written as an export control: China may not receive more than half of what the American market receives of the same part. It ties the size of the permitted China business to the size of the US business, so the cap grows as US data-center demand grows.",
     "kind": "chips",
     "paramShort": "China share of shipments",
     "unitShort": "%"
@@ -384,7 +384,7 @@
     "cfr": "15 CFR 772.1; 744.23",
     "source": "https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-produced-direct-product-rule-additions-and-refinements-to-controls-for-advanced-computing",
     "sourceTier": "A",
-    "note": "The clearest example of a threshold being rewritten because it did not survive contact with a fab. Half-pitch is a marketing number; cell area, bit density and TSV count are measurable on a die. The TSV prong was added specifically so that HBM base dies cannot escape by being coarse in-plane.",
+    "note": "The clearest example of a threshold being rewritten because it did not work against a real fab. Half-pitch is a marketing number; cell area, bit density and TSV count are measurable on a die. The TSV prong was added specifically so that HBM base dies cannot escape by being coarse in-plane.",
     "kind": "fabs",
     "paramShort": "DRAM cell area",
     "unitShort": "µm²"
@@ -441,7 +441,7 @@
     "alsoSee": [
       "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-742/section-742.6"
     ],
-    "note": "Overlay is the parameter that separates a usable advanced-logic scanner from a mature-node one, because multipatterning lives or dies on layer-to-layer alignment. The 1.50 nm tier tracks ASML's top immersion tools and the 2.4 nm tier reaches down into the older immersion fleet the Dutch controls also cover.",
+    "note": "Overlay is the parameter that separates a usable advanced-logic scanner from a mature-node one, because multipatterning depends entirely on layer-to-layer alignment. The 1.50 nm tier tracks ASML's top immersion tools and the 2.4 nm tier reaches down into the older immersion fleet the Dutch controls also cover.",
     "kind": "tools",
     "paramShort": "Dedicated chuck overlay",
     "unitShort": "nm"
@@ -468,7 +468,7 @@
     "cfr": "15 CFR 734.4(a)(3)",
     "source": "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-734/section-734.4",
     "sourceTier": "A",
-    "note": "A zero threshold is the strongest form an export control takes: it converts every American screw, laser or controller inside a foreign scanner into US jurisdiction. It is aimed squarely at ASML and at any future non-US scanner builder, and its carve-out for countries with equivalent controls is the mechanism that rewards allied alignment. The current eCFR text of 734.4(a)(3) keys the zero threshold to equipment meeting the ECCN 3B993.f.1 parameters when it is destined for the development or production of advanced-node integrated circuits, and carries the Japanese and Dutch control-list dates in a footnote.",
+    "note": "A zero threshold is the strongest form an export control takes: it converts every American screw, laser or controller inside a foreign scanner into US jurisdiction. It is aimed at ASML and at any future non-US scanner builder, and its carve-out for countries with equivalent controls is the mechanism that rewards allied alignment. The current eCFR text of 734.4(a)(3) ties the zero threshold to equipment meeting the ECCN 3B993.f.1 parameters when it is destined for the development or production of advanced-node integrated circuits, and carries the Japanese and Dutch control-list dates in a footnote.",
     "kind": "tools",
     "paramShort": "US-origin content",
     "unitShort": "%"
@@ -532,7 +532,7 @@
     "alsoSee": [
       "https://www.federalregister.gov/documents/2024/09/06/2024-19633/commerce-control-list-additions-and-revisions-implementation-of-controls-on-advanced-technologies"
     ],
-    "note": "The clearest sign that the control map is drawn around processes: ECCN 3B090 was invented in October 2022 as a China-only entry and then dissolved into the general 3B001 list a year later, which multilateralised it. It catches tungsten and cobalt fill and ALD; it does not catch the older deposition tools that make up most of a mature-node fab.",
+    "note": "The clearest sign that the control map is drawn around processes: ECCN 3B090 was invented in October 2022 as a China-only entry and then dissolved into the general 3B001 list a year later, which made it a multilateral control. It catches tungsten and cobalt fill and ALD; it does not catch the older deposition tools that make up most of a mature-node fab.",
     "kind": "tools",
     "paramShort": "Designed for deposition",
     "unitShort": ""
@@ -701,7 +701,7 @@
     "alsoSee": [
       "https://www.federalregister.gov/documents/2025/11/12/2025-19846/one-year-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed-entities"
     ],
-    "note": "The single largest expansion of the Entity List's reach, and the fastest reversal: stayed on 10 November 2025 as part of the one-year US-China truce and due to snap back on 9 November 2026 unless extended. It is the most consequential scheduled date in the map.",
+    "note": "The single largest expansion of the Entity List's reach, and the fastest reversal: stayed on 10 November 2025 as part of the one-year US-China truce and due to return on 9 November 2026 unless extended. It is the most consequential scheduled date in the map.",
     "kind": "entities",
     "paramShort": "Ownership share",
     "unitShort": "%"
@@ -822,7 +822,7 @@
     "unit": "TPP, cumulative maximum per country",
     "alternative": "Presumption of approval up to the allocation; presumption of denial above it and for Macau and Country Group D:5",
     "destinations": "All destinations outside the 18 Tier 1 allies and outside D:5",
-    "licensePolicy": "Rescinded before it was enforced",
+    "licensePolicy": "Rescission announced; never enforced",
     "effectiveDate": "2025-01-15",
     "status": "Rescinded",
     "amendedBy": [
@@ -833,7 +833,7 @@
     "cfr": "15 CFR 742.6(a)(6); part 740, supplement no. 5",
     "source": "https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion",
     "sourceTier": "A",
-    "note": "The most ambitious threshold ever written into the regime: a numeric compute quota for entire countries. Published 15 January 2025, never enforced, rescinded 13 May 2025 with BIS instructing enforcement officials to stand down before the 15 May compliance date. Kept in the map because the numbers define what a compute quota would look like if one returns.",
+    "note": "The most ambitious threshold ever written into the regime: a numeric compute quota for entire countries. Published 15 January 2025, never enforced: on 13 May 2025, before the 15 May compliance date, BIS told its enforcement officials not to enforce it. Kept in the map because the numbers define what a compute quota would look like if one returns.",
     "kind": "chips",
     "paramShort": "Country TPP allocation",
     "unitShort": "TPP"
@@ -849,7 +849,7 @@
     "unit": "TPP by 2027, rising from 633,000,000 in Q1 2025 through 1,899,000,000 in Q1 2026",
     "alternative": "Eligibility limited to entities in Country Groups A, B and D:1 to D:4, excluding Macau and D:5",
     "destinations": "Outside the Tier 1 allies and outside D:5",
-    "licensePolicy": "Rescinded before it was enforced",
+    "licensePolicy": "Rescission announced; never enforced",
     "effectiveDate": "2025-01-15",
     "status": "Rescinded",
     "amendedBy": [
@@ -876,7 +876,7 @@
     "unit": "% of total AI computing power outside the Tier 1 list, with no more than 7% in any single country outside it",
     "alternative": "US-headquartered UVEUs could not place more than 50% of their total AI computing power outside the United States",
     "destinations": "Anywhere except Macau and Country Group D:5",
-    "licensePolicy": "Rescinded before it was enforced",
+    "licensePolicy": "Rescission announced; never enforced",
     "effectiveDate": "2025-01-15",
     "status": "Rescinded",
     "amendedBy": [
@@ -887,7 +887,7 @@
     "cfr": "15 CFR 748.15",
     "source": "https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion",
     "sourceTier": "A",
-    "note": "A control on where American compute physically sits. The 50 percent domestic-retention condition for US firms reappears in a different form in the January 2026 H200 rule, which suggests the idea survived the rescission even though the rule did not.",
+    "note": "A control on where American compute physically sits. The 50 percent domestic-retention condition for US firms reappears in a different form in the January 2026 H200 rule, which suggests the idea survived even though the rule was set aside.",
     "kind": "chips",
     "paramShort": "Share outside Tier 1",
     "unitShort": "%"
@@ -903,7 +903,7 @@
     "unit": "TPP of advanced computing ICs per calendar year to any individual ultimate consignee",
     "alternative": "Direct exports only, no distributors; not available for Macau or D:5",
     "destinations": "Outside Macau and Country Group D:5",
-    "licensePolicy": "Rescinded before it was enforced",
+    "licensePolicy": "Rescission announced; never enforced",
     "effectiveDate": "2025-01-15",
     "status": "Rescinded",
     "amendedBy": [
@@ -941,7 +941,7 @@
     "cfr": "15 CFR 742.6(a)(13), (b)(14)",
     "source": "https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion",
     "sourceTier": "A",
-    "note": "The seam between chip governance and model governance, and the only time the two have been written into the same instrument. It borrowed the 10^26 figure from the 2023 executive order's reporting threshold, which shows how quickly a reporting number becomes a control number.",
+    "note": "The point where chip governance meets model governance, and the only time the two have been written into the same instrument. It borrowed the 10^26 figure from the 2023 executive order's reporting threshold, which shows how quickly a reporting number becomes a control number.",
     "kind": "models",
     "paramShort": "Training compute",
     "unitShort": "operations"

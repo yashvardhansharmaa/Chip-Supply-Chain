@@ -3,7 +3,7 @@
  "id": "deposition-and-etch",
  "number": 6,
  "title": "Deposition and Etch",
- "oneLiner": "Lithography prints the pattern; deposition and etch do the rest, over a thousand steps per wafer, and it is the one tool segment where China has taken real share.",
+ "oneLiner": "Lithography prints the pattern; deposition and etch do the rest, over a thousand steps per wafer, and it is the one kind of chipmaking tool where Chinese makers have gained real share.",
  "plain": "Deposition and etch build the chip itself, one layer at a time. Deposition lays down a film a few atoms thick. Lithography prints a pattern on it. Etch then eats away everything the pattern does not protect, and the next film goes down on top. A chip takes more than a thousand of these rounds. Some of the holes the etch cuts are hundreds of times deeper than they are wide, the shape of a finger-wide shaft dropping through several floors, and the film has to coat them right to the bottom. The etch has to eat one material and leave the one beside it untouched. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.",
  "bridge": "A printed pattern is not yet a circuit, and the machines that turn it into one run more often than anything else in the fab.",
  "specimen": "process-chamber",
@@ -25,14 +25,14 @@
  {"code": "KR", "note": "Large buyer; Semes and local suppliers in wet processing"},
  {"code": "CN", "note": "Naura, AMEC, Piotech; largest equipment market at $49.3B in 2025"}
  ],
- "chinaStatus": "China's strongest position in any kind of chipmaking tool. Chinese suppliers held about 11 percent of dry etch and 7 percent of deposition in 2024, but under 1 percent of atomic layer deposition.",
- "usStatus": "Two of the three largest tool makers are American. Washington lists dry etch, atomic layer deposition and deep-hole deposition tools as controlled exports, and one rule reaches tools built outside the United States with American technology.",
+ "chinaStatus": "Of all kinds of chipmaking tool, deposition and etch is where Chinese makers are strongest. Chinese suppliers held about 11 percent of dry etch and 7 percent of deposition in 2024, but under 1 percent of atomic layer deposition.",
+ "usStatus": "Two of the three largest deposition and etch tool makers are American. The US government lists dry etch, atomic layer deposition and deep-hole deposition tools as controlled exports, and one rule also covers tools built outside the United States with American technology.",
  "costSignal": "Tool makers publish no list prices. World sales of chipmaking equipment were $135.1B in 2025, with wafer processing tools up 12%.",
- "substitutability": {"band": "Moderate", "test": "Most deposition and etch steps have three or four approved tool makers; atomic layer deposition is the exception.", "why": "For most of the deposition and etch steps inside a fab, the tool can already be bought from three or four makers: Applied Materials, Lam, Tokyo Electron and ASM International. Switching from one to another means testing the new tool on the fab's own line until it matches, which takes two to five years for the newest chips. The exception is atomic layer deposition, which lays down a film one layer of atoms at a time. Chinese tool makers won real share in etch over five years but stayed under 1 percent in this step, so it is the one where China has the farthest to go."}
+ "substitutability": {"band": "Moderate", "test": "Most deposition and etch steps have three or four approved tool makers; atomic layer deposition is the exception.", "why": "For most of the deposition and etch steps inside a fab, the tool can already be bought from three or four makers: Applied Materials, Lam, Tokyo Electron and ASM International. Switching from one maker to another means testing the new tool on the fab's own line until it matches, which takes two to five years for the newest chips. The exception is atomic layer deposition, which lays down a film one layer of atoms at a time. Chinese tool makers gained real share in etch over five years but stayed under 1 percent in atomic layer deposition, so that is the step where China is weakest."}
  },
  "keyFacts": [
  {"fact": "Producing one chip takes more than 1,000 process steps and 70 or more border crossings (CSET, 2021)", "source": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"},
- {"fact": "Global semiconductor equipment billings reached $135.1B in 2025, up 15% from $117.1B in 2024, with wafer processing equipment up 12% (SEMI)", "source": "https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025"},
+ {"fact": "Global sales of chipmaking equipment reached $135.1B in 2025, up 15% from $117.1B in 2024, with wafer processing equipment up 12% (SEMI)", "source": "https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025"},
  {"fact": "China bought $49.3B of semiconductor equipment in 2025, still the largest single market but down 0.5%, while Taiwan rose 90% to a record $31.5B (SEMI)", "source": "https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025"},
  {"fact": "Tokyo Electron held 23% of dry etch, 38% of CVD and 15% of ALD worldwide in CY2025, against 91% of coater/developer, on the share chart in its own FY2026 results presentation", "source": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf"},
  {"fact": "China-based suppliers reached 7% of deposition and about 11% of dry etch in 2024, from 2% and under 3% in 2019", "source": "https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/"},
@@ -82,7 +82,7 @@ For deposition the gas carries the material wanted. The fragments land on the wa
 
 For etch the gas attacks one material and leaves the one beside it. Wherever the photoresist pattern covers the wafer, nothing happens. Wherever it does not, the fragments react with the surface and turn it into a gas, which the pump carries away. A second field pulls the charged fragments straight down at the wafer, so the etch cuts vertically and a narrow hole keeps its width as it deepens. When the etch reaches the material underneath, which the gas was chosen not to touch, it slows almost to a stop, and the tool ends the step.
 
-Change the gas, the pressure, the power and the temperature, and the same hardware either adds material or takes it away, which is why the export controls here are written as process specifications.
+Change the gas, the pressure, the power and the temperature, and the same hardware either adds material or takes it away, which is why the export controls on these tools are written as process specifications.
 
 CSET puts a single chip at more than 1,000 process steps, with the part-finished product crossing international borders 70 or more times ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 
@@ -92,7 +92,7 @@ CSET puts a single chip at more than 1,000 process steps, with the part-finished
 
 The market sizes and leading shares below are CSET's for 2025, which it builds from TechInsights data, on a $26.2 billion deposition tool market ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N36)) and a $21.9 billion dry etch market ([source](https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N103)).
 
-- **Physical vapor deposition** knocks atoms off a solid target and lands them on the wafer, the workhorse for metal barriers and seed layers, $4.9 billion in 2025 ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N42)).
+- **Physical vapor deposition** knocks atoms off a solid target and lands them on the wafer, the standard method for metal barriers and seed layers, $4.9 billion in 2025 ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N42)).
 - **Chemical vapor deposition** reacts gases at the wafer surface to grow a film; the plasma-enhanced version runs cooler and is most of the $11.2 billion CVD market, $7.5 billion in 2025 ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N47)) ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N38)).
 - **Atomic layer deposition** lays down less than one atomic layer at a time, so it coats vertical walls as evenly as horizontal floors. US regulators call it the basis for 3D scaling in 3D DRAM, 3D NAND and gate-all-around logic ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)); ASM International leads it with 54.5 percent of a $4.1 billion market in 2025 ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N41)).
 - **Epitaxy and electroplating** grow the strained silicon-germanium source and drain, and fill the copper wiring trenches ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
@@ -115,7 +115,7 @@ AI hardware asks for sideways cuts, deeper holes and a second metal stack on the
 
 SEMI put global equipment billings at $135.1 billion in 2025, up 15 percent from $117.1 billion, with wafer processing equipment up 12 percent ([source](https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025)).
 
-Within deposition and etch there is no single ASML. The share chart in Tokyo Electron's own results presentation puts it at 23 percent of dry etch, 27 percent of deposition systems and 15 percent of ALD in 2025, against 91 percent of coater/developer ([source](https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf)).
+Within deposition and etch no one firm dominates as ASML does in lithography. The share chart in Tokyo Electron's own results presentation puts it at 23 percent of dry etch, 27 percent of deposition systems and 15 percent of ALD in 2025, against 91 percent of coater/developer ([source](https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf)).
 
 ASM International, the atomic layer deposition specialist, reached a record EUR 3.2 billion of revenue in 2025 as customers built 2 nm gate-all-around capacity, with molybdenum ALD entering volume production ([source](https://www.asm.com/media/yvxbavwe/20260303-asm-reports-q4-and-full-year-2025-results.pdf)).
 
@@ -123,7 +123,7 @@ ASM International, the atomic layer deposition specialist, reached a record EUR 
 
 ## China and the controls
 
-China is the largest customer and the fastest-improving competitor. It bought $49.3 billion of equipment in 2025, still the biggest single market, though its spending fell half a percent while Taiwan's rose 90 percent to $31.5 billion ([source](https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025)). China still takes a large share of every major vendor's sales.
+China is the tool vendors' largest customer and their fastest-improving competitor. It bought $49.3 billion of equipment in 2025, still the biggest single market, though its spending fell half a percent while Taiwan's rose 90 percent to $31.5 billion ([source](https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025)). China still takes a large share of every major vendor's sales.
 
 - **Tokyo Electron**: 34.1 percent of sales in the year to March 2026, down from 41.7 percent ([source](https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf)).
 - **Lam Research**: 26 percent in the June 2026 quarter, behind Taiwan at 27 percent ([source](https://www.sec.gov/Archives/edgar/data/707549/000070754926000033/lrcx_exhibitx991xq4x2026.htm)).
@@ -145,7 +145,7 @@ Applied Materials took a $253 million charge to settle an export controls matter
 
 ## The chokepoint
 
-The chokepoint is real but softer than lithography's. Three or four credible vendors exist for most etch and deposition steps. The narrow points are ALD, where China holds under 1 percent ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)), and the extremely deep, narrow holes that HBM and 3D memory need. That is where the December 2024 rule aims ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
+The chokepoint is real but weaker than lithography's. Three or four credible vendors exist for most of the deposition and etch steps inside a fab. The exceptions are ALD, where China holds under 1 percent ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)), and the extremely deep, narrow holes that HBM and 3D memory need. The December 2024 rule targets those ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
 
 ## Key evaluation criteria
 
@@ -153,8 +153,8 @@ The chokepoint is real but softer than lithography's. Three or four credible ven
 - **Conformality and aspect ratio.** Whether a film reaches the bottom of a hole, and how deep that hole is against its width. Controls start at 10:1 for TSV etch and 200:1 for 3D DRAM deposition ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
 - **Uniformity.** Variation across a 300 mm wafer, with under 2 percent treated as an advanced-manufacturing marker ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
 - **Throughput.** Wafers per hour, which sets cost per layer and decides how many lots a fab can run.
-- **Particles and chamber matching.** How much of the defect budget these tools eat, and whether one chamber behaves like the next, which metrology and inspection measure (see [Metrology and inspection](#metrology-and-inspection)).
+- **Particles and chamber matching.** How large a share of the defects a fab can tolerate comes from these tools, and whether one chamber behaves like the next, which metrology and inspection measure (see [Metrology and inspection](#metrology-and-inspection)).
 
 ## Takeaways
 
-Deposition and etch are the volume business of a fab: over a thousand steps per wafer, four American, Japanese and Dutch firms taking most of the money, and no monopoly like ASML's in lithography. The AI roadmap raises difficulty faster than tool count, because gate-all-around, HBM and backside power ask each chamber for better selectivity and deeper holes. China has closed the gap fastest here and slowest in ALD, the tool gate-all-around logic depends on.
+Deposition and etch are the volume business of a fab: over a thousand steps per wafer, four American, Japanese and Dutch firms taking most of the money, and no monopoly like ASML's in lithography. The AI roadmap makes each step harder faster than it adds steps, because gate-all-around, HBM and backside power ask each chamber for better selectivity and deeper holes. China has closed the gap fastest in deposition and etch and slowest in ALD, the tool gate-all-around logic depends on.

@@ -1434,7 +1434,7 @@
           (f.route ? '<span class="cf-route">' + esc(f.route) + '</span>' : '') +
           (f.what ? '<span class="cf-what">' + esc(f.what) + '</span>' : '') + '</span>' +
           '<span class="cf-state">' + self.pillHTML(st) + '</span>' +
-          '<span class="cf-n">' + n + (n === 1 ? ' move' : ' moves') + '</span>' +
+          '<span class="cf-n">' + n + (n === 1 ? ' event' : ' events') + '</span>' +
           '<span class="cf-caret" aria-hidden="true"></span></h4>' +
           '<div class="cf-hist" id="cf-h-' + id + '" role="region" aria-labelledby="cf-b-' + id + '"><div class="cf-hist-in"></div></div>' +
           '</section>';
@@ -1444,7 +1444,7 @@
     /* the row read aloud: the button carries no text of its own, so it says what the row says */
     rowLabel: function (f, st, n) {
       return [f.name || f.id, f.route, this.STATE[st.status] + (st.suspended ? ', suspended until ' + this.fmtDate(st.suspendedUntil) : ''),
-      st.date ? 'from ' + this.fmtDate(st.date) : 'open since 2018', n + (n === 1 ? ' move' : ' moves')].filter(function (x) { return x; }).join(', ');
+      st.date ? 'from ' + this.fmtDate(st.date) : 'open since 2018', n + (n === 1 ? ' event' : ' events')].filter(function (x) { return x; }).join(', ');
     },
     /* the glossary's own terms inside a state label become popover buttons, so TPP and the Entity List are defined in place */
     GLOSS: [[/\bTPP\b/g, 'tpp', 'TPP'], [/\bEntity List\b/g, 'entity list', 'Entity List'], [/\bFDPR\b/g, 'foreign direct product rule', 'FDPR'], [/\bforeign direct product rule\b/gi, 'foreign direct product rule', 'foreign direct product rule'], [/\blicen[cs]e exception\b/gi, 'license exception', 'license exception']],
@@ -1574,7 +1574,7 @@
           '<div class="tl-panel" id="' + id + '" hidden><p>' + esc(e.summary || '') + '</p>' +
           (host ? '<a class="src" href="' + safeUrl(e.source) + '" target="_blank" rel="noopener">' + esc(host) + '</a>' : '') +
           '</div></div></li>';
-      }).join('') + '</ol>' : '<p class="cf-none">No move has touched this flow yet.</p>';
+      }).join('') + '</ol>' : '<p class="cf-none">No event has changed this flow yet.</p>';
       return body + this.chapterHTML(f);
     },
     /* the chapter that tells this flow's story, when the data names one */
@@ -1593,7 +1593,7 @@
         '<div class="cf-track"><div class="cf-years" id="cf-years" role="group" aria-label="Set the date by year">' +
         this.years.map(function (y) {
           var n = self.yearN[y] || 0;
-          return '<button type="button" class="cf-year" data-y="' + y + '" aria-pressed="false" aria-label="' + y + ', ' + n + (n === 1 ? ' move' : ' moves') + '">' +
+          return '<button type="button" class="cf-year" data-y="' + y + '" aria-pressed="false" aria-label="' + y + ', ' + n + (n === 1 ? ' event' : ' events') + '">' +
             '<span class="cf-yl">' + y + '</span><span class="cf-ys">’' + String(y).slice(2) + '</span><span class="cf-yn">' + n + '</span></button>';
         }).join('') + '</div><div class="cf-head" id="cf-head" aria-hidden="true"></div></div>';
       var years = $('#cf-years'), now = $('#cf-now');

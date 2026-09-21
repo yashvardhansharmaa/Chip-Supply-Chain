@@ -76,7 +76,7 @@ const ROLE = {
   KR: 'Memory, including the high-bandwidth stacks every accelerator needs',
   DE: 'The optics inside every EUV scanner; specialty chemicals',
   CN: 'The largest market, now building its own tools, memory and chips',
-  MY: 'Test and assembly, the last stop before the server',
+  MY: 'Test and assembly, the last stage before the server',
   SG: 'Test, assembly and mature-node fabs',
   GB: 'Arm and the other processor designs most chips license',
   IL: 'Metrology and inspection tools, and chip design centers',

@@ -3,9 +3,9 @@
   "id": "component-costs",
   "number": 16,
   "title": "The Economics of AI Chips",
-  "oneLiner": "Inside an AI accelerator the silicon is the cheap part. Memory and packaging are the bill.",
+  "oneLiner": "Inside an AI accelerator the silicon is the cheap part. Memory and packaging are most of the cost.",
   "plain": "A bill of materials is the list of parts inside a product and what each one costs to build. For an AI accelerator, the processor itself, the chip that does the calculating, is the cheap part, about a seventh of the total. The stacked memory beside it is nearly half, and the packaging that wires the two together costs more than the chip. Three firms in the world make that memory and one Taiwanese firm does that packaging, so the costliest parts are also the scarcest, and that is where a government's rules bite hardest.",
-  "bridge": "The physical chain ends at a powered rack, and the next question is which part of it holds the money.",
+  "bridge": "The physical chain ends at a powered rack, and the next question is which part of it costs the most.",
   "specimen": "wafer-cost",
   "specimenCaption": "What it costs to build one B200, drawn as a column with each layer as tall as its share of the bill. From the foot: $2,900 of memory in garnet, $1,100 of packaging, $1,000 of yield loss drawn hollow, $900 of logic dies, $480 of board and test. About $6,400 in all, for a part that sells for $30,000 to $40,000.",
   "keyFacts": [
@@ -34,7 +34,7 @@
       "source": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026"
     },
     {
-      "fact": "A 100,000 H100 cluster needs about 150 MW and burns 1.59 TWh per year",
+      "fact": "A 100,000 H100 cluster needs about 150 MW and uses 1.59 TWh per year",
       "source": "https://newsletter.semianalysis.com/p/100000-h100-clusters-power-network"
     },
     {
@@ -160,7 +160,7 @@
 ---
 # Component Costs
 
-Building a Blackwell B200 costs about $6,400. Nvidia sells it for $30,000 to $40,000 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). That $6,400 splits into stages that are expensive because of physics, because capacity is short, or because one firm can charge.
+Building a Blackwell B200 costs about $6,400. Nvidia sells it for $30,000 to $40,000 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). That $6,400 splits into stages that are expensive because of physics, because capacity is short, or because one firm sets the price.
 
 ## How it works
 
@@ -176,13 +176,13 @@ Those three numbers put the two dies inside a B200 at about $900, 14 percent of 
 
 ## Variants and trade-offs
 
-### Memory is the bill
+### Memory is the largest line
 
 The 192 GB of high-bandwidth memory beside those dies, sold as HBM3E, is the single largest line: about $2,900, 45 percent of the build, at $14 to $17 per gigabyte ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Nvidia controls that line least of all: three firms make the memory, and they sell every stack they can build.
 
 ### Packaging, substrate and test
 
-CoWoS-L, the TSMC process that mounts dies and memory on one carrier and wires them together, adds about $1,100, more than the logic dies it carries ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Packaging yield runs 65 to 95 percent, and a package that fails after the memory goes on throws away the dies and the memory with it, adding roughly $1,000 to every B200 that ships ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Substrate, board, test and assembly add $480 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). See [Advanced packaging](#advanced-packaging) for why that capacity binds first.
+CoWoS-L, the TSMC process that mounts dies and memory on one carrier and wires them together, adds about $1,100, more than the logic dies it carries ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Packaging yield runs 65 to 95 percent, and a package that fails after the memory goes on throws away the dies and the memory with it, adding roughly $1,000 to every B200 that ships ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Substrate, board, test and assembly add $480 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). See [Advanced packaging](#advanced-packaging) for why packaging capacity runs out first.
 
 ### The B200 bill of materials
 
@@ -204,7 +204,7 @@ Epoch AI models each line as a range, deriving the packaging line from TSMC's ad
 
 At rack scale the number that matters is the cost of a GPU-hour. For an operator that owns the machine, SemiAnalysis puts a Vera Rubin NVL72 at $3.57, against $1.84 for a GB200 and $2.36 for a GB300 ([source](https://inferencex.semianalysis.com/blog/vera-rubin-nvl72-vs-gb200-nvl72-inference)). Each generation costs its owner more per hour than the last, and buyers pay because throughput rises faster than the rate.
 
-One level up, a 100,000 H100 cluster costs over $4 billion in servers, draws about 150 MW, burns 1.59 TWh a year, pays $123.9 million for power and needs 98,304 optical transceivers ([source](https://newsletter.semianalysis.com/p/100000-h100-clusters-power-network)).
+One level up, a 100,000 H100 cluster costs over $4 billion in servers, draws about 150 MW, uses 1.59 TWh a year, pays $123.9 million for power and needs 98,304 optical transceivers ([source](https://newsletter.semianalysis.com/p/100000-h100-clusters-power-network)).
 
 ## Who captures the value
 
@@ -233,26 +233,26 @@ The two bodies that count this industry disagree. World Semiconductor Trade Stat
 
 {{figure:market-2025}}
 
-## Where the money sits
+## Where the money goes
 
-Per unit of compute, logic keeps getting cheaper and everything wrapped around it gets dearer. Packaging and its scrap cost more than twice the logic dies ([source](https://epoch.ai/data-insights/b200-cost-breakdown)), and a GB300 NVL72 rack already draws 142 kW ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
+Per unit of compute, logic keeps getting cheaper and everything wrapped around it gets more expensive. Packaging and its scrap cost more than twice the logic dies ([source](https://epoch.ai/data-insights/b200-cost-breakdown)), and a GB300 NVL72 rack already draws 142 kW ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
 
 | Stage | Class | Why |
 |---|---|---|
-| EUV lithography | Structurally expensive | One supplier; price set by a twenty-year optics curve. |
+| EUV lithography | Structurally expensive | One supplier; price set by twenty years of optics development. |
 | Masks and pellicles | Structurally expensive | Scales with layer count; every design pays again. |
 | Metrology and inspection | Structurally expensive | Inspection time rises faster than throughput. |
 | HBM | Structurally expensive | Stacking and through-silicon vias cut good die per wafer. |
 | Advanced packaging, CoWoS-L | Structurally expensive | 65 to 95 percent packaging yield; scrap destroys dies and memory. |
 | Power and cooling plant | Structurally expensive | Priced by grid queues and turbine lead times. |
 | Leading-edge logic wafers | Compressible with scale | Defect density and utilization improve through a ramp. |
-| Design and EDA | Compressible with scale | Engineering cost amortises across volume. |
+| Design and EDA | Compressible with scale | Engineering cost is spread across volume. |
 | Deposition and etch tools | Compressible with scale | Credible second sources for most deposition and etch steps. |
 | ABF substrates | Compressible with scale | A laminate line, buildable at scale. |
 | Optical transceivers | Compressible with scale | Copper and co-packaged optics cap the price. |
-| Test and assembly (OSAT) | Already commoditized | 17 to 21 percent margins; clears on price. |
-| Wafers and bulk gases | Already commoditized | Multi-supplier, long-qualified, thin spreads. |
-| Rack integration (ODM) | Already commoditized | Low-teens margins on specified content. |
+| Test and assembly (OSAT) | Already commoditized | 17 to 21 percent margins; sold on price. |
+| Wafers and bulk gases | Already commoditized | Multi-supplier, long-qualified, thin margins. |
+| Rack integration (ODM) | Already commoditized | Low-teens margins on parts the customer specifies. |
 
 ## Key evaluation criteria
 
@@ -265,4 +265,4 @@ Per unit of compute, logic keeps getting cheaper and everything wrapped around i
 
 ## Takeaways
 
-On a B200 the logic dies are 14 percent of the build, memory 45, and packaging with its scrap another 33 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Nvidia's 75 percent gross margin is the most visible number in the chain ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027)), and a custom chip can attack it by buying the same wafers and the same memory. The lines underneath are harder to attack: memory stacking yield, CoWoS interposer yield and the megawatts do not get cheaper as volume rises.
+On a B200 the logic dies are 14 percent of the build, memory 45, and packaging with its scrap another 33 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Nvidia's 75 percent gross margin is the most visible number in the chain ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027)), and a custom chip can undercut it by buying the same wafers and the same memory. The lines underneath are harder to cut: memory stacking yield, CoWoS interposer yield and the megawatts do not get cheaper as volume rises.
