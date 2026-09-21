@@ -422,7 +422,7 @@ const flows = readJSON(path.join(root, 'data', 'control-flows.json'), null); // 
 const exposure = readJSON(path.join(root, 'data', 'exposure.json'), []);
 const controlsNotes = read(path.join(root, 'data', 'control-thresholds-notes.md'));
 const exposureNotes = read(path.join(root, 'data', 'exposure-notes.md'));
-/* ---------------- China exposure: one bar chart per firm, China revenue by fiscal year in the firm's own currency (static SVG; app.js adds the tooltips) ---------------- */
+/* ---------------- China exposure: one bar chart per firm, China's share of revenue by fiscal year (static SVG; app.js adds the tooltips) ---------------- */
 function exposureViz(rows) {
   const ok = rows.filter((r) => r.chinaShare != null && r.fyEnd);
   if (!ok.length) return '';
@@ -435,42 +435,32 @@ function exposureViz(rows) {
     const rs = byFirm[f].slice().sort((a, b) => tx(a.fyEnd) - tx(b.fyEnd));
     const peak = rs.reduce((m, r) => (r.chinaShare > m.chinaShare ? r : m), rs[0]);
     return { firm: f, rows: rs, first: rs[0], last: rs[rs.length - 1], peak, meta: rs[0], hasMoney: rs.every((r) => r.chinaRevenue != null) };
-  }).sort((a, b) => catRank(a.meta.category) - catRank(b.meta.category) || b.last.chinaRevenue - a.last.chinaRevenue || a.firm.localeCompare(b.firm));
+  }).sort((a, b) => catRank(a.meta.category) - catRank(b.meta.category) || b.last.chinaShare - a.last.chinaShare || a.firm.localeCompare(b.firm));
   const T0 = 2021, T1 = 2026.6;
   const rules = [[tx('2022-10'), 'Oct 2022'], [tx('2023-10'), 'Oct 2023'], [tx('2024-12'), 'Dec 2024']];
   const pct = (v) => (v >= 10 ? Math.round(v) : Math.round(v * 10) / 10) + '%';
   const unit = (cur) => { const c = String(cur || '').toUpperCase(); if (c.startsWith('USD')) return ['$', 'bn', 1000]; if (c.startsWith('EUR')) return ['€', 'bn', 1000]; if (c.startsWith('JPY')) return ['¥', 'bn', 1000]; if (c.startsWith('KRW')) return ['₩', 'tn', 1000000]; return [c.split(' ')[0] + ' ', 'm', 1]; };
   const money = (v, cur) => { const [sym, suf, div] = unit(cur); const n = v / div; return sym + (n >= 100 ? Math.round(n) : n >= 10 ? Math.round(n * 10) / 10 : Math.round(n * 100) / 100) + suf; };
   const attrs = (r) => `data-firm="${esc(r.firm)}" data-fy="${esc(r.fiscalYear)}" data-share="${r.chinaShare}" data-china="${r.chinaRevenue != null ? r.chinaRevenue : ''}" data-total="${r.totalRevenue != null ? r.totalRevenue : ''}" data-cur="${esc(r.currency || '')}" data-basis="${esc(r.basis || '')}"`;
-  // one panel per firm: bars of China revenue by fiscal year on the firm's own scale, the share of revenue written above each bar
-  const PW = 240, PH = 122, px0 = 10, px1 = 232, py0 = 18, py1 = 98;
-  const X = (t) => px0 + ((t - T0) / (T1 - T0)) * (px1 - px0);
-  let d = `<div class="ex-legend"><span><i class="lg-bar"></i>China revenue by fiscal year, in the firm's own currency</span><span><i class="lg-top"></i>The year it peaked</span><span><i class="lg-rule"></i>US export rules of Oct 2022, Oct 2023 and Dec 2024</span><span>The figure above each bar is China's share of the firm's revenue that year</span></div><div class="ex-grid">`;
+  // one panel per firm: bars of China's share of revenue by fiscal year on a shared 0 to 60% scale, the peak year in garnet
+  const PW = 240, PH = 122, px0 = 10, px1 = 232, py0 = 18, py1 = 98, YMAX = 60;
+  const X = (t) => px0 + ((t - T0) / (T1 - T0)) * (px1 - px0), Y = (v) => py1 - (Math.min(v, YMAX) / YMAX) * (py1 - py0);
+  let d = `<div class="ex-legend"><span><i class="lg-bar"></i>China's share of the firm's revenue, by fiscal year</span><span><i class="lg-top"></i>The year it peaked</span><span><i class="lg-rule"></i>US export rules of Oct 2022, Oct 2023 and Dec 2024</span><span>Same scale on every panel, 0 to 60%</span></div><div class="ex-grid">`;
   let lastCat = null;
   firms.forEach((f) => {
     const cat = f.meta.category || '';
     if (cat !== lastCat) { d += `<h4 class="ex-cat">${esc(cat)}</h4>`; lastCat = cat; }
-    const topRow = f.hasMoney ? f.rows.reduce((m, r) => (r.chinaRevenue > m.chinaRevenue ? r : m), f.rows[0]) : null;
-    const capNote = f.hasMoney ? `peak ${money(topRow.chinaRevenue, topRow.currency)} in ${esc(topRow.fiscalYear)}${topRow === f.last ? '' : ', ' + money(f.last.chinaRevenue, f.last.currency) + ' in ' + esc(f.last.fiscalYear)}` : 'share of revenue only';
-    let s = `<figure class="ex-panel"><figcaption><b>${esc(f.firm)}</b><span>${f.meta.country ? esc(f.meta.country) + ' · ' : ''}${capNote}</span></figcaption>`;
-    s += `<svg viewBox="0 0 ${PW} ${PH}" role="group" aria-label="${esc(f.firm)}: China revenue by fiscal year, ${esc(f.first.fiscalYear)} to ${esc(f.last.fiscalYear)}">`;
+    let s = `<figure class="ex-panel"><figcaption><b>${esc(f.firm)}</b><span>${f.meta.country ? esc(f.meta.country) + ' · ' : ''}peak ${pct(f.peak.chinaShare)} in ${esc(f.peak.fiscalYear)}</span></figcaption>`;
+    s += `<svg viewBox="0 0 ${PW} ${PH}" role="group" aria-label="${esc(f.firm)}: China share of revenue by fiscal year, ${esc(f.first.fiscalYear)} to ${esc(f.last.fiscalYear)}">`;
+    [20, 40, 60].forEach((v) => { s += `<line x1="${px0}" y1="${Y(v).toFixed(1)}" x2="${px1}" y2="${Y(v).toFixed(1)}" class="grid"/>`; });
     rules.forEach((r) => { s += `<line x1="${X(r[0]).toFixed(1)}" y1="${py0 - 8}" x2="${X(r[0]).toFixed(1)}" y2="${py1}" class="rule"/>`; });
     s += `<line x1="${px0}" y1="${py1}" x2="${px1}" y2="${py1}" class="axis"/>`;
     const n = f.rows.length, slot = (px1 - px0) / Math.max(n, 5), bw = Math.min(26, slot * 0.62);
-    if (f.hasMoney) {
-      const max = Math.max(...f.rows.map((r) => r.chinaRevenue));
-      const top = f.rows.reduce((m, r) => (r.chinaRevenue > m.chinaRevenue ? r : m), f.rows[0]); // the year China revenue peaked, in garnet
-      f.rows.forEach((r) => {
-        const cx = X(tx(r.fyEnd)), h = (r.chinaRevenue / max) * (py1 - py0), y = py1 - h, isTop = r === top;
-        s += `<a href="${safeUrl(r.source || '#')}" target="_blank" rel="noopener" aria-label="${esc(f.firm)} ${esc(r.fiscalYear)}: China revenue ${money(r.chinaRevenue, r.currency)}, ${pct(r.chinaShare)} of the total, opens the filing"><rect x="${(cx - bw / 2).toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" class="bar${isTop ? ' top' : ''}" ${attrs(r)}/></a>`;
-        s += `<text x="${cx.toFixed(1)}" y="${(y - 4).toFixed(1)}" class="share${isTop ? ' top' : ''}" text-anchor="middle">${pct(r.chinaShare)}</text>`;
-      });
-    } else { // no filed China revenue: the share alone, as points on the same time axis
-      const Y = (v) => py1 - (v / 60) * (py1 - py0);
-      const pts = f.rows.map((r) => [X(tx(r.fyEnd)), Y(r.chinaShare)]);
-      s += `<path d="${pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ')}" class="line"/>`;
-      f.rows.forEach((r, i) => { const p = pts[i]; s += `<a href="${safeUrl(r.source || '#')}" target="_blank" rel="noopener" aria-label="${esc(f.firm)} ${esc(r.fiscalYear)}: ${pct(r.chinaShare)} from China, opens the filing"><circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3.4" class="dot${r === f.last ? ' last' : ''}" ${attrs(r)}/></a><text x="${p[0].toFixed(1)}" y="${(p[1] - 7).toFixed(1)}" class="share" text-anchor="middle">${pct(r.chinaShare)}</text>`; });
-    }
+    f.rows.forEach((r) => {
+      const cx = X(tx(r.fyEnd)), y = Y(r.chinaShare), h = py1 - y, isTop = r === f.peak;
+      s += `<a href="${safeUrl(r.source || '#')}" target="_blank" rel="noopener" aria-label="${esc(f.firm)} ${esc(r.fiscalYear)}: ${pct(r.chinaShare)} of revenue from China, opens the filing"><rect x="${(cx - bw / 2).toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" class="bar${isTop ? ' top' : ''}" ${attrs(r)}/></a>`;
+      s += `<text x="${cx.toFixed(1)}" y="${(y - 4).toFixed(1)}" class="share${isTop ? ' top' : ''}" text-anchor="middle">${pct(r.chinaShare)}</text>`;
+    });
     s += `<text x="${px0}" y="${PH - 4}" class="tick">${esc(f.first.fiscalYear)}</text><text x="${px1}" y="${PH - 4}" class="tick" text-anchor="end">${esc(f.last.fiscalYear)}</text></svg></figure>`;
     d += s;
   });
