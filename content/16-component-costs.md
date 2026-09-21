@@ -247,7 +247,7 @@ Per unit of compute, logic keeps getting cheaper and everything wrapped around i
 | Power and cooling plant | Structurally expensive | Priced by grid queues and turbine lead times. |
 | Leading-edge logic wafers | Compressible with scale | Defect density and utilization improve through a ramp. |
 | Design and EDA | Compressible with scale | Engineering cost amortises across volume. |
-| Deposition and etch tools | Compressible with scale | Credible second sources in most steps. |
+| Deposition and etch tools | Compressible with scale | Credible second sources for most deposition and etch steps. |
 | ABF substrates | Compressible with scale | A laminate line, buildable at scale. |
 | Optical transceivers | Compressible with scale | Copper and co-packaged optics cap the price. |
 | Test and assembly (OSAT) | Already commoditized | 17 to 21 percent margins; clears on price. |

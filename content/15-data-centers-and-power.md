@@ -60,13 +60,13 @@
         "note": "Hitachi group transformer manufacturing"
       }
     ],
-    "chinaStatus": "China has surplus generation, a large domestic transformer and switchgear industry, and can energize sites quickly. Its AI buildout is limited by accelerator supply, with megawatts to spare.",
-    "usStatus": "Has the demand and the capital but cannot shorten the equipment queues. Transformers and turbines are both multi-year waits, most large power transformers are imported, and no restarted reactor is running yet.",
+    "chinaStatus": "China has spare generating capacity, a large home industry making transformers and switchgear, and can connect new sites quickly. Its AI buildout is limited by the supply of accelerators, with megawatts to spare.",
+    "usStatus": "The United States has the demand and the money but cannot skip the equipment queues. Transformers and turbines both take years to arrive, most large power transformers are imported, and no restarted nuclear reactor is running yet.",
     "costSignal": "Transformer lead times of 36 months, against under a year before 2020; GE Vernova's gas backlog and reserved slots grew from 100 GW to 116 GW in 2026",
     "substitutability": {
       "band": "Moderate",
-      "test": "Several qualified vendors; the wait is a three-year transformer queue and six years of booked turbines",
-      "why": "Nothing here is unbuilt. Nine firms sell the power and cooling equipment for Nvidia's gigawatt designs, so a buyer can get the kit and haggle over the price. A well-funded actor cannot shorten the queue: large power transformers run to 36-month lead times against under a year before 2020, and GE Vernova's book is close to six years of turbine output, which puts new capacity two to five years out."
+      "test": "Several approved vendors sell every part, but a transformer takes three years to arrive and GE Vernova's turbines are booked about six years out.",
+      "why": "Nothing here has to be invented. Nine firms sell the power and cooling equipment for Nvidia's gigawatt data center designs, so a buyer can get the gear and haggle over the price. Money cannot skip the line. A large power transformer now takes 36 months to arrive, against under a year before 2020, and GE Vernova has close to six years of gas turbine orders on its books, so new capacity is two to five years away."
     }
   },
   "keyFacts": [

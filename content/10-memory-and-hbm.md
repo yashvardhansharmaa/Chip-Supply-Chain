@@ -23,10 +23,10 @@
       {"code": "JP", "note": "Micron Hiroshima, 1-gamma DRAM"},
       {"code": "SG", "note": "Micron HBM advanced packaging"}
     ],
-    "chinaStatus": "No Chinese firm ships HBM3E or HBM4 in volume. CXMT is the only credible domestic entrant, and the export controls are written to keep it that way.",
-    "usStatus": "Micron is the only US-headquartered HBM maker. BIS controls HBM above 2 GB/s per square millimeter of package or stack area under ECCN 3A090.c, which captures every stack now in production.",
-    "costSignal": "An HBM cube's data interface is 16 times wider than a DDR5 module's, and that width costs die area and stacking yield",
-    "substitutability": {"band": "Hard", "test": "Three firms ship HBM; no fourth holds leading-edge DRAM and a stacking line at once, and CXMT is still behind", "why": "Among the three, share moves on qualification alone: Micron went from 5.8 percent of HBM revenue in 2024 to 23.1 percent by the first quarter of 2026 without new capacity. A fourth is a different problem, because a well-funded actor has to put leading-edge DRAM, a line that drills and thins wafers, and a stacking process that keeps ground dies flat inside one company, then pass Nvidia's data-rate bar. Five to ten years, and no Chinese firm ships HBM3E or HBM4 in volume yet."}
+    "chinaStatus": "No Chinese firm ships HBM3E or HBM4 in volume. CXMT is the only Chinese firm with a credible shot at it, and the export controls are written to keep it that way.",
+    "usStatus": "Micron is the only American HBM maker. BIS, the US export control office, requires a license for HBM faster than 2 GB/s per square millimeter of package or stack area, under control number ECCN 3A090.c, and every stack now in production is faster than that.",
+    "costSignal": "An HBM stack moves data over a path 16 times wider than a DDR5 memory module's, and that width costs chip area and lowers the share of stacks that come out working.",
+    "substitutability": {"band": "Hard", "test": "Three firms ship HBM, and no fourth firm has both the newest DRAM and a line that stacks it.", "why": "Among the three makers, share moves as soon as a customer approves a new part: Micron went from 5.8 percent of HBM revenue in 2024 to 23.1 percent by the first quarter of 2026 without adding capacity. A fourth maker is a harder problem. It would need the newest DRAM, a line that drills through and thins wafers, and a way to stack the thinned chips without warping them, all inside one company, and then its stack would have to pass Nvidia's speed test. That takes five to ten years, and no Chinese firm ships HBM3E or HBM4 in volume yet."}
   },
   "keyFacts": [
     {"fact": "HBM4 sets a 2,048-bit interface with 32 channels, 2 TB/s per stack at 8 Gb/s per pin, and up to 64 GB per stack", "source": "https://www.jedec.org/news/pressreleases/jedec%C2%AE-and-industry-leaders-collaborate-release-jesd270-4-hbm4-standard-advancing"},

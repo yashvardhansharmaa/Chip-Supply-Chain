@@ -1,18 +1,18 @@
-built 2026-09-18T22:04:56.714Z
-source tiers: A 327 · B 22 · disallowed 0 · unclassified 0
+built 2026-09-21T04:49:02.113Z
+source tiers: A 335 · B 22 · disallowed 0 · unclassified 0
 chapters: 16 + geopolitics
-words: 25786
-sources: 349
+words: 25838
+sources: 357
 landscape: 35 chips · suppliers: 220 · timeline: 50 · matrix: 20 · glossary: 202 · controls: 40 · exposure: 108
 specimens: boule-and-wafer, cowos-exploded, die-floorplan, euv-scanner, foup, gaa-transistor, gas-cabinet, globe, gpu-baseboard, hbm-stack, package, photomask, probe-card, process-chamber, rack, sem-column, substrate-layers, wafer-cost, wafer
-size: 2703 KB
+size: 2711 KB
   01 design-and-eda: 1546 words, 18 sources (D 0, ? 0), 3 figures
   02 silicon-and-wafers: 1393 words, 13 sources (D 0, ? 0), 2 figures
   03 chemicals-gases-and-photoresist: 1451 words, 16 sources (D 0, ? 0), 2 figures
   04 lithography: 1548 words, 25 sources (D 0, ? 0), 4 figures
   05 photomasks-and-pellicles: 1420 words, 16 sources (D 0, ? 0), 1 figures
-  06 deposition-and-etch: 1486 words, 17 sources (D 0, ? 0), 3 figures
-  07 metrology-and-inspection: 1538 words, 15 sources (D 0, ? 0), 3 figures
+  06 deposition-and-etch: 1538 words, 25 sources (D 0, ? 0), 3 figures
+  07 metrology-and-inspection: 1535 words, 15 sources (D 0, ? 0), 3 figures
   08 transistors-and-front-end: 1549 words, 16 sources (D 0, ? 0), 2 figures
   09 foundries-and-fabs: 1383 words, 12 sources (D 0, ? 0), 2 figures
   10 memory-and-hbm: 1391 words, 16 sources (D 0, ? 0), 3 figures
@@ -21,5 +21,5 @@ size: 2703 KB
   13 test-and-assembly: 1236 words, 28 sources (D 0, ? 0), 3 figures
   14 systems-and-networking: 1324 words, 22 sources (D 0, ? 0), 2 figures
   15 data-centers-and-power: 1325 words, 14 sources (D 0, ? 0), 3 figures
-  16 component-costs: 1230 words, 21 sources (D 0, ? 0), 3 figures
+  16 component-costs: 1233 words, 21 sources (D 0, ? 0), 3 figures
   17 geopolitics: 3222 words, 62 sources (D 0, ? 0), 3 figures

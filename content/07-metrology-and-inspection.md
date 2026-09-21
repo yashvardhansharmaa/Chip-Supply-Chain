@@ -13,30 +13,30 @@
  "chokepointScore": 4,
  "leaders": [
  {"name": "KLA", "country": "US", "share": "56.5% of process control in 2024 on its own investor-day count, 6.5 times its nearest rival; $13.58B revenue, fiscal 2026"},
- {"name": "Applied Materials", "country": "US", "share": "10.5% of process control tools in 2024: electron-beam defect review, line-width measurement and film metrology"},
- {"name": "Lasertec", "country": "JP", "share": "7.7% of process control tools in 2024, almost all of it mask inspection"},
- {"name": "ASML", "country": "NL", "share": "5.2% of process control tools in 2024: YieldStar layer alignment and HMI multibeam electron inspection"},
- {"name": "Nova", "country": "IL", "share": "3.7% of process control tools in 2024; $880.6M revenue, 2025"},
- {"name": "Onto Innovation", "country": "US", "share": "3.0% of process control tools in 2024; $1.01B revenue, 2025"}
+ {"name": "Applied Materials", "country": "US", "share": "11.2% of process control tools in 2025: electron-beam defect review, line-width measurement and film metrology"},
+ {"name": "Lasertec", "country": "JP", "share": "6.4% of process control tools in 2025, almost all of it mask inspection"},
+ {"name": "ASML", "country": "NL", "share": "5.9% of process control tools in 2025: YieldStar layer alignment and HMI multibeam electron inspection"},
+ {"name": "Nova", "country": "IL", "share": "4.3% of process control tools in 2025; $880.6M revenue, 2025"},
+ {"name": "Onto Innovation", "country": "US", "share": "2.6% of process control tools in 2025; $1.01B revenue, 2025"}
  ],
  "countries": [
  {"code": "US", "note": "KLA (Milpitas), Onto Innovation (Wilmington, MA), Applied Materials"},
  {"code": "NL", "note": "ASML YieldStar and HMI e-beam, Veldhoven and San Jose"},
  {"code": "JP", "note": "Hitachi High-Tech CD-SEM; Lasertec mask inspection; Rigaku X-ray"},
  {"code": "IL", "note": "Nova (Rehovot) and Camtek (Migdal Haemek)"},
- {"code": "CN", "note": "Domestic entrants only; 0.8% of the process control tool market in 2024"}
+ {"code": "CN", "note": "Domestic entrants only; 0.7% of the process control tool market in 2025"}
  ],
- "chinaStatus": "The weakest Chinese position of any major tool segment. In 2019 domestic firms held 3.4% of line-width measurement, 1.3% of defect inspection and none of mask or packaging inspection; in 2024 they were still at 0.8% of the whole process control tool market. CSET's 2026 survey of Chinese share gains runs through deposition, etch, polishing, lithography, packaging and test, and never reaches process control.",
- "usStatus": "KLA is the largest process-control supplier in the world. It puts its own 2024 share at 56.5%, or 6.5 times its nearest rival; CSET's Supply Chain Explorer puts it at 57.2% of the same year's market. US firms take 72% of the segment, Japanese firms 15%. The December 2024 rule pulled inspection and measurement tools for patterned 300 mm wafers onto the controlled list, at a threshold of 21 nm defects.",
- "costSignal": "A $13.4B process control tool market in 2024, about 57% of it KLA's. KLA's fiscal 2026 revenue was $13.58B against a wafer equipment market of roughly $120B in 2025, so process control is around a tenth of what a fab spends on tools.",
- "substitutability": {"band": "Moderate", "test": "A named second source in every family; KLA sets the standard, and losing it slows yield learning while the line keeps running", "why": "The chokepoint is concentration: seven other firms ship qualified tools, and three of them lead a family outright. A well-funded actor that can buy them keeps the ability to run a fab, loses sensitivity and speed of yield learning, and closes the gap in two to five years. An actor that cannot buy is on a far longer clock: Chinese firms were still at 0.8 percent of the segment in 2024."}
+ "chinaStatus": "China's weakest position in any major kind of chipmaking tool. In 2019 Chinese firms held 3.4 percent of line-width measurement, 1.3 percent of defect inspection and none of mask or packaging inspection. In 2025 they still held 0.7 percent of the whole market for these tools. CSET's 2026 survey of Chinese share gains covers deposition, etch, polishing, lithography, packaging and test, and never reaches measurement and inspection.",
+ "usStatus": "KLA is the largest maker of these tools in the world. It puts its own 2024 share at 56.5 percent, or 6.5 times its nearest rival; CSET's Supply Chain Explorer puts it at 56.8 percent of the 2025 market. American firms take 72 percent of the segment and Japanese firms 14 percent. A December 2024 rule added inspection and measurement tools for patterned 300 mm wafers to the controlled list, for tools that can find defects 21 nm across or smaller.",
+ "costSignal": "A $15.7B process control tool market in 2025, about 57% of it KLA's. KLA's fiscal 2026 revenue was $13.58B against a wafer equipment market of roughly $120B in 2025, so process control is around a tenth of what a fab spends on tools.",
+ "substitutability": {"band": "Moderate", "test": "KLA sets the standard, but every kind of measuring and inspecting tool has a second maker, so losing KLA would slow a fab without stopping it.", "why": "These tools measure and inspect wafers so a fab can find and fix what is going wrong. KLA is the biggest maker, but seven other firms ship approved tools, and three of them lead one kind of tool outright. A fab that loses KLA and buys from the others keeps running; it sees fewer flaws and fixes them more slowly, and it takes two to five years to catch up. A country that is not allowed to buy from any of them has a far longer road: Chinese firms held 0.7 percent of this market in 2025."}
  },
  "keyFacts": [
  {"fact": "Die yield is (1 + D0A/a) to the power minus a, with a of 3 to 4 for modern CMOS, so defect density and die area alone set the ceiling", "source": "https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf"},
  {"fact": "KLA took the number one position in advanced wafer-level packaging process control in calendar 2025, adding 14 percentage points of share and growing that revenue about 70%", "source": "https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf"},
  {"fact": "KLA's process control share has grown 360 basis points since 2021 and is about 7x the nearest competitor", "source": "https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf"},
  {"fact": "KLA's March 2026 investor day puts its process control market share at 56.5% in 2024, up 2 points from 2021 and 6.5 times its nearest competitor", "source": "https://d1io3yog0oux5.cloudfront.net/_7791115a123b86b3f10b1a5eb5210224/klatencor/db/1166/10653/file/2026+Investor+Day+Master+Final_IR+copy.pdf"},
- {"fact": "CSET's Supply Chain Explorer puts KLA at 57.2% of a $13.4 billion process control tool market in 2024, ahead of Applied Materials at 10.5% and Lasertec at 7.7%", "source": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"},
+ {"fact": "CSET's Supply Chain Explorer puts KLA at 56.8% of a $15.7 billion process control tool market in 2025, ahead of Applied Materials at 11.2% and Lasertec at 6.4%", "source": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"},
  {"fact": "KLA fiscal 2026 revenue was $13.579 billion, up from $12.156 billion in fiscal 2025", "source": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000319201/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json"},
  {"fact": "ASML's HMI eScan 1100 uses 25 electron beams for up to 15x the throughput of single-beam e-beam inspection and finds patterning defects down to 7 nm", "source": "https://www.asml.com/en/products/metrology-and-inspection-systems/hmi-escan-1100"},
  {"fact": "KLA expects advanced packaging process control systems revenue of about $1.1 billion in calendar 2026, up more than 70% year-over-year and almost twice the growth rate of the advanced packaging market", "source": "https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf"},
@@ -47,17 +47,17 @@
  {
  "id": "pc-segments",
  "type": "bars",
- "title": "Process control market by tool family, 2024",
+ "title": "Process control market by tool family, 2025",
  "unit": "$M",
- "data": [["Defect inspection", 5900], ["Film and shape metrology", 2300], ["Mask inspection and repair", 2100], ["Overlay metrology", 906.6], ["CD metrology", 869.9], ["E-beam metrology", 769.5], ["Defect review", 618.1]],
+ "data": [["Defect inspection", 6700], ["Film and shape metrology", 2600], ["Mask inspection and repair", 2200], ["E-beam metrology", 1300], ["CD metrology", 1200], ["Overlay metrology", 991.4], ["Defect review", 729.1]],
  "source": {"label": "ETO Supply Chain Explorer, CSET", "url": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"}
  },
  {
  "id": "pc-share",
  "type": "stack",
- "title": "Process control tool revenue share, 2024",
+ "title": "Process control tool revenue share, 2025",
  "unit": "%",
- "data": [["KLA", 57.2], ["Applied Materials", 10.5], ["Lasertec", 7.7], ["Hitachi High-Tech", 5.6], ["ASML", 5.2], ["Nova", 3.7], ["Onto Innovation", 3.0], ["Camtek", 1.5], ["Rigaku", 1.2], ["All others", 4.4]],
+ "data": [["KLA", 56.8], ["Applied Materials", 11.2], ["Lasertec", 6.4], ["Hitachi High-Tech", 6.2], ["ASML", 5.9], ["Nova", 4.3], ["Onto Innovation", 2.6], ["Camtek", 1.6], ["Rigaku", 1.2], ["All others", 3.8]],
  "source": {"label": "ETO Supply Chain Explorer, CSET", "url": "https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60"}
  },
  {
@@ -73,7 +73,7 @@
 ---
 # Metrology and Inspection
 
-Process control is about a tenth of what a fab spends on tools, out of a wafer equipment market of roughly $120 billion in 2025 ([source](https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf)). At its March 2026 investor day KLA put its own 2024 share at 56.5 percent, six and a half times its nearest competitor ([source](https://d1io3yog0oux5.cloudfront.net/_7791115a123b86b3f10b1a5eb5210224/klatencor/db/1166/10653/file/2026+Investor+Day+Master+Final_IR+copy.pdf)); CSET, counting the same year independently, gets 57.2 percent ([source](https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60)).
+Process control is about a tenth of what a fab spends on tools, out of a wafer equipment market of roughly $120 billion in 2025 ([source](https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf)). At its March 2026 investor day KLA put its own 2024 share at 56.5 percent, six and a half times its nearest competitor ([source](https://d1io3yog0oux5.cloudfront.net/_7791115a123b86b3f10b1a5eb5210224/klatencor/db/1166/10653/file/2026+Investor+Day+Master+Final_IR+copy.pdf)); CSET's own count for 2025 is 56.8 percent ([source](https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60)).
 
 ## How it works
 
@@ -91,20 +91,20 @@ Run that equation with a clustering constant of 3 for an 8 square centimeter die
 
 ## Variants and trade-offs
 
-The tools trade sensitivity against speed. All the market sizes and shares below are CSET's, for 2024 ([source](https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60)).
+The tools trade sensitivity against speed. All the market sizes and shares below are CSET's, for 2025 ([source](https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60)).
 
-- **Defect inspection** scans a whole wafer with light or electrons and compares each die against its neighbors. It is the largest family by a distance, $5.9 billion, and the one KLA owns outright at 84.6 percent. ASML's HMI eScan 1100 runs 25 electron beams at once, up to 15 times the speed of a single beam, and finds patterning defects down to 7 nm ([source](https://www.asml.com/en/products/metrology-and-inspection-systems/hmi-escan-1100)).
-- **Film and shape metrology** measures how thick each film is and how flat the wafer sits, without cutting it open: $2.3 billion, with KLA at 47 percent, Nova at 20.6 and Onto Innovation at 13.6. Onto paid about $720 million in August 2026 for 27 percent of Japan's X-ray maker Rigaku ([source](https://investors.ontoinnovation.com/news/news-details/2026/Onto-Innovation-Completes-Strategic-Investment-in-Rigaku-Holdings-Corporation/default.aspx)).
-- **Mask inspection and repair** gets its own tools, because a defect on a mask repeats on every die: $2.1 billion, and the one family KLA does not lead, behind Lasertec at 45.6 percent against KLA's 40.7 and Zeiss's 11.
-- **Overlay metrology** measures whether this layer sits on the one below: $907 million, split almost evenly between KLA at 54.2 percent and ASML at 45.1.
-- **Critical dimension metrology** measures how wide a printed feature actually came out: $870 million, and the one family Japan leads, with Hitachi at 69 percent and Applied Materials at 30.
-- **Electron-beam metrology** resolves detail too fine for light: $770 million, led by Applied Materials at 49.5 percent with ASML at 37.6 and KLA at 11.9.
+- **Defect inspection** scans a whole wafer with light or electrons and compares each die against its neighbors. It is the largest family by a distance, $6.7 billion, and the one KLA owns outright at 85.9 percent. ASML's HMI eScan 1100 runs 25 electron beams at once, up to 15 times the speed of a single beam, and finds patterning defects down to 7 nm ([source](https://www.asml.com/en/products/metrology-and-inspection-systems/hmi-escan-1100)).
+- **Film and shape metrology** measures how thick each film is and how flat the wafer sits, without cutting it open: $2.6 billion, with KLA at 45.6 percent, Nova at 24.6 and Onto Innovation at 10.9. Onto paid about $720 million in August 2026 for 27 percent of Japan's X-ray maker Rigaku ([source](https://investors.ontoinnovation.com/news/news-details/2026/Onto-Innovation-Completes-Strategic-Investment-in-Rigaku-Holdings-Corporation/default.aspx)).
+- **Mask inspection and repair** gets its own tools, because a defect on a mask repeats on every die: $2.2 billion, and the one family where KLA is run close, 45.9 percent against Lasertec's 42 and Zeiss's 10.1.
+- **Overlay metrology** measures whether this layer sits on the one below: $991 million, split almost evenly between KLA at 51.5 percent and ASML at 47.9.
+- **Critical dimension metrology** measures how wide a printed feature actually came out: $1.2 billion, and the one family Japan leads, with Hitachi at 71.9 percent and Applied Materials at 27.5.
+- **Electron-beam metrology** resolves detail too fine for light: $1.3 billion, led by Applied Materials at 45.1 percent with ASML at 35.6 and KLA at 18.8.
 
 {{figure:pc-segments}}
 
 ## Who makes it
 
-KLA is most of the segment: 57.2 percent of a $13.4 billion market in 2024 ([source](https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60)), up two points since 2021 by its own figures ([source](https://d1io3yog0oux5.cloudfront.net/_7791115a123b86b3f10b1a5eb5210224/klatencor/db/1166/10653/file/2026+Investor+Day+Master+Final_IR+copy.pdf)). Its fiscal 2026 revenue was $13.579 billion, after $12.156 billion in fiscal 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0000319201/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json)), and it says it gained share again in 2025 across mask, optical wafer and e-beam inspection ([source](https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf)).
+KLA is most of the segment: 56.8 percent of a $15.7 billion market in 2025 ([source](https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60)), up two points since 2021 by its own figures ([source](https://d1io3yog0oux5.cloudfront.net/_7791115a123b86b3f10b1a5eb5210224/klatencor/db/1166/10653/file/2026+Investor+Day+Master+Final_IR+copy.pdf)). Its fiscal 2026 revenue was $13.579 billion, after $12.156 billion in fiscal 2025 ([source](https://data.sec.gov/api/xbrl/companyconcept/CIK0000319201/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json)), and it says it gained share again in 2025 across mask, optical wafer and e-beam inspection ([source](https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf)).
 
 {{figure:pc-share}}
 
@@ -127,7 +127,7 @@ The advantage is analytics as much as optics: inspection throws up far more cand
 
 The AI packaging build-out is where this segment is growing fastest. KLA took the number one position in advanced wafer-level packaging process control in 2025, adding 14 points ([source](https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf)), and expects about $1.1 billion of packaging process control revenue in 2026, more than 70 percent growth ([source](https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf)). Onto signed a volume purchase agreement worth over $240 million with an HBM maker for 2D inspection and 3D bump metrology through 2027 ([source](https://investors.ontoinnovation.com/news/news-details/2026/Onto-Innovation-Reports-2025-Fourth-Quarter-and-Full-Year-Results/default.aspx)).
 
-China has made less progress here than anywhere else in the tool chain. In 2019 Chinese firms held 3.4 percent of line-width measurement, 1.3 percent of defect inspection and none of photomask or packaging inspection ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). Five years later they were at 0.8 percent of the whole process control tool market ([source](https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60)). CSET's 2026 audit of where China gained runs through deposition, etch, polishing, lithography, packaging and test, and never reaches process control ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)).
+China has made less progress here than anywhere else in the tool chain. In 2019 Chinese firms held 3.4 percent of line-width measurement, 1.3 percent of defect inspection and none of photomask or packaging inspection ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). Six years later they were at 0.7 percent of the whole process control tool market ([source](https://chipexplorer.eto.tech/?parentNode=N118&selectedNode=N60)). CSET's 2026 audit of where China gained runs through deposition, etch, polishing, lithography, packaging and test, and never reaches process control ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)).
 
 The December 2024 rule wrote process control into the export lists. It controls defect inspection and measurement of patterned 300 mm wafers where the tool can find defects of 21 nm or smaller using light below 400 nm, or an electron beam resolving 1.65 nm, or a cold field emission source, or two or more beams ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)). A foreign direct product rule carries the same reach to tools built outside the United States ([source](https://www.bis.gov/press-release/commerce-strengthens-export-controls-restrict-chinas-capability-produce-advanced-semiconductors-military)).
 

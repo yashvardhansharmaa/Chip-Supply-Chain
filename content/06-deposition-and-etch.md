@@ -25,10 +25,10 @@
  {"code": "KR", "note": "Large buyer; Semes and local suppliers in wet processing"},
  {"code": "CN", "note": "Naura, AMEC, Piotech; largest equipment market at $49.3B in 2025"}
  ],
- "chinaStatus": "The strongest Chinese position in any tool segment. China-based suppliers held about 11% of dry etch and 7% of deposition in 2024, but under 1% of atomic layer deposition.",
- "usStatus": "Two of the three largest suppliers are American. Washington controls dry etch, atomic layer deposition and deep-hole deposition tools by export classification number, and by a rule that reaches tools built outside the United States from US technology.",
- "costSignal": "No public list prices. Global semiconductor equipment billings were $135.1B in 2025, with wafer processing up 12%.",
- "substitutability": {"band": "Moderate", "test": "Three or four vendors qualify at most etch and deposition steps; atomic layer deposition is the thin one", "why": "For most steps a buyer has three or four qualified vendors, so the work is requalification, two to five years at the leading node. The exception is atomic layer deposition, where Chinese suppliers stayed under 1 percent across the same five years they took real share in etch. A well-funded actor that is not fenced out buys from ASM International, Lam, Tokyo Electron and Applied Materials and starts from a qualified tool, which is why China's clock here is the long one."}
+ "chinaStatus": "China's strongest position in any kind of chipmaking tool. Chinese suppliers held about 11 percent of dry etch and 7 percent of deposition in 2024, but under 1 percent of atomic layer deposition.",
+ "usStatus": "Two of the three largest tool makers are American. Washington lists dry etch, atomic layer deposition and deep-hole deposition tools as controlled exports, and one rule reaches tools built outside the United States with American technology.",
+ "costSignal": "Tool makers publish no list prices. World sales of chipmaking equipment were $135.1B in 2025, with wafer processing tools up 12%.",
+ "substitutability": {"band": "Moderate", "test": "Most deposition and etch steps have three or four approved tool makers; atomic layer deposition is the one thin spot.", "why": "For most of the deposition and etch steps inside a fab, the tool can already be bought from three or four makers: Applied Materials, Lam, Tokyo Electron and ASM International. Switching from one to another means testing the new tool on the fab's own line until it matches, which takes two to five years for the newest chips. The thin spot is atomic layer deposition, which lays down a film one layer of atoms at a time. Chinese tool makers took real share in etch over five years but stayed under 1 percent here, so this is the step where China has the farthest to go."}
  },
  "keyFacts": [
  {"fact": "Producing one chip takes more than 1,000 process steps and 70 or more border crossings (CSET, 2021)", "source": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"},
@@ -90,15 +90,17 @@ CSET puts a single chip at more than 1,000 process steps, with the part-finished
 
 ### Deposition families
 
-- **Physical vapor deposition** knocks atoms off a solid target and lands them on the wafer, the workhorse for metal barriers and seed layers, $2.4 billion in 2019 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
-- **Chemical vapor deposition** reacts gases at the wafer surface to grow a film; the plasma-enhanced version runs cooler, $3.5 billion in 2019 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
-- **Atomic layer deposition** lays down less than one atomic layer at a time, so it coats vertical walls as evenly as horizontal floors. US regulators call it the basis for 3D scaling in 3D DRAM, 3D NAND and gate-all-around logic ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)); ASM International leads it, $1.6 billion in 2019 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
+The market sizes and leading shares below are CSET's for 2025, which it builds from TechInsights data, on a $26.2 billion deposition tool market ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N36)) and a $21.9 billion dry etch market ([source](https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N103)).
+
+- **Physical vapor deposition** knocks atoms off a solid target and lands them on the wafer, the workhorse for metal barriers and seed layers, $4.9 billion in 2025 ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N42)).
+- **Chemical vapor deposition** reacts gases at the wafer surface to grow a film; the plasma-enhanced version runs cooler and is most of the $11.2 billion CVD market, $7.5 billion in 2025 ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N47)) ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N38)).
+- **Atomic layer deposition** lays down less than one atomic layer at a time, so it coats vertical walls as evenly as horizontal floors. US regulators call it the basis for 3D scaling in 3D DRAM, 3D NAND and gate-all-around logic ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)); ASM International leads it with 54.5 percent of a $4.1 billion market in 2025 ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N41)).
 - **Epitaxy and electroplating** grow the strained silicon-germanium source and drain, and fill the copper wiring trenches ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 
 ### Etch families
 
-- **Conductor etch** cuts gates, metals and silicon, $6.5 billion in 2019, led by Lam ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
-- **Dielectric etch** cuts the insulating oxides and nitrides between them, $4.3 billion in 2019, led by Tokyo Electron ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
+- **Conductor etch** cuts gates, metals and silicon, $12.2 billion in 2025, led by Lam at 51.2 percent ([source](https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N50)).
+- **Dielectric etch** cuts the insulating oxides and nitrides between them, $8.7 billion in 2025, led by Tokyo Electron at 55.9 percent ([source](https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N51)).
 - **High-aspect-ratio etch** decides whether memory works at all: a 3D NAND channel or DRAM capacitor is a hole far deeper than it is wide that has to come out straight. Lam chills the wafer to sharpen the profile, and says Cryo 3.0 holds critical-dimension deviation under 0.1 percent down channels 10 microns deep ([source](https://newsroom.lamresearch.com/2024-07-31-Lam-Research-Introduces-Lam-Cryo-TM-3-0-Cryogenic-Etch-Technology-to-Accelerate-Scaling-of-3D-NAND-for-the-AI-Era)).
 
 AI hardware asks for sideways cuts, deeper holes and a second metal stack on the wafer's back.

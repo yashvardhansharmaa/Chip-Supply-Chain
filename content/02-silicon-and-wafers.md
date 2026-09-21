@@ -25,10 +25,10 @@
  {"code": "KR", "note": "SK Siltron, being sold to Doosan"},
  {"code": "US", "note": "Hemlock polysilicon in Michigan; GlobalWafers Sherman, Texas and St Peters, Missouri"}
  ],
- "chinaStatus": "Made about 93% of the world's polysilicon in 2023, but 98% of that was solar-grade, too impure for chips. Held under 1% of the 300 mm wafer market as of 2021, and supplies only 12% of the wafers its own 300 mm fabs consume.",
- "usStatus": "No US-headquartered volume wafer maker. Hemlock supplies polysilicon from Michigan; GlobalWafers took a CHIPS award of up to $406m for a $3.5bn Texas plant that opened in May 2025.",
+ "chinaStatus": "China made about 93 percent of the world's polysilicon in 2023, but 98 percent of it was solar grade, too impure for chips. It held under 1 percent of the 300 mm wafer market as of 2021, and it supplies only 12 percent of the wafers its own 300 mm fabs use.",
+ "usStatus": "No American firm makes wafers in volume. Hemlock makes polysilicon in Michigan, and GlobalWafers of Taiwan took a CHIPS Act award of up to $406 million toward a $3.5 billion Texas plant that opened in May 2025.",
  "costSignal": "The entire world market was $11.4bn of wafer revenue on 12,973 million square inches shipped in 2025",
- "substitutability": {"band": "Moderate", "test": "Five firms already qualify at 300 mm, but a fab has to requalify a new source for every chip it makes", "why": "Five firms qualify leading-edge 300 mm today, so losing one leaves four, and GlobalWafers showed money can still build a line: a $3.5 billion plant in Texas, the first of its kind in the United States in over twenty years. Qualification sets the clock, run per chip and counted in quarters against contracts already fixed years ahead, so a well-funded actor needs two to five years to close the gap."}
+ "substitutability": {"band": "Moderate", "test": "Five firms already make approved 300 mm wafers, but a fab has to test and approve a new supplier separately for every chip it makes.", "why": "Five firms make 300 mm wafers good enough for the newest chips, so losing one leaves four. Money can still build a new line: GlobalWafers of Taiwan spent $3.5 billion on a plant in Texas, the first of its kind in the United States in over twenty years. The slow part is approval. A fab tests a new wafer supplier on each chip it makes, each test runs for months, and supply contracts are signed years ahead, so switching takes two to five years."}
  },
  "keyFacts": [
  {"fact": "Worldwide silicon wafer shipments rose 5.8% to 12,973 million square inches in 2025 while revenue fell 1.2% to $11.4 billion", "source": "https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html"},
