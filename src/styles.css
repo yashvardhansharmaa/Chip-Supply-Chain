@@ -495,12 +495,14 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .ex-legend { display: flex; flex-wrap: wrap; gap: 6px 20px; font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 14px 0 6px; }
 .ex-legend i { display: inline-block; vertical-align: middle; margin-right: 7px; width: 10px; height: 10px; border-radius: 50%; box-sizing: border-box; }
 .ex-legend .lg-bar { width: 10px; height: 12px; border-radius: 0; background: var(--ink-2); }
+.ex-legend .lg-top { width: 10px; height: 12px; border-radius: 0; background: var(--accent); }
 .ex-legend .lg-rule { width: 1px; height: 12px; border-radius: 0; border-left: 1px dashed var(--ink-2); background: none; }
 .ex-cat { grid-column: 1 / -1; margin: 18px 0 0; padding-bottom: 6px; border-bottom: 1px solid var(--ink); font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); }
 .ex-cat:first-child { margin-top: 4px; }
 .ex-panel .tick { font-family: var(--font-mono); font-size: 10px; fill: var(--muted); }
-.ex-panel .bar { fill: var(--line-2); }
-.ex-panel .bar.last { fill: var(--ink); }
+.ex-panel .bar { fill: var(--ink-2); }
+.ex-panel .bar.top { fill: var(--accent); }
+.ex-panel .share.top { fill: var(--accent-ink); font-weight: 500; }
 .ex-panel a:hover rect, .ex-panel a:hover circle { fill: var(--accent); stroke: none; }
 .ex-panel .share { font-family: var(--font-mono); font-size: 9.5px; fill: var(--ink-2); }
 .ex-panel .val { font-family: var(--font-mono); font-size: 11px; font-weight: 500; fill: var(--ink); }
