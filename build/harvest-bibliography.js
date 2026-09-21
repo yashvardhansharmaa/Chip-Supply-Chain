@@ -977,6 +977,8 @@ async function main() {
     if (ordered.date) stats.dated++;
   }
 
+  // with --only, keep every entry the run did not touch: a partial harvest must never shrink the bibliography
+  if (only && fs.existsSync(OUT_FILE)) { try { const prev = JSON.parse(fs.readFileSync(OUT_FILE, 'utf8')); for (const u of Object.keys(prev)) if (!(u in bib)) bib[u] = prev[u]; } catch (e) { } }
   fs.writeFileSync(OUT_FILE, JSON.stringify(bib, null, 2) + '\n');
   console.error(
     `\nWrote ${path.relative(ROOT, OUT_FILE)}\n` +
