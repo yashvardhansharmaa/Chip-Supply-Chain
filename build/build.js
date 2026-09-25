@@ -379,15 +379,15 @@ function reviewHTML(ch) {
     const count = `<span class="label">Card ${i + 1} of ${n}</span>`;
     return `<div class="fc-card" data-i="${i}"${i ? ' hidden' : ''}>`
       + `<div class="fc-face fc-front"><div class="fc-row">${count}<span class="label">Question</span></div><p class="fc-q">${esc(c.q)}</p><div class="fc-row fc-row--end"><button type="button" class="fc-btn fc-btn--solid fc-show">Show answer</button></div></div>`
-      + `<div class="fc-face fc-back" inert><div class="fc-row">${count}<span class="label">Answer</span></div><p class="fc-a">${esc(c.a)}</p>${c.why || more ? `<p class="fc-why">${esc(c.why || '')}${more}</p>` : ''}<div class="fc-row fc-row--end"><button type="button" class="fc-btn fc-mark" data-known="0">Didn’t know</button><button type="button" class="fc-btn fc-btn--solid fc-mark" data-known="1">Knew it</button></div></div>`
+      + `<div class="fc-face fc-back" inert><div class="fc-row">${count}<span class="label">Answer</span></div><p class="fc-a">${esc(c.a)}</p>${c.why || more ? `<p class="fc-why">${esc(c.why || '')}${more}</p>` : ''}<div class="fc-row fc-row--foot"><button type="button" class="fc-link fc-flipback">Show question</button><span class="fc-marks"><button type="button" class="fc-btn fc-mark" data-known="0">Didn’t know</button><button type="button" class="fc-btn fc-btn--solid fc-mark" data-known="1">Knew it</button></span></div></div>`
       + `</div>`;
   }).join('');
   const dots = `<span class="fc-dots" aria-hidden="true">${fc.cards.map((_, i) => `<i${i ? '' : ' class="on"'}></i>`).join('')}</span>`;
   const keep = Array.isArray(fc.takeaways) && fc.takeaways.length ? `<div class="rv-keep"><h4 class="label">${NUM_WORD[fc.takeaways.length] || fc.takeaways.length} things to remember</h4><ul>${fc.takeaways.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></div>` : '';
   return `<section class="review fc" aria-label="Flashcards: ${esc(ch.title)}"><header class="rv-head"><h3 class="rv-title">Flashcards</h3><p class="rv-sub">Recall each answer, then turn the card.</p></header>`
     + `<div class="fc-deck"><div class="fc-behind fc-behind--2"></div><div class="fc-behind"></div>${cards}</div>`
-    + `<div class="fc-nav">${dots}</div>`
-    + `<div class="fc-end" hidden><p class="fc-score"><span class="fc-big"></span><span class="fc-score-t"></span></p>${keep}<p class="fc-row"><button type="button" class="fc-btn fc-reset">Start over</button></p></div></section>`;
+    + `<div class="fc-nav">${dots}<span class="fc-steps"><button type="button" class="fc-link fc-prev" disabled>Previous card</button><button type="button" class="fc-link fc-next" disabled>Next card</button></span></div>`
+    + `<div class="fc-end" hidden><p class="fc-score"><span class="fc-big"></span><span class="fc-score-t"></span></p>${keep}<p class="fc-row fc-row--gap"><button type="button" class="fc-btn fc-back-to-cards">Previous card</button><button type="button" class="fc-btn fc-reset">Start over</button></p></div></section>`;
 }
 function chapterHTML(ch) {
   const m = ch.meta, mins = Math.max(1, Math.round(ch.words / 230));

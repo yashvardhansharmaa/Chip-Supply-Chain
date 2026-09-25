@@ -1983,44 +1983,73 @@
       btn.addEventListener('click', function () { self.open(); });
       if (nav) nav.insertBefore(btn, $('.theme-toggle'));
       document.addEventListener('keydown', function (e) { var k = e.key || '', a = document.activeElement || document.body; if ((e.ctrlKey || e.metaKey) && k.toLowerCase() === 'k') { e.preventDefault(); self.open(); } if (k === '/' && !/INPUT|TEXTAREA|SELECT/.test(a.tagName || '') && !a.isContentEditable) { e.preventDefault(); self.open(); } });
-      // end-of-chapter flashcards: show one card, turn it over, mark it, move on; the end lists the takeaways
-      var fcShow = function (deck, i) {
-        $$('.fc-card', deck).forEach(function (c, j) { c.hidden = j !== i; c.classList.remove('is-flipped'); $('.fc-front', c).inert = false; $('.fc-back', c).inert = true; });
+      // end-of-chapter flashcards: one card at a time. "Show answer" turns a card over and "Show question" turns it back;
+      // marking a card moves on; Previous and Next revisit cards (Next only to cards already marked); the end lists the takeaways
+      var FC = {
+        parts: function (fc) { return { deck: $('.fc-deck', fc), cards: $$('.fc-card', fc), dots: $$('.fc-dots i', fc), nav: $('.fc-nav', fc), end: $('.fc-end', fc) }; },
+        cur: function (p) { for (var j = 0; j < p.cards.length; j++) if (!p.cards[j].hidden) return j; return 0; },
+        flip: function (card, back) { card.classList.toggle('is-flipped', back); $('.fc-front', card).inert = back; $('.fc-back', card).inert = !back; },
+        go: function (fc, i, focusShow) {
+          var p = FC.parts(fc);
+          p.end.hidden = true; p.deck.hidden = false; p.nav.hidden = false;
+          p.cards.forEach(function (c, j) { c.hidden = j !== i; FC.flip(c, false); });
+          p.dots.forEach(function (d, j) { var kn = p.cards[j].getAttribute('data-known'); d.className = j === i ? 'on' : kn === '1' ? 'k' : kn === '0' ? 'm' : ''; });
+          var prev = $('.fc-prev', fc), next = $('.fc-next', fc);
+          prev.disabled = i === 0; next.disabled = !p.cards[i].hasAttribute('data-known');
+          var a = document.activeElement;
+          if (focusShow || !a || a.disabled || !fc.contains(a) || a.closest('[hidden]')) { var f = $('.fc-show', p.cards[i]); if (f) f.focus({ preventScroll: true }); }
+        },
+        finish: function (fc) {
+          var p = FC.parts(fc), k = p.cards.filter(function (x) { return x.getAttribute('data-known') === '1'; }).length;
+          p.deck.hidden = true; p.nav.hidden = true; p.end.hidden = false;
+          $('.fc-big', p.end).textContent = k + '/' + p.cards.length;
+          $('.fc-score-t', p.end).textContent = k === p.cards.length ? 'known.' : 'known. Dashed lines mark the ideas to review.';
+          $$('.rv-keep li', p.end).forEach(function (li, j) { li.classList.toggle('miss', !!p.cards[j] && p.cards[j].getAttribute('data-known') !== '1'); });
+          var rs = $('.fc-reset', p.end); if (rs) rs.focus({ preventScroll: true });
+          if (window.goatcounter && window.goatcounter.count) try { window.goatcounter.count({ path: 'flashcards/' + ((fc.closest('.chapter') || {}).id || 'geopolitics') + '/' + k, title: 'Flashcards finished', event: true }); } catch (err) {}
+        },
+        step: function (fc, d) {
+          var p = FC.parts(fc), i = FC.cur(p);
+          if (d < 0 && i > 0) FC.go(fc, i - 1);
+          if (d > 0 && p.cards[i].hasAttribute('data-known')) { if (i + 1 < p.cards.length) FC.go(fc, i + 1); else FC.finish(fc); }
+        }
       };
       document.addEventListener('click', function (e) {
         var t = e.target.closest ? e.target : null; if (!t) return;
         var fc = t.closest('.fc'); if (!fc) return;
-        var deck = $('.fc-deck', fc), cards = $$('.fc-card', fc), dots = $$('.fc-dots i', fc);
+        var card = t.closest('.fc-card');
         if (t.closest('.fc-show')) {
-          var c = t.closest('.fc-card'); c.classList.add('is-flipped'); $('.fc-front', c).inert = true; $('.fc-back', c).inert = false;
-          setTimeout(function () { var k = $('.fc-mark[data-known="1"]', c); if (k) k.focus({ preventScroll: true }); }, reduced ? 0 : 260);
+          FC.flip(card, true);
+          setTimeout(function () { var k = $('.fc-mark[data-known="1"]', card); if (k) k.focus({ preventScroll: true }); }, reduced ? 0 : 260);
+          return;
+        }
+        if (t.closest('.fc-flipback')) {
+          FC.flip(card, false);
+          setTimeout(function () { var f = $('.fc-show', card); if (f) f.focus({ preventScroll: true }); }, reduced ? 0 : 260);
           return;
         }
         var m = t.closest('.fc-mark');
         if (m) {
-          var card = m.closest('.fc-card'), i = +card.getAttribute('data-i'), known = m.getAttribute('data-known') === '1';
-          card.setAttribute('data-known', known ? '1' : '0');
-          if (dots[i]) dots[i].className = known ? 'k' : 'm';
-          if (i + 1 < cards.length) {
-            fcShow(deck, i + 1); if (dots[i + 1]) dots[i + 1].className = 'on';
-            var nx = $('.fc-show', cards[i + 1]); if (nx) nx.focus({ preventScroll: true });
-          } else {
-            var k = cards.filter(function (x) { return x.getAttribute('data-known') === '1'; }).length, end = $('.fc-end', fc);
-            deck.hidden = true; end.hidden = false; $('.fc-nav', fc).hidden = true;
-            $('.fc-big', end).textContent = k + '/' + cards.length;
-            $('.fc-score-t', end).textContent = k === cards.length ? 'known.' : 'known. Dashed lines mark the ideas to review.';
-            $$('.rv-keep li', end).forEach(function (li, j) { li.classList.toggle('miss', !!cards[j] && cards[j].getAttribute('data-known') !== '1'); });
-            var rs = $('.fc-reset', end); if (rs) rs.focus({ preventScroll: true });
-            if (window.goatcounter && window.goatcounter.count) try { window.goatcounter.count({ path: 'flashcards/' + ((fc.closest('.chapter') || {}).id || 'geopolitics') + '/' + k, title: 'Flashcards finished', event: true }); } catch (err) {}
-          }
+          var i = +card.getAttribute('data-i'), n = FC.parts(fc).cards.length;
+          card.setAttribute('data-known', m.getAttribute('data-known') === '1' ? '1' : '0');
+          if (i + 1 < n) FC.go(fc, i + 1, true); else FC.finish(fc);
           return;
         }
+        if (t.closest('.fc-prev')) { FC.step(fc, -1); return; }
+        if (t.closest('.fc-next')) { FC.step(fc, 1); return; }
+        if (t.closest('.fc-back-to-cards')) { FC.go(fc, FC.parts(fc).cards.length - 1, true); return; }
         if (t.closest('.fc-reset')) {
-          cards.forEach(function (c) { c.removeAttribute('data-known'); });
-          dots.forEach(function (d, j) { d.className = j ? '' : 'on'; });
-          $('.fc-end', fc).hidden = true; $('.fc-nav', fc).hidden = false; deck.hidden = false; fcShow(deck, 0);
-          var f = $('.fc-show', cards[0]); if (f) f.focus({ preventScroll: true });
+          FC.parts(fc).cards.forEach(function (c) { c.removeAttribute('data-known'); });
+          FC.go(fc, 0, true);
         }
+      });
+      // the arrow keys step through a deck while focus is inside it
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+        if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+        var fc = e.target && e.target.closest ? e.target.closest('.fc') : null;
+        if (!fc || $('.fc-deck', fc).hidden) return;
+        e.preventDefault(); FC.step(fc, e.key === 'ArrowLeft' ? -1 : 1);
       });
       // copy a chapter's share link (its own page, which unfurls with a card)
       document.addEventListener('click', function (e) {
