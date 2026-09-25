@@ -363,6 +363,25 @@ function prevNext(ch) {
   const link = (c, dir, label) => (c ? `<a class="pn ${dir}" href="${chapterHref(c)}"><span class="label">${label}</span><span class="t"><span class="n">${pad(c.number)}</span> ${esc(c.title)}</span></a>` : '');
   return `<nav class="prevnext" aria-label="Previous and next chapter">${link(prev, 'prev', 'Previous')}${link(next, 'next', 'Next')}</nav>`;
 }
+// End-of-chapter review: a four-question check, then the four things to remember (data/quizzes.json, keyed by chapter id).
+const quizzes = readJSON(path.join(root, 'data', 'quizzes.json'), {});
+function reviewHTML(ch) {
+  const qz = quizzes[ch.id];
+  if (!qz || !Array.isArray(qz.quiz) || !qz.quiz.length) return '';
+  const letters = 'ABCD';
+  const qs = qz.quiz.map((q, qi) => {
+    if (!Array.isArray(q.options) || q.options.length !== 4 || !(q.answer >= 0 && q.answer < 4)) warn(`quiz ${ch.id} #${qi + 1}: needs 4 options and an answer 0-3`);
+    const anchor = q.section ? `${ch.id}--${slug(q.section)}` : '';
+    if (anchor && !ch.html.includes(`id="${anchor}"`)) warn(`quiz ${ch.id} #${qi + 1}: no section "${q.section}"`);
+    const more = anchor ? ` <a class="qz-more" href="#${anchor}">Reread: ${esc(q.section)}</a>` : '';
+    return `<li class="qz-q" data-answer="${+q.answer}"><p class="qz-stem" id="qz-${esc(ch.id)}-${qi + 1}"><span class="qz-n">${qi + 1}</span>${esc(q.q)}</p>`
+      + `<div class="qz-opts" role="group" aria-labelledby="qz-${esc(ch.id)}-${qi + 1}">${q.options.map((o, oi) => `<button type="button" class="qz-opt" data-i="${oi}"><span class="qz-l">${letters[oi]}</span><span class="qz-t">${esc(o)}</span></button>`).join('')}</div>`
+      + `<p class="qz-why" hidden aria-live="polite"><b class="qz-verdict"></b> ${esc(q.why)}${more}</p></li>`;
+  }).join('');
+  const tk = Array.isArray(qz.takeaways) && qz.takeaways.length ? `<div class="rv-keep"><h4 class="label">Four things to remember</h4><ul>${qz.takeaways.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></div>` : '';
+  return `<section class="review" aria-label="Check yourself: ${esc(ch.title)}"><header class="rv-head"><h3 class="rv-title">Check yourself</h3><p class="rv-sub">${['','One question','Two questions','Three questions','Four questions','Five questions'][qz.quiz.length] || qz.quiz.length + ' questions'} on the main ideas of this chapter</p></header>`
+    + `<ol class="qz">${qs}</ol><p class="qz-score" hidden><span class="qz-score-t"></span> <button type="button" class="qz-reset">Try again</button></p>${tk}</section>`;
+}
 function chapterHTML(ch) {
   const m = ch.meta, mins = Math.max(1, Math.round(ch.words / 230));
   const specimen = m.specimen || 'wafer';
@@ -382,7 +401,7 @@ ${pb.box}
 ${parts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${parts.inShort}</section>` : ''}
 ${isStage(ch) ? nameplate(m.card, ch.title) : ''}
 </header>
-<div class="prose">${glossaryWrap(pb.html)}${prevNext(ch)}${sources}</div>
+<div class="prose">${glossaryWrap(pb.html)}${reviewHTML(ch)}${prevNext(ch)}${sources}</div>
 </article>`;
 }
 const chaptersHTML = chapters.length ? chapters.map(chapterHTML).join('\n') : `<article class="chapter" id="placeholder" data-specimen="wafer" data-number="01" data-title="Placeholder"><header class="chapter-head"><div class="chapter-num">01</div><h2 class="chapter-title">No chapters yet</h2></header><div class="prose"><p>No chapters found. This is a shell build.</p></div></article>`;
@@ -475,7 +494,7 @@ if (geo) {
   const sources = geo.cites.length ? `<details class="chapter-sources"><summary>Sources (${geo.cites.length})</summary><ol>${geo.cites.map((c) => `<li>${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol></details>` : '';
   const gparts = splitTakeaways(geo.html); geo.inShort = gparts.inShort;
   const gpb = plainBox(gparts.body, geo.meta.plain, { id: 'geopolitics', cites: geo.cites, figures: [] });
-  geoBody = gpb.box + (gparts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${gparts.inShort}</section>` : '') + `<p class="label" style="margin:10px 0 26px">${geo.words.toLocaleString('en-US')} words / ${Math.max(1, Math.round(geo.words / 230))} min</p>` + glossaryWrap(gpb.html) + prevNext(geo) + sources;
+  geoBody = gpb.box + (gparts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${gparts.inShort}</section>` : '') + `<p class="label" style="margin:10px 0 26px">${geo.words.toLocaleString('en-US')} words / ${Math.max(1, Math.round(geo.words / 230))} min</p>` + glossaryWrap(gpb.html) + reviewHTML(geo) + prevNext(geo) + sources;
 }
 
 /* ---------------- sources view ---------------- */

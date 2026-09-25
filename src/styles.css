@@ -32,9 +32,10 @@
   --opsz-title: "opsz" 48, "SOFT" 0, "WONK" 0;   /* Fraunces as a sober transitional */
   --opsz-numeral: "opsz" 144, "SOFT" 0, "WONK" 0; /* Fraunces at its highest contrast, for the light numerals */
   --band: 0px; /* height of the sticky specimen band on phones; anchors add it to their offset */
-  --measure: 34em; /* about 78 characters of Source Serif at 18.5 px */
+  --measure: 41em; /* about 94 characters of Source Serif at 18.5 px; widened 20 percent on 25 Sept */
+  --frame: 650px;   /* chapter header and chokepoint card keep their earlier width */
   --bar-5: var(--accent); --bar-4: #3b424c; --bar-3: #bfb9af;
-  --col: 60%;
+  --col: 68%;
   --gutter: 88px;     /* the ledger column */
   --gutter-gap: 28px;
   --masthead: 56px;
@@ -161,7 +162,7 @@ small { font-size: 0.85em; }
 
 /* ---------- prose ---------- */
 .prose { max-width: var(--measure); }
-.view[data-view="geopolitics"] { --measure: 38em; } /* the essay reads a little wider than the chapters */
+.view[data-view="geopolitics"] { --measure: 44em; } /* the essay reads a little wider than the chapters */
 .prose h3 { font-size: 28px; line-height: 1.15; margin: 2em 0 0.65em; max-width: var(--measure); scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 16px); }
 .prose h4 { font-size: 21px; line-height: 1.25; margin: 1.7em 0 0.5em; max-width: var(--measure); scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 16px); }
 .prose > p, .prose > ul, .prose > ol, .prose blockquote { max-width: var(--measure); }
@@ -572,6 +573,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .chapter > .ch-ledger { grid-column: 1; grid-row: 1 / span 2; }
 .chapter > .chapter-head, .chapter > .prose { grid-column: 2; }
 .chapter-head { margin-bottom: 8px; min-width: 0; }
+.chapter-head > .ch-id { max-width: var(--frame); }
 .ch-ledger { position: sticky; top: calc(var(--masthead) + 84px); text-align: right; padding-right: 14px; }
 .ch-id { display: block; margin-bottom: 22px; }
 .ch-tile { border: 0; border-radius: 0; background: none; text-align: right; padding: 0; overflow: visible; }
@@ -612,7 +614,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .prose .takeaways { display: none; }
 
 /* ---------- the chokepoint card: a ruled statement, no box, no shadow ---------- */
-.plate { border: 0; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); border-radius: 0; background: none; box-shadow: none; overflow: hidden; margin-bottom: 38px; }
+.plate { max-width: var(--frame); border: 0; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); border-radius: 0; background: none; box-shadow: none; overflow: hidden; margin-bottom: 38px; }
 .plate-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; background: none; border-bottom: 1px solid var(--line-2); }
 .plate-head .label { color: var(--ink); font-weight: 600; }
 .plate-tags { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
@@ -662,7 +664,7 @@ button.ptag { cursor: pointer; }
 .dbg-only .hero, .dbg-only .contents, .dbg-only #chain, .dbg-only .chapter:not(.only) { display: none; }
 
 /* ---------- responsive ---------- */
-@media (max-width: 1100px) { :root { --col: 62%; --gutter: 64px; --gutter-gap: 20px; } body { font-size: 18px; } .ch-tile .v { font-size: 56px; } }
+@media (max-width: 1100px) { :root { --col: 66%; --gutter: 64px; --gutter-gap: 20px; } body { font-size: 18px; } .ch-tile .v { font-size: 56px; } }
 @media (max-width: 900px) {
   :root { --col: 100%; --masthead: 75px; --gutter: 34px; --gutter-gap: 12px; } /* the two-row phone masthead; measured at runtime too, but the first paint must not shift */
   body { font-size: 17px; }
@@ -748,6 +750,41 @@ button.ptag { cursor: pointer; }
   .timeline li { grid-template-columns: 1fr; gap: 4px; }
 }
 @media (max-width: 480px) { .tabs a { padding: 6px 6px 5px; font-size: 11.5px; } .wordmark b { font-size: 17px; } }
+
+
+/* ---------- end-of-chapter check: four questions, then the four things to remember ---------- */
+.review { max-width: var(--measure); margin: 3.2em 0 0; border-top: 2px solid var(--ink); padding-top: 4px; }
+.review .rv-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; }
+.prose .review .rv-title { margin: 0.55em 0 0.2em; }
+.review .rv-sub { margin: 0; font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.review .qz { list-style: none; margin: 18px 0 0; padding: 0; }
+.review .qz-q { padding: 18px 0 20px; border-top: 1px solid var(--line); }
+.review .qz-stem { display: flex; gap: 12px; margin: 0 0 12px; font-size: 18.5px; line-height: 1.45; color: var(--ink); }
+.review .qz-n { flex: none; width: 18px; padding-top: 4px; font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; }
+.review .qz-opts { display: grid; gap: 6px; padding-left: 30px; }
+.review .qz-opt { display: flex; align-items: flex-start; gap: 12px; width: 100%; margin: 0; padding: 9px 12px; text-align: left; font: inherit; font-size: 16.5px; line-height: 1.42; color: var(--ink-2); background: none; border: 1px solid var(--line); border-radius: 0; cursor: pointer; transition: border-color 0.15s, background-color 0.15s; }
+.review .qz-opt:hover:not(:disabled) { border-color: var(--ink); color: var(--ink); }
+.review .qz-opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.review .qz-l { flex: none; display: inline-grid; place-items: center; width: 22px; height: 22px; margin-top: 1px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--ink-2); border: 1px solid var(--line-2); }
+.review .qz-opt:disabled { cursor: default; color: var(--muted); }
+.review .qz-opt.is-right { color: var(--ink); border-color: var(--accent); background: var(--accent-soft); }
+.review .qz-opt.is-right .qz-l { color: var(--bg); background: var(--accent); border-color: var(--accent); }
+.review .qz-opt.is-wrong { border-style: dashed; border-color: var(--line-2); }
+.review .qz-opt.is-wrong .qz-t { text-decoration: line-through; text-decoration-thickness: 1px; }
+.review .qz-why { margin: 12px 0 0 30px; font-size: 16px; line-height: 1.5; color: var(--ink-2); }
+.review .qz-why[hidden], .review .qz-score[hidden] { display: none; }
+.review .qz-verdict { font-weight: 600; color: var(--ink); }
+.review .qz-more { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); white-space: nowrap; margin-left: 4px; }
+.review .qz-score { display: flex; align-items: baseline; gap: 14px; margin: 0; padding: 14px 0; border-top: 1px solid var(--ink); font-family: var(--font-display); font-size: 21px; color: var(--ink); }
+.review .qz-reset { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); background: none; border: 1px solid var(--line-2); border-radius: 0; padding: 6px 10px; cursor: pointer; }
+.review .qz-reset:hover { border-color: var(--ink); color: var(--ink); }
+.review .rv-keep { margin: 22px 0 0; padding: 14px 0 4px; border-top: 1px solid var(--line-2); }
+.review .rv-keep h4.label { margin: 0 0 12px; font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; line-height: 1.4; color: var(--accent); }
+.review .rv-keep ul { list-style: none; margin: 0; padding: 0; counter-reset: keep; }
+.review .rv-keep li { position: relative; padding: 0 0 10px 30px; font-size: 17px; line-height: 1.5; color: var(--ink); }
+.review .rv-keep li::before { content: ""; position: absolute; left: 4px; top: 0.72em; width: 12px; border-top: 2px solid var(--accent); }
+@media (max-width: 700px) { .review .qz-opts, .review .qz-why { padding-left: 0; margin-left: 0; } .review .qz-opt { font-size: 16px; } }
+@media print { .review .qz, .review .qz-score, .review .rv-head { display: none !important; } .review { border-top-width: 1px; } }
 
 @media print {
   .masthead, .stage, .rail, .to-top, .theme-toggle { display: none !important; }

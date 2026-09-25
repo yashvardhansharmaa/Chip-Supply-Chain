@@ -1983,6 +1983,31 @@
       btn.addEventListener('click', function () { self.open(); });
       if (nav) nav.insertBefore(btn, $('.theme-toggle'));
       document.addEventListener('keydown', function (e) { var k = e.key || '', a = document.activeElement || document.body; if ((e.ctrlKey || e.metaKey) && k.toLowerCase() === 'k') { e.preventDefault(); self.open(); } if (k === '/' && !/INPUT|TEXTAREA|SELECT/.test(a.tagName || '') && !a.isContentEditable) { e.preventDefault(); self.open(); } });
+      // end-of-chapter check: one answer per question, then the reason and a link back to the section
+      document.addEventListener('click', function (e) {
+        var t = e.target.closest ? e.target : null; if (!t) return;
+        var reset = t.closest('.qz-reset');
+        if (reset) {
+          var rv = reset.closest('.review');
+          $$('.qz-q', rv).forEach(function (q) { q.removeAttribute('data-done'); $$('.qz-opt', q).forEach(function (o) { o.disabled = false; o.className = 'qz-opt'; o.removeAttribute('aria-pressed'); }); var w = $('.qz-why', q); w.hidden = true; });
+          $('.qz-score', rv).hidden = true;
+          var first = $('.qz-opt', rv); if (first) first.focus();
+          return;
+        }
+        var b = t.closest('.qz-opt');
+        if (!b || b.disabled) return;
+        var q = b.closest('.qz-q'), ans = +q.getAttribute('data-answer'), pick = +b.getAttribute('data-i'), ok = pick === ans;
+        q.setAttribute('data-done', ok ? 'right' : 'wrong');
+        $$('.qz-opt', q).forEach(function (o, i) { o.disabled = true; if (i === ans) o.classList.add('is-right'); if (i === pick && !ok) o.classList.add('is-wrong'); });
+        b.setAttribute('aria-pressed', 'true');
+        var why = $('.qz-why', q); $('.qz-verdict', why).textContent = ok ? 'Correct.' : 'The answer is ' + 'ABCD'.charAt(ans) + '.'; why.hidden = false;
+        var rv2 = q.closest('.review'), qs = $$('.qz-q', rv2), done = qs.filter(function (x) { return x.hasAttribute('data-done'); });
+        if (done.length === qs.length) {
+          var right = qs.filter(function (x) { return x.getAttribute('data-done') === 'right'; }).length, sc = $('.qz-score', rv2);
+          $('.qz-score-t', sc).textContent = right + ' of ' + qs.length + ' correct.'; sc.hidden = false;
+          if (window.goatcounter && window.goatcounter.count) try { window.goatcounter.count({ path: 'quiz/' + ((rv2.closest('.chapter') || {}).id || 'geopolitics') + '/' + right, title: 'Quiz finished', event: true }); } catch (err) {}
+        }
+      });
       // copy a chapter's share link (its own page, which unfurls with a card)
       document.addEventListener('click', function (e) {
         var b = e.target.closest ? e.target.closest('.ch-copy') : null;
