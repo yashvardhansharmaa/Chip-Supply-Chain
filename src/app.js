@@ -1983,29 +1983,43 @@
       btn.addEventListener('click', function () { self.open(); });
       if (nav) nav.insertBefore(btn, $('.theme-toggle'));
       document.addEventListener('keydown', function (e) { var k = e.key || '', a = document.activeElement || document.body; if ((e.ctrlKey || e.metaKey) && k.toLowerCase() === 'k') { e.preventDefault(); self.open(); } if (k === '/' && !/INPUT|TEXTAREA|SELECT/.test(a.tagName || '') && !a.isContentEditable) { e.preventDefault(); self.open(); } });
-      // end-of-chapter check: one answer per question, then the reason and a link back to the section
+      // end-of-chapter flashcards: show one card, turn it over, mark it, move on; the end lists the takeaways
+      var fcShow = function (deck, i) {
+        $$('.fc-card', deck).forEach(function (c, j) { c.hidden = j !== i; c.classList.remove('is-flipped'); $('.fc-front', c).inert = false; $('.fc-back', c).inert = true; });
+      };
       document.addEventListener('click', function (e) {
         var t = e.target.closest ? e.target : null; if (!t) return;
-        var reset = t.closest('.qz-reset');
-        if (reset) {
-          var rv = reset.closest('.review');
-          $$('.qz-q', rv).forEach(function (q) { q.removeAttribute('data-done'); $$('.qz-opt', q).forEach(function (o) { o.disabled = false; o.className = 'qz-opt'; o.removeAttribute('aria-pressed'); }); var w = $('.qz-why', q); w.hidden = true; });
-          $('.qz-score', rv).hidden = true;
-          var first = $('.qz-opt', rv); if (first) first.focus();
+        var fc = t.closest('.fc'); if (!fc) return;
+        var deck = $('.fc-deck', fc), cards = $$('.fc-card', fc), dots = $$('.fc-dots i', fc);
+        if (t.closest('.fc-show')) {
+          var c = t.closest('.fc-card'); c.classList.add('is-flipped'); $('.fc-front', c).inert = true; $('.fc-back', c).inert = false;
+          setTimeout(function () { var k = $('.fc-mark[data-known="1"]', c); if (k) k.focus({ preventScroll: true }); }, reduced ? 0 : 260);
           return;
         }
-        var b = t.closest('.qz-opt');
-        if (!b || b.disabled) return;
-        var q = b.closest('.qz-q'), ans = +q.getAttribute('data-answer'), pick = +b.getAttribute('data-i'), ok = pick === ans;
-        q.setAttribute('data-done', ok ? 'right' : 'wrong');
-        $$('.qz-opt', q).forEach(function (o, i) { o.disabled = true; if (i === ans) o.classList.add('is-right'); if (i === pick && !ok) o.classList.add('is-wrong'); });
-        b.setAttribute('aria-pressed', 'true');
-        var why = $('.qz-why', q); $('.qz-verdict', why).textContent = ok ? 'Correct.' : 'The answer is ' + 'ABCD'.charAt(ans) + '.'; why.hidden = false;
-        var rv2 = q.closest('.review'), qs = $$('.qz-q', rv2), done = qs.filter(function (x) { return x.hasAttribute('data-done'); });
-        if (done.length === qs.length) {
-          var right = qs.filter(function (x) { return x.getAttribute('data-done') === 'right'; }).length, sc = $('.qz-score', rv2);
-          $('.qz-score-t', sc).textContent = right + ' of ' + qs.length + ' correct.'; sc.hidden = false;
-          if (window.goatcounter && window.goatcounter.count) try { window.goatcounter.count({ path: 'quiz/' + ((rv2.closest('.chapter') || {}).id || 'geopolitics') + '/' + right, title: 'Quiz finished', event: true }); } catch (err) {}
+        var m = t.closest('.fc-mark');
+        if (m) {
+          var card = m.closest('.fc-card'), i = +card.getAttribute('data-i'), known = m.getAttribute('data-known') === '1';
+          card.setAttribute('data-known', known ? '1' : '0');
+          if (dots[i]) dots[i].className = known ? 'k' : 'm';
+          if (i + 1 < cards.length) {
+            fcShow(deck, i + 1); if (dots[i + 1]) dots[i + 1].className = 'on';
+            var nx = $('.fc-show', cards[i + 1]); if (nx) nx.focus({ preventScroll: true });
+          } else {
+            var k = cards.filter(function (x) { return x.getAttribute('data-known') === '1'; }).length, end = $('.fc-end', fc);
+            deck.hidden = true; end.hidden = false; $('.fc-nav', fc).hidden = true;
+            $('.fc-big', end).textContent = k + '/' + cards.length;
+            $('.fc-score-t', end).textContent = k === cards.length ? 'known.' : 'known. Dashed lines mark the ideas to review.';
+            $$('.rv-keep li', end).forEach(function (li, j) { li.classList.toggle('miss', !!cards[j] && cards[j].getAttribute('data-known') !== '1'); });
+            var rs = $('.fc-reset', end); if (rs) rs.focus({ preventScroll: true });
+            if (window.goatcounter && window.goatcounter.count) try { window.goatcounter.count({ path: 'flashcards/' + ((fc.closest('.chapter') || {}).id || 'geopolitics') + '/' + k, title: 'Flashcards finished', event: true }); } catch (err) {}
+          }
+          return;
+        }
+        if (t.closest('.fc-reset')) {
+          cards.forEach(function (c) { c.removeAttribute('data-known'); });
+          dots.forEach(function (d, j) { d.className = j ? '' : 'on'; });
+          $('.fc-end', fc).hidden = true; $('.fc-nav', fc).hidden = false; deck.hidden = false; fcShow(deck, 0);
+          var f = $('.fc-show', cards[0]); if (f) f.focus({ preventScroll: true });
         }
       });
       // copy a chapter's share link (its own page, which unfurls with a card)

@@ -363,24 +363,31 @@ function prevNext(ch) {
   const link = (c, dir, label) => (c ? `<a class="pn ${dir}" href="${chapterHref(c)}"><span class="label">${label}</span><span class="t"><span class="n">${pad(c.number)}</span> ${esc(c.title)}</span></a>` : '');
   return `<nav class="prevnext" aria-label="Previous and next chapter">${link(prev, 'prev', 'Previous')}${link(next, 'next', 'Next')}</nav>`;
 }
-// End-of-chapter review: a four-question check, then the four things to remember (data/quizzes.json, keyed by chapter id).
-const quizzes = readJSON(path.join(root, 'data', 'quizzes.json'), {});
+// End-of-chapter flashcards: four cards (question on the front, answer and reason on the back), then the four things to
+// remember (data/flashcards.json, keyed by chapter id).
+const flashcards = readJSON(path.join(root, 'data', 'flashcards.json'), {});
+const NUM_WORD = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'];
 function reviewHTML(ch) {
-  const qz = quizzes[ch.id];
-  if (!qz || !Array.isArray(qz.quiz) || !qz.quiz.length) return '';
-  const letters = 'ABCD';
-  const qs = qz.quiz.map((q, qi) => {
-    if (!Array.isArray(q.options) || q.options.length !== 4 || !(q.answer >= 0 && q.answer < 4)) warn(`quiz ${ch.id} #${qi + 1}: needs 4 options and an answer 0-3`);
-    const anchor = q.section ? `${ch.id}--${slug(q.section)}` : '';
-    if (anchor && !ch.html.includes(`id="${anchor}"`)) warn(`quiz ${ch.id} #${qi + 1}: no section "${q.section}"`);
-    const more = anchor ? ` <a class="qz-more" href="#${anchor}">Reread: ${esc(q.section)}</a>` : '';
-    return `<li class="qz-q" data-answer="${+q.answer}"><p class="qz-stem" id="qz-${esc(ch.id)}-${qi + 1}"><span class="qz-n">${qi + 1}</span>${esc(q.q)}</p>`
-      + `<div class="qz-opts" role="group" aria-labelledby="qz-${esc(ch.id)}-${qi + 1}">${q.options.map((o, oi) => `<button type="button" class="qz-opt" data-i="${oi}"><span class="qz-l">${letters[oi]}</span><span class="qz-t">${esc(o)}</span></button>`).join('')}</div>`
-      + `<p class="qz-why" hidden aria-live="polite"><b class="qz-verdict"></b> ${esc(q.why)}${more}</p></li>`;
+  const fc = flashcards[ch.id];
+  if (!fc || !Array.isArray(fc.cards) || !fc.cards.length) return '';
+  const n = fc.cards.length;
+  const cards = fc.cards.map((c, i) => {
+    if (!c.q || !c.a) warn(`flashcards ${ch.id} #${i + 1}: needs q and a`);
+    const anchor = c.section ? `${ch.id}--${slug(c.section)}` : '';
+    if (anchor && !ch.html.includes(`id="${anchor}"`)) warn(`flashcards ${ch.id} #${i + 1}: no section "${c.section}"`);
+    const more = anchor ? ` <a class="fc-more" href="#${anchor}">Reread: ${esc(c.section)}</a>` : '';
+    const count = `<span class="label">Card ${i + 1} of ${n}</span>`;
+    return `<div class="fc-card" data-i="${i}"${i ? ' hidden' : ''}>`
+      + `<div class="fc-face fc-front"><div class="fc-row">${count}<span class="label">Question</span></div><p class="fc-q">${esc(c.q)}</p><div class="fc-row fc-row--end"><button type="button" class="fc-btn fc-btn--solid fc-show">Show answer</button></div></div>`
+      + `<div class="fc-face fc-back" inert><div class="fc-row">${count}<span class="label">Answer</span></div><p class="fc-a">${esc(c.a)}</p>${c.why || more ? `<p class="fc-why">${esc(c.why || '')}${more}</p>` : ''}<div class="fc-row fc-row--end"><button type="button" class="fc-btn fc-mark" data-known="0">Didn’t know</button><button type="button" class="fc-btn fc-btn--solid fc-mark" data-known="1">Knew it</button></div></div>`
+      + `</div>`;
   }).join('');
-  const tk = Array.isArray(qz.takeaways) && qz.takeaways.length ? `<div class="rv-keep"><h4 class="label">Four things to remember</h4><ul>${qz.takeaways.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></div>` : '';
-  return `<section class="review" aria-label="Check yourself: ${esc(ch.title)}"><header class="rv-head"><h3 class="rv-title">Check yourself</h3><p class="rv-sub">${['','One question','Two questions','Three questions','Four questions','Five questions'][qz.quiz.length] || qz.quiz.length + ' questions'} on the main ideas of this chapter</p></header>`
-    + `<ol class="qz">${qs}</ol><p class="qz-score" hidden><span class="qz-score-t"></span> <button type="button" class="qz-reset">Try again</button></p>${tk}</section>`;
+  const dots = `<span class="fc-dots" aria-hidden="true">${fc.cards.map((_, i) => `<i${i ? '' : ' class="on"'}></i>`).join('')}</span>`;
+  const keep = Array.isArray(fc.takeaways) && fc.takeaways.length ? `<div class="rv-keep"><h4 class="label">${NUM_WORD[fc.takeaways.length] || fc.takeaways.length} things to remember</h4><ul>${fc.takeaways.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></div>` : '';
+  return `<section class="review fc" aria-label="Flashcards: ${esc(ch.title)}"><header class="rv-head"><h3 class="rv-title">Flashcards</h3><p class="rv-sub">Recall each answer, then turn the card.</p></header>`
+    + `<div class="fc-deck"><div class="fc-behind fc-behind--2"></div><div class="fc-behind"></div>${cards}</div>`
+    + `<div class="fc-nav">${dots}</div>`
+    + `<div class="fc-end" hidden><p class="fc-score"><span class="fc-big"></span><span class="fc-score-t"></span></p>${keep}<p class="fc-row"><button type="button" class="fc-btn fc-reset">Start over</button></p></div></section>`;
 }
 function chapterHTML(ch) {
   const m = ch.meta, mins = Math.max(1, Math.round(ch.words / 230));

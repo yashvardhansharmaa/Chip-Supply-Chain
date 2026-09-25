@@ -48,7 +48,7 @@ const H0 = '«H»', H1 = '«/H»'; // heading markers, so h1-h4 may carry a ques
 let html = fs.readFileSync(distPath, 'utf8')
   .replace(/<script[\s\S]*?<\/script>/g, '\n').replace(/<style[\s\S]*?<\/style>/g, '\n')
   .replace(/<details class="chapter-sources"[\s\S]*?<\/details>/g, '\n') // each chapter's source list: verbatim titles
-  .replace(/(<p class="qz-stem"[^>]*>[\s\S]*?)\?(<\/p>)/g, '$1.$2') // quiz questions are real questions; every other rule still reads them
+  .replace(/(<p class="fc-q"[^>]*>[\s\S]*?)\?(<\/p>)/g, '$1.$2') // flashcard questions are real questions; every other rule still reads them
   .replace(/<sup class="cite">[\s\S]*?<\/sup>/g, ' ') // citation superscripts carry the source title as a tooltip
   .replace(/<section[^>]*data-view="sources"[\s\S]*?<\/section>/g, '\n') // bibliography, if ever rendered statically
   .replace(/<(?:ol|ul|div)[^>]*class="[^"]*\b(?:sources|bib(?:liography)?)\b[^"]*"[\s\S]*?<\/(?:ol|ul|div)>/g, '\n');

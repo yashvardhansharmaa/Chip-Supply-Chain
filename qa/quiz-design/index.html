@@ -1,0 +1,200 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quiz Section Options</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,400&family=Instrument+Sans:ital,wght@0,400..700;1,400&display=swap">
+<style>
+:root{--bg:#f7f6f2;--bg-2:#f1efea;--bg-3:#e8e5df;--ink:#14181f;--ink-2:#3b424c;--muted:#5c636d;--line:#d8d4cc;--line-2:#bfb9af;--accent:#7a1f2b;--accent-soft:rgba(122,31,43,.09);
+--display:"Fraunces",Georgia,serif;--body:"Source Serif 4",Georgia,serif;--sans:"Instrument Sans","Helvetica Neue",Arial,sans-serif;--op:"opsz" 48,"SOFT" 0,"WONK" 0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18.5px;line-height:1.55}
+button{font:inherit;color:inherit}
+.label{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.opt-head{max-width:1100px;margin:0 auto;padding:40px 24px 10px}
+.opt-head h1{font-family:var(--display);font-variation-settings:var(--op);font-weight:500;font-size:34px;margin:0 0 6px}
+.opt-head p{margin:0;color:var(--ink-2);max-width:48em}
+.frame{display:grid;grid-template-columns:88px minmax(0,759px);column-gap:28px;max-width:1100px;margin:0 auto;padding:30px 24px 80px}
+.gut{text-align:right;padding-top:12px}
+.gut .k{display:block}.gut .v{font-family:var(--display);font-weight:300;font-size:64px;line-height:1;font-variation-settings:"opsz" 144}
+.prose-tail{color:var(--ink-2);margin:0 0 2.4em}
+h3.t{font-family:var(--display);font-variation-settings:var(--op);font-weight:500;font-size:28px;line-height:1.15;margin:0}
+.sub{font-family:var(--sans);font-size:12px;color:var(--muted)}
+.why{font-size:16px;line-height:1.5;color:var(--ink-2)}
+.why b{color:var(--ink)}
+.more{font-family:var(--sans);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-left:4px;white-space:nowrap}
+.keep h4{margin:0 0 12px;color:var(--accent)}
+.keep ul{list-style:none;margin:0;padding:0}
+.keep li{position:relative;padding:0 0 10px 30px;font-size:17px;line-height:1.5}
+.keep li::before{content:"";position:absolute;left:4px;top:.72em;width:12px;border-top:2px solid var(--accent)}
+.btn{font-family:var(--sans);font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:none;border:1px solid var(--line-2);padding:8px 12px;cursor:pointer;color:var(--ink-2)}
+.btn:hover{border-color:var(--ink);color:var(--ink)}
+.btn.solid{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+[hidden]{display:none!important}
+
+/* A: current, stacked boxes */
+.A{border-top:2px solid var(--ink);padding-top:4px}
+.A .head{display:flex;justify-content:space-between;align-items:baseline;margin:.55em 0 .2em}
+.A ol{list-style:none;margin:18px 0 0;padding:0}
+.A .q{padding:18px 0 20px;border-top:1px solid var(--line)}
+.A .stem{display:flex;gap:12px;margin:0 0 12px}
+.A .n{flex:none;width:18px;padding-top:4px;font-family:var(--sans);font-size:12px;font-weight:600;color:var(--accent)}
+.A .opts{display:grid;gap:6px;padding-left:30px}
+.A .o{display:flex;gap:12px;align-items:flex-start;text-align:left;padding:9px 12px;border:1px solid var(--line);background:none;font-size:16.5px;line-height:1.42;color:var(--ink-2);cursor:pointer}
+.A .o .l{flex:none;display:inline-grid;place-items:center;width:22px;height:22px;font-family:var(--sans);font-size:11px;font-weight:600;border:1px solid var(--line-2)}
+.A .o.r{border-color:var(--accent);background:var(--accent-soft);color:var(--ink)}.A .o.r .l{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.A .o.w{border-style:dashed}.A .o.w .t{text-decoration:line-through}
+.A .o:disabled{cursor:default}
+.A .why{margin:12px 0 0 30px}
+.A .score{border-top:1px solid var(--ink);padding:14px 0;font-family:var(--display);font-size:21px;display:flex;gap:14px;align-items:baseline}
+.A .keep{border-top:1px solid var(--line-2);padding-top:14px;margin-top:22px}
+
+/* B: one question at a time */
+.B{border:1px solid var(--ink);background:var(--bg)}
+.B .bar{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:16px 22px 0}
+.B .bar i{height:6px;background:var(--bg-3)}.B .bar i.on{background:var(--ink-2)}.B .bar i.ok{background:var(--accent)}.B .bar i.no{background:repeating-linear-gradient(135deg,var(--line-2) 0 2px,transparent 2px 5px)}
+.B .top{display:flex;justify-content:space-between;align-items:baseline;padding:14px 22px 0}
+.B .body{padding:6px 22px 22px}
+.B .stem{font-family:var(--display);font-variation-settings:var(--op);font-weight:400;font-size:25px;line-height:1.25;margin:10px 0 18px}
+.B .opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.B .o{text-align:left;padding:12px 14px;border:1px solid var(--line-2);background:var(--bg);font-size:16px;line-height:1.4;cursor:pointer;min-height:74px;color:var(--ink-2)}
+.B .o:hover:not(:disabled){border-color:var(--ink);color:var(--ink)}
+.B .o .l{display:block;font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--muted);margin-bottom:4px}
+.B .o.r{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);color:var(--ink)}.B .o.r .l{color:var(--accent)}
+.B .o.w{color:var(--muted)}.B .o.w .t{text-decoration:line-through}
+.B .foot{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.B .foot .why{margin:0;flex:1}
+.B .end{padding:6px 22px 22px}
+.B .big{font-family:var(--display);font-weight:300;font-size:64px;line-height:1;font-variation-settings:"opsz" 144}
+.B .end .keep li.miss::before{border-top-style:dashed;border-color:var(--line-2)}
+
+/* C: ledger lines, no boxes */
+.C{border-top:2px solid var(--ink)}
+.C .head{display:grid;grid-template-columns:1fr auto;align-items:end;padding:14px 0 12px;border-bottom:1px solid var(--ink)}
+.C .tally{display:flex;gap:4px}.C .tally i{width:22px;height:8px;background:var(--bg-3)}.C .tally i.ok{background:var(--accent)}.C .tally i.no{background:var(--ink-2);opacity:.35}
+.C .q{display:grid;grid-template-columns:40px 1fr;padding:18px 0 16px;border-bottom:1px solid var(--line)}
+.C .n{font-family:var(--display);font-weight:300;font-size:30px;line-height:1;color:var(--muted);font-variation-settings:"opsz" 144}
+.C .q.done .n{color:var(--ink)}
+.C .stem{margin:0 0 8px;font-size:18.5px}
+.C .o{display:grid;grid-template-columns:24px 1fr;gap:0;width:100%;text-align:left;padding:5px 0 5px 10px;margin-left:-10px;border:0;border-left:2px solid transparent;background:none;font-size:16.5px;line-height:1.45;color:var(--ink-2);cursor:pointer}
+.C .o .l{font-family:var(--sans);font-size:11px;font-weight:600;color:var(--muted);padding-top:3px}
+.C .o:hover:not(:disabled){color:var(--ink);border-left-color:var(--line-2)}
+.C .o:disabled{cursor:default;color:var(--muted)}
+.C .o.r{border-left-color:var(--accent);color:var(--ink);background:linear-gradient(90deg,var(--accent-soft),transparent 70%)}.C .o.r .l{color:var(--accent)}
+.C .o.w .t{text-decoration:line-through}
+.C .why{margin:10px 0 0;padding-left:24px}
+.C .keep{padding-top:18px}
+
+/* D: takeaways paired with questions */
+.D .head{border-top:2px solid var(--ink);padding-top:14px;margin-bottom:6px}
+.D .pair{display:grid;grid-template-columns:40px 1fr;column-gap:0;padding:18px 0;border-top:1px solid var(--line)}
+.D .n{font-family:var(--sans);font-size:12px;font-weight:600;color:var(--accent);padding-top:5px}
+.D .stem{margin:0 0 10px}
+.D .opts{display:flex;flex-direction:column;gap:6px}
+.D .o{text-align:left;padding:8px 12px;border:1px solid var(--line);background:var(--bg-2);font-size:16px;line-height:1.4;color:var(--ink-2);cursor:pointer}
+.D .o:hover:not(:disabled){border-color:var(--ink)}
+.D .o:disabled{cursor:default}
+.D .o.r{background:var(--bg);border-color:var(--accent);color:var(--ink)}
+.D .o.w{opacity:.55}.D .o.w .t{text-decoration:line-through}
+.D .o.dim{opacity:.4}
+.D .lock{margin-top:12px;padding:12px 14px;border-left:2px solid var(--line-2);background:var(--bg-2);font-size:15px;color:var(--muted);font-family:var(--sans)}
+.D .take{margin-top:12px;padding:10px 0 2px 14px;border-left:2px solid var(--accent)}
+.D .take .label{color:var(--accent);display:block;margin-bottom:4px}
+.D .take p{margin:0 0 6px;font-size:18px;font-family:var(--display);font-variation-settings:var(--op);line-height:1.35}
+.D .take .why{margin:0}
+.D .sum{border-top:1px solid var(--ink);padding:14px 0 0;display:flex;gap:16px;align-items:baseline;font-family:var(--display);font-size:21px}
+
+/* E: flashcards */
+.E .head{border-top:2px solid var(--ink);padding-top:14px;display:flex;justify-content:space-between;align-items:baseline}
+.E .deck{position:relative;margin:18px 16px 0 0;perspective:1600px}
+.E .card{position:relative;display:grid;transition:transform .5s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d}
+.E .card.flip{transform:rotateY(180deg)}
+.E .face{grid-area:1/1;position:relative;backface-visibility:hidden;border:1px solid var(--ink);background:var(--bg);padding:26px 30px;display:flex;flex-direction:column}
+.E .back{transform:rotateY(180deg);background:var(--bg-2)}
+.E .back .why,.F .back .why{margin:0 0 18px!important}
+.E .behind{position:absolute;inset:0;border:1px solid var(--line-2);background:var(--bg-2);transform:translate(8px,8px)}
+.E .behind.b2{transform:translate(16px,16px);border-color:var(--line)}
+.E .stem{font-family:var(--display);font-variation-settings:var(--op);font-size:28px;line-height:1.22;margin:18px 0 40px;flex:1}
+.E .ans{font-family:var(--display);font-variation-settings:var(--op);font-size:24px;line-height:1.25;margin:12px 0 10px;color:var(--accent)}
+.E .row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.E .hint{font-family:var(--sans);font-size:12px;color:var(--muted)}
+.E .nav{display:flex;justify-content:space-between;align-items:center;margin-top:30px}
+.E .dots{display:flex;gap:6px}.E .dots i{width:9px;height:9px;border:1px solid var(--ink-2)}.E .dots i.on{background:var(--ink)}.E .dots i.k{background:var(--accent);border-color:var(--accent)}.E .dots i.m{background:repeating-linear-gradient(135deg,var(--ink-2) 0 1px,transparent 1px 3px)}
+.E .keep{margin-top:28px;border-top:1px solid var(--line-2);padding-top:14px}
+
+/* F: hybrid */
+.F .head{border-top:2px solid var(--ink);padding-top:14px;display:flex;justify-content:space-between;align-items:baseline}
+.F .deck{position:relative;margin:18px 16px 0 0;perspective:1600px}
+.F .card{position:relative;display:grid;transition:transform .5s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d}
+.F .card.flip{transform:rotateY(180deg)}
+.F .face{grid-area:1/1;position:relative;backface-visibility:hidden;border:1px solid var(--ink);background:var(--bg);padding:22px 26px;display:flex;flex-direction:column}
+.F .back{transform:rotateY(180deg);background:var(--bg-2)}
+.F .behind{position:absolute;inset:0;border:1px solid var(--line-2);background:var(--bg-2);transform:translate(8px,8px)}
+.F .behind.b2{transform:translate(16px,16px);border-color:var(--line)}
+.F .stem{font-family:var(--display);font-variation-settings:var(--op);font-size:23px;line-height:1.25;margin:12px 0 16px}
+.F .opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-content:start}
+.F .o{text-align:left;padding:10px 12px;border:1px solid var(--line-2);background:var(--bg);font-size:15.5px;line-height:1.38;cursor:pointer;color:var(--ink-2);display:flex;gap:10px}
+.F .o:hover{border-color:var(--ink);color:var(--ink)}
+.F .o .l{font-family:var(--sans);font-size:11px;font-weight:600;color:var(--muted);padding-top:2px}
+.F .verdict{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+.F .verdict.ok{color:var(--accent)}.F .verdict.no{color:var(--ink-2)}
+.F .ans{font-family:var(--display);font-variation-settings:var(--op);font-size:24px;line-height:1.25;margin:10px 0 6px;color:var(--accent)}
+.F .pick{font-size:15px;color:var(--muted);margin:0 0 10px}.F .pick s{text-decoration-thickness:1px}
+.F .row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.F .hint{font-family:var(--sans);font-size:12px;color:var(--muted)}
+.F .nav{display:flex;justify-content:space-between;align-items:center;margin-top:30px}
+.F .dots{display:flex;gap:6px}.F .dots i{width:9px;height:9px;border:1px solid var(--ink-2)}.F .dots i.on{background:var(--ink)}.F .dots i.k{background:var(--accent);border-color:var(--accent)}.F .dots i.m{background:repeating-linear-gradient(135deg,var(--ink-2) 0 1px,transparent 1px 3px)}
+.F .big,.E .big{font-family:var(--display);font-weight:300;font-size:64px;line-height:1;font-variation-settings:"opsz" 144}
+.keep li.miss::before{border-top-style:dashed;border-color:var(--line-2)}
+.keep li.miss{color:var(--ink-2)}
+/* dark */
+:root[data-theme=dark]{--bg:#14171c;--bg-2:#1b1f25;--bg-3:#23282f;--ink:#ece9e2;--ink-2:#c3c7cd;--muted:#939aa3;--line:#2c3138;--line-2:#3d434b;--accent:#d4667b;--accent-soft:rgba(212,102,123,.14)}
+/* phone */
+@media (max-width:600px){.frame{grid-template-columns:1fr;padding:20px 16px 60px}.gut{display:none}.opt-head{padding:24px 16px 0}.opt-head h1{font-size:28px}
+.B .opts,.F .opts{grid-template-columns:1fr}.B .o{min-height:0}.B .foot{flex-direction:column}.E .stem{font-size:24px}.F .stem{font-size:21px}}
+</style></head><body>
+<div id="root"></div>
+<script>
+var DATA={"takeaways":["Deposition lays down films a few atoms thick and etch cuts away whatever the printed pattern leaves exposed, over more than a thousand steps per chip.","Applied Materials, Lam Research, Tokyo Electron and ASM International make most of these tools, and no single firm dominates as ASML does in lithography.","Most deposition and etch steps can be bought from three or four makers, but switching makers for the newest chips takes two to five years of testing.","Chinese makers reached about 11 percent of dry etch by 2024 and stayed under 1 percent of atomic layer deposition, which gate-all-around logic depends on."],"quiz":[{"q":"How do deposition and etch work together to build a chip?","options":["Etch grows the silicon crystal, and deposition slices it into wafers","Deposition prints the pattern, and etch checks whether it landed correctly","Deposition lays down a thin film, and etch removes what the pattern leaves exposed","Deposition cleans the wafer, and etch bonds the finished chips into packages"],"answer":2,"why":"Deposition lays down a film a few atoms thick, lithography prints a pattern on it, and etch eats away what the pattern leaves unprotected. A chip takes more than a thousand of these rounds.","section":"How it works"},{"q":"How does leadership in deposition and etch tools differ from leadership in lithography?","options":["One Japanese firm makes every deposition and etch tool in use","Chinese firms hold most of the world market for these tools","Fabs design and build their own deposition and etch tools","Four firms share most of the market, and none dominates as ASML does"],"answer":3,"why":"Applied Materials, Lam Research, Tokyo Electron and ASM International take most of the money. Each leads different tool families, such as Lam in conductor etch and ASM International in atomic layer deposition.","section":"Who makes it"},{"q":"What does a fab face when it switches deposition or etch tool makers for its newest chips?","options":["Two to five years of testing the new tool on its own line until it matches","A legal ban, because each fab may buy these tools from one maker only","A full redesign of the chip, since each tool maker needs its own masks","A few weeks of setup, since all deposition and etch tools are identical"],"answer":0,"why":"Three or four credible makers exist for most deposition and etch steps. Switching still means testing the new tool on the fab's own line until it matches the old one.","section":"The chokepoint"},{"q":"In which kind of deposition and etch tool have Chinese makers gained least?","options":["Dry etch","Atomic layer deposition","Deposition as a whole","Etch and clean"],"answer":1,"why":"Between 2019 and 2024 China-based suppliers rose to about 11 percent of dry etch and 7 percent of deposition. In atomic layer deposition they gained nothing and stayed under 1 percent.","section":"China and the controls"}]};var L='ABCD';
+var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+var OPTS=[
+ ['A','Stacked list','What ships today. All four questions visible at once, each option a bordered row. Good for skimming and for returning readers; long, about two screens.'],
+ ['B','One at a time','A single question fills one card with a four-segment progress bar. Options sit in a two-by-two grid. The end screen shows the score and the four takeaways, each marked by whether its question was answered right. Short on the page, closer to a learning app.'],
+ ['C','Ledger lines','No boxes. Options are plain lines with the letter in a margin, and the chosen answer gets a garnet rule on its left edge. A tally of four ticks sits in the header. The quietest option and the closest to the rest of the chapter.'],
+ ['D','Paired takeaways','Each takeaway is locked behind its question. Answering reveals the takeaway and the reason together, so the four questions and the four things to remember become one list.'],
+ ['F','Cards with choices','A hybrid of B and E. One card at a time with four options on the front. Picking one turns the card over to the answer and the reason, and the dots below keep the score. The end screen lists the four takeaways, dashed where the answer was missed.'],
+ ['E','Flashcards','Recall before choice. Each card shows a question with no options; the reader thinks of the answer, flips the card, and marks whether they knew it. Tests memory harder; the four takeaways follow the deck.']];
+var root=document.getElementById('root');
+root.innerHTML=OPTS.map(function(o){return '<section id="opt-'+o[0]+'"><div class="opt-head"><span class="label">Option '+o[0]+'</span><h1>'+o[1]+'</h1><p>'+o[2]+'</p></div><div class="frame"><div class="gut"><span class="label k">Chapter</span><span class="v">06</span></div><div><p class="prose-tail">…and as holes deepen and films thin, each new node asks more of every chamber. The two largest suppliers booked $28.4 billion and $23.2 billion of revenue in their latest fiscal years.</p><div class="mock" data-k="'+o[0]+'"></div></div></div></section>'}).join('');
+var Q=DATA.quiz,T=DATA.takeaways;
+function keep(cls){return '<div class="keep"><h4 class="label">Four things to remember</h4><ul>'+T.map(function(t,i){return '<li'+(cls?cls(i):'')+'>'+esc(t)+'</li>'}).join('')+'</ul></div>'}
+function why(q,ok){return '<b>'+(ok?'Correct.':'The answer is '+L[q.answer]+'.')+'</b> '+esc(q.why)+' <a class="more" href="#">Reread: '+esc(q.section)+'</a>'}
+/* A */
+(function(el){var st=[];function r(){var done=st.filter(function(x){return x!=null}).length,right=st.filter(function(x,i){return x===Q[i].answer}).length;
+el.innerHTML='<div class="A"><div class="head"><h3 class="t">Check yourself</h3><span class="sub">Four questions on the main ideas of this chapter</span></div><ol>'+Q.map(function(q,i){var p=st[i];return '<li class="q"><p class="stem"><span class="n">'+(i+1)+'</span>'+esc(q.q)+'</p><div class="opts">'+q.options.map(function(o,j){var c=p==null?'':(j===q.answer?' r':(j===p?' w':''));return '<button class="o'+c+'" data-q="'+i+'" data-j="'+j+'"'+(p!=null?' disabled':'')+'><span class="l">'+L[j]+'</span><span class="t">'+esc(o)+'</span></button>'}).join('')+'</div>'+(p!=null?'<p class="why">'+why(q,p===q.answer)+'</p>':'')+'</li>'}).join('')+'</ol>'+(done===4?'<p class="score">'+right+' of 4 correct. <button class="btn" data-reset>Try again</button></p>':'')+keep()+'</div>'}
+el.onclick=function(e){var b=e.target.closest('[data-j]');if(b){st[+b.dataset.q]=+b.dataset.j;r()}if(e.target.closest('[data-reset]')){st=[];r()}};el.pre=function(){st=[Q[0].answer,(Q[1].answer+1)%4,Q[2].answer,Q[3].answer];r()};r()})(document.querySelector('[data-k=A]'));
+/* B */
+(function(el){var cur=0,st=[];function r(){var bar='<div class="bar">'+Q.map(function(q,i){var p=st[i];return '<i class="'+(p==null?(i===cur?'on':''):(p===q.answer?'ok':'no'))+'"></i>'}).join('')+'</div>';
+if(cur>=4){var right=st.filter(function(x,i){return x===Q[i].answer}).length;el.innerHTML='<div class="B">'+bar+'<div class="top"><h3 class="t">Check yourself</h3><button class="btn" data-reset>Try again</button></div><div class="end"><p style="display:flex;align-items:baseline;gap:14px;margin:8px 0 18px"><span class="big">'+right+'/4</span><span class="why">Questions answered correctly. A dashed mark below is an idea to reread.</span></p>'+keep(function(i){return st[i]===Q[i].answer?'':' class="miss"'})+'</div></div>';return}
+var q=Q[cur],p=st[cur];el.innerHTML='<div class="B">'+bar+'<div class="top"><h3 class="t">Check yourself</h3><span class="label">Question '+(cur+1)+' of 4</span></div><div class="body"><p class="stem">'+esc(q.q)+'</p><div class="opts">'+q.options.map(function(o,j){var c=p==null?'':(j===q.answer?' r':(j===p?' w':''));return '<button class="o'+c+'" data-j="'+j+'"'+(p!=null?' disabled':'')+'><span class="l">'+L[j]+'</span><span class="t">'+esc(o)+'</span></button>'}).join('')+'</div>'+(p!=null?'<div class="foot"><p class="why">'+why(q,p===q.answer)+'</p><button class="btn solid" data-next>'+(cur<3?'Next question':'See results')+'</button></div>':'')+'</div></div>'}
+el.onclick=function(e){var b=e.target.closest('[data-j]');if(b){st[cur]=+b.dataset.j;r()}if(e.target.closest('[data-next]')){cur++;r()}if(e.target.closest('[data-reset]')){cur=0;st=[];r()}};el.pre=function(){st=[Q[0].answer];cur=1;st[1]=(Q[1].answer+2)%4;r()};el.go=function(n,ans,wrong){st=[];for(var i=0;i<n;i++)st[i]=i===1?(Q[i].answer+1)%4:Q[i].answer;cur=n;if(ans&&n<4)st[n]=wrong?(Q[n].answer+2)%4:Q[n].answer;r()};r()})(document.querySelector('[data-k=B]'));
+/* C */
+(function(el){var st=[];function r(){var done=st.filter(function(x){return x!=null}).length,right=st.filter(function(x,i){return x===Q[i].answer}).length;
+el.innerHTML='<div class="C"><div class="head"><div><h3 class="t">Check yourself</h3><span class="sub">'+(done===4?right+' of 4 correct · <a class="more" href="#" data-reset style="margin:0">Try again</a>':'Four questions on the main ideas of this chapter')+'</span></div><div class="tally" aria-hidden="true">'+Q.map(function(q,i){var p=st[i];return '<i class="'+(p==null?'':(p===q.answer?'ok':'no'))+'"></i>'}).join('')+'</div></div>'+Q.map(function(q,i){var p=st[i];return '<div class="q'+(p!=null?' done':'')+'"><span class="n">'+(i+1)+'</span><div><p class="stem">'+esc(q.q)+'</p>'+q.options.map(function(o,j){var c=p==null?'':(j===q.answer?' r':(j===p?' w':''));return '<button class="o'+c+'" data-q="'+i+'" data-j="'+j+'"'+(p!=null?' disabled':'')+'><span class="l">'+L[j]+'</span><span class="t">'+esc(o)+'</span></button>'}).join('')+(p!=null?'<p class="why">'+why(q,p===q.answer)+'</p>':'')+'</div></div>'}).join('')+keep()+'</div>'}
+el.onclick=function(e){var b=e.target.closest('[data-j]');if(b){st[+b.dataset.q]=+b.dataset.j;r()}if(e.target.closest('[data-reset]')){e.preventDefault();st=[];r()}};el.pre=function(){st=[Q[0].answer,(Q[1].answer+1)%4];r()};r()})(document.querySelector('[data-k=C]'));
+/* D */
+(function(el){var st=[];function r(){var done=st.filter(function(x){return x!=null}).length,right=st.filter(function(x,i){return x===Q[i].answer}).length;
+el.innerHTML='<div class="D"><div class="head"><h3 class="t">Four things to remember</h3><span class="sub">Answer each question to unlock the idea behind it.</span></div>'+Q.map(function(q,i){var p=st[i];return '<div class="pair"><span class="n">0'+(i+1)+'</span><div><p class="stem">'+esc(q.q)+'</p><div class="opts">'+q.options.map(function(o,j){var c=p==null?'':(j===q.answer?' r':(j===p?' w':' dim'));return '<button class="o'+c+'" data-q="'+i+'" data-j="'+j+'"'+(p!=null?' disabled':'')+'><span class="t">'+esc(o)+'</span></button>'}).join('')+'</div>'+(p==null?'<div class="lock">Takeaway '+(i+1)+' appears after an answer.</div>':'<div class="take"><span class="label">'+(p===q.answer?'Correct · ':'Answer shown above · ')+'Takeaway '+(i+1)+'</span><p>'+esc(T[i])+'</p><p class="why">'+esc(q.why)+' <a class="more" href="#">Reread: '+esc(q.section)+'</a></p></div>')+'</div></div>'}).join('')+(done===4?'<p class="sum">'+right+' of 4 correct. <button class="btn" data-reset>Try again</button></p>':'')+'</div>'}
+el.onclick=function(e){var b=e.target.closest('[data-j]');if(b){st[+b.dataset.q]=+b.dataset.j;r()}if(e.target.closest('[data-reset]')){st=[];r()}};el.pre=function(){st=[Q[0].answer,(Q[1].answer+3)%4];r()};r()})(document.querySelector('[data-k=D]'));
+/* E */
+(function(el){var cur=0,flip=false,st=[];function r(){
+if(cur>=4){var k=st.filter(function(x){return x}).length;el.innerHTML='<div class="E"><div class="head"><h3 class="t">Flashcards</h3><button class="btn" data-reset>Go again</button></div><p style="display:flex;align-items:baseline;gap:14px;margin:16px 0 4px"><span class="big">'+k+'/4</span><span class="why">marked as known. A dashed line marks an idea to review.</span></p>'+keep(function(i){return st[i]?'':' class="miss"'})+'</div>';return}
+var q=Q[cur];el.innerHTML='<div class="E"><div class="head"><h3 class="t">Flashcards</h3><span class="sub">Think of the answer, then turn the card</span></div><div class="deck"><div class="behind b2"></div><div class="behind"></div><div class="card'+(flip?' flip':'')+'"><div class="face"><div class="row"><span class="label">Card '+(cur+1)+' of 4</span><span class="label">Question</span></div><p class="stem">'+esc(q.q)+'</p><div class="row"><span class="hint">Answer in your head first</span><button class="btn solid" data-flip>Turn the card</button></div></div><div class="face back"><div class="row"><span class="label">Card '+(cur+1)+' of 4</span><span class="label">Answer</span></div><p class="ans">'+esc(q.options[q.answer])+'</p><p class="why" style="flex:1;margin:0">'+esc(q.why)+' <a class="more" href="#">Reread: '+esc(q.section)+'</a></p><div class="row"><span class="hint">Did you know it?</span><span><button class="btn" data-m="0">Not yet</button> <button class="btn solid" data-m="1">Knew it</button></span></div></div></div></div><div class="nav"><div class="dots">'+Q.map(function(_,i){return '<i class="'+(i===cur?'on':(st[i]==null?'':(st[i]?'k':'m')))+'"></i>'}).join('')+'</div><span class="hint">Four cards from this chapter</span></div></div>'}
+el.onclick=function(e){if(e.target.closest('[data-flip]')){flip=true;r()}var m=e.target.closest('[data-m]');if(m){st[cur]=m.dataset.m==='1';cur++;flip=false;r()}if(e.target.closest('[data-reset]')){cur=0;st=[];flip=false;r()}};el.pre=function(){st=[true];cur=1;flip=true;r()};el.go=function(n,fl){st=[];for(var i=0;i<n;i++)st[i]=i!==1;cur=n;flip=!!fl;r()};r()})(document.querySelector('[data-k=E]'));
+
+/* F */
+(function(el){var cur=0,flip=false,st=[];function r(){
+var dots='<div class="dots">'+Q.map(function(q,i){return '<i class="'+(i===cur&&cur<4?'on':(st[i]==null?'':(st[i]===Q[i].answer?'k':'m')))+'"></i>'}).join('')+'</div>';
+if(cur>=4){var k=st.filter(function(x,i){return x===Q[i].answer}).length;el.innerHTML='<div class="F"><div class="head"><h3 class="t">Check yourself</h3><button class="btn" data-reset>Try again</button></div><p style="display:flex;align-items:baseline;gap:14px;margin:16px 0 4px"><span class="big">'+k+'/4</span><span class="why">answered correctly. A dashed line marks an idea to reread.</span></p>'+keep(function(i){return st[i]===Q[i].answer?'':' class="miss"'})+'</div>';return}
+var q=Q[cur],p=st[cur],ok=p===q.answer;
+el.innerHTML='<div class="F"><div class="head"><h3 class="t">Check yourself</h3><span class="sub">Four questions on the main ideas of this chapter</span></div><div class="deck"><div class="behind b2"></div><div class="behind"></div><div class="card'+(flip?' flip':'')+'"><div class="face"><div class="row"><span class="label">Question '+(cur+1)+' of 4</span></div><p class="stem">'+esc(q.q)+'</p><div class="opts">'+q.options.map(function(o,j){return '<button class="o" data-j="'+j+'"><span class="l">'+L[j]+'</span><span>'+esc(o)+'</span></button>'}).join('')+'</div></div><div class="face back"><div class="row"><span class="label">Question '+(cur+1)+' of 4</span><span class="verdict '+(ok?'ok':'no')+'">'+(p==null?'':(ok?'Correct':'Not quite'))+'</span></div><p class="ans">'+esc(q.options[q.answer])+'</p>'+(p!=null&&!ok?'<p class="pick">Picked: <s>'+esc(q.options[p])+'</s></p>':'')+'<p class="why" style="flex:1;margin:0">'+esc(q.why)+' <a class="more" href="#">Reread: '+esc(q.section)+'</a></p><div class="row"><span class="hint"></span><button class="btn solid" data-next>'+(cur<3?'Next question':'See results')+'</button></div></div></div></div><div class="nav">'+dots+'<span class="hint">Pick an answer to turn the card</span></div></div>'}
+el.onclick=function(e){var b=e.target.closest('[data-j]');if(b&&!flip){st[cur]=+b.dataset.j;flip=true;r()}if(e.target.closest('[data-next]')){cur++;flip=false;r()}if(e.target.closest('[data-reset]')){cur=0;st=[];flip=false;r()}};
+el.go=function(n,fl,wrong){st=[];for(var i=0;i<n;i++)st[i]=i===1?(Q[i].answer+1)%4:Q[i].answer;cur=n;flip=!!fl;if(fl){st[n]=wrong?(Q[n].answer+2)%4:Q[n].answer}r()};r()})(document.querySelector('[data-k=F]'));
+var th=/theme=dark/.test(location.search);if(th)document.documentElement.setAttribute('data-theme','dark');if(location.hash==='#pre')document.querySelectorAll('.mock').forEach(function(m){m.pre&&m.pre()});
+</script></body></html>

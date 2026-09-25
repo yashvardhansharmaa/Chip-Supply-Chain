@@ -142,3 +142,5 @@ The subsection permalinks (the "#" that appears when a chapter heading is hovere
 - check-speak.js treats the quiz question marks as real questions and still applies every other rule to them.
 - Text measure 34em to 41em (about 20 percent wider); column 60 to 68 percent; the chapter title block and chokepoint card are pinned at --frame: 650px. Essay measure 38em to 44em.
 - Masthead tagline "Every stage, and who controls it" removed (social cards keep it).
+
+- 25 Sept, later: the multiple-choice quiz was replaced by FLASHCARDS (the user's pick from five mockups in qa/quiz-design/). Each chapter ends with four cards: question on the front, answer and a one- or two-sentence reason on the back, "Didn't know" / "Knew it" to move on, then an end screen with the count known and the four takeaways (dashed where missed). Data: data/flashcards.json ({takeaways[4], cards[4]: q, a, why, section}); data/quizzes.json removed. Every number in the cards appears in its chapter. Print/PDF shows only the takeaways. GoatCounter event "flashcards/<chapter>/<known>".
