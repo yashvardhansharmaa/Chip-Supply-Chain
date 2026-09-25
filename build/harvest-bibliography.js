@@ -1361,6 +1361,14 @@ const PUBLISHERS = {
 // fetch was refused by a bot wall. Where a page would not show its date, the
 // date is left out rather than guessed.
 const MANUAL = {
+  // --- Epoch AI report (revised 24 Sept 2026 for Huawei's updated roadmap)
+  'https://epoch.ai/publications/huaweis-roadmap-to-2031': {
+    title: 'Will Huawei catch up to Nvidia by 2030?',
+    publisher: 'Epoch AI',
+    date: '2026-09-24',
+    type: 'report',
+    accessed: '2026-09-25',
+  },
   // --- Reuters (bot wall; headline and dateline read from the article)
   'https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/': {
     title: "Explainer: The $400 million ASML 'printers' key for the AI chip boom",

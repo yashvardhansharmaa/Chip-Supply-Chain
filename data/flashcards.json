@@ -22,7 +22,13 @@
       {
         "q": "Can China design the newest chips on its own software?",
         "a": "Not yet.",
-        "why": "China designs competitive AI accelerators, but CSET finds its design tools cannot handle the newest chips. In 2025 the United States stopped these sales to China for five weeks.",
+        "why": "CSET finds that Chinese design software cannot handle the newest chips. In 2025 the United States stopped these sales to China for five weeks.",
+        "section": "The chokepoint"
+      },
+      {
+        "q": "How far behind Nvidia is Huawei's best AI chip?",
+        "a": "About three to four years, on Epoch AI's estimate.",
+        "why": "Huawei's flagship for 2026, the Ascend 950, delivers about half the computing performance of Nvidia's H100, which began shipping in 2022.",
         "section": "The chokepoint"
       }
     ],
@@ -30,7 +36,8 @@
       "Chip design turns an idea into a blueprint, and a factory builds only designs checked in approved software.",
       "Synopsys, Cadence and Siemens EDA sell the software used to design every leading-edge chip.",
       "A new vendor would have to write a complete set of tools and win a foundry's approval.",
-      "China designs competitive AI chips but cannot yet design the newest ones on its own software."
+      "China designs its own AI chips but cannot yet design the newest ones on its own software.",
+      "Huawei's best AI chip trails Nvidia's by three to four years, on Epoch AI's estimate."
     ]
   },
   "silicon-and-wafers": {
