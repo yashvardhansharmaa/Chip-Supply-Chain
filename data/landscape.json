@@ -3497,7 +3497,7 @@
     "priceEstimate": null,
     "bomEstimate": null,
     "exportStatus": "Not sold as merchant silicon; deployed only in Azure regions. Total processing performance is 12,800 (16 x 800), well above the 4,800 threshold in ECCN 3A090.a.",
-    "notes": "Microsoft’s first accelerator, and the first silicon anywhere to implement the Microscaling data format that later became the MX standard. Microsoft published the cooling design in detail, down to the sidekick heat exchanger that sits beside the rack, and later the chip itself, in its Inside Maia 100 post and at Hot Chips 2024: an 820 mm2 die on TSMC N5 with four HBM2E stacks, 64 GB at 1.8 TB/s, on CoWoS-S. The date above is that of the Azure post carrying these figures, 3 April 2024; Epoch AI records the part at August 2024, when Microsoft presented it publicly. The die area and power come from Epoch AI. Microsoft designed the chip for up to 700 W and provisions it at 500 W, the figure shown",
+    "notes": "Microsoft’s first accelerator, and the first silicon anywhere to implement the Microscaling data format that later became the MX standard. Microsoft published the cooling design in detail, down to the sidekick heat exchanger that sits beside the rack, and later the chip itself, in its Inside Maia 100 post and at Hot Chips 2024: an 820 mm2 die on TSMC N5 with four HBM2E stacks, 64 GB at 1.8 TB/s, on CoWoS-S. The date above is that of the Azure post carrying these figures, 3 April 2024; Epoch AI records the part at August 2024, when Microsoft presented it publicly. The die area, about 820 mm2 on TSMC N5, is Microsoft’s own figure. Microsoft designed the chip for up to 700 W and provisions it at 500 W, the figure shown",
     "layout": {
       "unit": "mm",
       "interposer": [
