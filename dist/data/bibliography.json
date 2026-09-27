@@ -1,4 +1,10 @@
 {
+  "https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe3400b": {
+    "title": "TWINSCAN NXE:3400B: EUV lithography systems",
+    "publisher": "ASML",
+    "type": "page",
+    "accessed": "2026-09-27"
+  },
   "https://epoch.ai/publications/huaweis-roadmap-to-2031": {
     "title": "Will Huawei catch up to Nvidia by 2030?",
     "publisher": "Epoch AI",

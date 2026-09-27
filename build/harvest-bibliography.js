@@ -1361,6 +1361,13 @@ const PUBLISHERS = {
 // fetch was refused by a bot wall. Where a page would not show its date, the
 // date is left out rather than guessed.
 const MANUAL = {
+  // --- ASML product page (throughput rating: 26 x 33 mm die, 96 shots per wafer)
+  'https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe3400b': {
+    title: 'TWINSCAN NXE:3400B: EUV lithography systems',
+    publisher: 'ASML',
+    type: 'page',
+    accessed: '2026-09-27',
+  },
   // --- Epoch AI report (revised 24 Sept 2026 for Huawei's updated roadmap)
   'https://epoch.ai/publications/huaweis-roadmap-to-2031': {
     title: 'Will Huawei catch up to Nvidia by 2030?',

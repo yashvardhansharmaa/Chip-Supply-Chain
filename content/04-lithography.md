@@ -90,7 +90,7 @@ The wafer is coated with photoresist, a film that changes wherever light touches
 
 {{figure:litho-print}}
 
-The image from one mask covers a patch about 26 by 33 mm, so the wafer moves under the lens one patch at a time, close to a hundred patches per wafer. Before each one, the machine finds marks printed in earlier layers and lines the new layer up on them to within a few nanometers.
+The image from one mask covers a patch about 26 by 33 mm, so the wafer moves under the lens one patch at a time, close to a hundred patches per wafer. ASML's own throughput rating for an EUV scanner assumes 96 of them ([source](https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe3400b)). Before each one, the machine finds marks printed in earlier layers and lines the new layer up on them to within a few nanometers.
 
 Finer lines need shorter light. The finest light now in use, at 13.5 nm, is stopped by glass and by air, so an EUV scanner works in a vacuum and uses mirrors instead of lenses, and its masks are mirrors too. The older machines, which use light fourteen times longer, gain extra sharpness by filling the gap between lens and wafer with water ([source](https://www.asml.com/en/technology/lithography-principles/lenses-and-mirrors)).
 

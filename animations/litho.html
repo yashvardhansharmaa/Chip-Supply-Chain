@@ -100,12 +100,12 @@ function sideView(ctx, t, p) {
 }
 
 // ---- top view: the whole wafer, filled one patch at a time
-const WX = 598, WY = 214, WR = 150, KM = WR / 150;                 // pixels per millimeter
+const WX = 598, WY = 206, WR = 150, KM = WR / 150;                 // pixels per millimeter
 const PW = 26 * KM, PH = 33 * KM;
 const PATCHES = [];
 for (let j = -6; j <= 6; j++) {   // rows of patches, 26 by 33 mm, across a 300 mm wafer
   const row = [];
-  for (let i = -6; i <= 6; i++) { const x = WX + i * PW - PW / 2, y = WY + j * PH - PH / 2; const nx = Math.max(x, Math.min(WX, x + PW)), ny = Math.max(y, Math.min(WY, y + PH)); if (Math.hypot(nx - WX, ny - WY) < WR - 3 * KM) row.push([x, y]); }   // every patch that touches the wafer, edge patches included
+  for (let i = -6; i <= 6; i++) { const x = WX + i * PW - PW / 2, y = WY + j * PH - PH / 2; const nx = Math.max(x, Math.min(WX, x + PW)), ny = Math.max(y, Math.min(WY, y + PH)); if (Math.hypot(nx - WX, ny - WY) < WR - 3 * KM) { const far = Math.max(Math.hypot(x - WX, y - WY), Math.hypot(x + PW - WX, y - WY), Math.hypot(x - WX, y + PH - WY), Math.hypot(x + PW - WX, y + PH - WY)); row.push([x, y, far > WR - 3 * KM]); } }   // the third value marks an edge patch: printed, but no complete chip fits   // every patch that touches the wafer, edge patches included
   if (j % 2) row.reverse();                                          // the machine snakes across the wafer
   PATCHES.push(...row);
 }
@@ -127,13 +127,13 @@ function topView(ctx, t, p) {
   const order = [FIRST].concat(PATCHES.map((_, k) => k).filter((k) => k !== FIRST));
   ctx.save(); ctx.beginPath(); ctx.arc(WX, WY, WR - 1, 0, 7); ctx.clip();
   order.slice(0, Math.max(printedN, 1)).forEach((k, n) => {
-    const [x, y] = PATCHES[k];
+    const [x, y, edge] = PATCHES[k];
     const fresh = p4 > 0 && n === printedN - 1;
     ctx.save(); ctx.globalAlpha = a * (n < printedN ? 1 : ease((p1 - 0.2) / 0.3));
-    ctx.fillStyle = fresh ? `rgba(${V},0.75)` : n < printedN ? (dark ? 'rgba(122,31,43,0.55)' : 'rgba(122,31,43,0.28)') : 'transparent';
+    ctx.fillStyle = fresh ? `rgba(${V},0.75)` : n < printedN ? (edge ? (dark ? 'rgba(236,233,226,0.14)' : 'rgba(255,255,255,0.45)') : (dark ? 'rgba(122,31,43,0.55)' : 'rgba(122,31,43,0.28)')) : 'transparent';
     ctx.fillRect(x + 0.6, y + 0.6, PW - 1.2, PH - 1.2);
-    if (n < printedN && !fresh) { ctx.fillStyle = dark ? 'rgba(20,23,28,0.6)' : 'rgba(20,24,31,0.45)'; for (let l = 0; l < 6; l++) ctx.fillRect(x + 3 + l * (PW - 6) / 5.4, y + 4, 1.2, PH - 8); }
-    ctx.strokeStyle = PAL.garnet; ctx.lineWidth = n === 0 && p4 === 0 ? 1.6 : 0.8; ctx.strokeRect(x + 0.6, y + 0.6, PW - 1.2, PH - 1.2);
+    if (n < printedN && !fresh) { ctx.fillStyle = edge ? (dark ? 'rgba(20,23,28,0.3)' : 'rgba(20,24,31,0.18)') : (dark ? 'rgba(20,23,28,0.6)' : 'rgba(20,24,31,0.45)'); for (let l = 0; l < 6; l++) ctx.fillRect(x + 3 + l * (PW - 6) / 5.4, y + 4, 1.2, PH - 8); }
+    ctx.strokeStyle = edge && n < printedN && !fresh ? PAL.muted : PAL.garnet; ctx.setLineDash(edge && n < printedN && !fresh ? [2, 2] : []); ctx.lineWidth = n === 0 && p4 === 0 ? 1.6 : 0.8; ctx.strokeRect(x + 0.6, y + 0.6, PW - 1.2, PH - 1.2); ctx.setLineDash([]);
     ctx.restore();
   });
   ctx.restore();
@@ -141,7 +141,11 @@ function topView(ctx, t, p) {
   const named = ease((p1 - 0.2) / 0.3) * (1 - ease(p4 / 0.2));
   if (named > 0) { const [x, y] = PATCHES[FIRST]; label('This patch', x + PW + 6, y + PH / 2 + 4, PAL.garnet, { alpha: named }); }
   if (p4 > 0) {
-    label(`${printedN} of ${PATCHES.length} patches printed`, WX, WY + WR + 26, PAL.ink2, { align: 'center', alpha: ease(p4 / 0.2) });
+    label(`${printedN} of ${PATCHES.length} patches printed`, WX, WY + WR + 24, PAL.ink2, { align: 'center', alpha: ease(p4 / 0.2) });
+    // key: the edge patches
+    const ka = ease((p4 - 0.55) / 0.25);
+    if (ka > 0) { ctx.save(); ctx.globalAlpha = ka; ctx.fillStyle = dark ? 'rgba(236,233,226,0.14)' : 'rgba(255,255,255,0.7)'; ctx.fillRect(WX - 150, WY + WR + 34, 10, 12); ctx.strokeStyle = PAL.muted; ctx.setLineDash([2, 2]); ctx.strokeRect(WX - 149.5, WY + WR + 34.5, 9, 11); ctx.restore();
+      label('Printed to keep the wafer even;', WX - 134, WY + WR + 44, PAL.muted, { alpha: ka }); label('no complete chip', WX - 134, WY + WR + 58, PAL.muted, { alpha: ka }); }
     label('Each patch at most 26 by 33 mm', WX, WY - WR - 12, PAL.muted, { align: 'center', alpha: ease(p4 / 0.2) });
   } else label('The whole wafer, 300 mm across', WX, WY - WR - 12, PAL.muted, { align: 'center', alpha: a });
 }
