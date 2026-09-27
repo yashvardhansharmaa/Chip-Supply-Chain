@@ -1,0 +1,33 @@
+{
+ "duration": 21.4,
+ "fade": 0.8,
+ "width": 760,
+ "height": 420,
+ "steps": [
+  {
+   "k": "Base chip",
+   "t0": 0.4,
+   "cap": "A memory stack sits beside the GPU on a shared silicon base. It starts with a base chip, which controls the memory chips above it."
+  },
+  {
+   "k": "Thin",
+   "t0": 3,
+   "cap": "Each memory chip is ground to about 30 micrometers, thinner than a human hair."
+  },
+  {
+   "k": "Stack",
+   "t0": 6.2,
+   "cap": "Twelve chips are joined by dots of solder, and copper-filled holes run straight down through all of them."
+  },
+  {
+   "k": "Height",
+   "t0": 10.6,
+   "cap": "The stack has to fit under the cooling plate. Twelve chips reach 0.72 mm, the old limit. HBM4 raised the limit to 775 micrometers and fits up to sixteen chips."
+  },
+  {
+   "k": "Width",
+   "t0": 14.6,
+   "cap": "An HBM3E stack talks to the processor over 1,024 wires at once, sixteen times as many as a PC memory module. HBM4 doubles that to 2,048."
+  }
+ ]
+}

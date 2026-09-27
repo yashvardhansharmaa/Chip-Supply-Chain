@@ -41,6 +41,7 @@
     {"fact": "The same filing puts SK hynix at 29.1% of DRAM including HBM in the first quarter of 2026 and says three firms hold more than 90% of DRAM revenue", "source": "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm"}
   ],
   "figures": [
+    {"id": "hbm-inside", "type": "animation", "src": "hbm-stack", "title": "Inside a memory stack", "note": "Simplified cross-section. Heights follow the published limits and are drawn to one vertical scale; widths are not to scale."},
     {
       "id": "hbm-bandwidth",
       "type": "bars",
@@ -78,7 +79,9 @@ High bandwidth memory, or HBM, is where an AI chip keeps the numbers it is worki
 
 Each layer in the cube is a DRAM chip, ground thin and bonded to the one below with microbumps, dots of solder, and the whole stack sits on a base die that manages it. The copper-filled holes are TSVs, through-silicon vias, and they let a signal reach any layer without a wire around the outside.
 
-One cube talks to the processor over 1,024 wires at once, a 1,024-bit interface, sixteen times wider than a standard DDR5 memory module, the memory stick in a PC ([source](https://www.micron.com/products/memory/hbm)). Ordinary memory cannot be made that wide, because the pins would not fit on a circuit board. The stack can, since its wires run down through the TSVs and across a few millimeters of silicon to the processor beside it, with no board in the way.
+An HBM3E cube talks to the processor over 1,024 wires at once, a 1,024-bit interface, sixteen times wider than a standard DDR5 memory module, the memory stick in a PC ([source](https://www.micron.com/products/memory/hbm)). HBM4 doubles that to 2,048 wires ([source](https://www.jedec.org/news/pressreleases/jedec%C2%AE-and-industry-leaders-collaborate-release-jesd270-4-hbm4-standard-advancing)). Ordinary memory cannot be made that wide, because the pins would not fit on a circuit board. The stack can, since its wires run down through the TSVs and across a few millimeters of silicon to the processor beside it, with no board in the way.
+
+{{figure:hbm-inside}}
 
 Answering a prompt is what the width is for. Training reuses each stored number across a huge multiplication, so a chip can fetch little and compute a lot. To generate one word of an answer, the chip reads the whole model from memory, and the whole record of the conversation so far, does a little arithmetic, and waits for the next read. That record grows with the length of the conversation and the number of users served at once. So memory size and speed usually set how many people one chip can serve.
 

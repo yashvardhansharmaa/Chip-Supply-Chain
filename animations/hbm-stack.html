@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Inside a Memory Stack</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Instrument+Sans:wght@400;500;600&display=swap">
+</head><body>
+<script src="lib.js"></script>
+<script>
+const { PAL, clamp, ease, easeOut, mix, mixc, label, text } = A, dark = A.theme === 'dark';
+// Facts, all from chapter 10: a base die manages the stack; memory chips are ground to about 30 micrometers and joined
+// by microbumps, with TSVs straight through; a twelve-high stack is 0.72 mm tall; HBM4 raised the height limit from 720
+// to 775 micrometers because a taller stack would hit the cooling plate, and allows up to sixteen chips; an HBM3E stack
+// talks to the processor over 1,024 wires, sixteen times a standard DDR5 module, and HBM4 doubles that to 2,048 (JEDEC JESD270-4).
+const STEPS = [
+  { k: 'Base chip', t0: 0.4, t1: 3.0, cap: 'A memory stack sits beside the GPU on a shared silicon base. It starts with a base chip, which controls the memory chips above it.' },
+  { k: 'Thin', t0: 3.0, t1: 6.2, cap: 'Each memory chip is ground to about 30 micrometers, thinner than a human hair.' },
+  { k: 'Stack', t0: 6.2, t1: 10.6, cap: 'Twelve chips are joined by dots of solder, and copper-filled holes run straight down through all of them.' },
+  { k: 'Height', t0: 10.6, t1: 14.6, cap: 'The stack has to fit under the cooling plate. Twelve chips reach 0.72 mm, the old limit. HBM4 raised the limit to 775 micrometers and fits up to sixteen chips.' },
+  { k: 'Width', t0: 14.6, t1: 20.2, cap: 'An HBM3E stack talks to the processor over 1,024 wires at once, sixteen times as many as a PC memory module. HBM4 doubles that to 2,048.' },
+];
+const pr = (i, t) => clamp((t - STEPS[i].t0) / (STEPS[i].t1 - STEPS[i].t0));
+const W = 760, H = 420;
+// the cross-section: 11 mm wide, heights exaggerated so the layers show (a vertical scale, the stack's own, applies)
+const SX0 = 124, SX1 = 360, BASE_Y = 360, UM = 0.36;              // pixels per micrometer, vertically
+const BASE_H = 90 * UM, CHIP = 30 * UM;
+const C = {
+  si: dark ? ['#434b57', '#343b46'] : ['#3a424e', '#2a313b'], base: '#b8743d', baseDark: '#8f5a2f', bump: dark ? '#c9cfd6' : '#9aa3ad',
+  tsv: '#d08a4c', plate: dark ? '#6f7883' : '#8b939d', proc: dark ? ['#2c3440', '#232a35'] : ['#27303d', '#1b212b'], inter: dark ? '#8a939e' : '#c9ced4',
+};
+const layerY = (n, total, height) => { const pitch = (height - BASE_H) / total; return BASE_Y - BASE_H - (n + 1) * pitch; };
+
+function chip(ctx, x0, x1, y, h, a, tsvA) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha *= a;
+  const g = ctx.createLinearGradient(x0, y, x1, y + h); g.addColorStop(0, C.si[0]); g.addColorStop(1, C.si[1]);
+  ctx.fillStyle = g; ctx.fillRect(x0, y, x1 - x0, h);
+  ctx.fillStyle = 'rgba(255,255,255,0.18)'; ctx.fillRect(x0, y, x1 - x0, 0.8);
+  if (tsvA > 0) { ctx.globalAlpha = a * tsvA; ctx.fillStyle = C.tsv; for (let i = 0; i < 9; i++) ctx.fillRect(x0 + 22 + i * ((x1 - x0 - 44) / 8) - 1.2, y, 2.4, h); }
+  ctx.restore();
+}
+function bumps(ctx, x0, x1, y, a) {
+  if (a <= 0) return; ctx.save(); ctx.globalAlpha *= a; ctx.fillStyle = C.bump;
+  for (let x = x0 + 8; x < x1 - 4; x += 9) { ctx.beginPath(); ctx.arc(x, y, 1.5, 0, 7); ctx.fill(); }
+  ctx.restore();
+}
+function stack(ctx, t, n, height, a, tsvA) {
+  const pitch = (height - BASE_H) / n, h = Math.min(CHIP * (12 / n), pitch * 0.72);
+  for (let i = 0; i < n; i++) {
+    const y = BASE_Y - BASE_H - (i + 1) * pitch + (pitch - h), q = a(i);
+    if (q <= 0) continue;
+    const drop = (1 - ease(q)) * 40;
+    bumps(ctx, SX0, SX1, y + h + (pitch - h) / 2 - drop, ease(q));
+    chip(ctx, SX0, SX1, y - drop, h, ease(q), tsvA(i));
+  }
+}
+
+function render(ctx, t) {
+  ctx.fillStyle = PAL.bg; ctx.fillRect(0, 0, W, H);
+  const p0 = pr(0, t), p1 = pr(1, t), p2 = pr(2, t), p3 = pr(3, t), p4 = pr(4, t);
+  // the processor beside the stack, and the silicon they share, for context
+  const ctxA = ease(p0 / 0.4);
+  ctx.save(); ctx.globalAlpha = ctxA;
+  ctx.fillStyle = C.inter; ctx.fillRect(SX0 - 30, BASE_Y, SX1 - SX0 + 154, 10);
+  const g = ctx.createLinearGradient(SX1 + 34, 0, SX1 + 110, 0); g.addColorStop(0, C.proc[0]); g.addColorStop(1, C.proc[1]);
+  const limNow = mix(720, 775, ease(clamp((pr(3, t) - 0.55) / 0.35)));
+  ctx.fillStyle = g; ctx.fillRect(SX1 + 30, BASE_Y - limNow * UM, 64, limNow * UM);
+  ctx.restore();
+  label('GPU', SX1 + 62, BASE_Y + 24, PAL.ink2, { align: 'center', alpha: ctxA });
+  label('Does the calculating', SX1 + 62, BASE_Y + 38, PAL.muted, { align: 'center', alpha: ctxA });
+  label('Silicon base', SX0 - 30, BASE_Y + 24, PAL.ink2, { alpha: ctxA });
+  label('Wires the memory to the GPU', SX0 - 30, BASE_Y + 38, PAL.muted, { alpha: ctxA });
+  // base die
+  const baseA = ease((p0 - 0.2) / 0.5);
+  ctx.save(); ctx.globalAlpha = baseA; ctx.fillStyle = C.base; ctx.fillRect(SX0, BASE_Y - BASE_H, SX1 - SX0, BASE_H);
+  ctx.fillStyle = C.baseDark; for (let x = SX0 + 8; x < SX1 - 4; x += 9) { ctx.beginPath(); ctx.arc(x, BASE_Y, 1.5, 0, 7); ctx.fill(); }
+  ctx.restore();
+  label('Base chip', SX0 - 12, BASE_Y - BASE_H / 2 + 4, PAL.ink2, { align: 'right', alpha: baseA });
+  // thinning: one thick chip is ground down to about 30 micrometers
+  if (p1 > 0 && p2 < 0.2) {
+    const a = ease(p1 / 0.2) * (1 - ease(clamp(p2 / 0.2))), th = mix(110, CHIP, ease((p1 - 0.25) / 0.6));
+    const y = 230 - th / 2;
+    chip(ctx, SX0, SX1, y, th, a, clamp((p1 - 0.8) * 5));
+    // grinding sparks along the bottom face while it thins
+    if (p1 > 0.25 && p1 < 0.85) { ctx.fillStyle = mixc(C.base, '#ffffff', 0.4); for (let i = 0; i < 14; i++) { const x = SX0 + ((i * 53 + t * 240) % (SX1 - SX0)); ctx.globalAlpha = a * 0.7; ctx.fillRect(x, y + th + 2, 2, 2); } ctx.globalAlpha = 1; }
+    label('Ground to about 30 micrometers', SX0, y + th + 20, PAL.garnet, { alpha: a * ease((p1 - 0.7) / 0.2) });
+  }
+  // the stack: twelve chips, then sixteen thinner ones under the higher limit
+  const toSixteen = ease(clamp((p3 - 0.55) / 0.35));
+  const H12 = 720 * UM, H16 = 775 * UM;
+  const tsvOn = (i) => clamp((p2 - 0.72 - i * 0.012) / 0.12);
+  if (toSixteen < 1) stack(ctx, t, 12, H12, (i) => clamp((p2 - i * 0.045) / 0.18) * (1 - toSixteen), tsvOn);
+  if (toSixteen > 0) stack(ctx, t, 16, H16, () => toSixteen, () => 1);
+  label('Memory chips', SX0 - 12, BASE_Y - BASE_H - (H12 - BASE_H) / 2, PAL.ink2, { align: 'right', alpha: ease((p2 - 0.4) / 0.3) });
+  // cooling plate and the height limit
+  const hA = ease(p3 / 0.25) * (1 - ease(clamp(p4 / 0.3)) * 0.4);
+  if (hA > 0) {
+    const lim = mix(720, 775, toSixteen), ly = BASE_Y - lim * UM;
+    ctx.save(); ctx.globalAlpha = hA; ctx.fillStyle = C.plate; ctx.fillRect(SX0 - 20, ly - 12, SX1 - SX0 + 134, 12);
+    ctx.strokeStyle = PAL.garnet; ctx.setLineDash([5, 4]); ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(SX0 - 20, ly); ctx.lineTo(SX1 + 114, ly); ctx.stroke(); ctx.restore();
+    label('Cooling plate', SX0 - 20, ly - 20, PAL.muted, { alpha: hA });
+    label(`Height limit, ${toSixteen > 0.5 ? 775 : 720} micrometers`, SX1 + 114, ly - 20, PAL.garnet, { align: 'right', alpha: hA });
+  }
+  // readout on the right
+  const col = (on) => (on ? PAL.garnet : PAL.ink2);
+  const row = (y, v, unit, name, on, a) => {
+    if (a <= 0) return;
+    if (on) { ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = PAL.garnet; ctx.fillRect(496, y - 36, 2, 54); ctx.restore(); }
+    text(v, 512, y, '300 44px Fraunces', col(on), { alpha: a });
+    ctx.font = '300 44px Fraunces'; const w = ctx.measureText(v).width;
+    text(unit, 512 + w + 8, y, '500 13px "Instrument Sans"', col(on), { alpha: a });
+    label(name, 512, y + 19, PAL.muted, { alpha: a });
+  };
+  const readA = 1 - ease(clamp(p4 / 0.25));
+  row(110, '30', 'micrometers', 'One memory chip, ground thin', p1 > 0 && p2 === 0, ease((p1 - 0.7) / 0.2) * readA);
+  row(200, toSixteen > 0.5 ? '16' : '12', 'chips', toSixteen > 0.5 ? 'HBM4, up to sixteen' : 'A twelve-high stack', p2 > 0 && p4 === 0, ease((p2 - 0.3) / 0.3) * readA);
+  row(290, toSixteen > 0.5 ? '775' : '720', 'micrometers', toSixteen > 0.5 ? 'HBM4 height limit' : 'Stack height, 0.72 mm', p3 > 0 && p4 === 0, ease((p3 - 0.2) / 0.3) * readA);
+  // width: 64 wires for a PC memory module, 1,024 for an HBM3E stack and 2,048 for HBM4, drawn to the same scale
+  const wA = ease((p4 - 0.1) / 0.3);
+  if (wA > 0) {
+    const x0 = 512, per = 0.11, y1 = 96, y2 = 206, y3 = 316;   // pixels per wire
+    const band = (y, n, name, grow, on) => {
+      const w = n * per * grow;
+      ctx.save(); ctx.globalAlpha = wA; ctx.fillStyle = on ? PAL.wine : PAL.ink2;
+      ctx.fillRect(x0, y, w, 32);
+      // split into groups of 64, so the stack reads as sixteen PC memory modules side by side
+      ctx.fillStyle = PAL.bg; for (let g = 1; g < n / 64; g++) { const gx = x0 + g * 64 * per; if (gx < x0 + w) ctx.fillRect(gx - 0.5, y, 1, 32); }
+      ctx.restore();
+      text(n.toLocaleString('en-US'), x0, y - 12, '300 30px Fraunces', on ? PAL.garnet : PAL.ink2, { alpha: wA });
+      ctx.font = '300 30px Fraunces'; const tw = ctx.measureText(n.toLocaleString('en-US')).width;
+      text('wires', x0 + tw + 8, y - 12, '500 13px "Instrument Sans"', on ? PAL.garnet : PAL.ink2, { alpha: wA });
+      label(name, x0, y + 50, PAL.muted, { alpha: wA });
+    };
+    band(y1, 64, 'A PC memory module', 1, false);
+    band(y2, 1024, 'One HBM3E stack', ease((p4 - 0.25) / 0.35), false);
+    band(y3, 2048, 'One HBM4 stack', ease((p4 - 0.6) / 0.35), true);
+  }
+}
+A.start({ W, H, duration: 21.4, fade: 0.8, steps: STEPS, render });
+</script></body></html>
