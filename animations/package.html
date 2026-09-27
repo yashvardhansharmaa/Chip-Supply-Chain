@@ -9,11 +9,11 @@ const { PAL, clamp, ease, easeOut, mix, rng, label, text } = A, dark = A.theme =
 // stacks (chapter 11); an HBM stack is 11 x 12 mm (chapter 10 specimen); the chips together cover about 2,700 mm2, a
 // little over three exposures (chapter 11 specimen); TSMC builds CoWoS interposers up to 5.5 exposures (chapter 11).
 const STEPS = [
-  { k: 'One exposure', t0: 0.5, t1: 4.0, cap: 'A scanner prints at most a rectangle 26 by 33 mm in one exposure, which sets the practical limit on the size of one die.' },
-  { k: 'Two dies', t0: 4.0, t1: 7.4, cap: 'An AI accelerator needs more circuit than that, so its logic is split across two dies, each nearly one exposure in size.' },
-  { k: 'Interposer', t0: 7.4, t1: 10.6, cap: 'The dies sit side by side on an interposer, a base with wiring fine enough to join them.' },
-  { k: 'Memory', t0: 10.6, t1: 14.2, cap: 'Eight memory stacks go beside them. Together the chips cover a little over three exposures of silicon.' },
-  { k: 'Package', t0: 14.2, t1: 17.8, cap: 'The interposer is mounted on a resin substrate. TSMC now builds interposers up to 5.5 times the area of one exposure.' },
+  { k: 'The limit', t0: 0.5, t1: 4.2, cap: 'A chipmaking machine prints at most a patch 26 by 33 mm in one shot, about the size of a postage stamp, so no single chip can be bigger.' },
+  { k: 'Too big', t0: 4.2, t1: 8.4, cap: 'An AI accelerator needs more circuitry than one patch holds, so its logic is split into two chips, each nearly the size of a stamp.' },
+  { k: 'Silicon base', t0: 8.4, t1: 11.6, cap: 'The two chips sit side by side on a silicon base, called an interposer, whose fine wiring joins them.' },
+  { k: 'Memory', t0: 11.6, t1: 15.2, cap: 'Eight stacks of memory go beside them. Together the chips cover a little over three stamps of silicon.' },
+  { k: 'Package', t0: 15.2, t1: 18.8, cap: 'The silicon base sits on a larger package base, the substrate. TSMC now builds silicon bases as large as five and a half stamps.' },
 ];
 const pr = (i, t) => clamp((t - STEPS[i].t0) / (STEPS[i].t1 - STEPS[i].t0));
 const W = 760, H = 420, K = 4.75, CX = 212, CY = 212, mm = (x, y) => [CX + x * K, CY + y * K];
@@ -41,11 +41,18 @@ function die(ctx, dx, dy, a, side) {
   ctx.restore();
 }
 function field(ctx, fx, fy, a, dims) {
-  if (a <= 0) return; const [x, y] = mm(fx, fy);
-  ctx.save(); ctx.globalAlpha *= a; ctx.strokeStyle = PAL.garnet; ctx.lineWidth = 1.3; ctx.setLineDash([5, 4]); ctx.strokeRect(x, y, 26 * K, 33 * K); ctx.restore();
+  if (a <= 0) return; const [x, y] = mm(fx, fy), w = 26 * K, h = 33 * K;
+  ctx.save(); ctx.globalAlpha *= a;
+  ctx.fillStyle = dark ? 'rgba(212,102,123,0.07)' : 'rgba(122,31,43,0.05)'; ctx.fillRect(x, y, w, h);
+  ctx.strokeStyle = PAL.garnet; ctx.lineWidth = 1.2; ctx.strokeRect(x, y, w, h);
+  // perforations, so the patch reads as a postage stamp
+  ctx.fillStyle = PAL.bg; const r = 2.8, step = 9;
+  for (let px = x + step / 2; px < x + w; px += step) { ctx.beginPath(); ctx.arc(px, y, r, 0, 7); ctx.arc(px, y + h, r, 0, 7); ctx.fill(); }
+  for (let py = y + step / 2; py < y + h; py += step) { ctx.beginPath(); ctx.arc(x, py, r, 0, 7); ctx.arc(x + w, py, r, 0, 7); ctx.fill(); }
+  ctx.restore();
   if (dims) {
-    text('26 mm', x + 13 * K, y - 7, '500 11.5px "Instrument Sans"', PAL.garnet, { align: 'center', alpha: a * dims });
-    ctx.save(); ctx.translate(x - 8, y + 16.5 * K); ctx.rotate(-Math.PI / 2); text('33 mm', 0, 0, '500 11.5px "Instrument Sans"', PAL.garnet, { align: 'center', alpha: a * dims }); ctx.restore();
+    text('26 mm', x + w / 2, y - 8, '500 11.5px "Instrument Sans"', PAL.garnet, { align: 'center', alpha: a * dims });
+    ctx.save(); ctx.translate(x - 10, y + h / 2); ctx.rotate(-Math.PI / 2); text('33 mm', 0, 0, '500 11.5px "Instrument Sans"', PAL.garnet, { align: 'center', alpha: a * dims }); ctx.restore();
   }
 }
 // the readout on the right, in the manner of the defects figure: silicon counted in exposures
@@ -55,7 +62,7 @@ function row(y, value, name, on, a) {
   if (on) { c.save(); c.globalAlpha = a; c.fillStyle = PAL.garnet; c.fillRect(452, y - 36, 2, 54); c.restore(); }
   text(s, 470, y, '300 44px Fraunces', col, { alpha: a });
   c.font = '300 44px Fraunces'; const w = c.measureText(s).width;
-  text(value < 1.05 ? 'exposure' : 'exposures', 470 + w + 8, y, '500 13px "Instrument Sans"', col, { alpha: a });
+  text(value < 1.05 ? 'stamp' : 'stamps', 470 + w + 8, y, '500 13px "Instrument Sans"', col, { alpha: a });
   label(name, 470, y + 19, PAL.muted, { alpha: a });
 }
 function meter(ctx, value, a, markA) {
@@ -69,9 +76,9 @@ function meter(ctx, value, a, markA) {
   for (let v = 0; v <= 6; v++) text(String(v), sc(v), y + 24, '500 10.5px "Instrument Sans"', PAL.muted, { align: 'center', alpha: a });
   if (markA > 0) {
     ctx.save(); ctx.globalAlpha = markA; ctx.strokeStyle = PAL.ink; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(sc(5.5), y - 10); ctx.lineTo(sc(5.5), y + 12); ctx.stroke(); ctx.restore();
-    label('Largest interposer, 5.5', sc(5.5), y - 16, PAL.ink2, { align: 'right', alpha: markA });
+    label('Largest TSMC builds: 5.5', sc(5.5), y - 16, PAL.ink2, { align: 'right', alpha: markA });
   }
-  label('Silicon area, in exposures', x0, y - 16, PAL.muted, { alpha: a * (1 - markA) });
+  label('Silicon, counted in stamps', x0, y - 16, PAL.muted, { alpha: a * (1 - markA) });
 }
 
 function render(ctx, t) {
@@ -84,23 +91,35 @@ function render(ctx, t) {
     const [x, y] = mm(-w / 2, -w / 2); ctx.strokeStyle = C.subEdge; ctx.lineWidth = 1; ctx.strokeRect(x + 0.5, y + 0.5, w * K - 1, w * K - 1);
     for (let i = 0; i < 19; i++) { const u = -36 + i * 4; box(ctx, u, 35.2, 1.5, 2.4, C.pad); box(ctx, u, -37.6, 1.5, 2.4, C.pad); }
     ctx.restore();
-    label('Resin substrate', mm(-SUB / 2, 0)[0], mm(0, SUB / 2)[1] + 14, PAL.ink2, { alpha: clamp((p4 - 0.3) * 3) });
+    label('Package base (substrate)', mm(-SUB / 2, 0)[0], mm(0, SUB / 2)[1] + 14, PAL.ink2, { alpha: clamp((p4 - 0.3) * 3) });
   }
   // interposer
   if (p2 > 0) {
     const q = ease(p2 / 0.45);
     ctx.save(); ctx.globalAlpha = q; box(ctx, IP.x, IP.y, IP.w, IP.h, grad(ctx, IP.x, IP.y, IP.w, IP.h, C.inter));
     const [x, y] = mm(IP.x, IP.y); ctx.strokeStyle = C.interEdge; ctx.lineWidth = 1; ctx.strokeRect(x + 0.5, y + 0.5, IP.w * K - 1, IP.h * K - 1); ctx.restore();
-    label('Interposer', mm(IP.x, 0)[0], mm(0, IP.y)[1] - 7, PAL.ink2, { alpha: clamp((p2 - 0.25) * 3) * (1 - clamp(p4 * 3)) });
+    label('Silicon base', mm(IP.x, 0)[0], mm(0, IP.y)[1] - 7, PAL.ink2, { alpha: clamp((p2 - 0.25) * 3) * (1 - clamp(p4 * 3)) });
   }
   // exposure fields: they stay faintly in place, so the unit of the readout stays in view
   const [d0x, d0y] = DIES[0], [d1x, d1y] = DIES[1];
-  const keep = 1 - 0.65 * ease(clamp((p1 - 0.6) / 0.3)), gone = 1 - ease(clamp(p4 / 0.3));
+  const keep = 1 - 0.6 * ease(clamp((p1 - 0.8) / 0.2)), gone = 1 - ease(clamp(p4 / 0.3));
+  if (p0 > 0 && p1 < 0.3) label('Biggest patch one shot can print', mm(d0x, 0)[0] - 1, mm(0, d0y + 33)[1] + 16, PAL.garnet, { alpha: ease(p0 / 0.3) * (1 - clamp(p1 * 4)) });
+  const split = ease((p1 - 0.45) / 0.25), grow = ease(p1 / 0.25);
+  if (p1 > 0 && split < 1) {
+    // one block of circuitry, as wide as two chips: the part past the stamp's edge cannot print
+    const [bx, by] = mm(d0x, d0y), fullW = (2 * DIE_W + GAP) * K * mix(0.5, 1, grow), edge = mm(d0x - 0.25 + 26, 0)[0];
+    ctx.save(); ctx.globalAlpha = 1 - split;
+    const g = ctx.createLinearGradient(bx, by, bx + fullW, by); g.addColorStop(0, C.die[0]); g.addColorStop(1, C.die[1]);
+    ctx.fillStyle = g; ctx.fillRect(bx, by, fullW, DIE_H * K);
+    ctx.beginPath(); ctx.rect(edge, by, bx + fullW - edge, DIE_H * K); ctx.clip();
+    ctx.strokeStyle = PAL.garnet; ctx.lineWidth = 1.4; for (let k = -40; k < 200; k += 8) { ctx.beginPath(); ctx.moveTo(edge + k, by); ctx.lineTo(edge + k - 40, by + DIE_H * K); ctx.stroke(); }
+    ctx.restore();
+    label('Too big for one shot', mm(d1x + DIE_W, 0)[0], mm(0, d0y + DIE_H)[1] + 16, PAL.garnet, { align: 'right', alpha: grow * (1 - split) });
+  }
+  die(ctx, d0x, d0y, p1 > 0 && split < 1 ? split : ease((p0 - 0.3) / 0.35), -1);
+  die(ctx, d1x, d1y, split, 1);
   field(ctx, d0x - 0.25, d0y - 0.25, ease(p0 / 0.3) * keep * gone, 1 - ease(clamp(p1 * 3)));
-  field(ctx, d1x - 0.25, d1y - 0.25, ease(p1 / 0.3) * keep * gone, 0);
-  if (p0 > 0 && p1 < 0.3) label('One exposure', mm(d0x, 0)[0] - 1, mm(0, d0y + 33)[1] + 14, PAL.garnet, { alpha: ease(p0 / 0.3) * (1 - clamp(p1 * 4)) });
-  die(ctx, d0x, d0y, ease((p0 - 0.3) / 0.35), -1);
-  die(ctx, d1x, d1y, ease((p1 - 0.2) / 0.35), 1);
+  field(ctx, d1x - 0.25, d1y - 0.25, ease((p1 - 0.45) / 0.25) * keep * gone, 0);
   // wiring across the gap
   if (p2 > 0.35) {
     const q = clamp((p2 - 0.35) / 0.4); ctx.strokeStyle = C.link; ctx.lineWidth = 0.9;
@@ -124,14 +143,15 @@ function render(ctx, t) {
     if (q > 0.7) { const up = hy < 0; ctx.strokeStyle = C.link; ctx.globalAlpha = clamp((q - 0.7) * 3); ctx.lineWidth = 0.8; for (let i = 0; i < 6; i++) { const xx = x + 3 + i * ((w - 6) / 5); ctx.beginPath(); ctx.moveTo(xx, up ? y + h : y); ctx.lineTo(xx, up ? y + h + HG * K : y - HG * K); ctx.stroke(); } }
     ctx.globalAlpha = 1;
   });
+  label('Memory stacks', mm(IP.x + IP.w, 0)[0], mm(0, IP.y)[1] - 7, PAL.ink2, { align: 'right', alpha: ease((p3 - 0.3) / 0.3) * (1 - clamp(p4 * 3)) });
   // the readout
   const cur = p3 > 0 || p4 > 0 ? 2 : p1 > 0 || p2 > 0 ? 1 : 0;
-  row(96, V1, 'One logic die', cur === 0, ease((p0 - 0.55) / 0.3));
-  row(186, mix(V1, V2, ease((p1 - 0.45) / 0.4)), 'Two logic dies', cur === 1, ease((p1 - 0.35) / 0.3));
-  row(276, mix(V2, V3, ease((p3 - 0.35) / 0.5)), 'Dies and eight memory stacks', cur === 2, ease((p3 - 0.25) / 0.3));
-  const mv = p3 > 0 ? mix(V2, V3, ease((p3 - 0.35) / 0.5)) : p1 > 0 ? mix(V1, V2, ease((p1 - 0.45) / 0.4)) : V1 * ease((p0 - 0.55) / 0.3);
+  row(96, V1, 'One chip', cur === 0, ease((p0 - 0.55) / 0.3));
+  row(186, mix(V1, V2, ease((p1 - 0.7) / 0.25)), 'Two chips', cur === 1, ease((p1 - 0.6) / 0.25));
+  row(276, mix(V2, V3, ease((p3 - 0.35) / 0.5)), 'Two chips and eight memory stacks', cur === 2, ease((p3 - 0.25) / 0.3));
+  const mv = p3 > 0 ? mix(V2, V3, ease((p3 - 0.35) / 0.5)) : p1 > 0 ? mix(V1, V2, ease((p1 - 0.7) / 0.25)) : V1 * ease((p0 - 0.55) / 0.3);
   meter(ctx, mv, ease((p0 - 0.55) / 0.3), ease(p4 / 0.4));
 }
-A.start({ W, H, duration: 19.0, fade: 0.8, steps: STEPS, render });
+A.start({ W, H, duration: 20.0, fade: 0.8, steps: STEPS, render });
 window.INFO = { V1, V2, V3, area: 2 * DIE_W * DIE_H + 8 * HW * HH };
 </script></body></html>
