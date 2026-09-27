@@ -1,0 +1,366 @@
+{
+  "generated": "2026-09-27",
+  "scope": "Empty spec fields in data/landscape.json (38 chips), excluding price and bill of materials. Entries whose note starts FILL replace an empty value. Entries whose note starts CORRECTION replace a value the row states as unpublished, where a vendor source now publishes it. Values where two allowed sources disagree are in qa/landscape-specs.md, not here.",
+  "updates": [
+    {
+      "id": "nvidia-vr200",
+      "field": "tdpW",
+      "value": 2300,
+      "source": "https://newsletter.semianalysis.com/p/vera-rubin-extreme-co-design-an-evolution",
+      "quote": "Rubin’s chip level TDP increases up to 2,300W vs 1000-1400W for Blackwell. ... NVIDIA’s 2300W configuration represents the Max-P configuration, while the efficiency optimized Max-Q configuration runs at 1800W.",
+      "note": "FILL. Tier B (SemiAnalysis). The article frames Max-P and Max-Q as two power profiles on the same hardware: 'these are not distinct hardware SKUs but the 2 default power profiles'. 2,300 W is the maximum per-GPU setting in the VR NVL72 rack this row describes ('The VR NVL72 system has a TDP up to 220kW for the 2300W Rubin TDP SKU'). Put the 1,800 W Max-Q profile in notes. Nvidia itself still publishes no TDP."
+    },
+    {
+      "id": "nvidia-vr200",
+      "field": "process.node",
+      "value": "3NP",
+      "source": "https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage",
+      "quote": "NVIDIA transitions from 4NP with Blackwell to 3NP with Rubin.",
+      "note": "FILL. Tier B. The same article also says 'the N3P-based Rubin generation', and SemiAnalysis's Trainium3 deep dive names Vera Rubin among the first N3P adopters. '3NP' is Nvidia's custom name, parallel to 4NP on Blackwell, so a value of '3NP (TSMC N3P-based)' also matches the sources. This replaces the press-report wording the audit flagged."
+    },
+    {
+      "id": "google-tpu-v7-ironwood",
+      "field": "process.node",
+      "value": "N3E",
+      "source": "https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage",
+      "quote": "Google’s TPU roadmap shifts fully to N3E starting with TPU v7",
+      "note": "FILL. Tier B. The row previously held 'N3P (reported)', which the audit removed. SemiAnalysis gives N3E, not N3P."
+    },
+    {
+      "id": "google-tpu-8t",
+      "field": "process.node",
+      "value": "N3",
+      "source": "https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage",
+      "quote": "At the same time, the transition to next generation TPUv8 variants will begin, which will also remain on the N3 node.",
+      "note": "FILL. Tier B. SemiAnalysis says 'TPUv8 variants' and does not name 8t and 8i separately. The article discusses TSMC's N3 family throughout ('the industry-wide convergence toward TSMC’s N3 family'), so process.foundry = TSMC and process.country = TW can go with this value. Drop this entry if a per-variant source is required."
+    },
+    {
+      "id": "google-tpu-8i",
+      "field": "process.node",
+      "value": "N3",
+      "source": "https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage",
+      "quote": "At the same time, the transition to next generation TPUv8 variants will begin, which will also remain on the N3 node.",
+      "note": "FILL. Tier B. Same caveat as TPU 8t: the source covers TPUv8 variants as a group. The row already has foundry TSMC."
+    },
+    {
+      "id": "google-tpu-v6e",
+      "field": "process.node",
+      "value": "N5",
+      "source": "https://newsletter.semianalysis.com/p/tpuv7-google-takes-a-swing-at-the",
+      "quote": "TPU v6 Trillium is manufactured on the same N5 node as TPU v5p with similar silicon area",
+      "note": "FILL. Tier B. The sentence does not name the foundry, so process.foundry stays empty. N5 is TSMC's name for the node."
+    },
+    {
+      "id": "google-tpu-v6e",
+      "field": "memory.stacks",
+      "value": 2,
+      "source": "https://newsletter.semianalysis.com/p/tpuv7-google-takes-a-swing-at-the",
+      "quote": "Trillium was also the last of the “E” (lite) SKUs which meant it was equipped with only 2 sites of HBM3. While Trillium closed the gap to Hopper on compute, it fell far short of the H100/H200 on memory capacity and bandwidth, with only 2 stacks of HBM3 vs 5 and 6 stacks of HBM3 and HBM3E respectively.",
+      "note": "FILL. Tier B."
+    },
+    {
+      "id": "google-tpu-v6e",
+      "field": "memory.type",
+      "value": "HBM3",
+      "source": "https://newsletter.semianalysis.com/p/tpuv7-google-takes-a-swing-at-the",
+      "quote": "equipped with only 2 sites of HBM3",
+      "note": "FILL. Tier B. Replaces 'HBM (Google does not state the generation)'. Google itself still does not state the generation, so the note should credit SemiAnalysis."
+    },
+    {
+      "id": "google-tpu-v5p",
+      "field": "process.node",
+      "value": "N5",
+      "source": "https://newsletter.semianalysis.com/p/tpuv7-google-takes-a-swing-at-the",
+      "quote": "TPU v6 Trillium is manufactured on the same N5 node as TPU v5p",
+      "note": "FILL. Tier B. The foundry is not named, so process.foundry stays empty."
+    },
+    {
+      "id": "google-tpu-v4",
+      "field": "process.node",
+      "value": "7 nm",
+      "source": "https://arxiv.org/abs/2304.01433",
+      "quote": "Tech. node, Die size 7 nm, <600 mm2",
+      "note": "FILL. Tier A: Google's ISCA 2023 paper (Jouppi et al.), Table 4. Google's Hot Chips 2023 deck also says '7nm process' (https://hc2023.hotchips.org/assets/program/conference/day2/ML%20training/HC2023.Session5.ML_Training.Google.Norm_Jouppi.Andy_Swing.Final_2023-08-25.pdf). Die area is given only as '<600 mm2', so areaMm2Each stays empty. The paper names no foundry."
+    },
+    {
+      "id": "google-tpu-v4",
+      "field": "die.transistorsB",
+      "value": 22,
+      "source": "https://arxiv.org/abs/2304.01433",
+      "quote": "Transistor count 22 billion 10 billion",
+      "note": "FILL. Tier A. Table 4 columns are TPU v4 and TPU v3; 22 billion is TPU v4."
+    },
+    {
+      "id": "google-tpu-v4",
+      "field": "memory.stacks",
+      "value": 4,
+      "source": "https://arxiv.org/abs/2304.01433",
+      "quote": "Figure 2: The TPU v4 package (ASIC in center plus 4 HBM stacks)",
+      "note": "FILL. Tier A. The same Table 4 gives 'HBM2 capacity, BW 32 GiB, 1200 GB/s', which matches the row."
+    },
+    {
+      "id": "google-tpu-v4",
+      "field": "die.count",
+      "value": 1,
+      "source": "https://arxiv.org/abs/2304.01433",
+      "quote": "Figure 2: The TPU v4 package (ASIC in center plus 4 HBM stacks)",
+      "note": "FILL. Tier A. The figure caption describes one ASIC in the package."
+    },
+    {
+      "id": "google-tpu-v4",
+      "field": "interconnect.chipToChip",
+      "value": "Inter-chip interconnect in a 3D torus: 6 links at 50 GB/s each",
+      "source": "https://arxiv.org/abs/2304.01433",
+      "quote": "Inter Chip Interconnect 6 links @ 50 GB/s 4 links @ 70 GB/s",
+      "note": "CORRECTION. The row says 'Google does not publish a per-chip bandwidth for the v4'. Google's own paper does (TPU v4 column; the second value is TPU v3)."
+    },
+    {
+      "id": "aws-trainium2",
+      "field": "memory.stacks",
+      "value": 4,
+      "source": "https://newsletter.semianalysis.com/p/aws-trainium3-deep-dive-a-potential",
+      "quote": "The HBM3E is upgraded to 12-high for Trainium3 which brings memory capacity to 144GB per chip. Despite maintaining 4 stacks of HBM3E, AWS has achieved a 70% increase in memory bandwidth by going from below average pin speeds of 5.7Gbps for Trn2 to 9.6Gbps for Trn3",
+      "note": "FILL. Tier B. 'Maintaining 4 stacks' means Trn2 also had 4, which is consistent with 96 GiB at 24 GB per stack (next entry)."
+    },
+    {
+      "id": "aws-trainium2",
+      "field": "memory.type",
+      "value": "HBM3E (24 GB per stack, 5.7 Gbps pins)",
+      "source": "https://newsletter.semianalysis.com/p/aws-trainium3-deep-dive-a-potential",
+      "quote": "the 5.7Gbps pin speed that was used in Trn2 is more in line with HBM3 speeds, but it is still classified as HBM3E because it uses 24Gb dies to provide 24GB per stack",
+      "note": "FILL. Tier B. Replaces 'HBM (AWS states only 96 GiB of device memory at 2.9 TB/s)'. AWS itself still names no generation."
+    },
+    {
+      "id": "aws-trainium2",
+      "field": "process.node",
+      "value": "N5",
+      "source": "https://newsletter.semianalysis.com/p/aws-trainium3-deep-dive-a-potential",
+      "quote": "Trainium3’s compute moves to the N3P node from the N5 node that is used for Trn2.",
+      "note": "FILL. Tier B. The foundry is not named in the sentence, so process.foundry stays empty unless the reviewer accepts N5 plus 'TSMC’s CoWoS-R' (next entry) as naming TSMC."
+    },
+    {
+      "id": "aws-trainium2",
+      "field": "package.type",
+      "value": "CoWoS-R: two CoWoS-R assemblies with organic thin-film interposers on one substrate",
+      "source": "https://newsletter.semianalysis.com/p/aws-trainium3-deep-dive-a-potential",
+      "quote": "Readers who decipher die markings will see that the package shot above is just Trn2, and this is what we’ve used, as its package layout is exactly the same as Trainium3. The package is composed of two CoWoS-R assemblies, rather than one large interposer. The two compute dies interface with each other through the substrate. Trainium3 will continue to utilize TSMC’s CoWoS-R ... Trainium3 follows its predecessor Trainium2 to use an organic thin-film interposer",
+      "note": "FILL. Tier B."
+    },
+    {
+      "id": "aws-trainium2",
+      "field": "die.count",
+      "value": 2,
+      "source": "https://newsletter.semianalysis.com/p/aws-trainium3-deep-dive-a-potential",
+      "quote": "the package shot above is just Trn2 ... The two compute dies interface with each other through the substrate.",
+      "note": "FILL. Tier B. This counts compute dies only; the article names no other logic die. It matches the Trainium3 row's die.count of 2."
+    },
+    {
+      "id": "microsoft-maia-100",
+      "field": "memory.capacityGB",
+      "value": 64,
+      "source": "https://techcommunity.microsoft.com/blog/azureinfrastructureblog/inside-maia-100-revolutionizing-ai-workloads-with-microsofts-custom-ai-accelerat/4229118",
+      "quote": "Maia 100’s reticle-size SoC die, combined with four HBM2E die, provide a total of 1.8 terabytes per second of bandwidth and 64 gigabytes of capacity",
+      "note": "FILL. Tier A. The 'Inside Maia 100' post the row says no longer resolves does resolve (fetched 27 Sept 2026). Microsoft's Hot Chips 2024 deck agrees: 'HBM BW/Cap 1.8TB/s @64GB HBM2E' (https://hc2024.hotchips.org/assets/program/conference/day2/81_HC2024.Microsoft.Xu.Ramakrishnan.final.v2.pdf)."
+    },
+    {
+      "id": "microsoft-maia-100",
+      "field": "memory.bandwidthTBs",
+      "value": 1.8,
+      "source": "https://techcommunity.microsoft.com/blog/azureinfrastructureblog/inside-maia-100-revolutionizing-ai-workloads-with-microsofts-custom-ai-accelerat/4229118",
+      "quote": "provide a total of 1.8 terabytes per second of bandwidth and 64 gigabytes of capacity",
+      "note": "FILL. Tier A."
+    },
+    {
+      "id": "microsoft-maia-100",
+      "field": "memory.stacks",
+      "value": 4,
+      "source": "https://techcommunity.microsoft.com/blog/azureinfrastructureblog/inside-maia-100-revolutionizing-ai-workloads-with-microsofts-custom-ai-accelerat/4229118",
+      "quote": "combined with four HBM2E die",
+      "note": "FILL. Tier A. Microsoft says 'four HBM2E die', meaning four stacks."
+    },
+    {
+      "id": "microsoft-maia-100",
+      "field": "memory.type",
+      "value": "HBM2E",
+      "source": "https://hc2024.hotchips.org/assets/program/conference/day2/81_HC2024.Microsoft.Xu.Ramakrishnan.final.v2.pdf",
+      "quote": "HBM BW/Cap 1.8TB/s @64GB HBM2E",
+      "note": "FILL. Tier A. Replaces 'HBM (Microsoft publishes no generation, capacity or bandwidth)'."
+    },
+    {
+      "id": "microsoft-maia-100",
+      "field": "package.type",
+      "value": "TSMC CoWoS-S",
+      "source": "https://techcommunity.microsoft.com/blog/azureinfrastructureblog/inside-maia-100-revolutionizing-ai-workloads-with-microsofts-custom-ai-accelerat/4229118",
+      "quote": "The chip measures out at ~820mm2 and utilizes TSMC’s N5 process with COWOS-S interposer technology.",
+      "note": "CORRECTION. The row says 'Microsoft does not name the variant'; Microsoft does. The Hot Chips 2024 deck agrees: 'Package/Interposer Technology TSMC COWOS-S'."
+    },
+    {
+      "id": "meta-mtia-300",
+      "field": "interconnect.scaleUp",
+      "value": "16-accelerator scale-up domain (one rack), 800 GB/s per accelerator, up to 1 TB/s",
+      "source": "https://aisystemcodesign.github.io/papers/MTIA300_ISCA2026.pdf",
+      "quote": "Domain size 16 nodes | Scale-up network N/A | Bandwidth 800 GB/s (up to 1000 GB/s)  ...  the scale-up network currently offers 800 GB/s per accelerator, with the option to reach 1 TB/s. ... We use a scale-up domain of 16 nodes (one rack)",
+      "note": "FILL. Tier A: Meta's ISCA 2026 paper, Table I (the N/A is the MTIA-2i column) and Section III. Meta's HCCL paper (https://arxiv.org/pdf/2608.00358) gives the same split: '1 TB/s (800 GB/s scale-up, 200 GB/s scale-out)'."
+    },
+    {
+      "id": "meta-mtia-300",
+      "field": "compute.support.fp4",
+      "value": "no",
+      "source": "https://aisystemcodesign.github.io/papers/MTIA300_ISCA2026.pdf",
+      "quote": "Supporting new data types on MTIA 300 is challenging, especially as models adopt formats with custom scaling, such as row-wise or block-wise scaling for MX4 and NVFP4. While MTIA 300 handles standard hardware-accelerated casts, these emerging types often require specialized scaling that is not natively supported, forcing a fallback to RISC-V execution. ... To address this limitation, we introduced native support for MX4 in MTIA 400.",
+      "note": "FILL. Tier A. There is no native four-bit datapath; MX4 runs as a RISC-V software fallback. The FP4 cell should read 'not supported'. Update precisionNote to match."
+    },
+    {
+      "id": "meta-mtia-v2",
+      "field": "interconnect.scaleOut",
+      "value": "None; Meta lists no scale-out network for MTIA-2i (hosts reach it over PCIe)",
+      "source": "https://aisystemcodesign.github.io/papers/MTIA300_ISCA2026.pdf",
+      "quote": "Domain size 4096 L1, L2 unlimited | Scale-out network N/A",
+      "note": "FILL. Tier A: Table I, where 4096 is the MTIA 300 column and N/A is the MTIA-2i column. The same table also gives 'Scale-up network N/A' for MTIA-2i (see conflicts in the report)."
+    },
+    {
+      "id": "openai-jalapeno",
+      "field": "process.node",
+      "value": "N3P (compute die); N3E (I/O chiplet)",
+      "source": "https://newsletter.semianalysis.com/p/openai-jalapeno-better-than-nvidia",
+      "quote": "the B0 stepping delivers 13.4 PFLOPs of MXFP4 on a single reticle-sized compute die that is manufactured on TSMC’s N3P. ... Off-package I/O is provided by an N3E I/O chiplet",
+      "note": "FILL. Tier B."
+    },
+    {
+      "id": "openai-jalapeno",
+      "field": "process.foundry",
+      "value": "TSMC",
+      "source": "https://newsletter.semianalysis.com/p/openai-jalapeno-better-than-nvidia",
+      "quote": "a single reticle-sized compute die that is manufactured on TSMC’s N3P",
+      "note": "FILL. Tier B. Set process.country to TW with it."
+    },
+    {
+      "id": "openai-jalapeno",
+      "field": "compute.fp4TFLOPS",
+      "value": 13400,
+      "source": "https://newsletter.semianalysis.com/p/openai-jalapeno-better-than-nvidia",
+      "quote": "Specifically, the B0 stepping delivers 13.4 PFLOPs of MXFP4 on a single reticle-sized compute die",
+      "note": "FILL. Tier B. The figure is MXFP4 on the B0 stepping. SemiAnalysis calls it 'peak theoretical FLOPs' and does not say dense or sparse; it compares it with Rubin's '17.5 PFLOPs of dense Rubin NVFP4'. OpenAI publishes no FLOPS figure. Set compute.support.fp4 to 'yes' (next entry) and update precisionNote."
+    },
+    {
+      "id": "openai-jalapeno",
+      "field": "compute.support.fp4",
+      "value": "yes",
+      "source": "https://newsletter.semianalysis.com/p/openai-jalapeno-better-than-nvidia",
+      "quote": "13.4 PFLOPs of MXFP4",
+      "note": "FILL. Tier B. OpenAI's own results page shows the chip running 'DeepSeek R1 MXFP4' and 'Kimi K2.5 MXFP4' on InferenceX (https://openai.com/index/jalapeno-first-results/)."
+    },
+    {
+      "id": "openai-jalapeno",
+      "field": "memory.type",
+      "value": "HBM4",
+      "source": "https://newsletter.semianalysis.com/p/openai-jalapeno-better-than-nvidia",
+      "quote": "Jalapeño will ship with HBM4, making this chip one of the relatively early adopters after Nvidia and AMD",
+      "note": "FILL. Tier B. Replaces 'HBM, memory-sliced so each core sees its own slice'; keep the slicing detail in notes. The article says the HBM 'is likely provided by Samsung'. That is a guess, so do not use it for memory.suppliers."
+    },
+    {
+      "id": "openai-jalapeno",
+      "field": "memory.bandwidthTBs",
+      "value": 15.4,
+      "source": "https://newsletter.semianalysis.com/p/openai-jalapeno-better-than-nvidia",
+      "quote": "This results in 15.4TB/s of memory bandwidth per package",
+      "note": "FILL. Tier B. No capacity or stack count was found in the free part of the article."
+    },
+    {
+      "id": "openai-jalapeno",
+      "field": "package.type",
+      "value": "CoWoS (variant not stated)",
+      "source": "https://newsletter.semianalysis.com/p/openai-jalapeno-better-than-nvidia",
+      "quote": "OpenAI taped out Jalapeño in November 2025, or more specifically, this was a tape out of the CoWoS design, not just the top die silicon.",
+      "note": "FILL. Tier B."
+    },
+    {
+      "id": "groq-lpu",
+      "field": "die.transistorsB",
+      "value": 26.8,
+      "source": "https://groq.com/groq-isca-paper-2020/",
+      "quote": "The first-generation Groq TSP (at 1 GHz) in 14nm ASIC and packaged as a PCIe CEM form factor, yields a peak performance of 820 TeraOps/sec from 26.8B transistors on-chip",
+      "note": "FILL. Tier A: Groq's ISCA 2020 paper, hosted on groq.com. The figure is for the first-generation 14 nm GroqChip, the same part as the row's 725 mm2 die area ('25×29 mm 14nm chip') and 230 MB SRAM. It is not the next-generation LPU."
+    },
+    {
+      "id": "intel-gaudi2",
+      "field": "memory.stacks",
+      "value": 6,
+      "source": "https://cdrdv2-public.intel.com/817486/gaudi-3-ai-accelerator-white-paper.pdf",
+      "quote": "HBM 6 x HBM2E 8 x HBM2E  |  HBM Capacity 96 GB 128 GB",
+      "note": "FILL. Tier A: Intel's Gaudi 3 white paper compares the Gaudi 2 OAM (first column) with the Gaudi 3 OAM (second column)."
+    },
+    {
+      "id": "nvidia-h100",
+      "field": "memory.suppliers",
+      "value": ["SK hynix"],
+      "source": "https://news.skhynix.com/sk-hynix-to-supply-industrys-first-hbm3-dram-to-nvidia/",
+      "quote": "HBM3 to be combined with NVIDIA H100 Tensor Core GPU for accelerated computing",
+      "note": "FILL. Tier A: SK hynix press release, 8 June 2022. It names SK hynix only; it does not say SK hynix was the sole supplier, so do not treat the list as complete."
+    },
+    {
+      "id": "huawei-ascend-950dt",
+      "field": "compute.fp16TFLOPS",
+      "value": 547,
+      "source": "https://www.hiascend.com/hardware/processor?tag=950dt",
+      "quote": "Cube+Vector总算力 ... BF16/FP16（TFLOPS） 547/486/425 ... Memory容量（GB） 144/96  Memory带宽（TB/s） 4",
+      "note": "FILL. Tier A: Huawei's Ascend 950DT spec table. It lists three bins; 547 is the top bin, which goes with the 144 GB at 4 TB/s already on the row. The page renders client-side, and a plain fetch returns the 950PR tab, so it was read in a browser. The same table gives FP8 1034 and MXFP4 2007 for the top bin, against 1,000 and 2,000 on the row (see conflicts)."
+    },
+    {
+      "id": "huawei-ascend-950dt",
+      "field": "interconnect.scaleOut",
+      "value": "UBoE: 2 ports at 400 Gb/s (shared with UnifiedBus ports)",
+      "source": "https://www.hiascend.com/hardware/processor?tag=950dt",
+      "quote": "UBoE  2*Port，2*400Gbps (与UB共用2个端口)",
+      "note": "FILL. Tier A. The same table gives UnifiedBus as '18Port，112Gbps，2016GB/s双向', which matches the row's 2 TB/s chip-to-chip figure. The Atlas 650E server table gives 'UBoE：NPU直出，每NPU 400Gbps (单向) RoCE：每NPU 400Gbps (单向)' (https://www.hiascend.com/hardware/ai-server)."
+    },
+    {
+      "id": "huawei-ascend-910b",
+      "field": "interconnect.scaleUp",
+      "value": "Atlas 800T A2 server: 8 NPUs in an 8-card full mesh",
+      "source": "https://www.hiascend.com/hardware/ai-server?tag=900A2",
+      "quote": "单双机灵活部署，8卡Fullmesh互联 ... NPU 8 * 昇腾910",
+      "note": "FILL. Tier A. Caveat: Huawei's page names the NPU '昇腾910' (Ascend 910), not 910B. The A2 generation is the one the site's rows treat as 910B, in the same way the 910C row already maps the A3 SuperPoD to the 910C. The page renders client-side and was read in a browser."
+    },
+    {
+      "id": "huawei-ascend-910b",
+      "field": "interconnect.scaleOut",
+      "value": "RoCE Ethernet, one 200GE port per NPU (8 x 200GE QSFP on the Atlas 800T A2)",
+      "source": "https://www.hiascend.com/hardware/ai-server?tag=900A2",
+      "quote": "网络 8 * 200GE QSFP接口直出，RoCE协议",
+      "note": "FILL. Tier A. Per-NPU figure = 8 ports / 8 NPUs, from the same server table. The '昇腾910' naming caveat above applies."
+    },
+    {
+      "id": "huawei-ascend-910c",
+      "field": "interconnect.chipToChip",
+      "value": "HCCS / UnifiedBus; 784 GB/s bidirectional per NPU ('D2D', theoretical) in the Atlas 900 A3 SuperPoD",
+      "source": "https://www.hiascend.com/hardware/cluster?tag=900a3",
+      "quote": "最大支持384*NPU高速互联，D2D双向带宽理论784GB/s ... D2D互联带宽理论 双向784GB/s",
+      "note": "CORRECTION (adds a figure to the bare 'HCCS'). Tier A. The page renders client-side; it was read in a browser after selecting the Atlas 900 A3 SuperPoD tab. Here 'D2D' means device-to-device, not die-to-die: the Atlas 650E server table uses the same 784 GB/s per NPU ('单机总带宽 8 x 784GB/s (双向)')."
+    },
+    {
+      "id": "moore-threads-mtt-s5000",
+      "field": "memory.capacityGB",
+      "value": 80,
+      "source": "https://static.sse.com.cn/stock/disclosure/announcement/c/202509/002098_20250919_IP6Z.pdf",
+      "quote": "规格 平湖 曲院 春晓 苏堤 ... 片间互连带宽 800 GB/s 240 GB/s NA NA ... 最大显存容量 80 GB 48 GB 32 GB 16 GB  显存带宽 不披露 768 GB/s 448 GB/s 136 GB/s",
+      "note": "FILL, with a configuration caveat. Tier A under the site policy (stock-exchange filing: Moore Threads STAR Market prospectus, 上会稿, 19 Sept 2025, p. 1-1-102), but static.sse.com.cn is not in data/source-tiers.json and needs adding. The figure is the Pinghu (平湖) architecture's maximum memory capacity; the prospectus says S5000 is the Pinghu card ('第四代 GPU“平湖” S5000'). Bandwidth is explicitly '不披露' (not disclosed). The prospectus gives only FP32 (32 TFLOPS) for the S5000, not FP16 or FP8."
+    },
+    {
+      "id": "moore-threads-mtt-s5000",
+      "field": "interconnect.chipToChip",
+      "value": "MTLink, 800 GB/s chip-to-chip (Pinghu architecture)",
+      "source": "https://static.sse.com.cn/stock/disclosure/announcement/c/202509/002098_20250919_IP6Z.pdf",
+      "quote": "片间互连带宽 800 GB/s 240 GB/s NA NA",
+      "note": "FILL. Same source and caveats as memory.capacityGB. The first column is Pinghu. The product page names the link: 'Eight MTT S5000 OAM compute modules are interconnected via MTLink high-speed fabric' (https://en.mthreads.com/product/S5000)."
+    },
+    {
+      "id": "intel-gaudi3",
+      "field": "process.node",
+      "value": "TSMC 5 nm",
+      "source": "https://cdrdv2-public.intel.com/817486/gaudi-3-ai-accelerator-white-paper.pdf",
+      "quote": "Advancing from the Intel Gaudi 2 AI accelerator 7nm process, the Intel Gaudi 3 AI accelerator is manufactured in TSMC 5nm process",
+      "note": "CORRECTION to the node wording. The row says 'Epoch AI records a 5 nm TSMC process; Intel has not named the node', but Intel's own white paper names it. The value is unchanged; only the attribution is wrong."
+    }
+  ]
+}
