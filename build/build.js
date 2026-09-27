@@ -86,6 +86,7 @@ function host(url) { try { return new URL(url).hostname.replace(/^www\./, ''); }
 
 /* ---------------- figures ---------------- */
 function fmtNum(v) { if (typeof v !== 'number') return esc(v); return Math.abs(v) >= 1000 ? v.toLocaleString('en-US') : (Number.isInteger(v) ? String(v) : v.toFixed(1)); }
+const USED_MEDIA = new Set(); // animations placed in a chapter; only their files are copied to dist/media
 function figure(f, ctx) {
   if (!f) return '';
   const title = `<p class="fig-title">${esc(f.title)}${f.unit ? `<span class="unit">${esc(f.unit)}</span>` : ''}</p>`;
@@ -115,6 +116,7 @@ function figure(f, ctx) {
     // with the video by app.js; the transcript is read by screen readers and printed in place of the video
     const meta = readJSON(path.join(root, 'media', f.src + '.json'), null);
     if (!meta || !Array.isArray(meta.steps)) { warn(`${ctx.id}: animation ${f.src} has not been rendered (run build/animate.py ${f.src})`); return ''; }
+    USED_MEDIA.add(f.src);
     const m = `media/${esc(f.src)}`, steps = meta.steps;
     body = `<ol class="anim-steps">${steps.map((st, i) => `<li><button type="button" data-t="${+st.t0}"${i ? '' : ' aria-current="step"'}><span class="n">${String(i + 1).padStart(2, "0")}</span>${esc(st.k)}</button></li>`).join('')}</ol>`
       + `<div class="anim-stage" role="button" tabindex="0" aria-label="Pause the animation" style="aspect-ratio:${meta.width}/${meta.height}">`
@@ -584,7 +586,7 @@ fill('RAIL', railHTML); fill('CONTENTS', contentsHTML); fill('CHAPTERS', chapter
 fill('SUPPLIERS_INTRO', suppliersIntro); fill('BUILT', builtStr);
 // the PDF title page's art ships beside the page
 // explainer animations: the rendered videos and stills go to dist/media
-{ const md = path.join(root, 'media'); if (fs.existsSync(md)) { fs.mkdirSync(path.join(root, 'dist', 'media'), { recursive: true }); fs.readdirSync(md).filter((f) => /\.(mp4|jpg)$/.test(f)).forEach((f) => fs.copyFileSync(path.join(md, f), path.join(root, 'dist', 'media', f))); } }
+{ const md = path.join(root, 'media'); if (fs.existsSync(md)) { fs.mkdirSync(path.join(root, 'dist', 'media'), { recursive: true }); fs.readdirSync(md).filter((f) => /\.(mp4|jpg)$/.test(f) && [...USED_MEDIA].some((u) => f.startsWith(u + '-'))).forEach((f) => fs.copyFileSync(path.join(md, f), path.join(root, 'dist', 'media', f))); } }
 for (const asset of ['print-title.png']) { const from = path.join(root, 'build', 'assets', asset); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', asset)); } fill('GEO_DEK', esc(geoDek)); fill('GEO_BODY', geoBody);
 fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));
 // the Look up page: one list of every term, firm and chip, alphabetical, each with the kind a reader would call it

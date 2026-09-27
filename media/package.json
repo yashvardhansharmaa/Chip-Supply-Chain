@@ -1,5 +1,5 @@
 {
- "duration": 18.2,
+ "duration": 19,
  "fade": 0.8,
  "width": 760,
  "height": 420,
@@ -11,22 +11,22 @@
   },
   {
    "k": "Two dies",
-   "t0": 3.8,
-   "cap": "An AI accelerator needs more circuit than that, so its logic is split across two dies."
+   "t0": 4,
+   "cap": "An AI accelerator needs more circuit than that, so its logic is split across two dies, each nearly one exposure in size."
   },
   {
    "k": "Interposer",
-   "t0": 7,
+   "t0": 7.4,
    "cap": "The dies sit side by side on an interposer, a base with wiring fine enough to join them."
   },
   {
    "k": "Memory",
-   "t0": 10.2,
-   "cap": "Eight stacks of high-bandwidth memory go beside them, joined by more wires than a resin board can carry."
+   "t0": 10.6,
+   "cap": "Eight memory stacks go beside them. Together the chips cover a little over three exposures of silicon."
   },
   {
    "k": "Package",
-   "t0": 13.6,
+   "t0": 14.2,
    "cap": "The interposer is mounted on a resin substrate. TSMC now builds interposers up to 5.5 times the area of one exposure."
   }
  ]

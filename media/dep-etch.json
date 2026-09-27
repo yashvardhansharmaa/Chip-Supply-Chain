@@ -1,42 +1,47 @@
 {
- "duration": 20.4,
+ "duration": 24.2,
  "fade": 0.8,
  "width": 760,
  "height": 380,
  "steps": [
   {
+   "k": "The wafer",
+   "t0": 0.3,
+   "cap": "A slice through one spot on a wafer, magnified until its layers show."
+  },
+  {
    "k": "Deposit",
-   "t0": 0.5,
+   "t0": 2.8,
    "cap": "A film a few atoms thick is laid over the whole wafer."
   },
   {
    "k": "Coat",
-   "t0": 3.1,
+   "t0": 5.4,
    "cap": "A light-sensitive coating, the resist, is spun on top."
   },
   {
    "k": "Expose",
-   "t0": 5.4,
+   "t0": 7.7,
    "cap": "Light shines through a stencil and changes the resist wherever it lands."
   },
   {
    "k": "Develop",
-   "t0": 8.2,
+   "t0": 10.5,
    "cap": "A wash removes the resist the light reached, leaving the stencil\u2019s pattern."
   },
   {
    "k": "Etch",
-   "t0": 10.4,
+   "t0": 12.7,
    "cap": "A plasma cuts straight down through the film wherever the resist is gone."
   },
   {
    "k": "Strip",
-   "t0": 13.4,
+   "t0": 15.7,
    "cap": "The leftover resist is removed. The pattern now sits in the film."
   },
   {
    "k": "Repeat",
-   "t0": 15.4,
+   "t0": 17.7,
    "cap": "Insulator fills the gaps and the next layer goes on. A chip takes more than a thousand of these rounds."
   }
  ]
