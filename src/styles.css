@@ -825,6 +825,7 @@ button.ptag { cursor: pointer; }
 @media (max-width: 700px) { .figure--anim .anim-steps { gap: 0 12px; } .anim-cap { min-height: 4.5em; font-size: 16px; } }
 @media (prefers-reduced-motion: reduce) { .anim-state { transition: none; } }
 @media print {
+  .figure--anim { display: none !important; } /* the animations are for the screen; the PDF and paper carry the text alone */
   .anim-steps, .anim-cap, .anim-stage video, .anim-state { display: none !important; }
   .anim-print { display: block; width: 100%; }
   .anim-stage { aspect-ratio: auto !important; background: none; }

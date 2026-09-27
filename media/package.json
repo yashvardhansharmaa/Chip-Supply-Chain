@@ -22,7 +22,7 @@
   {
    "k": "Memory",
    "t0": 10.2,
-   "cap": "Eight stacks of memory go beside them, a few millimeters away. They hold the numbers the chips are working on."
+   "cap": "Eight stacks of memory go beside them, a few millimeters away. They hold the AI model\u2019s weights and the record of each conversation so far."
   },
   {
    "k": "One package",

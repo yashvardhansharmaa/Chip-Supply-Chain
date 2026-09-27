@@ -7,14 +7,14 @@
 const { PAL, clamp, ease, easeOut, mix, rng, label, text } = A, dark = A.theme === 'dark';
 // Facts: a leading accelerator is two logic dies and eight HBM stacks on a silicon interposer, on a resin substrate
 // (chapter 11); the substrate is the layered adapter between the chips and the circuit board (chapter 12); HBM holds the
-// numbers the chip is working on and sits a few millimeters from the processor (chapters 10 and 11); each logic die is
+// model's weights and the record of each conversation (the numbers the chip is working on) and sits a few millimeters from the processor (chapters 10 and 11); each logic die is
 // about as large as one exposure can print (chapters 1 and 11); nearly every AI accelerator is packaged by TSMC in
 // Taiwan (chapter 11). Footprints follow those sizes; heights are exaggerated so each layer shows.
 const STEPS = [
   { k: 'Package base', t0: 0.4, t1: 3.6, cap: 'An AI chip is built from several parts. First comes the package base, a layered board that connects everything to the circuit board below.' },
   { k: 'Silicon base', t0: 3.6, t1: 6.8, cap: 'On it sits a thin slab of silicon, called an interposer. Its fine wiring joins everything placed on top.' },
   { k: 'Logic chips', t0: 6.8, t1: 10.2, cap: 'Two logic chips go in the middle. They do the calculating, and each is as large as a chipmaking machine can print.' },
-  { k: 'Memory', t0: 10.2, t1: 13.6, cap: 'Eight stacks of memory go beside them, a few millimeters away. They hold the numbers the chips are working on.' },
+  { k: 'Memory', t0: 10.2, t1: 13.6, cap: 'Eight stacks of memory go beside them, a few millimeters away. They hold the AI model’s weights and the record of each conversation so far.' },
   { k: 'One package', t0: 13.6, t1: 17.4, cap: 'Together they make one AI accelerator. Nearly every one is put together by TSMC, in Taiwan.' },
 ];
 const pr = (i, t) => clamp((t - STEPS[i].t0) / (STEPS[i].t1 - STEPS[i].t0));
@@ -100,7 +100,7 @@ function render(ctx, t) {
   entry(328, 'Package base', 'Connects the part to the circuit board', [SUB.x + SUB.w, 10, SUB.h / 2], ease((p[0] - 0.4) / 0.3), cur === 0);
   entry(248, 'Silicon base', 'Fine wiring that joins what sits on top', [IP.x + IP.w, 22, TOPZ], ease((p[1] - 0.4) / 0.3), cur === 1);
   entry(168, 'Two logic chips', 'Do the calculating', [DIES[1].x + 16, DIES[1].y + 8, TOPZ + CH], ease((p[2] - 0.5) / 0.3), cur === 2);
-  entry(88, 'Eight memory stacks', 'Hold the numbers the chips work on', [HBMS[3].x + 8, HBMS[3].y + 4, TOPZ + CH], ease((p[3] - 0.4) / 0.3), cur === 3);
+  entry(88, 'Eight memory stacks', 'Hold the model’s weights and working data', [HBMS[3].x + 8, HBMS[3].y + 4, TOPZ + CH], ease((p[3] - 0.4) / 0.3), cur === 3);
   if (done > 0) label('One AI accelerator', 470, 30, PAL.garnet, { alpha: done });
 }
 A.start({ W, H, duration: 18.6, fade: 0.8, steps: STEPS, render });
