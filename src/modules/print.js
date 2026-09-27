@@ -61,6 +61,10 @@
     /* paper is white whatever the reader was using */
     document.documentElement.setAttribute('data-theme', 'light');
 
+    /* explainer animations print as their last frame and the list of steps: drop the videos, load the stills now */
+    Array.prototype.forEach.call(document.querySelectorAll('.figure--anim video'), function (v) { v.pause(); v.removeAttribute('src'); v.remove(); });
+    Array.prototype.forEach.call(document.querySelectorAll('img[loading="lazy"]'), function (img) { img.loading = 'eager'; });
+
     /* Kill the specimen's animation loops: they re-arm through requestAnimationFrame, so a
        quarter second of dead frames ends them. Paged.js drives its own render queue through
        requestAnimationFrame, so the stand-in passes calls on once that window has closed —

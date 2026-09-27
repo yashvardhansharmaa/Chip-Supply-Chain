@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Big Chips and Defects</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Instrument+Sans:wght@400;500;600&display=swap">
+</head><body>
+<script src="lib.js"></script>
+<script>
+const { PAL, clamp, ease, easeOut, mix, rng, label, text } = A, dark = A.theme === 'dark';
+const STEPS = [
+  { k: 'Specks land', t0: 0.5, t1: 3.2, cap: 'Specks of dust and tiny flaws land at random on every wafer.' },
+  { k: 'Small chips', t0: 3.2, t1: 7.2, cap: 'Cut into small chips, almost every chip misses every speck.' },
+  { k: 'AI-size chips', t0: 7.2, t1: 11.2, cap: 'An AI chip covers eight times the area, so about half of them catch a speck and fail.' },
+  { k: 'Half the specks', t0: 11.2, t1: 15.2, cap: 'Halve the specks and about seven in ten AI chips work. Finding defects pays most on the biggest chips.' },
+];
+const pr = (i, t) => clamp((t - STEPS[i].t0) / (STEPS[i].t1 - STEPS[i].t0));
+
+// ---- the simulation, in millimeters on a 300 mm wafer, following chapter 7: die yield = (1 + D0 x A / a)^-a with a = 3.
+// At D0 = 0.10 per square centimeter that gives about 91 percent for a 1 square centimeter die, about 49 percent for an
+// 8 square centimeter die, and about 69 percent for the 8 square centimeter die once D0 is halved. Clustered specks
+// (loose groups around random centers) are what the clustering constant describes, so the specks are drawn that way.
+const RAD = 150, USE = 147, D0 = 0.10, CL = 3;
+const NSPECK = Math.round(D0 * Math.PI * (USE / 10) ** 2);
+const model = (area, d) => Math.pow(1 + d * area / CL, -CL);
+const TARGET = [model(1, D0), model(8, D0), model(8, D0 / 2)];
+function grid(w, h) {
+  const out = [], nx = Math.ceil(2 * USE / w) + 2, ny = Math.ceil(2 * USE / h) + 2;
+  for (let i = -nx; i <= nx; i++) for (let j = -ny; j <= ny; j++) {
+    const x = i * w - w / 2, y = j * h - h / 2;
+    if (Math.max(Math.hypot(x, y), Math.hypot(x + w, y), Math.hypot(x, y + h), Math.hypot(x + w, y + h)) <= USE) out.push({ x, y, w, h });
+  }
+  return out;
+}
+const SMALL = grid(10, 10), BIG = grid(25, 32);
+const hits = (dies, sp) => dies.map((d) => sp.some((s) => s.x >= d.x && s.x < d.x + d.w && s.y >= d.y && s.y < d.y + d.h));
+const yld = (dies, sp) => hits(dies, sp).filter((x) => !x).length / dies.length;
+function clustered(r) {
+  const sp = [];
+  while (sp.length < NSPECK) {
+    let cx, cy; do { cx = (r() * 2 - 1) * USE; cy = (r() * 2 - 1) * USE; } while (Math.hypot(cx, cy) > USE);
+    const k = 1 + Math.floor(r() * 5);
+    for (let j = 0; j < k && sp.length < NSPECK; j++) {
+      const ang = r() * 6.283, rad = 14 * Math.sqrt(-2 * Math.log(1 - r() * 0.999));
+      const x = cx + Math.cos(ang) * rad, y = cy + Math.sin(ang) * rad;
+      if (Math.hypot(x, y) < USE) sp.push({ x, y, t: r(), keep: sp.length % 2 === 0 });
+    }
+  }
+  return sp;
+}
+let SPECKS;
+for (let seed = 1; seed < 40000; seed++) {   // a random wafer whose outcome sits on the formula's values
+  const sp = clustered(rng(seed));
+  const half = sp.filter((s) => s.keep);
+  if (Math.abs(yld(SMALL, sp) - TARGET[0]) < 0.01 && Math.abs(yld(BIG, sp) - TARGET[1]) < 0.012 && Math.abs(yld(BIG, half) - TARGET[2]) < 0.012) { SPECKS = sp; break; }
+}
+const HALF = SPECKS.filter((s) => s.keep);
+const HS = hits(SMALL, SPECKS), HB = hits(BIG, SPECKS), HBH = hits(BIG, HALF);
+const Y = [yld(SMALL, SPECKS), yld(BIG, SPECKS), yld(BIG, HALF)].map((v) => Math.round(100 * v));
+
+// ---- drawing
+const W = 760, H = 420, CX = 212, CY = 210, K = 196 / RAD, px = (x) => CX + x * K, py = (y) => CY + y * K;
+function wafer() {
+  const g = ctx0().createLinearGradient(px(-RAD), py(-RAD), px(RAD), py(RAD));
+  const s = dark ? ['#8d959f', '#737c87', '#a2a9b2', '#666f7a'] : ['#d9dde2', '#c2c8cf', '#e4e7eb', '#b3bac2'];
+  g.addColorStop(0, s[0]); g.addColorStop(0.45, s[1]); g.addColorStop(0.55, s[2]); g.addColorStop(1, s[3]);
+  const c = ctx0(); c.fillStyle = g; c.beginPath(); c.arc(CX, CY, RAD * K, 0, 7); c.fill();
+  c.fillStyle = PAL.bg; c.beginPath(); c.arc(CX, CY + RAD * K + 2, 6, 0, 7); c.fill();
+  c.strokeStyle = dark ? 'rgba(236,233,226,0.35)' : 'rgba(20,24,31,0.5)'; c.lineWidth = 1; c.beginPath(); c.arc(CX, CY, RAD * K, 0, 7); c.stroke();
+}
+const ctx0 = () => A.ctx;
+function dies(list, deadAt, drawP, fillP, alpha) {
+  if (alpha <= 0) return;
+  const c = ctx0(); c.save(); c.globalAlpha = alpha;
+  list.forEach((d, i) => {
+    const order = (d.y + USE) / (2 * USE), a = clamp((drawP - order * 0.7) / 0.3); if (a <= 0) return;
+    const f = clamp((fillP - order * 0.6) / 0.4), dead = deadAt(i);
+    if (f > 0) { c.fillStyle = dead ? `rgba(122,31,43,${(dark ? 0.8 : 0.62) * f * a})` : `rgba(255,255,255,${(dark ? 0.2 : 0.32) * f * a})`; c.fillRect(px(d.x), py(d.y), d.w * K, d.h * K); }
+    c.strokeStyle = dark ? `rgba(20,23,28,${0.55 * a})` : `rgba(20,24,31,${0.4 * a})`; c.lineWidth = 0.8; c.strokeRect(px(d.x) + 0.4, py(d.y) + 0.4, d.w * K - 0.8, d.h * K - 0.8);
+  });
+  c.restore();
+}
+function row(y, value, name, state, a) {
+  if (a <= 0) return;
+  const c = ctx0(), col = state ? PAL.garnet : PAL.ink2;
+  if (state) { c.globalAlpha = a; c.fillStyle = PAL.garnet; c.fillRect(452, y - 38, 2, 58); c.globalAlpha = 1; }
+  text(String(value), 470, y, '300 46px Fraunces', col, { alpha: a });
+  c.font = '300 46px Fraunces'; const vw = c.measureText(String(value)).width;
+  text('percent work', 470 + vw + 8, y, '500 13px "Instrument Sans"', col, { alpha: a });
+  label(name, 470, y + 20, PAL.muted, { alpha: a });
+}
+
+function render(ctx, t) {
+  ctx.fillStyle = PAL.bg; ctx.fillRect(0, 0, W, H);
+  ctx.globalAlpha = easeOut(clamp(t / 0.5)); wafer(); ctx.globalAlpha = 1;
+  const pS = pr(1, t), pB = pr(2, t), pH = pr(3, t), swap = clamp((t - STEPS[2].t0) / 0.6);
+  dies(SMALL, (i) => HS[i], ease(pS * 1.6), ease((pS - 0.4) / 0.5), 1 - ease(swap));
+  dies(BIG, (i) => (pH > 0 ? HBH[i] || (HB[i] && pH < 0.35 + 0.5 * ((BIG[i].y + USE) / (2 * USE))) : HB[i]), ease(pB * 1.6), ease((pB - 0.4) / 0.5), ease(swap));
+  SPECKS.forEach((s) => {
+    const a = clamp((pr(0, t) - s.t * 0.8) / 0.2); if (a <= 0) return;
+    const gone = s.keep ? 0 : ease(clamp((pH - 0.05 - s.t * 0.3) / 0.25)), al = a * (1 - gone), r = mix(8, 2.7, easeOut(a)) * (1 + gone);
+    ctx.fillStyle = dark ? `rgba(20,23,28,${al})` : `rgba(20,24,31,${0.92 * al})`; ctx.beginPath(); ctx.arc(px(s.x), py(s.y), r, 0, 7); ctx.fill();
+    ctx.strokeStyle = `rgba(247,246,242,${0.9 * al})`; ctx.lineWidth = 1; ctx.stroke();
+  });
+  const cur = pH > 0 ? 2 : pB > 0 ? 1 : pS > 0 ? 0 : -1;
+  row(110, Y[0], 'Small chips, 1 square cm', cur === 0, ease((pS - 0.55) / 0.3));
+  row(215, Y[1], 'AI-size chips, 8 square cm', cur === 1, ease((pB - 0.55) / 0.3));
+  const rh = ease((pH - 0.5) / 0.4);
+  row(320, Math.round(mix(Y[1], Y[2], rh)), 'AI-size chips, half the specks', cur === 2, clamp(pH * 4));
+}
+A.start({ W, H, duration: 16.4, fade: 0.8, steps: STEPS, render });
+window.INFO = { NSPECK, half: HALF.length, small: SMALL.length, big: BIG.length, Y, TARGET: TARGET.map((v) => Math.round(v * 1000) / 10) };
+</script></body></html>

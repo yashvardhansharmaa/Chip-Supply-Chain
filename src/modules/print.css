@@ -16,7 +16,7 @@
      in one box cancel each other out, so the head is the chapter's own "Chapter 4: Lithography". */
   @top-left { content: string(chapter); }
   @top-right { content: "Chip Supply Chain"; }
-  @bottom-left { content: "yashvardhansharmaa.github.io/chokepoints"; }
+  @bottom-left { content: "chipsupplychain.org"; }
   @bottom-right { content: counter(page) " / " counter(pages); }
 
   /* The foot of the page: a hairline, then the notes. */

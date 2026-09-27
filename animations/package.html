@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Bigger Than One Exposure</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Instrument+Sans:wght@400;500;600&display=swap">
+</head><body>
+<script src="lib.js"></script>
+<script>
+const { PAL, clamp, ease, easeOut, mix, rng, label, text } = A, dark = A.theme === 'dark';
+const STEPS = [
+  { k: 'One exposure', t0: 0.5, t1: 3.8, cap: 'A scanner prints at most a rectangle 26 by 33 mm in one exposure, which sets the practical limit on the size of one die.' },
+  { k: 'Two dies', t0: 3.8, t1: 7.0, cap: 'An AI accelerator needs more circuit than that, so its logic is split across two dies.' },
+  { k: 'Interposer', t0: 7.0, t1: 10.2, cap: 'The dies sit side by side on an interposer, a base with wiring fine enough to join them.' },
+  { k: 'Memory', t0: 10.2, t1: 13.6, cap: 'Eight stacks of high-bandwidth memory go beside them, joined by more wires than a resin board can carry.' },
+  { k: 'Package', t0: 13.6, t1: 17.0, cap: 'The interposer is mounted on a resin substrate. TSMC now builds interposers up to 5.5 times the area of one exposure.' },
+];
+const pr = (i, t) => clamp((t - STEPS[i].t0) / (STEPS[i].t1 - STEPS[i].t0));
+const W = 760, H = 420, K = 5.1, CX = 380, CY = 212;       // K pixels per millimeter
+const mm = (x, y) => [CX + x * K, CY + y * K];
+const C = {
+  die: dark ? '#262d38' : '#1e2530', tile: dark ? '#344052' : '#2b3545', link: '#b8743d',
+  inter: dark ? ['#8a939e', '#b4bbc4'] : ['#c3c9d0', '#e3e7eb'], interEdge: dark ? '#a4acb6' : '#9aa3ad',
+  hbm: dark ? '#303844' : '#2a3039', hbmLine: dark ? '#6a7584' : '#5a6574', sub: dark ? '#4f5d3c' : '#5d6c45', subEdge: dark ? '#6d7d55' : '#48563a', pad: dark ? '#8c9a6d' : '#8a9868',
+};
+// geometry in millimeters, centered on the package
+const DIE_W = 25, DIE_H = 32, GAP = 1;                        // each die fills most of a 26 x 33 mm exposure
+const DIES = [[-DIE_W - GAP / 2, -DIE_H / 2], [GAP / 2, -DIE_H / 2]];
+const HBM = 10.5, HG = 1.6, ROWY = [-DIE_H / 2 - HG - HBM, DIE_H / 2 + HG];
+const HBMS = []; ROWY.forEach((y) => [0, 1, 2, 3].forEach((i) => HBMS.push([-(4 * HBM + 3 * 1.4) / 2 + i * (HBM + 1.4), y])));
+const IP = { x: -28, y: ROWY[0] - 2, w: 56, h: (ROWY[1] + HBM + 2) - (ROWY[0] - 2) };
+const SUB = { x: -38.5, y: -38.5, w: 77, h: 77 };
+const r = rng(3), TILES = [];
+for (let i = 0; i < 6; i++) for (let j = 0; j < 8; j++) TILES.push([i, j, 0.55 + r() * 0.35]);
+
+function rect(ctx, x, y, w, h, fill) { const [a, b] = mm(x, y); ctx.fillStyle = fill; ctx.fillRect(a, b, w * K, h * K); }
+function die(ctx, dx, dy, a, side) {
+  ctx.save(); ctx.globalAlpha *= a;
+  rect(ctx, dx, dy, DIE_W, DIE_H, C.die);
+  // the compute tiles of the floorplan
+  const tw = (DIE_W - 4) / 6, th = (DIE_H - 6) / 8;
+  TILES.forEach(([i, j, v]) => { ctx.globalAlpha = a * v; rect(ctx, dx + 2 + i * tw + 0.4, dy + 3 + j * th + 0.4, tw - 0.8, th - 0.8, C.tile); });
+  ctx.globalAlpha = a;
+  // the strip on the inner edge that links it to the other die
+  rect(ctx, side < 0 ? dx + DIE_W - 1.2 : dx, dy + 3, 1.2, DIE_H - 6, C.link);
+  ctx.restore();
+}
+function field(ctx, fx, fy, a) {
+  const [x, y] = mm(fx, fy);
+  ctx.save(); ctx.globalAlpha *= a; ctx.strokeStyle = PAL.garnet; ctx.lineWidth = 1.4; ctx.setLineDash([5, 4]);
+  ctx.strokeRect(x, y, 26 * K, 33 * K); ctx.restore();
+}
+
+function render(ctx, t) {
+  ctx.fillStyle = PAL.bg; ctx.fillRect(0, 0, W, H);
+  const p0 = pr(0, t), p1 = pr(1, t), p2 = pr(2, t), p3 = pr(3, t), p4 = pr(4, t);
+  // substrate, last to arrive but drawn first
+  if (p4 > 0) {
+    const q = ease(p4 / 0.5), s = mix(0.9, 1, q);
+    ctx.save(); ctx.globalAlpha = q;
+    const w = SUB.w * s, h = SUB.h * s; rect(ctx, -w / 2, -h / 2, w, h, C.sub);
+    const [x, y] = mm(-w / 2, -h / 2); ctx.strokeStyle = C.subEdge; ctx.lineWidth = 1; ctx.strokeRect(x + 0.5, y + 0.5, w * K - 1, h * K - 1);
+    // small components around the edge of the substrate
+    ctx.fillStyle = C.pad; for (let i = 0; i < 18; i++) { const u = -34 + i * 4; rect(ctx, u, 34, 1.6, 2.4, C.pad); rect(ctx, u, -36.4, 1.6, 2.4, C.pad); }
+    ctx.restore();
+    label('Resin substrate', mm(SUB.x, 0)[0] + 8, mm(0, SUB.y + SUB.h)[1] - 24, dark ? '#c9d2b5' : '#eef1e6', { alpha: clamp((p4 - 0.3) * 3) });
+  }
+  // interposer
+  if (p2 > 0) {
+    const q = ease(p2 / 0.45);
+    ctx.save(); ctx.globalAlpha = q;
+    const [x, y] = mm(IP.x, IP.y), g = ctx.createLinearGradient(x, y, x + IP.w * K, y + IP.h * K);
+    g.addColorStop(0, C.inter[0]); g.addColorStop(0.5, C.inter[1]); g.addColorStop(1, C.inter[0]);
+    ctx.fillStyle = g; ctx.fillRect(x, y, IP.w * K, IP.h * K);
+    ctx.strokeStyle = C.interEdge; ctx.lineWidth = 1; ctx.strokeRect(x + 0.5, y + 0.5, IP.w * K - 1, IP.h * K - 1);
+    ctx.restore();
+    label('Interposer', mm(IP.x, 0)[0], mm(0, IP.y)[1] - 8, PAL.ink2, { alpha: clamp((p2 - 0.25) * 3) * (1 - clamp(p4 * 3)) });
+  }
+  // the exposure field, then the first die inside it
+  const f0 = ease(p0 / 0.35) * (1 - ease(clamp((p1 - 0.55) / 0.3)));
+  const [d0x, d0y] = DIES[0], [d1x, d1y] = DIES[1];
+  if (f0 > 0) {
+    field(ctx, d0x - 0.5, d0y - 0.5, f0);
+    const [fx, fy] = mm(d0x - 0.5, d0y - 0.5);
+    text('26 mm', fx + 13 * K, fy - 8, '500 12px "Instrument Sans"', PAL.garnet, { align: 'center', alpha: f0 });
+    ctx.save(); ctx.translate(fx - 9, fy + 16.5 * K); ctx.rotate(-Math.PI / 2); text('33 mm', 0, 0, '500 12px "Instrument Sans"', PAL.garnet, { align: 'center', alpha: f0 }); ctx.restore();
+    label('One exposure', fx, fy + 33 * K + 16, PAL.garnet, { alpha: f0 * (1 - ease(p1 * 3)) });
+  }
+  die(ctx, d0x, d0y, ease((p0 - 0.35) / 0.4), -1);
+  // the second die, printed in its own exposure
+  const f1 = ease(p1 / 0.3) * (1 - ease(clamp((p1 - 0.55) / 0.3)));
+  if (f1 > 0) field(ctx, d1x - 0.5, d1y - 0.5, f1);
+  die(ctx, d1x, d1y, ease((p1 - 0.25) / 0.4), 1);
+  if (p1 > 0.5 && p3 < 0.2) {
+    const a = clamp((p1 - 0.5) * 3) * (1 - clamp((p3 - 0.05) * 6));
+    label('Logic die', mm(d0x, 0)[0], mm(0, d0y)[1] - 8, PAL.ink2, { alpha: a * (1 - clamp(p2 * 4)) });
+    label('Logic die', mm(d1x + DIE_W, 0)[0], mm(0, d1y)[1] - 8, PAL.ink2, { align: 'right', alpha: a * (1 - clamp(p2 * 4)) });
+  }
+  // wiring across the gap between the dies
+  if (p2 > 0.35) {
+    const q = clamp((p2 - 0.35) / 0.4);
+    ctx.strokeStyle = C.link; ctx.lineWidth = 0.9;
+    for (let i = 0; i < 26; i++) {
+      const y = d0y + 4 + i * ((DIE_H - 8) / 25), [xa, ya] = mm(d0x + DIE_W - 1.2, y), [xb] = mm(d1x + 1.2, y);
+      const on = clamp(q * 1.6 - (i % 7) * 0.08);
+      if (on <= 0) continue;
+      ctx.globalAlpha = on; ctx.beginPath(); ctx.moveTo(xa, ya); ctx.lineTo(mix(xa, xb, on), ya); ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  }
+  // the memory stacks, each built up layer by layer
+  HBMS.forEach(([hx, hy], k) => {
+    const q = clamp((p3 - k * 0.06) / 0.4); if (q <= 0) return;
+    const [x, y] = mm(hx, hy), s = HBM * K;
+    ctx.save(); ctx.globalAlpha = ease(q * 2);
+    // eight memory chips drop onto the stack one by one; each sits a little up and to the left, so the stack shows its height
+    const n = 8, off = 0.22 * K, done = easeOut(q) * n, c0 = off * (n - 1) / 2;
+    for (let i = 0; i < n; i++) {
+      const qi = clamp(done - i); if (qi <= 0) break;
+      const dx = c0 - i * off, dy = c0 - i * off - (1 - ease(qi)) * 10;
+      ctx.globalAlpha = ease(qi); ctx.fillStyle = i % 2 ? C.hbmLine : C.hbm; ctx.fillRect(x + dx, y + dy, s, s);
+      ctx.fillStyle = C.hbm; ctx.fillRect(x + dx + 0.8, y + dy + 0.8, s - 1.6, s - 1.6);
+    }
+    ctx.globalAlpha = 1;
+    // short wires from the stack toward the nearest die
+    if (q > 0.7) { const up = hy < 0; ctx.strokeStyle = C.link; ctx.globalAlpha = clamp((q - 0.7) * 3); for (let i = 0; i < 6; i++) { const xx = x + 3 + i * ((s - 6) / 5); ctx.beginPath(); ctx.moveTo(xx, up ? y + s : y); ctx.lineTo(xx, up ? y + s + HG * K : y - HG * K); ctx.stroke(); } }
+    ctx.restore();
+  });
+  if (p3 > 0.3) {
+    const a = clamp((p3 - 0.3) * 3) * (1 - clamp(p4 * 3));
+    label('High-bandwidth memory', mm(IP.x + IP.w, 0)[0] + 10, mm(0, ROWY[0] + HBM / 2)[1] + 4, PAL.ink2, { alpha: a });
+    label('High-bandwidth memory', mm(IP.x + IP.w, 0)[0] + 10, mm(0, ROWY[1] + HBM / 2)[1] + 4, PAL.ink2, { alpha: a });
+  }
+}
+A.start({ W, H, duration: 18.2, fade: 0.8, steps: STEPS, render });
+</script></body></html>

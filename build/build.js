@@ -110,6 +110,20 @@ function figure(f, ctx) {
     const segs = data.map((d) => ({ name: d[0], v: +d[1] || 0, c: colorOf(d[0]) }));
     body = `<div class="stack-bar" role="img" aria-label="${esc(f.title)}">` + segs.map((s) => `<i style="flex:${(s.v / total * 100).toFixed(2)} 0 0;background:var(--c${s.c})" title="${esc(s.name)}: ${fmtNum(s.v)}${f.unit === '%' ? '%' : ''}"></i>`).join('') + `</div>` +
       `<div class="stack-legend">` + segs.map((s) => `<span style="--sw:var(--c${s.c})">${esc(s.name)}<b>${fmtNum(s.v)}${f.unit === '%' ? '%' : ''}</b></span>`).join('') + `</div>`;
+  } else if (f.type === 'animation') {
+    // an explainer animation rendered by build/animate.py: the step names and captions are page text, kept in time
+    // with the video by app.js; the transcript is read by screen readers and printed in place of the video
+    const meta = readJSON(path.join(root, 'media', f.src + '.json'), null);
+    if (!meta || !Array.isArray(meta.steps)) { warn(`${ctx.id}: animation ${f.src} has not been rendered (run build/animate.py ${f.src})`); return ''; }
+    const m = `media/${esc(f.src)}`, steps = meta.steps;
+    body = `<ol class="anim-steps">${steps.map((st, i) => `<li><button type="button" data-t="${+st.t0}"${i ? '' : ' aria-current="step"'}><span class="n">${String(i + 1).padStart(2, "0")}</span>${esc(st.k)}</button></li>`).join('')}</ol>`
+      + `<div class="anim-stage" role="button" tabindex="0" aria-label="Pause the animation" style="aspect-ratio:${meta.width}/${meta.height}">`
+      + `<video muted loop playsinline preload="none" aria-hidden="true" poster="${m}-light-start.jpg" data-src="${m}"></video>`
+      + `<img class="anim-print" src="${m}-light-end.jpg" alt="" loading="lazy"><span class="anim-state" aria-hidden="true">Paused</span></div>`
+      + `<p class="anim-cap" aria-hidden="true">${esc(steps[0].cap)}</p>`
+      + `<ol class="anim-transcript">${steps.map((st) => `<li><b>${esc(st.k)}.</b> ${esc(st.cap)}</li>`).join('')}</ol>`
+      + (f.note ? `<p class="fig-source">${esc(f.note)}</p>` : '');
+    return `<figure class="figure figure--anim" id="fig-${esc(ctx.id)}-${esc(f.id)}">${title}${body}${source}</figure>`;
   } else if (f.type === 'timeline') {
     body = `<ol class="tl">` + data.map((d) => `<li><span class="d">${esc(d[0])}</span>${esc(d[1])}</li>`).join('') + `</ol>`;
   } else {
@@ -569,6 +583,8 @@ fill('SHEET_PAGES', sheetPages); fill('SHEET_CHAPTERS', sheetChapters);
 fill('RAIL', railHTML); fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits); fill('FOOTER', footer); fill('FOOTER_KEY', footerKey);
 fill('SUPPLIERS_INTRO', suppliersIntro); fill('BUILT', builtStr);
 // the PDF title page's art ships beside the page
+// explainer animations: the rendered videos and stills go to dist/media
+{ const md = path.join(root, 'media'); if (fs.existsSync(md)) { fs.mkdirSync(path.join(root, 'dist', 'media'), { recursive: true }); fs.readdirSync(md).filter((f) => /\.(mp4|jpg)$/.test(f)).forEach((f) => fs.copyFileSync(path.join(md, f), path.join(root, 'dist', 'media', f))); } }
 for (const asset of ['print-title.png']) { const from = path.join(root, 'build', 'assets', asset); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', asset)); } fill('GEO_DEK', esc(geoDek)); fill('GEO_BODY', geoBody);
 fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));
 // the Look up page: one list of every term, firm and chip, alphabetical, each with the kind a reader would call it

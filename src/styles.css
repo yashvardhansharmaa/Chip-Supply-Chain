@@ -32,10 +32,10 @@
   --opsz-title: "opsz" 48, "SOFT" 0, "WONK" 0;   /* Fraunces as a sober transitional */
   --opsz-numeral: "opsz" 144, "SOFT" 0, "WONK" 0; /* Fraunces at its highest contrast, for the light numerals */
   --band: 0px; /* height of the sticky specimen band on phones; anchors add it to their offset */
-  --measure: 41em; /* about 94 characters of Source Serif at 18.5 px; widened 20 percent on 25 Sept */
+  --measure: 37em; /* about 85 characters of Source Serif at 18.5 px; 41em on 25 Sept, narrowed 10 percent on 27 Sept for a wider specimen stage */
   --frame: 650px;   /* chapter header and chokepoint card keep their earlier width */
   --bar-5: var(--accent); --bar-4: #3b424c; --bar-3: #bfb9af;
-  --col: 68%;
+  --col: 63%;
   --gutter: 88px;     /* the ledger column */
   --gutter-gap: 28px;
   --masthead: 56px;
@@ -162,7 +162,7 @@ small { font-size: 0.85em; }
 
 /* ---------- prose ---------- */
 .prose { max-width: var(--measure); }
-.view[data-view="geopolitics"] { --measure: 44em; } /* the essay reads a little wider than the chapters */
+.view[data-view="geopolitics"] { --measure: 40em; } /* the essay reads a little wider than the chapters */
 .prose h3 { font-size: 28px; line-height: 1.15; margin: 2em 0 0.65em; max-width: var(--measure); scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 16px); }
 .prose h4 { font-size: 21px; line-height: 1.25; margin: 1.7em 0 0.5em; max-width: var(--measure); scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 16px); }
 .prose > p, .prose > ul, .prose > ol, .prose blockquote { max-width: var(--measure); }
@@ -664,7 +664,7 @@ button.ptag { cursor: pointer; }
 .dbg-only .hero, .dbg-only .contents, .dbg-only #chain, .dbg-only .chapter:not(.only) { display: none; }
 
 /* ---------- responsive ---------- */
-@media (max-width: 1100px) { :root { --col: 66%; --gutter: 64px; --gutter-gap: 20px; } body { font-size: 18px; } .ch-tile .v { font-size: 56px; } }
+@media (max-width: 1100px) { :root { --col: 62%; --gutter: 64px; --gutter-gap: 20px; } body { font-size: 18px; } .ch-tile .v { font-size: 56px; } }
 @media (max-width: 900px) {
   :root { --col: 100%; --masthead: 75px; --gutter: 34px; --gutter-gap: 12px; } /* the two-row phone masthead; measured at runtime too, but the first paint must not shift */
   body { font-size: 17px; }
@@ -804,6 +804,32 @@ button.ptag { cursor: pointer; }
 @media (prefers-reduced-motion: reduce) { .fc-card { transition: none; } }
 @media (max-width: 700px) { .fc-face { padding: 18px 18px 16px; } .fc-q { font-size: 23px; } .fc-a { font-size: 21px; } .fc-deck { margin-right: 12px; } }
 @media print { .review .rv-head, .fc-deck, .fc-nav, .fc-score, .fc-end .fc-row { display: none !important; } .fc-end[hidden] { display: block !important; } .review { border-top-width: 1px; } }
+
+/* ---------- explainer animations: step names above, the video, the caption below ---------- */
+.figure--anim { max-width: var(--measure); }
+.figure--anim .anim-steps { display: flex; flex-wrap: wrap; gap: 2px 18px; list-style: none; margin: 10px 0 12px; padding: 0; }
+.figure--anim .anim-steps li { margin: 0; }
+.anim-steps button { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); background: none; border: 0; border-bottom: 2px solid transparent; border-radius: 0; padding: 5px 0 4px; cursor: pointer; }
+.anim-steps button .n { margin-right: 6px; font-variant-numeric: tabular-nums; opacity: 0.7; }
+.anim-steps button:hover { color: var(--ink); }
+.anim-steps button[aria-current="step"] { color: var(--accent); border-bottom-color: var(--accent); }
+.anim-steps button:focus-visible, .anim-stage:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.anim-stage { position: relative; width: 100%; background: var(--bg); border: 1px solid var(--line); box-sizing: border-box; cursor: pointer; }
+/* a hairline frame: browsers decode video colors a shade differently from the page, and a line hides that */
+.anim-stage video { display: block; width: 100%; height: 100%; }
+.anim-print { display: none; }
+.anim-state { position: absolute; top: 8px; right: 8px; font-family: var(--font-mono); font-size: 10.5px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); background: var(--bg); border: 1px solid var(--line-2); padding: 4px 8px; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+.figure--anim.is-paused .anim-state { opacity: 1; }
+.anim-cap { margin: 12px 0 6px; min-height: 3em; font-size: 17px; line-height: 1.5; color: var(--ink); }
+.anim-transcript { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (max-width: 700px) { .figure--anim .anim-steps { gap: 0 12px; } .anim-cap { min-height: 4.5em; font-size: 16px; } }
+@media (prefers-reduced-motion: reduce) { .anim-state { transition: none; } }
+@media print {
+  .anim-steps, .anim-cap, .anim-stage video, .anim-state { display: none !important; }
+  .anim-print { display: block; width: 100%; }
+  .anim-stage { aspect-ratio: auto !important; background: none; }
+  .anim-transcript { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; margin: 8px 0 0; padding-left: 1.4em; font-size: 10pt; }
+}
 
 @media print {
   .masthead, .stage, .rail, .to-top, .theme-toggle { display: none !important; }

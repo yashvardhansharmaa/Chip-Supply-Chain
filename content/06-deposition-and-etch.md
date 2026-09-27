@@ -41,6 +41,7 @@
  {"fact": "Lam Research fiscal 2026 revenue was $23.23 billion, up 26% from $18.44 billion", "source": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000033/lrcx_exhibitx991xq4x2026.htm"}
  ],
  "figures": [
+    {"id": "dep-etch-cycle", "type": "animation", "src": "dep-etch", "title": "One round of deposition and etch", "note": "Simplified cross-section. The layers are drawn much thicker than they are."},
  {
  "id": "equipment-billings",
  "type": "bars",
@@ -75,6 +76,8 @@ Applied Materials and Lam Research, the two largest deposition and etch supplier
 ## How it works
 
 Deposition and etch build the chip itself, one layer at a time. Deposition lays down a film a few atoms thick. Lithography prints a pattern on it. Etch then eats away everything the pattern does not protect, and the next film goes down on top. A chip takes more than a thousand of these rounds. Some of the holes the etch cuts are hundreds of times deeper than they are wide, the shape of a finger-wide shaft dropping through several floors, and the film has to coat them right to the bottom. The etch has to eat one material and leave the one beside it untouched. Four firms in America, Japan and the Netherlands make most of these machines, and China has come closer to matching them here than anywhere else.
+
+{{figure:dep-etch-cycle}}
 
 Both steps happen in a vacuum chamber that holds one wafer at a time. A pump empties the chamber of air, a measured flow of gas comes in, and an electric field that reverses millions of times a second, a radio-frequency field, strips electrons off the gas molecules. The gas is now a plasma, charged fragments that react far more readily than whole molecules do.
 

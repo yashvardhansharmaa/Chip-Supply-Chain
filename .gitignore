@@ -8,3 +8,6 @@ qa/brand-redesign/palettes/*/site/
 qa/brand-redesign/final/site/
 qa/brand-redesign/accents/*/site/
 qa/brand-redesign/tint/site/
+
+# shareable GIF and MP4 copies of the explainer animations (local only; the site uses media/)
+qa/explainer-gifs/

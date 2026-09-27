@@ -44,6 +44,7 @@
  {"fact": "Camtek 2025 revenue was a record $496.1 million, up 16% from $429.2 million", "source": "https://www.sec.gov/Archives/edgar/data/1109138/000117891326000549/zk2634405.htm"}
  ],
  "figures": [
+    {"id": "defect-yield", "type": "animation", "src": "defects", "title": "Why big chips lose more to defects", "note": "Simulated 300 mm wafer: 68 specks, 0.10 per square centimeter, placed at random in loose clusters. The share of working chips follows the formula above with a clustering constant of 3."},
  {
  "id": "pc-segments",
  "type": "bars",
@@ -88,6 +89,8 @@ The fab pays for all this to protect yield, the share of chips on a wafer that w
 A bigger chip is a bigger target for the second kind, and the loss grows faster than the area. In the standard formula, die yield is (1 + D0A/a) to the power minus a, where D0 is defects per square centimeter, A is die area and a is a clustering constant of 3 to 4, which says how much defects bunch together. At a defect density of 0.8 a 1 square centimeter die yields 49 percent and a 2 by 2 centimeter die 11 percent, so the bigger die costs about twenty times as much ([source](https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf)).
 
 Run that equation with a clustering constant of 3 for an 8 square centimeter die, about as much as one exposure can print, and it yields about 49 percent at a defect density of 0.10 and about 69 percent at 0.05 ([source](https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf)). Getting from one to the other is yield learning: find which of the thousand-odd steps is losing dies, fix it, move on.
+
+{{figure:defect-yield}}
 
 ## Variants and trade-offs
 

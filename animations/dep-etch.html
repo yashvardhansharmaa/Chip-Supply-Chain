@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>One Round of Deposition and Etch</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Instrument+Sans:wght@400;500;600&display=swap">
+</head><body>
+<script src="lib.js"></script>
+<script>
+const { PAL, clamp, ease, easeOut, mix, mixc, rng, label, text } = A, dark = A.theme === 'dark';
+const C = { si: dark ? '#343b45' : '#2c323b', siDot: dark ? '#414955' : '#3a414b', siEdge: dark ? '#4a525d' : null, film: '#b7c4cf', filmTop: '#dde4ea',
+  resist: '#c98f2e', resistLit: '#efdcae', cu: '#b8743d', diel: dark ? '#9aa6b0' : '#d3d9de', dust: dark ? '#9fb2c3' : '#7f93a5' };
+
+// captions follow the writing rules of the site; the page shows them in time with the video
+const STEPS = [
+  { k: 'Deposit', t0: 0.5, t1: 3.1, cap: 'A film a few atoms thick is laid over the whole wafer.' },
+  { k: 'Coat', t0: 3.1, t1: 5.4, cap: 'A light-sensitive coating, the resist, is spun on top.' },
+  { k: 'Expose', t0: 5.4, t1: 8.2, cap: 'Light shines through a stencil and changes the resist wherever it lands.' },
+  { k: 'Develop', t0: 8.2, t1: 10.4, cap: 'A wash removes the resist the light reached, leaving the stencil’s pattern.' },
+  { k: 'Etch', t0: 10.4, t1: 13.4, cap: 'A plasma cuts straight down through the film wherever the resist is gone.' },
+  { k: 'Strip', t0: 13.4, t1: 15.4, cap: 'The leftover resist is removed. The pattern now sits in the film.' },
+  { k: 'Repeat', t0: 15.4, t1: 19.2, cap: 'Insulator fills the gaps and the next layer goes on. A chip takes more than a thousand of these rounds.' },
+];
+const P = (i, t) => clamp((t - STEPS[i].t0) / (STEPS[i].t1 - STEPS[i].t0));
+
+const W = 760, H = 380, X0 = 20, X1 = 740, SW = X1 - X0, SUB_TOP = 318, SUB_BOT = 372, FILM = 34, RES = 28;
+const G = 62, L = (SW - 4 * G) / 5, OPEN = [0, 1, 2, 3].map((i) => Math.round(X0 + L + i * (L + G)));
+const ISLANDS = [[X0, OPEN[0]]].concat(OPEN.map((o, i) => [o + G, i < 3 ? OPEN[i + 1] : X1]));
+const inOpen = (x) => OPEN.some((o) => x >= o && x <= o + G);
+const r1 = rng(7), DROPS = Array.from({ length: 200 }, () => ({ x: X0 + 4 + r1() * (SW - 8), t: r1() * 0.82, v: 0.5 + r1() * 0.5, r: 1.1 + r1() * 1.1 }));
+const r2 = rng(11), IONS = []; for (let x = X0 + 4; x < X1 - 2; x += 8) IONS.push({ x: x + r2() * 3, ph: r2(), sp: 0.85 + r2() * 0.3 });
+const METAL = [{ pitch: 30, w: 13, h: 20 }, { pitch: 46, w: 22, h: 24 }, { pitch: 76, w: 38, h: 28 }];
+const LAYERS = [];
+METAL.forEach((m, k) => {
+  const ls = []; for (let x = X0 + 8 + k * 6; x < X1 - 4; x += m.pitch) ls.push([x, Math.min(m.w, X1 - x)]);
+  if (k) {
+    const below = LAYERS[LAYERS.length - 1].segs;
+    const vias = ls.filter((_, i) => i % 2 === 0).map(([a, w]) => { for (const [b, bw] of below) { const lo = Math.max(a, b), hi = Math.min(a + w, b + bw); if (hi - lo >= 7) return [(lo + hi) / 2 - 3.5, 7]; } return null; }).filter(Boolean);
+    LAYERS.push({ h: 12, segs: vias, via: true });
+  }
+  LAYERS.push({ h: m.h, segs: ls, via: false });
+});
+
+function render(ctx, t) {
+  ctx.fillStyle = PAL.bg; ctx.fillRect(0, 0, W, H);
+  const pDep = P(0, t), pCoat = P(1, t), pExp = P(2, t), pDev = P(3, t), pEtch = P(4, t), pStrip = P(5, t), pRep = P(6, t);
+  // silicon
+  ctx.fillStyle = C.si; ctx.fillRect(X0, SUB_TOP, SW, SUB_BOT - SUB_TOP);
+  ctx.fillStyle = C.siDot;
+  for (let y = SUB_TOP + 7; y < SUB_BOT - 3; y += 8) for (let x = X0 + ((y / 8) % 2 ? 5 : 9); x < X1 - 3; x += 8) { ctx.beginPath(); ctx.arc(x, y, 1, 0, 7); ctx.fill(); }
+  if (C.siEdge) { ctx.strokeStyle = C.siEdge; ctx.lineWidth = 1; ctx.strokeRect(X0 + 0.5, SUB_TOP + 0.5, SW - 1, SUB_BOT - SUB_TOP - 1); }
+  label('Silicon wafer', X0 + 12, SUB_BOT - 12, '#9aa3ad');
+
+  // film, with the etched openings cut out
+  const filmH = FILM * easeOut(pDep), filmTop = SUB_TOP - filmH, etchDepth = FILM * ease(pEtch);
+  if (filmH > 0.3) {
+    ctx.fillStyle = C.film;
+    if (etchDepth < 0.01) ctx.fillRect(X0, filmTop, SW, filmH);
+    else { for (const [a, b] of ISLANDS) ctx.fillRect(a, filmTop, b - a, filmH); for (const o of OPEN) ctx.fillRect(o, filmTop + etchDepth, G, Math.max(0, filmH - etchDepth)); }
+    ctx.fillStyle = C.filmTop; for (const [a, b] of ISLANDS) ctx.fillRect(a, filmTop, b - a, 1.5);
+    label('Film', X0 + 12, SUB_TOP - 12, '#51606d', { alpha: clamp((pDep - 0.4) * 3) * (1 - clamp(pRep * 4)) });
+  }
+  // atoms settling during deposition
+  if (pDep > 0 && pDep < 1) for (const d of DROPS) {
+    const q = (pDep - d.t) / (0.16 * (1.3 - d.v)); if (q < 0 || q > 1) continue;
+    ctx.globalAlpha = q < 0.85 ? 0.9 : (1 - q) * 6; ctx.fillStyle = C.dust;
+    ctx.beginPath(); ctx.arc(d.x, mix(120, filmTop - d.r, easeOut(q)), d.r, 0, 7); ctx.fill(); ctx.globalAlpha = 1;
+  }
+  // resist: a dome while it spreads, exact blocks once flat
+  const cx = X0 + SW / 2, hw = (SW / 2) * easeOut(pCoat), f = ease(pCoat);
+  const lit = clamp((pExp - 0.42) / 0.38), devH = RES * (1 - ease(pDev)), erode = 1 - 0.3 * ease(pEtch);
+  const stripA = 1 - ease(pStrip), stripY = -22 * ease(pStrip), resistTop = filmTop - RES;
+  if (pCoat > 0 && stripA > 0.01) {
+    ctx.save(); ctx.globalAlpha = stripA; ctx.translate(0, stripY);
+    if (pCoat < 1) {
+      ctx.fillStyle = C.resist; ctx.beginPath(); ctx.moveTo(cx - hw, filmTop);
+      for (let x = cx - hw; x <= cx + hw; x += 2) { const dx = (x - cx) / Math.max(hw, 1); ctx.lineTo(x, filmTop - RES * ((1 - f) * 1.9 * Math.sqrt(Math.max(0, 1 - dx * dx)) + f)); }
+      ctx.lineTo(cx + hw, filmTop); ctx.closePath(); ctx.fill();
+    } else {
+      const hi = RES * erode; ctx.fillStyle = C.resist; for (const [a, b] of ISLANDS) ctx.fillRect(a, filmTop - hi, b - a, hi);
+      const ho = pDev > 0 ? devH : RES;
+      if (ho > 0.3) { ctx.fillStyle = mixc(C.resist, C.resistLit, lit); for (const o of OPEN) ctx.fillRect(o, filmTop - ho, G, ho); }
+    }
+    label('Resist', X0 + 12, filmTop - 10, '#6d4a10', { alpha: clamp((pCoat - 0.6) * 3) });
+    ctx.restore();
+  }
+  // the wafer spins while it is coated
+  if (pCoat > 0 && pCoat < 1) {
+    const a = Math.sin(Math.PI * pCoat), yy = filmTop - 96, ang = t * 7;
+    ctx.save(); ctx.globalAlpha = a; ctx.strokeStyle = PAL.ink2; ctx.lineWidth = 1.3;
+    ctx.beginPath(); ctx.ellipse(cx, yy, 40, 10, 0, ang, ang + 4.6); ctx.stroke();
+    ctx.fillStyle = PAL.ink2; ctx.beginPath(); ctx.arc(cx + 40 * Math.cos(ang + 4.6), yy + 10 * Math.sin(ang + 4.6), 2.6, 0, 7); ctx.fill();
+    ctx.restore();
+    label('The wafer spins', cx, yy - 20, PAL.muted, { align: 'center', alpha: a });
+  }
+  // stencil and light
+  const maskIn = ease(clamp(pExp / 0.3)), maskOut = ease(clamp(pDev / 0.45));
+  const maskY = mix(40, resistTop - 86, maskIn) - 110 * maskOut, maskA = maskIn * (1 - maskOut);
+  if (maskA > 0.01) {
+    const lightA = clamp((pExp - 0.3) / 0.14) * (1 - clamp((pExp - 0.9) / 0.1));
+    if (lightA > 0) {
+      const g = ctx.createLinearGradient(0, maskY - 64, 0, maskY); g.addColorStop(0, `rgba(${PAL.violet},0)`); g.addColorStop(1, `rgba(${PAL.violet},${0.34 * lightA})`);
+      ctx.fillStyle = g; ctx.fillRect(X0 - 8, maskY - 64, SW + 16, 64);
+      for (const o of OPEN) { const g2 = ctx.createLinearGradient(0, maskY, 0, resistTop); g2.addColorStop(0, `rgba(${PAL.violet},${0.46 * lightA})`); g2.addColorStop(1, `rgba(${PAL.violet},${0.2 * lightA})`); ctx.fillStyle = g2; ctx.fillRect(o, maskY + 11, G, resistTop - maskY - 11); }
+      label('Light', X1, maskY - 48, PAL.violetInk, { align: 'right', alpha: lightA });
+    }
+    ctx.save(); ctx.globalAlpha = maskA; ctx.fillStyle = dark ? '#c3c7cd' : PAL.ink;
+    const cuts = [[X0 - 10, OPEN[0]]].concat(OPEN.map((o, i) => [o + G, i < 3 ? OPEN[i + 1] : X1 + 10]));
+    for (const [a, b] of cuts) ctx.fillRect(a, maskY, b - a, 11);
+    ctx.restore();
+    label('Stencil', X0 - 10, maskY - 8, PAL.ink2, { alpha: maskA });
+  }
+  // plasma: ions fall straight down, stop on the resist, and cut the film where it is bare
+  const plasmaA = Math.sin(Math.PI * clamp(pEtch * 1.08));
+  if (pEtch > 0 && plasmaA > 0.01) {
+    const top = resistTop - 150, pulse = 0.85 + 0.15 * Math.sin(t * 8);
+    const g = ctx.createLinearGradient(0, top, 0, resistTop - 20);
+    g.addColorStop(0, `rgba(${PAL.violet},0)`); g.addColorStop(0.5, `rgba(${PAL.violet},${0.28 * plasmaA * pulse})`); g.addColorStop(1, `rgba(${PAL.violet},0)`);
+    ctx.fillStyle = g; ctx.fillRect(X0 - 8, top, SW + 16, 130);
+    label('Plasma', X1, top + 14, PAL.violetInk, { align: 'right', alpha: plasmaA });
+    ctx.strokeStyle = `rgba(${PAL.violet},${0.9 * plasmaA})`; ctx.lineWidth = 1.2;
+    for (const io of IONS) {
+      const span = 120, y = resistTop - 118 + ((t * 210 * io.sp + io.ph * span) % span);
+      const floor = inOpen(io.x) ? filmTop + etchDepth : resistTop + RES * (1 - erode);
+      if (y - 7 > floor) continue;
+      ctx.beginPath(); ctx.moveTo(io.x, y - 7); ctx.lineTo(io.x, Math.min(y, floor)); ctx.stroke();
+    }
+  }
+  // repeat: insulator fills the gaps, then wiring layers stack up, wider toward the top
+  if (pRep > 0) {
+    ctx.globalAlpha = ease(clamp(pRep / 0.12)); ctx.fillStyle = C.diel; for (const o of OPEN) ctx.fillRect(o, filmTop, G, FILM); ctx.globalAlpha = 1;
+    let base = filmTop;
+    LAYERS.forEach((ly, k) => {
+      const q = ease(clamp((pRep * 1.3 - 0.14 - k * 0.15) / 0.2)); if (q <= 0) return;
+      const y = base - ly.h - (1 - q) * 30;
+      ctx.save(); ctx.globalAlpha = q;
+      ctx.fillStyle = C.diel; ctx.fillRect(X0, y, SW, ly.h);
+      ctx.fillStyle = C.cu; for (const [a, w] of ly.segs) { if (ly.via) ctx.fillRect(a, y, w, ly.h); else ctx.fillRect(a, y + 4, w, ly.h - 8); }
+      ctx.fillStyle = 'rgba(255,255,255,0.45)'; ctx.fillRect(X0, y, SW, 1);
+      ctx.restore();
+      base -= ly.h * q;
+    });
+    label('Copper wiring', X1, base - 10, dark ? '#d59a66' : '#8a531f', { align: 'right', alpha: clamp((pRep - 0.55) / 0.2) });
+    label('Insulator', X0, base - 10, PAL.muted, { alpha: clamp((pRep - 0.55) / 0.2) });
+  }
+}
+A.start({ W, H, duration: 20.4, fade: 0.8, steps: STEPS, render });
+</script></body></html>

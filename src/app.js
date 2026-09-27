@@ -2097,6 +2097,75 @@
   };
 
   // public surface for the module files concatenated after this one (src/modules/*.js)
+  /* ---------- explainer animations (figure--anim): play while on screen, captions follow the video ---------- */
+  var Anim = {
+    init: function () {
+      var figs = $$('.figure--anim'); if (!figs.length) return;
+      var theme = function () { return Theme.current() === 'dark' ? 'dark' : 'light'; };
+      var still = function (fig) { return reduced || fig._user; };
+      figs.forEach(function (fig) {
+        var v = $('video', fig), stage = $('.anim-stage', fig), btns = $$('.anim-steps button', fig), cap = $('.anim-cap', fig);
+        var caps = $$('.anim-transcript li', fig).map(function (li) { return li.textContent.replace(/^[^.]*\.\s*/, ''); });
+        var t0s = btns.map(function (b) { return +b.getAttribute('data-t'); }), cur = 0, raf = 0;
+        fig._v = v;
+        var src = function () { return v.getAttribute('data-src') + '-' + theme(); };
+        var poster = function () { v.poster = src() + (reduced && !v.getAttribute('src') ? '-end.jpg' : '-start.jpg'); };
+        var load = function () { if (!v.getAttribute('src')) { v.preload = 'auto'; v.src = src() + '.mp4'; v.load(); } };
+        var show = function (i) {
+          if (i === cur) return; cur = i;
+          btns.forEach(function (b, j) { if (j === i) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); });
+          cap.textContent = caps[i] || '';
+        };
+        var sync = function () { var t = v.currentTime, i = 0; for (var j = 0; j < t0s.length; j++) if (t >= t0s[j] - 0.05) i = j; show(i); };
+        var tick = function () { sync(); if (!v.paused) raf = requestAnimationFrame(tick); };
+        v.addEventListener('play', function () { cancelAnimationFrame(raf); tick(); fig.classList.remove('is-paused'); stage.setAttribute('aria-label', 'Pause the animation'); });
+        v.addEventListener('pause', function () { cancelAnimationFrame(raf); sync(); stage.setAttribute('aria-label', 'Play the animation'); });
+        v.addEventListener('seeked', sync);
+        var toggle = function () {
+          load();
+          if (v.paused) { fig._user = false; fig.classList.remove('is-paused'); v.play().catch(function () { }); }
+          else { fig._user = true; fig.classList.add('is-paused'); v.pause(); }
+        };
+        stage.addEventListener('click', toggle);
+        stage.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+        btns.forEach(function (b, j) {
+          b.addEventListener('click', function () {
+            load(); show(j);
+            var go = function () { try { v.currentTime = t0s[j] + 0.05; } catch (e) { } };
+            if (v.readyState >= 1) go(); else v.addEventListener('loadedmetadata', go, { once: true });
+            if (!still(fig) && fig._seen) v.play().catch(function () { });
+          });
+        });
+        poster();
+        if (reduced) { stage.setAttribute('aria-label', 'Play the animation'); fig.classList.add('is-paused'); }
+      });
+      // theme: swap to the matching video, keeping the place
+      new MutationObserver(function () {
+        figs.forEach(function (fig) {
+          var v = fig._v, base = v.getAttribute('data-src') + '-' + theme();
+          if (!v.getAttribute('src')) { v.poster = base + (reduced ? '-end.jpg' : '-start.jpg'); return; }
+          var t = v.currentTime, playing = !v.paused;
+          v.poster = base + '-start.jpg'; v.preload = 'auto'; v.src = base + '.mp4';
+          v.addEventListener('loadedmetadata', function () { try { v.currentTime = t; } catch (e) { } }, { once: true });
+          if (playing) v.play().catch(function () { }); else v.load();
+        });
+      }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+      // play only while on screen, and never on its own when the reader asked for reduced motion
+      if (!('IntersectionObserver' in window)) return;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          var fig = en.target, v = fig._v;
+          fig._seen = en.isIntersecting;
+          if (en.isIntersecting && !still(fig)) { if (!v.getAttribute('src')) v.src = v.getAttribute('data-src') + '-' + theme() + '.mp4'; v.play().catch(function () { }); }
+          else if (!v.paused) v.pause();
+        });
+      }, { threshold: 0.45 });
+      figs.forEach(function (f) { io.observe(f); });
+      // a reader's own print shows the last frame, so fetch those stills before the page is laid out
+      window.addEventListener('beforeprint', function () { $$('.anim-print').forEach(function (img) { img.loading = 'eager'; }); });
+    }
+  };
+
   window.CP = { Stage: Stage, Router: Router, Sections: Sections, Tools: Tools, Band: Band, DATA: DATA, $: $, $$: $$, esc: esc, narrow: narrow, safeUrl: safeUrl, cname: cname, reduced: reduced,
     Landscape: Landscape, Suppliers: Suppliers, register: function (view, def) { MODULE_VIEWS[view] = def; if (Router.current === view && def.activate) def.activate(); } };
   function boot() {
@@ -2117,6 +2186,7 @@
     Band.init();
     Router.init();
     Sections.init();
+    Anim.init();
     // warm the cache for the next chapters while idle
     var names = $$('[data-view="stack"] [data-specimen]').map(function (el) { return el.getAttribute('data-specimen'); });
     var i = 0;
