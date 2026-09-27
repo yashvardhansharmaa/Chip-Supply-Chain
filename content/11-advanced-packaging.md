@@ -45,7 +45,7 @@
     {"fact": "Epoch AI estimates Nvidia used 60.3% of the world's CoWoS packaging capacity in 2025, with a 90% confidence interval of 56.5 to 64.3, and that Nvidia, Google, AMD and Amazon together used around 90% of it while using only about 12% of advanced logic die production", "source": "https://epoch.ai/data-insights/ai-chip-supply-chain-constraints"}
   ],
   "figures": [
-    {"id": "package-build", "type": "animation", "src": "package", "title": "Why an AI accelerator is several chips in one package", "note": "Simplified top view of a two-die, eight-stack accelerator. The dies are to scale with the exposure field; the memory stacks and the substrate are approximate."},
+    {"id": "package-build", "type": "animation", "src": "package", "title": "The parts of an AI accelerator", "note": "Simplified view of a two-die, eight-stack accelerator. Footprints follow the sizes in this chapter and chapter 10; heights are exaggerated so each layer shows."},
     {
       "id": "cowos-reticles",
       "type": "bars",

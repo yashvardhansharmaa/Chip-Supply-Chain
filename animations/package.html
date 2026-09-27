@@ -1,157 +1,107 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><title>Bigger Than One Exposure</title>
+<html lang="en"><head><meta charset="utf-8"><title>The Parts of an AI Chip</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Instrument+Sans:wght@400;500;600&display=swap">
 </head><body>
 <script src="lib.js"></script>
 <script>
 const { PAL, clamp, ease, easeOut, mix, rng, label, text } = A, dark = A.theme === 'dark';
-// Facts: one exposure is 26 x 33 mm, 858 mm2 (chapter 11); a leading accelerator carries two logic dies and eight HBM
-// stacks (chapter 11); an HBM stack is 11 x 12 mm (chapter 10 specimen); the chips together cover about 2,700 mm2, a
-// little over three exposures (chapter 11 specimen); TSMC builds CoWoS interposers up to 5.5 exposures (chapter 11).
+// Facts: a leading accelerator is two logic dies and eight HBM stacks on a silicon interposer, on a resin substrate
+// (chapter 11); the substrate is the layered adapter between the chips and the circuit board (chapter 12); HBM holds the
+// numbers the chip is working on and sits a few millimeters from the processor (chapters 10 and 11); each logic die is
+// about as large as one exposure can print (chapters 1 and 11); nearly every AI accelerator is packaged by TSMC in
+// Taiwan (chapter 11). Footprints follow those sizes; heights are exaggerated so each layer shows.
 const STEPS = [
-  { k: 'The limit', t0: 0.5, t1: 4.2, cap: 'A chipmaking machine prints at most a patch 26 by 33 mm in one shot, about the size of a postage stamp, so no single chip can be bigger.' },
-  { k: 'Too big', t0: 4.2, t1: 8.4, cap: 'An AI accelerator needs more circuitry than one patch holds, so its logic is split into two chips, each nearly the size of a stamp.' },
-  { k: 'Silicon base', t0: 8.4, t1: 11.6, cap: 'The two chips sit side by side on a silicon base, called an interposer, whose fine wiring joins them.' },
-  { k: 'Memory', t0: 11.6, t1: 15.2, cap: 'Eight stacks of memory go beside them. Together the chips cover a little over three stamps of silicon.' },
-  { k: 'Package', t0: 15.2, t1: 18.8, cap: 'The silicon base sits on a larger package base, the substrate. TSMC now builds silicon bases as large as five and a half stamps.' },
+  { k: 'Package base', t0: 0.4, t1: 3.6, cap: 'An AI chip is built from several parts. First comes the package base, a layered board that connects everything to the circuit board below.' },
+  { k: 'Silicon base', t0: 3.6, t1: 6.8, cap: 'On it sits a thin slab of silicon, called an interposer. Its fine wiring joins everything placed on top.' },
+  { k: 'Logic chips', t0: 6.8, t1: 10.2, cap: 'Two logic chips go in the middle. They do the calculating, and each is as large as a chipmaking machine can print.' },
+  { k: 'Memory', t0: 10.2, t1: 13.6, cap: 'Eight stacks of memory go beside them, a few millimeters away. They hold the numbers the chips are working on.' },
+  { k: 'One package', t0: 13.6, t1: 17.4, cap: 'Together they make one AI accelerator. Nearly every one is put together by TSMC, in Taiwan.' },
 ];
 const pr = (i, t) => clamp((t - STEPS[i].t0) / (STEPS[i].t1 - STEPS[i].t0));
-const W = 760, H = 420, K = 4.75, CX = 212, CY = 212, mm = (x, y) => [CX + x * K, CY + y * K];
-const FIELD = 858, DIE_W = 25.5, DIE_H = 32.5, GAP = 1, HW = 11, HH = 12, HG = 1.6;
-const DIES = [[-DIE_W - GAP / 2, -DIE_H / 2], [GAP / 2, -DIE_H / 2]];
-const ROWY = [-DIE_H / 2 - HG - HH, DIE_H / 2 + HG];
-const HBMS = []; ROWY.forEach((y) => [0, 1, 2, 3].forEach((i) => HBMS.push([-(4 * HW + 3 * 1.3) / 2 + i * (HW + 1.3), y])));
-const IP = { x: -DIE_W - GAP / 2 - 2.2, y: ROWY[0] - 2, w: 2 * DIE_W + GAP + 4.4, h: ROWY[1] + HH + 2 - (ROWY[0] - 2) };
-const SUB = 80;
-const V1 = DIE_W * DIE_H / FIELD, V2 = 2 * V1, V3 = (2 * DIE_W * DIE_H + 8 * HW * HH) / FIELD;   // 0.97, 1.93, 3.16
+const W = 760, H = 420, K = 3.0, OX = 226, OY = 232;
+const iso = (x, y, z) => [OX + (x - y) * 0.866 * K, OY + (x + y) * 0.5 * K - z * K];
 const C = {
-  die: dark ? ['#2c3440', '#232a35'] : ['#27303d', '#1b212b'], tile: dark ? '#3a4658' : '#303b4c', link: '#c07a40',
-  inter: dark ? ['#8a939e', '#b8bfc8'] : ['#c1c7ce', '#e6e9ed'], interEdge: dark ? '#a4acb6' : '#98a1ab',
-  hbm: dark ? ['#3a4350', '#2c333e'] : ['#353c47', '#252b34'], hbmEdge: dark ? '#6b7686' : '#5f6a79', sub: dark ? '#4f5d3c' : '#5d6c45', subEdge: dark ? '#6d7d55' : '#48563a', pad: dark ? '#8c9a6d' : '#8a9868',
+  sub: dark ? ['#5f6f47', '#4a5838', '#3d4930'] : ['#6b7b4f', '#56643f', '#465234'], pad: dark ? '#9aa87b' : '#a3b187',
+  inter: dark ? ['#b9c0c8', '#8e97a2', '#78818c'] : ['#dfe3e7', '#b5bcc4', '#9aa2ab'], wire: '#c07a40',
+  die: dark ? ['#39424f', '#2a313b', '#222830'] : ['#2f3845', '#222932', '#1a2027'], tile: dark ? '#4a5667' : '#3c4859',
+  hbm: dark ? ['#4a5360', '#363e49', '#2c333c'] : ['#434b57', '#323943', '#282e36'], hbmLine: dark ? '#6c7686' : '#5c6675',
 };
-const r = rng(3), TILES = []; for (let i = 0; i < 6; i++) for (let j = 0; j < 8; j++) TILES.push([i, j, 0.5 + r() * 0.4]);
-function box(ctx, x, y, w, h, fill) { const [a, b] = mm(x, y); ctx.fillStyle = fill; ctx.fillRect(a, b, w * K, h * K); }
-function grad(ctx, x, y, w, h, cols) { const [a, b] = mm(x, y), g = ctx.createLinearGradient(a, b, a + w * K, b + h * K); g.addColorStop(0, cols[0]); g.addColorStop(0.5, cols[1]); g.addColorStop(1, cols[0]); return g; }
-function die(ctx, dx, dy, a, side) {
-  if (a <= 0) return; ctx.save(); ctx.globalAlpha *= a;
-  box(ctx, dx, dy, DIE_W, DIE_H, grad(ctx, dx, dy, DIE_W, DIE_H, C.die));
-  const tw = (DIE_W - 4) / 6, th = (DIE_H - 6) / 8;
-  TILES.forEach(([i, j, v]) => { ctx.globalAlpha = a * v; box(ctx, dx + 2 + i * tw + 0.35, dy + 3 + j * th + 0.35, tw - 0.7, th - 0.7, C.tile); });
-  ctx.globalAlpha = a; box(ctx, side < 0 ? dx + DIE_W - 1.1 : dx, dy + 3, 1.1, DIE_H - 6, C.link);
-  ctx.restore();
-}
-function field(ctx, fx, fy, a, dims) {
-  if (a <= 0) return; const [x, y] = mm(fx, fy), w = 26 * K, h = 33 * K;
-  ctx.save(); ctx.globalAlpha *= a;
-  ctx.fillStyle = dark ? 'rgba(212,102,123,0.07)' : 'rgba(122,31,43,0.05)'; ctx.fillRect(x, y, w, h);
-  ctx.strokeStyle = PAL.garnet; ctx.lineWidth = 1.2; ctx.strokeRect(x, y, w, h);
-  // perforations, so the patch reads as a postage stamp
-  ctx.fillStyle = PAL.bg; const r = 2.8, step = 9;
-  for (let px = x + step / 2; px < x + w; px += step) { ctx.beginPath(); ctx.arc(px, y, r, 0, 7); ctx.arc(px, y + h, r, 0, 7); ctx.fill(); }
-  for (let py = y + step / 2; py < y + h; py += step) { ctx.beginPath(); ctx.arc(x, py, r, 0, 7); ctx.arc(x + w, py, r, 0, 7); ctx.fill(); }
-  ctx.restore();
-  if (dims) {
-    text('26 mm', x + w / 2, y - 8, '500 11.5px "Instrument Sans"', PAL.garnet, { align: 'center', alpha: a * dims });
-    ctx.save(); ctx.translate(x - 10, y + h / 2); ctx.rotate(-Math.PI / 2); text('33 mm', 0, 0, '500 11.5px "Instrument Sans"', PAL.garnet, { align: 'center', alpha: a * dims }); ctx.restore();
-  }
-}
-// the readout on the right, in the manner of the defects figure: silicon counted in exposures
-function row(y, value, name, on, a) {
+// a box in the isometric view: top face and the two faces toward the viewer
+function box(ctx, x, y, z, w, d, h, col, a) {
   if (a <= 0) return;
-  const col = on ? PAL.garnet : PAL.ink2, s = value.toFixed(1), c = A.ctx;
-  if (on) { c.save(); c.globalAlpha = a; c.fillStyle = PAL.garnet; c.fillRect(452, y - 36, 2, 54); c.restore(); }
-  text(s, 470, y, '300 44px Fraunces', col, { alpha: a });
-  c.font = '300 44px Fraunces'; const w = c.measureText(s).width;
-  text(value < 1.05 ? 'stamp' : 'stamps', 470 + w + 8, y, '500 13px "Instrument Sans"', col, { alpha: a });
-  label(name, 470, y + 19, PAL.muted, { alpha: a });
-}
-function meter(ctx, value, a, markA) {
-  if (a <= 0) return;
-  const x0 = 470, x1 = 736, y = 362, sc = (v) => x0 + (x1 - x0) * v / 6;
+  const P = (px, py, pz) => iso(px, py, pz);
   ctx.save(); ctx.globalAlpha = a;
-  ctx.fillStyle = dark ? '#262b33' : '#e6e2da'; ctx.fillRect(x0, y, x1 - x0, 8);
-  ctx.fillStyle = PAL.garnet; ctx.fillRect(x0, y, sc(value) - x0, 8);
-  ctx.fillStyle = PAL.bg; for (let v = 1; v < 6; v++) ctx.fillRect(sc(v) - 0.5, y, 1, 8);
+  const poly = (pts, fill) => { ctx.fillStyle = fill; ctx.beginPath(); pts.forEach((p, i) => (i ? ctx.lineTo(...p) : ctx.moveTo(...p))); ctx.closePath(); ctx.fill(); };
+  poly([P(x, y + d, z), P(x + w, y + d, z), P(x + w, y + d, z + h), P(x, y + d, z + h)], col[1]);   // front-left face
+  poly([P(x + w, y, z), P(x + w, y + d, z), P(x + w, y + d, z + h), P(x + w, y, z + h)], col[2]);   // front-right face
+  poly([P(x, y, z + h), P(x + w, y, z + h), P(x + w, y + d, z + h), P(x, y + d, z + h)], col[0]);   // top
   ctx.restore();
-  for (let v = 0; v <= 6; v++) text(String(v), sc(v), y + 24, '500 10.5px "Instrument Sans"', PAL.muted, { align: 'center', alpha: a });
-  if (markA > 0) {
-    ctx.save(); ctx.globalAlpha = markA; ctx.strokeStyle = PAL.ink; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(sc(5.5), y - 10); ctx.lineTo(sc(5.5), y + 12); ctx.stroke(); ctx.restore();
-    label('Largest TSMC builds: 5.5', sc(5.5), y - 16, PAL.ink2, { align: 'right', alpha: markA });
-  }
-  label('Silicon, counted in stamps', x0, y - 16, PAL.muted, { alpha: a * (1 - markA) });
 }
+function topLine(ctx, x0, y0, x1, y1, z, col, lw, a) { ctx.save(); ctx.globalAlpha = a; ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.beginPath(); ctx.moveTo(...iso(x0, y0, z)); ctx.lineTo(...iso(x1, y1, z)); ctx.stroke(); ctx.restore(); }
+
+// the parts, in millimeters
+const SUB = { x: -40, y: -40, w: 80, d: 80, z: 0, h: 4 };
+const IP = { x: -28.5, y: -32, w: 57, d: 64, z: 4, h: 1.6 };
+const TOPZ = IP.z + IP.h, CH = 3.2;
+const DIES = [{ x: -26, y: -16.25, w: 25.5, d: 32.5 }, { x: 0.5, y: -16.25, w: 25.5, d: 32.5 }];
+const HBMS = []; [-30.3, 18.3].forEach((y) => [0, 1, 2, 3].forEach((i) => HBMS.push({ x: -23.6 + i * 11.8, y, w: 11, d: 12 })));
+const drop = (q) => (1 - easeOut(q)) * 40;   // parts fall into place from above
 
 function render(ctx, t) {
   ctx.fillStyle = PAL.bg; ctx.fillRect(0, 0, W, H);
-  const p0 = pr(0, t), p1 = pr(1, t), p2 = pr(2, t), p3 = pr(3, t), p4 = pr(4, t);
-  // substrate
-  if (p4 > 0) {
-    const q = ease(p4 / 0.45), s = mix(0.92, 1, q), w = SUB * s;
-    ctx.save(); ctx.globalAlpha = q; box(ctx, -w / 2, -w / 2, w, w, C.sub);
-    const [x, y] = mm(-w / 2, -w / 2); ctx.strokeStyle = C.subEdge; ctx.lineWidth = 1; ctx.strokeRect(x + 0.5, y + 0.5, w * K - 1, w * K - 1);
-    for (let i = 0; i < 19; i++) { const u = -36 + i * 4; box(ctx, u, 35.2, 1.5, 2.4, C.pad); box(ctx, u, -37.6, 1.5, 2.4, C.pad); }
+  const p = [0, 1, 2, 3, 4].map((i) => pr(i, t));
+  // package base, with small parts around its edge
+  const q0 = ease(p[0] / 0.5);
+  box(ctx, SUB.x, SUB.y, SUB.z + drop(q0), SUB.w, SUB.d, SUB.h, C.sub, q0);
+  if (q0 > 0.9) { ctx.save(); ctx.globalAlpha = (q0 - 0.9) * 10; ctx.fillStyle = C.pad; for (let i = 0; i < 16; i++) { const u = -36 + i * 4.8; for (const [px, py] of [[u, -37.5], [-37.5, u]]) { const [sx, sy] = iso(px, py, SUB.h); ctx.fillRect(sx - 1.6, sy - 1, 3.2, 2); } } ctx.restore(); }
+  // silicon base, with its wiring
+  const q1 = ease(p[1] / 0.5);
+  box(ctx, IP.x, IP.y, IP.z + drop(q1), IP.w, IP.d, IP.h, C.inter, q1);
+  const wires = ease((p[1] - 0.5) / 0.4) * (1 - ease(p[2] / 0.4) * 0.6);
+  if (wires > 0) for (let i = 0; i < 9; i++) { const yy = -12 + i * 3; topLine(ctx, -6, yy, 6, yy, TOPZ, C.wire, 1, wires); }
+  // memory stacks: chips stacked, their layers showing on the sides; the back row is drawn before the chips
+  const stack = (m, k) => {
+    const q = ease((p[3] - k * 0.05) / 0.4); if (q <= 0) return;
+    const z = TOPZ + drop(q);
+    box(ctx, m.x, m.y, z, m.w, m.d, CH, C.hbm, q);
+    ctx.save(); ctx.globalAlpha = q * 0.8; ctx.strokeStyle = C.hbmLine; ctx.lineWidth = 0.6;
+    for (let l = 1; l < 8; l++) { const zz = z + l * CH / 8; ctx.beginPath(); ctx.moveTo(...iso(m.x, m.y + m.d, zz)); ctx.lineTo(...iso(m.x + m.w, m.y + m.d, zz)); ctx.lineTo(...iso(m.x + m.w, m.y, zz)); ctx.stroke(); }
     ctx.restore();
-    label('Package base (substrate)', mm(-SUB / 2, 0)[0], mm(0, SUB / 2)[1] + 14, PAL.ink2, { alpha: clamp((p4 - 0.3) * 3) });
-  }
-  // interposer
-  if (p2 > 0) {
-    const q = ease(p2 / 0.45);
-    ctx.save(); ctx.globalAlpha = q; box(ctx, IP.x, IP.y, IP.w, IP.h, grad(ctx, IP.x, IP.y, IP.w, IP.h, C.inter));
-    const [x, y] = mm(IP.x, IP.y); ctx.strokeStyle = C.interEdge; ctx.lineWidth = 1; ctx.strokeRect(x + 0.5, y + 0.5, IP.w * K - 1, IP.h * K - 1); ctx.restore();
-    label('Silicon base', mm(IP.x, 0)[0], mm(0, IP.y)[1] - 7, PAL.ink2, { alpha: clamp((p2 - 0.25) * 3) * (1 - clamp(p4 * 3)) });
-  }
-  // exposure fields: they stay faintly in place, so the unit of the readout stays in view
-  const [d0x, d0y] = DIES[0], [d1x, d1y] = DIES[1];
-  const keep = 1 - 0.6 * ease(clamp((p1 - 0.8) / 0.2)), gone = 1 - ease(clamp(p4 / 0.3));
-  if (p0 > 0 && p1 < 0.3) label('Biggest patch one shot can print', mm(d0x, 0)[0] - 1, mm(0, d0y + 33)[1] + 16, PAL.garnet, { alpha: ease(p0 / 0.3) * (1 - clamp(p1 * 4)) });
-  const split = ease((p1 - 0.45) / 0.25), grow = ease(p1 / 0.25);
-  if (p1 > 0 && split < 1) {
-    // one block of circuitry, as wide as two chips: the part past the stamp's edge cannot print
-    const [bx, by] = mm(d0x, d0y), fullW = (2 * DIE_W + GAP) * K * mix(0.5, 1, grow), edge = mm(d0x - 0.25 + 26, 0)[0];
-    ctx.save(); ctx.globalAlpha = 1 - split;
-    const g = ctx.createLinearGradient(bx, by, bx + fullW, by); g.addColorStop(0, C.die[0]); g.addColorStop(1, C.die[1]);
-    ctx.fillStyle = g; ctx.fillRect(bx, by, fullW, DIE_H * K);
-    ctx.beginPath(); ctx.rect(edge, by, bx + fullW - edge, DIE_H * K); ctx.clip();
-    ctx.strokeStyle = PAL.garnet; ctx.lineWidth = 1.4; for (let k = -40; k < 200; k += 8) { ctx.beginPath(); ctx.moveTo(edge + k, by); ctx.lineTo(edge + k - 40, by + DIE_H * K); ctx.stroke(); }
+  };
+
+  HBMS.forEach((m, k) => { if (k < 4) stack(m, k); });
+  // logic chips: a floorplan of compute tiles on top, and the edge that links them
+  DIES.forEach((d, k) => {
+    const q = ease((p[2] - k * 0.18) / 0.45); if (q <= 0) return;
+    const z = TOPZ + drop(q);
+    box(ctx, d.x, d.y, z, d.w, d.d, CH, C.die, q);
+    ctx.save(); ctx.globalAlpha = q;
+    for (let i = 0; i < 5; i++) for (let j = 0; j < 7; j++) {
+      const tx = d.x + 2 + i * 4.4, ty = d.y + 2.5 + j * 4.1, zz = z + CH;
+      const pts = [iso(tx, ty, zz), iso(tx + 3.6, ty, zz), iso(tx + 3.6, ty + 3.3, zz), iso(tx, ty + 3.3, zz)];
+      ctx.fillStyle = C.tile; ctx.beginPath(); pts.forEach((pt, n) => (n ? ctx.lineTo(...pt) : ctx.moveTo(...pt))); ctx.closePath(); ctx.fill();
+    }
     ctx.restore();
-    label('Too big for one shot', mm(d1x + DIE_W, 0)[0], mm(0, d0y + DIE_H)[1] + 16, PAL.garnet, { align: 'right', alpha: grow * (1 - split) });
-  }
-  die(ctx, d0x, d0y, p1 > 0 && split < 1 ? split : ease((p0 - 0.3) / 0.35), -1);
-  die(ctx, d1x, d1y, split, 1);
-  field(ctx, d0x - 0.25, d0y - 0.25, ease(p0 / 0.3) * keep * gone, 1 - ease(clamp(p1 * 3)));
-  field(ctx, d1x - 0.25, d1y - 0.25, ease((p1 - 0.45) / 0.25) * keep * gone, 0);
-  // wiring across the gap
-  if (p2 > 0.35) {
-    const q = clamp((p2 - 0.35) / 0.4); ctx.strokeStyle = C.link; ctx.lineWidth = 0.9;
-    for (let i = 0; i < 24; i++) {
-      const y = d0y + 4 + i * ((DIE_H - 8) / 23), [xa, ya] = mm(d0x + DIE_W - 1.1, y), [xb] = mm(d1x + 1.1, y), on = clamp(q * 1.6 - (i % 7) * 0.08);
-      if (on > 0) { ctx.globalAlpha = on; ctx.beginPath(); ctx.moveTo(xa, ya); ctx.lineTo(mix(xa, xb, on), ya); ctx.stroke(); }
-    }
-    ctx.globalAlpha = 1;
-  }
-  // memory stacks: eight chips drop onto each stack, offset slightly so the stack shows its height
-  HBMS.forEach(([hx, hy], k) => {
-    const q = clamp((p3 - k * 0.05) / 0.4); if (q <= 0) return;
-    const [x, y] = mm(hx, hy), w = HW * K, h = HH * K, n = 8, off = 0.2 * K, c0 = off * (n - 1) / 2, done = easeOut(q) * n;
-    for (let i = 0; i < n; i++) {
-      const qi = clamp(done - i); if (qi <= 0) break;
-      const dx = c0 - i * off, dy = c0 - i * off - (1 - ease(qi)) * 10;
-      ctx.globalAlpha = ease(qi); ctx.fillStyle = C.hbmEdge; ctx.fillRect(x + dx, y + dy, w, h);
-      const g = ctx.createLinearGradient(x + dx, y + dy, x + dx + w, y + dy + h); g.addColorStop(0, C.hbm[0]); g.addColorStop(1, C.hbm[1]);
-      ctx.fillStyle = g; ctx.fillRect(x + dx + 0.8, y + dy + 0.8, w - 1.6, h - 1.6);
-    }
-    if (q > 0.7) { const up = hy < 0; ctx.strokeStyle = C.link; ctx.globalAlpha = clamp((q - 0.7) * 3); ctx.lineWidth = 0.8; for (let i = 0; i < 6; i++) { const xx = x + 3 + i * ((w - 6) / 5); ctx.beginPath(); ctx.moveTo(xx, up ? y + h : y); ctx.lineTo(xx, up ? y + h + HG * K : y - HG * K); ctx.stroke(); } }
-    ctx.globalAlpha = 1;
+    topLine(ctx, k ? d.x + 0.6 : d.x + d.w - 0.6, d.y + 3, k ? d.x + 0.6 : d.x + d.w - 0.6, d.y + d.d - 3, z + CH, C.wire, 2.2, q);
   });
-  label('Memory stacks', mm(IP.x + IP.w, 0)[0], mm(0, IP.y)[1] - 7, PAL.ink2, { align: 'right', alpha: ease((p3 - 0.3) / 0.3) * (1 - clamp(p4 * 3)) });
-  // the readout
-  const cur = p3 > 0 || p4 > 0 ? 2 : p1 > 0 || p2 > 0 ? 1 : 0;
-  row(96, V1, 'One chip', cur === 0, ease((p0 - 0.55) / 0.3));
-  row(186, mix(V1, V2, ease((p1 - 0.7) / 0.25)), 'Two chips', cur === 1, ease((p1 - 0.6) / 0.25));
-  row(276, mix(V2, V3, ease((p3 - 0.35) / 0.5)), 'Two chips and eight memory stacks', cur === 2, ease((p3 - 0.25) / 0.3));
-  const mv = p3 > 0 ? mix(V2, V3, ease((p3 - 0.35) / 0.5)) : p1 > 0 ? mix(V1, V2, ease((p1 - 0.7) / 0.25)) : V1 * ease((p0 - 0.55) / 0.3);
-  meter(ctx, mv, ease((p0 - 0.55) / 0.3), ease(p4 / 0.4));
+  HBMS.forEach((m, k) => { if (k >= 4) stack(m, k); });
+  // labels with leader lines, one per part, added as each lands
+  const done = p[4] > 0 ? ease(p[4] / 0.3) : 0;
+  const entry = (y, name, role, anchor, a, on) => {
+    if (a <= 0) return;
+    const [ax, ay] = iso(...anchor), lx = 470;
+    ctx.save(); ctx.globalAlpha = a * 0.7 * (1 - done * 0.6); ctx.strokeStyle = on ? PAL.garnet : PAL.line; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(lx - 8, y - 5); ctx.lineTo(ax, ay); ctx.stroke();
+    ctx.fillStyle = on ? PAL.garnet : PAL.ink2; ctx.beginPath(); ctx.arc(ax, ay, 2.4, 0, 7); ctx.fill(); ctx.restore();
+    text(name, lx, y, '500 20px Fraunces', on ? PAL.garnet : PAL.ink, { alpha: a });
+    text(role, lx, y + 20, '400 14.5px "Source Serif 4"', PAL.ink2, { alpha: a });
+  };
+  const cur = p[4] > 0 ? -1 : p[3] > 0 ? 3 : p[2] > 0 ? 2 : p[1] > 0 ? 1 : 0;
+  entry(328, 'Package base', 'Connects the part to the circuit board', [SUB.x + SUB.w, 10, SUB.h / 2], ease((p[0] - 0.4) / 0.3), cur === 0);
+  entry(248, 'Silicon base', 'Fine wiring that joins what sits on top', [IP.x + IP.w, 22, TOPZ], ease((p[1] - 0.4) / 0.3), cur === 1);
+  entry(168, 'Two logic chips', 'Do the calculating', [DIES[1].x + 16, DIES[1].y + 8, TOPZ + CH], ease((p[2] - 0.5) / 0.3), cur === 2);
+  entry(88, 'Eight memory stacks', 'Hold the numbers the chips work on', [HBMS[3].x + 8, HBMS[3].y + 4, TOPZ + CH], ease((p[3] - 0.4) / 0.3), cur === 3);
+  if (done > 0) label('One AI accelerator', 470, 30, PAL.garnet, { alpha: done });
 }
-A.start({ W, H, duration: 20.0, fade: 0.8, steps: STEPS, render });
-window.INFO = { V1, V2, V3, area: 2 * DIE_W * DIE_H + 8 * HW * HH };
+A.start({ W, H, duration: 18.6, fade: 0.8, steps: STEPS, render });
 </script></body></html>
