@@ -1,0 +1,33 @@
+{
+ "duration": 19.2,
+ "fade": 0.8,
+ "width": 760,
+ "height": 420,
+ "steps": [
+  {
+   "k": "Coat",
+   "t0": 0.4,
+   "cap": "The wafer is coated with a thin film that changes wherever light touches it."
+  },
+  {
+   "k": "Stencil",
+   "t0": 3.2,
+   "cap": "A stencil, called a mask, holds the pattern for one layer of the chip, drawn four times larger than life."
+  },
+  {
+   "k": "Shrink",
+   "t0": 6.2,
+   "cap": "Light shines through the stencil, and a lens shrinks the image four times and lands it on the film."
+  },
+  {
+   "k": "Wash",
+   "t0": 9.6,
+   "cap": "A wash removes the film wherever the light landed, and the pattern is left on the wafer."
+  },
+  {
+   "k": "Repeat",
+   "t0": 12.4,
+   "cap": "The machine steps across the wafer, printing one patch at a time, each about the size of a postage stamp."
+  }
+ ]
+}

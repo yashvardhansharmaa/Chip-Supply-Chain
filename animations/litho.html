@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>How Lithography Prints a Chip</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Instrument+Sans:wght@400;500;600&display=swap">
+</head><body>
+<script src="lib.js"></script>
+<script>
+const { PAL, clamp, ease, easeOut, mix, mixc, label, text } = A, dark = A.theme === 'dark';
+// Facts, from chapter 4's How it works: the wafer is coated with a film that changes wherever light touches it; the
+// mask holds one layer as a pattern drawn four times larger than life; the machine shines light through it, shrinks the
+// image four times and lands it on the film; a wash removes the film where the light hit. From chapters 4 and 11: one
+// shot covers at most 26 by 33 mm, about the size of a postage stamp, so a wafer takes many shots.
+const STEPS = [
+  { k: 'Coat', t0: 0.4, t1: 3.2, cap: 'The wafer is coated with a thin film that changes wherever light touches it.' },
+  { k: 'Stencil', t0: 3.2, t1: 6.2, cap: 'A stencil, called a mask, holds the pattern for one layer of the chip, drawn four times larger than life.' },
+  { k: 'Shrink', t0: 6.2, t1: 9.6, cap: 'Light shines through the stencil, and a lens shrinks the image four times and lands it on the film.' },
+  { k: 'Wash', t0: 9.6, t1: 12.4, cap: 'A wash removes the film wherever the light landed, and the pattern is left on the wafer.' },
+  { k: 'Repeat', t0: 12.4, t1: 18.0, cap: 'The machine steps across the wafer, printing one patch at a time, each about the size of a postage stamp.' },
+];
+const pr = (i, t) => clamp((t - STEPS[i].t0) / (STEPS[i].t1 - STEPS[i].t0));
+const W = 760, H = 420, V = PAL.violet;
+const C = { stencil: dark ? '#4a525d' : '#2b323c', lens: dark ? ['rgba(160,190,220,0.35)', 'rgba(200,220,240,0.55)'] : ['rgba(150,180,210,0.35)', 'rgba(200,220,240,0.75)'], lensEdge: dark ? '#8fa6bd' : '#7d93aa', film: '#c98f2e', filmLit: '#efdcae', si: dark ? '#343b45' : '#2c323b' };
+
+// ---- side view: light, stencil, lens, wafer
+const CX = 200, ST_Y = 118, ST_W = 216, LENS_Y = 212, WAF_Y = 344, IMG_W = ST_W / 4;
+const OPEN_N = 6, SLOT = ST_W / (OPEN_N * 2 + 1);                  // six clear lines in the stencil
+const slots = (w, cx) => Array.from({ length: OPEN_N }, (_, i) => cx - w / 2 + (2 * i + 1) * (w / (OPEN_N * 2 + 1)));
+const S_OPEN = slots(ST_W, CX), I_OPEN = slots(IMG_W, CX), I_SLOT = IMG_W / (OPEN_N * 2 + 1);
+
+function sideView(ctx, t, p) {
+  const [p0, p1, p2, p3, p4] = p;
+  // the wafer and its film
+  const wA = ease(p0 / 0.3);
+  ctx.save(); ctx.globalAlpha = wA; ctx.fillStyle = C.si; ctx.fillRect(CX - 150, WAF_Y + 8, 300, 16); ctx.restore();
+  const film = ease((p0 - 0.2) / 0.5), lit = ease((p2 - 0.55) / 0.35), wash = ease(p3 / 0.6);
+  if (film > 0) {
+    ctx.save(); ctx.globalAlpha = wA;
+    const fw = 300 * film; ctx.fillStyle = C.film; ctx.fillRect(CX - fw / 2, WAF_Y, fw, 8);
+    // where the image lands: the film changes, then washes away
+    for (const x of I_OPEN) { if (wash >= 1) { ctx.fillStyle = PAL.bg; ctx.fillRect(x, WAF_Y, I_SLOT, 8); continue; } ctx.fillStyle = mixc(C.film, C.filmLit, lit); ctx.fillRect(x, WAF_Y + 8 * wash, I_SLOT, 8 * (1 - wash)); if (wash > 0) { ctx.fillStyle = PAL.bg; ctx.fillRect(x, WAF_Y, I_SLOT, 8 * wash); } }
+    ctx.restore();
+    label('Film', CX - 150, WAF_Y - 8, PAL.ink2, { alpha: film });
+    label('Wafer', CX + 158, WAF_Y + 21, PAL.muted, { alpha: wA });
+  }
+  // stencil, with its lines four times larger than they will print
+  const sA = ease(p1 / 0.3);
+  if (sA > 0) {
+    ctx.save(); ctx.globalAlpha = sA; ctx.fillStyle = C.stencil; ctx.fillRect(CX - ST_W / 2 - 14, ST_Y, ST_W + 28, 8);
+    ctx.fillStyle = PAL.bg; for (const x of S_OPEN) ctx.fillRect(x, ST_Y, SLOT, 8);
+    ctx.restore();
+    label('Stencil (mask)', CX - ST_W / 2 - 14, ST_Y - 10, PAL.ink2, { alpha: sA });
+  }
+  // lens
+  const lA = ease((p2) / 0.25);
+  if (lA > 0) {
+    ctx.save(); ctx.globalAlpha = lA;
+    const g = ctx.createLinearGradient(0, LENS_Y - 14, 0, LENS_Y + 14); g.addColorStop(0, C.lens[0]); g.addColorStop(0.5, C.lens[1]); g.addColorStop(1, C.lens[0]);
+    ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(CX, LENS_Y, ST_W / 2 + 10, 14, 0, 0, 7); ctx.fill();
+    ctx.strokeStyle = C.lensEdge; ctx.lineWidth = 1; ctx.stroke(); ctx.restore();
+    label('Lens', CX + ST_W / 2 + 18, LENS_Y + 4, PAL.ink2, { alpha: lA });
+  }
+  // light: a source above, then a beam through each clear line, bent by the lens onto a spot a quarter the size
+  const on = clamp((p2 - 0.1) / 0.2) * (1 - ease(p3 / 0.3));
+  if (on > 0) {
+    ctx.save();
+    const g = ctx.createLinearGradient(0, 40, 0, ST_Y); g.addColorStop(0, `rgba(${V},0)`); g.addColorStop(1, `rgba(${V},${0.32 * on})`);
+    ctx.fillStyle = g; ctx.fillRect(CX - ST_W / 2 - 14, 40, ST_W + 28, ST_Y - 40);
+    S_OPEN.forEach((x, i) => {
+      const xi = I_OPEN[i], reach = ease((p2 - 0.15) / 0.4);
+      ctx.fillStyle = `rgba(${V},${0.3 * on})`;
+      ctx.beginPath(); ctx.moveTo(x, ST_Y + 8); ctx.lineTo(x + SLOT, ST_Y + 8); ctx.lineTo(x + SLOT, LENS_Y); ctx.lineTo(x, LENS_Y); ctx.closePath(); ctx.fill();
+      if (reach > 0) {
+        const yb = mix(LENS_Y, WAF_Y, reach);
+        ctx.beginPath(); ctx.moveTo(x, LENS_Y); ctx.lineTo(x + SLOT, LENS_Y); ctx.lineTo(mix(x + SLOT, xi + I_SLOT, reach), yb); ctx.lineTo(mix(x, xi, reach), yb); ctx.closePath(); ctx.fill();
+      }
+    });
+    ctx.restore();
+    label('Light', CX - ST_W / 2 - 14, 52, PAL.violetInk, { alpha: on });
+  }
+  // after the wash, a magnifier shows the pattern left in the film, seen from above
+  const mg = ease((p3 - 0.55) / 0.3) * (1 - ease(p4 / 0.25));
+  if (mg > 0) {
+    const mx = CX + 104, my = WAF_Y - 78, r = 44;
+    ctx.save(); ctx.globalAlpha = mg;
+    ctx.strokeStyle = PAL.ink2; ctx.lineWidth = 1; ctx.setLineDash([2, 3]); ctx.beginPath(); ctx.moveTo(CX + IMG_W / 2, WAF_Y); ctx.lineTo(mx - r * 0.7, my + r * 0.7); ctx.stroke(); ctx.setLineDash([]);
+    ctx.save(); ctx.beginPath(); ctx.arc(mx, my, r, 0, 7); ctx.clip();
+    ctx.fillStyle = C.film; ctx.fillRect(mx - r, my - r, 2 * r, 2 * r);
+    ctx.fillStyle = C.si; const lw = (2 * r) / (OPEN_N * 2 + 1); for (let i = 0; i < OPEN_N; i++) ctx.fillRect(mx - r + (2 * i + 1) * lw, my - r, lw, 2 * r);
+    ctx.restore();
+    ctx.strokeStyle = PAL.ink2; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(mx, my, r, 0, 7); ctx.stroke();
+    ctx.restore();
+    label('The pattern, left in the film', mx, my + r + 16, PAL.ink2, { align: 'center', alpha: mg });
+  }
+  // the four-times shrink, marked
+  const mk = ease((p2 - 0.6) / 0.3) * (1 - ease(p4 / 0.3));
+  if (mk > 0) {
+    const bar = (y, x0, x1, s, col) => { ctx.save(); ctx.globalAlpha = mk; ctx.strokeStyle = col; ctx.lineWidth = 1.1; ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.moveTo(x0, y - 4); ctx.lineTo(x0, y + 4); ctx.moveTo(x1, y - 4); ctx.lineTo(x1, y + 4); ctx.stroke(); ctx.restore(); label(s, x1 + 8, y + 4, col, { alpha: mk }); };
+    bar(ST_Y - 26, CX - ST_W / 2, CX + ST_W / 2, 'Four times larger', PAL.muted);
+    bar(WAF_Y + 40, CX - IMG_W / 2, CX + IMG_W / 2, 'Printed size', PAL.garnet);
+  }
+}
+
+// ---- top view: the whole wafer, filled one patch at a time
+const WX = 598, WY = 214, WR = 150, KM = WR / 150;                 // pixels per millimeter
+const PW = 26 * KM, PH = 33 * KM;
+const PATCHES = [];
+for (let j = -6; j <= 6; j++) {   // rows of patches, 26 by 33 mm, across a 300 mm wafer
+  const row = [];
+  for (let i = -6; i <= 6; i++) { const x = WX + i * PW - PW / 2, y = WY + j * PH - PH / 2; const nx = Math.max(x, Math.min(WX, x + PW)), ny = Math.max(y, Math.min(WY, y + PH)); if (Math.hypot(nx - WX, ny - WY) < WR - 3 * KM) row.push([x, y]); }   // every patch that touches the wafer, edge patches included
+  if (j % 2) row.reverse();                                          // the machine snakes across the wafer
+  PATCHES.push(...row);
+}
+const FIRST = PATCHES.reduce((b, p, k) => (Math.hypot(p[0] + PW / 2 - WX, p[1] + PH / 2 - WY) < Math.hypot(PATCHES[b][0] + PW / 2 - WX, PATCHES[b][1] + PH / 2 - WY) ? k : b), 0);
+function topView(ctx, t, p) {
+  const [p0, p1, p2, p3, p4] = p, a = ease(p0 / 0.4);
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha = a;
+  const g = ctx.createLinearGradient(WX - WR, WY - WR, WX + WR, WY + WR), st = dark ? ['#8d959f', '#737c87', '#a2a9b2', '#666f7a'] : ['#d9dde2', '#c2c8cf', '#e4e7eb', '#b3bac2'];
+  g.addColorStop(0, st[0]); g.addColorStop(0.45, st[1]); g.addColorStop(0.55, st[2]); g.addColorStop(1, st[3]);
+  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(WX, WY, WR, 0, 7); ctx.fill();
+  // the film tints the wafer once it is coated
+  ctx.globalAlpha = a * 0.16 * ease((p0 - 0.2) / 0.5); ctx.fillStyle = C.film; ctx.beginPath(); ctx.arc(WX, WY, WR, 0, 7); ctx.fill();
+  ctx.globalAlpha = a; ctx.fillStyle = PAL.bg; ctx.beginPath(); ctx.arc(WX, WY + WR + 1, 5, 0, 7); ctx.fill();
+  ctx.strokeStyle = dark ? 'rgba(236,233,226,0.35)' : 'rgba(20,24,31,0.45)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(WX, WY, WR, 0, 7); ctx.stroke();
+  ctx.restore();
+  // before the repeat, one patch is marked: the one the side view is printing
+  const printedN = p4 > 0 ? Math.floor(ease((p4 - 0.15) / 0.8) * PATCHES.length) : (p3 > 0.5 ? 1 : 0);
+  const order = [FIRST].concat(PATCHES.map((_, k) => k).filter((k) => k !== FIRST));
+  ctx.save(); ctx.beginPath(); ctx.arc(WX, WY, WR - 1, 0, 7); ctx.clip();
+  order.slice(0, Math.max(printedN, 1)).forEach((k, n) => {
+    const [x, y] = PATCHES[k];
+    const fresh = p4 > 0 && n === printedN - 1;
+    ctx.save(); ctx.globalAlpha = a * (n < printedN ? 1 : ease((p1 - 0.2) / 0.3));
+    ctx.fillStyle = fresh ? `rgba(${V},0.75)` : n < printedN ? (dark ? 'rgba(122,31,43,0.55)' : 'rgba(122,31,43,0.28)') : 'transparent';
+    ctx.fillRect(x + 0.6, y + 0.6, PW - 1.2, PH - 1.2);
+    if (n < printedN && !fresh) { ctx.fillStyle = dark ? 'rgba(20,23,28,0.6)' : 'rgba(20,24,31,0.45)'; for (let l = 0; l < 6; l++) ctx.fillRect(x + 3 + l * (PW - 6) / 5.4, y + 4, 1.2, PH - 8); }
+    ctx.strokeStyle = PAL.garnet; ctx.lineWidth = n === 0 && p4 === 0 ? 1.6 : 0.8; ctx.strokeRect(x + 0.6, y + 0.6, PW - 1.2, PH - 1.2);
+    ctx.restore();
+  });
+  ctx.restore();
+  // the patch being printed is named until the machine starts stepping across the wafer
+  const named = ease((p1 - 0.2) / 0.3) * (1 - ease(p4 / 0.2));
+  if (named > 0) { const [x, y] = PATCHES[FIRST]; label('This patch', x + PW + 6, y + PH / 2 + 4, PAL.garnet, { alpha: named }); }
+  if (p4 > 0) {
+    label(`${printedN} of ${PATCHES.length} patches printed`, WX, WY + WR + 26, PAL.ink2, { align: 'center', alpha: ease(p4 / 0.2) });
+    label('Each patch at most 26 by 33 mm', WX, WY - WR - 12, PAL.muted, { align: 'center', alpha: ease(p4 / 0.2) });
+  } else label('The whole wafer, 300 mm across', WX, WY - WR - 12, PAL.muted, { align: 'center', alpha: a });
+}
+
+function render(ctx, t) {
+  ctx.fillStyle = PAL.bg; ctx.fillRect(0, 0, W, H);
+  const p = [0, 1, 2, 3, 4].map((i) => pr(i, t));
+  sideView(ctx, t, p);
+  topView(ctx, t, p);
+}
+A.start({ W, H, duration: 19.2, fade: 0.8, steps: STEPS, render });
+window.INFO = { patches: PATCHES.length };
+</script></body></html>

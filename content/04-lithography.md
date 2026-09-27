@@ -40,6 +40,7 @@
  {"fact": "Reuters puts a DUV scanner at roughly $60 million, a standard EUV tool at around $200 million and a High-NA system at $350 million to $400 million, and ASML's DUV share above 80%", "source": "https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/"}
  ],
  "figures": [
+    {"id": "litho-print", "type": "animation", "src": "litho", "title": "How lithography prints a chip", "note": "Simplified. The newest machines, which use extreme ultraviolet light, carry the image with mirrors in place of a lens."},
  {
  "id": "euv-shipments",
  "type": "bars",
@@ -86,6 +87,8 @@ Lithography prints the pattern of a circuit onto the wafer. A machine holds a st
 The stencil is a photomask, the film is photoresist and the machine is a scanner (see [Photomasks and pellicles](#photomasks-and-pellicles)).
 
 The wafer is coated with photoresist, a film that changes wherever light touches it. The mask holds one layer of the circuit as a pattern of clear and dark areas, drawn four times larger than life. The machine shines light through the mask, shrinks the image four times with a lens, and lands it on the film. A wash then removes the film where the light hit, and the pattern is left standing on the wafer for the next machine to etch in or fill with metal. Then the film is stripped and the next mask goes in. A chip takes dozens of masks, one per layer.
+
+{{figure:litho-print}}
 
 The image from one mask covers a patch about 26 by 33 mm, so the wafer moves under the lens one patch at a time, close to a hundred patches per wafer. Before each one, the machine finds marks printed in earlier layers and lines the new layer up on them to within a few nanometers.
 
