@@ -62,7 +62,7 @@ function wafer() {
   const s = dark ? ['#8d959f', '#737c87', '#a2a9b2', '#666f7a'] : ['#d9dde2', '#c2c8cf', '#e4e7eb', '#b3bac2'];
   g.addColorStop(0, s[0]); g.addColorStop(0.45, s[1]); g.addColorStop(0.55, s[2]); g.addColorStop(1, s[3]);
   const c = ctx0(); c.fillStyle = g; c.beginPath(); c.arc(CX, CY, RAD * K, 0, 7); c.fill();
-  c.fillStyle = PAL.bg; c.beginPath(); c.arc(CX, CY + RAD * K + 2, 6, 0, 7); c.fill();
+
   c.strokeStyle = dark ? 'rgba(236,233,226,0.35)' : 'rgba(20,24,31,0.5)'; c.lineWidth = 1; c.beginPath(); c.arc(CX, CY, RAD * K, 0, 7); c.stroke();
 }
 const ctx0 = () => A.ctx;

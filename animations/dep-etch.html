@@ -45,7 +45,7 @@ function waferDisc(ctx, cx, cy, r) {
   const g = ctx.createLinearGradient(cx - r, cy - r, cx + r, cy + r), st = dark ? ['#8d959f', '#737c87', '#a2a9b2', '#666f7a'] : ['#d9dde2', '#c2c8cf', '#e4e7eb', '#b3bac2'];
   g.addColorStop(0, st[0]); g.addColorStop(0.45, st[1]); g.addColorStop(0.55, st[2]); g.addColorStop(1, st[3]);
   ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, r, 0, 7); ctx.fill();
-  ctx.fillStyle = PAL.bg; ctx.beginPath(); ctx.arc(cx, cy + r + r * 0.01, Math.max(2, r * 0.035), 0, 7); ctx.fill();
+
   ctx.strokeStyle = dark ? 'rgba(236,233,226,0.35)' : 'rgba(20,24,31,0.45)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(cx, cy, r, 0, 7); ctx.stroke();
 }
 function zoom(ctx, t) {

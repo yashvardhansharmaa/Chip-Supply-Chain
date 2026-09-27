@@ -119,7 +119,7 @@ function topView(ctx, t, p) {
   ctx.fillStyle = g; ctx.beginPath(); ctx.arc(WX, WY, WR, 0, 7); ctx.fill();
   // the film tints the wafer once it is coated
   ctx.globalAlpha = a * 0.16 * ease((p0 - 0.2) / 0.5); ctx.fillStyle = C.film; ctx.beginPath(); ctx.arc(WX, WY, WR, 0, 7); ctx.fill();
-  ctx.globalAlpha = a; ctx.fillStyle = PAL.bg; ctx.beginPath(); ctx.arc(WX, WY + WR + 1, 5, 0, 7); ctx.fill();
+  ctx.globalAlpha = a;
   ctx.strokeStyle = dark ? 'rgba(236,233,226,0.35)' : 'rgba(20,24,31,0.45)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(WX, WY, WR, 0, 7); ctx.stroke();
   ctx.restore();
   // before the repeat, one patch is marked: the one the side view is printing
