@@ -2404,5 +2404,79 @@
       "https://ai.meta.com/blog/next-generation-meta-training-inference-accelerator-AI-MTIA/"
     ],
     "note": "The only fully published die outline on this page: Meta gives the MTIA v2 die as 25.6 by 16.4 mm, 421 mm2, on TSMC 5 nm. There is no HBM and no interposer, because the 128 GB of LPDDR5 sits on the board rather than on the package, so the die is drawn flip-chipped straight onto a build-up substrate. Only the substrate rectangle is estimated."
+  },
+  "meta-mtia-300": {
+    "unit": "mm",
+    "interposer": [
+      50.3,
+      51.9
+    ],
+    "dies": [
+      {
+        "x": 0,
+        "y": 0,
+        "w": 25.6,
+        "h": 31.4
+      },
+      {
+        "x": 0,
+        "y": -20.6,
+        "w": 25.6,
+        "h": 9.3
+      },
+      {
+        "x": 0,
+        "y": 20.6,
+        "w": 25.6,
+        "h": 9.3
+      }
+    ],
+    "hbm": [
+      {
+        "x": -19.2,
+        "y": -12,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -19.2,
+        "y": 0,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": -19.2,
+        "y": 12,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 19.2,
+        "y": -12,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 19.2,
+        "y": 0,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "x": 19.2,
+        "y": 12,
+        "w": 11,
+        "h": 11
+      }
+    ],
+    "substrate": [
+      77.5,
+      77.5
+    ],
+    "estimated": true,
+    "sources": [
+      "https://aisystemcodesign.github.io/papers/MTIA300_ISCA2026.pdf"
+    ],
+    "note": "Meta publishes the package (77.5 mm square), the interposer (50.3 by 51.9 mm), the compute chiplet (25.6 by 31.4 mm) and two network chiplets (25.6 by 9.3 mm each), and says three HBM3E stacks sit on each side. The network chiplets are drawn above and below the compute chiplet, where the published sizes fit; that arrangement and the stack outlines are estimated."
   }
 }

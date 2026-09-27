@@ -20,6 +20,7 @@
   --accent: #7a1f2b;
   --accent-ink: #611722;
   --accent-soft: rgba(122, 31, 43, 0.09);
+  --accent-fill: var(--accent); /* bars and other filled marks */
   --c1: #2b63c4; --c2: #e06a1f; --c3: #1f9a6d; --c4: #c9a10c; --c5: #5a48b8; --c6: #c3302b; --c7: #2e7d1e; --c8: #8a9099;
   --stage-ink: 20, 24, 31;
   --stage-accent: 122, 31, 43;
@@ -34,7 +35,7 @@
   --band: 0px; /* height of the sticky specimen band on phones; anchors add it to their offset */
   --measure: 37em; /* about 85 characters of Source Serif at 18.5 px; 41em on 25 Sept, narrowed 10 percent on 27 Sept for a wider specimen stage */
   --frame: 650px;   /* chapter header and chokepoint card keep their earlier width */
-  --bar-5: var(--accent); --bar-4: #3b424c; --bar-3: #bfb9af;
+  --bar-5: var(--accent-fill); --bar-4: #3b424c; --bar-3: #bfb9af;
   --col: 63%;
   --gutter: 88px;     /* the ledger column */
   --gutter-gap: 28px;
@@ -46,9 +47,10 @@
   --bg: #14171c; --bg-2: #1b1f25; --bg-3: #23282f;
   --ink: #ece9e2; --ink-2: #c3c7cd; --muted: #939aa3;
   --line: #2c3138; --line-2: #3d434b;
-  --accent: #d4667b; --accent-ink: #de7f92; --accent-soft: rgba(212, 102, 123, 0.14); /* garnet lifted for the dark ground, 5.1:1 */
+  --accent: #e25c57; --accent-ink: #ee7a73; --accent-soft: rgba(226, 92, 87, 0.14); /* red for text on the dark ground, 5.1:1 */
+  --accent-fill: #a8414b; /* a deeper wine for bars and filled marks, 3.0:1 */
   --c1: #5b8ee6; --c2: #ef8140; --c3: #34b585; --c4: #d9b21e; --c5: #8676d8; --c6: #e0504a; --c7: #4f9c3a; --c8: #8a9099;
-  --stage-ink: 236, 233, 226; --stage-accent: 212, 102, 123;
+  --stage-ink: 236, 233, 226; --stage-accent: 226, 92, 87;
   --shadow: 0 0 0 1px rgba(0, 0, 0, 0.4), 0 6px 20px rgba(0, 0, 0, 0.35);
   --bar-4: #c3c7cd; --bar-3: #4a515a;
   color-scheme: dark;
@@ -205,7 +207,7 @@ sup.cite a:hover, sup.cite a:focus-visible { background: var(--accent-soft); tex
 .bars text { font-family: var(--font-mono); font-size: 11.5px; fill: var(--ink-2); }
 .bars text.val { fill: var(--ink); font-weight: 500; }
 .bars rect.track { fill: color-mix(in srgb, var(--ink) 5%, transparent); }
-.bars rect.bar { fill: var(--accent); }
+.bars rect.bar { fill: var(--accent-fill); }
 .bars line.axis { stroke: var(--line-2); stroke-width: 1; }
 .stack-bar { display: flex; height: 26px; gap: 2px; border-radius: 0; overflow: hidden; }
 .stack-bar i { display: block; height: 100%; min-width: 2px; }
@@ -496,15 +498,15 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .ex-legend { display: flex; flex-wrap: wrap; gap: 6px 20px; font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 14px 0 6px; }
 .ex-legend i { display: inline-block; vertical-align: middle; margin-right: 7px; width: 10px; height: 10px; border-radius: 50%; box-sizing: border-box; }
 .ex-legend .lg-bar { width: 10px; height: 12px; border-radius: 0; background: var(--ink-2); }
-.ex-legend .lg-top { width: 10px; height: 12px; border-radius: 0; background: var(--accent); }
+.ex-legend .lg-top { width: 10px; height: 12px; border-radius: 0; background: var(--accent-fill); }
 .ex-legend .lg-rule { width: 1px; height: 12px; border-radius: 0; border-left: 1px dashed var(--ink-2); background: none; }
 .ex-cat { grid-column: 1 / -1; margin: 18px 0 0; padding-bottom: 6px; border-bottom: 1px solid var(--ink); font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); }
 .ex-cat:first-child { margin-top: 4px; }
 .ex-panel .tick { font-family: var(--font-mono); font-size: 10px; fill: var(--muted); }
 .ex-panel .bar { fill: var(--ink-2); }
-.ex-panel .bar.top { fill: var(--accent); }
+.ex-panel .bar.top { fill: var(--accent-fill); }
 .ex-panel .share.top { fill: var(--accent-ink); font-weight: 500; }
-.ex-panel a:hover rect, .ex-panel a:hover circle { fill: var(--accent); stroke: none; }
+.ex-panel a:hover rect, .ex-panel a:hover circle { fill: var(--accent-fill); stroke: none; }
 .ex-panel .share { font-family: var(--font-mono); font-size: 9.5px; fill: var(--ink-2); }
 .ex-panel .val { font-family: var(--font-mono); font-size: 11px; font-weight: 500; fill: var(--ink); }
 .ex-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px 22px; margin: 6px 0 12px; }

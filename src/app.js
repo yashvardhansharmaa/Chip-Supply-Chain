@@ -609,7 +609,8 @@
       { label: 'Power, watts', hint: ['spec table', 'datasheet', 'product page'], num: function (c) { return c.tdpW; } },
       { label: 'Chip-to-chip links', hint: ['architecture', 'deep dive', 'white paper'], long: true, text: function (c) { return (c.interconnect || {}).chipToChip ? esc(c.interconnect.chipToChip) : null; } },
       { label: 'Scale-up, in one rack', hint: ['nvl', 'rack', 'system', 'deep dive', 'spec table'], long: true, text: function (c) { return (c.interconnect || {}).scaleUp ? esc(c.interconnect.scaleUp) : null; } },
-      { label: 'Price estimate', hint: ['semianalysis', 'price', 'rack', 'press release'], long: true, text: function (c) { return c.priceEstimate ? esc(c.priceEstimate) : null; } },
+      { label: 'Price estimate', hint: ['price', 'semianalysis', 'rack', 'press release'], long: true, text: function (c) { return c.priceEstimate ? esc(c.priceEstimate) : null; } },
+      { label: 'Cost to make, estimate', hint: ['cost', 'semianalysis'], long: true, text: function (c) { return c.bomEstimate ? esc(c.bomEstimate) : null; } },
       { label: 'Export-control status', hint: ['federal register', 'entity list', 'institute for progress', 'mofcom'], long: true, text: function (c) { return c.exportStatus ? esc(c.exportStatus) : null; } }
     ],
     sourceTitle: function (c, row) { // the chip's sources are not tagged per field, so match the row's subject against the labels

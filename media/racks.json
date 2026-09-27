@@ -1,0 +1,28 @@
+{
+ "duration": 19.6,
+ "fade": 0.8,
+ "width": 760,
+ "height": 420,
+ "steps": [
+  {
+   "k": "One rack",
+   "t0": 0.4,
+   "cap": "One AI chip is not enough to train a model. So 72 of them are wired together in one rack, a cabinet the size of a wardrobe, and run as one computer."
+  },
+  {
+   "k": "Copper inside",
+   "t0": 4.6,
+   "cap": "Inside the rack, copper wires link each tray of chips to the switch trays, which pass data between any two chips. Copper carries a signal only a few meters."
+  },
+  {
+   "k": "Light between",
+   "t0": 9,
+   "cap": "Training a large model takes many racks, too far apart for copper. The links between racks carry the signal as flashes of light in glass fiber."
+  },
+  {
+   "k": "Lasers",
+   "t0": 13.4,
+   "cap": "At each end of a fiber, a laser turns the electrical signal into flashes of light, and a detector turns them back. That lets thousands of chips in many racks work on one model."
+  }
+ ]
+}

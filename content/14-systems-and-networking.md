@@ -41,6 +41,7 @@
     {"fact": "Broadcom's AI semiconductor revenue was $16.7B in Q3 fiscal 2026, up 221% year over year and 54% quarter over quarter", "source": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm"}
   ],
   "figures": [
+    {"id": "racks-wired", "type": "animation", "src": "racks", "title": "How AI chips are wired together", "note": "Simplified. The trays follow the layout of an Nvidia NVL72 rack; racks and fibers are not drawn to scale."},
     {
       "id": "nvlink-bandwidth",
       "type": "bars",
@@ -67,6 +68,8 @@ A package computes nothing until it is built into a machine, and building the ma
 ## How it works
 
 One AI chip is not enough to train a model. So seventy-two of them are wired together in a rack, a cabinet the size of a wardrobe, and run as one computer. Each chip sits on its own board and draws more than a thousand amps, several times the current a whole house is wired to carry. The chips have to swap results with each other all the time, and a copper wire can carry those signals only a few meters before they fade, so the longer links send them as light down glass fiber. Many companies can build the rack. Only a few can make the lasers that send the light, and that is the narrow point.
+
+{{figure:racks-wired}}
 
 An accelerator ships as a module, the chip on a small board with its power supply and memory stacks. Nvidia calls its version SXM, and the open-standards equivalent is the Open Compute Project's accelerator module. Eight bolt onto a baseboard that carries their power and the switch chips, which pass data between any two modules at full speed.
 

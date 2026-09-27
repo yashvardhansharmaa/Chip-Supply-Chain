@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Copper and Light</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Instrument+Sans:wght@400;500;600&display=swap">
+</head><body>
+<script src="lib.js"></script>
+<script>
+const { PAL, clamp, ease, easeOut, mix, label, text } = A, dark = A.theme === 'dark';
+// Facts, from chapter 14: one AI chip is not enough to train a model, so 72 are wired together in a rack and run as one
+// computer; an Nvidia NVL72 rack holds 18 compute trays of four GPUs plus nine switch trays (10 compute trays above the
+// switches, 8 below); inside the rack the trays reach each other over copper, which carries a signal only a few meters;
+// beyond the rack every link runs on glass fiber with an optical transceiver at each end, where a laser turns the
+// electrical signal into pulses of light (a detector at the far end turns them back).
+const STEPS = [
+  { k: 'One rack', t0: 0.4, t1: 4.6, cap: 'One AI chip is not enough to train a model. So 72 of them are wired together in one rack, a cabinet the size of a wardrobe, and run as one computer.' },
+  { k: 'Copper inside', t0: 4.6, t1: 9.0, cap: 'Inside the rack, copper wires link each tray of chips to the switch trays, which pass data between any two chips. Copper carries a signal only a few meters.' },
+  { k: 'Light between', t0: 9.0, t1: 13.4, cap: 'Training a large model takes many racks, too far apart for copper. The links between racks carry the signal as flashes of light in glass fiber.' },
+  { k: 'Lasers', t0: 13.4, t1: 18.4, cap: 'At each end of a fiber, a laser turns the electrical signal into flashes of light, and a detector turns them back. That lets thousands of chips in many racks work on one model.' },
+];
+const pr = (i, t) => clamp((t - STEPS[i].t0) / (STEPS[i].t1 - STEPS[i].t0));
+const W = 760, H = 420;
+const C = {
+  frame: dark ? '#3d434b' : '#9aa2ab', body: dark ? '#1b1f25' : '#ffffff',
+  tray: dark ? '#2f3640' : '#2f3845', chip: dark ? '#6b7686' : '#8e97a2',
+  sw: dark ? '#56606d' : '#b5bcc4', port: dark ? '#9aa4b1' : '#5c6675',
+  copper: '#c07a40', copperHi: '#e0a060',
+};
+const LIGHT = (a) => `rgba(${PAL.violet},${a})`;
+
+// the rack, drawn at 140 x 332 in its own units: 10 chip trays, 9 switch trays, 8 chip trays
+const RW = 140, RH = 332, PITCH = RH / 27;
+const KIND = [...Array(10).fill('c'), ...Array(9).fill('s'), ...Array(8).fill('c')];
+const trayY = (i) => 4 + i * PITCH;
+function rack(ctx, ox, oy, s, a, o = {}) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha = a; ctx.translate(ox, oy); ctx.scale(s, s);
+  ctx.fillStyle = C.body; ctx.fillRect(-4, -4, RW + 8, RH + 12);
+  ctx.strokeStyle = C.frame; ctx.lineWidth = 1.2 / s; ctx.strokeRect(-4, -4, RW + 8, RH + 12);
+  KIND.forEach((k, i) => {
+    const q = o.fill == null ? 1 : clamp(o.fill * 27 - i * 0.7);   // trays slide in from top to bottom
+    if (q <= 0) return;
+    const y = trayY(i), dx = (1 - easeOut(q)) * 40, kk = o.allSwitch ? 's' : k;
+    ctx.globalAlpha = a * q;
+    ctx.fillStyle = kk === 'c' ? C.tray : C.sw; ctx.fillRect(4 + dx, y, RW - 8, PITCH - 2.4);
+    if (kk === 'c') {
+      ctx.fillStyle = o.chipsOn ? mixCol(C.chip, PAL.garnet, o.chipsOn) : C.chip;
+      for (let j = 0; j < 4; j++) ctx.fillRect(16 + dx + j * 30, y + 2.2, 18, PITCH - 6.8);
+    } else {
+      ctx.fillStyle = C.port;
+      for (let j = 0; j < 14; j++) ctx.fillRect(12 + dx + j * 8.6, y + 3.4, 4.4, PITCH - 9.2);
+    }
+  });
+  ctx.restore();
+}
+function mixCol(a, b, p) { return A.mixc(a, b, p); }
+
+// copper: every chip tray is wired to the switch trays; lanes nest so they never cross
+function copperPaths() {
+  const P = [], sTop = trayY(10), sBot = trayY(19) - 2.4, xr = RW - 4;
+  for (let k = 0; k < 10; k++) { const y = trayY(k) + PITCH / 2 - 1.2, x = xr + 6 + (9 - k) * 2.3; P.push([[xr, y], [x, y], [x, sTop + 2]]); }
+  for (let j = 0; j < 8; j++) { const y = trayY(19 + j) + PITCH / 2 - 1.2, x = xr + 6 + j * 2.3; P.push([[xr, y], [x, y], [x, sBot - 2]]); }
+  return P;
+}
+const PATHS = copperPaths();
+const at = (path, u) => {   // point a fraction u along a polyline
+  const L = []; let tot = 0; for (let i = 1; i < path.length; i++) { const l = Math.hypot(path[i][0] - path[i - 1][0], path[i][1] - path[i - 1][1]); L.push(l); tot += l; }
+  let d = u * tot; for (let i = 0; i < L.length; i++) { if (d <= L[i]) { const f = d / L[i]; return [mix(path[i][0], path[i + 1][0], f), mix(path[i][1], path[i + 1][1], f)]; } d -= L[i]; }
+  return path[path.length - 1];
+};
+function copper(ctx, ox, oy, s, a, t, pulse) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha = a; ctx.translate(ox, oy); ctx.scale(s, s);
+  ctx.strokeStyle = C.copper; ctx.lineWidth = 1 / Math.max(s, 0.6) * 0.9;
+  PATHS.forEach((p) => { ctx.beginPath(); p.forEach((pt, i) => (i ? ctx.lineTo(...pt) : ctx.moveTo(...pt))); ctx.stroke(); });
+  ctx.fillStyle = C.copper; ctx.fillRect(RW - 4 + 4, trayY(10), 3, trayY(19) - trayY(10) - 2.4);   // the spine beside the switch trays
+  if (pulse > 0) {
+    ctx.globalAlpha = a * pulse; ctx.fillStyle = C.copperHi;
+    PATHS.forEach((p, i) => { for (let n = 0; n < 2; n++) { const u = ((t * 0.55 + i * 0.137 + n * 0.5) % 1); const [x, y] = at(n ? p.slice().reverse() : p, u); ctx.beginPath(); ctx.arc(x, y, 1.9, 0, 7); ctx.fill(); } });
+  }
+  ctx.restore();
+}
+
+// the row of racks, and the fibers that join them to the network switches at the end
+const ROW = { y: 132, s: 0.5, xs: [16, 106, 196, 286], sw: 386 };
+const rowW = RW * ROW.s;
+const fiberPath = (i) => { const x0 = ROW.xs[i] + rowW / 2, x1 = ROW.sw + 13 + i * 14, y = ROW.y - 4, h = 18 + (3 - i) * 10; return (u) => { const x = mix(x0, x1, u); return [x, y - Math.sin(Math.PI * u) * h]; }; };
+function fibers(ctx, a, t, sel) {
+  if (a <= 0) return;
+  ctx.save();
+  for (let i = 0; i < 4; i++) {
+    const f = fiberPath(i), draw = ease(a * 1.3 - i * 0.1); if (draw <= 0) continue;
+    ctx.globalAlpha = draw; ctx.strokeStyle = LIGHT(dark ? 0.5 : 0.45); ctx.lineWidth = 1.4; ctx.beginPath();
+    for (let n = 0; n <= 40; n++) { const [x, y] = f(n / 40 * draw); n ? ctx.lineTo(x, y) : ctx.moveTo(x, y); } ctx.stroke();
+    if (draw >= 1) for (let n = 0; n < 3; n++) {
+      const dir = n % 2, u = (t * 0.32 + i * 0.21 + n / 3) % 1, [x, y] = f(dir ? 1 - u : u);
+      const g = ctx.createRadialGradient(x, y, 0, x, y, 6); g.addColorStop(0, LIGHT(0.95)); g.addColorStop(1, LIGHT(0));
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 6, 0, 7); ctx.fill();
+    }
+  }
+  if (sel > 0) {   // a laser at each end of every fiber
+    for (let i = 0; i < 4; i++) for (const u of [0, 1]) {
+      const [x, y] = fiberPath(i)(u), glow = 0.5 + 0.5 * Math.sin(t * 5 + i + u * 2);
+      const g = ctx.createRadialGradient(x, y, 0, x, y, 11); g.addColorStop(0, LIGHT(0.8 * glow)); g.addColorStop(1, LIGHT(0));
+      ctx.globalAlpha = sel; ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 11, 0, 7); ctx.fill();
+      ctx.fillStyle = PAL.garnet; ctx.fillRect(x - 4, y - 3, 8, 6);
+    }
+  }
+  ctx.restore();
+}
+
+function readout(ctx, y, v, unit, name, on, a) {
+  if (a <= 0) return;
+  if (on) { ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = PAL.garnet; ctx.fillRect(504, y - 36, 2, 54); ctx.restore(); }
+  const col = on ? PAL.garnet : PAL.ink2;
+  text(v, 520, y, '300 40px Fraunces', col, { alpha: a }); ctx.font = '300 40px Fraunces'; const w = ctx.measureText(v).width;
+  text(unit, 520 + w + 7, y, '500 13px "Instrument Sans"', col, { alpha: a });
+  label(name, 520, y + 19, PAL.muted, { alpha: a });
+}
+
+function render(ctx, t) {
+  ctx.fillStyle = PAL.bg; ctx.fillRect(0, 0, W, H);
+  const p = [0, 1, 2, 3].map((i) => pr(i, t));
+  // the first rack moves from centre stage into the row
+  const z = ease(p[2] / 0.35), ox = mix(220, ROW.xs[0], z), oy = mix(40, ROW.y, z), s = mix(1, ROW.s, z);
+  const chipsOn = ease((p[0] - 0.55) / 0.25) * (1 - ease(p[1] / 0.2));
+  rack(ctx, ox, oy, s, 1 * ease(p[0] / 0.1), { fill: ease(p[0] / 0.55), chipsOn });
+  const cu = ease(p[1] / 0.3);
+  copper(ctx, ox, oy, s, cu * (1 - 0.4 * z), t, cu * (1 - z));
+  // scene labels for the single rack, with leader lines to the trays
+  const one = 1 - ease(p[2] / 0.15);
+  const lead = (y1, name, role, ty, a, on) => {
+    if (a <= 0) return;
+    ctx.save(); ctx.globalAlpha = a * 0.7; ctx.strokeStyle = on ? PAL.garnet : PAL.line; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(182, y1 - 5); ctx.lineTo(232, ty); ctx.stroke(); ctx.fillStyle = on ? PAL.garnet : PAL.ink2; ctx.beginPath(); ctx.arc(232, ty, 2.4, 0, 7); ctx.fill(); ctx.restore();
+    text(name, 176, y1, '500 17px Fraunces', on ? PAL.garnet : PAL.ink, { align: 'right', alpha: a });
+    text(role, 176, y1 + 18, '400 13.5px "Source Serif 4"', PAL.ink2, { align: 'right', alpha: a });
+  };
+  const cur = p[3] > 0 ? 3 : p[2] > 0 ? 2 : p[1] > 0 ? 1 : 0;
+  lead(98, '18 chip trays', 'Four chips on each', 40 + trayY(3) + 5, ease((p[0] - 0.6) / 0.25) * one, cur === 0);
+  lead(196, '9 switch trays', 'Pass data between chips', 40 + trayY(14) + 5, ease((p[0] - 0.75) / 0.25) * one, false);
+  // the row: more racks of chips, a rack of network switches, and fiber between them
+  const row = ease((p[2] - 0.25) / 0.3);
+  for (let i = 1; i < 4; i++) { const a = ease(row * 1.4 - i * 0.15); rack(ctx, ROW.xs[i], ROW.y, ROW.s, a); copper(ctx, ROW.xs[i], ROW.y, ROW.s, a * 0.6, t, 0); }
+  rack(ctx, ROW.sw, ROW.y, ROW.s, row, { allSwitch: true });
+  label('Racks of chips', 16, 326, PAL.muted, { alpha: row });
+  label('Network switches', ROW.sw + rowW / 2, 326, PAL.muted, { alpha: row, align: 'center' });
+  const fib = ease((p[2] - 0.45) / 0.35);
+  fibers(ctx, fib, t, ease((p[3] - 0.05) / 0.2));
+  const lz = ease((p[3] - 0.15) / 0.2);
+  if (lz > 0) {
+    ctx.save(); ctx.globalAlpha = lz; ctx.fillStyle = PAL.garnet; ctx.fillRect(16, 366, 10, 7); ctx.restore();
+    text('Lasers', 36, 374, '500 17px Fraunces', PAL.garnet, { alpha: lz });
+    text('Turn the signal into light, at each end of a fiber', 36, 393, '400 13.5px "Source Serif 4"', PAL.ink2, { alpha: lz });
+  }
+  if (fib > 0) text('Glass fiber', 214, 62, '500 17px Fraunces', cur === 2 ? PAL.garnet : PAL.ink, { alpha: fib, align: 'center' });
+  // readouts
+  readout(ctx, 96, '72', 'chips', 'In each rack, one computer', cur === 0, ease((p[0] - 0.6) / 0.3));
+  const key = (y, draw, name, l1, l2, on, a) => {
+    if (a <= 0) return;
+    ctx.save(); ctx.globalAlpha = a; draw(520, y - 6); ctx.restore();
+    text(name, 552, y, '500 17px Fraunces', on ? PAL.garnet : PAL.ink, { alpha: a });
+    text(l1, 552, y + 19, '400 13.5px "Source Serif 4"', PAL.ink2, { alpha: a });
+    text(l2, 552, y + 36, '400 13.5px "Source Serif 4"', PAL.ink2, { alpha: a });
+  };
+  key(196, (x, y) => { ctx.strokeStyle = C.copper; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + 22, y); ctx.stroke(); ctx.fillStyle = C.copperHi; ctx.beginPath(); ctx.arc(x + 11, y, 2.4, 0, 7); ctx.fill(); },
+    'Copper wire', 'Inside a rack', 'Reaches only a few meters', cur === 1, ease((p[1] - 0.2) / 0.25));
+  key(282, (x, y) => { ctx.strokeStyle = LIGHT(0.55); ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + 22, y); ctx.stroke(); const g = ctx.createRadialGradient(x + 11, y, 0, x + 11, y, 7); g.addColorStop(0, LIGHT(0.95)); g.addColorStop(1, LIGHT(0)); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x + 11, y, 7, 0, 7); ctx.fill(); },
+    'Light in glass fiber', 'Between racks', 'Reaches much farther', cur >= 2, ease((p[2] - 0.5) / 0.25));
+}
+A.start({ W, H, duration: 19.6, fade: 0.8, steps: STEPS, render });
+</script></body></html>

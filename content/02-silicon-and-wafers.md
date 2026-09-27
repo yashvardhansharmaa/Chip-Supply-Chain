@@ -41,6 +41,7 @@
  {"fact": "Chinese producers supply 12% of the wafers consumed by China's own 300 mm fabs and 18% at 200 mm and below", "source": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"}
  ],
  "figures": [
+    {"id": "sand-to-wafer", "type": "animation", "src": "silicon", "title": "From sand to wafer", "note": "Simplified. The ingot and the machines are not drawn to scale."},
  {
  "id": "wafer-concentration",
  "type": "stack",
@@ -67,6 +68,8 @@ The whole world market for silicon wafers came to $11.4 billion of revenue on 12
 ## How it works
 
 Every chip is built on a wafer, a thin round slice of silicon about 30 centimeters across that carries hundreds of chips at once. Making one starts with sand, which is silicon bound to oxygen. The sand is refined until, of every hundred billion atoms, fewer than one is anything other than silicon. The silicon is melted, a small seed crystal is lowered to the surface and drawn slowly back up, and the melt freezes onto it as one long cylinder, a single crystal with its atoms in one unbroken orderly pattern from end to end. Saws cut the cylinder into discs, and each disc is polished until its surface is flat to within a few atoms, right out to the edge. Only five companies in the world make these wafers to that standard, and none of them is American or Chinese.
+
+{{figure:sand-to-wafer}}
 
 Silicon starts as quartzite, a rock that is silicon bound to oxygen. An arc furnace melts it with carbon, and the carbon takes the oxygen away as gas, leaving rough silicon metal. Refiners turn the metal into a gas, trichlorosilane, and distill it, because the impurities boil at other temperatures and stay behind. The clean gas then flows over silicon filaments heated inside a bell jar. On the hot surface the gas breaks apart, its silicon settles onto the filaments, and over days the filaments thicken into gray rods of polysilicon, the Siemens process. Everything downstream is made from those rods. The same process serves solar cells and chips, but only the ultra-pure semiconductor grade is any use for chips ([source](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-silicon.pdf)), and the two grades are separate industries with separate suppliers.
 

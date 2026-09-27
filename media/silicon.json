@@ -1,0 +1,28 @@
+{
+ "duration": 19.8,
+ "fade": 0.8,
+ "width": 760,
+ "height": 420,
+ "steps": [
+  {
+   "k": "Refine",
+   "t0": 0.4,
+   "cap": "Silicon starts as sand and rock. It is refined into rods so pure that, of every hundred billion atoms, fewer than one is anything else."
+  },
+  {
+   "k": "Grow",
+   "t0": 3.8,
+   "cap": "The rods are melted. A seed crystal touches the melt and is drawn slowly up, turning, and the silicon freezes onto it as one long crystal."
+  },
+  {
+   "k": "Slice",
+   "t0": 11.4,
+   "cap": "A wire saw slices the crystal, called an ingot, into thin discs."
+  },
+  {
+   "k": "Polish",
+   "t0": 15,
+   "cap": "Each disc is ground, etched and polished until it is flat to within a few atoms, right out to the edge."
+  }
+ ]
+}

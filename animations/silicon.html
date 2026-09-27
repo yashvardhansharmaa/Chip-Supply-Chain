@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>From Sand to Wafer</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Instrument+Sans:wght@400;500;600&display=swap">
+</head><body>
+<script src="lib.js"></script>
+<script>
+const { PAL, clamp, ease, easeOut, mix, rng, label, text } = A, dark = A.theme === 'dark';
+// Facts, from chapter 2's How it works: silicon starts as sand and rock (quartzite); it is refined until, of every hundred
+// billion atoms, fewer than one is anything else; the refined rods are polysilicon (many small crystals); it melts at
+// about 1,420 degrees Celsius, hotter than lava; a seed crystal is lowered to the melt and drawn slowly back up, turning;
+// the pull starts with a thin neck so flaws formed where the seed touched the melt end in the neck; the melt freezes onto
+// the seed as one crystal with its atoms in one unbroken pattern, the ingot; a wire saw slices it into discs, which are
+// ground, etched and polished flat to within a few atoms; the finished wafer is about 30 cm across. The ingot's proportions are drawn for clarity.
+const STEPS = [
+  { k: 'Refine', t0: 0.4, t1: 3.8, cap: 'Silicon starts as sand and rock. It is refined into rods so pure that, of every hundred billion atoms, fewer than one is anything else.' },
+  { k: 'Grow', t0: 3.8, t1: 11.4, cap: 'The rods are melted. A seed crystal touches the melt and is drawn slowly up, turning, and the silicon freezes onto it as one long crystal.' },
+  { k: 'Slice', t0: 11.4, t1: 15.0, cap: 'A wire saw slices the crystal, called an ingot, into thin discs.' },
+  { k: 'Polish', t0: 15.0, t1: 18.6, cap: 'Each disc is ground, etched and polished until it is flat to within a few atoms, right out to the edge.' },
+];
+const pr = (i, t) => clamp((t - STEPS[i].t0) / (STEPS[i].t1 - STEPS[i].t0));
+const W = 760, H = 420;
+const C = {
+  sand: dark ? '#b79d74' : '#c8ab7a', poly: dark ? ['#9aa2ac', '#737c87'] : ['#a3abb5', '#6f7883'],
+  metal: dark ? ['#5f6873', '#aeb6c0', '#e8ecef', '#8c95a0', '#56606b'] : ['#6f7883', '#b9c0c8', '#f2f4f6', '#98a1ab', '#646d78'],
+  quartz: dark ? ['#8a929c', '#5c636d'] : ['#e7e9ec', '#aeb5bd'], wafer: dark ? ['#8d959f', '#737c87', '#a2a9b2', '#666f7a'] : ['#d9dde2', '#c2c8cf', '#e4e7eb', '#b3bac2'],
+};
+const r1 = rng(5), GRAINS = Array.from({ length: 170 }, () => { const u = r1(), v = r1(); return { x: 70 + u * 150, y: 356 - Math.sqrt(v) * 70 * Math.sin(Math.PI * u), r: 1.3 + r1() * 1.7, t: r1() }; });
+const r2 = rng(9), SPECK = Array.from({ length: 160 }, () => [r2() * 2 - 1, r2() * 2 - 1, r2()]);
+const r3 = rng(21), CRYSTALS = Array.from({ length: 7 }, () => ({ x: (r3() * 2 - 1) * 34, y: (r3() * 2 - 1) * 34, a: r3() * Math.PI }));
+const CX = 250, MELT = 312, RIM = 294, BOT = 392, CW = 250;           // the crucible
+const IW = 112, SEED = 10, NECK = 24, SH = 34, LMAX = 280;             // ingot: diameter, seed, neck, shoulder, full length
+
+function readout(ctx, y, v, unit, name, on, a) {
+  if (a <= 0) return;
+  if (on) { ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = PAL.garnet; ctx.fillRect(504, y - 36, 2, 54); ctx.restore(); }
+  const col = on ? PAL.garnet : PAL.ink2;
+  text(v, 520, y, '300 40px Fraunces', col, { alpha: a }); ctx.font = '300 40px Fraunces'; const w = ctx.measureText(v).width;
+  text(unit, 520 + w + 7, y, '500 13px "Instrument Sans"', col, { alpha: a });
+  label(name, 520, y + 19, PAL.muted, { alpha: a });
+}
+// a magnified view of the atoms: jumbled grains for the rods, one pattern for the ingot
+function lattice(ctx, x, y, r, grains, a, from) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha = a;
+  if (from) { ctx.strokeStyle = PAL.ink2; ctx.lineWidth = 1; ctx.setLineDash([2, 3]); ctx.beginPath(); ctx.moveTo(from[0], from[1]); ctx.lineTo(x + (from[0] > x ? r : -r) * 0.8, y + r * 0.4); ctx.stroke(); ctx.setLineDash([]); }
+  ctx.fillStyle = dark ? '#262b33' : '#eef0f2'; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill();
+  ctx.save(); ctx.beginPath(); ctx.arc(x, y, r - 1, 0, 7); ctx.clip(); ctx.fillStyle = PAL.ink2;
+  const cells = grains ? CRYSTALS : [{ x: 0, y: 0, a: 0 }];
+  const nearest = (px, py) => cells.reduce((b, c, k) => (Math.hypot(px - c.x, py - c.y) < Math.hypot(px - cells[b].x, py - cells[b].y) ? k : b), 0);
+  cells.forEach((c, k) => {
+    const ca = Math.cos(c.a), sa = Math.sin(c.a);
+    for (let j = -9; j <= 9; j++) for (let i = -9; i <= 9; i++) {
+      const lx = i * 8.4 + (j % 2 ? 4.2 : 0), ly = j * 7.3, px = c.x + lx * ca - ly * sa, py = c.y + lx * sa + ly * ca;
+      if (Math.hypot(px, py) > r || (grains && nearest(px, py) !== k)) continue;
+      ctx.beginPath(); ctx.arc(x + px, y + py, 1.9, 0, 7); ctx.fill();
+    }
+  });
+  ctx.restore();
+  ctx.strokeStyle = PAL.ink2; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.stroke();
+  ctx.restore();
+}
+// the ingot, drawn upright in its own coordinates: y = 0 at the top of the seed, growing down to length L
+const halfAt = (y, L, tail) => { if (y < SEED) return 4; const d = y - SEED; if (d < NECK) return 2.5; if (d < NECK + SH) return mix(2.5, IW / 2, easeOut((d - NECK) / SH)); if (y > L - tail) return mix(IW / 2, 10, ease((y - (L - tail)) / tail)); return IW / 2; };
+function ingot(ctx, L, tail, spin, hot, a) {
+  if (a <= 0 || L < 1) return;
+  ctx.save(); ctx.globalAlpha *= a;
+  ctx.beginPath(); ctx.moveTo(-4, 0);
+  for (let y = 0; y <= L; y += 1.5) ctx.lineTo(-halfAt(y, L, tail), y);
+  for (let y = L; y >= 0; y -= 1.5) ctx.lineTo(halfAt(y, L, tail), y);
+  ctx.closePath();
+  ctx.save(); ctx.clip();
+  // polished metal: a highlight that drifts as it turns
+  const s = 0.34 + 0.08 * Math.sin(spin), g = ctx.createLinearGradient(-IW / 2, 0, IW / 2, 0);
+  g.addColorStop(0, C.metal[0]); g.addColorStop(Math.max(0.05, s - 0.18), C.metal[1]); g.addColorStop(s, C.metal[2]); g.addColorStop(Math.min(0.95, s + 0.3), C.metal[3]); g.addColorStop(1, C.metal[4]);
+  ctx.fillStyle = g; ctx.fillRect(-IW, 0, 2 * IW, L + 2);
+  // faint growth rings, and the ridges that run down a single crystal, turning with it
+  ctx.strokeStyle = dark ? 'rgba(20,23,28,0.14)' : 'rgba(20,24,31,0.07)'; ctx.lineWidth = 1;
+  for (let y = SEED + NECK + SH + 6; y < L - tail; y += 11) { ctx.beginPath(); ctx.moveTo(-IW / 2, y); ctx.lineTo(IW / 2, y); ctx.stroke(); }
+  ctx.strokeStyle = dark ? 'rgba(236,233,226,0.16)' : 'rgba(255,255,255,0.5)'; ctx.lineWidth = 1.4;
+  for (let k = 0; k < 4; k++) { const ang = spin + k * Math.PI / 2; if (Math.cos(ang) < 0.1) continue; const x = (IW / 2 - 2) * Math.sin(ang); ctx.beginPath(); ctx.moveTo(x, SEED + NECK + SH); ctx.lineTo(x, L - tail); ctx.stroke(); }
+  // freshly frozen silicon still glows where it leaves the melt
+  if (hot > 0) { const hg = ctx.createLinearGradient(0, L - 70, 0, L); hg.addColorStop(0, 'rgba(255,120,40,0)'); hg.addColorStop(1, `rgba(255,140,50,${0.55 * hot})`); ctx.fillStyle = hg; ctx.fillRect(-IW, L - 70, 2 * IW, 72); }
+  ctx.restore();
+  ctx.restore();
+}
+
+function render(ctx, t) {
+  ctx.fillStyle = PAL.bg; ctx.fillRect(0, 0, W, H);
+  const p0 = pr(0, t), p1 = pr(1, t), p2 = pr(2, t), p3 = pr(3, t);
+  // ---- refine: sand gives way to rods of pure silicon, which are many small crystals
+  const sceneA = 1 - ease(p1 / 0.16);
+  if (p0 > 0 && sceneA > 0) {
+    ctx.save();
+    for (const g of GRAINS) { const gone = 0.75 * clamp((p0 - 0.3 - g.t * 0.3) / 0.25); ctx.globalAlpha = sceneA * ease(p0 / 0.2) * (1 - gone); ctx.fillStyle = C.sand; ctx.beginPath(); ctx.arc(g.x, g.y, g.r, 0, 7); ctx.fill(); }
+    ctx.globalAlpha = sceneA;
+    const grow = ease((p0 - 0.3) / 0.5);
+    for (let k = 0; k < 3; k++) { const x = 300 + k * 44, h = 150 * grow, g = ctx.createLinearGradient(x, 0, x + 26, 0); g.addColorStop(0, C.poly[0]); g.addColorStop(1, C.poly[1]); ctx.fillStyle = g; ctx.fillRect(x, 358 - h, 26, h); }
+    ctx.restore();
+    label('Sand and rock', 70, 382, PAL.muted, { alpha: sceneA * ease(p0 / 0.2) });
+    label('Pure silicon rods', 300, 382, PAL.ink2, { alpha: sceneA * grow });
+    const lz = ease((p0 - 0.65) / 0.25) * sceneA;
+    lattice(ctx, 170, 118, 40, true, lz, [300, 230]);
+    label('Many small crystals', 170, 176, PAL.ink2, { align: 'center', alpha: lz });
+  }
+  // ---- grow: the seed touches the melt and rises, turning; the crystal grows beneath it
+  const sceneB = ease(p1 / 0.16) * (1 - ease(p2 / 0.12));
+  const up = clamp((p1 - 0.28) / 0.64), down = ease(clamp((p1 - 0.12) / 0.14));   // a steady pull, as a real puller runs
+  const lift = 18 * ease((p1 - 0.93) / 0.07), tail = 26 * ease((p1 - 0.88) / 0.12);
+  const L = up > 0 ? SEED + mix(0, LMAX - SEED, up) : SEED;
+  const seedTop = up > 0 ? MELT - L - lift : mix(-10, MELT - SEED, down);
+  const spin = t * 2.2;
+  if (sceneB > 0) {
+    ctx.save(); ctx.globalAlpha = sceneB;
+    // the melt, glowing, with light moving on its surface
+    const mg = ctx.createRadialGradient(CX, MELT + 26, 8, CX, MELT + 26, CW / 2);
+    mg.addColorStop(0, '#fff4d2'); mg.addColorStop(0.45, '#ffb44d'); mg.addColorStop(1, '#d45a18');
+    ctx.fillStyle = mg; ctx.beginPath(); ctx.moveTo(CX - CW / 2 + 9, MELT); ctx.lineTo(CX + CW / 2 - 9, MELT); ctx.quadraticCurveTo(CX + CW / 2 - 9, BOT - 9, CX, BOT - 9); ctx.quadraticCurveTo(CX - CW / 2 + 9, BOT - 9, CX - CW / 2 + 9, MELT); ctx.fill();
+    ctx.fillStyle = 'rgba(255,250,235,0.5)'; for (let k = 0; k < 3; k++) { const x = CX + Math.sin(t * 1.3 + k * 2.1) * 80; ctx.beginPath(); ctx.ellipse(x, MELT + 3, 16, 2, 0, 0, 7); ctx.fill(); }
+    // the crucible, with a rim of quartz
+    const qg = ctx.createLinearGradient(CX - CW / 2, 0, CX + CW / 2, 0); qg.addColorStop(0, C.quartz[1]); qg.addColorStop(0.5, C.quartz[0]); qg.addColorStop(1, C.quartz[1]);
+    ctx.strokeStyle = qg; ctx.lineWidth = 8; ctx.beginPath(); ctx.moveTo(CX - CW / 2, RIM); ctx.quadraticCurveTo(CX - CW / 2, BOT, CX, BOT); ctx.quadraticCurveTo(CX + CW / 2, BOT, CX + CW / 2, RIM); ctx.stroke();
+    // a warm haze above the melt
+    ctx.save(); ctx.translate(CX, MELT); ctx.scale(1, 0.45); const hz = ctx.createRadialGradient(0, 0, 10, 0, 0, CW / 2); hz.addColorStop(0, 'rgba(255,170,80,0.22)'); hz.addColorStop(1, 'rgba(255,170,80,0)'); ctx.fillStyle = hz; ctx.beginPath(); ctx.arc(0, 0, CW / 2, Math.PI, 2 * Math.PI); ctx.fill(); ctx.restore();
+    ctx.restore();
+    // the pull rod and the crystal hanging from it
+    ctx.save(); ctx.globalAlpha = sceneB; ctx.strokeStyle = PAL.ink2; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(CX, -4); ctx.lineTo(CX, seedTop); ctx.stroke(); ctx.restore();
+    ctx.save(); ctx.translate(CX, seedTop); ingot(ctx, up > 0 ? L : SEED, tail, spin, up > 0 ? 1 - ease((p1 - 0.9) / 0.1) * 0.6 : 0, sceneB); ctx.restore();
+    // where the crystal leaves the melt, a bright ring
+    if (up > 0 && lift < 2) { const rg = ctx.createRadialGradient(CX, MELT, IW * 0.35, CX, MELT, IW * 0.75); rg.addColorStop(0, 'rgba(255,236,190,0.9)'); rg.addColorStop(1, 'rgba(255,236,190,0)'); ctx.save(); ctx.globalAlpha = sceneB; ctx.fillStyle = rg; ctx.beginPath(); ctx.ellipse(CX, MELT, IW * 0.75, 7, 0, 0, 7); ctx.fill(); ctx.restore(); }
+    // turning: an arrow around the rod
+    const ta = sceneB * clamp(p1 * 5) * (1 - ease((p1 - 0.85) / 0.1));
+    if (ta > 0) { const ay = Math.max(24, seedTop - 16); ctx.save(); ctx.globalAlpha = ta; ctx.strokeStyle = PAL.ink2; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.ellipse(CX, ay, 20, 5, 0, spin, spin + 4.6); ctx.stroke(); ctx.fillStyle = PAL.ink2; ctx.beginPath(); ctx.arc(CX + 20 * Math.cos(spin + 4.6), ay + 5 * Math.sin(spin + 4.6), 2.2, 0, 7); ctx.fill(); ctx.restore(); label('Turning slowly', CX + 28, ay + 4, PAL.muted, { alpha: ta }); }
+    label('Melted silicon, about 1,420 °C', CX - CW / 2, BOT + 22, PAL.ink2, { alpha: sceneB * ease((p1 - 0.05) / 0.2) });
+    // the thin neck, where flaws from the seed stop
+    const nk = sceneB * ease((up - 0.06) / 0.06) * (1 - ease((up - 0.62) / 0.1));
+    if (nk > 0) { const ny = seedTop + SEED + NECK / 2; ctx.save(); ctx.globalAlpha = nk; ctx.strokeStyle = PAL.garnet; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(CX + 6, ny); ctx.lineTo(CX + 64, ny); ctx.stroke(); ctx.restore(); label('A thin neck, where flaws', CX + 70, ny - 2, PAL.garnet, { alpha: nk }); label('from the seed stop', CX + 70, ny + 12, PAL.garnet, { alpha: nk }); }
+    const lz = ease((p1 - 0.62) / 0.18) * sceneB;
+    lattice(ctx, 86, 150, 40, false, lz, [CX - IW / 2 + 6, 170]);
+    label('One crystal,', 86, 208, PAL.ink2, { align: 'center', alpha: lz }); label('one pattern', 86, 222, PAL.ink2, { align: 'center', alpha: lz });
+  }
+  // ---- slice: the ingot tips onto its side, then a web of wires cuts its body into discs
+  const sceneC = ease(p2 / 0.1) * (1 - ease(p3 / 0.2));
+  if (sceneC > 0) {
+    const Lt = LMAX, tl = 26, turn = ease(p2 / 0.3), cut = ease((p2 - 0.32) / 0.4), sep = ease((p2 - 0.74) / 0.22);
+    const sx = mix(CX, 236, turn), sy = mix(MELT - 18 - Lt / 2, 214, turn), rot = -Math.PI / 2 * turn;
+    const b0 = SEED + NECK + SH + 4, b1 = Lt - tl - 2, n = 18;
+    if (sep < 1) { ctx.save(); ctx.translate(sx, sy); ctx.rotate(rot); ctx.translate(0, -Lt / 2); ingot(ctx, Lt, tl, 0.6, 0, sceneC * (1 - sep)); ctx.restore(); }
+    if (turn >= 1) {
+      // the discs, drawn in screen space once the ingot lies flat: the body runs left to right
+      const x0 = sx - Lt / 2 + b0, x1 = sx - Lt / 2 + b1;
+      if (sep > 0) {
+        ctx.save(); ctx.globalAlpha = sceneC * sep;
+        for (let k = 0; k < n; k++) {
+          const a0 = x0 + (x1 - x0) * k / n, a1 = x0 + (x1 - x0) * (k + 1) / n - 1.6, dx = sep * (k - n / 2) * 2.4;
+          const g = ctx.createLinearGradient(0, sy - IW / 2, 0, sy + IW / 2); g.addColorStop(0, C.metal[0]); g.addColorStop(0.35, C.metal[2]); g.addColorStop(1, C.metal[4]);
+          ctx.fillStyle = g; ctx.fillRect(a0 + dx, sy - IW / 2, a1 - a0, IW);
+        }
+        ctx.restore();
+      }
+      if (cut > 0 && cut < 1) {
+        const wy = mix(sy - IW / 2 - 26, sy + IW / 2 + 4, cut);
+        ctx.save(); ctx.globalAlpha = sceneC; ctx.strokeStyle = PAL.garnet; ctx.lineWidth = 1;
+        for (let k = 1; k < n; k++) { const x = x0 + (x1 - x0) * k / n; ctx.beginPath(); ctx.moveTo(x, sy - IW / 2 - 34); ctx.lineTo(x, wy); ctx.stroke(); }
+        ctx.restore();
+        label('Wire saw', x1 + 30, sy - IW / 2 - 20, PAL.garnet, { alpha: sceneC });
+      }
+      label('Thin discs', x0, sy + IW / 2 + 24, PAL.ink2, { alpha: sceneC * sep });
+    }
+  }
+  // ---- polish
+  const sceneD = ease(p3 / 0.2);
+  if (sceneD > 0) {
+    const rough = 1 - ease((p3 - 0.25) / 0.6);
+    const x = 250, y = 206, rr = 150;
+    ctx.save(); ctx.globalAlpha = sceneD;
+    const g = ctx.createLinearGradient(x - rr, y - rr, x + rr, y + rr); C.wafer.forEach((c, i) => g.addColorStop([0, 0.45, 0.55, 1][i], c));
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, rr, 0, 7); ctx.fill();
+    if (rough > 0) { ctx.fillStyle = dark ? `rgba(20,23,28,${0.45 * rough})` : `rgba(90,98,108,${0.5 * rough})`; for (const [u, v, s] of SPECK) { if (u * u + v * v > 0.95) continue; ctx.fillRect(x + u * rr, y + v * rr, 1.5 + s * 2, 1.2); } }
+    ctx.strokeStyle = dark ? 'rgba(236,233,226,0.35)' : 'rgba(20,24,31,0.45)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, rr, 0, 7); ctx.stroke();
+    if (rough > 0 && rough < 1) { const ang = t * 3; ctx.globalAlpha = sceneD * 0.35 * Math.sin(Math.PI * (1 - rough)); ctx.fillStyle = dark ? '#dfe3e7' : '#ffffff'; ctx.beginPath(); ctx.arc(x + 80 * Math.cos(ang), y + 80 * Math.sin(ang), 46, 0, 7); ctx.fill(); }
+    ctx.restore();
+    label(rough > 0.5 ? 'A rough disc' : 'Polished flat to within a few atoms', 250, 384, PAL.ink2, { align: 'center', alpha: sceneD });
+  }
+  // ---- readout
+  const cur = p3 > 0 ? 2 : p1 > 0 || p2 > 0 ? 1 : 0;
+  readout(ctx, 96, '1', 'in 100 billion', 'Atoms that are not silicon', cur === 0, ease((p0 - 0.45) / 0.3));
+  readout(ctx, 196, '1,420', '°C', 'Melting point, hotter than lava', cur === 1, ease((p1 - 0.08) / 0.2));
+  readout(ctx, 296, '30', 'cm', 'Across one finished wafer', cur === 2, ease((p3 - 0.2) / 0.3));
+}
+A.start({ W, H, duration: 19.8, fade: 0.8, steps: STEPS, render });
+</script></body></html>

@@ -1,0 +1,699 @@
+{
+ "generated": "2026-09-27",
+ "updates": [
+  {
+   "id": "nvidia-vr200",
+   "field": "compute.fp16TFLOPS",
+   "value": 4000,
+   "source": "https://www.nvidia.com/en-us/data-center/vera-rubin-nvl72/",
+   "quote": "FP16/BF16³ | 288 PFLOPS | 8 PFLOPS | 4 PFLOPS (columns: Vera Rubin NVL72 | Vera Rubin Superchip | Rubin GPU); footnote: ³Dense specification.",
+   "note": "The Rubin GPU column prints 4 PFLOPS dense, so no halving is needed. The same figure appears in the HGX Rubin NVL8 per-GPU table on https://www.nvidia.com/en-us/data-center/hgx/ (FP16/BF16² 4 PFLOPS, ² Dense specification)."
+  },
+  {
+   "id": "nvidia-vr200",
+   "field": "compute.precisionNote",
+   "value": "Dense, from Nvidia’s Vera Rubin NVL72 table, whose Rubin GPU column prints 35 PFLOPS NVFP4 training, 17.5 PFLOPS FP8/FP6 training and 4 PFLOPS FP16/BF16, all marked as dense specifications, and 50 PFLOPS NVFP4 inference marked sparse. FP16 does not sit at half of FP8 on this part: Nvidia’s own table gives 4 PFLOPS against 17.5. All three formats are supported and published.",
+   "source": "https://www.nvidia.com/en-us/data-center/vera-rubin-nvl72/",
+   "quote": "NVFP4 Training³ ... 35 PFLOPS; FP8/FP6 Training³ ... 17.5 PFLOPS; FP16/BF16³ ... 4 PFLOPS; ²Sparse specification ³Dense specification",
+   "note": "Replaces the note that says the FP16 cell reads not published. Also fix `notes`: Epoch AI's 4,000 TFLOPS row is labelled 'Vera Rubin Superchip' but the value matches Nvidia's per-GPU column, not the two-GPU superchip (8 PFLOPS)."
+  },
+  {
+   "id": "nvidia-vr200",
+   "field": "interconnect.scaleOut",
+   "value": "Quantum-X800 InfiniBand or Spectrum-X Ethernet; 32.4 TB/s per rack and 0.45 TB/s per GPU, bidirectional",
+   "source": "https://www.nvidia.com/en-us/data-center/vera-rubin-nvl72/",
+   "quote": "Networking Bandwidth (Scale-Out)⁴ | 32.4 TB/s | 0.9 TB/s | 0.45 TB/s; ⁴Bi-directional bandwidth",
+   "note": "The current value, 28.8 TB/s per rack, matches Nvidia's June 2026 Vera Rubin datasheet (gpu-architecture-datasheet-vera-rubin-nvidia-us-5198950-web, 'Networking Bandwidth 28.8 TB/s'), which the live spec table has since superseded."
+  },
+  {
+   "id": "nvidia-b300",
+   "field": "compute.fp16TFLOPS",
+   "value": 2500,
+   "source": "https://www.nvidia.com/en-us/data-center/gb300-nvl72/",
+   "quote": "FP16/BF16 Tensor Core 360 PFLOPS ... 1. All Tensor Core specifications are with sparsity unless otherwise noted.",
+   "note": "Same derivation the row already uses for FP8 and FP4 (NVL72 table, halved for sparsity, divided by 72 GPUs). The current 2,250 comes from the HGX B300 board ('FP16/BF16 Tensor Core² 36 PFLOPS', '2. Specification in Sparse. Dense is ½ sparse spec shown.'), so the row mixes two configurations. Epoch AI's GB300 row also carries 2,500. Alternative: keep 2,250 and say in precisionNote that FP16 is the HGX figure."
+  },
+  {
+   "id": "nvidia-b300",
+   "field": "sources[+]",
+   "value": {
+    "label": "Nvidia technical blog: Inside Nvidia Blackwell Ultra",
+    "url": "https://developer.nvidia.com/blog/inside-nvidia-blackwell-ultra-the-chip-powering-the-ai-factory-era/"
+   },
+   "source": "https://developer.nvidia.com/blog/inside-nvidia-blackwell-ultra-the-chip-powering-the-ai-factory-era/",
+   "quote": "Max power (TGP) Up to 700W Up to 1,200W Up to 1,400W (columns: Hopper | Blackwell | Blackwell Ultra)",
+   "note": "The 1,400 W TDP, 288 GB, 8 TB/s, 15 PFLOPS dense NVFP4 and 5 PFLOPS dense FP8 are all confirmed here; none of the row's current sources prints the 1,400 W."
+  },
+  {
+   "id": "amd-mi455x",
+   "field": "die.count",
+   "value": 10,
+   "source": "https://www.amd.com/content/dam/amd/en/documents/products/accelerators/instinct/amd-instinct-mi455x_brochure.pdf",
+   "quote": "ACCELERATED COMPUTE DIES (XCD) 8 ... I/O DIES (IOD) 2",
+   "note": "Counted the same way as the MI355X row (8 XCD plus 2 IOD = 10). Also update `notes`, which says AMD publishes no die count."
+  },
+  {
+   "id": "amd-mi355x",
+   "field": "compute.precisionNote",
+   "value": "Dense matrix across 256 compute units, checked against AMD’s datasheet, which prints FP16 MATRIX 2.5166 PFLOPS, BFLOAT16 2.5166, MXFP8 and OCP-FP8 5.0332, INT8 MATRIX 5.0332 POPS and MXFP4 10.0663 PFLOPS. The datasheet’s structured-sparsity column doubles FP16, BF16, OCP-FP8 and INT8 and reads N/A for MXFP8, MXFP6 and MXFP4. All three formats are supported and published.",
+   "source": "https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/product-briefs/amd-instinct-mi355x-gpu-brochure.pdf",
+   "quote": "MXFP8 (PFLOPS) 5.0332 N/A ... MXFP6 (PFLOPS) 10.0663 N/A ... MXFP4 (PFLOPS) 10.0663 ... N/A",
+   "note": "The current note says sparsity doubles FP4 to 20,133 TFLOPS; the datasheet gives no sparse FP4 figure. The same claim ('with structured sparsity doubling each') sits in data/landscape-notes.md."
+  },
+  {
+   "id": "huawei-ascend-950pr",
+   "field": "memory.capacityGB",
+   "value": 112,
+   "source": "https://www.hiascend.com/hardware/accelerator-card",
+   "quote": "内存规格 | 112 GB HBM，带宽1.4TB/s 支持ECC",
+   "note": "Atlas 350 card, Huawei's shipping 950PR product. The table marks compute as '理论算力值' (theoretical peak). Huawei's 950PR processor page instead gives the chip's maximum configuration, '最大配备128GB、1.6TB/s高速片上内存' and '最大支持1784TFLOPS' (format not stated), at https://www.hiascend.com/hardware/processor?tag=950pr. Use one configuration for the whole row; this proposal uses the card because it is the only table tying memory, compute and power together."
+  },
+  {
+   "id": "huawei-ascend-950pr",
+   "field": "memory.bandwidthTBs",
+   "value": 1.4,
+   "source": "https://www.hiascend.com/hardware/accelerator-card",
+   "quote": "内存规格 | 112 GB HBM，带宽1.4TB/s 支持ECC"
+  },
+  {
+   "id": "huawei-ascend-950pr",
+   "field": "compute.fp16TFLOPS",
+   "value": 425,
+   "source": "https://www.hiascend.com/hardware/accelerator-card",
+   "quote": "425 TFLOPS FP16/BF16"
+  },
+  {
+   "id": "huawei-ascend-950pr",
+   "field": "compute.fp8TFLOPS",
+   "value": 804,
+   "source": "https://www.hiascend.com/hardware/accelerator-card",
+   "quote": "804 TFLOPS mxFP8/HiF8/mxFP6/INT8"
+  },
+  {
+   "id": "huawei-ascend-950pr",
+   "field": "compute.fp4TFLOPS",
+   "value": 1561,
+   "source": "https://www.hiascend.com/hardware/accelerator-card",
+   "quote": "1561 TFLOPS mxFP4"
+  },
+  {
+   "id": "huawei-ascend-950pr",
+   "field": "tdpW",
+   "value": 600,
+   "source": "https://www.hiascend.com/hardware/accelerator-card",
+   "quote": "最大功耗 | ≤600W"
+  },
+  {
+   "id": "huawei-ascend-950pr",
+   "field": "interconnect.chipToChip",
+   "value": "UnifiedBus 2.0, up to 2 TB/s bidirectional per chip; on the Atlas 350 card, 424 GB/s bidirectional in a two-card pair and 318 GB/s in a four-card full mesh",
+   "source": "https://www.hiascend.com/hardware/accelerator-card",
+   "quote": "卡间互联 | 通过专属灵衢连接器实现多卡互联 4卡全互连：3 * x4 UB端口/卡，双向318GB/s 2卡互连：4 * x4 UB端口/卡，双向424GB/s; processor page: 支持灵衢2.0互联协议，最大支持2TB/s双向互联带宽"
+  },
+  {
+   "id": "huawei-ascend-950pr",
+   "field": "sources[+]",
+   "value": [
+    {
+     "label": "Huawei Ascend: Atlas 350 accelerator card specifications",
+     "url": "https://www.hiascend.com/hardware/accelerator-card"
+    },
+    {
+     "label": "Huawei Ascend: Ascend 950PR processor page",
+     "url": "https://www.hiascend.com/hardware/processor?tag=950pr"
+    }
+   ],
+   "source": "https://www.hiascend.com/hardware/accelerator-card",
+   "quote": "Atlas 350 加速卡采用Ascend 950PR",
+   "note": "hiascend.com is Huawei's own Ascend site but is not on the Tier A list in data/source-tiers.json; add it."
+  },
+  {
+   "id": "meta-mtia-v2",
+   "field": "package.sizeMm",
+   "value": "50 x 40",
+   "source": "https://aisystemcodesign.github.io/papers/MTIA300_ISCA2026.pdf",
+   "quote": "Table (MTIA 300 | MTIA-2i): 77.5mm x 77.5mm (50.3mm x 51.9mm 3.2x interposer) | 50mm x 40mm",
+   "note": "The field now holds '25.6 x 16.4 die', which is the die, not the package. The ISCA 2026 paper's MTIA-2i column matches MTIA v2 exactly (25.6mm x 16.4mm, 2.35B gates, 1.35 GHz, 177 TFLOPS FP16/BF16, 204.8 GB/s LPDDR5)."
+  },
+  {
+   "id": "meta-mtia-v2",
+   "field": "die.transistorsB",
+   "value": null,
+   "source": "https://aisystemcodesign.github.io/papers/MTIA300_ISCA2026.pdf",
+   "quote": "7.2B gates, 511M FLOPS | 2.35B gates, 103M FLOPS",
+   "note": "No change: Meta gives gates, not transistors. Listed so the editor does not read the 2.35B gate count as a transistor count."
+  },
+  {
+   "id": "google-tpu-8i",
+   "field": "notes[+]",
+   "value": "Google’s launch post says “Both chips will be generally available later this year”; the Cloud TPU release notes carry no general-availability entry for TPU 8t or TPU 8i as of 27 September 2026, so the status stays Announced.",
+   "source": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/eighth-generation-tpu-agentic-era/",
+   "quote": "Both chips will be generally available later this year"
+  }
+ ],
+ "newChips": [
+  {
+   "id": "meta-mtia-300",
+   "name": "MTIA 300",
+   "family": "MTIA",
+   "vendor": "Meta",
+   "vendorCountry": "US",
+   "announced": "2026-03",
+   "shipping": null,
+   "status": "In production for ranking and recommendation training",
+   "target": "Ranking and recommendation (DLRM) training",
+   "process": {
+    "foundry": null,
+    "node": null,
+    "country": null
+   },
+   "die": {
+    "count": 3,
+    "areaMm2Each": null,
+    "transistorsB": null,
+    "reticleLimited": true
+   },
+   "package": {
+    "type": "CoWoS; one compute chiplet and two network chiplets on a silicon interposer",
+    "assembler": null,
+    "sizeMm": "77.5 x 77.5"
+   },
+   "memory": {
+    "type": "HBM3E (12-high)",
+    "stacks": 6,
+    "capacityGB": 216,
+    "bandwidthTBs": 6.1,
+    "suppliers": []
+   },
+   "compute": {
+    "fp16TFLOPS": 560,
+    "fp8TFLOPS": 1120,
+    "fp4TFLOPS": null,
+    "support": {
+     "fp16": "yes",
+     "fp8": "yes",
+     "fp4": "unknown"
+    },
+    "precisionNote": "From the specification table in Meta’s ISCA 2026 paper: 1120 TFLOPS/s FP8 and 560 TFLOPS/s FP16/BF16. The paper does not say dense or sparse. Meta names MX8 as MTIA 300’s low-precision format and first names MX4 for MTIA 400, so the FP4 cell reads not published. Epoch AI’s MTIA 300 row (1,200 FP8, 600 BF16, 800 W) does not match Meta’s own paper and should not be used."
+   },
+   "tdpW": 912,
+   "interconnect": {
+    "chipToChip": "Two on-package network chiplets with twelve 800 Gbps RDMA NICs, 1.2 TB/s of total I/O",
+    "scaleUp": null,
+    "scaleOut": "200 GB/s"
+   },
+   "systemIntegrators": [],
+   "priceEstimate": null,
+   "bomEstimate": null,
+   "exportStatus": "Not sold; consumed entirely inside Meta data centers.",
+   "notes": "Meta’s first training chip, built for recommendation models rather than generative AI. The compute chiplet measures 25.6 x 31.4 mm and is reticle-limited, with a redundant row of processing elements for yield; two 25.6 x 9.3 mm network chiplets carry the NICs, so no PCIe hop sits between accelerator and network. TDP is 912 W, 667 W typical. Meta names no foundry or node for the part in the paper; the package is described as CoWoS.",
+   "layout": null,
+   "sources": [
+    {
+     "label": "Meta (ISCA 2026): MTIA 300, Meta’s first training chip featuring built-in NICs and collective offloading engines",
+     "url": "https://aisystemcodesign.github.io/papers/MTIA300_ISCA2026.pdf"
+    },
+    {
+     "label": "Engineering at Meta: MTIA 300, Meta’s first training chip with built-in NICs",
+     "url": "https://engineering.fb.com/2026/08/24/networking-traffic/mtia-300-meta-training-chip-built-in-nics/"
+    },
+    {
+     "label": "Meta AI blog: MTIA, scale AI chips for billions",
+     "url": "https://ai.meta.com/blog/meta-mtia-scale-ai-chips-for-billions/"
+    }
+   ],
+   "_evidence": [
+    {
+     "field": "compute, memory, tdpW, package.sizeMm",
+     "url": "https://aisystemcodesign.github.io/papers/MTIA300_ISCA2026.pdf",
+     "quote": "Table rows (MTIA 300 column): 7.2B gates, 511M FLOPS; Compute chiplet: 25.6mm x 31.4mm; Network chiplet (2x): 25.6mm x 9.3mm; 77.5mm x 77.5mm (50.3mm x 51.9mm 3.2x interposer); 912W (667W typical); 16x PCIe Gen5 (64 GB/s); 1120 TFLOPS/s (FP8); 560 TFLOPS/s (FP16/BF16); 216 GB (6 stacks HBM3E); 6.1 TB/s (R or W)"
+    },
+    {
+     "field": "memory.type",
+     "url": "https://aisystemcodesign.github.io/papers/MTIA300_ISCA2026.pdf",
+     "quote": "Each side connects to 3 twelve-high HBM3E stacks."
+    },
+    {
+     "field": "package.type, die.reticleLimited",
+     "url": "https://aisystemcodesign.github.io/papers/MTIA300_ISCA2026.pdf",
+     "quote": "CoWoS package, a reticle-sized compute die, network chiplets ... ; Redundancy: To improve yield for a reticle-limited die, the compute chiplet includes a redundant row of PEs."
+    },
+    {
+     "field": "interconnect.chipToChip",
+     "url": "https://engineering.fb.com/2026/08/24/networking-traffic/mtia-300-meta-training-chip-built-in-nics/",
+     "quote": "Two network chiplets, each containing six custom 800 Gbps RDMA NICs, provide 1.2 TB/s of total I/O bandwidth without ever crossing a PCIe bus."
+    },
+    {
+     "field": "status",
+     "url": "https://ai.meta.com/blog/meta-mtia-scale-ai-chips-for-billions/",
+     "quote": "MTIA 300: in production for R&R training"
+    }
+   ]
+  },
+  {
+   "id": "google-tpu-8t",
+   "name": "TPU 8t",
+   "family": "TPU",
+   "vendor": "Google",
+   "vendorCountry": "US",
+   "announced": "2026-04",
+   "shipping": null,
+   "status": "Announced",
+   "target": "Large-scale pre-training",
+   "process": {
+    "foundry": null,
+    "node": null,
+    "country": null
+   },
+   "die": {
+    "count": null,
+    "areaMm2Each": null,
+    "transistorsB": null,
+    "reticleLimited": null
+   },
+   "package": {
+    "type": null,
+    "assembler": null,
+    "sizeMm": null
+   },
+   "memory": {
+    "type": "HBM (generation not stated) plus 128 MB on-chip Vmem",
+    "stacks": null,
+    "capacityGB": 216,
+    "bandwidthTBs": 6.528,
+    "suppliers": []
+   },
+   "compute": {
+    "fp16TFLOPS": null,
+    "fp8TFLOPS": null,
+    "fp4TFLOPS": 12600,
+    "support": {
+     "fp16": "unknown",
+     "fp8": "unknown",
+     "fp4": "yes"
+    },
+    "precisionNote": "Google publishes a 12.6 PFLOPS FP4 peak and no other precision for this part, and does not state dense versus sparse. It says TPU 8t “introduces native 4-bit floating point (FP4)”, doubling MXU throughput, but publishes no list of other formats, so FP16 and FP8 read not published."
+   },
+   "tdpW": null,
+   "interconnect": {
+    "chipToChip": "Inter-chip interconnect in a 3D torus, twice the scale-up bandwidth of Ironwood (Google gives no absolute figure)",
+    "scaleUp": "9,600-chip superpod, two petabytes of shared HBM, 121 exaFLOPS",
+    "scaleOut": "Virgo Network, up to 4x the data center network bandwidth of the previous generation; 134,000 TPUs in one fabric"
+   },
+   "systemIntegrators": [],
+   "priceEstimate": null,
+   "bomEstimate": null,
+   "exportStatus": "Not sold as merchant silicon; same posture as Ironwood.",
+   "notes": "The training half of Google’s split eighth generation, with SparseCores kept for embeddings and an Arm Axion host. Google publishes HBM capacity, bandwidth, on-chip memory, FP4 peak and pod size, and no node, die count, package, stack count, power or availability date beyond general availability later in 2026.",
+   "layout": null,
+   "sources": [
+    {
+     "label": "Google Cloud: TPU 8t and TPU 8i technical deep dive",
+     "url": "https://cloud.google.com/blog/products/compute/tpu-8t-and-tpu-8i-technical-deep-dive"
+    },
+    {
+     "label": "Google blog: eighth-generation TPUs for the agentic era",
+     "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/eighth-generation-tpu-agentic-era/"
+    }
+   ],
+   "_evidence": [
+    {
+     "field": "memory, compute.fp4TFLOPS",
+     "url": "https://cloud.google.com/blog/products/compute/tpu-8t-and-tpu-8i-technical-deep-dive",
+     "quote": "TPU 8t and TPU 8i at a glance ... HBM Capacity 216 GB 288 GB; On-Chip SRAM (Vmem) 128 MB 384 MB; Peak FP4 PFLOPs 12.6 10.1; HBM Bandwidth 6,528 GB/s 8,601 GB/s (~1.3x of TPU 8t)"
+    },
+    {
+     "field": "compute.support.fp4",
+     "url": "https://cloud.google.com/blog/products/compute/tpu-8t-and-tpu-8i-technical-deep-dive",
+     "quote": "Native FP4 : TPU 8t introduces native 4-bit floating point (FP4) to overcome memory bandwidth bottlenecks, doubling MXU throughput"
+    },
+    {
+     "field": "interconnect.scaleUp",
+     "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/eighth-generation-tpu-agentic-era/",
+     "quote": "A single TPU 8t superpod now scales to 9,600 chips and two petabytes of shared high bandwidth memory, with double the interchip bandwidth of the previous generation. This architecture delivers 121 ExaFlops of compute"
+    },
+    {
+     "field": "status",
+     "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/eighth-generation-tpu-agentic-era/",
+     "quote": "Both chips will be generally available later this year"
+    }
+   ]
+  },
+  {
+   "id": "huawei-ascend-950dt",
+   "name": "Ascend 950DT",
+   "family": "Ascend 950",
+   "vendor": "Huawei (HiSilicon)",
+   "vendorCountry": "CN",
+   "announced": "2025-09",
+   "shipping": null,
+   "status": "Announced; Huawei dated it to the fourth quarter of 2026",
+   "target": "Decode inference and training",
+   "process": {
+    "foundry": null,
+    "node": null,
+    "country": "CN"
+   },
+   "die": {
+    "count": null,
+    "areaMm2Each": null,
+    "transistorsB": null,
+    "reticleLimited": null
+   },
+   "package": {
+    "type": null,
+    "assembler": null,
+    "sizeMm": null
+   },
+   "memory": {
+    "type": "HiZQ 2.0, Huawei’s own high-bandwidth memory",
+    "stacks": null,
+    "capacityGB": 144,
+    "bandwidthTBs": 4,
+    "suppliers": [
+     "Huawei"
+    ]
+   },
+   "compute": {
+    "fp16TFLOPS": null,
+    "fp8TFLOPS": 1000,
+    "fp4TFLOPS": 2000,
+    "support": {
+     "fp16": "yes",
+     "fp8": "yes",
+     "fp4": "yes"
+    },
+    "precisionNote": "Roadmap figures for the shared Ascend 950 die from Huawei’s Connect 2025 keynote: 1 PFLOPS in FP8, MXFP8 and HiF8 and 2 PFLOPS in MXFP4. Treat them as the die’s ceiling: the shipping Atlas 350 card on the same die is rated at 804 TFLOPS mxFP8 and 1,561 TFLOPS mxFP4. FP16 is in Huawei’s format list with no published rate."
+   },
+   "tdpW": null,
+   "interconnect": {
+    "chipToChip": "UnifiedBus, 2 TB/s total interconnect bandwidth",
+    "scaleUp": "Atlas 950 SuperPoD, up to 8,192 chips",
+    "scaleOut": null
+   },
+   "systemIntegrators": [],
+   "priceEstimate": null,
+   "bomEstimate": null,
+   "exportStatus": "Huawei is on the US Entity List. HiZQ 2.0 is Huawei’s answer to the December 2024 rule barring HBM exports to China.",
+   "notes": "The decode-and-training sibling of the 950PR on the same Ascend 950 die, paired with the faster HiZQ 2.0 memory instead of HiBL 1.0. Huawei publishes memory and interconnect figures and nothing about node, die, package or power.",
+   "layout": null,
+   "sources": [
+    {
+     "label": "Huawei Connect 2025 keynote: the Ascend roadmap",
+     "url": "https://www.huawei.com/en/news/2025/9/hc-xu-keynote-speech"
+    }
+   ],
+   "_evidence": [
+    {
+     "field": "memory, interconnect, status",
+     "url": "https://www.huawei.com/en/news/2025/9/hc-xu-keynote-speech",
+     "quote": "The next chip is the Ascend 950DT, which is optimized for both the decode stage of inference and for model training. ... That's where our HiZQ 2.0 HBM comes in, delivering 144 GB of memory and 4 TB/s memory access bandwidth. The chip's total interconnect bandwidth will reach 2 TB/s. ... The Ascend 950DT chip will be available in the fourth quarter of 2026."
+    },
+    {
+     "field": "compute",
+     "url": "https://www.huawei.com/en/news/2025/9/hc-xu-keynote-speech",
+     "quote": "The Ascend 950PR and Ascend 950DT chips will use the same Ascend 950 Die. ... They will be able to deliver 1 PFLOPS in FP8, MXFP8, and HiF8, and 2 PFLOPS in MXFP4."
+    }
+   ]
+  },
+  {
+   "id": "tenstorrent-blackhole",
+   "name": "Blackhole (p150a card)",
+   "family": "Blackhole",
+   "vendor": "Tenstorrent",
+   "vendorCountry": "CA",
+   "announced": "2024-08",
+   "shipping": "2025-04",
+   "status": "Shipping",
+   "target": "Training and inference; developer and workstation cards",
+   "process": {
+    "foundry": null,
+    "node": "6 nm",
+    "country": null
+   },
+   "die": {
+    "count": 1,
+    "areaMm2Each": null,
+    "transistorsB": null,
+    "reticleLimited": null
+   },
+   "package": {
+    "type": "PCIe add-in card (dual-slot)",
+    "assembler": null,
+    "sizeMm": null
+   },
+   "memory": {
+    "type": "GDDR6 (256-bit) plus 180 MB on-die SRAM",
+    "stacks": 0,
+    "capacityGB": 32,
+    "bandwidthTBs": 0.512,
+    "suppliers": []
+   },
+   "compute": {
+    "fp16TFLOPS": null,
+    "fp8TFLOPS": 664,
+    "fp4TFLOPS": null,
+    "support": {
+     "fp16": "yes",
+     "fp8": "yes",
+     "fp4": "yes"
+    },
+    "precisionNote": "The card table gives 664 TFLOPS in BlockFP8, Tenstorrent’s block floating-point format, not OCP FP8; 120 of the die’s 140 Tensix cores are enabled. Tenstorrent’s Hot Chips 2024 slides give the full 140-core die 745 TFLOPS in FP8, Block FP4 and Block FP2 alike and 372 or 373 TFLOPS in BF16 (the slides disagree by one), with no card-level FP16 or FP4 figure, so those cells read not published."
+   },
+   "tdpW": 300,
+   "interconnect": {
+    "chipToChip": "Four QSFP-DD ports at 800 Gbps each, card to card only (the die has 10 x 400 Gbps Ethernet)",
+    "scaleUp": "TT-QuietBox, four Blackhole chips; Blackhole Galaxy, 32 chips",
+    "scaleOut": "Ethernet"
+   },
+   "systemIntegrators": [],
+   "priceEstimate": "List price $1,399 for the p150 card and $999 for the p100",
+   "bomEstimate": null,
+   "exportStatus": "Canadian design; Tenstorrent names no foundry.",
+   "notes": "The one merchant accelerator on the page sold at a public list price and built around GDDR6 instead of HBM, which removes both CoWoS and HBM from its supply chain. The 300 W is total board power. Tenstorrent publishes no foundry, die area, transistor count or package detail.",
+   "layout": null,
+   "sources": [
+    {
+     "label": "Tenstorrent Blackhole product page",
+     "url": "https://tenstorrent.com/hardware/blackhole"
+    },
+    {
+     "label": "Tenstorrent documentation: Blackhole PCIe cards",
+     "url": "https://docs.tenstorrent.com/aibs/blackhole/index.html"
+    },
+    {
+     "label": "Tenstorrent at Hot Chips 2024 (slides)",
+     "url": "https://hc2024.hotchips.org/assets/program/conference/day1/88_HC2024.Tenstorrent.Jasmina.Davor.v7.pdf"
+    },
+    {
+     "label": "Tenstorrent: Blackhole developer products launch",
+     "url": "https://tenstorrent.com/newsroom/tenstorrent-launches-blackhole-developer-products-at-tenstorrent-dev-day"
+    }
+   ],
+   "_evidence": [
+    {
+     "field": "memory, compute, tdpW",
+     "url": "https://docs.tenstorrent.com/aibs/blackhole/index.html",
+     "quote": "Memory | 28 GB GDDR6 | 32 GB GDDR6 | 32 GB GDDR6 | ... Memory Bandwidth | 448 GB/sec | 512 GB/sec | 512 GB/sec | || TeraFLOPS (BLOCKFP8) | 664 | 664 | 664 | || TBP (Total Board Power) | 300W | 300W | 300W"
+    },
+    {
+     "field": "support",
+     "url": "https://docs.tenstorrent.com/aibs/blackhole/index.html",
+     "quote": "Floating point | FP8, FP16, BFLOAT16 FP32 (Output Only) ... Block floating point | BLOCKFP2, BLOCKFP4, BLOCKFP8"
+    },
+    {
+     "field": "process.node, die figures",
+     "url": "https://hc2024.hotchips.org/assets/program/conference/day1/88_HC2024.Tenstorrent.Jasmina.Davor.v7.pdf",
+     "quote": "140 Tensix++ Cores • 6nm • 745 TOPS (FP8) • 512 GB/s GDDR6 • Gen5x16 • 10x400 Gbps Ethernet • 16 RISC-V CPU cores (quote as recorded by the research pass; slide PDF)"
+    },
+    {
+     "field": "priceEstimate, shipping",
+     "url": "https://tenstorrent.com/newsroom/tenstorrent-launches-blackhole-developer-products-at-tenstorrent-dev-day",
+     "quote": "Blackhole™ p150 ... available for $1,399; Blackhole™ products are now available for order (3 April 2025)"
+    }
+   ]
+  },
+  {
+   "id": "furiosa-rngd",
+   "name": "RNGD",
+   "family": "Tensor Contraction Processor",
+   "vendor": "FuriosaAI",
+   "vendorCountry": "KR",
+   "announced": "2024-08",
+   "shipping": null,
+   "status": "Shipping",
+   "target": "LLM inference",
+   "process": {
+    "foundry": "TSMC",
+    "node": "5 nm",
+    "country": "TW"
+   },
+   "die": {
+    "count": 1,
+    "areaMm2Each": null,
+    "transistorsB": null,
+    "reticleLimited": null
+   },
+   "package": {
+    "type": "CoWoS-S",
+    "assembler": null,
+    "sizeMm": null
+   },
+   "memory": {
+    "type": "HBM3 plus 256 MB on-chip SRAM",
+    "stacks": 2,
+    "capacityGB": 48,
+    "bandwidthTBs": 1.5,
+    "suppliers": []
+   },
+   "compute": {
+    "fp16TFLOPS": 256,
+    "fp8TFLOPS": 512,
+    "fp4TFLOPS": null,
+    "support": {
+     "fp16": "yes",
+     "fp8": "yes",
+     "fp4": "no"
+    },
+    "precisionNote": "From Furiosa’s specification page: 256 TFLOPS BF16, 512 TFLOPS FP8, 512 TOPS INT8 and 1,024 TOPS INT4. Furiosa lists its types as BF16, FP8, INT8 and INT4, so four-bit arithmetic is integer only and the FP4 cell reads not supported. Dense versus sparse is not stated."
+   },
+   "tdpW": 180,
+   "interconnect": {
+    "chipToChip": "PCIe Gen5 x16 with PCIe peer-to-peer",
+    "scaleUp": "PCIe card in 8-card servers",
+    "scaleOut": null
+   },
+   "systemIntegrators": [],
+   "priceEstimate": null,
+   "bomEstimate": null,
+   "exportStatus": "Korean design fabricated at TSMC.",
+   "notes": "A 180 W inference card that trades peak FLOPS for power: two HBM3 stacks on TSMC CoWoS-S, the same packaging queue as the flagships. Furiosa publishes no die area, transistor count or memory supplier.",
+   "layout": null,
+   "sources": [
+    {
+     "label": "FuriosaAI RNGD specifications",
+     "url": "https://furiosa.ai/renegade-spec"
+    },
+    {
+     "label": "FuriosaAI RNGD product page",
+     "url": "https://furiosa.ai/rngd"
+    },
+    {
+     "label": "FuriosaAI: RNGD at Hot Chips 2024",
+     "url": "https://furiosa.ai/blog/furiosaai-rngd-hot-chips-2024"
+    }
+   ],
+   "_evidence": [
+    {
+     "field": "process, compute, memory, tdpW",
+     "url": "https://furiosa.ai/renegade-spec",
+     "quote": "Process Node TSMC 5nm Frequency 1.0GHz BF16 256TFLOPS FP8 512TFLOPS INT8 512TOPS INT4 1024TOPS Memory Bandwidth HBM3 1.5TB/s Memory Capacity HBM3 48GB On-Chip SRAM 256MB Interconnect Interface PCIe Gen5 x16 ... Thermal Design Power (TDP) 180W"
+    },
+    {
+     "field": "package, stacks",
+     "url": "https://furiosa.ai/rngd",
+     "quote": "2 x HBM3 CoWoS-S, 6.0Gbps"
+    },
+    {
+     "field": "announced",
+     "url": "https://furiosa.ai/blog/furiosaai-rngd-hot-chips-2024",
+     "quote": "FuriosaAI unveils RNGD at Hot Chips 2024 (26 August 2024); TSMC delivered the first RNGD chips in May"
+    }
+   ],
+   "_flags": [
+    "status 'Shipping' rests on Furiosa's product page offering the card; no dated shipment statement was fetched. Confirm before publishing."
+   ]
+  },
+  {
+   "id": "sambanova-sn40l",
+   "name": "SN40L",
+   "family": "Reconfigurable Dataflow Unit",
+   "vendor": "SambaNova",
+   "vendorCountry": "US",
+   "announced": null,
+   "shipping": null,
+   "status": "Shipping; succeeded by SN50 in the second half of 2026",
+   "target": "Training and inference, especially composition-of-experts serving",
+   "process": {
+    "foundry": "TSMC",
+    "node": "5 nm (5FF)",
+    "country": "TW"
+   },
+   "die": {
+    "count": 2,
+    "areaMm2Each": null,
+    "transistorsB": 102,
+    "reticleLimited": null
+   },
+   "package": {
+    "type": "CoWoS 2.5D, two dies plus HBM",
+    "assembler": null,
+    "sizeMm": null
+   },
+   "memory": {
+    "type": "HBM2E plus 520 MB on-chip SRAM and up to 1.5 TB of DDR",
+    "stacks": null,
+    "capacityGB": 64,
+    "bandwidthTBs": 1.8,
+    "suppliers": []
+   },
+   "compute": {
+    "fp16TFLOPS": 638,
+    "fp8TFLOPS": null,
+    "fp4TFLOPS": null,
+    "support": {
+     "fp16": "yes",
+     "fp8": "no",
+     "fp4": "no"
+    },
+    "precisionNote": "638 TFLOPS BF16 from SambaNova’s Hot Chips 2024 slides and paper; its current product page prints 640. SambaNova lists the compute types as BF16, FP32, INT32 and INT8, so the FP8 and FP4 cells read not supported."
+   },
+   "tdpW": null,
+   "interconnect": {
+    "chipToChip": "Dedicated peer-to-peer links between RDUs (bandwidth not published)",
+    "scaleUp": "Eight sockets per node; up to 16 RDUs",
+    "scaleOut": "PCIe to the host"
+   },
+   "systemIntegrators": [],
+   "priceEstimate": null,
+   "bomEstimate": null,
+   "exportStatus": "US design fabricated at TSMC; subject to the EAR advanced-computing rules.",
+   "notes": "Two dies of under 650 mm2 each in one CoWoS package, with a three-tier memory of SRAM, HBM and DDR. SambaNova’s own sources disagree on HBM bandwidth (1.8 TB/s in the paper’s table, about 2 TB/s in its text) and on BF16 (638 against 640). The SN50 that replaces it (1,600 TFLOPS BF16, 3,200 FP8, TSMC 5 nm, 64 GB HBM2E) has no published bandwidth or power yet.",
+   "layout": null,
+   "sources": [
+    {
+     "label": "SambaNova at Hot Chips 2024 (slides)",
+     "url": "https://hc2024.hotchips.org/assets/program/conference/day1/48_HC2024.Sambanova.Prabhakar.final-withoutvideo.pdf"
+    },
+    {
+     "label": "SambaNova: SN40L, scaling the AI memory wall (arXiv 2405.07518)",
+     "url": "https://arxiv.org/pdf/2405.07518"
+    },
+    {
+     "label": "SambaNova RDU specifications (SN50 and SN40)",
+     "url": "https://sambanova.ai/technology/sn40l-rdu-ai-chip"
+    }
+   ],
+   "_evidence": [
+    {
+     "field": "process, package, die",
+     "url": "https://arxiv.org/pdf/2405.07518",
+     "quote": "fabricated using TSMC's 5FF process and packaged as a dual die socket using Chip-on-Wafer-on-Substrate (CoWoS) multi-chip packaging technology; Table II: Technology, Die Size 5nm, < 650 mm2; Dies per socket 2; HBM Capacity 64 GB; HBM Bandwidth 1.8 TB/s; SRAM Capacity 520 MB"
+    },
+    {
+     "field": "transistorsB, fp16, support",
+     "url": "https://hc2024.hotchips.org/assets/program/conference/day1/48_HC2024.Sambanova.Prabhakar.final-withoutvideo.pdf",
+     "quote": "102B Transistors; 638 TFLOPS (bf16); BF16, FP32, INT32, and INT8 compute data types"
+    },
+    {
+     "field": "memory.type",
+     "url": "https://sambanova.ai/technology/sn40l-rdu-ai-chip",
+     "quote": "SN50 SN40 ... Compute 1600 TFLOPS at BF16 3200 TFLOPS at FP8 640 TFLOPS Process node 5 nm TSMC 5 nm TSMC ... Three-tier memory: SRAM, HMB2E, DDR5"
+    }
+   ],
+   "_flags": [
+    "announced date not verified on a vendor page; left null. Slide quotes come from the research pass and were not re-fetched; the product-page quote was re-checked."
+   ]
+  }
+ ]
+}

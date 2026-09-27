@@ -5,8 +5,8 @@
 const A = (() => {
   const theme = new URLSearchParams(location.search).get('theme') === 'dark' ? 'dark' : 'light';
   const PAL = {
-    light: { bg: '#f7f6f2', ink: '#14181f', ink2: '#3b424c', muted: '#5c636d', faint: '#a4a9b0', line: '#d8d4cc', garnet: '#7a1f2b', violet: '112,92,220', violetInk: '#5a4bb0', panel: '#ffffff' },
-    dark: { bg: '#14171c', ink: '#ece9e2', ink2: '#c3c7cd', muted: '#939aa3', faint: '#5d646d', line: '#2c3138', garnet: '#d4667b', violet: '150,132,255', violetInk: '#a99cff', panel: '#1b1f25' },
+    light: { bg: '#f7f6f2', ink: '#14181f', ink2: '#3b424c', muted: '#5c636d', faint: '#a4a9b0', line: '#d8d4cc', garnet: '#7a1f2b', wine: '#7a1f2b', violet: '112,92,220', violetInk: '#5a4bb0', panel: '#ffffff' },
+    dark: { bg: '#14171c', ink: '#ece9e2', ink2: '#c3c7cd', muted: '#939aa3', faint: '#5d646d', line: '#2c3138', garnet: '#e25c57', wine: '#a8414b', violet: '150,132,255', violetInk: '#a99cff', panel: '#1b1f25' },
   }[theme];
   const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
   const ease = (p) => (p = clamp(p), p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
