@@ -1,0 +1,33 @@
+{
+ "duration": 23.2,
+ "fade": 0.8,
+ "width": 760,
+ "height": 420,
+ "steps": [
+  {
+   "k": "Inside a chip",
+   "t0": 0.4,
+   "cap": "An AI chip does all its work with transistors, tiny switches built into the silicon: 208 billion of them in one Nvidia Blackwell GPU. Making the switches is the front end of the factory; wiring them together comes after."
+  },
+  {
+   "k": "On",
+   "t0": 5.6,
+   "cap": "Each one is a switch. Seen end on, current flows through a strip of silicon, the channel, and the gate sits on top."
+  },
+  {
+   "k": "Off, leaking",
+   "t0": 8.8,
+   "cap": "Switching off, the gate squeezes the flow shut, but only near itself. In a tiny transistor, current still leaks through the part it cannot reach."
+  },
+  {
+   "k": "Fin",
+   "t0": 13,
+   "cap": "Stand the channel on edge as a fin, and the gate covers three sides. Much less gets through."
+  },
+  {
+   "k": "All around",
+   "t0": 17.2,
+   "cap": "Split it into thin sheets and wrap the gate around every side, and it shuts tight. That lets the switches keep shrinking, and smaller switches, packed tighter, are what make each new chip faster."
+  }
+ ]
+}

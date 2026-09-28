@@ -44,6 +44,7 @@
     {"fact": "TTM Technologies had $2.91 billion of revenue in fiscal 2025 and regularly builds boards of more than 30 layers, up to over 70", "source": "https://www.sec.gov/Archives/edgar/data/1116942/000119312526051976/ttmi-20251229.htm"}
   ],
   "figures": [
+    {"id": "substrate-fanout", "type": "animation", "src": "substrate", "title": "How a substrate fans out", "note": "Simplified. Eight layers are drawn, and every thickness is exaggerated."},
     {
       "id": "abf-layers",
       "type": "bars",
@@ -70,6 +71,8 @@ On TSMC's July 2026 earnings call, chief executive C.C. Wei said packaging capac
 ## How it works
 
 A package substrate is the adapter between a chip and the circuit board under it. The chip's connections come out finer than a human hair; the board is wired in millimeters. The substrate is built up like plywood. A stiff core of glass cloth and resin sits in the middle. Thin sheets of epoxy film are pressed onto both faces, a laser burns holes through each sheet, and copper is plated into the holes to carry signals from one layer to the next. Every added layer is another set of holes that can fail. A handful of firms build these substrates, and the film and the glass cloth each come from a single Japanese supplier, so a shortage here stops accelerators shipping.
+
+{{figure:substrate-fanout}}
 
 The substrate maker drills the core and plates it with copper before the build-up starts. Each cycle then presses on a film of epoxy about 10 micrometers thick, burns holes through it with a laser, plates copper into the holes to link the layers, and etches the wiring on top ([source](https://www.ajinomoto.com/stories/the-ajinomoto-groups-unexpected-role-in-semiconductor-manufacturing-the-insulating-film-abf-born-from-aminoscience)). A human hair is ten times thicker than one of those films ([source](https://www.ajinomoto.co.jp/company/en/ir/event/business_briefing/main/01113/teaserItems1/01/linkList/00/link/3_ICT_E.pdf)).
 

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>How a Substrate Fans Out</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Instrument+Sans:wght@400;500;600&display=swap">
+</head><body>
+<script src="lib.js"></script>
+<script>
+const { PAL, clamp, ease, easeOut, mix, label, text } = A, dark = A.theme === 'dark';
+// Facts, from chapter 12: the substrate is the adapter between a chip and the circuit board; the chip's connections are
+// finer than a human hair and the board is wired in millimeters; it is built up in layers of thin film around a stiff
+// core, each layer carrying copper down and outward; Ajinomoto counts 18 layers of its film in a high-performance
+// computing substrate. Eight layers are drawn, and every thickness is exaggerated.
+const STEPS = [
+  { k: 'The package', t0: 0.4, t1: 5.4, cap: 'An AI chip is more than the chip itself. It sits in a package: the chips on a silicon base, and under them the substrate, which connects everything to the circuit board.' },
+  { k: 'Tight to wide', t0: 5.4, t1: 9.0, cap: 'The connections on top are packed tight. The circuit board below is wired in millimeters. The substrate has to join the two.' },
+  { k: 'Layer by layer', t0: 9.0, t1: 15.0, cap: 'The substrate does it in layers, built outward from a stiff core. Each layer carries the copper a little further out.' },
+  { k: 'Connected', t0: 15.0, t1: 20.8, cap: 'Stacked together, the layers fan the tight grid out to the board’s wide one. An AI chip needs about 18 layers, against six for a PC, and every layer is another chance for a flaw, which is what makes these substrates hard to build.' },
+];
+// one headline at a time; each fades out before the next fades in
+const HEADS = [
+  { t0: 0.4, t1: 4.4, h: 'An AI chip, in its package', s: 'Seen from the side' },
+  { t0: 4.4, t1: 9.2, h: 'The substrate’s job', s: 'Join tight connections to a wide board' },
+  { t0: 9.2, t1: 15.2, h: 'Built up in layers', s: 'Each one carries the copper further out' },
+  { t0: 15.2, h: 'Every connection reaches the board', s: 'Each layer is one more chance for a flaw', red: 1 },
+];
+function heads(ctx, t) {
+  HEADS.forEach(({ t0, t1, h, s, red }) => {
+    const a = Math.min(ease((t - t0) / 0.35), t1 == null ? 1 : ease((t1 - t) / 0.35));
+    if (a <= 0) return;
+    text(h, 40, 62, '500 20px Fraunces', red ? PAL.garnet : PAL.ink, { alpha: a });
+    text(s, 40, 86, '400 16px "Source Serif 4"', PAL.ink2, { alpha: a });
+  });
+}
+const pr = (i, t) => clamp((t - STEPS[i].t0) / (STEPS[i].t1 - STEPS[i].t0));
+const W = 760, H = 420, CX = 250;
+const C = {
+  film: dark ? ['#4a4533', '#56503b'] : ['#efe6c4', '#e7dcb4'], core: dark ? '#3f4a3b' : '#cdd6bf',
+  cu: '#c07a40', chip: dark ? ['#4a5360', '#363e49'] : ['#3a424e', '#262d37'], board: dark ? '#2f5039' : '#4f7d5b',
+  metal: dark ? '#b9c0c8' : '#a3abb4', si: dark ? ['#9aa3ad', '#7d8691'] : ['#c9ced4', '#aab1b9'], hbm: dark ? '#434b57' : '#3a424e',
+};
+const N = 9, bumpX = (i) => CX + (i - 4) * 9, ballX = (i) => CX + (i - 4) * 50;
+const TOP = 150, LH = 18, NL = 8, BOT = TOP + NL * LH;             // eight layers; the core is the middle two
+const xAt = (i, level) => mix(bumpX(i), ballX(i), level / NL);    // where signal i sits at a layer boundary
+// the order layers appear: the core first, then outward in pairs
+const ORDER = [3, 4, 2, 5, 1, 6, 0, 7];
+
+// opening: the whole package from the side; it then moves to the corner and stays there, the substrate marked
+const PKG = [30, 214], INSET = { x: 520, y: 292, s: 0.45 };
+function drawPackage(ctx, m, a, hi) {
+  if (a <= 0) return;
+  const sc = mix(1, INSET.s, m);
+  ctx.save(); ctx.globalAlpha = a; ctx.translate(mix(PKG[0], INSET.x, m), mix(PKG[1], INSET.y, m)); ctx.scale(sc, sc); ctx.translate(-PKG[0], -PKG[1]);
+  ctx.fillStyle = C.board; ctx.fillRect(30, 330, 440, 14);
+  ctx.fillStyle = C.metal; for (let x = 132; x <= 368; x += 24) { ctx.beginPath(); ctx.arc(x, 323, 6, 0, 7); ctx.fill(); }
+  ctx.fillStyle = C.film[0]; ctx.fillRect(120, 272, 260, 44);
+  ctx.fillStyle = C.core; ctx.fillRect(120, 287, 260, 14);
+  ctx.save(); ctx.strokeStyle = C.cu; ctx.globalAlpha *= 0.6; ctx.lineWidth = 1; for (let k = 1; k < 6; k++) { ctx.beginPath(); ctx.moveTo(120, 272 + k * 7.3); ctx.lineTo(380, 272 + k * 7.3); ctx.stroke(); } ctx.restore();
+  let g = ctx.createLinearGradient(0, 256, 0, 272); g.addColorStop(0, C.si[0]); g.addColorStop(1, C.si[1]);
+  ctx.fillStyle = g; ctx.fillRect(150, 256, 200, 16);
+  g = ctx.createLinearGradient(0, 222, 0, 256); g.addColorStop(0, C.chip[0]); g.addColorStop(1, C.chip[1]);
+  ctx.fillStyle = g; ctx.fillRect(206, 222, 88, 34);
+  ctx.fillStyle = C.hbm; ctx.fillRect(158, 214, 40, 42); ctx.fillRect(302, 214, 40, 42);
+  ctx.strokeStyle = dark ? '#6c7686' : '#5c6675'; ctx.lineWidth = 0.8; for (const x of [158, 302]) for (let k = 1; k < 8; k++) { ctx.beginPath(); ctx.moveTo(x, 214 + k * 5.2); ctx.lineTo(x + 40, 214 + k * 5.2); ctx.stroke(); }
+  if (hi > 0) { ctx.globalAlpha = a * hi; ctx.strokeStyle = PAL.garnet; ctx.lineWidth = 2.4 / sc; ctx.strokeRect(118, 270, 264, 48); }
+  ctx.restore();
+}
+
+function render(ctx, t) {
+  ctx.fillStyle = PAL.bg; ctx.fillRect(0, 0, W, H);
+  const q = pr(0, t), p = [1, 2, 3].map((i) => pr(i, t));
+  const m = ease((q - 0.55) / 0.28), hi = ease((q - 0.3) / 0.2), la = ease(q / 0.2) * (1 - ease((q - 0.48) / 0.12));
+  drawPackage(ctx, m, ease(q / 0.2), hi);
+  label('Chips', 400, 240, PAL.ink2, { alpha: la });
+  label('Silicon base', 400, 268, PAL.ink2, { alpha: la });
+  label('Substrate', 400, 298, PAL.garnet, { alpha: la * hi });
+  label('Circuit board', 400, 366, PAL.ink2, { alpha: la });
+  label('The whole package', INSET.x, 372, PAL.muted, { alpha: ease((q - 0.8) / 0.2) });
+  heads(ctx, t);
+  const detA = ease((q - 0.78) / 0.22);
+  ctx.save(); ctx.globalAlpha = detA;
+  const endsA = detA, seat = ease(p[2] / 0.3);
+  const chipY = mix(112, TOP - 22, seat), boardY = mix(372, BOT + 26, seat);
+  // chip with its fine bumps
+  ctx.save(); ctx.globalAlpha = endsA;
+  let g = ctx.createLinearGradient(0, chipY, 0, chipY + 18); g.addColorStop(0, C.si[0]); g.addColorStop(1, C.si[1]);
+  ctx.fillStyle = g; ctx.fillRect(CX - 60, chipY, 120, 18);
+  ctx.fillStyle = C.chip[1]; ctx.fillRect(CX - 24, chipY - 14, 48, 14); ctx.fillStyle = C.hbm; ctx.fillRect(CX - 54, chipY - 16, 24, 16); ctx.fillRect(CX + 30, chipY - 16, 24, 16);
+  ctx.fillStyle = C.metal; for (let i = 0; i < N; i++) { ctx.beginPath(); ctx.arc(bumpX(i), chipY + 21, 2.6, 0, 7); ctx.fill(); }
+  // board with its wide solder balls
+  ctx.fillStyle = C.board; ctx.fillRect(CX - 240, boardY, 480, 16);
+  ctx.fillStyle = C.metal; for (let i = 0; i < N; i++) { ctx.beginPath(); ctx.arc(ballX(i), boardY - 10, 10, 0, 7); ctx.fill(); }
+  ctx.restore();
+  const tagA = endsA * (1 - ease(p[2] / 0.25));
+  label('Chips on their silicon base', CX + 76, chipY + 8, PAL.ink2, { alpha: endsA });
+  text('Connections packed tight', CX + 76, chipY + 25, '400 14px "Source Serif 4"', PAL.ink2, { alpha: tagA });
+  label('Circuit board', CX - 240, boardY + 36, PAL.ink2, { alpha: endsA });
+  text('Wired in millimeters', CX - 132, boardY + 36, '400 14px "Source Serif 4"', PAL.ink2, { alpha: tagA });
+  // layers, the core first, each with its copper stepping outward
+  for (let n = 0; n < NL; n++) {
+    const L = ORDER[n], q = clamp(p[1] * NL * 0.9 - n * 0.9);
+    if (q <= 0) continue;
+    const y = TOP + L * LH, a = ease(q / 0.5), off = (1 - easeOut(q / 0.5)) * (L < 4 ? -18 : 18);
+    const isCore = L === 3 || L === 4;
+    ctx.save(); ctx.globalAlpha = a * detA; ctx.translate(0, off);
+    ctx.fillStyle = isCore ? C.core : C.film[L % 2]; ctx.fillRect(CX - 220, y, 440, LH);
+    const cu = ease((q - 0.35) / 0.5);
+    if (cu > 0) {
+      ctx.globalAlpha = a * cu * detA; ctx.strokeStyle = C.cu; ctx.lineWidth = 2; ctx.lineJoin = 'round';
+      for (let i = 0; i < N; i++) { const xa = xAt(i, L), xb = xAt(i, L + 1); ctx.beginPath(); ctx.moveTo(xa, y); ctx.lineTo(xa, y + LH - 1); ctx.lineTo(xb, y + LH - 1); ctx.stroke(); ctx.fillStyle = C.cu; ctx.fillRect(xa - 1.75, y, 3.5, LH - 1); }
+    }
+    ctx.restore();
+  }
+  const layerA = ease(p[1] / 0.1);
+  if (layerA > 0 && p[2] < 0.3 && detA > 0) label('Core', CX + 232, TOP + 4 * LH + 4, PAL.muted, { alpha: layerA * (1 - ease(p[2] / 0.3)) });
+  // signals: light runs from each bump down through the layers to its ball
+  const flow = ease((p[2] - 0.35) / 0.25);
+  if (flow > 0) {
+    ctx.save(); ctx.globalCompositeOperation = dark ? 'lighter' : 'source-over';
+    for (let i = 0; i < N; i++) for (let k = 0; k < 2; k++) {
+      const u = (t * 0.45 + i * 0.11 + k * 0.5) % 1, lv = u * NL, L = Math.floor(lv), f = lv - L;
+      // down the via for the first half of each layer, then out along the wiring
+      const x = f < 0.5 ? xAt(i, L) : mix(xAt(i, L), xAt(i, L + 1), (f - 0.5) * 2), y = TOP + L * LH + Math.min(f * 2, 1) * (LH - 1);
+      if (dark) { const gr = ctx.createRadialGradient(x, y, 0, x, y, 7); gr.addColorStop(0, `rgba(255,190,150,${flow})`); gr.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(x, y, 7, 0, 7); ctx.fill(); }
+      else { ctx.fillStyle = PAL.garnet; ctx.globalAlpha = flow; ctx.beginPath(); ctx.arc(x, y, 3.2, 0, 7); ctx.fill(); ctx.globalAlpha = 1; }
+    }
+    ctx.restore();
+  }
+  ctx.restore();
+  // readout
+  const ra = ease((p[2] - 0.5) / 0.3);
+  if (ra > 0) {
+    ctx.save(); ctx.globalAlpha = ra; ctx.fillStyle = PAL.garnet; ctx.fillRect(504, 184, 2, 54); ctx.restore();
+    text('18', 520, 220, '300 44px Fraunces', PAL.garnet, { alpha: ra }); ctx.font = '300 44px Fraunces'; const w = ctx.measureText('18').width;
+    text('layers', 520 + w + 7, 220, '500 13px "Instrument Sans"', PAL.garnet, { alpha: ra });
+    label('Under an AI chip', 520, 239, PAL.muted, { alpha: ra });
+  }
+}
+A.start({ W, H, duration: 21.8, fade: 0.8, steps: STEPS, render });
+</script></body></html>

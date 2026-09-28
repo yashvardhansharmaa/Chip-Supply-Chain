@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>How a Transistor Switches</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Instrument+Sans:wght@400;500;600&display=swap">
+</head><body>
+<script src="lib.js"></script>
+<script>
+const { PAL, clamp, ease, mix, rng, label, text } = A, dark = A.theme === 'dark';
+// Facts, from chapter 8: a transistor is a valve; current runs along the channel and a voltage on the gate opens or
+// shuts the flow; made small enough, the valve stops sealing and current leaks with the gate off; a flat gate covers one
+// side of the channel, a fin lets it cover three, and gate-all-around wraps all four sides of each thin sheet.
+// A Blackwell GPU is 208 billion switches (chapter 8, citing Nvidia). After an opening view of the whole chip, one view throughout: the channel seen end on, as if cut across the gate. Current is drawn as points of light.
+const STEPS = [
+  { k: 'Inside a chip', t0: 0.4, t1: 5.6, cap: 'An AI chip does all its work with transistors, tiny switches built into the silicon: 208 billion of them in one Nvidia Blackwell GPU. Making the switches is the front end of the factory; wiring them together comes after.' },
+  { k: 'On', t0: 5.6, t1: 8.8, cap: 'Each one is a switch. Seen end on, current flows through a strip of silicon, the channel, and the gate sits on top.' },
+  { k: 'Off, leaking', t0: 8.8, t1: 13.0, cap: 'Switching off, the gate squeezes the flow shut, but only near itself. In a tiny transistor, current still leaks through the part it cannot reach.' },
+  { k: 'Fin', t0: 13.0, t1: 17.2, cap: 'Stand the channel on edge as a fin, and the gate covers three sides. Much less gets through.' },
+  { k: 'All around', t0: 17.2, t1: 22.2, cap: 'Split it into thin sheets and wrap the gate around every side, and it shuts tight. That lets the switches keep shrinking, and smaller switches, packed tighter, are what make each new chip faster.' },
+];
+// one headline at a time; each fades out before the next fades in
+const HEADS = [
+  { t0: 0.4, t1: 3.0, h: 'An AI chip', s: 'Seen from above' },
+  { t0: 3.0, t1: 6.0, h: 'Billions of tiny switches', s: 'Each one turns current on and off' },
+  { t0: 6.0, t1: 9.1, h: 'Switch on', s: 'Current flows' },
+  { t0: 9.1, t1: 13.4, h: 'Switch off', s: 'Current still leaks below the gate', red: 1 },
+  { t0: 13.4, t1: 17.6, h: 'Stand the channel up as a fin', s: 'Only a little leaks', red: 1 },
+  { t0: 17.6, h: 'Wrap the gate all around', s: 'Shut tight, so switches can keep shrinking', red: 1 },
+];
+function heads(ctx, t) {
+  HEADS.forEach(({ t0, t1, h, s, red }) => {
+    const a = Math.min(ease((t - t0) / 0.35), t1 == null ? 1 : ease((t1 - t) / 0.35));
+    if (a <= 0) return;
+    text(h, 40, 62, '500 20px Fraunces', red ? PAL.garnet : PAL.ink, { alpha: a });
+    text(s, 40, 86, '400 16px "Source Serif 4"', PAL.ink2, { alpha: a });
+  });
+}
+const pr = (i, t) => clamp((t - STEPS[i].t0) / (STEPS[i].t1 - STEPS[i].t0));
+const W = 760, H = 420, CX = 250;
+const C = {
+  si: dark ? '#262c34' : '#e3e6ea', siEdge: dark ? '#3c434d' : '#c4c9cf',
+  gate: dark ? ['#a3abb5', '#727b86'] : ['#626b76', '#3d4550'], ox: dark ? '#c7b27f' : '#e6d4a2',
+  glow: dark ? '120,172,255' : '47,111,214',
+};
+const R = rng(11), PTS = Array.from({ length: 170 }, () => [R(), R(), R() * 6.28, 0.6 + R() * 0.8]);
+
+// the three channel shapes, each a set of rectangles; the gate's faces are where it touches the channel
+const SHAPES = {
+  flat: { rects: [[CX - 130, 214, 260, 96]], faces: (x, y) => y - 214, gate: [[CX - 130, 160, 260, 46]] },
+  fin: { rects: [[CX - 32, 150, 64, 160]], faces: (x, y) => (y > 286 ? 99 : Math.min(y - 150, x - (CX - 32), CX + 32 - x)),
+    gate: [[CX - 72, 104, 144, 38], [CX - 72, 142, 32, 144], [CX + 40, 142, 32, 144]] },
+  sheets: { rects: [0, 1, 2].map((k) => [CX - 70, 158 + k * 50, 140, 26]), faces: () => 0,
+    gate: [[CX - 100, 118, 200, 204]] },
+};
+function drawShape(ctx, t, s, a, squeeze, reach) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha = a;
+  const S = SHAPES[s];
+  // gate metal behind (sheets) or around the channel, then insulator, then the channel itself
+  const outline = s === 'fin'
+    ? [[CX - 72, 286], [CX - 72, 104], [CX + 72, 104], [CX + 72, 286], [CX + 40, 286], [CX + 40, 142], [CX - 40, 142], [CX - 40, 286]]
+    : (([x, y, w, h]) => [[x, y], [x + w, y], [x + w, y + h], [x, y + h]])(S.gate[0]);
+  const path = () => { ctx.beginPath(); outline.forEach((q, i) => (i ? ctx.lineTo(...q) : ctx.moveTo(...q))); ctx.closePath(); };
+  const g0 = ctx.createLinearGradient(0, 104, 0, 320); g0.addColorStop(0, C.gate[0]); g0.addColorStop(1, C.gate[1]);
+  ctx.fillStyle = g0; path(); ctx.fill();
+  if (squeeze > 0) { ctx.save(); ctx.globalAlpha = a * squeeze; ctx.strokeStyle = PAL.garnet; ctx.lineWidth = 2; ctx.lineJoin = 'round'; path(); ctx.stroke(); ctx.restore(); }
+  // insulator: between gate and channel only
+  ctx.fillStyle = C.ox;
+  if (s === 'flat') ctx.fillRect(CX - 130, 206, 260, 8);
+  else if (s === 'fin') { ctx.fillRect(CX - 40, 142, 80, 8); ctx.fillRect(CX - 40, 150, 8, 136); ctx.fillRect(CX + 32, 150, 8, 136); }
+  else S.rects.forEach(([x, y, w, h]) => ctx.fillRect(x - 5, y - 5, w + 10, h + 10));
+  if (s === 'fin') { ctx.fillStyle = C.si; ctx.fillRect(CX - 130, 286, 260, 30); }
+  S.rects.forEach(([x, y, w, h]) => { ctx.fillStyle = C.si; ctx.fillRect(x, y, w, h); });
+  // the gate says whether it is on; when off, its reach into the channel is tinted
+  const gy = s === 'flat' ? 187 : s === 'fin' ? 127 : 139, gi = dark ? '#14171c' : '#f7f6f2';
+  label('Gate on', CX, gy, gi, { align: 'center', base: 'middle', alpha: 1 - squeeze });
+  label('Gate off', CX, gy, gi, { align: 'center', base: 'middle', alpha: squeeze });
+  if (squeeze > 0) {
+    ctx.save(); ctx.globalAlpha = a * squeeze * (dark ? 0.2 : 0.12); ctx.fillStyle = PAL.garnet;
+    if (s === 'flat') ctx.fillRect(CX - 130, 214, 260, reach);
+    else if (s === 'fin') ctx.fillRect(CX - 32, 150, 64, 136);
+    else S.rects.forEach((r) => ctx.fillRect(...r));
+    ctx.restore();
+  }
+  // current: points of light, put out wherever the gate's squeeze reaches
+  ctx.globalCompositeOperation = dark ? 'lighter' : 'source-over';
+  S.rects.forEach(([x, y, w, h], k) => {
+    PTS.forEach(([u, v, ph, sz], i) => {
+      if (i % S.rects.length !== k) return;
+      const px = x + 4 + u * (w - 8), py = y + 4 + v * (h - 8);
+      const inReach = s === 'sheets' ? 1 : clamp((reach - S.faces(px, py)) / 10);
+      const b = (0.55 + 0.45 * Math.sin(t * 2.4 + ph)) * (1 - inReach * squeeze);
+      if (b <= 0.02) return;
+      const r = 5 * sz, g = ctx.createRadialGradient(px, py, 0, px, py, r);
+      g.addColorStop(0, `rgba(${C.glow},${0.95 * b})`); g.addColorStop(1, `rgba(${C.glow},0)`);
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(px, py, r, 0, 7); ctx.fill();
+    });
+  });
+  ctx.restore();
+}
+
+// opening: the whole chip; it then moves to the corner and stays there, marked where the switches below sit
+const DIE = [155, 115, 190], MARK = [288, 172], INSET = { x: 520, y: 282, s: 0.42 };
+function drawDie(ctx, m, a, mark) {
+  if (a <= 0) return;
+  const [x0, y0, d] = DIE, sc = mix(1, INSET.s, m), X = mix(x0, INSET.x, m), Y = mix(y0, INSET.y, m);
+  ctx.save(); ctx.globalAlpha = a; ctx.translate(X, Y); ctx.scale(sc, sc); ctx.translate(-x0, -y0);
+  const g = ctx.createLinearGradient(x0, y0, x0 + d, y0 + d); g.addColorStop(0, dark ? '#3a424e' : '#2f3845'); g.addColorStop(1, dark ? '#262c34' : '#1c222a');
+  ctx.fillStyle = g; ctx.fillRect(x0, y0, d, d);
+  for (let i = 0; i < 6; i++) for (let j = 0; j < 7; j++) { ctx.fillStyle = dark ? '#4a5563' : '#3f4a59'; ctx.fillRect(x0 + 8 + i * 30.5, y0 + 8 + j * 25.5, 26, 21); }
+  ctx.restore();
+  // the marker keeps its size at any scale
+  if (mark > 0) {
+    const mx = X + (MARK[0] - x0) * sc, my = Y + (MARK[1] - y0) * sc;
+    ctx.save(); ctx.globalAlpha = a * mark; ctx.fillStyle = PAL.garnet; ctx.strokeStyle = PAL.bg; ctx.lineWidth = 1.6;
+    ctx.fillRect(mx - 4.5, my - 4.5, 9, 9); ctx.strokeRect(mx - 4.5, my - 4.5, 9, 9); ctx.restore();
+  }
+}
+function field(ctx, t, a) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha = a;
+  for (let r = 0; r < 6; r++) for (let c = 0; c < 9; c++) {
+    const x = 58 + c * 46, y = 124 + r * 36;
+    ctx.fillStyle = C.gate[1]; ctx.fillRect(x, y, 34, 9); ctx.fillStyle = C.ox; ctx.fillRect(x, y + 9, 34, 2);
+    ctx.fillStyle = C.si; ctx.fillRect(x, y + 11, 34, 12);
+    const on = Math.sin(t * 3 + r * 1.3 + c * 0.9) > 0;
+    if (on) { ctx.fillStyle = `rgba(${C.glow},0.85)`; for (let d = 0; d < 3; d++) { ctx.beginPath(); ctx.arc(x + 7 + d * 10, y + 17, 2, 0, 7); ctx.fill(); } }
+  }
+  ctx.restore();
+}
+function readout(ctx, n, unit, name, a) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = PAL.garnet; ctx.fillRect(504, 164, 2, 54); ctx.restore();
+  text(n, 520, 200, '300 44px Fraunces', PAL.garnet, { alpha: a }); ctx.font = '300 44px Fraunces'; const w = ctx.measureText(n).width;
+  text(unit, 520 + w + 7, 200, '500 13px "Instrument Sans"', PAL.garnet, { alpha: a });
+  label(name, 520, 219, PAL.muted, { alpha: a });
+}
+
+function render(ctx, t) {
+  ctx.fillStyle = PAL.bg; ctx.fillRect(0, 0, W, H);
+  const q = pr(0, t), p = [1, 2, 3, 4].map((i) => pr(i, t)), out = ease(p[0] / 0.2);
+  // the chip, then its place in the corner
+  const m = ease((q - 0.36) / 0.26);
+  field(ctx, t, ease((q - 0.48) / 0.2) * (1 - out));
+  drawDie(ctx, m, ease(q / 0.15), ease((q - 0.2) / 0.12));
+  label('The whole chip', INSET.x, 382, PAL.muted, { alpha: ease((q - 0.62) / 0.2) });
+  readout(ctx, '208', 'billion', 'In one Blackwell GPU', ease((q - 0.62) / 0.2) * (1 - out));
+  // one switch, seen end on
+  const toFin = ease((p[2] - 0.05) / 0.3), toSheets = ease((p[3] - 0.05) / 0.3);
+  // the squeeze switches on in step 2 and stays; its reach grows from the gate into the channel
+  const squeeze = ease((p[1] - 0.15) / 0.2), reach = 40 * ease((p[1] - 0.15) / 0.45);
+  const fa = ease((p[0] - 0.1) / 0.2);
+  drawShape(ctx, t, 'flat', fa * (1 - toFin), squeeze, reach);
+  drawShape(ctx, t, 'fin', toFin * (1 - toSheets), 1, 40);
+  drawShape(ctx, t, 'sheets', toSheets, 1, 40);
+  label('Channel', CX, 336, PAL.ink2, { align: 'center', alpha: fa * (1 - ease(p[1] / 0.2)) });
+  heads(ctx, t);
+  // readout: how many sides of the channel the gate covers
+  const n = p[3] > 0.2 ? '4' : p[2] > 0.2 ? '3' : '1';
+  readout(ctx, n, n === '1' ? 'side' : 'sides', 'Covered by the gate', ease((p[1] - 0.3) / 0.2));
+}
+A.start({ W, H, duration: 23.2, fade: 0.8, steps: STEPS, render });
+</script></body></html>

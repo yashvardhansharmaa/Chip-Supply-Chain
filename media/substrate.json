@@ -1,0 +1,28 @@
+{
+ "duration": 21.8,
+ "fade": 0.8,
+ "width": 760,
+ "height": 420,
+ "steps": [
+  {
+   "k": "The package",
+   "t0": 0.4,
+   "cap": "An AI chip is more than the chip itself. It sits in a package: the chips on a silicon base, and under them the substrate, which connects everything to the circuit board."
+  },
+  {
+   "k": "Tight to wide",
+   "t0": 5.4,
+   "cap": "The connections on top are packed tight. The circuit board below is wired in millimeters. The substrate has to join the two."
+  },
+  {
+   "k": "Layer by layer",
+   "t0": 9,
+   "cap": "The substrate does it in layers, built outward from a stiff core. Each layer carries the copper a little further out."
+  },
+  {
+   "k": "Connected",
+   "t0": 15,
+   "cap": "Stacked together, the layers fan the tight grid out to the board\u2019s wide one. An AI chip needs about 18 layers, against six for a PC, and every layer is another chance for a flaw, which is what makes these substrates hard to build."
+  }
+ ]
+}

@@ -42,6 +42,7 @@
  {"fact": "China has announced $43 billion for domestic EUV development; CSIS judges that China cannot yet build a working EUV system", "source": "https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography"}
  ],
  "figures": [
+ {"id": "switch-shapes", "type": "animation", "src": "transistor", "title": "Why the gate wraps around the channel", "note": "Simplified. The channel is seen end on, cut across the gate, with current drawn as points of light. Not to scale."},
  {
  "id": "node-roadmap",
  "type": "timeline",
@@ -73,6 +74,8 @@ A Blackwell GPU is 208 billion switches on two dies, each the largest a lithogra
 ## How it works
 
 The front end of a chip factory is the part that builds the transistors, the billions of tiny switches in every chip. Each switch is a valve. Current runs along a narrow strip of silicon called the channel, and a small voltage on a gate above the strip opens or shuts the flow. Shorter strips switch faster and more of them fit on a chip, but make the strip short enough and the valve stops sealing: current leaks through even when the gate is off, and the chip burns power doing nothing. The fix is to wrap the gate around all four sides of the strip, so it can squeeze the flow shut from every side, and that takes a long sequence of steps that have to run in exact order. Only three companies, TSMC, Intel and Samsung, can do it, a list so short that an export control can name every one of them.
+
+{{figure:switch-shapes}}
 
 The front end builds that valve in a fixed order. First it marks where each transistor will sit and fires atoms of boron or phosphorus into the silicon there, a step called ion implantation, so that those patches conduct the way the design needs.
 
