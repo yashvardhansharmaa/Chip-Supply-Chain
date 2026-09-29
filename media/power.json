@@ -1,0 +1,28 @@
+{
+ "duration": 20.6,
+ "fade": 0.8,
+ "width": 760,
+ "height": 420,
+ "steps": [
+  {
+   "k": "The site",
+   "t0": 0.4,
+   "cap": "Data centers are where AI chips go to work. A large training site holds a hundred thousand of them, in rows of racks."
+  },
+  {
+   "k": "Power in",
+   "t0": 5.4,
+   "cap": "Power comes in from the grid, stepped down by a substation, and runs through the data center to every rack. One rack of AI chips draws up to 142 kilowatts."
+  },
+  {
+   "k": "Heat",
+   "t0": 9.6,
+   "cap": "Every watt of it comes back out as heat, more than air can carry away."
+  },
+  {
+   "k": "Water out",
+   "t0": 13.8,
+   "cap": "So water runs through plates on the chips, carries the heat to coolers outdoors and comes back. Racks are heading for a megawatt each by 2027, so the power coming in and the heat going out keep growing."
+  }
+ ]
+}

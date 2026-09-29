@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Power In, Heat Out</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Instrument+Sans:wght@400;500;600&display=swap">
+</head><body>
+<script src="lib.js"></script>
+<script>
+const { PAL, clamp, ease, mix, label, text } = A, dark = A.theme === 'dark';
+// Facts, from chapter 15: a substation steps the grid's voltage down; one GB300 NVL72 rack draws up to 142 kW; every
+// watt of it comes back out as heat, more than air can carry, so plates on the chips pass it to water that releases it
+// outdoors; the newest racks take 45 °C supply water, warm enough that many sites can skip chillers. A diagram, not to scale.
+const STEPS = [
+  { k: 'The site', t0: 0.4, t1: 5.4, cap: 'Data centers are where AI chips go to work. A large training site holds a hundred thousand of them, in rows of racks.' },
+  { k: 'Power in', t0: 5.4, t1: 9.6, cap: 'Power comes in from the grid, stepped down by a substation, and runs through the data center to every rack. One rack of AI chips draws up to 142 kilowatts.' },
+  { k: 'Heat', t0: 9.6, t1: 13.8, cap: 'Every watt of it comes back out as heat, more than air can carry away.' },
+  { k: 'Water out', t0: 13.8, t1: 19.6, cap: 'So water runs through plates on the chips, carries the heat to coolers outdoors and comes back. Racks are heading for a megawatt each by 2027, so the power coming in and the heat going out keep growing.' },
+];
+// one headline at a time; each fades out before the next fades in
+const HEADS = [
+  { t0: 0.4, t1: 4.4, h: 'A data center', s: 'Cut open, with rows of racks inside' },
+  { t0: 4.4, t1: 9.9, h: 'Power in', s: 'Grid, then substation, then the racks inside' },
+  { t0: 9.9, t1: 14.1, h: 'Power becomes heat', s: 'More than air can carry away' },
+  { t0: 14.1, h: 'Water carries the heat away', s: 'Racks are heading for a megawatt each by 2027', red: 1 },
+];
+function heads(ctx, t) {
+  HEADS.forEach(({ t0, t1, h, s, red }) => {
+    const a = Math.min(ease((t - t0) / 0.35), t1 == null ? 1 : ease((t1 - t) / 0.35));
+    if (a <= 0) return;
+    text(h, 40, 62, '500 20px Fraunces', red ? PAL.garnet : PAL.ink, { alpha: a });
+    text(s, 40, 86, '400 16px "Source Serif 4"', PAL.ink2, { alpha: a });
+  });
+}
+const pr = (i, t) => clamp((t - STEPS[i].t0) / (STEPS[i].t1 - STEPS[i].t0));
+const W = 760, H = 420;
+const C = {
+  line: dark ? '#6f7883' : '#9aa2ab', edge: dark ? '#4d545e' : '#aab1b9', box: dark ? '#1f242b' : '#ffffff', ink: dark ? '#b9c0c8' : '#39414c',
+  tray: dark ? '#2c333d' : '#2f3845', chip: dark ? '#5f6a79' : '#8e97a2',
+  amp: dark ? '255,196,92' : '214,150,40', hot: dark ? '224,92,87' : '160,40,52', cool: dark ? '110,165,240' : '52,118,204',
+};
+const at = (pts, u) => { const seg = []; let L = 0; for (let i = 1; i < pts.length; i++) { const l = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); seg.push(l); L += l; } let d = u * L; for (let i = 0; i < seg.length; i++) { if (d <= seg[i]) { const f = d / seg[i]; return [mix(pts[i][0], pts[i + 1][0], f), mix(pts[i][1], pts[i + 1][1], f)]; } d -= seg[i]; } return pts[pts.length - 1]; };
+function line(ctx, pts, col, lw, a) { if (a <= 0) return; ctx.save(); ctx.globalAlpha *= a; ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.beginPath(); pts.forEach((p, i) => (i ? ctx.lineTo(...p) : ctx.moveTo(...p))); ctx.stroke(); ctx.restore(); }
+function glowDots(ctx, pts, t, rgb, n, speed, a, r) {
+  if (a <= 0) return; ctx.save(); ctx.globalCompositeOperation = dark ? 'lighter' : 'source-over';
+  for (let k = 0; k < n; k++) { const [x, y] = at(pts, (t * speed + k / n) % 1); const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(${rgb},${a})`); g.addColorStop(1, `rgba(${rgb},0)`); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill(); }
+  ctx.restore();
+}
+// layout: grid and substation outside on the left; the data center's walls hold the rack; the cooler sits outside on the right
+const HALL = [150, 104, 242, 280], RACK = [186, 150, 84, 200];
+const FEED = [[38, 168], [76, 212], [120, 212], [166, 212], [166, 166], [186, 166]];
+const HOT = [[270, 176], [450, 176], [450, 222]], COLD = [[428, 278], [428, 336], [270, 336]];
+
+// opening: a data center cut open, rows of racks inside; it then moves to the corner and stays there, one rack marked
+const SITE = [40, 132], INSET = { x: 530, y: 292, s: 0.45 }, MARKED = 7;
+function drawSite(ctx, t, m, a, hi) {
+  if (a <= 0) return;
+  const sc = mix(1, INSET.s, m);
+  ctx.save(); ctx.globalAlpha = a; ctx.translate(mix(SITE[0], INSET.x, m), mix(SITE[1], INSET.y, m)); ctx.scale(sc, sc); ctx.translate(-SITE[0], -SITE[1]);
+  // building shell
+  ctx.fillStyle = C.box; ctx.fillRect(40, 150, 420, 150); ctx.strokeStyle = C.edge; ctx.lineWidth = 1.2; ctx.strokeRect(40, 150, 420, 150);
+  // cooling units outside
+  for (let k = 0; k < 6; k++) { const x = 70 + k * 64; ctx.fillStyle = C.box; ctx.fillRect(x, 132, 40, 18); ctx.strokeRect(x, 132, 40, 18); ctx.beginPath(); ctx.arc(x + 20, 141, 6, 0, 7); ctx.stroke(); }
+  // two rows of racks, the back row lighter
+  for (let row = 0; row < 2; row++) for (let k = 0; k < 16; k++) {
+    const x = 58 + k * 25 + row * 6, y = row ? 198 : 214, h = row ? 40 : 70;
+    ctx.fillStyle = row ? (dark ? '#262c34' : '#c9ced4') : C.tray; ctx.fillRect(x, y, 16, h);
+    if (!row) { const w = 0.5 + 0.5 * Math.sin(t * 2 + k); ctx.fillStyle = `rgba(${C.amp},${0.35 + 0.35 * w})`; for (let j = 0; j < 6; j++) ctx.fillRect(x + 3, y + 6 + j * 10, 10, 2); }
+  }
+  if (hi > 0) { const x = 58 + MARKED * 25; ctx.globalAlpha = a * hi; ctx.strokeStyle = PAL.garnet; ctx.lineWidth = 2.4 / sc; ctx.strokeRect(x - 3, 211, 22, 76); }
+  ctx.restore();
+}
+
+function render(ctx, t) {
+  ctx.fillStyle = PAL.bg; ctx.fillRect(0, 0, W, H);
+  const q = pr(0, t), p = [1, 2, 3].map((i) => pr(i, t));
+  const m = ease((q - 0.55) / 0.28), la = ease(q / 0.2) * (1 - ease((q - 0.48) / 0.12));
+  drawSite(ctx, t, m, ease(q / 0.2), ease((q - 0.3) / 0.2));
+  label('Outdoor coolers', 250, 120, PAL.ink2, { align: 'center', alpha: la });
+  label('Racks of AI chips', 250, 322, PAL.ink2, { align: 'center', alpha: la });
+  label('The whole data center', INSET.x, 386, PAL.muted, { alpha: ease((q - 0.8) / 0.2) });
+  heads(ctx, t);
+  const a0 = ease((q - 0.78) / 0.22), heat = ease((p[1] - 0.1) / 0.5), water = ease(p[2] / 0.25);
+  // pylon
+  ctx.save(); ctx.globalAlpha = a0; ctx.strokeStyle = C.line; ctx.lineWidth = 1.4; ctx.beginPath();
+  ctx.moveTo(22, 300); ctx.lineTo(38, 156); ctx.lineTo(54, 300); ctx.moveTo(25, 168); ctx.lineTo(51, 168); ctx.moveTo(30, 220); ctx.lineTo(46, 220);
+  ctx.moveTo(28, 260); ctx.lineTo(48, 260); ctx.moveTo(30, 220); ctx.lineTo(48, 260); ctx.moveTo(46, 220); ctx.lineTo(28, 260); ctx.stroke(); ctx.restore();
+  label('Grid', 38, 322, PAL.ink2, { align: 'center', alpha: a0 });
+  // substation: two transformer coils
+  ctx.save(); ctx.globalAlpha = a0; ctx.fillStyle = C.box; ctx.fillRect(76, 192, 44, 40); ctx.strokeStyle = C.edge; ctx.lineWidth = 1; ctx.strokeRect(76, 192, 44, 40);
+  ctx.strokeStyle = C.ink; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(91, 212, 8, 0, 7); ctx.stroke(); ctx.beginPath(); ctx.arc(105, 212, 8, 0, 7); ctx.stroke(); ctx.restore();
+  label('Substation', 98, 256, PAL.ink2, { align: 'center', alpha: a0 });
+  // the data center: its walls, with the rack inside
+  ctx.save(); ctx.globalAlpha = a0; ctx.strokeStyle = C.ink; ctx.lineWidth = 1.6; ctx.strokeRect(...HALL); ctx.restore();
+  label('Data center', HALL[0], HALL[1] + HALL[3] + 18, PAL.ink2, { alpha: a0 });
+  line(ctx, FEED, C.line, 2, a0);
+  // rack with trays of chips; the chips warm through step 2 and stay warm
+  ctx.save(); ctx.globalAlpha = a0;
+  ctx.fillStyle = C.box; ctx.fillRect(...RACK); ctx.strokeStyle = C.edge; ctx.lineWidth = 1; ctx.strokeRect(...RACK);
+  for (let r = 0; r < 13; r++) {
+    const y = RACK[1] + 10 + r * 14.4; ctx.fillStyle = C.tray; ctx.fillRect(RACK[0] + 8, y, RACK[2] - 16, 9);
+    for (let j = 0; j < 4; j++) {
+      const x = RACK[0] + 12 + j * 16, w = 0.55 + 0.45 * Math.sin(t * 2.6 + r * 0.8 + j * 1.7);
+      ctx.fillStyle = C.chip; ctx.fillRect(x, y + 2, 11, 5);
+      if (heat > 0) { ctx.fillStyle = `rgba(${C.hot},${heat * (0.55 + 0.35 * w) * (1 - 0.35 * water)})`; ctx.fillRect(x, y + 2, 11, 5); }
+    }
+  }
+  ctx.restore();
+  label('Rack', RACK[0] + RACK[2] / 2, 370, PAL.ink2, { align: 'center', alpha: a0 });
+  // power: amber light running in from the grid
+  glowDots(ctx, FEED, t, C.amp, 6, 0.42, a0 * (1 - 0.3 * water), 6);
+  // heat: warm air rising off the rack, trapped in the hall while nothing carries it away
+  if (heat > 0) {
+    const shimmer = heat * (1 - water);
+    ctx.save(); ctx.globalAlpha = shimmer * 0.7; ctx.strokeStyle = `rgb(${C.hot})`; ctx.lineWidth = 1.6; ctx.lineCap = 'round';
+    for (let k = 0; k < 4; k++) { const x0 = RACK[0] + 14 + k * 19, ph = t * 1.4 + k * 0.6, up = (ph % 1) * 10;
+      ctx.beginPath(); for (let s = 0; s <= 16; s++) { const y = RACK[1] - 6 - up - s * 1.4; const x = x0 + Math.sin(s * 0.5 + t * 4 + k) * 3.5; s ? ctx.lineTo(x, y) : ctx.moveTo(x, y); } ctx.stroke(); }
+    ctx.restore();
+  }
+  // water: a loop through the wall to the outdoor cooler; warm out along the top, cool back along the bottom
+  if (water > 0) {
+    line(ctx, HOT, `rgb(${C.hot})`, 5, water); line(ctx, COLD, `rgb(${C.cool})`, 5, water);
+    glowDots(ctx, HOT, t, dark ? '255,170,150' : '255,255,255', 5, 0.35, water * 0.9, 4);
+    glowDots(ctx, COLD, t, dark ? '200,225,255' : '255,255,255', 5, 0.35, water * 0.9, 4);
+    ctx.save(); ctx.globalAlpha = water; ctx.fillStyle = C.box; ctx.fillRect(404, 222, 92, 56); ctx.strokeStyle = C.edge; ctx.strokeRect(404, 222, 92, 56);
+    ctx.strokeStyle = C.ink; ctx.lineWidth = 1.4;
+    for (const cx of [428, 472]) { ctx.beginPath(); ctx.arc(cx, 250, 14, 0, 7); ctx.stroke(); for (let b = 0; b < 3; b++) { const a = t * 7 + b * 2.09; ctx.beginPath(); ctx.moveTo(cx, 250); ctx.lineTo(cx + 11 * Math.cos(a), 250 + 11 * Math.sin(a)); ctx.stroke(); } }
+    ctx.restore();
+    label('Outdoor', 440, 298, PAL.ink2, { alpha: water }); label('cooler', 440, 312, PAL.ink2, { alpha: water });
+    text('Warm water out', 278, 166, '400 14px "Source Serif 4"', PAL.ink2, { alpha: water });
+    text('Water in, 45 °C', 278, 356, '400 14px "Source Serif 4"', PAL.ink2, { alpha: water });
+  }
+  // readouts: the site's scale, then what goes in comes out
+  const ro = (y, v, unit, name, on, a) => {
+    if (a <= 0) return;
+    if (on) { ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = PAL.garnet; ctx.fillRect(514, y - 36, 2, 54); ctx.restore(); }
+    const col = on ? PAL.garnet : PAL.ink2;
+    text(v, 530, y, '300 44px Fraunces', col, { alpha: a }); ctx.font = '300 44px Fraunces'; const w = ctx.measureText(v).width;
+    text(unit, 530 + w + 7, y, '500 13px "Instrument Sans"', col, { alpha: a });
+    label(name, 530, y + 19, PAL.muted, { alpha: a });
+  };
+  ro(150, '100,000', 'chips', 'At one large training site', true, ease((q - 0.2) / 0.2) * (1 - ease(p[0] / 0.2)));
+  ro(150, '142', 'kW', 'In, as power', p[1] === 0, ease((p[0] - 0.3) / 0.3));
+  ro(238, '142', 'kW', 'Out, as heat', p[1] > 0, ease((p[1] - 0.35) / 0.3));
+}
+A.start({ W, H, duration: 20.6, fade: 0.8, steps: STEPS, render });
+</script></body></html>

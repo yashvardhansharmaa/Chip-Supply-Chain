@@ -112,6 +112,7 @@
     }
   ],
   "figures": [
+    {"id": "power-in-heat-out", "type": "animation", "src": "power", "title": "Power in, heat out", "note": "Simplified diagram; sizes are illustrative. 142 kW is the most an Nvidia GB300 NVL72 rack draws; 45 °C is Nvidia's supply-water figure for its Vera Rubin racks; the megawatt racks from 2027 are Nvidia's plan."},
     {
       "id": "hyperscaler-capex",
       "type": "bars",
@@ -206,6 +207,8 @@ For thirty years the semiconductor industry set the pace and everything downstre
 ## How it works
 
 A data center's job is to feed electricity to the machines inside it and carry away the heat they give off. One rack of AI chips, a cabinet the size of a wardrobe, draws 142 kilowatts, and every watt of it comes back out as heat, more than air can carry away, so water is piped through the rack instead. A large training site already holds a hundred thousand chips, and the newest sites are planned in gigawatts. One gigawatt is the whole output of a large power station, and OpenAI's planned sites add up to more than nine of them by 2029. Getting that much electricity to the door is harder than putting up the building, because the transformers and heavy switches that connect a site to the grid, and the turbines that make the power, come from a few suppliers and take years to arrive.
+
+{{figure:power-in-heat-out}}
 
 A rack is now the unit of AI compute. A GB300 NVL72 draws up to 142 kW through eight 33 kW power shelves, the rack's own power supplies, more than ten times a conventional enterprise rack in the same floor area ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
 
