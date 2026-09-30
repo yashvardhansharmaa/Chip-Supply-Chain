@@ -351,7 +351,12 @@ ${china}
   const chips = `<div class="sa-chiprow"><span class="label">Pinned on the map</span><div class="sa-chipset" role="group" aria-label="Countries pinned on the map">${PRIMARY.map(chip).join('')}</div></div>`
     + `<div class="sa-chiprow"><span class="label">Also in the chain</span><div class="sa-chipset" role="group" aria-label="Other countries in the chain">${SECONDARY.map(chip).join('')}</div></div>`;
 
-  const panels = PRIMARY.concat(SECONDARY).map((cc) => panel(cc, cc === DEFAULT_CC)).join('');
+  // the panel shown when the reader clears the chosen country (click it again); src/modules/summary-a.js shows and hides it
+  const nonePanel = `<article class="sa-panel sa-panel--none" data-cc="none" hidden>
+<header class="sa-panel-head"><h4>No country chosen</h4></header>
+<p class="sa-panel-lede">Each numbered stop is one stage of the chain, pinned where a leading firm is based. Choose a country to see what it makes and which stages it leads.</p>
+</article>`;
+  const panels = nonePanel + PRIMARY.concat(SECONDARY).map((cc) => panel(cc, cc === DEFAULT_CC)).join('');
 
   /* ---------------- the chain in one strip ---------------- */
   const DEFAULT_STAGE = stages.filter((c) => c.band === 'Extreme')[0] || stages[0];

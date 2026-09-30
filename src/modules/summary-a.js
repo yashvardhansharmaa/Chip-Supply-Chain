@@ -27,6 +27,28 @@
     panel.parentNode.setAttribute('data-more', panel.scrollHeight - panel.clientHeight - panel.scrollTop > 6 ? '1' : '0');
   }
 
+  // no country chosen: every chip, marker and stop is off, and the neutral panel says how to pick one
+  function clearCountry() {
+    if (map) map.removeAttribute('data-cc');
+    $$('.sa-marker, .sa-chip, .sa-role', root).forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+    $$('.sa-town, .sa-stop, .sa-stopcard', root).forEach(function (el) { el.classList.remove('is-on'); });
+    var cap = $('.atlas-caption', root);
+    if (cap) {
+      var set = function (k, v) { var el = $('.atlas-caption-' + k, cap); if (el) el.textContent = v; };
+      set('name', 'All countries'); set('meta', ''); set('line', 'Choose one to light its stops on the route');
+    }
+    $$('.sa-panel', root).forEach(function (p) { p.hidden = p.getAttribute('data-cc') !== 'none'; });
+    more($('.sa-panel[data-cc="none"]', root));
+    if (CP.Suppliers && CP.Suppliers.light) CP.Suppliers.light('');
+  }
+  // a chip or marker that was already chosen when it was pressed clears the choice; any other selects its country
+  var wasOn = null;
+  function toggleCountry(b, fromMap) {
+    var on = wasOn === null ? b.getAttribute('aria-pressed') === 'true' : wasOn;
+    wasOn = null;
+    if (on) clearCountry(); else selectCountry(b.getAttribute('data-cc'), fromMap);
+  }
+
   function selectCountry(cc, fromMap) {
     if (!cc || !$('.sa-panel[data-cc="' + cc + '"]', root)) return;
     if (map) map.setAttribute('data-cc', cc);
@@ -72,11 +94,20 @@
     map = $('.sa-map', root);
     bound = true;
 
+    // read a chip's or marker's state as the press begins, before the focus handler below can select it
+    root.addEventListener('pointerdown', function (e) {
+      var b = e.target.closest ? e.target.closest('.sa-marker, .sa-chip, .sa-role') : null;
+      wasOn = b ? b.getAttribute('aria-pressed') === 'true' : null;
+    });
     root.addEventListener('click', function (e) {
       var marker = e.target.closest ? e.target.closest('.sa-marker, .sa-town') : null;
-      if (marker) { if (marker.getAttribute('data-dead')) return; selectCountry(marker.getAttribute('data-cc'), true); return; }
+      if (marker) {
+        if (marker.getAttribute('data-dead')) return;
+        if (marker.classList.contains('sa-marker')) toggleCountry(marker, true); else selectCountry(marker.getAttribute('data-cc'), true);
+        return;
+      }
       var chip = e.target.closest ? e.target.closest('.sa-chip, .sa-role') : null;
-      if (chip) { selectCountry(chip.getAttribute('data-cc'), false); return; }
+      if (chip) { toggleCountry(chip, false); return; }
       // a stop on the map or in the strip opens its country's panel here; the panel's rows lead to the chapters
       var stop = e.target.closest ? e.target.closest('.sa-stop, .sa-stopcard') : null;
       if (stop && stop.getAttribute('data-cc')) { e.preventDefault(); selectCountry(stop.getAttribute('data-cc'), true); return; }
@@ -140,7 +171,7 @@
     }, 80);
   }
 
-  CP.SummaryA = { selectCountry: selectCountry, fromHash: fromHash };
+  CP.SummaryA = { selectCountry: selectCountry, clearCountry: clearCountry, fromHash: fromHash };
   CP.register('summary-a', { stage: false, activate: bind });
   CP.register('suppliers', { stage: false, activate: function () { bind(); fromHash(); } });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bind); else bind();
