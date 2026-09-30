@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>How a Chip Is Designed</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Instrument+Sans:wght@400;500;600&display=swap">
+</head><body>
+<script src="lib.js"></script>
+<script>
+const { PAL, clamp, ease, easeOut, mix, rng, label, text } = A, dark = A.theme === 'dark';
+// Facts, from chapter 1: design turns an idea into a complete blueprint that fixes where each of billions of transistors
+// sits and how it is wired; the chip works in ticks, and a signal has to cross its wires within one tick, less than a
+// billionth of a second; a register holds one number and the tick moves every register forward together; software from
+// Synopsys, Cadence and Siemens places the cells, wires them and proves every signal arrives in time; a factory accepts
+// only designs that pass, then prints the design onto silicon through stencils. The opening floorplan follows the
+// chapter's GPU-die specimen (26 by 33 mm; compute tiles either side of a cache band, memory links on the long edges).
+// The close view is simplified: cells in rows, two registers per path, one tick slowed to a couple of seconds.
+const STEPS = [
+  { k: 'A blueprint', t0: 0.4, t1: 6.2, cap: 'Making a chip starts with design, which turns an idea into a complete blueprint. The blueprint fixes where each of the chip’s billions of switches sits and how each one is wired to the others.' },
+  { k: 'One tick', t0: 6.2, t1: 10.4, cap: 'The chip works in ticks, each less than a billionth of a second. On every tick a signal leaves a register, a small store that holds one number, and it has to cross its wire to the next register before the next tick.' },
+  { k: 'Too far', t0: 10.4, t1: 14.2, cap: 'If the next register sits far away, the wire is long. The signal is still on its way when the next tick comes, so it arrives too late.' },
+  { k: 'Placed closer', t0: 14.2, t1: 18.4, cap: 'Design software from three companies, Synopsys, Cadence and Siemens, places the parts and wires them together. Here it moves the register closer, and the signal arrives in time.' },
+  { k: 'Checked', t0: 18.4, t1: 22.4, cap: 'The software checks that every signal on the chip arrives in time, and a chip factory accepts only designs that pass. The factory then prints the blueprint onto silicon through stencils, and changing it after that costs new stencils and several months.' },
+];
+// one headline at a time; each fades out before the next fades in
+const HEADS = [
+  { t0: 0.4, t1: 4.4, h: 'Making a chip starts with design', s: 'An idea becomes a blueprint' },
+  { t0: 4.4, t1: 6.6, h: 'Where every switch sits', s: 'The blueprint also fixes every wire' },
+  { t0: 6.6, t1: 10.6, h: 'The chip works in ticks', s: 'A signal must cross its wire within one tick' },
+  { t0: 10.6, t1: 14.4, h: 'A long wire misses the tick', s: 'The signal arrives too late' },
+  { t0: 14.4, t1: 18.6, h: 'Design software moves it closer', s: 'Now the signal arrives in time' },
+  { t0: 18.6, h: 'Checked before anything is made', s: 'Only then is it printed onto silicon', red: 1 },
+];
+function heads(ctx, t) {
+  HEADS.forEach(({ t0, t1, h, s, red }) => {
+    const a = Math.min(ease((t - t0) / 0.35), t1 == null ? 1 : ease((t1 - t) / 0.35));
+    if (a <= 0) return;
+    text(h, 40, 62, '500 20px Fraunces', red ? PAL.garnet : PAL.ink, { alpha: a });
+    text(s, 40, 86, '400 16px "Source Serif 4"', PAL.ink2, { alpha: a });
+  });
+}
+const pr = (i, t) => clamp((t - STEPS[i].t0) / (STEPS[i].t1 - STEPS[i].t0));
+const W = 760, H = 420;
+const C = {
+  die: dark ? '#1d2229' : '#ffffff', dieEdge: dark ? '#6b7380' : '#3b424c',
+  tile: dark ? '#3a4a63' : '#c9d3e2', tileEdge: dark ? '#56698a' : '#9fb0c8',
+  cache: dark ? '#2d333b' : '#e4e6ea', cacheLine: dark ? '#3d444e' : '#cfd3d9',
+  mem: dark ? '#4a4332' : '#eadfc3', memLine: dark ? '#62593f' : '#d3c49c',
+  edge: dark ? '#30363f' : '#dadde2',
+  cell: dark ? '#2a3038' : '#e6e3dc', reg: dark ? '#d9d5cc' : '#2a313b',
+  glow: dark ? '120,172,255' : '47,111,214', blue: dark ? '#8fb6ff' : '#2f6fd6',
+  violet: PAL.violet, violetInk: PAL.violetInk,
+};
+
+// ---------- the floorplan: one GPU die from above, 33 by 26 mm, after the chapter's specimen ----------
+const DIE = [110, 124, 280, 220], KX = 280 / 33, KY = 220 / 26;
+const P = (X, Y) => [DIE[0] + X * KX, DIE[1] + Y * KY];
+const BLOCKS = [];   // [X, Y, w, h, kind, order] in mm
+for (let m = 0; m < 6; m++) {
+  const X = 2.9 + m * 4.55;
+  BLOCKS.push([X, 0.78, 4.1, 1.72, 'mem', 2], [X, 23.5, 4.1, 1.72, 'mem', 2]);
+  BLOCKS.push([X + 0.2, 2.75, 3.7, 1.5, 'cache', 2], [X + 0.2, 21.75, 3.7, 1.5, 'cache', 2]);
+}
+BLOCKS.push([13.8, 4.6, 5.4, 7.85, 'cache', 1], [13.8, 13.55, 5.4, 7.85, 'cache', 1], [30.85, 1.6, 1.7, 22.8, 'edge', 3], [0.45, 1.6, 1.7, 22.8, 'edge', 3]);
+const TILES = [];
+[[2.6, 13], [20, 30.4]].forEach(([x0, x1], side) => {
+  for (let g = 0; g < 4; g++) {
+    const y0 = 4.6 + g * 4.2 + 0.18, y1 = 4.6 + (g + 1) * 4.2 - 0.18, tw = (x1 - x0) / 6, th = (y1 - y0) / 3;
+    for (let a = 0; a < 6; a++) for (let b = 0; b < 3; b++) TILES.push([x0 + a * tw + 0.12, y0 + b * th + 0.1, tw - 0.24, th - 0.2, side * 4 + g]);
+  }
+});
+const MARK = (() => { const [X, Y, w, h] = TILES[(4 + 1) * 18 + 2 * 3 + 1]; return [X + w / 2, Y + h / 2]; })();
+function drawPlan(ctx, a, build) {
+  // build: 0..1, blocks arrive in order (outline, compute, cache, memory, edges)
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha *= a;
+  const [x0, y0, w, h] = DIE, ob = ease(build / 0.25);
+  ctx.fillStyle = C.die; ctx.globalAlpha *= 1; ctx.fillRect(x0, y0, w, h);
+  const blk = (X, Y, bw, bh, fill, k) => { const [px, py] = P(X, Y); ctx.fillStyle = fill; ctx.fillRect(px, py, bw * KX, bh * KY); };
+  TILES.forEach(([X, Y, tw, th, cl], i) => {
+    const p = ease((build - 0.15 - cl * 0.04 - (i % 18) * 0.004) / 0.2); if (p <= 0) return;
+    ctx.save(); ctx.globalAlpha *= p; blk(X, Y, tw, th, C.tile); ctx.restore();
+  });
+  BLOCKS.forEach(([X, Y, bw, bh, kind, ord]) => {
+    const p = ease((build - 0.35 - ord * 0.1) / 0.2); if (p <= 0) return;
+    ctx.save(); ctx.globalAlpha *= p;
+    blk(X, Y, bw, bh, kind === 'mem' ? C.mem : kind === 'edge' ? C.edge : C.cache);
+    if (kind === 'mem') { ctx.strokeStyle = C.memLine; ctx.lineWidth = 0.6; for (let k = 1; k < 8; k++) { const [px, py] = P(X + bw * k / 8, Y); ctx.beginPath(); ctx.moveTo(px, py + 1); ctx.lineTo(px, py + bh * KY - 1); ctx.stroke(); } }
+    if (kind === 'cache' && bh > 5) { ctx.strokeStyle = C.cacheLine; ctx.lineWidth = 0.6; for (let k = 1; k < 10; k++) { const [px, py] = P(X, Y + bh * k / 10); ctx.beginPath(); ctx.moveTo(px + 2, py); ctx.lineTo(px + bw * KX - 2, py); ctx.stroke(); } }
+    ctx.restore();
+  });
+  ctx.globalAlpha *= ob; ctx.strokeStyle = C.dieEdge; ctx.lineWidth = 1.2; ctx.strokeRect(x0, y0, w, h);
+  ctx.restore();
+}
+
+// ---------- the close view: rows of cells, two paths between registers ----------
+const ROW0 = 124, PITCH = 32, RH = 18, NR = 7, FX0 = 44, FX1 = 470;
+const rowY = (i) => ROW0 + i * PITCH;
+const REG = { A1: [81, 165], B1: [190, 197], A2: [81, 261], B2s: [431, 325], B2e: [201, 293] };
+const RS = 18;
+const hit = (x, y, w, h) => Object.values(REG).some(([cx, cy]) => x < cx + RS / 2 + 3 && x + w > cx - RS / 2 - 3 && y < cy + RS / 2 && y + h > cy - RS / 2);
+const R = rng(7), CELLS = [], FAINT = [];
+for (let i = 0; i < NR; i++) {
+  let x = FX0;
+  while (x < FX1 - 6) {
+    const w = Math.min(6 + Math.floor(R() * 15), FX1 - x);
+    if (!hit(x, rowY(i), w, RH)) CELLS.push([x, rowY(i), w, i]);
+    x += w + 2 + Math.floor(R() * 2);
+  }
+}
+// background wiring in the channels between rows, each a short run with a hop down or up at one end
+for (let i = 0; i < NR - 1; i++) {
+  const cy = rowY(i) + RH, off = [4, 10];
+  for (let k = 0; k < 7; k++) {
+    const y = cy + off[k % 2], xa = FX0 + 6 + R() * 330, len = 30 + R() * 90;
+    FAINT.push([xa, y, Math.min(xa + len, FX1 - 4), R() < 0.5 ? -1 : 1]);
+  }
+}
+const route1 = [[81, 174], [81, 181], [190, 181], [190, 188]];
+const route2 = (bx, by) => [[81, 270], [81, 277], [bx, 277], [bx, by - RS / 2]];
+const plen = (pts) => pts.slice(1).reduce((s, q, i) => s + Math.hypot(q[0] - pts[i][0], q[1] - pts[i][1]), 0);
+function at(pts, d) {
+  for (let i = 1; i < pts.length; i++) {
+    const [x0, y0] = pts[i - 1], [x1, y1] = pts[i], L = Math.hypot(x1 - x0, y1 - y0);
+    if (d <= L || i === pts.length - 1) { const f = L ? clamp(d / L) : 0; return [mix(x0, x1, f), mix(y0, y1, f)]; }
+    d -= L;
+  }
+}
+function sub(pts, d) {   // the route up to distance d
+  const out = [pts[0]];
+  for (let i = 1; i < pts.length; i++) {
+    const [x0, y0] = pts[i - 1], [x1, y1] = pts[i], L = Math.hypot(x1 - x0, y1 - y0);
+    if (d >= L) { out.push(pts[i]); d -= L; } else { const f = d / L; out.push([mix(x0, x1, f), mix(y0, y1, f)]); break; }
+  }
+  return out;
+}
+const TICK = 2.2, SPEED = plen(route1) / (0.4 * TICK);   // the short path takes 40 percent of a tick
+function line(ctx, pts, color, w, a) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha *= a; ctx.strokeStyle = color; ctx.lineWidth = w; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  ctx.beginPath(); pts.forEach((q, i) => (i ? ctx.lineTo(...q) : ctx.moveTo(...q))); ctx.stroke(); ctx.restore();
+}
+function dot(ctx, x, y, a, r = 8) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalCompositeOperation = dark ? 'lighter' : 'source-over';
+  const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(${C.glow},${a})`); g.addColorStop(0.35, `rgba(${C.glow},${0.8 * a})`); g.addColorStop(1, `rgba(${C.glow},0)`);
+  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill(); ctx.restore();
+}
+function reg(ctx, [x, y], a, lit = 0, outline = null) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha *= a;
+  ctx.fillStyle = C.reg; ctx.beginPath(); ctx.roundRect(x - RS / 2, y - RS / 2, RS, RS, 2.5); ctx.fill();
+  if (lit > 0) { ctx.globalAlpha *= lit; ctx.fillStyle = C.blue; ctx.beginPath(); ctx.roundRect(x - RS / 2, y - RS / 2, RS, RS, 2.5); ctx.fill(); ctx.globalAlpha /= lit; }
+  if (outline) { ctx.globalAlpha *= outline[1]; ctx.strokeStyle = outline[0]; ctx.lineWidth = 2; ctx.beginPath(); ctx.roundRect(x - RS / 2 - 2, y - RS / 2 - 2, RS + 4, RS + 4, 3.5); ctx.stroke(); }
+  ctx.restore();
+}
+// the tick, drawn as a ring around the receiving register that runs down; frozen in blue if the signal arrives first
+function ring(ctx, [x, y], a, left, state, r = 17) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha *= a; ctx.lineCap = 'round';
+  ctx.strokeStyle = PAL.bg; ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.stroke();
+  ctx.strokeStyle = state === 'late' ? PAL.garnet : PAL.line; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.stroke();
+  if (left > 0.001) { ctx.strokeStyle = state === 'ok' ? C.blue : PAL.ink2; ctx.lineWidth = 2.4; ctx.beginPath(); ctx.arc(x, y, r, -Math.PI / 2, -Math.PI / 2 + 6.283 * left); ctx.stroke(); }
+  ctx.restore();
+}
+function tag(ctx, s, x, y, color, a) {   // a label on a small patch of background, so it reads over the cells
+  if (a <= 0) return;
+  ctx.font = '600 10.5px "Instrument Sans"'; ctx.letterSpacing = '1.4px'; const w = ctx.measureText(s.toUpperCase()).width; ctx.letterSpacing = '0px';
+  ctx.save(); ctx.globalAlpha *= a * 0.94; ctx.fillStyle = PAL.bg; ctx.beginPath(); ctx.roundRect(x - 5, y - 8, w + 9, 16, 3); ctx.fill(); ctx.restore();
+  label(s, x, y, color, { base: 'middle', alpha: a });
+}
+// one run along a route: launch at t0; returns where the signal is and whether it made the tick
+function race(t, t0, pts) {
+  const L = plen(pts), el = t - t0, need = L / SPEED;
+  return { el, d: clamp(el * SPEED, 0, L), L, done: el >= need, need, left: clamp(1 - Math.min(el, need) / TICK), late: need > TICK, over: el >= TICK };
+}
+
+// ---------- the chain: design, then stencils, then the factory ----------
+const CHAIN = [[90, 'Design'], [250, 'Stencils'], [410, 'Factory']], CY = 370;
+function chain(ctx, a, pulse) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha *= a;
+  ctx.strokeStyle = PAL.line; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(90, CY); ctx.lineTo(410, CY); ctx.stroke();
+  ctx.fillStyle = PAL.faint; [170, 330].forEach((x) => { ctx.beginPath(); ctx.moveTo(x - 3, CY - 4); ctx.lineTo(x + 3, CY); ctx.lineTo(x - 3, CY + 4); ctx.closePath(); ctx.fill(); });
+  const px = pulse == null ? -1 : mix(90, 410, pulse);
+  CHAIN.forEach(([x, s], i) => {
+    const on = i === 0 ? 1 : clamp((px - x + 6) / 6);
+    ctx.fillStyle = PAL.bg; ctx.beginPath(); ctx.arc(x, CY, 6.5, 0, 7); ctx.fill();
+    ctx.strokeStyle = i === 0 ? PAL.garnet : PAL.ink2; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.arc(x, CY, 5.5, 0, 7); ctx.stroke();
+    if (i === 0) { ctx.fillStyle = PAL.garnet; ctx.beginPath(); ctx.arc(x, CY, 5.5, 0, 7); ctx.fill(); }
+    else if (on > 0) { ctx.save(); ctx.globalAlpha *= on; ctx.fillStyle = PAL.ink2; ctx.beginPath(); ctx.arc(x, CY, 5.5, 0, 7); ctx.fill(); ctx.restore(); }
+    label(s, x, CY + 24, i === 0 ? PAL.garnet : PAL.ink2, { align: 'center' });
+  });
+  ctx.restore();
+  if (pulse != null && pulse > 0 && pulse < 1) dot(ctx, px, CY, a, 9);
+}
+
+function readout(ctx, n, unit, name, a, y = 200) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = PAL.garnet; ctx.fillRect(504, y - 36, 2, 54); ctx.restore();
+  text(n, 520, y, '300 44px Fraunces', PAL.garnet, { alpha: a }); ctx.font = '300 44px Fraunces'; const w = ctx.measureText(n).width;
+  text(unit, 520 + w + 7, y, '500 13px "Instrument Sans"', PAL.garnet, { alpha: a });
+  label(name, 520, y + 19, PAL.muted, { alpha: a });
+}
+
+const INSET = { x: 520, y: 296, s: 0.3 };
+function render(ctx, t) {
+  ctx.fillStyle = PAL.bg; ctx.fillRect(0, 0, W, H);
+  const q = pr(0, t), p = [1, 2, 3, 4].map((i) => pr(i, t));
+
+  // opening: the chain with design first, the blueprint drawn in, then its place in the corner
+  const chainA = Math.max(ease((t - 0.4) / 0.6) * (1 - ease((t - 3.7) / 0.5)), ease((t - 20.0) / 0.6));
+  const pulse = t > 20.5 ? ease((t - 20.6) / 1.4) : null;
+  chain(ctx, chainA, pulse);
+  const m = ease((t - 4.0) / 1.0), sc = mix(1, INSET.s, m);
+  ctx.save(); ctx.translate(mix(DIE[0], INSET.x, m), mix(DIE[1], INSET.y, m)); ctx.scale(sc, sc); ctx.translate(-DIE[0], -DIE[1]);
+  drawPlan(ctx, ease((t - 0.9) / 0.4), clamp((t - 0.9) / 2.2));
+  ctx.restore();
+  const mk = ease((t - 4.6) / 0.4);
+  if (mk > 0) {
+    const [mx, my] = P(...MARK), X = mix(DIE[0], INSET.x, m) + (mx - DIE[0]) * sc, Y = mix(DIE[1], INSET.y, m) + (my - DIE[1]) * sc;
+    ctx.save(); ctx.globalAlpha = mk; ctx.fillStyle = PAL.garnet; ctx.strokeStyle = PAL.bg; ctx.lineWidth = 1.6;
+    ctx.fillRect(X - 4.5, Y - 4.5, 9, 9); ctx.strokeRect(X - 4.5, Y - 4.5, 9, 9); ctx.restore();
+  }
+  label('The whole chip', INSET.x, INSET.y + 220 * INSET.s + 18, PAL.muted, { alpha: ease((t - 4.8) / 0.5) });
+  // the opening's two labels, with leaders from the blocks
+  const la = ease((t - 2.3) / 0.5) * (1 - ease((t - 3.7) / 0.35));
+  if (la > 0) {
+    [[P(28.5, 6.5), 'Multiply numbers'], [P(27, 24.4), 'Links to memory stacks']].forEach(([[x, y], s]) => {
+      ctx.save(); ctx.globalAlpha = la; ctx.strokeStyle = PAL.ink2; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(404, y); ctx.stroke();
+      ctx.fillStyle = PAL.ink2; ctx.beginPath(); ctx.arc(x, y, 2.4, 0, 7); ctx.fill(); ctx.restore();
+      label(s, 410, y, PAL.ink2, { base: 'middle', alpha: la });
+    });
+  }
+
+  // close view: cells arrive row by row
+  const fa = ease((t - 4.7) / 0.8);
+  if (fa > 0) {
+    ctx.save(); ctx.globalAlpha = fa;
+    CELLS.forEach(([x, y, w, i]) => {
+      const c = ease((t - 4.8 - i * 0.1) / 0.5); if (c <= 0) return;
+      ctx.save(); ctx.globalAlpha *= c; ctx.fillStyle = C.cell; ctx.fillRect(x, y, w, RH); ctx.restore();
+    });
+    // background wiring; checked in step 5 as a sweep passes over it
+    const sweepX = mix(FX0 - 10, FX1 + 10, clamp((t - 18.8) / 1.8));
+    FAINT.forEach(([x0, y, x1, dir]) => {
+      const c = ease((t - 5.2 - (y - ROW0) * 0.004) / 0.5); if (c <= 0) return;
+      const pts = [[x0, y], [x1, y], [x1, y + dir * 7]];
+      line(ctx, pts, PAL.faint, 1, c * 0.75);
+      if (t > 18.8) {
+        const g = clamp((sweepX - x0) / 30), glint = g * (1 - ease((sweepX - x0 - 30) / 90));
+        line(ctx, pts, C.blue, 1.4, glint * 0.9);
+        line(ctx, pts, PAL.ink2, 1, g * 0.45);
+      }
+    });
+    ctx.restore();
+    if (t > 18.8 && t < 20.8) {
+      const sa = Math.min(ease((t - 18.8) / 0.2), 1 - ease((t - 20.4) / 0.4));
+      ctx.save(); ctx.globalAlpha = sa * 0.8; ctx.fillStyle = `rgb(${C.violet})`; ctx.fillRect(sweepX - 0.75, ROW0 - 8, 1.5, rowY(NR - 1) + RH + 16 - ROW0); ctx.restore();
+    }
+  }
+
+  // path 1: short, arrives in time (step 2); dims once path 2 takes over
+  const dim1 = 1 - 0.6 * ease((t - 10.5) / 0.4);
+  const pa = ease((t - 5.6) / 0.6) * dim1;
+  line(ctx, route1, PAL.ink2, 1.6, pa * 0.8);
+  const r1 = race(t, 7.0, route1);
+  reg(ctx, REG.A1, pa, t > 7.0 ? 1 - ease((t - 7.0) / 0.5) : 0);
+  reg(ctx, REG.B1, pa, r1.done ? 1 - 0.5 * ease((t - 7.0 - r1.need) / 1.2) : 0);
+  if (r1.el > 0) {
+    line(ctx, sub(route1, r1.d), C.blue, 2.2, dim1 * (r1.done ? 1 - 0.6 * ease((r1.el - r1.need) / 1.0) : 1));
+    if (!r1.done) dot(ctx, ...at(route1, r1.d), 1);
+  }
+  const ring1 = ease((t - 6.6) / 0.4) * (1 - ease((t - 10.2) / 0.4));
+  ring(ctx, REG.B1, ring1, t < 7.0 ? 1 : r1.left, r1.done ? 'ok' : '');
+  tag(ctx, 'Register', 98, 165, PAL.ink2, ease((t - 6.0) / 0.4) * (1 - ease((t - 10.2) / 0.3)));
+  tag(ctx, 'Register', 214, 197, PAL.ink2, ease((t - 6.0) / 0.4) * (1 - ease((t - 7.6) / 0.3)));
+  tag(ctx, 'In time', 214, 197, C.blue, ease((t - 7.0 - r1.need) / 0.3) * (1 - ease((t - 10.2) / 0.3)));
+
+  // path 2: far away, misses the tick (step 3); then the software moves the register closer (step 4)
+  const p2a = ease((t - 10.5) / 0.5);
+  if (p2a > 0) {
+    const mv = ease((t - 14.6) / 1.0), B2 = [mix(REG.B2s[0], REG.B2e[0], mv), mix(REG.B2s[1], REG.B2e[1], mv)];
+    const rt = route2(...B2);
+    // ghost of the new place, in the software's color
+    const gh = ease((t - 14.3) / 0.3) * (1 - ease((t - 15.4) / 0.4));
+    if (gh > 0) {
+      ctx.save(); ctx.globalAlpha = gh; ctx.strokeStyle = `rgb(${C.violet})`; ctx.lineWidth = 1.5; ctx.setLineDash([3, 2.5]);
+      ctx.strokeRect(REG.B2e[0] - RS / 2 - 2, REG.B2e[1] - RS / 2 - 2, RS + 4, RS + 4); ctx.restore();
+    }
+    line(ctx, rt, PAL.ink2, 1.6, p2a * 0.8);
+    const first = t < 14.2, run = first ? race(t, 11.0, route2(...REG.B2s)) : race(t, 15.9, rt);
+    const lateA = first && run.over ? ease((run.el - TICK) / 0.25) : 0;
+    const clear = first ? 1 - ease((t - 13.9) / 0.3) : 1;
+    reg(ctx, REG.A2, p2a, run.el > 0 ? 1 - ease(run.el / 0.5) : 0);
+    reg(ctx, B2, p2a, run.done ? (first ? 0.35 : 1 - 0.5 * ease((run.el - run.need) / 1.2)) : 0, lateA > 0 ? [PAL.garnet, lateA * clear] : null);
+    if (run.el > 0) {
+      line(ctx, sub(rt, run.d), C.blue, 2.2, (first ? clear : 1) * (run.done && !first ? 1 - 0.6 * ease((run.el - run.need) / 1.0) : 1) * (first ? 1 - 0.5 * lateA : 1));
+      if (!run.done) dot(ctx, ...at(rt, run.d), first ? 1 - 0.5 * lateA : 1);
+    }
+    const ringA = (first ? ease((t - 10.6) / 0.4) * (1 - ease((t - 14.0) / 0.3)) : ease((t - 15.4) / 0.4) * (1 - ease((t - 18.4) / 0.4)));
+    ring(ctx, B2, ringA, run.el < 0 ? 1 : run.left, first ? (run.over && !run.done ? 'late' : run.done ? '' : '') : (run.done ? 'ok' : ''));
+    tag(ctx, 'Late', 457, 325, PAL.garnet, lateA * (1 - ease((t - 14.0) / 0.3)));
+    tag(ctx, 'In time', 225, 293, C.blue, !first ? ease((run.el - run.need) / 0.3) * (1 - ease((t - 18.4) / 0.3)) : 0);
+  }
+
+  heads(ctx, t);
+  // readouts: billions of switches, then the length of one tick
+  const r0 = ease((t - 5.0) / 0.5) * (1 - ease((t - 6.3) / 0.3));
+  readout(ctx, 'Billions', 'switches', 'Each one placed and wired', r0);
+  readout(ctx, '< 1', 'billionth of a second', 'The length of one tick', ease((t - 6.7) / 0.4));
+  const lg = ease((t - 6.9) / 0.4) * (1 - ease((t - 18.4) / 0.4));
+  if (lg > 0) { ring(ctx, [527, 252], lg * 0.9, 0.7, '', 7); label('Time left in the tick', 548, 252, PAL.muted, { base: 'middle', alpha: lg }); }
+}
+A.start({ W, H, duration: 23.2, fade: 0.8, steps: STEPS, render });
+</script></body></html>

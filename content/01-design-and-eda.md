@@ -44,6 +44,7 @@
  {"fact": "Nearly 20% of the world's chip design engineers work in India", "source": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2148393"}
  ],
  "figures": [
+ {"id": "design-timing", "type": "animation", "src": "chip-design", "title": "How a chip is designed", "note": "Simplified. Not to scale. The floorplan follows a GPU die; one tick, less than a billionth of a second, is slowed to about two seconds."},
  {
  "id": "eda-share",
  "type": "stack",
@@ -78,6 +79,8 @@ Design is the only stage in this chain with no factory, and the one a foreign go
 ## How it works
 
 Chip design turns an idea for a new chip into a complete blueprint. A chip holds billions of transistors, tiny electrical switches, and the blueprint fixes where each one sits and how it is wired to the others. The chip works in ticks, and a signal has to cross those wires within one tick, less than a billionth of a second. Software from three companies, Synopsys, Cadence and Siemens, lays out a plan like that, checks it and signs it off, and a chip factory accepts only designs that have passed those tools. The factory prints each layer of the design onto silicon through a stencil, and changing the plan after that costs a fresh set of stencils and several months. Withhold the software and no new chip can be designed.
+
+{{figure:design-timing}}
 
 Design runs in five stages, each one's output the next one's input, all of it in software.
 

@@ -1,0 +1,33 @@
+{
+ "duration": 23.2,
+ "fade": 0.8,
+ "width": 760,
+ "height": 420,
+ "steps": [
+  {
+   "k": "A blueprint",
+   "t0": 0.4,
+   "cap": "Making a chip starts with design, which turns an idea into a complete blueprint. The blueprint fixes where each of the chip\u2019s billions of switches sits and how each one is wired to the others."
+  },
+  {
+   "k": "One tick",
+   "t0": 6.2,
+   "cap": "The chip works in ticks, each less than a billionth of a second. On every tick a signal leaves a register, a small store that holds one number, and it has to cross its wire to the next register before the next tick."
+  },
+  {
+   "k": "Too far",
+   "t0": 10.4,
+   "cap": "If the next register sits far away, the wire is long. The signal is still on its way when the next tick comes, so it arrives too late."
+  },
+  {
+   "k": "Placed closer",
+   "t0": 14.2,
+   "cap": "Design software from three companies, Synopsys, Cadence and Siemens, places the parts and wires them together. Here it moves the register closer, and the signal arrives in time."
+  },
+  {
+   "k": "Checked",
+   "t0": 18.4,
+   "cap": "The software checks that every signal on the chip arrives in time, and a chip factory accepts only designs that pass. The factory then prints the blueprint onto silicon through stencils, and changing it after that costs new stencils and several months."
+  }
+ ]
+}

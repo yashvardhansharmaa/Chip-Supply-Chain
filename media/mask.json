@@ -1,0 +1,33 @@
+{
+ "duration": 23.2,
+ "fade": 0.8,
+ "width": 760,
+ "height": 420,
+ "steps": [
+  {
+   "k": "The scanner",
+   "t0": 0.4,
+   "cap": "A photomask is the stencil that lithography prints from, one for each layer of a chip. Inside the scanner, light bounces off the mask and carries its pattern down to the wafer."
+  },
+  {
+   "k": "A mirror",
+   "t0": 4.8,
+   "cap": "No glass lets the short light now in use pass through. So the mask is a mirror, built up from about forty pairs of very thin layers laid on glass, and the light bounces off it."
+  },
+  {
+   "k": "The pattern",
+   "t0": 9.6,
+   "cap": "A dark pattern drawn on the mirror soaks up the light wherever no line should print. The light that bounces back carries the pattern of one layer."
+  },
+  {
+   "k": "Wafer after wafer",
+   "t0": 13.6,
+   "cap": "The same mask prints its layer on wafer after wafer, so one plate shapes millions of chips."
+  },
+  {
+   "k": "One speck",
+   "t0": 17.6,
+   "cap": "A speck of dust on the mask prints on every wafer, until someone finds it. The pellicle, a dust cover meant to protect the mask, is still short of production in a leading-edge fab."
+  }
+ ]
+}

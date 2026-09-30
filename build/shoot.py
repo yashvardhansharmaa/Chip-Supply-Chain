@@ -13,7 +13,7 @@ def opt(name, default):
     return type(default)(args[args.index(name) + 1]) if name in args else default
 width = opt('--width', 390 if mobile else 1366); height = opt('--height', 844 if mobile else 900)
 full = '--full' in args; printmedia = '--print' in args; wait = opt('--wait', 4.0); ev = opt('--eval', '')  # --eval runs a script (may return a promise) before the shot, e.g. to hover a footnote
-port = 9333
+port = opt("--port", 9333)
 chrome = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 proc = subprocess.Popen([chrome, '--headless=new', '--disable-gpu', '--hide-scrollbars', '--no-first-run', '--no-default-browser-check',
                          f'--remote-debugging-port={port}', f'--user-data-dir=/tmp/cp-shoot-profile-{os.getpid()}', 'about:blank'],

@@ -45,6 +45,7 @@
  {"fact": "Photronics, the largest mask maker selling to outside customers, had $849.3 million of revenue in fiscal 2025, of which $615.1 million was IC masks", "source": "https://www.globenewswire.com/news-release/2025/12/10/3203040/0/en/Photronics-Reports-Full-Year-and-Fourth-Quarter-Fiscal-2025-Results.html"}
  ],
  "figures": [
+ {"id": "mask-mirror", "type": "animation", "src": "mask", "title": "How a photomask prints its pattern", "note": "Simplified. The mask is drawn face down, as it sits in the scanner. The mirror layers and the dark pattern are drawn far thicker than they are, and the light's path through the scanner's mirrors is cut to one bounce."},
  {
  "id": "mask-set-cost",
  "type": "bars",
@@ -63,6 +64,8 @@ Every EUV layer on an AI accelerator needs a flawless mask, built on a blank pla
 ## How it works
 
 A photomask is the stencil that lithography prints from, one for each layer of a chip. The same plate prints its layer on wafer after wafer, so one plate shapes millions of chips. No glass lets the short light now in use pass through, so instead of a window the plate is a mirror, built up from about forty pairs of very thin layers, and the light bounces off it. A dark pattern drawn on top of the mirror soaks up the light wherever no line should print. Any speck of dust on the plate repeats on every wafer it prints. Two Japanese firms make almost all of those mirrors. A business almost nobody has heard of can hold up every advanced chip in the world.
+
+{{figure:mask-mirror}}
 
 A mask starts as a blank, a polished plate with nothing on it yet. For deep ultraviolet the blank is a window of quartz carrying a light-blocking film such as molybdenum silicide, and Shin-Etsu supplies those blanks ([source](https://www.shinetsu.co.jp/en/products/electronics-materials/photomask-blanks/)). For EUV the blank is a mirror of about 40 molybdenum and silicon layer pairs, 7 nm to a pair, laid on low-expansion glass, with a dark tantalum film on top, the absorber, that will carry the pattern ([source](https://arxiv.org/pdf/1912.09075)).
 

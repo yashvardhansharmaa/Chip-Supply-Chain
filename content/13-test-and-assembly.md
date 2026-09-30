@@ -42,6 +42,7 @@
     {"fact": "Malaysia ships about 13% of the world's packaged chips and is targeting 7% of advanced packaging shipments by 2035", "source": "https://www.mida.gov.my/advanced-packaging-how-malaysia-is-packaging-the-future-of-ai/"}
   ],
   "figures": [
+    {"id": "wafer-probe", "type": "animation", "src": "wafer-test", "title": "How a chip is tested", "note": "Simplified. Nine needles stand for thousands, and the failed chips are placed for illustration and show no real yield. The package follows chapter 11: two logic chips and eight memory stacks on a silicon base and a package base."},
     {
       "id": "ate-share",
       "type": "stack",
@@ -76,6 +77,8 @@ Semiconductor manufacturing runs to 400 to 600 steps, and Advantest counts test 
 ## How it works
 
 Before a chip can be sold, a machine has to put questions to it and check every answer. While the chips are still on the wafer, thousands of needles press onto small metal pads on each one, send in signals and read what comes back; the tester marks any chip that answers wrong, and that chip goes no further. A modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them. So the industry tests sooner, hotter and longer than it used to, to make a weak chip fail on the test bench before it reaches a finished product, and two firms, one Japanese and one American, sell most of the machines that do it.
+
+{{figure:wafer-probe}}
 
 Each round of test catches failures the round before it cannot see.
 

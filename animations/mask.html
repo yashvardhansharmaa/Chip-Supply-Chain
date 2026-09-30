@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>How a Photomask Works</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Instrument+Sans:wght@400;500;600&display=swap">
+</head><body>
+<script src="lib.js"></script>
+<script>
+const { PAL, clamp, ease, easeOut, mix, label, text } = A, dark = A.theme === 'dark';
+// Facts, from chapter 5's How it works: a photomask is the stencil lithography prints from, one for each layer of a
+// chip; the same plate prints its layer on wafer after wafer, so one plate shapes millions of chips; no glass lets the
+// short light now in use pass through, so the plate is a mirror built up from about forty pairs of very thin layers laid
+// on glass, and the light bounces off it; a dark pattern on the mirror soaks up the light wherever no line should print;
+// any speck of dust on the plate repeats on every wafer it prints, until someone finds it. The light strikes the mask at
+// a slant, and the pattern is four times larger than it prints. From the one-liner: the dust cover meant to protect
+// the mask is still not in production. From chapter 4: EUV scanners carry the light with mirrors.
+// The mask is drawn as it sits in the scanner, face down, with the light arriving from below. Every thickness is
+// exaggerated, and the light's path through the scanner's mirrors is shortened to one bounce.
+const STEPS = [
+  { k: 'The scanner', t0: 0.4, t1: 4.8, cap: 'A photomask is the stencil that lithography prints from, one for each layer of a chip. Inside the scanner, light bounces off the mask and carries its pattern down to the wafer.' },
+  { k: 'A mirror', t0: 4.8, t1: 9.6, cap: 'No glass lets the short light now in use pass through. So the mask is a mirror, built up from about forty pairs of very thin layers laid on glass, and the light bounces off it.' },
+  { k: 'The pattern', t0: 9.6, t1: 13.6, cap: 'A dark pattern drawn on the mirror soaks up the light wherever no line should print. The light that bounces back carries the pattern of one layer.' },
+  { k: 'Wafer after wafer', t0: 13.6, t1: 17.6, cap: 'The same mask prints its layer on wafer after wafer, so one plate shapes millions of chips.' },
+  { k: 'One speck', t0: 17.6, t1: 22.4, cap: 'A speck of dust on the mask prints on every wafer, until someone finds it. The pellicle, a dust cover meant to protect the mask, is still short of production in a leading-edge fab.' },
+];
+// one headline at a time; each fades out before the next fades in
+const HEADS = [
+  { t0: 0.4, t1: 2.6, h: 'Inside a lithography scanner', s: 'Seen from the side' },
+  { t0: 2.6, t1: 5.0, h: 'The photomask', s: 'The stencil for one layer of a chip' },
+  { t0: 5.0, t1: 7.2, h: 'Glass stops this light', s: 'The light now in use is too short to pass' },
+  { t0: 7.2, t1: 9.8, h: 'So the mask is a mirror', s: 'About forty pairs of very thin layers' },
+  { t0: 9.8, t1: 13.8, h: 'A dark pattern on the mirror', s: 'It soaks up light where no line should print' },
+  { t0: 13.8, t1: 17.9, h: 'One mask, wafer after wafer', s: 'Each wafer gets the same layer' },
+  { t0: 17.9, h: 'A speck of dust on the mask', s: 'It prints on every wafer that follows', red: 1 },
+];
+function heads(ctx, t) {
+  HEADS.forEach(({ t0, t1, h, s, red }) => {
+    const a = Math.min(ease((t - t0) / 0.35), t1 == null ? 1 : ease((t1 - t) / 0.35));
+    if (a <= 0) return;
+    text(h, 40, 62, '500 20px Fraunces', red ? PAL.garnet : PAL.ink, { alpha: a });
+    text(s, 40, 86, '400 16px "Source Serif 4"', PAL.ink2, { alpha: a });
+  });
+}
+const pr = (i, t) => clamp((t - STEPS[i].t0) / (STEPS[i].t1 - STEPS[i].t0));
+const W = 760, H = 420, V = PAL.violet;
+const C = {
+  glass: dark ? '#2b3540' : '#dbe4ea', glassEdge: dark ? '#44515e' : '#b7c4ce',
+  mo: dark ? '#56606c' : '#737d8a', si: dark ? '#9aa3ae' : '#d3d8de',
+  abs: dark ? '#07080a' : '#1d2229', absEdge: dark ? '#4a525d' : '#1d2229',
+  house: dark ? '#191d23' : '#efede7', stage: dark ? '#2c3138' : '#d8d4cc',
+  wafer: dark ? ['#8d959f', '#737c87', '#a2a9b2', '#666f7a'] : ['#d9dde2', '#c2c8cf', '#e4e7eb', '#b3bac2'],
+  print: dark ? 'rgba(20,23,28,0.55)' : 'rgba(20,24,31,0.42)', printFill: dark ? 'rgba(20,23,28,0.16)' : 'rgba(20,24,31,0.07)',
+};
+
+// ---- opening: the scanner from the side; it then moves to the corner and stays there, the mask marked
+const P = [[150, 334], [250, 144], [302, 239], [240, 346]];        // light source, mask, mirror, wafer
+const SEG = P.slice(1).map((q, i) => Math.hypot(q[0] - P[i][0], q[1] - P[i][1])), LEN = SEG.reduce((a, b) => a + b);
+const HOUSE = [110, 116], INSET = { x: 520, y: 284, s: 0.34 };
+function beamPath(ctx, f) {
+  let left = f * LEN; ctx.beginPath(); ctx.moveTo(...P[0]);
+  for (let i = 0; i < SEG.length && left > 0; i++) { const u = Math.min(1, left / SEG[i]); ctx.lineTo(mix(P[i][0], P[i + 1][0], u), mix(P[i][1], P[i + 1][1], u)); left -= SEG[i]; }
+}
+function drawScanner(ctx, m, a, beam, hi, mark) {
+  if (a <= 0) return;
+  const sc = mix(1, INSET.s, m), X = mix(HOUSE[0], INSET.x, m), Y = mix(HOUSE[1], INSET.y, m);
+  ctx.save(); ctx.globalAlpha = a; ctx.translate(X, Y); ctx.scale(sc, sc); ctx.translate(-HOUSE[0], -HOUSE[1]);
+  ctx.fillStyle = C.house; ctx.strokeStyle = PAL.line; ctx.lineWidth = 1.2 / sc;
+  ctx.beginPath(); ctx.roundRect(110, 116, 280, 256, 14); ctx.fill(); ctx.stroke();
+  // mask, face down: glass above, mirror below
+  ctx.fillStyle = C.glass; ctx.fillRect(212, 128, 76, 11); ctx.fillStyle = C.mo; ctx.fillRect(212, 139, 76, 5);
+  // one of the scanner's mirrors, curved, facing the light
+  ctx.strokeStyle = dark ? '#aeb6bf' : '#6a7480'; ctx.lineWidth = 5; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.arc(330, 239, 26, Math.PI * 0.86, Math.PI * 1.14); ctx.stroke();
+  // wafer on its stage
+  ctx.fillStyle = C.stage; ctx.fillRect(186, 352, 108, 10);
+  ctx.fillStyle = dark ? '#8d959f' : '#2c323b'; ctx.fillRect(196, 346, 88, 6);
+  // light: a glowing source and a thread along its path
+  if (beam > 0) {
+    const g = ctx.createRadialGradient(150, 334, 0, 150, 334, 14); g.addColorStop(0, `rgba(${V},0.9)`); g.addColorStop(1, `rgba(${V},0)`);
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(150, 334, 14, 0, 7); ctx.fill();
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.strokeStyle = `rgba(${V},0.18)`; ctx.lineWidth = 7; beamPath(ctx, beam); ctx.stroke();
+    ctx.strokeStyle = `rgba(${V},0.9)`; ctx.lineWidth = 1.8; beamPath(ctx, beam); ctx.stroke();
+  }
+  if (hi > 0) { ctx.globalAlpha = a * hi; ctx.strokeStyle = PAL.garnet; ctx.lineWidth = 2.2 / sc; ctx.strokeRect(209, 125, 82, 22); }
+  ctx.restore();
+  // the marker keeps its size at any scale
+  if (mark > 0) {
+    const mx = X + (250 - HOUSE[0]) * sc, my = Y + (136 - HOUSE[1]) * sc;
+    ctx.save(); ctx.globalAlpha = a * mark; ctx.fillStyle = PAL.garnet; ctx.strokeStyle = PAL.bg; ctx.lineWidth = 1.6;
+    ctx.fillRect(mx - 4.5, my - 4.5, 9, 9); ctx.strokeRect(mx - 4.5, my - 4.5, 9, 9); ctx.restore();
+  }
+}
+
+// ---- the mask up close, face down: glass, then the mirror layers under it, then the dark pattern
+const X0 = 60, X1 = 380, GT = 120, GB = 150, NP = 40, PH = 1.6, SB = GB + NP * PH, AH = 12;
+const IL = 150, IR = 290, K = 0.75, Y_IN = 330, WY = 366;           // lit stretch of mirror, slant, wafer row
+const BLOCKS = [[60, 90], [102, 114], [126, 150], [162, 174], [186, 198], [222, 234], [246, 258], [270, 300], [312, 324], [336, 348], [360, 380]];
+const inBlock = (x) => BLOCKS.some(([a, b]) => x > a && x < b);
+const SPECK = [210, SB + 4], HOLE = [205, 215];
+// where reflected light from mirror point x has reached at height y: it slants off and shrinks four times by the wafer
+const out = (x, y) => [220 + K * (y - SB) + (x - 220) * (1 - 0.75 * (y - SB) / (WY - SB)), y];
+
+function maskView(ctx, t, p, detA) {
+  const [, p1, p2, p3, p4] = p;
+  const pairs = NP * ease((p1 - 0.3) / 0.45), full = Math.floor(pairs), bottom = GB + pairs * PH;
+  const absA = ease((p2 - 0.1) / 0.35), speck = ease((p4 - 0.28) / 0.08);
+  const lightA = ease(p1 / 0.14) * detA, refl = Math.pow(pairs / NP, 0.7);
+  const reach = mix(330, WY, ease(p3 / 0.25));                      // how far the reflected light is drawn
+  // incoming light, a soft band arriving at a slant from below left
+  if (lightA > 0) {
+    const top = pairs > 0 ? bottom : GB, x0 = IL - K * (top - SB) + 0, dx = K * (Y_IN - top);
+    const g = ctx.createLinearGradient(0, Y_IN, 0, top); g.addColorStop(0, `rgba(${V},0)`); g.addColorStop(1, `rgba(${V},${0.3 * lightA})`);
+    ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(x0 - dx, Y_IN); ctx.lineTo(x0 + (IR - IL) - dx, Y_IN); ctx.lineTo(x0 + (IR - IL), top); ctx.lineTo(x0, top); ctx.closePath(); ctx.fill();
+  }
+  // glass
+  ctx.save(); ctx.globalAlpha = detA;
+  ctx.fillStyle = C.glass; ctx.fillRect(X0, GT, X1 - X0, GB - GT); ctx.strokeStyle = C.glassEdge; ctx.lineWidth = 1; ctx.strokeRect(X0 + 0.5, GT + 0.5, X1 - X0 - 1, GB - GT - 1);
+  ctx.restore();
+  // with no mirror yet, the light dies in the glass
+  const die = lightA * (1 - ease((p1 - 0.3) / 0.15));
+  if (die > 0) {
+    const x0 = IL + K * (SB - GB), g = ctx.createLinearGradient(0, GB, 0, GB - 18);
+    g.addColorStop(0, `rgba(${V},${0.45 * die})`); g.addColorStop(1, `rgba(${V},0)`);
+    ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(x0, GB); ctx.lineTo(x0 + IR - IL, GB); ctx.lineTo(x0 + IR - IL + K * 18, GB - 18); ctx.lineTo(x0 + K * 18, GB - 18); ctx.closePath(); ctx.fill();
+  }
+  // mirror layers, laid pair by pair on the glass
+  for (let n = 0; n < Math.ceil(pairs); n++) {
+    const y = GB + n * PH, a = n < full ? 1 : pairs - full;
+    ctx.save(); ctx.globalAlpha = detA * a;
+    ctx.fillStyle = C.mo; ctx.fillRect(X0, y, X1 - X0, PH / 2); ctx.fillStyle = C.si; ctx.fillRect(X0, y + PH / 2, X1 - X0, PH / 2);
+    ctx.restore();
+  }
+  // reflected light: bright wherever the mirror is bare, cut wherever the dark pattern or the speck sits
+  if (refl > 0 && lightA > 0) {
+    const edges = [IL, IR]; BLOCKS.forEach(([a, b]) => edges.push(a, b)); edges.push(...HOLE);
+    const xs = [...new Set(edges.filter((x) => x >= IL && x <= IR))].sort((a, b) => a - b);
+    for (let i = 0; i < xs.length - 1; i++) {
+      const xa = xs[i], xb = xs[i + 1], mid = (xa + xb) / 2;
+      let s = inBlock(mid) ? 1 - absA : 1;
+      if (mid > HOLE[0] && mid < HOLE[1]) s *= 1 - speck;
+      if (s <= 0.01) continue;
+      const top = pairs < NP ? bottom : SB, A0 = out(xa, top), B0 = out(xb, top), A1 = out(xa, reach), B1 = out(xb, reach);
+      const g = ctx.createLinearGradient(0, top, 0, reach), al = 0.55 * lightA * refl * s;
+      g.addColorStop(0, `rgba(${V},${al})`); g.addColorStop(0.8, `rgba(${V},${al * (p3 > 0 ? 0.85 : 0.35)})`); g.addColorStop(1, `rgba(${V},${p3 > 0 ? al * 0.85 * ease(p3 / 0.25) : 0})`);
+      ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(...A0); ctx.lineTo(...B0); ctx.lineTo(...B1); ctx.lineTo(...A1); ctx.closePath(); ctx.fill();
+    }
+  }
+  // the dark pattern, hanging under the mirror
+  if (absA > 0) {
+    ctx.save(); ctx.globalAlpha = detA * absA;
+    BLOCKS.forEach(([a, b]) => { ctx.fillStyle = C.abs; ctx.fillRect(a, SB, b - a, AH * absA); if (dark) { ctx.strokeStyle = C.absEdge; ctx.lineWidth = 0.8; ctx.strokeRect(a + 0.4, SB, b - a - 0.8, AH * absA - 0.4); } });
+    ctx.restore();
+  }
+  // labels, right of the plate
+  label('Glass', 392, 139, PAL.ink2, { alpha: detA });
+  label('Mirror', 392, 186, PAL.ink2, { alpha: detA * ease((pairs - 16) / 10) });
+  label('Dark pattern', 392, SB + 11, PAL.ink2, { alpha: detA * absA });
+  label('Light', 40, 282, PAL.violetInk, { alpha: lightA });
+  // the speck drifts in under the mask and sticks to the mirror
+  const drift = ease((p4 - 0.06) / 0.24);
+  if (drift > 0) {
+    const sx = mix(44, SPECK[0], drift), sy = mix(262, SPECK[1], drift) + Math.sin(drift * 7) * 5 * (1 - drift);
+    ctx.save(); ctx.globalAlpha = ease(drift / 0.15); ctx.fillStyle = dark ? '#d9d4c7' : '#3a3530';
+    ctx.beginPath(); ctx.arc(sx, sy, 3.6, 0, 7); ctx.arc(sx + 2.6, sy - 1.2, 2.4, 0, 7); ctx.arc(sx - 2, sy + 1.6, 2, 0, 7); ctx.fill();
+    ctx.restore();
+    const ring = ease((p4 - 0.3) / 0.12);
+    if (ring > 0) {
+      ctx.save(); ctx.globalAlpha = ring; ctx.strokeStyle = PAL.garnet; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.arc(SPECK[0], SPECK[1], 9, 0, 7); ctx.stroke();
+      // its shadow rides down with the light to the wafer
+      ctx.globalAlpha = ring * 0.8; ctx.lineWidth = 1; ctx.setLineDash([2, 3]); ctx.beginPath(); ctx.moveTo(...out(SPECK[0], SB + 13)); ctx.lineTo(...out(SPECK[0], WY - 2)); ctx.stroke(); ctx.setLineDash([]);
+      ctx.globalAlpha = ring;
+      ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(SPECK[0] - 9, SPECK[1] + 3); ctx.lineTo(118, 240); ctx.stroke(); ctx.restore();
+      label('Dust', 114, 244, PAL.garnet, { align: 'right', alpha: ring });
+    }
+  }
+}
+
+// ---- wafers, seen from above, passing one by one under the light
+const WR = 26, GAP = 66, SLOT = out(220, WY)[0], T_ROW = 13.9, PER = 0.95;
+const T_SPECK = STEPS[4].t0 + (STEPS[4].t1 - STEPS[4].t0) * 0.36;
+const CELLS = [];
+for (let j = -3; j <= 3; j++) for (let i = -3; i <= 3; i++) {
+  const x = i * 9 - 4, y = j * 10 - 4.5;
+  if (Math.max(Math.hypot(x, y), Math.hypot(x + 8, y), Math.hypot(x, y + 9), Math.hypot(x + 8, y + 9)) < WR - 2) CELLS.push([x, y]);
+}
+function wafers(ctx, t, rowA) {
+  if (rowA <= 0) return;
+  const c = Math.max(0, (t - T_ROW) / PER), s = Math.floor(c) + ease((c - Math.floor(c)) / 0.37);
+  for (let i = 0; i < 16; i++) {
+    const x = SLOT + GAP * (s - 1 - i);
+    if (x < 50 || x > 500) continue;
+    const a = rowA * Math.min(ease((x - 50) / 30), ease((500 - x) / 40));
+    if (a <= 0) continue;
+    const pp = clamp((c - i - 0.4) / 0.45), flawed = T_ROW + (i + 0.4) * PER > T_SPECK;
+    ctx.save(); ctx.globalAlpha = a;
+    const g = ctx.createLinearGradient(x - WR, WY - WR, x + WR, WY + WR); C.wafer.forEach((col, k) => g.addColorStop([0, 0.45, 0.55, 1][k], col));
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, WY, WR, 0, 7); ctx.fill();
+    ctx.strokeStyle = dark ? 'rgba(236,233,226,0.35)' : 'rgba(20,24,31,0.4)'; ctx.lineWidth = 1; ctx.stroke();
+    // the layer, printed patch by patch as the wafer sits under the light
+    const nDone = Math.floor(pp * CELLS.length + 0.001);
+    CELLS.slice(0, nDone).forEach(([cx, cy]) => {
+      ctx.fillStyle = C.printFill; ctx.fillRect(x + cx, WY + cy, 8, 9);
+      ctx.fillStyle = C.print; ctx.fillRect(x + cx + 1.5, WY + cy + 1.5, 1.2, 6); ctx.fillRect(x + cx + 5.3, WY + cy + 1.5, 1.2, 6);
+      if (flawed) { ctx.fillStyle = PAL.garnet; ctx.beginPath(); ctx.arc(x + cx + 4, WY + cy + 4.5, 1.7, 0, 7); ctx.fill(); }
+    });
+    ctx.restore();
+  }
+  label('Wafers', 40, 410, PAL.muted, { alpha: rowA });
+}
+
+function readout(ctx, n, unit, name, a) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = PAL.garnet; ctx.fillRect(504, 164, 2, 54); ctx.restore();
+  text(n, 520, 200, '300 44px Fraunces', PAL.garnet, { alpha: a }); ctx.font = '300 44px Fraunces'; const w = ctx.measureText(n).width;
+  text(unit, 520 + w + 7, 200, '500 13px "Instrument Sans"', PAL.garnet, { alpha: a });
+  label(name, 520, 219, PAL.muted, { alpha: a });
+}
+
+function render(ctx, t) {
+  ctx.fillStyle = PAL.bg; ctx.fillRect(0, 0, W, H);
+  const q = pr(0, t), p = [0, 1, 2, 3, 4].map((i) => pr(i, t));
+  // the scanner, then its place in the corner
+  const m = ease((q - 0.56) / 0.26), beam = ease((q - 0.08) / 0.34), hi = ease((q - 0.44) / 0.12);
+  const la = ease((q - 0.12) / 0.15) * (1 - ease((q - 0.5) / 0.08));
+  drawScanner(ctx, m, ease(q / 0.12), beam, hi * (1 - m), ease((q - 0.7) / 0.12));
+  label('Light', 150, 363, PAL.violetInk, { align: 'center', alpha: la * beam });
+  label('Mirror', 316, 244, PAL.ink2, { alpha: la });
+  label('Wafer', 292, 354, PAL.ink2, { alpha: la });
+  label('Mask', 200, 141, PAL.garnet, { align: 'right', alpha: ease((q - 0.44) / 0.12) * (1 - ease((q - 0.54) / 0.06)) });
+  label('The scanner', INSET.x, 390, PAL.muted, { alpha: ease((q - 0.8) / 0.2) });
+  heads(ctx, t);
+  const detA = ease((q - 0.84) / 0.16);
+  if (detA > 0) { wafers(ctx, t, ease(p[3] / 0.15)); maskView(ctx, t, p, detA); }
+  // readouts: the mirror's layer pairs, then the one mask behind every wafer
+  const swap = ease(p[3] / 0.15), pairs = Math.round(NP * ease((p[1] - 0.3) / 0.45));
+  readout(ctx, String(pairs), 'layer pairs', 'In the mirror', ease((p[1] - 0.3) / 0.12) * (1 - swap));
+  readout(ctx, '1', 'mask', 'On wafer after wafer', ease((p[3] - 0.15) / 0.15));
+}
+A.start({ W, H, duration: 23.2, fade: 0.8, steps: STEPS, render });
+</script></body></html>

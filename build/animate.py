@@ -23,7 +23,7 @@ themes = opt('--themes', 'light,dark').split(',')
 page = os.path.join(ROOT, 'animations', name + '.html')
 media = os.path.join(ROOT, 'media'); os.makedirs(media, exist_ok=True)
 chrome = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
-port = 9412
+port = opt("--port", 9412)  # --port lets two renders run side by side
 
 def run_theme(theme):
     frames = os.path.join('/tmp', f'cp-anim-{name}-{theme}-{os.getpid()}'); shutil.rmtree(frames, ignore_errors=True); os.makedirs(frames)

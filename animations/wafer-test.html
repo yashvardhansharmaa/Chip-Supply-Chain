@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>How a Chip Is Tested</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Instrument+Sans:wght@400;500;600&display=swap">
+</head><body>
+<script src="lib.js"></script>
+<script>
+const { PAL, clamp, ease, easeOut, mix, mixc, rng, label, text } = A, dark = A.theme === 'dark';
+// Facts, from chapter 13: every stage before this one makes dies, and assembly and test decide which go into a package;
+// before a chip can be sold, a machine puts questions to it and checks every answer; while the chips are still on the
+// wafer, thousands of needles on a probe card press onto small metal pads on each one, send in signals and read what
+// comes back; the tester marks any chip that answers wrong, and that chip goes no further; a modern accelerator glues
+// together a dozen expensive pieces, and one bad piece throws away all of them. The pass and fail pattern is
+// illustrative, not a yield. Nine needles stand for thousands. The package follows chapter 11: two logic chips and eight
+// memory stacks on a silicon base, on a package base, twelve pieces in all.
+const STEPS = [
+  { k: 'The wafer', t0: 0.4, t1: 5.0, cap: 'Every stage so far makes chips. Before any of them can be sold, a machine tests each one, starting while the chips are still on the wafer.' },
+  { k: 'Needles', t0: 5.0, t1: 8.8, cap: 'A probe card lowers thousands of needles onto one chip. They press onto small metal pads on its surface.' },
+  { k: 'Questions and answers', t0: 8.8, t1: 12.6, cap: 'Through the needles, the tester sends signals into the chip and reads what comes back. It checks every answer.' },
+  { k: 'Chip by chip', t0: 12.6, t1: 17.4, cap: 'The tester steps from chip to chip across the wafer. It marks any chip that answers wrong, and that chip goes no further.' },
+  { k: 'Into the package', t0: 17.4, t1: 22.4, cap: 'Only chips that pass go on to be packaged. A modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them, so each piece is tested before it goes in.' },
+];
+// one headline at a time; each fades out before the next fades in
+const HEADS = [
+  { t0: 0.4, t1: 2.9, h: 'A finished wafer of chips', s: 'Made, but not yet tested' },
+  { t0: 2.9, t1: 5.1, h: 'Each chip is tested next', s: 'While it is still on the wafer' },
+  { t0: 5.1, t1: 9.0, h: 'Needles press onto the chip', s: 'Thousands of them, on small metal pads' },
+  { t0: 9.0, t1: 12.7, h: 'Signals in, answers out', s: 'The tester checks every answer' },
+  { t0: 12.7, t1: 17.5, h: 'Chip by chip across the wafer', s: 'A chip that answers wrong goes no further' },
+  { t0: 17.5, t1: 20.2, h: 'Good chips go on to be packaged', s: 'A dozen pieces in one accelerator' },
+  { t0: 20.2, h: 'One bad piece would waste them all', s: 'So each chip is tested before it goes in', red: 1 },
+];
+function heads(ctx, t) {
+  HEADS.forEach(({ t0, t1, h, s, red }) => {
+    const a = Math.min(ease((t - t0) / 0.35), t1 == null ? 1 : ease((t1 - t) / 0.35));
+    if (a <= 0) return;
+    text(h, 40, 62, '500 20px Fraunces', red ? PAL.garnet : PAL.ink, { alpha: a });
+    text(s, 40, 86, '400 16px "Source Serif 4"', PAL.ink2, { alpha: a });
+  });
+}
+const pr = (i, t) => clamp((t - STEPS[i].t0) / (STEPS[i].t1 - STEPS[i].t0));
+const W = 760, H = 420, CX = 255;
+const C = {
+  wafer: dark ? ['#8d959f', '#737c87', '#a2a9b2', '#666f7a'] : ['#d9dde2', '#c2c8cf', '#e4e7eb', '#b3bac2'],
+  tile: dark ? '#3a4351' : '#3a4452', si: dark ? ['#9aa3ad', '#7d8691'] : ['#c9ced4', '#aab1b9'],
+  die: dark ? '#3c4655' : '#2f3845', pad: dark ? '#d5dae0' : '#cfd4da',
+  card: dark ? ['#56606d', '#434b57'] : ['#46505d', '#303844'], plate: dark ? '#8e97a2' : '#9aa2ab', needle: dark ? '#a9b0b9' : '#5c636d',
+  sub: dark ? '#4a5838' : '#6b7b4f', inter: dark ? '#9aa3ad' : '#d3d8dd', chip: dark ? '#39424f' : '#2f3845', hbm: dark ? '#4a5360' : '#434b57',
+  hbmLine: dark ? '#6c7686' : '#5c6675', tileGrid: dark ? '#4a5667' : '#3c4859',
+};
+const VIO = (a) => `rgba(${PAL.violet},${a})`, FAILC = dark ? '#d9534f' : '#a33341';   // a failed chip, in the garnet family but bright enough to read on a dark die
+
+// ---- the wafer, seen from above: a grid of dies, tested in rows, back and forth
+const WC = [250, 244], WR = 128, PITCH = 19, DS = 17;
+const DIES = [];
+for (let j = -7; j <= 6; j++) {
+  const row = [];
+  for (let i = -7; i <= 6; i++) {
+    const x = i * PITCH + 1, y = j * PITCH + 1;
+    if (Math.max(Math.hypot(x, y), Math.hypot(x + DS, y), Math.hypot(x, y + DS), Math.hypot(x + DS, y + DS)) <= WR - 5) row.push({ x, y });
+  }
+  if (row.length) DIES.push(...((DIES.length ? (j % 2 ? row.reverse() : row) : row)));
+}
+// the illustrative fail pattern: the second chip probed fails; a few others scattered, more near the edge
+const R = rng(7);
+DIES.forEach((d, i) => { const r = Math.hypot(d.x + DS / 2, d.y + DS / 2) / WR; d.fail = i === 1 || (i > 3 && R() < 0.03 + 0.1 * r * r * r); });
+// the four chips probed in the side view; after them the rest of the wafer fills in quickly
+const PROBES = [
+  { down: [6.1, 7.4], pulse: [9.0, 11.5], verdict: 11.8 },
+  { lift: [12.6, 12.95], shift: [12.95, 13.45], down: [13.45, 13.8], pulse: [13.85, 14.4], verdict: 14.5 },
+  { lift: [14.65, 14.8], shift: [14.8, 15.05], down: [15.05, 15.2], pulse: [15.2, 15.5], verdict: 15.55 },
+  { lift: [15.65, 15.8], shift: [15.8, 16.05], down: [16.05, 16.2], pulse: [16.2, 16.5], verdict: 16.55 },
+];
+DIES.forEach((d, i) => { d.vt = i < 4 ? PROBES[i].verdict : 16.7 + ((i - 4) / (DIES.length - 4)) * 0.65; });
+// two chips that passed, near the middle, are the ones seen later moving into the package
+const SRC = DIES.map((d, i) => [d, i]).filter(([d]) => !d.fail && Math.abs(d.y + 9) < 12 && Math.abs(d.x + 9) < 20).slice(0, 2).map(([d]) => d);
+const FLY = [19.0, 19.9];
+const INSET = { x: 590, y: 312, s: 0.42 };
+const inScreen = (d, m) => { const sc = mix(1, INSET.s, m), X = mix(WC[0], INSET.x, m), Y = mix(WC[1], INSET.y, m); return [X + d.x * sc, Y + d.y * sc, DS * sc]; };
+function drawWafer(ctx, t, m, a, focus) {
+  if (a <= 0) return;
+  const sc = mix(1, INSET.s, m), X = mix(WC[0], INSET.x, m), Y = mix(WC[1], INSET.y, m);
+  ctx.save(); ctx.globalAlpha = a; ctx.translate(X, Y); ctx.scale(sc, sc);
+  const g = ctx.createLinearGradient(-WR, -WR, WR, WR);
+  g.addColorStop(0, C.wafer[0]); g.addColorStop(0.45, C.wafer[1]); g.addColorStop(0.55, C.wafer[2]); g.addColorStop(1, C.wafer[3]);
+  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, WR, 0, 7); ctx.fill();
+  ctx.strokeStyle = dark ? 'rgba(236,233,226,0.35)' : 'rgba(20,24,31,0.45)'; ctx.lineWidth = 1 / sc; ctx.stroke();
+  ctx.fillStyle = PAL.bg; ctx.beginPath(); ctx.arc(0, WR, 4, 0, 7); ctx.fill();   // the notch
+  const draw = ease((t - 0.4) / 1.0);
+  DIES.forEach((d) => {
+    const o = clamp(draw * 1.6 - (d.y + WR) / (2 * WR) * 0.6); if (o <= 0) return;
+    const gone = SRC.includes(d) ? ease((t - FLY[0]) / 0.05) : 0;
+    ctx.globalAlpha = a * o * (1 - gone);
+    ctx.fillStyle = C.tile; ctx.fillRect(d.x, d.y, DS, DS);
+    const v = ease((t - d.vt) / 0.2);
+    if (v > 0) { ctx.globalAlpha = a * o * v * (1 - gone); ctx.fillStyle = d.fail ? FAILC : VIO(dark ? 0.55 : 0.5); ctx.fillRect(d.x, d.y, DS, DS); }
+  });
+  ctx.restore();
+  // the chip under the needles, outlined in red at any scale
+  if (focus > 0) {
+    const i = PROBES.reduce((k, p, n) => (p.shift && t >= p.shift[0] ? n : k), 0);
+    const late = t > 16.6 ? Math.min(DIES.length - 1, DIES.findIndex((d) => d.vt > t)) : -1;
+    const d = DIES[late > 3 ? late : i], [x, y, s] = inScreen(d, m);
+    ctx.save(); ctx.globalAlpha = a * focus; ctx.strokeStyle = PAL.garnet; ctx.lineWidth = 1.8;
+    ctx.strokeRect(x - 2, y - 2, s + 4, s + 4); ctx.restore();
+  }
+}
+
+// ---- the side view: the wafer's edge and a row of chips, a probe card above
+const P = 172, DW = 156, SLAB = [286, 306], LAYER = 276, PADS = [-4, -3, -2, -1, 0, 1, 2, 3, 4].map((k) => k * 16);
+const CARD_UP = 134, CARD_DOWN = 190, NEEDLE = 60, LX = 136;
+function probeState(t) {
+  let c = 0, off = 0, cur = 0, pulse = null;
+  PROBES.forEach((p, n) => {
+    if (p.lift && t >= p.lift[0]) c = mix(1, 0.5, ease((t - p.lift[0]) / (p.lift[1] - p.lift[0])));
+    if (p.shift) off += ease((t - p.shift[0]) / (p.shift[1] - p.shift[0]));
+    if (t >= p.down[0]) { c = p.lift ? mix(0.5, 1, ease((t - p.down[0]) / (p.down[1] - p.down[0]))) : ease((t - p.down[0]) / (p.down[1] - p.down[0])); cur = n; }
+    if (t >= p.pulse[0] && t <= p.pulse[1] + 0.2) pulse = { u: (t - p.pulse[0]) / (p.pulse[1] - p.pulse[0]), n, slow: n === 0 };
+  });
+  return { c, off, cur, pulse };
+}
+function sideView(ctx, t, a) {
+  if (a <= 0) return;
+  const S = probeState(t), cy = mix(CARD_UP, CARD_DOWN, S.c) - ease((t - 17.4) / 0.6) * 40;
+  const dieX = (k) => CX + (k - S.off) * P;
+  ctx.save(); ctx.globalAlpha = a; ctx.beginPath(); ctx.rect(30, 0, 462, H); ctx.clip();
+  // wafer: silicon slab from its rounded edge rightward, and the chips' top layer, cut apart by thin lanes
+  const edge = dieX(0) - DW / 2 - 18;
+  let g = ctx.createLinearGradient(0, SLAB[0], 0, SLAB[1]); g.addColorStop(0, C.si[0]); g.addColorStop(1, C.si[1]);
+  ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(edge + 9, SLAB[0]); ctx.lineTo(492, SLAB[0]); ctx.lineTo(492, SLAB[1]); ctx.lineTo(edge + 9, SLAB[1]);
+  ctx.arc(edge + 9, (SLAB[0] + SLAB[1]) / 2, 9, Math.PI / 2, Math.PI * 1.5); ctx.fill();
+  for (let k = 0; k < 7; k++) {
+    const x = dieX(k) - DW / 2; if (x > 492 || x + DW < 30) continue;
+    ctx.fillStyle = C.die; ctx.fillRect(x, LAYER, DW, SLAB[0] - LAYER);
+    // verdict: violet for a chip that passed, red for one that failed
+    const d = DIES[k], v = k < 4 ? ease((t - d.vt) / 0.25) : 0;
+    if (v > 0) { ctx.save(); ctx.globalAlpha = a * v; ctx.fillStyle = d.fail ? FAILC : VIO(dark ? 0.75 : 0.7); ctx.fillRect(x, LAYER, DW, SLAB[0] - LAYER); ctx.restore(); }
+    // the chip answering: a glow while signals run through it
+    if (S.pulse && S.pulse.n === k) {
+      const u = S.pulse.u, gl = Math.sin(clamp((u - 0.25) / 0.55) * Math.PI);
+      if (gl > 0) { ctx.save(); ctx.globalAlpha = a * gl * 0.8; ctx.fillStyle = VIO(1); ctx.fillRect(x, LAYER, DW, SLAB[0] - LAYER); ctx.restore(); }
+    }
+    ctx.fillStyle = C.pad; PADS.forEach((px) => ctx.fillRect(dieX(k) + px - 4, LAYER - 4, 8, 4));
+  }
+  // fade the row out at both ends
+  const clear = dark ? 'rgba(20,23,28,0)' : 'rgba(247,246,242,0)';
+  ctx.globalAlpha = 1;   // the fades hide the row's ends at any opacity
+  let fr = ctx.createLinearGradient(420, 0, 490, 0); fr.addColorStop(0, clear); fr.addColorStop(1, PAL.bg);
+  ctx.fillStyle = fr; ctx.fillRect(420, LAYER - 6, 72, SLAB[1] - LAYER + 8);
+  fr = ctx.createLinearGradient(30, 0, 100, 0); fr.addColorStop(0, PAL.bg); fr.addColorStop(1, clear);
+  ctx.fillStyle = fr; ctx.fillRect(30, LAYER - 6, 70, SLAB[1] - LAYER + 8);
+  ctx.globalAlpha = a;
+  // probe card and needles
+  const ca = 1 - ease((t - 17.4) / 0.5);
+  ctx.globalAlpha = a * ca;
+  g = ctx.createLinearGradient(0, cy, 0, cy + 20); g.addColorStop(0, C.card[0]); g.addColorStop(1, C.card[1]);
+  ctx.fillStyle = g; ctx.fillRect(CX - 105, cy, 210, 18);
+  ctx.fillStyle = C.plate; ctx.fillRect(CX - 80, cy + 18, 160, 4);
+  ctx.strokeStyle = C.needle; ctx.lineWidth = 1.3;
+  PADS.forEach((px) => { ctx.beginPath(); ctx.moveTo(CX + px, cy + 22); ctx.lineTo(CX + px, cy + 22 + NEEDLE); ctx.stroke(); });
+  // contact: the pads under the needles light up while the card is down
+  const touch = clamp((S.c - 0.97) / 0.03);
+  if (touch > 0 && t < 17.4) { ctx.fillStyle = VIO(0.9 * touch); PADS.forEach((px) => ctx.fillRect(CX + px - 4, LAYER - 4, 8, 4)); }
+  // signals: down the even needles into the chip, answers back up the odd ones
+  if (S.pulse) {
+    const u = S.pulse.u, top = cy + 24, bot = cy + 22 + NEEDLE - 2;
+    ctx.save(); ctx.globalCompositeOperation = dark ? 'lighter' : 'source-over';
+    const dots = (up, w0, w1) => {
+      const env = Math.sin(clamp((u - w0) / (w1 - w0)) * Math.PI); if (env <= 0) return;
+      const loc = clamp((u - w0) / (w1 - w0));
+      PADS.forEach((px, i) => {
+        if ((i % 2 === 1) !== up) return;
+        for (let k = 0; k < 3; k++) {
+          const f = (loc * (S.pulse.slow ? 2.4 : 1.4) + k / 3 + i * 0.07) % 1, y = up ? mix(bot, top, f) : mix(top, bot, f);
+          if (dark) { const gr = ctx.createRadialGradient(CX + px, y, 0, CX + px, y, 6); gr.addColorStop(0, VIO(env)); gr.addColorStop(1, VIO(0)); ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(CX + px, y, 6, 0, 7); ctx.fill(); }
+          else { ctx.fillStyle = VIO(env); ctx.beginPath(); ctx.arc(CX + px, y, 2.8, 0, 7); ctx.fill(); }
+        }
+      });
+    };
+    dots(false, 0, 0.5); dots(true, 0.45, 0.98);
+    ctx.restore();
+  }
+  ctx.restore();
+  // labels, right-aligned to the left of the chip
+  const la = a * ca;
+  label('Probe card', LX, cy + 13, PAL.ink2, { align: 'right', alpha: la * ease((t - 5.4) / 0.5) });
+  label('Needles', LX, cy + 22 + NEEDLE / 2 + 4, PAL.ink2, { align: 'right', alpha: la * ease((t - 5.6) / 0.5) * (1 - ease((t - 12.6) / 0.3)) });
+  label('Metal pads', LX, LAYER, PAL.ink2, { align: 'right', alpha: la * ease((t - 5.8) / 0.5) * (1 - ease((t - 12.6) / 0.3)) });
+  label('One chip, still on the wafer', CX, 340, PAL.muted, { align: 'center', alpha: a * ease((t - 5.4) / 0.5) * (1 - ease((t - 12.6) / 0.3)) });
+}
+
+// ---- the package, seen from above: a package base, a silicon base, two logic chips and eight memory stacks
+const PK = { sub: [155, 145, 190, 190], inter: [182, 165, 136, 150] };
+const LOGIC = [[204, 209, 44, 62], [252, 209, 44, 62]];
+const HBM = []; [175, 277].forEach((y) => [0, 1, 2, 3].forEach((i) => HBM.push([186.5 + i * 33, y, 28, 28])));
+const BAD = HBM[1];
+function pkg(ctx, t) {
+  const sa = ease((t - 17.8) / 0.5), ia = ease((t - 18.2) / 0.5);
+  if (sa <= 0) return;
+  const bad = ease((t - 20.5) / 0.4), lost = ease((t - 21.0) / 0.6);
+  const drop = (q) => (1 - easeOut(q)) * -16;
+  ctx.save();
+  const dim = 1 - lost * 0.62;
+  ctx.globalAlpha = sa * dim; ctx.fillStyle = C.sub; ctx.fillRect(PK.sub[0], PK.sub[1] + drop(sa), PK.sub[2], PK.sub[3]);
+  ctx.fillStyle = dark ? '#6f7d58' : '#8d9b72'; for (let i = 0; i < 14; i++) { const u = PK.sub[0] + 10 + i * 12.8; ctx.fillRect(u, PK.sub[1] + 5 + drop(sa), 3, 2); ctx.fillRect(u, PK.sub[1] + PK.sub[3] - 7 + drop(sa), 3, 2); }
+  ctx.globalAlpha = ia * dim; ctx.fillStyle = C.inter; ctx.fillRect(PK.inter[0], PK.inter[1] + drop(ia), PK.inter[2], PK.inter[3]);
+  HBM.forEach(([x, y, w, h], k) => {
+    const q = ease((t - 18.6 - k * 0.1) / 0.45); if (q <= 0) return;
+    const isBad = HBM[k] === BAD;
+    ctx.globalAlpha = q * (isBad ? 1 : dim); ctx.fillStyle = isBad ? mixc(C.hbm, FAILC, bad) : C.hbm; ctx.fillRect(x, y + drop(q), w, h);
+    ctx.strokeStyle = isBad ? mixc(C.hbmLine, dark ? '#f08a85' : '#a8414b', bad) : C.hbmLine; ctx.lineWidth = 0.7;
+    for (let l = 1; l < 4; l++) { ctx.beginPath(); ctx.moveTo(x + 4, y + drop(q) + l * 7); ctx.lineTo(x + w - 4, y + drop(q) + l * 7); ctx.stroke(); }
+  });
+  // the two logic chips arrive from the tested wafer, growing as they come
+  LOGIC.forEach(([x, y, w, h], k) => {
+    const q = ease((t - FLY[0] - k * 0.15) / (FLY[1] - FLY[0])); if (t < FLY[0]) return;
+    const [sx, sy, ss] = inScreen(SRC[k], 1);
+    const X = mix(sx, x, q), Y = mix(sy, y, q), Wd = mix(ss, w, q), Hd = mix(ss, h, q);
+    ctx.globalAlpha = dim; ctx.fillStyle = mixc(dark ? '#6f68b8' : '#8f87cf', C.chip, ease((q - 0.6) / 0.4)); ctx.fillRect(X, Y, Wd, Hd);
+    if (q > 0.8) { ctx.globalAlpha = dim * (q - 0.8) * 5; ctx.fillStyle = C.tileGrid; for (let i = 0; i < 4; i++) for (let j = 0; j < 6; j++) ctx.fillRect(x + 4 + i * 9.5, y + 4 + j * 9.4, 7.5, 7.4); }
+  });
+  // one bad piece, and the whole package it would be thrown away with
+  if (lost > 0) {
+    ctx.globalAlpha = lost; ctx.strokeStyle = PAL.garnet; ctx.lineWidth = 2; ctx.strokeRect(PK.sub[0] - 5, PK.sub[1] - 5, PK.sub[2] + 10, PK.sub[3] + 10);
+  }
+  ctx.restore();
+  label('If one piece were bad', 250, 364, PAL.garnet, { align: 'center', alpha: lost });
+}
+
+function readout(ctx, n, unit, name, a, col) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = col; ctx.fillRect(504, 164, 2, 54); ctx.restore();
+  text(n, 520, 200, '300 44px Fraunces', col, { alpha: a }); ctx.font = '300 44px Fraunces'; const w = ctx.measureText(n).width;
+  if (unit) text(unit, 520 + w + 7, 200, '500 13px "Instrument Sans"', col, { alpha: a });
+  label(name, 520, 219, PAL.muted, { alpha: a });
+}
+
+function render(ctx, t) {
+  ctx.fillStyle = PAL.bg; ctx.fillRect(0, 0, W, H);
+  const q = pr(0, t), m = ease((q - 0.62) / 0.26);
+  const focus = ease((t - 2.9) / 0.4) * (1 - ease((t - 17.4) / 0.4));
+  drawWafer(ctx, t, m, ease(q / 0.12), focus);
+  label('The wafer', INSET.x - 54, 396, PAL.muted, { alpha: ease((q - 0.85) / 0.15) });
+  sideView(ctx, t, ease((t - 4.3) / 0.7) * (1 - ease((t - 17.5) / 0.5)));
+  pkg(ctx, t);
+  heads(ctx, t);
+  // readout: the tester's verdict on each chip, then the pieces of one package
+  PROBES.forEach((p, k) => {
+    // the first verdict clears while the card moves on; the quick ones that follow hand straight over
+    const next = k === 0 ? PROBES[1].lift[0] + 0.3 : PROBES[k + 1] ? PROBES[k + 1].verdict : 17.3;
+    const a = Math.min(ease((t - p.verdict) / 0.15), 1 - ease((t - next + 0.12) / 0.12));
+    const f = DIES[k].fail;
+    readout(ctx, f ? 'Fail' : 'Pass', '', f ? 'An answer wrong' : 'Every answer right', a, f ? PAL.garnet : PAL.violetInk);
+  });
+  readout(ctx, 'A dozen', 'pieces', 'In one accelerator', ease((t - 19.7) / 0.4), PAL.garnet);
+}
+A.start({ W, H, duration: 23.2, fade: 0.8, steps: STEPS, render });
+</script></body></html>

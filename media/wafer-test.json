@@ -1,0 +1,33 @@
+{
+ "duration": 23.2,
+ "fade": 0.8,
+ "width": 760,
+ "height": 420,
+ "steps": [
+  {
+   "k": "The wafer",
+   "t0": 0.4,
+   "cap": "Every stage so far makes chips. Before any of them can be sold, a machine tests each one, starting while the chips are still on the wafer."
+  },
+  {
+   "k": "Needles",
+   "t0": 5,
+   "cap": "A probe card lowers thousands of needles onto one chip. They press onto small metal pads on its surface."
+  },
+  {
+   "k": "Questions and answers",
+   "t0": 8.8,
+   "cap": "Through the needles, the tester sends signals into the chip and reads what comes back. It checks every answer."
+  },
+  {
+   "k": "Chip by chip",
+   "t0": 12.6,
+   "cap": "The tester steps from chip to chip across the wafer. It marks any chip that answers wrong, and that chip goes no further."
+  },
+  {
+   "k": "Into the package",
+   "t0": 17.4,
+   "cap": "Only chips that pass go on to be packaged. A modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them, so each piece is tested before it goes in."
+  }
+ ]
+}
