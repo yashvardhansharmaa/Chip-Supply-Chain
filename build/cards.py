@@ -310,6 +310,7 @@ def main():
     host = site_host()
     chapters = chapter_specimens()
     specimen_no = {name: '%02d' % p['number'] for p in pages if p['kind'] == 'chapter' for name in [chapters.get(p['slug'])] if name}
+    pages = [p for p in pages if p['slug'] != 'home']  # the home card is centered for LinkedIn's crops; build/home_card.py draws it
     if only:
         pages = [p for p in pages if p['slug'] in only]
     os.makedirs(OUT, exist_ok=True)
