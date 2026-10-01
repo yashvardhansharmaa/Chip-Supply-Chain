@@ -78,7 +78,7 @@
     ],
     "source": "https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf",
     "aiCritical": true,
-    "trend": "Almost flat on this measure between the source's two cuts: Japan 52.4 percent in 2021 against 53.0 in 2023, Taiwan 19.0 in both, Korea 13.1 against 13.0, Europe 10.3 against 10.0. The movement is at the mature diameters and inside the Other column, where the Chinese 300 mm entrants sit; CSET had China under 5 percent in 2019 and under 1 percent of 300 mm wafers."
+    "trend": "Almost flat on this measure between the source's two cuts: Japan 52 percent in 2021 against 53 in 2023 as printed, Taiwan 19.0 in both, Korea 13.1 against 13.0, Europe 10.3 against 10.0. The movement is at the mature diameters and inside the Other column, where the Chinese 300 mm entrants sit; CSET had China under 5 percent in 2019 and under 1 percent of 300 mm wafers."
   },
   {
     "segment": "Photoresist",
@@ -88,22 +88,22 @@
     "basis": "relayed",
     "relayedVia": "Fuji Keizai",
     "shares": {
-      "JP": 78.4,
+      "JP": 78,
       "US": 12.8,
       "KR": 6.4,
       "Other": 2.4
     },
-    "hhi": 6357,
+    "hhi": 6295,
     "top2": 91,
-    "method": "Country shares of the photoresist market published by Japan's Ministry of Economy, Trade and Industry in December 2025, from Fuji Keizai's semiconductor materials survey, on a headquarters basis. Japan's 78 percent is printed on the chart; the other columns are measured off the chart's vector geometry, which reproduces every printed label on the slide exactly and sums to 100.",
-    "note": "Five Japanese firms, JSR, Tokyo Ohka Kogyo, Shin-Etsu Chemical, Sumitomo Chemical and Fujifilm, hold about four-fifths of all photoresist revenue and a materially higher share of EUV resist, where Japan is close to a monopoly and where CSET found China has nothing at all. US is DuPont, Merck's US-based EMD Electronics business and the pre-commercial metal-oxide house Inpria; the source shows no separate European column. KR is Dongjin Semichem and SK Materials Performance. The Other column is 2.4 points and is where the Chinese suppliers sit, Kempur, Nata and Jingrui, which serve mostly i-line and KrF grades; CSET put China under 5 percent of a $3.3bn photoresist market in 2019. JSR was taken private by the state-backed Japan Investment Corporation in 2024, which makes the Japanese position a policy instrument as well as a commercial one. CSET states that Japan dominates photoresist with 90 percent of the market on 2019 data, a figure on a narrower base and six years older than this one.",
+    "method": "Country shares of the photoresist market published by Japan's Ministry of Economy, Trade and Industry in December 2025, from Fuji Keizai's semiconductor materials survey, on a headquarters basis. Japan's 78 percent is printed on the chart and is used as printed; the other columns are measured off the chart's vector geometry, which reproduces every printed label on the slide exactly, so the row sums to 99.6.",
+    "note": "Japanese companies, among them JSR, Tokyo Ohka Kogyo, Shin-Etsu Chemical, Sumitomo Chemical and Fujifilm, held 78 percent of photoresist revenue in 2023 on METI's count by company nationality, and a materially higher share of EUV resist, where Japan is close to a monopoly and where CSET found China has nothing at all. US is DuPont, Merck's US-based EMD Electronics business and the pre-commercial metal-oxide house Inpria; the source shows no separate European column. KR is Dongjin Semichem and SK Materials Performance. The Other column is 2.4 points and is where the Chinese suppliers sit, Kempur, Nata and Jingrui, which serve mostly i-line and KrF grades; CSET put China under 5 percent of a $3.3bn photoresist market in 2019. JSR was taken private by the state-backed Japan Investment Corporation in 2024, which makes the Japanese position a policy instrument as well as a commercial one. CSET states that Japan dominates photoresist with 90 percent of the market on 2019 data, a figure on a narrower base and six years older than this one.",
     "sources": [
       "https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf",
       "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"
     ],
     "source": "https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf",
     "aiCritical": true,
-    "trend": "Japan held 76.7 percent in 2021 and 78.4 in 2023 on the same measure, so the Japanese position is not eroding at the category level. Korea rose from 4.2 to 6.4 over the same two years and the unattributed Other column, where the Chinese suppliers sit, fell from 5.7 to 2.4. Chinese and Korean firms have qualified mature-node resists; EUV resist remains Japanese."
+    "trend": "METI prints Japan at 77 percent in 2021 and 78 in 2023 on the same measure, so the Japanese position is not eroding at the category level. Korea rose from 4.2 to 6.4 over the same two years and the unattributed Other column, where the Chinese suppliers sit, fell from 5.7 to 2.4. Chinese and Korean firms have qualified mature-node resists; EUV resist remains Japanese."
   },
   {
     "segment": "Specialty gases",
@@ -286,55 +286,52 @@
     "trend": "Japanese blank suppliers have strengthened at the leading edge since 2021 while merchant mask revenue shifted toward captive fabs."
   },
   {
-    "segment": "Leading-edge logic manufacturing (≤5 nm)",
-    "metric": "Capacity share, site estimate",
-    "year": 2025,
-    "asOf": "2025",
-    "basis": "estimate",
+    "segment": "Leading-edge logic manufacturing (<10 nm)",
+    "metric": "Capacity share, site location",
+    "year": 2022,
+    "asOf": "2022",
+    "basis": "measured",
     "shares": {
-      "TW": 72,
-      "KR": 12,
-      "US": 11,
-      "EU-other": 5
+      "TW": 69,
+      "KR": 31
     },
-    "hhi": 5474,
-    "top2": 84,
-    "method": "A CHOKEPOINTS estimate. SIA and BCG measured sub-10 nm logic capacity by site in 2022 at Taiwan 69 and South Korea 31, with the United States at zero (2024 report, Exhibit 6); the row rolls that forward for TSMC's Fab 21 in Arizona, Intel's Fab 34 in Leixlip and 18A in Arizona and Oregon, and Samsung's Taylor fab.",
-    "note": "The only estimate in the matrix's manufacturing rows. Capacity is counted by fab location, wherever the company is headquartered, which is the right cut for this segment because it is where the physical risk sits. TW is TSMC's Fab 18 and Fab 20 complexes in Tainan and Hsinchu. The EU-other column is Intel's Fab 34 in Leixlip, Ireland, running Intel 4 and Intel 3. JP is zero because Rapidus remains at pilot scale. China is zero at this definition; SMIC's 7 nm-class N+2 output is real but is not a 5 nm node and is produced without EUV. Nobody publishes a current measurement of this segment.",
+    "hhi": 5722,
+    "top2": 100,
+    "method": "Logic wafer fabrication capacity below 10 nm by fab location in 2022, from SIA and BCG's 2024 report (Exhibit 6), which draws on Department of Commerce and SEMI data and counts fabs of 5,000 or more wafer starts a month on 8-inch or larger wafers, excluding R&D fabs.",
+    "note": "Capacity is counted by fab location, wherever the company is headquartered, which is where the physical risk sits. In 2022 all of it was in Taiwan and South Korea, and the United States, Japan, Europe and China held none. TSMC's Arizona fab now runs N4 and Intel builds 18A in Arizona, so the US column is no longer zero, but no allowed source publishes a newer split.",
     "sources": [
       "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf"
     ],
     "source": "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf",
     "aiCritical": true,
-    "trend": "Taiwan's share is falling slowly from about 69 percent as the US column goes from zero to double digits, but concentration remains the single most extreme geographic risk in the chain."
+    "trend": "SIA and BCG project Taiwan's share to fall from 69 percent in 2022 to 47 percent in 2032 and the US share to rise from zero to 28 percent."
   },
   {
     "segment": "Mature logic manufacturing (≥28 nm)",
-    "metric": "Capacity share",
-    "year": 2025,
-    "asOf": "2025",
-    "basis": "estimate",
+    "metric": "Capacity share, site location",
+    "year": 2022,
+    "asOf": "2022",
+    "basis": "measured",
     "shares": {
-      "CN": 38,
-      "TW": 27,
-      "JP": 9,
+      "CN": 33,
+      "TW": 30,
+      "JP": 10,
+      "Other": 9,
       "US": 8,
-      "Other": 6,
       "KR": 5,
-      "EU-other": 4,
-      "DE": 3
+      "EU-other": 4
     },
-    "hhi": 2404,
-    "top2": 65,
-    "method": "A CHOKEPOINTS estimate placed between two measurements: SIA and BCG's 2022 capacity split for logic at 28 nm and above (China 33, Taiwan 30, Japan 10, Other 9, US 8, Korea 5, Europe 4; 2024 report, Exhibit 6) and CSIS's finding in March 2026 that China now holds about half of global mature-node capacity on a broader definition that includes discretes, analog and power.",
-    "note": "Capacity by fab location. The two measurements the row sits between are not directly comparable, because CSIS uses a broader legacy definition than SIA and BCG's logic-only one, and China is rolled forward to 38 between them. DE is split out from EU-other to capture Infineon Dresden, Bosch Reutlingen and the automotive analog base; EU-other is mostly STMicroelectronics in France and Italy. China's number carries the widest error bar in the matrix.",
+    "hhi": 2275,
+    "top2": 63,
+    "method": "Logic wafer fabrication capacity at 28 nm and above by fab location in 2022, from SIA and BCG's 2024 report (Exhibit 6), on the same fab definition as the leading-edge row. Columns sum to 99 because of rounding in the source, and the source's Europe column is carried as EU-other.",
+    "note": "Capacity by fab location. The source's Other column covers Malaysia, Singapore, India and the rest of the world. CSIS finds that China now holds about half of global capacity for mature-node and commodity devices, on a broader definition that includes discretes, analog and power, so the two figures are not directly comparable.",
     "sources": [
       "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf",
       "https://www.csis.org/analysis/chinas-localization-drive-semiconductors-gains-impetus-allied-chip-export-controls"
     ],
     "source": "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf",
     "aiCritical": false,
-    "trend": "China's share of mature logic has risen from roughly 30 percent in 2021 toward 40 percent and is the main driver of trailing-edge price deflation and of Section 232 and tariff pressure."
+    "trend": "SIA and BCG project China's share to rise from 33 percent in 2022 to 37 percent in 2032, while Taiwan's falls from 30 to 25 percent."
   },
   {
     "segment": "DRAM manufacturing",
@@ -373,7 +370,7 @@
     "hhi": 7109,
     "top2": 100,
     "method": "Firm shares printed in the same SK hynix Form 424B4 prospectus (SK hynix 63.2, Samsung 19.3, Micron 17.4 for 2025), summed to country by parent-company headquarters; columns sum to 99.9 because of rounding in the source. The prospectus attributes the figures to IDC.",
-    "note": "There is no fourth supplier and no Chinese column at all. The prospectus's series also shows how fast the ranking moves on qualification: in 2024 the split was SK hynix 56.4, Samsung 37.8 and Micron 5.8, which is Korea at 94.2; by the first quarter of 2026 Micron was at 23.1 and Korea down to 76.9. The figures are IDC's, carried in SK hynix's registered prospectus. China has no HBM production that clears both the export-control thresholds and the performance bar, which is the binding constraint on Huawei's Ascend line and the reason Huawei designed its own HiBL and HiZQ stacks. HBM is itself a controlled item under ECCN 3A090.c, so the segment is unusual in being both extremely concentrated and directly regulated. The base die under HBM4 is now a logic die, which pulls TSMC and Samsung Foundry into a segment that used to be pure memory.",
+    "note": "There is no fourth supplier and no Chinese column at all. The prospectus's series also shows how fast the ranking moves on qualification: in 2024 the split was SK hynix 56.4, Samsung 37.8 and Micron 5.8, which is Korea at 94.2; by the first quarter of 2026 Micron was at 23.1 and Korea down to 76.9. The figures are IDC's, carried in SK hynix's registered prospectus. China has no HBM production that clears both the export-control thresholds and the performance bar, which is the binding constraint on Huawei's Ascend line. HBM is itself a controlled item under ECCN 3A090.c, so the segment is unusual in being both extremely concentrated and directly regulated. The base die under HBM4 is now a logic die, which pulls TSMC and Samsung Foundry into a segment that used to be pure memory.",
     "sources": [
       "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm"
     ],

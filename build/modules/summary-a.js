@@ -90,7 +90,7 @@ const SEG_CH = {
   'Specialty gases': 'chemicals-gases-and-photoresist', 'EUV lithography tools': 'lithography',
   'DUV lithography tools': 'lithography', 'Deposition tools': 'deposition-and-etch', 'Etch tools': 'deposition-and-etch',
   'Metrology & inspection tools': 'metrology-and-inspection', Photomasks: 'photomasks-and-pellicles',
-  'Leading-edge logic manufacturing (≤5 nm)': 'foundries-and-fabs',
+  'Leading-edge logic manufacturing (<10 nm)': 'foundries-and-fabs',
   'Mature logic manufacturing (≥28 nm)': 'foundries-and-fabs',
   'DRAM manufacturing': 'memory-and-hbm', HBM: 'memory-and-hbm',
   'Advanced packaging (2.5D/3D)': 'advanced-packaging', 'Assembly, test and packaging (ATP)': 'test-and-assembly',
@@ -160,6 +160,7 @@ module.exports = function (ctx) {
   const esc = ctx.esc, word = ctx.word, warn = ctx.warn, data = ctx.data;
   const chapters = data.chapters || [];
   const stages = chapters.filter((c) => c.number >= 1 && c.number <= 15); // the fifteen stages of the chain; 16 is component costs, 17 the essay
+  const cardCount = chapters.filter((c) => c.concentration).length; // only the stage chapters carry a chokepoint card
   const matrix = (data.matrix || []).filter((r) => r.shares);
   const suppliers = data.suppliers || [];
   const exposure = data.exposure || [];
@@ -295,8 +296,8 @@ module.exports = function (ctx) {
     const top = d.segs[0];
     const subject = theName(cc, true);
     const lede = top
-      ? `${subject} holds ${num(top.v)}% of ${lc(top.seg)}${top.rank === 1 ? ', more than any other country' : ''}, and is named on ${word(d.named.length)} of the ${word(chapters.length)} chokepoint cards.`
-      : `${subject} is named on ${word(d.named.length)} of the ${word(chapters.length)} chokepoint cards${d.firms.length ? `, and ${word(d.firms.length)} of the ${totalFirms} firms in the supplier list ${d.firms.length > 1 ? 'are' : 'is'} based there` : ''}.`;
+      ? `${subject} holds ${num(top.v)}% of ${lc(top.seg)}${top.rank === 1 ? ', more than any other country' : ''}, and is named on ${word(d.named.length)} of the ${word(cardCount)} chokepoint cards.`
+      : `${subject} is named on ${word(d.named.length)} of the ${word(cardCount)} chokepoint cards${d.firms.length ? `, and ${word(d.firms.length)} of the ${totalFirms} firms in the supplier list ${d.firms.length > 1 ? 'are' : 'is'} based there` : ''}.`;
 
     // up to three segment shares: anything it leads, or holds a tenth of
     const shares = d.segs.filter((s) => s.rank === 1 || s.v >= 10).slice(0, 3).map((s) => {
@@ -344,10 +345,10 @@ ${china}
     if (!a) return '';
     const d = info[cc];
     const dia = Math.max(22, Math.round(8.25 * Math.sqrt(d.named.length)));
-    return `<button type="button" class="sa-marker" data-cc="${cc}" data-hard="${d.top5 ? 1 : 0}" style="left:${pctX(n[1])}%;top:${pctY(n[0])}%;--d0:${dia}px" aria-pressed="${cc === DEFAULT_CC}" aria-label="${esc(d.name)}: named on ${d.named.length} of the ${chapters.length} chokepoint cards"><span class="sa-marker-dot"><span class="sa-marker-cc" aria-hidden="true">${cc}</span></span></button>`;
+    return `<button type="button" class="sa-marker" data-cc="${cc}" data-hard="${d.top5 ? 1 : 0}" style="left:${pctX(n[1])}%;top:${pctY(n[0])}%;--d0:${dia}px" aria-pressed="${cc === DEFAULT_CC}" aria-label="${esc(d.name)}: named on ${d.named.length} of the ${cardCount} chokepoint cards"><span class="sa-marker-dot"><span class="sa-marker-cc" aria-hidden="true">${cc}</span></span></button>`;
   }).join('');
 
-  const chip = (cc) => `<button type="button" class="sa-chip${PRIMARY.indexOf(cc) < 0 ? ' sa-chip--minor' : ''}" data-cc="${cc}" aria-pressed="${cc === DEFAULT_CC}" title="${esc(info[cc].name)} is named on ${info[cc].named.length} of the ${chapters.length} chokepoint cards">${esc(info[cc].name)}<small>${info[cc].named.length}</small></button>`;
+  const chip = (cc) => `<button type="button" class="sa-chip${PRIMARY.indexOf(cc) < 0 ? ' sa-chip--minor' : ''}" data-cc="${cc}" aria-pressed="${cc === DEFAULT_CC}" title="${esc(info[cc].name)} is named on ${info[cc].named.length} of the ${cardCount} chokepoint cards">${esc(info[cc].name)}<small>${info[cc].named.length}</small></button>`;
   const chips = `<div class="sa-chiprow"><span class="label">Pinned on the map</span><div class="sa-chipset" role="group" aria-label="Countries pinned on the map">${PRIMARY.map(chip).join('')}</div></div>`
     + `<div class="sa-chiprow"><span class="label">Also in the chain</span><div class="sa-chipset" role="group" aria-label="Other countries in the chain">${SECONDARY.map(chip).join('')}</div></div>`;
 
@@ -422,7 +423,7 @@ ${svg}
 </div>
 <div class="sa-panels" aria-live="polite">${panels}</div>
 <div class="sa-chips">${chips}</div>
-<p class="sa-legend"><span class="sa-lg sa-lg--big"></span>Marker area: how many of the ${chapters.length} chokepoint cards name the country<span class="sa-lg sa-lg--hard"></span>Heavier ring: named by a stage of extreme concentration<span class="sa-lg sa-lg--pin"></span>Chokepoint town<span class="sa-lg sa-lg--sub"></span>Town building a substitute</p>
+<p class="sa-legend"><span class="sa-lg sa-lg--big"></span>Marker area: how many of the ${cardCount} chokepoint cards name the country<span class="sa-lg sa-lg--hard"></span>Heavier ring: named by a stage of extreme concentration<span class="sa-lg sa-lg--pin"></span>Chokepoint town<span class="sa-lg sa-lg--sub"></span>Town building a substitute</p>
 </div>
 </section>
 

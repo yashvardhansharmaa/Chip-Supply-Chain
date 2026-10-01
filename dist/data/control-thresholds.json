@@ -9,7 +9,7 @@
     "value": 4800,
     "unit": "TPP, defined as 2 × MacTOPS × bit length of the operation, aggregated over all processing units on the integrated circuit",
     "alternative": "or TPP >= 1600 together with performance density >= 5.92, where performance density is TPP divided by the die area in square millimeters of the logic dies",
-    "destinations": "License required for Country Groups D:1, D:4 and D:5 that are not also specified in A:5 or A:6, which is 44 countries plus Macau. China and Macau are the operative targets.",
+    "destinations": "License required to or within any destination worldwide under 742.6(a)(6)(iii)(A); BIS enforces it only for the United Arab Emirates, for Country Groups D:1, D:4 and D:5 not also specified in A:5 or A:6, and for entities headquartered in Macau or Country Group D:5 or with an ultimate parent there. China and Macau are the operative targets.",
     "licensePolicy": "Presumption of denial for China and Macau. Since 15 January 2026 applications for parts below TPP 21,000 and total DRAM bandwidth 6,500 GB/s (H200 and MI325X class) are reviewed case by case.",
     "effectiveDate": "2023-11-17",
     "status": "In force",
@@ -28,7 +28,7 @@
     "alsoSee": [
       "https://cset.georgetown.edu/article/bis-2023-update-explainer/"
     ],
-    "note": "The master line for AI chips. It catches every current training-class accelerator (H100, H200, B200, MI300 and their successors) because TPP scales with both throughput and the precision at which the part is quoted. It misses nothing at the top and quite a lot in the middle: a chip can be cut below 4800 by trimming clocks or disabling units while keeping most of its usefulness for inference, which is how the H800 and later the H20 were built.",
+    "note": "The master line for AI chips. It catches every current training-class accelerator (H100, H200, B200, MI300 and their successors) because TPP scales with both throughput and the precision at which the part is quoted. It misses nothing at the top and quite a lot in the middle: a chip can be cut below 4800 by trimming clocks or disabling units while keeping most of its usefulness for inference, which is how the H20 was built.",
     "kind": "chips",
     "paramShort": "TPP",
     "unitShort": ""
@@ -73,7 +73,7 @@
     "value": 600,
     "unit": "GByte/s aggregate bidirectional transfer rate, required together with a bit-length × TOPS product of 4800 or more",
     "alternative": "Both conditions had to be met; failing either took a chip out of the entry",
-    "destinations": "China and Macau",
+    "destinations": "China",
     "licensePolicy": "Presumption of denial",
     "effectiveDate": "2022-10-21",
     "status": "Superseded",
@@ -85,7 +85,7 @@
     "cfr": "15 CFR part 774, supplement no. 1, ECCN 3A090 (2022 text)",
     "source": "https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor",
     "sourceTier": "A",
-    "note": "Kept in the map because it is the clearest case of a threshold being designed around. Nvidia cut NVLink bandwidth below 600 GB/s to create the A800 and H800, which were legal for a year. BIS deleted the interconnect parameter on 17 November 2023 and the workaround closed.",
+    "note": "Kept in the map because it is the clearest case of a threshold being designed around. Nvidia cut NVLink bandwidth below 600 GB/s to create the A800 and H800, which were legal for a year. BIS deleted the interconnect parameter in a rule issued on 17 October 2023 and in force from 17 November 2023, and the workaround closed.",
     "kind": "chips",
     "paramShort": "Interconnect bandwidth",
     "unitShort": "GB/s"
@@ -100,13 +100,14 @@
     "value": 2400,
     "unit": "TPP, where TPP is 2400 or more but below 4800 and performance density is 1.6 or more but below 5.92",
     "alternative": "or TPP of 1600 or more with performance density of 3.2 or more but below 5.92",
-    "destinations": "Country Groups D:1, D:4 and D:5 not also in A:5 or A:6",
+    "destinations": "The United Arab Emirates and Country Groups D:1, D:4 and D:5 not also in A:5 or A:6",
     "licensePolicy": "Eligible for the exceptions in 15 CFR 740.8. License Exception ACA covers destinations other than Macau and Country Group D:5; License Exception NAC covers Macau, Country Group D:5 and entities headquartered there, on advance notification to BIS. The January 2026 case-by-case band is a policy for 3A090.a items and does not reach this entry.",
     "effectiveDate": "2023-11-17",
     "status": "In force",
     "amendedBy": [
       "2024-12-02",
-      "2025-01-15"
+      "2025-01-13",
+      "2026-07-10"
     ],
     "chapter": "geopolitics",
     "frCitation": "88 FR 73458",
@@ -132,8 +133,8 @@
     "value": 2,
     "unit": "GB per second per square millimeter of package or stack area",
     "alternative": "Calculated as the memory bandwidth of the package or stack in GB/s divided by its area in mm²",
-    "destinations": "Worldwide license requirement with country-group carve-outs; enforced against China and Macau through the advanced computing foreign direct product rule, which reaches foreign-made HBM",
-    "licensePolicy": "Presumption of denial for China and Macau",
+    "destinations": "License required to or within Macau and Country Group D:5; the advanced computing foreign direct product rule reaches foreign-made HBM",
+    "licensePolicy": "Presumption of approval for buyers in Macau and Country Group D:5 that are neither headquartered there nor have an ultimate parent there; presumption of denial for all other applications",
     "effectiveDate": "2024-12-02",
     "status": "In force",
     "amendedBy": [
@@ -147,7 +148,7 @@
     "alsoSee": [
       "https://www.bis.gov/press-release/commerce-strengthens-export-controls-restrict-chinas-capability-produce-advanced-semiconductors-military"
     ],
-    "note": "Set deliberately low: 2 GB/s/mm² catches every HBM stack in production, including HBM2E, so the entry works as a ban on selling HBM into China. It is the control that hurts Chinese accelerators most, because a Chinese AI chip without HBM cannot feed its own compute.",
+    "note": "Set deliberately low: BIS said every HBM stack in production exceeded 2 GB/s/mm² when it wrote the rule. Density is measured over the area of the package or stack. The review splits by headquarters, so HBM for a Chinese-headquartered buyer meets a presumption of denial while other buyers in China meet a presumption of approval.",
     "kind": "memory",
     "paramShort": "Memory bandwidth density",
     "unitShort": "GB/s per mm²"
@@ -162,7 +163,7 @@
     "value": 3.3,
     "unit": "GB per second per square millimeter",
     "alternative": "Exporter must be headquartered in the US or a Country Group A:5 destination and not have a parent in Macau or D:5; direct purchase by the co-packaged commodity designer and direct shipment to the packaging site, with tracking and confirmation",
-    "destinations": "Not available for Macau or Country Group D:5",
+    "destinations": "Governs exports to or within Macau and Country Group D:5, where the license requirement applies; co-packaging at a facility there that produces advanced-node ICs is excluded",
     "licensePolicy": "Self-executing exception, no license application, subject to the conditions above",
     "effectiveDate": "2024-12-02",
     "status": "In force",
@@ -172,7 +173,7 @@
     "cfr": "15 CFR 740.25",
     "source": "https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-produced-direct-product-rule-additions-and-refinements-to-controls-for-advanced-computing",
     "sourceTier": "A",
-    "note": "The exception that keeps the legitimate HBM trade moving while 3A090.c stays broad. The gap between the 2 GB/s/mm² control line and the 3.3 GB/s/mm² exception ceiling is the space in which ordinary HBM3 packaging logistics happen; the RS control on 3A090.c applies only to Macau and Country Group D:5, so allied shipments need no license at any density; the 3.3 GB/s per mm² ceiling in 740.25(c) governs co-packaging inside China.",
+    "note": "The exception that keeps the legitimate HBM trade moving while 3A090.c stays broad. Under 740.25(c), stacks below 3.3 GB/s per mm² may go directly to a packaging site for the designer that bought them; the RS control on 3A090.c applies only to Macau and Country Group D:5, so allied shipments need no license at any density.",
     "kind": "memory",
     "paramShort": "Memory bandwidth density",
     "unitShort": "GB/s per mm²"
@@ -187,7 +188,7 @@
     "value": 4800,
     "unit": "same TPP thresholds as 3A090.a (4800, or 1600 with performance density 5.92); 4A090.b mirrors 3A090.b",
     "alternative": "4A090.a tracks 3A090.a; 4A090.b tracks 3A090.b and inherits its NAC and ACA treatment",
-    "destinations": "Country Groups D:1, D:4 and D:5 not also in A:5 or A:6",
+    "destinations": "4A090.a: license required worldwide under 742.6(a)(6)(iii)(A), enforced only for the United Arab Emirates, for Country Groups D:1, D:4 and D:5 not also in A:5 or A:6 and for entities headquartered in Macau or D:5 or with an ultimate parent there; 4A090.b follows 3A090.b",
     "licensePolicy": "Presumption of denial for China and Macau; follows the 3A090 policy of the chip inside",
     "effectiveDate": "2022-10-21",
     "status": "In force",
@@ -216,17 +217,17 @@
     "value": 21000,
     "unit": "TPP",
     "alternative": "must be met together with total DRAM bandwidth below 6,500 GB/s; named examples are the Nvidia H200 and the AMD MI325X",
-    "destinations": "China and Macau, for end users located there; presumption of denial retained for entities headquartered in restricted countries and for reexports and transfers",
+    "destinations": "China and Macau, for end users located there; presumption of denial retained for reexports, exports from abroad and transfers to Macau and Country Group D:5, and for exports to entities headquartered there, or with a parent headquartered there, that are located elsewhere",
     "licensePolicy": "Moves from presumption of denial to case-by-case review, conditional on certifications that US domestic supply is sufficient, that no domestic orders were delayed, that global foundry capacity is not diverted, that recipients have adequate security procedures, and that independent US-based third-party testing confirms the performance specification",
     "effectiveDate": "2026-01-15",
     "status": "In force",
     "amendedBy": [],
     "chapter": "geopolitics",
-    "frCitation": "91 FR 1685",
+    "frCitation": "91 FR 1684",
     "cfr": "15 CFR 742.6(b)(10)(iii)",
     "source": "https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities",
     "sourceTier": "A",
-    "note": "The first threshold in the regime that permits instead of denying: it draws a second line above 3A090.a and says everything between them may be sold to China if the conditions hold. It catches the H200 and MI325X; it deliberately excludes Blackwell-class parts, which sit far above TPP 21,000.",
+    "note": "A threshold that permits instead of denying: it draws a second line above 3A090.a and says everything between them may be sold to China if the conditions hold. It catches the H200 and MI325X; it deliberately excludes Blackwell-class parts, which sit far above TPP 21,000.",
     "kind": "chips",
     "paramShort": "TPP",
     "unitShort": ""
@@ -247,7 +248,7 @@
     "status": "In force",
     "amendedBy": [],
     "chapter": "memory-and-hbm",
-    "frCitation": "91 FR 1685",
+    "frCitation": "91 FR 1684",
     "cfr": "15 CFR 742.6(b)(10)(iii)",
     "source": "https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities",
     "sourceTier": "A",
@@ -272,7 +273,7 @@
     "status": "In force",
     "amendedBy": [],
     "chapter": "geopolitics",
-    "frCitation": "91 FR 1685",
+    "frCitation": "91 FR 1684",
     "cfr": "15 CFR 742.6(b)(10)(iii); part 748, supplement no. 2, paragraph (dd)",
     "source": "https://www.federalregister.gov/documents/2026/01/15/2026-00789/revision-to-license-review-policy-for-advanced-computing-commodities",
     "sourceTier": "A",
@@ -290,14 +291,14 @@
     "operator": ">=",
     "value": 30000000000,
     "unit": "transistors on a logic die made at the 16/14 nm node or below, or with a non-planar transistor architecture",
-    "alternative": "Rises to 35 billion for shipments in 2027 and 40 billion from 2029; the earlier red-flag figure was 50 billion",
+    "alternative": "For packages without HBM, rises to 35 billion for shipments in 2027 and 40 billion from 2029; the earlier red-flag figure was 50 billion with HBM",
     "destinations": "Worldwide license presumption for front-end fabricators and OSATs, rebuttable by shipping to an approved IC designer, an approved OSAT, or on a designer attestation",
-    "licensePolicy": "Presumption that a license is required unless overcome; Approved IC Designer status runs for 180 days from submission, with applications required after 13 April 2026",
+    "licensePolicy": "Presumption that the die is a 3A090.a item unless overcome; until 31 December 2026, designers headquartered in Taiwan or Country Groups A:1 and A:5 that report to the foundry count as authorized IC designers, and after that date a designer meeting the same criteria that has applied for approved status stays authorized until 180 days after applying",
     "effectiveDate": "2025-01-16",
     "status": "In force",
     "amendedBy": [
       "2025-01-31",
-      "2026-04-13"
+      "2026-04-07"
     ],
     "chapter": "foundries-and-fabs",
     "frCitation": "90 FR 5298",
@@ -321,7 +322,7 @@
     "alternative": "The architecture prong has no number: a planar 20 nm line is outside, a non-planar 22 nm line is inside",
     "destinations": "Facilities located in Macau or a Country Group D:5 destination",
     "licensePolicy": "Presumption of denial for facilities in China and Macau that produce advanced-node ICs; case-by-case for others",
-    "effectiveDate": "2022-10-21",
+    "effectiveDate": "2022-10-07",
     "status": "In force",
     "amendedBy": [
       "2023-11-17",
@@ -349,7 +350,7 @@
     "alternative": "None; a single-number test",
     "destinations": "Facilities in Macau or Country Group D:5",
     "licensePolicy": "Presumption of denial for China and Macau facilities producing at or above the line",
-    "effectiveDate": "2022-10-21",
+    "effectiveDate": "2022-10-07",
     "status": "In force",
     "amendedBy": [],
     "chapter": "memory-and-hbm",
@@ -371,20 +372,21 @@
     "operator": "<",
     "value": 0.0026,
     "unit": "µm² memory cell area; or memory density greater than 0.20 gigabits per mm²; or more than 3,000 through-silicon vias per die",
-    "alternative": "Originally written as a half-pitch of 18 nanometers or less; replaced on 2 December 2024 by these three physical measures, which BIS said match real 18 nm-class production. The earlier numbers were a cell area below 0.0019 µm² and a density above 0.288 Gb/mm².",
+    "alternative": "Originally written as a half-pitch of 18 nanometers or less. On 2 December 2024 BIS replaced it with a cell area below 0.0019 µm² or a density above 0.288 Gb/mm²; on 16 January 2025 it revised those to the current figures and added the through-silicon via count, which BIS said capture what its 18 nm half-pitch standard was meant to capture.",
     "destinations": "Facilities in Macau or Country Group D:5",
     "licensePolicy": "Presumption of denial for China and Macau facilities producing at or above the line",
-    "effectiveDate": "2022-10-21",
+    "effectiveDate": "2022-10-07",
     "status": "In force",
     "amendedBy": [
-      "2024-12-02"
+      "2024-12-02",
+      "2025-01-16"
     ],
     "chapter": "memory-and-hbm",
-    "frCitation": "87 FR 62186; 89 FR 96790",
+    "frCitation": "87 FR 62186; 89 FR 96790; 90 FR 5298",
     "cfr": "15 CFR 772.1; 744.23",
-    "source": "https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-produced-direct-product-rule-additions-and-refinements-to-controls-for-advanced-computing",
+    "source": "https://www.federalregister.gov/documents/2025/01/16/2025-00711/implementation-of-additional-due-diligence-measures-for-advanced-computing-integrated-circuits",
     "sourceTier": "A",
-    "note": "The clearest example of a threshold being rewritten because it did not work against a real fab. Half-pitch is a marketing number; cell area, bit density and TSV count are measurable on a die. The TSV prong was added specifically so that HBM base dies cannot escape by being coarse in-plane.",
+    "note": "The clearest example of a threshold being rewritten because it did not work against a real fab. BIS said the half-pitch test let fabs raise density through more compact cells and vertical stacking without meeting the definition. It added the through-silicon via count to ensure that all the DRAM it intended to capture is caught.",
     "kind": "fabs",
     "paramShort": "DRAM cell area",
     "unitShort": "µm²"
@@ -411,7 +413,7 @@
     "cfr": "15 CFR 772.1; 744.23",
     "source": "https://www.bis.gov/ear/title-15/subtitle-b/chapter-vii/subchapter-c/part-744/ss-74423-supercomputer-advanced-node",
     "sourceTier": "A",
-    "note": "A catch-all that works on whole installations: even uncontrolled components need a license if the exporter knows they are going into a Chinese machine of this size. The volume test, 41,600 cubic feet, is roughly a large machine room, and it is what stops the rule from being evaded by spreading the same compute across a bigger building.",
+    "note": "A catch-all that works on whole installations: even uncontrolled components need a license if the exporter knows they are going into a Chinese machine of this size. The eCFR note says the 41,600 cubic foot envelope corresponds, for example, to 6,400 square feet of floor space with 4 by 4 by 6.5 foot racks, and lets it include empty floor space between racks and adjacent floors.",
     "kind": "systems",
     "paramShort": "Double-precision compute",
     "unitShort": "petaflops"
@@ -419,12 +421,12 @@
   {
     "id": "3b001-f1b-overlay",
     "regime": "US EAR",
-    "instrument": "ECCN 3B001.f.1.b.1 and 3B001.f.1.b.2",
+    "instrument": "ECCN 3B001.f.1.b, with ECCN 3B993.f.1 for the next overlay tier",
     "scope": "DUV lithography scanners, the immersion tools that print advanced logic without EUV",
     "parameter": "Maximum dedicated chuck overlay, for tools with a light source wavelength of 193 nm or longer",
     "operator": "<=",
     "value": 1.5,
-    "unit": "nanometers dedicated chuck overlay (3B001.f.1.b.1); a second tier covers overlay greater than 1.50 nm but 2.4 nm or less (3B001.f.1.b.2)",
+    "unit": "nanometers dedicated chuck overlay, together with a minimum resolvable feature size of 45 nm or less (3B001.f.1.b); ECCN 3B993.f.1 covers overlay greater than 1.50 nm and up to 2.40 nm",
     "alternative": "EUV tools, meaning a light source below 193 nm, are controlled separately and more tightly",
     "destinations": "Macau and Country Group D:5, the scope to which the October 2023 rule extended semiconductor manufacturing equipment controls from the earlier China-only formulation",
     "licensePolicy": "Presumption of denial for China and Macau",
@@ -435,13 +437,13 @@
     ],
     "chapter": "lithography",
     "frCitation": "88 FR 73424",
-    "cfr": "15 CFR part 774, supplement no. 1, ECCN 3B001.f.1.b",
+    "cfr": "15 CFR part 774, supplement no. 1, ECCN 3B001.f.1.b; 3B993.f.1",
     "source": "https://www.federalregister.gov/documents/2023/10/25/2023-23049/export-controls-on-semiconductor-manufacturing-items",
     "sourceTier": "A",
     "alsoSee": [
       "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-742/section-742.6"
     ],
-    "note": "Overlay is the parameter that separates a usable advanced-logic scanner from a mature-node one, because multipatterning depends entirely on layer-to-layer alignment. The 1.50 nm tier tracks ASML's top immersion tools and the 2.4 nm tier reaches down into the older immersion fleet the Dutch controls also cover.",
+    "note": "Overlay is the parameter that separates a usable advanced-logic scanner from a mature-node one, because multipatterning depends entirely on layer-to-layer alignment. The 1.50 nm tier in 3B001.f.1.b tracks ASML's top immersion tools, and the 2.40 nm tier in 3B993.f.1 reaches down into the older immersion fleet the Dutch controls also cover.",
     "kind": "tools",
     "paramShort": "Dedicated chuck overlay",
     "unitShort": "nm"
@@ -455,7 +457,7 @@
     "operator": "=",
     "value": 0,
     "unit": "% US-origin controlled content",
-    "alternative": "Standard de minimis for D:5 is 25% for most items and 10% for some; here any US content at all makes the foreign tool subject to the EAR, unless the country from which the foreign-made item was first exported has the commodity on its own control list. The eCFR text names two: Japan, which added ArF-wet lithography and other advanced semiconductor manufacturing equipment to its control list on 23 July 2023, and the Netherlands, which did so on 7 September 2024",
+    "alternative": "Standard de minimis is 25 percent for destinations outside Country Groups E:1 and E:2 and 10 percent for those groups; here any US content at all makes the foreign tool subject to the EAR, unless the country from which the foreign-made item was first exported has the commodity on its own control list. The eCFR text names two: Japan, which added ArF-wet lithography and other advanced semiconductor manufacturing equipment to its control list on 23 July 2023, and the Netherlands, which did so on 9 September 2024",
     "destinations": "For the development or production of advanced-node integrated circuits, in Macau or Country Group D:5",
     "licensePolicy": "Presumption of denial",
     "effectiveDate": "2023-11-17",
@@ -517,7 +519,7 @@
     "alternative": "Physical vapor deposition controls that had been in 3B090.a.6 were dropped in the same rule; area-selective deposition and atomic layer deposition were added by the 6 September 2024 rule",
     "destinations": "Macau and Country Group D:5",
     "licensePolicy": "Presumption of denial for China and Macau",
-    "effectiveDate": "2022-10-21",
+    "effectiveDate": "2022-10-07",
     "status": "In force",
     "amendedBy": [
       "2023-11-17",
@@ -547,15 +549,15 @@
     "value": null,
     "unit": "no numeric parameter. Control is by EUV designation",
     "alternative": "EUV pellicles were separately controlled by Japan in July 2023",
-    "destinations": "Worldwide national security and regional stability controls; license for Macau and Country Group D:5",
+    "destinations": "Worldwide national security and regional stability license requirement; License Exception IEC covers countries that have implemented equivalent controls",
     "licensePolicy": "Presumption of denial for China and Macau",
-    "effectiveDate": "2023-11-17",
+    "effectiveDate": "2024-09-06",
     "status": "In force",
     "amendedBy": [],
     "chapter": "photomasks-and-pellicles",
-    "frCitation": "88 FR 73424",
+    "frCitation": "89 FR 72926",
     "cfr": "15 CFR part 774, supplement no. 1, ECCN 3B001.q",
-    "source": "https://www.federalregister.gov/documents/2023/10/25/2023-23049/export-controls-on-semiconductor-manufacturing-items",
+    "source": "https://www.federalregister.gov/documents/2024/09/06/2024-19633/commerce-control-list-additions-and-revisions-implementation-of-controls-on-advanced-technologies",
     "sourceTier": "A",
     "note": "A control on the consumable itself. Since no EUV scanner has ever been exported to China, controlling EUV masks looks redundant, but it forecloses a route in which China builds or acquires a scanner and then needs a mask supply chain it does not have.",
     "kind": "tools",
@@ -580,7 +582,7 @@
       "2024-12-02"
     ],
     "chapter": "metrology-and-inspection",
-    "frCitation": "89 FR 96790",
+    "frCitation": "88 FR 73424; 89 FR 96790",
     "cfr": "15 CFR part 774, supplement no. 1, ECCN 3B002.c",
     "source": "https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-produced-direct-product-rule-additions-and-refinements-to-controls-for-advanced-computing",
     "sourceTier": "A",
@@ -588,7 +590,7 @@
       "https://www.federalregister.gov/documents/2023/10/25/2023-23049/export-controls-on-semiconductor-manufacturing-items",
       "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-742/section-742.6"
     ],
-    "note": "One of only two ECCNs, with 3B001.a.4, that the December 2024 semiconductor equipment foreign direct product rule names in its product scope, which makes actinic mask inspection one of the two narrowest and hardest points in the whole equipment fence.",
+    "note": "Added in November 2023 and named, with listed paragraphs of 3B001, in the product scope of the December 2024 semiconductor equipment foreign direct product rule, which reaches the tool even when it is made outside the United States.",
     "kind": "tools",
     "paramShort": "Inspects EUV masks",
     "unitShort": ""
@@ -609,8 +611,7 @@
     "status": "In force",
     "amendedBy": [
       "2023-11-17",
-      "2024-12-02",
-      "2026-05-31"
+      "2024-12-02"
     ],
     "chapter": "geopolitics",
     "frCitation": "87 FR 62186; 89 FR 96790",
@@ -627,10 +628,10 @@
     "regime": "US EAR",
     "instrument": "Semiconductor manufacturing equipment foreign direct product rule, 15 CFR 734.9(k)",
     "scope": "Foreign-made chipmaking equipment",
-    "parameter": "Product scope test, tied to two ECCNs",
+    "parameter": "Product scope test, tied to listed paragraphs of 3B001 and 3B002",
     "operator": "meets",
     "value": null,
-    "unit": "foreign-produced items classified in ECCN 3B001.a.4 or ECCN 3B002.c",
+    "unit": "foreign-produced commodities specified in ECCN 3B001.a.4, c, d, f.1, f.5, f.6, k to n, p.2, p.4, r, or 3B002.c",
     "alternative": "Destination scope is Macau or Country Group D:5. A companion de minimis change makes any US-origin integrated circuit inside a foreign tool enough to bring it under the EAR.",
     "destinations": "Macau and Country Group D:5",
     "licensePolicy": "Presumption of denial",
@@ -644,7 +645,7 @@
     "cfr": "15 CFR 734.9(k)",
     "source": "https://www.federalregister.gov/documents/2024/12/05/2024-28270/foreign-produced-direct-product-rule-additions-and-refinements-to-controls-for-advanced-computing",
     "sourceTier": "A",
-    "note": "Deliberately narrow: two ECCNs out of the whole 3B001 list, because a broad equipment FDPR would have hit allied toolmakers hardest. It reaches equipment that has never been near the United States and is the legal basis on which BIS can stop a Japanese or Dutch tool at the Chinese border.",
+    "note": "It names the etch (3B001.c), deposition (3B001.d) and lithography (3B001.f.1) paragraphs among others, and reaches equipment that has never been near the United States. Its license requirement does not apply to items exported from abroad by entities in the countries listed in supplement no. 4 to part 742, Japan and the Netherlands among them, unless they are headquartered in Macau or Country Group D:5.",
     "kind": "tools",
     "paramShort": "Direct product of US tools",
     "unitShort": ""
@@ -701,7 +702,7 @@
     "alsoSee": [
       "https://www.federalregister.gov/documents/2025/11/12/2025-19846/one-year-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed-entities"
     ],
-    "note": "The single largest expansion of the Entity List's reach, and the fastest reversal: stayed on 10 November 2025 as part of the one-year US-China truce and due to return on 9 November 2026 unless extended. It is the most consequential scheduled date in the map.",
+    "note": "A broad expansion of the Entity List's reach, stayed on 10 November 2025 as part of the one-year US-China arrangement and due to return on 10 November 2026 unless the stay is extended.",
     "kind": "entities",
     "paramShort": "Ownership share",
     "unitShort": "%"
@@ -726,7 +727,7 @@
     "cfr": "15 CFR 744.11(a)(1)",
     "source": "https://www.federalregister.gov/documents/2025/11/12/2025-19846/one-year-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed-entities",
     "sourceTier": "A",
-    "note": "Listed as its own entry because the expiry date is itself a governing number. It was traded against China's suspension of the October 2025 rare-earth licensing regime, which means the two suspensions are linked and are likely to end together.",
+    "note": "Listed as its own entry because the expiry date is itself a governing number. The White House announced it alongside China's suspension of its October 2025 export controls, which MOFCOM set to run until 10 November 2026.",
     "kind": "entities",
     "paramShort": "Duration of the stay",
     "unitShort": "months"
@@ -742,7 +743,7 @@
     "unit": "TWINSCAN NXT:2000i and subsequent immersion systems",
     "alternative": "EUV systems were already under license before this order",
     "destinations": "Worldwide national license requirement administered by the Dutch government, aimed at China",
-    "licensePolicy": "Case-by-case; in practice licenses for Chinese advanced-logic destinations have not been granted",
+    "licensePolicy": "Case-by-case",
     "effectiveDate": "2023-09-01",
     "status": "In force",
     "amendedBy": [
@@ -823,7 +824,7 @@
     "alternative": "Presumption of approval up to the allocation; presumption of denial above it and for Macau and Country Group D:5",
     "destinations": "All destinations outside the 18 Tier 1 allies and outside D:5",
     "licensePolicy": "Rescission announced; never enforced",
-    "effectiveDate": "2025-01-15",
+    "effectiveDate": "2025-01-13",
     "status": "Rescinded",
     "amendedBy": [
       "2025-05-13"
@@ -850,7 +851,7 @@
     "alternative": "Eligibility limited to entities in Country Groups A, B and D:1 to D:4, excluding Macau and D:5",
     "destinations": "Outside the Tier 1 allies and outside D:5",
     "licensePolicy": "Rescission announced; never enforced",
-    "effectiveDate": "2025-01-15",
+    "effectiveDate": "2025-01-13",
     "status": "Rescinded",
     "amendedBy": [
       "2025-05-13"
@@ -877,7 +878,7 @@
     "alternative": "US-headquartered UVEUs could not place more than 50% of their total AI computing power outside the United States",
     "destinations": "Anywhere except Macau and Country Group D:5",
     "licensePolicy": "Rescission announced; never enforced",
-    "effectiveDate": "2025-01-15",
+    "effectiveDate": "2025-01-13",
     "status": "Rescinded",
     "amendedBy": [
       "2025-05-13"
@@ -904,7 +905,7 @@
     "alternative": "Direct exports only, no distributors; not available for Macau or D:5",
     "destinations": "Outside Macau and Country Group D:5",
     "licensePolicy": "Rescission announced; never enforced",
-    "effectiveDate": "2025-01-15",
+    "effectiveDate": "2025-01-13",
     "status": "Rescinded",
     "amendedBy": [
       "2025-05-13"
@@ -914,7 +915,7 @@
     "cfr": "15 CFR 740.29",
     "source": "https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion",
     "sourceTier": "A",
-    "note": "Roughly the compute of a few thousand top-end accelerators a year: the line the rule drew between a research group and a national program. It is the only place the regime has ever tried to say how much AI compute an ordinary customer should be able to buy without a license.",
+    "note": "Roughly the compute of 1,700 H100-class accelerators a year: the line the rule drew between a research group and a national program. It is the only place the regime has ever tried to say how much AI compute an ordinary customer should be able to buy without a license.",
     "kind": "chips",
     "paramShort": "Annual TPP per buyer",
     "unitShort": "TPP"
@@ -930,8 +931,8 @@
     "unit": "computational operations used to train the model",
     "alternative": "Open-weight models were excluded",
     "destinations": "Worldwide license requirement",
-    "licensePolicy": "Presumption of denial; rescinded before it was enforced",
-    "effectiveDate": "2025-01-15",
+    "licensePolicy": "Presumption of denial outside the destinations in paragraph (a) of supplement no. 5 to part 740 and presumption of approval within them; rescission announced before the compliance date",
+    "effectiveDate": "2025-01-13",
     "status": "Rescinded",
     "amendedBy": [
       "2025-05-13"
@@ -963,7 +964,7 @@
     "amendedBy": [],
     "chapter": "geopolitics",
     "frCitation": "91 FR 43034",
-    "cfr": "15 CFR 742.6(a)(6); part 740, supplement no. 1",
+    "cfr": "15 CFR 742.6(a)(6); part 740, supplements no. 1 and no. 8",
     "source": "https://www.federalregister.gov/documents/2026/07/14/2026-14132/enhanced-favorable-treatment-for-the-united-arab-emirates-under-the-export-administration",
     "sourceTier": "A",
     "note": "The mechanism that replaced the AI Diffusion tiers: instead of a compute quota per country, a named list of approved companies per country. It catches the diversion risk by identity, and the April 2027 expiry for G42 and Core42 makes American incorporation the price of continued access.",
@@ -1029,19 +1030,20 @@
     "operator": ">",
     "value": 1e+26,
     "unit": "computational operations, integer or floating point, counting one multiply-accumulate as two operations",
-    "alternative": "A lower threshold of 10^23 operations was proposed for models trained primarily on biological sequence data",
+    "alternative": "Models trained primarily on biological sequence data, at the lower threshold of 10^23 operations, were left to a separate survey",
     "destinations": "US persons and companies; a reporting duty with no export bar",
-    "licensePolicy": "Quarterly reporting to BIS. Proposed 11 September 2024 with the comment period closing 11 October 2024; never finalized. Its authority, Executive Order 14110, was revoked by Executive Order 14179 on 23 January 2025.",
+    "licensePolicy": "Quarterly reporting to BIS. Proposed 11 September 2024 with the comment period closing 11 October 2024; never finalized. Its authority, Executive Order 14110, was revoked by Executive Order 14148 on 20 January 2025, and Executive Order 14179 of 23 January 2025 ordered a review of actions taken under it.",
     "effectiveDate": null,
     "status": "Proposed, never in force",
     "amendedBy": [
-      "2025-01-23"
+      "2025-01-20"
     ],
     "chapter": "geopolitics",
     "frCitation": "89 FR 73612",
     "source": "https://www.federalregister.gov/documents/2024/09/11/2024-20529/establishment-of-reporting-requirements-for-the-development-of-advanced-artificial-intelligence",
     "sourceTier": "A",
     "alsoSee": [
+      "https://www.federalregister.gov/documents/2025/01/28/2025-01901/initial-rescissions-of-harmful-executive-orders-and-actions",
       "https://www.federalregister.gov/documents/2025/01/31/2025-02172/removing-barriers-to-american-leadership-in-artificial-intelligence"
     ],
     "note": "As of September 2026 the United States has no compute-based reporting threshold in force for AI models, only for the chips that train them: the chip side is governed to five significant figures and the model side not at all.",
@@ -1064,7 +1066,7 @@
     "effectiveDate": null,
     "status": "Proposed, never in force",
     "amendedBy": [
-      "2025-01-23"
+      "2025-01-20"
     ],
     "chapter": "data-centers-and-power",
     "frCitation": "89 FR 73612",
@@ -1086,17 +1088,17 @@
     "unit": "% of the value of the foreign-made item",
     "alternative": "A mirror of the US de minimis and foreign direct product logic, applied to materials",
     "destinations": "Worldwide, with a license requirement enforced against re-export to designated end uses including advanced semiconductors",
-    "licensePolicy": "License required; suspended for one year from 10 November 2025 under the US-China truce, alongside the US suspension of the affiliates rule",
-    "effectiveDate": "2025-10-09",
+    "licensePolicy": "License required; suspended from 7 November 2025 until 10 November 2026, before it took effect, alongside the US suspension of the affiliates rule",
+    "effectiveDate": "2025-12-01",
     "status": "Suspended",
     "amendedBy": [
-      "2025-11-10"
+      "2025-11-07"
     ],
     "chapter": "chemicals-gases-and-photoresist",
     "frCitation": "MOFCOM Announcement 2025 No. 61",
     "source": "https://cset.georgetown.edu/publication/mofcom-notice-2025-61/",
     "sourceTier": "A",
-    "note": "Included because it is the only non-US threshold in the map that reaches outside its own jurisdiction, and because 0.1 percent is stricter than any American de minimis figure except the zero applied to lithography. Its suspension expires at the same time as the affiliates rule stay, which is why the two must be read together.",
+    "note": "Included because it is the only non-US threshold in the map that reaches outside its own jurisdiction, and because 0.1 percent sits far below the standard American de minimis levels of 25 and 10 percent. Its suspension ends on 10 November 2026, the day the affiliates rule returns unless its stay is extended, which is why the two must be read together.",
     "kind": "china",
     "paramShort": "Chinese content by value",
     "unitShort": "%"

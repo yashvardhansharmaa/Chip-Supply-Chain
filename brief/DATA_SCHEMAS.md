@@ -139,6 +139,6 @@ The heart of the geopolitics view. For each segment, the share of global value (
 }
 ```
 
-Segments to cover (use these exact names): `EDA software`, `Core IP`, `Silicon wafers`, `Photoresist`, `Specialty gases`, `EUV lithography tools`, `DUV lithography tools`, `Deposition tools`, `Etch tools`, `Metrology & inspection tools`, `Photomasks`, `Leading-edge logic manufacturing (≤5 nm)`, `Mature logic manufacturing (≥28 nm)`, `DRAM manufacturing`, `HBM`, `Advanced packaging (2.5D/3D)`, `OSAT (assembly & test)`, `IC substrates`, `AI accelerator design`, `Server assembly`.
+Segments to cover (use these exact names): `EDA software`, `Core IP`, `Silicon wafers`, `Photoresist`, `Specialty gases`, `EUV lithography tools`, `DUV lithography tools`, `Deposition tools`, `Etch tools`, `Metrology & inspection tools`, `Photomasks`, `Leading-edge logic manufacturing (<10 nm)`, `Mature logic manufacturing (≥28 nm)`, `DRAM manufacturing`, `HBM`, `Advanced packaging (2.5D/3D)`, `OSAT (assembly & test)`, `IC substrates`, `AI accelerator design`, `Server assembly`.
 
 Shares must sum to roughly 100 per segment. If the best available split is by firm rather than country, convert it and say so in `note`.

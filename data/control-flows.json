@@ -71,7 +71,7 @@
         {
           "date": "2025-07-14",
           "status": "denial",
-          "label": "H20 licenses granted again; Blackwell still denied",
+          "label": "H20 licenses promised; Blackwell still denied",
           "event": "2025-07-14-h20-restored",
           "cite": {
             "url": "https://blogs.nvidia.com/blog/nvidia-ceo-promotes-ai-in-dc-and-china/",
@@ -94,7 +94,7 @@
           "label": "Denial above 21,000 TPP or 6,500 GB/s DRAM bandwidth",
           "event": "2026-01-15-h200-case-by-case",
           "cite": {
-            "fr": "91 FR 1685",
+            "fr": "91 FR 1684",
             "cfr": "15 CFR 742.6(b)(10)(iii)",
             "url": "https://www.govinfo.gov/content/pkg/FR-2026-01-15/html/2026-00789.htm"
           },
@@ -113,7 +113,7 @@
       "initial": "open",
       "states": [
         {
-          "date": "2022-10-21",
+          "date": "2022-10-07",
           "announced": "2022-10-07",
           "status": "case",
           "label": "License for advanced logic, DRAM and NAND tools",
@@ -234,7 +234,7 @@
       "id": "hbm",
       "name": "High-bandwidth memory",
       "route": "Korea and US → China",
-      "what": "Memory stacks above 2 GB per second per square millimeter, wherever they are made, plus the foreign stacks caught by the direct product rule. The license requirement runs only to Macau and Country Group D:5, and the review splits inside them: approval is presumed for buyers in China or Macau that are not headquartered there, denial for those that are. License Exception HBM still carries stacks to a Chinese packaging house for an American or allied designer.",
+      "what": "Memory stacks above 2 GB per second per square millimeter, wherever they are made, plus the foreign stacks caught by the direct product rule. The license requirement runs only to Macau and Country Group D:5, and the review splits inside them: approval is presumed for buyers in China or Macau that are not headquartered there, denial for those that are. License Exception HBM still lets a US or Country Group A:5 exporter ship stacks below 3.3 GB per second per square millimeter directly to a packaging site for the designer that bought them.",
       "order": 4,
       "chapter": "memory-and-hbm",
       "initial": "open",
@@ -443,11 +443,11 @@
           "date": "2025-11-09",
           "status": "prohibited",
           "suspendedUntil": "2026-11-27",
-          "label": "Ban stayed; general licenses issued to US end users",
+          "label": "Ban on exports to America suspended",
           "event": "2025-11-10-one-year-truce",
           "cite": {
             "fr": "MOFCOM Announcement 2025 No. 72",
-            "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_b1ec77dd3f0d4762952904df7cdaadec.html"
+            "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_5c68985a6b1a46778e2e8dbff1bb1601.html"
           }
         }
       ],
@@ -508,7 +508,7 @@
           "date": "2025-11-07",
           "status": "case",
           "suspendedUntil": "2026-11-10",
-          "label": "Stayed on 7 November, before it ever bound",
+          "label": "0.1 percent rule stayed on 7 November, before it took effect",
           "event": "2025-11-10-one-year-truce",
           "cite": {
             "fr": "MOFCOM and GAC Announcement 2025 No. 70",
@@ -540,7 +540,7 @@
         {
           "date": "2026-08-26",
           "status": "prohibited",
-          "label": "Reported curbs leave H200 licenses unused; nothing published",
+          "label": "PRC restrictions leave most H200 licenses unused",
           "event": "2026-08-26-h200-unused",
           "cite": {
             "fr": "NVIDIA Form 10-Q, Q2 FY2027",
@@ -633,7 +633,7 @@
           "event": "2022-12-23-ndaa-5949",
           "cite": {
             "fr": "Public Law 117-263, section 5949",
-            "url": "https://www.govinfo.gov/content/pkg/FR-2024-05-03/html/2024-08735.htm"
+            "url": "https://www.federalregister.gov/documents/2026/02/17/2026-03065/federal-acquisition-regulation-prohibition-on-certain-semiconductor-products-and-services"
           }
         },
         {
@@ -678,7 +678,7 @@
         {
           "date": "2026-01-15",
           "status": "policy",
-          "label": "Taiwan wins tariff relief, nothing on chips",
+          "label": "Taiwan wins tariff relief and pledges $250 billion of investment",
           "event": "2026-01-15-us-taiwan-mou",
           "cite": {
             "url": "https://www.federalregister.gov/documents/2026/05/28/2026-10571/implementing-certain-tariff-related-elements-of-a-trade-and-security-agreement-between-the-american"

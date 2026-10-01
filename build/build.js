@@ -82,7 +82,8 @@ function cite(url, ctx) {
   const label = [b.title || host(url), b.publisher, when].filter(Boolean).join(' · ');
   return `<sup class="cite"><a href="${esc(url)}" target="_blank" rel="noopener" data-t="${esc(b.title || '')}" data-p="${esc(b.publisher || '')}" data-d="${esc(when)}" data-tier="${esc(tier)}" aria-label="Source ${i + 1}: ${esc(label)}">${i + 1}</a></sup>`;
 }
-function host(url) { try { return new URL(url).hostname.replace(/^www\./, ''); } catch (e) { return url; } }
+// an archived page (web.archive.org/web/<stamp>/<original>) is rated and labelled by its original publisher
+function host(url) { try { const m = String(url).match(/^https?:\/\/web\.archive\.org\/web\/[^/]+\/(https?:\/\/.+)$/); return new URL(m ? m[1] : url).hostname.replace(/^www\./, ''); } catch (e) { return url; } }
 
 /* ---------------- figures ---------------- */
 function fmtNum(v) { if (typeof v !== 'number') return esc(v); return Math.abs(v) >= 1000 ? v.toLocaleString('en-US') : (Number.isInteger(v) ? String(v) : v.toFixed(1)); }

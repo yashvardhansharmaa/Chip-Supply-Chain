@@ -3,7 +3,7 @@
   "id": "advanced-packaging",
   "number": 11,
   "title": "Advanced Packaging",
-  "oneLiner": "Lithography stopped being the limit on chip size in 2022. The limit now is how large an interposer, the silicon base plate under the chips, TSMC can build, and through 2025 how many it could build a month.",
+  "oneLiner": "Lithography no longer sets the limit on the size of an AI accelerator. The limit now is how large an interposer, the silicon base plate under the chips, TSMC can build, and through 2025 how many it could build a month.",
   "plain": "Packaging joins finished chips into one component and mounts them on a base, called a substrate, wired almost as finely as the chips themselves. A lithography machine, which prints a chip's circuits, can cover only a rectangle about the size of a postage stamp in one shot, and a modern accelerator needs more circuit than fits in one, so it cannot be one chip. It is made as several pieces, set side by side on a shared slab of silicon and wired together through it, with the stacked memory a few millimeters away. Slab, chips and base all expand at different rates when heated, so the package can warp and its joints crack. Getting that right in large numbers is hard enough that nearly every AI accelerator is packaged by TSMC, in Taiwan.",
   "bridge": "Logic and memory are still two separate objects, made in different countries, and the next stage exists to close the distance between them.",
   "specimen": "cowos-exploded",
@@ -13,34 +13,35 @@
     "chokepointScore": 5,
     "leaders": [
       {"name": "TSMC", "country": "TW", "share": "Almost all CoWoS for leading AI accelerators"},
-      {"name": "ASE Technology", "country": "TW", "share": "NT$645.4B revenue, 2025; the largest outsourced assembly and test firm"},
+      {"name": "ASE Technology", "country": "TW", "share": "NT$645.4B revenue, 2025; the leading provider of outsourced assembly and test"},
       {"name": "Amkor", "country": "US", "share": "$6.71B net sales, 2025; the largest American assembly and test firm"},
-      {"name": "JCET", "country": "CN", "share": "RMB 35.96B revenue, 2024; the largest Chinese assembly and test firm"},
+      {"name": "JCET", "country": "CN", "share": "RMB 38.87B revenue, 2025; a leading Chinese assembly and test firm"},
       {"name": "ASMPT", "country": "SG", "share": "$532.1M advanced packaging revenue, 2025; thermocompression bonders"}
     ],
     "countries": [
       {"code": "TW", "note": "TSMC AP fabs and the OSAT cluster; almost all 2.5D capacity for AI accelerators"},
       {"code": "US", "note": "Amkor Peoria, Arizona from 2028; two TSMC advanced packaging plants planned in Arizona"},
-      {"code": "CN", "note": "JCET, Tongfu and HT-Tech, strong in conventional assembly and test, weak in 2.5D"},
+      {"code": "CN", "note": "JCET, Tongfu and HT-Tech; four of the top ten outsourced assembly and test firms by 2024 revenue are Chinese"},
       {"code": "NL", "note": "Besi hybrid and die bonders"},
       {"code": "JP", "note": "Disco grinders and dicers; TEL and Shibaura bonding tools"}
     ],
-    "chinaStatus": "China is far stronger at packaging and testing chips than at making them. JCET alone had revenue of RMB 35.96 billion in 2024. Chinese tool makers gained share in packaging and test tools while gaining none in atomic layer deposition or lithography. Almost none of that Chinese packaging is built on a silicon interposer, the kind AI accelerators need.",
-    "usStatus": "No firm yet does CoWoS-class packaging in volume in the United States. Amkor is building a $7B packaging and test plant in Peoria, Arizona, with up to $407M of CHIPS Act money, and production starts in early 2028.",
-    "costSignal": "No public wafer counts. TSMC told investors CoWoS capacity would grow about 60% a year, and keeps adding to that, but will not publish the total. Epoch AI estimates Nvidia alone used 60.3% of the world's CoWoS capacity in 2025",
-    "substitutability": {"band": "Moderate", "test": "Intel's EMIB can do the same job as TSMC's CoWoS, and the real shortage is in making enough working packages at the volume Nvidia orders.", "why": "None of the packaging steps is unusual, and Intel's EMIB does the same job when TSMC's CoWoS is sold out. The hard part is volume. A newcomer has to buy enough bonding machines and run enough practice lots to make the interposer, the silicon base plate under the chips, at 5.5 times the area a scanner prints in one shot. It then has to attach the memory stacks, have them work, and do all of that at the volume Nvidia alone orders. Amkor's plant in Peoria, Arizona shows the timing: production starts in early 2028, so the wait is two to five years."}
+    "chinaStatus": "Four of the top ten outsourced assembly and test firms by 2024 revenue are headquartered in China, and JCET alone had revenue of RMB 38.87 billion in 2025. Between 2019 and 2024, Chinese tool makers gained share in advanced packaging and test tools, gained none in atomic layer deposition and gained a negligible share in lithography. US and Japanese firms still held significant leads in advanced packaging tools in 2024, when China had 7 percent of that market.",
+    "usStatus": "No firm yet does CoWoS-class packaging in volume in the United States. Amkor is building a $7B packaging and test plant in Peoria, Arizona, with up to $407M of CHIPS Act money, and expects production to start in early 2028.",
+    "costSignal": "No public wafer counts. TSMC said at its 2024 symposium that CoWoS capacity would grow at a 60% compound annual rate over the next few years, but it does not publish the total. Epoch AI estimates Nvidia alone used 60.3% of the world's CoWoS capacity in 2025",
+    "substitutability": {"band": "Moderate", "test": "Intel's EMIB can do the same job as TSMC's CoWoS, and the real shortage is in making enough working packages at the volume Nvidia orders.", "why": "None of the packaging steps is unusual, and Intel's EMIB is another 2.5D option that Trainium and TPU have adopted to different degrees. The hard part is volume. A newcomer has to buy enough bonding machines and run enough practice lots to make the interposer, the silicon base plate under the chips, at 5.5 times the area a scanner prints in one shot. It then has to attach the memory stacks, have them work, and do all of that at the volume Nvidia alone orders. Amkor's plant in Peoria, Arizona shows the timing. Its production is expected to start in early 2028, so the wait is two to five years."}
   },
   "keyFacts": [
     {"fact": "A scanner's maximum exposure field is 26 mm by 33 mm, or 858 mm2", "source": "https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe3400c"},
-    {"fact": "TSMC is now producing 5.5-reticle CoWoS, having certified it in 2025 and started volume production in 2026", "source": "https://pr.tsmc.com/english/news/3302"},
+    {"fact": "TSMC said in April 2026 that it is now producing 5.5-reticle CoWoS and planning even larger versions", "source": "https://pr.tsmc.com/english/news/3302"},
     {"fact": "CoWoS-S silicon interposers reach 3.3x reticle size, about 2,700 mm2; larger designs must use CoWoS-R or CoWoS-L", "source": "https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm"},
     {"fact": "TSMC told its 2024 symposium that CoWoS capacity would grow at a 60% CAGR over the following years, and C.C. Wei said in July 2024 that he could not reach supply and demand balance", "source": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf"},
-    {"fact": "In October 2025 Wei would still not give an absolute CoWoS number for 2026, and said Amkor's Arizona plant would open before TSMC's own two packaging fabs there", "source": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf"},
+    {"fact": "In October 2025 Wei would still not give an absolute CoWoS number for 2026, and said a large outsourced packaging partner already breaking ground in Arizona was on an earlier schedule than TSMC's own two packaging fabs there", "source": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf"},
     {"fact": "A 14-reticle CoWoS carrying about 10 large compute dies and 20 HBM stacks is planned for production in 2028, with more than 14 reticles in 2029 and a 40-reticle System-on-Wafer the same year", "source": "https://pr.tsmc.com/english/news/3302"},
-    {"fact": "ASE Technology Holding had revenue of NT$645.4 billion in 2025 with assembly and test revenue up 23%; Amkor had revenue of $6.71 billion, up 6%", "source": "https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-fourth-quarter-and-the-full-year-of-2025-302679779.html"},
-    {"fact": "JCET, China's largest outsourced assembly and test firm, had revenue of RMB 35.96 billion in 2024, up 21.2%", "source": "https://www.jcetglobal.com/en/site/news-detail?id=1952"},
+    {"fact": "ASE Technology Holding had revenue of NT$645.4 billion in 2025, up 8.4%, with assembly and test revenue of NT$389.2 billion against NT$325.9 billion in 2024", "source": "https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-fourth-quarter-and-the-full-year-of-2025-302679779.html"},
+    {"fact": "JCET, a leading Chinese assembly and test firm, had record revenue of RMB 38.87 billion in 2025, up 8.1%", "source": "https://www.jcetglobal.com/en/site/news-detail?id=2048"},
     {"fact": "ASMPT advanced packaging revenue was $532.1M in 2025, up 30.2%, with TCB revenue up about 146%; it targets 35-40% of the TCB market", "source": "https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/"},
-    {"fact": "Amkor started building a $7B two-phase packaging and test campus in Peoria, Arizona in October 2025, with up to $407M of CHIPS funding and production from early 2028", "source": "https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced"},
+    {"fact": "Amkor started building a $7B two-phase packaging and test campus in Peoria, Arizona in October 2025, with production from early 2028", "source": "https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced"},
+    {"fact": "In December 2024 the Commerce Department awarded Amkor up to $407M in CHIPS Act direct funding for its Arizona facility", "source": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm"},
     {"fact": "TSMC's Arizona commitment reached $265 billion covering 10 fabs and 2 advanced packaging facilities", "source": "https://www.azcommerce.com/news-events/news/2026/7/tsmc-announcement/"},
     {"fact": "Epoch AI estimates Nvidia used 60.3% of the world's CoWoS packaging capacity in 2025, with a 90% confidence interval of 56.5 to 64.3, and that Nvidia, Google, AMD and Amazon together used around 90% of it while using only about 12% of advanced logic die production", "source": "https://epoch.ai/data-insights/ai-chip-supply-chain-constraints"}
   ],
@@ -81,13 +82,13 @@ A lithography scanner prints a rectangle 26 mm by 33 mm, or 858 mm2, in one expo
 
 Packaging joins finished chips into one component and mounts them on a base, called a substrate, wired almost as finely as the chips themselves. A lithography machine, which prints a chip's circuits, can cover only a rectangle about the size of a postage stamp in one shot, and a modern accelerator needs more circuit than fits in one, so it cannot be one chip. It is made as several pieces, set side by side on a shared slab of silicon and wired together through it, with the stacked memory a few millimeters away. Slab, chips and base all expand at different rates when heated, so the package can warp and its joints crack. Getting that right in large numbers is hard enough that nearly every AI accelerator is packaged by TSMC, in Taiwan.
 
-High bandwidth memory gives a second reason to split the package: its 1,024-bit or 2,048-bit connection, that many wires at once, is too wide for a resin base board to carry, so the memory sits beside the logic on a shared silicon carrier, the interposer.
+High bandwidth memory gives a second reason to split the package. An HBM4 stack connects through 2,048 data signals, packed too tightly for a standard resin base board, so the memory sits beside the logic on a shared silicon carrier, the interposer ([source](https://www.jedec.org/news/pressreleases/new-jedec%C2%AE-sphbm4-standard-enables-hbm4-class-bandwidth-organic-substrates)).
 
 {{figure:package-build}}
 
 The name CoWoS says the order: chip onto wafer, then wafer onto substrate. TSMC makes a thin silicon wafer carrying wiring and vertical copper vias, metal-filled holes that join one layer of wiring to the next, but no transistors. It bonds the logic dies and memory stacks face down onto that wafer with microbumps, dots of solder 30 to 40 microns apart, about a third of a hair's width, each dot one electrical joint. Then it cuts the interposer out of the wafer, attaches it to the resin substrate, and the substrate goes onto its board.
 
-Each of those packaging steps is ordinary on its own. But one cracked joint scraps a package holding eight qualified HBM stacks and two of the most expensive logic dies ever made.
+Each of those packaging steps is ordinary on its own. But one cracked joint scraps a package holding eight qualified HBM stacks and two large, expensive logic dies.
 
 ## Variants and trade-offs
 
@@ -99,13 +100,13 @@ Each of those packaging steps is ordinary on its own. But one cracked joint scra
 
 ### 2.5D: silicon, RDL and bridges
 
-TSMC has run CoWoS in volume since 2012 ([source](https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm)). CoWoS-S wires most finely, but its interposer is one unbroken piece of silicon whose yield falls as the area grows, so CoWoS-L replaces the slab with fine wiring and small silicon bridges only where the wiring is dense. Intel's EMIB buries the same bridge idea in the resin substrate, and is a credible second source when CoWoS capacity is short.
+TSMC has run CoWoS in volume since 2012 ([source](https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm)). CoWoS-S wires most finely, but its interposer is one unbroken piece of silicon whose yield falls as the area grows, so CoWoS-L replaces the slab with fine wiring and small silicon bridges only where the wiring is dense. Intel's EMIB buries the same bridge idea in the resin substrate, and SemiAnalysis reported in March 2026 that Trainium and TPU had adopted it to different degrees ([source](https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage)).
 
-Blackwell was the first high-volume design on CoWoS-L, and it went badly. The bridges carrying the 10 TB/s link between the two compute dies have to be placed to a tolerance that warping makes hard to hold ([source](https://semianalysis.com/2024/08/04/nvidias-blackwell-reworked-shipment/)).
+Blackwell was the first high-volume design on CoWoS-L, and packaging issues at TSMC and in Nvidia's design limited its supply ([source](https://semianalysis.com/2024/08/04/nvidias-blackwell-reworked-shipment/)). The bridges carrying the 10 TB/s link between the two compute dies need very high placement accuracy, and the different expansion rates of the dies, bridges, interposer and substrate caused warpage ([source](https://semianalysis.com/2024/08/04/nvidias-blackwell-reworked-shipment/)).
 
 ### 3D: SoIC, Foveros, X-Cube
 
-TSMC's SoIC and Intel's Foveros bond dies face to face, copper pad to copper pad with no solder, packing the connections far closer than microbumps allow. TSMC put 3 nm SoIC into volume production in 2025 ([source](https://investor.tsmc.com/static/annualReports/2025/english/pdf/2025_tsmc_ar_e_ch5.pdf)), with an A14-on-A14 version due in 2029 carrying 1.8 times as many connections between the dies as the 2 nm generation ([source](https://pr.tsmc.com/english/news/3302)). Heat decides the layout: the bottom die overheats and the top is hard to power, so 3D designs often put cache underneath and compute on top.
+TSMC's SoIC and Intel's Foveros bond dies face to face, copper pad to copper pad with no solder, packing the connections far closer than microbumps allow. TSMC put 3 nm SoIC into volume production in 2025 ([source](https://investor.tsmc.com/static/annualReports/2025/english/pdf/2025_tsmc_ar_e_ch5.pdf)). An A14-on-A14 version due in 2029 will carry 1.8 times the die-to-die connection density of the 2 nm version ([source](https://pr.tsmc.com/english/news/3302)). Heat decides the layout: the bottom die overheats and the top is hard to power, so 3D designs often put cache underneath and compute on top.
 
 ### Two ways off the silicon interposer
 
@@ -113,35 +114,35 @@ Panel-level packaging swaps the round wafer for a rectangular panel and wastes f
 
 ## Capacity
 
-TSMC does not publish a CoWoS wafer number, and will not. At its 2024 symposium it told investors capacity would grow at a 60 percent compound rate, and on the July 2024 earnings call C.C. Wei said he could not reach supply and demand balance ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf)).
+TSMC does not publicly disclose its CoWoS capacity ([source](https://epoch.ai/data-insights/ai-chip-supply-chain-constraints)). At its 2024 symposium it said capacity would grow at a 60 percent compound annual rate over the next few years, and on the July 2024 earnings call C.C. Wei said he could not reach supply and demand balance ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf)).
 
-In October 2025 Wei would still say only that TSMC would add capacity again in 2026 and give the real figure the year after, and that front end and back end were both, in his word, tight ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf)).
+In October 2025 Wei would still say only that TSMC was working to increase capacity in 2026 and would probably give the real number in 2026, and that front-end and back-end capacity were both, in his words, very tight ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf)).
 
-Epoch AI weighs each designer's component use against world supply and puts Nvidia at 60.3 percent of all CoWoS in 2025, with a 90 percent confidence interval of 56.5 to 64.3; Google took 13.5, AMD 8.4 and Amazon 7.4 ([source](https://epoch.ai/data-insights/ai-chip-supply-chain-constraints)). Those four absorbed around 90 percent of all CoWoS and all HBM by value while taking about 12 percent of the world's advanced logic wafers, which is why packaging ran out and logic did not.
+Epoch AI weighs each designer's component use against world supply and puts Nvidia at 60.3 percent of all CoWoS in 2025, with a 90 percent confidence interval of 56.5 to 64.3; Google took 13.5, AMD 8.4 and Amazon 7.4 ([source](https://epoch.ai/data-insights/ai-chip-supply-chain-constraints)). Those four consumed around 90 percent of global CoWoS capacity and HBM supply, with HBM measured by value, while consuming only 12 percent of advanced logic die production ([source](https://epoch.ai/data-insights/ai-chip-supply-chain-constraints)).
 
 {{figure:cowos-buyers}}
 
-SemiAnalysis reported in March 2026 that front-end wafers are now the dominant bottleneck and CoWoS supply is easing, partly because TSMC has no reason to build interposer lines its N3 output cannot feed ([source](https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage)).
+SemiAnalysis reported in March 2026 that front-end capacity is now the dominant bottleneck and CoWoS constraints are easing, and that TSMC plans CoWoS capacity around its N3 limits because added packaging capacity is of no use without front-end wafers to fill it ([source](https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage)).
 
 ## Who makes it
 
 {{figure:cowos-reticles}}
 
-The word packaging covers two industries. TSMC does the 2.5D work, chips side by side on a shared carrier, in its own back-end fabs; everything else goes to outsourced assembly and test firms. ASE Technology Holding, the largest, billed NT$645.4 billion in 2025, with its assembly and test business up 23 percent, and Amkor, the largest American one, billed $6.71 billion ([source](https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-fourth-quarter-and-the-full-year-of-2025-302679779.html)) ([source](https://www.sec.gov/Archives/edgar/data/1047127/000104712726000007/amkr123125erex-991.htm)).
+The word packaging covers two industries. TSMC does the 2.5D work, chips side by side on a shared carrier, in its own back-end fabs; everything else goes to outsourced assembly and test firms. ASE Technology Holding, the leading provider of assembly and test services, billed NT$645.4 billion in 2025, with its assembly and test business at NT$389.2 billion against NT$325.9 billion in 2024 ([source](https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-fourth-quarter-and-the-full-year-of-2025-302679779.html)). Amkor, the world's largest US-headquartered one, billed $6.71 billion ([source](https://www.sec.gov/Archives/edgar/data/1047127/000104712726000007/amkr123125erex-991.htm)).
 
 The tools are a narrower chokepoint than the assembly houses.
 
-- **Thermocompression bonding.** Pressing dies together under heat and force. ASMPT's advanced packaging revenue reached $532.1 million in 2025, with the bonder line up about 146 percent; it targets 35 to 40 percent of a market it puts at $1.6 billion by 2028 ([source](https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/)).
-- **Hybrid bonding.** Solder disappears and copper pads meet directly. Applied Materials built its Kinex bonder with Besi, which makes the placement head ([source](https://www.appliedmaterials.com/eu/en/product-library/kinex-integrated-die-to-wafer-hybrid-bonding-system.html)).
-- **Grinding and dicing.** Disco dominates the steps that thin wafers and cut packages apart; see [Test and assembly](#test-and-assembly) ([source](https://newsletter.semianalysis.com/p/disco-corporation-the-world-leader)).
+- **Thermocompression bonding.** Pressing dies together under heat and force. ASMPT's advanced packaging revenue reached $532.1 million in 2025, with thermocompression bonder revenue up about 146 percent; it targets 35 to 40 percent of a market it puts at $1.6 billion in 2028 ([source](https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/)).
+- **Hybrid bonding.** Solder disappears and copper pads meet directly. Applied Materials co-developed its Kinex hybrid bonding system with Besi, which Applied calls the industry leader in hybrid bonding ([source](https://www.appliedmaterials.com/eu/en/product-library/kinex-integrated-die-to-wafer-hybrid-bonding-system.html)).
+- **Grinding and dicing.** Disco holds the leading market share in wafer grinders and dicing saws, the tools that thin wafers and cut them into chips; see [Test and assembly](#test-and-assembly) ([source](https://newsletter.semianalysis.com/p/disco-corporation-the-world-leader)).
 
-TSMC's Arizona commitment reached $265 billion in July 2026 and covers two advanced packaging plants alongside 10 fabs ([source](https://www.azcommerce.com/news-events/news/2026/7/tsmc-announcement/)). Amkor started building a $7 billion campus in Peoria in October 2025, backed by up to $407 million of CHIPS money, producing from early 2028 ([source](https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced)), and Wei confirms it will open before TSMC's own two do ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf)).
+TSMC's Arizona commitment reached $265 billion in July 2026 and covers two advanced packaging plants alongside 10 fabs ([source](https://www.azcommerce.com/news-events/news/2026/7/tsmc-announcement/)). Amkor started building a $7 billion campus in Peoria in October 2025 and expects production from early 2028 ([source](https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced)). The Commerce Department awarded Amkor up to $407 million in CHIPS Act funding for the site in December 2024 ([source](https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm)). In October 2025 Wei said a large outsourced packaging partner already breaking ground in Arizona was on an earlier schedule than TSMC's own two packaging fabs there ([source](https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf)).
 
 ## The chokepoint
 
 {{figure:china-backend-tools}}
 
-JCET, the largest Chinese assembler, billed RMB 35.96 billion in 2024, up 21 percent ([source](https://www.jcetglobal.com/en/site/news-detail?id=1952)), and Chinese toolmakers took real share in packaging and test equipment over the same years they took none in atomic layer deposition ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). Packaging tools are less export-controlled than lithography, and Huawei's most credible response to the restrictions is to build big chips from small chiplets cut on SMIC silicon and assembled at home. China still has no silicon-interposer 2.5D at volume with qualified HBM beside it.
+JCET, a leading Chinese assembler, billed a record RMB 38.87 billion in 2025, up 8.1 percent ([source](https://www.jcetglobal.com/en/site/news-detail?id=2048)). Chinese toolmakers gained share in advanced packaging and test tools between 2019 and 2024, the same years they gained none in atomic layer deposition ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). Four of the top ten outsourced assembly and test firms by 2024 revenue are headquartered in China, but US and Japanese firms still held significant leads in advanced packaging tools in 2024 ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). JCET says its XDFOI platform has entered high-volume manufacturing with redistribution-layer interposer, silicon interposer and silicon bridge options ([source](https://www.jcetglobal.com/en/site/news-detail?id=2052)).
 
 Each generation on TSMC's roadmap needs a larger interposer.
 
@@ -152,9 +153,9 @@ Each generation on TSMC's roadmap needs a larger interposer.
 
 - **Interposer area** is the limit on how much logic and memory fit, now 5.5x reticle on CoWoS-L ([source](https://pr.tsmc.com/english/news/3302)).
 - **Package yield** decides whether a generation ships on time, and nobody publishes it.
-- **Warpage control** covers the expansion mismatch between die, bridge, interposer and substrate that broke early CoWoS-L and gets harder as packages grow ([source](https://semianalysis.com/2024/08/04/nvidias-blackwell-reworked-shipment/)).
+- **Warpage control** covers the expansion mismatch between die, bridge, interposer and substrate that caused warpage in Blackwell, the first high-volume CoWoS-L design ([source](https://semianalysis.com/2024/08/04/nvidias-blackwell-reworked-shipment/)).
 - **HBM stacks supported** is about 20 on the 14-reticle package due in 2028 ([source](https://pr.tsmc.com/english/news/3302)).
-- **Bonder throughput** is slow by nature: thermocompression and hybrid bonding place one die at a time, and three or four firms hold the tools ([source](https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/)).
+- **Bonder throughput** depends on the toolmakers, and ASMPT alone targets 35 to 40 percent of the thermocompression bonding market ([source](https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/)).
 - **Substrate size** limits everything above it. A 14-reticle interposer needs a resin substrate that will not warp under it, which pushes ABF build-up film to its limits; see [Substrates and PCBs](#substrates-and-pcbs).
 
 ## Takeaways

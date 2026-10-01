@@ -3,7 +3,7 @@
  "id": "transistors-and-front-end",
  "number": 8,
  "title": "Transistors and the Front End",
- "oneLiner": "Three companies can build a 2 nm-class transistor. Shrinking stopped lowering the cost per transistor about a decade ago, and every gain since has come from extra process steps.",
+ "oneLiner": "Three companies can build a 2 nm-class transistor, and TSMC's own figures show its chip density gain shrinking from 1.15 times at N2P to up to 1.10 times at A16.",
  "plain": "The front end of a chip factory is the part that builds the transistors, the billions of tiny switches in every chip. Each switch is a valve. Current runs along a narrow strip of silicon called the channel, and a small voltage on a gate above the strip opens or shuts the flow. Shorter strips switch faster and more of them fit on a chip, but make the strip short enough and the valve stops sealing: current leaks through even when the gate is off, and the chip burns power doing nothing. The fix is to wrap the gate around all four sides of the strip, so it can squeeze the flow shut from every side, and that takes a long sequence of steps that have to run in exact order. Only three companies, TSMC, Intel and Samsung, can do it, a list so short that an export control can name every one of them.",
  "bridge": "Measured and clean, the layers mean nothing on their own; laid in the right order they become switches.",
  "specimen": "gaa-transistor",
@@ -20,15 +20,15 @@
  ],
  "countries": [
  {"code": "TW", "note": "TSMC N2 at Fab 20 Hsinchu and Fab 22 Kaohsiung"},
- {"code": "US", "note": "Intel 18A at Fab 52, Arizona; TSMC Arizona on N4 and N3"},
+ {"code": "US", "note": "Intel 18A at Fab 52, Arizona; TSMC Arizona on N4, with N3 targeted for the second half of 2027"},
  {"code": "KR", "note": "Samsung Hwaseong and Pyeongtaek"},
  {"code": "JP", "note": "Rapidus Chitose, Hokkaido"},
  {"code": "CN", "note": "SMIC Shanghai and Beijing 300 mm lines"}
  ],
- "chinaStatus": "SMIC ships a process it calls N+3, measured at 113.4 million transistors per square millimeter. It prints each layer in two or four passes because it cannot buy an extreme-ultraviolet scanner. Its narrowest wires sit closer together than Intel 18A's, which shows what a decade of state money buys without an EUV scanner.",
+ "chinaStatus": "SMIC ships a process it calls N+3, measured at 113.4 million transistors per square millimeter. It prints its tightest layers in two or four passes because it cannot buy an extreme-ultraviolet scanner. Its narrowest wires sit closer together than Intel 18A's, a comparison SemiAnalysis calls an incomplete, cherry-picked metric.",
  "usStatus": "Intel runs the only American-owned line that makes the newest transistors. Its 18A process brought gate-all-around transistors and backside power, where power is fed from under the transistors, to market together. Intel is also the first to use High-NA EUV scanners, the newest kind, in volume production.",
- "costSignal": "No foundry publishes prices for its newest wafers. The public measure is how many more transistors TSMC fits on each new process, and that gain falls from 1.2x at N2P to about 1.1x at A16.",
- "substitutability": {"band": "Hard", "test": "Three firms make gate-all-around transistors, the newest kind, and none sells its process recipe.", "why": "The scarce thing is the process recipe: which steps, in which order, on which tools. Three firms have written one, so a newcomer knows it can be done but has to work out its own. Rapidus in Japan, backed by the state, is now finding out what that costs when starting with no line, on 267.6 billion yen and a 2027 target. Anyone who can buy extreme-ultraviolet scanners should expect five to ten years. China cannot buy those scanners. It has reached 5 nm-class features by printing each layer several times, and that keeps it behind the newest chips."}
+ "costSignal": "No foundry publishes prices for its newest wafers. The public measure is how many more transistors TSMC fits on each new process, and its chip density gain falls from 1.15x at N2P to up to 1.10x at A16.",
+ "substitutability": {"band": "Hard", "test": "Three firms make gate-all-around transistors, the newest kind, and none sells its process recipe.", "why": "The scarce thing is the process recipe: which steps, in which order, on which tools. Three firms have written one, so a newcomer knows it can be done but has to work out its own. Rapidus in Japan, backed by the state, is now finding out what that costs when starting with no line, on 267.6 billion yen and a 2027 target. China cannot buy extreme-ultraviolet scanners. It made its 7 nm chips on older deep-ultraviolet machines stockpiled before export controls took effect, and that keeps it behind the newest chips."}
  },
  "keyFacts": [
  {"fact": "TSMC N2 entered volume production in 4Q25, its first nanosheet gate-all-around node", "source": "https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm"},
@@ -38,8 +38,8 @@
  {"fact": "TSMC A13, a direct shrink of A14 giving 6% area savings, is planned for 2029, as is A12 with Super Power Rail", "source": "https://pr.tsmc.com/english/news/3302"},
  {"fact": "Intel 18A shipped gate-all-around and backside power together, giving an 11% routed area reduction and a 10x reduction in dynamic voltage droop", "source": "https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future"},
  {"fact": "SMIC N+3 measures a 57 nm contacted gate pitch and a 32.5 nm minimum metal pitch, for 113.4 million transistors per square millimeter, against 107.7 for TSMC N6", "source": "https://newsletter.semianalysis.com/p/steel-smic-n3-teardown"},
- {"fact": "China's third National Integrated Circuit Fund raised 344 billion yuan, about $47 billion, in May 2024", "source": "https://asia.nikkei.com/spotlight/supply-chain/china-launches-47bn-chip-fund-to-counter-u.s.-restrictions"},
- {"fact": "China has announced $43 billion for domestic EUV development; CSIS judges that China cannot yet build a working EUV system", "source": "https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography"}
+ {"fact": "China launched its third National Integrated Circuit Fund, worth 344 billion yuan, about $47 billion, in May 2024", "source": "https://asia.nikkei.com/spotlight/supply-chain/china-launches-47bn-chip-fund-to-counter-u.s.-restrictions"},
+ {"fact": "China has announced $43 billion for domestic EUV development; CSIS judged in September 2025 that EUV remains firmly out of reach despite massive state investment", "source": "https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography"}
  ],
  "figures": [
  {"id": "switch-shapes", "type": "animation", "src": "transistor", "title": "Why the gate wraps around the channel", "note": "Simplified. The channel is seen end on, cut across the gate, with current drawn as points of light. Not to scale."},
@@ -85,7 +85,7 @@ Each of those is a deposition, an etch or an implant of its own, and they have t
 
 The leak the wrapping prevents is called short-channel leakage, and it has three fixes:
 
-- **Better insulator.** Thicker, so fewer electrons slip straight through it, yet controlling the channel as tightly as before: Intel switched the gate insulator from silicon dioxide to hafnium at 45 nm in 2007 ([source](https://www.intel.com/pressroom/archive/releases/2007/20070128comp.htm)).
+- **Better insulator.** Thicker, so fewer electrons slip straight through it, yet controlling the channel as tightly as before: Intel switched the gate insulator from silicon dioxide to a thicker hafnium-based material at 45 nm in 2007 ([source](https://www.intel.com/pressroom/archive/releases/2007/20070128comp.htm)).
 - **More gate.** Wrap gate metal around more sides of the channel, as fins and nanosheets do.
 - **Thinner channel.** Thin the silicon until no current can flow where the gate cannot reach it.
 
@@ -97,7 +97,7 @@ A planar transistor lays the gate on one side of a flat channel, and loses contr
 
 ### Gate-all-around nanosheets
 
-A nanosheet lays the channel back down, stacks two to four thin sheets and threads gate metal around each one. The sheets can be drawn any width, so current comes in fine steps again, which TSMC sells as NanoFlex.
+A nanosheet lays the channel back down, stacks two to four thin sheets and threads gate metal around each one. The sheets can be drawn at different widths, so current comes in fine steps again. TSMC sells this as NanoFlex, which lets designers mix short cells for small area with tall cells for performance ([source](https://pr.tsmc.com/english/news/3136)).
 
 N2 entered volume production in the fourth quarter of 2025, TSMC's first nanosheet node ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm)). TSMC rates the follow-on N2P at 18 percent more speed at the same power, 36 percent less power at the same speed, and 1.2 times the logic density of N3E ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech)). Intel's RibbonFET shipped on 18A, and 18A-P adds another 9 percent performance at the same power ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)).
 
@@ -115,30 +115,30 @@ Intel shipped it first as PowerVia: on 18A, an 11 percent cut in routed area and
 
 ### CFET and what comes after
 
-A logic gate needs two transistors that switch on opposite signals, and today they sit side by side. The research institute imec expects complementary FETs to stack them and roughly halve the pair's area beyond the 1 nm nodes ([source](https://www.imec-int.com/en/articles/imec-puts-complementary-fet-cfet-logic-technology-roadmap)).
+A logic gate needs two transistors that switch on opposite signals, and today they sit side by side. The research institute imec sees complementary FETs, which stack the two on top of each other, as an attractive design for logic nodes beyond 1 nm ([source](https://www.imec-int.com/en/articles/imec-puts-complementary-fet-cfet-logic-technology-roadmap)).
 
 ## The back end of line
 
-Wiring is now as hard to make as the transistor. Copper seeps into the insulator around it, so every wire needs a barrier, a liner and a cap, and once the narrowest wires sit less than 20 nm apart those wrappers take a large share of the wire's cross-section ([source](https://www.imec-int.com/en/articles/semi-damascene-metallization-inflection-point-back-end-line-processing)). Two metals are moving into those narrow levels.
+Wiring is now as hard to make as the transistor. Copper seeps into the insulator around it, so every wire needs a barrier, a liner and a cap, and as the most critical wiring levels drop below a 20 nm pitch those extra layers take a large share of the wire's width ([source](https://www.imec-int.com/en/articles/semi-damascene-metallization-inflection-point-back-end-line-processing)). Two metals are moving into those narrow levels.
 
-- **Ruthenium** needs no barrier, so the whole wire conducts; imec has demonstrated ruthenium lines at a 16 nm pitch ([source](https://www.imec-int.com/en/press/imec-demonstrates-16nm-pitch-ru-lines-record-low-resistance-obtained-using-semi-damascene)).
-- **Molybdenum** conducts worse in bulk, 5.3 against copper's 1.68 microhm-cm, but in a thin film it beats tungsten by up to 30 percent and needs no barrier either, which is moving it into the contacts on each transistor ([source](https://blog.entegris.com/molybdenums-role-in-ultra-fast-computing-the-metal-behind-the-speed)).
+- **Ruthenium** shows promise for use without a barrier, which would keep the wire's resistance low ([source](https://www.imec-int.com/en/articles/semi-damascene-metallization-inflection-point-back-end-line-processing)). imec has demonstrated ruthenium lines at a 16 nm pitch ([source](https://www.imec-int.com/en/press/imec-demonstrates-16nm-pitch-ru-lines-record-low-resistance-obtained-using-semi-damascene)).
+- **Molybdenum** conducts worse in bulk, 5.3 against copper's 1.68 microhm-cm, but in a thin film it beats tungsten by up to 30 percent and needs no barrier either, which is moving it into some contacts and local wiring layers ([source](https://blog.entegris.com/molybdenums-role-in-ultra-fast-computing-the-metal-behind-the-speed)).
 
 ## Who makes it
 
-TSMC, Intel and Samsung build gate-all-around nodes with extreme ultraviolet lithography. SMIC builds 7 and 5 nm-class nodes without it. State-backed Rapidus targets 2 nm mass production in 2027 on 267.6 billion yen raised in February 2026 ([source](https://www.rapidus.inc/en/news_topics/information/rapidus-secures-267-6-billion-yen-in-funding-from-japan-government-and-private-sector-companies/)).
+TSMC, Intel and Samsung build gate-all-around nodes with extreme ultraviolet lithography. SMIC builds 7 nm-class nodes without it ([source](https://newsletter.semianalysis.com/p/steel-smic-n3-teardown)). State-backed Rapidus targets 2 nm mass production in 2027 on 267.6 billion yen raised in February 2026 ([source](https://www.rapidus.inc/en/news_topics/information/rapidus-secures-267-6-billion-yen-in-funding-from-japan-government-and-private-sector-companies/)).
 
-Node names describe nothing physical. SMIC's N+3, sold as 5 nm-class, sets its narrowest wires 32.5 nm apart, tighter than Intel 18A's 36 nm, and reaches 113.4 million transistors per square millimeter against 107.7 for TSMC's N6 ([source](https://newsletter.semianalysis.com/p/steel-smic-n3-teardown)).
+Node names describe nothing physical. SMIC's N+3, its third-generation 7 nm process, sets its narrowest wires 32.5 nm apart, tighter than Intel 18A's 36 nm, and reaches 113.4 million transistors per square millimeter against 107.7 for TSMC's N6 ([source](https://newsletter.semianalysis.com/p/steel-smic-n3-teardown)).
 
 AI accelerators sit a node behind the leading edge, because a die that large comes out working only on a process that has run for years. Blackwell uses a custom TSMC 4NP ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)).
 
-SRAM, the fast memory on the logic die, is the scaling failure that hurts AI chips most. TSMC claims 22 percent more SRAM density from N3E to N2, but the gain comes from the circuits around the array, and none of it from the cell that holds one bit ([source](https://newsletter.semianalysis.com/p/clash-of-the-foundries)), which is much of why accelerators push their memory off the die. See [Memory and HBM](#memory-and-hbm).
+SRAM, the fast memory on the logic die, is the scaling failure that hurts AI chips most. TSMC claims 22 percent more SRAM density from N3E to N2, but the gain comes mostly from the circuits around the array, and the cell that holds one bit shrinks little or not at all ([source](https://newsletter.semianalysis.com/p/clash-of-the-foundries)). See [Memory and HBM](#memory-and-hbm).
 
 ## The chokepoint
 
 No single machine makes the front end a chokepoint. The recipe does, and a recipe is which steps run in which order on which tools.
 
-China shows what that recipe costs. The third National Integrated Circuit Fund raised 344 billion yuan, about $47 billion, in May 2024 ([source](https://asia.nikkei.com/spotlight/supply-chain/china-launches-47bn-chip-fund-to-counter-u.s.-restrictions)), so money is not the constraint; tools are. A Shanghai state firm began building domestic immersion scanners in 2026, in single-digit annual volumes ([source](https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/)). Those are deep-ultraviolet machines, a generation behind EUV, and SMIC gets fine features out of them by printing each layer in several passes. That volume keeps those lines running and comes nowhere near replacing ASML. EUV is further away: China has announced $43 billion for domestic development, and the Center for Strategic and International Studies still judges that China cannot build a working system ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).
+China shows what that recipe costs. The third National Integrated Circuit Fund launched in May 2024 with 344 billion yuan, about $47 billion ([source](https://asia.nikkei.com/spotlight/supply-chain/china-launches-47bn-chip-fund-to-counter-u.s.-restrictions)), so money is not the constraint; tools are. A Shanghai state firm began building domestic immersion scanners in 2026 and planned about five that year and roughly 20 in 2027 ([source](https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/)). Those are deep-ultraviolet machines, a generation behind EUV, and SMIC gets fine features out of them by printing its tightest layers in several passes. That volume keeps those lines running and comes nowhere near replacing ASML. EUV is further away: China has announced $43 billion for domestic development, and the Center for Strategic and International Studies judged in September 2025 that EUV remains firmly out of reach despite massive state investment ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).
 
 See [Lithography](#lithography) and [Geopolitics](#geopolitics).
 
@@ -146,11 +146,11 @@ See [Lithography](#lithography) and [Geopolitics](#geopolitics).
 
 - **Electrostatic control.** How far the gate wraps the channel. It sets how much the switch leaks when off, and the lowest supply voltage it can run on.
 - **Density.** Transistors per square millimeter, comparable only inside one foundry's own numbering and for one kind of cell.
-- **Interconnect resistance.** Below a 20 nm wire spacing the wire becomes the slower part and sets the delay ([source](https://www.imec-int.com/en/articles/semi-damascene-metallization-inflection-point-back-end-line-processing)).
+- **Interconnect resistance.** Below a 20 nm wire spacing, copper wiring adds more and more delay from its resistance and capacitance ([source](https://www.imec-int.com/en/press/imec-demonstrates-16nm-pitch-ru-lines-record-low-resistance-obtained-using-semi-damascene)).
 - **Power delivery.** The voltage lost carrying power across the die. Backside power frees area and cuts the droop tenfold ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)).
-- **SRAM scaling.** The cell that holds one bit has stopped shrinking, which caps how much cache an accelerator can afford.
-- **Cost per transistor.** No foundry publishes wafer prices, so the shrinking density gain per node is the proxy. On that proxy, cost per transistor is rising for the first time.
+- **SRAM scaling.** The cell that holds one bit has barely shrunk since the 5 nm node, which caps how much cache an accelerator can afford ([source](https://newsletter.semianalysis.com/p/clash-of-the-foundries)).
+- **Cost per transistor.** No foundry publishes wafer prices, so the shrinking density gain per node is the public proxy.
 
 ## Takeaways
 
-TSMC's N2 process, which it calls the industry's most advanced, entered volume production in late 2025 with a new kind of transistor, the nanosheet ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm)). Each new generation now adds less, and TSMC's own figures show the gain in chip density falling from 1.15 times at its N2P process to up to 1.10 times at A16, the one after it ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech)). China made its most advanced chips, at 7 nm, with older deep ultraviolet machines stockpiled before export controls took effect, and CSIS judges that EUV remains out of China's reach ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).
+TSMC's N2 process, which it calls the industry's most advanced, entered volume production in late 2025 with a new kind of transistor, the nanosheet ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm)). TSMC's own figures show the gain in chip density falling from 1.15 times at its N2P process to up to 1.10 times at A16, the one after it ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech)). China made its most advanced chips, at 7 nm, with older deep ultraviolet machines stockpiled before export controls took effect, and CSIS judges that EUV remains out of China's reach ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).

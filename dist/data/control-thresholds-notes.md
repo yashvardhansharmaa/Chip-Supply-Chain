@@ -1,6 +1,6 @@
 # Control thresholds: how to read the file
 
-`data/control-thresholds.json` holds the 40 thresholds that govern AI chips and the machines that make them. Each entry records one threshold and the instrument that carries it. The site no longer draws this file as a page (the licence-thresholds view was removed on 10 September 2026 to keep Export Controls short); it ships as data, with `frCitation` and `cfr` on every row, for readers who want the numbers behind the board.
+`data/control-thresholds.json` holds the 40 thresholds that govern AI chips and the machines that make them. Each entry records one threshold and the instrument that carries it. The site no longer draws this file as a page (the license-thresholds view was removed on 10 September 2026 to keep Export Controls short); it ships as data, with `frCitation` and `cfr` on every row, for readers who want the numbers behind the board.
 
 Start with four things. `parameter`, `operator`, `value` and `unit` are the threshold itself. `status` says whether it binds: In force, Suspended, Superseded, Rescinded, or Proposed, never in force. `destinations` names who the threshold applies to, which usually matters more than the number itself. `licensePolicy` says what happens to an application that crosses the line, and the gap between "presumption of denial" and "case-by-case" is the gap between a ban and a queue.
 
@@ -14,16 +14,16 @@ Three kinds of entry sit in the file. Some are performance lines on a product: 3
 
 Three dates did the work.
 
-On 2 December 2024 the Bureau of Industry and Security (BIS) added export classification 3A090.c and set the line for high-bandwidth memory at a bandwidth density above 2 GB/s per mm². The figure is low enough to catch every stack in production, so the entry works as a ban rather than a specification. The same rule replaced the DRAM half-pitch test of 18 nm with three measurable quantities: a cell area below 0.0026 µm², a density above 0.20 Gb/mm², or more than 3,000 through-silicon vias per die. Half-pitch is a modeled number. The replacements can be read off a die.
+On 2 December 2024 the Bureau of Industry and Security (BIS) added export classification 3A090.c and set the line for high-bandwidth memory at a bandwidth density above 2 GB/s per mm² of package or stack area. BIS said every HBM stack in production exceeded it. License Exception HBM, at 15 CFR 740.25(c), admits only stacks below 3.3 GB/s per mm². The same rule replaced the DRAM half-pitch test of 18 nm with a cell area below 0.0019 µm² or a density above 0.288 Gb/mm². On 16 January 2025 BIS revised those to a cell area below 0.0026 µm² or a density above 0.20 Gb/mm², and added a third test of more than 3,000 through-silicon vias per die.
 
-On 29 September 2025 the affiliates rule extended the Entity List to any company owned 50 percent or more, in aggregate, by a listed entity. Six weeks later BIS stayed the rule until 9 November 2026 under the truce with Beijing. China suspended its own 0.1 percent rare-earth de minimis rule the same day.
+On 29 September 2025 the affiliates rule extended the Entity List to any company owned 50 percent or more, in aggregate, by a listed entity. Six weeks later BIS stayed the rule until 9 November 2026 under the truce with Beijing. China had suspended its own 0.1 percent rare-earth de minimis rule three days earlier, on 7 November.
 
 On 15 January 2026 two instruments took effect together. BIS moved chips below 21,000 points of total processing performance and below 6,500 GB/s of memory bandwidth from presumption of denial to case-by-case review for China and Macau, capping shipments at 50 percent of what the same product ships for American use. A national-security proclamation under Section 232 put a 25 percent tariff on covered chips entering the country.
 
 ## The three most likely to move next
 
-**The affiliates rule stay, 9 November 2026.** The stay expires in two months and the rule comes back automatically unless BIS extends it. Nothing else in the file carries a scheduled snap-back date, and China's rare-earth suspension is tied to the same clock.
+**The affiliates rule stay, 9 November 2026.** The stay ends on 9 November 2026, and the rule returns on 10 November unless BIS extends the stay. China's suspension of its rare-earth rules runs to 10 November 2026.
 
 **The EU's 10^25 FLOP threshold for general-purpose models.** Article 51(3) of the AI Act lets the Commission change it by delegated act, without going back to a legislature. It sits an order of magnitude below the American figure, and Commission enforcement powers over model providers began on 2 August 2026.
 
-**The January 2026 ceiling of 21,000 performance points.** It was drawn around one generation of hardware. Blackwell-class parts sit far above it, and pressure to raise it will grow with every quarter that Chinese buyers spend at the H200 line.
+**The January 2026 ceiling of 21,000 performance points.** It was drawn around one generation of hardware. Blackwell-class parts sit far above it, and Nvidia reported in August 2026 that the PRC government had restricted the H200 sales its licenses allowed.

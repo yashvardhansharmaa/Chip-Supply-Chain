@@ -3,11 +3,11 @@
   "id": "data-centers-and-power",
   "number": 15,
   "title": "Data Centers and Power",
-  "oneLiner": "The chips are no longer the slowest part of a data center buildout. A large transformer takes three years, turbine output does not reach 30 GW a year until 2030, and Texas has fifty times more large loads, mostly data centers, waiting to connect than it has approved to switch on.",
-  "plain": "A data center's job is to feed electricity to the machines inside it and carry away the heat they give off. One rack of AI chips, a cabinet the size of a wardrobe, draws 142 kilowatts, and every watt of it comes back out as heat, more than air can carry away, so water is piped through the rack instead. A large training site already holds a hundred thousand chips, and the newest sites are planned in gigawatts. One gigawatt is the whole output of a large power station, and OpenAI's planned sites add up to more than nine of them by 2029. Getting that much electricity to the door is harder than putting up the building, because the transformers and heavy switches that connect a site to the grid, and the turbines that make the power, come from a few suppliers and take years to arrive.",
+  "oneLiner": "The chips are no longer the slowest part of a data center buildout. A large transformer commonly takes three years, GE Vernova is working toward 30 GW of gas turbine output a year in 2030, and Texas had about 474 GW of large loads, mostly data centers, seeking a grid connection in June 2026.",
+  "plain": "A data center's job is to feed electricity to the machines inside it and carry away the heat they give off. One rack of AI chips, a cabinet the size of a wardrobe, draws up to 142 kilowatts, and every watt of it comes back out as heat, so the rack is cooled by liquid piped through it. A large training site already holds more than a hundred thousand chips, and the newest sites are planned in gigawatts. One gigawatt is the whole output of a large power station, and OpenAI's planned sites add up to more than nine of them by 2029. Getting that much electricity to the door is harder than putting up the building, because the transformers and heavy switches that connect a site to the grid, and the turbines that make the power, come from a few suppliers and take years to arrive.",
   "bridge": "Racks like that have to stand somewhere, and the somewhere has to be built around what they consume.",
   "specimen": "rack",
-  "specimenCaption": "A liquid-cooled rack of 72 GPUs, Nvidia's GB200 NVL72. It is 2.24 m tall, 600 mm wide and about 1.36 metric tons: taller than a door, heavier than a small car, and drawing about 120 kW, roughly what a hundred homes use on average. Drawn to scale. The gray steel power shelves and the copper busbar they feed are picked out.",
+  "specimenCaption": "A liquid-cooled rack of 72 GPUs, Nvidia's GB200 NVL72. It is 2.24 m tall, 600 mm wide and about 1.36 metric tons: taller than a door, heavier than a small car, and drawing about 120 kW. Drawn to scale. The gray steel power shelves and the copper busbar they feed are picked out.",
   "card": {
     "concentration": "High",
     "chokepointScore": 4,
@@ -61,12 +61,12 @@
       }
     ],
     "chinaStatus": "China has spare generating capacity, a large domestic industry making transformers and switchgear, and can connect new sites quickly. Its AI buildout is limited by the supply of accelerators, and it has power to spare.",
-    "usStatus": "The United States has the demand and the money but cannot shorten the wait for equipment. Transformers and turbines both take years to arrive. Most large power transformers are imported, and no restarted nuclear reactor is running yet.",
-    "costSignal": "Transformer lead times of 36 months, against under a year before 2020; GE Vernova's gas backlog and reserved slots grew from 100 GW to 116 GW in 2026",
+    "usStatus": "The United States has the demand and the money but cannot shorten the wait for equipment. Transformers and turbines both take years to arrive. Most large power transformers are imported, and no restarted nuclear reactor is serving data centers yet.",
+    "costSignal": "Large power transformer lead times of 36 months commonly quoted, against under a year before the pandemic; GE Vernova's gas backlog and reserved slots grew from 100 GW to 116 GW in the second quarter of 2026",
     "substitutability": {
       "band": "Moderate",
-      "test": "Several approved vendors sell every piece of power and cooling equipment, but a transformer takes three years to arrive and GE Vernova's gas turbines have orders for about six years ahead.",
-      "why": "Nothing in a data center's power and cooling has to be invented. Nine firms sell the power and cooling equipment for Nvidia's gigawatt data center designs, so a buyer can get the equipment and negotiate the price. Money cannot shorten the wait. A large power transformer now takes 36 months to arrive, against under a year before 2020. GE Vernova has close to six years of gas turbine orders waiting. New capacity is therefore two to five years away."
+      "test": "Nvidia names nine data center power system providers for its gigawatt designs, but a large transformer commonly takes three years to arrive and GE Vernova's gas backlog and reserved slots stood at 116 GW in mid-2026.",
+      "why": "Nvidia names nine data center power system providers for its gigawatt designs, so a buyer can choose among suppliers. Money cannot shorten the wait. Large power transformer lead times of 36 months are commonly quoted, against under a year before the pandemic, and the longest reach 60 months. GE Vernova's gas equipment backlog and slot reservations reached 116 GW in mid-2026, and it expects to reach 20 GW of annual gas turbine output in the third quarter of 2026."
     }
   },
   "keyFacts": [
@@ -75,11 +75,11 @@
       "source": "https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html"
     },
     {
-      "fact": "NVIDIA's 800-volt DC architecture is drawn for racks from 100 kW to over 1 MW, with megawatt racks from 2027, because the 54-volt distribution in today's racks hits physical limits past about 200 kW",
+      "fact": "NVIDIA's 800-volt DC architecture is drawn for racks from 100 kW to over 1 MW, with megawatt racks from 2027, because the 54-volt distribution in today's racks begins to hit physical limits once racks exceed 200 kW",
       "source": "https://developer.nvidia.com/blog/nvidia-800-v-hvdc-architecture-will-power-the-next-generation-of-ai-factories/"
     },
     {
-      "fact": "Nvidia's Kyber rack will hold 576 Rubin Ultra GPUs in 2027 on an 800-volt DC bus that carries over 150% more power through the same copper",
+      "fact": "Nvidia's Kyber rack will hold 576 Rubin Ultra GPUs by 2027 on an 800-volt DC bus that carries over 150% more power through the same copper",
       "source": "https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin"
     },
     {
@@ -87,7 +87,7 @@
       "source": "https://newscenter.lbl.gov/2025/01/15/berkeley-lab-report-evaluates-increase-in-electricity-demand-from-data-centers/"
     },
     {
-      "fact": "The five largest US data center operators spent $448.3B of capital in 2025; on that trend they reach $770B in 2026",
+      "fact": "Alphabet, Amazon, Meta, Microsoft and Oracle spent $448.2B of capital in 2025; if that trend continues they will spend $770B in 2026",
       "source": "https://epoch.ai/data-insights/hyperscaler-capex-trend"
     },
     {
@@ -95,7 +95,7 @@
       "source": "https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf"
     },
     {
-      "fact": "Only 9,042 MW of ERCOT large load had received Approval to Energize as of March 2026",
+      "fact": "ERCOT's large load status update of March 13, 2026, counted 9,042 MW that had received Approval to Energize",
       "source": "https://www.ercot.com/files/docs/2026/03/12/March-TAC-Report.pdf"
     },
     {
@@ -103,7 +103,7 @@
       "source": "https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf"
     },
     {
-      "fact": "GE Vernova's gas power equipment backlog and slot reservations grew from 100 GW to 116 GW, with output rising from 20 GW a year in 2026 to 24 GW in 2028 and 30 GW in 2030",
+      "fact": "GE Vernova's gas power equipment backlog and slot reservations grew from 100 GW to 116 GW in the second quarter of 2026, and it expects annual gas turbine output of 20 GW in the third quarter of 2026, 24 GW in 2028 and 30 GW in 2030",
       "source": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm"
     },
     {
@@ -116,20 +116,20 @@
     {
       "id": "hyperscaler-capex",
       "type": "bars",
-      "title": "Capital spending by the five largest US data center operators, 2025",
+      "title": "Capital spending by five large US data center operators, 2025",
       "unit": "$B",
       "data": [
         [
           "Amazon",
-          137.5
+          134.7
         ],
         [
           "Microsoft",
-          88.0
+          108.3
         ],
         [
           "Alphabet",
-          83.1
+          93.1
         ],
         [
           "Meta",
@@ -137,7 +137,7 @@
         ],
         [
           "Oracle",
-          40.6
+          39.6
         ]
       ],
       "source": {
@@ -148,11 +148,11 @@
     {
       "id": "turbine-output",
       "type": "bars",
-      "title": "GE Vernova annual gas turbine output, actual and planned",
+      "title": "GE Vernova annual gas turbine output, planned",
       "unit": "GW/yr",
       "data": [
         [
-          "2026",
+          "Q3 2026",
           20
         ],
         [
@@ -202,19 +202,19 @@
 ---
 # Data Centers and Power
 
-For thirty years the semiconductor industry set the pace and everything downstream followed. A wafer clears a leading-edge fab in months; a large power transformer takes three years, and before 2020 the same order took under one ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)).
+For thirty years the semiconductor industry set the pace and everything downstream followed. A wafer clears a leading-edge fab in months; a large power transformer commonly takes three years, and before the pandemic the same order took under one ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)).
 
 ## How it works
 
-A data center's job is to feed electricity to the machines inside it and carry away the heat they give off. One rack of AI chips, a cabinet the size of a wardrobe, draws 142 kilowatts, and every watt of it comes back out as heat, more than air can carry away, so water is piped through the rack instead. A large training site already holds a hundred thousand chips, and the newest sites are planned in gigawatts. One gigawatt is the whole output of a large power station, and OpenAI's planned sites add up to more than nine of them by 2029. Getting that much electricity to the door is harder than putting up the building, because the transformers and heavy switches that connect a site to the grid, and the turbines that make the power, come from a few suppliers and take years to arrive.
+A data center's job is to feed electricity to the machines inside it and carry away the heat they give off. One rack of AI chips, a cabinet the size of a wardrobe, draws up to 142 kilowatts, and every watt of it comes back out as heat, so the rack is cooled by liquid piped through it ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)). A large training site already holds more than a hundred thousand chips ([source](https://epoch.ai/data/ai-data-centers/directory/colossus-1)). The newest sites are planned in gigawatts ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)). One gigawatt is the whole output of a large power station, and OpenAI's planned sites add up to more than nine of them by 2029. Getting that much electricity to the door is harder than putting up the building, because the transformers and heavy switches that connect a site to the grid, and the turbines that make the power, come from a few suppliers and take years to arrive.
 
 {{figure:power-in-heat-out}}
 
-A rack is now the unit of AI compute. A GB300 NVL72 draws up to 142 kW through eight 33 kW power shelves, the rack's own power supplies, more than ten times a conventional enterprise rack in the same floor area ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
+A rack is now the unit of AI compute. A GB300 NVL72 draws up to 142 kW through eight 33 kW power shelves, the rack's own power supplies ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
 
 Between the grid and the rack, a substation steps the high voltage down with transformers. Switchgear, the building's heavy circuit breakers, can cut any part of the site off in a fault. Battery-backed supplies hold the load for the seconds it takes backup generators to start. Distribution boards split the feed among the rows of racks. At the back of each rack a busbar, a solid copper bar doing a job a cable would melt at, carries the current down to the trays. Every one of those is heavy equipment with its own lead time.
 
-Heat leaves in water. Cold plates on the GPU packages pass it to a building loop that releases it outdoors, and Nvidia's Vera Rubin racks run 45 °C supply water, warm enough that many sites can skip chillers ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
+Heat leaves in water. Cold plates on the GPU packages pass it to a building loop that releases it outdoors, and Nvidia's Rubin racks run coolant at up to 45 °C, warm enough that in many climates the loop can reject heat without turning on chillers ([source](https://blogs.nvidia.com/blog/liquid-cooling-ai-factories/)).
 
 Nvidia is also moving rack distribution to 800 volts of direct current. Raising the voltage cuts the current for the same power, and heat in copper comes from current, so the same conductor carries over 150 percent more power and the 200 kg busbars feeding a single rack are no longer needed ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
 
@@ -222,33 +222,35 @@ Nvidia is also moving rack distribution to 800 volts of direct current. Raising 
 
 ### Cooling
 
-- **Air.** Heat exchangers in the rack door work at moderate densities but cannot carry away the heat of an AI rack.
-- **Direct-to-chip liquid.** The default for anything Blackwell-class or later; every new AI hall is now plumbed for it.
-- **Immersion.** Higher density still, but hard to service and barely used at scale.
+- **Air.** Heat exchangers in the rack door work at moderate densities, but Nvidia's GB300 NVL72 rack is liquid cooled ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
+- **Direct-to-chip liquid.** Nvidia's Rubin platform is 100 percent liquid cooled, and every cloud provider and data center operator building for it is moving to liquid ([source](https://blogs.nvidia.com/blog/liquid-cooling-ai-factories/)).
+- **Immersion.** Higher density still, but hard to service.
 
-Cooling is not the bottleneck. Nvidia names nine firms supplying data center power and cooling systems for its gigawatt reference designs, among them ABB, Eaton, Hitachi Energy, Mitsubishi Electric, Schneider Electric, Siemens and Vertiv ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
+Nvidia says the cooling supply chain is keeping pace with the move to liquid, and Schneider Electric's cooling division, Motivair, has worked alongside Nvidia's product roadmap for nearly a decade ([source](https://blogs.nvidia.com/blog/liquid-cooling-ai-factories/)).
 
 ### Rack power
 
-Nvidia's 800-volt DC architecture is drawn for racks from 100 kW to more than a megawatt, with megawatt racks from 2027, because the 54-volt distribution in today's racks hits physical limits past about 200 kW ([source](https://developer.nvidia.com/blog/nvidia-800-v-hvdc-architecture-will-power-the-next-generation-of-ai-factories/)).
+Nvidia's 800-volt DC architecture is drawn for racks from 100 kW to more than a megawatt, with megawatt racks from 2027, because the 54-volt distribution in today's racks begins to hit physical limits once racks exceed 200 kW ([source](https://developer.nvidia.com/blog/nvidia-800-v-hvdc-architecture-will-power-the-next-generation-of-ai-factories/)).
 
-A megawatt rack changes the busbar, the floor loading, the coolant flow, the leak detection and the stored energy that carries the rack through a dip. Nvidia's Rubin racks hold 20 times more stored energy, to steady the draw as tens of thousands of GPUs enter and leave a training step together ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
+Nvidia names nine data center power system providers for its 800-volt gigawatt designs, among them ABB, Eaton, Hitachi Energy, Mitsubishi Electric, Schneider Electric, Siemens and Vertiv ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
+
+A megawatt rack changes the busbar, the floor loading, the coolant flow, the leak detection and the stored energy that carries the rack through a dip. Nvidia's Vera Rubin NVL72 rack design holds 20 times more energy storage to keep power steady ([source](https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin)).
 
 ### Where the electrons come from
 
-- **Grid interconnection.** The slow path, and the one every announced campus is queued in.
-- **Behind-the-meter gas**, generation on the site itself. The fast path, which is why campuses are sited next to gas.
-- **Nuclear.** Almost entirely prospective. Constellation agreed to sell the output of the 835 MW Crane Clean Energy Center to Microsoft before restart work began ([source](https://www.constellationenergy.com/news/2025/constellation-ahead-of-schedule-for-launch-of-crane-clean-energy-center.html)). The plant shut in 2019 and is restarting on a $1 billion federal loan closed in November 2025, still subject to Nuclear Regulatory Commission approval ([source](https://www.energy.gov/articles/energy-department-closes-loan-restart-nuclear-power-plant-pennsylvania)). No restarted reactor is serving data centers yet.
+- **Grid interconnection.** The slow path, with lengthy queues to connect ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)).
+- **Behind-the-meter gas**, generation on the site itself. The fast path, which at least three of the seven Stargate sites will use to sidestep grid queues ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)).
+- **Nuclear.** Almost entirely prospective. Constellation signed a power purchase agreement with Microsoft to restart Three Mile Island Unit 1 as the 835 MW Crane Clean Energy Center ([source](https://www.constellationenergy.com/news/2025/constellation-ahead-of-schedule-for-launch-of-crane-clean-energy-center.html)). The plant shut in 2019, and a $1 billion federal loan closed in November 2025 partly finances its restart, subject to Nuclear Regulatory Commission licensing approvals ([source](https://www.energy.gov/articles/energy-department-closes-loan-restart-nuclear-power-plant-pennsylvania)). No restarted reactor is serving data centers yet.
 
 ## Who makes it
 
-The largest data center operators pay for the buildout. Alphabet, Amazon, Meta, Microsoft and Oracle spent $448.3 billion of capital in 2025, and on that trend reach $770 billion in 2026 ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)).
+The largest data center operators pay for the buildout. Alphabet, Amazon, Meta, Microsoft and Oracle spent $448.2 billion of capital in 2025, and if that trend continues they will spend $770 billion in 2026 ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)).
 
 {{figure:hyperscaler-capex}}
 
-Campuses are now described in gigawatts: OpenAI's Stargate portfolio targets more than 9 GW across US sites by 2029, with Abilene, Texas going from 0.3 GW to 1.2 GW by late 2026 ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)).
+Campuses are now described in gigawatts. Epoch AI projects OpenAI's seven US Stargate sites to exceed 9 GW by 2029, with Abilene, Texas, growing from an estimated 0.3 GW in April to 1.2 GW in the fourth quarter of 2026 ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)).
 
-The equipment vendors are the constraint. GE Vernova, Siemens Energy, Hitachi Energy, ABB, Eaton and Schneider Electric supply the turbines, transformers and switchgear. GE Vernova's gas equipment backlog and reserved factory slots went from 100 GW to 116 GW inside 2026, with data center orders past $5 billion by mid-year, more than double the whole of 2025 ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
+The equipment vendors are the constraint. GE Vernova, Siemens Energy, Hitachi Energy, ABB, Eaton and Schneider Electric supply the turbines, transformers and switchgear. GE Vernova's gas equipment backlog and reserved factory slots went from 100 GW to 116 GW in the second quarter of 2026, and its electrification orders from data centers passed $5 billion in the first half, more than double its 2025 total ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
 
 {{figure:turbine-output}}
 
@@ -258,27 +260,27 @@ US data centers used 176 TWh in 2023, 4.4 percent of national electricity, and L
 
 {{figure:us-dc-electricity}}
 
-Chip efficiency keeps the low case plausible: Google's Ironwood TPU delivers twice the performance per watt of its predecessor ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)). The energy per token, where a token is the chunk of text a model reads or writes, falls while total energy rises, because the number of tokens rises faster.
+Chip efficiency is still improving. Google's Ironwood TPU delivers twice the performance per watt of Trillium, its previous generation ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)). Energy per token, where a token is the chunk of text a model reads or writes, can fall while total energy use still rises, if the number of tokens rises faster.
 
 ## The chokepoint
 
-Announced capacity and energized capacity are a long way apart. ERCOT, the grid operator for most of Texas, was tracking about 474 GW of large loads seeking a connection in June 2026, roughly 90 percent of it data centers ([source](https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf)). Only 9,042 MW had been approved to switch on ([source](https://www.ercot.com/files/docs/2026/03/12/March-TAC-Report.pdf)).
+Announced capacity and energized capacity are a long way apart. ERCOT, the grid operator for most of Texas, was tracking about 474 GW of large loads seeking a connection in June 2026, roughly 90 percent of it data centers ([source](https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf)). ERCOT's large load update of March 13, 2026, counted 9,042 MW that had received approval to energize ([source](https://www.ercot.com/files/docs/2026/03/12/March-TAC-Report.pdf)).
 
 Behind that queue sit the equipment lead times.
 
 - **Large power transformers.** Thirty-six-month lead times are commonly quoted and the worst reach 60, against under a year before the pandemic; 82 percent of the units put into US service in 2019 were imported ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)).
-- **Gas turbines.** GE Vernova will build 20 GW of turbines this year and is working toward 30 GW a year in 2030, against a backlog of 116 GW, close to six years of output ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
-- **Firm new generation**, the kind that runs whatever the weather. The one reactor restart with a data center buyer behind it, the 835 MW Crane plant, shut in 2019 and is still waiting on its license ([source](https://www.energy.gov/articles/energy-department-closes-loan-restart-nuclear-power-plant-pennsylvania)).
+- **Gas turbines.** GE Vernova expects to reach 20 GW of annual gas turbine output in the third quarter of 2026, 24 GW in 2028 and 30 GW in 2030, while its gas equipment backlog and slot reservations stood at 116 GW at mid-year ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
+- **Firm new generation**, the kind that runs whatever the weather. The 835 MW Crane plant shut in 2019, and its restart depends on Nuclear Regulatory Commission licensing approvals ([source](https://www.energy.gov/articles/energy-department-closes-loan-restart-nuclear-power-plant-pennsylvania)). The NRC has approved a fuel license amendment for the plant, and Constellation expects to restart it in 2027 ([source](https://www.constellationenergy.com/news/2026/08/constellation-reports-second-quarter-2026-results.html)).
 
 The chip chain moves faster: foundry and memory capacity have repeatedly expanded within a couple of years of the order. Money buys silicon capacity faster than it buys power capacity, and that difference decides how much of the 2026 capital spending turns into working compute.
 
 ## Key evaluation criteria
 
 - **Time to power** counts the months from signed lease to energized megawatt, and it is the number developers compete on.
-- **Transformer and turbine lead time** covers the two queues that set the schedule, at three years ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)) and six years of booked output ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
-- **Rack density supported** decides what an existing hall can take. An air-cooled one cannot host a 142 kW NVL72 without a full mechanical retrofit ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
+- **Transformer and turbine lead time** covers the two queues that set the schedule. Large power transformer lead times of 36 months are commonly quoted ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)). GE Vernova's gas backlog and slot reservations stood at 116 GW in mid-2026, against a planned 20 GW a year of output from the third quarter ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
+- **Rack density supported** decides what an existing hall can take. A GB300 NVL72 rack draws up to 142 kW and is liquid cooled ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
 - **Firmness of supply** separates a signed interconnection agreement from a delivered transformer.
-- **Energy per token** is the only efficiency measure that matters commercially. It keeps falling, but the number of tokens rises faster ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)).
+- **Energy per token** tracks how much electricity a model uses for each token it reads or writes, and chips with higher performance per watt, such as Google's Ironwood TPU, lower it ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)).
 
 ## Takeaways
 
