@@ -74,7 +74,7 @@
 ---
 # Chip Design, EDA and IP
 
-Design is the only stage in this chain without a factory, and the easiest for a government to cut off. In late May 2025 the US government required a license to sell chip design software to anyone in China, and Cadence and Synopsys cut off their Chinese customers until the rule was lifted on 2 July ([source](https://www.sec.gov/Archives/edgar/data/813672/000081367225000093/cdns-20250702.htm), [source](https://www.sec.gov/Archives/edgar/data/883241/000119312525155294/d80081d8k.htm)).
+Design is the only stage in this chain without a factory, and the easiest for a government to cut off. In late May 2025 the US government required a license to sell chip design software to anyone in China, and Cadence cut off its Chinese customers until the rule was lifted on 2 July ([source](https://www.sec.gov/Archives/edgar/data/813672/000081367225000093/cdns-20250702.htm)).
 
 ## How it works
 
@@ -151,4 +151,4 @@ On Epoch AI's estimates, Huawei's flagship chip for 2026, the Ascend 950, delive
 
 ## Takeaways
 
-Three companies, Synopsys, Cadence and Siemens, sell the software used to design every leading-edge chip ([source](https://newsletter.semianalysis.com/p/eda-market-primer), [source](https://cset.georgetown.edu/article/semiconductors-more-u-s-leverage-more-bad-news-for-beijing-part-3/)). The US government can cut that software off with a letter to each company, and in 2025 it did so for China from late May to 2 July ([source](https://www.sec.gov/Archives/edgar/data/813672/000081367225000093/cdns-20250702.htm), [source](https://www.sec.gov/Archives/edgar/data/883241/000119312525155294/d80081d8k.htm)). Chinese designers still rely on these tools, because no Chinese company yet sells software that can design the newest chips ([source](https://cset.georgetown.edu/article/semiconductors-more-u-s-leverage-more-bad-news-for-beijing-part-3/)).
+American companies, chiefly Synopsys and Cadence, are the only ones that sell the full set of software needed to design leading-edge chips ([source](https://cset.georgetown.edu/article/semiconductors-more-u-s-leverage-more-bad-news-for-beijing-part-3/)). The US government can cut that software off with a letter, and in 2025 it did so for China from late May to 2 July ([source](https://www.sec.gov/Archives/edgar/data/813672/000081367225000093/cdns-20250702.htm)). Chinese designers still rely on these tools, because no Chinese company yet sells software that can design the newest chips ([source](https://cset.georgetown.edu/article/semiconductors-more-u-s-leverage-more-bad-news-for-beijing-part-3/)).
