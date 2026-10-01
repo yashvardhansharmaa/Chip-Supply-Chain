@@ -706,11 +706,9 @@ button.ptag { cursor: pointer; }
   .sheet-pages { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 18px; }
   .sheet-pages a { font-family: var(--font-mono); font-weight: 500; font-size: 13px; padding: 7px 11px; border: 1px solid var(--line-2); border-radius: 0; color: var(--ink); text-decoration: none; }
   .sheet-chapters { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
-  .sheet-chapters a { display: grid; grid-template-columns: 34px 1fr auto; align-items: baseline; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+  .sheet-chapters a { display: grid; grid-template-columns: 34px 1fr; align-items: baseline; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none; }
   .sheet-chapters .n { font-family: var(--font-mono); font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
   .sheet-chapters .t { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 16px; }
-  .sheet-chapters .s { font-family: var(--font-mono); font-weight: 500; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
-  .sheet-chapters .s.hi { color: var(--accent); font-weight: 600; }
   .hero { padding-top: 22px; }
   .rail { display: none; }
   .to-top { display: none; } /* on phones the Top button sits in the bottom strip, so the pill never floats over the text */

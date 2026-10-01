@@ -3,18 +3,18 @@
   "id": "component-costs",
   "number": 16,
   "title": "The Economics of AI Chips",
-  "oneLiner": "Inside an AI accelerator the silicon is the cheap part. Memory and packaging are most of the cost.",
-  "plain": "A bill of materials is the list of parts inside a product and what each one costs to build. For an AI accelerator, the processor itself, the chip that does the calculating, is the cheap part, about $900 of the roughly $6,400 it costs to build. The stacked memory beside it accounts for about half, and the packaging that wires the two together costs more than the chip. Three firms dominate the world market for that memory and one Taiwanese firm does that packaging, so a few firms supply the costliest parts.",
+  "oneLiner": "In Epoch AI's December 2025 estimate for Nvidia's B200, the silicon is the cheap part. Memory and packaging are most of the cost.",
+  "plain": "A bill of materials is the list of parts inside a product and what each one costs to build. Epoch AI estimated in December 2025 that Nvidia's B200, a Blackwell accelerator, cost about $6,400 to build. The processor itself, the chip that does the calculating, was the cheap part at about $900. The stacked memory beside it accounted for about half, and the packaging that wires the two together cost more than the chip. Three firms dominate the world market for that memory and one Taiwanese firm does that packaging, so a few firms supply the costliest parts.",
   "bridge": "The physical chain ends at a powered rack, and the next question is which part of it costs the most.",
   "specimen": "wafer-cost",
-  "specimenCaption": "What it costs to build one B200, drawn as a column with each layer as tall as its share of the bill. From the foot: $2,900 of memory in garnet, $1,100 of packaging, $1,000 of yield loss drawn hollow, $900 of logic dies, $480 of power delivery, board and test. About $6,400 in all, for a part that reportedly sells for $30,000 to $40,000.",
+  "specimenCaption": "Epoch AI's December 2025 estimate of what it cost to build one B200, drawn as a column with each layer as tall as its share of the bill. From the foot: $2,900 of memory in garnet, $1,100 of packaging, $1,000 of yield loss drawn hollow, $900 of logic dies, $480 of power delivery, board and test. About $6,400 in all, against a reported selling price of $30,000 to $40,000 for the chip alone.",
   "keyFacts": [
     {
-      "fact": "A B200 costs about $6,400 to build, in a range of $5,700 to $7,300, and sells for a reported $30,000 to $40,000",
+      "fact": "Epoch AI estimated in December 2025 that a B200 cost about $6,400 to build, in a range of $5,700 to $7,300, against a reported selling price of $30,000 to $40,000 for the chip alone",
       "source": "https://epoch.ai/data-insights/b200-cost-breakdown"
     },
     {
-      "fact": "Memory accounts for half of that cost, with 192 GB of HBM3E at $2,900, priced at $14 to $17 per gigabyte; the logic dies are $900",
+      "fact": "In that estimate memory was half the cost, with 192 GB of HBM3E at $2,900, priced at $14 to $17 per gigabyte; the logic dies were $900",
       "source": "https://epoch.ai/data-insights/b200-cost-breakdown"
     },
     {
@@ -46,7 +46,7 @@
     {
       "id": "b200-bom",
       "type": "stack",
-      "title": "Where the ~$6,400 of B200 manufacturing cost goes, 2025 estimate",
+      "title": "Where the ~$6,400 of B200 manufacturing cost goes, Epoch AI estimate, December 2025",
       "unit": "$",
       "data": [
         [
@@ -114,8 +114,8 @@
           36.4
         ],
         [
-          "ASE Technology",
-          21.0
+          "ASE packaging and test",
+          27.3
         ],
         [
           "Amkor",
@@ -123,14 +123,14 @@
         ]
       ],
       "source": {
-        "label": "Each firm's own quarterly earnings release; quarters end between June and September 2026 (TSMC shown)",
+        "label": "Each firm's own quarterly earnings release; quarters end between June and September 2026; ASE's bar is its packaging and test segment (TSMC shown)",
         "url": "https://pr.tsmc.com/english/news/3326"
       }
     },
     {
       "id": "market-2025",
       "type": "bars",
-      "title": "Size of each layer of the chain, 2025",
+      "title": "Selected market totals, 2025",
       "unit": "$B",
       "data": [
         [
@@ -151,7 +151,7 @@
         ]
       ],
       "source": {
-        "label": "Semiconductor Industry Association on chip sales; Epoch AI quarterly capital spending at Alphabet, Amazon, Meta, Microsoft and Oracle, summed for 2025; Nvidia FY2026 results; SEMI on equipment billings",
+        "label": "Semiconductor Industry Association on chip sales; Epoch AI quarterly capital spending at Alphabet, Amazon, Meta, Microsoft and Oracle, summed for 2025; Nvidia data center revenue for its fiscal year to January 2026; SEMI on equipment billings",
         "url": "https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/"
       }
     }
@@ -160,11 +160,11 @@
 ---
 # Component Costs
 
-Epoch AI estimates that building a Blackwell B200 costs about $6,400, and reports put its selling price at $30,000 to $40,000 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). That $6,400 splits into stages that are expensive because of physics, because capacity is short, or because one firm sets the price.
+In December 2025 Epoch AI estimated that building a Blackwell B200 cost about $6,400, and reports put its selling price at $30,000 to $40,000 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). That $6,400 splits into stages that are expensive because of physics, because capacity is short, or because one firm sets the price.
 
 ## How it works
 
-A bill of materials is the list of parts inside a product and what each one costs to build. For an AI accelerator, the processor itself, the chip that does the calculating, is the cheap part, about $900 of the roughly $6,400 it costs to build ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). The stacked memory beside it accounts for about half, and the packaging that wires the two together costs more than the chip ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Three firms dominate the world market for that memory ([source](https://www.csis.org/analysis/understanding-biden-administrations-updated-export-controls)). One Taiwanese firm, TSMC, does that packaging, so a few firms supply the costliest parts ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
+A bill of materials is the list of parts inside a product and what each one costs to build. In Epoch AI's estimate for the B200, the processor itself, the chip that does the calculating, is the cheap part, about $900 of the roughly $6,400 build ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). The stacked memory beside it accounts for about half, and the packaging that wires the two together costs more than the chip ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Three firms dominate the world market for that memory ([source](https://www.csis.org/analysis/understanding-biden-administrations-updated-export-controls)). One Taiwanese firm, TSMC, does that packaging, so a few firms supply the costliest parts ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
 
 Three numbers set the cost of a die, the finished rectangle of circuitry cut out of a wafer.
 
@@ -178,7 +178,7 @@ Those three numbers put the two dies inside a B200 at about $900 of the roughly 
 
 ### Memory is the largest line
 
-The 192 GB of high-bandwidth memory beside those dies, sold as HBM3E, is the single largest line, about $2,900 at $14 to $17 per gigabyte ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Epoch AI says memory accounts for half of the roughly $6,400 build ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Three firms, SK hynix, Samsung and Micron, dominate the world market for that memory ([source](https://www.csis.org/analysis/understanding-biden-administrations-updated-export-controls)). SK hynix says demand for its products has exceeded its available supply in recent quarters ([source](https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm)).
+The 192 GB of high-bandwidth memory beside those dies, sold as HBM3E, is the single largest line, about $2,900 at $14 to $17 per gigabyte ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Epoch AI notes that HBM pricing is negotiated individually and can vary significantly by volume and contract length ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). The $14 to $17 range dates from December 2025, before the 2026 rise in memory makers' sales and margins described below ([source](https://news.skhynix.com/en/q2-2026-business-results/)). Epoch AI says memory accounts for half of the roughly $6,400 build ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Three firms, SK hynix, Samsung and Micron, dominate the world market for that memory ([source](https://www.csis.org/analysis/understanding-biden-administrations-updated-export-controls)). SK hynix says demand for its products has exceeded its available supply in recent quarters ([source](https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm)).
 
 ### Packaging, substrate and test
 
@@ -196,7 +196,9 @@ CoWoS-L, the TSMC process that mounts dies and memory on one carrier and wires t
 | Manufacturing cost | ~$6,400 | $5,700-7,300 |
 | Reported selling price | $30,000-40,000 | |
 
-Epoch AI models each line as a range, deriving the packaging line from TSMC's advanced packaging revenue and Nvidia's share of CoWoS capacity ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). The estimate covers the accelerator module only and leaves out servers and rack-scale systems ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
+Epoch AI models each line as a range, deriving the packaging line from TSMC's advanced packaging revenue and Nvidia's share of CoWoS capacity ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). The estimate covers the accelerator module only and leaves out servers and rack-scale systems ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Epoch AI notes that most Blackwell revenue comes from those systems, which may carry lower margins, so Nvidia's realized margin on Blackwell may be lower than the gap between this cost and the reported chip price suggests ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
+
+The B200 is used here because Epoch AI's line-by-line estimate covers it. In its results for the quarter to July 2026, Nvidia said its Vera Rubin platform was ramping into full production ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027)). Each Rubin GPU carries up to 288 GB of HBM4, a newer generation of the stacked memory ([source](https://developer.nvidia.com/blog/inside-nvidia-rubin-gpu-architecture-powering-the-era-of-agentic-ai/)).
 
 {{figure:b200-bom}}
 
@@ -218,18 +220,18 @@ One level up, a 100,000 H100 cluster costs over $4 billion in servers, needs mor
 | Lam Research | Etch | June 2026 | 51.7% |
 | Applied Materials | Deposition | July 2026 | 50.3% |
 | Ibiden | Substrates | June 2026 | 36.4% |
-| ASE Technology | OSAT | June 2026 | 21.0% |
+| ASE Technology | Packaging and test segment | June 2026 | 27.3% |
 | Amkor | OSAT | June 2026 | 16.8% |
 
-Each figure comes from the firm's own earnings release; for KLA and Ibiden it is gross profit divided by revenue, since those releases give no percentage ([source](https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Fiscal-Fourth-Quarter-and-Full-Year-2026-Results/default.aspx)) ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027)) ([source](https://pr.tsmc.com/english/news/3326)) ([source](https://ir.kla.com/news-events/press-releases/detail/518/kla-corporation-reports-fiscal-2026-fourth-quarter-and-full)) ([source](https://www.asml.com/en/news/press-releases/2026/q2-2026-financial-results)) ([source](https://newsroom.lamresearch.com/2026-07-29-Lam-Research-Corporation-Reports-Financial-Results-for-the-Quarter-Ended-June-28,-2026)) ([source](https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-third-quarter-2026-results)) ([source](https://www.ibiden.com/ir/items/tannshinn2026Q1.pdf)) ([source](https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-second-quarter-of-2026-302838714.html)) ([source](https://www.sec.gov/Archives/edgar/data/0001047127/000104712726000043/amkr6302026erex-991.htm)).
+Each figure comes from the firm's own earnings release; for KLA and Ibiden it is gross profit divided by revenue, since those releases give no percentage ([source](https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Fiscal-Fourth-Quarter-and-Full-Year-2026-Results/default.aspx)) ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027)) ([source](https://pr.tsmc.com/english/news/3326)) ([source](https://ir.kla.com/news-events/press-releases/detail/518/kla-corporation-reports-fiscal-2026-fourth-quarter-and-full)) ([source](https://www.asml.com/en/news/press-releases/2026/q2-2026-financial-results)) ([source](https://newsroom.lamresearch.com/2026-07-29-Lam-Research-Corporation-Reports-Financial-Results-for-the-Quarter-Ended-June-28,-2026)) ([source](https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-third-quarter-2026-results)) ([source](https://www.ibiden.com/ir/items/tannshinn2026Q1.pdf)) ([source](https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-second-quarter-of-2026-302838714.html)) ([source](https://www.sec.gov/Archives/edgar/data/0001047127/000104712726000043/amkr6302026erex-991.htm)). For ASE the table shows its packaging and test segment; the company as a whole earned 21.0 percent, because about a third of its revenue came from electronics manufacturing services, which earned 8.9 percent ([source](https://www.prnewswire.com/news-releases/ase-technology-holding-co-ltd-reports-its-unaudited-consolidated-financial-results-for-the-second-quarter-of-2026-302838714.html)).
 
 SK hynix's earnings release gives no gross margin. Its operating margin was 76 percent in the June quarter, on revenue up 257 percent in a year ([source](https://news.skhynix.com/en/q2-2026-business-results/)).
 
 {{figure:gross-margins}}
 
-In the table, design, equipment and leading-edge wafers earn gross margins of 50.3 to 75.0 percent, substrates 36.4 percent, and assembly and test 16.8 to 21.0 percent. In 2026 Micron passed all of them. Its gross margin rose from 39.8 percent for the year to August 2025 to 86.8 percent in the quarter to September 2026 ([source](https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Fiscal-Fourth-Quarter-and-Full-Year-2026-Results/default.aspx)). Nvidia's was 75.0 percent in the quarter to July 2026 ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027)).
+In the table, design, equipment and leading-edge wafers earn gross margins of 50.3 to 75.0 percent, substrates 36.4 percent, and assembly and test 16.8 to 27.3 percent. In 2026 Micron passed all of them. Its gross margin rose from 39.8 percent for the year to August 2025 to 86.8 percent in the quarter to September 2026 ([source](https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Fiscal-Fourth-Quarter-and-Full-Year-2026-Results/default.aspx)). Nvidia's was 75.0 percent in the quarter to July 2026 ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027)).
 
-The Semiconductor Industry Association, using monthly data compiled by World Semiconductor Trade Statistics, counted $791.7 billion of global chip sales in 2025 ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)). In its June 2026 forecast, World Semiconductor Trade Statistics put 2025 at $795.6 billion and 2026 at $1.51 trillion, with memory growing about 250 percent and logic 37 percent ([source](https://www.wsts.org/esraCMS/extension/media/f/WST/7618/WSTS_FC-Release-2026-May.pdf)). Below those totals sit $135.1 billion of equipment billings ([source](https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025)) and $448.2 billion of 2025 capital spending at Alphabet, Amazon, Meta, Microsoft and Oracle, the sum of Epoch AI's quarterly figures, which Epoch says would reach $770 billion in 2026 if the trend continues ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)).
+The Semiconductor Industry Association, using monthly data compiled by World Semiconductor Trade Statistics, counted $791.7 billion of global chip sales in 2025 ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)). In its June 2026 forecast, World Semiconductor Trade Statistics put 2025 at $795.6 billion and 2026 at $1.51 trillion, with memory growing about 250 percent and logic 37 percent ([source](https://www.wsts.org/esraCMS/extension/media/f/WST/7618/WSTS_FC-Release-2026-May.pdf)). Other totals include $135.1 billion of 2025 equipment billings ([source](https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025)) and $448.2 billion of 2025 capital spending at Alphabet, Amazon, Meta, Microsoft and Oracle, the sum of Epoch AI's quarterly figures, which Epoch says would reach $770 billion in 2026 if the trend continues ([source](https://epoch.ai/data-insights/hyperscaler-capex-trend)). These totals overlap, so they cannot be added together.
 
 {{figure:market-2025}}
 
@@ -237,22 +239,24 @@ The Semiconductor Industry Association, using monthly data compiled by World Sem
 
 In the B200, packaging and its scrap, $1,100 and $1,000 in Epoch AI's estimate, cost more than twice the $900 of logic dies ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). A GB300 NVL72 rack can draw up to 142 kW ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
 
+The classes below are a judgment of whether each stage's cost falls as volume grows, drawn from the sources in this chapter and the stage chapters.
+
 | Stage | Class | Why |
 |---|---|---|
-| EUV lithography | Structurally expensive | One supplier, ASML. |
-| Masks and pellicles | Structurally expensive | Scales with layer count; every design pays again. |
-| Metrology and inspection | Structurally expensive | Inspection time rises faster than throughput. |
-| HBM | Structurally expensive | Stacking and through-silicon vias cut good die per wafer. |
+| EUV lithography | Structurally expensive | One supplier, ASML. See [Lithography](#lithography). |
+| Masks and pellicles | Structurally expensive | Every design needs its own mask set, and every EUV layer a flawless mask. See [Photomasks and pellicles](#photomasks-and-pellicles). |
+| Metrology and inspection | Structurally expensive | KLA held about five times its nearest rival's share of these tools in 2025, by CSET's count. See [Metrology and inspection](#metrology-and-inspection). |
+| HBM | Structurally expensive | SK hynix says HBM needs more wafer input than ordinary DRAM. See [Memory and HBM](#memory-and-hbm). |
 | Advanced packaging, CoWoS-L | Structurally expensive | Modeled packaging yield of 65 to 95 percent; a failed package loses its dies and memory. |
-| Power and cooling plant | Structurally expensive | Priced by grid queues and turbine lead times. |
-| Leading-edge logic wafers | Compressible with scale | Defect density and utilization improve through a ramp. |
-| Design and EDA | Compressible with scale | Engineering cost is spread across volume. |
-| Deposition and etch tools | Compressible with scale | Credible second sources for most deposition and etch steps. |
-| ABF substrates | Compressible with scale | A laminate line, buildable at scale. |
-| Optical transceivers | Compressible with scale | Copper and co-packaged optics cap the price. |
-| Test and assembly (OSAT) | Already commoditized | Gross margins of 16.8 to 21.0 percent at Amkor and ASE. |
-| Wafers and bulk gases | Already commoditized | Multi-supplier, long-qualified, thin margins. |
-| Rack integration (ODM) | Already commoditized | Assembles parts the customer specifies. |
+| ABF substrates | Structurally expensive | Money can add substrate lines, but Ajinomoto said in June 2026 that the insulating film it makes for these substrates has held over 95 percent of its market since launch ([source](https://www.ajinomoto.co.jp/company/en/ir/event/business_briefing/main/011117/teaserItems1/01/linkList/03/link/20260630_presentation_E.pdf)). See [Substrates and PCBs](#substrates-and-pcbs). |
+| Power and cooling plant | Structurally expensive | Grid connections face lengthy queues, and GE Vernova's gas equipment backlog and slot reservations reached 116 GW in mid-2026. See [Data centers and power](#data-centers-and-power). |
+| Leading-edge logic wafers | Compressible with scale | A very large die yields well only once a process matures. See [Transistors and the front end](#transistors-and-front-end). |
+| Design and EDA | Compressible with scale | A design is paid for once, and its cost is spread across every chip sold. See [Chip design, EDA and IP](#design-and-eda). |
+| Deposition and etch tools | Compressible with scale | Most deposition and etch steps have three or four established tool makers. See [Deposition and etch](#deposition-and-etch). |
+| Optical transceivers | Compressible with scale | Nvidia agreed in March 2026 to invest $2 billion each in laser makers Coherent and Lumentum, with rights to future capacity. See [Systems and networking](#systems-and-networking). |
+| Test and assembly (OSAT) | Already commoditized | Gross margins of 16.8 to 27.3 percent at Amkor and ASE's packaging and test segment, in the table above. |
+| Wafers and bulk gases | Already commoditized | Several firms make approved 300 mm wafers, and the top five served about 75 percent of the market in 2025. See [Silicon and wafers](#silicon-and-wafers). |
+| Rack integration (ODM) | Already commoditized | Several contract manufacturers on three continents assemble racks. See [Systems and networking](#systems-and-networking). |
 
 ## Key evaluation criteria
 
@@ -265,4 +269,4 @@ In the B200, packaging and its scrap, $1,100 and $1,000 in Epoch AI's estimate, 
 
 ## Takeaways
 
-Epoch AI estimates that an Nvidia B200 costs around $6,400 to build and sells for a reported $30,000 to $40,000 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Memory and advanced packaging make up most of that cost, and the two processor dies cost less than the packaging that joins them to the memory ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Three companies, SK hynix, Samsung and Micron, dominate the world market for that kind of memory ([source](https://www.csis.org/analysis/understanding-biden-administrations-updated-export-controls)).
+Epoch AI estimated in December 2025 that an Nvidia B200 cost around $6,400 to build, against a reported selling price of $30,000 to $40,000 for the chip alone ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Memory and advanced packaging make up most of that cost, and the two processor dies cost less than the packaging that joins them to the memory ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Three companies, SK hynix, Samsung and Micron, dominate the world market for that kind of memory ([source](https://www.csis.org/analysis/understanding-biden-administrations-updated-export-controls)).

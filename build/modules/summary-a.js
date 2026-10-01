@@ -108,26 +108,32 @@ const SHORT = {
 
 const EQUIPMENT = ['Lithography', 'Deposition & Etch', 'Metrology & Inspection', 'Test', 'Advanced Packaging & OSAT', 'Equipment Subsystems & Components'];
 
-/* Where a stop's town label sits when the country is chosen. The label is 10.5 px mono at the stop's 1.16 scale,
- * so in drawing units (one unit is about a pixel at the plate's width) it starts 19 from the center, stands 17 tall
- * and runs 7.3 a character plus its padding. Right is the default; the rest are tried in this order when right
+/* Where a stop's town label sits when the country is chosen. The label is 10.5 px mono on a 16.6 px line with 2 px
+ * of padding (20.6 px tall, 6.2 px a character plus 10), and it grows with the chosen stop's 1.16 scale. The map is
+ * drawn 1000 units wide but shown at the plate's width, so a label covers more of the map on a narrow screen: the
+ * sides are solved for the map as a 1280 px laptop shows it (830 px wide), and anything wider has more room. The
+ * offsets match summary-a.css: 16 px from the stop's center to a side label, 13 px to a label above or below, 11 px
+ * from center to center for the corner labels. Right is the default; the rest are tried in this order when right
  * would cover another stop, another label or the edge of the map. Each entry gives the label's top-left corner. */
-const LAB_H = 17, LAB_GAP = 19, LAB_V = 15;
+const LAB_MAP_PX = 830, LAB_S = 1.16 * VW / LAB_MAP_PX;
+const LAB_H = 20.6 * LAB_S, LAB_GAP = 16 * LAB_S, LAB_V = 13 * LAB_S, LAB_C = 11 * LAB_S, LAB_IN = 8 * LAB_S;
+const labW = (name) => (name.length * 6.2 + 10) * LAB_S;
 const LAB = {
   r: (x, y, w) => [x + LAB_GAP, y - LAB_H / 2], l: (x, y, w) => [x - LAB_GAP - w, y - LAB_H / 2],
   d: (x, y, w) => [x - w / 2, y + LAB_V], u: (x, y, w) => [x - w / 2, y - LAB_V - LAB_H],
-  rd: (x, y, w) => [x + LAB_GAP, y + 2], ru: (x, y, w) => [x + LAB_GAP, y - 2 - LAB_H],
-  ld: (x, y, w) => [x - LAB_GAP - w, y + 2], lu: (x, y, w) => [x - LAB_GAP - w, y - 2 - LAB_H],
-  dr: (x, y, w) => [x - 8, y + LAB_V], dl: (x, y, w) => [x + 8 - w, y + LAB_V],
-  ur: (x, y, w) => [x - 8, y - LAB_V - LAB_H], ul: (x, y, w) => [x + 8 - w, y - LAB_V - LAB_H]
+  rd: (x, y, w) => [x + LAB_GAP, y + LAB_C - LAB_H / 2], ru: (x, y, w) => [x + LAB_GAP, y - LAB_C - LAB_H / 2],
+  ld: (x, y, w) => [x - LAB_GAP - w, y + LAB_C - LAB_H / 2], lu: (x, y, w) => [x - LAB_GAP - w, y - LAB_C - LAB_H / 2],
+  dr: (x, y, w) => [x - LAB_IN, y + LAB_V], dl: (x, y, w) => [x + LAB_IN - w, y + LAB_V],
+  ur: (x, y, w) => [x - LAB_IN, y - LAB_V - LAB_H], ul: (x, y, w) => [x + LAB_IN - w, y - LAB_V - LAB_H]
 };
 const LAB_ORDER = Object.keys(LAB);
 /* A side for every stop's label. Only one country's labels show at a time, so each country is solved on its own:
  * every combination of sides is tried (at most four stops a country, so a few thousand) and the one that covers the
- * least is kept, counting the area a label lays over a stop (its own country's at the ringed size), over another
- * label (twice) or past the edge of the map (ten times). Where nothing overlaps, that is the first clear layout in
- * preference order. The Bay Area's three stops sit within 25 units of one another, so a few units of a ring under
- * a label's translucent ground is the best there is; the warning fires only when a layout covers far more. */
+ * least is kept, counting the area a label lays over a stop (its own country's at the ringed size), past the edge
+ * of the map (ten times) or over another label (twenty times, since two labels on top of each other cannot be read).
+ * Where nothing overlaps, that is the first clear layout in preference order. Japan's and the Bay Area's stops sit
+ * close to their neighbors, so the edge of a label over a dimmed stop is the best there is; the warning fires when
+ * two labels touch or a layout covers far more of the stops. */
 function labelSides(stops, VW, VH, warn) {
   const overlap = (a, b) => Math.max(0, Math.min(a[2], b[2]) - Math.max(a[0], b[0])) * Math.max(0, Math.min(a[3], b[3]) - Math.max(a[1], b[1]));
   const box = (s, side) => { const p = LAB[side](s.x, s.y, s.w); return [p[0], p[1], p[0] + s.w, p[1] + LAB_H]; };
@@ -139,8 +145,8 @@ function labelSides(stops, VW, VH, warn) {
     const cost = (s, b, placed) => {
       let c = 0;
       c += 10 * (overlap(b, [0, 0, VW, VH]) < (b[2] - b[0]) * (b[3] - b[1]) ? (b[2] - b[0]) * (b[3] - b[1]) - overlap(b, [0, 0, VW, VH]) : 0);
-      stops.forEach((o) => { if (o === s) return; const r = o.cc === cc ? 14 : 11; c += overlap(b, [o.x - r, o.y - r, o.x + r, o.y + r]); });
-      placed.forEach((p) => { c += 2 * overlap(b, p); });
+      stops.forEach((o) => { if (o === s) return; const r = (o.cc === cc ? 14 * 1.16 : 11) * VW / LAB_MAP_PX; c += overlap(b, [o.x - r, o.y - r, o.x + r, o.y + r]); }); // a chosen stop is ringed and scaled
+      placed.forEach((p) => { c += 20 * overlap(b, p); });
       return c;
     };
     let best = null, bestCost = Infinity;
@@ -150,7 +156,10 @@ function labelSides(stops, VW, VH, warn) {
       LAB_ORDER.forEach((side) => { const b = box(own[i], side); walk(i + 1, placed.concat([b]), sofar.concat([side]), acc + cost(own[i], b, placed)); });
     };
     walk(0, [], [], 0);
-    if (bestCost > 200) warn('summary-a: the town labels for ' + cc + ' cover ' + Math.round(bestCost) + ' square units of the map at best');
+    const boxes = own.map((s, i) => box(s, best[i]));
+    const clash = boxes.reduce((a, b, i) => a + boxes.slice(i + 1).reduce((t, o) => t + overlap(b, o), 0), 0);
+    if (clash > 0) warn('summary-a: two town labels for ' + cc + ' overlap by ' + Math.round(clash) + ' square units at best');
+    else if (bestCost > 900) warn('summary-a: the town labels for ' + cc + ' cover ' + Math.round(bestCost) + ' square units of the map at best');
     own.forEach((s, i) => { sides[s.key] = best[i]; });
   });
   return sides;
@@ -461,7 +470,7 @@ ${svg}
   });
   const routeSvg = svg.replace('</svg>', `<g class="sa-routes">${route}${tails}</g></svg>`);
   // the chosen country's stops carry their town names; the label sides are solved so none covers a stop or another label
-  const sides = labelSides(routeStops.map((x) => { const a = XY(x.st); return { key: x.c.id, cc: x.st[4], x: a[0], y: a[1], w: x.st[1].length * 7.3 + 12 }; }), VW, VH, warn);
+  const sides = labelSides(routeStops.map((x) => { const a = XY(x.st); return { key: x.c.id, cc: x.st[4], x: a[0], y: a[1], w: labW(x.st[1]) }; }), VW, VH, warn);
   const stopBtns = routeStops.map((x) => {
     const a = XY(x.st), lead = ((x.c.leaders || [])[0] || {}).name || '', side = sides[x.c.id] || 'r';
     return `<a class="sa-stop${x.st[4] === DEFAULT_CC ? ' is-on' : ''}" data-cc="${x.st[4]}" href="${href(x.c)}" style="left:${(a[0] / VW * 100).toFixed(2)}%;top:${(a[1] / VH * 100).toFixed(2)}%" data-place="${esc(x.st[1])}"${side === 'r' ? '' : ` data-lab="${side}"`} data-title="${esc(x.c.title)}" data-town="${esc(x.st[1])}, ${esc(COUNTRY[x.st[4]] || x.st[4])}" data-lead="${esc(lead)}" data-band="${esc(x.c.band || '')}" aria-label="Stop ${x.c.number}, ${esc(x.c.title)}: ${esc(x.st[1])}${lead ? ', led by ' + esc(lead) : ''}, ${x.c.band ? x.c.band.toLowerCase() + ' concentration' : ''}."><span>${x.c.number}</span></a>`;

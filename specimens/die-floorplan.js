@@ -16,9 +16,11 @@
  *   - on a two-die part the other short edge carries the die-to-die interface
  *     instead, so a sliver of the neighbouring die is drawn beyond it.
  *
- * The die-to-die interface is the copper strip: thousands of contacts at a few
- * microns' pitch, carrying about 10 TB/s, doing the job the reticle limit
- * stopped a single piece of silicon from doing.
+ * H100 itself is a single die. The copper strip on the other short edge, and
+ * the sliver past it, stand for the die-to-die link that two-die designs such
+ * as Blackwell add: thousands of contacts at a few microns' pitch, carrying
+ * about 10 TB/s, doing the job the reticle limit stopped a single piece of
+ * silicon from doing.
  */
 PC.register('die-floorplan', function (p) {
   var W = 26, D = 33, T = 0.75;                 // one reticle field
@@ -127,10 +129,10 @@ PC.register('die-floorplan', function (p) {
     tilt: [1.02, -0.32, 0],
     // colour: the die-to-die interface is a field of copper micro-bumps and the copper bus behind them
     accent: [176, 102, 44], accentDark: [224, 154, 92],
-    caption: 'The floorplan of a GPU die: 26 by 33 mm, one whole reticle field. ' +
+    caption: 'A GPU die laid out after Nvidia\'s published H100 block diagram, drawn at one whole reticle field, 26 by 33 mm. ' +
       '144 compute tiles sit in eight clusters, four above the L2 cache band and four below; ' +
       'twelve memory controllers and their HBM PHYs run down the two long edges; the PCI Express ' +
-      'interface and the NVLink ports fill one short edge. The copper strip on the other short edge is ' +
-      'the die-to-die interface, and the sliver past it is the edge of the die it talks to.'
+      'interface and the NVLink ports fill one short edge. H100 is a single die; the copper strip on the ' +
+      'other short edge, and the sliver past it, stand for the die-to-die link that two-die designs such as Blackwell add.'
   };
 });

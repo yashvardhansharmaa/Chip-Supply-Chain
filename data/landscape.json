@@ -64,7 +64,7 @@
       "Lenovo"
     ],
     "priceEstimate": "$30,000 to $40,000 per GPU, the range Nvidia's CEO gave in March 2024. Epoch AI puts GB200 NVL72 systems at $33,000 to $42,000 per GPU",
-    "bomEstimate": "Epoch AI estimates about $6,400 to build ($5,700 to $7,300): memory $2,900, packaging $1,100, packaging yield loss $1,000, the two logic dies $900",
+    "bomEstimate": "Epoch AI estimated in December 2025 about $6,400 to build ($5,700 to $7,300): memory $2,900, packaging $1,100, packaging yield loss $1,000, the two logic dies $900",
     "exportStatus": "Controlled. Dense FP8 of 4,500 TFLOPS puts total processing performance near 36,000, well above the 21,000 TPP ceiling in the BIS rule effective 15 January 2026, so an export to China or Macau needs a license and is reviewed with a presumption of denial under 15 CFR 742.6(b)(10). An application may still be filed.",
     "notes": "The first reticle-crossing Nvidia data center GPU: two 4NP dies fused by a 10 TB/s NV-HBI link and presented to software as one GPU. Epoch AI's cost model puts the package on TSMC's CoWoS-L process. Nvidia publishes no die area, no package dimensions and no list price for the part. Epoch AI records the HGX B200 board at 180 GB and 7.7 TB/s per GPU against the 192 GB and 8 TB/s of the module Nvidia quotes.",
     "layout": {
@@ -400,8 +400,8 @@
     },
     "tdpW": 2300,
     "interconnect": {
-      "chipToChip": "NV-HBI die-to-die; NVLink 6 per GPU, quoted by Nvidia at 3 TB/s on the Vera Rubin NVL72 specification table (216 TB/s across 72 GPUs) and at 3.6 TB/s in Nvidia's Rubin architecture material; NVLink-C2C 1.8 TB/s to the Vera CPU",
-      "scaleUp": "Vera Rubin NVL72 (72 Rubin GPUs, 36 Vera CPUs, 216 TB/s NVLink, 20.7 TB HBM4)",
+      "chipToChip": "NV-HBI die-to-die; NVLink 6 at 3.6 TB/s per GPU in Nvidia's Rubin launch release of January 2026, while the Vera Rubin NVL72 specification table still quotes a preliminary 3 TB/s; NVLink-C2C 1.8 TB/s to the Vera CPU",
+      "scaleUp": "Vera Rubin NVL72 (72 Rubin GPUs, 36 Vera CPUs, 260 TB/s NVLink in the January 2026 launch release, 20.7 TB HBM4)",
       "scaleOut": "Quantum-X800 InfiniBand or Spectrum-X Ethernet; 32.4 TB/s per rack and 0.45 TB/s per GPU, both directions combined"
     },
     "systemIntegrators": [
@@ -515,6 +515,10 @@
       {
         "label": "SemiAnalysis: OpenAI Jalapeño (Rubin CoWoS tape-out)",
         "url": "https://newsletter.semianalysis.com/p/openai-jalapeno-better-than-nvidia"
+      },
+      {
+        "label": "Nvidia: Rubin platform launch release, January 2026 (NVLink 6 bandwidth)",
+        "url": "https://nvidianews.nvidia.com/news/rubin-platform-ai-supercomputer"
       }
     ]
   },
@@ -3271,7 +3275,7 @@
     "priceEstimate": "Not sold. SemiAnalysis estimates it costs Amazon about $4,000 per chip, as cited by Epoch AI",
     "bomEstimate": null,
     "exportStatus": "Not sold as merchant silicon; consumed inside AWS and rented as EC2 Trn2 instances. Total processing performance is 10,672, and it comes from the BF16 rate (16 x 667), which beats FP8 (8 x 1,299 = 10,392), because the rule takes the highest result across precisions. Either way it is more than twice the 4,800 threshold in ECCN 3A090.a.",
-    "notes": "The chip that made AWS a credible second source, and the generation Anthropic trained on at scale. It also shows how the export-control arithmetic behaves: FP8 doubles the BF16 rate on most accelerators, but on Trainium2 it falls short of double, so the BF16 figure sets the total processing performance. Epoch AI dates the part to 3 December 2024; AWS’s own documentation carries no date. AWS publishes compute, memory and fabric numbers and nothing about the silicon. SemiAnalysis supplies the rest shown here: N5, two compute dies on CoWoS-R, and four HBM3E stacks of 24 GB. No power figure exists. Epoch AI puts the draw at about 500 W, its own estimate.",
+    "notes": "The chip that made AWS a credible second source. Amazon says Anthropic is using Project Rainier, its Trainium2 cluster, to build and deploy Claude. It also shows how the export-control arithmetic behaves: FP8 doubles the BF16 rate on most accelerators, but on Trainium2 it falls short of double, so the BF16 figure sets the total processing performance. Epoch AI dates the part to 3 December 2024; AWS’s own documentation carries no date. AWS publishes compute, memory and fabric numbers and nothing about the silicon. SemiAnalysis supplies the rest shown here: N5, two compute dies on CoWoS-R, and four HBM3E stacks of 24 GB. No power figure exists. Epoch AI puts the draw at about 500 W, its own estimate.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -3341,6 +3345,10 @@
       {
         "label": "SemiAnalysis: AWS Trainium3 deep dive (Trainium2 package, node and memory)",
         "url": "https://newsletter.semianalysis.com/p/aws-trainium3-deep-dive-a-potential"
+      },
+      {
+        "label": "Amazon: AWS activates Project Rainier",
+        "url": "https://www.aboutamazon.com/news/aws/aws-project-rainier-ai-trainium-chips-compute-cluster"
       }
     ]
   },
@@ -4542,8 +4550,8 @@
     "status": "Shipping; the volume Chinese accelerator before the 910C",
     "target": "Training and inference",
     "process": {
-      "foundry": "SMIC",
-      "node": "7 nm class",
+      "foundry": "SMIC (as CSET reports) and TSMC (in much of the installed base, SemiAnalysis judges)",
+      "node": "SMIC N+2 7 nm class, per CSET; SemiAnalysis judges most 910B and 910C dies were actually made on TSMC N7",
       "country": "CN"
     },
     "die": {
@@ -4659,6 +4667,10 @@
       {
         "label": "Huawei Ascend: Atlas 800T A2 server spec table",
         "url": "https://www.hiascend.com/hardware/ai-server?tag=900A2"
+      },
+      {
+        "label": "SemiAnalysis: Huawei AI CloudMatrix 384 (where 910B and 910C dies were made)",
+        "url": "https://newsletter.semianalysis.com/p/huawei-ai-cloudmatrix-384-chinas-answer-to-nvidia-gb200-nvl72"
       }
     ]
   },

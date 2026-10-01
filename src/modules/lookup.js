@@ -192,6 +192,7 @@
       var num = function (v) { return Math.round(v) === v ? String(v) : String(Math.round(v * 10) / 10); };
       var chHref = function (ch) { return ch.id === 'geopolitics' ? '#/geopolitics' : '#' + ch.id; };
       var stages = chapters.filter(function (ch) { return ch.number >= 1 && ch.number <= 15; });
+      var cardCount = chapters.filter(function (ch) { return ch.concentration; }).length; // only the stage chapters carry a chokepoint card
       var named = chapters.filter(function (ch) { return (ch.countries || []).some(function (x) { return x.code === cc; }); })
         .sort(function (a, b) { return (b.bandRank || 0) - (a.bandRank || 0) || a.number - b.number; });
       var led = stages.filter(function (ch) { var f = (ch.countries || [])[0]; return f && f.code === cc; });
@@ -212,7 +213,7 @@
       var meta = [];
       if (led.length === 1) meta.push('leads 1 stage' + (extreme ? ', of extreme concentration' : ''));
       else if (led.length) meta.push('leads ' + led.length + ' stages' + (extreme ? ', ' + (extreme === led.length ? 'all' : extreme) + ' of them extreme' : ''));
-      meta.push('named on ' + named.length + ' of ' + chapters.length + ' chokepoint cards');
+      meta.push('named on ' + named.length + ' of ' + cardCount + ' chokepoint cards');
       if (firms.length) meta.push(firms.length + (firms.length === 1 ? ' firm' : ' firms') + ' in the supplier list' + (critical ? ', ' + critical + ' Critical' : ''));
       var h = '<article class="lk-card lk-card--country">' +
         '<p class="lk-kind">Country · ' + esc(cc) + '</p>' +

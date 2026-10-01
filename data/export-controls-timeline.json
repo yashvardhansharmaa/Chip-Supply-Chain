@@ -144,6 +144,23 @@
     ]
   },
   {
+    "date": "2022-08-15",
+    "effectiveDate": "2022-10-14",
+    "actor": "US (BIS)",
+    "title": "License requirement on design software for gate-all-around chips",
+    "summary": "BIS carried out December 2021 Wassenaar Arrangement decisions on four emerging technologies. One of them, new ECCN 3D006, put a national-security license requirement on electronic computer-aided design software specially designed for developing integrated circuits with gate-all-around transistors, a structure the rule called key to processes at 3 nm and below. The rule was published on 15 August 2022, and the 3D006 control took effect on 14 October 2022. The requirement covers exports to China.",
+    "category": "US export control",
+    "instrument": "rule",
+    "frCitation": "87 FR 49979",
+    "cfr": "15 CFR part 774, supplement no. 1 (ECCN 3D006)",
+    "source": "https://www.federalregister.gov/documents/2022/08/15/2022-17125/implementation-of-certain-2021-wassenaar-arrangement-decisions-on-four-section-1758-technologies",
+    "gist": "Software for designing the newest transistor structure needed a license years before the 2025 letters.",
+    "id": "2022-08-15-gaafet-ecad",
+    "flows": [
+      "us-tools"
+    ]
+  },
+  {
     "date": "2022-08-26",
     "actor": "US (BIS) and Nvidia",
     "title": "First license requirement on A100 and H100 exports to China",
@@ -258,7 +275,7 @@
     "effectiveDate": "2023-11-17",
     "actor": "US (BIS)",
     "title": "October 2023 update closes the A800 and H800 workaround",
-    "summary": "BIS replaced the interconnect-bandwidth test with a performance-density criterion, splitting ECCN 3A090 into a controlled tier 3A090.a and a notification tier 3A090.b, which captured the A800, H800, L40S and even the RTX 4090. License requirements were extended to companies headquartered in Macau or Country Group D:5, which includes China, wherever they are located, and to further destinations in Country Groups D:1, D:4 and D:5, to stop transshipment. Equipment controls were tightened in a companion rule, and BIS separately added the Chinese GPU designers Biren and Moore Threads to the Entity List the same day. The rules were published on 25 October 2023 and took effect from 17 November.",
+    "summary": "BIS replaced the interconnect-bandwidth test with a performance-density criterion, splitting ECCN 3A090 into a controlled tier 3A090.a and a notification tier 3A090.b, which captured the A800, H800, L40S and even the RTX 4090. License requirements were extended to companies headquartered in Macau or Country Group D:5, which includes China, wherever they are located, and to further destinations in Country Groups D:1, D:4 and D:5, to stop transshipment. Equipment controls were tightened in a companion rule, which also made certain immersion lithography tools for advanced chipmaking subject to US export rules if they held any American content at all, unless the country they were first exported from already controlled them, and BIS separately added the Chinese GPU designers Biren and Moore Threads to the Entity List the same day. The rules were published on 25 October 2023 and took effect from 17 November.",
     "category": "US export control",
     "instrument": "rule",
     "frCitation": "88 FR 73458; 88 FR 73424",
@@ -286,6 +303,20 @@
     "flows": [
       "entity",
       "ai-chips"
+    ]
+  },
+  {
+    "date": "2024-01-01",
+    "actor": "Netherlands (government) and ASML",
+    "title": "Dutch government partly revokes an ASML license for China",
+    "summary": "ASML said on 1 January 2024 that the Dutch government had recently partially revoked a license for the shipment of NXT:2050i and NXT:2100i immersion lithography systems in 2023, affecting a small number of customers in China. ASML said it did not expect the revocation, or the latest US export rules, to have a material impact on its 2023 financial outlook.",
+    "category": "Allied control",
+    "instrument": "licence-policy",
+    "source": "https://investor.asml.com/news-releases/news-release-details/statement-regarding-partial-revocation-export-license",
+    "gist": "A license already granted for two of ASML's immersion scanners was partly withdrawn before the year ended.",
+    "id": "2024-01-01-dutch-revocation",
+    "flows": [
+      "allies"
     ]
   },
   {
@@ -339,7 +370,7 @@
     "effectiveDate": "2024-12-31",
     "actor": "US (BIS)",
     "title": "December 2024 equipment and HBM package",
-    "summary": "BIS controlled 24 additional types of semiconductor manufacturing equipment and three software tools, and for the first time controlled high bandwidth memory under ECCN 3A090.c, defined as memory with a bandwidth density above 2 GB/s per square millimeter of package or stack area, a line BIS said every HBM stack then in production exceeded. New foreign direct product rules extended the equipment and HBM controls to production outside the United States, and License Exception HBM at §740.25 still lets a US or Country Group A:5 exporter ship stacks below 3.3 GB/s per square millimeter directly to a packaging site for the designer that bought them. BIS simultaneously added 140 entities in China, Japan, South Korea and Singapore to the Entity List. The rules were published on 5 December 2024, effective 2 December, with compliance for the new ECCNs, the direct product rules and the DRAM definitions required from 31 December.",
+    "summary": "BIS controlled 24 additional types of semiconductor manufacturing equipment and three software tools, and for the first time controlled high bandwidth memory under ECCN 3A090.c, defined as memory with a bandwidth density above 2 GB/s per square millimeter of package or stack area, a line BIS said every HBM stack then in production exceeded. The rule excludes co-packaged chips that combine HBM and logic and whose main function is processing, which the chip controls may cover instead. New foreign direct product rules extended the equipment and HBM controls to production outside the United States, but the equipment direct product rule largely exempts tools exported by firms located in Japan, the Netherlands and the 31 other countries listed in Supplement No. 4 to Part 742. License Exception HBM at §740.25 still lets a US or Country Group A:5 exporter ship stacks below 3.3 GB/s per square millimeter directly to a packaging site for the designer that bought them. BIS simultaneously added 140 entities in China, Japan, South Korea and Singapore to the Entity List. The rules were published on 5 December 2024, effective 2 December, with compliance for the new ECCNs, the direct product rules and the DRAM definitions required from 31 December.",
     "category": "US export control",
     "instrument": "rule",
     "frCitation": "89 FR 96790",
@@ -386,9 +417,9 @@
   {
     "date": "2025-01-15",
     "effectiveDate": "2025-04-01",
-    "actor": "Netherlands (Ministry of Foreign Trade)",
+    "actor": "Netherlands (Ministry of Foreign Affairs)",
     "title": "Dutch controls extended to measuring and inspection tools",
-    "summary": "The Dutch minister for foreign trade announced in the Government Gazette that from 1 April 2025 the national license requirement for advanced semiconductor manufacturing equipment would cover further technologies, among them specific measuring and inspection equipment used in making advanced chips. The ministry described the addition as a very limited number of goods. It is the second amendment to the national measure since its introduction on 1 September 2023.",
+    "summary": "On 15 January 2025 the Dutch minister for foreign trade announced in the Government Gazette that from 1 April 2025 the national license requirement for advanced semiconductor manufacturing equipment would cover further technologies, among them specific measuring and inspection equipment used in making advanced chips. The ministry described the addition as a very limited number of goods. It is the second amendment to the national measure since its introduction on 1 September 2023.",
     "category": "Allied control",
     "instrument": "rule",
     "frCitation": "Staatscourant, 15 January 2025",
@@ -508,6 +539,21 @@
     ]
   },
   {
+    "date": "2025-05-23",
+    "actor": "US (BIS)",
+    "title": "Design-software sales to China put under license by letter",
+    "summary": "On 23 May 2025 BIS informed Cadence that a license was needed to export, reexport or transfer electronic design automation software and technology where a transaction involved China or Chinese military end users. On 2 July 2025 BIS told Cadence that the requirement was rescinded with immediate effect.",
+    "category": "US export control",
+    "instrument": "licence-policy",
+    "frCitation": "Cadence Form 8-K, 2 July 2025",
+    "source": "https://www.sec.gov/Archives/edgar/data/813672/000081367225000093/cdns-20250702.htm",
+    "gist": "One letter cut China off from US design software, and another restored it about six weeks later.",
+    "id": "2025-05-23-eda-letters",
+    "flows": [
+      "us-tools"
+    ]
+  },
+  {
     "date": "2025-07-14",
     "actor": "US (Commerce) and Nvidia",
     "title": "H20 sales to China permitted again",
@@ -526,7 +572,7 @@
     "date": "2025-08-11",
     "actor": "US (White House) and Nvidia",
     "title": "A 15 percent revenue expectation attached to China licenses",
-    "summary": "The US government granted licenses in August 2025 that allowed Nvidia to ship H20 products to certain China-based customers. Nvidia's annual report records the condition that came with them: USG officials expressed an expectation that the government would receive 15 percent or more of the revenue generated from licensed sales of its products, but, in the company's words, \"the USG did not publish a regulation codifying such requirement\". No regulation codifying the payment has been published. Nvidia generated about $60 million of H20 revenue under those licenses. AMD was described at the time as accepting the same terms for its MI308, but has filed no comparable statement.",
+    "summary": "The US government granted licenses in August 2025 that allowed Nvidia to ship H20 products to certain China-based customers. Nvidia's annual report records the condition that came with them: USG officials expressed an expectation that the government would receive 15 percent or more of the revenue generated from licensed sales of its products, but, in the company's words, \"the USG did not publish a regulation codifying such requirement\". No regulation codifying the payment has been published. Nvidia generated about $60 million of H20 revenue under those licenses. Its filing for the quarter ended 26 July 2026 says Beijing restricted the purchases and that Nvidia was unable to sell its H20 inventory. AMD was described at the time as accepting the same terms for its MI308, but has filed no comparable statement.",
     "category": "US export control",
     "instrument": "licence-policy",
     "frCitation": "NVIDIA Form 10-K, FY2026",
@@ -557,13 +603,13 @@
     "effectiveDate": "2025-12-31",
     "actor": "US (BIS)",
     "title": "Validated End User status revoked for foreign fabs in China",
-    "summary": "BIS revoked the Validated End User authorizations that let Intel Semiconductor (Dalian), Samsung China Semiconductor and SK hynix Semiconductor (China) receive US equipment for their China fabs under a single general authorization. The companies had 120 days after publication, to 31 December 2025, to obtain licenses. BIS said it would license the operation of existing fabs but would not approve capacity expansion or technology upgrades in China, and estimated the change would generate about 1,000 extra license applications a year.",
+    "summary": "BIS revoked the Validated End User authorizations that let Samsung China Semiconductor, SK hynix Semiconductor (China) and Intel Semiconductor (Dalian), the NAND fab that SK hynix bought from Intel, receive US equipment for their China fabs under a single general authorization. The companies had 120 days after publication, to 31 December 2025, to obtain licenses. BIS said it would license the operation of existing fabs but would not approve capacity expansion or technology upgrades in China, and estimated the change would generate about 1,000 extra license applications a year. In December 2025 BIS granted SK hynix an annual license to ship approved US equipment to its China fabs during 2026.",
     "category": "US export control",
     "instrument": "rule",
     "frCitation": "90 FR 42321",
     "cfr": "15 CFR part 748, supplement no. 7",
     "source": "https://www.bis.gov/press-release/department-commerce-closes-export-controls-loophole-foreign-owned-semiconductor-fabs-china",
-    "gist": "Korean and American fabs inside China may keep running but may not upgrade or grow.",
+    "gist": "Korean-owned fabs inside China may keep running but may not upgrade or grow.",
     "id": "2025-08-29-veu-revoked",
     "flows": [
       "us-tools"
@@ -650,6 +696,21 @@
     ]
   },
   {
+    "date": "2025-11-22",
+    "actor": "EU (European Commission)",
+    "title": "EU adds Dutch chip-tool controls to its own control list",
+    "summary": "The European Union incorporated certain Dutch national controls into the EU Control List, extending to all member states a license requirement for specific semiconductor manufacturing equipment, through Commission Delegated Regulation (EU) 2025/2003, which entered into force on 22 November 2025. ASML said in its 2025 annual report that this did not mean a change for it, because those products already required an export license from the Netherlands.",
+    "category": "Allied control",
+    "instrument": "rule",
+    "frCitation": "Commission Delegated Regulation (EU) 2025/2003",
+    "source": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm",
+    "gist": "Controls the Netherlands wrote alone became EU-wide, with no change for ASML's own shipments.",
+    "id": "2025-11-22-eu-control-list",
+    "flows": [
+      "allies"
+    ]
+  },
+  {
     "date": "2025-12-08",
     "actor": "US (White House)",
     "title": "Trump clears H200 sales to China",
@@ -669,7 +730,7 @@
     "effectiveDate": "2026-01-15",
     "actor": "US (White House)",
     "title": "Section 232 proclamation puts a 25 percent tariff on advanced AI chips",
-    "summary": "A presidential proclamation under Section 232 imposed a 25 percent tariff from 12:01 a.m. on 15 January 2026 on a narrow set of advanced computing semiconductors and products containing them that pass through the United States but are not destined for US use. The covered bands are chips of 14,000 to 17,500 total processing performance with 4,500 to 5,000 GB/s of DRAM bandwidth, and 20,800 to 21,100 TPP with 5,800 to 6,200 GB/s, which capture the Nvidia H200 and AMD MI325X. Eight use-based exemptions cover US data centers, R&D, start-ups, repairs, consumer and industrial uses and the public sector. The proclamation ordered a review of data-center chips by 1 July 2026 and signaled a second phase with higher rates and an investment offset.",
+    "summary": "A presidential proclamation under Section 232 imposed a 25 percent tariff from 12:01 a.m. on 15 January 2026 on a narrow set of advanced computing semiconductors and products containing them that pass through the United States but are not destined for US use. The covered bands are chips of 14,000 to 17,500 total processing performance with 4,500 to 5,000 GB/s of DRAM bandwidth, and 20,800 to 21,100 TPP with 5,800 to 6,200 GB/s, which capture the Nvidia H200 and AMD MI325X. Nvidia's H200 licenses require each China-bound chip to pass an inspection in the United States before shipment, so every licensed H200 is imported first and pays the tariff. Eight use-based exemptions cover US data centers, R&D, start-ups, repairs, consumer and industrial uses and the public sector. The proclamation ordered a review of data-center chips by 1 July 2026 and signaled a second phase with higher rates and an investment offset.",
     "category": "Industrial policy",
     "instrument": "industrial-policy",
     "frCitation": "91 FR 2443 (Proclamation 11002)",
@@ -754,6 +815,22 @@
     "id": "2026-07-10-uae-group-a5",
     "flows": [
       "diffusion"
+    ]
+  },
+  {
+    "date": "2026-08-06",
+    "effectiveDate": "2026-12-04",
+    "actor": "US (White House)",
+    "title": "Proclamation 11052 sets a price floor and an extra duty on polysilicon imports",
+    "summary": "A presidential proclamation signed on 6 August 2026 set a minimum import price of $100 per kilogram for polysilicon ingots and wafers and an extra 15 percent duty on imported ingots and other listed products made from polysilicon, both from 4 December 2026. Firms with Commerce-approved plans to build US polysilicon, ingot, wafer or cell plants, with construction starting by 20 January 2029, can import equipment and some of those products without the new duties. A Commerce rule published on 24 September 2026 to stop stockpiling before the duties start lists doped single-crystal silicon wafers among the products it covers.",
+    "category": "Industrial policy",
+    "instrument": "industrial-policy",
+    "frCitation": "Proclamation 11052; FR Doc. 2026-16400",
+    "source": "https://www.federalregister.gov/documents/2026/08/11/2026-16400/adjusting-imports-of-polysilicon-and-its-derivatives-into-the-united-states",
+    "gist": "Imported silicon wafers face a price floor and an extra duty from December 2026, with relief for firms building US plants.",
+    "id": "2026-08-06-polysilicon-proclamation",
+    "flows": [
+      "industrial"
     ]
   },
   {

@@ -1,0 +1,98 @@
+{
+  "advanced-packaging": {
+    "v": 2,
+    "sha": "776667a848a83cda"
+  },
+  "chain": {
+    "v": 1,
+    "sha": "4f949746ccc1b281"
+  },
+  "chemicals-gases-and-photoresist": {
+    "v": 2,
+    "sha": "c6d6eb4c256c3904"
+  },
+  "chips": {
+    "v": 2,
+    "sha": "875d2f43d16d5745"
+  },
+  "component-costs": {
+    "v": 2,
+    "sha": "36ce3c5b06623015"
+  },
+  "data-centers-and-power": {
+    "v": 2,
+    "sha": "2f82c138b542e931"
+  },
+  "deposition-and-etch": {
+    "v": 2,
+    "sha": "632f2558b7a6391d"
+  },
+  "design-and-eda": {
+    "v": 2,
+    "sha": "459d9e0b6a4838da"
+  },
+  "export-controls": {
+    "v": 2,
+    "sha": "14b982ee172432d6"
+  },
+  "foundries-and-fabs": {
+    "v": 2,
+    "sha": "7f09074f555f7e2c"
+  },
+  "geopolitics": {
+    "v": 2,
+    "sha": "06f85a81bfb374d5"
+  },
+  "glossary": {
+    "v": 1,
+    "sha": "7179fabb00406125"
+  },
+  "home": {
+    "v": 2,
+    "sha": "bf4f1db90ed11b1e"
+  },
+  "intro": {
+    "v": 1,
+    "sha": "13825ef0eaa7596f"
+  },
+  "lithography": {
+    "v": 1,
+    "sha": "8d5214b1b0112a9e"
+  },
+  "memory-and-hbm": {
+    "v": 2,
+    "sha": "18a390cf308eea37"
+  },
+  "metrology-and-inspection": {
+    "v": 2,
+    "sha": "f2f46192d73f13a0"
+  },
+  "photomasks-and-pellicles": {
+    "v": 2,
+    "sha": "62e4fe0706908500"
+  },
+  "silicon-and-wafers": {
+    "v": 2,
+    "sha": "bf89606104c7c36a"
+  },
+  "substrates-and-pcbs": {
+    "v": 2,
+    "sha": "510f3a4ef15605b1"
+  },
+  "suppliers": {
+    "v": 2,
+    "sha": "99d3e3b4f49322de"
+  },
+  "systems-and-networking": {
+    "v": 2,
+    "sha": "a1e8be0cf3433173"
+  },
+  "test-and-assembly": {
+    "v": 2,
+    "sha": "b3d74ec3baa10d31"
+  },
+  "transistors-and-front-end": {
+    "v": 2,
+    "sha": "1cf5d7ae60b5ebd2"
+  }
+}

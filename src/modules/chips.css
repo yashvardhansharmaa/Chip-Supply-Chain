@@ -65,9 +65,13 @@
 
 /* ---------- the side-by-side table ---------- */
 .cx-tablewrap {
-  max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; container-type: inline-size;
   border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2);
 }
+/* the scroll cue: the right edge fades while more of the table sits past it */
+.cx-tablewrap[data-more="1"] { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 56px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 56px), transparent); }
+.cx-more { margin: 0 0 6px; text-align: right; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); }
+.cx-more[hidden] { display: none; }
 .cx-table { border-collapse: collapse; width: 100%; font-size: 14px; font-variant-numeric: tabular-nums; }
 .cx-table th, .cx-table td { padding: 9px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
 .cx-table tr:last-child th, .cx-table tr:last-child td { border-bottom: 0; }
@@ -82,6 +86,18 @@
 .cx-table thead .cx-rowhead { background: var(--bg); }
 .cx-col { min-width: 152px; }
 .cx-col.is-focus { box-shadow: inset 0 -2px 0 var(--accent); }
+/* three or four chips: the columns share the box equally and the row names wrap, so every chip shows without scrolling */
+@container (min-width: 520px) {
+  .cx-table[data-n="3"] { table-layout: fixed; }
+  .cx-table[data-n="3"] .cx-col { min-width: 0; }
+  .cx-table[data-n="3"] .cx-rowhead { width: 120px; min-width: 0; white-space: normal; }
+}
+@container (min-width: 640px) {
+  .cx-table[data-n="4"] { table-layout: fixed; }
+  .cx-table[data-n="4"] .cx-col { min-width: 0; }
+  .cx-table[data-n="4"] .cx-rowhead { width: 112px; min-width: 0; white-space: normal; }
+  .cx-table[data-n="4"] th, .cx-table[data-n="4"] td { padding-left: 10px; padding-right: 10px; overflow-wrap: anywhere; }
+}
 .cx-colhead { display: block; text-align: left; }
 .cx-colhead b { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: 18px; line-height: 1.1; }
 .cx-colhead span { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-top: 3px; }

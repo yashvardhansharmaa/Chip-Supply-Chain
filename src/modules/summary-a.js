@@ -130,7 +130,7 @@
     root.addEventListener('scroll', function (e) { if (e.target.classList && e.target.classList.contains('sa-panel')) more(e.target); }, true);
     window.addEventListener('resize', function () { more($('.sa-panel:not([hidden])', root)); });
 
-    // the route's stops: a card on hover or focus with the stage, its town, who leads it and the score
+    // the route's stops: a card on hover or focus with the stage, its town, who leads it and its concentration band
     var tip = null;
     var showStop = function (a) {
       if (!tip) { tip = document.createElement('div'); tip.className = 'sa-stop-tip'; tip.setAttribute('role', 'tooltip'); tip.hidden = true; document.body.appendChild(tip); }

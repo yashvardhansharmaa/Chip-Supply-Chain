@@ -8,7 +8,12 @@
 
    manifest() is the single list of pages, shared with build/cards.py (which calls it through node), so the
    card and the page never disagree about a title or a line. It reads content/*.md itself so it needs no
-   build context. Nothing here fills a template placeholder; the module returns {}. */
+   build context. The one placeholder it fills is HOME_CARD, the home card's URL for the main page's tags.
+
+   A card that changes after people have shared it needs a new URL, or LinkedIn and the rest keep showing the old
+   picture from their cache. build/assets/cards/versions.json keeps each card's version and a hash of its bytes; when
+   a card's bytes change (re-rendered by cards.py or home_card.py), the build bumps its version, writes the file back,
+   and the card's URL gains ?v=<version>. A card still on version 1 keeps its plain URL. */
 
 const BASE = require('../site.js').url;
 const SITE = 'Chip Supply Chain';
@@ -96,10 +101,31 @@ function manifest(root) {
   return pages;
 }
 
-function pageHTML(p) {
+// each card's version, bumped here when its bytes no longer match the hash on file (see the note at the top)
+function cardVersions(root, fs, path) {
+  const dir = path.join(root, 'build', 'assets', 'cards'), file = path.join(dir, 'versions.json');
+  let known = {};
+  try { known = JSON.parse(fs.readFileSync(file, 'utf8')); } catch (e) { known = {}; }
+  const out = {}, next = {};
+  let changed = false;
+  const pngs = fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => f.endsWith('.png')).sort() : [];
+  for (const f of pngs) {
+    const slug = f.replace(/\.png$/, '');
+    const sha = require('crypto').createHash('sha256').update(fs.readFileSync(path.join(dir, f))).digest('hex').slice(0, 16);
+    const was = known[slug] || null;
+    const v = !was ? 1 : was.sha === sha ? was.v : was.v + 1;
+    if (!was || was.sha !== sha) changed = true;
+    next[slug] = { v, sha }; out[slug] = v;
+  }
+  if (changed) fs.writeFileSync(file, JSON.stringify(next, null, 2) + '\n');
+  return out;
+}
+const cardURL = (slug, versions) => BASE + 'cards/' + slug + '.png' + ((versions && versions[slug] > 1) ? '?v=' + versions[slug] : '');
+
+function pageHTML(p, versions) {
   const url = BASE + p.slug + '/';
   const target = BASE + p.route;
-  const image = BASE + 'cards/' + p.slug + '.png';
+  const image = cardURL(p.slug, versions);
   const title = p.kind === 'chapter' ? `${p.title} · ${SITE}` : (p.slug === 'home' ? SITE : `${p.title} · ${SITE}`);
   return `<!doctype html>
 <html lang="en">
@@ -149,10 +175,11 @@ module.exports = function (ctx) {
   const { root, fs, path, warn } = ctx;
   const pages = manifest(root);
   const dist = path.join(root, 'dist');
+  const versions = cardVersions(root, fs, path);
   for (const p of pages) {
     const dir = path.join(dist, p.slug);
     fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(path.join(dir, 'index.html'), pageHTML(p));
+    fs.writeFileSync(path.join(dir, 'index.html'), pageHTML(p, versions));
   }
   // the cards, rendered by build/cards.py into build/assets/cards/; the build only copies them
   const src = path.join(root, 'build', 'assets', 'cards');
@@ -162,7 +189,7 @@ module.exports = function (ctx) {
   for (const f of have) fs.copyFileSync(path.join(src, f), path.join(out, f));
   const missing = pages.filter((p) => !have.includes(p.slug + '.png')).map((p) => p.slug);
   if (missing.length) warn(`social cards missing (run python3 build/cards.py): ${missing.join(', ')}`);
-  return {};
+  return { HOME_CARD: cardURL('home', versions) };
 };
 module.exports.manifest = manifest;
 module.exports.pageHTML = pageHTML;

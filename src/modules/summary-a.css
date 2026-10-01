@@ -246,7 +246,7 @@
 .sa-stopcard[data-cc="JP"] { border-color: var(--c1); } .sa-stopcard[data-cc="NL"] { border-color: var(--c2); } .sa-stopcard[data-cc="TW"] { border-color: var(--c3); } .sa-stopcard[data-cc="KR"] { border-color: var(--c5); } .sa-stopcard[data-cc="MY"] { border-color: var(--c8); }
 .sa-stopcard:hover .sa-stopcard-t, .sa-stopcard.is-hot .sa-stopcard-t, .sa-stopcard:focus-visible .sa-stopcard-t { color: var(--accent); }
 .sa-stopcard-n { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--muted); font-variant-numeric: tabular-nums; }
-.sa-stopcard-t { display: block; font-family: var(--font-body); font-weight: 500; font-size: 13.5px; line-height: 1.15; margin: 2px 0 3px; }
+.sa-stopcard-t { display: block; font-family: var(--font-body); font-weight: 500; font-size: 13.5px; line-height: 1.15; margin: 2px 0 3px; overflow-wrap: break-word; hyphens: auto; }
 .sa-stopcard-w { display: block; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.02em; color: var(--muted); }
 
 /* the plate: chips across the top, the caption, the map with the panel at its right, the strip as the footer */
@@ -267,7 +267,7 @@
 .atlas-body { display: grid; grid-template-columns: minmax(0, 1fr) 360px; grid-template-rows: auto auto; align-items: stretch; }
 .atlas .sa-map { grid-column: 1; grid-row: 1; border: 0; border-right: 1px solid var(--line); border-radius: 0; background: var(--bg-2); }
 .atlas .sa-svg { border-radius: 0; }
-.atlas .sa-strip-stops { grid-column: 1; grid-row: 2; margin: 0; padding: 12px 12px 14px; border-top: 1px solid var(--line); border-right: 1px solid var(--line); gap: 12px 8px; grid-template-columns: repeat(8, minmax(0, 1fr)); }
+.atlas .sa-strip-stops { grid-column: 1; grid-row: 2; margin: 0; padding: 12px 12px 14px; border-top: 1px solid var(--line); border-right: 1px solid var(--line); gap: 12px 8px; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); /* as many columns as fit whole words such as "Lithography"; eight at full width */ }
 .atlas .sa-panels { grid-column: 2; grid-row: 1 / span 2; position: relative; min-width: 0; }
 .atlas .sa-panel { position: absolute; inset: 0; max-height: none; overflow: auto; border: 0; border-radius: 0; padding: 16px 16px 14px; }
 .atlas .sa-panels[data-more="1"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 40px; background: linear-gradient(to bottom, transparent, var(--bg)); pointer-events: none; }
@@ -334,4 +334,6 @@
   .atlas .sa-stop.is-on { transform: none; box-shadow: 0 0 0 2px var(--accent); width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; }
   .sa-tail { display: none; }
 }
+/* a phone's strip: three stops a row, so every title wraps between words; five a row needs about 600 px before "Lithography" fits on one line */
+@media (max-width: 600px) { .atlas .sa-strip-stops { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 8px; } }
 @media (prefers-reduced-motion: reduce) { .sa-stop { transition: none; } }

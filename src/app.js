@@ -424,8 +424,10 @@
       var rt = null;
       window.addEventListener('resize', function () {
         if (Router.current !== 'landscape') return;
-        clearTimeout(rt); rt = setTimeout(function () { self.renderPlans(); }, 160);
+        clearTimeout(rt); rt = setTimeout(function () { self.renderPlans(); self.scrollCue(); }, 160);
       });
+      var tw = $('#cx-table-wrap');
+      if (tw) tw.addEventListener('scroll', function () { self.scrollCue(); }, { passive: true });
       var tb = $('#cx-table');
       if (tb) tb.addEventListener('click', function (e) {
         var j = e.target.closest('button[data-notes]');
@@ -639,6 +641,14 @@
       }
       return '<td class="' + (row.long ? 'cx-long' : '') + (c.id === this.sel ? ' is-focus' : '') + '"' + (title ? ' title="' + esc(title) + '"' : '') + '>' + inner + '</td>';
     },
+    // where the table is still wider than its box (a phone, a narrow window), the right edge fades and a line says it scrolls,
+    // since Mac and phone browsers hide the scrollbar until the reader scrolls
+    scrollCue: function () {
+      var w = $('#cx-table-wrap'), hint = $('#cx-more'); if (!w) return;
+      var over = w.scrollWidth - w.clientWidth > 4;
+      w.setAttribute('data-more', over && w.scrollWidth - w.clientWidth - w.scrollLeft > 4 ? '1' : '0');
+      if (hint) hint.hidden = !over;
+    },
     renderTable: function () {
       var self = this, tb = $('#cx-table'); if (!tb) return;
       var sel = this.selection(), multi = sel.length > 1, fns = [];
@@ -659,6 +669,8 @@
         html += '</tr>';
       });
       tb.innerHTML = html + '</tbody>';
+      tb.setAttribute('data-n', String(sel.length)); // three or four chips squeeze their columns to fit the page where it is wide enough
+      this.scrollCue();
       var foot = $('#cx-foot');
       if (foot) foot.innerHTML = fns.length ? '<p class="label">How the speed figures are measured</p><ol class="cx-fns">' +
         fns.map(function (f) { return '<li><b>' + esc(f.c.name) + '</b> ' + esc(f.n) + '</li>'; }).join('') + '</ol>' : '';

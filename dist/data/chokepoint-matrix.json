@@ -395,7 +395,7 @@
     ],
     "source": "https://epoch.ai/data-insights/ai-chip-supply-chain-constraints",
     "aiCritical": true,
-    "trend": "Advanced packaging was the binding constraint on AI accelerator output through late 2024 and early 2025; SemiAnalysis reported in March 2026 that CoWoS had eased and front-end wafer capacity had become the dominant bottleneck. The capacity being added outside Taiwan is real but small against TSMC's base."
+    "trend": "Advanced packaging was the binding constraint on AI accelerator output through late 2024 and early 2025; SemiAnalysis reported in March 2026 that CoWoS had eased and front-end wafer capacity had become the dominant bottleneck. On TSMC's July 2026 earnings call its chief executive gave a different account, saying packaging capacity was still so tight that it limited customers' growth. The capacity being added outside Taiwan is real but small against TSMC's base."
   },
   {
     "segment": "Assembly, test and packaging (ATP)",

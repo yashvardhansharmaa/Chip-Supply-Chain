@@ -66,7 +66,7 @@ LABEL = {
     'sem-column': 'Electron-beam inspection column', 'gaa-transistor': 'Gate-all-around transistor', 'foup': 'FOUP, 25 wafers',
     'hbm-stack': 'HBM stack, twelve high', 'cowos-exploded': 'CoWoS package, exploded', 'substrate-layers': 'Flip-chip substrate, cut away',
     'probe-card': 'Probe card over a wafer', 'gpu-baseboard': 'Eight-GPU baseboard', 'rack': 'Liquid-cooled rack, 72 accelerators',
-    'wafer-cost': 'Cost of one B200, to scale', 'globe': 'Chokepoint towns', 'package': 'Wafer-scale processor', 'wafer': '300 mm wafer',
+    'wafer-cost': 'Cost of one B200, to scale', 'globe': 'Chokepoint towns', 'package': 'AI accelerator package', 'wafer': '300 mm wafer',
 }
 
 # per-specimen framing: zoom (1 = fit the box), horizontal and vertical offset as a share of the box

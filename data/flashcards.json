@@ -10,7 +10,7 @@
       {
         "q": "Who sells the software used to design leading-edge chips?",
         "a": "Three firms: Synopsys, Cadence and Siemens EDA.",
-        "why": "Together they held more than 85 percent of the market in 2025.",
+        "why": "Together they held more than 85 percent of the market in 2025, counting Ansys as part of Synopsys.",
         "section": "Who makes it"
       },
       {
@@ -22,7 +22,7 @@
       {
         "q": "Can China design the newest chips on its own software?",
         "a": "Not yet.",
-        "why": "In 2021 CSET found that Chinese design software largely did not support the newest manufacturing processes. The US government required a license for design-software sales to China from late May to 2 July 2025.",
+        "why": "A January 2021 CSET report, built on 2019 data, found Chinese design software largely did not support the newest processes, though one Chinese firm, Empyrean, could run a full design flow for some analog and mixed-signal chips. Since 14 October 2022 software for designing chips with gate-all-around transistors has needed a US license, and from late May to 2 July 2025 every design-software sale to China needed one.",
         "section": "The chokepoint"
       },
       {
@@ -36,7 +36,7 @@
       "Chip design turns an idea into a blueprint, and a factory builds only designs checked in approved software.",
       "Synopsys, Cadence and Siemens EDA sell the software used to design every leading-edge chip.",
       "A new vendor would have to write a complete set of tools and win a foundry's approval.",
-      "China designs its own AI chips, but in 2021 its design software largely did not support the newest processes.",
+      "China designs its own AI chips, but a 2021 CSET report built on 2019 data found its design software largely did not support the newest processes.",
       "Huawei's best AI chip trails Nvidia's by three to four years, on Epoch AI's estimate."
     ]
   },
@@ -45,12 +45,12 @@
       {
         "q": "What is a wafer?",
         "a": "A thin disc of pure silicon, about 30 centimeters across, that carries hundreds of chips.",
-        "why": "It is sliced from a single crystal and polished flat to within a few atoms.",
+        "why": "It is sliced from a single crystal and polished to a mirror finish.",
         "section": "How it works"
       },
       {
         "q": "Who makes the wafers for leading-edge chips?",
-        "a": "Five firms in Japan, Taiwan, Germany and South Korea lead the market, and together they serve around 75 percent of it.",
+        "a": "Five firms in Japan, Taiwan, Germany and South Korea lead the market, and together they served around 75 percent of it in 2025.",
         "why": "They are Shin-Etsu, SUMCO, GlobalWafers, Siltronic and SK Siltron. None is American or Chinese.",
         "section": "Who makes it"
       },
@@ -62,16 +62,16 @@
       },
       {
         "q": "China makes most of the world's polysilicon. Why does that give it little hold over chip wafers?",
-        "a": "Almost all of it is solar grade, too impure for chips.",
-        "why": "In 2023 an estimated 98 percent of China's output was solar grade. Chinese firms held under 1 percent of the 300 mm wafer market as of 2019.",
+        "a": "Chips need electronic-grade silicon, and none of its five major suppliers is Chinese.",
+        "why": "Siltronic names Wacker, Hemlock, OCI, Tokuyama and Mitsubishi as those suppliers for 2025. Chinese firms held under 1 percent of the 300 mm wafer market as of 2019, and Eswin, China's largest 300 mm wafer maker, says it shipped about 6 percent of the world's 300 mm wafers in 2024.",
         "section": "The chokepoint"
       }
     ],
     "takeaways": [
       "Every chip starts on a wafer, a polished disc of pure silicon about 30 centimeters across.",
-      "The top five wafer makers, in Japan, Taiwan, Germany and South Korea, serve around 75 percent of the market.",
+      "The top five wafer makers, in Japan, Taiwan, Germany and South Korea, served around 75 percent of the market in 2025.",
       "Customers have to qualify a new wafer plant before they buy from it.",
-      "China makes most of the world's polysilicon, but almost all of it is too impure for chips."
+      "China makes most of the world's polysilicon, but none of the five major suppliers of the electronic-grade silicon chips need is Chinese."
     ]
   },
   "chemicals-gases-and-photoresist": {
@@ -91,13 +91,13 @@
       {
         "q": "Why does replacing a photoresist supplier take years?",
         "a": "Each formula is approved for one layer of one product at one factory.",
-        "why": "When Japan put resist under export licenses for South Korea in 2019, Korea bought more from other countries and made more at home.",
+        "why": "When Japan put resist and two other chemicals under export licenses for South Korea in 2019, Korea bought more from other countries, and output rose at Korean firms and at Japanese companies' affiliates in Korea. Some of the extra American supply may have been Japanese material shipped by way of the United States.",
         "section": "The chokepoint"
       },
       {
         "q": "What does China control in this stage?",
         "a": "Exports of gallium and germanium, which have needed a license since August 2023.",
-        "why": "Most gallium used in the United States goes into chips built on gallium arsenide or gallium nitride, and most of the rest into LEDs and laser diodes. In November 2025 China lifted its gallium ban on the United States for one year.",
+        "why": "Most gallium used in the United States goes into chips built on gallium arsenide or gallium nitride, and most of the rest into LEDs and laser diodes. On 9 November 2025 China suspended its December 2024 ban on US sales of gallium, germanium, antimony and superhard materials until 27 November 2026.",
         "section": "The chokepoint"
       }
     ],
@@ -130,7 +130,7 @@
       },
       {
         "q": "Can China buy or build an EUV machine?",
-        "a": "No. Export controls block ASML from shipping EUV machines to Chinese chipmakers, and a Chinese prototype has made EUV light but has printed no chip.",
+        "a": "No. Export controls block ASML from shipping EUV machines to Chinese chipmakers, and a Chinese prototype reported in December 2025 had made EUV light but had printed no chip.",
         "why": "Reuters reported in July 2026 that a Chinese firm has started producing immersion DUV machines, which use longer-wavelength light.",
         "section": "Controls and China's answer"
       }
@@ -139,7 +139,7 @@
       "Lithography prints each layer of a chip's circuit onto the wafer.",
       "The finest layers need extreme-ultraviolet light, which works only in a vacuum and with mirrors.",
       "ASML of the Netherlands is the only maker of EUV machines, and Zeiss is its sole supplier of their mirrors.",
-      "Export controls block EUV sales to Chinese chipmakers, and China's own prototype has printed no chip."
+      "Export controls block EUV sales to Chinese chipmakers, and a Chinese prototype reported in December 2025 had printed no chip."
     ]
   },
   "photomasks-and-pellicles": {
@@ -165,7 +165,7 @@
       {
         "q": "What masks can China make?",
         "a": "Masks for older machines only.",
-        "why": "No Chinese firm makes an EUV mask blank or a tool that checks an EUV mask.",
+        "why": "No Chinese firm makes an EUV mask blank or a tool that checks an EUV mask. Chinese merchant mask makers such as Shenzhen Qingyi and Shenzhen Newway compete with Photronics, which has run mask plants in Hefei and Xiamen since 2019.",
         "section": "The chokepoint"
       }
     ],
@@ -173,7 +173,7 @@
       "A photomask is the stencil for one layer of a chip, and any flaw on it repeats on every wafer.",
       "Three firms make EUV mask blanks, and Lasertec launched the first tool that checks finished masks in EUV light.",
       "AGC spent more than a decade learning to make EUV blanks before mass production began in 2017.",
-      "China makes masks only for older machines."
+      "China makes masks only for older machines, in SMIC's own mask shops and at merchant firms such as Shenzhen Qingyi and Shenzhen Newway."
     ]
   },
   "deposition-and-etch": {
@@ -192,13 +192,13 @@
       },
       {
         "q": "How much of these tool markets do Chinese makers hold?",
-        "a": "Almost 11 percent of dry etch and 7 percent of deposition in 2024.",
+        "a": "12.4 percent of dry etch and 9.8 percent of deposition in 2025, on CSET's count.",
         "why": "Deposition and etch are among the tools where Chinese makers gained the most share between 2019 and 2024.",
         "section": "China and the controls"
       },
       {
         "q": "How much of atomic layer deposition do Chinese makers hold?",
-        "a": "Less than 1 percent in 2024, and they gained no share there between 2019 and 2024.",
+        "a": "2.6 percent in 2025, most of it from Piotech.",
         "why": "US regulators call atomic layer deposition a 3D scaling enabler for gate-all-around logic.",
         "section": "China and the controls"
       }
@@ -206,8 +206,8 @@
     "takeaways": [
       "Deposition lays down thin films and etch cuts them into patterns, and a chip often takes more than a thousand steps.",
       "Four American, Japanese and Dutch firms make most of these tools, and none dominates.",
-      "Chinese makers held almost 11 percent of dry etch and 7 percent of deposition in 2024.",
-      "Chinese makers held less than 1 percent of atomic layer deposition in 2024."
+      "Chinese makers held 12.4 percent of dry etch and 9.8 percent of deposition in 2025, on CSET's count.",
+      "Chinese makers held 2.6 percent of atomic layer deposition in 2025, most of it from Piotech."
     ]
   },
   "metrology-and-inspection": {
@@ -221,27 +221,27 @@
       {
         "q": "Why do AI chips depend so much on finding defects?",
         "a": "They are among the largest chips made, and a bigger chip is more likely to catch a defect.",
-        "why": "On a chip that size, halving the defects raises the share of working chips from about half to about seven in ten.",
+        "why": "On a chip that size, halving the defects raises the share of flawless chips from about half to about seven in ten.",
         "section": "Packaging, AI and China"
       },
       {
         "q": "Who leads the market for these tools?",
-        "a": "KLA, an American firm, which puts its own 2024 share at 56.5 percent.",
-        "why": "That is 6.5 times its nearest rival. Every kind of tool still has a second maker.",
+        "a": "KLA, an American firm, with 56.8 percent of the market in 2025 on CSET's count.",
+        "why": "That is about five times Applied Materials, the next largest. Gartner put KLA at 56.5 percent in 2024. Every kind of tool still has a second maker.",
         "section": "Who makes it"
       },
       {
         "q": "How strong are Chinese makers of these tools?",
-        "a": "Weaker here than in deposition, etch, polishing, ion implantation or test tools.",
-        "why": "They held 0.7 percent of the market in 2025.",
+        "a": "Still small, though one of them is growing fast.",
+        "why": "CSET counts Chinese makers at 0.7 percent of the market in 2025. Skyverse's own 2025 revenue of 2.05 billion yuan came to about 1.8 percent of that market alone, so the count may miss some domestic sales.",
         "section": "Packaging, AI and China"
       }
     ],
     "takeaways": [
       "Metrology and inspection tools check each wafer between steps and tell a fab why its chips fail.",
       "AI chips are among the largest made, so finding defects matters most for them.",
-      "KLA of the United States puts its own 2024 share at 56.5 percent, 6.5 times its nearest rival.",
-      "Chinese makers held 0.7 percent of this tool market in 2025."
+      "CSET's count puts KLA of the United States at 56.8 percent of this tool market in 2025, about five times its nearest rival.",
+      "Chinese makers held 0.7 percent of this tool market in 2025 on CSET's count, though Skyverse's own revenue came to about 1.8 percent."
     ]
   },
   "transistors-and-front-end": {
@@ -253,9 +253,9 @@
         "section": "How it works"
       },
       {
-        "q": "Which companies can make these gate-all-around transistors?",
+        "q": "Which companies make these gate-all-around transistors in volume?",
         "a": "TSMC, Intel and Samsung.",
-        "why": "TSMC's N2 entered volume production in the fourth quarter of 2025, and Intel's 18A is in high-volume manufacturing.",
+        "why": "Samsung began initial 3 nm production with them in June 2022, TSMC's N2 entered volume production in the fourth quarter of 2025, and Intel's 18A is in high-volume manufacturing.",
         "section": "Who makes it"
       },
       {
@@ -273,7 +273,7 @@
     ],
     "takeaways": [
       "The newest transistors wrap the gate around all four sides of the channel to stop current leaking.",
-      "Only TSMC, Intel and Samsung can make them.",
+      "Only TSMC, Intel and Samsung make them in volume.",
       "No firm sells its process recipe, so a newcomer has to develop its own.",
       "SMIC makes 7 nm-class chips without EUV by printing its tightest layers in several passes."
     ]
@@ -300,8 +300,8 @@
       },
       {
         "q": "How much of China's fab capacity can make the newest chips?",
-        "a": "Almost none.",
-        "why": "China is forecast to have more fab capacity than any other region, but SMIC cannot buy an EUV machine.",
+        "a": "Little of it.",
+        "why": "In June 2024 SEMI forecast that China would have more fab capacity in 2025 than any other region. SMIC cannot buy an EUV machine, and makes its 7 nm-class chips by printing the tightest layers in several passes.",
         "section": "The chokepoint"
       }
     ],
@@ -309,7 +309,7 @@
       "A foundry makes chips for other companies, because no chip company can fill a fab alone.",
       "All six of TSMC's largest plants are in Taiwan.",
       "Money can buy a fab building, and training the workforce is the slow part.",
-      "China is forecast to have more fab capacity than any other region, and almost none of it can make the newest chips."
+      "In June 2024 SEMI forecast that China would have more fab capacity in 2025 than any other region, and little of it is advanced."
     ]
   },
   "memory-and-hbm": {
@@ -317,7 +317,7 @@
       {
         "q": "What is HBM?",
         "a": "Memory chips stacked into a cube beside the processor and wired to pass data fast.",
-        "why": "Copper-filled holes run straight down through the stack, which holds up to sixteen chips.",
+        "why": "Copper-filled holes made in each chip before stacking wire every layer to the ones below, and a stack holds up to sixteen chips.",
         "section": "How it works"
       },
       {
@@ -328,30 +328,30 @@
       },
       {
         "q": "Who makes HBM?",
-        "a": "Three firms: SK hynix, Samsung and Micron.",
+        "a": "Three firms make nearly all of it: SK hynix, Samsung and Micron.",
         "why": "SK hynix sold 63.2 percent of it in 2025 and Samsung 19.3 percent. A fourth maker would need both the newest DRAM and a line that stacks it.",
         "section": "Who makes it"
       },
       {
         "q": "Can China get advanced HBM?",
-        "a": "Not the newest kinds. BIS said in December 2024 that its controls covered every HBM stack then in production, and no Chinese firm ships HBM3E or HBM4 in volume.",
-        "why": "CSIS called CXMT one of only two Chinese firms with a credible path to producing advanced HBM.",
+        "a": "Not the newest kinds, and no Chinese firm ships HBM3E or HBM4 in volume.",
+        "why": "US controls since December 2024 cover HBM above 2 GB per second per square millimeter, a line BIS said every stack then in production crossed. A license exception lets stacks below 3.3 go straight to a chip designer's packaging site, and HBM already packaged with a processor, as on Nvidia's H20, falls under the chip rules instead.",
         "section": "The chokepoint"
       }
     ],
     "takeaways": [
       "HBM is memory stacked into a cube beside the processor and wired to pass data fast.",
       "An AI chip reads its whole model from memory for each word, so memory speed limits it.",
-      "Only SK hynix, Samsung and Micron make HBM.",
-      "US export controls covered every HBM stack in production in December 2024, and no Chinese firm ships HBM3E or HBM4 in volume."
+      "SK hynix, Samsung and Micron make nearly all HBM.",
+      "Since December 2024 US controls have covered the HBM stacks then in production, with two exceptions, and no Chinese firm ships HBM3E or HBM4 in volume."
     ]
   },
   "advanced-packaging": {
     "cards": [
       {
         "q": "Why is an AI accelerator built from several chips in one package?",
-        "a": "It needs more circuit than a lithography machine can print in one shot.",
-        "why": "Packaging sets the pieces and their memory side by side on a shared slab of silicon and wires them together.",
+        "a": "Many leading accelerators, Blackwell among them, need more logic than a lithography machine can print in one shot.",
+        "why": "Packaging sets the pieces and their memory side by side on a shared interposer and wires them together. Even the single-die H100 uses one to connect its memory.",
         "section": "How it works"
       },
       {
@@ -363,21 +363,21 @@
       {
         "q": "Why did packaging limit AI chip output in 2025?",
         "a": "Too few packaging lines had been built.",
-        "why": "The methods already worked. By March 2026 the limit had moved back to making wafers.",
+        "why": "The methods already worked. In March 2026 SemiAnalysis judged that making wafers had become the main limit, but in July 2026 TSMC said its packaging capacity was still so tight that it limited customers' growth.",
         "section": "The chokepoint"
       },
       {
         "q": "Can the United States package AI accelerators in volume?",
-        "a": "Not yet.",
-        "why": "No firm yet does CoWoS-class packaging in volume in the United States. Amkor's plant in Peoria, Arizona is expected to start production in early 2028.",
+        "a": "Not yet for Nvidia-class accelerators.",
+        "why": "Intel makes its Foveros 3D packages in volume in New Mexico, but no US site yet packages Nvidia-class accelerators with HBM on CoWoS. Amkor's plant in Peoria, Arizona is expected to start production in early 2028.",
         "section": "The chokepoint"
       }
     ],
     "takeaways": [
-      "An AI accelerator needs more circuit than one chip can hold, so packaging joins several chips and their memory.",
+      "Many leading accelerators, Blackwell among them, need more logic than one chip can hold, so packaging joins several chips and their memory.",
       "TSMC packages nearly every AI accelerator, in Taiwan.",
-      "Packaging was one of the main limits on AI chip output in 2025, and by March 2026 the limit had moved back to making wafers.",
-      "No firm yet does CoWoS-class packaging in volume in the United States."
+      "Packaging was one of the main limits on AI chip output in 2025, and in July 2026 TSMC said its packaging capacity was still so tight that it limited customers' growth.",
+      "No US site yet packages Nvidia-class accelerators with HBM on CoWoS, though Intel makes its own Foveros 3D packages in volume in New Mexico."
     ]
   },
   "substrates-and-pcbs": {
@@ -391,27 +391,27 @@
       {
         "q": "Which two substrate materials are each led by one Japanese supplier?",
         "a": "The insulating film, led by Ajinomoto, and the low-expansion glass cloth, led by Nitto Boseki.",
-        "why": "Ajinomoto puts its share of the film at about 95 percent, and Nitto Boseki claims an overwhelming advantage in low-expansion glass.",
+        "why": "Ajinomoto told investors in June 2026 that its film has held over 95 percent of its market since launch, and Nitto Boseki claims an overwhelming advantage in low-expansion glass.",
         "section": "The materials underneath"
       },
       {
-        "q": "Why would replacing Ajinomoto's film take years?",
-        "a": "Every substrate maker would have to approve the new film in each layer of each product.",
-        "why": "That takes five to ten years.",
+        "q": "Why is Ajinomoto's film hard to replace?",
+        "a": "Ajinomoto says major chipmakers have used it as the standard since 1999.",
+        "why": "Every substrate maker and chip customer would have to approve a new film in each layer of each product.",
         "section": "The chokepoint"
       },
       {
         "q": "Does any American firm make these substrates in volume?",
         "a": "None was named among the key makers in the White House's 2021 supply chain review.",
-        "why": "The eight key makers it named are in Japan, Taiwan, South Korea and China.",
+        "why": "The eight key makers it named are in Japan, Taiwan, South Korea and China. Since then Commerce has awarded up to $75 million to Absolics, a subsidiary of Korea's SKC, for a glass substrate plant in Georgia, and TTM says it offers IC substrates.",
         "section": "Who makes it"
       }
     ],
     "takeaways": [
       "A package substrate connects a chip's fine connections to a circuit board wired in millimeters.",
       "A Japanese supplier leads the film, and another leads the glass cloth inside it.",
-      "Replacing the film would take five to ten years of approvals.",
-      "The White House's 2021 supply chain review named no American firm among the key substrate makers."
+      "Replacing the film would mean re-approval by every substrate maker and chip customer.",
+      "The White House's 2021 supply chain review named no American firm among the key substrate makers, and the glass substrate plant Absolics is building in Georgia expects production capacity in 2027."
     ]
   },
   "test-and-assembly": {
@@ -425,19 +425,19 @@
       {
         "q": "Who makes most chip testers?",
         "a": "Advantest of Japan and Teradyne of the United States.",
-        "why": "Together they hold about 80 percent of the market. Advantest alone holds about 65 percent.",
+        "why": "Advantest put the two at about 80 percent of the market in its April 2025 investor guide. It estimates its own share of 2025 tester spending at about 65 percent.",
         "section": "Who makes it"
       },
       {
         "q": "Where does China stand in assembly and test?",
         "a": "Four of the top ten outsourced assembly and test firms by 2024 revenue are based in China.",
-        "why": "CSET finds that Chinese toolmakers are gaining share in advanced packaging and test tools but still lag well behind foreign suppliers.",
+        "why": "Between 2019 and 2024, CSET found, Chinese toolmakers gained 5 percentage points of share in test tools and 4 points in fabrication tools built for advanced packaging, but lost share in bonding and other conventional assembly and packaging tools.",
         "section": "The back end's geography"
       }
     ],
     "takeaways": [
       "Chips are tested early and often because one bad chip can ruin a package of expensive ones.",
-      "Advantest and Teradyne make about 80 percent of chip testers.",
+      "Advantest and Teradyne account for most spending on chip testers.",
       "Four of the top ten outsourced assembly and test firms by 2024 revenue are based in China."
     ]
   },
@@ -451,28 +451,28 @@
       },
       {
         "q": "Why do the longer links between AI chips carry signals as light?",
-        "a": "Copper carries the signals only a few meters before they fade.",
-        "why": "A laser turns the signal into pulses of light that travel down glass fiber.",
+        "a": "Copper carries the signals only a few meters.",
+        "why": "Active copper cables carry the signal up to 7 meters between racks. Beyond that a laser turns the signal into pulses of light that travel down glass fiber.",
         "section": "How it works"
       },
       {
         "q": "Which parts of an AI rack are hardest to replace?",
         "a": "Nvidia's NVLink switching and the lasers for the optical links.",
-        "why": "Rack assembly is easy to move. If Foxconn stopped, Quanta and Wistron could take over within a few quarters.",
+        "why": "Rack assembly can move from Foxconn to Quanta or Wistron, though the move would take an estimated several quarters.",
         "section": "The chokepoint"
       },
       {
         "q": "What does China control in the optical links?",
         "a": "About 70 percent of the world's indium, the raw material for the lasers.",
-        "why": "Chinese firms also assemble high-speed optical modules in volume.",
+        "why": "Since February 2025 China has also required export permits for indium phosphide substrates, the wafers the lasers are grown on. Chinese firms also assemble high-speed optical modules in volume.",
         "section": "The chokepoint"
       }
     ],
     "takeaways": [
       "An AI rack wires 72 chips together to run as one computer.",
-      "Longer links carry signals as light, because copper fades after a few meters.",
-      "NVLink switching and the lasers are the hard parts, and rack assembly is easy to move.",
-      "China produces about 70 percent of the world's indium, the raw material for the lasers."
+      "Almost every link longer than 7 meters carries its signal as light, because copper fades over longer runs.",
+      "NVLink switching and the lasers are the hard parts, and moving rack assembly would take an estimated several quarters.",
+      "China produces about 70 percent of the world's indium and has required export permits for indium phosphide substrates since February 2025."
     ]
   },
   "data-centers-and-power": {
@@ -490,8 +490,8 @@
         "section": "Capacity and demand"
       },
       {
-        "q": "What slows down building an AI data center most?",
-        "a": "Waiting for power equipment.",
+        "q": "Besides chips, what slows down building an AI data center?",
+        "a": "Power equipment, which takes years to arrive.",
         "why": "Lead times of 36 months are commonly quoted for a large power transformer, and GE Vernova's gas equipment backlog and slot reservations reached 116 GW in mid-2026.",
         "section": "The chokepoint"
       },
@@ -505,7 +505,7 @@
     "takeaways": [
       "One AI rack draws up to 142 kilowatts, too much heat for air, so racks are cooled with liquid.",
       "The newest AI sites are planned in gigawatts, each the output of a large power station.",
-      "Power equipment is the slow part, and lead times of 36 months are commonly quoted for a large transformer.",
+      "Power equipment is one of the slow parts, and lead times of 36 months are commonly quoted for a large transformer.",
       "China has power to spare and is limited by the supply of AI chips."
     ]
   },
@@ -513,13 +513,13 @@
     "cards": [
       {
         "q": "What does an Nvidia B200 cost to build, and what does it sell for?",
-        "a": "About $6,400 to build. Reports put its selling price at $30,000 to $40,000.",
-        "why": "The build cost is an estimate by Epoch AI. Nvidia's gross margin was 75.0 percent in the quarter to July 2026.",
+        "a": "About $6,400 to build, in Epoch AI's December 2025 estimate. Reports put the chip alone at $30,000 to $40,000.",
+        "why": "Nvidia's gross margin was 75.0 percent in the quarter to July 2026. Epoch AI notes that most Blackwell revenue comes from servers and racks, which may carry lower margins.",
         "section": "The B200 bill of materials"
       },
       {
         "q": "What is the most expensive part of an AI accelerator?",
-        "a": "The stacked memory, about $2,900, or about half of the cost to build.",
+        "a": "The stacked memory, about $2,900 in Epoch AI's December 2025 estimate, or about half of the cost to build.",
         "why": "The two logic dies that do the calculating cost about $900.",
         "section": "Memory is the largest line"
       },
@@ -531,7 +531,7 @@
       }
     ],
     "takeaways": [
-      "A B200 costs about $6,400 to build, and reports put its selling price at $30,000 to $40,000.",
+      "Epoch AI estimated in December 2025 that a B200 cost about $6,400 to build, against a reported price of $30,000 to $40,000 for the chip alone.",
       "The stacked memory is the most expensive part, about half of the cost.",
       "Packaging costs more than the logic chips, because a failed package throws away everything inside it."
     ]
@@ -553,13 +553,13 @@
       {
         "q": "What have export controls achieved against China?",
         "a": "They have kept China below the leading edge.",
-        "why": "China still cannot get EUV scanners, and CSIS judges that building its own remains out of reach. Its own toolmakers supplied 35 percent of its home equipment market in 2025.",
+        "why": "China still cannot get EUV scanners, and in September 2025 CSIS judged EUV firmly out of its reach. Its own toolmakers supplied 35 percent of its home equipment market in 2025.",
         "section": "China's response"
       },
       {
-        "q": "What have the controls cost allied toolmakers?",
-        "a": "A large share of their sales to China.",
-        "why": "China's share of ASML's system sales fell from 41 percent in 2024 to 33 percent in 2025. Its share of Tokyo Electron's quarterly sales fell from 47.4 to 26.8 percent in two years.",
+        "q": "How has China's share of allied toolmakers' sales changed?",
+        "a": "It has fallen since 2024.",
+        "why": "China's share of ASML's system sales fell from 41 percent in 2024 to 33 percent in 2025. Its share of Tokyo Electron's sales fell from 44.4 percent in the year to March 2024 to 34.1 percent in the year to March 2026, and Tokyo Electron says the latest drop came as spending on leading-edge chips grew faster than spending on older ones.",
         "section": "Allies: the Netherlands, Japan, Korea and Europe"
       },
       {
@@ -573,7 +573,7 @@
       "An export control works only when a country's firms sell something the buyer cannot get elsewhere.",
       "US controls also cover foreign goods made with American technology.",
       "The controls have kept China below the leading edge, and Chinese toolmakers supplied 35 percent of their home equipment market in 2025.",
-      "The controls cut Dutch and Japanese toolmakers' sales to China.",
+      "China's share of Dutch and Japanese toolmakers' sales has fallen since 2024.",
       "Taiwan held 69 percent of the world's logic capacity below 10 nm in 2022, and TSMC makes its 2 nm chips only there."
     ]
   }

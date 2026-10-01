@@ -1,17 +1,4 @@
 {
-  "https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe3400b": {
-    "title": "TWINSCAN NXE:3400B: EUV lithography systems",
-    "publisher": "ASML",
-    "type": "page",
-    "accessed": "2026-09-27"
-  },
-  "https://epoch.ai/publications/huaweis-roadmap-to-2031": {
-    "title": "Will Huawei catch up to Nvidia by 2030?",
-    "publisher": "Epoch AI",
-    "date": "2026-09-24",
-    "type": "report",
-    "accessed": "2026-09-25"
-  },
   "http://exportcontrol.mofcom.gov.cn/article/zcfg/gnzcfg/zcfggzqd/202307/847.html": {
     "title": "MOFCOM and General Administration of Customs announcement, export controls on gallium- and germanium-related items (对镓、锗相关物项实施出口管制)",
     "publisher": "Ministry of Commerce of the People's Republic of China",
@@ -46,11 +33,25 @@
     "type": "article",
     "accessed": "2026-09-09"
   },
+  "https://aisystemcodesign.github.io/papers/MTIA300_ISCA2026.pdf": {
+    "title": "MTIA 300: Meta’s First Training Chip Featuring",
+    "publisher": "Github",
+    "date": "2026-07-09",
+    "type": "pdf",
+    "accessed": "2026-09-09"
+  },
   "https://amkor.com/": {
     "title": "Semiconductor Packaging & Test Services",
     "publisher": "Amkor Technology",
     "date": "2017-11-08",
     "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://arxiv.org/abs/2304.01433": {
+    "title": "TPU v4: An Optically Reconfigurable Supercomputer for Machine Learning with Hardware Support for Embeddings",
+    "publisher": "arXiv",
+    "date": "2023-04-04",
+    "type": "report",
     "accessed": "2026-09-09"
   },
   "https://arxiv.org/abs/2506.12708": {
@@ -173,6 +174,13 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
+  "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/eighth-generation-tpu-agentic-era/": {
+    "title": "Our eighth generation TPUs: two chips for the agentic era",
+    "publisher": "Google",
+    "date": "2026-04-22",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
   "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/ironwood-tpu-age-of-inference/": {
     "title": "Ironwood: The first Google TPU for the age of inference",
     "publisher": "Google",
@@ -198,6 +206,20 @@
     "title": "NVIDIA, Partners Drive Next-Gen Efficient Gigawatt AI Factories in Buildup for Vera Rubin",
     "publisher": "Nvidia",
     "date": "2025-10-13",
+    "type": "article",
+    "accessed": "2026-09-09"
+  },
+  "https://blogs.nvidia.com/blog/liquid-cooling-ai-factories/": {
+    "title": "Hotter Than a Hot Tub: The 45°C Breakthrough to Cool AI’s Biggest Machines",
+    "publisher": "Nvidia",
+    "date": "2026-06-22",
+    "type": "article",
+    "accessed": "2026-09-09"
+  },
+  "https://blogs.nvidia.com/blog/nvidia-and-partners-build-in-america-for-america/": {
+    "title": "NVIDIA and Partners Build in America, for America",
+    "publisher": "Nvidia",
+    "date": "2026-08-05",
     "type": "article",
     "accessed": "2026-09-09"
   },
@@ -261,6 +283,12 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
+  "https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N40": {
+    "title": "Supply Chain Explorer: Advanced Chips",
+    "publisher": "Emerging Technology Observatory (ETO)",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
   "https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N41": {
     "title": "Supply Chain Explorer: Advanced Chips",
     "publisher": "Emerging Technology Observatory (ETO)",
@@ -292,6 +320,18 @@
     "accessed": "2026-09-09"
   },
   "https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N51": {
+    "title": "Supply Chain Explorer: Advanced Chips",
+    "publisher": "Emerging Technology Observatory (ETO)",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N53": {
+    "title": "Supply Chain Explorer: Advanced Chips",
+    "publisher": "Emerging Technology Observatory (ETO)",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N55": {
     "title": "Supply Chain Explorer: Advanced Chips",
     "publisher": "Emerging Technology Observatory (ETO)",
     "type": "page",
@@ -334,13 +374,6 @@
     "title": "Inside Beijing’s Chipmaking Offensive",
     "publisher": "Center for Security and Emerging Technology (CSET)",
     "date": "2025-07-14",
-    "type": "article",
-    "accessed": "2026-09-09"
-  },
-  "https://cset.georgetown.edu/article/semiconductors-more-u-s-leverage-more-bad-news-for-beijing-part-3/": {
-    "title": "Semiconductors: More U.S. Leverage, More Bad News For Beijing (Part 3)",
-    "publisher": "Center for Security and Emerging Technology (CSET)",
-    "date": "2021-10-25",
     "type": "article",
     "accessed": "2026-09-09"
   },
@@ -479,21 +512,9 @@
     "type": "dataset",
     "accessed": "2026-09-09"
   },
-  "https://data.sec.gov/api/xbrl/companyconcept/CIK0001047127/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json": {
-    "title": "Revenue from Contract with Customer, Excluding Assessed Tax (us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax) reported by AMKOR TECHNOLOGY, INC., XBRL company concept data",
-    "publisher": "U.S. Securities and Exchange Commission (XBRL data for AMKOR TECHNOLOGY, INC.)",
-    "type": "dataset",
-    "accessed": "2026-09-09"
-  },
   "https://data.sec.gov/api/xbrl/companyconcept/CIK0001109345/us-gaap/Revenues.json": {
     "title": "Revenues (us-gaap:Revenues) reported by NOVA LTD., XBRL company concept data",
     "publisher": "U.S. Securities and Exchange Commission (XBRL data for NOVA LTD.)",
-    "type": "dataset",
-    "accessed": "2026-09-09"
-  },
-  "https://data.sec.gov/api/xbrl/companyconcept/CIK0001116942/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json": {
-    "title": "Revenue from Contract with Customer, Excluding Assessed Tax (us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax) reported by TTM TECHNOLOGIES, INC., XBRL company concept data",
-    "publisher": "U.S. Securities and Exchange Commission (XBRL data for TTM TECHNOLOGIES, INC.)",
     "type": "dataset",
     "accessed": "2026-09-09"
   },
@@ -612,12 +633,46 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
+  "https://docs.nvidia.com/nemo-framework/user-guide/latest/nemotoolkit/features/parallelisms.html": {
+    "title": "Parallelisms Guide — Megatron Bridge",
+    "publisher": "Nvidia",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://download.intel.com/newsroom/archive/2025/en-us-2023-06-05-powervia-test-shows-industryleading-performance.pdf": {
+    "title": "PowerVia Test Shows Industry-Leading Performance",
+    "publisher": "Intel",
+    "date": "2025-01-31",
+    "type": "pdf",
+    "accessed": "2026-09-09"
+  },
+  "https://download.intel.com/newsroom/archive/2025/en-us-2023-09-12-intel-to-sell-minority-stake-in-ims-nanofabrication-business-to-tsmc.pdf": {
+    "title": "Intel to Sell Minority Stake in IMS Nanofabrication Business to TSMC",
+    "publisher": "Intel",
+    "date": "2025-01-31",
+    "type": "pdf",
+    "accessed": "2026-09-09"
+  },
   "https://download.intel.com/newsroom/archive/2025/en-us-2023-09-18-intel-unveils-industryleading-glass-substrates-to-meet-demand-for-more-powerful-compute.pdf": {
     "title": "Intel Unveils Industry-Leading Glass Substrates to Meet Demand for...",
     "publisher": "Intel",
     "date": "2025-01-31",
     "type": "pdf",
     "accessed": "2026-09-09"
+  },
+  "https://download.intel.com/newsroom/archive/2025/en-us-2024-06-12-intel-gaudi-enables-a-lower-cost-alternative-for-ai-compute-and-genai.pdf": {
+    "title": "Intel Gaudi Enables a Lower Cost Alternative for AI Compute and GenAI",
+    "publisher": "Intel",
+    "date": "2025-01-31",
+    "type": "pdf",
+    "accessed": "2026-09-09"
+  },
+  "https://echa.europa.eu/-/echa-publishes-updated-pfas-restriction-proposal": {
+    "title": "Echa publishes updated pfas restriction proposal (European Chemicals Agency website)",
+    "publisher": "European Chemicals Agency",
+    "type": "page",
+    "accessed": "2026-09-09",
+    "unverified": true
   },
   "https://echa.europa.eu/-/echa-supports-pfas-restriction-with-targeted-derogations": {
     "title": "ECHA supports PFAS restriction with targeted derogations",
@@ -699,6 +754,19 @@
     "type": "article",
     "accessed": "2026-09-09"
   },
+  "https://epoch.ai/data/ai-chip-sales-documentation/methodology": {
+    "title": "AI chip sales documentation",
+    "publisher": "Epoch AI",
+    "date": "2026-01-08",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://epoch.ai/data/ai-data-centers/directory/colossus-1": {
+    "title": "Colossus 1 | AI data centers",
+    "publisher": "Epoch AI",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
   "https://epoch.ai/data/machine-learning-hardware": {
     "title": "Data on Machine Learning Hardware",
     "publisher": "Epoch AI",
@@ -711,6 +779,13 @@
     "date": "2024-12-06",
     "type": "page",
     "accessed": "2026-09-09"
+  },
+  "https://epoch.ai/publications/huaweis-roadmap-to-2031": {
+    "title": "Will Huawei catch up to Nvidia by 2030?",
+    "publisher": "Epoch AI",
+    "date": "2026-09-24",
+    "type": "report",
+    "accessed": "2026-09-25"
   },
   "https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand": {
     "title": "OpenAI Stargate: where the US sites stand",
@@ -745,10 +820,10 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://global.canon/": {
-    "title": "Canon Global",
+  "https://global.canon/en/news/2023/20231013.html": {
+    "title": "Nanoimprint lithography semiconductor manufacturing system that covers diverse applications with simple patterning mechanism",
     "publisher": "Canon",
-    "type": "page",
+    "type": "press release",
     "accessed": "2026-09-09"
   },
   "https://global.canon/en/news/2024/20240926.html": {
@@ -758,9 +833,22 @@
     "type": "press release",
     "accessed": "2026-09-09"
   },
+  "https://gov.texas.gov/news/post/governor-abbott-directs-comprehensive-data-center-audit": {
+    "title": "Governor Abbott Directs Comprehensive Data Center Audit",
+    "publisher": "Texas",
+    "type": "press release",
+    "accessed": "2026-09-09"
+  },
   "https://groq.com/": {
     "title": "Groq is the premier neocloud for fast inference",
     "publisher": "Groq",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://groq.com/groq-isca-paper-2020/": {
+    "title": "Think Fast: A Tensor Streaming Processor (TSP) for Accelerating Deep Learning Workloads",
+    "publisher": "Groq",
+    "date": "2020-05-22",
     "type": "page",
     "accessed": "2026-09-09"
   },
@@ -774,6 +862,19 @@
     "title": "What is a Language Processing Unit?",
     "publisher": "Groq",
     "date": "2025-03-07",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://hc2024.hotchips.org/assets/program/conference/day2/81_HC2024.Microsoft.Xu.Ramakrishnan.final.v2.pdf": {
+    "title": "Inside MAIA100",
+    "publisher": "Hotchips",
+    "date": "2024-08-27",
+    "type": "pdf",
+    "accessed": "2026-09-09"
+  },
+  "https://hts.usitc.gov/search?query=3818.00.00": {
+    "title": "Harmonized Tariff Schedule",
+    "publisher": "Harmonized Tariff Schedule",
     "type": "page",
     "accessed": "2026-09-09"
   },
@@ -832,6 +933,13 @@
     "type": "article",
     "accessed": "2026-09-09"
   },
+  "https://investor.asml.com/news-releases/news-release-details/statement-regarding-partial-revocation-export-license": {
+    "title": "Statement regarding partial revocation export license",
+    "publisher": "Asml",
+    "type": "press release",
+    "accessed": "2026-09-09",
+    "unverified": true
+  },
   "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf": {
     "title": "Q2 2024 Taiwan Semiconductor Manufacturing Co Ltd Earnings Call (Chinese, English) — edited transcript",
     "publisher": "Refinitiv StreetEvents (transcript of a TSMC earnings call), via TSMC",
@@ -852,6 +960,13 @@
     "date": "2026-07-16",
     "type": "transcript",
     "accessed": "2026-09-09"
+  },
+  "https://investor.tsmc.com/static/annualReports/2022/english/ebook/files/basic-html/page237.html": {
+    "title": "Page237 (TSMC website)",
+    "publisher": "TSMC",
+    "type": "page",
+    "accessed": "2026-09-09",
+    "unverified": true
   },
   "https://investor.tsmc.com/static/annualReports/2025/english/index.html": {
     "title": "TSMC 2025 Annual Report",
@@ -879,11 +994,32 @@
     "type": "press release",
     "accessed": "2026-09-09"
   },
+  "https://investors.broadcom.com/news-releases/news-release-details/broadcom-announces-tomahawkr-6-davisson-industrys-first-1024": {
+    "title": "Broadcom announces tomahawkr 6 davisson industrys first 1024 (Broadcom website)",
+    "publisher": "Broadcom",
+    "type": "press release",
+    "accessed": "2026-09-09",
+    "unverified": true
+  },
+  "https://investors.broadcom.com/news-releases/news-release-details/broadcom-ships-tomahawk-4-industrys-highest-bandwidth-ethernet": {
+    "title": "Broadcom ships tomahawk 4 industrys highest bandwidth ethernet (Broadcom website)",
+    "publisher": "Broadcom",
+    "type": "press release",
+    "accessed": "2026-09-09",
+    "unverified": true
+  },
   "https://investors.broadcom.com/news-releases/news-release-details/broadcom-ships-tomahawk-5-industrys-highest-bandwidth-switch": {
     "title": "Broadcom Ships Tomahawk 5, Industry's Highest Bandwidth Switch Chip to Accelerate AI/ML Workloads",
     "publisher": "Broadcom",
     "type": "press release",
     "accessed": "2026-09-09"
+  },
+  "https://investors.broadcom.com/news-releases/news-release-details/broadcom-ships-tomahawk-6-worlds-first-1024-tbps-switch": {
+    "title": "Broadcom ships tomahawk 6 worlds first 1024 tbps switch (Broadcom website)",
+    "publisher": "Broadcom",
+    "type": "press release",
+    "accessed": "2026-09-09",
+    "unverified": true
   },
   "https://investors.broadcom.com/news-releases/news-release-details/openai-and-broadcom-announce-strategic-collaboration-deploy-10": {
     "title": "OpenAI and Broadcom announce strategic collaboration to deploy 10 gigawatts of OpenAI-designed AI accelerators",
@@ -891,19 +1027,12 @@
     "type": "press release",
     "accessed": "2026-09-09"
   },
-  "https://investors.micron.com/news/press-release/2025/Micron-Technology-Inc--Reports-Results-for-the-Fourth-Quarter-and-Full-Year-of-Fiscal-2025-09-23-2025/default.aspx": {
-    "title": "Micron Technology, Inc. Reports Results for the Fourth Quarter and Full Year of Fiscal 2025",
+  "https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Fiscal-Fourth-Quarter-and-Full-Year-2026-Results/default.aspx": {
+    "title": "Default (Micron Technology website)",
     "publisher": "Micron Technology",
-    "date": "2025-09-23",
     "type": "press release",
-    "accessed": "2026-09-09"
-  },
-  "https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Results-for-the-Third-Quarter-of-Fiscal-2026/default.aspx": {
-    "title": "Micron Technology, Inc. Reports Record Results for the Third Quarter of Fiscal 2026",
-    "publisher": "Micron Technology",
-    "date": "2026-06-24",
-    "type": "press release",
-    "accessed": "2026-09-09"
+    "accessed": "2026-09-09",
+    "unverified": true
   },
   "https://investors.ontoinnovation.com/news/news-details/2026/Onto-Innovation-Completes-Strategic-Investment-in-Rigaku-Holdings-Corporation/default.aspx": {
     "title": "Onto Innovation Completes Strategic Investment in Rigaku Holdings Corporation",
@@ -959,6 +1088,13 @@
     "type": "press release",
     "accessed": "2026-09-09"
   },
+  "https://ir.kla.com/news-events/press-releases/detail/95/kla-tencor-introduces-five-patterning-control-systems-for": {
+    "title": "KLA-Tencor Introduces Five Patterning Control Systems for Sub-7nm IC Manufacturing",
+    "publisher": "KLA Corporation",
+    "date": "2017-09-11",
+    "type": "press release",
+    "accessed": "2026-09-09"
+  },
   "https://jp.mitsuichemicals.com/": {
     "title": "Mitsui Chemicals, company website (三井化学株式会社)",
     "publisher": "Mitsui Chemicals",
@@ -982,6 +1118,27 @@
     "publisher": "Samsung Electro-Mechanics",
     "date": "2026-07-30",
     "type": "press release",
+    "accessed": "2026-09-09"
+  },
+  "https://news.samsung.com/global/samsung-begins-chip-production-using-3nm-process-technology-with-gaa-architecture": {
+    "title": "Samsung Begins Chip Production Using 3nm Process Technology With GAA Architecture - Samsung Global Newsroom",
+    "publisher": "Samsung Global Newsroom",
+    "date": "2022-06-30",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://news.samsung.com/global/samsung-develops-industry-first-36gb-hbm3e-12h-dram": {
+    "title": "Samsung Develops Industry-First 36GB HBM3E 12H DRAM - Samsung Global Newsroom",
+    "publisher": "Samsung Global Newsroom",
+    "date": "2024-02-27",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://news.samsung.com/global/samsung-ships-industry-first-commercial-hbm4": {
+    "title": "Samsung Ships Industry-First Commercial HBM4 With Ultimate Performance for AI Computing - Samsung Global Newsroom",
+    "publisher": "Samsung Global Newsroom",
+    "date": "2026-02-12",
+    "type": "page",
     "accessed": "2026-09-09"
   },
   "https://news.skhynix.com/en/2026-market-outlook-focus-on-the-hbm-led-memory-supercycle/": {
@@ -1017,6 +1174,19 @@
   "https://news.skhynix.com/sk-hynix-partners-with-tsmc-to-strengthen-hbm-technological-leadership/": {
     "title": "SK hynix Partners with TSMC to Strengthen HBM Technological Leadership",
     "publisher": "SK hynix",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://news.skhynix.com/sk-hynix-to-supply-industrys-first-hbm3-dram-to-nvidia/": {
+    "title": "SK hynix to Supply Industry’s First HBM3 DRAM to NVIDIA",
+    "publisher": "SK hynix",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://newscenter.lbl.gov/2023/08/21/how-scientists-are-accelerating-next-gen-microelectronics/": {
+    "title": "How Scientists Are Accelerating the Development of Next-Gen Microelectronics",
+    "publisher": "Lawrence Berkeley National Laboratory",
+    "date": "2023-08-21",
     "type": "page",
     "accessed": "2026-09-09"
   },
@@ -1118,6 +1288,27 @@
     "type": "article",
     "accessed": "2026-09-09"
   },
+  "https://newsletter.semianalysis.com/p/tpuv7-google-takes-a-swing-at-the": {
+    "title": "Google TPUv7: The 900lb Gorilla In the Room",
+    "publisher": "SemiAnalysis",
+    "date": "2025-11-28",
+    "type": "article",
+    "accessed": "2026-09-09"
+  },
+  "https://newsletter.semianalysis.com/p/vera-rubin-extreme-co-design-an-evolution": {
+    "title": "Vera Rubin – Extreme Co-Design: An Evolution from Grace Blackwell Oberon",
+    "publisher": "SemiAnalysis",
+    "date": "2026-02-25",
+    "type": "article",
+    "accessed": "2026-09-09"
+  },
+  "https://newsroom.amd.com/news/aai-2026-helios-update/": {
+    "title": "AAI 2026: AMD Launches AMD Helios Rackscale Solution for…",
+    "publisher": "AMD Newsroom",
+    "date": "2026-07-23",
+    "type": "press release",
+    "accessed": "2026-09-09"
+  },
   "https://newsroom.arm.com/news/arm-q4-fye26-results": {
     "title": "Arm delivers record-breaking quarter and full-year results",
     "publisher": "Arm",
@@ -1136,6 +1327,12 @@
     "title": "Lam Research Corporation Reports Financial Results for the Quarter Ended June 28, 2026",
     "publisher": "Lam Research",
     "date": "2026-07-29",
+    "type": "press release",
+    "accessed": "2026-09-09"
+  },
+  "https://newsroom.lamresearch.com/etch-essentials-semiconductor-manufacturing": {
+    "title": "Etch Essentials: The Building Blocks of AI Era Microchips (Semi 101)",
+    "publisher": "Lam Research",
     "type": "press release",
     "accessed": "2026-09-09"
   },
@@ -1167,10 +1364,22 @@
     "type": "press release",
     "accessed": "2026-09-09"
   },
+  "https://nvidianews.nvidia.com/news/nvidia-nvlink-fusion-semi-custom-ai-infrastructure-partner-ecosystem": {
+    "title": "NVIDIA Unveils NVLink Fusion for Industry to Build Semi-Custom AI Infrastructure With NVIDIA Partner Ecosystem",
+    "publisher": "Nvidia",
+    "type": "press release",
+    "accessed": "2026-09-09"
+  },
   "https://nvidianews.nvidia.com/news/nvidia-spectrum-x-co-packaged-optics-networking-switches-ai-factories": {
     "title": "NVIDIA Announces Spectrum-X Photonics, Co-Packaged Optics Networking Switches to Scale AI Factories to Millions of GPUs",
     "publisher": "Nvidia",
     "date": "2025-03-18",
+    "type": "press release",
+    "accessed": "2026-09-09"
+  },
+  "https://nvidianews.nvidia.com/news/rubin-platform-ai-supercomputer": {
+    "title": "NVIDIA Kicks Off the Next Generation of AI With Rubin",
+    "publisher": "Nvidia",
     "type": "press release",
     "accessed": "2026-09-09"
   },
@@ -1230,12 +1439,39 @@
     "type": "pdf",
     "accessed": "2026-09-09"
   },
+  "https://power.mhi.com/products/gasturbines": {
+    "title": "Gas Turbines | Mitsubishi Power",
+    "publisher": "Mitsubishi Power",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://pr.fujitsu.com/jp/news/2025/03/en/19-1.pdf": {
+    "title": "(Progress Report on Disclosed Matters) Notice Regarding Completion of JICC-04’s Tender Offer for Shares of a Consolidated Subsidiary of Fujitsu Limited (SHINKO ELECTRIC INDUSTRIES CO., LTD.)",
+    "publisher": "Fujitsu",
+    "date": "2025-03-19",
+    "type": "pdf",
+    "accessed": "2026-09-09"
+  },
+  "https://pr.tsmc.com/english/news/3136": {
+    "title": "News 3136 (TSMC website)",
+    "publisher": "TSMC",
+    "type": "press release",
+    "accessed": "2026-09-09",
+    "unverified": true
+  },
   "https://pr.tsmc.com/english/news/3174": {
     "title": "Amkor and TSMC to Expand Partnership and Collaborate on Advanced Packaging in Arizona",
     "publisher": "TSMC",
     "date": "2024-10-04",
     "type": "press release",
     "accessed": "2026-09-09"
+  },
+  "https://pr.tsmc.com/english/news/3204": {
+    "title": "News 3204 (TSMC website)",
+    "publisher": "TSMC",
+    "type": "press release",
+    "accessed": "2026-09-09",
+    "unverified": true
   },
   "https://pr.tsmc.com/english/news/3210": {
     "title": "TSMC Intends to Expand Its Investment in the United States to US$165 Billion to Power the Future of AI",
@@ -1374,10 +1610,38 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
+  "https://static.cninfo.com.cn/finalpage/2026-04-25/1225182755.PDF": {
+    "title": "深圳中科飞测科技股份有限公司2025 年年度报告摘要 公司代码：688361",
+    "publisher": "Cninfo",
+    "date": "2026-04-24",
+    "type": "pdf",
+    "accessed": "2026-09-09"
+  },
+  "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2025-10-22/688783_20251022_UYMD.pdf": {
+    "title": "688783 20251022 UYMD",
+    "publisher": "Sse",
+    "type": "pdf",
+    "accessed": "2026-09-09",
+    "unverified": true
+  },
+  "https://static.sse.com.cn/stock/disclosure/announcement/c/202509/002098_20250919_IP6Z.pdf": {
+    "title": "002098 20250919 IP6Z",
+    "publisher": "Sse",
+    "type": "pdf",
+    "accessed": "2026-09-09",
+    "unverified": true
+  },
   "https://techcommunity.microsoft.com/blog/azureinfrastructureblog/deep-dive-into-the-maia-200-architecture/4489312": {
     "title": "Deep dive into the Maia 200 architecture",
     "publisher": "Microsoft",
     "date": "2026-01-26",
+    "type": "article",
+    "accessed": "2026-09-09"
+  },
+  "https://techcommunity.microsoft.com/blog/azureinfrastructureblog/inside-maia-100-revolutionizing-ai-workloads-with-microsofts-custom-ai-accelerat/4229118": {
+    "title": "Inside Maia 100: Revolutionizing AI Workloads with Microsoft's Custom AI Accelerator",
+    "publisher": "Microsoft",
+    "date": "2024-08-27",
     "type": "article",
     "accessed": "2026-09-09"
   },
@@ -1394,10 +1658,10 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://towersemi.com/technology/rf-and-hpa/silicon-photonics/": {
-    "title": "RF & HPA - Tower Semiconductor",
+  "https://towersemi.com/technology/rf-and-hpa/silicon-photonics-rf/": {
+    "title": "Silicon Photonics (SiPho) - Tower Semiconductor",
     "publisher": "Tower Semiconductor",
-    "date": "2018-03-25",
+    "date": "2018-07-01",
     "type": "page",
     "accessed": "2026-09-09"
   },
@@ -1420,10 +1684,45 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
+  "https://web.archive.org/web/20240726075938/https://www.vdlgroep.com/en/news/vdl-etg-builds-complex-frames-for-zeiss": {
+    "title": "Vdl etg builds complex frames for zeiss",
+    "publisher": "Archive",
+    "type": "press release",
+    "accessed": "2026-09-09",
+    "unverified": true
+  },
+  "https://web.archive.org/web/20250809220519/http://nsig.com/en/about": {
+    "title": "About",
+    "publisher": "Archive",
+    "type": "page",
+    "accessed": "2026-09-09",
+    "unverified": true
+  },
+  "https://web.archive.org/web/20260911215719/https://www.dongjin.com/en/business/semiconductor.php": {
+    "title": "Semiconductor",
+    "publisher": "Archive",
+    "type": "page",
+    "accessed": "2026-09-09",
+    "unverified": true
+  },
   "https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf": {
     "title": "Behrooz Parhami, Dependable Computing: A Multilevel Approach, part 2",
     "publisher": "University of California, Santa Barbara",
     "date": "2020-10-11",
+    "type": "pdf",
+    "accessed": "2026-09-09"
+  },
+  "https://www.aboutamazon.com/news/aws/aws-project-rainier-ai-trainium-chips-compute-cluster": {
+    "title": "AWS activates Project Rainier: One of the world’s largest AI compute clusters comes online",
+    "publisher": "Amazon News",
+    "date": "2025-06-24",
+    "type": "press release",
+    "accessed": "2026-09-09"
+  },
+  "https://www.accretech.com/en/ir/index/main/00/teaserItems1/00/linkList/02/link/IntegratedReport2025_E.pdf": {
+    "title": "INTEGRATED REPORT 2025 Tokyo Seimitsu Co., Ltd.",
+    "publisher": "Accretech",
+    "date": "2025-12-03",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
@@ -1679,6 +1978,12 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
+  "https://www.appliedmaterials.com/eu/en/semiconductor/semiconductor-technologies/pvd.html": {
+    "title": "PVD | Aplied Materials",
+    "publisher": "Applied Materials",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
   "https://www.appliedmaterials.com/us/en/semiconductor.html": {
     "title": "Semiconductor Systems",
     "publisher": "Applied Materials",
@@ -1730,12 +2035,6 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.asml.com/en/investors/annual-report": {
-    "title": "ASML Annual reports",
-    "publisher": "ASML",
-    "type": "page",
-    "accessed": "2026-09-09"
-  },
   "https://www.asml.com/en/news/press-releases/2023/statement-regarding-export-control-regulations-dutch-government": {
     "title": "Statement regarding export control regulations Dutch government",
     "publisher": "ASML",
@@ -1764,19 +2063,30 @@
     "type": "press release",
     "accessed": "2026-09-09"
   },
-  "https://www.asml.com/en/news/press-releases/2026/tsmc-and-asml-announce-industry-transition-to-large-format-photomasks-for-high-na-euv": {
-    "title": "TSMC and ASML Announce Initiative to Pioneer Industry Transition to Large-Format Photomasks for High NA EUV",
-    "publisher": "ASML",
-    "date": "2026-09-08",
-    "type": "press release",
-    "accessed": "2026-09-09"
-  },
   "https://www.asml.com/en/news/stories/2022/the-euv-pellicle-indistinguishable-from-magic": {
     "title": "Indistinguishable from magic: the EUV pellicle",
     "publisher": "ASML",
     "date": "2022-09-14",
     "type": "press release",
     "accessed": "2026-09-09"
+  },
+  "https://www.asml.com/en/products/duv-lithography-systems": {
+    "title": "See ASML's DUV lithography systems",
+    "publisher": "ASML",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.asml.com/en/products/euv-lithography-systems": {
+    "title": "ASML EUV lithography systems",
+    "publisher": "ASML",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe3400b": {
+    "title": "TWINSCAN NXE:3400B: EUV lithography systems",
+    "publisher": "ASML",
+    "type": "page",
+    "accessed": "2026-09-27"
   },
   "https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe3400c": {
     "title": "TWINSCAN NXE:3400C",
@@ -1798,6 +2108,12 @@
   },
   "https://www.asml.com/en/technology/lithography-principles/light-and-lasers": {
     "title": "All about light and lasers in lithography",
+    "publisher": "ASML",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.asml.com/en/technology/lithography-principles/rayleigh-criterion": {
+    "title": "What is the Rayleigh criterion?",
     "publisher": "ASML",
     "type": "page",
     "accessed": "2026-09-09"
@@ -1949,24 +2265,6 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.broadcom.com/company/news/product-releases/52756": {
-    "title": "Broadcom Ships Tomahawk 4, Industry’s Highest Bandwidth Ethernet Switch Chip at 25.6 Terabits per Second",
-    "publisher": "Broadcom",
-    "type": "press release",
-    "accessed": "2026-09-09"
-  },
-  "https://www.broadcom.com/company/news/product-releases/63626": {
-    "title": "Broadcom Announces Tomahawk® 6 – Davisson, the Industry’s First 102.4-Tbps Ethernet Switch with Co-Packaged Optics",
-    "publisher": "Broadcom",
-    "type": "press release",
-    "accessed": "2026-09-09"
-  },
-  "https://www.broadcom.com/company/news/product-releases/64031": {
-    "title": "Broadcom Now Shipping World’s First 102.4 Tbps Switch in Production Volume",
-    "publisher": "Broadcom",
-    "type": "press release",
-    "accessed": "2026-09-09"
-  },
   "https://www.cac.gov.cn/2023-05/21/c_1686348043518073.htm": {
     "title": "Cyberspace Administration of China, notice on the cybersecurity review of Micron products (美光公司在华销售的产品未通过网络安全审查), 21 May 2023",
     "publisher": "Cyberspace Administration of China",
@@ -2066,13 +2364,6 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.commerce.gov/news/press-releases/2024/12/biden-harris-administration-announces-chips-incentives-awards": {
-    "title": "Biden-Harris Administration Announces CHIPS Incentives Awards with GlobalWafers to Support Domestic Production of Silicon Wafers",
-    "publisher": "U.S. Department of Commerce",
-    "date": "2024-12-17",
-    "type": "press release",
-    "accessed": "2026-09-09"
-  },
   "https://www.commerce.gov/news/press-releases/2025/11/statement-uae-and-saudi-chip-exports": {
     "title": "Statement on UAE and Saudi Chip Exports",
     "publisher": "U.S. Department of Commerce",
@@ -2093,10 +2384,17 @@
     "type": "press release",
     "accessed": "2026-09-09"
   },
-  "https://www.coolitsystems.com/data-center/": {
-    "title": "Data Center Cooling Systems: Beginner’s Technical Guide",
+  "https://www.constellationenergy.com/news/2026/08/constellation-reports-second-quarter-2026-results.html": {
+    "title": "Constellation Reports Second Quarter 2026 Results",
+    "publisher": "Constellation Energy",
+    "date": "2026-08-06",
+    "type": "press release",
+    "accessed": "2026-09-09"
+  },
+  "https://www.coolitsystems.com/products-services/server-products/": {
+    "title": "Scalable Cooling Tech for HPC & OEMs",
     "publisher": "CoolIT Systems",
-    "date": "2025-12-03",
+    "date": "2025-05-27",
     "type": "page",
     "accessed": "2026-09-09"
   },
@@ -2138,6 +2436,13 @@
     "title": "Micron Aggression: The Right Response to Beijing’s Ban on the U.S. Chipmaker",
     "publisher": "Center for Strategic and International Studies",
     "date": "2023-06-22",
+    "type": "report",
+    "accessed": "2026-09-09"
+  },
+  "https://www.csis.org/analysis/understanding-biden-administrations-updated-export-controls": {
+    "title": "Understanding the Biden Administration’s Updated Export Controls",
+    "publisher": "Center for Strategic and International Studies",
+    "date": "2024-12-11",
     "type": "report",
     "accessed": "2026-09-09"
   },
@@ -2206,16 +2511,10 @@
     "type": "press release",
     "accessed": "2026-09-09"
   },
-  "https://www.dongjin.com/en/business/semiconductor.php": {
-    "title": "Dongjin Semichem, semiconductor materials page",
-    "publisher": "Dongjin Semichem",
-    "type": "page",
-    "accessed": "2026-09-09"
-  },
-  "https://www.dupont.com/": {
-    "title": "DuPont, company website",
-    "publisher": "DuPont",
-    "type": "page",
+  "https://www.doosan.com/en/media-center/press-release_view?id=20172812": {
+    "title": "Press Release",
+    "publisher": "Doosan",
+    "type": "press release",
     "accessed": "2026-09-09"
   },
   "https://www.eaton.com/us/en-us/markets/data-centers.html": {
@@ -2242,6 +2541,18 @@
     "type": "regulation",
     "accessed": "2026-09-09"
   },
+  "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-738/appendix-Supplement%20No.%201%20to%20Part%20738": {
+    "title": "Supplement No. 1 to Part 738, Title 15 -- Commerce Country Chart",
+    "publisher": "Electronic Code of Federal Regulations",
+    "type": "regulation",
+    "accessed": "2026-09-09"
+  },
+  "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-740/section-740.25": {
+    "title": "15 CFR 740.25 -- License Exception High Bandwidth Memory (HBM).",
+    "publisher": "Electronic Code of Federal Regulations",
+    "type": "regulation",
+    "accessed": "2026-09-09"
+  },
   "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-742/section-742.6": {
     "title": "15 CFR 742.6, Regional stability",
     "publisher": "Electronic Code of Federal Regulations",
@@ -2254,10 +2565,11 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.eia.gov/pressroom/releases/press582.php": {
-    "title": "EIA Press Release (01/13/2026): EIA forecasts strongest four-year growth in U.S. electricity demand since 2000, fueled by data centers",
+  "https://www.eia.gov/outlooks/steo/archives/sep26.pdf": {
+    "title": "September 2026 Short-Term Energy",
     "publisher": "U.S. Energy Information Administration",
-    "type": "page",
+    "date": "2026-09-08",
+    "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://www.emdgroup.com/": {
@@ -2378,6 +2690,13 @@
     "type": "regulation",
     "accessed": "2026-09-09"
   },
+  "https://www.federalregister.gov/documents/2022/08/15/2022-17125/implementation-of-certain-2021-wassenaar-arrangement-decisions-on-four-section-1758-technologies": {
+    "title": "Implementation of Certain 2021 Wassenaar Arrangement Decisions on Four Section 1758 Technologies",
+    "publisher": "Federal Register (Commerce Department; Industry and Security Bureau)",
+    "date": "2022-08-15",
+    "type": "regulation",
+    "accessed": "2026-09-09"
+  },
   "https://www.federalregister.gov/documents/2022/10/13/2022-21658/implementation-of-additional-export-controls-certain-advanced-computing-and-semiconductor": {
     "title": "Implementation of Additional Export Controls: Certain Advanced Computing and Semiconductor Manufacturing Items; Supercomputer and Semiconductor End Use; Entity List Modification",
     "publisher": "Federal Register (Commerce Department; Industry and Security Bureau)",
@@ -2448,6 +2767,13 @@
     "type": "regulation",
     "accessed": "2026-09-09"
   },
+  "https://www.federalregister.gov/documents/2025/01/28/2025-01901/initial-rescissions-of-harmful-executive-orders-and-actions": {
+    "title": "Initial Rescissions of Harmful Executive Orders and Actions",
+    "publisher": "Federal Register (Executive Office of the President)",
+    "date": "2025-01-28",
+    "type": "regulation",
+    "accessed": "2026-09-09"
+  },
   "https://www.federalregister.gov/documents/2025/01/31/2025-02172/removing-barriers-to-american-leadership-in-artificial-intelligence": {
     "title": "Removing Barriers to American Leadership in Artificial Intelligence",
     "publisher": "Federal Register (Executive Office of the President)",
@@ -2490,6 +2816,13 @@
     "type": "regulation",
     "accessed": "2026-09-09"
   },
+  "https://www.federalregister.gov/documents/2026/02/17/2026-03065/federal-acquisition-regulation-prohibition-on-certain-semiconductor-products-and-services": {
+    "title": "Federal Acquisition Regulation: Prohibition on Certain Semiconductor Products and Services",
+    "publisher": "Federal Register (Management and Budget Office; Federal Procurement Policy Office; Defense Department; General Services Administration; National Aeronautics and Space Administration)",
+    "date": "2026-02-17",
+    "type": "regulation",
+    "accessed": "2026-09-09"
+  },
   "https://www.federalregister.gov/documents/2026/05/28/2026-10571/implementing-certain-tariff-related-elements-of-a-trade-and-security-agreement-between-the-american": {
     "title": "Implementing Certain Tariff-Related Elements of a Trade and Security Agreement Between the American Institute in Taiwan and the Taipei Economic and Cultural Representative Office in the United States",
     "publisher": "Federal Register (Commerce Department; International Trade Administration; Trade Representative, Office of United States)",
@@ -2501,6 +2834,20 @@
     "title": "Enhanced Favorable Treatment for the United Arab Emirates Under the Export Administration Regulations",
     "publisher": "Federal Register (Commerce Department; Industry and Security Bureau)",
     "date": "2026-07-14",
+    "type": "regulation",
+    "accessed": "2026-09-09"
+  },
+  "https://www.federalregister.gov/documents/2026/08/11/2026-16400/adjusting-imports-of-polysilicon-and-its-derivatives-into-the-united-states": {
+    "title": "Adjusting Imports of Polysilicon and Its Derivatives Into the United States",
+    "publisher": "Federal Register (Executive Office of the President)",
+    "date": "2026-08-11",
+    "type": "regulation",
+    "accessed": "2026-09-09"
+  },
+  "https://www.federalregister.gov/documents/2026/09/24/2026-19537/measures-to-restrict-stockpiling-of-polysilicon-and-polysilicon-derivatives-under-proclamation-11052": {
+    "title": "Measures To Restrict Stockpiling of Polysilicon and Polysilicon Derivatives Under Proclamation 11052",
+    "publisher": "Federal Register (Commerce Department; Industry and Security Bureau)",
+    "date": "2026-09-24",
     "type": "regulation",
     "accessed": "2026-09-09"
   },
@@ -2522,12 +2869,6 @@
     "title": "Probe Cards - Design and Manufacturing",
     "publisher": "FormFactor",
     "date": "2017-04-25",
-    "type": "page",
-    "accessed": "2026-09-09"
-  },
-  "https://www.foxconn.com/": {
-    "title": "Hon Hai Precision Industry (Foxconn), company website (鴻海科技集團)",
-    "publisher": "Hon Hai Precision Industry (Foxconn)",
     "type": "page",
     "accessed": "2026-09-09"
   },
@@ -2569,14 +2910,14 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.gigaphoton.com/en/products": {
-    "title": "Products | Gigaphoton",
+  "https://www.gigaphoton.com/company": {
+    "title": "Company Profile | Gigaphoton",
     "publisher": "Gigaphoton",
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.global.dnp/biz/solution/products/detail/10162232_4130.html": {
-    "title": "Products and Services",
+  "https://www.global.dnp/en/biz/solution/semiconductors/": {
+    "title": "Semiconductors | DNP Group",
     "publisher": "Dai Nippon Printing",
     "type": "page",
     "accessed": "2026-09-09"
@@ -2724,12 +3065,6 @@
     "type": "pdf",
     "accessed": "2026-09-09"
   },
-  "https://www.govinfo.gov/content/pkg/FR-2024-05-03/html/2024-08735.htm": {
-    "title": "Federal Register, Volume 89 Issue 87 (Friday, May 3, 2024)",
-    "publisher": "U.S. Government Publishing Office",
-    "type": "page",
-    "accessed": "2026-09-09"
-  },
   "https://www.govinfo.gov/content/pkg/FR-2024-09-06/html/2024-19633.htm": {
     "title": "Federal Register, Volume 89 Issue 173 (Friday, September 6, 2024)",
     "publisher": "U.S. Government Publishing Office",
@@ -2836,6 +3171,42 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
+  "https://www.hiascend.com/hardware/accelerator-card": {
+    "title": "Atlas 350 加速卡",
+    "publisher": "Hiascend",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.hiascend.com/hardware/ai-server?tag=900A2": {
+    "title": "Atlas 650E 服务器",
+    "publisher": "Hiascend",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.hiascend.com/hardware/cluster": {
+    "title": "Atlas 950 SuperPoD 液冷超节点",
+    "publisher": "Hiascend",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.hiascend.com/hardware/cluster?tag=900a3": {
+    "title": "Atlas 950 SuperPoD 液冷超节点",
+    "publisher": "Hiascend",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.hiascend.com/hardware/processor?tag=950dt": {
+    "title": "Ascend 950PR",
+    "publisher": "Hiascend",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.hiascend.com/hardware/processor?tag=950pr": {
+    "title": "Ascend 950PR",
+    "publisher": "Hiascend",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
   "https://www.hisilicon.com/": {
     "title": "HiSilicon, company website (海思)",
     "publisher": "HiSilicon",
@@ -2852,6 +3223,13 @@
     "title": "Transformers | Hitachi Energy",
     "publisher": "Hitachi Energy",
     "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.holdings.toppan.com/en/news/2025/12/newsrelease251210_1.html": {
+    "title": "TOPPAN and Tekscend Photomask Participate in SEMICON Japan 2025",
+    "publisher": "TOPPAN Holdings Inc.",
+    "date": "2025-12-10",
+    "type": "press release",
     "accessed": "2026-09-09"
   },
   "https://www.honhai.com/en-us/press-center/press-releases/latest-news/1978": {
@@ -2990,12 +3368,6 @@
     "type": "press release",
     "accessed": "2026-09-09"
   },
-  "https://www.ims.co.at/": {
-    "title": "IMS Nanofabrication, company website",
-    "publisher": "IMS Nanofabrication",
-    "type": "page",
-    "accessed": "2026-09-09"
-  },
   "https://www.infineon.com/": {
     "title": "Semiconductor & System Solutions",
     "publisher": "Infineon Technologies",
@@ -3024,6 +3396,13 @@
     "title": "Intel to Sell Minority Stake in IMS Nanofabrication Business to TSMC",
     "publisher": "Intel",
     "date": "2023-09-12",
+    "type": "press release",
+    "accessed": "2026-09-09"
+  },
+  "https://www.intc.com/news-events/press-releases/detail/1745/intel-reports-second-quarter-2025-financial-results": {
+    "title": "Intel Reports Second-Quarter 2025 Financial Results",
+    "publisher": "Intel",
+    "date": "2025-07-24",
     "type": "press release",
     "accessed": "2026-09-09"
   },
@@ -3061,6 +3440,12 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
+  "https://www.intel.com/content/www/us/en/newsroom/news/artificial-intelligence/intel-to-expand-ai-accelerator-portfolio-with-new-gpu.html": {
+    "title": "Intel to Expand AI Accelerator Portfolio with New GPU",
+    "publisher": "Intel",
+    "type": "press release",
+    "accessed": "2026-09-09"
+  },
   "https://www.intel.com/content/www/us/en/newsroom/news/intel-foundry/intel-foundry-asml-accelerate-industry-readiness-for-high-na-euv.html": {
     "title": "Intel Foundry and ASML Accelerate Industry Readiness for High-NA EUV",
     "publisher": "Intel",
@@ -3068,8 +3453,14 @@
     "type": "press release",
     "accessed": "2026-09-09"
   },
-  "https://www.intel.com/content/www/us/en/products/details/processors/ai-accelerators.html": {
-    "title": "Intel, AI accelerators product page",
+  "https://www.intel.com/content/www/us/en/newsroom/news/intel-opens-fab-9-new-mexico.html": {
+    "title": "Intel Opens Fab 9 in New Mexico",
+    "publisher": "Intel",
+    "type": "press release",
+    "accessed": "2026-09-09"
+  },
+  "https://www.intel.com/content/www/us/en/products/details/processors/ai-accelerators/gaudi.html": {
+    "title": "Intel® Gaudi® AI Accelerator Products",
     "publisher": "Intel",
     "type": "page",
     "accessed": "2026-09-09"
@@ -3087,6 +3478,13 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
+  "https://www.investors.dupont.com/news-and-media/press-release-details/2025/DuPont-Completes-Separation-of-Qnity-Electronics/default.aspx": {
+    "title": "Default",
+    "publisher": "Dupont",
+    "type": "press release",
+    "accessed": "2026-09-09",
+    "unverified": true
+  },
   "https://www.jabil.com/": {
     "title": "Jabil | Engineering, Supply Chain & Manufacturing Solutions",
     "publisher": "Jabil",
@@ -3099,12 +3497,19 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.jcetglobal.com/en/site/news-detail?id=1952": {
-    "title": "JCET Releases 2024 Annual Report, Achieves Record-High Revenue",
+  "https://www.jcetglobal.com/en/site/news-detail?id=2048": {
+    "title": "News detail (JCET Group website)",
     "publisher": "JCET Group",
-    "date": "2025-04-20",
-    "type": "press release",
-    "accessed": "2026-09-09"
+    "type": "page",
+    "accessed": "2026-09-09",
+    "unverified": true
+  },
+  "https://www.jcetglobal.com/en/site/news-detail?id=2052": {
+    "title": "News detail (JCET Group website)",
+    "publisher": "JCET Group",
+    "type": "page",
+    "accessed": "2026-09-09",
+    "unverified": true
   },
   "https://www.jedec.org/news/pressreleases/jedec%C2%AE-and-industry-leaders-collaborate-release-jesd270-4-hbm4-standard-advancing": {
     "title": "JEDEC® and Industry Leaders Collaborate to Release JESD270-4 HBM4 Standard: Advancing Bandwidth, Efficiency, and Capacity for AI and HPC",
@@ -3147,8 +3552,15 @@
     "type": "press release",
     "accessed": "2026-09-09"
   },
-  "https://www.jsr.co.jp/jsr_e/pd/se.shtml": {
-    "title": "Business Introduction",
+  "https://www.jsr.co.jp/jsr_e/news/assets/pdf/20240624_01_e.pdf": {
+    "title": "Announcement of Delisting of Shares of JSR Corporation",
+    "publisher": "JSR Corporation",
+    "date": "2024-06-19",
+    "type": "pdf",
+    "accessed": "2026-09-09"
+  },
+  "https://www.jsr.co.jp/jsr_e/products/em/": {
+    "title": "Electronic Materials Business | Business Introduction",
     "publisher": "JSR Corporation",
     "type": "page",
     "accessed": "2026-09-09"
@@ -3216,6 +3628,13 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
+  "https://www.lamresearch.com/product/sabre/": {
+    "title": "SABRE Product Family - Lam Research",
+    "publisher": "Lam Research",
+    "date": "2017-08-11",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
   "https://www.lamresearch.com/products/": {
     "title": "Products - Lam Research",
     "publisher": "Lam Research",
@@ -3229,6 +3648,25 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
+  "https://www.lasertec.co.jp/en/news/2019/20190912_2936.html": {
+    "title": "Lasertec releases ACTIS A150 Actinic EUV Patterned Mask Inspection System",
+    "publisher": "Lasertec",
+    "type": "press release",
+    "accessed": "2026-09-09"
+  },
+  "https://www.lasertec.co.jp/en/news/2025/20251031_3912.html": {
+    "title": "Lasertec Releases ACTIS A200HiT Series Actinic EUV Patterned Mask Inspection System",
+    "publisher": "Lasertec",
+    "type": "press release",
+    "accessed": "2026-09-09"
+  },
+  "https://www.lasertec.co.jp/en/products/semiconductor/actis_a150.html": {
+    "title": "ACTIS A150 | Lasertec Corporation",
+    "publisher": "Lasertec",
+    "date": "2019-09-12",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
   "https://www.lenovo.com/": {
     "title": "Lenovo Official Site | Laptops, Desktop PCs, Tablets, Monitors",
     "publisher": "Lenovo",
@@ -3238,13 +3676,6 @@
   "https://www.lginnotek.com/product/substrate.do": {
     "title": "LG Innotek, substrate products page (LG이노텍)",
     "publisher": "LG Innotek",
-    "type": "page",
-    "accessed": "2026-09-09"
-  },
-  "https://www.linde.com/": {
-    "title": "Linde Is Everywhere",
-    "publisher": "Linde",
-    "date": "2026-07-31",
     "type": "page",
     "accessed": "2026-09-09"
   },
@@ -3272,6 +3703,12 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
+  "https://www.meti.go.jp/english/press/2023/0323_001.html": {
+    "title": "指定されたページまたはファイルは存在しません （METI/経済産業省）",
+    "publisher": "Go",
+    "type": "press release",
+    "accessed": "2026-09-09"
+  },
   "https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf": {
     "title": "METI, Semiconductor and digital industry strategy: future direction (半導体・デジタル産業戦略の今後の方向性), 23 December 2025",
     "publisher": "Ministry of Economy, Trade and Industry (Japan)",
@@ -3283,6 +3720,13 @@
     "title": "Mitsubishi Gas Chemical, company website (三菱ガス化学株式会社)",
     "publisher": "Mitsubishi Gas Chemical",
     "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.mgc.co.jp/eng/ir/files/2410022e.pdf": {
+    "title": "2410022e",
+    "publisher": "Mitsubishi Gas Chemical",
+    "date": "2025-01-10",
+    "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://www.micron.com/about/blog/applications/ai/micron-continues-memory-industry-leadership-with-hbm3e-12-high-36gb": {
@@ -3330,9 +3774,27 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.mks.com/semiconductor": {
-    "title": "MKS Instruments, semiconductor page",
+  "https://www.mks.com/s/semiconductor-solutions": {
+    "title": "MKS Inc.",
     "publisher": "MKS Instruments",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.mofcom.gov.cn/zcfb/dwmygl/art/2023/art_52b9a321087f402bb3d310d18b07967e.html": {
+    "title": "商务部 海关总署公告2023年第23号 关于对镓、锗相关物项实施出口管制的公告",
+    "publisher": "Ministry of Commerce of the People's Republic of China",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.mofcom.gov.cn/zwgk/zcfb/art/2024/art_3d5e990b43424e60828030f58a547b60.html": {
+    "title": "商务部公告2024年第46号 关于加强相关两用物项对美国出口管制的公告",
+    "publisher": "Ministry of Commerce of the People's Republic of China",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_5c68985a6b1a46778e2e8dbff1bb1601.html": {
+    "title": "商务部公告2025年第72号 公布调整实施商务部公告2024年第46号的决定",
+    "publisher": "Ministry of Commerce of the People's Republic of China",
     "type": "page",
     "accessed": "2026-09-09"
   },
@@ -3356,8 +3818,8 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.morita-kagaku.co.jp/": {
-    "title": "Morita Chemical Industries, company website (森田化学工業株式会社)",
+  "https://www.morita-kagaku.co.jp/en/company/profile/": {
+    "title": "Company Outline | Company",
     "publisher": "Morita Chemical Industries",
     "type": "page",
     "accessed": "2026-09-09"
@@ -3398,8 +3860,8 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.nikon.com/": {
-    "title": "Nikon, company website",
+  "https://www.nikon.com/business/semi/lineup/": {
+    "title": "Lineup | Semiconductor Lithography Systems",
     "publisher": "Nikon",
     "type": "page",
     "accessed": "2026-09-09"
@@ -3415,6 +3877,20 @@
     "title": "Nippon Sanso Holdings, company website (日本酸素ホールディングス株式会社)",
     "publisher": "Nippon Sanso Holdings",
     "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.nist.gov/chips/absolics-georgia-covington": {
+    "title": "Absolics (Georgia)",
+    "publisher": "NIST",
+    "date": "2024-07-05",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.nist.gov/news-events/news/2024/12/biden-harris-administration-announces-chips-incentives-awards-globalwafers": {
+    "title": "Biden-Harris Administration Announces CHIPS Incentives Awards with GlobalWafers to Support Domestic Production of Silicon Wafers",
+    "publisher": "NIST",
+    "date": "2024-12-17",
+    "type": "press release",
     "accessed": "2026-09-09"
   },
   "https://www.nittobo.co.jp/eng/business/electronicmaterials/t-glass.htm": {
@@ -3437,14 +3913,14 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.nsig.com/en/": {
-    "title": "National Silicon Industry Group, company website",
-    "publisher": "National Silicon Industry Group (NSIG)",
+  "https://www.nuflare.co.jp/": {
+    "title": "NuFlare Technology, company website (株式会社ニューフレアテクノロジー)",
+    "publisher": "NuFlare Technology",
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.nuflare.co.jp/": {
-    "title": "NuFlare Technology, company website (株式会社ニューフレアテクノロジー)",
+  "https://www.nuflare.co.jp/english/products/beam/": {
+    "title": "EB Mask Writer | Product Information",
     "publisher": "NuFlare Technology",
     "type": "page",
     "accessed": "2026-09-09"
@@ -3518,8 +3994,8 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.parksystems.com/": {
-    "title": "English | Park Systems",
+  "https://www.parksystems.com/en/company/about-us": {
+    "title": "About Us",
     "publisher": "Park Systems",
     "type": "page",
     "accessed": "2026-09-09"
@@ -3550,8 +4026,8 @@
     "type": "press release",
     "accessed": "2026-09-09"
   },
-  "https://www.piotech.com/": {
-    "title": "Unlock Success with Strategic-Grade Domain Names",
+  "https://www.piotech.cn/": {
+    "title": "拓荆科技股份有限公司",
     "publisher": "Piotech",
     "type": "page",
     "accessed": "2026-09-09"
@@ -3609,6 +4085,12 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
+  "https://www.qnityelectronics.com/semiconductor-cmp.html": {
+    "title": "Chemical Mechanical Planarization (CMP) Materials for Semiconductor",
+    "publisher": "Qnityelectronics",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
   "https://www.qualcomm.com/": {
     "title": "Wireless Technology & Innovation | Mobile Technology",
     "publisher": "Qualcomm",
@@ -3633,6 +4115,18 @@
     "title": "Rapidus Corporation",
     "publisher": "Rapidus",
     "date": "2026-07-31",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.rapidus.inc/en/news_topics/information/20260605-2/": {
+    "title": "Rapidus Completes 150 Billion Yen Funding Round from Japan Government - Information - Rapidus Corporation",
+    "publisher": "Rapidus",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.rapidus.inc/en/news_topics/information/rapidus-achieves-significant-milestone-at-its-state-of-the-art-foundry-with-prototyping-of-leading-edge-2nm-gaa-transistors/": {
+    "title": "Rapidus Achieves Significant Milestone at its State-of-the-Art Foundry with Prototyping of Leading-Edge 2nm GAA TransistorsFirst prototypes successfully demonstrate electrical characteristics as the company continues to hit targets leading up to 2027 mass-production - Information - Rapidus Corporation",
+    "publisher": "Rapidus",
     "type": "page",
     "accessed": "2026-09-09"
   },
@@ -3790,6 +4284,13 @@
     "type": "filing",
     "accessed": "2026-09-09"
   },
+  "https://www.sec.gov/Archives/edgar/data/1040470/000165495426006919/aehr_10k.htm": {
+    "title": "AEHR TEST SYSTEMS, Form 10-K annual report for the period ended 2026-05-29",
+    "publisher": "U.S. Securities and Exchange Commission (filing by AEHR TEST SYSTEMS)",
+    "date": "2026-07-27",
+    "type": "filing",
+    "accessed": "2026-09-09"
+  },
   "https://www.sec.gov/Archives/edgar/data/1045810/000104581022000146/nvda-20220826.htm": {
     "title": "NVIDIA CORP, Form 8-K current report for the period ended 2022-08-26 (8-K)",
     "publisher": "U.S. Securities and Exchange Commission (filing by NVIDIA CORP)",
@@ -3801,6 +4302,13 @@
     "title": "NVIDIA CORP, Form 10-K annual report for the period ended 2023-01-29 (financial statement R87)",
     "publisher": "U.S. Securities and Exchange Commission (filing by NVIDIA CORP)",
     "date": "2023-02-24",
+    "type": "filing",
+    "accessed": "2026-09-09"
+  },
+  "https://www.sec.gov/Archives/edgar/data/1045810/000104581023000221/nvda-20231023.htm": {
+    "title": "NVIDIA CORP, Form 8-K current report for the period ended 2023-10-23 (8-K)",
+    "publisher": "U.S. Securities and Exchange Commission (filing by NVIDIA CORP)",
+    "date": "2023-10-24",
     "type": "filing",
     "accessed": "2026-09-09"
   },
@@ -3853,10 +4361,24 @@
     "type": "filing",
     "accessed": "2026-09-09"
   },
+  "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm": {
+    "title": "AMKOR TECHNOLOGY, INC., Form 10-K annual report for the period ended 2025-12-31 (10-K)",
+    "publisher": "U.S. Securities and Exchange Commission (filing by AMKOR TECHNOLOGY, INC.)",
+    "date": "2026-02-20",
+    "type": "filing",
+    "accessed": "2026-09-09"
+  },
   "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000043/amkr6302026erex-991.htm": {
     "title": "AMKOR TECHNOLOGY, INC., Form 8-K current report for the period ended 2026-07-27 (8-K)",
     "publisher": "U.S. Securities and Exchange Commission (filing by AMKOR TECHNOLOGY, INC.)",
     "date": "2026-07-27",
+    "type": "filing",
+    "accessed": "2026-09-09"
+  },
+  "https://www.sec.gov/Archives/edgar/data/1051627/000143774926027677/axti20260630_10q.htm": {
+    "title": "AXT INC, Form 10-Q quarterly report for the period ended 2026-06-30",
+    "publisher": "U.S. Securities and Exchange Commission (filing by AXT INC)",
+    "date": "2026-08-13",
     "type": "filing",
     "accessed": "2026-09-09"
   },
@@ -3871,6 +4393,20 @@
     "title": "ENTEGRIS INC, Form 10-K annual report for the period ended 2025-12-31 (financial statement R106)",
     "publisher": "U.S. Securities and Exchange Commission (filing by ENTEGRIS INC)",
     "date": "2026-02-11",
+    "type": "filing",
+    "accessed": "2026-09-09"
+  },
+  "https://www.sec.gov/Archives/edgar/data/1101302/000114036122025275/ny20004647x3_ex99-1.htm": {
+    "title": "ENTEGRIS INC, Form 8-K current report for the period ended 2022-07-06",
+    "publisher": "U.S. Securities and Exchange Commission (filing by ENTEGRIS INC)",
+    "date": "2022-07-06",
+    "type": "filing",
+    "accessed": "2026-09-09"
+  },
+  "https://www.sec.gov/Archives/edgar/data/1102934/000110293420000048/ccmp-20201001xex991.htm": {
+    "title": "CMC Materials, Inc., Form 8-K current report for the period ended 2020-09-28 (8-K)",
+    "publisher": "U.S. Securities and Exchange Commission (filing by CMC Materials, Inc.)",
+    "date": "2020-10-01",
     "type": "filing",
     "accessed": "2026-09-09"
   },
@@ -3916,6 +4452,13 @@
     "type": "filing",
     "accessed": "2026-09-09"
   },
+  "https://www.sec.gov/Archives/edgar/data/1122411/000095010326001661/dp241159_6k.htm": {
+    "title": "ASE Technology Holding Co., Ltd., Form 6-K report of foreign private issuer for the period ended 2026-02-05",
+    "publisher": "U.S. Securities and Exchange Commission (filing by ASE Technology Holding Co., Ltd.)",
+    "date": "2026-02-05",
+    "type": "filing",
+    "accessed": "2026-09-09"
+  },
   "https://www.sec.gov/Archives/edgar/data/1122411/000095010326001662/dp241167_6k.htm": {
     "title": "ASE Technology Holding Co., Ltd., Form 6-K report of foreign private issuer for the period ended 2026-02-05",
     "publisher": "U.S. Securities and Exchange Commission (filing by ASE Technology Holding Co., Ltd.)",
@@ -3937,6 +4480,27 @@
     "type": "filing",
     "accessed": "2026-09-09"
   },
+  "https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm": {
+    "title": "ASE Technology Holding Co., Ltd., Form 20-F annual report for the period ended 2025-12-31",
+    "publisher": "U.S. Securities and Exchange Commission (filing by ASE Technology Holding Co., Ltd.)",
+    "date": "2026-04-01",
+    "type": "filing",
+    "accessed": "2026-09-09"
+  },
+  "https://www.sec.gov/Archives/edgar/data/1622536/000162828025030559/a20250611pressreleasebusin.htm": {
+    "title": "Talen Energy Corp, Form 8-K current report for the period ended 2025-06-11 (8-K)",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Talen Energy Corp)",
+    "date": "2025-06-11",
+    "type": "filing",
+    "accessed": "2026-09-09"
+  },
+  "https://www.sec.gov/Archives/edgar/data/1707925/000162828026011430/lin-20251231.htm": {
+    "title": "LINDE PLC, Form 10-K annual report for the period ended 2025-12-31 (10-K)",
+    "publisher": "U.S. Securities and Exchange Commission (filing by LINDE PLC)",
+    "date": "2026-02-25",
+    "type": "filing",
+    "accessed": "2026-09-09"
+  },
   "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm": {
     "title": "Broadcom Inc., Form 10-K annual report for the period ended 2025-11-02 (10-K)",
     "publisher": "U.S. Securities and Exchange Commission (filing by Broadcom Inc.)",
@@ -3948,6 +4512,13 @@
     "title": "Broadcom Inc., Form 8-K current report for the period ended 2026-09-02 (8-K)",
     "publisher": "U.S. Securities and Exchange Commission (filing by Broadcom Inc.)",
     "date": "2026-09-02",
+    "type": "filing",
+    "accessed": "2026-09-09"
+  },
+  "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm": {
+    "title": "Credo Technology Group Holding Ltd, Form 10-K annual report for the period ended 2026-05-02 (10-K)",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Credo Technology Group Holding Ltd)",
+    "date": "2026-06-15",
     "type": "filing",
     "accessed": "2026-09-09"
   },
@@ -3965,10 +4536,24 @@
     "type": "filing",
     "accessed": "2026-09-09"
   },
+  "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm": {
+    "title": "GE Vernova Inc., Form 10-K annual report for the period ended 2025-12-31 (10-K)",
+    "publisher": "U.S. Securities and Exchange Commission (filing by GE Vernova Inc.)",
+    "date": "2026-01-29",
+    "type": "filing",
+    "accessed": "2026-09-09"
+  },
   "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm": {
     "title": "GE Vernova Inc., Form 8-K current report for the period ended 2026-07-22 (8-K)",
     "publisher": "U.S. Securities and Exchange Commission (filing by GE Vernova Inc.)",
     "date": "2026-07-22",
+    "type": "filing",
+    "accessed": "2026-09-09"
+  },
+  "https://www.sec.gov/Archives/edgar/data/2058873/000205887326000010/q-20251231.htm": {
+    "title": "Qnity Electronics, Inc., Form 10-K annual report for the period ended 2025-12-31 (10-K)",
+    "publisher": "U.S. Securities and Exchange Commission (filing by Qnity Electronics, Inc.)",
+    "date": "2026-02-26",
     "type": "filing",
     "accessed": "2026-09-09"
   },
@@ -4011,6 +4596,13 @@
     "title": "INTEL CORP, Form 8-K current report for the period ended 2025-08-22 (8-K)",
     "publisher": "U.S. Securities and Exchange Commission (filing by INTEL CORP)",
     "date": "2025-08-25",
+    "type": "filing",
+    "accessed": "2026-09-09"
+  },
+  "https://www.sec.gov/Archives/edgar/data/50863/000005086326000157/intc-20260627.htm": {
+    "title": "INTEL CORP, Form 10-Q quarterly report for the period ended 2026-06-27 (10-Q)",
+    "publisher": "U.S. Securities and Exchange Commission (filing by INTEL CORP)",
+    "date": "2026-07-24",
     "type": "filing",
     "accessed": "2026-09-09"
   },
@@ -4077,10 +4669,31 @@
     "type": "filing",
     "accessed": "2026-09-09"
   },
+  "https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm": {
+    "title": "MICRON TECHNOLOGY INC, Form 10-K annual report for the period ended 2025-08-28 (10-K)",
+    "publisher": "U.S. Securities and Exchange Commission (filing by MICRON TECHNOLOGY INC)",
+    "date": "2025-10-03",
+    "type": "filing",
+    "accessed": "2026-09-09"
+  },
   "https://www.sec.gov/Archives/edgar/data/723125/000072312525000040/202510karscopy.pdf": {
     "title": "MICRON TECHNOLOGY INC, Form ARS for the period ended 2025-08-28 (ARS)",
     "publisher": "U.S. Securities and Exchange Commission (filing by MICRON TECHNOLOGY INC)",
     "date": "2025-11-25",
+    "type": "filing",
+    "accessed": "2026-09-09"
+  },
+  "https://www.sec.gov/Archives/edgar/data/723125/000072312526000015/mu-20260528.htm": {
+    "title": "MICRON TECHNOLOGY INC, Form 10-Q quarterly report for the period ended 2026-05-28 (10-Q)",
+    "publisher": "U.S. Securities and Exchange Commission (filing by MICRON TECHNOLOGY INC)",
+    "date": "2026-06-25",
+    "type": "filing",
+    "accessed": "2026-09-09"
+  },
+  "https://www.sec.gov/Archives/edgar/data/810136/000114036125045801/ef20057458_10k.htm": {
+    "title": "PHOTRONICS INC, Form 10-K annual report for the period ended 2025-10-31 (10-K)",
+    "publisher": "U.S. Securities and Exchange Commission (filing by PHOTRONICS INC)",
+    "date": "2025-12-17",
     "type": "filing",
     "accessed": "2026-09-09"
   },
@@ -4189,6 +4802,13 @@
     "type": "filing",
     "accessed": "2026-09-09"
   },
+  "https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/ter-20251231.htm": {
+    "title": "TERADYNE, INC, Form 10-K annual report for the period ended 2025-12-31 (10-K)",
+    "publisher": "U.S. Securities and Exchange Commission (filing by TERADYNE, INC)",
+    "date": "2026-02-19",
+    "type": "filing",
+    "accessed": "2026-09-09"
+  },
   "https://www.semes.com/en/": {
     "title": "SEMES, company website",
     "publisher": "SEMES",
@@ -4236,12 +4856,6 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.shinetsu.co.jp/": {
-    "title": "Shin-Etsu Chemical, company website",
-    "publisher": "Shin-Etsu Chemical",
-    "type": "page",
-    "accessed": "2026-09-09"
-  },
   "https://www.shinetsu.co.jp/en/products/electronics-materials/photomask-blanks/": {
     "title": "Photomask blanks - Shin-Etsu Chemical Co., Ltd.",
     "publisher": "Shin-Etsu Chemical",
@@ -4249,16 +4863,35 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.shinetsu.co.jp/wp-content/uploads/2025/07/20260127_con_E.pdf": {
-    "title": "Consolidated Financial Results for the First Three Quarters Ended December 31, 2025",
+  "https://www.shinetsu.co.jp/en/sustainability/sc_ai/": {
+    "title": "| Shin-Etsu Chemical Co., Ltd.",
     "publisher": "Shin-Etsu Chemical",
-    "date": "2026-01-26",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.shinetsu.co.jp/wp-content/uploads/2025/07/20260428_con_E.pdf": {
+    "title": "Consolidated Financial Results for the Fiscal Year Ended March 31, 2026",
+    "publisher": "Shin-Etsu Chemical",
+    "date": "2026-04-27",
+    "type": "pdf",
+    "accessed": "2026-09-09"
+  },
+  "https://www.shinko.co.jp/english/news/docs/20260930-01_en.pdf": {
+    "title": "Notice Concerning the Acquisition of Japan Display Inc.’s Mobara Fab",
+    "publisher": "Shinko Electric Industries",
+    "date": "2026-09-30",
     "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://www.shinko.co.jp/english/product/": {
     "title": "Products | SHINKO ELECTRIC INDUSTRIES CO., LTD.",
     "publisher": "Shinko Electric Industries",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.shpcb.com/": {
+    "title": "胜宏科技(惠州)股份有限公司",
+    "publisher": "Shpcb",
     "type": "page",
     "accessed": "2026-09-09"
   },
@@ -4300,21 +4933,15 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.sksiltron.com/": {
-    "title": "SK siltron, company website",
-    "publisher": "SK siltron",
-    "type": "page",
-    "accessed": "2026-09-09"
-  },
   "https://www.skspecialty.com/": {
     "title": "SK specialty, company website (SK스페셜티)",
     "publisher": "SK specialty",
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.skyverse.com/": {
-    "title": "Skyverse Technology, company website",
-    "publisher": "Skyverse Technology",
+  "https://www.skyverse.cn/": {
+    "title": "访问被拦截！",
+    "publisher": "Skyverse",
     "type": "page",
     "accessed": "2026-09-09"
   },
@@ -4366,13 +4993,6 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.stimson.org/2025/chinas-germanium-and-gallium-export-restrictions-consequences-for-the-united-states/": {
-    "title": "China’s Germanium and Gallium Export Restrictions: Consequences for the United States",
-    "publisher": "Stimson Center",
-    "date": "2025-03-19",
-    "type": "report",
-    "accessed": "2026-09-09"
-  },
   "https://www.stimson.org/2025/why-taiwan-fears-america-first-risks-eroding-its-silicon-shield/": {
     "title": "Why Taiwan Fears ‘America First’ Risks Eroding Its ‘Silicon Shield’",
     "publisher": "Stimson Center",
@@ -4403,6 +5023,12 @@
     "title": "Sumitomo Chemical, company website (住友化学株式会社)",
     "publisher": "Sumitomo Chemical",
     "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.sumitomo-chem.co.jp/english/news/detail/20260702e_2.html": {
+    "title": "Sumitomo Chemical Subsidiary to Establish of a Joint Venture with Samsung Electro-Mechanics for the Glass Core Substrate BusinessJointly Promoting the Next-Generation Core Substrate Business for Advanced Semiconductor Packages | Business & Products",
+    "publisher": "Sumitomo Chemical",
+    "type": "press release",
     "accessed": "2026-09-09"
   },
   "https://www.supermicro.com/en/products/gpu": {
@@ -4458,6 +5084,18 @@
     "type": "pdf",
     "accessed": "2026-09-09"
   },
+  "https://www.tel.com/product/precio.html": {
+    "title": "Test Precio™ Series | Products and Service(products)",
+    "publisher": "Tokyo Electron",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.tel.com/product/telindy.html": {
+    "title": "Deposition TELINDY™ Series | Products and Service(products)",
+    "publisher": "Tokyo Electron",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
   "https://www.teradyne.com/": {
     "title": "Teradyne, company website",
     "publisher": "Teradyne",
@@ -4477,22 +5115,15 @@
     "type": "pdf",
     "accessed": "2026-09-09"
   },
-  "https://www.tok.co.jp/en/products/semiconductor": {
-    "title": "TOKYO OHKA KOGYO CO., LTD.",
+  "https://www.tok.co.jp/eng/products/semiconductor-pre": {
+    "title": "Semiconductor Manufacturing Field",
     "publisher": "Tokyo Ohka Kogyo",
-    "date": "2026-09-01",
     "type": "page",
     "accessed": "2026-09-09"
   },
   "https://www.tokuyama.co.jp/": {
     "title": "Tokuyama Corporation, company website",
     "publisher": "Tokuyama Corporation",
-    "type": "page",
-    "accessed": "2026-09-09"
-  },
-  "https://www.toppan.com/": {
-    "title": "TOPPAN, company website (TOPPANグループサイト)",
-    "publisher": "TOPPAN",
     "type": "page",
     "accessed": "2026-09-09"
   },
@@ -4507,6 +5138,13 @@
     "publisher": "TRUMPF",
     "type": "page",
     "accessed": "2026-09-09"
+  },
+  "https://www.tsmc.com/english/aboutTSMC/company_profile": {
+    "title": "Company profile (TSMC website)",
+    "publisher": "TSMC",
+    "type": "page",
+    "accessed": "2026-09-09",
+    "unverified": true
   },
   "https://www.tsmc.com/english/dedicatedFoundry/manufacturing/fab_capacity": {
     "title": "Fab Capacity",
@@ -4570,6 +5208,12 @@
     "accessed": "2026-09-09",
     "unverified": true
   },
+  "https://www.usgs.gov/news/national-news-release/usgs-critical-minerals-study-bans-gallium-and-germanium-exports-could": {
+    "title": "USGS Critical Minerals Study: Bans on Gallium and Germanium Exports Could Cost the U.S. Billions",
+    "publisher": "USGS",
+    "type": "press release",
+    "accessed": "2026-09-09"
+  },
   "https://www.utacgroup.com/services/": {
     "title": "Services - UTAC Group",
     "publisher": "UTAC",
@@ -4590,22 +5234,9 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.vdlgroep.com/en/vdl-groep/innovation-projects/vdl-etg-builds-complex-frames-for-zeiss": {
-    "title": "VDL Groep, VDL ETG builds complex frames for Zeiss, innovation project page",
-    "publisher": "VDL Groep",
-    "type": "page",
-    "accessed": "2026-09-09"
-  },
   "https://www.vertiv.com/": {
     "title": "Vertiv | Soluções para Continuidade Digital",
     "publisher": "Vertiv",
-    "type": "page",
-    "accessed": "2026-09-09"
-  },
-  "https://www.victorypcb.com/": {
-    "title": "China PCB Manufacturer | Prototype PCB Manufacturing Supplier - VictoryPCB - VictoryPCB",
-    "publisher": "Victory Giant Technology",
-    "date": "2025-12-26",
     "type": "page",
     "accessed": "2026-09-09"
   },
@@ -4622,6 +5253,20 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
+  "https://www.whitehouse.gov/fact-sheets/2025/11/fact-sheet-president-donald-j-trump-strikes-deal-on-economic-and-trade-relations-with-china/": {
+    "title": "Fact Sheet: President Donald J. Trump Strikes Deal on Economic and Trade Relations with China",
+    "publisher": "The White House",
+    "date": "2025-11-01",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.whitehouse.gov/fact-sheets/2026/01/fact-sheet-president-donald-j-trump-takes-action-on-certain-advanced-computing-chips-to-protect-americas-economic-and-national-security/": {
+    "title": "Fact Sheet: President Donald J. Trump Takes Action on Certain Advanced Computing Chips to Protect America’s Economic and National Security",
+    "publisher": "The White House",
+    "date": "2026-01-14",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
   "https://www.whitehouse.gov/presidential-actions/2026/01/adjusting-imports-of-semiconductors-semiconductor-manufacturing-equipment-and-their-derivative-products-into-the-united-states/": {
     "title": "ADJUSTING IMPORTS OF SEMICONDUCTORS, SEMICONDUCTOR MANUFACTURING EQUIPMENT, AND THEIR DERIVATIVE PRODUCTS INTO THE UNITED STATES",
     "publisher": "The White House",
@@ -4635,8 +5280,8 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.wistron.com/en/Business/Solutions": {
-    "title": "Wistron, business solutions page",
+  "https://www.wistron.com/en/Product&Services/Enterprise&Networking": {
+    "title": "Enterprise & Networking",
     "publisher": "Wistron",
     "type": "page",
     "accessed": "2026-09-09"
@@ -4647,10 +5292,11 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.wsts.org/76/103/Global-Semiconductor-Market-Approaches-1T-in-2026": {
-    "title": "Global Semiconductor Market Approaches $1T in 2026",
+  "https://www.wsts.org/esraCMS/extension/media/f/WST/7618/WSTS_FC-Release-2026-May.pdf": {
+    "title": "San Jose, California - June 2, 2026, 06:00 UTC",
     "publisher": "World Semiconductor Trade Statistics",
-    "type": "page",
+    "date": "2026-06-01",
+    "type": "pdf",
     "accessed": "2026-09-09"
   },
   "https://www.wuhanjingce.com/en/": {
@@ -4671,14 +5317,26 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.zeiss.com/semiconductor-manufacturing-technology/home.html": {
-    "title": "Semiconductor Manufacturing Technology",
+  "https://www.zeiss.com/semiconductor-manufacturing-technology/inspiring-technology/euv-lithography.html": {
+    "title": "EUV lithography and technology",
     "publisher": "Carl Zeiss",
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.zeiss.com/semiconductor-manufacturing-technology/inspiring-technology/euv-lithography.html": {
-    "title": "EUV lithography and technology",
+  "https://www.zeiss.com/semiconductor-manufacturing-technology/inspiring-technology/high-na-euv-lithography.html": {
+    "title": "High-NA-EUV Lithography: the next EUV generation",
+    "publisher": "Carl Zeiss",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.zeiss.com/semiconductor-manufacturing-technology/products/photomask-solutions/mask-qualification.html": {
+    "title": "Mask Qualification Solutions by ZEISS SMT",
+    "publisher": "Carl Zeiss",
+    "type": "page",
+    "accessed": "2026-09-09"
+  },
+  "https://www.zeiss.com/semiconductor-manufacturing-technology/products/photomask-solutions/mask-repair.html": {
+    "title": "Mask Repair Solutions by ZEISS SMT",
     "publisher": "Carl Zeiss",
     "type": "page",
     "accessed": "2026-09-09"

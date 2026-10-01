@@ -3,8 +3,8 @@
  "id": "transistors-and-front-end",
  "number": 8,
  "title": "Transistors and the Front End",
- "oneLiner": "Three companies can build a 2 nm-class transistor, and TSMC's own figures show its chip density gain shrinking from 1.15 times at N2P to up to 1.10 times at A16.",
- "plain": "The front end of a chip factory is the part that builds the transistors, the billions of tiny switches in every chip. Each switch is a valve. Current runs along a narrow strip of silicon called the channel, and a small voltage on a gate above the strip opens or shuts the flow. Shorter strips switch faster and more of them fit on a chip, but make the strip short enough and the valve stops sealing: current leaks through even when the gate is off, and the chip burns power doing nothing. The fix is to wrap the gate around all four sides of the strip, so it can squeeze the flow shut from every side, and that takes a long sequence of steps that have to run in exact order. Only three companies, TSMC, Intel and Samsung, can do it, a list so short that an export control can name every one of them.",
+ "oneLiner": "Three companies make 2 nm-class transistors in volume, and TSMC promises 1.2 times the logic density for N2P over N3E and more than that for A14 over N2.",
+ "plain": "The front end of a chip factory is the part that builds the transistors, the billions of tiny switches in every chip. Each switch is a valve. Current runs along a narrow strip of silicon called the channel, and a small voltage on a gate above the strip opens or shuts the flow. Shorter strips switch faster and more of them fit on a chip, but make the strip short enough and the valve stops sealing: current leaks through even when the gate is off, and the chip burns power doing nothing. The fix is to wrap the gate around all four sides of the strip, so it can squeeze the flow shut from every side, and that takes a long sequence of steps that have to run in exact order. Only three companies, TSMC, Intel and Samsung, make these switches in volume. In 2024 the United States put a worldwide license requirement on the know-how for building them, with an exception for countries that impose matching controls. In July 2025 Rapidus in Japan said it had started making 2 nm prototypes at its new plant in Hokkaido.",
  "bridge": "Measured and clean, the layers mean nothing on their own; laid in the right order they become switches.",
  "specimen": "gaa-transistor",
  "specimenCaption": "A gate-all-around transistor, the switch in a 2 nm-class chip, drawn at true proportions. The three silicon sheets are each 6 nm thick and 30 nm wide: a few dozen atoms from top to bottom, and roughly ten thousand times thinner than a human hair. The gold cage is the gate metal wrapping all four sides of each sheet.",
@@ -12,9 +12,9 @@
  "concentration": "Extreme",
  "chokepointScore": 5,
  "leaders": [
- {"name": "TSMC", "country": "TW", "share": "N2 in volume production since 4Q25, the first nanosheet node"},
+ {"name": "TSMC", "country": "TW", "share": "N2 in volume production since 4Q25, TSMC's first nanosheet node"},
  {"name": "Intel", "country": "US", "share": "18A in high-volume manufacturing; 18A-P adds 9% performance at the same power"},
- {"name": "Samsung Foundry", "country": "KR", "share": "SF2 family; SF2Z adds backside power"},
+ {"name": "Samsung Foundry", "country": "KR", "share": "First into production with gate-all-around nanosheets, starting initial 3 nm output in June 2022; SF2 family, with SF2Z adding backside power"},
  {"name": "SMIC", "country": "CN", "share": "N+2 and N+3, printed in several passes on older deep-ultraviolet tools, no EUV"},
  {"name": "Rapidus", "country": "JP", "share": "State-backed 2 nm entrant targeting mass production in 2027"}
  ],
@@ -27,8 +27,8 @@
  ],
  "chinaStatus": "SMIC ships a process it calls N+3, measured at 113.4 million transistors per square millimeter. It prints its tightest layers in two or four passes because it cannot buy an extreme-ultraviolet scanner. Its narrowest wires sit closer together than Intel 18A's, a comparison SemiAnalysis calls an incomplete, cherry-picked metric.",
  "usStatus": "Intel runs the only American-owned line that makes the newest transistors. Its 18A process brought gate-all-around transistors and backside power, where power is fed from under the transistors, to market together. Intel is also the first to use High-NA EUV scanners, the newest kind, in volume production.",
- "costSignal": "No foundry publishes prices for its newest wafers. The public measure is how many more transistors TSMC fits on each new process, and its chip density gain falls from 1.15x at N2P to up to 1.10x at A16.",
- "substitutability": {"band": "Hard", "test": "Three firms make gate-all-around transistors, the newest kind, and none sells its process recipe.", "why": "The scarce thing is the process recipe: which steps, in which order, on which tools. Three firms have written one, so a newcomer knows it can be done but has to work out its own. Rapidus in Japan, backed by the state, is now finding out what that costs when starting with no line, on 267.6 billion yen and a 2027 target. China cannot buy extreme-ultraviolet scanners. It made its 7 nm chips on older deep-ultraviolet machines stockpiled before export controls took effect, and that keeps it behind the newest chips."}
+ "costSignal": "No foundry publishes prices for its newest wafers, so cost per transistor cannot be worked out from public figures. TSMC publishes 1.2 times the logic density for N2P over N3E and a gain of more than 20 percent for A14 over N2.",
+ "substitutability": {"band": "Hard", "test": "Three firms make gate-all-around transistors, the newest kind, in volume, and none sells its process recipe.", "why": "The scarce thing is the process recipe: which steps, in which order, on which tools. Three firms have written one, so a newcomer knows it can be done but has to work out its own. Rapidus in Japan, backed by the state, is now finding out what it costs to go from prototypes to volume production, with 424.95 billion yen in equity as of June 2026, state research subsidies and a 2027 target. China cannot buy extreme-ultraviolet scanners. It made its 7 nm chips on older deep-ultraviolet machines stockpiled before export controls took effect, and that keeps it behind the newest chips."}
  },
  "keyFacts": [
  {"fact": "TSMC N2 entered volume production in 4Q25, its first nanosheet gate-all-around node", "source": "https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm"},
@@ -59,9 +59,9 @@
  {
  "id": "density-by-node",
  "type": "bars",
- "title": "TSMC's published density gain, node over node",
- "unit": "x versus the baseline node",
- "data": [["N2P logic vs N3E", 1.2], ["N2P chip vs N3E", 1.15], ["A16 chip vs N2P", 1.1]],
+ "title": "TSMC's published chip density gain over the baseline it names, A16 at its upper bound",
+ "unit": "%",
+ "data": [["N2P vs N3E", 15], ["A16 backside power vs N2P", 10]],
  "source": {"label": "TSMC advanced technologies, HPC platform", "url": "https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech"}
  }
  ]
@@ -73,7 +73,7 @@ A Blackwell GPU is 208 billion switches on two dies, each the largest a lithogra
 
 ## How it works
 
-The front end of a chip factory is the part that builds the transistors, the billions of tiny switches in every chip. Each switch is a valve. Current runs along a narrow strip of silicon called the channel, and a small voltage on a gate above the strip opens or shuts the flow. Shorter strips switch faster and more of them fit on a chip, but make the strip short enough and the valve stops sealing: current leaks through even when the gate is off, and the chip burns power doing nothing. The fix is to wrap the gate around all four sides of the strip, so it can squeeze the flow shut from every side, and that takes a long sequence of steps that have to run in exact order. Only three companies, TSMC, Intel and Samsung, can do it, a list so short that an export control can name every one of them.
+The front end of a chip factory is the part that builds the transistors, the billions of tiny switches in every chip. Each switch is a valve. Current runs along a narrow strip of silicon called the channel, and a small voltage on a gate above the strip opens or shuts the flow. Shorter strips switch faster and more of them fit on a chip, but make the strip short enough and the valve stops sealing: current leaks through even when the gate is off, and the chip burns power doing nothing. The fix is to wrap the gate around all four sides of the strip, so it can squeeze the flow shut from every side, and that takes a long sequence of steps that have to run in exact order. Only three companies, TSMC, Intel and Samsung, make these switches in volume. In 2024 the United States put a worldwide license requirement on the know-how for building them, with an exception for countries that impose matching controls ([source](https://www.federalregister.gov/documents/2024/09/06/2024-19633/commerce-control-list-additions-and-revisions-implementation-of-controls-on-advanced-technologies)). In July 2025 Rapidus in Japan said it had started making 2 nm prototypes at its new plant in Hokkaido ([source](https://www.rapidus.inc/en/news_topics/information/rapidus-achieves-significant-milestone-at-its-state-of-the-art-foundry-with-prototyping-of-leading-edge-2nm-gaa-transistors/)).
 
 {{figure:switch-shapes}}
 
@@ -83,9 +83,9 @@ Next it shapes the channel, in a FinFET by etching the silicon into thin fins st
 
 Each of those is a deposition, an etch or an implant of its own, and they have to run in exact order, since a sheet cannot be wrapped once the metal is on, nor the insulator added once it is buried.
 
-The leak the wrapping prevents is called short-channel leakage, and it has three fixes:
+Current leaks two ways, straight through the gate insulator and along the channel from end to end while the gate is off. The second is called short-channel leakage, and wrapping the gate around the channel reduces it. Three fixes deal with the two leaks:
 
-- **Better insulator.** Thicker, so fewer electrons slip straight through it, yet controlling the channel as tightly as before: Intel switched the gate insulator from silicon dioxide to a thicker hafnium-based material at 45 nm in 2007 ([source](https://www.intel.com/pressroom/archive/releases/2007/20070128comp.htm)).
+- **Better insulator.** A thicker hafnium-based film, paired with a metal gate, lets fewer electrons slip straight through yet controls the channel as tightly as before. Intel replaced silicon dioxide with it at 45 nm in 2007 and said it cut leakage through the insulator more than tenfold and, with the metal gate, leakage along the channel more than fivefold ([source](https://www.intel.com/pressroom/archive/releases/2007/20070128comp.htm)).
 - **More gate.** Wrap gate metal around more sides of the channel, as fins and nanosheets do.
 - **Thinner channel.** Thin the silicon until no current can flow where the gate cannot reach it.
 
@@ -99,7 +99,7 @@ A planar transistor lays the gate on one side of a flat channel, and loses contr
 
 A nanosheet lays the channel back down, stacks two to four thin sheets and threads gate metal around each one. The sheets can be drawn at different widths, so current comes in fine steps again. TSMC sells this as NanoFlex, which lets designers mix short cells for small area with tall cells for performance ([source](https://pr.tsmc.com/english/news/3136)).
 
-N2 entered volume production in the fourth quarter of 2025, TSMC's first nanosheet node ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm)). TSMC rates the follow-on N2P at 18 percent more speed at the same power, 36 percent less power at the same speed, and 1.2 times the logic density of N3E ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech)). Intel's RibbonFET shipped on 18A, and 18A-P adds another 9 percent performance at the same power ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)).
+N2 entered volume production in the fourth quarter of 2025, TSMC's first nanosheet node ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm)). TSMC rates the follow-on N2P at 18 percent more speed at the same power, 36 percent less power at the same speed, and 1.2 times the logic density of N3E ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech)). Intel's RibbonFET shipped on 18A, and 18A-P adds another 9 percent performance at the same power ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)). Samsung began initial production of its 3 nm gate-all-around process in June 2022, more than three years before TSMC's N2 ([source](https://news.samsung.com/global/samsung-begins-chip-production-using-3nm-process-technology-with-gaa-architecture)).
 
 Those numbers are vendor claims until someone measures the silicon. Each foundry picks its own baseline, and none publishes a density figure that can be set against a rival's.
 
@@ -126,11 +126,11 @@ Wiring is now as hard to make as the transistor. Copper seeps into the insulator
 
 ## Who makes it
 
-TSMC, Intel and Samsung build gate-all-around nodes with extreme ultraviolet lithography. SMIC builds 7 nm-class nodes without it ([source](https://newsletter.semianalysis.com/p/steel-smic-n3-teardown)). State-backed Rapidus targets 2 nm mass production in 2027 on 267.6 billion yen raised in February 2026 ([source](https://www.rapidus.inc/en/news_topics/information/rapidus-secures-267-6-billion-yen-in-funding-from-japan-government-and-private-sector-companies/)).
+TSMC, Intel and Samsung build gate-all-around nodes with extreme ultraviolet lithography. SMIC builds 7 nm-class nodes without it ([source](https://newsletter.semianalysis.com/p/steel-smic-n3-teardown)). State-backed Rapidus targets 2 nm mass production in 2027. By June 2026 it had raised 424.95 billion yen in equity, the latest 150 billion yen from a state agency, and it has received government research subsidies since fiscal 2022 ([source](https://www.rapidus.inc/en/news_topics/information/20260605-2/)).
 
 Node names describe nothing physical. SMIC's N+3, its third-generation 7 nm process, sets its narrowest wires 32.5 nm apart, tighter than Intel 18A's 36 nm, and reaches 113.4 million transistors per square millimeter against 107.7 for TSMC's N6 ([source](https://newsletter.semianalysis.com/p/steel-smic-n3-teardown)).
 
-AI accelerators sit a node behind the leading edge, because a die that large comes out working only on a process that has run for years. Blackwell uses a custom TSMC 4NP ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)).
+AI accelerators have usually trailed the leading edge, since a very large die comes out working reliably only on a process that has run for years. Blackwell uses a custom TSMC 4NP ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)). AMD's MI455X, launched on 23 July 2026, lists TSMC 2 nm and 3 nm silicon ([source](https://www.amd.com/en/products/accelerators/instinct/mi400/mi455x.html)). It spreads its compute across eight separate dies ([source](https://www.amd.com/content/dam/amd/en/documents/products/accelerators/instinct/amd-instinct-mi455x_brochure.pdf)).
 
 SRAM, the fast memory on the logic die, is the scaling failure that hurts AI chips most. TSMC claims 22 percent more SRAM density from N3E to N2, but the gain comes mostly from the circuits around the array, and the cell that holds one bit shrinks little or not at all ([source](https://newsletter.semianalysis.com/p/clash-of-the-foundries)). See [Memory and HBM](#memory-and-hbm).
 
@@ -149,8 +149,8 @@ See [Lithography](#lithography) and [Geopolitics](#geopolitics).
 - **Interconnect resistance.** Below a 20 nm wire spacing, copper wiring adds more and more delay from its resistance and capacitance ([source](https://www.imec-int.com/en/press/imec-demonstrates-16nm-pitch-ru-lines-record-low-resistance-obtained-using-semi-damascene)).
 - **Power delivery.** The voltage lost carrying power across the die. Backside power frees area and cuts the droop tenfold ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)).
 - **SRAM scaling.** The cell that holds one bit has barely shrunk since the 5 nm node, which caps how much cache an accelerator can afford ([source](https://newsletter.semianalysis.com/p/clash-of-the-foundries)).
-- **Cost per transistor.** No foundry publishes wafer prices, so the shrinking density gain per node is the public proxy.
+- **Cost per transistor.** No foundry publishes wafer prices, so it cannot be worked out from public figures.
 
 ## Takeaways
 
-TSMC's N2 process, which it calls the industry's most advanced, entered volume production in late 2025 with a new kind of transistor, the nanosheet ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm)). TSMC's own figures show the gain in chip density falling from 1.15 times at its N2P process to up to 1.10 times at A16, the one after it ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech)). China made its most advanced chips, at 7 nm, with older deep ultraviolet machines stockpiled before export controls took effect, and CSIS judges that EUV remains out of China's reach ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).
+TSMC's N2 process, which it calls the industry's most advanced, entered volume production in late 2025 with its first nanosheet transistors ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm)). TSMC's own figures give N2P 1.2 times the logic density of N3E, and A16, which adds backside power, up to 1.10 times the chip density of N2P ([source](https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech)). TSMC says its A14 process, planned for production in 2028, will raise logic density by more than 20 percent over N2 ([source](https://pr.tsmc.com/english/news/3228)). China made its most advanced chips, at 7 nm, with older deep ultraviolet machines stockpiled before export controls took effect, and in September 2025 CSIS judged that EUV remained firmly out of China's reach ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).

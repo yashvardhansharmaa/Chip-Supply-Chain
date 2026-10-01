@@ -3,7 +3,7 @@
     "term": "ABF",
     "aka": "Ajinomoto Build-up Film, build-up film, ABF build-up film, ABF substrate, ABF substrates",
     "plain": "The insulating film inside the base board, the substrate, that a high-end chip package sits on. The board is built up in layers, and a sheet of this epoxy film, about 10 micrometers thick, separates each layer of copper wiring from the next. The Japanese food company Ajinomoto first developed it in 1999.",
-    "why": "Ajinomoto puts its own share of the insulating film in high-end processor packages at about 95 percent, and says practically all high-performance computers and servers rely on it.",
+    "why": "Ajinomoto told investors in June 2026 that its film has held a share of over 95 percent since its launch, and it says practically all high-performance computers and servers rely on it.",
     "chapter": "substrates-and-pcbs"
   },
   {
@@ -23,22 +23,22 @@
   {
     "term": "ALD",
     "aka": "atomic layer deposition",
-    "plain": "A way of coating a chip roughly one atomic layer at a time. Each pulse of gas sticks to the surface and then stops once the surface is covered, so the film ends up the same thickness on the floor and on the walls of a hole hundreds of times deeper than it is wide.",
-    "why": "US regulators call atomic layer deposition an enabler of stacked memory and of FinFET and gate-all-around logic, and export rules name some of its tools directly. Chinese toolmakers gained no share in it between 2019 and 2024 and held less than 1 percent of the market in 2024.",
+    "plain": "A way of coating a chip roughly one atomic layer at a time. Each pulse of gas sticks to the surface and then stops once the surface is covered, so the film ends up the same thickness on the floor and on the walls of a hole more than 50 times deeper than it is wide.",
+    "why": "US regulators call atomic layer deposition an enabler of stacked memory and of FinFET and gate-all-around logic, and export rules name some of its tools directly. Chinese toolmakers held 2.6 percent of the market in 2025 on CSET's count, most of it from Piotech.",
     "chapter": "deposition-and-etch"
   },
   {
     "term": "ASIC",
     "aka": "application-specific integrated circuit, custom silicon, ASICs, custom accelerator, custom accelerators, custom chip, custom AI silicon, custom AI ASICs",
     "plain": "A chip designed for one company's own workload and not sold on the open market. Google's Tensor Processing Unit and Amazon's Trainium are chips of this kind; an Nvidia part sold to any customer is not.",
-    "why": "A custom chip is tuned to one company's workload, while a chip sold to everyone comes with mature software and a resale market. Design houses such as Broadcom and Marvell turn the buyer's design into silicon.",
+    "why": "A custom chip is tuned to one company's workload, while a chip sold to everyone comes with mature software and a resale market. Design houses such as Broadcom and Marvell turn the buyer's design into silicon and sell it the finished chips.",
     "chapter": "design-and-eda"
   },
   {
     "term": "ATE",
     "aka": "automated test equipment, tester",
     "plain": "The machine that connects to a finished chip, feeds it millions of test patterns and checks whether the answers coming back are right. Advantest counts test as the only manufacturing step that puts electricity through the chip.",
-    "why": "An AI accelerator joins a dozen expensive pieces, and one bad piece scraps them all, so each die is tested first. Advantest and Teradyne hold about 80 percent of the tester market.",
+    "why": "An AI accelerator joins a dozen expensive pieces, and one bad piece scraps them all, so each die is tested first. Advantest's April 2025 investor guide put Advantest and Teradyne at about 80 percent of the tester market.",
     "chapter": "test-and-assembly"
   },
   {
@@ -52,7 +52,7 @@
     "term": "bill of materials",
     "aka": "BOM",
     "plain": "The itemized list of every purchased part in a finished product and what each part cost, the way a builder's invoice prices lumber, wiring and fixtures separately.",
-    "why": "On an Nvidia B200, Epoch AI estimates that memory makes up about half of the roughly $6,400 manufacturing cost, so the bill of materials shows which suppliers capture the money a buyer spends.",
+    "why": "Epoch AI estimated in December 2025 that memory made up about half of the roughly $6,400 manufacturing cost of an Nvidia B200, so the bill of materials shows which suppliers capture the money a buyer spends.",
     "chapter": "component-costs"
   },
   {
@@ -107,8 +107,8 @@
   {
     "term": "CoWoS",
     "aka": "chip on wafer on substrate",
-    "plain": "TSMC's method for mounting logic chips and memory stacks side by side on a shared slab of silicon, then mounting that slab on a rigid base board. Nearly every high-end AI accelerator is built this way.",
-    "why": "TSMC's CoWoS packaging and memory were the main limits on AI chip production in 2025, and Epoch AI puts Nvidia at 60.3 percent of all CoWoS that year. By March 2026 SemiAnalysis judged that CoWoS supply was easing.",
+    "plain": "TSMC's method for mounting logic chips and memory stacks side by side on a shared interposer, a layer of fine wiring, then mounting that interposer on a rigid base board. In CoWoS-S the interposer is one piece of silicon; in CoWoS-L, which carries Blackwell and Rubin, it is redistribution wiring with small embedded silicon bridges. Nearly every high-end AI accelerator is built this way.",
+    "why": "TSMC's CoWoS packaging and memory were the main limits on AI chip production in 2025, and Epoch AI puts Nvidia at 60.3 percent of all CoWoS that year. SemiAnalysis judged in March 2026 that CoWoS supply was easing, but in July 2026 TSMC said its packaging capacity was so tight that it limited customers' growth.",
     "chapter": "advanced-packaging"
   },
   {
@@ -122,7 +122,7 @@
     "term": "defect density",
     "aka": "D0, defects per square centimeter",
     "plain": "The average number of chip-killing flaws per square centimeter of processed wafer. It is a fab's quality score, inferred from how many chips come out working.",
-    "why": "AI accelerators have the largest dies in production, and yield falls steeply with die area times defect density. On an 8 square centimeter die, halving defect density lifts yield from about 49 to about 69 percent.",
+    "why": "AI accelerators have the largest dies in production, and yield falls steeply with die area times defect density. On an 8 square centimeter die, halving defect density lifts the share of flawless dies from about 49 to about 69 percent. The share that can be sold is higher on chips that carry spare blocks.",
     "chapter": "metrology-and-inspection"
   },
   {
@@ -150,7 +150,7 @@
     "term": "DRAM",
     "aka": "dynamic random-access memory",
     "plain": "A computer's main working memory. Each bit is a charge held in a microscopic capacitor that leaks, so the chip has to refresh its contents constantly, and it forgets everything when the power goes off.",
-    "why": "HBM is a stack of DRAM chips, and only the three leading DRAM makers, SK hynix, Samsung and Micron, make it. SK hynix says the shift of production capacity to HBM left ordinary DRAM, the kind in PCs and phones, undersupplied and helped drive a significant price recovery from the third quarter of 2025.",
+    "why": "HBM is a stack of DRAM chips, and the three leading DRAM makers, SK hynix, Samsung and Micron, make nearly all of it. SK hynix says the shift of production capacity to HBM left ordinary DRAM, the kind in PCs and phones, undersupplied and helped drive a significant price recovery from the third quarter of 2025.",
     "chapter": "memory-and-hbm"
   },
   {
@@ -185,7 +185,7 @@
     "term": "EDA",
     "aka": "electronic design automation, chip design software",
     "plain": "The software that turns a description of what a chip should do into the exact pattern of shapes to be printed on silicon, and proves the result will work before anyone commits money to masks and wafers.",
-    "why": "Three vendors sell the only complete design flows used at the leading edge, so in May 2025 the US government could cut off their sales to China with letters to the vendors, until it lifted the requirement on 2 July.",
+    "why": "Three vendors sell the only complete design flows used at the leading edge. Since October 2022 software made for designing chips with gate-all-around transistors has needed a US export license, and in May 2025 the US government required a license for all their sales to China with letters to the vendors, until it lifted the requirement on 2 July.",
     "chapter": "design-and-eda"
   },
   {
@@ -220,7 +220,7 @@
     "term": "fab",
     "aka": "fabrication plant, wafer fab, fabs, chip factory, chip factories",
     "plain": "The factory where wafers are processed into chips. It is a cleanroom where each wafer moves between hundreds of machines in a sealed pod for months, and the building costs tens of billions of dollars.",
-    "why": "BCG puts the ten-year cost of owning a fab completed in 2026 at $35 to $43 billion. Money can buy the building faster than it can train a workforce, and TSMC has yet to build one of its largest fabs outside Taiwan.",
+    "why": "In 2023 BCG estimated that a new 2 nm-class fab finished in 2026 would cost $35 to $43 billion to own over ten years. Money can buy the building faster than it can train a workforce, and TSMC has yet to build one of its largest fabs outside Taiwan.",
     "chapter": "foundries-and-fabs"
   },
   {
@@ -283,21 +283,21 @@
     "term": "gross margin",
     "aka": "",
     "plain": "The share of a sale left over after paying what it cost to make the thing, before research, sales and overheads are counted. A 70 percent gross margin means $70 of every $100 of revenue survives manufacturing cost.",
-    "why": "Gross margin shows where pricing power sits. In quarters ending June to September 2026, Micron's was 86.8 percent, Nvidia's 75.0 percent and KLA's 61.4 percent, against 36.4 percent at the substrate maker Ibiden and 16.8 to 21.0 percent at the assembly and test houses Amkor and ASE.",
+    "why": "Gross margin shows where pricing power sits. In quarters ending June to September 2026, Micron's was 86.8 percent, Nvidia's 75.0 percent and KLA's 61.4 percent, against 36.4 percent at the substrate maker Ibiden and 16.8 to 27.3 percent at the assembly and test houses Amkor and ASE, counting ASE's packaging and test segment alone.",
     "chapter": "component-costs"
   },
   {
     "term": "HBM",
     "aka": "high bandwidth memory, high-bandwidth memory, HBM3E, HBM4, HBM4E, HBM stack, HBM stacks, memory stacks, stacked memory",
-    "plain": "Stacked memory built for AI chips. Up to sixteen memory chips are stacked into a cube, wired together by copper that runs straight down through them, and the cube sits a few millimeters from the processor. It holds the model the chip is running, the numbers called weights, and hands them to the processor over 1,024 or more wires at once.",
-    "why": "To write each word of an answer, the chip reads the whole model from this memory, along with the record of the conversation so far. A larger model or a longer conversation needs more memory, so the size and speed of HBM usually set how many people one chip can serve. It is the largest line in the bill of materials of an Nvidia B200, and only SK hynix, Samsung and Micron make it.",
+    "plain": "Stacked memory built for AI chips. Up to sixteen memory chips are stacked into a cube and wired together through copper-filled holes made in each chip before stacking, and the cube sits a few millimeters from the processor. It holds the model the chip is running, the numbers called weights, and hands them to the processor over 1,024 or more wires at once.",
+    "why": "To write each word of an answer, the chip reads the whole model from this memory, along with the record of the conversation so far. A larger model or a longer conversation needs more memory, so the size and speed of HBM usually set how many people one chip can serve. It is the largest line in the bill of materials of an Nvidia B200, and SK hynix, Samsung and Micron make nearly all of it.",
     "chapter": "memory-and-hbm"
   },
   {
     "term": "High-NA EUV",
     "aka": "high numerical aperture extreme ultraviolet, ASML EXE series, High-NA, High NA, High-NA scanners, High-NA machine, High-NA tools",
     "plain": "The next generation of extreme ultraviolet machine, whose larger mirrors collect light over a wider angle and so print smaller features. The wider optics also halve the area the machine can print in one exposure, so a large chip has to be stitched together from two exposures.",
-    "why": "It cuts the smallest printable feature from 13 nanometers to 8, and TSMC expects more AI chip layers to need it. Each machine sells for an estimated $350 to $400 million. Intel ships a high-volume product made with it, and TSMC plans to use it in high-volume manufacturing from 2030.",
+    "why": "It cuts the smallest printable feature from 13 nanometers to 8, and TSMC expects more AI chip layers to need it. Each machine sells for an estimated $350 to $400 million. Intel says it uses it in volume production for select layers of some 18A products, and TSMC plans to use it in high-volume manufacturing from 2030.",
     "chapter": "lithography"
   },
   {
@@ -331,7 +331,7 @@
   {
     "term": "interposer",
     "aka": "interposers, silicon interposer, silicon carrier",
-    "plain": "A slab of silicon carrying wiring but no transistors, used as a miniature circuit board underneath several chips so they can be connected at a density no ordinary board could reach.",
+    "plain": "A layer of wiring with no transistors, used as a miniature circuit board underneath several chips so they can be connected at a density no ordinary board could reach. It is either one piece of silicon or layers of fine copper wiring with small silicon bridges.",
     "why": "HBM connects over 1,024 or 2,048 wires, too many for a resin board, so memory and logic sit together on an interposer. Its area caps how much fits in one package, now 5.5 times the reticle on TSMC's CoWoS-L.",
     "chapter": "advanced-packaging"
   },
@@ -409,7 +409,7 @@
     "term": "metrology",
     "aka": "process control, when grouped with inspection, metrology and inspection, inspection tools",
     "plain": "Measuring what a factory actually built: how wide a printed line came out, how thick a film is, whether this layer sits exactly on top of the last one. Inspection is the related job of finding flaws.",
-    "why": "A fab that cannot buy sensitive inspection tools finds fewer of the defects that lower its yield, so its yield rises more slowly. KLA held 56.8 percent of the market for these tools in 2025.",
+    "why": "A fab that cannot buy sensitive inspection tools finds fewer of the defects that lower its yield, so its yield rises more slowly. KLA held 56.8 percent of the market for these tools in 2025, by CSET's count.",
     "chapter": "metrology-and-inspection"
   },
   {
@@ -436,8 +436,8 @@
   {
     "term": "NVLink",
     "aka": "NVSwitch, NVLink 5, NVLink 6, NV-HBI",
-    "plain": "Nvidia's private high-speed connection between its own accelerators, carrying 3,000 gigabytes per second per GPU in NVLink 6 on Nvidia's preliminary figures, so that dozens of them can act as one.",
-    "why": "Nvidia alone sells it, in a systems layer where most other parts have many suppliers, and UALink is a published open rival to it.",
+    "plain": "Nvidia's own high-speed connection between its accelerators, carrying 3,600 gigabytes per second per GPU in NVLink 6, according to Nvidia's January 2026 Rubin launch, so that dozens of them can act as one.",
+    "why": "Nvidia controls it, in a systems layer where most other parts have many suppliers. Since May 2025 its NVLink Fusion program has let other firms' custom chips, including CPUs from Fujitsu and Qualcomm, connect to Nvidia GPUs over NVLink, and UALink is a published open rival.",
     "chapter": "systems-and-networking"
   },
   {
@@ -451,7 +451,7 @@
     "term": "OSAT",
     "aka": "outsourced semiconductor assembly and test, OSATs, outsourced assembly and test, assembly and test firms, assembly and test contractor, assembly and test houses",
     "plain": "A contract firm that takes finished wafers, cuts them into chips, seals the chips into packages and tests them. It is the back end of chipmaking, done for hire.",
-    "why": "Every chip passes through assembly and test, yet ASE and Amkor earned gross margins of 21.0 and 16.8 percent in the June 2026 quarter. Four of the ten largest firms by 2024 revenue are headquartered in China.",
+    "why": "Every chip passes through assembly and test, yet in the June 2026 quarter Amkor earned a gross margin of 16.8 percent and ASE's packaging and test segment 27.3 percent. Four of the ten largest firms by 2024 revenue are headquartered in China.",
     "chapter": "test-and-assembly"
   },
   {
@@ -478,7 +478,7 @@
   {
     "term": "photomask",
     "aka": "mask, reticle, mask set, photomasks, masks, mask sets, mask blank set",
-    "plain": "The master template for one layer of a chip: a quartz plate, or for the shortest wavelengths a mirror, carrying the pattern that gets projected onto the wafer. A chip takes dozens of them, one per layer, and a full set at the leading edge costs roughly $10 million to $40 million.",
+    "plain": "The master template for one layer of a chip: a quartz plate, or for the shortest wavelengths a mirror, carrying the pattern that gets projected onto the wafer. A chip takes dozens of them, one per layer. In July 2022 SemiAnalysis put a full set above $1 million at 28 nm and above $10 million at 7 nm, and expected 3 nm sets to approach $40 million.",
     "why": "Mask cost decides which chips can afford a leading-edge process at all, and only three firms supply the blank plates for EUV masks, two of them Japanese.",
     "chapter": "photomasks-and-pellicles"
   },
@@ -584,7 +584,7 @@
     "term": "tape-out",
     "aka": "tape out, taped out, tapes out, tape-outs, tapeout",
     "plain": "The moment a chip design is declared finished and the pattern files are sent to the factory to be written into masks. The name survives from when the data physically left on a reel of magnetic tape.",
-    "why": "After tape-out each revision needs at least some new masks, and a full set costs about $40 million at 3 nm, so designers check everything they can before it.",
+    "why": "After tape-out each revision needs at least some new masks, and in July 2022 SemiAnalysis expected a full 3 nm set to approach $40 million, so designers check everything they can before it.",
     "chapter": "design-and-eda"
   },
   {
@@ -605,7 +605,7 @@
     "term": "transistor",
     "aka": "transistors",
     "plain": "The switch every chip is built from. Current runs through a channel between two terminals, and a voltage on a third terminal, the gate, opens or closes that path much as a tap opens or closes a pipe. One Nvidia Blackwell part contains 208 billion of them.",
-    "why": "Everything in this supply chain exists to make transistors smaller, faster and less leaky, and only three companies, TSMC, Intel and Samsung, can build the newest kind.",
+    "why": "Everything in this supply chain exists to make transistors smaller, faster and less leaky, and only three companies, TSMC, Intel and Samsung, make the newest kind in volume.",
     "chapter": "transistors-and-front-end"
   },
   {
@@ -619,7 +619,7 @@
     "term": "VEU",
     "aka": "Validated End-User, Validated End User, Validated End-User status, VEU status, VEU cover, validated end users",
     "plain": "An authorization BIS grants to a named foreign facility, letting approved items ship to it without an individual license each time. The approved facilities are listed in supplement no. 7 to 15 CFR part 748, and the procedure is 15 CFR 748.15.",
-    "why": "It let Samsung, SK hynix and Intel run their fabs inside China without individual licenses. BIS revoked that status effective 31 December 2025, and said it would license those fabs to keep running but not to expand capacity or upgrade technology (90 FR 42321).",
+    "why": "It let the China subsidiaries of Samsung and SK hynix, and the Dalian NAND fab that SK hynix bought from Intel, receive US equipment without individual licenses. BIS revoked that status effective 31 December 2025, and said it would license those fabs to keep running but not to expand capacity or upgrade technology (90 FR 42321). In December 2025 BIS granted SK hynix an annual license to ship approved US equipment to its China fabs during 2026.",
     "chapter": "geopolitics"
   },
   {
@@ -647,7 +647,7 @@
     "term": "CMP",
     "aka": "chemical mechanical polishing, chemical mechanical planarization, polishing slurry, polishing slurries, slurry, slurries, CMP slurry, CMP pads, planarization",
     "plain": "After each new layer goes onto a wafer, its surface is rubbed flat again with a pad and a liquid full of fine grit, the slurry. The step is called chemical mechanical polishing, or CMP. Without it the next layer would be printed on a surface too bumpy to focus on.",
-    "why": "Each slurry is approved for one layer of one product at one fab, and as of 2021 DuPont and Cabot Microelectronics held about 56 percent of a $790 million slurry market.",
+    "why": "Each slurry is approved for one layer of one product at one fab. As of 2021 DuPont and Cabot Microelectronics held about 56 percent of a $790 million slurry market. Cabot, renamed CMC Materials in October 2020, was bought by Entegris in July 2022, and DuPont's electronics business became Qnity Electronics in November 2025.",
     "chapter": "chemicals-gases-and-photoresist"
   },
   {
@@ -668,14 +668,14 @@
     "term": "polysilicon",
     "aka": "polycrystalline silicon, electronic-grade polysilicon, semiconductor-grade polysilicon, polysilicon feedstock",
     "plain": "Polysilicon is silicon refined to purity but not yet grown into one crystal: gray rods made of many small crystals. It is the raw material that is melted down to pull the single crystal a wafer is cut from. The same material, at lower purity, goes into solar panels.",
-    "why": "China made about 93 percent of the world's polysilicon in 2023, but an estimated 98 percent of its output was solar grade, so that lead does not reach chips.",
+    "why": "China made about 93 percent of the world's polysilicon in 2023, yet none of the five major suppliers of the electronic-grade kind that Siltronic names for 2025 is Chinese.",
     "chapter": "silicon-and-wafers"
   },
   {
     "term": "electronic-grade",
-    "aka": "electronic grade, semiconductor-grade, semiconductor grade, solar-grade, solar grade, eleven nines",
-    "plain": "Electronic-grade silicon is pure enough for chips, with fewer than one stray atom in every hundred billion, sometimes written as eleven nines. Solar-grade silicon is a less pure grade made for solar cells.",
-    "why": "Only an estimated 2 percent of China's 2023 polysilicon output was electronic grade, and none of the five major suppliers of it, Wacker, Hemlock, OCI, Tokuyama and Mitsubishi, is Chinese.",
+    "aka": "electronic grade, semiconductor-grade, semiconductor grade, solar-grade, solar grade",
+    "plain": "Electronic-grade silicon is refined until its metal impurities are no more than a few parts per billion, pure enough for chips. Solar-grade silicon is a less pure grade made for solar cells.",
+    "why": "Every chip starts from it, and the Commerce Department found in 2026 that semiconductor-grade polysilicon makes up only 2.4 percent of global production. Siltronic names five major suppliers for 2025, Wacker, Hemlock, OCI, Tokuyama and Mitsubishi, none of them Chinese.",
     "chapter": "silicon-and-wafers"
   },
   {
@@ -716,8 +716,8 @@
   {
     "term": "plasma",
     "aka": "plasmas, plasma etch, plasma-enhanced, plasma source",
-    "plain": "A plasma is a gas that has had electrons knocked off its atoms by an electric field, leaving charged fragments that react with whatever they touch. Most deposition and etch happens in a plasma inside a vacuum chamber, and the extreme ultraviolet light source is a plasma of vaporized tin.",
-    "why": "Change the gas, pressure and power in the chamber and the same plasma tool either adds a film or removes one, which is why export controls on these tools are written as process specifications.",
+    "plain": "A plasma is a gas that an electric field has split into charged ions and neutral fragments called radicals. In a chip tool the radicals do most of the chemistry and the ions give etch its direction. Most etch steps and many deposition steps happen in a plasma inside a vacuum chamber, while batch furnaces run oxidation, low-pressure deposition and some atomic layer deposition mostly without one. The extreme ultraviolet light source is a plasma of vaporized tin.",
+    "why": "Deposition and etch chambers are separate products built from similar vacuum, gas and radio-frequency parts, and export controls describe each tool by the process it is designed to run.",
     "chapter": "deposition-and-etch"
   },
   {
@@ -730,7 +730,7 @@
   {
     "term": "mask writer",
     "aka": "mask writers, multi-beam writer, multi-beam writers, electron-beam writer, e-beam writer, mask writing",
-    "plain": "A mask writer is the machine that draws a chip's pattern into a photomask blank with an electron beam, one shape at a time, over many hours, so modern writers fire many beams at once.",
+    "plain": "A mask writer is the machine that draws a chip's pattern into the resist on a photomask blank with electrons. A single-beam writer flashes one shape at a time, while NuFlare's multi-beam writer for the most advanced masks controls 260,000 beams at once.",
     "why": "No new chip can be printed until its masks are written. Intel says advanced EUV requires multi-beam mask writers and calls Austria's IMS Nanofabrication the established leader in them, and Japan's NuFlare also sells them.",
     "chapter": "photomasks-and-pellicles"
   },
@@ -745,7 +745,7 @@
     "term": "PVD",
     "aka": "physical vapor deposition, sputtering, sputtering target, sputtering targets, sputter",
     "plain": "Physical vapor deposition, or PVD, coats a wafer by knocking atoms off a solid slab of metal, the sputtering target, in a vacuum so they fly across and land on the wafer as a thin film. It lays down the metal barriers and seed layers under a chip's copper wiring.",
-    "why": "Every copper wire needs that barrier, because copper seeps into the insulator around it. JX Advanced Metals puts its own share of the world market for semiconductor sputtering targets at about 65 percent.",
+    "why": "Every copper wire needs that barrier, because copper seeps into the insulator around it. JX Advanced Metals puts its own share of the world market for semiconductor sputtering targets at about 65 percent as of fiscal 2026.",
     "chapter": "deposition-and-etch"
   },
   {
@@ -801,7 +801,7 @@
     "term": "front end",
     "aka": "front end of line, FEOL, front-end, front-end wafers",
     "plain": "The front end of line is the first half of making a chip, the steps that build the transistors in the silicon. In the industry at large, the front end means the whole wafer fab, as against the back end where chips are packaged and tested.",
-    "why": "SemiAnalysis judged in March 2026 that front-end capacity had overtaken packaging as the main bottleneck on AI chip output.",
+    "why": "SemiAnalysis judged in March 2026 that front-end capacity had overtaken packaging as the main bottleneck on AI chip output, though TSMC said in July 2026 that its packaging capacity still limited customers' growth.",
     "chapter": "transistors-and-front-end"
   },
   {
@@ -878,7 +878,7 @@
     "term": "second source",
     "aka": "second sources, second-source, multi-sourcing, dual source, single source, sole source, single-source",
     "plain": "A second source is a second supplier qualified for the same part or material, so that a fab can keep running if the first one stops shipping. A single-source part has none, and adding one means joint development and a fresh qualification.",
-    "why": "A second source lets a fab keep running when one supplier is cut off. When Japan put three chemicals under export licenses for South Korea in 2019, Korea bought more from other countries and production of all three rose inside the country.",
+    "why": "A second source lets a fab keep running when one supplier is cut off. When Japan put three chemicals under export licenses for South Korea in 2019, Korea bought more from other countries and output of all three rose at Korean firms and at Japanese companies' affiliates in Korea.",
     "chapter": "chemicals-gases-and-photoresist"
   },
   {
@@ -996,7 +996,7 @@
   {
     "term": "base die",
     "aka": "base chip, base logic die, logic base die, HBM base die",
-    "plain": "The base die is the bottom chip of an HBM stack, the one that manages the memory dies above it and talks to the processor on their behalf. For HBM4, SK hynix moved it to TSMC's advanced logic process so it can hold more functions.",
+    "plain": "The base die is the bottom chip of an HBM stack, the one that manages the memory dies above it and talks to the processor on their behalf. For HBM4, SK hynix moved it to TSMC's advanced logic process so it can hold more functions. Samsung's HBM4, shipped from February 2026, uses a 4 nm logic base die.",
     "why": "SK hynix made its own base dies up to HBM3E, so the move gives TSMC a role inside a product it does not make.",
     "chapter": "memory-and-hbm"
   },
@@ -1011,14 +1011,14 @@
     "term": "JEDEC",
     "aka": "JESD270-4, JEDEC standard",
     "plain": "JEDEC is the industry body that writes the standards for memory chips, so that a memory stack from any maker fits any processor built to the same specification. Its HBM4 standard, published in April 2025, sets the width and speed of the interface.",
-    "why": "Makers now ship HBM4 faster than the standard's 8 Gb/s per pin, SK hynix above 10 and Micron above 11, and each customer runs its own qualification tests, so meeting the standard does not by itself win an order.",
+    "why": "Makers now ship HBM4 faster than the standard's 8 Gb/s per pin, Samsung at 11.7, SK hynix above 10 and Micron above 11, and each customer runs its own qualification tests, so meeting the standard does not by itself win an order.",
     "chapter": "memory-and-hbm"
   },
   {
     "term": "memory bandwidth density",
     "aka": "bandwidth density, bandwidth-density",
     "plain": "Memory bandwidth density is how much data a memory stack can move each second divided by the area of its package or stack, in gigabytes per second per square millimeter. The December 2024 rule controls any stack above 2, and BIS said every HBM stack then in production exceeded that.",
-    "why": "One threshold catches every HBM stack in production, including stacks made outside the United States, so the control reaches all three makers.",
+    "why": "One threshold catches every HBM stack in production, including stacks made outside the United States, so the control reaches all three makers. A license exception still lets stacks below 3.3 go straight to a chip designer's packaging site, and HBM already packaged with a processor falls under the chip rules instead.",
     "chapter": "memory-and-hbm"
   },
   {
@@ -1053,7 +1053,7 @@
     "term": "indium phosphide",
     "aka": "InP, indium",
     "plain": "Indium phosphide is a crystal, grown from the metal indium and phosphorus, that gives off light when current passes through it, which silicon cannot do. It is the material of the lasers inside the fastest optical modules.",
-    "why": "China produces about 70 percent of the world's indium, and in March 2026 Nvidia agreed to invest $2 billion each in Coherent and Lumentum, alongside purchase commitments for their lasers.",
+    "why": "China produces about 70 percent of the world's indium and put it under new export restrictions in February 2025, when it also began requiring export permits for indium phosphide substrates. In March 2026 Nvidia agreed to invest $2 billion each in Coherent and Lumentum, alongside purchase commitments for their lasers.",
     "chapter": "systems-and-networking"
   },
   {
@@ -1101,7 +1101,7 @@
   {
     "term": "GB/s",
     "aka": "TB/s, Gb/s, Tbps, gigabytes per second, terabytes per second, gigabits per second, terabits per second",
-    "plain": "GB/s is gigabytes per second, the measure of how much data a link or a memory can move; TB/s is a thousand times more. A lowercase b, as in Gb/s or Tbps, counts bits, each an eighth of a byte. One HBM4 stack moves over 2 TB/s; NVLink 6 gives each GPU 3,000 GB/s on Nvidia's preliminary figures.",
+    "plain": "GB/s is gigabytes per second, the measure of how much data a link or a memory can move; TB/s is a thousand times more. A lowercase b, as in Gb/s or Tbps, counts bits, each an eighth of a byte. One HBM4 stack moves over 2 TB/s; NVLink 6 gives each GPU 3,600 GB/s, according to Nvidia's January 2026 Rubin launch.",
     "why": "The October 2022 US rule caught chips with a processing score of 4,800 or more and an input and output rate of 600 GB/s or more (87 FR 62186), and since January 2026 chips below 6,500 GB/s of total DRAM bandwidth and 21,000 TPP can be licensed case by case for China (91 FR 1684).",
     "chapter": "memory-and-hbm"
   },
@@ -1116,7 +1116,7 @@
     "term": "300 mm",
     "aka": "300-millimeter, 12-inch, 12-inch equivalent, 200 mm, 8-inch, 8-inch-equivalent, 450 mm, 150 mm",
     "plain": "300 mm is the diameter of the standard wafer, about twelve inches. Older fabs run 200 mm, or 8-inch, wafers. The last increase in wafer size, to 300 mm, came in 2002.",
-    "why": "300 mm wafers carried 99.7 percent of world fab capacity at 45 nm and below as of 2021, so advanced chips start on them.",
+    "why": "300 mm wafers carried 99.7 percent of world fab capacity at 45 nm and below in SEMI's November 2020 World Fab Forecast, which CSET cited in January 2021, so advanced chips start on them.",
     "chapter": "silicon-and-wafers"
   },
   {
@@ -1143,8 +1143,8 @@
   {
     "term": "transistor density",
     "aka": "logic density, chip density, transistors per square millimeter, density gain",
-    "plain": "Transistor density is how many transistors fit in a square millimeter of chip. SemiAnalysis measured SMIC's N+3 at 113.4 million, against 107.7 million for TSMC's N6. TSMC's own chip density gain per node falls from 1.15 times at N2P to up to 1.10 times at A16.",
-    "why": "No foundry publishes wafer prices, so the shrinking density gain per node is the public proxy for cost per transistor.",
+    "plain": "Transistor density is how many transistors fit in a square millimeter of chip. SemiAnalysis measured SMIC's N+3 at 113.4 million, against 107.7 million for TSMC's N6. TSMC says N2P gives 1.2 times the logic density and 1.15 times the chip density of N3E. A16, which adds backside power, gives up to 1.10 times the chip density of N2P, and A14 more than 20 percent more logic density than N2.",
+    "why": "Density sets how much logic fits on a die of a given size. No foundry publishes wafer prices, so cost per transistor cannot be worked out from public figures.",
     "chapter": "transistors-and-front-end"
   },
   {
@@ -1172,7 +1172,7 @@
     "term": "lead time",
     "aka": "lead times, delivery time",
     "plain": "Lead time is the wait between placing an order and receiving it. A wafer clears a leading-edge fab in months, while a large power transformer commonly takes three years.",
-    "why": "Money buys silicon capacity faster than it buys power capacity, and lead time is where that difference shows.",
+    "why": "Chip supply and power equipment are both constrained. Micron said in its report for the quarter to May 2026 that AI-driven memory and storage growth was outpacing industry supply, and waits for large power equipment run to years.",
     "chapter": "data-centers-and-power"
   },
   {
@@ -1186,7 +1186,7 @@
     "term": "leading edge",
     "aka": "leading-edge, at the leading edge, advanced node, advanced nodes, advanced-node",
     "plain": "The leading edge is the newest generation of chipmaking process in volume production, today the 3 nm and 2 nm nodes, made only by TSMC, Samsung and Intel. A leading-edge chip is one built on it. Everything older is a mature node.",
-    "why": "Only TSMC, Intel and Samsung build at the leading edge, a list so short that an export control can name every one of them.",
+    "why": "Only TSMC, Intel and Samsung make gate-all-around transistors in volume, and in 2024 the United States put a worldwide license requirement on the technology for building them.",
     "chapter": "transistors-and-front-end"
   },
   {
@@ -1200,7 +1200,7 @@
     "term": "ODM",
     "aka": "original design manufacturer, ODMs, contract manufacturer, contract manufacturers, contract manufacturing, EMS, server ODM",
     "plain": "An ODM, for original design manufacturer, is a firm such as Foxconn, Quanta or Wistron that designs and builds servers and racks to a customer's specification and puts the customer's name on the box. A contract manufacturer does the assembly only.",
-    "why": "Several contract manufacturers on three continents can build an AI rack, and if Foxconn stopped, Quanta and Wistron would absorb the volume in a couple of quarters, so rack assembly is not a chokepoint.",
+    "why": "Several contract manufacturers on three continents can build an AI rack, and moving Foxconn's share to Quanta and Wistron would take an estimated several quarters. Nvidia said in its filing for the quarter to April 2026 that the complexity of rack-scale systems had caused production delays.",
     "chapter": "systems-and-networking"
   },
   {
@@ -1382,7 +1382,7 @@
     "term": "gallium and germanium",
     "aka": "gallium, germanium, antimony",
     "plain": "Gallium and germanium are metals used in chips other than silicon logic, gallium in compound chips such as radio parts, LEDs and lasers, germanium in fiber optics, infrared optics and solar cells. Both are recovered as byproducts, gallium from processing bauxite and germanium from certain zinc ores and coal.",
-    "why": "China accounts for 99 percent of world production of primary low-purity gallium, and it has required licenses to export both metals since August 2023.",
+    "why": "USGS put China's share of world production of primary low-purity gallium at 99 percent in February 2026, and China has required licenses to export both metals since August 2023. Its December 2024 ban on exports of both to the United States is suspended until 27 November 2026.",
     "chapter": "chemicals-gases-and-photoresist"
   },
   {
@@ -1412,5 +1412,12 @@
     "plain": "A chip is a small rectangle of silicon, usually smaller than a fingernail, that carries a complete electronic circuit made of billions of transistors. It is cut from a wafer after the circuit has been built up on it layer by layer.",
     "why": "Everything on the site is about how these rectangles get made, and who can stop the making.",
     "chapter": "silicon-and-wafers"
+  },
+  {
+    "term": "TC-NCF",
+    "aka": "MR-MUF, Advanced MR-MUF, TC-NCF bonding",
+    "plain": "Two ways of joining the thinned memory chips in an HBM stack. In TC-NCF, thermocompression with non-conductive film, each chip is pressed onto the one below under heat with a thin insulating film between them, and Samsung uses it for its twelve-high HBM3E. In MR-MUF, used by SK hynix, the chips are stacked first, and a liquid protective material is injected between them and hardened.",
+    "why": "Thinner chips and taller stacks warp more easily, and both methods aim to control that. SK hynix says its Advanced MR-MUF also dissipates heat well.",
+    "chapter": "memory-and-hbm"
   }
 ]

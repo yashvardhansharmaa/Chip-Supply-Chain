@@ -432,7 +432,6 @@ const chaptersHTML = chapters.length ? chapters.map(chapterHTML).join('\n') : `<
 
 const contentsHTML = chapters.concat(geo ? [geo] : []).map((ch) => `<div class="item"><span class="n">${pad(ch.number)}</span><a class="t" href="#${esc(ch.id)}">${esc(ch.title)}</a><ul>${ch.headings.filter((h) => !/^takeaways?$/i.test(h.text)).map((h) => `<li><a href="#${esc(h.id)}">${esc(h.text)}</a></li>`).join('')}</ul></div>`).join('');
 const railHTML = chainTrack(stages, null);
-const score5 = stages.filter((c) => +((c.meta.card || {}).chokepointScore || 0) >= 5).length;
 const thesisHTML = 'How AI chips are made';
 const subtitleHTML = 'Every stage of the supply chain, and who controls it.';
 
@@ -575,20 +574,21 @@ for (const f of modDir(path.join(root, 'build', 'modules')).filter((x) => x.ends
   try { const out = require(path.join(root, 'build', 'modules', f))(ctx) || {}; Object.keys(out).forEach((k) => fill(k, String(out[k]))); }
   catch (e) { warn(`build module ${f} failed: ${e.message}`); }
 }
-const totalCites = all.reduce((a, c) => a + c.cites.length, 0);
-const claimsHTML = `<div><b class="num">${stages.length}</b><span>Stages, quartz<br>to a finished rack</span></div><div class="of-five"><b class="num">${score5}</b><span>Score 5 of 5<br>for concentration</span></div><div><b class="num">${totalCites}</b><span>Sources, one<br>per claim</span></div>`;
 fill('SITE_URL', SITE.url); fill('SITE_HOST', SITE.host);
 // the counter: each hash route counts as its own page ("/lithography", "/suppliers"), and the query string is dropped
-fill('ANALYTICS', SITE.analytics ? `<script>window.goatcounter={path:function(){return (location.hash||'').replace(/^#\\/?/,'/').replace(/\\?.*$/,'')||'/';}};</script>\n<script async src="https://gc.zgo.at/count.js" data-goatcounter="${esc(SITE.analytics)}"></script>` : ''); fill('THESIS', thesisHTML); fill('SUBTITLE', subtitleHTML); fill('CLAIMS', claimsHTML); fill('CHAIN', chainTrack(stages, null));
+fill('ANALYTICS', SITE.analytics ? `<script>window.goatcounter={path:function(){return (location.hash||'').replace(/^#\\/?/,'/').replace(/\\?.*$/,'')||'/';}};</script>\n<script async src="https://gc.zgo.at/count.js" data-goatcounter="${esc(SITE.analytics)}"></script>` : ''); fill('THESIS', thesisHTML); fill('SUBTITLE', subtitleHTML); fill('CHAIN', chainTrack(stages, null));
 const sheetPages = [['#/', 'Home'], ['#/intro', 'Start here'], ['#/chain', 'The Chain'], ['#/landscape', 'AI Chips'], ['#/suppliers', 'Suppliers'], ['#/controls', 'Export Controls'], ['#/glossary', 'Glossary']].map((p) => `<a href="${p[0]}">${p[1]}</a>`).join('');
-const sheetChapters = all.map((ch) => { const sc = +((ch.meta.card || {}).chokepointScore || 0); return `<li><a href="${ch.id === 'geopolitics' ? '#geopolitics' : '#' + esc(ch.id)}"><span class="n">${pad(ch.number)}</span><span class="t">${esc(ch.title)}</span><span class="s${sc >= 5 ? ' hi' : ''}">${sc ? sc + ' / 5' : ''}</span></a></li>`; }).join('');
+const sheetChapters = all.map((ch) => `<li><a href="${ch.id === 'geopolitics' ? '#geopolitics' : '#' + esc(ch.id)}"><span class="n">${pad(ch.number)}</span><span class="t">${esc(ch.title)}</span></a></li>`).join('');
 fill('SHEET_PAGES', sheetPages); fill('SHEET_CHAPTERS', sheetChapters);
 fill('RAIL', railHTML); fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits); fill('FOOTER', footer); fill('FOOTER_KEY', footerKey);
 fill('SUPPLIERS_INTRO', suppliersIntro); fill('BUILT', builtStr);
 // the PDF title page's art ships beside the page
 // explainer animations: the rendered videos and stills go to dist/media
 { const md = path.join(root, 'media'); if (fs.existsSync(md)) { fs.mkdirSync(path.join(root, 'dist', 'media'), { recursive: true }); fs.readdirSync(md).filter((f) => /\.(mp4|jpg)$/.test(f) && [...USED_MEDIA].some((u) => f.startsWith(u + '-'))).forEach((f) => fs.copyFileSync(path.join(md, f), path.join(root, 'dist', 'media', f))); } }
-for (const asset of ['print-title.png']) { const from = path.join(root, 'build', 'assets', asset); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', asset)); } fill('GEO_DEK', esc(geoDek)); fill('GEO_BODY', geoBody);
+for (const asset of ['print-title.png']) { const from = path.join(root, 'build', 'assets', asset); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', asset)); }
+// the site icons (drawn by `python3 build/icons.py`) go to the root of dist/, where browsers look for /favicon.ico
+for (const icon of ['favicon.ico', 'favicon.svg', 'apple-touch-icon.png']) { const from = path.join(root, 'build', 'assets', 'icons', icon); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', icon)); else warn(`icon ${icon} is missing; run python3 build/icons.py`); }
+fill('GEO_DEK', esc(geoDek)); fill('GEO_BODY', geoBody);
 fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));
 // the Look up page: one list of every term, firm and chip, alphabetical, each with the kind a reader would call it
 const lkSlug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -625,6 +625,12 @@ html = html.replace(/\{\{[A-Z_]+\}\}/g, () => '');
 fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
 fs.writeFileSync(path.join(root, 'dist', 'index.html'), html);
 if (SITE.cname) fs.writeFileSync(path.join(root, 'dist', 'CNAME'), SITE.cname + '\n'); else if (fs.existsSync(path.join(root, 'dist', 'CNAME'))) fs.unlinkSync(path.join(root, 'dist', 'CNAME'));
+// for search engines: everything may be crawled, and the sitemap lists the pages that carry their own content
+// (the site itself and the printable chain; the share pages only forward to the site, so they are left out)
+const isoDay = builtOn.toISOString().slice(0, 10);
+fs.writeFileSync(path.join(root, 'dist', 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${SITE.url}sitemap.xml\n`);
+fs.writeFileSync(path.join(root, 'dist', 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+  [SITE.url, SITE.url + 'chip-supply-chain-the-chain.pdf'].map((u) => `  <url><loc>${u}</loc><lastmod>${isoDay}</lastmod></url>`).join('\n') + `\n</urlset>\n`);
 // the datasets are served next to the page so the method notes' links resolve and researchers can fetch them directly
 fs.mkdirSync(path.join(root, 'dist', 'data'), { recursive: true });
 const dataFiles = fs.readdirSync(path.join(root, 'data')).filter((f) => /\.(json|md)$/.test(f));

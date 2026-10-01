@@ -3,7 +3,7 @@
   "id": "data-centers-and-power",
   "number": 15,
   "title": "Data Centers and Power",
-  "oneLiner": "The chips are no longer the slowest part of a data center buildout. A large transformer commonly takes three years, GE Vernova is working toward 30 GW of gas turbine output a year in 2030, and Texas had about 474 GW of large loads, mostly data centers, seeking a grid connection in June 2026.",
+  "oneLiner": "Chips are no longer the only slow part of a data center buildout. A large transformer commonly takes three years, GE Vernova is working toward 30 GW of gas turbine output a year in 2030, and Texas had about 474 GW of large loads, mostly data centers, seeking a grid connection in June 2026. In August 2026 the governor of Texas ordered every data center in that queue audited before any of them moves forward.",
   "plain": "A data center's job is to feed electricity to the machines inside it and carry away the heat they give off. One rack of AI chips, a cabinet the size of a wardrobe, draws up to 142 kilowatts, and every watt of it comes back out as heat, so the rack is cooled by liquid piped through it. A large training site already holds more than a hundred thousand chips, and the newest sites are planned in gigawatts. One gigawatt is the whole output of a large power station, and OpenAI's planned sites add up to more than nine of them by 2029. Getting that much electricity to the door is harder than putting up the building, because the transformers and heavy switches that connect a site to the grid, and the turbines that make the power, come from a few suppliers and take years to arrive.",
   "bridge": "Racks like that have to stand somewhere, and the somewhere has to be built around what they consume.",
   "specimen": "rack",
@@ -15,7 +15,7 @@
       {
         "name": "GE Vernova",
         "country": "US",
-        "share": "116 GW of gas equipment backlog and reserved factory slots at mid-2026"
+        "share": "116 GW of gas equipment backlog and reserved factory slots at mid-2026; also makes transformers and switchgear, including through Prolec GE"
       },
       {
         "name": "Hitachi Energy",
@@ -26,6 +26,11 @@
         "name": "Siemens Energy",
         "country": "DE",
         "share": "Grid technologies, transformers, turbines"
+      },
+      {
+        "name": "Mitsubishi Power",
+        "country": "JP",
+        "share": "Power generation equipment, including gas turbines; named by GE Vernova as a key competitor alongside Siemens Energy"
       },
       {
         "name": "Vertiv",
@@ -57,7 +62,7 @@
       },
       {
         "code": "JP",
-        "note": "Hitachi group transformer manufacturing"
+        "note": "Mitsubishi Heavy Industries power equipment, including gas turbines; Hitachi group transformers"
       }
     ],
     "chinaStatus": "China has spare generating capacity, a large domestic industry making transformers and switchgear, and can connect new sites quickly. Its AI buildout is limited by the supply of accelerators, and it has power to spare.",
@@ -91,11 +96,15 @@
       "source": "https://epoch.ai/data-insights/hyperscaler-capex-trend"
     },
     {
-      "fact": "ERCOT was tracking about 474 GW of large loads seeking interconnection in June 2026, about 90% of it data centers",
+      "fact": "ERCOT was tracking about 474 GW of large loads seeking interconnection in June 2026, about 90% of it data centers; in a preliminary July 2026 review, about 205 GW was eligible for Batch Zero, its first study of connection requests as a group",
       "source": "https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf"
     },
     {
-      "fact": "ERCOT's large load status update of March 13, 2026, counted 9,042 MW that had received Approval to Energize",
+      "fact": "On August 3, 2026, Texas Governor Greg Abbott ordered the Public Utility Commission and ERCOT to audit all data centers in ERCOT's interconnection process before any data center project moves forward",
+      "source": "https://gov.texas.gov/news/post/governor-abbott-directs-comprehensive-data-center-audit"
+    },
+    {
+      "fact": "ERCOT's large load status update of March 13, 2026, counted 9,042 MW approved to energize, of which ERCOT believed 3,883 MW was operating, judging by peak monthly use",
       "source": "https://www.ercot.com/files/docs/2026/03/12/March-TAC-Report.pdf"
     },
     {
@@ -107,8 +116,8 @@
       "source": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm"
     },
     {
-      "fact": "EIA expects US electricity use to grow 1% in 2026 and 3% in 2027, the strongest four-year growth since 2000",
-      "source": "https://www.eia.gov/pressroom/releases/press582.php"
+      "fact": "In its September 2026 Short-Term Energy Outlook, EIA expects record US electricity sales of 4,135 TWh in 2026 and 4,211 TWh in 2027, driven by data centers and manufacturing, and it lowered its 2027 electricity sales forecast for the region that includes Texas by 4.7% from August",
+      "source": "https://www.eia.gov/outlooks/steo/archives/sep26.pdf"
     }
   ],
   "figures": [
@@ -240,7 +249,7 @@ A megawatt rack changes the busbar, the floor loading, the coolant flow, the lea
 
 - **Grid interconnection.** The slow path, with lengthy queues to connect ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)).
 - **Behind-the-meter gas**, generation on the site itself. The fast path, which at least three of the seven Stargate sites will use to sidestep grid queues ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)).
-- **Nuclear.** Almost entirely prospective. Constellation signed a power purchase agreement with Microsoft to restart Three Mile Island Unit 1 as the 835 MW Crane Clean Energy Center ([source](https://www.constellationenergy.com/news/2025/constellation-ahead-of-schedule-for-launch-of-crane-clean-energy-center.html)). The plant shut in 2019, and a $1 billion federal loan closed in November 2025 partly finances its restart, subject to Nuclear Regulatory Commission licensing approvals ([source](https://www.energy.gov/articles/energy-department-closes-loan-restart-nuclear-power-plant-pennsylvania)). No restarted reactor is serving data centers yet.
+- **Nuclear.** Existing plants already sell power to data centers, and Talen supplies Amazon's data center campus next to the Susquehanna nuclear plant in Pennsylvania under a June 2025 contract expected to reach 1,920 MW no later than 2032 ([source](https://www.sec.gov/Archives/edgar/data/1622536/000162828025030559/a20250611pressreleasebusin.htm)). Restarts and new reactors are still prospective. Constellation signed a power purchase agreement with Microsoft to restart Three Mile Island Unit 1 as the 835 MW Crane Clean Energy Center ([source](https://www.constellationenergy.com/news/2025/constellation-ahead-of-schedule-for-launch-of-crane-clean-energy-center.html)). The plant shut in 2019, and a $1 billion federal loan closed in November 2025 partly finances its restart, subject to Nuclear Regulatory Commission licensing approvals ([source](https://www.energy.gov/articles/energy-department-closes-loan-restart-nuclear-power-plant-pennsylvania)). No restarted reactor is serving data centers yet.
 
 ## Who makes it
 
@@ -250,13 +259,13 @@ The largest data center operators pay for the buildout. Alphabet, Amazon, Meta, 
 
 Campuses are now described in gigawatts. Epoch AI projects OpenAI's seven US Stargate sites to exceed 9 GW by 2029, with Abilene, Texas, growing from an estimated 0.3 GW in April to 1.2 GW in the fourth quarter of 2026 ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)).
 
-The equipment vendors are the constraint. GE Vernova, Siemens Energy, Hitachi Energy, ABB, Eaton and Schneider Electric supply the turbines, transformers and switchgear. GE Vernova's gas equipment backlog and reserved factory slots went from 100 GW to 116 GW in the second quarter of 2026, and its electrification orders from data centers passed $5 billion in the first half, more than double its 2025 total ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
+The equipment vendors are the constraint. GE Vernova builds large gas turbines, and its 2025 annual report names Siemens Energy and Mitsubishi Power among the key competitors of its power generation business ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm)). Hitachi Energy, Siemens Energy, GE Vernova, ABB, Eaton and Schneider Electric supply transformers and switchgear. GE Vernova bought the remaining half of Prolec GE, a transformer maker, in the first half of 2026 ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)). GE Vernova's gas equipment backlog and reserved factory slots went from 100 GW to 116 GW in the second quarter of 2026, and its electrification orders from data centers passed $5 billion in the first half, more than double its 2025 total ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
 
 {{figure:turbine-output}}
 
 ## Capacity and demand
 
-US data centers used 176 TWh in 2023, 4.4 percent of national electricity, and Lawrence Berkeley National Laboratory projects 325 to 580 TWh by 2028, between 6.7 percent and 12 percent of the total ([source](https://newscenter.lbl.gov/2025/01/15/berkeley-lab-report-evaluates-increase-in-electricity-demand-from-data-centers/)). The Energy Information Administration expects national electricity use to rise 1 percent in 2026 and 3 percent in 2027, the fourth straight annual increase and the strongest four-year run since 2000 ([source](https://www.eia.gov/pressroom/releases/press582.php)).
+US data centers used 176 TWh in 2023, 4.4 percent of national electricity, and Lawrence Berkeley National Laboratory projects 325 to 580 TWh by 2028, between 6.7 percent and 12 percent of the total ([source](https://newscenter.lbl.gov/2025/01/15/berkeley-lab-report-evaluates-increase-in-electricity-demand-from-data-centers/)). In its September 2026 Short-Term Energy Outlook, the Energy Information Administration expects record US electricity sales of 4,135 TWh in 2026 and 4,211 TWh in 2027, growth of almost 2 percent in each year, driven by data centers and manufacturing ([source](https://www.eia.gov/outlooks/steo/archives/sep26.pdf)). The same outlook lowers its 2027 electricity sales forecast for the region that includes Texas by 4.7 percent from its August forecast, and it notes that Texas has paused connecting new data centers to the grid while it audits proposed projects ([source](https://www.eia.gov/outlooks/steo/archives/sep26.pdf)).
 
 {{figure:us-dc-electricity}}
 
@@ -264,7 +273,7 @@ Chip efficiency is still improving. Google's Ironwood TPU delivers twice the per
 
 ## The chokepoint
 
-Announced capacity and energized capacity are a long way apart. ERCOT, the grid operator for most of Texas, was tracking about 474 GW of large loads seeking a connection in June 2026, roughly 90 percent of it data centers ([source](https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf)). ERCOT's large load update of March 13, 2026, counted 9,042 MW that had received approval to energize ([source](https://www.ercot.com/files/docs/2026/03/12/March-TAC-Report.pdf)).
+Announced capacity and energized capacity are a long way apart. ERCOT, the grid operator for most of Texas, was tracking about 474 GW of large loads seeking a connection in June 2026, roughly 90 percent of it data centers ([source](https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf)). ERCOT's large load update of March 13, 2026, counted 9,042 MW approved to energize, but judging by peak monthly use, ERCOT believed only 3,883 MW of it was operating ([source](https://www.ercot.com/files/docs/2026/03/12/March-TAC-Report.pdf)). In a preliminary review in July 2026, ERCOT found about 205 GW of the queue eligible for Batch Zero, its first study of connection requests as a group ([source](https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf)). On August 3, 2026, Texas Governor Greg Abbott ordered the state's Public Utility Commission and ERCOT to audit every data center in the interconnection process before any data center project moves forward ([source](https://gov.texas.gov/news/post/governor-abbott-directs-comprehensive-data-center-audit)).
 
 Behind that queue sit the equipment lead times.
 
@@ -272,7 +281,7 @@ Behind that queue sit the equipment lead times.
 - **Gas turbines.** GE Vernova expects to reach 20 GW of annual gas turbine output in the third quarter of 2026, 24 GW in 2028 and 30 GW in 2030, while its gas equipment backlog and slot reservations stood at 116 GW at mid-year ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
 - **Firm new generation**, the kind that runs whatever the weather. The 835 MW Crane plant shut in 2019, and its restart depends on Nuclear Regulatory Commission licensing approvals ([source](https://www.energy.gov/articles/energy-department-closes-loan-restart-nuclear-power-plant-pennsylvania)). The NRC has approved a fuel license amendment for the plant, and Constellation expects to restart it in 2027 ([source](https://www.constellationenergy.com/news/2026/08/constellation-reports-second-quarter-2026-results.html)).
 
-The chip chain moves faster: foundry and memory capacity have repeatedly expanded within a couple of years of the order. Money buys silicon capacity faster than it buys power capacity, and that difference decides how much of the 2026 capital spending turns into working compute.
+Memory is short too, and Micron's quarterly report for the period ended May 28, 2026, says AI-driven memory and storage growth is outpacing industry supply ([source](https://www.sec.gov/Archives/edgar/data/723125/000072312526000015/mu-20260528.htm)). Power equipment takes years to arrive, and both limit how much of the 2026 capital spending turns into working compute.
 
 ## Key evaluation criteria
 
@@ -284,4 +293,4 @@ The chip chain moves faster: foundry and memory capacity have repeatedly expande
 
 ## Takeaways
 
-Large power transformers, a core part of the electric grid, now commonly take 36 months to deliver, against less than a year before the pandemic ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)). GE Vernova, a major maker of gas turbines, says its orders from data centers in the first half of 2026 were more than double its total for all of 2025 ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)). In Texas, about 474 GW of large loads, mostly data centers, were seeking a grid connection in June 2026 ([source](https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf)).
+Large power transformers, a core part of the electric grid, now commonly take 36 months to deliver, against less than a year before the pandemic ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)). GE Vernova says data center orders for its electrification business, which makes grid equipment such as transformers and switchgear, passed $5 billion in the first half of 2026, more than double its total for 2025 ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)). In Texas, about 474 GW of large loads, mostly data centers, were seeking a grid connection in June 2026 ([source](https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf)). In August 2026 the governor of Texas ordered every data center in that queue audited before any of them moves forward ([source](https://gov.texas.gov/news/post/governor-abbott-directs-comprehensive-data-center-audit)).
