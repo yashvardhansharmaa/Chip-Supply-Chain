@@ -24,6 +24,8 @@ jobs:
           node-version: 20
       - run: node build/build.js
       - run: cat dist/build-report.txt
+      # every citation must come from a tier A or B source (data/source-tiers.json); a failure here stops the deploy
+      - run: node qa/scripts/check-sources.js
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

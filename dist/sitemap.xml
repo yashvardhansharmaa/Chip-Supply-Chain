@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://chipsupplychain.org/</loc><lastmod>2026-10-01</lastmod></url>
+  <url><loc>https://chipsupplychain.org/design-and-eda/</loc><lastmod>2026-10-01</lastmod></url>
+  <url><loc>https://chipsupplychain.org/silicon-and-wafers/</loc><lastmod>2026-10-01</lastmod></url>
+  <url><loc>https://chipsupplychain.org/chemicals-gases-and-photoresist/</loc><lastmod>2026-10-01</lastmod></url>
+  <url><loc>https://chipsupplychain.org/lithography/</loc><lastmod>2026-10-01</lastmod></url>
+  <url><loc>https://chipsupplychain.org/photomasks-and-pellicles/</loc><lastmod>2026-10-01</lastmod></url>
+  <url><loc>https://chipsupplychain.org/deposition-and-etch/</loc><lastmod>2026-10-01</lastmod></url>
+  <url><loc>https://chipsupplychain.org/metrology-and-inspection/</loc><lastmod>2026-10-01</lastmod></url>
+  <url><loc>https://chipsupplychain.org/transistors-and-front-end/</loc><lastmod>2026-10-01</lastmod></url>
+  <url><loc>https://chipsupplychain.org/foundries-and-fabs/</loc><lastmod>2026-10-01</lastmod></url>
+  <url><loc>https://chipsupplychain.org/memory-and-hbm/</loc><lastmod>2026-10-01</lastmod></url>
+  <url><loc>https://chipsupplychain.org/advanced-packaging/</loc><lastmod>2026-10-01</lastmod></url>
+  <url><loc>https://chipsupplychain.org/substrates-and-pcbs/</loc><lastmod>2026-10-01</lastmod></url>
+  <url><loc>https://chipsupplychain.org/test-and-assembly/</loc><lastmod>2026-10-01</lastmod></url>
+  <url><loc>https://chipsupplychain.org/systems-and-networking/</loc><lastmod>2026-10-01</lastmod></url>
+  <url><loc>https://chipsupplychain.org/data-centers-and-power/</loc><lastmod>2026-10-01</lastmod></url>
+  <url><loc>https://chipsupplychain.org/component-costs/</loc><lastmod>2026-10-01</lastmod></url>
+  <url><loc>https://chipsupplychain.org/geopolitics/</loc><lastmod>2026-10-01</lastmod></url>
   <url><loc>https://chipsupplychain.org/chip-supply-chain-the-chain.pdf</loc><lastmod>2026-10-01</lastmod></url>
 </urlset>

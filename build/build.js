@@ -406,6 +406,8 @@ function reviewHTML(ch) {
     + `<div class="fc-nav">${dots}<span class="fc-steps"><button type="button" class="fc-link fc-prev" disabled>Previous card</button><button type="button" class="fc-link fc-next" disabled>Next card</button></span></div>`
     + `<div class="fc-end" hidden><p class="fc-score"><span class="fc-big"></span><span class="fc-score-t"></span></p>${keep}<p class="fc-row fc-row--gap"><button type="button" class="fc-btn fc-back-to-cards">Previous card</button><button type="button" class="fc-btn fc-reset">Start over</button></p></div></section>`;
 }
+// the chapter's share link: a plain link to its own readable page (so crawlers reach it from the main page); a click copies the address (src/app.js)
+const copyLink = (id) => `<a class="label ch-copy" href="${esc(id)}/" data-copy="${SITE.url}${esc(id)}/" aria-label="Copy a link to this chapter">Link to chapter</a>`;
 function chapterHTML(ch) {
   const m = ch.meta, mins = Math.max(1, Math.round(ch.words / 230));
   const specimen = m.specimen || 'wafer';
@@ -417,13 +419,16 @@ function chapterHTML(ch) {
   const next = stageIdx >= 0 ? stages[stageIdx + 1] : null;
   const tile = stageIdx >= 0 ? `<div class="ch-tile"><span class="k">Chapter</span><span class="v">${pad(ch.number)}</span><span class="of">stage ${stageIdx + 1} of ${stages.length}</span></div>` : `<div class="ch-tile"><span class="k">Chapter</span><span class="v">${pad(ch.number)}</span><span class="of">${ch.id === 'geopolitics' ? 'the contest' : 'the economics'}</span></div>`;
   const chain = stageIdx >= 0 ? `<div class="chain chain--compact" aria-label="Where this stage sits in the chain">${chainTrack(stages, ch.id)}<p class="chain-foot"><span><b>${esc(ch.title)}</b>, stage ${stageIdx + 1} of ${stages.length}</span><span>${next ? `Next: ${pad(next.number)} ${esc(next.title)}` : 'Last stage in the chain'}</span></p></div>` : '';
+  const plate = isStage(ch) ? nameplate(m.card, ch.title) : '';
+  // the same pieces, kept for the chapter's own readable page (build/modules/social.js); the prose is the copy before glossary buttons
+  ch.rendered = { plain: pb.box, inShort: parts.inShort, plate, prose: pb.html, mins };
   return `<article class="chapter" id="${esc(ch.id)}" data-specimen="${esc(specimen)}" data-number="${pad(ch.number)}" data-title="${esc(ch.title)}" data-caption="${esc(m.specimenCaption || '')}">
 <aside class="ch-ledger" aria-label="Chapter ${ch.number}${stageIdx >= 0 ? ', stage ' + (stageIdx + 1) + ' of ' + stages.length : ''}">${tile}${chain}</aside>
 <header class="chapter-head">
-<div class="ch-id"><div><h2 class="ch-title"><span class="sr-only">Chapter ${ch.number}: </span>${esc(ch.title)}</h2>${m.oneLiner ? `<p class="ch-lede">${esc(m.oneLiner)}</p>` : ''}<p class="ch-meta"><span class="label">${ch.words.toLocaleString('en-US')} words / ${mins} min</span><span class="label">Specimen: ${esc(SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' '))}</span><button type="button" class="label ch-copy" data-copy="${SITE.url}${esc(ch.id)}/" aria-label="Copy a link to this chapter">Link to chapter</button></p></div></div>
+<div class="ch-id"><div><h2 class="ch-title"><span class="sr-only">Chapter ${ch.number}: </span>${esc(ch.title)}</h2>${m.oneLiner ? `<p class="ch-lede">${esc(m.oneLiner)}</p>` : ''}<p class="ch-meta"><span class="label">${ch.words.toLocaleString('en-US')} words / ${mins} min</span><span class="label">Specimen: ${esc(SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' '))}</span>${copyLink(ch.id)}</p></div></div>
 ${pb.box}
 ${parts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${parts.inShort}</section>` : ''}
-${isStage(ch) ? nameplate(m.card, ch.title) : ''}
+${plate}
 </header>
 <div class="prose">${glossaryWrap(pb.html)}${reviewHTML(ch)}${prevNext(ch)}${sources}</div>
 </article>`;
@@ -517,7 +522,8 @@ if (geo) {
   const sources = geo.cites.length ? `<details class="chapter-sources"><summary>Sources (${geo.cites.length})</summary><ol>${geo.cites.map((c) => `<li>${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol></details>` : '';
   const gparts = splitTakeaways(geo.html); geo.inShort = gparts.inShort;
   const gpb = plainBox(gparts.body, geo.meta.plain, { id: 'geopolitics', cites: geo.cites, figures: [] });
-  geoBody = gpb.box + (gparts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${gparts.inShort}</section>` : '') + `<p class="label" style="margin:10px 0 26px">${geo.words.toLocaleString('en-US')} words / ${Math.max(1, Math.round(geo.words / 230))} min</p>` + glossaryWrap(gpb.html) + reviewHTML(geo) + prevNext(geo) + sources;
+  geo.rendered = { plain: gpb.box, inShort: gparts.inShort, plate: '', prose: gpb.html, mins: Math.max(1, Math.round(geo.words / 230)) };
+  geoBody = gpb.box + (gparts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${gparts.inShort}</section>` : '') + `<p class="ch-meta" style="margin:10px 0 26px"><span class="label">${geo.words.toLocaleString('en-US')} words / ${Math.max(1, Math.round(geo.words / 230))} min</span>${copyLink('geopolitics')}</p>` + glossaryWrap(gpb.html) + reviewHTML(geo) + prevNext(geo) + sources;
 }
 
 /* ---------------- sources view ---------------- */
@@ -551,6 +557,34 @@ const totalWords = all.reduce((a, c) => a + c.words, 0);
 const credits = `Made by <b><a href="https://www.linkedin.com/in/yashvardhan07/" target="_blank" rel="noopener">Yashvardhan Sharma</a></b> with Claude. Corrections and questions: <a href="mailto:contact@chipsupplychain.org">contact@chipsupplychain.org</a>.`;
 const builtOn = new Date(); const builtStr = `${builtOn.getDate()} ${MONTHS[builtOn.getMonth()]} ${builtOn.getFullYear()}`;
 const footer = `<p class="credits">${credits}<span class="updated">Updated ${builtStr}</span></p>`;
+
+/* ---------------- page dates ----------------
+   The day each page last changed. build/page-dates.json keeps, for each page, a hash of its content, the day that hash
+   last changed and the day the page first appeared, so a rebuild that changes nothing leaves the dates, the footer's
+   "Updated" day and the sitemap's lastmod alone. Days are local, like builtStr, so all three name the same day.
+   Commit the file with the build: a fresh checkout (the deploy) then keeps the same dates. */
+const isoOf = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const dayStr = (iso) => { const [y, m, d] = String(iso).split('-').map(Number); return `${d} ${MONTHS[m - 1]} ${y}`; };
+const today = isoOf(builtOn);
+const datesFile = path.join(root, 'build', 'page-dates.json');
+const pageDates = readJSONSafe(datesFile) || {};
+// the day a chapter first appeared: the commit that added its Markdown file, when git can say; asked once per page
+const firstDay = (file) => {
+  if (!file) return today;
+  try {
+    const out = require('child_process').execFileSync('git', ['log', '--follow', '--diff-filter=A', '--format=%as', '--', path.join('content', file)], { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim().split('\n').pop();
+    return /^\d{4}-\d\d-\d\d$/.test(out) ? out : today;
+  } catch (e) { return today; }
+};
+const pageDate = (key, content, file) => {
+  const hash = require('crypto').createHash('sha256').update(content).digest('hex').slice(0, 16);
+  const e = pageDates[key] || (pageDates[key] = { published: firstDay(file) });
+  if (e.hash !== hash) { e.hash = hash; e.modified = today; }
+  if (!e.published || e.published > e.modified) e.published = e.modified;
+  e.seen = true;
+  return e;
+};
+
 const footerKey = footer + `<p class="sources-key"><span class="tier tier-A">A</span> company filings, governments, standards bodies, universities and research institutions; <span class="tier tier-B">B</span> SemiAnalysis, Reuters, the Financial Times and Nikkei Asia.</p>`;
 const suppliersIntro = suppliers.length ? `What each of the ${suppliers.length} firms makes, where it sits, and how hard it would be to replace.` : 'The supplier list is not compiled yet.';
 
@@ -569,7 +603,9 @@ const modDir = (d) => (fs.existsSync(d) ? fs.readdirSync(d).filter((f) => !f.sta
 const moduleCSS = modDir(path.join(root, 'src', 'modules')).filter((f) => f.endsWith('.css')).map((f) => `\n/* module: ${f} */\n` + read(path.join(root, 'src', 'modules', f))).join('\n');
 fill('STYLES', read(path.join(root, 'src', 'styles.css')) + moduleCSS);
 // build modules: build/modules/*.js each export a function (ctx) returning { PLACEHOLDER: html, ... }
-const ctx = { root, fs, path, all, chapters, geo, stages, data, esc, pad, word, cap, read, readJSON, markdown, inline, tierOf, wordCount, warn, glossaryWrap, BAND_NOTE, SUB_NOTE };
+const ctx = { root, fs, path, all, chapters, geo, stages, data, esc, pad, word, cap, read, readJSON, markdown, inline, tierOf, wordCount, warn, glossaryWrap, BAND_NOTE, SUB_NOTE,
+  // for the readable chapter pages (social.js): the source list, footer and dates exactly as the main page prints them
+  tierTag, sourceLine, bibOf, slug, footerKey, builtOn, builtStr, flashcards, SPECIMEN_NAME, pageDate, dayStr };
 for (const f of modDir(path.join(root, 'build', 'modules')).filter((x) => x.endsWith('.js'))) {
   try { const out = require(path.join(root, 'build', 'modules', f))(ctx) || {}; Object.keys(out).forEach((k) => fill(k, String(out[k]))); }
   catch (e) { warn(`build module ${f} failed: ${e.message}`); }
@@ -588,7 +624,7 @@ fill('SUPPLIERS_INTRO', suppliersIntro); fill('BUILT', builtStr);
 for (const asset of ['print-title.png']) { const from = path.join(root, 'build', 'assets', asset); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', asset)); }
 // the site icons (drawn by `python3 build/icons.py`) go to the root of dist/, where browsers look for /favicon.ico
 for (const icon of ['favicon.ico', 'favicon.svg', 'apple-touch-icon.png']) { const from = path.join(root, 'build', 'assets', 'icons', icon); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', icon)); else warn(`icon ${icon} is missing; run python3 build/icons.py`); }
-fill('GEO_DEK', esc(geoDek)); fill('GEO_BODY', geoBody);
+fill('GEO_DEK', esc(geoDek)); fill('GEO_BODY', geoBody); fill('GEO_CAPTION', esc(geo ? geo.meta.specimenCaption || '' : '')); // the globe's caption, from the chapter's front matter as the other chapters' are
 fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));
 // the Look up page: one list of every term, firm and chip, alphabetical, each with the kind a reader would call it
 const lkSlug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -621,16 +657,31 @@ const moduleJS = modDir(path.join(root, 'src', 'modules')).filter((f) => f.endsW
 fill('APP', read(path.join(root, 'src', 'app.js')) + moduleJS);
 // any placeholder no module filled is removed rather than shipped as braces
 html = html.replace(/\{\{[A-Z_]+\}\}/g, () => '');
+// the main page's "Updated" day (footer and printed title page) is the day its content last changed, not the build's
+const homeDates = pageDate('/', html.split(builtStr).join(''));
+if (homeDates.modified !== today) html = html.split(`Updated ${builtStr}`).join(`Updated ${dayStr(homeDates.modified)}`);
 
 fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
 fs.writeFileSync(path.join(root, 'dist', 'index.html'), html);
 if (SITE.cname) fs.writeFileSync(path.join(root, 'dist', 'CNAME'), SITE.cname + '\n'); else if (fs.existsSync(path.join(root, 'dist', 'CNAME'))) fs.unlinkSync(path.join(root, 'dist', 'CNAME'));
 // for search engines: everything may be crawled, and the sitemap lists the pages that carry their own content
-// (the site itself and the printable chain; the share pages only forward to the site, so they are left out)
-const isoDay = builtOn.toISOString().slice(0, 10);
+// (the site itself, each chapter's readable page and the printable chain; the view share pages only forward to the site, so they are left out)
+// each with the day its content last changed (page dates, above): the readable pages hash their article, the PDF its bytes
+const chapterPages = (ctx.readablePages || []).map((id) => '/' + id + '/'); // social.js lists the readable pages it wrote
+if (chapterPages.length !== all.length) warn(`sitemap: ${all.length - chapterPages.length} of ${all.length} chapters have no readable page`);
+const pdfName = 'chip-supply-chain-the-chain.pdf', pdfFile = path.join(root, 'dist', pdfName);
+if (fs.existsSync(pdfFile)) pageDate('/' + pdfName, fs.readFileSync(pdfFile)); else warn(`sitemap: dist/${pdfName} is missing`);
+const lastmod = (key) => (pageDates[key] || {}).modified || today;
 fs.writeFileSync(path.join(root, 'dist', 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${SITE.url}sitemap.xml\n`);
 fs.writeFileSync(path.join(root, 'dist', 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-  [SITE.url, SITE.url + 'chip-supply-chain-the-chain.pdf'].map((u) => `  <url><loc>${u}</loc><lastmod>${isoDay}</lastmod></url>`).join('\n') + `\n</urlset>\n`);
+  ['/', ...chapterPages, '/' + pdfName].map((k) => `  <url><loc>${SITE.url}${k.slice(1)}</loc><lastmod>${lastmod(k)}</lastmod></url>`).join('\n') + `\n</urlset>\n`);
+// keep the dates of the pages this build wrote (a retired page drops out); the file is rewritten only when a date or hash moved
+{
+  const kept = {};
+  Object.keys(pageDates).sort().forEach((k) => { const e = pageDates[k]; if (e.seen) kept[k] = { published: e.published, modified: e.modified, hash: e.hash }; });
+  const text = JSON.stringify(kept, null, 2) + '\n';
+  if (read(datesFile) !== text) fs.writeFileSync(datesFile, text);
+}
 // the datasets are served next to the page so the method notes' links resolve and researchers can fetch them directly
 fs.mkdirSync(path.join(root, 'dist', 'data'), { recursive: true });
 const dataFiles = fs.readdirSync(path.join(root, 'data')).filter((f) => /\.(json|md)$/.test(f));

@@ -2064,10 +2064,13 @@
         if (!fc || $('.fc-deck', fc).hidden) return;
         e.preventDefault(); FC.step(fc, e.key === 'ArrowLeft' ? -1 : 1);
       });
-      // copy a chapter's share link (its own page, which unfurls with a card)
+      // copy a chapter's share link (its own page, which unfurls with a card); the link's href is that page, so a
+      // modified click (new tab, new window) opens it instead
       document.addEventListener('click', function (e) {
         var b = e.target.closest ? e.target.closest('.ch-copy') : null;
         if (!b) return;
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+        e.preventDefault();
         var url = b.getAttribute('data-copy'), done = function () { b.textContent = 'Copied'; b.setAttribute('data-done', '1'); setTimeout(function () { b.textContent = 'Link to chapter'; b.removeAttribute('data-done'); }, 1600); };
         if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, function () { window.prompt('Copy this link', url); });
         else window.prompt('Copy this link', url);
