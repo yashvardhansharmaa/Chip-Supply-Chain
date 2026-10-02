@@ -10835,7 +10835,7 @@ PC.register('wafer', function (p) {
       document.addEventListener('click', function (e) { var j = e.target.closest ? e.target.closest('.cf-jump-btn') : null; if (!j) return; var t = $('#timeline'); if (t) t.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' }); });
       // cite-this block in the footer
       var d0 = new Date().toISOString().slice(0, 10), canon = (document.querySelector('link[rel=canonical]') || {}).href || (location.origin + location.pathname);
-      $$('.site-footer').forEach(function (foot) { var d = d0; foot.insertAdjacentHTML('beforeend', '<details class="cite"><summary>How to cite</summary><pre>Sharma, Y. Chip Supply Chain: how AI chips are made, stage by stage. September 2026. ' + canon + ' (accessed ' + d + ').</pre><pre>@misc{chipsupplychain2026,\n  title  = {Chip Supply Chain: how AI chips are made, stage by stage},\n  author = {Sharma, Yashvardhan},\n  year   = {2026},\n  month  = {September},\n  url    = {' + canon + '},\n  note   = {Accessed ' + d + '}\n}</pre></details>'); });
+      $$('.site-footer').forEach(function (foot) { var d = d0; foot.insertAdjacentHTML('beforeend', '<details class="cite"><summary>How to cite</summary><pre>Sharma, Y. Chip Supply Chain: How AI Chips Are Made. September 2026. ' + canon + ' (accessed ' + d + ').</pre><pre>@misc{chipsupplychain2026,\n  title  = {Chip Supply Chain: How AI Chips Are Made},\n  author = {Sharma, Yashvardhan},\n  year   = {2026},\n  month  = {September},\n  url    = {' + canon + '},\n  note   = {Accessed ' + d + '}\n}</pre></details>'); });
     }
   };
 
