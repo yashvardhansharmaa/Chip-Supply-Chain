@@ -9177,7 +9177,7 @@ PC.register('wafer', function (p) {
         this.picked.splice(at, 1);
         if (this.sel === id) this.sel = this.picked[0] || null;
       } else {
-        if (this.picked.length >= this.max) { this.say('Remove one to add another.'); return; }
+        if (this.picked.length >= this.max) { this.say('Compare up to four. Remove one to add another.'); return; }
         this.picked.push(id);
         this.sel = id;
       }

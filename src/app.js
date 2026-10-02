@@ -175,7 +175,7 @@
     pointer: function () {
       var self = this, c = this.canvas, lx = 0, ly = 0, fine = window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
       if (!fine) return;
-      c.setAttribute('tabindex', '0'); c.setAttribute('aria-label', '3D specimen; drag or use the arrow keys to turn it');
+      c.setAttribute('tabindex', '0'); c.setAttribute('aria-label', '3D specimen. Drag it or use the arrow keys to turn it.');
       c.addEventListener('pointerenter', function (e) { if (e.pointerType !== 'touch') self.held = true; });
       c.addEventListener('pointerleave', function () { if (!self.dragging) self.held = false; });
       c.addEventListener('pointerdown', function (e) {
@@ -458,7 +458,7 @@
         this.picked.splice(at, 1);
         if (this.sel === id) this.sel = this.picked[0] || null;
       } else {
-        if (this.picked.length >= this.max) { this.say('Four is the limit.'); return; }
+        if (this.picked.length >= this.max) { this.say('Compare up to four. Remove one to add another.'); return; }
         this.picked.push(id);
         this.sel = id;
       }

@@ -69,18 +69,18 @@ const STOPS = [
 ];
 /* One line on what each country makes, in the words the chapters use. Editorial. */
 const ROLE = {
-  US: 'Designs the chips and makes most of the tools; the biggest buyer',
+  US: 'Designs the chips, makes most of the tools and is the biggest buyer',
   NL: 'The only maker of EUV scanners, the machines that print the finest layers',
-  JP: 'Wafers, photoresist, masks and etch tools: the materials no fab runs without',
+  JP: 'Wafers, photoresist, masks and etch tools, which every fab needs',
   TW: 'Makes nearly every leading-edge chip and packages most of them',
   KR: 'Memory, including the high-bandwidth stacks every accelerator needs',
-  DE: 'The optics inside every EUV scanner; specialty chemicals',
+  DE: 'The optics inside every EUV scanner, and specialty chemicals',
   CN: 'The largest market, now building its own tools, memory and chips',
   MY: 'Test and assembly, the last stage before the server',
   SG: 'Test, assembly and mature-node fabs',
-  GB: 'Arm and the other processor designs most chips license',
+  GB: 'Arm and the other processor designs that most chips license',
   IL: 'Metrology and inspection tools, and chip design centers',
-  AT: 'The mask writers and substrates two extreme chokepoints depend on'
+  AT: 'The mask writers and substrates that two extreme chokepoints depend on'
 };
 
 /* Which chapter each matrix segment belongs to. */
@@ -335,7 +335,7 @@ module.exports = function (ctx) {
       ? `<a href="#/geopolitics">${word(d.towns.length)} chokepoint town${d.towns.length > 1 ? 's' : ''}: ${d.towns.map((t) => esc(t.name)).join(', ')}</a>`
       : '';
     const firmLine = d.firms.length
-      ? `<a href="#/suppliers">${d.firms.length} firm${d.firms.length > 1 ? 's' : ''} in the supplier list${d.topCats.length ? ', led by ' + d.topCats.map((c) => esc(lcCat(c))).join('; ') : ''}</a>`
+      ? `<a href="#/suppliers">${d.firms.length} firm${d.firms.length > 1 ? 's' : ''} in the supplier list${d.topCats.length ? (d.firms.length > 1 ? `. Largest group${d.topCats.length > 1 ? 's' : ''}: ` : ', in ') + d.topCats.map((c) => esc(lcCat(c))).join('; ') : ''}</a>`
       : '<span>No firm in the supplier list</span>';
 
     return `<article class="sa-panel" data-cc="${cc}"${open ? '' : ' hidden'}>
@@ -480,7 +480,7 @@ ${svg}
   const roleOrder = Object.keys(ROLE).filter((cc) => info[cc]).sort((a, b) => ((ledBy[b] || []).length - (ledBy[a] || []).length) || (info[b].named.length - info[a].named.length));
   const metaOf = (cc) => {
     const led = ledBy[cc] || [], five = led.filter((c) => c.band === 'Extreme').length;
-    return led.length ? `leads ${word(led.length)} stage${led.length > 1 ? 's' : ''}${five ? `, ${word(five)} of them extreme` : ''}` : `named on ${word(info[cc].named.length)} stage${info[cc].named.length === 1 ? '' : 's'}`;
+    return led.length ? `leads ${word(led.length)} stage${led.length > 1 ? 's' : ''}${five ? `, ${word(five)} of them extreme` : ''}` : `named on ${word(info[cc].named.length)} chokepoint card${info[cc].named.length === 1 ? '' : 's'}`;
   };
   // the country chips keep the meta and the role line in their markup; the chip shows the name and the caption below reads the rest
   const roles = roleOrder.map((cc) => `<li><button type="button" class="sa-role" data-cc="${cc}" aria-pressed="${cc === DEFAULT_CC}"><span class="sa-role-name">${esc(COUNTRY[cc] || cc)}</span><span class="sa-role-meta">${metaOf(cc)}</span><span class="sa-role-line">${esc(ROLE[cc])}</span></button></li>`).join('');
