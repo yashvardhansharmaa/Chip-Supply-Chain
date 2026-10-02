@@ -174,6 +174,6 @@ Epoch puts Huawei's chips three to four years behind Nvidia's until at least 203
 
 ## Takeaways
 
-As of 2025, the think tank CSIS found Chinese design tools still far from replacing the full range of advanced capabilities US firms offer, especially for 5 nm and 3 nm chip design ([source](https://www.csis.org/analysis/double-edged-sword-semiconductor-export-controls-electronic-design-automation)). But Chinese design-software companies were winning share at older manufacturing processes, the research firm SemiAnalysis reported ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
-
 The US government required a license to sell design software to anyone in China from late May to 2 July 2025 ([source](https://www.sec.gov/Archives/edgar/data/813672/000081367225000093/cdns-20250702.htm)). Since October 2022 a narrower requirement has covered software specially made for chips with gate-all-around transistors, a transistor design the rule calls key to processes at 3 nm and below ([source](https://www.federalregister.gov/documents/2022/08/15/2022-17125/implementation-of-certain-2021-wassenaar-arrangement-decisions-on-four-section-1758-technologies)).
+
+As of 2025, the think tank CSIS found Chinese design tools still far from replacing the full range of advanced capabilities US firms offer, especially for 5 nm and 3 nm chip design ([source](https://www.csis.org/analysis/double-edged-sword-semiconductor-export-controls-electronic-design-automation)). But Chinese design-software companies were winning share at older manufacturing processes, the research firm SemiAnalysis reported ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).

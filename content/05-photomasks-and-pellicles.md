@@ -155,6 +155,6 @@ Pellicles already work in high-volume EUV manufacturing ([source](https://www.as
 
 ## Takeaways
 
-Hoya says its share of the mask blank market is exceptionally high ([source](https://www.hoya.com/ir/2025/en/review/it.html)). On CSET's count, Austria's IMS Nanofabrication held 46.6 percent of the 2025 world market for electron-beam mask writers, which draw the pattern onto a mask ([source](https://chipexplorer.eto.tech/?parentNode=N25&selectedNode=N29)).
+On CSET's count, Austria's IMS Nanofabrication held 46.6 percent of the 2025 world market for electron-beam mask writers, which draw the pattern onto a mask ([source](https://chipexplorer.eto.tech/?parentNode=N25&selectedNode=N29)). Hoya says its share of the mask blank market is exceptionally high ([source](https://www.hoya.com/ir/2025/en/review/it.html)).
 
 SemiAnalysis put a full set of masks for a leading-edge chip at $40 million in May 2026 ([source](https://newsletter.semianalysis.com/p/eda-market-primer)). In July 2022 it wrote that more companies will lack the volume to spread the fixed cost of mask sets ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)). On 8 September 2026 ASML and TSMC announced a plan to move from 6-inch to 12-inch masks ([source](https://pr.tsmc.com/english/news/3338)). They expect the change to raise fab productivity and lower chipmaking costs ([source](https://pr.tsmc.com/english/news/3338)).

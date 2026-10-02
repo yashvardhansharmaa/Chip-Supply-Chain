@@ -2,7 +2,7 @@
   "/": {
     "published": "2026-10-01",
     "modified": "2026-10-02",
-    "hash": "d03839bfa47be5c6"
+    "hash": "713b779bb7636b89"
   },
   "/advanced-packaging/": {
     "published": "2026-09-09",
@@ -17,7 +17,7 @@
   "/chip-supply-chain-the-chain.pdf": {
     "published": "2026-10-01",
     "modified": "2026-10-02",
-    "hash": "4e6bf5bee0bd133e"
+    "hash": "dd4bad62801e25c4"
   },
   "/component-costs/": {
     "published": "2026-09-09",
@@ -37,7 +37,7 @@
   "/design-and-eda/": {
     "published": "2026-09-09",
     "modified": "2026-10-02",
-    "hash": "89c5f9e6e405d730"
+    "hash": "deaf3e789147b036"
   },
   "/foundries-and-fabs/": {
     "published": "2026-09-09",
@@ -67,7 +67,7 @@
   "/photomasks-and-pellicles/": {
     "published": "2026-09-09",
     "modified": "2026-10-02",
-    "hash": "8e4115653a0beb42"
+    "hash": "494ea1c16ea575c4"
   },
   "/silicon-and-wafers/": {
     "published": "2026-09-09",
@@ -87,7 +87,7 @@
   "/test-and-assembly/": {
     "published": "2026-09-09",
     "modified": "2026-10-02",
-    "hash": "e7cf2e80205aca0d"
+    "hash": "81551952509c8ada"
   },
   "/transistors-and-front-end/": {
     "published": "2026-09-09",
