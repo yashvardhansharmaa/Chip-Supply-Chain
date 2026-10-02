@@ -45,7 +45,7 @@
         "fp8": "yes",
         "fp4": "yes"
       },
-      "precisionNote": "Dense, no sparsity, derived from Nvidia’s HGX B200 board table (8 GPUs: 36 PFLOPS FP16/BF16 and 72 PFLOPS FP8 with sparsity, 72 PFLOPS FP4 dense). The hotter GB200 NVL72 variant reaches 10,000 dense FP4 TFLOPS per GPU; HGX B200 baseboards ship 180 GB per GPU, under the 192 GB quoted for the chip. All three formats are supported and published: the HGX table carries FP4, FP8/FP6, INT8, FP16/BF16, TF32, FP32 and FP64 rows for the board."
+      "precisionNote": "Dense, no sparsity, derived from Nvidia’s HGX B200 board table (8 GPUs: 36 PFLOPS FP16/BF16 and 72 PFLOPS FP8 with sparsity, 72 PFLOPS FP4 dense). The higher-power GB200 NVL72 variant reaches 10,000 dense FP4 TFLOPS per GPU. HGX B200 baseboards carry 180 GB per GPU, under the 192 GB quoted for the chip. All three formats are supported and published. The HGX table carries FP4, FP8/FP6, INT8, FP16/BF16, TF32, FP32 and FP64 rows for the board."
     },
     "tdpW": 1000,
     "interconnect": {
@@ -63,10 +63,10 @@
       "HPE",
       "Lenovo"
     ],
-    "priceEstimate": "$30,000 to $40,000 per GPU, the range Nvidia's CEO gave in March 2024. Epoch AI's chip sales model, with data through October 2025, puts Nvidia's compute revenue per GPU in GB200 rack systems at $33,000 to $42,000, leaving out the networking gear. SemiAnalysis's cloud cost model measures the hourly cost of owning or renting one, counting server, power, data center space and financing; as of October 2026 it rates the B200 at about $1.73 per GPU-hour owned at large hyperscaler volume and $3.70 per GPU-hour at the retail tier",
+    "priceEstimate": "$30,000 to $40,000 per GPU, the range Nvidia's CEO gave in March 2024. Epoch AI's chip sales model, with data through October 2025, puts Nvidia's compute revenue per GPU in GB200 rack systems at $33,000 to $42,000, leaving out the networking gear. SemiAnalysis's cloud cost model measures the hourly cost of owning or renting one, counting server, power, data center space and financing. As of October 2026 it rates the B200 at about $1.73 per GPU-hour owned at large hyperscaler volume and $3.70 per GPU-hour at the retail tier",
     "bomEstimate": "Epoch AI estimated in December 2025 about $6,400 to build ($5,700 to $7,300): memory $2,900, packaging $1,100, packaging yield loss $1,000, the two logic dies $900",
-    "exportStatus": "Controlled. Dense FP8 of 4,500 TFLOPS puts total processing performance near 36,000, well above the 21,000 TPP ceiling in the BIS rule effective 15 January 2026, so an export to China or Macau needs a license and is reviewed with a presumption of denial under 15 CFR 742.6(b)(10). An application may still be filed.",
-    "notes": "The first reticle-crossing Nvidia data center GPU: two 4NP dies fused by a 10 TB/s NV-HBI link and presented to software as one GPU. Epoch AI's cost model puts the package on TSMC's CoWoS-L process. Nvidia publishes no die area, no package dimensions and no list price for the part. Epoch AI records the HGX B200 board at 180 GB and 7.7 TB/s per GPU against the 192 GB and 8 TB/s of the module Nvidia quotes.",
+    "exportStatus": "Controlled. Dense FP8 of 4,500 TFLOPS puts total processing performance (TPP) near 36,000, well above the 21,000 TPP ceiling for case-by-case review in the BIS rule effective 15 January 2026. So an export to China or Macau needs a license, which BIS reviews with a presumption of denial under 15 CFR 742.6(b)(10). An application may still be filed.",
+    "notes": "The first Nvidia data center GPU larger than the reticle limit, the biggest area a lithography tool can print in one exposure. It joins two dies, made on TSMC's 4NP process, with a 10 TB/s NV-HBI link, and software sees the pair as one GPU. Epoch AI's cost model puts the package on TSMC's CoWoS-L process. Nvidia publishes no die area, no package dimensions and no list price for the part. Epoch AI records the HGX B200 board at 180 GB and 7.7 TB/s per GPU, less than the 192 GB and 8 TB/s Nvidia quotes for the module.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -190,7 +190,7 @@
     "announced": "2025-03",
     "shipping": "2025-Q3",
     "status": "Shipping",
-    "target": "Inference-weighted training and inference",
+    "target": "Training and inference, weighted toward inference",
     "process": {
       "foundry": "TSMC",
       "node": "4NP (custom N4P)",
@@ -227,7 +227,7 @@
         "fp8": "yes",
         "fp4": "yes"
       },
-      "precisionNote": "Dense. Derived from Nvidia’s GB300 NVL72 table: 1,080 PFLOPS dense NVFP4, and 720 PFLOPS FP8/FP6 and 360 PFLOPS FP16/BF16 with sparsity, across 72 GPUs. On the HGX boards FP16 is unchanged from B200, at 36 PFLOPS with sparsity across eight GPUs; the Blackwell Ultra uplift is in FP4 and in attention softmax throughput. This row is the NVL72 part: the HGX B300 baseboard is slower, at 108 PFLOPS dense FP4 across eight GPUs, or 13,500 per GPU. All three formats are supported and published."
+      "precisionNote": "Dense. Derived from Nvidia’s GB300 NVL72 table: 1,080 PFLOPS dense NVFP4, and 720 PFLOPS FP8/FP6 and 360 PFLOPS FP16/BF16 with sparsity, across 72 GPUs. On the HGX boards FP16 is unchanged from the B200, at 36 PFLOPS with sparsity across eight GPUs. The B300's gains over the B200 are in FP4 and in attention softmax throughput. This row is the NVL72 part. The HGX B300 baseboard is slower, at 108 PFLOPS dense FP4 across eight GPUs, or 13,500 per GPU. All three formats are supported and published."
     },
     "tdpW": 1400,
     "interconnect": {
@@ -247,8 +247,8 @@
     ],
     "priceEstimate": "Epoch AI estimates $38,000 to $49,000 per GPU in GB300 NVL72 systems, from HSBC and SemiAnalysis rack prices and the cost of about 100 GB more memory than the B200",
     "bomEstimate": null,
-    "exportStatus": "Controlled. Far above the 21,000 TPP and 6,500 GB/s memory-bandwidth ceilings in the BIS rule effective 15 January 2026, so China and Macau need a license that is reviewed with a presumption of denial under 15 CFR 742.6(b)(10). Applications may be filed.",
-    "notes": "Same two-die 4NP silicon as B200 but with 12-high HBM3E stacks raising capacity to 288 GB, and a tensor core retuned for NVFP4 and for the softmax step in attention. Nvidia describes eight 12-high stacks, and Micron's 12-high HBM3E stack holds 36 GB, which gives the 288 GB. Nvidia publishes no die area, no package dimensions and no list price. As with the B200 the board and the module differ: Epoch AI records an HGX B300 at 270 GB, 7.7 TB/s and 1,100 W, against the 288 GB, 8 TB/s and 1,400 W of the GB300 configuration above.",
+    "exportStatus": "Controlled. It is far above the 21,000 TPP and 6,500 GB/s memory-bandwidth ceilings for case-by-case review in the BIS rule effective 15 January 2026. So an export to China or Macau needs a license, which BIS reviews with a presumption of denial under 15 CFR 742.6(b)(10). Applications may be filed.",
+    "notes": "It uses the same two-die 4NP silicon as the B200, with 12-high HBM3E stacks that raise capacity to 288 GB. Its tensor core is retuned for NVFP4, Nvidia's four-bit number format, and for the softmax step in attention. Nvidia describes eight 12-high stacks. Micron's 12-high HBM3E stack holds 36 GB, and eight of them make 288 GB. Nvidia publishes no die area, no package dimensions and no list price. As with the B200, the HGX board version has lower figures. Epoch AI records an HGX B300 board at 270 GB, 7.7 TB/s and 1,100 W, against 288 GB, 8 TB/s and 1,400 W for the GB300 configuration above.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -400,7 +400,7 @@
         "fp8": "yes",
         "fp4": "yes"
       },
-      "precisionNote": "Dense, from Nvidia’s Vera Rubin NVL72 table, whose Rubin GPU column gives 35 PFLOPS NVFP4 and 17.5 PFLOPS FP8/FP6 for training and 4 PFLOPS FP16/BF16, all marked dense. FP16 is well under half the FP8 rate on this part. Nvidia separately quotes 50 PFLOPS per GPU of NVFP4 inference with sparsity"
+      "precisionNote": "Dense, from Nvidia’s Vera Rubin NVL72 table. Its Rubin GPU column gives 35 PFLOPS NVFP4 and 17.5 PFLOPS FP8/FP6 for training and 4 PFLOPS FP16/BF16, all marked dense. FP16 is well under half the FP8 rate on this part. Nvidia separately quotes 50 PFLOPS per GPU of NVFP4 inference with sparsity"
     },
     "tdpW": 2300,
     "interconnect": {
@@ -416,10 +416,10 @@
       "Supermicro",
       "Dell"
     ],
-    "priceEstimate": "Nvidia publishes no price. SemiAnalysis’s TCO model puts a hyperscaler’s capital cost for a Vera Rubin NVL72 at $3.28 per GPU-hour over a four-year life, about 45 percent more per GPU than a GB300 rack",
+    "priceEstimate": "Nvidia publishes no price. SemiAnalysis’s total cost of ownership model puts a hyperscaler’s capital cost for a Vera Rubin NVL72 at $3.28 per GPU-hour over a four-year life, about 45 percent more per GPU than a GB300 rack",
     "bomEstimate": null,
-    "exportStatus": "Controlled. Performance is an order of magnitude above the January 2026 licensing thresholds, so a license for China or Macau is required and reviewed with a presumption of denial under 15 CFR 742.6(b)(10). Applications may be filed.",
-    "notes": "Nvidia’s first HBM4 GPU, at 288 GB per GPU in the shipping specification. SemiAnalysis reported in March 2026 that SK hynix and Samsung were closer than Micron to the roughly 11 Gb/s HBM4 pin speed Nvidia targets. SemiAnalysis had written in February 2026 that Micron was effectively out of the picture for Rubin HBM4, so the supplier field lists SK hynix and Samsung. Two Nvidia sources give different memory bandwidths: the Vera Rubin NVL72 specification table says 19.2 TB/s per GPU, and Nvidia's Rubin architecture post says up to 22 TB/s. The spec panel carries the table figure and neither is averaged away. The same disagreement applies to NVLink, at 3 TB/s on the table and 3.6 TB/s in the architecture material. Nvidia publishes 336 billion transistors, 224 streaming multiprocessors and 896 Tensor Cores, and no node, die area, package dimensions or board power. The node and power shown come from SemiAnalysis: 3NP, and 2,300 W at the maximum power setting, with an 1,800 W efficiency profile on the same hardware. Its spec table gives 4,000 TFLOPS of dense FP16 per GPU, well under half the 17,500 TFLOPS FP8 rate.",
+    "exportStatus": "Controlled. Its performance is an order of magnitude above the January 2026 licensing thresholds. So an export to China or Macau needs a license, which BIS reviews with a presumption of denial under 15 CFR 742.6(b)(10). Applications may be filed.",
+    "notes": "Nvidia’s first HBM4 GPU, at 288 GB per GPU in the shipping specification. SemiAnalysis reported in March 2026 that SK hynix and Samsung were closer than Micron to the roughly 11 Gb/s HBM4 pin speed Nvidia targets. SemiAnalysis had written in February 2026 that Micron was effectively out of the picture for Rubin HBM4, so the supplier field lists SK hynix and Samsung. Two Nvidia sources give different memory bandwidths: the Vera Rubin NVL72 specification table says 19.2 TB/s per GPU, and Nvidia's Rubin architecture post says up to 22 TB/s. The spec panel carries the table figure and does not average the two. The two sources also disagree on NVLink, Nvidia's link between GPUs, at 3 TB/s on the table and 3.6 TB/s in the architecture material. Nvidia publishes 336 billion transistors, 224 streaming multiprocessors and 896 Tensor Cores. It publishes no node, die area, package dimensions or board power. The node and power shown come from SemiAnalysis: 3NP, and 2,300 W at the maximum power setting, with an 1,800 W efficiency profile on the same hardware. Nvidia's spec table gives 4,000 TFLOPS of dense FP16 per GPU, well under half the 17,500 TFLOPS FP8 rate.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -572,7 +572,7 @@
         "fp8": "yes",
         "fp4": "no"
       },
-      "precisionNote": "Dense. Nvidia’s H200 SXM page quotes 1,979 TFLOPS BF16 and 3,958 TFLOPS FP8 with sparsity; halved here. Hopper has no four-bit datapath: Nvidia’s Hopper architecture post lists the tensor-core types, “The FP8, FP16, BF16, TF32, FP64, and INT8 MMA data types are supported”, and names no FP4, so the FP4 cell reads not supported."
+      "precisionNote": "Dense. Nvidia’s H200 SXM page quotes 1,979 TFLOPS BF16 and 3,958 TFLOPS FP8 with sparsity. The figures here are half of those. Hopper has no four-bit datapath. In its list of tensor-core types, Nvidia’s Hopper architecture post says “The FP8, FP16, BF16, TF32, FP64, and INT8 MMA data types are supported” and names no FP4. So the FP4 cell reads not supported."
     },
     "tdpW": 700,
     "interconnect": {
@@ -590,8 +590,8 @@
     ],
     "priceEstimate": null,
     "bomEstimate": null,
-    "exportStatus": "Licensable to China and Macau, case by case, since the BIS final rule effective 15 January 2026. That rule names the H200 and the AMD MI325X and sets the ceiling at total processing performance below 21,000 and total DRAM bandwidth below 6,500 GB/s; the H200's 4,800 GB/s and roughly 15,800 TPP fall under both. Aggregate TPP shipped to China is capped at 50 percent of aggregate TPP shipped to US customers, and a concurrent presidential proclamation adds a 25 percent tariff. Reexports and in-country transfers remain under presumption of denial. First deliveries to ByteDance and Tencent were reported in August 2026.",
-    "notes": "The standard Hopper part, with no China-specific changes, readmitted through a licensing carve-out. IFP reported in October 2025 that Washington was weighing the purpose-built B30A and that Chinese regulators had banned purchases of the H20 and the RTX Pro 6000D. It is the clearest case of export policy setting the product roadmap.",
+    "exportStatus": "Licensable to China and Macau, case by case, since the BIS final rule effective 15 January 2026. That rule names the H200 and the AMD MI325X. It sets the ceilings at a total processing performance (TPP) below 21,000 and a total DRAM bandwidth below 6,500 GB/s. The H200's 4,800 GB/s and roughly 15,800 TPP fall under both. The rule caps aggregate TPP shipped to China at 50 percent of aggregate TPP shipped to US customers. A presidential proclamation issued at the same time adds a 25 percent tariff. Reexports and in-country transfers remain under presumption of denial. First deliveries to ByteDance and Tencent were reported in August 2026.",
+    "notes": "The standard H200, with no China-specific changes, allowed back into China under a licensing carve-out. The Institute for Progress (IFP) reported in October 2025 that Washington was weighing the B30A, a chip built for the China market, and that Chinese regulators had banned purchases of the H20 and the RTX Pro 6000D. The H200 is the clearest case of export policy setting the product roadmap.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -714,7 +714,7 @@
         "fp8": "yes",
         "fp4": "no"
       },
-      "precisionNote": "Dense, from Epoch AI’s hardware database, which records 148 TFLOPS FP16 and BF16 for the HGX H20. Nvidia has never published an H20 datasheet, and no allowed source gives a separate FP8 figure. FP8 is supported all the same: the H20 is a cut-down Hopper part, and Nvidia’s Hopper post lists FP8 among the supported MMA types, so that cell reads not published. Hopper has no four-bit datapath: Nvidia’s Hopper architecture post lists the tensor-core types, “The FP8, FP16, BF16, TF32, FP64, and INT8 MMA data types are supported”, and names no FP4, so the FP4 cell reads not supported. Epoch AI describes the part as a scaled-down H200 in every variable except arithmetic, where it reaches only about 15 percent of the H200."
+      "precisionNote": "Dense, from Epoch AI’s hardware database, which records 148 TFLOPS FP16 and BF16 for the HGX H20. Nvidia has never published an H20 datasheet, and no allowed source gives a separate FP8 figure. FP8 is still supported, because the H20 is a cut-down Hopper part and Nvidia’s Hopper post lists FP8 among the supported tensor-core types. With no figure, the FP8 cell reads not published. Hopper has no four-bit datapath. In its list of tensor-core types, Nvidia’s Hopper architecture post says “The FP8, FP16, BF16, TF32, FP64, and INT8 MMA data types are supported” and names no FP4. So the FP4 cell reads not supported. Epoch AI describes the part as a slightly scaled-down H200 on every measure except arithmetic, where it reaches only about 15 percent of the H200."
     },
     "tdpW": 400,
     "interconnect": {
@@ -725,8 +725,8 @@
     "systemIntegrators": [],
     "priceEstimate": "$12,000 to $15,000 per card in February 2024, as reported by Reuters. Epoch AI uses $10,000 to $15,000 for 2024 and $10,000 to $13,000 for 2025",
     "bomEstimate": null,
-    "exportStatus": "The chip drawn to sit just under the 2023 line. Dense FP16 of 148 TFLOPS gives a total processing performance of 2,368, below the 4,800 in 3A090.a; if it uses the 814 mm2 Hopper die, performance density works out at about 2.9, under the 3.2 that would have pulled it into 3A090.b. SemiAnalysis called this straddling the line on peak performance and performance density at once. On 9 April 2025 the US government told Nvidia that the H20, and any circuit matching its memory or interconnect bandwidth, needed a license for China indefinitely, and Nvidia booked up to $5.5 billion of charges for inventory and purchase commitments.",
-    "notes": "Nvidia’s third attempt at a compliant China part, and the one that showed the limits of designing to a threshold: a chip built to comply with the rules still needed a license by April 2025. Nvidia publishes no datasheet, no die area, no stack count and no NVLink rate for it, so almost everything here comes from Epoch AI’s database. The 96 GB of HBM3 implies six 16 GB stacks on a die that carries six stack sites, but Nvidia has not confirmed that. SemiAnalysis reported product samples in November 2023 and mass production within the next month, and Epoch AI dates first shipments to February 2024.",
+    "exportStatus": "Designed to sit just under the thresholds of the 2023 rule. Dense FP16 of 148 TFLOPS gives a total processing performance of 2,368, below the 4,800 in 3A090.a. If it uses the 814 mm2 Hopper die, its performance density (TPP divided by die area) works out at about 2.9, under the 3.2 that would have pulled it into 3A090.b. SemiAnalysis called this straddling the line on peak performance and performance density at once. On 9 April 2025 the US government told Nvidia that the H20, and any circuit matching its memory or interconnect bandwidth, needed a license for China indefinitely. Nvidia then booked up to $5.5 billion of charges for inventory and purchase commitments.",
+    "notes": "Nvidia’s third attempt at a China part designed to meet US export rules. Even so, in April 2025 the US government required a license for it. Nvidia publishes no datasheet, no die area, no stack count and no NVLink rate for it, so almost everything here comes from Epoch AI’s database. The 96 GB of HBM3 implies six 16 GB stacks on a die that carries six stack sites, but Nvidia has not confirmed that. SemiAnalysis reported product samples in November 2023 and mass production within the next month. Epoch AI dates first shipments to February 2024.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -857,7 +857,7 @@
         "fp8": "yes",
         "fp4": "no"
       },
-      "precisionNote": "Dense, and identical to the H100. Epoch AI states that the H800 had exactly the same arithmetic performance as the H100 and records 989 TFLOPS dense FP16; the FP8 figure is the H100’s, halved from Nvidia’s sparse 3,958. Nvidia published no H800 datasheet outside China. Hopper has no four-bit datapath: Nvidia’s Hopper architecture post lists the tensor-core types, “The FP8, FP16, BF16, TF32, FP64, and INT8 MMA data types are supported”, and names no FP4, so the FP4 cell reads not supported."
+      "precisionNote": "Dense, and identical to the H100. Epoch AI states that the H800 had exactly the same arithmetic performance as the H100 and records 989 TFLOPS dense FP16. The FP8 figure is the H100’s, halved from Nvidia’s sparse 3,958. Nvidia published no H800 datasheet outside China. Hopper has no four-bit datapath. In its list of tensor-core types, Nvidia’s Hopper architecture post says “The FP8, FP16, BF16, TF32, FP64, and INT8 MMA data types are supported” and names no FP4. So the FP4 cell reads not supported."
     },
     "tdpW": 700,
     "interconnect": {
@@ -868,8 +868,8 @@
     "systemIntegrators": [],
     "priceEstimate": "Reuters reported in February 2024 that eight-GPU H800 servers sold for 2 million yuan, about $280,000, at their launch a year earlier, as cited by Epoch AI",
     "bomEstimate": null,
-    "exportStatus": "Controlled under the rule BIS issued on 17 October 2023. The rule’s stated effective date was 17 November 2023, but on 23 October 2023 the US government told Nvidia that its license requirements applied to the H800 immediately. Total processing performance of 15,832 is more than three times the 4,800 threshold, so the H800 only ever cleared the October 2022 rule because that rule required the 4,800 and the 600 GB/s interconnect together. Removing the interconnect parameter caught it immediately, along with the A800. Epoch AI’s read is that the cut cost less than it looks: 400 GB/s is still enough to hide communication behind useful work in a frontier training run, so on FLOP per second per dollar the H800 was about as good as the H100.",
-    "notes": "The China variant that cost Chinese buyers the least in practice. Epoch AI’s calculation is that the H800 was about as good as the H100 on training FLOP per second per dollar, because 400 GB/s of NVLink is still enough to hide communication behind useful work; the loss appears in short-context inference instead. Two sources contradict each other on its interconnect, CSIS at 300 GB/s and Epoch AI at 400 GB/s, and both figures are carried as they stand. Nvidia has published nothing about the part, and Epoch AI dates it to 21 March 2023.",
+    "exportStatus": "Controlled under the rule BIS issued on 17 October 2023. The rule’s stated effective date was 17 November 2023, but on 23 October 2023 the US government told Nvidia that its license requirements applied to the H800 immediately. Its total processing performance of 15,832 is more than three times the 4,800 threshold. The H800 cleared the October 2022 rule because that rule controlled a chip only if it crossed both the 4,800 and the 600 GB/s interconnect thresholds. When BIS removed the interconnect threshold, the rule caught the H800 at once, along with the A800. Epoch AI judges that the cut cost less than it looks, because 400 GB/s is still fast enough for the GPUs to exchange data while they compute in a frontier training run. So, by Epoch AI's measure, the H800 was about as good as the H100 on FLOP per second per dollar.",
+    "notes": "The China variant whose cuts cost Chinese buyers the least in practice. Epoch AI calculates that the H800 was about as good as the H100 on training FLOP per second per dollar, because 400 GB/s of NVLink is still fast enough for the GPUs to exchange data while they compute. By Epoch AI's account, the loss shows up in short-context inference instead. CSIS puts its interconnect at 300 GB/s and Epoch AI at 400 GB/s, and the chip-to-chip field shows both. Nvidia has published nothing about the part, and Epoch AI dates it to 21 March 2023.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -1006,7 +1006,7 @@
         "fp8": "no",
         "fp4": "no"
       },
-      "precisionNote": "Dense, and identical to the A100: CSIS describes the A800 as a modified A100 engineered to stay below the 600 GB/s interconnect limit, and Epoch AI’s hardware database records the same 312 TFLOPS dense FP16. Nvidia never published an A800 datasheet outside China, so no vendor figure exists. Ampere has neither an eight- nor a four-bit float datapath: Nvidia’s Ampere architecture post states that “Third-generation Tensor Cores add support for TF32, BF16, FP64, INT8, INT4, and binary data types”, so the FP8 and FP4 cells read not supported."
+      "precisionNote": "Dense, and identical to the A100. CSIS describes the A800 as a modified A100 engineered to stay below the 600 GB/s interconnect limit, and Epoch AI’s hardware database records the same 312 TFLOPS dense FP16. Nvidia never published an A800 datasheet outside China, so no vendor figure exists. Ampere has neither an eight- nor a four-bit float datapath. Nvidia’s Ampere architecture post states that “Third-generation Tensor Cores add support for TF32, BF16, FP64, INT8, INT4, and binary data types”. So the FP8 and FP4 cells read not supported."
     },
     "tdpW": 400,
     "interconnect": {
@@ -1017,8 +1017,8 @@
     "systemIntegrators": [],
     "priceEstimate": "About $10,000 each in 2023, as reported by the Financial Times and cited by Epoch AI",
     "bomEstimate": null,
-    "exportStatus": "Built to evade one number, then caught by a different one. The A800 kept the A100’s arithmetic, so its total processing performance stayed at 4,992, above the 4,800 line; what Nvidia changed was the other half of the October 2022 test, which controlled a chip only if it also had an aggregate bidirectional transfer rate of 600 GB/s or more. Cutting NVLink to 400 GB/s put it outside the rule. On 17 October 2023 BIS deleted the interconnect parameter and added a performance density test, and CSET notes that the deleted parameter was the same one around which Nvidia had designed its China-specific chips. The A800 has been controlled since.",
-    "notes": "The clearest case of a product designed against a regulation. Nvidia’s own 8-K of 31 August 2022 had already said the license would extend to any future chip meeting both peak performance and chip-to-chip thresholds roughly equivalent to the A100, and the A800 answers that by failing only one of the two. Commerce Secretary Gina Raimondo’s reply, quoted by CSIS, was that if a chip is redesigned around a cut line to enable AI, she would control it the next day. Epoch AI dates the A800 variants to August and November 2022.",
+    "exportStatus": "Controlled under the rule BIS issued on 17 October 2023. The A800 kept the A100’s arithmetic, so its total processing performance stayed at 4,992, above the 4,800 line. But the October 2022 rule controlled a chip only if it also had an aggregate bidirectional transfer rate of 600 GB/s or more. Cutting NVLink to 400 GB/s put the A800 outside the rule. On 17 October 2023 BIS deleted the interconnect threshold and added a performance density test. CSET notes that Nvidia had designed its China-specific chips around the deleted threshold.",
+    "notes": "The clearest case of a product designed around a regulation. Nvidia’s own 8-K filing of 31 August 2022 had already said the license requirement would extend to any future chip meeting both peak performance and chip-to-chip thresholds roughly equivalent to the A100. The A800 avoided it by meeting only one of the two. Commerce Secretary Gina Raimondo replied, as CSIS quotes her, that if a chip is redesigned around a cut line to enable AI, she would control it the next day. Epoch AI dates the A800 variants to August and November 2022.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -1113,7 +1113,7 @@
     "vendorCountry": "US",
     "announced": "2022-03",
     "shipping": "2022-Q4",
-    "status": "Superseded by Blackwell; the volume installed base of the 2023 to 2024 build-out",
+    "status": "Superseded by Blackwell; installed in volume during the 2023 to 2024 build-out",
     "target": "Training and inference",
     "process": {
       "foundry": "TSMC",
@@ -1149,7 +1149,7 @@
         "fp8": "yes",
         "fp4": "no"
       },
-      "precisionNote": "Dense. Nvidia’s H100 spec table quotes 1,979 TFLOPS FP16 and BF16 and 3,958 TFLOPS FP8 for the SXM part, both marked with sparsity; halved here, and the Hopper post’s own dense table gives 1,000 and 2,000 TFLOPS. Hopper has no four-bit datapath: Nvidia’s Hopper architecture post lists the tensor-core types, “The FP8, FP16, BF16, TF32, FP64, and INT8 MMA data types are supported”, and names no FP4, so the FP4 cell reads not supported."
+      "precisionNote": "Dense. Nvidia’s H100 spec table quotes 1,979 TFLOPS FP16 and BF16 and 3,958 TFLOPS FP8 for the SXM part, both marked with sparsity. The figures here are half of those, and the Hopper post’s own dense table gives 1,000 and 2,000 TFLOPS. Hopper has no four-bit datapath. In its list of tensor-core types, Nvidia’s Hopper architecture post says “The FP8, FP16, BF16, TF32, FP64, and INT8 MMA data types are supported” and names no FP4. So the FP4 cell reads not supported."
     },
     "tdpW": 700,
     "interconnect": {
@@ -1158,10 +1158,10 @@
       "scaleOut": "Quantum-2 InfiniBand or 400 Gb/s Ethernet; PCIe Gen5 at 128 GB/s to the host"
     },
     "systemIntegrators": [],
-    "priceEstimate": "About $25,000 on average: Nvidia's CEO said it sold 4 million Hopper GPUs for $100 billion. Epoch AI estimates $27,000 to $35,000 in 2023, falling to $22,000 to $30,000 in 2025",
+    "priceEstimate": "About $25,000 on average, from a statement by Nvidia's CEO that the company sold 4 million Hopper GPUs for $100 billion. Epoch AI estimates $27,000 to $35,000 in 2023, falling to $22,000 to $30,000 in 2025",
     "bomEstimate": null,
-    "exportStatus": "Controlled since before it shipped. An export to China needs a license, which BIS reviews with a presumption of denial under 15 CFR 742.6(b)(10), so applications may be filed. Dense FP8 of 1,979 TFLOPS gives a total processing performance of 15,832 (TPP = 8 x FP8 TFLOPS), more than three times the 4,800 threshold in 3A090.a, and performance density is about 19.4. NVLink 4 at 900 GB/s also cleared the 600 GB/s interconnect test in the original October 2022 rule, so the H100 failed both halves of that rule at once. Nvidia was told on 26 August 2022, before the chip shipped, that it would need a license.",
-    "notes": "The chip the 2023 and 2024 build-out ran on, and the one every China variant is measured against. Nvidia states that the full GH100 carries six HBM3 or HBM2e stack sites and that the SXM5 part uses five of them for 80 GB. The H200 that follows it is the same die with 141 GB of HBM3E, which is why the H200 became the chip Washington eventually allowed into China. Nvidia’s 8-K of 31 August 2022 still calls the H100 forthcoming, and Epoch AI dates the SXM5 part to September 2022. Nvidia names no OEM or ODM partner on the product page, pointing instead to a qualified-system catalog, so no system integrators are listed for the Hopper and Ampere parts.",
+    "exportStatus": "Controlled since before it shipped. An export to China needs a license, which BIS reviews with a presumption of denial under 15 CFR 742.6(b)(10). Applications may still be filed. Dense FP8 of 1,979 TFLOPS gives a total processing performance of 15,832 (TPP = 8 x FP8 TFLOPS), more than three times the 4,800 threshold in 3A090.a. Its performance density, TPP divided by die area, is about 19.4. NVLink 4 at 900 GB/s also exceeded the 600 GB/s interconnect limit in the original October 2022 rule, so both halves of that rule caught the H100. The US government told Nvidia on 26 August 2022, before the chip shipped, that it would need a license.",
+    "notes": "The chip the AI build-out of 2023 and 2024 ran on, and the one every China variant is measured against. Nvidia states that the full GH100 die carries six HBM3 or HBM2e stack sites and that the SXM5 part uses five of them for 80 GB. The H200 that follows it is the same die with 141 GB of HBM3E, which is why the H200 became the chip Washington eventually allowed into China. Nvidia’s 8-K filing of 31 August 2022 still calls the H100 forthcoming, and Epoch AI dates the SXM5 part to September 2022. Nvidia's product page names no server makers for it and points to a catalog of qualified systems instead, so no system integrators are listed.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -1290,7 +1290,7 @@
         "fp8": "no",
         "fp4": "no"
       },
-      "precisionNote": "Dense. Nvidia’s A100 spec table gives 312 TFLOPS FP16 and BF16 tensor core and 624 TOPS INT8 for both the SXM and PCIe parts, with the doubled figures (624 TFLOPS and 1,248 TOPS) marked with sparsity. Ampere has neither an eight- nor a four-bit float datapath: Nvidia’s Ampere architecture post states that “Third-generation Tensor Cores add support for TF32, BF16, FP64, INT8, INT4, and binary data types”, so the FP8 and FP4 cells read not supported."
+      "precisionNote": "Dense. Nvidia’s A100 spec table gives 312 TFLOPS FP16 and BF16 tensor core and 624 TOPS INT8 for both the SXM and PCIe parts. Its doubled figures (624 TFLOPS and 1,248 TOPS) are marked with sparsity. Ampere has neither an eight- nor a four-bit float datapath. Nvidia’s Ampere architecture post states that “Third-generation Tensor Cores add support for TF32, BF16, FP64, INT8, INT4, and binary data types”. So the FP8 and FP4 cells read not supported."
     },
     "tdpW": 400,
     "interconnect": {
@@ -1301,8 +1301,8 @@
     "systemIntegrators": [],
     "priceEstimate": "Epoch AI estimates $10,000 to $15,000 in 2022 and 2023, from CNBC and SemiAnalysis reports. The DGX A100 server launched in 2020 at $199,000 for eight GPUs",
     "bomEstimate": null,
-    "exportStatus": "Controlled, and the chip the whole regime was drawn around. Dense FP16 of 312 TFLOPS gives a total processing performance of 4,992 (TPP = 16 x FP16 TFLOPS), 192 points above the 4,800 threshold BIS wrote into ECCN 3A090 on 7 October 2022; that first rule also required an aggregate bidirectional transfer rate of 600 GB/s or more, which NVLink 3 meets exactly. Nvidia had already been told on 26 August 2022 that the A100 and the forthcoming H100 needed a license for China, Hong Kong and Russia, along with any future chip meeting thresholds roughly equivalent to the A100. Performance density is 4,992 divided by 826 mm2, about 6.0, so the chip is also caught by the second limb of 3A090.a added in October 2023.",
-    "notes": "The reference point for every threshold since. BIS set the October 2022 line just under the A100 on both axes it used, peak performance and chip-to-chip bandwidth, which is why the A800 exists at all. Nvidia describes five active HBM2 stacks on the 40 GB SXM4 board, so the 80 GB part carries the same five sites at 16 GB each in HBM2e; Nvidia names no memory supplier, no package dimensions and no list price. Epoch AI dates the SXM4 A100 to 14 May 2020 and the 80 GB version to 16 November 2020.",
+    "exportStatus": "Controlled. BIS drew its export thresholds around this chip. Dense FP16 of 312 TFLOPS gives a total processing performance of 4,992 (TPP = 16 x FP16 TFLOPS), 192 points above the 4,800 threshold BIS wrote into export category ECCN 3A090 on 7 October 2022. That first rule also required an aggregate bidirectional transfer rate of 600 GB/s or more, which NVLink 3 meets exactly. The US government had already told Nvidia on 26 August 2022 that the A100 and the forthcoming H100 needed a license for China, Hong Kong and Russia. The requirement also covered any future chip meeting thresholds roughly equivalent to the A100. Its performance density is 4,992 divided by 826 mm2, or about 6.0, so the chip also falls under the second test of 3A090.a, added in October 2023.",
+    "notes": "The reference point for every export threshold since 2022. BIS set the October 2022 line just under the A100 on both of the tests it used, peak performance and chip-to-chip bandwidth. The A800 exists because of that line. Nvidia describes five active HBM2 stacks on the 40 GB SXM4 board, so the 80 GB part carries the same five sites at 16 GB each in HBM2e. Nvidia names no memory supplier, no package dimensions and no list price. Epoch AI dates the SXM4 A100 to 14 May 2020 and the 80 GB version to 16 November 2020.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -1448,8 +1448,8 @@
     ],
     "priceEstimate": "Epoch AI estimates $25,000 to $30,000, from analyst reports. SemiAnalysis’s cloud cost model rates it at about $1.50 per GPU-hour owned at large hyperscaler volume and $2.90 per GPU-hour at the retail tier",
     "bomEstimate": null,
-    "exportStatus": "Controlled; above the January 2026 China licensing thresholds. AMD's licensable China part is the older MI325X, which the BIS rule names alongside the Nvidia H200.",
-    "notes": "AMD's eight-GPU-box part that matched Nvidia on HBM capacity, with 288 GB at 8 TB/s, the same as Blackwell Ultra. AMD launched it on 12 June 2025. Its weakness is scale-up, with no rack fabric to match NVL72. AMD names no packaging technology or assembler for it.",
+    "exportStatus": "Controlled. It is above the January 2026 China licensing thresholds. AMD's licensable China part is the older MI325X, which the BIS rule names alongside the Nvidia H200.",
+    "notes": "AMD's GPU for eight-GPU servers. It matched Nvidia on HBM capacity, with 288 GB at 8 TB/s, the same as Nvidia's B300 (Blackwell Ultra). AMD launched it on 12 June 2025. Its weakness is scale-up, the linking of many GPUs into one system, because it has no rack-scale fabric to match Nvidia's 72-GPU NVL72. AMD names no packaging technology or assembler for it.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -1626,7 +1626,7 @@
         "fp8": "yes",
         "fp4": "yes"
       },
-      "precisionNote": "AMD datasheet peak theoretical: 40,265 TFLOPS OCP MXFP4, 20,133 TFLOPS OCP MXFP6, MXFP8 and FP8, and 5,033 TFLOPS matrix FP16, BF16 and INT8. The datasheet’s separate structured-sparsity column doubles FP16, BF16 and INT8 to 10,066 TFLOPS and lists no sparsity figure for the MX formats or FP8. All three formats are supported and published."
+      "precisionNote": "AMD’s datasheet gives these peak theoretical figures: 40,265 TFLOPS OCP MXFP4, 20,133 TFLOPS OCP MXFP6, MXFP8 and FP8, and 5,033 TFLOPS matrix FP16, BF16 and INT8. The datasheet’s separate structured-sparsity column doubles FP16, BF16 and INT8 to 10,066 TFLOPS and lists no sparsity figure for the MX formats or FP8. All three formats are supported and published."
     },
     "tdpW": null,
     "interconnect": {
@@ -1635,10 +1635,10 @@
       "scaleOut": "UALink, 600 GB/s bidirectional per GPU on AMD's specification list; AMD's rack material adds up to 43 TB/s of Ethernet scale-out per rack"
     },
     "systemIntegrators": [],
-    "priceEstimate": "AMD publishes no price. SemiAnalysis’s TCO model puts a hyperscaler’s capital cost for an MI4XX rack at $2.86 per GPU-hour over a four-year life",
+    "priceEstimate": "AMD publishes no price. SemiAnalysis’s total cost of ownership model puts a hyperscaler’s capital cost for an MI4XX rack at $2.86 per GPU-hour over a four-year life",
     "bomEstimate": null,
-    "exportStatus": "Controlled. Far above the January 2026 China licensing thresholds, so a license for China or Macau is required and reviewed with a presumption of denial under 15 CFR 742.6(b)(10). Applications may be filed.",
-    "notes": "AMD's first rack-scale answer to NVL72; SemiAnalysis puts the MI400 compute dies on TSMC N2. Its 432 GB of HBM4 across 12 stacks is 50 percent more memory than Rubin carries, which is its positioning: win on capacity per package and on an open Ethernet-based scale-up fabric. AMD's specification list gives 320 billion transistors, 256 work group processors, a 2,400 MHz peak engine clock, 192 MB of L2, an Enhanced Accelerator Module form factor, direct liquid cooling and a launch date of 23 July 2026, and it publishes no total board power and no die areas; its datasheet counts eight compute dies and two I/O dies; the same page compares the part against a 288 GB, 22 TB/s competitor, which is Nvidia's Rubin.",
+    "exportStatus": "Controlled. It is far above the January 2026 China licensing thresholds. So an export to China or Macau needs a license, which BIS reviews with a presumption of denial under 15 CFR 742.6(b)(10). Applications may be filed.",
+    "notes": "AMD's first rack-scale answer to Nvidia's NVL72. SemiAnalysis puts the MI400-series compute dies on TSMC N2. The MI455X's 432 GB of HBM4 across 12 stacks is 50 percent more memory than Rubin carries. AMD positions it to win on capacity per package and on an open Ethernet-based scale-up fabric. AMD's specification list gives 320 billion transistors, 256 work group processors, a 2,400 MHz peak engine clock, 192 MB of L2 cache, an Enhanced Accelerator Module form factor, direct liquid cooling and a launch date of 23 July 2026. AMD publishes no total board power and no die areas. Its datasheet counts eight compute dies and two I/O dies. The same page compares the part against a 288 GB, 22 TB/s competitor, which is Nvidia's Rubin.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -1859,7 +1859,7 @@
         "fp8": "yes",
         "fp4": "no"
       },
-      "precisionNote": "Dense, from AMD’s footnote MI325-002: 1,307.4 TFLOPS FP16, 1,307.4 TFLOPS BF16, 2,614.9 TFLOPS FP8 and 2,614.9 TOPS INT8. Identical to the MI300X; the MI325X is the same CDNA 3 silicon with faster, larger memory. AMD’s sparsity column doubles each figure. CDNA 3 has no four-bit datapath: AMD’s CDNA 3 white paper tabulates every matrix type the architecture runs, Matrix FP64, FP32, TF32, FP16, BF16, FP8 and INT8, and the string FP4 appears nowhere in the document, so the FP4 cell reads not supported."
+      "precisionNote": "Dense, from AMD’s footnote MI325-002: 1,307.4 TFLOPS FP16, 1,307.4 TFLOPS BF16, 2,614.9 TFLOPS FP8 and 2,614.9 TOPS INT8. These match the MI300X, because the MI325X is the same CDNA 3 silicon with faster, larger memory. AMD’s sparsity column doubles each figure. CDNA 3 has no four-bit datapath. AMD’s CDNA 3 white paper tabulates every matrix type the architecture runs (Matrix FP64, FP32, TF32, FP16, BF16, FP8 and INT8), and the string FP4 appears nowhere in the document. So the FP4 cell reads not supported."
     },
     "tdpW": 1000,
     "interconnect": {
@@ -1868,10 +1868,10 @@
       "scaleOut": "PCIe Gen5 x16 to the host"
     },
     "systemIntegrators": [],
-    "priceEstimate": "Epoch AI estimates $10,000 to $20,000, the low end reflecting discounts to cloud companies amid weak demand",
+    "priceEstimate": "Epoch AI estimates $10,000 to $20,000. The low end reflects discounts to cloud companies while demand was weak",
     "bomEstimate": null,
-    "exportStatus": "Named in the rule. BIS’s final rule of 15 January 2026 moves exports to China and Macau from presumption of denial to case-by-case review for commodities with total processing performance below 21,000 and total DRAM bandwidth below 6,500 GB/s, and names the Nvidia H200 and the AMD MI325X as its examples. The MI325X clears both: 20,919 TPP and 6,000 GB/s. Approval is conditional on certified US supply, no diversion of foundry capacity, customer security procedures, third-party testing inside US customs territory, and a cap holding aggregate TPP shipped to China at no more than 50 percent of aggregate TPP shipped to US customers.",
-    "notes": "The same CDNA 3 silicon as the MI300X with 256 GB of HBM3E at 6 TB/s and a 1,000 W board, and the only AMD part Washington has ever named as licensable for China. Both halves of that license sit close to the line: 20,919 against a 21,000 ceiling, 6,000 GB/s against a 6,500 GB/s ceiling. AMD publishes no list price, no die areas and no assembler; Epoch AI's 1,017 mm2 for this silicon is the total across all twelve dies. No allowed source names the HBM supplier for the part.",
+    "exportStatus": "Named in BIS’s final rule of 15 January 2026. That rule moves exports to China and Macau from presumption of denial to case-by-case review for commodities with total processing performance below 21,000 and total DRAM bandwidth below 6,500 GB/s. It names the Nvidia H200 and the AMD MI325X as its examples. The MI325X falls under both ceilings, at 20,919 TPP and 6,000 GB/s. Approval is conditional on certified US supply, no diversion of foundry capacity, customer security procedures and third-party testing inside US customs territory. It also depends on a cap that holds aggregate TPP shipped to China at no more than 50 percent of aggregate TPP shipped to US customers.",
+    "notes": "The same CDNA 3 silicon as the MI300X, with 256 GB of HBM3E at 6 TB/s and a 1,000 W board. It is the only AMD part Washington has ever named as licensable for China. It sits just under both ceilings in the January 2026 rule, with a total processing performance (TPP) of 20,919 against 21,000 and memory bandwidth of 6,000 GB/s against 6,500 GB/s. AMD publishes no list price, no die areas and no assembler. Epoch AI's 1,017 mm2 for this silicon is the total across all twelve dies. No allowed source names the HBM supplier for the part.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -2074,7 +2074,7 @@
         "fp8": "yes",
         "fp4": "no"
       },
-      "precisionNote": "Dense, from AMD’s own footnote MI300-17: 1,307.4 TFLOPS FP16, 1,307.4 TFLOPS BF16, 2,614.9 TFLOPS FP8 and 2,614.9 TOPS INT8 at 2,100 MHz across 304 compute units, the same figures the CDNA 3 white paper tabulates. AMD’s separate structured-sparsity column doubles each of those. CDNA 3 has no four-bit datapath: AMD’s CDNA 3 white paper tabulates every matrix type the architecture runs, Matrix FP64, FP32, TF32, FP16, BF16, FP8 and INT8, and the string FP4 appears nowhere in the document, so the FP4 cell reads not supported."
+      "precisionNote": "Dense, from AMD’s own footnote MI300-17: 1,307.4 TFLOPS FP16, 1,307.4 TFLOPS BF16, 2,614.9 TFLOPS FP8 and 2,614.9 TOPS INT8 at 2,100 MHz across 304 compute units. The CDNA 3 white paper tabulates the same figures. AMD’s separate structured-sparsity column doubles each of those. CDNA 3 has no four-bit datapath. AMD’s CDNA 3 white paper tabulates every matrix type the architecture runs (Matrix FP64, FP32, TF32, FP16, BF16, FP8 and INT8), and the string FP4 appears nowhere in the document. So the FP4 cell reads not supported."
     },
     "tdpW": 750,
     "interconnect": {
@@ -2083,10 +2083,10 @@
       "scaleOut": "PCIe Gen5 x16 to the host"
     },
     "systemIntegrators": [],
-    "priceEstimate": "Epoch AI estimates $10,000 to $15,000 in its model of AMD’s 2024 and 2025 sales; Microsoft is reported to pay about $10,000 in volume. SemiAnalysis’s cloud cost model measures the hourly cost of owning or renting one, counting server, power, data center space and financing; as of October 2026 it rates the MI300X at about $0.95 per GPU-hour owned at large hyperscaler volume and $1.30 per GPU-hour at the retail tier",
+    "priceEstimate": "Epoch AI estimates $10,000 to $15,000 in its model of AMD’s 2024 and 2025 sales. Microsoft is reported to pay about $10,000 in volume. SemiAnalysis’s cloud cost model measures the hourly cost of owning or renting one, counting server, power, data center space and financing. As of October 2026 it rates the MI300X at about $0.95 per GPU-hour owned at large hyperscaler volume and $1.30 per GPU-hour at the retail tier",
     "bomEstimate": null,
-    "exportStatus": "Controlled. Total processing performance is 20,919 (8 x 2,614.9 dense FP8), four times the 4,800 threshold in ECCN 3A090.a. It also lands 81 points under the 21,000 ceiling BIS set on 15 January 2026, and its 5,300 GB/s of memory bandwidth is well under that rule’s 6,500 GB/s, so on the published numbers it falls inside the band moved to case-by-case review. The rule names the H200 and the MI325X. The MI300X is absent from it.",
-    "notes": "It put 192 GB on one package at its December 2023 launch, split across a dozen chiplets: eight N5 accelerator dies bonded onto four N6 I/O dies, 153 billion transistors in all. AMD’s page prints no stack count, but the count follows from it, since the 8,192-bit memory interface is eight 1,024-bit HBM channels, and the CDNA 3 white paper says eight stacks. AMD publishes no list price, no die areas and no assembler. Epoch AI records 1,017 mm2 for the MI300X, which is the total silicon across all twelve dies, so no per-die area is given.",
+    "exportStatus": "Controlled. Total processing performance is 20,919 (8 x 2,614.9 dense FP8), four times the 4,800 threshold in ECCN 3A090.a. It is also 81 points under the 21,000 ceiling BIS set on 15 January 2026, and its 5,300 GB/s of memory bandwidth is well under that rule’s 6,500 GB/s. So on the published numbers it falls inside the band moved to case-by-case review. The rule names the H200 and the MI325X but does not name the MI300X.",
+    "notes": "At its December 2023 launch it put 192 GB of memory on one package. The package holds twelve chiplets: eight N5 accelerator dies bonded onto four N6 I/O dies, with 153 billion transistors in all. AMD’s page prints no stack count, but the count follows from its 8,192-bit memory interface, which is eight 1,024-bit HBM interfaces, one per stack. The CDNA 3 white paper says eight stacks. AMD publishes no list price, no die areas and no assembler. Epoch AI records 1,017 mm2 for the MI300X, which is the total silicon across all twelve dies, so no per-die area is given.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -2264,7 +2264,7 @@
     "announced": "2025-04",
     "shipping": "2025-11",
     "status": "Shipping",
-    "target": "Inference-first, also used for training",
+    "target": "Built for inference, also used for training",
     "process": {
       "foundry": "TSMC",
       "node": "N3E (per SemiAnalysis)",
@@ -2297,7 +2297,7 @@
         "fp8": "yes",
         "fp4": "no"
       },
-      "precisionNote": "Google’s Cloud TPU documentation gives peak per-chip compute of 2,307 TFLOPS BF16 and 4,614 TFLOPS FP8, the only two precisions the tpu7x table carries. These are dense; Google publishes no sparsity figures, and the four SparseCores are embedding-lookup engines. Four-bit arithmetic arrives with the next generation: Google’s eighth-generation deep dive says “TPU 8t introduces native 4-bit floating point (FP4)”, so the FP4 cell reads not supported."
+      "precisionNote": "Google’s Cloud TPU documentation gives peak per-chip compute of 2,307 TFLOPS BF16 and 4,614 TFLOPS FP8, the only two precisions the tpu7x table carries. These are dense. Google publishes no sparsity figures, and the four SparseCores are engines for embedding lookups. Four-bit arithmetic arrives with the next generation. Google’s eighth-generation deep dive says “TPU 8t introduces native 4-bit floating point (FP4)”, so the FP4 cell reads not supported."
     },
     "tdpW": null,
     "interconnect": {
@@ -2311,8 +2311,8 @@
     ],
     "priceEstimate": "Not sold. Epoch AI estimates Google pays Broadcom $9,800 to $14,700 per chip, median $12,000",
     "bomEstimate": "Epoch AI estimates $4,600 to $5,500 to make, for the chip module without networking",
-    "exportStatus": "Not sold as merchant silicon. Consumed inside Google data centers and rented as Cloud TPU, so the control surface is physical shipment of racks abroad under the EAR advanced-computing rules.",
-    "notes": "Google's seventh-generation TPU, built for inference, with a 9,216-chip 3D-torus superpod. Google is unusually specific about the package for a TPU: the Cloud TPU documentation states that Ironwood is composed of two distinct chiplets, each a self-contained unit with one TensorCore, two SparseCores and 96 GB of HBM, and the architecture post names eight HBM3E stacks for 192 GiB at a peak 7.4 TB/s, which is the 7,380 GB/s in the documentation. Four stacks therefore sit with each chiplet, which is how the package is drawn. Google still publishes no node, die area, transistor count, package, HBM supplier or power figure; the N3E node shown is SemiAnalysis's.",
+    "exportStatus": "Not sold on the open market as merchant silicon. Google uses it in its own data centers and rents it out as Cloud TPU. So export control applies to physical shipments of racks abroad, under the advanced-computing rules of the Export Administration Regulations (EAR).",
+    "notes": "Google's seventh-generation TPU (Tensor Processing Unit). It is built for inference, and its superpod links 9,216 chips in a 3D torus. For a TPU, Google is unusually specific about the package. The Cloud TPU documentation states that Ironwood is composed of two distinct chiplets, each a self-contained unit with one TensorCore, two SparseCores and 96 GB of HBM. The architecture post names eight HBM3E stacks for 192 GiB at a peak 7.4 TB/s, which is the 7,380 GB/s in the documentation. So each chiplet has four stacks, and the package drawing shows them that way. Google still publishes no node, die area, transistor count, package, HBM supplier or power figure. The N3E node shown comes from SemiAnalysis.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -2461,7 +2461,7 @@
         "fp8": "unknown",
         "fp4": "yes"
       },
-      "precisionNote": "Google publishes a 12.6 PFLOPS FP4 peak and no other precision for this part, and does not state dense versus sparse. It says TPU 8t “introduces native 4-bit floating point (FP4)”, doubling MXU throughput, but publishes no list of other formats, so FP16 and FP8 read not published"
+      "precisionNote": "Google publishes a 12.6 PFLOPS FP4 peak and no other precision for this part, and does not say whether it is dense or sparse. It says TPU 8t “introduces native 4-bit floating point (FP4)”, doubling the throughput of its matrix multiply units. It publishes no list of other formats, so the FP16 and FP8 cells read not published"
     },
     "tdpW": null,
     "interconnect": {
@@ -2472,8 +2472,8 @@
     "systemIntegrators": [],
     "priceEstimate": null,
     "bomEstimate": null,
-    "exportStatus": "Not sold as merchant silicon; same posture as Ironwood",
-    "notes": "The training half of Google’s split eighth generation, with SparseCores kept for embeddings and an Arm Axion host. Google publishes HBM capacity, bandwidth, on-chip memory, FP4 peak and pod size, and no node, die count, package, stack count, power or availability date beyond general availability later in 2026. SemiAnalysis puts the eighth generation on TSMC N3",
+    "exportStatus": "Not sold as merchant silicon. As with Ironwood, export control applies to physical shipments of racks abroad",
+    "notes": "Google split its eighth TPU generation into two chips, one for training and one for inference. The TPU 8t is the training chip. It keeps SparseCores for embeddings and uses an Arm Axion host CPU. Google publishes HBM capacity, bandwidth, on-chip memory, FP4 peak and pod size. It publishes no node, die count, package, stack count, power or availability date, beyond saying the chip will be generally available later in 2026. SemiAnalysis puts the eighth generation on TSMC N3",
     "layout": null,
     "sources": [
       {
@@ -2532,7 +2532,7 @@
         "fp8": "unknown",
         "fp4": "yes"
       },
-      "precisionNote": "Google publishes a 10.1 PFLOPS FP4 peak and no other precision for this part, and does not state dense versus sparse. FP4 is the only format it names for either eighth-generation chip, and it publishes no list of supported data types, so the FP16 and FP8 cells read not published: nothing shows whether the hardware carries those paths. Third-party FP8 and BF16 numbers in circulation are derived by halving and are not official."
+      "precisionNote": "Google publishes a 10.1 PFLOPS FP4 peak and no other precision for this part, and does not say whether it is dense or sparse. FP4 is the only format Google names for either eighth-generation chip, and it publishes no list of supported data types. Nothing shows whether the hardware carries FP16 and FP8 paths, so those cells read not published. Third-party FP8 and BF16 numbers in circulation are derived by halving and are not official."
     },
     "tdpW": null,
     "interconnect": {
@@ -2543,8 +2543,8 @@
     "systemIntegrators": [],
     "priceEstimate": null,
     "bomEstimate": null,
-    "exportStatus": "Not sold as merchant silicon; same posture as Ironwood.",
-    "notes": "The inference half of Google's split eighth generation. It replaces Ironwood's four SparseCores with a dedicated Collectives Acceleration Engine that cuts on-chip collective latency about fivefold, and it carries 384 MB of on-chip Vmem. Google's wording on the silicon is that each TPU 8i chip has \"two Tensor Cores (TC) on-core dies and one CAE on the chiplet die\", which describes core dies and a separate chiplet die without giving a die count, so that field is empty and the package drawing shows one core die and one chiplet die. Its companion TPU 8t is the training part, with 216 GB of HBM at 6,528 GB/s, 12.6 PFLOPS of FP4 and a 3D torus reaching 9,600 chips. Google has named no design partner, node (SemiAnalysis puts the eighth generation on TSMC N3), packaging, HBM generation, stack count, TDP or availability date for either chip. Google says both eighth-generation chips will be generally available later in 2026; its Cloud TPU release notes carry no such entry as of 27 September 2026.",
+    "exportStatus": "Not sold as merchant silicon. As with Ironwood, export control applies to physical shipments of racks abroad.",
+    "notes": "Google split its eighth TPU generation into two chips, one for training and one for inference. The TPU 8i is the inference chip. It replaces Ironwood's four SparseCores with a dedicated Collectives Acceleration Engine (CAE), which cuts on-chip latency for collectives, the operations in which chips share results, about fivefold. It also carries 384 MB of on-chip Vmem. Google says each TPU 8i chip has \"two Tensor Cores (TC) on-core dies and one CAE on the chiplet die\". That wording names core dies and a separate chiplet die but gives no die count. So the die-count field is empty, and the package drawing shows one core die and one chiplet die. The TPU 8t training chip has 216 GB of HBM at 6,528 GB/s, 12.6 PFLOPS of FP4 and a 3D torus reaching 9,600 chips. Google has named no design partner, node, packaging, HBM generation, stack count, power figure or availability date for either chip. SemiAnalysis puts the eighth generation on TSMC N3. Google says both eighth-generation chips will be generally available later in 2026. Its Cloud TPU release notes carry no such entry as of 27 September 2026.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -2671,7 +2671,7 @@
         "fp8": "unknown",
         "fp4": "no"
       },
-      "precisionNote": "Google’s v6e documentation gives 918 TFLOPs peak bf16 per chip and 1,836 TOPs peak Int8, both dense, and lists no FP8 row; the eight-bit figure is INT8, so it stays in this note, out of the FP8 field. Two Google pages disagree about whether the part has an FP8 path at all: the tpu7x table prints “Peak compute per chip (FP8) (TFLOPs) … 918” for v6e, which is the bf16 figure repeated and buys no throughput. Nothing settles it, so the FP8 cell reads not published. FP4 is a different matter: no Google page gives v6e a four-bit rate, and Google dates native FP4 to the eighth generation, so that cell reads not supported."
+      "precisionNote": "Google’s v6e documentation gives 918 TFLOPs peak bf16 per chip and 1,836 TOPs peak Int8, both dense, and lists no FP8 row. The eight-bit figure is INT8, so it stays in this note and out of the FP8 field. Two Google pages disagree about whether the part has an FP8 path at all. The tpu7x table prints “Peak compute per chip (FP8) (TFLOPs) … 918” for v6e, which is the bf16 figure repeated, with no gain in throughput. Nothing settles it, so the FP8 cell reads not published. No Google page gives v6e a four-bit rate, and Google dates native FP4 to the eighth generation, so the FP4 cell reads not supported."
     },
     "tdpW": null,
     "interconnect": {
@@ -2682,8 +2682,8 @@
     "systemIntegrators": [],
     "priceEstimate": "Not sold. Epoch AI estimates Google pays Broadcom $3,400 to $5,000 per chip, median $4,100",
     "bomEstimate": "Epoch AI estimates $1,600 to $1,900 to make, for the chip module without networking",
-    "exportStatus": "Not sold as merchant silicon. Google consumes it internally and rents it as Cloud TPU, so the control surface is the physical shipment of racks abroad. Total processing performance is 14,688, whether taken from bf16 (16 x 918) or INT8 (8 x 1,836), three times the 4,800 threshold in ECCN 3A090.a.",
-    "notes": "The last TPU before Ironwood. Google does not name the memory; SemiAnalysis gives two stacks of HBM3, which fits 1,638 GB/s across 32 GB. Google publishes compute, memory and fabric numbers for its TPUs and nothing else; the N5 node and the stack count here come from SemiAnalysis. The other silicon fields are empty. Epoch AI puts the power draw at about 380 W; that is an estimate, and Google publishes none, so the TDP field is empty.",
+    "exportStatus": "Not sold as merchant silicon. Google uses it internally and rents it out as Cloud TPU, so export control applies to the physical shipment of racks abroad. Total processing performance is 14,688 from either bf16 (16 x 918) or INT8 (8 x 1,836), three times the 4,800 threshold in ECCN 3A090.a.",
+    "notes": "The last TPU before Ironwood. Google does not name the memory type. SemiAnalysis gives two stacks of HBM3, which is consistent with 1,638 GB/s across 32 GB. Google publishes compute, memory and fabric numbers for its TPUs and nothing else. The N5 node and the stack count here come from SemiAnalysis. The other silicon fields are empty. Epoch AI estimates the power draw at about 380 W. Because that is an estimate and Google publishes no figure, the power field is empty.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -2786,7 +2786,7 @@
         "fp8": "yes",
         "fp4": "no"
       },
-      "precisionNote": "Google’s v5p table gives 459 TFLOPs peak per chip for BF16 and the same 459 TFLOPs for FP8. Dropping to eight-bit buys no throughput on this part, which is the opposite of the Blackwell and CDNA generations, but Google prints the FP8 row, so the format is supported and published. Both figures are dense; Google publishes no sparsity numbers. No Google page gives the v5p a four-bit rate and Google dates native FP4 to the eighth generation, so the FP4 cell reads not supported. Capacity is quoted in GiB."
+      "precisionNote": "Google’s v5p table gives 459 TFLOPs peak per chip for BF16 and the same 459 TFLOPs for FP8. Dropping to eight-bit gives no extra throughput on this part, unlike the Blackwell and CDNA generations. Google still prints the FP8 row, so the format is supported and published. Both figures are dense. Google publishes no sparsity numbers. No Google page gives the v5p a four-bit rate and Google dates native FP4 to the eighth generation, so the FP4 cell reads not supported. Capacity is quoted in GiB."
     },
     "tdpW": null,
     "interconnect": {
@@ -2797,8 +2797,8 @@
     "systemIntegrators": [],
     "priceEstimate": "Not sold. Epoch AI estimates Google pays Broadcom $5,000 to $7,600 per chip, median $6,000",
     "bomEstimate": "Epoch AI estimates $2,300 to $2,900 to make, for the chip module without networking",
-    "exportStatus": "Not sold as merchant silicon; the same posture as the rest of the TPU line. Total processing performance is 7,344, taken from BF16 (16 x 459), which beats FP8 (8 x 459 = 3,672), because the rule takes the highest result. That is above the 4,800 threshold in ECCN 3A090.a.",
-    "notes": "The training TPU of the pre-Ironwood era, and the largest coherent domain Google had built at the time: 8,960 chips in a 3D torus. It carries two TensorCores and four SparseCores per chip. Its FP8 rate matching its BF16 rate is the clearest sign that the v5 generation was designed before low precision became the axis of competition. Google publishes compute, memory and fabric numbers for its TPUs and nothing else; the N5 node here comes from SemiAnalysis. The other silicon fields are empty.",
+    "exportStatus": "Not sold as merchant silicon. As with the rest of the TPU line, export control applies to physical shipments of racks abroad. Total processing performance is 7,344, above the 4,800 threshold in ECCN 3A090.a. The figure comes from BF16 (16 x 459), because the rule takes the highest result and FP8 gives 3,672 (8 x 459).",
+    "notes": "The training TPU of the pre-Ironwood era. Its pod of 8,960 chips, linked in a 3D torus to work as one system, was the largest such system Google had built at the time. Each chip carries two TensorCores and four SparseCores. Its FP8 rate equals its BF16 rate. That is the clearest sign that the v5 generation was designed before chipmakers competed mainly on low-precision throughput. Google publishes compute, memory and fabric numbers for its TPUs and nothing else. The N5 node here comes from SemiAnalysis. The other silicon fields are empty.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -2909,7 +2909,7 @@
         "fp8": "no",
         "fp4": "no"
       },
-      "precisionNote": "Google’s v5e table gives 197 TFLOPs peak bf16 per chip and 393 TOPs peak Int8, both dense, and no other precision. The eight-bit path is INT8, so eight-bit work on a v5e runs as integer quantization with no hardware floating point; the FP8 cell reads not supported. There is no four-bit rate on any Google page for this part either, and Google dates native FP4 to the eighth generation. Google states the memory bandwidth as 800 GiBps, which is 859 GB/s; the field above carries the converted figure."
+      "precisionNote": "Google’s v5e table gives 197 TFLOPs peak bf16 per chip and 393 TOPs peak Int8, both dense, and no other precision. The eight-bit path is INT8, so eight-bit work on a v5e runs as integer quantization with no eight-bit floating-point path in hardware. The FP8 cell therefore reads not supported. No Google page gives this part a four-bit rate either, and Google dates native FP4 to the eighth generation. Google states the memory bandwidth as 800 GiBps, which is 859 GB/s. The field above carries the converted figure."
     },
     "tdpW": null,
     "interconnect": {
@@ -2920,8 +2920,8 @@
     "systemIntegrators": [],
     "priceEstimate": "Not sold. Epoch AI estimates Google pays Broadcom $2,000 to $3,500 per chip, median $2,700",
     "bomEstimate": "Epoch AI estimates $950 to $1,400 to make, for the chip module without networking",
-    "exportStatus": "Not sold as merchant silicon. Total processing performance is 3,152 (16 x 197), below the 4,800 in ECCN 3A090.a, as are the H20, the TPU v4 and MTIA v2. It would not clear the second test: Epoch AI puts the die at 325 mm2, which gives a performance density near 9.7, well above the 5.92 that pulls any chip of 1,600 TPP or more into 3A090.a. Google does not publish the die area, so that second figure rests on Epoch.",
-    "notes": "Google describes Cloud TPU v5e as a combined training and inference product. Its specification table lists an expected performance per total cost of ownership of 0.65x, against 1 in the v6e table. It sits under the 4,800 line, yet 256 of them in a pod deliver 50.63 PFLOPs. Google publishes compute, memory and fabric numbers for its TPUs and nothing else: no foundry, no process node, no die area, no transistor count, no package type and no HBM stack count. Those fields are empty, with one exception: the 325 mm2 die area is Epoch AI’s, and it is carried because the export-control arithmetic rests on it.",
+    "exportStatus": "Not sold as merchant silicon. Total processing performance is 3,152 (16 x 197), below the 4,800 in ECCN 3A090.a, as are the H20, the TPU v4 and MTIA v2. But the second test, performance density, would catch it. Epoch AI puts the die at 325 mm2, which gives a performance density near 9.7, well above the 5.92 that pulls any chip of 1,600 TPP or more into 3A090.a. Google does not publish the die area, so the density figure rests on Epoch AI’s die area.",
+    "notes": "Google describes Cloud TPU v5e as a combined training and inference product. Its specification table lists an expected performance per total cost of ownership of 0.65x, against 1 in the v6e table. Its total processing performance sits under the 4,800 export threshold, yet a pod of 256 chips delivers 50.63 PFLOPs. Google publishes compute, memory and fabric numbers for its TPUs and nothing else: no foundry, no process node, no die area, no transistor count, no package type and no HBM stack count. Those fields are empty except the die area. The 325 mm2 figure is Epoch AI’s, and it is shown because the export-control arithmetic depends on it.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -2990,7 +2990,7 @@
     "vendorCountry": "US",
     "announced": "2021-05",
     "shipping": null,
-    "status": "In service as Cloud TPU; the oldest generation Google still documents",
+    "status": "In service as Cloud TPU, the oldest generation Google still documents",
     "target": "Training and inference",
     "process": {
       "foundry": null,
@@ -3024,7 +3024,7 @@
         "fp8": "no",
         "fp4": "no"
       },
-      "precisionNote": "Google gives a single figure, “275 teraflops (bf16 or int8)” per chip, and names no other format. Dropping to eight bits buys nothing on this part, and the eight-bit path is integer: there is no FP8 and no FP4 datapath, so both cells read not supported. Capacity is quoted as 32 GiB."
+      "precisionNote": "Google gives a single figure, “275 teraflops (bf16 or int8)” per chip, and names no other format. Eight-bit math runs no faster than bf16 on this part, and the eight-bit path is integer. There is no FP8 and no FP4 datapath, so both cells read not supported. Memory capacity is quoted as 32 GiB."
     },
     "tdpW": 192,
     "interconnect": {
@@ -3034,9 +3034,9 @@
     },
     "systemIntegrators": [],
     "priceEstimate": "Not sold. Epoch AI estimates Google pays Broadcom $2,700 to $4,500 per chip, median $3,400",
-    "bomEstimate": "Epoch AI estimates $1,100 to $1,500 to make, for the chip module without networking",
-    "exportStatus": "Not sold as merchant silicon. Total processing performance is 4,400 (16 x 275), which sits 400 points below the 4,800 threshold in ECCN 3A090.a. Whether it would be caught by the density test added in October 2023 cannot be worked out from allowed sources, because Google publishes no die area.",
-    "notes": "The generation that made TPUs credible outside Google, and the only TPU with a published power figure: Google reports measured minimum, mean and maximum draw of 90, 170 and 192 W, and the TDP is that measured maximum. Two TensorCores per chip, HBM2, named where later parts leave the generation unnamed, and a 3D mesh that Google says can be configured as a 3D torus on some slice shapes. Google's TPU pages give compute, memory and fabric numbers only, but its ISCA 2023 paper on TPU v4 adds the rest: 7 nm, 22 billion transistors, one die with four HBM stacks, and six chip-to-chip links at 50 GB/s. The fields above carry those figures. Epoch AI records a 7 nm process and a 340 W TDP for the part. The 192 W is Google's own measured maximum, and the two are not the same kind of number, so Epoch's figure stays out of the panel.",
+    "bomEstimate": "Epoch AI estimates the chip module costs $1,100 to $1,500 to make, without networking",
+    "exportStatus": "Not sold as merchant silicon. Total processing performance is 4,400 (16 x 275), 400 points below the 4,800 threshold in ECCN 3A090.a. A second test, added in October 2023, divides that figure by the die area. Google publishes no die area, so allowed sources cannot show whether that test would catch the chip.",
+    "notes": "TPU v4 is the generation that made TPUs credible outside Google. It is also the only TPU with a published power figure. Google reports measured minimum, mean and maximum draw of 90, 170 and 192 W, and the power figure in the table is that measured maximum. Each chip has two TensorCores and HBM2 memory. Google names the HBM generation for this part but not for later TPUs. The chips connect in a 3D mesh, which Google says can be configured as a 3D torus, a mesh whose edges wrap around, on some slice shapes. Google's TPU pages give only compute, memory and fabric numbers. Its ISCA 2023 paper on TPU v4 adds the rest: 7 nm, 22 billion transistors, one die with four HBM stacks, and six chip-to-chip links at 50 GB/s. The table above uses those figures. Epoch AI records a 7 nm process and a 340 W thermal design power (TDP) for the part. A TDP is a design rating, but the 192 W is Google's own measured maximum, so the table leaves Epoch's figure out.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -3150,7 +3150,7 @@
         "fp8": "yes",
         "fp4": "yes"
       },
-      "precisionNote": "Dense, from the AWS Neuron architecture docs: 671 TFLOPS dense BF16/FP16/TF32 (2,517 with 4x structured sparsity), and 2,517 TFLOPS for MXFP8 and MXFP4 alike. FP4 buys no throughput over FP8 on this part, but the datapath is there and AWS publishes the figure."
+      "precisionNote": "Dense, from the AWS Neuron architecture docs: 671 TFLOPS dense BF16/FP16/TF32 (2,517 with 4x structured sparsity), and 2,517 TFLOPS for MXFP8 and MXFP4 alike. FP4 runs no faster than FP8 on this part, but the datapath exists and AWS publishes the figure."
     },
     "tdpW": null,
     "interconnect": {
@@ -3161,8 +3161,8 @@
     "systemIntegrators": [],
     "priceEstimate": null,
     "bomEstimate": null,
-    "exportStatus": "Not sold as merchant silicon; consumed inside AWS and rented as EC2 Trn3 instances.",
-    "notes": "It follows Trainium2 onto CoWoS-R, an organic interposer with six copper RDL layers that SemiAnalysis describes as cheaper and more mechanically compliant than silicon. Alchip took the back-end physical design from Marvell for this generation. AWS's architecture page gives eight NeuronCore-v4, 144 GiB of device memory at 4.9 TB/s and 2.56 TB/s per device, and no power figure, no die area, no transistor count and no HBM stack count; the four-stack arrangement and the CoWoS-R description come from SemiAnalysis. Epoch AI lists 700 W for the part, citing the same AWS page, which carries no such number, so the TDP field is empty.",
+    "exportStatus": "Not sold as merchant silicon. AWS uses it in-house and rents it out as EC2 Trn3 instances.",
+    "notes": "Like Trainium2, Trainium3 uses CoWoS-R packaging. Its interposer, the layer that wires the compute dies to the memory stacks, is organic (a polymer) and has six copper RDL wiring layers. SemiAnalysis describes that interposer as cheaper than silicon and less rigid. For this generation Alchip took over the back-end physical design, the detailed layout of the chip, from Marvell. AWS's architecture page gives eight NeuronCore-v4, 144 GiB of device memory at 4.9 TB/s and 2.56 TB/s of chip-to-chip bandwidth per device. It gives no power figure, die area, transistor count or HBM stack count. The four-stack arrangement and the CoWoS-R description come from SemiAnalysis. Epoch AI lists 700 W for the part and cites the same AWS page, but that page carries no such number, so the power field is empty.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -3241,7 +3241,7 @@
     "vendorCountry": "US",
     "announced": "2024-12",
     "shipping": "2024-Q4",
-    "status": "In service as EC2 Trn2 instances; superseded by Trainium3",
+    "status": "In service as EC2 Trn2 instances, superseded by Trainium3",
     "target": "Training and inference",
     "process": {
       "foundry": null,
@@ -3275,7 +3275,7 @@
         "fp8": "yes",
         "fp4": "no"
       },
-      "precisionNote": "Dense, from the AWS Neuron architecture docs: eight NeuronCore-v3 deliver 1,299 FP8 TFLOPS, 667 BF16, FP16 and TF32 TFLOPS, and 181 FP32 TFLOPS, with 2,563 TFLOPS quoted for the sparse case. That list, FP8, BF16, FP16, TF32 and FP32, is the whole of what the page documents; no four-bit type appears, and MXFP4 arrives one generation later, on Trainium3. The FP4 cell reads not supported."
+      "precisionNote": "Dense, from the AWS Neuron architecture docs: eight NeuronCore-v3 deliver 1,299 FP8 TFLOPS, 667 BF16, FP16 and TF32 TFLOPS, and 181 FP32 TFLOPS, with 2,563 TFLOPS quoted for the sparse case. The page documents only those five types: FP8, BF16, FP16, TF32 and FP32. No four-bit type appears, so the FP4 cell reads not supported. MXFP4 arrives one generation later, on Trainium3."
     },
     "tdpW": null,
     "interconnect": {
@@ -3286,8 +3286,8 @@
     "systemIntegrators": [],
     "priceEstimate": "Not sold. SemiAnalysis estimates it costs Amazon about $4,000 per chip, as cited by Epoch AI",
     "bomEstimate": null,
-    "exportStatus": "Not sold as merchant silicon; consumed inside AWS and rented as EC2 Trn2 instances. Total processing performance is 10,672, and it comes from the BF16 rate (16 x 667), which beats FP8 (8 x 1,299 = 10,392), because the rule takes the highest result across precisions. Either way it is more than twice the 4,800 threshold in ECCN 3A090.a.",
-    "notes": "The chip that made AWS a credible second source. Amazon says Anthropic is using Project Rainier, its Trainium2 cluster, to build and deploy Claude. It also shows how the export-control arithmetic behaves: FP8 doubles the BF16 rate on most accelerators, but on Trainium2 it falls short of double, so the BF16 figure sets the total processing performance. Epoch AI dates the part to 3 December 2024; AWS’s own documentation carries no date. AWS publishes compute, memory and fabric numbers and nothing about the silicon. SemiAnalysis supplies the rest shown here: N5, two compute dies on CoWoS-R, and four HBM3E stacks of 24 GB. No power figure exists. Epoch AI puts the draw at about 500 W, its own estimate.",
+    "exportStatus": "Not sold as merchant silicon. AWS uses it in-house and rents it out as EC2 Trn2 instances. Total processing performance is 10,672, from the BF16 rate (16 x 667). The rule takes the highest result across precisions, and BF16 beats FP8 (8 x 1,299 = 10,392). Either way it is more than twice the 4,800 threshold in ECCN 3A090.a.",
+    "notes": "Trainium2 is the chip that made AWS a credible second source. Amazon says Anthropic is using Project Rainier, its Trainium2 cluster, to build and deploy Claude. On most accelerators FP8 runs at twice the BF16 rate, so the two formats give the same total processing performance, the measure export controls use. On Trainium2 FP8 falls short of double, so the BF16 figure sets the chip's total processing performance. Epoch AI dates the part to 3 December 2024. AWS’s own documentation gives no date. AWS publishes compute, memory and fabric numbers and nothing about the silicon. SemiAnalysis supplies the rest shown here: N5, two compute dies on CoWoS-R, and four HBM3E stacks of 24 GB. No power figure exists. Epoch AI's own estimate puts the draw at about 500 W.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -3406,7 +3406,7 @@
         "fp8": "yes",
         "fp4": "yes"
       },
-      "precisionNote": "Microsoft’s architecture deep dive states 10.1 PetaOPS FP4 and that FP4 throughput on Maia 200 is 2x that of FP8 and 8x that of BF16, which gives 5,050 TFLOPS FP8 and 1,263 TFLOPS BF16; its launch post says “over 10 petaFLOPS” FP4 and “over 5 petaFLOPS” FP8. Epoch AI’s database carries the same arithmetic at 1,268 TFLOPS BF16. All three formats are supported; dense versus sparse is not stated, and Microsoft publishes no separate tensor-core FP16 rate."
+      "precisionNote": "Microsoft’s architecture deep dive gives 10.1 PetaOPS FP4 and says FP4 throughput on Maia 200 is 2x that of FP8 and 8x that of BF16. That gives 5,050 TFLOPS FP8 and 1,263 TFLOPS BF16. Microsoft's launch post says “over 10 petaFLOPS” FP4 and “over 5 petaFLOPS” FP8. Epoch AI’s database uses the same arithmetic and records 1,268 TFLOPS BF16. All three formats are supported. Microsoft does not say whether the figures are dense or sparse, and publishes no separate tensor-core FP16 rate."
     },
     "tdpW": 750,
     "interconnect": {
@@ -3417,8 +3417,8 @@
     "systemIntegrators": [],
     "priceEstimate": null,
     "bomEstimate": null,
-    "exportStatus": "Not sold as merchant silicon; deployed only in Azure regions.",
-    "notes": "The exception among 2026 flagships: an all-Ethernet accelerator with an on-die NIC, no proprietary scale-up cable plant and a two-tier fabric reaching 6,144 accelerators. Microsoft publishes over 140 billion transistors on TSMC's N3 process, 216 GB of HBM3E at 7 TB/s, 272 MB of on-die SRAM and a 750 W SoC TDP, and no die area, no packaging technology and no HBM stack count; the deep dive names no CoWoS variant. Epoch AI's roughly 820 mm2 die figure is for Maia 100, the earlier part, and no allowed source publishes a Maia 200 die area.",
+    "exportStatus": "Not sold as merchant silicon. Microsoft deploys it only in its own Azure cloud.",
+    "notes": "Maia 200 is the exception among 2026 flagships. It uses only Ethernet, its network interface (NIC) is built into the die, it needs no proprietary scale-up cabling, and a two-tier network links up to 6,144 accelerators. Microsoft publishes over 140 billion transistors on TSMC's N3 process, 216 GB of HBM3E at 7 TB/s, 272 MB of on-die SRAM and a 750 W power rating for the chip. It publishes no die area, packaging technology or HBM stack count, and its architecture deep dive names no CoWoS variant. Epoch AI's die figure of roughly 820 mm2 belongs to Maia 100, the earlier part. No allowed source publishes a Maia 200 die area.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -3495,7 +3495,7 @@
     "vendorCountry": "US",
     "announced": "2023-11",
     "shipping": null,
-    "status": "Deployed inside Azure; superseded by Maia 200",
+    "status": "Deployed inside Azure, superseded by Maia 200",
     "target": "Training and inference for Azure OpenAI workloads",
     "process": {
       "foundry": "TSMC",
@@ -3529,7 +3529,7 @@
         "fp8": "unknown",
         "fp4": "unknown"
       },
-      "precisionNote": "Dense, from Microsoft’s Hot Chips 2024 deck, which gives peak dense tensor throughput of 0.8 POPS at BF16. The eight- and four-bit cells read not published: the tensor unit runs Microsoft’s own 9-bit and 6-bit MX formats, which are neither FP8 nor FP4"
+      "precisionNote": "Dense, from Microsoft’s Hot Chips 2024 deck, which gives peak dense tensor throughput of 0.8 POPS at BF16. The eight- and four-bit cells read not published, because the tensor unit runs Microsoft’s own 9-bit and 6-bit MX formats, which are neither FP8 nor FP4."
     },
     "tdpW": 500,
     "interconnect": {
@@ -3540,8 +3540,8 @@
     "systemIntegrators": [],
     "priceEstimate": null,
     "bomEstimate": null,
-    "exportStatus": "Not sold as merchant silicon; deployed only in Azure regions. Total processing performance is 12,800 (16 x 800), well above the 4,800 threshold in ECCN 3A090.a.",
-    "notes": "Microsoft’s first accelerator, and the first silicon anywhere to implement the Microscaling data format that later became the MX standard. Microsoft published the cooling design in detail, down to the sidekick heat exchanger that sits beside the rack, and later the chip itself, in its Inside Maia 100 post and at Hot Chips 2024: an 820 mm2 die on TSMC N5 with four HBM2E stacks, 64 GB at 1.8 TB/s, on CoWoS-S. Microsoft's Azure post of 3 April 2024 dates the announcement to November 2023, the date above; Epoch AI records the part at August 2024, when Microsoft presented it at Hot Chips. The die area, about 820 mm2 on TSMC N5, is Microsoft’s own figure. Microsoft designed the chip for up to 700 W and provisions it at 500 W, the figure shown",
+    "exportStatus": "Not sold as merchant silicon. Microsoft deploys it only in its own Azure cloud. Total processing performance is 12,800 (16 x 800), well above the 4,800 threshold in ECCN 3A090.a.",
+    "notes": "Maia 100 is Microsoft’s first accelerator. It is also the first silicon anywhere to implement the Microscaling data format, in which small blocks of numbers share one scale factor, and that format later became the MX standard. Microsoft published the cooling design in detail, down to the sidekick heat exchanger that sits beside the rack. It later described the chip itself in its Inside Maia 100 post and at the Hot Chips 2024 conference. By Microsoft's own figures, the chip is a die of about 820 mm2 on TSMC N5 with four HBM2E stacks, 64 GB at 1.8 TB/s, on CoWoS-S. Microsoft's Azure post of 3 April 2024 dates the announcement to November 2023, the date shown above. Epoch AI records the part at August 2024, when Microsoft presented it at Hot Chips. Microsoft designed the chip for up to 700 W and provisions it at 500 W, the figure shown.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -3618,7 +3618,7 @@
     "vendorCountry": "US",
     "announced": "2026-03",
     "shipping": null,
-    "status": "Lab testing finished; on the path to deployment",
+    "status": "Lab testing finished, on the path to deployment",
     "target": "Generative AI inference",
     "process": {
       "foundry": null,
@@ -3652,7 +3652,7 @@
         "fp8": "yes",
         "fp4": "yes"
       },
-      "precisionNote": "Meta’s own blog gives only ratios, quoting 400 percent higher FP8 FLOPS and 51 percent higher HBM bandwidth than MTIA 300, and publishes no absolute figure for either part, so the ratios cannot be resolved into numbers. The formats themselves are on the record: Meta writes that MTIA 400 “supports enhanced versions of MX8 and MX4, which are important low-precision formats”, so eight- and four-bit floats both read not published. It names no 16-bit rate or type for this generation. The absolute figures Meta showed at Hot Chips 2026 sit in a registration-gated deck."
+      "precisionNote": "Meta’s blog gives only ratios to MTIA 300: 400 percent higher FP8 FLOPS and 51 percent higher HBM bandwidth. It publishes no absolute figure for either part, so the ratios cannot be turned into numbers. Meta writes that MTIA 400 “supports enhanced versions of MX8 and MX4, which are important low-precision formats”, so the eight- and four-bit cells both read not published. It names no 16-bit rate or type for this generation. The absolute figures Meta showed at Hot Chips 2026 are in a deck that requires registration."
     },
     "tdpW": null,
     "interconnect": {
@@ -3663,8 +3663,8 @@
     "systemIntegrators": [],
     "priceEstimate": null,
     "bomEstimate": null,
-    "exportStatus": "Not sold at all; consumed entirely inside Meta data centers.",
-    "notes": "Meta says it has built the capability to ship a new chip roughly every six months, and MTIA 400 is the second of four successive generations Meta described in March 2026: MTIA 450 doubles HBM bandwidth again, and MTIA 500 is quoted at 4.5 times the HBM bandwidth and 25 times the compute of MTIA 300. Broadcom supplies the XPU design platform, the advanced packaging and the Ethernet. Meta publishes no foundry, node, HBM generation, die area, transistor count, HBM capacity, HBM supplier, TDP or absolute performance for MTIA 400, and gives its performance only as ratios to MTIA 300; the sibling MTIA 300 post is the only one that carries an absolute memory figure, 216 GB of HBM3E.",
+    "exportStatus": "Not sold at all. Meta uses it only inside its own data centers.",
+    "notes": "Meta says it can ship a new chip roughly every six months. MTIA 400 is the second of four successive generations Meta described in March 2026. MTIA 450 doubles HBM bandwidth again, and Meta quotes MTIA 500 at 4.5 times the HBM bandwidth and 25 times the compute of MTIA 300. Broadcom supplies the XPU design platform, the advanced packaging and the Ethernet networking. Meta publishes no foundry, node, HBM generation, die area, transistor count, HBM capacity, HBM supplier, TDP or absolute performance for MTIA 400. It gives performance only as ratios to MTIA 300. The only absolute memory figure is in the companion MTIA 300 post, which gives 216 GB of HBM3E for MTIA 300.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -3815,7 +3815,7 @@
         "fp8": "yes",
         "fp4": "no"
       },
-      "precisionNote": "From the spec table in Meta’s ISCA 2026 paper: 1,120 TFLOPS FP8 and 560 TFLOPS FP16/BF16, with no dense or sparse basis stated. The paper says four-bit formats such as MX4 run as a software fallback on MTIA 300, with no native datapath, so the FP4 cell reads not supported. Epoch AI’s MTIA 300 row (1,200 FP8, 600 BF16, 800 W) does not match Meta’s paper and is not used"
+      "precisionNote": "From the spec table in Meta’s ISCA 2026 paper: 1,120 TFLOPS FP8 and 560 TFLOPS FP16/BF16. The paper does not say whether these are dense or sparse. It says MTIA 300 has no native datapath for four-bit formats such as MX4 and runs them in software instead, so the FP4 cell reads not supported. Epoch AI’s MTIA 300 row (1,200 FP8, 600 BF16, 800 W) does not match Meta’s paper, so the table does not use it."
     },
     "tdpW": 912,
     "interconnect": {
@@ -3826,8 +3826,8 @@
     "systemIntegrators": [],
     "priceEstimate": null,
     "bomEstimate": null,
-    "exportStatus": "Not sold; used only inside Meta data centers",
-    "notes": "Meta’s first training chip, built to train its ranking and recommendation models. The compute chiplet measures 25.6 by 31.4 mm and fills a full reticle, with a spare row of processing elements for yield; two 25.6 by 9.3 mm network chiplets carry the network interfaces, so no PCIe hop sits between accelerator and network. Power is 912 W, 667 W typical. Meta names no foundry or node for the part; the paper describes the package as CoWoS",
+    "exportStatus": "Not sold. Meta uses it only inside its own data centers.",
+    "notes": "MTIA 300 is Meta’s first training chip, built to train its ranking and recommendation models. The compute chiplet measures 25.6 by 31.4 mm and fills a full reticle, the largest area a lithography scanner can print in one exposure. It has a spare row of processing elements to improve yield, the share of chips that come out working. Two network chiplets of 25.6 by 9.3 mm carry the network interfaces, so data reaches the network without a hop over PCIe to a separate network card. Power is rated at 912 W, with 667 W typical. Meta names no foundry or node for the part, but its ISCA 2026 paper describes the package as CoWoS.",
     "layout": null,
     "sources": [
       {
@@ -3852,7 +3852,7 @@
     "vendorCountry": "US",
     "announced": "2024-04",
     "shipping": null,
-    "status": "Deployed inside Meta data centers; superseded by MTIA 300 and MTIA 400",
+    "status": "Deployed inside Meta data centers, superseded by MTIA 300 and MTIA 400",
     "target": "Ranking and recommendation inference",
     "process": {
       "foundry": "TSMC",
@@ -3886,7 +3886,7 @@
         "fp8": "no",
         "fp4": "no"
       },
-      "precisionNote": "Dense. Meta’s table gives 354 TOPS INT8 and 177 TFLOPS FP16 and BF16 for the matrix engines at 1.35 GHz, with 708 and 354 quoted for the sparse case. The vector core adds 11.06 TOPS INT8, 5.53 TFLOPS FP16 and 2.76 TFLOPS FP32. INT8 and FP16/BF16 are the only types the table carries: there is no FP8 and no FP4 datapath, so both cells read not supported."
+      "precisionNote": "Dense. Meta’s table gives 354 TOPS INT8 and 177 TFLOPS FP16 and BF16 for the matrix engines at 1.35 GHz, with 708 and 354 quoted for the sparse case. The vector core adds 11.06 TOPS INT8, 5.53 TFLOPS FP16 and 2.76 TFLOPS FP32. Apart from FP32 on the vector core, the table carries only INT8 and FP16/BF16. There is no FP8 and no FP4 datapath, so both cells read not supported."
     },
     "tdpW": 90,
     "interconnect": {
@@ -3897,8 +3897,8 @@
     "systemIntegrators": [],
     "priceEstimate": null,
     "bomEstimate": null,
-    "exportStatus": "Not sold; consumed entirely inside Meta data centers. Total processing performance is 2,832 (16 x 177), below the 4,800 headline threshold, but performance density on the published 421 mm2 die works out at about 6.7, above the 5.92 that pulls any chip of 1,600 TPP or more into ECCN 3A090.a under the second limb BIS added in October 2023. It is the clearest case of a chip the density test catches and the headline number misses.",
-    "notes": "The one large accelerator with no HBM at all: 128 GB of LPDDR5 at 204.8 GB/s, about a sixteenth of an H100’s memory bandwidth, backed by 256 MB of on-chip SRAM, at 90 W by Meta's 2024 blog, or 85 W (65 W typical) by its 2026 ISCA paper. That is a deliberate choice for ranking and recommendation work, where the model is small and the traffic is enormous. Meta also publishes what almost nobody else does: the die measures 25.6 by 16.4 mm, 421 mm2, and holds 2.35 billion gates on TSMC 5 nm. Meta publishes no package type and no scale-out fabric for the part, which is consistent with a PCIe-attached accelerator, and names no memory supplier.",
+    "exportStatus": "Not sold. Meta uses it only inside its own data centers. Total processing performance (TPP) is 2,832 (16 x 177), below the 4,800 threshold. But its performance density, TPP divided by die area, works out at about 6.7 on the published 421 mm2 die. That is above 5.92, the density at which any chip of 1,600 TPP or more falls into ECCN 3A090.a under the second test BIS added in October 2023. MTIA v2 is the clearest case of a chip that the density test catches and the 4,800 threshold misses.",
+    "notes": "MTIA v2 has no HBM at all. It uses 128 GB of LPDDR5, the low-power memory used in phones and laptops, backed by 256 MB of on-chip SRAM. Its 204.8 GB/s of memory bandwidth is about a sixteenth of an H100’s. Meta made that memory choice deliberately for ranking and recommendation work, where the model is small and the traffic is enormous. Meta's 2024 blog gives the chip's power as 90 W, and its 2026 ISCA paper gives 85 W (65 W typical). Meta also publishes die details that almost no other vendor does. The die measures 25.6 by 16.4 mm (421 mm2) and holds 2.35 billion gates on TSMC 5 nm. Meta publishes no package type and no network for linking chips across servers, which fits a card that plugs into a server over PCIe. It names no memory supplier.",
     "layout": {
       "unit": "mm",
       "interposer": null,
@@ -3939,7 +3939,7 @@
     "vendorCountry": "US",
     "announced": "2026-06",
     "shipping": null,
-    "status": "Engineering samples; OpenAI plans to begin deploying it by the end of 2026",
+    "status": "Engineering samples. OpenAI plans to begin deploying it by the end of 2026",
     "target": "LLM inference only",
     "process": {
       "foundry": "TSMC",
@@ -3973,7 +3973,7 @@
         "fp8": "unknown",
         "fp4": "yes"
       },
-      "precisionNote": "OpenAI publishes no per-precision FLOPS and argues that performance per unit of power is the more useful standard. SemiAnalysis gives 13.4 PFLOPS of MXFP4 for the B0 stepping, a peak theoretical figure without a dense or sparse basis, and OpenAI's own results run MXFP4 models on the chip. FP16 and FP8 read not published. On SemiAnalysis’s InferenceX benchmark, OpenAI reports peak interactivity of 1,459 tokens per second per user on GPT-OSS 120B, 700 on DeepSeek R1 and 694 on Kimi K2.5"
+      "precisionNote": "OpenAI publishes no per-precision FLOPS and argues that performance per unit of power is the more useful standard. SemiAnalysis gives 13.4 PFLOPS of MXFP4 for the B0 stepping (chip revision), a theoretical peak with no dense or sparse basis stated. OpenAI's own results show MXFP4 models running on the chip. FP16 and FP8 read not published. On SemiAnalysis’s InferenceX benchmark, OpenAI reports peak interactivity of 1,459 tokens per second per user on GPT-OSS 120B, 700 on DeepSeek R1 and 694 on Kimi K2.5."
     },
     "tdpW": 700,
     "interconnect": {
@@ -3986,8 +3986,8 @@
     ],
     "priceEstimate": null,
     "bomEstimate": null,
-    "exportStatus": "Not merchant silicon; deployed in OpenAI and partner data centers.",
-    "notes": "A reticle-sized inference ASIC taped out in nine months under the 10 gigawatt co-development deal OpenAI signed with Broadcom in October 2025. It is rated at 700 W against the GB300's 1,400 W, and OpenAI reports 1.5 to 1.9 times the peak throughput per watt of the GB200 and GB300 systems it compared, normalized by each chip's rated power. OpenAI has published nothing physical and frames the chip in delivered tokens per second. The node, memory, bandwidth, package and FP4 figures shown come from SemiAnalysis. The package drawing follows Broadcom's 3.5D face-to-face platform and is estimated throughout. SemiAnalysis describes two dies, a reticle-sized compute die and an I/O chiplet.",
+    "exportStatus": "Not sold as merchant silicon. OpenAI plans to deploy it in its own and partner data centers.",
+    "notes": "Jalapeño is OpenAI's custom inference chip (an ASIC), as large as one lithography exposure allows. It reached tape-out, the hand-off of the finished design for manufacturing, in nine months. It was developed under the 10 gigawatt co-development deal OpenAI signed with Broadcom in October 2025. It is rated at 700 W against the 1,400 W of Nvidia's GB300. OpenAI reports 1.5 to 1.9 times the peak throughput per watt of the Nvidia GB200 and GB300 systems it compared, normalized by each chip's rated power. OpenAI has published no physical details and describes the chip's performance in delivered tokens per second. The node, memory, bandwidth, package and FP4 figures shown come from SemiAnalysis. The package drawing follows Broadcom's 3.5D face-to-face platform and is estimated throughout. SemiAnalysis describes two dies, a compute die of that maximum size and an I/O chiplet.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -4102,7 +4102,7 @@
         "fp8": "yes",
         "fp4": "no"
       },
-      "precisionNote": "Intel’s Gaudi 3 white paper gives 1,678 TFLOPS for both FP8 and BF16 on the matrix engines, in its comparison with Gaudi 2 and again in Table 5, which also lists 459 TFLOPS for FP16 (signed) and TF32 and 229 for FP32; Epoch AI records the same 1,678. Intel’s Gaudi documentation gives 1.8 PFLOPS for FP8 and BF16 across 8 matrix multiplication engines and 64 tensor processor cores on two compute dies. Neither source states dense or sparse. Gaudi 3 has no four-bit datapath: the white paper states that “the Intel Gaudi 3 AI accelerator MME supports all the key AI compute datatypes: FP8 (both E4M3 and E5M2), BF16, FP16, TF32 and FP32” and never mentions FP4, so that cell reads not supported."
+      "precisionNote": "Intel’s Gaudi 3 white paper gives 1,678 TFLOPS for both FP8 and BF16 on the matrix engines, in its comparison with Gaudi 2 and again in Table 5. Table 5 also lists 459 TFLOPS for FP16 (signed) and TF32, and 229 for FP32. Epoch AI records the same 1,678. Intel’s Gaudi documentation gives 1.8 PFLOPS for FP8 and BF16 across 8 matrix multiplication engines and 64 tensor processor cores on two compute dies. Neither Intel source says whether the figures are dense or sparse. Gaudi 3 has no four-bit datapath. The white paper states that “the Intel Gaudi 3 AI accelerator MME supports all the key AI compute datatypes: FP8 (both E4M3 and E5M2), BF16, FP16, TF32 and FP32” and never mentions FP4, so the FP4 cell reads not supported."
     },
     "tdpW": 900,
     "interconnect": {
@@ -4119,8 +4119,8 @@
     ],
     "priceEstimate": "$125,000 list price for a kit of eight on a universal baseboard, Intel's own figure (June 2024)",
     "bomEstimate": null,
-    "exportStatus": "Controlled; above the BIS advanced-computing thresholds, so an export to China needs a license, reviewed with a presumption of denial under 15 CFR 742.6(b)(10). Applications may be filed.",
-    "notes": "A merchant AI accelerator that uses standard Ethernet for both scale-up and scale-out, with 24 200-gigabit RoCE ports on the package. Intel's next announced inference part is Crescent Island, a data center GPU with 160 GB of LPDDR5X, with customer sampling expected in the second half of 2026. Intel publishes no die area, transistor count, package dimensions, HBM supplier or list price for it; its white paper names TSMC 5 nm as the process.",
+    "exportStatus": "Controlled. It is above the BIS advanced-computing thresholds, so an export to China needs a license, reviewed with a presumption of denial under 15 CFR 742.6(b)(10). Applications may be filed.",
+    "notes": "Gaudi 3 is an AI accelerator that Intel sells on the open market. It uses standard Ethernet both to link the eight cards on a baseboard and to link baseboards together, with 24 RoCE ports of 200 gigabits on the package. Intel's next announced inference part is Crescent Island, a data center GPU with 160 GB of LPDDR5X. Intel expects customer sampling in the second half of 2026. Intel publishes no die area, transistor count, package dimensions, HBM supplier or per-chip list price for Gaudi 3. Its white paper names TSMC 5 nm as the process.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -4269,7 +4269,7 @@
         "fp8": "yes",
         "fp4": "no"
       },
-      "precisionNote": "Intel publishes no Gaudi 2 datasheet of its own, but its Gaudi 3 white paper tabulates the two parts together and gives Gaudi 2 432 TFLOPS BF16 MME and 865 TFLOPS FP8 MME; those are the figures above. Epoch AI’s hardware database carries 450 TFLOPS BF16 and the same 865 FP8; the figure above is Intel’s. Neither source states dense or sparse. The Gaudi documentation lists the types: “Gaudi 2 supports all popular data types required for deep learning: FP32, TF32, BF16, FP16 & FP8 (both E4M3 and E5M2)”, with no four-bit format, so the FP4 cell reads not supported."
+      "precisionNote": "Intel publishes no Gaudi 2 datasheet of its own. Its Gaudi 3 white paper tabulates the two parts together and gives Gaudi 2's matrix engines (MME) 432 TFLOPS BF16 and 865 TFLOPS FP8, the figures shown above. Epoch AI’s hardware database carries 450 TFLOPS BF16 and the same 865 FP8, but the table uses Intel’s figure. Neither source says whether the figures are dense or sparse. The Gaudi documentation lists the types: “Gaudi 2 supports all popular data types required for deep learning: FP32, TF32, BF16, FP16 & FP8 (both E4M3 and E5M2)”, with no four-bit format, so the FP4 cell reads not supported."
     },
     "tdpW": 600,
     "interconnect": {
@@ -4280,8 +4280,8 @@
     "systemIntegrators": [],
     "priceEstimate": "$65,000 for a kit of eight on a universal baseboard, offered to system makers, Intel's own figure (June 2024)",
     "bomEstimate": null,
-    "exportStatus": "Controlled. Total processing performance is 6,920, taken from FP8 (8 x 865), which beats BF16 (16 x 432 = 6,912), above the 4,800 threshold in ECCN 3A090.a.",
-    "notes": "The chip that made the Ethernet choice Gaudi 3 inherited: 24 RDMA NICs on the package, so a Gaudi cluster needs no proprietary cable plant and no InfiniBand. It also carries 48 MB of local SRAM and hardware video decoders that let it run its own pre-processing. Intel positioned it against the A100 and never gave it a datasheet of its own, so the compute figures come from the comparison table in Intel's Gaudi 3 white paper, which records the older part at 432 TFLOPS BF16 and 865 TFLOPS FP8. Epoch AI also gives the foundry as TSMC and the die as 826 mm2; the foundry is carried above and the die area is not, because 826 mm2 is exactly the A100 figure and Epoch's citation for the row is an archived page, with no primary document behind it. Intel publishes no die count, die area, transistor count or memory supplier; its Gaudi 3 white paper gives six HBM2E stacks.",
+    "exportStatus": "Controlled. Total processing performance is 6,920, above the 4,800 threshold in ECCN 3A090.a. The figure comes from FP8 (8 x 865), which beats BF16 (16 x 432 = 6,912).",
+    "notes": "With Gaudi 2, Intel made the Ethernet choice that Gaudi 3 inherited. Gaudi 2 has 24 RDMA network interfaces (NICs) on the package, so a Gaudi cluster needs no proprietary cabling and no InfiniBand. It also carries 48 MB of local SRAM and hardware video decoders that let it run its own pre-processing. Intel positioned Gaudi 2 against the A100 but never gave it a datasheet of its own. So the compute figures come from the comparison table in Intel's Gaudi 3 white paper, which records Gaudi 2 at 432 TFLOPS BF16 and 865 TFLOPS FP8. Epoch AI gives the foundry as TSMC and the die as 826 mm2. The table above uses the foundry. It leaves out the die area, because 826 mm2 is exactly the A100 figure and Epoch's citation for the row is an archived page, with no primary document behind it. Intel publishes no die count, die area, transistor count or memory supplier. Its Gaudi 3 white paper gives Gaudi 2 six HBM2E stacks.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -4375,7 +4375,7 @@
     "announced": "2026-08",
     "shipping": "2026-Q3",
     "status": "Shipping",
-    "target": "Inference-first, also used for training",
+    "target": "Mainly inference, also used for training",
     "process": {
       "foundry": "TSMC",
       "node": "N5",
@@ -4408,7 +4408,7 @@
         "fp8": "unknown",
         "fp4": "unknown"
       },
-      "precisionNote": "Cerebras quotes 250 PFLOPS of AI compute per WSE-3 Turbo, double the original WSE-3, and names no precision and no dense-versus-sparse basis for it, so the figure cannot be placed in a precision row. Cerebras’s developer documentation does list what the platform runs, “The CS system offers support for the following data formats”, FP32, FP16, cbfloat16 and bfloat16, which puts FP16 in the supported-but-unpublished column. That page is the training-software documentation for the CS platform and predates the CS-4, and Cerebras publishes no data-type list for the WSE-3 Turbo, so the FP8 and FP4 cells read not published."
+      "precisionNote": "Cerebras quotes 250 PFLOPS of AI compute per WSE-3 Turbo, double the original WSE-3. It names no precision and no dense or sparse basis for the figure, so it fits none of the table's speed rows. Cerebras’s developer documentation says “The CS system offers support for the following data formats” and lists FP32, FP16, cbfloat16 and bfloat16. So FP16 is supported, with no published figure. But that page documents the training software for the CS platform and predates the CS-4. Cerebras publishes no data-type list for the WSE-3 Turbo, so the FP8 and FP4 cells read not published."
     },
     "tdpW": null,
     "interconnect": {
@@ -4419,8 +4419,8 @@
     "systemIntegrators": [],
     "priceEstimate": null,
     "bomEstimate": null,
-    "exportStatus": "US-designed and TSMC-fabricated; subject to the EAR advanced-computing rules on export to China and other restricted destinations.",
-    "notes": "The only production part that deliberately ignores the reticle limit, stitching 84 reticle-sized tiles into one 46,225 mm2 device and skipping HBM entirely in favor of 44 GB of on-wafer SRAM at 43.2 PB/s. That removes the packaging and memory chokepoints that limit everyone else and replaces them with a yield and power problem: three wafers per rack, direct liquid cooling, and up to 30 PSU modules per backpack.",
+    "exportStatus": "US-designed and fabricated by TSMC. Exports to China and other restricted destinations fall under the advanced-computing rules of the Export Administration Regulations (EAR).",
+    "notes": "The WSE-3 Turbo is the only production part that deliberately ignores the reticle limit, the largest area a lithography scanner can print in one exposure. Cerebras stitches 84 reticle-sized tiles into one 46,225 mm2 device. The chip has no HBM and uses 44 GB of on-wafer SRAM at 43.2 PB/s instead. The design avoids the packaging and memory chokepoints that limit other chips, but it creates problems of yield and power. Each rack holds three wafers and needs direct liquid cooling, and each wafer's housing, which Cerebras calls a backpack, draws on up to 30 power-supply modules.",
     "layout": {
       "unit": "mm",
       "waferScale": true,
@@ -4495,7 +4495,7 @@
         "fp8": "yes",
         "fp4": "unknown"
       },
-      "precisionNote": "Derived from a rack figure: Groq quotes 315 PFLOPS of FP8 inference compute and 40 PB/s of SRAM bandwidth per 256-LPU rack, which is about 1,230 TFLOPS FP8 and 156 TB/s per accelerator. Dense versus sparse not stated. FP16 is supported but no current figure exists: Epoch AI records 188 TFLOPS FP16 and 750 TOPS INT8 for the first-generation GroqChip from a Groq product brief whose URL no longer resolves, and mixing that generation’s arithmetic with a rack-derived FP8 figure would misstate the part, so the cell stays empty. Groq names no four-bit format anywhere, but publishes no data-type list either, so FP4 reads not published. Groq’s own LPU page puts on-chip SRAM bandwidth at “upwards of 80 terabytes per second”, roughly half the rack-derived figure, so the two Groq pages do not agree and both are recorded here."
+      "precisionNote": "Derived from a rack figure. Groq quotes 315 PFLOPS of FP8 inference compute and 40 PB/s of SRAM bandwidth per 256-LPU rack, which works out to about 1,230 TFLOPS FP8 and 156 TB/s per accelerator. Groq does not say whether the figure is dense or sparse. FP16 is supported, but no current figure exists. Epoch AI records 188 TFLOPS FP16 and 750 TOPS INT8 for the first-generation GroqChip, from a Groq product brief whose link no longer works. Mixing that generation’s figures with a rack-derived FP8 figure would misstate the part, so the FP16 cell stays empty. Groq names no four-bit format anywhere, but publishes no data-type list either, so FP4 reads not published. Groq’s own LPU page puts on-chip SRAM bandwidth at “upwards of 80 terabytes per second”, roughly half the rack-derived figure. The two Groq pages disagree, and both are recorded here."
     },
     "tdpW": 215,
     "interconnect": {
@@ -4505,9 +4505,9 @@
     },
     "systemIntegrators": [],
     "priceEstimate": null,
-    "bomEstimate": "In February 2024 SemiAnalysis estimated a raw wafer cost under $6,000 for the 14 nm GroqChip, on a die of about 725 mm2, against roughly $16,000 for an H100 wafer on TSMC's 4N",
+    "bomEstimate": "In February 2024 SemiAnalysis estimated a raw wafer cost of under $6,000 for the 14 nm GroqChip (a die of about 725 mm2), against roughly $16,000 for an H100 wafer on TSMC's 4N",
     "exportStatus": "US-designed and, for the 14 nm generation, fabricated and packaged in the United States. Groq lists a data center in Riyadh, Saudi Arabia.",
-    "notes": "The purest SRAM-only design in production: no HBM at all, a fully deterministic VLIW pipeline, and a model that only works when hundreds of chips are wired together as one machine. SemiAnalysis reports that its 14 nm first generation was fabricated at GlobalFoundries and packaged in the United States. The 230 MB of SRAM and the 215 W above are the first-generation GroqChip, recorded by Epoch AI from a Groq product brief whose URL no longer resolves; Groq's live pages give neither a power figure nor a per-chip SRAM capacity, and the rack figure of 128 GB across 256 LPUs implies 500 MB per chip on the current part. Groq publishes no package type and no price; its ISCA 2020 paper gives the first-generation chip 26.8 billion transistors.",
+    "notes": "The LPU is the purest SRAM-only design in production. All of its memory is SRAM on the chip itself, with no HBM at all. It runs a fully deterministic VLIW pipeline, in which the timing of every step is fixed in advance. The design works only when hundreds of chips are wired together as one machine. SemiAnalysis reports that its 14 nm first generation was fabricated at GlobalFoundries and packaged in the United States. The 230 MB of SRAM and the 215 W shown above are for the first-generation GroqChip. Epoch AI recorded them from a Groq product brief whose link no longer works. Groq's current pages give neither a power figure nor a per-chip SRAM capacity. Its rack figure of 128 GB across 256 LPUs implies 500 MB per chip on the current part. Groq publishes no package type and no price. Its ISCA 2020 paper gives the first-generation chip 26.8 billion transistors.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -4559,7 +4559,7 @@
     "vendorCountry": "CN",
     "announced": "2022",
     "shipping": null,
-    "status": "Shipping; the volume Chinese accelerator before the 910C",
+    "status": "Shipping, the high-volume Chinese accelerator before the 910C",
     "target": "Training and inference",
     "process": {
       "foundry": "SMIC (as CSET reports) and TSMC (in much of the installed base, SemiAnalysis judges)",
@@ -4593,7 +4593,7 @@
         "fp8": "no",
         "fp4": "no"
       },
-      "precisionNote": "CSET puts the second-generation Ascend 910B series at a maximum theoretical 400 TFLOPS FP16, 80 TFLOPS above the first-generation 910, and finds that only about 75 percent of that gain is real hardware: half comes from a higher clock, a quarter from an extra vector unit per AI core, and the last quarter from a change in how Huawei counts peak performance. Huawei publishes no per-chip figure of its own; its Atlas 800T A2 server gives 3.0 or 2.5 PFLOPS FP16 across eight NPUs, 375 or 312.5 TFLOPS per chip. Huawei’s own roadmap makes the absence explicit: “Compared with the Ascend 910B and Ascend 910C, our newer chips – starting with the Ascend 950 chips – … will support more data formats, including FP32, HF32, FP16, BF16, FP8, MXFP8, HiF8, MXFP4, and HiF4.” Eight- and four-bit floats arrive with the 950 series, so the FP8 and FP4 cells read not supported."
+      "precisionNote": "CSET puts the second-generation Ascend 910B series at a theoretical maximum of 400 TFLOPS FP16, 80 TFLOPS above the first-generation 910. CSET finds that only about 75 percent of that gain is real hardware. Half of the gain comes from a higher clock, a quarter from an extra vector unit per AI core, and the last quarter from a change in how Huawei counts peak performance. Huawei publishes no per-chip figure of its own. Its Atlas 800T A2 server gives 3.0 or 2.5 PFLOPS FP16 across eight NPUs, which is 375 or 312.5 TFLOPS per chip. Huawei’s own roadmap says eight- and four-bit floats arrive with the 950 series: “Compared with the Ascend 910B and Ascend 910C, our newer chips – starting with the Ascend 950 chips – … will support more data formats, including FP32, HF32, FP16, BF16, FP8, MXFP8, HiF8, MXFP4, and HiF4.” So the FP8 and FP4 cells read not supported."
     },
     "tdpW": 400,
     "interconnect": {
@@ -4604,8 +4604,8 @@
     "systemIntegrators": [],
     "priceEstimate": null,
     "bomEstimate": null,
-    "exportStatus": "Chinese design, Chinese fab, and controlled from both directions. Huawei has been under US export controls since 2019, so the 910B cannot lawfully draw on US-origin technology, and its total processing performance of 6,400 (16 x 400) would put it above the 4,800 threshold in ECCN 3A090.a if it were a US export. Epoch AI reads its performance as similar to the A100, which is the level the October 2022 threshold was drawn to exclude.",
-    "notes": "The domestic answer to the A100, and the evidence that export controls have effect. CSET dates the series to 2022; no allowed source gives a first-shipment date, so that field is empty. CSET finds that Huawei needed at least two years to redesign the part for SMIC and cut the number of active AI cores between the first and second generations, most likely because of yield or capacity limits on SMIC’s 7 nm line. The 910B ships in several grades, from a 910B4 at 32 GB and 800 GB/s to a 910B1 at 64 GB and 1.6 TB/s; the figures above are the top of that range. SemiAnalysis places the chip between the A100 and the H100 in performance. Huawei publishes no die area, transistor count, package detail or per-chip datasheet.",
+    "exportStatus": "Chinese design and Chinese fab. Huawei has been under US export controls since 2019, so the 910B cannot lawfully draw on US-origin technology. Its total processing performance of 6,400 (16 x 400) would also put it above the 4,800 threshold in ECCN 3A090.a if it were a US export. Epoch AI rates its performance as similar to the A100's, the level the October 2022 threshold was set to keep out of China.",
+    "notes": "The 910B is Huawei's domestic answer to Nvidia's A100, and it shows that export controls have an effect. CSET finds that Huawei needed at least two years to redesign the part for SMIC, the Chinese foundry. CSET also finds that Huawei cut the number of active AI cores between the first and second generations, most likely because of yield or capacity limits on SMIC’s 7 nm line. CSET dates the series to 2022. No allowed source gives a first-shipment date, so that field is empty. The 910B ships in several grades, from a 910B4 at 32 GB and 800 GB/s to a 910B1 at 64 GB and 1.6 TB/s. The figures above are for the top of that range. SemiAnalysis places the chip between the A100 and the H100 in performance. Huawei publishes no die area, transistor count, package detail or per-chip datasheet.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -4695,7 +4695,7 @@
     "announced": "2024-09",
     "shipping": "2025-Q1",
     "status": "Shipping",
-    "target": "Training and inference, in practice inference-weighted",
+    "target": "Training and inference, used more for inference in practice",
     "process": {
       "foundry": "SMIC (intended) and TSMC (in much of the installed base)",
       "node": "SMIC N+2 7 nm class as intended; SemiAnalysis judges most 910B and 910C dies were actually made on TSMC N7",
@@ -4731,7 +4731,7 @@
         "fp8": "no",
         "fp4": "no"
       },
-      "precisionNote": "Derived from a system figure, with no vendor datasheet and no independent measurement: SemiAnalysis’s CloudMatrix 384 figure of 300 PFLOPS dense BF16 across 384 chips implies about 781 TFLOPS per chip, and Epoch AI records 800. Huawei publishes no per-chip figure for the 910C, but its Atlas 900 A3 SuperPoD page gives 307.2, 288.7 or 240.3 PFLOPS FP16 across 384 chips, depending on the model: 800, 752 or 626 TFLOPS per chip. Huawei’s own roadmap makes the absence explicit: “Compared with the Ascend 910B and Ascend 910C, our newer chips – starting with the Ascend 950 chips – … will support more data formats, including FP32, HF32, FP16, BF16, FP8, MXFP8, HiF8, MXFP4, and HiF4.” Eight- and four-bit floats arrive with the 950 series, so the FP8 and FP4 cells read not supported."
+      "precisionNote": "Derived from a system figure, with no vendor datasheet and no independent measurement. SemiAnalysis’s CloudMatrix 384 figure of 300 PFLOPS dense BF16 across 384 chips implies about 781 TFLOPS per chip. Epoch AI records 800. Huawei publishes no per-chip figure for the 910C. Its Atlas 900 A3 SuperPoD page gives 307.2, 288.7 or 240.3 PFLOPS FP16 across 384 chips, depending on the model, which is 800, 752 or 626 TFLOPS per chip. Huawei’s own roadmap says eight- and four-bit floats arrive with the 950 series: “Compared with the Ascend 910B and Ascend 910C, our newer chips – starting with the Ascend 950 chips – … will support more data formats, including FP32, HF32, FP16, BF16, FP8, MXFP8, HiF8, MXFP4, and HiF4.” So the FP8 and FP4 cells read not supported."
     },
     "tdpW": 700,
     "interconnect": {
@@ -4743,10 +4743,10 @@
       "Huawei",
       "xFusion"
     ],
-    "priceEstimate": "No published per-card price. System proxies: a Huawei Atlas appliance for DeepSeek-R1 671B is reported at RMB 3M to 5M, against roughly RMB 20M for an H100-based equivalent",
+    "priceEstimate": "No published per-card price. As a system comparison, a Huawei Atlas appliance for DeepSeek-R1 671B is reported at RMB 3M to 5M, against roughly RMB 20M for an H100-based equivalent",
     "bomEstimate": null,
-    "exportStatus": "Huawei has been on the US Entity List since May 2019 and SMIC since December 2020, so the part cannot legally source US-origin technology.",
-    "notes": "The clearest case in the industry of a domestic chip that materially is not: SemiAnalysis judges that most 910B and 910C dies were made on TSMC N7, reaching Huawei through Sophgo before TSMC stopped supplying it. Huawei's answer to weak per-chip performance is scale, and CloudMatrix 384 beats a GB200 NVL72 on aggregate BF16 while using about four times the power. Huawei publishes no datasheet for the part. The 781 TFLOPS above is arithmetic on SemiAnalysis's system figure, 300 PFLOPS of dense BF16 across 384 chips; the 128 GB of HBM2E, the 3.2 TB/s and the 700 W come from Epoch AI's hardware database, whose own citations mix the Huawei keynote and SemiAnalysis with a market-research outlet.",
+    "exportStatus": "Huawei has been on the US Entity List since May 2019 and SMIC since December 2020, so the 910C cannot lawfully draw on US-origin technology.",
+    "notes": "The 910C is the clearest case in the industry of a domestic chip built largely from imported dies. SemiAnalysis judges that most 910B and 910C dies were made on TSMC N7 and reached Huawei through Sophgo, another Chinese chip designer, before TSMC stopped supplying Sophgo. Huawei's answer to weak per-chip performance is scale. Its CloudMatrix 384 system links 384 chips and beats Nvidia's GB200 NVL72 rack on total BF16 compute, but it uses about four times the power. Huawei publishes no datasheet for the part. The 781 TFLOPS above is SemiAnalysis's system figure, 300 PFLOPS of dense BF16, divided across 384 chips. The 128 GB of HBM2E, the 3.2 TB/s and the 700 W come from Epoch AI's hardware database. Epoch's own citations for them mix a Huawei keynote and SemiAnalysis with a market-research outlet.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -4854,7 +4854,7 @@
     "announced": "2025-09",
     "shipping": "2026-Q1",
     "status": "Shipping",
-    "target": "Prefill inference and recommendation",
+    "target": "Inference (prefill, the stage that reads the prompt) and recommendation",
     "process": {
       "foundry": null,
       "node": null,
@@ -4889,7 +4889,7 @@
         "fp8": "yes",
         "fp4": "yes"
       },
-      "precisionNote": "From Huawei’s spec table for the Atlas 350 card, the shipping 950PR product, which lists theoretical peaks: 425 TFLOPS FP16/BF16, 804 TFLOPS mxFP8/HiF8 and 1,561 TFLOPS mxFP4. Huawei’s 2025 roadmap gave the 950 die 1,000 TFLOPS FP8 and 2,000 FP4, and its processor page gives the chip’s maximum configuration as 128 GB at 1.6 TB/s. This row uses the card throughout, because it is the only Huawei table that ties memory, compute and power together"
+      "precisionNote": "From Huawei’s spec table for the Atlas 350 card, the shipping 950PR product. The table lists theoretical peaks of 425 TFLOPS FP16/BF16, 804 TFLOPS mxFP8/HiF8 and 1,561 TFLOPS mxFP4. Huawei’s 2025 roadmap gave the 950 die 1,000 TFLOPS FP8 and 2,000 FP4. Huawei's processor page gives the chip’s maximum configuration as 128 GB at 1.6 TB/s. The table uses the card’s figures throughout, because the card’s table is the only Huawei table that ties memory, compute and power together."
     },
     "tdpW": 600,
     "interconnect": {
@@ -4903,7 +4903,7 @@
     "priceEstimate": null,
     "bomEstimate": null,
     "exportStatus": "Huawei is on the US Entity List. Huawei presents HiBL 1.0 and HiZQ 2.0 as its own HBM for the Ascend 950 chips.",
-    "notes": "The first Huawei accelerator to ship with Huawei's own high-bandwidth memory instead of stockpiled Korean HBM, which is the most consequential claim on its roadmap. Huawei sells it as the Atlas 350 card, which it says can run alone or four-way over UnifiedBus, and dated it to the first quarter of 2026. Huawei names HiBL 1.0 as the memory, and the card's spec table gives 112 GB at 1.4 TB/s, well short of the 144 GB at 4 TB/s it promises for the 950DT. Node, die count, die area, package and price are unpublished.",
+    "notes": "The 950PR is the first Huawei accelerator to ship with Huawei's own high-bandwidth memory (HBM) instead of stockpiled Korean HBM. That is the most consequential claim on Huawei's roadmap. Huawei sells the chip as the Atlas 350 card, which it says can run alone or in groups of four linked by UnifiedBus, Huawei's chip-to-chip connection. Huawei dated the 950PR to the first quarter of 2026. Huawei names HiBL 1.0 as the memory. The card's spec table gives 112 GB at 1.4 TB/s, well short of the 144 GB at 4 TB/s Huawei promises for the 950DT. Node, die count, die area, package and price are unpublished.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -4980,8 +4980,8 @@
     "vendorCountry": "CN",
     "announced": "2025-09",
     "shipping": null,
-    "status": "Announced; Huawei dated it to the fourth quarter of 2026 and now publishes spec tables for servers built on it",
-    "target": "Decode inference and training",
+    "status": "Announced. Huawei dated it to the fourth quarter of 2026 and has since published spec tables for servers built on it",
+    "target": "Inference (decode, the stage that writes the answer) and training",
     "process": {
       "foundry": null,
       "node": null,
@@ -5016,7 +5016,7 @@
         "fp8": "yes",
         "fp4": "yes"
       },
-      "precisionNote": "From Huawei’s 950DT spec table, top speed grade: 547 TFLOPS FP16/BF16, 1,034 TFLOPS mxFP8 and 2,007 TFLOPS mxFP4. The table lists memory as 144 or 96 GB at 4 TB/s without tying either to a speed grade. Huawei’s 2025 roadmap had given the 950 die 1 PFLOPS FP8 and 2 PFLOPS MXFP4. Huawei’s Atlas 650E server, with 96 GB per chip, works out to the table’s bottom grade"
+      "precisionNote": "From Huawei’s 950DT spec table, top speed grade: 547 TFLOPS FP16/BF16, 1,034 TFLOPS mxFP8 and 2,007 TFLOPS mxFP4. The table lists memory as 144 or 96 GB at 4 TB/s without tying either to a speed grade. Huawei’s 2025 roadmap had given the 950 die 1 PFLOPS FP8 and 2 PFLOPS MXFP4. Huawei’s Atlas 650E server carries 96 GB per chip, and its per-chip figures match the table’s lowest speed grade."
     },
     "tdpW": null,
     "interconnect": {
@@ -5027,8 +5027,8 @@
     "systemIntegrators": [],
     "priceEstimate": null,
     "bomEstimate": null,
-    "exportStatus": "Huawei is on the US Entity List. Huawei presents HiZQ 2.0 as its own HBM for the 950DT",
-    "notes": "The decode-and-training sibling of the 950PR on the same Ascend 950 die, paired with the faster HiZQ 2.0 memory instead of HiBL 1.0. Huawei publishes memory and interconnect figures and nothing about node, die, package or power",
+    "exportStatus": "Huawei is on the US Entity List. Huawei presents HiZQ 2.0 as its own HBM for the 950DT.",
+    "notes": "The 950DT is the version of the Ascend 950 built for training and for decode, the stage of inference that writes the answer. It uses the same die as the 950PR, paired with the faster HiZQ 2.0 memory instead of HiBL 1.0. Huawei publishes memory and interconnect figures and nothing about node, die, package or power.",
     "layout": null,
     "sources": [
       {
@@ -5087,7 +5087,7 @@
         "fp8": "unknown",
         "fp4": "unknown"
       },
-      "precisionNote": "Cambricon publishes no specifications for this part: its own site carries no product page for the Siyuan 590, no per-precision figures are available from any allowed source, and no document lists the data types the chip runs, so all three cells read not published."
+      "precisionNote": "Cambricon publishes no specifications for this part and has no product page for the Siyuan 590 on its site. No allowed source gives per-precision figures, and no document lists the data types the chip runs, so all three cells read not published."
     },
     "tdpW": null,
     "interconnect": {
@@ -5102,8 +5102,8 @@
     ],
     "priceEstimate": "Epoch AI derives an average selling price of about 46,560 yuan ($6,380) in 2024 and 58,760 yuan ($8,510) in 2025, from Cambricon's annual reports",
     "bomEstimate": null,
-    "exportStatus": "Cambricon has been on the US Entity List since 16 December 2022, which cuts it off from US-origin technology. Epoch AI reports that SMIC handles its production.",
-    "notes": "Epoch AI's chip-sales methodology puts it on SMIC's N+2 process, broadly equivalent to TSMC's 7 nm, with 80 GB of HBM. Cambricon itself discloses almost nothing: its own site still lists only the MLU270 and MLU370, with no product page for the 590 or the newer 690. Epoch AI carries a Siyuan 590 row giving SMIC, a 7 nm process and 200 W, but its cited sources are a Substack newsletter and a LinkedIn post, with nothing primary behind them, so the other silicon, memory and power fields stay empty.",
+    "exportStatus": "Cambricon has been on the US Entity List since 16 December 2022, which cuts it off from US-origin technology. Epoch AI reports that SMIC makes the chip.",
+    "notes": "In the methodology for its chip-sales estimates, Epoch AI puts the Siyuan 590 on SMIC's N+2 process, broadly equivalent to TSMC's 7 nm, with 80 GB of HBM. Cambricon itself discloses almost nothing. Its site still lists only the MLU270 and MLU370, with no product page for the 590 or the newer 690. A separate Epoch AI entry for the Siyuan 590 gives SMIC, a 7 nm process and 200 W. But that entry cites a Substack newsletter and a LinkedIn post, with nothing primary behind them, so the other silicon, memory and power fields stay empty.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -5206,7 +5206,7 @@
         "fp8": "yes",
         "fp4": "no"
       },
-      "precisionNote": "Moore Threads publishes no peak FLOPS for the MTT S5000. Its own product page states the range instead, “full-precision compute support from FP8 to FP64” on the PH100 “Pinghu” chip, so FP16 and FP8 are supported but unpublished, while four-bit arithmetic sits outside the range the vendor claims and the FP4 cell reads not supported. The page also claims at least 4,000 tokens per second single-GPU prefill, at least 1,000 tokens per second decode, and 95 percent linear scaling at 10,000-GPU cluster scale. No independent benchmark exists."
+      "precisionNote": "Moore Threads publishes no peak FLOPS for the MTT S5000. Its product page instead claims “full-precision compute support from FP8 to FP64” on the PH100 “Pinghu” chip. So FP16 and FP8 are supported, but no figures are published for them. Four-bit arithmetic falls outside the range Moore Threads claims, so the FP4 cell reads not supported. The page also claims at least 4,000 tokens per second of single-GPU prefill, at least 1,000 tokens per second of decode, and 95 percent linear scaling at 10,000-GPU cluster scale. No independent benchmark exists."
     },
     "tdpW": null,
     "interconnect": {
@@ -5217,8 +5217,8 @@
     "systemIntegrators": [],
     "priceEstimate": null,
     "bomEstimate": null,
-    "exportStatus": "Chinese design, and on the US Entity List. BIS added Moore Thread Intelligent Technology (Beijing) Co., Ltd., listed with the aliases Moore Threads and Mo'er Xianchen, together with its Chengdu and Shanghai affiliates, effective 17 October 2023: a license is required for all items subject to the EAR, with a presumption of denial (Entity List Additions, 88 FR 71991). It also depends on domestic foundry capacity and on the same HBM embargo as its peers.",
-    "notes": "A Chinese full-function GPU sold on software compatibility; no measurement of its silicon is published. Its own product page names the PH100 “Pinghu” chip, OAM compute modules and an eight-GPU MTT MGX platform, and claims full-precision support from FP8 to FP64, at least 4,000 tokens per second single-GPU prefill, at least 1,000 tokens per second decode and over 74 percent of the performance of leading international flagship products. It publishes no foundry, node, memory type, memory bandwidth, TDP, transistor count, die count, package or price. Its STAR Market prospectus gives the Pinghu architecture's maximums: 80 GB of memory and 800 GB/s between chips. What it does publish is native support for PyTorch, Megatron-LM, vLLM and SGLang through its MUSA stack, which is how Chinese accelerators substitute for CUDA in practice.",
+    "exportStatus": "Chinese design. Its maker is on the US Entity List. BIS added Moore Thread Intelligent Technology (Beijing) Co., Ltd., listed with the aliases Moore Threads and Mo'er Xianchen, together with its Chengdu and Shanghai affiliates, effective 17 October 2023. A license is required for all items subject to the Export Administration Regulations (EAR), with a presumption of denial (Entity List Additions, 88 FR 71991). Moore Threads also depends on Chinese foundry capacity and, like other Chinese chip designers, faces the US embargo on HBM.",
+    "notes": "The MTT S5000 is a Chinese full-function GPU, sold on its software compatibility. No measurement of its silicon is published. Moore Threads' product page names the PH100 “Pinghu” chip, OAM compute modules and an eight-GPU MTT MGX platform. It claims full-precision support from FP8 to FP64 and over 74 percent of the performance of leading international flagship products. It also claims at least 4,000 tokens per second of single-GPU prefill, the stage of inference that reads the prompt. For decode, the stage that writes the answer, it claims at least 1,000 tokens per second. Moore Threads publishes no foundry, node, memory type, memory bandwidth, TDP, transistor count, die count, package or price. Its STAR Market prospectus gives the Pinghu architecture's maximums: 80 GB of memory and 800 GB/s between chips. Moore Threads does document native support for the AI software frameworks PyTorch, Megatron-LM, vLLM and SGLang through its MUSA software stack. Chinese accelerators use stacks like this in place of Nvidia's CUDA.",
     "layout": {
       "unit": "mm",
       "interposer": [

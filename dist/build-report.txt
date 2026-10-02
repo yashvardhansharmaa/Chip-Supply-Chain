@@ -1,25 +1,25 @@
-built 2026-10-02T04:56:23.385Z
-source tiers: A 480 · B 24 · disallowed 0 · unclassified 0
+built 2026-10-02T12:13:46.291Z
+source tiers: A 481 · B 24 · disallowed 0 · unclassified 0
 chapters: 16 + geopolitics
-words: 34065
-sources: 504
+words: 36255
+sources: 505
 landscape: 38 chips · suppliers: 226 · timeline: 55 · matrix: 20 · glossary: 203 · controls: 40 · exposure: 108
 specimens: boule-and-wafer, cowos-exploded, die-floorplan, euv-scanner, foup, gaa-transistor, gas-cabinet, globe, gpu-baseboard, hbm-stack, package, photomask, probe-card, process-chamber, rack, sem-column, substrate-layers, wafer-cost, wafer
-size: 3225 KB
-  01 design-and-eda: 2137 words, 24 sources (D 0, ? 0), 4 figures
-  02 silicon-and-wafers: 1962 words, 21 sources (D 0, ? 0), 3 figures
-  03 chemicals-gases-and-photoresist: 1994 words, 33 sources (D 0, ? 0), 2 figures
-  04 lithography: 1954 words, 30 sources (D 0, ? 0), 5 figures
-  05 photomasks-and-pellicles: 2014 words, 30 sources (D 0, ? 0), 2 figures
-  06 deposition-and-etch: 1888 words, 33 sources (D 0, ? 0), 4 figures
-  07 metrology-and-inspection: 2035 words, 22 sources (D 0, ? 0), 4 figures
-  08 transistors-and-front-end: 1816 words, 23 sources (D 0, ? 0), 3 figures
-  09 foundries-and-fabs: 1766 words, 27 sources (D 0, ? 0), 2 figures
-  10 memory-and-hbm: 1965 words, 23 sources (D 0, ? 0), 4 figures
-  11 advanced-packaging: 1890 words, 24 sources (D 0, ? 0), 4 figures
-  12 substrates-and-pcbs: 1797 words, 24 sources (D 0, ? 0), 3 figures
-  13 test-and-assembly: 1546 words, 38 sources (D 0, ? 0), 4 figures
-  14 systems-and-networking: 1736 words, 30 sources (D 0, ? 0), 3 figures
-  15 data-centers-and-power: 1772 words, 23 sources (D 0, ? 0), 4 figures
-  16 component-costs: 1833 words, 25 sources (D 0, ? 0), 3 figures
-  17 geopolitics: 3960 words, 74 sources (D 0, ? 0), 3 figures
+size: 3429 KB
+  01 design-and-eda: 2315 words, 24 sources (D 0, ? 0), 4 figures
+  02 silicon-and-wafers: 2047 words, 21 sources (D 0, ? 0), 3 figures
+  03 chemicals-gases-and-photoresist: 2124 words, 33 sources (D 0, ? 0), 2 figures
+  04 lithography: 2052 words, 30 sources (D 0, ? 0), 5 figures
+  05 photomasks-and-pellicles: 2107 words, 30 sources (D 0, ? 0), 2 figures
+  06 deposition-and-etch: 2123 words, 33 sources (D 0, ? 0), 4 figures
+  07 metrology-and-inspection: 2185 words, 22 sources (D 0, ? 0), 4 figures
+  08 transistors-and-front-end: 1864 words, 23 sources (D 0, ? 0), 3 figures
+  09 foundries-and-fabs: 1895 words, 27 sources (D 0, ? 0), 2 figures
+  10 memory-and-hbm: 2007 words, 23 sources (D 0, ? 0), 4 figures
+  11 advanced-packaging: 2043 words, 24 sources (D 0, ? 0), 4 figures
+  12 substrates-and-pcbs: 1823 words, 24 sources (D 0, ? 0), 3 figures
+  13 test-and-assembly: 1651 words, 38 sources (D 0, ? 0), 4 figures
+  14 systems-and-networking: 1863 words, 30 sources (D 0, ? 0), 3 figures
+  15 data-centers-and-power: 1900 words, 23 sources (D 0, ? 0), 4 figures
+  16 component-costs: 1947 words, 25 sources (D 0, ? 0), 3 figures
+  17 geopolitics: 4309 words, 75 sources (D 0, ? 0), 3 figures

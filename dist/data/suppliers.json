@@ -9,9 +9,9 @@
     "founded": 1986,
     "ticker": "SNPS",
     "ownership": "Public",
-    "role": "Supplies the synthesis, place-and-route, verification and signoff software used to turn an AI accelerator RTL description into a manufacturable layout, plus the largest commercial silicon IP catalog. Its 2025 acquisition of Ansys added multiphysics simulation for thermal and power integrity.",
+    "role": "Makes the synthesis, place-and-route, verification and signoff software that turns the code describing an AI accelerator's logic (its RTL) into a layout a fab can build. It also sells the largest commercial catalog of silicon IP, ready-made circuit blocks that chip designers license. Its 2025 acquisition of Ansys added multiphysics simulation for thermal and power integrity.",
     "chokepoint": "Critical",
-    "shareNote": "About $8B of CY2025 EDA and IP revenue including Ansys, against Cadence at $5.30B and Siemens EDA at an estimated $2.2-2.5B",
+    "shareNote": "About $8B of calendar 2025 EDA and IP revenue including Ansys, against Cadence at $5.30B and Siemens EDA at an estimated $2.2-2.5B",
     "customers": [
       "Nvidia",
       "AMD",
@@ -20,7 +20,7 @@
       "Samsung",
       "Intel"
     ],
-    "aiRelevance": "No leading-edge AI accelerator is taped out without a full EDA flow, and Synopsys supplies the largest single share of it.",
+    "aiRelevance": "Every leading-edge AI accelerator is designed and checked with a full set of electronic design automation (EDA) tools before it goes to the fab. Synopsys supplies the largest single share of those tools.",
     "revenueUSDb": 7.054,
     "revenueYear": 2025,
     "source": "https://newsletter.semianalysis.com/p/eda-market-primer"
@@ -35,9 +35,9 @@
     "founded": 1988,
     "ticker": "CDNS",
     "ownership": "Public",
-    "role": "The second of the three EDA vendors that matter, strong in analog and custom design, simulation and hardware emulation. Its Palladium and Protium emulation boxes are how large AI chips are verified before tape-out.",
+    "role": "The second-largest of the three main makers of chip design (EDA) software, strong in analog and custom design, simulation and hardware emulation. Designers verify large AI chips on its Palladium and Protium emulation systems, which run a design in hardware before it goes to the fab.",
     "chokepoint": "Critical",
-    "shareNote": "About $5.30B of CY2025 EDA revenue, second behind Synopsys",
+    "shareNote": "About $5.30B of calendar 2025 EDA revenue, second behind Synopsys",
     "customers": [
       "Nvidia",
       "Broadcom",
@@ -46,7 +46,7 @@
       "Samsung",
       "Micron"
     ],
-    "aiRelevance": "Emulation capacity is a limiting item on AI chip schedules, and Cadence is one of two credible suppliers.",
+    "aiRelevance": "Emulation capacity is one of the limits on AI chip schedules, and Cadence is one of two credible suppliers.",
     "revenueUSDb": 5.297,
     "revenueYear": 2025,
     "source": "https://newsletter.semianalysis.com/p/eda-market-primer"
@@ -61,9 +61,9 @@
     "founded": 1981,
     "ticker": "Private",
     "ownership": "Subsidiary of Siemens AG (acquired as Mentor Graphics in 2017)",
-    "role": "The third EDA vendor, whose Calibre physical verification tool is the de facto standard foundries use to sign off a layout, alongside a design-for-test product line. Foundry process design kits are written against Calibre decks.",
+    "role": "The third-largest maker of chip design (EDA) software. Its Calibre tool is the de facto standard for physical verification, the check foundries use to confirm a layout follows their manufacturing rules before they accept it. It also sells design-for-test software. Foundries write the rule files they give chip designers in Calibre's format.",
     "chokepoint": "Critical",
-    "shareNote": "Estimated $2.2-2.5B of CY2025 EDA revenue, third behind Synopsys and Cadence",
+    "shareNote": "Estimated $2.2-2.5B of calendar 2025 EDA revenue, third behind Synopsys and Cadence",
     "customers": [
       "TSMC",
       "Samsung",
@@ -71,7 +71,7 @@
       "GlobalFoundries",
       "Nvidia"
     ],
-    "aiRelevance": "TSMC specifies Calibre-clean physical verification for tape-out, and Samsung and Intel do the same.",
+    "aiRelevance": "TSMC requires a layout to pass Calibre's checks with no errors before it will make the chip, and Samsung and Intel do the same.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://newsletter.semianalysis.com/p/eda-market-primer"
@@ -85,8 +85,8 @@
     "city": "Canonsburg",
     "founded": 1970,
     "ticker": "Private",
-    "ownership": "Subsidiary of Synopsys since the 2025 completion of Synopsys' acquisition",
-    "role": "Supplies the thermal, electromagnetic and structural simulation used to model how a 1 kW accelerator package heats, warps and delivers power. RedHawk is the standard tool for chip power integrity signoff.",
+    "ownership": "Subsidiary of Synopsys since the acquisition closed in 2025",
+    "role": "Makes the thermal, electromagnetic and structural simulation software used to model how a 1 kW accelerator package heats, warps and delivers power. Its RedHawk tool is the standard for power integrity signoff, the final check that power reaches every part of a chip as designed.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -96,7 +96,7 @@
       "Samsung",
       "Intel"
     ],
-    "aiRelevance": "Thermal and warpage simulation is the limiting design problem for kilowatt-class packages and liquid-cooled racks.",
+    "aiRelevance": "Heat and warpage are the limiting design problems for kilowatt-class packages and liquid-cooled racks, and Ansys software simulates both.",
     "revenueUSDb": 2.545,
     "revenueYear": 2024,
     "source": "https://www.ansys.com/products/semiconductors"
@@ -110,8 +110,8 @@
     "city": "Beijing",
     "founded": 2009,
     "ticker": "301269.SZ",
-    "ownership": "Public; state-linked shareholders including China Electronics Corporation",
-    "role": "A Chinese EDA vendor. In its 2025 annual report, filed in April 2026, it says it has complete design flows for analog, memory, radio-frequency and flat-panel display circuits, and that its digital tools cover 80 percent of the main tools for digital design. It is the centerpiece of China's effort to replace the American EDA tools that export controls can withdraw.",
+    "ownership": "Public, with state-linked shareholders including China Electronics Corporation",
+    "role": "A Chinese EDA vendor. In its 2025 annual report, filed in April 2026, it says it has complete design tool chains for analog, memory, radio-frequency and flat-panel display circuits. The same report says its digital tools cover 80 percent of the main tools for digital design. It is the main company in China's effort to replace the American EDA tools that export controls can cut off.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -120,7 +120,7 @@
       "CXMT",
       "BOE"
     ],
-    "aiRelevance": "If China is to design advanced AI chips without US software, Empyrean is the tool chain it has to finish.",
+    "aiRelevance": "To design advanced AI chips without US software, China has to finish Empyrean's tool chain.",
     "revenueUSDb": 0.197,
     "revenueYear": 2025,
     "source": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225217315.PDF"
@@ -135,7 +135,7 @@
     "founded": 2010,
     "ticker": "688206.SS",
     "ownership": "Public (Shanghai STAR Market)",
-    "role": "Chinese EDA vendor focused on semiconductor device modeling, parameter extraction and fast SPICE simulation, the layer that connects a foundry process to a designer's simulation deck.",
+    "role": "A Chinese EDA vendor that makes device modeling, parameter extraction and fast SPICE circuit simulation software. Device models describe how the transistors on a foundry's process behave, so chip designers can simulate their circuits on that process.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -144,7 +144,7 @@
       "CXMT",
       "Samsung"
     ],
-    "aiRelevance": "Device models are the first thing a domestic Chinese AI chip designer needs when foreign tools are withdrawn.",
+    "aiRelevance": "A Chinese AI chip designer cut off from foreign tools needs device models first.",
     "revenueUSDb": 0.072,
     "revenueYear": 2025,
     "source": "https://www.primarius-tech.com/en/"
@@ -159,7 +159,7 @@
     "founded": 2003,
     "ticker": "301095.SZ",
     "ownership": "Public (Shenzhen ChiNext)",
-    "role": "Supplies test-chip design software, on-wafer electrical test systems and yield analysis tools used to characterize and debug a new process node. It sits between EDA and metrology.",
+    "role": "Supplies test-chip design software, on-wafer electrical test systems and yield analysis tools used to measure and debug a new manufacturing process. Its products fall between design software and metrology (measurement) equipment.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -168,7 +168,7 @@
       "CXMT",
       "Nexchip"
     ],
-    "aiRelevance": "Yield learning is the difference between a Chinese fab that can build AI logic economically and one that cannot.",
+    "aiRelevance": "Whether a Chinese fab can build AI logic economically depends on yield learning, the work of raising the share of good chips on each wafer.",
     "revenueUSDb": 0.109,
     "revenueYear": 2025,
     "source": "https://www.semitronix.com/"
@@ -182,8 +182,8 @@
     "city": "Cambridge",
     "founded": 1990,
     "ticker": "ARM",
-    "ownership": "Public; majority owned by SoftBank Group",
-    "role": "Licenses the CPU architecture and cores used in the host processors that feed AI accelerators, including Nvidia's Grace and Vera CPUs and the Arm cores inside hyperscaler server SoCs. It also licenses the interconnect and system IP around them. In 2026 it launched the Arm AGI CPU, its first production silicon product, and by May 2026 servers built on it could be ordered from ASRock, Lenovo, Quanta and Supermicro.",
+    "ownership": "Public, majority owned by SoftBank Group",
+    "role": "Licenses the CPU architecture and cores used in the host processors that feed data to AI accelerators. These include Nvidia's Grace and Vera CPUs and the Arm cores inside the server chips that large cloud companies design. It also licenses the interconnect and system IP around them. In 2026 it launched the Arm AGI CPU, its first production chip. By May 2026, ASRock, Lenovo, Quanta and Supermicro were taking orders for servers built on it.",
     "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
@@ -194,7 +194,7 @@
       "MediaTek",
       "Qualcomm"
     ],
-    "aiRelevance": "The CPUs in Nvidia's Grace and Vera platforms and in hyperscaler server chips use the Arm architecture, which makes that architecture a point of licensing control.",
+    "aiRelevance": "The CPUs in Nvidia's Grace and Vera platforms and in large cloud companies' server chips use the Arm architecture, so building them requires a license from Arm.",
     "revenueUSDb": 4.92,
     "revenueYear": 2026,
     "source": "https://newsroom.arm.com/news/arm-q4-fye26-results"
@@ -209,7 +209,7 @@
     "founded": 1990,
     "ticker": "RMBS",
     "ownership": "Public",
-    "role": "Licenses the memory controller and PHY IP that connects a processor to DDR5, LPDDR and HBM, plus register clock drivers for server memory modules. It sells silicon IP.",
+    "role": "Licenses the memory controller and interface (PHY) IP that connects a processor to DDR5, LPDDR and HBM memory. It also sells register clock drivers, the buffer chips on server memory modules.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -233,8 +233,8 @@
     "city": "London",
     "founded": 2017,
     "ticker": "Private",
-    "ownership": "Acquired by Qualcomm under a deal announced in 2025; no longer separately listed",
-    "role": "Supplies the multi-gigabit SerDes, PCIe, UCIe and Ethernet IP that moves data between chiplets and between accelerators. Qualcomm bought it to build data-center silicon.",
+    "ownership": "Acquired by Qualcomm in a deal announced in 2025 and no longer separately listed",
+    "role": "Supplies multi-gigabit connection IP (SerDes, PCIe, UCIe and Ethernet) that moves data between chiplets and between accelerators. Qualcomm bought it to build data-center silicon.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -243,7 +243,7 @@
       "Marvell",
       "Intel"
     ],
-    "aiRelevance": "SerDes IP quality sets the achievable die-to-die and rack-scale bandwidth of an AI system.",
+    "aiRelevance": "The quality of SerDes IP sets how much bandwidth an AI system can reach between dies and across a rack.",
     "revenueUSDb": 0.308,
     "revenueYear": 2024,
     "source": "https://awavesemi.com/"
@@ -258,7 +258,7 @@
     "founded": 2015,
     "ticker": "Private",
     "ownership": "Private, venture-backed",
-    "role": "Sells RISC-V CPU cores, including vector and matrix cores used as control processors inside AI accelerators. RISC-V is the license-free alternative to Arm and is being adopted heavily in China.",
+    "role": "Sells RISC-V CPU cores, including vector and matrix cores used as control processors inside AI accelerators. RISC-V is the license-free alternative to Arm, and Chinese chip designers are adopting it heavily.",
     "chokepoint": "Diversified",
     "shareNote": null,
     "customers": [
@@ -281,7 +281,7 @@
     "city": "Kings Langley",
     "founded": 1985,
     "ticker": "Private",
-    "ownership": "Private; owned by Canyon Bridge Capital Partners",
+    "ownership": "Private, owned by Canyon Bridge Capital Partners",
     "role": "Licenses GPU and neural network accelerator IP for edge and automotive silicon. Its ownership by a China-linked fund made it an early test case for technology transfer scrutiny in the UK.",
     "chokepoint": "Diversified",
     "shareNote": null,
@@ -305,7 +305,7 @@
     "founded": 1993,
     "ticker": "NVDA",
     "ownership": "Public",
-    "role": "Designs the Blackwell and Rubin GPUs, the NVLink scale-up fabric and the NVL72 rack systems that most AI training and a large share of inference runs on. It also sells the CUDA software stack that ties developers to its hardware.",
+    "role": "Designs the Blackwell and Rubin GPUs, the NVLink connections that join many GPUs into one system, and the NVL72 rack systems. Most AI training and a large share of inference run on this hardware. It also makes the CUDA software stack that ties developers to its hardware.",
     "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
@@ -316,7 +316,7 @@
       "Oracle",
       "CoreWeave"
     ],
-    "aiRelevance": "Nvidia is the demand signal the whole chain plans around, from CoWoS bookings to HBM allocation to grid interconnect queues.",
+    "aiRelevance": "Suppliers across the chain plan around Nvidia's demand, from bookings for TSMC's CoWoS packaging to HBM memory allocation to queues for power-grid connections.",
     "revenueUSDb": 215.938,
     "revenueYear": 2026,
     "source": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026"
@@ -331,7 +331,7 @@
     "founded": 1969,
     "ticker": "AMD",
     "ownership": "Public",
-    "role": "Designs the Instinct MI355X and MI400 accelerators and EPYC server CPUs, and through its 2025 purchase of ZT Systems now designs rack-scale AI systems as well. It is the only merchant alternative to Nvidia at scale.",
+    "role": "Designs the Instinct MI355X and MI400 accelerators and EPYC server CPUs. Since buying ZT Systems in 2025 it also designs rack-scale AI systems. It is the only company other than Nvidia that sells AI accelerators on the open market at scale.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -342,7 +342,7 @@
       "Dell",
       "HPE"
     ],
-    "aiRelevance": "AMD is the main competitive check on Nvidia pricing and the second-source option most large buyers are qualifying.",
+    "aiRelevance": "AMD is the main competitive check on Nvidia's pricing, and most large buyers are qualifying it as a second source.",
     "revenueUSDb": 34.639,
     "revenueYear": 2025,
     "source": "https://www.amd.com/en/products/accelerators/instinct.html"
@@ -356,8 +356,8 @@
     "city": "Santa Clara",
     "founded": 1968,
     "ticker": "INTC",
-    "ownership": "Public; the US government took a large equity stake in 2025",
-    "role": "Designs Xeon server CPUs, which still host most AI clusters, and the Gaudi accelerator line. Its product business is separate from Intel Foundry, which has its own entry.",
+    "ownership": "Public, and the US government took a large equity stake in 2025",
+    "role": "Designs Xeon server CPUs and the Gaudi accelerator line. Xeon chips are still the host CPUs in most AI clusters. Its product business is separate from Intel Foundry, the company's manufacturing arm.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -367,7 +367,7 @@
       "Amazon",
       "IBM"
     ],
-    "aiRelevance": "Xeon remains the default head node in AI servers even where the accelerators come from someone else.",
+    "aiRelevance": "Xeon remains the default host CPU in AI servers, even where the accelerators come from another company.",
     "revenueUSDb": 52.853,
     "revenueYear": 2025,
     "source": "https://www.intel.com/content/www/us/en/products/details/processors/ai-accelerators/gaudi.html"
@@ -382,7 +382,7 @@
     "founded": 1998,
     "ticker": "Private",
     "ownership": "Division of Alphabet Inc.",
-    "role": "Designs the Tensor Processing Unit line, now at the v7 Ironwood generation, and deploys it in its own data centers and to cloud customers. The physical design and manufacture are done with Broadcom and MediaTek at TSMC.",
+    "role": "Designs the Tensor Processing Unit (TPU), now at the v7 Ironwood generation. It uses TPUs in its own data centers and offers them to cloud customers. Broadcom and MediaTek work with it on the physical design, which turns a chip design into a layout, and on manufacturing at TSMC.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -391,7 +391,7 @@
       "Anthropic",
       "Apple"
     ],
-    "aiRelevance": "TPUs give Google a large AI training fleet that does not depend on Nvidia, and other hyperscalers have followed the model.",
+    "aiRelevance": "TPUs give Google a large AI training fleet that does not depend on Nvidia, and other large cloud companies have followed with chips of their own.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://cloud.google.com/tpu"
@@ -406,14 +406,14 @@
     "founded": 2011,
     "ticker": "Private",
     "ownership": "Subsidiary of Amazon since 2015",
-    "role": "Amazon's silicon design arm, responsible for the Trainium training chips, Inferentia inference parts and the Nitro data processing units used across AWS. Trainium 3 is the current generation.",
+    "role": "Amazon's chip design arm. It designs the Trainium training chips, Inferentia inference chips and the Nitro data processing units used across AWS. Trainium 3 is the current generation.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "Amazon Web Services",
       "Anthropic"
     ],
-    "aiRelevance": "Trainium is Amazon's in-house alternative to Nvidia inside a public cloud and anchors Amazon's capacity planning.",
+    "aiRelevance": "Trainium is Amazon's in-house alternative to Nvidia in its own cloud, and Amazon builds its capacity plans around it.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://aws.amazon.com/ai/machine-learning/trainium/"
@@ -428,14 +428,14 @@
     "founded": 1975,
     "ticker": "Private",
     "ownership": "Division of Microsoft Corporation",
-    "role": "Designs the Maia accelerator family and the Cobalt Arm server CPU for Azure, together with the liquid-cooling sidekick racks they need. Maia 200 is the current generation.",
+    "role": "Designs the Maia accelerator family and the Cobalt Arm server CPU for Microsoft's Azure cloud. It also designs the 'sidekick' racks that sit beside the servers and supply the liquid cooling they need. Maia 200 is the current generation.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
       "Microsoft Azure",
       "OpenAI"
     ],
-    "aiRelevance": "Maia is Microsoft's hedge against Nvidia pricing and allocation for its own inference load.",
+    "aiRelevance": "Maia gives Microsoft its own chip for its inference work, so it can depend less on Nvidia's pricing and allocation.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://azure.microsoft.com/en-us/blog/azure-maia-for-the-era-of-ai-from-silicon-to-software-to-systems/"
@@ -450,13 +450,13 @@
     "founded": 2004,
     "ticker": "META",
     "ownership": "Public",
-    "role": "Designs the MTIA inference accelerator for its recommendation and ranking workloads, built with Broadcom at TSMC. Meta remains one of the largest buyers of merchant GPUs at the same time.",
+    "role": "Designs the MTIA inference accelerator for its recommendation and ranking workloads, built with Broadcom at TSMC. Meta is also one of the largest buyers of GPUs from outside chip vendors.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
       "Meta Platforms"
     ],
-    "aiRelevance": "MTIA shows how much inference volume a single application company can move off merchant GPUs.",
+    "aiRelevance": "MTIA shows how much inference work a single app company can move off outside vendors' GPUs and onto its own chip.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://engineering.fb.com/"
@@ -471,7 +471,7 @@
     "founded": 1961,
     "ticker": "AVGO",
     "ownership": "Public",
-    "role": "Co-designs and manufactures the custom AI accelerators used by Google, Meta and other hyperscalers, and supplies the Tomahawk and Jericho switch chips plus the PCIe and SerDes IP that wire AI clusters together. It is a leading supplier of merchant Ethernet switch silicon.",
+    "role": "Co-designs and supplies the custom AI accelerators used by Google, Meta and other hyperscalers. It is also a leading seller of Ethernet switch chips, including its Tomahawk and Jericho lines, and it supplies the PCIe and SerDes IP that connect AI clusters.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -482,7 +482,7 @@
       "Arista",
       "Cisco"
     ],
-    "aiRelevance": "Broadcom sits on both sides of the AI cluster, designing the custom accelerators and supplying the Ethernet fabric that connects them.",
+    "aiRelevance": "Broadcom designs custom accelerators and also supplies the Ethernet networking chips that connect them in an AI cluster.",
     "revenueUSDb": 63.887,
     "revenueYear": 2025,
     "source": "https://www.broadcom.com/"
@@ -497,7 +497,7 @@
     "founded": 1995,
     "ticker": "MRVL",
     "ownership": "Public",
-    "role": "The second custom AI silicon house, supplying accelerators and infrastructure chips to hyperscalers, plus the optical DSPs, retimers and Ethernet controllers used in AI networking. It competes directly with Broadcom for XPU sockets.",
+    "role": "Designs custom AI accelerators and infrastructure chips for hyperscalers, plus networking chips such as optical DSPs, retimers and Ethernet controllers for AI clusters. It ranks second to Broadcom in custom AI chips and competes with it directly to design hyperscalers' accelerators.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -521,7 +521,7 @@
     "founded": 2003,
     "ticker": "3661.TW",
     "ownership": "Public",
-    "role": "A design services house that takes a customer's AI accelerator architecture through physical implementation, tape-out and supply at TSMC, including 2.5D packaging integration. It is one of the few firms with production experience on reticle-limit AI dies.",
+    "role": "A design services firm that takes a customer's AI accelerator design through physical layout, tape-out and supply at TSMC, including 2.5D packaging. It is one of the few firms with production experience on reticle-limit AI dies, the largest chips a lithography tool can print in one exposure.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -530,7 +530,7 @@
       "Socionext",
       "AMD"
     ],
-    "aiRelevance": "Design service capacity on advanced nodes is scarce, and Alchip is one of the handful of firms that can deliver a CoWoS-class AI chip.",
+    "aiRelevance": "Design service capacity on advanced nodes is scarce, and Alchip is one of the handful of firms that can deliver an AI chip in TSMC's CoWoS packaging.",
     "revenueUSDb": 0.982,
     "revenueYear": 2025,
     "source": "https://www.alchip.com/en/"
@@ -544,8 +544,8 @@
     "city": "Hsinchu",
     "founded": 1998,
     "ticker": "3443.TW",
-    "ownership": "Public; TSMC is the largest shareholder",
-    "role": "TSMC's design services affiliate, providing physical design, IP integration and turnkey supply for customer AI ASICs on TSMC nodes and packaging. Its TSMC relationship gives it early access to new processes.",
+    "ownership": "Public, with TSMC as the largest shareholder",
+    "role": "TSMC's design services affiliate. It does the physical design and IP integration for customers' custom AI chips (ASICs) and delivers the finished chips, made on TSMC processes and packaging. Its ties to TSMC give it early access to new processes.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -554,7 +554,7 @@
       "Tesla",
       "NXP"
     ],
-    "aiRelevance": "Global Unichip is the fastest route from an AI architecture to silicon on a leading-edge TSMC node with CoWoS attached.",
+    "aiRelevance": "Global Unichip is the fastest route from an AI chip design to a finished chip on a leading-edge TSMC process with CoWoS packaging.",
     "revenueUSDb": 1.084,
     "revenueYear": 2025,
     "source": "https://www.guc-asic.com/en/"
@@ -569,7 +569,7 @@
     "founded": 1997,
     "ticker": "2454.TW",
     "ownership": "Public",
-    "role": "Best known for mobile SoCs, MediaTek has become a custom AI ASIC vendor and works on Google's TPU program. It brings high-volume advanced-node design capability to the custom silicon market.",
+    "role": "Best known for its smartphone chips, MediaTek also designs custom AI chips (ASICs) and works on Google's TPU program. It has experience designing high-volume chips on advanced nodes.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -593,7 +593,7 @@
     "founded": 1985,
     "ticker": "QCOM",
     "ownership": "Public",
-    "role": "Supplies Snapdragon SoCs with on-device neural engines and, from its 2025 announcement, the AI200 and AI250 rack-scale inference accelerators. Its purchase of Alphawave added the SerDes IP a data-center part needs.",
+    "role": "Designs Snapdragon chips with built-in neural engines that run AI on phones and other devices. In 2025 it announced the AI200 and AI250 rack-scale inference accelerators. Its purchase of Alphawave added the high-speed connection (SerDes) IP a data-center chip needs.",
     "chokepoint": "Diversified",
     "shareNote": null,
     "customers": [
@@ -602,7 +602,7 @@
       "Xiaomi",
       "Meta"
     ],
-    "aiRelevance": "Qualcomm is targeting inference, where memory capacity per dollar matters more than peak training FLOPS.",
+    "aiRelevance": "Qualcomm is targeting inference, the running of trained models, where memory capacity per dollar matters more than the peak compute that training needs.",
     "revenueUSDb": 44.284,
     "revenueYear": 2025,
     "source": "https://www.qualcomm.com/"
@@ -617,7 +617,7 @@
     "founded": 2016,
     "ticker": "CBRS",
     "ownership": "Public",
-    "role": "Builds the Wafer Scale Engine, a single processor covering almost an entire 300 mm wafer with on-die SRAM instead of HBM. It sells systems and inference cloud capacity.",
+    "role": "Builds the Wafer Scale Engine, a single processor that covers almost an entire 300 mm wafer. It keeps its memory on the chip as SRAM instead of using separate HBM stacks. It sells systems and inference cloud capacity.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -626,7 +626,7 @@
       "Argonne National Laboratory",
       "Meta"
     ],
-    "aiRelevance": "Wafer-scale integration avoids both HBM supply and advanced packaging capacity, the two tightest constraints in the chain.",
+    "aiRelevance": "Wafer-scale integration needs neither HBM nor advanced packaging capacity, the two tightest constraints in the chain.",
     "revenueUSDb": 0.51,
     "revenueYear": 2025,
     "source": "https://www.cerebras.ai/product-chip"
@@ -640,8 +640,8 @@
     "city": "Mountain View",
     "founded": 2016,
     "ticker": "Private",
-    "ownership": "Private, venture-backed; licensed its inference technology to Nvidia on a non-exclusive basis in December 2025",
-    "role": "Designs the Language Processing Unit, an inference chip built on large on-die SRAM and a statically scheduled architecture with no HBM. It sells tokens through its own cloud, and few chips.",
+    "ownership": "Private, venture-backed, and licensed its inference technology to Nvidia on a non-exclusive basis in December 2025",
+    "role": "Designs the Language Processing Unit (LPU), an inference chip that uses large on-chip SRAM and no HBM, and whose compiler schedules every operation in advance. It sells few chips. Instead it runs AI models in its own cloud and charges customers per token of text processed.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -649,7 +649,7 @@
       "Saudi Arabia (Aramco Digital)",
       "Enterprise and API customers"
     ],
-    "aiRelevance": "An SRAM-only design avoids HBM entirely, which is the scarcest input in the AI chain.",
+    "aiRelevance": "An SRAM-only design needs no HBM, the scarcest input in the AI chain.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://groq.com/"
@@ -664,7 +664,7 @@
     "founded": 2004,
     "ticker": "Private",
     "ownership": "Subsidiary of Huawei Technologies",
-    "role": "Huawei's chip design arm and the designer of the Ascend 910C and the announced 950 and 960 accelerators. Its parts are made at SMIC without EUV, which caps yield and volume.",
+    "role": "Huawei's chip design arm. It designs the Ascend 910C and the announced 950 and 960 accelerators. SMIC makes its chips without EUV lithography tools, and that limits yield and volume.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -673,7 +673,7 @@
       "China Telecom",
       "iFlytek"
     ],
-    "aiRelevance": "Ascend is the benchmark for how far Chinese domestic substitution in AI accelerators has come.",
+    "aiRelevance": "Ascend is the main measure of how far China has gone in replacing foreign AI accelerators with its own.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.hisilicon.com/"
@@ -687,8 +687,8 @@
     "city": "Beijing",
     "founded": 2016,
     "ticker": "688256.SS",
-    "ownership": "Public (Shanghai STAR Market); state-linked shareholders",
-    "role": "China's largest listed merchant AI chip designer, selling the Siyuan training and inference accelerators to Chinese cloud operators. It is on the US Entity List and manufactures domestically.",
+    "ownership": "Public (Shanghai STAR Market), with state-linked shareholders",
+    "role": "Designs the Siyuan training and inference accelerators and sells them to Chinese cloud operators. Among listed Chinese companies that design AI chips for sale to other firms, it is the largest. It is on the US Entity List, which restricts US exports to it, and has its chips made in China.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -697,7 +697,7 @@
       "China Mobile",
       "Lenovo"
     ],
-    "aiRelevance": "Cambricon is the main listed proxy for Chinese AI accelerator substitution and its revenue tracks domestic deployment.",
+    "aiRelevance": "Cambricon is the main listed company tied to China's shift to domestic AI accelerators, and its revenue tracks how many are deployed.",
     "revenueUSDb": 0.966,
     "revenueYear": 2025,
     "source": "https://www.cambricon.com/"
@@ -711,8 +711,8 @@
     "city": "Tianjin",
     "founded": 2014,
     "ticker": "688041.SS",
-    "ownership": "Public (Shanghai STAR Market); state-linked; a planned merger with Sugon was terminated in December 2025",
-    "role": "Makes x86-compatible server CPUs derived from an AMD license and the Deep Computing Unit accelerator line. It supplies Chinese government and state enterprise data centers.",
+    "ownership": "Public (Shanghai STAR Market), state-linked, and its planned merger with Sugon was terminated in December 2025",
+    "role": "Makes x86-compatible server CPUs, derived from an AMD license, and the Deep Computing Unit (DCU) accelerator line. It supplies Chinese government and state enterprise data centers.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -734,8 +734,8 @@
     "city": "Beijing",
     "founded": 2020,
     "ticker": "688795.SS",
-    "ownership": "Public (Shanghai STAR Market); on the US Entity List",
-    "role": "Builds full-function GPUs with a CUDA-like software layer, aimed at replacing Nvidia in Chinese workstations and training clusters. It listed on the STAR Market after being placed on the Entity List.",
+    "ownership": "Public (Shanghai STAR Market), on the US Entity List",
+    "role": "Builds full-function GPUs with a CUDA-like software layer, aimed at replacing Nvidia in Chinese workstations and training clusters. It listed on Shanghai's STAR Market after being placed on the US Entity List.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -743,7 +743,7 @@
       "Chinese universities",
       "Domestic OEMs"
     ],
-    "aiRelevance": "Moore Threads is China's attempt at a general-purpose GPU.",
+    "aiRelevance": "Moore Threads is one of the Chinese firms trying to build a general-purpose GPU, for graphics as well as AI.",
     "revenueUSDb": 0.224,
     "revenueYear": 2025,
     "source": "https://www.mthreads.com/"
@@ -757,8 +757,8 @@
     "city": "Shanghai",
     "founded": 2019,
     "ticker": "6082.HK",
-    "ownership": "Public (Hong Kong); on the US Entity List",
-    "role": "Designs the BR100 series general-purpose GPUs for AI training and HPC. Export controls forced it to redesign parts away from TSMC's most advanced nodes.",
+    "ownership": "Public (Hong Kong), on the US Entity List",
+    "role": "Designs the BR100 series general-purpose GPUs for AI training and high-performance computing. Export controls forced it to redesign its chips so they no longer use TSMC's most advanced processes.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -780,7 +780,7 @@
     "founded": 2020,
     "ticker": "688802.SS",
     "ownership": "Public (Shanghai STAR Market)",
-    "role": "Chinese GPGPU designer whose Xiyun and Xisi lines target AI training and inference in domestic data centers, with a CUDA-compatible software stack.",
+    "role": "A Chinese designer of general-purpose GPUs, whose Xiyun and Xisi lines are built for AI training and inference in Chinese data centers. It offers a CUDA-compatible software stack.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -802,7 +802,7 @@
     "founded": 2015,
     "ticker": "9903.HK",
     "ownership": "Public (Hong Kong)",
-    "role": "Designs the Tiangai and Zhikai general-purpose AI accelerators for Chinese data centers, with an emphasis on compatibility with mainstream AI frameworks.",
+    "role": "Designs the Tiangai and Zhikai general-purpose AI accelerators for Chinese data centers, built to work with mainstream AI frameworks.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -823,8 +823,8 @@
     "city": "Toronto",
     "founded": 2016,
     "ticker": "Private",
-    "ownership": "Private; investors include Samsung, Hyundai and LG",
-    "role": "Builds AI accelerators around RISC-V cores and an Ethernet-based scale-out fabric, and licenses the designs as IP so customers can build their own chips. It sells both silicon and architecture.",
+    "ownership": "Private, with investors including Samsung, Hyundai and LG",
+    "role": "Builds AI accelerators around RISC-V cores, with Ethernet links that join many chips into one system. It also licenses the designs as IP so customers can build their own chips.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -833,7 +833,7 @@
       "Rapidus",
       "Bodhi Computing"
     ],
-    "aiRelevance": "Licensable AI IP lets countries and firms build sovereign accelerators without designing from scratch.",
+    "aiRelevance": "Licensable AI IP lets countries and companies build accelerators they control without designing one from scratch.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://tenstorrent.com/"
@@ -848,7 +848,7 @@
     "founded": 2017,
     "ticker": "Private",
     "ownership": "Private, venture-backed",
-    "role": "Builds reconfigurable dataflow units with large three-tier memory and sells them as full systems or as an inference cloud, aimed at enterprises that want models running on premises.",
+    "role": "Builds reconfigurable dataflow units, AI chips that are set up to match how data flows through each model. They use a large three-tier memory system. SambaNova sells them as an inference cloud service and as full systems for companies that want to run models on their own premises.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -856,7 +856,7 @@
       "SoftBank",
       "Saudi Aramco"
     ],
-    "aiRelevance": "Dataflow architectures trade generality for higher utilization on transformer inference.",
+    "aiRelevance": "Dataflow chips give up some flexibility to keep more of their hardware busy when running transformers, the model design behind large language models.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://sambanova.ai/technology/sn40l-rdu-ai-chip"
@@ -871,14 +871,14 @@
     "founded": 2019,
     "ticker": "Private",
     "ownership": "Private, venture-backed",
-    "role": "Builds inference accelerators that put compute inside SRAM to cut the energy cost of moving weights, targeting batch inference for large language models.",
+    "role": "Builds inference accelerators that compute inside SRAM, which cuts the energy spent moving model weights. They are aimed at batch inference, which runs many requests to a large language model at once.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
       "Microsoft (evaluation)",
       "Enterprise inference customers"
     ],
-    "aiRelevance": "In-memory compute addresses the memory bandwidth wall that makes inference expensive.",
+    "aiRelevance": "In-memory compute cuts the data movement between memory and processor that makes inference expensive.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.d-matrix.ai/product/"
@@ -893,13 +893,13 @@
     "founded": 2022,
     "ticker": "Private",
     "ownership": "Private, venture-backed",
-    "role": "Designing Sohu, an ASIC that hard-wires the transformer architecture into silicon, trading flexibility for throughput per watt.",
+    "role": "Designing Sohu, a custom chip (ASIC) that hard-wires the transformer architecture into silicon. The transformer is the model design behind large language models. Sohu gives up flexibility to do more work per watt.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
       "Early access inference customers"
     ],
-    "aiRelevance": "A bet that the transformer is stable enough to justify fixing it in hardware.",
+    "aiRelevance": "A bet that AI models will keep using the transformer design long enough to justify fixing it in hardware.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.etched.com/"
@@ -913,7 +913,7 @@
     "city": "Seongnam",
     "founded": 2020,
     "ticker": "Private",
-    "ownership": "Private; merged with SK Telecom's Sapeon in 2024; SK Group and Arm are investors",
+    "ownership": "Private, merged with SK Telecom's Sapeon in 2024, with SK Group and Arm as investors",
     "role": "An AI chip startup building the Rebel inference accelerator with Samsung Foundry and SK hynix HBM. It is the national champion for Korean AI silicon.",
     "chokepoint": "Contested",
     "shareNote": null,
@@ -922,7 +922,7 @@
       "KT",
       "Korean public sector"
     ],
-    "aiRelevance": "Rebellions is the test of whether Korea can turn memory strength into accelerator design capability.",
+    "aiRelevance": "Rebellions is a test of whether Korea's strength in memory chips can extend to designing AI accelerators.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://rebellions.ai/"
@@ -937,14 +937,14 @@
     "founded": 2017,
     "ticker": "Private",
     "ownership": "Private, venture-backed",
-    "role": "Builds the RNGD inference accelerator using a tensor contraction architecture and HBM3, aimed at power-constrained enterprise inference. It turned down an acquisition offer from Meta in 2025.",
+    "role": "Builds the RNGD inference accelerator, which uses HBM3 memory and an architecture designed around tensor contraction, the core math of AI models. It is aimed at companies running inference where power is limited. It turned down an acquisition offer from Meta in 2025.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
       "LG AI Research",
       "Korean enterprises"
     ],
-    "aiRelevance": "One of the few non-US startups shipping a production HBM-equipped inference part.",
+    "aiRelevance": "One of the few startups outside the US shipping an inference chip with HBM in production.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://furiosa.ai/rngd"
@@ -959,7 +959,7 @@
     "founded": 1926,
     "ticker": "4063.T",
     "ownership": "Public",
-    "role": "The world's largest silicon wafer maker by capacity and shipments, supplying the blank substrate every logic and memory die is built on. It held an estimated 22 percent of global 300 mm wafer capacity at the end of 2024, according to the October 2025 listing prospectus of the Chinese wafer maker Eswin. It also supplies ArF and EUV photoresist and photomask pellicles, so it supplies three separate stages of the chain.",
+    "role": "The world's largest silicon wafer maker by capacity and shipments. Silicon wafers are the blank discs every logic and memory die is built on. Shin-Etsu held an estimated 22 percent of global 300 mm wafer capacity at the end of 2024, according to the October 2025 listing prospectus of the Chinese wafer maker Eswin. It also makes ArF and EUV photoresist, the light-sensitive coating chip patterns are printed into, and pellicles, the thin films that keep dust off photomasks. So it supplies three separate stages of the chain.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -969,7 +969,7 @@
       "Micron",
       "SK hynix"
     ],
-    "aiRelevance": "Leading-edge AI logic requires epitaxial 300 mm wafers with defect densities only a handful of firms can reach.",
+    "aiRelevance": "Leading-edge AI logic requires epitaxial 300 mm wafers with defect densities only a handful of firms can reach. An epitaxial wafer carries an extra layer of pure crystal grown on its surface.",
     "revenueUSDb": 16.734,
     "revenueYear": 2026,
     "source": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2025-10-22/688783_20251022_UYMD.pdf"
@@ -984,7 +984,7 @@
     "founded": 1999,
     "ticker": "3436.T",
     "ownership": "Public",
-    "role": "The second largest silicon wafer maker by capacity and shipments and a pure play, supplying polished and epitaxial 300 mm wafers to logic and memory fabs worldwide. It held an estimated 20 percent of global 300 mm wafer capacity at the end of 2024, according to Eswin's October 2025 listing prospectus. Capacity additions take three to four years and are contracted years ahead.",
+    "role": "The second-largest silicon wafer maker by capacity and shipments. It makes only wafers, selling polished and epitaxial 300 mm wafers to logic and memory fabs worldwide. It held an estimated 20 percent of global 300 mm wafer capacity at the end of 2024, according to Eswin's October 2025 listing prospectus. New capacity takes three to four years to add, and customers contract for it years ahead.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -994,7 +994,7 @@
       "Micron",
       "Kioxia"
     ],
-    "aiRelevance": "Wafer supply is the first physical constraint on how many AI dies can exist, and the top five wafer makers served around 75 percent of the market in 2025.",
+    "aiRelevance": "Wafer supply is the first physical limit on how many AI dies can be made. The top five wafer makers served around 75 percent of the market in 2025.",
     "revenueUSDb": 2.663,
     "revenueYear": 2025,
     "source": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2025-10-22/688783_20251022_UYMD.pdf"
@@ -1008,8 +1008,8 @@
     "city": "Hsinchu",
     "founded": 2011,
     "ticker": "6488.TWO",
-    "ownership": "Public; controlled by Sino-American Silicon Products",
-    "role": "The third largest wafer maker, with fabs across Taiwan, Japan, the US and Europe, and a new 300 mm plant in Sherman, Texas built with CHIPS Act support. In its annual report for 2025 it ranked itself third and put its shipments at about 15 to 20 percent of global semiconductor wafer output. It also supplies SOI and compound semiconductor substrates.",
+    "ownership": "Public, controlled by Sino-American Silicon Products",
+    "role": "The third-largest wafer maker, with fabs in Taiwan, Japan, the US and Europe. It built a new 300 mm plant in Sherman, Texas, with CHIPS Act support. In its annual report for 2025 it ranked itself third and put its shipments at about 15 to 20 percent of global semiconductor wafer output. It also supplies silicon-on-insulator (SOI) and compound semiconductor substrates.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1032,8 +1032,8 @@
     "city": "Munich",
     "founded": 1968,
     "ticker": "WAF.DE",
-    "ownership": "Public; Wacker Chemie holds a large minority stake",
-    "role": "Europe's silicon wafer maker, running 300 mm capacity in Germany and a newer fab in Singapore. Its planned sale to GlobalWafers lapsed in 2022 when German investment clearance was not issued before the deadline.",
+    "ownership": "Public, with Wacker Chemie holding a large minority stake",
+    "role": "Europe's silicon wafer maker, with 300 mm capacity in Germany and a newer fab in Singapore. Its planned sale to GlobalWafers lapsed in 2022 when the German government did not grant investment clearance before the deadline.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1056,8 +1056,8 @@
     "city": "Gumi",
     "founded": 1983,
     "ticker": "Private",
-    "ownership": "Part of SK Group; SK agreed in July 2026 to sell a 70.6 percent stake to Doosan",
-    "role": "Korea's silicon wafer maker, supplying 300 mm wafers largely to Samsung and SK hynix, plus silicon carbide substrates for power devices from a US plant in Michigan.",
+    "ownership": "Part of SK Group, which agreed in July 2026 to sell a 70.6 percent stake to Doosan",
+    "role": "Korea's silicon wafer maker, supplying 300 mm wafers largely to Samsung and SK hynix. It also makes silicon carbide substrates for power devices at a US plant in Michigan.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1080,7 +1080,7 @@
     "founded": 1992,
     "ticker": "SOI.PA",
     "ownership": "Public",
-    "role": "Makes engineered substrates using its Smart Cut layer transfer process, mainly silicon-on-insulator for RF and automotive chips and piezoelectric-on-insulator for filters.",
+    "role": "Makes engineered substrates with its Smart Cut process, which moves a thin crystal layer from one wafer onto another. Most are silicon-on-insulator for radio-frequency (RF) and automotive chips, or piezoelectric-on-insulator for radio filters.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1089,7 +1089,7 @@
       "Qorvo",
       "Samsung"
     ],
-    "aiRelevance": "Relevant to the RF and edge silicon around AI systems.",
+    "aiRelevance": "Its substrates go into some of the RF and edge chips around AI systems.",
     "revenueUSDb": 0.689,
     "revenueYear": 2026,
     "source": "https://www.soitec.com/en/products"
@@ -1103,8 +1103,8 @@
     "city": "Shanghai",
     "founded": 2015,
     "ticker": "688126.SS",
-    "ownership": "Public (Shanghai STAR Market); state-backed, National IC Fund investor",
-    "role": "China's state-backed silicon wafer group, including Shanghai Zing Semiconductor for 300 mm and Okmetic in Finland for specialty wafers. It is the domestic answer to reliance on Japanese wafer supply.",
+    "ownership": "Public (Shanghai STAR Market) and state-backed, with the National IC Fund as an investor",
+    "role": "China's state-backed silicon wafer group, which owns Shanghai Zing Semiconductor (300 mm wafers) and Okmetic in Finland (specialty wafers). It is China's domestic alternative to Japanese wafer supply.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -1113,7 +1113,7 @@
       "CXMT",
       "YMTC"
     ],
-    "aiRelevance": "Domestic wafer supply is a precondition for a Chinese chain that does not depend on Japanese exports.",
+    "aiRelevance": "A Chinese supply chain that does not depend on Japanese exports needs domestic wafer supply first.",
     "revenueUSDb": 0.552,
     "revenueYear": 2025,
     "source": "https://web.archive.org/web/20250809220519/http://nsig.com/en/about"
@@ -1127,8 +1127,8 @@
     "city": "Hemlock",
     "founded": 1961,
     "ticker": "Private",
-    "ownership": "Private; majority owned by Corning with Japanese partners",
-    "role": "Makes the ultra-pure polysilicon that is melted to grow the crystal ingots wafers are cut from. Semiconductor-grade material is made by only a few plants worldwide, and Siltronic names Hemlock among the five major suppliers of electronic-grade silicon in 2025.",
+    "ownership": "Private, majority owned by Corning with Japanese partners",
+    "role": "Makes the ultra-pure polysilicon that is melted to grow the crystal ingots wafers are cut from. Only a few plants worldwide make semiconductor-grade material. Siltronic names Hemlock among the five major suppliers of electronic-grade silicon in 2025.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1152,7 +1152,7 @@
     "founded": 1914,
     "ticker": "WCH.DE",
     "ownership": "Public",
-    "role": "One of the small group of producers of semiconductor-grade polysilicon, made at Burghausen in Germany and in Tennessee. Its silicone and chemicals businesses are much larger by revenue than the electronics grade material.",
+    "role": "One of the few producers of semiconductor-grade polysilicon, which it makes at Burghausen in Germany and in Tennessee. Its silicone and chemicals businesses bring in much more revenue than its electronic-grade polysilicon.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1198,7 +1198,7 @@
     "founded": 1959,
     "ticker": "010060.KS",
     "ownership": "Public",
-    "role": "Korean chemical group producing polysilicon and a range of fab chemicals including high-purity hydrogen peroxide and phosphoric acid. Most of its polysilicon output serves solar customers.",
+    "role": "A Korean chemical group that makes polysilicon and fab chemicals, including high-purity hydrogen peroxide and phosphoric acid. Most of its polysilicon goes to solar customers.",
     "chokepoint": "Diversified",
     "shareNote": null,
     "customers": [
@@ -1221,7 +1221,7 @@
     "founded": null,
     "ticker": "688783.SS",
     "ownership": "Public (Shanghai STAR Market)",
-    "role": "Mainland China's largest maker of 300 mm wafers, which says it ranked sixth in the world with about 7.7 percent of global 300 mm shipments in the first half of 2026, up from about 6 percent in 2024.",
+    "role": "Mainland China's largest maker of 300 mm wafers. It says it ranked sixth in the world with about 7.7 percent of global 300 mm shipments in the first half of 2026, up from about 6 percent in 2024.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -1242,7 +1242,7 @@
     "founded": 1957,
     "ticker": "Private",
     "ownership": "Taken private by the Japan Investment Corporation in 2024",
-    "role": "A Japanese photoresist maker that owns Inpria, an Oregon maker of metal-oxide resist for extreme ultraviolet printing. A vehicle of the Japan Investment Corporation took 84.36 percent of its shares in a tender offer that closed on 16 April 2024, and its shares were delisted from the Tokyo Stock Exchange on 25 June 2024.",
+    "role": "A Japanese maker of photoresist, the light-sensitive coating that chip patterns are printed into. It owns Inpria, an Oregon maker of metal-oxide resist for extreme ultraviolet (EUV) printing. A company controlled by the Japan Investment Corporation bought 84.36 percent of its shares in a tender offer that closed on 16 April 2024. Its shares were delisted from the Tokyo Stock Exchange on 25 June 2024.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1266,7 +1266,7 @@
     "founded": 1936,
     "ticker": "4186.T",
     "ownership": "Public",
-    "role": "Supplies photoresist across KrF, ArF immersion and EUV, plus developers, strippers and thick-film resists used in advanced packaging. It has been supplying resist since the earliest days of the industry.",
+    "role": "Makes photoresist for KrF, ArF immersion and EUV lithography, plus developers, strippers and thick-film resists used in advanced packaging. It has supplied resist since the industry's early days.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1276,7 +1276,7 @@
       "Micron",
       "Kioxia"
     ],
-    "aiRelevance": "Copper pillar and redistribution layers in advanced packaging use TOK thick-film resists as well as its front-end products.",
+    "aiRelevance": "Besides resist for making chips, Tokyo Ohka Kogyo supplies the thick-film resists used to build copper pillars and redistribution layers (fine wiring) in advanced packaging.",
     "revenueUSDb": 1.541,
     "revenueYear": 2025,
     "source": "https://www.tok.co.jp/eng/products/semiconductor-pre"
@@ -1291,7 +1291,7 @@
     "founded": 1934,
     "ticker": "4901.T",
     "ownership": "Public",
-    "role": "Turned its film chemistry into a large electronic materials business covering photoresist, developers, CMP slurries, polyimides and cleaning chemicals. Electronic materials are a minority of group revenue but a major share of world supply.",
+    "role": "Makes photoresist, developers, CMP polishing slurries, polyimides and cleaning chemicals. It built this large electronic materials business from its photographic film chemistry. Electronic materials are a minority of group revenue but a major share of world supply.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1315,7 +1315,7 @@
     "founded": 1913,
     "ticker": "4005.T",
     "ownership": "Public",
-    "role": "Supplies ArF and EUV photoresist and high-purity metals and compounds for fabs, alongside a much larger petrochemical and agrochemical business. It is one of the four or five firms with qualified EUV resist.",
+    "role": "Makes ArF and EUV photoresist and high-purity metals and compounds for fabs, though its petrochemical and agrochemical business is much larger. It is one of the four or five firms with EUV resist that chipmakers have qualified for production.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1337,7 +1337,7 @@
     "city": "Wilmington",
     "founded": 2025,
     "ticker": "Q",
-    "ownership": "Public; separated from DuPont on 1 November 2025",
+    "ownership": "Public, separated from DuPont on 1 November 2025",
     "role": "DuPont's former electronics business, an independent company since 1 November 2025. It supplies chemical mechanical planarization slurries and pads, lithographic materials, and metallization and other materials for chip packaging and circuit boards.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -1348,7 +1348,7 @@
       "Micron",
       "ASE"
     ],
-    "aiRelevance": "Every metal layer on an AI die is planarized with a CMP pad and slurry pair before the next layer goes down.",
+    "aiRelevance": "Every metal layer on an AI die is polished flat with a CMP pad and slurry before the next layer goes down.",
     "revenueUSDb": 4.754,
     "revenueYear": 2025,
     "source": "https://www.sec.gov/Archives/edgar/data/2058873/000205887326000010/q-20251231.htm"
@@ -1363,7 +1363,7 @@
     "founded": 2007,
     "ticker": "Private",
     "ownership": "Subsidiary of JSR Corporation",
-    "role": "Developed tin-oxide metal-based EUV resists that absorb EUV photons far more efficiently than organic chemically amplified resists, which improves dose and resolution at High-NA.",
+    "role": "Developed tin-oxide EUV resists that absorb EUV photons far more efficiently than organic chemically amplified resists. Higher absorption cuts the light dose needed and sharpens resolution on High-NA EUV tools.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1409,14 +1409,14 @@
     "founded": 1986,
     "ticker": "357780.KQ",
     "ownership": "Public (KOSDAQ)",
-    "role": "Supplies high-purity hydrogen fluoride etchant, CVD precursors and cleaning chemicals to Korean memory fabs. It localized HF production after the 2019 Japanese export restrictions.",
+    "role": "Supplies high-purity hydrogen fluoride (HF) etchant, CVD precursors and cleaning chemicals to Korean memory fabs. It localized HF production after the 2019 Japanese export restrictions.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
       "Samsung",
       "SK hynix"
     ],
-    "aiRelevance": "The etchants that cut high aspect ratio features in DRAM come from a short list of suppliers, and Soulbrain is Korea's.",
+    "aiRelevance": "The etchants that cut the deep, narrow (high aspect ratio) features in DRAM come from a short list of suppliers, and Soulbrain is Korea's.",
     "revenueUSDb": 0.689,
     "revenueYear": 2025,
     "source": "https://www.soulbrain.co.kr/en/"
@@ -1431,7 +1431,7 @@
     "founded": 1917,
     "ticker": "4401.T",
     "ownership": "Public",
-    "role": "Makes the organometallic precursor molecules that atomic layer deposition tools use to build high-k gate dielectrics and metal films one atomic layer at a time.",
+    "role": "Makes the organometallic precursor molecules that atomic layer deposition tools use to build films one atomic layer at a time, including metal films and the high-k insulating layers in transistor gates.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1455,7 +1455,7 @@
     "founded": 1950,
     "ticker": "5384.T",
     "ownership": "Public",
-    "role": "Makes the abrasive slurries used to polish silicon wafers and to planarize metal and dielectric layers during chip fabrication. Slurry chemistry is tuned per process step and per customer.",
+    "role": "Makes the abrasive slurries used to polish silicon wafers and to planarize (polish flat) the metal and insulating layers built up during chip fabrication. Fujimi tunes each slurry for the process step and the customer.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1478,7 +1478,7 @@
     "city": "Tokyo",
     "founded": 1905,
     "ticker": "5016.T",
-    "ownership": "Public; listed in Tokyo in 2025 after being spun out of ENEOS",
+    "ownership": "Public, listed in Tokyo in 2025 after being spun out of ENEOS",
     "role": "Supplies the ultra-high-purity copper, tantalum and titanium sputtering targets used to deposit the metal interconnect on a chip, along with high-purity treated rolled copper foil for substrates.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -1488,7 +1488,7 @@
       "Intel",
       "Micron"
     ],
-    "aiRelevance": "Copper interconnect purity determines resistance and electromigration life in the dense wiring of an AI die.",
+    "aiRelevance": "Copper purity sets the resistance of the dense wiring on an AI die and how long it lasts before electromigration wears it out. Electromigration is the slow drift of metal atoms pushed by electric current.",
     "revenueUSDb": 5.751,
     "revenueYear": 2026,
     "source": "https://www.jx-nmm.com/english/products/"
@@ -1502,8 +1502,8 @@
     "city": "Darmstadt",
     "founded": 1668,
     "ticker": "MRK.DE",
-    "ownership": "Public; family-controlled",
-    "role": "Through its electronics division, formed around the acquisitions of Versum Materials and AZ Electronic Materials, it supplies deposition precursors, specialty gases, CMP slurries and dielectrics. It is one of the broadest single-source materials suppliers.",
+    "ownership": "Public, family-controlled",
+    "role": "Its electronics division supplies deposition precursors, specialty gases, CMP slurries and dielectrics. Merck built the division around its acquisitions of Versum Materials and AZ Electronic Materials. It sells one of the broadest ranges of materials of any single supplier.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1528,7 +1528,7 @@
     "founded": 1966,
     "ticker": "ENTG",
     "ownership": "Public",
-    "role": "Supplies the filters, purifiers, fluid handling components, wafer carriers and specialty coatings that keep contamination out of a fab, plus CMP slurries acquired with CMC Materials. Its products are consumed continuously.",
+    "role": "Makes the filters, purifiers, fluid handling components, wafer carriers and specialty coatings that keep contamination out of a fab. It also sells CMP slurries, a business it gained by buying CMC Materials. Fabs use up its products continuously.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1538,7 +1538,7 @@
       "Micron",
       "SK hynix"
     ],
-    "aiRelevance": "Particle counts scale directly into defect density, and a large AI die is far more sensitive to defects than a small one.",
+    "aiRelevance": "More particles mean more defects, and a large AI die is far more sensitive to defects than a small one.",
     "revenueUSDb": 3.197,
     "revenueYear": 2025,
     "source": "https://www.entegris.com/en/home/products.html"
@@ -1553,7 +1553,7 @@
     "founded": 1879,
     "ticker": "LIN",
     "ownership": "Public",
-    "role": "The largest industrial gas company worldwide, supplying nitrogen, hydrogen, helium and the rare gases such as neon used in excimer lasers, usually through on-site plants built next to the fab. Gas supply contracts run for a decade or more.",
+    "role": "The world's largest industrial gas company. It supplies fabs with nitrogen, hydrogen, helium and rare gases such as the neon used in excimer lasers, usually from plants built next to the fab. Gas supply contracts run for a decade or more.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1563,7 +1563,7 @@
       "Micron",
       "SK hynix"
     ],
-    "aiRelevance": "A fab cannot start without a bulk gas plant, and neon supply for DUV lasers proved fragile after the invasion of Ukraine.",
+    "aiRelevance": "A fab cannot start production without a bulk gas plant. Neon supply for DUV lasers proved fragile after Russia invaded Ukraine.",
     "revenueUSDb": 33.986,
     "revenueYear": 2025,
     "source": "https://www.sec.gov/Archives/edgar/data/1707925/000162828026011430/lin-20251231.htm"
@@ -1587,7 +1587,7 @@
       "Intel",
       "GlobalFoundries"
     ],
-    "aiRelevance": "Etch and deposition chemistries for high aspect ratio structures depend on a narrow set of qualified specialty gases.",
+    "aiRelevance": "Etch and deposition chemistries for deep, narrow (high aspect ratio) structures depend on a small set of qualified specialty gases.",
     "revenueUSDb": 31.315,
     "revenueYear": 2025,
     "source": "https://www.airliquide.com/"
@@ -1611,7 +1611,7 @@
       "Micron",
       "TSMC"
     ],
-    "aiRelevance": "Nitrogen consumption at a leading-edge fab is measured in hundreds of thousands of cubic meters an hour.",
+    "aiRelevance": "A leading-edge fab uses hundreds of thousands of cubic meters of nitrogen an hour.",
     "revenueUSDb": 12.037,
     "revenueYear": 2025,
     "source": "https://www.airproducts.com/industries/electronics"
@@ -1635,7 +1635,7 @@
       "Micron",
       "Samsung"
     ],
-    "aiRelevance": "Japanese gas supply underpins the fabs and packaging houses that build most AI memory and packages.",
+    "aiRelevance": "The fabs and packaging houses that build most AI memory and packages rely on Japanese gas supply.",
     "revenueUSDb": 8.839,
     "revenueYear": 2026,
     "source": "https://www.nipponsanso-hd.co.jp/"
@@ -1649,8 +1649,8 @@
     "city": "Yeongju",
     "founded": 1998,
     "ticker": "Private",
-    "ownership": "Formerly SK Materials; majority stake sold to Hahn & Company by SK Inc.",
-    "role": "Produces nitrogen trifluoride, the gas used to clean deposition chambers, plus tungsten hexafluoride and other specialty etch gases. Chamber cleaning gas consumption scales with deposition throughput.",
+    "ownership": "Formerly SK Materials, and SK Inc. sold a majority stake to Hahn & Company",
+    "role": "Produces nitrogen trifluoride, the gas used to clean deposition chambers, plus tungsten hexafluoride and other specialty etch gases. The more wafers a fab runs through deposition, the more chamber cleaning gas it uses.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1658,7 +1658,7 @@
       "SK hynix",
       "TSMC"
     ],
-    "aiRelevance": "NF3 supply constrains how fast deposition chambers can be cycled, which constrains DRAM and 3D NAND output.",
+    "aiRelevance": "Nitrogen trifluoride (NF3) supply limits how fast deposition chambers can be cleaned and returned to use, and so limits DRAM and 3D NAND flash output.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.skspecialty.com/"
@@ -1682,7 +1682,7 @@
       "Micron",
       "Kioxia"
     ],
-    "aiRelevance": "High aspect ratio etch in DRAM and 3D NAND depends on a narrow set of fluorinated chemistries.",
+    "aiRelevance": "Etching deep, narrow (high aspect ratio) features in DRAM and 3D NAND depends on a small set of fluorinated chemistries.",
     "revenueUSDb": 0.425,
     "revenueYear": 2026,
     "source": "https://www.kantodenka.co.jp/"
@@ -1697,7 +1697,7 @@
     "founded": 1916,
     "ticker": "4109.T",
     "ownership": "Public",
-    "role": "Refines hydrofluoric acid to the purity needed to etch and clean silicon without leaving metal contamination. Japan's 2019 export licensing of high-purity HF to Korea showed how few qualified sources exist.",
+    "role": "Refines hydrofluoric acid to the purity needed to etch and clean silicon without leaving metal contamination. Japan's 2019 decision to require export licenses for high-purity HF sent to Korea showed how few qualified sources exist.",
     "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
@@ -1744,7 +1744,7 @@
     "founded": 1939,
     "ticker": "4004.T",
     "ownership": "Public",
-    "role": "Formed from Showa Denko and Hitachi Chemical, it supplies high-purity etch gases, CMP slurries, die attach films and the copper-clad laminates and encapsulants used in advanced packaging. It leads a consortium on panel-level packaging.",
+    "role": "Supplies high-purity etch gases, CMP slurries, die attach films, and the copper-clad laminates and encapsulants used in advanced packaging. It was formed from Showa Denko and Hitachi Chemical. It leads a consortium on panel-level packaging.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1754,7 +1754,7 @@
       "Amkor",
       "Intel"
     ],
-    "aiRelevance": "Its packaging materials sit inside the CoWoS and fan-out packages that AI accelerators are built in.",
+    "aiRelevance": "Its packaging materials go into the CoWoS and fan-out packages that AI accelerators are built in.",
     "revenueUSDb": 8.758,
     "revenueYear": 2025,
     "source": "https://www.resonac.com/"
@@ -1769,9 +1769,9 @@
     "founded": 1984,
     "ticker": "ASML",
     "ownership": "Public",
-    "role": "The only maker of extreme ultraviolet lithography scanners, and also a maker of immersion deep ultraviolet scanners. Its EUV systems are used for the most critical layers on the most advanced logic and memory chips.",
+    "role": "The only maker of extreme ultraviolet (EUV) lithography scanners, the machines that print circuit patterns onto wafers. It also makes immersion deep ultraviolet (DUV) scanners. Chipmakers use its EUV systems for the most critical layers on the most advanced logic and memory chips.",
     "chokepoint": "Critical",
-    "shareNote": "Only manufacturer of EUV lithography systems; recognized revenue on 48 EUV systems and 279 DUV systems in 2025",
+    "shareNote": "Only manufacturer of EUV lithography systems. Recognized revenue on 48 EUV systems and 279 DUV systems in 2025",
     "customers": [
       "TSMC",
       "Samsung",
@@ -1780,7 +1780,7 @@
       "Micron",
       "Rapidus"
     ],
-    "aiRelevance": "Access to EUV divides the fabs that can build leading-edge AI logic from the fabs that cannot.",
+    "aiRelevance": "A fab needs EUV to build leading-edge AI logic.",
     "revenueUSDb": 37.972,
     "revenueYear": 2025,
     "source": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm"
@@ -1795,7 +1795,7 @@
     "founded": 1917,
     "ticker": "7731.T",
     "ownership": "Public",
-    "role": "Makes ArF immersion, ArF, KrF and i-line lithography systems, now a small share of the leading-edge market but still relevant for mature nodes and for tool servicing. Its current lineup includes no EUV system.",
+    "role": "Makes ArF immersion, ArF, KrF and i-line lithography systems. It now has a small share of the leading-edge market. But its tools are still used to make chips on older (mature-node) processes, and Nikon services them. Its current lineup includes no EUV system.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1804,7 +1804,7 @@
       "Renesas",
       "Chinese mature-node fabs"
     ],
-    "aiRelevance": "Relevant to the mature-node parts around AI systems.",
+    "aiRelevance": "Its tools print some of the chips made on older processes for use around AI systems.",
     "revenueUSDb": 4.402,
     "revenueYear": 2026,
     "source": "https://www.nikon.com/business/semi/lineup/"
@@ -1819,7 +1819,7 @@
     "founded": 1937,
     "ticker": "7751.T",
     "ownership": "Public",
-    "role": "Supplies i-line and KrF steppers for mature nodes and packaging, and is commercializing nanoimprint lithography, which stamps a pattern into the resist. Nanoimprint avoids EUV optics entirely but has defect and throughput limits.",
+    "role": "Makes i-line and KrF steppers for mature nodes and packaging. It is also commercializing nanoimprint lithography, which stamps a pattern into the resist. Nanoimprint needs no EUV optics, but it has defect and throughput limits.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1841,8 +1841,8 @@
     "city": "Shanghai",
     "founded": 2002,
     "ticker": "Private",
-    "ownership": "State-owned; backed by Shanghai municipal government and the National IC Fund",
-    "role": "A Chinese maker of lithography scanners, founded in 2002 in Shanghai's Zhangjiang park. Its shipping products are i-line and KrF class tools used for packaging and mature nodes; reports of a domestic immersion ArF tool have not been independently confirmed in production.",
+    "ownership": "State-owned, backed by the Shanghai municipal government and the National IC Fund",
+    "role": "A Chinese maker of lithography scanners, founded in 2002 in Shanghai's Zhangjiang park. It ships i-line and KrF class tools for packaging and mature nodes. Reports of a domestic immersion ArF tool in production have not been independently confirmed.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -1871,7 +1871,7 @@
     "customers": [
       "ASML"
     ],
-    "aiRelevance": "EUV source power sets scanner throughput, which sets how much leading-edge AI silicon the world can print per year.",
+    "aiRelevance": "EUV source power sets how many wafers a scanner can expose per hour, and so how much leading-edge AI silicon fabs can print each year.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.asml.com/"
@@ -1886,7 +1886,7 @@
     "founded": 2000,
     "ticker": "Private",
     "ownership": "Subsidiary of Komatsu",
-    "role": "Makes ArF and KrF excimer laser light sources for DUV scanners, including ASML immersion tools, and describes itself as the world's leading excimer laser light source manufacturer. It also offers retrofit sources for installed DUV tools.",
+    "role": "Makes ArF and KrF excimer laser light sources for DUV scanners, including ASML immersion tools. It describes itself as the world's leading excimer laser light source manufacturer. It also offers retrofit sources for installed DUV tools.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1894,7 +1894,7 @@
       "Canon",
       "Fabs with installed DUV tools"
     ],
-    "aiRelevance": "Keeps a second source of DUV light in business, and DUV light is what multipatterning at mature and middle nodes runs on.",
+    "aiRelevance": "Gigaphoton gives fabs a second source of DUV light, the light used for multipatterning (printing one layer in several exposures) at mature and middle nodes.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.gigaphoton.com/company"
@@ -1908,14 +1908,14 @@
     "city": "Oberkochen",
     "founded": 1846,
     "ticker": "Private",
-    "ownership": "Part of the Zeiss Group; ASML holds a minority stake in Carl Zeiss SMT",
-    "role": "Makes the multilayer mirrors and projection optics inside every EUV scanner, polished to atomic-scale flatness, plus the larger anamorphic optics for High-NA. Zeiss SMT exclusively supplies the optics for ASML's EUV machines. It also makes AIMS EUV, which checks how a mask will print under the scanner's own imaging conditions, and MeRiT systems that repair masks.",
+    "ownership": "Part of the Zeiss Group, with ASML holding a minority stake in Carl Zeiss SMT",
+    "role": "Makes the multilayer mirrors and projection optics inside every EUV scanner, polished to atomic-scale flatness, plus the larger anamorphic optics for High-NA EUV scanners. Zeiss SMT exclusively supplies the optics for ASML's EUV scanners. It also makes AIMS EUV, which checks how a mask will print under the scanner's own imaging conditions, and MeRiT systems that repair masks.",
     "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
       "ASML"
     ],
-    "aiRelevance": "The mirror set is the physical limit on EUV resolution and the hardest thing in the chain to duplicate.",
+    "aiRelevance": "The mirror set limits EUV resolution and is the hardest part of the chain to duplicate.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.zeiss.com/semiconductor-manufacturing-technology/inspiring-technology/high-na-euv-lithography.html"
@@ -1937,7 +1937,7 @@
       "ASML",
       "Carl Zeiss SMT"
     ],
-    "aiRelevance": "Drive laser power translates directly into EUV photons, wafers per hour and AI chip output.",
+    "aiRelevance": "The CO2 laser's power directly sets how much EUV light a scanner gets, and so how many wafers of AI chips it can expose per hour.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.trumpf.com/en_US/solutions/applications/euv-lithography/"
@@ -1952,14 +1952,14 @@
     "founded": 1953,
     "ticker": "Private",
     "ownership": "Private, family-owned",
-    "role": "A Dutch precision manufacturing group that builds large mechanical modules, frames and vacuum assemblies for ASML scanners. It is one of the main suppliers in the Brainport cluster around Veldhoven.",
+    "role": "A Dutch precision manufacturing group that builds large mechanical modules, frames and vacuum assemblies for ASML scanners. It is one of the main suppliers in the Brainport cluster around ASML's base in Veldhoven.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "ASML",
       "Thermo Fisher Scientific"
     ],
-    "aiRelevance": "Scanner output is limited by how fast the supply cluster around ASML can build modules.",
+    "aiRelevance": "ASML can ship scanners only as fast as the supply cluster around it builds modules.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.vdlgroep.com/en/markets/semiconductor"
@@ -1974,7 +1974,7 @@
     "founded": 1991,
     "ticker": "JEN.DE",
     "ownership": "Public",
-    "role": "Supplies precision optics, laser components and optical measurement modules used inside lithography and inspection tools, plus its own micro-optics production.",
+    "role": "Supplies precision optics, laser components and optical measurement modules used inside lithography and inspection tools, and makes its own micro-optics.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1982,7 +1982,7 @@
       "Carl Zeiss SMT",
       "Applied Materials"
     ],
-    "aiRelevance": "Part of the German optics cluster that no other region has reproduced at this precision.",
+    "aiRelevance": "Part of the German optics cluster that no other region has reproduced at the same precision.",
     "revenueUSDb": 1.216,
     "revenueYear": 2025,
     "source": "https://www.jenoptik.com/markets/semiconductor-equipment"
@@ -2007,7 +2007,7 @@
       "Applied Materials",
       "Lam Research"
     ],
-    "aiRelevance": "Pump and abatement lead times have been a real constraint on how fast new fab capacity can be brought up.",
+    "aiRelevance": "Lead times for pumps and abatement systems have limited how fast fabs can bring up new capacity.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.edwardsvacuum.com/"
@@ -2022,7 +2022,7 @@
     "founded": 1961,
     "ticker": "MKSI",
     "ownership": "Public",
-    "role": "Supplies the RF generators, mass flow controllers, pressure gauges, vacuum components and ozone systems inside process tools, and through Atotech the electroplating chemistry used for copper interconnect and substrates.",
+    "role": "Supplies the RF generators, mass flow controllers, pressure gauges, vacuum components and ozone systems inside process tools. Through Atotech it also supplies the electroplating chemistry used for copper interconnect and substrates.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2031,7 +2031,7 @@
       "Tokyo Electron",
       "ASML"
     ],
-    "aiRelevance": "Plasma process control hardware determines etch and deposition repeatability at the dimensions AI logic uses.",
+    "aiRelevance": "Hardware that controls plasma processes sets how consistently tools etch and deposit at the dimensions used in AI logic.",
     "revenueUSDb": 3.931,
     "revenueYear": 2025,
     "source": "https://www.mks.com/s/semiconductor-solutions"
@@ -2055,7 +2055,7 @@
       "Tokyo Electron",
       "KLA"
     ],
-    "aiRelevance": "Plasma stability at sub-nanometer control is what makes high aspect ratio etch reproducible.",
+    "aiRelevance": "A stable plasma lets fabs repeat high aspect ratio etch, which cuts deep, narrow holes, with sub-nanometer control.",
     "revenueUSDb": 1.799,
     "revenueYear": 2025,
     "source": "https://www.advancedenergy.com/"
@@ -2101,7 +2101,7 @@
       "Lam Research",
       "Tokyo Electron"
     ],
-    "aiRelevance": "Chamber parts cleaning is a recurring service that determines fab uptime and defect performance.",
+    "aiRelevance": "Chamber parts cleaning is a recurring service, and it determines how much of the time tools can run and how many defects reach the wafer.",
     "revenueUSDb": 2.054,
     "revenueYear": 2025,
     "source": "https://www.uct.com/"
@@ -2116,7 +2116,7 @@
     "founded": 1965,
     "ticker": "VACN.SW",
     "ownership": "Public",
-    "role": "Makes the high-vacuum isolation and control valves that seal and gate every process chamber. Valve particle performance and cycle life directly affect tool uptime and wafer defect counts.",
+    "role": "Makes the high-vacuum isolation and control valves that seal and gate every process chamber. How many particles a valve sheds and how many cycles it lasts directly affect tool uptime and wafer defect counts.",
     "chokepoint": "Critical",
     "shareNote": "About 71% of the semiconductor and semiconductor-related vacuum valve market (2025)",
     "customers": [
@@ -2125,7 +2125,7 @@
       "Tokyo Electron",
       "ASML"
     ],
-    "aiRelevance": "One Swiss firm supplies most of the valves on which every deposition and etch chamber in the world depends.",
+    "aiRelevance": "VAT supplies most of the valves that every deposition and etch chamber in the world depends on.",
     "revenueUSDb": 1.327,
     "revenueYear": 2025,
     "source": "https://www.vatgroup.com/files/live/sites/vat/files/Investor%20relations/annual-report/2025/full-year-2025-results-presentation.pdf"
@@ -2140,7 +2140,7 @@
     "founded": 1890,
     "ticker": "PFV.DE",
     "ownership": "Majority owned by Busch Group",
-    "role": "Makes turbomolecular pumps, which spin at tens of thousands of revolutions per minute to reach the high vacuum that etch, deposition and EUV chambers require, plus leak detection instruments.",
+    "role": "Makes turbomolecular pumps, which spin at tens of thousands of revolutions per minute to reach the high vacuum that etch, deposition and EUV chambers require. It also makes leak detection instruments.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2163,7 +2163,7 @@
     "founded": 1953,
     "ticker": "6856.T",
     "ownership": "Public",
-    "role": "Supplies mass flow controllers, which meter process gases into chambers to a fraction of a percent, plus residual gas analyzers and liquid concentration monitors used across the fab.",
+    "role": "Supplies mass flow controllers, which meter process gases into chambers to within a fraction of a percent. It also supplies residual gas analyzers and liquid concentration monitors used across the fab.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2172,7 +2172,7 @@
       "Tokyo Electron",
       "TSMC"
     ],
-    "aiRelevance": "Gas flow accuracy is the control variable behind film thickness uniformity across a 300 mm wafer.",
+    "aiRelevance": "Gas flow accuracy controls how even a film's thickness is across a 300 mm wafer.",
     "revenueUSDb": 2.165,
     "revenueYear": 2025,
     "source": "https://www.horiba.com/int/semiconductor/"
@@ -2195,7 +2195,7 @@
       "Applied Materials",
       "ASE"
     ],
-    "aiRelevance": "Vacuum capacitors for high-power RF matching are made by very few firms and limit plasma etch tool builds.",
+    "aiRelevance": "Very few firms make vacuum capacitors for high-power RF matching, and that supply limits how many plasma etch tools can be built.",
     "revenueUSDb": 0.565,
     "revenueYear": 2025,
     "source": "https://www.comet.tech/"
@@ -2219,7 +2219,7 @@
       "Naura",
       "SMIC"
     ],
-    "aiRelevance": "Chamber consumables are replaced on a schedule, so their supply limits fab operating capacity.",
+    "aiRelevance": "Fabs replace chamber consumables on a schedule, so the supply of consumables limits how much a fab can run.",
     "revenueUSDb": 1.878,
     "revenueYear": 2026,
     "source": "https://www.ferrotec.com/products/"
@@ -2259,7 +2259,7 @@
     "founded": 1907,
     "ticker": "5201.T",
     "ownership": "Public",
-    "role": "The other main supplier of EUV mask blanks, which it says it alone makes from glass material through coating, and a major maker of synthetic quartz substrates and photomask glass. Its glass expertise comes from a much larger architectural and automotive glass business.",
+    "role": "The main supplier of EUV mask blanks besides Hoya, and a major maker of synthetic quartz substrates and photomask glass. AGC says it is the only blank maker that produces EUV blanks in-house from the glass material through the coating. Its glass expertise comes from a much larger architectural and automotive glass business.",
     "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
@@ -2268,7 +2268,7 @@
       "Intel",
       "Photronics"
     ],
-    "aiRelevance": "AGC and Hoya are the main sources of the blank under an EUV mask. AGC's EUV blank sales reached ¥40 billion in 2024 and fell in 2025, and in June 2026 AGC said they were recovering and that 2026 demand would exceed 2024's.",
+    "aiRelevance": "AGC and Hoya are the main sources of the blank under an EUV mask. AGC's EUV blank sales reached ¥40 billion in 2024 and fell in 2025. In June 2026 AGC said sales were recovering and that 2026 demand would exceed 2024's.",
     "revenueUSDb": 13.385,
     "revenueYear": 2025,
     "source": "https://www.agc.com/en/ir/library/bizbriefing/pdf/2026_0602esemiconductor_transcript.pdf"
@@ -2283,7 +2283,7 @@
     "founded": 1969,
     "ticker": "PLAB",
     "ownership": "Public",
-    "role": "A merchant photomask maker, writing and inspecting masks for logic and display customers from plants in the US, Taiwan, Korea, China and Europe. Most leading-edge masks are made captive by the foundries themselves.",
+    "role": "A merchant photomask maker, writing and inspecting masks for logic and display customers from plants in the US, Taiwan, Korea, China and Europe. The foundries make most leading-edge masks in-house.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2307,7 +2307,7 @@
     "founded": 1900,
     "ticker": "7911.T",
     "ownership": "Public",
-    "role": "Makes advanced photomasks through its photomask arm and is building flip-chip BGA substrate capacity for AI packages. Its photomask business was carved out as Tekscend Photomask, now listed in Tokyo.",
+    "role": "Makes advanced photomasks through its photomask arm and is building flip-chip BGA substrate capacity for AI packages. Its photomask business became a separate company, Tekscend Photomask, which is listed in Tokyo.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2316,7 +2316,7 @@
       "Intel",
       "Micron"
     ],
-    "aiRelevance": "Sits on both the mask and the substrate side of an AI package, two of the tighter capacity constraints.",
+    "aiRelevance": "Toppan supplies both photomasks and AI package substrates, two of the tighter capacity constraints.",
     "revenueUSDb": 11.735,
     "revenueYear": 2026,
     "source": "https://www.holdings.toppan.com/en/news/2025/12/newsrelease251210_1.html"
@@ -2331,7 +2331,7 @@
     "founded": 1876,
     "ticker": "7912.T",
     "ownership": "Public",
-    "role": "Makes photomasks including EUV masks, plus lead frames and other electronic components. Like Toppan it turned commercial printing precision into semiconductor patterning.",
+    "role": "Makes photomasks, including EUV masks, plus lead frames and other electronic components. Like Toppan, it applied the precision of commercial printing to semiconductor patterning.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2354,8 +2354,8 @@
     "city": "Brunn am Gebirge",
     "founded": 1985,
     "ticker": "Private",
-    "ownership": "Majority owned by Intel; Bain Capital and TSMC hold minority stakes",
-    "role": "Builds the multi-beam electron mask writers that pattern EUV masks with hundreds of thousands of parallel beamlets. On CSET's count it led the market for all electron-beam mask writers in 2025, and NuFlare is the only other maker of multi-beam writers.",
+    "ownership": "Majority owned by Intel, with Bain Capital and TSMC holding minority stakes",
+    "role": "Builds the multi-beam electron mask writers that pattern EUV masks with hundreds of thousands of parallel beamlets. On CSET's count it led the market for all electron-beam mask writers in 2025. NuFlare is the only other maker of multi-beam writers.",
     "chokepoint": "Critical",
     "shareNote": "46.6% of the $994M market for all electron-beam mask writers in 2025, ahead of NuFlare (39.2%) and JEOL (14.2%), on CSET's analysis of TechInsights data",
     "customers": [
@@ -2365,7 +2365,7 @@
       "Toppan",
       "Dai Nippon Printing"
     ],
-    "aiRelevance": "Leading-edge EUV masks for AI chips are written on multi-beam tools, and in 2023 Intel called IMS the established industry leader in making them.",
+    "aiRelevance": "Leading-edge EUV masks for AI chips are written on multi-beam tools. In 2023 Intel called IMS the established industry leader in making them.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://download.intel.com/newsroom/archive/2025/en-us-2023-09-12-intel-to-sell-minority-stake-in-ims-nanofabrication-business-to-tsmc.pdf"
@@ -2389,7 +2389,7 @@
       "Photronics",
       "Samsung"
     ],
-    "aiRelevance": "Mask write time is a real constraint on how quickly new AI chip designs can be brought to production.",
+    "aiRelevance": "The time it takes to write masks limits how quickly new AI chip designs can reach production.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.nuflare.co.jp/"
@@ -2404,7 +2404,7 @@
     "founded": 1912,
     "ticker": "4183.T",
     "ownership": "Public",
-    "role": "Supplies EUV pellicles, the thin membranes that keep particles off a photomask while it is exposed. EUV pellicles must transmit over 90 percent of 13.5 nm light and survive high source power, and only a few sources exist.",
+    "role": "Supplies EUV pellicles, the thin membranes that keep particles off a photomask while it is exposed. EUV pellicles must transmit over 90 percent of 13.5 nm light and survive high source power. Only a few suppliers make them.",
     "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
@@ -2434,7 +2434,7 @@
     "customers": [
       "Chip and display makers"
     ],
-    "aiRelevance": "Domestic merchant masks cover the mature-node chips around AI systems, though not the EUV layers of an AI die.",
+    "aiRelevance": "Chinese merchant masks cover the mature-node chips around AI systems, but not the EUV layers of an AI die.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.sec.gov/Archives/edgar/data/810136/000114036125045801/ef20057458_10k.htm"
@@ -2455,7 +2455,7 @@
     "customers": [
       "Chip and display makers"
     ],
-    "aiRelevance": "Domestic merchant masks cover the mature-node chips around AI systems, though not the EUV layers of an AI die.",
+    "aiRelevance": "Chinese merchant masks cover the mature-node chips around AI systems, but not the EUV layers of an AI die.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.sec.gov/Archives/edgar/data/810136/000114036125045801/ef20057458_10k.htm"
@@ -2472,7 +2472,7 @@
     "ownership": "Public",
     "role": "Supplies process control equipment: optical and electron beam wafer inspection, reticle inspection, overlay and film metrology. Its tools find the defects that determine yield on large dies.",
     "chokepoint": "Critical",
-    "shareNote": "56.8% of the process control market in 2025 on CSET's count, about 5 times Applied Materials; Gartner data in KLA's 2026 investor day put it at 56.5% in 2024, 6.5 times the nearest competitor",
+    "shareNote": "56.8% of the process control market in 2025 on CSET's count, about 5 times Applied Materials' share. Gartner data in KLA's 2026 investor day put it at 56.5% in 2024, 6.5 times the nearest competitor.",
     "customers": [
       "TSMC",
       "Samsung",
@@ -2495,7 +2495,7 @@
     "founded": 1960,
     "ticker": "6920.T",
     "ownership": "Public",
-    "role": "Makes actinic inspection tools, which inspect EUV mask blanks and patterned masks using EUV light, and its ACTIS A150 was the world's first actinic EUV patterned mask inspection system. In October 2025 it launched the ACTIS A200HiT series, which it says triples the A150's inspection speed. These tools detect printable phase defects that DUV-based mask inspection cannot.",
+    "role": "Makes actinic inspection tools, which use EUV light to inspect EUV mask blanks and patterned masks. Its ACTIS A150 was the world's first actinic EUV patterned mask inspection system. In October 2025 it launched the ACTIS A200HiT series, which it says triples the A150's inspection speed. These tools detect printable phase defects, flaws in a mask's reflective layers that DUV-based mask inspection cannot find.",
     "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
@@ -2503,7 +2503,7 @@
       "Samsung",
       "Intel"
     ],
-    "aiRelevance": "EUV masks for AI chips need inspection that can find phase defects, and Lasertec built the first actinic tool for patterned masks.",
+    "aiRelevance": "EUV masks for AI chips need inspection that can find phase defects. Lasertec built the first actinic tool for patterned masks.",
     "revenueUSDb": 1.498,
     "revenueYear": 2026,
     "source": "https://www.lasertec.co.jp/en/news/2025/20251031_3912.html"
@@ -2518,7 +2518,7 @@
     "founded": 1947,
     "ticker": "Private",
     "ownership": "Wholly owned subsidiary of Hitachi",
-    "role": "The largest supplier of critical dimension scanning electron microscopes, which measure feature widths after lithography and etch, plus plasma etch systems and electron beam review tools.",
+    "role": "The largest supplier of critical dimension scanning electron microscopes (CD-SEMs), which measure feature widths after lithography and etch. It also makes plasma etch systems and electron beam review tools.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2528,7 +2528,7 @@
       "Micron",
       "SK hynix"
     ],
-    "aiRelevance": "CD-SEM is how a fab confirms that an EUV layer printed at the intended dimension before committing the wafer onward.",
+    "aiRelevance": "Fabs use CD-SEMs to confirm that an EUV layer printed at the intended dimension before sending the wafer on to the next step.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.hitachi-hightech.com/global/en/products/semiconductor-manufacturing/"
@@ -2543,7 +2543,7 @@
     "founded": 2019,
     "ticker": "ONTO",
     "ownership": "Public",
-    "role": "Formed from Rudolph Technologies and Nanometrics, it supplies optical film metrology, macro defect inspection and packaging inspection, with a strong position in advanced packaging metrology.",
+    "role": "Supplies optical film metrology, macro defect inspection and packaging inspection, with a strong position in advanced packaging metrology. It was formed from Rudolph Technologies and Nanometrics.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2578,7 +2578,7 @@
       "SK hynix",
       "Micron"
     ],
-    "aiRelevance": "Gate-all-around transistors cannot be process-controlled without dimensional metrology of buried structures.",
+    "aiRelevance": "Fabs cannot control the gate-all-around process without measuring the dimensions of buried structures.",
     "revenueUSDb": 0.881,
     "revenueYear": 2025,
     "source": "https://www.novami.com/"
@@ -2627,7 +2627,7 @@
       "TSMC",
       "Intel"
     ],
-    "aiRelevance": "Sub-nanometer surface control matters for hybrid bonding, where two wafers must mate atom to atom.",
+    "aiRelevance": "Hybrid bonding joins two wafers atom to atom, so their surfaces need sub-nanometer control.",
     "revenueUSDb": 0.153,
     "revenueYear": 2025,
     "source": "https://www.parksystems.com/en/company/about-us"
@@ -2641,17 +2641,17 @@
     "city": "Shenzhen",
     "founded": 2014,
     "ticker": "688361.SS",
-    "ownership": "Public (Shanghai STAR Market); state-backed investors",
+    "ownership": "Public (Shanghai STAR Market), with state-backed investors",
     "role": "A Shenzhen maker of wafer defect inspection and film metrology tools, aiming to replace KLA systems in Chinese fabs. Its coverage is strongest at mature nodes.",
     "chokepoint": "Contested",
-    "shareNote": "2,053.3 million yuan of revenue in 2025, up 48.75%, per its 2025 annual report summary; about 1.8% of CSET's $15.7B process control market for 2025, against CSET's 0.7% for all Chinese firms",
+    "shareNote": "2,053.3 million yuan of revenue in 2025, up 48.75%, per its 2025 annual report summary. That is about 1.8% of CSET's $15.7B process control market for 2025, against CSET's 0.7% for all Chinese firms.",
     "customers": [
       "SMIC",
       "Hua Hong",
       "CXMT",
       "YMTC"
     ],
-    "aiRelevance": "CSET counts Chinese makers at 0.7 percent of process control tools in 2025, and Skyverse's own revenue, about 1.8 percent of that market, suggests the count misses some domestic sales.",
+    "aiRelevance": "CSET counts Chinese makers at 0.7 percent of process control tools in 2025. Skyverse's own revenue is about 1.8 percent of that market, which suggests the count misses some domestic sales.",
     "revenueUSDb": 0.285,
     "revenueYear": 2025,
     "source": "https://www.skyverse.cn/"
@@ -2666,7 +2666,7 @@
     "founded": 2006,
     "ticker": "300567.SZ",
     "ownership": "Public (Shenzhen ChiNext)",
-    "role": "Started in flat panel display test and moved into semiconductor film metrology, electrical test and defect inspection for Chinese fabs through its Wuhan Jingce Semiconductor arm.",
+    "role": "Makes semiconductor film metrology, electrical test and defect inspection tools for Chinese fabs through its Wuhan Jingce Semiconductor arm. It started in flat panel display test.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -2675,7 +2675,7 @@
       "YMTC",
       "BOE"
     ],
-    "aiRelevance": "China's effort to build process control at home.",
+    "aiRelevance": "Wuhan Jingce is part of China's effort to make its own process control tools.",
     "revenueUSDb": 0.498,
     "revenueYear": 2025,
     "source": "https://www.wuhanjingce.com/en/"
@@ -2690,7 +2690,7 @@
     "founded": 1967,
     "ticker": "AMAT",
     "ownership": "Public",
-    "role": "Supplies physical and chemical vapor deposition, epitaxy, ion implantation, chemical mechanical planarization and electron beam inspection. It supplies tools for more process steps than any other vendor.",
+    "role": "Makes tools for physical and chemical vapor deposition, epitaxy, ion implantation, chemical mechanical planarization and electron beam inspection. Its tools cover more process steps than any other vendor's.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2715,7 +2715,7 @@
     "founded": 1980,
     "ticker": "LRCX",
     "ownership": "Public",
-    "role": "The largest supplier of plasma etch systems, with 41.1 percent of the $21.9 billion dry etch tool market in 2025, against 23.4 percent for Tokyo Electron, according to CSET. Its line includes the high aspect ratio etch used to drill 3D NAND channels and DRAM capacitors, plus ALD, electroplating and cryogenic etch tools.",
+    "role": "The largest supplier of plasma etch systems. According to CSET, it had 41.1 percent of the $21.9 billion dry etch tool market in 2025, against 23.4 percent for Tokyo Electron. Its line includes the high aspect ratio etch used to drill 3D NAND channels and DRAM capacitors, plus atomic layer deposition, electroplating and cryogenic etch tools.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2725,7 +2725,7 @@
       "TSMC",
       "Kioxia"
     ],
-    "aiRelevance": "HBM depends on deep silicon vias and dense DRAM capacitors, both of which are Lam etch problems.",
+    "aiRelevance": "HBM depends on deep silicon vias and dense DRAM capacitors, and Lam makes etch tools for both.",
     "revenueUSDb": 23.233,
     "revenueYear": 2026,
     "source": "https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N103"
@@ -2740,7 +2740,7 @@
     "founded": 1963,
     "ticker": "8035.T",
     "ownership": "Public",
-    "role": "Makes the coater/developer track that applies photoresist and develops it after exposure, and which is physically linked to every scanner in a fab, plus etch, deposition, cleaning and wafer bonding systems, and wafer probers for chip testing.",
+    "role": "Makes the coater/developer track, which applies photoresist, develops it after exposure and is physically linked to every scanner in a fab. It also makes etch, deposition, cleaning and wafer bonding systems, and wafer probers for chip testing.",
     "chokepoint": "Critical",
     "shareNote": "91% of the world coater/developer (track) market in CY2025, on Gartner data published in Tokyo Electron's own results presentation",
     "customers": [
@@ -2750,7 +2750,7 @@
       "SK hynix",
       "Micron"
     ],
-    "aiRelevance": "Tokyo Electron holds more than 90 percent of the coater/developer market, which makes the track linked to each scanner as hard a dependency as the scanner.",
+    "aiRelevance": "Tokyo Electron holds more than 90 percent of the coater/developer market. That share makes the track linked to each scanner as hard a dependency as the scanner.",
     "revenueUSDb": 15.886,
     "revenueYear": 2026,
     "source": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4presentations-e.pdf"
@@ -2765,7 +2765,7 @@
     "founded": 1968,
     "ticker": "ASM.AS",
     "ownership": "Public",
-    "role": "Makes the atomic layer deposition tools that grow films one atomic layer at a time, which is how gate-all-around transistors and high-k dielectrics are built. It also supplies epitaxy and plasma-enhanced ALD.",
+    "role": "Makes atomic layer deposition (ALD) tools, which grow films one atomic layer at a time. Chipmakers use ALD to build gate-all-around transistors and high-k dielectrics. ASM also makes epitaxy and plasma-enhanced ALD tools.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2774,7 +2774,7 @@
       "Intel",
       "Micron"
     ],
-    "aiRelevance": "Gate-all-around nanosheet transistors in N2 and 18A class logic are ALD-defined structures.",
+    "aiRelevance": "ALD defines the structure of the gate-all-around nanosheet transistors in TSMC N2 and Intel 18A class logic.",
     "revenueUSDb": 3.688,
     "revenueYear": 2025,
     "source": "https://www.asm.com/"
@@ -2788,8 +2788,8 @@
     "city": "Tokyo",
     "founded": 2018,
     "ticker": "6525.T",
-    "ownership": "Public; listed in Tokyo in 2023 after KKR ownership",
-    "role": "Makes batch vertical furnaces and batch ALD systems that process dozens of wafers at once, widely used for DRAM and 3D NAND film steps where throughput matters more than single-wafer control.",
+    "ownership": "Public, listed in Tokyo in 2023 after KKR ownership",
+    "role": "Makes batch vertical furnaces and batch ALD systems that process dozens of wafers at once. Memory makers use them widely for DRAM and 3D NAND film steps where throughput matters more than single-wafer control.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2799,7 +2799,7 @@
       "Kioxia",
       "TSMC"
     ],
-    "aiRelevance": "Batch deposition throughput is a direct input to how many DRAM wafers, and therefore HBM stacks, can be produced.",
+    "aiRelevance": "How fast batch tools deposit films directly affects how many DRAM wafers, and so how many HBM stacks, fabs can produce.",
     "revenueUSDb": 1.528,
     "revenueYear": 2026,
     "source": "https://www.kokusai-electric.com/"
@@ -2813,8 +2813,8 @@
     "city": "Beijing",
     "founded": 2001,
     "ticker": "002371.SZ",
-    "ownership": "Public (Shenzhen); state-backed, National IC Fund investor",
-    "role": "China's largest semiconductor equipment maker, with plasma etch, PVD, CVD, ALD, furnace and cleaning tools. Domestic substitution lifted it into the world's top ten chipmaking equipment suppliers by sales in 2025. That year three Chinese firms made the global top 20, up from one in 2022.",
+    "ownership": "Public (Shenzhen), state-backed, with the National IC Fund as an investor",
+    "role": "China's largest semiconductor equipment maker, with plasma etch, deposition (PVD, CVD and ALD), furnace and cleaning tools. As Chinese fabs replaced foreign tools with local ones, Naura rose into the world's top ten chipmaking equipment suppliers by sales in 2025. That year three Chinese firms made the global top 20, up from one in 2022.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -2861,7 +2861,7 @@
     "city": "Shenyang",
     "founded": 2010,
     "ticker": "688072.SS",
-    "ownership": "Public (Shanghai STAR Market); state-backed",
+    "ownership": "Public (Shanghai STAR Market), state-backed",
     "role": "China's main domestic supplier of plasma-enhanced CVD and ALD systems, and more recently hybrid wafer bonding tools aimed at 3D integration.",
     "chokepoint": "Contested",
     "shareNote": null,
@@ -2871,7 +2871,7 @@
       "YMTC",
       "Hua Hong"
     ],
-    "aiRelevance": "Deposition and bonding tools are prerequisites for any domestic Chinese attempt at HBM.",
+    "aiRelevance": "Any Chinese attempt to make HBM at home needs deposition and bonding tools.",
     "revenueUSDb": 0.969,
     "revenueYear": 2025,
     "source": "https://www.piotech.cn/"
@@ -2896,7 +2896,7 @@
       "Micron",
       "SK hynix"
     ],
-    "aiRelevance": "Cleaning defectivity compounds across hundreds of steps and appears as yield loss on large AI dies.",
+    "aiRelevance": "Defects left by cleaning add up across hundreds of steps and show up as yield loss on large AI dies.",
     "revenueUSDb": 3.938,
     "revenueYear": 2026,
     "source": "https://www.screen.co.jp/spe/en/products"
@@ -2911,7 +2911,7 @@
     "founded": 1993,
     "ticker": "Private",
     "ownership": "Majority owned by Samsung Electronics",
-    "role": "Korea's largest maker of chip and display equipment by its own description, with sales of about KRW 2.46 trillion in 2025, supplying wafer cleaning, coater/developer track, etch and packaging systems, mainly to Samsung. It is how Samsung keeps some tool technology in house.",
+    "role": "Supplies wafer cleaning, coater/developer track, etch and packaging systems, mainly to Samsung. By its own description it is Korea's largest maker of chip and display equipment, with sales of about KRW 2.46 trillion in 2025. Through SEMES, Samsung keeps some tool technology in house.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2932,7 +2932,7 @@
     "city": "Fremont",
     "founded": 1998,
     "ticker": "ACMR",
-    "ownership": "Public; principal operations through ACM Research Shanghai",
+    "ownership": "Public, with principal operations through ACM Research Shanghai",
     "role": "Makes single-wafer cleaning systems using megasonic and bubble technologies, plus electroplating and advanced packaging tools. It is US-listed but manufactures and sells largely in China.",
     "chokepoint": "Contested",
     "shareNote": null,
@@ -2957,8 +2957,8 @@
     "city": "Hsinchu",
     "founded": 1987,
     "ticker": "2330.TW",
-    "ownership": "Public; the Taiwanese state holds a minority stake",
-    "role": "Manufactures almost every leading-edge AI accelerator, including Nvidia, AMD, Broadcom and hyperscaler custom silicon, on N4, N3 and N2 processes. It also owns CoWoS and SoIC advanced packaging, which is the tighter constraint.",
+    "ownership": "Public, with the Taiwanese state holding a minority stake",
+    "role": "Manufactures almost every leading-edge AI accelerator, including those of Nvidia, AMD and Broadcom and the custom chips of large cloud companies, on its N4, N3 and N2 processes. It also owns CoWoS and SoIC advanced packaging, and its packaging capacity is a tighter constraint than its wafer capacity.",
     "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
@@ -2969,7 +2969,7 @@
       "Qualcomm",
       "MediaTek"
     ],
-    "aiRelevance": "TSMC is the single most concentrated point in the AI chain: one company, mostly on one island, makes the dies and packages them.",
+    "aiRelevance": "TSMC is the single most concentrated point in the AI chain, because it both makes and packages the dies, mostly in Taiwan.",
     "revenueUSDb": 122.42,
     "revenueYear": 2025,
     "source": "https://investor.tsmc.com/static/annualReports/2025/english/index.html"
@@ -2984,7 +2984,7 @@
     "founded": 2005,
     "ticker": "Private",
     "ownership": "Division of Samsung Electronics (005930.KS)",
-    "role": "A foundry with a gate-all-around process in production, which it introduced at 3 nm, running SF2 class nodes in Korea and building a fab in Taylor, Texas. It is the second source large AI customers keep qualifying.",
+    "role": "A foundry running its 2 nm class SF2 process in Korea and building a fab in Taylor, Texas. Its gate-all-around transistors, introduced at 3 nm, are in production. Large AI customers keep qualifying it as a second source.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2994,7 +2994,7 @@
       "Rebellions",
       "Ambarella"
     ],
-    "aiRelevance": "A credible second leading-edge foundry is the main hedge against Taiwan concentration.",
+    "aiRelevance": "A credible second leading-edge foundry is the main hedge against the concentration of leading-edge production in Taiwan.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://semiconductor.samsung.com/foundry/"
@@ -3008,8 +3008,8 @@
     "city": "Santa Clara",
     "founded": 2021,
     "ticker": "Private",
-    "ownership": "Division of Intel Corporation; the US government took an equity stake in Intel in 2025",
-    "role": "Intel's manufacturing arm, running the 18A process with RibbonFET gate-all-around and PowerVia backside power, plus EMIB and Foveros packaging. Most of its volume is still internal, and outside customers provided only $293 million of its $5.765 billion of segment revenue in the quarter to 27 June 2026.",
+    "ownership": "Division of Intel Corporation, in which the US government took an equity stake in 2025",
+    "role": "Intel's manufacturing arm, running the 18A process with RibbonFET gate-all-around and PowerVia backside power, plus EMIB and Foveros packaging. Most of its output is still Intel's own chips. Outside customers provided only $293 million of its $5.765 billion of segment revenue in the quarter to 27 June 2026.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -3018,7 +3018,7 @@
       "Amazon",
       "US Department of Defense"
     ],
-    "aiRelevance": "18A, and 14A once Intel completes its development, give AI chip designers a leading-edge process from a US-owned foundry on US soil.",
+    "aiRelevance": "18A gives AI chip designers a leading-edge process from a US-owned foundry on US soil, and 14A will too once Intel completes its development.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.intel.com/content/www/us/en/foundry/overview.html"
@@ -3032,8 +3032,8 @@
     "city": "Shanghai",
     "founded": 2000,
     "ticker": "0981.HK",
-    "ownership": "Public (Hong Kong and Shanghai); state-backed, National IC Fund investor",
-    "role": "China's largest foundry, producing 7 nm class logic using multipatterning on immersion DUV because it cannot buy EUV. CSET reported in June 2024 that Huawei's Ascend 910B is believed to be made on its N+2 process, though SemiAnalysis judged in April 2025 that most 910B and 910C chips were made at TSMC. It is on the US Entity List.",
+    "ownership": "Public (Hong Kong and Shanghai), state-backed, with the National IC Fund as an investor",
+    "role": "China's largest foundry, producing 7 nm class logic using multipatterning on immersion DUV because it cannot buy EUV. CSET reported in June 2024 that Huawei's Ascend 910B AI chip is believed to be made on its N+2 process. But SemiAnalysis judged in April 2025 that most 910B and 910C chips were made at TSMC. It is on the US Entity List.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -3041,7 +3041,7 @@
       "Cambricon",
       "Chinese fabless firms"
     ],
-    "aiRelevance": "SMIC's yield and capacity at 7 nm set the ceiling on how many domestic Chinese AI accelerators can exist.",
+    "aiRelevance": "SMIC's yield and capacity at 7 nm cap how many Chinese AI accelerators can be made at home.",
     "revenueUSDb": 9.327,
     "revenueYear": 2025,
     "source": "https://www.smics.com/"
@@ -3055,15 +3055,15 @@
     "city": "Shanghai",
     "founded": 1996,
     "ticker": "1347.HK",
-    "ownership": "Public (Hong Kong and Shanghai); state-backed",
-    "role": "Mainland China's second largest pure-play foundry and the world's fifth largest by 2025 sales, focused on mature-node specialty processes including power management, embedded memory and analog. It does not make leading-edge logic.",
+    "ownership": "Public (Hong Kong and Shanghai), state-backed",
+    "role": "A foundry focused on mature-node specialty processes, including power management, embedded memory and analog. It is mainland China's second largest pure-play foundry and the world's fifth largest by 2025 sales. It does not make leading-edge logic.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
       "Chinese fabless firms",
       "Power semiconductor designers"
     ],
-    "aiRelevance": "Supplies the power management and analog parts that surround AI compute.",
+    "aiRelevance": "Supplies the power management and analog parts that surround AI processors.",
     "revenueUSDb": 2.402,
     "revenueYear": 2025,
     "source": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-05-15/688347_20260515_XRZ3.pdf"
@@ -3077,8 +3077,8 @@
     "city": "Malta",
     "founded": 2009,
     "ticker": "GFS",
-    "ownership": "Public; Mubadala of Abu Dhabi is the largest shareholder",
-    "role": "Runs mature and specialty processes for RF, automotive, power and silicon photonics from fabs in New York, Vermont, Germany and Singapore. It exited the leading-edge race in 2018.",
+    "ownership": "Public, with Mubadala of Abu Dhabi as the largest shareholder",
+    "role": "Runs mature and specialty processes for RF, automotive, power and silicon photonics from fabs in New York, Vermont, Germany and Singapore. It stopped developing leading-edge processes in 2018.",
     "chokepoint": "Diversified",
     "shareNote": null,
     "customers": [
@@ -3103,7 +3103,7 @@
     "founded": 1980,
     "ticker": "2303.TW",
     "ownership": "Public",
-    "role": "Taiwan's second foundry, running 28 nm and above for display drivers, power management, connectivity and automotive parts. It is expanding 12 nm capacity in partnership with Intel.",
+    "role": "Taiwan's second largest foundry, running processes of 28 nm and above for display drivers, power management, connectivity and automotive parts. It is expanding 12 nm capacity in partnership with Intel.",
     "chokepoint": "Diversified",
     "shareNote": null,
     "customers": [
@@ -3112,7 +3112,7 @@
       "Realtek",
       "Novatek"
     ],
-    "aiRelevance": "Mature-node capacity supplies the power management and interface chips a rack of accelerators needs.",
+    "aiRelevance": "Its mature-node fabs make the power management and interface chips a rack of accelerators needs.",
     "revenueUSDb": 7.541,
     "revenueYear": 2025,
     "source": "https://www.umc.com/en/Product/technologies/Overview"
@@ -3126,8 +3126,8 @@
     "city": "Tokyo",
     "founded": 2022,
     "ticker": "Private",
-    "ownership": "Private; funded by the Japanese government and a consortium of Japanese firms",
-    "role": "Japan's attempt to rebuild leading-edge logic manufacturing, running a 2 nm gate-all-around pilot line in Chitose, Hokkaido with IBM and imec technology and ASML EUV tools.",
+    "ownership": "Private, funded by the Japanese government and a consortium of Japanese firms",
+    "role": "Runs a 2 nm gate-all-around pilot line in Chitose, Hokkaido, using IBM and imec technology and ASML EUV tools. It is Japan's attempt to rebuild leading-edge logic manufacturing.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -3173,8 +3173,8 @@
     "city": "Icheon",
     "founded": 1983,
     "ticker": "000660.KS",
-    "ownership": "Public; part of SK Group",
-    "role": "The largest supplier of high bandwidth memory, alongside a large conventional DRAM and NAND business including Solidigm. HBM is stacked DRAM connected by through-silicon vias.",
+    "ownership": "Public, part of SK Group",
+    "role": "The largest supplier of high bandwidth memory (HBM), with a large conventional DRAM and NAND business that includes Solidigm. HBM is a stack of DRAM chips connected by through-silicon vias, copper columns that run through the chips.",
     "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
@@ -3184,7 +3184,7 @@
       "Microsoft",
       "Google"
     ],
-    "aiRelevance": "HBM capacity allocation between SK hynix, Samsung and Micron decides how many accelerators ship.",
+    "aiRelevance": "How SK hynix, Samsung and Micron allocate their HBM capacity sets how many accelerators ship.",
     "revenueUSDb": 72.451,
     "revenueYear": 2025,
     "source": "https://news.skhynix.com/en/sk-hynix-announces-fy25-financial-results/"
@@ -3224,7 +3224,7 @@
     "founded": 1978,
     "ticker": "MU",
     "ownership": "Public",
-    "role": "The only American maker of leading-edge DRAM and the third HBM supplier, with fabs in the US, Japan, Taiwan and Singapore and CHIPS Act support for new capacity in Idaho and New York.",
+    "role": "The only American maker of leading-edge DRAM and the third HBM supplier, with fabs in the US, Japan, Taiwan and Singapore. It has CHIPS Act support for new capacity in Idaho and New York.",
     "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
@@ -3234,7 +3234,7 @@
       "Dell",
       "HPE"
     ],
-    "aiRelevance": "Micron is the only HBM source outside Korea and therefore the main geographic diversification in AI memory.",
+    "aiRelevance": "Micron is the only HBM source outside Korea, so it is the main alternative to Korean supply of AI memory.",
     "revenueUSDb": 37.378,
     "revenueYear": 2025,
     "source": "https://www.sec.gov/Archives/edgar/data/723125/000072312525000040/202510karscopy.pdf"
@@ -3248,7 +3248,7 @@
     "city": "Hefei",
     "founded": 2016,
     "ticker": "688825.SS",
-    "ownership": "Public (Shanghai STAR Market); state-backed, National IC Fund investor",
+    "ownership": "Public (Shanghai STAR Market), state-backed, with the National IC Fund as an investor",
     "role": "China's only significant DRAM maker, producing DDR4 and DDR5 and working toward HBM. It has scaled capacity quickly enough to move commodity DRAM prices.",
     "chokepoint": "Contested",
     "shareNote": null,
@@ -3257,7 +3257,7 @@
       "Chinese module makers",
       "Domestic AI accelerator vendors"
     ],
-    "aiRelevance": "Domestic HBM is the missing piece of China's AI chain, and CXMT is the main candidate to supply it.",
+    "aiRelevance": "China's AI chain still lacks a domestic HBM supply, and CXMT is the main candidate to provide it.",
     "revenueUSDb": 9.185,
     "revenueYear": 2025,
     "source": "https://www.cxmt.com/en/"
@@ -3271,7 +3271,7 @@
     "city": "Wuhan",
     "founded": 2016,
     "ticker": "Private",
-    "ownership": "State-backed; National IC Fund and Tsinghua Unigroup lineage",
+    "ownership": "State-backed, with roots in the National IC Fund and Tsinghua Unigroup",
     "role": "China's 3D NAND maker, using its Xtacking architecture that bonds a separately made logic wafer onto the memory array. It has been on the US Entity List since 2022.",
     "chokepoint": "Contested",
     "shareNote": null,
@@ -3279,7 +3279,7 @@
       "Chinese SSD makers",
       "Chinese OEMs"
     ],
-    "aiRelevance": "NAND matters for AI storage tiers, well away from the accelerator, but Xtacking is a genuine wafer-bonding capability.",
+    "aiRelevance": "NAND goes into the storage of AI systems, well away from the accelerator. But Xtacking gives YMTC a real wafer-bonding capability.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.ymtc.com/en/"
@@ -3293,7 +3293,7 @@
     "city": "Tokyo",
     "founded": 2017,
     "ticker": "285A.T",
-    "ownership": "Public; listed in Tokyo in December 2024, with a Bain-led consortium retaining a stake",
+    "ownership": "Public, listed in Tokyo in December 2024, with a Bain-led consortium retaining a stake",
     "role": "The former Toshiba Memory, making 3D NAND at Yokkaichi and Kitakami in a long-running joint venture with SanDisk. Its BiCS8 generation targets enterprise SSDs.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -3317,7 +3317,7 @@
     "city": "Milpitas",
     "founded": 1988,
     "ticker": "SNDK",
-    "ownership": "Public; separated from Western Digital in 2025",
+    "ownership": "Public, separated from Western Digital in 2025",
     "role": "Manufactures 3D NAND in a joint venture with Kioxia and sells client and enterprise SSDs. It became a standalone company again when Western Digital split its flash and disk businesses.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -3326,7 +3326,7 @@
       "HPE",
       "Hyperscale cloud operators"
     ],
-    "aiRelevance": "AI training checkpoints and inference caches sit on high-capacity enterprise SSDs.",
+    "aiRelevance": "AI training checkpoints and inference caches are stored on high-capacity enterprise SSDs.",
     "revenueUSDb": 20.248,
     "revenueYear": 2026,
     "source": "https://www.sandisk.com/company/newsroom"
@@ -3340,8 +3340,8 @@
     "city": "New Taipei",
     "founded": 1995,
     "ticker": "2408.TW",
-    "ownership": "Public; part of the Formosa Plastics Group",
-    "role": "Taiwan's DRAM maker, producing commodity and specialty DRAM at mature nodes. It does not make HBM and is a generation or more behind the leading three.",
+    "ownership": "Public, part of the Formosa Plastics Group",
+    "role": "Taiwan's DRAM maker, producing commodity and specialty DRAM at mature nodes. It does not make HBM and is a generation or more behind the three leading DRAM makers.",
     "chokepoint": "Diversified",
     "shareNote": null,
     "customers": [
@@ -3371,7 +3371,7 @@
       "Industrial OEMs",
       "Edge AI designers"
     ],
-    "aiRelevance": "Targets edge inference, where a cheaper stacked memory can replace HBM at lower bandwidth.",
+    "aiRelevance": "Targets AI running on devices outside data centers, where a cheaper stacked memory can replace HBM at lower bandwidth.",
     "revenueUSDb": 2.838,
     "revenueYear": 2025,
     "source": "https://www.winbond.com/"
@@ -3385,10 +3385,10 @@
     "city": "Kaohsiung",
     "founded": 1984,
     "ticker": "3711.TW",
-    "ownership": "Public; includes Siliconware Precision Industries (SPIL)",
-    "role": "Calls itself the leading provider of semiconductor assembly and testing services, packaging and testing chips for fabless firms and foundries, with growing 2.5D and fan-out capacity for AI parts. It absorbed SPIL in 2018.",
+    "ownership": "Public, and includes Siliconware Precision Industries (SPIL)",
+    "role": "Packages and tests chips for fabless firms and foundries, and is adding 2.5D and fan-out capacity for AI parts. It calls itself the leading provider of semiconductor assembly and testing services. It absorbed Siliconware Precision Industries (SPIL) in 2018.",
     "chokepoint": "Important",
-    "shareNote": "Revenue is for the whole group: about 59% of 2025 revenue came from packaging and test (NT$389.2bn) and about 40% from electronics manufacturing services, per its Q4 2025 6-K",
+    "shareNote": "Revenue is for the whole group. About 59% of 2025 revenue came from packaging and test (NT$389.2bn) and about 40% from electronics manufacturing services, per its Q4 2025 6-K filing.",
     "customers": [
       "Nvidia",
       "AMD",
@@ -3396,7 +3396,7 @@
       "Broadcom",
       "MediaTek"
     ],
-    "aiRelevance": "As TSMC's CoWoS capacity saturates, ASE takes overflow assembly and test work for AI packages.",
+    "aiRelevance": "When TSMC's CoWoS capacity is full, ASE takes overflow assembly and test work for AI packages.",
     "revenueUSDb": 20.489,
     "revenueYear": 2025,
     "source": "https://www.sec.gov/Archives/edgar/data/1122411/000095010326001662/dp241167_6k.htm"
@@ -3411,7 +3411,7 @@
     "founded": 1968,
     "ticker": "AMKR",
     "ownership": "Public",
-    "role": "The world's largest US-headquartered OSAT, as it described itself in its annual report for 2025, with plants across Asia and a new advanced packaging plant in Peoria, Arizona, planned under an October 2024 memorandum of understanding with TSMC to serve customers of TSMC's Arizona fabs; the two announced a long-term partnership in June 2026.",
+    "role": "Packages and tests other companies' chips at plants across Asia. In its annual report for 2025 it described itself as the world's largest US-headquartered OSAT (outsourced semiconductor assembly and test firm). Its new advanced packaging plant in Peoria, Arizona, was planned under an October 2024 memorandum of understanding with TSMC to serve customers of TSMC's Arizona fabs. The two firms announced a long-term partnership in June 2026.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -3421,7 +3421,7 @@
       "Infineon",
       "TSMC"
     ],
-    "aiRelevance": "Domestic packaging capacity is what reshoring AI chip manufacture to the United States still lacks.",
+    "aiRelevance": "Efforts to bring AI chip manufacture back to the United States still lack domestic packaging capacity.",
     "revenueUSDb": 6.708,
     "revenueYear": 2025,
     "source": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm"
@@ -3435,8 +3435,8 @@
     "city": "Jiangyin",
     "founded": 1972,
     "ticker": "600584.SS",
-    "ownership": "Public (Shanghai); state-linked shareholders",
-    "role": "A leading Chinese assembly and test firm, offering wire bond, flip chip, fan-out and system-in-package assembly, with record revenue of RMB 38.87 billion in 2025. It acquired STATS ChipPAC in 2015 to gain advanced packaging capability.",
+    "ownership": "Public (Shanghai), with state-linked shareholders",
+    "role": "A leading Chinese assembly and test firm, offering wire bond, flip chip, fan-out and system-in-package assembly. Its revenue reached a record RMB 38.87 billion in 2025. It acquired STATS ChipPAC in 2015 to gain advanced packaging capability.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -3444,7 +3444,7 @@
       "SMIC",
       "Global IDMs"
     ],
-    "aiRelevance": "Domestic packaging capacity lets Chinese AI chips be assembled without Taiwanese or Korean facilities.",
+    "aiRelevance": "With domestic packaging capacity, China can assemble its AI chips without Taiwanese or Korean facilities.",
     "revenueUSDb": 5.777,
     "revenueYear": 2025,
     "source": "https://www.jcetglobal.com/en/"
@@ -3468,7 +3468,7 @@
       "SK hynix",
       "Nvidia"
     ],
-    "aiRelevance": "Memory test capacity is a real constraint because HBM stacks must be tested before and after stacking.",
+    "aiRelevance": "Memory test capacity limits HBM supply, because the DRAM dies must be tested before stacking and the finished stack tested again.",
     "revenueUSDb": 2.379,
     "revenueYear": 2025,
     "source": "https://www.pti.com.tw/en/"
@@ -3482,8 +3482,8 @@
     "city": "Nantong",
     "founded": 1997,
     "ticker": "002156.SZ",
-    "ownership": "Public (Shenzhen); AMD holds a stake in its Suzhou and Penang plants",
-    "role": "A Chinese OSAT that packages a large share of AMD's CPUs and GPUs through joint venture plants acquired from AMD in 2016, and is developing 2.5D chiplet packaging.",
+    "ownership": "Public (Shenzhen), with AMD holding a stake in its Suzhou and Penang plants",
+    "role": "A Chinese OSAT that packages a large share of AMD's CPUs and GPUs through joint venture plants acquired from AMD in 2016. It is developing 2.5D chiplet packaging.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -3504,15 +3504,15 @@
     "city": "Tianshui",
     "founded": 2003,
     "ticker": "002185.SZ",
-    "ownership": "Public (Shenzhen); state-linked",
-    "role": "A leading Chinese OSAT whose scale ranks among the ten largest in the world, providing wire bond, flip chip and fan-out packaging from plants in Tianshui, Xi'an, Kunshan and Nanjing, plus the Malaysian packaging firm Unisem, which it acquired in 2019.",
+    "ownership": "Public (Shenzhen), state-linked",
+    "role": "A Chinese OSAT that ranks among the ten largest in the world. It provides wire bond, flip chip and fan-out packaging from plants in Tianshui, Xi'an, Kunshan and Nanjing. It also packages chips through Unisem, a Malaysian firm it acquired in 2019.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
       "Chinese fabless firms",
       "Automotive and consumer OEMs"
     ],
-    "aiRelevance": "Domestic packaging capacity that Chinese AI accelerators depend on.",
+    "aiRelevance": "Hua Tian provides domestic packaging capacity that Chinese AI accelerators depend on.",
     "revenueUSDb": 2.559,
     "revenueYear": 2025,
     "source": "https://disc.static.szse.cn/disc/disk03/finalpage/2026-03-31/a0209878-88e7-443c-b062-6a33047d9c98.PDF"
@@ -3527,7 +3527,7 @@
     "founded": 1987,
     "ticker": "2449.TW",
     "ownership": "Public",
-    "role": "The world's largest pure-play chip test house and second worldwide in test revenue, as the company described itself in 2026, running wafer sort and final test on logic including AI accelerators. Test time per AI die is long, which makes tester capacity a bottleneck.",
+    "role": "Tests logic chips, including AI accelerators, both on the wafer (wafer sort) and after packaging (final test). In 2026 it described itself as the world's largest pure-play chip test house and second worldwide in test revenue.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -3559,7 +3559,7 @@
       "Himax",
       "Chinese panel makers"
     ],
-    "aiRelevance": "Bumping capacity feeds the flip-chip assembly steps that AI packages also rely on.",
+    "aiRelevance": "Bumping adds the small metal bumps that flip-chip assembly uses to join a chip to its package, and AI packages rely on flip-chip assembly too.",
     "revenueUSDb": 0.681,
     "revenueYear": 2025,
     "source": "https://www.chipbond.com.tw/en/"
@@ -3573,7 +3573,7 @@
     "city": "Singapore",
     "founded": 1997,
     "ticker": "Private",
-    "ownership": "Private; owned by Wise Road Capital",
+    "ownership": "Private, owned by Wise Road Capital",
     "role": "A Singapore-based OSAT providing assembly and test for analog, mixed-signal, automotive and memory devices from plants across Southeast Asia and China.",
     "chokepoint": "Diversified",
     "shareNote": null,
@@ -3581,7 +3581,7 @@
       "Analog and automotive IDMs",
       "Fabless customers"
     ],
-    "aiRelevance": "Provides Southeast Asian assembly capacity outside the Taiwan and China concentration.",
+    "aiRelevance": "Provides assembly capacity in Southeast Asia, away from the concentration in Taiwan and China.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.utacgroup.com/services/"
@@ -3596,7 +3596,7 @@
     "founded": 1995,
     "ticker": "BESI.AS",
     "ownership": "Public",
-    "role": "Makes die attach, flip chip and thermocompression bonders, and leads in hybrid bonding tools that join dies copper pad to copper pad without solder. Hybrid bonding is how logic dies are stacked in SoIC and future HBM.",
+    "role": "Makes die attach, flip chip and thermocompression bonders, and leads in hybrid bonding tools that join dies copper pad to copper pad without solder. Hybrid bonding is how logic dies are stacked in TSMC's SoIC and future HBM.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -3606,7 +3606,7 @@
       "SK hynix",
       "Amkor"
     ],
-    "aiRelevance": "Hybrid bonding placement accuracy is the enabling constraint for 3D stacked AI logic and next-generation HBM.",
+    "aiRelevance": "3D stacked AI logic and next-generation HBM both depend on how accurately hybrid bonders place each die.",
     "revenueUSDb": 0.687,
     "revenueYear": 2025,
     "source": "https://www.besi.com/products-technology/"
@@ -3620,7 +3620,7 @@
     "city": "Singapore",
     "founded": 1975,
     "ticker": "0522.HK",
-    "ownership": "Public (Hong Kong listed); ASM International holds a stake",
+    "ownership": "Public (Hong Kong listed), part-owned by ASM International",
     "role": "Supplies die bonders, thermocompression bonders, wire bonders and surface mount equipment, and is one of the firms competing to supply hybrid bonders for advanced packaging.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -3646,7 +3646,7 @@
     "founded": 1980,
     "ticker": "042700.KS",
     "ownership": "Public",
-    "role": "Makes the thermocompression bonders used to stack HBM dies, supplying SK hynix and Micron. Its dual-head TC bonders set the pace for HBM stacking capacity.",
+    "role": "Makes the thermocompression bonders used to stack HBM dies, including dual-head models, and supplies SK hynix and Micron.",
     "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
@@ -3669,7 +3669,7 @@
     "founded": 1937,
     "ticker": "6146.T",
     "ownership": "Public",
-    "role": "Makes the dicing saws, laser dicers and back-grinders that cut wafers into dies and thin them for stacking. Thinning wafers to tens of micrometers is what makes HBM and 3D stacking possible.",
+    "role": "Makes the dicing saws, laser dicers and back-grinders that cut wafers into dies and thin them for stacking. HBM and other 3D stacks need wafers thinned to tens of micrometers.",
     "chokepoint": "Critical",
     "shareNote": "87% of the $1.9bn market for dicing saws and wafer grinders in 2025, on CSET's analysis of TechInsights data",
     "customers": [
@@ -3728,7 +3728,7 @@
       "Sony",
       "imec"
     ],
-    "aiRelevance": "Wafer-to-wafer hybrid bonding is the path to stacking logic on logic in future AI accelerators.",
+    "aiRelevance": "Wafer-to-wafer hybrid bonding is the way to stack logic on logic in future AI accelerators.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.evgroup.com/products/"
@@ -3767,7 +3767,7 @@
     "founded": 1909,
     "ticker": "2802.T",
     "ownership": "Public",
-    "role": "Makes Ajinomoto Build-up Film, the insulating layer used between the copper layers of flip-chip package substrates. The material came out of amino acid chemistry, and Ajinomoto says ABF holds a share of over 95 percent in its market.",
+    "role": "Makes Ajinomoto Build-up Film (ABF), the insulating layer between the copper layers of flip-chip package substrates. Ajinomoto, a food company, developed the material from its amino acid chemistry. It says ABF holds over 95 percent of its market.",
     "chokepoint": "Critical",
     "shareNote": "Over 95% of the ABF build-up film market, per Ajinomoto's June 2026 electronic materials briefing",
     "customers": [
@@ -3777,7 +3777,7 @@
       "AT&S",
       "Nan Ya PCB"
     ],
-    "aiRelevance": "Nearly every large AI package substrate is built up from layers of one Japanese food company's film.",
+    "aiRelevance": "Nearly every large AI package substrate is built up from layers of ABF, a film made by the Japanese food company Ajinomoto.",
     "revenueUSDb": 10.296,
     "revenueYear": 2026,
     "source": "https://www.ajinomoto.co.jp/company/en/ir/event/business_briefing/main/011117/teaserItems1/01/linkList/03/link/20260630_presentation_E.pdf"
@@ -3792,7 +3792,7 @@
     "founded": 1912,
     "ticker": "4062.T",
     "ownership": "Public",
-    "role": "Makes the highest-layer-count flip-chip BGA substrates, the multilayer boards a processor die sits on. It supplies substrates for large AI packages and is expanding capacity at Ono.",
+    "role": "Makes the highest-layer-count flip-chip BGA substrates, the multilayer boards a processor die sits on. It supplies substrates for large AI packages and is expanding capacity at its Ono plant.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -3816,7 +3816,7 @@
     "founded": 1946,
     "ticker": "Private",
     "ownership": "Taken private in 2025 by a consortium led by the Japan Investment Corporation",
-    "role": "A Japanese maker of high-end flip-chip BGA substrates, alongside Ibiden and Toppan, plus lead frames and interposers. A company owned mainly by funds of JIC Capital, a subsidiary of Japan Investment Corporation, took it private in 2025. In September 2026 Shinko agreed to buy Japan Display's Mobara plant in Chiba as a new core plant for advanced chip packages, with production scheduled for fiscal 2028.",
+    "role": "Makes high-end flip-chip BGA substrates, plus lead frames and interposers. Other Japanese makers of high-end substrates include Ibiden and Toppan. It was taken private in 2025 by a company owned mainly by funds of JIC Capital, a subsidiary of Japan Investment Corporation. In September 2026 Shinko agreed to buy Japan Display's Mobara plant in Chiba as a new core plant for advanced chip packages. Production there is scheduled for fiscal 2028.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -3839,7 +3839,7 @@
     "city": "Taoyuan",
     "founded": 1990,
     "ticker": "3037.TW",
-    "ownership": "Public; part of the United Microelectronics group",
+    "ownership": "Public, part of the United Microelectronics group",
     "role": "One of the largest IC substrate makers, producing ABF and BT substrates plus high density interconnect boards. It is adding ABF capacity in Taiwan and Shenzhen for AI demand.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -3850,7 +3850,7 @@
       "Broadcom",
       "MediaTek"
     ],
-    "aiRelevance": "Taiwanese substrate capacity is what absorbs AI package demand that the Japanese suppliers cannot take.",
+    "aiRelevance": "Taiwanese substrate makers take the AI package demand that the Japanese suppliers cannot meet.",
     "revenueUSDb": 4.166,
     "revenueYear": 2025,
     "source": "https://www.unimicron.com/"
@@ -3864,7 +3864,7 @@
     "city": "Taoyuan",
     "founded": 2000,
     "ticker": "3189.TW",
-    "ownership": "Public; affiliated with Pegatron",
+    "ownership": "Public, affiliated with Pegatron",
     "role": "Makes flip-chip and wire bond IC substrates and flexible printed circuits, supplying processor and networking chip customers from plants in Taiwan and China.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -3874,7 +3874,7 @@
       "Broadcom",
       "Marvell"
     ],
-    "aiRelevance": "An additional source of ABF substrate capacity in a segment that has been supply-limited since 2021.",
+    "aiRelevance": "Another source of ABF substrate capacity in a segment that has been supply-limited since 2021.",
     "revenueUSDb": 1.249,
     "revenueYear": 2025,
     "source": "https://www.kinsus.com.tw/en/"
@@ -3888,7 +3888,7 @@
     "city": "Taoyuan",
     "founded": 1997,
     "ticker": "8046.TW",
-    "ownership": "Public; part of the Formosa Plastics Group",
+    "ownership": "Public, part of the Formosa Plastics Group",
     "role": "Produces ABF and BT IC substrates and high-layer-count printed circuit boards, and is one of the main IC substrate makers worldwide.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -3913,7 +3913,7 @@
     "founded": 1987,
     "ticker": "ATS.VI",
     "ownership": "Public",
-    "role": "Europe's IC substrate and advanced PCB maker, with ABF substrate plants in Chongqing and Kulim, Malaysia. It is the only European firm in high-end IC substrates.",
+    "role": "Makes IC substrates and advanced PCBs, with ABF substrate plants in Chongqing, China, and Kulim, Malaysia. It is the only European firm in high-end IC substrates.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -3936,8 +3936,8 @@
     "city": "Suwon",
     "founded": 1973,
     "ticker": "009150.KS",
-    "ownership": "Public; part of the Samsung group",
-    "role": "Makes flip-chip BGA substrates for processors and AI accelerators, plus multilayer ceramic capacitors used in dense server power delivery. It is expanding FC-BGA capacity in Busan and Vietnam.",
+    "ownership": "Public, part of the Samsung group",
+    "role": "Makes flip-chip BGA substrates for processors and AI accelerators, plus multilayer ceramic capacitors (MLCCs) used in dense server power delivery. It is expanding FC-BGA capacity in Busan and Vietnam.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -3961,7 +3961,7 @@
     "city": "Seoul",
     "founded": 1970,
     "ticker": "011070.KS",
-    "ownership": "Public; part of the LG group",
+    "ownership": "Public, part of the LG group",
     "role": "Entered high-end flip-chip BGA substrates in 2022 with a plant in Gumi, adding a third Korean source alongside Samsung Electro-Mechanics. Its larger business is optical modules for smartphones.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -3970,7 +3970,7 @@
       "Nvidia",
       "Apple"
     ],
-    "aiRelevance": "New FC-BGA entrants matter because substrate supply has repeatedly limited AI package output.",
+    "aiRelevance": "Substrate supply has repeatedly limited AI package output, so new FC-BGA makers add capacity where it is short.",
     "revenueUSDb": 16.33,
     "revenueYear": 2025,
     "source": "https://www.lginnotek.com/product/substrate.do"
@@ -3985,7 +3985,7 @@
     "founded": 1923,
     "ticker": "3110.T",
     "ownership": "Public",
-    "role": "Weaves the ultra-fine low thermal expansion glass cloth, known as T-glass, that reinforces high-end package substrates and server boards. Its fiber keeps large substrates flat as they heat. In August 2025 it decided to expand glass fiber cloth production at its Fukushima Enterprise Center, with output from the fourth quarter of its fiscal 2026, and it says Chinese and Taiwanese companies are aggressively catching up with it in special glass.",
+    "role": "Weaves the ultra-fine low thermal expansion glass cloth, known as T-glass, that reinforces high-end package substrates and server boards. Its fiber keeps large substrates flat as they heat. In August 2025 it decided to expand glass fiber cloth production at its Fukushima Enterprise Center, with the added output starting in the fourth quarter of its fiscal 2026. It says Chinese and Taiwanese companies are aggressively catching up with it in special glass.",
     "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
@@ -4009,13 +4009,13 @@
     "founded": 1918,
     "ticker": "4182.T",
     "ownership": "Public",
-    "role": "Invented BT resin, the laminate material used in memory and many package substrates, and supplies copper-clad laminates and specialty chemicals for electronics. In October 2024 it estimated that its BT resins held about 40 percent of the substrate materials market, and it promotes a low-warpage copper-clad laminate for flip-chip BGA substrates, which carry CPUs and GPUs.",
+    "role": "Invented BT resin, the laminate material used in memory and many package substrates, and supplies copper-clad laminates and specialty chemicals for electronics. In October 2024 it estimated that its BT resins held about 40 percent of the substrate materials market. It also promotes a low-warpage copper-clad laminate for flip-chip BGA substrates, which carry CPUs and GPUs.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
       "Package substrate makers"
     ],
-    "aiRelevance": "BT laminate goes into package substrates for data center memory, CPUs and GPUs, and MGC is expanding its use in AI products and servers.",
+    "aiRelevance": "BT laminate goes into package substrates for data center memory, CPUs and GPUs. Mitsubishi Gas Chemical is expanding the laminate's use in AI products and servers.",
     "revenueUSDb": 4.799,
     "revenueYear": 2026,
     "source": "https://www.mgc.co.jp/eng/ir/files/2410022e.pdf"
@@ -4030,7 +4030,7 @@
     "founded": 1918,
     "ticker": "Private",
     "ownership": "Division of Panasonic Holdings",
-    "role": "Makes the Megtron series of low-loss copper-clad laminates used in high-speed server boards and switch boards, where signal loss at 112 Gbps determines whether a link works.",
+    "role": "Makes the Megtron series of low-loss copper-clad laminates used in high-speed server and switch boards. At 112 Gbps, too much signal loss in the board makes a link fail.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4064,7 +4064,7 @@
       "Quanta",
       "Celestica"
     ],
-    "aiRelevance": "AI baseboards need 20 or more layers of low-loss material, which few PCB makers can build at yield.",
+    "aiRelevance": "AI baseboards need 20 or more layers of low-loss material, and few PCB makers can build such boards at high yield.",
     "revenueUSDb": 2.867,
     "revenueYear": 2025,
     "source": "https://www.shpcb.com/"
@@ -4079,7 +4079,7 @@
     "founded": 1992,
     "ticker": "002463.SZ",
     "ownership": "Public (Shenzhen)",
-    "role": "Supplies high-speed multilayer printed circuit boards for servers, switches and AI accelerator boards, and is a main supplier to the networking equipment makers.",
+    "role": "Makes high-speed multilayer printed circuit boards for servers, switches and AI accelerators, and is a main supplier to networking equipment makers.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -4127,7 +4127,7 @@
     "founded": 1978,
     "ticker": "TTMI",
     "ownership": "Public",
-    "role": "One of the largest technology manufacturers in North America, by its own description, supplying data center, aerospace and defense boards, including high-layer-count boards for AI and networking systems. It also offers IC substrates and is building an ultra-high-density circuit board plant in Syracuse, New York, with volume production expected in the second half of 2026.",
+    "role": "Makes printed circuit boards for data center, aerospace and defense customers, including high-layer-count boards for AI and networking systems. By its own description it is one of the largest technology manufacturers in North America. It also offers IC substrates and is building an ultra-high-density circuit board plant in Syracuse, New York, with volume production expected in the second half of 2026.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4136,7 +4136,7 @@
       "Defense primes",
       "Hyperscale operators"
     ],
-    "aiRelevance": "Provides domestic PCB capacity for AI infrastructure where supply chain origin matters.",
+    "aiRelevance": "Provides PCB capacity in the United States for AI systems whose buyers care where the boards are made.",
     "revenueUSDb": 2.906,
     "revenueYear": 2025,
     "source": "https://www.ttm.com/"
@@ -4151,7 +4151,7 @@
     "founded": 2021,
     "ticker": "Private",
     "ownership": "Subsidiary of SKC, part of SK Group",
-    "role": "A subsidiary of Korea's SKC with a final CHIPS Act award of up to $75 million for a 120,000-square-foot glass core substrate plant in Covington, Georgia; as of October 2026 NIST's project page expected its production capacity to come online in 2027. NIST says the glass substrates allow smaller, more densely packed and shorter connections, for faster and more energy-efficient computing.",
+    "role": "A subsidiary of Korea's SKC with a final CHIPS Act award of up to $75 million for a 120,000-square-foot glass core substrate plant in Covington, Georgia. As of October 2026, NIST's project page expected the plant's production capacity to come online in 2027. NIST says the glass substrates allow smaller, more densely packed and shorter connections, for faster and more energy-efficient computing.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -4182,7 +4182,7 @@
       "King Yuan Electronics",
       "Samsung"
     ],
-    "aiRelevance": "Tester capacity has become a genuine constraint on AI accelerator and HBM shipments.",
+    "aiRelevance": "Tester capacity has become a constraint on AI accelerator and HBM shipments.",
     "revenueUSDb": 7.337,
     "revenueYear": 2026,
     "source": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_slide.pdf"
@@ -4197,7 +4197,7 @@
     "founded": 1960,
     "ticker": "TER",
     "ownership": "Public",
-    "role": "The other half of the automated test equipment duopoly, supplying SoC, memory and system-level test platforms, plus industrial automation through its robotics arm.",
+    "role": "Supplies SoC, memory and system-level test platforms, and forms the automated test equipment duopoly with Advantest. It also sells industrial automation equipment through its robotics arm.",
     "chokepoint": "Important",
     "shareNote": "$2.52bn of semiconductor test revenue in 2025, service included: $1.89bn from SoC testers and $0.505bn from memory testers, per its 2025 10-K",
     "customers": [
@@ -4222,7 +4222,7 @@
     "founded": 1993,
     "ticker": "FORM",
     "ownership": "Public",
-    "role": "A leading probe card maker, with $637.9 million of revenue in its probe card segment in 2025, supplying the MEMS probe cards that make temporary electrical contact with thousands of pads on a wafer during sort, including HBM and logic probe cards.",
+    "role": "Supplies the MEMS probe cards that make temporary electrical contact with thousands of pads on a wafer during testing, including HBM and logic probe cards. It is a leading probe card maker, with $637.9 million of revenue in its probe card segment in 2025.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4246,8 +4246,8 @@
     "city": "Cernusco Lombardone",
     "founded": 1996,
     "ticker": "TPRO.MI",
-    "ownership": "Public; family-controlled",
-    "role": "The main European probe card maker and the closest competitor to FormFactor, specializing in vertical MEMS probe heads used for high pin count logic and HBM test.",
+    "ownership": "Public, family-controlled",
+    "role": "Makes probe cards, specializing in vertical MEMS probe heads used for high pin count logic and HBM test. It is the main European probe card maker and the closest competitor to FormFactor.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4257,7 +4257,7 @@
       "TSMC",
       "SK hynix"
     ],
-    "aiRelevance": "Vertical probe technology is what allows testing of the very high pad counts on AI accelerators.",
+    "aiRelevance": "Vertical probes make it possible to test AI accelerators, which have very high pad counts.",
     "revenueUSDb": 0.73,
     "revenueYear": 2025,
     "source": "https://www.technoprobe.com/"
@@ -4272,7 +4272,7 @@
     "founded": 1970,
     "ticker": "6871.T",
     "ownership": "Public",
-    "role": "Makes probe cards specialized for memory wafer test, including the multi-DUT cards used to test DRAM and HBM dies in parallel, plus display test equipment.",
+    "role": "Makes probe cards specialized for memory wafer test, including cards that test many DRAM and HBM dies in parallel, plus display test equipment.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4320,7 +4320,7 @@
     "founded": 1947,
     "ticker": "COHU",
     "ownership": "Public",
-    "role": "Makes the handlers that move devices in and out of testers, along with thermal subsystems, contactors and interface boards. Handling and thermal control are as important as the tester itself for hot AI parts.",
+    "role": "Makes the handlers that move devices in and out of testers, along with thermal subsystems, contactors and interface boards. For AI chips that run hot, handling and thermal control are as important as the tester itself.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4344,7 +4344,7 @@
     "founded": 1977,
     "ticker": "AEHR",
     "ownership": "Public",
-    "role": "Makes wafer-level burn-in systems that stress an entire wafer at temperature and voltage to find early-life failures, used for silicon carbide, photonics and now AI processors.",
+    "role": "Makes wafer-level burn-in systems, which stress an entire wafer at high temperature and voltage to find early-life failures. They are used for silicon carbide, photonics and AI processors.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4352,7 +4352,7 @@
       "AI processor vendors",
       "Photonics suppliers"
     ],
-    "aiRelevance": "Burn-in matters for AI parts because a failure inside a 72-GPU rack is expensive to find later.",
+    "aiRelevance": "Burn-in finds early-life failures in AI chips before they go into a 72-GPU rack, where a failure is expensive to find.",
     "revenueUSDb": 0.05,
     "revenueYear": 2026,
     "source": "https://www.aehr.com/products/"
@@ -4367,7 +4367,7 @@
     "founded": 1984,
     "ticker": "2360.TW",
     "ownership": "Public",
-    "role": "Makes automated test equipment, power test instruments and system-level test platforms, including the burn-in and SLT systems used for AI processors and power components.",
+    "role": "Makes automated test equipment, power test instruments and system-level test (SLT) platforms, including the burn-in and SLT systems used for AI processors and power components.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4391,7 +4391,7 @@
     "founded": 1949,
     "ticker": "7729.T",
     "ownership": "Public",
-    "role": "Sells as Accretech and says it has the top global share in probers, the machines that move each wafer under the probe card and hold it at a set temperature during wafer test. It also makes dicing machines and grinders.",
+    "role": "Makes probers, the machines that move each wafer under the probe card and hold it at a set temperature during wafer test, plus dicing machines and grinders. It sells as Accretech and says it has the top global share in probers.",
     "chokepoint": "Important",
     "shareNote": "8.1% of the $1.9bn market for dicing saws and wafer grinders in 2025, second to Disco, on CSET's analysis of TechInsights data",
     "customers": [
@@ -4413,7 +4413,7 @@
     "founded": 2017,
     "ticker": "ALAB",
     "ownership": "Public",
-    "role": "Makes the retimers, smart cable modules and fabric switches that keep PCIe, CXL and Ethernet links intact across the distances inside an AI rack. Signal integrity fails before the protocol does.",
+    "role": "Makes the retimers, smart cable modules and fabric switches that keep PCIe, CXL and Ethernet links intact across the distances inside an AI rack. Over those distances the signal degrades, and a retimer cleans it up and sends it on.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4423,7 +4423,7 @@
       "Microsoft",
       "Dell"
     ],
-    "aiRelevance": "Many GPU-to-CPU and GPU-to-NIC links in a modern AI server pass through a retimer.",
+    "aiRelevance": "Many GPU-to-CPU and GPU-to-network-card links in an AI server pass through a retimer.",
     "revenueUSDb": 0.853,
     "revenueYear": 2025,
     "source": "https://www.asteralabs.com/products/"
@@ -4438,7 +4438,7 @@
     "founded": 2008,
     "ticker": "CRDO",
     "ownership": "Public",
-    "role": "Supplies high-speed SerDes IP, active electrical cables and retimers used for 400G and 800G links inside and between AI racks. Its active copper cables carry signals up to 7 meters between neighboring racks, replacing optics over those distances at lower power.",
+    "role": "Supplies high-speed SerDes IP, active electrical cables and retimers used for 400G and 800G links inside and between AI racks. Its active electrical cables are copper and carry signals up to 7 meters between neighboring racks, replacing optics over those distances at lower power.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4447,7 +4447,7 @@
       "Nvidia",
       "Arista"
     ],
-    "aiRelevance": "Copper links inside a rack are cheaper and lower power than optics, which matters at cluster scale.",
+    "aiRelevance": "Copper links inside a rack are cheaper and use less power than optics, and the savings add up across a cluster.",
     "revenueUSDb": 1.335,
     "revenueYear": 2026,
     "source": "https://www.credosemi.com/products/"
@@ -4462,7 +4462,7 @@
     "founded": 2004,
     "ticker": "ANET",
     "ownership": "Public",
-    "role": "Builds the high-radix Ethernet switches, mostly on Broadcom Tomahawk silicon, that hyperscalers use to build AI back-end networks as an alternative to InfiniBand.",
+    "role": "Builds Ethernet switches with high port counts, mostly on Broadcom's Tomahawk switch chips, that hyperscalers use for AI back-end networks as an alternative to InfiniBand.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4471,7 +4471,7 @@
       "Oracle",
       "Anthropic"
     ],
-    "aiRelevance": "Ethernet has become the default scale-out fabric for large AI clusters, and Arista is its main vendor.",
+    "aiRelevance": "Ethernet has become the default scale-out network for large AI clusters, and Arista is its main vendor.",
     "revenueUSDb": 9.006,
     "revenueYear": 2025,
     "source": "https://www.arista.com/en/solutions/ai-networking"
@@ -4486,7 +4486,7 @@
     "founded": 1984,
     "ticker": "CSCO",
     "ownership": "Public",
-    "role": "Sells data center switches and routers and designs its own Silicon One switching ASICs, giving it a second in-house alternative to merchant switch silicon for AI fabrics.",
+    "role": "Sells data center switches and routers and designs its own Silicon One switch chips, giving it a second in-house alternative to switch chips bought from chip vendors for AI networks.",
     "chokepoint": "Diversified",
     "shareNote": null,
     "customers": [
@@ -4494,7 +4494,7 @@
       "Cloud operators",
       "Telecom carriers"
     ],
-    "aiRelevance": "Supplies both the systems and, unusually for a systems vendor, the switch silicon inside them.",
+    "aiRelevance": "Supplies both the systems and, unusually for a systems vendor, the switch chips inside them.",
     "revenueUSDb": 63.325,
     "revenueYear": 2026,
     "source": "https://www.cisco.com/site/us/en/products/networking/silicon-one/index.html"
@@ -4509,7 +4509,7 @@
     "founded": 1988,
     "ticker": "2345.TW",
     "ownership": "Public",
-    "role": "A leading contract maker of white-box data center switches, building the hardware that hyperscalers run their own network software on. Most 800G switch boxes are built by Accton or its peers.",
+    "role": "A leading contract maker of white-box data center switches, building the hardware that hyperscalers run their own network software on. Accton and its peers build most 800G switch boxes.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4519,7 +4519,7 @@
       "Google",
       "Nvidia"
     ],
-    "aiRelevance": "AI back-end networks are built from white-box switches assembled by a small group of Taiwanese ODMs.",
+    "aiRelevance": "A small group of Taiwanese ODMs assembles the white-box switches that make up AI back-end networks.",
     "revenueUSDb": 7.883,
     "revenueYear": 2025,
     "source": "https://www.accton.com/"
@@ -4534,7 +4534,7 @@
     "founded": 1932,
     "ticker": "APH",
     "ownership": "Public",
-    "role": "Makes the high-speed connectors, cable assemblies and backplane systems that carry 112 Gbps signals between boards in an AI rack. The NVLink spine in a rack-scale system is a cable and connector problem.",
+    "role": "Makes the high-speed connectors, cable assemblies and backplane systems that carry 112 Gbps signals between boards in an AI rack. The NVLink spine that links the GPUs in a rack-scale system is built from cables and connectors.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4544,7 +4544,7 @@
       "Cisco",
       "Arista"
     ],
-    "aiRelevance": "Rack-scale AI systems replaced board traces with thousands of precision cable assemblies.",
+    "aiRelevance": "Rack-scale AI systems replaced the copper traces on circuit boards with thousands of precision cable assemblies.",
     "revenueUSDb": 23.095,
     "revenueYear": 2025,
     "source": "https://www.amphenol.com/markets/it-datacom"
@@ -4567,7 +4567,7 @@
       "Nvidia suppliers",
       "Server ODMs"
     ],
-    "aiRelevance": "Provides high-volume cable and connector capacity for AI racks at Chinese cost structures.",
+    "aiRelevance": "Provides high-volume cable and connector capacity for AI racks at Chinese manufacturing costs.",
     "revenueUSDb": 49.397,
     "revenueYear": 2025,
     "source": "https://www.luxshare-ict.com/en/"
@@ -4592,7 +4592,7 @@
       "Amazon",
       "Meta"
     ],
-    "aiRelevance": "Optical module supply scales linearly with cluster size and has repeatedly been a shipment constraint.",
+    "aiRelevance": "The number of optical modules a cluster needs grows in step with its size, and module supply has repeatedly limited shipments.",
     "revenueUSDb": 5.684,
     "revenueYear": 2025,
     "source": "https://www.innolight.com/en/"
@@ -4629,7 +4629,7 @@
     "founded": 1971,
     "ticker": "COHR",
     "ownership": "Public",
-    "role": "Makes indium phosphide lasers, VCSELs, optical components and transceiver modules, and is one of the few module makers that also makes the laser chips inside them, including at an indium phosphide wafer fab in Sherman, Texas.",
+    "role": "Makes indium phosphide lasers, VCSELs, optical components and transceiver modules. It is one of the few module makers that also makes the laser chips inside them, including at an indium phosphide wafer fab in Sherman, Texas.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4639,7 +4639,7 @@
       "Google",
       "Amazon"
     ],
-    "aiRelevance": "Laser die capacity is upstream of every optical module, and very few firms have indium phosphide fabs.",
+    "aiRelevance": "Every optical module needs laser chips, and very few firms have indium phosphide fabs.",
     "revenueUSDb": 7.118,
     "revenueYear": 2026,
     "source": "https://www.coherent.com/networking"
@@ -4676,7 +4676,7 @@
     "city": "Bangkok",
     "founded": 2000,
     "ticker": "FN",
-    "ownership": "Public; incorporated in the Cayman Islands with operations in Thailand",
+    "ownership": "Public, incorporated in the Cayman Islands with operations in Thailand",
     "role": "A contract manufacturer of optical modules and photonic assemblies, building transceivers and optical engines for the largest networking and AI vendors from plants in Thailand.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -4686,7 +4686,7 @@
       "Coherent",
       "Lumentum"
     ],
-    "aiRelevance": "A large share of the world's AI-cluster optics is physically assembled in a small number of Thai buildings.",
+    "aiRelevance": "A large share of the world's AI-cluster optics is assembled in a small number of buildings in Thailand.",
     "revenueUSDb": 4.641,
     "revenueYear": 2026,
     "source": "https://www.fabrinet.com/"
@@ -4700,7 +4700,7 @@
     "city": "Santa Clara",
     "founded": 2015,
     "ticker": "Private",
-    "ownership": "Private; investors include Nvidia, Intel Capital and AMD",
+    "ownership": "Private, with investors including Nvidia, Intel Capital and AMD",
     "role": "Builds optical input and output chiplets that put light directly into the processor package, replacing electrical SerDes with fiber at the package edge.",
     "chokepoint": "Contested",
     "shareNote": null,
@@ -4725,7 +4725,7 @@
     "founded": 2017,
     "ticker": "Private",
     "ownership": "Private, venture-backed",
-    "role": "Develops photonic interposers and optical interconnect that route light beneath stacked dies, aiming to remove the bandwidth ceiling between accelerators in a package.",
+    "role": "Develops photonic interposers and optical interconnect that route light beneath stacked dies, aiming to remove the bandwidth limit between accelerators in a package.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -4746,7 +4746,7 @@
     "founded": 1851,
     "ticker": "GLW",
     "ownership": "Public",
-    "role": "Makes the optical fiber and cabling that connects data center halls and campuses, and develops glass substrates for semiconductor packaging. It also holds the majority stake in Hemlock Semiconductor.",
+    "role": "Makes the optical fiber and cabling that connect data center halls and campuses, and develops glass substrates for semiconductor packaging. It also holds the majority stake in Hemlock Semiconductor.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4754,7 +4754,7 @@
       "Telecom carriers",
       "AT&T"
     ],
-    "aiRelevance": "Fiber plant inside and between AI campuses is a physical prerequisite for cluster scale-out.",
+    "aiRelevance": "Scaling out an AI cluster requires fiber inside and between campuses.",
     "revenueUSDb": 15.629,
     "revenueYear": 2025,
     "source": "https://www.corning.com/worldwide/en/products/communication-networks.html"
@@ -4769,13 +4769,13 @@
     "founded": 1986,
     "ticker": "AXTI",
     "ownership": "Public",
-    "role": "A US-listed maker of the indium phosphide wafers that lasers for optical links are grown on, which does all its manufacturing in China. China has required export permits for indium phosphide substrates since February 2025, and in its filing for the quarter to June 2026 AXT called the permits the most significant challenge it faces.",
+    "role": "Makes the indium phosphide wafers that lasers for optical links are grown on. It is listed in the US but does all its manufacturing in China. China has required export permits for indium phosphide substrates since February 2025. In its filing for the quarter to June 2026, AXT called the permits the most significant challenge it faces.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
       "Laser and optical component makers"
     ],
-    "aiRelevance": "Laser makers need indium phosphide wafers, and a US-listed supplier that makes them only in China depends on Chinese export permits.",
+    "aiRelevance": "Laser makers need indium phosphide wafers, and AXT makes them only in China, so it depends on Chinese export permits.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.sec.gov/Archives/edgar/data/1051627/000143774926027677/axti20260630_10q.htm"
@@ -4789,8 +4789,8 @@
     "city": "New Taipei",
     "founded": 1974,
     "ticker": "2317.TW",
-    "ownership": "Public; trades as Foxconn",
-    "role": "The largest electronics contract manufacturer and the world's largest AI server provider, building Nvidia servers and rack-scale systems, with assembly in Taiwan, Mexico, the US and Southeast Asia.",
+    "ownership": "Public, trades as Foxconn",
+    "role": "Builds Nvidia servers and rack-scale systems, with assembly in Taiwan, Mexico, the US and Southeast Asia. It is the largest electronics contract manufacturer and the world's largest AI server provider.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4800,7 +4800,7 @@
       "Meta",
       "Apple"
     ],
-    "aiRelevance": "Rack-scale AI systems are assembled and burned in by a handful of Taiwanese firms, of which Foxconn is the largest.",
+    "aiRelevance": "A handful of Taiwanese firms assemble and burn in rack-scale AI systems, and Hon Hai (Foxconn) is the largest of them.",
     "revenueUSDb": 257.241,
     "revenueYear": 2025,
     "source": "https://www.honhai.com/en-us/press-center/press-releases/latest-news/1978"
@@ -4815,7 +4815,7 @@
     "founded": 1988,
     "ticker": "2382.TW",
     "ownership": "Public",
-    "role": "One of the largest AI server ODMs, building GPU baseboards, servers and full racks for hyperscalers and for Nvidia reference systems, with plants in Taiwan, the US, Mexico and Thailand.",
+    "role": "Builds GPU baseboards, servers and full racks for hyperscalers and for Nvidia reference systems, with plants in Taiwan, the US, Mexico and Thailand. It is one of the largest AI server ODMs, the contract firms that design and build servers for other companies.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4825,7 +4825,7 @@
       "Nvidia",
       "Microsoft"
     ],
-    "aiRelevance": "Quanta and its peers convert accelerators into deployable racks, and their capacity sets the pace of deployment.",
+    "aiRelevance": "Quanta and its peers turn accelerators into racks ready to deploy, and their capacity limits how fast AI hardware goes into service.",
     "revenueUSDb": 67.419,
     "revenueYear": 2025,
     "source": "https://www.qct.io/solution/index/AI-Solutions"
@@ -4839,7 +4839,7 @@
     "city": "New Taipei",
     "founded": 2001,
     "ticker": "3231.TW",
-    "ownership": "Public; parent of Wiwynn",
+    "ownership": "Public, parent of Wiwynn",
     "role": "Builds GPU baseboards and AI servers, and grew quickly during the 2025 AI build-out. It also supplies liquid cooling loops and rack integration.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -4863,7 +4863,7 @@
     "city": "New Taipei",
     "founded": 2012,
     "ticker": "6669.TW",
-    "ownership": "Public; majority owned by Wistron",
+    "ownership": "Public, majority owned by Wistron",
     "role": "Designs and builds hyperscale servers, storage and rack systems to Open Compute designs for cloud operators, including liquid-cooled AI racks.",
     "chokepoint": "Important",
     "shareNote": null,
@@ -4872,7 +4872,7 @@
       "Microsoft",
       "Amazon"
     ],
-    "aiRelevance": "Open Compute rack designs are how hyperscalers deploy AI capacity at their own specification.",
+    "aiRelevance": "Hyperscalers use Open Compute rack designs to deploy AI capacity built to their own specifications.",
     "revenueUSDb": 30.18,
     "revenueYear": 2025,
     "source": "https://www.wiwynn.com/products"
@@ -4919,7 +4919,7 @@
       "Enterprises",
       "Cloud operators"
     ],
-    "aiRelevance": "One of the few US-based firms that integrates AI racks in-house.",
+    "aiRelevance": "One of the few US-based firms that integrate AI racks in-house.",
     "revenueUSDb": 39.063,
     "revenueYear": 2026,
     "source": "https://www.supermicro.com/en/products/gpu"
@@ -4943,7 +4943,7 @@
       "Enterprises",
       "Government"
     ],
-    "aiRelevance": "Enterprise AI deployment mostly arrives through the large server OEMs.",
+    "aiRelevance": "Enterprises mostly buy their AI hardware from the large server OEMs.",
     "revenueUSDb": 113.538,
     "revenueYear": 2026,
     "source": "https://www.dell.com/en-us/dt/solutions/artificial-intelligence/index.htm"
@@ -4966,7 +4966,7 @@
       "Enterprises",
       "Cloud operators"
     ],
-    "aiRelevance": "Cray-derived liquid cooling and interconnect experience transfers directly to dense AI clusters.",
+    "aiRelevance": "HPE's liquid cooling and interconnect experience from Cray applies directly to dense AI clusters.",
     "revenueUSDb": 34.296,
     "revenueYear": 2025,
     "source": "https://www.hpe.com/us/en/servers.html"
@@ -5003,8 +5003,8 @@
     "city": "Secaucus",
     "founded": 1994,
     "ticker": "Private",
-    "ownership": "Acquired by AMD in 2025; the manufacturing operation was sold on to Sanmina",
-    "role": "Designs and validates rack-scale AI systems for hyperscalers. AMD bought it for the systems engineering team so it could ship complete racks.",
+    "ownership": "Acquired by AMD in 2025, and AMD sold the manufacturing operation on to Sanmina",
+    "role": "Designs and validates rack-scale AI systems for hyperscalers. AMD bought it for its systems engineering team, so that AMD could ship complete racks.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -5033,7 +5033,7 @@
       "Hyperscale cloud operators",
       "Networking OEMs"
     ],
-    "aiRelevance": "A significant share of AI back-end switch hardware is built by contract manufacturers like Celestica.",
+    "aiRelevance": "Contract manufacturers such as Celestica build a significant share of AI back-end switch hardware.",
     "revenueUSDb": 12.391,
     "revenueYear": 2025,
     "source": "https://www.celestica.com/hardware-platform-solutions"
@@ -5056,7 +5056,7 @@
       "Networking OEMs",
       "Nvidia partners"
     ],
-    "aiRelevance": "Cold plate and manifold manufacturing has become a genuine capacity constraint for liquid-cooled racks.",
+    "aiRelevance": "Cold plate and manifold manufacturing has become a capacity constraint for liquid-cooled racks.",
     "revenueUSDb": 29.802,
     "revenueYear": 2025,
     "source": "https://www.jabil.com/"
@@ -5071,7 +5071,7 @@
     "founded": 1946,
     "ticker": "VRT",
     "ownership": "Public",
-    "role": "Supplies uninterruptible power supplies, busway power distribution, coolant distribution units and liquid cooling systems for data centers, and co-develops reference power and cooling designs with Nvidia.",
+    "role": "Makes uninterruptible power supplies, busway power distribution, coolant distribution units and liquid cooling systems for data centers. It co-develops reference power and cooling designs with Nvidia.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -5081,7 +5081,7 @@
       "CoreWeave",
       "Digital Realty"
     ],
-    "aiRelevance": "A 132 kW rack cannot be air cooled, so the coolant distribution unit now matters as much as the server itself.",
+    "aiRelevance": "A 132 kW rack cannot be air cooled, so it needs a coolant distribution unit to pump liquid through its servers.",
     "revenueUSDb": 10.23,
     "revenueYear": 2025,
     "source": "https://www.vertiv.com/"
@@ -5096,7 +5096,7 @@
     "founded": 1836,
     "ticker": "SU.PA",
     "ownership": "Public",
-    "role": "Supplies medium and low voltage electrical distribution, uninterruptible power supplies through APC, busway and liquid cooling for data centers, plus the design software operators plan with.",
+    "role": "Supplies medium and low voltage electrical distribution, uninterruptible power supplies under the APC brand, busway and liquid cooling for data centers, plus the design software operators plan with.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -5105,7 +5105,7 @@
       "Digital Realty",
       "Equinix"
     ],
-    "aiRelevance": "Electrical equipment lead times, especially transformers and switchgear, now set AI data center schedules.",
+    "aiRelevance": "AI data center schedules now depend on lead times for electrical equipment, especially transformers and switchgear.",
     "revenueUSDb": 46.672,
     "revenueYear": 2025,
     "source": "https://www.se.com/us/en/work/solutions/for-business/data-centers-and-networks/"
@@ -5128,7 +5128,7 @@
       "Colocation providers",
       "Utilities"
     ],
-    "aiRelevance": "Grid connection and on-site electrical gear are now longer lead time items than the GPUs themselves.",
+    "aiRelevance": "A grid connection and on-site electrical gear now take longer to obtain than the GPUs themselves.",
     "revenueUSDb": 27.448,
     "revenueYear": 2025,
     "source": "https://www.eaton.com/us/en-us/markets/data-centers.html"
@@ -5143,7 +5143,7 @@
     "founded": 1971,
     "ticker": "2308.TW",
     "ownership": "Public",
-    "role": "A global leader in switching power supplies and a maker of the power shelves and busbars used in AI racks, plus fans, cold plates and coolant distribution units. It supplies the 800 VDC power architecture Nvidia has moved toward.",
+    "role": "A global leader in switching power supplies and a maker of the power shelves and busbars used in AI racks, plus fans, cold plates and coolant distribution units. It supplies equipment for the 800-volt DC power architecture that Nvidia has moved toward.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -5153,7 +5153,7 @@
       "Microsoft",
       "Amazon"
     ],
-    "aiRelevance": "Rack power conversion efficiency at 100 kW and above is dominated by a small number of Taiwanese suppliers.",
+    "aiRelevance": "A small number of Taiwanese suppliers dominate efficient power conversion for racks of 100 kW and above.",
     "revenueUSDb": 17.615,
     "revenueYear": 2025,
     "source": "https://www.deltaww.com/"
@@ -5177,7 +5177,7 @@
       "HPE",
       "Cloud operators"
     ],
-    "aiRelevance": "Cold plate design and supply is a distinct bottleneck separate from the servers themselves.",
+    "aiRelevance": "Cold plate design and supply is its own bottleneck, separate from server supply.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.coolitsystems.com/products-services/server-products/"
@@ -5199,7 +5199,7 @@
       "HPC integrators",
       "Server OEMs"
     ],
-    "aiRelevance": "An early liquid cooling specialist in a market that AI rack density made mainstream.",
+    "aiRelevance": "An early liquid cooling specialist, in a market that became mainstream as AI racks grew denser.",
     "revenueUSDb": 0.042,
     "revenueYear": 2025,
     "source": "https://www.asetek.com/"
@@ -5222,7 +5222,7 @@
       "Hyperscale operators",
       "Grid operators"
     ],
-    "aiRelevance": "Large power transformers are the longest lead time physical item between a chip order and a running cluster.",
+    "aiRelevance": "Large power transformers take longer to deliver than any other physical item between a chip order and a running cluster.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://www.hitachienergy.com/products-and-solutions/transformers"
@@ -5237,7 +5237,7 @@
     "founded": 2020,
     "ticker": "ENR.DE",
     "ownership": "Public",
-    "role": "Supplies gas turbines, grid transmission equipment and transformers, and has orders booked years ahead, because data center and electrification demand exceeds its manufacturing capacity.",
+    "role": "Supplies gas turbines, grid transmission equipment and transformers. Its orders are booked years ahead because data center and electrification demand exceeds its manufacturing capacity.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -5245,7 +5245,7 @@
       "Independent power producers",
       "Hyperscale operators"
     ],
-    "aiRelevance": "On-site and grid generation capacity is now part of the AI buildout.",
+    "aiRelevance": "The AI buildout now includes new generating capacity, both on site and on the grid.",
     "revenueUSDb": 45.423,
     "revenueYear": 2025,
     "source": "https://www.siemens-energy.com/global/en/home/products-services/product-offerings.html"
@@ -5260,7 +5260,7 @@
     "founded": 2024,
     "ticker": "GEV",
     "ownership": "Public",
-    "role": "Builds gas turbines, grid equipment and wind generation, and is a main supplier of the new generating capacity being contracted specifically to power AI data centers. It bought the remaining half of the transformer maker Prolec GE in the first half of 2026.",
+    "role": "Builds gas turbines, grid equipment and wind turbines. It is a main supplier of the new generating capacity being contracted specifically to power AI data centers. It bought the remaining half of the transformer maker Prolec GE in the first half of 2026.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -5307,7 +5307,7 @@
     "founded": 1999,
     "ticker": "IFX.DE",
     "ownership": "Public",
-    "role": "The largest power semiconductor maker, with 17.3 percent of the $32.5 billion market for power discretes and modules in 2025, against 7.2 percent for onsemi, according to Omdia figures Infineon published in August 2026. It supplies the MOSFETs, gallium nitride devices and power stages used from the grid connection through the rack power shelf to the point-of-load regulator.",
+    "role": "Supplies the MOSFETs, gallium nitride devices and power stages used from the grid connection through the rack power shelf to the point-of-load regulator. It is the largest power semiconductor maker, according to Omdia figures Infineon published in August 2026. Those figures give it 17.3 percent of the $32.5 billion market for power discretes and modules in 2025, against 7.2 percent for onsemi.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -5316,7 +5316,7 @@
       "Vertiv",
       "Server ODMs"
     ],
-    "aiRelevance": "Nvidia's move to 800 volt DC rack distribution is built on power semiconductors from a handful of suppliers.",
+    "aiRelevance": "Nvidia's move to 800-volt DC rack power distribution depends on power semiconductors from a handful of suppliers.",
     "revenueUSDb": 17.043,
     "revenueYear": 2025,
     "source": "https://www.infineon.com/assets/row/public/documents/corporate/investors/presentations/2026/2026-08-05-q3-fy26-investor-presentation-v01-00-en.pdf"
@@ -5339,7 +5339,7 @@
       "Nvidia partners",
       "Cloud operators"
     ],
-    "aiRelevance": "Even liquid-cooled racks still need fans and pumps, and motor supply is concentrated in a few Japanese firms.",
+    "aiRelevance": "Liquid-cooled racks still need fans and pumps, and motor supply is concentrated in a few Japanese firms.",
     "revenueUSDb": 16.954,
     "revenueYear": 2025,
     "source": "https://www.nidec.com/en/product/search/category/B101/"
@@ -5354,7 +5354,7 @@
     "founded": null,
     "ticker": "7011.T",
     "ownership": "Brand of Mitsubishi Heavy Industries",
-    "role": "The power systems brand of Mitsubishi Heavy Industries, making gas turbines from the 30 MW class to the 563 MW class. GE Vernova's 2025 annual report names it, with Siemens Energy, among the key competitors of its power generation business.",
+    "role": "Makes gas turbines from the 30 MW class to the 563 MW class. It is the power systems brand of Mitsubishi Heavy Industries. In its 2025 annual report, GE Vernova names Mitsubishi Power and Siemens Energy among the key competitors of its power generation business.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [

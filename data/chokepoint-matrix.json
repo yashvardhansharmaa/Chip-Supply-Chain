@@ -15,8 +15,8 @@
     },
     "hhi": 5690,
     "top2": 87,
-    "method": "A CHOKEPOINTS estimate for 2025. The United States column is anchored on SIA and BCG's measurement of EDA and core IP together, which was 74 percent American and 20 percent European in 2019 (2021 report, Exhibit 14) and 68 and 25 in 2022 (2024 report, Exhibit 2); the EDA-only split is then set by the two American vendors' filed revenue, $4.37bn of EDA product-group revenue at Synopsys in FY2025 (62.0 percent of $7,054.2m) and $3.71bn of Core EDA at Cadence (70 percent of $5,296.8m).",
-    "note": "Firm shares converted to country by parent-company headquarters. Synopsys (US, $7,054.2m total revenue FY2025, of which the EDA product group was 62.0 percent, Design IP 24.8 and the newly acquired Ansys 10.7) and Cadence (US, $5,296.8m FY2025, of which Core EDA was 70 percent) hold roughly seven-tenths of the EDA tool revenue the row counts; Keysight EDA and PDF Solutions add to the US column. The single largest judgment call is Siemens EDA, the former Mentor Graphics: it is run from Wilsonville, Oregon but owned by Siemens AG, so it is assigned to DE, consistent with the Zeiss=DE convention. Assigning it to the US instead would put the US near 87 percent and drop DE to about 1. Siemens does not disclose EDA revenue separately in its annual report, which makes the German column the least certain number in the row and is why the row is an estimate. SemiAnalysis estimated in May 2026 that Siemens EDA had $2.2bn to $2.5bn of revenue in 2025, in an industry it sized at $18bn including design IP. JP is Zuken plus Altium, which Renesas acquired in 2024. CN is Empyrean, Primarius, Semitronix and X-Epic, still concentrated in analog and packaging tools, short of a full digital flow. Excludes design IP, which is carried separately under Core IP. CSET's own 2019 figure, carried as node N84 in ETO's provision table, is the United States at 96 percent, because CSET assigns Mentor Graphics to the US.",
+    "method": "An in-house estimate for 2025. The United States column is based on SIA and BCG's measurement of EDA and core IP together. That measurement was 74 percent American and 20 percent European in 2019 (2021 report, Exhibit 14) and 68 and 25 in 2022 (2024 report, Exhibit 2). The EDA-only split then comes from the two American vendors' filed revenue: $4.37bn of EDA product-group revenue at Synopsys in FY2025 (62.0 percent of $7,054.2m) and $3.71bn of Core EDA at Cadence (70 percent of $5,296.8m).",
+    "note": "Firm shares converted to country by parent-company headquarters. Synopsys and Cadence, both American, hold roughly seven-tenths of the EDA tool revenue the row counts. Synopsys had $7,054.2m of total revenue in FY2025, of which the EDA product group was 62.0 percent, Design IP 24.8 and the newly acquired Ansys 10.7. Cadence had $5,296.8m of total revenue in FY2025, of which Core EDA was 70 percent. Keysight EDA and PDF Solutions add to the US column. The largest judgment call is Siemens EDA, the former Mentor Graphics. It is run from Wilsonville, Oregon, but owned by Siemens AG, so the row assigns it to DE under the same parent-company rule that puts Zeiss in DE. Assigning it to the US instead would put the US near 87 percent and drop DE to about 1. Siemens does not disclose EDA revenue separately in its annual report. That gap makes the German column the least certain number in the row, and it is the reason the row is an estimate. SemiAnalysis estimated in May 2026 that Siemens EDA had $2.2bn to $2.5bn of revenue in 2025, in an industry it sized at $18bn including design IP. JP is Zuken plus Altium, which Renesas acquired in 2024. CN is Empyrean, Primarius, Semitronix and X-Epic, which still focus on analog and packaging tools and lack a full digital flow, the complete chain of tools needed to design a digital chip. The row excludes design IP, which is counted separately under Core IP. CSET's own 2019 figure, carried as node N84 in ETO's provision table, puts the United States at 96 percent, because CSET assigns Mentor Graphics to the US.",
     "sources": [
       "https://www.semiconductors.org/wp-content/uploads/2021/05/BCG-x-SIA-Strengthening-the-Global-Semiconductor-Value-Chain-April-2021_1.pdf",
       "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf",
@@ -26,7 +26,7 @@
     ],
     "source": "https://www.semiconductors.org/wp-content/uploads/2021/05/BCG-x-SIA-Strengthening-the-Global-Semiconductor-Value-Chain-April-2021_1.pdf",
     "aiCritical": true,
-    "trend": "Static concentration since 2021, except that China's share roughly tripled off a tiny base after the 2025 US export-license episode pushed domestic buyers toward Empyrean and its peers."
+    "trend": "Concentration has been static since 2021, except that China's share roughly tripled from a tiny base. The rise came after the United States required an export license for design-software sales to China from May to July 2025, which pushed Chinese buyers toward Empyrean and its peers."
   },
   {
     "segment": "Core IP",
@@ -43,8 +43,8 @@
     },
     "hhi": 3958,
     "top2": 88,
-    "method": "A CHOKEPOINTS estimate for 2025, built from the design-IP licensing and royalty revenue the largest vendors file (Arm $4,920m in the year to March 2026, Synopsys $1,752m of Design IP in FY2025, Cadence about $742m, or 14 percent of revenue) and moved on from CSET's 2019 split of the segment, carried as node N85 in ETO's provision table, which was US 52, GB 43, CN 2, TW 1 on a $3.9bn market. The denominator is an estimate: Imagination, SiFive and the Chinese houses publish nothing comparable. SEMI's ESD Alliance counted $7.87bn of semiconductor IP revenue in 2025, the sum of its four quarterly reports, and does not name the firms it counts. If Arm is among them, Arm's revenue for the year to March 2026 would be more than three-fifths of that total, above the 48 percent in this estimate.",
-    "note": "GB is Arm (Cambridge, revenue $4,920m in the year to March 2026, of which royalties were $2,613m); Other is Imagination Technologies and smaller vendors. Arm is majority-owned by SoftBank of Japan, so a cut by ownership would move those 48 points from GB to JP. US is Synopsys IP, Cadence IP, Rambus, SiFive and Ceva; Alphawave moves from GB to the US column with Qualcomm's acquisition, announced in 2025. CN is VeriSilicon and the domestic RISC-V houses. TW is eMemory. Shares are of design-IP licensing and royalty revenue, with no count of chips shipped using the IP, and the row is an estimate because the four vendors that file cover about four-fifths of it and the rest is private.",
+    "method": "An in-house estimate for 2025, built from the design-IP licensing and royalty revenue the largest vendors file (Arm $4,920m in the year to March 2026, Synopsys $1,752m of Design IP in FY2025, Cadence about $742m, or 14 percent of revenue). It updates CSET's 2019 split of the segment, carried as node N85 in ETO's provision table, which was US 52, GB 43, CN 2, TW 1 on a $3.9bn market. The denominator is an estimate, because Imagination, SiFive and the Chinese vendors publish nothing comparable. SEMI's ESD Alliance counted $7.87bn of semiconductor IP revenue in 2025, the sum of its four quarterly reports. It does not name the firms it counts. If Arm is among them, Arm's revenue for the year to March 2026 would be more than three-fifths of that total, above the 48 percent in this estimate.",
+    "note": "GB is Arm, based in Cambridge, with revenue of $4,920m in the year to March 2026, of which royalties were $2,613m. Arm is majority-owned by SoftBank of Japan, so a split by ownership would move those 48 points from GB to JP. US is Synopsys IP, Cadence IP, Rambus, SiFive and Ceva. Alphawave moves from GB to the US column with Qualcomm's acquisition, announced in 2025. CN is VeriSilicon and the Chinese vendors of designs based on RISC-V, an open processor instruction set that needs no license. TW is eMemory. Other is Imagination Technologies and smaller vendors. Shares are of design-IP licensing and royalty revenue and do not count chips shipped using the IP. The row is an estimate because the four vendors that file public accounts cover about four-fifths of it, and the rest comes from private firms.",
     "sources": [
       "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm",
       "https://www.sec.gov/Archives/edgar/data/883241/000088324125000028/snps-20251031.htm",
@@ -57,7 +57,7 @@
     ],
     "source": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm",
     "aiCritical": false,
-    "trend": "Broadly stable UK-US duopoly since 2021, with RISC-V eroding Arm's position at the margin and Chinese IP vendors growing from about 2 percent to about 5 percent."
+    "trend": "The UK-US duopoly has been broadly stable since 2021. RISC-V designs have taken a small amount of business from Arm, and Chinese IP vendors' share has grown from about 2 percent to about 5 percent."
   },
   {
     "segment": "Silicon wafers",
@@ -75,8 +75,8 @@
     },
     "hhi": 3464,
     "top2": 72,
-    "method": "Country shares of the silicon wafer market published by Japan's Ministry of Economy, Trade and Industry in December 2025, from Fuji Keizai's semiconductor materials survey, on a headquarters basis. Japan's 53 percent is printed on the chart; the other columns are measured off the chart's vector geometry, which reproduces every printed label on the slide exactly and sums to 100.",
-    "note": "Polished and epitaxial silicon wafers for semiconductor use, by revenue and by parent-company headquarters. JP is Shin-Etsu Handotai and SUMCO; TW is GlobalWafers; KR is SK Siltron; DE is Siltronic, and carries the source's whole European column, which also contains Finland's Okmetic, owned by China's National Silicon Industry Group. There is no meaningful US-headquartered merchant wafer supplier, which is why US is zero even though Shin-Etsu, SUMCO, Siltronic and GlobalWafers all operate US plants. The source publishes no China column at either 2021 or 2023, so Zing Semiconductor, NSIG, Simgui, TCL Zhonghuan and Gritek sit inside the five-point Other column; CSET put China under 5 percent of wafers in 2019, and under 1 percent of 300 mm wafers. Eswin, the largest Chinese maker of 300 mm wafers, says in its October 2025 prospectus that it alone had about 6 percent of global 300 mm shipments in 2024 and about 7 percent of capacity at the end of that year, and its 2026 half-year report puts its share of shipments at about 7.7 percent in the first half of 2026. Siltronic's 2025 annual report says the five largest makers, itself included, meet roughly 75 percent of global demand, on a measure it does not define, which leaves more room for other suppliers than the five-point Other column. The 2019 CSET split, carried as node N26 in ETO's provision table, was JP 56, TW 16, DE 14, KR 10, CN 4 on a $10.9bn market, so the movement since is Japanese and German share going to Taiwan and Korea. SEMI put silicon wafer revenue at $11.4bn in 2025.",
+    "method": "Country shares of the silicon wafer market published by Japan's Ministry of Economy, Trade and Industry in December 2025, from Fuji Keizai's semiconductor materials survey, on a headquarters basis. Japan's 53 percent is printed on the chart. The other columns are measured from the exact bar shapes stored in the PDF. Those measurements reproduce every printed label on the slide exactly and sum to 100.",
+    "note": "Polished and epitaxial silicon wafers for semiconductor use, by revenue and by parent-company headquarters. An epitaxial wafer is a polished wafer with an extra layer of crystal grown on top. JP is Shin-Etsu Handotai and SUMCO, TW is GlobalWafers and KR is SK Siltron. DE is Siltronic, and it carries the source's whole European column, which also includes Finland's Okmetic, owned by China's National Silicon Industry Group (NSIG). The US column is zero because no meaningful merchant wafer supplier, one that sells its wafers to chipmakers, is headquartered in the US. Shin-Etsu, SUMCO, Siltronic and GlobalWafers all operate US plants, but the row counts them by headquarters. The source publishes no China column for either 2021 or 2023, so Zing Semiconductor, NSIG, Simgui, TCL Zhonghuan and Gritek sit inside the five-point Other column. CSET put China under 5 percent of wafers in 2019, and under 1 percent of 300 mm wafers. Eswin, the largest Chinese maker of 300 mm wafers, says in its October 2025 prospectus that it alone had about 6 percent of global 300 mm shipments in 2024. It also says it had about 7 percent of capacity at the end of that year. Its 2026 half-year report puts its share of shipments at about 7.7 percent in the first half of 2026. Siltronic's 2025 annual report says the five largest makers, itself included, meet roughly 75 percent of global demand, on a measure it does not define. That leaves more room for other suppliers than the five-point Other column does. CSET's 2019 split, carried as node N26 in ETO's provision table, was JP 56, TW 16, DE 14, KR 10, CN 4 on a $10.9bn market. So since 2019, Japanese and German share has gone to Taiwan and Korea. SEMI put silicon wafer revenue at $11.4bn in 2025.",
     "sources": [
       "https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf",
       "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv",
@@ -87,7 +87,7 @@
     ],
     "source": "https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf",
     "aiCritical": true,
-    "trend": "Almost flat on this measure between the source's two cuts: Japan 52 percent in 2021 against 53 in 2023 as printed, Taiwan 19.0 in both, Korea 13.1 against 13.0, Europe 10.3 against 10.0. The movement is at the mature diameters and inside the Other column, where the Chinese 300 mm entrants sit; CSET had China under 5 percent in 2019 and under 1 percent of 300 mm wafers, and Eswin alone had about 6 percent of global 300 mm shipments in 2024 and about 7.7 percent in the first half of 2026."
+    "trend": "Shares barely moved on this measure between the source's 2021 and 2023 figures. Japan went from 52 percent to 53 as printed, Korea from 13.1 to 13.0 and Europe from 10.3 to 10.0, and Taiwan held at 19.0. The change is in the older, smaller wafer sizes and inside the Other column, where the Chinese 300 mm entrants sit. CSET had China under 5 percent in 2019 and under 1 percent of 300 mm wafers. Eswin alone had about 6 percent of global 300 mm shipments in 2024 and about 7.7 percent in the first half of 2026."
   },
   {
     "segment": "Photoresist",
@@ -104,15 +104,15 @@
     },
     "hhi": 6295,
     "top2": 91,
-    "method": "Country shares of the photoresist market published by Japan's Ministry of Economy, Trade and Industry in December 2025, from Fuji Keizai's semiconductor materials survey, on a headquarters basis. Japan's 78 percent is printed on the chart and is used as printed; the other columns are measured off the chart's vector geometry, which reproduces every printed label on the slide exactly, so the row sums to 99.6.",
-    "note": "Japanese companies, among them JSR, Tokyo Ohka Kogyo, Shin-Etsu Chemical, Sumitomo Chemical and Fujifilm, held 78 percent of photoresist revenue in 2023 on METI's count by company nationality, and a materially higher share of EUV resist, where Japan is close to a monopoly and where CSET found China has nothing at all. US is DuPont, Merck's US-based EMD Electronics business and the pre-commercial metal-oxide house Inpria; the source shows no separate European column. KR is Dongjin Semichem and SK Materials Performance. The Other column is 2.4 points and is where the Chinese suppliers sit, Kempur, Nata and Jingrui, which serve mostly i-line and KrF grades; CSET put China under 5 percent of a $3.3bn photoresist market in 2019. JSR was taken private by the state-backed Japan Investment Corporation in 2024, which makes the Japanese position a policy instrument as well as a commercial one. CSET states that Japan dominates photoresist with 90 percent of the market on 2019 data, a figure on a narrower base and six years older than this one.",
+    "method": "Country shares of the photoresist market published by Japan's Ministry of Economy, Trade and Industry in December 2025, from Fuji Keizai's semiconductor materials survey, on a headquarters basis. Japan's 78 percent is printed on the chart and is used as printed. The other columns are measured from the exact bar shapes stored in the PDF, and those measurements reproduce every printed label on the slide exactly. With Japan as printed and the rest measured, the row sums to 99.6.",
+    "note": "Japanese companies, among them JSR, Tokyo Ohka Kogyo, Shin-Etsu Chemical, Sumitomo Chemical and Fujifilm, held 78 percent of photoresist revenue in 2023 on METI's count by company nationality. They held a materially higher share of EUV resist, where Japan is close to a monopoly and where CSET found China has nothing at all. US is DuPont, Merck's US-based EMD Electronics business and Inpria, a pre-commercial maker of metal-oxide resist. The source shows no separate European column. KR is Dongjin Semichem and SK Materials Performance. The Chinese suppliers, Kempur, Nata and Jingrui, sit in the 2.4-point Other column and serve mostly i-line and KrF grades, the resists for older, longer-wavelength lithography. CSET put China under 5 percent of a $3.3bn photoresist market in 2019. The state-backed Japan Investment Corporation took JSR private in 2024. That makes Japan's position in photoresist a policy tool as well as a commercial one. CSET states that Japan dominates photoresist with 90 percent of the market on 2019 data, a figure on a narrower base and six years older than this one.",
     "sources": [
       "https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf",
       "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf"
     ],
     "source": "https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf",
     "aiCritical": true,
-    "trend": "METI prints Japan at 77 percent in 2021 and 78 in 2023 on the same measure, so the Japanese position is not eroding at the category level. Korea rose from 4.2 to 6.4 over the same two years and the unattributed Other column, where the Chinese suppliers sit, fell from 5.7 to 2.4. Chinese and Korean firms have qualified mature-node resists; EUV resist remains Japanese."
+    "trend": "METI prints Japan at 77 percent in 2021 and 78 in 2023 on the same measure, so Japan's share of photoresist as a whole is not falling. Korea rose from 4.2 to 6.4 over the same two years, and the unattributed Other column, where the Chinese suppliers sit, fell from 5.7 to 2.4. Chinese and Korean firms have had resists for older chip generations (mature nodes) approved by chipmakers, but EUV resist remains Japanese."
   },
   {
     "segment": "Specialty gases",
@@ -131,15 +131,15 @@
     },
     "hhi": 1756,
     "top2": 43,
-    "method": "A CHOKEPOINTS model: no allowed source splits electronic gases by country as a category. The shares are built from the supplier set CSET lists for the segment, a $6bn market in 2019 that CSET sources to SEMI, weighted by the firms' electronic-gas businesses, and checked against the molecule-level country shares METI published in December 2025.",
-    "note": "Electronic specialty and bulk gases for fabs, which is the row's weakness: it mixes the bulk industrial gases where Linde, Air Liquide and Air Products dominate with the specialty molecules where Japan and Korea do. Firm-to-country mapping: JP is Nippon Sanso Holdings/Taiyo Nippon Sanso, Resonac (formerly Showa Denko) and Kanto Denka, which lead in fluorinated etch gases. DE is Linde and Merck; Linde plc is legally domiciled in the UK and Ireland after the Praxair merger but is treated as DE here on operating-history grounds, which is a defensible but arguable call. EU-other is Air Liquide of France. US is Air Products and Entegris. KR is SK Specialty and Wonik. CN is Huate Gas, Jinhong Gas and PERIC. On the molecules that matter for etch and clean, the Japanese column understates Japan by a wide margin and the row understates China's leverage: METI, publishing Fuji Keizai's 2023 survey, puts Japan at 92 percent of fluorine gas mixtures, 97 of carbonyl sulfide, 77 of hydrogen bromide, 72 of HFC etch gases, 65 of chlorine gases and 61 of PFC etch gases, while Korea holds 47 percent of nitrogen trifluoride and China 24 percent of it and 13 percent of HFC etch gases. China also supplies most of the world's rare gases, a position that strengthened after Ukrainian neon production stopped in 2022. The least well-measured segment in the matrix: CSET names the suppliers and the market size and publishes no shares.",
+    "method": "An in-house model, because no allowed source splits electronic gases by country as a category. The shares start from the suppliers CSET lists for the segment, a $6bn market in 2019 that CSET sources to SEMI. The model weights each firm by the size of its electronic-gas business and checks the result against the country shares for individual gases that METI published in December 2025.",
+    "note": "Electronic specialty and bulk gases for fabs. The row's weakness is that it mixes the bulk industrial gases, where Linde, Air Liquide and Air Products dominate, with the specialty molecules, where Japan and Korea dominate. Firm-to-country mapping: JP is Nippon Sanso Holdings/Taiyo Nippon Sanso, Resonac (formerly Showa Denko) and Kanto Denka, which lead in fluorinated etch gases. DE is Linde and Merck. Linde plc is legally domiciled in the UK and Ireland after the Praxair merger, but the row treats it as DE because of its operating history. That call could be argued either way. EU-other is Air Liquide of France. US is Air Products and Entegris. KR is SK Specialty and Wonik. CN is Huate Gas, Jinhong Gas and PERIC. For the molecules used in etch and clean, the Japanese column understates Japan by a wide margin, and the row understates China's position. METI, publishing Fuji Keizai's 2023 survey, puts Japan at 92 percent of fluorine gas mixtures, 97 of carbonyl sulfide, 77 of hydrogen bromide, 72 of hydrofluorocarbon (HFC) etch gases, 65 of chlorine gases and 61 of perfluorocarbon (PFC) etch gases. In the same survey Korea holds 47 percent of nitrogen trifluoride, and China holds 24 percent of it and 13 percent of HFC etch gases. China also supplies most of the world's rare gases, a position that strengthened after Ukrainian neon production stopped in 2022. Specialty gases are the least well-measured segment in the matrix, because CSET names the suppliers and the market size but publishes no shares.",
     "sources": [
       "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf",
       "https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf"
     ],
     "source": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf",
     "aiCritical": false,
-    "trend": "China's share has risen since 2021 as it displaced Ukrainian and Russian rare-gas supply and moved up the value chain in fluorinated gases."
+    "trend": "China's share has risen since 2021, as Chinese suppliers replaced Ukrainian and Russian rare gases and moved into higher-value fluorinated gases."
   },
   {
     "segment": "EUV lithography tools",
@@ -154,14 +154,14 @@
     "hhi": 10000,
     "top2": 100,
     "method": "Node N20 in ETO's provision table: CSET's analysis of TechInsights 2025 data on a $13bn market, published in July 2026. ASML is the only supplier, so the country column is the firm column.",
-    "note": "ASML is the sole supplier, on a 2025 market of about $13bn. ASML's annual report records 48 EUV systems recognized in 2025, four EXE and 44 NXE, out of 535 systems sold in units. The 100 percent figure is a vendor-headquarters number and hides the real geography: Carl Zeiss SMT (DE) makes the projection and illumination optics and is the only firm that can, Trumpf (DE) makes the CO2 drive lasers, and Cymer (US, San Diego, an ASML subsidiary) makes the light sources. In 2025 ASML bought €4.4bn from Zeiss alone across its whole business, more than a quarter of the €16.2bn it spent with all its suppliers. China has no EUV tool and no credible near-term path to one; its published work remains at the laser-discharge-plasma source and research-stage level. The underlying market shares are TechInsights', relayed by CSET.",
+    "note": "ASML is the sole supplier, on a 2025 market of about $13bn. ASML's annual report records revenue from 48 EUV systems in 2025 (four EXE and 44 NXE), out of 535 systems sold. The 100 percent figure counts the vendor's headquarters and hides where the parts are made. Carl Zeiss SMT (DE) makes the projection and illumination optics and is the only firm that can. Trumpf (DE) makes the CO2 drive lasers, and Cymer (US, San Diego, an ASML subsidiary) makes the light sources. In 2025 ASML bought €4.4bn from Zeiss alone across its whole business, more than a quarter of the €16.2bn it spent with all its suppliers. China has no EUV tool and no credible near-term path to one. Its published work has not gone beyond research and a laser-discharge-plasma light source. The underlying market shares are TechInsights', relayed by CSET.",
     "sources": [
       "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv",
       "https://ourbrand.asml.com/m/71076aaad607de4d/original/asml-2025-annual-report-based-on-us-gaap.pdf"
     ],
     "source": "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv",
     "aiCritical": true,
-    "trend": "Unchanged at 100 percent since the technology shipped; the only movement is upward in value per tool as High-NA EXE:5200 systems enter the mix."
+    "trend": "Unchanged at 100 percent since the technology shipped. The only change is a higher value per tool, as ASML adds its newer and costlier High-NA EXE:5200 systems to its sales."
   },
   {
     "segment": "DUV lithography tools",
@@ -175,8 +175,8 @@
     },
     "hhi": 9050,
     "top2": 100,
-    "method": "Weighted here across the three DUV nodes in ETO's provision table on their stated 2025 market sizes: ArF immersion ($11.7bn, ASML 99.3 percent, N22), ArF dry ($508m, ASML 94.4, N21) and KrF ($1.7bn, ASML 66, N105). The $13.9bn weighted total gives NL 95.1 and JP 4.9; the underlying shares are TechInsights' data analyzed by CSET.",
-    "note": "Revenue-weighted across the three DUV classes in the CSET/ETO 2025 data: ArF immersion ($11.7bn, ASML 99.3 percent and 0.7 left with Japan, unattributed to a firm in the source), ArF dry ($0.51bn, ASML 94.4, Nikon 5.6) and KrF ($1.7bn, ASML 66, mostly Canon and Nikon at 34). ASML's own 2025 figures are consistent: 131 ArF immersion systems for EUR 10,311m, 16 ArF dry for EUR 427m and 78 KrF for EUR 1,001m. Excludes i-line, which is not DUV and where Canon leads with 53.7 percent; including i-line would roughly double Japan's share of the wider optical-lithography market. China's SMEE is not visible in DUV revenue; its best delivered tool remains 90 nm-class immersion-free, with a 28 nm-class ArF immersion scanner still in development.",
+    "method": "The row weights the three DUV nodes in ETO's provision table by their stated 2025 market sizes: ArF immersion ($11.7bn, ASML 99.3 percent, N22), ArF dry ($508m, ASML 94.4, N21) and KrF ($1.7bn, ASML 66, N105). Across the $13.9bn combined market, that gives NL 95.1 and JP 4.9. The underlying shares are TechInsights' data, analyzed by CSET.",
+    "note": "Revenue-weighted across the three DUV classes in the CSET/ETO 2025 data. In ArF immersion ($11.7bn), ASML had 99.3 percent, and the source leaves the other 0.7 with Japan without naming a firm. In ArF dry ($0.51bn), ASML had 94.4 and Nikon 5.6. In KrF ($1.7bn), ASML had 66, and the other 34 is mostly Canon and Nikon. ASML's own 2025 figures are consistent: 131 ArF immersion systems for EUR 10,311m, 16 ArF dry for EUR 427m and 78 KrF for EUR 1,001m. The row excludes i-line tools, an older type that is not DUV and where Canon leads with 53.7 percent. Including i-line would roughly double Japan's share of the wider optical-lithography market. China's SMEE does not show up in DUV revenue. Its best delivered tool remains a 90 nm-class scanner without immersion, and its 28 nm-class ArF immersion scanner is still in development.",
     "sources": [
       "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv",
       "https://ourbrand.asml.com/m/71076aaad607de4d/original/asml-2025-annual-report-based-on-us-gaap.pdf",
@@ -184,7 +184,7 @@
     ],
     "source": "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv",
     "aiCritical": true,
-    "trend": "ASML's DUV share has held near 95 percent since 2021, while China's share of its net system sales fell from 41 percent in 2024 to 33 percent in 2025."
+    "trend": "ASML's DUV share has held near 95 percent since 2021. China's share of ASML's net system sales fell from 41 percent in 2024 to 33 percent in 2025."
   },
   {
     "segment": "Deposition tools",
@@ -205,15 +205,15 @@
     },
     "hhi": 4059,
     "top2": 74,
-    "method": "Node N36 in ETO's provision table: CSET's analysis of TechInsights 2025 data on a $26.2bn market, published in July 2026. The source's Swiss and British columns are grouped here into Other and its French column into EU-other; every other column is as published.",
-    "note": "Covers CVD, ALD, PVD, epitaxy and electrochemical plating for front-end wafer processing. Firm-to-country mapping: US is Applied Materials, which is 41.2 points of the American column on its own, plus Lam Research at 16.9 and Veeco at 1.3; JP is Tokyo Electron (9.7) and Kokusai Electric (3.3); NL is ASM International (10.9), which leads atomic layer deposition; CN is NAURA (6.3) and Piotech (2.6); KR is Wonik IPS and Jusung; Other is mostly Swiss and UK suppliers. The shares are TechInsights' measurement, relayed by CSET.",
+    "method": "Node N36 in ETO's provision table: CSET's analysis of TechInsights 2025 data on a $26.2bn market, published in July 2026. The source's Swiss and British columns are grouped here into Other and its French column into EU-other. Every other column is as published.",
+    "note": "Covers chemical and physical vapor deposition (CVD, PVD), atomic layer deposition (ALD), epitaxy and electrochemical plating for front-end wafer processing. Firm-to-country mapping: US is Applied Materials (41.2 points on its own), Lam Research (16.9) and Veeco (1.3). JP is Tokyo Electron (9.7) and Kokusai Electric (3.3). NL is ASM International (10.9), which leads ALD. CN is NAURA (6.3) and Piotech (2.6). KR is Wonik IPS and Jusung, and Other is mostly Swiss and UK suppliers. The shares are TechInsights' measurement, relayed by CSET.",
     "sources": [
       "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv",
       "https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/"
     ],
     "source": "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv",
     "aiCritical": true,
-    "trend": "China's share rose from 2 percent in 2019 to 7 percent in 2024 on CSET's earlier count, and this row's 2025 data puts it at 9.8 percent, among the largest Chinese gains in the equipment chain."
+    "trend": "China's share rose from 2 percent in 2019 to 7 percent in 2024 on CSET's earlier count. This row's 2025 data puts it at 9.8 percent, among the largest Chinese gains in the equipment chain."
   },
   {
     "segment": "Etch tools",
@@ -235,7 +235,7 @@
     "hhi": 3941,
     "top2": 85,
     "method": "Node N55 in ETO's provision table: CSET's analysis of TechInsights 2025 data on a $29.1bn etch-and-clean market, published in July 2026. The source's 'various countries' column is carried here as Other.",
-    "note": "Firm-to-country mapping: US is Lam Research (36.7 points) and Applied Materials (12.7), plus ACM Research (2.4), which is US-listed but operates chiefly through its Shanghai subsidiary and so arguably belongs partly in the CN column; JP is Tokyo Electron (22.1), SCREEN Holdings (7.8) and Hitachi High-Tech (1.7) on the clean side; CN is NAURA (5.2) and AMEC (4.4). CSIS reports Chinese tool vendors already hold about 40 percent of their own domestic etch and thin-film deposition market, which matters more than their global share. The shares are TechInsights' measurement, relayed by CSET.",
+    "note": "Firm-to-country mapping: US is Lam Research (36.7 points), Applied Materials (12.7) and ACM Research (2.4). ACM Research is US-listed but operates mainly through its Shanghai subsidiary, so it arguably belongs partly in the CN column. JP is Tokyo Electron (22.1), SCREEN Holdings (7.8) and Hitachi High-Tech (1.7) on the clean side. CN is NAURA (5.2) and AMEC (4.4). CSIS reports that Chinese tool vendors already hold about 40 percent of China's own etch and thin-film deposition market, which matters more than their global share. The shares are TechInsights' measurement, relayed by CSET.",
     "sources": [
       "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv",
       "https://www.csis.org/analysis/chinas-localization-drive-semiconductors-gains-impetus-allied-chip-export-controls",
@@ -243,7 +243,7 @@
     ],
     "source": "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv",
     "aiCritical": true,
-    "trend": "China's share rose from under 3 percent in 2019 to almost 9 percent in 2024 on CSET's earlier count, and to 10.1 percent in 2025, with AMEC the clearest case of a Chinese tool vendor reaching commercial parity at mature nodes."
+    "trend": "China's share rose from under 3 percent in 2019 to almost 9 percent in 2024 on CSET's earlier count, and to 10.1 percent in 2025. AMEC is the clearest case of a Chinese tool vendor competing on equal terms with foreign vendors at mature nodes, the older chip generations."
   },
   {
     "segment": "Metrology & inspection tools",
@@ -266,14 +266,14 @@
     "hhi": 5412,
     "top2": 86,
     "method": "Node N60 in ETO's provision table: CSET's analysis of TechInsights 2025 process-control data on a $15.7bn market, published in July 2026. The source's Hungarian column is carried here as EU-other and its 'various countries' column as Other.",
-    "note": "Firm-to-country mapping: US is KLA, which at 56.8 points is over half the market on its own, plus Applied Materials (11.2) and Onto Innovation (2.6); JP is Lasertec (6.4), Hitachi High-Tech (6.2) and Rigaku (1.2); NL is ASML's YieldStar overlay and metrology line (5.9); IL is Nova (4.3) and Camtek (1.6); EU-other is Hungary; DE is Carl Zeiss AIMS mask metrology. Two chokepoints are invisible at this resolution: Lasertec holds effectively all actinic EUV mask-blank inspection, and Zeiss holds all AIMS EUV aerial-image mask review. The shares are TechInsights' measurement, relayed by CSET.",
+    "note": "Firm-to-country mapping: US is KLA (56.8 points, over half the market on its own), Applied Materials (11.2) and Onto Innovation (2.6). JP is Lasertec (6.4), Hitachi High-Tech (6.2) and Rigaku (1.2). NL is ASML's YieldStar overlay and metrology line (5.9). Overlay is how well each patterned layer lines up with the one below. IL is Nova (4.3) and Camtek (1.6), EU-other is Hungary and DE is Carl Zeiss AIMS mask metrology. Two chokepoints do not show at this level of detail. Lasertec holds effectively all actinic EUV mask-blank inspection, which checks blank masks using EUV light itself. Zeiss holds all AIMS EUV aerial-image mask review, which checks how a finished mask's pattern will print. The shares are TechInsights' measurement, relayed by CSET.",
     "sources": [
       "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv",
       "https://static.cninfo.com.cn/finalpage/2026-04-25/1225182755.PDF"
     ],
     "source": "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv",
     "aiCritical": true,
-    "trend": "The most durable US position in the chain; China held 0.7 percent globally in 2025 on CSET's count, though Skyverse (Shenzhen Zhongke Feice) alone reported 2025 revenue equal to about 1.8 percent of this market."
+    "trend": "Metrology and inspection is the most durable US position in the chain. China held 0.7 percent globally in 2025 on CSET's count, though Skyverse (Shenzhen Zhongke Feice) alone reported 2025 revenue equal to about 1.8 percent of this market."
   },
   {
     "segment": "Photomasks",
@@ -288,8 +288,8 @@
     },
     "hhi": 4458,
     "top2": 93,
-    "method": "CSET's 2019 country split for photomasks, carried machine-readably as node N33 in ETO's provision table: Japan 53, the United States 40, Taiwan 7 on a roughly $4bn market, and counting captive mask shops alongside merchants. CSET built it from company financial statements.",
-    "note": "The oldest figure in the matrix, and the weakest. Counting captive mask shops alongside merchants is why the US share is so high: Intel's and GlobalFoundries' in-house mask operations sit in the US column, TSMC's in TW, Samsung's in KR, and captive shops held 66 percent of photomask revenue in 2025 on SEMI's count, as relayed by Photronics. JP is Toppan (renamed Tekscend in 2024), Dai Nippon Printing and Hoya. METI's December 2025 slide, from Fuji Keizai's survey, gives a newer split by company headquarters for 2023: Japan 19 percent as printed and, measured off the chart, the United States about 11 and Taiwan about 2, with about 68 percent in an Other column the slide does not break down. That Other column is close to the 63 percent captive share SEMI counted for 2023, so the two splits cannot be compared column by column. What has changed since 2019: the total market is now above $5bn, captive share has stayed near two-thirds, Photronics has added US, Taiwan and China capacity, and Hoya has become the acute chokepoint in EUV mask blanks, a dependency that does not appear in a revenue split at all. Hoya's own estimate for the year to March 2026, drawn as a pie chart without numbers, shows it with about four-fifths of that market and a single rival with the rest. The country columns are indicative only, and date from 2019.",
+    "method": "CSET's 2019 country split for photomasks, carried as node N33 in ETO's provision table, is Japan 53, the United States 40 and Taiwan 7 on a roughly $4bn market. It counts chipmakers' own captive mask shops alongside merchant suppliers. CSET built it from company financial statements.",
+    "note": "The photomask split is the oldest figure in the matrix and the weakest. The US share is high because the split counts captive mask shops alongside merchants. Intel's and GlobalFoundries' in-house mask operations sit in the US column, TSMC's in TW and Samsung's in KR. Captive shops held 66 percent of photomask revenue in 2025 on SEMI's count, as relayed by Photronics. JP is Toppan (renamed Tekscend in 2024), Dai Nippon Printing and Hoya. METI's December 2025 slide, from Fuji Keizai's survey, gives a newer split by company headquarters for 2023. It prints Japan at 19 percent. Measured off the chart, the United States is about 11 percent and Taiwan about 2, with about 68 percent in an Other column that the slide does not break down. That Other column is close to the 63 percent captive share SEMI counted for 2023, so the two splits cannot be compared column by column. Since 2019 the total market has grown above $5bn, captive share has stayed near two-thirds, and Photronics has added US, Taiwan and China capacity. Hoya has also become the acute chokepoint in EUV mask blanks, the coated glass plates that EUV masks are patterned on. That dependency does not appear in a revenue split at all. Hoya's own estimate for the year to March 2026, drawn as a pie chart without numbers, shows it with about four-fifths of that market and a single rival with the rest. The country columns are indicative only, and date from 2019.",
     "sources": [
       "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv",
       "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf",
@@ -299,7 +299,7 @@
     ],
     "source": "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv",
     "aiCritical": true,
-    "trend": "Japanese blank suppliers have strengthened at the leading edge since 2021. On SEMI's count the captive share of mask revenue went from 65 percent in 2021 to 63 percent in 2022 through 2024 and 66 percent in 2025."
+    "trend": "Japanese mask-blank suppliers have strengthened at the leading edge since 2021. On SEMI's count the captive share of mask revenue went from 65 percent in 2021 to 63 percent in 2022 through 2024 and 66 percent in 2025."
   },
   {
     "segment": "Leading-edge logic manufacturing (<10 nm)",
@@ -313,8 +313,8 @@
     },
     "hhi": 5722,
     "top2": 100,
-    "method": "Logic wafer fabrication capacity below 10 nm by fab location in 2022, from SIA and BCG's 2024 report (Exhibit 6), which draws on Department of Commerce and SEMI data and counts fabs of 5,000 or more wafer starts a month on 8-inch or larger wafers, excluding R&D fabs.",
-    "note": "Capacity is counted by fab location, wherever the company is headquartered, which is where the physical risk sits. In 2022 all of it was in Taiwan and South Korea, and the United States, Japan, Europe and China held none. TSMC's Arizona fab now runs N4 and Intel builds 18A in Arizona, so the US column is no longer zero, but no allowed source publishes a newer split by node. SemiAnalysis put Taiwan's share of the world's advanced-node capacity at over 90 percent in December 2025, without tying the term to a node size or giving other countries' shares. Epoch AI assumed in March 2026 that TSMC alone does about 90 percent of the world's advanced-node fabrication; that is a share by company used as a model input, so it counts TSMC's Arizona output with its Taiwan fabs and cannot replace the 2022 split by fab location.",
+    "method": "Logic wafer fabrication capacity below 10 nm by fab location in 2022, from SIA and BCG's 2024 report (Exhibit 6). The report draws on Department of Commerce and SEMI data. It counts fabs that start 5,000 or more wafers a month on wafers 8 inches or larger, and leaves out R&D fabs.",
+    "note": "The row counts capacity by fab location, wherever the company is headquartered. Fab location is where the physical risk lies. In 2022 all of it was in Taiwan and South Korea, and the United States, Japan, Europe and China held none. TSMC's Arizona fab runs its 4 nm-class N4 process and Intel makes chips on its 18A process in Arizona, so the US column is no longer zero. But no allowed source publishes a newer split by node. SemiAnalysis put Taiwan's share of the world's advanced-node capacity at over 90 percent in December 2025, without tying the term to a node size or giving other countries' shares. Epoch AI assumed in March 2026 that TSMC alone does about 90 percent of the world's advanced-node fabrication. That is a share by company, used as a model input, so it counts TSMC's Arizona output with its Taiwan fabs and cannot replace the 2022 split by fab location.",
     "sources": [
       "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf",
       "https://epoch.ai/data-insights/ai-chip-supply-chain-constraints",
@@ -342,7 +342,7 @@
     "hhi": 2275,
     "top2": 63,
     "method": "Logic wafer fabrication capacity at 28 nm and above by fab location in 2022, from SIA and BCG's 2024 report (Exhibit 6), on the same fab definition as the leading-edge row. Columns sum to 99 because of rounding in the source, and the source's Europe column is carried as EU-other.",
-    "note": "Capacity by fab location. The source's Other column covers Malaysia, Singapore, India and the rest of the world. In a February 2025 filing SIA counted every type of chip made at 28 nm and above, memory and analog included, and put China at 33 percent of that capacity in 2023, up from 19 percent in 2015; that definition is broader than this row's logic-only measure, so the two figures are not directly comparable.",
+    "note": "Capacity by fab location. The source's Other column covers Malaysia, Singapore, India and the rest of the world. In a February 2025 filing SIA counted every type of chip made at 28 nm and above, memory and analog included. It put China at 33 percent of that capacity in 2023, up from 19 percent in 2015. That definition is broader than this row's logic-only measure, so the two figures are not directly comparable.",
     "sources": [
       "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf",
       "https://www.semiconductors.org/wp-content/uploads/2025/02/USTR-2024-0024-00109674-CAT-5016-Public-Document.pdf"
@@ -366,13 +366,13 @@
     "hhi": 5408,
     "top2": 93,
     "method": "Firm shares printed in SK hynix's Form 424B4 prospectus of July 2026 (SK hynix 34.8, Samsung 34.5, Micron 23.5, Others 7.3 for 2025), summed to country by parent-company headquarters. The prospectus attributes the figures to IDC, Worldwide Memory Market Shares.",
-    "note": "The figures are IDC's, adopted by SK hynix in a registered prospectus, which is a company filing with securities-law liability attached. This is revenue, and bits would give a different picture: 2025 was a price spike, so a revenue share says as much about pricing as about who can make what. It is by headquarters: Micron fabs most of its bits in Taiwan and Japan, so a production cut would move them. And 'Others' is unattributed in the source; it is the column holding CXMT, Nanya, Winbond and PSMC, and it grew from 5.1 in 2024 to 7.3 in 2025 and 9.9 in the first quarter of 2026, which is the fastest-moving number in the row.",
+    "note": "The figures are IDC's, adopted by SK hynix in a registered prospectus, a company filing that carries securities-law liability. The shares are of revenue, and a count of memory bits shipped would give a different picture. Prices spiked in 2025, so a revenue share says as much about pricing as about who can make what. The split is also by headquarters. Micron makes most of its bits in Taiwan and Japan, so a split by production site would move them. The source does not name the firms in 'Others', but that column holds China's CXMT and Taiwan's Nanya, Winbond and PSMC. It grew from 5.1 in 2024 to 7.3 in 2025 and 9.9 in the first quarter of 2026, the fastest-moving number in the row.",
     "sources": [
       "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm"
     ],
     "source": "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm",
     "aiCritical": true,
-    "trend": "SK hynix passed Samsung for the first time in 2025 on the strength of HBM, then fell back behind it in the first quarter of 2026. The structural move is the 'Others' column, which has nearly doubled since 2024; SemiAnalysis models CXMT at 9 percent of global DRAM bit shipments in 2025 rising to 12 percent by 2027, in DDR4 and consumer parts, away from the server DDR5 and HBM that AI buyers compete for."
+    "trend": "SK hynix passed Samsung for the first time in 2025 on the strength of HBM, then fell back behind it in the first quarter of 2026. The longer-term change is in the 'Others' column, which has nearly doubled since 2024. SemiAnalysis models CXMT at 9 percent of global DRAM bit shipments in 2025, rising to 12 percent by 2027. Those bits are in DDR4, an older generation of DRAM, and in consumer parts. AI buyers compete instead for server DDR5 and HBM."
   },
   {
     "segment": "HBM",
@@ -387,14 +387,14 @@
     },
     "hhi": 7109,
     "top2": 100,
-    "method": "Firm shares printed in the same SK hynix Form 424B4 prospectus (SK hynix 63.2, Samsung 19.3, Micron 17.4 for 2025), summed to country by parent-company headquarters; columns sum to 99.9 because of rounding in the source. The prospectus attributes the figures to IDC.",
-    "note": "There is no fourth supplier and no Chinese column at all. The prospectus's series also shows how fast the ranking moves on qualification: in 2024 the split was SK hynix 56.4, Samsung 37.8 and Micron 5.8, which is Korea at 94.2; by the first quarter of 2026 Micron was at 23.1 and Korea down to 76.9. The figures are IDC's, carried in SK hynix's registered prospectus. China has no HBM production that clears both the export-control thresholds and the performance bar, which is the binding constraint on Huawei's Ascend line. HBM is itself a controlled item under ECCN 3A090.c, so the segment is unusual in being both extremely concentrated and directly regulated. The base die under HBM4 is now a logic die, which pulls TSMC and Samsung Foundry into a segment that used to be pure memory.",
+    "method": "Firm shares printed in the same SK hynix Form 424B4 prospectus (SK hynix 63.2, Samsung 19.3, Micron 17.4 for 2025), summed to country by parent-company headquarters. Columns sum to 99.9 because of rounding in the source. The prospectus attributes the figures to IDC.",
+    "note": "There is no fourth supplier and no Chinese column at all. The prospectus's figures for other periods also show how fast the ranking moves as suppliers pass or fail customers' qualification tests. In 2024 the split was SK hynix 56.4, Samsung 37.8 and Micron 5.8, which put Korea at 94.2. By the first quarter of 2026 Micron was at 23.1 and Korea was down to 76.9. The figures are IDC's, carried in SK hynix's registered prospectus. China has no HBM production that clears both the export-control thresholds and the performance bar. That gap is the main limit on Huawei's Ascend AI chips. HBM is itself export-controlled, under ECCN 3A090.c, so the segment is unusual in being both extremely concentrated and directly regulated. In HBM4 the base die, the chip at the bottom of the memory stack, is a logic die. That brings TSMC and Samsung Foundry into a segment that used to be pure memory.",
     "sources": [
       "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm"
     ],
     "source": "https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm",
     "aiCritical": true,
-    "trend": "Korea's share has fallen from 94.2 percent in 2024 to 82.5 in 2025 and 76.9 in the first quarter of 2026, entirely to Micron; the ranking among the three moves on qualification wins, and none of the three is Chinese."
+    "trend": "Korea's share has fallen from 94.2 percent in 2024 to 82.5 in 2025 and 76.9 in the first quarter of 2026, all of it lost to Micron. The ranking among the three follows which supplier passes customers' qualification tests, and none of the three is Chinese."
   },
   {
     "segment": "Advanced packaging (2.5D/3D)",
@@ -405,15 +405,15 @@
     "shares": null,
     "hhi": null,
     "top2": null,
-    "method": "No shares. No allowed source publishes 2.5D or 3D packaging capacity by country: TSMC's disclosures, SEMI, SIA and ETO's provision table carry advanced-packaging tools (node N109) and no advanced-packaging capacity.",
-    "note": "The demand side is measured. Epoch AI estimates that Nvidia consumed 60.3 percent of the world's CoWoS capacity in 2025 (90 percent CI 56.5 to 64.3), Google 13.5, AMD 8.4 and Amazon 7.4, and that those four took around 90 percent of all CoWoS and all HBM by value while using about 12 percent of advanced logic die production. That is a split by buyer, and it is the sharpest published measure of how narrow the segment is. Epoch builds the estimate on year-end wafers-per-month benchmarks taken from SemiWiki and TrendForce, so the figure is relayed market research, with no institutional measurement behind it. On the supply side what is documented is dependence: Nvidia's annual report states that it uses CoWoS and names TSMC and Samsung as its foundries, and TSMC's CoWoS lines are in Taiwan; the American additions are Intel's EMIB and Foveros lines in Arizona, Oregon and New Mexico and Amkor's Arizona build, and the Korean ones are Samsung I-Cube and SK hynix's HBM stacking. The geography is overwhelmingly Taiwanese and unmeasured.",
+    "method": "No shares. No allowed source publishes 2.5D or 3D packaging capacity by country. TSMC's disclosures, SEMI, SIA and ETO's provision table carry advanced-packaging tools (node N109) but no advanced-packaging capacity.",
+    "note": "The demand side is measured for CoWoS, TSMC's 2.5D packaging process. Epoch AI estimates that Nvidia consumed 60.3 percent of the world's CoWoS capacity in 2025 (90 percent confidence interval 56.5 to 64.3), Google 13.5, AMD 8.4 and Amazon 7.4. It estimates that those four took around 90 percent of all CoWoS and all HBM by value while using about 12 percent of advanced logic die production. That is a split by buyer, and it is the sharpest published measure of how narrow the segment is. Epoch AI builds the estimate on year-end wafers-per-month benchmarks taken from SemiWiki and TrendForce, so the figure is relayed market research, with no institutional measurement behind it. On the supply side, the public record shows which firms rely on which suppliers. Nvidia's annual report states that it uses CoWoS and names TSMC and Samsung as its foundries, and TSMC's CoWoS lines are in Taiwan. In the United States there are Intel's EMIB and Foveros packaging lines in Arizona, Oregon and New Mexico, and the plant Amkor is building in Arizona. In Korea there are Samsung's I-Cube lines and SK hynix's HBM stacking. The capacity is overwhelmingly in Taiwan, and no allowed source measures it.",
     "sources": [
       "https://epoch.ai/data-insights/ai-chip-supply-chain-constraints",
       "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv"
     ],
     "source": "https://epoch.ai/data-insights/ai-chip-supply-chain-constraints",
     "aiCritical": true,
-    "trend": "Advanced packaging was the binding constraint on AI accelerator output through late 2024 and early 2025; SemiAnalysis reported in March 2026 that CoWoS had eased and front-end wafer capacity had become the dominant bottleneck. On TSMC's July 2026 earnings call its chief executive gave a different account, saying packaging capacity was still so tight that it limited customers' growth. The capacity being added outside Taiwan is real but small against TSMC's base."
+    "trend": "Advanced packaging was the main limit on AI accelerator output through late 2024 and early 2025. SemiAnalysis reported in March 2026 that the CoWoS shortage had eased and front-end wafer capacity had become the main bottleneck. On TSMC's July 2026 earnings call its chief executive gave a different account, saying packaging capacity was still so tight that it limited customers' growth. Capacity is being added outside Taiwan, but it is small next to TSMC's existing capacity."
   },
   {
     "segment": "Assembly, test and packaging (ATP)",
@@ -432,8 +432,8 @@
     },
     "hhi": 2219,
     "top2": 58,
-    "method": "ATP site capacity by country on a $95bn market in 2022, taken from SIA and carried at stage level (S3) in ETO's provision table; SIA and BCG print the same 2022 split in their 2024 report (Exhibit 2). Columns sum to 99 because of rounding in the source.",
-    "note": "Four years old, in the segment that has moved most. SIA's 2025 State of the U.S. Semiconductor Industry report carries a 2024 split on the same site-capacity basis, China 28 percent, Taiwan 20, South Korea 9, Japan 8, Europe 7 and an unattributed Other 26, with the US too small to label; it does not explain Taiwan's fall from 28 to 20 in two years, so the row keeps the 2022 measurement. The merchant OSATs file their own plant lists without the captive half of the stage that would make a denominator. It is by site, so Amkor's plants count in Korea, the Philippines, Vietnam and China and none of them in the United States, which is why the US column is 3. And it counts captive assembly and test inside IDMs and foundries alongside the merchant OSATs, which is most of what Taiwan, Korea and Japan are doing here. The 20-point 'various countries' column is not attributed in the source; SIA and BCG put Southeast Asia, with Malaysia the largest, at about a fifth of global assembly capacity by location in 2022, which is consistent with reading the column that way.",
+    "method": "ATP site capacity by country on a $95bn market in 2022, taken from SIA and carried at stage level (S3) in ETO's provision table. SIA and BCG print the same 2022 split in their 2024 report (Exhibit 2). Columns sum to 99 because of rounding in the source.",
+    "note": "The figure is four years old, in the segment where country shares have moved most. SIA's 2025 State of the U.S. Semiconductor Industry report carries a 2024 split on the same site-capacity basis: China 28 percent, Taiwan 20, South Korea 9, Japan 8, Europe 7 and an unattributed Other 26, with the US too small to label. The report does not explain Taiwan's fall from 28 to 20 in two years, so the row keeps the 2022 measurement. The merchant assembly and test firms (OSATs) file their own plant lists, but those lists leave out the captive half of the stage, so they cannot supply a denominator. The split is by site. Amkor's plants count in Korea, the Philippines, Vietnam and China and none in the United States, so the US column is 3. The split also counts the assembly and test that integrated device makers (IDMs) and foundries do in-house, alongside the merchant OSATs. That in-house work is most of what Taiwan, Korea and Japan do in this stage. The source does not say which countries make up the 20-point 'various countries' column. SIA and BCG put Southeast Asia, with Malaysia the largest, at about a fifth of global assembly capacity by location in 2022, which is consistent with reading that column as Southeast Asia.",
     "sources": [
       "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv",
       "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf",
@@ -441,7 +441,7 @@
     ],
     "source": "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv",
     "aiCritical": false,
-    "trend": "China has the largest single share of assembly and test capacity by site and has been adding it faster than anyone else, which is why the export controls reach packaging tools as well as wafer tools."
+    "trend": "China has the largest single share of assembly and test capacity by site, and it has been adding capacity faster than anyone else. So the export controls reach packaging tools as well as wafer tools."
   },
   {
     "segment": "IC substrates",
@@ -452,8 +452,8 @@
     "shares": null,
     "hhi": null,
     "top2": null,
-    "method": "No shares. Both candidate sources name the suppliers without measuring them: every share field in ETO's Substrates node (N96) is blank, and the White House hundred-day supply chain review of June 2021 names the same firms and lists ABF substrate among the materials commenters flagged, again with no shares.",
-    "note": "ETO's Substrates node lists Ibiden, Shinko, Nan Ya, Samsung, Shennan Circuits, Zhuhai Yueya and AKM against Japan, Korea, Taiwan and China and stops there; the White House review names the same firms the same way. The firms themselves report substrates inside broader electronics segments. The supplier set is therefore the useful part and it is stable: Unimicron, Nan Ya PCB and Kinsus in Taiwan; Ibiden and Shinko Electric Industries in Japan; Samsung Electro-Mechanics, LG Innotek, Simmtech and Daeduck in Korea; AT&S in Austria; Shennan Circuits and Zhen Ding in China. There is no US-headquartered volume supplier, which is what the 2021 review pointed out. The AI-relevant sub-segment is narrower still: the very large, high-layer-count ABF substrates that sit under CoWoS packages come from a handful of Japanese, Taiwanese and Austrian plants, and substrates are the constraint most often named after CoWoS itself. METI said in June 2026 that Japan holds the top share in the high-end package substrates used for AI chips, without giving a figure. AT&S's annual report for 2025/26, citing Prismark, puts the FC-BGA substrate market at $7.5bn in 2025, up 18 percent on 2024. One firm-level number is on the record, from Ibiden's own investor briefing of May 2026: it says it typically takes close to 100 percent of a new generation of interposer-type substrates at launch and loses 20 to 30 points three to six months later.",
+    "method": "No shares. Both candidate sources name the suppliers without measuring them. Every share field in ETO's Substrates node (N96) is blank. The White House hundred-day supply chain review of June 2021 names the same firms, again with no shares. It lists ABF substrate, built up from Ajinomoto's insulating film, among the materials commenters flagged.",
+    "note": "ETO's Substrates node lists Ibiden, Shinko, Nan Ya, Samsung, Shennan Circuits, Zhuhai Yueya and AKM against Japan, Korea, Taiwan and China and gives nothing more. The White House review names the same firms the same way. The firms themselves report substrates inside broader electronics segments. So the list of suppliers is the useful part, and it is stable. The suppliers are Unimicron, Nan Ya PCB and Kinsus in Taiwan; Ibiden and Shinko Electric Industries in Japan; Samsung Electro-Mechanics, LG Innotek, Simmtech and Daeduck in Korea; AT&S in Austria; and Shennan Circuits and Zhen Ding in China. There is no US-headquartered volume supplier, as the 2021 review pointed out. The sub-segment used for AI chips is narrower still. The very large, high-layer-count ABF substrates under CoWoS packages come from a handful of Japanese, Taiwanese and Austrian plants. After CoWoS itself, substrates are the constraint most often named. METI said in June 2026 that Japan holds the top share in the high-end package substrates used for AI chips, without giving a figure. AT&S's annual report for 2025/26, citing Prismark, puts the FC-BGA substrate market at $7.5bn in 2025, up 18 percent on 2024. Ibiden gave the one firm-level number on the record, in its investor briefing of May 2026. It says it typically takes close to 100 percent of a new generation of interposer-type substrates at launch and loses 20 to 30 points three to six months later.",
     "sources": [
       "https://bidenwhitehouse.archives.gov/wp-content/uploads/2021/06/100-day-supply-chain-review-report.pdf",
       "https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/provision.csv",
@@ -462,7 +462,7 @@
     ],
     "source": "https://bidenwhitehouse.archives.gov/wp-content/uploads/2021/06/100-day-supply-chain-review-report.pdf",
     "aiCritical": true,
-    "trend": "Chinese suppliers have grown at mature grades while Japan and Austria have held the high-layer-count ABF business that AI packages need; no allowed source measures the movement."
+    "trend": "Chinese suppliers have grown in mature grades, while Japan and Austria have held the high-layer-count ABF business that AI packages need. No allowed source measures the change."
   },
   {
     "segment": "AI accelerator design",
@@ -478,8 +478,8 @@
     },
     "hhi": 8676,
     "top2": 98,
-    "method": "A CHOKEPOINTS estimate: no allowed source publishes AI accelerator silicon as a market with country shares. The US column is built from the design owners' filed revenue, chiefly Nvidia's $193,737m of data-center revenue in the year to January 2026 out of $215,938m total and Broadcom's $63,887m FY2025 total, of which AI silicon is a large and undisclosed slice; the Chinese column follows CSIS's work on domestic substitution.",
-    "note": "Revenue of AI accelerator silicon attributed to the country of the firm that owns the design, merchant and captive combined. US is Nvidia, whose data-center revenue was $193.7bn in the year to January 2026 out of $215.9bn total, plus AMD's Instinct line, plus the custom ASIC programs that Broadcom ($63.9bn total revenue FY2025) and Marvell design for Google, Meta, OpenAI and Amazon, plus Intel Gaudi. Google TPU and AWS Trainium revenue is credited to the US because the design owner is US even though Broadcom, Alchip and MediaTek do much of the physical implementation; crediting the design-service houses instead would move a few points to TW. CN is Huawei HiSilicon Ascend, Cambricon, Biren, Moore Threads and MetaX. The Chinese column is the softest number in the row: CSIS's March 2026 piece, the basis for it, reports that domestic parts are taking a fast-growing share of China's own AI chip market, and the figure it gives for that domestic share is TrendForce's, relayed. A fast-growing share of China's market is still a small share of the world's, which is what about 5 percent globally reflects. Design location: almost all of the US column is manufactured in Taiwan.",
+    "method": "An in-house estimate, because no allowed source publishes AI accelerator silicon as a market with country shares. The US column is built from the design owners' filed revenue. The main inputs are Nvidia's $193,737m of data-center revenue in the year to January 2026, out of $215,938m total, and Broadcom's $63,887m FY2025 total, of which AI silicon is a large and undisclosed part. The Chinese column follows CSIS's work on China replacing imported AI chips with its own.",
+    "note": "Revenue of AI accelerator silicon attributed to the country of the firm that owns the design. It combines merchant chips, sold to any buyer, and captive chips, designed for one company's own use. US is Nvidia, whose data-center revenue was $193.7bn in the year to January 2026 out of $215.9bn total. The US column also includes AMD's Instinct line, Intel Gaudi, and the custom chips (ASICs) that Broadcom ($63.9bn total revenue FY2025) and Marvell design for Google, Meta, OpenAI and Amazon. Google TPU and AWS Trainium revenue is credited to the US because the design owners are American. But Broadcom, Alchip and MediaTek do much of the physical implementation, the detailed layout work that readies a design for manufacture. Crediting the design-service houses instead would move a few points to TW. CN is Huawei HiSilicon Ascend, Cambricon, Biren, Moore Threads and MetaX. The Chinese column is the least certain number in the row. It rests on CSIS's March 2026 piece, which reports that domestic parts are taking a fast-growing share of China's own AI chip market. CSIS takes its figure for that domestic share from TrendForce. Chinese firms' fast-growing share of their home market still adds up to a small share of the world market, about 5 percent in this estimate. The split is by design owner, and almost all of the US column is manufactured in Taiwan.",
     "sources": [
       "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
       "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
@@ -487,7 +487,7 @@
     ],
     "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
     "aiCritical": true,
-    "trend": "US share has stayed above 90 percent since 2021, but the internal mix has shifted from Nvidia-only toward hyperscaler ASICs designed with Broadcom, Marvell and Alchip. No allowed source publishes the merchant-versus-ASIC split."
+    "trend": "The US share has stayed above 90 percent since 2021. But within it the mix has shifted from Nvidia alone toward custom chips (ASICs) that the largest cloud and internet companies design with Broadcom, Marvell and Alchip. No allowed source publishes the split between merchant chips and ASICs."
   },
   {
     "segment": "Server assembly",
@@ -498,13 +498,13 @@
     "shares": null,
     "hhi": null,
     "top2": null,
-    "method": "No shares. AI server and rack integration shares are published only by market-research firms. CSET's brief on big tech in Taiwan, CSIS's Indo-Pacific mapping and Epoch AI's chip-owner work carry no country split for the stage, and the ODMs report consolidated revenue without breaking out AI systems.",
-    "note": "Nvidia's annual report anchors what can be said: it names Hon Hai Precision Industry, Wistron and Fabrinet among the contract manufacturers that perform assembly, testing and packaging for it, states that its supply chain is currently concentrated in Asia, and says it is expanding into the United States and Latin America. That is a heavily Taiwanese ODM base whose physical assembly footprint is moving toward North America under tariff and customer pressure, with Dell, HPE and Supermicro in the American column and Inspur, Lenovo, H3C and Sugon selling into the Chinese domestic market.",
+    "method": "No shares. AI server and rack integration shares are published only by market-research firms. CSET's brief on big tech in Taiwan, CSIS's Indo-Pacific mapping and Epoch AI's chip-owner work carry no country split for the stage. The original design manufacturers (ODMs) that build the servers report consolidated revenue without breaking out AI systems.",
+    "note": "What can be said rests on Nvidia's annual report. It names Hon Hai Precision Industry, Wistron and Fabrinet among the contract manufacturers that perform assembly, testing and packaging for Nvidia. It states that Nvidia's supply chain is currently concentrated in Asia and that Nvidia is expanding into the United States and Latin America. Most of the ODMs are Taiwanese, and their physical assembly is moving toward North America under tariff and customer pressure. Dell, HPE and Supermicro sit in the American column, and Inspur, Lenovo, H3C and Sugon sell into the Chinese domestic market.",
     "sources": [
       "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
     ],
     "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
     "aiCritical": true,
-    "trend": "Headquarters and assembly location have been diverging since 2023: the Taiwanese ODMs still design and win the racks, while more of the physical integration happens in Mexico, Texas and Wisconsin."
+    "trend": "Since 2023 the Taiwanese ODMs have kept designing the racks and winning the orders, but more of the physical assembly has moved to Mexico, Texas and Wisconsin."
   }
 ]

@@ -3829,13 +3829,6 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
-  "https://www.meti.go.jp/english/press/2023/0323_001.html": {
-    "title": "Circular Notice on Partial Amendment to the Circular Notice on the Operation of the Cabinet Order on Export Trade Control and other circular notices (Review of Export Control to South Korea)",
-    "publisher": "Ministry of Economy, Trade and Industry (Japan)",
-    "date": "2023-03-23",
-    "type": "press release",
-    "accessed": "2026-10-02"
-  },
   "https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf": {
     "title": "METI, Semiconductor and digital industry strategy: future direction (半導体・デジタル産業戦略の今後の方向性), 23 December 2025",
     "publisher": "Ministry of Economy, Trade and Industry (Japan)",
@@ -5571,5 +5564,12 @@
     "publisher": "Carl Zeiss",
     "type": "page",
     "accessed": "2026-09-09"
+  },
+  "https://web.archive.org/web/20250408171837/https://www.meti.go.jp/english/press/2023/0323_001.html": {
+    "title": "Circular Notice on Partial Amendment to the Circular Notice on the Operation of the Cabinet Order on Export Trade Control and other circular notices (Review of Export Control to South Korea)",
+    "publisher": "Ministry of Economy, Trade and Industry (Japan)",
+    "date": "2023-03-23",
+    "type": "press release",
+    "accessed": "2026-10-02"
   }
 }

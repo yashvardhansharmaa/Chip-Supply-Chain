@@ -4,7 +4,7 @@
       "id": "ai-chips",
       "name": "Advanced AI chips",
       "route": "US → China",
-      "what": "Data center accelerators: the A100, H100, the cut-down A800, H800, H20 and H200, and the Blackwell parts, all of them above the January 2026 band.",
+      "what": "Data center accelerators: the A100, H100, the cut-down A800, H800, H20 and H200, and the Blackwell parts. Since January 2026, chips in the H200's performance band are reviewed case by case, and those above it, such as Blackwell, face a presumption of denial.",
       "order": 1,
       "chapter": "geopolitics",
       "initial": "open",
@@ -13,7 +13,7 @@
           "date": "2022-08-26",
           "announced": "2022-08-31",
           "status": "case",
-          "label": "License for A100 and H100, by letter",
+          "label": "License required for A100 and H100, by letter to Nvidia",
           "event": "2022-08-31-a100-h100-licence",
           "cite": {
             "fr": "NVIDIA Form 8-K, 31 August 2022",
@@ -24,7 +24,7 @@
           "date": "2022-10-21",
           "announced": "2022-10-07",
           "status": "denial",
-          "label": "Denial above 4,800 TPP with 600 GB/s",
+          "label": "Denial above 4,800 TPP with 600 GB/s or more of chip-to-chip bandwidth",
           "event": "2022-10-07-october-rules",
           "cite": {
             "fr": "87 FR 62186",
@@ -36,7 +36,7 @@
           "date": "2023-11-17",
           "announced": "2023-10-17",
           "status": "denial",
-          "label": "Density test closes the A800 and H800",
+          "label": "Test of computing power per chip area covers the A800 and H800",
           "event": "2023-10-17-density-test",
           "cite": {
             "fr": "88 FR 73458",
@@ -48,7 +48,7 @@
           "date": "2025-01-16",
           "announced": "2025-01-15",
           "status": "denial",
-          "label": "Foundries must vet the designers who tape out",
+          "label": "Foundries must vet the designers whose chips they make",
           "event": "2025-01-16-foundry-diligence",
           "cite": {
             "fr": "90 FR 5298",
@@ -60,7 +60,7 @@
           "date": "2025-04-09",
           "announced": "2025-04-15",
           "status": "denial",
-          "label": "Even the China-legal H20 stopped, by letter",
+          "label": "H20, built to stay within the 2023 limits, stopped by letter to Nvidia",
           "event": "2025-04-09-h20-licence",
           "cite": {
             "fr": "NVIDIA Form 8-K, 15 April 2025",
@@ -71,7 +71,7 @@
         {
           "date": "2025-07-14",
           "status": "denial",
-          "label": "H20 licenses promised; Blackwell still denied",
+          "label": "H20 licenses promised, but Blackwell still denied",
           "event": "2025-07-14-h20-restored",
           "cite": {
             "url": "https://blogs.nvidia.com/blog/nvidia-ceo-promotes-ai-in-dc-and-china/",
@@ -81,7 +81,7 @@
         {
           "date": "2025-08-11",
           "status": "denial",
-          "label": "China licenses carry a 15 percent revenue expectation",
+          "label": "US officials expect 15 percent of revenue from licensed China sales",
           "event": "2025-08-11-fifteen-percent",
           "cite": {
             "fr": "NVIDIA Form 10-K, FY2026",
@@ -91,7 +91,7 @@
         {
           "date": "2026-01-15",
           "status": "denial",
-          "label": "Denial above 21,000 TPP or 6,500 GB/s DRAM bandwidth",
+          "label": "Denial above 21,000 TPP or 6,500 GB/s of memory bandwidth",
           "event": "2026-01-15-h200-case-by-case",
           "cite": {
             "fr": "91 FR 1684",
@@ -107,7 +107,7 @@
       "id": "us-tools",
       "name": "Chipmaking tools",
       "route": "US → China",
-      "what": "Semiconductor manufacturing equipment and the software that runs it. A license is needed; applications for advanced fabs meet a presumption of denial, the rest are weighed case by case.",
+      "what": "Semiconductor manufacturing equipment and the software that runs it. A license is needed. Applications for advanced fabs meet a presumption of denial, and the rest are reviewed case by case.",
       "order": 2,
       "chapter": "deposition-and-etch",
       "initial": "open",
@@ -116,7 +116,7 @@
           "date": "2022-10-07",
           "announced": "2022-10-07",
           "status": "case",
-          "label": "License for advanced logic, DRAM and NAND tools",
+          "label": "License required for tools that make advanced logic, DRAM and NAND chips",
           "event": "2022-10-07-october-rules",
           "cite": {
             "fr": "87 FR 62186",
@@ -128,7 +128,7 @@
           "date": "2023-11-17",
           "announced": "2023-10-17",
           "status": "case",
-          "label": "License, with tighter equipment thresholds",
+          "label": "License required, with tighter equipment thresholds",
           "event": "2023-10-17-density-test",
           "cite": {
             "fr": "88 FR 73424",
@@ -139,7 +139,7 @@
         {
           "date": "2024-09-06",
           "status": "case",
-          "label": "Gate-all-around and quantum tools controlled worldwide",
+          "label": "Gate-all-around transistor technology and quantum computing items controlled worldwide",
           "event": "2024-09-06-gaafet-quantum",
           "cite": {
             "fr": "89 FR 72926",
@@ -151,7 +151,7 @@
           "date": "2024-12-31",
           "announced": "2024-12-02",
           "status": "case",
-          "label": "License for more deposition, etch and inspection tools",
+          "label": "License required for more deposition, etch and inspection tools",
           "event": "2024-12-02-hbm-package",
           "cite": {
             "fr": "89 FR 96790",
@@ -163,7 +163,7 @@
           "date": "2025-12-31",
           "announced": "2025-08-29",
           "status": "case",
-          "label": "Foreign-owned fabs in China lose their VEU authorization",
+          "label": "Foreign-owned fabs in China lose their blanket approval for US tools (VEU)",
           "event": "2025-08-29-veu-revoked",
           "cite": {
             "fr": "90 FR 42321",
@@ -178,7 +178,7 @@
       "id": "allies",
       "name": "Allied controls",
       "route": "Netherlands and Japan → China",
-      "what": "Advanced immersion DUV scanners, the measuring and inspection tools that go with them, and 23 categories of Japanese equipment.",
+      "what": "Advanced immersion DUV scanners (machines that print chip patterns), the measuring and inspection tools that go with them, and 23 categories of Japanese equipment.",
       "order": 3,
       "chapter": "lithography",
       "initial": "open",
@@ -187,7 +187,7 @@
           "date": "2023-07-23",
           "announced": "2023-05-23",
           "status": "case",
-          "label": "Japan licenses 23 categories of chipmaking equipment",
+          "label": "Japan requires licenses for 23 categories of chipmaking equipment",
           "event": "2023-07-23-japan-tools",
           "cite": {
             "fr": "METI, amended export trade control order",
@@ -197,7 +197,7 @@
         {
           "date": "2023-09-01",
           "status": "case",
-          "label": "Dutch license for advanced immersion DUV scanners",
+          "label": "Dutch license required for advanced immersion DUV scanners",
           "event": "2023-09-01-dutch-licence",
           "cite": {
             "url": "https://www.asml.com/en/news/press-releases/2023/statement-regarding-export-control-regulations-dutch-government",
@@ -209,7 +209,7 @@
           "date": "2024-09-07",
           "announced": "2024-09-06",
           "status": "case",
-          "label": "Dutch licensing extended to mid-range immersion tools",
+          "label": "Dutch license requirement extended to mid-range immersion scanners",
           "event": "2024-09-06-dutch-extension",
           "cite": {
             "fr": "Staatscourant 2024, 29008",
@@ -220,7 +220,7 @@
           "date": "2025-04-01",
           "announced": "2025-01-15",
           "status": "case",
-          "label": "Dutch license extended to measuring and inspection tools",
+          "label": "Dutch license requirement extended to measuring and inspection tools",
           "event": "2025-04-01-dutch-metrology",
           "cite": {
             "fr": "Staatscourant, 15 January 2025",
@@ -234,7 +234,7 @@
       "id": "hbm",
       "name": "High-bandwidth memory",
       "route": "Korea and US → China",
-      "what": "Memory stacks above 2 GB per second per square millimeter, wherever they are made, plus the foreign stacks caught by the direct product rule. The license requirement runs only to Macau and Country Group D:5, and the review splits inside them: approval is presumed for buyers in China or Macau that are not headquartered there, denial for those that are. License Exception HBM still lets a US or Country Group A:5 exporter ship stacks below 3.3 GB per second per square millimeter directly to a packaging site for the designer that bought them.",
+      "what": "Memory stacks with more than 2 GB per second of bandwidth per square millimeter, wherever they are made, including foreign stacks that the direct product rule brings under US control. The license requirement covers only Macau and Country Group D:5, the US list of arms-embargoed countries that includes China. For buyers in China or Macau, approval is presumed if they are headquartered elsewhere, and denial if they are headquartered there. License Exception HBM still lets an exporter in the US or in Country Group A:5, a group of close US partners, ship stacks below 3.3 GB per second per square millimeter without a license. The stacks must go directly to a packaging site for the designer that bought them.",
       "order": 4,
       "chapter": "memory-and-hbm",
       "initial": "open",
@@ -258,7 +258,7 @@
       "id": "entity",
       "name": "US goods and technology",
       "route": "US → listed Chinese firms",
-      "what": "Anything subject to the EAR, from processors to design software, when a listed firm is a party to the transaction. The review policy is written into each listing.",
+      "what": "Anything subject to the US Export Administration Regulations (EAR), from processors to design software, when a firm on the Entity List is a party to the transaction. Each listing sets how license applications are reviewed.",
       "order": 5,
       "chapter": "geopolitics",
       "initial": "open",
@@ -279,7 +279,7 @@
           "date": "2018-07-13",
           "announced": "2018-07-23",
           "status": "open",
-          "label": "Order terminated on settlement; ZTE off the list",
+          "label": "After a settlement, the order ends and ZTE comes off the Denied Persons List",
           "event": "2018-07-13-zte-order-terminated",
           "cite": {
             "fr": "83 FR 34825",
@@ -290,7 +290,7 @@
         {
           "date": "2018-10-30",
           "status": "denial",
-          "label": "Fujian Jinhua listed; presumption of denial",
+          "label": "Fujian Jinhua listed, with a presumption of denial",
           "event": "2018-10-30-jinhua-listed",
           "cite": {
             "fr": "83 FR 54519",
@@ -314,7 +314,7 @@
           "date": "2020-05-15",
           "announced": "2020-05-19",
           "status": "denial",
-          "label": "Reaches foreign fabs making Huawei's designs",
+          "label": "US extends the foreign direct product rule to foreign fabs making Huawei's designs",
           "event": "2020-05-15-huawei-fdpr",
           "cite": {
             "fr": "85 FR 29849",
@@ -326,7 +326,7 @@
           "date": "2020-08-17",
           "announced": "2020-08-20",
           "status": "denial",
-          "label": "Any chip made with US tools caught",
+          "label": "Rule widened to any chip made with US tools, whoever designed it",
           "event": "2020-08-17-fdpr-broadened",
           "cite": {
             "fr": "85 FR 51596",
@@ -338,7 +338,7 @@
           "date": "2020-12-18",
           "announced": "2020-12-22",
           "status": "denial",
-          "label": "SMIC listed; denial at 10 nanometers and below",
+          "label": "SMIC listed, with denial at 10 nanometers and below",
           "event": "2020-12-18-smic-listed",
           "cite": {
             "fr": "85 FR 83416",
@@ -362,7 +362,7 @@
           "date": "2025-03-25",
           "announced": "2025-03-28",
           "status": "denial",
-          "label": "Twelve more listed for AI and supercomputers",
+          "label": "Twelve more entities listed for AI and supercomputer work",
           "event": "2025-03-25-entity-additions",
           "cite": {
             "fr": "90 FR 14046",
@@ -374,7 +374,7 @@
           "date": "2025-09-29",
           "announced": "2025-09-30",
           "status": "denial",
-          "label": "Subsidiaries of listed firms caught worldwide",
+          "label": "Affiliates rule covers subsidiaries of listed firms worldwide",
           "event": "2025-09-29-affiliates-rule",
           "cite": {
             "fr": "90 FR 47201",
@@ -387,7 +387,7 @@
           "announced": "2025-11-12",
           "status": "denial",
           "suspendedUntil": "2026-11-09",
-          "label": "Affiliates rule stayed to 9 November 2026",
+          "label": "Affiliates rule suspended until 9 November 2026",
           "event": "2025-11-10-one-year-truce",
           "cite": {
             "fr": "90 FR 50857",
@@ -422,7 +422,7 @@
           "date": "2023-08-01",
           "announced": "2023-07-03",
           "status": "case",
-          "label": "License for gallium and germanium items",
+          "label": "License required for gallium and germanium items",
           "event": "2023-07-03-gallium-germanium",
           "cite": {
             "fr": "MOFCOM and GAC Announcement 2023 No. 23",
@@ -457,7 +457,7 @@
       "id": "minerals-world",
       "name": "Critical minerals to everyone else",
       "route": "China → the rest of the world",
-      "what": "The same gallium, germanium and antimony, plus seven medium and heavy rare earths, sold anywhere but America. A license is required. A ban is not in force.",
+      "what": "The same gallium, germanium and antimony, plus seven medium and heavy rare earths, sold anywhere but America. A license is required. No ban is in force.",
       "order": 7,
       "chapter": "chemicals-gases-and-photoresist",
       "initial": "open",
@@ -477,7 +477,7 @@
           "date": "2023-08-01",
           "announced": "2023-07-03",
           "status": "case",
-          "label": "License for gallium and germanium items",
+          "label": "License required for gallium and germanium items",
           "event": "2023-07-03-gallium-germanium",
           "cite": {
             "fr": "MOFCOM and GAC Announcement 2023 No. 23",
@@ -497,7 +497,7 @@
         {
           "date": "2025-10-09",
           "status": "case",
-          "label": "Jurisdiction claimed over foreign goods above 0.1 percent",
+          "label": "China claims jurisdiction over foreign goods with 0.1 percent or more Chinese rare earths by value",
           "event": "2025-10-09-rare-earth-reach",
           "cite": {
             "fr": "MOFCOM Announcement 2025 No. 61",
@@ -508,7 +508,7 @@
           "date": "2025-11-07",
           "status": "case",
           "suspendedUntil": "2026-11-10",
-          "label": "0.1 percent rule stayed on 7 November, before it took effect",
+          "label": "0.1 percent rule suspended on 7 November, before it took effect",
           "event": "2025-11-10-one-year-truce",
           "cite": {
             "fr": "MOFCOM and GAC Announcement 2025 No. 70",
@@ -522,7 +522,7 @@
       "id": "china-market",
       "name": "Foreign chips inside China",
       "route": "US and Japan → China's market",
-      "what": "American memory and Nvidia accelerators sold inside China, plus a Japanese deposition gas. These are Chinese measures on Chinese buyers; no export is involved.",
+      "what": "American memory and Nvidia accelerators sold inside China, plus a Japanese deposition gas. These are Chinese measures on Chinese buyers. No export is involved.",
       "order": 8,
       "chapter": "geopolitics",
       "initial": "open",
@@ -530,7 +530,7 @@
         {
           "date": "2023-05-21",
           "status": "prohibited",
-          "label": "Cybersecurity review bars Micron from critical information infrastructure",
+          "label": "Cybersecurity review bars operators of critical information infrastructure from buying Micron products",
           "event": "2023-05-21-micron-barred",
           "cite": {
             "fr": "Cybersecurity Review Office notice, 21 May 2023",
@@ -540,7 +540,7 @@
         {
           "date": "2026-08-26",
           "status": "prohibited",
-          "label": "PRC restrictions leave most H200 licenses unused",
+          "label": "Chinese restrictions leave most H200 licenses unused",
           "event": "2026-08-26-h200-unused",
           "cite": {
             "fr": "NVIDIA Form 10-Q, Q2 FY2027",
@@ -554,7 +554,7 @@
       "id": "diffusion",
       "name": "AI chips to the rest of the world",
       "route": "US → every other destination",
-      "what": "The top band of accelerators, ECCNs 3A090.a and 4A090.a, which need a license to or within any destination worldwide. License Exception AIA carries them to the nineteen destinations in supplement no. 5 to part 740, and License Exception LPP up to 26,900,000 TPP a year per consignee elsewhere. Applications from the nineteen are reviewed with a presumption of approval; the rest run against a per-country allocation of 790,000,000 TPP through 2027.",
+      "what": "The top band of accelerators, ECCNs 3A090.a and 4A090.a, which need a license to or within any destination worldwide. License Exception AIA lets exporters ship them without a license to nineteen destinations, the United States and eighteen allies, listed in supplement no. 5 to part 740. License Exception LPP allows up to 26,900,000 TPP a year per recipient elsewhere. License applications for the nineteen are reviewed with a presumption of approval. The rest count against a cap of 790,000,000 TPP per country through 2027.",
       "order": 9,
       "chapter": "geopolitics",
       "initial": "open",
@@ -563,7 +563,7 @@
           "date": "2025-01-13",
           "announced": "2025-01-15",
           "status": "case",
-          "label": "License required worldwide; AIA covers nineteen destinations, LPP elsewhere",
+          "label": "License required worldwide, with AIA for nineteen destinations and LPP elsewhere",
           "event": "2025-01-13-diffusion-rule",
           "cite": {
             "fr": "90 FR 4544",
@@ -574,7 +574,7 @@
         {
           "date": "2025-05-13",
           "status": "case",
-          "label": "BIS stops enforcing; the text stays in the CFR",
+          "label": "Commerce Department stops enforcing the rule, but its text stays in the Code of Federal Regulations",
           "event": "2025-05-13-diffusion-rescinded",
           "cite": {
             "url": "https://www.bis.gov/press-release/department-commerce-rescinds-biden-era-artificial-intelligence-diffusion-rule-strengthens-chip-related",
@@ -585,7 +585,7 @@
         {
           "date": "2025-05-15",
           "status": "case",
-          "label": "Bilateral deals replace the caps; the license stands",
+          "label": "Bilateral deals replace the caps, but the license requirement stands",
           "event": "2025-05-15-gulf-deals",
           "cite": {
             "url": "https://www.whitehouse.gov/fact-sheets/2025/05/fact-sheet-president-donald-j-trump-secures-200-billion-in-new-u-s-uae-deals-and-accelerates-previously-committed-1-4-trillion-uae-investment/",
@@ -596,7 +596,7 @@
           "date": "2026-07-10",
           "announced": "2026-07-14",
           "status": "case",
-          "label": "UAE joins A:5; named consignees ship license-free",
+          "label": "UAE joins Country Group A:5, and shipments to named recipients need no license",
           "event": "2026-07-10-uae-group-a5",
           "cite": {
             "fr": "91 FR 43034",
@@ -611,7 +611,7 @@
       "id": "industrial",
       "name": "Money, stakes and tariffs",
       "route": "at home",
-      "what": "Subsidies, state investment funds, government equity, procurement bars and tariffs. None of these is a license gate.",
+      "what": "Subsidies, state investment funds, government stakes in companies, procurement bars and tariffs. None of these is a license requirement.",
       "order": 10,
       "chapter": "geopolitics",
       "initial": "open",
@@ -619,7 +619,7 @@
         {
           "date": "2022-08-09",
           "status": "policy",
-          "label": "CHIPS Act: $52.7 billion, with a China expansion bar",
+          "label": "CHIPS Act: $52.7 billion, with a bar on expanding in China",
           "event": "2022-08-09-chips-act",
           "cite": {
             "fr": "Public Law 117-167",
@@ -657,7 +657,7 @@
         {
           "date": "2025-08-22",
           "status": "policy",
-          "label": "Washington takes 9.9 percent of Intel",
+          "label": "US government takes a 9.9 percent stake in Intel",
           "event": "2025-08-22-intel-stake",
           "cite": {
             "fr": "Intel Form 8-K, 22 August 2025",
@@ -668,7 +668,7 @@
           "date": "2026-01-15",
           "announced": "2026-01-14",
           "status": "policy",
-          "label": "25 percent tariff on chips passing through America",
+          "label": "25 percent tariff on advanced AI chips passing through America",
           "event": "2026-01-14-section-232",
           "cite": {
             "fr": "91 FR 2443",

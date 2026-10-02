@@ -244,7 +244,7 @@ const SUBS = { 'Very hard': 4, Hard: 3, Moderate: 2, Easy: 1 };
 const SUBWORD = { 'Very hard': 'Very hard to substitute', Hard: 'Hard to substitute', Moderate: 'Moderately hard to substitute', Easy: 'Easy to substitute' };
 // one sentence per band, shown when a reader hovers the tag on the card (the full definitions stay in the Index)
 const BAND_NOTE = { Extreme: 'Three or fewer firms could supply this stage today, or one firm holds more than half of it.', High: 'Four to six firms could supply this stage today, and the top two take most of the revenue.', Moderate: 'Seven or more firms could supply this stage today, none of them dominant.', Low: 'Many firms could supply this stage today, and the scarce input is something another industry sells at volume.' };
-const SUB_NOTE = { 'Very hard': 'No second source at the leading node, and the path runs through physics, decades of unwritten know-how or protected IP: ten years or more, and nobody has repeated it yet.', Hard: 'No second source at the leading node. The path is known and takes five to ten years.', Moderate: 'A second source exists but is not yet qualified at the leading node: two to five years to close the gap.', Easy: 'A qualified second source ships today at the leading node.' };
+const SUB_NOTE = { 'Very hard': 'No second supplier exists at the leading node, and the path to one depends on physics, decades of unwritten know-how or protected intellectual property. No one has yet repeated what the leaders did, and closing the gap takes ten years or more.', Hard: 'No second supplier exists at the leading node. The path to one is known, and closing the gap takes five to ten years.', Moderate: 'A second supplier exists but is not yet qualified at the leading node. Closing the gap takes two to five years.', Easy: 'A qualified second supplier ships today at the leading node.' };
 const SPECIMEN_NAME = { 'boule-and-wafer': 'boule and wafer', 'cowos-exploded': 'CoWoS package, exploded', 'die-floorplan': 'die floorplan', 'euv-scanner': 'EUV scanner', foup: 'wafer carrier (FOUP)', 'gaa-transistor': 'gate-all-around transistor', 'gas-cabinet': 'gas cabinet', globe: 'globe', 'gpu-baseboard': 'GPU baseboard', 'hbm-stack': 'HBM stack', package: 'chip package', photomask: 'photomask', 'probe-card': 'probe card', 'process-chamber': 'process chamber', rack: 'server rack', 'sem-column': 'electron microscope column', 'substrate-layers': 'substrate layers', 'wafer-cost': 'wafer cost', wafer: 'wafer' };
 function nameplate(card, title) {
   if (!card) return '';
@@ -586,7 +586,7 @@ const pageDate = (key, content, file) => {
 };
 
 const footerKey = footer + `<p class="sources-key"><span class="tier tier-A">A</span> company filings, governments, standards bodies, universities and research institutions; <span class="tier tier-B">B</span> SemiAnalysis, Reuters, the Financial Times and Nikkei Asia.</p>`;
-const suppliersIntro = suppliers.length ? `What each of the ${suppliers.length} firms makes, where it sits, and how hard it would be to replace.` : 'The supplier list is not compiled yet.';
+const suppliersIntro = suppliers.length ? `What each of the ${suppliers.length} firms makes, where it is based, and how hard it would be to replace.` : 'The supplier list is not compiled yet.';
 
 const kit = read(path.join(root, 'src', 'kit.js')) || '';
 const specDir = path.join(root, 'specimens');
@@ -596,7 +596,7 @@ const specNames = new Set((specimens.match(/PC\.register\('([\w-]+)'/g) || []).m
 all.forEach((ch) => { const s = ch.meta.specimen; if (s && !specNames.has(s)) warn(`${ch.id}: specimen "${s}" is not built yet`); });
 ['package', 'globe'].forEach((s) => { if (!specNames.has(s)) warn(`specimen "${s}" (used by hero/geopolitics) is not built yet`); });
 
-const data = { landscape, landscapeNotes, suppliers, timeline, matrix, flows, exposure, chapters: all.map((c) => { const card = c.meta.card || {}; return { id: c.id, number: c.number, title: c.title, specimen: c.meta.specimen, oneLiner: c.meta.oneLiner || '', plain: c.meta.plain || '', score: +card.chokepointScore || 0, concentration: card.concentration || '', band: card.concentration || '', bandRank: BANDS[card.concentration] || 0, substitutability: card.substitutability || null, leaders: card.leaders || [], countries: card.countries || [], substitution: card.substitution || {}, chinaStatus: card.chinaStatus || '', usStatus: card.usStatus || '' }; }) };
+const data = { landscape, landscapeNotes, suppliers, timeline, matrix, flows, exposure, chapters: all.map((c) => { const card = c.meta.card || {}; return { id: c.id, number: c.number, title: c.title, specimen: c.meta.specimen, oneLiner: c.meta.oneLiner || '', plain: String(c.meta.plain || '').replace(/\s*\(\[source\]\([^)\s]*\)\)/g, ''), score: +card.chokepointScore || 0, concentration: card.concentration || '', band: card.concentration || '', bandRank: BANDS[card.concentration] || 0, substitutability: card.substitutability || null, leaders: card.leaders || [], countries: card.countries || [], substitution: card.substitution || {}, chinaStatus: card.chinaStatus || '', usStatus: card.usStatus || '' }; }) };
 let html = read(path.join(root, 'src', 'template.html'));
 const fill = (k, v) => { html = html.split(`{{${k}}}`).join(v); };
 const modDir = (d) => (fs.existsSync(d) ? fs.readdirSync(d).filter((f) => !f.startsWith('.')).sort() : []);
@@ -650,7 +650,7 @@ lkItems.sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' 
 fill('LOOKUP_LIST', lkItems.map((i) => `<li id="${esc(i.id)}" data-kind="${i.kind}" data-key="${esc(i.key || i.name)}"${i.alias && i.alias.length ? ` data-alias="${esc(i.alias.join('|'))}"` : ''} data-text="${esc(i.text.toLowerCase().replace(/\s+/g, ' '))}"><button type="button"><span class="lk-name">${esc(i.name)}</span><span class="lk-lab">${esc(i.label)}</span></button></li>`).join(''));
 fill('CONTROLS_DEK', `Every rule since 2018, what can still be sold to China, and each firm's China sales.`);
 fill('EXPOSURE_VIZ', exposureViz(exposure));
-fill('EXPOSURE_NOTE', exposure.length ? 'Shares are computed from the absolute figures each firm filed. Firms count China differently: where the goods ship, where they are billed, or where the customer is based.' : '');
+fill('EXPOSURE_NOTE', exposure.length ? 'Each share is computed from the revenue amounts the firm filed. Firms count China differently: where the goods ship, where they are billed, or where the customer is based.' : '');
 fill('KIT', kit); fill('SPECIMENS', specimens);
 fill('DATA', JSON.stringify(data).replace(/<\/script/gi, '<\\/script'));
 const moduleJS = modDir(path.join(root, 'src', 'modules')).filter((f) => f.endsWith('.js')).map((f) => `\n/* module: ${f} */\ntry {\n${read(path.join(root, 'src', 'modules', f)).replace(/<\/script/gi, '<\\/script')}\n} catch (e) { console.warn('module ${f} failed', e); }`).join('\n');

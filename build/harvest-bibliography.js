@@ -3110,7 +3110,9 @@ const MANUAL = {
   'https://www.jsr.co.jp/jsr_e/news/2021/20210917.html': {
     title: 'JSR Agrees to Acquire EUV Pioneer Inpria Corporation',
   },
-  'https://www.meti.go.jp/english/press/2023/0323_001.html': {
+  // live page removed by METI ("page does not exist", 2 Oct 2026); cited through the Wayback copy of 8 April 2025
+  'https://web.archive.org/web/20250408171837/https://www.meti.go.jp/english/press/2023/0323_001.html': {
+    publisher: 'Ministry of Economy, Trade and Industry (Japan)',
     title: 'Circular Notice on Partial Amendment to the Circular Notice on the Operation of the Cabinet Order on Export Trade Control and other circular notices (Review of Export Control to South Korea)',
     date: '2023-03-23',
     type: 'press release',

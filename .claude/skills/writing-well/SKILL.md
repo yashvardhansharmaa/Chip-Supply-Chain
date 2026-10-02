@@ -40,11 +40,28 @@ Do not assume the reader knows what everyone in the industry knows. Spell out th
 
 ## 6. Say it as you would say it
 
-Never write a sentence you would not say aloud to a smart friend. No pomp, no inflated register. Opinions are allowed and should be plain ("we think", "the evidence is thin"). Specific beats general: one firm, one tool, one price, not "several major vendors".
+Never write a sentence you would not say aloud to a smart friend. No pomp, no inflated register. A judgment is allowed when it is plain and owned by its source ("Reuters reported", "the firm estimates", "no public count exists"); the site never speaks as "we" or "you". Specific beats general: one firm, one tool, one price, never "several major vendors".
 
 ## 7. Rhythm and sound
 
 People read with the ear. Vary sentence length. Read the passage aloud; where you stumble, rewrite. "But" is a strong first word for a sentence that turns. Use transition words that signal a turn (but, yet, still, instead, meanwhile, so) rather than throat-clearing ones (furthermore, additionally, moreover).
+
+## 8. Machine-written habits to remove
+
+Text drafted by a language model has tells that readers notice even when they cannot name them. Each one makes the writer sound clever and the reader work harder. Replace each with the plain statement of the fact.
+
+- **Aphorism and paired antithesis:** "No fab is planned around X, and no fab works without it." "The silicon is the cheap part." "X is less a Y than a Z." Say what happens and give the number.
+- **Abstraction in place of the event:** "Since 2018 the United States has been converting that fact into policy." Name the actor, the action and the date: "Since 2018 the United States has used export rules to..."
+- **Personification and metaphor:** stages that "decide", markets that "reward", a firm that "sits at the heart" of the chain, a bottleneck that "moves". Use the literal verb.
+- **Set-up before the point:** "The reason is simple:", "Here is why", "The answer is", "What matters is", "This means that", "The catch:". Start with the point.
+- **Significance without the fact:** "plays a key role", "is critical to", "matters because". State what the thing does, and the reader sees why it matters.
+- **Elegant variation:** ASML, then "the Dutch firm", then "the Veldhoven company". Call a thing by one name throughout.
+- **Stacked clauses:** a sentence that chains three clauses with "and", ", which" or "while" is two or three sentences. Over about 30 words, split it, keeping one citation at the end of each sentence that carries a sourced fact.
+- **Semicolons and colons that stitch two sentences:** use a period.
+- **Vague time:** "now", "today", "recently", "currently". Give the month or year.
+- **Rhythm tics:** three-part lists of abstract nouns, every paragraph ending on a quotable line, a summary sentence that restates the paragraph. Cut them.
+
+Do not over-correct. Plain writing still links its facts with "because", "so" and "but", explains a term the first time a non-specialist meets it, and keeps the calibrated hedges that make it accurate ("about", "by its own estimate", "Reuters reported"). A run of five-word sentences reads as badly as one sentence of sixty words.
 
 ## Procedure for a Chokepoints edit
 
@@ -58,6 +75,9 @@ People read with the ear. Vary sentence length. Read the passage aloud; where yo
 
 ## Site-specific rules that override taste
 
-- No em dashes in prose (they are allowed only inside the bold-label bullets of "Key evaluation criteria").
-- The `plain` paragraph in the front matter must stay identical to the first paragraph under "How it works".
+- No em dashes, no "X, not Y", no "not X but Y", no "rather than", no "not only ... but", no colon punchlines, no rhetorical questions, no "we", "you" or "our", and no reference to the site itself ("this site"). `node qa/scripts/check-speak.js` enforces these; `node qa/scripts/style-report.js --file <path>` lists the softer habits above for one file.
+- American spelling; "percent" in prose; one `([source](url))` per sentence, at its end, from the more reliable source.
+- The `plain` paragraph in the front matter must stay identical to the first paragraph under "How it works": the build hides that paragraph and shows `plain` in its place, so a citation found only in the paragraph disappears.
+- A chapter's `oneLiner` is also its search-result description: one or two whole sentences, about 110 to 160 characters, stating the chapter's main fact plainly.
+- Glossary entries say what the thing is first, then give the reason it matters directly, with no "why it matters" signposting.
 - Section headings, figure markers `{{figure:id}}`, tables and the front matter JSON are structure, not prose; leave them unless the brief says otherwise.
