@@ -3,7 +3,7 @@
   "id": "data-centers-and-power",
   "number": 15,
   "title": "Data Centers and Power",
-  "oneLiner": "Chips are no longer the only slow part of a data center buildout. A large transformer commonly takes three years, GE Vernova is working toward 30 GW of gas turbine output a year in 2030, and Texas had about 474 GW of large loads, mostly data centers, seeking a grid connection in June 2026. In August 2026 the governor of Texas ordered every data center in that queue audited before any of them moves forward.",
+  "oneLiner": "Chips are no longer the only slow part of a data center buildout. A large transformer commonly took three years to arrive in 2024, GE Vernova is working toward 30 GW of gas turbine output a year in 2030, and Texas had about 474 GW of large loads, mostly data centers, seeking a grid connection in June 2026. In August 2026 the governor of Texas ordered every data center in that queue audited before any of them moves forward.",
   "plain": "A data center's job is to feed electricity to the machines inside it and carry away the heat they give off. One rack of AI chips, a cabinet the size of a wardrobe, draws up to 142 kilowatts, and every watt of it comes back out as heat, so the rack is cooled by liquid piped through it. A large training site already holds more than a hundred thousand chips, and the newest sites are planned in gigawatts. One gigawatt is the whole output of a large power station, and OpenAI's planned sites add up to more than nine of them by 2029. Getting that much electricity to the door is harder than putting up the building, because the transformers and heavy switches that connect a site to the grid, and the turbines that make the power, come from a few suppliers and take years to arrive.",
   "bridge": "Racks like that have to stand somewhere, and the somewhere has to be built around what they consume.",
   "specimen": "rack",
@@ -66,12 +66,12 @@
       }
     ],
     "chinaStatus": "China has spare generating capacity, a large domestic industry making transformers and switchgear, and can connect new sites quickly. Its AI buildout is limited by the supply of accelerators, and it has power to spare.",
-    "usStatus": "The United States has the demand and the money but cannot shorten the wait for equipment. Transformers and turbines both take years to arrive. Most large power transformers are imported, and no restarted nuclear reactor is serving data centers yet.",
-    "costSignal": "Large power transformer lead times of 36 months commonly quoted, against under a year before the pandemic; GE Vernova's gas backlog and reserved slots grew from 100 GW to 116 GW in the second quarter of 2026",
+    "usStatus": "The United States has the demand and the money but cannot shorten the wait for equipment. Transformers and turbines both take years to arrive. Most large power transformers are imported, and US factories supplied 29.2 percent of those bought in the US in 2023, measured by capacity. No restarted nuclear reactor is serving data centers yet.",
+    "costSignal": "Large power transformer lead times of 36 months commonly quoted in 2024, against under a year before the pandemic; GE Vernova's gas backlog and reserved slots grew from 100 GW to 116 GW in the second quarter of 2026",
     "substitutability": {
       "band": "Moderate",
-      "test": "Nvidia names nine data center power system providers for its gigawatt designs, but a large transformer commonly takes three years to arrive and GE Vernova's gas backlog and reserved slots stood at 116 GW in mid-2026.",
-      "why": "Nvidia names nine data center power system providers for its gigawatt designs, so a buyer can choose among suppliers. Money cannot shorten the wait. Large power transformer lead times of 36 months are commonly quoted, against under a year before the pandemic, and the longest reach 60 months. GE Vernova's gas equipment backlog and slot reservations reached 116 GW in mid-2026, and it expects to reach 20 GW of annual gas turbine output in the third quarter of 2026."
+      "test": "Nvidia names nine data center power system providers for its gigawatt designs, but a large transformer commonly took three years to arrive in 2024 and GE Vernova's gas backlog and reserved slots stood at 116 GW in mid-2026.",
+      "why": "Nvidia names nine data center power system providers for its gigawatt designs, so a buyer can choose among suppliers. Money cannot shorten the wait. In 2024, large power transformer lead times of 36 months were commonly quoted, against under a year before the pandemic, and the longest reached 60 months. An IEA survey published in 2025 found waits of up to four years worldwide. GE Vernova's gas equipment backlog and slot reservations reached 116 GW in mid-2026, and it expects to reach 20 GW of annual gas turbine output in the third quarter of 2026."
     }
   },
   "keyFacts": [
@@ -88,8 +88,8 @@
       "source": "https://blogs.nvidia.com/blog/gigawatt-ai-factories-ocp-vera-rubin"
     },
     {
-      "fact": "US data centers used 176 TWh in 2023, 4.4% of US electricity, and are projected at 325 to 580 TWh by 2028, or 6.7% to 12%",
-      "source": "https://newscenter.lbl.gov/2025/01/15/berkeley-lab-report-evaluates-increase-in-electricity-demand-from-data-centers/"
+      "fact": "US data centers used 192 TWh in 2024, 4.7% of US electricity, and Lawrence Berkeley National Laboratory's reference case projects 649 TWh in 2030, or 11.8%, within a range of 521 to 843 TWh",
+      "source": "https://www.energy.gov/documents/united-states-data-center-energy-usage-report-2025-update"
     },
     {
       "fact": "Alphabet, Amazon, Meta, Microsoft and Oracle spent $448.2B of capital in 2025; if that trend continues they will spend $770B in 2026",
@@ -108,8 +108,12 @@
       "source": "https://www.ercot.com/files/docs/2026/03/12/March-TAC-Report.pdf"
     },
     {
-      "fact": "Large power transformer lead times of 36 months are commonly quoted and reach 60 months; before the pandemic an order took under a year, and 82% of units put into US service in 2019 were imported",
+      "fact": "In 2024, large power transformer lead times of 36 months were commonly quoted and reached 60 months; before the pandemic an order took under a year, and 82% of units put into US service in 2019 were imported",
       "source": "https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf"
+    },
+    {
+      "fact": "US producers supplied 29.2% of US consumption of large power transformers of 60 MVA and above in 2023, measured by capacity, down from 32.5% in 2021; their lead times averaged three years in 2023, against one and a half years for importers",
+      "source": "https://www.usitc.gov/publications/701_731/pub5531.pdf"
     },
     {
       "fact": "GE Vernova's gas power equipment backlog and slot reservations grew from 100 GW to 116 GW in the second quarter of 2026, and it expects annual gas turbine output of 20 GW in the third quarter of 2026, 24 GW in 2028 and 30 GW in 2030",
@@ -181,29 +185,29 @@
     {
       "id": "us-dc-electricity",
       "type": "bars",
-      "title": "US data center electricity use, actual and 2028 projection range",
+      "title": "US data center electricity use, 2024 and 2030 projection range",
       "unit": "TWh",
       "data": [
         [
-          "2014",
-          58
+          "2024",
+          192
         ],
         [
-          "2023",
-          176
+          "2030 low case",
+          521
         ],
         [
-          "2028 low case",
-          325
+          "2030 reference case",
+          649
         ],
         [
-          "2028 high case",
-          580
+          "2030 high case",
+          843
         ]
       ],
       "source": {
-        "label": "Lawrence Berkeley National Laboratory, December 2024",
-        "url": "https://newscenter.lbl.gov/2025/01/15/berkeley-lab-report-evaluates-increase-in-electricity-demand-from-data-centers/"
+        "label": "Lawrence Berkeley National Laboratory, June 2026",
+        "url": "https://www.energy.gov/documents/united-states-data-center-energy-usage-report-2025-update"
       }
     }
   ]
@@ -211,7 +215,7 @@
 ---
 # Data Centers and Power
 
-For thirty years the semiconductor industry set the pace and everything downstream followed. A wafer clears a leading-edge fab in months; a large power transformer commonly takes three years, and before the pandemic the same order took under one ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)).
+For thirty years the semiconductor industry set the pace and everything downstream followed. A wafer clears a leading-edge fab in months; in 2024 a large power transformer commonly took three years, and before the pandemic the same order took under one ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)).
 
 ## How it works
 
@@ -219,7 +223,7 @@ A data center's job is to feed electricity to the machines inside it and carry a
 
 {{figure:power-in-heat-out}}
 
-A rack is now the unit of AI compute. A GB300 NVL72 draws up to 142 kW through eight 33 kW power shelves, the rack's own power supplies ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
+A rack is now the unit of AI compute. A GB300 NVL72 draws up to 142 kW through eight 33 kW power shelves, the rack's own power supplies ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)). Colossus 1, an AI data center in Memphis, Tennessee, held an estimated 230,000 Nvidia GPUs by July 2025 ([source](https://epoch.ai/data/ai-data-centers/directory/colossus-1)).
 
 Between the grid and the rack, a substation steps the high voltage down with transformers. Switchgear, the building's heavy circuit breakers, can cut any part of the site off in a fault. Battery-backed supplies hold the load for the seconds it takes backup generators to start. Distribution boards split the feed among the rows of racks. At the back of each rack a busbar, a solid copper bar doing a job a cable would melt at, carries the current down to the trays. Every one of those is heavy equipment with its own lead time.
 
@@ -265,7 +269,7 @@ The equipment vendors are the constraint. GE Vernova builds large gas turbines, 
 
 ## Capacity and demand
 
-US data centers used 176 TWh in 2023, 4.4 percent of national electricity, and Lawrence Berkeley National Laboratory projects 325 to 580 TWh by 2028, between 6.7 percent and 12 percent of the total ([source](https://newscenter.lbl.gov/2025/01/15/berkeley-lab-report-evaluates-increase-in-electricity-demand-from-data-centers/)). In its September 2026 Short-Term Energy Outlook, the Energy Information Administration expects record US electricity sales of 4,135 TWh in 2026 and 4,211 TWh in 2027, growth of almost 2 percent in each year, driven by data centers and manufacturing ([source](https://www.eia.gov/outlooks/steo/archives/sep26.pdf)). The same outlook lowers its 2027 electricity sales forecast for the region that includes Texas by 4.7 percent from its August forecast, and it notes that Texas has paused connecting new data centers to the grid while it audits proposed projects ([source](https://www.eia.gov/outlooks/steo/archives/sep26.pdf)).
+US data centers used 192 TWh in 2024, 4.7 percent of national electricity, according to a June 2026 estimate by Lawrence Berkeley National Laboratory that leaves out cryptocurrency mining ([source](https://www.energy.gov/documents/united-states-data-center-energy-usage-report-2025-update)). The lab's reference case projects 464 TWh in 2028 and 649 TWh in 2030, 11.8 percent of forecast US electricity use, and its scenarios for 2030 range from 521 to 843 TWh, or 9.5 percent to 15.3 percent ([source](https://www.energy.gov/documents/united-states-data-center-energy-usage-report-2025-update)). In its September 2026 Short-Term Energy Outlook, the Energy Information Administration expects record US electricity sales of 4,135 TWh in 2026 and 4,211 TWh in 2027, growth of almost 2 percent in each year, driven by data centers and manufacturing ([source](https://www.eia.gov/outlooks/steo/archives/sep26.pdf)). The same outlook lowers its 2027 electricity sales forecast for the region that includes Texas by 4.7 percent from its August forecast, and it notes that Texas has paused connecting new data centers to the grid while it audits proposed projects ([source](https://www.eia.gov/outlooks/steo/archives/sep26.pdf)).
 
 {{figure:us-dc-electricity}}
 
@@ -277,7 +281,7 @@ Announced capacity and energized capacity are a long way apart. ERCOT, the grid 
 
 Behind that queue sit the equipment lead times.
 
-- **Large power transformers.** Thirty-six-month lead times are commonly quoted and the worst reach 60, against under a year before the pandemic; 82 percent of the units put into US service in 2019 were imported ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)).
+- **Large power transformers.** In 2024, 36-month lead times were commonly quoted and the worst reached 60, against under a year before the pandemic; by a Commerce Department estimate, 82 percent of the units put into US service in 2019 were imported ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)). A survey of the industry published by the IEA in 2025 found that large power transformers took up to four years to secure worldwide, and that average lead times had almost doubled since 2021 ([source](https://www.iea.org/reports/building-the-future-transmission-grid/executive-summary)). Measured by capacity, US factories supplied 29.2 percent of the transformers of 60 MVA and above bought in the US in 2023, and imports supplied the rest ([source](https://www.usitc.gov/publications/701_731/pub5531.pdf)).
 - **Gas turbines.** GE Vernova expects to reach 20 GW of annual gas turbine output in the third quarter of 2026, 24 GW in 2028 and 30 GW in 2030, while its gas equipment backlog and slot reservations stood at 116 GW at mid-year ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
 - **Firm new generation**, the kind that runs whatever the weather. The 835 MW Crane plant shut in 2019, and its restart depends on Nuclear Regulatory Commission licensing approvals ([source](https://www.energy.gov/articles/energy-department-closes-loan-restart-nuclear-power-plant-pennsylvania)). The NRC has approved a fuel license amendment for the plant, and Constellation expects to restart it in 2027 ([source](https://www.constellationenergy.com/news/2026/08/constellation-reports-second-quarter-2026-results.html)).
 
@@ -286,11 +290,11 @@ Memory is short too, and Micron's quarterly report for the period ended May 28, 
 ## Key evaluation criteria
 
 - **Time to power** counts the months from signed lease to energized megawatt, and it is the number developers compete on.
-- **Transformer and turbine lead time** covers the two queues that set the schedule. Large power transformer lead times of 36 months are commonly quoted ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)). GE Vernova's gas backlog and slot reservations stood at 116 GW in mid-2026, against a planned 20 GW a year of output from the third quarter ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
+- **Transformer and turbine lead time** covers the two queues that set the schedule. Large power transformer lead times of 36 months were commonly quoted in 2024 ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)). GE Vernova's gas backlog and slot reservations stood at 116 GW in mid-2026, against a planned 20 GW a year of output from the third quarter ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
 - **Rack density supported** decides what an existing hall can take. A GB300 NVL72 rack draws up to 142 kW and is liquid cooled ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
 - **Firmness of supply** separates a signed interconnection agreement from a delivered transformer.
 - **Energy per token** tracks how much electricity a model uses for each token it reads or writes, and chips with higher performance per watt, such as Google's Ironwood TPU, lower it ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)).
 
 ## Takeaways
 
-Large power transformers, a core part of the electric grid, now commonly take 36 months to deliver, against less than a year before the pandemic ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)). GE Vernova says data center orders for its electrification business, which makes grid equipment such as transformers and switchgear, passed $5 billion in the first half of 2026, more than double its total for 2025 ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)). In Texas, about 474 GW of large loads, mostly data centers, were seeking a grid connection in June 2026 ([source](https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf)). In August 2026 the governor of Texas ordered every data center in that queue audited before any of them moves forward ([source](https://gov.texas.gov/news/post/governor-abbott-directs-comprehensive-data-center-audit)).
+Large power transformers, a core part of the electric grid, commonly took 36 months to deliver in 2024, against less than a year before the pandemic ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)). GE Vernova says data center orders for its electrification business, which makes grid equipment such as transformers and switchgear, passed $5 billion in the first half of 2026, more than double its total for 2025 ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)). In Texas, about 474 GW of large loads, mostly data centers, were seeking a grid connection in June 2026 ([source](https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf)). In August 2026 the governor of Texas ordered every data center in that queue audited before any of them moves forward ([source](https://gov.texas.gov/news/post/governor-abbott-directs-comprehensive-data-center-audit)).

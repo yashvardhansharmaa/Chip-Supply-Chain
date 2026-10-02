@@ -22,7 +22,7 @@
       {
         "q": "Can China design the newest chips on its own software?",
         "a": "Not yet.",
-        "why": "A January 2021 CSET report, built on 2019 data, found Chinese design software largely did not support the newest processes, though one Chinese firm, Empyrean, could run a full design flow for some analog and mixed-signal chips. Since 14 October 2022 software for designing chips with gate-all-around transistors has needed a US license, and from late May to 2 July 2025 every design-software sale to China needed one.",
+        "why": "In October 2025 CSIS found Chinese design tools still far from replacing the full range of advanced capabilities US firms offer, especially for 5 nm and 3 nm chip design. Since 14 October 2022 software for designing chips with gate-all-around transistors has needed a US license, and from late May to 2 July 2025 every design-software sale to China needed one.",
         "section": "The chokepoint"
       },
       {
@@ -36,7 +36,7 @@
       "Chip design turns an idea into a blueprint, and a factory builds only designs checked in approved software.",
       "Synopsys, Cadence and Siemens EDA sell the software used to design every leading-edge chip.",
       "A new vendor would have to write a complete set of tools and win a foundry's approval.",
-      "China designs its own AI chips, but a 2021 CSET report built on 2019 data found its design software largely did not support the newest processes.",
+      "China designs its own AI chips, but in October 2025 CSIS found its design software still far from replacing US tools, especially for 5 nm and 3 nm chips.",
       "Huawei's best AI chip trails Nvidia's by three to four years, on Epoch AI's estimate."
     ]
   },
@@ -63,7 +63,7 @@
       {
         "q": "China makes most of the world's polysilicon. Why does that give it little hold over chip wafers?",
         "a": "Chips need electronic-grade silicon, and none of its five major suppliers is Chinese.",
-        "why": "Siltronic names Wacker, Hemlock, OCI, Tokuyama and Mitsubishi as those suppliers for 2025. Chinese firms held under 1 percent of the 300 mm wafer market as of 2019, and Eswin, China's largest 300 mm wafer maker, says it shipped about 6 percent of the world's 300 mm wafers in 2024.",
+        "why": "Siltronic names Wacker, Hemlock, OCI, Tokuyama and Mitsubishi as those suppliers for 2025. Chinese firms held under 1 percent of the 300 mm wafer market as of 2019, and Eswin, China's largest 300 mm wafer maker, says it shipped about 7.7 percent of the world's 300 mm wafers in the first half of 2026, up from about 6 percent in 2024.",
         "section": "The chokepoint"
       }
     ],
@@ -181,7 +181,7 @@
       {
         "q": "What do deposition and etch do?",
         "a": "Deposition lays down a thin film, and etch cuts away the parts the printed pattern leaves exposed.",
-        "why": "Making a chip often takes more than a thousand steps, one layer at a time.",
+        "why": "Making one chip takes 1,000 to 1,500 steps, the Semiconductor Industry Association estimated in 2025.",
         "section": "How it works"
       },
       {
@@ -204,7 +204,7 @@
       }
     ],
     "takeaways": [
-      "Deposition lays down thin films and etch cuts them into patterns, and a chip often takes more than a thousand steps.",
+      "Deposition lays down thin films and etch cuts them into patterns, and making one chip takes 1,000 to 1,500 steps, by a 2025 industry estimate.",
       "Four American, Japanese and Dutch firms make most of these tools, and none dominates.",
       "Chinese makers held 12.4 percent of dry etch and 9.8 percent of deposition in 2025, on CSET's count.",
       "Chinese makers held 2.6 percent of atomic layer deposition in 2025, most of it from Piotech."
@@ -301,7 +301,7 @@
       {
         "q": "How much of China's fab capacity can make the newest chips?",
         "a": "Little of it.",
-        "why": "In June 2024 SEMI forecast that China would have more fab capacity in 2025 than any other region. SMIC cannot buy an EUV machine, and makes its 7 nm-class chips by printing the tightest layers in several passes.",
+        "why": "In its third-quarter 2026 World Fab Forecast, SEMI projected that China would keep the world's largest installed fab capacity in 2026 and 2027. SMIC cannot buy an EUV machine, and makes its 7 nm-class chips by printing the tightest layers in several passes.",
         "section": "The chokepoint"
       }
     ],
@@ -309,7 +309,7 @@
       "A foundry makes chips for other companies, because no chip company can fill a fab alone.",
       "All six of TSMC's largest plants are in Taiwan.",
       "Money can buy a fab building, and training the workforce is the slow part.",
-      "In June 2024 SEMI forecast that China would have more fab capacity in 2025 than any other region, and little of it is advanced."
+      "SEMI projected in 2026 that China would keep the world's largest installed fab capacity in 2026 and 2027, and little of it is advanced."
     ]
   },
   "memory-and-hbm": {
@@ -463,7 +463,7 @@
       },
       {
         "q": "What does China control in the optical links?",
-        "a": "About 70 percent of the world's indium, the raw material for the lasers.",
+        "a": "About 70 percent of the world's indium output in 2025, the raw material for the lasers.",
         "why": "Since February 2025 China has also required export permits for indium phosphide substrates, the wafers the lasers are grown on. Chinese firms also assemble high-speed optical modules in volume.",
         "section": "The chokepoint"
       }
@@ -472,7 +472,7 @@
       "An AI rack wires 72 chips together to run as one computer.",
       "Almost every link longer than 7 meters carries its signal as light, because copper fades over longer runs.",
       "NVLink switching and the lasers are the hard parts, and moving rack assembly would take an estimated several quarters.",
-      "China produces about 70 percent of the world's indium and has required export permits for indium phosphide substrates since February 2025."
+      "China produced about 70 percent of the world's indium in 2025 and has required export permits for indium phosphide substrates since February 2025."
     ]
   },
   "data-centers-and-power": {
@@ -492,7 +492,7 @@
       {
         "q": "Besides chips, what slows down building an AI data center?",
         "a": "Power equipment, which takes years to arrive.",
-        "why": "Lead times of 36 months are commonly quoted for a large power transformer, and GE Vernova's gas equipment backlog and slot reservations reached 116 GW in mid-2026.",
+        "why": "In 2024 lead times of 36 months were commonly quoted for a large power transformer, and GE Vernova's gas equipment backlog and slot reservations reached 116 GW in mid-2026.",
         "section": "The chokepoint"
       },
       {
@@ -505,7 +505,7 @@
     "takeaways": [
       "One AI rack draws up to 142 kilowatts, too much heat for air, so racks are cooled with liquid.",
       "The newest AI sites are planned in gigawatts, each the output of a large power station.",
-      "Power equipment is one of the slow parts, and lead times of 36 months are commonly quoted for a large transformer.",
+      "Power equipment is one of the slow parts, and in 2024 lead times of 36 months were commonly quoted for a large transformer.",
       "China has power to spare and is limited by the supply of AI chips."
     ]
   },
@@ -513,7 +513,7 @@
     "cards": [
       {
         "q": "What does an Nvidia B200 cost to build, and what does it sell for?",
-        "a": "About $6,400 to build, in Epoch AI's December 2025 estimate. Reports put the chip alone at $30,000 to $40,000.",
+        "a": "About $6,400 to build, in Epoch AI's December 2025 estimate. Reports in March 2024 put its selling price at $30,000 to $40,000 per chip.",
         "why": "Nvidia's gross margin was 75.0 percent in the quarter to July 2026. Epoch AI notes that most Blackwell revenue comes from servers and racks, which may carry lower margins.",
         "section": "The B200 bill of materials"
       },
@@ -531,7 +531,7 @@
       }
     ],
     "takeaways": [
-      "Epoch AI estimated in December 2025 that a B200 cost about $6,400 to build, against a reported price of $30,000 to $40,000 for the chip alone.",
+      "Epoch AI estimated in December 2025 that a B200 cost about $6,400 to build, against a selling price of $30,000 to $40,000 per chip reported in March 2024.",
       "The stacked memory is the most expensive part, about half of the cost.",
       "Packaging costs more than the logic chips, because a failed package throws away everything inside it."
     ]

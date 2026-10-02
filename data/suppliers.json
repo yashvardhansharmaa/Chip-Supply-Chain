@@ -111,7 +111,7 @@
     "founded": 2009,
     "ticker": "301269.SZ",
     "ownership": "Public; state-linked shareholders including China Electronics Corporation",
-    "role": "A Chinese EDA vendor with a complete analog and mixed-signal design flow and partial digital coverage. It is the centerpiece of China's effort to replace the American EDA tools that export controls can withdraw.",
+    "role": "A Chinese EDA vendor. In its 2025 annual report, filed in April 2026, it says it has complete design flows for analog, memory, radio-frequency and flat-panel display circuits, and that its digital tools cover 80 percent of the main tools for digital design. It is the centerpiece of China's effort to replace the American EDA tools that export controls can withdraw.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -123,7 +123,7 @@
     "aiRelevance": "If China is to design advanced AI chips without US software, Empyrean is the tool chain it has to finish.",
     "revenueUSDb": 0.197,
     "revenueYear": 2025,
-    "source": "https://www.empyrean.com.cn/"
+    "source": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225217315.PDF"
   },
   {
     "name": "Primarius Technologies",
@@ -471,7 +471,7 @@
     "founded": 1961,
     "ticker": "AVGO",
     "ownership": "Public",
-    "role": "Co-designs and manufactures the custom AI accelerators used by Google, Meta and other hyperscalers, and supplies the Tomahawk and Jericho switch chips plus the PCIe and SerDes IP that wire AI clusters together. It is the single largest supplier of merchant switch silicon.",
+    "role": "Co-designs and manufactures the custom AI accelerators used by Google, Meta and other hyperscalers, and supplies the Tomahawk and Jericho switch chips plus the PCIe and SerDes IP that wire AI clusters together. It is a leading supplier of merchant Ethernet switch silicon.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -959,7 +959,7 @@
     "founded": 1926,
     "ticker": "4063.T",
     "ownership": "Public",
-    "role": "The silicon wafer maker with the world's leading market share, supplying the blank substrate every logic and memory die is built on. It also supplies ArF and EUV photoresist and photomask pellicles, so it supplies three separate stages of the chain.",
+    "role": "The world's largest silicon wafer maker by capacity and shipments, supplying the blank substrate every logic and memory die is built on. It held an estimated 22 percent of global 300 mm wafer capacity at the end of 2024, according to the October 2025 listing prospectus of the Chinese wafer maker Eswin. It also supplies ArF and EUV photoresist and photomask pellicles, so it supplies three separate stages of the chain.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -972,7 +972,7 @@
     "aiRelevance": "Leading-edge AI logic requires epitaxial 300 mm wafers with defect densities only a handful of firms can reach.",
     "revenueUSDb": 16.734,
     "revenueYear": 2026,
-    "source": "https://www.shinetsu.co.jp/en/sustainability/sc_ai/"
+    "source": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2025-10-22/688783_20251022_UYMD.pdf"
   },
   {
     "name": "SUMCO",
@@ -984,7 +984,7 @@
     "founded": 1999,
     "ticker": "3436.T",
     "ownership": "Public",
-    "role": "The second largest silicon wafer maker and a pure play, supplying polished and epitaxial 300 mm wafers to logic and memory fabs worldwide. Capacity additions take three to four years and are contracted years ahead.",
+    "role": "The second largest silicon wafer maker by capacity and shipments and a pure play, supplying polished and epitaxial 300 mm wafers to logic and memory fabs worldwide. It held an estimated 20 percent of global 300 mm wafer capacity at the end of 2024, according to Eswin's October 2025 listing prospectus. Capacity additions take three to four years and are contracted years ahead.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -994,10 +994,10 @@
       "Micron",
       "Kioxia"
     ],
-    "aiRelevance": "Wafer supply is the first physical constraint on how many AI dies can exist, and the top five wafer makers serve around 75 percent of the market.",
+    "aiRelevance": "Wafer supply is the first physical constraint on how many AI dies can exist, and the top five wafer makers served around 75 percent of the market in 2025.",
     "revenueUSDb": 2.663,
     "revenueYear": 2025,
-    "source": "https://www.sumcosi.com/english/products/"
+    "source": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2025-10-22/688783_20251022_UYMD.pdf"
   },
   {
     "name": "GlobalWafers",
@@ -1009,7 +1009,7 @@
     "founded": 2011,
     "ticker": "6488.TWO",
     "ownership": "Public; controlled by Sino-American Silicon Products",
-    "role": "The third largest wafer maker, with fabs across Taiwan, Japan, the US and Europe, and a new 300 mm plant in Sherman, Texas built with CHIPS Act support. It also supplies SOI and compound semiconductor substrates.",
+    "role": "The third largest wafer maker, with fabs across Taiwan, Japan, the US and Europe, and a new 300 mm plant in Sherman, Texas built with CHIPS Act support. In its annual report for 2025 it ranked itself third and put its shipments at about 15 to 20 percent of global semiconductor wafer output. It also supplies SOI and compound semiconductor substrates.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -1021,7 +1021,7 @@
     "aiRelevance": "The main non-Japanese source of leading-edge wafers and the one adding capacity inside the United States.",
     "revenueUSDb": 1.924,
     "revenueYear": 2025,
-    "source": "https://www.sas-globalwafers.com/"
+    "source": "https://www.sas-globalwafers.com/wp-content/uploads/2026/04/GlobalWafers_2025-Annual-Report-EN.pdf"
   },
   {
     "name": "Siltronic",
@@ -1042,7 +1042,7 @@
       "Intel",
       "Micron"
     ],
-    "aiRelevance": "One of the top five wafer makers, which serve around 75 percent of the market, and the only European one among them.",
+    "aiRelevance": "One of the top five wafer makers, which served around 75 percent of the market in 2025, and the only European one among them.",
     "revenueUSDb": 1.566,
     "revenueYear": 2025,
     "source": "https://www.siltronic.com/en/products"
@@ -1221,7 +1221,7 @@
     "founded": null,
     "ticker": "688783.SS",
     "ownership": "Public (Shanghai STAR Market)",
-    "role": "Mainland China's largest maker of 300 mm wafers, which ranked sixth in the world with about 6 percent of global 300 mm shipments in 2024 and about 7 percent of capacity, according to its October 2025 Shanghai listing prospectus.",
+    "role": "Mainland China's largest maker of 300 mm wafers, which says it ranked sixth in the world with about 7.7 percent of global 300 mm shipments in the first half of 2026, up from about 6 percent in 2024.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -1230,7 +1230,7 @@
     "aiRelevance": "A domestic 300 mm supplier at this scale lets Chinese fabs rely less on the five foreign firms that lead the wafer market.",
     "revenueUSDb": null,
     "revenueYear": null,
-    "source": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2025-10-22/688783_20251022_UYMD.pdf"
+    "source": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225503057.PDF"
   },
   {
     "name": "JSR Corporation",
@@ -2268,10 +2268,10 @@
       "Intel",
       "Photronics"
     ],
-    "aiRelevance": "AGC and Hoya are the main sources of the blank under an EUV mask, and in December 2024 AGC said its EUV blank sales grew 50 percent in 2023 and could reach about ¥40 billion in 2024.",
+    "aiRelevance": "AGC and Hoya are the main sources of the blank under an EUV mask. AGC's EUV blank sales reached ¥40 billion in 2024 and fell in 2025, and in June 2026 AGC said they were recovering and that 2026 demand would exceed 2024's.",
     "revenueUSDb": 13.385,
     "revenueYear": 2025,
-    "source": "https://www.agc.com/en/news/detail/1201109_2814.html"
+    "source": "https://www.agc.com/en/ir/library/bizbriefing/pdf/2026_0602esemiconductor_transcript.pdf"
   },
   {
     "name": "Photronics",
@@ -2355,9 +2355,9 @@
     "founded": 1985,
     "ticker": "Private",
     "ownership": "Majority owned by Intel; Bain Capital and TSMC hold minority stakes",
-    "role": "Builds the multi-beam electron mask writers that pattern EUV masks with hundreds of thousands of parallel beamlets. It is the dominant supplier for leading-edge mask writing, with NuFlare the only other source.",
+    "role": "Builds the multi-beam electron mask writers that pattern EUV masks with hundreds of thousands of parallel beamlets. On CSET's count it led the market for all electron-beam mask writers in 2025, and NuFlare is the only other maker of multi-beam writers.",
     "chokepoint": "Critical",
-    "shareNote": null,
+    "shareNote": "46.6% of the $994M market for all electron-beam mask writers in 2025, ahead of NuFlare (39.2%) and JEOL (14.2%), on CSET's analysis of TechInsights data",
     "customers": [
       "TSMC",
       "Samsung",
@@ -2365,7 +2365,7 @@
       "Toppan",
       "Dai Nippon Printing"
     ],
-    "aiRelevance": "Leading-edge EUV masks for AI chips are written on multi-beam tools, and IMS is the established industry leader in making them.",
+    "aiRelevance": "Leading-edge EUV masks for AI chips are written on multi-beam tools, and in 2023 Intel called IMS the established industry leader in making them.",
     "revenueUSDb": null,
     "revenueYear": null,
     "source": "https://download.intel.com/newsroom/archive/2025/en-us-2023-09-12-intel-to-sell-minority-stake-in-ims-nanofabrication-business-to-tsmc.pdf"
@@ -2715,7 +2715,7 @@
     "founded": 1980,
     "ticker": "LRCX",
     "ownership": "Public",
-    "role": "The largest supplier of plasma etch systems, particularly the high aspect ratio etch used to drill 3D NAND channels and DRAM capacitors, plus ALD, electroplating and cryogenic etch tools.",
+    "role": "The largest supplier of plasma etch systems, with 41.1 percent of the $21.9 billion dry etch tool market in 2025, against 23.4 percent for Tokyo Electron, according to CSET. Its line includes the high aspect ratio etch used to drill 3D NAND channels and DRAM capacitors, plus ALD, electroplating and cryogenic etch tools.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2728,7 +2728,7 @@
     "aiRelevance": "HBM depends on deep silicon vias and dense DRAM capacitors, both of which are Lam etch problems.",
     "revenueUSDb": 23.233,
     "revenueYear": 2026,
-    "source": "https://www.lamresearch.com/products/"
+    "source": "https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N103"
   },
   {
     "name": "Tokyo Electron",
@@ -2814,7 +2814,7 @@
     "founded": 2001,
     "ticker": "002371.SZ",
     "ownership": "Public (Shenzhen); state-backed, National IC Fund investor",
-    "role": "China's largest semiconductor equipment maker, with plasma etch, PVD, CVD, ALD, furnace and cleaning tools. It has grown into the global top ten equipment vendors through domestic substitution.",
+    "role": "China's largest semiconductor equipment maker, with plasma etch, PVD, CVD, ALD, furnace and cleaning tools. Domestic substitution lifted it into the world's top ten chipmaking equipment suppliers by sales in 2025. That year three Chinese firms made the global top 20, up from one in 2022.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -2826,7 +2826,7 @@
     "aiRelevance": "Naura is the clearest measure of how far China has come in replacing American and Japanese process tools.",
     "revenueUSDb": 5.849,
     "revenueYear": 2025,
-    "source": "https://www.naura.com/en/"
+    "source": "https://asia.nikkei.com/business/tech/semiconductors/china-edges-up-with-3-of-world-s-top-20-chipmaking-gear-suppliers"
   },
   {
     "name": "AMEC",
@@ -2911,7 +2911,7 @@
     "founded": 1993,
     "ticker": "Private",
     "ownership": "Majority owned by Samsung Electronics",
-    "role": "Korea's largest semiconductor equipment maker, supplying wafer cleaning, coater/developer track, etch and packaging systems, mainly to Samsung. It is how Samsung keeps some tool technology in house.",
+    "role": "Korea's largest maker of chip and display equipment by its own description, with sales of about KRW 2.46 trillion in 2025, supplying wafer cleaning, coater/developer track, etch and packaging systems, mainly to Samsung. It is how Samsung keeps some tool technology in house.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2921,7 +2921,7 @@
     "aiRelevance": "Supplies a meaningful share of the tools inside the fabs that make most of the world's HBM.",
     "revenueUSDb": null,
     "revenueYear": null,
-    "source": "https://www.semes.com/en/"
+    "source": "https://www.semes.com/en/company/management-information/view"
   },
   {
     "name": "ACM Research",
@@ -3056,7 +3056,7 @@
     "founded": 1996,
     "ticker": "1347.HK",
     "ownership": "Public (Hong Kong and Shanghai); state-backed",
-    "role": "China's second largest foundry, focused on mature-node specialty processes including power management, embedded memory and analog. It does not make leading-edge logic.",
+    "role": "Mainland China's second largest pure-play foundry and the world's fifth largest by 2025 sales, focused on mature-node specialty processes including power management, embedded memory and analog. It does not make leading-edge logic.",
     "chokepoint": "Contested",
     "shareNote": null,
     "customers": [
@@ -3066,7 +3066,7 @@
     "aiRelevance": "Supplies the power management and analog parts that surround AI compute.",
     "revenueUSDb": 2.402,
     "revenueYear": 2025,
-    "source": "https://www.huahonggrace.com/"
+    "source": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-05-15/688347_20260515_XRZ3.pdf"
   },
   {
     "name": "GlobalFoundries",
@@ -3411,7 +3411,7 @@
     "founded": 1968,
     "ticker": "AMKR",
     "ownership": "Public",
-    "role": "The largest US-headquartered OSAT, with plants across Asia and a new advanced packaging plant in Peoria, Arizona, planned under an October 2024 memorandum of understanding with TSMC to serve customers of TSMC's Arizona fabs; the two announced a long-term partnership in June 2026.",
+    "role": "The world's largest US-headquartered OSAT, as it described itself in its annual report for 2025, with plants across Asia and a new advanced packaging plant in Peoria, Arizona, planned under an October 2024 memorandum of understanding with TSMC to serve customers of TSMC's Arizona fabs; the two announced a long-term partnership in June 2026.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -3424,7 +3424,7 @@
     "aiRelevance": "Domestic packaging capacity is what reshoring AI chip manufacture to the United States still lacks.",
     "revenueUSDb": 6.708,
     "revenueYear": 2025,
-    "source": "https://amkor.com/"
+    "source": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm"
   },
   {
     "name": "JCET Group",
@@ -3527,7 +3527,7 @@
     "founded": 1987,
     "ticker": "2449.TW",
     "ownership": "Public",
-    "role": "The largest independent test house in Taiwan, running wafer sort and final test on logic including AI accelerators. Test time per AI die is long, which makes tester capacity a bottleneck.",
+    "role": "The world's largest pure-play chip test house and second worldwide in test revenue, as the company described itself in 2026, running wafer sort and final test on logic including AI accelerators. Test time per AI die is long, which makes tester capacity a bottleneck.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -3539,7 +3539,7 @@
     "aiRelevance": "AI accelerators take far longer to test than mobile chips, so test capacity constrains shipments.",
     "revenueUSDb": 1.109,
     "revenueYear": 2025,
-    "source": "https://www.kyec.com.tw/en/"
+    "source": "https://www.kyec.com.tw/en/about"
   },
   {
     "name": "Chipbond Technology",
@@ -3671,7 +3671,7 @@
     "ownership": "Public",
     "role": "Makes the dicing saws, laser dicers and back-grinders that cut wafers into dies and thin them for stacking. Thinning wafers to tens of micrometers is what makes HBM and 3D stacking possible.",
     "chokepoint": "Critical",
-    "shareNote": null,
+    "shareNote": "87% of the $1.9bn market for dicing saws and wafer grinders in 2025, on CSET's analysis of TechInsights data",
     "customers": [
       "TSMC",
       "Samsung",
@@ -3840,7 +3840,7 @@
     "founded": 1990,
     "ticker": "3037.TW",
     "ownership": "Public; part of the United Microelectronics group",
-    "role": "The largest IC substrate maker by revenue, producing ABF and BT substrates plus high density interconnect boards. It is adding ABF capacity in Taiwan and Shenzhen for AI demand.",
+    "role": "One of the largest IC substrate makers, producing ABF and BT substrates plus high density interconnect boards. It is adding ABF capacity in Taiwan and Shenzhen for AI demand.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -3889,7 +3889,7 @@
     "founded": 1997,
     "ticker": "8046.TW",
     "ownership": "Public; part of the Formosa Plastics Group",
-    "role": "Produces ABF and BT IC substrates and high-layer-count printed circuit boards, and is one of the top five IC substrate makers worldwide.",
+    "role": "Produces ABF and BT IC substrates and high-layer-count printed circuit boards, and is one of the main IC substrate makers worldwide.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4222,7 +4222,7 @@
     "founded": 1993,
     "ticker": "FORM",
     "ownership": "Public",
-    "role": "The largest probe card maker, supplying the MEMS probe cards that make temporary electrical contact with thousands of pads on a wafer during sort, including HBM and logic probe cards.",
+    "role": "A leading probe card maker, with $637.9 million of revenue in its probe card segment in 2025, supplying the MEMS probe cards that make temporary electrical contact with thousands of pads on a wafer during sort, including HBM and logic probe cards.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -4235,7 +4235,7 @@
     "aiRelevance": "Probe cards are custom per design, so a new AI chip needs new probe cards before it can be tested at all.",
     "revenueUSDb": 0.785,
     "revenueYear": 2025,
-    "source": "https://www.formfactor.com/products/probe-cards/"
+    "source": "https://www.sec.gov/Archives/edgar/data/1039399/000103939926000009/form-20251227.htm"
   },
   {
     "name": "Technoprobe",
@@ -4393,7 +4393,7 @@
     "ownership": "Public",
     "role": "Sells as Accretech and says it has the top global share in probers, the machines that move each wafer under the probe card and hold it at a set temperature during wafer test. It also makes dicing machines and grinders.",
     "chokepoint": "Important",
-    "shareNote": null,
+    "shareNote": "8.1% of the $1.9bn market for dicing saws and wafer grinders in 2025, second to Disco, on CSET's analysis of TechInsights data",
     "customers": [
       "Chipmakers",
       "Assembly and test firms"
@@ -5307,7 +5307,7 @@
     "founded": 1999,
     "ticker": "IFX.DE",
     "ownership": "Public",
-    "role": "The largest power semiconductor maker, supplying the MOSFETs, gallium nitride devices and power stages used from the grid connection through the rack power shelf to the point-of-load regulator.",
+    "role": "The largest power semiconductor maker, with 17.3 percent of the $32.5 billion market for power discretes and modules in 2025, against 7.2 percent for onsemi, according to Omdia figures Infineon published in August 2026. It supplies the MOSFETs, gallium nitride devices and power stages used from the grid connection through the rack power shelf to the point-of-load regulator.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -5319,7 +5319,7 @@
     "aiRelevance": "Nvidia's move to 800 volt DC rack distribution is built on power semiconductors from a handful of suppliers.",
     "revenueUSDb": 17.043,
     "revenueYear": 2025,
-    "source": "https://www.infineon.com/"
+    "source": "https://www.infineon.com/assets/row/public/documents/corporate/investors/presentations/2026/2026-08-05-q3-fy26-investor-presentation-v01-00-en.pdf"
   },
   {
     "name": "Nidec",

@@ -37,7 +37,7 @@
   {
     "term": "ATE",
     "aka": "automated test equipment, tester",
-    "plain": "The machine that connects to a finished chip, feeds it millions of test patterns and checks whether the answers coming back are right. Advantest counts test as the only manufacturing step that puts electricity through the chip.",
+    "plain": "The machine that connects to a finished chip, feeds it millions of test patterns and checks whether the answers coming back are right. Advantest's July 2026 investor guide counts test as the only manufacturing step that puts electrical signals through the chip.",
     "why": "An AI accelerator joins a dozen expensive pieces, and one bad piece scraps them all, so each die is tested first. Advantest's April 2025 investor guide put Advantest and Teradyne at about 80 percent of the tester market.",
     "chapter": "test-and-assembly"
   },
@@ -136,7 +136,7 @@
     "term": "deposition",
     "aka": "",
     "plain": "Adding a layer of material to a wafer, either by knocking atoms off a solid target so they land on the surface, or by reacting gases at the surface so a film grows there. It is how the insulators, the wires and the parts of each transistor are built up.",
-    "why": "Making a chip often takes more than a thousand steps, many of them deposition and etch, and AI hardware needs films that reach the bottom of deeper holes. Four firms make most of the tools, and deposition is among the tool types where Chinese makers gained the most share between 2019 and 2024.",
+    "why": "Making one chip takes 1,000 to 1,500 steps by a 2025 industry estimate, many of them deposition and etch, and AI hardware needs films that reach the bottom of deeper holes. Four firms make most of the tools, and deposition is among the tool types where Chinese makers gained the most share between 2019 and 2024.",
     "chapter": "deposition-and-etch"
   },
   {
@@ -255,7 +255,7 @@
     "term": "foundry",
     "aka": "pure-play foundry, contract chipmaker, foundries, pure-play, pure play, pure-play model, contract chipmaking",
     "plain": "A factory business that manufactures chips designed by other companies and makes only its customers' products. TSMC, founded in 1987, pioneered the model, and it works because no chip company sells enough of one product to fill a modern fab on its own.",
-    "why": "All six of TSMC's largest plants are in Taiwan, which makes over 70 percent of the world's chips below 10 nm, so one island's politics reaches the whole chip supply.",
+    "why": "All six of TSMC's largest plants are in Taiwan, which held 69 percent of the world's logic capacity below 10 nm in 2022, so one island's politics reaches the whole chip supply.",
     "chapter": "foundries-and-fabs"
   },
   {
@@ -478,7 +478,7 @@
   {
     "term": "photomask",
     "aka": "mask, reticle, mask set, photomasks, masks, mask sets, mask blank set",
-    "plain": "The master template for one layer of a chip: a quartz plate, or for the shortest wavelengths a mirror, carrying the pattern that gets projected onto the wafer. A chip takes dozens of them, one per layer. In July 2022 SemiAnalysis put a full set above $1 million at 28 nm and above $10 million at 7 nm, and expected 3 nm sets to approach $40 million.",
+    "plain": "The master template for one layer of a chip: a quartz plate, or for the shortest wavelengths a mirror, carrying the pattern that gets projected onto the wafer. A chip takes dozens of them, one per layer. In July 2022 SemiAnalysis put a full set above $1 million at 28 nm and above $10 million at 7 nm, and in May 2026 it put a leading-edge set at $40 million.",
     "why": "Mask cost decides which chips can afford a leading-edge process at all, and only three firms supply the blank plates for EUV masks, two of them Japanese.",
     "chapter": "photomasks-and-pellicles"
   },
@@ -584,7 +584,7 @@
     "term": "tape-out",
     "aka": "tape out, taped out, tapes out, tape-outs, tapeout",
     "plain": "The moment a chip design is declared finished and the pattern files are sent to the factory to be written into masks. The name survives from when the data physically left on a reel of magnetic tape.",
-    "why": "After tape-out each revision needs at least some new masks, and in July 2022 SemiAnalysis expected a full 3 nm set to approach $40 million, so designers check everything they can before it.",
+    "why": "After tape-out each revision needs at least some new masks, and in May 2026 SemiAnalysis put a single respin at leading-edge nodes at $50 million to $100 million, so designers check everything they can before it.",
     "chapter": "design-and-eda"
   },
   {
@@ -647,7 +647,7 @@
     "term": "CMP",
     "aka": "chemical mechanical polishing, chemical mechanical planarization, polishing slurry, polishing slurries, slurry, slurries, CMP slurry, CMP pads, planarization",
     "plain": "After each new layer goes onto a wafer, its surface is rubbed flat again with a pad and a liquid full of fine grit, the slurry. The step is called chemical mechanical polishing, or CMP. Without it the next layer would be printed on a surface too bumpy to focus on.",
-    "why": "Each slurry is approved for one layer of one product at one fab. As of 2021 DuPont and Cabot Microelectronics held about 56 percent of a $790 million slurry market. Cabot, renamed CMC Materials in October 2020, was bought by Entegris in July 2022, and DuPont's electronics business became Qnity Electronics in November 2025.",
+    "why": "Each slurry is approved for one layer of one product at one fab. CSET's January 2021 brief, drawing on 2019 market reports, put DuPont and Cabot Microelectronics at about 56 percent of a $790 million slurry market. Cabot, renamed CMC Materials in October 2020, was bought by Entegris in July 2022, and DuPont's electronics business became Qnity Electronics in November 2025.",
     "chapter": "chemicals-gases-and-photoresist"
   },
   {
@@ -724,14 +724,14 @@
     "term": "electron beam",
     "aka": "electron-beam, e-beam, electron beams, multi-beam, multibeam, e-beam inspection, electron-beam metrology",
     "plain": "An electron beam is a stream of electrons focused to a spot far smaller than any spot of light. Fabs use it to write the pattern onto a photomask, to inspect wafers for defects light cannot see, and to measure line widths. A multi-beam tool fires many beams at once, because a single beam is slow.",
-    "why": "Intel calls Austria's IMS Nanofabrication the established leader in the multi-beam writers that advanced EUV masks require, and since December 2024 US rules control wafer inspection tools that use two or more beams to find defects 21 nm across or smaller.",
+    "why": "In 2023 Intel called Austria's IMS Nanofabrication the established leader in the multi-beam writers that advanced EUV masks require, and since December 2024 US rules control wafer inspection tools that use two or more beams to find defects 21 nm across or smaller.",
     "chapter": "photomasks-and-pellicles"
   },
   {
     "term": "mask writer",
     "aka": "mask writers, multi-beam writer, multi-beam writers, electron-beam writer, e-beam writer, mask writing",
     "plain": "A mask writer is the machine that draws a chip's pattern into the resist on a photomask blank with electrons. A single-beam writer flashes one shape at a time, while NuFlare's multi-beam writer for the most advanced masks controls 260,000 beams at once.",
-    "why": "No new chip can be printed until its masks are written. Intel says advanced EUV requires multi-beam mask writers and calls Austria's IMS Nanofabrication the established leader in them, and Japan's NuFlare also sells them.",
+    "why": "No new chip can be printed until its masks are written. In 2023 Intel said advanced EUV requires multi-beam mask writers and called Austria's IMS Nanofabrication the established leader in them. Counting all electron-beam mask writers, CSET put IMS at 46.6 percent of 2025 sales and Japan's NuFlare at 39.2 percent.",
     "chapter": "photomasks-and-pellicles"
   },
   {
@@ -843,7 +843,7 @@
     "term": "dicing",
     "aka": "wafer dicing, dicing saw, dicing saws, grinding, wafer grinding, grinders, wafer grinders, thinning, wafer thinning",
     "plain": "Dicing cuts a finished wafer into its individual dies with a diamond saw or a laser. Grinding, done first, thins the wafer from the back, and for stacked memory it goes on until the copper columns inside the dies come through.",
-    "why": "HBM depends on that grinding, and Disco of Japan leads in wafer grinders and dicing saws.",
+    "why": "HBM depends on that grinding, and Disco of Japan held 87 percent of the world market for dicing saws and wafer grinders in 2025, on CSET's count.",
     "chapter": "test-and-assembly"
   },
   {
@@ -1053,7 +1053,7 @@
     "term": "indium phosphide",
     "aka": "InP, indium",
     "plain": "Indium phosphide is a crystal, grown from the metal indium and phosphorus, that gives off light when current passes through it, which silicon cannot do. It is the material of the lasers inside the fastest optical modules.",
-    "why": "China produces about 70 percent of the world's indium and put it under new export restrictions in February 2025, when it also began requiring export permits for indium phosphide substrates. In March 2026 Nvidia agreed to invest $2 billion each in Coherent and Lumentum, alongside purchase commitments for their lasers.",
+    "why": "China produced about 70 percent of the world's indium in 2025 and put it under new export restrictions in February 2025, when it also began requiring export permits for indium phosphide substrates. In March 2026 Nvidia agreed to invest $2 billion each in Coherent and Lumentum, alongside purchase commitments for their lasers.",
     "chapter": "systems-and-networking"
   },
   {
@@ -1074,7 +1074,7 @@
     "term": "large power transformer",
     "aka": "large power transformers, transformer, transformers, switchgear, substation",
     "plain": "A large power transformer is the machine that steps grid electricity down from transmission voltage to a level a data center can use. Switchgear is the heavy switching and protection equipment around it, and together they make up the substation at the gate of the campus.",
-    "why": "Lead times of 36 months are commonly quoted, against under a year before the pandemic, and 82 percent of the units put into US service in 2019 were imported.",
+    "why": "In 2024 lead times of 36 months were commonly quoted, against under a year before the pandemic, and 82 percent of the units put into US service in 2019 were imported.",
     "chapter": "data-centers-and-power"
   },
   {
@@ -1094,8 +1094,8 @@
   {
     "term": "TWh",
     "aka": "terawatt-hour, terawatt-hours, terawatt hours",
-    "plain": "A terawatt-hour is a billion kilowatt-hours, the unit national electricity use is counted in. US data centers used 176 TWh in 2023, 4.4 percent of the country's electricity.",
-    "why": "Lawrence Berkeley National Laboratory projects 325 to 580 TWh by 2028, between 6.7 and 12 percent of US electricity.",
+    "plain": "A terawatt-hour is a billion kilowatt-hours, the unit national electricity use is counted in. US data centers used 192 TWh in 2024, 4.7 percent of the country's electricity.",
+    "why": "Lawrence Berkeley National Laboratory's reference case projects 649 TWh in 2030, 11.8 percent of forecast US electricity use, within a range of 521 to 843 TWh.",
     "chapter": "data-centers-and-power"
   },
   {
@@ -1109,7 +1109,7 @@
     "term": "wafers per month",
     "aka": "wafers a month, wafer starts, wafer starts per month, WSPM, wafer starts a month, million wafers per month",
     "plain": "Wafers per month is how fab capacity is counted: the number of wafers a plant can start through its line each month. A TSMC gigafab runs more than 100,000, and SMIC's capacity at 7 nm and below was conservatively estimated at 45,000 a month at the end of 2025. Figures are often converted to 8-inch or 12-inch equivalents so plants with different wafer sizes can be compared.",
-    "why": "SEMI forecast China at 10.1 million wafers a month in 2025, the most of any region, but little of that capacity is advanced.",
+    "why": "In June 2024 SEMI forecast China at 10.1 million wafers a month in 2025, the most of any region, and in 2026 it projected China would stay largest through 2027, but little of that capacity is advanced.",
     "chapter": "foundries-and-fabs"
   },
   {
@@ -1171,7 +1171,7 @@
   {
     "term": "lead time",
     "aka": "lead times, delivery time",
-    "plain": "Lead time is the wait between placing an order and receiving it. A wafer clears a leading-edge fab in months, while a large power transformer commonly takes three years.",
+    "plain": "Lead time is the wait between placing an order and receiving it. A wafer clears a leading-edge fab in months, while in 2024 a large power transformer commonly took three years.",
     "why": "Chip supply and power equipment are both constrained. Micron said in its report for the quarter to May 2026 that AI-driven memory and storage growth was outpacing industry supply, and waits for large power equipment run to years.",
     "chapter": "data-centers-and-power"
   },
@@ -1375,7 +1375,7 @@
     "term": "wet chemicals",
     "aka": "wet chemical, wet processing, wet clean, cleaning chemicals, process chemicals",
     "plain": "Wet chemicals are the liquids a wafer is dipped in or sprayed with between steps: acids that strip a layer, solvents that remove resist, and ultrapure water rinses. Wet processing is any step done in liquid.",
-    "why": "As of 2021 five firms held more than 60 percent of the wet chemicals market, and BIS controls wet processing tools by how selectively they etch one material over another.",
+    "why": "CSET's January 2021 brief, drawing on 2019 market reports, put five firms at more than 60 percent of the wet chemicals market, and BIS controls wet processing tools by how selectively they etch one material over another.",
     "chapter": "chemicals-gases-and-photoresist"
   },
   {

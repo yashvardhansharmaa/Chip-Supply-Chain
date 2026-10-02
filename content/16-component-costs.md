@@ -7,10 +7,10 @@
   "plain": "A bill of materials is the list of parts inside a product and what each one costs to build. Epoch AI estimated in December 2025 that Nvidia's B200, a Blackwell accelerator, cost about $6,400 to build. The processor itself, the chip that does the calculating, was the cheap part at about $900. The stacked memory beside it accounted for about half, and the packaging that wires the two together cost more than the chip. Three firms dominate the world market for that memory and one Taiwanese firm does that packaging, so a few firms supply the costliest parts.",
   "bridge": "The physical chain ends at a powered rack, and the next question is which part of it costs the most.",
   "specimen": "wafer-cost",
-  "specimenCaption": "Epoch AI's December 2025 estimate of what it cost to build one B200, drawn as a column with each layer as tall as its share of the bill. From the foot: $2,900 of memory in garnet, $1,100 of packaging, $1,000 of yield loss drawn hollow, $900 of logic dies, $480 of power delivery, board and test. About $6,400 in all, against a reported selling price of $30,000 to $40,000 for the chip alone.",
+  "specimenCaption": "Epoch AI's December 2025 estimate of what it cost to build one B200, drawn as a column with each layer as tall as its share of the bill. From the foot: $2,900 of memory in garnet, $1,100 of packaging, $1,000 of yield loss drawn hollow, $900 of logic dies, $480 of power delivery, board and test. About $6,400 in all, against a selling price of $30,000 to $40,000 per chip reported in March 2024.",
   "keyFacts": [
     {
-      "fact": "Epoch AI estimated in December 2025 that a B200 cost about $6,400 to build, in a range of $5,700 to $7,300, against a reported selling price of $30,000 to $40,000 for the chip alone",
+      "fact": "Epoch AI estimated in December 2025 that a B200 cost about $6,400 to build, in a range of $5,700 to $7,300, against a selling price of $30,000 to $40,000 per chip reported in March 2024",
       "source": "https://epoch.ai/data-insights/b200-cost-breakdown"
     },
     {
@@ -20,6 +20,10 @@
     {
       "fact": "Epoch AI's B200 model assumes a $17,000 4NP wafer, two roughly 800 mm2 compute chiplets and a die yield of 40 to 70 percent centered on 60",
       "source": "https://epoch.ai/data-insights/b200-cost-breakdown"
+    },
+    {
+      "fact": "Epoch AI's chip sales model, with data through October 2025, puts Nvidia's compute revenue per GPU in its GB200 rack systems at $33,000 to $42,000, a figure that leaves out the networking gear in those racks",
+      "source": "https://epoch.ai/data/ai-chip-sales-documentation/methodology#nvidia"
     },
     {
       "fact": "SemiAnalysis puts Vera Rubin NVL72 ownership at $3.57 per GPU-hour, against $1.84 for GB200 and $2.36 for GB300",
@@ -160,7 +164,7 @@
 ---
 # Component Costs
 
-In December 2025 Epoch AI estimated that building a Blackwell B200 cost about $6,400, and reports put its selling price at $30,000 to $40,000 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). That $6,400 splits into stages that are expensive because of physics, because capacity is short, or because one firm sets the price.
+In December 2025 Epoch AI estimated that building a Blackwell B200 cost about $6,400, and reports in March 2024 put its selling price at $30,000 to $40,000 per chip ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Epoch AI's chip sales model, with data through October 2025, puts Nvidia's compute revenue per GPU in its GB200 rack systems at $33,000 to $42,000, a figure that leaves out the networking gear in those racks ([source](https://epoch.ai/data/ai-chip-sales-documentation/methodology#nvidia)). That $6,400 splits into stages that are expensive because of physics, because capacity is short, or because one firm sets the price.
 
 ## How it works
 
@@ -194,7 +198,8 @@ CoWoS-L, the TSMC process that mounts dies and memory on one carrier and wires t
 | Logic die, two on TSMC 4NP | $900 | $720-1,200 |
 | Power delivery, board, assembly and test | $480 | $370-600 |
 | Manufacturing cost | ~$6,400 | $5,700-7,300 |
-| Reported selling price | $30,000-40,000 | |
+| Reported selling price per chip, March 2024 | $30,000-40,000 | |
+| Nvidia compute revenue per GPU in GB200 racks, data to October 2025 | $33,000-42,000 | |
 
 Epoch AI models each line as a range, deriving the packaging line from TSMC's advanced packaging revenue and Nvidia's share of CoWoS capacity ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). The estimate covers the accelerator module only and leaves out servers and rack-scale systems ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Epoch AI notes that most Blackwell revenue comes from those systems, which may carry lower margins, so Nvidia's realized margin on Blackwell may be lower than the gap between this cost and the reported chip price suggests ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
 
@@ -269,4 +274,4 @@ The classes below are a judgment of whether each stage's cost falls as volume gr
 
 ## Takeaways
 
-Epoch AI estimated in December 2025 that an Nvidia B200 cost around $6,400 to build, against a reported selling price of $30,000 to $40,000 for the chip alone ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Memory and advanced packaging make up most of that cost, and the two processor dies cost less than the packaging that joins them to the memory ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Three companies, SK hynix, Samsung and Micron, dominate the world market for that kind of memory ([source](https://www.csis.org/analysis/understanding-biden-administrations-updated-export-controls)).
+Epoch AI estimated in December 2025 that an Nvidia B200 cost around $6,400 to build, against a selling price of $30,000 to $40,000 per chip reported in March 2024 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Its chip sales model, with data through October 2025, puts Nvidia's compute revenue per GPU in GB200 rack systems at $33,000 to $42,000 ([source](https://epoch.ai/data/ai-chip-sales-documentation/methodology#nvidia)). Memory and advanced packaging make up most of the $6,400 build cost, and the two processor dies cost less than the packaging that joins them to the memory ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Three companies, SK hynix, Samsung and Micron, dominate the world market for that kind of memory ([source](https://www.csis.org/analysis/understanding-biden-administrations-updated-export-controls)).

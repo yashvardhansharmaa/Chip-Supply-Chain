@@ -63,7 +63,7 @@
       "HPE",
       "Lenovo"
     ],
-    "priceEstimate": "$30,000 to $40,000 per GPU, the range Nvidia's CEO gave in March 2024. Epoch AI puts GB200 NVL72 systems at $33,000 to $42,000 per GPU",
+    "priceEstimate": "$30,000 to $40,000 per GPU, the range Nvidia's CEO gave in March 2024. Epoch AI's chip sales model, with data through October 2025, puts Nvidia's compute revenue per GPU in GB200 rack systems at $33,000 to $42,000, leaving out the networking gear. SemiAnalysis's cloud cost model measures the hourly cost of owning or renting one, counting server, power, data center space and financing; as of October 2026 it rates the B200 at about $1.73 per GPU-hour owned at large hyperscaler volume and $3.70 per GPU-hour at the retail tier",
     "bomEstimate": "Epoch AI estimated in December 2025 about $6,400 to build ($5,700 to $7,300): memory $2,900, packaging $1,100, packaging yield loss $1,000, the two logic dies $900",
     "exportStatus": "Controlled. Dense FP8 of 4,500 TFLOPS puts total processing performance near 36,000, well above the 21,000 TPP ceiling in the BIS rule effective 15 January 2026, so an export to China or Macau needs a license and is reviewed with a presumption of denial under 15 CFR 742.6(b)(10). An application may still be filed.",
     "notes": "The first reticle-crossing Nvidia data center GPU: two 4NP dies fused by a 10 TB/s NV-HBI link and presented to software as one GPU. Epoch AI's cost model puts the package on TSMC's CoWoS-L process. Nvidia publishes no die area, no package dimensions and no list price for the part. Epoch AI records the HGX B200 board at 180 GB and 7.7 TB/s per GPU against the 192 GB and 8 TB/s of the module Nvidia quotes.",
@@ -174,6 +174,10 @@
       {
         "label": "Nvidia technical blog: Inside Nvidia Blackwell Ultra (Blackwell column: 192 GB, 8 TB/s)",
         "url": "https://developer.nvidia.com/blog/inside-nvidia-blackwell-ultra-the-chip-powering-the-ai-factory-era/"
+      },
+      {
+        "label": "SemiAnalysis InferenceX B200 chip page",
+        "url": "https://inferencex.semianalysis.com/chips/b200"
       }
     ]
   },
@@ -862,7 +866,7 @@
       "scaleOut": "InfiniBand; PCIe Gen5 at 128 GB/s"
     },
     "systemIntegrators": [],
-    "priceEstimate": "Reuters reported eight-GPU H800 servers selling for 2 million yuan, about $280,000, as cited by Epoch AI",
+    "priceEstimate": "Reuters reported in February 2024 that eight-GPU H800 servers sold for 2 million yuan, about $280,000, at their launch a year earlier, as cited by Epoch AI",
     "bomEstimate": null,
     "exportStatus": "Controlled under the rule BIS issued on 17 October 2023. The rule’s stated effective date was 17 November 2023, but on 23 October 2023 the US government told Nvidia that its license requirements applied to the H800 immediately. Total processing performance of 15,832 is more than three times the 4,800 threshold, so the H800 only ever cleared the October 2022 rule because that rule required the 4,800 and the 600 GB/s interconnect together. Removing the interconnect parameter caught it immediately, along with the A800. Epoch AI’s read is that the cut cost less than it looks: 400 GB/s is still enough to hide communication behind useful work in a frontier training run, so on FLOP per second per dollar the H800 was about as good as the H100.",
     "notes": "The China variant that cost Chinese buyers the least in practice. Epoch AI’s calculation is that the H800 was about as good as the H100 on training FLOP per second per dollar, because 400 GB/s of NVLink is still enough to hide communication behind useful work; the loss appears in short-context inference instead. Two sources contradict each other on its interconnect, CSIS at 300 GB/s and Epoch AI at 400 GB/s, and both figures are carried as they stand. Nvidia has published nothing about the part, and Epoch AI dates it to 21 March 2023.",
@@ -953,6 +957,10 @@
       {
         "label": "Nvidia Form 8-K, 24 October 2023: license requirements effective immediately for the A100, A800, H100, H800 and L40S",
         "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581023000221/nvda-20231023.htm"
+      },
+      {
+        "label": "Reuters, 1 February 2024: H800 servers sold for about 2 million yuan at launch a year earlier",
+        "url": "https://www.reuters.com/technology/nvidias-new-china-focused-ai-chip-set-be-sold-similar-price-huawei-product-2024-02-01/"
       }
     ]
   },
@@ -2075,7 +2083,7 @@
       "scaleOut": "PCIe Gen5 x16 to the host"
     },
     "systemIntegrators": [],
-    "priceEstimate": "Epoch AI estimates $10,000 to $15,000; Microsoft is reported to pay about $10,000 in volume",
+    "priceEstimate": "Epoch AI estimates $10,000 to $15,000 in its model of AMD’s 2024 and 2025 sales; Microsoft is reported to pay about $10,000 in volume. SemiAnalysis’s cloud cost model measures the hourly cost of owning or renting one, counting server, power, data center space and financing; as of October 2026 it rates the MI300X at about $0.95 per GPU-hour owned at large hyperscaler volume and $1.30 per GPU-hour at the retail tier",
     "bomEstimate": null,
     "exportStatus": "Controlled. Total processing performance is 20,919 (8 x 2,614.9 dense FP8), four times the 4,800 threshold in ECCN 3A090.a. It also lands 81 points under the 21,000 ceiling BIS set on 15 January 2026, and its 5,300 GB/s of memory bandwidth is well under that rule’s 6,500 GB/s, so on the published numbers it falls inside the band moved to case-by-case review. The rule names the H200 and the MI325X. The MI300X is absent from it.",
     "notes": "It put 192 GB on one package at its December 2023 launch, split across a dozen chiplets: eight N5 accelerator dies bonded onto four N6 I/O dies, 153 billion transistors in all. AMD’s page prints no stack count, but the count follows from it, since the 8,192-bit memory interface is eight 1,024-bit HBM channels, and the CDNA 3 white paper says eight stacks. AMD publishes no list price, no die areas and no assembler. Epoch AI records 1,017 mm2 for the MI300X, which is the total silicon across all twelve dies, so no per-die area is given.",
@@ -2240,6 +2248,10 @@
       {
         "label": "Epoch AI: AI chip sales methodology, chip price and cost estimates",
         "url": "https://epoch.ai/data/ai-chip-sales-documentation/methodology"
+      },
+      {
+        "label": "SemiAnalysis InferenceX MI300X chip page",
+        "url": "https://inferencex.semianalysis.com/chips/mi300x"
       }
     ]
   },
@@ -4493,7 +4505,7 @@
     },
     "systemIntegrators": [],
     "priceEstimate": null,
-    "bomEstimate": "SemiAnalysis estimated a raw wafer cost under $6,000 for the 14 nm GroqChip, against roughly $16,000 for an H100 wafer, on a die of about 725 mm2",
+    "bomEstimate": "In February 2024 SemiAnalysis estimated a raw wafer cost under $6,000 for the 14 nm GroqChip, on a die of about 725 mm2, against roughly $16,000 for an H100 wafer on TSMC's 4N",
     "exportStatus": "US-designed and, for the 14 nm generation, fabricated and packaged in the United States. Groq lists a data center in Riyadh, Saudi Arabia.",
     "notes": "The purest SRAM-only design in production: no HBM at all, a fully deterministic VLIW pipeline, and a model that only works when hundreds of chips are wired together as one machine. SemiAnalysis reports that its 14 nm first generation was fabricated at GlobalFoundries and packaged in the United States. The 230 MB of SRAM and the 215 W above are the first-generation GroqChip, recorded by Epoch AI from a Groq product brief whose URL no longer resolves; Groq's live pages give neither a power figure nor a per-chip SRAM capacity, and the rack figure of 128 GB across 256 LPUs implies 500 MB per chip on the current part. Groq publishes no package type and no price; its ISCA 2020 paper gives the first-generation chip 26.8 billion transistors.",
     "layout": {
