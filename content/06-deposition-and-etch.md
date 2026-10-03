@@ -12,23 +12,23 @@
  "concentration": "High",
  "chokepointScore": 4,
  "leaders": [
- {"name": "Applied Materials", "country": "US", "share": "$28.4B revenue, fiscal 2025; leader in physical and chemical vapor deposition and in epitaxy"},
- {"name": "Lam Research", "country": "US", "share": "$23.2B revenue, fiscal 2026; leader in dry etch and in metal atomic layer deposition"},
+ {"name": "Applied Materials", "country": "US", "share": "$28.4B revenue, fiscal 2025; leader in physical and chemical vapor deposition"},
+ {"name": "Lam Research", "country": "US", "share": "$23.2B revenue, fiscal 2026; leader in conductor etch"},
  {"name": "Tokyo Electron", "country": "JP", "share": "23% of dry etch and 38% of tube and low-pressure CVD, 2025"},
  {"name": "ASM International", "country": "NL", "share": "€3.2B revenue, 2025; leader in atomic layer deposition"},
- {"name": "Naura", "country": "CN", "share": "14.7% of PVD and 5.9% of dry etch, 2025; China's largest toolmaker"}
+ {"name": "Naura", "country": "CN", "share": "14.7% of PVD, 2025"}
  ],
  "countries": [
- {"code": "US", "note": "Applied Materials (Santa Clara), Lam Research (Fremont)"},
- {"code": "JP", "note": "Tokyo Electron, Kokusai Electric, Hitachi High-Tech"},
- {"code": "NL", "note": "ASM International, Almere; ALD and epitaxy"},
- {"code": "KR", "note": "Large buyer; Jusung, Wonik IPS and Eugene in atomic layer deposition and PSK in dry strip, 2025; Semes in wet processing"},
+ {"code": "US", "note": "Applied Materials, Lam Research"},
+ {"code": "JP", "note": "Tokyo Electron, Kokusai Electric"},
+ {"code": "NL", "note": "ASM International, atomic layer deposition"},
+ {"code": "KR", "note": "Large equipment buyer"},
  {"code": "CN", "note": "Naura, AMEC, Piotech; largest equipment market at $49.3B in 2025"}
  ],
- "chinaStatus": "Deposition and etch tools are among those where Chinese toolmakers gained the most share between 2019 and 2024. They held 12.4 percent of dry etch, 9.8 percent of deposition and 2.6 percent of atomic layer deposition in 2025, according to CSET's analysis of TechInsights data. CSET's earlier analysis had them under 1 percent of atomic layer deposition in 2024.",
- "usStatus": "Two of the three largest deposition and etch toolmakers are American. The US government lists some dry etch, atomic layer deposition and deep-hole deposition tools as controlled exports. Its December 2024 foreign direct product rule reaches some tools built abroad with American technology. The rule largely exempts foreign-made tools exported by companies in Japan, the Netherlands and 31 other countries that it lists.",
- "costSignal": "Toolmakers publish no list prices. World sales of chipmaking equipment were $135.1B in 2025, with wafer processing tools up 12%.",
- "substitutability": {"band": "Moderate", "test": "Most deposition and etch steps have three or four established toolmakers, and atomic layer deposition has at least five. China's own toolmakers held 2.6 percent of atomic layer deposition in 2025.", "why": "For most deposition and etch steps, a fab can already buy the tool from three or four makers: Applied Materials, Lam, Tokyo Electron and ASM International. Switching makers means testing the new tool on the fab's own line until it matches the old tool's results. Atomic layer deposition, the most advanced kind of deposition, lays down a film a fraction of a layer of atoms at a time. At least five makers sell it, led by ASM International with 54.5 percent in 2025. China's own toolmakers held 2.6 percent of it in 2025, against 12.4 percent of dry etch."}
+ "chinaStatus": "Chinese toolmakers held 12.4 percent of dry etch in 2025, according to CSET's analysis of TechInsights data. CSET's earlier analysis had them under 1 percent of atomic layer deposition in 2024.",
+ "usStatus": "The US government lists some dry etch, atomic layer deposition and deep-hole deposition tools as controlled exports. Its December 2024 foreign direct product rule reaches some tools built outside the United States.",
+ "costSignal": "$135.1B world sales of chipmaking equipment in 2025, with wafer processing tools up 12%",
+ "substitutability": {"band": "Moderate", "test": "Most deposition and etch steps have three or four established toolmakers.", "why": "Atomic layer deposition lays down a film a fraction of a layer of atoms at a time. At least five makers sell it, led by ASM International with 54.5 percent in 2025."}
  },
  "keyFacts": [
  {"fact": "Producing one chip takes 1,000 to 1,500 steps, depending on how complex it is. A part-finished chip can cross international borders 70 or more times (SIA, 2025, with the border-crossing figure from a 2020 Accenture and Global Semiconductor Alliance study)", "source": "https://www.finance.senate.gov/download/051425-isaacs-testimony&download=1"},
@@ -97,8 +97,8 @@ Accenture and the Global Semiconductor Alliance estimated in 2020 that a part-fi
 
 The market sizes and leading shares below are 2025 figures from Georgetown University's Center for Security and Emerging Technology (CSET), based on data from the research firm TechInsights. CSET puts the deposition tool market at $26.2 billion ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N36)). It puts the dry etch market at $21.9 billion ([source](https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N103)).
 
-- **Physical vapor deposition** (PVD), which knocks atoms off a solid target and lands them on the wafer, was a $4.9 billion market in 2025 ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N42)).
-- **Chemical vapor deposition** (CVD), which reacts gases at the wafer surface to grow a film, was an $11.2 billion market in 2025 ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N47)). The plasma-enhanced version (PECVD) runs cooler and made up most of it, $7.5 billion ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N38)).
+- **Physical vapor deposition** (PVD), which knocks atoms off a solid target and lands them on the wafer, was a $4.9 billion market in 2025 ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N42)). Applied Materials held 82.4 percent of it and China's Naura 14.7 percent ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N42)).
+- **Chemical vapor deposition** (CVD), which reacts gases at the wafer surface to grow a film, was an $11.2 billion market in 2025, led by Applied Materials at 47 percent ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N47)). The plasma-enhanced version (PECVD) runs cooler and made up most of it, $7.5 billion ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N38)).
 - **Atomic layer deposition** (ALD) lays down less than one atomic layer at a time, so it coats vertical walls as evenly as horizontal floors. US regulators say that even coating makes it important for building 3D structures, such as 3D DRAM, 3D NAND, and the FinFET and gate-all-around transistors in logic chips ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)). ASM International leads it with 54.5 percent of a $4.1 billion market in 2025 ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N41)).
 - **Epitaxy** grows layers that line up with the crystal beneath them, using high-temperature CVD tools ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N40)). **Electroplating** deposits the copper used for wiring across the wafer ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)).
 
@@ -128,7 +128,7 @@ ASM International, the atomic layer deposition specialist, reached a record EUR 
 
 ## China and the controls
 
-China is the tool vendors' largest market, and Chinese toolmakers have gained share since 2019 ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). It bought $49.3 billion of equipment in 2025, half a percent less than in 2024, and remained the biggest single market ([source](https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025)). Taiwan's spending rose 90 percent to $31.5 billion ([source](https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025)). China still takes a large share of every major vendor's sales.
+China is the tool vendors' largest market, and Chinese toolmakers have gained share since 2019 ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). It bought $49.3 billion of equipment in 2025, half a percent less than in 2024, and remained the biggest single market ([source](https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025)). Taiwan's spending rose 90 percent to $31.5 billion ([source](https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025)). South Korea's rose 26 percent to $25.8 billion ([source](https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025)). China still takes a large share of every major vendor's sales.
 
 - **Tokyo Electron**: 34.1 percent of sales in the year to March 2026, down from 41.7 percent ([source](https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf)).
 - **Lam Research**: 26 percent in the June 2026 quarter, behind Taiwan at 27 percent ([source](https://www.sec.gov/Archives/edgar/data/707549/000070754926000033/lrcx_exhibitx991xq4x2026.htm)).
@@ -151,21 +151,13 @@ The United States tightened its export controls at least five times between 2022
 
 The rules apply to the toolmakers as well as to their customers. Applied Materials took a $253 million charge to settle an export controls compliance matter with BIS ([source](https://www.globenewswire.com/news-release/2026/08/13/3344890/0/en/applied-materials-announces-third-quarter-2026-results.html)).
 
-Of the tools in the chart below, China-based suppliers have their largest share in dry stripping, which clears leftover photoresist off the wafer and was a $314.6 million market in 2025 ([source](https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N53)). Mattson Technology held 22.6 percent of it and Naura 8.3 percent ([source](https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N53)). Mattson is a US-based firm that Beijing E-Town bought in 2016 ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)).
+Of the tools in the chart below, China-based suppliers have their largest share in dry stripping, which clears leftover photoresist off the wafer and was a $314.6 million market in 2025 ([source](https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N53)). Kokusai held 35.7 percent of it, Mattson Technology 22.6 percent and Naura 8.3 percent ([source](https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N53)). Mattson is a US-based firm that Beijing E-Town bought in 2016 ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)).
 
 {{figure:china-tool-share}}
 
 ## The chokepoint
 
-Deposition and etch tools are a chokepoint, but a weaker one than lithography. Most deposition and etch steps have three or four credible vendors. Atomic layer deposition has at least five, led by ASM International at 54.5 percent in 2025 ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N41)). China's own toolmakers held only 2.6 percent of atomic layer deposition in 2025 ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N41)). The December 2024 rule targets advanced atomic layer deposition tools and the extremely deep, narrow holes that HBM and 3D memory need ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
-
-## Key evaluation criteria
-
-- **Selectivity.** How hard the process attacks one material and spares another. BIS controls wet processing at a silicon-germanium-to-silicon ratio of 100:1 ([source](https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf)).
-- **Conformality and aspect ratio.** Whether a film reaches the bottom of a hole, and how deep that hole is against its width. Controls start at 10:1 for TSV etch and 200:1 for 3D DRAM deposition ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
-- **Uniformity.** How much results vary across a 300 mm wafer. The TSV etch control is set at within-wafer etch depth nonuniformity of 2 percent or less ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
-- **Throughput.** Wafers per hour, which sets the cost per layer and how many lots a fab can run.
-- **Particles and chamber matching.** How many stray particles these tools leave on a wafer, each a possible defect, and whether one chamber behaves like the next. Metrology and inspection tools measure both (see [Metrology and inspection](#metrology-and-inspection)).
+Deposition and etch tools are a chokepoint, but a weaker one than lithography. Most deposition and etch steps have three or four credible vendors. Atomic layer deposition has at least five ([source](https://chipexplorer.eto.tech/?parentNode=N35&selectedNode=N41)). The December 2024 rule targets advanced atomic layer deposition tools and the extremely deep, narrow holes that HBM and 3D memory need ([source](https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf)).
 
 ## Takeaways
 

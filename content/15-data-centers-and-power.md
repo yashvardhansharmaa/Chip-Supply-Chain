@@ -15,12 +15,12 @@
       {
         "name": "GE Vernova",
         "country": "US",
-        "share": "116 GW of gas equipment backlog and reserved factory slots at mid-2026. Also makes transformers and switchgear, including through Prolec GE"
+        "share": "Gas equipment, transformers and switchgear, including through Prolec GE"
       },
       {
         "name": "Hitachi Energy",
         "country": "CH",
-        "share": "Large power transformers and high-voltage switchgear"
+        "share": "Power transformers and switchgear"
       },
       {
         "name": "Siemens Energy",
@@ -30,23 +30,23 @@
       {
         "name": "Mitsubishi Power",
         "country": "JP",
-        "share": "Power generation equipment, including gas turbines. GE Vernova names it a key competitor, alongside Siemens Energy"
+        "share": "Power generation equipment, including gas turbines"
       },
       {
         "name": "Vertiv",
         "country": "US",
-        "share": "Data center power and cooling systems. A partner in Nvidia's gigawatt AI factory designs"
+        "share": "Data center power systems"
       },
       {
         "name": "Schneider Electric",
         "country": "FR",
-        "share": "Electrical distribution and cooling. A partner in Nvidia's 800-volt DC designs"
+        "share": "Electrical distribution and cooling"
       }
     ],
     "countries": [
       {
         "code": "US",
-        "note": "Most new AI capacity. The ERCOT grid in Texas and the PJM grid in the Mid-Atlantic and Midwest carry the growth in demand"
+        "note": "The largest data center operators, and GE Vernova turbines and grid equipment"
       },
       {
         "code": "CH",
@@ -57,21 +57,17 @@
         "note": "Siemens Energy grid technologies and turbines"
       },
       {
-        "code": "TW",
-        "note": "Delta Electronics power shelves, busbars and thermal modules"
-      },
-      {
         "code": "JP",
-        "note": "Mitsubishi Heavy Industries power equipment, including gas turbines. Hitachi group transformers"
+        "note": "Mitsubishi Power equipment, including gas turbines"
       }
     ],
-    "chinaStatus": "China has spare generating capacity and a large domestic industry that makes transformers and switchgear, and it can connect new sites quickly. The supply of accelerators limits its AI buildout.",
-    "usStatus": "The United States has the demand and the money but cannot shorten the wait for equipment. Transformers and turbines both take years to arrive. Measured by capacity, US factories supplied 29.2 percent of the large power transformers bought in the US in 2023, and imports supplied the rest. No restarted nuclear reactor is serving data centers yet.",
-    "costSignal": "Large power transformer lead times of 36 months were commonly quoted in 2024, against under a year before the pandemic. GE Vernova's gas equipment backlog and reserved factory slots grew from 100 GW to 116 GW in the second quarter of 2026",
+    "chinaStatus": "China used 25 percent of the world's data center electricity in 2024, second to the United States, by the International Energy Agency's estimate. Data centers made up around 3 percent of the growth in China's electricity demand from 2022 to 2024.",
+    "usStatus": "The United States has the demand and the money but cannot shorten the wait for equipment. Constellation expects to restart the Crane nuclear plant for Microsoft in 2027.",
+    "costSignal": "36 months, the large power transformer lead time commonly quoted in 2024, against under a year before the pandemic",
     "substitutability": {
       "band": "Moderate",
-      "test": "Nvidia names nine data center power system providers for its gigawatt designs. But a large transformer commonly took three years to arrive in 2024, and GE Vernova's gas equipment backlog and reserved factory slots stood at 116 GW in mid-2026.",
-      "why": "Nvidia names nine data center power system providers for its gigawatt designs, so a buyer can choose among suppliers. But money cannot shorten the wait. In 2024, large power transformer lead times of 36 months were commonly quoted, and the longest reached 60 months. Before the pandemic, an order took under a year. An International Energy Agency survey published in 2025 found waits of up to four years worldwide. GE Vernova's gas equipment backlog and reserved factory slots reached 116 GW in mid-2026. It expects its gas turbine output to reach 20 GW a year in the third quarter of 2026."
+      "test": "Nvidia names nine data center power system providers for its gigawatt designs.",
+      "why": "A buyer can choose among suppliers, but money cannot shorten the wait. In 2024, the longest large power transformer lead times reached 60 months. An International Energy Agency survey published in 2025 found waits of up to four years worldwide."
     }
   },
   "keyFacts": [
@@ -265,7 +261,7 @@ The largest data center operators pay for the buildout. Capital spending by Alph
 
 Epoch AI, a research group, projects that OpenAI's seven US Stargate sites will exceed 9 GW by 2029 ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)). It expects the site in Abilene, Texas, to grow from an estimated 0.3 GW in April to 1.2 GW in the fourth quarter of 2026 ([source](https://epoch.ai/publications/openai-stargate-where-the-us-sites-stand)).
 
-Equipment makers limit how fast the buildout can go. GE Vernova builds large gas turbines, and its 2025 annual report names Siemens Energy and Mitsubishi Power among the key competitors of its power generation business ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm)). Hitachi Energy, Siemens Energy, GE Vernova, ABB, Eaton and Schneider Electric supply transformers and switchgear.
+Equipment makers limit how fast the buildout can go. GE Vernova builds large gas turbines, and its 2025 annual report names Siemens Energy and Mitsubishi Power among the key competitors of its power generation business ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm)). Its electrification business makes power transformers and switchgear, and the report names Hitachi Energy, Siemens Energy, Schneider Electric and ABB among that business's key competitors ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm)).
 
 GE Vernova bought the remaining half of Prolec GE, a transformer maker, in the first half of 2026 ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)). GE Vernova's gas equipment backlog and reserved factory slots grew from 100 GW to 116 GW in the second quarter of 2026 ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)). In the first half of the year, data center orders for its electrification business, which makes grid equipment, passed $5 billion, more than double its total for 2025 ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
 
@@ -279,6 +275,8 @@ In its September 2026 Short-Term Energy Outlook, the Energy Information Administ
 
 {{figure:us-dc-electricity}}
 
+By the International Energy Agency's estimate, China accounted for 25 percent of the world's data center electricity use in 2024, second to the United States at 45 percent ([source](https://www.iea.org/reports/energy-and-ai/executive-summary)). Data centers made up around 3 percent of the growth in China's electricity demand from 2022 to 2024, the agency found ([source](https://www.iea.org/reports/electricity-2025/executive-summary)).
+
 Chip efficiency is still improving. Google's Ironwood TPU, an AI chip, delivers twice the performance per watt of Trillium, the TPU before it ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)). A token is the chunk of text a model reads or writes. Energy per token can fall while total energy use still rises, if the number of tokens rises faster.
 
 ## The chokepoint
@@ -288,18 +286,10 @@ Far more capacity has been announced than is connected and running. ERCOT, the g
 Projects in that queue also wait on equipment.
 
 - **Large power transformers.** In 2024, lead times of 36 months were commonly quoted and the longest reached 60 months, against under a year before the pandemic ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)). By a Commerce Department estimate, 82 percent of the units put into US service in 2019 were imported ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)). In an industry survey published in 2025, the International Energy Agency found that large power transformers took up to four years to secure worldwide ([source](https://www.iea.org/reports/building-the-future-transmission-grid/executive-summary)). It also found that their average lead times had almost doubled since 2021 ([source](https://www.iea.org/reports/building-the-future-transmission-grid/executive-summary)). Measured by capacity, US factories supplied 29.2 percent of the transformers of 60 MVA and above bought in the US in 2023, and imports supplied the rest ([source](https://www.usitc.gov/publications/701_731/pub5531.pdf)).
-- **Gas turbines.** GE Vernova's gas equipment backlog and reserved factory slots stood at 116 GW in mid-2026 ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)). It expects its annual gas turbine output to reach 20 GW in the third quarter of 2026, 24 GW in 2028 and 30 GW in 2030 ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
-- **Firm new generation**, the kind that runs whatever the weather. The 835 MW Crane plant shut in 2019, and its restart depends on Nuclear Regulatory Commission licensing approvals ([source](https://www.energy.gov/articles/energy-department-closes-loan-restart-nuclear-power-plant-pennsylvania)). The NRC has approved a fuel license amendment for the plant, and Constellation expects to restart it in 2027 ([source](https://www.constellationenergy.com/news/2026/08/constellation-reports-second-quarter-2026-results.html)).
+- **Gas turbines.** GE Vernova expects its annual gas turbine output to reach 20 GW in the third quarter of 2026, 24 GW in 2028 and 30 GW in 2030 ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
+- **Firm new generation**, the kind that runs whatever the weather. The Nuclear Regulatory Commission has approved a fuel license amendment for the Crane plant, and Constellation expects to restart it in 2027 ([source](https://www.constellationenergy.com/news/2026/08/constellation-reports-second-quarter-2026-results.html)).
 
 Memory chips are also in short supply. Micron's quarterly report for the period ended May 28, 2026, says AI-driven growth in demand for memory and storage is outpacing industry supply ([source](https://www.sec.gov/Archives/edgar/data/723125/000072312526000015/mu-20260528.htm)). The memory shortage and the wait for power equipment both limit how much of the 2026 capital spending turns into working compute.
-
-## Key evaluation criteria
-
-- **Time to power** counts the months from a signed lease until the power is switched on. Developers compete on this number.
-- **Transformer and turbine lead time** covers the two queues that set the schedule. Large power transformer lead times of 36 months were commonly quoted in 2024 ([source](https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf)). GE Vernova's gas equipment backlog and reserved factory slots stood at 116 GW in mid-2026, against planned output of 20 GW a year from the third quarter ([source](https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm)).
-- **Rack density supported** sets which racks an existing hall can take. A GB300 NVL72 rack draws up to 142 kW and is liquid cooled ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
-- **Firmness of supply** tells whether a site's power is backed by delivered equipment, such as a transformer, or exists only on paper, as a signed interconnection agreement.
-- **Energy per token** is the electricity a model uses for each token it reads or writes. Chips with higher performance per watt, such as Google's Ironwood TPU, lower it ([source](https://cloud.google.com/blog/products/compute/inside-the-ironwood-tpu-codesigned-ai-stack)).
 
 ## Takeaways
 

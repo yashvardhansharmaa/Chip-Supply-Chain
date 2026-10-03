@@ -13,22 +13,22 @@
  "chokepointScore": 5,
  "leaders": [
  {"name": "TSMC", "country": "TW", "share": "N2 in volume production since 4Q25, TSMC's first nanosheet node"},
- {"name": "Intel", "country": "US", "share": "18A in high-volume manufacturing. 18A-P adds 9% performance at the same power"},
- {"name": "Samsung Foundry", "country": "KR", "share": "First into production with gate-all-around nanosheets, starting initial 3 nm output in June 2022. In the SF2 family, SF2Z adds backside power"},
- {"name": "SMIC", "country": "CN", "share": "N+2 and N+3, printed in several passes on older deep-ultraviolet tools, no EUV"},
+ {"name": "Intel", "country": "US", "share": "18A in high-volume manufacturing"},
+ {"name": "Samsung Foundry", "country": "KR", "share": "First into production with gate-all-around nanosheets, starting initial 3 nm output in June 2022"},
+ {"name": "SMIC", "country": "CN", "share": "N+3, printed in several passes on older deep-ultraviolet tools, no EUV"},
  {"name": "Rapidus", "country": "JP", "share": "State-backed 2 nm entrant targeting mass production in 2027"}
  ],
  "countries": [
  {"code": "TW", "note": "TSMC N2 at Fab 20 Hsinchu and Fab 22 Kaohsiung"},
- {"code": "US", "note": "Intel 18A at Fab 52, Arizona. TSMC Arizona on N4, with N3 targeted for the second half of 2027"},
+ {"code": "US", "note": "Intel 18A at Fab 52, Arizona"},
  {"code": "KR", "note": "Samsung Hwaseong and Pyeongtaek"},
  {"code": "JP", "note": "Rapidus Chitose, Hokkaido"},
  {"code": "CN", "note": "SMIC Shanghai and Beijing 300 mm lines"}
  ],
- "chinaStatus": "SMIC ships a process it calls N+3, measured at 113.4 million transistors per square millimeter. It prints its tightest layers in two or four passes because it cannot buy an extreme-ultraviolet scanner. Its narrowest wires sit closer together than Intel 18A's, a comparison SemiAnalysis calls an incomplete, cherry-picked metric.",
- "usStatus": "Intel runs the only American-owned line that makes the newest transistors. Its 18A process brought gate-all-around transistors and backside power to market together. Backside power feeds the transistors from underneath. Intel is also the first to use High-NA EUV scanners, the newest kind, in volume production.",
- "costSignal": "No foundry publishes prices for its newest wafers, so cost per transistor cannot be worked out from public figures. TSMC does publish density gains. It rates N2P at 1.2 times the logic density of N3E, and A14 at more than 20 percent above N2.",
- "substitutability": {"band": "Hard", "test": "Three firms make gate-all-around transistors, the newest kind, in volume, and none sells its process recipe.", "why": "A newcomer has to work out its own process recipe, which sets the steps, their order and the tools for each. Three firms have written one. Rapidus, a state-backed newcomer in Japan, aims to move from prototypes to volume production in 2027. As of June 2026 it had raised 424.95 billion yen in equity and received state research subsidies. China cannot buy extreme-ultraviolet scanners. It made its 7 nm chips on older deep-ultraviolet machines stockpiled before export controls took effect. Relying on those machines keeps it behind the newest chips."}
+ "chinaStatus": "SMIC ships a process it calls N+3, measured at 113.4 million transistors per square millimeter. It prints its tightest layers in several passes because it cannot buy an extreme-ultraviolet scanner.",
+ "usStatus": "Intel runs the only American-owned line that makes the newest transistors. Its 18A process brought gate-all-around transistors and backside power to market together.",
+ "costSignal": "TSMC rates N2P at 1.2 times the logic density of N3E",
+ "substitutability": {"band": "Hard", "test": "Three firms make gate-all-around transistors, the newest kind, in volume, and none sells its process recipe.", "why": "A newcomer has to work out its own process recipe, which sets the steps, their order and the tools for each. Three firms have written one. China cannot buy extreme-ultraviolet scanners."}
  },
  "keyFacts": [
  {"fact": "TSMC N2 entered volume production in 4Q25, its first nanosheet gate-all-around node", "source": "https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm"},
@@ -132,7 +132,7 @@ Wiring has become as hard to make as the transistor. Copper seeps into the insul
 
 TSMC, Intel and Samsung build gate-all-around nodes with extreme-ultraviolet (EUV) lithography. China's SMIC builds 7 nm-class nodes without it ([source](https://newsletter.semianalysis.com/p/steel-smic-n3-teardown)). In July 2025 Rapidus, a state-backed newcomer in Japan, said it had started making 2 nm prototypes at its plant in Chitose, Hokkaido, and would begin mass production in 2027 ([source](https://www.rapidus.inc/en/news_topics/information/rapidus-achieves-significant-milestone-at-its-state-of-the-art-foundry-with-prototyping-of-leading-edge-2nm-gaa-transistors/)). By June 2026 it had raised 424.95 billion yen in equity, the latest 150 billion yen from a state agency ([source](https://www.rapidus.inc/en/news_topics/information/20260605-2/)). It has also received government research subsidies since fiscal 2022 ([source](https://www.rapidus.inc/en/news_topics/information/20260605-2/)).
 
-A node's name, such as 7 nm, does not measure any feature on the chip. SMIC's N+3, its third-generation 7 nm process, sets its narrowest wires 32.5 nm apart, tighter than Intel 18A's 36 nm ([source](https://newsletter.semianalysis.com/p/steel-smic-n3-teardown)). It packs 113.4 million transistors per square millimeter, against 107.7 for TSMC's N6 ([source](https://newsletter.semianalysis.com/p/steel-smic-n3-teardown)).
+A node's name, such as 7 nm, does not measure any feature on the chip. SMIC's N+3, its third-generation 7 nm process, sets its narrowest wires 32.5 nm apart, tighter than Intel 18A's 36 nm, though SemiAnalysis called that comparison an incomplete, cherry-picked metric ([source](https://newsletter.semianalysis.com/p/steel-smic-n3-teardown)). It packs 113.4 million transistors per square millimeter, against 107.7 for TSMC's N6 ([source](https://newsletter.semianalysis.com/p/steel-smic-n3-teardown)).
 
 AI accelerators have usually trailed the leading edge, because a die as large as theirs comes out working reliably only on a process that has run for years. Blackwell uses a custom TSMC 4NP process ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)). AMD's MI455X, launched on 23 July 2026, lists TSMC 2 nm and 3 nm silicon ([source](https://www.amd.com/en/products/accelerators/instinct/mi400/mi455x.html)). It spreads its compute across eight separate dies ([source](https://www.amd.com/content/dam/amd/en/documents/products/accelerators/instinct/amd-instinct-mi455x_brochure.pdf)).
 
@@ -144,20 +144,11 @@ TSMC, Intel and Samsung do not sell their process recipes, which set the steps, 
 
 China launched its third National Integrated Circuit Fund in May 2024 with 344 billion yuan, about $47 billion ([source](https://asia.nikkei.com/spotlight/supply-chain/china-launches-47bn-chip-fund-to-counter-u.s.-restrictions)). But China cannot buy EUV scanners.
 
-A Shanghai state firm began building domestic immersion scanners in 2026 and planned about five that year and roughly 20 in 2027 ([source](https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/)). Those are deep-ultraviolet machines, a generation behind EUV. SMIC gets fine features out of them by printing its tightest layers in several passes. That many scanners keep those lines running but come nowhere near replacing ASML, the Dutch scanner maker.
+A Shanghai state firm began building domestic immersion scanners in 2026 and planned about five that year and roughly 20 in 2027 ([source](https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/)). Those are deep-ultraviolet machines, a generation behind EUV. SMIC gets fine features out of them by printing its tightest layers in several passes ([source](https://newsletter.semianalysis.com/p/steel-smic-n3-teardown)). That many scanners keep those lines running but come nowhere near replacing ASML, the Dutch scanner maker.
 
 Domestic EUV is further off. China has announced $43 billion to develop it ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)). In September 2025 the Center for Strategic and International Studies (CSIS) judged that EUV remains firmly out of reach despite massive state investment ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).
 
 See [Lithography](#lithography) and [Geopolitics](#geopolitics).
-
-## Key evaluation criteria
-
-- **Electrostatic control.** How far the gate wraps the channel. It sets how much the switch leaks when off, and the lowest supply voltage it can run on.
-- **Density.** Transistors per square millimeter, comparable only inside one foundry's own numbering and for one kind of cell.
-- **Interconnect resistance.** Below a 20 nm pitch, copper wiring adds more and more delay from its resistance and capacitance ([source](https://www.imec-int.com/en/press/imec-demonstrates-16nm-pitch-ru-lines-record-low-resistance-obtained-using-semi-damascene)).
-- **Power delivery.** The voltage lost carrying power across the die. On Intel's 18A, backside power frees area and cuts the droop tenfold ([source](https://www.intc.com/news-events/press-releases/detail/1772/intel-foundry-details-process-milestones-and-future)).
-- **SRAM scaling.** The cell that holds one bit has barely shrunk since the 5 nm node, which caps how much SRAM an accelerator can afford ([source](https://newsletter.semianalysis.com/p/clash-of-the-foundries)).
-- **Cost per transistor.** No foundry publishes wafer prices, so it cannot be worked out from public figures.
 
 ## Takeaways
 

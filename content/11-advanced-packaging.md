@@ -3,8 +3,8 @@
   "id": "advanced-packaging",
   "number": 11,
   "title": "Advanced Packaging",
-  "oneLiner": "TSMC packages nearly every AI accelerator. Epoch AI found that this packaging and high bandwidth memory were the main bottlenecks on AI chip production in 2025.",
-  "plain": "Packaging joins finished chips into one component and mounts them on a base, called a substrate, wired almost as finely as the chips themselves. A lithography machine, which prints a chip's circuits, can cover only a rectangle about the size of a postage stamp in one shot. Many leading accelerators, Nvidia's Blackwell among them, need more logic than fits in that rectangle. So they are built from several chips, called dies, set side by side on an interposer, which wires them together and sits on the substrate. Stacks of memory chips sit on the same interposer, a few millimeters away. The interposer is either one piece of silicon or layers of fine copper wiring that often carry small silicon bridges where the links are densest. Interposer, chips and substrate all expand at different rates when heated, so the package can warp and its joints crack. Preventing that in high volume is so hard that TSMC, in Taiwan, packages nearly every AI accelerator.",
+  "oneLiner": "Epoch AI estimates that in 2025 Nvidia, Google, AMD and Amazon used around 90 percent of the capacity for CoWoS, TSMC's packaging for AI chips.",
+  "plain": "Packaging joins finished chips into one component and mounts them on a base, called a substrate, wired almost as finely as the chips themselves. A lithography machine, which prints a chip's circuits, can cover only a rectangle about the size of a postage stamp in one shot. Many leading accelerators, Nvidia's Blackwell among them, need more logic than fits in that rectangle. So they are built from several chips, called dies, set side by side on an interposer, which wires them together and sits on the substrate. Stacks of memory chips sit on the same interposer, a few millimeters away. The interposer is either one piece of silicon or layers of fine copper wiring that often carry small silicon bridges where the links are densest. Interposer, chips and substrate all expand at different rates when heated, so the package can warp and its joints crack. Preventing that in high volume is so hard that Nvidia, Google, AMD and Amazon all rely on TSMC, in Taiwan, to package their accelerators.",
   "bridge": "Logic and memory are still two separate parts, made in different countries. The next stage puts them side by side in one package.",
   "specimen": "cowos-exploded",
   "specimenCaption": "A CoWoS-L package, pulled apart. Two logic dies and eight HBM stacks sit on the interposer, shown in silver with its copper wiring. In CoWoS-L the interposer is fine redistribution wiring with small embedded silicon bridges. It sits on a resin substrate with a grid of solder balls underneath. The chips together cover about 2,700 mm2, a little over three reticle fields. Footprints are to scale. Thicknesses and the gaps between layers are exaggerated.",
@@ -12,24 +12,24 @@
     "concentration": "Extreme",
     "chokepointScore": 5,
     "leaders": [
-      {"name": "TSMC", "country": "TW", "share": "Almost all CoWoS for leading AI accelerators"},
+      {"name": "TSMC", "country": "TW", "share": "CoWoS packaging used by Nvidia, Google, AMD and Amazon"},
       {"name": "Intel", "country": "US", "share": "Foveros 3D packaging in volume at Rio Rancho, New Mexico; EMIB 2.5D bridges"},
-      {"name": "ASE Technology", "country": "TW", "share": "NT$389.2B assembly, test and materials revenue, 2025; the leading provider of outsourced assembly and test"},
-      {"name": "Amkor", "country": "US", "share": "$6.71B net sales, 2025; the largest American assembly and test firm"},
-      {"name": "JCET", "country": "CN", "share": "RMB 38.87B revenue, 2025; a leading Chinese assembly and test firm"},
+      {"name": "ASE Technology", "country": "TW", "share": "NT$389.2B assembly, test and materials revenue, 2025"},
+      {"name": "Amkor", "country": "US", "share": "$6.71B net sales, 2025"},
+      {"name": "JCET", "country": "CN", "share": "RMB 38.87B revenue, 2025"},
       {"name": "ASMPT", "country": "SG", "share": "$532.1M advanced packaging revenue, 2025; thermocompression bonders"}
     ],
     "countries": [
-      {"code": "TW", "note": "TSMC advanced packaging fabs and a cluster of outsourced assembly and test firms; almost all 2.5D capacity for AI accelerators"},
-      {"code": "US", "note": "Intel Foveros packaging in volume at Rio Rancho, New Mexico; Amkor plant in Peoria, Arizona, from 2028; two TSMC advanced packaging plants planned in Arizona"},
-      {"code": "CN", "note": "JCET, Tongfu and HT-Tech; four of the top ten outsourced assembly and test firms by 2024 revenue are Chinese"},
-      {"code": "NL", "note": "Besi hybrid and die bonders"},
-      {"code": "JP", "note": "Disco grinders and dicers; TEL and Shibaura bonding tools"}
+      {"code": "TW", "note": "TSMC advanced packaging fabs and a cluster of outsourced assembly and test firms"},
+      {"code": "US", "note": "Intel Foveros packaging in volume at Rio Rancho, New Mexico"},
+      {"code": "CN", "note": "Four of the top ten outsourced assembly and test firms by 2024 revenue are Chinese"},
+      {"code": "NL", "note": "Besi hybrid bonders"},
+      {"code": "JP", "note": "Disco grinders and dicers"}
     ],
-    "chinaStatus": "Four of the top ten outsourced assembly and test firms by 2024 revenue are headquartered in China. JCET alone had revenue of RMB 38.87 billion in 2025. Between 2019 and 2024, Chinese firms gained 5 percentage points of share in test tools and 4 points in fabrication tools built for advanced packaging, especially in etch and clean tools. But they lost share in bonding and other conventional assembly and packaging tools, the category where CSET counts hybrid and thermocompression bonders. In 2024 Chinese firms had 7 percent of the market for advanced packaging fabrication tools, against 65 percent for US firms and 15 percent for Japanese firms.",
-    "usStatus": "Intel opened Fab 9 in Rio Rancho, New Mexico, in January 2024 to make its Foveros 3D packages in volume. It called the plant the only US factory producing the most advanced packaging at scale. Intel also offers its EMIB 2.5D packaging to outside customers. SemiAnalysis reported in March 2026 that Amazon's Trainium and Google's TPU were adopting EMIB to different degrees. No US site yet packages Nvidia-class accelerators with HBM on CoWoS. Amkor is building a $7B packaging and test plant in Peoria, Arizona, with up to $407M of CHIPS Act money, and expects production to start in early 2028.",
-    "costSignal": "About 65,000 to 75,000 CoWoS wafers a month at the end of 2025, up from 35,000 to 40,000 a year earlier, in industry estimates from SemiWiki and TrendForce compiled by Epoch AI. TSMC does not publish its CoWoS capacity. At its 2024 symposium it projected 60 percent annual growth for the next few years. Epoch AI estimates Nvidia alone used 60.3 percent of the world's CoWoS capacity in 2025",
-    "substitutability": {"band": "Moderate", "test": "Intel's EMIB can do the same job as TSMC's CoWoS. But the shortage is in making enough working packages at the volume Nvidia orders.", "why": "None of the packaging steps is unusual. Intel's EMIB is another 2.5D option, and Amazon's Trainium and Google's TPU were adopting it to different degrees as of March 2026. But a newcomer has to buy enough bonding machines and run enough practice lots to make the interposer at 5.5 times the area a scanner prints in one shot. It then has to attach the memory stacks, make sure they work, and do all of that at the volume Nvidia alone orders. Amkor started building its plant in Peoria, Arizona in October 2025 and expects production to start in early 2028, more than two years later. For a newcomer, the wait is two to five years."}
+    "chinaStatus": "Between 2019 and 2024, Chinese firms gained 5 percentage points of share in test tools and 4 points in fabrication tools built for advanced packaging. But they lost share in bonding and other conventional assembly and packaging tools.",
+    "usStatus": "Intel opened Fab 9 in Rio Rancho, New Mexico, in January 2024 to make its Foveros 3D packages in volume. Amkor is building a $7B packaging and test plant in Peoria, Arizona, and expects production to start in early 2028.",
+    "costSignal": "About 65,000 to 75,000 CoWoS wafers a month at the end of 2025, up from 35,000 to 40,000 a year earlier, in industry estimates compiled by Epoch AI. TSMC does not publish its CoWoS capacity",
+    "substitutability": {"band": "Moderate", "test": "Intel's EMIB can do the same job as TSMC's CoWoS, but the shortage is in making enough working packages at the volume Nvidia orders.", "why": "None of the packaging steps is unusual. Intel's EMIB is another 2.5D option, and Amazon's Trainium and Google's TPU were adopting it to different degrees as of March 2026. But a newcomer has to buy enough bonding machines and run enough practice lots to make the interposer at 5.5 times the area a scanner prints in one shot."}
   },
   "keyFacts": [
     {"fact": "A scanner's maximum exposure field is 26 mm by 33 mm, or 858 mm2", "source": "https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe3400c"},
@@ -83,7 +83,7 @@ A lithography scanner prints a rectangle 26 mm by 33 mm, or 858 mm2, in one expo
 
 ## How it works
 
-Packaging joins finished chips into one component and mounts them on a base, called a substrate, wired almost as finely as the chips themselves. A lithography machine, which prints a chip's circuits, can cover only a rectangle about the size of a postage stamp in one shot. Many leading accelerators, Nvidia's Blackwell among them, need more logic than fits in that rectangle. So they are built from several chips, called dies, set side by side on an interposer, which wires them together and sits on the substrate. Stacks of memory chips sit on the same interposer, a few millimeters away. The interposer is either one piece of silicon or layers of fine copper wiring that often carry small silicon bridges where the links are densest. Interposer, chips and substrate all expand at different rates when heated, so the package can warp and its joints crack. Preventing that in high volume is so hard that TSMC, in Taiwan, packages nearly every AI accelerator.
+Packaging joins finished chips into one component and mounts them on a base, called a substrate, wired almost as finely as the chips themselves. A lithography machine, which prints a chip's circuits, can cover only a rectangle about the size of a postage stamp in one shot. Many leading accelerators, Nvidia's Blackwell among them, need more logic than fits in that rectangle. So they are built from several chips, called dies, set side by side on an interposer, which wires them together and sits on the substrate. Stacks of memory chips sit on the same interposer, a few millimeters away. The interposer is either one piece of silicon or layers of fine copper wiring that often carry small silicon bridges where the links are densest. Interposer, chips and substrate all expand at different rates when heated, so the package can warp and its joints crack. Preventing that in high volume is so hard that Nvidia, Google, AMD and Amazon all rely on TSMC, in Taiwan, to package their accelerators.
 
 A second reason for the interposer is high bandwidth memory (HBM). An HBM4 stack connects through 2,048 data signals, packed too tightly for a standard resin substrate, so the memory sits beside the logic on the interposer ([source](https://www.jedec.org/news/pressreleases/new-jedec%C2%AE-sphbm4-standard-enables-hbm4-class-bandwidth-organic-substrates)). Even Nvidia's H100, whose single logic die is 814 mm2 and fits inside one reticle field, carries five HBM stacks ([source](https://developer.nvidia.com/blog/nvidia-hopper-architecture-in-depth/)). Epoch AI counts TSMC's CoWoS packaging among the three inputs the H100 needs, along with its logic die and its HBM ([source](https://epoch.ai/data-insights/ai-chip-supply-chain-constraints)).
 
@@ -163,15 +163,6 @@ Each generation on TSMC's roadmap needs a larger interposer.
 
 - **2028.** A 14-reticle interposer of roughly 12,000 mm2, about the area of a compact disc, carrying about ten large compute dies and 20 HBM stacks ([source](https://pr.tsmc.com/english/news/3302)).
 - **2029.** More than 14 reticles, plus a 40-reticle System-on-Wafer ([source](https://pr.tsmc.com/english/news/3302)).
-
-## Key evaluation criteria
-
-- **Interposer area** limits how much logic and memory fit in one package, and stood at 5.5x reticle on CoWoS-L in April 2026 ([source](https://pr.tsmc.com/english/news/3302)).
-- **Package yield**, the share of finished packages that work, determines whether a generation ships on time. Nobody publishes it.
-- **Warpage control** means managing the different expansion rates of die, bridge, interposer and substrate. That mismatch caused warpage in Blackwell, the first high-volume CoWoS-L design ([source](https://semianalysis.com/2024/08/04/nvidias-blackwell-reworked-shipment/)).
-- **HBM stacks supported** reach about 20 on the 14-reticle package due in 2028 ([source](https://pr.tsmc.com/english/news/3302)).
-- **Bonder throughput** depends on the toolmakers. ASMPT alone targets 35 to 40 percent of the thermocompression bonding market ([source](https://www.asmpt.com/en/investor-relations/news-events/asmpt-announces-2025-annual-results/)).
-- **Substrate size** limits everything above it. A 14-reticle interposer needs a resin substrate that will not warp under it, and that pushes ABF build-up film, the insulating material in the substrate's layers, to its limits. See [Substrates and PCBs](#substrates-and-pcbs).
 
 ## Takeaways
 

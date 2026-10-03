@@ -13,22 +13,22 @@
     "chokepointScore": 4,
     "leaders": [
       {"name": "Advantest", "country": "JP", "share": "About 65% of the tester market in 2025, by its own estimate"},
-      {"name": "Teradyne", "country": "US", "share": "Second in testers, with $2.52bn of semiconductor test revenue in 2025, including system-level testers and service"},
-      {"name": "ASE", "country": "TW", "share": "The largest assembly and test contractor. About 59 percent of its $20.6bn of 2025 revenue came from packaging and test and 40 percent from electronics manufacturing"},
+      {"name": "Teradyne", "country": "US", "share": "Second in testers, with $2.52bn of semiconductor test revenue in 2025, service included"},
+      {"name": "ASE", "country": "TW", "share": "Largest assembly and test contractor; $20.6bn of 2025 revenue, about 59 percent from packaging and test"},
       {"name": "Amkor", "country": "US", "share": "$6.71bn of 2025 revenue"},
-      {"name": "Disco", "country": "JP", "share": "87% of the $1.9bn market for dicing saws and wafer grinders in 2025, on CSET's analysis of TechInsights data"}
+      {"name": "Disco", "country": "JP", "share": "87% of the $1.9bn market for dicing saws and grinders in 2025, on CSET's analysis"}
     ],
     "countries": [
-      {"code": "TW", "note": "The largest assembly and test cluster, home to ASE, Powertech, KYEC and ChipMOS"},
-      {"code": "JP", "note": "Advantest testers, Accretech and Tokyo Electron probers, Disco and Accretech dicing and grinding, Micronics Japan probe cards"},
+      {"code": "TW", "note": "Home to ASE and Powertech; Taiwanese firms lead outsourced assembly and test"},
+      {"code": "JP", "note": "Advantest testers, Accretech and Tokyo Electron probers, Disco and Accretech dicing and grinding"},
       {"code": "US", "note": "Test equipment from Teradyne, FormFactor, Cohu and Aehr, and Amkor's Arizona packaging plant"},
-      {"code": "CN", "note": "Four of the top ten assembly and test firms by 2024 revenue are headquartered in China"},
-      {"code": "MY", "note": "Penang and Kulim. Malaysia said in July 2026 that it ships 13% of the world's packaged chips"}
+      {"code": "CN", "note": "Four of the top ten assembly and test firms by 2024 revenue"},
+      {"code": "MY", "note": "Malaysia said in July 2026 that it ships 13% of the world's packaged chips"}
     ],
-    "chinaStatus": "CSET at Georgetown finds that between 2019 and 2024 Chinese toolmakers gained 5 percentage points of share in test tools and 4 points in fabrication tools built for advanced packaging. But they lost share in bonding and other conventional assembly and packaging tools. They still lag significantly behind foreign suppliers. CSET counts four of the top ten assembly and test firms by 2024 revenue as headquartered in China.",
-    "usStatus": "American firms, among them Teradyne, FormFactor, Cohu and Aehr, are strong in test machines and probe cards, the circuit boards whose needles touch each chip on the wafer. They are weak in assembly. Amkor is building a $7 billion packaging and test campus in Arizona and has a long-term deal to run packaging and test there for TSMC.",
-    "costSignal": "ASE's packaging and test business (about $12.1 billion) and Amkor ($6.71 billion) billed about $18.8 billion between them in 2025. ASE spent $4.1 billion on machinery, buildings, facilities and automation in the first half of 2026",
-    "substitutability": {"band": "Moderate", "test": "No test or assembly tool has only one maker, but switching testers means rebuilding the customer's whole test setup.", "why": "Advantest and Teradyne sell most of the testers between them, but customers have approved machines from both. The smaller kinds of test and assembly tool each have several makers. Advantest tells its investors that customers are highly cautious about switching, because a new tester means rebuilding their whole setup for development, evaluation and volume production. For a new tester maker, that switching cost is a one-time barrier, and getting its machines approved by customers would take two to five years. Four of the top ten outsourced assembly and test firms by 2024 revenue are based in China."}
+    "chinaStatus": "CSET at Georgetown finds that between 2019 and 2024 Chinese toolmakers gained share in test tools and 4 percentage points in fabrication tools built for advanced packaging. But they lost share in bonding and other conventional assembly and packaging tools.",
+    "usStatus": "American firms such as Teradyne and FormFactor are strong in test machines and probe cards. Amkor is building a $7 billion packaging and test campus in Arizona and has a long-term deal to run packaging and test there for TSMC.",
+    "costSignal": "About $12.1 billion of 2025 revenue from outside customers at ASE's packaging and test business; Amkor took $6.71 billion",
+    "substitutability": {"band": "Moderate", "test": "No test or assembly tool has only one maker, but switching testers means rebuilding the customer's whole test setup.", "why": "Advantest and Teradyne sell most of the testers between them, but customers have approved machines from both. The smaller kinds of test and assembly tool each have several makers. For a new tester maker, the switching cost is a one-time barrier, which fits the Moderate band, where closing the gap takes about two to five years."}
   },
   "keyFacts": [
     {"fact": "Advantest estimates that it held about 65% of the tester market by value in calendar 2025. It puts its share of system-on-chip (SoC) testers at 66%, up about 10 points in a year, and of memory test at about 60%", "source": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf"},
@@ -142,15 +142,7 @@ Unlike lithography, no test or assembly tool has a single supplier. Advantest ar
 
 CSET finds that between 2019 and 2024 Chinese toolmakers gained 5 percentage points of share in test tools and 4 points in fabrication tools built for advanced packaging ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). But they lost share in bonding and other conventional assembly and packaging tools ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)). They still lag significantly behind foreign suppliers ([source](https://cset.georgetown.edu/article/inside-beijings-chipmaking-offensive/)).
 
-ASE's packaging and test business took about $12.1 billion from outside customers in 2025 ([source](https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm)). With Amkor's $6.71 billion, the two billed about $18.8 billion between them, compared with global semiconductor sales of $791.7 billion ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)). That is less than 3 percent of chip sales, for a step every chip has to pass through.
-
-## Key evaluation criteria
-
-- **Test coverage** is the share of hidden failures caught before they reach a package that cannot be taken apart.
-- **Test time per part** sets throughput and cost, and large dies, memory stacks and chiplets all push it up.
-- **Probe card flatness and life** set the cost of wafer sort. Every needle must stay in the same plane across a full die and hold that over a long life.
-- **Thermal control** gets harder as accelerators draw more power. A kilowatt-class accelerator has to be kept at a set temperature in the test socket while it runs at full speed.
-- **Capacity and geography** set how many chips can be tested and packaged, and where. Taiwan, China and Malaysia hold most of the floor space, and new capacity takes years.
+ASE's packaging and test business took about $12.1 billion from outside customers in 2025 ([source](https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm)). Amkor took $6.71 billion ([source](https://www.sec.gov/Archives/edgar/data/1047127/000104712726000007/amkr123125erex-991.htm)). Global semiconductor sales that year were $791.7 billion ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)).
 
 ## Takeaways
 

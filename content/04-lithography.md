@@ -12,20 +12,20 @@
  "concentration": "Extreme",
  "chokepointScore": 5,
  "leaders": [
- {"name": "ASML", "country": "NL", "share": "100% of EUV (extreme ultraviolet) and above 80% of DUV (deep ultraviolet). EUV was 48% of its own 2025 system revenue and immersion DUV 42%"},
- {"name": "Nikon", "country": "JP", "share": "22 new chip lithography systems in the year to March 2026, in a 2025 market Nikon estimates at 570 units"},
- {"name": "Canon", "country": "JP", "share": "i-line and krypton fluoride tools for older, coarser layers, plus a nanoimprint system that Canon says was the first commercialized for chipmaking"}
+ {"name": "ASML", "country": "NL", "share": "100% of EUV (extreme ultraviolet) and above 80% of DUV (deep ultraviolet)"},
+ {"name": "Nikon", "country": "JP", "share": "22 new chip lithography systems in the year to March 2026"},
+ {"name": "Canon", "country": "JP", "share": "Deep ultraviolet tools, plus a nanoimprint system that stamps the pattern"}
  ],
  "countries": [
- {"code": "NL", "note": "ASML design and final assembly, Veldhoven"},
- {"code": "DE", "note": "Zeiss SMT optics, Oberkochen; Trumpf carbon dioxide lasers that drive the light source, Ditzingen"},
+ {"code": "NL", "note": "ASML, the Dutch maker of every EUV scanner"},
+ {"code": "DE", "note": "Zeiss SMT optics, Oberkochen, and Trumpf carbon dioxide drive lasers, Ditzingen"},
  {"code": "US", "note": "ASML light-source research and manufacturing, San Diego"},
  {"code": "JP", "note": "Nikon and Canon deep ultraviolet scanners and steppers"}
  ],
- "chinaStatus": "Export controls block ASML from shipping EUV scanners to Chinese foundries. In September 2025 CSIS judged that EUV remained firmly out of reach for China despite massive state investment. That came before a December 2025 report of a Chinese prototype that made EUV light but had printed no chip. Reuters reported in July 2026 that Shanghai Aishengna Electronic Technology Group, a state-owned firm registered in 2023, has started producing Chinese immersion DUV scanners. SMEE, the older Chinese supplier, has its largest share in i-line scanners, the coarsest kind, and even there holds about 4 percent of the world market.",
+ "chinaStatus": "In September 2025 CSIS judged that EUV remained firmly out of reach for China despite massive state investment. SMEE, the older Chinese supplier, has its largest share in i-line scanners, the coarsest kind, and even there holds about 4 percent of the world market.",
  "usStatus": "No American firm makes scanners. But the US government limits who may buy them, through rules on the American-made parts inside each machine and through its entity list of firms that may not be supplied.",
  "costSignal": "About $200M for a standard EUV scanner, $350-400M for the newer High-NA version and about $60M for a DUV tool, according to Reuters. ASML does not publish per-system prices",
- "substitutability": {"band": "Very hard", "test": "ASML is the only maker of EUV scanners, and Zeiss is its sole supplier of their mirrors. A state-funded Chinese team has made the light but has not printed a chip.", "why": "Nobody else makes EUV scanners. A newcomer would first have to make mirrors a meter wide, polished smooth to within tens of picometers, a picometer being a trillionth of a meter. It would also need a light source that hits tin droplets with a laser 50,000 times a second. An attempt in China, reported in December 2025, had made extreme-ultraviolet light but had printed no chip. In September 2025, before that report, CSIS judged that EUV remained firmly out of reach for China despite massive state investment."}
+ "substitutability": {"band": "Very hard", "test": "ASML is the only maker of EUV scanners, and Zeiss is its sole supplier of their mirrors.", "why": "A newcomer would first have to make mirrors a meter wide, polished smooth to within tens of picometers, a picometer being a trillionth of a meter. It would also need a light source that hits tin droplets with a laser 50,000 times a second."}
  },
  "keyFacts": [
  {"fact": "ASML sold 48 EUV systems in 2025, versus 44 in 2024", "source": "https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf"},
@@ -103,7 +103,7 @@ When one exposure cannot draw a pattern finely enough, the layer is printed with
 
 ### Deep ultraviolet
 
-Deep ultraviolet (DUV) light comes from gas lasers: 248 nanometers from krypton fluoride (KrF), 193 from argon fluoride (ArF), shone through air or water ([source](https://www.asml.com/en/technology/lithography-principles/light-and-lasers)). Most of the machines sold are still DUV tools. Of the 327 systems ASML sold in 2025, 131 were ArF immersion, 78 KrF and 16 ArF dry, all deep ultraviolet, and another 54 were older i-line tools ([source](https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf)). The i-line tools use 365 nm light from a mercury lamp, and ASML says they print features as small as 220 nm ([source](https://www.asml.com/en/technology/lithography-principles/light-and-lasers)).
+Deep ultraviolet (DUV) light comes from gas lasers: 248 nanometers from krypton fluoride (KrF), 193 from argon fluoride (ArF), shone through air or water ([source](https://www.asml.com/en/technology/lithography-principles/light-and-lasers)). Most of the machines sold are still DUV tools. Of the systems ASML sold in 2025, 131 were ArF immersion, 78 KrF and 16 ArF dry, all deep ultraviolet, and another 54 were older i-line tools ([source](https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf)). The i-line tools use 365 nm light from a mercury lamp, and ASML says they print features as small as 220 nm ([source](https://www.asml.com/en/technology/lithography-principles/light-and-lasers)).
 
 Reuters puts a DUV scanner at roughly $60 million ([source](https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/)). In DUV, ASML competes with Nikon and Canon, and it still holds above 80 percent of that market ([source](https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/)). Among DUV tools, export controls focus on immersion scanners, because without EUV a fab needs NXT:2000i-class scanners and several passes per layer to make leading-edge logic chips. Dutch export licensing covers these scanners.
 
@@ -147,7 +147,7 @@ Nikon and Canon serve narrower markets. Nikon sold 22 new chip lithography syste
 
 ## Controls and China's answer
 
-Export controls bar EUV from Chinese foundries ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)). In September 2025 CSIS judged that EUV remained "firmly out of reach" for China despite massive state investment ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)). That judgment came before Reuters reported a Chinese prototype in December 2025 ([source](https://www.reuters.com/world/china/how-china-built-its-manhattan-project-rival-west-ai-chips-2025-12-17/)). For DUV scanners and other tools, the restrictions came in this order:
+Export controls bar EUV from Chinese foundries ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)). In September 2025 CSIS judged that EUV remained "firmly out of reach" for China despite massive state investment ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)). For DUV scanners and other tools, the restrictions came in this order:
 
 - **Dutch national licensing** of advanced DUV took effect on 1 September 2023 ([source](https://www.government.nl/latest/news/2024/09/06/the-netherlands-expands-export-control-measure-advanced-semiconductor-manufacturing-equipment)).
 - **A US rule** published on 25 October 2023 put certain immersion scanners bound for advanced chipmaking under US export rules if they held any American content at all ([source](https://www.federalregister.gov/documents/2023/10/25/2023-23049/export-controls-on-semiconductor-manufacturing-items)). The rule did not apply if the country the scanners were first exported from already controlled them ([source](https://www.federalregister.gov/documents/2023/10/25/2023-23049/export-controls-on-semiconductor-manufacturing-items)).
@@ -171,14 +171,6 @@ If ASML stopped shipping, no fab anywhere could add EUV scanners. Tools already 
 In July 2026 ASML put its 2026 capacity at around 65 standard (low-NA) EUV scanners and said it plans to add 30 percent for 2027 ([source](https://ourbrand.asml.com/asset/c8dbf3fc-4c5e-4406-83f6-27694b138245/Press-Release-Financial-Results-Q2-2026.pdf)).
 
 For AI accelerators, EUV is the point of control, because it prints the finest layers, the ones that set how densely transistors and wires pack ([source](https://www.asml.com/en/products/euv-lithography-systems)). TSMC expects the number of layers needing High-NA to rise as AI designs grow more complex ([source](https://pr.tsmc.com/english/news/3338)).
-
-## Key evaluation criteria
-
-- **Resolution.** Set by the Rayleigh criterion, which puts the smallest printable feature at k1 times the wavelength divided by the numerical aperture ([source](https://www.asml.com/en/technology/lithography-principles/rayleigh-criterion)). The factor k1 depends on the chipmaking process and has a physical limit of 0.25 ([source](https://www.asml.com/en/technology/lithography-principles/rayleigh-criterion)). EUV reaches 13 nm at 0.33 NA and 8 nm at 0.55 NA ([source](https://www.asml.com/en/company/stories/2024/5-things-high-na-euv)).
-- **Throughput.** Wafers an hour at a stated dose. The NXE:3800E is rated at 220 and the EXE:5200B at 175 ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf)).
-- **Overlay.** How precisely one layer lands on the one below. ASML says the EXE:5200B's improved projection optics, developed with Zeiss, maximize imaging and overlay ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf)).
-- **Field size.** The patch of wafer one exposure covers. High-NA halves it ([source](https://www.asml.com/en/company/stories/2024/5-things-high-na-euv)). ASML and TSMC plan 12-inch masks to remove stitching constraints ([source](https://pr.tsmc.com/english/news/3338)).
-- **Source power.** Brighter light means more wafers an hour, and ASML demonstrated the first 1,000-watt EUV source in April 2025 ([source](https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf)).
 
 ## Takeaways
 

@@ -176,13 +176,13 @@ Three numbers set the cost of a die, the finished rectangle of circuitry cut out
 - **Dies per wafer.** A wafer is a circle and dies are rectangles, so the edge of the wafer goes to waste. The bigger the die, the fewer fit. Each of the two logic dies in a B200 is about 800 mm2 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Nvidia calls them reticle-limited, meaning they are near the largest size a scanner can print in one shot ([source](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)).
 - **Yield.** Yield is the share of dies that work. Defects land at random, so a bigger die is more likely to catch one. Epoch AI models Blackwell die yield at 40 to 70 percent, centered on 60 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
 
-Together, those three numbers put the two dies inside a B200 at about $900 of the roughly $6,400 build cost ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). The estimate counts only variable costs and leaves out fixed costs such as research and development ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
+Together, those three numbers put the two dies inside a B200 at about $900 ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). The estimate counts only variable costs and leaves out fixed costs such as research and development ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
 
 ## Variants and trade-offs
 
 ### Memory is the largest line
 
-The largest line on the bill is the 192 GB of high-bandwidth memory beside those dies, a generation called HBM3E ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). At $14 to $17 per gigabyte it comes to about $2,900, which Epoch AI counts as half of the roughly $6,400 build cost ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Epoch AI says HBM prices are negotiated deal by deal and can vary significantly with volume and contract length ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). The $14 to $17 range dates from December 2025, before the 2026 rise in memory makers' sales and margins described below ([source](https://news.skhynix.com/en/q2-2026-business-results/)).
+The largest line on the bill is the 192 GB of high-bandwidth memory beside those dies, a generation called HBM3E ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). At $14 to $17 per gigabyte it comes to about $2,900, which Epoch AI counts as half of the build cost ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). Epoch AI says HBM prices are negotiated deal by deal and can vary significantly with volume and contract length ([source](https://epoch.ai/data-insights/b200-cost-breakdown)). The $14 to $17 range dates from December 2025, before the 2026 rise in memory makers' sales and margins described below ([source](https://news.skhynix.com/en/q2-2026-business-results/)).
 
 Three firms, SK hynix, Samsung and Micron, dominate the world market for that memory ([source](https://www.csis.org/analysis/understanding-biden-administrations-updated-export-controls)). SK hynix says demand for its products has exceeded its available supply in recent quarters ([source](https://www.sec.gov/Archives/edgar/data/2120882/000119312526299963/d32785d424b4.htm)).
 
@@ -238,7 +238,7 @@ SK hynix's earnings release gives no gross margin. Its operating margin was 76 p
 
 {{figure:gross-margins}}
 
-In the table, design, equipment and leading-edge wafers earn gross margins of 50.3 to 75.0 percent, substrates 36.4 percent, and assembly and test 16.8 to 27.3 percent. In 2026 Micron passed all of them. Its gross margin rose from 39.8 percent for the year to August 2025 to 86.8 percent in the quarter to September 2026 ([source](https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Fiscal-Fourth-Quarter-and-Full-Year-2026-Results/default.aspx)). Nvidia's was 75.0 percent in the quarter to July 2026 ([source](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027)).
+In the table, design, equipment and leading-edge wafers earn gross margins of 50.3 to 75.0 percent, substrates 36.4 percent, and assembly and test 16.8 to 27.3 percent. In 2026 Micron passed all of them. Its gross margin rose from 39.8 percent for the year to August 2025 to 86.8 percent in the quarter to September 2026 ([source](https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Fiscal-Fourth-Quarter-and-Full-Year-2026-Results/default.aspx)).
 
 The Semiconductor Industry Association, using monthly data compiled by World Semiconductor Trade Statistics, counted $791.7 billion of global chip sales in 2025 ([source](https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/)). In its June 2026 forecast, World Semiconductor Trade Statistics put 2025 at $795.6 billion and 2026 at $1.51 trillion, with memory growing about 250 percent and logic 37 percent ([source](https://www.wsts.org/esraCMS/extension/media/f/WST/7618/WSTS_FC-Release-2026-May.pdf)).
 
@@ -248,7 +248,7 @@ The industry group SEMI counted $135.1 billion of semiconductor equipment billin
 
 ## Where the money goes
 
-In Epoch AI's estimate for the B200, packaging ($1,100) and packaging yield loss ($1,000) together cost more than twice as much as the logic dies ($900) ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
+In Epoch AI's estimate for the B200, packaging and packaging yield loss together cost more than twice as much as the logic dies ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
 
 The table below sorts each stage by whether its cost falls as volume grows. The classes are a judgment drawn from the sources in this chapter and the stage chapters.
 
@@ -268,15 +268,6 @@ The table below sorts each stage by whether its cost falls as volume grows. The 
 | Test and assembly (OSAT) | Already commoditized | Gross margins of 16.8 to 27.3 percent at Amkor and ASE's packaging and test segment, in the table above. |
 | Wafers and bulk gases | Already commoditized | Several firms make approved 300 mm wafers, and the top five served about 75 percent of the market in 2025. See [Silicon and wafers](#silicon-and-wafers). |
 | Rack integration (ODM) | Already commoditized | Several contract manufacturers on three continents assemble racks. See [Systems and networking](#systems-and-networking). |
-
-## Key evaluation criteria
-
-- **Cost per good die.** The wafer price divided by the dies on that wafer that work. A larger die or a lower yield raises it.
-- **Memory dollars per gigabyte, and gigabytes per part.** Memory is the largest line on the bill, and three firms make most of it.
-- **Packaging yield.** Every point lost throws away finished dies and the memory attached to them ([source](https://epoch.ai/data-insights/b200-cost-breakdown)).
-- **Share of the bill the vendor does not control.** Nvidia sets its own margin but buys memory, packaging and substrates at another firm's price.
-- **Rack watts.** A GB300 NVL72 rack can draw up to 142 kW, and the data center has to supply and cool all of it ([source](https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html)).
-- **Compressibility class.** Whether a line's cost falls when volume doubles. If it does not, capacity limits supply.
 
 ## Takeaways
 

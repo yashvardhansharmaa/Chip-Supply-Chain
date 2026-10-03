@@ -12,23 +12,23 @@
  "concentration": "Extreme",
  "chokepointScore": 4,
  "leaders": [
- {"name": "Synopsys", "country": "US", "share": "$7.054B revenue in the fiscal year ended 31 October 2025, Ansys included from July; 90%+ of the timing-signoff market"},
- {"name": "Cadence", "country": "US", "share": "$5.30B revenue in calendar 2025; 55-60% of the hardware emulator market"},
- {"name": "Siemens EDA", "country": "DE", "share": "An estimated $2.2-2.5B revenue in 2025; 85%+ of physical verification, the final layout check"},
+ {"name": "Synopsys", "country": "US", "share": "90%+ of the timing-signoff market"},
+ {"name": "Cadence", "country": "US", "share": "55%+ of the hardware emulator market"},
+ {"name": "Siemens EDA", "country": "DE", "share": "85%+ of physical verification, the final layout check"},
  {"name": "Arm", "country": "GB", "share": "About 50% of processor compute at the top cloud firms, fiscal 2026"},
  {"name": "Broadcom", "country": "US", "share": "$16.7B of AI semiconductor revenue in the third quarter of fiscal 2026, custom accelerators and networking combined"}
  ],
  "countries": [
- {"code": "US", "note": "Synopsys, Cadence, Broadcom, Marvell, Nvidia, AMD; Siemens EDA's main sites"},
+ {"code": "US", "note": "Synopsys, Cadence, Broadcom, Marvell and Nvidia"},
  {"code": "GB", "note": "Arm processor and interconnect designs licensed from Cambridge, and since 2026 its own server chip"},
  {"code": "TW", "note": "Alchip, Global Unichip and MediaTek: design services that carry a chip to the factory"},
  {"code": "IL", "note": "Annapurna Labs, the AWS design house behind Trainium and Graviton"},
  {"code": "IN", "note": "Nearly 20% of the world's chip design engineers, on the Indian government's count"}
  ],
- "chinaStatus": "China designs its own AI accelerators, but Huawei's best, the Ascend 950, delivers about half the computing performance of Nvidia's H100 from 2022, on Epoch AI's estimate. CSET at Georgetown University found in 2021, from 2019 data, that Chinese design software largely did not support processes at 14 nm and below. In October 2025 CSIS found Chinese design tools still far from replacing the full range of advanced capabilities US firms offer, especially for 5 nm and 3 nm chip design. The US government required a license for design-software sales to China from late May 2025 until it lifted the requirement on 2 July. A narrower license requirement on software made for chips with gate-all-around transistors has applied since October 2022.",
- "usStatus": "The United States has the two largest design-software vendors and the leading custom-chip design houses. Siemens EDA is German-owned, but the American technology inside it still needs US export licenses.",
- "costSignal": "SemiAnalysis put a leading-edge photomask set at $40M in May 2026. In 2022 it reported that startups had designed and taped out chips on TSMC 7 nm, then a leading-edge process, for $50-75M",
- "substitutability": {"band": "Hard", "test": "Only three complete sets of chip design software exist, and a fourth would have to be written from nothing and approved by a foundry.", "why": "Three complete sets of chip design software exist. Changing one tool, such as the synthesis tool, means re-running the later steps of the design. The foundry that makes the chip also specifies which signoff tools its customers must use. A newcomer would have to write a fourth set from nothing and win that foundry approval. CSET at Georgetown University found in 2021, from 2019 data, that Chinese design tools largely did not support processes at 14 nm and below. Industry experts interviewed by CSIS in August 2024 judged China unlikely to develop leading design tools for at least another decade. In the short to medium term, they judged, China could replace only specific design steps."}
+ "chinaStatus": "China designs its own AI accelerators, but Huawei's best, the Ascend 950, delivers about half the computing performance of Nvidia's H100 from 2022, on Epoch AI's estimate. CSET found in 2021, from 2019 data, that Chinese design software largely did not support processes at 14 nm and below.",
+ "usStatus": "The United States has the two largest design-software vendors and the leading custom-chip design houses.",
+ "costSignal": "$40M for a leading-edge photomask set, SemiAnalysis's May 2026 figure. In 2022 SemiAnalysis reported that startups had designed and taped out chips on TSMC 7 nm for $50-75M",
+ "substitutability": {"band": "Hard", "test": "Only three complete sets of chip design software exist, and a fourth would have to be written from nothing and approved by a foundry.", "why": "Changing one tool, such as the synthesis tool, means re-running the later steps of the design. The foundry that makes the chip also specifies which signoff tools its customers must use."}
  },
  "keyFacts": [
  {"fact": "The market for chip design software and licensed circuit blocks was about $18B in 2025, with Synopsys, Cadence and Siemens EDA holding over 85%, counting Ansys as part of Synopsys", "source": "https://newsletter.semianalysis.com/p/eda-market-primer"},
@@ -162,15 +162,6 @@ China can design accelerators, but it cannot finish one at the leading edge with
 On Epoch AI's estimates, Huawei's flagship chip for 2026, the Ascend 950, delivers about half the computing performance of Nvidia's H100, which began shipping in 2022 ([source](https://epoch.ai/publications/huaweis-roadmap-to-2031)). Epoch puts Nvidia's B300 at 6.75 times the 950's theoretical peak performance ([source](https://epoch.ai/publications/huaweis-roadmap-to-2031)). Epoch's median estimate is that Huawei will make about 1.5 million Ascend chips in 2026, against 5.9 million for Nvidia ([source](https://epoch.ai/publications/huaweis-roadmap-to-2031)). On those estimates, Huawei's 2026 output would carry less than 4 percent of the computing power Nvidia ships that year ([source](https://epoch.ai/publications/huaweis-roadmap-to-2031)).
 
 Epoch puts Huawei's chips three to four years behind Nvidia's until at least 2030, for three reasons ([source](https://epoch.ai/publications/huaweis-roadmap-to-2031)). SMIC cannot pack transistors as densely as TSMC, which makes Nvidia's. Chinese memory makers are only starting to produce high-bandwidth memory. And Huawei's software for programming its chips is far less mature than Nvidia's ([source](https://epoch.ai/publications/huaweis-roadmap-to-2031)).
-
-## Key evaluation criteria
-
-- **Flow completeness.** How many steps one vendor covers, from the first line of code to final signoff.
-- **Foundry certification.** Whether the foundry has validated that exact tool version against its reference flow and process design kit, the file set describing what the foundry can print. Without that, the foundry refuses signoff.
-- **Verification throughput.** Simulation cycles and emulator capacity per day, which set the schedule more than anything else.
-- **IP availability at node.** Whether the licensed blocks have been proven in silicon on that process: the processor cores, the high-speed serial links, PCIe and the memory interface.
-- **Design services depth.** Whether a partner can carry a customer's circuit list to a finished mask set on the newest node.
-- **Legal exposure.** How much of the flow is US-origin technology, and so subject to export licensing.
 
 ## Takeaways
 

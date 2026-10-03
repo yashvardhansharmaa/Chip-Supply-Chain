@@ -355,7 +355,7 @@
         "section": "How it works"
       },
       {
-        "q": "Who packages nearly every AI accelerator?",
+        "q": "Which company do Nvidia, Google, AMD and Amazon rely on to package their AI accelerators?",
         "a": "TSMC, in Taiwan.",
         "why": "TSMC's packaging process is called CoWoS. Nvidia alone took an estimated 60.3 percent of CoWoS capacity in 2025.",
         "section": "Who makes it"
@@ -375,7 +375,7 @@
     ],
     "takeaways": [
       "Many leading accelerators, Nvidia's Blackwell among them, need more logic than one chip can hold, so packaging joins several chips and their memory.",
-      "TSMC packages nearly every AI accelerator, in Taiwan.",
+      "Nvidia, Google, AMD and Amazon all rely on TSMC, in Taiwan, to package their accelerators.",
       "Packaging was one of the main limits on AI chip output in 2025. In July 2026 TSMC said its packaging capacity was still so tight that it limited customers' growth.",
       "No US site yet packages Nvidia-class accelerators with HBM on CoWoS, though Intel makes its own Foveros 3D packages in volume in New Mexico."
     ]

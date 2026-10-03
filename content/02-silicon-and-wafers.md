@@ -12,10 +12,10 @@
  "concentration": "High",
  "chokepointScore": 4,
  "leaders": [
- {"name": "Shin-Etsu Handotai", "country": "JP", "share": "Its parent does not break out wafer sales. The parent's electronics materials segment, which also sells rare earth magnets, encapsulants, photoresists and photomask blanks, had ¥1,015.7bn of sales in the year to March 2026"},
+ {"name": "Shin-Etsu Handotai", "country": "JP", "share": "Its parent's electronics materials segment, wafers included, had ¥1,015.7bn of sales in the year to March 2026"},
  {"name": "SUMCO", "country": "JP", "share": "¥409.7bn of 2025 net sales, but an ¥11.8bn loss"},
  {"name": "GlobalWafers", "country": "TW", "share": "NT$60.6bn revenue in 2025"},
- {"name": "SK Siltron", "country": "KR", "share": "One of the top five wafer makers, which together served around 75 percent of the market in 2025"},
+ {"name": "SK Siltron", "country": "KR", "share": "One of the top five wafer makers"},
  {"name": "Siltronic", "country": "DE", "share": "€1,346.7m revenue in 2025"}
  ],
  "countries": [
@@ -25,10 +25,10 @@
  {"code": "KR", "note": "SK Siltron"},
  {"code": "US", "note": "Hemlock polysilicon in Michigan, and GlobalWafers plants in Sherman, Texas and St Peters, Missouri"}
  ],
- "chinaStatus": "China made about 93 percent of the world's polysilicon in 2023. An estimated 98 percent of China's output was solar grade and 2 percent electronic grade, close to the split for the world as a whole. None of the five major suppliers of electronic-grade silicon that Siltronic names is Chinese. Chinese firms held under 1 percent of the 300 mm wafer market as of 2019. As of 2018, Chinese producers made only 12 percent of the wafers for Chinese-headquartered 300 mm fabs. Eswin, China's largest 300 mm wafer maker, says it shipped about 7.7 percent of the world's 300 mm wafers in the first half of 2026, up from about 6 percent in 2024.",
- "usStatus": "No major US-headquartered firm makes wafers. Hemlock makes polysilicon in Michigan, and GlobalWafers of Taiwan won CHIPS awards of up to $406 million for wafer plants in Texas and Missouri. Its $3.5 billion Texas plant opened in May 2025. Proclamation 11052, signed August 6, 2026, sets a minimum import price of $100 per kilogram for polysilicon ingots and wafers from December 4, 2026. From the same date it adds an extra 15 percent duty on imported ingots and other listed products made from polysilicon. Firms with approved plans to build US polysilicon, ingot, wafer or solar cell plants can import equipment and some of those products without the new duties.",
- "costSignal": "The world wafer market was $11.4bn in 2025, on 12,973 million square inches shipped",
- "substitutability": {"band": "Moderate", "test": "Several firms already make 300 mm wafers that fabs have approved, but customers have to test and approve a new wafer plant before they buy from it.", "why": "Firms headquartered in Japan, Taiwan, Germany and South Korea make state-of-the-art 300 mm wafers. The top five served around 75 percent of the market in 2025, so losing one leaves four. A new wafer plant can still be built. GlobalWafers of Taiwan spent $3.5 billion on one in Texas, the first wafer production line of its kind in the United States in over twenty years. The slow part is approval. Customers have to test and approve a new plant, a step called qualification, before they buy from it. Siltronic completed key customer qualifications at its new Singapore fab in July 2025. Siltronic also sells under long-term agreements."}
+ "chinaStatus": "China made about 93 percent of the world's polysilicon in 2023. Chinese firms held under 1 percent of the 300 mm wafer market as of 2019.",
+ "usStatus": "No major US-headquartered firm makes wafers. GlobalWafers of Taiwan won CHIPS awards of up to $406 million for wafer plants in Texas and Missouri.",
+ "costSignal": "$11.4bn world wafer market in 2025, on 12,973 million square inches shipped",
+ "substitutability": {"band": "Moderate", "test": "Several firms already make 300 mm wafers that fabs have approved, but customers have to test and approve a new wafer plant before they buy from it.", "why": "Losing one of the top five wafer makers leaves four, and a new wafer plant can still be built. The slow part is approval, a step called qualification. Siltronic completed key customer qualifications at its new Singapore fab in July 2025."}
  },
  "keyFacts": [
  {"fact": "Worldwide silicon wafer shipments rose 5.8% to 12,973 million square inches in 2025 while revenue fell 1.2% to $11.4 billion", "source": "https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html"},
@@ -86,7 +86,7 @@ Epitaxial wafers get one more layer of near-perfect silicon, grown on top at abo
 
 ### Polished versus epitaxial
 
-A polished wafer is a doped single crystal polished to a mirror finish ([source](https://www.sumcosi.com/english/products/process/)). An epitaxial wafer is a polished wafer with a thin layer of single-crystal silicon grown on top at about 1,200 degrees Celsius ([source](https://www.sumcosi.com/english/products/process/)). The transistors are built in that layer, so its quality sets the lowest leakage the chip can reach. It also sets the chip's risk of latch-up, an unintended short circuit between power and ground. SEMI, the industry association, credits the 2025 rise in shipments to AI-driven demand for advanced epitaxial wafers for logic chips and polished wafers for high-bandwidth memory ([source](https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html)).
+A polished wafer is a doped single crystal polished to a mirror finish ([source](https://www.sumcosi.com/english/products/process/)). An epitaxial wafer is a polished wafer with a thin layer of single-crystal silicon grown on top ([source](https://www.sumcosi.com/english/products/process/)). The transistors are built in that layer, so its quality sets the lowest leakage the chip can reach. It also sets the chip's risk of latch-up, an unintended short circuit between power and ground. SEMI, the industry association, credits the 2025 rise in shipments to AI-driven demand for advanced epitaxial wafers for logic chips and polished wafers for high-bandwidth memory ([source](https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html)).
 
 ### Silicon on insulator
 
@@ -135,15 +135,7 @@ In SEMI figures from November 2020 cited by CSET, 99.7 percent of world fab capa
 
 The last increase in wafer size, to 300 mm, happened in 2002 ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). Bigger discs make printing, or photolithography, a bigger share of the processing cost ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). A 2013 University of Texas lecture cited by CSET put photolithography at half the cost of processing a 300 mm wafer, against a quarter for a 150 mm one ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). Wafers are still produced in diameters of up to 300 mm ([source](https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html)).
 
-Some GPU dies fill the whole area a lithography tool can print in one exposure. One fatal defect on such a die ruins far more silicon than one on a small chip. Extreme-ultraviolet printing also stays in focus over only a tiny range of heights (see [Lithography](#lithography)), so the disc has to be flat at every point.
-
-## Key evaluation criteria
-
-- **Grade.** Chips need electronic-grade polysilicon, and none of the five major suppliers of it that Siltronic named for 2025 is Chinese ([source](https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf)).
-- **Defect density** in the epitaxial layer. A big AI die loses more good silicon per defect than a small chip does. SEMI's wafer group says the move to sub-3nm processes is raising requirements for wafer quality and consistency ([source](https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html)).
-- **Flatness and nanotopography**, the fine ripple across the surface. Extreme-ultraviolet exposure stays in focus over only a tiny range of heights, so the surface has to stay within that range across the whole 300 mm wafer.
-- **Diameter.** In SEMI figures from November 2020 cited by CSET, 99.7 percent of world fab capacity at 45 nm and below used 300 mm wafers ([source](https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf)). Of all the wafer area shipped worldwide in 2025, 300 mm wafers made up an estimated 78.8 percent ([source](https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-04-21/688783_20260421_6JVC.pdf)).
-- **Contract structure**, since Siltronic expects continued price pressure in 2026 on sales outside its existing long-term agreements ([source](https://www.siltronic.com/en/press/press-releases/siltronic-ag-robust-business-performance-in-2025-demonstrates-resilience-despite-challenging-conditions.html)).
+Some GPU dies fill the whole area a lithography tool can print in one exposure. One fatal defect on such a die ruins far more silicon than one on a small chip. Extreme-ultraviolet printing also stays in focus over only a tiny range of heights (see [Lithography](#lithography)), so the disc has to be flat at every point. SEMI's wafer group says the move to sub-3nm processes is raising requirements for wafer quality and consistency ([source](https://www.prnewswire.com/news-releases/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results-302683028.html)).
 
 ## Takeaways
 
