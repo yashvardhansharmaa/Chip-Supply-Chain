@@ -77,13 +77,15 @@
 .cf-what { display: block; font-family: var(--font-body); font-size: 14px; line-height: 1.35; color: var(--ink-2); margin-top: 2px; max-width: 58ch; }
 .cf-state { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; min-width: 0; }
 .cf-pills { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; }
-/* the ramp, open to prohibited: outlined muted, dashed ink, garnet, solid ink */
+/* the ramp, open to prohibited: outlined muted, dashed muted, dashed ink, garnet, solid ink */
 .cf-pill {
   font-family: var(--font-mono); font-weight: 500; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap;
   padding: 2px 7px 3px; border: 1px solid var(--line-2); border-radius: 0; color: var(--muted); background: transparent;
 }
 .cf-pill.is-open { border-color: var(--line-2); color: var(--muted); background: transparent; }
 .cf-pill.is-case { border-style: dashed; border-color: var(--ink); color: var(--ink); }
+/* restricted: limited to some buyers or uses without a ban, a step below case by case, so its dash is lighter */
+.cf-pill.is-restricted { border-style: dashed; border-color: var(--muted); color: var(--ink-2); background: transparent; }
 .cf-pill.is-denial { background: none; border-color: var(--accent); color: var(--accent); }
 .cf-pill.is-prohibited { background: var(--ink); border-color: var(--ink); color: var(--bg); }
 .cf-pill.is-policy { background: none; border-color: var(--ink-2); color: var(--ink-2); }
@@ -206,8 +208,9 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 .timeline .tl-more, .cf-hist .tl-more {
   font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--muted); background: none; border: 0; border-bottom: 1px solid var(--line-2);
-  padding: 0 0 1px; cursor: pointer;
+  padding: 0 0 1px; cursor: pointer; position: relative;
 }
+.timeline .tl-more::before, .cf-hist .tl-more::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 24px); height: 26px; transform: translate(-50%, -50%); } /* a 24 px target, same look */
 .timeline .tl-more:hover, .timeline .tl-more:focus-visible,
 .cf-hist .tl-more:hover, .cf-hist .tl-more:focus-visible { color: var(--ink); border-bottom-color: var(--accent); }
 .timeline .tl-panel, .cf-hist .tl-panel { margin: 9px 0 2px; padding-left: 13px; border-left: 1px solid var(--line-2); max-width: 76ch; }
@@ -238,6 +241,11 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
   .cf[data-mode="date"] .cf-board { margin-bottom: 6px; }
   .cf[data-mode="date"] .cf-asof b { font-size: 18px; }
   .cf[data-mode="date"] .cf-legend { grid-template-columns: 1fr; gap: 9px 0; }
+  /* the board fills the right of the window from top to foot, so Back to top moves to the foot of the chronology,
+     just left of the board's rule: the column's right padding, plus the board's 38 percent of the row, plus 12 px */
+  body:has(.view[data-view="controls"]:not([hidden]) .sub:not([hidden]) > .cf[data-mode="date"]) .to-top {
+    right: calc(clamp(16px, 4vw, 56px) + 0.38 * (100vw - clamp(16px, 4vw, 56px) - clamp(16px, 3vw, 44px)) + 12px);
+  }
 }
 
 @media (max-width: 899px) {

@@ -152,6 +152,9 @@ small { font-size: 0.85em; }
 .contents { padding: 36px 0 20px; border-top: 1px solid var(--line); margin-top: 40px; }
 .contents h2 { font-size: 26px; margin-bottom: 20px; }
 .contents-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 26px 28px; }
+.contents-k { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 16px; }
+.contents-grid + .contents-k { margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--line); }
+.contents-note { font-size: 15px; color: var(--ink-2); max-width: 62ch; margin: -6px 0 18px; }
 .contents-grid .item { break-inside: avoid; }
 .contents-grid .n { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--muted); letter-spacing: 0.08em; }
 .contents-grid .t { display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 19px; letter-spacing: 0; text-transform: none; margin: 4px 0 8px; text-decoration: none; }
@@ -179,8 +182,15 @@ small { font-size: 0.85em; }
 .prose .takeaways h3 { margin: 0 0 0.6em; font-size: 11px; font-family: var(--font-mono); font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
 .prose .takeaways p { font-size: 18px; }
 sup.cite { font-size: 0.62em; line-height: 0; vertical-align: 0.55em; margin-left: 2px; }
-sup.cite a { font-family: var(--font-mono); font-weight: 500; color: var(--accent); text-decoration: none; padding: 1px 3px; border-radius: 0; }
+sup.cite a { position: relative; font-family: var(--font-mono); font-weight: 500; color: var(--accent); text-decoration: none; padding: 1px 3px; border-radius: 0; }
 sup.cite a:hover, sup.cite a:focus-visible { background: var(--accent-soft); text-decoration: none; }
+/* small controls keep their look but take a fingertip: an invisible box at least 24 px square, centered on the control */
+sup.cite a::before, .ch-copy::before, .permalink::before, button.ptag::before, .fc-more::before {
+  content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 24px); height: max(100%, 26px); transform: translate(-50%, -50%);
+}
+.ch-copy, .permalink, button.ptag, .fc-more { position: relative; }
+/* link targets land clear of the fixed masthead, whose real height app.js measures into --masthead */
+.figure[id], h2[id], h3[id], h4[id], h5[id], .timeline li[id], .lk-entry { scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 16px); }
 .ct-tip { position: fixed; z-index: 50; width: max-content; max-width: min(360px, calc(100vw - 16px)); background: var(--bg); border: 1px solid var(--line-2); border-radius: 0; box-shadow: var(--shadow); padding: 12px 15px 13px; }
 .ct-tip .tier { float: right; margin: 1px 0 0 10px; }
 .ct-tip b { display: block; font-size: 16px; line-height: 1.25; margin-bottom: 5px; }
@@ -209,6 +219,11 @@ sup.cite a:hover, sup.cite a:focus-visible { background: var(--accent-soft); tex
 .bars rect.track { fill: color-mix(in srgb, var(--ink) 5%, transparent); }
 .bars rect.bar { fill: var(--accent-fill); }
 .bars line.axis { stroke: var(--line-2); stroke-width: 1; }
+/* a phone draws the 600-unit chart at about 350 px, so 11.5-unit labels would read at under 7 px. Larger type, with the
+   whole drawing moved 24 units right into the empty margin past the values, so the longest label (26 characters) still
+   ends before the bars and starts inside the frame */
+@media screen and (max-width: 640px) { .bars > * { transform: translateX(24px); } .bars text { font-size: 13.5px; } }
+@media screen and (max-width: 480px) { .bars text { font-size: 15px; } }
 .stack-bar { display: flex; height: 26px; gap: 2px; border-radius: 0; overflow: hidden; }
 .stack-bar i { display: block; height: 100%; min-width: 2px; }
 .stack-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 12px; font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-2); }
@@ -241,7 +256,7 @@ sup.cite a:hover, sup.cite a:focus-visible { background: var(--accent-soft); tex
 .prevnext .pn .n { font-family: var(--font-mono); font-weight: 500; font-size: 12px; color: var(--muted); margin-right: 7px; font-variant-numeric: tabular-nums; }
 .prevnext .next { grid-column: 2; text-align: right; }
 .chapter-sources { margin: 2.6em 0 0; border-top: 1px solid var(--line-2); padding-top: 12px; }
-.chapter-sources summary { cursor: pointer; font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); list-style: none; }
+.chapter-sources summary { cursor: pointer; font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); list-style: none; padding: 4px 0; margin: -4px 0; } /* the padding makes a 24 px target; the margin keeps the layout */
 .chapter-sources summary::-webkit-details-marker { display: none; }
 .chapter-sources summary::before { content: "+ "; }
 .chapter-sources[open] summary::before { content: "\2212 "; }
@@ -250,8 +265,11 @@ sup.cite a:hover, sup.cite a:focus-visible { background: var(--accent-soft); tex
 .chapter-sources li a { color: var(--ink-2); }
 .chapter-sources li .host { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-left: 6px; }
 
-.to-top { position: fixed; right: 24px; top: calc(var(--masthead) + 14px); z-index: 35; font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line-2); background: var(--bg); padding: 7px 10px; border-radius: 0; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+/* Back to top sits in the bottom corner: links and jumps land controls near the top of the window (Copy table, the board's Now), never at its foot */
+.to-top { position: fixed; right: 24px; bottom: 20px; z-index: 35; font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line-2); background: var(--bg); padding: 7px 10px; border-radius: 0; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
 .to-top[data-show="1"] { opacity: 1; pointer-events: auto; }
+/* where the specimen fills the right of the window (The Chain, Home), its caption holds the foot, so the button keeps the empty top corner */
+@media (min-width: 901px) { body:has(.stage[data-hidden="0"]) .to-top { top: calc(var(--masthead) + 14px); bottom: auto; } }
 .to-top:hover { color: var(--ink); border-color: var(--ink); }
 
 /* ---------- landscape ---------- */
@@ -429,7 +447,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .export-bar .count { margin-right: auto; }
 .export-bar--quiet { justify-content: flex-end; }
 .cite { margin-top: 14px; }
-.cite summary { cursor: pointer; font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); }
+.cite summary { cursor: pointer; font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); padding: 4px 0; margin: -4px 0; }
 .cite pre { margin: 10px 0 0; padding: 12px 14px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 0; font-family: var(--font-code); font-size: 11.5px; line-height: 1.5; white-space: pre-wrap; overflow-x: auto; color: var(--ink); }
 
 /* ---------- sources view ---------- */
@@ -488,6 +506,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 @media (max-width: 899px) { .howto ul { grid-template-columns: 1fr; } }
 .howto .howto-dl { display: flex; gap: 8px; flex-wrap: wrap; margin: 6px 0 12px; }
 .howto .howto-dl .btn { text-decoration: none; }
+.howto .howto-dl .howto-alt { align-self: center; margin-left: 6px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); }
 .howto { max-width: none; margin: 8px 0 0; padding: 16px 0 6px; border: 0; border-top: 1px solid var(--ink); border-radius: 0; background: none; } /* the contents block draws the rule below */
 .howto h2 { font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
 .howto p, .howto li { font-size: 16.5px; line-height: 1.5; }
@@ -674,9 +693,9 @@ button.ptag { cursor: pointer; }
   .wordmark { flex: 1 1 auto; min-width: 0; }
   .wordmark span { display: none; }
   .wordmark b { white-space: nowrap; font-size: 18px; }
-  .masthead .search-btn, .masthead .theme-toggle { position: absolute; top: 8px; } /* the buttons live inside the tab strip; on phones they pin to the first row */
+  .masthead .search-btn, .masthead .theme-toggle { position: absolute; top: 5px; width: 32px; height: 32px; } /* the buttons live inside the tab strip; on phones they pin to the first row, clear of the tabs below so each tab keeps a full 24 px to tap */
   .masthead .theme-toggle { right: 14px; }
-  .masthead .search-btn { right: 54px; }
+  .masthead .search-btn { right: 52px; }
   .wordmark { padding-right: 92px; }
   .tabs { order: 3; flex: 0 0 100%; width: 100%; flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; -webkit-overflow-scrolling: touch; margin: 2px 0 0; padding: 0 0 4px; }
   .tabs a { padding: 6px 8px 5px; font-size: 12.5px; }
@@ -709,10 +728,17 @@ button.ptag { cursor: pointer; }
   .sheet-chapters a { display: grid; grid-template-columns: 34px 1fr; align-items: baseline; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none; }
   .sheet-chapters .n { font-family: var(--font-mono); font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
   .sheet-chapters .t { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 16px; }
+  .sheet-chapters .sheet-k { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); padding: 18px 0 8px; border-bottom: 1px solid var(--line); }
   .hero { padding-top: 22px; }
   .rail { display: none; }
   .to-top { display: none; } /* on phones the Top button sits in the bottom strip, so the pill never floats over the text */
-  .masthead:has(.tabs[data-end="0"])::after { content: ""; position: absolute; right: 0; bottom: 0; width: 34px; height: 36px; background: linear-gradient(to right, transparent, var(--bg)); pointer-events: none; } /* the tab strip scrolls: fade its edge while more tabs hide to the right */
+  /* the tab strip scrolls: while more tabs hide to the right, its edge fades out under a chevron */
+  .masthead:has(.tabs[data-end="0"])::after {
+    content: "\203A"; position: absolute; right: 0; bottom: 0; width: 50px; height: 36px; padding: 0 9px 5px 0;
+    display: flex; align-items: center; justify-content: flex-end;
+    font-family: var(--font-mono); font-weight: 500; font-size: 20px; line-height: 1; color: var(--ink-2);
+    background: linear-gradient(to right, color-mix(in srgb, var(--bg) 0%, transparent), var(--bg) 62%); pointer-events: none;
+  }
   .stage-top { display: none; }
   body:has(.to-top[data-show="1"]) .stage-top { display: inline-block; }
   /* without WebGL the strip keeps its buttons (Contents, Top) so the phone still has its navigation */
@@ -732,10 +758,10 @@ button.ptag { cursor: pointer; }
   .chain-key { margin-left: 0; flex-basis: 100%; }
   .chain--compact .stage-cell .t { visibility: visible; white-space: normal; }
   .plate-kpis { grid-template-columns: 1fr; }
-  .plate-kpis > div { border-right: 0; border-bottom: 1px solid var(--line); padding-left: 0; }
+  .plate-kpis > div, .plate-kpis > div + div { border-right: 0; border-bottom: 1px solid var(--line); padding-left: 0; } /* "+ div" too, or the desktop indent of the second and third cells survives */
   .plate-rows .row { grid-template-columns: 1fr; gap: 6px; }
   .plate-status { grid-template-columns: 1fr; }
-  .plate-status > div { border-right: 0; border-bottom: 1px solid var(--line); padding-left: 0; }
+  .plate-status > div, .plate-status > div + div { border-right: 0; border-bottom: 1px solid var(--line); padding-left: 0; }
   .inshort p { font-size: 19px; }
   .prevnext { grid-template-columns: 1fr; }
   .prevnext .next { grid-column: 1; text-align: left; }
@@ -801,6 +827,7 @@ button.ptag { cursor: pointer; }
 .review .rv-keep li::before { content: ""; position: absolute; left: 4px; top: 0.72em; width: 12px; border-top: 2px solid var(--accent); }
 .review .rv-keep li.miss { color: var(--ink-2); }
 .review .rv-keep li.miss::before { border-top-style: dashed; border-color: var(--line-2); }
+.review .rv-keep .fc-more { margin-left: 0; } /* the space before it is the gap, so a link that wraps starts flush with the text */
 @media (prefers-reduced-motion: reduce) { .fc-card { transition: none; } }
 @media (max-width: 700px) { .fc-face { padding: 18px 18px 16px; } .fc-q { font-size: 23px; } .fc-a { font-size: 21px; } .fc-deck { margin-right: 12px; } }
 @media print { .review .rv-head, .fc-deck, .fc-nav, .fc-score, .fc-end .fc-row { display: none !important; } .fc-end[hidden] { display: block !important; } .review { border-top-width: 1px; } }

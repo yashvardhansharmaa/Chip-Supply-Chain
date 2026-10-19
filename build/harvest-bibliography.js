@@ -1060,6 +1060,7 @@ const PUBLISHERS = {
   'brookings.edu': 'Brookings Institution',
   'ifp.org': 'Institute for Progress',
   'epoch.ai': 'Epoch AI',
+  'iea.org': 'International Energy Agency',
   'chipexplorer.eto.tech': 'Emerging Technology Observatory (ETO)',
   'bcg.com': 'Boston Consulting Group',
   'semiconductors.org': 'Semiconductor Industry Association',
@@ -1399,11 +1400,14 @@ const MANUAL = {
     accessed: '2026-09-25',
   },
   // --- Reuters (bot wall; headline and dateline read from the article)
+  // Opened in a browser 18 Oct 2026: the page shows this headline, "January 28, 2026 ... Updated July 28, 2026"
+  // and an "AMSTERDAM, July 28" dateline; the slug keeps an earlier headline. Dated to the version the link serves.
   'https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/': {
     title: "Explainer: The $400 million ASML 'printers' key for the AI chip boom",
     publisher: 'Reuters',
-    date: '2026-01-28',
+    date: '2026-07-28',
     type: 'article',
+    accessed: '2026-10-18',
   },
   'https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/': {
     title: 'China starts production of home-grown immersion DUV chipmaking tools, source says',
@@ -3569,4 +3573,165 @@ const MANUAL = {
   'https://epoch.ai/data/ai-data-centers/directory/colossus-1': {
     title: 'Colossus 1, AI data centers directory',
   },
+  // ===== Fix round, 18 Oct 2026: citations added after the user review. Each title and date was read
+  // off the page or PDF (headline, cover, dateline, "Published on" line); dates only where the page shows one.
+  // --- Pages that refuse scripted requests (Cloudflare or Akamai): read from the Wayback copy of the same URL
+  'https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-innovative-pattern-shaping-technology-reduces': {
+    // headline and "SANTA CLARA, Calif., Feb. 28, 2023 (GLOBE NEWSWIRE)", Wayback copy of 5 July 2025
+    title: 'Applied Materials’ Innovative Pattern-Shaping Technology Reduces the Cost, Complexity and Environmental Impact of Advanced Chip Manufacturing',
+    publisher: 'Applied Materials',
+    date: '2023-02-28',
+    type: 'press release',
+    accessed: '2026-10-18',
+  },
+  'https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-technologies-enable-2d-scaling-euv-and-3d-gate': {
+    // headline and "SANTA CLARA, Calif., April 21, 2022 (GLOBE NEWSWIRE)", Wayback copy of 28 June 2025
+    title: 'Applied Materials Technologies Enable 2D Scaling with EUV and 3D Gate-All-Around Transistors',
+    publisher: 'Applied Materials',
+    date: '2022-04-21',
+    type: 'press release',
+    accessed: '2026-10-18',
+  },
+  'https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-unveils-next-gen-chipmaking-products': {
+    // headline and "SANTA CLARA, Calif., Oct. 07, 2025 (GLOBE NEWSWIRE)", Wayback copy of 3 September 2026
+    title: 'Applied Materials Unveils Next-Gen Chipmaking Products to Supercharge AI Performance',
+    publisher: 'Applied Materials',
+    date: '2025-10-07',
+    type: 'press release',
+    accessed: '2026-10-18',
+  },
+  'https://investors.micron.com/news-releases/news-release-details/micron-innovates-data-center-edge-nvidia': {
+    // headline and "SAN JOSE, Calif., March 18, 2025 (GLOBE NEWSWIRE)", Wayback copy of 13 July 2026
+    title: 'Micron Innovates From the Data Center to the Edge With NVIDIA',
+    publisher: 'Micron Technology',
+    date: '2025-03-18',
+    type: 'press release',
+    accessed: '2026-10-18',
+  },
+  'https://www.iea.org/reports/electricity-2025/executive-summary': {
+    // page title "Executive summary – Electricity 2025"; report page: "Published 14 February 2025"; Wayback copies of 7 and 10 October 2026
+    title: 'Executive summary – Electricity 2025',
+    date: '2025-02-14',
+    type: 'report',
+    accessed: '2026-10-18',
+  },
+  'https://www.iea.org/reports/energy-and-ai/executive-summary': {
+    // page title "Executive summary - Energy and AI"; report page: "Published 10 April 2025"; Wayback copies of 14 October 2026
+    title: 'Executive summary – Energy and AI',
+    date: '2025-04-10',
+    type: 'report',
+    accessed: '2026-10-18',
+  },
+  'https://investors.micron.com/news/press-release/2024/Micron-Commences-Volume-Production-of-Industry-Leading-HBM3E-Solution-to-Accelerate-the-Growth-of-AI-02-26-2024/default.aspx': {
+    // headline and "BOISE, Idaho, Feb. 26, 2024 (GLOBE NEWSWIRE)", Wayback copy of 13 September 2026
+    title: 'Micron Commences Volume Production of Industry-Leading HBM3E Solution to Accelerate the Growth of AI',
+    publisher: 'Micron Technology',
+    date: '2024-02-26',
+    type: 'press release',
+    accessed: '2026-10-18',
+  },
+  'https://investor.tsmc.com/static/annualReports/2022/english/ebook/files/basic-html/page97.html': {
+    // e-book page headed "Page 97 - TSMC 2022 Annual Report"; no date on the page; Wayback copy of 19 May 2025
+    title: 'TSMC 2022 Annual Report, page 97',
+    publisher: 'TSMC',
+    type: 'report',
+    accessed: '2026-10-18',
+  },
+  // --- Titles that were a page label, carried the site name, or had no date
+  'https://www.asml.com/en/products/duv-lithography-systems/twinscan-nxt-2150i': {
+    title: 'TWINSCAN NXT:2150i',
+    accessed: '2026-10-18',
+  },
+  'https://www.asml.com/en/news/stories/2021/semiconductor-manufacturing-process-steps': {
+    // byline reads "Updated - by Alison Li, October 4, 2023"; dated to the version the link serves
+    title: '6 crucial steps in semiconductor manufacturing',
+    date: '2023-10-04',
+    type: 'article',
+    accessed: '2026-10-18',
+  },
+  'https://www.sec.gov/Archives/edgar/data/937966/000093796617000010/pressreleasequarterlyresul.htm': {
+    // Exhibit 99.1 to ASML's Form 6-K: "VELDHOVEN, the Netherlands, April 19, 2017"
+    title: 'Stronger than expected demand drives ASML Q1 sales',
+    accessed: '2026-10-18',
+  },
+  'https://global.canon/en/ir/conference/pdf/conf2025e.pdf': {
+    // cover: "Canon Inc. / FY 2025 Results / January 29, 2026"
+    title: 'Canon Inc. FY 2025 Results',
+    date: '2026-01-29',
+    accessed: '2026-10-18',
+  },
+  'https://www.imec-int.com/en/articles/entering-nanosheet-transistor-era-0': {
+    date: '2022-02-11',
+    type: 'article',
+    accessed: '2026-10-18',
+  },
+  'https://www.imec-int.com/en/imec-magazine/imec-magazine-june-2019/euv-lithography-weighing-the-options-for-future-logic-and-memory-applications': {
+    date: '2019-06-06',
+    type: 'article',
+    accessed: '2026-10-18',
+  },
+  'https://www.intel.com/content/dam/www/central-libraries/us/en/documents/2025-11/foveros-direct-3d-tech-brief.pdf': {
+    // the brief shows no date; the scraped one was the PDF's creation stamp
+    title: 'Foveros Direct 3D Technology Brief',
+    date: null,
+    accessed: '2026-10-18',
+  },
+  'https://www.rapidus.inc/en/news_topics/information/ibm-and-rapidus-form-strategic-partnership-to-build-advanced-semiconductor-technology-and-ecosystem-in-japan/': {
+    // "UPDATE: 2022.12.13" and "TOKYO – Dec. 13, 2022"
+    title: 'IBM and Rapidus Form Strategic Partnership to Build Advanced Semiconductor Technology and Ecosystem in Japan',
+    date: '2022-12-13',
+    type: 'press release',
+    accessed: '2026-10-18',
+  },
+  'https://www.morita-kagaku.co.jp/en/products/hafce/9/': {
+    title: 'Electronic grade Hydrofluoric acid',
+    accessed: '2026-10-18',
+  },
+  'https://www.skspecialty.com/new/eng/html/main/': {
+    title: 'SK specialty, company website',
+    accessed: '2026-10-18',
+  },
+  'https://www.intel.com/content/www/us/en/foundry/process/18a.html': {
+    // the page heading; no date on the page
+    title: 'Intel 18A: See Our Biggest Process Innovation',
+    accessed: '2026-10-18',
+  },
+  'https://news.skhynix.com/en/sk-hynix-showcases-full-stack-ai-memory-portfolio-at-2025-ocp-global-summit/': {
+    // post dated "October 31, 2025" under the headline
+    date: '2025-10-31',
+    type: 'article',
+    accessed: '2026-10-18',
+  },
+  'https://raw.githubusercontent.com/georgetown-cset/eto-chip-explorer/main/data/providers.csv': {
+    // header row "provider_name,alias,provider_id,provider_type,country"; same repository as provision.csv
+    title: 'ETO Chip Explorer source data: providers.csv',
+    publisher: 'Center for Security and Emerging Technology (CSET) / Emerging Technology Observatory',
+    type: 'dataset',
+    accessed: '2026-10-18',
+  },
+  // --- Archived copies: cite the original publisher, not the archive
+  'https://web.archive.org/web/20240514221055/https://cloud.google.com/tpu/docs/v5e': {
+    // "Last updated 2024-05-09 UTC"
+    title: 'TPU v5e',
+    publisher: 'Google Cloud',
+    date: '2024-05-09',
+    type: 'page',
+    accessed: '2026-10-18',
+  },
+  'https://web.archive.org/web/20240615150738/https://www.government.nl/latest/news/2023/06/30/government-publishes-additional-export-measures-for-advanced-semiconductor-manufacturing-equipment': {
+    // "News item | 30-06-2023 | 09:00"
+    publisher: 'Government of the Netherlands',
+    date: '2023-06-30',
+    type: 'press release',
+    accessed: '2026-10-18',
+  },
+  // --- Scraped title and date checked against the page; only the access date changes
+  'https://arxiv.org/abs/2201.04725': { accessed: '2026-10-18' },
+  'https://global.canon/en/product/indtech/semicon/': { accessed: '2026-10-18' },
+  'https://newsletter.semianalysis.com/p/hybrid-bonding-process-flow-advanced': { accessed: '2026-10-18' },
+  'https://newsletter.semianalysis.com/p/nvidia-b100-b200-gb200-cogs-pricing': { accessed: '2026-10-18' },
+  'https://newsletter.semianalysis.com/p/the-future-of-the-transistor': { accessed: '2026-10-18' },
+  'https://www.federalregister.gov/documents/2026/04/09/2026-06851/extension-of-authorized-integrated-circuit-ic-designer-status-and-application-deadline-to-become-an': { accessed: '2026-10-18' },
+  'https://www.kantodenka.co.jp/english/product/gas/': { accessed: '2026-10-18' },
+  'https://www.stella-chemifa.co.jp/english/business/chemical/': { accessed: '2026-10-18' },
 };

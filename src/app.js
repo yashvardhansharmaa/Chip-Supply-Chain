@@ -11,6 +11,36 @@
   var dec = function (s) { try { return decodeURIComponent(s); } catch (e) { return s; } }; // a hand-typed "#%" is not valid escaping and must not throw the router
   var COUNTRY = { US: 'United States', NL: 'Netherlands', JP: 'Japan', TW: 'Taiwan', KR: 'South Korea', CN: 'China', DE: 'Germany', CH: 'Switzerland', GB: 'United Kingdom', FR: 'France', IL: 'Israel', SG: 'Singapore', MY: 'Malaysia', AT: 'Austria', IT: 'Italy', BE: 'Belgium', IN: 'India', AE: 'United Arab Emirates', SA: 'Saudi Arabia', CA: 'Canada', SE: 'Sweden', FI: 'Finland', DK: 'Denmark', IE: 'Ireland', TH: 'Thailand', VN: 'Vietnam', PH: 'Philippines', MX: 'Mexico', 'EU-other': 'Other Europe', Other: 'Other' };
   var cname = function (c) { return COUNTRY[c] || c; };
+  var cssPx = function (name) { return parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name)) || 0; };
+  /* what covers the top of the window: the fixed masthead, and in the chain or the walk the fixed rail under it */
+  var headerH = function () {
+    var h = (cssPx('--masthead') || 56) + cssPx('--band');
+    var cur = window.CP && CP.Router ? CP.Router.current : null, rail = cur === 'stack' ? $('.rail') : cur === 'walk' ? $('#wk-rail') : null;
+    if (rail && !rail.hidden && rail.offsetHeight && getComputedStyle(rail).position === 'fixed') h += rail.offsetHeight;
+    return h;
+  };
+  /* where a scrolled-to element's top should sit: its content (inside any top padding, as a chapter has) below the header with a
+     little air, or lower if its own scroll-margin-top asks */
+  var landAt = function (el) { var cs = getComputedStyle(el); return Math.max(parseFloat(cs.scrollMarginTop) || 0, headerH() + 16 - (parseFloat(cs.paddingTop) || 0)); };
+  /* every scroll the script makes to an element goes through here, so a title never lands under the masthead or the rail */
+  var scrollToEl = function (el, smooth) {
+    if (!el || !el.getBoundingClientRect) return;
+    var y = Math.max(0, Math.round(el.getBoundingClientRect().top + window.pageYOffset - landAt(el)));
+    var root = document.documentElement, prev = root.style.scrollBehavior, glide = !!smooth && !reduced;
+    if (!glide) root.style.scrollBehavior = 'auto'; // html has scroll-behavior: smooth; a jump must not animate 30,000 px
+    window.scrollTo({ top: y, behavior: glide ? 'smooth' : 'auto' });
+    if (!glide) root.style.scrollBehavior = prev;
+  };
+  /* the reader's own date as YYYY-MM-DD (toISOString would give the UTC date, a day ahead in an American evening) */
+  var localISO = function (d) { d = d || new Date(); return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); };
+  /* a snippet cut at a word boundary, with an ellipsis when anything was cut */
+  var clip = function (s, n) {
+    s = String(s == null ? '' : s).replace(/\s+/g, ' ').trim();
+    if (s.length <= n) return s;
+    var t = s.slice(0, n + 1), sp = t.lastIndexOf(' ');
+    t = sp > n * 0.6 ? t.slice(0, sp) : s.slice(0, n);
+    return t.replace(/[\s,;:.\-–—(]+$/, '') + '…';
+  };
 
   /* ---------------- theme ---------------- */
   var Theme = {
@@ -246,7 +276,7 @@
   var ALIAS = { chain: 'stack', home: 'walk', intro: 'walk', briefing: 'walk', geopolitics: 'stack', thresholds: 'controls', sources: 'stack' }; // the Sources page was retired; its sources sit at the end of each chapter // the licence-thresholds tab was retired; its route lands on the board
   var MODULE_VIEWS = {}; // modules register { activate(), stage: bool } per view through window.CP.register
   var Router = {
-    current: null,
+    current: null, from: null,
     init: function () {
       var self = this;
       window.addEventListener('hashchange', function () { self.route(); });
@@ -268,7 +298,9 @@
       if (ALIAS[v]) v = ALIAS[v];
       var sub = null; // the Export Controls page has three sections
       if (v === 'exposure') { v = 'controls'; sub = 'exposure'; } else if (v === 'controls') sub = 'timeline';
+      var em = h.match(/^#\/controls\/([^?#\/]+)/), evId = em ? dec(em[1]) : null; // #/controls/<event-id> opens the chronology on that entry
       var changed = v !== this.current || sub !== this.currentSub;
+      this.from = this.current; // the walk reads this to tell a return from a step within it
       this.current = v; this.currentSub = sub;
       if (sub) {
         $$('.view[data-view="controls"] .sub').forEach(function (s) { s.hidden = s.getAttribute('data-sub') !== sub; });
@@ -278,31 +310,58 @@
       $$('.tabs a').forEach(function (a) { var dv = a.getAttribute('data-view'); var on = dv === v; if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
       if (narrow()) { var onTab = $('.tabs a[aria-current="page"]'); if (onTab && onTab.scrollIntoView) onTab.scrollIntoView({ block: 'nearest', inline: 'nearest' }); } // the phone tab strip scrolls; keep the current tab in view
       var rail = $('.rail'); if (rail && v !== 'stack') rail.setAttribute('data-show', '0');
+      if (v === 'stack' && !this.artSoon) { // the chain is the page that prints, so its cover art comes in once the page has loaded and gone idle
+        this.artSoon = true;
+        var art = function () { if (window.CP_ART) window.CP_ART(); };
+        var later = function () { if (window.requestIdleCallback) requestIdleCallback(art, { timeout: 5000 }); else setTimeout(art, 1500); };
+        if (document.readyState === 'complete') later(); else window.addEventListener('load', later, { once: true });
+      }
       var mv = MODULE_VIEWS[v];
       Stage.setVisible(v === 'stack' || v === 'landscape' || v === 'walk' || !!(mv && mv.stage));
       if (mv && mv.activate) { try { mv.activate(); } catch (err) { console.warn('view module failed', v, err); } }
       if (v === 'landscape') Landscape.activate();
       else if (v === 'suppliers') Suppliers.activate();
-      else if (v === 'controls') { Controls.activate(); if (!Geo.built) Geo.build(); }
-      if (changed && !anchor) window.scrollTo(0, 0); // no anchor to land on, so start the new view at the top ("#/" included)
+      else if (v === 'controls') { Controls.activate(); if (!Geo.built) Geo.build(); Geo.renderUpcoming(); } // the countdown is redrawn each visit, from that day
+      // an entry's address (#/controls/<event-id>) opens and marks that entry; leaving it for the board's own address (the tab, a
+      // link) is a new place too, so the mark goes, a By subject choice the entry set aside comes back, and the page starts at the top
+      var leftEntry = v === 'controls' && !evId && !!this.evId, focused = false;
+      if (v === 'controls' && !evId) { Geo.mark(null); if (Geo.modeBack) { var mb = Geo.modeBack; Geo.modeBack = null; Geo.setMode(mb, false); } }
+      if (evId && v === 'controls') { focused = Geo.focusEvent(evId, !this.routed || changed); if (!focused) Geo.mark(null); }
+      this.evId = v === 'controls' ? evId : null;
+      // no anchor to land on (or an entry address naming no entry), so start the new view at the top ("#/" included); a view that
+      // places the page itself (the walk returning the reader to the step they left) says so through owns()
+      if ((changed || leftEntry) && !anchor && !focused && !(mv && mv.owns && mv.owns())) window.scrollTo(0, 0);
       if (v === 'stack' || v === 'walk') {
         if (anchor) {
           var el = document.getElementById(anchor);
           if (el) {
-            if (!this.booted) { // first load: jump, do not animate 30,000 px
-              var root = document.documentElement, prev = root.style.scrollBehavior;
-              root.style.scrollBehavior = 'auto'; el.scrollIntoView({ block: 'start' }); root.style.scrollBehavior = prev;
-            } else el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+            var jumpIt = !this.booted || changed;
+            scrollToEl(el, !jumpIt); // first load or a new view: jump, do not animate 30,000 px; within the view: glide
+            if (jumpIt) this.settle(el);
           }
           this.booted = true;
         }
         Sections.update();
       }
+      this.routed = true;
       var label = { stack: 'The Chain', landscape: 'AI Chips', suppliers: 'Suppliers', controls: sub === 'exposure' ? 'China revenue share' : 'Export Controls', glossary: 'Glossary' }[v];
       document.title = (v === 'home' || !label) ? 'Chip Supply Chain' : 'Chip Supply Chain · ' + label;
       // one page view per route change (the counter counts the first load itself)
       var gc = window.goatcounter;
       if (gc && gc.path) { var pth = gc.path(); if (this.counted === undefined) this.counted = pth; else if (pth !== this.counted && gc.count) { this.counted = pth; try { gc.count(); } catch (err) { } } }
+    },
+    /* a jump lands before the web fonts, late images and freshly built rows settle, and anything reflowing above the target
+       moves it; for the next second or two, put it back whenever it has drifted, unless the reader has started to scroll or gone elsewhere */
+    settle: function (el) {
+      var moved = false, h0 = location.hash, mark = function () { moved = true; };
+      ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (t) { window.addEventListener(t, mark, { passive: true, once: true }); });
+      var again = function () {
+        if (moved || location.hash !== h0 || !document.contains(el) || el.closest('[hidden]')) return;
+        if (Math.abs(el.getBoundingClientRect().top - landAt(el)) > 2) scrollToEl(el, false);
+      };
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { setTimeout(again, 30); });
+      if (document.readyState !== 'complete') window.addEventListener('load', function () { setTimeout(again, 30); }, { once: true });
+      setTimeout(again, 400); setTimeout(again, 1200);
     }
   };
 
@@ -330,11 +389,14 @@
       var items = Router.current === 'walk' ? this.walkItems : this.items;
       if (!items || !items.length) return; // before init, or a view with nothing to track
       var vh = window.innerHeight, probe = narrow() ? vh * 0.55 : vh * 0.42, best = null, bestTop = -Infinity;
+      var first = null;
       for (var i = 0; i < items.length; i++) {
         var r = items[i].getBoundingClientRect();
+        if (!r.width && !r.height) continue; // not laid out (?only= hides the other chapters): its top reads 0 and would win
+        if (!first) first = items[i];
         if (r.top <= probe && r.top > bestTop) { best = items[i]; bestTop = r.top; }
       }
-      if (!best) best = items[0];
+      if (!best) best = first || items[0];
       if (!best) return;
       var r2 = best.getBoundingClientRect();
       var p = r2.height > vh ? Math.max(0, Math.min(1, (probe - r2.top) / (r2.height - vh * 0.3))) : 0;
@@ -690,7 +752,7 @@
       var el = document.getElementById('cx-note-' + id);
       if (!el) return;
       el.open = true;
-      el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+      scrollToEl(el, true);
     },
 
     /* ---- the stage keeps drawing the focused chip's package from above ---- */
@@ -1170,9 +1232,12 @@
       { name: 'Industrial policy', label: 'Policy', short: 'Pol', cls: 'policy' },
       { name: 'Corporate', label: 'Firms', short: 'Firm', cls: 'corp' }
     ],
-    /* the license outcome a flow stands in, and the word the pill carries. Four of them are outcomes an
-       exporter can act on; Policy is the off-ramp for money and tariffs, which gate nothing. */
-    STATE: { open: 'No license', 'case': 'Case by case', denial: 'Presumption of denial', prohibited: 'Prohibited', policy: 'Policy' },
+    /* the license outcome a flow stands in, and the word the pill carries, from open to closed. Restricted is a
+       government limiting sales to some buyers or uses without banning them outright. Policy is the off-ramp for
+       money and tariffs, which gate nothing. */
+    STATE: { open: 'No license', restricted: 'Restricted', 'case': 'Case by case', denial: 'Presumption of denial', prohibited: 'Prohibited', policy: 'Policy' },
+    /* the outcomes from the most closed down, the order a year's tally reads in */
+    SEVERITY: ['prohibited', 'denial', 'case', 'restricted', 'policy'],
     /* the board's first schema had five states that did not map to outcomes: a license and a listing are
        one fact, and "shut" covered both a presumption of denial and a ban. Old data still reads. */
     OLD_STATE: { license: 'denial', shut: 'prohibited' },
@@ -1244,7 +1309,11 @@
       chips.addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; var c = b.getAttribute('data-cat'); self.cat = self.cat === c ? null : c; $$('button', chips).forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-cat') === self.cat ? 'true' : 'false'); }); self.renderTimeline(); });
       var all = $('#tl-all'); if (all) all.addEventListener('click', function () { self.setFull(!self.full); });
       var list = $('#timeline');
-      list.addEventListener('click', function (e) { var b = e.target.closest ? e.target.closest('.tl-more') : null; if (b) self.setOpen(b, b.getAttribute('aria-expanded') !== 'true'); });
+      list.addEventListener('click', function (e) {
+        var a = e.target.closest ? e.target.closest('.tl-link') : null;
+        if (a) { if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return; e.preventDefault(); self.copyLink(a); return; } // a modified click opens the entry in a new tab
+        var b = e.target.closest ? e.target.closest('button.tl-more') : null; if (b) self.setOpen(b, b.getAttribute('aria-expanded') !== 'true');
+      });
       // the flows; without them the page is the chronology it has always been
       this.flows = this.loadFlows();
       tl.forEach(function (e, i) { if (!e.id) e.id = 'tl' + i; });
@@ -1345,7 +1414,7 @@
         if (self.mode === 'subject') { b.setAttribute('aria-controls', 'cf-h-' + row.getAttribute('data-f')); b.setAttribute('aria-expanded', row.getAttribute('data-open') === '1' ? 'true' : 'false'); }
         else { b.removeAttribute('aria-controls'); b.removeAttribute('aria-expanded'); }
       });
-      if (remember) this.saveMode(this.mode);
+      if (remember) { this.saveMode(this.mode); this.modeBack = null; } // the reader's own choice stands
       if (this.mode === 'subject') this.setAsOf(this.now, [this.now, this.now]); // back to now, without flashing the whole board
       this.at = -1;
       this.sync();
@@ -1374,13 +1443,15 @@
         var host = e.source ? e.source.replace(/^https?:\/\//, '').split('/')[0] : '';
         var eff = e.effectiveDate && e.effectiveDate !== e.date ? e.effectiveDate : null; // a rule takes force after it is announced
         var inst = self.instWord(e.instrument), cite = self.citeText({ fr: e.frCitation, cfr: e.cfr });
-        html += '<li class="tl-e" id="tl-e' + i + '" data-i="' + i + '" data-date="' + esc(e.date || '') + '">' +
+        html += '<li class="tl-e" id="tl-e' + i + '" data-i="' + i + '" data-ev="' + esc(e.id || '') + '" data-date="' + esc(e.date || '') + '">' +
           '<div class="d"><b>' + ds + '</b>' + (eff ? '<span class="tl-eff">in force ' + esc(self.fmtDate(eff)) + '</span>' : '') + esc(e.actor || '') + '</div>' +
           '<div class="tl-body"><span class="cf-ev-tags"><span class="cat ' + self.CATS[self.lane(e.category)].cls + '">' + esc(e.category || '') + '</span>' +
           (inst ? '<span class="cf-inst">' + esc(inst) + '</span>' : '') + '</span>' +
           '<h4>' + esc(e.title) + '</h4><p class="tl-gist">' + esc(self.gistOf(e)) + '</p>' +
           (cite ? self.citeHTML({ fr: e.frCitation, cfr: e.cfr, url: e.source }, 'cf-ev-cite') : '') +
           '<button type="button" class="tl-more" aria-expanded="false" aria-controls="tl-p' + i + '">More</button>' +
+          // the entry's own address (#/controls/<event-id>, stable as entries are added); a click copies it
+          (e.id ? '<a class="tl-more tl-link" href="' + esc('#/controls/' + encodeURIComponent(e.id)) + '" style="margin-left:14px;text-decoration:none" aria-label="Copy a link to this entry" title="Copy a link to this entry">Link</a>' : '') +
           '<div class="tl-panel" id="tl-p' + i + '" hidden><p>' + esc(e.summary || '') + '</p>' +
           (host ? '<a class="src" href="' + safeUrl(e.source) + '" target="_blank" rel="noopener">' + esc(host) + '</a>' : '') +
           '</div></div></li>';
@@ -1398,7 +1469,7 @@
       var self = this, last = this.years[this.years.length - 1];
       if (!this.flows) return '';
       var end = parseInt(y, 10) >= last ? this.now : y + '-12-31';
-      var counts = {}, order = ['prohibited', 'denial', 'case', 'policy'], parts = [], susp = 0;
+      var counts = {}, order = this.SEVERITY, parts = [], susp = 0;
       this.flows.forEach(function (f) {
         var s = self.stateAt(f, end);
         if (s.status !== 'open') counts[s.status] = (counts[s.status] || 0) + 1;
@@ -1407,7 +1478,8 @@
       order.forEach(function (k) { if (counts[k]) parts.push(counts[k] + ' ' + esc(String(self.STATE[k]).toLowerCase())); });
       if (susp) parts.push(susp + ' suspended');
       if (!parts.length) return '';
-      return '<p class="cf-sum">' + (parseInt(y, 10) >= last ? 'Now' : 'End of ' + esc(y)) + ' · ' + parts.join(' · ') + ' · of ' + this.flows.length + ' flows</p>';
+      var n = this.flows.length; // counted, never assumed: the board's row count changes with the data
+      return '<p class="cf-sum">' + (parseInt(y, 10) >= last ? 'Now' : 'End of ' + esc(y)) + ' · ' + parts.join(' · ') + ' · of the ' + n + (n === 1 ? ' row' : ' rows') + ' on the board</p>';
     },
     setOpen: function (btn, open) {
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -1419,7 +1491,73 @@
       var self = this;
       this.full = !!on;
       var b = $('#tl-all'); if (b) b.setAttribute('aria-pressed', this.full ? 'true' : 'false');
-      $$('#timeline .tl-more').forEach(function (btn) { self.setOpen(btn, self.full); });
+      $$('#timeline button.tl-more').forEach(function (btn) { self.setOpen(btn, self.full); });
+    },
+    /* #/controls/<event-id>: the chronology, that entry opened and marked, scrolled to just under the masthead */
+    focusEvent: function (id, jumpIt) { // jumpIt: a first load or an arrival from another view, so no glide
+      var self = this, ev = null, li = null;
+      (this.tl || []).forEach(function (e) { if (e.id === id) ev = e; });
+      if (!ev) return false;
+      if (this.flows && this.mode !== 'date') { var back = this.mode; this.setMode('date', false); this.modeBack = back; } // By subject hides the chronology; the router gives it back when the reader leaves the entry
+      if (this.cat && ev.category !== this.cat) { // a category filter that hides the entry gives way
+        this.cat = null;
+        $$('#tl-filters button').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+        this.renderTimeline();
+      }
+      (this.items || []).forEach(function (el) { if (el.getAttribute('data-ev') === id) li = el; });
+      if (!li) return false;
+      this.mark(li);
+      var more = li.querySelector('button.tl-more'); if (more) this.setOpen(more, true);
+      li.classList.add('is-in'); // already risen: the entrance animation would slide it under the reader's eye
+      scrollToEl(li, !jumpIt);
+      if (jumpIt) Router.settle(li);
+      return true;
+    },
+    mark: function (li) { (this.items || []).forEach(function (el) { el.classList.toggle('is-target', el === li); }); },
+    /* the link control on each entry: the address bar takes the entry's address, and the full URL goes to the clipboard */
+    copyLink: function (a) {
+      var canon = $('link[rel="canonical"]'), base = canon && canon.href ? canon.href.replace(/#.*$/, '') : location.href.replace(/#.*$/, '');
+      var href = a.getAttribute('href'), url = base + href, li = a.closest ? a.closest('.tl-e') : null;
+      try { history.replaceState(null, '', href); } catch (e) { }
+      if (li) this.mark(li);
+      var done = function () { a.textContent = 'Copied'; a.setAttribute('data-done', '1'); setTimeout(function () { a.textContent = 'Link'; a.removeAttribute('data-done'); }, 1600); };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, function () { window.prompt('Copy this link', url); });
+      else window.prompt('Copy this link', url);
+    },
+    /* "Coming up": the dated deadlines ahead (DATA.flows.upcoming), counted down from the reader's own today;
+       gone when there are none or every date has passed */
+    renderUpcoming: function () {
+      var raw = DATA.flows && DATA.flows.upcoming, host = $('#cf-upcoming');
+      var today = new Date(); today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      var day = function (iso) { var p = String(iso || '').split('-').map(Number); return p.length === 3 && p[0] ? new Date(p[0], p[1] - 1, p[2]) : null; };
+      var list = (Object.prototype.toString.call(raw) === '[object Array]' ? raw : []).map(function (u) {
+        var d = u && day(u.date); return d ? { u: u, n: Math.round((d - today) / 86400000) } : null;
+      }).filter(function (x) { return x && x.n >= 0; }).sort(function (a, b) { return a.n - b.n; });
+      if (!list.length) { if (host) host.hidden = true; return; }
+      if (!host) {
+        var sub = $('.view[data-view="controls"] .sub[data-sub="timeline"]'); if (!sub) return;
+        host = document.createElement('section'); host.className = 'cf-up'; host.id = 'cf-upcoming'; host.setAttribute('aria-labelledby', 'cf-up-h');
+        host.style.cssText = 'margin:4px 0 20px;padding-top:9px;border-top:1px solid var(--ink)';
+        sub.insertBefore(host, sub.firstChild);
+      }
+      var self = this, mono = 'font-family:var(--font-mono);font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;';
+      if (!host._wired) { // the address may already be that entry's, so no hashchange would come: go there anyway
+        host._wired = true;
+        host.addEventListener('click', function (e) {
+          var a = e.target.closest ? e.target.closest('a.cf-up-link') : null;
+          if (a && a.getAttribute('href') === location.hash && !(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button)) { e.preventDefault(); Router.route(); }
+        });
+      }
+      host.hidden = false;
+      host.innerHTML = '<h3 class="label" id="cf-up-h" style="margin:0 0 2px">Coming up</h3><ol style="list-style:none;margin:0;padding:0">' + list.map(function (x) {
+        var u = x.u, when = x.n === 0 ? 'today' : x.n === 1 ? 'tomorrow' : 'in ' + x.n + ' days';
+        var link = u.event ? '<a class="cf-up-link" href="' + esc('#/controls/' + encodeURIComponent(u.event)) + '" style="' + mono + 'margin-left:10px;white-space:nowrap">Timeline entry</a>'
+          : (u.source && safeUrl(u.source) !== '#' ? '<a class="cf-up-link" href="' + safeUrl(u.source) + '" target="_blank" rel="noopener" style="' + mono + 'margin-left:10px;white-space:nowrap">Source</a>' : '');
+        return '<li style="display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 14px;padding:8px 0;border-bottom:1px solid var(--line)">' +
+          '<span style="' + mono + 'flex:0 0 8.6em;color:var(--ink)">' + esc(self.fmtDate(u.date)) + '</span>' +
+          '<span style="' + mono + 'flex:0 0 7em;color:var(--accent)">' + esc(when) + '</span>' +
+          '<span style="flex:1 1 18em;min-width:0;font-size:15px;line-height:1.4;color:var(--ink-2)">' + esc(u.label || '') + link + '</span></li>';
+      }).join('') + '</ol>';
     },
     /* entries rise into view once; with no observer they simply stay readable */
     reveal: function () {
@@ -1507,7 +1645,7 @@
       var self = this, host = $('#cf-board');
       if (!host) return;
       host.addEventListener('click', function (e) {
-        var m = e.target.closest ? e.target.closest('.tl-more') : null;
+        var m = e.target.closest ? e.target.closest('button.tl-more') : null;
         if (m) { self.setOpen(m, m.getAttribute('aria-expanded') !== 'true'); return; }
         var b = e.target.closest ? e.target.closest('.cf-btn') : null, row = b ? b.closest('.cf-row') : null;
         if (!row) return;
@@ -1831,7 +1969,8 @@
       document.addEventListener('focusin', function (e) { var b = term(e); if (b) self.show(b); else if (self.el && !self.el.contains(e.target)) self.hide(); });
       document.addEventListener('click', function (e) {
         var b = term(e);
-        if (b) { if (self.btn === b && self.el && !self.el.hidden) self.hide(); else self.show(b); return; }
+        // a tap on a phone sends mouseover (which opens the panel) a moment before its click, so that click must not close it again
+        if (b) { if (self.btn === b && self.el && !self.el.hidden) { if (Date.now() - self.at > 500) self.hide(); } else self.show(b); return; }
         if (!self.el || !self.el.contains(e.target)) self.hide();
       });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && self.el && !self.el.hidden) { var b = self.btn; self.hide(); if (b) b.focus(); } });
@@ -1878,10 +2017,24 @@
         var ys = Object.keys(years).sort();
         var meta = {}; ex.forEach(function (r) { meta[r.firm] = r; });
         var order = Object.keys(firms).sort(function (a, b) { var la = firms[a][ys[ys.length - 1]] || {}, lb = firms[b][ys[ys.length - 1]] || {}; return (lb.chinaShare || 0) - (la.chinaShare || 0); });
+        // how a firm counts China, in a few words (build/build.js reads the basis the same way for the charts)
+        var basisShort = function (b) { b = (b || '').toLowerCase(); if (!b) return ''; if (/ship-to|ship to|destination|fab\)/.test(b)) return 'counted where it ships'; if (/bill|invoice/.test(b)) return 'counted where it is billed'; if (/headquarters/.test(b)) return 'counted by headquarters'; if (/seat|licen/.test(b)) return 'counted by license seats'; if (/used|usage/.test(b)) return 'counted where it is used'; if (/own operating|operating units|own units/.test(b)) return 'counted by own units'; return 'counted by customer location'; };
+        var firstLine = function (b) { var t = String(b || ''), i = t.indexOf('. '); return i > 0 ? t.slice(0, i + 1) : t; }; // the basis itself, without "Share computed from..."
         et.innerHTML = '<thead><tr><th>Firm</th>' + ys.map(function (y) { return '<th>' + esc(y) + '</th>'; }).join('') + '</tr></thead><tbody>' + order.map(function (f) {
           var m = meta[f];
-          var basisShort = function (b) { b = (b || '').toLowerCase(); if (!b) return ''; if (/ship-to|ship to|destination|fab\)/.test(b)) return 'counted where it ships'; if (/bill|invoice/.test(b)) return 'counted where it is billed'; if (/headquarters/.test(b)) return 'counted by headquarters'; if (/seat|licen/.test(b)) return 'counted by license seats'; if (/used|usage/.test(b)) return 'counted where it is used'; if (/own operating|operating units|own units/.test(b)) return 'counted by own units'; return 'counted by customer location'; };
-          return '<tr><td title="' + esc(m.basis || '') + '">' + esc(f) + '<small>' + esc(m.category || '') + ' · ' + esc(cname(m.country)) + (m.basis ? ' · ' + esc(basisShort(m.basis)) : '') + '</small></td>' + ys.map(function (y) { var r = firms[f][y]; if (!r || r.chinaShare == null) return '<td><span class="cell zero" title="Not filed for this year" aria-label="Not filed for this year">·</span></td>'; return '<td><a class="cell" style="--v:' + Math.round(Math.min(100, r.chinaShare) * 1.6) + '" href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" aria-label="' + esc(f) + ' ' + esc(y) + ': ' + esc(String(r.chinaShare)) + ' percent from China, opens the filing" title="' + esc((r.chinaRevenue != null ? r.chinaRevenue.toLocaleString('en-US') + ' of ' + (r.totalRevenue || 0).toLocaleString('en-US') + ' ' + (r.currency || '') : '') + (r.note ? (r.chinaRevenue != null ? ' · ' : '') + r.note : '')) + '">' + r.chinaShare.toFixed(1) + '%</a></td>'; }).join('') + '</tr>';
+          // a firm can change how it counts China between years (Nvidia: billing location to FY2023, customer headquarters from FY2024):
+          // the row names every basis with its years, each cell names its own, and a dashed rule marks the first year of a new one
+          var segs = [];
+          ys.forEach(function (y) { var r = firms[f][y]; if (!r || r.chinaShare == null || !r.basis) return; var k = basisShort(r.basis), last = segs[segs.length - 1]; if (!last || last.k !== k) segs.push({ k: k, from: y, to: y, text: firstLine(r.basis) }); else last.to = y; });
+          var starts = {}; segs.forEach(function (sg, i) { if (i) starts[sg.from] = 1; });
+          var label = segs.length > 1 ? segs.map(function (sg, i) { var w = i ? sg.k.replace(/^counted /, '') : sg.k; return i === segs.length - 1 ? w + ' from ' + sg.from : (i ? w + ' ' + sg.from + ' to ' + sg.to : w + ' to ' + sg.to); }).join(', ') : (m.basis ? basisShort(m.basis) : '');
+          var rowTitle = segs.length > 1 ? segs.map(function (sg) { return sg.from + (sg.to !== sg.from ? ' to ' + sg.to : '') + ': ' + sg.text; }).join(' ') : (m.basis || '');
+          return '<tr><td title="' + esc(rowTitle) + '">' + esc(f) + '<small>' + esc(m.category || '') + ' · ' + esc(cname(m.country)) + (label ? ' · ' + esc(label) : '') + '</small></td>' + ys.map(function (y) {
+            var r = firms[f][y]; if (!r || r.chinaShare == null) return '<td><span class="cell zero" title="Not filed for this year" aria-label="Not filed for this year">·</span></td>';
+            var brk = starts[y], basis = r.basis ? 'Counted: ' + firstLine(r.basis) : '';
+            var tip = [r.chinaRevenue != null ? r.chinaRevenue.toLocaleString('en-US') + ' of ' + (r.totalRevenue || 0).toLocaleString('en-US') + ' ' + (r.currency || '') : '', r.note || '', (brk ? 'New basis from this year. ' : '') + basis].filter(Boolean).join(' · ');
+            return '<td' + (brk ? ' style="border-left:2px dashed var(--ink-2)"' : '') + '>' + (brk ? '<span class="sr-only">The firm counts China differently from this year. </span>' : '') + '<a class="cell" style="--v:' + Math.round(Math.min(100, r.chinaShare) * 1.6) + '" href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" aria-label="' + esc(f) + ' ' + esc(y) + ': ' + esc(String(r.chinaShare)) + ' percent from China, opens the filing" title="' + esc(tip) + '">' + r.chinaShare.toFixed(1) + '%</a></td>';
+          }).join('') + '</tr>';
         }).join('') + '</tbody>';
       }
     }
@@ -1908,7 +2061,7 @@
       $$('#glossary .gl-entry').forEach(function (el) { idx.push({ kind: 'Term', title: el.querySelector('dt').firstChild.textContent, text: el.querySelector('dd p').textContent, href: '#' + el.id }); });
       (DATA.suppliers || []).forEach(function (r) { idx.push({ kind: 'Supplier', title: r.name, text: r.category + ' · ' + cname(r.country) + (r.role ? ' · ' + r.role : ''), href: '#/suppliers', q: r.name }); });
       (DATA.landscape || []).forEach(function (c) { idx.push({ kind: 'Chip', title: c.vendor + ' ' + c.name, text: ((c.process || {}).node || '') + ' · ' + ((c.memory || {}).type || '') + ' · ' + (c.status || ''), href: '#/landscape', chip: c.id }); });
-      (DATA.timeline || []).forEach(function (e) { idx.push({ kind: 'Event ' + e.date, title: e.title, text: e.summary || '', href: '#/controls' }); });
+      (DATA.timeline || []).forEach(function (e) { idx.push({ kind: 'Event ' + e.date, title: e.title, text: e.summary || '', href: e.id ? '#/controls/' + encodeURIComponent(e.id) : '#/controls' }); }); // straight to the entry, opened
       (DATA.exposure || []).forEach(function (r) { if (r.chinaShare != null) idx.push({ kind: 'China revenue', title: r.firm + ' ' + r.fiscalYear, text: 'China was ' + r.chinaShare + '% of revenue' + (r.basis ? ' · ' + r.basis : ''), href: '#/exposure' }); });
       var self = this;
       idx.forEach(function (i) {
@@ -1967,6 +2120,8 @@
         box.innerHTML = '<div class="cp-search-panel"><input type="search" placeholder="Search chapters, terms, suppliers, chips and events…" aria-label="Search"><ol class="cp-search-results"></ol><p class="cp-search-hint">Enter opens the first result · Esc closes</p></div>';
         document.body.appendChild(box);
         var inp = $('input', box), list = $('ol', box);
+        // the keyboard hint means nothing on a touch screen with no keyboard
+        if (window.matchMedia && matchMedia('(hover: none) and (pointer: coarse)').matches) { var hint = $('.cp-search-hint', box); if (hint) hint.hidden = true; }
         box.addEventListener('click', function (e) { if (e.target === box) self.close(); });
         box.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.preventDefault(); self.close(); } }); // on the panel, not the input: Esc must work from a result too
         inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') { var a = list.querySelector('a'); if (a) a.click(); } });
@@ -1975,8 +2130,8 @@
           if (!q) { list.innerHTML = ''; return; }
           var res = self.search(q), hits = res.hits;
           list.innerHTML = (res.note ? '<li class="none">' + esc(res.note) + '</li>' : '') +
-            (hits.map(function (h, k) { return '<li><a href="' + safeUrl(h.href) + '" data-k="' + k + '"><span class="k">' + esc(h.kind) + '</span><b>' + esc(h.title) + '</b><span class="t">' + esc(h.text.slice(0, 140)) + '</span></a></li>'; }).join('') || (res.note ? '' : '<li class="none">Nothing matches.</li>'));
-          list.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { var h = hits[+a.getAttribute('data-k')]; self.close(true); if (h.chip) setTimeout(function () { Landscape.select(h.chip); }, 60); if (h.q) setTimeout(function () { var s = $('#sup-search'); if (s) { s.value = h.q; s.dispatchEvent(new Event('input')); } }, 60); if (h.el) setTimeout(function () { h.el.scrollIntoView({ block: 'center' }); }, 60); }); });
+            (hits.map(function (h, k) { return '<li><a href="' + safeUrl(h.href) + '" data-k="' + k + '"><span class="k">' + esc(h.kind) + '</span><b>' + esc(h.title) + '</b><span class="t">' + esc(clip(h.text, 140)) + '</span></a></li>'; }).join('') || (res.note ? '' : '<li class="none">Nothing matches.</li>'));
+          list.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { var h = hits[+a.getAttribute('data-k')]; self.close(true); if (h.href === location.hash) setTimeout(function () { Router.route(); }, 0); /* the address is already this one, so no hashchange will come: go there anyway */ if (h.chip) setTimeout(function () { Landscape.select(h.chip); }, 60); if (h.q) setTimeout(function () { var s = $('#sup-search'); if (s) { s.value = h.q; s.dispatchEvent(new Event('input')); } }, 60); if (h.el) setTimeout(function () { h.el.scrollIntoView({ block: 'center' }); }, 60); }); });
         });
       }
       if (box.hidden) this.from = document.activeElement; // where the reader was, so closing can put them back
@@ -2016,8 +2171,17 @@
           var p = FC.parts(fc), k = p.cards.filter(function (x) { return x.getAttribute('data-known') === '1'; }).length;
           p.deck.hidden = true; p.nav.hidden = true; p.end.hidden = false;
           $('.fc-big', p.end).textContent = k + '/' + p.cards.length;
-          $('.fc-score-t', p.end).textContent = k === p.cards.length ? 'known.' : 'known. Dashed lines mark the ideas to review.';
-          $$('.rv-keep li', p.end).forEach(function (li, j) { li.classList.toggle('miss', !!p.cards[j] && p.cards[j].getAttribute('data-known') !== '1'); });
+          // an idea marked "Didn't know" stays at full strength and gains the link back to its section; the label says so
+          var missed = 0;
+          $$('.rv-keep li', p.end).forEach(function (li, j) {
+            $$('.fc-more', li).forEach(function (a) { a.remove(); }); // a deck taken again starts clean
+            li.classList.remove('miss');
+            var c = p.cards[j];
+            if (!c || c.getAttribute('data-known') === '1') return;
+            var re = $('.fc-more', c);
+            if (re) { missed++; li.appendChild(document.createTextNode(' ')); li.appendChild(re.cloneNode(true)); }
+          });
+          $('.fc-score-t', p.end).textContent = k === p.cards.length ? 'known.' : missed ? 'known. Each idea marked “Didn’t know” ends with a link to reread its section.' : 'known.';
           var rs = $('.fc-reset', p.end); if (rs) rs.focus({ preventScroll: true });
           if (window.goatcounter && window.goatcounter.count) try { window.goatcounter.count({ path: 'flashcards/' + ((fc.closest('.chapter') || {}).id || 'geopolitics') + '/' + k, title: 'Flashcards finished', event: true }); } catch (err) {}
         },
@@ -2105,10 +2269,13 @@
       addExport('#timeline', 'export-control timeline', function () { return Geo.visible || DATA.timeline; }, 'before', 'Copy timeline');
       addExport('#exposure-table', 'China revenue share by firm and year', DATA.exposure, 'before');
       // the line above the board that takes a reader down to the chronology
-      document.addEventListener('click', function (e) { var j = e.target.closest ? e.target.closest('.cf-jump-btn') : null; if (!j) return; var t = $('#timeline'); if (t) t.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' }); });
+      document.addEventListener('click', function (e) { var j = e.target.closest ? e.target.closest('.cf-jump-btn') : null; if (!j) return; var t = $('#timeline'); if (t) scrollToEl(t, true); });
       // cite-this block in the footer
-      var d0 = new Date().toISOString().slice(0, 10), canon = (document.querySelector('link[rel=canonical]') || {}).href || (location.origin + location.pathname);
-      $$('.site-footer').forEach(function (foot) { var d = d0; foot.insertAdjacentHTML('beforeend', '<details class="cite"><summary>How to cite</summary><pre>Sharma, Y. Chip Supply Chain: How AI Chips Are Made. September 2026. ' + canon + ' (accessed ' + d + ').</pre><pre>@misc{chipsupplychain2026,\n  title  = {Chip Supply Chain: How AI Chips Are Made},\n  author = {Sharma, Yashvardhan},\n  year   = {2026},\n  month  = {September},\n  url    = {' + canon + '},\n  note   = {Accessed ' + d + '}\n}</pre></details>'); });
+      // the edition is the site's last update, read from the footer's "Updated 3 October 2026"; the access date is the reader's own day
+      var d0 = localISO(), canon = (document.querySelector('link[rel=canonical]') || {}).href || (location.origin + location.pathname);
+      var upd = ($('.site-footer .updated') || {}).textContent || '', um = upd.match(/(\d{1,2})\s+([A-Z][a-z]+)\s+(\d{4})/);
+      var year = um ? um[3] : String(new Date().getFullYear()), edition = um ? um[2] + ' ' + year : year; // no stamp: the year alone, never a guessed month
+      $$('.site-footer').forEach(function (foot) { var d = d0; foot.insertAdjacentHTML('beforeend', '<details class="cite"><summary>How to cite</summary><pre>Sharma, Y. Chip Supply Chain: How AI Chips Are Made. ' + esc(edition) + '. ' + canon + ' (accessed ' + d + ').</pre><pre>@misc{chipsupplychain' + esc(year) + ',\n  title  = {Chip Supply Chain: How AI Chips Are Made},\n  author = {Sharma, Yashvardhan},\n  year   = {' + esc(year) + '},\n' + (um ? '  month  = {' + esc(um[2]) + '},\n' : '') + '  url    = {' + canon + '},\n  note   = {Accessed ' + d + '}\n}</pre></details>'); });
     }
   };
 
@@ -2125,8 +2292,10 @@
         var t0s = btns.map(function (b) { return +b.getAttribute('data-t'); }), cur = 0, raf = 0;
         fig._v = v;
         var src = function () { return v.getAttribute('data-src') + '-' + theme(); };
-        var poster = function () { v.poster = src() + (reduced && !v.getAttribute('src') ? '-end.jpg' : '-start.jpg'); };
-        var load = function () { if (!v.getAttribute('src')) { v.preload = 'auto'; v.src = src() + '.mp4'; v.load(); } };
+        // the poster is a still the size of the frame: it is fetched only once its figure nears the screen (see near, below)
+        var poster = function () { fig._poster = true; v.poster = src() + (reduced && !v.getAttribute('src') ? '-end.jpg' : '-start.jpg'); };
+        fig._setPoster = poster;
+        var load = function () { if (!fig._poster) poster(); if (!v.getAttribute('src')) { v.preload = 'auto'; v.src = src() + '.mp4'; v.load(); } };
         var show = function (i) {
           if (i === cur) return; cur = i;
           btns.forEach(function (b, j) { if (j === i) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); });
@@ -2152,44 +2321,67 @@
             if (!still(fig) && fig._seen) v.play().catch(function () { });
           });
         });
-        poster();
         if (reduced) { stage.setAttribute('aria-label', 'Play the animation'); fig.classList.add('is-paused'); }
       });
-      // theme: swap to the matching video, keeping the place
+      var allPosters = function () { figs.forEach(function (fig) { if (!fig._poster && fig._setPoster) fig._setPoster(); }); };
+      // theme: swap to the matching video, keeping the place (a poster not yet fetched stays unfetched)
       new MutationObserver(function () {
         figs.forEach(function (fig) {
           var v = fig._v, base = v.getAttribute('data-src') + '-' + theme();
-          if (!v.getAttribute('src')) { v.poster = base + (reduced ? '-end.jpg' : '-start.jpg'); return; }
+          if (!v.getAttribute('src')) { if (fig._poster) v.poster = base + (reduced ? '-end.jpg' : '-start.jpg'); return; }
           var t = v.currentTime, playing = !v.paused;
           v.poster = base + '-start.jpg'; v.preload = 'auto'; v.src = base + '.mp4';
           v.addEventListener('loadedmetadata', function () { try { v.currentTime = t; } catch (e) { } }, { once: true });
           if (playing) v.play().catch(function () { }); else v.load();
         });
       }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+      // nothing to fetch for print: the animations are left out of paper and the PDF (styles.css), so neither their posters nor
+      // their stills are fetched as the page is laid out, and the line stays free for the cover art
       // play only while on screen, and never on its own when the reader asked for reduced motion
-      if (!('IntersectionObserver' in window)) return;
+      if (!('IntersectionObserver' in window)) { allPosters(); return; }
+      // a figure within a screen and a half of the window takes its poster; one in a hidden view (the chain, on the home page) never comes near
+      var near = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { if (!en.target._poster && en.target._setPoster) en.target._setPoster(); near.unobserve(en.target); } });
+      }, { rootMargin: '150% 0px 150% 0px' });
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (en) {
           var fig = en.target, v = fig._v;
           fig._seen = en.isIntersecting;
-          if (en.isIntersecting && !still(fig)) { if (!v.getAttribute('src')) v.src = v.getAttribute('data-src') + '-' + theme() + '.mp4'; v.play().catch(function () { }); }
+          if (en.isIntersecting && !still(fig)) { if (!fig._poster) fig._setPoster(); if (!v.getAttribute('src')) v.src = v.getAttribute('data-src') + '-' + theme() + '.mp4'; v.play().catch(function () { }); }
           else if (!v.paused) v.pause();
         });
       }, { threshold: 0.45 });
-      figs.forEach(function (f) { io.observe(f); });
-      // a reader's own print shows the last frame, so fetch those stills before the page is laid out
-      window.addEventListener('beforeprint', function () { $$('.anim-print').forEach(function (img) { img.loading = 'eager'; }); });
+      figs.forEach(function (f) { near.observe(f); io.observe(f); });
     }
   };
 
   window.CP = { Stage: Stage, Router: Router, Sections: Sections, Tools: Tools, Band: Band, DATA: DATA, $: $, $$: $$, esc: esc, narrow: narrow, safeUrl: safeUrl, cname: cname, reduced: reduced,
+    scrollToEl: scrollToEl, landAt: landAt, headerH: headerH,
     Landscape: Landscape, Suppliers: Suppliers, register: function (view, def) { MODULE_VIEWS[view] = def; if (Router.current === view && def.activate) def.activate(); } };
   function boot() {
     // QA aid: ?only=<chapter-id> shows just that chapter at the top of the page (screenshots in a hidden pane only paint the first frame)
-    try { var only = new URLSearchParams(location.search).get('only'); if (only && document.getElementById(only)) { document.documentElement.classList.add('dbg-only'); document.getElementById(only).classList.add('only'); } } catch (e) { }
+    try {
+      var only = new URLSearchParams(location.search).get('only'), onlyEl = only && document.getElementById(only);
+      if (onlyEl) {
+        document.documentElement.classList.add('dbg-only'); onlyEl.classList.add('only');
+        // with no route of its own it opens that chapter, not the home page
+        if ((!location.hash || location.hash === '#' || location.hash === '#/') && onlyEl.closest && onlyEl.closest('.view[data-view="stack"]')) history.replaceState(null, '', location.pathname + location.search + '#' + only);
+      }
+    } catch (e) { }
     Theme.init();
     Tip.init(); Cite.init();
-    var printBtn = $('#print-page'); if (printBtn) printBtn.addEventListener('click', function () { window.print(); });
+    var printBtn = $('#print-page'); // the dialog lays the page out at once and never waits for an image still loading, so the
+    // cover art (src/template.html) is fetched and decoded first, for at most ten seconds
+    if (printBtn) printBtn.addEventListener('click', function () {
+      if (printBtn._wait) return;
+      var art = window.CP_ART ? window.CP_ART() : null;
+      if (!art || (art.complete && art.naturalWidth > 0)) { window.print(); return; }
+      var label = printBtn.textContent, done = false;
+      var go = function () { if (done) return; done = true; printBtn._wait = false; printBtn.textContent = label; printBtn.removeAttribute('aria-busy'); window.print(); };
+      printBtn._wait = true; printBtn.textContent = 'Preparing…'; printBtn.setAttribute('aria-busy', 'true');
+      (art.decode ? art.decode() : new Promise(function (res) { art.addEventListener('load', res, { once: true }); art.addEventListener('error', res, { once: true }); })).then(go, go);
+      setTimeout(go, 10000);
+    });
     (function () { // the phone tab strip fades at its right edge while there is more to scroll
       var tabs = $('.tabs'); if (!tabs) return;
       var edge = function () { tabs.setAttribute('data-end', tabs.scrollLeft + tabs.clientWidth >= tabs.scrollWidth - 2 ? '1' : '0'); };

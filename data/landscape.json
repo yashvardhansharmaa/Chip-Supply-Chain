@@ -32,8 +32,7 @@
       "bandwidthTBs": 8,
       "suppliers": [
         "SK hynix",
-        "Micron",
-        "Samsung"
+        "Micron"
       ]
     },
     "compute": {
@@ -66,7 +65,7 @@
     "priceEstimate": "$30,000 to $40,000 per GPU, the range Nvidia's CEO gave in March 2024. Epoch AI's chip sales model, with data through October 2025, puts Nvidia's compute revenue per GPU in GB200 rack systems at $33,000 to $42,000, leaving out the networking gear. SemiAnalysis's cloud cost model measures the hourly cost of owning or renting one, counting server, power, data center space and financing. As of October 2026 it rates the B200 at about $1.73 per GPU-hour owned at large hyperscaler volume and $3.70 per GPU-hour at the retail tier",
     "bomEstimate": "Epoch AI estimated in December 2025 about $6,400 to build ($5,700 to $7,300): memory $2,900, packaging $1,100, packaging yield loss $1,000, the two logic dies $900",
     "exportStatus": "Controlled. Dense FP8 of 4,500 TFLOPS puts total processing performance (TPP) near 36,000, well above the 21,000 TPP ceiling for case-by-case review in the BIS rule effective 15 January 2026. So an export to China or Macau needs a license, which BIS reviews with a presumption of denial under 15 CFR 742.6(b)(10). An application may still be filed.",
-    "notes": "The first Nvidia data center GPU larger than the reticle limit, the biggest area a lithography tool can print in one exposure. It joins two dies, made on TSMC's 4NP process, with a 10 TB/s NV-HBI link, and software sees the pair as one GPU. Epoch AI's cost model puts the package on TSMC's CoWoS-L process. Nvidia publishes no die area, no package dimensions and no list price for the part. Epoch AI records the HGX B200 board at 180 GB and 7.7 TB/s per GPU, less than the 192 GB and 8 TB/s Nvidia quotes for the module.",
+    "notes": "The first Nvidia data center GPU larger than the reticle limit, the biggest area a lithography tool can print in one exposure. It joins two dies, made on TSMC's 4NP process, with a 10 TB/s NV-HBI link, and software sees the pair as one GPU. Epoch AI's cost model puts the package on TSMC's CoWoS-L process. Nvidia publishes no die area, no package dimensions and no list price for the part, and it names no memory supplier. SemiAnalysis reported in March 2024 that SK hynix and Micron supply the HBM3E, most of it from SK hynix. Micron said in March 2025 that its 8-high HBM3E is available for the HGX B200. Epoch AI records the HGX B200 board at 180 GB and 7.7 TB/s per GPU, less than the 192 GB and 8 TB/s Nvidia quotes for the module.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -178,6 +177,14 @@
       {
         "label": "SemiAnalysis InferenceX B200 chip page",
         "url": "https://inferencex.semianalysis.com/chips/b200"
+      },
+      {
+        "label": "SemiAnalysis, March 2024: Nvidia B100, B200, GB200 (SK hynix and Micron as HBM3E suppliers)",
+        "url": "https://newsletter.semianalysis.com/p/nvidia-b100-b200-gb200-cogs-pricing"
+      },
+      {
+        "label": "Micron, March 2025: HBM3E 8-high 24 GB available for the HGX B200 and GB200 NVL72",
+        "url": "https://investors.micron.com/news-releases/news-release-details/micron-innovates-data-center-edge-nvidia"
       }
     ]
   },
@@ -214,8 +221,7 @@
       "bandwidthTBs": 8,
       "suppliers": [
         "SK hynix",
-        "Micron",
-        "Samsung"
+        "Micron"
       ]
     },
     "compute": {
@@ -248,7 +254,7 @@
     "priceEstimate": "Epoch AI estimates $38,000 to $49,000 per GPU in GB300 NVL72 systems, from HSBC and SemiAnalysis rack prices and the cost of about 100 GB more memory than the B200",
     "bomEstimate": null,
     "exportStatus": "Controlled. It is far above the 21,000 TPP and 6,500 GB/s memory-bandwidth ceilings for case-by-case review in the BIS rule effective 15 January 2026. So an export to China or Macau needs a license, which BIS reviews with a presumption of denial under 15 CFR 742.6(b)(10). Applications may be filed.",
-    "notes": "It uses the same two-die 4NP silicon as the B200, with 12-high HBM3E stacks that raise capacity to 288 GB. Its tensor core is retuned for NVFP4, Nvidia's four-bit number format, and for the softmax step in attention. Nvidia describes eight 12-high stacks. Micron's 12-high HBM3E stack holds 36 GB, and eight of them make 288 GB. Nvidia publishes no die area, no package dimensions and no list price. As with the B200, the HGX board version has lower figures. Epoch AI records an HGX B300 board at 270 GB, 7.7 TB/s and 1,100 W, against 288 GB, 8 TB/s and 1,400 W for the GB300 configuration above.",
+    "notes": "It uses the same two-die 4NP silicon as the B200, with 12-high HBM3E stacks that raise capacity to 288 GB. Its tensor core is retuned for NVFP4, Nvidia's four-bit number format, and for the softmax step in attention. Nvidia describes eight 12-high stacks. Micron's 12-high HBM3E stack holds 36 GB, and eight of them make 288 GB. Nvidia publishes no die area, no package dimensions and no list price, and it names no memory supplier. Micron said in March 2025 that its 12-high 36 GB HBM3E is designed into the HGX B300 NVL16 and GB300 NVL72 platforms. SK hynix said in October 2025 that its 36 GB HBM3E is used in the GB300. As with the B200, the HGX board version has lower figures. Epoch AI records an HGX B300 board at 270 GB, 7.7 TB/s and 1,100 W, against 288 GB, 8 TB/s and 1,400 W for the GB300 configuration above.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -352,6 +358,14 @@
       {
         "label": "Nvidia technical blog: Inside Nvidia Blackwell Ultra",
         "url": "https://developer.nvidia.com/blog/inside-nvidia-blackwell-ultra-the-chip-powering-the-ai-factory-era/"
+      },
+      {
+        "label": "Micron, March 2025: HBM3E 12-high 36 GB designed into the HGX B300 NVL16 and GB300 NVL72",
+        "url": "https://investors.micron.com/news-releases/news-release-details/micron-innovates-data-center-edge-nvidia"
+      },
+      {
+        "label": "SK hynix, October 2025: 36 GB HBM3E used in Nvidia's GB300 (OCP Global Summit)",
+        "url": "https://news.skhynix.com/en/sk-hynix-showcases-full-stack-ai-memory-portfolio-at-2025-ocp-global-summit/"
       }
     ]
   },
@@ -558,9 +572,7 @@
       "capacityGB": 141,
       "bandwidthTBs": 4.8,
       "suppliers": [
-        "SK hynix",
-        "Micron",
-        "Samsung"
+        "Micron"
       ]
     },
     "compute": {
@@ -590,8 +602,8 @@
     ],
     "priceEstimate": null,
     "bomEstimate": null,
-    "exportStatus": "Licensable to China and Macau, case by case, since the BIS final rule effective 15 January 2026. That rule names the H200 and the AMD MI325X. It sets the ceilings at a total processing performance (TPP) below 21,000 and a total DRAM bandwidth below 6,500 GB/s. The H200's 4,800 GB/s and roughly 15,800 TPP fall under both. The rule caps aggregate TPP shipped to China at 50 percent of aggregate TPP shipped to US customers. A presidential proclamation issued at the same time adds a 25 percent tariff. Reexports and in-country transfers remain under presumption of denial. First deliveries to ByteDance and Tencent were reported in August 2026.",
-    "notes": "The standard H200, with no China-specific changes, allowed back into China under a licensing carve-out. The Institute for Progress (IFP) reported in October 2025 that Washington was weighing the B30A, a chip built for the China market, and that Chinese regulators had banned purchases of the H20 and the RTX Pro 6000D. The H200 is the clearest case of export policy setting the product roadmap.",
+    "exportStatus": "Licensable to China and Macau, case by case, since the BIS final rule effective 15 January 2026. That rule names the H200 and the AMD MI325X. It sets the ceilings at a total processing performance (TPP) below 21,000 and a total DRAM bandwidth below 6,500 GB/s. The H200's 4,800 GB/s and roughly 15,800 TPP fall under both. The rule caps aggregate TPP shipped to China at 50 percent of aggregate TPP shipped to US customers. A presidential proclamation issued at the same time adds a 25 percent tariff. Reexports and in-country transfers remain under presumption of denial. In its filing for the quarter ended 26 July 2026, Nvidia said China's government had restricted these sales and that its H200 shipments under the licenses came to less than 1 percent of that quarter's data center revenue.",
+    "notes": "The standard H200, with no China-specific changes, allowed back into China under a licensing carve-out. The Institute for Progress (IFP) reported in October 2025 that Washington was weighing the B30A, a chip built for the China market, and that Chinese regulators had banned purchases of the H20 and the RTX Pro 6000D. The H200 is the clearest case of export policy setting the product roadmap. Nvidia names no memory supplier for the part. Micron said in February 2024 that its 24 GB 8-high HBM3E would be part of the H200, and no allowed source names another supplier.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -669,6 +681,14 @@
       {
         "label": "White House fact sheet, January 2026: 25 percent tariff on chips such as the H200 and MI325X",
         "url": "https://www.whitehouse.gov/fact-sheets/2026/01/fact-sheet-president-donald-j-trump-takes-action-on-certain-advanced-computing-chips-to-protect-americas-economic-and-national-security/"
+      },
+      {
+        "label": "Nvidia Form 10-Q for the quarter ended 26 July 2026: H200 licenses, PRC restrictions and shipments",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm"
+      },
+      {
+        "label": "Micron, February 2024: 24 GB 8-high HBM3E to be part of the Nvidia H200",
+        "url": "https://investors.micron.com/news/press-release/2024/Micron-Commences-Volume-Production-of-Industry-Leading-HBM3E-Solution-to-Accelerate-the-Growth-of-AI-02-26-2024/default.aspx"
       }
     ]
   },
@@ -1871,7 +1891,7 @@
     "priceEstimate": "Epoch AI estimates $10,000 to $20,000. The low end reflects discounts to cloud companies while demand was weak",
     "bomEstimate": null,
     "exportStatus": "Named in BIS’s final rule of 15 January 2026. That rule moves exports to China and Macau from presumption of denial to case-by-case review for commodities with total processing performance below 21,000 and total DRAM bandwidth below 6,500 GB/s. It names the Nvidia H200 and the AMD MI325X as its examples. The MI325X falls under both ceilings, at 20,919 TPP and 6,000 GB/s. Approval is conditional on certified US supply, no diversion of foundry capacity, customer security procedures and third-party testing inside US customs territory. It also depends on a cap that holds aggregate TPP shipped to China at no more than 50 percent of aggregate TPP shipped to US customers.",
-    "notes": "The same CDNA 3 silicon as the MI300X, with 256 GB of HBM3E at 6 TB/s and a 1,000 W board. It is the only AMD part Washington has ever named as licensable for China. It sits just under both ceilings in the January 2026 rule, with a total processing performance (TPP) of 20,919 against 21,000 and memory bandwidth of 6,000 GB/s against 6,500 GB/s. AMD publishes no list price, no die areas and no assembler. Epoch AI's 1,017 mm2 for this silicon is the total across all twelve dies. No allowed source names the HBM supplier for the part.",
+    "notes": "The same CDNA 3 silicon as the MI300X, with 256 GB of HBM3E at 6 TB/s and a 1,000 W board. It is the only AMD part Washington has ever named as licensable for China. It sits just under both ceilings in the January 2026 rule, with a total processing performance (TPP) of 20,919 against 21,000 and memory bandwidth of 6,000 GB/s against 6,500 GB/s. AMD publishes no list price, no die areas and no assembler. No allowed source names the HBM supplier for the part.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -2086,7 +2106,7 @@
     "priceEstimate": "Epoch AI estimates $10,000 to $15,000 in its model of AMD’s 2024 and 2025 sales. Microsoft is reported to pay about $10,000 in volume. SemiAnalysis’s cloud cost model measures the hourly cost of owning or renting one, counting server, power, data center space and financing. As of October 2026 it rates the MI300X at about $0.95 per GPU-hour owned at large hyperscaler volume and $1.30 per GPU-hour at the retail tier",
     "bomEstimate": null,
     "exportStatus": "Controlled. Total processing performance is 20,919 (8 x 2,614.9 dense FP8), four times the 4,800 threshold in ECCN 3A090.a. It is also 81 points under the 21,000 ceiling BIS set on 15 January 2026, and its 5,300 GB/s of memory bandwidth is well under that rule’s 6,500 GB/s. So on the published numbers it falls inside the band moved to case-by-case review. The rule names the H200 and the MI325X but does not name the MI300X.",
-    "notes": "At its December 2023 launch it put 192 GB of memory on one package. The package holds twelve chiplets: eight N5 accelerator dies bonded onto four N6 I/O dies, with 153 billion transistors in all. AMD’s page prints no stack count, but the count follows from its 8,192-bit memory interface, which is eight 1,024-bit HBM interfaces, one per stack. The CDNA 3 white paper says eight stacks. AMD publishes no list price, no die areas and no assembler. Epoch AI records 1,017 mm2 for the MI300X, which is the total silicon across all twelve dies, so no per-die area is given.",
+    "notes": "At its December 2023 launch it put 192 GB of memory on one package. The package holds twelve chiplets: eight N5 accelerator dies bonded onto four N6 I/O dies, with 153 billion transistors in all. AMD’s page prints no stack count, but the count follows from its 8,192-bit memory interface, which is eight 1,024-bit HBM interfaces, one per stack. The CDNA 3 white paper says eight stacks. AMD publishes no list price, no die areas and no assembler, so the die-area and assembler fields stay empty.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -2894,10 +2914,10 @@
       "sizeMm": null
     },
     "memory": {
-      "type": "HBM (Google does not state the generation)",
+      "type": "HBM2",
       "stacks": null,
       "capacityGB": 16,
-      "bandwidthTBs": 0.859,
+      "bandwidthTBs": 0.819,
       "suppliers": []
     },
     "compute": {
@@ -2909,7 +2929,7 @@
         "fp8": "no",
         "fp4": "no"
       },
-      "precisionNote": "Google’s v5e table gives 197 TFLOPs peak bf16 per chip and 393 TOPs peak Int8, both dense, and no other precision. The eight-bit path is INT8, so eight-bit work on a v5e runs as integer quantization with no eight-bit floating-point path in hardware. The FP8 cell therefore reads not supported. No Google page gives this part a four-bit rate either, and Google dates native FP4 to the eighth generation. Google states the memory bandwidth as 800 GiBps, which is 859 GB/s. The field above carries the converted figure."
+      "precisionNote": "Google’s v5e table gives 197 TFLOPs peak bf16 per chip and 393 TOPs peak Int8, both dense, and no other precision. The eight-bit path is INT8, so eight-bit work on a v5e runs as integer quantization with no eight-bit floating-point path in hardware. The FP8 cell therefore reads not supported. No Google page gives this part a four-bit rate either, and Google dates native FP4 to the eighth generation. Google’s v5e table of May 2024 gave the memory as 16 GB of HBM2 at 819 GBps, and the memory fields above carry those figures. The current table names no HBM generation and lists the bandwidth as 800 GiBps."
     },
     "tdpW": null,
     "interconnect": {
@@ -2959,6 +2979,10 @@
       {
         "label": "Google Cloud TPU v5e documentation",
         "url": "https://docs.cloud.google.com/tpu/docs/v5e"
+      },
+      {
+        "label": "Google Cloud TPU v5e documentation, archived copy last updated 9 May 2024 (HBM2, 819 GBps)",
+        "url": "https://web.archive.org/web/20240514221055/https://cloud.google.com/tpu/docs/v5e"
       },
       {
         "label": "Epoch AI machine learning hardware database (ml_hardware.csv)",
@@ -3036,7 +3060,7 @@
     "priceEstimate": "Not sold. Epoch AI estimates Google pays Broadcom $2,700 to $4,500 per chip, median $3,400",
     "bomEstimate": "Epoch AI estimates the chip module costs $1,100 to $1,500 to make, without networking",
     "exportStatus": "Not sold as merchant silicon. Total processing performance is 4,400 (16 x 275), 400 points below the 4,800 threshold in ECCN 3A090.a. A second test, added in October 2023, divides that figure by the die area. Google publishes no die area, so allowed sources cannot show whether that test would catch the chip.",
-    "notes": "TPU v4 is the generation that made TPUs credible outside Google. It is also the only TPU with a published power figure. Google reports measured minimum, mean and maximum draw of 90, 170 and 192 W, and the power figure in the table is that measured maximum. Each chip has two TensorCores and HBM2 memory. Google names the HBM generation for this part but not for later TPUs. The chips connect in a 3D mesh, which Google says can be configured as a 3D torus, a mesh whose edges wrap around, on some slice shapes. Google's TPU pages give only compute, memory and fabric numbers. Its ISCA 2023 paper on TPU v4 adds the rest: 7 nm, 22 billion transistors, one die with four HBM stacks, and six chip-to-chip links at 50 GB/s. The table above uses those figures. Epoch AI records a 7 nm process and a 340 W thermal design power (TDP) for the part. A TDP is a design rating, but the 192 W is Google's own measured maximum, so the table leaves Epoch's figure out.",
+    "notes": "TPU v4 is the generation that made TPUs credible outside Google. It is also the only TPU with a published power figure. Google reports measured minimum, mean and maximum draw of 90, 170 and 192 W, and the power figure in the table is that measured maximum. Each chip has two TensorCores and HBM2 memory. As of October 2026, Google's Cloud TPU documentation names the HBM generation for this part and for no later TPU. The chips connect in a 3D mesh, which Google says can be configured as a 3D torus, a mesh whose edges wrap around, on some slice shapes. Google's TPU pages give only compute, memory and fabric numbers. Its ISCA 2023 paper on TPU v4 adds the rest: 7 nm, 22 billion transistors, one die with four HBM stacks, and six chip-to-chip links at 50 GB/s. The table above uses those figures. Epoch AI records a 7 nm process and a 340 W thermal design power (TDP) for the part. A TDP is a design rating, but the 192 W is Google's own measured maximum, so the table leaves Epoch's figure out.",
     "layout": {
       "unit": "mm",
       "interposer": [

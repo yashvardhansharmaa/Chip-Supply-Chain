@@ -145,7 +145,7 @@
     "ticker": "6857.T",
     "country": "JP",
     "category": "Test",
-    "fiscalYear": "FY2023",
+    "fiscalYear": "FY2024",
     "fyEnd": "2024-03",
     "chinaRevenue": 157.1,
     "totalRevenue": 486.5,
@@ -153,21 +153,7 @@
     "chinaShare": 32.3,
     "basis": "Sales by region on a ship-to basis, from Advantest's own annual and results materials. Share computed from the revenue amounts in those materials.",
     "source": "https://www.advantest.com/document/en/investors/ir-library/annual/E_all_IAR2024.pdf",
-    "note": "Advantest labels the year ended March 2024 FY2023. Tokyo Electron and SCREEN label the same year FY2024. Advantest's audited statements report Asia as a single region, so the China line comes from Advantest's own reports."
-  },
-  {
-    "firm": "Advantest",
-    "ticker": "6857.T",
-    "country": "JP",
-    "category": "Test",
-    "fiscalYear": "FY2024",
-    "fyEnd": "2025-03",
-    "chinaRevenue": 175.1,
-    "totalRevenue": 779.7,
-    "currency": "JPY billion",
-    "chinaShare": 22.5,
-    "basis": "Sales by region on a ship-to basis, from Advantest's own annual and results materials. Share computed from the revenue amounts in those materials.",
-    "source": "https://www.advantest.com/document/en/investors/ir-library/annual/E_all_IAR2025.pdf"
+    "note": "Advantest's own reports call the year ended March 2024 FY2023. Advantest's audited statements report Asia as a single region, so the China line comes from Advantest's own reports."
   },
   {
     "firm": "Advantest",
@@ -175,6 +161,21 @@
     "country": "JP",
     "category": "Test",
     "fiscalYear": "FY2025",
+    "fyEnd": "2025-03",
+    "chinaRevenue": 175.1,
+    "totalRevenue": 779.7,
+    "currency": "JPY billion",
+    "chinaShare": 22.5,
+    "basis": "Sales by region on a ship-to basis, from Advantest's own annual and results materials. Share computed from the revenue amounts in those materials.",
+    "source": "https://www.advantest.com/document/en/investors/ir-library/annual/E_all_IAR2025.pdf",
+    "note": "Advantest's own reports call the year ended March 2025 FY2024."
+  },
+  {
+    "firm": "Advantest",
+    "ticker": "6857.T",
+    "country": "JP",
+    "category": "Test",
+    "fiscalYear": "FY2026",
     "fyEnd": "2026-03",
     "chinaRevenue": 213.3,
     "totalRevenue": 1128.6,
@@ -182,7 +183,7 @@
     "chinaShare": 18.9,
     "basis": "Sales by region on a ship-to basis, from Advantest's own annual and results materials. Share computed from the revenue amounts in those materials.",
     "source": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_slide.pdf",
-    "note": "The source rounds regional figures to 0.1bn yen. Its Japan, Americas and Europe figures match the audited note, which reports Japan, Americas, Europe and a single Asia line."
+    "note": "Advantest's own reports call the year ended March 2026 FY2025. The source rounds regional figures to 0.1bn yen. Its Japan, Americas and Europe figures match the audited note, which reports Japan, Americas, Europe and a single Asia line."
   },
   {
     "firm": "Applied Materials",
@@ -941,7 +942,7 @@
     "chinaShare": 9.1,
     "basis": "Revenue by geographic region, based on the location of the customer's headquarters, with Hong Kong counted in China. Share computed from the revenue amounts in the filing.",
     "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/R84.htm",
-    "note": "This is the first year Nvidia reported on the headquarters basis. The FY2026 fall reflects the H20 license freeze and China's own procurement restrictions as well as the basis change."
+    "note": "Nvidia's FY2026 annual report (10-K) is the first to count revenue by customer headquarters, and it restated FY2024 and FY2025 on that basis. The FY2026 fall reflects the H20 license freeze and China's own procurement restrictions."
   },
   {
     "firm": "Onto Innovation",

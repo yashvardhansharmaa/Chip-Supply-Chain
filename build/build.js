@@ -121,19 +121,31 @@ function figure(f, ctx) {
     const m = `media/${esc(f.src)}`, steps = meta.steps;
     body = `<ol class="anim-steps">${steps.map((st, i) => `<li><button type="button" data-t="${+st.t0}"${i ? '' : ' aria-current="step"'}><span class="n">${String(i + 1).padStart(2, "0")}</span>${esc(st.k)}</button></li>`).join('')}</ol>`
       + `<div class="anim-stage" role="button" tabindex="0" aria-label="Pause the animation" style="aspect-ratio:${meta.width}/${meta.height}">`
-      + `<video muted loop playsinline preload="none" aria-hidden="true" poster="${m}-light-start.jpg" data-src="${m}"></video>`
+      + `<video muted loop playsinline preload="none" aria-hidden="true" data-src="${m}"></video>` // no poster attribute: app.js sets it (theme-matched) once the figure nears the screen, and for print
       + `<img class="anim-print" src="${m}-light-end.jpg" alt="" loading="lazy"><span class="anim-state" aria-hidden="true">Paused</span></div>`
       + `<p class="anim-cap" aria-hidden="true">${esc(steps[0].cap)}</p>`
       + `<ol class="anim-transcript">${steps.map((st) => `<li><b>${esc(st.k)}.</b> ${esc(st.cap)}</li>`).join('')}</ol>`
       + (f.note ? `<p class="fig-source">${esc(f.note)}</p>` : '');
     return `<figure class="figure figure--anim" id="fig-${esc(ctx.id)}-${esc(f.id)}">${title}${body}${source}</figure>`;
   } else if (f.type === 'timeline') {
-    body = `<ol class="tl">` + data.map((d) => `<li><span class="d">${esc(d[0])}</span>${esc(d[1])}</li>`).join('') + `</ol>`;
+    // a row's date is a day (2019-05-16), a month (2028-03) or a bare year (2028), written as the source gave it; a year sits
+    // at the start of that year and is labelled with the year alone. Rows are put in date order (ties keep their order).
+    const dated = data.map((d, k) => ({ d, k, t: figDate(d[0]) }));
+    if (dated.every((r) => r.t)) dated.sort((a, b) => a.t.key.localeCompare(b.t.key) || a.k - b.k);
+    body = `<ol class="tl">` + dated.map((r) => `<li><span class="d">${r.t ? `<time datetime="${esc(r.t.iso)}">${esc(r.t.label)}</time>` : esc(r.d[0])}</span>${esc(r.d[1])}</li>`).join('') + `</ol>`;
   } else {
     warn(`${ctx.id}: unknown figure type ${f.type}`);
     return '';
   }
   return `<figure class="figure" id="fig-${esc(ctx.id)}-${esc(f.id)}">${title}${body}${source}</figure>`;
+}
+// A date in a figure: { key, the day it sorts as; iso, for <time datetime>; label, what the reader sees }. A full day keeps the
+// form the data gives; a month reads "March 2028"; a bare year reads "2028" and sorts as 1 January. Anything else is not a date.
+function figDate(s) {
+  const v = String(s == null ? '' : s).trim();
+  const m = v.match(/^(\d{4})(?:-(\d{2})(?:-(\d{2}))?)?$/);
+  if (!m || (m[2] && (+m[2] < 1 || +m[2] > 12)) || (m[3] && (+m[3] < 1 || +m[3] > 31))) return null;
+  return { key: `${m[1]}-${m[2] || '01'}-${m[3] || '01'}`, iso: v, label: m[3] ? v : m[2] ? `${MONTHS[+m[2] - 1]} ${m[1]}` : m[1] };
 }
 function tableFallback(data, f) {
   return `<table class="sr-only"><caption>${esc(f.title)}</caption><tbody>${data.map((d) => `<tr><th scope="row">${esc(d[0])}</th><td>${fmtNum(d[1])}${f.unit ? ' ' + esc(f.unit) : ''}</td></tr>`).join('')}</tbody></table>`;
@@ -246,8 +258,11 @@ const SUBWORD = { 'Very hard': 'Very hard to substitute', Hard: 'Hard to substit
 const BAND_NOTE = { Extreme: 'Three or fewer firms could supply this stage today, or one firm holds more than half of it.', High: 'Four to six firms could supply this stage today, and the top two take most of the revenue.', Moderate: 'Seven or more firms could supply this stage today, none of them dominant.', Low: 'Many firms could supply this stage today, and the scarce input is something another industry sells at volume.' };
 const SUB_NOTE = { 'Very hard': 'No second supplier exists at the leading node, and the path to one depends on physics, decades of unwritten know-how or protected intellectual property. No one has yet repeated what the leaders did, and closing the gap takes ten years or more.', Hard: 'No second supplier exists at the leading node. The path to one is known, and closing the gap takes five to ten years.', Moderate: 'A second supplier exists but is not yet qualified at the leading node. Closing the gap takes two to five years.', Easy: 'A qualified second supplier ships today at the leading node.' };
 const SPECIMEN_NAME = { 'boule-and-wafer': 'boule and wafer', 'cowos-exploded': 'CoWoS package, exploded', 'die-floorplan': 'die floorplan', 'euv-scanner': 'EUV scanner', foup: 'wafer carrier (FOUP)', 'gaa-transistor': 'gate-all-around transistor', 'gas-cabinet': 'gas cabinet', globe: 'globe', 'gpu-baseboard': 'GPU baseboard', 'hbm-stack': 'HBM stack', package: 'chip package', photomask: 'photomask', 'probe-card': 'probe card', 'process-chamber': 'process chamber', rack: 'server rack', 'sem-column': 'electron microscope column', 'substrate-layers': 'substrate layers', 'wafer-cost': 'wafer cost', wafer: 'wafer' };
-function nameplate(card, title) {
+// gl, when given, marks glossary terms in the card's prose (the substitutability test, the reason and the China and US
+// lines), the first use of each across the card; it takes and returns escaped HTML
+function nameplate(card, title, gl) {
   if (!card) return '';
+  const g = gl || ((s) => s);
   const leaders = (card.leaders || []).map((l) => `<li><span class="chip">${esc(l.country || '')}</span><span class="who">${esc(l.name)}</span>${l.share ? ` <span class="note">${esc(l.share)}</span>` : ''}</li>`).join('');
   const countries = (card.countries || []).map((c) => `<li><span class="chip">${esc(c.code)}</span><span class="who">${esc(COUNTRY[c.code] || c.code)}</span>${c.note ? ` <span class="note">${esc(c.note)}</span>` : ''}</li>`).join('');
   const sub = card.substitution || {};
@@ -264,15 +279,15 @@ function nameplate(card, title) {
 <header class="plate-head"><span class="label">Chokepoint card</span><span class="plate-tags">${conc ? `<button type="button" class="gl-term ptag ptag-conc" data-band="${BANDS[conc] || 0}" data-term="concentration" data-note="${esc(BAND_NOTE[conc] || '')}">${esc(conc)} concentration</button>` : ''}${sb ? `<button type="button" class="gl-term ptag ptag-sub" data-band="${SUBS[sb.band] || 0}" data-term="substitutability" data-note="${esc(SUB_NOTE[sb.band] || '')}" data-test="${esc(sb.test || '')}">${esc(SUBWORD[sb.band] || sb.band)}</button>` : (sub.years ? `<span class="ptag ptag-sub">${esc(sub.years)} years to substitute</span>` : '')}</span></header>
 <div class="plate-kpis">
 <div><span class="k">Concentration</span><b class="v ${esc(card.concentration || '')}">${esc(card.concentration || '—')}</b></div>
-${sb ? `<div><span class="k">Substitutability</span><b class="v sub-${SUBS[sb.band] || 0}">${esc(sb.band)}</b>${sb.test ? `<span class="sub">${esc(sb.test)}</span>` : ''}</div>` : `<div><span class="k">Substitution time</span><b class="v">${esc(sub.years || '—')}${sub.years && !/year/i.test(sub.years) ? '<small>years</small>' : ''}</b></div>`}
+${sb ? `<div><span class="k">Substitutability</span><b class="v sub-${SUBS[sb.band] || 0}">${esc(sb.band)}</b>${sb.test ? `<span class="sub">${g(esc(sb.test))}</span>` : ''}</div>` : `<div><span class="k">Substitution time</span><b class="v">${esc(sub.years || '—')}${sub.years && !/year/i.test(sub.years) ? '<small>years</small>' : ''}</b></div>`}
 <div><span class="k">Price or market size</span><b class="v cost${costLong ? ' long' : ''}">${esc(cost[0] || '—')}</b>${cost[1] ? `<span class="sub">${esc(cost[1])}</span>` : ''}</div>
 </div>
 <dl class="plate-rows">
 ${leaders ? `<div class="row"><dt>Who leads</dt><dd><ul>${leaders}</ul></dd></div>` : ''}
 ${countries ? `<div class="row"><dt>Where it is made</dt><dd><ul>${countries}</ul></dd></div>` : ''}
-${(sb && sb.why) || sub.why ? `<div class="row"><dt>Why substitution is ${sb && SUBS[sb.band] <= 2 ? 'possible' : 'slow'}</dt><dd class="why">${esc((sb && sb.why) || sub.why)}</dd></div>` : ''}
+${(sb && sb.why) || sub.why ? `<div class="row"><dt>Why substitution is ${sb && SUBS[sb.band] <= 2 ? 'possible' : 'slow'}</dt><dd class="why">${g(esc((sb && sb.why) || sub.why))}</dd></div>` : ''}
 </dl>
-${card.chinaStatus || card.usStatus ? `<div class="plate-status">${card.chinaStatus ? `<div><span class="k">Where China stands</span><p>${esc(card.chinaStatus)}</p></div>` : ''}${card.usStatus ? `<div><span class="k">Where the US stands</span><p>${esc(card.usStatus)}</p></div>` : ''}</div>` : ''}
+${card.chinaStatus || card.usStatus ? `<div class="plate-status">${card.chinaStatus ? `<div><span class="k">Where China stands</span><p>${g(esc(card.chinaStatus))}</p></div>` : ''}${card.usStatus ? `<div><span class="k">Where the US stands</span><p>${g(esc(card.usStatus))}</p></div>` : ''}</div>` : ''}
 </section>`;
 }
 
@@ -321,6 +336,8 @@ function plainBox(html, plain, ctx) {
   html = html.replace(/<p>([\s\S]*?)<\/p>/g, (whole, inner) => { if (!done && key && norm(inner).slice(0, 60) === key) { done = true; return ''; } return whole; });
   return { html, box: `<div class="plain"><span class="label">In plain terms</span><p>${inline(plain, ctx)}</p></div>` };
 }
+// the main page's "In plain terms" box, with the first use of each glossary term in its paragraph marked (the label is left alone)
+const glPlain = (box) => String(box || '').replace(/<p>([\s\S]*)<\/p>/, (m, inner) => `<p>${glossaryWrap(inner)}</p>`);
 /* ---------------- glossary terms in the prose ----------------
    The first time a chapter uses a glossary term, it is wrapped in a button the runtime hangs a
    definition popover on. Headings, links, code, citation marks, figures and the card are left alone. */
@@ -343,9 +360,10 @@ const glRE = glVariants.length
   ? new RegExp('(?<![A-Za-z0-9])(' + glVariants.map((t) => t.v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+')).join('|') + ')(?![A-Za-z0-9])', 'gi')
   : null;
 const glTermOf = new Map(glVariants.map((t) => [t.v, t.term]));
-function glossaryWrap(html) {
+// `used` lets several pieces of one block share a single first use (the card's test, reason and China and US lines)
+function glossaryWrap(html, used) {
   if (!glRE) return html;
-  const used = new Set();
+  used = used || new Set();
   const wrapText = (text) => text.split(/(&[a-zA-Z#][a-zA-Z0-9]*;)/).map((part, i) => {
     if (i % 2) return part; // an HTML entity: leave it whole
     return part.replace(glRE, (match) => {
@@ -408,6 +426,36 @@ function reviewHTML(ch) {
 }
 // the chapter's share link: a plain link to its own readable page (so crawlers reach it from the main page); a click copies the address (src/app.js)
 const copyLink = (id) => `<a class="label ch-copy" href="${esc(id)}/" data-copy="${SITE.url}${esc(id)}/" aria-label="Copy a link to this chapter">Link to chapter</a>`;
+/* ---------------- the cite line under each chapter title ----------------
+   "Updated <day> · Cite this chapter · Report an error", on the main page and on the chapter's readable page. The day is the
+   chapter's own (page dates, below). The citation names the chapter and its readable page; the report link is a mailto with
+   the chapter's title in the subject. On the main page the toggle is a button. On the readable page it is a link to the
+   citation, which then opens without scripts (:target), and CITE_JS turns it into a toggle there too. */
+const CITE_WORK = 'Chip Supply Chain: How AI Chips Are Made';
+const CITE_MAIL = 'contact@chipsupplychain.org';
+function citeBlock(ch, day, page) {
+  const url = SITE.url + ch.id + '/', box = page ? 'cite' : 'cite-' + ch.id;
+  const mail = `mailto:${CITE_MAIL}?subject=${encodeURIComponent('Report an error: ' + ch.title)}&body=${encodeURIComponent('Chapter: ' + ch.title + '\n' + url + '\n\n')}`;
+  const toggle = page
+    ? `<a class="ch-cite-btn" href="#${box}" aria-controls="${box}">Cite this chapter</a>`
+    : `<button type="button" class="ch-cite-btn" aria-expanded="false" aria-controls="${box}">Cite this chapter</button>`;
+  return `<div class="ch-cite"><p class="ch-cite-line"><span>Updated ${esc(day)}</span><span class="ch-cite-sep" aria-hidden="true">·</span>${toggle}<span class="ch-cite-sep" aria-hidden="true">·</span><a class="ch-cite-mail" href="${esc(mail)}">Report an error</a></p>`
+    + `<div class="ch-cite-box" id="${box}" role="region" aria-label="Citation for this chapter"${page ? '' : ' hidden'}><p class="ch-cite-text">Sharma, Yashvardhan. “${esc(ch.title)}.” <i>${CITE_WORK}</i>. Updated ${esc(day)}. <a href="${esc(url)}">${esc(url)}</a></p></div></div>`;
+}
+// the toggle and the copy control, shared by the main page (src/template.html) and the readable pages (social.js)
+const CITE_JS = `(function(){
+function copyBtn(b){if(b.querySelector('.ch-cite-copy')||!(navigator.clipboard&&navigator.clipboard.writeText))return;var c=document.createElement('button');c.type='button';c.className='ch-cite-copy';c.textContent='Copy citation';b.appendChild(c);}
+function set(t,open){var b=document.getElementById(t.getAttribute('aria-controls'));if(!b)return;t.setAttribute('aria-expanded',open?'true':'false');b.hidden=!open;b.classList.toggle('is-open',open);if(open)copyBtn(b);}
+document.addEventListener('click',function(e){var t=e.target.closest?e.target.closest('.ch-cite-btn, .ch-cite-copy'):null;if(!t)return;
+if(t.classList.contains('ch-cite-btn')){e.preventDefault();set(t,t.getAttribute('aria-expanded')!=='true');return;}
+var p=t.parentNode.querySelector('.ch-cite-text'),text=p?p.textContent.replace(/\\s+/g,' ').trim():'';
+navigator.clipboard.writeText(text).then(function(){t.textContent='Copied';setTimeout(function(){t.textContent='Copy citation';},1600);},function(){t.textContent='Copy failed';});});
+document.addEventListener('keydown',function(e){if(e.key!==' ')return;var t=e.target.closest?e.target.closest('a.ch-cite-btn'):null;if(!t)return;e.preventDefault();set(t,t.getAttribute('aria-expanded')!=='true');});
+Array.prototype.forEach.call(document.querySelectorAll('a.ch-cite-btn'),function(a){a.setAttribute('role','button');a.setAttribute('aria-expanded','false');});
+try{var o=location.hash.length>1?document.getElementById(location.hash.slice(1)):null;if(o&&o.classList.contains('ch-cite-box')){var t=document.querySelector('.ch-cite-btn[aria-controls="'+o.id+'"]');if(t)set(t,true);}}catch(e){}
+})();`;
+// the cite line's date goes in once every page's date is known (after the build modules write the readable pages)
+const CITE_DAY = (id) => `{{CITE_DAY:${id}}}`;
 function chapterHTML(ch) {
   const m = ch.meta, mins = Math.max(1, Math.round(ch.words / 230));
   const specimen = m.specimen || 'wafer';
@@ -422,20 +470,28 @@ function chapterHTML(ch) {
   const plate = isStage(ch) ? nameplate(m.card, ch.title) : '';
   // the same pieces, kept for the chapter's own readable page (build/modules/social.js); the prose is the copy before glossary buttons
   ch.rendered = { plain: pb.box, inShort: parts.inShort, plate, prose: pb.html, mins };
+  // the main page's head: each block (In plain terms, In short, the card's prose) marks the first use of each glossary term in it
+  const cardUsed = new Set();
+  const plateGl = isStage(ch) ? nameplate(m.card, ch.title, (h) => glossaryWrap(h, cardUsed)) : '';
   return `<article class="chapter" id="${esc(ch.id)}" data-specimen="${esc(specimen)}" data-number="${pad(ch.number)}" data-title="${esc(ch.title)}" data-caption="${esc(m.specimenCaption || '')}">
 <aside class="ch-ledger" aria-label="Chapter ${ch.number}${stageIdx >= 0 ? ', stage ' + (stageIdx + 1) + ' of ' + stages.length : ''}">${tile}${chain}</aside>
 <header class="chapter-head">
-<div class="ch-id"><div><h2 class="ch-title"><span class="sr-only">Chapter ${ch.number}: </span>${esc(ch.title)}</h2>${m.oneLiner ? `<p class="ch-lede">${esc(m.oneLiner)}</p>` : ''}<p class="ch-meta"><span class="label">${ch.words.toLocaleString('en-US')} words / ${mins} min</span><span class="label">Specimen: ${esc(SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' '))}</span>${copyLink(ch.id)}</p></div></div>
-${pb.box}
-${parts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${parts.inShort}</section>` : ''}
-${plate}
+<div class="ch-id"><div><h2 class="ch-title"><span class="sr-only">Chapter ${ch.number}: </span>${esc(ch.title)}</h2>${m.oneLiner ? `<p class="ch-lede">${esc(m.oneLiner)}</p>` : ''}<p class="ch-meta"><span class="label">${ch.words.toLocaleString('en-US')} words / ${mins} min</span><span class="label">Specimen: ${esc(SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' '))}</span>${copyLink(ch.id)}</p>${citeBlock(ch, CITE_DAY(ch.id))}</div></div>
+${glPlain(pb.box)}
+${parts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${glossaryWrap(parts.inShort)}</section>` : ''}
+${plateGl}
 </header>
 <div class="prose">${glossaryWrap(pb.html)}${reviewHTML(ch)}${prevNext(ch)}${sources}</div>
 </article>`;
 }
 const chaptersHTML = chapters.length ? chapters.map(chapterHTML).join('\n') : `<article class="chapter" id="placeholder" data-specimen="wafer" data-number="01" data-title="Placeholder"><header class="chapter-head"><div class="chapter-num">01</div><h2 class="chapter-title">No chapters yet</h2></header><div class="prose"><p>No chapters found. This is a shell build.</p></div></article>`;
 
-const contentsHTML = chapters.concat(geo ? [geo] : []).map((ch) => `<div class="item"><span class="n">${pad(ch.number)}</span><a class="t" href="#${esc(ch.id)}">${esc(ch.title)}</a><ul>${ch.headings.filter((h) => !/^takeaways?$/i.test(h.text)).map((h) => `<li><a href="#${esc(h.id)}">${esc(h.text)}</a></li>`).join('')}</ul></div>`).join('');
+// the fifteen stages of the chain first, then the two chapters that look across all of them under their own heading
+const contentsItem = (ch) => `<div class="item"><span class="n">${pad(ch.number)}</span><a class="t" href="#${esc(ch.id)}">${esc(ch.title)}</a><ul>${ch.headings.filter((h) => !/^takeaways?$/i.test(h.text)).map((h) => `<li><a href="#${esc(h.id)}">${esc(h.text)}</a></li>`).join('')}</ul></div>`;
+const stageIds = new Set(stages.map((c) => c.id));
+const acrossChapters = chapters.filter((c) => !stageIds.has(c.id)).concat(geo ? [geo] : []);
+const contentsHTML = `<h3 class="contents-k">The ${word(stages.length)} stages of the chain</h3><div class="contents-grid">${stages.map(contentsItem).join('')}</div>`
+  + (acrossChapters.length ? `<h3 class="contents-k">Across the chain</h3><p class="contents-note">These ${word(acrossChapters.length)} chapters are not stages. They look across all ${word(stages.length)}, at what a chip costs and at the contest over who controls each stage.</p><div class="contents-grid">${acrossChapters.map(contentsItem).join('')}</div>` : '');
 const railHTML = chainTrack(stages, null);
 const thesisHTML = 'How AI chips are made';
 const subtitleHTML = 'Every stage of the supply chain, and who controls it.';
@@ -478,12 +534,24 @@ function exposureViz(rows) {
   const tx = (fy) => { const [y, m] = fy.split('-').map(Number); return y + (m - 0.5) / 12; };
   const CAT_ORDER = ['Lithography', 'Deposition', 'Etch', 'Process Control', 'Metrology', 'Test', 'Assembly', 'Materials', 'Memory', 'AI Accelerator Vendor', 'EDA'];
   const catRank = (c) => { const i = CAT_ORDER.findIndex((k) => String(c || '').toLowerCase().includes(k.toLowerCase())); return i < 0 ? CAT_ORDER.length : i; };
+  // how a firm counts China, as one word for the chart; the same reading as the table's labels in src/app.js (basisShort)
+  const basisWord = (b) => { b = String(b || '').toLowerCase(); if (!b) return ''; if (/ship-to|ship to|destination|fab\)/.test(b)) return 'ship-to'; if (/bill|invoice/.test(b)) return 'billing'; if (/headquarters/.test(b)) return 'headquarters'; if (/seat|licen/.test(b)) return 'seats'; if (/used|usage/.test(b)) return 'use'; if (/own operating|operating units|own units/.test(b)) return 'own units'; return 'customer'; };
   const firms = Object.keys(byFirm).map((f) => {
     const rs = byFirm[f].slice().sort((a, b) => tx(a.fyEnd) - tx(b.fyEnd));
+    // a firm can change how it counts China between years (Nvidia: billing location to FY2023, customer headquarters from FY2024);
+    // the dashed line marks where the counting changed; the garnet bar is always the highest year shown
+    const breaks = rs.map((r, i) => i).filter((i) => i && basisWord(rs[i].basis) !== basisWord(rs[i - 1].basis));
     const peak = rs.reduce((m, r) => (r.chinaShare > m.chinaShare ? r : m), rs[0]);
-    return { firm: f, rows: rs, first: rs[0], last: rs[rs.length - 1], peak, meta: rs[0], hasMoney: rs.every((r) => r.chinaRevenue != null) };
+    return { firm: f, rows: rs, first: rs[0], last: rs[rs.length - 1], peak, breaks, meta: rs[0], hasMoney: rs.every((r) => r.chinaRevenue != null) };
   }).sort((a, b) => catRank(a.meta.category) - catRank(b.meta.category) || b.last.chinaShare - a.last.chinaShare || a.firm.localeCompare(b.firm));
-  const T0 = 2021, T1 = 2026.6;
+  const anyBreak = firms.some((f) => f.breaks.length);
+  // a bar stands for a whole fiscal year, so it is centered on the middle of that year (six months before it ends); the rule lines
+  // then fall inside the year in which each rule came
+  const mid = (fy) => tx(fy) - 0.5;
+  const T0 = 2020.2, T1 = 2026.3;
+  const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  // a fiscal year that does not end in December is named by its end month, so firms whose years end in March are not read as calendar years
+  const fyName = (r) => { const [y, m] = String(r.fyEnd).split('-').map(Number); return m === 12 ? r.fiscalYear : `year to ${MON[m - 1]} ${y}`; };
   const rules = [[tx('2022-10'), 'Oct 2022'], [tx('2023-10'), 'Oct 2023'], [tx('2024-12'), 'Dec 2024']];
   const pct = (v) => (v >= 10 ? Math.round(v) : Math.round(v * 10) / 10) + '%';
   const unit = (cur) => { const c = String(cur || '').toUpperCase(); if (c.startsWith('USD')) return ['$', 'bn', 1000]; if (c.startsWith('EUR')) return ['€', 'bn', 1000]; if (c.startsWith('JPY')) return ['¥', 'bn', 1000]; if (c.startsWith('KRW')) return ['₩', 'tn', 1000000]; return [c.split(' ')[0] + ' ', 'm', 1]; };
@@ -492,21 +560,29 @@ function exposureViz(rows) {
   // one panel per firm: bars of China's share of revenue by fiscal year on a shared 0 to 60% scale, the peak year in garnet
   const PW = 240, PH = 122, px0 = 10, px1 = 232, py0 = 18, py1 = 98, YMAX = 60;
   const X = (t) => px0 + ((t - T0) / (T1 - T0)) * (px1 - px0), Y = (v) => py1 - (Math.min(v, YMAX) / YMAX) * (py1 - py0);
-  let d = `<div class="ex-legend"><span><i class="lg-bar"></i>China's share of the firm's revenue, by fiscal year</span><span><i class="lg-top"></i>The year it peaked</span><span><i class="lg-rule"></i>US export rules of Oct 2022, Oct 2023 and Dec 2024</span><span>Same scale on every panel, 0 to 60%</span></div><div class="ex-grid">`;
+  let d = `<div class="ex-legend"><span><i class="lg-bar"></i>China's share of the firm's revenue, by fiscal year</span><span><i class="lg-top"></i>The year it peaked</span><span><i class="lg-rule"></i>US export rules of Oct 2022, Oct 2023 and Dec 2024</span>${anyBreak ? `<span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true" style="vertical-align:middle;margin-right:7px"><line x1="4" y1="0" x2="4" y2="12" stroke="currentColor" stroke-width="1.8" stroke-dasharray="3 2"/></svg>The firm changed how it counts China</span>` : ''}<span>Same scale on every panel, 0 to 60%</span></div><div class="ex-grid">`;
   let lastCat = null;
   firms.forEach((f) => {
     const cat = f.meta.category || '';
     if (cat !== lastCat) { d += `<h4 class="ex-cat">${esc(cat)}</h4>`; lastCat = cat; }
-    let s = `<figure class="ex-panel"><figcaption><b>${esc(f.firm)}</b><span>${f.meta.country ? esc(f.meta.country) + ' · ' : ''}peak ${pct(f.peak.chinaShare)} in ${esc(f.peak.fiscalYear)}</span></figcaption>`;
-    s += `<svg viewBox="0 0 ${PW} ${PH}" role="group" aria-label="${esc(f.firm)}: China share of revenue by fiscal year, ${esc(f.first.fiscalYear)} to ${esc(f.last.fiscalYear)}">`;
+    const changes = f.breaks.map((i) => `${basisWord(f.rows[i - 1].basis)} to ${f.rows[i - 1].fiscalYear}, ${basisWord(f.rows[i].basis)} from ${f.rows[i].fiscalYear}`).join('; ');
+    let s = `<figure class="ex-panel"><figcaption><b>${esc(f.firm)}</b><span${changes ? ` title="Counted by ${esc(changes)}."` : ''}>${f.meta.country ? esc(f.meta.country) + ' · ' : ''}peak ${pct(f.peak.chinaShare)} in ${esc(fyName(f.peak))}</span></figcaption>`;
+    s += `<svg viewBox="0 0 ${PW} ${PH}" role="group" aria-label="${esc(f.firm)}: China share of revenue by fiscal year, ${esc(f.first.fiscalYear)} to ${esc(f.last.fiscalYear)}${changes ? `, counted by ${esc(changes)}` : ''}">`;
     [20, 40, 60].forEach((v) => { s += `<line x1="${px0}" y1="${Y(v).toFixed(1)}" x2="${px1}" y2="${Y(v).toFixed(1)}" class="grid"/>`; });
     rules.forEach((r) => { s += `<line x1="${X(r[0]).toFixed(1)}" y1="${py0 - 8}" x2="${X(r[0]).toFixed(1)}" y2="${py1}" class="rule"/>`; });
     s += `<line x1="${px0}" y1="${py1}" x2="${px1}" y2="${py1}" class="axis"/>`;
     const n = f.rows.length, slot = (px1 - px0) / Math.max(n, 5), bw = Math.min(26, slot * 0.62);
     f.rows.forEach((r) => {
-      const cx = X(tx(r.fyEnd)), y = Y(r.chinaShare), h = py1 - y, isTop = r === f.peak;
+      const cx = X(mid(r.fyEnd)), y = Y(r.chinaShare), h = py1 - y, isTop = r === f.peak;
       s += `<a href="${safeUrl(r.source || '#')}" target="_blank" rel="noopener" aria-label="${esc(f.firm)} ${esc(r.fiscalYear)}: ${pct(r.chinaShare)} of revenue from China, opens the filing"><rect x="${(cx - bw / 2).toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" class="bar${isTop ? ' top' : ''}" ${attrs(r)}/></a>`;
       s += `<text x="${cx.toFixed(1)}" y="${(y - 4).toFixed(1)}" class="share${isTop ? ' top' : ''}" text-anchor="middle">${pct(r.chinaShare)}</text>`;
+    });
+    // a change of counting basis: a dashed line between the two years, the old basis named to its left and the new to its right
+    f.breaks.forEach((i) => {
+      const bx = (X(mid(f.rows[i - 1].fyEnd)) + X(mid(f.rows[i].fyEnd))) / 2, was = basisWord(f.rows[i - 1].basis), now = basisWord(f.rows[i].basis), cw = 6.1;
+      s += `<line x1="${bx.toFixed(1)}" y1="${py0 - 8}" x2="${bx.toFixed(1)}" y2="${py1}" class="line basis" stroke-dasharray="3 2"/>`;
+      s += `<text x="${Math.max(2 + was.length * cw, bx - 3).toFixed(1)}" y="${py0 - 10}" class="tick" text-anchor="end">${esc(was)}</text>`;
+      s += `<text x="${Math.min(PW - 2 - now.length * cw, bx + 3).toFixed(1)}" y="${py0 - 10}" class="tick">${esc(now)}</text>`;
     });
     s += `<text x="${px0}" y="${PH - 4}" class="tick">${esc(f.first.fiscalYear)}</text><text x="${px1}" y="${PH - 4}" class="tick" text-anchor="end">${esc(f.last.fiscalYear)}</text></svg></figure>`;
     d += s;
@@ -523,7 +599,7 @@ if (geo) {
   const gparts = splitTakeaways(geo.html); geo.inShort = gparts.inShort;
   const gpb = plainBox(gparts.body, geo.meta.plain, { id: 'geopolitics', cites: geo.cites, figures: [] });
   geo.rendered = { plain: gpb.box, inShort: gparts.inShort, plate: '', prose: gpb.html, mins: Math.max(1, Math.round(geo.words / 230)) };
-  geoBody = gpb.box + (gparts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${gparts.inShort}</section>` : '') + `<p class="ch-meta" style="margin:10px 0 26px"><span class="label">${geo.words.toLocaleString('en-US')} words / ${Math.max(1, Math.round(geo.words / 230))} min</span>${copyLink('geopolitics')}</p>` + glossaryWrap(gpb.html) + reviewHTML(geo) + prevNext(geo) + sources;
+  geoBody = glPlain(gpb.box) + (gparts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${glossaryWrap(gparts.inShort)}</section>` : '') + `<p class="ch-meta" style="margin:10px 0 26px"><span class="label">${geo.words.toLocaleString('en-US')} words / ${Math.max(1, Math.round(geo.words / 230))} min</span>${copyLink('geopolitics')}</p>` + glossaryWrap(gpb.html) + reviewHTML(geo) + prevNext(geo) + sources;
 }
 
 /* ---------------- sources view ---------------- */
@@ -605,16 +681,21 @@ fill('STYLES', read(path.join(root, 'src', 'styles.css')) + moduleCSS);
 // build modules: build/modules/*.js each export a function (ctx) returning { PLACEHOLDER: html, ... }
 const ctx = { root, fs, path, all, chapters, geo, stages, data, esc, pad, word, cap, read, readJSON, markdown, inline, tierOf, wordCount, warn, glossaryWrap, BAND_NOTE, SUB_NOTE,
   // for the readable chapter pages (social.js): the source list, footer and dates exactly as the main page prints them
-  tierTag, sourceLine, bibOf, slug, footerKey, builtOn, builtStr, flashcards, SPECIMEN_NAME, pageDate, dayStr };
+  tierTag, sourceLine, bibOf, slug, footerKey, builtOn, builtStr, flashcards, SPECIMEN_NAME, pageDate, dayStr,
+  // the cite line under the chapter title, as the main page prints it (the readable page's own date goes in)
+  citeBlock, CITE_JS };
 for (const f of modDir(path.join(root, 'build', 'modules')).filter((x) => x.endsWith('.js'))) {
   try { const out = require(path.join(root, 'build', 'modules', f))(ctx) || {}; Object.keys(out).forEach((k) => fill(k, String(out[k]))); }
   catch (e) { warn(`build module ${f} failed: ${e.message}`); }
 }
 fill('SITE_URL', SITE.url); fill('SITE_HOST', SITE.host);
-// the counter: each hash route counts as its own page ("/lithography", "/suppliers"), and the query string is dropped
-fill('ANALYTICS', SITE.analytics ? `<script>window.goatcounter={path:function(){return (location.hash||'').replace(/^#\\/?/,'/').replace(/\\?.*$/,'')||'/';}};</script>\n<script async src="https://gc.zgo.at/count.js" data-goatcounter="${esc(SITE.analytics)}"></script>` : ''); fill('THESIS', thesisHTML); fill('SUBTITLE', subtitleHTML); fill('CHAIN', chainTrack(stages, null));
-const sheetPages = [['#/', 'Home'], ['#/intro', 'Start here'], ['#/chain', 'The Chain'], ['#/landscape', 'AI Chips'], ['#/suppliers', 'Suppliers'], ['#/controls', 'Export Controls'], ['#/glossary', 'Glossary']].map((p) => `<a href="${p[0]}">${p[1]}</a>`).join('');
-const sheetChapters = all.map((ch) => `<li><a href="${ch.id === 'geopolitics' ? '#geopolitics' : '#' + esc(ch.id)}"><span class="n">${pad(ch.number)}</span><span class="t">${esc(ch.title)}</span></a></li>`).join('');
+// the counter: each hash route counts as its own page ("/lithography", "/suppliers"), and the query string is dropped;
+// the walk's step addresses (#/walk/<chapter>, replaced as the reader scrolls Start here) all count as the home page
+fill('ANALYTICS', SITE.analytics ? `<script>window.goatcounter={path:function(){return (location.hash||'').replace(/^#\\/?/,'/').replace(/\\?.*$/,'').replace(/^\\/walk\\/.*$/,'/')||'/';}};</script>\n<script async src="https://gc.zgo.at/count.js" data-goatcounter="${esc(SITE.analytics)}"></script>` : ''); fill('THESIS', thesisHTML); fill('SUBTITLE', subtitleHTML); fill('CHAIN', chainTrack(stages, null));
+// Home is the Start here walk (#/ and #/intro open the same view), so it has one entry
+const sheetPages = [['#/', 'Home'], ['#/chain', 'The Chain'], ['#/landscape', 'AI Chips'], ['#/suppliers', 'Suppliers'], ['#/controls', 'Export Controls'], ['#/glossary', 'Glossary']].map((p) => `<a href="${p[0]}">${p[1]}</a>`).join('');
+const sheetItem = (ch) => `<li><a href="${ch.id === 'geopolitics' ? '#geopolitics' : '#' + esc(ch.id)}"><span class="n">${pad(ch.number)}</span><span class="t">${esc(ch.title)}</span></a></li>`;
+const sheetChapters = stages.map(sheetItem).join('') + (acrossChapters.length ? `<li class="sheet-k" aria-hidden="true">Across the chain</li>` + acrossChapters.map(sheetItem).join('') : '');
 fill('SHEET_PAGES', sheetPages); fill('SHEET_CHAPTERS', sheetChapters);
 fill('RAIL', railHTML); fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits); fill('FOOTER', footer); fill('FOOTER_KEY', footerKey);
 fill('SUPPLIERS_INTRO', suppliersIntro); fill('BUILT', builtStr);
@@ -624,7 +705,7 @@ fill('SUPPLIERS_INTRO', suppliersIntro); fill('BUILT', builtStr);
 for (const asset of ['print-title.png']) { const from = path.join(root, 'build', 'assets', asset); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', asset)); }
 // the site icons (drawn by `python3 build/icons.py`) go to the root of dist/, where browsers look for /favicon.ico
 for (const icon of ['favicon.ico', 'favicon.svg', 'apple-touch-icon.png']) { const from = path.join(root, 'build', 'assets', 'icons', icon); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', icon)); else warn(`icon ${icon} is missing; run python3 build/icons.py`); }
-fill('GEO_DEK', esc(geoDek)); fill('GEO_BODY', geoBody); fill('GEO_CAPTION', esc(geo ? geo.meta.specimenCaption || '' : '')); // the globe's caption, from the chapter's front matter as the other chapters' are
+fill('GEO_DEK', esc(geoDek)); fill('GEO_CITE', geo ? citeBlock(geo, CITE_DAY(geo.id)) : ''); fill('CITE_JS', CITE_JS); fill('GEO_BODY', geoBody); fill('GEO_CAPTION', esc(geo ? geo.meta.specimenCaption || '' : '')); // the globe's caption, from the chapter's front matter as the other chapters' are
 fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));
 // the Look up page: one list of every term, firm and chip, alphabetical, each with the kind a reader would call it
 const lkSlug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -650,7 +731,7 @@ lkItems.sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' 
 fill('LOOKUP_LIST', lkItems.map((i) => `<li id="${esc(i.id)}" data-kind="${i.kind}" data-key="${esc(i.key || i.name)}"${i.alias && i.alias.length ? ` data-alias="${esc(i.alias.join('|'))}"` : ''} data-text="${esc(i.text.toLowerCase().replace(/\s+/g, ' '))}"><button type="button"><span class="lk-name">${esc(i.name)}</span><span class="lk-lab">${esc(i.label)}</span></button></li>`).join(''));
 fill('CONTROLS_DEK', `Every rule since 2018, what can still be sold to China, and each firm's China sales.`);
 fill('EXPOSURE_VIZ', exposureViz(exposure));
-fill('EXPOSURE_NOTE', exposure.length ? 'Each share is computed from the revenue amounts the firm filed. Firms count China differently: where the goods ship, where they are billed, or where the customer is based.' : '');
+fill('EXPOSURE_NOTE', exposure.length ? 'Each share is computed from the revenue amounts the firm filed. Firms count China differently: where the goods ship, where they are billed, or where the customer is based. Fiscal years are labeled by the calendar year in which they end.' : '');
 fill('KIT', kit); fill('SPECIMENS', specimens);
 fill('DATA', JSON.stringify(data).replace(/<\/script/gi, '<\\/script'));
 const moduleJS = modDir(path.join(root, 'src', 'modules')).filter((f) => f.endsWith('.js')).map((f) => `\n/* module: ${f} */\ntry {\n${read(path.join(root, 'src', 'modules', f)).replace(/<\/script/gi, '<\\/script')}\n} catch (e) { console.warn('module ${f} failed', e); }`).join('\n');
@@ -660,6 +741,9 @@ html = html.replace(/\{\{[A-Z_]+\}\}/g, () => '');
 // the main page's "Updated" day (footer and printed title page) is the day its content last changed, not the build's
 const homeDates = pageDate('/', html.split(builtStr).join(''));
 if (homeDates.modified !== today) html = html.split(`Updated ${builtStr}`).join(`Updated ${dayStr(homeDates.modified)}`);
+// each chapter's cite line carries that chapter's own day, the one its readable page shows (social.js has just dated it);
+// it goes in only now, so that neither the main page's hash nor its "Updated" rewrite above ever sees a chapter's day
+html = html.replace(/\{\{CITE_DAY:([a-z0-9-]+)\}\}/g, (m, id) => { const e = pageDates['/' + id + '/']; if (!e || !e.modified) warn(`cite line: chapter ${id} has no page date`); return dayStr((e && e.modified) || today); });
 
 fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
 fs.writeFileSync(path.join(root, 'dist', 'index.html'), html);
@@ -674,7 +758,7 @@ if (fs.existsSync(pdfFile)) pageDate('/' + pdfName, fs.readFileSync(pdfFile)); e
 const lastmod = (key) => (pageDates[key] || {}).modified || today;
 fs.writeFileSync(path.join(root, 'dist', 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${SITE.url}sitemap.xml\n`);
 fs.writeFileSync(path.join(root, 'dist', 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-  ['/', ...chapterPages, '/' + pdfName].map((k) => `  <url><loc>${SITE.url}${k.slice(1)}</loc><lastmod>${lastmod(k)}</lastmod></url>`).join('\n') + `\n</urlset>\n`);
+  ['/', ...chapterPages, '/summary/', '/' + pdfName, '/chip-supply-chain-summary.pdf'].map((k) => `  <url><loc>${SITE.url}${k.slice(1)}</loc><lastmod>${lastmod(k)}</lastmod></url>`).join('\n') + `\n</urlset>\n`);
 // keep the dates of the pages this build wrote (a retired page drops out); the file is rewritten only when a date or hash moved
 {
   const kept = {};

@@ -117,9 +117,9 @@
         "section": "How it works"
       },
       {
-        "q": "Why do the finest layers need extreme-ultraviolet (EUV) light?",
-        "a": "Finer lines need light of a shorter wavelength, and EUV has the shortest in use.",
-        "why": "Air and glass absorb EUV light, so the machine works in a vacuum and uses mirrors instead of lenses.",
+        "q": "Why do chipmakers print the finest layers with extreme-ultraviolet (EUV) light?",
+        "a": "Its much shorter wavelength lets EUV print in one exposure what deep-ultraviolet (DUV) tools need several patterning steps to build.",
+        "why": "TSMC's first 7 nm process and Intel 7 were made without EUV, by building their finest layers in several patterning steps with DUV. One EUV exposure per layer cuts masks and process steps, which lowers cost and the risk of misalignment.",
         "section": "How it works"
       },
       {
@@ -137,7 +137,7 @@
     ],
     "takeaways": [
       "Lithography prints each layer of a chip's circuit onto the wafer.",
-      "The finest layers need extreme-ultraviolet (EUV) light, which air and glass absorb, so EUV machines work in a vacuum and use mirrors.",
+      "Extreme-ultraviolet (EUV) light prints the finest layers in fewer steps than deep ultraviolet, but air and glass absorb it, so EUV machines work in a vacuum and use mirrors.",
       "ASML of the Netherlands is the only maker of EUV machines, and Zeiss alone supplies their mirrors.",
       "Export controls block EUV sales to Chinese chipmakers, and a Chinese prototype reported in December 2025 had printed no chip."
     ]
@@ -248,8 +248,8 @@
     "cards": [
       {
         "q": "Why do the newest transistors wrap the gate around the channel?",
-        "a": "To stop current leaking when the switch is off.",
-        "why": "The gate turns the current along the channel on and off. Shorter channels switch faster but leak, and a gate on all four sides can shut off the current completely.",
+        "a": "To cut the current that leaks when the switch is off.",
+        "why": "The gate turns the current along the channel on and off. Shorter channels switch faster but leak more. A gate on all four sides cuts that leakage further than a fin, whose gate covers three sides.",
         "section": "How it works"
       },
       {
@@ -260,29 +260,29 @@
       },
       {
         "q": "Why is the front end, the part of a fab that builds the transistors, hard for a new firm to enter?",
-        "a": "No firm sells its process recipe, the exact sequence of steps that builds the transistors.",
-        "why": "A newcomer has to develop its own.",
+        "a": "TSMC, Intel and Samsung do not sell their leading-edge process flows, the exact sequence of steps that builds the transistors.",
+        "why": "A newcomer has to develop its own flow or build on another firm's technology, as Rapidus is doing with IBM's 2 nm process.",
         "section": "The chokepoint"
       },
       {
         "q": "How does China's SMIC make advanced chips without an EUV machine?",
-        "a": "It prints its tightest layers in two or four passes on deep-ultraviolet tools.",
+        "a": "It builds its tightest layers in several patterning steps on deep-ultraviolet tools.",
         "why": "Export controls block ASML from selling SMIC an EUV machine. With this method SMIC makes chips on N+3, its third-generation 7 nm process.",
         "section": "The chokepoint"
       }
     ],
     "takeaways": [
-      "The newest transistors wrap the gate around all four sides of the channel to stop current leaking.",
+      "The newest transistors wrap the gate around all four sides of the channel to cut the current that leaks when the switch is off.",
       "Only TSMC, Intel and Samsung make them in volume.",
-      "No firm sells its process recipe, so a newcomer has to develop its own.",
-      "China's SMIC makes 7 nm-class chips without EUV by printing its tightest layers in several passes."
+      "TSMC, Intel and Samsung do not sell their leading-edge process flows, so a newcomer has to develop its own or build on another firm's, as Rapidus is doing with IBM's.",
+      "China's SMIC makes 7 nm-class chips without EUV by building its tightest layers in several patterning steps."
     ]
   },
   "foundries-and-fabs": {
     "cards": [
       {
         "q": "What is a foundry?",
-        "a": "A chip factory that makes chips designed by other companies.",
+        "a": "A company that makes chips designed by other companies.",
         "why": "A chip factory, or fab, costs tens of billions of dollars, and no chip company sells enough of one product to fill a fab by itself.",
         "section": "How it works"
       },
@@ -301,7 +301,7 @@
       {
         "q": "How much of China's fab capacity can make the newest chips?",
         "a": "Little of it.",
-        "why": "In its third-quarter 2026 World Fab Forecast, SEMI projected that China would keep the world's largest installed fab capacity in 2026 and 2027. SMIC cannot buy an EUV machine, so it makes its 7 nm-class chips by printing the tightest layers in several passes.",
+        "why": "In its third-quarter 2026 World Fab Forecast, SEMI projected that China would keep the world's largest installed fab capacity in 2026 and 2027. SMIC cannot buy an EUV machine, so it makes its 7 nm-class chips by building the tightest layers in several patterning steps.",
         "section": "The chokepoint"
       }
     ],
@@ -362,7 +362,7 @@
       },
       {
         "q": "Why did packaging limit AI chip output in 2025?",
-        "a": "The methods worked, but too few packaging lines had been built.",
+        "a": "Too few packaging lines had been built, and Nvidia's first Blackwell packages, on the newest method, CoWoS-L, ran into problems.",
         "why": "In March 2026 the analyst firm SemiAnalysis judged that the factories that print the chips had become the main limit. But in July 2026 TSMC said its packaging capacity was still so tight that it limited customers' growth.",
         "section": "The chokepoint"
       },

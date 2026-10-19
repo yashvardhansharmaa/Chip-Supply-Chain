@@ -14,7 +14,7 @@
  "leaders": [
  {"name": "Synopsys", "country": "US", "share": "90%+ of the timing-signoff market"},
  {"name": "Cadence", "country": "US", "share": "55%+ of the hardware emulator market"},
- {"name": "Siemens EDA", "country": "DE", "share": "85%+ of physical verification, the final layout check"},
+ {"name": "Siemens EDA", "country": "US", "share": "85%+ of physical verification, the final layout check"},
  {"name": "Arm", "country": "GB", "share": "About 50% of processor compute at the top cloud firms, fiscal 2026"},
  {"name": "Broadcom", "country": "US", "share": "$16.7B of AI semiconductor revenue in the third quarter of fiscal 2026, custom accelerators and networking combined"}
  ],
@@ -129,7 +129,7 @@ The reticle limit caps the size of a single die, one piece of silicon ([source](
 
 ## Who makes it
 
-Design software and licensed blocks were an $18 billion market in 2025 ([source](https://newsletter.semianalysis.com/p/eda-market-primer)). Synopsys, Cadence and Siemens EDA took more than 85 percent of it, counting Ansys as part of Synopsys ([source](https://newsletter.semianalysis.com/p/eda-market-primer)). No other vendor had more than 5 percent of any core category ([source](https://newsletter.semianalysis.com/p/eda-market-primer)).
+Design software and licensed blocks were an $18 billion market in 2025 ([source](https://newsletter.semianalysis.com/p/eda-market-primer)). Synopsys, Cadence and Siemens EDA took more than 85 percent of it, counting Ansys as part of Synopsys ([source](https://newsletter.semianalysis.com/p/eda-market-primer)). No other vendor had more than 5 percent of any core category ([source](https://newsletter.semianalysis.com/p/eda-market-primer)). Siemens EDA is a US-based subsidiary of the German firm Siemens, so country shares that count each firm by its parent company's headquarters put its sales under Germany ([source](https://www.csis.org/analysis/double-edged-sword-semiconductor-export-controls-electronic-design-automation)).
 
 Synopsys is the largest. Its own results put revenue at $7.054 billion for the fiscal year to 31 October 2025, with Ansys, bought that July, contributing $756.6 million ([source](https://www.sec.gov/Archives/edgar/data/883241/000119312525314200/d29055dex991.htm)). Cadence, whose year ends in December, took $5.297 billion in calendar 2025 ([source](https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/R115.htm)).
 

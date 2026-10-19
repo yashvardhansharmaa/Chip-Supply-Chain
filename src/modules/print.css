@@ -37,11 +37,14 @@
     --bg: #fff; --bg-2: #f4f5f6; --bg-3: #e9ebec;
     --ink: #000; --ink-2: #22272b; --muted: #464e55;
     --line: #c6cacd; --line-2: #a4aaaf;
-    --accent: #7a1f2b; --accent-ink: #611722; --accent-soft: rgba(122, 31, 43, 0.09);
+    --accent: #7a1f2b; --accent-ink: #611722; --accent-soft: rgba(122, 31, 43, 0.09); --accent-fill: #7a1f2b;
+    --c1: #2b63c4; --c2: #e06a1f; --c3: #1f9a6d; --c4: #c9a10c; --c5: #5a48b8; --c6: #c3302b; --c7: #2e7d1e; --c8: #8a9099;
+    --stage-ink: 20, 24, 31; --stage-accent: 122, 31, 43;
     --bar-5: #7a1f2b; --bar-4: #3a434c; --bar-3: #adb3b8;
     --shadow: none; --masthead: 0px; --band: 0px; --col: 100%; --measure: 132mm;
     color-scheme: light;
   }
+  :root[data-theme="dark"] .timeline .cat.policy { color: #7a5f06; } /* the screen's dark-theme yellow is unreadable on paper */
 
   /* Fills and backgrounds are data here: the chain bars, the chokepoint pips and every SVG chart. */
   *, *::before, *::after { -webkit-print-color-adjust: exact; print-color-adjust: exact; }

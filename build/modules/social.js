@@ -102,8 +102,10 @@ function manifest(root) {
       // for the card: the chapter's lede and its two ratings as tags (none for the two chapters that are not stages)
       lede: c.oneLiner || c.plain, tags: si >= 0 && conc ? [`${conc} concentration`, SUBWORD[sub] || sub].filter(Boolean) : [],
       description: describe(c.plain), body: c.plain, route: '#' + c.id, linkText: 'Read the chapter',
-      // the readable page's own meta description (search results), from the chapter's one-line summary; og/twitter keep `description`
+      // the readable page's meta description (search results) and its og/twitter description (share previews), from the chapter's one-line summary
       metaDescription: searchDescription(c.oneLiner || c.plain),
+      // a share preview has room for the whole one-line summary, so it is never cut mid-sentence
+      shareDescription: c.oneLiner || searchDescription(c.plain),
     });
   }
 
@@ -117,7 +119,7 @@ function manifest(root) {
     { slug: 'home', route: '', eyebrow: 'The AI chip supply chain', title: 'How AI chips are made', line: 'The AI chip supply chain, stage by stage: who makes each part, how concentrated each stage is, and what a substitute would cost.', description: 'How AI chips are made, and who controls each stage. The supply chain stage by stage: who makes each part, how concentrated each stage is, and what a substitute would cost.' },
     { slug: 'intro', route: '#/intro', eyebrow: `${SITE} · Start here`, title: 'How AI chips are made', line: `An introduction to the entire supply chain in ${mins} minutes.` },
     { slug: 'chain', route: '#/chain', eyebrow: `${SITE} · The Chain`, title: 'The Chain', line: 'Every stage of the supply chain, and who controls it.', description: `Every stage of the supply chain, and who controls it. ${chapters.length} chapters, from chip design to the data center.` },
-    { slug: 'chips', route: '#/landscape', eyebrow: `${SITE} · AI Chips`, title: 'AI Chips', line: 'The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026.', description: 'The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026. Each entry names the foundry, process node, memory supplier and packaging plant behind the chip.' },
+    { slug: 'chips', route: '#/landscape', eyebrow: `${SITE} · AI Chips`, title: 'AI Chips', line: 'The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026.', description: 'The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026. Each entry names the foundry, process node, memory supplier and packaging plant behind the chip wherever the maker or a cited source has published them.' },
     { slug: 'suppliers', route: '#/suppliers', eyebrow: `${SITE} · Suppliers`, title: 'Suppliers', line: `What each of the ${suppliers.length || 220} firms makes, where it sits, and how hard it would be to replace.` },
     { slug: 'export-controls', route: '#/controls', eyebrow: `${SITE} · Export Controls`, title: 'Export Controls', line: "Every rule since 2018, what can still be sold to China, and each firm's China sales." },
     { slug: 'glossary', route: '#/glossary', eyebrow: `${SITE} · Glossary`, title: 'Glossary', line: 'Every term, firm, chip and country, with the passages that use them.' },
@@ -153,10 +155,12 @@ function shareTags(p, versions) {
   const url = BASE + p.slug + '/';
   const image = cardURL(p.slug, versions);
   const title = p.kind === 'chapter' ? p.title : pageTitle(p);
+  // a chapter's preview leads with its one-line summary (the fact a reader would share), whole; the meta description cuts it to search length
+  const description = p.kind === 'chapter' && (p.shareDescription || p.metaDescription) ? (p.shareDescription || p.metaDescription) : p.description;
   return `<meta property="og:site_name" content="${SITE}">
 <meta property="og:type" content="${p.kind === 'chapter' ? 'article' : 'website'}">
 <meta property="og:title" content="${esc(title)}">
-<meta property="og:description" content="${esc(p.description)}">
+<meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${esc(url)}">
 <meta property="og:image" content="${esc(image)}">
 <meta property="og:image:width" content="1200">
@@ -164,7 +168,7 @@ function shareTags(p, versions) {
 <meta property="og:image:alt" content="${esc(p.eyebrow + '. ' + p.title + '. ' + p.line)}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)}">
-<meta name="twitter:description" content="${esc(p.description)}">
+<meta name="twitter:description" content="${esc(description)}">
 <meta name="twitter:image" content="${esc(image)}">`;
 }
 const ICONS = `<link rel="icon" href="../favicon.ico" sizes="16x16 32x32 48x48">
@@ -212,6 +216,23 @@ a{color:#7a1f2b}
 const BANDS = { Extreme: 4, High: 3, Moderate: 2, Low: 1 }; // as build.js ranks them for the chain's bars
 const minCSS = (s) => s.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ').replace(/\s*([{};])\s*/g, '$1').replace(/;}/g, '}').trim();
 const textOf = (html) => String(html || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+// the readable page's own additions to build/assets/chapter-page.css: the cite line under the title (build.js citeBlock;
+// the citation opens as the link's :target without scripts, and as a toggle with them) and the key under the stage strip.
+// Printed, the citation shows in full and the two controls drop out.
+const EXTRA_CSS = minCSS(`
+.ch-head .ch-meta { margin-bottom: 8px; }
+.ch-cite { margin: 0 0 26px; }
+.ch-cite-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 8px; margin: 0; font-family: var(--font-label); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.ch-cite-line > * { padding: 4px 0; }
+.ch-cite-btn, .ch-cite-mail, .ch-cite-copy { font: inherit; letter-spacing: inherit; text-transform: inherit; background: none; border: 0; margin: 0; cursor: pointer; color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2); }
+.ch-cite-btn:hover, .ch-cite-mail:hover, .ch-cite-copy:hover { text-decoration-color: var(--accent); }
+.ch-cite-box { display: none; margin: 6px 0 2px; padding: 12px 14px 10px; border-left: 2px solid var(--accent); background: var(--bg-2); }
+.ch-cite-box:target:not([hidden]), .ch-cite-box.is-open { display: block; }
+.ch-cite-text { margin: 0; font-size: 15px; line-height: 1.5; overflow-wrap: anywhere; }
+.ch-cite-text a { color: inherit; }
+.ch-cite-copy { display: inline-block; margin-top: 6px; padding: 4px 0; font-family: var(--font-label); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; }
+@media print { .ch-cite-btn, .ch-cite-mail, .ch-cite-sep, .ch-cite-copy { display: none !important; } .ch-cite-box { display: block !important; background: none; padding: 4px 0 0 10px; } }
+`);
 
 // The main page's headings start at h3 under the chapter's h2; here the chapter title is the h1, so each moves up one level.
 const levelUp = (html) => String(html || '').replace(/<(\/?)h([3-6])(?=[\s>])/g, (m, s, n) => `<${s}h${n - 1}`);
@@ -312,12 +333,28 @@ ${review}
 <nav class="endnav" aria-label="After the chapter">${cta(' cta--end')}${prevnext}</nav>
 ${sources}
 </article>`;
-  const main = fixLinks(plainTerms(plainCites(article)), new Set(seq.map((c) => c.id)));
-  // the day this chapter's text last changed (build.js keeps a hash of `main` per page), and the day it first appeared;
+  const text = fixLinks(plainTerms(plainCites(article)), new Set(seq.map((c) => c.id)));
+  // the day this chapter's text last changed (build.js keeps a hash of `text` per page), and the day it first appeared;
   // the footer's "Updated" day says the same, in the main page's wording
   const today = builtOn.toISOString().slice(0, 10);
-  const dates = ctx.pageDate ? ctx.pageDate('/' + p.slug + '/', main, ch.file) : { published: today, modified: today };
-  const footerKey = ctx.dayStr ? ctx.footerKey.split(`Updated ${builtStr}`).join(`Updated ${ctx.dayStr(dates.modified)}`) : ctx.footerKey;
+  const dates = ctx.pageDate ? ctx.pageDate('/' + p.slug + '/', text, ch.file) : { published: today, modified: today };
+  const day = ctx.dayStr ? ctx.dayStr(dates.modified) : builtStr;
+  const footerKey = ctx.dayStr ? ctx.footerKey.split(`Updated ${builtStr}`).join(`Updated ${day}`) : ctx.footerKey;
+  // after the hash, the page furniture that is not the chapter's text: the cite line under the title (it carries the day, so
+  // it cannot be hashed) and the one-line key to the strip's colors
+  const bandsUsed = ['Extreme', 'High', 'Moderate', 'Low'].filter((b) => stages.some((c) => (c.meta.card || {}).concentration === b));
+  const trackKey = bandsUsed.length ? `<p class="track-key"><span class="tk-k">Concentration</span>${bandsUsed.map((b) => `<span class="tk" data-band="${BANDS[b]}"><i aria-hidden="true"></i>${b}</span>`).join('')}</p>` : '';
+  const main = text
+    .replace(/(<p class="ch-meta">[\s\S]*?<\/p>)/, (m) => m + (ctx.citeBlock ? ctx.citeBlock(ch, day, true) : ''))
+    .replace(/(<p class="track-foot">[\s\S]*?<\/p>)(<\/nav>)/, (m, foot, end) => foot + trackKey + end);
+  const ymd = String(dates.modified).replace(/-/g, '/');
+  const scholar = `<meta name="citation_title" content="${esc(ch.title)}">
+<meta name="citation_author" content="Sharma, Yashvardhan">
+<meta name="citation_date" content="${esc(ymd)}">
+<meta name="citation_publisher" content="${SITE}">
+<meta name="citation_language" content="en">
+<meta name="citation_public_url" content="${esc(url)}">
+<meta name="citation_fulltext_html_url" content="${esc(url)}">`;
 
   const ld = {
     '@context': 'https://schema.org', '@type': 'Article', headline: ch.title, description: p.metaDescription || p.description,
@@ -336,6 +373,7 @@ ${sources}
 <meta name="description" content="${esc(p.metaDescription || p.description)}">
 <link rel="canonical" href="${esc(url)}">
 <meta name="author" content="${AUTHOR.name}">
+${scholar}
 ${shareTags(p, versions)}
 ${ICONS}
 <meta name="color-scheme" content="light dark">
@@ -344,7 +382,7 @@ ${ICONS}
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="${FONTS}">
 <script>(function(){try{var q=/[?&]theme=(light|dark)/.exec(location.search);var t=q?q[1]:localStorage.getItem('cp-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
-<style>${css}</style>
+<style>${css}${EXTRA_CSS}</style>
 ${SITE_CONFIG.analytics ? `<script async src="https://gc.zgo.at/count.js" data-goatcounter="${esc(SITE_CONFIG.analytics)}"></script>` : ''}
 </head>
 <body>
@@ -354,6 +392,7 @@ ${SITE_CONFIG.analytics ? `<script async src="https://gc.zgo.at/count.js" data-g
 ${main}
 <footer class="site-footer">${footerKey}</footer>
 </main>
+${ctx.CITE_JS ? `<script>${ctx.CITE_JS}</script>` : ''}
 ${hasVideo ? `<script>(function(){var t=document.documentElement.getAttribute('data-theme');if(t!=='dark'&&(t||!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)))return;[].forEach.call(document.querySelectorAll('video[data-media]'),function(v){var b=v.getAttribute('data-media');v.poster=b+'-dark-end.jpg';v.src=b+'-dark.mp4';});})();</script>` : ''}
 </body>
 </html>

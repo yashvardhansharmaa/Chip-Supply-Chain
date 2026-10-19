@@ -16,7 +16,8 @@ const J = (f) => JSON.parse(fs.readFileSync('data/' + f, 'utf8'));
 const flows = J('control-flows.json').flows, events = J('export-controls-timeline.json'), glossary = J('glossary.json'), suppliers = J('suppliers.json'), landscape = J('landscape.json'), matrix = J('chokepoint-matrix.json'), exposure = J('exposure.json');
 const evIds = new Set((events.events || events).map((e) => e.id));
 const chapterIds = new Set((html.match(/<article class="chapter" id="([^"]+)"/g) || []).map((m) => m.match(/id="([^"]+)"/)[1]).concat(ids.has('geopolitics') ? ['geopolitics'] : []));
-flows.forEach((f) => { if (f.chapter && !chapterIds.has(f.chapter)) problems.push(`flow ${f.id}: chapter ${f.chapter} does not exist`); f.states.forEach((s) => { if (s.event && !evIds.has(s.event)) problems.push(`flow ${f.id}: state ${s.date} cites event ${s.event}, not in the timeline`); if (!['open', 'case', 'denial', 'prohibited', 'policy'].includes(s.status)) problems.push(`flow ${f.id}: status ${s.status}`); if (!/^\d{4}-\d{2}-\d{2}$/.test(s.date)) problems.push(`flow ${f.id}: date ${s.date}`); if (s.suspendedUntil && !/^\d{4}-\d{2}-\d{2}$/.test(s.suspendedUntil)) problems.push(`flow ${f.id}: suspendedUntil ${s.suspendedUntil}`); }); });
+flows.forEach((f) => { if (f.chapter && !chapterIds.has(f.chapter)) problems.push(`flow ${f.id}: chapter ${f.chapter} does not exist`); f.states.forEach((s) => { if (s.event && !evIds.has(s.event)) problems.push(`flow ${f.id}: state ${s.date} cites event ${s.event}, not in the timeline`); if (!['open', 'restricted', 'case', 'denial', 'prohibited', 'policy'].includes(s.status)) problems.push(`flow ${f.id}: status ${s.status}`); if (!/^\d{4}-\d{2}-\d{2}$/.test(s.date)) problems.push(`flow ${f.id}: date ${s.date}`); if (s.suspendedUntil && !/^\d{4}-\d{2}-\d{2}$/.test(s.suspendedUntil)) problems.push(`flow ${f.id}: suspendedUntil ${s.suspendedUntil}`); }); });
+(J('control-flows.json').upcoming || []).forEach((u) => { if (u.event && !evIds.has(u.event)) problems.push(`upcoming ${u.date}: event ${u.event}, not in the timeline`); if (!/^\d{4}-\d{2}-\d{2}$/.test(u.date)) problems.push(`upcoming: date ${u.date}`); });
 (events.events || events).forEach((e) => { (e.flows || []).forEach((fid) => { if (!flows.some((f) => f.id === fid)) problems.push(`event ${e.id}: flow ${fid} does not exist`); }); if (!/^\d{4}-\d{2}-\d{2}$/.test(e.date)) problems.push(`event ${e.id}: date ${e.date}`); });
 glossary.forEach((g) => { if (g.chapter && g.chapter !== 'introduction-and-goals' && !chapterIds.has(g.chapter)) problems.push(`glossary ${g.term}: chapter ${g.chapter} does not exist`); });
 // glossary terms the prose points at
@@ -35,4 +36,30 @@ const all = (html.match(/\sid="([^"]+)"/g) || []).map((m) => m.slice(5, -1)); co
 // placeholders left in the build
 (html.match(/\{\{[A-Z_]+\}\}/g) || []).forEach((p) => problems.push(`unfilled placeholder ${p}`));
 if (/undefined|\bNaN\b|\[object Object\]/.test(html)) problems.push('the page text contains "undefined", "NaN" or "[object Object]"');
+// 3. chapter figures that restate the Export Controls data must agree with it, so the two can never show different numbers.
+//    A bar labelled "<Firm>, <year or FYyear>" whose firm is in data/exposure.json must show that row's China share (to its precision);
+//    a timeline figure's dates must each be the date of an entry in data/export-controls-timeline.json.
+{
+  const exposure = J('exposure.json');
+  const evDates = new Set((events.events || events).map((e) => e.date)); // the date a rule took effect, or the announcement date the board records for it
+  flows.forEach((fl) => fl.states.forEach((st) => { if (st.announced && st.event) evDates.add(st.announced); }));
+  for (const f of fs.readdirSync('content').filter((x) => /^\d\d-.*\.md$/.test(x))) {
+    const src = fs.readFileSync('content/' + f, 'utf8'); const a = src.indexOf('---json\n'); const b = src.indexOf('\n---', a + 8);
+    let fm; try { fm = JSON.parse(src.slice(a + 8, b)); } catch (e) { continue; }
+    for (const fig of fm.figures || []) {
+      if (fig.type === 'bars' && /China'?s share of revenue/i.test(fig.title || '')) {
+        for (const [label, v] of fig.data || []) {
+          const m = String(label).match(/^(.+?),\s*(?:FY)?(\d{4})$/); if (!m) continue;
+          const row = exposure.find((r) => r.firm === m[1] && r.fiscalYear === 'FY' + m[2]);
+          if (!row) { problems.push(`${f} figure ${fig.id}: "${label}" has no row in data/exposure.json`); continue; }
+          const dp = (String(v).split('.')[1] || '').length, want = Math.round(row.chinaShare * 10 ** dp) / 10 ** dp;
+          if (Math.abs(v - want) > 1e-9) problems.push(`${f} figure ${fig.id}: "${label}" shows ${v}, data/exposure.json has ${row.chinaShare}`);
+        }
+      }
+      if (fig.type === 'timeline' && /export controls/i.test(fig.title || '')) {
+        for (const [d, what] of fig.data || []) if (!evDates.has(d)) problems.push(`${f} figure ${fig.id}: ${d} (${what}) is not the date of any Export Controls timeline entry or its recorded announcement`);
+      }
+    }
+  }
+}
 console.log(problems.length ? problems.join('\n') : 'integrity: no problems'); console.log(`views: ${[...views].join(', ')} · ids: ${ids.size} · chapters: ${chapterIds.size}`);

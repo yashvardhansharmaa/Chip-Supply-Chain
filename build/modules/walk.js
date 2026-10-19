@@ -66,7 +66,7 @@ module.exports = function (ctx) {
 <p class="wk-where"><span class="label">Chapter ${pad(ch.number)}</span>${stage ? `<span class="label wk-stage">${esc(stage)}</span>` : ''}</p>
 <h3 class="wk-t">${esc(ch.title)}</h3>
 ${ctx.glossaryWrap ? ctx.glossaryWrap(`<p class="wk-p">${esc(plainOf(ch.id))}</p>`) : `<p class="wk-p">${esc(plainOf(ch.id))}</p>`}
-${factsHTML(ch)}
+${ctx.glossaryWrap ? ctx.glossaryWrap(factsHTML(ch)) : factsHTML(ch)}
 ${leadersHTML(c)}
 <div class="wk-foot">${bandHTML(c)}<a class="wk-read" href="${esc(chapterHref(ch.id))}">Read the chapter</a></div>
 <nav class="wk-pn" aria-label="Step ${i + 1} of ${steps.length}">${

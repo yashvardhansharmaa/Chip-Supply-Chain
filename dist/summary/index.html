@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The AI chip supply chain in brief · Chip Supply Chain</title>
+<meta name="description" content="The fifteen stages of the AI chip supply chain on a few pages: who leads each, how concentrated it is, and where China and the United States stand.">
+<link rel="canonical" href="https://chipsupplychain.org/summary/">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,400&family=Instrument+Sans:wght@400..600&display=swap">
+<style>
+:root { --ink: #14181f; --ink-2: #3b424c; --muted: #5c636d; --line: #d9d6cf; --garnet: #7a1f2b; --bg: #fff; }
+* { box-sizing: border-box; }
+html { background: var(--bg); color: var(--ink); }
+body { margin: 0 auto; max-width: 960px; padding: 32px 20px 48px; font: 15px/1.5 "Source Serif 4", Georgia, serif; }
+a { color: inherit; }
+.kicker, .k, .tags, .src, .cc, th, .meta, .key { font-family: "Instrument Sans", system-ui, sans-serif; }
+.kicker { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--garnet); margin: 0 0 6px; }
+h1 { font: 600 34px/1.1 Fraunces, Georgia, serif; margin: 0 0 8px; text-wrap: balance; }
+.dek { font-size: 17px; color: var(--ink-2); margin: 0 0 10px; max-width: 62ch; }
+.meta { font-size: 12px; color: var(--muted); margin: 0 0 18px; }
+.key { font-size: 12.5px; color: var(--ink-2); border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line); padding: 8px 0; margin: 0 0 14px; display: grid; gap: 4px; }
+.key b { color: var(--ink); font-weight: 600; }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+th { text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--ink); padding: 6px 8px 6px 0; }
+td { border-bottom: 1px solid var(--line); padding: 6px 8px 6px 0; vertical-align: baseline; }
+td.n { font-family: "Instrument Sans", sans-serif; color: var(--muted); font-size: 12px; width: 26px; }
+td.t a { text-decoration: none; font-weight: 600; }
+td.band { font-family: "Instrument Sans", sans-serif; font-size: 12.5px; white-space: nowrap; }
+.b-Extreme { color: var(--garnet); font-weight: 600; }
+.cc { font-size: 10.5px; color: var(--muted); letter-spacing: 0.05em; }
+h2 { font: 600 21px/1.2 Fraunces, Georgia, serif; margin: 30px 0 4px; }
+.h2-note { font-size: 13.5px; color: var(--ink-2); margin: 0 0 12px; }
+.stages { columns: 2; column-gap: 30px; }
+.stage { break-inside: avoid; border-top: 1px solid var(--line); padding: 10px 0 12px; }
+.stage h3 { font: 600 16.5px/1.25 Fraunces, Georgia, serif; margin: 0 0 2px; }
+.stage h3 .n { font: 500 12px "Instrument Sans", sans-serif; color: var(--muted); margin-right: 4px; }
+.tags { font-size: 12px; color: var(--muted); margin: 0 0 5px; }
+.stage p, .stage li, .short p { font-size: 13.5px; line-height: 1.45; margin: 0 0 5px; }
+.lede { color: var(--ink); }
+.who { margin: 0 0 5px; padding-left: 16px; }
+.k { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-right: 3px; }
+.src { font-size: 11.5px; color: var(--muted); margin-top: 4px !important; }
+.src a { color: var(--muted); }
+.across { columns: 2; column-gap: 30px; }
+.foot { font-family: "Instrument Sans", sans-serif; font-size: 11.5px; color: var(--muted); border-top: 1px solid var(--ink); margin-top: 26px; padding-top: 8px; }
+@media (max-width: 720px) { .stages, .across { columns: 1; } body { padding: 20px 16px 40px; } h1 { font-size: 28px; } table { font-size: 12.5px; } }
+@page { size: A4; margin: 12mm 12mm 13mm; }
+@media print {
+  body { max-width: none; padding: 0; font-size: 9.6pt; }
+  h1 { font-size: 22pt; } .dek { font-size: 11.5pt; } .meta, .key { font-size: 8.5pt; }
+  table { font-size: 9pt; } th { font-size: 7.5pt; } td.band, td.n { font-size: 8.5pt; }
+  h2 { font-size: 14pt; margin-top: 16pt; break-after: avoid; } .h2-note { font-size: 9pt; }
+  .stage { padding: 5pt 0 6pt; } .stage h3 { font-size: 10pt; } .stage p, .stage li, .short p { font-size: 8.2pt; line-height: 1.34; margin-bottom: 2.5pt; } .tags, .k, .src, .cc { font-size: 7.4pt; }
+  .stages-h { break-before: page; margin-top: 0; }
+  td, th { padding-top: 3.5pt; padding-bottom: 3.5pt; } .stages, .across { column-gap: 22pt; }
+  a { text-decoration: none; }
+}
+</style>
+</head>
+<body>
+<header>
+<p class="kicker">Chip Supply Chain · summary</p>
+<h1>The AI chip supply chain in brief</h1>
+<p class="dek">The fifteen stages that turn sand and software into an AI accelerator: who leads each one, how concentrated it is, and where China and the United States stand.</p>
+<p class="meta">Updated 19 October 2026 · <a href="https://chipsupplychain.org/">chipsupplychain.org</a> · Every figure is cited in the chapter each section links to.</p>
+</header>
+<div class="key">
+<span><b>Concentration</b> counts the firms that credibly supply a stage: Extreme, High, Moderate or Low.</span>
+<span><b>Substitutability</b> rates how hard it would be for a well-funded state or firm to build an alternative: Easy, Moderate, Hard or Very hard.</span>
+</div>
+<table>
+<thead><tr><th>#</th><th>Stage</th><th>Who leads</th><th>Concentration</th><th>Substitutability</th></tr></thead>
+<tbody><tr><td class="n">01</td><td class="t"><a href="https://chipsupplychain.org/design-and-eda/">Chip Design, EDA and IP</a></td><td>Synopsys <span class="cc">US</span>, Cadence <span class="cc">US</span></td><td class="band b-Extreme">Extreme</td><td class="band">Hard</td></tr><tr><td class="n">02</td><td class="t"><a href="https://chipsupplychain.org/silicon-and-wafers/">Silicon and Wafers</a></td><td>Shin-Etsu Handotai <span class="cc">JP</span>, SUMCO <span class="cc">JP</span></td><td class="band b-High">High</td><td class="band">Moderate</td></tr><tr><td class="n">03</td><td class="t"><a href="https://chipsupplychain.org/chemicals-gases-and-photoresist/">Chemicals, Gases and Photoresist</a></td><td>JSR <span class="cc">JP</span>, Tokyo Ohka Kogyo <span class="cc">JP</span></td><td class="band b-High">High</td><td class="band">Moderate</td></tr><tr><td class="n">04</td><td class="t"><a href="https://chipsupplychain.org/lithography/">Lithography</a></td><td>ASML <span class="cc">NL</span>, Nikon <span class="cc">JP</span></td><td class="band b-Extreme">Extreme</td><td class="band">Very hard</td></tr><tr><td class="n">05</td><td class="t"><a href="https://chipsupplychain.org/photomasks-and-pellicles/">Photomasks and Pellicles</a></td><td>AGC <span class="cc">JP</span>, Hoya <span class="cc">JP</span></td><td class="band b-Extreme">Extreme</td><td class="band">Hard</td></tr><tr><td class="n">06</td><td class="t"><a href="https://chipsupplychain.org/deposition-and-etch/">Deposition and Etch</a></td><td>Applied Materials <span class="cc">US</span>, Lam Research <span class="cc">US</span></td><td class="band b-High">High</td><td class="band">Moderate</td></tr><tr><td class="n">07</td><td class="t"><a href="https://chipsupplychain.org/metrology-and-inspection/">Metrology and Inspection</a></td><td>KLA <span class="cc">US</span>, Applied Materials <span class="cc">US</span></td><td class="band b-High">High</td><td class="band">Moderate</td></tr><tr><td class="n">08</td><td class="t"><a href="https://chipsupplychain.org/transistors-and-front-end/">Transistors and the Front End</a></td><td>TSMC <span class="cc">TW</span>, Intel <span class="cc">US</span></td><td class="band b-Extreme">Extreme</td><td class="band">Hard</td></tr><tr><td class="n">09</td><td class="t"><a href="https://chipsupplychain.org/foundries-and-fabs/">Foundries and Fabs</a></td><td>TSMC <span class="cc">TW</span>, Intel Foundry <span class="cc">US</span></td><td class="band b-Extreme">Extreme</td><td class="band">Hard</td></tr><tr><td class="n">10</td><td class="t"><a href="https://chipsupplychain.org/memory-and-hbm/">Memory and HBM</a></td><td>SK hynix <span class="cc">KR</span>, Samsung <span class="cc">KR</span></td><td class="band b-Extreme">Extreme</td><td class="band">Hard</td></tr><tr><td class="n">11</td><td class="t"><a href="https://chipsupplychain.org/advanced-packaging/">Advanced Packaging</a></td><td>TSMC <span class="cc">TW</span>, Intel <span class="cc">US</span></td><td class="band b-Extreme">Extreme</td><td class="band">Moderate</td></tr><tr><td class="n">12</td><td class="t"><a href="https://chipsupplychain.org/substrates-and-pcbs/">Substrates and PCBs</a></td><td>Ajinomoto <span class="cc">JP</span>, Nitto Boseki <span class="cc">JP</span></td><td class="band b-Extreme">Extreme</td><td class="band">Hard</td></tr><tr><td class="n">13</td><td class="t"><a href="https://chipsupplychain.org/test-and-assembly/">Test and Assembly</a></td><td>Advantest <span class="cc">JP</span>, Teradyne <span class="cc">US</span></td><td class="band b-High">High</td><td class="band">Moderate</td></tr><tr><td class="n">14</td><td class="t"><a href="https://chipsupplychain.org/systems-and-networking/">Systems and Networking</a></td><td>Nvidia <span class="cc">US</span>, Broadcom <span class="cc">US</span></td><td class="band b-High">High</td><td class="band">Moderate</td></tr><tr><td class="n">15</td><td class="t"><a href="https://chipsupplychain.org/data-centers-and-power/">Data Centers and Power</a></td><td>GE Vernova <span class="cc">US</span>, Hitachi Energy <span class="cc">CH</span></td><td class="band b-High">High</td><td class="band">Moderate</td></tr></tbody>
+</table>
+<h2>Across the chain</h2>
+<p class="h2-note">Two chapters look across all fifteen stages, at what a chip costs and at the contest over who controls them.</p>
+<div class="across"><section class="stage wide">
+<h3><span class="n">16</span> The Economics of AI Chips</h3>
+<p class="lede">Epoch AI estimated in December 2025 that Nvidia's B200 AI chip cost about $6,400 to build, mostly for memory and packaging. Its processor silicon cost about $900.</p>
+<div class="short"><p>Reports in March 2024 put the B200's selling price at $30,000 to $40,000 per chip. Epoch AI notes that most Blackwell revenue comes from servers and rack-scale systems, which may carry lower margins. It says Nvidia's Blackwell margin may therefore be lower than the gap between cost and price suggests.</p></div>
+<p class="src">Sources: <a href="https://chipsupplychain.org/component-costs/">chipsupplychain.org/component-costs/</a></p>
+</section><section class="stage wide">
+<h3><span class="n">17</span> Geopolitics</h3>
+<p class="lede">Since 2018 the United States has used export controls to limit China's access to advanced chips and chipmaking tools, and China has been building its own.</p>
+<div class="short"><p>Japan and the Netherlands have aligned their own export controls with the American rules on chipmaking equipment. Chinese toolmakers supplied 35 percent of China's own chipmaking equipment market in 2025, up from 10 to 15 percent before 2022. When the United States licensed sales of Nvidia's H200 chip in February 2026, China restricted them.</p></div>
+<p class="src">Sources: <a href="https://chipsupplychain.org/geopolitics/">chipsupplychain.org/geopolitics/</a></p>
+</section></div>
+<h2 class="stages-h">The fifteen stages</h2>
+<p class="h2-note">In the order a chip is made.</p>
+<div class="stages"><section class="stage">
+<h3><span class="n">01</span> Chip Design, EDA and IP</h3>
+<p class="tags"><span class="b-Extreme">Extreme concentration</span> · Hard to substitute</p>
+<p class="lede">Synopsys, Cadence and Siemens EDA sell the software used to design every leading-edge AI accelerator. In 2025 they took over 85 percent of an $18 billion market, licensed blocks included.</p>
+<ul class="who"><li><b>Synopsys</b> <span class="cc">United States</span>. 90%+ of the timing-signoff market</li><li><b>Cadence</b> <span class="cc">United States</span>. 55%+ of the hardware emulator market</li></ul>
+<p><span class="k">China</span> China designs its own AI accelerators, but Huawei's best, the Ascend 950, delivers about half the computing performance of Nvidia's H100 from 2022, on Epoch AI's estimate. CSET found in 2021, from 2019 data, that Chinese design software largely did not support processes at 14 nm and below.</p>
+<p><span class="k">United States</span> The United States has the two largest design-software vendors and the leading custom-chip design houses.</p>
+<p class="src">Sources: <a href="https://chipsupplychain.org/design-and-eda/">chipsupplychain.org/design-and-eda/</a></p>
+</section><section class="stage">
+<h3><span class="n">02</span> Silicon and Wafers</h3>
+<p class="tags"><span class="b-High">High concentration</span> · Moderate to substitute</p>
+<p class="lede">Firms based in Japan, Taiwan, Germany and South Korea make most 300 mm wafers used for advanced chips. China makes most polysilicon, almost all of it for solar cells.</p>
+<ul class="who"><li><b>Shin-Etsu Handotai</b> <span class="cc">Japan</span>. Its parent's electronics materials segment, wafers included, had ¥1,015.7bn of sales in the year to March 2026</li><li><b>SUMCO</b> <span class="cc">Japan</span>. ¥409.7bn of 2025 net sales, but an ¥11.8bn loss</li></ul>
+<p><span class="k">China</span> China made about 93 percent of the world's polysilicon in 2023. Chinese firms held under 1 percent of the 300 mm wafer market as of 2019.</p>
+<p><span class="k">United States</span> No major US-headquartered firm makes wafers. GlobalWafers of Taiwan won CHIPS awards of up to $406 million for wafer plants in Texas and Missouri.</p>
+<p class="src">Sources: <a href="https://chipsupplychain.org/silicon-and-wafers/">chipsupplychain.org/silicon-and-wafers/</a></p>
+</section><section class="stage">
+<h3><span class="n">03</span> Chemicals, Gases and Photoresist</h3>
+<p class="tags"><span class="b-High">High concentration</span> · Moderate to substitute</p>
+<p class="lede">Japanese companies held 78 percent of world photoresist sales in 2023. Supply of chip chemicals, gases and metals has been disrupted three times since 2019.</p>
+<ul class="who"><li><b>JSR</b> <span class="cc">Japan</span>. A vehicle of the state-backed Japan Investment Corporation bought 84.36% of JSR in April 2024</li><li><b>Tokyo Ohka Kogyo</b> <span class="cc">Japan</span>. Resist maker with ¥139,668m of sales in the first half of fiscal 2026</li></ul>
+<p><span class="k">China</span> In March 2026 the Chinese resist maker Hubei Dinglong said China had yet to reach large-scale production of advanced resist for 248 nm, 193 nm or extreme-ultraviolet printing. Since August 2023 China has required licenses to export gallium and germanium.</p>
+<p><span class="k">United States</span> In photoresist, American companies ranked a distant second to Japanese companies by sales in 2023. In 2021 JSR of Japan agreed to buy Inpria, an Oregon maker of resist for extreme ultraviolet.</p>
+<p class="src">Sources: <a href="https://chipsupplychain.org/chemicals-gases-and-photoresist/">chipsupplychain.org/chemicals-gases-and-photoresist/</a></p>
+</section><section class="stage">
+<h3><span class="n">04</span> Lithography</h3>
+<p class="tags"><span class="b-Extreme">Extreme concentration</span> · Very hard to substitute</p>
+<p class="lede">ASML, a Dutch firm, is the only maker of extreme ultraviolet scanners, the machines that print the finest layers of a chip. It sold 48 of them in 2025.</p>
+<ul class="who"><li><b>ASML</b> <span class="cc">Netherlands</span>. 100% of EUV (extreme ultraviolet) and above 80% of DUV (deep ultraviolet)</li><li><b>Nikon</b> <span class="cc">Japan</span>. 22 new chip lithography systems in the year to March 2026</li></ul>
+<p><span class="k">China</span> In September 2025 CSIS judged that EUV remained firmly out of reach for China despite massive state investment. SMEE, the older Chinese supplier, has its largest share in i-line scanners, the coarsest kind, and even there holds about 4 percent of the world market.</p>
+<p><span class="k">United States</span> No American firm makes scanners. But the US government limits who may buy them, through rules on the American-made parts inside each machine and through its entity list of firms that may not be supplied.</p>
+<p class="src">Sources: <a href="https://chipsupplychain.org/lithography/">chipsupplychain.org/lithography/</a></p>
+</section><section class="stage">
+<h3><span class="n">05</span> Photomasks and Pellicles</h3>
+<p class="tags"><span class="b-Extreme">Extreme concentration</span> · Hard to substitute</p>
+<p class="lede">Only three firms in the world make the blank plates for the masks used to print the finest layers of leading-edge chips. Japan's AGC and Hoya are two of them.</p>
+<ul class="who"><li><b>AGC</b> <span class="cc">Japan</span>. Ranks itself No.2 worldwide in EUV mask blanks on its own fiscal 2026 estimates</li><li><b>Hoya</b> <span class="cc">Japan</span>. Says its share of mask blanks is exceptionally high</li></ul>
+<p><span class="k">China</span> SMIC runs two mask shops of its own in Shanghai. No Chinese firm appears in CSET's 2025 market shares for electron-beam mask writers, the machines that draw the pattern onto a mask.</p>
+<p><span class="k">United States</span> Photronics calls itself one of the world's leading photomask makers, and KLA makes mask inspection tools.</p>
+<p class="src">Sources: <a href="https://chipsupplychain.org/photomasks-and-pellicles/">chipsupplychain.org/photomasks-and-pellicles/</a></p>
+</section><section class="stage">
+<h3><span class="n">06</span> Deposition and Etch</h3>
+<p class="tags"><span class="b-High">High concentration</span> · Moderate to substitute</p>
+<p class="lede">Deposition and etch tools build a chip layer by layer. They are among the chipmaking tools where Chinese toolmakers gained the most share from 2019 to 2024.</p>
+<ul class="who"><li><b>Applied Materials</b> <span class="cc">United States</span>. $28.4B revenue, fiscal 2025; leader in physical and chemical vapor deposition</li><li><b>Lam Research</b> <span class="cc">United States</span>. $23.2B revenue, fiscal 2026; leader in conductor etch</li></ul>
+<p><span class="k">China</span> Chinese toolmakers held 12.4 percent of dry etch in 2025, according to CSET's analysis of TechInsights data. CSET's earlier analysis had them under 1 percent of atomic layer deposition in 2024.</p>
+<p><span class="k">United States</span> The US government lists some dry etch, atomic layer deposition and deep-hole deposition tools as controlled exports. Its December 2024 foreign direct product rule reaches some tools built outside the United States.</p>
+<p class="src">Sources: <a href="https://chipsupplychain.org/deposition-and-etch/">chipsupplychain.org/deposition-and-etch/</a></p>
+</section><section class="stage">
+<h3><span class="n">07</span> Metrology and Inspection</h3>
+<p class="tags"><span class="b-High">High concentration</span> · Moderate to substitute</p>
+<p class="lede">KLA, an American firm, held 56.8 percent of the market for tools that measure and inspect wafers in 2025 by CSET's count, about five times its nearest rival.</p>
+<ul class="who"><li><b>KLA</b> <span class="cc">United States</span>. 56.8% of process control tools in 2025 by CSET's count, about 5 times Applied Materials</li><li><b>Applied Materials</b> <span class="cc">United States</span>. 11.2% of process control tools in 2025</li></ul>
+<p><span class="k">China</span> Chinese makers are still small in metrology and inspection, but one of them is growing fast. Skyverse, a Shenzhen maker of inspection and metrology tools, reported 2.05 billion yuan of revenue in 2025, about $285 million and up 48.75 percent on 2024.</p>
+<p><span class="k">United States</span> KLA is the largest maker of metrology and inspection tools in the world. Citing Gartner, KLA puts its 2024 share at 56.5 percent, or 6.5 times its nearest rival.</p>
+<p class="src">Sources: <a href="https://chipsupplychain.org/metrology-and-inspection/">chipsupplychain.org/metrology-and-inspection/</a></p>
+</section><section class="stage">
+<h3><span class="n">08</span> Transistors and the Front End</h3>
+<p class="tags"><span class="b-Extreme">Extreme concentration</span> · Hard to substitute</p>
+<p class="lede">Only TSMC, Intel and Samsung make 2 nm-class transistors in volume. TSMC plans its A14 process for 2028, with more than 20 percent higher logic density than N2.</p>
+<ul class="who"><li><b>TSMC</b> <span class="cc">Taiwan</span>. N2 in volume production since 4Q25, TSMC's first nanosheet node</li><li><b>Intel</b> <span class="cc">United States</span>. 18A in high-volume manufacturing</li></ul>
+<p><span class="k">China</span> SMIC ships a process it calls N+3, measured at 113.4 million transistors per square millimeter. It prints its tightest layers in several passes because it cannot buy an extreme-ultraviolet scanner.</p>
+<p><span class="k">United States</span> Intel runs the only American-owned line that makes the newest transistors. Its 18A process brought gate-all-around transistors and backside power to market together.</p>
+<p class="src">Sources: <a href="https://chipsupplychain.org/transistors-and-front-end/">chipsupplychain.org/transistors-and-front-end/</a></p>
+</section><section class="stage">
+<h3><span class="n">09</span> Foundries and Fabs</h3>
+<p class="tags"><span class="b-Extreme">Extreme concentration</span> · Hard to substitute</p>
+<p class="lede">TSMC's six largest plants are all in Taiwan. In 2025 they could make more than 13 million wafers a year, out of more than 17 million for the whole company.</p>
+<ul class="who"><li><b>TSMC</b> <span class="cc">Taiwan</span>. 77% of wafer revenue from 7 nm and below, 2Q26</li><li><b>Intel Foundry</b> <span class="cc">United States</span>. $5.8bn segment revenue, only $293m of it from outside customers, 2Q26</li></ul>
+<p><span class="k">China</span> Georgetown University's CSET reported in June 2024 that Huawei's Ascend 910B AI chip is believed to be made on SMIC's 7 nm-class N+2 process. But SemiAnalysis judged in April 2025 that most 910B and 910C chips were made at TSMC.</p>
+<p><span class="k">United States</span> Intel says it is the only chipmaker that develops and manufactures leading-edge logic chips in the United States. The US government bought a passive 9.9 percent stake in Intel in August 2025, and Intel Foundry lost $2.089 billion in the second quarter of 2026.</p>
+<p class="src">Sources: <a href="https://chipsupplychain.org/foundries-and-fabs/">chipsupplychain.org/foundries-and-fabs/</a></p>
+</section><section class="stage">
+<h3><span class="n">10</span> Memory and HBM</h3>
+<p class="tags"><span class="b-Extreme">Extreme concentration</span> · Hard to substitute</p>
+<p class="lede">SK hynix, Samsung and Micron make nearly all high bandwidth memory (HBM), the stacked memory beside AI chips. SK hynix took 63.2 percent of HBM revenue in 2025.</p>
+<ul class="who"><li><b>SK hynix</b> <span class="cc">South Korea</span>. 63.2% of HBM revenue in 2025</li><li><b>Samsung</b> <span class="cc">South Korea</span>. 19.3% of HBM revenue in 2025</li></ul>
+<p><span class="k">China</span> The Institute for Progress estimated in October 2025 that China would make virtually no HBM that year. Huawei said in September 2025 that its Ascend 950 chips would use two HBM designs of its own, without saying who would manufacture the memory.</p>
+<p><span class="k">United States</span> Micron is the only American HBM maker. License Exception HBM lets exporters headquartered in the United States or a Country Group A:5 ally ship HBM below 3.3 GB per second per square millimeter without a license.</p>
+<p class="src">Sources: <a href="https://chipsupplychain.org/memory-and-hbm/">chipsupplychain.org/memory-and-hbm/</a></p>
+</section><section class="stage">
+<h3><span class="n">11</span> Advanced Packaging</h3>
+<p class="tags"><span class="b-Extreme">Extreme concentration</span> · Moderate to substitute</p>
+<p class="lede">Epoch AI estimates that in 2025 Nvidia, Google, AMD and Amazon used around 90 percent of the capacity for CoWoS, TSMC's packaging for AI chips.</p>
+<ul class="who"><li><b>TSMC</b> <span class="cc">Taiwan</span>. CoWoS packaging used by Nvidia, Google, AMD and Amazon</li><li><b>Intel</b> <span class="cc">United States</span>. Foveros 3D packaging in volume at Rio Rancho, New Mexico; EMIB 2.5D bridges</li></ul>
+<p><span class="k">China</span> Between 2019 and 2024, Chinese firms gained 5 percentage points of share in test tools and 4 points in fabrication tools built for advanced packaging. But they lost share in bonding and other conventional assembly and packaging tools.</p>
+<p><span class="k">United States</span> Intel opened Fab 9 in Rio Rancho, New Mexico, in January 2024 to make its Foveros 3D packages in volume. Amkor is building a $7B packaging and test plant in Peoria, Arizona, and expects production to start in early 2028.</p>
+<p class="src">Sources: <a href="https://chipsupplychain.org/advanced-packaging/">chipsupplychain.org/advanced-packaging/</a></p>
+</section><section class="stage">
+<h3><span class="n">12</span> Substrates and PCBs</h3>
+<p class="tags"><span class="b-Extreme">Extreme concentration</span> · Hard to substitute</p>
+<p class="lede">Ajinomoto, a Japanese food company, told investors in June 2026 that it holds over 95 percent of the market for the insulating film inside high-end chip packages.</p>
+<ul class="who"><li><b>Ajinomoto</b> <span class="cc">Japan</span>. Told investors that its build-up film has held over 95% of its market since launch</li><li><b>Nitto Boseki</b> <span class="cc">Japan</span>. Claims an overwhelming advantage in low thermal expansion glass</li></ul>
+<p><span class="k">China</span> TTM, an American circuit board maker, says its circuit board competitors are mostly based in China and Taiwan. Nitto Boseki, a Japanese glass fiber maker, says Chinese and Taiwanese companies are aggressively catching up with it in the special glass sector.</p>
+<p><span class="k">United States</span> The White House's 2021 supply chain review listed no American firm among the key substrate makers. The Commerce Department has made a final award of up to $75 million to Absolics, a subsidiary of Korea's SKC, for a glass substrate plant in Covington, Georgia.</p>
+<p class="src">Sources: <a href="https://chipsupplychain.org/substrates-and-pcbs/">chipsupplychain.org/substrates-and-pcbs/</a></p>
+</section><section class="stage">
+<h3><span class="n">13</span> Test and Assembly</h3>
+<p class="tags"><span class="b-High">High concentration</span> · Moderate to substitute</p>
+<p class="lede">Testing finds bad chips before they go into an expensive package. Japan's Advantest took about 65 percent of 2025 spending on chip testers, by its own estimate.</p>
+<ul class="who"><li><b>Advantest</b> <span class="cc">Japan</span>. About 65% of the tester market in 2025, by its own estimate</li><li><b>Teradyne</b> <span class="cc">United States</span>. Second in testers, with $2.52bn of semiconductor test revenue in 2025, service included</li></ul>
+<p><span class="k">China</span> CSET at Georgetown finds that between 2019 and 2024 Chinese toolmakers gained share in test tools and 4 percentage points in fabrication tools built for advanced packaging. But they lost share in bonding and other conventional assembly and packaging tools.</p>
+<p><span class="k">United States</span> American firms such as Teradyne and FormFactor are strong in test machines and probe cards. Amkor is building a $7 billion packaging and test campus in Arizona and has a long-term deal to run packaging and test there for TSMC.</p>
+<p class="src">Sources: <a href="https://chipsupplychain.org/test-and-assembly/">chipsupplychain.org/test-and-assembly/</a></p>
+</section><section class="stage">
+<h3><span class="n">14</span> Systems and Networking</h3>
+<p class="tags"><span class="b-High">High concentration</span> · Moderate to substitute</p>
+<p class="lede">AI chips are wired together 72 to a rack and run as one computer. Many firms can assemble the racks, but few can make the lasers for the optical links between them.</p>
+<ul class="who"><li><b>Nvidia</b> <span class="cc">United States</span>. NVLink and NVSwitch for links inside a rack; InfiniBand and Spectrum-X Ethernet between racks</li><li><b>Broadcom</b> <span class="cc">United States</span>. Tomahawk switch chips sold to any buyer, and custom AI accelerators</li></ul>
+<p><span class="k">China</span> Chinese firms such as InnoLight assemble high-speed optical modules in volume, at sites including Suzhou and Thailand. In February 2025 China put indium under new export restrictions and began requiring export permits for indium phosphide substrates, the wafers the lasers are grown on.</p>
+<p><span class="k">United States</span> American firms make the switch chips, the links that join accelerators inside a rack, and the lasers. Nvidia said in August 2026 that Wistron's new plant in Fort Worth, Texas, was producing its GB300 superchips and that Foxconn was building a factory in Houston.</p>
+<p class="src">Sources: <a href="https://chipsupplychain.org/systems-and-networking/">chipsupplychain.org/systems-and-networking/</a></p>
+</section><section class="stage">
+<h3><span class="n">15</span> Data Centers and Power</h3>
+<p class="tags"><span class="b-High">High concentration</span> · Moderate to substitute</p>
+<p class="lede">In 2024 a large transformer commonly took three years to arrive. In June 2026, big power users, mostly data centers, sought about 474 GW of grid connections in Texas.</p>
+<ul class="who"><li><b>GE Vernova</b> <span class="cc">United States</span>. Gas equipment, transformers and switchgear, including through Prolec GE</li><li><b>Hitachi Energy</b> <span class="cc">Switzerland</span>. Power transformers and switchgear</li></ul>
+<p><span class="k">China</span> China used 25 percent of the world's data center electricity in 2024, second to the United States, by the International Energy Agency's estimate. Data centers made up around 3 percent of the growth in China's electricity demand from 2022 to 2024.</p>
+<p><span class="k">United States</span> The United States has the demand and the money but cannot shorten the wait for equipment. Constellation expects to restart the Crane nuclear plant for Microsoft in 2027.</p>
+<p class="src">Sources: <a href="https://chipsupplychain.org/data-centers-and-power/">chipsupplychain.org/data-centers-and-power/</a></p>
+</section></div>
+<p class="foot">Chip Supply Chain: How AI Chips Are Made, by Yashvardhan Sharma. Summary updated 19 October 2026. The full chapters, with a source for every figure, are at chipsupplychain.org.</p>
+</body>
+</html>

@@ -29,6 +29,20 @@
 <style>
 {{STYLES}}
 </style>
+<style>
+/* the cite line under each chapter title: Updated <day> · Cite this chapter · Report an error (build/build.js citeBlock) */
+.ch-cite { margin: 8px 0 0; }
+.ch-cite-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 8px; margin: 0; font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.ch-cite-line > * { padding: 4px 0; }
+.ch-cite-btn, .ch-cite-mail, .ch-cite-copy { font: inherit; letter-spacing: inherit; text-transform: inherit; background: none; border: 0; margin: 0; cursor: pointer; color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2); }
+.ch-cite-btn:hover, .ch-cite-mail:hover, .ch-cite-copy:hover { text-decoration-color: var(--accent); }
+.ch-cite-box { margin: 6px 0 2px; padding: 12px 14px 10px; border-left: 2px solid var(--accent); background: var(--bg-2); max-width: 40em; }
+.ch-cite-text { margin: 0; font-family: var(--font-body); font-size: 15px; line-height: 1.5; color: var(--ink); overflow-wrap: anywhere; }
+.ch-cite-text a { color: inherit; }
+.ch-cite-copy { display: inline-block; margin-top: 6px; padding: 4px 0; font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; }
+.chapter--essay .ch-cite { margin-top: 14px; }
+@media print { .ch-cite { display: none !important; } }
+</style>
 <script>
 /* apply a saved theme before first paint */
 (function(){try{var q=/[?&]theme=(light|dark)/.exec(location.search);var t=q?q[1]:localStorage.getItem('cp-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
@@ -70,7 +84,7 @@
   <main>
     <section class="view column" data-view="stack" hidden>
       <section class="print-only print-title" aria-hidden="true">
-        <img class="pt-art" src="print-title.png" alt="">
+        <img class="pt-art" data-src="print-title.png" width="1558" height="1558" alt="">
         <div class="pt-type">
           <p class="pt-k">Chip Supply Chain</p>
           <h1 class="pt-h">How AI chips<br>are made</h1>
@@ -93,16 +107,16 @@
           <li><b>Price or market size.</b> What one unit costs, or what the stage earns in a year.</li>
         </ul>
         <p>The card also says where China and the United States stand. The chapters follow the order in which a chip is made.</p>
-        <p class="howto-dl"><a class="btn ghost" href="chip-supply-chain-the-chain.pdf" download>Download the chain as a PDF</a> <button type="button" class="btn ghost" id="print-page">Print this page</button></p>
+        <p class="howto-dl"><a class="btn ghost" href="chip-supply-chain-the-chain.pdf" download>Download the chain as a PDF</a> <a class="btn ghost" href="chip-supply-chain-summary.pdf" download>Download a short summary</a> <a class="howto-alt" href="summary/">Read the summary online</a></p>
       </div>
       <div class="contents" id="contents">
         <h2>Contents</h2>
-        <div class="contents-grid">{{CONTENTS}}</div>
+        {{CONTENTS}}
       </div>
       {{CHAPTERS}}
       <article class="chapter chapter--essay" id="geopolitics" data-specimen="globe" data-number="17" data-title="Geopolitics" data-caption="{{GEO_CAPTION}}">
         <aside class="ch-ledger" aria-label="Chapter 17"><div class="ch-tile"><span class="k">Chapter</span><span class="v">17</span><span class="of">the contest</span></div></aside>
-        <header class="chapter-head"><div class="ch-id"><div><h2 class="ch-title"><span class="sr-only">Chapter 17: </span>Geopolitics</h2><p class="ch-lede">{{GEO_DEK}}</p></div></div></header>
+        <header class="chapter-head"><div class="ch-id"><div><h2 class="ch-title"><span class="sr-only">Chapter 17: </span>Geopolitics</h2><p class="ch-lede">{{GEO_DEK}}</p>{{GEO_CITE}}</div></div></header>
         <div class="prose">{{GEO_BODY}}</div>
       </article>
       <footer class="site-footer">{{FOOTER_KEY}}</footer>
@@ -111,7 +125,7 @@
     <section class="view column" data-view="landscape" hidden data-specimen="package">
       <div class="view-head">
         <h2>AI Chips</h2>
-        <p class="dek">The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026. Each entry names the foundry, process node, memory supplier and packaging plant behind the chip.</p>
+        <p class="dek">The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026. Each entry names the foundry, process node, memory supplier and packaging plant behind the chip wherever the maker or a cited source has published them.</p>
       </div>
       <div id="picker" class="picker cx-picker" role="group" aria-label="Choose two to four chips to compare"></div>
       <div class="cx-bar">
@@ -187,6 +201,7 @@
           <div class="cf-board" id="cf-board"></div>
           <ul class="cf-legend" aria-label="What each state means">
             <li><span class="cf-pill is-open">No license</span><span>None needed.</span></li>
+            <li><span class="cf-pill is-restricted">Restricted</span><span>A government limits sales to some buyers or uses without banning them outright.</span></li>
             <li><span class="cf-pill is-case">Case by case</span><span>A license is required, and each application is judged on its own.</span></li>
             <li><span class="cf-pill is-denial">Presumption of denial</span><span>A license is required and will normally be refused. This is the usual policy for those on the Entity List, a US list of restricted foreign companies, institutes and individuals.</span></li>
             <li><span class="cf-pill is-prohibited">Prohibited</span><span>No license is available, or the item is banned outright.</span></li>
@@ -240,5 +255,23 @@
 <script>{{SPECIMENS}}</script>
 <script>window.CP_DATA = {{DATA}};</script>
 <script>{{APP}}</script>
+<script>{{CITE_JS}}</script>
+<script>
+/* The printed cover's art (print-title.png, about 490 KB) is never fetched on the home page. It is fetched when the browser
+   is idle after the chain is shown (src/app.js), when the reader points at or focuses "Print this page", before that button
+   opens the dialog (it waits for the image, src/app.js), when the browser is about to print (too late on a slow line, so
+   only a fallback), and when build/pdf.py lays the page out for the PDF (it calls CP_PRINT.prepare before Paged.js, which
+   waits for the image). */
+(function () {
+  function art() { var i = document.querySelector('img.pt-art[data-src]'); if (i && !i.getAttribute('src')) i.src = i.getAttribute('data-src'); return i; }
+  window.CP_ART = art;
+  window.addEventListener('beforeprint', art);
+  try { var mq = window.matchMedia && matchMedia('print'); if (mq && mq.addEventListener) mq.addEventListener('change', function (e) { if (e.matches) art(); }); } catch (e) {}
+  var btn = document.getElementById('print-page');
+  if (btn) ['pointerenter', 'focus', 'touchstart'].forEach(function (t) { btn.addEventListener(t, art, { passive: true }); });
+  var P = window.CP_PRINT;
+  if (P && typeof P.prepare === 'function') { var prep = P.prepare; P.prepare = function () { art(); return prep.apply(this, arguments); }; }
+})();
+</script>
 </body>
 </html>

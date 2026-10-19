@@ -95,6 +95,14 @@ strong, b { font-weight: 600; }
 .track-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; margin: 8px 0 0; font-size: 10.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 .track-foot b { color: var(--ink); font-weight: 600; }
 .track-foot a { color: var(--ink-2); }
+/* the one-line key under the strip: each band's bar drawn at the height it has in the strip, standing on the baseline */
+.track .track-key { display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 14px; margin: 7px 0 0; padding-top: 7px; border-top: 1px solid var(--line); font-family: var(--font-label); font-size: 10.5px; font-weight: 500; letter-spacing: 0.08em; line-height: 1.5; text-transform: uppercase; color: var(--muted); }
+.track .track-key .tk-k { color: var(--muted); margin-right: 2px; }
+.track .track-key .tk { display: inline-flex; align-items: baseline; gap: 6px; color: var(--ink-2); }
+.track .track-key i { display: inline-block; flex: none; width: 7px; height: 2px; background: var(--bar-3); }
+.track .track-key [data-band="4"] i { height: 10px; background: var(--bar-5); }
+.track .track-key [data-band="3"] i { height: 7px; background: var(--bar-4); }
+.track .track-key [data-band="2"] i { height: 4px; }
 
 /* In plain terms, In short */
 .plain { border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2); padding: 14px 0 16px; margin: 0 0 28px; }
@@ -162,7 +170,9 @@ strong, b { font-weight: 600; }
 .prose code { font-family: var(--font-code); font-size: 0.82em; background: var(--bg-2); padding: 1px 5px; }
 .prose hr { border: 0; border-top: 1px solid var(--line); margin: 2.2em 0; }
 sup.cite { font-size: 0.62em; line-height: 0; vertical-align: 0.55em; margin-left: 1px; }
-sup.cite a { font-family: var(--font-label); font-weight: 600; color: var(--accent); text-decoration: none; padding: 1px 2px; }
+sup.cite a { position: relative; font-family: var(--font-label); font-weight: 600; color: var(--accent); text-decoration: none; padding: 1px 2px; }
+/* the footnote number keeps its size but takes a fingertip: an invisible 24 px box centered on it */
+sup.cite a::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 24px); height: 24px; transform: translate(-50%, -50%); }
 sup.cite a:hover, sup.cite a:focus-visible { background: var(--accent-soft); }
 /* the brackets round a footnote number are for copied and extracted text only (see plainCites in build/modules/social.js) */
 sup.cite .br { font-size: 0; }
@@ -188,6 +198,9 @@ sup.cite .br { font-size: 0; }
 .bars rect.track { fill: var(--bg-2); }
 .bars rect.bar { fill: var(--accent-fill); }
 .bars line.axis { stroke: var(--line-2); stroke-width: 1; }
+/* a phone draws the 600-unit chart at about 350 px: larger labels, the drawing moved 24 units right so the longest still fits */
+@media screen and (max-width: 640px) { .bars > * { transform: translateX(24px); } .bars text { font-size: 13.5px; } }
+@media screen and (max-width: 480px) { .bars text { font-size: 15px; } }
 .stack-bar { display: flex; height: 26px; gap: 2px; overflow: hidden; }
 .stack-bar i { display: block; height: 100%; min-width: 2px; }
 .stack-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 12px; font-family: var(--font-label); font-size: 12px; color: var(--ink-2); }
@@ -276,7 +289,14 @@ sup.cite .br { font-size: 0; }
 }
 
 @media print {
-  :root, :root[data-theme="dark"] { --bg: #fff; --ink: #000; --ink-2: #22272b; --muted: #464e55; --line: #c6cacd; --line-2: #a4aaaf; --accent: #7a1f2b; --accent-fill: #7a1f2b; color-scheme: light; }
+  /* paper is always light: the selector list matches the dark blocks above at equal weight and comes later, so it wins in any theme */
+  :root, :root[data-theme="dark"], :root:not([data-theme="light"]) {
+    --bg: #fff; --bg-2: #f4f5f6; --ink: #000; --ink-2: #22272b; --muted: #464e55; --line: #c6cacd; --line-2: #a4aaaf;
+    --accent: #7a1f2b; --accent-soft: rgba(122, 31, 43, 0.09); --accent-fill: #7a1f2b; --on-accent: #fff;
+    --c1: #2b63c4; --c2: #e06a1f; --c3: #1f9a6d; --c4: #c9a10c; --c5: #5a48b8; --c6: #c3302b; --c7: #2e7d1e;
+    --bar-4: #3b424c; --bar-3: #bfb9af;
+    color-scheme: light;
+  }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   body { font-size: 10.5pt; }
   .masthead nav, .skip, .cta, .endnav, .track, .specimen a, .anim-frame { display: none !important; }

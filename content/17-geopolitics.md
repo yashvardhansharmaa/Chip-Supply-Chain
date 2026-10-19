@@ -63,11 +63,11 @@
       "data": [
         [
           "ASML, 2024",
-          41
+          36.1
         ],
         [
           "ASML, 2025",
-          33
+          29.1
         ],
         [
           "Applied Materials, FY2024",
@@ -95,8 +95,8 @@
         ]
       ],
       "source": {
-        "label": "ASML Q4 2025 investor presentation, Applied Materials and Lam Research 10-K filings, Tokyo Electron Q4 FY2026 results",
-        "url": "https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf"
+        "label": "ASML 2025 Form 20-F (China share computed from total net sales by region), Applied Materials and Lam Research 10-K filings, Tokyo Electron Q4 FY2026 results",
+        "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/R71.htm"
       }
     },
     {
@@ -154,7 +154,7 @@
     {
       "id": "control-timeline",
       "type": "timeline",
-      "title": "Eight rule changes that shaped US chip export controls",
+      "title": "Eight US actions that shaped chip export controls",
       "data": [
         [
           "2019-05-16",

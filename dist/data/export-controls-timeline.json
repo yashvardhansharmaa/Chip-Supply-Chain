@@ -172,7 +172,8 @@
     "gist": "Nvidia needed a license to sell its top chips in China and answered within weeks with the cut-down A800.",
     "id": "2022-08-31-a100-h100-licence",
     "flows": [
-      "ai-chips"
+      "ai-chips",
+      "ai-chips-top"
     ]
   },
   {
@@ -190,6 +191,7 @@
     "id": "2022-10-07-october-rules",
     "flows": [
       "ai-chips",
+      "ai-chips-top",
       "us-tools"
     ]
   },
@@ -285,6 +287,7 @@
     "id": "2023-10-17-density-test",
     "flows": [
       "ai-chips",
+      "ai-chips-top",
       "us-tools"
     ]
   },
@@ -443,7 +446,8 @@
     "gist": "Foundries and packagers had to check who an advanced chip was really for.",
     "id": "2025-01-16-foundry-diligence",
     "flows": [
-      "ai-chips"
+      "ai-chips",
+      "ai-chips-top"
     ]
   },
   {
@@ -527,12 +531,12 @@
   {
     "date": "2025-05-15",
     "actor": "US, UAE and Saudi Arabia",
-    "title": "Gulf AI infrastructure deals replace the diffusion caps",
-    "summary": "During President Trump's Gulf trip, the White House announced more than $200 billion of new US-UAE deals. It also announced an AI accord under which the UAE commits to build or finance US data centers at least as large and powerful as those it builds at home. The two governments separately announced a 5 gigawatt AI campus in Abu Dhabi led by G42, an Emirati AI company. Reports said the UAE could import the equivalent of roughly 500,000 Nvidia-class GPUs a year, about a fifth for G42 and the rest for large US cloud companies operating there. Saudi Arabia's new state AI company Humain signed agreements with Nvidia for several hundred thousand GPUs over five years and with AMD for a $10 billion program. The deals replaced the country caps of the unenforced AI Diffusion Rule with country-by-country agreements that carry security conditions.",
+    "title": "US and UAE sign an AI agreement during the Gulf trip",
+    "summary": "During President Trump's Gulf trip, the White House announced more than $200 billion of new US-UAE deals. It also announced an AI accord under which the UAE commits to build or finance US data centers at least as large and powerful as those it builds at home. The two governments separately announced a 5 gigawatt AI campus in Abu Dhabi led by G42, an Emirati AI company. Reports said the UAE could import the equivalent of roughly 500,000 Nvidia-class GPUs a year, about a fifth for G42 and the rest for large US cloud companies operating there. Saudi Arabia's new state AI company Humain signed agreements with Nvidia for several hundred thousand GPUs over five years and with AMD for a $10 billion program. The agreement also commits the UAE to align its national security rules with those of the United States, including protections to prevent the diversion of US-origin technology.",
     "category": "US export control",
     "instrument": "licence-policy",
     "source": "https://www.whitehouse.gov/fact-sheets/2025/05/fact-sheet-president-donald-j-trump-secures-200-billion-in-new-u-s-uae-deals-and-accelerates-previously-committed-1-4-trillion-uae-investment/",
-    "gist": "Gulf states won large GPU imports by pledging to build or finance US data centers and accepting security conditions.",
+    "gist": "The UAE pledged to build or finance US data centers as large as its own and to guard against diversion of US technology.",
     "id": "2025-05-15-gulf-deals",
     "flows": [
       "diffusion"
@@ -678,21 +682,50 @@
     ]
   },
   {
+    "date": "2025-11-07",
+    "actor": "China (MOFCOM and Customs)",
+    "title": "China suspends its October 2025 export controls for a year",
+    "summary": "MOFCOM and the General Administration of Customs suspended six export control announcements issued in October 2025, from 7 November 2025 until 10 November 2026. They are MOFCOM and Customs Announcements 2025 Nos. 55, 56, 57 and 58 and MOFCOM Announcements 2025 Nos. 61 and 62. No. 61 is the rule that claimed jurisdiction over foreign goods with 0.1 percent or more Chinese rare earths by value.",
+    "category": "China countermeasure",
+    "instrument": "rule",
+    "frCitation": "MOFCOM and GAC Announcement 2025 No. 70",
+    "source": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_b1ec77dd3f0d4762952904df7cdaadec.html",
+    "gist": "China paused its widest rare earth controls, including the 0.1 percent rule, until 10 November 2026.",
+    "id": "2025-11-07-october-controls-suspended",
+    "flows": [
+      "minerals",
+      "minerals-world"
+    ]
+  },
+  {
+    "date": "2025-11-09",
+    "actor": "China (MOFCOM)",
+    "title": "China suspends its ban on gallium, germanium and antimony exports to the US",
+    "summary": "MOFCOM suspended paragraph 2 of Announcement 2024 No. 46 from 9 November 2025 until 27 November 2026. That paragraph said exports to the United States of dual-use items related to gallium, germanium, antimony and superhard materials would in principle not be licensed. It also set stricter end-user and end-use checks on graphite exports to the United States.",
+    "category": "China countermeasure",
+    "instrument": "rule",
+    "frCitation": "MOFCOM Announcement 2025 No. 72",
+    "source": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_5c68985a6b1a46778e2e8dbff1bb1601.html",
+    "gist": "China paused its December 2024 ban on mineral exports to the US until 27 November 2026.",
+    "id": "2025-11-09-us-ban-suspended",
+    "flows": [
+      "minerals"
+    ]
+  },
+  {
     "date": "2025-11-10",
-    "actor": "US (BIS) and China (MOFCOM)",
-    "title": "One-year truce suspends the affiliates rule and the rare earth regime",
-    "summary": "After the Trump-Xi meeting in Busan on 30 October 2025, BIS suspended the affiliates rule from 10 November 2025 until 9 November 2026. China acted first, in two steps. On 7 November, Announcement 2025 No. 70 suspended the October export control measures, including the rare earth rules, until 10 November 2026. On 9 November, Announcement 2025 No. 72 suspended the December 2024 ban on gallium, germanium, antimony and superhard material exports to the United States until 27 November 2026. China also agreed to issue general licenses, which cover repeated exports without a separate approval for each, for US end users and their suppliers.",
+    "actor": "US (BIS)",
+    "title": "US suspends the affiliates rule for one year under the truce",
+    "summary": "After the Trump-Xi meeting in Busan on 30 October 2025, BIS suspended the affiliates rule from 10 November 2025 until 9 November 2026. The same rule brings the affiliates rule back on 10 November 2026 unless the suspension is extended. China had suspended its own October 2025 export controls on 7 November and its ban on mineral exports to the United States on 9 November. China also agreed to issue general licenses, which cover repeated exports without a separate approval for each, for US end users and their suppliers.",
     "category": "US export control",
     "instrument": "rule",
-    "frCitation": "90 FR 50857; MOFCOM Announcements 2025 Nos. 70 and 72",
+    "frCitation": "90 FR 50857",
     "cfr": "15 CFR 744.11(a)(1)",
     "source": "https://www.federalregister.gov/documents/2025/11/12/2025-19846/one-year-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed-entities",
     "gist": "Both sides suspended their broadest measures for a year, and China agreed to issue general licenses.",
     "id": "2025-11-10-one-year-truce",
     "flows": [
-      "entity",
-      "minerals",
-      "minerals-world"
+      "entity"
     ]
   },
   {
@@ -717,7 +750,7 @@
     "summary": "President Trump announced that the United States would allow the H200 and similar products to be shipped to approved customers in China. BIS announced the implementing rule on 13 January 2026, and it took effect on publication on 15 January. It moved license applications for the Nvidia H200, the AMD MI325X and similar chips from a presumption of denial, under which they are normally refused, to case-by-case review. The applicant must show that the exports will not reduce the global semiconductor capacity available to US customers. It must also show that the Chinese purchaser has adopted export compliance procedures, including customer screening, and that the item has passed independent third-party testing in the United States. Nvidia's filings state that the licenses require each H200 to pass a US inspection before shipment. The filings say that, as a result, any H200 shipped under the program is subject to a 25 percent tariff on importation into the United States. Nvidia says it has been unable to pass the tariff on to customers.",
     "category": "US export control",
     "instrument": "licence-policy",
-    "cfr": "15 CFR 742.6(b)(10)",
+    "frCitation": "BIS press release, 13 January 2026",
     "source": "https://www.bis.gov/press-release/department-commerce-revises-license-review-policy-semiconductors-exported-china",
     "gist": "China could buy the chip, but only after US testing and a 25 percent tariff.",
     "id": "2025-12-08-h200-cleared",
@@ -754,7 +787,8 @@
     "gist": "BIS began case-by-case licensing to China for a band of chips below the top tier, but not for Nvidia's newer Blackwell chips.",
     "id": "2026-01-15-h200-case-by-case",
     "flows": [
-      "ai-chips"
+      "ai-chips",
+      "ai-chips-top"
     ]
   },
   {

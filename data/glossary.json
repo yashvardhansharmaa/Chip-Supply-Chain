@@ -36,8 +36,8 @@
   },
   {
     "term": "ATE",
-    "aka": "automated test equipment, tester",
-    "plain": "The machine that connects to a finished chip, feeds it millions of test patterns and checks whether the answers coming back are right. Advantest's July 2026 investor guide counts test as the only manufacturing step that puts electrical signals through the chip.",
+    "aka": "automated test equipment, automatic test equipment, tester",
+    "plain": "Automated test equipment, or ATE, is the machine that connects to a finished chip, feeds it millions of test patterns and checks whether the answers coming back are right. Advantest's July 2026 investor guide counts test as the only manufacturing step that puts electrical signals through the chip.",
     "why": "An AI accelerator joins a dozen expensive pieces, and one bad piece scraps them all. So each die is tested before assembly. Advantest's April 2025 investor guide put Advantest and Teradyne at about 80 percent of the tester market.",
     "chapter": "test-and-assembly"
   },
@@ -84,6 +84,13 @@
     "chapter": "introduction-and-goals"
   },
   {
+    "term": "CMOS",
+    "aka": "complementary metal-oxide-semiconductor, complementary MOS",
+    "plain": "CMOS, short for complementary metal-oxide-semiconductor, is the standard way of building digital circuits from pairs of transistors. Each n-type transistor, which switches on when the voltage on its gate is high, is matched with a p-type transistor, which switches on when that voltage is low. In either logic state one side of the circuit is off, so little current flows except while it switches.",
+    "why": "CMOS became the dominant technology for making chips because its circuits drew close to zero power while idle, which kept heat in check as chips packed in more transistors. FinFET and gate-all-around transistors are newer shapes for the same n-type and p-type pairs.",
+    "chapter": "transistors-and-front-end"
+  },
+  {
     "term": "compute threshold",
     "aka": "training compute threshold",
     "plain": "A limit set on the amount of arithmetic used to train an AI model. It counts operations, whichever chips run them. The AI Diffusion rule of January 2025 made one an export control. ECCN 4E091 covers \"'Parameters' for an artificial intelligence model trained utilizing 10^26 or more 'operations'\". The rules require a license to send such parameters to every destination worldwide (15 CFR 742.6(a)(13)). Article 51(2) of the EU AI Act sets Europe's line ten times lower. It presumes a model has high-impact capabilities when the cumulative computation used for training is \"greater than 10^25\" floating point operations.",
@@ -110,6 +117,13 @@
     "plain": "TSMC's method for mounting logic chips and memory stacks side by side on a shared interposer, a layer of fine wiring, then mounting that interposer on a rigid base board. In CoWoS-S the interposer is one piece of silicon. In CoWoS-L, used for Nvidia's Blackwell and Rubin, it is layers of fine copper wiring with small embedded silicon bridges. Nearly every high-end AI accelerator is built this way.",
     "why": "Epoch AI found that TSMC's CoWoS packaging and memory were the main limits on AI chip production in 2025. It estimates that Nvidia used 60.3 percent of all CoWoS that year. SemiAnalysis judged in March 2026 that CoWoS supply was easing, but in July 2026 TSMC said its packaging capacity was so tight that it limited customers' growth.",
     "chapter": "advanced-packaging"
+  },
+  {
+    "term": "CSIS",
+    "aka": "Center for Strategic and International Studies",
+    "plain": "CSIS, the Center for Strategic and International Studies, is a bipartisan, nonprofit policy research organization in Washington, D.C., founded in 1962. Its technology researchers publish assessments of China's chipmaking and of US export controls.",
+    "why": "Its reports judge how far Chinese chipmakers are from replacing foreign tools. In September 2025 CSIS judged that extreme ultraviolet machines remained firmly out of China's reach despite massive state investment, including $43 billion that China announced for developing its own.",
+    "chapter": "lithography"
   },
   {
     "term": "de minimis",
@@ -156,7 +170,7 @@
   {
     "term": "DUV",
     "aka": "deep ultraviolet, deep-ultraviolet, DUV scanner, DUV scanners, DUV tools",
-    "plain": "The older kind of chipmaking light, and the machines that print with it, which still make up most lithography tools. The light comes from gas lasers, at 248 or 193 nanometers. Filling the gap between lens and wafer with water sharpens the image, a method called immersion.",
+    "plain": "Chipmaking light from gas lasers, at 248 or 193 nanometers, and the machines that print with it, which still make up most lithography tools. Filling the gap between lens and wafer with water sharpens the image, a method called immersion.",
     "why": "A fab without extreme ultraviolet machines can reach leading-edge logic only with immersion deep ultraviolet and several passes per layer, as SMIC does. So Dutch export licensing draws its line at immersion tools.",
     "chapter": "lithography"
   },
@@ -187,6 +201,13 @@
     "plain": "The software that turns a description of what a chip should do into the exact pattern of shapes to be printed on silicon. It also proves the design will work before anyone commits money to masks and wafers.",
     "why": "Three vendors sell the only software that covers every step of designing a leading-edge chip. Since October 2022 software made for designing chips with gate-all-around transistors has needed a US export license. In May 2025 the US government sent letters to the three vendors requiring a license for all their sales to China, and it lifted the requirement on 2 July.",
     "chapter": "design-and-eda"
+  },
+  {
+    "term": "EMEA",
+    "aka": "",
+    "plain": "EMEA stands for Europe, the Middle East and Africa, one region in the breakdowns that companies publish of where their sales go.",
+    "why": "ASML is based in the Netherlands, yet tools shipped to EMEA made up 1 percent of its net system sales in 2025, against 33 percent for China.",
+    "chapter": "lithography"
   },
   {
     "term": "end-use and end-user controls",
@@ -268,7 +289,7 @@
   {
     "term": "gate-all-around",
     "aka": "GAA, nanosheet transistor, RibbonFET at Intel, nanosheet, nanosheets, RibbonFET, GAA transistor, gate-all-around transistors",
-    "plain": "A transistor in which the gate, the electrode that switches the current, wraps all the way around the channel that current flows through. In a FinFET, the design it replaces, the gate touches three sides. Surrounding the channel gives the gate full control, so the switch still turns fully off as dimensions shrink.",
+    "plain": "A transistor in which the gate, the electrode that switches the current, wraps all the way around the channel that current flows through. In a FinFET, the design it replaces, the gate touches three sides. Surrounding the channel gives the gate firmer control than a fin allows, so less current leaks when the switch is off.",
     "why": "Only TSMC, Intel and Samsung can build it. It needs etch that cuts sideways, which US export rules control. Customers building 2 nm gate-all-around capacity lifted ASM International, the leader in atomic layer deposition, to record revenue in 2025.",
     "chapter": "transistors-and-front-end"
   },
@@ -399,6 +420,13 @@
     "chapter": "lithography"
   },
   {
+    "term": "logic chip",
+    "aka": "logic chips, logic die, logic dies",
+    "plain": "A logic chip is one that computes, such as a processor, a graphics processor or an AI accelerator. Memory chips, such as DRAM and NAND flash, store data instead.",
+    "why": "US export rules set separate lines for logic and memory. The October 2022 rule covered equipment for fabs in China making logic chips at 16/14 nm or below. It also covered fabs making DRAM at 18 nm half-pitch or below, or NAND with 128 or more layers. ASML counted 66 percent of its 2025 system sales as going to logic and 34 percent to memory.",
+    "chapter": "foundries-and-fabs"
+  },
+  {
     "term": "memory wall",
     "aka": "",
     "plain": "The widening gap between how fast a processor can calculate and how fast memory can feed it numbers to work on. The cost of arithmetic has fallen faster than the cost of moving numbers.",
@@ -414,9 +442,9 @@
   },
   {
     "term": "multipatterning",
-    "aka": "double patterning, quadruple patterning, self-aligned quadruple patterning, multiple patterning, multi-patterning, several passes, several exposures, multiply exposed, DUV multipatterning",
-    "plain": "Printing a single chip layer using two, three or four separate plates and etching steps, because one exposure cannot resolve features that close together. Fabs use it when they have no light sharp enough to print the layer in one exposure.",
-    "why": "SMIC reaches its most advanced processes without extreme ultraviolet machines by printing its tightest layers in several passes on deep ultraviolet tools. Each extra pass costs a mask and machine time, and adds a chance to misalign.",
+    "aka": "double patterning, quadruple patterning, self-aligned double patterning, self-aligned quadruple patterning, SADP, SAQP, LELE, multiple patterning, multi-patterning, several passes, several exposures, multiply exposed, DUV multipatterning",
+    "plain": "Building one chip layer in several patterning steps, because a single exposure cannot print lines that close together. It comes in two kinds. Litho-etch multipatterning splits the layer's pattern across two or three masks, then prints and etches each part separately. Self-aligned double or quadruple patterning prints one coarser pattern, then deposits and etches thin spacer films along its edges to halve or quarter the line spacing. Cut masks then remove the parts of lines the circuit does not need.",
+    "why": "SMIC makes its 7 nm-class chips without extreme ultraviolet machines by multipatterning on deep ultraviolet tools. TSMC's first 7 nm process and Intel 7 were also made without extreme ultraviolet light. Every extra mask or spacer step adds cost and machine time, and each extra litho-etch exposure adds a chance that parts of the layer misalign.",
     "chapter": "lithography"
   },
   {
@@ -560,6 +588,13 @@
     "chapter": "geopolitics"
   },
   {
+    "term": "SoC",
+    "aka": "system on a chip, system-on-chip, system-on-a-chip, SoCs",
+    "plain": "A system on a chip, or SoC, is a single chip that combines processor cores, a graphics processor and other circuit blocks that a device needs. The main processor in a smartphone is one.",
+    "why": "Makers of chip testers split their market in two. SoC testers check processors and other non-memory chips, and memory testers check memory. Advantest put SoC testers at about $6.9 billion of a $9.0 billion tester market in 2025.",
+    "chapter": "test-and-assembly"
+  },
+  {
     "term": "subject to the EAR",
     "aka": "",
     "plain": "The test for whether an item falls under US export rules at all. Under 15 CFR 734.3 it covers anything in the United States and anything of US origin wherever it is. It also covers foreign-made goods that contain more than a permitted share of controlled US content, and foreign-made goods caught by a foreign direct product rule. The test applies to the item, whatever the seller's nationality.",
@@ -688,7 +723,7 @@
   {
     "term": "ArF",
     "aka": "argon fluoride, argon fluoride laser, 193 nm, 193-nanometer",
-    "plain": "ArF is argon fluoride, the gas mixture inside the laser that gives deep ultraviolet scanners their 193-nanometer light. An ArF scanner, dry or immersion, prints most of the fine layers on any chip made without extreme ultraviolet.",
+    "plain": "ArF stands for argon fluoride, the gas mixture inside the laser that gives deep ultraviolet lithography its 193-nanometer light. Scanners, the machines that print each layer, use this light in two ways. A dry scanner shines it through air, and an immersion scanner through a thin film of water between lens and wafer, which prints finer lines. ArF scanners print most of the fine layers on any chip made without extreme ultraviolet.",
     "why": "ArF immersion scanners made up 42 percent of ASML's system sales in 2025. They are also the kind that a Chinese state-owned firm was reported in July 2026 to be producing at home.",
     "chapter": "lithography"
   },
@@ -716,8 +751,8 @@
   {
     "term": "plasma",
     "aka": "plasmas, plasma etch, plasma-enhanced, plasma source",
-    "plain": "A plasma is a gas that an electric field has split into charged ions and neutral fragments called radicals. In a chip tool the radicals do most of the chemistry and the ions give etch its direction. Most etch steps and many deposition steps happen in a plasma inside a vacuum chamber. But batch furnaces run oxidation, low-pressure deposition and some atomic layer deposition mostly without one. The extreme ultraviolet light source is a plasma of vaporized tin.",
-    "why": "Deposition and etch chambers are separate products built from similar vacuum, gas and radio-frequency parts. Export controls describe each tool by the process it is designed to run.",
+    "plain": "A plasma is a gas energized until some of its atoms or molecules break into charged particles. Most etch steps and many deposition steps happen in a plasma that an electric field makes inside a vacuum chamber, though batch furnaces mostly work without one. In the chamber, neutral fragments called radicals do most of the chemistry, and charged ions give etch its direction. In an extreme ultraviolet machine, a laser vaporizes droplets of molten tin into a plasma that gives off the 13.5-nanometer light.",
+    "why": "Deposition and etch chambers are separate products built from similar vacuum, gas and radio-frequency parts. Export controls describe each tool by the process it is designed to run. An extreme ultraviolet source has to make its tin plasma 50,000 times a second to give enough light for production.",
     "chapter": "deposition-and-etch"
   },
   {
@@ -1114,7 +1149,7 @@
   },
   {
     "term": "300 mm",
-    "aka": "300-millimeter, 12-inch, 12-inch equivalent, 200 mm, 8-inch, 8-inch-equivalent, 450 mm, 150 mm",
+    "aka": "300-millimeter, 12-inch wafer, 12-inch wafers, 12-inch equivalent, 200 mm, 8-inch, 8-inch-equivalent, 450 mm, 150 mm",
     "plain": "300 mm is the diameter of the standard wafer, about twelve inches. Older fabs run 200 mm, or 8-inch, wafers. The last increase in wafer size, to 300 mm, came in 2002.",
     "why": "Advanced chips start on 300 mm wafers. In SEMI's November 2020 World Fab Forecast, which CSET cited in January 2021, they carried 99.7 percent of world fab capacity at 45 nm and below.",
     "chapter": "silicon-and-wafers"

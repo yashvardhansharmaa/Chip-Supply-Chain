@@ -99,6 +99,13 @@
   text-decoration: none; border-bottom: 1px solid var(--line-2); padding-bottom: 1px;
 }
 .wk-read::after { content: "\00a0\2192"; color: var(--muted); }
+/* Read the chapter, the Concentration tag and each source link look as they did but take a fingertip: an invisible box
+   at least 24 px tall, centered on the control */
+.wk-read, .wk-score-term, .wk-facts .wk-src { position: relative; }
+.wk-read::before, .wk-score-term::before, .wk-facts .wk-src::before {
+  content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 24px); height: max(100%, 26px); transform: translate(-50%, -50%);
+}
+.wk-facts .wk-src::before { width: calc(100% + 8px); }
 .wk-read:hover { color: var(--accent); border-bottom-color: var(--accent); }
 .wk-read:hover::after { color: var(--accent); }
 
