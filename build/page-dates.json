@@ -2,7 +2,7 @@
   "/": {
     "published": "2026-10-01",
     "modified": "2026-10-19",
-    "hash": "8d362a96681482c1"
+    "hash": "eb33a79c85029496"
   },
   "/advanced-packaging/": {
     "published": "2026-09-09",
@@ -17,17 +17,17 @@
   "/chip-supply-chain-the-chain.pdf": {
     "published": "2026-10-01",
     "modified": "2026-10-19",
-    "hash": "243637f466e0d7e1"
+    "hash": "fcefe2ad826fc168"
   },
   "/component-costs/": {
     "published": "2026-09-09",
-    "modified": "2026-10-03",
-    "hash": "86e5fc8a0f3761c6"
+    "modified": "2026-10-19",
+    "hash": "ba5bce5a8b6d1f26"
   },
   "/data-centers-and-power/": {
     "published": "2026-09-09",
-    "modified": "2026-10-18",
-    "hash": "5d0a71e09d81717f"
+    "modified": "2026-10-19",
+    "hash": "9dab573146a8a96e"
   },
   "/deposition-and-etch/": {
     "published": "2026-09-09",
@@ -41,13 +41,13 @@
   },
   "/foundries-and-fabs/": {
     "published": "2026-09-09",
-    "modified": "2026-10-18",
-    "hash": "268ae997ef01661a"
+    "modified": "2026-10-19",
+    "hash": "a71210ac640ddc66"
   },
   "/geopolitics/": {
     "published": "2026-09-09",
     "modified": "2026-10-19",
-    "hash": "ba32abd133cddf8c"
+    "hash": "582b52ff0dc92bf7"
   },
   "/lithography/": {
     "published": "2026-09-09",
@@ -91,7 +91,7 @@
   },
   "/transistors-and-front-end/": {
     "published": "2026-09-09",
-    "modified": "2026-10-18",
-    "hash": "93b0c27aae600a6d"
+    "modified": "2026-10-19",
+    "hash": "e3e7771745905591"
   }
 }

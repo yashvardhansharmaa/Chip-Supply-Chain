@@ -254,7 +254,7 @@
     "priceEstimate": "Epoch AI estimates $38,000 to $49,000 per GPU in GB300 NVL72 systems, from HSBC and SemiAnalysis rack prices and the cost of about 100 GB more memory than the B200",
     "bomEstimate": null,
     "exportStatus": "Controlled. It is far above the 21,000 TPP and 6,500 GB/s memory-bandwidth ceilings for case-by-case review in the BIS rule effective 15 January 2026. So an export to China or Macau needs a license, which BIS reviews with a presumption of denial under 15 CFR 742.6(b)(10). Applications may be filed.",
-    "notes": "It uses the same two-die 4NP silicon as the B200, with 12-high HBM3E stacks that raise capacity to 288 GB. Its tensor core is retuned for NVFP4, Nvidia's four-bit number format, and for the softmax step in attention. Nvidia describes eight 12-high stacks. Micron's 12-high HBM3E stack holds 36 GB, and eight of them make 288 GB. Nvidia publishes no die area, no package dimensions and no list price, and it names no memory supplier. Micron said in March 2025 that its 12-high 36 GB HBM3E is designed into the HGX B300 NVL16 and GB300 NVL72 platforms. SK hynix said in October 2025 that its 36 GB HBM3E is used in the GB300. As with the B200, the HGX board version has lower figures. Epoch AI records an HGX B300 board at 270 GB, 7.7 TB/s and 1,100 W, against 288 GB, 8 TB/s and 1,400 W for the GB300 configuration above.",
+    "notes": "It uses the same two-die 4NP silicon as the B200, with 12-high HBM3E stacks that raise capacity to 288 GB. Its tensor core is retuned for NVFP4, Nvidia's four-bit number format, and for the softmax step in attention. Nvidia describes eight 12-high stacks. Micron's 12-high HBM3E stack holds 36 GB, and eight of them make 288 GB. Nvidia publishes no die area, no package dimensions and no list price, and it names no memory supplier. Micron said in March 2025 that its 12-high 36 GB HBM3E is designed into the HGX B300 NVL16 and GB300 NVL72 platforms. SK hynix said in October 2025 that its 36 GB HBM3E is used in the GB300. Nvidia said in October 2025 that it had a \"key supply collaboration for HBM3E and HBM4\" with Samsung, and Samsung said that month that it sold HBM3E \"to all related customers\". Neither names the chip. As with the B200, the HGX board version has lower figures. Epoch AI records an HGX B300 board at 270 GB, 7.7 TB/s and 1,100 W, against 288 GB, 8 TB/s and 1,400 W for the GB300 configuration above.",
     "layout": {
       "unit": "mm",
       "interposer": [
@@ -366,6 +366,14 @@
       {
         "label": "SK hynix, October 2025: 36 GB HBM3E used in Nvidia's GB300 (OCP Global Summit)",
         "url": "https://news.skhynix.com/en/sk-hynix-showcases-full-stack-ai-memory-portfolio-at-2025-ocp-global-summit/"
+      },
+      {
+        "label": "Nvidia, October 2025: key supply collaboration with Samsung for HBM3E and HBM4 (no chip named)",
+        "url": "https://nvidianews.nvidia.com/news/samsung-ai-factory"
+      },
+      {
+        "label": "Samsung, Q3 2025 results: HBM3E sold to all related customers (no chip named)",
+        "url": "https://news.samsung.com/global/samsung-electronics-announces-third-quarter-2025-results"
       }
     ]
   },

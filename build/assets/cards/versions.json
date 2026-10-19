@@ -20,8 +20,8 @@
     "sha": "36ce3c5b06623015"
   },
   "data-centers-and-power": {
-    "v": 2,
-    "sha": "2f82c138b542e931"
+    "v": 4,
+    "sha": "7d1e328aa083b19c"
   },
   "deposition-and-etch": {
     "v": 2,
@@ -40,8 +40,8 @@
     "sha": "7f09074f555f7e2c"
   },
   "geopolitics": {
-    "v": 2,
-    "sha": "06f85a81bfb374d5"
+    "v": 3,
+    "sha": "333b72d35eb60877"
   },
   "glossary": {
     "v": 1,

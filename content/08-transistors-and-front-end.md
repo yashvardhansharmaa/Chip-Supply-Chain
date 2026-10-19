@@ -154,7 +154,7 @@ A Shanghai state firm began building domestic immersion scanners in 2026 and pla
 
 Domestic EUV is further off. China has announced $43 billion to develop it ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)). In September 2025 the Center for Strategic and International Studies (CSIS) judged that EUV remains firmly out of reach despite massive state investment ([source](https://www.csis.org/blogs/strategic-technologies-blog/breakthroughs-or-boasts-assessing-recent-chinese-lithography)).
 
-See [Lithography](#lithography) and [Geopolitics](#geopolitics).
+See [Lithography](#lithography) and [Who Controls the Chain](#geopolitics).
 
 ## Takeaways
 

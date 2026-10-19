@@ -559,8 +559,8 @@
       {
         "q": "How has China's share of allied toolmakers' sales changed?",
         "a": "It has fallen since 2024.",
-        "why": "China's share of ASML's system sales fell from 41 percent in 2024 to 33 percent in 2025. Its share of Tokyo Electron's sales fell from 44.4 percent in the year to March 2024 to 34.1 percent in the year to March 2026. Tokyo Electron says the latest drop came as spending on leading-edge chips grew faster than spending on older ones.",
-        "section": "Allies: the Netherlands, Japan, Korea and Europe"
+        "why": "China's share of ASML's net system sales, which leave out service and field options, fell from 41 percent in 2024 to 33 percent in 2025. Its share of Tokyo Electron's sales fell from 44.4 percent in the year to March 2024 to 34.1 percent in the year to March 2026. Tokyo Electron says the share fell to 26.8 percent in the quarter to March 2026 because spending on leading-edge chips grew faster than spending on older ones.",
+        "section": "Who gains and who pays"
       },
       {
         "q": "Where are most leading-edge chips made?",
