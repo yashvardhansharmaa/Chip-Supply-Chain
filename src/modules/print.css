@@ -137,6 +137,9 @@
   /* how to read, and the contents as a report's contents: one line a chapter, with its page */
   .howto { margin: 0 0 8mm; padding: 3.4mm 4mm 1mm; }
   .howto h2 { font-size: 7.4pt; margin-bottom: 2.4mm; }
+  .howto h2.howto-title { font-size: 19pt; margin-bottom: 1.6mm; }
+  .howto .howto-lede { font-size: 10.5pt; margin-bottom: 3mm; }
+  .howto h3.howto-k { font-size: 7.4pt; padding-top: 2.4mm; margin-bottom: 1.6mm; }
   .howto p, .howto li { font-size: 9pt; line-height: 1.45; }
   .contents { break-after: page; padding: 4mm 0 0; margin-top: 6mm; }
   .contents h2 { font-size: 14pt; margin-bottom: 4mm; }

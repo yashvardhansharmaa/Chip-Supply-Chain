@@ -537,7 +537,10 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .howto .howto-dl .btn { text-decoration: none; }
 .howto .howto-dl .howto-alt { align-self: center; margin-left: 6px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); }
 .howto { max-width: none; margin: 8px 0 0; padding: 16px 0 6px; border: 0; border-top: 1px solid var(--ink); border-radius: 0; background: none; } /* the contents block draws the rule below */
-.howto h2 { font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+.howto h2.howto-title { font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: clamp(30px, 3vw, 40px); line-height: 1.05; letter-spacing: -0.01em; text-transform: none; color: var(--ink); margin: 0 0 8px; }
+.howto .howto-lede { font-size: 18.5px; line-height: 1.45; color: var(--ink-2); max-width: 40em; margin: 0 0 18px; }
+@media (max-width: 640px) { .howto .howto-lede { font-size: 17px; } }
+.howto h3.howto-k { font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; padding-top: 14px; border-top: 1px solid var(--line); }
 .howto p, .howto li { font-size: 16.5px; line-height: 1.5; }
 .howto ul { padding-left: 18px; margin: 0 0 12px; }
 .howto li { margin: 0 0 6px; }
@@ -1628,6 +1631,9 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
   /* how to read, and the contents as a report's contents: one line a chapter, with its page */
   .howto { margin: 0 0 8mm; padding: 3.4mm 4mm 1mm; }
   .howto h2 { font-size: 7.4pt; margin-bottom: 2.4mm; }
+  .howto h2.howto-title { font-size: 19pt; margin-bottom: 1.6mm; }
+  .howto .howto-lede { font-size: 10.5pt; margin-bottom: 3mm; }
+  .howto h3.howto-k { font-size: 7.4pt; padding-top: 2.4mm; margin-bottom: 1.6mm; }
   .howto p, .howto li { font-size: 9pt; line-height: 1.45; }
   .contents { break-after: page; padding: 4mm 0 0; margin-top: 6mm; }
   .contents h2 { font-size: 14pt; margin-bottom: 4mm; }
@@ -2568,14 +2574,15 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
         </div>
       </section>
       <div class="howto" id="howto">
-        <h2>How to read a chapter</h2>
-        <p>Each of the fifteen stage chapters opens with a chokepoint card.</p>
+        <h2 class="howto-title">The Chain</h2>
+        <p class="howto-lede">This page covers each of the fifteen stages of making an AI chip in detail, one chapter per stage, in the order a chip is made, from design software to the data center. Two more chapters at the end look across all the stages, at what a chip costs and who controls the chain.</p>
+        <h3 class="howto-k">How to read a chapter</h3>
+        <p>Each stage chapter opens with a chokepoint card. It rates the stage on two scales, gives a price or market size, and says where China and the United States stand.</p>
         <ul>
-          <li><b>Concentration.</b> How many firms credibly supply this stage, rated Extreme, High, Moderate or Low.</li>
-          <li><b>Substitutability.</b> How hard it would be for a well-funded state or firm to build an alternative, rated Easy, Moderate, Hard or Very hard. Each rating has its own written test.</li>
+          <li><b>Concentration.</b> How many firms could supply the stage today, rated Extreme, High, Moderate or Low.</li>
+          <li><b>Substitutability.</b> How hard it would be for a well-funded state or firm to build an alternative, rated Easy, Moderate, Hard or Very hard.</li>
           <li><b>Price or market size.</b> What one unit costs, or what the stage earns in a year.</li>
         </ul>
-        <p>The card also says where China and the United States stand. The chapters follow the order in which a chip is made.</p>
         <p class="howto-dl"><a class="btn ghost" href="chip-supply-chain-the-chain.pdf" download>Download the chain as a PDF</a> <a class="btn ghost" href="chip-supply-chain-summary.pdf" download>Download a short summary</a> <a class="howto-alt" href="summary/">Read the summary online</a></p>
       </div>
       <div class="contents" id="contents">
