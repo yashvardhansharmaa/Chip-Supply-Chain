@@ -1,0 +1,202 @@
+[
+  {
+    "url": "https://www.finance.senate.gov/download/051425-isaacs-testimony&download=1",
+    "sentence": "Making one chip takes 1,000 to 1,500 steps, the Semiconductor Industry Associati",
+    "page": 2,
+    "pages": 11,
+    "evidence": "ultimately between 1,000 and 1,500 steps to turn the silicon into the final packaged semiconductor, depending on the complexity of the chip."
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf",
+    "sentence": "Each cycle adds a fraction of a layer of atoms wherever the gas reached, so the ",
+    "page": 16,
+    "pages": 32,
+    "evidence": "the ALD processes build up material directly, a fraction of a monolayer at a time to build the thinnest, most uniform films possible."
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf",
+    "sentence": "Deposition and etch chambers are separate products built from similar vacuum, ga",
+    "page": 28,
+    "pages": 32,
+    "evidence": "c. Etch equipment. c.1. Equipment designed for dry etching as follows ... d. Semiconductor manufacturing deposition equipment, as follows: d.1. Equipment designed for",
+    "note": "supports the second clause only; the rule does not say the two kinds of tool share vacuum, gas and RF parts"
+  },
+  {
+    "url": "https://www.finance.senate.gov/download/051425-isaacs-testimony&download=1",
+    "sentence": "Accenture and the Global Semiconductor Alliance estimated in 2020 that a part-fi",
+    "page": 2,
+    "pages": 11,
+    "evidence": "\"could cross international borders approximately 70 or more times before finally making it to the end customer,\" ... Accenture / Global Semiconductor Alliance, ... 2020."
+  },
+  {
+    "url": "https://www.finance.senate.gov/download/051425-isaacs-testimony&download=1",
+    "sentence": "The Semiconductor Industry Association repeated the figure in 2025",
+    "page": 2,
+    "pages": 11,
+    "evidence": "A semiconductor product \"could cross international borders approximately 70 or more times before finally making it to the end customer,\""
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf",
+    "sentence": "US regulators say that even coating makes it important for building 3D structure",
+    "page": 16,
+    "pages": 32,
+    "evidence": "capacity for conformal deposition ... importance as a 3D scaling enabler, such as in the fabrication of 3D DRAM, 3D NAND, and FinFET/GAAFET logic."
+  },
+  {
+    "url": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf",
+    "sentence": "**Electroplating** deposits the copper used for wiring across the wafer",
+    "page": 39,
+    "pages": 98,
+    "evidence": "Only the United States and Taiwan produce electrochemical coating tools.146 A common application is to deposit copper (used for wiring in chips) across a wafer."
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf",
+    "sentence": "**Gate-all-around** transistors need highly selective isotropic etch, which cuts",
+    "page": 15,
+    "pages": 32,
+    "evidence": "Isotropic dry etching is required for lateral etching. Gate-All-Around Field Effect Transistors (GAAFETs) and similar 3D structures ... require lateral etching with high selectivity."
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf",
+    "sentence": "The US Bureau of Industry and Security (BIS) controls isotropic dry etch tools t",
+    "page": 28,
+    "pages": 32,
+    "evidence": "c.1.a. Equipment designed or modified for isotropic dry etching, having a largest 'silicon germanium-to-silicon (SiGe:Si) etch selectivity' of greater than or equal to 100:1"
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf",
+    "sentence": "**HBM** (high-bandwidth memory) needs holes etched straight through the silicon,",
+    "page": 15,
+    "pages": 41,
+    "evidence": "3B001.c.3 controls the etch equipment used to package a chip containing a through-silicon via (TSV) (e.g., a HBM chip)."
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf",
+    "sentence": "BIS controls the tools that etch these holes at aspect ratios (depth to width) o",
+    "page": 32,
+    "pages": 41,
+    "evidence": "c.4. Equipment designed for Through Silicon Via (TSV) etch having all of the following: c.4.a. Silicon etch rate greater than 7 microns per minute"
+  },
+  {
+    "url": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf",
+    "sentence": "Tokyo Electron's own results presentation gives it 23 percent of dry etch, 27 pe",
+    "page": 28,
+    "pages": 29,
+    "evidence": "[chart labels] World Market Share of Major Products (CY2025): Dry Etch System 23%, Deposition System 27%, ALD 15%",
+    "note": "slide figures are Gartner data ('Chart created by TEL based on Gartner research')"
+  },
+  {
+    "url": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf",
+    "sentence": "The same presentation gives it 91 percent of coater/developers in 2025",
+    "page": 28,
+    "pages": 29,
+    "evidence": "[chart labels] World Market Share of Major Products (CY2025): Coater/Developer 91%",
+    "note": "slide figures are Gartner data"
+  },
+  {
+    "url": "https://www.asm.com/media/yvxbavwe/20260303-asm-reports-q4-and-full-year-2025-results.pdf",
+    "sentence": "ASM International, the atomic layer deposition specialist, reached a record EUR ",
+    "page": 2,
+    "pages": 17,
+    "evidence": "revenue increased to a record €3.2 billion in 2025, driven primarily by the advanced logic/foundry segment as customers increased their investments in 2nm GAA capacity."
+  },
+  {
+    "url": "https://www.asm.com/media/yvxbavwe/20260303-asm-reports-q4-and-full-year-2025-results.pdf",
+    "sentence": "Molybdenum ALD, a new use of its tools that deposits the metal molybdenum, enter",
+    "page": 2,
+    "pages": 17,
+    "evidence": "Product penetrations have led to new applications such as Mo ALD and area selective deposition (ASD) entering HVM production for the 2nm node."
+  },
+  {
+    "url": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf",
+    "sentence": "**Tokyo Electron**: 34.1 percent of sales in the year to March 2026, down from 4",
+    "page": 27,
+    "pages": 29,
+    "evidence": "Sales by Region ... China ... 41.7% ... 34.1% ... FY2025 FY2026",
+    "note": "p27 footnote: percentages are shares of new equipment sales, Field Solutions excluded"
+  },
+  {
+    "url": "https://www.asm.com/media/yvxbavwe/20260303-asm-reports-q4-and-full-year-2025-results.pdf",
+    "sentence": "**ASM International**: more than 30 percent of 2025 revenue",
+    "page": 2,
+    "pages": 17,
+    "evidence": "Equipment sales from China decreased year-on-year, but still accounted for more than 30% of total ASM revenue in 2025."
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2022-10-13/pdf/2022-21658.pdf",
+    "sentence": "The 7 October interim final rule required a license for certain chipmaking equip",
+    "page": 1,
+    "pages": 30,
+    "evidence": "certain semiconductor manufacturing items ... specific activities of ‘‘U.S. persons’’ that ‘support’ the ‘‘development’’ or ‘‘production’’ of certain ICs in the PRC require a license."
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2022-10-13/pdf/2022-21658.pdf",
+    "sentence": "It also widened foreign-produced item rules for 28 Chinese entities already on t",
+    "page": 1,
+    "pages": 30,
+    "evidence": "this rule expands the scope of foreign-produced items subject to license requirements for twenty-eight existing entities on the Entity List that are located in China."
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf",
+    "sentence": "The October rule, effective 17 November, rewrote the equipment entries",
+    "page": 1,
+    "pages": 32,
+    "evidence": "Effective dates: This rule is effective November 17, 2023 ... amends the EAR to implement SME controls more effectively"
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf",
+    "sentence": "It added sideways (isotropic) and vertical (anisotropic) dry etch (ECCN 3B001.c.",
+    "page": 16,
+    "pages": 32,
+    "evidence": "ECCN 3B001.d.5 is added to control ... carbon hard masks ... ECCN 3B001.d.9 is added to establish control of spatial ALD equipment ... low fluorine tungsten films"
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf",
+    "sentence": "The new equipment entries include TSV etch, and deposition into features with as",
+    "page": 16,
+    "pages": 41,
+    "evidence": "3B001.d.19 controls equipment that deposits material in very high aspect ratio features (greater than 200:1, characteristic of 3D DRAM technology)."
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf",
+    "sentence": "The rule largely exempts foreign-made tools exported by firms located in Japan, ",
+    "page": 28,
+    "pages": 41,
+    "evidence": "Supplement No. 4 to Part 742— Countries Excluded From Certain Semiconductor Manufacturing Equipment License Requirements ... Japan ... Netherlands"
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf",
+    "sentence": "Japan added advanced chipmaking equipment to its control list on 23 July 2023",
+    "page": 21,
+    "pages": 41,
+    "evidence": "The Government of Japan added ArF-wet lithography equipment and other advanced semiconductor manufacturing equipment to its control list for all regions on July 23, 2023."
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2025-09-30/pdf/2025-19001.pdf",
+    "sentence": "The Affiliates Rule extended Entity List restrictions to any company at least 50",
+    "page": 1,
+    "pages": 14,
+    "evidence": "any entity that is at least 50 percent owned by one or more entities on the Entity List will itself automatically be subject to Entity"
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf",
+    "sentence": "The December 2024 rule targets advanced atomic layer deposition tools and the ex",
+    "page": 33,
+    "pages": 41,
+    "evidence": "d.18. Equipment designed or modified for Atomic Layer Deposition (ALD) of molybdenum (Mo), ruthenium (Ru) ... features with aspect ratio greater than 200:1"
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2023-10-25/pdf/2023-23049.pdf",
+    "sentence": "Atomic layer deposition tools coat a hole's walls and floor as evenly as its rim",
+    "page": 16,
+    "pages": 32,
+    "evidence": "The self-limiting nature of the processes and the related capacity for conformal deposition are the basis for its importance as a 3D scaling enabler"
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf",
+    "sentence": "The December 2024 US export rule targets advanced atomic layer deposition tools ",
+    "page": 33,
+    "pages": 41,
+    "evidence": "d.18. Equipment designed or modified for Atomic Layer Deposition (ALD) of molybdenum (Mo), ruthenium (Ru) ... features with aspect ratio greater than 200:1"
+  }
+]

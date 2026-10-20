@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Why One Missing Material Can Stop a Fab</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Instrument+Sans:wght@400;500;600&display=swap">
+</head><body>
+<script src="lib.js"></script>
+<script>
+const { PAL, clamp, ease, mix, mixc, text } = A, dark = A.theme === 'dark';
+// Facts, from chapter 3: a fab uses a few hundred chemicals and gases, and a shortage of any one of them can stop it.
+// Hydrofluoric acid cleans the wafer; silane gas carries the silicon for new layers; a machine spins a coat of photoresist
+// across the wafer; etching cuts the pattern into the layer beneath, with etch gases; sputtering targets are slabs of pure
+// metal that a plasma knocks atoms off, to settle as thin metal films; polishing slurries grind each new layer flat.
+// Chipmakers keep stockpiles. A chipmaker has to test and approve each new resist in its own factory, and even a resist
+// that passes the first time takes seven to 17 months to approve (SIA, 2023, How it works); the resist maker adjusts its
+// formula over rounds of tests in the fab (SIA, 2023, The chokepoint). The number is in the last caption only.
+// A diagram: six materials stand for the few hundred, one step each, in one loop. The order follows one wiring layer.
+const STEPS = [
+  { k: 'One layer', t0: 0.4, cap: 'A chip is built up in layers. For each layer the wafer goes around a loop of steps like this one, and each step uses its own chemical, gas or metal.' },
+  { k: 'Many wafers', t0: 6.7, cap: 'A fab runs many wafers at once, so every material is always in use. Deliveries keep each stock topped up.' },
+  { k: 'One runs out', t0: 11.1, cap: 'If one material stops arriving, the fab works through its stock.' },
+  { k: 'The fab stops', t0: 14.1, cap: 'When the stock runs out, wafers pile up at that step, and the rest of the fab stands idle.' },
+  { k: 'A new supplier', t0: 18.4, cap: 'A new supplier’s resist goes through round after round of tests in the fab. Even one that passes the first time takes seven to 17 months to approve.' },
+];
+const W = 760, H = 420, DURATION = 24.6;
+const C = {
+  track: dark ? '#3a414b' : '#cfcac0', pipe: dark ? '#4c535d' : '#b9b4aa', box: dark ? '#1b1f25' : '#ffffff',
+  wafer: dark ? ['#8d959f', '#737c87', '#a2a9b2', '#666f7a'] : ['#d9dde2', '#c2c8cf', '#e4e7eb', '#b3bac2'],
+  waferEdge: dark ? 'rgba(236,233,226,0.45)' : 'rgba(20,24,31,0.45)',
+};
+// the words in the frame: each step's name as a small uppercase tag above its material's name; both are sized to read on
+// a phone, where the frame is drawn at about half size
+const TAG = '600 15px "Instrument Sans"', NAME = '500 20px Fraunces';
+const tag = (s, x, y, col, o = {}) => text(s.toUpperCase(), x, y, TAG, col, Object.assign({ ls: '1.5px' }, o));
+// the six materials, in the order the wafer meets them; colors follow the other animations (film, resist, plasma, copper)
+const MAT = [
+  { step: 'Clean', name: 'Hydrofluoric acid', kind: 'bottle', col: dark ? '#7fa9df' : '#5d8dc6' },
+  { step: 'Deposit', name: 'Silane gas', kind: 'cyl', col: dark ? '#a9b8c6' : '#8fa1b3' },
+  { step: 'Coat', name: 'Photoresist', kind: 'bottle', col: '#c98f2e' },
+  { step: 'Etch', name: 'Etch gas', kind: 'cyl', col: dark ? '#9684ff' : '#705cdc' },
+  { step: 'Metal', name: 'Sputtering target', kind: 'slab', col: dark ? '#c98a55' : '#b8743d' },
+  { step: 'Polish', name: 'Polishing slurry', kind: 'drum', col: dark ? '#b9b2a6' : '#a59d90' },
+];
+const RES = 2;                                                      // the material that runs out
+const rgba = (hex, a) => { const n = parseInt(hex.slice(1), 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`; };
+
+// ---- the loop: six steps on a ring, each fed from its own container, and deliveries in from outside. The ring sits in
+// the middle of the frame; for the last step it moves left to make room for the new supplier.
+const CX0 = 372, CX1 = 312, T_PAN = 18.4, CY = 210, R = 122, WR = 16, RC = R + 62, RD0 = RC + 62, RD1 = RC + 26;
+let CX = CX0;
+const SA = (k) => -120 + 60 * k;                                    // a step's angle in degrees; wafers run clockwise
+const pt = (deg, r) => [CX + r * Math.cos(deg * Math.PI / 180), CY + r * Math.sin(deg * Math.PI / 180)];
+const mod = (a, n) => ((a % n) + n) % n;
+// where each step's words go, from its container: [dx, dy of the material's name, align]; the step's tag sits above it
+const LAB = [[-24, 8, 'right'], [24, 8, 'left'], [-18, -44, 'left'], [24, 8, 'left'], [-24, 8, 'right'], [40, -36, 'right']];
+
+// ---- the schedule: every wafer hops one step at a time, all together. Lap 1 is one wafer, slowly; then six wafers.
+const HOPS = [];
+for (let i = 0; i < 6; i++) HOPS.push({ t0: 1.58 + i * 1.0, d: 0.42 });          // lap 1
+for (let i = 0; i < 4; i++) HOPS.push({ t0: 7.9 + i * 0.8, d: 0.3 });            // six wafers
+for (let i = 0; i < 4; i++) HOPS.push({ t0: 11.1 + i * 1.0, d: 0.35 });          // resist stops arriving
+for (let i = 0; i < 4; i++) HOPS.push({ t0: 14.9 + i * 0.8, d: 0.3 });           // the rest catch up with the queue
+const PHI = (t) => HOPS.reduce((s, h) => s + ease((t - h.t0) / h.d), 0);
+const free = (i, t) => SA(i) + 60 * (PHI(t) - (i ? 6 : 0));          // wafer i starts at step i; the others join after lap 1
+const T_JOIN = 6.95, T_CUT = 11.4, T_STOP = HOPS[13].t0;            // the hop at T_STOP brings a wafer to the empty step
+// from T_STOP each wafer stops behind the one ahead of it: the first to reach the empty step stops on it
+const GAP = 12, S0 = SA(RES);
+const CAPS = (() => {
+  const ps = [0, 1, 2, 3, 4, 5].map((i) => free(i, T_STOP));
+  const ahead = ps.map((p) => S0 + 360 * (Math.floor((p - S0) / 360 + 1e-6) + 1));
+  const caps = [];
+  ps.map((p, i) => [ahead[i] - p, i]).sort((a, b) => a[0] - b[0]).forEach(([, i], j) => { caps[i] = ahead[i] - j * GAP; });
+  return caps;
+})();
+const smin = (a, b, k) => Math.min(a, b) - k * Math.log(1 + Math.exp(-Math.abs(a - b) / k));
+const pos = (i, t) => (t < T_STOP ? free(i, t) : smin(free(i, t), CAPS[i], 2));
+const present = (i, t) => (i ? ease((t - T_JOIN) / 0.5) : ease((t - 0.7) / 0.4));
+
+// ---- uses: in each pause between hops, every wafer sitting on a step is worked on there, if the step has its material.
+// Each use takes a third of a container; a delivery brings it back, unless the deliveries have stopped.
+const DWELLS = [{ a: 1.0, b: 1.56 }];
+HOPS.forEach((h, j) => { const a = h.t0 + h.d, b = j + 1 < HOPS.length ? HOPS[j + 1].t0 : a + 0.5; DWELLS.push({ a: (j === 5 ? 7.4 : a) + 0.02, b: b - 0.02 }); });
+const USES = [], PARCELS = [];
+let resLeft = 3;
+DWELLS.forEach((w) => {
+  const m = (w.a + w.b) / 2;
+  for (let i = 0; i < 6; i++) {
+    if (i && m < T_JOIN + 0.4) continue;
+    const f = free(i, m);
+    if (m > T_STOP && f > CAPS[i] + 0.5) continue;                   // held in the queue, short of the step
+    const k = mod(Math.round((f - SA(0)) / 60), 6);
+    if (Math.abs(f - SA(k) - 360 * Math.round((f - SA(k)) / 360)) > 0.5) continue;
+    if (k === RES && w.a > T_CUT) { if (resLeft <= 0) continue; resLeft--; }
+    USES.push({ k, i, a: w.a, b: w.b });
+    if (!(k === RES && w.a > T_CUT)) PARCELS.push({ k, a: w.b - 0.02, b: w.b + 0.3 });
+  }
+});
+const LAST = MAT.map((_, k) => Math.max(...USES.filter((u) => u.k === k).map((u) => u.b)));
+const FIRST = MAT.map((_, k) => Math.min(...USES.filter((u) => u.k === k).map((u) => u.a)));
+const T_EMPTY = LAST[RES], T_STUCK = T_STOP + 0.36;
+const level = (k, t) => clamp(1 - USES.reduce((s, u) => s + (u.k === k ? ease((t - u.a) / (u.b - u.a)) : 0), 0) / 3
+  + PARCELS.reduce((s, p) => s + (p.k === k ? ease((t - p.b + 0.08) / 0.22) : 0), 0) / 3);
+const working = (k, t) => USES.reduce((s, u) => (u.k === k ? Math.max(s, clamp(Math.min((t - u.a) / 0.12, (u.b - t) / 0.12))) : s), 0);
+const usingWafer = (i, t) => USES.reduce((s, u) => (u.i === i ? Math.max(s, clamp(Math.min((t - u.a) / 0.12, (u.b - t) / 0.18))) : s), 0);
+const matOf = (i, t) => { const u = USES.find((u) => u.i === i && t > u.a - 0.05 && t < u.b + 0.3); return u ? u.k : -1; };
+
+// ---- drawing helpers
+function shape(kind) {
+  const p = new Path2D();
+  if (kind === 'cyl') { p.moveTo(-7, 16); p.lineTo(-7, -9); p.arc(0, -9, 7, Math.PI, 0); p.lineTo(7, 16); p.closePath(); return { p, top: -16, bot: 16 }; }
+  if (kind === 'bottle') { p.moveTo(-8, -6); p.lineTo(-8, 13); p.quadraticCurveTo(-8, 16, -5, 16); p.lineTo(5, 16); p.quadraticCurveTo(8, 16, 8, 13); p.lineTo(8, -6); p.lineTo(4, -11); p.lineTo(4, -14); p.lineTo(-4, -14); p.lineTo(-4, -11); p.closePath(); return { p, top: -7, bot: 16 }; }
+  if (kind === 'drum') { p.roundRect(-10, -12, 20, 28, 2.5); return { p, top: -12, bot: 16 }; }
+  p.roundRect(-13, -2, 26, 12, 2); return { p, top: -2, bot: 10 };   // a slab of metal
+}
+const SHAPES = {}; ['cyl', 'bottle', 'drum', 'slab'].forEach((k) => { SHAPES[k] = shape(k); });
+const S = 1.6;                                                      // containers are drawn at 1.6 times
+function icon(ctx, m, x, y, lv, o = {}) {
+  const a = o.alpha == null ? 1 : o.alpha; if (a <= 0) return;
+  const { p, top, bot } = SHAPES[m.kind];
+  ctx.save(); ctx.globalAlpha *= a; ctx.translate(x, y - 3 * S); ctx.scale(S, S);
+  ctx.fillStyle = C.box; ctx.fill(p);
+  ctx.save(); ctx.clip(p); lv = clamp(lv);
+  ctx.fillStyle = m.col; ctx.fillRect(-14, mix(bot, top, lv), 28, (bot - top) * lv + 1);
+  if (m.kind === 'slab') { ctx.fillStyle = 'rgba(255,255,255,0.28)'; ctx.fillRect(-14, -2, 28, 3); }
+  ctx.restore();
+  const edge = o.edge || PAL.ink2;
+  ctx.strokeStyle = edge; ctx.lineWidth = (o.lw || 1.3) / S; ctx.lineJoin = 'round';
+  if (o.dash) ctx.setLineDash([2.4, 2]);
+  ctx.stroke(p); ctx.setLineDash([]);
+  ctx.fillStyle = edge;
+  if (m.kind === 'cyl') { ctx.fillRect(-2.5, -21, 5, 5); ctx.fillRect(-5.5, -22.4, 11, 1.6); }
+  if (m.kind === 'bottle') ctx.fillRect(-5, -19, 10, 5);
+  if (m.kind === 'drum') { ctx.beginPath(); ctx.moveTo(-10, -3); ctx.lineTo(10, -3); ctx.moveTo(-10, 7); ctx.lineTo(10, 7); ctx.stroke(); }
+  ctx.restore();
+}
+function wafer(ctx, x, y, a, tint, tintA, garnet) {
+  if (a <= 0) return;
+  const g = ctx.createLinearGradient(x - WR, y - WR, x + WR, y + WR);
+  g.addColorStop(0, C.wafer[0]); g.addColorStop(0.45, C.wafer[1]); g.addColorStop(0.55, C.wafer[2]); g.addColorStop(1, C.wafer[3]);
+  ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, WR, 0, 7); ctx.fill();
+  if (tintA > 0) { ctx.globalAlpha = a * tintA; ctx.fillStyle = tint; ctx.fill(); }
+  ctx.globalAlpha = a;
+  if (garnet) { ctx.strokeStyle = PAL.garnet; ctx.lineWidth = 2.6; ctx.beginPath(); ctx.arc(x, y, WR - 0.3, 0, 7); ctx.stroke(); }
+  else { ctx.strokeStyle = C.waferEdge; ctx.lineWidth = 1; ctx.stroke(); }
+  ctx.restore();
+}
+function line(ctx, x0, y0, x1, y1, col, w, a, dash) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha = a; ctx.strokeStyle = col; ctx.lineWidth = w; ctx.lineCap = 'round';
+  if (dash) ctx.setLineDash(dash);
+  ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke(); ctx.restore();
+}
+
+function render(ctx, t) {
+  ctx.fillStyle = PAL.bg; ctx.fillRect(0, 0, W, H);
+  CX = mix(CX0, CX1, ease((t - T_PAN) / 0.9));
+  const base = ease((t - 0.25) / 0.6);
+  const cut = ease((t - T_CUT) / 0.3), empty = ease((t - T_EMPTY) / 0.3);
+  const nb = ease((t - 18.85) / 0.75);                              // the new supplier
+  // a step falls idle once the fab has stopped and its last wafer has gone: its words turn grey and its drawing fades by half
+  const idle = MAT.map((_, k) => (k === RES ? 0 : (t > T_STOP ? ease((t - LAST[k] - 0.25) / 0.5) : 0)));
+  const lit = MAT.map((_, k) => ease((t - FIRST[k] + 0.1) / 0.4));  // a step's words appear when the first wafer gets there
+
+  // the ring and its direction
+  ctx.save(); ctx.globalAlpha = base; ctx.strokeStyle = C.track; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(CX, CY, R, 0, 7); ctx.stroke();
+  ctx.strokeStyle = PAL.faint; ctx.lineWidth = 1.6; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  for (let k = 0; k < 6; k++) {
+    const d = SA(k) + 30, [x, y] = pt(d, R), a = d * Math.PI / 180, tx = -Math.sin(a), ty = Math.cos(a), nx = Math.cos(a), ny = Math.sin(a);
+    ctx.beginPath(); ctx.moveTo(x - 6 * tx + 5 * nx, y - 6 * ty + 5 * ny); ctx.lineTo(x + 2 * tx, y + 2 * ty); ctx.lineTo(x - 6 * tx - 5 * nx, y - 6 * ty - 5 * ny); ctx.stroke();
+  }
+  ctx.restore();
+
+  MAT.forEach((m, k) => {
+    const d = SA(k), on = 1 - 0.5 * idle[k];
+    // deliveries: a line in from outside, and a parcel along it after each use
+    const [x0, y0] = pt(d, RD0), [x1, y1] = pt(d, RD1);
+    const dead = k === RES ? cut : 0;
+    ctx.save(); ctx.globalAlpha = base * on * (k === RES ? 1 - nb : 1);   // the new supplier's line takes the resist's place
+    const g = ctx.createLinearGradient(x0, y0, x1, y1); g.addColorStop(0, rgba(dark ? '#4c535d' : '#b9b4aa', 0)); g.addColorStop(0.45, C.pipe); g.addColorStop(1, C.pipe);
+    ctx.strokeStyle = g; ctx.lineWidth = 2.2; ctx.lineCap = 'round';
+    if (dead > 0.5) { ctx.setLineDash([3, 4]); ctx.globalAlpha *= 0.8; }
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke(); ctx.restore();
+    PARCELS.forEach((p) => {
+      if (p.k !== k || t < p.a || t > p.b) return;
+      const u = ease((t - p.a) / (p.b - p.a)), x = mix(x0, x1, u), y = mix(y0, y1, u);
+      ctx.save(); ctx.globalAlpha = base * Math.min(1, u * 4, (1 - u) * 6 + 0.2); ctx.fillStyle = m.col; ctx.beginPath(); ctx.roundRect(x - 5, y - 5, 10, 10, 2.5); ctx.fill(); ctx.restore();
+    });
+    // the feed from the container to the step, with material running in while a wafer is worked on
+    const [f0x, f0y] = pt(d, RC - 24), [f1x, f1y] = pt(d, R + WR + 4);
+    line(ctx, f0x, f0y, f1x, f1y, C.pipe, 1.6, base * on);
+    const wk = working(k, t);
+    if (wk > 0.01) { ctx.save(); ctx.fillStyle = m.col; for (let n = 0; n < 3; n++) { const u = (t * 2.4 + n / 3) % 1; ctx.globalAlpha = wk * Math.sin(Math.PI * u); ctx.beginPath(); ctx.arc(mix(f0x, f1x, u), mix(f0y, f1y, u), 2.6, 0, 7); ctx.fill(); } ctx.restore(); }
+    // the slot where a wafer stops
+    const [sx, sy] = pt(d, R);
+    ctx.save(); ctx.globalAlpha = base * on * 0.85; ctx.strokeStyle = C.track; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(sx, sy, WR + 3.5, 0, 7); ctx.stroke(); ctx.restore();
+    // the container is the step's stock: its level falls with each use and deliveries top it up
+    const [cx, cy] = pt(d, RC), out = k === RES ? empty : 0;
+    icon(ctx, m, cx, cy, level(k, t), { alpha: base * on, edge: out > 0 ? mixc(PAL.ink2, PAL.garnet, out) : PAL.ink2, lw: 1.3 + 0.7 * out });
+    // the step and its material; in lap 1 the step the garnet wafer is at is named in garnet
+    const [lx, ly, al] = LAB[k], a = base * lit[k], hi = t < T_JOIN ? working(k, t) : 0, id = idle[k];
+    tag(m.step, cx + lx, cy + ly - 22, hi > 0 ? mixc(PAL.muted, PAL.garnet, hi) : id > 0 ? mixc(PAL.muted, PAL.faint, 0.6 * id) : PAL.muted, { align: al, alpha: a });
+    text(m.name, cx + lx, cy + ly, NAME, out > 0 ? mixc(PAL.ink, PAL.garnet, out) : id > 0 ? mixc(PAL.ink, PAL.muted, id) : PAL.ink, { align: al, alpha: a });
+  });
+  // the deliveries are named beside the resist's, where they will stop; the resist's line goes empty, crossed out
+  const [dx0, dy0] = pt(S0, RD0);
+  tag('Deliveries', dx0 + 8, dy0 + 5, PAL.muted, { alpha: ease((t - 6.9) / 0.5) * (1 - ease((t - T_PAN) / 0.35)) });
+  if (cut > 0) {
+    const [x, y] = pt(S0, (RD0 + RD1) / 2 - 6);
+    ctx.save(); ctx.globalAlpha = cut * (1 - ease((t - T_PAN) / 0.4)); ctx.strokeStyle = PAL.garnet; ctx.lineWidth = 2.6; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(x - 7, y - 7); ctx.lineTo(x + 7, y + 7); ctx.moveTo(x + 7, y - 7); ctx.lineTo(x - 7, y + 7); ctx.stroke(); ctx.restore();
+  }
+  if (empty > 0) { const [x, y] = pt(S0, RC); tag('Empty', x, y + 48, PAL.garnet, { align: 'center', alpha: empty }); }
+
+  // wafers, tinted by the material of the step they are worked on; the garnet one is drawn last
+  const order = [1, 2, 3, 4, 5, 0].sort((a, b) => (a === 0) - (b === 0) || pos(a, t) - pos(b, t));
+  order.forEach((i) => {
+    const pa = present(i, t); if (pa <= 0) return;
+    const p = pos(i, t), [x, y] = pt(p, R), k = matOf(i, t), f = usingWafer(i, t);
+    if (k >= 0 && f > 0) { const g = ctx.createRadialGradient(x, y, WR - 2, x, y, WR + 14); g.addColorStop(0, rgba(MAT[k].col, (i ? 0.36 : 0.5) * f * pa)); g.addColorStop(1, rgba(MAT[k].col, 0)); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, WR + 14, 0, 7); ctx.fill(); }
+    wafer(ctx, x, y, pa, k >= 0 ? MAT[k].col : null, k >= 0 ? 0.45 * f : 0, i === 0);
+  });
+  // the moment the garnet wafer reaches the empty step and cannot go on
+  const st = clamp((t - T_STUCK) / 0.7);
+  if (st > 0 && st < 1) { const [x, y] = pt(S0, R); ctx.save(); ctx.globalAlpha = 0.7 * (1 - st); ctx.strokeStyle = PAL.garnet; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(x, y, WR + 5 + 13 * ease(st), 0, 7); ctx.stroke(); ctx.restore(); }
+
+  // a new supplier's resist waits on the empty line while it goes through round after round of tests in the fab
+  if (nb > 0) {
+    const [lx0] = pt(S0, RD1), nx = mix(800, 714, nb), ny = CY;
+    line(ctx, lx0 - 6, ny, nx - 20, ny, C.pipe, 2.2, nb, [3, 4]);
+    icon(ctx, MAT[RES], nx, ny, 1, { alpha: nb, dash: true, edge: PAL.ink2 });
+    tag('New supplier', 744, ny - 48, PAL.ink2, { align: 'right', alpha: nb });
+    // each round sweeps once around, then fills; they run from the new supplier toward the fab, and the last is still going
+    const N = 5, X0 = 560, DX = 30, T_R = 19.7, DR = 0.9;
+    for (let j = 0; j < N; j++) {
+      const r = N - 1 - j, x = X0 + j * DX, u = clamp((t - T_R - DR * r) / 0.58), fillA = ease((t - T_R - DR * r - 0.52) / 0.2);
+      ctx.save(); ctx.globalAlpha = nb; ctx.fillStyle = PAL.bg; ctx.beginPath(); ctx.arc(x, ny, 11, 0, 7); ctx.fill();
+      ctx.strokeStyle = PAL.faint; ctx.lineWidth = 1.4; ctx.stroke();
+      if (u > 0) { ctx.strokeStyle = PAL.ink2; ctx.lineWidth = 2.6; ctx.lineCap = 'round'; ctx.beginPath(); ctx.arc(x, ny, 11, -Math.PI / 2, -Math.PI / 2 + 2 * Math.PI * u); ctx.stroke(); }
+      if (fillA > 0) { ctx.globalAlpha = nb * fillA; ctx.fillStyle = MAT[RES].col; ctx.beginPath(); ctx.arc(x, ny, 7.5, 0, 7); ctx.fill(); }
+      ctx.restore();
+    }
+    tag('Rounds of tests', X0 + (N - 1) * DX / 2, ny + 38, PAL.muted, { align: 'center', alpha: nb });
+    tag('in the fab', X0 + (N - 1) * DX / 2, ny + 57, PAL.muted, { align: 'center', alpha: nb });
+  }
+}
+A.start({ W, H, duration: DURATION, fade: 0.8, steps: STEPS, render, fonts: [TAG, NAME] });
+window.INFO = { T_CUT, T_EMPTY, T_STOP, CAPS, LAST };
+</script></body></html>

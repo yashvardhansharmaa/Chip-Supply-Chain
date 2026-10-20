@@ -19,13 +19,13 @@
     "date": "2018-07-13",
     "actor": "US (BIS)",
     "title": "ZTE denial order terminated",
-    "summary": "BIS terminated the April 2018 denial order and removed ZTE from the Denied Persons List. ZTE had met the terms of its 8 June settlement: a $1 billion penalty, $400 million placed in escrow, a replaced board and a US-appointed compliance monitor. A ten-year denial order remains in place but suspended. The order had run for 89 days. It is the only US measure on this timeline that barred exports outright.",
+    "summary": "BIS terminated the April 2018 denial order and removed ZTE from the Denied Persons List. ZTE had met the terms of its 8 June settlement: a $1 billion penalty, $400 million placed in escrow, a replaced board and a US-appointed compliance monitor. A ten-year denial order remains in place but suspended. The April order is the only US measure on this timeline that barred exports outright.",
     "category": "US export control",
     "instrument": "denial-order",
     "frCitation": "83 FR 34825",
     "cfr": "15 CFR part 766",
     "source": "https://www.govinfo.gov/content/pkg/FR-2018-07-23/html/2018-15633.htm",
-    "gist": "The only outright US export ban on this timeline lasted 89 days and ended in settlement.",
+    "gist": "The only outright US export ban on this timeline ended in July 2018 after a settlement.",
     "id": "2018-07-13-zte-order-terminated",
     "flows": [
       "entity"
@@ -51,7 +51,7 @@
     "date": "2019-05-16",
     "actor": "US (BIS)",
     "title": "Huawei and 68 affiliates added to the Entity List",
-    "summary": "BIS listed Huawei Technologies and 68 non-US affiliates across 26 destinations, requiring a license with a presumption of denial for every item subject to the EAR. The listing ended Huawei's access to Google Mobile Services, Intel and Xilinx parts and US chip design (EDA) software. BIS added a further 46 affiliates in August 2019 and 38 more in August 2020, taking the listed total past 150 entities. Huawei's handset shipments fell from roughly 240 million units in 2019 to about 35 million in 2021.",
+    "summary": "BIS listed Huawei Technologies and 68 non-US affiliates across 26 destinations, requiring a license with a presumption of denial for every item subject to the EAR. The listing ended Huawei's access to Google Mobile Services, Intel and Xilinx parts and US chip design (EDA) software. BIS added a further 46 affiliates in August 2019 and 38 more in August 2020.",
     "category": "US export control",
     "instrument": "entity-listing",
     "frCitation": "84 FR 22961",
@@ -62,6 +62,46 @@
     "flows": [
       "entity"
     ]
+  },
+  {
+    "date": "2019-07-01",
+    "effectiveDate": "2019-07-04",
+    "actor": "Japan (METI)",
+    "title": "Japan requires individual licenses for three chemicals sold to South Korea",
+    "summary": "From 4 July 2019, Japan's Ministry of Economy, Trade and Industry (METI) required exporters to get an individual license to ship fluorinated polyimide, resist (photoresist) and hydrogen fluoride to South Korea. The bulk licenses that had covered the three items no longer applied. The change also covered their technology, which METI said may include technology transferred with exports of manufacturing equipment. METI said the relationship of trust with South Korea, including on export control, \"has been significantly undermined\". It also said it had found sensitive items exported to South Korea with inadequate management by companies. On the same day METI opened public comment on removing South Korea from its list of so-called white countries.",
+    "category": "Other governments",
+    "instrument": "licence-policy",
+    "frCitation": "Foreign Exchange and Foreign Trade Act, articles 25(1) and 48(1)",
+    "source": "https://web.archive.org/web/20250325151832/https://www.meti.go.jp/english/press/2019/0701_001.html",
+    "gist": "Each export of the three chemicals to South Korea needed its own license from 4 July 2019.",
+    "id": "2019-07-01-japan-korea-three-chemicals",
+    "flows": []
+  },
+  {
+    "date": "2019-08-02",
+    "effectiveDate": "2019-08-28",
+    "actor": "Japan (METI)",
+    "title": "Japan removes South Korea from its preferred trade partner list",
+    "summary": "The Japanese cabinet approved an order removing South Korea from Appended Table III of the Export Trade Control Order, the countries often called the white list or preferred trade partner list. The order was promulgated on 7 August and took effect on 28 August 2019. Exporters could no longer use general bulk licenses for goods and technology sent to South Korea. Those exports also came under catch-all control, which requires a license for unlisted goods and technology that could have military uses or serve weapons of mass destruction. Special general bulk licenses, granted to exporters that meet higher standards, remained available. METI regrouped destinations into Groups A to D and placed South Korea in Group B. Fluorinated polyimide, resist and hydrogen fluoride had needed individual licenses since 4 July. METI said it would grant them if exports were verified as legitimate private transactions.",
+    "category": "Other governments",
+    "instrument": "rule",
+    "frCitation": "Export Trade Control Order (Cabinet Order No. 378 of 1949), Appended Table III",
+    "source": "https://web.archive.org/web/20221222221824/https://www.meti.go.jp/english/press/2019/0802_001.html",
+    "gist": "South Korea lost access to Japan's general bulk licenses, and exports to it came under catch-all control.",
+    "id": "2019-08-02-japan-korea-group-a",
+    "flows": []
+  },
+  {
+    "date": "2019-09-18",
+    "actor": "South Korea (MOTIE)",
+    "title": "South Korea removes Japan from its white list",
+    "summary": "South Korea's Ministry of Trade, Industry and Energy (MOTIE) removed Japan from its white list of countries with fast-track trade status, with immediate effect on 18 September 2019. South Korean exports to Japan related to weapons production faced longer permit applications and more paperwork. The ministry said the change aimed to improve South Korea's export control system and was not retaliation against Japan. Japan had removed South Korea's fast-track status in late August, after tightening exports to South Korea of three materials used in the chip and display industries. South Korea had also filed a World Trade Organization (WTO) dispute over the Japanese export curbs.",
+    "category": "Other governments",
+    "instrument": "rule",
+    "source": "https://www.reuters.com/article/us-southkorea-japan-whitelist/south-korea-removes-japan-from-fast-track-trade-white-list-idUSKBN1W21T2",
+    "gist": "South Korea dropped Japan from its own fast-track trade list and took Japan's export curbs to the WTO.",
+    "id": "2019-09-18-korea-japan-white-list",
+    "flows": []
   },
   {
     "date": "2020-05-15",
@@ -101,7 +141,7 @@
     "actor": "China (NPC Standing Committee)",
     "title": "China's Export Control Law",
     "summary": "The Standing Committee of the National People's Congress adopted a single statute for export control, in force from 1 December 2020. It authorizes control lists, licenses, and end-user and end-use certificates. It also authorizes a list of foreign parties that may be barred from buying, controls over reexports of Chinese-origin items, and countermeasures against states that use export controls against China. Every Chinese export control since, from the gallium licensing of 2023 to the rare earth rules of 2025, has been issued under it.",
-    "category": "China countermeasure",
+    "category": "China",
     "instrument": "rule",
     "frCitation": "Export Control Law of the People’s Republic of China, article 49",
     "source": "https://exportcontrol.mofcom.gov.cn/article/zcfg/gnzcfg/flfg/202111/226.html",
@@ -127,6 +167,31 @@
     "flows": [
       "entity"
     ]
+  },
+  {
+    "date": "2021-09-09",
+    "actor": "EU (Parliament and Council)",
+    "title": "EU's new dual-use export regulation enters into force",
+    "summary": "The European Union's new Export Control Regulation for dual-use items, civilian goods and technology with possible military or security uses, entered into force on 9 September 2021. It replaced the EU's 2009 rules. The European Commission said the regulation builds on the Wassenaar Arrangement, the multilateral export control framework behind many of the restrictions it imposes. The regulation lets the Commission amend the list of controlled items or destinations by delegated act, a simplified procedure. The Commission said the new framework would also let the EU pool expertise on emerging dual-use technologies such as advanced computing.",
+    "category": "Other governments",
+    "instrument": "rule",
+    "frCitation": "Regulation (EU) 2021/821",
+    "source": "https://ec.europa.eu/commission/presscorner/detail/en/ip_21_4601",
+    "gist": "The EU's dual-use export rules took effect, letting the Commission update the control list by delegated act.",
+    "id": "2021-09-09-eu-dual-use-regulation",
+    "flows": []
+  },
+  {
+    "date": "2021-11-23",
+    "actor": "Italy (government)",
+    "title": "Italy vetoes a Chinese purchase of Applied Materials' Italian unit",
+    "summary": "Italy's government blocked Zhejiang Jingsheng Mechanical, a Chinese company, from buying Applied Materials' screen printing equipment business in Italy through a joint venture with the US group's Hong Kong arm. Zhejiang Jingsheng disclosed the veto in a Hong Kong filing on 23 November 2021. Two government sources told Reuters the cabinet had decided on 18 November on the recommendation of Industry Minister Giancarlo Giorgetti. The sources said Giorgetti had argued that the takeover could have consequences for the strategic semiconductor sector. The joint venture was also meant to take over Applied Materials' wafer equipment business in Singapore and its assets in China. In April 2021 the government had stopped Shenzhen Invenland Holdings, another Chinese company, from buying a controlling stake in a maker of semiconductor equipment. Italy uses its golden powers to block bids in industries it considers strategic.",
+    "category": "Other governments",
+    "instrument": "investment-screening",
+    "source": "https://www.reuters.com/markets/deals/italys-draghi-vetoes-third-chinese-takeover-this-year-2021-11-23/",
+    "gist": "Italy blocked a Chinese firm from buying an Applied Materials unit after the industry minister cited the semiconductor sector.",
+    "id": "2021-11-23-italy-applied-materials-veto",
+    "flows": []
   },
   {
     "date": "2022-08-09",
@@ -181,7 +246,7 @@
     "effectiveDate": "2022-10-21",
     "actor": "US (BIS)",
     "title": "October 2022 rules on advanced computing and semiconductor equipment",
-    "summary": "BIS created ECCN 3A090 and imposed China-wide controls on advanced chips, capturing the A100 and H100. The controls covered chips above 4,800 total processing performance (TPP), the rules' measure of computing power, combined with interconnect bandwidth of 600 GB/s or more. New foreign direct product rules extended the chip controls to such chips and computers made outside the United States with US technology or software. Equipment controls covered fabs making logic at 16/14 nm or below or with non-planar transistors, DRAM at 18 nm half-pitch or below and NAND with 128 layers or more. US persons needed a BIS license to support advanced chipmaking in China. The interim final rule was published on 13 October. Parts of §§742.6 and 744.23 and the new equipment ECCN 3B090 took effect on 7 October, and §744.6 on 12 October. The chip ECCNs 3A090 and 4A090, the direct product rules and the Entity List changes took effect on 21 October.",
+    "summary": "BIS created ECCN 3A090 and imposed China-wide controls on advanced chips, capturing the A100 and H100. The controls covered chips with a total processing performance (TPP), the rules' measure of computing power, of 4,800 or more, combined with interconnect bandwidth of 600 GB/s or more. New foreign direct product rules extended the chip controls to such chips and computers made outside the United States with US technology or software. Equipment controls covered fabs making logic at 16/14 nm or below or with non-planar transistors, DRAM at 18 nm half-pitch or below and NAND with 128 layers or more. US persons needed a BIS license to support advanced chipmaking in China. The interim final rule was published on 13 October. Parts of §§742.6 and 744.23 and the new equipment ECCN 3B090 took effect on 7 October, and §744.6 on 12 October. The chip ECCNs 3A090 and 4A090, the direct product rules and the Entity List changes took effect on 21 October.",
     "category": "US export control",
     "instrument": "rule",
     "frCitation": "87 FR 62186",
@@ -194,6 +259,31 @@
       "ai-chips-top",
       "us-tools"
     ]
+  },
+  {
+    "date": "2022-11-09",
+    "actor": "Germany (government)",
+    "title": "Germany blocks Chinese investment in two chipmakers",
+    "summary": "The German government blocked Chinese investment in two domestic semiconductor producers after the deals raised concerns about national security and the flow of sensitive know-how to China. It vetoed the takeover of the chip factory of Elmos, a company based in Dortmund, by Silex, a Swedish subsidiary of the Chinese group Sai Microelectronics. Government sources told Reuters it also blocked investment in ERS Electronic, a company in Bavaria that had been exploring investment from a Chinese private equity firm. Economy Minister Robert Habeck said that in the semiconductor sector the government wanted to protect the technological and economic sovereignty of Germany and Europe. Sai Microelectronics said it deeply regretted the decision.",
+    "category": "Other governments",
+    "instrument": "investment-screening",
+    "source": "https://www.reuters.com/markets/deals/germany-block-chinese-takeover-semiconductor-firm-ers-electronic-handelsblatt-2022-11-09/",
+    "gist": "Berlin vetoed a Chinese-owned firm's purchase of Elmos's chip factory and blocked investment in ERS Electronic.",
+    "id": "2022-11-09-germany-elmos-veto",
+    "flows": []
+  },
+  {
+    "date": "2022-11-16",
+    "actor": "UK (government)",
+    "title": "UK orders Nexperia to sell Newport Wafer Fab",
+    "summary": "The British government ordered Nexperia, a Chinese-owned technology company headquartered in the Netherlands, to sell at least 86 percent of Newport Wafer Fab, Britain's biggest microchip factory. Nexperia had taken its stake to 100 percent in July 2021. The order followed a national security assessment under a law in force since January 2022. The law lets the government scrutinize and potentially block acquisitions in sensitive sectors, including deals completed since November 2020. The government cited a national security risk from the technology and know-how that compound semiconductor activities at the site could yield. Nexperia said it did not accept the concerns and would appeal.",
+    "category": "Other governments",
+    "instrument": "investment-screening",
+    "frCitation": "National Security and Investment Act 2021, section 26 final order",
+    "source": "https://www.reuters.com/technology/uk-orders-chinas-nexperia-sell-least-86-microchip-factory-2022-11-16/",
+    "gist": "Britain ordered a Chinese-owned firm to sell at least 86 percent of its biggest chip factory, citing national security.",
+    "id": "2022-11-16-uk-newport-order",
+    "flows": []
   },
   {
     "date": "2022-12-23",
@@ -212,31 +302,58 @@
     ]
   },
   {
+    "date": "2023-03-23",
+    "actor": "Japan (METI)",
+    "title": "Japan allows special bulk licenses for three chemicals sold to South Korea",
+    "summary": "From 23 March 2023, Japan's Ministry of Economy, Trade and Industry (METI) covered exports of hydrogen fluoride, fluorinated polyimide and resists to South Korea under its Special General Bulk Export License system. The change also covered transfers of their technology. METI described the change as a review of how it handles exports of the three items to South Korea under the Foreign Exchange and Foreign Trade Act. License applications for the three items moved from METI's Trade Security Inspection Division to its regional bureaus and trade offices. METI asked exporters to keep checking end users and end uses under their internal export control rules.",
+    "category": "Other governments",
+    "instrument": "licence-policy",
+    "frCitation": "METI circular notice, 23 March 2023",
+    "source": "https://web.archive.org/web/20250408171837/https://www.meti.go.jp/english/press/2023/0323_001.html",
+    "gist": "The three chemicals joined Japan's special bulk license system for exports to South Korea from 23 March 2023.",
+    "id": "2023-03-23-japan-korea-chemicals-bulk",
+    "flows": []
+  },
+  {
     "date": "2023-05-21",
     "actor": "China (Cyberspace Administration)",
     "title": "Micron barred from critical information infrastructure",
-    "summary": "China's Cybersecurity Review Office, a body outside the export-control system, ended a two-month review by concluding that Micron's products carried serious security risks. It ordered operators of critical information infrastructure to stop buying them. Micron told the SEC that customers headquartered in mainland China and Hong Kong were about a quarter of its worldwide revenue. It said roughly half of that revenue, a low-double-digit percentage of the worldwide figure, was at risk. The decision was Beijing's first direct retaliation against a US chipmaker. Chinese buyers shifted to Samsung, SK hynix and the domestic suppliers YMTC and CXMT.",
-    "category": "China countermeasure",
+    "summary": "China's Cybersecurity Review Office, a body outside the export-control system, concluded a review of Micron's products sold in China by finding that they carried serious security risks. It ordered operators of critical information infrastructure to stop buying them. The office called the review a necessary measure to protect national security and said foreign firms that follow Chinese law are welcome in the Chinese market. Micron told the SEC that customers headquartered in mainland China and Hong Kong were about a quarter of its worldwide revenue. It said roughly half of that revenue, a low-double-digit percentage of the worldwide figure, was at risk.",
+    "category": "China",
     "instrument": "countermeasure",
     "frCitation": "Cybersecurity Review Office notice, 21 May 2023",
     "source": "https://www.cac.gov.cn/2023-05/21/c_1686348043518073.htm",
-    "gist": "Beijing hit back at a US chipmaker for the first time, and Chinese buyers switched suppliers.",
+    "gist": "China told operators of critical information infrastructure to stop buying Micron products, citing security risks.",
     "id": "2023-05-21-micron-barred",
     "flows": [
       "china-market"
     ]
   },
   {
+    "date": "2023-06-27",
+    "effectiveDate": "2023-07-21",
+    "actor": "Japan (METI)",
+    "title": "Japan returns South Korea to its preferred trade partner list",
+    "summary": "The Japanese cabinet decided to add South Korea to Appended Table 3 of the Export Trade Control Order. The order was promulgated on 30 June and took effect on 21 July 2023. From then, exporters could use general bulk licenses for goods and technology sent to South Korea. Those exports also left catch-all control, under which an exporter needs a license for unlisted goods that could be used for weapons. Japan's Ministry of Economy, Trade and Industry (METI) asked exporters to keep screening transactions, including end users and end uses.",
+    "category": "Other governments",
+    "instrument": "rule",
+    "frCitation": "Export Trade Control Order, Appended Table 3",
+    "source": "https://www.meti.go.jp/english/press/2023/0627_004.html",
+    "gist": "From 21 July 2023, general bulk licenses covered exports to South Korea, and those exports left catch-all control.",
+    "id": "2023-06-27-japan-korea-group-a-restored",
+    "flows": []
+  },
+  {
     "date": "2023-07-03",
     "effectiveDate": "2023-08-01",
     "actor": "China (MOFCOM and Customs)",
     "title": "Gallium and germanium export licensing",
-    "summary": "China's Ministry of Commerce (MOFCOM) and the General Administration of Customs issued Announcement No. 23 of 2023 on national security grounds. It placed eight gallium-related and six germanium-related items under dual-use export licensing from 1 August 2023. Controlled items include gallium metal, gallium nitride, gallium arsenide, germanium metal, zone-refined germanium ingots and germanium tetrachloride. China produced roughly 98 percent of the world's primary gallium and about 60 percent of refined germanium at the time. Chinese exports of both metals fell sharply in the following months, and prices outside China roughly doubled.",
-    "category": "China countermeasure",
-    "instrument": "countermeasure",
+    "summary": "China's Ministry of Commerce (MOFCOM) and the General Administration of Customs issued Announcement No. 23 of 2023 on national security grounds. It placed eight gallium-related and six germanium-related items under dual-use export licensing from 1 August 2023. Controlled items include gallium metal, gallium nitride, gallium arsenide, germanium metal, zone-refined germanium ingots and germanium tetrachloride. Exporters must apply to MOFCOM through provincial commerce departments and supply end-user and end-use certificates.",
+    "category": "China",
+    "instrument": "rule",
     "frCitation": "MOFCOM and GAC Announcement 2023 No. 23",
     "source": "http://exportcontrol.mofcom.gov.cn/article/zcfg/gnzcfg/zcfggzqd/202307/847.html",
-    "gist": "China put gallium and germanium exports under license, and prices outside China roughly doubled.",
+    "gist": "Eight gallium items and six germanium items needed a license to leave China from August 2023.",
     "id": "2023-07-03-gallium-germanium",
     "flows": [
       "minerals",
@@ -247,12 +364,12 @@
     "date": "2023-07-23",
     "actor": "Japan (METI)",
     "title": "Japanese controls on 23 categories of chipmaking equipment",
-    "summary": "An amended export trade control order from Japan's Ministry of Economy, Trade and Industry (METI) took effect, adding 23 categories of advanced semiconductor manufacturing equipment to the license list. The categories cover cleaning, deposition, lithography, annealing, test and mask-related tools. The controls apply to all destinations, but a simplified process covers 42 friendly countries, so China is the practical target. Tokyo Electron, SCREEN, Advantest, Nikon and Canon were the main affected exporters.",
-    "category": "Allied control",
+    "summary": "An amended ordinance from Japan's Ministry of Economy, Trade and Industry (METI) took effect on 23 July 2023, adding 23 types of advanced semiconductor manufacturing equipment to the export license list. METI had promulgated the ordinance on 23 May. The 23 items are tools for cleaning, deposition, annealing, lithography, etching and inspection. METI said the additions aim to prevent diversion to military use and supplement the Wassenaar Arrangement. The controls apply regardless of destination.",
+    "category": "Other governments",
     "instrument": "rule",
-    "frCitation": "METI, amended export trade control order",
+    "frCitation": "METI Ordinance No. 25 of 2023",
     "source": "https://www.csis.org/analysis/csis-translation-updated-japanese-export-controls-high-performance-semiconductor",
-    "gist": "Japan's toolmakers needed licenses to ship 23 types of advanced tools to China.",
+    "gist": "Japanese exporters needed a license to ship 23 more types of advanced chipmaking tools to any destination.",
     "id": "2023-07-23-japan-tools",
     "flows": [
       "allies"
@@ -262,14 +379,29 @@
     "date": "2023-09-01",
     "actor": "Netherlands (Ministry of Foreign Affairs)",
     "title": "Dutch license requirement takes effect for advanced immersion DUV",
-    "summary": "The Netherlands' national export control measure for advanced semiconductor manufacturing equipment entered into force. It covers exports outside the EU, with license applications assessed case by case. ASML confirmed on 30 June 2023 that it would need Dutch licenses for all shipments of the TWINSCAN NXT:2000i and subsequent immersion systems. It said it expected no material impact on its 2023 outlook. ASML's 2024 annual report records higher shipments to China, drawn from a backlog built in earlier years. Customers in China represented 36.1 percent of its 2024 total net sales.",
-    "category": "Allied control",
+    "summary": "The Netherlands' national export control measure for advanced semiconductor manufacturing equipment entered into force on 1 September 2023. ASML said on 30 June 2023 that it would need Dutch licenses for all shipments of its most advanced immersion DUV systems, the TWINSCAN NXT:2000i and later models. The Dutch government would grant or deny the applications case by case. ASML said sales of its EUV systems were already restricted. It said it expected no material impact on its financial outlook for 2023.",
+    "category": "Other governments",
     "instrument": "rule",
     "source": "https://www.asml.com/en/news/press-releases/2023/statement-regarding-export-control-regulations-dutch-government",
-    "gist": "ASML needed Dutch licenses for its newest immersion scanners, but its shipments to China rose as it filled earlier orders.",
+    "gist": "ASML needed Dutch licenses to ship its most advanced immersion DUV scanners, from the NXT:2000i on.",
     "id": "2023-09-01-dutch-licence",
     "flows": [
       "allies"
+    ]
+  },
+  {
+    "date": "2023-09-21",
+    "actor": "EU (Parliament and Council)",
+    "title": "European Chips Act enters into force",
+    "summary": "The European Chips Act entered into force on 21 September 2023, with the aim of doubling the EU's share of the global semiconductor market to 20 percent in 2030. Its first pillar, the Chips for Europe Initiative, has €3.3 billion of EU funds, which member states are expected to match. The money supports pilot production lines, a cloud-based design platform, competence centers, quantum chips and a Chips Fund for debt and equity financing. The second pillar creates a status for first-of-a-kind integrated production facilities and open EU foundries, which may receive state aid. The third sets up a mechanism for the European Commission and member states to monitor chip supply and, if needed, trigger a crisis stage.",
+    "category": "Industrial policy",
+    "instrument": "industrial-policy",
+    "frCitation": "Regulation (EU) 2023/1781",
+    "source": "https://ec.europa.eu/commission/presscorner/detail/en/ip_23_4518",
+    "gist": "The EU set a goal of 20 percent of the global chip market in 2030 and put €3.3 billion of EU funds into chip research and pilot lines.",
+    "id": "2023-09-21-eu-chips-act",
+    "flows": [
+      "industrial"
     ]
   },
   {
@@ -295,13 +427,13 @@
     "date": "2023-10-17",
     "actor": "US (BIS)",
     "title": "Biren and Moore Threads added to the Entity List",
-    "summary": "On the same day it closed the A800 and H800 workaround, BIS added thirteen Chinese entities to the Entity List for developing advanced computing chips. They included Beijing Biren Technology and its affiliates and the three Moore Thread Intelligent Technology companies. A license is required for all items subject to the EAR, and applications are reviewed under a presumption of denial. Both firms had been designing GPUs meant to replace Nvidia parts in Chinese data centers.",
+    "summary": "On the same day it closed the A800 and H800 workaround, BIS added thirteen Chinese entities to the Entity List for developing advanced computing chips. They included Beijing Biren Technology and its affiliates and the three Moore Thread Intelligent Technology companies. A license is required for all items subject to the EAR, and applications are reviewed under a presumption of denial. BIS said advanced computing chips can provide artificial intelligence capabilities for weapons of mass destruction, advanced weapons systems and high-tech surveillance.",
     "category": "US export control",
     "instrument": "entity-listing",
     "frCitation": "88 FR 71991",
     "cfr": "15 CFR 744.11",
     "source": "https://www.govinfo.gov/content/pkg/FR-2023-10-19/html/2023-23048.htm",
-    "gist": "On the day it tightened the AI chip rules, BIS listed the two Chinese GPU designers closest to replacing Nvidia.",
+    "gist": "On the day it tightened the AI chip rules, BIS listed the Chinese GPU designers Biren and Moore Threads.",
     "id": "2023-10-17-entity-additions",
     "flows": [
       "entity",
@@ -309,11 +441,28 @@
     ]
   },
   {
+    "date": "2023-10-20",
+    "effectiveDate": "2023-12-01",
+    "actor": "China (MOFCOM and Customs)",
+    "title": "Graphite export licensing",
+    "summary": "China's commerce ministry, MOFCOM, and the General Administration of Customs issued Announcement No. 39 of 2023, citing national security and interests. From 1 December 2023 two groups of graphite items needed a license to leave China. The first is synthetic graphite and its products with purity above 99.9 percent, flexural strength above 30 MPa and density above 1.73 grams per cubic centimeter. The second is natural flake graphite and its products, including spherical and expanded graphite. Exporters must apply to MOFCOM through provincial commerce departments and supply end-user and end-use certificates. The announcement lifted temporary controls on the other graphite items in a 2006 announcement, which it repealed.",
+    "category": "China",
+    "instrument": "rule",
+    "frCitation": "MOFCOM and GAC Announcement 2023 No. 39",
+    "source": "https://www.mofcom.gov.cn/zcfb/blgg/art/2023/art_f6b1bc49e2c8482f8eb749012bc66dec.html",
+    "gist": "High-purity synthetic graphite and natural flake graphite needed a license to leave China from December 2023.",
+    "id": "2023-10-20-graphite-licensing",
+    "flows": [
+      "minerals",
+      "minerals-world"
+    ]
+  },
+  {
     "date": "2024-01-01",
     "actor": "Netherlands (government) and ASML",
     "title": "Dutch government partly revokes an ASML license for China",
     "summary": "ASML said on 1 January 2024 that the Dutch government had recently partially revoked a license for the shipment of NXT:2050i and NXT:2100i immersion lithography systems in 2023. The revocation affected a small number of customers in China. ASML said it did not expect the revocation, or the latest US export rules, to have a material impact on its 2023 financial outlook.",
-    "category": "Allied control",
+    "category": "Other governments",
     "instrument": "licence-policy",
     "source": "https://investor.asml.com/news-releases/news-release-details/statement-regarding-partial-revocation-export-license",
     "gist": "Before the end of 2023, the Dutch government partly withdrew a license it had already granted for two ASML immersion scanner models.",
@@ -324,13 +473,13 @@
   },
   {
     "date": "2024-05-24",
-    "actor": "China (State Council)",
+    "actor": "China (Big Fund)",
     "title": "Big Fund III capitalized at 344 billion yuan",
-    "summary": "The third phase of China's National Integrated Circuit Industry Investment Fund, known as the Big Fund, was registered with 344 billion yuan, larger than Phases I and II combined. Six state banks together hold about 33 percent, with ICBC, Agricultural Bank, Bank of China and China Construction Bank putting in 21.5 billion yuan each. Reported priorities include silicon carbide and gallium nitride, high-value DRAM, and continued support for equipment and materials. Phase I raised 138.7 billion yuan in 2014 and Phase II 204 billion yuan in 2019.",
+    "summary": "The third phase of China's National Integrated Circuit Industry Investment Fund, known as the Big Fund, was registered on 24 May 2024 with 344 billion yuan of capital. Six state-owned banks planned to provide 33.14 percent of it, with Industrial and Commercial Bank of China, Agricultural Bank of China, Bank of China and China Construction Bank putting in 21.5 billion yuan each within 10 years. Industry sources expected silicon carbide and gallium nitride to be an investment focus. Phase I was registered in 2014 with 138.7 billion yuan and Phase II in 2019 with 204 billion yuan.",
     "category": "Industrial policy",
     "instrument": "industrial-policy",
     "source": "https://english.www.gov.cn/news/202405/29/content_WS66569746c6d0868f4e8e7987.html",
-    "gist": "China's third state chip fund was larger than the first two combined, with reported priorities in tools, materials and memory.",
+    "gist": "China's third state chip fund was registered with 344 billion yuan, nearly a third of it from six state-owned banks.",
     "id": "2024-05-24-big-fund-three",
     "flows": [
       "industrial"
@@ -341,12 +490,12 @@
     "effectiveDate": "2024-09-07",
     "actor": "Netherlands (Ministry of Foreign Affairs)",
     "title": "Dutch controls extended to more DUV immersion tools",
-    "summary": "The Netherlands expanded its national licensing measure to more types of advanced semiconductor manufacturing equipment from 7 September 2024. The Dutch requirement replaced the US license requirement that had covered ASML's mid-range TWINSCAN NXT:1970i and NXT:1980i immersion scanners and related services. Klever, the Dutch minister for foreign trade, cited increased security risks in the current geopolitical context and stressed that applications would still be assessed case by case. The measure was tightened again on 1 April 2025.",
-    "category": "Allied control",
+    "summary": "On 6 September 2024 the Dutch government published an updated license requirement for exports of immersion DUV lithography equipment, in effect from 7 September. ASML said the change made the Dutch government, in place of the US government, the authority that licenses shipments of its TWINSCAN NXT:1970i and NXT:1980i immersion systems from the Netherlands. The requirement also covers specially designed parts, software and technology for these systems exported outside the EU. The Dutch requirement was already in place for the NXT:2000i and later immersion systems.",
+    "category": "Other governments",
     "instrument": "rule",
     "frCitation": "Staatscourant 2024, 29008",
-    "source": "https://www.government.nl/latest/news/2024/09/06/the-netherlands-expands-export-control-measure-advanced-semiconductor-manufacturing-equipment",
-    "gist": "The Dutch government took over licensing of ASML's mid-range immersion scanners from the United States.",
+    "source": "https://www.sec.gov/Archives/edgar/data/937966/000093796625000009/asml-20241231.htm",
+    "gist": "The Dutch government took over from the United States the licensing of ASML's NXT:1970i and NXT:1980i immersion scanners.",
     "id": "2024-09-06-dutch-extension",
     "flows": [
       "allies"
@@ -356,13 +505,13 @@
     "date": "2024-09-06",
     "actor": "US (BIS)",
     "title": "Worldwide controls on gate-all-around, quantum and additive items",
-    "summary": "BIS added worldwide license requirements for gate-all-around transistor technology under ECCN 3E905, a set of quantum computing items, scanning electron microscopes under 3B903 and metal additive manufacturing (3D printing) equipment. The requirements aligned with controls that allied governments had adopted. License Exception IEC (Implemented Export Controls) at §740.24 authorizes shipments to countries that have imposed equivalent controls. Exports to other countries still need a license.",
+    "summary": "BIS added worldwide license requirements for gate-all-around transistor technology under ECCN 3E905, a set of quantum computing items, scanning electron microscopes under 3B903 and metal additive manufacturing (3D printing) equipment. BIS said the requirements were consistent with controls that several other governments had adopted. License Exception IEC (Implemented Export Controls) at §740.24 authorizes shipments to countries that have imposed equivalent controls. Exports to other countries still need a license.",
     "category": "US export control",
     "instrument": "rule",
     "frCitation": "89 FR 72926",
     "cfr": "15 CFR 742.6(a)(10); 742.4(a)(5); 740.24",
     "source": "https://www.govinfo.gov/content/pkg/FR-2024-09-06/html/2024-19633.htm",
-    "gist": "New worldwide controls exempted shipments to allies that impose the same controls.",
+    "gist": "New worldwide license requirements came with an exception for countries that impose the same controls.",
     "id": "2024-09-06-gaafet-quantum",
     "flows": [
       "us-tools"
@@ -389,13 +538,13 @@
   {
     "date": "2024-12-03",
     "actor": "China (MOFCOM)",
-    "title": "Outright ban on gallium, germanium and antimony exports to the US",
-    "summary": "MOFCOM Notice No. 46 of 2024, issued the day after the US equipment package, banned exports of gallium, germanium, antimony and superhard materials to the United States. It also imposed stricter end-user and end-use checks on dual-use graphite. Unlike the 2023 measures, which set up licensing, this was a country-specific prohibition. The US Geological Survey estimated the gallium and germanium ban alone could cost the US economy about $3.4 billion of GDP. US germanium prices roughly doubled over the following year.",
-    "category": "China countermeasure",
-    "instrument": "countermeasure",
+    "title": "Ban on gallium, germanium and antimony exports to the US",
+    "summary": "MOFCOM Notice No. 46 of 2024, issued the day after the US equipment package, banned exports of all dual-use items to US military users or for military uses. It said exports of gallium, germanium, antimony and superhard materials to the United States would in principle not be permitted. It also imposed stricter end-user and end-use checks on dual-use graphite sent to the United States. Unlike the 2023 measures, which set up licensing, this was a country-specific prohibition. The US Geological Survey estimated the gallium and germanium ban alone could cost the US economy about $3.4 billion of GDP.",
+    "category": "China",
+    "instrument": "rule",
     "frCitation": "MOFCOM Announcement 2024 No. 46",
     "source": "https://cset.georgetown.edu/publication/china-rare-earth-export-ban/",
-    "gist": "China moved from licensing to an outright ban on exports to the US, and US germanium prices roughly doubled.",
+    "gist": "China moved from licensing to a ban on gallium, germanium and antimony exports to the US.",
     "id": "2024-12-03-minerals-ban",
     "flows": [
       "minerals"
@@ -423,7 +572,7 @@
     "actor": "Netherlands (Ministry of Foreign Affairs)",
     "title": "Dutch controls extended to measuring and inspection tools",
     "summary": "On 15 January 2025 the Dutch minister for foreign trade announced in the Government Gazette that the national license requirement for advanced semiconductor manufacturing equipment would cover further technologies from 1 April 2025. These included specific measuring and inspection equipment used in making advanced chips. The ministry described the addition as covering a very limited number of goods. It is the second amendment to the national measure since it took effect on 1 September 2023.",
-    "category": "Allied control",
+    "category": "Other governments",
     "instrument": "rule",
     "frCitation": "Staatscourant, 15 January 2025",
     "source": "https://www.government.nl/latest/news/2025/01/15/klever-export-controls-on-advanced-semiconductor-manufacturing-equipment-to-be-tightened",
@@ -448,6 +597,22 @@
     "flows": [
       "ai-chips",
       "ai-chips-top"
+    ]
+  },
+  {
+    "date": "2025-02-04",
+    "actor": "China (MOFCOM and Customs)",
+    "title": "Tungsten, tellurium, bismuth, molybdenum and indium export licensing",
+    "summary": "China's commerce ministry, MOFCOM, and the General Administration of Customs put items related to five metals under export licensing, citing national security and non-proliferation obligations. The tungsten items include ammonium paratungstate, tungsten oxide and some tungsten carbide. The tellurium items include tellurium metal and cadmium telluride, cadmium zinc telluride and mercury cadmium telluride, among them substrates and epitaxial wafers. The bismuth and molybdenum items include bismuth metal and fine molybdenum powder. The indium items are indium phosphide, trimethylindium and triethylindium. Technology for producing the listed items is covered too. The controls took effect on publication, on 4 February 2025.",
+    "category": "China",
+    "instrument": "rule",
+    "frCitation": "MOFCOM and GAC Announcement 2025 No. 10",
+    "source": "https://www.mofcom.gov.cn/zfxxgk/gkml/art/2025/art_084ded0609404b2d81c746b31c9a03a6.html",
+    "gist": "Indium phosphide and items related to four other metals needed a license to leave China from February 2025.",
+    "id": "2025-02-04-tungsten-indium-licensing",
+    "flows": [
+      "minerals",
+      "minerals-world"
     ]
   },
   {
@@ -482,15 +647,31 @@
     ]
   },
   {
+    "date": "2025-03-28",
+    "effectiveDate": "2025-05-28",
+    "actor": "Japan (METI)",
+    "title": "Japan adds advanced chips and more chipmaking tools to its export controls",
+    "summary": "Japan's Ministry of Economy, Trade and Industry (METI) added what it calls important and emerging technologies to its export license list, to prevent their diversion to military use. It also revised technical specifications, including some agreed in the Wassenaar Arrangement. The cabinet order was promulgated on 28 March 2025 and METI's ordinance on 3 April, and both took effect on 28 May. The list added chips with total processing performance (TPP), a measure of computing power, of 6,000 or more and at least 600 GB/s of data transfer to other chips. It also added computers that contain such chips. New chipmaking tools on the list include plasma doping ion implanters, imprint lithography tools and equipment for upgrading deep ultraviolet (DUV) immersion scanners. Annealing, deposition, etch and supercritical carbon dioxide cleaning tools, wafer defect inspection and overlay metrology tools, and extreme ultraviolet (EUV) masks were added as well. Exports of listed goods and technology need a license from Japan's minister of economy, trade and industry.",
+    "category": "Other governments",
+    "instrument": "rule",
+    "frCitation": "Cabinet Order No. 102 of 2025 and METI Ordinance No. 34 of 2025",
+    "source": "https://www.meti.go.jp/policy/anpo/law_document/20250328_ristshiryou.pdf",
+    "gist": "Japan's license list grew to cover chips such as GPUs with 6,000 TPP or more and at least 600 GB/s of chip-to-chip transfer, and more kinds of chipmaking tools.",
+    "id": "2025-03-28-japan-advanced-chips",
+    "flows": [
+      "allies"
+    ]
+  },
+  {
     "date": "2025-04-04",
     "actor": "China (MOFCOM and Customs)",
     "title": "Export controls on seven medium and heavy rare earths",
-    "summary": "China's Announcement No. 18 of 2025 put samarium, gadolinium, terbium, dysprosium, lutetium, scandium and yttrium, together with their oxides, alloys, compounds and permanent magnets, under dual-use export licensing. The controls took effect immediately, two days after the United States announced its reciprocal tariffs. China refines roughly 90 percent of global rare earth output and until recently accounted for about 99 percent of heavy rare earth separation. License processing at first took 45 working days or more. Chinese magnet exports fell about 75 percent in May, then recovered under a June trade truce.",
-    "category": "China countermeasure",
-    "instrument": "countermeasure",
+    "summary": "China's commerce ministry, MOFCOM, and the General Administration of Customs issued Announcement No. 18 of 2025, citing national security and non-proliferation obligations. It put samarium, gadolinium, terbium, dysprosium, lutetium, scandium and yttrium under dual-use export licensing, together with their metals, alloys, oxides, compounds and the targets used to deposit them as thin films. Samarium-cobalt magnets and neodymium magnets that contain terbium or dysprosium are covered too. The controls took effect on the day of issuance, 4 April 2025.",
+    "category": "China",
+    "instrument": "rule",
     "frCitation": "MOFCOM and GAC Announcement 2025 No. 18",
     "source": "https://english.mofcom.gov.cn/Policies/AnnouncementsOrders/art/2025/art_0dd87cbee7b045bf93fabe6ab2faceee.html",
-    "gist": "Chinese magnet exports fell about 75 percent in May before recovering under a June truce.",
+    "gist": "Seven medium and heavy rare earths, and magnets made with some of them, needed a license to leave China from April 2025.",
     "id": "2025-04-04-rare-earths",
     "flows": [
       "minerals",
@@ -517,7 +698,7 @@
     "date": "2025-05-13",
     "actor": "US (BIS)",
     "title": "BIS stops enforcing the AI Diffusion Rule",
-    "summary": "Two days before the rule's compliance date, Commerce announced it would not enforce the AI Diffusion Rule and would issue a replacement rule. Nothing was withdrawn from the regulations. The Code of Federal Regulations still contains License Exceptions AIA, ACM and LPP at 15 CFR 740.27, 740.28 and 740.29, and the list of nineteen destinations in supplement no. 5 to part 740. It also still contains the worldwide license requirement at 742.6(a)(6)(iii)(A) and the 790 million TPP per-country allocation at 742.6(b)(10)(iii)(B). BIS confirmed in July 2026 that it enforces the worldwide requirement only against Country Groups D:1, D:4 and D:5 and against entities headquartered in Country Group D:5 or Macau. On 13 May 2025 BIS also issued three pieces of guidance. The first said that using Huawei Ascend 910B, 910C and 910D chips risks violating the EAR, because they were likely made with controlled US technology. The second warned that letting US AI chips train or run Chinese AI models could have consequences. The third set out how exporters should guard against diversion. The Ascend guidance originally said the chips were restricted \"anywhere in the world\", wording BIS softened after Chinese protests.",
+    "summary": "Two days before the rule's compliance date, Commerce announced it would not enforce the AI Diffusion Rule and would issue a replacement rule. Nothing was withdrawn from the regulations. The Code of Federal Regulations still contains License Exceptions AIA, ACM and LPP at 15 CFR 740.27, 740.28 and 740.29, and the list of nineteen destinations in supplement no. 5 to part 740. It also still contains the worldwide license requirement at 742.6(a)(6)(iii)(A) and the 790 million TPP per-country allocation at 742.6(b)(10)(iii)(B). BIS said in July 2026 that it enforces the worldwide requirement only for destinations in Country Groups D:1, D:4 and D:5 that are not also in A:5 or A:6, for the United Arab Emirates, and for entities headquartered in Country Group D:5 or Macau or with an ultimate parent headquartered there. On 13 May 2025 BIS also issued three pieces of guidance. The first said that using Huawei Ascend 910B, 910C and 910D chips risks violating the EAR, because they were likely made with controlled US technology. The second warned that letting US AI chips train or run Chinese AI models could have consequences. The third set out how exporters should guard against diversion. The Ascend guidance originally said the chips were restricted \"anywhere in the world\", wording BIS softened after Chinese protests.",
     "category": "US export control",
     "instrument": "licence-policy",
     "cfr": "15 CFR 740.27, 740.28, 740.29; 742.6(a)(6)(iii)(A)",
@@ -558,6 +739,19 @@
     ]
   },
   {
+    "date": "2025-06-10",
+    "actor": "Taiwan (Ministry of Economic Affairs)",
+    "title": "Taiwan adds Huawei and SMIC to its export control entity list",
+    "summary": "Taiwan added Huawei Technologies and Semiconductor Manufacturing International Corp (SMIC) to its strategic high-tech commodities entity list. Taiwanese companies need government approval before exporting any products to companies on the list. The trade administration of Taiwan's economy ministry said it had updated the list on 10 June 2025 on the grounds of preventing arms proliferation and other national security considerations. It added 601 entities, including entities from Russia, Pakistan, Iran, Myanmar and China. The administration said manufacturers must comply with export control rules, fulfill their verification obligations and carefully assess transaction risks.",
+    "category": "Other governments",
+    "instrument": "entity-listing",
+    "frCitation": "Strategic High-Tech Commodities Entity List, update of 10 June 2025",
+    "source": "https://www.reuters.com/world/china/taiwan-adds-chinas-huawei-smic-export-control-list-2025-06-15/",
+    "gist": "Taiwanese firms needed government approval to export anything to Huawei or SMIC.",
+    "id": "2025-06-10-taiwan-entity-list",
+    "flows": []
+  },
+  {
     "date": "2025-07-14",
     "actor": "US (Commerce) and Nvidia",
     "title": "H20 sales to China permitted again",
@@ -571,6 +765,19 @@
     "flows": [
       "ai-chips"
     ]
+  },
+  {
+    "date": "2025-07-14",
+    "actor": "Malaysia (MITI)",
+    "title": "Malaysia requires permits for US-origin AI chips",
+    "summary": "Malaysia's Ministry of Investment, Trade and Industry (MITI) made all exports, transshipments and transits of high-performance AI chips of US origin subject to a Strategic Trade Permit, with immediate effect. It used section 12 of the Strategic Trade Act 2010, a catch-all provision that requires at least 30 days' notice before shipping an unlisted item that may be misused. MITI said the step would close regulatory gaps while Malaysia reviews adding these chips to its Strategic Items List. It said anyone found violating the act or related laws would face strict legal action.",
+    "category": "Other governments",
+    "instrument": "licence-policy",
+    "frCitation": "Strategic Trade Act 2010, section 12",
+    "source": "https://www.miti.gov.my/miti/resources/Media%20Release/%5BFINAL%5D_MITI_Press_Stmt_Malaysia_Regulates_Trade_of_US_AI_Chips_2025-07-14.pdf",
+    "gist": "Shipping US-origin high-performance AI chips out of or through Malaysia needed a permit from 14 July 2025.",
+    "id": "2025-07-14-malaysia-ai-chip-permit",
+    "flows": []
   },
   {
     "date": "2025-08-11",
@@ -650,13 +857,26 @@
     ]
   },
   {
+    "date": "2025-09-30",
+    "actor": "Netherlands (Ministry of Economic Affairs)",
+    "title": "Dutch government invokes emergency powers over Nexperia",
+    "summary": "On 30 September 2025 the Dutch Minister of Economic Affairs invoked the Goods Availability Act over Nexperia, a chipmaker headquartered in Nijmegen, the first use of the act since 1952. The government said its concerns stemmed from actions attributed to the chief executive, involving the improper transfer of product assets, funds, technology and knowledge to a foreign entity. The order aimed to keep Nexperia's production capabilities available to Europe in an emergency. In separate proceedings, the Enterprise Chamber of the Amsterdam Court of Appeal suspended the chief executive and transferred all but one of the company's shares to a trustee. The Dutch government said China had imposed an export control measure on all Nexperia locations in China. On 19 November 2025 the Dutch government suspended its order. It cited constructive meetings with the Chinese authorities and the measures they had taken to ensure the supply of chips to Europe and the rest of the world.",
+    "category": "Other governments",
+    "instrument": "order",
+    "frCitation": "Goods Availability Act 1952",
+    "source": "https://www.government.nl/site/binaries/site-content/collections/documents/2025/11/19/update-on-invoking-goods-availability-act/Update+on+invoking+Goods+Availability+Act+-+19+november+2025.pdf",
+    "gist": "China restricted exports from Nexperia's sites in China, and the Dutch government suspended its order on 19 November 2025.",
+    "id": "2025-10-12-nexperia-seizure",
+    "flows": []
+  },
+  {
     "date": "2025-10-09",
     "effectiveDate": "2025-10-09",
     "actor": "China (MOFCOM)",
     "title": "Extraterritorial rare earth controls with a 0.1 percent rule",
     "summary": "China's commerce ministry, MOFCOM, issued Notice No. 61 of 2025 and companion notices. Together they added holmium, erbium, thulium, europium and ytterbium to the controlled list. They put controls on rare earth mining, smelting, separation, magnet-making and recycling technology. They also asserted jurisdiction over foreign-made goods in which Chinese-origin controlled rare earths account for 0.1 percent or more of value. Exports for foreign military users face denial and those for advanced semiconductor and AI uses face case-by-case review. It was the first time China used its own version of the US foreign direct product rule, which claims control over foreign-made goods built with US technology. The 0.1 percent rule was due to take effect on 1 December 2025, but China suspended it on 7 November.",
-    "category": "China countermeasure",
-    "instrument": "countermeasure",
+    "category": "China",
+    "instrument": "rule",
     "frCitation": "MOFCOM Announcement 2025 No. 61",
     "source": "https://cset.georgetown.edu/publication/mofcom-notice-2025-61/",
     "gist": "China claimed jurisdiction over foreign-made goods containing its rare earths, such as magnets and sputtering targets in chipmaking tools.",
@@ -667,26 +887,24 @@
     ]
   },
   {
-    "date": "2025-10-12",
-    "actor": "Netherlands (Ministry of Economic Affairs)",
-    "title": "Dutch government invokes emergency powers over Nexperia",
-    "summary": "The Netherlands disclosed that on 30 September 2025 it had invoked the 1952 Goods Availability Act over Nexperia, a chipmaker owned by the Chinese firm Wingtech. The law lets the government give orders to companies to keep critical goods available in an emergency. The government called the step highly exceptional and cited serious governance shortcomings at Nexperia. An Amsterdam court suspended Nexperia's Chinese chief executive and placed Nexperia's shares in trust. China retaliated by blocking exports from Nexperia's Dongguan plant, which packages roughly 70 percent of the company's output. The block caused shortages across Europe of the discrete chips used in cars, simple parts such as transistors and diodes. The Dutch government suspended its order on 19 November 2025. Wingtech later sought more than $8 billion in treaty arbitration.",
-    "category": "Allied control",
-    "instrument": "investment-screening",
-    "frCitation": "Goods Availability Act 1952",
-    "source": "https://www.government.nl/latest/news/2025/10/12/minister-of-economic-affairs-invokes-goods-availability-act",
-    "gist": "China blocked exports from Nexperia's Dongguan plant, and European carmakers ran short of parts.",
-    "id": "2025-10-12-nexperia-seizure",
-    "flows": [
-      "allies"
-    ]
+    "date": "2025-10-09",
+    "actor": "China (MOFCOM)",
+    "title": "China puts TechInsights on its Unreliable Entity List",
+    "summary": "China's commerce ministry published a decision by its Unreliable Entity List working mechanism to add 14 foreign entities to the list. They include TechInsights Inc. and its branches, among them TechInsights Japan, TechInsights Korea, TechInsights Market Analysis and several Strategy Analytics companies. The listed entities may not take part in import or export activities related to China or make new investments there. Organizations and individuals in China may not trade or cooperate with them, and in particular may not send them data or sensitive information. The announcement cited the Foreign Trade Law, the National Security Law and the Anti-Foreign Sanctions Law and took effect on publication. The other entities named include Dedrone by Axon, AeroVironment, BAE Systems, Inc. and the Halifax International Security Forum.",
+    "category": "China",
+    "instrument": "entity-listing",
+    "frCitation": "Unreliable Entity List Working Mechanism Announcement 2025 No. 10",
+    "source": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_9b662990fa4a4d26ba3984ab5d826960.html",
+    "gist": "Chinese organizations could no longer trade with TechInsights or its branches or send them data.",
+    "id": "2025-10-09-techinsights-uel",
+    "flows": []
   },
   {
     "date": "2025-11-07",
     "actor": "China (MOFCOM and Customs)",
     "title": "China suspends its October 2025 export controls for a year",
     "summary": "MOFCOM and the General Administration of Customs suspended six export control announcements issued in October 2025, from 7 November 2025 until 10 November 2026. They are MOFCOM and Customs Announcements 2025 Nos. 55, 56, 57 and 58 and MOFCOM Announcements 2025 Nos. 61 and 62. No. 61 is the rule that claimed jurisdiction over foreign goods with 0.1 percent or more Chinese rare earths by value.",
-    "category": "China countermeasure",
+    "category": "China",
     "instrument": "rule",
     "frCitation": "MOFCOM and GAC Announcement 2025 No. 70",
     "source": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_b1ec77dd3f0d4762952904df7cdaadec.html",
@@ -702,7 +920,7 @@
     "actor": "China (MOFCOM)",
     "title": "China suspends its ban on gallium, germanium and antimony exports to the US",
     "summary": "MOFCOM suspended paragraph 2 of Announcement 2024 No. 46 from 9 November 2025 until 27 November 2026. That paragraph said exports to the United States of dual-use items related to gallium, germanium, antimony and superhard materials would in principle not be licensed. It also set stricter end-user and end-use checks on graphite exports to the United States.",
-    "category": "China countermeasure",
+    "category": "China",
     "instrument": "rule",
     "frCitation": "MOFCOM Announcement 2025 No. 72",
     "source": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_5c68985a6b1a46778e2e8dbff1bb1601.html",
@@ -729,11 +947,11 @@
     ]
   },
   {
-    "date": "2025-11-22",
+    "date": "2025-11-15",
     "actor": "EU (European Commission)",
     "title": "EU adds Dutch chip-tool controls to its own control list",
-    "summary": "The European Union added certain Dutch national controls to the EU Control List through Commission Delegated Regulation (EU) 2025/2003. The change extended a license requirement for specific semiconductor manufacturing equipment to all member states. The regulation entered into force on 22 November 2025. ASML said in its 2025 annual report that the change made no difference to it, because those products already required an export license from the Netherlands.",
-    "category": "Allied control",
+    "summary": "The European Union added certain Dutch national controls to the EU Control List in November 2025, extending a license requirement for specific semiconductor manufacturing equipment to all member states. ASML said in its 2025 annual report that the requirement covers its DUV immersion lithography systems when they are exported outside the EU. It said the change made no difference to the company, because those products already required an export license from the Netherlands.",
+    "category": "Other governments",
     "instrument": "rule",
     "frCitation": "Commission Delegated Regulation (EU) 2025/2003",
     "source": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm",
@@ -825,7 +1043,7 @@
     "date": "2026-03-19",
     "actor": "US (DOJ)",
     "title": "Super Micro co-founder charged over AI servers diverted to China",
-    "summary": "Federal prosecutors in the Southern District of New York charged Super Micro co-founder Yih-Shyan \"Wally\" Liaw, Taiwan-based general manager Ruei-Tsang Chang and broker Ting-Wei Sun. They are charged with conspiring to violate the Export Control Reform Act, to smuggle goods and to defraud the United States. Prosecutors allege that a buyer purchased about $2.5 billion of servers from the manufacturer in 2024 and 2025 on false end-user records. They allege that at least $510 million of those servers were diverted to China between late April and mid-May 2025. The scheme allegedly relied on layered transshipment and on staged dummy servers to deceive auditors. Liaw resigned from the Super Micro board the next day and pleaded not guilty on 1 April 2026. Super Micro shares fell about a third on the news.",
+    "summary": "Federal prosecutors in the Southern District of New York charged Super Micro co-founder Yih-Shyan \"Wally\" Liaw, Taiwan-based general manager Ruei-Tsang Chang and broker Ting-Wei Sun. They are charged with conspiring to violate the Export Control Reform Act, to smuggle goods and to defraud the United States. Prosecutors allege that a buyer purchased about $2.5 billion of servers from the manufacturer in 2024 and 2025 on false end-user records. They allege that at least $510 million of those servers were diverted to China between late April and mid-May 2025. The scheme allegedly relied on layered transshipment and on staged dummy servers to deceive auditors. Liaw resigned from the Super Micro board the next day and pleaded not guilty on 1 April 2026.",
     "category": "US export control",
     "instrument": "enforcement",
     "source": "https://www.justice.gov/opa/pr/three-charged-conspiring-unlawfully-divert-cutting-edge-us-artificial-intelligence",
@@ -852,6 +1070,20 @@
     ]
   },
   {
+    "date": "2026-07-15",
+    "actor": "India (Union Cabinet)",
+    "title": "India approves Semicon 2.0",
+    "summary": "India's Union Cabinet approved Semicon 2.0, a program for the country's chip design and manufacturing industry with a budget of ₹1,27,500 crore. Its six pillars are chip design, machines and materials, new fabs, assembly and packaging units, research and development, and talent. The government said India's first fab is scheduled to be commissioned in 2028. Under Semicon 1.0, twelve manufacturing units had been approved with a cumulative investment of over ₹1.64 lakh crore. They include one silicon fab, one silicon carbide fab, a gallium nitride micro LED display fab and nine packaging units. Micron, Kaynes and CG Semi have started commercial production.",
+    "category": "Industrial policy",
+    "instrument": "industrial-policy",
+    "source": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2284784",
+    "gist": "India budgeted ₹1,27,500 crore for a second chip program after approving twelve plants under the first.",
+    "id": "2026-07-15-india-semicon-2",
+    "flows": [
+      "industrial"
+    ]
+  },
+  {
     "date": "2026-08-06",
     "effectiveDate": "2026-12-04",
     "actor": "US (White House)",
@@ -859,7 +1091,7 @@
     "summary": "A presidential proclamation signed on 6 August 2026 set a minimum import price of $100 per kilogram for polysilicon ingots and wafers. Polysilicon is the purified silicon that chip and solar wafers are made from. The proclamation also set an extra 15 percent duty on imported ingots and other listed products made from polysilicon. Both measures start on 4 December 2026. Firms with Commerce-approved plans to build US polysilicon, ingot, wafer or solar cell plants, with construction starting by 20 January 2029, can import equipment and some of those products without the new duties. A Commerce rule published on 24 September 2026, meant to stop stockpiling before the duties start, lists doped single-crystal silicon wafers among the products it covers.",
     "category": "Industrial policy",
     "instrument": "industrial-policy",
-    "frCitation": "Proclamation 11052; FR Doc. 2026-16400",
+    "frCitation": "91 FR 51975 (Proclamation 11052)",
     "source": "https://www.federalregister.gov/documents/2026/08/11/2026-16400/adjusting-imports-of-polysilicon-and-its-derivatives-into-the-united-states",
     "gist": "Imported silicon wafers face a price floor and an extra duty from December 2026, with relief for firms building US plants.",
     "id": "2026-08-06-polysilicon-proclamation",
@@ -872,7 +1104,7 @@
     "actor": "China (PRC government) and Nvidia",
     "title": "PRC restrictions leave the H200 licenses largely unused",
     "summary": "Nvidia's quarterly filing for the period to 26 July 2026 records that the US government began granting licenses in February 2026 to ship small amounts of H200 to specific China-based customers. But, in the company's words, \"such sales were restricted by the PRC government, and we have been unable to sell all the products for which we have licenses\". Nvidia took a $0.4 billion charge in the first half of its fiscal 2027, the six months to 26 July 2026, for excess H200 inventory and purchase obligations. It shipped only a fraction of what the licenses allowed, and those shipments came to less than 1 percent of data-center revenue in the quarter. Customers headquartered in China, including Hong Kong, accounted for $7.9 billion of the quarter's $96.2 billion of revenue, against $4.0 billion a year earlier. Beijing has not published the measures behind its restrictions.",
-    "category": "China countermeasure",
+    "category": "China",
     "instrument": "countermeasure",
     "frCitation": "NVIDIA Form 10-Q, Q2 FY2027",
     "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
@@ -887,8 +1119,9 @@
     "actor": "China (MOFCOM)",
     "title": "China hits Japanese dichlorosilane with duties of up to 99.2 percent",
     "summary": "China's commerce ministry, MOFCOM, issued a preliminary anti-dumping ruling against Japanese dichlorosilane, a specialty gas used for thin-film deposition in chipmaking. From 8 September 2026, importers must post deposits with Chinese customs at rates of 80.8 to 99.2 percent, pending a final ruling. The 99.2 percent rate applies to Shin-Etsu Chemical and all non-cooperating exporters. The investigation opened on 7 January 2026 after a complaint from the Chinese producer Tangshan Sanfu Electronic Materials. MOFCOM said the complaint's preliminary evidence showed import prices falling a cumulative 31 percent from 2022 to 2024. Japan protested the measure. The investigation is normally due to end by 7 January 2027 and can be extended by six months.",
-    "category": "China countermeasure",
-    "instrument": "countermeasure",
+    "category": "China",
+    "instrument": "trade-remedy",
+    "frCitation": "MOFCOM Announcement 2026 No. 37",
     "source": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2026/art_01c15948864a45d186abb146fe30a42b.html",
     "gist": "Chinese importers must post deposits of up to 99.2 percent on a Japanese gas that chip fabs use to lay down thin films.",
     "id": "2026-09-07-dichlorosilane-duties",

@@ -185,6 +185,14 @@
         '</article>';
     },
 
+    /* the firms whose country differs between the shares and the supplier list, as data/chokepoint-matrix-notes.md gives them
+       (the specialty gases and core IP rows' notes say the same), and the country cards they touch */
+    SPLITS: {
+      siemens: 'Siemens EDA is run from Oregon but owned by Siemens AG, so the EDA software share counts it under Germany and the supplier list under the US.',
+      linde: 'Linde plc is incorporated in Ireland, with head offices in the UK and the US. The specialty gases share counts it under Germany for its roots in Linde AG, as Georgetown University\'s Emerging Technology Observatory does. The supplier list counts it under the UK.',
+      arm: 'The core IP share counts Arm under the UK, where it has its headquarters, although SoftBank of Japan owns most of it.'
+    },
+    SPLIT_BY: { DE: ['siemens', 'linde'], US: ['siemens'], GB: ['arm', 'linde'] },
     /* a country: the Suppliers page's one line on what it makes, the stages it leads or holds a share of, the chokepoint
        cards that name it, and its firms by category with the Critical ones named. Every figure is computed from DATA. */
     countryCard: function (co) {
@@ -201,7 +209,7 @@
       var segs = (DATA.matrix || []).filter(function (r) { return r.shares && r.shares[cc] != null; }).map(function (r) {
         var rank = Object.keys(r.shares).sort(function (a, b) { return r.shares[b] - r.shares[a]; }).indexOf(cc) + 1;
         var basis = r.basis === 'relayed' ? 'reported by ' + (r.relayedVia || 'a third party') : r.basis === 'derived' ? 'computed' : (r.basis || '');
-        return { seg: r.segment, v: r.shares[cc], rank: rank, basis: basis, year: String(r.asOf || r.year || ''), method: r.method || '' };
+        return { seg: r.segment, v: r.shares[cc], rank: rank, basis: basis, year: String(r.asOf || r.year || ''), method: r.method || '', capacity: /^capacity/i.test(r.metric || '') };
       }).sort(function (a, b) { return b.v - a.v; });
       var big = segs.filter(function (s) { return s.rank === 1 || s.v >= 1; }), small = segs.filter(function (s) { return s.rank !== 1 && s.v < 1; });
       // firms by category, the Critical ones named; each name opens that firm's entry
@@ -237,6 +245,23 @@
           var rows = cats[cat], crit = rows.filter(function (r) { return r.chokepoint === 'Critical'; });
           return '<li><span class="lk-stage-k">' + esc(cat) + '</span><span class="lk-stage-c">' + rows.length + '</span>' + (crit.length ? '<span class="lk-stage-f">' + crit.map(function (r) { return firmId[r.name] ? '<button type="button" class="lk-go" data-go="' + esc(firmId[r.name]) + '">' + esc(r.name) + '</button>' : esc(r.name); }).join(' ') + '</span>' : '') + '</li>';
         }).join('') + '</ul>';
+        // a member of the EU-27: the bloc's firms counted together, as the Suppliers ribbons can draw them (the member list is app.js's)
+        var EU27 = (CP.Suppliers && CP.Suppliers.EU27) || [];
+        if (EU27.indexOf(cc) >= 0) {
+          var eu = (DATA.suppliers || []).filter(function (r) { return EU27.indexOf(r.country) >= 0; }), euCrit = eu.filter(function (r) { return r.chokepoint === 'Critical'; }).length;
+          h += '<p class="lk-eu">Across the EU-27, the supplier list has ' + eu.length + ' firms' + (euCrit ? ', ' + euCrit + ' of them Critical' : '') + '. <a href="#/suppliers?tab=country&amp;group=eu">See them together on the Suppliers page →</a></p>';
+        }
+      }
+      // how the card's numbers give a firm its country: shares of a market's revenue go by parent company, capacity by plant, the
+      // supplier list by each firm's own headquarters (data/chokepoint-matrix-notes.md, "Converting firm shares to country shares"),
+      // with the firms that part the shares from the list named on the cards whose numbers they touch
+      if (segs.length) {
+        var rev = segs.some(function (s) { return !s.capacity; }), cap = segs.some(function (s) { return s.capacity; }), note = [];
+        if (rev) note.push('Country shares of a market\'s revenue count most firms under their parent company\'s home country' + (firms.length ? ', and the supplier list counts each firm under the country of its own headquarters.' : '.'));
+        if (cap) note.push('Shares of manufacturing capacity count each plant under the country where it stands.');
+        if (!rev && firms.length) note.push('The supplier list counts each firm under the country of its own headquarters.');
+        (this.SPLIT_BY[cc] || []).forEach(function (k) { note.push(self.SPLITS[k]); });
+        h += '<p class="lk-note">' + esc(note.join(' ')) + '</p>';
       }
       h += '<p class="lk-links">' + (co.panel ? '<a href="#/suppliers?country=' + esc(cc) + '">See what it makes on the Suppliers page →</a>' : '') + (firms.length ? '<a href="#/suppliers" data-supcc="' + esc(cc) + '">Its firms in the supplier list →</a>' : '') + '</p></article>';
       return h;
@@ -266,7 +291,8 @@
         var id = ch.id, title = ch.getAttribute('data-title') || id, num = ch.getAttribute('data-number') || '';
         $$('p, li', ch).forEach(function (el) {
           if (el.closest('.chapter-sources, .plate-head, .chain, .brief-head, figure, .chapter-nav, nav')) return;
-          var clone = el.cloneNode(true); $$('sup.cite, .gl-tip, .chip', clone).forEach(function (s) { s.parentNode.removeChild(s); });
+          // a card's marks (and the comma between two of them) and a leader's China line (.lead-cn, from the China revenue panel) are not the passage's words
+          var clone = el.cloneNode(true); $$('sup.cite, sup.cite-sep, .gl-tip, .chip, .lead-cn', clone).forEach(function (s) { s.parentNode.removeChild(s); });
           var text = self.textOf(clone).replace(/\s+/g, ' ').replace(/\s+([.,;:])/g, '$1').trim();
           if (text.length > 40) out.push({ chapter: id, title: title, num: num, el: el, text: text });
         });

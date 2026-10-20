@@ -1,0 +1,2014 @@
+[
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "design-and-eda",
+      "list": "cards",
+      "index": 2
+    },
+    "field": "why",
+    "before": "Each foundry certifies specific versions of the existing tools for its own process.",
+    "after": "Foundries specify which signoff tools their customers must use for tape-out.",
+    "by": "expert-design-and-eda",
+    "note": "Unsupported claim; chapter states and cites the new wording (primer).",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "signoff"
+    },
+    "field": "plain",
+    "before": "must pass before a foundry will make it.",
+    "after": "must pass before tape-out.",
+    "by": "expert-design-and-eda",
+    "note": "Foundries gate tape-out on physical verification, not timing.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "signoff"
+    },
+    "field": "why",
+    "before": "A foundry accepts only designs that have passed these checks. Synopsys",
+    "after": "A foundry accepts only layouts that pass physical verification against its rules. At advanced nodes, Synopsys",
+    "by": "expert-design-and-eda",
+    "note": "Shares are advanced-node shares (chapter change 3); foundry gate is DRC/LVS.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "PDK"
+    },
+    "field": "why",
+    "before": "A foundry validates each exact version of the design software against its kit. It refuses signoff from any version it has not validated.",
+    "after": "Foundries develop each kit with the design-software vendors about two years before production starts and specify which tools customers must use for tape-out.",
+    "by": "expert-design-and-eda",
+    "note": "'Refuses signoff' overstated; primer: co-develop PDKs 24 months before production.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "epitaxy"
+    },
+    "field": "why",
+    "before": "The quality of that layer sets how much current the chip leaks.",
+    "after": "Flaws in that layer can make the transistors leak current.",
+    "by": "expert-silicon-and-wafers",
+    "note": "Overstated; matches chapter change 3.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "chip"
+    },
+    "field": "plain",
+    "before": "circuit made of billions",
+    "after": "circuit, often made of billions",
+    "by": "expert-silicon-and-wafers",
+    "note": "Optional accuracy fix: many chips have far fewer transistors.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "wafer"
+    },
+    "field": "plain",
+    "before": "300 millimeters across.",
+    "after": "300 millimeters across for advanced chips.",
+    "by": "expert-silicon-and-wafers",
+    "note": "Optional accuracy fix: 200 mm wafers are still made.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "chemicals-gases-and-photoresist",
+      "list": "cards",
+      "index": 1
+    },
+    "field": "q",
+    "before": "Which country makes most of the world's photoresist?",
+    "after": "Which country's companies sell most of the world's photoresist?",
+    "by": "expert-chemicals-gases-and-photoresist",
+    "note": "Source counts sales by company nationality.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "chemicals-gases-and-photoresist",
+      "list": "cards",
+      "index": 1
+    },
+    "field": "a",
+    "before": "Japan.",
+    "after": "Japan's.",
+    "by": "expert-chemicals-gases-and-photoresist",
+    "note": "Follows the new question.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "chemicals-gases-and-photoresist",
+      "list": "cards",
+      "index": 2
+    },
+    "field": "q",
+    "before": "Why does replacing a photoresist supplier take years?",
+    "after": "Why is it slow to switch to a new photoresist supplier?",
+    "by": "expert-chemicals-gases-and-photoresist",
+    "note": "'Years' is not what the chapter states (7 to 17 months).",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "chemicals-gases-and-photoresist",
+      "list": "cards",
+      "index": 2
+    },
+    "field": "a",
+    "before": "Each formula is approved for one layer of one product at one factory.",
+    "after": "Each resist is tuned to the layers it prints, and the chipmaker has to approve it in its own fab.",
+    "by": "expert-chemicals-gases-and-photoresist",
+    "note": "No source supports 'one product'.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "chemicals-gases-and-photoresist",
+      "list": "cards",
+      "index": 2
+    },
+    "field": "why",
+    "before": "A new supplier has to develop its version together with the factory, one layer at a time. When Japan put resist and two other chemicals under export licenses for South Korea in 2019, Korea bought more from other countries, and Korean firms and Japanese companies' affiliates in Korea made more.",
+    "after": "Even a resist that passes the first time takes seven to 17 months to approve, the Semiconductor Industry Association wrote in 2023. When Japan put resist and two other chemicals under export licenses for South Korea in 2019, South Korea bought more from other countries, and South Korean firms and Japanese companies' affiliates in South Korea made more.",
+    "by": "expert-chemicals-gases-and-photoresist",
+    "note": "Unsupported first sentence replaced by the chapter's SIA figure; country named in full.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "chemicals-gases-and-photoresist",
+      "list": "takeaways",
+      "index": 2
+    },
+    "before": "Each resist is approved for one layer of one product at one factory, so switching to a new supplier takes years.",
+    "after": "A chipmaker has to approve each new resist in its own fab, and even one that passes the first time takes seven to 17 months.",
+    "by": "expert-chemicals-gases-and-photoresist",
+    "note": "Takeaway 3: same fix as card 3.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "photoresist"
+    },
+    "field": "plain",
+    "before": ", much like developing photographic film. What remains",
+    "after": ". What remains",
+    "by": "expert-chemicals-gases-and-photoresist",
+    "note": "The film analogy is backwards.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "photoresist"
+    },
+    "field": "why",
+    "before": "Each formula is approved for one layer of one product at one fab, so switching supplier takes years.",
+    "after": "Each resist is tuned to the layers it prints, and even one that passes the first time takes seven to 17 months to approve in a fab.",
+    "by": "expert-chemicals-gases-and-photoresist",
+    "note": "Unsupported claim; chapter's SIA figure.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "CMP"
+    },
+    "field": "why",
+    "before": "Each slurry is approved for one layer of one product at one fab.",
+    "after": "Japanese companies held 51 percent of polishing-slurry sales in 2023, counted by company nationality.",
+    "by": "expert-chemicals-gases-and-photoresist",
+    "note": "Unsupported sentence replaced by the chapter's METI p. 8 figure.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "qualification"
+    },
+    "field": "plain",
+    "before": "accept a new material, tool or supplier for one product. A resist, a slurry, a wafer source or a memory stack is approved for one layer of one product at one fab, and switching means running the whole test again.",
+    "after": "accept a new material, tool or supplier. A resist, a slurry, a wafer source or a memory stack is approved for a set use, such as one layer in one fab's process, and switching means running the tests again.",
+    "by": "expert-chemicals-gases-and-photoresist",
+    "note": "No source supports 'one product'.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "qualification"
+    },
+    "field": "why",
+    "before": "Qualification makes a second source take years to add, which protects incumbent suppliers.",
+    "after": "Even a resist that passes the first time takes seven to 17 months to approve, the Semiconductor Industry Association wrote in 2023, so a second source is slow to add.",
+    "by": "expert-chemicals-gases-and-photoresist",
+    "note": "'Years' unsupported; chapter's SIA figure.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "specialty gases"
+    },
+    "field": "plain",
+    "before": "They arrive in cylinders by the gram. Bulk gases, such as nitrogen and oxygen, arrive by the metric ton and are often made on the fab site.",
+    "after": "They arrive in cylinders. Bulk gases, such as nitrogen and oxygen, come by pipeline or from plants built at the fab.",
+    "by": "expert-chemicals-gases-and-photoresist",
+    "note": "Wrong quantities; matches chapter change 8 (Air Liquide).",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "hydrogen fluoride"
+    },
+    "field": "plain",
+    "before": ", at purities of about one stray metal atom in a trillion.",
+    "after": ". Like other cleaning chemicals, it is purified until metal impurities are down to parts per trillion.",
+    "by": "expert-chemicals-gases-and-photoresist",
+    "note": "Unsourced atom count removed from the chapter; follows the Sumitomo sentence.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "hydrogen fluoride"
+    },
+    "field": "why",
+    "before": "exports of it to Korea fell 87.9 percent. Korea bought",
+    "after": "exports of it to South Korea fell 87.9 percent. South Korea bought",
+    "by": "expert-chemicals-gases-and-photoresist",
+    "note": "Country named in full, as in the chapter.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "nitrogen trifluoride"
+    },
+    "field": "why",
+    "before": "Nitrogen trifluoride is the specialty of smaller firms such as SK Materials of Korea.",
+    "after": "SK Specialty of South Korea has made nitrogen trifluoride since 2001, when it became the first company to produce the gas there.",
+    "by": "expert-chemicals-gases-and-photoresist",
+    "note": "SK Materials is now SK Specialty, the largest NF3 maker. Proposal's 'made it' written as 'made nitrogen trifluoride' because 'it' would follow 'a fab'.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "neon"
+    },
+    "field": "plain",
+    "before": "A fab uses it by the cylinder and cannot print without it.",
+    "after": "A fab uses it by the cylinder, and those scanners cannot print without it.",
+    "by": "expert-chemicals-gases-and-photoresist",
+    "note": "EUV scanners use no neon.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "gallium and germanium"
+    },
+    "field": "plain",
+    "before": "metals used in chips other than silicon logic. Gallium goes into compound chips such as radio parts, LEDs and lasers, and germanium into fiber optics, infrared optics and solar cells.",
+    "after": "metals used in electronics. Gallium goes into compound chips such as radio parts, LEDs and lasers, and germanium into fiber optics, infrared optics, semiconductors and solar cells.",
+    "by": "expert-chemicals-gases-and-photoresist",
+    "note": "SiGe is in leading-edge logic; MCS 2026 lists semiconductor uses.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "second source"
+    },
+    "field": "why",
+    "before": ", Korea bought more from other countries. Output of all three chemicals rose at Korean firms and at Japanese companies' affiliates in Korea.",
+    "after": ", South Korea bought more from other countries. Output of all three chemicals rose at South Korean firms and at Japanese companies' affiliates in South Korea.",
+    "by": "expert-chemicals-gases-and-photoresist",
+    "note": "Optional consistency: country named in full.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "immersion lithography"
+    },
+    "field": "plain",
+    "before": "Light bends more sharply through water than through air, so the same lens prints finer lines.",
+    "after": "The water lets the lens focus light at a wider angle than air allows, so the same light prints finer lines.",
+    "by": "expert-lithography",
+    "note": "Wrong physics: the gain is an NA above 1 (ASML).",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "immersion lithography"
+    },
+    "field": "why",
+    "before": "Dutch export licensing covers immersion scanners.",
+    "after": "Dutch export licensing covers the most advanced immersion scanners.",
+    "by": "expert-lithography",
+    "note": "Older immersion models are not licensed (ASML, 30 June 2023).",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "DUV"
+    },
+    "field": "why",
+    "before": "draws its line at immersion tools.",
+    "after": "covers the most advanced immersion tools.",
+    "by": "expert-lithography",
+    "note": "Same source.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "KrF"
+    },
+    "field": "plain",
+    "before": ", where lines are far apart, and thick films for packaging.",
+    "after": ", where lines are far apart.",
+    "by": "expert-lithography",
+    "note": "Packaging lithography is mostly i-line; no source for KrF.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "lithography"
+    },
+    "field": "why",
+    "before": "It is the most concentrated stage in the chain, and the finest layers it prints set",
+    "after": "Only one company, ASML, makes the machines for its finest layers, and those layers set",
+    "by": "expert-lithography",
+    "note": "'Most concentrated' is an unsourced ranking.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "i-line"
+    },
+    "field": "plain",
+    "before": "the coarsest lithography light still in use",
+    "after": "the coarsest of the main lithography lights",
+    "by": "expert-lithography",
+    "note": "Accuracy: the entry's own aka lists g-line, which is coarser and still used.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "photomasks-and-pellicles",
+      "list": "cards",
+      "index": 0
+    },
+    "field": "a",
+    "before": "one for each layer of a chip.",
+    "after": "at least one for each layer of a chip.",
+    "by": "expert-photomasks-and-pellicles",
+    "note": "Multipatterned layers use two or more masks; matches the new plain.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "photomasks-and-pellicles",
+      "list": "cards",
+      "index": 1
+    },
+    "field": "section",
+    "before": "Who makes it",
+    "after": "Blanks",
+    "by": "expert-photomasks-and-pellicles",
+    "note": "Reread went to a section that never mentions blank makers.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "photomasks-and-pellicles",
+      "list": "cards",
+      "index": 3
+    },
+    "field": "a",
+    "before": "Masks for older machines only.",
+    "after": "Masks for deep ultraviolet machines and older ones.",
+    "by": "expert-photomasks-and-pellicles",
+    "note": "SMIC's shops serve ArF scanners.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "photomasks-and-pellicles",
+      "list": "cards",
+      "index": 3
+    },
+    "field": "why",
+    "before": "No Chinese firm makes an EUV mask blank or a tool that checks an EUV mask.",
+    "after": "SMIC's two mask shops in Shanghai make masks for those machines.",
+    "by": "expert-photomasks-and-pellicles",
+    "note": "No source for the old sentence; the new one is in Who makes it.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "photomasks-and-pellicles",
+      "list": "cards",
+      "index": 3
+    },
+    "field": "section",
+    "before": "The chokepoint",
+    "after": "Who makes it",
+    "by": "expert-photomasks-and-pellicles",
+    "note": "The answer sits in Who makes it.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "photomasks-and-pellicles",
+      "list": "takeaways",
+      "index": 3
+    },
+    "before": "China makes masks only for older machines,",
+    "after": "China makes masks for deep ultraviolet machines and older ones,",
+    "by": "expert-photomasks-and-pellicles",
+    "note": "Takeaway: same fix as card 4.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "mask blank"
+    },
+    "field": "plain",
+    "before": "carrying the coating that the pattern will be cut into. For extreme ultraviolet the coating is a mirror of about forty pairs of ultrathin layers, and a particle buried in it cannot",
+    "after": "carrying the film that the pattern will be cut into. For extreme ultraviolet that film sits on a mirror of about forty pairs of ultrathin layers, and a particle buried in the mirror cannot",
+    "by": "expert-photomasks-and-pellicles",
+    "note": "The EUV pattern is etched in the absorber on top of the mirror.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "mask blank"
+    },
+    "field": "why",
+    "before": "only three firms supply EUV blanks, two of them Japanese.",
+    "after": "only three firms supply EUV blanks, and AGC and Hoya, both Japanese, are two of them.",
+    "by": "expert-photomasks-and-pellicles",
+    "note": "AGC never says 'two of them Japanese'.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "photomask"
+    },
+    "field": "plain",
+    "before": "dozens of them, one per layer.",
+    "after": "dozens of them, at least one per layer.",
+    "by": "expert-photomasks-and-pellicles",
+    "note": "Multipatterning.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "reticle"
+    },
+    "field": "why",
+    "before": "A reticle's printable area is fixed at 26 by 33 millimeters,",
+    "after": "One exposure from a reticle prints at most 26 by 33 millimeters of the wafer,",
+    "by": "expert-photomasks-and-pellicles",
+    "note": "26 by 33 mm is the scanner field on the wafer; High-NA halves it.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "electron beam"
+    },
+    "field": "plain",
+    "before": "Fabs use it to write the pattern onto a photomask, to inspect wafers for defects light cannot see, and to measure line widths.",
+    "after": "Mask shops use it to write the pattern onto a photomask, and fabs use it to inspect wafers for defects light cannot see and to measure line widths.",
+    "by": "expert-photomasks-and-pellicles",
+    "note": "Wrong actor for mask writing.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "ALD"
+    },
+    "field": "plain",
+    "before": "roughly one atomic layer at a time.",
+    "after": "a fraction of an atomic layer at a time.",
+    "by": "expert-deposition-and-etch",
+    "note": "Growth per cycle is below one layer (FR 2023-23049 p. 16).",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "deposition"
+    },
+    "field": "plain",
+    "before": "Machines either knock atoms off a solid target so they land on the surface, or react gases at the surface so a film grows there.",
+    "after": "Machines knock atoms off a solid target so they land on the surface, react gases at the surface so a film grows there, or plate metal out of a liquid.",
+    "by": "expert-deposition-and-etch",
+    "note": "Copper wiring is electroplated (chapter cites CSET p. 39).",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "plasma"
+    },
+    "field": "why",
+    "before": "Deposition and etch chambers are separate products built from similar vacuum, gas and radio-frequency parts. ",
+    "after": "",
+    "by": "expert-deposition-and-etch",
+    "note": "Sentence cut from the chapter this round for lack of a source.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "metrology-and-inspection",
+      "list": "cards",
+      "index": 1
+    },
+    "field": "why",
+    "before": "49.2 percent of chips 1 centimeter square come out flawless, but only 11.3 percent of chips 2 centimeters square.",
+    "after": "49.2 percent of chips 1 centimeter on a side come out flawless, but only 11.3 percent of chips 2 centimeters on a side.",
+    "by": "expert-metrology-and-inspection",
+    "note": "Matches the chapter's plain.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "metrology-and-inspection",
+      "list": "cards",
+      "index": 0
+    },
+    "field": "why",
+    "before": "tell a fab why",
+    "after": "help a fab find out why",
+    "by": "expert-metrology-and-inspection",
+    "note": "Optional accuracy fix: finding the cause takes yield analysis too.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "metrology-and-inspection",
+      "list": "takeaways",
+      "index": 0
+    },
+    "before": "and tell a fab why its chips fail",
+    "after": "and help a fab find out why its chips fail",
+    "by": "expert-metrology-and-inspection",
+    "note": "Takeaway: same fix.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "defect density"
+    },
+    "field": "why",
+    "before": "dies 1 centimeter square come out flawless, against 11.3 percent of dies 2 centimeters square.",
+    "after": "dies 1 centimeter on a side come out flawless, against 11.3 percent of dies 2 centimeters on a side.",
+    "by": "expert-metrology-and-inspection",
+    "note": "Matches the chapter's plain.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "critical dimension"
+    },
+    "field": "why",
+    "before": "Hitachi holds 71.9 percent of the market for the tools that measure it, the one kind",
+    "after": "In 2025 Hitachi held 71.9 percent of the market for the tools that measure it, by CSET's count. They are the one kind",
+    "by": "expert-metrology-and-inspection",
+    "note": "Figure had no year (CSET N66, 2025).",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "ion implantation"
+    },
+    "field": "plain",
+    "before": " It is the first step in building each transistor.",
+    "after": "",
+    "by": "expert-transistors-and-front-end",
+    "note": "Wrong: GAA flows start with epitaxy and fin patterning.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "ion implantation"
+    },
+    "field": "why",
+    "before": "No transistor can be built without it.",
+    "after": "Every modern chip process relies on it.",
+    "by": "expert-transistors-and-front-end",
+    "note": "Overstated: in-situ doped epitaxy and diffusion also dope transistors.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "gate-all-around"
+    },
+    "field": "why",
+    "before": "Only TSMC, Intel and Samsung can build it.",
+    "after": "Only TSMC, Intel and Samsung make it in volume.",
+    "by": "expert-transistors-and-front-end",
+    "note": "Rapidus, IBM and imec build GAA prototypes.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "node"
+    },
+    "field": "plain",
+    "before": "than Intel's 18A does.",
+    "after": "than Intel's Panther Lake chips on 18A do.",
+    "by": "expert-transistors-and-front-end",
+    "note": "18A supports a 32 nm M0 pitch; matches chapter change 1.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "FinFET"
+    },
+    "field": "why",
+    "before": "TSMC built its processes on FinFETs until N2,",
+    "after": "TSMC's leading-edge processes used FinFETs until N2,",
+    "by": "expert-transistors-and-front-end",
+    "note": "TSMC's mature processes are planar.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "leading edge"
+    },
+    "field": "plain",
+    "before": " Everything older is a mature node.",
+    "after": "",
+    "by": "expert-transistors-and-front-end",
+    "note": "5 and 7 nm are neither leading edge nor mature.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "backside power delivery"
+    },
+    "field": "plain",
+    "before": "The finished wafer is ground thin and the power wires are built on its back. Power arrives through holes drilled up from below,",
+    "after": "After the transistors and signal wiring are built, the wafer is bonded face down to a second wafer and ground thin, and the power wires are built on its back. Power arrives through tiny holes etched up from below,",
+    "by": "expert-transistors-and-front-end",
+    "note": "Wafer is bonded to a carrier; holes are etched.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "backside power delivery"
+    },
+    "field": "why",
+    "before": "Intel ships it on its 18A process and TSMC on its A16 process.",
+    "after": "Intel ships it on its 18A process. TSMC says A16, its first process with it, will be production-ready in the second half of 2026.",
+    "by": "expert-transistors-and-front-end",
+    "note": "No source shows A16 shipping (TSMC A16 page, Aug 2026).",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "transistor density"
+    },
+    "field": "plain",
+    "before": "A14 gives more than 20 percent more logic density than N2.",
+    "after": "TSMC says A14, planned for 2028, will give more than 20 percent more logic density than N2.",
+    "by": "expert-transistors-and-front-end",
+    "note": "A14 is a plan (TSMC 3228).",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "nm-class"
+    },
+    "field": "plain",
+    "before": ", or when nothing on it measures 7 nanometers.",
+    "after": ".",
+    "by": "expert-transistors-and-front-end",
+    "note": "Nothing on any modern node measures its nominal size.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "memory-and-hbm",
+      "list": "cards",
+      "index": 3
+    },
+    "field": "a",
+    "before": "Not the newest kinds, and no Chinese firm ships HBM3E or HBM4 in volume.",
+    "after": "Not the newest kinds. The Institute for Progress estimated that China made virtually no HBM of its own in 2025.",
+    "by": "expert-memory-and-hbm",
+    "note": "Second clause not stated in the chapter; IFP estimate is.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "memory-and-hbm",
+      "list": "takeaways",
+      "index": 3
+    },
+    "before": "No Chinese firm ships HBM3E or HBM4 in volume.",
+    "after": "The Institute for Progress estimated that China made virtually no HBM in 2025.",
+    "by": "expert-memory-and-hbm",
+    "note": "Takeaway: same fix.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "JEDEC"
+    },
+    "field": "why",
+    "before": "8 Gb/s per pin: Samsung at 11.7, SK hynix above 10 and Micron above 11.",
+    "after": "8 Gb/s per pin. Samsung's runs at 11.7, SK hynix's above 10 and Micron's above 11.",
+    "by": "expert-memory-and-hbm",
+    "note": "Colon joining two sentences.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "NAND"
+    },
+    "field": "plain",
+    "before": "when the power is off: the storage inside",
+    "after": "when the power is off. It is the storage inside",
+    "by": "expert-memory-and-hbm",
+    "note": "Colon joining two sentences.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "hybrid bonding"
+    },
+    "field": "aka",
+    "before": "Foveros",
+    "after": "Foveros Direct",
+    "by": "expert-advanced-packaging",
+    "note": "Plain Foveros uses solder microbumps; the alias opened the wrong definition in ch 11.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "hybrid bonding"
+    },
+    "field": "plain",
+    "before": "Joining two chips face to face by pressing their copper pads, and the glass-like insulator around them, into direct contact, with no solder",
+    "after": "Joining two chips by bonding their copper pads, and the glass-like insulator around them, directly to each other, with no solder",
+    "by": "expert-advanced-packaging",
+    "note": "Not only face to face; the bond comes from contact and annealing.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "hybrid bonding"
+    },
+    "field": "why",
+    "before": "It would cut the spacing between connections in a memory stack from about 20 micrometers to under 1. An SK hynix tech note expects",
+    "after": "An SK hynix tech note puts microbumps about 20 micrometers apart and hybrid-bonded pads under 1 micrometer apart. It expects",
+    "by": "expert-advanced-packaging",
+    "note": "The note's figures are generic, not for memory stacks.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "microbump"
+    },
+    "field": "plain",
+    "before": "Microbumps sit 30 to 40 microns apart,",
+    "after": "In Intel's 2.5D packages microbumps sit 36 microns apart,",
+    "by": "expert-advanced-packaging",
+    "note": "Unsourced range; matches chapter change 2 (Intel brief).",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "microbump"
+    },
+    "field": "why",
+    "before": "Hybrid bonding, copper pressed straight onto copper,",
+    "after": "Hybrid bonding, which joins copper straight to copper,",
+    "by": "expert-advanced-packaging",
+    "note": "Optional accuracy fix, consistent with the hybrid bonding entry.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "interposer"
+    },
+    "field": "plain",
+    "before": "fine copper wiring with small silicon bridges.",
+    "after": "fine copper wiring, often with small silicon bridges.",
+    "by": "expert-advanced-packaging",
+    "note": "CoWoS-R has no bridges.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "interposer"
+    },
+    "field": "why",
+    "before": "On TSMC's CoWoS-L that area is now 5.5 times the reticle,",
+    "after": "In April 2026 TSMC was producing CoWoS at 5.5 times the reticle,",
+    "by": "expert-advanced-packaging",
+    "note": "Vague 'now'.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "reticle limit"
+    },
+    "field": "why",
+    "before": "Every leading AI accelerator needs more circuit than this, so designs are split",
+    "after": "Many leading AI accelerators, Nvidia's Blackwell among them, need more circuitry than this, so they are split",
+    "by": "expert-advanced-packaging",
+    "note": "The H100 is one die; the chapter says 'Many'.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "reticle limit"
+    },
+    "field": "plain",
+    "before": "and is the same for every design.",
+    "after": "and is the same for every design. The newer High-NA EUV machines print half that area.",
+    "by": "expert-advanced-packaging",
+    "note": "Optional accuracy fix: High-NA halves the field (ch 4 cites ASML).",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "thermocompression bonding"
+    },
+    "field": "plain",
+    "before": "and how chiplets are placed on a package.",
+    "after": "and a growing way to place chiplets on a package.",
+    "by": "expert-advanced-packaging",
+    "note": "Optional accuracy fix: most chiplets still use mass reflow (ASMPT).",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "advanced-packaging",
+      "list": "cards",
+      "index": 2
+    },
+    "field": "section",
+    "before": "The chokepoint",
+    "after": "Capacity",
+    "by": "expert-advanced-packaging",
+    "note": "The answer sits in Capacity.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "advanced-packaging",
+      "list": "cards",
+      "index": 3
+    },
+    "field": "section",
+    "before": "The chokepoint",
+    "after": "Who makes it",
+    "by": "expert-advanced-packaging",
+    "note": "Intel Fab 9 and Amkor Peoria are in Who makes it.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "advanced-packaging",
+      "list": "cards",
+      "index": 2
+    },
+    "field": "why",
+    "before": "the analyst firm SemiAnalysis",
+    "after": "the research firm SemiAnalysis",
+    "by": "expert-advanced-packaging",
+    "note": "Optional: one name, as in the body.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "ABF"
+    },
+    "field": "plain",
+    "before": "The insulating film inside the base board, the substrate, that a high-end chip package sits on.",
+    "after": "The insulating film inside the substrate, the small layered board that the chips in a high-end package sit on.",
+    "by": "expert-substrates-and-pcbs",
+    "note": "The substrate is part of the package.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "substrate"
+    },
+    "field": "plain",
+    "before": "The small, dense circuit board that a chip package sits on, spreading the chip's microscopic connections out",
+    "after": "The small, dense circuit board at the base of a chip package. The chips sit on it, and it spreads their microscopic connections out",
+    "by": "expert-substrates-and-pcbs",
+    "note": "Same error as ABF.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "substrate"
+    },
+    "field": "why",
+    "before": "A handful of Asian firms build these substrates for others. As packages grow, warping and handling replace the wiring as the limit on what can be built.",
+    "after": "A handful of firms, most of them in Asia, build these substrates for others. As packages grow, a substrate warps more and needs more layers, so fewer come out working.",
+    "by": "expert-substrates-and-pcbs",
+    "note": "AT&S and TTM are not Asian; the old second sentence was an unsourced aphorism.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "glass cloth"
+    },
+    "field": "plain",
+    "before": "which keeps a large package flat.",
+    "after": "which helps keep a large package flat.",
+    "by": "expert-substrates-and-pcbs",
+    "note": "T-glass reduces warping but does not prevent it alone.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "substrates-and-pcbs",
+      "list": "cards",
+      "index": 2
+    },
+    "field": "a",
+    "before": "a new film in each layer of each product.",
+    "after": "a new film for each product.",
+    "by": "expert-substrates-and-pcbs",
+    "note": "Approval is per product and process.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "ATE"
+    },
+    "field": "plain",
+    "before": "connects to a finished chip, feeds it millions of test patterns",
+    "after": "connects to a chip, on the wafer or in its package, feeds it test patterns",
+    "by": "expert-test-and-assembly",
+    "note": "Testers work at wafer sort too; no source for 'millions'.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "wafer sort"
+    },
+    "field": "plain",
+    "before": "A probe card lowers thousands of needles onto the pads of one die, and",
+    "after": "Thousands of needles on a probe card press onto the pads of one die, or of several dies at once, and",
+    "by": "expert-test-and-assembly",
+    "note": "The card does not move; one touchdown can cover many dies.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "burn-in"
+    },
+    "field": "plain",
+    "before": "is moving burn-in for its accelerators from the finished system to the wafer.",
+    "after": "is moving all burn-in for its accelerators from the system level to the wafer.",
+    "by": "expert-test-and-assembly",
+    "note": "As chapter change 5 (Aehr says system-level).",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "burn-in"
+    },
+    "field": "why",
+    "before": "so burn-in now protects",
+    "after": "so burn-in on the wafer protects",
+    "by": "expert-test-and-assembly",
+    "note": "Only wafer-level burn-in happens before parts are joined.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "probe card"
+    },
+    "field": "why",
+    "before": "set how fast a new accelerator or memory stack can reach full production.",
+    "after": "can limit how fast a new accelerator or memory stack reaches full production.",
+    "by": "expert-test-and-assembly",
+    "note": "No source says probe cards set the pace.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "data-centers-and-power",
+      "list": "cards",
+      "index": 1
+    },
+    "field": "why",
+    "before": "OpenAI's planned sites add up",
+    "after": "OpenAI's seven Stargate sites in the United States add up",
+    "by": "expert-data-centers-and-power",
+    "note": "Epoch's 9 GW covers the seven US Stargate sites only.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "data-centers-and-power",
+      "list": "cards",
+      "index": 1
+    },
+    "field": "section",
+    "before": "Capacity and demand",
+    "after": "How it works",
+    "by": "expert-data-centers-and-power",
+    "note": "The fact is in How it works.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "data-centers-and-power",
+      "list": "cards",
+      "index": 3
+    },
+    "field": "q",
+    "before": "What limits China's AI data center buildout?",
+    "after": "Which two countries used the most data center electricity in 2024?",
+    "by": "expert-data-centers-and-power",
+    "note": "Old card's claims are stated and cited nowhere; replacement uses the chapter's IEA figures.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "data-centers-and-power",
+      "list": "cards",
+      "index": 3
+    },
+    "field": "a",
+    "before": "The supply of AI chips.",
+    "after": "The United States, with 45 percent of the world's total, and China, with 25 percent.",
+    "by": "expert-data-centers-and-power",
+    "note": "Same.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "data-centers-and-power",
+      "list": "cards",
+      "index": 3
+    },
+    "field": "why",
+    "before": "China has spare generating capacity and makes its own transformers. The United States imports most of its large transformers.",
+    "after": "Those are the International Energy Agency's estimates. Data centers made up around 3 percent of the growth in China's electricity demand from 2022 to 2024.",
+    "by": "expert-data-centers-and-power",
+    "note": "Same.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "data-centers-and-power",
+      "list": "cards",
+      "index": 3
+    },
+    "field": "section",
+    "before": "The chokepoint",
+    "after": "Capacity and demand",
+    "by": "expert-data-centers-and-power",
+    "note": "The IEA figures are in Capacity and demand.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "data-centers-and-power",
+      "list": "takeaways",
+      "index": 3
+    },
+    "before": "China has power to spare, but the supply of AI chips limits its buildout.",
+    "after": "The United States used 45 percent of the world's data center electricity in 2024 and China 25 percent, by the International Energy Agency's estimate.",
+    "by": "expert-data-centers-and-power",
+    "note": "Takeaway: same fix.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "busbar"
+    },
+    "field": "plain",
+    "before": "A cable carrying the same current would melt. The busbars feeding a single AI rack can weigh 200 kilograms.",
+    "after": "An ordinary cable carrying the same current would overheat. At the 54 volts used inside racks such as the GB300 NVL72, a one-megawatt rack would need up to 200 kilograms of busbar, by Nvidia's estimate.",
+    "by": "expert-data-centers-and-power",
+    "note": "As chapter changes 2 and 4: 200 kg is for a 1 MW rack at 54 V.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "busbar"
+    },
+    "field": "why",
+    "before": "Nvidia is moving to 800-volt distribution so the same copper carries over 150 percent more power and those heavy bars are no longer needed.",
+    "after": "Nvidia is moving its racks to 800 volts, which cuts the current, so a megawatt rack will not need bars that heavy.",
+    "by": "expert-data-centers-and-power",
+    "note": "The 150 percent compares 800 V DC with 415/480 V AC.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "rack"
+    },
+    "field": "why",
+    "before": "and the stored energy that carries the rack through a dip in power.",
+    "after": "and the energy stored in the rack to keep its power draw steady.",
+    "by": "expert-data-centers-and-power",
+    "note": "In-rack storage smooths the rack's own swings (chapter change 6).",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "power shelf"
+    },
+    "field": "why",
+    "before": ", but the transformers upstream have few suppliers.",
+    "after": ". The large transformers upstream commonly took three years to arrive in 2024.",
+    "by": "expert-data-centers-and-power",
+    "note": "'Few suppliers' unsourced; lead time is what the chapter documents.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "kilowatt"
+    },
+    "field": "plain",
+    "before": "A data center campus is now sized in gigawatts.",
+    "after": "The largest data center campuses are planned in gigawatts.",
+    "by": "expert-data-centers-and-power",
+    "note": "Most campuses are tens to hundreds of megawatts.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "large power transformer"
+    },
+    "field": "plain",
+    "before": "is the machine that steps grid electricity down from transmission voltage to a level",
+    "after": "is a machine that changes grid electricity from one voltage to another, for example from transmission voltage down to a level",
+    "by": "expert-data-centers-and-power",
+    "note": "These transformers also step generator output up.",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "capex"
+    },
+    "field": "why",
+    "before": "spent $448.2 billion of capital in 2025.",
+    "after": "spent $448.2 billion of capital in 2025, the sum of Epoch AI's quarterly figures.",
+    "by": "expert-data-centers-and-power",
+    "note": "Epoch publishes quarterly figures, not the annual total (chapter change 10).",
+    "batch": 1
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "hyperscaler"
+    },
+    "field": "why",
+    "before": "spent $448.2 billion of capital in 2025.",
+    "after": "spent $448.2 billion of capital in 2025, the sum of Epoch AI's quarterly figures.",
+    "by": "expert-data-centers-and-power",
+    "note": "Same.",
+    "batch": 1
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "foundries-and-fabs",
+      "list": "cards",
+      "index": 1
+    },
+    "field": "section",
+    "before": "Who makes it",
+    "after": "How it works",
+    "by": "expert-foundries-and-fabs",
+    "note": "The 13 and 17 million figures sit in How it works.",
+    "batch": 2
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "foundries-and-fabs",
+      "list": "cards",
+      "index": 2
+    },
+    "field": "q",
+    "before": "What is the slowest part of setting up leading-edge chipmaking outside Taiwan?",
+    "after": "What did SemiAnalysis judge in December 2025 to be a major challenge for TSMC in Arizona?",
+    "by": "expert-foundries-and-fabs",
+    "note": "'Slowest part' has no source.",
+    "batch": 2
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "foundries-and-fabs",
+      "list": "cards",
+      "index": 2
+    },
+    "field": "a",
+    "before": "Building a workforce with years of experience running the process.",
+    "after": "Finding enough skilled workers.",
+    "by": "expert-foundries-and-fabs",
+    "note": "Same.",
+    "batch": 2
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "foundries-and-fabs",
+      "list": "cards",
+      "index": 2
+    },
+    "field": "why",
+    "before": "Any firm with enough money can pay for the building. TSMC's planned investment in Arizona reached $265 billion in July 2026, but all of its largest plants are still in Taiwan.",
+    "after": "A foundry needs highly skilled engineers to get the most working chips from each wafer. TSMC's planned investment in Arizona reached $265 billion in July 2026, but all six of its largest plants are still in Taiwan.",
+    "by": "expert-foundries-and-fabs",
+    "note": "'Any firm with enough money' has no source.",
+    "batch": 2
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "foundries-and-fabs",
+      "list": "cards",
+      "index": 3
+    },
+    "field": "why",
+    "before": "In its third-quarter 2026 World Fab Forecast",
+    "after": "In its second-quarter 2026 World Fab Forecast",
+    "by": "expert-foundries-and-fabs",
+    "note": "The chapter cites the second-quarter update.",
+    "batch": 2
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "foundries-and-fabs",
+      "list": "takeaways",
+      "index": 0
+    },
+    "before": "because no chip company can fill a fab alone.",
+    "after": "because no chip company sells enough of one product to fill a fab alone.",
+    "by": "expert-foundries-and-fabs",
+    "note": "Takeaway 1: Intel and memory makers fill their own fabs.",
+    "batch": 2
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "foundries-and-fabs",
+      "list": "takeaways",
+      "index": 2
+    },
+    "before": "Outside Taiwan, the slowest part of setting up leading-edge chipmaking is training a workforce to run the process.",
+    "after": "SemiAnalysis judged in December 2025 that finding enough skilled workers remained a major challenge for TSMC in Arizona.",
+    "by": "expert-foundries-and-fabs",
+    "note": "Takeaway 3: same fix as card 3.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "fab"
+    },
+    "field": "plain",
+    "before": "each wafer moves between hundreds of machines in a sealed pod",
+    "after": "each wafer moves from machine to machine in a sealed pod",
+    "by": "expert-foundries-and-fabs",
+    "note": "Unsourced count, already cut from the chapter.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "fab"
+    },
+    "field": "why",
+    "before": "A company can put up the building faster than it can train the workforce to run it.",
+    "after": "SemiAnalysis judged in December 2025 that finding enough workers remained a major challenge for TSMC in Arizona.",
+    "by": "expert-foundries-and-fabs",
+    "note": "Unsourced claim; the chapter's SemiAnalysis judgment.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "foundry"
+    },
+    "field": "plain",
+    "before": "A company that manufactures chips designed by other companies and makes no products of its own. TSMC, founded in 1987, pioneered the model. It works",
+    "after": "A company, or a division of one, that manufactures chips designed by other companies. A pure-play foundry, the model TSMC pioneered after its founding in 1987, makes no products of its own. The model works",
+    "by": "expert-foundries-and-fabs",
+    "note": "Intel Foundry and Samsung Foundry are foundries.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "high-volume manufacturing"
+    },
+    "field": "plain",
+    "before": "stops being a trial and runs at full rate with enough good chips to sell.",
+    "after": "stops being a trial and is made in volume for sale. Output then climbs to full rate during the ramp.",
+    "by": "expert-foundries-and-fabs",
+    "note": "HVM starts the ramp; old text contradicted the ramp entry.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "utilization"
+    },
+    "field": "plain",
+    "before": "A fab costs the same whether it is full or empty, so utilization decides whether it makes money.",
+    "after": "Most of a fab's costs, such as paying off its tools, stay the same whether it runs full or half empty, so utilization largely decides whether it makes money.",
+    "by": "expert-foundries-and-fabs",
+    "note": "Materials, gases and power scale with output.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "logic chip"
+    },
+    "field": "why",
+    "before": "ASML counted 66 percent of its 2025 system sales as going to logic and 34 percent to memory.",
+    "after": "ASML's 2025 system sales were €16,054.1 million to logic chipmakers and €8,420.2 million to memory makers.",
+    "by": "expert-foundries-and-fabs",
+    "note": "The percentages were computed; ASML 2025 annual report end-use table.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "wafers per month"
+    },
+    "field": "plain",
+    "before": "SMIC's capacity at 7 nm and below was conservatively estimated at 45,000 a month at the end of 2025.",
+    "after": "In September 2025 SemiAnalysis conservatively put SMIC's capacity at 7 nm and below at 45,000 a month by the end of 2025.",
+    "by": "expert-foundries-and-fabs",
+    "note": "It was a forecast and needs an owner; ch 17's sourced wording.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "mature node"
+    },
+    "field": "why",
+    "before": "Its mature-node chipmaking is going domestic on a visible timetable.",
+    "after": "In the five years before May 2024, Chinese companies invested $63 billion in 73 fabs, mostly for chips above 28 nm, SIA and BCG reported.",
+    "by": "expert-foundries-and-fabs",
+    "note": "Unsourced claim; SIA/BCG May 2024 p. 30.",
+    "batch": 2
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "systems-and-networking",
+      "list": "cards",
+      "index": 2
+    },
+    "field": "why",
+    "before": "By contrast, rack assembly can move from Foxconn to Quanta or Wistron, though the move would take an estimated several quarters.",
+    "after": "By contrast, more than 50 makers of systems and components were gearing up for Nvidia's Vera Rubin NVL72 rack in October 2025, Nvidia said.",
+    "by": "expert-systems-and-networking",
+    "note": "The chapter cut the 'several quarters' estimate as unsourced.",
+    "batch": 2
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "systems-and-networking",
+      "list": "takeaways",
+      "index": 2
+    },
+    "before": "Rack assembly can move to another firm, though the move would take an estimated several quarters.",
+    "after": "In October 2025 more than 50 makers of systems and components were gearing up to build Nvidia's next rack.",
+    "by": "expert-systems-and-networking",
+    "note": "Takeaway 3: same fix.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "scale-up network"
+    },
+    "field": "plain",
+    "before": "The wiring that joins a few dozen accelerators inside one rack so a model too large for a single chip can be spread across them. It runs at terabytes per second, tens of times faster than the network between racks.",
+    "after": "The network that joins a group of accelerators, from a few dozen in one rack to thousands, so a model too large for a single chip can be spread across them. It runs at terabytes per second. In Nvidia's GB300 NVL72 each GPU has nine times as much bandwidth on it as on the scale-out network.",
+    "by": "expert-systems-and-networking",
+    "note": "Scale-up domains reach thousands; 'tens of times' unsourced, chapter gives nine times.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "scale-up network"
+    },
+    "field": "why",
+    "before": "The bandwidth of this network sets the size of model that can be trained.",
+    "after": "The bandwidth of this network limits how efficiently a large model trains.",
+    "by": "expert-systems-and-networking",
+    "note": "Overstated.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "co-packaged optics"
+    },
+    "field": "plain",
+    "before": "puts the lasers and light-to-electricity converters onto the switch chip's own package instead of into plug-in modules at the front of the box.",
+    "after": "puts the parts that turn electrical signals into light and back onto the switch chip's own package instead of into plug-in modules at the front of the box. Broadcom keeps the lasers that supply the light in separate modules that can be replaced in the field.",
+    "by": "expert-systems-and-networking",
+    "note": "Old text contradicted the chapter and Broadcom's field-replaceable laser modules.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "optical transceiver"
+    },
+    "field": "why",
+    "before": "but the lasers inside them, which only a few firms can make, are the bottleneck.",
+    "after": "but the lasers inside them were scarce in 2026.",
+    "by": "expert-systems-and-networking",
+    "note": "'Only a few firms' cut from the chapter as unsupported.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "ODM"
+    },
+    "field": "why",
+    "before": "Several contract manufacturers on three continents can build an AI rack. But moving Foxconn's share of rack assembly to Quanta and Wistron would take an estimated several quarters. Nvidia said in its filing for the quarter to April 2026 that the complexity of rack-scale systems had caused production delays.",
+    "after": "More than 50 makers of systems and components were gearing up for Nvidia's Vera Rubin NVL72 rack in October 2025, Nvidia said. In its filing for the quarter to July 2026, Nvidia said the complexity of producing its data center systems had caused production delays.",
+    "by": "expert-systems-and-networking",
+    "note": "Unsourced estimates cut from the chapter; chapter's newer filing.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "baseboard"
+    },
+    "field": "plain",
+    "before": "It carries their power and the switch chips that let them reach each other at full speed.",
+    "after": "It carries their power and the links between them. On Nvidia's baseboard, switch chips let any two modules reach each other at full speed.",
+    "by": "expert-systems-and-networking",
+    "note": "Not every baseboard carries switch chips.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "NVLink"
+    },
+    "field": "why",
+    "before": "Nvidia controls it, but most other parts at the server and rack level have many suppliers. Since May 2025 its NVLink Fusion program has let other firms' custom chips, including CPUs from Fujitsu and Qualcomm, connect to Nvidia GPUs over NVLink.",
+    "after": "Nvidia controls it, while more than 50 makers of systems and components build around its racks. Since May 2025 its NVLink Fusion program has let other firms' custom chips connect to Nvidia GPUs over NVLink, and Fujitsu and Qualcomm plan CPUs that do so.",
+    "by": "expert-systems-and-networking",
+    "note": "'Many suppliers' unsourced; Fujitsu and Qualcomm CPUs are planned (chapter).",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "InfiniBand"
+    },
+    "field": "plain",
+    "before": "InfiniBand is a networking standard built for supercomputers, with low delay and no dropped packets. AI clusters used it to link thousands of servers before Ethernet caught up. Nvidia sells both.",
+    "after": "InfiniBand is a networking standard long used in supercomputers, with low delay and no dropped packets. AI clusters relied on it to link thousands of servers before Ethernet caught up, and Nvidia still sells both.",
+    "by": "expert-systems-and-networking",
+    "note": "Nvidia's 10-Q still credits InfiniBand demand; past tense misled.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "InfiniBand"
+    },
+    "field": "why",
+    "before": "Broadcom's Ethernet switch chips now double in bandwidth every generation.",
+    "after": "Broadcom has doubled the bandwidth of its Ethernet switch chips with each generation since 2019.",
+    "by": "expert-systems-and-networking",
+    "note": "Vague 'now'.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "Ethernet"
+    },
+    "field": "why",
+    "before": "Broadcom sells its Ethernet switch chips to any buyer. It has doubled their bandwidth every generation, from 25.6 Tbps on one chip in Tomahawk 4 to 102.4 in Tomahawk 6.",
+    "after": "Broadcom has doubled the bandwidth of its Ethernet switch chips every generation, from 25.6 Tbps on one chip in Tomahawk 4 in 2019 to 102.4 in Tomahawk 6 in 2025.",
+    "by": "expert-systems-and-networking",
+    "note": "'To any buyer' cut from the chapter as unsourced; figures dated.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "scale-out network"
+    },
+    "field": "plain",
+    "before": "It uses the same technology as ordinary data center networks, built at far larger scale.",
+    "after": "Its Ethernet versions use the same standard as ordinary data center networks.",
+    "by": "expert-systems-and-networking",
+    "note": "InfiniBand is not ordinary data-center technology.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "SerDes"
+    },
+    "field": "plain",
+    "before": "over a single wire.",
+    "after": "over a single pair of wires.",
+    "by": "expert-systems-and-networking",
+    "note": "A lane is a differential pair.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "SerDes"
+    },
+    "field": "why",
+    "before": "The blocks are licensed IP that has to be proven in silicon on each new process.",
+    "after": "Many chip designers license the blocks as IP, and each design has to be proven in silicon on every new process.",
+    "by": "expert-systems-and-networking",
+    "note": "Broadcom and Marvell design their own SerDes.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "NVL72"
+    },
+    "field": "why",
+    "before": "AI capacity is now built and costed by the rack. SemiAnalysis puts the cost",
+    "after": "AI capacity is built and costed by the rack. In July 2026 SemiAnalysis put the cost",
+    "by": "expert-systems-and-networking",
+    "note": "Undated figure and vague 'now' (SemiAnalysis, 23 July 2026).",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "indium phosphide"
+    },
+    "field": "plain",
+    "before": "which silicon cannot do.",
+    "after": "which silicon cannot do efficiently.",
+    "by": "expert-systems-and-networking",
+    "note": "Optional accuracy fix: silicon emits light, but weakly.",
+    "batch": 2
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "component-costs",
+      "list": "cards",
+      "index": 1
+    },
+    "field": "q",
+    "before": "What is the most expensive part of an AI accelerator?",
+    "after": "What is the most expensive part of an Nvidia B200?",
+    "by": "expert-component-costs",
+    "note": "The answer is one estimate for one chip.",
+    "batch": 2
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "component-costs",
+      "list": "cards",
+      "index": 2
+    },
+    "field": "q",
+    "before": "Why does packaging cost more than the logic chips?",
+    "after": "Why does packaging add so much to the cost of a B200?",
+    "by": "expert-component-costs",
+    "note": "Old answer had the cause wrong.",
+    "batch": 2
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "component-costs",
+      "list": "cards",
+      "index": 2
+    },
+    "field": "a",
+    "before": "A package that fails after assembly wastes the chips and the memory inside it.",
+    "after": "The CoWoS-L process itself costs about $1,100, more than the $900 logic chips, and a package that fails testing wastes the chips and memory inside it.",
+    "by": "expert-component-costs",
+    "note": "Epoch's $1,100 exceeds $900 before any scrap.",
+    "batch": 2
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "component-costs",
+      "list": "cards",
+      "index": 2
+    },
+    "field": "why",
+    "before": "In Epoch AI's estimate, packaging costs $1,100 and scrapped packages another $1,000, together more than twice the $900 for the logic chips.",
+    "after": "In Epoch AI's estimate, spreading the cost of those failed packages over the good ones adds about $1,000 to each B200.",
+    "by": "expert-component-costs",
+    "note": "'More than twice' is computed.",
+    "batch": 2
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "component-costs",
+      "list": "takeaways",
+      "index": 2
+    },
+    "before": "Packaging costs more than the logic chips, because a failed package wastes everything inside it.",
+    "after": "Packaging costs more than the logic chips, and each package that fails wastes the chips and memory inside it.",
+    "by": "expert-component-costs",
+    "note": "Takeaway 3: wrong cause.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "mm2"
+    },
+    "field": "plain",
+    "before": "TSMC's interposer planned for 2028 is roughly 12,000 mm2, about the area of a compact disc.",
+    "after": "TSMC plans to start making CoWoS packages with interposers 14 times that size in 2028.",
+    "by": "expert-component-costs",
+    "note": "12,000 was computed (14 x 858); TSMC 23 Apr 2026.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "mm2"
+    },
+    "field": "why",
+    "before": "Yield, the share of dies that work, falls faster than area rises, so die area drives the cost of each working chip.",
+    "after": "Yield, the share of dies that work, falls as die area grows, so the cost of each working chip rises faster than its area.",
+    "by": "expert-component-costs",
+    "note": "Old sentence compared rates of two different quantities (matches ch 7 change 1).",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "operating margin"
+    },
+    "field": "why",
+    "before": "SK hynix's earnings release gives no gross margin, so its operating margin is the public measure of how much it keeps from memory sales. That margin was 76 percent in the June 2026 quarter.",
+    "after": "SK hynix's earnings release gives no gross margin, only an operating margin, which was 76 percent in the June 2026 quarter.",
+    "by": "expert-component-costs",
+    "note": "Its statutory quarterly reports do show gross profit.",
+    "batch": 2
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "geopolitics",
+      "list": "cards",
+      "index": 1
+    },
+    "field": "a",
+    "before": "Through the Foreign Direct Product Rule, which covers foreign goods made with American technology.",
+    "after": "Mainly through the Foreign Direct Product Rule, which covers some foreign goods made with American technology when they go to places or buyers the rule names.",
+    "by": "expert-geopolitics",
+    "note": "Overstated (15 CFR 734.9).",
+    "batch": 2
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "geopolitics",
+      "list": "takeaways",
+      "index": 1
+    },
+    "before": "US controls also cover foreign goods made with American technology.",
+    "after": "US controls also cover some foreign goods made with American technology.",
+    "by": "expert-geopolitics",
+    "note": "Takeaway 2: same fix.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "foreign direct product rule"
+    },
+    "field": "why",
+    "before": "With it, a chip made in Taiwan on American tools for a listed Chinese firm needs a US license.",
+    "after": "With it, a chip made in Taiwan on American tools for Huawei needs a US license. For listed firms the rule reaches only those whose entry carries a footnote naming it, such as Huawei's (15 CFR 734.9(e)).",
+    "by": "expert-geopolitics",
+    "note": "Entity List FDP rules reach only footnoted entries.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "3B001"
+    },
+    "field": "plain",
+    "before": "3B001 and 3B090 are the entries in the US export control list that cover chipmaking equipment. They are written as process specifications, such as an etch tool that cuts sideways or a deposition tool that reaches 200-to-1 holes.",
+    "after": "3B001 is the main entry in the US export control list for chipmaking equipment. It is written as process specifications, such as an etch tool that cuts sideways or a deposition tool that coats holes more than 200 times deeper than they are wide. BIS created 3B090 in October 2022 and folded it into 3B001 and 3B002 in October 2023 (88 FR 73424).",
+    "by": "expert-geopolitics",
+    "note": "3B090 no longer exists in the CCL.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "3B001"
+    },
+    "field": "why",
+    "before": "They decide which",
+    "after": "It decides which",
+    "by": "expert-geopolitics",
+    "note": "Follows the singular subject.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "3B001"
+    },
+    "field": "why",
+    "before": "They define a tool",
+    "after": "It defines a tool",
+    "by": "expert-geopolitics",
+    "note": "Same.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "License Exception NAC"
+    },
+    "field": "plain",
+    "before": "lets AI chips below the top band ship",
+    "after": "lets AI chips other than top-band data center chips ship",
+    "by": "expert-geopolitics",
+    "note": "740.8(a): the exclusion is data center chips meeting 3A090.a.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "License Exception ACA"
+    },
+    "field": "plain",
+    "before": "lets AI chips below the top band ship",
+    "after": "lets AI chips other than top-band data center chips ship",
+    "by": "expert-geopolitics",
+    "note": "Same.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "License Exception ACA"
+    },
+    "field": "plain",
+    "before": "are excluded and need a license to any destination.",
+    "after": "are excluded.",
+    "by": "expert-geopolitics",
+    "note": "License Exception AIA lets them go license-free to nineteen destinations.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "License Exception ACA"
+    },
+    "field": "why",
+    "before": "It lets chips below the top band reach",
+    "after": "It lets these chips reach",
+    "by": "expert-geopolitics",
+    "note": "Follows the plain change.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "US person"
+    },
+    "field": "plain",
+    "before": "any American citizen, resident or company, wherever in the world they are.",
+    "after": "any American citizen, permanent resident or company, wherever in the world they are, and anyone in the United States.",
+    "by": "expert-geopolitics",
+    "note": "15 CFR 772.1.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "Federal Register"
+    },
+    "field": "plain",
+    "before": "where every new rule is published before it takes effect. A citation such as 89 FR 96790 means volume 89, page 96790. Export control rules appear there first, and the page number is how they are cited.",
+    "after": "where every new rule is published. An export rule can take effect a few days before it is printed there, as the UAE rule did in July 2026. A citation such as 89 FR 96790 means volume 89, page 96790, and is the usual way to cite a rule.",
+    "by": "expert-geopolitics",
+    "note": "UAE rule effective 10 July, published 14 July 2026.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "silicon shield"
+    },
+    "field": "plain",
+    "before": "The argument that Taiwan's dominance of advanced chipmaking deters an attack, because destroying or seizing TSMC would cost an aggressor and the world more than the island is worth.",
+    "after": "The argument that Taiwan's lead in advanced chipmaking deters an attack on the island, because so many countries rely on its chips.",
+    "by": "expert-geopolitics",
+    "note": "Overstated framing (Stimson).",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "silicon shield"
+    },
+    "field": "why",
+    "before": "The idea is central to Taiwan policy, and it is contested. The shield works only while Taiwan's chipmaking stays irreplaceable, so Taiwan's government has a reason to slow the spread of chipmaking to other countries, which its allies want.",
+    "after": "The idea is central to debate about Taiwan's security, and it is contested. It holds only while Taiwan's chipmaking is hard to replace, so Taiwan keeps its newest chip processes at home first while the United States pushes for more chipmaking on its own soil.",
+    "by": "expert-geopolitics",
+    "note": "Drops the contested 'its allies' framing; matches the chapter.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "export control"
+    },
+    "field": "plain",
+    "before": "The government names an item and a buyer, and from then on its own companies must hold a license before they ship that item to that buyer. The United States extends the rule to goods",
+    "after": "The government names an item and a country or a buyer. From then on its own companies must hold a license before they ship that item to that country or buyer. The United States extends some of these rules to goods",
+    "by": "expert-geopolitics",
+    "note": "Same as chapter changes 1 and 2.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "consignee"
+    },
+    "field": "why",
+    "before": "G42 and US-headquartered AI companies",
+    "after": "G42 and eight US-headquartered AI companies",
+    "by": "expert-geopolitics",
+    "note": "Chapter states eight. The proposed G42 sunset sentence is not applied (not in the chapter; owner question 5).",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "compute threshold"
+    },
+    "field": "why",
+    "before": "by delegated act, without going back to a legislature.",
+    "after": "by delegated act. Such an act takes effect unless the European Parliament or the Council objects within three months (Article 97(6)).",
+    "by": "expert-geopolitics",
+    "note": "Wrong: Parliament and Council can object (AI Act art. 97(6)).",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "model weights"
+    },
+    "field": "why",
+    "before": "A chip reads every weight from memory",
+    "after": "A chip reads the model's weights from memory",
+    "by": "expert-geopolitics",
+    "note": "Mixture-of-experts models read only part.",
+    "batch": 2
+  },
+  {
+    "file": "glossary",
+    "where": {
+      "term": "mm2"
+    },
+    "field": "plain",
+    "before": "with interposers 14 times that size in 2028.",
+    "after": "with interposers 14 times the size of one scanner shot in 2028.",
+    "by": "shared-apply",
+    "note": "Readability fix to expert-component-costs item 4: \"that size\" pointed back to the 800 mm2 die, while TSMC states 14 reticles (the 858 mm2 shot).",
+    "batch": 2
+  }
+]

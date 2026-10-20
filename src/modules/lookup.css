@@ -68,6 +68,11 @@
 .lk-share-v { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 400; font-size: 17px; font-variant-numeric: tabular-nums; }
 .lk-share-m { grid-column: 1 / -1; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; color: var(--muted); line-height: 1.5; }
 .lk-small { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin: 8px 0 0; line-height: 1.5; }
+/* an EU-27 member's card: the bloc's firms counted together, linked to the Suppliers ribbons drawn that way */
+.lk-eu { margin: 0; padding: 8px 0 0; border-top: 1px solid var(--line); font-size: 14.5px; line-height: 1.45; color: var(--ink-2); }
+.lk-eu a { display: inline-block; padding: 3px 0; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 600; font-size: 13.5px; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+/* how the card's shares and the supplier list give each firm its country */
+.lk-note { margin: 18px 0 0; font-family: var(--font-mono); font-size: 11px; line-height: 1.6; color: var(--muted); max-width: 92ch; }
 .lk-cards li { border-top: 1px solid var(--line); }
 .lk-cards li:first-child { border-top: 0; }
 .lk-cards a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; align-items: baseline; padding: 7px 0 8px; text-decoration: none; color: inherit; }

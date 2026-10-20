@@ -2,7 +2,12 @@
 """Print a view of the built site to a PDF with headless Chrome over the DevTools protocol.
 
 usage: python3 build/pdf.py <url> <out.pdf> [--wait 6] [--eval <js>] [--title <running header>]
-                            [--only N] [--timeout 420] [--no-paged]
+                            [--only N] [--chapter <id>] [--edition YYYY-MM-DD] [--port 9334]
+                            [--timeout 420] [--no-paged]
+
+The chain:     python3 build/pdf.py "http://127.0.0.1:8765/?theme=light#/chain" dist/chip-supply-chain-the-chain.pdf --wait 8
+One chapter:   python3 build/pdf.py "http://127.0.0.1:8765/?theme=light#/chain" dist/pdf/lithography.pdf --chapter lithography
+               (build/chapter_pdfs.py runs this for every chapter)
 
 The page is laid out by Paged.js, injected from here because the site has no bundler. It is pinned
 at build/vendor/paged.polyfill.js: v0.4.3, https://unpkg.com/pagedjs@0.4.3/dist/paged.polyfill.js,
@@ -13,26 +18,52 @@ heads and folios in the page margins. src/modules/print.css is the stylesheet; s
 writes each note at print time from the data-* fields already on every citation.
 
 --only N paginates the first N chapters only, for iterating on the design.
+--chapter <id> lays that chapter out alone: a compact title block (site, chapter, edition, the chapter's own page,
+how to cite it) in place of the cover and contents, with the same footnotes, running heads and folios.
+--edition YYYY-MM-DD dates the PDF; the default is today. "Edition of 20 October 2026" goes on the title block, in
+the foot of every page and in the citation.
+--port is the DevTools port (9334); if another run holds it, this one waits for it to come free.
 --no-paged falls back to Chrome's own pagination, with each chapter's notes at its end; the same
 fallback runs by itself if Paged.js cannot lay the document out.
 """
-import json, subprocess, sys, time, urllib.request, os, base64
+import json, subprocess, sys, time, urllib.request, os, base64, socket, datetime
 import websocket  # websocket-client
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 args = sys.argv[1:]
 url, out = args[0], args[1]
+def site_info():
+    js = 'var s=require(%s);process.stdout.write(JSON.stringify({url:s.url,host:s.host}))' % json.dumps(os.path.join(ROOT, 'build', 'site.js'))
+    return json.loads(subprocess.run(['node', '-e', js], capture_output=True, text=True, check=True).stdout)
+SITE = site_info()
 def site_host():
-    js = 'process.stdout.write(require(%s).host)' % json.dumps(os.path.join(ROOT, 'build', 'site.js'))
-    return subprocess.run(['node', '-e', js], capture_output=True, text=True, check=True).stdout.strip()
+    return SITE['host']
 
 def opt(name, default):
     return type(default)(args[args.index(name) + 1]) if name in args else default
 def flag(name):
     return name in args
-wait = opt('--wait', 6.0); ev = opt('--eval', ''); only = opt('--only', 0)
+wait = opt('--wait', 6.0); ev = opt('--eval', ''); only = opt('--only', 0); chapter = opt('--chapter', '')
 budget = opt('--timeout', 420.0); use_paged = not flag('--no-paged')
-port = 9334
+port = opt('--port', 9334)
+# the edition is the day the PDF is made, unless --edition pins it (so a set made across midnight shares one)
+try:
+    day = datetime.date.fromisoformat(opt('--edition', '')) if '--edition' in args else datetime.date.today()
+except ValueError:
+    sys.exit('--edition takes a date as YYYY-MM-DD')
+edition = f'{day.day} {day.strftime("%B")} {day.year}'
+
+# one Chrome to a port: if another run (or another agent) holds it, wait for it to finish rather than talk to its browser
+def port_busy(p):
+    with socket.socket() as s:
+        s.settimeout(0.5)
+        return s.connect_ex(('127.0.0.1', p)) == 0
+for i in range(144):
+    if not port_busy(port): break
+    if i == 0: print(f'port {port} is in use (another PDF run?): waiting for it to come free', flush=True)
+    time.sleep(5)
+else:
+    sys.exit(f'port {port} is still in use after 12 minutes')
 chrome = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 proc = subprocess.Popen([chrome, '--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check',
                          '--disable-background-timer-throttling', '--disable-renderer-backgrounding',
@@ -80,20 +111,24 @@ try:
             js(open(os.path.join(ROOT, 'src', 'modules', 'print.js'), encoding='utf-8').read())
         if js('typeof window.CP_PRINT') != 'object':
             sys.exit('print.js did not load: no window.CP_PRINT')
+        if chapter and not js(f'!!document.querySelector("article.chapter#" + CSS.escape({json.dumps(chapter)}))'):
+            sys.exit(f'no chapter "{chapter}" on {url}')
 
     def prepare(mode):
-        opts = {'mode': mode}
+        opts = {'mode': mode, 'edition': edition, 'site': SITE['url']}
         if only: opts['only'] = int(only)
+        if chapter: opts['chapter'] = chapter
         summary = js(f'JSON.stringify(window.CP_PRINT.prepare({json.dumps(opts)}))', timeout=180)
         say(f'prepared: {summary}')
         time.sleep(0.8)  # let the specimen's animation loops die before Paged.js takes the frames
         return summary
 
     def print_pdf(css_page_size):
-        title = opt('--title', 'Chip Supply Chain · The Chain')
+        # the fallback's own head and foot (Chrome's templates): the title and the edition, the site and the folio
+        title = opt('--title', js('document.title') if chapter else 'Chip Supply Chain · The Chain')
         style = ("font-family: Menlo, 'DejaVu Sans Mono', monospace; font-size: 7.5px; letter-spacing: 0.04em;"
                  " color: #5b646d; width: 100%; padding: 0 20mm; display: flex; justify-content: space-between; align-items: center;")
-        header = '<div style="' + style + ' margin-top: 6mm;"><span>' + title + '</span><span>' + time.strftime('%-d %B %Y') + '</span></div>'
+        header = '<div style="' + style + ' margin-top: 6mm;"><span>' + title + '</span><span>Edition of ' + edition + '</span></div>'
         footer = ('<div style="' + style + ' margin-bottom: 6mm;"><span>' + site_host() + '</span>'
                   '<span><span class="pageNumber"></span> / <span class="totalPages"></span></span></div>')
         params = {'printBackground': True, 'transferMode': 'ReturnAsBase64'}
@@ -102,11 +137,17 @@ try:
             params.update({'preferCSSPageSize': True, 'displayHeaderFooter': False,
                            'marginTop': 0, 'marginBottom': 0, 'marginLeft': 0, 'marginRight': 0})
         else:
+            # Chrome now draws print.css's margin boxes itself, in its default type: this path prints its own head and
+            # foot, so those boxes are emptied, or every page would carry both
+            js("(function () { var s = document.createElement('style'); s.textContent = '@page { @top-left { content: none; }"
+               " @top-right { content: none; } @bottom-left { content: none; } @bottom-right { content: none; } }';"
+               " document.head.appendChild(s); })()")
             params.update({'preferCSSPageSize': False, 'paperWidth': 8.27, 'paperHeight': 11.69,
                            'marginTop': 0.75, 'marginBottom': 0.72, 'marginLeft': 0.79, 'marginRight': 0.79,
                            'displayHeaderFooter': True, 'headerTemplate': header, 'footerTemplate': footer})
         pdf = send('Page.printToPDF', params, timeout=600)
         if 'data' not in pdf: sys.exit('print failed: ' + json.dumps(pdf)[:300])
+        os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
         open(out, 'wb').write(base64.b64decode(pdf['data']))
         say(f'wrote {out} {round(os.path.getsize(out) / 1e6, 2)} MB')
 

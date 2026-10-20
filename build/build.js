@@ -26,19 +26,25 @@ const tierCounts = (cites) => { const c = { A: 0, B: 0, C: 0, D: 0, '?': 0 }; ci
 /* ---------------- bibliography: url -> { title, publisher, date, type, accessed } ---------------- */
 const bibliography = readJSON(path.join(root, 'data', 'bibliography.json'), {});
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-const bibOf = (url) => bibliography[url] || bibliography[String(url).replace(/&amp;/g, '&')] || null;
+// A citation into a long PDF carries its page as a fragment, #page=N (qa/round2/SCHEMA.md §2). The entry is the document's,
+// so a url is looked up as written first (one entry keys a #section of its own), then without its fragment.
+const bibOf = (url) => { const u = String(url).replace(/&amp;/g, '&'); return bibliography[url] || bibliography[u] || bibliography[u.replace(/#.*$/, '')] || null; };
+// the page a citation points at: the N of #page=N when it is a positive integer, else ''
+const pageOf = (url) => { const m = String(url).match(/#(?:[^#]*&)?page=([^&#]*)/); return m && /^[1-9]\d*$/.test(m[1]) ? m[1] : ''; };
 const bibDate = (d) => {
   const p = String(d || '').split('-');
   if (p.length === 3) return `${+p[2]} ${MONTHS[+p[1] - 1] || p[1]} ${p[0]}`;
   if (p.length === 2) return `${MONTHS[+p[1] - 1] || p[1]} ${p[0]}`;
   return p[0] || '';
 };
+// what sits in the date's place: the date the source carries, or, when it shows none, the day it was read
+const bibWhen = (b) => (b && b.date ? bibDate(b.date) : b && b.accessed ? 'Accessed ' + bibDate(b.accessed) : '');
 const bibLabel = (url) => { const b = bibOf(url); return b && b.title ? b.title : ''; };
-// One citation as a reference line: the title, then publisher and date in small type. A url with no entry stays a url.
+// One citation as a reference line: the title, then publisher, date and page in small type. A url with no entry stays a url.
 function sourceLine(url) {
-  const b = bibOf(url);
+  const b = bibOf(url), pg = pageOf(url);
   const label = b && b.title ? b.title : (url.length > 96 ? url.slice(0, 94) + '…' : url);
-  const meta = b ? [b.publisher, bibDate(b.date)].filter(Boolean).join(' · ') : host(url);
+  const meta = (b ? [b.publisher, bibWhen(b)] : [host(url)]).concat(pg ? ['p. ' + pg] : []).filter(Boolean).join(' · ');
   return `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(label)}</a>${meta ? `<span class="src-meta">${esc(meta)}</span>` : ''}`;
 }
 
@@ -78,9 +84,10 @@ function cite(url, ctx) {
   url = url.replace(/&amp;/g, '&');
   let i = ctx.cites.findIndex((c) => c.url === url);
   if (i < 0) { ctx.cites.push({ url }); i = ctx.cites.length - 1; }
-  const b = bibOf(url) || {}, tier = tierOf(url), when = bibDate(b.date);
-  const label = [b.title || host(url), b.publisher, when].filter(Boolean).join(' · ');
-  return `<sup class="cite"><a href="${esc(url)}" target="_blank" rel="noopener" data-t="${esc(b.title || '')}" data-p="${esc(b.publisher || '')}" data-d="${esc(when)}" data-tier="${esc(tier)}" aria-label="Source ${i + 1}: ${esc(label)}">${i + 1}</a></sup>`;
+  // the same document at two pages is two sources (two urls); data-pg carries the page to the popover and the printed note
+  const b = bibOf(url) || {}, tier = tierOf(url), when = bibWhen(b), pg = pageOf(url);
+  const label = [b.title || host(url), b.publisher, when, pg ? 'p. ' + pg : ''].filter(Boolean).join(' · ');
+  return `<sup class="cite"><a href="${esc(url)}" target="_blank" rel="noopener" data-t="${esc(b.title || '')}" data-p="${esc(b.publisher || '')}" data-d="${esc(when)}"${pg ? ` data-pg="${pg}"` : ''} data-tier="${esc(tier)}" aria-label="Source ${i + 1}: ${esc(label)}">${i + 1}</a></sup>`;
 }
 // an archived page (web.archive.org/web/<stamp>/<original>) is rated and labelled by its original publisher
 function host(url) { try { const m = String(url).match(/^https?:\/\/web\.archive\.org\/web\/[^/]+\/(https?:\/\/.+)$/); return new URL(m ? m[1] : url).hostname.replace(/^www\./, ''); } catch (e) { return url; } }
@@ -258,36 +265,94 @@ const SUBWORD = { 'Very hard': 'Very hard to substitute', Hard: 'Hard to substit
 const BAND_NOTE = { Extreme: 'Three or fewer firms could supply this stage today, or one firm holds more than half of it.', High: 'Four to six firms could supply this stage today, and the top two take most of the revenue.', Moderate: 'Seven or more firms could supply this stage today, none of them dominant.', Low: 'Many firms could supply this stage today, and the scarce input is something another industry sells at volume.' };
 const SUB_NOTE = { 'Very hard': 'No second supplier exists at the leading node, and the path to one depends on physics, decades of unwritten know-how or protected intellectual property. No one has yet repeated what the leaders did, and closing the gap takes ten years or more.', Hard: 'No second supplier exists at the leading node. The path to one is known, and closing the gap takes five to ten years.', Moderate: 'A second supplier exists but is not yet qualified at the leading node. Closing the gap takes two to five years.', Easy: 'A qualified second supplier ships today at the leading node.' };
 const SPECIMEN_NAME = { 'boule-and-wafer': 'boule and wafer', 'cowos-exploded': 'CoWoS package, exploded', 'die-floorplan': 'die floorplan', 'euv-scanner': 'EUV scanner', foup: 'wafer carrier (FOUP)', 'gaa-transistor': 'gate-all-around transistor', 'gas-cabinet': 'gas cabinet', globe: 'globe', 'gpu-baseboard': 'GPU baseboard', 'hbm-stack': 'HBM stack', package: 'chip package', photomask: 'photomask', 'probe-card': 'probe card', 'process-chamber': 'process chamber', rack: 'server rack', 'sem-column': 'electron microscope column', 'substrate-layers': 'substrate layers', 'wafer-cost': 'wafer cost', wafer: 'wafer' };
+/* The card's footnote marks (qa/round2/SCHEMA.md §1). The card's text carries no citations. Beside each text sits a list of
+   urls, one per sentence, each one also cited in the chapter's body, so a mark is the chapter's own footnote number and a
+   url cited on the card and in the body has one number. The card leads the chapter, so the chapter loop registers its urls
+   (cardCites) before the body is read, and they take the first numbers in the order a reader meets them. */
+// a sentence ends at . ! or ? followed by a space and a capital, a digit, a currency sign or an opening quote, or at the end
+const cardSentences = (t) => String(t || '').replace(/\s+/g, ' ').trim().split(/(?<=[.!?])\s+(?=[\p{Lu}\p{Nd}\p{Sc}"“‘'])/u).filter(Boolean);
+const CARD_STOP = /[.!?]["”’)\]]*$/; // a sentence's closing stop; its mark goes just before it, as the body's marks do
+// the card's sourced texts in reading order: the substitutability test, the cost slot, each leader's share, the reason, the
+// China line, the US line
+function cardFields(card) {
+  const sb = card.substitutability && card.substitutability.band ? card.substitutability : {};
+  return [['substitutability test', sb.test, sb.testSources], ['costSignal', card.costSignal, card.costSources]]
+    .concat((card.leaders || []).map((l) => [`${l.name} share`, l.share, l.source ? [l.source] : []]))
+    .concat([['substitutability why', sb.why, sb.whySources], ['chinaStatus', card.chinaStatus, card.chinaSources], ['usStatus', card.usStatus, card.usSources]])
+    .map(([what, text, urls]) => ({ what, text: String(text || ''), urls: (Array.isArray(urls) ? urls : []).map((u) => (u ? String(u) : '')) }));
+}
+// called by the chapter loop before the body is read; warns when a field's url count differs from its sentence count
+function cardCites(card, ctx) {
+  if (!card) return;
+  const off = [];
+  let any = false;
+  cardFields(card).forEach((f) => {
+    const urls = f.urls.filter(Boolean), n = f.text ? cardSentences(f.text).length : 0;
+    if (f.urls.length) any = true;
+    urls.forEach((u) => cite(u, ctx));
+    if (n !== urls.length) off.push(`${f.what} ${n} sentence${n === 1 ? '' : 's'} / ${urls.length} url${urls.length === 1 ? '' : 's'}`);
+  });
+  if (!any) warn(`${ctx.id}: the card has no source fields (qa/round2/SCHEMA.md §1)`);
+  else if (off.length) warn(`${ctx.id}: card url and sentence counts differ: ${off.join(', ')}`);
+}
+// The marks for one place in the text. More urls than sentences: the extras sit with the last sentence, a comma between
+// marks so that 1 and 2 never read as 12. A sentence with no url gets no mark.
+const cardMarks = (urls, ctx) => (ctx ? urls.filter(Boolean).map((u) => cite(u, ctx)).join('<sup class="cite-sep" aria-hidden="true">,</sup>') : '');
+// a card text with its marks, sentence by sentence; g wraps glossary terms (escaped HTML in and out)
+function cardText(text, urls, ctx, g) {
+  const ss = cardSentences(text), us = urls || [];
+  return ss.map((s, i) => {
+    const stop = (s.match(CARD_STOP) || [''])[0];
+    return g(esc(s.slice(0, s.length - stop.length))) + cardMarks(i < ss.length - 1 ? [us[i]] : us.slice(i), ctx) + esc(stop);
+  }).join(' ');
+}
+// a figure at the head of the cost slot: an amount, a range or a share, with its unit
+const COST_LEAD = /^((?:about |roughly |up to |from |over |under |~|≈)?(?:US)?[$€£¥]?\d[\d,.]*\+?(?:\s?(?:-|–|to)\s?[$€£¥]?\d[\d,.]*)?\s?(?:[kKMBT]n?|bn|mn|billion|million|trillion|%)?)\s+(.+)$/i;
+// the China revenue panel (data/exposure.json), joined to the leaders' names by build/exposure.js
+const EXPOSURE = require('./exposure.js').exposureIndex(readJSON(path.join(root, 'data', 'exposure.json'), []));
 // gl, when given, marks glossary terms in the card's prose (the substitutability test, the reason and the China and US
-// lines), the first use of each across the card; it takes and returns escaped HTML
-function nameplate(card, title, gl) {
+// lines), the first use of each across the card; it takes and returns escaped HTML. ctx is the chapter's citation context
+// ({ id, cites }); without it the card is drawn without marks.
+function nameplate(card, title, gl, ctx) {
   if (!card) return '';
-  const g = gl || ((s) => s);
-  const leaders = (card.leaders || []).map((l) => `<li><span class="chip">${esc(l.country || '')}</span><span class="who">${esc(l.name)}</span>${l.share ? ` <span class="note">${esc(l.share)}</span>` : ''}</li>`).join('');
+  const g = gl || ((s) => s), plain = (s) => s;
+  const F = {}; cardFields(card).forEach((f) => { F[f.what] = f.urls; });
+  // a leader's share with its mark, and under it, for a firm the China revenue panel covers, that firm's latest China share
+  // as a quiet second line that opens the firm's chart (#/exposure/<slug>; the readable pages point at the main page's)
+  const leaders = (card.leaders || []).map((l) => {
+    const cn = EXPOSURE.label(l.name), href = EXPOSURE.href(l.name);
+    return `<li><span class="chip">${esc(l.country || '')}</span><span class="who">${esc(l.name)}</span>${l.share ? ` <span class="note">${cardText(l.share, l.source ? [String(l.source)] : [], ctx, plain)}</span>` : ''}${cn && href ? `<a class="lead-cn" href="${esc(href)}">${esc(cn)}</a>` : ''}</li>`;
+  }).join('');
   const countries = (card.countries || []).map((c) => `<li><span class="chip">${esc(c.code)}</span><span class="who">${esc(COUNTRY[c.code] || c.code)}</span>${c.note ? ` <span class="note">${esc(c.note)}</span>` : ''}</li>`).join('');
   const sub = card.substitution || {};
   const sb = card.substitutability && card.substitutability.band ? card.substitutability : null;
   const conc = card.concentration || '';
-  // Cost signal: lead with the number when the sentence starts with one; a sentence that does not gets the small reading face, never the display size
-  const costSegs = String(card.costSignal || '').split(/;\s|\.\s/);
-  let costHead = costSegs[0] || '', costRest = costSegs.slice(1).join('. ');
-  const numLead = costHead.match(/^((?:about |roughly |up to |from |over |under |~|≈)?(?:US)?[$€£¥]?\d[\d,.]*\+?(?:\s?(?:-|–|to)\s?[$€£¥]?\d[\d,.]*)?\s?(?:[kKMBT]n?|bn|mn|billion|million|trillion|%)?)\s+(.+)$/i);
-  if (numLead && costHead.length > 30) { costRest = numLead[2] + (costRest ? '. ' + costRest : ''); costHead = numLead[1]; }
-  const costLong = costHead.length > 30;
-  const cost = [costHead, costRest];
+  // Cost signal: lead with the number when the first sentence starts with one, the rest of that sentence and any others in
+  // small type below; a first sentence that does not gets the small reading face, never the display size. The first mark
+  // goes at the end of the first sentence, wherever that falls, and each later sentence carries its own.
+  const costSS = cardSentences(card.costSignal), costU = F.costSignal || [];
+  const first = costSS[0] || '', firstStop = (first.match(CARD_STOP) || [''])[0], firstBody = first.slice(0, first.length - firstStop.length);
+  const firstMarks = cardMarks(costSS.length > 1 ? [costU[0]] : costU, ctx);
+  const numLead = firstBody.match(COST_LEAD), lead = !!(numLead && firstBody.length > 30);
+  const costLong = !lead && firstBody.length > 30;
+  const restHTML = costSS.length > 1 ? cardText(costSS.slice(1).join(' '), costU.slice(1), ctx, plain) : '';
+  // a figure set large drops its full stop; a first sentence in the reading face keeps it
+  const costHeadHTML = lead ? esc(numLead[1]) : first ? esc(firstBody) + firstMarks + (costLong ? esc(firstStop) : '') : '—';
+  const costSubHTML = lead ? esc(numLead[2]) + firstMarks + esc(firstStop) + (restHTML ? ' ' + restHTML : '') : restHTML;
+  const costLabel = card.costLabel ? esc(card.costLabel) : 'Price or market size';
   return `<section class="plate" aria-label="Chokepoint card${title ? ' for ' + esc(title) : ''}">
 <header class="plate-head"><span class="label">Chokepoint card</span><span class="plate-tags">${conc ? `<button type="button" class="gl-term ptag ptag-conc" data-band="${BANDS[conc] || 0}" data-term="concentration" data-note="${esc(BAND_NOTE[conc] || '')}">${esc(conc)} concentration</button>` : ''}${sb ? `<button type="button" class="gl-term ptag ptag-sub" data-band="${SUBS[sb.band] || 0}" data-term="substitutability" data-note="${esc(SUB_NOTE[sb.band] || '')}" data-test="${esc(sb.test || '')}">${esc(SUBWORD[sb.band] || sb.band)}</button>` : (sub.years ? `<span class="ptag ptag-sub">${esc(sub.years)} years to substitute</span>` : '')}</span></header>
 <div class="plate-kpis">
 <div><span class="k">Concentration</span><b class="v ${esc(card.concentration || '')}">${esc(card.concentration || '—')}</b></div>
-${sb ? `<div><span class="k">Substitutability</span><b class="v sub-${SUBS[sb.band] || 0}">${esc(sb.band)}</b>${sb.test ? `<span class="sub">${g(esc(sb.test))}</span>` : ''}</div>` : `<div><span class="k">Substitution time</span><b class="v">${esc(sub.years || '—')}${sub.years && !/year/i.test(sub.years) ? '<small>years</small>' : ''}</b></div>`}
-<div><span class="k">Price or market size</span><b class="v cost${costLong ? ' long' : ''}">${esc(cost[0] || '—')}</b>${cost[1] ? `<span class="sub">${esc(cost[1])}</span>` : ''}</div>
+${sb ? `<div><span class="k">Substitutability</span><b class="v sub-${SUBS[sb.band] || 0}">${esc(sb.band)}</b>${sb.test ? `<span class="sub">${cardText(sb.test, F['substitutability test'], ctx, g)}</span>` : ''}</div>` : `<div><span class="k">Substitution time</span><b class="v">${esc(sub.years || '—')}${sub.years && !/year/i.test(sub.years) ? '<small>years</small>' : ''}</b></div>`}
+<div><span class="k">${costLabel}</span><b class="v cost${costLong ? ' long' : ''}">${costHeadHTML}</b>${costSubHTML ? `<span class="sub">${costSubHTML}</span>` : ''}</div>
 </div>
 <dl class="plate-rows">
 ${leaders ? `<div class="row"><dt>Who leads</dt><dd><ul>${leaders}</ul></dd></div>` : ''}
 ${countries ? `<div class="row"><dt>Where it is made</dt><dd><ul>${countries}</ul></dd></div>` : ''}
-${(sb && sb.why) || sub.why ? `<div class="row"><dt>Why substitution is ${sb && SUBS[sb.band] <= 2 ? 'possible' : 'slow'}</dt><dd class="why">${g(esc((sb && sb.why) || sub.why))}</dd></div>` : ''}
+${(sb && sb.why) || sub.why ? `<div class="row"><dt>Why substitution is ${sb && SUBS[sb.band] <= 2 ? 'possible' : 'slow'}</dt><dd class="why">${sb && sb.why ? cardText(sb.why, F['substitutability why'], ctx, g) : g(esc(sub.why))}</dd></div>` : ''}
 </dl>
-${card.chinaStatus || card.usStatus ? `<div class="plate-status">${card.chinaStatus ? `<div><span class="k">Where China stands</span><p>${g(esc(card.chinaStatus))}</p></div>` : ''}${card.usStatus ? `<div><span class="k">Where the US stands</span><p>${g(esc(card.usStatus))}</p></div>` : ''}</div>` : ''}
+${card.chinaStatus || card.usStatus ? `<div class="plate-status">${card.chinaStatus ? `<div><span class="k">Where China stands</span><p>${cardText(card.chinaStatus, F.chinaStatus, ctx, g)}</p></div>` : ''}${card.usStatus ? `<div><span class="k">Where the US stands</span><p>${cardText(card.usStatus, F.usStatus, ctx, g)}</p></div>` : ''}</div>` : ''}
 </section>`;
 }
 
@@ -300,6 +365,7 @@ for (const f of files) {
   const { meta, body } = parseChapter(read(path.join(contentDir, f)), f);
   const id = meta.id || f.replace(/^\d\d-/, '').replace(/\.md$/, '');
   const ctx = { id, cites: [], figures: meta.figures || [] };
+  if (id !== 'geopolitics' && meta.number >= 1 && meta.number <= 15) cardCites(meta.card, ctx); // the card comes first, so its sources take the first numbers
   const { html, headings } = markdown(body, ctx);
   const words = wordCount(body);
   const ch = { file: f, id, meta, html, headings, words, cites: ctx.cites, number: meta.number || chapters.length + 1, title: meta.title || id };
@@ -366,9 +432,10 @@ function glossaryWrap(html, used) {
   used = used || new Set();
   const wrapText = (text) => text.split(/(&[a-zA-Z#][a-zA-Z0-9]*;)/).map((part, i) => {
     if (i % 2) return part; // an HTML entity: leave it whole
-    return part.replace(glRE, (match) => {
+    return part.replace(glRE, (match, _v, offset, str) => {
       const term = glTermOf.get(match.toLowerCase().replace(/\s+/g, ' '));
       if (!term || used.has(term)) return match;
+      if (/^lot$/i.test(match) && /\ba\s+$/i.test(str.slice(Math.max(0, offset - 3), offset))) return match; // "a lot" is not a wafer lot
       used.add(term);
       return `<button type="button" class="gl-term" data-term="${esc(term.toLowerCase())}">${match}</button>`;
     });
@@ -399,18 +466,29 @@ function prevNext(ch) {
   return `<nav class="prevnext" aria-label="Previous and next chapter">${link(prev, 'prev', 'Previous')}${link(next, 'next', 'Next')}</nav>`;
 }
 // End-of-chapter flashcards: four cards (question on the front, answer and reason on the back), then the four things to
-// remember (data/flashcards.json, keyed by chapter id).
+// remember (data/flashcards.json, keyed by chapter id). Start here ends with a deck of its own, "intro" in the same file,
+// built by the same deckHTML in build/modules/walk.js (ctx.deckHTML).
 const flashcards = readJSON(path.join(root, 'data', 'flashcards.json'), {});
-const NUM_WORD = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'];
+const NUM_WORD = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
 function reviewHTML(ch) {
   const fc = flashcards[ch.id];
   if (!fc || !Array.isArray(fc.cards) || !fc.cards.length) return '';
-  const n = fc.cards.length;
-  const cards = fc.cards.map((c, i) => {
-    if (!c.q || !c.a) warn(`flashcards ${ch.id} #${i + 1}: needs q and a`);
+  // each card's reason ends with a link back to the section of the chapter that covers it
+  return deckHTML(fc, { id: ch.id, title: ch.title, more: (c, i) => {
     const anchor = c.section ? `${ch.id}--${slug(c.section)}` : '';
     if (anchor && !ch.html.includes(`id="${anchor}"`)) warn(`flashcards ${ch.id} #${i + 1}: no section "${c.section}"`);
-    const more = anchor ? ` <a class="fc-more" href="#${anchor}">Reread: ${esc(c.section)}</a>` : '';
+    return anchor ? { href: '#' + anchor, text: 'Reread: ' + c.section } : null;
+  } });
+}
+// one deck, wherever it sits: o.id makes its address ("<id>--flashcards"), o.title its label, o.more(card, i) the link that
+// ends a card's reason ({ href, text } or null), o.attrs any attributes of its own (Start here's names its storage key) and
+// o.sub the line beside its title
+function deckHTML(fc, o) {
+  const n = fc.cards.length;
+  const cards = fc.cards.map((c, i) => {
+    if (!c.q || !c.a) warn(`flashcards ${o.id} #${i + 1}: needs q and a`);
+    const link = o.more(c, i);
+    const more = link ? ` <a class="fc-more" href="${esc(link.href)}">${esc(link.text)}</a>` : '';
     const count = `<span class="label">Card ${i + 1} of ${n}</span>`;
     return `<div class="fc-card" data-i="${i}"${i ? ' hidden' : ''}>`
       + `<div class="fc-face fc-front"><div class="fc-row">${count}<span class="label">Question</span></div><p class="fc-q">${esc(c.q)}</p><div class="fc-row fc-row--end"><button type="button" class="fc-btn fc-btn--solid fc-show">Show answer</button></div></div>`
@@ -419,7 +497,8 @@ function reviewHTML(ch) {
   }).join('');
   const dots = `<span class="fc-dots" aria-hidden="true">${fc.cards.map((_, i) => `<i${i ? '' : ' class="on"'}></i>`).join('')}</span>`;
   const keep = Array.isArray(fc.takeaways) && fc.takeaways.length ? `<div class="rv-keep"><h4 class="label">${NUM_WORD[fc.takeaways.length] || fc.takeaways.length} things to remember</h4><ul>${fc.takeaways.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></div>` : '';
-  return `<section class="review fc" aria-label="Flashcards: ${esc(ch.title)}"><header class="rv-head"><h3 class="rv-title">Flashcards</h3><p class="rv-sub">Recall each answer, then turn the card.</p></header>`
+  // the deck's id is the address search links to (src/app.js opens the deck at the card that was found)
+  return `<section class="review fc" id="${esc(o.id)}--flashcards"${o.attrs || ''} aria-label="Flashcards: ${esc(o.title)}"><header class="rv-head"><h3 class="rv-title">Flashcards</h3><p class="rv-sub">${esc(o.sub || 'Recall each answer, then turn the card.')}</p></header>`
     + `<div class="fc-deck"><div class="fc-behind fc-behind--2"></div><div class="fc-behind"></div>${cards}</div>`
     + `<div class="fc-nav">${dots}<span class="fc-steps"><button type="button" class="fc-link fc-prev" disabled>Previous card</button><button type="button" class="fc-link fc-next" disabled>Next card</button></span></div>`
     + `<div class="fc-end" hidden><p class="fc-score"><span class="fc-big"></span><span class="fc-score-t"></span></p>${keep}<p class="fc-row fc-row--gap"><button type="button" class="fc-btn fc-back-to-cards">Previous card</button><button type="button" class="fc-btn fc-reset">Start over</button></p></div></section>`;
@@ -427,19 +506,34 @@ function reviewHTML(ch) {
 // the chapter's share link: a plain link to its own readable page (so crawlers reach it from the main page); a click copies the address (src/app.js)
 const copyLink = (id) => `<a class="label ch-copy" href="${esc(id)}/" data-copy="${SITE.url}${esc(id)}/" aria-label="Copy a link to this chapter">Link to chapter</a>`;
 /* ---------------- the cite line under each chapter title ----------------
-   "Updated <day> · Cite this chapter · Report an error", on the main page and on the chapter's readable page. The day is the
-   chapter's own (page dates, below). The citation names the chapter and its readable page; the report link is a mailto with
-   the chapter's title in the subject. On the main page the toggle is a button. On the readable page it is a link to the
-   citation, which then opens without scripts (:target), and CITE_JS turns it into a toggle there too. */
+   "Updated <day> · Cite this chapter · Chapter PDF", on the main page and on the chapter's readable page. The day is the
+   chapter's own (page dates, below). The citation names the chapter and its readable page; Chapter PDF downloads the
+   chapter's own PDF. On the main page the toggle is a button. On the readable page it is a link to the citation, which
+   then opens without scripts (:target), and CITE_JS turns it into a toggle there too. */
 const CITE_WORK = 'Chip Supply Chain: How AI Chips Are Made';
-const CITE_MAIL = 'contact@chipsupplychain.org';
+// each chapter's PDF, dist/pdf/<id>.pdf (written by build/chapter_pdfs.py, not by the build): the cite line links it and the
+// sitemap lists it once the file exists, so a chapter not yet printed never shows a broken link
+const chapterPDFs = new Map();
+function chapterPDF(id) {
+  if (!chapterPDFs.has(id)) {
+    let v = null;
+    try {
+      const bytes = fs.readFileSync(path.join(root, 'dist', 'pdf', id + '.pdf'));
+      v = { href: 'pdf/' + id + '.pdf', bytes, pages: (bytes.toString('latin1').match(/\/Type\s*\/Page[^s]/g) || []).length };
+    } catch (e) { v = null; }
+    chapterPDFs.set(id, v);
+  }
+  return chapterPDFs.get(id);
+}
 function citeBlock(ch, day, page) {
   const url = SITE.url + ch.id + '/', box = page ? 'cite' : 'cite-' + ch.id;
-  const mail = `mailto:${CITE_MAIL}?subject=${encodeURIComponent('Report an error: ' + ch.title)}&body=${encodeURIComponent('Chapter: ' + ch.title + '\n' + url + '\n\n')}`;
   const toggle = page
     ? `<a class="ch-cite-btn" href="#${box}" aria-controls="${box}">Cite this chapter</a>`
     : `<button type="button" class="ch-cite-btn" aria-expanded="false" aria-controls="${box}">Cite this chapter</button>`;
-  return `<div class="ch-cite"><p class="ch-cite-line"><span>Updated ${esc(day)}</span><span class="ch-cite-sep" aria-hidden="true">·</span>${toggle}<span class="ch-cite-sep" aria-hidden="true">·</span><a class="ch-cite-mail" href="${esc(mail)}">Report an error</a></p>`
+  // saved under a name that says what it is: chip-supply-chain-lithography.pdf, not lithography.pdf
+  const pdf = chapterPDF(ch.id);
+  const pdfLink = pdf ? `<span class="ch-cite-sep" aria-hidden="true">·</span><a class="ch-cite-pdf" href="${page ? '../' : ''}${pdf.href}" download="chip-supply-chain-${esc(ch.id)}.pdf" type="application/pdf" title="${esc(ch.title)} as a PDF${pdf.pages ? `, ${pdf.pages} pages` : ''}">Chapter PDF</a>` : '';
+  return `<div class="ch-cite"><p class="ch-cite-line"><span>Updated ${esc(day)}</span><span class="ch-cite-sep" aria-hidden="true">·</span>${toggle}${pdfLink}</p>`
     + `<div class="ch-cite-box" id="${box}" role="region" aria-label="Citation for this chapter"${page ? '' : ' hidden'}><p class="ch-cite-text">Sharma, Yashvardhan. “${esc(ch.title)}.” <i>${CITE_WORK}</i>. Updated ${esc(day)}. <a href="${esc(url)}">${esc(url)}</a></p></div></div>`;
 }
 // the toggle and the copy control, shared by the main page (src/template.html) and the readable pages (social.js)
@@ -467,12 +561,13 @@ function chapterHTML(ch) {
   const next = stageIdx >= 0 ? stages[stageIdx + 1] : null;
   const tile = stageIdx >= 0 ? `<div class="ch-tile"><span class="k">Chapter</span><span class="v">${pad(ch.number)}</span><span class="of">stage ${stageIdx + 1} of ${stages.length}</span></div>` : `<div class="ch-tile"><span class="k">Chapter</span><span class="v">${pad(ch.number)}</span><span class="of">${ch.id === 'geopolitics' ? 'the contest' : 'the economics'}</span></div>`;
   const chain = stageIdx >= 0 ? `<div class="chain chain--compact" aria-label="Where this stage sits in the chain">${chainTrack(stages, ch.id)}<p class="chain-foot"><span><b>${esc(ch.title)}</b>, stage ${stageIdx + 1} of ${stages.length}</span><span>${next ? `Next: ${pad(next.number)} ${esc(next.title)}` : 'Last stage in the chain'}</span></p></div>` : '';
-  const plate = isStage(ch) ? nameplate(m.card, ch.title) : '';
+  const cardCtx = { id: ch.id, cites: ch.cites, figures: [] }; // the card's marks number with the body's (its urls were registered first)
+  const plate = isStage(ch) ? nameplate(m.card, ch.title, null, cardCtx) : '';
   // the same pieces, kept for the chapter's own readable page (build/modules/social.js); the prose is the copy before glossary buttons
   ch.rendered = { plain: pb.box, inShort: parts.inShort, plate, prose: pb.html, mins };
   // the main page's head: each block (In plain terms, In short, the card's prose) marks the first use of each glossary term in it
   const cardUsed = new Set();
-  const plateGl = isStage(ch) ? nameplate(m.card, ch.title, (h) => glossaryWrap(h, cardUsed)) : '';
+  const plateGl = isStage(ch) ? nameplate(m.card, ch.title, (h) => glossaryWrap(h, cardUsed), cardCtx) : '';
   return `<article class="chapter" id="${esc(ch.id)}" data-specimen="${esc(specimen)}" data-number="${pad(ch.number)}" data-title="${esc(ch.title)}" data-caption="${esc(m.specimenCaption || '')}">
 <aside class="ch-ledger" aria-label="Chapter ${ch.number}${stageIdx >= 0 ? ', stage ' + (stageIdx + 1) + ' of ' + stages.length : ''}">${tile}${chain}</aside>
 <header class="chapter-head">
@@ -525,6 +620,8 @@ const flows = readJSON(path.join(root, 'data', 'control-flows.json'), null); // 
 const exposure = readJSON(path.join(root, 'data', 'exposure.json'), []);
 const controlsNotes = read(path.join(root, 'data', 'control-thresholds-notes.md'));
 const exposureNotes = read(path.join(root, 'data', 'exposure-notes.md'));
+// the China revenue panel joined to the supplier list by build/exposure.js (aliases, divisions, slugs, labels), so src/app.js needs no name logic
+const exposureJoin = require('./exposure.js').exposureIndex(exposure), exSlug = require('./exposure.js').slug;
 /* ---------------- China exposure: one bar chart per firm, China's share of revenue by fiscal year (static SVG; app.js adds the tooltips) ---------------- */
 function exposureViz(rows) {
   const ok = rows.filter((r) => r.chinaShare != null && r.fyEnd);
@@ -532,8 +629,12 @@ function exposureViz(rows) {
   const byFirm = {};
   ok.forEach((r) => { (byFirm[r.firm] = byFirm[r.firm] || []).push(r); });
   const tx = (fy) => { const [y, m] = fy.split('-').map(Number); return y + (m - 0.5) / 12; };
-  const CAT_ORDER = ['Lithography', 'Deposition', 'Etch', 'Process Control', 'Metrology', 'Test', 'Assembly', 'Materials', 'Memory', 'AI Accelerator Vendor', 'EDA'];
+  // the toolmakers first, front end to back end, then materials, the chipmakers and design software; a category the data adds
+  // later goes after these in alphabetical order, and the sort keeps each category's firms together under its one heading
+  const CAT_ORDER = ['Lithography', 'Deposition', 'Etch', 'Process Control', 'Metrology', 'Packaging', 'Assembly', 'Test', 'Photomask', 'Materials', 'Chemicals', 'Foundry', 'Memory', 'AI Accelerator Vendor', 'EDA'];
   const catRank = (c) => { const i = CAT_ORDER.findIndex((k) => String(c || '').toLowerCase().includes(k.toLowerCase())); return i < 0 ? CAT_ORDER.length : i; };
+  // a long name squeezes its caption into four lines; the chart shows the firm's own short name, and the full one on hover
+  const SHOWN = { 'BE Semiconductor Industries': 'Besi' };
   // how a firm counts China, as one word for the chart; the same reading as the table's labels in src/app.js (basisShort)
   const basisWord = (b) => { b = String(b || '').toLowerCase(); if (!b) return ''; if (/ship-to|ship to|destination|fab\)/.test(b)) return 'ship-to'; if (/bill|invoice/.test(b)) return 'billing'; if (/headquarters/.test(b)) return 'headquarters'; if (/seat|licen/.test(b)) return 'seats'; if (/used|usage/.test(b)) return 'use'; if (/own operating|operating units|own units/.test(b)) return 'own units'; return 'customer'; };
   const firms = Object.keys(byFirm).map((f) => {
@@ -543,12 +644,14 @@ function exposureViz(rows) {
     const breaks = rs.map((r, i) => i).filter((i) => i && basisWord(rs[i].basis) !== basisWord(rs[i - 1].basis));
     const peak = rs.reduce((m, r) => (r.chinaShare > m.chinaShare ? r : m), rs[0]);
     return { firm: f, rows: rs, first: rs[0], last: rs[rs.length - 1], peak, breaks, meta: rs[0], hasMoney: rs.every((r) => r.chinaRevenue != null) };
-  }).sort((a, b) => catRank(a.meta.category) - catRank(b.meta.category) || b.last.chinaShare - a.last.chinaShare || a.firm.localeCompare(b.firm));
+  }).sort((a, b) => catRank(a.meta.category) - catRank(b.meta.category) || String(a.meta.category || '').localeCompare(String(b.meta.category || '')) || b.last.chinaShare - a.last.chinaShare || a.firm.localeCompare(b.firm));
   const anyBreak = firms.some((f) => f.breaks.length);
   // a bar stands for a whole fiscal year, so it is centered on the middle of that year (six months before it ends); the rule lines
   // then fall inside the year in which each rule came
   const mid = (fy) => tx(fy) - 0.5;
-  const T0 = 2020.2, T1 = 2026.3;
+  // one time axis for every panel, widened only when a firm files a year outside it, so no bar falls off the edge
+  const mids = ok.map((r) => mid(r.fyEnd));
+  const T0 = Math.min(2020.2, Math.min(...mids) - 0.34), T1 = Math.max(2026.3, Math.max(...mids) + 0.34);
   const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   // a fiscal year that does not end in December is named by its end month, so firms whose years end in March are not read as calendar years
   const fyName = (r) => { const [y, m] = String(r.fyEnd).split('-').map(Number); return m === 12 ? r.fiscalYear : `year to ${MON[m - 1]} ${y}`; };
@@ -558,17 +661,20 @@ function exposureViz(rows) {
   const money = (v, cur) => { const [sym, suf, div] = unit(cur); const n = v / div; return sym + (n >= 100 ? Math.round(n) : n >= 10 ? Math.round(n * 10) / 10 : Math.round(n * 100) / 100) + suf; };
   const attrs = (r) => `data-firm="${esc(r.firm)}" data-fy="${esc(r.fiscalYear)}" data-share="${r.chinaShare}" data-china="${r.chinaRevenue != null ? r.chinaRevenue : ''}" data-total="${r.totalRevenue != null ? r.totalRevenue : ''}" data-cur="${esc(r.currency || '')}" data-basis="${esc(r.basis || '')}"`;
   // one panel per firm: bars of China's share of revenue by fiscal year on a shared 0 to 60% scale, the peak year in garnet
-  const PW = 240, PH = 122, px0 = 10, px1 = 232, py0 = 18, py1 = 98, YMAX = 60;
+  // (the scale runs higher, in steps of 20, only if a share on file passes 60%)
+  const YMAX = Math.max(60, Math.ceil(Math.max(...ok.map((r) => r.chinaShare)) / 20) * 20);
+  const PW = 240, PH = 122, px0 = 10, px1 = 232, py0 = 18, py1 = 98;
   const X = (t) => px0 + ((t - T0) / (T1 - T0)) * (px1 - px0), Y = (v) => py1 - (Math.min(v, YMAX) / YMAX) * (py1 - py0);
-  let d = `<div class="ex-legend"><span><i class="lg-bar"></i>China's share of the firm's revenue, by fiscal year</span><span><i class="lg-top"></i>The year it peaked</span><span><i class="lg-rule"></i>US export rules of Oct 2022, Oct 2023 and Dec 2024</span>${anyBreak ? `<span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true" style="vertical-align:middle;margin-right:7px"><line x1="4" y1="0" x2="4" y2="12" stroke="currentColor" stroke-width="1.8" stroke-dasharray="3 2"/></svg>The firm changed how it counts China</span>` : ''}<span>Same scale on every panel, 0 to 60%</span></div><div class="ex-grid">`;
+  let d = `<div class="ex-legend"><span><i class="lg-bar"></i>China's share of the firm's revenue, by fiscal year</span><span><i class="lg-top"></i>The year it peaked</span><span><i class="lg-rule"></i>US export rules of Oct 2022, Oct 2023 and Dec 2024</span>${anyBreak ? `<span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true" style="vertical-align:middle;margin-right:7px"><line x1="4" y1="0" x2="4" y2="12" stroke="currentColor" stroke-width="1.8" stroke-dasharray="3 2"/></svg>The firm changed how it counts China</span>` : ''}<span>Same scale on every panel, 0 to ${YMAX}%</span></div><div class="ex-grid">`;
   let lastCat = null;
   firms.forEach((f) => {
     const cat = f.meta.category || '';
     if (cat !== lastCat) { d += `<h4 class="ex-cat">${esc(cat)}</h4>`; lastCat = cat; }
     const changes = f.breaks.map((i) => `${basisWord(f.rows[i - 1].basis)} to ${f.rows[i - 1].fiscalYear}, ${basisWord(f.rows[i].basis)} from ${f.rows[i].fiscalYear}`).join('; ');
-    let s = `<figure class="ex-panel"><figcaption><b>${esc(f.firm)}</b><span${changes ? ` title="Counted by ${esc(changes)}."` : ''}>${f.meta.country ? esc(f.meta.country) + ' · ' : ''}peak ${pct(f.peak.chinaShare)} in ${esc(fyName(f.peak))}</span></figcaption>`;
+    // each chart has its own address, #/exposure/<slug> (build/exposure.js names the slug); the router scrolls to the id and focuses the figure
+    let s = `<figure class="ex-panel" id="ex-${esc(exSlug(f.firm))}" tabindex="-1"><figcaption><b${SHOWN[f.firm] ? ` title="${esc(f.firm)}"` : ''}>${esc(SHOWN[f.firm] || f.firm)}</b><span${changes ? ` title="Counted by ${esc(changes)}."` : ''}>${f.meta.country ? esc(f.meta.country) + ' · ' : ''}peak ${pct(f.peak.chinaShare)} in ${esc(fyName(f.peak))}</span></figcaption>`;
     s += `<svg viewBox="0 0 ${PW} ${PH}" role="group" aria-label="${esc(f.firm)}: China share of revenue by fiscal year, ${esc(f.first.fiscalYear)} to ${esc(f.last.fiscalYear)}${changes ? `, counted by ${esc(changes)}` : ''}">`;
-    [20, 40, 60].forEach((v) => { s += `<line x1="${px0}" y1="${Y(v).toFixed(1)}" x2="${px1}" y2="${Y(v).toFixed(1)}" class="grid"/>`; });
+    for (let v = 20; v <= YMAX; v += 20) s += `<line x1="${px0}" y1="${Y(v).toFixed(1)}" x2="${px1}" y2="${Y(v).toFixed(1)}" class="grid"/>`;
     rules.forEach((r) => { s += `<line x1="${X(r[0]).toFixed(1)}" y1="${py0 - 8}" x2="${X(r[0]).toFixed(1)}" y2="${py1}" class="rule"/>`; });
     s += `<line x1="${px0}" y1="${py1}" x2="${px1}" y2="${py1}" class="axis"/>`;
     const n = f.rows.length, slot = (px1 - px0) / Math.max(n, 5), bw = Math.min(26, slot * 0.62);
@@ -672,7 +778,17 @@ const specNames = new Set((specimens.match(/PC\.register\('([\w-]+)'/g) || []).m
 all.forEach((ch) => { const s = ch.meta.specimen; if (s && !specNames.has(s)) warn(`${ch.id}: specimen "${s}" is not built yet`); });
 ['package', 'globe'].forEach((s) => { if (!specNames.has(s)) warn(`specimen "${s}" (used by hero/geopolitics) is not built yet`); });
 
-const data = { landscape, landscapeNotes, suppliers, timeline, matrix, flows, exposure, chapters: all.map((c) => { const card = c.meta.card || {}; return { id: c.id, number: c.number, title: c.title, specimen: c.meta.specimen, oneLiner: c.meta.oneLiner || '', plain: String(c.meta.plain || '').replace(/\s*\(\[source\]\([^)\s]*\)\)/g, ''), score: +card.chokepointScore || 0, concentration: card.concentration || '', band: card.concentration || '', bandRank: BANDS[card.concentration] || 0, substitutability: card.substitutability || null, leaders: card.leaders || [], countries: card.countries || [], substitution: card.substitution || {}, chinaStatus: card.chinaStatus || '', usStatus: card.usStatus || '' }; }) };
+// each supplier the China revenue panel covers carries its latest China share, ready to print: label for its detail ("China 29.1% of
+// revenue, FY2025"), short for its line in the list ("China 29.1%", or "China 14.2% of Samsung Electronics" for a division, whose
+// figure is its parent's) and href for its chart. A supplier the panel does not cover goes in unchanged.
+const suppliersData = suppliers.map((r) => {
+  const href = exposureJoin.href(r.name); if (!href) return r;
+  const firm = exposureJoin.firmOf(r.name), share = require('./exposure.js').shareText(exposureJoin.latest(r.name)); // "33%" where only a percentage was filed
+  return Object.assign({}, r, { china: { label: exposureJoin.label(r.name), short: 'China ' + share + (require('./exposure.js').PARENTS[r.name] ? ' of ' + firm : ''), href } });
+});
+// each firm's chart address, for the search entries of the China revenue rows (the rows themselves stay as filed, since the page exports them)
+const exposureLinks = {}; Object.keys(exposureJoin.byFirm).forEach((f) => { exposureLinks[f] = exposureJoin.href(f); });
+const data = { landscape, landscapeNotes, suppliers: suppliersData, timeline, matrix, flows, exposure, exposureLinks, chapters: all.map((c) => { const card = c.meta.card || {}; return { id: c.id, number: c.number, title: c.title, specimen: c.meta.specimen, oneLiner: c.meta.oneLiner || '', plain: String(c.meta.plain || '').replace(/\s*\(\[source\]\([^)\s]*\)\)/g, ''), score: +card.chokepointScore || 0, concentration: card.concentration || '', band: card.concentration || '', bandRank: BANDS[card.concentration] || 0, substitutability: card.substitutability || null, leaders: card.leaders || [], countries: card.countries || [], substitution: card.substitution || {}, chinaStatus: card.chinaStatus || '', usStatus: card.usStatus || '' }; }) };
 let html = read(path.join(root, 'src', 'template.html'));
 const fill = (k, v) => { html = html.split(`{{${k}}}`).join(v); };
 const modDir = (d) => (fs.existsSync(d) ? fs.readdirSync(d).filter((f) => !f.startsWith('.')).sort() : []);
@@ -682,6 +798,8 @@ fill('STYLES', read(path.join(root, 'src', 'styles.css')) + moduleCSS);
 const ctx = { root, fs, path, all, chapters, geo, stages, data, esc, pad, word, cap, read, readJSON, markdown, inline, tierOf, wordCount, warn, glossaryWrap, BAND_NOTE, SUB_NOTE,
   // for the readable chapter pages (social.js): the source list, footer and dates exactly as the main page prints them
   tierTag, sourceLine, bibOf, slug, footerKey, builtOn, builtStr, flashcards, SPECIMEN_NAME, pageDate, dayStr,
+  // the flashcard deck, for the one that ends Start here (build/modules/walk.js)
+  deckHTML,
   // the cite line under the chapter title, as the main page prints it (the readable page's own date goes in)
   citeBlock, CITE_JS };
 for (const f of modDir(path.join(root, 'build', 'modules')).filter((x) => x.endsWith('.js'))) {
@@ -729,9 +847,9 @@ data.countries = Object.keys(COUNTRY).filter((cc) => /^[A-Z]{2}$/.test(cc) && ((
 data.countries.forEach((c) => lkItems.push({ kind: 'country', id: 'lk-country-' + c.code.toLowerCase(), key: c.code, name: c.name, alias: c.aliases, label: 'Country', text: [c.name, c.code, c.aliases.join(' '), 'country', c.role].join(' ') }));
 lkItems.sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }));
 fill('LOOKUP_LIST', lkItems.map((i) => `<li id="${esc(i.id)}" data-kind="${i.kind}" data-key="${esc(i.key || i.name)}"${i.alias && i.alias.length ? ` data-alias="${esc(i.alias.join('|'))}"` : ''} data-text="${esc(i.text.toLowerCase().replace(/\s+/g, ' '))}"><button type="button"><span class="lk-name">${esc(i.name)}</span><span class="lk-lab">${esc(i.label)}</span></button></li>`).join(''));
-fill('CONTROLS_DEK', `Every rule since 2018, what can still be sold to China, and each firm's China sales.`);
+fill('CONTROLS_DEK', `The main rules since 2018, what can still be sold to China, and China's share of revenue at ${new Set(exposure.map((r) => r.firm)).size} firms, from their filings.`);
 fill('EXPOSURE_VIZ', exposureViz(exposure));
-fill('EXPOSURE_NOTE', exposure.length ? 'Each share is computed from the revenue amounts the firm filed. Firms count China differently: where the goods ship, where they are billed, or where the customer is based. Fiscal years are labeled by the calendar year in which they end.' : '');
+fill('EXPOSURE_NOTE', exposure.length ? `The charts cover ${new Set(exposure.map((r) => r.firm)).size} firms, each of which gives a figure for China in its own filings. Other firms are not shown, and some, such as Lasertec, AGC and Axcelis, give no China figure. Each share is computed from the revenue amounts the firm filed, except Nova's, which its filings give only as a rounded percentage. Firms count China differently, for example by where the goods ship, where they are billed, or where the customer is based. Fiscal years are labeled by the calendar year in which they end.` : '');
 fill('KIT', kit); fill('SPECIMENS', specimens);
 fill('DATA', JSON.stringify(data).replace(/<\/script/gi, '<\\/script'));
 const moduleJS = modDir(path.join(root, 'src', 'modules')).filter((f) => f.endsWith('.js')).map((f) => `\n/* module: ${f} */\ntry {\n${read(path.join(root, 'src', 'modules', f)).replace(/<\/script/gi, '<\\/script')}\n} catch (e) { console.warn('module ${f} failed', e); }`).join('\n');
@@ -749,16 +867,22 @@ fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
 fs.writeFileSync(path.join(root, 'dist', 'index.html'), html);
 if (SITE.cname) fs.writeFileSync(path.join(root, 'dist', 'CNAME'), SITE.cname + '\n'); else if (fs.existsSync(path.join(root, 'dist', 'CNAME'))) fs.unlinkSync(path.join(root, 'dist', 'CNAME'));
 // for search engines: everything may be crawled, and the sitemap lists the pages that carry their own content
-// (the site itself, each chapter's readable page and the printable chain; the view share pages only forward to the site, so they are left out)
-// each with the day its content last changed (page dates, above): the readable pages hash their article, the PDF its bytes
+// (the site itself, each chapter's readable page, the summary, and the PDFs: the chain, the summary and each chapter's own;
+// the view share pages only forward to the site, so they are left out)
+// each with the day its content last changed (page dates, above): the readable pages hash their article, a PDF its bytes
 const chapterPages = (ctx.readablePages || []).map((id) => '/' + id + '/'); // social.js lists the readable pages it wrote
 if (chapterPages.length !== all.length) warn(`sitemap: ${all.length - chapterPages.length} of ${all.length} chapters have no readable page`);
 const pdfName = 'chip-supply-chain-the-chain.pdf', pdfFile = path.join(root, 'dist', pdfName);
 if (fs.existsSync(pdfFile)) pageDate('/' + pdfName, fs.readFileSync(pdfFile)); else warn(`sitemap: dist/${pdfName} is missing`);
+const summaryPdf = 'chip-supply-chain-summary.pdf', summaryPdfFile = path.join(root, 'dist', summaryPdf);
+if (fs.existsSync(summaryPdfFile)) pageDate('/' + summaryPdf, fs.readFileSync(summaryPdfFile));
+// each chapter's own PDF that has been printed (chapterPDF, above), dated by its bytes as the chain's is
+const chapterPdfs = all.filter((c) => chapterPDF(c.id)).map((c) => { const p = chapterPDF(c.id); pageDate('/' + p.href, p.bytes); return '/' + p.href; });
+if (chapterPdfs.length < all.length) warn(`chapter PDFs: ${all.length - chapterPdfs.length} of ${all.length} are not in dist/pdf/ yet (python3 build/chapter_pdfs.py), so their cite lines carry no PDF link: ${all.filter((c) => !chapterPDF(c.id)).map((c) => c.id).join(', ')}`);
 const lastmod = (key) => (pageDates[key] || {}).modified || today;
 fs.writeFileSync(path.join(root, 'dist', 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${SITE.url}sitemap.xml\n`);
 fs.writeFileSync(path.join(root, 'dist', 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-  ['/', ...chapterPages, '/summary/', '/' + pdfName, '/chip-supply-chain-summary.pdf'].map((k) => `  <url><loc>${SITE.url}${k.slice(1)}</loc><lastmod>${lastmod(k)}</lastmod></url>`).join('\n') + `\n</urlset>\n`);
+  ['/', ...chapterPages, '/summary/', '/' + pdfName, '/' + summaryPdf, ...chapterPdfs].map((k) => `  <url><loc>${SITE.url}${k.slice(1)}</loc><lastmod>${lastmod(k)}</lastmod></url>`).join('\n') + `\n</urlset>\n`);
 // keep the dates of the pages this build wrote (a retired page drops out); the file is rewritten only when a date or hash moved
 {
   const kept = {};

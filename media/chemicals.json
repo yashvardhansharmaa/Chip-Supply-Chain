@@ -1,0 +1,33 @@
+{
+ "duration": 24.6,
+ "fade": 0.8,
+ "width": 760,
+ "height": 420,
+ "steps": [
+  {
+   "k": "One layer",
+   "t0": 0.4,
+   "cap": "A chip is built up in layers. For each layer the wafer goes around a loop of steps like this one, and each step uses its own chemical, gas or metal."
+  },
+  {
+   "k": "Many wafers",
+   "t0": 6.7,
+   "cap": "A fab runs many wafers at once, so every material is always in use. Deliveries keep each stock topped up."
+  },
+  {
+   "k": "One runs out",
+   "t0": 11.1,
+   "cap": "If one material stops arriving, the fab works through its stock."
+  },
+  {
+   "k": "The fab stops",
+   "t0": 14.1,
+   "cap": "When the stock runs out, wafers pile up at that step, and the rest of the fab stands idle."
+  },
+  {
+   "k": "A new supplier",
+   "t0": 18.4,
+   "cap": "A new supplier\u2019s resist goes through round after round of tests in the fab. Even one that passes the first time takes seven to 17 months to approve."
+  }
+ ]
+}

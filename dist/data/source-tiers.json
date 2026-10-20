@@ -352,7 +352,11 @@
     "usitc.gov",
     "iea.org",
     "oecd.org",
-    "lbl.gov"
+    "lbl.gov",
+    "edinet-fsa.go.jp",
+    "eir-parts.net",
+    "csis-website-prod.s3.amazonaws.com",
+    "tsia.org.tw"
   ],
   "B": [
     "newsletter.semianalysis.com",

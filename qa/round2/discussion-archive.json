@@ -1,0 +1,121 @@
+{
+  "design-and-eda": {
+    "questions": [
+      "A US license requirement on design-software sales to China lasted only from late May to 2 July 2025. How might it still change where Chinese chip designers buy their tools?",
+      "Epoch AI puts Huawei's chips three to four years behind Nvidia's until at least 2030, for three reasons. Which could Huawei close on its own, and which depend on other stages?",
+      "CSIS put the cost of developing a leading-edge 2 nm chip at about $725 million in September 2026. When is a custom ASIC worth that to one company, compared with buying a merchant GPU?"
+    ]
+  },
+  "silicon-and-wafers": {
+    "questions": [
+      "SUMCO and Siltronic both lost money in 2025, though the top five wafer makers served around 75 percent of the market. What could explain losses in so concentrated a market?",
+      "GlobalWafers won CHIPS awards of up to $406 million, and from 4 December 2026, a $100 per kilogram minimum import price covers polysilicon ingots and wafers. Who pays for each, and who gains?",
+      "Siltronic describes itself as the only Western-based maker among the top five wafer makers. Why might a supplier stress where it is based, and which buyers would care?"
+    ]
+  },
+  "chemicals-gases-and-photoresist": {
+    "questions": [
+      "Supply of chip chemicals, gases and metals has been disrupted three times since 2019, twice by governments and once by a war. Which disruption did buyers handle best, and why?",
+      "Gallium is recovered mostly as a byproduct of processing bauxite, and germanium comes from certain zinc ores and coal deposits. What does that mean for how quickly other countries could replace Chinese supply?",
+      "PFAS chemicals are used throughout a fab. In March 2026 ECHA's scientific committees backed an EU-wide restriction with targeted exemptions. Which fab uses would make the strongest case for an exemption, and why?"
+    ]
+  },
+  "lithography": {
+    "questions": [
+      "Intel says it uses High-NA in volume for select layers of some 18A products, while TSMC says it will use High-NA in high-volume manufacturing from 2030. What does each gain and risk?",
+      "ASML's 2025 annual report lists 5,100 suppliers, and Zeiss is its sole supplier of optics. Does the EUV chokepoint sit with ASML itself, or with the few suppliers behind it?",
+      "A 25 October 2023 US rule reached certain immersion scanners with any American content, unless the country they were first exported from already controlled them. What does that exemption offer each government?"
+    ]
+  },
+  "photomasks-and-pellicles": {
+    "questions": [
+      "In September 2026 ASML and TSMC announced plans for 12-inch masks in advanced chip production by 2033. Would the switch weaken the leading makers of blanks, writers and inspection tools, or strengthen them?",
+      "Photronics says mask production has tended to move toward independent firms, yet SMIC runs two in-house mask shops in Shanghai. What does a chipmaker gain and give up by making its own masks?",
+      "Hoya says its mask blank share is exceptionally high but that customers may gradually start buying EUV blanks from more than one supplier. What could drive that shift, and what slows it?"
+    ]
+  },
+  "deposition-and-etch": {
+    "questions": [
+      "Between 2019 and 2024 China-based suppliers went from 2 to 7 percent of deposition but gained no share in atomic layer deposition. What could explain the difference?",
+      "Since 31 December 2025, US tools bound for the Chinese units of Samsung and SK hynix have needed a license. How might that change what those firms build in China and elsewhere?",
+      "A part-finished chip can cross international borders 70 or more times, by a 2020 estimate. What does that mean for tariffs or controls that depend on where a chip was made?"
+    ]
+  },
+  "metrology-and-inspection": {
+    "questions": [
+      "A fab that cannot buy sensitive inspection tools finds fewer defects, so its yield rises more slowly. How does a control that slows a fab compare with one that blocks a step outright?",
+      "Chinese makers held 0.7 percent of the 2025 market by CSET's count, yet China took 26 percent of KLA's revenue in the June 2026 quarter. What would each side lose if inspection controls tightened?",
+      "On CSET's 2025 count, KLA held 56.8 percent of process control tools, but Hitachi led line-width measurement with 71.9 percent. How should a stage's concentration be judged when it varies so much by tool?"
+    ]
+  },
+  "transistors-and-front-end": {
+    "questions": [
+      "Rapidus builds on IBM's 2 nm technology, while SMIC makes 7 nm-class chips without EUV. What does each path to advanced logic depend on, and where is each most likely to fall short?",
+      "In September 2024 the United States put a worldwide license requirement on the know-how for building gate-all-around transistors. What can a control on know-how do that one on machines cannot?",
+      "AI accelerators have usually trailed the leading edge, because a large die yields well only on a mature process. How might spreading compute across eight dies, as AMD's MI455X does, change that?"
+    ]
+  },
+  "foundries-and-fabs": {
+    "questions": [
+      "In June 2024 CSET said Huawei's Ascend 910B was believed to be made at SMIC. In April 2025 SemiAnalysis judged most were made at TSMC. What would each finding imply for export controls?",
+      "Chip production in Taiwan faces seismic, power and political risks. Which can firms plan against, and which lie beyond any firm's control?",
+      "In June 2024 SEMI forecast that China would have the most installed fab capacity of any region in 2025, though little of it is advanced. What influence, if any, could that capacity give China?"
+    ]
+  },
+  "memory-and-hbm": {
+    "questions": [
+      "In December 2024 BIS controlled HBM above 2 GB per second per square millimeter, a line every stack then in production crossed. Why define a control by a technical measure instead of naming products?",
+      "Samsung's HBM revenue share fell from 37.8 percent in 2024 to 20.5 percent in the first quarter of 2026, as Micron's rose from 5.8 to 23.1 percent. What could move shares that fast?",
+      "SK hynix says the shift of capacity to HBM left traditional DRAM undersupplied, helping drive a price recovery from the third quarter of 2025. Which buyers outside AI feel that shift, and how?"
+    ]
+  },
+  "advanced-packaging": {
+    "questions": [
+      "Epoch AI estimates four chip designers used around 90 percent of CoWoS capacity in 2025 but only 12 percent of advanced logic die production. How might that shape their bargaining with TSMC?",
+      "TSMC plans a 14-reticle interposer carrying about ten large compute dies and 20 HBM stacks in 2028. What would make a package that large worth the risk that one cracked joint scraps it?",
+      "Asked about Intel's EMIB-T in July 2026, TSMC's chief executive said he hoped it would take some of the load off TSMC. Why might TSMC welcome a rival's packaging technology?"
+    ]
+  },
+  "substrates-and-pcbs": {
+    "questions": [
+      "Nitto Boseki says demand seems to have risen about two to three times since it set its fiscal 2024 to 2027 plan. What does it risk by expanding too early or too late?",
+      "Ajinomoto, a Japanese food company, told investors in June 2026 that its film has held over 95 percent of its market since launch. What does its case suggest about how chokepoints form?",
+      "Ajinomoto counts 22 layers of its film in a 2026 AI package substrate, against six when PCs first adopted it in 1999. How does that change the stakes of relying on one supplier?"
+    ]
+  },
+  "test-and-assembly": {
+    "questions": [
+      "Advantest argues tester share moves slowly because switching means rebuilding a customer's whole test setup. Yet its system-on-chip tester share rose about ten points in 2025, to 66 percent. What could explain both?",
+      "Aehr's lead AI customer is shifting burn-in for its accelerators from the finished system to the wafer. What does testing earlier save, and what does it cost?",
+      "Malaysia said in July 2026 that it ships 13 percent of the world's packaged chips and wants 7 percent of advanced packaging shipments by 2035. What makes advanced packaging a different business?"
+    ]
+  },
+  "systems-and-networking": {
+    "questions": [
+      "Since May 2025 NVLink Fusion has let other firms' custom chips use NVLink, while UALink is an open standard for the same job. Which leaves buyers less dependent on one firm, and why?",
+      "AXT, a US-listed maker of indium phosphide wafers, makes them all in China, which put them on its export control list on 4 February 2025. What does that show about supply risk?",
+      "In March 2026 Nvidia agreed to invest $2 billion each in Coherent and Lumentum, alongside purchase commitments and rights to future capacity. Why might each side want such a deal?"
+    ]
+  },
+  "data-centers-and-power": {
+    "questions": [
+      "ERCOT was tracking about 474 GW of large loads seeking a connection in June 2026, roughly 90 percent of it data centers. Why might requests run so far ahead of what gets connected?",
+      "At least three of OpenAI's seven Stargate sites will use gas generation on site to avoid grid queues. What does that path trade for speed, and what could still slow it?",
+      "Google's Ironwood TPU delivers twice the performance per watt of Trillium, the TPU before it. When would more efficient chips cut total data center electricity use, and when would they raise it?"
+    ]
+  },
+  "component-costs": {
+    "questions": [
+      "In quarters ending in 2026, design, equipment and leading-edge wafers earned gross margins of 50.3 to 75.0 percent, and assembly and test 16.8 to 27.3 percent. What explains the gap, and could it close?",
+      "SemiAnalysis puts a Vera Rubin NVL72 at $3.57 per GPU-hour, against $1.84 for a GB200, yet finds Rubin cheaper per token. Which measure matters more to a buyer, and when?",
+      "Which stage classed as structurally expensive, such as HBM or CoWoS-L packaging, is most likely to become compressible with scale, and what would it take?"
+    ]
+  },
+  "geopolitics": {
+    "questions": [
+      "An export control works only when a country's own firms sell something the buyer cannot get elsewhere. Which segments in the chokepoints table pass that test, and which might fail it by 2030?",
+      "Chinese toolmakers held 10 to 15 percent of their home market before 2022 and 35 percent in 2025. How much of that rise would have come without export controls, and how could anyone tell?",
+      "Taiwan's rules keep TSMC's newest process at home first, so its Arizona fabs have run a generation behind. Which side of the silicon shield debate does that rule support, and why?"
+    ]
+  }
+}

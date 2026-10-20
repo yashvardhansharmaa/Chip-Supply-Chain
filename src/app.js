@@ -272,13 +272,17 @@
   };
 
   /* ---------------- router ---------------- */
-  var VIEWS = ['home', 'stack', 'chain', 'intro', 'walk', 'briefing', 'landscape', 'suppliers', 'geopolitics', 'controls', 'thresholds', 'exposure', 'glossary', 'sources'];
-  var ALIAS = { chain: 'stack', home: 'walk', intro: 'walk', briefing: 'walk', geopolitics: 'stack', thresholds: 'controls', sources: 'stack' }; // the Sources page was retired; its sources sit at the end of each chapter // the licence-thresholds tab was retired; its route lands on the board
+  var VIEWS = ['home', 'stack', 'chain', 'intro', 'walk', 'briefing', 'landscape', 'ai-chips', 'suppliers', 'geopolitics', 'controls', 'export-controls', 'thresholds', 'exposure', 'glossary', 'sources'];
+  var ALIAS = { chain: 'stack', home: 'walk', intro: 'walk', briefing: 'walk', geopolitics: 'stack', thresholds: 'controls', sources: 'stack', 'export-controls': 'controls', 'ai-chips': 'landscape' }; // the tab names typed as routes land on their pages // the Sources page was retired; its sources sit at the end of each chapter // the licence-thresholds tab was retired; its route lands on the board
   var MODULE_VIEWS = {}; // modules register { activate(), stage: bool } per view through window.CP.register
   var Router = {
-    current: null, from: null,
+    current: null, from: null, places: {}, marks: 0,
     init: function () {
       var self = this;
+      // the reader's place in the chain, kept under the mark of the history entry it belongs to (route()). As Back or Forward leaves
+      // an entry, the browser moves the page to the other entry's place, and history.state is already the other entry's, so that
+      // scroll is not taken for the reader's
+      window.addEventListener('scroll', function () { if (self.current === 'stack' && self.place && (history.state || {}).cpPlace === self.place) self.places[self.place] = window.pageYOffset; }, { passive: true });
       window.addEventListener('hashchange', function () { self.route(); });
       var wm = $('.wordmark'); // the wordmark always takes you back to the top of the stack
       if (wm) wm.addEventListener('click', function (e) { e.preventDefault(); if (location.hash && location.hash !== '#/') location.hash = '#/'; window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' }); });
@@ -299,7 +303,20 @@
       var sub = null; // the Export Controls page has three sections
       if (v === 'exposure') { v = 'controls'; sub = 'exposure'; } else if (v === 'controls') sub = 'timeline';
       var em = h.match(/^#\/controls\/([^?#\/]+)/), evId = em ? dec(em[1]) : null; // #/controls/<event-id> opens the chronology on that entry
+      var xm = h.match(/^#\/exposure\/([^?#\/]+)/), exId = xm ? dec(xm[1]).toLowerCase() : null; // #/exposure/<slug> opens the China revenue share panel on that firm's chart
       var changed = v !== this.current || sub !== this.currentSub;
+      // The chain's address does not follow the scroll, so Back to it from another view (a card's China line, a search result)
+      // would land on the chapter's top, or the page's at #/chain. Each history entry the chain serves takes a mark of its own
+      // (history.state.cpPlace) and keeps the reader's place under it. A link or a tab makes a new entry, which has no mark, so an
+      // arrival at a marked entry from another view is Back or Forward, and the reader goes back to that place. The walk keeps
+      // its own place (owns()).
+      var backY = null;
+      if (v === 'stack') {
+        var mark = (history.state || {}).cpPlace;
+        if (mark && changed && this.places[mark] != null) backY = this.places[mark];
+        if (!mark) { mark = 'p' + Date.now().toString(36) + (++this.marks); try { history.replaceState({ cpPlace: mark }, ''); } catch (e) { mark = null; } }
+        this.place = mark;
+      }
       this.from = this.current; // the walk reads this to tell a return from a step within it
       this.current = v; this.currentSub = sub;
       if (sub) {
@@ -328,11 +345,19 @@
       if (v === 'controls' && !evId) { Geo.mark(null); if (Geo.modeBack) { var mb = Geo.modeBack; Geo.modeBack = null; Geo.setMode(mb, false); } }
       if (evId && v === 'controls') { focused = Geo.focusEvent(evId, !this.routed || changed); if (!focused) Geo.mark(null); }
       this.evId = v === 'controls' ? evId : null;
+      // a firm's address (#/exposure/<slug>) lands on that firm's chart; the panel's own address (#/exposure, the tab) starts at the top again
+      var leftFirm = sub === 'exposure' && !exId && !!this.exId;
+      if (exId && sub === 'exposure') focused = Controls.focusFirm(exId, !this.routed || changed) || focused;
+      this.exId = sub === 'exposure' ? exId : null;
       // no anchor to land on (or an entry address naming no entry), so start the new view at the top ("#/" included); a view that
       // places the page itself (the walk returning the reader to the step they left) says so through owns()
-      if ((changed || leftEntry) && !anchor && !focused && !(mv && mv.owns && mv.owns())) window.scrollTo(0, 0);
+      if ((changed || leftEntry || leftFirm) && !anchor && !focused && backY === null && !(mv && mv.owns && mv.owns())) window.scrollTo(0, 0);
       if (v === 'stack' || v === 'walk') {
-        if (anchor) {
+        if (backY !== null) { // Back or Forward to an entry of the chain: the place the reader left, at once
+          var root = document.documentElement, sb = root.style.scrollBehavior;
+          root.style.scrollBehavior = 'auto'; window.scrollTo(0, backY); root.style.scrollBehavior = sb;
+          this.booted = true;
+        } else if (anchor) {
           var el = document.getElementById(anchor);
           if (el) {
             var jumpIt = !this.booted || changed;
@@ -774,6 +799,22 @@
     rows: DATA.suppliers || [], built: false, stage: '', country: '', chk: '', q: '', sortKey: 'name', sortDir: 1,
     mode: 'ladder', stages: [], at: 0, tipAt: -1, drawW: 0, wiped: false,
     CO: ['US', 'JP', 'CN', 'TW', 'KR', 'NL', 'DE'], // the band order down the stack; every other country stacks last
+    /* the ribbons can also count the EU's members as one column (#/suppliers?tab=country&group=eu). Every firm keeps its own
+       country: the grouping only changes which column it is drawn in, and the list's "Other countries" follows the drawing */
+    EU27: ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE'], // the members in 2026
+    EU_CO: ['US', 'JP', 'CN', 'TW', 'KR', 'EU'], group: 'country',
+    cols: function () { return (this.group === 'eu' ? this.EU_CO : this.CO).concat(['Other']); },
+    colOf: function (cc) { // the column a firm of this country is drawn in
+      if (this.group === 'eu' && this.EU27.indexOf(cc) >= 0) return 'EU';
+      return (this.group === 'eu' ? this.EU_CO : this.CO).indexOf(cc) >= 0 ? cc : 'Other';
+    },
+    keyOf: function (c) { return c === 'Other' ? '__other' : c === 'EU' ? '__eu' : c; }, // a column, as the firm filter's value
+    /* under the ribbons: they count firms by each one's own headquarters, as the supplier list does, while the country shares
+       count by parent company (data/chokepoint-matrix-notes.md, "Converting firm shares to country shares"; the Glossary's
+       country cards carry the same note) */
+    NOTE: 'The ribbons count each firm in the supplier list under the country of its own headquarters. Country shares of a market\'s revenue count most firms under their parent company\'s home country. ' +
+      'Siemens EDA is run from Oregon but owned by Siemens AG, so the ribbons count it under the US and the EDA software share under Germany. Linde plc is incorporated in Ireland, with head offices in the UK and the US. ' +
+      'The ribbons count it under the UK. The specialty gases share counts it under Germany for its roots in Linde AG, as Georgetown University\'s Emerging Technology Observatory does.',
     LEVELS: ['Critical', 'Important', 'Contested', 'Diversified'],
     RANK: { Critical: 0, Important: 1, Contested: 2, Diversified: 3 },
     ORDER: ['Design & EDA', 'IP & Architecture', 'Silicon & Wafers', 'Photomasks', 'Lithography', 'Deposition & Etch', 'Photoresist & Materials', 'Chemicals & Gases', 'Optics & Photonics', 'Equipment Subsystems & Components', 'Metrology & Inspection', 'Foundry', 'Memory', 'Advanced Packaging & OSAT', 'Test', 'Substrates & PCBs', 'Interconnect & Networking', 'Power & Cooling', 'Systems & Servers', 'AI Accelerator Vendor'], // chain order, design first
@@ -788,7 +829,30 @@
     },
     activate: function () {
       this.setTab(/[?&]tab=country\b/.test(location.hash || '') ? 'country' : 'stage'); // #/suppliers?tab=country opens the ribbons
+      var eu = /[?&]group=eu\b/.test(location.hash || '');
+      if (eu) this.setGroup('eu', true); // ...and &group=eu draws the EU-27 as one
+      else if (this.tab === 'country' && this.group === 'eu') this.groupURL(); // the grouping chosen earlier stays, and the address says so
       if (!this.built) this.build(); else this.fitPipe();
+      // a link to the EU-27 view (the Glossary's member countries) lands on the ribbons, below the atlas; the router has just put the page at its top
+      if (eu && this.tab === 'country') setTimeout(function () { var t = $('#sup-pipe'); if (t && !t.closest('[hidden]')) { scrollToEl(t, false); Router.settle(t); } }, 0);
+    },
+    /* the ribbons by country, or with the EU-27 members as one column; quiet: set it up before the first draw */
+    setGroup: function (g, quiet) {
+      g = g === 'eu' ? 'eu' : 'country';
+      $$('#sup-group .sup-gbtn').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-group') === g ? 'true' : 'false'); });
+      if (g === this.group) return;
+      this.group = g;
+      this.litCC = g === 'eu' ? 'EU' : (this.atlasCC || ''); // the EU column lights as it appears; back by country, the atlas's choice lights again
+      if (!this.built) return;
+      this.groupStages(); this.legend(); this.otherCount();
+      this.drawW = 0; this.drawPipe(); // drawn now if its tab is open, else when the tab opens (fitPipe)
+      this.sync(); this.render();
+      if (!quiet) this.groupURL();
+    },
+    groupURL: function () { if (this.tab === 'country') try { history.replaceState(null, '', '#/suppliers?tab=country' + (this.group === 'eu' ? '&group=eu' : '')); } catch (e) { } },
+    otherCount: function () { // "Other countries" in the firm filter counts what the drawing's Other column holds
+      var self = this, o = $('#sup-country option[value="__other"]'); if (!o) return;
+      o.textContent = 'Other countries (' + this.rows.filter(function (r) { return self.colOf(r.country) === 'Other'; }).length + ')';
     },
     /* two tabs under the atlas: the ladder by stage, the ribbons by country */
     setTab: function (tab) {
@@ -801,8 +865,8 @@
       this.setTab('stage');
       if (/[?&]tab=country\b/.test(location.hash || '')) history.replaceState(null, '', '#/suppliers');
     },
-    light: function (cc) { // the atlas's chosen country lights its ribbons; a country set in the firm filter takes over
-      this.lit = this.CO.indexOf(cc) >= 0 ? cc : '';
+    light: function (cc) { // the atlas's chosen country lights its column's ribbons (none for a country drawn in Other); a country set in the firm filter takes over
+      this.atlasCC = this.litCC = cc || '';
       if (this.built) this.sync();
     },
 
@@ -816,8 +880,21 @@
       this.rows.forEach(function (r) { countries[r.country] = (countries[r.country] || 0) + 1; });
       Object.keys(countries).forEach(function (c) { if (self.CO.indexOf(c) < 0) other += countries[c]; });
       Object.keys(countries).sort(function (a, b) { return countries[b] - countries[a]; }).forEach(function (c) { var o = document.createElement('option'); o.value = c; o.textContent = cname(c) + ' (' + countries[c] + ')'; sel.appendChild(o); });
+      var eu = this.rows.filter(function (r) { return self.EU27.indexOf(r.country) >= 0; }).length;
+      if (eu) { var eo = document.createElement('option'); eo.value = '__eu'; eo.textContent = 'EU-27 members (' + eu + ')'; sel.appendChild(eo); }
       if (other) { var oo = document.createElement('option'); oo.value = '__other'; oo.textContent = 'Other countries (' + other + ')'; sel.appendChild(oo); }
+      this.otherCount();
       sel.addEventListener('change', function () { self.setCountry(sel.value, false); });
+      // over the ribbons: the switch that counts the EU-27 as one column; under them, how a firm is given a country
+      var ph = $('#sup-pipe-h');
+      if (ph && !$('#sup-group')) { // the heading and the switch share one row, which wraps on a phone
+        var row = document.createElement('div'); row.className = 'sup-pipe-top';
+        ph.parentNode.insertBefore(row, ph); row.appendChild(ph);
+        row.insertAdjacentHTML('beforeend', '<div class="sup-modes sup-group" id="sup-group" role="group" aria-label="Count the EU-27 members"><button type="button" class="sup-gbtn" data-group="country" aria-pressed="' + (this.group !== 'eu') + '">Each country</button><button type="button" class="sup-gbtn" data-group="eu" aria-pressed="' + (this.group === 'eu') + '">EU-27 together</button></div>');
+        $$('#sup-group .sup-gbtn').forEach(function (b) { b.addEventListener('click', function () { self.setGroup(b.getAttribute('data-group')); }); });
+      }
+      var lg = $('#sup-legend');
+      if (lg && !$('#sup-note')) lg.insertAdjacentHTML('afterend', '<p class="sup-note" id="sup-note">' + esc(this.NOTE) + '</p>');
 
       $('#sup-chk').addEventListener('change', function (e) { self.chk = e.target.value; self.render(); });
       var supTimer; $('#sup-search').addEventListener('input', function (e) { var v = e.target.value; clearTimeout(supTimer); supTimer = setTimeout(function () { self.q = v.trim().toLowerCase(); self.render(); }, 120); });
@@ -844,7 +921,7 @@
         r._ix = i; // where the row sits in the dataset, so a name button can find it again
         var s = by[r.category] || (by[r.category] = { name: r.category, rows: [], crit: [], by: {}, n: 0 });
         s.rows.push(r); s.n++;
-        var c = self.CO.indexOf(r.country) >= 0 ? r.country : 'Other';
+        var c = self.colOf(r.country);
         s.by[c] = (s.by[c] || 0) + 1;
         if (r.chokepoint === 'Critical') s.crit.push(r.name);
       });
@@ -852,8 +929,8 @@
       Object.keys(by).sort().forEach(function (c) { if (order.indexOf(c) < 0) order.push(c); });
       this.stages = order.map(function (c, i) { var s = by[c]; s.i = i; s.short = self.SHORT[c] || c; s.id = 'sup-rung-' + i; return s; });
     },
-    coName: function (c) { return c === 'Other' ? 'Other' : cname(c); },
-    otherNames: function (rows) { var seen = {}; rows.forEach(function (r) { if (this.CO.indexOf(r.country) < 0) seen[cname(r.country)] = 1; }, this); return Object.keys(seen).sort(); }, // the real countries behind an Other band or ribbon
+    coName: function (c) { return c === 'Other' ? 'Other' : c === 'EU' ? 'European Union' : cname(c); },
+    otherNames: function (rows) { var seen = {}; rows.forEach(function (r) { if (this.colOf(r.country) !== r.country) seen[cname(r.country)] = 1; }, this); return Object.keys(seen).sort(); }, // the real countries behind an Other or EU band or ribbon
 
     /* ---- the pipeline: the chain drawn as a pipe that narrows where the firms run out ---- */
     fitPipe: function () {
@@ -865,7 +942,7 @@
       var st = this.stages, n = st.length; if (!n) return;
       var W = Math.max(820, Math.round(host.clientWidth) || 820), tight = W < 1000;
       this.drawW = W;
-      var cols = this.CO.concat(['Other']), nc = cols.length;
+      var cols = this.cols(), nc = cols.length;
       var total = this.rows.length || 1;
       var H = tight ? 520 : 580, padT = 16, padB = 16, inner = H - padT - padB;
       var x0 = tight ? 128 : 172, wL = 12, x1 = W - (tight ? 168 : 214), wR = 10;
@@ -884,7 +961,7 @@
           var k = s.by[c] || 0; if (!k) return;
           var a0 = curL[c], a1 = a0 + k * uL, b0 = curR[i], b1 = b0 + k * uR;
           curL[c] = a1; curR[i] = b1;
-          var crit = s.rows.some(function (r) { return (self.CO.indexOf(r.country) >= 0 ? r.country : 'Other') === c && r.chokepoint === 'Critical'; });
+          var crit = s.rows.some(function (r) { return self.colOf(r.country) === c && r.chokepoint === 'Critical'; });
           var xa = x0 + wL;
           ribs += '<path class="sup-band sup-rib c-' + c + (crit ? ' is-crit' : '') + '" data-c="' + c + '" data-i="' + i + '" d="M' + xa + ',' + a0.toFixed(1) +
             ' C' + mx.toFixed(1) + ',' + a0.toFixed(1) + ' ' + mx.toFixed(1) + ',' + b0.toFixed(1) + ' ' + x1 + ',' + b0.toFixed(1) +
@@ -908,7 +985,7 @@
         hits += '<rect class="sup-hit" data-i="' + i + '" x="' + (x1 - 6) + '" y="' + top.toFixed(1) + '" width="' + (W - x1 + 6) + '" height="' + hgt.toFixed(1) +
           '" role="button" tabindex="' + (i === self.at ? '0' : '-1') + '" aria-label="' + esc(s.name + ': ' + s.n + ' firms, ' + s.crit.length + ' critical.') + '"></rect>';
       });
-      host.innerHTML = '<svg class="sup-pipe-svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" role="group" aria-label="Countries to stages: a ribbon for every country and stage pairing, its width the number of firms, amber where one is Critical">' +
+      host.innerHTML = '<svg class="sup-pipe-svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" role="group" aria-label="Countries to stages: a ribbon for every country and stage pairing, its width the number of firms, amber where one is Critical' + (this.group === 'eu' ? '. The EU-27 members are drawn as one' : '') + '">' +
         '<defs><clipPath id="sup-wipe-clip"><rect class="sup-wipe' + (this.wiped ? '' : ' is-new') + '" x="0" y="0" width="' + W + '" height="' + H + '"></rect></clipPath></defs>' +
         '<g class="sup-flow" clip-path="url(#sup-wipe-clip)">' + ribs + nodesL + nodesR + '<g class="sup-labels">' + labs + '</g><g class="sup-clabs">' + '</g></g>' +
         '<g class="sup-chits">' + hitsL + '</g><g class="sup-hits">' + hits + '</g></svg>';
@@ -932,9 +1009,9 @@
       svg.addEventListener('mouseleave', function () { hot(null, false); self.hideTip(); });
       svg.addEventListener('click', function (e) {
         var rib = e.target.closest ? e.target.closest('.sup-rib') : null;
-        if (rib) { var c0 = rib.getAttribute('data-c'); self.stage = ''; self.setCountry(c0 === 'Other' ? '__other' : c0, false); self.goStage(+rib.getAttribute('data-i')); return; }
+        if (rib) { var c0 = rib.getAttribute('data-c'); self.stage = ''; self.setCountry(self.keyOf(c0), false); self.goStage(+rib.getAttribute('data-i')); return; }
         var ch = e.target.closest ? e.target.closest('.sup-chit') : null;
-        if (ch) { var c = ch.getAttribute('data-c'); self.setCountry(c === 'Other' ? '__other' : c, true); return; }
+        if (ch) { var c = ch.getAttribute('data-c'); self.setCountry(self.keyOf(c), true); return; }
         var h = e.target.closest ? e.target.closest('.sup-hit') : null;
         if (h) self.goStage(+h.getAttribute('data-i'));
       });
@@ -980,7 +1057,7 @@
     },
     legend: function () {
       var self = this, h = '';
-      this.CO.concat(['Other']).forEach(function (c) { h += '<span class="sup-lg"><i class="sup-sw c-' + c + '"></i>' + esc(self.coName(c)) + '</span>'; });
+      this.cols().forEach(function (c) { h += '<span class="sup-lg"><i class="sup-sw c-' + c + '"></i>' + esc(self.coName(c)) + '</span>'; });
       $('#sup-legend').innerHTML = h + '<span class="sup-lg"><i class="sup-crit-sw"></i>holds a Critical firm</span>' +
         '<span class="sup-lg-note">Ribbon width is the number of firms a country has at a stage.</span>';
     },
@@ -998,7 +1075,7 @@
       var s = this.stages[i], el = $('#sup-tip'), hit = $('.sup-hit[data-i="' + i + '"]');
       if (!s || !el || !hit) return;
       var self = this, co = '';
-      this.CO.concat(['Other']).forEach(function (c) {
+      this.cols().forEach(function (c) {
         var v = s.by[c] || 0; if (!v) return;
         co += '<span class="sup-tip-c"><i class="sup-sw c-' + c + '"></i>' + esc(c) + '<b>' + v + '</b></span>';
       });
@@ -1009,11 +1086,11 @@
     },
     showCountryTip: function (c, anchor) { // a country: how many firms, at which stages, and its Critical names
       var self = this, el = $('#sup-tip'); if (!el) return;
-      var rows = this.rows.filter(function (r) { return (self.CO.indexOf(r.country) >= 0 ? r.country : 'Other') === c; });
+      var rows = this.rows.filter(function (r) { return self.colOf(r.country) === c; });
       var by = {}; rows.forEach(function (r) { by[r.category] = (by[r.category] || 0) + 1; });
       var stages = this.stages.filter(function (s) { return by[s.name]; }).map(function (s) { return esc(s.short) + ' <b>' + by[s.name] + '</b>'; });
       var crit = rows.filter(function (r) { return r.chokepoint === 'Critical'; }).map(function (r) { return r.name; });
-      var others = c === 'Other' ? this.otherNames(rows) : [];
+      var others = c === 'Other' || c === 'EU' ? this.otherNames(rows) : [];
       el.innerHTML = '<b>' + esc(this.coName(c)) + '</b><span class="sup-tip-n">' + rows.length + ' firms across ' + stages.length + ' stages</span>' +
         (others.length ? '<span class="sup-tip-co">' + esc(others.join(', ')) + '</span>' : '') +
         '<span class="sup-tip-co sup-tip-stages">' + stages.join(' · ') + '</span>' +
@@ -1022,8 +1099,8 @@
     },
     showRibTip: function (c, i, anchor) { // a ribbon: the firms of one country at one stage
       var self = this, s = this.stages[i], el = $('#sup-tip'); if (!s || !el) return;
-      var rows = s.rows.filter(function (r) { return (self.CO.indexOf(r.country) >= 0 ? r.country : 'Other') === c; });
-      var isOther = c === 'Other';
+      var rows = s.rows.filter(function (r) { return self.colOf(r.country) === c; });
+      var isOther = c === 'Other' || c === 'EU'; // a column of several countries names each firm's own
       var names = rows.map(function (r) { var n = (r.chokepoint === 'Critical' ? '<b>' + esc(r.name) + '</b>' : esc(r.name)); return isOther ? n + ' <small>(' + esc(cname(r.country)) + ')</small>' : n; });
       var others = isOther ? this.otherNames(rows) : [];
       el.innerHTML = '<b>' + esc(this.coName(c)) + ' → ' + esc(s.name) + '</b><span class="sup-tip-n">' + rows.length + (rows.length === 1 ? ' firm' : ' firms') + (others.length ? ' from ' + esc(others.join(', ')) : '') + (names.some(function (x) { return x.indexOf('<b>') === 0; }) ? ' · bold is Critical' : '') + '</span>' +
@@ -1072,23 +1149,31 @@
       this.sync(); this.render();
     },
     sync: function () { // every control, the pipeline and the ladder show the same state
-      var self = this, on = this.country === '__other' ? 'Other' : this.country, lad = this.mode === 'ladder';
+      var self = this, on = this.country, lad = this.mode === 'ladder';
       var sel = $('#sup-country'); if (sel) sel.value = this.country || '';
       $$('.sup-mode').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-mode') === self.mode ? 'true' : 'false'); });
       $('#sup-ladder').hidden = !lad;
       $('#sup-ladder-h').hidden = !lad;
       $('#sup-wrap').hidden = lad;
-      $$('.sup-band').forEach(function (p) { if (on && p.getAttribute('data-c') === on) p.setAttribute('data-on', '1'); else p.removeAttribute('data-on'); });
-      var lit = on ? '' : (this.lit || '');
+      // the firm filter lights each ribbon that holds a firm it keeps, so a country drawn inside the Other or EU column lights those ribbons
+      $$('.sup-band').forEach(function (p) {
+        var i = p.getAttribute('data-i'), s = on && i != null ? self.stages[+i] : null, c = p.getAttribute('data-c');
+        if (s && s.rows.some(function (r) { return self.colOf(r.country) === c && self.inCountry(r); })) p.setAttribute('data-on', '1'); else p.removeAttribute('data-on');
+      });
+      var lit = on || !this.litCC || this.colOf(this.litCC) === 'Other' ? '' : this.colOf(this.litCC);
       $$('.sup-rib').forEach(function (p) { if (lit && p.getAttribute('data-c') === lit) p.setAttribute('data-lit', '1'); else p.removeAttribute('data-lit'); });
       var pipe = $('#sup-pipe'); if (pipe) { pipe.setAttribute('data-filtered', on ? '1' : '0'); pipe.setAttribute('data-lit', lit ? '1' : '0'); }
     },
-    countryLabel: function () { return this.country === '__other' ? 'Other countries' : cname(this.country); },
+    countryLabel: function () { return this.country === '__other' ? 'Other countries' : this.country === '__eu' ? 'EU-27 members' : cname(this.country); },
     filtering: function () { return !!this.stage || !!(this.country || this.chk || this.q); },
+    inCountry: function (r) { // the firm filter's country test: one country, the EU-27 members, or the drawing's Other column
+      if (this.country === '__other') return this.colOf(r.country) === 'Other';
+      if (this.country === '__eu') return this.EU27.indexOf(r.country) >= 0;
+      return !this.country || r.country === this.country;
+    },
     match: function (r) {
       if (this.stage && r.category !== this.stage) return false; // a stage picked on the pipeline filters the list and the export
-      if (this.country === '__other') { if (this.CO.indexOf(r.country) >= 0) return false; }
-      else if (this.country && r.country !== this.country) return false;
+      if (!this.inCountry(r)) return false;
       if (this.chk && r.chokepoint !== this.chk) return false;
       if (this.q) { var hay = [r.name, r.nativeName, r.city, r.ticker, r.role, r.subcategory, (r.customers || []).join(' '), cname(r.country)].join(' ').toLowerCase(); if (hay.indexOf(this.q) < 0) return false; }
       return true;
@@ -1127,8 +1212,9 @@
           return (self.RANK[a.chokepoint] - self.RANK[b.chokepoint]) || String(a.name).localeCompare(String(b.name));
         }).map(function (f) {
           return '<span class="sup-nw" data-r="' + f._ix + '"><button type="button" class="sup-name lv-' + esc(f.chokepoint || 'Important') +
-            '" aria-expanded="false" aria-controls="' + s.id + '-p">' + esc(f.name) + '<i class="sup-cc">' + esc(f.country) + '</i></button></span>';
-        }).join('');
+            '" aria-expanded="false" aria-controls="' + s.id + '-p">' + esc(f.name) + '<i class="sup-cc">' + esc(f.country) + '</i>' +
+            (f.china ? '<i class="sup-ex" title="' + esc(f.china.label) + '"><span class="sr-only">, </span>' + esc(f.china.short) + '</i>' : '') + '</button></span>'; // a firm on the China revenue panel: its latest China share (build/build.js)
+        }).join(' '); // the lines break at these spaces, so a name never leaves its comma at the start of the next line
         html += '<section class="sup-rung" id="' + s.id + '" data-i="' + s.i + '" data-crit="' + s.crit.length + '" aria-labelledby="' + s.id + '-h">' +
           '<span class="sup-rank" aria-hidden="true">' + (r < 9 ? '0' : '') + (r + 1) + '</span>' +
           '<div class="sup-rung-head"><h3 class="sup-rung-name" id="' + s.id + '-h">' + esc(s.name) + '</h3>' +
@@ -1185,6 +1271,8 @@
         (tag ? '<em>' + esc(tag) + '</em>' : '') + '</p>' +
         (r.role ? '<p class="sup-role">' + esc(r.role) + '</p>' : '') +
         (facts.length ? '<dl class="sup-facts">' + facts.map(function (f) { return '<dt>' + f[0] + '</dt><dd>' + f[1] + '</dd>'; }).join('') + '</dl>' : '') +
+        // the China revenue panel's latest figure for the firm (for a division, its parent's, and the label says so), linked to its chart
+        (r.china ? '<p class="sup-china"><a href="' + safeUrl(r.china.href) + '">' + esc(r.china.label) + '<span class="sr-only">. Opens the chart of every year</span> <span aria-hidden="true">→</span></a></p>' : '') +
         (r.source ? '<a class="sup-src" href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" aria-label="Source for ' + esc(r.name) + '">Source</a>' : '') + '</div>';
     },
 
@@ -1194,7 +1282,8 @@
       var th = function (k, label) { return '<th><button type="button" data-sort="' + k + '"' + (self.sortKey === k ? ' aria-sort="' + (self.sortDir > 0 ? 'ascending' : 'descending') + '"' : '') + '>' + label + '</button></th>'; };
       var html = '<thead><tr>' + th('name', 'Supplier') + th('category', 'Category') + th('country', 'Country') + th('founded', 'Founded') + th('chokepoint', 'Chokepoint level') + '<th>What they make</th><th>Customers</th></tr></thead><tbody>';
       rows.forEach(function (r) {
-        html += '<tr><td class="name"><b>' + esc(r.name) + '</b><span>' + esc([r.nativeName, r.ticker].filter(Boolean).join(' · ')) + '</span></td>' +
+        html += '<tr><td class="name"><b>' + esc(r.name) + '</b><span>' + esc([r.nativeName, r.ticker].filter(Boolean).join(' · ')) + '</span>' +
+          (r.china ? '<a class="sup-ex-a" href="' + safeUrl(r.china.href) + '">' + esc(r.china.label) + '</a>' : '') + '</td>' +
           '<td>' + esc(r.category) + (r.subcategory ? '<br><span class="cc" style="color:var(--muted)">' + esc(r.subcategory) + '</span>' : '') + '</td>' +
           '<td><span class="cc">' + esc(r.country) + '</span> ' + esc(r.city || '') + '</td>' +
           '<td class="num">' + (r.founded || '—') + '</td>' +
@@ -1227,8 +1316,8 @@
     /* the five kinds of move; the colors are the .timeline .cat classes */
     CATS: [
       { name: 'US export control', label: 'US rules', short: 'US', cls: '' },
-      { name: 'China countermeasure', label: 'China', short: 'CN', cls: 'cn' },
-      { name: 'Allied control', label: 'Allied', short: 'Ally', cls: 'ally' },
+      { name: 'China', label: 'China', short: 'CN', cls: 'cn' },
+      { name: 'Other governments', label: 'Other governments', short: 'Other', cls: 'ally' }, // every government but the US and China: Japan and Korea's measures on each other as well as controls on China
       { name: 'Industrial policy', label: 'Policy', short: 'Pol', cls: 'policy' },
       { name: 'Corporate', label: 'Firms', short: 'Firm', cls: 'corp' }
     ],
@@ -1245,6 +1334,7 @@
     INSTRUMENT: {
       rule: 'Rule', 'entity-listing': 'Listing', 'denial-order': 'Denial order', 'licence-policy': 'License policy',
       'licence-exception': 'Exception', enforcement: 'Enforcement', countermeasure: 'Countermeasure',
+      'trade-remedy': 'Trade remedy', order: 'Order',
       'investment-screening': 'Screening', 'industrial-policy': 'Policy', corporate: 'Corporate', pending: 'Pending'
     },
     MODE_KEY: 'cp-cf-mode',
@@ -1283,7 +1373,7 @@
     },
     lane: function (c) {
       c = c || '';
-      return /China/i.test(c) ? 1 : /Allied/i.test(c) ? 2 : /Industrial/i.test(c) ? 3 : /Corporate/i.test(c) ? 4 : 0;
+      return /China/i.test(c) ? 1 : /Other governments|Allied/i.test(c) ? 2 : /Industrial/i.test(c) ? 3 : /Corporate/i.test(c) ? 4 : 0;
     },
     build: function () {
       this.built = true;
@@ -1855,7 +1945,8 @@
       var self = this, d = a.dataset || {}, t = this.panel(), hostName = '';
       clearTimeout(this.timer);
       try { hostName = new URL(a.href).hostname.replace(/^www\./, ''); } catch (e) { hostName = ''; }
-      var meta = [d.p, d.d].filter(Boolean).join(' · ');
+      // publisher · date (or the day the source was read, when it shows no date) · the page, for a citation into a long PDF
+      var meta = [d.p, d.d, d.pg ? 'p. ' + d.pg : ''].filter(Boolean).join(' · ');
       t.innerHTML = (d.tier ? '<span class="tier tier-' + esc(d.tier) + '" title="Source tier ' + esc(d.tier) + '">' + esc(d.tier) + '</span>' : '') +
         '<b>' + esc(d.t || hostName || a.href) + '</b>' + (meta ? '<p>' + esc(meta) + '</p>' : '') +
         '<a href="' + safeUrl(a.href) + '" target="_blank" rel="noopener">' + (hostName ? esc(hostName) : 'Source') + ' ↗</a>';
@@ -1989,16 +2080,33 @@
   var Controls = {
     built: false,
     activate: function () { if (!this.built) this.build(); if (Geo.built) Geo.sync(); },
+    /* #/exposure/<slug>: that firm's chart (id ex-<slug>, written by build/build.js) just under the masthead. A reader who came by a
+       link on the page gets focus there, so the next Tab reaches its bars; a short wash of the accent shows which chart it is,
+       once the page has settled, and never under reduced motion */
+    focusFirm: function (id, jumpIt) { // jumpIt: a first load or an arrival from another view, so no glide
+      var el = document.getElementById('ex-' + id), self = this;
+      if (!el || !el.closest('#exposure-viz')) return false;
+      scrollToEl(el, !jumpIt);
+      if (jumpIt) Router.settle(el);
+      if (Router.routed && el.focus) { try { el.focus({ preventScroll: true }); } catch (e) { } }
+      if (reduced) return true;
+      clearTimeout(this.flashT);
+      $$('#exposure-viz .ex-flash').forEach(function (x) { x.classList.remove('ex-flash'); });
+      var go = function () { self.flashT = setTimeout(function () { el.classList.add('ex-flash'); self.flashT = setTimeout(function () { el.classList.remove('ex-flash'); }, 2000); }, jumpIt ? 250 : 500); };
+      if (document.readyState === 'complete') go(); else window.addEventListener('load', go, { once: true });
+      return true;
+    },
     build: function () { // the China revenue share sub-tab: tooltips on the charts and the table behind the toggle
       this.built = true;
       var ex = DATA.exposure || [];
       var viz = $('#exposure-viz');
       if (viz && viz.firstElementChild) { // tooltips on the exposure charts
         var tip = document.createElement('div'); tip.className = 'ex-tip'; tip.hidden = true; document.body.appendChild(tip);
-        var fmtM = function (v) { return Number(v).toLocaleString('en-US') + 'm'; };
+        var fmtU = function (v, u) { return Number(v).toLocaleString('en-US') + u; };
         var showTip = function (c) {
-          var d = c.dataset, cur = (d.cur || '').replace(/\s*million\s*/i, '');
-          var money = d.china && d.total ? ' · ' + (cur ? cur + ' ' : '') + fmtM(d.china) + ' of ' + fmtM(d.total) : '';
+          // the row's currency names its unit ("USD million", "JPY billion"): the code goes in front, the unit after each amount
+          var d = c.dataset, cu = d.cur || '', u = /billion/i.test(cu) ? 'bn' : /thousand/i.test(cu) ? 'k' : 'm', cur = cu.replace(/\s*(million|billion|thousand)\s*/i, '');
+          var money = d.china && d.total ? ' · ' + (cur ? cur + ' ' : '') + fmtU(d.china, u) + ' of ' + fmtU(d.total, u) : '';
           tip.innerHTML = '<b>' + esc(d.firm) + ' · ' + esc(d.fy) + '</b>China was ' + esc(d.share) + '% of revenue' + money + (d.basis ? '<br>' + esc(d.basis) : '');
           tip.hidden = false;
           var r = c.getBoundingClientRect(), x = r.left + r.width / 2 + window.scrollX, y = r.top + window.scrollY;
@@ -2007,7 +2115,7 @@
         };
         viz.addEventListener('mouseover', function (e) { var c = e.target.closest && e.target.closest('[data-firm]'); if (c) showTip(c); });
         viz.addEventListener('mouseout', function (e) { if (e.target.closest && e.target.closest('[data-firm]')) tip.hidden = true; });
-        viz.addEventListener('focusin', function (e) { var c = e.target.querySelector ? e.target.querySelector('[data-firm]') : null; if (c) showTip(c); });
+        viz.addEventListener('focusin', function (e) { var a = e.target.closest ? e.target.closest('a') : null, c = a ? a.querySelector('[data-firm]') : null; if (c) showTip(c); }); // a bar's link; the chart itself, focused by its address, shows none
         viz.addEventListener('focusout', function () { tip.hidden = true; });
       }
       var et = $('#exposure-table');
@@ -2033,7 +2141,7 @@
             var r = firms[f][y]; if (!r || r.chinaShare == null) return '<td><span class="cell zero" title="Not filed for this year" aria-label="Not filed for this year">·</span></td>';
             var brk = starts[y], basis = r.basis ? 'Counted: ' + firstLine(r.basis) : '';
             var tip = [r.chinaRevenue != null ? r.chinaRevenue.toLocaleString('en-US') + ' of ' + (r.totalRevenue || 0).toLocaleString('en-US') + ' ' + (r.currency || '') : '', r.note || '', (brk ? 'New basis from this year. ' : '') + basis].filter(Boolean).join(' · ');
-            return '<td' + (brk ? ' style="border-left:2px dashed var(--ink-2)"' : '') + '>' + (brk ? '<span class="sr-only">The firm counts China differently from this year. </span>' : '') + '<a class="cell" style="--v:' + Math.round(Math.min(100, r.chinaShare) * 1.6) + '" href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" aria-label="' + esc(f) + ' ' + esc(y) + ': ' + esc(String(r.chinaShare)) + ' percent from China, opens the filing" title="' + esc(tip) + '">' + r.chinaShare.toFixed(1) + '%</a></td>';
+            return '<td' + (brk ? ' style="border-left:2px dashed var(--ink-2)"' : '') + '>' + (brk ? '<span class="sr-only">The firm counts China differently from this year. </span>' : '') + '<a class="cell" style="--v:' + Math.round(Math.min(100, r.chinaShare) * 1.6) + '" href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" aria-label="' + esc(f) + ' ' + esc(y) + ': ' + esc(String(r.chinaShare)) + ' percent from China, opens the filing" title="' + esc(tip) + '">' + (r.chinaRevenue != null ? r.chinaShare.toFixed(1) : String(r.chinaShare)) + '%</a></td>'; // a share the filing gives only as a percentage prints as filed (build/exposure.js shareText)
           }).join('') + '</tr>';
         }).join('') + '</tbody>';
       }
@@ -2062,10 +2170,17 @@
       (DATA.suppliers || []).forEach(function (r) { idx.push({ kind: 'Supplier', title: r.name, text: r.category + ' · ' + cname(r.country) + (r.role ? ' · ' + r.role : ''), href: '#/suppliers', q: r.name }); });
       (DATA.landscape || []).forEach(function (c) { idx.push({ kind: 'Chip', title: c.vendor + ' ' + c.name, text: ((c.process || {}).node || '') + ' · ' + ((c.memory || {}).type || '') + ' · ' + (c.status || ''), href: '#/landscape', chip: c.id }); });
       (DATA.timeline || []).forEach(function (e) { idx.push({ kind: 'Event ' + e.date, title: e.title, text: e.summary || '', href: e.id ? '#/controls/' + encodeURIComponent(e.id) : '#/controls' }); }); // straight to the entry, opened
-      (DATA.exposure || []).forEach(function (r) { if (r.chinaShare != null) idx.push({ kind: 'China revenue', title: r.firm + ' ' + r.fiscalYear, text: 'China was ' + r.chinaShare + '% of revenue' + (r.basis ? ' · ' + r.basis : ''), href: '#/exposure' }); });
+      (DATA.exposure || []).forEach(function (r) { if (r.chinaShare != null) idx.push({ kind: 'China revenue', title: r.firm + ' ' + r.fiscalYear, text: 'China was ' + r.chinaShare + '% of revenue' + (r.basis ? ' · ' + r.basis : ''), href: (DATA.exposureLinks || {})[r.firm] || '#/exposure' }); }); // straight to the firm's chart
+      // each flashcard, found by its question or its answer (more: matched, never shown). The result opens the chapter's deck at
+      // that card, question side up (Tools.openCard), so the line under it names the deck and leaves the answer to recall.
+      // Start here's deck sits in the walk, in no chapter, and carries its own name (data-name)
+      $$('[data-view="stack"] .fc[id], [data-view="walk"] .fc[id]').forEach(function (fc) {
+        var ch = fc.closest('.chapter'), name = ch ? ((ch.querySelector('.ch-title') || {}).textContent || '').replace(/^Chapter \d+: /, '') : (fc.getAttribute('data-name') || ''), cards = $$('.fc-card', fc);
+        cards.forEach(function (c, k) { idx.push({ kind: 'Flashcard', title: ($('.fc-q', c) || {}).textContent || '', text: name + ' · card ' + (k + 1) + ' of ' + cards.length, more: 'flashcards ' + (($('.fc-a', c) || {}).textContent || ''), href: '#' + fc.id, card: { id: fc.id, i: k } }); });
+      });
       var self = this;
       idx.forEach(function (i) {
-        i.hay = (i.kind + ' ' + i.title + ' ' + i.text).toLowerCase();
+        i.hay = (i.kind + ' ' + i.title + ' ' + i.text + (i.more ? ' ' + i.more : '')).toLowerCase();
         i.hayn = self.norm(i.hay); // hyphens flattened, so "export-control" and "export control" are the same string
         i.tn = self.norm(i.title);
         i.tw = i.tn.split(' ').filter(Boolean);
@@ -2131,7 +2246,7 @@
           var res = self.search(q), hits = res.hits;
           list.innerHTML = (res.note ? '<li class="none">' + esc(res.note) + '</li>' : '') +
             (hits.map(function (h, k) { return '<li><a href="' + safeUrl(h.href) + '" data-k="' + k + '"><span class="k">' + esc(h.kind) + '</span><b>' + esc(h.title) + '</b><span class="t">' + esc(clip(h.text, 140)) + '</span></a></li>'; }).join('') || (res.note ? '' : '<li class="none">Nothing matches.</li>'));
-          list.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { var h = hits[+a.getAttribute('data-k')]; self.close(true); if (h.href === location.hash) setTimeout(function () { Router.route(); }, 0); /* the address is already this one, so no hashchange will come: go there anyway */ if (h.chip) setTimeout(function () { Landscape.select(h.chip); }, 60); if (h.q) setTimeout(function () { var s = $('#sup-search'); if (s) { s.value = h.q; s.dispatchEvent(new Event('input')); } }, 60); if (h.el) setTimeout(function () { h.el.scrollIntoView({ block: 'center' }); }, 60); }); });
+          list.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { var h = hits[+a.getAttribute('data-k')]; self.close(true); if (h.href === location.hash) setTimeout(function () { Router.route(); }, 0); /* the address is already this one, so no hashchange will come: go there anyway */ if (h.chip) setTimeout(function () { Landscape.select(h.chip); }, 60); if (h.q) setTimeout(function () { var s = $('#sup-search'); if (s) { s.value = h.q; s.dispatchEvent(new Event('input')); } }, 60); if (h.el) setTimeout(function () { h.el.scrollIntoView({ block: 'center' }); }, 60); if (h.card && self.openCard) setTimeout(function () { self.openCard(h.card.id, h.card.i); }, 60); }); });
         });
       }
       if (box.hidden) this.from = document.activeElement; // where the reader was, so closing can put them back
@@ -2152,20 +2267,60 @@
       if (nav) nav.insertBefore(btn, $('.theme-toggle'));
       document.addEventListener('keydown', function (e) { var k = e.key || '', a = document.activeElement || document.body; if ((e.ctrlKey || e.metaKey) && k.toLowerCase() === 'k') { e.preventDefault(); self.open(); } if (k === '/' && !/INPUT|TEXTAREA|SELECT/.test(a.tagName || '') && !a.isContentEditable) { e.preventDefault(); self.open(); } });
       // end-of-chapter flashcards: one card at a time. "Show answer" turns a card over and "Show question" turns it back;
-      // marking a card moves on; Previous and Next revisit cards (Next only to cards already marked); the end lists the takeaways
+      // marking a card moves on; Previous and Next revisit cards (Next only to cards already marked); the end lists the takeaways.
+      // Each deck keeps its marks and its last score on this device (localStorage "cp-fc-<chapter id>", and "cp-fc-intro" for the
+      // deck that ends Start here): a reader who comes back finds the cards marked as they left them and "Last time: 3 of 4
+      // known." in place of the instruction, and Start over forgets both. Every storage call is guarded, so without storage
+      // the deck works the same and simply forgets.
       var FC = {
         parts: function (fc) { return { deck: $('.fc-deck', fc), cards: $$('.fc-card', fc), dots: $$('.fc-dots i', fc), nav: $('.fc-nav', fc), end: $('.fc-end', fc) }; },
         cur: function (p) { for (var j = 0; j < p.cards.length; j++) if (!p.cards[j].hidden) return j; return 0; },
         flip: function (card, back) { card.classList.toggle('is-flipped', back); $('.fc-front', card).inert = back; $('.fc-back', card).inert = !back; },
-        go: function (fc, i, focusShow) {
+        go: function (fc, i, focusShow, quiet) { // quiet: set the deck up without touching focus (a deck restored as the page loads)
           var p = FC.parts(fc);
           p.end.hidden = true; p.deck.hidden = false; p.nav.hidden = false;
           p.cards.forEach(function (c, j) { c.hidden = j !== i; FC.flip(c, false); });
           p.dots.forEach(function (d, j) { var kn = p.cards[j].getAttribute('data-known'); d.className = j === i ? 'on' : kn === '1' ? 'k' : kn === '0' ? 'm' : ''; });
           var prev = $('.fc-prev', fc), next = $('.fc-next', fc);
           prev.disabled = i === 0; next.disabled = !p.cards[i].hasAttribute('data-known');
+          if (quiet) return;
           var a = document.activeElement;
           if (focusShow || !a || a.disabled || !fc.contains(a) || a.closest('[hidden]')) { var f = $('.fc-show', p.cards[i]); if (f) f.focus({ preventScroll: true }); }
+        },
+        // the deck's name: its own data-deck where it has one (Start here's, which sits in no chapter), else its chapter's id
+        id: function (fc) { return fc.getAttribute('data-deck') || (fc.closest('.chapter') || {}).id || 'geopolitics'; },
+        key: function (fc) { return 'cp-fc-' + FC.id(fc); },
+        // a short fingerprint of the deck's questions, so marks kept for an earlier version of the cards are not put on new ones
+        sig: function (fc) { var s = FC.parts(fc).cards.map(function (c) { return ($('.fc-q', c) || {}).textContent || ''; }).join('|'), h = 5381; for (var j = 0; j < s.length; j++) h = ((h * 33) ^ s.charCodeAt(j)) >>> 0; return h.toString(36); },
+        // what this device kept for the deck, or null: nothing kept, storage blocked, or a deck whose cards have changed since
+        read: function (fc) {
+          var s = null;
+          try { s = JSON.parse(localStorage.getItem(FC.key(fc)) || 'null'); } catch (e) { return null; }
+          return s && Array.isArray(s.marks) && s.marks.length === FC.parts(fc).cards.length && s.sig === FC.sig(fc) ? s : null;
+        },
+        save: function (fc, done) { // done: the round is over, and its score becomes the last one
+          var marks = FC.parts(fc).cards.map(function (c) { var k = c.getAttribute('data-known'); return k === '1' || k === '0' ? k : ''; });
+          var last = done ? { known: marks.filter(function (k) { return k === '1'; }).length, total: marks.length, day: localISO() } : (FC.read(fc) || {}).last;
+          var keep = { sig: FC.sig(fc), marks: marks }; if (last) keep.last = last;
+          try { localStorage.setItem(FC.key(fc), JSON.stringify(keep)); } catch (e) { }
+        },
+        forget: function (fc) { try { localStorage.removeItem(FC.key(fc)); } catch (e) { } FC.lastLine(fc, null); },
+        // the quiet line beside the deck's title: the instruction, or for a reader who has finished the deck before, that score
+        lastLine: function (fc, last) {
+          var sub = $('.rv-sub', fc); if (!sub) return;
+          if (sub._intro == null) sub._intro = sub.textContent;
+          var n = FC.parts(fc).cards.length, ok = !!last && last.total === n && last.known >= 0 && last.known <= n && Math.floor(last.known) === last.known;
+          sub.textContent = ok ? 'Last time: ' + last.known + ' of ' + n + ' known.' : sub._intro;
+          sub.classList.toggle('fc-last', ok);
+        },
+        // a reader coming back: the marks go back on the cards and the deck opens at the first card not yet marked, or at the
+        // first card when the round was finished, so the deck starts again with the dots showing last time's marks
+        restore: function (fc) {
+          var s = FC.read(fc); if (!s) return;
+          var p = FC.parts(fc), at = -1;
+          p.cards.forEach(function (c, j) { var k = s.marks[j]; if (k === '1' || k === '0') c.setAttribute('data-known', k); else if (at < 0) at = j; });
+          FC.go(fc, at < 0 ? 0 : at, false, true);
+          FC.lastLine(fc, s.last);
         },
         finish: function (fc) {
           var p = FC.parts(fc), k = p.cards.filter(function (x) { return x.getAttribute('data-known') === '1'; }).length;
@@ -2181,9 +2336,11 @@
             var re = $('.fc-more', c);
             if (re) { missed++; li.appendChild(document.createTextNode(' ')); li.appendChild(re.cloneNode(true)); }
           });
-          $('.fc-score-t', p.end).textContent = k === p.cards.length ? 'known.' : missed ? 'known. Each idea marked “Didn’t know” ends with a link to reread its section.' : 'known.';
+          // a chapter's deck links back to a section, Start here's to a chapter (data-reread)
+          $('.fc-score-t', p.end).textContent = k === p.cards.length ? 'known.' : missed ? 'known. Each idea marked “Didn’t know” ends with a link to ' + (fc.getAttribute('data-reread') || 'reread its section') + '.' : 'known.';
           var rs = $('.fc-reset', p.end); if (rs) rs.focus({ preventScroll: true });
-          if (window.goatcounter && window.goatcounter.count) try { window.goatcounter.count({ path: 'flashcards/' + ((fc.closest('.chapter') || {}).id || 'geopolitics') + '/' + k, title: 'Flashcards finished', event: true }); } catch (err) {}
+          FC.save(fc, true);
+          if (window.goatcounter && window.goatcounter.count) try { window.goatcounter.count({ path: 'flashcards/' + FC.id(fc) + '/' + k, title: 'Flashcards finished', event: true }); } catch (err) {}
         },
         step: function (fc, d) {
           var p = FC.parts(fc), i = FC.cur(p);
@@ -2209,7 +2366,7 @@
         if (m) {
           var i = +card.getAttribute('data-i'), n = FC.parts(fc).cards.length;
           card.setAttribute('data-known', m.getAttribute('data-known') === '1' ? '1' : '0');
-          if (i + 1 < n) FC.go(fc, i + 1, true); else FC.finish(fc);
+          if (i + 1 < n) { FC.save(fc); FC.go(fc, i + 1, true); } else FC.finish(fc);
           return;
         }
         if (t.closest('.fc-prev')) { FC.step(fc, -1); return; }
@@ -2217,9 +2374,13 @@
         if (t.closest('.fc-back-to-cards')) { FC.go(fc, FC.parts(fc).cards.length - 1, true); return; }
         if (t.closest('.fc-reset')) {
           FC.parts(fc).cards.forEach(function (c) { c.removeAttribute('data-known'); });
+          FC.forget(fc);
           FC.go(fc, 0, true);
         }
       });
+      $$('.fc').forEach(function (fc) { FC.restore(fc); });
+      // a search result for one card: the deck opens at that card, question side up, with focus on "Show answer"
+      self.openCard = function (id, i) { var fc = document.getElementById(id); if (fc && fc.classList.contains('fc') && FC.parts(fc).cards[i]) FC.go(fc, i, true); };
       // the arrow keys step through a deck while focus is inside it
       document.addEventListener('keydown', function (e) {
         if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
@@ -2354,6 +2515,16 @@
       figs.forEach(function (f) { near.observe(f); io.observe(f); });
     }
   };
+
+  /* ---------- the browser's own print: nothing folded ----------
+     Paper cannot open a folded source list. Chrome opens a closed <details> from print.css (::details-content); other
+     browsers do not, so each closed one is opened just before the browser prints and folded again after. build/pdf.py
+     opens them itself (CP_PRINT.prepare). */
+  (function () {
+    var opened = [];
+    window.addEventListener('beforeprint', function () { $$('details:not([open])').forEach(function (d) { d.open = true; opened.push(d); }); });
+    window.addEventListener('afterprint', function () { opened.forEach(function (d) { d.open = false; }); opened = []; });
+  })();
 
   window.CP = { Stage: Stage, Router: Router, Sections: Sections, Tools: Tools, Band: Band, DATA: DATA, $: $, $$: $$, esc: esc, narrow: narrow, safeUrl: safeUrl, cname: cname, reduced: reduced,
     scrollToEl: scrollToEl, landAt: landAt, headerH: headerH,

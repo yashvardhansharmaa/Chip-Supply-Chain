@@ -1,0 +1,86 @@
+[
+  {
+    "url": "https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf",
+    "sentence": "Fuji Keizai's survey by parent-company headquarters, as Japan's Ministry of Econ",
+    "page": 8,
+    "pages": 111,
+    "evidence": "（出所）富士経済 「半導体材料市場の現状と将来展望」を元に経済産業省が作成 [chart 素材市場 売上高シェア (2023): photoresist Japan 78%, silicon wafers Japan 53%]"
+  },
+  {
+    "url": "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf",
+    "sentence": "The Semiconductor Industry Association and Boston Consulting Group's 2022 measur",
+    "page": 14,
+    "pages": 38,
+    "evidence": "Logic: 2022 0% 31% 69% <10 nm 2032F 28% 6% 5% 9% 47% 3% [Exhibit 6 chart, 2022: Logic <10 nm Taiwan 69%; Logic 28 nm+ China 33%]"
+  },
+  {
+    "url": "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf",
+    "sentence": "Taiwan held 69 percent of the world's logic capacity below 10 nm in 2022",
+    "page": 14,
+    "pages": 38,
+    "evidence": "Logic: 2022 0% 31% 69% <10 nm 2032F 28% 6% 5% 9% 47% 3% [Exhibit 6 chart, Logic <10 nm, 2022: Taiwan 69%]"
+  },
+  {
+    "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf",
+    "sentence": "Asked in October 2025 how much CoWoS packaging capacity he would add, TSMC's cha",
+    "page": 7,
+    "pages": 18,
+    "evidence": "we are working very hard to narrow the gap between the demand and supply. We are still working to increase the capacity in 2026."
+  },
+  {
+    "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf",
+    "sentence": "He called wafer and packaging capacity both \"very tight\"",
+    "page": 7,
+    "pages": 18,
+    "evidence": "Today, all I want to say about the AI, everything related, like frontend and backend capacity is very tight."
+  },
+  {
+    "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf",
+    "sentence": "TSMC said in October 2025 that it was \"preparing to upgrade our technologies fas",
+    "page": 5,
+    "pages": 18,
+    "evidence": "we are preparing to upgrade our technologies faster to N2 and more advanced process technologies in Arizona"
+  },
+  {
+    "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf",
+    "sentence": "The Arizona fabs narrow the gap in wafer production, and TSMC has two advanced p",
+    "page": 13,
+    "pages": 18,
+    "evidence": "We have announced our plan to build two advanced packaging fabs in Arizona and to support our customers."
+  },
+  {
+    "url": "https://ourbrand.asml.com/m/3136300aa4999bc1/original/2026_01_28_Presentation-Investor-Relations-Q4-2025.pdf",
+    "sentence": "At ASML, China's share of net system sales, which leave out service and field op",
+    "page": 9,
+    "pages": 24,
+    "evidence": "Net system sales breakdown (Yearly) [pie charts, Region (ship to location): China 33% in 2025, 41% in 2024]"
+  },
+  {
+    "url": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf",
+    "sentence": "At Tokyo Electron, China's share fell from 44.4 percent in the year to March 202",
+    "page": 27,
+    "pages": 29,
+    "evidence": "Sales by Region 28.3% 23.9% 44.4% 41.7% 34.1% [chart, China series: FY2024 44.4%, FY2026 34.1%]"
+  },
+  {
+    "url": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4transcript-e.pdf",
+    "sentence": "The company said the share dropped to 26.8 percent in the quarter to March 2026 ",
+    "page": 5,
+    "pages": 29,
+    "evidence": "as growth rate of spending for leading-edge nodes was higher than that for mature nodes, proportion of sales in China dropped to 26.8%"
+  },
+  {
+    "url": "https://www.semiconductors.org/wp-content/uploads/2026/07/SIA_2026_State-of-the-Semiconductor-Industry.pdf",
+    "sentence": "Counting every type of chip, they took 53.4 percent of global sales in 2025, the",
+    "page": 7,
+    "pages": 23,
+    "evidence": "The U.S. industry reached sales of $425 billion in 2025, representing 53.4% of total global sales and the highest U.S. market share since 1984."
+  },
+  {
+    "url": "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf",
+    "sentence": "It held 69 percent of the world's capacity for logic chips below 10 nanometers i",
+    "page": 14,
+    "pages": 38,
+    "evidence": "Logic: 2022 0% 31% 69% <10 nm 2032F 28% 6% 5% 9% 47% 3% [Exhibit 6 chart, Logic <10 nm, 2022: Taiwan 69%]"
+  }
+]

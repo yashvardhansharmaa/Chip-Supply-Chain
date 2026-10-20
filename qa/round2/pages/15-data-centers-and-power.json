@@ -1,0 +1,107 @@
+[
+  {
+    "url": "https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf",
+    "sentence": "A wafer passes through a leading-edge fab in months, but in 2024 a large power t",
+    "page": 8,
+    "pages": 53,
+    "evidence": "lead times for acquisition of an LPT have become exceptionally long, with 36-month lead times being commonly quoted"
+  },
+  {
+    "url": "https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf",
+    "sentence": "Before the pandemic, the same order took under a year",
+    "page": 18,
+    "pages": 53,
+    "evidence": "(COVID-19) pandemic, it was possible to place an order for a large transformer with a lead time of less than a year"
+  },
+  {
+    "url": "https://www.eia.gov/outlooks/steo/archives/sep26.pdf",
+    "sentence": "In its September 2026 Short-Term Energy Outlook, the Energy Information Administ",
+    "page": 4,
+    "pages": 56,
+    "evidence": "We expect electricity sales in the United States to total 4,135 billion kilowatthours (BkWh) in 2026 and 4,211 BkWh in 2027"
+  },
+  {
+    "url": "https://www.eia.gov/outlooks/steo/archives/sep26.pdf",
+    "sentence": "Sales would grow by almost 2 percent in each year, driven by data centers and ma",
+    "page": 10,
+    "pages": 56,
+    "evidence": "an increase of almost 2% over 2025. We expect an additional growth of nearly 2% in electricity sales in 2027"
+  },
+  {
+    "url": "https://www.eia.gov/outlooks/steo/archives/sep26.pdf",
+    "sentence": "The same outlook lowers its 2027 electricity sales forecast for the region that ",
+    "page": 4,
+    "pages": 56,
+    "evidence": "West South Central region electricity sales (billion kilowatthours) 761 790 Previous forecast 765 829 Percentage change -0.5% -4.7%"
+  },
+  {
+    "url": "https://www.eia.gov/outlooks/steo/archives/sep26.pdf",
+    "sentence": "It notes that Texas has paused connecting new data centers to the grid while it ",
+    "page": 10,
+    "pages": 56,
+    "evidence": "Although Texas has paused the connection of new data centers to the grid to facilitate a regulatory audit of proposed data center projects"
+  },
+  {
+    "url": "https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf",
+    "sentence": "ERCOT, the grid operator for most of Texas, was tracking about 474 GW of large l",
+    "page": 6,
+    "pages": 10,
+    "evidence": "Key Takeaway: ERCOT is tracking approximately 474 GW of Large Loads seeking interconnection, of which ~90% are data centers."
+  },
+  {
+    "url": "https://www.ercot.com/files/docs/2026/03/12/March-TAC-Report.pdf",
+    "sentence": "ERCOT's large load update of March 13, 2026, counted 9,042 MW approved to energi",
+    "page": 6,
+    "pages": 15,
+    "evidence": "Of the 9042 MW that have received Approval to Energize, ERCOT has observed a non-simultaneous monthly peak consumption of 3883 MW"
+  },
+  {
+    "url": "https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf",
+    "sentence": "In a preliminary review in July 2026, ERCOT found about 205 GW of the queue elig",
+    "page": 10,
+    "pages": 10,
+    "evidence": "Approximately 205 GW of Large Load is eligible for inclusion in Batch Zero based on existing studies"
+  },
+  {
+    "url": "https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf",
+    "sentence": "In 2024, lead times of 36 months were commonly quoted and the longest reached 60",
+    "page": 8,
+    "pages": 53,
+    "evidence": "with 36-month lead times being commonly quoted and maximum lead times reaching as much as 60 months"
+  },
+  {
+    "url": "https://www.energy.gov/sites/default/files/2024-10/EXEC-2022-001242%20-%20Large%20Power%20Transformer%20Resilience%20Report%20signed%20by%20Secretary%20Granholm%20on%207-10-24.pdf",
+    "sentence": "By a Commerce Department estimate, 82 percent of the units put into US service i",
+    "page": 20,
+    "pages": 53,
+    "evidence": "estimated that in 2019, 137 LPTs (18 percent) were produced domestically for domestic use while 617 units (82 percent) were imported"
+  },
+  {
+    "url": "https://www.usitc.gov/publications/701_731/pub5531.pdf",
+    "sentence": "Measured by capacity, US factories supplied 29.2 percent of the transformers of ",
+    "page": 90,
+    "pages": 282,
+    "evidence": "The share of apparent U.S. consumption for which U.S. producers accounted decreased during 2021-23 from 32.5 percent to 29.2 percent."
+  },
+  {
+    "url": "https://www.usitc.gov/publications/701_731/pub5531.pdf",
+    "sentence": "Measured by capacity, US factories supplied 29.2 percent of the large power tran",
+    "page": 90,
+    "pages": 282,
+    "evidence": "The share of apparent U.S. consumption for which U.S. producers accounted decreased during 2021-23 from 32.5 percent to 29.2 percent."
+  },
+  {
+    "url": "https://www.ercot.com/files/docs/2026/03/12/March-TAC-Report.pdf",
+    "sentence": "ERCOT, the grid operator for most of Texas, counted 9,042 MW of big power users ",
+    "page": 6,
+    "pages": 15,
+    "evidence": "Of the 9042 MW that have received Approval to Energize, ERCOT has observed a non-simultaneous monthly peak consumption of 3883 MW"
+  },
+  {
+    "url": "https://www.ercot.com/files/docs/2026/03/12/March-TAC-Report.pdf",
+    "sentence": "Judging by peak monthly use, it believed 3,883 MW of that was operating",
+    "page": 6,
+    "pages": 15,
+    "evidence": "This value represents how much approved load ERCOT believes is now operational"
+  }
+]

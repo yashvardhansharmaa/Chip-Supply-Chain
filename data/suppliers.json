@@ -382,7 +382,7 @@
     "founded": 1998,
     "ticker": "Private",
     "ownership": "Division of Alphabet Inc.",
-    "role": "Designs the Tensor Processing Unit (TPU), now at the v7 Ironwood generation. It uses TPUs in its own data centers and offers them to cloud customers. Broadcom and MediaTek work with it on the physical design, which turns a chip design into a layout, and on manufacturing at TSMC.",
+    "role": "Designs the Tensor Processing Unit (TPU), and announced the eighth generation, the TPU 8t and TPU 8i, in April 2026. It uses TPUs in its own data centers and offers them to cloud customers. Broadcom and MediaTek work with it on the physical design, which turns a chip design into a layout, and on manufacturing at TSMC.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -2472,7 +2472,7 @@
     "ownership": "Public",
     "role": "Supplies process control equipment: optical and electron beam wafer inspection, reticle inspection, overlay and film metrology. Its tools find the defects that determine yield on large dies.",
     "chokepoint": "Critical",
-    "shareNote": "56.8% of the process control market in 2025 on CSET's count, about 5 times Applied Materials' share. Gartner data in KLA's 2026 investor day put it at 56.5% in 2024, 6.5 times the nearest competitor.",
+    "shareNote": "56.8% of the process control market in 2025 on CSET's count, against 11.2% for Applied Materials, the next largest. Gartner data in KLA's 2026 investor day put it at 56.5% in 2024, 6.5 times the nearest competitor.",
     "customers": [
       "TSMC",
       "Samsung",
@@ -2644,16 +2644,16 @@
     "ownership": "Public (Shanghai STAR Market), with state-backed investors",
     "role": "A Shenzhen maker of wafer defect inspection and film metrology tools, aiming to replace KLA systems in Chinese fabs. Its coverage is strongest at mature nodes.",
     "chokepoint": "Contested",
-    "shareNote": "2,053.3 million yuan of revenue in 2025, up 48.75%, per its 2025 annual report summary. That is about 1.8% of CSET's $15.7B process control market for 2025, against CSET's 0.7% for all Chinese firms.",
+    "shareNote": "2,053,298,171.74 yuan of revenue in 2025, up 48.75% on 2024, per its 2025 annual report summary.",
     "customers": [
       "SMIC",
       "Hua Hong",
       "CXMT",
       "YMTC"
     ],
-    "aiRelevance": "CSET counts Chinese makers at 0.7 percent of process control tools in 2025. Skyverse's own revenue is about 1.8 percent of that market, which suggests the count misses some domestic sales.",
-    "revenueUSDb": 0.285,
-    "revenueYear": 2025,
+    "aiRelevance": "CSET counts Chinese makers at 0.7 percent of process control tools in 2025.",
+    "revenueUSDb": null,
+    "revenueYear": null,
     "source": "https://www.skyverse.cn/"
   },
   {
@@ -3199,7 +3199,7 @@
     "founded": 1983,
     "ticker": "Private",
     "ownership": "Division of Samsung Electronics (005930.KS)",
-    "role": "Samsung Electronics' memory business, supplying DRAM, NAND and HBM. It began mass production of HBM4 in 2026 and was first to ship commercial HBM4, at 11.7 Gbps per pin.",
+    "role": "Samsung Electronics' memory business, supplying DRAM, NAND and HBM. It began mass production of HBM4 in 2026 and says it was the first to ship commercial HBM4, at 11.7 Gbps per pin.",
     "chokepoint": "Critical",
     "shareNote": null,
     "customers": [
@@ -3792,7 +3792,7 @@
     "founded": 1912,
     "ticker": "4062.T",
     "ownership": "Public",
-    "role": "Makes the highest-layer-count flip-chip BGA substrates, the multilayer boards a processor die sits on. It supplies substrates for large AI packages and is expanding capacity at its Ono plant.",
+    "role": "Makes the highest-layer-count flip-chip BGA substrates, the multilayer boards a processor die sits on. It supplies substrates for large AI packages and is expanding capacity, first mainly at its Gama plant, which it said in August 2026 would start operating in stages from the end of fiscal 2027.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [
@@ -3816,7 +3816,7 @@
     "founded": 1946,
     "ticker": "Private",
     "ownership": "Taken private in 2025 by a consortium led by the Japan Investment Corporation",
-    "role": "Makes high-end flip-chip BGA substrates, plus lead frames and interposers. Other Japanese makers of high-end substrates include Ibiden and Toppan. It was taken private in 2025 by a company owned mainly by funds of JIC Capital, a subsidiary of Japan Investment Corporation. In September 2026 Shinko agreed to buy Japan Display's Mobara plant in Chiba as a new core plant for advanced chip packages. Production there is scheduled for fiscal 2028.",
+    "role": "Makes high-end flip-chip BGA substrates, plus lead frames and interposers. Other Japanese makers of high-end substrates include Ibiden and Toppan. It was taken private in 2025 by a company owned mainly by funds of JIC Capital, a subsidiary of Japan Investment Corporation. In September 2026 Shinko agreed to buy Japan Display's Mobara plant in Chiba as a new core plant for its flip-chip package substrates. Production there is scheduled for fiscal 2028.",
     "chokepoint": "Important",
     "shareNote": null,
     "customers": [

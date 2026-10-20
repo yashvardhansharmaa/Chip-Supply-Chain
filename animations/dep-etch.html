@@ -11,13 +11,13 @@ const C = { si: dark ? '#343b45' : '#2c323b', siDot: dark ? '#414955' : '#3a414b
 // captions follow the writing rules of the site; the page shows them in time with the video
 const STEPS = [
   { k: 'The wafer', t0: 0.3, t1: 2.8, cap: 'A slice through one spot on a wafer, magnified until its layers show.' },
-  { k: 'Deposit', t0: 2.8, t1: 5.4, cap: 'A film a few atoms thick is laid over the whole wafer.' },
+  { k: 'Deposit', t0: 2.8, t1: 5.4, cap: 'A thin film is laid over the whole wafer.' },
   { k: 'Coat', t0: 5.4, t1: 7.7, cap: 'A light-sensitive coating, the resist, is spun on top.' },
   { k: 'Expose', t0: 7.7, t1: 10.5, cap: 'Light shines through a stencil and changes the resist wherever it lands.' },
   { k: 'Develop', t0: 10.5, t1: 12.7, cap: 'A wash removes the resist the light reached, leaving the stencil’s pattern.' },
   { k: 'Etch', t0: 12.7, t1: 15.7, cap: 'A plasma cuts straight down through the film wherever the resist is gone.' },
   { k: 'Strip', t0: 15.7, t1: 17.7, cap: 'The leftover resist is removed. The pattern now sits in the film.' },
-  { k: 'Repeat', t0: 17.7, t1: 22.8, cap: 'Insulator fills the gaps and the next layer goes on. A chip takes more than a thousand of these rounds.' },
+  { k: 'Repeat', t0: 17.7, t1: 22.8, cap: 'Insulator fills the gaps and the next layer goes on. Making one chip takes 1,000 to 1,500 steps, the Semiconductor Industry Association estimated in 2025.' },
 ];
 const P = (i, t) => clamp((t - STEPS[i].t0) / (STEPS[i].t1 - STEPS[i].t0));
 
@@ -80,8 +80,15 @@ function counter(ctx, t, pRep, a) {
   const fin = ease(clamp((pRep - 0.78) / 0.12));
   label('Round', X1, 30, PAL.muted, { align: 'right', alpha: a * (1 - fin) });
   text(String(1 + landed), X1, 70, '300 40px Fraunces', PAL.ink2, { align: 'right', alpha: a * (1 - fin) });
-  label('Rounds for one chip', X1, 30, PAL.garnet, { align: 'right', alpha: a * fin });
-  text('1,000+', X1, 70, '300 40px Fraunces', PAL.garnet, { align: 'right', alpha: a * fin });
+  // the one sourced count: the SIA's 1,000 to 1,500 steps to make one chip (2025, chapter 6), set as chapter 9's readout
+  // sets it; a round is several steps, so the readout counts steps and never rounds
+  const f = '300 40px Fraunces', u = '500 13px "Instrument Sans"', fa = a * fin;
+  ctx.font = f; const w2 = ctx.measureText('1,500').width; ctx.font = u; const wt = ctx.measureText('to').width;
+  label('Steps to make one chip', X1, 30, PAL.garnet, { align: 'right', alpha: fa });
+  text('1,500', X1, 70, f, PAL.garnet, { align: 'right', alpha: fa });
+  text('to', X1 - w2 - 6, 70, u, PAL.garnet, { align: 'right', alpha: fa });
+  text('1,000', X1 - w2 - wt - 12, 70, f, PAL.garnet, { align: 'right', alpha: fa });
+  label('SIA estimate, 2025', X1, 90, PAL.muted, { align: 'right', alpha: fa });
 }
 
 function render(ctx, t) {

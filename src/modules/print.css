@@ -10,14 +10,15 @@
   size: A4;
   margin: 17mm 20mm 16mm;
 
-  /* Running heads and folios. Chrome ignores margin boxes when it prints the page itself,
-     so the browser's own header and footer still serve that path.
+  /* Running heads and folios. Paged.js sets their type through the rules at the end of this file;
+     Chrome also draws these boxes when it prints the page itself (it has no string(), so the
+     chapter head is left out there), and the type in each box is for that path.
      One string() to a box: Paged.js passes strings through a custom property, and two of them
      in one box cancel each other out, so the head is the chapter's own "Chapter 4: Lithography". */
-  @top-left { content: string(chapter); }
-  @top-right { content: "Chip Supply Chain"; }
-  @bottom-left { content: "chipsupplychain.org"; }
-  @bottom-right { content: counter(page) " / " counter(pages); }
+  @top-left { content: string(chapter); font: 500 7.5pt "Instrument Sans", "Helvetica Neue", Arial, sans-serif; letter-spacing: 0.06em; color: #5b646d; }
+  @top-right { content: "Chip Supply Chain"; font: 500 7.5pt "Instrument Sans", "Helvetica Neue", Arial, sans-serif; letter-spacing: 0.06em; color: #5b646d; }
+  @bottom-left { content: "chipsupplychain.org"; font: 500 7.5pt "Instrument Sans", "Helvetica Neue", Arial, sans-serif; letter-spacing: 0.06em; color: #5b646d; }
+  @bottom-right { content: counter(page) " / " counter(pages); font: 500 7.5pt "Instrument Sans", "Helvetica Neue", Arial, sans-serif; letter-spacing: 0.06em; color: #5b646d; }
 
   /* The foot of the page: a hairline, then the notes. */
   @footnote { margin-top: 4mm; padding-top: 2.2mm; border-top: 0.4pt solid #b9bec2; }
@@ -32,8 +33,9 @@
 }
 
 @media print {
-  /* Dark mode must not print as dark ink. Light tokens for paper, whatever the reader was using. */
-  :root, :root[data-theme="dark"] {
+  /* Dark mode must not print as dark ink. Light tokens for paper, whatever the reader was using: the list matches
+     every dark-theme selector at equal weight (a system-dark block uses :root:not([data-theme="light"])). */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
     --bg: #fff; --bg-2: #f4f5f6; --bg-3: #e9ebec;
     --ink: #000; --ink-2: #22272b; --muted: #464e55;
     --line: #c6cacd; --line-2: #a4aaaf;
@@ -96,6 +98,12 @@
   .inshort p { font-size: 11.5pt; line-height: 1.45; margin-bottom: 1.6mm; }
   .plain { margin: 6mm 0 7mm; padding: 3mm 5mm 3.4mm; border-left-width: 2.5pt; max-width: 132mm; }
   .plain p { font-size: 10pt; line-height: 1.5; }
+  /* the takeaways after the flashcards ("Four things to remember"): the list at the size of In plain terms, its label at
+     the labels' size. Left to the screen's 17 px, it printed at 12.75 pt, above
+     In short. The selectors match the screen's (styles.css) in weight, so these, coming later, win. */
+  .review .rv-keep { margin: 4mm 0 3mm; padding-top: 2.6mm; }
+  .review .rv-keep h4.label { font-size: 7pt; margin-bottom: 2.4mm; }
+  .review .rv-keep li { font-size: 10pt; line-height: 1.45; padding-bottom: 1.6mm; }
 
   /* the chokepoint card */
   .plate { margin-bottom: 7mm; box-shadow: none; }
@@ -117,6 +125,10 @@
   .plate-rows .why { font-size: 9pt; }
   .plate-status > div { padding: 2.6mm 4mm 3mm; }
   .plate-status p { font-size: 8.8pt; line-height: 1.45; }
+  /* the card's marks print in the notes' red, as the prose's do. The China revenue line under a leader is a way into the
+     interactive chart, with no note of its own, so paper leaves it out. */
+  .plate sup.cite a, .plate sup.cite-sep { color: var(--accent-ink); }
+  .plate .lead-cn { display: none; }
   .chip { font-size: 6.4pt; width: 6mm; }
   .cc { font-size: 7pt; }
 
@@ -133,6 +145,7 @@
   .tl li { font-size: 8.6pt; }
   .tl li .d { font-size: 6.8pt; }
   figure svg, .figure svg, #exposure-viz svg { max-width: 100%; height: auto; }
+
 
   /* how to read, and the contents as a report's contents: one line a chapter, with its page */
   .howto { margin: 0 0 8mm; padding: 3.4mm 4mm 1mm; }
@@ -160,7 +173,10 @@
   .chapter-sources, .mt-note { break-inside: avoid; }
   .chapter-sources ol, .mt-cites { font-size: 7.6pt; }
   .chapter-sources li, .mt-cites li { overflow-wrap: anywhere; }
-  .chapter-sources summary::before, .mt-note > summary::before { content: ""; }
+  /* the browser's own print (and the PDF's fallback) gives each source its full address under its title; the marks in
+     the text stay numbers. src/app.js opens the folded lists before the browser prints. */
+  .chapter-sources li > a[href]::after { content: attr(href); display: block; font-family: var(--font-code); font-size: 6.8pt; line-height: 1.35; color: var(--muted); overflow-wrap: anywhere; }
+  .chapter-sources summary::before, .chapter-sources[open] summary::before, .mt-note > summary::before { content: ""; }
   /* with real footnotes, the list at the end of the chapter would say everything twice */
   .cp-print .chapter-sources { display: none !important; }
 
@@ -191,6 +207,21 @@
   .print-title .pt-by { font-family: var(--font-display); font-weight: 600; font-size: 11pt; margin: 0; }
   .print-title .pt-what { font-family: var(--font-mono); font-size: 8pt; color: #5b646d; margin: 0; }
   .print-title .pt-meta { font-family: var(--font-mono); font-size: 7.6pt; color: #5b646d; margin: 2.6mm 0 0; }
+
+  /* ---------- one chapter alone (build/pdf.py --chapter) ----------
+     print.js puts a compact title block where the cover and contents were: the site and the edition, the chapter, its
+     own page and how to cite it. The chapter starts beneath it, and the colophon follows the last page of text
+     (the two breaks are turned off under .site-footer, below). */
+  .pt-chapter { margin: 0 0 7mm; padding: 0 0 3.4mm; border-bottom: 0.5pt solid var(--line-2); break-inside: avoid; break-after: avoid; }
+  .pt-chapter p { margin: 0; }
+  .pt-chapter .ptc-k { display: flex; justify-content: space-between; gap: 6mm; font-family: var(--font-mono); font-weight: 500; font-size: 7.4pt; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .pt-chapter .ptc-ed { color: var(--ink); }
+  .pt-chapter .ptc-h { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 600; font-size: 13pt; line-height: 1.2; color: var(--ink); margin-top: 2.6mm; }
+  .pt-chapter .ptc-url { font-family: var(--font-mono); font-size: 8pt; color: var(--muted); margin-top: 0.6mm; }
+  .pt-chapter .ptc-cite { font-family: var(--font-body); font-size: 8pt; line-height: 1.4; color: var(--ink-2); margin-top: 2.4mm; max-width: 150mm; overflow-wrap: anywhere; }
+  .pt-chapter .ptc-ck { font-family: var(--font-mono); font-weight: 500; font-size: 6.6pt; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  /* the colophon's citation for this edition, written by print.js in place of the screen's */
+  .site-footer .cite--edition pre { font-size: 7.4pt; padding: 2.4mm 3mm; overflow-wrap: anywhere; }
   .howto { break-inside: avoid; }
   .contents .item { break-inside: avoid; }
   .gl-term { border-bottom: 0 !important; text-decoration: none !important; background: none !important; color: inherit !important; }
@@ -205,6 +236,11 @@
   .prose sup.cite a { color: var(--accent-ink); }
   .site-footer { break-before: page; font-size: 8pt; }
   .site-footer .sources-key, .site-footer .updated { font-size: 7.2pt; }
+  /* one chapter alone starts under its title block and the colophon follows its text. Paged.js applies breaks by
+     selector, in the order the rules come, inside the body: so these come after the rules they undo, and key on the
+     title block rather than on a class of <html>. */
+  .pt-chapter + .chapter { break-before: auto; }
+  .pt-chapter ~ .site-footer { break-before: auto; margin-top: 10mm; }
 
   /* ---------- footnotes ----------
      print.js writes one .fn beside every citation from its data-* fields; Paged.js floats it to

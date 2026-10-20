@@ -32,6 +32,47 @@
 .wk-tabs a:focus-visible { outline: none; }
 .wk-tabs span { display: block; font-size: 15.5px; line-height: 1.45; }
 
+/* ---------- the chain at a glance: on phones, under the hero, in place of Other pages ----------
+   The fifteen stages in order, one line each: the number in the ledger column (so the names line up with the walk's
+   text below), the name, and the concentration drawn as the summary page draws it, a four-step meter and the plain word,
+   garnet at Extreme. Each line is a link to its chapter, the full width of the column and at least 28 px tall.
+   Wider screens keep Other pages under the hero. */
+.wk-gl { display: none; }
+@media (max-width: 700px) {
+  .wk-head .wk-tabs { display: none; } /* every page stays one tap away in the tabs and the Contents sheet */
+  .wk-gl { display: block; margin: 24px 0 0; border-top: 1px solid var(--ink); }
+  .wk-gl-h { display: block; margin: 0; padding: 10px 0 0; }
+  .wk-gl-p { margin: 5px 0 12px; font-size: 15px; line-height: 1.45; color: var(--ink-2); }
+  .wk-gl-p b { color: var(--accent); font-weight: 600; }
+  .wk-gl-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
+  .wk-gl-list li + li { border-top: 1px solid var(--line); }
+  .wk-gl-list a {
+    display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr) auto; column-gap: var(--gutter-gap); align-items: baseline;
+    min-height: 28px; padding: 4px 0; color: var(--ink); text-decoration: none;
+  }
+  .wk-gl-n { padding-right: 8px; text-align: right; font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .wk-gl-t { font-size: 15.5px; line-height: 1.3; text-wrap: balance; } /* a long name breaks into two even lines, never one word alone */
+  .wk-gl-c { display: inline-flex; align-items: baseline; gap: 7px; font-family: var(--font-mono); font-size: 12.5px; color: var(--ink); }
+  .wk-gl-m { display: inline-flex; align-self: center; align-items: flex-end; gap: 2px; height: 14px; }
+  .wk-gl-m i { display: block; width: 6px; background: var(--line); }
+  .wk-gl-m i:nth-child(1) { height: 5px; }
+  .wk-gl-m i:nth-child(2) { height: 8px; }
+  .wk-gl-m i:nth-child(3) { height: 11px; }
+  .wk-gl-m i:nth-child(4) { height: 14px; }
+  .wk-gl-list li .wk-gl-m i.on { background: var(--muted); }
+  .wk-gl-list li[data-level="3"] .wk-gl-m i.on { background: var(--bar-4); }
+  .wk-gl-list li[data-level="4"] .wk-gl-m i.on { background: var(--accent-fill); }
+  .wk-gl-w { min-width: 4.1em; } /* every word as wide as the longest, so the meters stand in one column */
+  .wk-gl-list li[data-level="4"] .wk-gl-w { color: var(--accent); font-weight: 600; }
+  .wk-gl-list a:hover .wk-gl-t, .wk-gl-list a:active .wk-gl-t, .wk-gl-list a:focus-visible .wk-gl-t { color: var(--accent); }
+  .wk-gl-list a:focus-visible { outline-offset: 2px; }
+}
+@media (max-width: 380px) { /* a 360 px phone: a narrower meter and word keep most names on one line */
+  .wk-gl-t { font-size: 15px; }
+  .wk-gl-c { gap: 5px; font-size: 12px; }
+  .wk-gl-m i { width: 5px; }
+}
+
 /* ---------- the walk: the ledger column ---------- */
 .wk-list { list-style: none; margin: 44px 0 0; padding: 0; }
 .wk-step {
@@ -121,6 +162,20 @@
   text-decoration: none; padding: 9px 12px; border: 1px solid var(--line-2); border-radius: 0; color: var(--ink);
 }
 .wk-end-links a:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ---------- the walk: the flashcards after the last step ----------
+   The chapter decks' component and look (styles.css .review, .fc-*), set in the walk's text column. A chapter's deck sits in
+   .prose, which gives its title the heading type; here the title takes the same type directly. */
+.wk-deck { max-width: var(--measure); margin: 0 0 48px calc(var(--gutter) + var(--gutter-gap)); }
+.wk-deck .review { margin-top: 6px; }
+.wk-deck .rv-title {
+  font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); letter-spacing: 0;
+  font-size: 28px; line-height: 1.15; margin: 0.55em 0 0.2em;
+}
+/* ten dots leave a phone no room for both step links beside them, so the links move under the dots, each on one line */
+.wk-deck .fc-nav { flex-wrap: wrap; row-gap: 2px; }
+.wk-deck .fc-steps .fc-link { white-space: nowrap; }
+@media (max-width: 900px) { .wk-deck { margin-left: 0; margin-bottom: 40px; } }
 
 /* ---------- the progress rail ---------- */
 .wk-rail {

@@ -55,7 +55,12 @@ strong, b { font-weight: 600; }
 
 /* masthead: the wordmark home, two links into the site */
 .masthead { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 56px; padding: 0 var(--gutter); border-bottom: 1px solid var(--line-2); }
-.wordmark { text-decoration: none; font-family: var(--font-display); font-weight: 500; font-size: 21px; letter-spacing: 0.075em; font-variant-caps: small-caps; font-variation-settings: "opsz" 36, "SOFT" 0, "WONK" 0; white-space: nowrap; }
+/* the wordmark: the favicon's tile beside the name, as in the app's masthead (src/styles.css); the tile keeps the favicon's garnet in both themes */
+.wordmark { display: flex; align-items: center; gap: 12px; min-height: 44px; text-decoration: none; }
+.wordmark .wm-tile { display: block; flex: none; width: 29px; height: 29px; }
+.wordmark .wm-tile rect { fill: #7a1f2b; }
+.wordmark .wm-tile path { fill: #f7f6f2; }
+.wordmark .wm-name { font-family: var(--font-display); font-size: 21px; font-weight: 540; font-variation-settings: "opsz" 28, "SOFT" 0, "WONK" 0; letter-spacing: -0.005em; line-height: 1; white-space: nowrap; }
 .masthead nav { display: flex; gap: 4px; }
 .masthead nav a { font-family: var(--font-label); font-weight: 500; font-size: 13.5px; color: var(--ink-2); text-decoration: none; padding: 8px 8px 7px; border-bottom: 1px solid transparent; white-space: nowrap; }
 .masthead nav a:hover { color: var(--ink); border-bottom-color: var(--accent); }
@@ -264,7 +269,9 @@ sup.cite .br { font-size: 0; }
 @media (max-width: 640px) {
   body { font-size: 18px; }
   .masthead { min-height: 52px; gap: 8px; }
-  .wordmark { font-size: 18px; }
+  .wordmark { gap: 9px; }
+  .wordmark .wm-tile { width: 25px; height: 25px; }
+  .wordmark .wm-name { font-size: 18px; }
   .masthead nav a { font-size: 12.5px; padding: 6px 5px 5px; }
   .ch-lede { font-size: 19px; }
   .inshort p, .inshort li { font-size: 18.5px; }
@@ -284,7 +291,9 @@ sup.cite .br { font-size: 0; }
 }
 
 @media (max-width: 370px) {
-  .wordmark { font-size: 16px; letter-spacing: 0.05em; }
+  .wordmark { gap: 7px; } /* at 320 px the two nav links leave 154 px */
+  .wordmark .wm-tile { width: 21px; height: 21px; }
+  .wordmark .wm-name { font-size: 14.5px; }
   .masthead nav a { font-size: 12px; padding: 6px 4px 5px; }
 }
 

@@ -1,0 +1,44 @@
+[
+  {
+    "url": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf",
+    "sentence": "In a January 2021 report built on 2019 market data, CSET at Georgetown Universit",
+    "page": 50,
+    "pages": 98,
+    "evidence": "Empyrean is purportedly the only Chinese EDA firm that can run a complete design flow. Its tools can fully design certain analog and mixed-signal"
+  },
+  {
+    "url": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf",
+    "sentence": "For all other chips, Chinese designers then relied on US tools",
+    "page": 50,
+    "pages": 98,
+    "evidence": "Outside of Empyrean's niche offerings, Chinese chip designers rely on U.S. EDA tools—especially Synopsys and Cadence—for all chip designs."
+  },
+  {
+    "url": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf",
+    "sentence": "The report found that other Chinese tools covered only narrow parts of the desig",
+    "page": 50,
+    "pages": 98,
+    "evidence": "only narrow slices of the chip design flow or supplement leading U.S. EDA tools ... largely do not support leading-edge fabrication processes (e.g., ≤14 nm)"
+  },
+  {
+    "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225217315.PDF",
+    "sentence": "In its 2025 annual report, filed in April 2026, Empyrean says it now has complet",
+    "page": 18,
+    "pages": 196,
+    "evidence": "模拟电路设计全流程 EDA 工具系统、存储电路设计全流程 ... 射频电路设计全流程 ... 平板显示电路设计全流程 EDA 工具系统"
+  },
+  {
+    "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225217315.PDF",
+    "sentence": "It says its digital tools cover 80 percent of the main tools for digital design",
+    "page": 14,
+    "pages": 196,
+    "evidence": "丰富了公司数字 EDA 工具产品线，产品种类已覆盖数字电路设计主要工具的 80%。"
+  },
+  {
+    "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225217315.PDF",
+    "sentence": "The same report lists foundry certifications for its circuit simulator at 8, 5 a",
+    "page": 15,
+    "pages": 196,
+    "evidence": "电路仿真工具 ALPS 获得 8nm/5nm/4nm 认证 ... 物理验证工具 Argus DRC/LVS 获得 28nm 认证。"
+  }
+]

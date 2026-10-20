@@ -30,12 +30,14 @@
 {{STYLES}}
 </style>
 <style>
-/* the cite line under each chapter title: Updated <day> · Cite this chapter · Report an error (build/build.js citeBlock) */
+/* the cite line under each chapter title: Updated <day> · Cite this chapter · Chapter PDF (build/build.js citeBlock) */
 .ch-cite { margin: 8px 0 0; }
 .ch-cite-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 8px; margin: 0; font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
 .ch-cite-line > * { padding: 4px 0; }
-.ch-cite-btn, .ch-cite-mail, .ch-cite-copy { font: inherit; letter-spacing: inherit; text-transform: inherit; background: none; border: 0; margin: 0; cursor: pointer; color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2); }
-.ch-cite-btn:hover, .ch-cite-mail:hover, .ch-cite-copy:hover { text-decoration-color: var(--accent); }
+.ch-cite-btn, .ch-cite-pdf, .ch-cite-copy { font: inherit; letter-spacing: inherit; text-transform: inherit; background: none; border: 0; margin: 0; cursor: pointer; color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2); }
+.ch-cite-btn:hover, .ch-cite-pdf:hover, .ch-cite-copy:hover { text-decoration-color: var(--accent); }
+/* a phone has no room for the whole line: the day takes a line of its own, with no dot left at its end, and the two links share the next */
+@media (max-width: 640px) { .ch-cite-line > span:first-child { flex-basis: 100%; } .ch-cite-line > span:first-child + .ch-cite-sep { display: none; } }
 .ch-cite-box { margin: 6px 0 2px; padding: 12px 14px 10px; border-left: 2px solid var(--accent); background: var(--bg-2); max-width: 40em; }
 .ch-cite-text { margin: 0; font-family: var(--font-body); font-size: 15px; line-height: 1.5; color: var(--ink); overflow-wrap: anywhere; }
 .ch-cite-text a { color: inherit; }
@@ -54,7 +56,7 @@
 <div class="sheet" id="sheet" role="dialog" aria-label="Contents" hidden><div class="sheet-head"><b>Contents</b><button type="button" class="sheet-close" aria-label="Close">×</button></div><nav class="sheet-pages">{{SHEET_PAGES}}</nav><ol class="sheet-chapters">{{SHEET_CHAPTERS}}</ol></div>
 <div id="app">
   <header class="masthead">
-    <a class="wordmark" href="#/"><b>Chip Supply Chain</b></a>
+    <a class="wordmark" href="#/" aria-label="Chip Supply Chain"><svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg><span class="wm-name">Chip Supply Chain</span></a>
     <nav class="tabs" aria-label="Sections">
       <a href="#/" data-view="walk">Home</a>
       <a href="#/chain" data-view="stack">The Chain</a>
@@ -100,7 +102,7 @@
       </section>
       <div class="howto" id="howto">
         <h2 class="howto-title">The Chain</h2>
-        <p class="howto-lede">This page covers each of the fifteen stages of making an AI chip in detail, one chapter per stage, in the order a chip is made, from design software to the data center. Two more chapters at the end look across all the stages, at what a chip costs and who controls the chain.</p>
+        <p class="howto-lede">This page covers each of the fifteen stages of making an AI chip in detail, one chapter per stage, in the order a chip is made, from design software to the data center. Two more chapters at the end look across all the stages, at what a chip costs and who controls the chain. To help readers learn, each chapter has a 3D model, most have an animation, and every one ends with flashcards.</p>
         <h3 class="howto-k">How to read a chapter</h3>
         <p>Each stage chapter opens with a chokepoint card. It rates the stage on two scales, gives a price or market size, and says where China and the United States stand.</p>
         <ul>

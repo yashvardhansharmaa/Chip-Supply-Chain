@@ -7,22 +7,22 @@
   {
    "k": "Specks land",
    "t0": 0.5,
-   "cap": "Specks of dust and tiny flaws land at random on every wafer."
+   "cap": "Specks of dust and tiny flaws land at random on every wafer. A textbook example assumes 0.8 per square centimeter."
   },
   {
    "k": "Small chips",
    "t0": 3.2,
-   "cap": "Cut into small chips, almost every chip misses every speck."
+   "cap": "Of chips 1 centimeter on a side, 49.2 percent miss every speck and come out flawless."
   },
   {
-   "k": "AI-size chips",
+   "k": "Big chips",
    "t0": 7.2,
-   "cap": "An AI chip covers eight times the area, so about half of them catch a speck and fail."
+   "cap": "Chips 2 centimeters on a side are bigger targets for the same specks. Only 11.3 percent come out flawless."
   },
   {
-   "k": "Half the specks",
+   "k": "The cost",
    "t0": 11.2,
-   "cap": "Halve the specks and about seven in ten AI chips work. Finding defects pays most on the biggest chips."
+   "cap": "The big chip yields less and fits fewer times on a wafer, so it costs 20.1 times as much as the small one."
   }
  ]
 }

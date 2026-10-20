@@ -11,3 +11,10 @@ qa/brand-redesign/tint/site/
 
 # shareable GIF and MP4 copies of the explainer animations (local only; the site uses media/)
 qa/explainer-gifs/
+
+# round two working files (downloads, screenshots, the generated review page)
+build/__pycache__/
+qa/round2/scratch/
+qa/round2/shots/
+qa/round2/review.html
+qa/round2/links-progress.txt

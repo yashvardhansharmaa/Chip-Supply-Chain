@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>How a Fab Builds a Chip</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Instrument+Sans:wght@400;500;600&display=swap">
+</head><body>
+<script src="lib.js"></script>
+<script>
+const { PAL, clamp, ease, easeOut, mix, rng, text } = A, dark = A.theme === 'dark';
+// Facts, from chapter 9's How it works: a chip is built up in layers, and the same loop of steps repeats for each one;
+// wafers travel in a sealed pod that only a machine opens, and an overhead track carries the pod from tool to tool; at
+// each tool a robot lifts a wafer out and the tool does its one job (depositing a film, printing a pattern, etching it,
+// cleaning it or measuring it); when a layer is finished the loop starts again with the next one; the foundry runs
+// every design through the same tools. From chapter 8: the transistors are built first and the wiring above them after.
+// From chapter 5: lithography prints from a photomask, at least one for each layer of a chip, so every layer needs a print.
+// The one number, 1,000 to 1,500 steps to make one chip, is the Semiconductor Industry Association's 2025 estimate, cited in
+// chapters 6 and 13. The layer counter counts only the laps drawn and claims no real total.
+// Simplified: one tool of each kind, side by side; a real fab has many, spread across the building. Seven layers stand
+// for many more. Not to scale.
+const STEPS = [
+  { k: 'The fab', t0: 0.4, cap: 'Sealed pods carry wafers from tool to tool on a track near the ceiling.' },
+  { k: 'Deposit', t0: 2.8, cap: 'The first tool lays a thin film on the wafer.' },
+  { k: 'Print', t0: 4.6, cap: 'The next prints a pattern on it with light.' },
+  { k: 'Etch', t0: 6.4, cap: 'An etch tool cuts the pattern into the film.' },
+  { k: 'Clean, measure', t0: 8.2, cap: 'The wafer is cleaned, then measured to check the layer came out right.' },
+  { k: 'Next layer', t0: 10.9, cap: 'Then the loop starts again for the next layer. The transistors come first, then the wiring above them.' },
+  { k: 'Finished', t0: 15.3, cap: 'Making one chip takes 1,000 to 1,500 steps, the Semiconductor Industry Association estimated in 2025.' },
+];
+const DURATION = 19.6, W = 760, H = 420;
+const ss = (u) => (u = clamp(u), u * u * (3 - 2 * u));
+const C = {
+  face: dark ? '#232930' : '#ffffff', efem: dark ? '#2a3038' : '#eeece6', edge: dark ? 'rgba(236,233,226,0.34)' : 'rgba(20,24,31,0.4)',
+  detail: dark ? '#3a414b' : '#d3d7dc', head: dark ? '#7b838d' : '#8a929c', chamber: dark ? '#12161a' : '#eef0f2',
+  rail: dark ? '#8a929c' : '#5c636d', railFade: dark ? 'rgba(138,146,156,0)' : 'rgba(92,99,109,0)', railBack: dark ? '#3c424a' : '#cdc9c1',
+  shell: dark ? 'rgba(236,233,226,0.12)' : 'rgba(255,255,255,0.92)', waferLine: dark ? '#8d959f' : '#9aa3ad',
+  qVeh: dark ? '#4c535d' : '#c4c8ce', qEdge: dark ? '#656d77' : '#a9aeb5', qLine: dark ? '#4f5660' : '#ced2d7',
+  si: dark ? '#343b45' : '#2c323b', siDot: dark ? '#414955' : '#3a414b', siEdge: dark ? '#4a525d' : null,
+  waferEdge: dark ? '#8d959f' : '#2c323b', film: '#b7c4cf', cu: '#b8743d', diel: dark ? '#9aa6b0' : '#d3d9de', gate: dark ? '#a3abb5' : '#626b76',
+  ox: dark ? '#c7b27f' : '#e6d4a2', plug: dark ? '#d5dae0' : '#8a929c', dust: dark ? '#9fb2c3' : '#7f93a5', cuInk: dark ? '#d59a66' : '#8a531f',
+  lens: dark ? ['rgba(160,190,220,0.35)', 'rgba(200,220,240,0.55)'] : ['rgba(150,180,210,0.35)', 'rgba(200,220,240,0.75)'], lensEdge: dark ? '#8fa6bd' : '#7d93aa',
+};
+const V = (a) => `rgba(${PAL.violet},${a})`;
+// on a phone the frame shows at about half size, so labels are set at 13.5 px (lib.js uses 10.5) and names at 18 to 20 px
+const LAB = '600 13.5px "Instrument Sans"', NAME = '500 20px Fraunces', NOTE = '500 19px Fraunces';
+const lab = (s, x, y, color, o = {}) => text(s.toUpperCase(), x, y, LAB, color, Object.assign({ ls: '1.3px' }, o));
+
+// ---- the track: a loop near the ceiling, seen from the side. The front rail runs over the tools; the return, behind
+// it, brings pods round again. Pods come in at the left; a finished pod leaves to the right.
+const TL = 24, TR = 462, YB = 76, YF = 100, YM = (YB + YF) / 2, RX = 14, RY = (YF - YB) / 2;
+const FRONT = TR - TL, CURVE = Math.PI * Math.sqrt((RX * RX + RY * RY) / 2), LT = 2 * FRONT + 2 * CURVE;
+function loopPos(s) {
+  s = ((s % LT) + LT) % LT;
+  if (s < FRONT) return { x: TL + s, y: YF, d: 0 };
+  if (s < FRONT + CURVE) { const u = (s - FRONT) / CURVE; return { x: TR + RX * Math.sin(Math.PI * u), y: YM + RY * Math.cos(Math.PI * u), d: u }; }
+  if (s < 2 * FRONT + CURVE) return { x: TR - (s - FRONT - CURVE), y: YB, d: 1 };
+  const u = (s - 2 * FRONT - CURVE) / CURVE; return { x: TL - RX * Math.sin(Math.PI * u), y: YM - RY * Math.cos(Math.PI * u), d: 1 - u };
+}
+
+// ---- the tools, standing on the floor; each takes the pod on a load port at its left and works on the wafer in a
+// chamber, drawn cut open, where the sign of its job always shows
+const FLOOR = 336, SHELF = 268, PW = 28, PH = 22, POD_UP = YF + 9, DROP = SHELF - PH - POD_UP, NAME_Y = 364, TW = 84, EF = 30;
+const TOOLS = ['Deposit', 'Print', 'Etch', 'Clean', 'Measure'].map((name, i) => ({ name, x: 24 + 92 * i, w: TW, top: [178, 166, 182, 188, 178][i] }));
+TOOLS.forEach((T) => { T.stop = T.x + EF / 2; T.win = [T.x + EF + 6, 196, TW - EF - 12, 70]; });
+const SLOT_S = TOOLS.map((T) => T.stop - TL);
+
+// ---- the clock. It counts stages: a tool visit is 1, a move to the next tool 0.3, the trip round the loop 1.6, so one
+// lap is 7.8. One pod goes slowly round its first lap; then the fab's other pods appear and the laps speed up; the
+// finished pod leaves slowly while the others work on.
+const LAPU = 7.8, STAGES = [[0, 1, 0], [1, 1.3, 0, 1], [1.3, 2.3, 1], [2.3, 2.6, 1, 2], [2.6, 3.6, 2], [3.6, 3.9, 2, 3], [3.9, 4.9, 3], [4.9, 5.2, 3, 4], [5.2, 6.2, 4], [6.2, 7.8, 4, 0]];
+const VISIT0 = [0, 1.3, 2.6, 3.9, 5.2];   // where each tool's visit starts within a lap
+const KEYS = [[0.5, -1.6], [2.8, 0], [4.25, 1.0], [4.6, 1.3], [6.05, 2.3], [6.4, 2.6], [7.85, 3.6], [8.2, 3.9], [9.3, 4.9], [9.6, 5.2],
+  [10.9, 6.2], [11.65, 7.8], [12.7, 15.6], [13.35, 23.4], [13.87, 31.2], [14.34, 39.0], [14.79, 46.8], [15.3, 53.0], [16.6, 53.8], [19.6, 54.7]];
+function pchip(X, Y) {
+  const n = X.length, h = [], d = [], m = [];
+  for (let k = 0; k < n - 1; k++) { h[k] = X[k + 1] - X[k]; d[k] = (Y[k + 1] - Y[k]) / h[k]; }
+  m[0] = 0; m[n - 1] = d[n - 2];
+  for (let k = 1; k < n - 1; k++) { const w1 = 2 * h[k] + h[k - 1], w2 = h[k] + 2 * h[k - 1]; m[k] = (w1 + w2) / (w1 / d[k - 1] + w2 / d[k]); }
+  return (x) => {
+    if (x <= X[0]) return Y[0];
+    if (x >= X[n - 1]) return Y[n - 1] + d[n - 2] * (x - X[n - 1]);
+    let k = 0; while (x > X[k + 1]) k++;
+    const s = (x - X[k]) / h[k], s2 = s * s, s3 = s2 * s;
+    return (2 * s3 - 3 * s2 + 1) * Y[k] + (s3 - 2 * s2 + s) * h[k] * m[k] + (-2 * s3 + 3 * s2) * Y[k + 1] + (s3 - s2) * h[k] * m[k + 1];
+  };
+}
+const tau = pchip(KEYS.map((k) => k[0]), KEYS.map((k) => k[1]));
+const rate = (t) => (tau(t + 0.01) - tau(t - 0.01)) / 0.02;
+const OUR_EXIT = 53.0, GREY_IN = 6.2;
+
+// where a pod is, given its progress L (in stages)
+function freeState(L, who) {
+  if (L < 0) return { path: 'in', x: mix(-40, TOOLS[0].stop, ss((L + 1.6) / 1.6)), y: YF, d: 0, visit: -1 };
+  if (who === 'first' && L >= OUR_EXIT) return { path: 'out', x: mix(TOOLS[4].stop, 530, ss((L - OUR_EXIT) / 1.6)), y: YF, d: 0, visit: -1 };
+  const n = Math.floor(L / LAPU), l = L - n * LAPU;
+  for (const st of STAGES) if (l < st[1]) {
+    const u = (l - st[0]) / (st[1] - st[0]);
+    let s, visit = -1;
+    if (st.length === 3) { s = SLOT_S[st[2]]; visit = st[2]; }
+    else if (st[3] === 0) s = mix(SLOT_S[4], SLOT_S[0] + LT, ss(u));
+    else s = mix(SLOT_S[st[2]], SLOT_S[st[3]], ease(u));
+    return Object.assign({ path: 'loop', s, visit, u, lap: n }, loopPos(s));
+  }
+}
+// the garnet pod, and the fab's other pods, one tool apart
+const PODS = [{ off: 0, who: 'first' }].concat([1, 2, 3, 4].map((j) => ({ off: 1.3 * j, who: 'other' })));
+
+function podStates(t) {
+  const T = tau(t), sp = 1 / Math.max(rate(t), 0.01);
+  const amp = clamp((sp - 0.05) / 0.3), slow = clamp((sp - 0.6) / 0.6);
+  return PODS.map((p) => {
+    const L = T + p.off;
+    const st = freeState(L, p.who);
+    const alpha = p.who === 'first' ? (st.path === 'out' ? 1 - clamp((st.x - 428) / 32) : 1) : ease((T - GREY_IN) / 1.2);
+    // lowering onto the tool, the wafer's trip into it, and the job itself, all within one visit
+    let drop = 0, proc = 0, inTool = 0;
+    if (st.visit >= 0) {
+      const u = st.u;
+      drop = amp * alpha * (u < 0.2 ? ease(u / 0.2) : u > 0.86 ? ease((1 - u) / 0.14) : 1);   // a pod fading in appears on the rail
+      proc = clamp((u - 0.3) / 0.48);
+      inTool = slow * (u < 0.2 ? 0 : u < 0.3 ? ease((u - 0.2) / 0.1) : u < 0.78 ? 1 : u < 0.86 ? 1 - ease((u - 0.78) / 0.08) : 0);
+    }
+    return Object.assign({}, st, { who: p.who, ours: p.who !== 'other', alpha, drop, proc, inTool, L });
+  });
+}
+
+// ---- drawing: the floor, the track
+function floorLine(ctx, a) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = PAL.line; ctx.fillRect(12, FLOOR, 476, 2); ctx.restore();
+}
+function track(ctx, a, front) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha = a; ctx.lineCap = 'round';
+  if (!front) {   // the return, behind the tools' rail: a hairline
+    ctx.strokeStyle = C.railBack; ctx.lineWidth = 1.4; ctx.beginPath();
+    for (let s = FRONT; s <= LT + 0.1; s += 3) { const p = loopPos(Math.min(s, LT - 0.01)); s === FRONT ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y); }
+    ctx.stroke();
+  } else {        // the rail over the tools, from the way in at the left edge to the way out at the right
+    ctx.strokeStyle = C.rail; ctx.lineWidth = 2.6; ctx.beginPath(); ctx.moveTo(0, YF); ctx.lineTo(TR, YF); ctx.stroke();
+    const g = ctx.createLinearGradient(TR, 0, 498, 0); g.addColorStop(0, C.rail); g.addColorStop(1, C.railFade);
+    ctx.strokeStyle = g; ctx.beginPath(); ctx.moveTo(TR, YF); ctx.lineTo(498, YF); ctx.stroke();
+  }
+  ctx.restore();
+}
+function tool(ctx, i, a, hi) {
+  const T = TOOLS[i], { x, w, top } = T, m = x + EF + (w - EF) / 2;
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha = a;
+  const body = () => { ctx.beginPath(); ctx.rect(x + 0.5, top + 0.5, w - 1, FLOOR - top - 0.5); };
+  ctx.fillStyle = C.face; body(); ctx.fill();
+  ctx.fillStyle = C.efem; ctx.fillRect(x + 0.5, top + 0.5, EF, FLOOR - top - 0.5);
+  ctx.strokeStyle = C.edge; ctx.lineWidth = 1; body(); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x + EF + 0.5, top); ctx.lineTo(x + EF + 0.5, FLOOR); ctx.stroke();
+  ctx.fillStyle = C.detail; ctx.fillRect(x + 2, SHELF, EF - 4, 4); ctx.strokeRect(x + 2.5, SHELF + 0.5, EF - 5, 3);   // the load port
+  const [wx, wy, ww, wh] = T.win;
+  ctx.fillStyle = C.chamber; ctx.beginPath(); ctx.roundRect(wx, wy, ww, wh, 4); ctx.fill(); ctx.stroke();
+  // each kind of tool has its own shape on top
+  ctx.fillStyle = C.detail; ctx.strokeStyle = C.edge;
+  if (i === 0) for (const cx of [m - 9, m + 9]) { ctx.beginPath(); ctx.arc(cx, top, 8, Math.PI, 2 * Math.PI); ctx.closePath(); ctx.fill(); ctx.stroke(); }
+  if (i === 1) { ctx.fillRect(m - 18, top - 20, 36, 20); ctx.strokeRect(m - 17.5, top - 19.5, 35, 19.5); }
+  if (i === 2) for (const cx of [m - 15, m + 2]) { ctx.fillRect(cx, top - 11, 13, 11); ctx.strokeRect(cx + 0.5, top - 10.5, 12, 10.5); ctx.beginPath(); ctx.moveTo(cx + 1.5, top - 14); ctx.lineTo(cx + 4.5, top - 17); ctx.lineTo(cx + 7.5, top - 14); ctx.lineTo(cx + 10.5, top - 17); ctx.stroke(); }
+  if (i === 3) { ctx.fillRect(m - 5, top - 16, 10, 16); ctx.strokeRect(m - 4.5, top - 15.5, 9, 15.5); ctx.fillRect(m - 15, top - 22, 22, 6); ctx.strokeRect(m - 14.5, top - 21.5, 21, 5); }
+  if (i === 4) { ctx.beginPath(); ctx.moveTo(m - 10, top); ctx.lineTo(m + 10, top); ctx.lineTo(m + 4, top - 24); ctx.lineTo(m - 4, top - 24); ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.fillRect(m - 6, top - 28, 12, 4); ctx.strokeRect(m - 5.5, top - 27.5, 11, 3.5); }
+  if (hi > 0) { ctx.globalAlpha = a * hi; ctx.strokeStyle = PAL.garnet; ctx.lineWidth = 2; body(); ctx.stroke(); }
+  ctx.restore();
+}
+// the job, inside the chamber. Its sign shows at rest, faint and still, and brightens and moves while a wafer is in.
+const R1 = rng(3), DOTS = Array.from({ length: 22 }, () => [R1(), R1(), 0.7 + R1() * 0.6]);
+function job(ctx, i, p, k, t, wafer, a) {
+  if (a <= 0) return;
+  const [wx, wy, ww, wh] = TOOLS[i].win, cx = wx + ww / 2, wyB = wy + wh - 13, live = k > 0.02, on = Math.max(0.3, k);
+  ctx.save(); ctx.beginPath(); ctx.roundRect(wx, wy, ww, wh, 4); ctx.clip(); ctx.globalAlpha = a;
+  ctx.fillStyle = C.detail; ctx.fillRect(cx - 7, wyB + 3, 14, wh);   // the stand
+  if (wafer > 0) { ctx.globalAlpha = a * wafer; ctx.fillStyle = C.waferEdge; ctx.fillRect(wx + 4, wyB, ww - 8, 3); ctx.globalAlpha = a; }
+  if (i === 0) {          // deposit: a shower head lets material settle out of a gas and build a film
+    ctx.fillStyle = C.head; ctx.fillRect(wx + 4, wy + 5, ww - 8, 4);
+    ctx.fillStyle = C.dust; ctx.globalAlpha = a * on;
+    for (const [u, ph, v] of DOTS) { const f = live ? (t * 1.2 * v + ph) % 1 : ph; ctx.beginPath(); ctx.arc(wx + 6 + u * (ww - 12), mix(wy + 14, wyB - 3, f), 1.7, 0, 7); ctx.fill(); }
+    if (wafer > 0 && p > 0) { ctx.globalAlpha = a * wafer; ctx.fillStyle = C.film; const fh = 4 * ease(p); ctx.fillRect(wx + 4, wyB - fh, ww - 8, fh); }
+  } else if (i === 1) {   // print: light through a lens, one patch at a time across the wafer
+    const n = 4, j = Math.min(n - 1, Math.floor(p * n)), f = p * n - j, px = live ? wx + 7 + (j + 0.5) * (ww - 14) / n : cx, b = live ? Math.sin(Math.PI * f) : 1;
+    ctx.fillStyle = V(0.2 + 0.6 * k * b); ctx.beginPath(); ctx.moveTo(cx - 11, wy + 16); ctx.lineTo(cx + 11, wy + 16); ctx.lineTo(px + 4, wyB); ctx.lineTo(px - 4, wyB); ctx.closePath(); ctx.fill();
+    const g = ctx.createLinearGradient(0, wy + 9, 0, wy + 17); g.addColorStop(0, C.lens[0]); g.addColorStop(0.5, C.lens[1]); g.addColorStop(1, C.lens[0]);
+    ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(cx, wy + 13, ww / 2 - 4, 4.5, 0, 0, 7); ctx.fill(); ctx.strokeStyle = C.lensEdge; ctx.lineWidth = 1; ctx.stroke();
+    if (live && wafer > 0) { ctx.fillStyle = V(0.95); for (let q = 0; q <= j; q++) { const qx = wx + 7 + (q + 0.5) * (ww - 14) / n; if (q < j || f > 0.5) ctx.fillRect(qx - 3.5, wyB - 2, 7, 2); } }
+  } else if (i === 2) {   // etch: a plasma glows over the wafer and drives its ions straight down
+    ctx.fillStyle = C.head; ctx.fillRect(wx + 4, wy + 5, ww - 8, 3);
+    const pulse = live ? 0.85 + 0.15 * Math.sin(t * 9) : 1, g = ctx.createLinearGradient(0, wy + 8, 0, wyB);
+    g.addColorStop(0, V(0.04)); g.addColorStop(1, V((0.22 + 0.4 * k) * pulse)); ctx.fillStyle = g; ctx.fillRect(wx, wy + 8, ww, wyB - wy - 8);
+    ctx.strokeStyle = V(0.45 + 0.5 * k); ctx.lineWidth = 1.2;
+    const span = wyB - wy - 20;
+    for (let q = 0; q < 6; q++) { const x = wx + 6 + q * (ww - 12) / 5, y = wy + 12 + (live ? (t * 60 + q * 11) % span : (q * 17) % span); ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y + 6); ctx.stroke(); }
+  } else if (i === 3) {   // clean: a spray washes the wafer as it spins
+    ctx.fillStyle = C.head; ctx.fillRect(cx - 4, wy, 8, 8);
+    ctx.strokeStyle = C.dust; ctx.fillStyle = C.dust; ctx.lineWidth = 1.2;
+    for (let q = -3; q <= 3; q++) {
+      const x0 = cx + q * 0.9, x1 = cx + q * 5.6, y0 = wy + 8, y1 = wyB - 1;
+      ctx.globalAlpha = a * (0.36 + 0.3 * k); ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+      if (live) for (let r = 0; r < 2; r++) { const f = (t * 2.6 + q * 0.37 + r * 0.5 + 5) % 1; ctx.globalAlpha = a * k * (1 - f * 0.6); ctx.beginPath(); ctx.arc(mix(x0, x1, f), mix(y0, y1, f), 1.5, 0, 7); ctx.fill(); }
+    }
+  } else {                // measure: a fine beam checks the new layer
+    ctx.fillStyle = C.head; ctx.beginPath(); ctx.moveTo(cx - 7, wy); ctx.lineTo(cx + 7, wy); ctx.lineTo(cx + 3, wy + 10); ctx.lineTo(cx - 3, wy + 10); ctx.closePath(); ctx.fill();
+    const sx = live ? mix(wx + 7, wx + ww - 7, 0.5 - 0.5 * Math.cos(Math.PI * 2 * p)) : cx;
+    ctx.strokeStyle = V(0.4 + 0.5 * k); ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(cx, wy + 10); ctx.lineTo(sx, wyB); ctx.stroke();
+    const g = ctx.createRadialGradient(sx, wyB, 0, sx, wyB, 7); g.addColorStop(0, V(0.5 + 0.5 * k)); g.addColorStop(1, V(0)); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(sx, wyB, 7, 0, 7); ctx.fill();
+  }
+  ctx.restore();
+}
+// a pod on the track: the vehicle rides the rail and lowers the pod on its cables. The followed pod is garnet.
+function pod(ctx, st) {
+  if (st.alpha <= 0.01) return;
+  const s = 1 - 0.2 * st.d, x = st.x, y = st.y, dy = st.drop * DROP * s, w = PW * s, h = PH * s, g = st.ours;
+  ctx.save(); ctx.globalAlpha = st.alpha * (1 - 0.4 * st.d);
+  ctx.fillStyle = g ? PAL.garnet : C.qVeh; ctx.beginPath(); ctx.roundRect(x - 15 * s, y - 5 * s, 30 * s, 11 * s, 2); ctx.fill();
+  const top = y + 9 * s + dy;
+  if (dy > 0.5) { ctx.strokeStyle = g ? PAL.garnet : C.qEdge; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x - 5 * s, y + 6 * s); ctx.lineTo(x - 5 * s, top); ctx.moveTo(x + 5 * s, y + 6 * s); ctx.lineTo(x + 5 * s, top); ctx.stroke(); }
+  ctx.fillStyle = g ? PAL.garnet : C.qEdge; ctx.fillRect(x - 7 * s, top - 2 * s, 14 * s, 2.5 * s);   // the flange the hoist grips
+  ctx.fillStyle = C.shell; ctx.beginPath(); ctx.roundRect(x - w / 2, top, w, h, 3); ctx.fill();
+  ctx.strokeStyle = g ? C.waferLine : C.qLine; ctx.lineWidth = 1;
+  for (let k = 0; k < 5; k++) { const wy = top + (4.5 + k * 3.3) * s; if (g && k === 2 && st.inTool > 0) continue; ctx.beginPath(); ctx.moveTo(x - 10 * s, wy); ctx.lineTo(x + 10 * s, wy); ctx.stroke(); }
+  ctx.strokeStyle = g ? PAL.garnet : C.qEdge; ctx.lineWidth = g ? 2 : 1; ctx.beginPath(); ctx.roundRect(x - w / 2, top, w, h, 3); ctx.stroke();
+  ctx.restore();
+}
+// the wafer on its way from the pod into the chamber and back (a robot does this)
+function transfer(ctx, st) {
+  if (!st.ours || st.visit < 0 || st.inTool <= 0 || st.inTool >= 1) return;
+  const T = TOOLS[st.visit], [wx, wy, ww, wh] = T.win, f = st.inTool;
+  const x = mix(st.x - 10, wx + 4, f), y = mix(POD_UP + DROP + 11, wy + wh - 13, f), len = mix(20, ww - 8, f);
+  ctx.save(); ctx.globalAlpha = st.alpha; ctx.fillStyle = C.waferEdge; ctx.fillRect(x, y, len, 3); ctx.restore();
+}
+
+// ---- one wafer cut through: one new layer per lap, transistors first, then wiring
+const SX0 = 512, SX1 = 640, SWID = SX1 - SX0, SI_TOP = 296;
+const LAYERS = [
+  { kind: 'fin', h: 22 }, { kind: 'gate', h: 20 }, { kind: 'contact', h: 16 },
+  { kind: 'wire', h: 20, pitch: 16, w: 8 }, { kind: 'wire', h: 24, pitch: 24, w: 12 }, { kind: 'wire', h: 28, pitch: 32, w: 16 }, { kind: 'wire', h: 34, pitch: 44, w: 24 },
+];
+let y0 = SI_TOP; LAYERS.forEach((ly) => { ly.y1 = y0; ly.y0 = y0 - ly.h; y0 = ly.y0; });
+const feats = (pitch, w, off = 0) => { const out = []; for (let x = SX0 + off; x + 1 < SX1; x += pitch) out.push([x, Math.min(w, SX1 - x)]); return out; };
+LAYERS.forEach((ly, k) => {
+  if (ly.kind === 'fin') ly.f = feats(16, 7, 5);
+  if (ly.kind === 'gate') ly.f = feats(16, 12, 2.5);
+  if (ly.kind === 'contact') ly.f = feats(32, 5, 6);
+  if (ly.kind === 'wire') ly.f = feats(ly.pitch, ly.w, 3 + k * 2);
+});
+function layerFinal(ctx, ly) {
+  ctx.fillStyle = C.diel; ctx.fillRect(SX0, ly.y0, SWID, ly.h);
+  if (ly.kind === 'fin') { ctx.fillStyle = C.si; for (const [x, w] of ly.f) ctx.fillRect(x, ly.y0 + 1, w, ly.h - 1); }
+  if (ly.kind === 'gate') for (const [x, w] of ly.f) { ctx.fillStyle = C.ox; ctx.fillRect(x, ly.y1 - 2, w, 2); ctx.fillStyle = C.gate; ctx.fillRect(x, ly.y0 + 3, w, ly.h - 5); }
+  if (ly.kind === 'contact') { ctx.fillStyle = C.plug; for (const [x, w] of ly.f) ctx.fillRect(x, ly.y0, w, ly.h); }
+  if (ly.kind === 'wire') {
+    ctx.fillStyle = C.cu;
+    for (const [x, w] of ly.f) ctx.fillRect(x, ly.y0 + 3, w, ly.h - 8);
+    ly.f.forEach(([x, w], n) => { if (n % 2 === 0) ctx.fillRect(x + w / 2 - 2.5, ly.y1 - 5, 5, 5); });   // vias down to the layer below
+  }
+  ctx.fillStyle = 'rgba(255,255,255,0.4)'; ctx.fillRect(SX0, ly.y0, SWID, 1);
+}
+// z magnifies the view about the bottom left corner of its window: the first layer is shown twice as large
+const zy = (y, z) => FLOOR - z * (FLOOR - y);
+function stack(ctx, L, a, dx, z) {
+  if (a <= 0) return;
+  const XV = SX0 + SWID / z;   // the right edge of what the window shows
+  ctx.save(); ctx.translate(dx, 0); ctx.globalAlpha = a;
+  ctx.beginPath(); ctx.rect(SX0, 100, SWID, FLOOR - 100); ctx.clip();
+  ctx.translate(SX0, FLOOR); ctx.scale(z, z); ctx.translate(-SX0, -FLOOR);
+  ctx.fillStyle = C.si; ctx.fillRect(SX0, SI_TOP, SWID, FLOOR - SI_TOP);
+  ctx.fillStyle = C.siDot; for (let y = SI_TOP + 6; y < FLOOR - 3; y += 7) for (let x = SX0 + ((y / 7) % 2 ? 4 : 7.5); x < SX1 - 2; x += 7) { ctx.beginPath(); ctx.arc(x, y, 0.9, 0, 7); ctx.fill(); }
+  if (C.siEdge) { ctx.strokeStyle = C.siEdge; ctx.lineWidth = 1 / z; ctx.strokeRect(SX0, SI_TOP, SWID, FLOOR - SI_TOP); }
+  LAYERS.forEach((ly, k) => {
+    const l = L - k * LAPU; if (l <= 0) return;
+    const pr = (i) => clamp((l - VISIT0[i] - 0.3) / 0.48), dep = pr(0), prt = pr(1), etc = pr(2), cln = pr(3), mea = pr(4);
+    ctx.globalAlpha = a;
+    if (etc < 1) {   // the new film, and the pattern printed on it
+      const hh = ly.h * easeOut(dep); ctx.fillStyle = C.film; ctx.fillRect(SX0, ly.y1 - hh, SWID, hh);
+      if (prt > 0) { ctx.fillStyle = V(0.8 * ease(prt) * (1 - etc)); for (const [x, w] of ly.f) ctx.fillRect(x, ly.y0, w, ly.h); }
+    }
+    if (etc > 0) { ctx.globalAlpha = a * ease(etc); layerFinal(ctx, ly); }
+    ctx.globalAlpha = a;
+    if (cln > 0 && cln < 1) { const sx = mix(SX0 - 18, XV + 18, cln), g = ctx.createLinearGradient(sx - 20, 0, sx + 20, 0); g.addColorStop(0, 'rgba(255,255,255,0)'); g.addColorStop(0.5, `rgba(255,255,255,${0.75 * Math.sin(Math.PI * cln)})`); g.addColorStop(1, 'rgba(255,255,255,0)'); ctx.save(); ctx.beginPath(); ctx.rect(SX0, ly.y0, SWID, ly.h); ctx.clip(); ctx.fillStyle = g; ctx.fillRect(sx - 20, ly.y0, 40, ly.h); ctx.restore(); }
+    if (mea > 0 && mea < 1) { const sx = mix(SX0, XV, mea); ctx.strokeStyle = PAL.violetInk; ctx.globalAlpha = a * Math.sin(Math.PI * mea); ctx.lineWidth = 1.6 / z; ctx.beginPath(); ctx.moveTo(sx, ly.y0 - 5 / z); ctx.lineTo(sx, ly.y1); ctx.stroke(); }
+  });
+  ctx.restore();
+  lab('Silicon', SX0 + 10 + dx, FLOOR - 12, '#9aa3ad', { alpha: a });
+}
+// the groups of layers, named with brackets to their right
+function bracket(ctx, y0, y1, name, col, a, dx) {
+  if (a <= 0 || y1 - y0 < 1) return;
+  const bx = SX1 + 6 + dx;
+  ctx.save(); ctx.globalAlpha = a; ctx.strokeStyle = col; ctx.lineWidth = 1.2;
+  ctx.beginPath(); ctx.moveTo(bx, y0 + 0.5); ctx.lineTo(bx + 4, y0 + 0.5); ctx.lineTo(bx + 4, y1 - 0.5); ctx.lineTo(bx, y1 - 0.5); ctx.stroke(); ctx.restore();
+  text(name, bx + 10, (y0 + y1) / 2 + 6, '500 18px Fraunces', col, { alpha: a });
+}
+// the counter over the column: the laps drawn, then, as the finished wafer leaves, the SIA estimate, held to the end
+function readouts(ctx, t, T) {
+  const num = '300 46px Fraunces', x = SX0;
+  const k1 = ease((t - 2.1) / 0.5) * (1 - ease((t - 15.55) / 0.4));
+  const k2 = ease((t - 15.6) / 0.5);
+  if (k1 > 0) {
+    lab('Layer', x, 38, PAL.muted, { alpha: k1 });
+    text(String(clamp(Math.floor(Math.max(T, 0) / LAPU) + 1, 1, LAYERS.length)), x - 2, 88, num, PAL.ink2, { alpha: k1 });
+  }
+  if (k2 > 0) {
+    ctx.save(); ctx.globalAlpha = k2; ctx.fillStyle = PAL.garnet; ctx.fillRect(x - 14, 24, 2, 88); ctx.restore();
+    lab('Steps to make one chip', x, 38, PAL.garnet, { alpha: k2 });
+    let px = x - 2; const f = '300 42px Fraunces', u = '500 14px "Instrument Sans"';
+    const put = (s, font) => { text(s, px, 86, font, PAL.garnet, { alpha: k2 }); ctx.font = font; px += ctx.measureText(s).width + 7; };
+    put('1,000', f); put('to', u); put('1,500', f);
+    lab('SIA estimate, 2025', x, 108, PAL.muted, { alpha: k2 });
+  }
+}
+
+function render(ctx, t) {
+  ctx.fillStyle = PAL.bg; ctx.fillRect(0, 0, W, H);
+  const T = tau(t), fast = clamp((rate(t) - 2.5) / 5);
+  floorLine(ctx, ease((t - 0.3) / 0.8));
+  const pods = podStates(t), us = pods[0];
+  // every tool shows its job while a pod is in it; at full speed every tool is busy all the time
+  const busy = TOOLS.map(() => ({ k: 0, p: 0 }));
+  pods.forEach((st) => { if (st.visit >= 0 && st.alpha > 0 && st.proc > 0 && st.proc < 1) { const k = st.alpha * ease(Math.min(st.proc, 1 - st.proc) / 0.12); if (k > busy[st.visit].k) busy[st.visit] = { k, p: st.proc }; } });
+  const steady = fast * 0.75 * ease((T - GREY_IN) / 1.2);
+  TOOLS.forEach((T_, i) => {
+    const a = ease((t - 0.35 - i * 0.1) / 0.5);
+    const hi = us.visit === i && us.alpha > 0 ? (1 - fast) * clamp(Math.min(us.u / 0.1, (1 - us.u) / 0.1)) : 0;
+    tool(ctx, i, a, hi);
+    // the wafer in the chamber: the garnet pod's, while it is in there, or any wafer when the fab runs fast
+    const wIn = us.visit === i ? us.inTool : 0, b = busy[i];
+    job(ctx, i, b.p, Math.max(b.k, steady), t, Math.max(wIn, b.k > 0.01 ? 1 : 0, steady > 0.05 ? 1 : 0), a);
+    text(T_.name, T_.x + T_.w / 2, NAME_Y, NAME, hi > 0.5 ? PAL.garnet : PAL.ink, { align: 'center', alpha: ease((t - 0.5 - i * 0.1) / 0.5) });
+  });
+  // the track and the pods on it: pods on the return are farther away, so they are drawn first, smaller and paler
+  const trA = ease((t - 0.5) / 0.6);
+  track(ctx, trA, false);
+  pods.filter((s) => s.d > 0.5).forEach((s) => pod(ctx, s));
+  track(ctx, trA, true);
+  // the garnet pod's path, drawn as a streak while the laps run fast
+  if (fast > 0 && T < OUR_EXIT) {
+    ctx.save(); ctx.strokeStyle = PAL.garnet; ctx.lineCap = 'round'; ctx.lineWidth = 2.4;
+    let prev = null;
+    for (let k = 0; k <= 12; k++) {
+      const p = freeState(tau(t - k * 0.01), 'first'), dd = prev ? Math.hypot(p.x - prev.x, p.y - prev.y) : 0;
+      if (prev && dd > 1.5 && dd < 140) { ctx.globalAlpha = fast * 0.38 * (1 - k / 13); ctx.beginPath(); ctx.moveTo(prev.x, prev.y); ctx.lineTo(p.x, p.y); ctx.stroke(); }
+      prev = p;
+    }
+    ctx.restore();
+  }
+  pods.filter((s) => s.d <= 0.5).forEach((s) => { pod(ctx, s); transfer(ctx, s); });
+  text('Other wafers, same tools', 243, 54, NOTE, PAL.ink2, { align: 'center', alpha: ease((t - 11.2) / 0.4) * (1 - ease((t - 13.8) / 0.4)) });
+  text('Out, to be tested', 404, 54, NOTE, PAL.ink2, { align: 'center', alpha: ease((t - 15.5) / 0.4) });
+  // one wafer, cut through; it stays, finished, as the pod leaves
+  const stA = ease((t - 1.3) / 0.6), L1 = Math.min(T, LAPU * LAYERS.length);
+  const z = mix(2, 1, ease((T - 6.2) / 1.6));   // the first layer is shown magnified; the view pulls back as the pod goes round again
+  stack(ctx, L1, stA, 0, z);
+  // each bracket reaches the top of the newest layer in its group
+  const reach = (from, to) => LAYERS.slice(from, to).reduce((y, ly, k) => (L1 - (from + k) * LAPU > 0.5 ? ly.y0 : y), LAYERS[from].y1);
+  bracket(ctx, zy(reach(0, 3), z), zy(LAYERS[0].y1, z), 'Transistors', PAL.ink2, ease((L1 - 5.4) / 0.8), 0);
+  bracket(ctx, reach(3, 7), LAYERS[3].y1, 'Wiring', C.cuInk, ease((L1 - 3 * LAPU - 0.5) / 0.8), 0);
+  lab('One wafer, cut through', SX0 + 22, NAME_Y, PAL.garnet, { alpha: stA });
+  if (stA > 0) {   // a small garnet pod says which wafer this is
+    ctx.save(); ctx.globalAlpha = stA; const px = SX0, py = NAME_Y - 11;
+    ctx.fillStyle = C.shell; ctx.strokeStyle = PAL.garnet; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.roundRect(px, py, 15, 12, 2); ctx.fill(); ctx.stroke();
+    ctx.strokeStyle = C.waferLine; ctx.lineWidth = 0.9; for (let k = 0; k < 3; k++) { ctx.beginPath(); ctx.moveTo(px + 3, py + 3.5 + k * 2.6); ctx.lineTo(px + 12, py + 3.5 + k * 2.6); ctx.stroke(); }
+    ctx.restore();
+  }
+  readouts(ctx, t, T);
+}
+A.start({ W, H, duration: DURATION, fade: 0.8, steps: STEPS, render, fonts: ['600 13.5px "Instrument Sans"', '500 19px Fraunces', '500 18px Fraunces', '300 46px Fraunces'] });
+window.INFO = { tau, LT };
+</script></body></html>

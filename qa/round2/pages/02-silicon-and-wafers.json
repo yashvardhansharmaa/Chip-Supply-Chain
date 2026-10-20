@@ -1,0 +1,268 @@
+[
+  {
+    "url": "https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf",
+    "sentence": "In 2025 the top five wafer makers served around 75 percent of the world market, ",
+    "page": 6,
+    "pages": 32,
+    "evidence": "Around 75% ... of the market is served by the Top 5 wafer manufacturers"
+  },
+  {
+    "url": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf",
+    "sentence": "The Center for Security and Emerging Technology (CSET) at Georgetown University ",
+    "page": 55,
+    "pages": 98,
+    "evidence": "Table 18: Fab materials market ... $10.9 billion Shin-Etsu (Japan), SUMCO (Japan), GlobalWafers (Taiwan), Siltronic (Germany), SK Siltron (South Korea)"
+  },
+  {
+    "url": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf",
+    "sentence": "They were Shin-Etsu and SUMCO of Japan, GlobalWafers of Taiwan, Siltronic of Ger",
+    "page": 55,
+    "pages": 98,
+    "evidence": "$10.9 billion Shin-Etsu (Japan), SUMCO (Japan), GlobalWafers (Taiwan), Siltronic (Germany), SK Siltron (South Korea)"
+  },
+  {
+    "url": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf",
+    "sentence": "CSET also listed nine Chinese-owned producers, among them Zhonghuan, Simgui, Zin",
+    "page": 55,
+    "pages": 98,
+    "evidence": "Okmetic (China),221 JRH (China), Zhonghuan (China), Gritek (China), MCL (China), Simgui (China), GuoSheng (China), POSHING (China), and ZingSEMI (China)"
+  },
+  {
+    "url": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf",
+    "sentence": "As of 2018, five Chinese firms were making or planning 300 mm wafers",
+    "page": 57,
+    "pages": 98,
+    "evidence": "Of these, as of 2018, JRH, Zhonghuan, Gritek, Simgui, and ZingSEMI were producing or had plans to produce 300 mm wafers."
+  },
+  {
+    "url": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2025-10-22/688783_20251022_UYMD.pdf",
+    "sentence": "In its October 2025 listing prospectus, Eswin, a Chinese wafer maker, counts sev",
+    "page": null,
+    "pages": null,
+    "problem": "could not download (HTTP 200, but static.sse.com.cn returned a 3.9 KB Alibaba Cloud WAF JavaScript challenge page instead of the PDF on both tries, as it did for the 2 October bib-cache fetch; not bypassed). Figures unverified. The same Eswin prospectus should also be on cninfo.com.cn"
+  },
+  {
+    "url": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2025-10-22/688783_20251022_UYMD.pdf",
+    "sentence": "Their combined capacity was 2.94 million wafers a month at the end of 2024",
+    "page": null,
+    "pages": null,
+    "problem": "could not download (HTTP 200, but static.sse.com.cn returned a 3.9 KB Alibaba Cloud WAF JavaScript challenge page instead of the PDF on both tries, as it did for the 2 October bib-cache fetch; not bypassed). Figures unverified. The same Eswin prospectus should also be on cninfo.com.cn"
+  },
+  {
+    "url": "https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf",
+    "sentence": "The chart shows shares of 2023 sales from a survey by Fuji Keizai, a Japanese re",
+    "page": 8,
+    "pages": 111,
+    "evidence": "素材市場 売上高シェア (2023) ... （出所）富士経済 「半導体材料市場の現状と将来展望」を元に経済産業省が作成"
+  },
+  {
+    "url": "https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf",
+    "sentence": "Japan's Ministry of Economy, Trade and Industry reproduced the figures in a Dece",
+    "page": 8,
+    "pages": 111,
+    "evidence": "（出所）富士経済 「半導体材料市場の現状と将来展望」を元に経済産業省が作成"
+  },
+  {
+    "url": "https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf",
+    "sentence": "The deck prints only Japan's 53 percent, so the other shares are read off its ch",
+    "page": 8,
+    "pages": 111,
+    "evidence": "素材市場 売上高シェア (2023) ... シリコンウエハ 52% 53%"
+  },
+  {
+    "url": "https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf",
+    "sentence": "The chart gives no separate share to Chinese or US companies",
+    "page": 8,
+    "pages": 111,
+    "evidence": "日本 US Europe 韓国 台湾 中国 その他 ... シリコンウエハ 52% 53%"
+  },
+  {
+    "url": "https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf",
+    "sentence": "Siltronic's April 2026 investor presentation says the top five wafer makers serv",
+    "page": 6,
+    "pages": 32,
+    "evidence": "Around 75% ... served by the Top 5 wafer manufacturers ... Source: Q1 – Q3 2025 Quarterly revenue reports"
+  },
+  {
+    "url": "https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf",
+    "sentence": "It names the five as Shin-Etsu, SUMCO, GlobalWafers, SK Siltron and Siltronic it",
+    "page": 6,
+    "pages": 32,
+    "evidence": "Global Wafers Sumco ... Top 5 Wafer manufacturers ... Shin Etsu ... SK Siltron"
+  },
+  {
+    "url": "https://www.shinetsu.co.jp/wp-content/uploads/2025/07/20260428_con_E.pdf",
+    "sentence": "Its parent's electronics materials segment sold ¥1,015.7 billion in the year to ",
+    "page": 6,
+    "pages": 28,
+    "evidence": "Electronics Materials ... Net sales 934.3 1,015.7 9%"
+  },
+  {
+    "url": "https://www.shinetsu.co.jp/wp-content/uploads/2025/07/20260428_con_E.pdf",
+    "sentence": "AI-related demand stayed strong and demand in other sectors began to rise, lifti",
+    "page": 6,
+    "pages": 28,
+    "evidence": "the demand related to AI continued to be strong, while the demands in other sectors have finally started to rise."
+  },
+  {
+    "url": "https://www.shinetsu.co.jp/wp-content/uploads/2025/07/20260428_con_E.pdf",
+    "sentence": "The segment also sells rare earth magnets and other materials, and the results r",
+    "page": 20,
+    "pages": 28,
+    "evidence": "Semiconductor silicon, Rare earth magnets, Semiconductor encapsulating materials, LED packaging materials, Photoresists, Photomask blanks, Synthetic quartz products"
+  },
+  {
+    "url": "https://www.sumcosi.com/english/pdf/ir/library/shareholders/27/pdf/nc_e_27.pdf",
+    "sentence": "Sold ¥409.7 billion and still lost ¥11.8 billion, as operating profit fell from ",
+    "page": 26,
+    "pages": 51,
+    "evidence": "Net sales ... 396,619 409,670 ... Operating profit ... 36,924 1,342 ... Profit or loss attributable to owners of parent ... (11,751)"
+  },
+  {
+    "url": "https://www.sumcosi.com/english/pdf/ir/library/shareholders/27/pdf/nc_e_27.pdf",
+    "sentence": "In the same year it added leading-edge 300 mm capacity and reorganized productio",
+    "page": 24,
+    "pages": 51,
+    "evidence": "we have been making steady progress in reorganizing the production of wafers of 200 mm and smaller, for which demand remains weak."
+  },
+  {
+    "url": "https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf",
+    "sentence": "China made 1.50 million metric tons of polysilicon, the raw material, in 2023, a",
+    "page": 7,
+    "pages": 44,
+    "evidence": "China's production of polysilicon increased by 84% to 1.50 Mt and accounted for approximately 93% of the global production in 2023."
+  },
+  {
+    "url": "https://pubs.usgs.gov/myb/vol3/2023/myb3-2023-china.pdf",
+    "sentence": "Solar-grade material was an estimated 98 percent of that output and electronic-g",
+    "page": 7,
+    "pages": 44,
+    "evidence": "Solar-grade polysilicon was estimated to account for 98% of the country's total, and electronic-grade polysilicon, 2%."
+  },
+  {
+    "url": "https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf",
+    "sentence": "Siltronic put the 2025 market for electronic-grade silicon at $1.4 billion, with",
+    "page": 5,
+    "pages": 32,
+    "evidence": "Silicon for electronic applications USD 1.4 bn ... Wacker Chemie, Hemlock, OCI, Tokuyama, Mitsubishi ... 5 major suppliers ... (figures for 2025)"
+  },
+  {
+    "url": "https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf",
+    "sentence": "Siltronic of Germany describes itself as the only Western-based maker among the ",
+    "page": 6,
+    "pages": 32,
+    "evidence": "SILTRONIC IS WELL POSITIONED AS THE ONLY WESTERN-BASED WAFER MANUFACTURER"
+  },
+  {
+    "url": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf",
+    "sentence": "As of 2019 Chinese firms held under 5 percent of the wafer market and under 1 pe",
+    "page": 55,
+    "pages": 98,
+    "evidence": "Table 18: Fab materials market ... Chinese market share ... <5% (<1% for 300 mm wafers)"
+  },
+  {
+    "url": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf",
+    "sentence": "As of 2018, Chinese producers made 12 percent of the wafers for Chinese-headquar",
+    "page": 58,
+    "pages": 98,
+    "evidence": "Chinese wafer producers respectively produce 18 percent and 12 percent of the wafers for Chinese-headquartered 100–200 mm fabs and 300 mm fabs."
+  },
+  {
+    "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225503057.PDF",
+    "sentence": "Eswin, mainland China's largest maker of 300 mm wafers, says it ranked sixth in ",
+    "page": 18,
+    "pages": 208,
+    "evidence": "报告期，公司出货量全球市占率约 7.7%，位居 12 英寸硅片领域国内第一、全球第六。"
+  },
+  {
+    "url": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2025-10-22/688783_20251022_UYMD.pdf",
+    "sentence": "Its October 2025 Shanghai listing prospectus, drawing on SEMI data, estimates th",
+    "page": null,
+    "pages": null,
+    "problem": "could not download (HTTP 200, but static.sse.com.cn returned a 3.9 KB Alibaba Cloud WAF JavaScript challenge page instead of the PDF on both tries, as it did for the 2 October bib-cache fetch; not bypassed). Figures unverified. The same Eswin prospectus should also be on cninfo.com.cn"
+  },
+  {
+    "url": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2025-10-22/688783_20251022_UYMD.pdf",
+    "sentence": "It puts Eswin at about 6 percent and all other makers at about 15 percent",
+    "page": null,
+    "pages": null,
+    "problem": "could not download (HTTP 200, but static.sse.com.cn returned a 3.9 KB Alibaba Cloud WAF JavaScript challenge page instead of the PDF on both tries, as it did for the 2 October bib-cache fetch; not bypassed). Figures unverified. The same Eswin prospectus should also be on cninfo.com.cn"
+  },
+  {
+    "url": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf",
+    "sentence": "Making the smoothest, high-purity 300 mm wafers takes considerable know-how that",
+    "page": 57,
+    "pages": 98,
+    "evidence": "Manufacturing the smoothest, high-purity 300 mm wafers—which are necessary for supporting the smallest chip features sizes—requires considerable tacit know-how."
+  },
+  {
+    "url": "https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf",
+    "sentence": "Customers have to qualify a new wafer plant before they buy from it, and Siltron",
+    "page": 12,
+    "pages": 32,
+    "evidence": "NEW 300 mm FAB IN SINGAPORE ... Key prime customer qualifications completed in July 2025"
+  },
+  {
+    "url": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf",
+    "sentence": "In SEMI figures from November 2020 cited by CSET, 99.7 percent of world fab capa",
+    "page": 57,
+    "pages": 98,
+    "evidence": "300 mm diameter wafers, which are used for 99.7 percent of the world's fab capacity capable of manufacturing chips at ≤45 nm nodes."
+  },
+  {
+    "url": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-04-21/688783_20260421_6JVC.pdf",
+    "sentence": "SEMI estimated that 300 mm wafers made up about 78.8 percent of all wafer area s",
+    "page": null,
+    "pages": null,
+    "problem": "could not download (HTTP 200, but static.sse.com.cn returned a 3.9 KB Alibaba Cloud WAF JavaScript challenge page instead of the PDF on both tries, as it did for the 2 October bib-cache fetch; not bypassed). Figure unverified. The same Eswin 2025 annual report summary should also be on cninfo.com.cn"
+  },
+  {
+    "url": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf",
+    "sentence": "The last increase in wafer size, to 300 mm, happened in 2002",
+    "page": 80,
+    "pages": 98,
+    "evidence": "The last wafer size increase to 300 mm occurred in 2002."
+  },
+  {
+    "url": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf",
+    "sentence": "Bigger discs make printing, or photolithography, a bigger share of the processin",
+    "page": 80,
+    "pages": 98,
+    "evidence": "Larger wafers increase relative photolithography costs, to the point where 50 percent of 300 mm wafer processing costs are for photolithography"
+  },
+  {
+    "url": "https://cset.georgetown.edu/wp-content/uploads/The-Semiconductor-Supply-Chain-Issue-Brief-1.pdf",
+    "sentence": "A 2013 University of Texas lecture cited by CSET put photolithography at half th",
+    "page": 80,
+    "pages": 98,
+    "evidence": "50 percent of 300 mm wafer processing costs are for photolithography compared to 25 percent for 150 mm wafers ... University of Texas, Austin, TX, 2013"
+  },
+  {
+    "url": "https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf",
+    "sentence": "Japanese companies held 53 percent of the world's silicon wafer sales in 2023, b",
+    "page": 8,
+    "pages": 111,
+    "evidence": "素材市場 売上高シェア (2023) ... シリコンウエハ 52% 53%"
+  },
+  {
+    "url": "https://www.meti.go.jp/policy/mono_info_service/joho/conference/semicon_digital/0014/handeji14-4.pdf",
+    "sentence": "Firms based in Taiwan, South Korea and Europe held most of the rest",
+    "page": 8,
+    "pages": 111,
+    "evidence": "日本 US Europe 韓国 台湾 中国 その他 ... シリコンウエハ 52% 53%"
+  },
+  {
+    "url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225503057.PDF",
+    "sentence": "China's largest maker of 300 mm wafers, Eswin, says it ranked sixth in the world",
+    "page": 18,
+    "pages": 208,
+    "evidence": "报告期，公司出货量全球市占率约 7.7%，位居 12 英寸硅片领域国内第一、全球第六。"
+  },
+  {
+    "url": "https://www.siltronic.com/fileadmin/investorrelations/2026/Q1/20260429_Siltronic_InvestorPresentation__.pdf",
+    "sentence": "Chips also need electronic-grade polysilicon, the raw material for wafers, and n",
+    "page": 5,
+    "pages": 32,
+    "evidence": "Silicon for electronic applications USD 1.4 bn ... Wacker Chemie, Hemlock, OCI, Tokuyama, Mitsubishi ... 5 major suppliers"
+  }
+]

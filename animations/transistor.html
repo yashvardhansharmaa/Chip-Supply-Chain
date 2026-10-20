@@ -10,11 +10,11 @@ const { PAL, clamp, ease, mix, rng, label, text } = A, dark = A.theme === 'dark'
 // side of the channel, a fin lets it cover three, and gate-all-around wraps all four sides of each thin sheet.
 // A Blackwell GPU is 208 billion switches (chapter 8, citing Nvidia). After an opening view of the whole chip, one view throughout: the channel seen end on, as if cut across the gate. Current is drawn as points of light.
 const STEPS = [
-  { k: 'Inside a chip', t0: 0.4, t1: 5.6, cap: 'An AI chip does all its work with transistors, tiny switches built into the silicon: 208 billion of them in one Nvidia Blackwell GPU. Making the switches is the front end of the factory; wiring them together comes after.' },
+  { k: 'Inside a chip', t0: 0.4, t1: 5.6, cap: 'An AI chip does all its work with transistors, tiny switches built into the silicon. One Nvidia Blackwell GPU holds 208 billion of them. Making the switches is the front end of the factory, and wiring them together comes after.' },
   { k: 'On', t0: 5.6, t1: 8.8, cap: 'Each one is a switch. Seen end on, current flows through a strip of silicon, the channel, and the gate sits on top.' },
   { k: 'Off, leaking', t0: 8.8, t1: 13.0, cap: 'Switching off, the gate squeezes the flow shut, but only near itself. In a tiny transistor, current still leaks through the part it cannot reach.' },
   { k: 'Fin', t0: 13.0, t1: 17.2, cap: 'Stand the channel on edge as a fin, and the gate covers three sides. Much less gets through.' },
-  { k: 'All around', t0: 17.2, t1: 22.2, cap: 'Split it into thin sheets and wrap the gate around every side, and it shuts tight. That lets the switches keep shrinking, and smaller switches, packed tighter, are what make each new chip faster.' },
+  { k: 'All around', t0: 17.2, t1: 22.2, cap: 'Split it into thin sheets and wrap the gate around every side, and it shuts far tighter. That lets the switches keep shrinking, so each new chip can pack in more of them.' },
 ];
 // one headline at a time; each fades out before the next fades in
 const HEADS = [
@@ -23,7 +23,7 @@ const HEADS = [
   { t0: 6.0, t1: 9.1, h: 'Switch on', s: 'Current flows' },
   { t0: 9.1, t1: 13.4, h: 'Switch off', s: 'Current still leaks below the gate', red: 1 },
   { t0: 13.4, t1: 17.6, h: 'Stand the channel up as a fin', s: 'Only a little leaks', red: 1 },
-  { t0: 17.6, h: 'Wrap the gate all around', s: 'Shut tight, so switches can keep shrinking', red: 1 },
+  { t0: 17.6, h: 'Wrap the gate all around', s: 'Shut far tighter, so switches can keep shrinking', red: 1 },
 ];
 function heads(ctx, t) {
   HEADS.forEach(({ t0, t1, h, s, red }) => {

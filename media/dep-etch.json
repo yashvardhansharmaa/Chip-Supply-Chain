@@ -12,7 +12,7 @@
   {
    "k": "Deposit",
    "t0": 2.8,
-   "cap": "A film a few atoms thick is laid over the whole wafer."
+   "cap": "A thin film is laid over the whole wafer."
   },
   {
    "k": "Coat",
@@ -42,7 +42,7 @@
   {
    "k": "Repeat",
    "t0": 17.7,
-   "cap": "Insulator fills the gaps and the next layer goes on. A chip takes more than a thousand of these rounds."
+   "cap": "Insulator fills the gaps and the next layer goes on. Making one chip takes 1,000 to 1,500 steps, the Semiconductor Industry Association estimated in 2025."
   }
  ]
 }

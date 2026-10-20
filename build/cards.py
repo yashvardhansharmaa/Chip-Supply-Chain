@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Render the social cards (1200 x 630 PNG, one per chapter and per view) with headless Chrome.
 
-usage: python3 build/cards.py [--only <slug>[,<slug>]] [--keep]
+usage: python3 build/cards.py [--only <slug>[,<slug>]] [--keep] [--port <devtools port, default 9334>]
 
 Run by hand, like build/pdf.py, not on every build. The list of pages (slug, eyebrow, title, line, lede, tags) is
 build/modules/social.js's manifest(), read through node so the card and the unfurl page never disagree.
@@ -13,11 +13,12 @@ vignette. At the right, large on the bare ground, the chapter's own specimen: th
 dumped from src/kit.js by build/cards-art.js and drawn here with Pillow in ink with its accent points in the
 colors the specimen declares for the light ground (qa/specimen-colors.md), at the tilt the site opens it at, over
 the centered 28 px rule and the tracked plate line ("SPECIMEN 04 · LITHOGRAPHY", Jost, the number in garnet). The
-left column is the chapter head reduced to its essentials: the eyebrow ("CHIP SUPPLY CHAIN | CHAPTER 04 · STAGE 4
-OF 15", Instrument Sans), the title in Fraunces at 116 px (opsz 144, SOFT and WONK at 0), the two ratings as
-garnet-ruled tags in the site's .ptag style, and the lede in Source Serif 4: the first two sentences of the
-chapter's oneLiner, the second cut to its first clause when it runs long. A view swaps the eyebrow for the
-wordmark in small caps with the italic tagline, carries no tags, and shows its dek; the home card is the site's
+left column is the chapter head reduced to its essentials: the wordmark (the favicon's tile beside "Chip Supply
+Chain" in Fraunces, as in the site's masthead) with a hairline tick and "CHAPTER 04 · STAGE 4 OF 15" in Instrument
+Sans, the title in Fraunces at 116 px (opsz 144, SOFT and WONK at 0), the two ratings as garnet-ruled tags in the
+site's .ptag style, and the lede in Source Serif 4: the first two sentences of the chapter's oneLiner, the second
+cut to its first clause when it runs long. A view follows the wordmark with the italic tagline instead, carries no
+tags, and shows its dek; the home card is the site's
 hero, "How AI chips are made", over the GPU die. A chapter names its specimen in its front matter; a view takes
 one from VIEW_SPECIMEN below. The foot carries the domain.
 
@@ -48,12 +49,22 @@ LONG_SENTENCE = 120         # a second sentence past this is cut to its first cl
 args = sys.argv[1:]
 only = args[args.index('--only') + 1].split(',') if '--only' in args else None
 keep = '--keep' in args  # keep the temporary HTML and art files for inspection
+if '--port' in args:
+    PORT = int(args[args.index('--port') + 1])  # a free DevTools port when another headless Chrome holds the default
 
 # the light sheet, qa/brand-build.md (:root in src/styles.css)
 # (the two rule colors are named rule_line and rule_line2 so they never collide with the card's `line` text in the template dict)
 LIGHT = dict(bg='#f7f6f2', ink='#14181f', ink2='#3b424c', muted='#5c636d', rule_line='#d8d4cc', rule_line2='#bfb9af', accent='#7a1f2b')
 SITE = 'Chip Supply Chain'
 TAGLINE = 'Every stage, and who controls it'  # the wordmark's tagline, src/template.html
+# the favicon's tile (build/assets/icons/favicon.svg), as the masthead's wordmark draws it; .wordmark .wm-tile colors it
+TILE = ('<svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true"><rect width="16" height="16" rx="3.2"/>'
+        '<path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 '
+        'Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 '
+        'Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 '
+        'Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 '
+        'Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 '
+        'Q1011 765 1011 683 Z"/></svg>')
 
 # the specimen a view shows; chapters name theirs in content/*.md front matter
 VIEW_SPECIMEN = {'home': 'die-floorplan', 'intro': 'boule-and-wafer', 'chain': 'cowos-exploded', 'chips': 'package',
@@ -92,11 +103,15 @@ body { background: var(--bg); color: var(--ink); font-family: var(--label); -web
 .plate-line::before { content: ""; position: absolute; top: 0; left: 50%%; width: 28px; height: 1px; margin-left: -14px; background: var(--ink); }
 .plate-line b { color: var(--accent); font-weight: 400; }
 .text { position: absolute; left: 72px; top: 60px; bottom: 56px; width: %(col_w)spx; display: flex; flex-direction: column; }
-.label { flex: none; font-family: var(--label); font-weight: 500; font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); line-height: 1.3; margin: 0; white-space: nowrap; }
-.label b { font-weight: 600; color: var(--ink-2); }
-.label i { font-style: normal; display: inline-block; width: 1px; height: 0.9em; background: var(--line-2); margin: 0 14px -2px; }
-.wordmark { flex: none; font-family: var(--display); font-weight: 500; font-size: 26px; letter-spacing: 0.075em; font-variant-caps: small-caps; font-variation-settings: "opsz" 36, "SOFT" 0, "WONK" 0; color: var(--ink); margin: 0; line-height: 1; white-space: nowrap; }
-.wordmark span { font-family: var(--body); font-style: italic; font-variant-caps: normal; font-size: 18px; letter-spacing: 0; color: var(--muted); margin-left: 16px; font-weight: 400; }
+.wordmark { flex: none; display: flex; align-items: center; gap: 15px; margin: 0; white-space: nowrap; }
+.wordmark .wm-tile { display: block; flex: none; width: 36px; height: 36px; }
+.wordmark .wm-tile rect { fill: %(accent)s; }
+.wordmark .wm-tile path { fill: %(bg)s; }
+.wordmark .wm-text { display: flex; align-items: baseline; }
+.wordmark .wm-name { font-family: var(--display); font-weight: 540; font-size: 26px; font-variation-settings: "opsz" 28, "SOFT" 0, "WONK" 0; letter-spacing: -0.005em; line-height: 1; color: var(--ink); }
+.wordmark .tagline { font-family: var(--body); font-style: italic; font-size: 18px; color: var(--muted); margin-left: 16px; font-weight: 400; }
+.wordmark .rest { font-family: var(--label); font-weight: 500; font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.wordmark .rest i { font-style: normal; display: inline-block; width: 1px; height: 0.9em; background: var(--line-2); margin: 0 14px -2px; }
 .mid { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: center; padding: 8px 0 24px; }
 .title { font-family: var(--display); font-weight: 400; font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0; font-size: %(title_px)spx; line-height: 1.0; letter-spacing: -0.015em; margin: 0; color: var(--ink); overflow-wrap: normal; }
 .tags { display: flex; flex: none; gap: 10px; margin: 30px 0 0; padding: 0; list-style: none; }
@@ -169,11 +184,13 @@ def lede(text):
 
 
 def head_html(p):
-    """A chapter's eyebrow, "Chip Supply Chain | Chapter 04 · Stage 4 of 15" with a hairline tick; a view's wordmark and tagline."""
+    """The wordmark (the favicon's tile and the name, as in the masthead), then for a chapter a hairline tick and
+    "Chapter 04 · Stage 4 of 15", for a view the italic tagline."""
     if p['kind'] == 'chapter':
-        parts = p['eyebrow'].split(' · ')
-        return '<p class="label"><b>%s</b><i></i>%s</p>' % (esc(parts[0]), esc(' · '.join(parts[1:])))
-    return '<p class="wordmark">%s<span>%s</span></p>' % (esc(SITE), esc(TAGLINE))
+        rest = '<span class="rest"><i></i>%s</span>' % esc(' · '.join(p['eyebrow'].split(' · ')[1:]))
+    else:
+        rest = '<span class="tagline">%s</span>' % esc(TAGLINE)
+    return '<p class="wordmark">%s<span class="wm-text"><span class="wm-name">%s</span>%s</span></p>' % (TILE, esc(SITE), rest)
 
 
 def tags_html(p):

@@ -1,0 +1,30 @@
+[
+  {
+    "url": "https://docs.fcc.gov/public/attachments/FCC-26-50A1.pdf",
+    "sentence": "The Federal Communications Commission publishes a Covered List of equipment and ",
+    "page": 3,
+    "pages": 108,
+    "evidence": "the Commission publishes the Covered List, a list of equipment and services that have been specifically determined by enumerated sources to pose an unacceptable risk"
+  },
+  {
+    "url": "https://docs.fcc.gov/public/attachments/FCC-26-50A1.pdf",
+    "sentence": "Its July 2026 order bars new authorizations for devices that contain logic-beari",
+    "page": 6,
+    "pages": 108,
+    "evidence": "we prohibit the authorization of logic-bearing hardware components produced by Covered List entities and devices containing such logic-bearing hardware components"
+  },
+  {
+    "url": "https://docs.fcc.gov/public/attachments/FCC-26-50A1.pdf",
+    "sentence": "Commenters in the record named optical transceivers as one such component",
+    "page": 10,
+    "pages": 108,
+    "evidence": "logic-bearing hardware components, such as semiconductors, IoT modules, optical transceivers, and printed circuit boards, among other components can be exploited"
+  },
+  {
+    "url": "https://docs.fcc.gov/public/attachments/FCC-26-50A1.pdf",
+    "sentence": "The same order notes that the key players in the optical transceiver market, Coh",
+    "page": 40,
+    "pages": 108,
+    "evidence": "Coherent Corp. (US) and INNOLIGHT (China) Are the Key Players"
+  }
+]

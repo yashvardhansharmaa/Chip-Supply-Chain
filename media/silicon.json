@@ -7,7 +7,7 @@
   {
    "k": "Refine",
    "t0": 0.4,
-   "cap": "Silicon starts as sand and rock. It is refined into rods so pure that, of every hundred billion atoms, fewer than one is anything else."
+   "cap": "Silicon starts as quartz rock. It is refined into rods so pure that metal impurities are no more than a few parts per billion."
   },
   {
    "k": "Grow",
@@ -22,7 +22,7 @@
   {
    "k": "Polish",
    "t0": 15,
-   "cap": "Each disc is ground, etched and polished until it is flat to within a few atoms, right out to the edge."
+   "cap": "Each disc is ground, etched and polished to a mirror finish, flat right out to the edge."
   }
  ]
 }

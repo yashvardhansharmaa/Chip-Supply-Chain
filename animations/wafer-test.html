@@ -5,19 +5,20 @@
 <script src="lib.js"></script>
 <script>
 const { PAL, clamp, ease, easeOut, mix, mixc, rng, label, text } = A, dark = A.theme === 'dark';
-// Facts, from chapter 13: every stage before this one makes dies, and assembly and test decide which go into a package;
+// Facts, from chapter 13: earlier stages make the dies, and assembly and test decide which go into a package;
 // before a chip can be sold, a machine puts questions to it and checks every answer; while the chips are still on the
 // wafer, thousands of needles on a probe card press onto small metal pads on each one, send in signals and read what
-// comes back; the tester marks any chip that answers wrong, and that chip goes no further; a modern accelerator glues
+// comes back; the tester marks any chip that answers wrong, and that chip goes no further; a modern accelerator bonds
 // together a dozen expensive pieces, and one bad piece throws away all of them. The pass and fail pattern is
-// illustrative, not a yield. Nine needles stand for thousands. The package follows chapter 11: two logic chips and eight
-// memory stacks on a silicon base, on a package base, twelve pieces in all.
+// illustrative, not a yield. Nine needles stand for thousands. As in a prober, the card stays put and the wafer moves.
+// The package follows chapter 11: two logic chips and eight memory stacks on an interposer, on a package base, twelve
+// pieces in all.
 const STEPS = [
-  { k: 'The wafer', t0: 0.4, t1: 5.0, cap: 'Every stage so far makes chips. Before any of them can be sold, a machine tests each one, starting while the chips are still on the wafer.' },
-  { k: 'Needles', t0: 5.0, t1: 8.8, cap: 'A probe card lowers thousands of needles onto one chip. They press onto small metal pads on its surface.' },
+  { k: 'The wafer', t0: 0.4, t1: 5.0, cap: 'Earlier stages make the chips. Before any of them can be sold, a machine tests each one, starting while the chips are still on the wafer.' },
+  { k: 'Needles', t0: 5.0, t1: 8.8, cap: 'Thousands of needles on a probe card press onto one chip. They touch small metal pads on its surface.' },
   { k: 'Questions and answers', t0: 8.8, t1: 12.6, cap: 'Through the needles, the tester sends signals into the chip and reads what comes back. It checks every answer.' },
-  { k: 'Chip by chip', t0: 12.6, t1: 17.4, cap: 'The tester steps from chip to chip across the wafer. It marks any chip that answers wrong, and that chip goes no further.' },
-  { k: 'Into the package', t0: 17.4, t1: 22.4, cap: 'Only chips that pass go on to be packaged. A modern accelerator glues together a dozen expensive pieces, and one bad piece throws away all of them, so each piece is tested before it goes in.' },
+  { k: 'Chip by chip', t0: 12.6, t1: 17.4, cap: 'The wafer moves under the needles, chip by chip. The tester marks any chip that answers wrong, and that chip goes no further.' },
+  { k: 'Into the package', t0: 17.4, t1: 22.4, cap: 'Only chips that pass go on to be packaged. A modern accelerator bonds together a dozen expensive pieces, and one bad piece throws away all of them, so each piece is tested before it goes in.' },
 ];
 // one headline at a time; each fades out before the next fades in
 const HEADS = [
@@ -120,9 +121,10 @@ function probeState(t) {
 }
 function sideView(ctx, t, a) {
   if (a <= 0) return;
-  const S = probeState(t), cy = mix(CARD_UP, CARD_DOWN, S.c) - ease((t - 17.4) / 0.6) * 40;
+  // as in a prober, the card stays put and the wafer moves: up to the needles, down again, across to the next chip
+  const S = probeState(t), cy = CARD_DOWN - ease((t - 17.4) / 0.6) * 40, drop = (1 - S.c) * (CARD_DOWN - CARD_UP);
   const dieX = (k) => CX + (k - S.off) * P;
-  ctx.save(); ctx.globalAlpha = a; ctx.beginPath(); ctx.rect(30, 0, 462, H); ctx.clip();
+  ctx.save(); ctx.globalAlpha = a; ctx.beginPath(); ctx.rect(30, 0, 462, H); ctx.clip(); ctx.translate(0, drop);
   // wafer: silicon slab from its rounded edge rightward, and the chips' top layer, cut apart by thin lanes
   const edge = dieX(0) - DW / 2 - 18;
   let g = ctx.createLinearGradient(0, SLAB[0], 0, SLAB[1]); g.addColorStop(0, C.si[0]); g.addColorStop(1, C.si[1]);
@@ -148,7 +150,7 @@ function sideView(ctx, t, a) {
   ctx.fillStyle = fr; ctx.fillRect(420, LAYER - 6, 72, SLAB[1] - LAYER + 8);
   fr = ctx.createLinearGradient(30, 0, 100, 0); fr.addColorStop(0, PAL.bg); fr.addColorStop(1, clear);
   ctx.fillStyle = fr; ctx.fillRect(30, LAYER - 6, 70, SLAB[1] - LAYER + 8);
-  ctx.globalAlpha = a;
+  ctx.globalAlpha = a; ctx.translate(0, -drop);
   // probe card and needles
   const ca = 1 - ease((t - 17.4) / 0.5);
   ctx.globalAlpha = a * ca;
@@ -159,7 +161,7 @@ function sideView(ctx, t, a) {
   PADS.forEach((px) => { ctx.beginPath(); ctx.moveTo(CX + px, cy + 22); ctx.lineTo(CX + px, cy + 22 + NEEDLE); ctx.stroke(); });
   // contact: the pads under the needles light up while the card is down
   const touch = clamp((S.c - 0.97) / 0.03);
-  if (touch > 0 && t < 17.4) { ctx.fillStyle = VIO(0.9 * touch); PADS.forEach((px) => ctx.fillRect(CX + px - 4, LAYER - 4, 8, 4)); }
+  if (touch > 0 && t < 17.4) { ctx.fillStyle = VIO(0.9 * touch); PADS.forEach((px) => ctx.fillRect(CX + px - 4, LAYER - 4 + drop, 8, 4)); }
   // signals: down the even needles into the chip, answers back up the odd ones
   if (S.pulse) {
     const u = S.pulse.u, top = cy + 24, bot = cy + 22 + NEEDLE - 2;
@@ -184,11 +186,11 @@ function sideView(ctx, t, a) {
   const la = a * ca;
   label('Probe card', LX, cy + 13, PAL.ink2, { align: 'right', alpha: la * ease((t - 5.4) / 0.5) });
   label('Needles', LX, cy + 22 + NEEDLE / 2 + 4, PAL.ink2, { align: 'right', alpha: la * ease((t - 5.6) / 0.5) * (1 - ease((t - 12.6) / 0.3)) });
-  label('Metal pads', LX, LAYER, PAL.ink2, { align: 'right', alpha: la * ease((t - 5.8) / 0.5) * (1 - ease((t - 12.6) / 0.3)) });
-  label('One chip, still on the wafer', CX, 340, PAL.muted, { align: 'center', alpha: a * ease((t - 5.4) / 0.5) * (1 - ease((t - 12.6) / 0.3)) });
+  label('Metal pads', LX, LAYER + drop, PAL.ink2, { align: 'right', alpha: la * ease((t - 5.8) / 0.5) * (1 - ease((t - 12.6) / 0.3)) });
+  label('One chip, still on the wafer', CX, 340 + drop, PAL.muted, { align: 'center', alpha: a * ease((t - 5.4) / 0.5) * (1 - ease((t - 12.6) / 0.3)) });
 }
 
-// ---- the package, seen from above: a package base, a silicon base, two logic chips and eight memory stacks
+// ---- the package, seen from above: a package base, an interposer, two logic chips and eight memory stacks
 const PK = { sub: [155, 145, 190, 190], inter: [182, 165, 136, 150] };
 const LOGIC = [[204, 209, 44, 62], [252, 209, 44, 62]];
 const HBM = []; [175, 277].forEach((y) => [0, 1, 2, 3].forEach((i) => HBM.push([186.5 + i * 33, y, 28, 28])));

@@ -1,4 +1,5 @@
-/* WALK  — the view at #/walk: "How AI chips are made", the site's 18 plain-language paragraphs in order.
+/* WALK  — the view at #/walk: "How AI chips are made", the site's 18 plain-language paragraphs in order. On phones the
+   hero is followed by the chain at a glance (GLANCE, below); wider screens keep "Other pages" there.
    START_HERE — the three-way chooser on the landing page, directly under the hero.
 
    Nothing here is written from memory. Every paragraph, name, country code, score and count is read
@@ -53,6 +54,32 @@ module.exports = function (ctx) {
 
   steps.forEach((c) => { if (!plainOf(c.id)) ctx.warn(`walk: chapter ${c.id} has no plain paragraph`); });
 
+  /* ---------------- the chain at a glance (phones, under the hero) ----------------
+     The fifteen stages in the order a chip is made, one line each: number, name, and the stage's concentration as the
+     summary page draws it (a four-step meter and the plain word). Each line links to its chapter. On phones it takes the
+     place of "Other pages", which repeats the tabs (walk.css). Names and bands come from the chapter cards, the count is
+     computed, and the meaning of Extreme is the card's own note (ctx.BAND_NOTE), so nothing here is retyped. */
+  const LEVEL = { Extreme: 4, High: 3, Moderate: 2, Low: 1 };
+  const meter = (band) => `<span class="wk-gl-m" aria-hidden="true">${[1, 2, 3, 4].map((k) => `<i${k <= (LEVEL[band] || 0) ? ' class="on"' : ''}></i>`).join('')}</span>`;
+  const nExtreme = stages.filter((s) => (card[s.id] || {}).band === 'Extreme').length;
+  // the card's note reads "Three or fewer firms could supply this stage today, or one firm holds more than half of it."; here it
+  // follows "8 of the 15 stages are rated Extreme, meaning", cut to three lines on a phone. A changed note drops the clause.
+  const xNote = String((ctx.BAND_NOTE || {}).Extreme || '');
+  const xMeaning = /this stage/.test(xNote) ? xNote.replace('this stage', 'each').replace(/ of it\.$/, '.').replace(/\.$/, '').replace(/^\w/, (m) => m.toLowerCase()) : '';
+  const glanceRow = (s, i) => {
+    const b = (card[s.id] || {}).band || '';
+    return `<li data-level="${LEVEL[b] || 0}"><a href="${esc(chapterHref(s.id))}"><span class="wk-gl-n">${pad(i + 1)}</span><span class="wk-gl-t">${esc(s.title)}</span>${b ? `<span class="wk-gl-c">${meter(b)}<span class="wk-gl-w">${esc(b)}<span class="sr-only"> concentration</span></span></span>` : ''}</a></li>`;
+  };
+  const GLANCE = stages.length ? `<section class="wk-gl" aria-labelledby="wk-gl-h">
+<h3 class="label wk-gl-h" id="wk-gl-h">The chain at a glance</h3>
+${nExtreme ? `<p class="wk-gl-p"><b>${nExtreme} of the ${stages.length} stages</b> are rated Extreme${xMeaning ? `, meaning ${esc(xMeaning)}` : ' concentration'}.</p>` : ''}
+<ol class="wk-gl-list">${stages.map(glanceRow).join('')}</ol>
+</section>` : '';
+
+  // the flashcards that end the walk (below), which the last step's Next leads on to
+  const introDeck = (ctx.flashcards || {}).intro;
+  const hasDeck = !!(introDeck && Array.isArray(introDeck.cards) && introDeck.cards.length && ctx.deckHTML);
+
   /* ---------------- the walk ---------------- */
   const list = steps.map((ch, i) => {
     const c = card[ch.id] || {};
@@ -72,11 +99,29 @@ ${leadersHTML(c)}
 <nav class="wk-pn" aria-label="Step ${i + 1} of ${steps.length}">${
       prev ? `<a class="wk-prev" href="#${esc(stepId(prev.id))}"><span class="label">Previous</span><span class="wk-pn-t">${esc(prev.title)}</span></a>` : '<span></span>'
     }${
-      next ? `<a class="wk-next" href="#${esc(stepId(next.id))}"><span class="label">Next</span><span class="wk-pn-t">${esc(next.title)}</span></a>` : '<span></span>'
+      next ? `<a class="wk-next" href="#${esc(stepId(next.id))}"><span class="label">Next</span><span class="wk-pn-t">${esc(next.title)}</span></a>`
+        : hasDeck ? `<a class="wk-next" href="#${esc(stepId('flashcards'))}"><span class="label">Next</span><span class="wk-pn-t">Flashcards</span></a>` : '<span></span>'
     }</nav>
 </div>
 </li>`;
   }).join('\n');
+
+  /* ---------------- the end: the whole chain in flashcards ----------------
+     data/flashcards.json "intro", built by build.js's deckHTML, the component every chapter ends with. Each card's reason
+     ends with a link to the chapter that explains it. data-deck names the deck for src/app.js, which keeps its marks under
+     "cp-fc-intro"; data-name is what search calls it; data-reread finishes the end screen's line ("ends with a link to its
+     chapter"). The block's own id makes "#/walk/flashcards" an address of this view, like a step's, so the address can
+     follow the reader into the deck (src/modules/walk.js). social.js writes the same cards on the static /intro/ page. */
+  const chapterOf = new Map(all.map((c) => [c.id, c]));
+  const DECK = hasDeck ? `<div class="wk-deck" id="${esc(stepId('flashcards'))}">${ctx.deckHTML(introDeck, {
+    id: 'intro', title: 'Start here', attrs: ' data-deck="intro" data-name="Start here" data-reread="its chapter"',
+    sub: `${cap(word(introDeck.cards.length))} cards on the whole chain. Recall each answer, then turn the card.`,
+    more: (c, i) => {
+      const ch = chapterOf.get(c.chapter);
+      if (!ch) { ctx.warn(`flashcards intro #${i + 1}: no chapter "${c.chapter}"`); return null; }
+      return { href: chapterHref(ch.id), text: 'Read: ' + ch.title };
+    },
+  })}</div>` : '';
 
   const WALK = `<div class="wk">
 <div class="wk-rail" id="wk-rail" data-show="0" aria-hidden="true" hidden><div class="wk-rail-bar"><i></i></div><p class="wk-rail-line"><span class="wk-rail-n"></span><span class="wk-rail-t"></span></p></div>
@@ -84,18 +129,20 @@ ${leadersHTML(c)}
 <h2 class="wk-title">How AI chips are made</h2>
 <p class="wk-dek">An introduction to the entire semiconductor supply chain.</p>
 <p class="wk-meta"><span class="label">${steps.length} paragraphs</span><span class="label">${walkWords.toLocaleString('en-US')} words</span><span class="label">about ${mins} min</span></p>
+${GLANCE}
 <nav class="wk-tabs" aria-label="Other pages">
 <p class="label wk-tabs-k">Other pages</p>
 <a href="#/chain"><b class="wk-tab">The Chain</b><span>The full semiconductor supply chain explained in detail, in ${word(all.length)} chapters, with all sources linked.</span></a>
 <a href="#/landscape"><b class="wk-tab">AI Chips</b><span>The specs of ${(data.landscape || []).length} AI chips from Nvidia, AMD, Google, Huawei and others, compared side by side.</span></a>
 <a href="#/suppliers"><b class="wk-tab">Suppliers</b><span>The ${(data.suppliers || []).length} companies behind the chain, on a map and stage by stage, and what each country makes.</span></a>
-<a href="#/controls"><b class="wk-tab">Export Controls</b><span>Every US and allied rule since 2018, what can still be sold to China, and how much each company sells there.</span></a>
+<a href="#/controls"><b class="wk-tab">Export Controls</b><span>The main rules since 2018, what can still be sold to China, and China's share of revenue at ${new Set((data.exposure || []).map((r) => r.firm)).size} firms, from their filings.</span></a>
 <a href="#/glossary"><b class="wk-tab">Glossary</b><span>Plain definitions of every term, plus every company, chip and country, with the passages that mention them.</span></a>
 </nav>
 </header>
 <ol class="wk-list">
 ${list}
 </ol>
+${DECK}
 <div class="wk-end">
 <p class="wk-end-links"><a href="#/chain">All ${word(steps.length)} chapters in full</a><a href="#/suppliers">Where each stage happens</a><a href="#/controls">What the rules did</a></p>
 </div>

@@ -5,27 +5,28 @@
 <script src="lib.js"></script>
 <script>
 const { PAL, clamp, ease, easeOut, mix, label, text } = A, dark = A.theme === 'dark';
-// Facts, from chapter 5's How it works: a photomask is the stencil lithography prints from, one for each layer of a
-// chip; the same plate prints its layer on wafer after wafer, so one plate shapes millions of chips; no glass lets the
-// short light now in use pass through, so the plate is a mirror built up from about forty pairs of very thin layers laid
-// on glass, and the light bounces off it; a dark pattern on the mirror soaks up the light wherever no line should print;
-// any speck of dust on the plate repeats on every wafer it prints, until someone finds it. The light strikes the mask at
-// a slant, and the pattern is four times larger than it prints. From the one-liner: the dust cover meant to protect
-// the mask is still not in production. From chapter 4: EUV scanners carry the light with mirrors.
+// Facts, from chapter 5's How it works: a photomask is the stencil lithography prints from, at least one for each layer
+// of a chip; the same plate prints its layer on wafer after wafer, so one plate shapes millions of chips; no glass lets
+// extreme ultraviolet (EUV) light through, so the mask for EUV layers is a mirror built up from about forty pairs of very
+// thin layers laid on glass, and the light bounces off it; a dark pattern on the mirror soaks up the light wherever no
+// line should print; any speck of dust on the plate repeats on every wafer it prints, until someone finds it, so a thin
+// membrane on a frame, the pellicle, covers the mask's patterned side and catches dust where it is too far out of focus to
+// print. The light strikes the mask at a slant, and the pattern is four times larger than it prints. From chapter 4:
+// EUV scanners carry the light with mirrors.
 // The mask is drawn as it sits in the scanner, face down, with the light arriving from below. Every thickness is
 // exaggerated, and the light's path through the scanner's mirrors is shortened to one bounce.
 const STEPS = [
-  { k: 'The scanner', t0: 0.4, t1: 4.8, cap: 'A photomask is the stencil that lithography prints from, one for each layer of a chip. Inside the scanner, light bounces off the mask and carries its pattern down to the wafer.' },
-  { k: 'A mirror', t0: 4.8, t1: 9.6, cap: 'No glass lets the short light now in use pass through. So the mask is a mirror, built up from about forty pairs of very thin layers laid on glass, and the light bounces off it.' },
+  { k: 'The scanner', t0: 0.4, t1: 4.8, cap: 'A photomask is the stencil that lithography prints from, at least one for each layer of a chip. Inside the scanner, light bounces off the mask and carries its pattern down to the wafer.' },
+  { k: 'A mirror', t0: 4.8, t1: 9.6, cap: 'No glass lets extreme ultraviolet (EUV) light through. So the mask for EUV layers is a mirror, built up from about forty pairs of very thin layers laid on glass, and the light bounces off it.' },
   { k: 'The pattern', t0: 9.6, t1: 13.6, cap: 'A dark pattern drawn on the mirror soaks up the light wherever no line should print. The light that bounces back carries the pattern of one layer.' },
   { k: 'Wafer after wafer', t0: 13.6, t1: 17.6, cap: 'The same mask prints its layer on wafer after wafer, so one plate shapes millions of chips.' },
-  { k: 'One speck', t0: 17.6, t1: 22.4, cap: 'A speck of dust on the mask prints on every wafer, until someone finds it. The pellicle, a dust cover meant to protect the mask, is still short of production in a leading-edge fab.' },
+  { k: 'One speck', t0: 17.6, t1: 22.4, cap: 'A speck of dust on the mask prints on every wafer, until someone finds it. So a thin membrane on a frame, called a pellicle, covers the mask's patterned side and catches dust where it is too far out of focus to print.' },
 ];
 // one headline at a time; each fades out before the next fades in
 const HEADS = [
   { t0: 0.4, t1: 2.6, h: 'Inside a lithography scanner', s: 'Seen from the side' },
   { t0: 2.6, t1: 5.0, h: 'The photomask', s: 'The stencil for one layer of a chip' },
-  { t0: 5.0, t1: 7.2, h: 'Glass stops this light', s: 'The light now in use is too short to pass' },
+  { t0: 5.0, t1: 7.2, h: 'Glass stops EUV light', s: 'Every kind of glass soaks it up' },
   { t0: 7.2, t1: 9.8, h: 'So the mask is a mirror', s: 'About forty pairs of very thin layers' },
   { t0: 9.8, t1: 13.8, h: 'A dark pattern on the mirror', s: 'It soaks up light where no line should print' },
   { t0: 13.8, t1: 17.9, h: 'One mask, wafer after wafer', s: 'Each wafer gets the same layer' },

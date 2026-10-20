@@ -7,7 +7,7 @@
   {
    "k": "Inside a chip",
    "t0": 0.4,
-   "cap": "An AI chip does all its work with transistors, tiny switches built into the silicon: 208 billion of them in one Nvidia Blackwell GPU. Making the switches is the front end of the factory; wiring them together comes after."
+   "cap": "An AI chip does all its work with transistors, tiny switches built into the silicon. One Nvidia Blackwell GPU holds 208 billion of them. Making the switches is the front end of the factory, and wiring them together comes after."
   },
   {
    "k": "On",
@@ -27,7 +27,7 @@
   {
    "k": "All around",
    "t0": 17.2,
-   "cap": "Split it into thin sheets and wrap the gate around every side, and it shuts tight. That lets the switches keep shrinking, and smaller switches, packed tighter, are what make each new chip faster."
+   "cap": "Split it into thin sheets and wrap the gate around every side, and it shuts far tighter. That lets the switches keep shrinking, so each new chip can pack in more of them."
   }
  ]
 }

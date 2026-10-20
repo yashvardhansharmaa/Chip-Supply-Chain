@@ -1,0 +1,93 @@
+[
+  {
+    "url": "https://investor.tsmc.com/static/annualReports/2025/english/pdf/2025_tsmc_ar_e_ch5.pdf",
+    "sentence": "CoWoS-L replaces that piece of silicon with redistribution layers (RDL) of fine ",
+    "page": 3,
+    "pages": 14,
+    "evidence": "CoWoS®-L advanced packaging service enables larger HPC products by combining Chip on Wafer on Substrate with RDL-based interposer, higher density embedded local silicon interconnect (LSI)"
+  },
+  {
+    "url": "https://investor.tsmc.com/static/annualReports/2025/english/pdf/2025_tsmc_ar_e_ch5.pdf",
+    "sentence": "Its 3 nm SoIC entered volume production in 2025",
+    "page": 3,
+    "pages": 14,
+    "evidence": "3nm system on integrated chip (SoIC) stacking technology successfully entered volume production in 2025."
+  },
+  {
+    "url": "https://investor.tsmc.com/static/annualReports/2025/english/pdf/2025_tsmc_ar_e_ch5.pdf",
+    "sentence": "TSMC's COUPE uses SoIC to join a silicon photonics chip, which sends data as lig",
+    "page": 3,
+    "pages": 14,
+    "evidence": "TSMC-COUPETM technology service, leveraging the TSMC-SoIC® CoW stacking solution to integrate silicon photonics and electrical control chips for high-speed and low-power data transmission products"
+  },
+  {
+    "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf",
+    "sentence": "At its 2024 symposium TSMC said CoWoS capacity would grow at a 60 percent compou",
+    "page": 6,
+    "pages": 19,
+    "evidence": "And then, for the CoWoS, at the symposium, we said CoWoS' capacity will grow at a 60% CAGR the next few years."
+  },
+  {
+    "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf",
+    "sentence": "But when asked about that rate on the July 2024 earnings call, TSMC's chief exec",
+    "page": 6,
+    "pages": 19,
+    "evidence": "Talking about CAGR of those kind of increase of the CoWoS capacity, now, it's out of my mind."
+  },
+  {
+    "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf",
+    "sentence": "He said only that he would keep adding capacity wherever he could, and that he c",
+    "page": 6,
+    "pages": 19,
+    "evidence": "I also tried to reach the supply and demand balance, but I cannot today. The demand is so high."
+  },
+  {
+    "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf",
+    "sentence": "In October 2025 Wei would still say only that TSMC was working to increase capac",
+    "page": 7,
+    "pages": 18,
+    "evidence": "We are still working to increase the capacity in 2026. The real number, we probably update you next year."
+  },
+  {
+    "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf",
+    "sentence": "He said front-end capacity (making the chips) and back-end capacity (packaging t",
+    "page": 7,
+    "pages": 18,
+    "evidence": "Today, all I want to say about the AI, everything related, like frontend and backend capacity is very tight."
+  },
+  {
+    "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf",
+    "sentence": "On the July 2026 earnings call, Wei said TSMC's packaging capacity was so tight ",
+    "page": 10,
+    "pages": 22,
+    "evidence": "Well, let me say that our packaging capacity is so tight that now it limits my customers' growth."
+  },
+  {
+    "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf",
+    "sentence": "Asked about Intel's EMIB-T, he said he welcomed the extra flexibility and hoped ",
+    "page": 10,
+    "pages": 22,
+    "evidence": "So we welcome that additional flexibility in the market"
+  },
+  {
+    "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf",
+    "sentence": "In October 2025 Wei said a large outsourced packaging partner, already breaking ",
+    "page": 13,
+    "pages": 18,
+    "evidence": "they're already breaking ground. And the schedule is earlier than TSMC's two advanced packaging fabs."
+  },
+  {
+    "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf",
+    "sentence": "On the July 2026 earnings call, TSMC's chief executive, C.C. Wei, said its packa",
+    "page": 10,
+    "pages": 22,
+    "evidence": "Well, let me say that our packaging capacity is so tight that now it limits my customers' growth."
+  },
+  {
+    "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf",
+    "sentence": "Asked about Intel's EMIB-T packaging, he said he hoped it would take some of the",
+    "page": 10,
+    "pages": 22,
+    "evidence": "we hope they will be successful and so that share some of the loading from TSMC."
+  }
+]

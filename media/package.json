@@ -10,9 +10,9 @@
    "cap": "An AI chip is built from several parts. First comes the package base, a layered board that connects everything to the circuit board below."
   },
   {
-   "k": "Silicon base",
+   "k": "Interposer",
    "t0": 3.6,
-   "cap": "On it sits a thin slab of silicon, called an interposer. Its fine wiring joins everything placed on top."
+   "cap": "On it sits an interposer, a thin layer of very fine wiring that joins everything placed on top."
   },
   {
    "k": "Logic chips",
@@ -27,7 +27,7 @@
   {
    "k": "One package",
    "t0": 13.6,
-   "cap": "Together they make one AI accelerator. Nearly every one is put together by TSMC, in Taiwan."
+   "cap": "Together they make one AI accelerator. Most are put together by TSMC, in Taiwan."
   }
  ]
 }

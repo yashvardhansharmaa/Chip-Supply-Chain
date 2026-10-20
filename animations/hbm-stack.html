@@ -5,14 +5,15 @@
 <script src="lib.js"></script>
 <script>
 const { PAL, clamp, ease, easeOut, mix, mixc, label, text } = A, dark = A.theme === 'dark';
-// Facts, all from chapter 10: a base die manages the stack; memory chips are ground to about 30 micrometers and joined
-// by microbumps, with TSVs straight through; a twelve-high stack is 0.72 mm tall; HBM4 raised the height limit from 720
+// Facts, from chapter 10: a base die manages the stack; memory chips are ground to about 30 micrometers and joined
+// by microbumps, with TSVs straight through all but the top chip (Micron's HBM4 page, cited in chapter 10: "Another
+// produces thicker top dies without TSVs"); a twelve-high stack is 0.72 mm tall; HBM4 raised the height limit from 720
 // to 775 micrometers because a taller stack would hit the cooling plate, and allows up to sixteen chips; an HBM3E stack
 // talks to the processor over 1,024 wires, sixteen times a standard DDR5 module, and HBM4 doubles that to 2,048 (JEDEC JESD270-4).
 const STEPS = [
   { k: 'Base chip', t0: 0.4, t1: 3.0, cap: 'A memory stack sits beside the GPU on a shared silicon base. It starts with a base chip, which controls the memory chips above it.' },
   { k: 'Thin', t0: 3.0, t1: 6.2, cap: 'Each memory chip is ground to about 30 micrometers, thinner than a human hair.' },
-  { k: 'Stack', t0: 6.2, t1: 10.6, cap: 'Twelve chips are joined by dots of solder, and copper-filled holes run straight down through all of them.' },
+  { k: 'Stack', t0: 6.2, t1: 10.6, cap: 'Twelve chips are joined by dots of solder, and copper-filled holes run straight down through all but the top one.' },
   { k: 'Height', t0: 10.6, t1: 14.6, cap: 'The stack has to fit under the cooling plate. Twelve chips reach 0.72 mm, the old limit. HBM4 raised the limit to 775 micrometers and fits up to sixteen chips.' },
   { k: 'Width', t0: 14.6, t1: 20.2, cap: 'An HBM3E stack talks to the processor over 1,024 wires at once, sixteen times as many as a PC memory module. HBM4 doubles that to 2,048.' },
 ];
@@ -48,7 +49,7 @@ function stack(ctx, t, n, height, a, tsvA) {
     if (q <= 0) continue;
     const drop = (1 - ease(q)) * 40;
     bumps(ctx, SX0, SX1, y + h + (pitch - h) / 2 - drop, ease(q));
-    chip(ctx, SX0, SX1, y - drop, h, ease(q), tsvA(i));
+    chip(ctx, SX0, SX1, y - drop, h, ease(q), i < n - 1 ? tsvA(i) : 0);   // the top chip has no through-holes
   }
 }
 

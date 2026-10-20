@@ -1,0 +1,86 @@
+[
+  {
+    "url": "https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2607E.pdf",
+    "sentence": "Advantest's investor guide of July 2026 says test is the only step that puts ele",
+    "page": 10,
+    "pages": 15,
+    "evidence": "Among these steps, semiconductor testing is the only process that uses electrical signals to test devices, playing a critical role in quality assurance."
+  },
+  {
+    "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf",
+    "sentence": "TSMC has told investors that its CoWoS packaging roadmap runs beyond 14 times th",
+    "page": 16,
+    "pages": 22,
+    "evidence": "as we said, we roadmap to even larger than 14x reticle size with CoWoS"
+  },
+  {
+    "url": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf",
+    "sentence": "Advantest puts its own share at about 65 percent of an estimated $9.0 billion te",
+    "page": 13,
+    "pages": 17,
+    "evidence": "Advantest’s overall market share estimate increased to approximately 65%, marking a notable gain."
+  },
+  {
+    "url": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf",
+    "sentence": "Its share of system-on-chip (SoC) testers, the machines that test processors and",
+    "page": 13,
+    "pages": 17,
+    "evidence": "In the SoC tester market, we estimate that our market share reached 66%, an increase of approximately 10 percentage points YoY."
+  },
+  {
+    "url": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf",
+    "sentence": "It held about 60 percent of memory test",
+    "page": 13,
+    "pages": 17,
+    "evidence": "although our market share declined by approximately 2 percentage points, it remained at around 60%."
+  },
+  {
+    "url": "https://technoprobe.com/wp-content/uploads/2026/03/PR-FY-2025_.pdf",
+    "sentence": "Technoprobe's revenue grew 15.7 percent to EUR 628.4 million in 2025, about 38 p",
+    "page": 1,
+    "pages": 11,
+    "evidence": "Consolidated Revenues of €628.4 million, up 15.7%"
+  },
+  {
+    "url": "https://www.accretech.com/en/ir/index/main/00/teaserItems1/00/linkList/02/link/IntegratedReport2025_E.pdf",
+    "sentence": "Tokyo Seimitsu, which sells under the Accretech name, says it has the largest gl",
+    "page": 6,
+    "pages": 84,
+    "evidence": "Top share of the global market (based on our research) Probing machine"
+  },
+  {
+    "url": "https://www.accretech.com/en/ir/index/main/00/teaserItems1/00/linkList/02/link/IntegratedReport2025_E.pdf",
+    "sentence": "It also makes dicing machines and grinders",
+    "page": 6,
+    "pages": 84,
+    "evidence": "Dicing machine This machine cuts a large number of integrated circuits formed on a wafer into individual chips (dies) High rigid grinder"
+  },
+  {
+    "url": "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf",
+    "sentence": "A 2024 study by the Semiconductor Industry Association and Boston Consulting Gro",
+    "page": 21,
+    "pages": 38,
+    "evidence": "Rest of world ATP capacity, 2022–2032F (as % of total capacity) [Exhibit 13 chart: Malaysia 7% of global ATP capacity in 2022]"
+  },
+  {
+    "url": "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf",
+    "sentence": "The study measured capacity by factory floor space at contractors and chipmakers",
+    "page": 35,
+    "pages": 38,
+    "evidence": "27. Facility capacity measured by footprint of the facilities (in square meters)."
+  },
+  {
+    "url": "https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf",
+    "sentence": "Advantest argues that switching to another tester maker means rebuilding the who",
+    "page": 14,
+    "pages": 16,
+    "evidence": "Changing tester selection is synonymous with customers having to reconstruct their entire environment for device development, evaluation, and volume production"
+  },
+  {
+    "url": "https://www.advantest.com/document/en/investors/ir-library/investors-guide/Investors_Guide_2504E.pdf",
+    "sentence": "Advantest argues that switching to another tester maker means rebuilding a custo",
+    "page": 14,
+    "pages": 16,
+    "evidence": "This means that our market share is unlikely to fluctuate significantly in the short term."
+  }
+]

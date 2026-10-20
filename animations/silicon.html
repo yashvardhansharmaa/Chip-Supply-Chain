@@ -5,17 +5,18 @@
 <script src="lib.js"></script>
 <script>
 const { PAL, clamp, ease, easeOut, mix, rng, label, text } = A, dark = A.theme === 'dark';
-// Facts, from chapter 2's How it works: silicon starts as sand and rock (quartzite); it is refined until, of every hundred
-// billion atoms, fewer than one is anything else; the refined rods are polysilicon (many small crystals); it melts at
+// Facts, from chapter 2's How it works: silicon starts as quartz rock (quartzite); it is refined until metal impurities
+// are no more than a few parts per billion; the refined rods are polysilicon (many small crystals); it melts at
 // about 1,420 degrees Celsius, hotter than lava; a seed crystal is lowered to the melt and drawn slowly back up, turning;
 // the pull starts with a thin neck so flaws formed where the seed touched the melt end in the neck; the melt freezes onto
 // the seed as one crystal with its atoms in one unbroken pattern, the ingot; a wire saw slices it into discs, which are
-// ground, etched and polished flat to within a few atoms; the finished wafer is about 30 cm across. The ingot's proportions are drawn for clarity.
+// ground, etched and polished to a mirror finish and made flat across the whole face; the finished wafer is about 30 cm
+// across. The ingot's proportions are drawn for clarity.
 const STEPS = [
-  { k: 'Refine', t0: 0.4, t1: 3.8, cap: 'Silicon starts as sand and rock. It is refined into rods so pure that, of every hundred billion atoms, fewer than one is anything else.' },
+  { k: 'Refine', t0: 0.4, t1: 3.8, cap: 'Silicon starts as quartz rock. It is refined into rods so pure that metal impurities are no more than a few parts per billion.' },
   { k: 'Grow', t0: 3.8, t1: 11.4, cap: 'The rods are melted. A seed crystal touches the melt and is drawn slowly up, turning, and the silicon freezes onto it as one long crystal.' },
   { k: 'Slice', t0: 11.4, t1: 15.0, cap: 'A wire saw slices the crystal, called an ingot, into thin discs.' },
-  { k: 'Polish', t0: 15.0, t1: 18.6, cap: 'Each disc is ground, etched and polished until it is flat to within a few atoms, right out to the edge.' },
+  { k: 'Polish', t0: 15.0, t1: 18.6, cap: 'Each disc is ground, etched and polished to a mirror finish, flat right out to the edge.' },
 ];
 const pr = (i, t) => clamp((t - STEPS[i].t0) / (STEPS[i].t1 - STEPS[i].t0));
 const W = 760, H = 420;
@@ -96,7 +97,7 @@ function render(ctx, t) {
     const grow = ease((p0 - 0.3) / 0.5);
     for (let k = 0; k < 3; k++) { const x = 300 + k * 44, h = 150 * grow, g = ctx.createLinearGradient(x, 0, x + 26, 0); g.addColorStop(0, C.poly[0]); g.addColorStop(1, C.poly[1]); ctx.fillStyle = g; ctx.fillRect(x, 358 - h, 26, h); }
     ctx.restore();
-    label('Sand and rock', 70, 382, PAL.muted, { alpha: sceneA * ease(p0 / 0.2) });
+    label('Quartz rock', 70, 382, PAL.muted, { alpha: sceneA * ease(p0 / 0.2) });
     label('Pure silicon rods', 300, 382, PAL.ink2, { alpha: sceneA * grow });
     const lz = ease((p0 - 0.65) / 0.25) * sceneA;
     lattice(ctx, 170, 118, 40, true, lz, [300, 230]);
@@ -179,11 +180,11 @@ function render(ctx, t) {
     ctx.strokeStyle = dark ? 'rgba(236,233,226,0.35)' : 'rgba(20,24,31,0.45)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, rr, 0, 7); ctx.stroke();
     if (rough > 0 && rough < 1) { const ang = t * 3; ctx.globalAlpha = sceneD * 0.35 * Math.sin(Math.PI * (1 - rough)); ctx.fillStyle = dark ? '#dfe3e7' : '#ffffff'; ctx.beginPath(); ctx.arc(x + 80 * Math.cos(ang), y + 80 * Math.sin(ang), 46, 0, 7); ctx.fill(); }
     ctx.restore();
-    label(rough > 0.5 ? 'A rough disc' : 'Polished flat to within a few atoms', 250, 384, PAL.ink2, { align: 'center', alpha: sceneD });
+    label(rough > 0.5 ? 'A rough disc' : 'Polished to a mirror finish', 250, 384, PAL.ink2, { align: 'center', alpha: sceneD });
   }
   // ---- readout
   const cur = p3 > 0 ? 2 : p1 > 0 || p2 > 0 ? 1 : 0;
-  readout(ctx, 96, '1', 'in 100 billion', 'Atoms that are not silicon', cur === 0, ease((p0 - 0.45) / 0.3));
+  readout(ctx, 96, 'A few', 'parts per billion', 'Metal impurities', cur === 0, ease((p0 - 0.45) / 0.3));
   readout(ctx, 196, '1,420', '°C', 'Melting point, hotter than lava', cur === 1, ease((p1 - 0.08) / 0.2));
   readout(ctx, 296, '30', 'cm', 'Across one finished wafer', cur === 2, ease((p3 - 0.2) / 0.3));
 }

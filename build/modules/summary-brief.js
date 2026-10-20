@@ -56,7 +56,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 <p class="more"><a href="${url(ch.id)}">Read the chapter, with its sources</a></p>
 </article>`).join('');
 
-  const screen = `<header class="masthead"><a class="wordmark" href="${SITE.url}">Chip Supply Chain</a><nav aria-label="Site"><a href="${SITE.url}#/chain">The Chain</a><a href="${SITE.url}#/controls">Export Controls</a><a href="${SITE.url}#/glossary">Glossary</a></nav></header>
+  const screen = `<header class="masthead"><a class="wordmark" href="${SITE.url}" aria-label="Chip Supply Chain"><svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg><span class="wm-name">Chip Supply Chain</span></a><nav aria-label="Site"><a href="${SITE.url}#/chain">The Chain</a><a href="${SITE.url}#/controls">Export Controls</a><a href="${SITE.url}#/glossary">Glossary</a></nav></header>
 <main class="scr">
 <section class="hero">
 <p class="eyebrow"><b>Summary</b> · the whole chain in one read</p>
@@ -147,7 +147,11 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   a { color: inherit; }
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .masthead { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 56px; padding: 0 var(--gutter); border-bottom: 1px solid var(--line-2); }
-  .wordmark { text-decoration: none; font-family: var(--display); font-weight: 500; font-size: 21px; letter-spacing: 0.075em; font-variant-caps: small-caps; white-space: nowrap; }
+  .wordmark { display: flex; align-items: center; gap: 12px; min-height: 44px; text-decoration: none; }
+  .wordmark .wm-tile { display: block; flex: none; width: 29px; height: 29px; }
+  .wordmark .wm-tile rect { fill: #7a1f2b; }
+  .wordmark .wm-tile path { fill: #f7f6f2; }
+  .wordmark .wm-name { font-family: var(--display); font-size: 21px; font-weight: 540; font-variation-settings: "opsz" 28, "SOFT" 0, "WONK" 0; letter-spacing: -0.005em; line-height: 1; white-space: nowrap; }
   .masthead nav { display: flex; gap: 2px; }
   .masthead nav a { font-family: var(--label); font-weight: 500; font-size: 13.5px; color: var(--ink-2); text-decoration: none; padding: 10px 8px 9px; border-bottom: 1px solid transparent; white-space: nowrap; }
   .masthead nav a:hover { color: var(--ink); border-bottom-color: var(--accent); }
@@ -237,7 +241,9 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   @media (max-width: 560px) {
     body { font-size: 16.5px; }
     .masthead { min-height: 52px; }
-    .wordmark { font-size: 18px; }
+    .wordmark { gap: 9px; }
+    .wordmark .wm-tile { width: 25px; height: 25px; }
+    .wordmark .wm-name { font-size: 18px; }
     .masthead nav a:nth-child(n+2) { display: none; }
     .scr, .site-footer { overflow-wrap: break-word; }
     .dek { font-size: 18.5px; }

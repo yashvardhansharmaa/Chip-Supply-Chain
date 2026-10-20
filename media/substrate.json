@@ -22,7 +22,7 @@
   {
    "k": "Connected",
    "t0": 15,
-   "cap": "Stacked together, the layers fan the tight grid out to the board\u2019s wide one. An AI chip needs about 18 layers, against six for a PC, and every layer is another chance for a flaw, which is what makes these substrates hard to build."
+   "cap": "Stacked together, the layers fan the tight grid out to the board\u2019s wide one. Ajinomoto counts 11 layers of its film on each side of the core in a 2026 AI package substrate, against three on each side for a PC in 1999. Every layer is another chance for a flaw, which is what makes these substrates hard to build."
   }
  ]
 }

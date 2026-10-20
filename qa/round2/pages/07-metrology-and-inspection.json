@@ -1,0 +1,255 @@
+[
+  {
+    "url": "https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf",
+    "sentence": "KLA puts the whole wafer equipment market, including advanced packaging, at abou",
+    "page": 7,
+    "pages": 15,
+    "evidence": "the wafer equipment market, including advanced packaging, to approximately the low $150 billion range in calendar 2026 ... the approximate $120 billion level in calendar 2025."
+  },
+  {
+    "url": "https://d1io3yog0oux5.cloudfront.net/_7791115a123b86b3f10b1a5eb5210224/klatencor/db/1166/10653/file/2026+Investor+Day+Master+Final_IR+copy.pdf",
+    "sentence": "At its March 2026 investor day KLA cited Gartner's figures for 2024, which put i",
+    "page": 35,
+    "pages": 173,
+    "evidence": "Process Control Market Share ... 56.5% ... KLA Share in 2024 ... 6.5x nearest competitor ... Source: Gartner April 2025"
+  },
+  {
+    "url": "https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf",
+    "sentence": "In April 2026 KLA said its 2025 share was about 7 times the nearest competitor's",
+    "page": 3,
+    "pages": 17,
+    "evidence": "Since 2021, KLA's share of Process Control has grown by 360 basis points and is approximately 7x greater than the nearest competitor."
+  },
+  {
+    "url": "https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf",
+    "sentence": "A wafer loses value two ways: whole regions ruined by mishandling, misalignment ",
+    "page": 10,
+    "pages": 65,
+    "evidence": "Global or gross-area defects result from scratches (e.g., from wafer mishandling), mask misalignment, or over/under-etching."
+  },
+  {
+    "url": "https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf",
+    "sentence": "At a defect density of 0.8 per square centimeter, with a set to 3, a 1 square ce",
+    "page": 8,
+    "pages": 65,
+    "evidence": "a defect density of 0.8/cm2 ... a yield of 0.492w and 0.113w for the 1 × 1 and 2 × 2 dies, respectively, assuming a = 3"
+  },
+  {
+    "url": "https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf",
+    "sentence": "Because the bigger die yields less and fits fewer times on a wafer, it costs 20.",
+    "page": 8,
+    "pages": 65,
+    "evidence": "the 2 × 2 die costs (120/26) × (0.492/0.113) = 20.1 times as much as the 1 × 1 die"
+  },
+  {
+    "url": "https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf",
+    "sentence": "By the same formula, an 8 square centimeter die, about as much as one exposure c",
+    "page": null,
+    "pages": 65,
+    "problem": "Figure not in the PDF: the chapter computed it. Searched all 65 pages for 8 cm2, 0.10 and 0.1 defects/cm2, 49 percent, 0.49 and reticle/exposure: no match. The PDF gives only the yield formula (5.2.yield) and a = 3-4 on p7 and a worked example for 1 cm2 and 4 cm2 dies at 0.8/cm2 on p8. (1 + 0.8/3)^-3 = 0.492 is the same number as the p8 example, so the 'about 49 percent' is the chapter's own calculation, which the source rules forbid."
+  },
+  {
+    "url": "https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf",
+    "sentence": "Halving the defect density to 0.05 lifts that yield to about 69 percent",
+    "page": null,
+    "pages": 65,
+    "problem": "Figure not in the PDF: the chapter computed it. Searched for 0.05 defects/cm2, 69 percent and 0.687 to 0.69: the only 0.05 is in an unrelated table on p63. (1 + 0.4/3)^-3 = 0.687 follows from the formula on p7, but the PDF never states it."
+  },
+  {
+    "url": "https://web.ece.ucsb.edu/~parhami/docs_folder/f33-book-dep-comp-pt2.pdf",
+    "sentence": "A chip built from many identical blocks can carry spares and switch off a faulty",
+    "page": 23,
+    "pages": 65,
+    "evidence": "Providing redundant components or cells, plus a capability to avoid or route around bad elements is one way of avoiding defects."
+  },
+  {
+    "url": "https://d1io3yog0oux5.cloudfront.net/_7791115a123b86b3f10b1a5eb5210224/klatencor/db/1166/10653/file/2026+Investor+Day+Master+Final_IR+copy.pdf",
+    "sentence": "KLA's own actinic mask inspection tool was still at an early demo stage at its M",
+    "page": 91,
+    "pages": 173,
+    "evidence": "Actinic 7xx EUV ... Early Demo Stage"
+  },
+  {
+    "url": "https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf",
+    "sentence": "KLA says its share grew 3.6 percentage points from 2021 to 2025",
+    "page": 3,
+    "pages": 17,
+    "evidence": "Since 2021, KLA's share of Process Control has grown by 360 basis points"
+  },
+  {
+    "url": "https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf",
+    "sentence": "It says it gained share again in 2025 across mask, optical wafer and e-beam insp",
+    "page": 3,
+    "pages": 17,
+    "evidence": "Market share also improved across mask inspection, optical patterned wafer inspection, and electron beam inspection."
+  },
+  {
+    "url": "https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf",
+    "sentence": "KLA's patterning line, which includes several metrology products and mask inspec",
+    "page": 5,
+    "pages": 15,
+    "evidence": "Patterning systems, which include multiple metrology products and reticle inspection, rose 18% sequentially and 61% year-over-year"
+  },
+  {
+    "url": "https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf",
+    "sentence": "In that quarter Taiwan took 31 percent of KLA's revenue and China 26 percent",
+    "page": 5,
+    "pages": 15,
+    "evidence": "the quarterly regional revenue split was Taiwan at 31%, China at 26%, North America at 18%"
+  },
+  {
+    "url": "https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf",
+    "sentence": "KLA says process control's share of fab spending is still rising",
+    "page": 4,
+    "pages": 17,
+    "evidence": "are spurring structurally higher process control intensity across the customer base."
+  },
+  {
+    "url": "https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf",
+    "sentence": "In memory chips, KLA credits the rise to higher performance specifications, less",
+    "page": 4,
+    "pages": 17,
+    "evidence": "In memory, higher performance specs, reduced redundancy, and increasing logic content in devices designed for high-performance computing (HPC) applications"
+  },
+  {
+    "url": "https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf",
+    "sentence": "KLA's systems analyze data with AI and also filter out noise",
+    "page": 4,
+    "pages": 17,
+    "evidence": "KLA's industry-leading systems apply AI-driven analytics, noise suppression and simulation capabilities"
+  },
+  {
+    "url": "https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf",
+    "sentence": "In April 2026 KLA said it had added AI to every product line over the previous f",
+    "page": 4,
+    "pages": 17,
+    "evidence": "Over the past five years, we have enabled our entire product portfolio with increasing AI capabilities."
+  },
+  {
+    "url": "https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf",
+    "sentence": "KLA says the AI build-out is making advanced packaging, and the process control ",
+    "page": 2,
+    "pages": 15,
+    "evidence": "the AI infrastructure buildout is increasing the importance of advanced packaging and its related process-control requirements."
+  },
+  {
+    "url": "https://d1io3yog0oux5.cloudfront.net/_a357bfc9113388e37f3bfcb2ea2f0b64/klatencor/db/1117/10655/letter_to_shareholders/KLA+Shareholder+Letter+-+Q3+FY26.pdf",
+    "sentence": "KLA became the largest supplier of process control tools for advanced wafer-leve",
+    "page": 3,
+    "pages": 17,
+    "evidence": "Advanced Wafer Level Packaging, where KLA assumed the #1 position in this market, increased market share by 14 percentage points"
+  },
+  {
+    "url": "https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf",
+    "sentence": "It expects about $1.1 billion of packaging process control revenue in 2026, up m",
+    "page": 2,
+    "pages": 15,
+    "evidence": "for calendar 2026, we now expect our Advanced Packaging process control systems revenue to grow to approximately $1.1billion, up more than 70% year-over-year"
+  },
+  {
+    "url": "https://static.cninfo.com.cn/finalpage/2026-04-25/1225182755.PDF",
+    "sentence": "Skyverse (Shenzhen Zhongke Feice), a maker of wafer inspection and metrology too",
+    "page": 12,
+    "pages": 16,
+    "evidence": "营业收入 2,053,298,171.74 1,380,378,763.53 48.75 890,900,112.98",
+    "note": "'about $285 million' is not in the PDF, which gives yuan only; the dollar figure is a currency conversion"
+  },
+  {
+    "url": "https://static.cninfo.com.cn/finalpage/2026-04-25/1225182755.PDF",
+    "sentence": "That was up 48.75 percent on 2024 and more than double its 2023 revenue",
+    "page": 12,
+    "pages": 16,
+    "evidence": "营业收入 2,053,298,171.74 1,380,378,763.53 48.75 890,900,112.98"
+  },
+  {
+    "url": "https://static.cninfo.com.cn/finalpage/2026-04-25/1225182755.PDF",
+    "sentence": "In its 2025 annual report Skyverse says Chinese makers still hold a low share of",
+    "page": 11,
+    "pages": 16,
+    "evidence": "中国大陆半导体检测与量测设备国产化率较低 ... 其中科磊半导体在中国市场的占比仍然最高"
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2022-10-13/pdf/2022-21658.pdf",
+    "sentence": "In October 2022 the US began requiring a license for any US-made item, process c",
+    "page": 5,
+    "pages": 30,
+    "evidence": "new paragraph (a)(1)(iii) imposes a license requirement on any item subject to the EAR ... semiconductor fabrication \"facility\" located in China"
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2022-10-13/pdf/2022-21658.pdf",
+    "sentence": "The rule covered fabs that made logic chips at 16/14 nm or below, NAND memory wi",
+    "page": 16,
+    "pages": 30,
+    "evidence": "16/14 nanometers or less; (B) NOT AND (NAND) memory integrated circuits with 128 layers or more; or (C) Dynamic random-access memory (DRAM)"
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf",
+    "sentence": "It controls tools for defect inspection and measurement of patterned 300 mm wafe",
+    "page": 37,
+    "pages": 41,
+    "evidence": "q.1. Patterned wafer defect metrology or patterned wafer defect inspection equipment, designed or modified to accept wafers greater than or equal to 300 mm"
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf",
+    "sentence": "They must do this using light with a wavelength below 400 nm, an electron beam r",
+    "page": 37,
+    "pages": 41,
+    "evidence": "optical wavelength less than 400 nm ... resolution less (better) than or equal to 1.65 nm ... Cold Field Emission (CFE) ... Two or more electron-beam sources"
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf",
+    "sentence": "The same rule controls overlay metrology accurate to 0.5 nm or better if the too",
+    "page": 37,
+    "pages": 41,
+    "evidence": "Metrology equipment designed to measure focus or overlay ... overlay measurement accuracy less (better) than or equal to 0.5 nm having any of the following"
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf",
+    "sentence": "It also controls stand-alone wafer shape metrology that feeds corrections to imm",
+    "page": 37,
+    "pages": 41,
+    "evidence": "q.2.a. Stand-alone equipment designed to measure wafer shape parameters prior to lithography exposure and utilize measurements to improve overlay or focus"
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf",
+    "sentence": "A separate new entry, 3B994, covers optical film and line-width metrology for 30",
+    "page": 38,
+    "pages": 41,
+    "evidence": "q.3. Optical thin film metrology equipment or optical critical dimension metrology equipment designed for 300mm wafers and containing software designed for measuring non-planar transistors."
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf",
+    "sentence": "BIS, the US Commerce Department bureau that wrote the rule, placed these tools i",
+    "page": 17,
+    "pages": 41,
+    "evidence": "This IFR adds new ECCN 3B993 to specify items that enable ... but which BIS believes also have legitimate applications in non-advanced-node production"
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf",
+    "sentence": "So they carry narrower license requirements than tools built only for advanced c",
+    "page": 17,
+    "pages": 41,
+    "evidence": "and thus do not warrant nationwide license requirements or a presumption of denial. These items are differentiated from those in the ECCN 3B001 item paragraphs"
+  },
+  {
+    "url": "https://d1io3yog0oux5.cloudfront.net/_b9ee755a5f60dd0fb3f9e27967aed6af/klatencor/db/1117/10668/letter_to_shareholders/KLA+Earnings+Shareholder+Letter+-+Q4+FY26.pdf",
+    "sentence": "Yet China took 26 percent of KLA's revenue in the June 2026 quarter",
+    "page": 5,
+    "pages": 15,
+    "evidence": "the quarterly regional revenue split was Taiwan at 31%, China at 26%, North America at 18%"
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2022-10-13/pdf/2022-21658.pdf",
+    "sentence": "Since October 2022 the US has required a license for any US-made tool bound for ",
+    "page": 5,
+    "pages": 30,
+    "evidence": "this license requirement also applies to U.S.-origin items and other items subject to the EAR"
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/FR-2024-12-05/pdf/2024-28270.pdf",
+    "sentence": "A December 2024 rule added specific tools to the export control list, among them",
+    "page": 18,
+    "pages": 41,
+    "evidence": "3B993.q.1 is created to control metrology and inspection equipment for use with patterned 300 mm semiconductor wafers ... detect defects equal to or smaller than 21nm"
+  }
+]

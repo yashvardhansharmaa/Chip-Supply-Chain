@@ -1,6 +1,7 @@
 /* Specimen: a 12-high HBM3E stack, exploded inside its molding compound.
  *
- * Real object: an 11 x 12 mm cube, 0.72 mm tall, holding a logic base die and
+ * Real object: an 11 x 11 mm cube, 0.72 mm tall (Micron's HBM3E product brief:
+ * "11mm x 11mm x 0.72mm"), holding a logic base die and
  * twelve DRAM dies each ground to about 30 um, joined by micro-bumps and pierced
  * by through-silicon vias down the middle of every die. Wikipedia's HBM article
  * gives the 30 um die thickness; Samsung's 36 GB HBM3E 12H release gives the
@@ -20,8 +21,8 @@
  */
 PC.register('hbm-stack', function (p) {
   var mm = 0.09;
-  var W = 11 * mm, D = 12 * mm;             // DRAM die footprint
-  var bW = 12 * mm, bD = 13 * mm;           // base die: a shade larger all round
+  var W = 10.6 * mm, D = 10.6 * mm;         // DRAM die footprint, drawn a shade inside the cube
+  var bW = 11 * mm, bD = 11 * mm;           // base die and molding: the cube's 11 x 11 mm footprint
   var t = 0.040, bt = 0.080;                // drawn thicknesses (~15x life)
   var pitch = 0.062;                        // gap is 55% of a die's own thickness
   var baseGap = 0.046;                      // a wider step off the base die
@@ -110,6 +111,6 @@ PC.register('hbm-stack', function (p) {
     accent: [176, 102, 44], accentDark: [224, 154, 92],
     // colour: the shell round the stack is epoxy molding compound, which is black
     accent2: [43, 39, 36], accent2Dark: [107, 101, 95],
-    caption: 'A twelve-high HBM stack opened up: twelve DRAM dies of 11 by 12 mm, each ground to about thirty micrometres, lifted off the copper-coloured logic base die, with micro-bumps in every gap and through-silicon vias running the full height. The faint box around them is the molding compound that makes the finished part a cube. Footprint is to scale; thicknesses and gaps are exaggerated about fifteen times, because the real cube is only 0.72 mm tall.'
+    caption: 'A twelve-high HBM stack opened up: twelve DRAM dies, each ground to about thirty micrometers, lifted off the copper-colored logic base die, with micro-bumps in every gap and through-silicon vias running the full height. The faint box around them is the molding compound that makes the finished part a cube. Footprint is to scale; thicknesses and gaps are exaggerated about fifteen times, because the real cube is only 0.72 mm tall.'
   };
 });

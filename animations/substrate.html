@@ -7,13 +7,15 @@
 const { PAL, clamp, ease, easeOut, mix, label, text } = A, dark = A.theme === 'dark';
 // Facts, from chapter 12: the substrate is the adapter between a chip and the circuit board; the chip's connections are
 // finer than a human hair and the board is wired in millimeters; it is built up in layers of thin film around a stiff
-// core, each layer carrying copper down and outward; Ajinomoto counts 18 layers of its film in a high-performance
-// computing substrate. Eight layers are drawn, and every thickness is exaggerated.
+// core, each layer carrying copper down and outward; Ajinomoto counts 11 layers of its film on each side of the core in a
+// 2026 AI package substrate, and PC substrates had three on each side in 1999 (June 2026 deck, p. 11; the deck labels
+// each side, so the readout gives the per-side count and never a sum). Three layers of film are drawn on each side of a
+// core two layers thick, and every thickness is exaggerated.
 const STEPS = [
   { k: 'The package', t0: 0.4, t1: 5.4, cap: 'An AI chip is more than the chip itself. It sits in a package: the chips on a silicon base, and under them the substrate, which connects everything to the circuit board.' },
   { k: 'Tight to wide', t0: 5.4, t1: 9.0, cap: 'The connections on top are packed tight. The circuit board below is wired in millimeters. The substrate has to join the two.' },
   { k: 'Layer by layer', t0: 9.0, t1: 15.0, cap: 'The substrate does it in layers, built outward from a stiff core. Each layer carries the copper a little further out.' },
-  { k: 'Connected', t0: 15.0, t1: 20.8, cap: 'Stacked together, the layers fan the tight grid out to the board’s wide one. An AI chip needs about 18 layers, against six for a PC, and every layer is another chance for a flaw, which is what makes these substrates hard to build.' },
+  { k: 'Connected', t0: 15.0, t1: 20.8, cap: 'Stacked together, the layers fan the tight grid out to the board’s wide one. Ajinomoto counts 11 layers of its film on each side of the core in a 2026 AI package substrate, against three on each side for a PC in 1999. Every layer is another chance for a flaw, which is what makes these substrates hard to build.' },
 ];
 // one headline at a time; each fades out before the next fades in
 const HEADS = [
@@ -128,10 +130,11 @@ function render(ctx, t) {
   // readout
   const ra = ease((p[2] - 0.5) / 0.3);
   if (ra > 0) {
-    ctx.save(); ctx.globalAlpha = ra; ctx.fillStyle = PAL.garnet; ctx.fillRect(504, 184, 2, 54); ctx.restore();
-    text('18', 520, 220, '300 44px Fraunces', PAL.garnet, { alpha: ra }); ctx.font = '300 44px Fraunces'; const w = ctx.measureText('18').width;
+    ctx.save(); ctx.globalAlpha = ra; ctx.fillStyle = PAL.garnet; ctx.fillRect(504, 184, 2, 70); ctx.restore();
+    text('11', 520, 220, '300 44px Fraunces', PAL.garnet, { alpha: ra }); ctx.font = '300 44px Fraunces'; const w = ctx.measureText('11').width;
     text('layers', 520 + w + 7, 220, '500 13px "Instrument Sans"', PAL.garnet, { alpha: ra });
-    label('Under an AI chip', 520, 239, PAL.muted, { alpha: ra });
+    label('On each side of the core', 520, 239, PAL.muted, { alpha: ra });
+    label('AI package, 2026', 520, 255, PAL.muted, { alpha: ra });
   }
 }
 A.start({ W, H, duration: 21.8, fade: 0.8, steps: STEPS, render });

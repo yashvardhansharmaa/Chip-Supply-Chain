@@ -12,7 +12,7 @@
   {
    "k": "Power in",
    "t0": 5.4,
-   "cap": "Power comes in from the grid, stepped down by a substation, and runs through the data center to every rack. One rack of AI chips draws up to 142 kilowatts."
+   "cap": "Power comes in from the grid, stepped down by a substation, and runs through the data center to every rack. One rack of AI chips can draw 142 kilowatts."
   },
   {
    "k": "Heat",
@@ -22,7 +22,7 @@
   {
    "k": "Water out",
    "t0": 13.8,
-   "cap": "So water runs through plates on the chips, carries the heat to coolers outdoors and comes back. Racks are heading for a megawatt each by 2027, so the power coming in and the heat going out keep growing."
+   "cap": "So water runs through plates on the chips, carries the heat to coolers outdoors and comes back. Nvidia plans for racks of a megawatt each from 2027, so the power coming in and the heat going out keep growing."
   }
  ]
 }

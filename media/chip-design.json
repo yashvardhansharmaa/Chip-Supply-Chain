@@ -27,7 +27,7 @@
   {
    "k": "Checked",
    "t0": 18.4,
-   "cap": "The software checks that every signal on the chip arrives in time, and a chip factory accepts only designs that pass. The factory then prints the blueprint onto silicon through stencils, and changing it after that costs new stencils and several months."
+   "cap": "The software checks that every signal arrives in time and that every shape can be printed, and a chip factory accepts only designs that pass the printing checks. The factory then prints the blueprint onto silicon through stencils, and changing it after that costs new stencils and a few months."
   }
  ]
 }

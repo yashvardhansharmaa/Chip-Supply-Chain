@@ -10,16 +10,16 @@ const { PAL, clamp, ease, mix, label, text } = A, dark = A.theme === 'dark';
 // outdoors; the newest racks take 45 °C supply water, warm enough that many sites can skip chillers. A diagram, not to scale.
 const STEPS = [
   { k: 'The site', t0: 0.4, t1: 5.4, cap: 'Data centers are where AI chips go to work. A large training site holds a hundred thousand of them, in rows of racks.' },
-  { k: 'Power in', t0: 5.4, t1: 9.6, cap: 'Power comes in from the grid, stepped down by a substation, and runs through the data center to every rack. One rack of AI chips draws up to 142 kilowatts.' },
+  { k: 'Power in', t0: 5.4, t1: 9.6, cap: 'Power comes in from the grid, stepped down by a substation, and runs through the data center to every rack. One rack of AI chips can draw 142 kilowatts.' },
   { k: 'Heat', t0: 9.6, t1: 13.8, cap: 'Every watt of it comes back out as heat, more than air can carry away.' },
-  { k: 'Water out', t0: 13.8, t1: 19.6, cap: 'So water runs through plates on the chips, carries the heat to coolers outdoors and comes back. Racks are heading for a megawatt each by 2027, so the power coming in and the heat going out keep growing.' },
+  { k: 'Water out', t0: 13.8, t1: 19.6, cap: 'So water runs through plates on the chips, carries the heat to coolers outdoors and comes back. Nvidia plans for racks of a megawatt each from 2027, so the power coming in and the heat going out keep growing.' },
 ];
 // one headline at a time; each fades out before the next fades in
 const HEADS = [
   { t0: 0.4, t1: 4.4, h: 'A data center', s: 'Cut open, with rows of racks inside' },
   { t0: 4.4, t1: 9.9, h: 'Power in', s: 'Grid, then substation, then the racks inside' },
   { t0: 9.9, t1: 14.1, h: 'Power becomes heat', s: 'More than air can carry away' },
-  { t0: 14.1, h: 'Water carries the heat away', s: 'Racks are heading for a megawatt each by 2027', red: 1 },
+  { t0: 14.1, h: 'Water carries the heat away', s: 'Nvidia plans racks of a megawatt from 2027', red: 1 },
 ];
 function heads(ctx, t) {
   HEADS.forEach(({ t0, t1, h, s, red }) => {

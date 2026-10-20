@@ -1,0 +1,27 @@
+[
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "data-centers-and-power",
+      "list": "cards",
+      "index": 0
+    },
+    "field": "a",
+    "before": "One rack draws up to 142 kilowatts",
+    "after": "One rack can draw 142 kilowatts",
+    "by": "refresh-b",
+    "note": "matches plain"
+  },
+  {
+    "file": "flashcards",
+    "where": {
+      "deck": "data-centers-and-power",
+      "list": "takeaways",
+      "index": 0
+    },
+    "before": "One AI rack draws up to 142 kilowatts",
+    "after": "One AI rack can draw 142 kilowatts",
+    "by": "refresh-b",
+    "note": "matches plain"
+  }
+]

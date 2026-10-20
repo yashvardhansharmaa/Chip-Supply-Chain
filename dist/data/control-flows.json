@@ -24,7 +24,7 @@
           "date": "2022-10-21",
           "announced": "2022-10-07",
           "status": "denial",
-          "label": "Denial above 4,800 TPP with 600 GB/s or more of chip-to-chip bandwidth",
+          "label": "Denial at 4,800 TPP or more with 600 GB/s or more of chip-to-chip bandwidth",
           "event": "2022-10-07-october-rules",
           "cite": {
             "fr": "87 FR 62186",
@@ -127,7 +127,7 @@
           "date": "2022-10-21",
           "announced": "2022-10-07",
           "status": "denial",
-          "label": "Denial above 4,800 TPP with 600 GB/s or more of chip-to-chip bandwidth",
+          "label": "Denial at 4,800 TPP or more with 600 GB/s or more of chip-to-chip bandwidth",
           "event": "2022-10-07-october-rules",
           "cite": {
             "fr": "87 FR 62186",
@@ -247,9 +247,9 @@
     },
     {
       "id": "allies",
-      "name": "Allied controls",
+      "name": "Dutch and Japanese controls",
       "route": "Netherlands and Japan → China",
-      "what": "Advanced immersion DUV scanners (machines that print chip patterns), the measuring and inspection tools that go with them, and 23 categories of Japanese equipment.",
+      "what": "Advanced immersion DUV scanners (machines that print chip patterns) and some measuring and inspection tools from the Netherlands, and the chipmaking equipment Japan added to its license list in 2023 and 2025. The Dutch controls cover exports to every destination outside the EU, and the Japanese controls cover every destination.",
       "order": 4,
       "chapter": "lithography",
       "initial": "open",
@@ -280,7 +280,7 @@
           "date": "2024-09-07",
           "announced": "2024-09-06",
           "status": "case",
-          "label": "Dutch license requirement extended to mid-range immersion scanners",
+          "label": "Dutch license requirement extended to more DUV lithography tools",
           "event": "2024-09-06-dutch-extension",
           "cite": {
             "fr": "Staatscourant 2024, 29008",
@@ -297,9 +297,20 @@
             "fr": "Staatscourant, 15 January 2025",
             "url": "https://www.government.nl/latest/news/2025/01/15/klever-export-controls-on-advanced-semiconductor-manufacturing-equipment-to-be-tightened"
           }
+        },
+        {
+          "date": "2025-05-28",
+          "announced": "2025-03-28",
+          "status": "case",
+          "label": "Japan adds more chipmaking tools, such as etch, deposition and inspection tools, to its license list",
+          "event": "2025-03-28-japan-advanced-chips",
+          "cite": {
+            "fr": "Cabinet Order No. 102 of 2025 and METI Ordinance No. 34 of 2025",
+            "url": "https://www.meti.go.jp/policy/anpo/law_document/20250328_ristshiryou.pdf"
+          }
         }
       ],
-      "short": "Allied tools"
+      "short": "Dutch and Japanese tools"
     },
     {
       "id": "hbm",
@@ -501,6 +512,17 @@
           }
         },
         {
+          "date": "2023-12-01",
+          "announced": "2023-10-20",
+          "status": "case",
+          "label": "License required for high-purity synthetic graphite and natural flake graphite",
+          "event": "2023-10-20-graphite-licensing",
+          "cite": {
+            "fr": "MOFCOM and GAC Announcement 2023 No. 39",
+            "url": "https://www.mofcom.gov.cn/zcfb/blgg/art/2023/art_f6b1bc49e2c8482f8eb749012bc66dec.html"
+          }
+        },
+        {
           "date": "2024-12-03",
           "status": "prohibited",
           "label": "Exports to America not permitted, in principle",
@@ -528,7 +550,7 @@
       "id": "minerals-world",
       "name": "Critical minerals to everyone else",
       "route": "China → the rest of the world",
-      "what": "The same gallium, germanium and antimony, plus seven medium and heavy rare earths, sold anywhere but America. A license is required. No ban is in force.",
+      "what": "The same gallium, germanium and antimony, plus graphite, seven medium and heavy rare earths and items related to tungsten, tellurium, bismuth, molybdenum and indium, sold anywhere but America. A license is required.",
       "order": 8,
       "chapter": "chemicals-gases-and-photoresist",
       "initial": "open",
@@ -553,6 +575,27 @@
           "cite": {
             "fr": "MOFCOM and GAC Announcement 2023 No. 23",
             "url": "http://exportcontrol.mofcom.gov.cn/article/zcfg/gnzcfg/zcfggzqd/202307/847.html"
+          }
+        },
+        {
+          "date": "2023-12-01",
+          "announced": "2023-10-20",
+          "status": "case",
+          "label": "License required for high-purity synthetic graphite and natural flake graphite",
+          "event": "2023-10-20-graphite-licensing",
+          "cite": {
+            "fr": "MOFCOM and GAC Announcement 2023 No. 39",
+            "url": "https://www.mofcom.gov.cn/zcfb/blgg/art/2023/art_f6b1bc49e2c8482f8eb749012bc66dec.html"
+          }
+        },
+        {
+          "date": "2025-02-04",
+          "status": "case",
+          "label": "Items related to tungsten, tellurium, bismuth, molybdenum and indium added",
+          "event": "2025-02-04-tungsten-indium-licensing",
+          "cite": {
+            "fr": "MOFCOM and GAC Announcement 2025 No. 10",
+            "url": "https://www.mofcom.gov.cn/zfxxgk/gkml/art/2025/art_084ded0609404b2d81c746b31c9a03a6.html"
           }
         },
         {

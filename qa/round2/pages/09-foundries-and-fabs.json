@@ -1,0 +1,65 @@
+[
+  {
+    "url": "https://www.epw.senate.gov/public/_cache/files/a/c/ac4552ff-551b-40d5-bea6-19dd17a1cfea/1F7BCD91016CBE352434701BE58395874BEA6A892A23ABEE1D7214EC924EC0EB.03-04-2026-isaacs-testimony.pdf",
+    "sentence": "In March 2026 the Semiconductor Industry Association (SIA) told the US Senate th",
+    "page": 3,
+    "pages": 12,
+    "evidence": "require high levels of capital investment (as much as $20-25 billion for a leading-edge fab, spanning construction costs and manufacturing equipment investments)"
+  },
+  {
+    "url": "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf",
+    "sentence": "In 2022 South Korea and Taiwan held almost all of the world's logic capacity bel",
+    "page": 13,
+    "pages": 38,
+    "evidence": "from almost 100% distributed between South Korea and Taiwan in 2022 to more than 40% being outside these regions by 2032"
+  },
+  {
+    "url": "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf",
+    "sentence": "The United States had almost no capacity below 10 nm that year",
+    "page": 13,
+    "pages": 38,
+    "evidence": "In 2022, the United States did not produce any advanced logic chips."
+  },
+  {
+    "url": "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf",
+    "sentence": "In May 2024 SIA and BCG projected that the US share of that capacity would reach",
+    "page": 14,
+    "pages": 38,
+    "evidence": "Logic: 2022 0% 31% 69% <10 nm 2032F 28% 6% 5% 9% 47% 3% [Exhibit 6 chart, Logic <10 nm, 2032F: US 28%]"
+  },
+  {
+    "url": "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf",
+    "sentence": "They also projected that new fab investment worldwide would reach around $2.3 tr",
+    "page": 4,
+    "pages": 38,
+    "evidence": "We project around $2.3 trillion in private sector investment in wafer fabrication in 2024–2032"
+  },
+  {
+    "url": "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf",
+    "sentence": "Little of China's capacity is advanced",
+    "page": 30,
+    "pages": 38,
+    "evidence": "Mainland China leads the world in ATP capacity and wafer fabrication for logic chips at or older than 28 nanometers."
+  },
+  {
+    "url": "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf",
+    "sentence": "Taiwan held 69 percent of the world's logic capacity below 10 nm in 2022",
+    "page": 14,
+    "pages": 38,
+    "evidence": "Logic: 2022 0% 31% 69% <10 nm 2032F 28% 6% 5% 9% 47% 3% [Exhibit 6 chart, Logic <10 nm, 2022: Taiwan 69%, Korea 31%, US 0%]"
+  },
+  {
+    "url": "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf",
+    "sentence": "In 2022 Taiwan held 69 percent of the world's capacity for advanced logic chips,",
+    "page": 14,
+    "pages": 38,
+    "evidence": "Logic: 2022 0% 31% 69% <10 nm 2032F 28% 6% 5% 9% 47% 3% [Exhibit 6 chart, Logic <10 nm, 2022: Taiwan 69%, Korea 31%, US 0%]"
+  },
+  {
+    "url": "https://www.semiconductors.org/wp-content/uploads/2024/05/Report_Emerging-Resilience-in-the-Semiconductor-Supply-Chain.pdf",
+    "sentence": "Little of China's capacity is advanced",
+    "page": 30,
+    "pages": 38,
+    "evidence": "Mainland China leads the world in ATP capacity and wafer fabrication for logic chips at or older than 28 nanometers."
+  }
+]

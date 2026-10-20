@@ -103,11 +103,19 @@ small { font-size: 0.85em; }
   background: var(--bg);
   border-bottom: 1px solid var(--line-2);
 }
-.wordmark { display: flex; align-items: baseline; gap: 14px; text-decoration: none; }
-/* Fraunces small caps. Google Fonts strips the smcp feature from its subsets, so the browser synthesizes them
-   (scaled capitals); a self-hosted Fraunces with smcp, or a drawn wordmark, would replace this without a markup change. */
-.wordmark b { font-family: var(--font-display); font-weight: 500; font-size: 21px; letter-spacing: 0.075em; text-transform: none; font-variant-caps: small-caps; font-variation-settings: "opsz" 36, "SOFT" 0, "WONK" 0; }
-.wordmark span { font-family: var(--font-body); font-style: italic; font-size: 14px; letter-spacing: 0; color: var(--muted); text-transform: none; }
+/* the wordmark: the favicon's tile (build/assets/icons/favicon.svg, inline) beside the name in Fraunces title case.
+   The tile keeps the favicon's own garnet and paper in both themes, so it matches the tab icon; odd sizes (29 px in the
+   55 px bar, 25 px in the 27 px phone row) center it on whole pixels. The link's aria-label carries the name. */
+.wordmark { display: flex; align-items: center; gap: 12px; min-height: 44px; text-decoration: none; }
+.wordmark .wm-tile { display: block; flex: none; width: 29px; height: 29px; }
+.wordmark .wm-tile rect { fill: #7a1f2b; }
+.wordmark .wm-tile path { fill: #f7f6f2; }
+.wordmark .wm-name { font-family: var(--font-display); font-size: 21px; font-weight: 540; font-variation-settings: "opsz" 28, "SOFT" 0, "WONK" 0; letter-spacing: -0.005em; line-height: 1; white-space: nowrap; }
+@media (max-width: 900px) {
+  .wordmark { flex: 1 1 auto; min-width: 0; min-height: 27px; gap: 9px; padding-right: 92px; }
+  .wordmark .wm-tile { width: 25px; height: 25px; }
+  .wordmark .wm-name { font-size: 18px; }
+}
 .tabs { display: flex; gap: 4px; align-items: center; min-width: 0; overflow-x: auto; scrollbar-width: none; }
 .tabs::-webkit-scrollbar { display: none; }
 .tabs a {
@@ -489,7 +497,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .subtabs a { font-family: var(--font-mono); font-weight: 500; font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; padding: 10px 14px 9px; border-bottom: 2px solid transparent; margin-bottom: -1px; }
 .subtabs a:hover { color: var(--ink); }
 .subtabs a[aria-current="true"] { color: var(--ink); border-bottom-color: var(--accent); }
-@media (max-width: 1240px) { .wordmark span { display: none; } .tabs a { padding: 8px 7px 7px; font-size: 13px; } }
+@media (max-width: 1240px) { .tabs a { padding: 8px 7px 7px; font-size: 13px; } }
 @media (max-width: 1060px) { .tabs a { padding: 8px 5px 7px; font-size: 12.5px; } .tabs { gap: 2px; } }
 
 .stage .stage-actions, .sheet { display: none; }
@@ -683,6 +691,15 @@ button.ptag { cursor: pointer; }
 .plate-status > div:last-child { border-right: 0; }
 .plate-status .k { display: block; font-family: var(--font-mono); font-weight: 500; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
 .plate-status p { font-size: 14.5px; line-height: 1.5; color: var(--ink-2); margin: 0; }
+/* the card's footnote marks: on a figure set large the mark keeps the size of the card's other marks and rides at the
+   figure's cap height; two marks in one place (a field with more urls than sentences) take a comma between them */
+.plate-kpis .v:not(.long) sup.cite { font-size: 0.4em; vertical-align: 1.1em; margin-left: 0; }
+.plate sup.cite-sep { font-family: var(--font-mono); font-size: 0.62em; line-height: 0; vertical-align: 0.55em; color: var(--accent); }
+/* under a leader's share, the firm's latest China share of revenue from the Export Controls panel: a second line in the
+   label face, small and muted, that opens the firm's chart; the invisible box keeps a 24 px target without spacing the list */
+.plate-rows .lead-cn { position: relative; display: block; width: fit-content; max-width: 100%; text-indent: 0; margin-top: 2px; font-family: var(--font-mono); font-size: 12px; line-height: 1.35; letter-spacing: 0.01em; font-variant-numeric: tabular-nums; color: var(--muted); }
+.plate-rows .lead-cn:hover { color: var(--accent); }
+.plate-rows .lead-cn::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: max(100%, 24px); transform: translateY(-50%); }
 .brief-meta .conc.Extreme, .plate-kpis .v.Extreme { color: var(--accent); }
 
 .dbg-only .hero, .dbg-only .contents, .dbg-only #chain, .dbg-only .chapter:not(.only) { display: none; }
@@ -693,13 +710,9 @@ button.ptag { cursor: pointer; }
   :root { --col: 100%; --masthead: 75px; --gutter: 34px; --gutter-gap: 12px; } /* the two-row phone masthead; measured at runtime too, but the first paint must not shift */
   body { font-size: 17px; }
   .masthead { padding: 6px 14px 0; height: auto; min-height: 52px; flex-wrap: wrap; gap: 0 8px; align-items: center; }
-  .wordmark { flex: 1 1 auto; min-width: 0; }
-  .wordmark span { display: none; }
-  .wordmark b { white-space: nowrap; font-size: 18px; }
   .masthead .search-btn, .masthead .theme-toggle { position: absolute; top: 5px; width: 32px; height: 32px; } /* the buttons live inside the tab strip; on phones they pin to the first row, clear of the tabs below so each tab keeps a full 24 px to tap */
   .masthead .theme-toggle { right: 14px; }
   .masthead .search-btn { right: 52px; }
-  .wordmark { padding-right: 92px; }
   .tabs { order: 3; flex: 0 0 100%; width: 100%; flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; -webkit-overflow-scrolling: touch; margin: 2px 0 0; padding: 0 0 4px; }
   .tabs a { padding: 6px 8px 5px; font-size: 12.5px; }
   .chapter .chain--compact, .chapter .chain-foot { display: none; }
@@ -778,7 +791,7 @@ button.ptag { cursor: pointer; }
   .spec-groups dt { border-bottom: 0; padding-bottom: 0; }
   .timeline li { grid-template-columns: 1fr; gap: 4px; }
 }
-@media (max-width: 480px) { .tabs a { padding: 6px 6px 5px; font-size: 11.5px; } .wordmark b { font-size: 17px; } }
+@media (max-width: 480px) { .tabs a { padding: 6px 6px 5px; font-size: 11.5px; } }
 
 
 /* ---------- end-of-chapter flashcards: four cards, then the four things to remember ---------- */
@@ -834,6 +847,8 @@ button.ptag { cursor: pointer; }
 @media (prefers-reduced-motion: reduce) { .fc-card { transition: none; } }
 @media (max-width: 700px) { .fc-face { padding: 18px 18px 16px; } .fc-q { font-size: 23px; } .fc-a { font-size: 21px; } .fc-deck { margin-right: 12px; } }
 @media print { .review .rv-head, .fc-deck, .fc-nav, .fc-score, .fc-end .fc-row { display: none !important; } .fc-end[hidden] { display: block !important; } .review { border-top-width: 1px; } }
+/* a returning reader's last score takes the place of the deck's instruction (app.js); the same quiet line */
+.review .rv-sub.fc-last { color: var(--ink-2); }
 
 /* ---------- explainer animations: step names above, the video, the caption below ---------- */
 .figure--anim { max-width: var(--measure); }

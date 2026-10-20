@@ -17,7 +17,7 @@
   {
    "k": "Light between",
    "t0": 9,
-   "cap": "Training a large model takes many racks, too far apart for copper. The links between racks carry the signal as flashes of light in glass fiber."
+   "cap": "Training a large model takes many racks, most of them too far apart for copper. The links between them carry the signal as flashes of light in glass fiber."
   },
   {
    "k": "Lasers",

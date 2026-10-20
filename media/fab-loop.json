@@ -1,0 +1,43 @@
+{
+ "duration": 19.6,
+ "fade": 0.8,
+ "width": 760,
+ "height": 420,
+ "steps": [
+  {
+   "k": "The fab",
+   "t0": 0.4,
+   "cap": "Sealed pods carry wafers from tool to tool on a track near the ceiling."
+  },
+  {
+   "k": "Deposit",
+   "t0": 2.8,
+   "cap": "The first tool lays a thin film on the wafer."
+  },
+  {
+   "k": "Print",
+   "t0": 4.6,
+   "cap": "The next prints a pattern on it with light."
+  },
+  {
+   "k": "Etch",
+   "t0": 6.4,
+   "cap": "An etch tool cuts the pattern into the film."
+  },
+  {
+   "k": "Clean, measure",
+   "t0": 8.2,
+   "cap": "The wafer is cleaned, then measured to check the layer came out right."
+  },
+  {
+   "k": "Next layer",
+   "t0": 10.9,
+   "cap": "Then the loop starts again for the next layer. The transistors come first, then the wiring above them."
+  },
+  {
+   "k": "Finished",
+   "t0": 15.3,
+   "cap": "Making one chip takes 1,000 to 1,500 steps, the Semiconductor Industry Association estimated in 2025."
+  }
+ ]
+}

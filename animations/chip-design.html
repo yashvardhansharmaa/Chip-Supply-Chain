@@ -8,8 +8,9 @@ const { PAL, clamp, ease, easeOut, mix, rng, label, text } = A, dark = A.theme =
 // Facts, from chapter 1: design turns an idea into a complete blueprint that fixes where each of billions of transistors
 // sits and how it is wired; the chip works in ticks, and a signal has to cross its wires within one tick, less than a
 // billionth of a second; a register holds one number and the tick moves every register forward together; software from
-// Synopsys, Cadence and Siemens places the cells, wires them and proves every signal arrives in time; a factory accepts
-// only designs that pass, then prints the design onto silicon through stencils. The opening floorplan follows the
+// Synopsys, Cadence and Siemens places the cells, wires them, proves every signal arrives in time and checks that every
+// shape can be printed; a factory accepts only designs that pass the printing checks, then prints the design onto
+// silicon through stencils; changing it after that takes new stencils and a few months. The opening floorplan follows the
 // chapter's GPU-die specimen (26 by 33 mm; compute tiles either side of a cache band, memory links on the long edges).
 // The close view is simplified: cells in rows, two registers per path, one tick slowed to a couple of seconds.
 const STEPS = [
@@ -17,7 +18,7 @@ const STEPS = [
   { k: 'One tick', t0: 6.2, t1: 10.4, cap: 'The chip works in ticks, each less than a billionth of a second. On every tick a signal leaves a register, a small store that holds one number, and it has to cross its wire to the next register before the next tick.' },
   { k: 'Too far', t0: 10.4, t1: 14.2, cap: 'If the next register sits far away, the wire is long. The signal is still on its way when the next tick comes, so it arrives too late.' },
   { k: 'Placed closer', t0: 14.2, t1: 18.4, cap: 'Design software from three companies, Synopsys, Cadence and Siemens, places the parts and wires them together. Here it moves the register closer, and the signal arrives in time.' },
-  { k: 'Checked', t0: 18.4, t1: 22.4, cap: 'The software checks that every signal on the chip arrives in time, and a chip factory accepts only designs that pass. The factory then prints the blueprint onto silicon through stencils, and changing it after that costs new stencils and several months.' },
+  { k: 'Checked', t0: 18.4, t1: 22.4, cap: 'The software checks that every signal arrives in time and that every shape can be printed, and a chip factory accepts only designs that pass the printing checks. The factory then prints the blueprint onto silicon through stencils, and changing it after that costs new stencils and a few months.' },
 ];
 // one headline at a time; each fades out before the next fades in
 const HEADS = [

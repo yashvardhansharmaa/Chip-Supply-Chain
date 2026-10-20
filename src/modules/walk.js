@@ -4,11 +4,12 @@
   var CP = window.CP;
   if (!CP) return;
 
-  var rail, fill, num, label, list, steps = [], total = 0;
+  var rail, fill, num, label, list, steps = [], total = 0, deck = null, deckHash = '';
   var setUp = false, queued = false, at = -1, first = true;
   /* Back from a chapter returns the reader to the same place: while the walk is read, the address follows the step on
-     screen (#/walk/<chapter>, replaced, never pushed), and the scroll position is kept, so coming back to that address
-     puts the page where it was left. */
+     screen (#/walk/<chapter>, replaced, never pushed), or past the last step the flashcards (#/walk/flashcards), and the
+     scroll position is kept, so coming back to that address puts the page where it was left, and a reload in the deck
+     opens on the deck. */
   var lastY = 0, lastHash = null, base = '#/', pending = null, hold = 0;
   var HOMEISH = /^(#|#\/|#\/(walk|home|intro|briefing))?$/, STEP = /^#\/walk\/[^?#\/]+$/;
 
@@ -25,11 +26,11 @@
     root.style.scrollBehavior = 'auto'; window.scrollTo(0, y); root.style.scrollBehavior = prev;
   }
 
-  function remember(i) {
+  function remember(i) { // i: the step on screen; -1 above the first step, -2 in the flashcards after the last
     lastY = window.pageYOffset;
     var h = location.hash || '';
     if (HOMEISH.test(h) || STEP.test(h)) { // an address this view does not own (a query, an anchor) is left alone
-      var want = i >= 0 ? '#' + steps[i].id : base;
+      var want = i === -2 ? deckHash : i >= 0 ? '#' + steps[i].id : base;
       if (want !== h) { try { history.replaceState(history.state, '', want || location.pathname + location.search); } catch (e) { } }
     }
     lastHash = location.hash || '';
@@ -42,6 +43,8 @@
     list = CP.$('.wk-list');
     steps = CP.$$('.wk-step');
     total = steps.length;
+    deck = document.getElementById('/walk/flashcards'); // the flashcards after the last step, an address of this view like a step's
+    deckHash = deck ? '#/walk/flashcards' : '';
     if (!rail || !list || !total) { rail = null; return false; }
     fill = rail.querySelector('.wk-rail-bar i');
     num = rail.querySelector('.wk-rail-n');
@@ -67,8 +70,9 @@
     if (!rail || CP.Router.current !== 'walk') return;
     var ln = line();
     var box = list.getBoundingClientRect();
+    var inDeck = !!deck && deck.getBoundingClientRect().top <= ln; // the flashcards have reached the reading line: the rail, which names a step, goes
 
-    rail.setAttribute('data-show', box.top < ln && box.bottom > ln - 60 ? '1' : '0');
+    rail.setAttribute('data-show', !inDeck && box.top < ln && box.bottom > ln - 60 ? '1' : '0');
     var p = Math.max(0, Math.min(1, (ln - box.top) / Math.max(1, box.height)));
     fill.style.width = (p * 100).toFixed(1) + '%';
 
@@ -78,7 +82,7 @@
     var r = steps[cur].getBoundingClientRect(), f = Math.max(0, Math.min(1, (ln - r.top) / Math.max(1, r.height)));
     steps[cur].style.setProperty('--wk-fill', (f * 100).toFixed(1) + '%');
     // above the first step the address is the page's own; just after a landing the page may still reflow under it, so wait
-    if (!pending && Date.now() > hold) remember(steps[0].getBoundingClientRect().top <= ln ? cur : -1);
+    if (!pending && Date.now() > hold) remember(inDeck ? -2 : steps[0].getBoundingClientRect().top <= ln ? cur : -1);
     if (cur === at) return;
     at = cur;
     for (var j = 0; j < total; j++) {

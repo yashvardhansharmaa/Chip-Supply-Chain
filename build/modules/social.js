@@ -111,6 +111,8 @@ function manifest(root) {
 
   let suppliers = [];
   try { suppliers = JSON.parse(fs.readFileSync(path.join(root, 'data', 'suppliers.json'), 'utf8')); } catch (e) { /* the count is decorative */ }
+  let exposureFirms = 24;
+  try { exposureFirms = new Set(JSON.parse(fs.readFileSync(path.join(root, 'data', 'exposure.json'), 'utf8')).map((r) => r.firm)).size; } catch (e) { /* keep the last known count */ }
   const walkWords = chapters.reduce((a, c) => a + wordCount(c.plain), 0);
   const mins = Math.max(1, Math.round(walkWords / 230));
 
@@ -121,7 +123,7 @@ function manifest(root) {
     { slug: 'chain', route: '#/chain', eyebrow: `${SITE} · The Chain`, title: 'The Chain', line: 'Every stage of the supply chain, and who controls it.', description: `Every stage of the supply chain, and who controls it. ${chapters.length} chapters, from chip design to the data center.` },
     { slug: 'chips', route: '#/landscape', eyebrow: `${SITE} · AI Chips`, title: 'AI Chips', line: 'The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026.', description: 'The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026. Each entry names the foundry, process node, memory supplier and packaging plant behind the chip wherever the maker or a cited source has published them.' },
     { slug: 'suppliers', route: '#/suppliers', eyebrow: `${SITE} · Suppliers`, title: 'Suppliers', line: `What each of the ${suppliers.length || 220} firms makes, where it sits, and how hard it would be to replace.` },
-    { slug: 'export-controls', route: '#/controls', eyebrow: `${SITE} · Export Controls`, title: 'Export Controls', line: "Every rule since 2018, what can still be sold to China, and each firm's China sales." },
+    { slug: 'export-controls', route: '#/controls', eyebrow: `${SITE} · Export Controls`, title: 'Export Controls', line: `The main rules since 2018, what can still be sold to China, and China's share of revenue at ${exposureFirms} firms, from their filings.` },
     { slug: 'glossary', route: '#/glossary', eyebrow: `${SITE} · Glossary`, title: 'Glossary', line: 'Every term, firm, chip and country, with the passages that use them.' },
   ];
   for (const v of views) pages.push({ kind: 'view', body: v.description || v.line, linkText: 'Open the page', ...v, description: describe(v.description || v.line) });
@@ -212,30 +214,94 @@ a{color:#7a1f2b}
 `;
 }
 
+// Start here's page (/intro/): the same tags, and a reader with scripts is sent on to Start here as from every view's page.
+// A reader without scripts stays, since this page has no meta refresh (it would send them to a main page that shows nothing
+// without scripts), and finds the deck that ends Start here as review questions, each answer linking to its chapter's
+// readable page. It takes the readable chapter pages' styles.
+function introHTML(p, versions, css, review) {
+  const target = BASE + p.route;
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(pageTitle(p))}</title>
+<meta name="description" content="${esc(p.description)}">
+<link rel="canonical" href="${esc(target)}">
+${shareTags(p, versions)}
+<!-- the tags above are what an unfurler reads; a person with scripts is sent on to the page itself -->
+<script>location.replace(${JSON.stringify(target)});</script>
+${ICONS}
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="${FONTS}">
+<style>${css}${EXTRA_CSS}</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead"><a class="wordmark" href="../" aria-label="Chip Supply Chain"><svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg><span class="wm-name">Chip Supply Chain</span></a><nav aria-label="Site"><a href="../#/chain">The Chain</a><a href="../#/glossary">Glossary</a></nav></header>
+<main id="main" class="page">
+<header class="ch-head">
+<p class="eyebrow"><b>Start here</b></p>
+<h1 class="ch-title">${esc(p.title)}</h1>
+<p class="ch-lede">${esc(p.body)}</p>
+<p><a href="${esc(target)}">${esc(p.linkText)}</a></p>
+</header>
+${review}
+</main>
+</body>
+</html>
+`;
+}
+
 /* ---------------- the readable chapter page ---------------- */
 const BANDS = { Extreme: 4, High: 3, Moderate: 2, Low: 1 }; // as build.js ranks them for the chain's bars
 const minCSS = (s) => s.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ').replace(/\s*([{};])\s*/g, '$1').replace(/;}/g, '}').trim();
 const textOf = (html) => String(html || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
 // the readable page's own additions to build/assets/chapter-page.css: the cite line under the title (build.js citeBlock;
 // the citation opens as the link's :target without scripts, and as a toggle with them) and the key under the stage strip.
-// Printed, the citation shows in full and the two controls drop out.
+// On a phone the cite line's day takes a line of its own, and its two links share the next.
+// Printed (the browser's own print, with no script), the citation shows in full and the cite line's links drop out; each
+// source prints its full address under its title, while the marks in the text stay numbers; the review answers open
+// (where the browser can open a closed <details> from CSS) and the note telling the reader to open them goes; the
+// specimen's caption, which describes the 3D model, is left out with the model.
 const EXTRA_CSS = minCSS(`
 .ch-head .ch-meta { margin-bottom: 8px; }
 .ch-cite { margin: 0 0 26px; }
 .ch-cite-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 8px; margin: 0; font-family: var(--font-label); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
 .ch-cite-line > * { padding: 4px 0; }
-.ch-cite-btn, .ch-cite-mail, .ch-cite-copy { font: inherit; letter-spacing: inherit; text-transform: inherit; background: none; border: 0; margin: 0; cursor: pointer; color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2); }
-.ch-cite-btn:hover, .ch-cite-mail:hover, .ch-cite-copy:hover { text-decoration-color: var(--accent); }
+.ch-cite-btn, .ch-cite-pdf, .ch-cite-copy { font: inherit; letter-spacing: inherit; text-transform: inherit; background: none; border: 0; margin: 0; cursor: pointer; color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2); }
+.ch-cite-btn:hover, .ch-cite-pdf:hover, .ch-cite-copy:hover { text-decoration-color: var(--accent); }
+@media (max-width: 640px) { .ch-cite-line > span:first-child { flex-basis: 100%; } .ch-cite-line > span:first-child + .ch-cite-sep { display: none; } }
 .ch-cite-box { display: none; margin: 6px 0 2px; padding: 12px 14px 10px; border-left: 2px solid var(--accent); background: var(--bg-2); }
 .ch-cite-box:target:not([hidden]), .ch-cite-box.is-open { display: block; }
 .ch-cite-text { margin: 0; font-size: 15px; line-height: 1.5; overflow-wrap: anywhere; }
 .ch-cite-text a { color: inherit; }
 .ch-cite-copy { display: inline-block; margin-top: 6px; padding: 4px 0; font-family: var(--font-label); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; }
-@media print { .ch-cite-btn, .ch-cite-mail, .ch-cite-sep, .ch-cite-copy { display: none !important; } .ch-cite-box { display: block !important; background: none; padding: 4px 0 0 10px; } }
+@media print {
+  .ch-cite-btn, .ch-cite-pdf, .ch-cite-sep, .ch-cite-copy { display: none !important; }
+  .ch-cite-box { display: block !important; background: none; padding: 4px 0 0 10px; }
+  .sources li > a[href] { text-decoration: none; }
+  .sources li > a[href]::after { content: attr(href); display: block; font-family: var(--font-code); font-size: 8pt; line-height: 1.4; color: var(--muted); overflow-wrap: anywhere; }
+  .specimen, .review-note { display: none !important; }
+  .review details { break-inside: avoid; }
+  .review summary { padding-left: 0; }
+  .review summary::before { content: none; }
+  .review .answer { display: block; padding-left: 0; }
+}
+@media print { .review details::details-content { content-visibility: visible; display: block; block-size: auto; } }
+/* the card (build.js nameplate): its footnote marks, and the leader's China revenue line, as on the main page (src/styles.css) */
+.plate-kpis .v:not(.long) sup.cite { font-size: 0.4em; vertical-align: 1.1em; margin-left: 0; }
+.plate sup.cite-sep { font-family: var(--font-label); font-size: 0.62em; line-height: 0; vertical-align: 0.55em; color: var(--accent); }
+.plate-rows .lead-cn { position: relative; display: block; width: fit-content; max-width: 100%; text-indent: 0; margin-top: 2px; font-family: var(--font-label); font-size: 12px; line-height: 1.35; letter-spacing: 0.01em; font-variant-numeric: tabular-nums; color: var(--muted); }
+.plate-rows .lead-cn:hover { color: var(--accent); }
+.plate-rows .lead-cn::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: max(100%, 24px); transform: translateY(-50%); }
 `);
 
+
 // The main page's headings start at h3 under the chapter's h2; here the chapter title is the h1, so each moves up one level.
-const levelUp = (html) => String(html || '').replace(/<(\/?)h([3-6])(?=[\s>])/g, (m, s, n) => `<${s}h${n - 1}`);
+const levelUp =(html) => String(html || '').replace(/<(\/?)h([3-6])(?=[\s>])/g, (m, s, n) => `<${s}h${n - 1}`);
 
 // A footnote number opens its source, as on the main page; the hover card becomes the link's title (title, publisher, date).
 // The space the Markdown leaves before a citation is dropped, so the number sits on its word as a footnote does in print,
@@ -278,6 +344,13 @@ function fixLinks(html, chapterIds) {
   });
 }
 
+// A flashcard deck without scripts: review questions whose answers open in place, each reason ending with the link more(card)
+// returns. A chapter's page links back to its sections; Start here's page (introHTML) links to the chapters.
+const reviewSection = (cards, more) => `<section class="review" aria-labelledby="review-questions"><h2 class="label" id="review-questions">Review questions</h2><p class="review-note">Open a question to see its answer.</p>${cards.map((c) => {
+  const link = more(c);
+  return `<details><summary>${esc(c.q)}</summary><div class="answer"><p><b>${esc(c.a)}</b></p>${c.why || link ? `<p class="why">${esc(c.why || '')}${link}</p>` : ''}</div></details>`;
+}).join('')}</section>`;
+
 function readableHTML(p, ch, ctx, versions, css) {
   const { stages, flashcards, SPECIMEN_NAME, tierTag, sourceLine, builtOn, builtStr } = ctx;
   const r = ch.rendered, m = ch.meta || {};
@@ -302,11 +375,10 @@ function readableHTML(p, ch, ctx, versions, css) {
   const specimen = m.specimen || 'wafer';
   const specimenHTML = m.specimenCaption ? `<aside class="specimen" aria-label="Specimen"><span class="label">Specimen · ${esc(SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' '))}</span><p>${esc(m.specimenCaption)}</p><a href="${esc(app)}">See it in 3D in the interactive chapter</a></aside>` : '';
 
-  const review = cards.length ? `<section class="review" aria-labelledby="review-questions"><h2 class="label" id="review-questions">Review questions</h2><p class="review-note">Open a question to see its answer.</p>${cards.map((c) => {
+  const review = cards.length ? reviewSection(cards, (c) => {
     const anchor = c.section ? `${ch.id}--${ctx.slug(c.section)}` : '';
-    const more = anchor ? ` <a href="#${esc(anchor)}">Reread: ${esc(c.section)}</a>` : '';
-    return `<details><summary>${esc(c.q)}</summary><div class="answer"><p><b>${esc(c.a)}</b></p>${c.why || more ? `<p class="why">${esc(c.why || '')}${more}</p>` : ''}</div></details>`;
-  }).join('')}</section>` : '';
+    return anchor ? ` <a href="#${esc(anchor)}">Reread: ${esc(c.section)}</a>` : '';
+  }) : '';
 
   const pn = (c, dir, label) => (c ? `<a class="pn ${dir}" href="../${esc(c.id)}/"><span class="label">${label}</span><span class="t"><span class="n">${pad(c.number)}</span>${esc(c.title)}</span></a>` : '');
   const prevnext = prev || next ? `<div class="prevnext">${pn(prev, 'prev', 'Previous chapter')}${pn(next, 'next', 'Next chapter')}</div>` : '';
@@ -387,7 +459,7 @@ ${SITE_CONFIG.analytics ? `<script async src="https://gc.zgo.at/count.js" data-g
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="masthead"><a class="wordmark" href="../">Chip Supply Chain</a><nav aria-label="Site"><a href="../#/chain">The Chain</a><a href="../#/glossary">Glossary</a></nav></header>
+<header class="masthead"><a class="wordmark" href="../" aria-label="Chip Supply Chain"><svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg><span class="wm-name">Chip Supply Chain</span></a><nav aria-label="Site"><a href="../#/chain">The Chain</a><a href="../#/glossary">Glossary</a></nav></header>
 <main id="main" class="page">
 ${main}
 <footer class="site-footer">${footerKey}</footer>
@@ -407,6 +479,13 @@ module.exports = function (ctx) {
   let css = '';
   try { css = minCSS(fs.readFileSync(path.join(root, 'build', 'assets', 'chapter-page.css'), 'utf8')); } catch (e) { warn('chapter pages: build/assets/chapter-page.css is missing, so they ship unstyled'); }
   const byId = new Map((ctx.all || []).map((c) => [c.id, c]));
+  // the deck that ends Start here (data/flashcards.json "intro"), for /intro/: each answer links to its chapter's readable page
+  const introDeck = (ctx.flashcards || {}).intro;
+  const introCards = introDeck && Array.isArray(introDeck.cards) ? introDeck.cards.filter((c) => c.q && c.a) : [];
+  const introReview = introCards.length ? reviewSection(introCards, (c) => {
+    const ch = byId.get(c.chapter);
+    return ch ? ` <a href="../${esc(ch.id)}/">Read: ${esc(ch.title)}</a>` : '';
+  }) : '';
   ctx.readablePages = []; // build.js lists these in the sitemap
   for (const p of pages) {
     const dir = path.join(dist, p.slug);
@@ -419,7 +498,7 @@ module.exports = function (ctx) {
       ctx.readablePages.push(p.slug);
     } else {
       if (p.kind === 'chapter') warn(`chapter page ${p.slug}: the chapter was not rendered, so its link only forwards to the main page`);
-      html = pageHTML(p, versions);
+      html = p.slug === 'intro' && introReview ? introHTML(p, versions, css, introReview) : pageHTML(p, versions);
     }
     fs.writeFileSync(path.join(dir, 'index.html'), html);
   }

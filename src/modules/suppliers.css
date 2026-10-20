@@ -25,6 +25,7 @@
 .sup-band.c-NL { fill: var(--c2); }
 .sup-band.c-DE { fill: var(--c4); }
 .sup-band.c-Other { fill: var(--c8); }
+.sup-band.c-EU { fill: var(--c7); }                      /* the EU-27 members drawn as one column (the switch over the ribbons) */
 .sup-pipe[data-filtered="1"] .sup-band { opacity: 0.15; }
 .sup-pipe[data-filtered="1"] .sup-band[data-on] { opacity: 1; }
 
@@ -61,6 +62,7 @@
 .sup-sw.c-NL { background: var(--c2); }
 .sup-sw.c-DE { background: var(--c4); }
 .sup-sw.c-Other { background: var(--c8); }
+.sup-sw.c-EU { background: var(--c7); }
 .sup-crit-sw { display: block; width: 7px; height: 7px; background: var(--accent); flex: 0 0 auto; }
 .sup-lg-note { display: inline; }
 
@@ -110,11 +112,11 @@
 .sup-rung-n { margin: 0; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-variant-numeric: tabular-nums; }
 
 .sup-names { grid-column: 2; margin: 0; line-height: 1.7; }
-.sup-nw { display: inline; }
+.sup-nw { display: inline; white-space: nowrap; }           /* a name and its comma stay together; the list breaks at the spaces between names */
 .sup-nw[hidden] { display: none; }
-.sup-nw::after { content: ","; color: var(--muted); margin-right: 4px; }
+.sup-nw::after { content: ","; color: var(--muted); margin-right: 0; }
 .sup-nw.is-last::after { content: ""; margin-right: 0; }
-.sup-name { font-family: var(--font-body); font-weight: 500; font-size: 15px; line-height: 1.3; color: var(--ink); padding: 1px 2px; margin: 0 -2px; border-radius: 0; }
+.sup-name { font-family: var(--font-body); font-weight: 500; font-size: 15px; line-height: 1.3; color: var(--ink); padding: 1px 2px; margin: 0 -2px; border-radius: 0; white-space: normal; }
 .sup-name.lv-Critical { color: var(--accent); font-weight: 600; }
 .sup-name.lv-Diversified { color: var(--muted); }
 .sup-name:hover { background: var(--bg-2); }
@@ -180,7 +182,7 @@
 .sup-pipe[data-filtered="1"] .sup-rib { opacity: 0.1; }
 .sup-pipe[data-filtered="1"] .sup-rib[data-on] { opacity: 0.9; }
 .sup-cnode.c-US { fill: var(--ink); } .sup-cnode.c-JP { fill: var(--c1); } .sup-cnode.c-CN { fill: var(--c6); } .sup-cnode.c-TW { fill: var(--c3); }
-.sup-cnode.c-KR { fill: var(--c5); } .sup-cnode.c-NL { fill: var(--c2); } .sup-cnode.c-DE { fill: var(--c4); } .sup-cnode.c-Other { fill: var(--c8); }
+.sup-cnode.c-KR { fill: var(--c5); } .sup-cnode.c-NL { fill: var(--c2); } .sup-cnode.c-DE { fill: var(--c4); } .sup-cnode.c-Other { fill: var(--c8); } .sup-cnode.c-EU { fill: var(--c7); }
 .sup-snode { fill: var(--ink-2); }
 .sup-chit { fill: transparent; cursor: pointer; }
 .sup-clab { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 600; fill: var(--ink); text-anchor: end; }
@@ -191,3 +193,34 @@
 .sup-tip-stages b { font-weight: 500; color: var(--ink); }
 
 #sup-tip .sup-tip-stages small { display: inline; font-size: 0.92em; color: var(--muted); }
+
+/* ---------- the ribbons' switch and note ---------- */
+.sup-pipe-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 18px; margin: 0 0 10px; max-width: 1180px; }
+.sup-pipe-top .sup-pipe-h { margin: 0; }
+.sup-gbtn { font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; min-height: 30px; padding: 7px 11px; color: var(--muted); background: none; }
+.sup-gbtn + .sup-gbtn { border-left: 1px solid var(--line-2); }
+.sup-gbtn:hover { color: var(--ink); }
+.sup-gbtn[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+/* the switch groups clip their edges (overflow: hidden), so the focus ring sits inside the button */
+.sup-gbtn:focus-visible, .sup-mode:focus-visible { outline-offset: -4px; }
+.sup-gbtn[aria-pressed="true"]:focus-visible, .sup-mode[aria-pressed="true"]:focus-visible { outline-color: var(--bg); } /* on the filled button the ring takes the ground's color */
+.sup-note { max-width: 96ch; margin: 10px 0 0; font-family: var(--font-mono); font-size: 11.5px; line-height: 1.55; color: var(--muted); }
+
+/* ---------- a firm's China revenue share (the Export Controls panel, joined by build/exposure.js) ---------- */
+/* on its line in the ladder, quiet: after the country code, past a hairline */
+.sup-ex { font-style: normal; font-family: var(--font-mono); font-weight: 400; font-size: 9.5px; letter-spacing: 0.04em; color: var(--muted); margin-left: 6px; padding-left: 6px; border-left: 1px solid var(--line-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* in its panel: the label, with the year, linking to its chart */
+.sup-china { margin: 10px 0 0; font-size: 13.5px; line-height: 1.45; }
+.sup-china a { display: inline-block; padding: 3px 0; color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+.sup-china a:hover { color: var(--accent); text-decoration-color: currentColor; }
+.sup td.name .sup-ex-a { display: block; width: fit-content; margin-top: 0; padding: 5px 0; font-family: var(--font-mono); font-size: 11px; line-height: 1.4; color: var(--muted); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 2px; }
+.sup td.name .sup-ex-a:hover { color: var(--accent); }
+/* the chart a link opens (#/exposure/<slug>) lands with its category heading in view, and takes a short wash of the accent,
+   once; app.js adds the wash only when motion is allowed */
+.ex-panel { scroll-margin-top: calc(var(--masthead) + var(--band) + 52px); }
+.ex-panel.ex-flash { animation: ex-flash 1.8s var(--ease) both; }
+@keyframes ex-flash {
+  0%, 30% { background-color: var(--accent-soft); box-shadow: 0 0 0 10px var(--accent-soft); }
+  100% { background-color: transparent; box-shadow: 0 0 0 10px transparent; }
+}
+@media (prefers-reduced-motion: reduce) { .ex-panel.ex-flash { animation: none; } }
