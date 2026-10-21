@@ -74,7 +74,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 <div class="sec-head"><h2 id="glance-h">The chain at a glance</h2><p><b>${nExtreme} of ${stages.length}</b> stages are rated Extreme concentration, meaning three or fewer firms could supply each of them today, or one firm holds more than half of it.</p></div>
 <div class="ladder-head" aria-hidden="true"><span>Stage</span><span>Concentration</span><span>Substitutability</span><span>Who leads</span></div>
 <ol class="ladder">${ladder}</ol>
-<p class="key"><b>Concentration</b> counts the firms that credibly supply a stage: Extreme, High, Moderate or Low. <b>Substitutability</b> rates how hard it would be for a well-funded state or firm to build an alternative: Easy, Moderate, Hard or Very hard.</p>
+<p class="key"><b>Concentration</b> counts the firms that credibly supply a stage. Every stage rates Extreme or High. <b>Substitutability</b> rates how hard it would be for a well-funded state or firm to build an alternative: Very hard, Hard or Moderately hard.</p>
 </section>
 <section class="stages-s" aria-labelledby="stages-h">
 <div class="sec-head"><h2 id="stages-h">The ${word(stages.length)} stages</h2><p>In the order a chip is made.</p></div>
@@ -121,8 +121,8 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 <p class="meta">Updated ${esc(builtStr)} · <a href="${SITE.url}">${SITE.host}</a> · Every figure is cited in the chapter each section links to.</p>
 </header>
 <div class="key">
-<span><b>Concentration</b> counts the firms that credibly supply a stage: Extreme, High, Moderate or Low.</span>
-<span><b>Substitutability</b> rates how hard it would be for a well-funded state or firm to build an alternative: Easy, Moderate, Hard or Very hard.</span>
+<span><b>Concentration</b> counts the firms that credibly supply a stage. Every stage rates Extreme or High.</span>
+<span><b>Substitutability</b> rates how hard it would be for a well-funded state or firm to build an alternative: Very hard, Hard or Moderately hard.</span>
 </div>
 <table>
 <thead><tr><th>#</th><th>Stage</th><th>Who leads</th><th>Concentration</th><th>Substitutability</th></tr></thead>

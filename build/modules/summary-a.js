@@ -347,7 +347,7 @@ ${china}
 </article>`;
   }
 
-  const DEFAULT_CC = 'TW';
+  const DEFAULT_CC = ''; // the plate opens with no country chosen (the owner, 21 Oct 2026); set a code such as 'TW' to open on one
   // marker area is proportional to the number of chapter cards that name the country, with a floor big enough to tap
   const markers = PRIMARY.map((cc) => {
     const a = anchors[cc], n = NUDGE[cc] || a;
@@ -362,7 +362,7 @@ ${china}
     + `<div class="sa-chiprow"><span class="label">Also in the chain</span><div class="sa-chipset" role="group" aria-label="Other countries in the chain">${SECONDARY.map(chip).join('')}</div></div>`;
 
   // the panel shown when the reader clears the chosen country (click it again); src/modules/summary-a.js shows and hides it
-  const nonePanel = `<article class="sa-panel sa-panel--none" data-cc="none" hidden>
+  const nonePanel = `<article class="sa-panel sa-panel--none" data-cc="none"${DEFAULT_CC ? ' hidden' : ''}>
 <header class="sa-panel-head"><h4>No country chosen</h4></header>
 <p class="sa-panel-lede">Each numbered stop is one stage of the chain, pinned where a leading firm is based. Choose a country to see what it makes and which stages it leads.</p>
 </article>`;
@@ -429,7 +429,7 @@ ${led ? `<div class="sa-stage-leaders"><span class="label">Who leads</span><ul>$
 <p class="sa-sub">Copper pins mark the chain's ${word(sites.length)} chokepoint towns, taller where the stage is harder to replace; dark pins mark the ${word(towns.length - sites.length)} towns building substitutes. Where a coast is crowded, the marker sits offshore on a line back to its country.</p>
 </div>
 <div class="sa-grid">
-<div class="sa-map" data-cc="${DEFAULT_CC}">
+<div class="sa-map"${DEFAULT_CC ? ` data-cc="${DEFAULT_CC}"` : ''}>
 ${svg}
 <div class="sa-overlay">${townDots}${markers}</div>
 </div>
@@ -487,14 +487,15 @@ ${svg}
   };
   // the country chips keep the meta and the role line in their markup; the chip shows the name and the caption below reads the rest
   const roles = roleOrder.map((cc) => `<li><button type="button" class="sa-role" data-cc="${cc}" aria-pressed="${cc === DEFAULT_CC}"><span class="sa-role-name">${esc(COUNTRY[cc] || cc)}</span><span class="sa-role-meta">${metaOf(cc)}</span><span class="sa-role-line">${esc(ROLE[cc])}</span></button></li>`).join('');
-  const caption = `<p class="atlas-caption"><b class="atlas-caption-name">${esc(COUNTRY[DEFAULT_CC])}</b> <span class="atlas-caption-meta">${metaOf(DEFAULT_CC)}</span> <span class="atlas-caption-line">${esc(ROLE[DEFAULT_CC])}</span></p>`;
+  const caption = DEFAULT_CC ? `<p class="atlas-caption"><b class="atlas-caption-name">${esc(COUNTRY[DEFAULT_CC])}</b> <span class="atlas-caption-meta">${metaOf(DEFAULT_CC)}</span> <span class="atlas-caption-line">${esc(ROLE[DEFAULT_CC])}</span></p>`
+    : '<p class="atlas-caption"><b class="atlas-caption-name">All countries</b> <span class="atlas-caption-meta"></span> <span class="atlas-caption-line">Choose one to light its stops on the route</span></p>'; // as clearCountry() in src/modules/summary-a.js writes it
   const homeMap = `<div class="sa sa--home sa--atlas">
 <section class="atlas" id="the-route" aria-labelledby="atlas-h">
 <h3 class="sr-only" id="atlas-h">What each country makes</h3>
 <div class="atlas-bar"><span class="label atlas-bar-l">The route of one chip</span><ul class="sa-roles" aria-label="Countries">${roles}</ul></div>
 ${caption}
 <div class="atlas-body">
-<div class="sa-map sa-map--route" data-cc="${DEFAULT_CC}">${routeSvg}<div class="sa-overlay">${stopBtns}</div></div>
+<div class="sa-map sa-map--route"${DEFAULT_CC ? ` data-cc="${DEFAULT_CC}"` : ''}>${routeSvg}<div class="sa-overlay">${stopBtns}</div></div>
 <ol class="sa-strip-stops">${strip}</ol>
 <div class="sa-panels" aria-live="polite">${panels}</div>
 </div>

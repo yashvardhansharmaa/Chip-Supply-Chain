@@ -149,9 +149,9 @@
     root.addEventListener('focusin', function (e) { var a = e.target.closest ? e.target.closest('.sa-stop') : null; if (a) showStop(a); else hideStop(); });
     window.addEventListener('scroll', function () { hideStop(); }, { passive: true });
 
-    // the panel opens on the country the build marked; make the chips, the stops and the strip agree
-    var open = $('.sa-panel:not([hidden])', root);
-    if (open) selectCountry(open.getAttribute('data-cc'), false);
+    // the panel opens on the country the build marked, if any; make the chips, the stops, the strip and the ribbons agree
+    var open = $('.sa-panel:not([hidden])', root), cc0 = open && open.getAttribute('data-cc');
+    if (cc0 && cc0 !== 'none') selectCountry(cc0, false); else clearCountry();
   }
 
   // #/suppliers?country=JP opens the Suppliers page with that country chosen on the plate (the Index's country cards link here)
