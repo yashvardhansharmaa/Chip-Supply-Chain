@@ -57,3 +57,17 @@ transistors 11 (total 213). Book 180 pages.
 - QA tools (scratch): order-check.js (numbering on main and static pages), textcheck.py (every paragraph, list item,
   card line and table cell of dist/index.html found in the PDF), gaps.py (longest blank run per page from the
   rendered PDF), sheet.py (contact sheets). Final sheets: qa/round2/shots/print-fix/final/<id>.png, chain.png.
+
+## Follow-up: real text fonts (20 October, after 454b463)
+- Cause: Chrome embeds any font file with an fvar table as Type 3. Google Fonts serves one variable file when several
+  weights of a family are asked for at once, so even "static" requests came back variable. One request per instance
+  (single weight, single optical size) returns fixed instances, which embed as CID TrueType.
+- print.js printFonts()/fontsReady(): in print, the page's Google Fonts links give way to one link per instance
+  (Fraunces 600@14, 500@48, 400@72, 700@96, 300@144; Source Serif 4 at 12 pt, 400/500/600/700 and italic 400/600;
+  Instrument Sans 400-700; IBM Plex Mono; Noto Serif/Sans SC and JP for CJK titles, which otherwise fell back to
+  PingFang and Hiragino, also Type 3). pdf.py waits on fontsReady() after prepare(). All OFL; nothing vendored.
+- print.css: font tokens with Noto fallbacks; font-variation-settings off; capital labels tracked at 0.05 em (wider
+  tracking extracted as "C O N C E N T R A T I O N").
+- summary_pdf.py FONTS_JS: the same swap for the summary only (Fraunces 600@24 for its heads).
+- Result: 292 font entries across the 17 chapters, the book and the summary, all CID TrueType, no Type 3. Files
+  shrank from 23.7 MB to 8.9 MB (chapters), 11.4 to 9.6 MB (book), 0.55 to 0.20 MB (summary).

@@ -60,6 +60,36 @@ EDITION_JS = r'''(function (edition, host, pdf) {
   return 'dated';
 })'''
 
+# Static fonts for the summary's print, as src/modules/print.js does for the chapters: Chrome puts a variable font into
+# a PDF as Type 3 shapes, which copy and search as broken words, so the page's variable families give way to fixed
+# instances of the same OFL families, one Google Fonts request per instance (several weights in one request come back
+# as one variable file). Fraunces is the summary's heads (600, at optical size 24), Source Serif 4 its text, Instrument
+# Sans its labels. Capital labels are tracked at 0.05 em, which copies as words. Only the summary is changed.
+FONTS_JS = r'''(function () {
+  if (!document.querySelector('.prt')) return Promise.resolve('as is');
+  var fams = ['Fraunces:opsz,wght@24,600', 'Fraunces:opsz,wght@48,500', 'Fraunces:opsz,wght@72,400',
+    'Source+Serif+4:ital,opsz,wght@0,12,400', 'Source+Serif+4:ital,opsz,wght@0,12,500', 'Source+Serif+4:ital,opsz,wght@0,12,600',
+    'Source+Serif+4:ital,opsz,wght@0,12,700', 'Source+Serif+4:ital,opsz,wght@1,12,400',
+    'Instrument+Sans:wght@400', 'Instrument+Sans:wght@500', 'Instrument+Sans:wght@600', 'Instrument+Sans:wght@700'];
+  Array.prototype.forEach.call(document.querySelectorAll('link[rel="stylesheet"][href*="fonts.googleapis.com"]'), function (l) { l.remove(); });
+  var loads = fams.map(function (f) {
+    var l = document.createElement('link'); l.rel = 'stylesheet';
+    l.href = 'https://fonts.googleapis.com/css2?family=' + f + '&display=block';
+    var p = new Promise(function (done) { l.onload = done; l.onerror = done; });
+    document.head.appendChild(l); return p;
+  });
+  var s = document.createElement('style');
+  s.textContent = '@media print { *, *::before, *::after { font-variation-settings: normal !important; font-optical-sizing: none; }'
+    + ' .kicker, th, .k, .cc { letter-spacing: 0.05em !important; } }';
+  document.head.appendChild(s);
+  var faces = ['600 22pt Fraunces', '500 14pt Fraunces', '400 14pt Fraunces', '400 9pt "Source Serif 4"', '500 9pt "Source Serif 4"',
+    '600 9pt "Source Serif 4"', '700 9pt "Source Serif 4"', 'italic 400 9pt "Source Serif 4"', '400 8pt "Instrument Sans"',
+    '500 8pt "Instrument Sans"', '600 8pt "Instrument Sans"', '700 8pt "Instrument Sans"'];
+  return Promise.all(loads).then(function () {
+    return Promise.all(faces.map(function (f) { return document.fonts.load(f).catch(function () { return []; }); }));
+  }).then(function () { return document.fonts.ready; }).then(function () { return 'static fonts'; });
+})()'''
+
 chrome = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 profile = f'/tmp/cp-summary-pdf-{os.getpid()}'
 proc = subprocess.Popen([chrome, '--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check',
@@ -86,6 +116,7 @@ try:
     send('Runtime.evaluate', {'expression': 'document.fonts.ready.then(() => true)', 'awaitPromise': True, 'returnByValue': True})
     dated = send('Runtime.evaluate', {'expression': EDITION_JS + '(%s, %s, %s)' % (json.dumps(edition), json.dumps(site['host']),
                  json.dumps(site['url'] + 'chip-supply-chain-summary.pdf')), 'returnByValue': True}).get('result', {}).get('value')
+    send('Runtime.evaluate', {'expression': FONTS_JS, 'awaitPromise': True, 'returnByValue': True})
     pdf = send('Page.printToPDF', {'preferCSSPageSize': True, 'printBackground': True, 'displayHeaderFooter': False})
     data = base64.b64decode(pdf['data'])
     pages = len(re.findall(rb'/Type\s*/Page[^s]', data))

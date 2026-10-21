@@ -1213,7 +1213,7 @@
         }).map(function (f) {
           return '<span class="sup-nw" data-r="' + f._ix + '"><button type="button" class="sup-name lv-' + esc(f.chokepoint || 'Important') +
             '" aria-expanded="false" aria-controls="' + s.id + '-p">' + esc(f.name) + '<i class="sup-cc">' + esc(f.country) + '</i>' +
-            (f.china ? '<i class="sup-ex" title="' + esc(f.china.label) + '"><span class="sr-only">, </span>' + esc(f.china.short) + '</i>' : '') + '</button></span>'; // a firm on the China revenue panel: its latest China share (build/build.js)
+            '</button></span>'; // the list stays names only: a firm's revenue and its China share open with the firm (detail, below)
         }).join(' '); // the lines break at these spaces, so a name never leaves its comma at the start of the next line
         html += '<section class="sup-rung" id="' + s.id + '" data-i="' + s.i + '" data-crit="' + s.crit.length + '" aria-labelledby="' + s.id + '-h">' +
           '<span class="sup-rank" aria-hidden="true">' + (r < 9 ? '0' : '') + (r + 1) + '</span>' +
@@ -1266,14 +1266,16 @@
         var v = (r.revenueUSDb >= 10 ? r.revenueUSDb.toFixed(1) : r.revenueUSDb.toFixed(2)).replace(/0+$/, '').replace(/\.$/, '');
         facts.push(['Revenue', '$' + v + 'B' + (r.revenueYear ? ' (' + esc(r.revenueYear) + ')' : '')]);
       }
+      // right under the revenue, the share of it that came from China, from the China revenue panel (for a division, its
+      // parent's share, and the label says so), linked to the firm's chart of every year
+      if (r.china) facts.push(['From China', '<a href="' + safeUrl(r.china.href) + '">' + esc(String(r.china.label).replace(/^China /, '')) +
+        '<span class="sr-only">. Opens the chart of every year</span> <span aria-hidden="true">→</span></a>']);
       var tag = [r.subcategory, cname(r.country) + (r.city ? ', ' + r.city : ''), /^private$/i.test(r.ticker || '') ? '' : r.ticker].filter(Boolean).join(' · ');
       return '<div class="sup-detail-body">' +
         '<p class="sup-detail-h">' + esc(r.name) + (r.chokepoint ? ' <span class="chk ' + esc(r.chokepoint) + '">' + esc(r.chokepoint) + '</span>' : '') +
         (tag ? '<em>' + esc(tag) + '</em>' : '') + '</p>' +
         (r.role ? '<p class="sup-role">' + esc(r.role) + '</p>' : '') +
         (facts.length ? '<dl class="sup-facts">' + facts.map(function (f) { return '<dt>' + f[0] + '</dt><dd>' + f[1] + '</dd>'; }).join('') + '</dl>' : '') +
-        // the China revenue panel's latest figure for the firm (for a division, its parent's, and the label says so), linked to its chart
-        (r.china ? '<p class="sup-china"><a href="' + safeUrl(r.china.href) + '">' + esc(r.china.label) + '<span class="sr-only">. Opens the chart of every year</span> <span aria-hidden="true">→</span></a></p>' : '') +
         (r.source ? '<a class="sup-src" href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" aria-label="Source for ' + esc(r.name) + '">Source</a>' : '') + '</div>';
     },
     // a firm's revenue as its filing prints it, linked to the filing, then the fiscal year by the month it ends, then, for a firm

@@ -156,6 +156,8 @@
       var rs = r.revenueShown, revHTML = rs && CP.Suppliers && CP.Suppliers.revenueHTML ? CP.Suppliers.revenueHTML(rs) : '';
       if (revHTML) facts.push(['Revenue', revHTML, true]);
       else if (r.revenueUSDb != null) facts.push(['Revenue', '$' + (Math.round(r.revenueUSDb * 10) / 10).toLocaleString('en-US') + 'bn' + (r.revenueYear ? ', ' + r.revenueYear : '')]);
+      // under the revenue, the share of it that came from China (the China revenue panel's latest year), linked to the firm's chart
+      if (r.china && r.china.href) facts.push(['From China', '<a href="' + esc(CP.safeUrl(r.china.href) || r.china.href) + '">' + esc(String(r.china.label).replace(/^China /, '')) + ' <span aria-hidden="true">→</span></a>', true]);
       return '<article class="lk-card lk-card--firm">' +
         '<p class="lk-kind">Firm' + (r.chokepoint ? ' · <span class="lk-chk lk-chk--' + esc(String(r.chokepoint).toLowerCase()) + '">' + esc(r.chokepoint) + '</span>' : '') + '</p>' +
         '<h3>' + esc(r.name) + (r.nativeName ? ' <span class="lk-native">' + esc(r.nativeName) + '</span>' : '') + '</h3>' +

@@ -125,6 +125,10 @@ try:
         opts.update({k: v for k, v in (fit or {}).items() if v})  # moves and tight, from lay_out()
         summary = js(f'JSON.stringify(window.CP_PRINT.prepare({json.dumps(opts)}))', timeout=180)
         say(f'prepared: {summary}')
+        # prepare() swaps the variable web fonts for static ones (they embed as text, not Type 3 shapes): wait for them
+        if js("typeof window.CP_PRINT.fontsReady") == 'function':
+            try: say(f"print fonts: {js('window.CP_PRINT.fontsReady()', await_promise=True, timeout=90)} faces loaded")
+            except Exception as e: say(f'print fonts: {e}')
         time.sleep(0.8)  # let the specimen's animation loops die before Paged.js takes the frames
         return summary
 

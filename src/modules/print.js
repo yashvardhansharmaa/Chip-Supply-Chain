@@ -17,6 +17,48 @@
 
   function each(sel, root, fn) { Array.prototype.forEach.call((root || document).querySelectorAll(sel), fn); }
 
+  /* Paper gets static fonts. Chrome cannot put a variable font into a PDF as a font: it draws each instance as Type 3
+     shapes, which copy and search as broken words ("ED / A"). So for print the page's variable families give way to
+     fixed instances of the same families, all under the SIL Open Font License, served by Google Fonts as the site's own
+     fonts are: Fraunces at one optical size per weight (the screen's settings: 48 for heads, 72 for the card's figures,
+     144 for the chapter numerals), Source Serif 4 at its text size, Instrument Sans, IBM Plex Mono, and Noto Serif and
+     Sans for the Chinese and Japanese titles of some sources (the system's own CJK fonts print as Type 3 too). Chrome
+     embeds each as TrueType, subset to the letters used. */
+  /* one request per instance: asked for a single point, Google Fonts serves a fixed instance; asked for several weights
+     at once, it serves one variable file that covers them, and that prints as Type 3 again */
+  var PRINT_FONTS = ['Fraunces:opsz,wght@14,600', 'Fraunces:opsz,wght@48,500', 'Fraunces:opsz,wght@72,400',
+    'Fraunces:opsz,wght@96,700', 'Fraunces:opsz,wght@144,300',
+    'Source+Serif+4:ital,opsz,wght@0,12,400', 'Source+Serif+4:ital,opsz,wght@0,12,500', 'Source+Serif+4:ital,opsz,wght@0,12,600',
+    'Source+Serif+4:ital,opsz,wght@0,12,700', 'Source+Serif+4:ital,opsz,wght@1,12,400', 'Source+Serif+4:ital,opsz,wght@1,12,600',
+    'Instrument+Sans:wght@400', 'Instrument+Sans:wght@500', 'Instrument+Sans:wght@600', 'Instrument+Sans:wght@700',
+    'IBM+Plex+Mono:wght@400;500', 'Noto+Serif+SC:wght@400', 'Noto+Serif+SC:wght@600', 'Noto+Serif+JP:wght@400',
+    'Noto+Serif+JP:wght@600', 'Noto+Sans+SC:wght@400', 'Noto+Sans+JP:wght@400'];
+  var fontsLoaded = null;
+  function printFonts() {
+    each('link[rel="stylesheet"][href*="fonts.googleapis.com"]', document, function (l) { l.remove(); });
+    fontsLoaded = Promise.all(PRINT_FONTS.map(function (family) {
+      var link = node('link');
+      link.rel = 'stylesheet'; link.href = 'https://fonts.googleapis.com/css2?family=' + family + '&display=block';
+      link.setAttribute('data-pagedjs-ignore', ''); // Paged.js leaves it in place, so the faces stay loaded through the layout
+      var loaded = new Promise(function (done) { link.onload = done; link.onerror = done; });
+      document.head.appendChild(link);
+      return loaded;
+    }));
+  }
+  /* pdf.py waits on this after prepare(): the stylesheet, then each face the print uses, then any other pending load */
+  function fontsReady() {
+    var faces = ['300 24pt Fraunces', '400 13pt Fraunces', '500 14pt Fraunces', '600 11pt Fraunces', '700 68pt Fraunces',
+      '400 10pt "Source Serif 4"', '500 10pt "Source Serif 4"', '600 10pt "Source Serif 4"', '700 10pt "Source Serif 4"',
+      'italic 400 10pt "Source Serif 4"', '400 7pt "Instrument Sans"', '500 7pt "Instrument Sans"', '600 7pt "Instrument Sans"',
+      '700 7pt "Instrument Sans"', '400 7pt "IBM Plex Mono"', '500 7pt "IBM Plex Mono"'];
+    return Promise.resolve(fontsLoaded).then(function () {
+      return Promise.all(faces.map(function (f) { return document.fonts.load(f).catch(function () { return []; }); }));
+    }).then(function () { return document.fonts.ready; }).then(function () {
+      var got = []; document.fonts.forEach(function (f) { if (f.status === 'loaded') got.push(f.family + ' ' + f.weight + (f.style !== 'normal' ? ' ' + f.style : '')); });
+      return got.filter(function (v, i) { return got.indexOf(v) === i; }).length;
+    });
+  }
+
   /* the full address without its scheme, as a reader would type it: query and fragment kept, never shortened
      (a long one wraps onto the next line of the note, print.css) */
   function readable(url) {
@@ -133,8 +175,8 @@
   }
 
   /* A chapter printed alone opens on a compact title block in place of the book's cover and contents: the site and the
-     chapter's number, the edition, and how to cite it, which names the chapter and its own page. The chapter's title
-     follows at once, set large, so the block does not repeat it. */
+     chapter's number, the edition and the chapter's own address. The chapter's title follows at once, set large, so the
+     block does not repeat it. */
   function titleBlock(ch, url, edition) {
     var head = node('header', 'pt-chapter');
     var top = node('p', 'ptc-k');
@@ -142,16 +184,9 @@
     top.appendChild(node('span', '', 'Chip Supply Chain' + (n ? ' · Chapter ' + n : '')));
     if (edition) top.appendChild(node('span', 'ptc-ed', edition));
     head.appendChild(top);
-    if (edition) {
-      var cite = node('p', 'ptc-cite');
-      cite.appendChild(node('span', 'ptc-ck', 'Cite as'));
-      cite.appendChild(document.createTextNode(' '));
-      cite.appendChild(citation(title, url, edition, true));
-      head.appendChild(cite);
-    } else {
-      var where = node('p', 'ptc-url'), link = node('a', '', readable(url));
-      link.href = url; where.appendChild(link); head.appendChild(where);
-    }
+    /* the chapter opens on its title: the citation sits once, at the end, in "How to cite this chapter" */
+    var where = node('p', 'ptc-url'), link = node('a', '', readable(url));
+    link.href = url; where.appendChild(link); head.appendChild(where);
     return head;
   }
 
@@ -177,8 +212,9 @@
     opts = opts || {};
     var out = { mode: opts.mode || 'footnotes', cites: 0, notes: 0, chapters: 0, dropped: 0 };
 
-    /* paper is white whatever the reader was using */
+    /* paper is white whatever the reader was using, and set in static fonts (printFonts, above) */
     document.documentElement.setAttribute('data-theme', 'light');
+    printFonts();
 
     /* explainer animations print as their last frame and the list of steps: drop the videos, load the stills now */
     Array.prototype.forEach.call(document.querySelectorAll('.figure--anim video'), function (v) { v.pause(); v.removeAttribute('src'); v.remove(); });
@@ -552,5 +588,5 @@
     return out;
   }
 
-  window.CP_PRINT = { prepare: prepare, finish: finish };
+  window.CP_PRINT = { prepare: prepare, fontsReady: fontsReady, finish: finish };
 })();

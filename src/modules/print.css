@@ -44,12 +44,28 @@
     --stage-ink: 20, 24, 31; --stage-accent: 122, 31, 43;
     --bar-5: #7a1f2b; --bar-4: #3a434c; --bar-3: #adb3b8;
     --shadow: none; --masthead: 0px; --band: 0px; --col: 100%; --measure: 132mm;
+    /* the static print fonts (print.js printFonts), with Noto for Chinese and Japanese titles, so nothing falls back to a
+       system font (those print as Type 3 shapes, which do not copy or search) */
+    --font-display: "Fraunces", "Noto Serif SC", "Noto Serif JP", Georgia, serif;
+    --font-body: "Source Serif 4", "Noto Serif SC", "Noto Serif JP", Georgia, serif;
+    --font-mono: "Instrument Sans", "Noto Sans SC", "Noto Sans JP", "Helvetica Neue", Arial, sans-serif;
+    --font-code: "IBM Plex Mono", "Noto Sans SC", "Noto Sans JP", ui-monospace, monospace;
+    --font-caption: "Instrument Sans", "Noto Sans SC", "Noto Sans JP", "Helvetica Neue", Arial, sans-serif;
+    --opsz-title: normal; --opsz-numeral: normal;
     color-scheme: light;
   }
   :root[data-theme="dark"] .timeline .cat.policy { color: #7a5f06; } /* the screen's dark-theme yellow is unreadable on paper */
 
   /* Fills and backgrounds are data here: the chain bars, the chokepoint pips and every SVG chart. */
   *, *::before, *::after { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  /* static fonts have no axes to set: each optical size is its own instance (print.js PRINT_FONTS) */
+  *, *::before, *::after { font-variation-settings: normal !important; font-optical-sizing: none; }
+  /* Capital labels tracked wider than about 0.06 em copy out of a PDF as single letters ("C O N C E N T R A T I O N"):
+     on paper they are tracked at 0.05 em */
+  .label, .inshort h3.label, .plain .label, .review .rv-keep h4.label, .ch-tile .k, .ch-tile .of, .plate-kpis .k, .plate-rows dt,
+  .plate-status .k, .ptag, .contents-k, .howto h3.howto-k, .howto h2:not(.howto-title), .prose th, .prose h5, .pt-chapter .ptc-k,
+  .print-title .pt-k, .cp-sources .cp-sources-h, .site-footer .updated, .chip, .fig-title .unit, .stack-legend,
+  .contents-grid .n { letter-spacing: 0.05em !important; }
 
   /* Chrome, screen furniture off: masthead, specimen stage, phone strip and its sheet, rail,
      back-to-top, search dialog, hover tooltips and the copy buttons. */
