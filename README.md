@@ -69,19 +69,9 @@ A firm's card gives what it makes, where it is based and its revenue, and for 24
 - **Revenue in another currency** is shown as filed, then converted at the Federal Reserve's average rate for that fiscal year.
 - **A check in the build** fails any citation from a source outside the policy.
 
-## Build it locally
+## Visit the site
 
-The site builds to `dist/` with Node 18 or later:
-
-```bash
-node build/build.js
-```
-
-Then serve it and open http://127.0.0.1:8765/:
-
-```bash
-python3 -m http.server 8765 --directory dist
-```
+**[chipsupplychain.org](https://chipsupplychain.org)**
 
 ## Credits
 
