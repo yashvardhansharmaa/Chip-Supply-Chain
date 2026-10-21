@@ -2,7 +2,7 @@
 const fs = require('fs');
 const prev = JSON.parse(fs.readFileSync('qa/link-check.json', 'utf8'));
 const todo = [...new Set(prev.deadList.concat(prev.blockedList).map((r) => r.url.replace(/\\+$/, '')))];
-const UA = 'Compute Chokepoints link check (yashvardhan@uni.minerva.edu)';
+const UA = 'Mozilla/5.0 (research; chipsupplychain.org)'; // a generic agent: never an email or other personal data in a header (owner's rule)
 const results = []; let i = 0;
 async function probe(u) {
   const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 45000);

@@ -126,10 +126,14 @@
         <h1>AI Chips</h1>
         <p class="dek">The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026. Each entry names the foundry, process node, memory supplier and packaging plant behind the chip wherever the maker or a cited source has published them.</p>
       </div>
-      <div id="picker" class="picker cx-picker" role="group" aria-label="Choose two to four chips to compare"></div>
-      <div class="cx-bar">
-        <span class="count cx-count" id="cx-count" aria-live="polite"></span>
-        <button type="button" class="btn ghost cx-clear" id="cx-clear">Clear</button>
+      <div class="cxa" id="cx-slots">
+        <div class="cxa-head"><p class="cxa-ask" id="cxa-ask">Choose two chips to compare. Add up to four.</p><button type="button" class="cxa-clear" id="cx-clear" hidden>Clear</button></div>
+        <div class="cxa-row" id="cxa-row" role="group" aria-labelledby="cxa-ask"></div>
+        <div class="cxa-pairs" id="cxa-pairs"></div>
+        <details class="cxa-browse" id="cxa-browse"><summary>Browse all chips by maker</summary>
+          <div id="picker" class="picker cx-picker" role="group" aria-label="All chips, by maker"></div>
+        </details>
+        <p class="sr-only" id="cxa-live" aria-live="polite"></p>
       </div>
       <h3 class="label cx-h">Packages at one scale</h3>
       <p class="cx-sub">The logic dies are the pieces of silicon that do the computing, and the memory stacks feed them data. The interposer is the layer of wiring that connects the two, and the substrate is the small circuit board underneath.</p>

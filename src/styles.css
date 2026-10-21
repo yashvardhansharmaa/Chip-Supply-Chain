@@ -111,7 +111,7 @@ small { font-size: 0.85em; }
 
 /* ---------- display type: Fraunces at a restrained optical size, never bold ---------- */
 .wk-title, .ch-title, .view-head h1, .view-head h2, .thesis, .contents h2, .prose h3, .prose h4, .wk-t, .wk-end-t,
-.spec-head h3, .brief-head .t, .gl-entry dt, .timeline h4, .sources-list h3, .prevnext .pn .t, .fig-title,
+.brief-head .t, .gl-entry dt, .timeline h4, .sources-list h3, .prevnext .pn .t, .fig-title,
 .ct-tip b, .gl-tip b, .cp-search-results b, .sheet-head b, .wk-pn-t, .ex-rank .name, .ex-panel figcaption b, .ex-tip b {
   font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); letter-spacing: 0;
 }
@@ -372,35 +372,6 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .picker button span { display: block; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; opacity: 0.75; margin-top: 3px; }
 .picker .group { flex-basis: 100%; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); margin: 10px 0 -2px; padding-top: 10px; border-top: 1px solid var(--line); }
 .picker .group:first-child { border-top: 0; padding-top: 0; margin-top: 0; }
-.spec { border: 0; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); border-radius: 0; background: none; margin-bottom: 26px; }
-.spec-head { padding: 18px 0 16px; border-bottom: 1px solid var(--line-2); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: flex-end; }
-.spec-head h3 { font-weight: 400; font-size: 40px; line-height: 0.95; }
-.spec-head .vendor { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); margin-bottom: 8px; display: block; }
-.spec-head .status { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; border: 1px solid var(--line-2); padding: 4px 8px; border-radius: 0; color: var(--ink-2); }
-.spec-head .status.Shipping { border-color: var(--accent); color: var(--accent); }
-.spec-kpis { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--line); }
-.spec-kpis div { padding: 14px 18px 14px 0; border-right: 1px solid var(--line); }
-.spec-kpis div + div { padding-left: 18px; }
-.spec-kpis div:last-child { border-right: 0; }
-.spec-kpis b { display: block; font-family: var(--font-display); font-weight: 400; font-variation-settings: "opsz" 72, "SOFT" 0, "WONK" 0; font-size: 30px; line-height: 1; font-variant-numeric: tabular-nums; }
-.spec-kpis b small { font-size: 14px; font-weight: 500; color: var(--muted); margin-left: 3px; }
-.spec-kpis span { display: block; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); margin-top: 6px; }
-.spec-groups { padding: 6px 0 8px; }
-.spec-groups h4 { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--accent); margin: 18px 0 6px; }
-.spec-groups dl { margin: 0; display: grid; grid-template-columns: minmax(150px, 34%) 1fr; }
-.spec-groups dt, .spec-groups dd { padding: 7px 0; border-bottom: 1px solid var(--line); margin: 0; font-size: 15px; line-height: 1.45; }
-.spec-groups dt { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); padding-top: 10px; }
-.spec-groups dd { font-variant-numeric: tabular-nums; }
-.spec-notes { padding: 18px 0 22px; border-top: 1px solid var(--line); font-size: 16.5px; line-height: 1.55; color: var(--ink-2); }
-.spec-notes .label { display: block; margin-bottom: 8px; }
-.spec-sources { padding: 0 0 20px; font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); }
-.spec-sources a { color: var(--muted); margin-right: 14px; }
-.compare-wrap { overflow-x: auto; border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2); border-radius: 0; margin-bottom: 40px; }
-.compare { border-collapse: collapse; width: 100%; font-size: 13.5px; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.compare th, .compare td { padding: 8px 12px 8px 0; border-bottom: 1px solid var(--line); text-align: left; }
-.compare th { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); background: var(--bg); position: sticky; top: 0; }
-.compare td:first-child { font-weight: 500; }
-.compare tr:hover td { background: var(--bg-2); }
 
 /* ---------- suppliers ---------- */
 .filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 20px 0 14px; }
@@ -939,12 +910,6 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
   .prevnext .next { grid-column: 1; text-align: left; }
   /* the popover becomes a sheet across the foot of the screen, above the specimen strip */
   .gl-tip.is-sheet { left: 10px; right: 10px; top: auto; width: auto; max-width: none; }
-  .spec-kpis { grid-template-columns: 1fr 1fr; }
-  .spec-kpis div:nth-child(2n) { border-right: 0; }
-  .spec-kpis div:nth-child(2n+1) { padding-left: 0; }
-  .spec-kpis div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
-  .spec-groups dl { grid-template-columns: 1fr; }
-  .spec-groups dt { border-bottom: 0; padding-bottom: 0; }
   .timeline li { grid-template-columns: 1fr; gap: 4px; }
 }
 /* a phone: the wordmark is the way home, so the Home tab goes and the other five fit a 360 px screen without scrolling */

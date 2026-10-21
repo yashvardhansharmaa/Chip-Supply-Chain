@@ -25,3 +25,5 @@ qa/design/shots/
 qa/design/build/*/
 qa/design/qa/*.png
 qa/design/review.html
+qa/design/chips-ux/**/*.png
+qa/code-review/perf/out/

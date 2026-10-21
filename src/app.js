@@ -321,6 +321,7 @@
       }
       this.from = this.current; // the walk reads this to tell a return from a step within it
       this.current = v; this.currentSub = sub;
+      if (changed) Sections.currentId = null; // a new view draws its own specimen on arrival: the chain its chapter's, AI Chips its package or chip
       if (sub) {
         $$('.view[data-view="controls"] .sub').forEach(function (s) { s.hidden = s.getAttribute('data-sub') !== sub; });
         $$('#controls-subtabs a').forEach(function (a) { if (a.getAttribute('data-sub') === sub) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
@@ -446,6 +447,9 @@
     built: false,
     hint: '',
     exportRows: [],   // the export bar in Tools holds this same array, so mutate it, never replace it
+    compare: DATA.landscapeCompare || { pairs: [], with: {} }, // data/landscape-compare.json: the empty page's pairs, each chip's Try with partners
+    said: '',         // the picks last read out by the live region, so each change is announced once
+    pop: null,        // the open chip picker: { slot, trigger }
 
     /* ---- data ---- */
     byId: function (id) { for (var i = 0; i < this.chips.length; i++) if (this.chips[i].id === id) return this.chips[i]; return null; },
@@ -458,19 +462,14 @@
     syncExport: function () { // Tools' copy buttons read this array at click time
       var rows = this.selection();
       this.exportRows.length = 0;
-      for (var i = 0; i < rows.length; i++) this.exportRows.push(rows[i]);
-      var wrap = $('#cx-table-wrap'), bar = wrap && wrap.previousElementSibling;
-      if (bar && bar.classList && bar.classList.contains('export-bar')) {
-        var n = bar.querySelector('.count');
-        if (n) n.textContent = rows.length + (rows.length === 1 ? ' row' : ' rows') + ' · chips compared';
-      }
+      for (var i = 0; i < rows.length; i++) this.exportRows.push(rows[i]); // the quiet export line has no count to keep in step
     },
 
     /* ---- lifecycle ---- */
     activate: function () {
       if (!this.built) this.buildUI();
       var c = this.byId(this.sel);
-      if (c) this.showStage(c);
+      if (c) this.showStage(c); else this.showGeneric(); // with nothing picked the stage shows the package, never the last page's specimen
     },
     buildUI: function () {
       this.built = true;
@@ -493,8 +492,24 @@
       pk.innerHTML = html;
       pk.addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) self.toggle(b.getAttribute('data-id')); });
       pk.addEventListener('keydown', function (e) { self.arrows(e, $$('button', pk)); });
+      // the slots: a chip's Change and an empty slot open the picker; Remove empties the slot; Try with fills slot 2
+      var srow = $('#cxa-row');
+      if (srow) srow.addEventListener('click', function (e) {
+        var b = e.target.closest('button[data-act]'); if (!b) return;
+        var i = +b.closest('.cxa-slot').getAttribute('data-i'), act = b.getAttribute('data-act');
+        if (act === 'choose') { if (self.pop && self.pop.trigger === b) self.closePicker(true); else self.openPicker(i, b); }
+        else if (act === 'remove') { self.setSlot(i, ''); self.focusSlot(Math.min(i, self.picked.length)); }
+        else if (act === 'try') { self.setSlot(i, b.getAttribute('data-id')); self.focusSlot(i); }
+      });
+      var pairs = $('#cxa-pairs');
+      if (pairs) {
+        pairs.innerHTML = this.compare.pairs.length ? '<span class="cxa-pk">Or start from a pair</span>' + this.compare.pairs.map(function (p, k) { return '<button type="button" data-pair="' + k + '">' + esc(p.label) + '</button>'; }).join('') : '';
+        pairs.addEventListener('click', function (e) { var b = e.target.closest('button[data-pair]'); if (!b) return; self.setPair(self.compare.pairs[+b.getAttribute('data-pair')].ids); self.focusSlot(1); });
+      }
+      var sum = $('#cxa-browse summary');
+      if (sum) sum.textContent = 'Browse all ' + this.chips.length + ' chips by maker';
       var clear = $('#cx-clear');
-      if (clear) clear.addEventListener('click', function () { self.clear(); });
+      if (clear) clear.addEventListener('click', function () { self.clear(); self.focusSlot(0); });
       var plans = $('#cx-plans');
       if (plans) {
         plans.addEventListener('click', function (e) { var b = e.target.closest('button[data-id]'); if (b) self.focus(b.getAttribute('data-id')); });
@@ -503,7 +518,7 @@
       var rt = null;
       window.addEventListener('resize', function () {
         if (Router.current !== 'landscape') return;
-        clearTimeout(rt); rt = setTimeout(function () { self.renderPlans(); self.scrollCue(); }, 160);
+        clearTimeout(rt); rt = setTimeout(function () { self.renderPlans(); self.scrollCue(); self.replacePicker(); }, 160);
       });
       var tw = $('#cx-table-wrap');
       if (tw) tw.addEventListener('scroll', function () { self.scrollCue(); }, { passive: true });
@@ -529,7 +544,7 @@
     },
 
     /* ---- selection ---- */
-    say: function (msg) { this.hint = msg; this.renderCount(); },
+    say: function (msg) { this.hint = msg; this.renderSlots(); this.announce(msg); }, // a refusal shows in the guidance line until the next change, and is read out
     toggle: function (id) {
       var c = this.byId(id); if (!c) return;
       var at = this.picked.indexOf(id);
@@ -564,7 +579,207 @@
     clear: function () {
       this.picked = []; this.sel = null; this.hint = '';
       this.render();
-      Stage.show('package', { plan: true }, 'An AI accelerator package, drawn from above.', 'AI chips · <b>package</b>');
+      this.showGeneric();
+    },
+    showGeneric: function () { Stage.show('package', { plan: true }, 'An AI accelerator package, drawn from above.', 'AI chips · <b>package</b>'); },
+
+    /* ---- the slots: two to four columns that ask for their chips (redesign of 21 Oct 2026, qa/design/chips-ux/) ----
+       An empty slot and a chip's Change open the picker; Remove empties a slot; the folded checklist and the search box change the
+       same `picked`, so every way in stays in step. Until two chips are in, the plans and the table keep a column for each one missing. */
+    ORD: ['first', 'second', 'third', 'fourth'],
+    short: function (c) { return String(c.name).replace(/\s*\(.*\)\s*$/, ''); }, // "H100 (SXM5)" reads "H100" in pairs, Try with and announcements
+    year: function (c) { return c.announced ? String(c.announced).slice(0, 4) : ''; },
+    metaLine: function (c) { return [c.vendor, cname(c.vendorCountry), this.year(c)].filter(Boolean).join(' · '); },
+    names: function (ids) { var self = this, n = ids.map(function (id) { var c = self.byId(id); return c ? self.short(c) : id; }); return n.length < 2 ? n.join('') : n.slice(0, -1).join(', ') + ' and ' + n[n.length - 1]; },
+    guide: function () { // the guidance line over the slots, which is also what the live region reads after each change
+      var n = this.picked.length;
+      if (!n) return 'Choose two chips to compare. Add up to four.';
+      if (n === 1) return 'Choose one more chip to compare.';
+      return 'Comparing ' + n + ' chips.' + (n < this.max ? (this.max - n === 1 ? ' Add one more.' : ' Add up to two more.') : '');
+    },
+    setSlot: function (i, id) { // put a chip in slot i (replacing its chip), or empty slot i when id is ''
+      var p = this.picked.slice();
+      if (!id) { if (i < p.length) p.splice(i, 1); }
+      else { var at = p.indexOf(id); if (at >= 0 && at !== i) return; if (i < p.length) p[i] = id; else p.push(id); }
+      this.picked = p.slice(0, this.max);
+      this.sel = id || (this.picked.indexOf(this.sel) >= 0 ? this.sel : this.picked[this.picked.length - 1] || null);
+      this.hint = '';
+      this.render();
+      if (this.sel) this.showStage(this.byId(this.sel)); else this.showGeneric();
+    },
+    setPair: function (ids) {
+      var self = this;
+      this.picked = ids.filter(function (id) { return self.byId(id); }).slice(0, this.max); this.sel = this.picked[0] || null; this.hint = '';
+      this.render();
+      if (this.sel) this.showStage(this.byId(this.sel));
+    },
+    focusSlot: function (i) { // a filled slot's Change, or an empty slot's own button
+      var s = $('#cxa-row .cxa-slot[data-i="' + i + '"]'), b = s && $('[data-act="choose"]', s);
+      if (b) b.focus();
+    },
+    announce: function (msg) { var el = $('#cxa-live'); if (!el) return; el.textContent = ''; setTimeout(function () { el.textContent = msg; }, 50); },
+    announceChange: function () { // one message per change of the picks, whichever control made it: a slot, Try with, a pair, a tick, search, Clear
+      var key = this.picked.join(','); if (key === this.said) return;
+      var was = this.said ? this.said.split(',') : [], now = this.picked;
+      this.said = key;
+      var added = now.filter(function (x) { return was.indexOf(x) < 0; }), gone = was.filter(function (x) { return now.indexOf(x) < 0; });
+      var lead = !now.length ? 'All chips cleared.'
+        : added.length && !gone.length ? this.names(added) + ' added.'
+        : gone.length && !added.length ? this.names(gone) + ' removed.'
+        : added.length === 1 && gone.length === 1 ? this.names(added) + ' in place of ' + this.names(gone) + '.'
+        : 'Now ' + this.names(now) + '.';
+      this.announce(lead + ' ' + this.guide());
+    },
+    thumbSVG: function (c) { // the package plan at thumbnail size, fitted to its box; the size is not to scale with the other slots
+      return this.planBounds(c.layout) ? this.planSVG(c, 1) : '<i class="cxa-noplan"></i>';
+    },
+    renderSlots: function () {
+      var self = this, row = $('#cxa-row'); if (!row) return;
+      var n = this.picked.length, shown = n < 2 ? 2 : Math.min(this.max, n + 1), html = '';
+      for (var i = 0; i < shown; i++) html += this.slotHTML(i, n);
+      row.innerHTML = html;
+      row.setAttribute('data-n', String(shown));
+      var ask = $('#cxa-ask'); if (ask) ask.textContent = this.hint || this.guide();
+      var clr = $('#cx-clear'); if (clr) clr.hidden = !n;
+      var pairs = $('#cxa-pairs'); if (pairs) pairs.hidden = n > 0 || !this.compare.pairs.length; // after a pick, Try with under slot 2 takes over
+      // at four the checklist's other chips say they are unavailable; they stay in the tab order, and a tick on one says why
+      $$('#picker button').forEach(function (b) { if (n >= self.max && b.getAttribute('aria-pressed') !== 'true') b.setAttribute('aria-disabled', 'true'); else b.removeAttribute('aria-disabled'); });
+    },
+    slotHTML: function (i, n) {
+      var self = this, id = this.picked[i], c = id ? this.byId(id) : null, k = 'cxa-k' + i;
+      var state = c ? 'filled' : (i === n && n < 2) ? 'next' : i >= 2 ? 'more' : 'empty'; // "next" is the one slot drawn in garnet
+      var head = '<p class="cxa-k" id="' + k + '">Chip ' + (i + 1) + (state === 'more' ? ', optional' : '') + '</p>';
+      if (c) {
+        return '<div class="cxa-slot" data-i="' + i + '" data-state="filled">' + head + '<div class="cxa-card cxa-chip">' +
+          '<span class="cxa-thumb" aria-hidden="true">' + this.thumbSVG(c) + '</span>' +
+          '<span class="cxa-id"><b class="cxa-name" title="' + esc(c.name) + '">' + esc(c.name) + '</b><span class="cxa-meta">' + esc(this.metaLine(c)) + '</span></span>' +
+          '<span class="cxa-acts"><button type="button" class="cxa-act" data-act="choose" aria-haspopup="dialog" aria-expanded="false" aria-label="Change chip ' + (i + 1) + ', ' + esc(c.name) + '">Change</button>' +
+          '<button type="button" class="cxa-act" data-act="remove" aria-label="Remove ' + esc(c.name) + ' from chip ' + (i + 1) + '">Remove</button></span></div></div>';
+      }
+      var text = state === 'more' ? 'Add a ' + this.ORD[i] + ' chip (optional)' : 'Choose a chip', tryHTML = '';
+      if (state === 'next' && n === 1) {
+        var sug = (this.compare.with[this.picked[0]] || []).filter(function (s) { return self.byId(s) && self.picked.indexOf(s) < 0; }).slice(0, 3);
+        if (sug.length) tryHTML = '<p class="cxa-try"><span class="cxa-pk">Try with</span>' + sug.map(function (s) { var t = self.short(self.byId(s)); return '<button type="button" data-act="try" data-id="' + esc(s) + '" aria-label="Add ' + esc(t) + ' as chip 2">' + esc(t) + '</button>'; }).join('') + '</p>';
+      }
+      return '<div class="cxa-slot" data-i="' + i + '" data-state="' + state + '">' + head +
+        '<button type="button" class="cxa-card cxa-add" data-act="choose" aria-haspopup="dialog" aria-expanded="false" aria-describedby="' + k + '"><span class="cxa-plus" aria-hidden="true">+</span><span>' + esc(text) + '</span></button>' + tryHTML + '</div>';
+    },
+
+    /* ---- the chip picker: a popover under the slot (a sheet from the bottom on phones) holding a filter field and the chips by maker.
+       The field is an ARIA combobox that drives a grouped listbox through aria-activedescendant: Up and Down move, Enter picks,
+       Escape closes and returns to the slot, typing filters and makes the first match active. An outside click closes it. ---- */
+    ordered: function () { // the checklist's order: countries as they first appear, China last; one group per maker, chips in data order
+      var ccs = [], by = {}, out = [];
+      this.chips.forEach(function (c) { var cc = c.vendorCountry || '??'; if (!by[cc]) { by[cc] = { vs: [], v: {} }; ccs.push(cc); } if (!by[cc].v[c.vendor]) { by[cc].v[c.vendor] = []; by[cc].vs.push(c.vendor); } by[cc].v[c.vendor].push(c); });
+      ccs.sort(function (a, b) { return (a === 'CN') - (b === 'CN'); });
+      ccs.forEach(function (cc) { by[cc].vs.forEach(function (v) { out.push({ vendor: v, chips: by[cc].v[v] }); }); });
+      return out;
+    },
+    buildPicker: function () {
+      var self = this, el = document.createElement('div'), scrim = document.createElement('div');
+      el.className = 'cxp'; el.id = 'cxp'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-labelledby', 'cxp-t'); el.hidden = true;
+      el.innerHTML = '<div class="cxp-head"><p class="cxp-t" id="cxp-t">Choose a chip</p><button type="button" class="cxp-x" aria-label="Close">&times;</button></div>' +
+        '<input class="cxp-in" id="cxp-in" type="text" role="combobox" aria-autocomplete="list" aria-expanded="true" aria-controls="cxp-list" aria-labelledby="cxp-t" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type a name or maker">' +
+        '<div class="cxp-list" id="cxp-list" role="listbox" aria-labelledby="cxp-t">' + this.ordered().map(function (g, gi) {
+          return '<div class="cxp-g" role="group" aria-labelledby="cxp-g' + gi + '"><div class="cxp-gh" id="cxp-g' + gi + '" role="presentation">' + esc(g.vendor) + '</div>' + g.chips.map(function (c) {
+            return '<div class="cxp-o" role="option" id="cxp-o-' + esc(c.id) + '" data-id="' + esc(c.id) + '" aria-selected="false"><span class="cxp-n">' + esc(c.name) + '</span><span class="cxp-m">' + esc(self.metaLine(c)) + '</span><span class="cxp-s"></span></div>';
+          }).join('') + '</div>';
+        }).join('') + '</div><p class="cxp-none" hidden>No chip matches. Try a maker, such as Nvidia or Huawei.</p>';
+      scrim.className = 'cxp-scrim'; scrim.hidden = true;
+      document.body.appendChild(scrim); document.body.appendChild(el); // on the body, so the phone sheet rises above the specimen strip
+      this.popEl = el; this.popScrim = scrim; this.popIn = $('#cxp-in', el); this.popList = $('#cxp-list', el); this.popActive = null;
+      this.popOpts = $$('.cxp-o', el).map(function (o) { var c = self.byId(o.getAttribute('data-id')); return { el: o, id: c.id, text: [c.name, c.vendor, cname(c.vendorCountry), c.family || '', self.year(c)].join(' ').toLowerCase() }; });
+      this.popIn.addEventListener('input', function () { self.filterPicker(); });
+      this.popIn.addEventListener('keydown', function (e) {
+        var list = self.navOpts(), i = list.indexOf(self.popActive), k = e.key;
+        if (k === 'ArrowDown' || k === 'ArrowUp') {
+          e.preventDefault(); if (!list.length) return;
+          self.setActive(list[k === 'ArrowDown' ? (i < 0 ? 0 : (i + 1) % list.length) : (i < 0 ? list.length - 1 : (i - 1 + list.length) % list.length)]);
+        } else if (k === 'Enter') { if (self.popActive) { e.preventDefault(); self.choose(self.popActive.getAttribute('data-id')); } }
+      });
+      el.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); self.closePicker(true); } });
+      this.popList.addEventListener('mousedown', function (e) { e.preventDefault(); }); // a click on a chip keeps the field focused
+      this.popList.addEventListener('click', function (e) { var o = e.target.closest('.cxp-o'); if (o && o.getAttribute('aria-disabled') !== 'true') self.choose(o.getAttribute('data-id')); });
+      $('.cxp-x', el).addEventListener('click', function () { self.closePicker(true); });
+      scrim.addEventListener('click', function () { self.closePicker(true); });
+      el.addEventListener('focusout', function () { setTimeout(function () { if (self.pop && !el.contains(document.activeElement) && document.activeElement !== self.pop.trigger) self.closePicker(false); }, 0); });
+      document.addEventListener('pointerdown', function (e) { if (self.pop && !el.contains(e.target) && !scrim.contains(e.target) && !self.pop.trigger.contains(e.target)) self.closePicker(false); }, true);
+      if (window.visualViewport) window.visualViewport.addEventListener('resize', function () { if (self.pop && el.classList.contains('is-sheet')) self.fitSheet(); });
+      window.addEventListener('hashchange', function () { self.closePicker(false); }); // Back or a link must not leave the picker over another page
+      return el;
+    },
+    openPicker: function (i, trigger) {
+      var self = this, el = this.popEl || this.buildPicker(), cur = this.picked[i] || null, sheet = narrow();
+      if (this.pop) this.closePicker(false);
+      this.pop = { slot: i, trigger: trigger };
+      $('#cxp-t', el).textContent = (cur ? 'Change chip ' : 'Choose chip ') + (i + 1);
+      this.popOpts.forEach(function (o) { // chips already in another slot are marked and cannot be picked twice
+        var at = self.picked.indexOf(o.id), other = at >= 0 && at !== i;
+        if (other) o.el.setAttribute('aria-disabled', 'true'); else o.el.removeAttribute('aria-disabled');
+        o.el.classList.toggle('is-mine', at === i);
+        $('.cxp-s', o.el).textContent = other ? 'In chip ' + (at + 1) : at === i ? 'In this slot' : '';
+      });
+      this.popIn.value = ''; this.filterPicker(); this.popList.scrollTop = 0;
+      el.classList.toggle('is-sheet', sheet);
+      el.hidden = false; this.popScrim.hidden = !sheet;
+      if (sheet) { document.documentElement.style.overflow = 'hidden'; this.fitSheet(); } else this.placePicker();
+      trigger.setAttribute('aria-expanded', 'true');
+      if (cur) this.setActive(document.getElementById('cxp-o-' + cur));
+      this.popIn.focus({ preventScroll: true });
+    },
+    placePicker: function () { // under the slot's card, as wide as the card or 340 px, kept inside the column; the page moves only if the list cannot fit
+      var el = this.popEl, p = this.pop; if (!p) return;
+      var slot = p.trigger.closest('.cxa-slot'), card = (slot && $('.cxa-card', slot)) || p.trigger, r = card.getBoundingClientRect(), col = $('#cx-slots').getBoundingClientRect();
+      var w = Math.min(Math.max(r.width, 340), col.width), left = r.left;
+      if (left + w > col.right) left = Math.max(col.left, r.right - w);
+      el.style.bottom = ''; el.style.maxHeight = '';
+      el.style.width = Math.round(w) + 'px'; el.style.left = Math.round(left + window.pageXOffset) + 'px'; el.style.top = Math.round(r.bottom + window.pageYOffset + 6) + 'px';
+      var room = window.innerHeight - r.bottom - 6 - (el.offsetHeight - this.popList.offsetHeight) - 16;
+      this.popList.style.maxHeight = Math.max(220, Math.min(360, room)) + 'px';
+      var over = el.getBoundingClientRect().bottom - window.innerHeight + 12;
+      if (over > 0) { var root = document.documentElement, prev = root.style.scrollBehavior; root.style.scrollBehavior = 'auto'; window.scrollBy(0, over); root.style.scrollBehavior = prev; }
+    },
+    fitSheet: function () { // the phone sheet sits on the keyboard: its foot follows the visual viewport, so the field stays in view
+      var el = this.popEl, vv = window.visualViewport, vh = vv ? vv.height : window.innerHeight, kb = vv ? Math.max(0, window.innerHeight - vv.height - vv.offsetTop) : 0;
+      el.style.left = ''; el.style.top = ''; el.style.width = '';
+      el.style.bottom = Math.round(kb) + 'px';
+      el.style.maxHeight = Math.round(Math.min(vh - 16, window.innerHeight * 0.86)) + 'px';
+      this.popList.style.maxHeight = '';
+    },
+    replacePicker: function () { // after a resize: a popover that crossed the phone breakpoint closes; otherwise it follows its slot
+      if (!this.pop) return;
+      if (narrow() !== this.popEl.classList.contains('is-sheet')) this.closePicker(false);
+      else if (narrow()) this.fitSheet(); else this.placePicker();
+    },
+    closePicker: function (back) {
+      var p = this.pop; if (!p) return;
+      this.pop = null;
+      this.popEl.hidden = true; this.popScrim.hidden = true; this.setActive(null);
+      if (this.popEl.classList.contains('is-sheet')) document.documentElement.style.overflow = '';
+      if (document.contains(p.trigger)) { p.trigger.setAttribute('aria-expanded', 'false'); if (back) p.trigger.focus(); }
+    },
+    navOpts: function () { return this.popOpts.filter(function (o) { return !o.el.hidden && o.el.getAttribute('aria-disabled') !== 'true'; }).map(function (o) { return o.el; }); },
+    setActive: function (opt) {
+      if (this.popActive) { this.popActive.classList.remove('is-active'); this.popActive.setAttribute('aria-selected', 'false'); }
+      this.popActive = opt || null;
+      if (!opt) { this.popIn.removeAttribute('aria-activedescendant'); return; }
+      opt.classList.add('is-active'); opt.setAttribute('aria-selected', 'true'); this.popIn.setAttribute('aria-activedescendant', opt.id);
+      var l = this.popList, gh = 28, t = opt.offsetTop, b = t + opt.offsetHeight; // keep the active chip in the list's view, clear of the sticky maker heading
+      if (t - gh < l.scrollTop) l.scrollTop = Math.max(0, t - gh); else if (b > l.scrollTop + l.clientHeight) l.scrollTop = b - l.clientHeight;
+    },
+    filterPicker: function () {
+      var q = this.popIn.value.trim().toLowerCase(), toks = q ? q.split(/\s+/) : [], any = false;
+      this.popOpts.forEach(function (o) { var ok = toks.every(function (t) { return o.text.indexOf(t) >= 0; }); o.el.hidden = !ok; if (ok) any = true; });
+      $$('.cxp-g', this.popEl).forEach(function (g) { g.hidden = !$$('.cxp-o', g).some(function (o) { return !o.hidden; }); });
+      $('.cxp-none', this.popEl).hidden = any;
+      this.setActive(q ? this.navOpts()[0] || null : null); // typing makes the first match active, so Enter takes it; an empty field waits for an arrow key
+    },
+    choose: function (id) {
+      var p = this.pop; if (!p) return;
+      this.closePicker(false);
+      if (this.picked[p.slot] !== id) this.setSlot(p.slot, id);
+      var self = this, n = this.picked.length, to = n < 2 ? n : Math.min(p.slot, n - 1); // the next waiting slot while the comparison needs one, else the slot just filled
+      setTimeout(function () { self.focusSlot(to); }, 0); // after the key event that picked, so the Enter cannot also press the slot it lands on
     },
 
     /* ---- render ---- */
@@ -580,11 +795,13 @@
       this.renderTable();
       this.renderNotes();
       this.syncExport();
+      this.renderSlots();
+      this.announceChange();
     },
-    renderCount: function () {
-      var el = $('#cx-count'); if (!el) return;
-      el.innerHTML = this.picked.length ? '<b>' + this.picked.length + '</b> of ' + this.max + ' chips selected' + (this.hint ? ' · <i>' + esc(this.hint) + '</i>' : '') : '';
-      var sec = $('section[data-view="landscape"]'); if (sec) sec.setAttribute('data-empty', this.picked.length ? '0' : '1');
+    renderCount: function () { // the count line went with the slots: the guidance line over them says where the reader is
+      var sec = $('section[data-view="landscape"]'); if (!sec) return;
+      sec.setAttribute('data-empty', this.picked.length ? '0' : '1');
+      sec.setAttribute('data-full', this.picked.length >= this.max ? '1' : '0');
     },
 
     /* ---- package plans, all at one millimetres-per-pixel scale ---- */
@@ -660,9 +877,14 @@
           '<span class="cx-plan-name"><b>' + esc(c.name) + '</b><em>' + esc(c.vendor) + '</em></span>' +
           '<span class="cx-plan-art">' + self.planSVG(c, k) + '</span>' +
           '<span class="cx-plan-size">' + esc(self.planSize(c)) + '</span></button>';
-      }).join('') || '';
+      }).join('') + this.ghostPlans(sel.length);
       var key = $('#cx-key');
       if (key) key.innerHTML = '<span><i class="cx-sw die"></i>logic die</span><span><i class="cx-sw hbm"></i>memory stack</span><span><i class="cx-sw int"></i>interposer</span><span><i class="cx-sw sub"></i>substrate</span>' + this.scaleKey(k);
+    },
+    ghostPlans: function (n) { // until two chips are in, a dashed outline holds the place of each one missing
+      var h = '';
+      for (var i = n + 1; i <= 2; i++) h += '<div class="cx-plan cx-plan--ghost" aria-hidden="true"><span class="cx-plan-name"><b>Chip ' + i + '</b><em>Not chosen yet</em></span><span class="cx-plan-art"><i></i></span><span class="cx-plan-size">&nbsp;</span></div>';
+      return h;
     },
 
     /* ---- the side-by-side table ---- */
@@ -739,16 +961,24 @@
           '<button type="button" class="cx-colhead" data-id="' + esc(c.id) + '" aria-pressed="' + (c.id === self.sel ? 'true' : 'false') + '"><b>' + esc(c.name) + '</b><span>' + esc(c.vendor) + '</span></button>' +
           '<button type="button" class="cx-jump" data-notes="' + esc(c.id) + '">Read the notes</button></th>';
       });
+      // until two chips are in, an empty hatched column waits for each one missing, so the reader sees what the table will hold
+      var g = Math.max(0, 2 - sel.length), gd = '';
+      for (var gi = 0; gi < g; gi++) {
+        html += '<th scope="col" class="cx-col cx-col--ghost"><span class="cx-ghost-h">Chip ' + (sel.length + gi + 1) + '</span><span class="cx-ghost-s">Not chosen yet</span></th>';
+        gd += '<td class="cx-ghost"></td>';
+      }
       html += '</tr></thead><tbody>';
       this.rows.forEach(function (row) {
         var max = 0;
         if (row.num) sel.forEach(function (c) { var v = row.num(c); if (typeof v === 'number' && v > max) max = v; });
         html += '<tr><th scope="row" class="cx-rowhead">' + esc(row.label) + '</th>';
         sel.forEach(function (c) { html += self.cellHTML(c, row, max, row.fn ? marker(c) : '', multi); });
-        html += '</tr>';
+        html += gd + '</tr>';
       });
       tb.innerHTML = html + '</tbody>';
-      tb.setAttribute('data-n', String(sel.length)); // three or four chips squeeze their columns to fit the page where it is wide enough
+      tb.setAttribute('data-n', String(sel.length + g)); // three or four chips squeeze their columns to fit the page where it is wide enough
+      var tw = $('#cx-table-wrap'); // with no chip the table is a preview of its rows, so a screen reader skips it
+      if (tw) { if (sel.length) tw.removeAttribute('aria-hidden'); else tw.setAttribute('aria-hidden', 'true'); }
       this.scrollCue();
       var foot = $('#cx-foot');
       if (foot) foot.innerHTML = fns.length ? '<p class="label">How the speed figures are measured</p><ol class="cx-fns">' +

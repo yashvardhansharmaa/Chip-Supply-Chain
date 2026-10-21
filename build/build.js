@@ -670,6 +670,15 @@ const landscape = readJSON(path.join(root, 'data', 'landscape.json'), []);
 // per-chip package layouts live in their own file so the specimen designers and the data editors never touch the same JSON
 const landscapeLayouts = readJSONSafe(path.join(root, 'data', 'landscape-layouts.json')) || {};
 landscape.forEach((c) => { if (landscapeLayouts[c.id]) c.layout = landscapeLayouts[c.id]; }); // the researched layouts file wins over the inline field
+// AI Chips starting points: the empty page's pairs and each chip's "Try with" partners (editorial, no figures); every id must name a chip
+const landscapeCompareRaw = readJSONSafe(path.join(root, 'data', 'landscape-compare.json')) || {};
+const landscapeCompare = { pairs: landscapeCompareRaw.pairs || [], with: landscapeCompareRaw.with || {} };
+{
+  const chipIds = new Set(landscape.map((c) => c.id));
+  landscapeCompare.pairs.forEach((p) => (p.ids || []).forEach((id) => { if (!chipIds.has(id)) warn('landscape-compare: pair "' + p.label + '" names no chip ' + id); }));
+  Object.keys(landscapeCompare.with).forEach((k) => [k].concat(landscapeCompare.with[k]).forEach((id) => { if (!chipIds.has(id)) warn('landscape-compare: with.' + k + ' names no chip ' + id); }));
+  landscape.forEach((c) => { if (!landscapeCompare.with[c.id]) warn('landscape-compare: no partners for ' + c.id); });
+}
 const suppliers = readJSON(path.join(root, 'data', 'suppliers.json'), []);
 const timeline = readJSON(path.join(root, 'data', 'export-controls-timeline.json'), []);
 const matrix = readJSON(path.join(root, 'data', 'chokepoint-matrix.json'), []);
@@ -913,7 +922,7 @@ const suppliersData = suppliers.map((r) => {
 });
 // each firm's chart address, for the search entries of the China revenue rows (the rows themselves stay as filed, since the page exports them)
 const exposureLinks = {}; Object.keys(exposureJoin.byFirm).forEach((f) => { exposureLinks[f] = exposureJoin.href(f); });
-const data = { landscape, landscapeNotes, suppliers: suppliersData, timeline, matrix, flows, exposure, exposureLinks, chapters: all.map((c) => { const card = c.meta.card || {}; return { id: c.id, number: c.number, title: c.title, specimen: c.meta.specimen, oneLiner: c.meta.oneLiner || '', plain: String(c.meta.plain || '').replace(/\s*\(\[source\]\([^)\s]*\)\)/g, ''), score: +card.chokepointScore || 0, concentration: card.concentration || '', band: card.concentration || '', bandRank: BANDS[card.concentration] || 0, substitutability: card.substitutability || null, leaders: card.leaders || [], countries: card.countries || [], substitution: card.substitution || {}, chinaStatus: card.chinaStatus || '', usStatus: card.usStatus || '' }; }) };
+const data = { landscape, landscapeNotes, landscapeCompare, suppliers: suppliersData, timeline, matrix, flows, exposure, exposureLinks, chapters: all.map((c) => { const card = c.meta.card || {}; return { id: c.id, number: c.number, title: c.title, specimen: c.meta.specimen, oneLiner: c.meta.oneLiner || '', plain: String(c.meta.plain || '').replace(/\s*\(\[source\]\([^)\s]*\)\)/g, ''), score: +card.chokepointScore || 0, concentration: card.concentration || '', band: card.concentration || '', bandRank: BANDS[card.concentration] || 0, substitutability: card.substitutability || null, leaders: card.leaders || [], countries: card.countries || [], substitution: card.substitution || {}, chinaStatus: card.chinaStatus || '', usStatus: card.usStatus || '' }; }) };
 let html = read(path.join(root, 'src', 'template.html'));
 const fill = (k, v) => { html = html.split(`{{${k}}}`).join(v); };
 const modDir = (d) => (fs.existsSync(d) ? fs.readdirSync(d).filter((f) => !f.startsWith('.')).sort() : []);
