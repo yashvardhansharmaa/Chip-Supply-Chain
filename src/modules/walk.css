@@ -11,11 +11,11 @@
 .wk-eyebrow { display: block; margin: 0 0 13px; }
 .wk-title {
   font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: clamp(40px, 4.2vw, 60px); line-height: 1.02;
-  text-transform: none; letter-spacing: -0.012em;
+  font-size: var(--fs-d1); line-height: 1.02;
+  text-transform: none; letter-spacing: -0.015em;
   margin: 0 0 16px; max-width: 12em;
 }
-.wk-dek { font-size: 20px; line-height: 1.45; color: var(--ink-2); max-width: 30em; margin: 0 0 18px; }
+.wk-dek { font-size: var(--fs-lede); line-height: 1.45; color: var(--ink-2); max-width: 30em; margin: 0 0 18px; }
 .wk-meta { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0; }
 .wk-meta .label { position: relative; }
 .wk-meta .label + .label::before { content: ""; position: absolute; left: -10px; top: 2px; width: 1px; height: 10px; background: var(--line-2); }
@@ -25,24 +25,24 @@
 .wk-tabs-k { margin: 0; padding: 10px 0 8px; border-bottom: 1px solid var(--line); color: var(--muted); }
 .wk-tabs a { display: grid; grid-template-columns: 172px minmax(0, 1fr); gap: 0 20px; align-items: baseline; min-width: 0; padding: 9px 0 10px; border-top: 1px solid var(--line); color: var(--ink-2); text-decoration: none; }
 .wk-tabs a:first-of-type { border-top: 0; }
-.wk-tabs .wk-tab { display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 19px; line-height: 1.2; padding: 0; margin: 0; border: 0; border-radius: 0; color: var(--ink); background: none; transition: color 0.15s; }
+.wk-tabs .wk-tab { display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--fs-d5); line-height: 1.2; padding: 0; margin: 0; border: 0; border-radius: 0; color: var(--ink); background: none; transition: color 0.15s; }
 .wk-tabs .wk-tab::after { content: "\00a0\2192"; color: var(--line-2); font-weight: 400; }
 .wk-tabs a:hover .wk-tab, .wk-tabs a:focus-visible .wk-tab { background: none; color: var(--accent); }
 .wk-tabs a:hover .wk-tab::after { color: var(--accent); }
 .wk-tabs a:focus-visible { outline: none; }
-.wk-tabs span { display: block; font-size: 15.5px; line-height: 1.45; }
+.wk-tabs span { display: block; font-size: var(--fs-small); line-height: 1.45; }
 
-/* ---------- the chain at a glance: on phones, under the hero, in place of Other pages ----------
+/* ---------- the chain at a glance: under the hero, at every width ----------
    The fifteen stages in order, one line each: the number in the ledger column (so the names line up with the walk's
    text below), the name, and the concentration drawn as the summary page draws it, a four-step meter and the plain word,
    garnet at Extreme. Each line is a link to its chapter, the full width of the column and at least 28 px tall.
-   Wider screens keep Other pages under the hero. */
-.wk-gl { display: none; }
+   Other pages, which repeats the tabs, closes the walk (.wk-end). The phone block comes first and is the shipped phone
+   layout; from 701 px the rows grow a little, and from 901 px the numbers hang in the ledger column, so the names start
+   on the title's edge and the list previews the walk's own structure. */
 @media (max-width: 700px) {
-  .wk-head .wk-tabs { display: none; } /* every page stays one tap away in the tabs and the Contents sheet */
   .wk-gl { display: block; margin: 24px 0 0; border-top: 1px solid var(--ink); }
   .wk-gl-h { display: block; margin: 0; padding: 10px 0 0; }
-  .wk-gl-p { margin: 5px 0 12px; font-size: 15px; line-height: 1.45; color: var(--ink-2); }
+  .wk-gl-p { margin: 5px 0 12px; font-size: var(--fs-small); line-height: 1.45; color: var(--ink-2); }
   .wk-gl-p b { color: var(--accent); font-weight: 600; }
   .wk-gl-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
   .wk-gl-list li + li { border-top: 1px solid var(--line); }
@@ -50,9 +50,9 @@
     display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr) auto; column-gap: var(--gutter-gap); align-items: baseline;
     min-height: 28px; padding: 4px 0; color: var(--ink); text-decoration: none;
   }
-  .wk-gl-n { padding-right: 8px; text-align: right; font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .wk-gl-t { font-size: 15.5px; line-height: 1.3; text-wrap: balance; } /* a long name breaks into two even lines, never one word alone */
-  .wk-gl-c { display: inline-flex; align-items: baseline; gap: 7px; font-family: var(--font-mono); font-size: 12.5px; color: var(--ink); }
+  .wk-gl-n { padding-right: 8px; text-align: right; font-family: var(--font-mono); font-size: var(--fs-cap); color: var(--muted); font-variant-numeric: tabular-nums; }
+  .wk-gl-t { font-size: var(--fs-small); line-height: 1.3; text-wrap: balance; } /* a long name breaks into two even lines, never one word alone */
+  .wk-gl-c { display: inline-flex; align-items: baseline; gap: 7px; font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--ink); }
   .wk-gl-m { display: inline-flex; align-self: center; align-items: flex-end; gap: 2px; height: 14px; }
   .wk-gl-m i { display: block; width: 6px; background: var(--line); }
   .wk-gl-m i:nth-child(1) { height: 5px; }
@@ -68,9 +68,45 @@
   .wk-gl-list a:focus-visible { outline-offset: 2px; }
 }
 @media (max-width: 380px) { /* a 360 px phone: a narrower meter and word keep most names on one line */
-  .wk-gl-t { font-size: 15px; }
-  .wk-gl-c { gap: 5px; font-size: 12px; }
+  .wk-gl-t { font-size: var(--fs-small); }
+  .wk-gl-c { gap: 5px; font-size: var(--fs-ui-s); }
   .wk-gl-m i { width: 5px; }
+}
+@media (min-width: 701px) {
+  .wk-gl { display: block; margin: 34px 0 0; border-top: 1px solid var(--ink); }
+  .wk-gl-h { display: block; margin: 0; padding: 11px 0 0; }
+  .wk-gl-p { margin: 6px 0 14px; font-size: var(--fs-plain); line-height: 1.45; color: var(--ink-2); max-width: 36em; }
+  .wk-gl-p b { color: var(--accent); font-weight: 600; }
+  .wk-gl-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
+  .wk-gl-list li + li { border-top: 1px solid var(--line); }
+  .wk-gl-list a {
+    display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr) auto; column-gap: var(--gutter-gap); align-items: baseline;
+    min-height: 30px; padding: 5px 0 4px; color: var(--ink); text-decoration: none;
+  }
+  .wk-gl-n { padding-right: 8px; text-align: right; font-family: var(--font-mono); font-size: var(--fs-cap); color: var(--muted); font-variant-numeric: tabular-nums; }
+  .wk-gl-t { font-size: var(--fs-d6); line-height: 1.3; }
+  .wk-gl-c { display: inline-flex; align-items: baseline; gap: 8px; font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--ink-2); }
+  .wk-gl-m { display: inline-flex; align-self: center; align-items: flex-end; gap: 2px; height: 14px; }
+  .wk-gl-m i { display: block; width: 6px; background: var(--line); }
+  .wk-gl-m i:nth-child(1) { height: 5px; }
+  .wk-gl-m i:nth-child(2) { height: 8px; }
+  .wk-gl-m i:nth-child(3) { height: 11px; }
+  .wk-gl-m i:nth-child(4) { height: 14px; }
+  .wk-gl-list li .wk-gl-m i.on { background: var(--muted); }
+  .wk-gl-list li[data-level="3"] .wk-gl-m i.on { background: var(--bar-4); }
+  .wk-gl-list li[data-level="4"] .wk-gl-m i.on { background: var(--accent-fill); }
+  .wk-gl-w { min-width: 4.4em; }
+  .wk-gl-list li[data-level="4"] .wk-gl-w, .wk-gl-list li[data-level="4"] .wk-gl-n { color: var(--accent); }
+  .wk-gl-list li[data-level="4"] .wk-gl-w { font-weight: 600; }
+  .wk-gl-list a:hover { background: var(--bg-2); }
+  .wk-gl-list a:hover .wk-gl-t, .wk-gl-list a:focus-visible .wk-gl-t { color: var(--accent); }
+}
+@media (min-width: 901px) {
+  .wk-gl { border-top: 0; }
+  .wk-gl-h { border-top: 1px solid var(--ink); }
+  .wk-gl-list a { position: relative; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; }
+  .wk-gl-n { position: absolute; top: 9px; left: calc(-1 * (var(--gutter) + var(--gutter-gap))); width: var(--gutter); padding-right: 14px; }
+  .wk-gl-t { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--fs-d6); line-height: 1.25; }
 }
 
 /* ---------- the walk: the ledger column ---------- */
@@ -89,7 +125,7 @@
 .wk-n { /* the number is the mark: Fraunces at its lightest weight and highest contrast */
   position: absolute; right: 14px; top: -14px;
   font-family: var(--font-display); font-weight: 300; font-variation-settings: var(--opsz-numeral);
-  font-size: 54px; line-height: 1; letter-spacing: -0.02em;
+  font-size: var(--fs-num-m); line-height: 1; letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums lining-nums; color: var(--muted);
 }
 .wk-step.is-past .wk-mark::before { background: var(--ink-2); }
@@ -103,7 +139,7 @@
 .wk-where .wk-stage::before { content: ""; position: absolute; left: -9px; top: 2px; width: 1px; height: 10px; background: var(--line-2); }
 .wk-t {
   font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title);
-  font-size: clamp(26px, 2.3vw, 32px); line-height: 1.1; letter-spacing: 0;
+  font-size: var(--fs-d1s); line-height: 1.1; letter-spacing: 0;
   margin: 0 0 14px; max-width: 15em;
 }
 .wk-p { max-width: var(--measure); line-height: 1.6; margin: 0 0 16px; }
@@ -111,7 +147,7 @@
 .wk-leaders {
   display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 11px;
   max-width: var(--measure); margin: 0 0 15px;
-  font-size: 15.5px; line-height: 1.5; color: var(--ink-2);
+  font-size: var(--fs-small); line-height: 1.5; color: var(--ink-2);
 }
 .wk-leaders .label { flex: 0 0 auto; }
 .wk-lead { font-weight: 600; color: var(--ink); }
@@ -124,7 +160,7 @@
 }
 .wk-score {
   display: inline-flex; align-items: center; gap: 9px;
-  font-family: var(--font-mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); font-variant-numeric: tabular-nums;
 }
 .wk-pips { display: inline-flex; gap: 4px; }
 .wk-pips i { display: block; box-sizing: border-box; width: 8px; height: 8px; border-radius: 0; border: 1.5px solid var(--line-2); }
@@ -132,11 +168,11 @@
 .wk-score[data-rank="3"] .wk-pips i.on { background: var(--bar-3); border-color: var(--bar-3); }
 .wk-score[data-rank="4"] .wk-pips i.on { background: var(--bar-4); border-color: var(--bar-4); }
 .wk-score[data-rank="5"] .wk-pips i.on { background: var(--bar-5); border-color: var(--bar-5); }
-.wk-sc b { color: var(--ink); font-weight: 600; font-size: 13px; }
+.wk-sc b { color: var(--ink); font-weight: 600; font-size: var(--fs-ui); }
 .wk-score[data-rank="5"] .wk-sc, .wk-score[data-rank="5"] .wk-sc b { color: var(--accent); }
 .wk-read {
   margin-left: auto; font-family: var(--font-mono); font-weight: 500;
-  font-size: 13.5px; letter-spacing: 0.01em; white-space: nowrap;
+  font-size: var(--fs-ui); letter-spacing: 0.01em; white-space: nowrap;
   text-decoration: none; border-bottom: 1px solid var(--line-2); padding-bottom: 1px;
 }
 .wk-read::after { content: "\00a0\2192"; color: var(--muted); }
@@ -152,16 +188,9 @@
 
 .wk-pn { display: none; }
 
-/* ---------- the walk: the end ---------- */
-.wk-end { border-top: 1px solid var(--ink); padding: 22px 0 0; max-width: var(--measure); margin-left: calc(var(--gutter) + var(--gutter-gap)); }
-.wk-end-t { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 24px; line-height: 1.15; margin: 0 0 8px; }
-.wk-end-p { margin: 0 0 16px; color: var(--ink-2); }
-.wk-end-links { display: flex; flex-wrap: wrap; gap: 8px 10px; margin: 0; }
-.wk-end-links a {
-  font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
-  text-decoration: none; padding: 9px 12px; border: 1px solid var(--line-2); border-radius: 0; color: var(--ink);
-}
-.wk-end-links a:hover { color: var(--accent); border-color: var(--accent); }
+/* ---------- the walk: the end, Other pages (its own ink rule opens it) ---------- */
+.wk-end { max-width: var(--measure); margin-left: calc(var(--gutter) + var(--gutter-gap)); }
+.wk-end .wk-tabs { margin: 0; }
 
 /* ---------- the walk: the flashcards after the last step ----------
    The chapter decks' component and look (styles.css .review, .fc-*), set in the walk's text column. A chapter's deck sits in
@@ -170,7 +199,7 @@
 .wk-deck .review { margin-top: 6px; }
 .wk-deck .rv-title {
   font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); letter-spacing: 0;
-  font-size: 28px; line-height: 1.15; margin: 0.55em 0 0.2em;
+  font-size: var(--fs-d2); line-height: 1.15; margin: 0.55em 0 0.2em;
 }
 /* ten dots leave a phone no room for both step links beside them, so the links move under the dots, each on one line */
 .wk-deck .fc-nav { flex-wrap: wrap; row-gap: 2px; }
@@ -187,7 +216,7 @@
 .wk-rail[data-show="1"] { transform: none; opacity: 1; }
 .wk-rail-bar { height: 2px; background: var(--line); border-radius: 0; overflow: hidden; }
 .wk-rail-bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width 0.15s linear; }
-.wk-rail-line { display: flex; gap: 12px; align-items: baseline; margin: 6px 0 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.02em; color: var(--muted); }
+.wk-rail-line { display: flex; gap: 12px; align-items: baseline; margin: 6px 0 0; font-family: var(--font-mono); font-size: var(--fs-ui-s); letter-spacing: 0.01em; color: var(--muted); }
 .wk-rail-n { flex: 0 0 auto; color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
 .wk-rail-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
@@ -204,14 +233,14 @@
 .wk-sh-item:hover { border-top-color: var(--ink); background: none; }
 .wk-sh-t {
   display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title);
-  font-size: 16px; line-height: 1.2; letter-spacing: 0; margin: 0 0 4px; text-wrap: balance;
+  font-size: var(--fs-d6); line-height: 1.2; letter-spacing: 0; margin: 0 0 4px; text-wrap: balance;
 }
 .wk-sh-t::after { content: "\00a0\2192"; color: var(--muted); font-weight: 400; }
 .wk-sh-item:hover .wk-sh-t { color: var(--accent); }
 .wk-sh-d { display: block; font-size: 13.5px; line-height: 1.38; color: var(--ink-2); }
 .wk-sh-more {
   align-self: flex-start; margin-top: 6px;
-  font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+  font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase;
   color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--line-2);
 }
 .wk-sh-more:hover { color: var(--accent); border-bottom-color: var(--accent); }
@@ -219,8 +248,8 @@
 
 /* ---------- the walk: sourced facts ---------- */
 .wk-facts { list-style: none; margin: 10px 0 4px; padding: 8px 0 6px 16px; border-left: 1px solid var(--line-2); max-width: var(--measure); }
-.wk-facts li { font-family: var(--font-body); font-size: 15.5px; line-height: 1.45; color: var(--ink-2); margin: 0 0 6px; }
-.wk-facts .wk-src { font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); text-decoration: none; margin-left: 6px; }
+.wk-facts li { font-family: var(--font-body); font-size: var(--fs-small); line-height: 1.45; color: var(--ink-2); margin: 0 0 6px; }
+.wk-facts .wk-src { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; color: var(--accent); text-decoration: none; margin-left: 6px; }
 .wk-facts .wk-src:hover { text-decoration: underline; }
 
 /* ---------- narrow ---------- */
@@ -235,16 +264,16 @@
   /* the ledger column narrows to 34 px; the number stays in it, small */
   .wk-head { margin-left: 0; padding-top: 26px; }
   .wk-title { font-size: 36px; max-width: none; }
-  .wk-dek { font-size: 17.5px; }
+  .wk-dek { font-size: var(--fs-plain); }
   .wk-meta .label + .label::before, .wk-where .wk-stage::before { display: none; }
   .wk-tabs a { grid-template-columns: 1fr; gap: 2px; }
-  .wk-tabs .wk-tab { font-size: 17px; }
-  .wk-tabs span { font-size: 14.5px; }
+  .wk-tabs .wk-tab { font-size: var(--fs-d6); }
+  .wk-tabs span { font-size: var(--fs-small); }
   .wk-list { margin-top: 30px; }
   .wk-step { scroll-margin-top: calc(var(--masthead) + 60px); }
   .wk-block { padding-bottom: 38px; }
   .wk-n { display: block; right: 8px; top: -6px; font-size: 26px; }
-  .wk-t { font-size: 25px; max-width: none; }
+  .wk-t { font-size: var(--fs-d3); max-width: none; }
   .wk-foot { gap: 10px 14px; }
   .wk-read { margin-left: 0; }
   .wk-end { margin-left: 0; }
@@ -258,11 +287,10 @@
   .wk-pn .wk-next { text-align: right; }
   .wk-pn .label { display: block; margin-bottom: 3px; }
   .wk-pn-t { display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 14.5px; line-height: 1.25; overflow-wrap: anywhere; }
-  .wk-end-links a { font-size: 10.5px; padding: 8px 9px; }
 }
 @media (max-width: 420px) {
   .wk-title { font-size: 33px; }
-  .wk-t { font-size: 23px; }
+  .wk-t { font-size: var(--fs-d3); }
   .wk-pn-t { font-size: 13px; }
 }
 @media (prefers-reduced-motion: reduce) {

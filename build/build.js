@@ -62,9 +62,10 @@ function inline(text, ctx) {
   let s = esc(text);
   // code spans
   s = s.replace(/`([^`]+)`/g, (_, c) => `<code>${c}</code>`);
-  // citations: ([source](url)) or [source](url)
-  s = s.replace(/\(\s*\[(?:source|Source|src)\]\((https?:[^)\s]+)\)\s*\)/g, (_, url) => cite(url, ctx));
-  s = s.replace(/\[(?:source|Source|src)\]\((https?:[^)\s]+)\)/g, (_, url) => cite(url, ctx));
+  // citations: ([source](url)) or [source](url); the space before one goes too, so the mark sits on its word and a line
+  // never breaks between them (the readable pages already set it so, plainCites in build/modules/social.js)
+  s = s.replace(/\s*\(\s*\[(?:source|Source|src)\]\((https?:[^)\s]+)\)\s*\)/g, (_, url) => cite(url, ctx));
+  s = s.replace(/\s*\[(?:source|Source|src)\]\((https?:[^)\s]+)\)/g, (_, url) => cite(url, ctx));
   // links
   s = s.replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, (_, t, url) => `<a href="${url}" target="_blank" rel="noopener">${t}</a>`);
   // internal anchors [text](#id)
@@ -95,30 +96,71 @@ function host(url) { try { const m = String(url).match(/^https?:\/\/web\.archive
 /* ---------------- figures ---------------- */
 function fmtNum(v) { if (typeof v !== 'number') return esc(v); return Math.abs(v) >= 1000 ? v.toLocaleString('en-US') : (Number.isInteger(v) ? String(v) : v.toFixed(1)); }
 const USED_MEDIA = new Set(); // animations placed in a chapter; only their files are copied to dist/media
+/* A figure's unit (decision 11, 21 Oct 2026). A unit of eight characters or fewer travels with every value, and the tag after
+   the title goes: "%" gives 56.8%, a currency unit puts its sign before the figure and the rest after it ($60M, $2,900,
+   $1,187/kg), and a word follows the figure (48 tools, 1,200 GB/s). A longer unit ("million 8-inch-equivalent wafers per
+   month") stays a tag after the title and the values stand bare. */
+const unitOnValue = (u) => !!u && String(u).length <= 8;
+function withUnit(v, unit) {
+  const n = fmtNum(v), u = String(unit || '');
+  if (!unitOnValue(u)) return n;
+  if (u === '%') return n + '%';
+  const sign = u.match(/^[$€£¥]/);
+  if (sign) return sign[0] + n + esc(u.slice(1));
+  return n + '\u00a0' + esc(u); // a no-break space: the figure and its unit never part
+}
+/* Stacked bars (decision 4, the owner's middle way, 21 Oct 2026). data-k on each segment and its legend entry names its
+   color, and the stylesheets map each to a token (src/styles.css and build/assets/chapter-page.css, light and dark):
+   "lead", the largest share that is not a remainder, garnet; "1" to "5", the others in data order, the five chart hues;
+   "tail", any past those five; "rest", a remainder ("Other", "All others", "… and all others"), hatched with a hairline edge.
+   The country stacks keep each country's own color (COUNTRY_COLOR, the Suppliers page's), as "c1" to "c7", never twice in a
+   chart; Europe takes the EU color (c2), and a region or remainder turns neutral, "n1" then "n2". */
+const STACK_REST = /^(other|others|all others|everyone else|rest of world|.* and all others|.*other companies)$/i;
+const COUNTRY_STACKS = new Set(['wafer-concentration', 'resist-country', 'asml-region']);
+const COUNTRY_ADJ = { Japanese: 'Japan', American: 'United States', Taiwanese: 'Taiwan', Korean: 'South Korea', 'South Korean': 'South Korea', Chinese: 'China', Dutch: 'Netherlands', German: 'Germany' };
+function stackKeys(f, segs) {
+  if (COUNTRY_STACKS.has(f.id)) {
+    const used = new Set(); let n = 0;
+    return segs.map((s) => {
+      const adj = String(s.name).match(/^(\w+(?: Korean)?) (?:companies|firms|suppliers)$/);
+      const name = adj && COUNTRY_ADJ[adj[1]] ? COUNTRY_ADJ[adj[1]] : s.name;
+      const c = /^europe$/i.test(name) ? 2 : COUNTRY_COLOR[name];
+      if (c && c < 8 && !used.has(c)) { used.add(c); return 'c' + c; }
+      n += 1; return 'n' + Math.min(n, 2);
+    });
+  }
+  const rest = segs.map((s) => STACK_REST.test(String(s.name).trim()));
+  let lead = -1;
+  segs.forEach((s, i) => { if (!rest[i] && (lead < 0 || s.v > segs[lead].v)) lead = i; });
+  let n = 0;
+  return segs.map((s, i) => (i === lead ? 'lead' : rest[i] ? 'rest' : ++n <= 5 ? String(n) : 'tail'));
+}
+// a unit that moves onto the values leaves the title, and so does any copy of it the title spells out ("2022 ($M)", "price in Europe ($/kg)", decision 11)
+const figTitle = (f) => (unitOnValue(f.unit) ? String(f.title || '').split(` (${f.unit})`).join('') : String(f.title || ''));
 function figure(f, ctx) {
   if (!f) return '';
-  const title = `<p class="fig-title">${esc(f.title)}${f.unit ? `<span class="unit">${esc(f.unit)}</span>` : ''}</p>`;
+  const shortUnit = unitOnValue(f.unit);
+  const title = `<p class="fig-title">${esc(figTitle(f))}${f.unit && !shortUnit ? `<span class="unit">${esc(f.unit)}</span>` : ''}</p>`;
   const source = f.source && f.source.url ? `<p class="fig-source">Source: <a href="${safeUrl(f.source.url)}" target="_blank" rel="noopener">${esc(f.source.label || host(f.source.url))}</a></p>` : (f.source && f.source.label ? `<p class="fig-source">Source: ${esc(f.source.label)}</p>` : '');
   if (f.source && f.source.url) cite(f.source.url, ctx);
   let body = '';
   const data = Array.isArray(f.data) ? f.data.filter((d) => Array.isArray(d) && d.length >= 2) : [];
   if (f.type === 'bars') {
+    // HTML rows, so a label is never cut and wraps at a readable size on a phone: the label beside its bar from 641 px up
+    // (its column as wide as the longest label, at most 45 percent), above it below that. One series, so the bars are ink
+    // and the largest garnet (.hb.top; ties mark each). --lw and --vw size the label column and the room for the value.
     const max = Math.max(...data.map((d) => +d[1] || 0), 1e-9);
-    const rowH = 26, labelW = 176, barX = labelW + 8, barW = 330, W = 600, H = data.length * rowH + 6;
-    let svg = `<svg class="bars" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(f.title)}">`;
-    data.forEach((d, i) => {
-      const y = i * rowH + 3, w = Math.max(2, (+d[1] || 0) / max * barW);
-      svg += `<text x="${labelW}" y="${y + 13}" text-anchor="end">${esc(String(d[0]).slice(0, 26))}</text><rect class="track" x="${barX}" y="${y}" width="${barW}" height="16" rx="1"/><rect class="bar" x="${barX}" y="${y}" width="${w.toFixed(1)}" height="16" rx="1"/><text class="val" x="${barX + w + 8}" y="${y + 13}">${fmtNum(d[1])}${f.unit === '%' ? '%' : ''}</text>`;
-    });
-    svg += `<line class="axis" x1="${barX}" y1="0" x2="${barX}" y2="${H}"/></svg>`;
-    body = svg + tableFallback(data, f);
+    const vals = data.map((d) => withUnit(d[1], f.unit));
+    const lw = Math.max(...data.map((d) => String(d[0]).length)), vw = Math.max(...vals.map((v) => v.replace(/&[a-z]+;/g, '&').length));
+    body = `<div class="hbars" aria-hidden="true" style="--lw:${(lw * 0.56 + 0.4).toFixed(1)}em;--vw:${(vw * 0.62 + 0.9).toFixed(1)}em">`
+      + data.map((d, i) => `<div class="hb${(+d[1] || 0) === max ? ' top' : ''}"><span class="hb-l">${esc(d[0])}</span><span class="hb-r"><i style="width:${Math.max(0.6, (+d[1] || 0) / max * 100).toFixed(1)}%"></i><b>${vals[i]}</b></span></div>`).join('')
+      + `</div>` + tableFallback(data, f);
   } else if (f.type === 'stack') {
     const total = data.reduce((a, d) => a + (+d[1] || 0), 0) || 1;
-    let seen = 0;
-    const colorOf = (name) => { const c = COUNTRY_COLOR[name]; if (c) return c; seen += 1; return ((seen - 1) % 8) + 1; };
-    const segs = data.map((d) => ({ name: d[0], v: +d[1] || 0, c: colorOf(d[0]) }));
-    body = `<div class="stack-bar" role="img" aria-label="${esc(f.title)}">` + segs.map((s) => `<i style="flex:${(s.v / total * 100).toFixed(2)} 0 0;background:var(--c${s.c})" title="${esc(s.name)}: ${fmtNum(s.v)}${f.unit === '%' ? '%' : ''}"></i>`).join('') + `</div>` +
-      `<div class="stack-legend">` + segs.map((s) => `<span style="--sw:var(--c${s.c})">${esc(s.name)}<b>${fmtNum(s.v)}${f.unit === '%' ? '%' : ''}</b></span>`).join('') + `</div>`;
+    const segs = data.map((d) => ({ name: d[0], v: +d[1] || 0 }));
+    const keys = stackKeys(f, segs);
+    body = `<div class="stack-bar" role="img" aria-label="${esc(f.title)}">` + segs.map((s, i) => `<i data-k="${keys[i]}" style="flex:${(s.v / total * 100).toFixed(2)} 0 0" title="${esc(s.name)}: ${withUnit(s.v, f.unit)}"></i>`).join('') + `</div>` +
+      `<div class="stack-legend">` + segs.map((s, i) => `<span data-k="${keys[i]}">${esc(s.name)}<b>${withUnit(s.v, f.unit)}</b></span>`).join('') + `</div>`;
   } else if (f.type === 'animation') {
     // an explainer animation rendered by build/animate.py: the step names and captions are page text, kept in time
     // with the video by app.js; the transcript is read by screen readers and printed in place of the video
@@ -129,7 +171,7 @@ function figure(f, ctx) {
     body = `<ol class="anim-steps">${steps.map((st, i) => `<li><button type="button" data-t="${+st.t0}"${i ? '' : ' aria-current="step"'}><span class="n">${String(i + 1).padStart(2, "0")}</span>${esc(st.k)}</button></li>`).join('')}</ol>`
       + `<div class="anim-stage" role="button" tabindex="0" aria-label="Pause the animation" style="aspect-ratio:${meta.width}/${meta.height}">`
       + `<video muted loop playsinline preload="none" aria-hidden="true" data-src="${m}"></video>` // no poster attribute: app.js sets it (theme-matched) once the figure nears the screen, and for print
-      + `<img class="anim-print" src="${m}-light-end.jpg" alt="" loading="lazy"><span class="anim-state" aria-hidden="true">Paused</span></div>`
+      + `<img class="anim-print" src="${m}-print-end.jpg" alt="" loading="lazy"><span class="anim-state" aria-hidden="true">Paused</span></div>`
       + `<p class="anim-cap" aria-hidden="true">${esc(steps[0].cap)}</p>`
       + `<ol class="anim-transcript">${steps.map((st) => `<li><b>${esc(st.k)}.</b> ${esc(st.cap)}</li>`).join('')}</ol>`
       + (f.note ? `<p class="fig-source">${esc(f.note)}</p>` : '');
@@ -155,10 +197,13 @@ function figDate(s) {
   return { key: `${m[1]}-${m[2] || '01'}-${m[3] || '01'}`, iso: v, label: m[3] ? v : m[2] ? `${MONTHS[+m[2] - 1]} ${m[1]}` : m[1] };
 }
 function tableFallback(data, f) {
-  return `<table class="sr-only"><caption>${esc(f.title)}</caption><tbody>${data.map((d) => `<tr><th scope="row">${esc(d[0])}</th><td>${fmtNum(d[1])}${f.unit ? ' ' + esc(f.unit) : ''}</td></tr>`).join('')}</tbody></table>`;
+  return `<table class="sr-only"><caption>${esc(figTitle(f))}</caption><tbody>${data.map((d) => `<tr><th scope="row">${esc(d[0])}</th><td>${unitOnValue(f.unit) ? withUnit(d[1], f.unit) : fmtNum(d[1]) + (f.unit ? ' ' + esc(f.unit) : '')}</td></tr>`).join('')}</tbody></table>`;
 }
 
 /* ---------------- block markdown ---------------- */
+// a table cell that is a figure: an amount, a share or a range, with an optional sign, unit and bracketed note ("$2,900",
+// "86.8%", "$2,800-3,100", "~$6,400", "about 40 percent" is prose and does not count)
+const TABLE_FIGURE = /^[~≈<>+\-−]?\s?(about\s)?[$€£¥]?\s?\d[\d.,]*(\s?(%|bn|billion|million|M|B|k|x|×|nm|mm|W|kW|MW|GW|TWh|GB|TB\/s|GB\/s|mm2|mm²|pp))?(\s?[-–]\s?[$€£¥]?\d[\d.,]*(\s?(%|bn|M|B|k|x|nm|mm|W|GB))?)?\s*(\(.*\))?$/i;
 function markdown(src, ctx) {
   const lines = src.replace(/\r/g, '').split('\n');
   const out = [];
@@ -204,9 +249,23 @@ function markdown(src, ctx) {
       const rows = [];
       while (i < lines.length && lines[i].trim().startsWith('|')) { rows.push(lines[i].trim()); i++; }
       const cells = (r) => r.replace(/^\|/, '').replace(/\|$/, '').split('|').map((c) => c.trim());
-      const head = cells(rows[0]);
-      let html = `<div class="table-wrap" tabindex="0"><table><thead><tr>${head.map((h) => `<th>${inline(h, ctx)}</th>`).join('')}</tr></thead><tbody>`;
-      for (let r = 2; r < rows.length; r++) { const cs = cells(rows[r]); html += `<tr>${cs.map((c) => `<td>${inline(c, ctx)}</td>`).join('')}</tr>`; }
+      // every cell is read in reading order first, so the footnotes number as before; then a column whose filled body cells
+      // are at least 60 percent figures (footnote marks aside), or that the Markdown aligns right (---:), is a figure column,
+      // class "n": right-aligned on tabular digits, and a number range in its cells takes an en dash, $2,800–3,100 (decision 11)
+      const head = cells(rows[0]).map((h) => inline(h, ctx));
+      const body = rows.slice(2).map((r) => cells(r).map((c) => inline(c, ctx)));
+      const align = cells(rows[1]);
+      const plainCell = (h) => h.replace(/<sup class="cite[^"]*">[\s\S]*?<\/sup>/g, '').replace(/<[^>]+>/g, '').replace(/&nbsp;|\u00a0/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').trim();
+      const isFig = (h) => TABLE_FIGURE.test(plainCell(h));
+      const numCol = head.map((_, c) => {
+        if (/^-+:$/.test(align[c] || '')) return true;
+        if (!c) return false; // the first column names the rows
+        const filled = body.map((r) => r[c]).filter((h) => h != null && plainCell(h) !== '');
+        return filled.length > 0 && filled.filter(isFig).length / filled.length >= 0.6;
+      });
+      const dashRanges = (h) => h.split(/(<[^>]+>)/).map((part, k) => (k % 2 ? part : part.replace(/(\d)-(?=[$€£¥]?\d)/g, '$1\u2013'))).join('');
+      let html = `<div class="table-wrap" tabindex="0"><table><thead><tr>${head.map((h, c) => `<th${numCol[c] ? ' class="n"' : ''}>${h}</th>`).join('')}</tr></thead><tbody>`;
+      body.forEach((cs) => { html += `<tr>${cs.map((h, c) => (numCol[c] ? `<td class="n">${dashRanges(h)}</td>` : `<td>${h}</td>`)).join('')}</tr>`; });
       out.push(html + '</tbody></table></div>');
       continue;
     }
@@ -321,8 +380,6 @@ function cardText(text, urls, ctx, g) {
 }
 // a figure at the head of the cost slot: an amount, a range or a share, with its unit
 const COST_LEAD = /^((?:about |roughly |up to |from |over |under |~|≈)?(?:US)?[$€£¥]?\d[\d,.]*\+?(?:\s?(?:-|–|to)\s?[$€£¥]?\d[\d,.]*)?\s?(?:[kKMBT]n?|bn|mn|billion|million|trillion|%)?)\s+(.+)$/i;
-// the China revenue panel (data/exposure.json), joined to the leaders' names by build/exposure.js
-const EXPOSURE = require('./exposure.js').exposureIndex(readJSON(path.join(root, 'data', 'exposure.json'), []));
 // gl, when given, marks glossary terms in the card's prose (the substitutability test, the reason and the China and US
 // lines), the first use of each across the card; it takes and returns escaped HTML. ctx is the chapter's citation context
 // ({ id, cites }); without it the card is drawn without marks.
@@ -330,12 +387,9 @@ function nameplate(card, title, gl, ctx) {
   if (!card) return '';
   const g = gl || ((s) => s), plain = (s) => s;
   const F = {}; cardFields(card).forEach((f) => { F[f.what] = f.urls; });
-  // a leader's share with its mark, and under it, for a firm the China revenue panel covers, that firm's latest China share
-  // as a quiet second line that opens the firm's chart (#/exposure/<slug>; the readable pages point at the main page's)
-  const leaders = (card.leaders || []).map((l) => {
-    const cn = EXPOSURE.label(l.name), href = EXPOSURE.href(l.name);
-    return `<li><span class="chip">${esc(l.country || '')}</span><span class="who">${esc(l.name)}</span>${l.share ? ` <span class="note">${cardText(l.share, l.source ? [String(l.source)] : [], ctx, plain)}</span>` : ''}${cn && href ? `<a class="lead-cn" href="${esc(href)}">${esc(cn)}</a>` : ''}</li>`;
-  }).join('');
+  // a leader's share with its mark (the firm's China share of revenue is not repeated here, decision 13 of 21 Oct 2026: it stays
+  // in the Suppliers drawer, the Glossary's firm card and the Export Controls chart)
+  const leaders = (card.leaders || []).map((l) => `<li><span class="chip">${esc(l.country || '')}</span><span class="who">${esc(l.name)}</span>${l.share ? ` <span class="note">${cardText(l.share, l.source ? [String(l.source)] : [], ctx, plain)}</span>` : ''}</li>`).join('');
   const countries = (card.countries || []).map((c) => `<li><span class="chip">${esc(c.code)}</span><span class="who">${esc(COUNTRY[c.code] || c.code)}</span>${c.note ? ` <span class="note">${esc(c.note)}</span>` : ''}</li>`).join('');
   const sub = card.substitution || {};
   const sb = card.substitutability && card.substitutability.band ? card.substitutability : null;
@@ -354,10 +408,10 @@ function nameplate(card, title, gl, ctx) {
   const costSubHTML = lead ? esc(numLead[2]) + firstMarks + esc(firstStop) + (restHTML ? ' ' + restHTML : '') : restHTML;
   const costLabel = card.costLabel ? esc(card.costLabel) : 'Price or market size';
   return `<section class="plate" aria-label="Chokepoint card${title ? ' for ' + esc(title) : ''}">
-<header class="plate-head"><span class="label">Chokepoint card</span><span class="plate-tags">${conc ? `<button type="button" class="gl-term ptag ptag-conc" data-band="${BANDS[conc] || 0}" data-term="concentration" data-note="${esc(BAND_NOTE[conc] || '')}">${esc(conc)} concentration</button>` : ''}${sb ? `<button type="button" class="gl-term ptag ptag-sub" data-band="${SUBS[sb.band] || 0}" data-term="substitutability" data-note="${esc(SUB_NOTE[sb.band] || '')}" data-test="${esc(sb.test || '')}">${esc(SUBWORD[sb.band] || sb.band)}</button>` : (sub.years ? `<span class="ptag ptag-sub">${esc(sub.years)} years to substitute</span>` : '')}</span></header>
+<header class="plate-head"><span class="label">Chokepoint card</span></header>
 <div class="plate-kpis">
-<div><span class="k">Concentration</span><b class="v ${esc(card.concentration || '')}">${esc(card.concentration || '—')}</b></div>
-${sb ? `<div><span class="k">Substitutability</span><b class="v sub-${SUBS[sb.band] || 0}">${esc(sb.band)}</b>${sb.test ? `<span class="sub">${cardText(sb.test, F['substitutability test'], ctx, g)}</span>` : ''}</div>` : `<div><span class="k">Substitution time</span><b class="v">${esc(sub.years || '—')}${sub.years && !/year/i.test(sub.years) ? '<small>years</small>' : ''}</b></div>`}
+<div><span class="k">Concentration</span><b class="v ${esc(conc)}">${conc ? `<button type="button" class="gl-term v-btn" data-band="${BANDS[conc] || 0}" data-term="concentration" data-head="${esc(conc)} concentration" data-note="${esc(BAND_NOTE[conc] || '')}">${esc(conc)}</button>` : '—'}</b>${BAND_NOTE[conc] ? `<span class="sub">${esc(BAND_NOTE[conc])}</span>` : ''}</div>
+${sb ? `<div><span class="k">Substitutability</span><b class="v sub-${SUBS[sb.band] || 0}"><button type="button" class="gl-term v-btn" data-band="${SUBS[sb.band] || 0}" data-term="substitutability" data-head="${esc(SUBWORD[sb.band] || sb.band)}" data-note="${esc(SUB_NOTE[sb.band] || '')}" data-test="${esc(sb.test || '')}">${esc(sb.band)}</button></b>${sb.test ? `<span class="sub">${cardText(sb.test, F['substitutability test'], ctx, g)}</span>` : ''}</div>` : `<div><span class="k">Substitution time</span><b class="v">${esc(sub.years || '—')}${sub.years && !/year/i.test(sub.years) ? '<small>years</small>' : ''}</b></div>`}
 <div><span class="k">${costLabel}</span><b class="v cost${costLong ? ' long' : ''}">${costHeadHTML}</b>${costSubHTML ? `<span class="sub">${costSubHTML}</span>` : ''}</div>
 </div>
 <dl class="plate-rows">
@@ -516,11 +570,13 @@ function deckHTML(fc, o) {
     + `<div class="fc-nav">${dots}<span class="fc-steps"><button type="button" class="fc-link fc-prev" disabled>Previous card</button><button type="button" class="fc-link fc-next" disabled>Next card</button></span></div>`
     + `<div class="fc-end" hidden><p class="fc-score"><span class="fc-big"></span><span class="fc-score-t"></span></p>${keep}<p class="fc-row fc-row--gap"><button type="button" class="fc-btn fc-back-to-cards">Previous card</button><button type="button" class="fc-btn fc-reset">Start over</button></p></div></section>`;
 }
-// the chapter's share link: a plain link to its own readable page (so crawlers reach it from the main page); a click copies the address (src/app.js)
-const copyLink = (id) => `<a class="label ch-copy" href="${esc(id)}/" data-copy="${SITE.url}${esc(id)}/" aria-label="Copy a link to this chapter">Link to chapter</a>`;
+// the chapter's share link: a plain link to its own readable page (so crawlers reach it from the main page); a click copies the address
+// (src/app.js). It leads the cite line's actions (citeBlock).
+const copyLink = (id) => `<a class="ch-copy ch-cite-copylink" href="${esc(id)}/" data-copy="${SITE.url}${esc(id)}/" aria-label="Copy a link to this chapter">Link to chapter</a>`;
 /* ---------------- the cite line under each chapter title ----------------
-   "Updated <day> · Cite this chapter · Chapter PDF", on the main page and on the chapter's readable page. The day is the
-   chapter's own (page dates, below). The citation names the chapter and its readable page; Chapter PDF downloads the
+   The chapter head is one line of facts (.ch-meta: words / minutes, the specimen, "Updated <day>") and one line of actions,
+   this one: "Link to chapter · Cite this chapter · Chapter PDF" on the main page (lead, the copy link), "Cite this chapter ·
+   Chapter PDF" on the chapter's readable page. The day is the chapter's own (page dates, below). The citation names the chapter and its readable page; Chapter PDF downloads the
    chapter's own PDF. On the main page the toggle is a button. On the readable page it is a link to the citation, which
    then opens without scripts (:target), and CITE_JS turns it into a toggle there too. */
 const CITE_WORK = 'Chip Supply Chain: How AI Chips Are Made';
@@ -538,7 +594,7 @@ function chapterPDF(id) {
   }
   return chapterPDFs.get(id);
 }
-function citeBlock(ch, day, page) {
+function citeBlock(ch, day, page, lead) {
   const url = SITE.url + ch.id + '/', box = page ? 'cite' : 'cite-' + ch.id;
   const toggle = page
     ? `<a class="ch-cite-btn" href="#${box}" aria-controls="${box}">Cite this chapter</a>`
@@ -546,7 +602,7 @@ function citeBlock(ch, day, page) {
   // saved under a name that says what it is: chip-supply-chain-lithography.pdf, not lithography.pdf
   const pdf = chapterPDF(ch.id);
   const pdfLink = pdf ? `<span class="ch-cite-sep" aria-hidden="true">·</span><a class="ch-cite-pdf" href="${page ? '../' : ''}${pdf.href}" download="chip-supply-chain-${esc(ch.id)}.pdf" type="application/pdf" title="${esc(ch.title)} as a PDF${pdf.pages ? `, ${pdf.pages} pages` : ''}">Chapter PDF</a>` : '';
-  return `<div class="ch-cite"><p class="ch-cite-line"><span>Updated ${esc(day)}</span><span class="ch-cite-sep" aria-hidden="true">·</span>${toggle}${pdfLink}</p>`
+  return `<div class="ch-cite"><p class="ch-cite-line">${lead ? lead + '<span class="ch-cite-sep" aria-hidden="true">·</span>' : ''}${toggle}${pdfLink}</p>`
     + `<div class="ch-cite-box" id="${box}" role="region" aria-label="Citation for this chapter"${page ? '' : ' hidden'}><p class="ch-cite-text">Sharma, Yashvardhan. “${esc(ch.title)}.” <i>${CITE_WORK}</i>. Updated ${esc(day)}. <a href="${esc(url)}">${esc(url)}</a></p></div></div>`;
 }
 // the toggle and the copy control, shared by the main page (src/template.html) and the readable pages (social.js)
@@ -563,6 +619,11 @@ try{var o=location.hash.length>1?document.getElementById(location.hash.slice(1))
 })();`;
 // the cite line's date goes in once every page's date is known (after the build modules write the readable pages)
 const CITE_DAY = (id) => `{{CITE_DAY:${id}}}`;
+// the key under the ledger column's fifteen rows: each band the stages hold, its bar drawn as the rows draw it
+const LEDGER_KEY = (() => {
+  const used = ['Extreme', 'High', 'Moderate', 'Low'].filter((b) => stages.some((c) => (c.meta.card || {}).concentration === b));
+  return used.length ? `<p class="ledger-key" aria-hidden="true">${used.map((b) => `<span class="lgk" data-band="${BANDS[b]}"><i></i>${b}</span>`).join('')}</p>` : '';
+})();
 function chapterHTML(ch) {
   const m = ch.meta, mins = Math.max(1, Math.round(ch.words / 230));
   const specimen = m.specimen || 'wafer';
@@ -571,9 +632,8 @@ function chapterHTML(ch) {
   ch.inShort = parts.inShort;
   const sources = ch.cites.length ? `<details class="chapter-sources"><summary>Sources (${ch.cites.length})</summary><ol>${ch.cites.map((c) => `<li>${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol></details>` : '';
   const stageIdx = stages.findIndex((c) => c.id === ch.id);
-  const next = stageIdx >= 0 ? stages[stageIdx + 1] : null;
   const tile = stageIdx >= 0 ? `<div class="ch-tile"><span class="k">Chapter</span><span class="v">${pad(ch.number)}</span><span class="of">stage ${stageIdx + 1} of ${stages.length}</span></div>` : `<div class="ch-tile"><span class="k">Chapter</span><span class="v">${pad(ch.number)}</span><span class="of">${ch.id === 'geopolitics' ? 'the contest' : 'the economics'}</span></div>`;
-  const chain = stageIdx >= 0 ? `<div class="chain chain--compact" aria-label="Where this stage sits in the chain">${chainTrack(stages, ch.id)}<p class="chain-foot"><span><b>${esc(ch.title)}</b>, stage ${stageIdx + 1} of ${stages.length}</span><span>${next ? `Next: ${pad(next.number)} ${esc(next.title)}` : 'Last stage in the chain'}</span></p></div>` : '';
+  const chain = stageIdx >= 0 ? `<div class="chain chain--compact" aria-label="Where this stage sits in the chain">${chainTrack(stages, ch.id)}${LEDGER_KEY}</div>` : '';
   const cardCtx = { id: ch.id, cites: ch.cites, figures: [] }; // the card's marks number with the body's (its urls were registered first)
   const plate = isStage(ch) ? nameplate(m.card, ch.title, null, cardCtx) : '';
   // the same pieces, kept for the chapter's own readable page (build/modules/social.js); the prose is the copy before glossary buttons
@@ -584,23 +644,23 @@ function chapterHTML(ch) {
   return `<article class="chapter" id="${esc(ch.id)}" data-specimen="${esc(specimen)}" data-number="${pad(ch.number)}" data-title="${esc(ch.title)}" data-caption="${esc(m.specimenCaption || '')}">
 <aside class="ch-ledger" aria-label="Chapter ${ch.number}${stageIdx >= 0 ? ', stage ' + (stageIdx + 1) + ' of ' + stages.length : ''}">${tile}${chain}</aside>
 <header class="chapter-head">
-<div class="ch-id"><div><h2 class="ch-title"><span class="sr-only">Chapter ${ch.number}: </span>${esc(ch.title)}</h2>${m.oneLiner ? `<p class="ch-lede">${esc(m.oneLiner)}</p>` : ''}<p class="ch-meta"><span class="label">${ch.words.toLocaleString('en-US')} words / ${mins} min</span><span class="label">Specimen: ${esc(SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' '))}</span>${copyLink(ch.id)}</p>${citeBlock(ch, CITE_DAY(ch.id))}</div></div>
+<div class="ch-id"><div><h2 class="ch-title"><span class="sr-only">Chapter ${ch.number}: </span>${esc(ch.title)}</h2>${m.oneLiner ? `<p class="ch-lede">${esc(m.oneLiner)}</p>` : ''}<p class="ch-meta"><span class="label">${ch.words.toLocaleString('en-US')} words / ${mins} min</span><span class="label">Specimen: ${esc(SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' '))}</span><span class="label">Updated ${CITE_DAY(ch.id)}</span></p>${citeBlock(ch, CITE_DAY(ch.id), false, copyLink(ch.id))}</div></div>
 ${glPlain(pb.box)}
 ${parts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${glossaryWrap(parts.inShort)}</section>` : ''}
 ${plateGl}
 </header>
-<div class="prose">${glossaryWrap(pb.html)}${reviewHTML(ch)}${prevNext(ch)}${sources}</div>
+<div class="prose">${glossaryWrap(pb.html)}${reviewHTML(ch)}${sources}${prevNext(ch)}</div>
 </article>`;
 }
 const chaptersHTML = chapters.length ? chapters.map(chapterHTML).join('\n') : `<article class="chapter" id="placeholder" data-specimen="wafer" data-number="01" data-title="Placeholder"><header class="chapter-head"><div class="chapter-num">01</div><h2 class="chapter-title">No chapters yet</h2></header><div class="prose"><p>No chapters found. This is a shell build.</p></div></article>`;
 
-// the fifteen stages of the chain first, then the two chapters that look across all of them under their own heading
-const contentsItem = (ch) => `<div class="item"><span class="n">${pad(ch.number)}</span><a class="t" href="#${esc(ch.id)}">${esc(ch.title)}</a><ul>${ch.headings.filter((h) => !/^takeaways?$/i.test(h.text)).map((h) => `<li><a href="#${esc(h.id)}">${esc(h.text)}</a></li>`).join('')}</ul></div>`;
+// the fifteen stages of the chain first, then the two chapters that look across all of them under their own heading; each
+// entry gives the chapter's one-line summary (decision 12; the section links stay in search and the permalinks)
+const contentsItem = (ch) => `<div class="item"><span class="n">${pad(ch.number)}</span><a class="t" href="#${esc(ch.id)}">${esc(ch.title)}</a>${ch.meta.oneLiner ? `<p class="ol">${esc(ch.meta.oneLiner)}</p>` : ''}</div>`;
 const stageIds = new Set(stages.map((c) => c.id));
 const acrossChapters = chapters.filter((c) => !stageIds.has(c.id)).concat(geo ? [geo] : []);
 const contentsHTML = `<h3 class="contents-k">The ${word(stages.length)} stages of the chain</h3><div class="contents-grid">${stages.map(contentsItem).join('')}</div>`
   + (acrossChapters.length ? `<h3 class="contents-k">Across the chain</h3><p class="contents-note">These ${word(acrossChapters.length)} chapters are not stages. They look across all ${word(stages.length)}, at what a chip costs and at the contest over who controls each stage.</p><div class="contents-grid">${acrossChapters.map(contentsItem).join('')}</div>` : '');
-const railHTML = chainTrack(stages, null);
 const thesisHTML = 'How AI chips are made';
 const subtitleHTML = 'Every stage of the supply chain, and who controls it.';
 
@@ -679,15 +739,17 @@ function exposureViz(rows) {
   const PW = 240, PH = 122, px0 = 10, px1 = 232, py0 = 18, py1 = 98;
   const X = (t) => px0 + ((t - T0) / (T1 - T0)) * (px1 - px0), Y = (v) => py1 - (Math.min(v, YMAX) / YMAX) * (py1 - py0);
   let d = `<div class="ex-legend"><span><i class="lg-bar"></i>China's share of the firm's revenue, by fiscal year</span><span><i class="lg-top"></i>The year it peaked</span><span><i class="lg-rule"></i>US export rules of Oct 2022, Oct 2023 and Dec 2024</span>${anyBreak ? `<span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true" style="vertical-align:middle;margin-right:7px"><line x1="4" y1="0" x2="4" y2="12" stroke="currentColor" stroke-width="1.8" stroke-dasharray="3 2"/></svg>The firm changed how it counts China</span>` : ''}<span>Same scale on every panel, 0 to ${YMAX}%</span></div><div class="ex-grid">`;
+  // each category is a group as wide as its panels (--n), so the grid can set small categories side by side (src/styles.css);
+  // every bar prints its value, so the panels carry no gridlines
+  const nIn = {}; firms.forEach((f) => { const c = f.meta.category || ''; nIn[c] = (nIn[c] || 0) + 1; });
   let lastCat = null;
   firms.forEach((f) => {
     const cat = f.meta.category || '';
-    if (cat !== lastCat) { d += `<h4 class="ex-cat">${esc(cat)}</h4>`; lastCat = cat; }
+    if (cat !== lastCat) { d += `${lastCat === null ? '' : '</div>'}<div class="ex-group" style="--n:${nIn[cat]}"><h4 class="ex-cat">${esc(cat)}</h4>`; lastCat = cat; }
     const changes = f.breaks.map((i) => `${basisWord(f.rows[i - 1].basis)} to ${f.rows[i - 1].fiscalYear}, ${basisWord(f.rows[i].basis)} from ${f.rows[i].fiscalYear}`).join('; ');
     // each chart has its own address, #/exposure/<slug> (build/exposure.js names the slug); the router scrolls to the id and focuses the figure
     let s = `<figure class="ex-panel" id="ex-${esc(exSlug(f.firm))}" tabindex="-1"><figcaption><b${SHOWN[f.firm] ? ` title="${esc(f.firm)}"` : ''}>${esc(SHOWN[f.firm] || f.firm)}</b><span${changes ? ` title="Counted by ${esc(changes)}."` : ''}>${f.meta.country ? esc(f.meta.country) + ' · ' : ''}peak ${pct(f.peak.chinaShare)} in ${esc(fyName(f.peak))}</span></figcaption>`;
     s += `<svg viewBox="0 0 ${PW} ${PH}" role="group" aria-label="${esc(f.firm)}: China share of revenue by fiscal year, ${esc(f.first.fiscalYear)} to ${esc(f.last.fiscalYear)}${changes ? `, counted by ${esc(changes)}` : ''}">`;
-    for (let v = 20; v <= YMAX; v += 20) s += `<line x1="${px0}" y1="${Y(v).toFixed(1)}" x2="${px1}" y2="${Y(v).toFixed(1)}" class="grid"/>`;
     rules.forEach((r) => { s += `<line x1="${X(r[0]).toFixed(1)}" y1="${py0 - 8}" x2="${X(r[0]).toFixed(1)}" y2="${py1}" class="rule"/>`; });
     s += `<line x1="${px0}" y1="${py1}" x2="${px1}" y2="${py1}" class="axis"/>`;
     const n = f.rows.length, slot = (px1 - px0) / Math.max(n, 5), bw = Math.min(26, slot * 0.62);
@@ -706,7 +768,7 @@ function exposureViz(rows) {
     s += `<text x="${px0}" y="${PH - 4}" class="tick">${esc(f.first.fiscalYear)}</text><text x="${px1}" y="${PH - 4}" class="tick" text-anchor="end">${esc(f.last.fiscalYear)}</text></svg></figure>`;
     d += s;
   });
-  return d + '</div>';
+  return d + (lastCat === null ? '' : '</div>') + '</div>';
 }
 
 
@@ -718,7 +780,7 @@ if (geo) {
   const gparts = splitTakeaways(geo.html); geo.inShort = gparts.inShort;
   const gpb = plainBox(gparts.body, geo.meta.plain, { id: 'geopolitics', cites: geo.cites, figures: [] });
   geo.rendered = { plain: gpb.box, inShort: gparts.inShort, plate: '', prose: gpb.html, mins: Math.max(1, Math.round(geo.words / 230)) };
-  geoBody = glPlain(gpb.box) + (gparts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${glossaryWrap(gparts.inShort)}</section>` : '') + `<p class="ch-meta" style="margin:10px 0 26px"><span class="label">${geo.words.toLocaleString('en-US')} words / ${Math.max(1, Math.round(geo.words / 230))} min</span>${copyLink('geopolitics')}</p>` + glossaryWrap(gpb.html) + reviewHTML(geo) + prevNext(geo) + sources;
+  geoBody = glPlain(gpb.box) + (gparts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${glossaryWrap(gparts.inShort)}</section>` : '') + glossaryWrap(gpb.html) + reviewHTML(geo) + sources + prevNext(geo);
 }
 
 /* ---------------- sources view ---------------- */
@@ -878,7 +940,13 @@ const sheetPages = [['#/', 'Home'], ['#/chain', 'The Chain'], ['#/landscape', 'A
 const sheetItem = (ch) => `<li><a href="${ch.id === 'geopolitics' ? '#geopolitics' : '#' + esc(ch.id)}"><span class="n">${pad(ch.number)}</span><span class="t">${esc(ch.title)}</span></a></li>`;
 const sheetChapters = stages.map(sheetItem).join('') + (acrossChapters.length ? `<li class="sheet-k" aria-hidden="true">Across the chain</li>` + acrossChapters.map(sheetItem).join('') : '');
 fill('SHEET_PAGES', sheetPages); fill('SHEET_CHAPTERS', sheetChapters);
-fill('RAIL', railHTML); fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits); fill('FOOTER', footer); fill('FOOTER_KEY', footerKey);
+fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits);
+// the footer opens with the masthead's own tile (src/template.html), which signs off in the ledger column on the walk and
+// The Chain (styles.css .ft-mark) and stays hidden elsewhere. It is added here, so footer and footerKey, which the readable
+// pages and the summary reuse, keep their words and markup.
+const ftMark = (html.match(/<svg class="wm-tile"[\s\S]*?<\/svg>/) || [])[0] || '';
+const ftLead = ftMark ? `<span class="ft-mark" aria-hidden="true">${ftMark}</span>` : '';
+fill('FOOTER', ftLead + footer); fill('FOOTER_KEY', ftLead + footerKey);
 fill('SUPPLIERS_INTRO', suppliersIntro); fill('SUPPLIERS_REVENUE_NOTE', suppliersRevenueNote); fill('BUILT', builtStr);
 // the PDF title page's art ships beside the page
 // explainer animations: the rendered videos and stills go to dist/media
@@ -886,17 +954,29 @@ fill('SUPPLIERS_INTRO', suppliersIntro); fill('SUPPLIERS_REVENUE_NOTE', supplier
 for (const asset of ['print-title.png']) { const from = path.join(root, 'build', 'assets', asset); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', asset)); }
 // the site icons (drawn by `python3 build/icons.py`) go to the root of dist/, where browsers look for /favicon.ico
 for (const icon of ['favicon.ico', 'favicon.svg', 'apple-touch-icon.png']) { const from = path.join(root, 'build', 'assets', 'icons', icon); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', icon)); else warn(`icon ${icon} is missing; run python3 build/icons.py`); }
-fill('GEO_DEK', esc(geoDek)); fill('GEO_CITE', geo ? citeBlock(geo, CITE_DAY(geo.id)) : ''); fill('CITE_JS', CITE_JS); fill('GEO_BODY', geoBody); fill('GEO_CAPTION', esc(geo ? geo.meta.specimenCaption || '' : '')); // the globe's caption, from the chapter's front matter as the other chapters' are
+fill('GEO_DEK', esc(geoDek)); fill('GEO_CITE', geo ? `<p class="ch-meta"><span class="label">${geo.words.toLocaleString('en-US')} words / ${geo.rendered.mins} min</span><span class="label">Updated ${CITE_DAY(geo.id)}</span></p>` + citeBlock(geo, CITE_DAY(geo.id), false, copyLink('geopolitics')) : ''); fill('CITE_JS', CITE_JS); fill('GEO_BODY', geoBody); fill('GEO_CAPTION', esc(geo ? geo.meta.specimenCaption || '' : '')); // the globe's caption, from the chapter's front matter as the other chapters' are
 fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));
 // the Look up page: one list of every term, firm and chip, alphabetical, each with the kind a reader would call it
 const lkSlug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const lkItems = [];
+// the list's labels sit on one line in sentence case: a firm's stage by the short name the Suppliers ribbons print
+// (Suppliers.SHORT in src/app.js), any other stage name with its later words in lower case unless they are acronyms
+// ("Optics & photonics", "Substrates & PCBs"); data-text keeps the full category, so search still finds it
+const LK_SHORT = {
+  'Equipment Subsystems & Components': 'Equipment subsystems', 'Advanced Packaging & OSAT': 'Advanced packaging',
+  'Interconnect & Networking': 'Interconnect', 'AI Accelerator Vendor': 'Accelerator vendors',
+  'Photoresist & Materials': 'Photoresist', 'Metrology & Inspection': 'Metrology',
+  'Deposition & Etch': 'Deposition & etch', 'Chemicals & Gases': 'Chemicals & gases',
+  'Systems & Servers': 'Systems & servers', 'Power & Cooling': 'Power & cooling',
+  'Silicon & Wafers': 'Silicon wafers', 'IP & Architecture': 'IP & architecture'
+};
+const lkStage = (c) => LK_SHORT[c] || String(c || 'Firm').split(' ').map((w, i) => (i && !/[A-Z].*[A-Z]/.test(w) ? w.toLowerCase() : w)).join(' ');
 // what the prose calls each entry: the name minus its corporate tail, a known nickname, a chip's model code and codename, a term's acronyms
 const LK_SUFFIX = /\s+(Holdings?|Inc\.?|Incorporated|Corporation|Corp\.?|Co\.?|Ltd\.?|Limited|Group|Technologies|Technology|Electronics|Semiconductors?|Industries|International|Systems|Design|Precision|Information|Chemical|Semi)$/i;
 const LK_NICK = { 'Hon Hai Precision': 'Foxconn', 'Carl Zeiss SMT': 'Zeiss', 'Hewlett Packard Enterprise': 'HPE', 'Tokyo Ohka Kogyo': 'TOK', 'Samsung Electronics': 'Samsung', 'Taiwan Semiconductor Manufacturing': 'TSMC', 'Semiconductor Manufacturing International': 'SMIC', 'Advanced Micro Devices': 'AMD', 'BE Semiconductor Industries': 'Besi', 'Yangtze Memory Technologies': 'YMTC', 'ChangXin Memory Technologies': 'CXMT', 'Shanghai Micro Electronics Equipment': 'SMEE', 'Alphawave Semi': 'Alphawave', 'Nippon Sanso Holdings': 'Nippon Sanso', 'Shin-Etsu Chemical': 'Shin-Etsu', 'Super Micro Computer': 'Supermicro' };
 const lkAliases = (name) => { const out = []; let n = name; for (let i = 0; i < 3; i++) { const m = n.replace(LK_SUFFIX, ''); if (m === n) break; n = m; if (n.length >= 3 && n !== name) out.push(n); } if (LK_NICK[name]) out.push(LK_NICK[name]); return out; };
-glossary.forEach((g) => { const akas = String(g.aka || '').split(/[;,]/).map((x) => x.trim()).filter((x) => x.length >= 3 && x.toLowerCase() !== g.term.toLowerCase() && !/^[a-z]+$/.test(x)); lkItems.push({ kind: 'term', id: 'lk-term-' + lkSlug(g.term), key: 'gl-' + lkSlug(g.term), name: g.term, alias: akas, label: g.chapter === 'geopolitics' ? 'export control' : 'term', text: [g.term, g.aka || '', g.plain].join(' ') }); });
-suppliers.forEach((r) => lkItems.push({ kind: 'firm', id: 'lk-firm-' + lkSlug(r.name), name: r.name, alias: lkAliases(r.name).concat(r.nativeName ? [r.nativeName] : []), label: r.category || 'firm', key: r.name, text: [r.name, r.nativeName || '', r.city || '', COUNTRY[r.country] || r.country || '', r.ticker || '', r.category || '', r.subcategory || '', r.role || '', LK_NICK[r.name] || ''].join(' ') }));
+glossary.forEach((g) => { const akas = String(g.aka || '').split(/[;,]/).map((x) => x.trim()).filter((x) => x.length >= 3 && x.toLowerCase() !== g.term.toLowerCase() && !/^[a-z]+$/.test(x)); lkItems.push({ kind: 'term', id: 'lk-term-' + lkSlug(g.term), key: 'gl-' + lkSlug(g.term), name: g.term, alias: akas, label: g.chapter === 'geopolitics' ? 'Export control' : 'Term', text: [g.term, g.aka || '', g.plain].join(' ') }); });
+suppliers.forEach((r) => lkItems.push({ kind: 'firm', id: 'lk-firm-' + lkSlug(r.name), name: r.name, alias: lkAliases(r.name).concat(r.nativeName ? [r.nativeName] : []), label: lkStage(r.category), key: r.name, text: [r.name, r.nativeName || '', r.city || '', COUNTRY[r.country] || r.country || '', r.ticker || '', r.category || '', r.subcategory || '', r.role || '', LK_NICK[r.name] || ''].join(' ') }));
 landscape.forEach((c) => { const al = []; const bare = c.name.replace(/\s*\(.*\)$/, ''); al.push(bare); bare.split(/\s+/).forEach((t) => { if (/\d/.test(t) && t.length >= 3 && t !== bare) al.push(t); }); const paren = (c.name.match(/\(([^)]*)\)/) || [])[1] || ''; paren.split(/[\s,]+/).forEach((t) => { if ((/^[A-Z][a-z]{3,}$/.test(t) && !/variant|configuration|China|licensed|of|the/i.test(t)) || (/\d/.test(t) && t.length >= 4)) al.push(t); }); if (c.family && c.family.length >= 5 && !/^(TPU|Ascend|Siyuan|Pinghu)\b/.test(c.family) && !/\(/.test(c.family)) al.push(c.family); lkItems.push({ kind: 'chip', id: 'lk-chip-' + lkSlug(c.id), name: `${c.vendor} ${c.name}`, alias: al.filter((x, i, arr) => arr.indexOf(x) === i), label: 'AI chip', key: c.id, text: [c.vendor, c.name, c.family || '', (c.process || {}).node || '', (c.memory || {}).type || ''].join(' ') }); });
 // countries: any with three or more firms in the supplier list, a share in the country-share matrix, or a line on the home page's leverage table.
 // The role line is the home page's own (build/modules/summary-a.js exports ROLE), never retyped here; the card reads it from DATA.countries.

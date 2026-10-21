@@ -2,26 +2,48 @@
 """Render an explainer animation (animations/<name>.html) to the site's media files.
 
 usage: python3 build/animate.py <name> [--fps 24] [--gif] [--themes light,dark]
+       python3 build/animate.py --print-stills [<name> ...]
 
 For each theme it writes media/<name>-<theme>.mp4, a first-frame poster media/<name>-<theme>-start.jpg and a
-last-frame still media/<name>-<theme>-end.jpg (used for print and reduced motion). It also writes media/<name>.json with
+last-frame still media/<name>-<theme>-end.jpg (the poster for reduced motion). The light theme also writes the print
+still, media/<name>-print-end.jpg: the same last frame with the site's paper ground (246, 247, 241) taken to white, each
+channel scaled by 255 over the ground's value, so on a white PDF page the drawing sits on the page and not in a grey
+panel (build.js points img.anim-print at it; the screen never loads it). It also writes media/<name>.json with
 the duration and the steps, which build.js turns into the step list and captions under the video.
+--print-stills writes only the print stills, from the light last-frame stills already in media/ (every animation, or
+the names given), without rendering the video again.
 --gif also writes qa/explainer-gifs/<name>-<theme>.gif for sharing outside the site.
 Frames are drawn at exact times with window.draw(t), so the result does not depend on machine speed.
 Run it alone: it starts its own headless Chrome on DevTools port 9412.
 """
 import base64, json, os, shutil, subprocess, sys, time, urllib.request
-import websocket  # websocket-client
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 args = sys.argv[1:]
+media = os.path.join(ROOT, 'media'); os.makedirs(media, exist_ok=True)
+GROUND = (246, 247, 241)  # the light theme's paper, PAL.bg in animations/*.html
+
+def print_still(src, dst):
+    """the last frame for paper: the light ground taken to white, channel by channel, everything darker scaled with it"""
+    lut = ':'.join(f"{c}='clip(val*255/{g},0,255)'" for c, g in zip('rgb', GROUND))
+    subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', src, '-vf', 'format=rgb24,lutrgb=' + lut, '-q:v', '3', dst], check=True)
+
+if args and args[0] == '--print-stills':
+    names = args[1:] or sorted(f[:-5] for f in os.listdir(media) if f.endswith('.json'))
+    for n in names:
+        src = os.path.join(media, n + '-light-end.jpg')
+        if not os.path.exists(src): sys.exit(f'no {src}: render the animation first (python3 build/animate.py {n})')
+        print_still(src, os.path.join(media, n + '-print-end.jpg'))
+        print(f'{n}-print-end.jpg {os.path.getsize(os.path.join(media, n + "-print-end.jpg")) // 1024} KB')
+    sys.exit(0)
+
+import websocket  # websocket-client
 name = args[0]
 def opt(k, d):
     return type(d)(args[args.index(k) + 1]) if k in args else d
 fps = opt('--fps', 24)
 themes = opt('--themes', 'light,dark').split(',')
 page = os.path.join(ROOT, 'animations', name + '.html')
-media = os.path.join(ROOT, 'media'); os.makedirs(media, exist_ok=True)
 chrome = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 port = opt("--port", 9412)  # --port lets two renders run side by side
 
@@ -72,6 +94,8 @@ def run_theme(theme):
                     '-color_trc', 'bt709', '-color_range', 'tv', '-movflags', '+faststart', base + '.mp4'], check=True)
     for src, dst in ((os.path.join(frames, 'f0000.png'), base + '-start.jpg'), (os.path.join(frames, 'end.png'), base + '-end.jpg')):
         subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', src, '-q:v', '3', dst], check=True)
+    if theme == 'light':
+        print_still(os.path.join(frames, 'end.png'), os.path.join(media, f'{name}-print-end.jpg'))
     if '--gif' in args:
         gdir = os.path.join(ROOT, 'qa', 'explainer-gifs'); os.makedirs(gdir, exist_ok=True)
         subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-framerate', str(fps), '-i', pat, '-vf',

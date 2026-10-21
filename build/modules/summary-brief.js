@@ -23,6 +23,11 @@ module.exports = function (ctx) {
   const leaders = (c, n) => (c.leaders || []).slice(0, n);
   const card = (ch) => ch.meta.card || {};
   const sub = (ch) => (card(ch).substitutability || {}).band || '';
+  // the band in the words the chapter cards and the share cards use (SUBWORD in build/build.js and build/modules/social.js)
+  const SUBWORD = { 'Very hard': 'Very hard to substitute', Hard: 'Hard to substitute', Moderate: 'Moderately hard to substitute', Easy: 'Easy to substitute' };
+  const subWords = (ch) => SUBWORD[sub(ch)] || `${sub(ch)} to substitute`;
+  // the favicon's tile, as the masthead draws it beside the name
+  const TILE = '<svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg>';
   const conc = (ch) => card(ch).concentration || '';
   const title = 'The AI chip supply chain in brief';
   const dek = `The ${word(stages.length)} stages that turn sand and software into an AI accelerator: who leads each one, how concentrated it is, and where China and the United States stand.`;
@@ -41,7 +46,7 @@ module.exports = function (ctx) {
     return `<article class="card lv-${LEVEL[conc(ch)] || 0}" id="s-${esc(ch.id)}">
 <p class="card-k"><span class="n">${pad(i + 1)}</span>Stage ${i + 1} of ${stages.length}</p>
 <h3><a href="${url(ch.id)}">${esc(ch.title)}</a></h3>
-<p class="pills"><span class="pill pill-c${LEVEL[conc(ch)] === 4 ? ' x' : ''}">${esc(conc(ch))} concentration</span>${sub(ch) ? `<span class="pill">${esc(sub(ch))} to substitute</span>` : ''}</p>
+<p class="pills"><span class="pill pill-c${LEVEL[conc(ch)] === 4 ? ' x' : ''}">${esc(conc(ch))} concentration</span>${sub(ch) ? `<span class="pill">${esc(subWords(ch))}</span>` : ''}</p>
 ${ch.meta.oneLiner ? `<p class="lede">${esc(ch.meta.oneLiner)}</p>` : ''}
 ${who ? `<div class="who-block"><p class="lbl">Who leads</p><ul>${who}</ul></div>` : ''}
 ${sides.length ? `<div class="sides">${sides.map(([k, v]) => `<div><p class="lbl">${k}</p><p>${esc(v)}</p></div>`).join('')}</div>` : ''}
@@ -56,7 +61,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 <p class="more"><a href="${url(ch.id)}">Read the chapter, with its sources</a></p>
 </article>`).join('');
 
-  const screen = `<header class="masthead"><a class="wordmark" href="${SITE.url}" aria-label="Chip Supply Chain"><svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg><span class="wm-name">Chip Supply Chain</span></a><nav aria-label="Site"><a href="${SITE.url}#/chain">The Chain</a><a href="${SITE.url}#/controls">Export Controls</a><a href="${SITE.url}#/glossary">Glossary</a></nav></header>
+  const screen = `<header class="masthead"><a class="wordmark" href="${SITE.url}" aria-label="Chip Supply Chain">${TILE}<span class="wm-name">Chip Supply Chain</span></a><nav aria-label="Site"><a href="${SITE.url}#/chain">The Chain</a><a href="${SITE.url}#/controls">Export Controls</a><a href="${SITE.url}#/glossary">Glossary</a></nav></header>
 <main class="scr">
 <section class="hero">
 <p class="eyebrow"><b>Summary</b> · the whole chain in one read</p>
@@ -82,7 +87,8 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 </main>
 <footer class="site-footer scr">${footerKey}</footer>`;
 
-  /* ---------- print layout (the PDF), unchanged ---------- */
+  /* ---------- print layout (the PDF) ----------
+     It opens on the wordmark (the tile and the name, as on every page of the site), then "Summary" as a label. */
   const rows = stages.map((ch, i) => {
     const c = card(ch);
     const who = leaders(c, 2).map((l) => `${esc(l.name)}${l.country ? ` <span class="cc">${esc(l.country)}</span>` : ''}`).join(', ');
@@ -93,7 +99,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
     const who = leaders(c, 2).map((l) => `<li><b>${esc(l.name)}</b>${l.country ? ` <span class="cc">${esc(COUNTRY[l.country] || l.country)}</span>` : ''}${l.share ? `. ${esc(l.share)}` : ''}</li>`).join('');
     return `<section class="stage">
 <h3><span class="n">${pad(i + 1)}</span> ${esc(ch.title)}</h3>
-<p class="tags"><span class="b-${esc(c.concentration || '')}">${esc(c.concentration || '')} concentration</span>${sub(ch) ? ` · ${esc(sub(ch))} to substitute` : ''}</p>
+<p class="tags"><span class="b-${esc(c.concentration || '')}">${esc(c.concentration || '')} concentration</span>${sub(ch) ? ` · ${esc(subWords(ch))}` : ''}</p>
 ${ch.meta.oneLiner ? `<p class="lede">${esc(ch.meta.oneLiner)}</p>` : ''}
 ${who ? `<ul class="who">${who}</ul>` : ''}
 ${c.chinaStatus ? `<p><span class="k">China</span> ${esc(c.chinaStatus)}</p>` : ''}
@@ -109,7 +115,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 </section>`).join('');
   const print = `<div class="prt">
 <header>
-<p class="kicker">Chip Supply Chain · summary</p>
+<p class="kicker wm">${TILE}<span class="wm-name">Chip Supply Chain</span><span class="wm-sub">Summary</span></p>
 <h1>${title}</h1>
 <p class="dek">${esc(dek)}</p>
 <p class="meta">Updated ${esc(builtStr)} · <a href="${SITE.url}">${SITE.host}</a> · Every figure is cited in the chapter each section links to.</p>
@@ -136,10 +142,9 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   --accent: #7a1f2b; --accent-fill: #7a1f2b; --accent-soft: rgba(122, 31, 43, 0.08); --on-accent: #f7f6f2; --bar-4: #3b424c; --bar-3: #8f8a81; --bar-2: #bfb9af;
   --display: "Fraunces", "Iowan Old Style", Georgia, serif; --body: "Source Serif 4", "Iowan Old Style", Georgia, serif; --label: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
   --gutter: clamp(16px, 4vw, 40px); color-scheme: light; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #14171c; --bg-2: #1b1f25; --card: #181c22; --ink: #ece9e2; --ink-2: #c3c7cd; --muted: #939aa3; --line: #2c3138; --line-2: #3d434b;
-  --accent: #e25c57; --accent-fill: #a8414b; --accent-soft: rgba(226, 92, 87, 0.12); --on-accent: #fff; --bar-4: #c3c7cd; --bar-3: #7d848d; --bar-2: #4a515a; color-scheme: dark; } }
+/* dark: the site's own bar inks (src/styles.css), High in --bar-4 above Moderate in --bar-3 */
 :root[data-theme="dark"] { --bg: #14171c; --bg-2: #1b1f25; --card: #181c22; --ink: #ece9e2; --ink-2: #c3c7cd; --muted: #939aa3; --line: #2c3138; --line-2: #3d434b;
-  --accent: #e25c57; --accent-fill: #a8414b; --accent-soft: rgba(226, 92, 87, 0.12); --on-accent: #fff; --bar-4: #c3c7cd; --bar-3: #7d848d; --bar-2: #4a515a; color-scheme: dark; }
+  --accent: #e25c57; --accent-fill: #a8414b; --accent-soft: rgba(226, 92, 87, 0.12); --on-accent: #fff; --bar-4: #636a73; --bar-3: #4a515a; --bar-2: #3d434b; color-scheme: dark; }
 @media screen {
   .prt { display: none; }
   *, *::before, *::after { box-sizing: border-box; }
@@ -256,7 +261,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 @media screen and (prefers-reduced-motion: reduce) { * { transition: none !important; } }`;
 
   const PRINT_CSS = `
-@page { size: A4; margin: 12mm 12mm 13mm; }
+@page { size: A4; margin: 14mm 15mm 14mm; } /* room to hold and write on; 15 or 16 mm at the sides tips the stages onto six pages */
 @media print {
 :root, :root:not([data-theme="light"]), :root[data-theme="dark"] { --ink: #14181f; --ink-2: #3b424c; --muted: #5c636d; --line: #d9d6cf; --garnet: #7a1f2b; --bg: #fff; color-scheme: light; }
 * { box-sizing: border-box; }
@@ -265,6 +270,12 @@ body { margin: 0 auto; max-width: 960px; padding: 32px 20px 48px; font: 15px/1.5
 a { color: inherit; }
 .kicker, .k, .tags, .src, .cc, th, .meta, .key { font-family: "Instrument Sans", system-ui, sans-serif; }
 .kicker { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--garnet); margin: 0 0 6px; }
+.kicker.wm { display: flex; align-items: center; gap: 2.6mm; letter-spacing: 0 !important; text-transform: none; color: var(--ink); margin: 0 0 5mm; }
+.kicker.wm .wm-tile { display: block; width: 6mm; height: 6mm; flex: none; }
+.kicker.wm .wm-tile rect { fill: #7a1f2b; }
+.kicker.wm .wm-tile path { fill: #fff; }
+.kicker.wm .wm-name { font: 500 12pt "Fraunces Mark", Fraunces, Georgia, serif; line-height: 1; }
+.kicker.wm .wm-sub { font: 500 7.4pt "Instrument Sans", system-ui, sans-serif; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); padding-left: 2.6mm; margin-left: 0.4mm; border-left: 0.5pt solid var(--line); line-height: 1.2; }
 h1 { font: 600 34px/1.1 Fraunces, Georgia, serif; margin: 0 0 8px; text-wrap: balance; }
 .dek { font-size: 17px; color: var(--ink-2); margin: 0 0 10px; max-width: 62ch; }
 .meta { font-size: 12px; color: var(--muted); margin: 0 0 18px; }
@@ -274,6 +285,7 @@ table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
 th { text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--ink); padding: 6px 8px 6px 0; }
 td { border-bottom: 1px solid var(--line); padding: 6px 8px 6px 0; vertical-align: baseline; }
 td.n { font-family: "Instrument Sans", sans-serif; color: var(--muted); font-size: 12px; width: 26px; }
+td.t { padding-right: 4mm; white-space: nowrap; } /* the stage on one line, clear of who leads it; a wrapped row tips the page */
 td.t a { text-decoration: none; font-weight: 600; }
 td.band { font-family: "Instrument Sans", sans-serif; font-size: 12.5px; white-space: nowrap; }
 .b-Extreme { color: var(--garnet); font-weight: 600; }

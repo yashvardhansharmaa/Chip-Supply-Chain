@@ -24,8 +24,9 @@ how to cite it) in place of the cover and contents, with the same footnotes, run
 the foot of every page and in the citation.
 --port is the DevTools port (9334); if another run holds it, this one waits for it to come free.
 After each layout print.js reports how the pages came out (short pages, a card or figure that left a gap, text run into
-the notes or left off the page); lay_out() below lays the document out again, up to four times, with those figures
-moved down the text and those cards set closer, and prints the best layout. "TEXT OFF THE PAGE" in the log means some
+the notes or left off the page, a chapter's last sources alone on a page); lay_out() below lays the document out again,
+up to six times, with those figures and cards moved down the text, those cards or source lists set closer, and prints
+the best layout. "TEXT OFF THE PAGE" in the log means some
 text would not print; build/chapter_pdfs.py refuses such a file.
 --no-paged falls back to Chrome's own pagination, with each chapter's notes at its end; the same
 fallback runs by itself if Paged.js cannot lay the document out.
@@ -188,22 +189,31 @@ try:
         return json.loads(report or '{}')
 
     # A block kept whole that opens a page the page before could not hold leaves a gap there. print.js finish() names
-    # them: a figure (floats) goes as far down the text as the text needs to fill the gap; a chapter whose card did it
-    # (tight) has its head and card set closer. A card that runs into the notes of its page (crowded) is set closer, and if
-    # it still does, may break between its parts (split). The document is laid out again with those, up to four times; a
+    # them: a figure or a card (floats) goes as far down the text as the text needs to fill the gap; a chapter whose card
+    # did it and cannot move (tight) has its head and card set closer; a chapter whose last sources ran onto a page of
+    # their own (sources) has its source list set closer. A card that runs into the notes of its page (crowded) is set closer, and if
+    # it still does, may break between its parts (split). The document is laid out again with those, up to six times; a
     # layout is kept only if it leaves less text off the page (lost, which must be none), or runs into the notes on fewer
-    # pages, or leaves fewer headings at the foot of a page, or has fewer short pages, or fewer pages, or less room left
-    # empty, in that order. The last layout made is the one printed, so after a worse one the best is laid out again.
+    # pages, or leaves fewer headings at the foot of a page, or has fewer short pages, or fewer pages, or fewer cards that
+    # do not head their page (one that could still move up under its opening paragraph, so the opener is left short; or,
+    # counted twice, one moved past a paragraph that then did not fit the page before, failed), or less room left empty,
+    # in that order. A failed move is undone and not tried again. The last layout made is the one printed, so after a
+    # worse one the best is laid out again.
     def lay_out():
-        fit, seen, tried = {'moves': {}, 'tight': {}, 'split': {}}, [], set()
+        fit, seen, tried, pinned = {'moves': {}, 'tight': {}, 'split': {}, 'sources': {}}, [], set(), set()
         prepare('footnotes'); best = run_paged()
         score = lambda r: (len(r.get('lost') or []), len(r.get('overlap') or []), len(r.get('stranded') or []),
-                           len(r.get('short') or []), r.get('pages') or 0, r.get('gap') or 0)
+                           len(r.get('short') or []), r.get('pages') or 0,
+                           len([f for f in r.get('floats') or [] if str(f.get('id', '')).startswith('card-')]) + 2 * len(r.get('failed') or []),
+                           r.get('gap') or 0)
         current = True
-        for _ in range(4):
-            trial = {'moves': dict(fit['moves']), 'tight': dict(fit['tight']), 'split': dict(fit['split'])}
-            for f in best.get('floats') or []: trial['moves'][f['id']] = trial['moves'].get(f['id'], 0) + int(f['k'])
+        for _ in range(6):
+            trial = {'moves': dict(fit['moves']), 'tight': dict(fit['tight']), 'split': dict(fit['split']), 'sources': dict(fit['sources'])}
+            for c in best.get('failed') or []: trial['moves'].pop(c, None); pinned.add(c)
+            for f in best.get('floats') or []:
+                if f['id'] not in pinned: trial['moves'][f['id']] = trial['moves'].get(f['id'], 0) + int(f['k'])
             for t in best.get('tight') or []: trial['tight'][t] = 1
+            for t in best.get('sources') or []: trial['sources'][t] = 1
             for t in best.get('crowded') or []:
                 if t in trial['tight'] or t in tried: trial['split'][t] = 1
                 else: trial['tight'][t] = 1
@@ -211,9 +221,12 @@ try:
             if trial == fit or trial in seen: break
             seen.append(trial)
             say('laying out again: ' + ', '.join([f'{i} down {n}' for i, n in trial['moves'].items() if n != fit['moves'].get(i)]
+                                                 + [f'{i} back' for i in fit['moves'] if i not in trial['moves']]
                                                  + [f'{i} closer' for i in trial['tight'] if i not in fit['tight']]
-                                                 + [f'{i} card may break' for i in trial['split'] if i not in fit['split']]))
+                                                 + [f'{i} card may break' for i in trial['split'] if i not in fit['split']]
+                                                 + [f'{i} sources closer' for i in trial['sources'] if i not in fit['sources']]))
             load(); prepare('footnotes', trial); again = run_paged()
+            pinned.update(again.get('failed') or [])  # a card move that failed is not tried again, whichever layout is kept
             if score(again) < score(best):
                 fit, best, current = trial, again, True
             else:

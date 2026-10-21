@@ -1,22 +1,23 @@
 #!/usr/bin/env python3
 """Render the social cards (1200 x 630 PNG, one per chapter and per view) with headless Chrome.
 
-usage: python3 build/cards.py [--only <slug>[,<slug>]] [--keep] [--port <devtools port, default 9334>]
+usage: python3 build/cards.py [--only <slug>[,<slug>]] [--keep] [--port <devtools port, default 9334>] [--out <dir>]
 
 Run by hand, like build/pdf.py, not on every build. The list of pages (slug, eyebrow, title, line, lede, tags) is
 build/modules/social.js's manifest(), read through node so the card and the unfurl page never disagree.
-Output: build/assets/cards/<slug>.png; `node build/build.js` copies the folder to dist/cards/.
+Output: build/assets/cards/<slug>.png (--out writes them to another folder, for a trial); `node build/build.js` copies the
+folder to dist/cards/.
 
 The card is the "Plate" direction from qa/cards-redesign-2/light: the page itself at card size. The site's light
 tokens (qa/brand-build.md: warm white ground, blue-black ink, garnet as the only accent), no gradient and no
 vignette. At the right, large on the bare ground, the chapter's own specimen: the point cloud the page shows,
 dumped from src/kit.js by build/cards-art.js and drawn here with Pillow in ink with its accent points in the
 colors the specimen declares for the light ground (qa/specimen-colors.md), at the tilt the site opens it at, over
-the centered 28 px rule and the tracked plate line ("SPECIMEN 04 · LITHOGRAPHY", Jost, the number in garnet). The
+the centered 28 px rule and the tracked plate line ("SPECIMEN 04 · EUV SCANNER, IN SECTION", Jost, the number in garnet). The
 left column is the chapter head reduced to its essentials: the wordmark (the favicon's tile beside "Chip Supply
 Chain" in Fraunces, as in the site's masthead) with a hairline tick and "CHAPTER 04 · STAGE 4 OF 15" in Instrument
-Sans, the title in Fraunces at 116 px (opsz 144, SOFT and WONK at 0), the two ratings as garnet-ruled tags in the
-site's .ptag style, and the lede in Source Serif 4: the first two sentences of the chapter's oneLiner, the second
+Sans, the title in Fraunces at 116 px (opsz 144, SOFT and WONK at 0), the two ratings as garnet-ruled tags in sentence
+case ("Moderately hard to substitute" in tracked capitals ran out of the column into the specimen), and the lede in Source Serif 4: the first two sentences of the chapter's oneLiner, the second
 cut to its first clause when it runs long. A view follows the wordmark with the italic tagline instead, carries no
 tags, and shows its dek; the home card is the site's
 hero, "How AI chips are made", over the GPU die. A chapter names its specimen in its front matter; a view takes
@@ -51,6 +52,8 @@ only = args[args.index('--only') + 1].split(',') if '--only' in args else None
 keep = '--keep' in args  # keep the temporary HTML and art files for inspection
 if '--port' in args:
     PORT = int(args[args.index('--port') + 1])  # a free DevTools port when another headless Chrome holds the default
+if '--out' in args:
+    OUT = os.path.abspath(args[args.index('--out') + 1])  # a trial folder; the cards the site ships stay as they are
 
 # the light sheet, qa/brand-build.md (:root in src/styles.css)
 # (the two rule colors are named rule_line and rule_line2 so they never collide with the card's `line` text in the template dict)
@@ -70,7 +73,8 @@ TILE = ('<svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true"><rect width
 VIEW_SPECIMEN = {'home': 'die-floorplan', 'intro': 'boule-and-wafer', 'chain': 'cowos-exploded', 'chips': 'package',
                  'suppliers': 'globe', 'export-controls': 'globe', 'glossary': 'wafer'}
 
-# the plate line of a view names the specimen; a chapter's names the chapter. The kit's captions run to a paragraph.
+# the plate line names the specimen, for a chapter as for a view (the chapter's title already stands beside it at 100 px).
+# The kit's captions run to a paragraph.
 LABEL = {
     'die-floorplan': 'GPU die, one reticle field', 'boule-and-wafer': 'Silicon ingot and wafer', 'gas-cabinet': 'Specialty gas cabinet',
     'euv-scanner': 'EUV scanner, in section', 'photomask': 'EUV reticle and pellicle', 'process-chamber': 'Plasma etch chamber, in section',
@@ -114,8 +118,8 @@ body { background: var(--bg); color: var(--ink); font-family: var(--label); -web
 .wordmark .rest i { font-style: normal; display: inline-block; width: 1px; height: 0.9em; background: var(--line-2); margin: 0 14px -2px; }
 .mid { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: center; padding: 8px 0 24px; }
 .title { font-family: var(--display); font-weight: 400; font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0; font-size: %(title_px)spx; line-height: 1.0; letter-spacing: -0.015em; margin: 0; color: var(--ink); overflow-wrap: normal; }
-.tags { display: flex; flex: none; gap: 10px; margin: 30px 0 0; padding: 0; list-style: none; }
-.tags li { font-family: var(--label); font-weight: 500; font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.2; padding: 7px 11px; border: 1px solid var(--accent); color: var(--accent); white-space: nowrap; }
+.tags { display: flex; flex: none; flex-wrap: wrap; gap: 8px 10px; margin: 30px 0 0; padding: 0; list-style: none; }
+.tags li { font-family: var(--label); font-weight: 500; font-size: 16.5px; letter-spacing: 0; text-transform: none; line-height: 1.2; padding: 6px 10px 7px; border: 1px solid var(--accent); color: var(--accent); white-space: nowrap; }
 .line { flex: none; font-family: var(--body); font-weight: 400; font-variation-settings: "opsz" 24; font-size: %(lede_px)spx; line-height: 1.32; color: var(--ink-2); margin: 28px 0 0; max-width: %(col_w)spx; display: -webkit-box; -webkit-line-clamp: %(lede_lines)s; -webkit-box-orient: vertical; overflow: hidden; }
 .tags + .line { margin-top: 26px; }
 .foot { flex: none; font-family: var(--label); font-weight: 500; font-size: 18px; line-height: 1; letter-spacing: 0.04em; color: var(--muted); margin: 0; white-space: nowrap; }
@@ -161,7 +165,11 @@ FIT_JS = """
   const l = document.getElementById('line');
   let lpx = parseFloat(getComputedStyle(l).fontSize);
   while (l.scrollHeight > l.clientHeight + 2 && lpx > 20) { lpx -= 1; l.style.fontSize = lpx + 'px'; }
-  const over = overflow() || wide() || l.scrollHeight > l.clientHeight + 2;
+  // a tag that runs past the column's right edge would cross into the specimen
+  const tagsWide = () => { const u = document.querySelector('.tags'); return !!u && [...u.children].some((li) => li.getBoundingClientRect().right > u.getBoundingClientRect().right + 1); };
+  // and a plate line (it names the specimen) wider than the art box above it
+  const plateWide = () => { const q = document.querySelector('.plate-line'); return !!q && q.scrollWidth > q.clientWidth + 1; };
+  const over = overflow() || wide() || tagsWide() || plateWide() || l.scrollHeight > l.clientHeight + 2;
   const fam = (spec) => document.fonts.check(spec);  // check the weights the template uses; a weight not in the sheet reads as false
   const faces = [...document.fonts].map((f) => f.family.replace(/"/g, '') + ' ' + f.style + ' ' + f.weight + ' ' + f.status);
   return JSON.stringify({ px, lpx, lines: lines(), over, fonts: [fam('400 20px "Fraunces"'), fam('400 20px "Source Serif 4"'), fam('500 20px "Instrument Sans"'), fam('400 20px "Jost"')], faces });
@@ -199,9 +207,10 @@ def tags_html(p):
 
 
 def plate_html(p, name, specimen_no):
-    """"Specimen 04 · Lithography" for a chapter; for a view, the specimen's number (when a chapter owns it) and its label."""
+    """"Specimen 04 · EUV scanner, in section" for a chapter; for a view, the specimen's number (when a chapter owns it) and
+    its label. A specimen with no label falls back to the chapter's title."""
     no = ('%02d' % p['number']) if p['kind'] == 'chapter' else specimen_no.get(name)
-    text = p['title'] if p['kind'] == 'chapter' else LABEL.get(name, name)
+    text = LABEL.get(name, p['title'] if p['kind'] == 'chapter' else name)
     return ('Specimen <b>%s</b> · %s' % (no, esc(text))) if no else esc(text)
 
 
@@ -414,7 +423,7 @@ def main():
             if size > LIMIT:
                 note += ' OVER 150 KB'
             if fit.get('over'):
-                note += ' OVERFLOW: check the title'
+                note += ' OVERFLOW: check the title, the tags and the plate line'
             if not all(fit.get('fonts', [])):
                 fonts_ok = False
                 note += ' FONTS %s' % ','.join(n for n, ok in zip(('Fraunces', 'Source Serif 4', 'Instrument Sans', 'Jost'), fit['fonts']) if not ok)

@@ -19,3 +19,9 @@ qa/round2/shots/
 qa/round2/review.html
 qa/round2/links-progress.txt
 qa/round3/review.html
+
+# design round working files (screenshots and the generated review page stay local)
+qa/design/shots/
+qa/design/build/*/
+qa/design/qa/*.png
+qa/design/review.html

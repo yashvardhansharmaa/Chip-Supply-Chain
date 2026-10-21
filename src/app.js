@@ -12,10 +12,11 @@
   var COUNTRY = { US: 'United States', NL: 'Netherlands', JP: 'Japan', TW: 'Taiwan', KR: 'South Korea', CN: 'China', DE: 'Germany', CH: 'Switzerland', GB: 'United Kingdom', FR: 'France', IL: 'Israel', SG: 'Singapore', MY: 'Malaysia', AT: 'Austria', IT: 'Italy', BE: 'Belgium', IN: 'India', AE: 'United Arab Emirates', SA: 'Saudi Arabia', CA: 'Canada', SE: 'Sweden', FI: 'Finland', DK: 'Denmark', IE: 'Ireland', TH: 'Thailand', VN: 'Vietnam', PH: 'Philippines', MX: 'Mexico', 'EU-other': 'Other Europe', Other: 'Other' };
   var cname = function (c) { return COUNTRY[c] || c; };
   var cssPx = function (name) { return parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name)) || 0; };
-  /* what covers the top of the window: the fixed masthead, and in the chain or the walk the fixed rail under it */
+  /* what covers the top of the window: the fixed masthead, and in the walk the fixed rail under it (the chain's own rail was
+     retired on 21 Oct 2026: the ledger column beside each chapter already shows the fifteen stages) */
   var headerH = function () {
     var h = (cssPx('--masthead') || 56) + cssPx('--band');
-    var cur = window.CP && CP.Router ? CP.Router.current : null, rail = cur === 'stack' ? $('.rail') : cur === 'walk' ? $('#wk-rail') : null;
+    var cur = window.CP && CP.Router ? CP.Router.current : null, rail = cur === 'walk' ? $('#wk-rail') : null;
     if (rail && !rail.hidden && rail.offsetHeight && getComputedStyle(rail).position === 'fixed') h += rail.offsetHeight;
     return h;
   };
@@ -57,7 +58,8 @@
       var dark = this.current() === 'dark', b = $('.theme-toggle');
       if (b) {
         b.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
-        $('.ic-moon', b).hidden = dark; $('.ic-sun', b).hidden = !dark;
+        // the icons are SVG elements, which have no .hidden property: set the attribute, which [hidden] hides
+        $('.ic-moon', b).toggleAttribute('hidden', dark); $('.ic-sun', b).toggleAttribute('hidden', !dark);
       }
       Stage.refreshColors();
     },
@@ -326,7 +328,6 @@
       $$('.view').forEach(function (s) { s.hidden = s.getAttribute('data-view') !== v; });
       $$('.tabs a').forEach(function (a) { var dv = a.getAttribute('data-view'); var on = dv === v; if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
       if (narrow()) { var onTab = $('.tabs a[aria-current="page"]'); if (onTab && onTab.scrollIntoView) onTab.scrollIntoView({ block: 'nearest', inline: 'nearest' }); } // the phone tab strip scrolls; keep the current tab in view
-      var rail = $('.rail'); if (rail && v !== 'stack') rail.setAttribute('data-show', '0');
       if (v === 'stack' && !this.artSoon) { // the chain is the page that prints, so its cover art comes in once the page has loaded and gone idle
         this.artSoon = true;
         var art = function () { if (window.CP_ART) window.CP_ART(); };
@@ -397,7 +398,6 @@
       var self = this;
       this.items = $$('[data-view="stack"] [data-specimen]');
       this.walkItems = $$('[data-view="walk"] [data-specimen]');
-      this.railItems = $$('.rail li');
       window.addEventListener('scroll', function () { self.update(); }, { passive: true });
       window.addEventListener('resize', function () { self.update(); });
       $('.to-top').addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' }); });
@@ -432,16 +432,7 @@
         var num = best.getAttribute('data-number');
         Stage.show(best.getAttribute('data-specimen'), null, best.getAttribute('data-caption') ? esc(best.getAttribute('data-caption')) : null,
           num ? 'Specimen <b>' + num + '</b> · ' + esc(best.getAttribute('data-title') || '') : 'Specimen <b>00</b> · the whole chip');
-        var seen = true;
-        this.railItems.forEach(function (li) {
-          var on = li.getAttribute('data-id') === id;
-          if (on) { li.setAttribute('aria-current', 'true'); seen = false; } else li.removeAttribute('aria-current');
-          li.classList.toggle('done', seen && !on);
-        });
       }
-      var contents = $('#contents'), rail = $('.rail');
-      var past = contents ? contents.getBoundingClientRect().bottom < 0 : window.scrollY > vh;
-      if (rail) rail.setAttribute('data-show', past ? '1' : '0');
     }
   };
 
@@ -494,7 +485,8 @@
         g.vendors.forEach(function (v) {
           html += '<div class="vrow"><span class="vname">' + esc(v) + '</span><div class="vchips">' + g.byV[v].map(function (c) {
             var sub = c.family && c.family !== c.name ? c.family : (c.announced ? String(c.announced).slice(0, 4) : '');
-            return '<button type="button" data-id="' + esc(c.id) + '" data-cc="' + esc(cc) + '" aria-pressed="false"><b>' + esc(c.name) + '</b>' + (sub ? '<span>' + esc(sub) + '</span>' : '') + '</button>';
+            // the checklist shows the name alone; the family (Blackwell, Hopper) or the year moves to the tooltip (src/modules/chips.css)
+            return '<button type="button" data-id="' + esc(c.id) + '" data-cc="' + esc(cc) + '" aria-pressed="false"' + (sub ? ' title="' + esc(sub) + '"' : '') + '><b>' + esc(c.name) + '</b>' + (sub ? '<span>' + esc(sub) + '</span>' : '') + '</button>';
           }).join('') + '</div></div>';
         });
       });
@@ -935,17 +927,19 @@
     /* ---- the pipeline: the chain drawn as a pipe that narrows where the firms run out ---- */
     fitPipe: function () {
       var host = $('#sup-pipe-scroll'); if (!host) return;
-      if (Math.max(820, Math.round(host.clientWidth) || 820) !== this.drawW) this.drawPipe();
+      if (Math.max(280, Math.round(host.clientWidth) || 280) !== this.drawW) this.drawPipe();
     },
     drawPipe: function () { // the ribbons: countries on the left, the twenty stages on the right, a ribbon for every pairing, its width the firms
       var self = this, host = $('#sup-pipe-scroll'); if (!host || !host.clientWidth) return; // under the other tab it has no width; it is drawn when its tab opens
       var st = this.stages, n = st.length; if (!n) return;
-      var W = Math.max(820, Math.round(host.clientWidth) || 820), tight = W < 1000;
+      // drawn to the column's width; a phone gets country codes on the left and a taller field, so every stage label stays on screen
+      var W = Math.max(280, Math.round(host.clientWidth) || 280), tight = W < 1000, phone = W < 600;
       this.drawW = W;
       var cols = this.cols(), nc = cols.length;
       var total = this.rows.length || 1;
-      var H = tight ? 520 : 580, padT = 16, padB = 16, inner = H - padT - padB;
-      var x0 = tight ? 128 : 172, wL = 12, x1 = W - (tight ? 168 : 214), wR = 10;
+      var H = phone ? 720 : tight ? 520 : 580, padT = 16, padB = 16, inner = H - padT - padB;
+      var x0 = phone ? 54 : tight ? 128 : 172, wL = phone ? 10 : 12, x1 = W - (phone ? 150 : tight ? 168 : 214), wR = phone ? 8 : 10;
+      var coLab = function (c) { return phone ? c : self.coName(c); };
       var gL = 8, gR = 4;
       var uL = (inner - gL * (nc - 1)) / total, uR = (inner - gR * (n - 1)) / total;
       var cTot = {}; cols.forEach(function (c) { cTot[c] = 0; });
@@ -959,21 +953,26 @@
       cols.forEach(function (c) {                                        // each country's ribbons leave in stage order; each stage's arrive in country order
         st.forEach(function (s, i) {
           var k = s.by[c] || 0; if (!k) return;
+          var kc = s.rows.filter(function (r) { return self.colOf(r.country) === c && r.chokepoint === 'Critical'; }).length;
           var a0 = curL[c], a1 = a0 + k * uL, b0 = curR[i], b1 = b0 + k * uR;
           curL[c] = a1; curR[i] = b1;
-          var crit = s.rows.some(function (r) { return self.colOf(r.country) === c && r.chokepoint === 'Critical'; });
-          var xa = x0 + wL;
-          ribs += '<path class="sup-band sup-rib c-' + c + (crit ? ' is-crit' : '') + '" data-c="' + c + '" data-i="' + i + '" d="M' + xa + ',' + a0.toFixed(1) +
-            ' C' + mx.toFixed(1) + ',' + a0.toFixed(1) + ' ' + mx.toFixed(1) + ',' + b0.toFixed(1) + ' ' + x1 + ',' + b0.toFixed(1) +
-            ' L' + x1 + ',' + b1.toFixed(1) + ' C' + mx.toFixed(1) + ',' + b1.toFixed(1) + ' ' + mx.toFixed(1) + ',' + a1.toFixed(1) + ' ' + xa + ',' + a1.toFixed(1) + 'Z"></path>';
+          // the pairing's Critical firms ride on top as a ribbon of their own, as wide as their count, so the garnet counts them
+          var am = a0 + kc * uL, bm = b0 + kc * uR, xa = x0 + wL;
+          var path = function (A0, A1, B0, B1, cls) {
+            return '<path class="sup-band sup-rib c-' + c + cls + '" data-c="' + c + '" data-i="' + i + '" d="M' + xa + ',' + A0.toFixed(1) +
+              ' C' + mx.toFixed(1) + ',' + A0.toFixed(1) + ' ' + mx.toFixed(1) + ',' + B0.toFixed(1) + ' ' + x1 + ',' + B0.toFixed(1) +
+              ' L' + x1 + ',' + B1.toFixed(1) + ' C' + mx.toFixed(1) + ',' + B1.toFixed(1) + ' ' + mx.toFixed(1) + ',' + A1.toFixed(1) + ' ' + xa + ',' + A1.toFixed(1) + 'Z"></path>';
+          };
+          if (kc) ribs += path(a0, am, b0, bm, ' is-crit');
+          if (kc < k) ribs += path(am, a1, bm, b1, '');
         });
       });
-      var fsL = tight ? 12 : 13, fsR = tight ? 11 : 12;
+      var fsL = phone ? 11.5 : tight ? 12 : 13, fsR = phone ? 10.5 : tight ? 11 : 12;
       var nodesL = '', hitsL = '';
       cols.forEach(function (c) {
         var yy = ly[c], mid = (yy[0] + yy[1]) / 2;
         nodesL += '<rect class="sup-cnode c-' + c + '" data-c="' + c + '" x="' + x0 + '" y="' + yy[0].toFixed(1) + '" width="' + wL + '" height="' + Math.max(1.5, yy[1] - yy[0]).toFixed(1) + '"></rect>' +
-          '<text class="sup-clab" x="' + (x0 - 10) + '" y="' + (mid + 4.5).toFixed(1) + '" font-size="' + fsL + '">' + esc(self.coName(c)) + '<tspan class="sup-cn"> ' + cTot[c] + '</tspan></text>';
+          '<text class="sup-clab" x="' + (x0 - 10) + '" y="' + (mid + 4.5).toFixed(1) + '" font-size="' + fsL + '">' + esc(coLab(c)) + '<tspan class="sup-cn"> ' + cTot[c] + '</tspan></text>';
         hitsL += '<rect class="sup-chit" data-c="' + c + '" x="0" y="' + Math.max(0, yy[0] - 4).toFixed(1) + '" width="' + (x0 + wL + 6) + '" height="' + Math.max(18, yy[1] - yy[0] + 8).toFixed(1) + '"></rect>';
       });
       var nodesR = '', labs = '', hits = '';
@@ -985,13 +984,14 @@
         hits += '<rect class="sup-hit" data-i="' + i + '" x="' + (x1 - 6) + '" y="' + top.toFixed(1) + '" width="' + (W - x1 + 6) + '" height="' + hgt.toFixed(1) +
           '" role="button" tabindex="' + (i === self.at ? '0' : '-1') + '" aria-label="' + esc(s.name + ': ' + s.n + ' firms, ' + s.crit.length + ' critical.') + '"></rect>';
       });
-      host.innerHTML = '<svg class="sup-pipe-svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" role="group" aria-label="Countries to stages: a ribbon for every country and stage pairing, its width the number of firms, amber where one is Critical' + (this.group === 'eu' ? '. The EU-27 members are drawn as one' : '') + '">' +
+      // tabindex -1: Chrome otherwise makes the drawing itself a tab stop (its content overflows it), one before the stages
+      host.innerHTML = '<svg class="sup-pipe-svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" tabindex="-1" role="group" aria-label="Countries to stages: a ribbon for every country and stage pairing, its width the number of firms, garnet for the Critical firms' + (this.group === 'eu' ? '. The EU-27 members are drawn as one' : '') + '">' +
         '<defs><clipPath id="sup-wipe-clip"><rect class="sup-wipe' + (this.wiped ? '' : ' is-new') + '" x="0" y="0" width="' + W + '" height="' + H + '"></rect></clipPath></defs>' +
         '<g class="sup-flow" clip-path="url(#sup-wipe-clip)">' + ribs + nodesL + nodesR + '<g class="sup-labels">' + labs + '</g><g class="sup-clabs">' + '</g></g>' +
         '<g class="sup-chits">' + hitsL + '</g><g class="sup-hits">' + hits + '</g></svg>';
       // the country labels must sit above the hit rects to stay crisp, but the hits must catch the pointer: labels go last, pointer-events off
       var svg = $('.sup-pipe-svg', host);
-      var clabs = ''; cols.forEach(function (c) { var yy = ly[c], mid = (yy[0] + yy[1]) / 2; clabs += '<text class="sup-clab" x="' + (x0 - 10) + '" y="' + (mid + 4.5).toFixed(1) + '" font-size="' + fsL + '">' + esc(self.coName(c)) + '<tspan class="sup-cn"> ' + cTot[c] + '</tspan></text>'; });
+      var clabs = ''; cols.forEach(function (c) { var yy = ly[c], mid = (yy[0] + yy[1]) / 2; clabs += '<text class="sup-clab" x="' + (x0 - 10) + '" y="' + (mid + 4.5).toFixed(1) + '" font-size="' + fsL + '">' + esc(coLab(c)) + '<tspan class="sup-cn"> ' + cTot[c] + '</tspan></text>'; });
       $$('.sup-clab', svg).forEach(function (t) { t.parentNode.removeChild(t); });
       svg.insertAdjacentHTML('beforeend', '<g class="sup-clabs" pointer-events="none">' + clabs + '</g>');
       this.wiped = true;
@@ -1000,7 +1000,7 @@
       var hot = function (sel, on) { svg.setAttribute('data-hot', on ? '1' : '0'); $$('.sup-rib', svg).forEach(function (r) { if (on && sel(r)) r.setAttribute('data-hot', '1'); else r.removeAttribute('data-hot'); }); };
       svg.addEventListener('mouseover', function (e) {
         var rib = e.target.closest ? e.target.closest('.sup-rib') : null;
-        if (rib) { hot(function (r) { return r === rib; }, true); self.showRibTip(rib.getAttribute('data-c'), +rib.getAttribute('data-i'), rib); return; }
+        if (rib) { var rc = rib.getAttribute('data-c'), ri = rib.getAttribute('data-i'); hot(function (r) { return r.getAttribute('data-c') === rc && r.getAttribute('data-i') === ri; }, true); self.showRibTip(rib.getAttribute('data-c'), +rib.getAttribute('data-i'), rib); return; }
         var ch = e.target.closest ? e.target.closest('.sup-chit') : null;
         if (ch) { var c = ch.getAttribute('data-c'); hot(function (r) { return r.getAttribute('data-c') === c; }, true); self.showCountryTip(c, ch); return; }
         var h = e.target.closest ? e.target.closest('.sup-hit') : null;
@@ -1058,7 +1058,7 @@
     legend: function () {
       var self = this, h = '';
       this.cols().forEach(function (c) { h += '<span class="sup-lg"><i class="sup-sw c-' + c + '"></i>' + esc(self.coName(c)) + '</span>'; });
-      $('#sup-legend').innerHTML = h + '<span class="sup-lg"><i class="sup-crit-sw"></i>holds a Critical firm</span>' +
+      $('#sup-legend').innerHTML = h + '<span class="sup-lg"><i class="sup-crit-sw"></i>Critical firms</span>' +
         '<span class="sup-lg-note">Ribbon width is the number of firms a country has at a stage.</span>';
     },
     tipAt: function (el, anchor, alignRight) { // place #sup-tip beside an element of the drawing, inside #sup-pipe
@@ -1154,6 +1154,7 @@
       $$('.sup-mode').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-mode') === self.mode ? 'true' : 'false'); });
       $('#sup-ladder').hidden = !lad;
       $('#sup-ladder-h').hidden = !lad;
+      var key = $('#sup-key'); if (key) key.hidden = !lad; // the key names the ladder's colors, so it goes with it
       $('#sup-wrap').hidden = lad;
       // the firm filter lights each ribbon that holds a firm it keeps, so a country drawn inside the Other or EU column lights those ribbons
       $$('.sup-band').forEach(function (p) {
@@ -1213,16 +1214,22 @@
         }).map(function (f) {
           return '<span class="sup-nw" data-r="' + f._ix + '"><button type="button" class="sup-name lv-' + esc(f.chokepoint || 'Important') +
             '" aria-expanded="false" aria-controls="' + s.id + '-p">' + esc(f.name) + '<i class="sup-cc">' + esc(f.country) + '</i>' +
+            (f.chokepoint === 'Critical' || f.chokepoint === 'Diversified' ? '<span class="sr-only">, ' + esc(f.chokepoint) + '</span>' : '') + // the name's color, said aloud
             '</button></span>'; // the list stays names only: a firm's revenue and its China share open with the firm (detail, below)
         }).join(' '); // the lines break at these spaces, so a name never leaves its comma at the start of the next line
+        // the numeral is the stage's number of firms, the value the ladder is sorted by, so ties show at a glance
         html += '<section class="sup-rung" id="' + s.id + '" data-i="' + s.i + '" data-crit="' + s.crit.length + '" aria-labelledby="' + s.id + '-h">' +
-          '<span class="sup-rank" aria-hidden="true">' + (r < 9 ? '0' : '') + (r + 1) + '</span>' +
+          '<span class="sup-rank" aria-hidden="true">' + s.n + '</span>' +
           '<div class="sup-rung-head"><h3 class="sup-rung-name" id="' + s.id + '-h">' + esc(s.name) + '</h3>' +
-          '<p class="sup-rung-n">' + s.n + ' firms' + (s.crit.length ? ' · ' + s.crit.length + ' critical' : '') + '</p></div>' +
+          '<p class="sup-rung-n">' + self.rungCount(s.n, s.crit.length) + '</p></div>' +
           '<p class="sup-names">' + names + '</p>' +
           '<div class="sup-panel" id="' + s.id + '-p"><div class="sup-panel-in"></div></div></section>';
       });
       $('#sup-ladder').innerHTML = html;
+    },
+    // beside a stage's name: its Critical firms, one garnet square each (the numeral already shows the number of firms; a screen reader hears it here)
+    rungCount: function (n, crit) {
+      return '<span class="sr-only">' + n + ' firms. </span>' + (crit ? '<span class="sup-crit-n"><span class="sup-crit-sq" aria-hidden="true">' + new Array(crit + 1).join('<i></i>') + '</span>' + crit + ' critical</span>' : '');
     },
     applyFilter: function () { // the rungs never move; the filters only hide names and change the count
       var self = this, on = this.filtering();
@@ -1235,7 +1242,7 @@
         });
         if (last) last.classList.add('is-last');
         var crit = +rung.getAttribute('data-crit');
-        $('.sup-rung-n', rung).textContent = on ? hits + ' of ' + items.length + ' firms' : items.length + ' firms' + (crit ? ' · ' + crit + ' critical' : '');
+        var cn = $('.sup-rung-n', rung); if (on) cn.textContent = hits + ' of ' + items.length + ' firms'; else cn.innerHTML = self.rungCount(items.length, crit);
         rung.setAttribute('data-empty', hits ? '0' : '1');
         var open = $('.sup-name[aria-expanded="true"]', rung);
         if (open && (!hits || open.parentNode.hidden)) self.closePanel(rung);
@@ -1269,7 +1276,7 @@
       // right under the revenue, the share of it that came from China, from the China revenue panel (for a division, its
       // parent's share, and the label says so), linked to the firm's chart of every year
       if (r.china) facts.push(['From China', '<a href="' + safeUrl(r.china.href) + '">' + esc(String(r.china.label).replace(/^China /, '')) +
-        '<span class="sr-only">. Opens the chart of every year</span> <span aria-hidden="true">→</span></a>']);
+        '<span class="sr-only">. Opens the chart of every year</span> <span aria-hidden="true">→</span></a>' + this.exMini(r.china.href)]);
       var tag = [r.subcategory, cname(r.country) + (r.city ? ', ' + r.city : ''), /^private$/i.test(r.ticker || '') ? '' : r.ticker].filter(Boolean).join(' · ');
       return '<div class="sup-detail-body">' +
         '<p class="sup-detail-h">' + esc(r.name) + (r.chokepoint ? ' <span class="chk ' + esc(r.chokepoint) + '">' + esc(r.chokepoint) + '</span>' : '') +
@@ -1277,6 +1284,17 @@
         (r.role ? '<p class="sup-role">' + esc(r.role) + '</p>' : '') +
         (facts.length ? '<dl class="sup-facts">' + facts.map(function (f) { return '<dt>' + f[0] + '</dt><dd>' + f[1] + '</dd>'; }).join('') + '</dl>' : '') +
         (r.source ? '<a class="sup-src" href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" aria-label="Source for ' + esc(r.name) + '">Source</a>' : '') + '</div>';
+    },
+    // the firm's China revenue chart, small, under its From China line: a copy of its panel on Export Controls (#ex-<slug>, written by
+    // build/build.js and already in the page), its links unwrapped and hidden from screen readers, since the line beside it says the
+    // figure. A firm with no panel gets nothing. The Index firm card (src/modules/lookup.js) uses it too
+    exMini: function (href) {
+      var m = /\/exposure\/([a-z0-9-]+)/.exec(String(href || '')), fig = m && document.getElementById('ex-' + m[1]), svg = fig && fig.querySelector('svg');
+      if (!svg) return '';
+      var c = svg.cloneNode(true);
+      $$('a', c).forEach(function (a) { while (a.firstChild) a.parentNode.insertBefore(a.firstChild, a); a.parentNode.removeChild(a); });
+      c.removeAttribute('role'); c.removeAttribute('aria-label'); c.setAttribute('focusable', 'false');
+      return '<span class="sup-ex-mini ex-panel" aria-hidden="true">' + c.outerHTML + '</span>';
     },
     // a firm's revenue as its filing prints it, linked to the filing, then the fiscal year by the month it ends, then, for a firm
     // that does not file in dollars, about how much in dollars: "¥2,443,533 million (year to March 2026), about $16.2 billion".
@@ -1657,11 +1675,13 @@
       host.hidden = false;
       host.innerHTML = '<h3 class="label" id="cf-up-h" style="margin:0 0 2px">Coming up</h3><ol style="list-style:none;margin:0;padding:0">' + list.map(function (x) {
         var u = x.u, when = x.n === 0 ? 'today' : x.n === 1 ? 'tomorrow' : 'in ' + x.n + ' days';
-        var link = u.event ? '<a class="cf-up-link" href="' + esc('#/controls/' + encodeURIComponent(u.event)) + '" style="' + mono + 'margin-left:10px;white-space:nowrap">Timeline entry</a>'
-          : (u.source && safeUrl(u.source) !== '#' ? '<a class="cf-up-link" href="' + safeUrl(u.source) + '" target="_blank" rel="noopener" style="' + mono + 'margin-left:10px;white-space:nowrap">Source</a>' : '');
+        // the link is quiet, in sentence case; garnet marks only the deadlines within a month
+        var quiet = 'display:inline-block;padding:4px 0;font-family:var(--font-mono);font-size:11px;line-height:16px;color:var(--muted);margin-left:10px;white-space:nowrap';
+        var link = u.event ? '<a class="cf-up-link" href="' + esc('#/controls/' + encodeURIComponent(u.event)) + '" style="' + quiet + '" aria-label="Entry in the timeline">Entry <span aria-hidden="true">→</span></a>'
+          : (u.source && safeUrl(u.source) !== '#' ? '<a class="cf-up-link" href="' + safeUrl(u.source) + '" target="_blank" rel="noopener" style="' + quiet + '">Source</a>' : '');
         return '<li style="display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 14px;padding:8px 0;border-bottom:1px solid var(--line)">' +
           '<span style="' + mono + 'flex:0 0 8.6em;color:var(--ink)">' + esc(self.fmtDate(u.date)) + '</span>' +
-          '<span style="' + mono + 'flex:0 0 7em;color:var(--accent)">' + esc(when) + '</span>' +
+          '<span style="' + mono + 'flex:0 0 7em;color:' + (x.n <= 30 ? 'var(--accent)' : 'var(--muted)') + '">' + esc(when) + '</span>' +
           '<span style="flex:1 1 18em;min-width:0;font-size:15px;line-height:1.4;color:var(--ink-2)">' + esc(u.label || '') + link + '</span></li>';
       }).join('') + '</ol>';
     },
@@ -1690,6 +1710,9 @@
           '<span class="cf-id"><span class="cf-name">' + esc(f.name || f.id) + '</span>' +
           (f.route ? '<span class="cf-route">' + esc(f.route) + '</span>' : '') +
           (f.what ? '<span class="cf-what">' + esc(f.what) + '</span>' : '') + '</span>' +
+          '<span class="' + self.rampClass(st) + '" style="--i:' + self.rampAt(st) + '" aria-hidden="true"><i class="cf-ramp-t"></i>' +
+          '<i class="cf-ramp-k" style="left:0"></i><i class="cf-ramp-k" style="left:25%"></i><i class="cf-ramp-k" style="left:50%"></i><i class="cf-ramp-k" style="left:75%"></i><i class="cf-ramp-k" style="left:100%"></i>' +
+          '<i class="cf-ramp-f"></i><i class="cf-ramp-d"></i></span>' +
           '<span class="cf-state">' + self.pillHTML(st) + '</span>' +
           '<span class="cf-n">' + n + (n === 1 ? ' event' : ' events') + '</span>' +
           '<span class="cf-caret" aria-hidden="true"></span></h4>' +
@@ -1697,6 +1720,14 @@
           '</section>';
       }).join('');
       if (!reduced) host.setAttribute('data-in', '1');
+    },
+    /* the row's scale: five steps from No license to Prohibited, a dot at the state, ink up to Case by case and garnet from a
+       presumption of denial. Policy rows get the bare track (money and tariffs gate nothing). The row's button already says the
+       state, so the scale is hidden from screen readers */
+    RAMP: ['open', 'restricted', 'case', 'denial', 'prohibited'],
+    rampAt: function (st) { return Math.max(0, this.RAMP.indexOf(st.status)); },
+    rampClass: function (st) {
+      return 'cf-ramp' + (st.status === 'policy' ? ' is-policy' : '') + (this.rampAt(st) >= 3 ? ' is-closed' : '') + (st.suspended ? ' is-susp' : '');
     },
     /* the row read aloud: the button carries no text of its own, so it says what the row says */
     rowLabel: function (f, st, n) {
@@ -1732,6 +1763,9 @@
         var f = self.byId[row.getAttribute('data-f')];
         if (!f) return;
         var st = self.stateAt(f, self.asOf), key = self.keyOf(st), box = row.querySelector('.cf-state');
+        // the scale is changed in place, never rebuilt, so its dot slides to the new state (controls.css; none under reduced motion)
+        var ramp = row.querySelector('.cf-ramp');
+        if (ramp) { ramp.className = self.rampClass(st); ramp.style.setProperty('--i', self.rampAt(st)); }
         if (box && key !== self.keys[f.id]) {
           box.innerHTML = self.pillHTML(st);
           var btn = row.querySelector('.cf-btn');
@@ -1849,8 +1883,10 @@
         '<button type="button" class="cf-now" id="cf-now">Now</button></div>' +
         '<div class="cf-track"><div class="cf-years" id="cf-years" role="group" aria-label="Set the date by year">' +
         this.years.map(function (y) {
-          var n = self.yearN[y] || 0;
+          var n = self.yearN[y] || 0, most = Math.max.apply(null, self.years.map(function (yy) { return self.yearN[yy] || 0; }).concat([1]));
+          // each year carries its number of moves as a small bar, so the busy years stand out on the scrubber
           return '<button type="button" class="cf-year" data-y="' + y + '" aria-pressed="false" aria-label="' + y + ', ' + n + (n === 1 ? ' event' : ' events') + '">' +
+            '<i class="cf-yb" style="height:' + Math.max(1, Math.round(n / most * 20)) + 'px"></i>' +
             '<span class="cf-yl">' + y + '</span><span class="cf-ys">’' + String(y).slice(2) + '</span><span class="cf-yn">' + n + '</span></button>';
         }).join('') + '</div><div class="cf-head" id="cf-head" aria-hidden="true"></div></div>';
       var years = $('#cf-years'), now = $('#cf-now');
@@ -2153,11 +2189,12 @@
           var starts = {}; segs.forEach(function (sg, i) { if (i) starts[sg.from] = 1; });
           var label = segs.length > 1 ? segs.map(function (sg, i) { var w = i ? sg.k.replace(/^counted /, '') : sg.k; return i === segs.length - 1 ? w + ' from ' + sg.from : (i ? w + ' ' + sg.from + ' to ' + sg.to : w + ' to ' + sg.to); }).join(', ') : (m.basis ? basisShort(m.basis) : '');
           var rowTitle = segs.length > 1 ? segs.map(function (sg) { return sg.from + (sg.to !== sg.from ? ' to ' + sg.to : '') + ': ' + sg.text; }).join(' ') : (m.basis || '');
+          var peak = 0; ys.forEach(function (y) { var r = firms[f][y]; if (r && r.chinaShare != null) peak = Math.max(peak, r.chinaShare); }); // the firm's highest year, garnet as in its panel
           return '<tr><td title="' + esc(rowTitle) + '">' + esc(f) + '<small>' + esc(m.category || '') + ' · ' + esc(cname(m.country)) + (label ? ' · ' + esc(label) : '') + '</small></td>' + ys.map(function (y) {
             var r = firms[f][y]; if (!r || r.chinaShare == null) return '<td><span class="cell zero" title="Not filed for this year" aria-label="Not filed for this year">·</span></td>';
             var brk = starts[y], basis = r.basis ? 'Counted: ' + firstLine(r.basis) : '';
             var tip = [r.chinaRevenue != null ? r.chinaRevenue.toLocaleString('en-US') + ' of ' + (r.totalRevenue || 0).toLocaleString('en-US') + ' ' + (r.currency || '') : '', r.note || '', (brk ? 'New basis from this year. ' : '') + basis].filter(Boolean).join(' · ');
-            return '<td' + (brk ? ' style="border-left:2px dashed var(--ink-2)"' : '') + '>' + (brk ? '<span class="sr-only">The firm counts China differently from this year. </span>' : '') + '<a class="cell" style="--v:' + Math.round(Math.min(100, r.chinaShare) * 1.6) + '" href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" aria-label="' + esc(f) + ' ' + esc(y) + ': ' + esc(String(r.chinaShare)) + ' percent from China, opens the filing" title="' + esc(tip) + '">' + (r.chinaRevenue != null ? r.chinaShare.toFixed(1) : String(r.chinaShare)) + '%</a></td>'; // a share the filing gives only as a percentage prints as filed (build/exposure.js shareText)
+            return '<td' + (brk ? ' style="border-left:2px dashed var(--ink-2)"' : '') + '>' + (brk ? '<span class="sr-only">The firm counts China differently from this year. </span>' : '') + '<a class="cell' + (r.chinaShare === peak ? ' is-peak' : '') + '" style="--v:' + Math.round(Math.min(100, r.chinaShare) * 1.6) + '" href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" aria-label="' + esc(f) + ' ' + esc(y) + ': ' + esc(String(r.chinaShare)) + ' percent from China, opens the filing" title="' + esc(tip) + '">' + (r.chinaRevenue != null ? r.chinaShare.toFixed(1) : String(r.chinaShare)) + '%</a></td>'; // a share the filing gives only as a percentage prints as filed (build/exposure.js shareText)
           }).join('') + '</tr>';
         }).join('') + '</tbody>';
       }
@@ -2177,8 +2214,9 @@
         idx.push({ kind: 'Chapter', title: title.replace(/^Chapter \d+: /, ''), text: (ch.querySelector('.ch-lede') || {}).textContent || '', href: '#' + ch.id });
         $$('.prose h3[id], .prose h4[id]', ch).forEach(function (h) {
           var t = '', p = h.nextElementSibling;
-          while (p && !/^H[1-4]$/.test(p.tagName) && t.length < 900) { if (/^(P|DIV|UL|OL|TABLE)$/.test(p.tagName)) t += ' ' + p.textContent; p = p.nextElementSibling; }
-          idx.push({ kind: title.replace(/^Chapter \d+: /, ''), title: h.textContent.replace(/#$/, ''), text: t.replace(/\s+/g, ' ').trim().slice(0, 900), href: '#' + h.id });
+          // the snippet is the reading text: a copy of each block without its footnote marks, so "8 Gb/s per pin 9." reads "8 Gb/s per pin."
+          while (p && !/^H[1-4]$/.test(p.tagName) && t.length < 900) { if (/^(P|DIV|UL|OL|TABLE)$/.test(p.tagName)) { var c = p.cloneNode(true); $$('sup.cite', c).forEach(function (s) { s.remove(); }); t += ' ' + c.textContent; } p = p.nextElementSibling; }
+          idx.push({ kind: title.replace(/^Chapter \d+: /, ''), title: h.textContent.replace(/#$/, ''), text: t.replace(/\s+/g, ' ').replace(/\s+([.,;:)])/g, '$1').trim().slice(0, 900), href: '#' + h.id });
         });
       });
       (DATA.chapters || []).filter(function (c) { return c.id === 'geopolitics'; }).forEach(function () { idx.push({ kind: 'Essay', title: 'Who Controls the Chain', text: 'Who holds each chokepoint, the export-control campaign, China\'s response, the Gulf and smuggling.', href: '#/controls' }); });
@@ -2248,9 +2286,14 @@
       var self = this, box = $('#cp-search');
       if (!box) {
         box = document.createElement('div'); box.id = 'cp-search'; box.hidden = true; box.setAttribute('role', 'dialog'); box.setAttribute('aria-label', 'Search');
-        box.innerHTML = '<div class="cp-search-panel"><input type="search" placeholder="Search chapters, terms, suppliers, chips and events…" aria-label="Search"><ol class="cp-search-results"></ol><p class="cp-search-hint">Enter opens the first result · Esc closes</p></div>';
+        box.innerHTML = '<div class="cp-search-panel"><input type="search" placeholder="Search chapters, terms, suppliers, chips and events…" aria-label="Search"><p class="cp-search-try"></p><ol class="cp-search-results"></ol><p class="cp-search-hint">Enter opens the first result · Esc closes</p></div>';
         document.body.appendChild(box);
-        var inp = $('input', box), list = $('ol', box);
+        var inp = $('input', box), list = $('ol', box), tryRow = $('.cp-search-try', box);
+        // an empty search suggests what to type, from the Glossary's own Try row; a tap fills the box and searches
+        var names = self.tryNames();
+        if (names.length) tryRow.innerHTML = '<span class="label">Try</span>' + names.map(function (n) { return '<button type="button">' + esc(n) + '</button>'; }).join('');
+        else tryRow.remove();
+        tryRow.addEventListener('click', function (e) { var b = e.target.closest ? e.target.closest('button') : null; if (!b) return; inp.value = b.textContent; inp.dispatchEvent(new Event('input')); inp.focus(); });
         // the keyboard hint means nothing on a touch screen with no keyboard
         if (window.matchMedia && matchMedia('(hover: none) and (pointer: coarse)').matches) { var hint = $('.cp-search-hint', box); if (hint) hint.hidden = true; }
         box.addEventListener('click', function (e) { if (e.target === box) self.close(); });
@@ -2258,6 +2301,7 @@
         inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') { var a = list.querySelector('a'); if (a) a.click(); } });
         inp.addEventListener('input', function () {
           var q = inp.value.trim();
+          if (tryRow) tryRow.hidden = !!q; // the suggestions give way to the results
           if (!q) { list.innerHTML = ''; return; }
           var res = self.search(q), hits = res.hits;
           list.innerHTML = (res.note ? '<li class="none">' + esc(res.note) + '</li>' : '') +
@@ -2266,7 +2310,25 @@
         });
       }
       if (box.hidden) this.from = document.activeElement; // where the reader was, so closing can put them back
-      box.hidden = false; $('input', box).value = ''; $('ol', box).innerHTML = ''; $('input', box).focus();
+      box.hidden = false; $('input', box).value = ''; $('ol', box).innerHTML = ''; var tr = $('.cp-search-try', box); if (tr) tr.hidden = false; $('input', box).focus();
+    },
+    /* the suggestions under an empty search box, drawn once per visit the way the Glossary draws its own Try row
+       (src/modules/lookup.js suggest: two short terms, two firms that matter, one chip, one country) from the same list of
+       entries, #lk-items, which every page carries. A chip goes by its model ("Ascend 950PR", "Instinct MI300X"): the maker,
+       a design house in brackets and a bracketed tail are dropped */
+    tryNames: function () {
+      var items = $$('#lk-items li[data-kind]'), name = function (li) { return ((li.querySelector('.lk-name') || {}).textContent || '').trim(); };
+      var kind = function (k) { return items.filter(function (li) { return li.getAttribute('data-kind') === k; }); };
+      var pick = function (arr, n) { var a = arr.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a.slice(0, n); };
+      var big = {}; (DATA.suppliers || []).forEach(function (r) { if (r.chokepoint === 'Critical' || r.chokepoint === 'Important') big[r.name] = 1; });
+      var chosen = pick(kind('term').filter(function (li) { return name(li).length <= 22; }), 2)
+        .concat(pick(kind('firm').filter(function (li) { return big[li.getAttribute('data-key')]; }), 2), pick(kind('chip'), 1), pick(kind('country'), 1));
+      // a chip's list name is its maker and its name, so a chip takes its own name from the data (its data-key is the chip id), as the Glossary's Try row does
+      var chipName = {}; (DATA.landscape || []).forEach(function (c) { chipName[c.id] = c.name; });
+      return pick(chosen, chosen.length).map(function (li) {
+        var own = li.getAttribute('data-kind') === 'chip' ? chipName[li.getAttribute('data-key')] : '';
+        return String(own || name(li)).replace(/\s*\([^)]*\)$/, '');
+      }).filter(Boolean);
     },
     close: function (following) { // following a result: the destination takes focus, so leave it alone
       var box = $('#cp-search'); if (box) box.hidden = true;
@@ -2429,22 +2491,42 @@
       // dataset export buttons (copy to clipboard: JSON or CSV)
       var copy = function (text, btn, label) { var done = function (ok) { btn.textContent = ok ? 'Copied' : 'Copy failed'; setTimeout(function () { btn.textContent = label; }, 2000); }; if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); }); else done(false); };
       var toCSV = function (rows) { if (!rows.length) return ''; var cols = []; rows.forEach(function (r) { Object.keys(r).forEach(function (k) { if (cols.indexOf(k) < 0) cols.push(k); }); }); var q = function (v) { if (v == null) return ''; if (typeof v === 'object') v = JSON.stringify(v); return String(v).replace(/[\t\n\r]+/g, ' '); }; return cols.join('\t') + '\n' + rows.map(function (r) { return cols.map(function (c) { return q(r[c]); }).join('\t'); }).join('\n'); }; // tab-separated, so a spreadsheet splits the columns on paste
-      var addExport = function (anchorSel, name, rows, where, quiet) { // quiet: a button label; buttons only, no row count
+      // quiet: what the bar copies, in a word ("board"). The bar is then one quiet line at the foot of what it copies, "Copy the
+      // board · Table · JSON", after the anchor (where 'after') or inside it, last ('append'). It may start empty: the AI Chips
+      // selection fills its live array, and that page hides the line while nothing is picked (src/modules/chips.css)
+      var addExport = function (anchorSel, name, rows, where, quiet) {
         var get = typeof rows === 'function' ? rows : function () { return rows; }; // a function means: whatever the table currently shows
-        var host = $(anchorSel); if (!host || !get() || !get().length) return;
-        var bar = document.createElement('div'); bar.className = 'export-bar' + (quiet ? ' export-bar--quiet' : '');
-        bar.innerHTML = (quiet ? '' : '<span class="count">' + get().length + ' rows · ' + esc(name) + '</span>') + '<button type="button" class="btn ghost">' + esc(quiet || 'Copy table') + '</button><button type="button" class="btn ghost">Copy as JSON</button>';
+        var host = $(anchorSel); if (!host || !get() || (!quiet && !get().length)) return;
+        var place = function (bar) { if (where === 'after') host.insertAdjacentElement('afterend', bar); else if (where === 'append') host.appendChild(bar); else host.insertAdjacentElement('beforebegin', bar); };
+        if (quiet) {
+          var q = document.createElement('div'); q.className = 'export-bar xq';
+          q.innerHTML = '<span class="xq-k" aria-hidden="true">Copy the ' + esc(quiet) + '</span>' +
+            '<button type="button" class="btn ghost"><span class="sr-only">Copy the ' + esc(quiet) + ' as a </span>Table</button><span class="xq-s" aria-hidden="true">·</span>' +
+            '<button type="button" class="btn ghost"><span class="sr-only">Copy the ' + esc(quiet) + ' as </span>JSON</button>';
+          var put = function (text, btn) { // the button says Copied for a moment, then reads as before
+            if (btn._was == null) btn._was = btn.innerHTML;
+            var done = function (ok) { btn.textContent = ok ? 'Copied' : 'Copy failed'; setTimeout(function () { btn.innerHTML = btn._was; }, 2000); };
+            if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); }); else done(false);
+          };
+          var qb = q.querySelectorAll('button');
+          qb[0].addEventListener('click', function () { put(toCSV(get()), qb[0]); });
+          qb[1].addEventListener('click', function () { put(JSON.stringify(get(), null, 1), qb[1]); });
+          place(q);
+          return;
+        }
+        var bar = document.createElement('div'); bar.className = 'export-bar';
+        bar.innerHTML = '<span class="count">' + get().length + ' rows · ' + esc(name) + '</span><button type="button" class="btn ghost">Copy table</button><button type="button" class="btn ghost">Copy as JSON</button>';
         var b = bar.querySelectorAll('button'), countEl = bar.querySelector('.count');
         host.addEventListener('cp:rows', function () { if (countEl) countEl.textContent = get().length + ' rows · ' + name; });
-        b[0].addEventListener('click', function () { copy(toCSV(get()), b[0], quiet || 'Copy table'); });
+        b[0].addEventListener('click', function () { copy(toCSV(get()), b[0], 'Copy table'); });
         b[1].addEventListener('click', function () { copy(JSON.stringify(get(), null, 1), b[1], 'Copy as JSON'); });
-        if (where === 'after') host.insertAdjacentElement('afterend', bar); else host.insertAdjacentElement('beforebegin', bar);
+        place(bar);
       };
-      addExport('#cx-table-wrap', 'chips compared', Landscape.exportRows, 'before'); // a live array: Landscape keeps it in step with the selection
+      addExport('#cx-table-wrap', 'chips compared', Landscape.exportRows, 'after', 'comparison'); // a live array: Landscape keeps it in step with the selection
       addExport('#matrix', 'country-share matrix', DATA.matrix, 'before');
-      addExport('#cf', 'chokepoint board', function () { return Geo.boardRows ? Geo.boardRows() : []; }, 'before', 'Copy board'); // visible in both modes
-      addExport('#timeline', 'export-control timeline', function () { return Geo.visible || DATA.timeline; }, 'before', 'Copy timeline');
-      addExport('#exposure-table', 'China revenue share by firm and year', DATA.exposure, 'before');
+      addExport('#cf-side .cf-legend', 'chokepoint board', function () { return Geo.boardRows ? Geo.boardRows() : []; }, 'after', 'board'); // under the board's key, in both modes
+      addExport('.tl-bar', 'export-control timeline', function () { return Geo.visible || DATA.timeline; }, 'append', 'timeline'); // on the filter row
+      addExport('[data-sub="exposure"] .matrix-wrap', 'China revenue share by firm and year', DATA.exposure, 'after', 'figures'); // under the table it copies
       // the line above the board that takes a reader down to the chronology
       document.addEventListener('click', function (e) { var j = e.target.closest ? e.target.closest('.cf-jump-btn') : null; if (!j) return; var t = $('#timeline'); if (t) scrollToEl(t, true); });
       // cite-this block in the footer

@@ -47,7 +47,10 @@
       var countries = items.filter(function (li) { return li.getAttribute('data-kind') === 'country'; });
       var chosen = pick(terms, 2).concat(pick(firms, 2), pick(chips, 1), pick(countries, 1)); chosen = pick(chosen, chosen.length);
       var label = box.querySelector('.lk-try-k') ? box.querySelector('.lk-try-k').outerHTML : 'Try';
-      box.innerHTML = label + ' ' + chosen.map(function (li) { var name = li.querySelector('.lk-name').textContent.replace(/^(Nvidia|AMD|Google|AWS|Microsoft|Meta|Intel|Huawei|Cambricon|Moore Threads|OpenAI|Cerebras|Groq) /, '').replace(/\s*\(.*\)$/, ''); return '<button type="button" data-go="' + esc(li.id) + '">' + esc(name) + '</button>'; }).join(' ');
+      // a chip's list name is its maker and its name ("Huawei (HiSilicon) Ascend 950PR", build/build.js), so a suggestion takes the
+      // chip's own name from the data (its data-key is the chip id); a trailing aside, "(Ironwood)", is dropped as for every kind
+      var chipName = {}; (DATA.landscape || []).forEach(function (c) { chipName[c.id] = c.name; });
+      box.innerHTML = label + ' ' + chosen.map(function (li) { var own = li.getAttribute('data-kind') === 'chip' ? chipName[li.getAttribute('data-key')] : ''; var name = String(own || li.querySelector('.lk-name').textContent).replace(/\s*\(.*\)$/, ''); return '<button type="button" data-go="' + esc(li.id) + '">' + esc(name) + '</button>'; }).join(' ');
       $$('[data-go]', box).forEach(function (b) { b.addEventListener('click', function () { self.select(b.getAttribute('data-go'), true); }); });
     },
 
@@ -157,7 +160,9 @@
       if (revHTML) facts.push(['Revenue', revHTML, true]);
       else if (r.revenueUSDb != null) facts.push(['Revenue', '$' + (Math.round(r.revenueUSDb * 10) / 10).toLocaleString('en-US') + 'bn' + (r.revenueYear ? ', ' + r.revenueYear : '')]);
       // under the revenue, the share of it that came from China (the China revenue panel's latest year), linked to the firm's chart
-      if (r.china && r.china.href) facts.push(['From China', '<a href="' + esc(CP.safeUrl(r.china.href) || r.china.href) + '">' + esc(String(r.china.label).replace(/^China /, '')) + ' <span aria-hidden="true">→</span></a>', true]);
+      // ...with the firm's small China chart under it, as in the Suppliers panel (Suppliers.exMini in src/app.js)
+      if (r.china && r.china.href) facts.push(['From China', '<a href="' + esc(CP.safeUrl(r.china.href) || r.china.href) + '">' + esc(String(r.china.label).replace(/^China /, '')) + ' <span aria-hidden="true">→</span></a>' +
+        (CP.Suppliers && CP.Suppliers.exMini ? CP.Suppliers.exMini(r.china.href) : ''), true]);
       return '<article class="lk-card lk-card--firm">' +
         '<p class="lk-kind">Firm' + (r.chokepoint ? ' · <span class="lk-chk lk-chk--' + esc(String(r.chokepoint).toLowerCase()) + '">' + esc(r.chokepoint) + '</span>' : '') + '</p>' +
         '<h3>' + esc(r.name) + (r.nativeName ? ' <span class="lk-native">' + esc(r.nativeName) + '</span>' : '') + '</h3>' +

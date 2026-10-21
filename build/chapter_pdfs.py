@@ -2,6 +2,10 @@
 """Print each chapter of The Chain to its own PDF, dist/pdf/<id>.pdf, from the running local server.
 
 usage: python3 build/chapter_pdfs.py [<id> ...] [--base http://127.0.0.1:8765/] [--edition YYYY-MM-DD] [--wait 6]
+                                    [--port <DevTools port for pdf.py, default its own 9334>] [--logs <dir>]
+
+--logs keeps each chapter's pdf.py log as <dir>/<id>.log: the layout report print.js gives after each pass (short
+pages, stranded heads, text run into the notes or off the page), for checking the set page by page.
 
 With no ids it prints all seventeen, in order. Each chapter is laid out by build/pdf.py --chapter <id>: Paged.js,
 with the notes at the foot of each page, running heads and folios, and a compact title block (the site, the chapter,
@@ -26,6 +30,9 @@ def opt(name, default):
     return default
 base = opt('--base', 'http://127.0.0.1:8765/')
 wait = opt('--wait', '6')
+port = opt('--port', '')  # pdf.py's DevTools port, when another run holds the default
+logs = opt('--logs', '')
+if logs: os.makedirs(logs, exist_ok=True)
 try:
     day = datetime.date.fromisoformat(opt('--edition', datetime.date.today().isoformat()))
 except ValueError:
@@ -86,8 +93,9 @@ try:
         part = os.path.join(tmp, cid + '.pdf')
         t0 = time.time()
         r = subprocess.run([sys.executable, os.path.join(ROOT, 'build', 'pdf.py'), url, part, '--chapter', cid,
-                            '--edition', day.isoformat(), '--wait', wait], capture_output=True, text=True)
+                            '--edition', day.isoformat(), '--wait', wait] + (['--port', port] if port else []), capture_output=True, text=True)
         log = (r.stdout + r.stderr).strip().splitlines()
+        if logs: open(os.path.join(logs, cid + '.log'), 'w').write('\n'.join(log) + '\n')
         why = None
         if r.returncode != 0 or not os.path.exists(part):
             why = 'pdf.py failed: ' + ' | '.join(log[-3:])

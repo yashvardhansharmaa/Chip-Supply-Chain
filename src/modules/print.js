@@ -33,24 +33,44 @@
     'Instrument+Sans:wght@400', 'Instrument+Sans:wght@500', 'Instrument+Sans:wght@600', 'Instrument+Sans:wght@700',
     'IBM+Plex+Mono:wght@400;500', 'Noto+Serif+SC:wght@400', 'Noto+Serif+SC:wght@600', 'Noto+Serif+JP:wght@400',
     'Noto+Serif+JP:wght@600', 'Noto+Sans+SC:wght@400', 'Noto+Sans+JP:wght@400'];
+  /* Two more instances of Fraunces under names of their own: the cover's title at the largest optical size and the
+     site's display weight, and the wordmark at the masthead's optical size. Under the family's own name they would take
+     the place of the 400 and 500 above (one face to a weight), which set the card's figures and the heads. Each comes
+     from the same Google Fonts request a link would make, added through the FontFace API under its new name. */
+  var PRINT_FACES = [['Fraunces Display', 'Fraunces:opsz,wght@144,400'], ['Fraunces Mark', 'Fraunces:opsz,wght@28,500']];
   var fontsLoaded = null;
+  function fontURL(family) { return 'https://fonts.googleapis.com/css2?family=' + family + '&display=block'; }
+  function namedFace(name, family) {
+    return fetch(fontURL(family)).then(function (r) { return r.text(); }).then(function (css) {
+      var loads = [], re = /@font-face\s*{([^}]*)}/g, m;
+      while ((m = re.exec(css))) {
+        var src = /src:\s*([^;]+);/.exec(m[1]), w = /font-weight:\s*([^;]+);/.exec(m[1]), u = /unicode-range:\s*([^;]+);/.exec(m[1]);
+        if (!src) continue;
+        var face = new FontFace(name, src[1].trim(), { weight: w ? w[1].trim() : '400', unicodeRange: u ? u[1].trim() : 'U+0-10FFFF', display: 'block' });
+        document.fonts.add(face);
+        loads.push(face.load().catch(function () { return null; }));
+      }
+      return Promise.all(loads);
+    }).catch(function () { return null; }); // without it the cover and the wordmark fall back to the 400 and 500 above
+  }
   function printFonts() {
     each('link[rel="stylesheet"][href*="fonts.googleapis.com"]', document, function (l) { l.remove(); });
     fontsLoaded = Promise.all(PRINT_FONTS.map(function (family) {
       var link = node('link');
-      link.rel = 'stylesheet'; link.href = 'https://fonts.googleapis.com/css2?family=' + family + '&display=block';
+      link.rel = 'stylesheet'; link.href = fontURL(family);
       link.setAttribute('data-pagedjs-ignore', ''); // Paged.js leaves it in place, so the faces stay loaded through the layout
       var loaded = new Promise(function (done) { link.onload = done; link.onerror = done; });
       document.head.appendChild(link);
       return loaded;
-    }));
+    }).concat(PRINT_FACES.map(function (f) { return namedFace(f[0], f[1]); })));
   }
   /* pdf.py waits on this after prepare(): the stylesheet, then each face the print uses, then any other pending load */
   function fontsReady() {
     var faces = ['300 24pt Fraunces', '400 13pt Fraunces', '500 14pt Fraunces', '600 11pt Fraunces', '700 68pt Fraunces',
       '400 10pt "Source Serif 4"', '500 10pt "Source Serif 4"', '600 10pt "Source Serif 4"', '700 10pt "Source Serif 4"',
       'italic 400 10pt "Source Serif 4"', '400 7pt "Instrument Sans"', '500 7pt "Instrument Sans"', '600 7pt "Instrument Sans"',
-      '700 7pt "Instrument Sans"', '400 7pt "IBM Plex Mono"', '500 7pt "IBM Plex Mono"'];
+      '700 7pt "Instrument Sans"', '400 7pt "IBM Plex Mono"', '500 7pt "IBM Plex Mono"', '400 68pt "Fraunces Display"',
+      '500 11pt "Fraunces Mark"'];
     return Promise.resolve(fontsLoaded).then(function () {
       return Promise.all(faces.map(function (f) { return document.fonts.load(f).catch(function () { return []; }); }));
     }).then(function () { return document.fonts.ready; }).then(function () {
@@ -162,26 +182,29 @@
     return '@misc{' + key + ',\n' + rows.map(function (r) { return '  ' + (r[0] + '            ').slice(0, 12) + ' = {' + r[1] + '}'; }).join(',\n') + '\n}';
   }
 
-  /* the colophon's "How to cite" names this edition: the screen's block carries the reader's own access date */
+  /* the colophon's "How to cite" names this edition: the screen's block carries the reader's own access date. On paper the
+     citation is set as type, with the work in italic, as a citation is printed; the BibTeX stays in the code face. */
   function citeBox(title, url, edition, key) {
     var box = node('details', 'cite cite--edition');
     box.open = true;
     box.appendChild(node('summary', '', title ? 'How to cite this chapter' : 'How to cite this edition'));
-    var plain = node('pre');
-    plain.appendChild(citation(title, url, edition, false));
+    var plain = node('p', 'cp-cite-text');
+    plain.appendChild(citation(title, url, edition, true));
     box.appendChild(plain);
     box.appendChild(node('pre', '', bibtex(key, title, url, edition)));
     return box;
   }
 
-  /* A chapter printed alone opens on a compact title block in place of the book's cover and contents: the site and the
-     chapter's number, the edition and the chapter's own address. The chapter's title follows at once, set large, so the
-     block does not repeat it. */
-  function titleBlock(ch, url, edition) {
+  /* A chapter printed alone opens on a compact title block in place of the book's cover and contents: the wordmark (the
+     masthead's tile and the name, as on every page of the site), the edition and the chapter's own address. The chapter's
+     title follows at once, set large, and its number stands in the ledger beside it, so the block repeats neither. */
+  function titleBlock(ch, url, edition, tile) {
     var head = node('header', 'pt-chapter');
     var top = node('p', 'ptc-k');
-    var n = parseInt(ch.getAttribute('data-number'), 10), title = ch.getAttribute('data-title') || '';
-    top.appendChild(node('span', '', 'Chip Supply Chain' + (n ? ' · Chapter ' + n : '')));
+    var mark = node('span', 'ptc-wm');
+    if (tile) mark.appendChild(tile);
+    mark.appendChild(node('span', 'wm-name', 'Chip Supply Chain'));
+    top.appendChild(mark);
     if (edition) top.appendChild(node('span', 'ptc-ed', edition));
     head.appendChild(top);
     /* the chapter opens on its title: the citation sits once, at the end, in "How to cite this chapter" */
@@ -201,13 +224,82 @@
     document.head.appendChild(s);
   }
 
+  /* ---------- the chapter opener, the questions and the contents page, for paper ---------- */
+
+  /* The fifteen stages in the ledger column, under the chapter's number, as the screen's column shows them (print.css
+     .cp-index): built from the screen's strip before it goes. The two chapters that are not stages have no strip, and
+     print none. */
+  function stageIndex() {
+    each('article.chapter', document, function (ch) {
+      var led = ch.querySelector('.ch-ledger'), track = led && led.querySelector('.chain-track');
+      if (!track) return;
+      var ol = node('ol', 'cp-index');
+      ol.setAttribute('aria-hidden', 'true');
+      each('li', track, function (li, i) {
+        var n = li.querySelector('.n'), t = li.querySelector('.t');
+        var item = node('li', (i ? '' : 'cp-top') + (li.getAttribute('aria-current') === 'true' ? ' is-here' : ''));
+        item.appendChild(node('span', 't', t ? t.textContent.replace(/\u00ad/g, '') : ''));
+        item.appendChild(node('span', 'n', n ? n.textContent : ''));
+        ol.appendChild(item);
+      });
+      led.appendChild(ol);
+    });
+  }
+
+  /* The card heads the chapter's second page, as a plate. It goes to the head of the text under an id of its own, so that
+     floats() (below) can move it down past the opening paragraph when that paragraph fills the opening page, as it moves
+     figures; it never moves past a heading. */
+  function cardsToText() {
+    each('article.chapter', document, function (ch) {
+      var plate = ch.querySelector('.chapter-head .plate'), prose = ch.querySelector(':scope > .prose');
+      if (!plate || !prose || !ch.id) return;
+      plate.id = 'card-' + ch.id;
+      prose.insertBefore(plate, prose.firstChild);
+    });
+  }
+
+  /* The deck's questions for paper. The cards are screen-only, so the questions print as a list above the takeaways, each
+     with the section that answers it (the card's "Reread" link): a reader answers from memory, then checks the list. */
+  var COUNT = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
+  function questions() {
+    each('section.review', document, function (rv) {
+      var keep = rv.querySelector('.rv-keep'), cards = rv.querySelectorAll('.fc-card .fc-q');
+      if (!keep || !cards.length) return;
+      var box = node('div', 'cp-quiz');
+      box.appendChild(node('h4', 'label', (COUNT[cards.length] || cards.length) + (cards.length === 1 ? ' question' : ' questions') + ' to answer from memory'));
+      var ol = node('ol');
+      each('.fc-card', rv, function (card) {
+        var q = card.querySelector('.fc-q'), more = card.querySelector('.fc-more');
+        if (!q) return;
+        var li = node('li', '', q.textContent.trim());
+        var where = more ? more.textContent.replace(/^\s*Reread:\s*/, '').trim() : '';
+        if (where) { li.appendChild(document.createTextNode(' ')); li.appendChild(node('span', 'cp-quiz-re', 'see ' + where)); }
+        ol.appendChild(li);
+      });
+      box.appendChild(ol);
+      keep.parentNode.insertBefore(box, keep);
+      keep.classList.add('cp-quizzed');
+    });
+  }
+
+  /* The Chain's opening sentence speaks of the page and its 3D models: the printed edition says what it holds. Its
+     length matches the screen's, since the contents page is full to within a line. */
+  var LEDE_END = 'Each chapter ends with questions to answer from memory. Online, every chapter also has a 3D model, and most have an animation.';
+  function printLede() {
+    each('.howto .howto-lede', document, function (p) {
+      var t = p.textContent.replace(/^This page covers/, 'This edition covers');
+      p.textContent = /To help readers learn[^.]*\./.test(t) ? t.replace(/To help readers learn[^.]*\./, LEDE_END) : t;
+    });
+  }
+
   /* Called once, on the loaded page, before Paged.js is injected.
      opts.mode      'footnotes' (default) or 'endnotes' for the fallback
      opts.only      keep only the first N chapters (used while iterating on the design)
      opts.chapter   keep only this chapter (its id), under a compact title block in place of the cover and contents
      opts.edition   the day the PDF is made, "20 October 2026": printed as "Edition of 20 October 2026" on the title
                     block, in the foot of every page and in the citation
-     opts.site      the site's address, "https://chipsupplychain.org/" (default: the page's canonical link) */
+     opts.site      the site's address, "https://chipsupplychain.org/" (default: the page's canonical link)
+     opts.moves, opts.tight, opts.split, opts.sources   what an earlier layout learned (build/pdf.py, from finish()) */
   function prepare(opts) {
     opts = opts || {};
     var out = { mode: opts.mode || 'footnotes', cites: 0, notes: 0, chapters: 0, dropped: 0 };
@@ -219,6 +311,11 @@
     /* explainer animations print as their last frame and the list of steps: drop the videos, load the stills now */
     Array.prototype.forEach.call(document.querySelectorAll('.figure--anim video'), function (v) { v.pause(); v.removeAttribute('src'); v.remove(); });
     Array.prototype.forEach.call(document.querySelectorAll('img[loading="lazy"]'), function (img) { img.loading = 'eager'; });
+
+    /* the masthead's tile, for the wordmark on a chapter's title block, and the ledger's strip of stages, before both go */
+    var tile = document.querySelector('.masthead .wm-tile');
+    tile = tile ? tile.cloneNode(true) : null;
+    stageIndex();
 
     /* Kill the specimen's animation loops: they re-arm through requestAnimationFrame, so a
        quarter second of dead frames ends them. Paged.js drives its own render queue through
@@ -235,6 +332,8 @@
 
     GONE.forEach(function (sel) { each(sel, document, function (el) { el.remove(); }); });
     each('.view', document, function (v) { if (v.hasAttribute('hidden')) { v.remove(); out.dropped++; } });
+    cardsToText();
+    questions();
 
     /* figures moved down the text after an earlier layout (pdf.py, from floats() below): each goes after the next n
        blocks, so the text fills the page the figure could not */
@@ -245,14 +344,14 @@
     });
     /* the block after a figure or a table stands a little further off (print.css .cp-after; Paged.js turns an "a + b"
        selector into a rule too weak to set it) */
-    each('.prose > .figure, .prose > .table-wrap', document, function (el) {
+    each('.prose > .figure, .prose > .table-wrap, .prose > .plate', document, function (el) {
       if (el.nextElementSibling) el.nextElementSibling.classList.add('cp-after');
     });
     each('details', document, function (d) { d.open = true; });
     /* A glossary term is a button on screen, and a button never breaks across a line: on paper it is a word in the
-       text, so it becomes a span ("deep ultraviolet (DUV) lithography" then wraps like the words round it). The card's
-       two rating tags stay buttons, with their box. */
-    each('button.gl-term:not(.ptag)', document, function (b) {
+       text, so it becomes a span ("deep ultraviolet (DUV) lithography" then wraps like the words round it), as do the
+       card's two ratings, which are glossary buttons too. */
+    each('button.gl-term', document, function (b) {
       var s = document.createElement('span');
       s.className = b.className;
       while (b.firstChild) s.appendChild(b.firstChild);
@@ -279,10 +378,11 @@
       if (!alone || !alone.matches('article.chapter')) throw new Error('no chapter "' + opts.chapter + '" on this page');
       Array.prototype.forEach.call(chapters, function (c) { if (c !== alone) c.remove(); });
       each('.print-title, .howto, .contents', document, function (el) { el.remove(); });
-      alone.parentNode.insertBefore(titleBlock(alone, site + alone.id + '/', edition), alone);
+      alone.parentNode.insertBefore(titleBlock(alone, site + alone.id + '/', edition, tile), alone);
+      document.documentElement.classList.add('cp-alone'); // no sink over the chapter's title: the title block is above it
       document.title = (alone.getAttribute('data-title') || alone.id) + ' · Chip Supply Chain'; // the PDF's own title
       out.chapters = 1; out.chapter = alone.id;
-    }
+    } else printLede();
 
     /* chapters whose card opened a page after a short one in an earlier layout (from pdf.py): the head and the card
        are set closer (print.css .cp-tight), so that the end of In short and the card share a page */
@@ -294,6 +394,11 @@
     Object.keys(opts.split || {}).forEach(function (id) {
       var ch = document.getElementById(id);
       if (ch && opts.split[id]) ch.classList.add('cp-split');
+    });
+    /* and chapters whose last few sources ran onto a page of their own: the list is set closer (.cp-sources-tight) */
+    Object.keys(opts.sources || {}).forEach(function (id) {
+      var ch = document.getElementById(id);
+      if (ch && opts.sources[id]) ch.classList.add('cp-sources-tight');
     });
 
     /* the edition: on the cover's last line, in the foot of every page, and in the citation at the end */
@@ -483,18 +588,29 @@
      book: the answer is how many blocks to move the figure past, the paragraphs and lists that fit the gap with their
      notes and one more that can run on across the page's end, never past a heading, a table or another figure. pdf.py
      then lays the chapter out again with the figures moved (prepare({moves})). Figures carry no footnote marks, so the
-     notes keep their order. */
+     notes keep their order. The chokepoint card moves the same way (cardsToText gives it an id at the head of the text),
+     but only past paragraphs that fit the gap whole: it then heads the next page as a plate. Its own marks come after the
+     paragraph's in reading order either way. */
   var NOTE_LINE = 15; // px: one more note at the foot, as print.css sets them
   function floats(pages, fills) {
     var out = [];
     var area = pages[0] && pages[0].querySelector('.pagedjs_area'), H = area ? area.getBoundingClientRect().height : 0;
     for (var i = 1; i < pages.length; i++) {
-      if (!(fills[i - 1] < 0.8)) continue;
+      if (!(fills[i - 1] < 0.97)) continue;
       var content = pages[i].querySelector('.pagedjs_page_content');
       var first = content && content.querySelector('.figure, p, li, h2, h3, h4, h5, table, .plate, .plain, .inshort, .rv-keep, .cp-sources');
       if (first && /^H[2-5]$/.test(first.tagName)) first = first.nextElementSibling;
-      if (!first || !first.matches('.figure[id]') || first.hasAttribute('data-split-from')) continue; // a figure's first part keeps its id
+      if (!first || !first.matches('.figure[id], .plate[id]') || first.hasAttribute('data-split-from')) continue; // a figure's first part keeps its id
+      /* a figure moves when the page before falls short; the card moves whenever the opening paragraph fits above it */
+      var whole = first.matches('.plate');
+      if (!whole && !(fills[i - 1] < 0.8)) continue;
       var gap = (1 - fills[i - 1]) * H, used = 0, k = 0, seen = {};
+      /* the card's paragraph moves whole, to the head of the text, where the text block's top margin stands above it in
+         place of its own (a move that still does not fit comes back in finish() as failed) */
+      if (whole && first.nextElementSibling) {
+        used = Math.max(0, (parseFloat(window.getComputedStyle(first.parentNode).marginTop) || 0) -
+          (parseFloat(window.getComputedStyle(first.nextElementSibling).marginTop) || 0));
+      }
       each('.pagedjs_footnote_inner_content .fn', pages[i - 1], function (n) { seen[n.getAttribute('data-k')] = 1; });
       for (var s = first.nextElementSibling; s; s = s.nextElementSibling) {
         if (!/^(P|UL|OL|BLOCKQUOTE)$/.test(s.tagName)) break;
@@ -505,7 +621,7 @@
         });
         h += (parseFloat(st.marginTop) || 0) + (parseFloat(st.marginBottom) || 0) + Object.keys(keys).length * NOTE_LINE;
         if (used + h <= gap) { used += h; k++; Object.keys(keys).forEach(function (key) { seen[key] = 1; }); continue; }
-        if (gap - used > 4 * NOTE_LINE) k++; // room for a few lines: it starts here and runs on above the figure's page
+        if (!whole && gap - used > 4 * NOTE_LINE) k++; // room for a few lines: it starts here and runs on above the figure's page
         break;
       }
       if (k) out.push({ id: first.id, k: k, page: i + 1 });
@@ -515,12 +631,19 @@
 
   /* Called once Paged.js has laid the pages out. noteFlow has already given each source one note a page; any repeat
      left is taken out here. The report names the pages that fall short (under two-thirds full, the last page aside), a
-     heading left at the foot of a page, and a figure or card split across two. */
+     heading left at the foot of a page, a figure or card split across two, and a chapter whose last sources stand on a
+     page of their own (sources). It also marks each chapter's opening page and the book's colophon, which carry no
+     running head (print.css .cp-opener, .cp-colophon); that changes no layout. */
   function finish() {
-    var out = { pages: 0, notes: 0, repeats: 0, stray: 0, overflow: 0, short: [], stranded: [], split: [], overlap: [], crowded: [], lost: [] };
+    var out = { pages: 0, notes: 0, repeats: 0, stray: 0, overflow: 0, short: [], stranded: [], split: [], overlap: [], crowded: [], lost: [], sources: [] };
     var pages = document.querySelectorAll('.pagedjs_page'), fills = [], alone = !!document.querySelector('.pagedjs_page .pt-chapter');
     Array.prototype.forEach.call(pages, function (page, i) {
       out.pages++;
+      /* the first block of text on the page: a page that opens on the colophon carries no running head either */
+      var box = page.querySelector('.pagedjs_page_content');
+      var lead = box && box.querySelector('p, li, h2, h3, h4, h5, table, .figure, .plate, summary, pre');
+      if (box && box.querySelector('article.chapter:not([data-split-from])')) page.classList.add('cp-opener');
+      if (lead && lead.closest('.site-footer')) page.classList.add('cp-colophon');
       var seen = {};
       each('.pagedjs_footnote_inner_content .fn', page, function (fn) {
         var k = fn.getAttribute('data-k') || '';
@@ -544,7 +667,6 @@
       out.stray += page.querySelectorAll('.pagedjs_page_content .fn:not([data-footnote-call]):not(.fn-dup)').length;
       var f = fills[i] = fill(page);
       /* text or a figure that runs down into the notes (a block kept whole that is taller than its page's room) */
-      var box = page.querySelector('.pagedjs_page_content');
       if (box && inkBottom(box, Infinity) > box.getBoundingClientRect().bottom + 2) {
         out.overlap.push(i + 1);
         var art = page.querySelector('.plate') ? page.querySelector('.plate').closest('article.chapter') : null;
@@ -573,13 +695,37 @@
         var head = seenLast && seenLast.parentNode.closest('h2, h3, h4, h5, .fig-title, .cp-sources-h');
         if (head && i < pages.length - 1) out.stranded.push((i + 1) + ':' + head.textContent.trim().slice(0, 40));
       }
+      /* the last few entries of a chapter's source list alone on a page, under a fifth of it, or (a chapter printed alone)
+         its citation alone on the last page: that chapter's list is set closer next time (prepare({sources})) */
+      var list = lead && lead.closest('.cp-sources'), sid = '';
+      if (list) {
+        var area = page.querySelector('.pagedjs_area'), a = area.getBoundingClientRect(), low = -Infinity;
+        each('.cp-sources li', box, function (li) { low = Math.max(low, li.getBoundingClientRect().bottom); });
+        var art = list.closest('article.chapter');
+        if (art && a.height && (low - a.top) / a.height < 0.2) sid = art.id || art.getAttribute('data-id') || '';
+      } else if (alone && i === pages.length - 1 && i > 0 && lead && lead.closest('.site-footer') && pages[i - 1].querySelector('.cp-sources')) {
+        var only = document.querySelector('.pagedjs_page article.chapter[id]');
+        sid = only ? only.id : '';
+      }
+      if (sid && out.sources.indexOf(sid) < 0) out.sources.push(sid);
     });
     out.floats = floats(pages, fills);
-    /* a card (kept whole) that opens a page when the page before falls short: its chapter, for a closer setting */
+    /* a card moved down past its opening paragraph when the paragraph did not fit the page before after all: the paragraph
+       then opens the card's page above it. pdf.py lays the chapter out again with the card back at the head of its page. */
+    out.failed = [];
+    each('.pagedjs_page_content .plate[id^="card-"]', document, function (pl) {
+      var prev = pl.previousElementSibling, pg = pl.closest('.pagedjs_page');
+      if (!prev || pl.hasAttribute('data-split-from') || !pg || pg.classList.contains('cp-opener')) return;
+      if (!prev.hasAttribute('data-split-from') && out.failed.indexOf(pl.id) < 0) out.failed.push(pl.id);
+    });
+    /* a card (kept whole) that opens a page when the page before falls short: its chapter, for a closer setting, unless the
+       opening paragraph can move up to fill that page (floats, above) */
     out.tight = [];
+    var moving = {};
+    out.floats.forEach(function (f) { moving[f.id] = 1; });
     for (var i = 1; i < pages.length; i++) {
       var first = pages[i].querySelector('.pagedjs_page_content .plate, .pagedjs_page_content p, .pagedjs_page_content li, .pagedjs_page_content h3');
-      var ch = first && first.matches('.plate') && !first.hasAttribute('data-split-from') && fills[i - 1] < 0.8 ? first.closest('article.chapter') : null;
+      var ch = first && first.matches('.plate') && !first.hasAttribute('data-split-from') && !moving[first.id] && fills[i - 1] < 0.8 ? first.closest('article.chapter') : null;
       var cid = ch ? ch.id || ch.getAttribute('data-id') : ''; // Paged.js moves the id of a split element's later parts to data-id
       if (cid && out.tight.indexOf(cid) < 0) out.tight.push(cid);
     }

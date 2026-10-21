@@ -1,5 +1,5 @@
-/* WALK  — the view at #/walk: "How AI chips are made", the site's 18 plain-language paragraphs in order. On phones the
-   hero is followed by the chain at a glance (GLANCE, below); wider screens keep "Other pages" there.
+/* WALK  — the view at #/walk: "How AI chips are made", the site's 18 plain-language paragraphs in order. At every width the
+   hero is followed by the chain at a glance (GLANCE, below), and the walk ends with "Other pages" (design round, 21 Oct 2026).
    START_HERE — the three-way chooser on the landing page, directly under the hero.
 
    Nothing here is written from memory. Every paragraph, name, country code, score and count is read
@@ -54,10 +54,10 @@ module.exports = function (ctx) {
 
   steps.forEach((c) => { if (!plainOf(c.id)) ctx.warn(`walk: chapter ${c.id} has no plain paragraph`); });
 
-  /* ---------------- the chain at a glance (phones, under the hero) ----------------
+  /* ---------------- the chain at a glance (under the hero) ----------------
      The fifteen stages in the order a chip is made, one line each: number, name, and the stage's concentration as the
-     summary page draws it (a four-step meter and the plain word). Each line links to its chapter. On phones it takes the
-     place of "Other pages", which repeats the tabs (walk.css). Names and bands come from the chapter cards, the count is
+     summary page draws it (a four-step meter and the plain word). Each line links to its chapter. "Other pages", which
+     repeats the tabs, closes the walk instead (OTHER, below). Names and bands come from the chapter cards, the count is
      computed, and the meaning of Extreme is the card's own note (ctx.BAND_NOTE), so nothing here is retyped. */
   const LEVEL = { Extreme: 4, High: 3, Moderate: 2, Low: 1 };
   const meter = (band) => `<span class="wk-gl-m" aria-hidden="true">${[1, 2, 3, 4].map((k) => `<i${k <= (LEVEL[band] || 0) ? ' class="on"' : ''}></i>`).join('')}</span>`;
@@ -71,7 +71,7 @@ module.exports = function (ctx) {
     return `<li data-level="${LEVEL[b] || 0}"><a href="${esc(chapterHref(s.id))}"><span class="wk-gl-n">${pad(i + 1)}</span><span class="wk-gl-t">${esc(s.title)}</span>${b ? `<span class="wk-gl-c">${meter(b)}<span class="wk-gl-w">${esc(b)}<span class="sr-only"> concentration</span></span></span>` : ''}</a></li>`;
   };
   const GLANCE = stages.length ? `<section class="wk-gl" aria-labelledby="wk-gl-h">
-<h3 class="label wk-gl-h" id="wk-gl-h">The chain at a glance</h3>
+<h2 class="label wk-gl-h" id="wk-gl-h">The chain at a glance</h2>
 ${nExtreme ? `<p class="wk-gl-p"><b>${nExtreme} of the ${stages.length} stages</b> are rated Extreme${xMeaning ? `, meaning ${esc(xMeaning)}` : ' concentration'}.</p>` : ''}
 <ol class="wk-gl-list">${stages.map(glanceRow).join('')}</ol>
 </section>` : '';
@@ -91,7 +91,7 @@ ${nExtreme ? `<p class="wk-gl-p"><b>${nExtreme} of the ${stages.length} stages</
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">${pad(ch.number)}</span></div>
 <div class="wk-block">
 <p class="wk-where"><span class="label">Chapter ${pad(ch.number)}</span>${stage ? `<span class="label wk-stage">${esc(stage)}</span>` : ''}</p>
-<h3 class="wk-t">${esc(ch.title)}</h3>
+<h2 class="wk-t">${esc(ch.title)}</h2>
 ${ctx.glossaryWrap ? ctx.glossaryWrap(`<p class="wk-p">${esc(plainOf(ch.id))}</p>`) : `<p class="wk-p">${esc(plainOf(ch.id))}</p>`}
 ${ctx.glossaryWrap ? ctx.glossaryWrap(factsHTML(ch)) : factsHTML(ch)}
 ${leadersHTML(c)}
@@ -123,28 +123,32 @@ ${leadersHTML(c)}
     },
   })}</div>` : '';
 
-  const WALK = `<div class="wk">
-<div class="wk-rail" id="wk-rail" data-show="0" aria-hidden="true" hidden><div class="wk-rail-bar"><i></i></div><p class="wk-rail-line"><span class="wk-rail-n"></span><span class="wk-rail-t"></span></p></div>
-<header class="wk-head">
-<h2 class="wk-title">How AI chips are made</h2>
-<p class="wk-dek">An introduction to the entire semiconductor supply chain.</p>
-<p class="wk-meta"><span class="label">${steps.length} paragraphs</span><span class="label">${walkWords.toLocaleString('en-US')} words</span><span class="label">about ${mins} min</span></p>
-${GLANCE}
-<nav class="wk-tabs" aria-label="Other pages">
+  /* ---------------- the end: every other page, one line each ----------------
+     The walk closes on the rest of the site, after the flashcards, in place of three boxed links (design round, 21 Oct 2026;
+     owner's decision 1). Until then the chain at a glance leads, and the masthead's tabs reach every page. */
+  const OTHER = `<nav class="wk-tabs" aria-label="Other pages">
 <p class="label wk-tabs-k">Other pages</p>
 <a href="#/chain"><b class="wk-tab">The Chain</b><span>The full semiconductor supply chain explained in detail, in ${word(all.length)} chapters, with all sources linked.</span></a>
 <a href="#/landscape"><b class="wk-tab">AI Chips</b><span>The specs of ${(data.landscape || []).length} AI chips from Nvidia, AMD, Google, Huawei and others, compared side by side.</span></a>
 <a href="#/suppliers"><b class="wk-tab">Suppliers</b><span>The ${(data.suppliers || []).length} companies behind the chain, on a map and stage by stage, and what each country makes.</span></a>
 <a href="#/controls"><b class="wk-tab">Export Controls</b><span>The main rules since 2018, what can still be sold to China, and China's share of revenue at ${new Set((data.exposure || []).map((r) => r.firm)).size} firms, from their filings.</span></a>
 <a href="#/glossary"><b class="wk-tab">Glossary</b><span>Plain definitions of every term, plus every company, chip and country, with the passages that mention them.</span></a>
-</nav>
+</nav>`;
+
+  const WALK = `<div class="wk">
+<div class="wk-rail" id="wk-rail" data-show="0" aria-hidden="true" hidden><div class="wk-rail-bar"><i></i></div><p class="wk-rail-line"><span class="wk-rail-n"></span><span class="wk-rail-t"></span></p></div>
+<header class="wk-head">
+<h1 class="wk-title">How AI chips are made</h1>
+<p class="wk-dek">An introduction to the entire semiconductor supply chain.</p>
+<p class="wk-meta"><span class="label">${steps.length} paragraphs</span><span class="label">${walkWords.toLocaleString('en-US')} words</span><span class="label">about ${mins} min</span></p>
+${GLANCE}
 </header>
 <ol class="wk-list">
 ${list}
 </ol>
 ${DECK}
 <div class="wk-end">
-<p class="wk-end-links"><a href="#/chain">All ${word(steps.length)} chapters in full</a><a href="#/suppliers">Where each stage happens</a><a href="#/controls">What the rules did</a></p>
+${OTHER}
 </div>
 </div>`;
 

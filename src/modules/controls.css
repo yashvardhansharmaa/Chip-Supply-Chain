@@ -11,7 +11,7 @@
 .cf-top .controls-intro { margin-bottom: 12px; max-width: 62ch; }
 .cf-modes { display: flex; gap: 0; flex: 0 0 auto; margin-top: 12px; }
 .cf-mode {
-  font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+  font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase;
   padding: 6px 13px; border: 1px solid var(--line-2); background: none; color: var(--muted); cursor: pointer;
   transition: color 150ms var(--ease), background-color 150ms var(--ease);
 }
@@ -26,10 +26,10 @@
 /* ---------- the year scrubber ---------- */
 .cf-scrub { margin: 0 0 16px; }
 .cf-scrub-h { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 7px; }
-.cf-asof { font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0; }
-.cf-asof b { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 400; font-size: 21px; letter-spacing: 0; text-transform: none; color: var(--ink); margin-left: 6px; font-variant-numeric: tabular-nums; }
+.cf-asof { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); margin: 0; }
+.cf-asof b { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 400; font-size: var(--fs-d4); letter-spacing: 0; text-transform: none; color: var(--ink); margin-left: 6px; font-variant-numeric: tabular-nums; }
 .cf-now {
-  flex: 0 0 auto; font-family: var(--font-mono); font-weight: 500; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  flex: 0 0 auto; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase;
   padding: 4px 11px 5px; border: 1px solid var(--line-2); border-radius: 0; background: none; color: var(--ink-2); cursor: pointer;
 }
 .cf-now:hover, .cf-now:focus-visible { border-color: var(--accent); color: var(--ink); }
@@ -72,14 +72,14 @@
 .cf-rowh:hover .cf-name { color: var(--accent); }
 .cf-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 .cf-id { min-width: 0; }
-.cf-name { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: 20px; letter-spacing: 0; color: var(--ink); transition: color 0.15s; }
+.cf-name { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: var(--fs-d5); letter-spacing: 0; color: var(--ink); transition: color 0.15s; }
 .cf-route { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.05em; color: var(--muted); margin-left: 9px; white-space: nowrap; }
-.cf-what { display: block; font-family: var(--font-body); font-size: 14px; line-height: 1.35; color: var(--ink-2); margin-top: 2px; max-width: 58ch; }
+.cf-what { display: block; font-family: var(--font-body); font-size: var(--fs-note); line-height: 1.35; color: var(--ink-2); margin-top: 2px; max-width: 58ch; }
 .cf-state { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; min-width: 0; }
 .cf-pills { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; }
 /* the ramp, open to prohibited: outlined muted, dashed muted, dashed ink, garnet, solid ink */
 .cf-pill {
-  font-family: var(--font-mono); font-weight: 500; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap;
+  font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; white-space: nowrap;
   padding: 2px 7px 3px; border: 1px solid var(--line-2); border-radius: 0; color: var(--muted); background: transparent;
 }
 .cf-pill.is-open { border-color: var(--line-2); color: var(--muted); background: transparent; }
@@ -95,14 +95,14 @@
   font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.03em; white-space: nowrap;
   padding: 2px 6px 3px; border: 1px dashed var(--line-2); border-radius: 0; color: var(--ink-2); background: none;
 }
-.cf-lab { font-family: var(--font-body); font-size: 14px; line-height: 1.3; color: var(--ink-2); }
+.cf-lab { font-family: var(--font-body); font-size: var(--fs-note); line-height: 1.3; color: var(--ink-2); }
 .cf-when { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; line-height: 1.5; color: var(--muted); }
 .cf-cite {
   position: relative; z-index: 1; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.02em; line-height: 1.5;
   color: var(--muted); text-decoration-color: var(--line-2); overflow-wrap: anywhere;
 }
 a.cf-cite:hover, a.cf-cite:focus-visible { color: var(--accent); text-decoration-color: var(--accent); }
-.cf-n { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; color: var(--muted); text-align: right; white-space: nowrap; padding-top: 4px; }
+.cf-n { font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); color: var(--muted); text-align: right; white-space: nowrap; padding-top: 4px; }
 .cf-caret {
   width: 8px; height: 8px; border-right: 1.6px solid var(--line-2); border-bottom: 1.6px solid var(--line-2);
   transform: rotate(45deg); transition: transform 200ms var(--ease); margin: 6px auto 0;
@@ -124,13 +124,13 @@ a.cf-cite:hover, a.cf-cite:focus-visible { color: var(--accent); text-decoration
 .cf-ev-d b { display: block; font-weight: 500; font-size: 11.5px; color: var(--ink); }
 .cf-ev-d span { display: block; }
 /* announced, then in force: the label above the date it belongs to */
-.cf-ev-k { font-family: var(--font-mono); font-weight: 500; font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.cf-ev-k { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; color: var(--muted); margin-top: 4px; }
 .cf-ev-d .cf-ev-k:first-child { margin-top: 0; }
-.cf-ev-t { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: 15.5px; line-height: 1.2; margin: 1px 0 3px; }
-.cf-ev-g { font-family: var(--font-body); font-size: 14.5px; line-height: 1.45; color: var(--ink-2); margin: 0 0 5px; max-width: 70ch; }
+.cf-ev-t { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: var(--fs-d6); line-height: 1.2; margin: 1px 0 3px; }
+.cf-ev-g { font-family: var(--font-body); font-size: var(--fs-note); line-height: 1.45; color: var(--ink-2); margin: 0 0 5px; max-width: 70ch; }
 .cf-ev-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 3px 8px; margin-bottom: 2px; }
 .cf-inst {
-  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase;
+  font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase;
   padding: 1px 5px 2px; border: 1px solid var(--line-2); border-radius: 0; color: var(--muted); background: none;
 }
 .cf-ev-cite {
@@ -141,19 +141,19 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 .cf-ev-from { display: block; margin-top: 4px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; color: var(--muted); }
 /* the chapter that tells the flow's story, at the foot of an open row */
 .cf-chapter { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 0; padding: 0 0 16px; }
-.cf-chapter a { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); text-decoration-color: var(--line-2); }
+.cf-chapter a { font-family: var(--font-mono); font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--ink-2); text-decoration-color: var(--line-2); }
 .cf-chapter a:hover, .cf-chapter a:focus-visible { color: var(--ink); text-decoration-color: var(--accent); }
-.cf-chapter-n { font-family: var(--font-body); font-size: 14px; color: var(--muted); }
+.cf-chapter-n { font-family: var(--font-body); font-size: var(--fs-note); color: var(--muted); }
 .cf-hist .cat {
-  display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 2px;
+  display: block; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase;
+  color: var(--ink-2); margin-bottom: 2px; /* the US category in ink, as on Suppliers */
 }
 .cf-hist .cat.cn { color: var(--c6); }
 .cf-hist .cat.ally { color: var(--c1); }
 .cf-hist .cat.policy { color: var(--c4); }
 .cf-hist .cat.corp { color: var(--c5); }
 .cf-hist .src { font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); }
-.cf-none { font-family: var(--font-mono); font-size: 11px; color: var(--muted); padding: 8px 0 14px; margin: 0; }
+.cf-none { font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); padding: 8px 0 14px; margin: 0; }
 
 /* under each year on a phone: where the flows stood when the year ended */
 .cf-sum { display: none; }
@@ -168,18 +168,22 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 /* ---------- timeline: filter bar ---------- */
 .tl-bar { display: flex; align-items: flex-start; gap: 10px 14px; flex-wrap: wrap; margin: 0 0 12px; }
 .tl-bar .chips { margin: 0; flex: 1 1 320px; }
-.tl-all { flex: 0 0 auto; padding: 5px 11px; font-size: 10.5px; }
+.tl-all { flex: 0 0 auto; padding: 5px 11px; font-size: var(--fs-cap); }
 .tl-all[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+/* "Show full summaries" is a quiet text switch beside the chips, set like the export line */
+.tl-all.btn.ghost { border: 0; padding: 4px 0; min-height: 24px; color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; align-self: center; }
+.tl-all.btn.ghost:hover { color: var(--ink); text-decoration-color: var(--accent); }
+.tl-all.btn.ghost[aria-pressed="true"] { background: none; color: var(--ink); text-decoration-color: var(--accent); }
 .chips button.tl-chip { padding-left: 22px; position: relative; }
 .tl-chip::before {
   content: ""; position: absolute; left: 9px; top: 50%; width: 7px; height: 7px;
-  margin-top: -3.5px; border-radius: 50%; background: var(--accent);
+  margin-top: -3.5px; border-radius: 50%; background: var(--ink);
 }
 .tl-chip.cn::before { background: var(--c6); }
 .tl-chip.ally::before { background: var(--c1); }
 .tl-chip.policy::before { background: var(--c4); }
 .tl-chip.corp::before { background: var(--c5); }
-.tl-chip[aria-pressed="true"]::before { background: var(--accent); }
+.tl-chip[aria-pressed="true"]::before { background: var(--bg); } /* the pressed chip is filled with ink, so the US dot turns to paper */
 .tl-chip.cn[aria-pressed="true"]::before { background: var(--c6); }
 .tl-chip.ally[aria-pressed="true"]::before { background: var(--c1); }
 .tl-chip.policy[aria-pressed="true"]::before { background: var(--c4); }
@@ -191,7 +195,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 .timeline .tl-year { display: block; border: 0; padding: 0; }
 .timeline .tl-year .year-label { display: inline-block; font-size: 34px; margin: 22px 0 0; }
 .timeline .tl-n {
-  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase;
   color: var(--muted); margin-left: 10px; vertical-align: 6px;
 }
 .timeline .tl-e { padding: 11px 0 12px; scroll-margin-top: calc(var(--masthead) + 20px); }
@@ -203,10 +207,10 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 /* the day a rule takes force, under the day it was announced */
 .timeline .d .tl-eff { display: block; font-size: 11px; color: var(--muted); margin: 1px 0 2px; }
 .timeline .cf-ev-cite { margin: 0 0 6px; }
-.timeline .tl-e h4 { font-size: 16.5px; line-height: 1.24; margin-bottom: 3px; }
-.timeline .tl-gist { font-family: var(--font-body); font-size: 15.5px; line-height: 1.45; color: var(--ink-2); margin: 0 0 5px; max-width: 76ch; }
+.timeline .tl-e h4 { font-size: var(--fs-d6); line-height: 1.24; margin-bottom: 3px; }
+.timeline .tl-gist { font-family: var(--font-body); font-size: var(--fs-small); line-height: 1.45; color: var(--ink-2); margin: 0 0 5px; max-width: 76ch; }
 .timeline .tl-more, .cf-hist .tl-more {
-  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase;
   color: var(--muted); background: none; border: 0; border-bottom: 1px solid var(--line-2);
   padding: 0 0 1px; cursor: pointer; position: relative;
 }
@@ -214,7 +218,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 .timeline .tl-more:hover, .timeline .tl-more:focus-visible,
 .cf-hist .tl-more:hover, .cf-hist .tl-more:focus-visible { color: var(--ink); border-bottom-color: var(--accent); }
 .timeline .tl-panel, .cf-hist .tl-panel { margin: 9px 0 2px; padding-left: 13px; border-left: 1px solid var(--line-2); max-width: 76ch; }
-.timeline .tl-panel p, .cf-hist .tl-panel p { font-size: 15px; line-height: 1.55; margin: 0 0 6px; }
+.timeline .tl-panel p, .cf-hist .tl-panel p { font-size: var(--fs-small); line-height: 1.55; margin: 0 0 6px; }
 .timeline .tl-panel .src, .cf-hist .tl-panel .src { display: inline-block; }
 .timeline .tl-empty { display: block; border-top: 0; padding: 18px 0; }
 
@@ -239,7 +243,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
   .cf[data-mode="date"] .cf-route { display: block; margin-left: 0; margin-top: 1px; }
   .cf[data-mode="date"] .cf-state { align-items: flex-end; }
   .cf[data-mode="date"] .cf-board { margin-bottom: 6px; }
-  .cf[data-mode="date"] .cf-asof b { font-size: 18px; }
+  .cf[data-mode="date"] .cf-asof b { font-size: var(--fs-d5); }
   .cf[data-mode="date"] .cf-legend { grid-template-columns: 1fr; gap: 9px 0; }
   /* the board fills the right of the window from top to foot, so Back to top moves to the foot of the chronology,
      just left of the board's rule: the column's right padding, plus the board's 38 percent of the row, plus 12 px */
@@ -254,9 +258,9 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
   .cf-top { gap: 6px 12px; }
   .cf-modes { margin-top: 0; margin-bottom: 12px; }
   .cf-rowh { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; padding: 12px 0; align-items: start; }
-  .cf-name { font-size: 17.5px; }
+  .cf-name { font-size: var(--fs-d6); }
   .cf-route { display: block; margin-left: 0; }
-  .cf-what { font-size: 13.5px; }
+  .cf-what { font-size: var(--fs-note); }
   .cf-id { grid-column: 1; grid-row: 1; }
   .cf-n { grid-column: 2; grid-row: 1; text-align: right; padding-top: 4px; }
   .cf-state { grid-column: 1 / -1; grid-row: 2; margin-top: 6px; }
@@ -266,12 +270,12 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
   .cf-ev-lab { display: inline; margin-top: 0; max-width: none; }
   .cf-ev-from, .cf-ev-p .cf-ev-cite { display: inline; margin: 0; }
   .cf-ev-p:empty { display: none; }
-  .cf-asof b { font-size: 19px; }
+  .cf-asof b { font-size: var(--fs-d5); }
   .tl-bar { gap: 8px 10px; }
-  .tl-all { width: 100%; text-align: left; }
-  .timeline .tl-year .year-label { font-size: 30px; }
-  .timeline .tl-e h4 { font-size: 16px; }
-  .timeline .tl-gist { font-size: 15px; }
+  .tl-all { width: auto; text-align: left; }
+  .timeline .tl-year .year-label { font-size: var(--fs-num-s); }
+  .timeline .tl-e h4 { font-size: var(--fs-d6); }
+  .timeline .tl-gist { font-size: var(--fs-small); }
 }
 
 @media (max-width: 560px) {
@@ -292,7 +296,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 }
 .cf-legend li { display: grid; gap: 4px; align-items: start; align-content: start; }
 .cf-legend .cf-pill, .cf-legend .cf-susp { justify-self: start; }
-.cf-legend li > span:last-child { font-family: var(--font-body); font-size: 13.5px; line-height: 1.4; color: var(--muted); }
+.cf-legend li > span:last-child { font-family: var(--font-body); font-size: var(--fs-note); line-height: 1.4; color: var(--muted); }
 /* six entries read as three and three, not five and a stray */
 @media (min-width: 900px) { .cf-legend { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (min-width: 900px) { .cf[data-mode="date"] .cf-legend { grid-template-columns: 1fr; gap: 9px 0; } }
@@ -301,7 +305,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 
 /* ---------- histories: the state's own label, and an honest gutter ---------- */
 .cf-ev-lab { display: block; margin-top: 5px; font-family: var(--font-mono); font-size: 10.5px; line-height: 1.4; color: var(--ink-2); max-width: 150px; }
-.cf-ev-none { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.cf-ev-none { font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; color: var(--muted); }
 /* ---------- the years look like buttons and meet a fingertip ---------- */
 .cf-year { border: 1px solid var(--line); border-right-width: 1px; background: none; border-radius: 0; min-height: 44px; margin: 0 1px; }
 .cf-year:hover { border-color: var(--line-2); }
@@ -311,6 +315,53 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 
 /* the line above the board that points down to the chronology */
 .cf-jump { margin: 0; }
-.cf-jump-btn { font: inherit; font-family: var(--font-body); font-size: 16px; line-height: 1.4; color: var(--ink-2); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+.cf-jump-btn { font: inherit; font-family: var(--font-body); font-size: var(--fs-small); line-height: 1.4; color: var(--ink-2); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
 .cf-jump-btn:hover, .cf-jump-btn:focus-visible { color: var(--ink); text-decoration-color: var(--accent); outline: none; }
 #timeline { scroll-margin-top: calc(var(--masthead) + 16px); }
+
+/* ---------- the board as a chart: one five-step scale a row, No license to Prohibited ----------
+   A dot marks the row's state, the line up to it ink to Case by case and garnet from a presumption of denial; the scale's two
+   ends are named once above the board (.cf-scale, in src/template.html). When the date moves, the dots slide along their
+   scales: the one motion here, and it is the state changing (none under reduced motion). A closed row is one line; its
+   description opens with the row. The pills and the full key under the board stay for readers who prefer words */
+.cf-scale { display: none; }
+.cf-scale-r { display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 10px; color: var(--ink-2); }
+.cf-scale-r i { flex: 1 1 auto; height: 1px; position: relative; background: linear-gradient(to right, var(--line-2), var(--accent-fill)); }
+.cf-scale-r i::after { content: ""; position: absolute; right: -1px; top: -3px; border: 3.5px solid transparent; border-left: 6px solid var(--accent-fill); border-right: 0; }
+.cf-scale-r span:last-child { color: var(--accent-ink); }
+@media (min-width: 900px) {
+  .cf[data-mode="subject"] .cf-rowh, .cf-scale { grid-template-columns: minmax(0, 0.85fr) 292px minmax(0, 1.2fr) 64px 14px; }
+  .cf-scale { display: grid; column-gap: 16px; align-items: end; padding: 0 2px 7px 0; }
+  .cf-scale-l, .cf-scale-x { font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); }
+  .cf-scale-l { font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; }
+  .cf-scale-x { grid-column: 3 / -1; }
+  .cf-scale-r { margin: 0 14px 0 4px; }
+  .cf[data-mode="subject"] .cf-route { display: block; margin: 2px 0 0; }
+  .cf[data-mode="date"] .cf-ramp, .cf[data-mode="date"] .cf-scale { display: none; }
+}
+@media (min-width: 900px) and (max-width: 1199px) {
+  .cf[data-mode="subject"] .cf-rowh, .cf-scale { grid-template-columns: minmax(0, 1fr) 200px minmax(0, 1.1fr) 56px 14px; } /* the names wrap here, so the scale narrows */
+}
+.cf[data-mode="subject"] .cf-row:not([data-open="1"]) .cf-what { display: none; }
+.cf-ramp { position: relative; display: block; height: 22px; margin: 6px 14px 0 4px; }
+.cf-ramp-t { position: absolute; left: 0; right: 0; top: 10px; height: 1px; background: var(--line-2); }
+.cf-ramp-k { position: absolute; top: 7px; width: 1px; height: 7px; margin-left: -0.5px; background: var(--line-2); }
+.cf-ramp-f { position: absolute; left: 0; top: 9px; height: 3px; width: calc(var(--i) * 25%); background: var(--ink-2); transition: width 240ms var(--ease); }
+.cf-ramp-d { position: absolute; top: 4px; left: calc(var(--i) * 25%); width: 13px; height: 13px; margin-left: -6.5px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 2px var(--bg); transition: left 240ms var(--ease); }
+.cf-ramp.is-closed .cf-ramp-f, .cf-ramp.is-closed .cf-ramp-d { background: var(--accent-fill); }
+.cf-ramp.is-susp .cf-ramp-f { background: var(--line-2); }
+.cf-ramp.is-susp .cf-ramp-d { background: var(--bg); border: 1.5px dashed var(--ink-2); }
+.cf-ramp.is-policy .cf-ramp-f, .cf-ramp.is-policy .cf-ramp-d { display: none; }
+.cf-ramp.is-policy .cf-ramp-t, .cf-ramp.is-policy .cf-ramp-k { background: var(--line); }
+@media (max-width: 899px) {
+  .cf-ramp { grid-column: 1 / -1; grid-row: 2; margin: 8px 7px 0; }
+  .cf-state { grid-row: 3; }
+  .cf-scale { display: flex; margin: 0 0 6px; }
+  .cf-scale-r { flex: 1 1 auto; }
+  .cf-scale-l, .cf-scale-x { display: none; }
+}
+/* the scrubber's years carry their number of moves as a small bar */
+.cf-yb { display: block; width: 14px; margin: 0 auto 4px; background: var(--muted); opacity: 0.55; }
+.cf-year { justify-content: flex-end; }
+.cf-year[aria-pressed="true"] .cf-yb { background: var(--accent-fill); opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .cf-ramp-f, .cf-ramp-d { transition: none; } }

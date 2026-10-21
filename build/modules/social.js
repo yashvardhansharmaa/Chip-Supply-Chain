@@ -199,7 +199,7 @@ main{max-width:34em;margin:0 auto;padding:48px 16px}
 .eyebrow{font:500 11px/1.4 "Instrument Sans","Helvetica Neue",Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#5c636d;margin:0 0 12px}
 h1{font:400 34px/1.1 Fraunces,Georgia,serif;margin:0 0 20px}
 a{color:#7a1f2b}
-@media (prefers-color-scheme:dark){body{background:#14171c;color:#ece9e2}.eyebrow{color:#939aa3}a{color:#e25c57}}
+[data-theme="dark"] body{background:#14171c;color:#ece9e2}[data-theme="dark"] .eyebrow{color:#939aa3}[data-theme="dark"] a{color:#e25c57}
 </style>
 </head>
 <body>
@@ -259,21 +259,24 @@ ${review}
 const BANDS = { Extreme: 4, High: 3, Moderate: 2, Low: 1 }; // as build.js ranks them for the chain's bars
 const minCSS = (s) => s.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ').replace(/\s*([{};])\s*/g, '$1').replace(/;}/g, '}').trim();
 const textOf = (html) => String(html || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
-// the readable page's own additions to build/assets/chapter-page.css: the cite line under the title (build.js citeBlock;
-// the citation opens as the link's :target without scripts, and as a toggle with them) and the key under the stage strip.
-// On a phone the cite line's day takes a line of its own, and its two links share the next.
+// the readable page's own additions to build/assets/chapter-page.css: the head's facts (words / minutes · Updated <day>) and,
+// under them, the cite line's actions (build.js citeBlock; the citation opens as the link's :target without scripts, and as
+// a toggle with them), and the key under the stage strip. On a phone a line that wraps drops its dots, so none ends on one.
 // Printed (the browser's own print, with no script), the citation shows in full and the cite line's links drop out; each
 // source prints its full address under its title, while the marks in the text stay numbers; the review answers open
 // (where the browser can open a closed <details> from CSS) and the note telling the reader to open them goes; the
 // specimen's caption, which describes the 3D model, is left out with the model.
 const EXTRA_CSS = minCSS(`
-.ch-head .ch-meta { margin-bottom: 8px; }
+.ch-head .ch-meta { margin-bottom: 4px; }
+.ch-meta > span { white-space: nowrap; }
+.ch-meta > span + span::before { content: "\\00b7"; margin: 0 8px; }
+@media (max-width: 640px) { .ch-head .ch-meta { display: flex; flex-wrap: wrap; gap: 0 20px; } .ch-meta > span + span::before { content: none; } }
 .ch-cite { margin: 0 0 26px; }
 .ch-cite-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 8px; margin: 0; font-family: var(--font-label); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
 .ch-cite-line > * { padding: 4px 0; }
 .ch-cite-btn, .ch-cite-pdf, .ch-cite-copy { font: inherit; letter-spacing: inherit; text-transform: inherit; background: none; border: 0; margin: 0; cursor: pointer; color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2); }
 .ch-cite-btn:hover, .ch-cite-pdf:hover, .ch-cite-copy:hover { text-decoration-color: var(--accent); }
-@media (max-width: 640px) { .ch-cite-line > span:first-child { flex-basis: 100%; } .ch-cite-line > span:first-child + .ch-cite-sep { display: none; } }
+@media (max-width: 640px) { .ch-cite-line { gap: 0 20px; } .ch-cite-line .ch-cite-sep { display: none; } }
 .ch-cite-box { display: none; margin: 6px 0 2px; padding: 12px 14px 10px; border-left: 2px solid var(--accent); background: var(--bg-2); }
 .ch-cite-box:target:not([hidden]), .ch-cite-box.is-open { display: block; }
 .ch-cite-text { margin: 0; font-size: 15px; line-height: 1.5; overflow-wrap: anywhere; }
@@ -291,12 +294,9 @@ const EXTRA_CSS = minCSS(`
   .review .answer { display: block; padding-left: 0; }
 }
 @media print { .review details::details-content { content-visibility: visible; display: block; block-size: auto; } }
-/* the card (build.js nameplate): its footnote marks, and the leader's China revenue line, as on the main page (src/styles.css) */
+/* the card (build.js nameplate): its footnote marks, as on the main page (src/styles.css) */
 .plate-kpis .v:not(.long) sup.cite { font-size: 0.4em; vertical-align: 1.1em; margin-left: 0; }
 .plate sup.cite-sep { font-family: var(--font-label); font-size: 0.62em; line-height: 0; vertical-align: 0.55em; color: var(--accent); }
-.plate-rows .lead-cn { position: relative; display: block; width: fit-content; max-width: 100%; text-indent: 0; margin-top: 2px; font-family: var(--font-label); font-size: 12px; line-height: 1.35; letter-spacing: 0.01em; font-variant-numeric: tabular-nums; color: var(--muted); }
-.plate-rows .lead-cn:hover { color: var(--accent); }
-.plate-rows .lead-cn::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: max(100%, 24px); transform: translateY(-50%); }
 `);
 
 
@@ -310,8 +310,8 @@ const levelUp =(html) => String(html || '').replace(/<(\/?)h([3-6])(?=[\s>])/g, 
 const plainCites = (html) => html.replace(/\s+(?=<sup class="cite">)/g, '').replace(/<sup class="cite"><a href="([^"]*)"[^>]*?aria-label="Source (\d+): ([^"]*)">\d+<\/a><\/sup>/g,
   (m, href, n, label) => `<sup class="cite"><a href="${href}" target="_blank" rel="noopener" title="${label}" aria-label="Source ${n}: ${label}"><span class="br">[</span>${n}<span class="br">]</span></a></sup>`);
 
-// Glossary buttons need the app's popover; here they are plain text. The card's two rating tags keep their look and
-// carry their one-line definition as a title.
+// Glossary buttons need the app's popover; here they are plain text. The card's two rating values (.v-btn) keep their
+// dotted rule and carry their one-line definition as a title.
 const plainTerms = (html) => String(html || '').replace(/<button type="button" class="gl-term\b\s*([^"]*)"([^>]*)>([\s\S]*?)<\/button>/g, (m, cls, attrs, inner) => {
   const band = (attrs.match(/\bdata-band="([^"]*)"/) || [])[1];
   const note = (attrs.match(/\bdata-note="([^"]*)"/) || [])[1];
@@ -329,7 +329,7 @@ const staticAnimations = (html) => html.replace(/<figure class="figure figure--a
   const notes = (inner.match(/<p class="fig-source">[\s\S]*?<\/p>/g) || []).join('');
   const base = '../' + src;
   const size = ratio ? ` width="${ratio[1]}" height="${ratio[2]}"` : '';
-  return `<figure class="figure figure--anim"${id || ''}>${title}<div class="anim-frame"><video controls preload="none" playsinline muted${size} poster="${base}-light-end.jpg" src="${base}-light.mp4" data-media="${base}" aria-label="Animation: ${textOf(title)}"></video></div><img class="anim-still" src="${base}-light-end.jpg" alt="Last frame of the animation: ${textOf(title)}" decoding="async" fetchpriority="low">${steps ? `<ol class="anim-steps">${steps}</ol>` : ''}${notes}</figure>`;
+  return `<figure class="figure figure--anim"${id || ''}>${title}<div class="anim-frame"><video controls preload="none" playsinline muted${size} poster="${base}-light-end.jpg" src="${base}-light.mp4" data-media="${base}" aria-label="Animation: ${textOf(title)}"></video></div><img class="anim-still" src="${base}-print-end.jpg" alt="Last frame of the animation: ${textOf(title)}" decoding="async" fetchpriority="low">${steps ? `<ol class="anim-steps">${steps}</ol>` : ''}${notes}</figure>`;
 });
 
 // Links inside the chapter: a heading on this page stays a fragment, another chapter goes to its readable page, anything
@@ -390,7 +390,7 @@ function readableHTML(p, ch, ctx, versions, css) {
 <p class="eyebrow">${eyebrow}</p>
 <h1 class="ch-title">${esc(ch.title)}</h1>
 ${m.oneLiner ? `<p class="ch-lede">${esc(m.oneLiner)}</p>` : ''}
-<p class="ch-meta">${ch.words.toLocaleString('en-US')} words / ${r.mins} min</p>
+<p class="ch-meta"><span>${ch.words.toLocaleString('en-US')} words / ${r.mins} min</span></p>
 ${cta('')}
 </header>
 ${track}
@@ -412,12 +412,12 @@ ${sources}
   const dates = ctx.pageDate ? ctx.pageDate('/' + p.slug + '/', text, ch.file) : { published: today, modified: today };
   const day = ctx.dayStr ? ctx.dayStr(dates.modified) : builtStr;
   const footerKey = ctx.dayStr ? ctx.footerKey.split(`Updated ${builtStr}`).join(`Updated ${day}`) : ctx.footerKey;
-  // after the hash, the page furniture that is not the chapter's text: the cite line under the title (it carries the day, so
-  // it cannot be hashed) and the one-line key to the strip's colors
+  // after the hash, the page furniture that is not the chapter's text: the head's "Updated <day>" and the cite line under it
+  // (they carry the day, so they cannot be hashed) and the one-line key to the strip's colors
   const bandsUsed = ['Extreme', 'High', 'Moderate', 'Low'].filter((b) => stages.some((c) => (c.meta.card || {}).concentration === b));
   const trackKey = bandsUsed.length ? `<p class="track-key"><span class="tk-k">Concentration</span>${bandsUsed.map((b) => `<span class="tk" data-band="${BANDS[b]}"><i aria-hidden="true"></i>${b}</span>`).join('')}</p>` : '';
   const main = text
-    .replace(/(<p class="ch-meta">[\s\S]*?<\/p>)/, (m) => m + (ctx.citeBlock ? ctx.citeBlock(ch, day, true) : ''))
+    .replace(/(<p class="ch-meta">[\s\S]*?)(<\/p>)/, (m, meta, end) => meta + `<span>Updated ${esc(day)}</span>` + end + (ctx.citeBlock ? ctx.citeBlock(ch, day, true) : ''))
     .replace(/(<p class="track-foot">[\s\S]*?<\/p>)(<\/nav>)/, (m, foot, end) => foot + trackKey + end);
   const ymd = String(dates.modified).replace(/-/g, '/');
   const scholar = `<meta name="citation_title" content="${esc(ch.title)}">
@@ -465,7 +465,7 @@ ${main}
 <footer class="site-footer">${footerKey}</footer>
 </main>
 ${ctx.CITE_JS ? `<script>${ctx.CITE_JS}</script>` : ''}
-${hasVideo ? `<script>(function(){var t=document.documentElement.getAttribute('data-theme');if(t!=='dark'&&(t||!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)))return;[].forEach.call(document.querySelectorAll('video[data-media]'),function(v){var b=v.getAttribute('data-media');v.poster=b+'-dark-end.jpg';v.src=b+'-dark.mp4';});})();</script>` : ''}
+${hasVideo ? `<script>(function(){var t=document.documentElement.getAttribute('data-theme');if(t!=='dark')return;[].forEach.call(document.querySelectorAll('video[data-media]'),function(v){var b=v.getAttribute('data-media');v.poster=b+'-dark-end.jpg';v.src=b+'-dark.mp4';});})();</script>` : ''}
 </body>
 </html>
 `;

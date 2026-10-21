@@ -64,7 +64,9 @@ EDITION_JS = r'''(function (edition, host, pdf) {
 # a PDF as Type 3 shapes, which copy and search as broken words, so the page's variable families give way to fixed
 # instances of the same OFL families, one Google Fonts request per instance (several weights in one request come back
 # as one variable file). Fraunces is the summary's heads (600, at optical size 24), Source Serif 4 its text, Instrument
-# Sans its labels. Capital labels are tracked at 0.05 em, which copies as words. Only the summary is changed.
+# Sans its labels; the wordmark is Fraunces 500 at the masthead's optical size, 28, added under a name of its own
+# ("Fraunces Mark", through the FontFace API, as src/modules/print.js does) so it does not take the place of the 500
+# above. Capital labels are tracked at 0.05 em, which copies as words. Only the summary is changed.
 FONTS_JS = r'''(function () {
   if (!document.querySelector('.prt')) return Promise.resolve('as is');
   var fams = ['Fraunces:opsz,wght@24,600', 'Fraunces:opsz,wght@48,500', 'Fraunces:opsz,wght@72,400',
@@ -78,13 +80,23 @@ FONTS_JS = r'''(function () {
     var p = new Promise(function (done) { l.onload = done; l.onerror = done; });
     document.head.appendChild(l); return p;
   });
+  loads.push(fetch('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@28,500&display=block').then(function (r) { return r.text(); }).then(function (css) {
+    var faces = [], re = /@font-face\s*{([^}]*)}/g, m;
+    while ((m = re.exec(css))) {
+      var src = /src:\s*([^;]+);/.exec(m[1]), u = /unicode-range:\s*([^;]+);/.exec(m[1]);
+      if (!src) continue;
+      var face = new FontFace('Fraunces Mark', src[1].trim(), { weight: '500', unicodeRange: u ? u[1].trim() : 'U+0-10FFFF', display: 'block' });
+      document.fonts.add(face); faces.push(face.load().catch(function () { return null; }));
+    }
+    return Promise.all(faces);
+  }).catch(function () { return null; }));
   var s = document.createElement('style');
   s.textContent = '@media print { *, *::before, *::after { font-variation-settings: normal !important; font-optical-sizing: none; }'
     + ' .kicker, th, .k, .cc { letter-spacing: 0.05em !important; } }';
   document.head.appendChild(s);
   var faces = ['600 22pt Fraunces', '500 14pt Fraunces', '400 14pt Fraunces', '400 9pt "Source Serif 4"', '500 9pt "Source Serif 4"',
     '600 9pt "Source Serif 4"', '700 9pt "Source Serif 4"', 'italic 400 9pt "Source Serif 4"', '400 8pt "Instrument Sans"',
-    '500 8pt "Instrument Sans"', '600 8pt "Instrument Sans"', '700 8pt "Instrument Sans"'];
+    '500 8pt "Instrument Sans"', '600 8pt "Instrument Sans"', '700 8pt "Instrument Sans"', '500 12pt "Fraunces Mark"'];
   return Promise.all(loads).then(function () {
     return Promise.all(faces.map(function (f) { return document.fonts.load(f).catch(function () { return []; }); }));
   }).then(function () { return document.fonts.ready; }).then(function () { return 'static fonts'; });
