@@ -21,9 +21,18 @@
       "Intel"
     ],
     "aiRelevance": "Every leading-edge AI accelerator is designed and checked with a full set of electronic design automation (EDA) tools before it goes to the fab. Synopsys supplies the largest single share of those tools.",
-    "revenueUSDb": 7.054,
-    "revenueYear": 2025,
-    "source": "https://newsletter.semianalysis.com/p/eda-market-primer"
+    "source": "https://newsletter.semianalysis.com/p/eda-market-primer",
+    "revenue": {
+      "amount": 7054178,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Total revenue, consolidated, US GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2024-11",
+      "fyEnd": "2025-10",
+      "source": "https://www.sec.gov/Archives/edgar/data/883241/000088324125000028/R5.htm"
+    }
   },
   {
     "name": "Cadence Design Systems",
@@ -47,9 +56,18 @@
       "Micron"
     ],
     "aiRelevance": "Emulation capacity is one of the limits on AI chip schedules, and Cadence is one of two credible suppliers.",
-    "revenueUSDb": 5.297,
-    "revenueYear": 2025,
-    "source": "https://newsletter.semianalysis.com/p/eda-market-primer"
+    "source": "https://newsletter.semianalysis.com/p/eda-market-primer",
+    "revenue": {
+      "amount": 5296759,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Total revenue, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/R5.htm"
+    }
   },
   {
     "name": "Siemens EDA",
@@ -97,9 +115,19 @@
       "Intel"
     ],
     "aiRelevance": "Heat and warpage are the limiting design problems for kilowatt-class packages and liquid-cooled racks, and Ansys software simulates both.",
-    "revenueUSDb": 2.545,
-    "revenueYear": 2024,
-    "source": "https://www.ansys.com/products/semiconductors"
+    "source": "https://www.ansys.com/products/semiconductors",
+    "revenue": {
+      "amount": 2544809,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenue, consolidated, US GAAP",
+      "fiscalYear": "2024",
+      "fyStart": "2024-01",
+      "fyEnd": "2024-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/1013462/000101346225000009/R5.htm",
+      "note": "Ansys has filed no accounts since Synopsys bought it in July 2025, so this is its last annual figure."
+    }
   },
   {
     "name": "Empyrean Technology",
@@ -121,9 +149,18 @@
       "BOE"
     ],
     "aiRelevance": "To design advanced AI chips without US software, China has to finish Empyrean's tool chain.",
-    "revenueUSDb": 0.197,
-    "revenueYear": 2025,
-    "source": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225217315.PDF"
+    "source": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225217315.PDF",
+    "revenue": {
+      "amount": 1324976566.63,
+      "unit": "one",
+      "currency": "CNY",
+      "scope": "company",
+      "basis": "营业收入 (operating revenue), consolidated income statement (合并利润表), China Accounting Standards for Business Enterprises (企业会计准则); table unit 元 (yuan)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225217315.PDF#page=117"
+    }
   },
   {
     "name": "Primarius Technologies",
@@ -145,9 +182,18 @@
       "Samsung"
     ],
     "aiRelevance": "A Chinese AI chip designer cut off from foreign tools needs device models first.",
-    "revenueUSDb": 0.072,
-    "revenueYear": 2025,
-    "source": "https://www.primarius-tech.com/en/"
+    "source": "https://www.primarius-tech.com/en/",
+    "revenue": {
+      "amount": 483670553.41,
+      "unit": "one",
+      "currency": "CNY",
+      "scope": "company",
+      "basis": "营业收入 (operating revenue), consolidated income statement (合并利润表), China Accounting Standards for Business Enterprises (企业会计准则); table unit 元 (yuan)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-16/1225108676.PDF#page=146"
+    }
   },
   {
     "name": "Semitronix",
@@ -169,9 +215,18 @@
       "Nexchip"
     ],
     "aiRelevance": "Whether a Chinese fab can build AI logic economically depends on yield learning, the work of raising the share of good chips on each wafer.",
-    "revenueUSDb": 0.109,
-    "revenueYear": 2025,
-    "source": "https://www.semitronix.com/"
+    "source": "https://www.semitronix.com/",
+    "revenue": {
+      "amount": 734977273.05,
+      "unit": "one",
+      "currency": "CNY",
+      "scope": "company",
+      "basis": "营业收入 (operating revenue), consolidated income statement (合并利润表), China Accounting Standards for Business Enterprises (企业会计准则); table unit 元 (yuan)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225153967.PDF#page=125"
+    }
   },
   {
     "name": "Arm Holdings",
@@ -195,9 +250,18 @@
       "Qualcomm"
     ],
     "aiRelevance": "The CPUs in Nvidia's Grace and Vera platforms and in large cloud companies' server chips use the Arm architecture, so building them requires a license from Arm.",
-    "revenueUSDb": 4.92,
-    "revenueYear": 2026,
-    "source": "https://newsroom.arm.com/news/arm-q4-fye26-results"
+    "source": "https://newsroom.arm.com/news/arm-q4-fye26-results",
+    "revenue": {
+      "amount": 4920,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenue, consolidated income statements, US GAAP",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/R3.htm"
+    }
   },
   {
     "name": "Rambus",
@@ -220,9 +284,18 @@
       "SK hynix"
     ],
     "aiRelevance": "HBM and high-capacity server DRAM interfaces are among the hardest blocks to design, and Rambus is one of the few sources of proven IP.",
-    "revenueUSDb": 0.708,
-    "revenueYear": 2025,
-    "source": "https://www.rambus.com/interface-ip/"
+    "source": "https://www.rambus.com/interface-ip/",
+    "revenue": {
+      "amount": 707630,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenue, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/R4.htm"
+    }
   },
   {
     "name": "Alphawave Semi",
@@ -244,9 +317,19 @@
       "Intel"
     ],
     "aiRelevance": "The quality of SerDes IP sets how much bandwidth an AI system can reach between dies and across a rack.",
-    "revenueUSDb": 0.308,
-    "revenueYear": 2024,
-    "source": "https://awavesemi.com/"
+    "source": "https://awavesemi.com/",
+    "revenue": {
+      "amount": 254475,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenue, continuing operations, consolidated statement of comprehensive income, UK-adopted IFRS",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://find-and-update.company-information.service.gov.uk/company/13073661/filing-history/MzUyNTE5MDg3OWFkaXF6a2N4/document?format=pdf&download=0#page=16",
+      "note": "Alphawave is now part of Qualcomm. The figure comes from its 2025 accounts filed at Companies House."
+    }
   },
   {
     "name": "SiFive",
@@ -317,9 +400,18 @@
       "CoreWeave"
     ],
     "aiRelevance": "Suppliers across the chain plan around Nvidia's demand, from bookings for TSMC's CoWoS packaging to HBM memory allocation to queues for power-grid connections.",
-    "revenueUSDb": 215.938,
-    "revenueYear": 2026,
-    "source": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026"
+    "source": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026",
+    "revenue": {
+      "amount": 215938,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenue, consolidated, US GAAP",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-02",
+      "fyEnd": "2026-01",
+      "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/R3.htm"
+    }
   },
   {
     "name": "AMD",
@@ -343,9 +435,18 @@
       "HPE"
     ],
     "aiRelevance": "AMD is the main competitive check on Nvidia's pricing, and most large buyers are qualifying it as a second source.",
-    "revenueUSDb": 34.639,
-    "revenueYear": 2025,
-    "source": "https://www.amd.com/en/products/accelerators/instinct.html"
+    "source": "https://www.amd.com/en/products/accelerators/instinct.html",
+    "revenue": {
+      "amount": 34639,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Net revenue, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/R3.htm"
+    }
   },
   {
     "name": "Intel",
@@ -368,9 +469,18 @@
       "IBM"
     ],
     "aiRelevance": "Xeon remains the default host CPU in AI servers, even where the accelerators come from another company.",
-    "revenueUSDb": 52.853,
-    "revenueYear": 2025,
-    "source": "https://www.intel.com/content/www/us/en/products/details/processors/ai-accelerators/gaudi.html"
+    "source": "https://www.intel.com/content/www/us/en/products/details/processors/ai-accelerators/gaudi.html",
+    "revenue": {
+      "amount": 52853,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Net revenue, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/R3.htm"
+    }
   },
   {
     "name": "Google",
@@ -483,9 +593,18 @@
       "Cisco"
     ],
     "aiRelevance": "Broadcom designs custom accelerators and also supplies the Ethernet networking chips that connect them in an AI cluster.",
-    "revenueUSDb": 63.887,
-    "revenueYear": 2025,
-    "source": "https://www.broadcom.com/"
+    "source": "https://www.broadcom.com/",
+    "revenue": {
+      "amount": 63887,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Total net revenue, consolidated, US GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2024-11",
+      "fyEnd": "2025-10",
+      "source": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/R5.htm"
+    }
   },
   {
     "name": "Marvell Technology",
@@ -507,9 +626,18 @@
       "Meta"
     ],
     "aiRelevance": "Marvell is the credible second source for hyperscalers that do not want Broadcom to hold every custom silicon program.",
-    "revenueUSDb": 8.195,
-    "revenueYear": 2026,
-    "source": "https://www.marvell.com/company/investor-relations.html"
+    "source": "https://www.marvell.com/company/investor-relations.html",
+    "revenue": {
+      "amount": 8194.6,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Net revenue, consolidated, US GAAP",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-02",
+      "fyEnd": "2026-01",
+      "source": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/R5.htm"
+    }
   },
   {
     "name": "Alchip Technologies",
@@ -531,9 +659,18 @@
       "AMD"
     ],
     "aiRelevance": "Design service capacity on advanced nodes is scarce, and Alchip is one of the handful of firms that can deliver an AI chip in TSMC's CoWoS packaging.",
-    "revenueUSDb": 0.982,
-    "revenueYear": 2025,
-    "source": "https://www.alchip.com/en/"
+    "source": "https://www.alchip.com/en/",
+    "revenue": {
+      "amount": 30926092,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=3661&filename=202504_3661_AIA.pdf#page=8"
+    }
   },
   {
     "name": "Global Unichip",
@@ -555,9 +692,18 @@
       "NXP"
     ],
     "aiRelevance": "Global Unichip is the fastest route from an AI chip design to a finished chip on a leading-edge TSMC process with CoWoS packaging.",
-    "revenueUSDb": 1.084,
-    "revenueYear": 2025,
-    "source": "https://www.guc-asic.com/en/"
+    "source": "https://www.guc-asic.com/en/",
+    "revenue": {
+      "amount": 34140978,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Net revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=3443&filename=202504_3443_AIA.pdf#page=8"
+    }
   },
   {
     "name": "MediaTek",
@@ -579,9 +725,18 @@
       "Samsung"
     ],
     "aiRelevance": "MediaTek is the third credible custom AI silicon partner alongside Broadcom and Marvell.",
-    "revenueUSDb": 18.92,
-    "revenueYear": 2025,
-    "source": "https://corp.mediatek.com/investor-relations"
+    "source": "https://corp.mediatek.com/investor-relations",
+    "revenue": {
+      "amount": 595965682,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Net sales, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2454&filename=202504_2454_AIA.pdf#page=10"
+    }
   },
   {
     "name": "Qualcomm",
@@ -603,9 +758,18 @@
       "Meta"
     ],
     "aiRelevance": "Qualcomm is targeting inference, the running of trained models, where memory capacity per dollar matters more than the peak compute that training needs.",
-    "revenueUSDb": 44.284,
-    "revenueYear": 2025,
-    "source": "https://www.qualcomm.com/"
+    "source": "https://www.qualcomm.com/",
+    "revenue": {
+      "amount": 44284,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Total revenues, consolidated, US GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2024-10",
+      "fyEnd": "2025-09",
+      "source": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/R4.htm"
+    }
   },
   {
     "name": "Cerebras Systems",
@@ -627,9 +791,19 @@
       "Meta"
     ],
     "aiRelevance": "Wafer-scale integration needs neither HBM nor advanced packaging capacity, the two tightest constraints in the chain.",
-    "revenueUSDb": 0.51,
-    "revenueYear": 2025,
-    "source": "https://www.cerebras.ai/product-chip"
+    "source": "https://www.cerebras.ai/product-chip",
+    "revenue": {
+      "amount": 509991,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Total revenue, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/2021728/000162828026035214/cerebras-424b4.htm",
+      "note": "Cerebras listed in May 2026, so the figure comes from its listing prospectus."
+    }
   },
   {
     "name": "Groq",
@@ -698,9 +872,18 @@
       "Lenovo"
     ],
     "aiRelevance": "Cambricon is the main listed company tied to China's shift to domestic AI accelerators, and its revenue tracks how many are deployed.",
-    "revenueUSDb": 0.966,
-    "revenueYear": 2025,
-    "source": "https://www.cambricon.com/"
+    "source": "https://www.cambricon.com/",
+    "revenue": {
+      "amount": 6497196198.68,
+      "unit": "one",
+      "currency": "CNY",
+      "scope": "company",
+      "basis": "营业收入 (operating revenue), consolidated income statement (合并利润表), China Accounting Standards for Business Enterprises (企业会计准则); table unit 元 (yuan)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-03-13/1225007336.PDF#page=102"
+    }
   },
   {
     "name": "Hygon Information Technology",
@@ -721,9 +904,18 @@
       "Chinese government data centers"
     ],
     "aiRelevance": "Hygon supplies the domestic host CPUs that Chinese AI clusters need alongside domestic accelerators.",
-    "revenueUSDb": 2.137,
-    "revenueYear": 2025,
-    "source": "https://www.hygon.cn/"
+    "source": "https://www.hygon.cn/",
+    "revenue": {
+      "amount": 14376889476.95,
+      "unit": "one",
+      "currency": "CNY",
+      "scope": "company",
+      "basis": "营业收入 (operating revenue), consolidated income statement (合并利润表), China Accounting Standards for Business Enterprises (企业会计准则); table unit 元 (yuan)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-08/1225083088.PDF#page=116"
+    }
   },
   {
     "name": "Moore Threads",
@@ -744,9 +936,18 @@
       "Domestic OEMs"
     ],
     "aiRelevance": "Moore Threads is one of the Chinese firms trying to build a general-purpose GPU, for graphics as well as AI.",
-    "revenueUSDb": 0.224,
-    "revenueYear": 2025,
-    "source": "https://www.mthreads.com/"
+    "source": "https://www.mthreads.com/",
+    "revenue": {
+      "amount": 1505525060.52,
+      "unit": "one",
+      "currency": "CNY",
+      "scope": "company",
+      "basis": "营业收入 (operating revenue), consolidated income statement (合并利润表), China Accounting Standards for Business Enterprises (企业会计准则); table unit 元 (yuan)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225197717.PDF#page=125"
+    }
   },
   {
     "name": "Biren Technology",
@@ -766,9 +967,18 @@
       "Chinese research institutes"
     ],
     "aiRelevance": "Biren is one of the few Chinese firms attempting a full training-class GPU.",
-    "revenueUSDb": 0.154,
-    "revenueYear": 2025,
-    "source": "https://www.birentech.com/"
+    "source": "https://www.birentech.com/",
+    "revenue": {
+      "amount": 1034614,
+      "unit": "thousand",
+      "currency": "CNY",
+      "scope": "company",
+      "basis": "Revenue, consolidated statement of comprehensive loss, IFRS Accounting Standards; table in RMB thousands",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0422/2026042200045.pdf#page=112"
+    }
   },
   {
     "name": "MetaX",
@@ -788,9 +998,18 @@
       "Domestic server OEMs"
     ],
     "aiRelevance": "One of the Chinese GPU startups that listed in 2025 and 2026 to fund domestic AI silicon.",
-    "revenueUSDb": 0.244,
-    "revenueYear": 2025,
-    "source": "https://www.metax-tech.com/en/"
+    "source": "https://www.metax-tech.com/en/",
+    "revenue": {
+      "amount": 1644085465.86,
+      "unit": "one",
+      "currency": "CNY",
+      "scope": "company",
+      "basis": "营业收入 (operating revenue), consolidated income statement (合并利润表), China Accounting Standards for Business Enterprises (企业会计准则); table unit 元 (yuan)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-03-27/1225036092.PDF#page=117"
+    }
   },
   {
     "name": "Iluvatar CoreX",
@@ -810,9 +1029,18 @@
       "Chinese universities"
     ],
     "aiRelevance": "A domestic vendor competing for the Chinese training market that Nvidia can no longer serve.",
-    "revenueUSDb": 0.154,
-    "revenueYear": 2025,
-    "source": "https://www.iluvatar.com/"
+    "source": "https://www.iluvatar.com/",
+    "revenue": {
+      "amount": 1033606,
+      "unit": "thousand",
+      "currency": "CNY",
+      "scope": "company",
+      "basis": "Revenue, consolidated statement of profit or loss and other comprehensive income, HKFRS Accounting Standards; table in RMB thousands",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0427/2026042701284.pdf#page=105"
+    }
   },
   {
     "name": "Tenstorrent",
@@ -970,9 +1198,18 @@
       "SK hynix"
     ],
     "aiRelevance": "Leading-edge AI logic requires epitaxial 300 mm wafers with defect densities only a handful of firms can reach. An epitaxial wafer carries an extra layer of pure crystal grown on its surface.",
-    "revenueUSDb": 16.734,
-    "revenueYear": 2026,
-    "source": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2025-10-22/688783_20251022_UYMD.pdf"
+    "source": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2025-10-22/688783_20251022_UYMD.pdf",
+    "revenue": {
+      "amount": 2573969,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales, consolidated, J-GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://www.shinetsu.co.jp/wp-content/uploads/2026/08/Financial-Section.pdf#page=10"
+    }
   },
   {
     "name": "SUMCO",
@@ -995,9 +1232,18 @@
       "Kioxia"
     ],
     "aiRelevance": "Wafer supply is the first physical limit on how many AI dies can be made. The top five wafer makers served around 75 percent of the market in 2025.",
-    "revenueUSDb": 2.663,
-    "revenueYear": 2025,
-    "source": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2025-10-22/688783_20251022_UYMD.pdf"
+    "source": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2025-10-22/688783_20251022_UYMD.pdf",
+    "revenue": {
+      "amount": 409670,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales, consolidated, J-GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://ssl4.eir-parts.net/doc/3436/ir_material_for_fiscal_ym10/200931/00.pdf#page=81"
+    }
   },
   {
     "name": "GlobalWafers",
@@ -1019,9 +1265,18 @@
       "Micron"
     ],
     "aiRelevance": "The main non-Japanese source of leading-edge wafers and the one adding capacity inside the United States.",
-    "revenueUSDb": 1.924,
-    "revenueYear": 2025,
-    "source": "https://www.sas-globalwafers.com/wp-content/uploads/2026/04/GlobalWafers_2025-Annual-Report-EN.pdf"
+    "source": "https://www.sas-globalwafers.com/wp-content/uploads/2026/04/GlobalWafers_2025-Annual-Report-EN.pdf",
+    "revenue": {
+      "amount": 60597938,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=6488&filename=202504_6488_AIA.pdf#page=9"
+    }
   },
   {
     "name": "Siltronic",
@@ -1043,9 +1298,18 @@
       "Micron"
     ],
     "aiRelevance": "One of the top five wafer makers, which served around 75 percent of the market in 2025, and the only European one among them.",
-    "revenueUSDb": 1.566,
-    "revenueYear": 2025,
-    "source": "https://www.siltronic.com/en/products"
+    "source": "https://www.siltronic.com/en/products",
+    "revenue": {
+      "amount": 1346.7,
+      "unit": "million",
+      "currency": "EUR",
+      "scope": "company",
+      "basis": "Sales, consolidated statement of profit or loss, IFRS",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.siltronic.com/fileadmin/investorrelations/Archiv/2025/Q4/260420_Siltronic_Annual_Report_2025_safe.pdf#page=109"
+    }
   },
   {
     "name": "SK Siltron",
@@ -1090,9 +1354,18 @@
       "Samsung"
     ],
     "aiRelevance": "Its substrates go into some of the RF and edge chips around AI systems.",
-    "revenueUSDb": 0.689,
-    "revenueYear": 2026,
-    "source": "https://www.soitec.com/en/products"
+    "source": "https://www.soitec.com/en/products",
+    "revenue": {
+      "amount": 592319,
+      "unit": "thousand",
+      "currency": "EUR",
+      "scope": "company",
+      "basis": "Revenue, consolidated income statement, IFRS",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://www.soitec.com/docs/default-source/agm-documents/2026/en/soitec---2025-2026-urd---va.pdf?Status=Master&sfvrsn=6bd9e43b_5#page=243"
+    }
   },
   {
     "name": "National Silicon Industry Group",
@@ -1114,9 +1387,18 @@
       "YMTC"
     ],
     "aiRelevance": "A Chinese supply chain that does not depend on Japanese exports needs domestic wafer supply first.",
-    "revenueUSDb": 0.552,
-    "revenueYear": 2025,
-    "source": "https://web.archive.org/web/20250809220519/http://nsig.com/en/about"
+    "source": "https://web.archive.org/web/20250809220519/http://nsig.com/en/about",
+    "revenue": {
+      "amount": 3716030112.23,
+      "unit": "one",
+      "currency": "CNY",
+      "scope": "company",
+      "basis": "营业收入 (operating revenue), consolidated income statement (合并利润表), China Accounting Standards for Business Enterprises (企业会计准则); table unit 元 (yuan)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-17/1225114274.PDF#page=116"
+    }
   },
   {
     "name": "Hemlock Semiconductor",
@@ -1161,9 +1443,18 @@
       "GlobalWafers"
     ],
     "aiRelevance": "Along with Hemlock and Tokuyama it supplies the feedstock for the wafers used in leading-edge logic and memory.",
-    "revenueUSDb": 6.376,
-    "revenueYear": 2025,
-    "source": "https://www.wacker.com/cms/en-us/products/product-groups/polysilicon/polysilicon.html"
+    "source": "https://www.wacker.com/cms/en-us/products/product-groups/polysilicon/polysilicon.html",
+    "revenue": {
+      "amount": 5485.3,
+      "unit": "million",
+      "currency": "EUR",
+      "scope": "group",
+      "basis": "Sales, consolidated statement of income, IFRS",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://reports.wacker.com/2025/annual-report/_assets/downloads/entire-wacker-ar25.pdf#page=225"
+    }
   },
   {
     "name": "Tokuyama",
@@ -1184,9 +1475,18 @@
       "TSMC"
     ],
     "aiRelevance": "Polysilicon purity sets the lowest defect density a wafer can reach, which sets the yield on large AI dies.",
-    "revenueUSDb": 2.272,
-    "revenueYear": 2026,
-    "source": "https://www.tokuyama.co.jp/"
+    "source": "https://www.tokuyama.co.jp/",
+    "revenue": {
+      "amount": 349476,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales (売上高), consolidated, J-GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://www.tokuyama.co.jp/ir/pdf/SR162_full.pdf#page=125"
+    }
   },
   {
     "name": "OCI Holdings",
@@ -1207,9 +1507,18 @@
       "Korean fabs"
     ],
     "aiRelevance": "Supplies the bulk wet chemicals Korean memory fabs consume in HBM production.",
-    "revenueUSDb": 2.521,
-    "revenueYear": 2025,
-    "source": "https://www.oci.co.kr/"
+    "source": "https://www.oci.co.kr/",
+    "revenue": {
+      "amount": 3380060390,
+      "unit": "thousand",
+      "currency": "KRW",
+      "scope": "company",
+      "basis": "매출액 (Revenue), consolidated, K-IFRS",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260318000617&dcmNo=11136858&eleId=21&offset=503877&length=26152&dtd=dart4.xsd"
+    }
   },
   {
     "name": "Eswin Material",
@@ -1277,9 +1586,18 @@
       "Kioxia"
     ],
     "aiRelevance": "Besides resist for making chips, Tokyo Ohka Kogyo supplies the thick-film resists used to build copper pillars and redistribution layers (fine wiring) in advanced packaging.",
-    "revenueUSDb": 1.541,
-    "revenueYear": 2025,
-    "source": "https://www.tok.co.jp/eng/products/semiconductor-pre"
+    "source": "https://www.tok.co.jp/eng/products/semiconductor-pre",
+    "revenue": {
+      "amount": 237029,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales (売上高), consolidated, J-GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.tok.co.jp/application/files/9717/7432/8945/securities_2512.pdf#page=63"
+    }
   },
   {
     "name": "Fujifilm",
@@ -1301,9 +1619,18 @@
       "Micron"
     ],
     "aiRelevance": "Supplies both the lithography chemicals for the die and the polyimide dielectrics used in advanced packaging.",
-    "revenueUSDb": 21.824,
-    "revenueYear": 2026,
-    "source": "https://www.fujifilm.com/us/en/business/semiconductor-materials"
+    "source": "https://www.fujifilm.com/us/en/business/semiconductor-materials",
+    "revenue": {
+      "amount": 3356969,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales (売上高), consolidated, US GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100YIBH.pdf#page=141"
+    }
   },
   {
     "name": "Sumitomo Chemical",
@@ -1324,9 +1651,18 @@
       "Intel"
     ],
     "aiRelevance": "EUV resist supply is concentrated in a few Japanese firms, and Sumitomo is one of them.",
-    "revenueUSDb": 15.138,
-    "revenueYear": 2026,
-    "source": "https://www.sumitomo-chem.co.jp/"
+    "source": "https://www.sumitomo-chem.co.jp/",
+    "revenue": {
+      "amount": 2328515,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Sales revenue (売上収益), consolidated, IFRS",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://www.sumitomo-chem.co.jp/ir/library/security_report/files/docs/25_4q.pdf#page=119"
+    }
   },
   {
     "name": "Qnity Electronics",
@@ -1349,9 +1685,18 @@
       "ASE"
     ],
     "aiRelevance": "Every metal layer on an AI die is polished flat with a CMP pad and slurry before the next layer goes down.",
-    "revenueUSDb": 4.754,
-    "revenueYear": 2025,
-    "source": "https://www.sec.gov/Archives/edgar/data/2058873/000205887326000010/q-20251231.htm"
+    "source": "https://www.sec.gov/Archives/edgar/data/2058873/000205887326000010/q-20251231.htm",
+    "revenue": {
+      "amount": 4754,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Net sales, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/2058873/000205887326000010/R3.htm"
+    }
   },
   {
     "name": "Inpria",
@@ -1417,9 +1762,18 @@
       "SK hynix"
     ],
     "aiRelevance": "The etchants that cut the deep, narrow (high aspect ratio) features in DRAM come from a short list of suppliers, and Soulbrain is Korea's.",
-    "revenueUSDb": 0.689,
-    "revenueYear": 2025,
-    "source": "https://www.soulbrain.co.kr/en/"
+    "source": "https://www.soulbrain.co.kr/en/",
+    "revenue": {
+      "amount": 923381966875,
+      "unit": "one",
+      "currency": "KRW",
+      "scope": "company",
+      "basis": "매출액 (Revenue), consolidated, K-IFRS",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260316001567&dcmNo=11129507&eleId=21&offset=259551&length=31561&dtd=dart4.xsd"
+    }
   },
   {
     "name": "Adeka",
@@ -1441,9 +1795,18 @@
       "Micron"
     ],
     "aiRelevance": "Gate-all-around transistors and DRAM capacitors depend on precursor chemistry as much as on the deposition tool.",
-    "revenueUSDb": 2.708,
-    "revenueYear": 2026,
-    "source": "https://www.adeka.co.jp/"
+    "source": "https://www.adeka.co.jp/",
+    "revenue": {
+      "amount": 416563,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales (売上高), consolidated, J-GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://www.adeka.co.jp/ir/library/pdf/yuhou_164-4.pdf#page=94"
+    }
   },
   {
     "name": "Fujimi Incorporated",
@@ -1465,9 +1828,18 @@
       "Shin-Etsu Chemical"
     ],
     "aiRelevance": "Planarization quality limits how many metal layers can be stacked, which matters for dense AI logic and HBM.",
-    "revenueUSDb": 0.451,
-    "revenueYear": 2026,
-    "source": "https://www.fujimiinc.co.jp/"
+    "source": "https://www.fujimiinc.co.jp/",
+    "revenue": {
+      "amount": 69404,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales (売上高), consolidated, J-GAAP",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://www.ircms.jp/irexport/fujimiinc/file/a83519987178237.pdf#page=70"
+    }
   },
   {
     "name": "JX Advanced Metals",
@@ -1489,9 +1861,18 @@
       "Micron"
     ],
     "aiRelevance": "Copper purity sets the resistance of the dense wiring on an AI die and how long it lasts before electromigration wears it out. Electromigration is the slow drift of metal atoms pushed by electric current.",
-    "revenueUSDb": 5.751,
-    "revenueYear": 2026,
-    "source": "https://www.jx-nmm.com/english/products/"
+    "source": "https://www.jx-nmm.com/english/products/",
+    "revenue": {
+      "amount": 884638,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales (売上高), consolidated, IFRS",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100YINW.pdf#page=93"
+    }
   },
   {
     "name": "Merck KGaA",
@@ -1514,9 +1895,18 @@
       "SK hynix"
     ],
     "aiRelevance": "Advanced logic and DRAM need hundreds of qualified chemistries, and Merck supplies a large fraction of them.",
-    "revenueUSDb": 24.529,
-    "revenueYear": 2025,
-    "source": "https://www.emdgroup.com/"
+    "source": "https://www.emdgroup.com/",
+    "revenue": {
+      "amount": 21102,
+      "unit": "million",
+      "currency": "EUR",
+      "scope": "group",
+      "basis": "Net sales, consolidated income statement, IFRS",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://reports.emdgroup.com/en/annualreport/2025/_assets/downloads/entire-emd-ar25.pdf#page=385"
+    }
   },
   {
     "name": "Entegris",
@@ -1539,9 +1929,18 @@
       "SK hynix"
     ],
     "aiRelevance": "More particles mean more defects, and a large AI die is far more sensitive to defects than a small one.",
-    "revenueUSDb": 3.197,
-    "revenueYear": 2025,
-    "source": "https://www.entegris.com/en/home/products.html"
+    "source": "https://www.entegris.com/en/home/products.html",
+    "revenue": {
+      "amount": 3196.6,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Net sales, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/1101302/000110130226000012/R5.htm"
+    }
   },
   {
     "name": "Linde",
@@ -1564,9 +1963,18 @@
       "SK hynix"
     ],
     "aiRelevance": "A fab cannot start production without a bulk gas plant. Neon supply for DUV lasers proved fragile after Russia invaded Ukraine.",
-    "revenueUSDb": 33.986,
-    "revenueYear": 2025,
-    "source": "https://www.sec.gov/Archives/edgar/data/1707925/000162828026011430/lin-20251231.htm"
+    "source": "https://www.sec.gov/Archives/edgar/data/1707925/000162828026011430/lin-20251231.htm",
+    "revenue": {
+      "amount": 33986,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "group",
+      "basis": "Sales, consolidated statements of income, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/1707925/000162828026011430/R3.htm"
+    }
   },
   {
     "name": "Air Liquide",
@@ -1588,9 +1996,18 @@
       "GlobalFoundries"
     ],
     "aiRelevance": "Etch and deposition chemistries for deep, narrow (high aspect ratio) structures depend on a small set of qualified specialty gases.",
-    "revenueUSDb": 31.315,
-    "revenueYear": 2025,
-    "source": "https://www.airliquide.com/"
+    "source": "https://www.airliquide.com/",
+    "revenue": {
+      "amount": 26940.2,
+      "unit": "million",
+      "currency": "EUR",
+      "scope": "group",
+      "basis": "Revenue, consolidated income statement, IFRS",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.airliquide.com/sites/airliquide.com/files/2026-03/air-liquide-2025-universal-registration-document-interactive.pdf#page=199"
+    }
   },
   {
     "name": "Air Products",
@@ -1612,9 +2029,18 @@
       "TSMC"
     ],
     "aiRelevance": "A leading-edge fab uses hundreds of thousands of cubic meters of nitrogen an hour.",
-    "revenueUSDb": 12.037,
-    "revenueYear": 2025,
-    "source": "https://www.airproducts.com/industries/electronics"
+    "source": "https://www.airproducts.com/industries/electronics",
+    "revenue": {
+      "amount": 12037.3,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Sales, consolidated, US GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2024-10",
+      "fyEnd": "2025-09",
+      "source": "https://www.sec.gov/Archives/edgar/data/2969/000000296925000055/R3.htm"
+    }
   },
   {
     "name": "Nippon Sanso Holdings",
@@ -1636,9 +2062,18 @@
       "Samsung"
     ],
     "aiRelevance": "The fabs and packaging houses that build most AI memory and packages rely on Japanese gas supply.",
-    "revenueUSDb": 8.839,
-    "revenueYear": 2026,
-    "source": "https://www.nipponsanso-hd.co.jp/"
+    "source": "https://www.nipponsanso-hd.co.jp/",
+    "revenue": {
+      "amount": 1359611,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Revenue (売上収益), consolidated, IFRS",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://jp.nipponsanso.com/LinkClick.aspx?fileticket=aagGVd5LE%2bM%3d#page=92"
+    }
   },
   {
     "name": "SK Specialty",
@@ -1683,9 +2118,18 @@
       "Kioxia"
     ],
     "aiRelevance": "Etching deep, narrow (high aspect ratio) features in DRAM and 3D NAND depends on a small set of fluorinated chemistries.",
-    "revenueUSDb": 0.425,
-    "revenueYear": 2026,
-    "source": "https://www.kantodenka.co.jp/"
+    "source": "https://www.kantodenka.co.jp/",
+    "revenue": {
+      "amount": 65400,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales (売上高), consolidated, J-GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100YJCK.pdf#page=69"
+    }
   },
   {
     "name": "Stella Chemifa",
@@ -1707,9 +2151,18 @@
       "Kioxia"
     ],
     "aiRelevance": "Ultra-pure HF is used at dozens of steps in DRAM manufacture, which makes it a direct input to HBM supply.",
-    "revenueUSDb": 0.239,
-    "revenueYear": 2026,
-    "source": "https://www.stella-chemifa.co.jp/"
+    "source": "https://www.stella-chemifa.co.jp/",
+    "revenue": {
+      "amount": 36799,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales (売上高), consolidated, J-GAAP",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://www.stella-chemifa.co.jp/ir/securities/files/yhq4_2026.pdf#page=61"
+    }
   },
   {
     "name": "Morita Chemical Industries",
@@ -1755,9 +2208,18 @@
       "Intel"
     ],
     "aiRelevance": "Its packaging materials go into the CoWoS and fan-out packages that AI accelerators are built in.",
-    "revenueUSDb": 8.758,
-    "revenueYear": 2025,
-    "source": "https://www.resonac.com/"
+    "source": "https://www.resonac.com/",
+    "revenue": {
+      "amount": 1347125,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Revenue (売上収益), consolidated, IFRS",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.resonac.com/sites/default/files/2026-03/%E6%9C%89%E4%BE%A1%E8%A8%BC%E5%88%B8%E5%A0%B1%E5%91%8A%E6%9B%B8_20260325.pdf#page=104"
+    }
   },
   {
     "name": "ASML",
@@ -1781,9 +2243,18 @@
       "Rapidus"
     ],
     "aiRelevance": "A fab needs EUV to build leading-edge AI logic.",
-    "revenueUSDb": 37.972,
-    "revenueYear": 2025,
-    "source": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm"
+    "source": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm",
+    "revenue": {
+      "amount": 32667.3,
+      "unit": "million",
+      "currency": "EUR",
+      "scope": "company",
+      "basis": "Total net sales, consolidated statement of profit or loss, EU-IFRS (statutory Annual Report 2025)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm"
+    }
   },
   {
     "name": "Nikon",
@@ -1805,9 +2276,18 @@
       "Chinese mature-node fabs"
     ],
     "aiRelevance": "Its tools print some of the chips made on older processes for use around AI systems.",
-    "revenueUSDb": 4.402,
-    "revenueYear": 2026,
-    "source": "https://www.nikon.com/business/semi/lineup/"
+    "source": "https://www.nikon.com/business/semi/lineup/",
+    "revenue": {
+      "amount": 677163,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Revenue (売上収益), consolidated, IFRS",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://www.jp.nikon.com/content/dam/web-assets/nikoncom/company/local/jp/ja/ir/ir_library/sr/pdf/26fr_j.pdf#page=84"
+    }
   },
   {
     "name": "Canon",
@@ -1828,9 +2308,18 @@
       "Packaging and mature-node fabs"
     ],
     "aiRelevance": "Canon says its nanoimprint system patterns a minimum linewidth of 14 nm, equivalent to the 5 nm node, without projection optics.",
-    "revenueUSDb": 30.066,
-    "revenueYear": 2025,
-    "source": "https://global.canon/en/news/2023/20231013.html"
+    "source": "https://global.canon/en/news/2023/20231013.html",
+    "revenue": {
+      "amount": 4624727,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales (売上高), consolidated, US GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://global.canon/ja/ir/yuuhou/canon2025.pdf#page=145"
+    }
   },
   {
     "name": "SMEE",
@@ -1983,9 +2472,18 @@
       "Applied Materials"
     ],
     "aiRelevance": "Part of the German optics cluster that no other region has reproduced at the same precision.",
-    "revenueUSDb": 1.216,
-    "revenueYear": 2025,
-    "source": "https://www.jenoptik.com/markets/semiconductor-equipment"
+    "source": "https://www.jenoptik.com/markets/semiconductor-equipment",
+    "revenue": {
+      "amount": 1045973,
+      "unit": "thousand",
+      "currency": "EUR",
+      "scope": "company",
+      "basis": "Revenue, continuing operations, consolidated statement of profit or loss, IFRS",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.jenoptik.com/-/media/websitedocuments/ir/berichte-und-tabellen/2025/online/en/jenoptik-annual-report-2025.pdf#page=193"
+    }
   },
   {
     "name": "Edwards Vacuum",
@@ -2032,9 +2530,18 @@
       "ASML"
     ],
     "aiRelevance": "Hardware that controls plasma processes sets how consistently tools etch and deposit at the dimensions used in AI logic.",
-    "revenueUSDb": 3.931,
-    "revenueYear": 2025,
-    "source": "https://www.mks.com/s/semiconductor-solutions"
+    "source": "https://www.mks.com/s/semiconductor-solutions",
+    "revenue": {
+      "amount": 3931,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Net revenues, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/1049502/000119312526066820/R4.htm"
+    }
   },
   {
     "name": "Advanced Energy Industries",
@@ -2056,9 +2563,18 @@
       "KLA"
     ],
     "aiRelevance": "A stable plasma lets fabs repeat high aspect ratio etch, which cuts deep, narrow holes, with sub-nanometer control.",
-    "revenueUSDb": 1.799,
-    "revenueYear": 2025,
-    "source": "https://www.advancedenergy.com/"
+    "source": "https://www.advancedenergy.com/",
+    "revenue": {
+      "amount": 1798.8,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenue, net, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/927003/000110465926014731/R4.htm"
+    }
   },
   {
     "name": "Ichor Holdings",
@@ -2079,9 +2595,18 @@
       "ASML"
     ],
     "aiRelevance": "Tool vendors cannot ship chambers faster than their subsystem partners can build gas delivery modules.",
-    "revenueUSDb": 0.948,
-    "revenueYear": 2025,
-    "source": "https://www.ichorsystems.com/"
+    "source": "https://www.ichorsystems.com/",
+    "revenue": {
+      "amount": 947652,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Net sales, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/1652535/000165253526000012/R5.htm"
+    }
   },
   {
     "name": "Ultra Clean Holdings",
@@ -2102,9 +2627,18 @@
       "Tokyo Electron"
     ],
     "aiRelevance": "Chamber parts cleaning is a recurring service, and it determines how much of the time tools can run and how many defects reach the wafer.",
-    "revenueUSDb": 2.054,
-    "revenueYear": 2025,
-    "source": "https://www.uct.com/"
+    "source": "https://www.uct.com/",
+    "revenue": {
+      "amount": 2054.0,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Total revenues, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/1275014/000162828026010744/R5.htm"
+    }
   },
   {
     "name": "VAT Group",
@@ -2126,9 +2660,18 @@
       "ASML"
     ],
     "aiRelevance": "VAT supplies most of the valves that every deposition and etch chamber in the world depends on.",
-    "revenueUSDb": 1.327,
-    "revenueYear": 2025,
-    "source": "https://www.vatgroup.com/files/live/sites/vat/files/Investor%20relations/annual-report/2025/full-year-2025-results-presentation.pdf"
+    "source": "https://www.vatgroup.com/files/live/sites/vat/files/Investor%20relations/annual-report/2025/full-year-2025-results-presentation.pdf",
+    "revenue": {
+      "amount": 1073516,
+      "unit": "thousand",
+      "currency": "CHF",
+      "scope": "company",
+      "basis": "Net sales, consolidated income statement, IFRS",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.vatgroup.com/files/live/sites/vat/files/Investor%20relations/annual-report/2025/financial-statement.pdf#page=3"
+    }
   },
   {
     "name": "Pfeiffer Vacuum",
@@ -2149,9 +2692,18 @@
       "Lam Research"
     ],
     "aiRelevance": "EUV scanners and ion implanters need high vacuum that only turbomolecular pumping can reach.",
-    "revenueUSDb": 0.988,
-    "revenueYear": 2025,
-    "source": "https://www.pfeiffer-vacuum.com/"
+    "source": "https://www.pfeiffer-vacuum.com/",
+    "revenue": {
+      "amount": 850063,
+      "unit": "thousand",
+      "currency": "EUR",
+      "scope": "company",
+      "basis": "Umsatzerlöse (revenue), Konzern-Gewinn- und Verlustrechnung (consolidated income statement), IFRS",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://s1.q4cdn.com/944141433/files/doc_financials/2025/ar/Pfeiffer-Vacuum_Geschaeftsbericht-2025.pdf#page=84"
+    }
   },
   {
     "name": "Horiba",
@@ -2173,9 +2725,18 @@
       "TSMC"
     ],
     "aiRelevance": "Gas flow accuracy controls how even a film's thickness is across a 300 mm wafer.",
-    "revenueUSDb": 2.165,
-    "revenueYear": 2025,
-    "source": "https://www.horiba.com/int/semiconductor/"
+    "source": "https://www.horiba.com/int/semiconductor/",
+    "revenue": {
+      "amount": 333081,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales (売上高), consolidated, J-GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://static.horiba.com/fileadmin/Horiba/Company/Investor_Relations/IR_Library/Asset_Securities_Reports/20260323_SY_jp_01_Xw7.pdf#page=75"
+    }
   },
   {
     "name": "Comet Group",
@@ -2196,9 +2757,18 @@
       "ASE"
     ],
     "aiRelevance": "Very few firms make vacuum capacitors for high-power RF matching, and that supply limits how many plasma etch tools can be built.",
-    "revenueUSDb": 0.565,
-    "revenueYear": 2025,
-    "source": "https://www.comet.tech/"
+    "source": "https://www.comet.tech/",
+    "revenue": {
+      "amount": 457044,
+      "unit": "thousand",
+      "currency": "CHF",
+      "scope": "company",
+      "basis": "Net sales, consolidated statement of income, IFRS",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://reports.comet-group.com/25/app/uploads/Comet_Financial-Report-2025_en.pdf#page=2"
+    }
   },
   {
     "name": "Ferrotec Holdings",
@@ -2220,9 +2790,18 @@
       "SMIC"
     ],
     "aiRelevance": "Fabs replace chamber consumables on a schedule, so the supply of consumables limits how much a fab can run.",
-    "revenueUSDb": 1.878,
-    "revenueYear": 2026,
-    "source": "https://www.ferrotec.com/products/"
+    "source": "https://www.ferrotec.com/products/",
+    "revenue": {
+      "amount": 288933,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales (売上高), consolidated, J-GAAP",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://ircms.irstreet.com/contents/data_file.php?template=2158&brand=85&data=491586&filename=pdf_file.pdf#page=76"
+    }
   },
   {
     "name": "Hoya",
@@ -2245,9 +2824,18 @@
       "Dai Nippon Printing"
     ],
     "aiRelevance": "Most EUV layers on an AI accelerator are printed from masks that started as Hoya or AGC blanks.",
-    "revenueUSDb": 6.161,
-    "revenueYear": 2026,
-    "source": "https://www.hoya.com/ir/2026/en/review/it.html"
+    "source": "https://www.hoya.com/ir/2026/en/review/it.html",
+    "revenue": {
+      "amount": 947749,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Revenue (売上収益), consolidated, IFRS",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100Y90T.pdf#page=83"
+    }
   },
   {
     "name": "AGC Inc.",
@@ -2269,9 +2857,18 @@
       "Photronics"
     ],
     "aiRelevance": "AGC and Hoya are the main sources of the blank under an EUV mask. AGC's EUV blank sales reached ¥40 billion in 2024 and fell in 2025. In June 2026 AGC said sales were recovering and that 2026 demand would exceed 2024's.",
-    "revenueUSDb": 13.385,
-    "revenueYear": 2025,
-    "source": "https://www.agc.com/en/ir/library/bizbriefing/pdf/2026_0602esemiconductor_transcript.pdf"
+    "source": "https://www.agc.com/en/ir/library/bizbriefing/pdf/2026_0602esemiconductor_transcript.pdf",
+    "revenue": {
+      "amount": 2058832,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales (売上高), consolidated, IFRS",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100XSTU.pdf#page=97"
+    }
   },
   {
     "name": "Photronics",
@@ -2293,9 +2890,18 @@
       "Texas Instruments"
     ],
     "aiRelevance": "Merchant mask supply matters most for the mature-node and analog parts around AI systems.",
-    "revenueUSDb": 0.849,
-    "revenueYear": 2025,
-    "source": "https://www.photronics.com/products/"
+    "source": "https://www.photronics.com/products/",
+    "revenue": {
+      "amount": 849294,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenue, consolidated, US GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2024-11",
+      "fyEnd": "2025-10",
+      "source": "https://www.sec.gov/Archives/edgar/data/810136/000114036125045801/R5.htm"
+    }
   },
   {
     "name": "Toppan Holdings",
@@ -2317,9 +2923,18 @@
       "Micron"
     ],
     "aiRelevance": "Toppan supplies both photomasks and AI package substrates, two of the tighter capacity constraints.",
-    "revenueUSDb": 11.735,
-    "revenueYear": 2026,
-    "source": "https://www.holdings.toppan.com/en/news/2025/12/newsrelease251210_1.html"
+    "source": "https://www.holdings.toppan.com/en/news/2025/12/newsrelease251210_1.html",
+    "revenue": {
+      "amount": 1805033,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales (売上高), consolidated, J-GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100YIAY.pdf#page=113"
+    }
   },
   {
     "name": "Dai Nippon Printing",
@@ -2341,9 +2956,18 @@
       "Kioxia"
     ],
     "aiRelevance": "One of the few merchant sources able to write and repair EUV masks outside the foundries.",
-    "revenueUSDb": 9.833,
-    "revenueYear": 2026,
-    "source": "https://www.global.dnp/en/biz/solution/semiconductors/"
+    "source": "https://www.global.dnp/en/biz/solution/semiconductors/",
+    "revenue": {
+      "amount": 1512571,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales (売上高), consolidated, J-GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100YF74.pdf#page=107"
+    }
   },
   {
     "name": "IMS Nanofabrication",
@@ -2414,9 +3038,18 @@
       "ASML"
     ],
     "aiRelevance": "Without a working pellicle a single particle on a mask repeats as a defect on every AI die printed with it.",
-    "revenueUSDb": 10.849,
-    "revenueYear": 2026,
-    "source": "https://jp.mitsuichemicals.com/"
+    "source": "https://jp.mitsuichemicals.com/",
+    "revenue": {
+      "amount": 1668754,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Revenue (売上収益), consolidated, IFRS",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://jp.mitsuichemicals.com/content/dam/mitsuichemicals/sites/mci/documents/release/2026/ms_260622.pdf#page=114"
+    }
   },
   {
     "name": "Shenzhen Qingyi Photomask",
@@ -2481,9 +3114,18 @@
       "SK hynix"
     ],
     "aiRelevance": "A reticle-sized AI die has so much area that a small change in defect density swings yield and cost sharply.",
-    "revenueUSDb": 13.579,
-    "revenueYear": 2026,
-    "source": "https://d1io3yog0oux5.cloudfront.net/_7791115a123b86b3f10b1a5eb5210224/klatencor/db/1167/10630/presentation/2026+Investor+Day_Khan_Final_IR+copy.pdf"
+    "source": "https://d1io3yog0oux5.cloudfront.net/_7791115a123b86b3f10b1a5eb5210224/klatencor/db/1167/10630/presentation/2026+Investor+Day_Khan_Final_IR+copy.pdf",
+    "revenue": {
+      "amount": 13579476,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Total revenues, consolidated, US GAAP",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-07",
+      "fyEnd": "2026-06",
+      "source": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/R5.htm"
+    }
   },
   {
     "name": "Lasertec",
@@ -2504,9 +3146,18 @@
       "Intel"
     ],
     "aiRelevance": "EUV masks for AI chips need inspection that can find phase defects. Lasertec built the first actinic tool for patterned masks.",
-    "revenueUSDb": 1.498,
-    "revenueYear": 2026,
-    "source": "https://www.lasertec.co.jp/en/news/2025/20251031_3912.html"
+    "source": "https://www.lasertec.co.jp/en/news/2025/20251031_3912.html",
+    "revenue": {
+      "amount": 230485,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales (売上高), consolidated, J-GAAP",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-07",
+      "fyEnd": "2026-06",
+      "source": "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100Z32V.pdf#page=61"
+    }
   },
   {
     "name": "Hitachi High-Tech",
@@ -2554,9 +3205,18 @@
       "Amkor"
     ],
     "aiRelevance": "Advanced packaging inspection has become a bottleneck as AI packages grow past 100 mm on a side.",
-    "revenueUSDb": 1.005,
-    "revenueYear": 2025,
-    "source": "https://ontoinnovation.com/products"
+    "source": "https://ontoinnovation.com/products",
+    "revenue": {
+      "amount": 1005263,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenue, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/704532/000119312526066937/R2.htm"
+    }
   },
   {
     "name": "Nova Ltd",
@@ -2579,9 +3239,18 @@
       "Micron"
     ],
     "aiRelevance": "Fabs cannot control the gate-all-around process without measuring the dimensions of buried structures.",
-    "revenueUSDb": 0.881,
-    "revenueYear": 2025,
-    "source": "https://www.novami.com/"
+    "source": "https://www.novami.com/",
+    "revenue": {
+      "amount": 880577,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Total revenues, consolidated statements of operations, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.novami.com/wp-content/uploads/2026/02/a2634307.pdf#page=135"
+    }
   },
   {
     "name": "Camtek",
@@ -2604,9 +3273,18 @@
       "Micron"
     ],
     "aiRelevance": "HBM stacking and CoWoS assembly need per-bump inspection because a single bad joint scraps an expensive package.",
-    "revenueUSDb": 0.496,
-    "revenueYear": 2025,
-    "source": "https://www.camtek.com/products/"
+    "source": "https://www.camtek.com/products/",
+    "revenue": {
+      "amount": 496072,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenues, consolidated statements of income, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/1109138/000117891326001561/R4.htm"
+    }
   },
   {
     "name": "Park Systems",
@@ -2628,9 +3306,18 @@
       "Intel"
     ],
     "aiRelevance": "Hybrid bonding joins two wafers atom to atom, so their surfaces need sub-nanometer control.",
-    "revenueUSDb": 0.153,
-    "revenueYear": 2025,
-    "source": "https://www.parksystems.com/en/company/about-us"
+    "source": "https://www.parksystems.com/en/company/about-us",
+    "revenue": {
+      "amount": 205613479882,
+      "unit": "one",
+      "currency": "KRW",
+      "scope": "company",
+      "basis": "수익(매출액) (Revenue), consolidated, K-IFRS",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260319000022&dcmNo=11145726&eleId=21&offset=268686&length=26691&dtd=dart4.xsd"
+    }
   },
   {
     "name": "Skyverse Technology",
@@ -2676,9 +3363,18 @@
       "BOE"
     ],
     "aiRelevance": "Wuhan Jingce is part of China's effort to make its own process control tools.",
-    "revenueUSDb": 0.498,
-    "revenueYear": 2025,
-    "source": "https://www.wuhanjingce.com/en/"
+    "source": "https://www.wuhanjingce.com/en/",
+    "revenue": {
+      "amount": 3347637577,
+      "unit": "one",
+      "currency": "CNY",
+      "scope": "company",
+      "basis": "营业收入 (operating revenue), consolidated income statement (合并利润表), China Accounting Standards for Business Enterprises (企业会计准则); table unit 元 (yuan)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225201722.PDF#page=127"
+    }
   },
   {
     "name": "Applied Materials",
@@ -2701,9 +3397,18 @@
       "SK hynix"
     ],
     "aiRelevance": "Gate-all-around transistors and advanced interconnect need dozens of Applied deposition steps per wafer.",
-    "revenueUSDb": 28.368,
-    "revenueYear": 2025,
-    "source": "https://www.appliedmaterials.com/us/en/semiconductor.html"
+    "source": "https://www.appliedmaterials.com/us/en/semiconductor.html",
+    "revenue": {
+      "amount": 28368,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Net revenue, consolidated, US GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2024-11",
+      "fyEnd": "2025-10",
+      "source": "https://www.sec.gov/Archives/edgar/data/6951/000162828025056742/R3.htm"
+    }
   },
   {
     "name": "Lam Research",
@@ -2726,9 +3431,18 @@
       "Kioxia"
     ],
     "aiRelevance": "HBM depends on deep silicon vias and dense DRAM capacitors, and Lam makes etch tools for both.",
-    "revenueUSDb": 23.233,
-    "revenueYear": 2026,
-    "source": "https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N103"
+    "source": "https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N103",
+    "revenue": {
+      "amount": 23232690,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenue, consolidated, US GAAP",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-07",
+      "fyEnd": "2026-06",
+      "source": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm"
+    }
   },
   {
     "name": "Tokyo Electron",
@@ -2751,9 +3465,18 @@
       "Micron"
     ],
     "aiRelevance": "Tokyo Electron holds more than 90 percent of the coater/developer market. That share makes the track linked to each scanner as hard a dependency as the scanner.",
-    "revenueUSDb": 15.886,
-    "revenueYear": 2026,
-    "source": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4presentations-e.pdf"
+    "source": "https://www.tel.com/ir/library/report/pjuomj00000000tf-att/fy26q4presentations-e.pdf",
+    "revenue": {
+      "amount": 2443533,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales, consolidated, J-GAAP",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://www.tel.com/ir/library/consolidated-financial-statements/i242su00000000yk-att/Consolidated_Financial_Statements_FY2026.pdf#page=5"
+    }
   },
   {
     "name": "ASM International",
@@ -2775,9 +3498,18 @@
       "Micron"
     ],
     "aiRelevance": "ALD defines the structure of the gate-all-around nanosheet transistors in TSMC N2 and Intel 18A class logic.",
-    "revenueUSDb": 3.688,
-    "revenueYear": 2025,
-    "source": "https://www.asm.com/"
+    "source": "https://www.asm.com/",
+    "revenue": {
+      "amount": 3173.2,
+      "unit": "million",
+      "currency": "EUR",
+      "scope": "company",
+      "basis": "Revenue, consolidated statement of profit or loss, IFRS (EU)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.asm.com/media/3skhiimk/asm-2025-annual-report.pdf#page=159"
+    }
   },
   {
     "name": "Kokusai Electric",
@@ -2800,9 +3532,18 @@
       "TSMC"
     ],
     "aiRelevance": "How fast batch tools deposit films directly affects how many DRAM wafers, and so how many HBM stacks, fabs can produce.",
-    "revenueUSDb": 1.528,
-    "revenueYear": 2026,
-    "source": "https://www.kokusai-electric.com/"
+    "source": "https://www.kokusai-electric.com/",
+    "revenue": {
+      "amount": 235079,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Revenue (売上収益), consolidated, IFRS",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100YJUA.pdf#page=87"
+    }
   },
   {
     "name": "Naura Technology",
@@ -2824,9 +3565,18 @@
       "YMTC"
     ],
     "aiRelevance": "Naura is the clearest measure of how far China has come in replacing American and Japanese process tools.",
-    "revenueUSDb": 5.849,
-    "revenueYear": 2025,
-    "source": "https://asia.nikkei.com/business/tech/semiconductors/china-edges-up-with-3-of-world-s-top-20-chipmaking-gear-suppliers"
+    "source": "https://asia.nikkei.com/business/tech/semiconductors/china-edges-up-with-3-of-world-s-top-20-chipmaking-gear-suppliers",
+    "revenue": {
+      "amount": 39353112419.78,
+      "unit": "one",
+      "currency": "CNY",
+      "scope": "company",
+      "basis": "营业收入 (operating revenue), consolidated income statement (合并利润表), China Accounting Standards for Business Enterprises (企业会计准则); table unit 元 (yuan)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-18/1225122918.PDF#page=111"
+    }
   },
   {
     "name": "AMEC",
@@ -2848,9 +3598,18 @@
       "TSMC"
     ],
     "aiRelevance": "Etch is the step where Chinese equipment has come closest to parity with foreign tools.",
-    "revenueUSDb": 1.841,
-    "revenueYear": 2025,
-    "source": "https://www.amec-inc.com/en/"
+    "source": "https://www.amec-inc.com/en/",
+    "revenue": {
+      "amount": 12384638268.11,
+      "unit": "one",
+      "currency": "CNY",
+      "scope": "company",
+      "basis": "营业收入 (operating revenue), consolidated income statement (合并利润表), China Accounting Standards for Business Enterprises (企业会计准则); table unit 元 (yuan)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-03-31/1225062431.PDF#page=142"
+    }
   },
   {
     "name": "Piotech",
@@ -2872,9 +3631,18 @@
       "Hua Hong"
     ],
     "aiRelevance": "Any Chinese attempt to make HBM at home needs deposition and bonding tools.",
-    "revenueUSDb": 0.969,
-    "revenueYear": 2025,
-    "source": "https://www.piotech.cn/"
+    "source": "https://www.piotech.cn/",
+    "revenue": {
+      "amount": 6519094874.63,
+      "unit": "one",
+      "currency": "CNY",
+      "scope": "company",
+      "basis": "营业收入 (operating revenue), consolidated income statement (合并利润表), China Accounting Standards for Business Enterprises (企业会计准则); table unit 元 (yuan)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225222226.PDF#page=155"
+    }
   },
   {
     "name": "SCREEN Holdings",
@@ -2897,9 +3665,18 @@
       "SK hynix"
     ],
     "aiRelevance": "Defects left by cleaning add up across hundreds of steps and show up as yield loss on large AI dies.",
-    "revenueUSDb": 3.938,
-    "revenueYear": 2026,
-    "source": "https://www.screen.co.jp/spe/en/products"
+    "source": "https://www.screen.co.jp/spe/en/products",
+    "revenue": {
+      "amount": 605748,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales (売上高), consolidated, J-GAAP",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://www.screen.co.jp/download_file/view/7e03d9a8-88eb-4a7d-ab77-509eba1422ac/2540#page=80"
+    }
   },
   {
     "name": "SEMES",
@@ -2944,9 +3721,18 @@
       "SK hynix"
     ],
     "aiRelevance": "Cleaning is one of the segments where Chinese fabs have found a workable non-Japanese supplier.",
-    "revenueUSDb": 0.901,
-    "revenueYear": 2025,
-    "source": "https://www.acmrcsh.com/"
+    "source": "https://www.acmrcsh.com/",
+    "revenue": {
+      "amount": 901309,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenue, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/1680062/000162828026013231/R4.htm"
+    }
   },
   {
     "name": "TSMC",
@@ -2970,9 +3756,18 @@
       "MediaTek"
     ],
     "aiRelevance": "TSMC is the single most concentrated point in the AI chain, because it both makes and packages the dies, mostly in Taiwan.",
-    "revenueUSDb": 122.42,
-    "revenueYear": 2025,
-    "source": "https://investor.tsmc.com/static/annualReports/2025/english/index.html"
+    "source": "https://investor.tsmc.com/static/annualReports/2025/english/index.html",
+    "revenue": {
+      "amount": 3809054272,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Net revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2330&filename=202504_2330_AIA.pdf#page=8"
+    }
   },
   {
     "name": "Samsung Foundry",
@@ -3042,9 +3837,18 @@
       "Chinese fabless firms"
     ],
     "aiRelevance": "SMIC's yield and capacity at 7 nm cap how many Chinese AI accelerators can be made at home.",
-    "revenueUSDb": 9.327,
-    "revenueYear": 2025,
-    "source": "https://www.smics.com/"
+    "source": "https://www.smics.com/",
+    "revenue": {
+      "amount": 9326799,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenue, consolidated statement of profit or loss, IFRS Accounting Standards; table in USD thousands",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0408/2026040801181.pdf#page=105"
+    }
   },
   {
     "name": "Hua Hong Semiconductor",
@@ -3064,9 +3868,18 @@
       "Power semiconductor designers"
     ],
     "aiRelevance": "Supplies the power management and analog parts that surround AI processors.",
-    "revenueUSDb": 2.402,
-    "revenueYear": 2025,
-    "source": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-05-15/688347_20260515_XRZ3.pdf"
+    "source": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-05-15/688347_20260515_XRZ3.pdf",
+    "revenue": {
+      "amount": 2402064,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenue, consolidated statement of profit or loss, HKFRS Accounting Standards; table in US$ thousands",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0409/2026040901617.pdf#page=311"
+    }
   },
   {
     "name": "GlobalFoundries",
@@ -3089,9 +3902,18 @@
       "AMD"
     ],
     "aiRelevance": "Its silicon photonics process is used for optical interconnect components in AI data centers.",
-    "revenueUSDb": 6.791,
-    "revenueYear": 2025,
-    "source": "https://gf.com/"
+    "source": "https://gf.com/",
+    "revenue": {
+      "amount": 6791,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Net revenue, consolidated, IFRS",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/R5.htm"
+    }
   },
   {
     "name": "UMC",
@@ -3113,9 +3935,18 @@
       "Novatek"
     ],
     "aiRelevance": "Its mature-node fabs make the power management and interface chips a rack of accelerators needs.",
-    "revenueUSDb": 7.541,
-    "revenueYear": 2025,
-    "source": "https://www.umc.com/en/Product/technologies/Overview"
+    "source": "https://www.umc.com/en/Product/technologies/Overview",
+    "revenue": {
+      "amount": 237553199,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Operating revenues, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2303&filename=202504_2303_AIA.pdf#page=10"
+    }
   },
   {
     "name": "Rapidus",
@@ -3160,9 +3991,18 @@
       "Nvidia"
     ],
     "aiRelevance": "Silicon photonics capacity is a growing constraint as AI clusters move to co-packaged optics.",
-    "revenueUSDb": 1.566,
-    "revenueYear": 2025,
-    "source": "https://towersemi.com/technology/rf-and-hpa/silicon-photonics-rf/"
+    "source": "https://towersemi.com/technology/rf-and-hpa/silicon-photonics-rf/",
+    "revenue": {
+      "amount": 1566104,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenue, consolidated statements of operations, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/928876/000117891326002318/R4.htm"
+    }
   },
   {
     "name": "SK hynix",
@@ -3185,9 +4025,18 @@
       "Google"
     ],
     "aiRelevance": "How SK hynix, Samsung and Micron allocate their HBM capacity sets how many accelerators ship.",
-    "revenueUSDb": 72.451,
-    "revenueYear": 2025,
-    "source": "https://news.skhynix.com/en/sk-hynix-announces-fy25-financial-results/"
+    "source": "https://news.skhynix.com/en/sk-hynix-announces-fy25-financial-results/",
+    "revenue": {
+      "amount": 97146675,
+      "unit": "million",
+      "currency": "KRW",
+      "scope": "company",
+      "basis": "매출액 (Revenue), consolidated, K-IFRS",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260317000635&dcmNo=11132576&eleId=21&offset=371607&length=31668&dtd=dart4.xsd"
+    }
   },
   {
     "name": "Samsung Memory",
@@ -3235,9 +4084,18 @@
       "HPE"
     ],
     "aiRelevance": "Micron is the only HBM source outside Korea, so it is the main alternative to Korean supply of AI memory.",
-    "revenueUSDb": 37.378,
-    "revenueYear": 2025,
-    "source": "https://www.sec.gov/Archives/edgar/data/723125/000072312525000040/202510karscopy.pdf"
+    "source": "https://www.sec.gov/Archives/edgar/data/723125/000072312525000040/202510karscopy.pdf",
+    "revenue": {
+      "amount": 133188,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenue, consolidated, US GAAP",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-09",
+      "fyEnd": "2026-08",
+      "source": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/R3.htm"
+    }
   },
   {
     "name": "CXMT",
@@ -3258,9 +4116,19 @@
       "Domestic AI accelerator vendors"
     ],
     "aiRelevance": "China's AI chain still lacks a domestic HBM supply, and CXMT is the main candidate to provide it.",
-    "revenueUSDb": 9.185,
-    "revenueYear": 2025,
-    "source": "https://www.cxmt.com/en/"
+    "source": "https://www.cxmt.com/en/",
+    "revenue": {
+      "amount": 61799321546.81,
+      "unit": "one",
+      "currency": "CNY",
+      "scope": "company",
+      "basis": "营业收入 (operating revenue), consolidated income statement (合并利润表) in the IPO prospectus, China Accounting Standards for Business Enterprises (企业会计准则); table unit 元 (yuan)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-07-22/1225435990.PDF#page=209",
+      "note": "CXMT listed in July 2026, so the figure comes from the audited accounts in its listing prospectus."
+    }
   },
   {
     "name": "YMTC",
@@ -3304,9 +4172,18 @@
       "Enterprise SSD buyers"
     ],
     "aiRelevance": "Enterprise SSD demand from AI clusters has become the strongest part of the NAND market.",
-    "revenueUSDb": 15.197,
-    "revenueYear": 2026,
-    "source": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/ir/library/securities/asset/Annual-Securities-Report-FY2025-EN.pdf"
+    "source": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/ir/library/securities/asset/Annual-Securities-Report-FY2025-EN.pdf",
+    "revenue": {
+      "amount": 2337628,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Revenue (売上収益), consolidated, IFRS",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100YJ18.pdf#page=105"
+    }
   },
   {
     "name": "SanDisk",
@@ -3327,9 +4204,18 @@
       "Hyperscale cloud operators"
     ],
     "aiRelevance": "AI training checkpoints and inference caches are stored on high-capacity enterprise SSDs.",
-    "revenueUSDb": 20.248,
-    "revenueYear": 2026,
-    "source": "https://www.sandisk.com/company/newsroom"
+    "source": "https://www.sandisk.com/company/newsroom",
+    "revenue": {
+      "amount": 20248,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenue, net, consolidated, US GAAP",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-07",
+      "fyEnd": "2026-06",
+      "source": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm"
+    }
   },
   {
     "name": "Nanya Technology",
@@ -3349,9 +4235,18 @@
       "Consumer electronics OEMs"
     ],
     "aiRelevance": "Supplies commodity DRAM whose price is set by the same shortage that constrains HBM supply.",
-    "revenueUSDb": 2.114,
-    "revenueYear": 2025,
-    "source": "https://www.nanya.com/en/Product"
+    "source": "https://www.nanya.com/en/Product",
+    "revenue": {
+      "amount": 66586520,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2408&filename=202504_2408_AIA.pdf#page=9"
+    }
   },
   {
     "name": "Winbond Electronics",
@@ -3372,9 +4267,18 @@
       "Edge AI designers"
     ],
     "aiRelevance": "Targets AI running on devices outside data centers, where a cheaper stacked memory can replace HBM at lower bandwidth.",
-    "revenueUSDb": 2.838,
-    "revenueYear": 2025,
-    "source": "https://www.winbond.com/"
+    "source": "https://www.winbond.com/",
+    "revenue": {
+      "amount": 89406171,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2344&filename=202504_2344_AIA.pdf#page=8"
+    }
   },
   {
     "name": "ASE Technology Holding",
@@ -3397,9 +4301,18 @@
       "MediaTek"
     ],
     "aiRelevance": "When TSMC's CoWoS capacity is full, ASE takes overflow assembly and test work for AI packages.",
-    "revenueUSDb": 20.489,
-    "revenueYear": 2025,
-    "source": "https://www.sec.gov/Archives/edgar/data/1122411/000095010326001662/dp241167_6k.htm"
+    "source": "https://www.sec.gov/Archives/edgar/data/1122411/000095010326001662/dp241167_6k.htm",
+    "revenue": {
+      "amount": 645387710,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=3711&filename=202504_3711_AIA.pdf#page=9"
+    }
   },
   {
     "name": "Amkor Technology",
@@ -3422,9 +4335,18 @@
       "TSMC"
     ],
     "aiRelevance": "Efforts to bring AI chip manufacture back to the United States still lack domestic packaging capacity.",
-    "revenueUSDb": 6.708,
-    "revenueYear": 2025,
-    "source": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm"
+    "source": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm",
+    "revenue": {
+      "amount": 6707981,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Net sales, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/R3.htm"
+    }
   },
   {
     "name": "JCET Group",
@@ -3445,9 +4367,18 @@
       "Global IDMs"
     ],
     "aiRelevance": "With domestic packaging capacity, China can assemble its AI chips without Taiwanese or Korean facilities.",
-    "revenueUSDb": 5.777,
-    "revenueYear": 2025,
-    "source": "https://www.jcetglobal.com/en/"
+    "source": "https://www.jcetglobal.com/en/",
+    "revenue": {
+      "amount": 38871348331.23,
+      "unit": "one",
+      "currency": "CNY",
+      "scope": "company",
+      "basis": "营业收入 (operating revenue), consolidated income statement (合并利润表), China Accounting Standards for Business Enterprises (企业会计准则); table unit 元 (yuan)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-10/1225091498.PDF#page=80"
+    }
   },
   {
     "name": "Powertech Technology",
@@ -3469,9 +4400,18 @@
       "Nvidia"
     ],
     "aiRelevance": "Memory test capacity limits HBM supply, because the DRAM dies must be tested before stacking and the finished stack tested again.",
-    "revenueUSDb": 2.379,
-    "revenueYear": 2025,
-    "source": "https://www.pti.com.tw/en/"
+    "source": "https://www.pti.com.tw/en/",
+    "revenue": {
+      "amount": 74929320,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Net sales, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=6239&filename=202504_6239_AIA.pdf#page=7"
+    }
   },
   {
     "name": "Tongfu Microelectronics",
@@ -3491,9 +4431,18 @@
       "Chinese fabless firms"
     ],
     "aiRelevance": "One of the few Chinese OSATs with real experience packaging large multi-die processors.",
-    "revenueUSDb": 4.15,
-    "revenueYear": 2025,
-    "source": "https://www.tfme.com/"
+    "source": "https://www.tfme.com/",
+    "revenue": {
+      "amount": 27921424656.15,
+      "unit": "one",
+      "currency": "CNY",
+      "scope": "company",
+      "basis": "营业收入 (operating revenue), consolidated income statement (合并利润表), China Accounting Standards for Business Enterprises (企业会计准则); table unit 元 (yuan)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-17/1225112762.PDF#page=86"
+    }
   },
   {
     "name": "Hua Tian Technology",
@@ -3513,9 +4462,18 @@
       "Automotive and consumer OEMs"
     ],
     "aiRelevance": "Hua Tian provides domestic packaging capacity that Chinese AI accelerators depend on.",
-    "revenueUSDb": 2.559,
-    "revenueYear": 2025,
-    "source": "https://disc.static.szse.cn/disc/disk03/finalpage/2026-03-31/a0209878-88e7-443c-b062-6a33047d9c98.PDF"
+    "source": "https://disc.static.szse.cn/disc/disk03/finalpage/2026-03-31/a0209878-88e7-443c-b062-6a33047d9c98.PDF",
+    "revenue": {
+      "amount": 17213915293.79,
+      "unit": "one",
+      "currency": "CNY",
+      "scope": "company",
+      "basis": "营业收入 (operating revenue), consolidated income statement (合并利润表), China Accounting Standards for Business Enterprises (企业会计准则); table unit 元 (yuan)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-03-31/1225059982.PDF#page=84"
+    }
   },
   {
     "name": "King Yuan Electronics",
@@ -3537,9 +4495,18 @@
       "Broadcom"
     ],
     "aiRelevance": "AI accelerators take far longer to test than mobile chips, so test capacity constrains shipments.",
-    "revenueUSDb": 1.109,
-    "revenueYear": 2025,
-    "source": "https://www.kyec.com.tw/en/about"
+    "source": "https://www.kyec.com.tw/en/about",
+    "revenue": {
+      "amount": 34933546,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Net sales, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2449&filename=202504_2449_AIA.pdf#page=10"
+    }
   },
   {
     "name": "Chipbond Technology",
@@ -3560,9 +4527,18 @@
       "Chinese panel makers"
     ],
     "aiRelevance": "Bumping adds the small metal bumps that flip-chip assembly uses to join a chip to its package, and AI packages rely on flip-chip assembly too.",
-    "revenueUSDb": 0.681,
-    "revenueYear": 2025,
-    "source": "https://www.chipbond.com.tw/en/"
+    "source": "https://www.chipbond.com.tw/en/",
+    "revenue": {
+      "amount": 21454104,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=6147&filename=202504_6147_AIA.pdf#page=12"
+    }
   },
   {
     "name": "UTAC Holdings",
@@ -3607,9 +4583,18 @@
       "Amkor"
     ],
     "aiRelevance": "3D stacked AI logic and next-generation HBM both depend on how accurately hybrid bonders place each die.",
-    "revenueUSDb": 0.687,
-    "revenueYear": 2025,
-    "source": "https://www.besi.com/products-technology/"
+    "source": "https://www.besi.com/products-technology/",
+    "revenue": {
+      "amount": 591331,
+      "unit": "thousand",
+      "currency": "EUR",
+      "scope": "company",
+      "basis": "Revenue, consolidated statement of operations, IFRS (EU)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.besi.com/fileadmin/data/Investor_Relations/_Semi__Annual_Reports/Annual_Report_2025.pdf#page=196"
+    }
   },
   {
     "name": "ASMPT",
@@ -3632,9 +4617,19 @@
       "SK hynix"
     ],
     "aiRelevance": "Bonder throughput determines how many HBM stacks and 2.5D packages can be assembled per day.",
-    "revenueUSDb": 1.752,
-    "revenueYear": 2025,
-    "source": "https://www.asmpt.com/"
+    "source": "https://www.asmpt.com/",
+    "revenue": {
+      "amount": 13736243,
+      "unit": "thousand",
+      "currency": "HKD",
+      "scope": "company (continuing operations)",
+      "basis": "Revenue, continuing operations, consolidated statement of profit or loss, HKFRS",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.asmpt.com/site/assets/files/84854/e_00522ar-20260405.pdf#page=67",
+      "note": "Continuing operations only. ASMPT has classified its NEXX business as held for sale."
+    }
   },
   {
     "name": "Hanmi Semiconductor",
@@ -3680,9 +4675,18 @@
       "Amkor"
     ],
     "aiRelevance": "Every AI die must be diced and every HBM layer thinned, and Disco makes the saws and grinders that do both.",
-    "revenueUSDb": 2.84,
-    "revenueYear": 2026,
-    "source": "https://www.disco.co.jp/eg/ir/library/doc/fr/fr20260422.pdf"
+    "source": "https://www.disco.co.jp/eg/ir/library/doc/fr/fr20260422.pdf",
+    "revenue": {
+      "amount": 436889,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales (売上高), consolidated, J-GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://www.disco.co.jp/jp/ir/library/doc/fs/fs87.pdf#page=82"
+    }
   },
   {
     "name": "Kulicke and Soffa",
@@ -3704,9 +4708,18 @@
       "Micron"
     ],
     "aiRelevance": "Wire bonding still dominates memory module and mature-node assembly around AI systems.",
-    "revenueUSDb": 0.654,
-    "revenueYear": 2025,
-    "source": "https://www.kns.com/"
+    "source": "https://www.kns.com/",
+    "revenue": {
+      "amount": 654081,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Net revenue, consolidated statement of operations, US GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2024-10",
+      "fyEnd": "2025-09",
+      "source": "https://www.sec.gov/Archives/edgar/data/56978/000005697825000081/R5.htm"
+    }
   },
   {
     "name": "EV Group",
@@ -3753,9 +4766,18 @@
       "Intel"
     ],
     "aiRelevance": "Fan-out and 2.5D packaging need lithography on panels and reconstituted wafers as well as on silicon.",
-    "revenueUSDb": 0.585,
-    "revenueYear": 2025,
-    "source": "https://www.suss.com/en/products-solutions"
+    "source": "https://www.suss.com/en/products-solutions",
+    "revenue": {
+      "amount": 503180,
+      "unit": "thousand",
+      "currency": "EUR",
+      "scope": "company",
+      "basis": "Sales, consolidated statement of income, IFRS",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.suss.com/en/content/download/3228/47132/2026_03_30_SUSS_Annual%20Report%202025.pdf?version=3#page=183"
+    }
   },
   {
     "name": "Ajinomoto",
@@ -3778,9 +4800,18 @@
       "Nan Ya PCB"
     ],
     "aiRelevance": "Nearly every large AI package substrate is built up from layers of ABF, a film made by the Japanese food company Ajinomoto.",
-    "revenueUSDb": 10.296,
-    "revenueYear": 2026,
-    "source": "https://www.ajinomoto.co.jp/company/en/ir/event/business_briefing/main/011117/teaserItems1/01/linkList/03/link/20260630_presentation_E.pdf"
+    "source": "https://www.ajinomoto.co.jp/company/en/ir/event/business_briefing/main/011117/teaserItems1/01/linkList/03/link/20260630_presentation_E.pdf",
+    "revenue": {
+      "amount": 1583719,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales (売上高), consolidated, IFRS",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://www.ajinomoto.co.jp/company/jp/ir/library/securities/main/06/teaserItems1/0/linkList/03/link/FY25Q4_annual%20Securities%20Report_J.pdf#page=154"
+    }
   },
   {
     "name": "Ibiden",
@@ -3802,9 +4833,18 @@
       "Broadcom"
     ],
     "aiRelevance": "Substrate size and layer count for AI packages have grown faster than the industry can add capacity.",
-    "revenueUSDb": 2.706,
-    "revenueYear": 2026,
-    "source": "https://www.ibiden.com/"
+    "source": "https://www.ibiden.com/",
+    "revenue": {
+      "amount": 416201,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales (売上高), consolidated, J-GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100YC4B.pdf#page=78"
+    }
   },
   {
     "name": "Shinko Electric Industries",
@@ -3826,9 +4866,19 @@
       "Broadcom"
     ],
     "aiRelevance": "High-layer-count substrates are one of the tighter capacity constraints in AI packaging, along with CoWoS.",
-    "revenueUSDb": 1.398,
-    "revenueYear": 2025,
-    "source": "https://www.shinko.co.jp/english/product/"
+    "source": "https://www.shinko.co.jp/english/product/",
+    "revenue": {
+      "amount": 215022,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales (売上高), consolidated, J-GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2024-04",
+      "fyEnd": "2025-03",
+      "source": "https://www.shinko.co.jp/ir/docs/bn2025.pdf#page=12",
+      "note": "Shinko has been private since June 2025. This is its last published consolidated figure, from an unaudited results release."
+    }
   },
   {
     "name": "Unimicron",
@@ -3851,9 +4901,18 @@
       "MediaTek"
     ],
     "aiRelevance": "Taiwanese substrate makers take the AI package demand that the Japanese suppliers cannot meet.",
-    "revenueUSDb": 4.166,
-    "revenueYear": 2025,
-    "source": "https://www.unimicron.com/"
+    "source": "https://www.unimicron.com/",
+    "revenue": {
+      "amount": 131240882,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Sales revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=3037&filename=202504_3037_AIA.pdf#page=13"
+    }
   },
   {
     "name": "Kinsus Interconnect",
@@ -3875,9 +4934,18 @@
       "Marvell"
     ],
     "aiRelevance": "Another source of ABF substrate capacity in a segment that has been supply-limited since 2021.",
-    "revenueUSDb": 1.249,
-    "revenueYear": 2025,
-    "source": "https://www.kinsus.com.tw/en/"
+    "source": "https://www.kinsus.com.tw/en/",
+    "revenue": {
+      "amount": 39351096,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Operating revenues, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=3189&filename=202504_3189_AIA.pdf#page=11"
+    }
   },
   {
     "name": "Nan Ya PCB",
@@ -3899,9 +4967,18 @@
       "Broadcom"
     ],
     "aiRelevance": "Supplies both the package substrate and the server boards that carry AI accelerators.",
-    "revenueUSDb": 1.275,
-    "revenueYear": 2025,
-    "source": "https://www.nanyapcb.com.tw/"
+    "source": "https://www.nanyapcb.com.tw/",
+    "revenue": {
+      "amount": 40172990,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=8046&filename=202504_8046_AIA.pdf#page=9"
+    }
   },
   {
     "name": "AT&S",
@@ -3923,9 +5000,18 @@
       "Apple"
     ],
     "aiRelevance": "The only substrate capacity for AI packages that is European-owned, though the plants are in Asia.",
-    "revenueUSDb": 2.082,
-    "revenueYear": 2026,
-    "source": "https://ats.net/"
+    "source": "https://ats.net/",
+    "revenue": {
+      "amount": 1790776,
+      "unit": "thousand",
+      "currency": "EUR",
+      "scope": "company",
+      "basis": "Revenue, consolidated statement of profit or loss, IFRS (EU)",
+      "fiscalYear": "2025/26",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://ats.net/en/download/annual-financial-report-2025-26/?wpdmdl=61790#page=4"
+    }
   },
   {
     "name": "Samsung Electro-Mechanics",
@@ -3948,9 +5034,18 @@
       "Apple"
     ],
     "aiRelevance": "Supplies both the substrate under the package and thousands of MLCCs around each accelerator.",
-    "revenueUSDb": 8.438,
-    "revenueYear": 2025,
-    "source": "https://www.samsungsem.com/"
+    "source": "https://www.samsungsem.com/",
+    "revenue": {
+      "amount": 11314459238100,
+      "unit": "one",
+      "currency": "KRW",
+      "scope": "company",
+      "basis": "매출액 (Revenue), consolidated, K-IFRS",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260310003071&dcmNo=11105795&eleId=21&offset=341261&length=44392&dtd=dart4.xsd"
+    }
   },
   {
     "name": "LG Innotek",
@@ -3971,9 +5066,18 @@
       "Apple"
     ],
     "aiRelevance": "Substrate supply has repeatedly limited AI package output, so new FC-BGA makers add capacity where it is short.",
-    "revenueUSDb": 16.33,
-    "revenueYear": 2025,
-    "source": "https://www.lginnotek.com/product/substrate.do"
+    "source": "https://www.lginnotek.com/product/substrate.do",
+    "revenue": {
+      "amount": 21896603,
+      "unit": "million",
+      "currency": "KRW",
+      "scope": "company",
+      "basis": "매출액 (Revenue), consolidated, K-IFRS",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260312001270&dcmNo=11116775&eleId=21&offset=303972&length=21173&dtd=dart4.xsd"
+    }
   },
   {
     "name": "Nittobo",
@@ -4016,9 +5120,18 @@
       "Package substrate makers"
     ],
     "aiRelevance": "BT laminate goes into package substrates for data center memory, CPUs and GPUs. Mitsubishi Gas Chemical is expanding the laminate's use in AI products and servers.",
-    "revenueUSDb": 4.799,
-    "revenueYear": 2026,
-    "source": "https://www.mgc.co.jp/eng/ir/files/2410022e.pdf"
+    "source": "https://www.mgc.co.jp/eng/ir/files/2410022e.pdf",
+    "revenue": {
+      "amount": 738243,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales (売上高), consolidated, J-GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://www.mgc.co.jp/ir/files/2026_4.pdf#page=98"
+    }
   },
   {
     "name": "Panasonic Industry",
@@ -4065,9 +5178,18 @@
       "Celestica"
     ],
     "aiRelevance": "AI baseboards need 20 or more layers of low-loss material, and few PCB makers can build such boards at high yield.",
-    "revenueUSDb": 2.867,
-    "revenueYear": 2025,
-    "source": "https://www.shpcb.com/"
+    "source": "https://www.shpcb.com/",
+    "revenue": {
+      "amount": 19292313457.36,
+      "unit": "one",
+      "currency": "CNY",
+      "scope": "company",
+      "basis": "营业收入 (operating revenue), consolidated income statement (合并利润表), China Accounting Standards for Business Enterprises (企业会计准则); table unit 元 (yuan)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-03-13/1225007455.PDF#page=107"
+    }
   },
   {
     "name": "WUS Printed Circuit",
@@ -4089,9 +5211,18 @@
       "Foxconn"
     ],
     "aiRelevance": "Switch and accelerator boards are among the most demanding PCBs made, and supply is concentrated.",
-    "revenueUSDb": 2.816,
-    "revenueYear": 2025,
-    "source": "https://www.wuspcb.com/en/"
+    "source": "https://www.wuspcb.com/en/",
+    "revenue": {
+      "amount": 18945220585,
+      "unit": "one",
+      "currency": "CNY",
+      "scope": "company",
+      "basis": "营业收入 (operating revenue), consolidated income statement (合并利润表), China Accounting Standards for Business Enterprises (企业会计准则); table unit 元 (yuan)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-03-25/1225027832.PDF#page=87"
+    }
   },
   {
     "name": "Gold Circuit Electronics",
@@ -4113,9 +5244,18 @@
       "Celestica"
     ],
     "aiRelevance": "One of the Taiwanese PCB makers that build the boards inside AI server racks.",
-    "revenueUSDb": 1.905,
-    "revenueYear": 2025,
-    "source": "https://www.gce.com.tw/en/"
+    "source": "https://www.gce.com.tw/en/",
+    "revenue": {
+      "amount": 60003758,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Sales revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2368&filename=202504_2368_AIA.pdf#page=10"
+    }
   },
   {
     "name": "TTM Technologies",
@@ -4137,9 +5277,18 @@
       "Hyperscale operators"
     ],
     "aiRelevance": "Provides PCB capacity in the United States for AI systems whose buyers care where the boards are made.",
-    "revenueUSDb": 2.906,
-    "revenueYear": 2025,
-    "source": "https://www.ttm.com/"
+    "source": "https://www.ttm.com/",
+    "revenue": {
+      "amount": 2906345,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Net sales, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/1116942/000119312526051976/R4.htm"
+    }
   },
   {
     "name": "Absolics",
@@ -4183,9 +5332,18 @@
       "Samsung"
     ],
     "aiRelevance": "Tester capacity has become a constraint on AI accelerator and HBM shipments.",
-    "revenueUSDb": 7.337,
-    "revenueYear": 2026,
-    "source": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_slide.pdf"
+    "source": "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_slide.pdf",
+    "revenue": {
+      "amount": 1128610,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales, consolidated, IFRS",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://www.advantest.com/document/en/investors/ir-library/report/IR_SecuritiesandBusinessReport_84th_en.pdf#page=116"
+    }
   },
   {
     "name": "Teradyne",
@@ -4208,9 +5366,18 @@
       "Amkor"
     ],
     "aiRelevance": "The second source for the test capacity that limits AI chip output.",
-    "revenueUSDb": 3.19,
-    "revenueYear": 2025,
-    "source": "https://www.teradyne.com/"
+    "source": "https://www.teradyne.com/",
+    "revenue": {
+      "amount": 3190024,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Total revenues, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/R4.htm"
+    }
   },
   {
     "name": "FormFactor",
@@ -4233,9 +5400,18 @@
       "TSMC"
     ],
     "aiRelevance": "Probe cards are custom per design, so a new AI chip needs new probe cards before it can be tested at all.",
-    "revenueUSDb": 0.785,
-    "revenueYear": 2025,
-    "source": "https://www.sec.gov/Archives/edgar/data/1039399/000103939926000009/form-20251227.htm"
+    "source": "https://www.sec.gov/Archives/edgar/data/1039399/000103939926000009/form-20251227.htm",
+    "revenue": {
+      "amount": 784993,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenues, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/1039399/000103939926000009/R5.htm"
+    }
   },
   {
     "name": "Technoprobe",
@@ -4258,9 +5434,18 @@
       "SK hynix"
     ],
     "aiRelevance": "Vertical probes make it possible to test AI accelerators, which have very high pad counts.",
-    "revenueUSDb": 0.73,
-    "revenueYear": 2025,
-    "source": "https://www.technoprobe.com/"
+    "source": "https://www.technoprobe.com/",
+    "revenue": {
+      "amount": 628380,
+      "unit": "thousand",
+      "currency": "EUR",
+      "scope": "company",
+      "basis": "Revenue, consolidated income statement, IFRS (EU)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.technoprobe.com/wp-content/uploads/2026/04/Technoprobe-SpA-Annual-Financial-Report-31.12.2025.pdf#page=137"
+    }
   },
   {
     "name": "Micronics Japan",
@@ -4282,9 +5467,18 @@
       "Kioxia"
     ],
     "aiRelevance": "HBM requires testing each die before stacking, which multiplies memory probe card demand.",
-    "revenueUSDb": 0.456,
-    "revenueYear": 2025,
-    "source": "https://www.mjc.co.jp/en/products/"
+    "source": "https://www.mjc.co.jp/en/products/",
+    "revenue": {
+      "amount": 70173,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales (売上高), consolidated, J-GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100XTD8.pdf#page=75"
+    }
   },
   {
     "name": "MPI Corporation",
@@ -4306,9 +5500,18 @@
       "Chinese fabs"
     ],
     "aiRelevance": "Local probe card supply matters because cards wear out and must be replaced during high-volume AI test.",
-    "revenueUSDb": 0.424,
-    "revenueYear": 2025,
-    "source": "https://www.mpi-corporation.com/ast/"
+    "source": "https://www.mpi-corporation.com/ast/",
+    "revenue": {
+      "amount": 13371181,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Operating revenue, net, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=6223&filename=202504_6223_AIA.pdf#page=13"
+    }
   },
   {
     "name": "Cohu",
@@ -4330,9 +5533,18 @@
       "NXP"
     ],
     "aiRelevance": "Testing a kilowatt-class part requires thermal control hardware that most handlers were never built for.",
-    "revenueUSDb": 0.453,
-    "revenueYear": 2025,
-    "source": "https://www.cohu.com/"
+    "source": "https://www.cohu.com/",
+    "revenue": {
+      "amount": 452956,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Net sales, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/R4.htm"
+    }
   },
   {
     "name": "Aehr Test Systems",
@@ -4353,9 +5565,18 @@
       "Photonics suppliers"
     ],
     "aiRelevance": "Burn-in finds early-life failures in AI chips before they go into a 72-GPU rack, where a failure is expensive to find.",
-    "revenueUSDb": 0.05,
-    "revenueYear": 2026,
-    "source": "https://www.aehr.com/products/"
+    "source": "https://www.aehr.com/products/",
+    "revenue": {
+      "amount": 50001,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenue, consolidated, US GAAP",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-06",
+      "fyEnd": "2026-05",
+      "source": "https://www.sec.gov/Archives/edgar/data/1040470/000165495426006919/R4.htm"
+    }
   },
   {
     "name": "Chroma ATE",
@@ -4377,9 +5598,18 @@
       "Nvidia suppliers"
     ],
     "aiRelevance": "System-level test has become standard for AI accelerators because wafer test cannot catch every failure mode.",
-    "revenueUSDb": 0.899,
-    "revenueYear": 2025,
-    "source": "https://www.chromaate.com/"
+    "source": "https://www.chromaate.com/",
+    "revenue": {
+      "amount": 28310935,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Net operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2360&filename=202504_2360_AIA.pdf#page=8"
+    }
   },
   {
     "name": "Tokyo Seimitsu (Accretech)",
@@ -4424,9 +5654,18 @@
       "Dell"
     ],
     "aiRelevance": "Many GPU-to-CPU and GPU-to-network-card links in an AI server pass through a retimer.",
-    "revenueUSDb": 0.853,
-    "revenueYear": 2025,
-    "source": "https://www.asteralabs.com/products/"
+    "source": "https://www.asteralabs.com/products/",
+    "revenue": {
+      "amount": 852525,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenue, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000010/R5.htm"
+    }
   },
   {
     "name": "Credo Technology",
@@ -4448,9 +5687,18 @@
       "Arista"
     ],
     "aiRelevance": "Copper links inside a rack are cheaper and use less power than optics, and the savings add up across a cluster.",
-    "revenueUSDb": 1.335,
-    "revenueYear": 2026,
-    "source": "https://www.credosemi.com/products/"
+    "source": "https://www.credosemi.com/products/",
+    "revenue": {
+      "amount": 1335116,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenue, consolidated, US GAAP",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-05",
+      "fyEnd": "2026-04",
+      "source": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/R5.htm"
+    }
   },
   {
     "name": "Arista Networks",
@@ -4472,9 +5720,18 @@
       "Anthropic"
     ],
     "aiRelevance": "Ethernet has become the default scale-out network for large AI clusters, and Arista is its main vendor.",
-    "revenueUSDb": 9.006,
-    "revenueYear": 2025,
-    "source": "https://www.arista.com/en/solutions/ai-networking"
+    "source": "https://www.arista.com/en/solutions/ai-networking",
+    "revenue": {
+      "amount": 9005.7,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Total revenue, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/R5.htm"
+    }
   },
   {
     "name": "Cisco Systems",
@@ -4495,9 +5752,18 @@
       "Telecom carriers"
     ],
     "aiRelevance": "Supplies both the systems and, unusually for a systems vendor, the switch chips inside them.",
-    "revenueUSDb": 63.325,
-    "revenueYear": 2026,
-    "source": "https://www.cisco.com/site/us/en/products/networking/silicon-one/index.html"
+    "source": "https://www.cisco.com/site/us/en/products/networking/silicon-one/index.html",
+    "revenue": {
+      "amount": 63325,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Total revenue, consolidated, US GAAP",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-08",
+      "fyEnd": "2026-07",
+      "source": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/R5.htm"
+    }
   },
   {
     "name": "Accton Technology",
@@ -4520,9 +5786,18 @@
       "Nvidia"
     ],
     "aiRelevance": "A small group of Taiwanese ODMs assembles the white-box switches that make up AI back-end networks.",
-    "revenueUSDb": 7.883,
-    "revenueYear": 2025,
-    "source": "https://www.accton.com/"
+    "source": "https://www.accton.com/",
+    "revenue": {
+      "amount": 248319703,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2345&filename=202504_2345_AIA.pdf#page=8"
+    }
   },
   {
     "name": "Amphenol",
@@ -4545,9 +5820,18 @@
       "Arista"
     ],
     "aiRelevance": "Rack-scale AI systems replaced the copper traces on circuit boards with thousands of precision cable assemblies.",
-    "revenueUSDb": 23.095,
-    "revenueYear": 2025,
-    "source": "https://www.amphenol.com/markets/it-datacom"
+    "source": "https://www.amphenol.com/markets/it-datacom",
+    "revenue": {
+      "amount": 23094.7,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Net sales, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/820313/000110465926013549/R3.htm"
+    }
   },
   {
     "name": "Luxshare Precision",
@@ -4568,9 +5852,18 @@
       "Server ODMs"
     ],
     "aiRelevance": "Provides high-volume cable and connector capacity for AI racks at Chinese manufacturing costs.",
-    "revenueUSDb": 49.397,
-    "revenueYear": 2025,
-    "source": "https://www.luxshare-ict.com/en/"
+    "source": "https://www.luxshare-ict.com/en/",
+    "revenue": {
+      "amount": 332344443143.39,
+      "unit": "one",
+      "currency": "CNY",
+      "scope": "company",
+      "basis": "营业收入 (operating revenue), consolidated income statement (合并利润表), China Accounting Standards for Business Enterprises (企业会计准则); table unit 元 (yuan)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-15/1225104908.PDF#page=121"
+    }
   },
   {
     "name": "Innolight Technology",
@@ -4593,9 +5886,18 @@
       "Meta"
     ],
     "aiRelevance": "The number of optical modules a cluster needs grows in step with its size, and module supply has repeatedly limited shipments.",
-    "revenueUSDb": 5.684,
-    "revenueYear": 2025,
-    "source": "https://www.innolight.com/en/"
+    "source": "https://www.innolight.com/en/",
+    "revenue": {
+      "amount": 38239935640.67,
+      "unit": "one",
+      "currency": "CNY",
+      "scope": "company",
+      "basis": "营业收入 (operating revenue), consolidated income statement (合并利润表), China Accounting Standards for Business Enterprises (企业会计准则); table unit 元 (yuan)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-03-31/1225056459.PDF#page=94"
+    }
   },
   {
     "name": "Eoptolink Technology",
@@ -4615,9 +5917,18 @@
       "Networking OEMs"
     ],
     "aiRelevance": "A second high-volume Chinese source for the optics that connect AI clusters.",
-    "revenueUSDb": 3.692,
-    "revenueYear": 2025,
-    "source": "https://www.eoptolink.com/en/"
+    "source": "https://www.eoptolink.com/en/",
+    "revenue": {
+      "amount": 24841854840.22,
+      "unit": "one",
+      "currency": "CNY",
+      "scope": "company",
+      "basis": "营业收入 (operating revenue), consolidated income statement (合并利润表), China Accounting Standards for Business Enterprises (企业会计准则); table unit 元 (yuan)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225172598.PDF#page=72"
+    }
   },
   {
     "name": "Coherent Corp",
@@ -4640,9 +5951,18 @@
       "Amazon"
     ],
     "aiRelevance": "Every optical module needs laser chips, and very few firms have indium phosphide fabs.",
-    "revenueUSDb": 7.118,
-    "revenueYear": 2026,
-    "source": "https://www.coherent.com/networking"
+    "source": "https://www.coherent.com/networking",
+    "revenue": {
+      "amount": 7118181,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenues, consolidated, US GAAP",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-07",
+      "fyEnd": "2026-06",
+      "source": "https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/R5.htm"
+    }
   },
   {
     "name": "Lumentum",
@@ -4663,9 +5983,18 @@
       "Optical module makers"
     ],
     "aiRelevance": "The second Western source of laser chips for the optics that link AI accelerators.",
-    "revenueUSDb": 3.014,
-    "revenueYear": 2026,
-    "source": "https://www.lumentum.com/"
+    "source": "https://www.lumentum.com/",
+    "revenue": {
+      "amount": 3014.0,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Net revenue, consolidated, US GAAP",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-07",
+      "fyEnd": "2026-06",
+      "source": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026057358/R3.htm"
+    }
   },
   {
     "name": "Fabrinet",
@@ -4687,9 +6016,18 @@
       "Lumentum"
     ],
     "aiRelevance": "A large share of the world's AI-cluster optics is assembled in a small number of buildings in Thailand.",
-    "revenueUSDb": 4.641,
-    "revenueYear": 2026,
-    "source": "https://www.fabrinet.com/"
+    "source": "https://www.fabrinet.com/",
+    "revenue": {
+      "amount": 4641097,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenues, consolidated statements of operations and comprehensive income, US GAAP",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-07",
+      "fyEnd": "2026-06",
+      "source": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/R5.htm"
+    }
   },
   {
     "name": "Ayar Labs",
@@ -4755,9 +6093,18 @@
       "AT&T"
     ],
     "aiRelevance": "Scaling out an AI cluster requires fiber inside and between campuses.",
-    "revenueUSDb": 15.629,
-    "revenueYear": 2025,
-    "source": "https://www.corning.com/worldwide/en/products/communication-networks.html"
+    "source": "https://www.corning.com/worldwide/en/products/communication-networks.html",
+    "revenue": {
+      "amount": 15629,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Net sales, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/24741/000002474126000124/R3.htm"
+    }
   },
   {
     "name": "AXT",
@@ -4801,9 +6148,18 @@
       "Apple"
     ],
     "aiRelevance": "A handful of Taiwanese firms assemble and burn in rack-scale AI systems, and Hon Hai (Foxconn) is the largest of them.",
-    "revenueUSDb": 257.241,
-    "revenueYear": 2025,
-    "source": "https://www.honhai.com/en-us/press-center/press-releases/latest-news/1978"
+    "source": "https://www.honhai.com/en-us/press-center/press-releases/latest-news/1978",
+    "revenue": {
+      "amount": 8103104763,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2317&filename=202504_2317_AIA.pdf#page=10"
+    }
   },
   {
     "name": "Quanta Computer",
@@ -4826,9 +6182,18 @@
       "Microsoft"
     ],
     "aiRelevance": "Quanta and its peers turn accelerators into racks ready to deploy, and their capacity limits how fast AI hardware goes into service.",
-    "revenueUSDb": 67.419,
-    "revenueYear": 2025,
-    "source": "https://www.qct.io/solution/index/AI-Solutions"
+    "source": "https://www.qct.io/solution/index/AI-Solutions",
+    "revenue": {
+      "amount": 2123689447,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2382&filename=202504_2382_AIA.pdf#page=9"
+    }
   },
   {
     "name": "Wistron",
@@ -4850,9 +6215,18 @@
       "Amazon"
     ],
     "aiRelevance": "GPU baseboard assembly is a specialized step with few qualified suppliers worldwide.",
-    "revenueUSDb": 69.413,
-    "revenueYear": 2025,
-    "source": "https://www.wistron.com/en/Product&Services/Enterprise&Networking"
+    "source": "https://www.wistron.com/en/Product&Services/Enterprise&Networking",
+    "revenue": {
+      "amount": 2186522636,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Net revenues, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=3231&filename=202504_3231_AIA.pdf#page=9"
+    }
   },
   {
     "name": "Wiwynn",
@@ -4873,9 +6247,18 @@
       "Amazon"
     ],
     "aiRelevance": "Hyperscalers use Open Compute rack designs to deploy AI capacity built to their own specifications.",
-    "revenueUSDb": 30.18,
-    "revenueYear": 2025,
-    "source": "https://www.wiwynn.com/products"
+    "source": "https://www.wiwynn.com/products",
+    "revenue": {
+      "amount": 950663310,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=6669&filename=202504_6669_AIA.pdf#page=9"
+    }
   },
   {
     "name": "Inventec",
@@ -4896,9 +6279,18 @@
       "Dell"
     ],
     "aiRelevance": "One of the Taiwanese ODMs that build AI servers for cloud operators.",
-    "revenueUSDb": 21.943,
-    "revenueYear": 2025,
-    "source": "https://www.inventec.com/"
+    "source": "https://www.inventec.com/",
+    "revenue": {
+      "amount": 691190326,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2356&filename=202504_2356_AIA.pdf#page=9"
+    }
   },
   {
     "name": "Super Micro Computer",
@@ -4920,9 +6312,18 @@
       "Cloud operators"
     ],
     "aiRelevance": "One of the few US-based firms that integrate AI racks in-house.",
-    "revenueUSDb": 39.063,
-    "revenueYear": 2026,
-    "source": "https://www.supermicro.com/en/products/gpu"
+    "source": "https://www.supermicro.com/en/products/gpu",
+    "revenue": {
+      "amount": 39063072,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Net sales, consolidated, US GAAP",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-07",
+      "fyEnd": "2026-06",
+      "source": "https://www.sec.gov/Archives/edgar/data/1375365/000137536526000022/R5.htm"
+    }
   },
   {
     "name": "Dell Technologies",
@@ -4944,9 +6345,18 @@
       "Government"
     ],
     "aiRelevance": "Enterprises mostly buy their AI hardware from the large server OEMs.",
-    "revenueUSDb": 113.538,
-    "revenueYear": 2026,
-    "source": "https://www.dell.com/en-us/dt/solutions/artificial-intelligence/index.htm"
+    "source": "https://www.dell.com/en-us/dt/solutions/artificial-intelligence/index.htm",
+    "revenue": {
+      "amount": 113538,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Total net revenue, consolidated, US GAAP",
+      "fiscalYear": "FY2026",
+      "fyStart": "2025-02",
+      "fyEnd": "2026-01",
+      "source": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000008/R5.htm"
+    }
   },
   {
     "name": "Hewlett Packard Enterprise",
@@ -4967,9 +6377,18 @@
       "Cloud operators"
     ],
     "aiRelevance": "HPE's liquid cooling and interconnect experience from Cray applies directly to dense AI clusters.",
-    "revenueUSDb": 34.296,
-    "revenueYear": 2025,
-    "source": "https://www.hpe.com/us/en/servers.html"
+    "source": "https://www.hpe.com/us/en/servers.html",
+    "revenue": {
+      "amount": 34296,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Total net revenue, consolidated, US GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2024-11",
+      "fyEnd": "2025-10",
+      "source": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/R3.htm"
+    }
   },
   {
     "name": "Lenovo",
@@ -4990,9 +6409,18 @@
       "Cloud operators"
     ],
     "aiRelevance": "Warm-water cooling avoids chillers entirely, which matters as rack power passes 100 kW.",
-    "revenueUSDb": 83.075,
-    "revenueYear": 2026,
-    "source": "https://www.lenovo.com/"
+    "source": "https://www.lenovo.com/",
+    "revenue": {
+      "amount": 83074555,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenue, consolidated income statement, HKFRS Accounting Standards; table in US$ thousands",
+      "fiscalYear": "FY2025/26",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0626/2026062600475.pdf#page=175"
+    }
   },
   {
     "name": "ZT Systems",
@@ -5034,9 +6462,18 @@
       "Networking OEMs"
     ],
     "aiRelevance": "Contract manufacturers such as Celestica build a significant share of AI back-end switch hardware.",
-    "revenueUSDb": 12.391,
-    "revenueYear": 2025,
-    "source": "https://www.celestica.com/hardware-platform-solutions"
+    "source": "https://www.celestica.com/hardware-platform-solutions",
+    "revenue": {
+      "amount": 12390.9,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenue, consolidated statement of operations, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/R5.htm"
+    }
   },
   {
     "name": "Jabil",
@@ -5057,9 +6494,18 @@
       "Nvidia partners"
     ],
     "aiRelevance": "Cold plate and manifold manufacturing has become a capacity constraint for liquid-cooled racks.",
-    "revenueUSDb": 29.802,
-    "revenueYear": 2025,
-    "source": "https://www.jabil.com/"
+    "source": "https://www.jabil.com/",
+    "revenue": {
+      "amount": 29802,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Net revenue, consolidated, US GAAP",
+      "fiscalYear": "FY2025",
+      "fyStart": "2024-09",
+      "fyEnd": "2025-08",
+      "source": "https://www.sec.gov/Archives/edgar/data/898293/000162828025045293/R5.htm"
+    }
   },
   {
     "name": "Vertiv",
@@ -5082,9 +6528,18 @@
       "Digital Realty"
     ],
     "aiRelevance": "A 132 kW rack cannot be air cooled, so it needs a coolant distribution unit to pump liquid through its servers.",
-    "revenueUSDb": 10.23,
-    "revenueYear": 2025,
-    "source": "https://www.vertiv.com/"
+    "source": "https://www.vertiv.com/",
+    "revenue": {
+      "amount": 10229.9,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Net sales, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/R3.htm"
+    }
   },
   {
     "name": "Schneider Electric",
@@ -5106,9 +6561,18 @@
       "Equinix"
     ],
     "aiRelevance": "AI data center schedules now depend on lead times for electrical equipment, especially transformers and switchgear.",
-    "revenueUSDb": 46.672,
-    "revenueYear": 2025,
-    "source": "https://www.se.com/us/en/work/solutions/for-business/data-centers-and-networks/"
+    "source": "https://www.se.com/us/en/work/solutions/for-business/data-centers-and-networks/",
+    "revenue": {
+      "amount": 40152,
+      "unit": "million",
+      "currency": "EUR",
+      "scope": "group",
+      "basis": "Revenue, consolidated statement of income, IFRS",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://download.se.com/files?p_Doc_Ref=2025-URD&p_enDocType=Financial+release&p_File_Name=2025-universal-registration-document.pdf#page=494"
+    }
   },
   {
     "name": "Eaton",
@@ -5129,9 +6593,18 @@
       "Utilities"
     ],
     "aiRelevance": "A grid connection and on-site electrical gear now take longer to obtain than the GPUs themselves.",
-    "revenueUSDb": 27.448,
-    "revenueYear": 2025,
-    "source": "https://www.eaton.com/us/en-us/markets/data-centers.html"
+    "source": "https://www.eaton.com/us/en-us/markets/data-centers.html",
+    "revenue": {
+      "amount": 27448,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "group",
+      "basis": "Net sales, consolidated statements of income, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000007/R3.htm"
+    }
   },
   {
     "name": "Delta Electronics",
@@ -5154,9 +6627,18 @@
       "Amazon"
     ],
     "aiRelevance": "A small number of Taiwanese suppliers dominate efficient power conversion for racks of 100 kW and above.",
-    "revenueUSDb": 17.615,
-    "revenueYear": 2025,
-    "source": "https://www.deltaww.com/"
+    "source": "https://www.deltaww.com/",
+    "revenue": {
+      "amount": 554885168,
+      "unit": "thousand",
+      "currency": "TWD",
+      "scope": "company",
+      "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2308&filename=202504_2308_AIA.pdf#page=10"
+    }
   },
   {
     "name": "CoolIT Systems",
@@ -5200,9 +6682,18 @@
       "Server OEMs"
     ],
     "aiRelevance": "An early liquid cooling specialist, in a market that became mainstream as AI racks grew denser.",
-    "revenueUSDb": 0.042,
-    "revenueYear": 2025,
-    "source": "https://www.asetek.com/"
+    "source": "https://www.asetek.com/",
+    "revenue": {
+      "amount": 41497,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenue, consolidated statement of comprehensive income, IFRS (EU)",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://mb.cision.com/Public/6758/4332189/a3b61a579acb1aef.xhtml"
+    }
   },
   {
     "name": "Hitachi Energy",
@@ -5246,9 +6737,18 @@
       "Hyperscale operators"
     ],
     "aiRelevance": "The AI buildout now includes new generating capacity, both on site and on the grid.",
-    "revenueUSDb": 45.423,
-    "revenueYear": 2025,
-    "source": "https://www.siemens-energy.com/global/en/home/products-services/product-offerings.html"
+    "source": "https://www.siemens-energy.com/global/en/home/products-services/product-offerings.html",
+    "revenue": {
+      "amount": 39077,
+      "unit": "million",
+      "currency": "EUR",
+      "scope": "group",
+      "basis": "Revenue, consolidated statements of income, IFRS",
+      "fiscalYear": "FY2025",
+      "fyStart": "2024-10",
+      "fyEnd": "2025-09",
+      "source": "https://assets.siemens-energy.com/dam/32b27e9a-af91-4915-8b51-b3af012d0d98/A-Siemens_Energy_Annual_Report_2025-pdf_Original%20file.pdf#page=148"
+    }
   },
   {
     "name": "GE Vernova",
@@ -5269,9 +6769,18 @@
       "Independent power producers"
     ],
     "aiRelevance": "Turbine delivery slots have become a limiting factor for new AI campuses in the United States.",
-    "revenueUSDb": 38.068,
-    "revenueYear": 2025,
-    "source": "https://www.gevernova.com/gas-power"
+    "source": "https://www.gevernova.com/gas-power",
+    "revenue": {
+      "amount": 38068,
+      "unit": "million",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Total revenues, consolidated and combined, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/R3.htm"
+    }
   },
   {
     "name": "Monolithic Power Systems",
@@ -5293,9 +6802,18 @@
       "Server ODMs"
     ],
     "aiRelevance": "Delivering a thousand amperes into a die at a controlled voltage is one of the hardest board-level problems in AI hardware.",
-    "revenueUSDb": 2.79,
-    "revenueYear": 2025,
-    "source": "https://www.monolithicpower.com/en/applications/enterprise-computing.html"
+    "source": "https://www.monolithicpower.com/en/applications/enterprise-computing.html",
+    "revenue": {
+      "amount": 2790459,
+      "unit": "thousand",
+      "currency": "USD",
+      "scope": "company",
+      "basis": "Revenue, consolidated, US GAAP",
+      "fiscalYear": "2025",
+      "fyStart": "2025-01",
+      "fyEnd": "2025-12",
+      "source": "https://www.sec.gov/Archives/edgar/data/1280452/000143774926006113/R4.htm"
+    }
   },
   {
     "name": "Infineon",
@@ -5317,9 +6835,18 @@
       "Server ODMs"
     ],
     "aiRelevance": "Nvidia's move to 800-volt DC rack power distribution depends on power semiconductors from a handful of suppliers.",
-    "revenueUSDb": 17.043,
-    "revenueYear": 2025,
-    "source": "https://www.infineon.com/assets/row/public/documents/corporate/investors/presentations/2026/2026-08-05-q3-fy26-investor-presentation-v01-00-en.pdf"
+    "source": "https://www.infineon.com/assets/row/public/documents/corporate/investors/presentations/2026/2026-08-05-q3-fy26-investor-presentation-v01-00-en.pdf",
+    "revenue": {
+      "amount": 14662,
+      "unit": "million",
+      "currency": "EUR",
+      "scope": "group",
+      "basis": "Revenue, consolidated statement of profit or loss, IFRS",
+      "fiscalYear": "FY2025",
+      "fyStart": "2024-10",
+      "fyEnd": "2025-09",
+      "source": "https://www.infineon.com/row/public/documents/corporate/investors/annual-reports/2025/2025-annual-report-v01-00-en.pdf#page=93"
+    }
   },
   {
     "name": "Nidec",
@@ -5340,9 +6867,19 @@
       "Cloud operators"
     ],
     "aiRelevance": "Liquid-cooled racks still need fans and pumps, and motor supply is concentrated in a few Japanese firms.",
-    "revenueUSDb": 16.954,
-    "revenueYear": 2025,
-    "source": "https://www.nidec.com/en/product/search/category/B101/"
+    "source": "https://www.nidec.com/en/product/search/category/B101/",
+    "revenue": {
+      "amount": 2708705,
+      "unit": "million",
+      "currency": "JPY",
+      "scope": "company",
+      "basis": "Net sales (売上高), continuing operations, consolidated, IFRS",
+      "fiscalYear": "FY2025",
+      "fyStart": "2025-04",
+      "fyEnd": "2026-03",
+      "source": "https://www.nidec.com/files/user/www-nidec-com/ir/library/reports/FY25Q4_jp.pdf#page=130",
+      "note": "Nidec's auditor gave no opinion on these accounts, a disclaimer of opinion in the report filed on 30 September 2026."
+    }
   },
   {
     "name": "Mitsubishi Power",

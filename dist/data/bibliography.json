@@ -601,12 +601,54 @@
     "type": "filing",
     "accessed": "2026-09-09"
   },
+  "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260310003071&dcmNo=11105795&eleId=21&offset=341261&length=44392&dtd=dart4.xsd": {
+    "title": "Samsung Electro-Mechanics, consolidated income statement (연결 포괄손익계산서), business report (사업보고서) for fiscal year 2025",
+    "publisher": "Financial Supervisory Service (DART)",
+    "date": "2026-03-10",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260312001270&dcmNo=11116775&eleId=21&offset=303972&length=21173&dtd=dart4.xsd": {
+    "title": "LG Innotek, consolidated income statement (연결 손익계산서), business report (사업보고서) for fiscal year 2025",
+    "publisher": "Financial Supervisory Service (DART)",
+    "date": "2026-03-12",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260316001567&dcmNo=11129507&eleId=21&offset=259551&length=31561&dtd=dart4.xsd": {
+    "title": "Soulbrain, consolidated income statement (연결 포괄손익계산서), business report (사업보고서) for fiscal year 2025",
+    "publisher": "Financial Supervisory Service (DART)",
+    "date": "2026-03-16",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260317000635&dcmNo=11132576&eleId=21&offset=371607&length=31668&dtd=dart4.xsd": {
+    "title": "SK hynix, consolidated income statement (연결 포괄손익계산서), business report (사업보고서) for fiscal year 2025",
+    "publisher": "Financial Supervisory Service (DART)",
+    "date": "2026-03-17",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
   "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260317000635&dcmNo=11132576&eleId=48&offset=2673284&length=29807&dtd=dart4.xsd": {
     "title": "SK hynix, revenue note to the consolidated financial statements (매출액), fiscal year 2025",
     "publisher": "Financial Supervisory Service (DART)",
     "date": "2026-03-17",
     "type": "filing",
     "accessed": "2026-09-09"
+  },
+  "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260318000617&dcmNo=11136858&eleId=21&offset=503877&length=26152&dtd=dart4.xsd": {
+    "title": "OCI Holdings, consolidated income statement (연결 손익계산서), business report (사업보고서) for fiscal year 2025",
+    "publisher": "Financial Supervisory Service (DART)",
+    "date": "2026-03-18",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260319000022&dcmNo=11145726&eleId=21&offset=268686&length=26691&dtd=dart4.xsd": {
+    "title": "Park Systems, consolidated income statement (연결 포괄손익계산서), business report (사업보고서) for fiscal year 2025",
+    "publisher": "Financial Supervisory Service (DART)",
+    "date": "2026-03-19",
+    "type": "filing",
+    "accessed": "2026-10-20"
   },
   "https://data.sec.gov/api/xbrl/companyconcept/CIK0000006951/us-gaap/RevenueFromContractWithCustomerExcludingAssessedTax.json": {
     "title": "Revenue from Contract with Customer, Excluding Assessed Tax (us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax) reported by APPLIED MATERIALS INC /DE, XBRL company concept data",
@@ -719,10 +761,262 @@
     "type": "filing",
     "accessed": "2026-10-20"
   },
+  "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100XSTU.pdf": {
+    "title": "AGC, securities report (有価証券報告書), 101st fiscal year (year ended December 2025)",
+    "publisher": "Financial Services Agency (EDINET)",
+    "date": "2026-03-24",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100XTD8.pdf": {
+    "title": "Micronics Japan, securities report (有価証券報告書), 55th fiscal year (year ended December 2025)",
+    "publisher": "Financial Services Agency (EDINET)",
+    "date": "2026-03-25",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100Y90T.pdf": {
+    "title": "HOYA, securities report (有価証券報告書), 88th fiscal year (year ended March 2026)",
+    "publisher": "Financial Services Agency (EDINET)",
+    "date": "2026-06-05",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100YC4B.pdf": {
+    "title": "Ibiden, securities report (有価証券報告書), 173rd fiscal year (year ended March 2026)",
+    "publisher": "Financial Services Agency (EDINET)",
+    "date": "2026-06-18",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100YF74.pdf": {
+    "title": "Dai Nippon Printing, securities report (有価証券報告書), 132nd fiscal year (year ended March 2026)",
+    "publisher": "Financial Services Agency (EDINET)",
+    "date": "2026-06-23",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100YIAY.pdf": {
+    "title": "TOPPAN Holdings, securities report (有価証券報告書), 180th fiscal year (year ended March 2026)",
+    "publisher": "Financial Services Agency (EDINET)",
+    "date": "2026-06-24",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100YIBH.pdf": {
+    "title": "FUJIFILM Holdings, securities report (有価証券報告書), 130th fiscal year (year ended March 2026)",
+    "publisher": "Financial Services Agency (EDINET)",
+    "date": "2026-06-24",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100YINW.pdf": {
+    "title": "JX Advanced Metals, securities report (有価証券報告書), 24th fiscal year (year ended March 2026)",
+    "publisher": "Financial Services Agency (EDINET)",
+    "date": "2026-06-24",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100YJ18.pdf": {
+    "title": "KIOXIA Holdings, securities report (有価証券報告書), 8th fiscal year (year ended March 2026)",
+    "publisher": "Financial Services Agency (EDINET)",
+    "date": "2026-06-24",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100YJCK.pdf": {
+    "title": "Kanto Denka Kogyo, securities report (有価証券報告書), 119th fiscal year (year ended March 2026)",
+    "publisher": "Financial Services Agency (EDINET)",
+    "date": "2026-06-25",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100YJUA.pdf": {
+    "title": "KOKUSAI ELECTRIC, securities report (有価証券報告書), 11th fiscal year (year ended March 2026)",
+    "publisher": "Financial Services Agency (EDINET)",
+    "date": "2026-06-25",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
   "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100Z32V.pdf": {
     "title": "Lasertec, securities report (有価証券報告書), 64th fiscal year (year ended June 2026)",
     "publisher": "Financial Services Agency (EDINET)",
     "date": "2026-09-24",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2303&filename=202504_2303_AIA.pdf": {
+    "title": "UMC, consolidated financial statements for 2025 (English translation, 202504_2303_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-02-25",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2308&filename=202504_2308_AIA.pdf": {
+    "title": "Delta Electronics, consolidated financial statements for 2025 (English translation, 202504_2308_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-04-15",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2317&filename=202504_2317_AIA.pdf": {
+    "title": "Hon Hai Precision, consolidated financial statements for 2025 (English translation, 202504_2317_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-05-07",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2330&filename=202504_2330_AIA.pdf": {
+    "title": "TSMC, consolidated financial statements for 2025 (English translation, 202504_2330_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-02-26",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2344&filename=202504_2344_AIA.pdf": {
+    "title": "Winbond Electronics, consolidated financial statements for 2025 (English translation, 202504_2344_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-03-18",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2345&filename=202504_2345_AIA.pdf": {
+    "title": "Accton Technology, consolidated financial statements for 2025 (English translation, 202504_2345_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-05-13",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2356&filename=202504_2356_AIA.pdf": {
+    "title": "Inventec, consolidated financial statements for 2025 (English translation, 202504_2356_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-04-14",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2360&filename=202504_2360_AIA.pdf": {
+    "title": "Chroma ATE, consolidated financial statements for 2025 (English translation, 202504_2360_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-04-24",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2368&filename=202504_2368_AIA.pdf": {
+    "title": "Gold Circuit Electronics, consolidated financial statements for 2025 (English translation, 202504_2368_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-04-01",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2382&filename=202504_2382_AIA.pdf": {
+    "title": "Quanta Computer, consolidated financial statements for 2025 (English translation, 202504_2382_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-04-24",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2408&filename=202504_2408_AIA.pdf": {
+    "title": "Nanya Technology, consolidated financial statements for 2025 (English translation, 202504_2408_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-04-02",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2449&filename=202504_2449_AIA.pdf": {
+    "title": "King Yuan Electronics, consolidated financial statements for 2025 (English translation, 202504_2449_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-05-08",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2454&filename=202504_2454_AIA.pdf": {
+    "title": "MediaTek, consolidated financial statements for 2025 (English translation, 202504_2454_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-02-26",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=3037&filename=202504_3037_AIA.pdf": {
+    "title": "Unimicron, consolidated financial statements for 2025 (English translation, 202504_3037_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-04-08",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=3189&filename=202504_3189_AIA.pdf": {
+    "title": "Kinsus Interconnect, consolidated financial statements for 2025 (English translation, 202504_3189_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-03-03",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=3231&filename=202504_3231_AIA.pdf": {
+    "title": "Wistron, consolidated financial statements for 2025 (English translation, 202504_3231_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-04-14",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=3443&filename=202504_3443_AIA.pdf": {
+    "title": "Global Unichip, consolidated financial statements for 2025 (English translation, 202504_3443_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-01-29",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=3661&filename=202504_3661_AIA.pdf": {
+    "title": "Alchip Technologies, consolidated financial statements for 2025 (English translation, 202504_3661_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-04-09",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=3711&filename=202504_3711_AIA.pdf": {
+    "title": "ASE Technology Holding, consolidated financial statements for 2025 (English translation, 202504_3711_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-03-18",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=6147&filename=202504_6147_AIA.pdf": {
+    "title": "Chipbond Technology, consolidated financial statements for 2025 (English translation, 202504_6147_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-03-13",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=6223&filename=202504_6223_AIA.pdf": {
+    "title": "MPI Corporation, consolidated financial statements for 2025 (English translation, 202504_6223_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-05-08",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=6239&filename=202504_6239_AIA.pdf": {
+    "title": "Powertech Technology, consolidated financial statements for 2025 (English translation, 202504_6239_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-03-11",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=6488&filename=202504_6488_AIA.pdf": {
+    "title": "GlobalWafers, consolidated financial statements for 2025 (English translation, 202504_6488_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-04-15",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=6669&filename=202504_6669_AIA.pdf": {
+    "title": "Wiwynn, consolidated financial statements for 2025 (English translation, 202504_6669_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-02-26",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
+  "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=8046&filename=202504_8046_AIA.pdf": {
+    "title": "Nan Ya PCB, consolidated financial statements for 2025 (English translation, 202504_8046_AIA.pdf)",
+    "publisher": "Taiwan Stock Exchange (MOPS)",
+    "date": "2026-03-27",
     "type": "filing",
     "accessed": "2026-10-20"
   },
@@ -1017,6 +1311,13 @@
     "publisher": "Canon",
     "type": "page",
     "accessed": "2026-10-18"
+  },
+  "https://global.canon/ja/ir/yuuhou/canon2025.pdf": {
+    "title": "Canon, securities report (有価証券報告書), 125th fiscal year (year ended December 2025)",
+    "publisher": "Canon",
+    "date": "2026-03-25",
+    "type": "filing",
+    "accessed": "2026-10-20"
   },
   "https://gov.texas.gov/news/post/governor-abbott-directs-comprehensive-data-center-audit": {
     "title": "Governor Abbott Directs Comprehensive Data Center Audit",
@@ -1326,6 +1627,13 @@
     "type": "press release",
     "accessed": "2026-09-09"
   },
+  "https://ircms.irstreet.com/contents/data_file.php?template=2158&brand=85&data=491586&filename=pdf_file.pdf": {
+    "title": "Ferrotec, securities report (有価証券報告書), 46th fiscal year (year ended March 2026)",
+    "publisher": "Ferrotec",
+    "date": "2026-06-25",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
   "https://jp.mitsuichemicals.com/": {
     "title": "Mitsui Chemicals, company website (三井化学株式会社)",
     "publisher": "Mitsui Chemicals",
@@ -1339,12 +1647,26 @@
     "type": "pdf",
     "accessed": "2026-10-20"
   },
+  "https://jp.mitsuichemicals.com/content/dam/mitsuichemicals/sites/mci/documents/release/2026/ms_260622.pdf": {
+    "title": "Mitsui Chemicals, securities report (有価証券報告書), 29th fiscal year (year ended March 2026)",
+    "publisher": "Mitsui Chemicals",
+    "date": "2026-06-22",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
   "https://jp.mitsuichemicals.com/en/release/2024/2024_0528_1/index.htm": {
     "title": "Mitsui Chemicals Sets up Production Facilities for CNT Pellicles to Be Used in Next-Gen EUV Lithography",
     "publisher": "Mitsui Chemicals",
     "date": "2024-05-28",
     "type": "page",
     "accessed": "2026-09-09"
+  },
+  "https://jp.nipponsanso.com/LinkClick.aspx?fileticket=aagGVd5LE%2bM%3d": {
+    "title": "Nippon Sanso Holdings, securities report (有価証券報告書), 22nd fiscal year (year ended March 2026)",
+    "publisher": "Nippon Sanso Holdings",
+    "date": "2026-06-15",
+    "type": "filing",
+    "accessed": "2026-10-20"
   },
   "https://lightmatter.co/products/passage/": {
     "title": "3D Photonics for AI Applications",
@@ -1942,6 +2264,13 @@
     "type": "pdf",
     "accessed": "2026-10-20"
   },
+  "https://ssl4.eir-parts.net/doc/3436/ir_material_for_fiscal_ym10/200931/00.pdf": {
+    "title": "SUMCO, Annual Securities Report for the fiscal year ended December 31, 2025 (English translation)",
+    "publisher": "SUMCO",
+    "date": "2026-03-31",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
   "https://ssl4.eir-parts.net/doc/6920/ir_material_for_fiscal_ym9/209785/00.xlsx": {
     "title": "Lasertec, Financial Highlights [Excel], fiscal year ended June 2026",
     "publisher": "Lasertec",
@@ -1989,6 +2318,13 @@
     "date": "2026-08-25",
     "type": "pdf",
     "accessed": "2026-09-09"
+  },
+  "https://static.horiba.com/fileadmin/Horiba/Company/Investor_Relations/IR_Library/Asset_Securities_Reports/20260323_SY_jp_01_Xw7.pdf": {
+    "title": "HORIBA, securities report (有価証券報告書), 88th fiscal year (year ended December 2025)",
+    "publisher": "HORIBA",
+    "date": "2026-03-23",
+    "type": "filing",
+    "accessed": "2026-10-20"
   },
   "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2025-10-22/688783_20251022_UYMD.pdf": {
     "title": "西安奕材首次公开发行股票并在科创板上市招股说明书",
@@ -2165,6 +2501,13 @@
     "type": "page",
     "accessed": "2026-09-09"
   },
+  "https://www.adeka.co.jp/ir/library/pdf/yuhou_164-4.pdf": {
+    "title": "ADEKA, securities report (有価証券報告書), 164th fiscal year (year ended March 2026)",
+    "publisher": "ADEKA",
+    "date": "2026-06-15",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
   "https://www.advancedenergy.com/": {
     "title": "Advanced Energy Industries, company website",
     "publisher": "Advanced Energy Industries",
@@ -2198,6 +2541,13 @@
     "date": "2026-07-30",
     "type": "pdf",
     "accessed": "2026-09-09"
+  },
+  "https://www.advantest.com/document/en/investors/ir-library/report/IR_SecuritiesandBusinessReport_84th_en.pdf": {
+    "title": "Advantest, Annual Securities Report and Business Report, 84th term (FY2025, year ended March 2026), English translation",
+    "publisher": "Advantest",
+    "date": "2026-06-26",
+    "type": "filing",
+    "accessed": "2026-10-20"
   },
   "https://www.advantest.com/document/en/investors/ir-library/result/JE_BIZ_260427_note.pdf": {
     "title": "Advantest, presentation notes for the FY2025 (year ended 31 March 2026) results briefing, 27 April 2026",
@@ -2326,6 +2676,13 @@
     "date": "2026-05-07",
     "type": "pdf",
     "accessed": "2026-10-02"
+  },
+  "https://www.ajinomoto.co.jp/company/jp/ir/library/securities/main/06/teaserItems1/0/linkList/03/link/FY25Q4_annual%20Securities%20Report_J.pdf": {
+    "title": "Ajinomoto, securities report (有価証券報告書), 148th fiscal year (year ended March 2026)",
+    "publisher": "Ajinomoto",
+    "date": "2026-06-12",
+    "type": "filing",
+    "accessed": "2026-10-20"
   },
   "https://www.ajinomoto.com/stories/the-ajinomoto-groups-unexpected-role-in-semiconductor-manufacturing-the-insulating-film-abf-born-from-aminoscience": {
     "title": "The Ajinomoto Group’s Unexpected Role in Semiconductor Manufacturing: The Insulating Film “ABF” Born from “AminoScience”",
@@ -3009,6 +3366,13 @@
     "type": "filing",
     "accessed": "2026-10-20"
   },
+  "https://www.disco.co.jp/jp/ir/library/doc/fs/fs87.pdf": {
+    "title": "DISCO, securities report (有価証券報告書), 87th fiscal year (year ended March 2026)",
+    "publisher": "DISCO",
+    "date": "2026-06-16",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
   "https://www.doosan.com/en/media-center/press-release_view?id=20172812": {
     "title": "Doosan Signs Share Purchase Agreement with SK for SK Siltron",
     "publisher": "Doosan",
@@ -3398,6 +3762,20 @@
     "date": "2026-09-24",
     "type": "regulation",
     "accessed": "2026-09-09"
+  },
+  "https://www.federalreserve.gov/datadownload/Output.aspx?rel=H10&series=c5d6e0edf324b2fb28d73bcacafaaa02&lastobs=&from=01/01/2023&to=12/31/2026&filetype=csv&label=include&layout=seriescolumn&type=package": {
+    "title": "Data Download Program, Foreign Exchange Rates (G.5 / H.10): G.5 Statistical Release, Monthly rates, January 2023 to September 2026 (CSV)",
+    "publisher": "Board of Governors of the Federal Reserve System",
+    "date": "2026-10-01",
+    "type": "dataset",
+    "accessed": "2026-10-20"
+  },
+  "https://www.federalreserve.gov/releases/g5/20261001/": {
+    "title": "Foreign Exchange Rates - G.5 Monthly, release of October 1, 2026",
+    "publisher": "Board of Governors of the Federal Reserve System",
+    "date": "2026-10-01",
+    "type": "dataset",
+    "accessed": "2026-10-20"
   },
   "https://www.ferrotec.com/products/": {
     "title": "Ferrotec, products and technologies page",
@@ -4164,6 +4542,13 @@
     "type": "press release",
     "accessed": "2026-10-02"
   },
+  "https://www.ircms.jp/irexport/fujimiinc/file/a83519987178237.pdf": {
+    "title": "Fujimi Incorporated, securities report (有価証券報告書), 74th fiscal year (year ended March 2026)",
+    "publisher": "Fujimi Incorporated",
+    "date": "2026-06-19",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
   "https://www.jabil.com/": {
     "title": "Jabil, company website",
     "publisher": "Jabil",
@@ -4223,6 +4608,13 @@
     "date": "2025-02-17",
     "type": "press release",
     "accessed": "2026-10-02"
+  },
+  "https://www.jp.nikon.com/content/dam/web-assets/nikoncom/company/local/jp/ja/ir/ir_library/sr/pdf/26fr_j.pdf": {
+    "title": "Nikon, securities report (有価証券報告書), 162nd fiscal year (year ended March 2026)",
+    "publisher": "Nikon",
+    "date": "2026-06-25",
+    "type": "filing",
+    "accessed": "2026-10-20"
   },
   "https://www.jsr.co.jp/jsr_e/news/2021/20210917.html": {
     "title": "JSR Agrees to Acquire EUV Pioneer Inpria Corporation",
@@ -4418,6 +4810,13 @@
     "type": "pdf",
     "accessed": "2026-10-02"
   },
+  "https://www.mgc.co.jp/ir/files/2026_4.pdf": {
+    "title": "Mitsubishi Gas Chemical, securities report (有価証券報告書), 99th fiscal year (year ended March 2026)",
+    "publisher": "Mitsubishi Gas Chemical",
+    "date": "2026-06-22",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
   "https://www.micron.com/about/blog/applications/ai/micron-continues-memory-industry-leadership-with-hbm3e-12-high-36gb": {
     "title": "Micron continues memory industry leadership with HBM3E 12-high 36GB",
     "publisher": "Micron Technology",
@@ -4572,6 +4971,13 @@
     "publisher": "Nidec",
     "type": "page",
     "accessed": "2026-09-09"
+  },
+  "https://www.nidec.com/files/user/www-nidec-com/ir/library/reports/FY25Q4_jp.pdf": {
+    "title": "Nidec, securities report (有価証券報告書), 53rd fiscal year (year ended March 2026)",
+    "publisher": "Nidec",
+    "date": "2026-09-30",
+    "type": "filing",
+    "accessed": "2026-10-20"
   },
   "https://www.nikon.com/business/semi/lineup/": {
     "title": "Nikon, semiconductor lithography systems lineup",
@@ -4884,6 +5290,13 @@
     "publisher": "Resonac",
     "type": "page",
     "accessed": "2026-09-09"
+  },
+  "https://www.resonac.com/sites/default/files/2026-03/%E6%9C%89%E4%BE%A1%E8%A8%BC%E5%88%B8%E5%A0%B1%E5%91%8A%E6%9B%B8_20260325.pdf": {
+    "title": "Resonac Holdings, securities report (有価証券報告書), 117th fiscal year (year ended December 2025)",
+    "publisher": "Resonac Holdings",
+    "date": "2026-03-25",
+    "type": "filing",
+    "accessed": "2026-10-20"
   },
   "https://www.reuters.com/article/us-southkorea-japan-whitelist/south-korea-removes-japan-from-fast-track-trade-white-list-idUSKBN1W21T2": {
     "title": "South Korea removes Japan from fast-track trade 'white list'",
@@ -5871,6 +6284,13 @@
     "type": "pdf",
     "accessed": "2026-09-09"
   },
+  "https://www.shinetsu.co.jp/wp-content/uploads/2026/08/Financial-Section.pdf": {
+    "title": "Shin-Etsu Chemical, Annual Report 2026, Financial Section (fiscal year ended March 2026)",
+    "publisher": "Shin-Etsu Chemical",
+    "date": "2026-08",
+    "type": "report",
+    "accessed": "2026-10-20"
+  },
   "https://www.shinko.co.jp/english/news/docs/20260930-01_en.pdf": {
     "title": "Notice Concerning the Acquisition of Japan Display Inc.’s Mobara Fab",
     "publisher": "Shinko Electric Industries",
@@ -5883,6 +6303,13 @@
     "publisher": "Shinko Electric Industries",
     "type": "page",
     "accessed": "2026-09-09"
+  },
+  "https://www.shinko.co.jp/ir/docs/bn2025.pdf": {
+    "title": "Shinko Electric Industries, consolidated financial results for the fiscal year ended March 2025 (2025年3月期 決算短信)",
+    "publisher": "Shinko Electric Industries",
+    "date": "2025-04-24",
+    "type": "filing",
+    "accessed": "2026-10-20"
   },
   "https://www.shpcb.com/": {
     "title": "Victory Giant Technology, company website (胜宏科技)",
@@ -6002,6 +6429,13 @@
     "type": "page",
     "accessed": "2026-10-18"
   },
+  "https://www.stella-chemifa.co.jp/ir/securities/files/yhq4_2026.pdf": {
+    "title": "Stella Chemifa, securities report (有価証券報告書), 83rd fiscal year (year ended March 2026)",
+    "publisher": "Stella Chemifa",
+    "date": "2026-06-18",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
   "https://www.stimson.org/2025/why-taiwan-fears-america-first-risks-eroding-its-silicon-shield/": {
     "title": "Why Taiwan Fears ‘America First’ Risks Eroding Its ‘Silicon Shield’",
     "publisher": "Stimson Center",
@@ -6041,6 +6475,13 @@
     "date": "2026-07-02",
     "type": "press release",
     "accessed": "2026-10-02"
+  },
+  "https://www.sumitomo-chem.co.jp/ir/library/security_report/files/docs/25_4q.pdf": {
+    "title": "Sumitomo Chemical, securities report (有価証券報告書), 145th fiscal year (year ended March 2026)",
+    "publisher": "Sumitomo Chemical",
+    "date": "2026-06-22",
+    "type": "filing",
+    "accessed": "2026-10-20"
   },
   "https://www.supermicro.com/en/products/gpu": {
     "title": "GPU Servers For AI, Deep / Machine Learning & HPC",
@@ -6133,6 +6574,13 @@
     "type": "pdf",
     "accessed": "2026-09-09"
   },
+  "https://www.tok.co.jp/application/files/9717/7432/8945/securities_2512.pdf": {
+    "title": "Tokyo Ohka Kogyo, securities report (有価証券報告書), 96th fiscal year (year ended December 2025)",
+    "publisher": "Tokyo Ohka Kogyo",
+    "date": "2026-03-24",
+    "type": "filing",
+    "accessed": "2026-10-20"
+  },
   "https://www.tok.co.jp/eng/products/semiconductor-pre": {
     "title": "Semiconductor Manufacturing Field",
     "publisher": "Tokyo Ohka Kogyo",
@@ -6144,6 +6592,13 @@
     "publisher": "Tokuyama Corporation",
     "type": "page",
     "accessed": "2026-09-09"
+  },
+  "https://www.tokuyama.co.jp/ir/pdf/SR162_full.pdf": {
+    "title": "Tokuyama, securities report (有価証券報告書), 162nd fiscal year (year ended March 2026)",
+    "publisher": "Tokuyama",
+    "date": "2026-06-19",
+    "type": "filing",
+    "accessed": "2026-10-20"
   },
   "https://www.trumpf.com/en_US/products/lasers/euv-drive-laser/": {
     "title": "Good things come in ever-smaller packages",

@@ -1,5 +1,5 @@
-/* Print: the report. A 9.5 pt page, one chapter per page, every source a footnote at the foot
-   of the page it is cited on, and a running head in the margin.
+/* Print: the report. A 10 pt page, each chapter from a new page, every source a short footnote at the foot
+   of the page it is cited on, a source list with full addresses after each chapter, and a running head in the margin.
    Footnotes and margin boxes need Paged.js, which build/pdf.py injects from build/vendor/ after
    the page has loaded; src/modules/print.js writes each note from the citation's data-* fields
    and puts the class cp-print on <html>. Without Paged.js (the browser's own Print) the page
@@ -67,23 +67,29 @@
 
   /* ---------- the type ramp for paper ----------
      Screen sizes are in px and far too large at this measure; every step of the ramp is set
-     here in points against a 9.5 pt body, so the hierarchy holds on the page. */
-  body { background: #fff; color: #000; font-size: 9.5pt; line-height: 1.42; }
-  /* a reading measure of about 75 characters, left-aligned, the way a report reads */
+     here in points against a 10 pt body, so the hierarchy holds on the page. */
+  body { background: #fff; color: #000; font-size: 10pt; line-height: 1.45; }
+  /* a reading measure of about 80 characters, left-aligned, the way a report reads */
   .column, .chapter, .prose { width: 100%; max-width: none; padding: 0; margin-left: 0; }
   .prose > p, .prose > ul, .prose > ol, .prose h3, .prose h4, .inshort p, .plain p, .ch-lede { max-width: 132mm; }
   .mt-prose > p, .mt-log p, .mt-cites { max-width: 132mm; }
-  .prose > p, .prose > ul, .prose > ol, .prose blockquote { font-size: 9.5pt; line-height: 1.42; }
-  .prose li { margin-bottom: 0.3em; }
+  .prose > p, .prose > ul, .prose > ol, .prose blockquote { font-size: 10pt; line-height: 1.45; }
+  /* Space between blocks is set above them, never below. Chrome drops a block's top margin at the head of a page, but
+     counts a bottom margin against the page it ends: the last lines of a paragraph, or the card after it, then went over. */
+  .prose > p, .prose > ul, .prose > ol, .prose > blockquote { margin: 2.4mm 0 0; }
+  .prose li { margin: 0.3em 0 0; }
+  .chapter > .prose { margin-top: 5mm; }
   .prose blockquote { padding-left: 4mm; border-left-width: 1.5pt; }
   .prose code { font-size: 0.86em; }
 
   .ch-title { font-size: 23pt; line-height: 1.02; margin: -1mm 0 3mm; }
   .ch-lede { font-size: 11.8pt; line-height: 1.36; max-width: 118mm; }
-  /* the ledger column keeps its place on paper: the number in a 22 mm margin, the head beside it */
-  .chapter { display: grid; grid-template-columns: 22mm minmax(0, 1fr); column-gap: 6mm; padding: 0; border-top: 0; }
-  .chapter > .ch-ledger { grid-column: 1; grid-row: 1; position: static; text-align: right; padding: 0; }
-  .chapter > .chapter-head, .chapter > .prose { grid-column: 2; }
+  /* The ledger column keeps its place on paper: the number in a 22 mm margin, the head and the text beside it. The
+     number floats in the chapter's left padding. A grid would hold the head as one row, which Chrome moves whole to the
+     next page when it fits there: a short head then left the page before it empty. */
+  .chapter { display: block; padding: 0 0 0 28mm; border-top: 0; }
+  .chapter > .ch-ledger { float: left; width: 22mm; margin-left: -28mm; position: static; text-align: right; padding: 0; }
+  .chapter > .chapter-head, .chapter > .prose { margin-left: 0; }
   .ch-tile { padding: 0; }
   .ch-tile .v { font-size: 24pt; margin: 0.6mm 0 0.4mm; }
   .ch-tile .k, .ch-tile .of { font-size: 6.4pt; }
@@ -94,37 +100,66 @@
   .label, .plate-head .label { font-size: 7pt; }
 
   /* the two boxes that carry the argument in plain words */
-  .inshort { margin: 6mm 0 7mm; border-left-width: 3pt; padding-left: 5mm; }
-  .inshort p { font-size: 11.5pt; line-height: 1.45; margin-bottom: 1.6mm; }
-  .plain { margin: 6mm 0 7mm; padding: 3mm 5mm 3.4mm; border-left-width: 2.5pt; max-width: 132mm; }
-  .plain p { font-size: 10pt; line-height: 1.5; }
+  .inshort { margin: 6mm 0 0; border-left-width: 3pt; padding-left: 5mm; }
+  /* each paragraph stands 1.8 mm below the one before (the first meets the label's own space and the larger counts).
+     No "a + b" or ":first-of-type" selectors in this file: Paged.js rewrites them as attribute rules of lower weight,
+     and they lose. */
+  .inshort p { font-size: 10.8pt; line-height: 1.42; margin: 1.8mm 0 0; }
+  .plain { margin: 5mm 0 0; padding: 3mm 5mm 3.4mm; border-left-width: 2.5pt; max-width: 132mm; }
+  .plain p { font-size: 10pt; line-height: 1.48; margin: 0; }
   /* the takeaways after the flashcards ("Four things to remember"): the list at the size of In plain terms, its label at
      the labels' size. Left to the screen's 17 px, it printed at 12.75 pt, above
      In short. The selectors match the screen's (styles.css) in weight, so these, coming later, win. */
-  .review .rv-keep { margin: 4mm 0 3mm; padding-top: 2.6mm; }
-  .review .rv-keep h4.label { font-size: 7pt; margin-bottom: 2.4mm; }
-  .review .rv-keep li { font-size: 10pt; line-height: 1.45; padding-bottom: 1.6mm; }
+  .review { border-top: 0; padding-top: 0; margin-top: 7mm; } /* the deck's head is screen-only, so its rule would stand alone over the list's own */
+  .review .fc-end { margin-top: 0; }
+  .review .rv-keep { margin: 0; padding-top: 2.6mm; }
+  .review .rv-keep h4.label { font-size: 7pt; margin-bottom: 0.8mm; }
+  .review .rv-keep li { font-size: 10pt; line-height: 1.45; padding-bottom: 0; margin-top: 1.6mm; }
 
-  /* the chokepoint card */
-  .plate { margin-bottom: 7mm; box-shadow: none; }
-  .plate-head { padding: 2mm 4mm; }
+  /* the chokepoint card, kept whole on one page (below) and set close, so that with its notes it shares a page with the
+     end of In short */
+  .plate { margin: 6mm 0 0; box-shadow: none; } /* the screen's overflow: hidden stays: Chrome then moves the card whole */
+  .chapter-head { margin-bottom: 0; }
+  .plate-head { padding: 1.4mm 3mm; gap: 3mm; }
+  .plate-head .label { white-space: nowrap; }
+  .plate-head .ptag { font-size: 6.4pt; padding: 0.6mm 1.6mm; }
   .plate-score { font-size: 7.4pt; }
   .plate-score b { font-size: 8pt; }
   .pips i { width: 6.5pt; height: 6.5pt; border-width: 1pt; }
-  .plate-kpis > div { padding: 3mm 4mm 3.2mm; }
-  .plate-kpis .k, .plate-status .k, .plate-rows dt { font-size: 6.4pt; margin-bottom: 1.6mm; }
-  .plate-kpis .v { font-size: 15.5pt; line-height: 1.06; }
-  .plate-kpis .v.cost { font-size: 13pt; }
-  .plate-kpis .v.cost.long { font-size: 9.5pt; line-height: 1.3; }
+  .plate-kpis > div { padding: 1.8mm 3mm 2mm; }
+  .plate-kpis .k, .plate-status .k, .plate-rows dt { font-size: 6.4pt; margin-bottom: 1mm; }
+  .plate-kpis .v { font-size: 13pt; line-height: 1.06; }
+  .plate-kpis .v.cost { font-size: 12pt; }
+  .plate-kpis .v.cost.long { font-size: 8.8pt; line-height: 1.3; }
   .plate-kpis .v small { font-size: 8pt; }
-  .plate-kpis .sub { font-size: 6.8pt; line-height: 1.45; margin-top: 1.6mm; }
-  .plate-rows .row { grid-template-columns: 32mm 1fr; gap: 5mm; padding: 2.4mm 4mm; }
-  .plate-rows dd { font-size: 9.2pt; line-height: 1.4; }
-  .plate-rows li { padding-left: 7mm; text-indent: -7mm; margin-bottom: 1.4mm; }
-  .plate-rows .note { font-size: 8.6pt; }
-  .plate-rows .why { font-size: 9pt; }
-  .plate-status > div { padding: 2.6mm 4mm 3mm; }
-  .plate-status p { font-size: 8.8pt; line-height: 1.45; }
+  .plate-kpis .sub { font-size: 6.6pt; line-height: 1.36; margin-top: 1mm; }
+  .plate-rows .row { grid-template-columns: 24mm 1fr; gap: 3.5mm; padding: 1.4mm 3mm; }
+  .plate-rows dd { font-size: 8.3pt; line-height: 1.32; }
+  .plate-rows li { padding-left: 7mm; text-indent: -7mm; margin-bottom: 0.5mm; }
+  .plate-rows .note { font-size: 7.9pt; }
+  .plate-rows .why { font-size: 8.3pt; }
+  .plate-status > div { padding: 1.7mm 3mm 1.9mm; }
+  .plate-status p { font-size: 8.1pt; line-height: 1.34; }
+  /* A chapter whose card would open a page after a short one is laid out again with its head and card set closer
+     (build/pdf.py, print.js .cp-tight): the end of In short and the card then share a page. */
+  .cp-tight .plain, .cp-tight .inshort, .cp-tight .plate { margin-top: 4.5mm; }
+  .cp-tight .plain { padding: 2.4mm 4.4mm 2.8mm; }
+  .cp-tight .plain p { line-height: 1.42; }
+  .cp-tight .inshort p { font-size: 10.4pt; line-height: 1.38; }
+  .cp-tight .inshort p { margin-top: 1.4mm; }
+  .cp-tight .plate-kpis > div { padding: 1.4mm 3mm 1.5mm; }
+  .cp-tight .plate-rows .row { padding: 1mm 3mm; }
+  .cp-tight .plate-rows dd, .cp-tight .plate-rows .why { font-size: 7.9pt; line-height: 1.27; }
+  .cp-tight .plate-rows .note { font-size: 7.6pt; }
+  .cp-tight .plate-rows li { margin-bottom: 0.2mm; }
+  .cp-tight .plate-status > div { padding: 1.4mm 3mm 1.5mm; }
+  .cp-tight .plate-status p { font-size: 7.8pt; line-height: 1.28; }
+  /* A card that with its notes is taller than a page even set closer would run into the notes (it is kept whole as one
+     block, and Chrome never breaks that). Its chapter is laid out once more with the card free to break, between its
+     parts only (print.js .cp-split): the figures, each row, the two lines on China and the US. */
+  .cp-split .plate { break-inside: auto; overflow: visible; }
+  .cp-split .plate-head, .cp-split .plate-kpis, .cp-split .plate-rows .row, .cp-split .plate-status { break-inside: avoid; }
+  .cp-split .plate-head { break-after: avoid; }
   /* the card's marks print in the notes' red, as the prose's do. The China revenue line under a leader is a way into the
      interactive chart, with no note of its own, so paper leaves it out. */
   .plate sup.cite a, .plate sup.cite-sep { color: var(--accent-ink); }
@@ -133,32 +168,42 @@
   .cc { font-size: 7pt; }
 
   /* tables and figures: they may fill the column, never spill off it */
-  .table-wrap { overflow: visible; margin: 3mm 0 4mm; }
+  .table-wrap { overflow: visible; margin: 4mm 0 0; }
+  .prose > .cp-after { margin-top: 4.5mm; } /* the block after a figure or table (print.js marks it) */
   .prose table { font-size: 8.6pt; line-height: 1.32; }
   .prose th, .prose td { padding: 1.4mm 2.6mm; }
   .prose th { font-size: 6.8pt; }
-  .figure { margin: 4mm 0 5mm; padding: 3mm 3.5mm 2.6mm; }
+  .figure { margin: 5mm 0 0; padding: 3mm 3.5mm 2.6mm; }
   .figure .fig-title { font-size: 9.5pt; margin-bottom: 2.4mm; }
   .figure .fig-title .unit { font-size: 6.8pt; }
   .figure .fig-source { font-size: 6.8pt; margin-top: 2mm; }
   .stack-legend { font-size: 7pt; gap: 1mm 4mm; margin-top: 2mm; }
   .tl li { font-size: 8.6pt; }
   .tl li .d { font-size: 6.8pt; }
+  /* an animation on paper: its last frame, then its steps in the figures' small type (styles.css prints the list) */
+  .figure--anim .anim-stage { border: 0; }
+  .figure--anim .anim-print { display: block; width: 100%; height: auto; }
+  .figure--anim .anim-transcript { font-size: 8.6pt; line-height: 1.38; margin: 2.6mm 0 0; padding-left: 5mm; }
+  .figure--anim .anim-transcript li { margin: 0 0 0.9mm; }
   figure svg, .figure svg, #exposure-viz svg { max-width: 100%; height: auto; }
 
 
   /* how to read, and the contents as a report's contents: one line a chapter, with its page */
-  .howto { margin: 0 0 8mm; padding: 3.4mm 4mm 1mm; }
+  .howto { margin: 0 0 4mm; padding: 3.4mm 4mm 1mm; }
   .howto h2 { font-size: 7.4pt; margin-bottom: 2.4mm; }
   .howto h2.howto-title { font-size: 19pt; margin-bottom: 1.6mm; }
   .howto .howto-lede { font-size: 10.5pt; margin-bottom: 3mm; }
   .howto h3.howto-k { font-size: 7.4pt; padding-top: 2.4mm; margin-bottom: 1.6mm; }
   .howto p, .howto li { font-size: 9pt; line-height: 1.45; }
-  .contents { break-after: page; padding: 4mm 0 0; margin-top: 6mm; }
+  .contents { break-after: page; padding: 3mm 0 0; margin-top: 3mm; }
+  /* the two group heads ("The fifteen stages", "Across the chain") and the note under the second: the screen's 62 px
+     above the second ran the contents' last line onto a page of its own */
+  .contents .contents-k { margin: 3.5mm 0 2mm; padding-top: 0; border-top: 0; font-size: 7pt; }
+  .contents .contents-note { margin: 0 0 2mm; font-size: 9pt; line-height: 1.4; }
   .contents h2 { font-size: 14pt; margin-bottom: 4mm; }
   .contents-grid { display: block; }
   .contents-grid .item { break-inside: avoid; display: flex; align-items: baseline; gap: 4mm;
-    border-bottom: 0.3pt solid var(--line); padding: 1.3mm 0; }
+    border-bottom: 0.3pt solid var(--line); padding: 0.9mm 0; } /* close enough that the seventeen lines share the page with How to read */
   .contents-grid .n { font-size: 7.4pt; }
   .contents-grid .t { flex: 1; display: flex; justify-content: space-between; gap: 6mm;
     margin: 0; font-size: 9.5pt; letter-spacing: 0.03em; }
@@ -170,7 +215,8 @@
   details > summary { display: block; list-style: none; }
   details:not([open]) > *:not(summary) { display: block !important; }
   details::details-content { content-visibility: visible !important; display: block !important; block-size: auto !important; }
-  .chapter-sources, .mt-note { break-inside: avoid; }
+  .mt-note { break-inside: avoid; }
+  .chapter-sources li { break-inside: avoid; }
   .chapter-sources ol, .mt-cites { font-size: 7.6pt; }
   .chapter-sources li, .mt-cites li { overflow-wrap: anywhere; }
   /* the browser's own print (and the PDF's fallback) gives each source its full address under its title; the marks in
@@ -181,7 +227,9 @@
   .cp-print .chapter-sources { display: none !important; }
 
   /* One chapter per page, and blocks that must not be split across the fold. */
-  .chapter { break-before: page; padding: 0 0 4mm; border-top: 0; }
+  /* No padding at the chapter's foot: Paged.js copies the chapter onto each page it fills, each copy with its own padding,
+     so a bottom padding stood under the last line of every page and pushed that paragraph out of sight */
+  .chapter { break-before: page; padding-top: 0; padding-bottom: 0; border-top: 0; }
   .print-only { display: block !important; }
   /* ---------- the cover ----------
      A4 portrait, the wafer cover (qa/cover-wafer.md). The 300 mm wafer in plan view, drawn by
@@ -189,7 +237,7 @@
      either side, 14mm from the head, notch at the foot, no plate and no bleed. Beneath it the
      seven lines of type: eyebrow, title, subtitle, then the colophon at the foot under one
      hairline. No running head: @page :first empties the margin boxes. */
-  .print-title { break-after: page; min-height: 258mm; display: flex !important; flex-direction: column; padding-bottom: 0; }
+  .print-title { break-after: page; min-height: 258mm; display: flex !important; flex-direction: column; padding-bottom: 0; line-height: 1.42; } /* its own leading: the body's 1.45 ran the cover's last line onto page 2 */
   .print-title .pt-art {
     align-self: flex-start; display: block;
     width: 164mm; height: auto; max-width: none;
@@ -222,20 +270,32 @@
   .pt-chapter .ptc-ck { font-family: var(--font-mono); font-weight: 500; font-size: 6.6pt; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
   /* the colophon's citation for this edition, written by print.js in place of the screen's */
   .site-footer .cite--edition pre { font-size: 7.4pt; padding: 2.4mm 3mm; overflow-wrap: anywhere; }
+  /* the citation and its BibTeX on one page, under their heading; the credits and the tier key may close the page before */
+  .site-footer .cite--edition { break-inside: avoid; }
+  .site-footer .credits, .site-footer .sources-key { break-inside: avoid; }
   .howto { break-inside: avoid; }
   .contents .item { break-inside: avoid; }
   .gl-term { border-bottom: 0 !important; text-decoration: none !important; background: none !important; color: inherit !important; }
+  /* print.js makes each glossary term a span (a button never breaks across a line); the card's rating tags keep their box */
+  .gl-term:not(.ptag) { display: inline; white-space: normal; line-height: inherit; letter-spacing: inherit; vertical-align: baseline; }
   sup.cite { margin-left: 1px; }
   sup.cite a { padding: 0; background: none !important; }
   .view-head { break-after: avoid; padding-top: 0; }
-  .plate, .figure, .inshort, .plain, .brief-card, .gl-entry, .mt-note, .mt-log li { break-inside: avoid; }
-  h1, h2, h3, h4, .ch-title, .ch-lede { break-after: avoid; }
+  /* Whole on one page: the card, each chart or figure with its title and source line, and the short boxes elsewhere on the
+     site. In plain terms, In short, paragraphs and lists run on across a page like any text, two lines at least either side. */
+  .plate, .figure, .brief-card, .gl-entry, .mt-note, .mt-log li { break-inside: avoid; }
+  /* a box that runs on to the next page has its top rule on its first part only and its bottom rule on its last */
+  .plain[data-split-to], .cp-sources[data-split-to] { border-bottom: 0; padding-bottom: 0; }
+  .plain[data-split-from], .cp-sources[data-split-from] { border-top: 0; padding-top: 0; margin-top: 0; }
+  p, li, blockquote, dd { orphans: 2; widows: 2; }
+  h1, h2, h3, h4, h5, .ch-title, .ch-lede, .label { break-after: avoid; }
   thead { display: table-header-group; }
   tr { break-inside: avoid; }
   a[href] { text-decoration: none; color: inherit; }
   .prose sup.cite a { color: var(--accent-ink); }
-  .site-footer { break-before: page; font-size: 8pt; }
+  .site-footer { break-before: page; font-size: 8pt; margin-left: 28mm; } /* on the text's column, as the source list is */
   .site-footer .sources-key, .site-footer .updated { font-size: 7.2pt; }
+  .site-footer .tier { width: auto; height: auto; line-height: 1.25; padding: 0 0.8mm; margin: 0 1.2mm 0 0; font-size: 6.2pt; vertical-align: 0.4pt; }
   /* one chapter alone starts under its title block and the colophon follows its text. Paged.js applies breaks by
      selector, in the order the rules come, inside the body: so these come after the rules they undo, and key on the
      title block rather than on a class of <html>. */
@@ -249,18 +309,32 @@
   .fn { float: footnote; }
   .fn::footnote-call { content: none; }
   .fn::footnote-marker { content: ""; }
-  .fn[data-note] { font-family: var(--font-body); font-size: 7.8pt; line-height: 1.28; color: var(--ink-2); }
+  /* One note a line where it fits: the number hung in the margin of the notes, the title in ink, then publisher, date
+     and page, then the short address (print.js shortUrl; the chapter's source list gives it in full). */
+  .fn[data-note] { font-family: var(--font-body); font-size: 7.4pt; line-height: 1.3; color: var(--ink-2); }
   .pagedjs_footnote_inner_content .fn {
-    display: block; list-style: none;
-    padding-left: 6mm; text-indent: -6mm; margin: 0 0 1.1mm;
-    overflow-wrap: anywhere;
+    display: block; list-style: none; position: relative;
+    padding-left: 5.5mm; margin: 0 0 0.7mm;
   }
   .pagedjs_footnote_inner_content .fn:last-child { margin-bottom: 0; }
-  .fn-n { font-family: var(--font-mono); font-size: 6.8pt; color: var(--ink); }
+  .fn-n { position: absolute; left: 0; top: 0.1pt; width: 4.4mm; text-align: right; font-family: var(--font-mono); font-weight: 500; font-size: 6.6pt; color: var(--accent-ink); font-variant-numeric: tabular-nums; }
   .fn-t { color: var(--ink); }
-  .fn-m { color: var(--muted); }
-  .fn-tier { font-family: var(--font-mono); font-size: 6pt; letter-spacing: 0.06em; color: var(--muted); border: 0.4pt solid var(--line-2); border-radius: 1pt; padding: 0 0.8mm; }
-  .fn-u { font-family: var(--font-mono); font-size: 6.6pt; color: var(--muted); }
+  .fn-m { color: var(--ink-2); }
+  .fn-u { font-family: var(--font-mono); font-size: 6.3pt; letter-spacing: -0.01em; color: var(--muted); white-space: nowrap; }
+
+  /* ---------- the chapter's source list, after its text ----------
+     print.js (sourceList) builds it from the screen's list: numbered as the notes are, each source with its tier, its
+     title, its publisher and date, and its full address. */
+  .cp-sources { margin: 9mm 0 0; padding-top: 2.6mm; border-top: 0.5pt solid var(--line-2); max-width: none; }
+  .cp-sources .cp-sources-h { font-family: var(--font-mono); font-weight: 500; font-size: 7pt; line-height: 1.3; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 2.6mm; break-after: avoid; }
+  .cp-sources ol { margin: 0; padding-left: 7mm; font-size: 7.6pt; line-height: 1.32; color: var(--ink-2); }
+  .cp-sources li { margin: 1.5mm 0 0; break-inside: avoid; }
+  .cp-sources li::marker { font-family: var(--font-mono); font-weight: 500; font-size: 6.6pt; color: var(--accent-ink); }
+  .cp-sources li a { color: var(--ink); }
+  .cp-sources .tier { width: auto; height: auto; line-height: 1.2; padding: 0 0.7mm; margin-right: 1.6mm; font-size: 5.8pt; vertical-align: 0.6pt; }
+  .cp-sources .src-meta { display: inline; font-family: var(--font-body); font-size: 7.6pt; color: var(--ink-2); }
+  .cp-sources .src-meta::before { content: ". "; }
+  .cp-sources .src-url { display: block; font-family: var(--font-mono); font-size: 6.3pt; line-height: 1.35; color: var(--muted); overflow-wrap: anywhere; }
   /* a note that Paged.js could not move stays in the text; it must not print as loose words */
   .pagedjs_page_content .fn { display: none !important; }
 

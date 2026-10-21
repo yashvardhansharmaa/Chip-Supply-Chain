@@ -329,7 +329,7 @@ const staticAnimations = (html) => html.replace(/<figure class="figure figure--a
   const notes = (inner.match(/<p class="fig-source">[\s\S]*?<\/p>/g) || []).join('');
   const base = '../' + src;
   const size = ratio ? ` width="${ratio[1]}" height="${ratio[2]}"` : '';
-  return `<figure class="figure figure--anim"${id || ''}>${title}<div class="anim-frame"><video controls preload="none" playsinline muted${size} poster="${base}-light-end.jpg" src="${base}-light.mp4" data-media="${base}" aria-label="Animation: ${textOf(title)}"></video></div>${steps ? `<ol class="anim-steps">${steps}</ol>` : ''}${notes}</figure>`;
+  return `<figure class="figure figure--anim"${id || ''}>${title}<div class="anim-frame"><video controls preload="none" playsinline muted${size} poster="${base}-light-end.jpg" src="${base}-light.mp4" data-media="${base}" aria-label="Animation: ${textOf(title)}"></video></div><img class="anim-still" src="${base}-light-end.jpg" alt="Last frame of the animation: ${textOf(title)}" decoding="async" fetchpriority="low">${steps ? `<ol class="anim-steps">${steps}</ol>` : ''}${notes}</figure>`;
 });
 
 // Links inside the chapter: a heading on this page stays a fragment, another chapter goes to its readable page, anything

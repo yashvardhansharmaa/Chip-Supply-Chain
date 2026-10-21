@@ -6,7 +6,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 p = os.path.join(ROOT, 'data', 'bibliography.json')
 bib = json.loads(open(p).read())
 found = {}
-for f in sorted(glob.glob(os.path.join(ROOT, 'qa', 'round2', '*-notes.md')) + glob.glob(os.path.join(ROOT, 'qa', 'round2', 'expert-*.md'))):
+for f in sorted(glob.glob(os.path.join(ROOT, 'qa', 'round2', '*-notes.md')) + glob.glob(os.path.join(ROOT, 'qa', 'round2', 'expert-*.md')) + glob.glob(os.path.join(ROOT, 'qa', 'round3', '*-notes.md'))):
     s = open(f).read(); i = s.lower().find('new bibliography entries')
     if i < 0: continue
     for block in re.findall(r'```json\s*\n([\s\S]*?)\n```', s[i:]):

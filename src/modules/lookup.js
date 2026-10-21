@@ -150,8 +150,12 @@
       if (where) facts.push(['Based in', where]);
       if (r.founded) facts.push(['Founded', String(r.founded)]);
       if (r.ownership || r.ticker) facts.push(['Ownership', [r.ownership, r.ticker ? 'ticker ' + r.ticker : ''].filter(Boolean).join(', ')]);
-      if (r.revenueUSDb != null) facts.push(['Revenue', '$' + (Math.round(r.revenueUSDb * 10) / 10).toLocaleString('en-US') + 'bn' + (r.revenueYear ? ', ' + r.revenueYear : '')]);
       if (r.customers && r.customers.length) facts.push(['Named customers', r.customers.join(', ')]);
+      // revenue as filed, linked to the filing, with about how much in dollars (the Suppliers row prints it the same way, src/app.js);
+      // it comes last and takes the card's full width, so the filing's note follows it. A firm with no filed revenue yet keeps its earlier dollar figure.
+      var rs = r.revenueShown, revHTML = rs && CP.Suppliers && CP.Suppliers.revenueHTML ? CP.Suppliers.revenueHTML(rs) : '';
+      if (revHTML) facts.push(['Revenue', revHTML, true]);
+      else if (r.revenueUSDb != null) facts.push(['Revenue', '$' + (Math.round(r.revenueUSDb * 10) / 10).toLocaleString('en-US') + 'bn' + (r.revenueYear ? ', ' + r.revenueYear : '')]);
       return '<article class="lk-card lk-card--firm">' +
         '<p class="lk-kind">Firm' + (r.chokepoint ? ' · <span class="lk-chk lk-chk--' + esc(String(r.chokepoint).toLowerCase()) + '">' + esc(r.chokepoint) + '</span>' : '') + '</p>' +
         '<h3>' + esc(r.name) + (r.nativeName ? ' <span class="lk-native">' + esc(r.nativeName) + '</span>' : '') + '</h3>' +
@@ -159,7 +163,9 @@
         (r.role ? '<p class="lk-lede">' + esc(r.role) + '</p>' : '') +
         (r.shareNote ? '<p class="lk-p">' + esc(r.shareNote) + '</p>' : '') +
         (r.aiRelevance ? '<p class="lk-p lk-why">' + esc(r.aiRelevance) + '</p>' : '') +
-        (facts.length ? '<dl class="lk-facts">' + facts.map(function (f) { return '<div><dt>' + esc(f[0]) + '</dt><dd>' + esc(f[1]) + '</dd></div>'; }).join('') + '</dl>' : '') +
+        (facts.length ? '<dl class="lk-facts">' + facts.map(function (f) { return (f[2] ? '<div class="lk-fact-wide">' : '<div>') + '<dt>' + esc(f[0]) + '</dt><dd>' + (f[2] ? f[1] : esc(f[1])) + '</dd></div>'; }).join('') + '</dl>' : '') +
+        // the filing's note (build/build.js leaves out the lines meant for the editors): a figure from an unaudited release, a year older, or one the auditor would not sign
+        (revHTML && rs.note ? '<p class="lk-revnote"><b>About the revenue figure.</b> ' + esc(rs.note) + '</p>' : '') +
         '<p class="lk-links"><a href="#/suppliers" data-sup="' + esc(r.name) + '">In the supplier list →</a>' + (r.source && CP.safeUrl(r.source) ? ' <a href="' + esc(CP.safeUrl(r.source)) + '" target="_blank" rel="noopener">Company page ↗</a>' : '') + '</p>' +
         '</article>';
     },

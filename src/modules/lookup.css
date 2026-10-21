@@ -51,6 +51,10 @@
 .lk-facts div { min-width: 0; }
 .lk-facts dt { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
 .lk-facts dd { margin: 0; font-size: 15px; line-height: 1.4; overflow-wrap: anywhere; }
+.lk-facts .lk-fact-wide { grid-column: 1 / -1; } /* revenue as filed, with its year and dollar figure, on one line where it fits */
+/* the filing's note on the revenue figure: quiet, and free to break a long URL or file name */
+.lk-revnote { margin: 8px 0 10px; font-size: 13.5px; line-height: 1.5; color: var(--muted); overflow-wrap: anywhere; }
+.lk-revnote b { font-weight: 600; color: var(--ink-2); }
 .lk-links { margin: 12px 0 0; display: flex; flex-wrap: wrap; gap: 8px 18px; }
 .lk-links a { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 600; font-size: 13.5px; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
 .lk-noentry { border: 1px dashed var(--line-2); border-radius: 0; padding: 16px 20px; }

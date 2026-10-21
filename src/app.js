@@ -1261,7 +1261,8 @@
       if (r.shareNote) facts.push(['Share', esc(r.shareNote)]);
       if (r.founded) facts.push(['Founded', esc(r.founded)]);
       if (r.ownership) facts.push(['Ownership', esc(r.ownership)]);
-      if (r.revenueUSDb != null) {
+      if (r.revenueShown) facts.push(['Revenue', this.revenueHTML(r.revenueShown)]);
+      else if (r.revenueUSDb != null) { // a firm with no filed revenue yet keeps its earlier dollar figure (build/build.js names them)
         var v = (r.revenueUSDb >= 10 ? r.revenueUSDb.toFixed(1) : r.revenueUSDb.toFixed(2)).replace(/0+$/, '').replace(/\.$/, '');
         facts.push(['Revenue', '$' + v + 'B' + (r.revenueYear ? ' (' + esc(r.revenueYear) + ')' : '')]);
       }
@@ -1274,6 +1275,14 @@
         // the China revenue panel's latest figure for the firm (for a division, its parent's, and the label says so), linked to its chart
         (r.china ? '<p class="sup-china"><a href="' + safeUrl(r.china.href) + '">' + esc(r.china.label) + '<span class="sr-only">. Opens the chart of every year</span> <span aria-hidden="true">→</span></a></p>' : '') +
         (r.source ? '<a class="sup-src" href="' + safeUrl(r.source) + '" target="_blank" rel="noopener" aria-label="Source for ' + esc(r.name) + '">Source</a>' : '') + '</div>';
+    },
+    // a firm's revenue as its filing prints it, linked to the filing, then the fiscal year by the month it ends, then, for a firm
+    // that does not file in dollars, about how much in dollars: "¥2,443,533 million (year to March 2026), about $16.2 billion".
+    // build/build.js writes every piece (revenueShown); the Index card (src/modules/lookup.js) prints it with this too
+    revenueHTML: function (s) {
+      if (!s || !s.filed) return '';
+      return (s.href ? '<a class="rev-filed" href="' + safeUrl(s.href) + '" target="_blank" rel="noopener">' + esc(s.filed) + '<span class="sr-only">, opens the filing</span></a>' : '<span class="rev-filed">' + esc(s.filed) + '</span>') +
+        (s.year ? ' (' + (s.group ? 'group revenue, ' : '') + esc(s.year) + ')' : '') + (s.about ? ', <span class="rev-usd">' + esc(s.about) + '</span>' : '');
     },
 
     /* ---- detailed table: every field, as before ---- */
@@ -1294,9 +1303,14 @@
       $('#sup-table').innerHTML = html + '</tbody>';
     },
     copy: function () {
-      var rows = this.filtered(), cols = ['name', 'nativeName', 'category', 'subcategory', 'country', 'city', 'founded', 'ticker', 'ownership', 'chokepoint', 'shareNote', 'role', 'customers', 'revenueUSDb', 'revenueYear', 'source'];
+      var rows = this.filtered(), cols = ['name', 'nativeName', 'category', 'subcategory', 'country', 'city', 'founded', 'ticker', 'ownership', 'chokepoint', 'shareNote', 'role', 'customers', 'revenueUSDb', 'revenueYear', 'source',
+        'revenueAmount', 'revenueUnit', 'revenueCurrency', 'revenueFiscalYear', 'revenueFyEnd', 'revenueSource', 'revenueUSD', 'revenueUSDBasis'];
+      // the filed revenue after the earlier columns: the amount as filed (without commas, so a spreadsheet reads it as a number) and the
+      // revenue object's own fields, then the dollar figure build/build.js converted and the rates it used
+      var REV = { revenueUnit: 'unit', revenueCurrency: 'currency', revenueFiscalYear: 'fiscalYear', revenueFyEnd: 'fyEnd', revenueSource: 'source' };
+      var val = function (r, c) { return c === 'revenueAmount' ? (r.revenueShown || {}).amount : REV[c] ? (r.revenue || {})[REV[c]] : r[c]; };
       var q = function (v) { if (v == null) return ''; if (Array.isArray(v)) v = v.join('; '); return String(v).replace(/[\t\n\r]+/g, ' '); }; // tab-separated: a spreadsheet splits it on paste
-      var csv = cols.join('\t') + '\n' + rows.map(function (r) { return cols.map(function (c) { return q(r[c]); }).join('\t'); }).join('\n');
+      var csv = cols.join('\t') + '\n' + rows.map(function (r) { return cols.map(function (c) { return q(val(r, c)); }).join('\t'); }).join('\n');
       var btn = $('#sup-copy');
       var done = function (ok) { btn.textContent = ok ? 'Copied ' + rows.length + ' rows' : 'Copy failed'; setTimeout(function () { btn.textContent = 'Copy table'; }, 2200); };
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(csv).then(function () { done(true); }, function () { done(false); });

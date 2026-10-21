@@ -1,0 +1,210 @@
+[
+ {
+  "name": "Empyrean Technology",
+  "country": "CN",
+  "ticker": "301269.SZ",
+  "revenueUSDb_now": 0.197,
+  "revenueYear_now": 2025,
+  "role": "A Chinese EDA vendor. In its 2025 annual report, filed in April 2026, it says it has complete design tool chains for analog, memory, radio-frequency and flat-pa"
+ },
+ {
+  "name": "Primarius Technologies",
+  "country": "CN",
+  "ticker": "688206.SS",
+  "revenueUSDb_now": 0.072,
+  "revenueYear_now": 2025,
+  "role": "A Chinese EDA vendor that makes device modeling, parameter extraction and fast SPICE circuit simulation software. Device models describe how the transistors on "
+ },
+ {
+  "name": "Semitronix",
+  "country": "CN",
+  "ticker": "301095.SZ",
+  "revenueUSDb_now": 0.109,
+  "revenueYear_now": 2025,
+  "role": "Supplies test-chip design software, on-wafer electrical test systems and yield analysis tools used to measure and debug a new manufacturing process. Its product"
+ },
+ {
+  "name": "Cambricon Technologies",
+  "country": "CN",
+  "ticker": "688256.SS",
+  "revenueUSDb_now": 0.966,
+  "revenueYear_now": 2025,
+  "role": "Designs the Siyuan training and inference accelerators and sells them to Chinese cloud operators. Among listed Chinese companies that design AI chips for sale t"
+ },
+ {
+  "name": "Hygon Information Technology",
+  "country": "CN",
+  "ticker": "688041.SS",
+  "revenueUSDb_now": 2.137,
+  "revenueYear_now": 2025,
+  "role": "Makes x86-compatible server CPUs, derived from an AMD license, and the Deep Computing Unit (DCU) accelerator line. It supplies Chinese government and state ente"
+ },
+ {
+  "name": "Moore Threads",
+  "country": "CN",
+  "ticker": "688795.SS",
+  "revenueUSDb_now": 0.224,
+  "revenueYear_now": 2025,
+  "role": "Builds full-function GPUs with a CUDA-like software layer, aimed at replacing Nvidia in Chinese workstations and training clusters. It listed on Shanghai's STAR"
+ },
+ {
+  "name": "Biren Technology",
+  "country": "CN",
+  "ticker": "6082.HK",
+  "revenueUSDb_now": 0.154,
+  "revenueYear_now": 2025,
+  "role": "Designs the BR100 series general-purpose GPUs for AI training and high-performance computing. Export controls forced it to redesign its chips so they no longer "
+ },
+ {
+  "name": "MetaX",
+  "country": "CN",
+  "ticker": "688802.SS",
+  "revenueUSDb_now": 0.244,
+  "revenueYear_now": 2025,
+  "role": "A Chinese designer of general-purpose GPUs, whose Xiyun and Xisi lines are built for AI training and inference in Chinese data centers. It offers a CUDA-compati"
+ },
+ {
+  "name": "Iluvatar CoreX",
+  "country": "CN",
+  "ticker": "9903.HK",
+  "revenueUSDb_now": 0.154,
+  "revenueYear_now": 2025,
+  "role": "Designs the Tiangai and Zhikai general-purpose AI accelerators for Chinese data centers, built to work with mainstream AI frameworks."
+ },
+ {
+  "name": "National Silicon Industry Group",
+  "country": "CN",
+  "ticker": "688126.SS",
+  "revenueUSDb_now": 0.552,
+  "revenueYear_now": 2025,
+  "role": "China's state-backed silicon wafer group, which owns Shanghai Zing Semiconductor (300 mm wafers) and Okmetic in Finland (specialty wafers). It is China's domest"
+ },
+ {
+  "name": "Wuhan Jingce Electronic",
+  "country": "CN",
+  "ticker": "300567.SZ",
+  "revenueUSDb_now": 0.498,
+  "revenueYear_now": 2025,
+  "role": "Makes semiconductor film metrology, electrical test and defect inspection tools for Chinese fabs through its Wuhan Jingce Semiconductor arm. It started in flat "
+ },
+ {
+  "name": "Naura Technology",
+  "country": "CN",
+  "ticker": "002371.SZ",
+  "revenueUSDb_now": 5.849,
+  "revenueYear_now": 2025,
+  "role": "China's largest semiconductor equipment maker, with plasma etch, deposition (PVD, CVD and ALD), furnace and cleaning tools. As Chinese fabs replaced foreign too"
+ },
+ {
+  "name": "AMEC",
+  "country": "CN",
+  "ticker": "688012.SS",
+  "revenueUSDb_now": 1.841,
+  "revenueYear_now": 2025,
+  "role": "Advanced Micro-Fabrication Equipment makes capacitively and inductively coupled plasma etch systems used at Chinese logic and memory fabs, plus MOCVD reactors f"
+ },
+ {
+  "name": "Piotech",
+  "country": "CN",
+  "ticker": "688072.SS",
+  "revenueUSDb_now": 0.969,
+  "revenueYear_now": 2025,
+  "role": "China's main domestic supplier of plasma-enhanced CVD and ALD systems, and more recently hybrid wafer bonding tools aimed at 3D integration."
+ },
+ {
+  "name": "SMIC",
+  "country": "CN",
+  "ticker": "0981.HK",
+  "revenueUSDb_now": 9.327,
+  "revenueYear_now": 2025,
+  "role": "China's largest foundry, producing 7 nm class logic using multipatterning on immersion DUV because it cannot buy EUV. CSET reported in June 2024 that Huawei's A"
+ },
+ {
+  "name": "Hua Hong Semiconductor",
+  "country": "CN",
+  "ticker": "1347.HK",
+  "revenueUSDb_now": 2.402,
+  "revenueYear_now": 2025,
+  "role": "A foundry focused on mature-node specialty processes, including power management, embedded memory and analog. It is mainland China's second largest pure-play fo"
+ },
+ {
+  "name": "CXMT",
+  "country": "CN",
+  "ticker": "688825.SS",
+  "revenueUSDb_now": 9.185,
+  "revenueYear_now": 2025,
+  "role": "China's only significant DRAM maker, producing DDR4 and DDR5 and working toward HBM. It has scaled capacity quickly enough to move commodity DRAM prices."
+ },
+ {
+  "name": "JCET Group",
+  "country": "CN",
+  "ticker": "600584.SS",
+  "revenueUSDb_now": 5.777,
+  "revenueYear_now": 2025,
+  "role": "A leading Chinese assembly and test firm, offering wire bond, flip chip, fan-out and system-in-package assembly. Its revenue reached a record RMB 38.87 billion "
+ },
+ {
+  "name": "Tongfu Microelectronics",
+  "country": "CN",
+  "ticker": "002156.SZ",
+  "revenueUSDb_now": 4.15,
+  "revenueYear_now": 2025,
+  "role": "A Chinese OSAT that packages a large share of AMD's CPUs and GPUs through joint venture plants acquired from AMD in 2016. It is developing 2.5D chiplet packagin"
+ },
+ {
+  "name": "Hua Tian Technology",
+  "country": "CN",
+  "ticker": "002185.SZ",
+  "revenueUSDb_now": 2.559,
+  "revenueYear_now": 2025,
+  "role": "A Chinese OSAT that ranks among the ten largest in the world. It provides wire bond, flip chip and fan-out packaging from plants in Tianshui, Xi'an, Kunshan and"
+ },
+ {
+  "name": "Victory Giant Technology",
+  "country": "CN",
+  "ticker": "300476.SZ",
+  "revenueUSDb_now": 2.867,
+  "revenueYear_now": 2025,
+  "role": "Makes high-layer-count printed circuit boards and supplies AI accelerator baseboards and switch boards to the server ODMs."
+ },
+ {
+  "name": "WUS Printed Circuit",
+  "country": "CN",
+  "ticker": "002463.SZ",
+  "revenueUSDb_now": 2.816,
+  "revenueYear_now": 2025,
+  "role": "Makes high-speed multilayer printed circuit boards for servers, switches and AI accelerators, and is a main supplier to networking equipment makers."
+ },
+ {
+  "name": "Luxshare Precision",
+  "country": "CN",
+  "ticker": "002475.SZ",
+  "revenueUSDb_now": 49.397,
+  "revenueYear_now": 2025,
+  "role": "A large Chinese contract manufacturer of connectors, high-speed cable assemblies and modules, and a growing supplier of AI server interconnect hardware alongsid"
+ },
+ {
+  "name": "Innolight Technology",
+  "country": "CN",
+  "ticker": "300308.SZ",
+  "revenueUSDb_now": 5.684,
+  "revenueYear_now": 2025,
+  "role": "A world-leading maker of high-speed optical transceiver modules for data centers, shipping 800G and 1.6T modules to hyperscalers. AI clusters need one or more o"
+ },
+ {
+  "name": "Eoptolink Technology",
+  "country": "CN",
+  "ticker": "300502.SZ",
+  "revenueUSDb_now": 3.692,
+  "revenueYear_now": 2025,
+  "role": "A major supplier of 400G, 800G and 1.6T optical transceivers to cloud and AI data center operators, and one of the fastest growing Chinese optics firms."
+ },
+ {
+  "name": "Lenovo",
+  "country": "CN",
+  "ticker": "0992.HK",
+  "revenueUSDb_now": 83.075,
+  "revenueYear_now": 2026,
+  "role": "Builds AI servers and its Neptune warm-water liquid cooling systems, selling into enterprises and research computing worldwide from plants in China, Hungary, Me"
+ }
+]

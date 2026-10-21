@@ -1,0 +1,250 @@
+{
+  "Alchip Technologies": {
+    "amount": 30926092, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=3661&filename=202504_3661_AIA.pdf#page=8",
+    "quote": "OPERATING REVENUE (Notes 20 and 27) $ 991,857 $ 30,926,092 100 $ 1,618,353 $ 51,968,570 100",
+    "note": "MOPS e-document 202504_3661_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_3661_AI1.pdf), uploaded 2026-04-09; the link opens a page with the PDF. Unit line: (In Thousands of New Taiwan Dollars or U.S. Dollars, Except Earnings Per Share). The statement prints a USD column beside the NTD one (2025: US$991,857 thousand); the notes name the New Taiwan dollar as the presentation currency, so the NTD figure is used."
+  },
+  "Global Unichip": {
+    "amount": 34140978, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Net revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=3443&filename=202504_3443_AIA.pdf#page=8",
+    "quote": "NET REVENUE (Notes 17 and 28) $ 34,140,978 100 $ 25,044,192 100",
+    "note": "MOPS e-document 202504_3443_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_3443_AI1.pdf), uploaded 2026-01-29; the link opens a page with the PDF. Unit line: (In Thousands of New Taiwan Dollars, Except Earnings Per Share)."
+  },
+  "MediaTek": {
+    "amount": 595965682, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Net sales, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2454&filename=202504_2454_AIA.pdf#page=10",
+    "quote": "Net sales 4, 5, 6(23), 7 $ 595,965,682 100 $ 530,585,886 100",
+    "note": "MOPS e-document 202504_2454_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_2454_AI1.pdf), uploaded 2026-02-26; the link opens a page with the PDF. Unit line: (Amounts in thousands of New Taiwan Dollars, except for earnings per share)."
+  },
+  "GlobalWafers": {
+    "amount": 60597938, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=6488&filename=202504_6488_AIA.pdf#page=9",
+    "quote": "4000 Operating revenue (notes 6(23) and 7) $ 60,597,938 100 62,626,004 100",
+    "note": "MOPS e-document 202504_6488_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_6488_AI1.pdf), uploaded 2026-04-15; the link opens a page with the PDF. Unit line: (Expressed in Thousands of New Taiwan Dollars, Except for Earnings Per Share)."
+  },
+  "OCI Holdings": {
+    "amount": 3380060390, "unit": "thousand", "currency": "KRW",
+    "scope": "company", "basis": "매출액 (Revenue), consolidated, K-IFRS",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260318000617&dcmNo=11136858&eleId=21&offset=503877&length=26152&dtd=dart4.xsd",
+    "quote": "매출액 3,380,060,390",
+    "note": "DART business report (사업보고서) for 2025 (52nd period), filed 2026-03-18, rcpNo 20260318000617, section III 2-2 연결 손익계산서, unit (단위 : 천원)."
+  },
+  "Soulbrain": {
+    "amount": 923381966875, "unit": "one", "currency": "KRW",
+    "scope": "company", "basis": "매출액 (Revenue), consolidated, K-IFRS",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260316001567&dcmNo=11129507&eleId=21&offset=259551&length=31561&dtd=dart4.xsd",
+    "quote": "매출액 (주4,26) 923,381,966,875",
+    "note": "DART business report (사업보고서) of 솔브레인 (Soulbrain Co., 357780; not the holding company 솔브레인홀딩스) for 2025 (6th period), filed 2026-03-16, rcpNo 20260316001567, section III 2-2 연결 포괄손익계산서, unit (단위 : 원)."
+  },
+  "Park Systems": {
+    "amount": 205613479882, "unit": "one", "currency": "KRW",
+    "scope": "company", "basis": "수익(매출액) (Revenue), consolidated, K-IFRS",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260319000022&dcmNo=11145726&eleId=21&offset=268686&length=26691&dtd=dart4.xsd",
+    "quote": "수익(매출액) 205,613,479,882",
+    "note": "DART business report (사업보고서) for 2025 (29th period), filed 2026-03-19, rcpNo 20260319000022, section III 2-2 연결 포괄손익계산서, unit (단위 : 원)."
+  },
+  "TSMC": {
+    "amount": 3809054272, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Net revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2330&filename=202504_2330_AIA.pdf#page=8",
+    "quote": "NET REVENUE (Notes 5, 21, 33 and 39) $ 3,809,054,272 100 $ 2,894,307,699 100",
+    "note": "MOPS e-document 202504_2330_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_2330_AI1.pdf), uploaded 2026-02-26; the link opens a page with the PDF. Unit line: (In Thousands of New Taiwan Dollars, Except Earnings Per Share). The 2025 Form 20-F (EDGAR accession 0001628280-26-025362, filed 2026-04-16) could not be opened on sec.gov (HTTP 403 to the generic User-Agent, two tries on 2026-10-20). TSMC's IR copy of the same 20-F (https://investor.tsmc.com/sites/ir/sec-filings/2025_20F%20Report.pdf#page=101, read through WebFetch after the site refused curl) prints 'NET REVENUE 6, 22, 34, 38 $ 2,161,735.8 $ 2,894,307.7 $ 3,809,054.3 $ 121,423.5' in millions of NT$ (US$ column is a convenience translation), consistent with this figure."
+  },
+  "UMC": {
+    "amount": 237553199, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Operating revenues, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2303&filename=202504_2303_AIA.pdf#page=10",
+    "quote": "Operating revenues 4, 6(21), 7 $ 237,553,199 $ 232,302,584",
+    "note": "MOPS e-document 202504_2303_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_2303_AI1.pdf), uploaded 2026-02-25; the link opens a page with the PDF. Unit line: (Expressed in Thousands of New Taiwan Dollars, Except for Earnings per Share)."
+  },
+  "SK hynix": {
+    "amount": 97146675, "unit": "million", "currency": "KRW",
+    "scope": "company", "basis": "매출액 (Revenue), consolidated, K-IFRS",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260317000635&dcmNo=11132576&eleId=21&offset=371607&length=31668&dtd=dart4.xsd",
+    "quote": "매출액 (주4,24,31) 97,146,675",
+    "note": "DART business report (사업보고서) for 2025 (78th period), filed 2026-03-17, rcpNo 20260317000635, section III 2-2 연결 포괄손익계산서, unit (단위 : 백만원). Whole company, including Solidigm."
+  },
+  "Nanya Technology": {
+    "amount": 66586520, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2408&filename=202504_2408_AIA.pdf#page=9",
+    "quote": "4000 Operating revenue (Notes 6(t) and 7) $ 66,586,520 100 34,131,667 100",
+    "note": "MOPS e-document 202504_2408_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_2408_AI1.pdf), uploaded 2026-04-02; the link opens a page with the PDF. Unit line: (Expressed in Thousands of New Taiwan Dollars, Except Earnings Per Share)."
+  },
+  "Winbond Electronics": {
+    "amount": 89406171, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2344&filename=202504_2344_AIA.pdf#page=8",
+    "quote": "OPERATING REVENUE (Notes 4, 23 and 31) $ 89,406,171 100 $ 81,609,768 100",
+    "note": "MOPS e-document 202504_2344_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_2344_AI1.pdf), uploaded 2026-03-18; the link opens a page with the PDF. Unit line: (In Thousands of New Taiwan Dollars, Except Earnings Per Share)."
+  },
+  "ASE Technology Holding": {
+    "amount": 645387710, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=3711&filename=202504_3711_AIA.pdf#page=9",
+    "quote": "OPERATING REVENUE (Note 39) $ 645,387,710 100 $ 595,409,585 100",
+    "note": "MOPS e-document 202504_3711_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_3711_AI1.pdf), uploaded 2026-03-18; the link opens a page with the PDF. Unit line: (In Thousands of New Taiwan Dollars Except Earnings Per Share). The 2025 Form 20-F (EDGAR accession 0001193125-26-135585, d50802d20f.htm) could not be opened: sec.gov returned HTTP 403 to the generic User-Agent on 2026-10-20 and ASE's IR site returned 403, so the MOPS filing of the same audited consolidated statements is used."
+  },
+  "Powertech Technology": {
+    "amount": 74929320, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Net sales, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=6239&filename=202504_6239_AIA.pdf#page=7",
+    "quote": "NET SALES (Notes 4, 24 and 30) $ 74,929,320 100 $ 73,315,042 100",
+    "note": "MOPS e-document 202504_6239_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_6239_AI1.pdf), uploaded 2026-03-11; the link opens a page with the PDF. Unit line: (In Thousands of New Taiwan Dollars, Except Earnings Per Share)."
+  },
+  "King Yuan Electronics": {
+    "amount": 34933546, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Net sales, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2449&filename=202504_2449_AIA.pdf#page=10",
+    "quote": "Net sales 4, 6(16), 6(18), 7 $34,933,546 100 $26,856,031 100",
+    "note": "MOPS e-document 202504_2449_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_2449_AI1.pdf), uploaded 2026-05-08; the link opens a page with the PDF. Unit line: (Amounts in thousands of New Taiwan Dollars, except for earnings per share)."
+  },
+  "Chipbond Technology": {
+    "amount": 21454104, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=6147&filename=202504_6147_AIA.pdf#page=12",
+    "quote": "4000 Operating revenue 6(19) and 7 $ 21,454,104 100 $ 20,337,566 100",
+    "note": "MOPS e-document 202504_6147_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_6147_AI1.pdf), uploaded 2026-03-13; the link opens a page with the PDF. Unit line: (Expressed in thousands of New Taiwan dollars, except earnings per share amounts)."
+  },
+  "Unimicron": {
+    "amount": 131240882, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Sales revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=3037&filename=202504_3037_AIA.pdf#page=13",
+    "quote": "4000 Sales revenue 6(25) and 7 $ 131,240,882 100 $ 115,373,282 100",
+    "note": "MOPS e-document 202504_3037_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_3037_AI1.pdf), uploaded 2026-04-08; the link opens a page with the PDF. Unit line: (Expressed in thousands of New Taiwan dollars, except for earnings per share amounts)."
+  },
+  "Kinsus Interconnect": {
+    "amount": 39351096, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Operating revenues, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=3189&filename=202504_3189_AIA.pdf#page=11",
+    "quote": "4000 Operating revenues 4, 6(23), 7 $39,351,096 100 $30,534,979 100",
+    "note": "MOPS e-document 202504_3189_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_3189_AI1.pdf), uploaded 2026-03-03; the link opens a page with the PDF. Unit line: (Amounts Expressed in Thousands of New Taiwan Dollars, Except for Earnings per Share)."
+  },
+  "Nan Ya PCB": {
+    "amount": 40172990, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=8046&filename=202504_8046_AIA.pdf#page=9",
+    "quote": "4000 Operating revenue (notes 6(m) and 7) $ 40,172,990 100 32,283,331 100",
+    "note": "MOPS e-document 202504_8046_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_8046_AI1.pdf), uploaded 2026-03-27; the link opens a page with the PDF. Unit line: (Expressed in Thousands of New Taiwan Dollars, Except for Earnings Per Share)."
+  },
+  "Samsung Electro-Mechanics": {
+    "amount": 11314459238100, "unit": "one", "currency": "KRW",
+    "scope": "company", "basis": "매출액 (Revenue), consolidated, K-IFRS",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260310003071&dcmNo=11105795&eleId=21&offset=341261&length=44392&dtd=dart4.xsd",
+    "quote": "매출액 (주3,20,24) 11,314,459,238,100",
+    "note": "DART business report (사업보고서) for 2025 (53rd period), filed 2026-03-10, rcpNo 20260310003071, section III 2-2 연결 포괄손익계산서, unit (단위 : 원)."
+  },
+  "LG Innotek": {
+    "amount": 21896603, "unit": "million", "currency": "KRW",
+    "scope": "company", "basis": "매출액 (Revenue), consolidated, K-IFRS",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260312001270&dcmNo=11116775&eleId=21&offset=303972&length=21173&dtd=dart4.xsd",
+    "quote": "매출액 21,896,603",
+    "note": "DART business report (사업보고서) for 2025 (50th period), filed 2026-03-12, rcpNo 20260312001270, section III 2-2 연결 손익계산서, unit (단위 : 백만원)."
+  },
+  "Gold Circuit Electronics": {
+    "amount": 60003758, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Sales revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2368&filename=202504_2368_AIA.pdf#page=10",
+    "quote": "4100 Sales revenue (Note IV) $ 60,003,758 100 $ 38,951,890 100",
+    "note": "MOPS e-document 202504_2368_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_2368_AI1.pdf), uploaded 2026-04-01; the link opens a page with the PDF. Unit line: Unit: NTD thousand, except for EPS (NT$). The English translation heads the revenue block 'Operating income' (Chinese 營業收入); its only line is 4100 Sales revenue (銷貨收入), so this is the total."
+  },
+  "MPI Corporation": {
+    "amount": 13371181, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Operating revenue, net, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=6223&filename=202504_6223_AIA.pdf#page=13",
+    "quote": "Operating Revenue, net 13,371,181 100 10,171,861 100",
+    "note": "MOPS e-document 202504_6223_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_6223_AI1.pdf), uploaded 2026-05-08; the link opens a page with the PDF. Unit line: (All amounts are expressed in thousands of New Taiwan Dollars unless otherwise stated). The top line is 'Operating Revenue, net', after sales returns and allowances and including lease, commission and processing revenue; the 'Sales revenue' line above it reads 13,375,725."
+  },
+  "Chroma ATE": {
+    "amount": 28310935, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Net operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2360&filename=202504_2360_AIA.pdf#page=8",
+    "quote": "NET OPERATING REVENUE (Notes 21 and 28) $ 28,310,935 100 $ 21,603,837 100",
+    "note": "MOPS e-document 202504_2360_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_2360_AI1.pdf), uploaded 2026-04-24; the link opens a page with the PDF. Unit line: (In Thousands of New Taiwan Dollars, Except Earnings Per Share)."
+  },
+  "Accton Technology": {
+    "amount": 248319703, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2345&filename=202504_2345_AIA.pdf#page=8",
+    "quote": "OPERATING REVENUE (Notes 4, 25, 36 and 41) $ 248,319,703 100 $ 110,424,744 100",
+    "note": "MOPS e-document 202504_2345_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_2345_AI1.pdf), uploaded 2026-05-13; the link opens a page with the PDF. Unit line: (In Thousands of New Taiwan Dollars, Except Earnings Per Share)."
+  },
+  "Hon Hai Precision": {
+    "amount": 8103104763, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2317&filename=202504_2317_AIA.pdf#page=10",
+    "quote": "4000 Operating revenue 6(30) and 7 $ 8,103,104,763 100 $ 6,859,615,493 100",
+    "note": "MOPS e-document 202504_2317_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_2317_AI1.pdf), uploaded 2026-05-07; the link opens a page with the PDF. Unit line: (EXPRESSED IN THOUSANDS OF NEW TAIWAN DOLLARS, EXCEPT FOR EARNINGS PER SHARE AMOUNTS)."
+  },
+  "Quanta Computer": {
+    "amount": 2123689447, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2382&filename=202504_2382_AIA.pdf#page=9",
+    "quote": "4000 Operating revenue (Notes (6)(v) and (7)) $ 2,123,689,447 100 1,410,755,659 100",
+    "note": "MOPS e-document 202504_2382_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_2382_AI1.pdf), uploaded 2026-04-24; the link opens a page with the PDF. Unit line: (AMOUNTS EXPRESSED IN THOUSANDS OF NEW TAIWAN DOLLARS)."
+  },
+  "Wistron": {
+    "amount": 2186522636, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Net revenues, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=3231&filename=202504_3231_AIA.pdf#page=9",
+    "quote": "4000 Net revenues (notes 6(aa) and 7) $2,186,522,636 100 1,049,255,781 100",
+    "note": "MOPS e-document 202504_3231_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_3231_AI1.pdf), uploaded 2026-04-14; the link opens a page with the PDF. Unit line: (Expressed in Thousands of New Taiwan Dollars, Except for Earnings Per Share)."
+  },
+  "Wiwynn": {
+    "amount": 950663310, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=6669&filename=202504_6669_AIA.pdf#page=9",
+    "quote": "4000 Operating revenue (notes 6(s) and 7) $ 950,663,310 100 360,541,104 100",
+    "note": "MOPS e-document 202504_6669_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_6669_AI1.pdf), uploaded 2026-02-26; the link opens a page with the PDF. Unit line: (Expressed in Thousands of New Taiwan dollars, Except for Earnings Per Common Share)."
+  },
+  "Inventec": {
+    "amount": 691190326, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2356&filename=202504_2356_AIA.pdf#page=9",
+    "quote": "4000 Operating revenue (Notes (4), (6)(v) and (7)) $ 691,190,326 100 646,261,954 100",
+    "note": "MOPS e-document 202504_2356_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_2356_AI1.pdf), uploaded 2026-04-14; the link opens a page with the PDF. Unit line: (Expressed in Thousands of New Taiwan Dollars)."
+  },
+  "Delta Electronics": {
+    "amount": 554885168, "unit": "thousand", "currency": "TWD",
+    "scope": "company", "basis": "Operating revenue, consolidated, Taiwan-IFRS (IFRSs as endorsed by the FSC)",
+    "fiscalYear": "2025", "fyStart": "2025-01", "fyEnd": "2025-12",
+    "source": "https://doc.twse.com.tw/server-java/t57sb01?step=9&kind=A&co_id=2308&filename=202504_2308_AIA.pdf#page=10",
+    "quote": "Operating revenue 6(21) and 7 $ 17,654,635 $ 554,885,168 $ 421,147,557",
+    "note": "MOPS e-document 202504_2308_AIA.pdf (English translation of the 2025 consolidated financial report; Chinese original 202504_2308_AI1.pdf), uploaded 2026-04-15; the link opens a page with the PDF. Unit line: (EXPRESSED IN THOUSANDS OF DOLLARS, EXCEPT EARNINGS PER SHARE DATA). The statement also prints US$17,654,635 thousand for 2025; the notes call the US-dollar figures a convenience translation at NT$31.430 per US$1.00 (31 December 2025), so the NTD figure is used."
+  }
+}

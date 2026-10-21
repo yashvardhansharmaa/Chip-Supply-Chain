@@ -1,0 +1,282 @@
+[
+ {
+  "name": "Shin-Etsu Chemical",
+  "country": "JP",
+  "ticker": "4063.T",
+  "revenueUSDb_now": 16.734,
+  "revenueYear_now": 2026,
+  "role": "The world's largest silicon wafer maker by capacity and shipments. Silicon wafers are the blank discs every logic and memory die is built on. Shin-Etsu held an "
+ },
+ {
+  "name": "SUMCO",
+  "country": "JP",
+  "ticker": "3436.T",
+  "revenueUSDb_now": 2.663,
+  "revenueYear_now": 2025,
+  "role": "The second-largest silicon wafer maker by capacity and shipments. It makes only wafers, selling polished and epitaxial 300 mm wafers to logic and memory fabs wo"
+ },
+ {
+  "name": "Tokuyama",
+  "country": "JP",
+  "ticker": "4043.T",
+  "revenueUSDb_now": 2.272,
+  "revenueYear_now": 2026,
+  "role": "Japanese chemical maker supplying semiconductor-grade polysilicon from Shunan and Malaysia, plus high-purity isopropyl alcohol and other fab chemicals. It is on"
+ },
+ {
+  "name": "Tokyo Ohka Kogyo",
+  "country": "JP",
+  "ticker": "4186.T",
+  "revenueUSDb_now": 1.541,
+  "revenueYear_now": 2025,
+  "role": "Makes photoresist for KrF, ArF immersion and EUV lithography, plus developers, strippers and thick-film resists used in advanced packaging. It has supplied resi"
+ },
+ {
+  "name": "Fujifilm",
+  "country": "JP",
+  "ticker": "4901.T",
+  "revenueUSDb_now": 21.824,
+  "revenueYear_now": 2026,
+  "role": "Makes photoresist, developers, CMP polishing slurries, polyimides and cleaning chemicals. It built this large electronic materials business from its photographi"
+ },
+ {
+  "name": "Sumitomo Chemical",
+  "country": "JP",
+  "ticker": "4005.T",
+  "revenueUSDb_now": 15.138,
+  "revenueYear_now": 2026,
+  "role": "Makes ArF and EUV photoresist and high-purity metals and compounds for fabs, though its petrochemical and agrochemical business is much larger. It is one of the"
+ },
+ {
+  "name": "Adeka",
+  "country": "JP",
+  "ticker": "4401.T",
+  "revenueUSDb_now": 2.708,
+  "revenueYear_now": 2026,
+  "role": "Makes the organometallic precursor molecules that atomic layer deposition tools use to build films one atomic layer at a time, including metal films and the hig"
+ },
+ {
+  "name": "Fujimi Incorporated",
+  "country": "JP",
+  "ticker": "5384.T",
+  "revenueUSDb_now": 0.451,
+  "revenueYear_now": 2026,
+  "role": "Makes the abrasive slurries used to polish silicon wafers and to planarize (polish flat) the metal and insulating layers built up during chip fabrication. Fujim"
+ },
+ {
+  "name": "JX Advanced Metals",
+  "country": "JP",
+  "ticker": "5016.T",
+  "revenueUSDb_now": 5.751,
+  "revenueYear_now": 2026,
+  "role": "Supplies the ultra-high-purity copper, tantalum and titanium sputtering targets used to deposit the metal interconnect on a chip, along with high-purity treated"
+ },
+ {
+  "name": "Nippon Sanso Holdings",
+  "country": "JP",
+  "ticker": "4091.T",
+  "revenueUSDb_now": 8.839,
+  "revenueYear_now": 2026,
+  "role": "The parent of Taiyo Nippon Sanso, supplying bulk and electronic specialty gases in Japan, the US and Asia. It is a major source of the high-purity gases Japanes"
+ },
+ {
+  "name": "Kanto Denka Kogyo",
+  "country": "JP",
+  "ticker": "4047.T",
+  "revenueUSDb_now": 0.425,
+  "revenueYear_now": 2026,
+  "role": "Makes fluorine-based specialty gases including tungsten hexafluoride and carbon fluorides used for plasma etch and chamber cleaning. It is one of a small number"
+ },
+ {
+  "name": "Stella Chemifa",
+  "country": "JP",
+  "ticker": "4109.T",
+  "revenueUSDb_now": 0.239,
+  "revenueYear_now": 2026,
+  "role": "Refines hydrofluoric acid to the purity needed to etch and clean silicon without leaving metal contamination. Japan's 2019 decision to require export licenses f"
+ },
+ {
+  "name": "Resonac Holdings",
+  "country": "JP",
+  "ticker": "4004.T",
+  "revenueUSDb_now": 8.758,
+  "revenueYear_now": 2025,
+  "role": "Supplies high-purity etch gases, CMP slurries, die attach films, and the copper-clad laminates and encapsulants used in advanced packaging. It was formed from S"
+ },
+ {
+  "name": "Nikon",
+  "country": "JP",
+  "ticker": "7731.T",
+  "revenueUSDb_now": 4.402,
+  "revenueYear_now": 2026,
+  "role": "Makes ArF immersion, ArF, KrF and i-line lithography systems. It now has a small share of the leading-edge market. But its tools are still used to make chips on"
+ },
+ {
+  "name": "Canon",
+  "country": "JP",
+  "ticker": "7751.T",
+  "revenueUSDb_now": 30.066,
+  "revenueYear_now": 2025,
+  "role": "Makes i-line and KrF steppers for mature nodes and packaging. It is also commercializing nanoimprint lithography, which stamps a pattern into the resist. Nanoim"
+ },
+ {
+  "name": "Horiba",
+  "country": "JP",
+  "ticker": "6856.T",
+  "revenueUSDb_now": 2.165,
+  "revenueYear_now": 2025,
+  "role": "Supplies mass flow controllers, which meter process gases into chambers to within a fraction of a percent. It also supplies residual gas analyzers and liquid co"
+ },
+ {
+  "name": "Ferrotec Holdings",
+  "country": "JP",
+  "ticker": "6890.T",
+  "revenueUSDb_now": 1.878,
+  "revenueYear_now": 2026,
+  "role": "Supplies quartz and ceramic chamber consumables, ferrofluidic vacuum feedthroughs, electrostatic chucks and thermoelectric coolers, with much of its manufacturi"
+ },
+ {
+  "name": "Hoya",
+  "country": "JP",
+  "ticker": "7741.T",
+  "revenueUSDb_now": 6.161,
+  "revenueYear_now": 2026,
+  "role": "Makes the ultra-flat low-thermal-expansion glass blanks, coated with molybdenum-silicon multilayers, that become EUV photomasks. Hoya says it holds an exception"
+ },
+ {
+  "name": "AGC Inc.",
+  "country": "JP",
+  "ticker": "5201.T",
+  "revenueUSDb_now": 13.385,
+  "revenueYear_now": 2025,
+  "role": "The main supplier of EUV mask blanks besides Hoya, and a major maker of synthetic quartz substrates and photomask glass. AGC says it is the only blank maker tha"
+ },
+ {
+  "name": "Toppan Holdings",
+  "country": "JP",
+  "ticker": "7911.T",
+  "revenueUSDb_now": 11.735,
+  "revenueYear_now": 2026,
+  "role": "Makes advanced photomasks through its photomask arm and is building flip-chip BGA substrate capacity for AI packages. Its photomask business became a separate c"
+ },
+ {
+  "name": "Dai Nippon Printing",
+  "country": "JP",
+  "ticker": "7912.T",
+  "revenueUSDb_now": 9.833,
+  "revenueYear_now": 2026,
+  "role": "Makes photomasks, including EUV masks, plus lead frames and other electronic components. Like Toppan, it applied the precision of commercial printing to semicon"
+ },
+ {
+  "name": "Mitsui Chemicals",
+  "country": "JP",
+  "ticker": "4183.T",
+  "revenueUSDb_now": 10.849,
+  "revenueYear_now": 2026,
+  "role": "Supplies EUV pellicles, the thin membranes that keep particles off a photomask while it is exposed. EUV pellicles must transmit over 90 percent of 13.5 nm light"
+ },
+ {
+  "name": "Lasertec",
+  "country": "JP",
+  "ticker": "6920.T",
+  "revenueUSDb_now": 1.498,
+  "revenueYear_now": 2026,
+  "role": "Makes actinic inspection tools, which use EUV light to inspect EUV mask blanks and patterned masks. Its ACTIS A150 was the world's first actinic EUV patterned m"
+ },
+ {
+  "name": "Tokyo Electron",
+  "country": "JP",
+  "ticker": "8035.T",
+  "revenueUSDb_now": 15.886,
+  "revenueYear_now": 2026,
+  "role": "Makes the coater/developer track, which applies photoresist, develops it after exposure and is physically linked to every scanner in a fab. It also makes etch, "
+ },
+ {
+  "name": "Kokusai Electric",
+  "country": "JP",
+  "ticker": "6525.T",
+  "revenueUSDb_now": 1.528,
+  "revenueYear_now": 2026,
+  "role": "Makes batch vertical furnaces and batch ALD systems that process dozens of wafers at once. Memory makers use them widely for DRAM and 3D NAND film steps where t"
+ },
+ {
+  "name": "SCREEN Holdings",
+  "country": "JP",
+  "ticker": "7735.T",
+  "revenueUSDb_now": 3.938,
+  "revenueYear_now": 2026,
+  "role": "Makes the single-wafer and batch cleaning systems that remove particles and residues between almost every process step. Cleaning is the most frequently repeated"
+ },
+ {
+  "name": "Kioxia",
+  "country": "JP",
+  "ticker": "285A.T",
+  "revenueUSDb_now": 15.197,
+  "revenueYear_now": 2026,
+  "role": "The former Toshiba Memory, making 3D NAND at Yokkaichi and Kitakami in a long-running joint venture with SanDisk. Its BiCS8 generation targets enterprise SSDs."
+ },
+ {
+  "name": "Disco Corporation",
+  "country": "JP",
+  "ticker": "6146.T",
+  "revenueUSDb_now": 2.84,
+  "revenueYear_now": 2026,
+  "role": "Makes the dicing saws, laser dicers and back-grinders that cut wafers into dies and thin them for stacking. HBM and other 3D stacks need wafers thinned to tens "
+ },
+ {
+  "name": "Ajinomoto",
+  "country": "JP",
+  "ticker": "2802.T",
+  "revenueUSDb_now": 10.296,
+  "revenueYear_now": 2026,
+  "role": "Makes Ajinomoto Build-up Film (ABF), the insulating layer between the copper layers of flip-chip package substrates. Ajinomoto, a food company, developed the ma"
+ },
+ {
+  "name": "Ibiden",
+  "country": "JP",
+  "ticker": "4062.T",
+  "revenueUSDb_now": 2.706,
+  "revenueYear_now": 2026,
+  "role": "Makes the highest-layer-count flip-chip BGA substrates, the multilayer boards a processor die sits on. It supplies substrates for large AI packages and is expan"
+ },
+ {
+  "name": "Shinko Electric Industries",
+  "country": "JP",
+  "ticker": "Private",
+  "revenueUSDb_now": 1.398,
+  "revenueYear_now": 2025,
+  "role": "Makes high-end flip-chip BGA substrates, plus lead frames and interposers. Other Japanese makers of high-end substrates include Ibiden and Toppan. It was taken "
+ },
+ {
+  "name": "Mitsubishi Gas Chemical",
+  "country": "JP",
+  "ticker": "4182.T",
+  "revenueUSDb_now": 4.799,
+  "revenueYear_now": 2026,
+  "role": "Invented BT resin, the laminate material used in memory and many package substrates, and supplies copper-clad laminates and specialty chemicals for electronics."
+ },
+ {
+  "name": "Advantest",
+  "country": "JP",
+  "ticker": "6857.T",
+  "revenueUSDb_now": 7.337,
+  "revenueYear_now": 2026,
+  "role": "Makes automated test equipment for logic and memory, including the V93000 platform used to test AI accelerators and the testers used for HBM. Test time on AI di"
+ },
+ {
+  "name": "Micronics Japan",
+  "country": "JP",
+  "ticker": "6871.T",
+  "revenueUSDb_now": 0.456,
+  "revenueYear_now": 2025,
+  "role": "Makes probe cards specialized for memory wafer test, including cards that test many DRAM and HBM dies in parallel, plus display test equipment."
+ },
+ {
+  "name": "Nidec",
+  "country": "JP",
+  "ticker": "6594.T",
+  "revenueUSDb_now": 16.954,
+  "revenueYear_now": 2025,
+  "role": "Makes precision motors, high static pressure server fans, pumps and liquid cooling modules, and supplies the coolant distribution hardware used in dense AI rack"
+ }
+]

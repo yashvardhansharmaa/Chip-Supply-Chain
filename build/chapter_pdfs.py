@@ -10,7 +10,8 @@ a time, on pdf.py's port. The whole run shares one edition date (today, or --edi
 still makes a single edition.
 
 A new file replaces the old one only if it is at least 100 KB and has text: its chapter title and its edition line,
-found by pdftotext or PyMuPDF. Anything else is refused, the old file (if any) stays, and the run exits non-zero.
+found by pdftotext or PyMuPDF, and pdf.py did not report text left off a page. Anything else is refused, the old file
+(if any) stays, and the run exits non-zero.
 Rebuild the site afterwards (node build/build.js): the cite line under each chapter title links the chapter's PDF once
 the file exists, and the sitemap lists it.
 """
@@ -92,6 +93,8 @@ try:
             why = 'pdf.py failed: ' + ' | '.join(log[-3:])
         elif any('PAGED.JS FAILED' in line for line in log):
             why = 'Paged.js could not lay it out, so pdf.py fell back to end-of-chapter notes'
+        elif any('TEXT OFF THE PAGE' in line for line in log):
+            why = next(line for line in log if 'TEXT OFF THE PAGE' in line).split('] ', 1)[-1]
         else:
             data = open(part, 'rb').read()
             text = squash(text_of(part) or '')

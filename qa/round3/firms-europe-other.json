@@ -1,0 +1,242 @@
+[
+ {
+  "name": "Arm Holdings",
+  "country": "GB",
+  "ticker": "ARM",
+  "revenueUSDb_now": 4.92,
+  "revenueYear_now": 2026,
+  "role": "Licenses the CPU architecture and cores used in the host processors that feed data to AI accelerators. These include Nvidia's Grace and Vera CPUs and the Arm co"
+ },
+ {
+  "name": "Alphawave Semi",
+  "country": "GB",
+  "ticker": "Private",
+  "revenueUSDb_now": 0.308,
+  "revenueYear_now": 2024,
+  "role": "Supplies multi-gigabit connection IP (SerDes, PCIe, UCIe and Ethernet) that moves data between chiplets and between accelerators. Qualcomm bought it to build da"
+ },
+ {
+  "name": "Siltronic",
+  "country": "DE",
+  "ticker": "WAF.DE",
+  "revenueUSDb_now": 1.566,
+  "revenueYear_now": 2025,
+  "role": "Europe's silicon wafer maker, with 300 mm capacity in Germany and a newer fab in Singapore. Its planned sale to GlobalWafers lapsed in 2022 when the German gove"
+ },
+ {
+  "name": "Soitec",
+  "country": "FR",
+  "ticker": "SOI.PA",
+  "revenueUSDb_now": 0.689,
+  "revenueYear_now": 2026,
+  "role": "Makes engineered substrates with its Smart Cut process, which moves a thin crystal layer from one wafer onto another. Most are silicon-on-insulator for radio-fr"
+ },
+ {
+  "name": "Wacker Chemie",
+  "country": "DE",
+  "ticker": "WCH.DE",
+  "revenueUSDb_now": 6.376,
+  "revenueYear_now": 2025,
+  "role": "One of the few producers of semiconductor-grade polysilicon, which it makes at Burghausen in Germany and in Tennessee. Its silicone and chemicals businesses bri"
+ },
+ {
+  "name": "Merck KGaA",
+  "country": "DE",
+  "ticker": "MRK.DE",
+  "revenueUSDb_now": 24.529,
+  "revenueYear_now": 2025,
+  "role": "Its electronics division supplies deposition precursors, specialty gases, CMP slurries and dielectrics. Merck built the division around its acquisitions of Vers"
+ },
+ {
+  "name": "Linde",
+  "country": "GB",
+  "ticker": "LIN",
+  "revenueUSDb_now": 33.986,
+  "revenueYear_now": 2025,
+  "role": "The world's largest industrial gas company. It supplies fabs with nitrogen, hydrogen, helium and rare gases such as the neon used in excimer lasers, usually fro"
+ },
+ {
+  "name": "Air Liquide",
+  "country": "FR",
+  "ticker": "AI.PA",
+  "revenueUSDb_now": 31.315,
+  "revenueYear_now": 2025,
+  "role": "Supplies ultra-pure bulk gases, specialty etch and deposition gases and ALD precursors, with on-site plants at most leading-edge fabs. It also supplies the fluo"
+ },
+ {
+  "name": "ASML",
+  "country": "NL",
+  "ticker": "ASML",
+  "revenueUSDb_now": 37.972,
+  "revenueYear_now": 2025,
+  "role": "The only maker of extreme ultraviolet (EUV) lithography scanners, the machines that print circuit patterns onto wafers. It also makes immersion deep ultraviolet"
+ },
+ {
+  "name": "Jenoptik",
+  "country": "DE",
+  "ticker": "JEN.DE",
+  "revenueUSDb_now": 1.216,
+  "revenueYear_now": 2025,
+  "role": "Supplies precision optics, laser components and optical measurement modules used inside lithography and inspection tools, and makes its own micro-optics."
+ },
+ {
+  "name": "VAT Group",
+  "country": "CH",
+  "ticker": "VACN.SW",
+  "revenueUSDb_now": 1.327,
+  "revenueYear_now": 2025,
+  "role": "Makes the high-vacuum isolation and control valves that seal and gate every process chamber. How many particles a valve sheds and how many cycles it lasts direc"
+ },
+ {
+  "name": "Pfeiffer Vacuum",
+  "country": "DE",
+  "ticker": "PFV.DE",
+  "revenueUSDb_now": 0.988,
+  "revenueYear_now": 2025,
+  "role": "Makes turbomolecular pumps, which spin at tens of thousands of revolutions per minute to reach the high vacuum that etch, deposition and EUV chambers require. I"
+ },
+ {
+  "name": "Comet Group",
+  "country": "CH",
+  "ticker": "COTN.SW",
+  "revenueUSDb_now": 0.565,
+  "revenueYear_now": 2025,
+  "role": "Makes RF power delivery components, vacuum capacitors and impedance matching networks for plasma tools, and X-ray systems used to inspect solder joints and pack"
+ },
+ {
+  "name": "Nova Ltd",
+  "country": "IL",
+  "ticker": "NVMI",
+  "revenueUSDb_now": 0.881,
+  "revenueYear_now": 2025,
+  "role": "Supplies optical critical dimension scatterometry and X-ray metrology used to measure three-dimensional structures such as gate-all-around nanosheets and high a"
+ },
+ {
+  "name": "Camtek",
+  "country": "IL",
+  "ticker": "CAMT",
+  "revenueUSDb_now": 0.496,
+  "revenueYear_now": 2025,
+  "role": "Makes inspection and metrology systems for bumping, wafer-level packaging and HBM assembly, including tools that measure bump height and coplanarity across a wa"
+ },
+ {
+  "name": "ASM International",
+  "country": "NL",
+  "ticker": "ASM.AS",
+  "revenueUSDb_now": 3.688,
+  "revenueYear_now": 2025,
+  "role": "Makes atomic layer deposition (ALD) tools, which grow films one atomic layer at a time. Chipmakers use ALD to build gate-all-around transistors and high-k diele"
+ },
+ {
+  "name": "Tower Semiconductor",
+  "country": "IL",
+  "ticker": "TSEM",
+  "revenueUSDb_now": 1.566,
+  "revenueYear_now": 2025,
+  "role": "A specialty foundry for analog, RF, power and silicon photonics, including the photonic integrated circuits used in optical transceivers and co-packaged optics."
+ },
+ {
+  "name": "BE Semiconductor Industries",
+  "country": "NL",
+  "ticker": "BESI.AS",
+  "revenueUSDb_now": 0.687,
+  "revenueYear_now": 2025,
+  "role": "Makes die attach, flip chip and thermocompression bonders, and leads in hybrid bonding tools that join dies copper pad to copper pad without solder. Hybrid bond"
+ },
+ {
+  "name": "ASMPT",
+  "country": "SG",
+  "ticker": "0522.HK",
+  "revenueUSDb_now": 1.752,
+  "revenueYear_now": 2025,
+  "role": "Supplies die bonders, thermocompression bonders, wire bonders and surface mount equipment, and is one of the firms competing to supply hybrid bonders for advanc"
+ },
+ {
+  "name": "Kulicke and Soffa",
+  "country": "SG",
+  "ticker": "KLIC",
+  "revenueUSDb_now": 0.654,
+  "revenueYear_now": 2025,
+  "role": "Makes wire bonders, the standard tool of low-cost packaging, and is developing thermocompression and fluxless bonding systems for advanced packages."
+ },
+ {
+  "name": "SUSS MicroTec",
+  "country": "DE",
+  "ticker": "SMHN.DE",
+  "revenueUSDb_now": 0.585,
+  "revenueYear_now": 2025,
+  "role": "Supplies photoresist coaters, developers, mask aligners and temporary bonding systems used in advanced packaging and MEMS, including the thick-resist processing"
+ },
+ {
+  "name": "AT&S",
+  "country": "AT",
+  "ticker": "ATS.VI",
+  "revenueUSDb_now": 2.082,
+  "revenueYear_now": 2026,
+  "role": "Makes IC substrates and advanced PCBs, with ABF substrate plants in Chongqing, China, and Kulim, Malaysia. It is the only European firm in high-end IC substrate"
+ },
+ {
+  "name": "Technoprobe",
+  "country": "IT",
+  "ticker": "TPRO.MI",
+  "revenueUSDb_now": 0.73,
+  "revenueYear_now": 2025,
+  "role": "Makes probe cards, specializing in vertical MEMS probe heads used for high pin count logic and HBM test. It is the main European probe card maker and the closes"
+ },
+ {
+  "name": "Fabrinet",
+  "country": "TH",
+  "ticker": "FN",
+  "revenueUSDb_now": 4.641,
+  "revenueYear_now": 2026,
+  "role": "A contract manufacturer of optical modules and photonic assemblies, building transceivers and optical engines for the largest networking and AI vendors from pla"
+ },
+ {
+  "name": "Celestica",
+  "country": "CA",
+  "ticker": "CLS",
+  "revenueUSDb_now": 12.391,
+  "revenueYear_now": 2025,
+  "role": "Builds servers, storage and 800G Ethernet switches for hyperscalers on a contract basis, and has grown strongly with AI networking demand."
+ },
+ {
+  "name": "Schneider Electric",
+  "country": "FR",
+  "ticker": "SU.PA",
+  "revenueUSDb_now": 46.672,
+  "revenueYear_now": 2025,
+  "role": "Supplies medium and low voltage electrical distribution, uninterruptible power supplies under the APC brand, busway and liquid cooling for data centers, plus th"
+ },
+ {
+  "name": "Eaton",
+  "country": "IE",
+  "ticker": "ETN",
+  "revenueUSDb_now": 27.448,
+  "revenueYear_now": 2025,
+  "role": "Makes switchgear, busway, transformers, UPS systems and power distribution units for data centers, a segment that has become supply constrained as AI campuses s"
+ },
+ {
+  "name": "Asetek",
+  "country": "DK",
+  "ticker": "ASTK.OL",
+  "revenueUSDb_now": 0.042,
+  "revenueYear_now": 2025,
+  "role": "Developed direct-to-chip liquid cooling for servers and high performance computing, licensing and supplying pumps, cold plates and rack coolant distribution uni"
+ },
+ {
+  "name": "Siemens Energy",
+  "country": "DE",
+  "ticker": "ENR.DE",
+  "revenueUSDb_now": 45.423,
+  "revenueYear_now": 2025,
+  "role": "Supplies gas turbines, grid transmission equipment and transformers. Its orders are booked years ahead because data center and electrification demand exceeds it"
+ },
+ {
+  "name": "Infineon",
+  "country": "DE",
+  "ticker": "IFX.DE",
+  "revenueUSDb_now": 17.043,
+  "revenueYear_now": 2025,
+  "role": "Supplies the MOSFETs, gallium nitride devices and power stages used from the grid connection through the rack power shelf to the point-of-load regulator. It is "
+ }
+]

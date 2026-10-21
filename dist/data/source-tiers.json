@@ -356,7 +356,17 @@
     "edinet-fsa.go.jp",
     "eir-parts.net",
     "csis-website-prod.s3.amazonaws.com",
-    "tsia.org.tw"
+    "tsia.org.tw",
+    "federalreserve.gov",
+    "doc.twse.com.tw",
+    "mops.twse.com.tw",
+    "hkexnews.hk",
+    "ircms.jp",
+    "ircms.irstreet.com",
+    "nipponsanso.com",
+    "company-information.service.gov.uk",
+    "comet-group.com",
+    "mb.cision.com"
   ],
   "B": [
     "newsletter.semianalysis.com",

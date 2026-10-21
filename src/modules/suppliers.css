@@ -205,6 +205,11 @@
 .sup-gbtn:focus-visible, .sup-mode:focus-visible { outline-offset: -4px; }
 .sup-gbtn[aria-pressed="true"]:focus-visible, .sup-mode[aria-pressed="true"]:focus-visible { outline-color: var(--bg); } /* on the filled button the ring takes the ground's color */
 .sup-note { max-width: 96ch; margin: 10px 0 0; font-family: var(--font-mono); font-size: 11.5px; line-height: 1.55; color: var(--muted); }
+/* revenue as filed: the method note under the list, and the filed figure (here and on the Index card), which never breaks inside */
+.sup-rev-note { margin-top: 22px; }
+.sup-rev-note:empty { display: none; }
+.rev-filed { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.rev-usd { white-space: nowrap; } /* "about $122 billion" stays on one line */
 
 /* ---------- a firm's China revenue share (the Export Controls panel, joined by build/exposure.js) ---------- */
 /* on its line in the ladder, quiet: after the country code, past a hairline */

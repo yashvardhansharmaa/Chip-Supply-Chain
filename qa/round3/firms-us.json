@@ -1,0 +1,386 @@
+[
+ {
+  "name": "Synopsys",
+  "country": "US",
+  "ticker": "SNPS",
+  "revenueUSDb_now": 7.054,
+  "revenueYear_now": 2025,
+  "role": "Makes the synthesis, place-and-route, verification and signoff software that turns the code describing an AI accelerator's logic (its RTL) into a layout a fab c"
+ },
+ {
+  "name": "Cadence Design Systems",
+  "country": "US",
+  "ticker": "CDNS",
+  "revenueUSDb_now": 5.297,
+  "revenueYear_now": 2025,
+  "role": "The second-largest of the three main makers of chip design (EDA) software, strong in analog and custom design, simulation and hardware emulation. Designers veri"
+ },
+ {
+  "name": "Ansys",
+  "country": "US",
+  "ticker": "Private",
+  "revenueUSDb_now": 2.545,
+  "revenueYear_now": 2024,
+  "role": "Makes the thermal, electromagnetic and structural simulation software used to model how a 1 kW accelerator package heats, warps and delivers power. Its RedHawk "
+ },
+ {
+  "name": "Rambus",
+  "country": "US",
+  "ticker": "RMBS",
+  "revenueUSDb_now": 0.708,
+  "revenueYear_now": 2025,
+  "role": "Licenses the memory controller and interface (PHY) IP that connects a processor to DDR5, LPDDR and HBM memory. It also sells register clock drivers, the buffer "
+ },
+ {
+  "name": "Nvidia",
+  "country": "US",
+  "ticker": "NVDA",
+  "revenueUSDb_now": 215.938,
+  "revenueYear_now": 2026,
+  "role": "Designs the Blackwell and Rubin GPUs, the NVLink connections that join many GPUs into one system, and the NVL72 rack systems. Most AI training and a large share"
+ },
+ {
+  "name": "AMD",
+  "country": "US",
+  "ticker": "AMD",
+  "revenueUSDb_now": 34.639,
+  "revenueYear_now": 2025,
+  "role": "Designs the Instinct MI355X and MI400 accelerators and EPYC server CPUs. Since buying ZT Systems in 2025 it also designs rack-scale AI systems. It is the only c"
+ },
+ {
+  "name": "Intel",
+  "country": "US",
+  "ticker": "INTC",
+  "revenueUSDb_now": 52.853,
+  "revenueYear_now": 2025,
+  "role": "Designs Xeon server CPUs and the Gaudi accelerator line. Xeon chips are still the host CPUs in most AI clusters. Its product business is separate from Intel Fou"
+ },
+ {
+  "name": "Broadcom",
+  "country": "US",
+  "ticker": "AVGO",
+  "revenueUSDb_now": 63.887,
+  "revenueYear_now": 2025,
+  "role": "Co-designs and supplies the custom AI accelerators used by Google, Meta and other hyperscalers. It is also a leading seller of Ethernet switch chips, including "
+ },
+ {
+  "name": "Marvell Technology",
+  "country": "US",
+  "ticker": "MRVL",
+  "revenueUSDb_now": 8.195,
+  "revenueYear_now": 2026,
+  "role": "Designs custom AI accelerators and infrastructure chips for hyperscalers, plus networking chips such as optical DSPs, retimers and Ethernet controllers for AI c"
+ },
+ {
+  "name": "Qualcomm",
+  "country": "US",
+  "ticker": "QCOM",
+  "revenueUSDb_now": 44.284,
+  "revenueYear_now": 2025,
+  "role": "Designs Snapdragon chips with built-in neural engines that run AI on phones and other devices. In 2025 it announced the AI200 and AI250 rack-scale inference acc"
+ },
+ {
+  "name": "Cerebras Systems",
+  "country": "US",
+  "ticker": "CBRS",
+  "revenueUSDb_now": 0.51,
+  "revenueYear_now": 2025,
+  "role": "Builds the Wafer Scale Engine, a single processor that covers almost an entire 300 mm wafer. It keeps its memory on the chip as SRAM instead of using separate H"
+ },
+ {
+  "name": "Qnity Electronics",
+  "country": "US",
+  "ticker": "Q",
+  "revenueUSDb_now": 4.754,
+  "revenueYear_now": 2025,
+  "role": "DuPont's former electronics business, an independent company since 1 November 2025. It supplies chemical mechanical planarization slurries and pads, lithographi"
+ },
+ {
+  "name": "Entegris",
+  "country": "US",
+  "ticker": "ENTG",
+  "revenueUSDb_now": 3.197,
+  "revenueYear_now": 2025,
+  "role": "Makes the filters, purifiers, fluid handling components, wafer carriers and specialty coatings that keep contamination out of a fab. It also sells CMP slurries,"
+ },
+ {
+  "name": "Air Products",
+  "country": "US",
+  "ticker": "APD",
+  "revenueUSDb_now": 12.037,
+  "revenueYear_now": 2025,
+  "role": "Supplies bulk nitrogen, oxygen, hydrogen and helium to fabs through on-site generation, and specialty gases for etch and deposition. It is one of three global s"
+ },
+ {
+  "name": "MKS Instruments",
+  "country": "US",
+  "ticker": "MKSI",
+  "revenueUSDb_now": 3.931,
+  "revenueYear_now": 2025,
+  "role": "Supplies the RF generators, mass flow controllers, pressure gauges, vacuum components and ozone systems inside process tools. Through Atotech it also supplies t"
+ },
+ {
+  "name": "Advanced Energy Industries",
+  "country": "US",
+  "ticker": "AEIS",
+  "revenueUSDb_now": 1.799,
+  "revenueYear_now": 2025,
+  "role": "Makes the RF and DC power supplies and matching networks that strike and hold the plasmas used in etch and deposition, plus precision power for data-center equi"
+ },
+ {
+  "name": "Ichor Holdings",
+  "country": "US",
+  "ticker": "ICHR",
+  "revenueUSDb_now": 0.948,
+  "revenueYear_now": 2025,
+  "role": "Designs and builds the gas panels, weldments and chemical delivery modules that route process gases into etch and deposition chambers. It is an outsourced manuf"
+ },
+ {
+  "name": "Ultra Clean Holdings",
+  "country": "US",
+  "ticker": "UCTT",
+  "revenueUSDb_now": 2.054,
+  "revenueYear_now": 2025,
+  "role": "Builds gas delivery systems, chemical modules and frame assemblies for process tools, and runs a large business cleaning and coating chamber parts between uses."
+ },
+ {
+  "name": "Photronics",
+  "country": "US",
+  "ticker": "PLAB",
+  "revenueUSDb_now": 0.849,
+  "revenueYear_now": 2025,
+  "role": "A merchant photomask maker, writing and inspecting masks for logic and display customers from plants in the US, Taiwan, Korea, China and Europe. The foundries m"
+ },
+ {
+  "name": "KLA",
+  "country": "US",
+  "ticker": "KLAC",
+  "revenueUSDb_now": 13.579,
+  "revenueYear_now": 2026,
+  "role": "Supplies process control equipment: optical and electron beam wafer inspection, reticle inspection, overlay and film metrology. Its tools find the defects that "
+ },
+ {
+  "name": "Onto Innovation",
+  "country": "US",
+  "ticker": "ONTO",
+  "revenueUSDb_now": 1.005,
+  "revenueYear_now": 2025,
+  "role": "Supplies optical film metrology, macro defect inspection and packaging inspection, with a strong position in advanced packaging metrology. It was formed from Ru"
+ },
+ {
+  "name": "Applied Materials",
+  "country": "US",
+  "ticker": "AMAT",
+  "revenueUSDb_now": 28.368,
+  "revenueYear_now": 2025,
+  "role": "Makes tools for physical and chemical vapor deposition, epitaxy, ion implantation, chemical mechanical planarization and electron beam inspection. Its tools cov"
+ },
+ {
+  "name": "Lam Research",
+  "country": "US",
+  "ticker": "LRCX",
+  "revenueUSDb_now": 23.233,
+  "revenueYear_now": 2026,
+  "role": "The largest supplier of plasma etch systems. According to CSET, it had 41.1 percent of the $21.9 billion dry etch tool market in 2025, against 23.4 percent for "
+ },
+ {
+  "name": "ACM Research",
+  "country": "US",
+  "ticker": "ACMR",
+  "revenueUSDb_now": 0.901,
+  "revenueYear_now": 2025,
+  "role": "Makes single-wafer cleaning systems using megasonic and bubble technologies, plus electroplating and advanced packaging tools. It is US-listed but manufactures "
+ },
+ {
+  "name": "GlobalFoundries",
+  "country": "US",
+  "ticker": "GFS",
+  "revenueUSDb_now": 6.791,
+  "revenueYear_now": 2025,
+  "role": "Runs mature and specialty processes for RF, automotive, power and silicon photonics from fabs in New York, Vermont, Germany and Singapore. It stopped developing"
+ },
+ {
+  "name": "Micron Technology",
+  "country": "US",
+  "ticker": "MU",
+  "revenueUSDb_now": 37.378,
+  "revenueYear_now": 2025,
+  "role": "The only American maker of leading-edge DRAM and the third HBM supplier, with fabs in the US, Japan, Taiwan and Singapore. It has CHIPS Act support for new capa"
+ },
+ {
+  "name": "SanDisk",
+  "country": "US",
+  "ticker": "SNDK",
+  "revenueUSDb_now": 20.248,
+  "revenueYear_now": 2026,
+  "role": "Manufactures 3D NAND in a joint venture with Kioxia and sells client and enterprise SSDs. It became a standalone company again when Western Digital split its fl"
+ },
+ {
+  "name": "Amkor Technology",
+  "country": "US",
+  "ticker": "AMKR",
+  "revenueUSDb_now": 6.708,
+  "revenueYear_now": 2025,
+  "role": "Packages and tests other companies' chips at plants across Asia. In its annual report for 2025 it described itself as the world's largest US-headquartered OSAT "
+ },
+ {
+  "name": "TTM Technologies",
+  "country": "US",
+  "ticker": "TTMI",
+  "revenueUSDb_now": 2.906,
+  "revenueYear_now": 2025,
+  "role": "Makes printed circuit boards for data center, aerospace and defense customers, including high-layer-count boards for AI and networking systems. By its own descr"
+ },
+ {
+  "name": "Teradyne",
+  "country": "US",
+  "ticker": "TER",
+  "revenueUSDb_now": 3.19,
+  "revenueYear_now": 2025,
+  "role": "Supplies SoC, memory and system-level test platforms, and forms the automated test equipment duopoly with Advantest. It also sells industrial automation equipme"
+ },
+ {
+  "name": "FormFactor",
+  "country": "US",
+  "ticker": "FORM",
+  "revenueUSDb_now": 0.785,
+  "revenueYear_now": 2025,
+  "role": "Supplies the MEMS probe cards that make temporary electrical contact with thousands of pads on a wafer during testing, including HBM and logic probe cards. It i"
+ },
+ {
+  "name": "Cohu",
+  "country": "US",
+  "ticker": "COHU",
+  "revenueUSDb_now": 0.453,
+  "revenueYear_now": 2025,
+  "role": "Makes the handlers that move devices in and out of testers, along with thermal subsystems, contactors and interface boards. For AI chips that run hot, handling "
+ },
+ {
+  "name": "Aehr Test Systems",
+  "country": "US",
+  "ticker": "AEHR",
+  "revenueUSDb_now": 0.05,
+  "revenueYear_now": 2026,
+  "role": "Makes wafer-level burn-in systems, which stress an entire wafer at high temperature and voltage to find early-life failures. They are used for silicon carbide, "
+ },
+ {
+  "name": "Astera Labs",
+  "country": "US",
+  "ticker": "ALAB",
+  "revenueUSDb_now": 0.853,
+  "revenueYear_now": 2025,
+  "role": "Makes the retimers, smart cable modules and fabric switches that keep PCIe, CXL and Ethernet links intact across the distances inside an AI rack. Over those dis"
+ },
+ {
+  "name": "Credo Technology",
+  "country": "US",
+  "ticker": "CRDO",
+  "revenueUSDb_now": 1.335,
+  "revenueYear_now": 2026,
+  "role": "Supplies high-speed SerDes IP, active electrical cables and retimers used for 400G and 800G links inside and between AI racks. Its active electrical cables are "
+ },
+ {
+  "name": "Arista Networks",
+  "country": "US",
+  "ticker": "ANET",
+  "revenueUSDb_now": 9.006,
+  "revenueYear_now": 2025,
+  "role": "Builds Ethernet switches with high port counts, mostly on Broadcom's Tomahawk switch chips, that hyperscalers use for AI back-end networks as an alternative to "
+ },
+ {
+  "name": "Cisco Systems",
+  "country": "US",
+  "ticker": "CSCO",
+  "revenueUSDb_now": 63.325,
+  "revenueYear_now": 2026,
+  "role": "Sells data center switches and routers and designs its own Silicon One switch chips, giving it a second in-house alternative to switch chips bought from chip ve"
+ },
+ {
+  "name": "Amphenol",
+  "country": "US",
+  "ticker": "APH",
+  "revenueUSDb_now": 23.095,
+  "revenueYear_now": 2025,
+  "role": "Makes the high-speed connectors, cable assemblies and backplane systems that carry 112 Gbps signals between boards in an AI rack. The NVLink spine that links th"
+ },
+ {
+  "name": "Coherent Corp",
+  "country": "US",
+  "ticker": "COHR",
+  "revenueUSDb_now": 7.118,
+  "revenueYear_now": 2026,
+  "role": "Makes indium phosphide lasers, VCSELs, optical components and transceiver modules. It is one of the few module makers that also makes the laser chips inside the"
+ },
+ {
+  "name": "Lumentum",
+  "country": "US",
+  "ticker": "LITE",
+  "revenueUSDb_now": 3.014,
+  "revenueYear_now": 2026,
+  "role": "Supplies indium phosphide lasers, electro-absorption modulated lasers and optical modules for data center and telecom links, and is expanding capacity for AI cl"
+ },
+ {
+  "name": "Corning",
+  "country": "US",
+  "ticker": "GLW",
+  "revenueUSDb_now": 15.629,
+  "revenueYear_now": 2025,
+  "role": "Makes the optical fiber and cabling that connect data center halls and campuses, and develops glass substrates for semiconductor packaging. It also holds the ma"
+ },
+ {
+  "name": "Super Micro Computer",
+  "country": "US",
+  "ticker": "SMCI",
+  "revenueUSDb_now": 39.063,
+  "revenueYear_now": 2026,
+  "role": "Designs and builds AI servers and complete liquid-cooled racks, with final assembly in California, Taiwan and Malaysia. It was among the first to ship direct-to"
+ },
+ {
+  "name": "Dell Technologies",
+  "country": "US",
+  "ticker": "DELL",
+  "revenueUSDb_now": 113.538,
+  "revenueYear_now": 2026,
+  "role": "Sells PowerEdge AI servers and integrated rack systems to enterprises and AI cloud operators, adding services, financing and deployment on top of the hardware."
+ },
+ {
+  "name": "Hewlett Packard Enterprise",
+  "country": "US",
+  "ticker": "HPE",
+  "revenueUSDb_now": 34.296,
+  "revenueYear_now": 2025,
+  "role": "Builds AI servers and Cray supercomputers with direct liquid cooling, and since acquiring Juniper Networks also supplies data center networking."
+ },
+ {
+  "name": "Jabil",
+  "country": "US",
+  "ticker": "JBL",
+  "revenueUSDb_now": 29.802,
+  "revenueYear_now": 2025,
+  "role": "A large contract manufacturer building AI data center hardware including server racks, power distribution and liquid cooling components such as cold plates and "
+ },
+ {
+  "name": "Vertiv",
+  "country": "US",
+  "ticker": "VRT",
+  "revenueUSDb_now": 10.23,
+  "revenueYear_now": 2025,
+  "role": "Makes uninterruptible power supplies, busway power distribution, coolant distribution units and liquid cooling systems for data centers. It co-develops referenc"
+ },
+ {
+  "name": "GE Vernova",
+  "country": "US",
+  "ticker": "GEV",
+  "revenueUSDb_now": 38.068,
+  "revenueYear_now": 2025,
+  "role": "Builds gas turbines, grid equipment and wind turbines. It is a main supplier of the new generating capacity being contracted specifically to power AI data cente"
+ },
+ {
+  "name": "Monolithic Power Systems",
+  "country": "US",
+  "ticker": "MPWR",
+  "revenueUSDb_now": 2.79,
+  "revenueYear_now": 2025,
+  "role": "Makes the multiphase voltage regulator and power module chips that convert 12 or 48 volts down to the sub-one-volt rails an accelerator core needs, at currents "
+ }
+]

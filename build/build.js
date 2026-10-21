@@ -267,8 +267,8 @@ const SUB_NOTE = { 'Very hard': 'No second supplier exists at the leading node, 
 const SPECIMEN_NAME = { 'boule-and-wafer': 'boule and wafer', 'cowos-exploded': 'CoWoS package, exploded', 'die-floorplan': 'die floorplan', 'euv-scanner': 'EUV scanner', foup: 'wafer carrier (FOUP)', 'gaa-transistor': 'gate-all-around transistor', 'gas-cabinet': 'gas cabinet', globe: 'globe', 'gpu-baseboard': 'GPU baseboard', 'hbm-stack': 'HBM stack', package: 'chip package', photomask: 'photomask', 'probe-card': 'probe card', 'process-chamber': 'process chamber', rack: 'server rack', 'sem-column': 'electron microscope column', 'substrate-layers': 'substrate layers', 'wafer-cost': 'wafer cost', wafer: 'wafer' };
 /* The card's footnote marks (qa/round2/SCHEMA.md §1). The card's text carries no citations. Beside each text sits a list of
    urls, one per sentence, each one also cited in the chapter's body, so a mark is the chapter's own footnote number and a
-   url cited on the card and in the body has one number. The card leads the chapter, so the chapter loop registers its urls
-   (cardCites) before the body is read, and they take the first numbers in the order a reader meets them. */
+   url cited on the card and in the body has one number. The chapter loop numbers sources in the order a reader meets them
+   (readingOrderCites): In plain terms and In short, then the card (cardCites), then the body. */
 // a sentence ends at . ! or ? followed by a space and a capital, a digit, a currency sign or an opening quote, or at the end
 const cardSentences = (t) => String(t || '').replace(/\s+/g, ' ').trim().split(/(?<=[.!?])\s+(?=[\p{Lu}\p{Nd}\p{Sc}"“‘'])/u).filter(Boolean);
 const CARD_STOP = /[.!?]["”’)\]]*$/; // a sentence's closing stop; its mark goes just before it, as the body's marks do
@@ -294,6 +294,19 @@ function cardCites(card, ctx) {
   });
   if (!any) warn(`${ctx.id}: the card has no source fields (qa/round2/SCHEMA.md §1)`);
   else if (off.length) warn(`${ctx.id}: card url and sentence counts differ: ${off.join(', ')}`);
+}
+// The chapter's head comes before its body: In plain terms (meta.plain, the first paragraph of How it works), In short (the
+// body's Takeaways section, which splitTakeaways moves to the head), then the card. Their sources are numbered first, in
+// that order, before markdown() numbers the rest of the body as it reads it; a source met again keeps its number.
+function readingOrderCites(meta, body, ctx, hasCard) {
+  if (meta.plain) inline(String(meta.plain), ctx);
+  const lines = String(body || '').replace(/\r/g, '').split('\n');
+  const at = lines.findIndex((l) => /^##\s+takeaways?\s*(\{#[^}]*\})?\s*$/i.test(l.trim().replace(/\*\*/g, '')));
+  if (at >= 0) {
+    const rest = lines.slice(at + 1), end = rest.findIndex((l) => /^#{1,2}\s/.test(l.trim()));
+    inline((end < 0 ? rest : rest.slice(0, end)).join('\n'), ctx);
+  }
+  if (hasCard) cardCites(meta.card, ctx);
 }
 // The marks for one place in the text. More urls than sentences: the extras sit with the last sentence, a comma between
 // marks so that 1 and 2 never read as 12. A sentence with no url gets no mark.
@@ -365,7 +378,7 @@ for (const f of files) {
   const { meta, body } = parseChapter(read(path.join(contentDir, f)), f);
   const id = meta.id || f.replace(/^\d\d-/, '').replace(/\.md$/, '');
   const ctx = { id, cites: [], figures: meta.figures || [] };
-  if (id !== 'geopolitics' && meta.number >= 1 && meta.number <= 15) cardCites(meta.card, ctx); // the card comes first, so its sources take the first numbers
+  readingOrderCites(meta, body, ctx, id !== 'geopolitics' && meta.number >= 1 && meta.number <= 15);
   const { html, headings } = markdown(body, ctx);
   const words = wordCount(body);
   const ch = { file: f, id, meta, html, headings, words, cites: ctx.cites, number: meta.number || chapters.length + 1, title: meta.title || id };
@@ -778,6 +791,56 @@ const specNames = new Set((specimens.match(/PC\.register\('([\w-]+)'/g) || []).m
 all.forEach((ch) => { const s = ch.meta.specimen; if (s && !specNames.has(s)) warn(`${ch.id}: specimen "${s}" is not built yet`); });
 ['package', 'globe'].forEach((s) => { if (!specNames.has(s)) warn(`specimen "${s}" (used by hero/geopolitics) is not built yet`); });
 
+/* ---------------- supplier revenue: as filed, and about how much in dollars (qa/round3/SPEC.md section 2) ----------------
+   A supplier's revenue object (data/suppliers.json) holds its latest annual revenue exactly as its filing prints it. Here, in
+   memory only, each such supplier gains revenueShown, what the Suppliers rows and the Index card print ("¥2,443,533 million",
+   "year to March 2026", "about $16.2 billion", the filing's link and its note), and the dollar figure build/fx.js converts: the
+   filed amount over the mean of the Federal Reserve's G.5 monthly rates across the fiscal year (data/fx-rates.json), as
+   revenueUSD (dollars) with revenueUSDBasis (the months, series and mean rate, for the export). revenueUSDb, which the home page's
+   comparison reads, becomes that figure in billions, or null when the currency or a month has no rate. No data file is written.
+   A supplier with no revenue object keeps its earlier revenueUSDb, and the build report names it. */
+const fxConv = require('./fx.js')(readJSON(path.join(root, 'data', 'fx-rates.json'), {}));
+const CUR_SIGN = { USD: '$', EUR: '€', GBP: '£', JPY: '¥', CNY: 'CN¥', TWD: 'NT$', KRW: '₩', HKD: 'HK$', SGD: 'S$', CAD: 'C$', AUD: 'A$', INR: '₹' }; // any other code prints as itself: "CHF 1,073,516 thousand"
+// each amount as data/suppliers.json types it, by supplier name, since JSON.parse drops a filed trailing zero ("2054.0")
+const filedText = {};
+(read(path.join(root, 'data', 'suppliers.json')) || '').split(/\n  \{\n/).forEach((chunk) => {
+  const n = /"name": ("(?:[^"\\]|\\.)*")/.exec(chunk), a = /"revenue": \{\s*"amount": (\d+(?:\.\d+)?)[,\s]/.exec(chunk);
+  if (n && a) filedText[JSON.parse(n[1])] = a[1];
+});
+const groupDigits = (t) => { const [i, f] = String(t).split('.'); return i.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (f != null ? '.' + f : ''); };
+// the fiscal year by the month it ends, since firms name the same April-to-March year FY2025 or FY2026: "year to March 2026", or "2025"
+const fyShown = (v) => { const m = /^(\d{4})-(\d{2})$/.exec(v.fyEnd || ''); return !m ? String(v.fiscalYear || '') : +m[2] === 12 ? m[1] : `year to ${MONTHS[+m[2] - 1]} ${m[1]}`; };
+// the note for the Index card, less the sentences and clauses that speak to the editors (how a filing was fetched, how the figure
+// compares with the one the page used to print); what stays is word for word, so no figure in it changes
+const NOTE_INTERNAL = /\bthis machine\b|\brefused\b|\bWebFetch\b|\bHTTP 403\b|\bcould not be opened\b|\bqa\/|\bscratch\b|\bearlier agents\b|revenueUSDb|\bthe site(?:'s)?\b|\bsite figure\b/i;
+const NOTE_TAIL = /,\s*(?:which matches|matching) the (?:scale|scope) of the site(?:'s)? (?:current )?figure(?: \([^)]*\))?|,\s*if the row should[^.;]*|:\s*the site's current figure[^.;]*/gi;
+const NOTE_ABBR = /\b(?:U\.S|Inc|Ltd|Pte|Co|Corp|No|p|pp|plc|e\.g|i\.e|vs|S\.A|N\.V)$/; // a full stop after these does not end a sentence
+// split at a separator outside parentheses, so "(accession ...; primary document ...)" stays one piece
+const splitTop = (s, re) => { const out = []; let depth = 0, from = 0; for (let i = 0; i < s.length; i++) { const c = s[i]; if (c === '(' || c === '（') depth++; else if ((c === ')' || c === '）') && depth) depth--; else if (!depth) { const m = re.exec(s.slice(i, i + 4)); if (m) { out.push(s.slice(from, i + m[1].length)); from = i + m[0].length; i = from - 1; } } } out.push(s.slice(from)); return out.filter((x) => x.trim()); };
+const readerNote = (note) => {
+  const sents = [];
+  splitTop(String(note || '').replace(NOTE_TAIL, '').trim(), /^([.!?])\s+(?=[A-Z(“"])/).forEach((p) => { const last = sents[sents.length - 1]; if (last != null && NOTE_ABBR.test(last.replace(/[.!?]$/, ''))) sents[sents.length - 1] = last + ' ' + p; else sents.push(p); });
+  return sents.map((s) => { const cl = splitTop(s.replace(/[.!?]$/, ''), /^(;)\s+/).map((c) => c.replace(/;$/, '')); return NOTE_INTERNAL.test(cl[0]) ? '' : cl.filter((c) => !NOTE_INTERNAL.test(c)).join('; ') + '.'; }).filter(Boolean).join(' ');
+};
+const revenueOld = [];
+suppliers.forEach((r) => {
+  const v = r.revenue;
+  if (!v || typeof v !== 'object') { if (r.revenueUSDb != null) revenueOld.push(r.name); return; }
+  const code = String(v.currency || '').toUpperCase(), out = typeof v.amount === 'number' ? fxConv.toUSD(v) : null;
+  r.revenueUSDb = out ? Math.round(out.usd / 1e6) / 1e3 : null;
+  r.revenueUSD = out ? Math.round(out.usd) : null;
+  r.revenueUSDBasis = out ? out.basis : null;
+  const y = /^(\d{4})-\d{2}$/.exec(v.fyEnd || ''); if (y) r.revenueYear = +y[1];
+  if (typeof v.amount !== 'number') return; // no public filing: no figure on the page, and the note in the data says why
+  if (!out) warn(`revenue: ${r.name} (${code || 'no currency'}, ${v.fyStart} to ${v.fyEnd}) has no Federal Reserve rate for every month, so it shows only its filed figure`);
+  const t = filedText[r.name] != null && +filedText[r.name] === v.amount ? filedText[r.name] : String(v.amount);
+  r.revenueShown = { amount: t, filed: (CUR_SIGN[code] || code + ' ') + groupDigits(t) + (v.unit && v.unit !== 'one' ? ' ' + v.unit : ''), year: fyShown(v), about: code !== 'USD' && out ? fxConv.label(out.usd) : '', href: v.source || '', note: readerNote(v.note), group: v.scope === 'group' };
+});
+if (revenueOld.length) warn(`revenue: ${revenueOld.length} suppliers have no filed revenue yet and show their earlier dollar figure: ${revenueOld.join(', ')}`);
+// the method note under the Suppliers list: the first paragraph of data/suppliers-revenue-notes.md
+const revNotePara = (read(path.join(root, 'data', 'suppliers-revenue-notes.md')) || '').split(/\n\s*\n/).map((p) => p.trim()).find((p) => p && !p.startsWith('#')) || '';
+const suppliersRevenueNote = revNotePara ? inline(revNotePara.replace(/\s+/g, ' '), { id: 'suppliers-revenue', cites: [], figures: [] }) : '';
+
 // each supplier the China revenue panel covers carries its latest China share, ready to print: label for its detail ("China 29.1% of
 // revenue, FY2025"), short for its line in the list ("China 29.1%", or "China 14.2% of Samsung Electronics" for a division, whose
 // figure is its parent's) and href for its chart. A supplier the panel does not cover goes in unchanged.
@@ -816,7 +879,7 @@ const sheetItem = (ch) => `<li><a href="${ch.id === 'geopolitics' ? '#geopolitic
 const sheetChapters = stages.map(sheetItem).join('') + (acrossChapters.length ? `<li class="sheet-k" aria-hidden="true">Across the chain</li>` + acrossChapters.map(sheetItem).join('') : '');
 fill('SHEET_PAGES', sheetPages); fill('SHEET_CHAPTERS', sheetChapters);
 fill('RAIL', railHTML); fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', credits); fill('FOOTER', footer); fill('FOOTER_KEY', footerKey);
-fill('SUPPLIERS_INTRO', suppliersIntro); fill('BUILT', builtStr);
+fill('SUPPLIERS_INTRO', suppliersIntro); fill('SUPPLIERS_REVENUE_NOTE', suppliersRevenueNote); fill('BUILT', builtStr);
 // the PDF title page's art ships beside the page
 // explainer animations: the rendered videos and stills go to dist/media
 { const md = path.join(root, 'media'); if (fs.existsSync(md)) { fs.mkdirSync(path.join(root, 'dist', 'media'), { recursive: true }); fs.readdirSync(md).filter((f) => /\.(mp4|jpg)$/.test(f) && [...USED_MEDIA].some((u) => f.startsWith(u + '-'))).forEach((f) => fs.copyFileSync(path.join(md, f), path.join(root, 'dist', 'media', f))); } }

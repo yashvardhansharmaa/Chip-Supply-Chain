@@ -1,0 +1,250 @@
+[
+ {
+  "name": "Alchip Technologies",
+  "country": "TW",
+  "ticker": "3661.TW",
+  "revenueUSDb_now": 0.982,
+  "revenueYear_now": 2025,
+  "role": "A design services firm that takes a customer's AI accelerator design through physical layout, tape-out and supply at TSMC, including 2.5D packaging. It is one o"
+ },
+ {
+  "name": "Global Unichip",
+  "country": "TW",
+  "ticker": "3443.TW",
+  "revenueUSDb_now": 1.084,
+  "revenueYear_now": 2025,
+  "role": "TSMC's design services affiliate. It does the physical design and IP integration for customers' custom AI chips (ASICs) and delivers the finished chips, made on"
+ },
+ {
+  "name": "MediaTek",
+  "country": "TW",
+  "ticker": "2454.TW",
+  "revenueUSDb_now": 18.92,
+  "revenueYear_now": 2025,
+  "role": "Best known for its smartphone chips, MediaTek also designs custom AI chips (ASICs) and works on Google's TPU program. It has experience designing high-volume ch"
+ },
+ {
+  "name": "GlobalWafers",
+  "country": "TW",
+  "ticker": "6488.TWO",
+  "revenueUSDb_now": 1.924,
+  "revenueYear_now": 2025,
+  "role": "The third-largest wafer maker, with fabs in Taiwan, Japan, the US and Europe. It built a new 300 mm plant in Sherman, Texas, with CHIPS Act support. In its annu"
+ },
+ {
+  "name": "OCI Holdings",
+  "country": "KR",
+  "ticker": "010060.KS",
+  "revenueUSDb_now": 2.521,
+  "revenueYear_now": 2025,
+  "role": "A Korean chemical group that makes polysilicon and fab chemicals, including high-purity hydrogen peroxide and phosphoric acid. Most of its polysilicon goes to s"
+ },
+ {
+  "name": "Soulbrain",
+  "country": "KR",
+  "ticker": "357780.KQ",
+  "revenueUSDb_now": 0.689,
+  "revenueYear_now": 2025,
+  "role": "Supplies high-purity hydrogen fluoride (HF) etchant, CVD precursors and cleaning chemicals to Korean memory fabs. It localized HF production after the 2019 Japa"
+ },
+ {
+  "name": "Park Systems",
+  "country": "KR",
+  "ticker": "140860.KQ",
+  "revenueUSDb_now": 0.153,
+  "revenueYear_now": 2025,
+  "role": "Makes the automated atomic force microscopes fabs use to measure surface roughness, step height and defect profiles at sub-nanometer resolution. It acquired the"
+ },
+ {
+  "name": "TSMC",
+  "country": "TW",
+  "ticker": "2330.TW",
+  "revenueUSDb_now": 122.42,
+  "revenueYear_now": 2025,
+  "role": "Manufactures almost every leading-edge AI accelerator, including those of Nvidia, AMD and Broadcom and the custom chips of large cloud companies, on its N4, N3 "
+ },
+ {
+  "name": "UMC",
+  "country": "TW",
+  "ticker": "2303.TW",
+  "revenueUSDb_now": 7.541,
+  "revenueYear_now": 2025,
+  "role": "Taiwan's second largest foundry, running processes of 28 nm and above for display drivers, power management, connectivity and automotive parts. It is expanding "
+ },
+ {
+  "name": "SK hynix",
+  "country": "KR",
+  "ticker": "000660.KS",
+  "revenueUSDb_now": 72.451,
+  "revenueYear_now": 2025,
+  "role": "The largest supplier of high bandwidth memory (HBM), with a large conventional DRAM and NAND business that includes Solidigm. HBM is a stack of DRAM chips conne"
+ },
+ {
+  "name": "Nanya Technology",
+  "country": "TW",
+  "ticker": "2408.TW",
+  "revenueUSDb_now": 2.114,
+  "revenueYear_now": 2025,
+  "role": "Taiwan's DRAM maker, producing commodity and specialty DRAM at mature nodes. It does not make HBM and is a generation or more behind the three leading DRAM make"
+ },
+ {
+  "name": "Winbond Electronics",
+  "country": "TW",
+  "ticker": "2344.TW",
+  "revenueUSDb_now": 2.838,
+  "revenueYear_now": 2025,
+  "role": "Makes NOR flash, specialty low-power DRAM and a customized ultra-bandwidth memory called CUBE aimed at edge AI devices that cannot afford HBM."
+ },
+ {
+  "name": "ASE Technology Holding",
+  "country": "TW",
+  "ticker": "3711.TW",
+  "revenueUSDb_now": 20.489,
+  "revenueYear_now": 2025,
+  "role": "Packages and tests chips for fabless firms and foundries, and is adding 2.5D and fan-out capacity for AI parts. It calls itself the leading provider of semicond"
+ },
+ {
+  "name": "Powertech Technology",
+  "country": "TW",
+  "ticker": "6239.TW",
+  "revenueUSDb_now": 2.379,
+  "revenueYear_now": 2025,
+  "role": "Specializes in memory assembly and test, including DRAM and NAND packaging, and has been adding capacity for HBM-related and logic advanced packaging work."
+ },
+ {
+  "name": "King Yuan Electronics",
+  "country": "TW",
+  "ticker": "2449.TW",
+  "revenueUSDb_now": 1.109,
+  "revenueYear_now": 2025,
+  "role": "Tests logic chips, including AI accelerators, both on the wafer (wafer sort) and after packaging (final test). In 2026 it described itself as the world's larges"
+ },
+ {
+  "name": "Chipbond Technology",
+  "country": "TW",
+  "ticker": "6147.TWO",
+  "revenueUSDb_now": 0.681,
+  "revenueYear_now": 2025,
+  "role": "Specializes in gold and copper bumping and chip-on-film packaging, mainly for display driver ICs, and provides bumping services used in wider advanced packaging"
+ },
+ {
+  "name": "Unimicron",
+  "country": "TW",
+  "ticker": "3037.TW",
+  "revenueUSDb_now": 4.166,
+  "revenueYear_now": 2025,
+  "role": "One of the largest IC substrate makers, producing ABF and BT substrates plus high density interconnect boards. It is adding ABF capacity in Taiwan and Shenzhen "
+ },
+ {
+  "name": "Kinsus Interconnect",
+  "country": "TW",
+  "ticker": "3189.TW",
+  "revenueUSDb_now": 1.249,
+  "revenueYear_now": 2025,
+  "role": "Makes flip-chip and wire bond IC substrates and flexible printed circuits, supplying processor and networking chip customers from plants in Taiwan and China."
+ },
+ {
+  "name": "Nan Ya PCB",
+  "country": "TW",
+  "ticker": "8046.TW",
+  "revenueUSDb_now": 1.275,
+  "revenueYear_now": 2025,
+  "role": "Produces ABF and BT IC substrates and high-layer-count printed circuit boards, and is one of the main IC substrate makers worldwide."
+ },
+ {
+  "name": "Samsung Electro-Mechanics",
+  "country": "KR",
+  "ticker": "009150.KS",
+  "revenueUSDb_now": 8.438,
+  "revenueYear_now": 2025,
+  "role": "Makes flip-chip BGA substrates for processors and AI accelerators, plus multilayer ceramic capacitors (MLCCs) used in dense server power delivery. It is expandi"
+ },
+ {
+  "name": "LG Innotek",
+  "country": "KR",
+  "ticker": "011070.KS",
+  "revenueUSDb_now": 16.33,
+  "revenueYear_now": 2025,
+  "role": "Entered high-end flip-chip BGA substrates in 2022 with a plant in Gumi, adding a third Korean source alongside Samsung Electro-Mechanics. Its larger business is"
+ },
+ {
+  "name": "Gold Circuit Electronics",
+  "country": "TW",
+  "ticker": "2368.TW",
+  "revenueUSDb_now": 1.905,
+  "revenueYear_now": 2025,
+  "role": "Makes high-layer-count printed circuit boards for servers and networking, and has grown with AI server baseboard and switch board demand."
+ },
+ {
+  "name": "MPI Corporation",
+  "country": "TW",
+  "ticker": "6223.TWO",
+  "revenueUSDb_now": 0.424,
+  "revenueYear_now": 2025,
+  "role": "Supplies vertical probe cards, engineering probe stations and thermal test systems, serving Taiwanese foundry and OSAT test operations."
+ },
+ {
+  "name": "Chroma ATE",
+  "country": "TW",
+  "ticker": "2360.TW",
+  "revenueUSDb_now": 0.899,
+  "revenueYear_now": 2025,
+  "role": "Makes automated test equipment, power test instruments and system-level test (SLT) platforms, including the burn-in and SLT systems used for AI processors and p"
+ },
+ {
+  "name": "Accton Technology",
+  "country": "TW",
+  "ticker": "2345.TW",
+  "revenueUSDb_now": 7.883,
+  "revenueYear_now": 2025,
+  "role": "A leading contract maker of white-box data center switches, building the hardware that hyperscalers run their own network software on. Accton and its peers buil"
+ },
+ {
+  "name": "Hon Hai Precision",
+  "country": "TW",
+  "ticker": "2317.TW",
+  "revenueUSDb_now": 257.241,
+  "revenueYear_now": 2025,
+  "role": "Builds Nvidia servers and rack-scale systems, with assembly in Taiwan, Mexico, the US and Southeast Asia. It is the largest electronics contract manufacturer an"
+ },
+ {
+  "name": "Quanta Computer",
+  "country": "TW",
+  "ticker": "2382.TW",
+  "revenueUSDb_now": 67.419,
+  "revenueYear_now": 2025,
+  "role": "Builds GPU baseboards, servers and full racks for hyperscalers and for Nvidia reference systems, with plants in Taiwan, the US, Mexico and Thailand. It is one o"
+ },
+ {
+  "name": "Wistron",
+  "country": "TW",
+  "ticker": "3231.TW",
+  "revenueUSDb_now": 69.413,
+  "revenueYear_now": 2025,
+  "role": "Builds GPU baseboards and AI servers, and grew quickly during the 2025 AI build-out. It also supplies liquid cooling loops and rack integration."
+ },
+ {
+  "name": "Wiwynn",
+  "country": "TW",
+  "ticker": "6669.TW",
+  "revenueUSDb_now": 30.18,
+  "revenueYear_now": 2025,
+  "role": "Designs and builds hyperscale servers, storage and rack systems to Open Compute designs for cloud operators, including liquid-cooled AI racks."
+ },
+ {
+  "name": "Inventec",
+  "country": "TW",
+  "ticker": "2356.TW",
+  "revenueUSDb_now": 21.943,
+  "revenueYear_now": 2025,
+  "role": "Builds AI and general purpose servers for cloud operators and OEMs, with manufacturing in Taiwan, Mexico, the Czech Republic and Malaysia."
+ },
+ {
+  "name": "Delta Electronics",
+  "country": "TW",
+  "ticker": "2308.TW",
+  "revenueUSDb_now": 17.615,
+  "revenueYear_now": 2025,
+  "role": "A global leader in switching power supplies and a maker of the power shelves and busbars used in AI racks, plus fans, cold plates and coolant distribution units"
+ }
+]

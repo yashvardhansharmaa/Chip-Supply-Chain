@@ -397,7 +397,10 @@ ${led ? `<div class="sa-stage-leaders"><span class="label">Who leads</span><ul>$
     if (!s || EQUIPMENT.indexOf(s.category) < 0 || s.revenueUSDb == null) return;
     if (!bigTool || s.revenueUSDb > bigTool.rev) {
       const rows = expFirms[f].slice().sort((a, b) => (a.fyEnd < b.fyEnd ? -1 : 1));
-      bigTool = { firm: f, rev: s.revenueUSDb, country: s.country, row: rows[rows.length - 1] };
+      // its revenue as the Suppliers page prints it (build/build.js, revenueShown): about how much in dollars for a firm that files in
+      // another currency, the filed figure for a dollar filer, and the earlier dollar figure for a firm with no filed revenue yet
+      const rs = s.revenueShown || {};
+      bigTool = { firm: f, rev: s.revenueUSDb, revText: rs.about || (rs.filed && /^\$/.test(rs.filed) ? rs.filed : '$' + num(s.revenueUSDb) + 'bn'), country: s.country, row: rows[rows.length - 1] };
     }
   });
   const litho = byId('lithography'), geoCh = byId('geopolitics');
@@ -405,7 +408,7 @@ ${led ? `<div class="sa-stage-leaders"><span class="label">Who leads</span><ul>$
     { n: word(hardest.length), s: `of the ${stages.length} stages are extreme chokepoints: the tallest bars in the strip above, from ${esc(hardest[0].title)} to ${esc(hardest[hardest.length - 1].title)}.`, href: '#chain', link: 'The chain' },
     euvMakers.length ? { n: word(euvMakers.length), s: `firm in the supplier list builds extreme ultraviolet scanners: ${euvMakers.map((s) => esc(s.name) + (s.city ? ' of ' + esc(s.city) : '')).join(' and ')}${euvNL != null ? `. The Netherlands holds ${num(euvNL)}% of that segment` : ''}.`, href: href(litho), link: 'Lithography' } : null,
     { n: tkPct + '%', s: `of the chain's ${sites.length} chokepoint towns are on Taiwan or in South Korea: ${tkTW.map((t) => esc(t.name)).join(', ')}.`, href: '#/geopolitics', link: 'Geopolitics' },
-    bigTool ? { n: num(bigTool.row.chinaShare) + '%', s: `of ${esc(bigTool.firm)}'s revenue came from China in ${esc(bigTool.row.fiscalYear)}. It is the largest equipment vendor in the supplier list, at $${num(bigTool.rev)}bn a year.`, href: '#/exposure', link: 'China revenue share' } : null
+    bigTool ? { n: num(bigTool.row.chinaShare) + '%', s: `of ${esc(bigTool.firm)}'s revenue came from China in ${esc(bigTool.row.fiscalYear)}. It is the largest equipment vendor in the supplier list, at ${esc(bigTool.revText)} a year.`, href: '#/exposure', link: 'China revenue share' } : null
   ].filter(Boolean).map((k) => `<li class="sa-num"><b>${k.n}</b><p>${k.s}</p><a href="${k.href}">${k.link} →</a></li>`).join('');
 
   /* ---------------- the lead ---------------- */
