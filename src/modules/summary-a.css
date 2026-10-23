@@ -116,7 +116,7 @@
 .sa-chipset { display: flex; flex-wrap: wrap; gap: 6px; }
 .sa-chip {
   font-family: var(--font-mono); font-size: var(--fs-ui); font-weight: 500; line-height: 1;
-  padding: 8px 10px; border: 1px solid var(--line-2); border-radius: 0; background: none; color: var(--ink-2);
+  padding: 8px 10px; border: 1px solid var(--control-edge); border-radius: 0; background: none; color: var(--ink-2);
 }
 .sa-chip small { font-family: var(--font-mono); font-size: 10px; color: var(--muted); margin-left: 6px; }
 .sa-chip:hover { border-color: var(--ink-2); color: var(--ink); }
@@ -241,6 +241,7 @@
 .sa-stop:hover, .sa-stop:focus-visible { transform: scale(1.25); z-index: 4; outline: none; box-shadow: 0 0 0 2px var(--accent); }
 .sa-stop-tip { position: absolute; z-index: 50; max-width: 300px; padding: 9px 11px 10px; background: var(--ink); color: var(--bg); border-radius: 0; font-family: var(--font-mono); font-size: var(--fs-ui-s); line-height: 1.45; pointer-events: none; }
 .sa-stop-tip[hidden] { display: none; }
+@media (hover: hover) { .sa-stop-tip { pointer-events: auto; } } /* a mouse can move onto the tip and it stays (WCAG 1.4.13) */
 .sa-stop-tip b { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-size: 14.5px; letter-spacing: 0; margin-bottom: 3px; color: var(--bg); }
 .sa-stop-tip span { display: block; opacity: 0.85; }
 .sa-stop-tip .sa-stop-tip-s { margin-top: 4px; color: var(--accent); opacity: 1; }
@@ -280,7 +281,7 @@
 .atlas .sa-panel-foot { margin-top: 10px; }
 
 /* the chosen country lifts out of the route: its stops ring in garnet and carry their towns, the other stops and the arcs dim */
-.atlas .sa-stop:not(.is-on) { opacity: 0.42; box-shadow: none; background: var(--ink-2); }
+.atlas .sa-stop:not(.is-on) { box-shadow: none; background: var(--muted); } /* a gray disc in place of opacity dims the stop and keeps its number at 5.6:1 (6.3:1 dark); at 0.42 opacity it fell to 1.4:1 */
 .atlas .sa-stop:not(.is-on):hover, .atlas .sa-stop:not(.is-on):focus-visible { opacity: 1; box-shadow: 0 0 0 2px var(--accent); }
 .atlas .sa-route { opacity: 0.22; }
 .atlas .sa-tail { opacity: 0.45; }

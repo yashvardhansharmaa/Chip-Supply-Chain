@@ -53,7 +53,7 @@ strong, b { font-weight: 600; }
 }
 .label { font-size: var(--fs-cap); font-weight: 500; letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); }
 
-/* masthead: the wordmark home, two links into the site */
+/* masthead: the wordmark home, then The Chain and the four reference pages (social.js NAV) */
 .masthead { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 56px; padding: 0 var(--gutter); border-bottom: 1px solid var(--line-2); }
 /* the wordmark: the favicon's tile beside the name, as in the app's masthead (src/styles.css); the tile keeps the favicon's garnet in both themes */
 .wordmark { display: flex; align-items: center; gap: 12px; min-height: 44px; text-decoration: none; }
@@ -64,6 +64,12 @@ strong, b { font-weight: 600; }
 .masthead nav { display: flex; gap: 4px; }
 .masthead nav a { font-family: var(--font-label); font-weight: 500; font-size: 13.5px; color: var(--ink-2); text-decoration: none; padding: 8px 8px 7px; border-bottom: 1px solid transparent; white-space: nowrap; }
 .masthead nav a:hover { color: var(--ink); border-bottom-color: var(--accent); }
+.masthead nav a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--accent); }
+/* from 800 px down the five links take a row of their own under the wordmark, wrapping to a second line at 320 px */
+@media (max-width: 800px) {
+  .masthead { flex-wrap: wrap; row-gap: 0; padding-top: 4px; padding-bottom: 6px; }
+  .masthead nav { flex-wrap: wrap; gap: 0 2px; width: 100%; margin-left: -5px; }
+}
 
 /* the reading column */
 .page { max-width: calc(var(--measure) + 2 * var(--gutter)); margin: 0 auto; padding: 0 var(--gutter); }
@@ -267,6 +273,10 @@ sup.cite .br { font-size: 0; }
 /* the end of the chapter: the button again, then previous and next */
 .endnav { margin: 3.2em 0 0; padding: 26px 0 0; border-top: 1px solid var(--ink); }
 .endnav .cta { margin-bottom: 26px; }
+/* the hand-picked related chapters (build/related-chapters.js), by name, before Previous and Next */
+.related { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 20px; margin: 0 0 22px; font-family: var(--font-label); font-size: var(--fs-ui); line-height: 1.45; }
+.related .label { flex-basis: 100%; margin-bottom: 4px; }
+.related a { color: var(--accent); padding: 4px 0; }
 .prevnext { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .pn { display: block; text-decoration: none; border-top: 1px solid var(--line-2); padding: 12px 0 14px; min-width: 0; }
 .pn:hover { border-top-color: var(--ink); }
@@ -319,10 +329,7 @@ sup.cite .br { font-size: 0; }
 }
 
 @media (max-width: 370px) {
-  .wordmark { gap: 7px; } /* at 320 px the two nav links leave 154 px */
-  .wordmark .wm-tile { width: 21px; height: 21px; }
-  .wordmark .wm-name { font-size: 14.5px; }
-  .masthead nav a { font-size: 12px; padding: 6px 4px 5px; }
+  .masthead nav a { font-size: 12px; padding: 6px 4px 5px; } /* the wordmark has its own row, so it keeps its phone size */
 }
 
 @media print {

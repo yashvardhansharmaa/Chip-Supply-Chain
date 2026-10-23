@@ -1,0 +1,1954 @@
+{
+ "url": "http://127.0.0.1:8765/#/suppliers",
+ "net": "slow4g",
+ "cpu": 4.0,
+ "desktop": false,
+ "variant": null,
+ "ratio_index": [
+  4.6652499149949,
+  4143591,
+  888182
+ ],
+ "ratio_litho": [
+  5.107876257354337,
+  134567,
+  26345
+ ],
+ "runs": [
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      1100
+     ],
+     [
+      "first-contentful-paint",
+      1100
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 1100,
+      "size": 4000,
+      "el": "a.wordmark > span.wm-name",
+      "url": ""
+     },
+     {
+      "t": 5040,
+      "size": 29568,
+      "el": "article.sa-panel > p.sa-panel-lede",
+      "url": ""
+     }
+    ],
+    "ls": [
+     {
+      "t": 4876,
+      "v": 0.0024724057730502735,
+      "input": false,
+      "src": [
+       {
+        "n": "figure.stage > div.stage-actions",
+        "p": [
+         780,
+         35
+        ],
+        "c": [
+         742,
+         35
+        ]
+       }
+      ]
+     },
+     {
+      "t": 4960.699999988079,
+      "v": 0.015118206957032696,
+      "input": false,
+      "src": [
+       {
+        "n": "div#app > figure.stage",
+        "p": [
+         695,
+         128
+        ],
+        "c": [
+         775,
+         48
+        ]
+       }
+      ]
+     }
+    ],
+    "lt": [
+     [
+      4644.299999952316,
+      219
+     ],
+     [
+      4903.5,
+      52
+     ],
+     [
+      5547,
+      133
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 825.5,
+      "d": 90.59999996423721,
+      "block": 0,
+      "render": 1.899999976158142,
+      "style": 1.899999976158142,
+      "scripts": []
+     },
+     {
+      "t": 963.8999999761581,
+      "d": 138.30000001192093,
+      "block": 0,
+      "render": 2.300000011920929,
+      "style": 2.300000011920929,
+      "scripts": []
+     },
+     {
+      "t": 174.79999995231628,
+      "d": 648.3000000119209,
+      "block": 0,
+      "render": 30.80000001192093,
+      "style": 30.80000001192093,
+      "scripts": []
+     },
+     {
+      "t": 1147.3999999761581,
+      "d": 622.1999999880791,
+      "block": 0,
+      "render": 3.699999988079071,
+      "style": 3.599999964237213,
+      "scripts": []
+     },
+     {
+      "t": 1797.5999999642372,
+      "d": 250.30000001192093,
+      "block": 0,
+      "render": 3.600000023841858,
+      "style": 3.5,
+      "scripts": []
+     },
+     {
+      "t": 2132.599999964237,
+      "d": 81.69999998807907,
+      "block": 0,
+      "render": 4,
+      "style": 3.899999976158142,
+      "scripts": []
+     },
+     {
+      "t": 4644.299999952316,
+      "d": 234.4000000357628,
+      "block": 184.3,
+      "render": 15.300000011920929,
+      "style": 14.400000035762787,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 224238,
+        "d": 206,
+        "comp": 116
+       }
+      ]
+     },
+     {
+      "t": 4903.199999988079,
+      "d": 57.5,
+      "block": 5.4,
+      "render": 3.100000023841858,
+      "style": 3,
+      "scripts": [
+       {
+        "inv": "DOMWindow.onload",
+        "fn": "setMast",
+        "pos": 226465,
+        "d": 25,
+        "comp": 25
+       }
+      ]
+     },
+     {
+      "t": 4976,
+      "d": 63.19999998807907,
+      "block": 0,
+      "render": 1.300000011920929,
+      "style": 0.9000000357627869,
+      "scripts": []
+     },
+     {
+      "t": 5547,
+      "d": 134.69999998807907,
+      "block": 84.2,
+      "render": 0.9000000357627869,
+      "style": 0.9000000357627869,
+      "scripts": [
+       {
+        "inv": "IdleRequestCallback",
+        "fn": "warm",
+        "pos": 227289,
+        "d": 133,
+        "comp": 0
+       }
+      ]
+     }
+    ],
+    "draw": null,
+    "drawN": 0,
+    "builds": [
+     [
+      "die-floorplan",
+      5040,
+      36,
+      80473
+     ],
+     [
+      "boule-and-wafer",
+      5079,
+      26,
+      37097
+     ],
+     [
+      "gas-cabinet",
+      5105,
+      29,
+      79809
+     ],
+     [
+      "euv-scanner",
+      5137,
+      40,
+      88035
+     ],
+     [
+      "photomask",
+      5186,
+      17,
+      63001
+     ],
+     [
+      "process-chamber",
+      5205,
+      48,
+      59401
+     ],
+     [
+      "sem-column",
+      5254,
+      39,
+      75941
+     ],
+     [
+      "gaa-transistor",
+      5293,
+      20,
+      54955
+     ],
+     [
+      "foup",
+      5315,
+      26,
+      91714
+     ],
+     [
+      "hbm-stack",
+      5343,
+      16,
+      55310
+     ],
+     [
+      "cowos-exploded",
+      5362,
+      18,
+      60256
+     ],
+     [
+      "substrate-layers",
+      5381,
+      23,
+      45237
+     ],
+     [
+      "probe-card",
+      5406,
+      38,
+      98110
+     ],
+     [
+      "gpu-baseboard",
+      5446,
+      27,
+      85096
+     ],
+     [
+      "rack",
+      5475,
+      24,
+      76109
+     ],
+     [
+      "wafer-cost",
+      5525,
+      20,
+      53749
+     ],
+     [
+      "globe",
+      5547,
+      133,
+      69348
+     ]
+    ],
+    "marks": {
+     "dcl": 4644.899999976158,
+     "load": 4908.799999952316
+    }
+   },
+   "nav": {
+    "ttfb": 1.5999999642372131,
+    "respEnd": 4596.399999976158,
+    "domInteractive": 4644.299999952316,
+    "dcl": 4851.599999964237,
+    "load": 4934.199999988079,
+    "transfer": 4143891,
+    "decoded": 4143591
+   },
+   "dom": 22601,
+   "stage": {
+    "hidden": "1",
+    "collapsed": "1",
+    "w": 1,
+    "h": 1
+   },
+   "heap": 11.5,
+   "view": "suppliers",
+   "docH": 6442,
+   "density": 0.55,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 2
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 16,
+     "end_ms": 18
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4143781,
+     "failed": null,
+     "start_ms": 1787,
+     "end_ms": 6383
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1960,
+     "end_ms": 2565
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 2254,
+     "end_ms": 2255
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6765,
+     "end_ms": 6924
+    }
+   ],
+   "summary": {
+    "fp": 1100,
+    "fcp": 1100,
+    "lcp": 5040,
+    "lcp_el": "article.sa-panel > p.sa-panel-lede",
+    "tbt": 254,
+    "longtasks": 3,
+    "lt_total": 404,
+    "lt_max": 219,
+    "cls": 0.0176,
+    "draw": null,
+    "ttfb": 1.5999999642372131,
+    "respEnd": 4596.399999976158,
+    "domInteractive": 4644.299999952316,
+    "dcl": 4851.599999964237,
+    "load": 4934.199999988079,
+    "dom": 22601,
+    "heap": 11.5,
+    "view": "suppliers",
+    "first_build": [
+     "die-floorplan",
+     5040,
+     36,
+     80473
+    ],
+    "n_builds": 17,
+    "build_ms_total": 580,
+    "stage": {
+     "hidden": "1",
+     "collapsed": "1",
+     "w": 1,
+     "h": 1
+    },
+    "density": 0.55
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      844
+     ],
+     [
+      "first-contentful-paint",
+      844
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 844,
+      "size": 4000,
+      "el": "a.wordmark > span.wm-name",
+      "url": ""
+     },
+     {
+      "t": 4916,
+      "size": 29568,
+      "el": "article.sa-panel > p.sa-panel-lede",
+      "url": ""
+     }
+    ],
+    "ls": [
+     {
+      "t": 4839,
+      "v": 0.0024724057730502735,
+      "input": false,
+      "src": [
+       {
+        "n": "figure.stage > div.stage-actions",
+        "p": [
+         780,
+         35
+        ],
+        "c": [
+         742,
+         35
+        ]
+       }
+      ]
+     },
+     {
+      "t": 4923.800000011921,
+      "v": 0.015118206957032696,
+      "input": false,
+      "src": [
+       {
+        "n": "div#app > figure.stage",
+        "p": [
+         695,
+         128
+        ],
+        "c": [
+         775,
+         48
+        ]
+       },
+       {
+        "n": "figure.stage > div.stage-actions",
+        "p": [
+         822,
+         1
+        ],
+        "c": [
+         782,
+         35
+        ]
+       }
+      ]
+     }
+    ],
+    "lt": [
+     [
+      4641.899999976158,
+      185
+     ],
+     [
+      4865.599999964237,
+      54
+     ],
+     [
+      5457.899999976158,
+      124
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 173.89999997615814,
+      "d": 659,
+      "block": 6.6,
+      "render": 39.89999997615814,
+      "style": 39.89999997615814,
+      "scripts": []
+     },
+     {
+      "t": 4641.899999976158,
+      "d": 199.80000001192093,
+      "block": 149.3,
+      "render": 13.600000023841858,
+      "style": 13.199999988079071,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 224238,
+        "d": 175,
+        "comp": 100
+       }
+      ]
+     },
+     {
+      "t": 4864.899999976158,
+      "d": 58.90000003576279,
+      "block": 7.1,
+      "render": 2.400000035762787,
+      "style": 2.300000011920929,
+      "scripts": [
+       {
+        "inv": "DOMWindow.onload",
+        "fn": "setMast",
+        "pos": 226465,
+        "d": 27,
+        "comp": 27
+       }
+      ]
+     },
+     {
+      "t": 5457.899999976158,
+      "d": 125.10000002384186,
+      "block": 75.1,
+      "render": 0.5,
+      "style": 0,
+      "scripts": [
+       {
+        "inv": "IdleRequestCallback",
+        "fn": "warm",
+        "pos": 227289,
+        "d": 125,
+        "comp": 0
+       }
+      ]
+     }
+    ],
+    "draw": null,
+    "drawN": 0,
+    "builds": [
+     [
+      "die-floorplan",
+      4949,
+      35,
+      80473
+     ],
+     [
+      "boule-and-wafer",
+      4986,
+      26,
+      37097
+     ],
+     [
+      "gas-cabinet",
+      5014,
+      33,
+      79809
+     ],
+     [
+      "euv-scanner",
+      5050,
+      46,
+      88035
+     ],
+     [
+      "photomask",
+      5098,
+      16,
+      63001
+     ],
+     [
+      "process-chamber",
+      5121,
+      48,
+      59401
+     ],
+     [
+      "sem-column",
+      5171,
+      40,
+      75941
+     ],
+     [
+      "gaa-transistor",
+      5213,
+      21,
+      54955
+     ],
+     [
+      "foup",
+      5235,
+      27,
+      91714
+     ],
+     [
+      "hbm-stack",
+      5262,
+      16,
+      55310
+     ],
+     [
+      "cowos-exploded",
+      5280,
+      17,
+      60256
+     ],
+     [
+      "substrate-layers",
+      5298,
+      20,
+      45237
+     ],
+     [
+      "probe-card",
+      5319,
+      39,
+      98110
+     ],
+     [
+      "gpu-baseboard",
+      5359,
+      26,
+      85096
+     ],
+     [
+      "rack",
+      5386,
+      23,
+      76109
+     ],
+     [
+      "wafer-cost",
+      5437,
+      21,
+      53749
+     ],
+     [
+      "globe",
+      5458,
+      124,
+      69348
+     ]
+    ],
+    "marks": {
+     "dcl": 4642.399999976158,
+     "load": 4870.699999988079
+    }
+   },
+   "nav": {
+    "ttfb": 2.699999988079071,
+    "respEnd": 4600.199999988079,
+    "domInteractive": 4642,
+    "dcl": 4817.800000011921,
+    "load": 4897.399999976158,
+    "transfer": 4143891,
+    "decoded": 4143591
+   },
+   "dom": 22601,
+   "stage": {
+    "hidden": "1",
+    "collapsed": "1",
+    "w": 1,
+    "h": 1
+   },
+   "heap": 11.7,
+   "view": "suppliers",
+   "docH": 6442,
+   "density": 0.55,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 3
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 18,
+     "end_ms": 21
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4143781,
+     "failed": null,
+     "start_ms": 1212,
+     "end_ms": 5812
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1384,
+     "end_ms": 1988
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1679,
+     "end_ms": 1680
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6157,
+     "end_ms": 6318
+    }
+   ],
+   "summary": {
+    "fp": 844,
+    "fcp": 844,
+    "lcp": 4916,
+    "lcp_el": "article.sa-panel > p.sa-panel-lede",
+    "tbt": 213,
+    "longtasks": 3,
+    "lt_total": 363,
+    "lt_max": 185,
+    "cls": 0.0176,
+    "draw": null,
+    "ttfb": 2.699999988079071,
+    "respEnd": 4600.199999988079,
+    "domInteractive": 4642,
+    "dcl": 4817.800000011921,
+    "load": 4897.399999976158,
+    "dom": 22601,
+    "heap": 11.7,
+    "view": "suppliers",
+    "first_build": [
+     "die-floorplan",
+     4949,
+     35,
+     80473
+    ],
+    "n_builds": 17,
+    "build_ms_total": 578,
+    "stage": {
+     "hidden": "1",
+     "collapsed": "1",
+     "w": 1,
+     "h": 1
+    },
+    "density": 0.55
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      872
+     ],
+     [
+      "first-contentful-paint",
+      872
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 872,
+      "size": 4000,
+      "el": "a.wordmark > span.wm-name",
+      "url": ""
+     },
+     {
+      "t": 5032,
+      "size": 29568,
+      "el": "article.sa-panel > p.sa-panel-lede",
+      "url": ""
+     }
+    ],
+    "ls": [
+     {
+      "t": 4953.599999964237,
+      "v": 0.0024724057730502735,
+      "input": false,
+      "src": [
+       {
+        "n": "figure.stage > div.stage-actions",
+        "p": [
+         780,
+         35
+        ],
+        "c": [
+         742,
+         35
+        ]
+       }
+      ]
+     },
+     {
+      "t": 5047.099999964237,
+      "v": 0.015118206957032696,
+      "input": false,
+      "src": [
+       {
+        "n": "div#app > figure.stage",
+        "p": [
+         695,
+         128
+        ],
+        "c": [
+         775,
+         48
+        ]
+       }
+      ]
+     }
+    ],
+    "lt": [
+     [
+      4714.599999964237,
+      223
+     ],
+     [
+      4984.300000011921,
+      58
+     ],
+     [
+      5258.699999988079,
+      55
+     ],
+     [
+      5639,
+      123
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 186.5999999642372,
+      "d": 668.5,
+      "block": 20.5,
+      "render": 48.39999997615814,
+      "style": 48.299999952316284,
+      "scripts": []
+     },
+     {
+      "t": 4714.599999964237,
+      "d": 242.20000004768372,
+      "block": 191.6,
+      "render": 18.30000001192093,
+      "style": 17.600000023841858,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 224238,
+        "d": 206,
+        "comp": 118
+       }
+      ]
+     },
+     {
+      "t": 4983.699999988079,
+      "d": 63.60000002384186,
+      "block": 11.3,
+      "render": 3.200000047683716,
+      "style": 3,
+      "scripts": [
+       {
+        "inv": "DOMWindow.onload",
+        "fn": "setMast",
+        "pos": 226465,
+        "d": 26,
+        "comp": 26
+       }
+      ]
+     },
+     {
+      "t": 5173.399999976158,
+      "d": 50.10000002384186,
+      "block": 0,
+      "render": 0.10000002384185791,
+      "style": 0,
+      "scripts": [
+       {
+        "inv": "IdleRequestCallback",
+        "fn": "warm",
+        "pos": 227289,
+        "d": 49,
+        "comp": 0
+       }
+      ]
+     },
+     {
+      "t": 5258.300000011921,
+      "d": 56.39999997615814,
+      "block": 5.9,
+      "render": 0.10000002384185791,
+      "style": 0,
+      "scripts": [
+       {
+        "inv": "IdleRequestCallback",
+        "fn": "warm",
+        "pos": 227289,
+        "d": 55,
+        "comp": 0
+       }
+      ]
+     },
+     {
+      "t": 5639,
+      "d": 124.30000001192093,
+      "block": 73.6,
+      "render": 0.10000002384185791,
+      "style": 0.10000002384185791,
+      "scripts": [
+       {
+        "inv": "IdleRequestCallback",
+        "fn": "warm",
+        "pos": 227289,
+        "d": 124,
+        "comp": 0
+       }
+      ]
+     }
+    ],
+    "draw": null,
+    "drawN": 0,
+    "builds": [
+     [
+      "die-floorplan",
+      5071,
+      36,
+      80473
+     ],
+     [
+      "boule-and-wafer",
+      5109,
+      28,
+      37097
+     ],
+     [
+      "gas-cabinet",
+      5140,
+      31,
+      79809
+     ],
+     [
+      "euv-scanner",
+      5173,
+      48,
+      88035
+     ],
+     [
+      "photomask",
+      5225,
+      22,
+      63001
+     ],
+     [
+      "process-chamber",
+      5259,
+      54,
+      59401
+     ],
+     [
+      "sem-column",
+      5316,
+      43,
+      75941
+     ],
+     [
+      "gaa-transistor",
+      5361,
+      24,
+      54955
+     ],
+     [
+      "foup",
+      5386,
+      30,
+      91714
+     ],
+     [
+      "hbm-stack",
+      5418,
+      19,
+      55310
+     ],
+     [
+      "cowos-exploded",
+      5440,
+      20,
+      60256
+     ],
+     [
+      "substrate-layers",
+      5461,
+      24,
+      45237
+     ],
+     [
+      "probe-card",
+      5487,
+      44,
+      98110
+     ],
+     [
+      "gpu-baseboard",
+      5535,
+      27,
+      85096
+     ],
+     [
+      "rack",
+      5587,
+      32,
+      76109
+     ],
+     [
+      "wafer-cost",
+      5621,
+      16,
+      53749
+     ],
+     [
+      "globe",
+      5639,
+      123,
+      69348
+     ]
+    ],
+    "marks": {
+     "dcl": 4715.5,
+     "load": 4989.5
+    }
+   },
+   "nav": {
+    "ttfb": 4.300000011920929,
+    "respEnd": 4654.300000011921,
+    "domInteractive": 4715.099999964237,
+    "dcl": 4922,
+    "load": 5015.699999988079,
+    "transfer": 4143891,
+    "decoded": 4143591
+   },
+   "dom": 22601,
+   "stage": {
+    "hidden": "1",
+    "collapsed": "1",
+    "w": 1,
+    "h": 1
+   },
+   "heap": 13.8,
+   "view": "suppliers",
+   "docH": 6442,
+   "density": 0.55,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 4
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 22,
+     "end_ms": 28
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4143781,
+     "failed": null,
+     "start_ms": 1215,
+     "end_ms": 5869
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1400,
+     "end_ms": 2006
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1691,
+     "end_ms": 1693
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6282,
+     "end_ms": 6440
+    }
+   ],
+   "summary": {
+    "fp": 872,
+    "fcp": 872,
+    "lcp": 5032,
+    "lcp_el": "article.sa-panel > p.sa-panel-lede",
+    "tbt": 259,
+    "longtasks": 4,
+    "lt_total": 459,
+    "lt_max": 223,
+    "cls": 0.0176,
+    "draw": null,
+    "ttfb": 4.300000011920929,
+    "respEnd": 4654.300000011921,
+    "domInteractive": 4715.099999964237,
+    "dcl": 4922,
+    "load": 5015.699999988079,
+    "dom": 22601,
+    "heap": 13.8,
+    "view": "suppliers",
+    "first_build": [
+     "die-floorplan",
+     5071,
+     36,
+     80473
+    ],
+    "n_builds": 17,
+    "build_ms_total": 621,
+    "stage": {
+     "hidden": "1",
+     "collapsed": "1",
+     "w": 1,
+     "h": 1
+    },
+    "density": 0.55
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      852
+     ],
+     [
+      "first-contentful-paint",
+      852
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 852,
+      "size": 4000,
+      "el": "a.wordmark > span.wm-name",
+      "url": ""
+     },
+     {
+      "t": 4948,
+      "size": 29568,
+      "el": "article.sa-panel > p.sa-panel-lede",
+      "url": ""
+     }
+    ],
+    "ls": [
+     {
+      "t": 4873.799999952316,
+      "v": 0.0024724057730502735,
+      "input": false,
+      "src": [
+       {
+        "n": "figure.stage > div.stage-actions",
+        "p": [
+         780,
+         35
+        ],
+        "c": [
+         742,
+         35
+        ]
+       }
+      ]
+     },
+     {
+      "t": 4957.399999976158,
+      "v": 0.015118206957032696,
+      "input": false,
+      "src": [
+       {
+        "n": "div#app > figure.stage",
+        "p": [
+         695,
+         128
+        ],
+        "c": [
+         775,
+         48
+        ]
+       }
+      ]
+     }
+    ],
+    "lt": [
+     [
+      4640.299999952316,
+      216
+     ],
+     [
+      4902.799999952316,
+      50
+     ],
+     [
+      5157.099999964237,
+      52
+     ],
+     [
+      5503.5,
+      128
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 183.19999998807907,
+      "d": 660.3999999761581,
+      "block": 13.5,
+      "render": 41.19999998807907,
+      "style": 40.39999997615814,
+      "scripts": []
+     },
+     {
+      "t": 4612.299999952316,
+      "d": 264.80000001192093,
+      "block": 185.8,
+      "render": 19,
+      "style": 18.19999998807907,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 224238,
+        "d": 202,
+        "comp": 115
+       }
+      ]
+     },
+     {
+      "t": 4901.899999976158,
+      "d": 55.5,
+      "block": 3.3,
+      "render": 2.399999976158142,
+      "style": 2.399999976158142,
+      "scripts": [
+       {
+        "inv": "DOMWindow.onload",
+        "fn": "setMast",
+        "pos": 226465,
+        "d": 23,
+        "comp": 23
+       }
+      ]
+     },
+     {
+      "t": 5157.099999964237,
+      "d": 52.40000003576279,
+      "block": 2.4,
+      "render": 0,
+      "style": 0,
+      "scripts": [
+       {
+        "inv": "IdleRequestCallback",
+        "fn": "warm",
+        "pos": 227289,
+        "d": 52,
+        "comp": 0
+       }
+      ]
+     },
+     {
+      "t": 5494.299999952316,
+      "d": 139.20000004768372,
+      "block": 79.9,
+      "render": 1.2000000476837158,
+      "style": 1.2000000476837158,
+      "scripts": [
+       {
+        "inv": "IdleRequestCallback",
+        "fn": "warm",
+        "pos": 227289,
+        "d": 129,
+        "comp": 0
+       }
+      ]
+     }
+    ],
+    "draw": null,
+    "drawN": 0,
+    "builds": [
+     [
+      "die-floorplan",
+      4979,
+      37,
+      80473
+     ],
+     [
+      "boule-and-wafer",
+      5018,
+      28,
+      37097
+     ],
+     [
+      "gas-cabinet",
+      5048,
+      32,
+      79809
+     ],
+     [
+      "euv-scanner",
+      5082,
+      48,
+      88035
+     ],
+     [
+      "photomask",
+      5133,
+      17,
+      63001
+     ],
+     [
+      "process-chamber",
+      5157,
+      51,
+      59401
+     ],
+     [
+      "sem-column",
+      5210,
+      41,
+      75941
+     ],
+     [
+      "gaa-transistor",
+      5255,
+      22,
+      54955
+     ],
+     [
+      "foup",
+      5278,
+      27,
+      91714
+     ],
+     [
+      "hbm-stack",
+      5306,
+      17,
+      55310
+     ],
+     [
+      "cowos-exploded",
+      5327,
+      18,
+      60256
+     ],
+     [
+      "substrate-layers",
+      5346,
+      21,
+      45237
+     ],
+     [
+      "probe-card",
+      5369,
+      39,
+      98110
+     ],
+     [
+      "gpu-baseboard",
+      5411,
+      25,
+      85096
+     ],
+     [
+      "rack",
+      5438,
+      21,
+      76109
+     ],
+     [
+      "wafer-cost",
+      5461,
+      15,
+      53749
+     ],
+     [
+      "globe",
+      5504,
+      128,
+      69348
+     ]
+    ],
+    "marks": {
+     "dcl": 4641.199999988079,
+     "load": 4906.5
+    }
+   },
+   "nav": {
+    "ttfb": 4.199999988079071,
+    "respEnd": 4595.799999952316,
+    "domInteractive": 4640.399999976158,
+    "dcl": 4843.599999964237,
+    "load": 4929.699999988079,
+    "transfer": 4143891,
+    "decoded": 4143591
+   },
+   "dom": 22601,
+   "stage": {
+    "hidden": "1",
+    "collapsed": "1",
+    "w": 1,
+    "h": 1
+   },
+   "heap": 11.2,
+   "view": "suppliers",
+   "docH": 6442,
+   "density": 0.55,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 2
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 14,
+     "end_ms": 16
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4143781,
+     "failed": null,
+     "start_ms": 1214,
+     "end_ms": 5809
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1393,
+     "end_ms": 2000
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1687,
+     "end_ms": 1690
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6189,
+     "end_ms": 6348
+    }
+   ],
+   "summary": {
+    "fp": 852,
+    "fcp": 852,
+    "lcp": 4948,
+    "lcp_el": "article.sa-panel > p.sa-panel-lede",
+    "tbt": 246,
+    "longtasks": 4,
+    "lt_total": 446,
+    "lt_max": 216,
+    "cls": 0.0176,
+    "draw": null,
+    "ttfb": 4.199999988079071,
+    "respEnd": 4595.799999952316,
+    "domInteractive": 4640.399999976158,
+    "dcl": 4843.599999964237,
+    "load": 4929.699999988079,
+    "dom": 22601,
+    "heap": 11.2,
+    "view": "suppliers",
+    "first_build": [
+     "die-floorplan",
+     4979,
+     37,
+     80473
+    ],
+    "n_builds": 17,
+    "build_ms_total": 587,
+    "stage": {
+     "hidden": "1",
+     "collapsed": "1",
+     "w": 1,
+     "h": 1
+    },
+    "density": 0.55
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      840
+     ],
+     [
+      "first-contentful-paint",
+      840
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 840,
+      "size": 4000,
+      "el": "a.wordmark > span.wm-name",
+      "url": ""
+     },
+     {
+      "t": 5024,
+      "size": 29568,
+      "el": "article.sa-panel > p.sa-panel-lede",
+      "url": ""
+     }
+    ],
+    "ls": [
+     {
+      "t": 4933.299999952316,
+      "v": 0.0024724057730502735,
+      "input": false,
+      "src": [
+       {
+        "n": "figure.stage > div.stage-actions",
+        "p": [
+         780,
+         35
+        ],
+        "c": [
+         742,
+         35
+        ]
+       }
+      ]
+     },
+     {
+      "t": 5044.799999952316,
+      "v": 0.015118206957032696,
+      "input": false,
+      "src": [
+       {
+        "n": "div#app > figure.stage",
+        "p": [
+         695,
+         128
+        ],
+        "c": [
+         775,
+         48
+        ]
+       }
+      ]
+     }
+    ],
+    "lt": [
+     [
+      4688.599999964237,
+      230
+     ],
+     [
+      4965.599999964237,
+      72
+     ],
+     [
+      5252.299999952316,
+      50
+     ],
+     [
+      5563.899999976158,
+      119
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 178.89999997615814,
+      "d": 652.6000000238419,
+      "block": 2.3,
+      "render": 36.10000002384186,
+      "style": 36.10000002384186,
+      "scripts": []
+     },
+     {
+      "t": 4648.199999988079,
+      "d": 289,
+      "block": 198.2,
+      "render": 17.900000035762787,
+      "style": 17.100000023841858,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 224238,
+        "d": 216,
+        "comp": 122
+       }
+      ]
+     },
+     {
+      "t": 4964.599999964237,
+      "d": 80.69999998807907,
+      "block": 26.4,
+      "render": 4,
+      "style": 3.699999988079071,
+      "scripts": [
+       {
+        "inv": "DOMWindow.onload",
+        "fn": "setMast",
+        "pos": 226465,
+        "d": 32,
+        "comp": 31
+       }
+      ]
+     },
+     {
+      "t": 5252.299999952316,
+      "d": 51.60000002384186,
+      "block": 0.7,
+      "render": 0.10000002384185791,
+      "style": 0.10000002384185791,
+      "scripts": [
+       {
+        "inv": "IdleRequestCallback",
+        "fn": "warm",
+        "pos": 227289,
+        "d": 51,
+        "comp": 0
+       }
+      ]
+     },
+     {
+      "t": 5563.399999976158,
+      "d": 121.5,
+      "block": 71,
+      "render": 1,
+      "style": 1,
+      "scripts": [
+       {
+        "inv": "IdleRequestCallback",
+        "fn": "warm",
+        "pos": 227289,
+        "d": 120,
+        "comp": 0
+       }
+      ]
+     }
+    ],
+    "draw": null,
+    "drawN": 0,
+    "builds": [
+     [
+      "die-floorplan",
+      5069,
+      42,
+      80473
+     ],
+     [
+      "boule-and-wafer",
+      5114,
+      27,
+      37097
+     ],
+     [
+      "gas-cabinet",
+      5145,
+      33,
+      79809
+     ],
+     [
+      "euv-scanner",
+      5181,
+      42,
+      88035
+     ],
+     [
+      "photomask",
+      5235,
+      16,
+      63001
+     ],
+     [
+      "process-chamber",
+      5252,
+      50,
+      59401
+     ],
+     [
+      "sem-column",
+      5305,
+      42,
+      75941
+     ],
+     [
+      "gaa-transistor",
+      5349,
+      23,
+      54955
+     ],
+     [
+      "foup",
+      5374,
+      28,
+      91714
+     ],
+     [
+      "hbm-stack",
+      5403,
+      16,
+      55310
+     ],
+     [
+      "cowos-exploded",
+      5421,
+      17,
+      60256
+     ],
+     [
+      "substrate-layers",
+      5439,
+      20,
+      45237
+     ],
+     [
+      "probe-card",
+      5461,
+      36,
+      98110
+     ],
+     [
+      "gpu-baseboard",
+      5499,
+      26,
+      85096
+     ],
+     [
+      "rack",
+      5526,
+      20,
+      76109
+     ],
+     [
+      "wafer-cost",
+      5548,
+      15,
+      53749
+     ],
+     [
+      "globe",
+      5564,
+      119,
+      69348
+     ]
+    ],
+    "marks": {
+     "dcl": 4688.799999952316,
+     "load": 4972.399999976158
+    }
+   },
+   "nav": {
+    "ttfb": 7.899999976158142,
+    "respEnd": 4630.599999964237,
+    "domInteractive": 4688.699999988079,
+    "dcl": 4905.799999952316,
+    "load": 5004.299999952316,
+    "transfer": 4143891,
+    "decoded": 4143591
+   },
+   "dom": 22601,
+   "stage": {
+    "hidden": "1",
+    "collapsed": "1",
+    "w": 1,
+    "h": 1
+   },
+   "heap": 43.8,
+   "view": "suppliers",
+   "docH": 6442,
+   "density": 0.55,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 2
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 16,
+     "end_ms": 18
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4143781,
+     "failed": null,
+     "start_ms": 1218,
+     "end_ms": 5848
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1394,
+     "end_ms": 1998
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1691,
+     "end_ms": 1693
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6282,
+     "end_ms": 6439
+    }
+   ],
+   "summary": {
+    "fp": 840,
+    "fcp": 840,
+    "lcp": 5024,
+    "lcp_el": "article.sa-panel > p.sa-panel-lede",
+    "tbt": 271,
+    "longtasks": 4,
+    "lt_total": 471,
+    "lt_max": 230,
+    "cls": 0.0176,
+    "draw": null,
+    "ttfb": 7.899999976158142,
+    "respEnd": 4630.599999964237,
+    "domInteractive": 4688.699999988079,
+    "dcl": 4905.799999952316,
+    "load": 5004.299999952316,
+    "dom": 22601,
+    "heap": 43.8,
+    "view": "suppliers",
+    "first_build": [
+     "die-floorplan",
+     5069,
+     42,
+     80473
+    ],
+    "n_builds": 17,
+    "build_ms_total": 572,
+    "stage": {
+     "hidden": "1",
+     "collapsed": "1",
+     "w": 1,
+     "h": 1
+    },
+    "density": 0.55
+   }
+  }
+ ]
+}

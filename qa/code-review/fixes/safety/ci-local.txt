@@ -1,0 +1,56 @@
+== node qa/scripts/check-size.js
+check-size: 615 files outside dist/ and media/, none over 5.0 MB
+   exit 0, 0 s
+== sh -c node build/build.js > /dev/null
+   exit 0, 1 s
+   warning: this build moved page dates (build/page-dates.json differs from the last commit)
+== node qa/scripts/check-sources.js
+check-sources: 2721 citations, all tier A or B
+   exit 0, 1 s
+== node qa/scripts/check-integrity.js
+allowed: exposure row for Veeco Instruments has no supplier entry. Reason: Veeco files a China share, so it has a China revenue panel, but it is not in the supplier list. data/exposure-notes.md classes it as Deposition & Etch.
+integrity: no problems
+views: walk, suppliers, controls, glossary, geopolitics, stack, home, landscape, summary-a · ids: 1046 · chapters: 17
+   exit 0, 0 s
+== node qa/scripts/check-speak.js
+check-speak: no matches
+   exit 0, 0 s
+== node qa/scripts/smoke.js
+smoke: Chrome/156.0.8078.47, serving dist on http://127.0.0.1:10361
+walk at 320: walk view shown: true, steps: 17, page 320 px wide
+walk at 390: walk view shown: true, steps: 17, page 390 px wide
+walk at 1440: walk view shown: true, steps: 17
+chain at 320: chapters: 17, cards: 15, page 320 px wide
+chain at 390: chapters: 17, cards: 15, page 390 px wide
+chain at 1440: chapters: 17, cards: 15
+landscape at 320: chips in the picker: 38, page 320 px wide
+landscape at 390: chips in the picker: 38, page 390 px wide
+landscape at 1440: chips in the picker: 38
+suppliers at 320: count: 226 suppliers, ladder parts: 20, page 320 px wide
+suppliers at 390: count: 226 suppliers, ladder parts: 20, page 390 px wide
+suppliers at 1440: count: 226 suppliers, ladder parts: 20
+controls at 320: board rows: 11, page 320 px wide
+controls at 390: board rows: 11, page 390 px wide
+controls at 1440: board rows: 11
+exposure-asml at 320: ASML chart: top 127, height 189, page 320 px wide
+exposure-asml at 390: ASML chart: top 127, height 225, page 390 px wide
+exposure-asml at 1440: ASML chart: top 108, height 172
+glossary at 320: entries: 487, page 320 px wide
+glossary at 390: entries: 487, page 390 px wide
+glossary at 1440: entries: 487
+chapter-page at 320: title: Lithography, card: true, sources: 46, page 320 px wide
+chapter-page at 390: title: Lithography, card: true, sources: 46, page 390 px wide
+chapter-page at 1440: title: Lithography, card: true, sources: 46
+summary at 320: ladder rows: 15, cards: 17, page 320 px wide
+summary at 390: ladder rows: 15, cards: 17, page 390 px wide
+summary at 1440: ladder rows: 15, cards: 17
+theme, main page, device dark, nothing saved: ground rgb(247, 246, 242)
+theme, main page, ?theme=dark: ground rgb(20, 23, 28)
+theme, chapter page, device dark, nothing saved: ground rgb(247, 246, 242)
+theme, chapter page, ?theme=dark: ground rgb(20, 23, 28)
+theme, summary, device dark, nothing saved: ground rgb(247, 246, 242)
+theme, summary, ?theme=dark: ground rgb(20, 23, 28)
+
+smoke: 33 page loads, no failures (31 s)
+   exit 0, 31 s
+all steps passed; the job would upload dist/ and deploy

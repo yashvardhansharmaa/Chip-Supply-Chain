@@ -1,0 +1,48 @@
+PASS opens with nothing picked and the package on the stage
+PASS Enter on slot 1 opens the picker with the field focused
+PASS the field is a combobox that controls the listbox
+PASS ArrowDown makes the first chip active (aria-activedescendant)
+PASS typing filters, first match active
+PASS Enter picks it; focus moves to the waiting slot 2
+PASS live region: added + next step
+PASS Enter on slot 2 opens its picker
+PASS chip in slot 1 is marked and disabled
+PASS Escape closes and returns focus to slot 2
+PASS an outside click (the scrim, on a phone) closes the picker without a pick
+PASS Try with fills slot 2; focus on its Change
+PASS a third slot waits as a ghost
+PASS Remove empties slot 2; focus on slot 2 button
+PASS live region: removed + next step
+PASS Clear empties all; focus on slot 1; stage back to the package
+PASS a tick in the checklist fills slot 1
+PASS Remove in a slot unticks the checklist
+PASS four picks fill the row; no fifth slot
+PASS at four the checklist marks the rest unavailable
+PASS a fifth tick is refused, said in the guidance line and the live region
+PASS Change opens the picker; arrows skip chips in other slots
+PASS search (Landscape.select) still adds a chip
+PASS arriving from The Chain with nothing picked shows the package
+PASS no horizontal scroll
+PASS targets in the slots and picker are 24 px or more
+PASS on a phone the picker is a sheet from the bottom over the strip
+PASS the bar is hidden while the slots are in view
+PASS in the comparison the bar shows under the masthead with each chip, no + Add at four
+PASS scroll padding covers the masthead and the bar (--cx-sticky)
+PASS no chip name is clipped in the cards, the table heads, the slots or the bar
+PASS one package card says "On the stage", and it is the chip on the stage
+PASS Change on a package card opens the picker for that chip
+PASS a pick from a card changes that column; focus stays on its Change in the cards
+PASS × on a table head removes that chip; focus moves to the Change of the next column in the table
+PASS with three chips the bar offers + Add
+PASS × in the bar removes that chip; focus stays in the bar
+PASS a chip name in the bar goes back to its slot and opens Change
+PASS Escape returns focus to that slot
+PASS + Add in the bar opens the picker for the next empty slot
+PASS Clear in the bar empties all; the bar goes; focus on slot 1; --cx-sticky back to 0
+PASS the new controls are 24 px or more
+PASS no horizontal scroll with four chips and the bar
+PASS a chapter shows its own specimen
+PASS AI Chips with nothing picked shows the package, never the chapter
+PASS a pick draws its chip
+PASS Back to the chapter draws its specimen again, not the chip
+errors: none

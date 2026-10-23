@@ -1,0 +1,1714 @@
+{
+ "url": "http://127.0.0.1:8765/#/chain",
+ "net": "slow4g",
+ "cpu": 4.0,
+ "desktop": false,
+ "variant": null,
+ "ratio_index": [
+  4.6652499149949,
+  4143591,
+  888182
+ ],
+ "ratio_litho": [
+  5.107876257354337,
+  134567,
+  26345
+ ],
+ "runs": [
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      1016
+     ],
+     [
+      "first-contentful-paint",
+      1016
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 1016,
+      "size": 4000,
+      "el": "a.wordmark > span.wm-name",
+      "url": ""
+     },
+     {
+      "t": 5544,
+      "size": 73696,
+      "el": "div#howto.howto > p.howto-lede",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [
+     [
+      4655.5,
+      550
+     ],
+     [
+      5206.600000023842,
+      139
+     ],
+     [
+      5346.5,
+      190
+     ],
+     [
+      6064.600000023842,
+      118
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 180.10000002384186,
+      "d": 680.5999999642372,
+      "block": 2.2,
+      "render": 33.299999952316284,
+      "style": 33.299999952316284,
+      "scripts": []
+     },
+     {
+      "t": 921,
+      "d": 96.90000003576279,
+      "block": 0,
+      "render": 1.7000000476837158,
+      "style": 1.7000000476837158,
+      "scripts": []
+     },
+     {
+      "t": 1087.9000000357628,
+      "d": 607.1999999880791,
+      "block": 0,
+      "render": 3,
+      "style": 3,
+      "scripts": []
+     },
+     {
+      "t": 1722.199999988079,
+      "d": 263,
+      "block": 0,
+      "render": 4.199999988079071,
+      "style": 4.199999988079071,
+      "scripts": []
+     },
+     {
+      "t": 4655.5,
+      "d": 629.4000000357628,
+      "block": 578.7,
+      "render": 78.20000004768372,
+      "style": 75.70000004768372,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 224238,
+        "d": 506,
+        "comp": 421
+       },
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "bind",
+        "pos": 313904,
+        "d": 32,
+        "comp": 29
+       }
+      ]
+     },
+     {
+      "t": 5345.600000023842,
+      "d": 203.30000001192093,
+      "block": 152.3,
+      "render": 11.400000035762787,
+      "style": 10.600000023841858,
+      "scripts": [
+       {
+        "inv": "DOMWindow.onload",
+        "fn": "setMast",
+        "pos": 226465,
+        "d": 101,
+        "comp": 100
+       }
+      ]
+     }
+    ],
+    "draw": 5208.699999988079,
+    "drawN": 596,
+    "builds": [
+     [
+      "die-floorplan",
+      5118,
+      36,
+      80473
+     ],
+     [
+      "boule-and-wafer",
+      5588,
+      25,
+      37097
+     ],
+     [
+      "gas-cabinet",
+      5640,
+      38,
+      79809
+     ],
+     [
+      "euv-scanner",
+      5679,
+      44,
+      88035
+     ],
+     [
+      "photomask",
+      5726,
+      19,
+      63001
+     ],
+     [
+      "process-chamber",
+      5753,
+      48,
+      59401
+     ],
+     [
+      "sem-column",
+      5805,
+      38,
+      75941
+     ],
+     [
+      "gaa-transistor",
+      5846,
+      21,
+      54955
+     ],
+     [
+      "foup",
+      5870,
+      27,
+      91714
+     ],
+     [
+      "hbm-stack",
+      5898,
+      17,
+      55310
+     ],
+     [
+      "cowos-exploded",
+      5917,
+      18,
+      60256
+     ],
+     [
+      "substrate-layers",
+      5937,
+      22,
+      45237
+     ],
+     [
+      "probe-card",
+      5959,
+      36,
+      98110
+     ],
+     [
+      "gpu-baseboard",
+      5998,
+      25,
+      85096
+     ],
+     [
+      "rack",
+      6025,
+      22,
+      76109
+     ],
+     [
+      "wafer-cost",
+      6048,
+      15,
+      53749
+     ],
+     [
+      "globe",
+      6065,
+      118,
+      69348
+     ]
+    ],
+    "marks": {
+     "dcl": 4656.199999988079,
+     "load": 5350.800000011921
+    }
+   },
+   "nav": {
+    "ttfb": 5.5,
+    "respEnd": 4601,
+    "domInteractive": 4655.800000011921,
+    "dcl": 5195.199999988079,
+    "load": 5452.400000035763,
+    "transfer": 4143891,
+    "decoded": 4143591
+   },
+   "dom": 21599,
+   "stage": {
+    "hidden": "0",
+    "collapsed": "1",
+    "w": 203,
+    "h": 203
+   },
+   "heap": 46,
+   "view": "stack",
+   "docH": 226430,
+   "density": 0.55,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 2
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 24,
+     "end_ms": 26
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4143781,
+     "failed": null,
+     "start_ms": 2020,
+     "end_ms": 6620
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 2198,
+     "end_ms": 2802
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 2493,
+     "end_ms": 2495
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 7595,
+     "end_ms": 7754
+    },
+    {
+     "url": "http://127.0.0.1:8765/print-title.png",
+     "type": "Image",
+     "status": 200,
+     "bytes": 501200,
+     "failed": null,
+     "start_ms": 7598,
+     "end_ms": 10266
+    }
+   ],
+   "summary": {
+    "fp": 1016,
+    "fcp": 1016,
+    "lcp": 5544,
+    "lcp_el": "div#howto.howto > p.howto-lede",
+    "tbt": 797,
+    "longtasks": 4,
+    "lt_total": 997,
+    "lt_max": 550,
+    "cls": 0,
+    "draw": 5208.699999988079,
+    "ttfb": 5.5,
+    "respEnd": 4601,
+    "domInteractive": 4655.800000011921,
+    "dcl": 5195.199999988079,
+    "load": 5452.400000035763,
+    "dom": 21599,
+    "heap": 46,
+    "view": "stack",
+    "first_build": [
+     "die-floorplan",
+     5118,
+     36,
+     80473
+    ],
+    "n_builds": 17,
+    "build_ms_total": 569,
+    "stage": {
+     "hidden": "0",
+     "collapsed": "1",
+     "w": 203,
+     "h": 203
+    },
+    "density": 0.55
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      836
+     ],
+     [
+      "first-contentful-paint",
+      836
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 836,
+      "size": 4000,
+      "el": "a.wordmark > span.wm-name",
+      "url": ""
+     },
+     {
+      "t": 5428,
+      "size": 73696,
+      "el": "div#howto.howto > p.howto-lede",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [
+     [
+      4642.100000023842,
+      530
+     ],
+     [
+      5173.199999988079,
+      173
+     ],
+     [
+      5349,
+      211
+     ],
+     [
+      5836.900000035763,
+      52
+     ],
+     [
+      6145.100000023842,
+      117
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 175.80000001192093,
+      "d": 652.3999999761581,
+      "block": 1.3,
+      "render": 34.59999996423721,
+      "style": 34.59999996423721,
+      "scripts": []
+     },
+     {
+      "t": 4642.100000023842,
+      "d": 635,
+      "block": 584.3,
+      "render": 103.80000001192093,
+      "style": 100.90000003576279,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 224238,
+        "d": 482,
+        "comp": 401
+       },
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "bind",
+        "pos": 313904,
+        "d": 32,
+        "comp": 29
+       }
+      ]
+     },
+     {
+      "t": 5347.100000023842,
+      "d": 231.5999999642372,
+      "block": 179,
+      "render": 17.299999952316284,
+      "style": 16.5,
+      "scripts": [
+       {
+        "inv": "DOMWindow.onload",
+        "fn": "setMast",
+        "pos": 226465,
+        "d": 112,
+        "comp": 112
+       }
+      ]
+     },
+     {
+      "t": 5836.600000023842,
+      "d": 53.59999996423721,
+      "block": 3.3,
+      "render": 0.5999999642372131,
+      "style": 0.09999996423721313,
+      "scripts": [
+       {
+        "inv": "IdleRequestCallback",
+        "fn": "warm",
+        "pos": 227289,
+        "d": 53,
+        "comp": 0
+       }
+      ]
+     }
+    ],
+    "draw": 5175.400000035763,
+    "drawN": 594,
+    "builds": [
+     [
+      "die-floorplan",
+      5080,
+      38,
+      80473
+     ],
+     [
+      "boule-and-wafer",
+      5684,
+      32,
+      37097
+     ],
+     [
+      "gas-cabinet",
+      5721,
+      32,
+      79809
+     ],
+     [
+      "euv-scanner",
+      5758,
+      46,
+      88035
+     ],
+     [
+      "photomask",
+      5815,
+      20,
+      63001
+     ],
+     [
+      "process-chamber",
+      5837,
+      52,
+      59401
+     ],
+     [
+      "sem-column",
+      5892,
+      37,
+      75941
+     ],
+     [
+      "gaa-transistor",
+      5932,
+      20,
+      54955
+     ],
+     [
+      "foup",
+      5954,
+      28,
+      91714
+     ],
+     [
+      "hbm-stack",
+      5985,
+      16,
+      55310
+     ],
+     [
+      "cowos-exploded",
+      6002,
+      17,
+      60256
+     ],
+     [
+      "substrate-layers",
+      6021,
+      20,
+      45237
+     ],
+     [
+      "probe-card",
+      6042,
+      34,
+      98110
+     ],
+     [
+      "gpu-baseboard",
+      6078,
+      26,
+      85096
+     ],
+     [
+      "rack",
+      6106,
+      22,
+      76109
+     ],
+     [
+      "wafer-cost",
+      6129,
+      15,
+      53749
+     ],
+     [
+      "globe",
+      6145,
+      117,
+      69348
+     ]
+    ],
+    "marks": {
+     "dcl": 4642.600000023842,
+     "load": 5356.199999988079
+    }
+   },
+   "nav": {
+    "ttfb": 2.900000035762787,
+    "respEnd": 4598.600000023842,
+    "domInteractive": 4642.600000023842,
+    "dcl": 5157.699999988079,
+    "load": 5469.300000011921,
+    "transfer": 4143891,
+    "decoded": 4143591
+   },
+   "dom": 21599,
+   "stage": {
+    "hidden": "0",
+    "collapsed": "1",
+    "w": 203,
+    "h": 203
+   },
+   "heap": 46.7,
+   "view": "stack",
+   "docH": 226430,
+   "density": 0.55,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 2
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 12,
+     "end_ms": 14
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4143781,
+     "failed": null,
+     "start_ms": 1210,
+     "end_ms": 5808
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1383,
+     "end_ms": 1990
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1675,
+     "end_ms": 1677
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6822,
+     "end_ms": 6983
+    },
+    {
+     "url": "http://127.0.0.1:8765/print-title.png",
+     "type": "Image",
+     "status": 200,
+     "bytes": 501200,
+     "failed": null,
+     "start_ms": 6885,
+     "end_ms": 9549
+    }
+   ],
+   "summary": {
+    "fp": 836,
+    "fcp": 836,
+    "lcp": 5428,
+    "lcp_el": "div#howto.howto > p.howto-lede",
+    "tbt": 833,
+    "longtasks": 5,
+    "lt_total": 1083,
+    "lt_max": 530,
+    "cls": 0,
+    "draw": 5175.400000035763,
+    "ttfb": 2.900000035762787,
+    "respEnd": 4598.600000023842,
+    "domInteractive": 4642.600000023842,
+    "dcl": 5157.699999988079,
+    "load": 5469.300000011921,
+    "dom": 21599,
+    "heap": 46.7,
+    "view": "stack",
+    "first_build": [
+     "die-floorplan",
+     5080,
+     38,
+     80473
+    ],
+    "n_builds": 17,
+    "build_ms_total": 572,
+    "stage": {
+     "hidden": "0",
+     "collapsed": "1",
+     "w": 203,
+     "h": 203
+    },
+    "density": 0.55
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      836
+     ],
+     [
+      "first-contentful-paint",
+      836
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 836,
+      "size": 4000,
+      "el": "a.wordmark > span.wm-name",
+      "url": ""
+     },
+     {
+      "t": 5372,
+      "size": 73696,
+      "el": "div#howto.howto > p.howto-lede",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [
+     [
+      4648.699999988079,
+      506
+     ],
+     [
+      5155.399999976158,
+      139
+     ],
+     [
+      5295.300000011921,
+      198
+     ],
+     [
+      6009.099999964237,
+      115
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 177.80000001192093,
+      "d": 651.1999999880791,
+      "block": 0,
+      "render": 31.80000001192093,
+      "style": 31.80000001192093,
+      "scripts": []
+     },
+     {
+      "t": 4620.899999976158,
+      "d": 602.5,
+      "block": 524.7,
+      "render": 68,
+      "style": 65.59999996423721,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 224238,
+        "d": 466,
+        "comp": 386
+       },
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "bind",
+        "pos": 313904,
+        "d": 29,
+        "comp": 27
+       }
+      ]
+     },
+     {
+      "t": 5294.5,
+      "d": 210.19999998807907,
+      "block": 159.3,
+      "render": 10.399999976158142,
+      "style": 9.899999976158142,
+      "scripts": [
+       {
+        "inv": "DOMWindow.onload",
+        "fn": "setMast",
+        "pos": 226465,
+        "d": 107,
+        "comp": 107
+       }
+      ]
+     },
+     {
+      "t": 5704.599999964237,
+      "d": 51,
+      "block": 0.2,
+      "render": 0.3999999761581421,
+      "style": 0.09999996423721313,
+      "scripts": [
+       {
+        "inv": "IdleRequestCallback",
+        "fn": "warm",
+        "pos": 227289,
+        "d": 50,
+        "comp": 0
+       }
+      ]
+     }
+    ],
+    "draw": 5157.699999988079,
+    "drawN": 596,
+    "builds": [
+     [
+      "die-floorplan",
+      5070,
+      39,
+      80473
+     ],
+     [
+      "boule-and-wafer",
+      5572,
+      28,
+      37097
+     ],
+     [
+      "gas-cabinet",
+      5601,
+      31,
+      79809
+     ],
+     [
+      "euv-scanner",
+      5634,
+      41,
+      88035
+     ],
+     [
+      "photomask",
+      5679,
+      17,
+      63001
+     ],
+     [
+      "process-chamber",
+      5705,
+      50,
+      59401
+     ],
+     [
+      "sem-column",
+      5757,
+      37,
+      75941
+     ],
+     [
+      "gaa-transistor",
+      5798,
+      20,
+      54955
+     ],
+     [
+      "foup",
+      5820,
+      27,
+      91714
+     ],
+     [
+      "hbm-stack",
+      5848,
+      16,
+      55310
+     ],
+     [
+      "cowos-exploded",
+      5867,
+      17,
+      60256
+     ],
+     [
+      "substrate-layers",
+      5887,
+      20,
+      45237
+     ],
+     [
+      "probe-card",
+      5908,
+      34,
+      98110
+     ],
+     [
+      "gpu-baseboard",
+      5944,
+      26,
+      85096
+     ],
+     [
+      "rack",
+      5971,
+      21,
+      76109
+     ],
+     [
+      "wafer-cost",
+      5993,
+      14,
+      53749
+     ],
+     [
+      "globe",
+      6009,
+      115,
+      69348
+     ]
+    ],
+    "marks": {
+     "dcl": 4649.199999988079,
+     "load": 5299
+    }
+   },
+   "nav": {
+    "ttfb": 7.099999964237213,
+    "respEnd": 4604.5,
+    "domInteractive": 4648.899999976158,
+    "dcl": 5144.899999976158,
+    "load": 5406.099999964237,
+    "transfer": 4143891,
+    "decoded": 4143591
+   },
+   "dom": 21599,
+   "stage": {
+    "hidden": "0",
+    "collapsed": "1",
+    "w": 203,
+    "h": 203
+   },
+   "heap": 42.8,
+   "view": "stack",
+   "docH": 226430,
+   "density": 0.55,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 3
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 18,
+     "end_ms": 23
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4143781,
+     "failed": null,
+     "start_ms": 1217,
+     "end_ms": 5821
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1392,
+     "end_ms": 2000
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1687,
+     "end_ms": 1688
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6748,
+     "end_ms": 6904
+    },
+    {
+     "url": "http://127.0.0.1:8765/print-title.png",
+     "type": "Image",
+     "status": 200,
+     "bytes": 501200,
+     "failed": null,
+     "start_ms": 6780,
+     "end_ms": 9448
+    }
+   ],
+   "summary": {
+    "fp": 836,
+    "fcp": 836,
+    "lcp": 5372,
+    "lcp_el": "div#howto.howto > p.howto-lede",
+    "tbt": 758,
+    "longtasks": 4,
+    "lt_total": 958,
+    "lt_max": 506,
+    "cls": 0,
+    "draw": 5157.699999988079,
+    "ttfb": 7.099999964237213,
+    "respEnd": 4604.5,
+    "domInteractive": 4648.899999976158,
+    "dcl": 5144.899999976158,
+    "load": 5406.099999964237,
+    "dom": 21599,
+    "heap": 42.8,
+    "view": "stack",
+    "first_build": [
+     "die-floorplan",
+     5070,
+     39,
+     80473
+    ],
+    "n_builds": 17,
+    "build_ms_total": 553,
+    "stage": {
+     "hidden": "0",
+     "collapsed": "1",
+     "w": 203,
+     "h": 203
+    },
+    "density": 0.55
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      832
+     ],
+     [
+      "first-contentful-paint",
+      832
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 832,
+      "size": 4000,
+      "el": "a.wordmark > span.wm-name",
+      "url": ""
+     },
+     {
+      "t": 5420,
+      "size": 73696,
+      "el": "div#howto.howto > p.howto-lede",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [
+     [
+      4648,
+      565
+     ],
+     [
+      5213.800000011921,
+      137
+     ],
+     [
+      5351,
+      194
+     ],
+     [
+      6106.800000011921,
+      118
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 174.30000001192093,
+      "d": 648.5999999642372,
+      "block": 0.6,
+      "render": 33.89999997615814,
+      "style": 33.89999997615814,
+      "scripts": []
+     },
+     {
+      "t": 4612.899999976158,
+      "d": 670.5,
+      "block": 584.7,
+      "render": 69.59999996423721,
+      "style": 67.80000001192093,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 224238,
+        "d": 525,
+        "comp": 436
+       },
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "bind",
+        "pos": 313904,
+        "d": 29,
+        "comp": 26
+       }
+      ]
+     },
+     {
+      "t": 5350.800000011921,
+      "d": 206.5999999642372,
+      "block": 156.4,
+      "render": 12.199999988079071,
+      "style": 11.699999988079071,
+      "scripts": [
+       {
+        "inv": "DOMWindow.onload",
+        "fn": "setMast",
+        "pos": 226465,
+        "d": 99,
+        "comp": 99
+       }
+      ]
+     }
+    ],
+    "draw": 5215.5,
+    "drawN": 596,
+    "builds": [
+     [
+      "die-floorplan",
+      5126,
+      41,
+      80473
+     ],
+     [
+      "boule-and-wafer",
+      5637,
+      30,
+      37097
+     ],
+     [
+      "gas-cabinet",
+      5670,
+      32,
+      79809
+     ],
+     [
+      "euv-scanner",
+      5706,
+      46,
+      88035
+     ],
+     [
+      "photomask",
+      5763,
+      18,
+      63001
+     ],
+     [
+      "process-chamber",
+      5783,
+      48,
+      59401
+     ],
+     [
+      "sem-column",
+      5831,
+      34,
+      75941
+     ],
+     [
+      "gaa-transistor",
+      5869,
+      17,
+      54955
+     ],
+     [
+      "foup",
+      5887,
+      21,
+      91714
+     ],
+     [
+      "hbm-stack",
+      5912,
+      19,
+      55310
+     ],
+     [
+      "cowos-exploded",
+      5935,
+      22,
+      60256
+     ],
+     [
+      "substrate-layers",
+      5960,
+      25,
+      45237
+     ],
+     [
+      "probe-card",
+      5988,
+      41,
+      98110
+     ],
+     [
+      "gpu-baseboard",
+      6035,
+      27,
+      85096
+     ],
+     [
+      "rack",
+      6065,
+      22,
+      76109
+     ],
+     [
+      "wafer-cost",
+      6089,
+      16,
+      53749
+     ],
+     [
+      "globe",
+      6107,
+      117,
+      69348
+     ]
+    ],
+    "marks": {
+     "dcl": 4648.699999988079,
+     "load": 5355.099999964237
+    }
+   },
+   "nav": {
+    "ttfb": 2.399999976158142,
+    "respEnd": 4595.300000011921,
+    "domInteractive": 4648.099999964237,
+    "dcl": 5202.899999976158,
+    "load": 5454.099999964237,
+    "transfer": 4143891,
+    "decoded": 4143591
+   },
+   "dom": 21599,
+   "stage": {
+    "hidden": "0",
+    "collapsed": "1",
+    "w": 203,
+    "h": 203
+   },
+   "heap": 46.3,
+   "view": "stack",
+   "docH": 226430,
+   "density": 0.55,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 3
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 20,
+     "end_ms": 22
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4143781,
+     "failed": null,
+     "start_ms": 1215,
+     "end_ms": 5810
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1388,
+     "end_ms": 1990
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1682,
+     "end_ms": 1683
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6800,
+     "end_ms": 6958
+    },
+    {
+     "url": "http://127.0.0.1:8765/print-title.png",
+     "type": "Image",
+     "status": 200,
+     "bytes": 501200,
+     "failed": null,
+     "start_ms": 6846,
+     "end_ms": 9508
+    }
+   ],
+   "summary": {
+    "fp": 832,
+    "fcp": 832,
+    "lcp": 5420,
+    "lcp_el": "div#howto.howto > p.howto-lede",
+    "tbt": 814,
+    "longtasks": 4,
+    "lt_total": 1014,
+    "lt_max": 565,
+    "cls": 0,
+    "draw": 5215.5,
+    "ttfb": 2.399999976158142,
+    "respEnd": 4595.300000011921,
+    "domInteractive": 4648.099999964237,
+    "dcl": 5202.899999976158,
+    "load": 5454.099999964237,
+    "dom": 21599,
+    "heap": 46.3,
+    "view": "stack",
+    "first_build": [
+     "die-floorplan",
+     5126,
+     41,
+     80473
+    ],
+    "n_builds": 17,
+    "build_ms_total": 576,
+    "stage": {
+     "hidden": "0",
+     "collapsed": "1",
+     "w": 203,
+     "h": 203
+    },
+    "density": 0.55
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      832
+     ],
+     [
+      "first-contentful-paint",
+      832
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 832,
+      "size": 4000,
+      "el": "a.wordmark > span.wm-name",
+      "url": ""
+     },
+     {
+      "t": 5392,
+      "size": 73696,
+      "el": "div#howto.howto > p.howto-lede",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [
+     [
+      4647.699999988079,
+      518
+     ],
+     [
+      5166.699999988079,
+      157
+     ],
+     [
+      5325,
+      206
+     ],
+     [
+      6101.699999988079,
+      115
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 177.39999997615814,
+      "d": 644.6999999880791,
+      "block": 0,
+      "render": 31.099999964237213,
+      "style": 30.69999998807907,
+      "scripts": []
+     },
+     {
+      "t": 4647.699999988079,
+      "d": 605.3000000119209,
+      "block": 554.5,
+      "render": 86.30000001192093,
+      "style": 83.60000002384186,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 224238,
+        "d": 465,
+        "comp": 365
+       },
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "bind",
+        "pos": 313904,
+        "d": 41,
+        "comp": 36
+       }
+      ]
+     },
+     {
+      "t": 5324.199999988079,
+      "d": 223.19999998807907,
+      "block": 172.2,
+      "render": 16.30000001192093,
+      "style": 15,
+      "scripts": [
+       {
+        "inv": "DOMWindow.onload",
+        "fn": "setMast",
+        "pos": 226465,
+        "d": 107,
+        "comp": 107
+       }
+      ]
+     }
+    ],
+    "draw": 5169.300000011921,
+    "drawN": 596,
+    "builds": [
+     [
+      "die-floorplan",
+      5049,
+      54,
+      80473
+     ],
+     [
+      "boule-and-wafer",
+      5654,
+      32,
+      37097
+     ],
+     [
+      "gas-cabinet",
+      5691,
+      33,
+      79809
+     ],
+     [
+      "euv-scanner",
+      5728,
+      45,
+      88035
+     ],
+     [
+      "photomask",
+      5782,
+      17,
+      63001
+     ],
+     [
+      "process-chamber",
+      5803,
+      48,
+      59401
+     ],
+     [
+      "sem-column",
+      5853,
+      38,
+      75941
+     ],
+     [
+      "gaa-transistor",
+      5893,
+      20,
+      54955
+     ],
+     [
+      "foup",
+      5914,
+      26,
+      91714
+     ],
+     [
+      "hbm-stack",
+      5942,
+      16,
+      55310
+     ],
+     [
+      "cowos-exploded",
+      5959,
+      18,
+      60256
+     ],
+     [
+      "substrate-layers",
+      5977,
+      21,
+      45237
+     ],
+     [
+      "probe-card",
+      6001,
+      35,
+      98110
+     ],
+     [
+      "gpu-baseboard",
+      6039,
+      23,
+      85096
+     ],
+     [
+      "rack",
+      6063,
+      21,
+      76109
+     ],
+     [
+      "wafer-cost",
+      6086,
+      15,
+      53749
+     ],
+     [
+      "globe",
+      6102,
+      116,
+      69348
+     ]
+    ],
+    "marks": {
+     "dcl": 4648.5,
+     "load": 5332
+    }
+   },
+   "nav": {
+    "ttfb": 3.899999976158142,
+    "respEnd": 4606.099999964237,
+    "domInteractive": 4647.699999988079,
+    "dcl": 5154.899999976158,
+    "load": 5439.699999988079,
+    "transfer": 4143891,
+    "decoded": 4143591
+   },
+   "dom": 21599,
+   "stage": {
+    "hidden": "0",
+    "collapsed": "1",
+    "w": 203,
+    "h": 203
+   },
+   "heap": 43.9,
+   "view": "stack",
+   "docH": 226430,
+   "density": 0.55,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 3
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 19,
+     "end_ms": 21
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4143781,
+     "failed": null,
+     "start_ms": 1215,
+     "end_ms": 5820
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1390,
+     "end_ms": 1992
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1684,
+     "end_ms": 1686
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6794,
+     "end_ms": 6949
+    },
+    {
+     "url": "http://127.0.0.1:8765/print-title.png",
+     "type": "Image",
+     "status": 200,
+     "bytes": 501200,
+     "failed": null,
+     "start_ms": 6852,
+     "end_ms": 9515
+    }
+   ],
+   "summary": {
+    "fp": 832,
+    "fcp": 832,
+    "lcp": 5392,
+    "lcp_el": "div#howto.howto > p.howto-lede",
+    "tbt": 796,
+    "longtasks": 4,
+    "lt_total": 996,
+    "lt_max": 518,
+    "cls": 0,
+    "draw": 5169.300000011921,
+    "ttfb": 3.899999976158142,
+    "respEnd": 4606.099999964237,
+    "domInteractive": 4647.699999988079,
+    "dcl": 5154.899999976158,
+    "load": 5439.699999988079,
+    "dom": 21599,
+    "heap": 43.9,
+    "view": "stack",
+    "first_build": [
+     "die-floorplan",
+     5049,
+     54,
+     80473
+    ],
+    "n_builds": 17,
+    "build_ms_total": 578,
+    "stage": {
+     "hidden": "0",
+     "collapsed": "1",
+     "w": 203,
+     "h": 203
+    },
+    "density": 0.55
+   }
+  }
+ ]
+}

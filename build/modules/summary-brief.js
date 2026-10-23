@@ -10,7 +10,11 @@
 const SITE = require('../site.js');
 
 module.exports = function (ctx) {
-  const { fs, path, root, stages = [], chapters = [], geo, esc, pad, word, builtStr, footerKey = '', } = ctx;
+  const { fs, path, root, stages = [], chapters = [], geo, esc, pad, word, builtStr, pageDate, dayStr } = ctx;
+  // the page's "Updated" day is the day its content last changed (page dates in build/build.js): written as DAY until the
+  // page is hashed, then replaced, so a rebuild with no change in the chapters leaves the summary's day alone
+  const DAY = '{{DAY:SUMMARY}}';
+  const footerKey = String(ctx.footerKey || '').split(`Updated ${builtStr}`).join(`Updated ${DAY}`);
   if (!stages.length) return {};
   const stageIds = new Set(stages.map((c) => c.id));
   const across = chapters.filter((c) => !stageIds.has(c.id)).concat(geo ? [geo] : []);
@@ -30,6 +34,8 @@ module.exports = function (ctx) {
   const TILE = '<svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg>';
   const conc = (ch) => card(ch).concentration || '';
   const title = 'The AI chip supply chain in brief';
+  // the page's search title and description, from the approved list (build/page-titles.js); the visible h1 stays the title above
+  const seo = require('../page-titles.js')('/summary/') || { title, description: `The ${word(stages.length)} stages of the AI chip supply chain in one read: who leads each, how concentrated it is, and where China and the United States stand. A four-page PDF is included.` };
   const dek = `The ${word(stages.length)} stages that turn sand and software into an AI accelerator: who leads each one, how concentrated it is, and where China and the United States stand.`;
 
   /* ---------- screen layout ---------- */
@@ -61,14 +67,14 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 <p class="more"><a href="${url(ch.id)}">Read the chapter, with its sources</a></p>
 </article>`).join('');
 
-  const screen = `<header class="masthead"><a class="wordmark" href="${SITE.url}" aria-label="Chip Supply Chain">${TILE}<span class="wm-name">Chip Supply Chain</span></a><nav aria-label="Site"><a href="${SITE.url}#/chain">The Chain</a><a href="${SITE.url}#/controls">Export Controls</a><a href="${SITE.url}#/glossary">Glossary</a></nav></header>
+  const screen = `<header class="masthead"><a class="wordmark" href="${SITE.url}" aria-label="Chip Supply Chain">${TILE}<span class="wm-name">Chip Supply Chain</span></a><nav aria-label="Site"><a href="${SITE.url}#/chain">The Chain</a><a href="../chips/">AI Chips</a><a href="../suppliers/">Suppliers</a><a href="../export-controls/">Export Controls</a><a href="../glossary/">Glossary</a></nav></header>
 <main class="scr">
 <section class="hero">
 <p class="eyebrow"><b>Summary</b> · the whole chain in one read</p>
 <h1>${title}</h1>
 <p class="dek">${esc(dek)}</p>
 <p class="cta"><a class="btn" href="../chip-supply-chain-summary.pdf" download>Download the PDF <span>4 pages</span></a><a class="btn ghost" href="${SITE.url}#/chain">Read the full chain</a></p>
-<p class="meta">Updated ${esc(builtStr)} · Every figure is cited in the chapter each card links to</p>
+<p class="meta">Updated ${DAY} · Every figure is cited in the chapter each card links to</p>
 </section>
 <section class="glance" aria-labelledby="glance-h">
 <div class="sec-head"><h2 id="glance-h">The chain at a glance</h2><p><b>${nExtreme} of ${stages.length}</b> stages are rated Extreme concentration, meaning three or fewer firms could supply each of them today, or one firm holds more than half of it.</p></div>
@@ -118,7 +124,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 <p class="kicker wm">${TILE}<span class="wm-name">Chip Supply Chain</span><span class="wm-sub">Summary</span></p>
 <h1>${title}</h1>
 <p class="dek">${esc(dek)}</p>
-<p class="meta">Updated ${esc(builtStr)} · <a href="${SITE.url}">${SITE.host}</a> · Every figure is cited in the chapter each section links to.</p>
+<p class="meta">Updated ${DAY} · <a href="${SITE.url}">${SITE.host}</a> · Every figure is cited in the chapter each section links to.</p>
 </header>
 <div class="key">
 <span><b>Concentration</b> counts the firms that credibly supply a stage. Every stage rates Extreme or High.</span>
@@ -134,7 +140,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
 <h2 class="stages-h">The ${word(stages.length)} stages</h2>
 <p class="h2-note">In the order a chip is made.</p>
 <div class="stages">${blocks}</div>
-<p class="foot">Chip Supply Chain: How AI Chips Are Made, by Yashvardhan Sharma. Summary updated ${esc(builtStr)}. The full chapters, with a source for every figure, are at ${SITE.host}.</p>
+<p class="foot">Chip Supply Chain: How AI Chips Are Made, by Yashvardhan Sharma. Summary updated ${DAY}. The full chapters, with a source for every figure, are at ${SITE.host}.</p>
 </div>`;
 
   const SCREEN_CSS = `
@@ -160,6 +166,10 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
   .masthead nav { display: flex; gap: 2px; }
   .masthead nav a { font-family: var(--label); font-weight: 500; font-size: 13.5px; color: var(--ink-2); text-decoration: none; padding: 10px 8px 9px; border-bottom: 1px solid transparent; white-space: nowrap; }
   .masthead nav a:hover { color: var(--ink); border-bottom-color: var(--accent); }
+  @media (max-width: 800px) { /* the five links take a row of their own under the wordmark */
+    .masthead { flex-wrap: wrap; row-gap: 0; padding-top: 4px; padding-bottom: 6px; }
+    .masthead nav { flex-wrap: wrap; gap: 0 2px; width: 100%; margin-left: -8px; }
+  }
   .scr { max-width: 1080px; margin: 0 auto; padding: 0 var(--gutter); }
   .eyebrow, .meta, .lbl, .card-k, .pill, .ladder, .ladder-head, .key, .more, .cc, .site-footer { font-family: var(--label); }
   .hero { padding: clamp(40px, 7vh, 72px) 0 36px; max-width: 760px; }
@@ -249,7 +259,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
     .wordmark { gap: 9px; }
     .wordmark .wm-tile { width: 25px; height: 25px; }
     .wordmark .wm-name { font-size: 18px; }
-    .masthead nav a:nth-child(n+2) { display: none; }
+    .masthead nav a { font-size: 12.5px; padding: 6px 6px 5px; }
     .scr, .site-footer { overflow-wrap: break-word; }
     .dek { font-size: 18.5px; }
     .sides { grid-template-columns: minmax(0, 1fr); }
@@ -320,11 +330,13 @@ a { text-decoration: none; }
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${title} · Chip Supply Chain</title>
-<meta name="description" content="The ${word(stages.length)} stages of the AI chip supply chain in one read: who leads each, how concentrated it is, and where China and the United States stand. A four-page PDF is included.">
+<title>${esc(seo.title)} · Chip Supply Chain</title>
+<meta name="description" content="${esc(seo.description)}">
 <link rel="canonical" href="${SITE.url}summary/">
-<meta property="og:title" content="${title}">
-<meta property="og:description" content="${esc(dek)}">
+<meta property="og:title" content="${esc(seo.title)}">
+<meta property="og:description" content="${esc(seo.description)}">
+<meta name="twitter:title" content="${esc(seo.title)}">
+<meta name="twitter:description" content="${esc(seo.description)}">
 <meta property="og:url" content="${SITE.url}summary/">
 <meta property="og:type" content="article">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
@@ -342,6 +354,7 @@ ${print}
 </html>`;
   const dir = path.join(root, 'dist', 'summary');
   fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(path.join(dir, 'index.html'), html);
+  const dated = pageDate ? pageDate('/summary/', html) : null;
+  fs.writeFileSync(path.join(dir, 'index.html'), html.split(DAY).join(esc(dated && dayStr ? dayStr(dated.modified) : builtStr)));
   return {};
 };

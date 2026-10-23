@@ -6,7 +6,7 @@
 .cx-picker button { padding-left: 30px; position: relative; }
 .cx-picker button::before {
   content: ""; position: absolute; left: 10px; top: 11px; width: 12px; height: 12px;
-  border: 1px solid var(--line-2); border-radius: 0; background: var(--bg);
+  border: 1px solid var(--control-edge); border-radius: 0; background: var(--bg); /* the empty box is the state, so it takes the 3:1 control edge */
 }
 /* chosen: the box becomes a tick in the ground color on the ink fill */
 .cx-picker button[aria-pressed="true"]::before { left: 12px; top: 10px; width: 5px; height: 9px; border: solid var(--bg); border-width: 0 1.5px 1.5px 0; background: none; transform: rotate(45deg); }
@@ -43,9 +43,9 @@
 .cxa-row { --n: 2; display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 12px; padding-top: 12px; }
 .cxa-row[data-n="3"] { --n: 3; }
 .cxa-row[data-n="4"] { --n: 4; }
-.cxa-slot { min-width: 0; container: cxa-slot / inline-size; }
+.cxa-slot { min-width: 0; display: flex; flex-direction: column; container: cxa-slot / inline-size; } /* the card fills the row, so the cards in a row match */
 .cxa-k { margin: 0 0 6px; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); }
-.cxa-card { display: grid; box-sizing: border-box; width: 100%; height: 116px; border: 1px solid var(--line-2); border-radius: 0; background: var(--bg); text-align: left; }
+.cxa-card { flex: 1 1 auto; display: grid; box-sizing: border-box; width: 100%; min-height: 116px; border: 1px solid var(--line-2); border-radius: 0; background: var(--bg); text-align: left; }
 /* an empty slot is one button */
 .cxa-add { display: flex; align-items: center; gap: 9px; padding: 0 14px; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui); color: var(--ink); cursor: pointer; }
 .cxa-add:hover { border-color: var(--ink); background: var(--bg-2); }
@@ -60,12 +60,12 @@
 .cxa-thumb .cx-hbm { fill: var(--muted); } /* memory goes grey here: in the slots garnet belongs to the slot waiting for a pick */
 .cxa-noplan { display: block; width: 50px; height: 38px; border: 1px dashed var(--line-2); background: repeating-linear-gradient(135deg, transparent 0 5px, var(--line) 5px 6px); }
 .cxa-id { min-width: 0; align-self: start; }
-.cxa-name { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 400; font-size: var(--fs-d5); line-height: 1.15; color: var(--ink); }
-.cxa-meta { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; margin-top: 4px; overflow: hidden; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); line-height: 1.4; text-transform: uppercase; color: var(--muted); }
+.cxa-name { display: block; overflow-wrap: break-word; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 400; font-size: var(--fs-d5); line-height: 1.15; color: var(--ink); }
+.cxa-meta { display: block; margin-top: 4px; overflow-wrap: break-word; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); line-height: 1.4; text-transform: uppercase; color: var(--muted); }
 .cxa-acts { grid-column: 2; display: flex; gap: 14px; }
 .cxa-act { font-size: var(--fs-ui-s); }
 /* Try with: under the slot waiting for the second chip */
-.cxa-try { margin: 8px 0 0; font-family: var(--font-mono); font-size: var(--fs-ui-s); line-height: 1.6; color: var(--muted); }
+.cxa-try { grid-column: 2; margin: -4px 0 0; font-family: var(--font-mono); font-size: var(--fs-ui-s); line-height: 1.6; color: var(--muted); }
 .cxa-pk { margin-right: 10px; }
 .cxa-try button { margin-right: 12px; font-weight: 500; font-size: var(--fs-ui-s); color: var(--ink); }
 /* the empty page's pairs: small ruled buttons */
@@ -84,7 +84,7 @@
 section[data-view="landscape"][data-full="1"] .cx-picker button[aria-pressed="false"] { opacity: 0.42; }
 @container cxa (max-width: 700px) { .cxa-row[data-n="3"], .cxa-row[data-n="4"] { --n: 2; } } /* a third and fourth wrap under the pair */
 @container cxa-slot (max-width: 230px) { /* a narrow slot stacks: plan, name, maker line, actions */
-  .cxa-card { height: 152px; }
+  .cxa-card { min-height: 152px; }
   .cxa-add { padding: 0 10px; }
   .cxa-chip { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto; row-gap: 6px; padding: 10px 10px 8px; }
   .cxa-thumb { grid-row: auto; justify-content: flex-start; width: auto; }
@@ -99,7 +99,7 @@ section[data-view="landscape"][data-full="1"] .cx-picker button[aria-pressed="fa
 .cxp-t { margin: 0; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); }
 .cxp-x { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; font-size: 20px; line-height: 1; color: var(--ink-2); }
 .cxp-x:hover { color: var(--ink); background: var(--bg-2); }
-.cxp-in { display: block; margin: 6px 12px 0; padding: 9px 10px; font: inherit; font-family: var(--font-mono); font-size: var(--fs-ui); color: var(--ink); background: var(--bg); border: 1px solid var(--line-2); border-radius: 0; }
+.cxp-in { display: block; margin: 6px 12px 0; padding: 9px 10px; font: inherit; font-family: var(--font-mono); font-size: var(--fs-ui); color: var(--ink); background: var(--bg); border: 1px solid var(--control-edge); border-radius: 0; }
 .cxp-in::placeholder { color: var(--muted); }
 .cxp-in:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 2px; }
 .cxp-list { position: relative; flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; margin-top: 10px; padding-bottom: 6px; border-top: 1px solid var(--line); }
@@ -124,7 +124,7 @@ section[data-view="landscape"][data-full="1"] .cx-picker button[aria-pressed="fa
 .cxp.is-sheet .cxp-o { padding: 9px 16px; }
 
 /* ---------- the empty frame: dashed plans and hatched columns wait for each chip not yet chosen ---------- */
-.cx-plan--ghost { border: 1px dashed var(--line-2); cursor: default; min-width: 150px; }
+.cx-plan--ghost { gap: 8px; padding: 8px 10px 10px; border: 1px dashed var(--line-2); cursor: default; min-width: 150px; }
 .cx-plan--ghost:hover { border-color: var(--line-2); }
 .cx-plan--ghost .cx-plan-name b, .cx-plan--ghost .cx-plan-name em { color: var(--muted); }
 .cx-plan--ghost .cx-plan-art i { display: block; width: 128px; height: 92px; background: repeating-linear-gradient(135deg, transparent 0 7px, var(--line) 7px 8px); }
@@ -150,17 +150,23 @@ section[data-view="landscape"][data-full="1"] .cx-picker button[aria-pressed="fa
 
 /* ---------- package plans, one scale ---------- */
 .cx-plans {
-  display: flex; align-items: stretch; gap: 20px; max-width: 100%;
-  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  display: flex; flex-wrap: wrap; align-items: stretch; gap: 20px; max-width: 100%; /* the cards wrap where they cannot share a row, so none is cut off */
   padding: 6px 2px 14px; margin-bottom: 6px;
 }
 .cx-plan {
-  flex: 0 0 auto; display: flex; flex-direction: column; gap: 8px; text-align: left;
-  padding: 8px 10px 10px; border: 1px solid transparent; border-radius: 0;
+  position: relative; flex: 0 0 auto; display: flex; flex-direction: column; box-sizing: border-box; text-align: left;
+  border: 1px solid transparent; border-radius: 0;
 }
-.cx-plan:hover { border-color: var(--line-2); background: none; }
-.cx-plan[aria-pressed="true"] { border-color: var(--accent); background: none; }
-.cx-plan-name b { display: block; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui); line-height: 1.15; }
+.cx-plan:hover { border-color: var(--line-2); }
+/* the chip on the 3D stage: an ink outline and a label that says so */
+.cx-plan.is-on, .cx-plan.is-on:hover { border-color: var(--ink); }
+.cx-plan-hit { display: flex; flex: 1 1 auto; flex-direction: column; gap: 8px; width: 100%; padding: 8px 10px 4px; text-align: left; }
+.cx-on { display: block; min-height: 15px; padding-right: 26px; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; color: var(--muted); }
+.cx-plan.is-on .cx-on { font-weight: 600; color: var(--ink); }
+.cx-plan-hit:hover .cx-on { color: var(--ink); }
+.cx-plan-foot { display: flex; align-items: center; gap: 12px; padding: 0 10px 8px; }
+.cx-noplan { display: flex; align-items: center; justify-content: center; width: 112px; height: 72px; padding: 6px; box-sizing: border-box; border: 1px dashed var(--line-2); background: repeating-linear-gradient(135deg, transparent 0 7px, var(--line) 7px 8px); font-family: var(--font-mono); font-style: normal; font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; text-align: center; color: var(--muted); }
+.cx-plan-name b { display: block; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui); line-height: 1.2; overflow-wrap: break-word; }
 .cx-plan-name em {
   display: block; font-style: normal; font-family: var(--font-mono);
   font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; color: var(--muted); margin-top: 2px;
@@ -199,7 +205,8 @@ section[data-view="landscape"][data-full="1"] .cx-picker button[aria-pressed="fa
 .cx-table thead th { background: var(--bg); border-bottom: 1px solid var(--line-2); vertical-align: bottom; }
 .cx-table thead .cx-rowhead { background: var(--bg); }
 .cx-col { min-width: 152px; }
-.cx-col.is-focus { box-shadow: inset 0 -2px 0 var(--accent); }
+.cx-col { position: relative; }
+.cx-col.is-focus { box-shadow: inset 0 -2px 0 var(--ink); }
 /* three or four chips: the columns share the box equally and the row names wrap, so every chip shows without scrolling */
 @container (min-width: 520px) {
   .cx-table[data-n="3"] { table-layout: fixed; }
@@ -212,12 +219,13 @@ section[data-view="landscape"][data-full="1"] .cx-picker button[aria-pressed="fa
   .cx-table[data-n="4"] .cx-rowhead { width: 112px; min-width: 0; white-space: normal; }
   .cx-table[data-n="4"] th, .cx-table[data-n="4"] td { padding-left: 10px; padding-right: 10px; overflow-wrap: anywhere; }
 }
-.cx-colhead { display: block; text-align: left; }
+.cx-colhead { display: block; padding-right: 30px; text-align: left; overflow-wrap: break-word; }
 .cx-colhead b { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: var(--fs-d5); line-height: 1.1; }
 .cx-colhead span { display: block; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; color: var(--muted); margin-top: 3px; }
 .cx-colhead:hover b { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 0.18em; }
+.cx-colacts { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; margin-top: 6px; }
 .cx-jump {
-  margin-top: 7px; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s);
+  margin-top: 0; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s);
   text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--line-2); padding-bottom: 1px;
 }
 .cx-jump:hover { color: var(--ink); border-color: var(--ink-2); }
@@ -271,3 +279,35 @@ section[data-view="landscape"][data-full="1"] .cx-picker button[aria-pressed="fa
 /* nothing picked: the slots lead, and the plans and the table show their empty frame; the explanations, key, notes and export wait */
 section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="landscape"][data-empty="1"] .cx-foot, section[data-view="landscape"][data-empty="1"] .cx-notes, section[data-view="landscape"][data-empty="1"] .export-bar, section[data-view="landscape"][data-empty="1"] .cx-plans-head, section[data-view="landscape"][data-empty="1"] .cx-table-head, section[data-view="landscape"][data-empty="1"] .cx-sub, section[data-view="landscape"][data-empty="1"] .cx-more { display: none; }
 @media print { .cxp, .cxp-scrim { display: none !important; } }
+
+/* ---------- Change and × on every column head of the comparison (21 Oct 2026, fix2) ---------- */
+.cx-act { min-height: 24px; padding: 2px 0; font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+.cx-act:hover { color: var(--ink); text-decoration-color: var(--ink-2); }
+.cx-x { position: absolute; top: 4px; right: 4px; z-index: 1; display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; font-size: 17px; line-height: 1; color: var(--ink-2); }
+.cx-x:hover { color: var(--ink); background: var(--bg-2); }
+.cx-table th.cx-col .cx-x { top: 6px; right: 6px; z-index: 0; } /* under the sticky row heads when a phone scrolls the table sideways */
+
+/* ---------- the bar that follows the reader once the slots scroll away ---------- */
+:root { --cx-sticky: 0px; } /* Landscape.updateBar sets it to the bar's height while the bar shows; any scroll padding for the masthead can add it */
+.cxs { position: fixed; top: var(--masthead); left: 0; z-index: 30; box-sizing: border-box; width: var(--col); padding: 0 clamp(16px, 4vw, 56px) 0 clamp(16px, 3vw, 44px); background: var(--bg); }
+.cxs-in { display: flex; align-items: center; gap: 8px 14px; min-height: 46px; padding: 6px 0; border-bottom: 1px solid var(--line-2); }
+.cxs-k { flex: none; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); }
+.cxs-list { display: flex; flex: 1 1 auto; flex-wrap: wrap; align-items: center; gap: 6px; min-width: 0; }
+.cxs-chip { display: inline-flex; align-items: center; border: 1px solid var(--line-2); background: var(--bg); }
+.cxs-name { min-height: 28px; padding: 2px 2px 2px 9px; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui-s); color: var(--ink); }
+.cxs-name:hover { text-decoration: underline; text-decoration-color: var(--ink-2); text-underline-offset: 3px; }
+.cxs-x { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; font-size: 16px; line-height: 1; color: var(--ink-2); }
+.cxs-x:hover { color: var(--ink); background: var(--bg-2); }
+.cxs-add { min-height: 30px; padding: 2px 10px; border: 1px dashed var(--line-2); font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui-s); color: var(--ink-2); }
+.cxs-add:hover { border-color: var(--ink); color: var(--ink); }
+.cxs-clear { flex: none; min-height: 24px; padding: 2px 0; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+.cxs-clear:hover { color: var(--ink); }
+/* nothing focused may sit under the masthead and the bar (WCAG 2.4.11) */
+html.kb:has(section[data-view="landscape"]:not([hidden])) { scroll-padding-top: calc(var(--masthead) + var(--band, 0px) + var(--cx-sticky) + 12px); }
+section[data-view="landscape"] .cx-h, section[data-view="landscape"] .cx-note, section[data-view="landscape"] .cx-tablewrap { scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + var(--cx-sticky) + 16px); }
+@media (max-width: 900px) {
+  .cxs { padding: 0 18px; }
+  .cxs-k { display: none; }
+  .cxs-in { gap: 6px 10px; }
+}
+@media print { .cxs { display: none !important; } }

@@ -2,7 +2,7 @@
 .lk { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 34px; align-items: start; margin: 6px 0 40px; }
 .lk-list { position: sticky; top: calc(var(--masthead) + 16px); border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2); border-radius: 0; background: none; overflow: hidden; }
 .lk-search { padding: 12px 0 10px; border-bottom: 1px solid var(--line-2); }
-.lk-search input { width: 100%; font: inherit; font-family: var(--font-body); font-size: 16px; padding: 9px 12px; border: 1px solid var(--line-2); border-radius: 0; background: var(--bg); color: var(--ink); }
+.lk-search input { width: 100%; font: inherit; font-family: var(--font-body); font-size: 16px; padding: 9px 12px; border: 1px solid var(--control-edge); border-radius: 0; background: var(--bg); color: var(--ink); }
 .lk-search input:focus { outline: none; border-color: var(--ink); }
 .lk-search input::placeholder { color: var(--muted); }
 #lk-items { list-style: none; margin: 0; padding: 6px 0; max-height: calc(100vh - var(--masthead) - 160px); min-height: 200px; overflow: auto; overscroll-behavior: contain; }

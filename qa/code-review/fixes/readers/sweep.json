@@ -1,0 +1,586 @@
+{
+ "controls 1440 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "BODY",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": ""
+ },
+ "glossary 1440 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "INPUT",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "entry 1440 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "DT",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "country 1440 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "H3",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "suppliers 1440 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "ribbons 1440 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "exposure 1440 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "chapter 1440 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "A",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "errors 1440 light": [],
+ "controls 1440 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "BODY",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": ""
+ },
+ "glossary 1440 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "INPUT",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "entry 1440 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "DT",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "country 1440 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "H3",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "suppliers 1440 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "ribbons 1440 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "exposure 1440 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "chapter 1440 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "A",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "errors 1440 dark": [],
+ "controls 1024 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "BODY",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": ""
+ },
+ "glossary 1024 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "INPUT",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "entry 1024 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "DT",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "country 1024 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "H3",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "suppliers 1024 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "ribbons 1024 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "exposure 1024 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "chapter 1024 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "A",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "errors 1024 light": [],
+ "controls 1024 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "BODY",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": ""
+ },
+ "glossary 1024 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "INPUT",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "entry 1024 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "DT",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "country 1024 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "H3",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "suppliers 1024 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "ribbons 1024 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "exposure 1024 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "chapter 1024 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "A",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "errors 1024 dark": [],
+ "controls 390 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "BODY",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": ""
+ },
+ "glossary 390 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "INPUT",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "entry 390 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "DT",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "country 390 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "H3",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "suppliers 390 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "ribbons 390 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "exposure 390 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "chapter 390 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "A",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "errors 390 light": [],
+ "controls 390 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "BODY",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": ""
+ },
+ "glossary 390 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "INPUT",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "entry 390 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "DT",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "country 390 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "H3",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "suppliers 390 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "ribbons 390 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "exposure 390 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "chapter 390 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "A",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "errors 390 dark": [],
+ "controls 320 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "BODY",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": ""
+ },
+ "glossary 320 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "INPUT",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "entry 320 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "DT",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "country 320 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "H3",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "suppliers 320 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "ribbons 320 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "exposure 320 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "chapter 320 light": {
+  "sideways": 0,
+  "theme": "light",
+  "active": "A",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "errors 320 light": [],
+ "controls 320 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "BODY",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": ""
+ },
+ "glossary 320 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "INPUT",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "entry 320 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "DT",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "country 320 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "H3",
+  "supCount": "",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "suppliers 320 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "ribbons 320 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "exposure 320 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "BODY",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "chapter 320 dark": {
+  "sideways": 0,
+  "theme": "dark",
+  "active": "A",
+  "supCount": "226 suppliers",
+  "asOf": "31 Dec 2022",
+  "status": "Board as of 31 Dec 2022. 11 rows changed.",
+  "lkCount": "487 entries \u00b7 208 terms \u00b7 226 firms \u00b7 38 chips \u00b7 15 countries"
+ },
+ "errors 320 dark": []
+}

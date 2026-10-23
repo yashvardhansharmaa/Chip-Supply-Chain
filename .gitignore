@@ -27,3 +27,45 @@ qa/design/qa/*.png
 qa/design/review.html
 qa/design/chips-ux/**/*.png
 qa/code-review/perf/out/
+
+# --- 21 Oct 2026 (code review, repo hygiene): QA working files stay on this Mac ---
+# Reports (.md), proposals (.json), review pages (.html) and scripts under qa/ stay in git. Screenshots, renders, films,
+# sound, dumps and caches do not: they are 11 GB on this Mac and would block a push. Use git add -f only for one small
+# image a report must show. The site's own large files live in dist/ and media/, outside these rules.
+__pycache__/
+*.pyc
+qa/**/*.png
+qa/**/*.jpg
+qa/**/*.jpeg
+qa/**/*.gif
+qa/**/*.webp
+qa/**/*.avif
+qa/**/*.tif
+qa/**/*.tiff
+qa/**/*.psd
+qa/**/*.svgz
+qa/**/*.mp4
+qa/**/*.mov
+qa/**/*.webm
+qa/**/*.mkv
+qa/**/*.m4v
+qa/**/*.wav
+qa/**/*.mp3
+qa/**/*.m4a
+qa/**/*.aac
+qa/**/*.pdf
+qa/**/*.bin
+qa/**/*.npy
+qa/**/*.npz
+qa/**/*.zip
+qa/**/*.tar
+qa/**/*.gz
+qa/promo/
+qa/**/scratch/
+qa/**/shots/
+qa/**/site/
+qa/**/frames/
+
+# design round two and three: the review pages embed their shots, and the critics write scratch output (23 Oct 2026)
+qa/design2/review.html
+qa/design3/**/*.html.full.png

@@ -1,0 +1,507 @@
+{
+ "#/": {
+  "preboot_views": [
+   "walk"
+  ],
+  "preboot_subs": [
+   "stage",
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "None"
+  ],
+  "postboot_views": [
+   "walk"
+  ],
+  "router": "walk",
+  "first_poll_with_view": 991,
+  "boot_at": 5078,
+  "fcp": 2472,
+  "lcp": {
+   "t": 2472,
+   "size": 24222,
+   "el": "section.wk-gl > p.wk-gl-p",
+   "url": ""
+  },
+  "cls": 0,
+  "shifts": [],
+  "console": []
+ },
+ "#/chain": {
+  "preboot_views": [
+   "",
+   "stack"
+  ],
+  "preboot_subs": [
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "None"
+  ],
+  "postboot_views": [
+   "stack"
+  ],
+  "router": "stack",
+  "first_poll_with_view": 1008,
+  "boot_at": 4952,
+  "fcp": 892,
+  "lcp": {
+   "t": 952,
+   "size": 73696,
+   "el": "div#howto.howto > p.howto-lede",
+   "url": ""
+  },
+  "cls": 0,
+  "shifts": [],
+  "console": []
+ },
+ "#lithography": {
+  "preboot_views": [
+   "",
+   "stack"
+  ],
+  "preboot_subs": [
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "None"
+  ],
+  "postboot_views": [
+   "stack"
+  ],
+  "router": "stack",
+  "first_poll_with_view": 953,
+  "boot_at": 5090,
+  "fcp": 844,
+  "lcp": {
+   "t": 1856,
+   "size": 115125,
+   "el": "div.plain > p",
+   "url": ""
+  },
+  "cls": 0,
+  "shifts": [],
+  "console": []
+ },
+ "#geopolitics": {
+  "preboot_views": [
+   "",
+   "stack"
+  ],
+  "preboot_subs": [
+   "",
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "None"
+  ],
+  "postboot_views": [
+   "stack"
+  ],
+  "router": "stack",
+  "first_poll_with_view": 2488,
+  "boot_at": 5814,
+  "fcp": 4396,
+  "lcp": {
+   "t": 5160,
+   "size": 94464,
+   "el": "div.plain > p",
+   "url": ""
+  },
+  "cls": 0,
+  "shifts": [],
+  "console": []
+ },
+ "#lithography--high-na-euv": {
+  "preboot_views": [
+   "",
+   "stack"
+  ],
+  "preboot_subs": [
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "None"
+  ],
+  "postboot_views": [
+   "stack"
+  ],
+  "router": "stack",
+  "first_poll_with_view": 12804,
+  "boot_at": 14408,
+  "fcp": 12304,
+  "lcp": {
+   "t": 12836,
+   "size": 108117,
+   "el": "div.prose > p",
+   "url": ""
+  },
+  "cls": 0,
+  "shifts": [],
+  "console": []
+ },
+ "#/suppliers": {
+  "preboot_views": [
+   "",
+   "suppliers"
+  ],
+  "preboot_subs": [
+   "",
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "1"
+  ],
+  "postboot_views": [
+   "suppliers"
+  ],
+  "router": "suppliers",
+  "first_poll_with_view": 947,
+  "boot_at": 5039,
+  "fcp": 844,
+  "lcp": {
+   "t": 1064,
+   "size": 29568,
+   "el": "article.sa-panel > p.sa-panel-lede",
+   "url": ""
+  },
+  "cls": 0,
+  "shifts": [],
+  "console": []
+ },
+ "#/suppliers?country=JP": {
+  "preboot_views": [
+   "suppliers"
+  ],
+  "preboot_subs": [
+   "timeline"
+  ],
+  "preboot_stage": [
+   "1"
+  ],
+  "postboot_views": [
+   "suppliers"
+  ],
+  "router": "suppliers",
+  "first_poll_with_view": 838,
+  "boot_at": 5039,
+  "fcp": 828,
+  "lcp": {
+   "t": 848,
+   "size": 29014,
+   "el": "div.view-head > p.dek",
+   "url": ""
+  },
+  "cls": 0,
+  "shifts": [],
+  "console": []
+ },
+ "#/suppliers?tab=country": {
+  "preboot_views": [
+   "suppliers"
+  ],
+  "preboot_subs": [
+   "timeline"
+  ],
+  "preboot_stage": [
+   "1"
+  ],
+  "postboot_views": [
+   "suppliers"
+  ],
+  "router": "suppliers",
+  "first_poll_with_view": 864,
+  "boot_at": 5070,
+  "fcp": 852,
+  "lcp": {
+   "t": 940,
+   "size": 29568,
+   "el": "article.sa-panel > p.sa-panel-lede",
+   "url": ""
+  },
+  "cls": 0,
+  "shifts": [],
+  "console": []
+ },
+ "#/controls": {
+  "preboot_views": [
+   "",
+   "controls"
+  ],
+  "preboot_subs": [
+   "",
+   "stage"
+  ],
+  "preboot_stage": [
+   "1"
+  ],
+  "postboot_views": [
+   "controls"
+  ],
+  "router": "controls",
+  "first_poll_with_view": 1010,
+  "boot_at": 5156,
+  "fcp": 888,
+  "lcp": {
+   "t": 940,
+   "size": 44640,
+   "el": "div.view-head > p.dek",
+   "url": ""
+  },
+  "cls": 0,
+  "shifts": [],
+  "console": []
+ },
+ "#/exposure/asml": {
+  "preboot_views": [
+   "",
+   "controls"
+  ],
+  "preboot_subs": [
+   "",
+   "stage,exposure"
+  ],
+  "preboot_stage": [
+   "1"
+  ],
+  "postboot_views": [
+   "controls"
+  ],
+  "router": "controls",
+  "first_poll_with_view": 982,
+  "boot_at": 5106,
+  "fcp": 864,
+  "lcp": {
+   "t": 1092,
+   "size": 44640,
+   "el": "div.view-head > p.dek",
+   "url": ""
+  },
+  "cls": 0,
+  "shifts": [],
+  "console": []
+ },
+ "#/controls/2019-05-16-huawei-listed": {
+  "preboot_views": [
+   "controls"
+  ],
+  "preboot_subs": [
+   "stage"
+  ],
+  "preboot_stage": [
+   "1"
+  ],
+  "postboot_views": [
+   "controls"
+  ],
+  "router": "controls",
+  "first_poll_with_view": 856,
+  "boot_at": 5116,
+  "fcp": 856,
+  "lcp": {
+   "t": 5396,
+   "size": 67851,
+   "el": "div#tl-p3.tl-panel > p",
+   "url": ""
+  },
+  "cls": 0,
+  "shifts": [],
+  "console": []
+ },
+ "#/glossary": {
+  "preboot_views": [
+   "",
+   "glossary"
+  ],
+  "preboot_subs": [
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "1"
+  ],
+  "postboot_views": [
+   "glossary"
+  ],
+  "router": "glossary",
+  "first_poll_with_view": 2629,
+  "boot_at": 5851,
+  "fcp": 852,
+  "lcp": {
+   "t": 2560,
+   "size": 22125,
+   "el": "div.view-head > p.dek",
+   "url": ""
+  },
+  "cls": 0,
+  "shifts": [],
+  "console": []
+ },
+ "#gl-euv": {
+  "preboot_views": [
+   "",
+   "glossary"
+  ],
+  "preboot_subs": [
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "1"
+  ],
+  "postboot_views": [
+   "glossary"
+  ],
+  "router": "glossary",
+  "first_poll_with_view": 2589,
+  "boot_at": 5384,
+  "fcp": 884,
+  "lcp": {
+   "t": 2824,
+   "size": 22125,
+   "el": "div.view-head > p.dek",
+   "url": ""
+  },
+  "cls": 0,
+  "shifts": [],
+  "console": []
+ },
+ "#/landscape": {
+  "preboot_views": [
+   "landscape"
+  ],
+  "preboot_subs": [
+   "",
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "None"
+  ],
+  "postboot_views": [
+   "landscape"
+  ],
+  "router": "landscape",
+  "first_poll_with_view": 5467,
+  "boot_at": 8182,
+  "fcp": 6500,
+  "lcp": {
+   "t": 7048,
+   "size": 79547,
+   "el": "div.view-head > p.dek",
+   "url": ""
+  },
+  "cls": 0,
+  "shifts": [],
+  "console": []
+ },
+ "#/walk/lithography": {
+  "preboot_views": [
+   "walk"
+  ],
+  "preboot_subs": [
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "None"
+  ],
+  "postboot_views": [
+   "walk"
+  ],
+  "router": "walk",
+  "first_poll_with_view": 1019,
+  "boot_at": 5452,
+  "fcp": 1412,
+  "lcp": {
+   "t": 1412,
+   "size": 202120,
+   "el": "div.wk-block > p.wk-p",
+   "url": ""
+  },
+  "cls": 0,
+  "shifts": [],
+  "console": []
+ },
+ "#design-and-eda": {
+  "preboot_views": [
+   "",
+   "stack"
+  ],
+  "preboot_subs": [
+   "",
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "None"
+  ],
+  "postboot_views": [
+   "stack"
+  ],
+  "router": "stack",
+  "first_poll_with_view": 1214,
+  "boot_at": 59027,
+  "fcp": 58708,
+  "lcp": {
+   "t": 59408,
+   "size": 89625,
+   "el": "div.plain > p",
+   "url": ""
+  },
+  "cls": 0,
+  "shifts": [],
+  "console": []
+ },
+ "#component-costs": {
+  "preboot_views": [
+   "",
+   "stack"
+  ],
+  "preboot_subs": [
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "None"
+  ],
+  "postboot_views": [
+   "stack"
+  ],
+  "router": "stack",
+  "first_poll_with_view": 962,
+  "boot_at": 5656,
+  "fcp": 856,
+  "lcp": {
+   "t": 2888,
+   "size": 89386,
+   "el": "div.plain > p",
+   "url": ""
+  },
+  "cls": 0,
+  "shifts": [],
+  "console": []
+ },
+ "#main": {
+  "preboot_views": [
+   "",
+   "stack"
+  ],
+  "preboot_subs": [
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "None"
+  ],
+  "postboot_views": [
+   "stack"
+  ],
+  "router": "stack",
+  "first_poll_with_view": 974,
+  "boot_at": 5013,
+  "fcp": 864,
+  "lcp": {
+   "t": 940,
+   "size": 73696,
+   "el": "div#howto.howto > p.howto-lede",
+   "url": ""
+  },
+  "cls": 0,
+  "shifts": [],
+  "console": []
+ }
+}

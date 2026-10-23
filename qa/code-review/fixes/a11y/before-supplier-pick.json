@@ -1,0 +1,30 @@
+{
+ "1440": {
+  "before pick": {
+   "country": "JP",
+   "count": "45 of 226 suppliers \u00b7 Japan"
+  },
+  "picked": "TSMC",
+  "after pick": {
+   "country": "JP",
+   "search": "TSMC",
+   "count": "26 of 226 suppliers \u00b7 Japan",
+   "tsmcShown": false,
+   "active": "BODY Skip to content\nContents\u00d7HomeT"
+  }
+ },
+ "390": {
+  "before pick": {
+   "country": "JP",
+   "count": "45 of 226 suppliers \u00b7 Japan"
+  },
+  "picked": "TSMC",
+  "after pick": {
+   "country": "JP",
+   "search": "TSMC",
+   "count": "26 of 226 suppliers \u00b7 Japan",
+   "tsmcShown": false,
+   "active": "BODY Skip to content\nContents\u00d7HomeT"
+  }
+ }
+}

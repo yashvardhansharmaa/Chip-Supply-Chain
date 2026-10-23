@@ -1,0 +1,19 @@
+mode: new
+21 Oct, first build (settles the dates file)
+  "/" 2026-10-21 | "/summary/" 2026-10-21 | chapter pages moved to this day: 17 of 17
+  shown: main footer "21 October 2026", summary "21 October 2026", /lithography/ "21 October 2026", sitemap /summary/ 2026-10-21
+9 Nov, no change at all
+  "/" 2026-10-21 | "/summary/" 2026-10-21 | chapter pages moved to this day: 0 of 17
+  shown: main footer "21 October 2026", summary "21 October 2026", /lithography/ "21 October 2026", sitemap /summary/ 2026-10-21
+10 Nov, design only: CSS on both sheets, a JS comment, two classes renamed in figure(), the template reindented
+  "/" 2026-10-21 | "/summary/" 2026-10-21 | chapter pages moved to this day: 0 of 17
+  shown: main footer "21 October 2026", summary "21 October 2026", /lithography/ "21 October 2026", sitemap /summary/ 2026-10-21
+11 Nov, one sentence added to chapter 4
+  "/" 2026-11-11 | "/summary/" 2026-10-21 | chapter pages moved to this day: 1 of 17 (/lithography/)
+  shown: main footer "11 November 2026", summary "21 October 2026", /lithography/ "11 November 2026", sitemap /summary/ 2026-10-21
+12 Nov, one supplier row reworded in data/suppliers.json
+  "/" 2026-11-12 | "/summary/" 2026-10-21 | chapter pages moved to this day: 0 of 17
+  shown: main footer "12 November 2026", summary "21 October 2026", /lithography/ "11 November 2026", sitemap /summary/ 2026-10-21
+13 Nov, chapter 4's oneLiner changed
+  "/" 2026-11-13 | "/summary/" 2026-11-13 | chapter pages moved to this day: 1 of 17 (/lithography/)
+  shown: main footer "13 November 2026", summary "13 November 2026", /lithography/ "13 November 2026", sitemap /summary/ 2026-11-13

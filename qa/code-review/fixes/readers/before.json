@@ -1,0 +1,338 @@
+{
+ "board_now": {
+  "11 Nov 2026": {
+   "today": "Wed Nov 11 2026",
+   "asOf": "7 Sept 2026",
+   "entity": "Presumption of denialSuspended until 9 Nov 2026Affiliates rule suspended until 9 November 2026from 10 Nov 2025 \u00b7 announced 12 Nov 202590 FR 50857 \u00b7 15 CFR 744.11(a)(1)",
+   "minerals": "ProhibitedSuspended until 27 Nov 2026Ban on exports to America suspendedfrom 9 Nov 2025MOFCOM Announcement 2025 No. 72",
+   "mineralsWorld": "Case by caseSuspended until 10 Nov 20260.1 percent rule suspended on 7 November, before it took effectfrom 7 Nov 2025MOFCOM and GAC Announcement 2025 No. 70",
+   "suspendedShown": [
+    "Suspended until 9 Nov 2026",
+    "Suspended until 27 Nov 2026",
+    "Suspended until 10 Nov 2026"
+   ]
+  },
+  "errors": [],
+  "real today": {
+   "today": "Wed Oct 21 2026",
+   "asOf": "7 Sept 2026",
+   "entity": "Presumption of denialSuspended until 9 Nov 2026Affiliates rule suspended until 9 November 2026from 10 Nov 2025 \u00b7 announced 12 Nov 202590 FR 50857 \u00b7 15 CFR 744.11(a)(1)",
+   "minerals": "ProhibitedSuspended until 27 Nov 2026Ban on exports to America suspendedfrom 9 Nov 2025MOFCOM Announcement 2025 No. 72",
+   "mineralsWorld": "Case by caseSuspended until 10 Nov 20260.1 percent rule suspended on 7 November, before it took effectfrom 7 Nov 2025MOFCOM and GAC Announcement 2025 No. 70",
+   "suspendedShown": [
+    "Suspended until 9 Nov 2026",
+    "Suspended until 27 Nov 2026",
+    "Suspended until 10 Nov 2026"
+   ]
+  },
+  "pass": false,
+  "doc": "P1-3: the board's Now on 11 Nov 2026 (faked clock) and on the real today"
+ },
+ "board_status": {
+  "result": {
+   "afterYear": null,
+   "afterArrow": null,
+   "afterNow": null,
+   "afterChip": null
+  },
+  "errors": [],
+  "pass": false,
+  "doc": "a11y #5: a year press, the arrow keys and Now are announced in a polite status"
+ },
+ "passage_link": {
+  "result": {
+   "term": "lk-term-big-fund",
+   "chapter": "geopolitics",
+   "text": "China spends more than the United States. The latest round of its Nati",
+   "samples": [
+    {
+     "t": 250,
+     "passageTop": 9258,
+     "onScreen": false,
+     "chapterTop": 0
+    },
+    {
+     "t": 1000,
+     "passageTop": 8924,
+     "onScreen": false,
+     "chapterTop": -334
+    },
+    {
+     "t": 1600,
+     "passageTop": 9326,
+     "onScreen": false,
+     "chapterTop": 68
+    },
+    {
+     "t": 2600,
+     "passageTop": 9326,
+     "onScreen": false,
+     "chapterTop": 68
+    }
+   ]
+  },
+  "errors": [],
+  "pass": false,
+  "doc": "P1-1 (A1): a Where it appears passage link lands on the passage and stays there"
+ },
+ "popover_close": {
+  "desktop": {
+   "from": 33559,
+   "href": "#gl-scanner",
+   "hash": "#gl-scanner",
+   "tipHidden": false,
+   "tipRect": [
+    8,
+    10,
+    340,
+    273
+   ],
+   "scrollY": 439,
+   "entryHeadTop": -117,
+   "entryHeadVisible": false,
+   "focus": "BODY",
+   "entryToEntry": {
+    "scrollY": 373,
+    "headTop": -51,
+    "mast": 56,
+    "visible": false
+   }
+  },
+  "errors": [],
+  "phone": {
+   "from": 48773,
+   "href": "#gl-scanner",
+   "hash": "#gl-scanner",
+   "tipHidden": false,
+   "tipRect": [
+    10,
+    436,
+    370,
+    270
+   ],
+   "scrollY": 333,
+   "entryHeadTop": 104,
+   "entryHeadVisible": true,
+   "focus": "BODY",
+   "entryToEntry": {
+    "scrollY": 333,
+    "headTop": 104,
+    "mast": 70,
+    "visible": true
+   }
+  },
+  "pass": false,
+  "doc": "P1-5 (A5): Look it up closes the popover; the Glossary opens with the entry in view; entry to entry lands below the masthead"
+ },
+ "non_passages": {
+  "result": {
+   "indexed": 1035,
+   "nonPassages": 51,
+   "byKind": {
+    "ch-meta": 17,
+    "ch-cite": 34
+   },
+   "wordCountLines": 17,
+   "citationLines": 17,
+   "rawSearchYashvardhan": "17 places",
+   "sample": [
+    "2,262 words / 10 min Specimen: die floorplan Updated 21 October 2026",
+    "Link to chapter \u00b7 Cite this chapter \u00b7 Chapter PDF",
+    "Sharma, Yashvardhan. \u201cChip Design, EDA and IP.\u201d Chip Supply Chain: How AI Chips Are Made. "
+   ]
+  },
+  "errors": [],
+  "pass": false,
+  "doc": "P1-4: word-count lines, citation text and card furniture are not passages"
+ },
+ "search_enter": {
+  "result": {
+   "whileTyping": "gl-search",
+   "active": "BODY Skip to content\nContents\u00d7HomeT",
+   "inCard": false,
+   "countRole": null,
+   "countLive": null,
+   "count": "65 of 487 entries",
+   "selected": "lk-term-hbm"
+  },
+  "errors": [],
+  "pass": false,
+  "doc": "a11y #1 / QA: Enter in the Glossary search moves focus to the chosen entry, not to the page; the count is a polite status"
+ },
+ "company_links": {
+  "result": {
+   "lam research": "https://chipexplorer.eto.tech/?parentNode=N46&amp;selectedNode=N103",
+   "wistron": "https://www.wistron.com/en/Product&amp;Services/Enterprise&amp;Networking"
+  },
+  "errors": [],
+  "pass": false,
+  "doc": "P1 #6: the Company page links for Lam Research and Wistron"
+ },
+ "card_focus": {
+  "result": {
+   "afterEnter": "BUTTON ABFTerm in card: false",
+   "tabsToFirstCardLink": 483,
+   "landedOn": "Read it in Substrates and PCBs \u2192",
+   "tabFromSearch": [
+    "list: BUTTON 15 CFRExport control",
+    "list: BUTTON 300 mmTerm",
+    "list: BUTTON 3A090Export control",
+    "list: BUTTON 3B001Export control"
+   ],
+   "arrowDownTwice": "15 CFRExport control"
+  },
+  "errors": [],
+  "pass": false,
+  "doc": "a11y #1: Enter on the 5th list entry; Tab presses from there to the card's first link"
+ },
+ "supplier_ribbons": {
+  "result": {
+   "counts": [
+    "3 of 226 suppliers \u00b7 Silicon & Wafers \u00b7 Japan",
+    "10 of 226 suppliers \u00b7 Photomasks"
+   ],
+   "countRole": null,
+   "countLive": null
+  },
+  "errors": [],
+  "pass": false,
+  "doc": "P1-2 (A2): two Japan ribbons in a row keep the Japan filter"
+ },
+ "supplier_glossary_links": {
+  "result": {
+   "asml": "13 of 226 suppliers",
+   "searchAfterAsml": "ASML",
+   "japan": "3 of 226 suppliers \u00b7 Japan",
+   "searchAfterJapan": "ASML",
+   "japanFirms": 45
+  },
+  "errors": [],
+  "pass": false,
+  "doc": "P1-2 (A3): ASML's 'In the supplier list', then Japan's 'Its firms in the supplier list'"
+ },
+ "table_sort_focus": {
+  "result": {
+   "first": {
+    "active": "BODY ",
+    "thSort": null,
+    "btnSort": "ascending"
+   },
+   "second": {
+    "active": "BODY ",
+    "thSort": null
+   }
+  },
+  "errors": [],
+  "pass": false,
+  "doc": "a11y #12: focus after pressing a sort header in Table mode"
+ },
+ "timeline_mentions": {
+  "result": {
+   "n": 13,
+   "hrefs": [
+    "#/controls"
+   ],
+   "resolve": true
+  },
+  "errors": [],
+  "pass": false,
+  "doc": "P1-6: the Entity List card's Export Controls mentions link to their entries"
+ },
+ "popover_keyboard": {
+  "desktop": {
+   "start": "term: lithography systems | tip open",
+   "tab1": "term: extreme ultraviolet | tip open",
+   "shiftTab": "term: lithography systems | tip open",
+   "tabFromLink": "15 | tip closed",
+   "escapeFromLink": "8 | tip closed"
+  },
+  "errors": [],
+  "phone": {
+   "start": "term: lithography systems | tip open",
+   "tab1": "term: extreme ultraviolet | tip open",
+   "shiftTab": "term: lithography systems | tip open",
+   "tabFromLink": "15 | tip closed",
+   "escapeFromLink": "8 | tip closed"
+  },
+  "pass": false,
+  "doc": "P1-7a / a11y #18: Tab from a glossary term reaches the popover's link; Tab again moves on; Shift+Tab and Escape come back"
+ },
+ "stale_search": {
+  "result": {
+   "essayEntries": [
+    "Who Controls the Chain -> #/controls"
+   ],
+   "top": [
+    "Chapter \u00b7 Who Controls the Chain -> #geopolitics",
+    "Essay \u00b7 Who Controls the Chain -> #/controls",
+    "Start here \u00b7 Who Controls the Chain, in plain terms -> #/walk/geopolitics",
+    "Who Controls the Chain \u00b7 Ways around the controls -> #geopolitics--ways-around-the-controls"
+   ]
+  },
+  "errors": [],
+  "pass": false,
+  "doc": "P1-9: search has no Essay entry that opens Export Controls"
+ },
+ "tooltips": {
+  "ribbons": {
+   "onFocus": {
+    "shown": true,
+    "pe": "none"
+   },
+   "afterEscape": {
+    "shown": true,
+    "pe": "none"
+   },
+   "pointerOnTip": {
+    "shown": false,
+    "pe": "none"
+   },
+   "escapeWhileHovered": {
+    "shown": false,
+    "pe": "none"
+   }
+  },
+  "atlas": {
+   "onFocus": {
+    "shown": true,
+    "pe": "none"
+   },
+   "afterEscape": {
+    "shown": true,
+    "pe": "none"
+   }
+  },
+  "china": {
+   "onFocus": {
+    "shown": true,
+    "pe": "none"
+   },
+   "afterEscape": {
+    "shown": true,
+    "pe": "none"
+   },
+   "pointerOnTip": {
+    "shown": false,
+    "pe": "none"
+   }
+  },
+  "errors": [],
+  "pass": false,
+  "doc": "a11y #10 (WCAG 1.4.13): the ribbon, China revenue and atlas tips close with Escape and can be hovered"
+ },
+ "ribbon_click_real": {
+  "desktop": {
+   "count": "3 of 226 suppliers \u00b7 Silicon & Wafers \u00b7 Japan",
+   "stage": "Silicon & Wafers",
+   "country": "JP"
+  },
+  "errors": [],
+  "phone": {
+   "count": "3 of 226 suppliers \u00b7 Silicon & Wafers \u00b7 Japan",
+   "stage": "Silicon & Wafers",
+   "country": "JP"
+  },
+  "pass": true,
+  "doc": "the tips take a mouse pointer now: a real click on a ribbon (and a tap on a phone) still reaches the ribbon"
+ }
+}

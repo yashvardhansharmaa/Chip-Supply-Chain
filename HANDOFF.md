@@ -1,5 +1,7 @@
 # Compute Chokepoints — handoff (updated 9 September 2026, third session)
 
+> **21 October 2026: read `docs/RUNBOOK.md` first.** It holds the current rules (sources, dated figures, no personal data in requests, no `git add -A`) and the weekly refresh step by step. The live site is https://chipsupplychain.org/ and the repository https://github.com/yashvardhansharmaa/Chip-Supply-Chain. The dated log below is history. Where it disagrees with the runbook, the runbook holds.
+
 Live site: https://yashvardhansharmaa.github.io/chokepoints/ (redeploys on every push to `main`).
 Repo: https://github.com/yashvardhansharmaa/chokepoints. Build: `node build/build.js` → `dist/index.html`; report in `dist/build-report.txt`. Data-source audit: `node build/audit-data-sources.js`.
 
@@ -87,7 +89,7 @@ The PDF title page carries a rendered specimen (the GPU die floorplan): `build/a
 
 - Forbid subagents in worker prompts (the concurrency cap counts them and they stall).
 - The WebSearch budget is shared and exhausts early; tell workers to use WebFetch on primary sources and Google News RSS.
-- Tell workers to save drafts early; API connection drops kill agents silently. Run a background auto-commit loop while they write.
+- Tell workers to save drafts early, because API connection drops kill agents silently. Do not run an auto-commit loop, and never use `git add -A` or `git add .`. The folder holds 11 GB of QA screenshots and films (21 Oct 2026). Commit by naming the folders, as in `docs/RUNBOOK.md` step 4.
 - Give each worker its own files; when two need the same JSON, split it (as with `landscape-layouts.json`).
 - The hidden browser pane paints only the first frame and refuses screenshots when not displayed; verify layout with DOM measurements through `javascript_tool`, and use `?only=<chapter-id>` to load a single chapter.
 
@@ -197,3 +199,19 @@ The subsection permalinks (the "#" that appears when a chapter heading is hovere
 - Type: one named scale in `src/styles.css` (`--fs-*`, `--sp-*`), applied to the screen CSS; print styles unchanged.
 - PDFs and cards re-rendered with `--edition 2026-10-21`: chapters 180 pages, the book 174, the summary 4; no Type 3 fonts. Test and Assembly and Substrates and PCBs still open with a short first page (a deeper sink was not built).
 - The repo was renamed to Chip-Supply-Chain on 21 Oct; `origin` points there.
+
+## 21 to 23 Oct 2026: AI Chips slots, code review fixes, search pages
+- AI Chips rebuilt as slots (pick up to four chips, a searchable picker, Change and Remove at each column and in a sticky Comparing bar). Notes in `qa/design/chips-ux/`.
+- Code review in `qa/code-review/` (four reports, `PLAN.md`, `FIXES.md`). Fixed, with notes and proof in `qa/code-review/fixes/`:
+  - speed: first view on a phone about 0.9 s from about 5 s, `src/preroute.js`, chapters on `content-visibility`, specimens built only where shown;
+  - reader bugs: the board's Now, Glossary passage links, Suppliers filters, timeline mentions;
+  - accessibility: focus under the fixed bars, the skip link, search as a modal, contrast, the specimen pause button;
+  - safety: build validation in `build/validate.js`, integrity and a smoke tour in CI (`qa/scripts/smoke.js`), dates by content, `.gitignore` for QA media, `docs/RUNBOOK.md`.
+- Search engines (`qa/code-review/seo.md`):
+  - real pages for /suppliers/, /export-controls/, /chips/ and /glossary/ (`build/modules/reference-pages.js`);
+  - approved titles and descriptions in `build/page-titles.json`, also used for the app's tab titles (`Router.title`);
+  - related chapters;
+  - PDFs out of the sitemap;
+  - chapter links on Home, the ledger strip and Previous/Next carry their static page as `href` with the app route in `data-route`.
+- howaichipsaremade.com (Squarespace) forwards with a 301 to chipsupplychain.org, paths kept.
+- Design round two (`qa/design2/`) was rejected by the owner on 23 Oct ("a pretty poor job"). Round three, a full visual redesign from research of the best light-themed sites, runs in `qa/design3/`.

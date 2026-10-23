@@ -1,0 +1,92 @@
+/* Option A, "Slots": the comparison asks for its own chips. Two to four ruled column slots, each a
+   "Choose a chip" menu, lead the page; the comparison below shows its frame from the start, with
+   empty columns where the chips will go. The checklist leaves the page.
+   Lands in src/modules/chips.css (replacing the picker block and the .cx-bar rules). */
+
+/* the old count bar goes (template.html drops .cx-bar); the checklist moves, folded, under the slots */
+section[data-view="landscape"] .cx-bar { display: none; }
+.cxa-browse { margin: 14px 0 0; }
+.cxa-browse summary { display: inline-flex; align-items: center; gap: 8px; min-height: 32px; cursor: pointer; list-style: none; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--ink-2); }
+.cxa-browse summary::-webkit-details-marker { display: none; }
+.cxa-browse summary::before { content: "+"; width: 12px; font-size: var(--fs-ui); color: var(--muted); }
+.cxa-browse[open] summary::before { content: "\2212"; }
+.cxa-browse summary:hover { color: var(--ink); }
+.cxa-browse .cx-picker { margin: 12px 0 0; }
+.cxa-ask[data-warn="1"] { color: var(--accent-ink); }
+section[data-view="landscape"][data-full="1"] .cx-picker button[aria-pressed="false"] { opacity: 0.42; }
+
+.cxa { margin: 4px 0 40px; }
+.cxa-head { display: flex; align-items: baseline; gap: 16px; margin: 0 0 14px; }
+.cxa-head .cxa-ask { margin: 0 auto 0 0; }
+.cxa-ask { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 400; font-size: var(--fs-d3); line-height: 1.2; color: var(--ink); margin: 0 0 14px; }
+.cxa-row { display: grid; grid-template-columns: repeat(var(--slots, 2), minmax(0, 1fr)); border-top: 1px solid var(--ink); }
+.cxa-slot { min-width: 0; padding: 12px 16px 14px; border-right: 1px solid var(--line); }
+.cxa-slot:first-child { padding-left: 0; }
+.cxa-slot:last-child { border-right: 0; padding-right: 0; }
+.cxa-slot[hidden] { display: none; }
+.cxa-top { display: flex; align-items: center; gap: 10px; height: 24px; margin: 0 0 6px; }
+.cxa-k { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); margin-right: auto; }
+.cxa-x { min-height: 24px; padding: 2px 0; font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+.cxa-x:hover { color: var(--ink); text-decoration-color: var(--accent); }
+.cxa-x[hidden] { display: none; }
+/* the menu: square, hairline, the Suppliers filter chevron */
+.cxa-sel {
+  display: block; width: 100%; min-height: 44px; padding: 10px 32px 10px 12px;
+  font: inherit; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui); color: var(--ink);
+  border: 1px solid var(--line-2); border-radius: 0; background-color: var(--bg);
+  -webkit-appearance: none; appearance: none; text-overflow: ellipsis; cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, var(--ink-2) 50%), linear-gradient(135deg, var(--ink-2) 50%, transparent 50%);
+  background-position: calc(100% - 17px) 52%, calc(100% - 12px) 52%; background-size: 5px 5px; background-repeat: no-repeat;
+}
+.cxa-sel:hover { border-color: var(--ink); }
+.cxa-sel:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 2px; }
+.cxa-slot[data-state="empty"] .cxa-sel, .cxa-slot[data-state="next"] .cxa-sel, .cxa-slot[data-state="more"] .cxa-sel { color: var(--ink-2); font-weight: 400; }
+.cxa-slot[data-state="filled"] .cxa-sel { border-color: var(--ink); }
+/* the slot that wants a chip next: garnet, the one place the page asks for an action */
+.cxa-slot[data-state="next"] .cxa-k { color: var(--accent-ink); }
+.cxa-slot[data-state="next"] .cxa-sel { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+/* a third or fourth slot is optional: a dashed field */
+.cxa-slot[data-state="more"] .cxa-sel { border-style: dashed; }
+.cxa-meta { display: block; min-height: 16px; margin-top: 6px; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; color: var(--muted); }
+.cxa-try { margin: 8px 0 0; font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); line-height: 1.5; }
+.cxa-try[hidden] { display: none; }
+.cxa-try button, .cxa-pairs button {
+  min-height: 24px; padding: 2px 0; margin-right: 12px; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui-s); color: var(--ink);
+  text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px;
+}
+.cxa-try button:hover, .cxa-pairs button:hover { text-decoration-color: var(--accent); }
+.cxa-foot[hidden] { display: none; }
+.cxa-foot { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 0; margin: 12px 0 0; padding-top: 10px; border-top: 1px solid var(--line); }
+.cxa-pairs { margin: 0 auto 0 0; font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); line-height: 1.5; }
+.cxa-pk { margin-right: 12px; }
+.cxa-clear { min-height: 24px; padding: 2px 0; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+.cxa-clear[hidden] { display: none; }
+
+/* the comparison keeps its frame while it waits: plans and table show, the explanations wait for a chip */
+section[data-view="landscape"].cxa-on[data-empty="1"] .cx-plans,
+section[data-view="landscape"].cxa-on[data-empty="1"] .cx-tablewrap,
+section[data-view="landscape"].cxa-on[data-empty="1"] .cx-h { display: block; }
+section[data-view="landscape"].cxa-on[data-empty="1"] .cx-plans { display: flex; }
+.cx-plan--ghost { border: 1px dashed var(--line-2); cursor: default; min-width: 150px; }
+.cx-plan--ghost:hover { border-color: var(--line-2); }
+.cx-plan--ghost .cx-plan-name b, .cx-plan--ghost .cx-plan-name em { color: var(--muted); }
+.cx-plan--ghost .cx-plan-art i { display: block; width: 128px; height: 92px; background: repeating-linear-gradient(135deg, transparent 0 7px, var(--line) 7px 8px); }
+.cx-col--ghost .cx-ghost-h { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 400; font-size: var(--fs-d5); line-height: 1.1; color: var(--muted); }
+.cx-col--ghost .cx-ghost-s { display: block; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; color: var(--muted); margin-top: 3px; }
+.cx-table td.cx-ghost { color: var(--line-2); font-family: var(--font-mono); }
+/* before any chip, the empty table shows its first rows and fades, so the reader sees what it will hold */
+section[data-view="landscape"].cxa-on[data-empty="1"] .cx-tablewrap { max-height: 360px; overflow: hidden; -webkit-mask-image: linear-gradient(#000 50%, transparent); mask-image: linear-gradient(#000 50%, transparent); }
+
+@media (max-width: 900px) {
+  .cxa-ask { font-size: var(--fs-d4); }
+  /* two slots a row, so the pair still reads as two columns; a third and fourth wrap under them */
+  .cxa-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cxa-slot { padding: 10px 10px 12px; }
+  .cxa-slot:nth-child(odd) { padding-left: 0; }
+  .cxa-slot:nth-child(even) { padding-right: 0; border-right: 0; }
+  .cxa-slot:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .cxa-sel { font-size: 16px; padding-left: 10px; } /* 16 px, or iOS zooms the page when the menu opens */
+  .cx-col--ghost { min-width: 104px; }
+  .cx-plan--ghost { min-width: 120px; }
+  .cx-plan--ghost .cx-plan-art i { width: 96px; height: 70px; }
+}

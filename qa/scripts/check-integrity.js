@@ -1,5 +1,11 @@
 // Release check: internal anchors resolve, data files agree with each other, ids referenced exist. node qa/scripts/check-integrity.js
+// Exits 1 when it finds a problem that is not in ALLOWED below, so the deploy workflow stops; run it after the build.
 const fs = require('fs');
+process.chdir(require('path').resolve(__dirname, '..', '..')); // reads dist/, data/ and content/ from the repository root, wherever it is run from
+// Known problems that are accepted on purpose, each with its reason. A problem goes here only when the data is right as it is.
+const ALLOWED = {
+  'exposure row for Veeco Instruments has no supplier entry': 'Veeco files a China share, so it has a China revenue panel, but it is not in the supplier list. data/exposure-notes.md classes it as Deposition & Etch.',
+};
 const raw = fs.readFileSync('dist/index.html', 'utf8');
 const html = raw.replace(/<script[\s\S]*?<\/script>/g, ''); // markup only; the bundle's own strings are not links
 const ids = new Set((html.match(/\sid="([^"]+)"/g) || []).map((m) => m.slice(5, -1)));
@@ -7,7 +13,7 @@ const views = new Set((html.match(/data-view="([^"]+)"/g) || []).map((m) => m.sl
 const problems = [];
 // 1. internal hrefs
 const hrefs = (html.match(/href="#[^"]*"/g) || []).map((m) => m.slice(6, -1));
-const routes = new Set(['/', '/stack', '/chain', '/intro', '/walk', '/briefing', '/landscape', '/suppliers', '/geopolitics', '/controls', '/thresholds', '/exposure', '/glossary', '/sources']);
+const routes = new Set(['/', '/home', '/stack', '/chain', '/intro', '/walk', '/briefing', '/landscape', '/ai-chips', '/suppliers', '/geopolitics', '/controls', '/export-controls', '/thresholds', '/exposure', '/glossary', '/sources']); // Router VIEWS in src/app.js
 const badHref = {};
 hrefs.forEach((h) => { if (h === '#' || h === '') return; const b = h.slice(1); if (b.startsWith('/')) { const top = '/' + b.split('?')[0].split('/')[1]; if (!routes.has(top)) badHref[h] = (badHref[h] || 0) + 1; } else if (!ids.has(b)) badHref[h] = (badHref[h] || 0) + 1; });
 Object.keys(badHref).forEach((h) => problems.push(`internal link to nothing: ${h} (${badHref[h]}x)`));
@@ -119,4 +125,8 @@ if (/undefined|\bNaN\b|\[object Object\]/.test(html)) problems.push('the page te
   }
   cardWarn.forEach((w) => console.log('warn: ' + w));
 }
-console.log(problems.length ? problems.join('\n') : 'integrity: no problems'); console.log(`views: ${[...views].join(', ')} · ids: ${ids.size} · chapters: ${chapterIds.size}`);
+const allowed = problems.filter((p) => ALLOWED[p]), errors = problems.filter((p) => !ALLOWED[p]);
+allowed.forEach((p) => console.log(`allowed: ${p}. Reason: ${ALLOWED[p]}`));
+Object.keys(ALLOWED).filter((p) => !problems.includes(p)).forEach((p) => console.log(`note: the allowed problem "${p}" no longer occurs; remove it from ALLOWED`));
+console.log(errors.length ? errors.join('\n') : 'integrity: no problems'); console.log(`views: ${[...views].join(', ')} · ids: ${ids.size} · chapters: ${chapterIds.size}`);
+if (errors.length) { console.error(`check-integrity: ${errors.length} problem${errors.length === 1 ? '' : 's'}`); process.exit(1); }

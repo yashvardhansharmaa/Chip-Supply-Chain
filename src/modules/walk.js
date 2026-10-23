@@ -129,7 +129,9 @@
       // coming back (Back from a chapter, or any return) to the address the walk had when the reader left it
       var back = !cold && CP.Router.from !== 'walk' && lastHash !== null && h === lastHash, y = lastY;
       var glide = !cold && CP.Router.from === 'walk'; // a step link inside the walk glides; arriving from elsewhere jumps
-      pending = back ? 'restore' : (stepFor(h) ? 'jump' : null);
+      // a reader who scrolled while the page was still arriving (the walk shows before boot) is not jumped back to the step
+      var kept = cold && !!(window.CP_PRE && window.CP_PRE.touched);
+      pending = back ? 'restore' : (stepFor(h) && !kept ? 'jump' : null);
       var place = function () { if (pending === 'restore') jumpTo(y); else if (pending === 'jump') return jump(glide); return null; };
       place();
       // once more on the next task (a cold load can still be settling), not the next frame — a background tab gets no frames

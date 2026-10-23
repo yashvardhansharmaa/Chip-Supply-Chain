@@ -1,0 +1,5 @@
+run 0: ttfb 2 respEnd 4596 fcp 1100 lcp 5040 (article.sa-panel > p.sa-panel-lede) dcl 4852 load 4934 tbt 254 lt 3 max 219 cls 0.0176 draw None build1 ['die-floorplan', 5040, 36, 80473] builds 17 (580 ms) dom 22601 heap 11.5
+run 1: ttfb 3 respEnd 4600 fcp 844 lcp 4916 (article.sa-panel > p.sa-panel-lede) dcl 4818 load 4897 tbt 213 lt 3 max 185 cls 0.0176 draw None build1 ['die-floorplan', 4949, 35, 80473] builds 17 (578 ms) dom 22601 heap 11.7
+run 2: ttfb 4 respEnd 4654 fcp 872 lcp 5032 (article.sa-panel > p.sa-panel-lede) dcl 4922 load 5016 tbt 259 lt 4 max 223 cls 0.0176 draw None build1 ['die-floorplan', 5071, 36, 80473] builds 17 (621 ms) dom 22601 heap 13.8
+run 3: ttfb 4 respEnd 4596 fcp 852 lcp 4948 (article.sa-panel > p.sa-panel-lede) dcl 4844 load 4930 tbt 246 lt 4 max 216 cls 0.0176 draw None build1 ['die-floorplan', 4979, 37, 80473] builds 17 (587 ms) dom 22601 heap 11.2
+run 4: ttfb 8 respEnd 4631 fcp 840 lcp 5024 (article.sa-panel > p.sa-panel-lede) dcl 4906 load 5004 tbt 271 lt 4 max 230 cls 0.0176 draw None build1 ['die-floorplan', 5069, 42, 80473] builds 17 (572 ms) dom 22601 heap 43.8

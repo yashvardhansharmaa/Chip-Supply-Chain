@@ -21,18 +21,32 @@
         if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
           e.preventDefault(); if (!vis.length) return;
           self.cursor = e.key === 'ArrowDown' ? Math.min(vis.length - 1, self.cursor + 1) : Math.max(0, self.cursor - 1);
-          self.select(vis[self.cursor].id, true);
-        } else if (e.key === 'Enter') { e.preventDefault(); if (vis.length) { self.select(vis[Math.max(0, self.cursor)].id, true); inp.blur(); $('#lk-list').classList.remove('is-open'); } }
+          self.select(vis[self.cursor].id, true); // the arrows preview an entry; focus stays in the box
+        } else if (e.key === 'Enter') { // Enter chooses: the entry's heading takes focus, so the next Tab is in the card (accessibility #1)
+          e.preventDefault();
+          if (vis.length) { $('#lk-list').classList.remove('is-open'); self.select(vis[Math.max(0, self.cursor)].id, true, true); }
+        }
         else if (e.key === 'Escape') { inp.value = ''; self.filter(''); }
       });
       list.addEventListener('click', function (e) {
         var li = e.target.closest ? e.target.closest('li[id]') : null; if (!li) return;
-        self.select(li.id, true); $('#lk-list').classList.remove('is-open'); if (narrow()) inp.blur();
+        $('#lk-list').classList.remove('is-open'); self.select(li.id, true, true);
+      });
+      // the list is one Tab stop (the chosen entry, or the first shown); the arrow keys, Home and End walk it, so Tab goes from the
+      // list straight to the card instead of through 487 entries (accessibility #1)
+      list.addEventListener('keydown', function (e) {
+        if (['ArrowDown', 'ArrowUp', 'Home', 'End'].indexOf(e.key) < 0) return;
+        var b = e.target.closest ? e.target.closest('#lk-items button') : null; if (!b) return;
+        var btns = self.visible().map(function (li) { return li.querySelector('button'); }), i = btns.indexOf(b);
+        var j = e.key === 'Home' ? 0 : e.key === 'End' ? btns.length - 1 : Math.max(0, Math.min(btns.length - 1, i + (e.key === 'ArrowDown' ? 1 : -1)));
+        e.preventDefault(); if (!btns[j]) return;
+        btns.forEach(function (x) { x.tabIndex = -1; }); btns[j].tabIndex = 0; btns[j].focus();
       });
       document.addEventListener('click', function (e) { if (narrow() && !e.target.closest('#lk-list')) $('#lk-list').classList.remove('is-open'); });
       var br = $('#lk-browse'); if (br) br.addEventListener('click', function () { var open = !$('#lk-list').classList.contains('is-open'); $('#lk-list').classList.toggle('is-open', open); br.setAttribute('aria-expanded', open ? 'true' : 'false'); });
       this.suggest();
       this.filter('');
+      var cnt = $('#lk-count'); if (cnt) cnt.setAttribute('role', 'status'); // from now on a new count is read out (accessibility #5)
     },
 
     /* six things to try, drawn afresh on every load: two terms, two firms that matter, one chip, one country */
@@ -51,13 +65,45 @@
       // chip's own name from the data (its data-key is the chip id); a trailing aside, "(Ironwood)", is dropped as for every kind
       var chipName = {}; (DATA.landscape || []).forEach(function (c) { chipName[c.id] = c.name; });
       box.innerHTML = label + ' ' + chosen.map(function (li) { var own = li.getAttribute('data-kind') === 'chip' ? chipName[li.getAttribute('data-key')] : ''; var name = String(own || li.querySelector('.lk-name').textContent).replace(/\s*\(.*\)$/, ''); return '<button type="button" data-go="' + esc(li.id) + '">' + esc(name) + '</button>'; }).join(' ');
-      $$('[data-go]', box).forEach(function (b) { b.addEventListener('click', function () { self.select(b.getAttribute('data-go'), true); }); });
+      $$('[data-go]', box).forEach(function (b) { b.addEventListener('click', function () { self.select(b.getAttribute('data-go'), true, true); }); });
     },
 
     activate: function () {
       this.init();
       var h = (location.hash || '').replace(/^#/, ''), el = h && document.getElementById(h);
-      if (el && (el.closest('#lk-items') || (el.classList && el.classList.contains('gl-entry')))) this.select(h, false);
+      if (el && (el.closest('#lk-items') || (el.classList && el.classList.contains('gl-entry')))) { this.select(h, false); this.land(); }
+    },
+    /* an address that names an entry (a popover's Look it up, a search result, a card's link): the router leaves the page where
+       the last view had it, so the Glossary starts at its top, where the entry stands beside the list, or on a phone at the entry
+       itself. After a move within the site (not a first load) the entry's heading takes focus too (correctness P1-5) */
+    land: function () {
+      var R = CP.Router || {}, within = R.from === 'glossary', root = document.documentElement, sb = root.style.scrollBehavior;
+      if (narrow()) { var top = $('#lk-entry'); if (top) CP.scrollToEl(top, within); }
+      else { root.style.scrollBehavior = 'auto'; window.scrollTo(0, 0); root.style.scrollBehavior = sb; }
+      var li = this.selected && document.getElementById(this.selected); if (li) this.inList(li); // the list, measured with the page in place
+      if (R.routed && R.from) this.focusCard(false);
+    },
+    /* the chosen entry's heading takes focus, so the next Tab reaches the card's links (accessibility #1). scroll: on a phone, or
+       when the heading is out of sight, the page brings the entry up first */
+    focusCard: function (scroll) {
+      var head = $('#glossary .gl-entry:not([hidden]) dt') || $('#lk-card:not([hidden]) h3') || $('#lk-card:not([hidden]) .lk-noentry b'), entry = $('#lk-entry');
+      if (!head) return;
+      if (scroll && entry) { var r = head.getBoundingClientRect(); if (narrow() || r.top < CP.headerH() || r.bottom > window.innerHeight) CP.scrollToEl(entry, true); }
+      if (!head.hasAttribute('tabindex')) head.setAttribute('tabindex', '-1');
+      try { head.focus({ preventScroll: true }); } catch (e) { head.focus(); }
+    },
+    /* the list's one Tab stop: the chosen entry while it is shown, else the first shown */
+    rove: function () {
+      var on = this.selected && document.getElementById(this.selected), vis = this.visible(), pick = on && !on.hidden ? on : vis[0];
+      this.items().forEach(function (li) { var b = li.firstElementChild; if (b) b.tabIndex = li === pick ? 0 : -1; });
+    },
+    /* the list scrolls to show the chosen entry, centered in the part of the list on screen; the page itself does not move
+       (scrollIntoView would move both) */
+    inList: function (li) {
+      var box = $('#lk-items'); if (!box || !box.clientHeight || li.hidden) return;
+      var r = li.getBoundingClientRect(), br = box.getBoundingClientRect(), top = Math.max(br.top, CP.headerH()), bottom = Math.min(br.bottom, window.innerHeight);
+      if (bottom - top < r.height) return;
+      if (r.top < top || r.bottom > bottom) box.scrollTop += r.top + r.height / 2 - (top + bottom) / 2;
     },
 
     items: function () { return $$('#lk-items li'); },
@@ -79,6 +125,7 @@
       if (q) { var list = $('#lk-items'); this.visible().filter(function (li) { return li.classList.contains('is-name'); }).reverse().forEach(function (li) { list.insertBefore(li, list.firstChild); }); this.visible().filter(function (li) { return li.classList.contains('is-exact'); }).reverse().forEach(function (li) { list.insertBefore(li, list.firstChild); }); }
       else { var list2 = $('#lk-items'); all.slice().sort(function (a, b) { return a.querySelector('.lk-name').textContent.localeCompare(b.querySelector('.lk-name').textContent, 'en', { sensitivity: 'base' }); }).forEach(function (li) { list2.appendChild(li); }); }
       this.cursor = -1;
+      this.rove();
       var c = $('#lk-count'), terms = $$('#lk-items li[data-kind="term"]').length, firms = $$('#lk-items li[data-kind="firm"]').length, chips = $$('#lk-items li[data-kind="chip"]').length, countries = $$('#lk-items li[data-kind="country"]').length;
       if (c) c.textContent = q ? (n ? n + ' of ' + all.length + ' entries' : 'No entry matches.') : all.length + ' entries · ' + terms + ' terms · ' + firms + ' firms · ' + chips + ' chips' + (countries ? ' · ' + countries + ' countries' : '');
       $('#lk-list').classList.toggle('is-open', !!q || document.activeElement === $('#gl-search'));
@@ -87,14 +134,16 @@
     },
 
     /* ---------- selection ---------- */
-    select: function (id, push) {
+    select: function (id, push, focus) { // focus: the reader chose it (a click, Enter, a suggestion), so the entry takes focus
       if (/^gl-/.test(id)) id = 'lk-term-' + id.slice(3); // a glossary entry's own id (popovers, search, old links) names the same row
       var li = document.getElementById(id); if (!li || !li.closest('#lk-items')) return;
       var kind = li.getAttribute('data-kind'), key = li.getAttribute('data-key');
       if (!kind) return;
       this.selected = id;
-      this.items().forEach(function (x) { x.classList.toggle('is-on', x.id === id); if (x.id === id) x.setAttribute('aria-current', 'true'); else x.removeAttribute('aria-current'); });
-      if (li.scrollIntoView && !narrow()) li.scrollIntoView({ block: 'nearest' });
+      // aria-current on the button the reader reaches, not on its li (accessibility #17)
+      this.items().forEach(function (x) { var on = x.id === id, b = x.firstElementChild; x.classList.toggle('is-on', on); x.removeAttribute('aria-current'); if (b) { if (on) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); } });
+      this.rove();
+      this.inList(li);
       $('#lk-rest').hidden = true;
       var entry = null, name = li.querySelector('.lk-name').textContent, patterns = kind === 'chip' ? [] : [name];
       (li.getAttribute('data-alias') || '').split('|').forEach(function (a) { if (a) patterns.push(a); });
@@ -117,7 +166,8 @@
       this.mentions(patterns, kind, key);
       var anchor = kind === 'term' ? key : id;
       if (push && location.hash !== '#' + anchor) history.replaceState(null, '', '#' + anchor);
-      if (narrow()) { var top = $('#lk-entry'); if (top) top.scrollIntoView({ block: 'start', behavior: reduced ? 'auto' : 'smooth' }); }
+      // a choice brings the entry up and gives it focus; a preview (the arrows, the first match while typing) leaves the page and the focus alone
+      if (focus) this.focusCard(true);
     },
 
     showRaw: function (q) {
@@ -128,7 +178,7 @@
       var near = this.nearest(q);
       var card = $('#lk-card'); card.hidden = false;
       card.innerHTML = '<div class="lk-noentry"><b>' + esc(q) + '</b><p>No entry.</p>' + (near.length ? '<p class="lk-near">Did you mean ' + near.map(function (li) { return '<button type="button" data-go="' + esc(li.id) + '">' + esc(li.querySelector('.lk-name').textContent) + '</button>'; }).join(' ') + '</p>' : '') + '</div>';
-      $$('[data-go]', card).forEach(function (b) { b.addEventListener('click', function () { var inp = $('#gl-search'); inp.value = ''; self.filter(''); self.select(b.getAttribute('data-go'), true); }); });
+      $$('[data-go]', card).forEach(function (b) { b.addEventListener('click', function () { var inp = $('#gl-search'); inp.value = ''; self.filter(''); self.select(b.getAttribute('data-go'), true, true); }); });
       $('#lk-rest').hidden = true;
       this.mentions([q], 'raw', q);
     },
@@ -161,7 +211,8 @@
       else if (r.revenueUSDb != null) facts.push(['Revenue', '$' + (Math.round(r.revenueUSDb * 10) / 10).toLocaleString('en-US') + 'bn' + (r.revenueYear ? ', ' + r.revenueYear : '')]);
       // under the revenue, the share of it that came from China (the China revenue panel's latest year), linked to the firm's chart
       // ...with the firm's small China chart under it, as in the Suppliers panel (Suppliers.exMini in src/app.js)
-      if (r.china && r.china.href) facts.push(['From China', '<a href="' + esc(CP.safeUrl(r.china.href) || r.china.href) + '">' + esc(String(r.china.label).replace(/^China /, '')) + ' <span aria-hidden="true">→</span></a>' +
+      // safeUrl escapes what it returns, so it is not escaped again (the double escape broke the Company page links, below)
+      if (r.china && r.china.href) facts.push(['From China', '<a href="' + CP.safeUrl(r.china.href) + '">' + esc(String(r.china.label).replace(/^China /, '')) + ' <span aria-hidden="true">→</span></a>' +
         (CP.Suppliers && CP.Suppliers.exMini ? CP.Suppliers.exMini(r.china.href) : ''), true]);
       return '<article class="lk-card lk-card--firm">' +
         '<p class="lk-kind">Firm' + (r.chokepoint ? ' · <span class="lk-chk lk-chk--' + esc(String(r.chokepoint).toLowerCase()) + '">' + esc(r.chokepoint) + '</span>' : '') + '</p>' +
@@ -173,7 +224,7 @@
         (facts.length ? '<dl class="lk-facts">' + facts.map(function (f) { return (f[2] ? '<div class="lk-fact-wide">' : '<div>') + '<dt>' + esc(f[0]) + '</dt><dd>' + (f[2] ? f[1] : esc(f[1])) + '</dd></div>'; }).join('') + '</dl>' : '') +
         // the filing's note (build/build.js leaves out the lines meant for the editors): a figure from an unaudited release, a year older, or one the auditor would not sign
         (revHTML && rs.note ? '<p class="lk-revnote"><b>About the revenue figure.</b> ' + esc(rs.note) + '</p>' : '') +
-        '<p class="lk-links"><a href="#/suppliers" data-sup="' + esc(r.name) + '">In the supplier list →</a>' + (r.source && CP.safeUrl(r.source) ? ' <a href="' + esc(CP.safeUrl(r.source)) + '" target="_blank" rel="noopener">Company page ↗</a>' : '') + '</p>' +
+        '<p class="lk-links"><a href="#/suppliers" data-sup="' + esc(r.name) + '">In the supplier list →</a>' + (r.source && CP.safeUrl(r.source) !== '#' ? ' <a href="' + CP.safeUrl(r.source) + '" target="_blank" rel="noopener">Company page ↗</a>' : '') + '</p>' +
         '</article>';
     },
 
@@ -282,14 +333,20 @@
 
     wire: function (root) {
       var self = this;
-      $$('a[data-sup]', root).forEach(function (a) { a.addEventListener('click', function () { var q = a.getAttribute('data-sup'); setTimeout(function () { var s = $('#sup-search'); if (s) { s.value = q; s.dispatchEvent(new Event('input')); } }, 60); }); });
-      $$('a[data-supcc]', root).forEach(function (a) { a.addEventListener('click', function () { var cc = a.getAttribute('data-supcc'); setTimeout(function () { var S = CP.Suppliers; if (S && S.setCountry && S.country !== cc) S.setCountry(cc, false); }, 60); }); });
-      $$('button[data-go]', root).forEach(function (b) { b.addEventListener('click', function () { var inp = $('#gl-search'); if (inp && inp.value) { inp.value = ''; self.filter(''); } self.select(b.getAttribute('data-go'), true); }); });
+      // the supplier list takes the whole filter from the link (a firm's name, or a country), so an older search or stage cannot narrow it (correctness P1-2)
+      $$('a[data-sup]', root).forEach(function (a) { a.addEventListener('click', function () { var q = a.getAttribute('data-sup'); setTimeout(function () { var S = CP.Suppliers; if (S && S.show) S.show({ q: q }); }, 60); }); });
+      $$('a[data-supcc]', root).forEach(function (a) { a.addEventListener('click', function () { var cc = a.getAttribute('data-supcc'); setTimeout(function () { var S = CP.Suppliers; if (S && S.show) S.show({ country: cc }); }, 60); }); });
+      $$('button[data-go]', root).forEach(function (b) { b.addEventListener('click', function () { var inp = $('#gl-search'); if (inp && inp.value) { inp.value = ''; self.filter(''); } self.select(b.getAttribute('data-go'), true, true); }); });
       $$('a[data-chip]', root).forEach(function (a) { a.addEventListener('click', function () { var id = a.getAttribute('data-chip'); setTimeout(function () { if (window.CP.Landscape && CP.Landscape.select) CP.Landscape.select(id); else if (typeof Landscape !== 'undefined') Landscape.select(id); }, 60); }); });
       $$('a[data-para]', root).forEach(function (a) { a.addEventListener('click', function (e) {
         e.preventDefault(); var i = +a.getAttribute('data-para'), p = self.paras[i]; if (!p) return;
         location.hash = '#' + p.chapter;
-        setTimeout(function () { p.el.scrollIntoView({ block: 'center', behavior: reduced ? 'auto' : 'smooth' }); p.el.classList.add('lk-flash'); setTimeout(function () { p.el.classList.remove('lk-flash'); }, 2600); }, 140);
+        // the router lands on the chapter and settles it there; the passage's own settle then takes over, so late fonts and
+        // images cannot pull the page back to the chapter's top (correctness P1-1)
+        setTimeout(function () {
+          CP.scrollToEl(p.el, false); if (CP.Router && CP.Router.settle) CP.Router.settle(p.el);
+          p.el.classList.add('lk-flash'); setTimeout(function () { p.el.classList.remove('lk-flash'); }, 2600);
+        }, 140);
       }); });
     },
 
@@ -303,9 +360,10 @@
       $$('.view[data-view="stack"] article.chapter').forEach(function (ch) {
         var id = ch.id, title = ch.getAttribute('data-title') || id, num = ch.getAttribute('data-number') || '';
         $$('p, li', ch).forEach(function (el) {
-          if (el.closest('.chapter-sources, .plate-head, .chain, .brief-head, figure, .chapter-nav, nav')) return;
-          // a card's marks (and the comma between two of them) and a leader's China line (.lead-cn, from the China revenue panel) are not the passage's words
-          var clone = el.cloneNode(true); $$('sup.cite, sup.cite-sep, .gl-tip, .chip, .lead-cn', clone).forEach(function (s) { s.parentNode.removeChild(s); });
+          // the chapter head's facts line (.ch-meta: words, minutes, specimen, Updated) and its citation line and text (.ch-cite) are not passages (correctness P1-4)
+          if (el.closest('.chapter-sources, .plate-head, .ch-meta, .ch-cite, .chain, figure, .chapter-nav, nav')) return;
+          // a card's marks (and the comma between two of them) are not the passage's words
+          var clone = el.cloneNode(true); $$('sup.cite, sup.cite-sep, .gl-tip, .chip', clone).forEach(function (s) { s.parentNode.removeChild(s); });
           var text = self.textOf(clone).replace(/\s+/g, ' ').replace(/\s+([.,;:])/g, '$1').trim();
           if (text.length > 40) out.push({ chapter: id, title: title, num: num, el: el, text: text });
         });
@@ -337,8 +395,8 @@
       if (!re) { box.hidden = true; return; }
       var hits = [], mark = function (s) { return esc(s).replace(re, function (x) { return '<mark>' + x + '</mark>'; }); };
       this.corpus().forEach(function (p, i) { var s = self.sentence(p.text, re); if (s) hits.push({ src: 'Chapter ' + p.num, sub: p.title, html: mark(s), href: '#' + p.chapter, para: i }); });
-      (Array.isArray(DATA.timeline) ? DATA.timeline : ((DATA.timeline || {}).events || [])).forEach(function (e) { var t = [e.gist || '', e.title || '', e.summary || ''].join(' '); re.lastIndex = 0; if (!re.test(t)) return; var s = self.sentence(e.gist && (re.lastIndex = 0, re.test(e.gist)) ? e.gist : (e.summary || e.title), re) || e.title; hits.push({ src: 'Export Controls', sub: e.date, html: mark(s), href: '#/controls' }); });
-      (Array.isArray(DATA.flows) ? DATA.flows : ((DATA.flows || {}).flows || [])).forEach(function (f) { (f.states || []).forEach(function (st) { re.lastIndex = 0; if (st.label && re.test(st.label)) hits.push({ src: 'Export Controls', sub: f.name, html: mark(st.label), href: '#/controls' }); }); });
+      (Array.isArray(DATA.timeline) ? DATA.timeline : ((DATA.timeline || {}).events || [])).forEach(function (e) { var t = [e.gist || '', e.title || '', e.summary || ''].join(' '); re.lastIndex = 0; if (!re.test(t)) return; var s = self.sentence(e.gist && (re.lastIndex = 0, re.test(e.gist)) ? e.gist : (e.summary || e.title), re) || e.title; hits.push({ src: 'Export Controls', sub: e.date, html: mark(s), href: e.id ? '#/controls/' + encodeURIComponent(e.id) : '#/controls' }); }); // the entry's own address opens it (correctness P1-6)
+      (Array.isArray(DATA.flows) ? DATA.flows : ((DATA.flows || {}).flows || [])).forEach(function (f) { (f.states || []).forEach(function (st) { re.lastIndex = 0; if (st.label && re.test(st.label)) hits.push({ src: 'Export Controls', sub: f.name, html: mark(st.label), href: st.event ? '#/controls/' + encodeURIComponent(st.event) : '#/controls' }); }); }); // a board state links to the entry that set it
       (DATA.landscape || []).forEach(function (c) { if (kind === 'chip' && c.id === key) return; var t = [c.notes || '', c.exportStatus || ''].join(' '); var s = self.sentence(t, re); if (s) hits.push({ src: 'AI Chips', sub: c.vendor + ' ' + c.name, html: mark(s), href: '#/landscape', chip: c.id }); });
       (DATA.suppliers || []).forEach(function (r) { if (kind === 'firm' && r.name === key) return; var t = [r.role || '', r.shareNote || '', r.aiRelevance || ''].join(' '); var s = self.sentence(t, re); if (s) hits.push({ src: 'Suppliers', sub: r.name, html: mark(s), href: '#/suppliers', sup: r.name }); });
       if (!hits.length) { box.hidden = false; box.innerHTML = '<h3 class="lk-h">Where it appears</h3><p class="lk-none">' + (kind === 'firm' ? 'Only in the supplier list.' : kind === 'chip' ? 'Only on the AI Chips page.' : kind === 'term' ? 'Only in this entry.' : 'Nowhere else.') + '</p>'; return; }

@@ -1,0 +1,5 @@
+run 0: ttfb 3 respEnd 4689 fcp 1204 lcp 2236 (article.sa-panel > p.sa-panel-lede) dcl 4916 load 4959 tbt 126 lt 1 max 176 cls 0 draw None build1 None builds 0 (0 ms) dom 22610 heap 4
+run 1: ttfb 2 respEnd 4684 fcp 844 lcp 936 (article.sa-panel > p.sa-panel-lede) dcl 4922 load 4972 tbt 131 lt 1 max 181 cls 0 draw None build1 None builds 0 (0 ms) dom 22610 heap 4.3
+run 2: ttfb 4 respEnd 4681 fcp 840 lcp 932 (article.sa-panel > p.sa-panel-lede) dcl 4920 load 4968 tbt 130 lt 1 max 180 cls 0 draw None build1 None builds 0 (0 ms) dom 22610 heap 4.3
+run 3: ttfb 7 respEnd 4685 fcp 844 lcp 928 (article.sa-panel > p.sa-panel-lede) dcl 4929 load 4977 tbt 136 lt 1 max 186 cls 0 draw None build1 None builds 0 (0 ms) dom 22610 heap 4.4
+run 4: ttfb 3 respEnd 4680 fcp 836 lcp 924 (article.sa-panel > p.sa-panel-lede) dcl 4920 load 4969 tbt 136 lt 1 max 186 cls 0 draw None build1 None builds 0 (0 ms) dom 22610 heap 4.3

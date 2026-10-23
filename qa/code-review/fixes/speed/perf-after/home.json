@@ -1,0 +1,1097 @@
+{
+ "url": "http://127.0.0.1:8765/#/",
+ "net": "slow4g",
+ "cpu": 4.0,
+ "desktop": false,
+ "variant": null,
+ "ratio_index": [
+  4.639799184407623,
+  4199524,
+  905109
+ ],
+ "ratio_litho": [
+  5.086166185675199,
+  135704,
+  26681
+ ],
+ "runs": [
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      1940
+     ],
+     [
+      "first-contentful-paint",
+      1940
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 1940,
+      "size": 24222,
+      "el": "section.wk-gl > p.wk-gl-p",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [
+     [
+      4761.100000023842,
+      213
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 961,
+      "d": 153.19999998807907,
+      "block": 0,
+      "render": 3.899999976158142,
+      "style": 3.899999976158142,
+      "scripts": []
+     },
+     {
+      "t": 1116.300000011921,
+      "d": 156.80000001192093,
+      "block": 0,
+      "render": 4,
+      "style": 4,
+      "scripts": []
+     },
+     {
+      "t": 180.30000001192093,
+      "d": 771.3000000119209,
+      "block": 124.6,
+      "render": 153.69999998807907,
+      "style": 153.69999998807907,
+      "scripts": []
+     },
+     {
+      "t": 1297,
+      "d": 647.8000000119209,
+      "block": 0,
+      "render": 5.300000011920929,
+      "style": 5.300000011920929,
+      "scripts": []
+     },
+     {
+      "t": 2015.9000000357628,
+      "d": 683.1999999880791,
+      "block": 0,
+      "render": 6.900000035762787,
+      "style": 6.900000035762787,
+      "scripts": []
+     },
+     {
+      "t": 2732.900000035763,
+      "d": 249.29999995231628,
+      "block": 0,
+      "render": 6.899999976158142,
+      "style": 6.899999976158142,
+      "scripts": []
+     },
+     {
+      "t": 3084.100000023842,
+      "d": 67.69999998807907,
+      "block": 0,
+      "render": 6.100000023841858,
+      "style": 6.100000023841858,
+      "scripts": []
+     },
+     {
+      "t": 4708.699999988079,
+      "d": 51.5,
+      "block": 0,
+      "render": 9.099999964237213,
+      "style": 9.099999964237213,
+      "scripts": []
+     },
+     {
+      "t": 4761.100000023842,
+      "d": 231.80000001192093,
+      "block": 181.3,
+      "render": 17.5,
+      "style": 4.5,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 255122,
+        "d": 185,
+        "comp": 58
+       },
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "bind",
+        "pos": 350575,
+        "d": 15,
+        "comp": 12
+       },
+       {
+        "inv": "FrameRequestCallback",
+        "fn": "",
+        "pos": 11494,
+        "d": 5,
+        "comp": 0
+       },
+       {
+        "inv": "FrameRequestCallback",
+        "fn": "update",
+        "pos": 360172,
+        "d": 8,
+        "comp": 5
+       }
+      ]
+     },
+     {
+      "t": 5058.600000023842,
+      "d": 252.5,
+      "block": 0,
+      "render": 1.300000011920929,
+      "style": 0.30000001192092896,
+      "scripts": []
+     }
+    ],
+    "draw": 4980.300000011921,
+    "drawN": 601,
+    "builds": [
+     [
+      "die-floorplan",
+      4895,
+      45,
+      57440
+     ],
+     [
+      "boule-and-wafer",
+      5314,
+      27,
+      28057
+     ],
+     [
+      "gas-cabinet",
+      5345,
+      29,
+      72071
+     ]
+    ],
+    "marks": {
+     "dcl": 4762.199999988079,
+     "load": 5020
+    }
+   },
+   "nav": {
+    "ttfb": 2.199999988079071,
+    "respEnd": 4680.5,
+    "domInteractive": 4761.100000023842,
+    "dcl": 4963.900000035763,
+    "load": 5020.100000023842,
+    "transfer": 4199824,
+    "decoded": 4199524
+   },
+   "dom": 21608,
+   "stage": {
+    "hidden": "0",
+    "collapsed": "1",
+    "w": 203,
+    "h": 203
+   },
+   "heap": 10.6,
+   "view": "walk",
+   "docH": 20618,
+   "density": 0.22000000000000003,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 4
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 30,
+     "end_ms": 36
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4199714,
+     "failed": null,
+     "start_ms": 1214,
+     "end_ms": 5894
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1392,
+     "end_ms": 1995
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1697,
+     "end_ms": 1698
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6273,
+     "end_ms": 6434
+    }
+   ],
+   "summary": {
+    "fp": 1940,
+    "fcp": 1940,
+    "lcp": 1940,
+    "lcp_el": "section.wk-gl > p.wk-gl-p",
+    "tbt": 163,
+    "longtasks": 1,
+    "lt_total": 213,
+    "lt_max": 213,
+    "cls": 0,
+    "draw": 4980.300000011921,
+    "ttfb": 2.199999988079071,
+    "respEnd": 4680.5,
+    "domInteractive": 4761.100000023842,
+    "dcl": 4963.900000035763,
+    "load": 5020.100000023842,
+    "dom": 21608,
+    "heap": 10.6,
+    "view": "walk",
+    "first_build": [
+     "die-floorplan",
+     4895,
+     45,
+     57440
+    ],
+    "n_builds": 3,
+    "build_ms_total": 101,
+    "stage": {
+     "hidden": "0",
+     "collapsed": "1",
+     "w": 203,
+     "h": 203
+    },
+    "density": 0.22000000000000003
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      968
+     ],
+     [
+      "first-contentful-paint",
+      968
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 968,
+      "size": 24222,
+      "el": "section.wk-gl > p.wk-gl-p",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [
+     [
+      4755.600000023842,
+      171
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 178.4000000357628,
+      "d": 755.0999999642372,
+      "block": 103.2,
+      "render": 135.69999998807907,
+      "style": 135.69999998807907,
+      "scripts": []
+     },
+     {
+      "t": 4755.600000023842,
+      "d": 184.39999997615814,
+      "block": 134,
+      "render": 13,
+      "style": 5.5,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 255122,
+        "d": 143,
+        "comp": 52
+       },
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "bind",
+        "pos": 350575,
+        "d": 15,
+        "comp": 13
+       }
+      ]
+     }
+    ],
+    "draw": 4929.400000035763,
+    "drawN": 601,
+    "builds": [
+     [
+      "die-floorplan",
+      4854,
+      39,
+      57440
+     ],
+     [
+      "boule-and-wafer",
+      5003,
+      25,
+      28057
+     ],
+     [
+      "gas-cabinet",
+      5040,
+      31,
+      72071
+     ]
+    ],
+    "marks": {
+     "dcl": 4756.400000035763,
+     "load": 4965.699999988079
+    }
+   },
+   "nav": {
+    "ttfb": 3.900000035762787,
+    "respEnd": 4682.400000035763,
+    "domInteractive": 4755.699999988079,
+    "dcl": 4914.699999988079,
+    "load": 4965.699999988079,
+    "transfer": 4199824,
+    "decoded": 4199524
+   },
+   "dom": 21608,
+   "stage": {
+    "hidden": "0",
+    "collapsed": "1",
+    "w": 203,
+    "h": 203
+   },
+   "heap": 12,
+   "view": "walk",
+   "docH": 20618,
+   "density": 0.22000000000000003,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 3
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 15,
+     "end_ms": 18
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4199714,
+     "failed": null,
+     "start_ms": 1214,
+     "end_ms": 5896
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1389,
+     "end_ms": 1993
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1693,
+     "end_ms": 1694
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6214,
+     "end_ms": 6371
+    }
+   ],
+   "summary": {
+    "fp": 968,
+    "fcp": 968,
+    "lcp": 968,
+    "lcp_el": "section.wk-gl > p.wk-gl-p",
+    "tbt": 121,
+    "longtasks": 1,
+    "lt_total": 171,
+    "lt_max": 171,
+    "cls": 0,
+    "draw": 4929.400000035763,
+    "ttfb": 3.900000035762787,
+    "respEnd": 4682.400000035763,
+    "domInteractive": 4755.699999988079,
+    "dcl": 4914.699999988079,
+    "load": 4965.699999988079,
+    "dom": 21608,
+    "heap": 12,
+    "view": "walk",
+    "first_build": [
+     "die-floorplan",
+     4854,
+     39,
+     57440
+    ],
+    "n_builds": 3,
+    "build_ms_total": 95,
+    "stage": {
+     "hidden": "0",
+     "collapsed": "1",
+     "w": 203,
+     "h": 203
+    },
+    "density": 0.22000000000000003
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      948
+     ],
+     [
+      "first-contentful-paint",
+      948
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 948,
+      "size": 24222,
+      "el": "section.wk-gl > p.wk-gl-p",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [
+     [
+      4752.699999988079,
+      142
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 174.5,
+      "d": 743.1999999880791,
+      "block": 91.5,
+      "render": 123.89999997615814,
+      "style": 123.89999997615814,
+      "scripts": []
+     },
+     {
+      "t": 4752.699999988079,
+      "d": 154,
+      "block": 103.3,
+      "render": 10.799999952316284,
+      "style": 4.5,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 255122,
+        "d": 117,
+        "comp": 42
+       },
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "bind",
+        "pos": 350575,
+        "d": 14,
+        "comp": 12
+       }
+      ]
+     }
+    ],
+    "draw": 4898,
+    "drawN": 615,
+    "builds": [
+     [
+      "die-floorplan",
+      4832,
+      32,
+      57440
+     ],
+     [
+      "boule-and-wafer",
+      4968,
+      25,
+      28057
+     ],
+     [
+      "gas-cabinet",
+      5008,
+      34,
+      72071
+     ]
+    ],
+    "marks": {
+     "dcl": 4753.600000023842,
+     "load": 4931
+    }
+   },
+   "nav": {
+    "ttfb": 3.5,
+    "respEnd": 4680.900000035763,
+    "domInteractive": 4753.199999988079,
+    "dcl": 4884.900000035763,
+    "load": 4931.699999988079,
+    "transfer": 4199824,
+    "decoded": 4199524
+   },
+   "dom": 21608,
+   "stage": {
+    "hidden": "0",
+    "collapsed": "1",
+    "w": 203,
+    "h": 203
+   },
+   "heap": 11.8,
+   "view": "walk",
+   "docH": 20618,
+   "density": 0.22000000000000003,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 2
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 12,
+     "end_ms": 13
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4199714,
+     "failed": null,
+     "start_ms": 1212,
+     "end_ms": 5893
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1385,
+     "end_ms": 1992
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1693,
+     "end_ms": 1694
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6178,
+     "end_ms": 6340
+    }
+   ],
+   "summary": {
+    "fp": 948,
+    "fcp": 948,
+    "lcp": 948,
+    "lcp_el": "section.wk-gl > p.wk-gl-p",
+    "tbt": 92,
+    "longtasks": 1,
+    "lt_total": 142,
+    "lt_max": 142,
+    "cls": 0,
+    "draw": 4898,
+    "ttfb": 3.5,
+    "respEnd": 4680.900000035763,
+    "domInteractive": 4753.199999988079,
+    "dcl": 4884.900000035763,
+    "load": 4931.699999988079,
+    "dom": 21608,
+    "heap": 11.8,
+    "view": "walk",
+    "first_build": [
+     "die-floorplan",
+     4832,
+     32,
+     57440
+    ],
+    "n_builds": 3,
+    "build_ms_total": 91,
+    "stage": {
+     "hidden": "0",
+     "collapsed": "1",
+     "w": 203,
+     "h": 203
+    },
+    "density": 0.22000000000000003
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      956
+     ],
+     [
+      "first-contentful-paint",
+      956
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 956,
+      "size": 24222,
+      "el": "section.wk-gl > p.wk-gl-p",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [
+     [
+      4754.699999988079,
+      161
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 175.5,
+      "d": 749.4000000357628,
+      "block": 98.4,
+      "render": 130.60000002384186,
+      "style": 130.60000002384186,
+      "scripts": []
+     },
+     {
+      "t": 4754.699999988079,
+      "d": 173.10000002384186,
+      "block": 123,
+      "render": 11.899999976158142,
+      "style": 4.600000023841858,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 255122,
+        "d": 135,
+        "comp": 50
+       },
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "bind",
+        "pos": 350575,
+        "d": 14,
+        "comp": 12
+       }
+      ]
+     }
+    ],
+    "draw": 4918.5,
+    "drawN": 614,
+    "builds": [
+     [
+      "die-floorplan",
+      4849,
+      34,
+      57440
+     ],
+     [
+      "boule-and-wafer",
+      5026,
+      29,
+      28057
+     ],
+     [
+      "gas-cabinet",
+      5060,
+      32,
+      72071
+     ]
+    ],
+    "marks": {
+     "dcl": 4755.400000035763,
+     "load": 4953.699999988079
+    }
+   },
+   "nav": {
+    "ttfb": 3.699999988079071,
+    "respEnd": 4682,
+    "domInteractive": 4754.800000011921,
+    "dcl": 4904.900000035763,
+    "load": 4953.699999988079,
+    "transfer": 4199824,
+    "decoded": 4199524
+   },
+   "dom": 21608,
+   "stage": {
+    "hidden": "0",
+    "collapsed": "1",
+    "w": 203,
+    "h": 203
+   },
+   "heap": 12.5,
+   "view": "walk",
+   "docH": 20618,
+   "density": 0.22000000000000003,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 1
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 11,
+     "end_ms": 13
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4199714,
+     "failed": null,
+     "start_ms": 1213,
+     "end_ms": 5894
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1386,
+     "end_ms": 1989
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1694,
+     "end_ms": 1696
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6202,
+     "end_ms": 6362
+    }
+   ],
+   "summary": {
+    "fp": 956,
+    "fcp": 956,
+    "lcp": 956,
+    "lcp_el": "section.wk-gl > p.wk-gl-p",
+    "tbt": 111,
+    "longtasks": 1,
+    "lt_total": 161,
+    "lt_max": 161,
+    "cls": 0,
+    "draw": 4918.5,
+    "ttfb": 3.699999988079071,
+    "respEnd": 4682,
+    "domInteractive": 4754.800000011921,
+    "dcl": 4904.900000035763,
+    "load": 4953.699999988079,
+    "dom": 21608,
+    "heap": 12.5,
+    "view": "walk",
+    "first_build": [
+     "die-floorplan",
+     4849,
+     34,
+     57440
+    ],
+    "n_builds": 3,
+    "build_ms_total": 95,
+    "stage": {
+     "hidden": "0",
+     "collapsed": "1",
+     "w": 203,
+     "h": 203
+    },
+    "density": 0.22000000000000003
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      944
+     ],
+     [
+      "first-contentful-paint",
+      944
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 944,
+      "size": 24222,
+      "el": "section.wk-gl > p.wk-gl-p",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [
+     [
+      4762,
+      153
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 175.80000001192093,
+      "d": 737.6000000238419,
+      "block": 83.6,
+      "render": 116.90000003576279,
+      "style": 116.90000003576279,
+      "scripts": []
+     },
+     {
+      "t": 4762,
+      "d": 165.20000004768372,
+      "block": 114.6,
+      "render": 11.200000047683716,
+      "style": 4.700000047683716,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 255122,
+        "d": 128,
+        "comp": 46
+       },
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "bind",
+        "pos": 350575,
+        "d": 14,
+        "comp": 11
+       }
+      ]
+     }
+    ],
+    "draw": 4917.700000047684,
+    "drawN": 615,
+    "builds": [
+     [
+      "die-floorplan",
+      4848,
+      36,
+      57440
+     ],
+     [
+      "boule-and-wafer",
+      5048,
+      26,
+      28057
+     ],
+     [
+      "gas-cabinet",
+      5078,
+      32,
+      72071
+     ]
+    ],
+    "marks": {
+     "dcl": 4762.800000011921,
+     "load": 4952.5
+    }
+   },
+   "nav": {
+    "ttfb": 2.600000023841858,
+    "respEnd": 4695.700000047684,
+    "domInteractive": 4762.100000023842,
+    "dcl": 4905.100000023842,
+    "load": 4952.700000047684,
+    "transfer": 4199824,
+    "decoded": 4199524
+   },
+   "dom": 21608,
+   "stage": {
+    "hidden": "0",
+    "collapsed": "1",
+    "w": 203,
+    "h": 203
+   },
+   "heap": 12.4,
+   "view": "walk",
+   "docH": 20618,
+   "density": 0.22000000000000003,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 1
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 11,
+     "end_ms": 12
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4199714,
+     "failed": null,
+     "start_ms": 1211,
+     "end_ms": 5907
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1385,
+     "end_ms": 1991
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1691,
+     "end_ms": 1693
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6199,
+     "end_ms": 6362
+    }
+   ],
+   "summary": {
+    "fp": 944,
+    "fcp": 944,
+    "lcp": 944,
+    "lcp_el": "section.wk-gl > p.wk-gl-p",
+    "tbt": 103,
+    "longtasks": 1,
+    "lt_total": 153,
+    "lt_max": 153,
+    "cls": 0,
+    "draw": 4917.700000047684,
+    "ttfb": 2.600000023841858,
+    "respEnd": 4695.700000047684,
+    "domInteractive": 4762.100000023842,
+    "dcl": 4905.100000023842,
+    "load": 4952.700000047684,
+    "dom": 21608,
+    "heap": 12.4,
+    "view": "walk",
+    "first_build": [
+     "die-floorplan",
+     4848,
+     36,
+     57440
+    ],
+    "n_builds": 3,
+    "build_ms_total": 94,
+    "stage": {
+     "hidden": "0",
+     "collapsed": "1",
+     "w": 203,
+     "h": 203
+    },
+    "density": 0.22000000000000003
+   }
+  }
+ ]
+}

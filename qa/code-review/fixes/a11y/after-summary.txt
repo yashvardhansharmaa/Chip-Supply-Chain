@@ -1,0 +1,178 @@
+===== after-1440-dark.json
+  obscured #/chain  fwd {'bar': 12, 'clear': 56, 'part': 2} | back {'clear': 40}
+      e.g. BUTTON.gl-term "gate-all-around transistors" part 869 900 bars 56 900
+      e.g. BUTTON.gl-term "transistor" part 869 900 bars 56 900
+  obscured #/       fwd {'bar': 12, 'clear': 58} | back {'clear': 40}
+  AI Chips, 3 chips in, --cx-sticky 46px, scroll-padding-top 114px: 30 Shift+Tabs {'clear': 30}, 25 of them with the Comparing bar shown []
+  skip #/suppliers first Tab: A.skip "Skip to content" | Enter: #/suppliers, focus MAIN#main "How AI chips are ma | next Tab: BUTTON.sa-role "United Statesleads five  (in main: True)
+  skip #/chain     first Tab: A.skip "Skip to content" | Enter: #/chain, focus MAIN#main "How AI chips are ma | next Tab: A.btn.ghost "Download the chain as a PDF (in main: True)
+  skip #/          first Tab: A.skip "Skip to content" | Enter: #/, focus MAIN#main "1 / 17Chip Design,  | next Tab: A "01Chip Design, EDA and IPExtreme conc (in main: True)
+  search: aria-modal true, #app inert True | status '14 results.' | 24 Tabs: 24 inside, 0 [] outside | Esc with focus on body: closed True | Esc from a result: closed True, focus BUTTON.search-btn "Search"
+     pick lithography/Chapter      -> H2.ch-title "Chapter 4: Lithography"  heading=True where=clear
+     pick high-NA/None             -> H4#lithography--high-na-euv "High-NA EUV#"  heading=True where=clear
+     pick TSMC/Supplier            -> H1 "Suppliers"  heading=True where=clear
+     pick H100/Chip                -> H1 "AI Chips"  heading=True where=clear
+     pick Entity List/Term         -> DT "Entity Listentity-list, Entity-Listed, E"  heading=False where=clear
+     pick Entity List/Event        -> H4 "SMIC added to the Entity List"  heading=True where=clear
+     pick ASML 2023/China revenue  -> FIGURE#ex-asml.ex-panel.ex-flash "ASMLNL · peak 36% in FY2  heading=False where=clear
+  contrast: step numbers 5.05 to 6.32 (75) | atlas stops 6.32 to 6.32 | table peaks min 6.83, under 4.5: 0 of 24 | search placeholder 6.32
+  control edges: supSearch 3.8, supCountry 3.8, supChk 3.8, ghostBtn 10.58, glSearch 3.8, filterChip 3.8, chipSquare 3.8
+  Back to top: hidden but focused in first 14 Tabs: 0; hidden state {'show': '1', 'vis': 'visible', 'display': 'block'} | .wk-tabs a outline: solid 1px rgb(226, 92, 87) | .cf-jump-btn outline: solid 1px rgb(226, 92, 87)
+  spin: {'control': {'text': '', 'label': 'Pause the turn', 'pressed': None, 'w': 24, 'h': 24, 'shown': True}, 'turn2s': 0.22, 'afterPress': {'text': '', 'pressed': None, 'turn2s': 0, 'saved': '1'}, 'afterReload': {'text': '', 'pressed': None, 'turn2s': 0}, 'resumed': {'text': '', 'turn2s': 0.22}, 'hscroll': 0}
+  Home tab (Enter): before {'y': 6000, 'hash': '#/walk/transistors-and-front-end'} -> after {'y': 0, 'hash': '#/', 'active': 'H1.wk-title "How AI chips are made"'}
+  axe: #/ 0 {}; #/chain 21 {'target-size': 21}; #/suppliers 6 {'target-size': 6}; #/glossary 0 {}; #/controls 0 {}; #/exposure 0 {}; #/landscape 0 {}; search-open 0 {}
+===== after-1440-light.json
+  obscured #/chain  fwd {'bar': 12, 'clear': 56, 'part': 2} | back {'clear': 40}
+      e.g. BUTTON.gl-term "gate-all-around transistors" part 869 900 bars 56 900
+      e.g. BUTTON.gl-term "transistor" part 869 900 bars 56 900
+  obscured #/       fwd {'bar': 12, 'clear': 58} | back {'clear': 40}
+  AI Chips, 3 chips in, --cx-sticky 46px, scroll-padding-top 114px: 30 Shift+Tabs {'clear': 30}, 25 of them with the Comparing bar shown []
+  skip #/suppliers first Tab: A.skip "Skip to content" | Enter: #/suppliers, focus MAIN#main "How AI chips are ma | next Tab: BUTTON.sa-role "United Statesleads five  (in main: True)
+  skip #/chain     first Tab: A.skip "Skip to content" | Enter: #/chain, focus MAIN#main "How AI chips are ma | next Tab: A.btn.ghost "Download the chain as a PDF (in main: True)
+  skip #/          first Tab: A.skip "Skip to content" | Enter: #/, focus MAIN#main "1 / 17Chip Design,  | next Tab: A "01Chip Design, EDA and IPExtreme conc (in main: True)
+  search: aria-modal true, #app inert True | status '14 results.' | 24 Tabs: 24 inside, 0 [] outside | Esc with focus on body: closed True | Esc from a result: closed True, focus BUTTON.search-btn "Search"
+     pick lithography/Chapter      -> H2.ch-title "Chapter 4: Lithography"  heading=True where=clear
+     pick high-NA/None             -> H4#lithography--high-na-euv "High-NA EUV#"  heading=True where=clear
+     pick TSMC/Supplier            -> H1 "Suppliers"  heading=True where=clear
+     pick H100/Chip                -> H1 "AI Chips"  heading=True where=clear
+     pick Entity List/Term         -> DT "Entity Listentity-list, Entity-Listed, E"  heading=False where=clear
+     pick Entity List/Event        -> H4 "SMIC added to the Entity List"  heading=True where=clear
+     pick ASML 2023/China revenue  -> FIGURE#ex-asml.ex-panel.ex-flash "ASMLNL · peak 36% in FY2  heading=False where=clear
+  contrast: step numbers 5.61 to 9.43 (75) | atlas stops 5.61 to 5.61 | table peaks min 6.63, under 4.5: 0 of 24 | search placeholder 5.61
+  control edges: supSearch 3.67, supCountry 3.67, supChk 3.67, ghostBtn 9.38, glSearch 3.67, filterChip 3.67, chipSquare 3.67
+  Back to top: hidden but focused in first 14 Tabs: 0; hidden state {'show': '1', 'vis': 'visible', 'display': 'block'} | .wk-tabs a outline: solid 1px rgb(122, 31, 43) | .cf-jump-btn outline: solid 1px rgb(122, 31, 43)
+  spin: {'control': {'text': '', 'label': 'Pause the turn', 'pressed': None, 'w': 24, 'h': 24, 'shown': True}, 'turn2s': 0.22, 'afterPress': {'text': '', 'pressed': None, 'turn2s': 0, 'saved': '1'}, 'afterReload': {'text': '', 'pressed': None, 'turn2s': 0}, 'resumed': {'text': '', 'turn2s': 0.22}, 'hscroll': 0}
+  Home tab (Enter): before {'y': 6000, 'hash': '#/walk/transistors-and-front-end'} -> after {'y': 0, 'hash': '#/', 'active': 'H1.wk-title "How AI chips are made"'}
+  axe: #/ 0 {}; #/chain 21 {'target-size': 21}; #/suppliers 6 {'target-size': 6}; #/glossary 0 {}; #/controls 0 {}; #/exposure 0 {}; #/landscape 0 {}; search-open 0 {}
+===== after-1024-dark.json
+  obscured #/chain  fwd {'bar': 12, 'clear': 57, 'part': 1} | back {'clear': 40}
+      e.g. BUTTON.gl-term "transistor" part 737 768 bars 56 768
+  obscured #/       fwd {'bar': 12, 'clear': 58} | back {'clear': 40}
+  AI Chips, 3 chips in, --cx-sticky 46px, scroll-padding-top 114px: 30 Shift+Tabs {'clear': 30}, 25 of them with the Comparing bar shown []
+  skip #/suppliers first Tab: A.skip "Skip to content" | Enter: #/suppliers, focus MAIN#main "How AI chips are ma | next Tab: BUTTON.sa-role "United Statesleads five  (in main: True)
+  skip #/chain     first Tab: A.skip "Skip to content" | Enter: #/chain, focus MAIN#main "How AI chips are ma | next Tab: A.btn.ghost "Download the chain as a PDF (in main: True)
+  skip #/          first Tab: A.skip "Skip to content" | Enter: #/, focus MAIN#main "1 / 17Chip Design,  | next Tab: A "01Chip Design, EDA and IPExtreme conc (in main: True)
+  search: aria-modal true, #app inert True | status '14 results.' | 24 Tabs: 24 inside, 0 [] outside | Esc with focus on body: closed True | Esc from a result: closed True, focus BUTTON.search-btn "Search"
+     pick lithography/Chapter      -> H2.ch-title "Chapter 4: Lithography"  heading=True where=clear
+     pick high-NA/None             -> H4#lithography--high-na-euv "High-NA EUV#"  heading=True where=clear
+     pick TSMC/Supplier            -> H1 "Suppliers"  heading=True where=clear
+     pick H100/Chip                -> H1 "AI Chips"  heading=True where=clear
+     pick Entity List/Term         -> DT "Entity Listentity-list, Entity-Listed, E"  heading=False where=clear
+     pick Entity List/Event        -> H4 "SMIC added to the Entity List"  heading=True where=clear
+     pick ASML 2023/China revenue  -> FIGURE#ex-asml.ex-panel.ex-flash "ASMLNL · peak 36% in FY2  heading=False where=clear
+  contrast: step numbers 5.05 to 6.32 (75) | atlas stops 6.32 to 6.32 | table peaks min 6.83, under 4.5: 0 of 24 | search placeholder 6.32
+  control edges: supSearch 3.8, supCountry 3.8, supChk 3.8, ghostBtn 10.58, glSearch 3.8, filterChip 3.8, chipSquare 3.8
+  Back to top: hidden but focused in first 14 Tabs: 0; hidden state {'show': '1', 'vis': 'visible', 'display': 'block'} | .wk-tabs a outline: solid 1px rgb(226, 92, 87) | .cf-jump-btn outline: solid 1px rgb(226, 92, 87)
+  spin: {'control': {'text': '', 'label': 'Pause the turn', 'pressed': None, 'w': 24, 'h': 24, 'shown': True}, 'turn2s': 0.22, 'afterPress': {'text': '', 'pressed': None, 'turn2s': 0, 'saved': '1'}, 'afterReload': {'text': '', 'pressed': None, 'turn2s': 0}, 'resumed': {'text': '', 'turn2s': 0.22}, 'hscroll': 0}
+  Home tab (Enter): before {'y': 6000, 'hash': '#/walk/metrology-and-inspection'} -> after {'y': 0, 'hash': '#/', 'active': 'H1.wk-title "How AI chips are made"'}
+  axe: #/ 14 {'target-size': 14}; #/chain 21 {'target-size': 21}; #/suppliers 12 {'target-size': 12}; #/glossary 0 {}; #/controls 0 {}; #/exposure 0 {}; #/landscape 0 {}; search-open 0 {}
+===== after-1024-light.json
+  obscured #/chain  fwd {'bar': 12, 'clear': 57, 'part': 1} | back {'clear': 40}
+      e.g. BUTTON.gl-term "transistor" part 737 768 bars 56 768
+  obscured #/       fwd {'bar': 12, 'clear': 58} | back {'clear': 40}
+  AI Chips, 3 chips in, --cx-sticky 46px, scroll-padding-top 114px: 30 Shift+Tabs {'clear': 30}, 25 of them with the Comparing bar shown []
+  skip #/suppliers first Tab: A.skip "Skip to content" | Enter: #/suppliers, focus MAIN#main "How AI chips are ma | next Tab: BUTTON.sa-role "United Statesleads five  (in main: True)
+  skip #/chain     first Tab: A.skip "Skip to content" | Enter: #/chain, focus MAIN#main "How AI chips are ma | next Tab: A.btn.ghost "Download the chain as a PDF (in main: True)
+  skip #/          first Tab: A.skip "Skip to content" | Enter: #/, focus MAIN#main "1 / 17Chip Design,  | next Tab: A "01Chip Design, EDA and IPExtreme conc (in main: True)
+  search: aria-modal true, #app inert True | status '14 results.' | 24 Tabs: 24 inside, 0 [] outside | Esc with focus on body: closed True | Esc from a result: closed True, focus BUTTON.search-btn "Search"
+     pick lithography/Chapter      -> H2.ch-title "Chapter 4: Lithography"  heading=True where=clear
+     pick high-NA/None             -> H4#lithography--high-na-euv "High-NA EUV#"  heading=True where=clear
+     pick TSMC/Supplier            -> H1 "Suppliers"  heading=True where=clear
+     pick H100/Chip                -> H1 "AI Chips"  heading=True where=clear
+     pick Entity List/Term         -> DT "Entity Listentity-list, Entity-Listed, E"  heading=False where=clear
+     pick Entity List/Event        -> H4 "SMIC added to the Entity List"  heading=True where=clear
+     pick ASML 2023/China revenue  -> FIGURE#ex-asml.ex-panel.ex-flash "ASMLNL · peak 36% in FY2  heading=False where=clear
+  contrast: step numbers 5.61 to 9.43 (75) | atlas stops 5.61 to 5.61 | table peaks min 6.63, under 4.5: 0 of 24 | search placeholder 5.61
+  control edges: supSearch 3.67, supCountry 3.67, supChk 3.67, ghostBtn 9.38, glSearch 3.67, filterChip 3.67, chipSquare 3.67
+  Back to top: hidden but focused in first 14 Tabs: 0; hidden state {'show': '1', 'vis': 'visible', 'display': 'block'} | .wk-tabs a outline: solid 1px rgb(122, 31, 43) | .cf-jump-btn outline: solid 1px rgb(122, 31, 43)
+  spin: {'control': {'text': '', 'label': 'Pause the turn', 'pressed': None, 'w': 24, 'h': 24, 'shown': True}, 'turn2s': 0.22, 'afterPress': {'text': '', 'pressed': None, 'turn2s': 0, 'saved': '1'}, 'afterReload': {'text': '', 'pressed': None, 'turn2s': 0}, 'resumed': {'text': '', 'turn2s': 0.22}, 'hscroll': 0}
+  Home tab (Enter): before {'y': 6000, 'hash': '#/walk/metrology-and-inspection'} -> after {'y': 0, 'hash': '#/', 'active': 'H1.wk-title "How AI chips are made"'}
+  axe: #/ 14 {'target-size': 14}; #/chain 21 {'target-size': 21}; #/suppliers 12 {'target-size': 12}; #/glossary 0 {}; #/controls 0 {}; #/exposure 0 {}; #/landscape 0 {}; search-open 0 {}
+===== after-390-dark.json
+  obscured #/chain  fwd {'bar': 12, 'clear': 58} | back {'clear': 40}
+  obscured #/       fwd {'bar': 12, 'clear': 58} | back {'clear': 40}
+  AI Chips, 3 chips in, --cx-sticky 46px, scroll-padding-top 133px: 30 Shift+Tabs {'clear': 30}, 28 of them with the Comparing bar shown []
+  skip #/suppliers first Tab: A.skip "Skip to content" | Enter: #/suppliers, focus MAIN#main "How AI chips are ma | next Tab: BUTTON.sa-role "United Statesleads five  (in main: True)
+  skip #/chain     first Tab: A.skip "Skip to content" | Enter: #/chain, focus MAIN#main "How AI chips are ma | next Tab: A.btn.ghost "Download the chain as a PDF (in main: True)
+  skip #/          first Tab: A.skip "Skip to content" | Enter: #/, focus MAIN#main "1 / 17Chip Design,  | next Tab: A "01Chip Design, EDA and IPExtreme conc (in main: True)
+  search: aria-modal true, #app inert True | status '14 results.' | 24 Tabs: 24 inside, 0 [] outside | Esc with focus on body: closed True | Esc from a result: closed True, focus BUTTON.search-btn "Search"
+     pick lithography/Chapter      -> H2.ch-title "Chapter 4: Lithography"  heading=True where=clear
+     pick high-NA/None             -> H4#lithography--high-na-euv "High-NA EUV#"  heading=True where=clear
+     pick TSMC/Supplier            -> H1 "Suppliers"  heading=True where=clear
+     pick H100/Chip                -> H1 "AI Chips"  heading=True where=clear
+     pick Entity List/Term         -> DT "Entity Listentity-list, Entity-Listed, E"  heading=False where=clear
+     pick Entity List/Event        -> H4 "SMIC added to the Entity List"  heading=True where=clear
+     pick ASML 2023/China revenue  -> FIGURE#ex-asml.ex-panel.ex-flash "ASMLNL · peak 36% in FY2  heading=False where=clear
+  sheet: aria-modal true, #app inert True | 40 Tabs: 40 inside, 0 [] outside | Esc -> BUTTON.stage-menu "Contents" | Close -> BUTTON.stage-menu "Contents" | chapter link -> H2.ch-title "Chapter 4: Lithography" (clear) | page link -> H1 "Suppliers"
+  contrast: step numbers 5.05 to 6.32 (75) | atlas stops 1.72 to 1.72 | table peaks min 6.83, under 4.5: 0 of 24 | search placeholder 6.32
+  control edges: supSearch 3.8, supCountry 3.8, supChk 3.8, ghostBtn 10.58, glSearch 3.8, filterChip 3.8, chipSquare 3.8
+  Back to top: hidden but focused in first 14 Tabs: 0; hidden state {'show': '1', 'vis': 'visible', 'display': 'none'} | .wk-tabs a outline: solid 1px rgb(226, 92, 87) | .cf-jump-btn outline: solid 1px rgb(226, 92, 87)
+  spin: {'control': {'text': '', 'label': 'Pause the turn', 'pressed': None, 'w': 28, 'h': 28, 'shown': True}, 'turn2s': 0.22, 'afterPress': {'text': '', 'pressed': None, 'turn2s': 0, 'saved': '1'}, 'afterReload': {'text': '', 'pressed': None, 'turn2s': 0}, 'resumed': {'text': '', 'turn2s': 0.22}, 'hscroll': 0}
+  Home tab (click (tab hidden on phones)): before {'y': 6000, 'hash': '#/walk/photomasks-and-pellicles'} -> after {'y': 0, 'hash': '#/', 'active': 'H1.wk-title "How AI chips are made"'}
+  axe: #/ 9 {'target-size': 9}; #/chain 18 {'target-size': 18}; #/suppliers 12 {'target-size': 12}; #/glossary 0 {}; #/controls 0 {}; #/exposure 0 {}; #/landscape 0 {}; search-open 0 {}
+===== after-390-light.json
+  obscured #/chain  fwd {'bar': 12, 'clear': 58} | back {'clear': 40}
+  obscured #/       fwd {'bar': 12, 'clear': 58} | back {'clear': 40}
+  AI Chips, 3 chips in, --cx-sticky 46px, scroll-padding-top 133px: 30 Shift+Tabs {'clear': 30}, 28 of them with the Comparing bar shown []
+  skip #/suppliers first Tab: A.skip "Skip to content" | Enter: #/suppliers, focus MAIN#main "How AI chips are ma | next Tab: BUTTON.sa-role "United Statesleads five  (in main: True)
+  skip #/chain     first Tab: A.skip "Skip to content" | Enter: #/chain, focus MAIN#main "How AI chips are ma | next Tab: A.btn.ghost "Download the chain as a PDF (in main: True)
+  skip #/          first Tab: A.skip "Skip to content" | Enter: #/, focus MAIN#main "1 / 17Chip Design,  | next Tab: A "01Chip Design, EDA and IPExtreme conc (in main: True)
+  search: aria-modal true, #app inert True | status '14 results.' | 24 Tabs: 24 inside, 0 [] outside | Esc with focus on body: closed True | Esc from a result: closed True, focus BUTTON.search-btn "Search"
+     pick lithography/Chapter      -> H2.ch-title "Chapter 4: Lithography"  heading=True where=clear
+     pick high-NA/None             -> H4#lithography--high-na-euv "High-NA EUV#"  heading=True where=clear
+     pick TSMC/Supplier            -> H1 "Suppliers"  heading=True where=clear
+     pick H100/Chip                -> H1 "AI Chips"  heading=True where=clear
+     pick Entity List/Term         -> DT "Entity Listentity-list, Entity-Listed, E"  heading=False where=clear
+     pick Entity List/Event        -> H4 "SMIC added to the Entity List"  heading=True where=clear
+     pick ASML 2023/China revenue  -> FIGURE#ex-asml.ex-panel.ex-flash "ASMLNL · peak 36% in FY2  heading=False where=clear
+  sheet: aria-modal true, #app inert True | 40 Tabs: 40 inside, 0 [] outside | Esc -> BUTTON.stage-menu "Contents" | Close -> BUTTON.stage-menu "Contents" | chapter link -> H2.ch-title "Chapter 4: Lithography" (clear) | page link -> H1 "Suppliers"
+  contrast: step numbers 5.61 to 9.43 (75) | atlas stops 1.52 to 1.52 | table peaks min 6.63, under 4.5: 0 of 24 | search placeholder 5.61
+  control edges: supSearch 3.67, supCountry 3.67, supChk 3.67, ghostBtn 9.38, glSearch 3.67, filterChip 3.67, chipSquare 3.67
+  Back to top: hidden but focused in first 14 Tabs: 0; hidden state {'show': '1', 'vis': 'visible', 'display': 'none'} | .wk-tabs a outline: solid 1px rgb(122, 31, 43) | .cf-jump-btn outline: solid 1px rgb(122, 31, 43)
+  spin: {'control': {'text': '', 'label': 'Pause the turn', 'pressed': None, 'w': 28, 'h': 28, 'shown': True}, 'turn2s': 0.22, 'afterPress': {'text': '', 'pressed': None, 'turn2s': 0, 'saved': '1'}, 'afterReload': {'text': '', 'pressed': None, 'turn2s': 0}, 'resumed': {'text': '', 'turn2s': 0.22}, 'hscroll': 0}
+  Home tab (click (tab hidden on phones)): before {'y': 6000, 'hash': '#/walk/photomasks-and-pellicles'} -> after {'y': 0, 'hash': '#/', 'active': 'H1.wk-title "How AI chips are made"'}
+  axe: #/ 9 {'target-size': 9}; #/chain 18 {'target-size': 18}; #/suppliers 12 {'target-size': 12}; #/glossary 0 {}; #/controls 0 {}; #/exposure 0 {}; #/landscape 0 {}; search-open 0 {}
+===== after-320-dark.json
+  obscured #/chain  fwd {'bar': 12, 'clear': 58} | back {'clear': 40}
+  obscured #/       fwd {'bar': 12, 'clear': 58} | back {'clear': 40}
+  AI Chips, 3 chips in, --cx-sticky 79px, scroll-padding-top 166px: 30 Shift+Tabs {'clear': 30}, 30 of them with the Comparing bar shown []
+  skip #/suppliers first Tab: A.skip "Skip to content" | Enter: #/suppliers, focus MAIN#main "How AI chips are ma | next Tab: BUTTON.sa-role "United Statesleads five  (in main: True)
+  skip #/chain     first Tab: A.skip "Skip to content" | Enter: #/chain, focus MAIN#main "How AI chips are ma | next Tab: A.btn.ghost "Download the chain as a PDF (in main: True)
+  skip #/          first Tab: A.skip "Skip to content" | Enter: #/, focus MAIN#main "1 / 17Chip Design,  | next Tab: A "01Chip Design, EDA and IPExtreme conc (in main: True)
+  search: aria-modal true, #app inert True | status '14 results.' | 24 Tabs: 24 inside, 0 [] outside | Esc with focus on body: closed True | Esc from a result: closed True, focus BUTTON.search-btn "Search"
+     pick lithography/Chapter      -> H2.ch-title "Chapter 4: Lithography"  heading=True where=clear
+     pick high-NA/None             -> H4#lithography--high-na-euv "High-NA EUV#"  heading=True where=clear
+     pick TSMC/Supplier            -> H1 "Suppliers"  heading=True where=clear
+     pick H100/Chip                -> H1 "AI Chips"  heading=True where=clear
+     pick Entity List/Term         -> DT "Entity Listentity-list, Entity-Listed, E"  heading=False where=clear
+     pick Entity List/Event        -> H4 "SMIC added to the Entity List"  heading=True where=clear
+     pick ASML 2023/China revenue  -> FIGURE#ex-asml.ex-panel.ex-flash "ASMLNL · peak 36% in FY2  heading=False where=clear
+  sheet: aria-modal true, #app inert True | 40 Tabs: 40 inside, 0 [] outside | Esc -> BUTTON.stage-menu "Contents" | Close -> BUTTON.stage-menu "Contents" | chapter link -> H2.ch-title "Chapter 4: Lithography" (clear) | page link -> H1 "Suppliers"
+  contrast: step numbers 5.05 to 6.32 (75) | atlas stops 1.72 to 1.72 | table peaks min 6.83, under 4.5: 0 of 24 | search placeholder 6.32
+  control edges: supSearch 3.8, supCountry 3.8, supChk 3.8, ghostBtn 10.58, glSearch 3.8, filterChip 3.8, chipSquare 3.8
+  Back to top: hidden but focused in first 14 Tabs: 0; hidden state {'show': '1', 'vis': 'visible', 'display': 'none'} | .wk-tabs a outline: solid 1px rgb(226, 92, 87) | .cf-jump-btn outline: solid 1px rgb(226, 92, 87)
+  spin: {'control': {'text': '', 'label': 'Pause the turn', 'pressed': None, 'w': 28, 'h': 28, 'shown': True}, 'turn2s': 0.22, 'afterPress': {'text': '', 'pressed': None, 'turn2s': 0, 'saved': '1'}, 'afterReload': {'text': '', 'pressed': None, 'turn2s': 0}, 'resumed': {'text': '', 'turn2s': 0.22}, 'hscroll': 0}
+  Home tab (click (tab hidden on phones)): before {'y': 6000, 'hash': '#/walk/lithography'} -> after {'y': 0, 'hash': '#/', 'active': 'H1.wk-title "How AI chips are made"'}
+  axe: #/ 12 {'target-size': 12}; #/chain 13 {'target-size': 13}; #/suppliers 13 {'target-size': 13}; #/glossary 0 {}; #/controls 0 {}; #/exposure 0 {}; #/landscape 0 {}; search-open 0 {}
+===== after-320-light.json
+  obscured #/chain  fwd {'bar': 12, 'clear': 58} | back {'clear': 40}
+  obscured #/       fwd {'bar': 12, 'clear': 58} | back {'clear': 40}
+  AI Chips, 3 chips in, --cx-sticky 79px, scroll-padding-top 166px: 30 Shift+Tabs {'clear': 30}, 30 of them with the Comparing bar shown []
+  skip #/suppliers first Tab: A.skip "Skip to content" | Enter: #/suppliers, focus MAIN#main "How AI chips are ma | next Tab: BUTTON.sa-role "United Statesleads five  (in main: True)
+  skip #/chain     first Tab: A.skip "Skip to content" | Enter: #/chain, focus MAIN#main "How AI chips are ma | next Tab: A.btn.ghost "Download the chain as a PDF (in main: True)
+  skip #/          first Tab: A.skip "Skip to content" | Enter: #/, focus MAIN#main "1 / 17Chip Design,  | next Tab: A "01Chip Design, EDA and IPExtreme conc (in main: True)
+  search: aria-modal true, #app inert True | status '14 results.' | 24 Tabs: 24 inside, 0 [] outside | Esc with focus on body: closed True | Esc from a result: closed True, focus BUTTON.search-btn "Search"
+     pick lithography/Chapter      -> H2.ch-title "Chapter 4: Lithography"  heading=True where=clear
+     pick high-NA/None             -> H4#lithography--high-na-euv "High-NA EUV#"  heading=True where=clear
+     pick TSMC/Supplier            -> H1 "Suppliers"  heading=True where=clear
+     pick H100/Chip                -> H1 "AI Chips"  heading=True where=clear
+     pick Entity List/Term         -> DT "Entity Listentity-list, Entity-Listed, E"  heading=False where=clear
+     pick Entity List/Event        -> H4 "SMIC added to the Entity List"  heading=True where=clear
+     pick ASML 2023/China revenue  -> FIGURE#ex-asml.ex-panel.ex-flash "ASMLNL · peak 36% in FY2  heading=False where=clear
+  sheet: aria-modal true, #app inert True | 40 Tabs: 40 inside, 0 [] outside | Esc -> BUTTON.stage-menu "Contents" | Close -> BUTTON.stage-menu "Contents" | chapter link -> H2.ch-title "Chapter 4: Lithography" (clear) | page link -> H1 "Suppliers"
+  contrast: step numbers 5.61 to 9.43 (75) | atlas stops 1.52 to 1.52 | table peaks min 6.63, under 4.5: 0 of 24 | search placeholder 5.61
+  control edges: supSearch 3.67, supCountry 3.67, supChk 3.67, ghostBtn 9.38, glSearch 3.67, filterChip 3.67, chipSquare 3.67
+  Back to top: hidden but focused in first 14 Tabs: 0; hidden state {'show': '1', 'vis': 'visible', 'display': 'none'} | .wk-tabs a outline: solid 1px rgb(122, 31, 43) | .cf-jump-btn outline: solid 1px rgb(122, 31, 43)
+  spin: {'control': {'text': '', 'label': 'Pause the turn', 'pressed': None, 'w': 28, 'h': 28, 'shown': True}, 'turn2s': 0.22, 'afterPress': {'text': '', 'pressed': None, 'turn2s': 0, 'saved': '1'}, 'afterReload': {'text': '', 'pressed': None, 'turn2s': 0}, 'resumed': {'text': '', 'turn2s': 0.22}, 'hscroll': 0}
+  Home tab (click (tab hidden on phones)): before {'y': 6000, 'hash': '#/walk/lithography'} -> after {'y': 0, 'hash': '#/', 'active': 'H1.wk-title "How AI chips are made"'}
+  axe: #/ 12 {'target-size': 12}; #/chain 13 {'target-size': 13}; #/suppliers 13 {'target-size': 13}; #/glossary 0 {}; #/controls 0 {}; #/exposure 0 {}; #/landscape 0 {}; search-open 0 {}

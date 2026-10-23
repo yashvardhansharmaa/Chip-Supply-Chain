@@ -1,0 +1,16 @@
+== out/after/home.json (n=5)
+   fcp 956 [944-1940]  lcp 956 [944-1940]  tbt 111 [92-163]  lt_max 161 [142-213]  longtasks 1 [1-1]  cls 0.0000 [0.0000-0.0000]  draw 4918 [4898-4980]  respEnd 4682 [4680-4696]  dcl 4905 [4885-4964]  load 4954 [4932-5020]  build_ms_total 95 [91-101]  dom 21608 [21608-21608]  heap 12 [11-12]
+   lcp element {'section.wk-gl > p.wk-gl-p'}  first build ['die-floorplan', 4895, 45, 57440]  stage {'hidden': '0', 'collapsed': '1', 'w': 203, 'h': 203}
+   requests run0: / 4199714 @1214; https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz, 76 @1392; https://gc.zgo.at/count.js net::ERR_BLOCKED_BY_CLIENT.Inspector @1697; /favicon.svg 933 @6273
+== out/after/chain.json (n=5)
+   fcp 836 [836-1288]  lcp 892 [888-1300]  tbt 96 [93-135]  lt_max 146 [143-175]  longtasks 1 [1-2]  cls 0.0000 [0.0000-0.0000]  draw 4898 [4892-4959]  respEnd 4681 [4679-4716]  dcl 4884 [4877-4943]  load 4915 [4910-4977]  build_ms_total 96 [91-101]  dom 21608 [21608-21608]  heap 11 [10-13]
+   lcp element {'div#howto.howto > p.howto-lede'}  first build ['die-floorplan', 4829, 36, 57440]  stage {'hidden': '0', 'collapsed': '1', 'w': 203, 'h': 203}
+   requests run0: / 4199714 @1950; https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz, 76 @2123; https://gc.zgo.at/count.js net::ERR_BLOCKED_BY_CLIENT.Inspector @2427; /favicon.svg 933 @6881
+== out/after/suppliers.json (n=5)
+   fcp 844 [836-1204]  lcp 932 [924-2236]  tbt 131 [126-136]  lt_max 181 [176-186]  longtasks 1 [1-1]  cls 0.0000 [0.0000-0.0000]  draw -  respEnd 4684 [4680-4689]  dcl 4920 [4916-4929]  load 4969 [4959-4977]  build_ms_total 0 [0-0]  dom 22610 [22610-22610]  heap 4 [4-4]
+   lcp element {'article.sa-panel > p.sa-panel-lede'}  first build None  stage {'hidden': '1', 'collapsed': '1', 'w': 1, 'h': 1}
+   requests run0: / 4199714 @2082; https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz, 76 @2254; https://gc.zgo.at/count.js net::ERR_BLOCKED_BY_CLIENT.Inspector @2560; /favicon.svg 933 @7058
+== out/after/litho.json (n=5)
+   fcp 912 [908-1964]  lcp 912 [908-1964]  tbt 0 [0-0]  lt_max 0 [0-0]  longtasks 0 [0-0]  cls 0.0000 [0.0000-0.0000]  draw -  respEnd 290 [287-292]  dcl 962 [882-965]  load 1019 [1018-1022]  build_ms_total 0 [0-0]  dom 1122 [1122-1122]  heap 1 [1-2]
+   lcp element {'header.ch-head > p.ch-lede'}  first build None  stage None
+   requests run0: /lithography/ 135893 @1988; https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz, 76 @2162; https://gc.zgo.at/count.js net::ERR_BLOCKED_BY_CLIENT.Inspector @2178; /media/litho-light-end.jpg 130142 @2203; /favicon.svg 933 @3029

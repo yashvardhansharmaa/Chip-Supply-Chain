@@ -138,3 +138,52 @@ In `qa/design/chips-ux/build/`, named `<before|after>-<state>-<width>-<theme>.pn
 
 - **The phone sheet on a real iPhone or Android.** The keyboard positioning follows `visualViewport`, but headless Chrome raises no on-screen keyboard.
 - **Screen readers:** the roles, names and announcements were checked in the DOM only. VoiceOver and NVDA were not run.
+
+## Fix 2: Change and Remove where the reader is (21 Oct 2026)
+
+The owner, on the live page with four chips (B200, Ascend 950DT, H20, H200 China-licensed configuration), wrote: "i don't see the option to remove/change". Change and Remove lived only on the slots at the top, which have scrolled away by the time a reader is in the comparison. The fourth slot also clamped its name to "H200 (China-licensed…".
+
+### What changed
+
+- **Every column head has Change and ×.** Each package card and each spec-table column head carries a quiet "Change" and an × in its top corner.
+  - Change opens the picker for that slot, anchored under that card or column head (`Landscape.openPicker` takes an origin, and `placePicker` anchors to `.cx-plan` or `th`).
+  - The × is named "Remove H20 from the comparison".
+  - After a pick or a removal, focus stays in the same region: that column's Change in the cards or the table, or the next column's Change after a removal. It never jumps back to the slots (`Landscape.colActs`, `colAct`, and `choose` reading `pop.origin`).
+- **A bar follows the reader** (`#cx-sticky`, `Landscape.renderBar` and `updateBar`).
+  - It appears under the masthead once the slots scroll out of view, while a chip is in. It hides when the slots come back. It sits under the masthead on phones too.
+  - It reads "Comparing", then each chip as a small ruled item with its ×, then "+ Add" while fewer than four are picked, then "Clear".
+  - A chip name scrolls back to its slot and opens Change there. "+ Add" opens the next empty slot. If the bar holds focus as it hides, focus moves to slot 1.
+- **Names are never clipped.**
+  - The slot name and maker line lose their two-line clamp and wrap in full. Each slot is a flex column whose card fills the row, so the cards in a row keep one height. "Try with" moved into its own grid cell under slot 2, so it no longer stretches one card.
+  - Package cards have a fixed width of at least 132 px plus padding, so a long name wraps in two lines without widening its card. `Landscape.scaleFor` fits the plans to the row with that minimum, at one scale. Where four cards cannot share a row (1024, phones), the row now wraps, at the same scale. It used to scroll sideways and cut the last card.
+  - Table heads wrap (`overflow-wrap: break-word`), with room kept for the ×.
+- **The outline means something.** The outlined card is the chip drawn on the 3D stage. It now says so: an "On the stage" label at the top of that card. The label's line is kept empty on the other cards so the names stay level. Clicking another card puts it on the stage, and its tooltip says so. The outline and the table's matching column underline are now ink. Garnet stays for the slot waiting for a pick and for focus, as in the first build.
+- **A chip with no published layout** (Ascend 950DT, TPU 8t) shows a hatched box marked "No published layout" in place of the empty gap.
+
+### The scroll-padding variable (for the a11y builder)
+
+- **`--cx-sticky`** is declared on `:root` in `src/modules/chips.css` (default `0px`). `Landscape.updateBar` sets it on `<html>` to the bar's height whenever a chip is picked on AI Chips, shown or not, and to `0px` everywhere else. It holds the height even while the bar is hidden because a jump into the comparison makes the bar appear, so the jump's target must already clear it.
+- **On AI Chips**, chips.css sets `html:has(section[data-view="landscape"]:not([hidden])) { scroll-padding-top: calc(var(--masthead) + var(--band, 0px) + var(--cx-sticky) + 12px) }`, and a matching `scroll-margin-top` on `.cx-h`, `.cx-note` and `.cx-tablewrap`.
+- **A global masthead rule** can add `var(--cx-sticky, 0px)` to its sum. My AI Chips rule is more specific, so it wins on that page either way.
+
+### Checks (fix 2)
+
+- **Build and checks:** `node build/build.js` exit 0, no warnings. `check-speak`: no matches. `check-integrity`: no problems. `check-sources`: 2,721 citations, all tier A or B.
+- **`build/behave.py`** (17 new steps at 1440, 16 on the phone, where the sheet replaces the anchored popover) passed 47 of 47 at 1440 and 47 of 47 on the 390 phone against `http://127.0.0.1:8765/`, with no console errors. The new steps cover these.
+  - The bar: shown and hidden by scroll, the chip names, + Add, ×, Clear.
+  - `--cx-sticky` and the scroll padding.
+  - No clipped names in cards, table heads, slots or the bar.
+  - Exactly one "On the stage" card, matching the stage.
+  - Change from a card, with the picker anchored under it and focus kept.
+  - × from the table head, with focus kept.
+  - Targets of 24 px or more.
+  - No horizontal scroll.
+- **No horizontal scroll** at 2560, 1920, 1440, 1024, 390 and 320, light and dark.
+
+### Shots (fix 2)
+
+- **Before** (the live page before the fix) and **after**, in `qa/design/chips-ux/build/fix2/`, all with the owner's four chips:
+  - `owner-<width>-<theme>`: scrolled to the packages at 2560, 1920, 1440, 1024, 390 and 320. The after set has every width in light and dark.
+  - `owner-table`: scrolled to the table, at 1920 and 390.
+  - `owner-top`: the slots, at 1920.
+- **After only:** `owner-change`, the picker opened from the H20 card's Change, at 1440 and on the 390 sheet.

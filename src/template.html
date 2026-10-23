@@ -3,24 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Chip Supply Chain</title>
-<meta name="description" content="The AI chip supply chain, stage by stage: who makes each part, how concentrated each stage is, and what a substitute would cost. Every stage has a 3D specimen beside the text.">
+<!-- the title and description come from build/page-titles.json (filled by build/modules/social.js), as every static page's do -->
+<title>{{HOME_TITLE}}</title>
+<meta name="cp-titles" content="{{VIEW_TITLES}}">
+<meta name="description" content="{{HOME_DESCRIPTION}}">
 <link rel="canonical" href="{{SITE_URL}}">
 <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta property="og:site_name" content="Chip Supply Chain">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Chip Supply Chain">
-<meta property="og:description" content="The AI chip supply chain, stage by stage: who makes each part, how concentrated each stage is, and what a substitute would cost. Every stage has a 3D specimen beside the text.">
+<meta property="og:title" content="{{HOME_TITLE}}">
+<meta property="og:description" content="{{HOME_DESCRIPTION}}">
 <meta property="og:url" content="{{SITE_URL}}">
 <meta property="og:image" content="{{HOME_CARD}}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Chip Supply Chain. How AI chips are made. chipsupplychain.org">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Chip Supply Chain">
-<meta name="twitter:description" content="The AI chip supply chain, stage by stage: who makes each part, how concentrated each stage is, and what a substitute would cost. Every stage has a 3D specimen beside the text.">
+<meta name="twitter:title" content="{{HOME_TITLE}}">
+<meta name="twitter:description" content="{{HOME_DESCRIPTION}}">
 <meta name="twitter:image" content="{{HOME_CARD}}">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "Chip Supply Chain", "url": "{{SITE_URL}}", "description": "How AI chips are made: an introduction to the entire semiconductor supply chain.", "inLanguage": "en", "author": {"@type": "Person", "name": "Yashvardhan Sharma", "url": "https://www.linkedin.com/in/yashvardhan07/"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,11 +50,33 @@
 /* apply a saved theme before first paint */
 (function(){try{var q=/[?&]theme=(light|dark)/.exec(location.search);var t=q?q[1]:localStorage.getItem('cp-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
+<script>{{PREROUTE}}</script>
+<style>
+/* Before boot only the routed view shows, so it paints as soon as its own markup has arrived (src/preroute.js sets
+   data-route and data-sub on <html>). From boot the router's hidden attributes decide, and html.booted ends these rules. */
+html:not(.booted)[data-route="walk"] .view:not([data-view="walk"]),
+html:not(.booted)[data-route="stack"] .view:not([data-view="stack"]),
+html:not(.booted)[data-route="landscape"] .view:not([data-view="landscape"]),
+html:not(.booted)[data-route="suppliers"] .view:not([data-view="suppliers"]),
+html:not(.booted)[data-route="controls"] .view:not([data-view="controls"]),
+html:not(.booted)[data-route="glossary"] .view:not([data-view="glossary"]),
+html:not(.booted)[data-route="pending"] .view,
+html:not(.booted) .view[data-view="controls"] .sub[data-sub="exposure"],
+html:not(.booted)[data-sub="exposure"] .view[data-view="controls"] .sub[data-sub="timeline"],
+html:not(.booted)[data-sub="country"] .view[data-view="suppliers"] .sup-tab[data-tab="stage"] { display: none !important; }
+html:not(.booted)[data-sub="exposure"] .view[data-view="controls"] .sub[data-sub="exposure"] { display: block !important; }
+/* the views whose bodies boot() builds show only their heads until then, so nothing painted early moves when it does:
+   the Export Controls board and timeline, the Glossary, AI Chips, and the Suppliers atlas when the address picks a country */
+html:not(.booted)[data-route="controls"]:not([data-sub="exposure"]) .view[data-view="controls"] > :not(.view-head):not(#controls-subtabs),
+html:not(.booted)[data-route="glossary"] .view[data-view="glossary"] > :not(.view-head),
+html:not(.booted)[data-route="landscape"] .view[data-view="landscape"] > :not(.view-head),
+html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { display: none !important; }
+</style>
 {{ANALYTICS}}
 </head>
 <body>
-<a class="skip" href="#app">Skip to content</a>
-<div class="sheet" id="sheet" role="dialog" aria-label="Contents" hidden><div class="sheet-head"><b>Contents</b><button type="button" class="sheet-close" aria-label="Close">×</button></div><nav class="sheet-pages">{{SHEET_PAGES}}</nav><ol class="sheet-chapters">{{SHEET_CHAPTERS}}</ol></div>
+<a class="skip" href="#main">Skip to content</a>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Contents" hidden><div class="sheet-head"><b>Contents</b><button type="button" class="sheet-close" aria-label="Close">×</button></div><nav class="sheet-pages">{{SHEET_PAGES}}</nav><ol class="sheet-chapters">{{SHEET_CHAPTERS}}</ol></div>
 <div id="app">
   <header class="masthead">
     <a class="wordmark" href="#/" aria-label="Chip Supply Chain"><svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg><span class="wm-name">Chip Supply Chain</span></a>
@@ -78,9 +102,126 @@
     <div class="stage-actions"><button type="button" class="stage-top">Top</button><button type="button" class="stage-menu" aria-haspopup="dialog" aria-controls="sheet">Contents</button><button type="button" class="stage-toggle" aria-expanded="false">Expand</button></div>
     <figcaption id="stage-caption"></figcaption>
   </figure>
+  <script>/* before boot the strip matches the routed view: a view with no specimen starts without one (Router.route keeps it so) */
+  (function(f){var r=document.documentElement.getAttribute('data-route');if(f&&r&&!/^(walk|stack|landscape)$/.test(r))f.setAttribute('data-hidden','1');})(document.currentScript&&document.currentScript.previousElementSibling);</script>
 
-  <main>
-    <section class="view column" data-view="stack" hidden>
+  <main id="main" tabindex="-1">
+    <!-- the views in the order a first visit needs them: home first, the three small views, The Chain, the Glossary -->
+    <section class="view column" data-view="walk">{{WALK}}<footer class="site-footer">{{FOOTER}}</footer></section>
+
+    <section class="view column" data-view="landscape" data-specimen="package">
+      <div class="view-head">
+        <h1>AI Chips</h1>
+        <p class="dek">The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026. Each entry names the foundry, process node, memory supplier and packaging plant behind the chip wherever the maker or a cited source has published them.</p>
+      </div>
+      <div class="cxa" id="cx-slots">
+        <div class="cxa-head"><p class="cxa-ask" id="cxa-ask">Choose two chips to compare. Add up to four.</p><button type="button" class="cxa-clear" id="cx-clear" hidden>Clear</button></div>
+        <div class="cxa-row" id="cxa-row" role="group" aria-labelledby="cxa-ask"></div>
+        <div class="cxa-pairs" id="cxa-pairs"></div>
+        <details class="cxa-browse" id="cxa-browse"><summary>Browse all chips by maker</summary>
+          <div id="picker" class="picker cx-picker" role="group" aria-label="All chips, by maker"></div>
+        </details>
+        <p class="sr-only" id="cxa-live" aria-live="polite"></p>
+      </div>
+      <div class="cxs" id="cx-sticky" role="region" aria-label="Chips in the comparison" hidden><div class="cxs-in" id="cxs-in"></div></div>
+      <h3 class="label cx-h">Packages at one scale</h3>
+      <p class="cx-sub">The logic dies are the pieces of silicon that do the computing, and the memory stacks feed them data. The interposer is the layer of wiring that connects the two, and the substrate is the small circuit board underneath.</p>
+      <div class="cx-key" id="cx-key"></div>
+      <div id="cx-plans" class="cx-plans"></div>
+      <h3 class="label cx-h">Specs side by side</h3>
+      <p class="cx-sub">TFLOPS counts trillions of calculations a second. FP16, FP8 and FP4 are number formats that use 16, 8 and 4 bits per number. The fewer the bits, the more calculations a chip can do.</p>
+      <p class="cx-more" id="cx-more" hidden>Scroll sideways to see every chip &rarr;</p>
+      <div id="cx-table-wrap" class="cx-tablewrap"><table class="cx-table" id="cx-table"></table></div>
+      <div id="cx-foot" class="cx-foot"></div>
+      <div id="cx-notes" class="cx-notes"></div>
+      <footer class="site-footer">{{FOOTER}}</footer>
+    </section>
+
+    <section class="view column wide" data-view="suppliers">
+      <div class="view-head">
+        <h1>Suppliers</h1>
+        <p class="dek">{{SUPPLIERS_INTRO}}</p>
+      </div>
+      {{HOME_MAP}}
+      <nav class="subtabs sup-tabs" aria-label="Firms by stage or by country"><a href="#/suppliers" data-tab="stage" aria-current="true">By stage</a><a href="#/suppliers?tab=country" data-tab="country">By country</a></nav>
+      <div class="sup-tab" data-tab="stage">
+      <div class="filters">
+        <input id="sup-search" type="search" placeholder="Search suppliers, cities, tickers…" aria-label="Search suppliers">
+        <select id="sup-country" aria-label="Filter by country"><option value="">All countries</option></select>
+        <select id="sup-chk" aria-label="Filter by chokepoint level"><option value="">All chokepoint levels</option><option>Critical</option><option>Important</option><option>Contested</option><option>Diversified</option></select>
+      </div>
+      <div class="sup-toolbar" id="sup-toolbar">
+        <span class="count" id="sup-count"></span>
+        <button class="btn ghost sup-allstages" id="sup-allstages" type="button" hidden>All stages</button>
+        <div class="sup-modes" role="group" aria-label="Firm list layout">
+          <button type="button" class="sup-mode" data-mode="ladder" aria-pressed="true">Ladder</button>
+          <button type="button" class="sup-mode" data-mode="table" aria-pressed="false">Table</button>
+        </div>
+        <button class="btn ghost" id="sup-copy" type="button">Copy table</button>
+      </div>
+      <h3 class="label sup-ladder-h" id="sup-ladder-h">Stages by number of firms, fewest first</h3>
+      <p class="sup-key" id="sup-key" aria-hidden="true"><b class="k-crit">Critical</b><span aria-hidden="true">·</span><b>Important or contested</b><span aria-hidden="true">·</span><b class="k-div">Diversified</b></p>
+      <div class="sup-ladder" id="sup-ladder" aria-labelledby="sup-ladder-h"></div>
+      <div class="sup-wrap" id="sup-wrap" hidden><table class="sup" id="sup-table"></table></div>
+      <p class="sup-note sup-rev-note" id="sup-rev-note">{{SUPPLIERS_REVENUE_NOTE}}</p>
+      </div>
+      <div class="sup-tab" data-tab="country" hidden>
+      <section class="sup-pipe" id="sup-pipe" aria-labelledby="sup-pipe-h">
+        <h3 class="label sup-pipe-h" id="sup-pipe-h">Which countries supply which stages</h3>
+        <div class="sup-pipe-scroll" id="sup-pipe-scroll"></div>
+        <p class="sup-legend" id="sup-legend"></p>
+        <div class="sup-tip" id="sup-tip" role="tooltip" hidden></div>
+      </section>
+      </div>
+      <footer class="site-footer">{{FOOTER}}</footer>
+    </section>
+
+    <section class="view column wide" data-view="controls">
+      <div class="view-head">
+        <h1>Export Controls</h1>
+        <p class="dek">{{CONTROLS_DEK}}</p>
+      </div>
+      <nav class="subtabs" id="controls-subtabs" aria-label="Controls sections"><a href="#/controls" data-sub="timeline" aria-current="true">What the rules did</a><a href="#/exposure" data-sub="exposure">China revenue share</a></nav>
+      <script>/* before boot, #/exposure marks its own tab (Router.route keeps the marks from then on) */
+      (function(n){if(!n||document.documentElement.getAttribute('data-sub')!=='exposure')return;[].forEach.call(n.querySelectorAll('a[data-sub]'),function(a){if(a.getAttribute('data-sub')==='exposure')a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');});})(document.currentScript&&document.currentScript.previousElementSibling);</script>
+      <div class="sub" data-sub="timeline">
+      <div class="cf-top">
+        <div>
+          <p class="cf-jump"><button type="button" class="cf-jump-btn">The timeline of AI chip export controls, 2018 to today ↓</button></p>
+        </div>
+        <div class="cf-modes" id="cf-modes" role="group" aria-label="Order the events" hidden><button type="button" class="cf-mode" data-mode="subject" aria-pressed="false">By subject</button><button type="button" class="cf-mode" data-mode="date" aria-pressed="true">By date</button></div>
+      </div>
+      <div class="cf" id="cf" data-mode="date">
+        <div class="cf-side" id="cf-side" hidden>
+          <div class="cf-scrub" id="cf-scrub"></div>
+          <div class="cf-scale" aria-hidden="true"><span class="cf-scale-l">What can be sold</span><span class="cf-scale-r"><span>No license</span><i></i><span>Prohibited</span></span><span class="cf-scale-x">The state on the date above. The full key is under the board.</span></div>
+          <div class="cf-board" id="cf-board"></div>
+          <ul class="cf-legend" aria-label="What each state means">
+            <li><span class="cf-pill is-open">No license</span><span>None needed.</span></li>
+            <li><span class="cf-pill is-restricted">Restricted</span><span>A government limits sales to some buyers or uses without banning them outright.</span></li>
+            <li><span class="cf-pill is-case">Case by case</span><span>A license is required, and each application is judged on its own.</span></li>
+            <li><span class="cf-pill is-denial">Presumption of denial</span><span>A license is required and will normally be refused. This is the usual policy for those on the Entity List, a US list of restricted foreign companies, institutes and individuals.</span></li>
+            <li><span class="cf-pill is-prohibited">Prohibited</span><span>No license is available, or the item is banned outright.</span></li>
+            <li><span class="cf-pill is-policy">Policy</span><span>Money and tariffs, which do not stop a shipment.</span></li>
+            <li><span class="cf-susp">Suspended</span><span>The rule is on hold until the date shown. When the hold ends, the state beside it takes effect.</span></li>
+          </ul>
+        </div>
+        <div class="cf-chron" id="cf-chron">
+          <div class="tl-bar"><div id="tl-filters" class="chips tl-filters" role="group" aria-label="Filter events"></div><button type="button" class="btn ghost tl-all" id="tl-all" aria-pressed="false">Show full summaries</button></div>
+          <ol class="timeline" id="timeline"></ol>
+        </div>
+      </div>
+      </div>
+      <div class="sub" data-sub="exposure">
+      <h3 class="label" style="margin: 10px 0 6px">China share of revenue, from company filings</h3>
+      <div id="exposure-viz">{{EXPOSURE_VIZ}}</div>
+      <details class="table-view"><summary>The same figures as a table</summary><div class="matrix-wrap"><table class="matrix" id="exposure-table"></table></div></details>
+      <p class="matrix-note" id="exposure-note">{{EXPOSURE_NOTE}}</p>
+      </div>
+      <footer class="site-footer">{{FOOTER}}</footer>
+    </section>
+
+    <section class="view column" data-view="stack">
       <section class="print-only print-title" aria-hidden="true">
         <img class="pt-art" data-src="print-title.png" width="1558" height="1558" alt="">
         <div class="pt-type">
@@ -121,118 +262,7 @@
       <footer class="site-footer">{{FOOTER_KEY}}</footer>
     </section>
 
-    <section class="view column" data-view="landscape" hidden data-specimen="package">
-      <div class="view-head">
-        <h1>AI Chips</h1>
-        <p class="dek">The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026. Each entry names the foundry, process node, memory supplier and packaging plant behind the chip wherever the maker or a cited source has published them.</p>
-      </div>
-      <div class="cxa" id="cx-slots">
-        <div class="cxa-head"><p class="cxa-ask" id="cxa-ask">Choose two chips to compare. Add up to four.</p><button type="button" class="cxa-clear" id="cx-clear" hidden>Clear</button></div>
-        <div class="cxa-row" id="cxa-row" role="group" aria-labelledby="cxa-ask"></div>
-        <div class="cxa-pairs" id="cxa-pairs"></div>
-        <details class="cxa-browse" id="cxa-browse"><summary>Browse all chips by maker</summary>
-          <div id="picker" class="picker cx-picker" role="group" aria-label="All chips, by maker"></div>
-        </details>
-        <p class="sr-only" id="cxa-live" aria-live="polite"></p>
-      </div>
-      <h3 class="label cx-h">Packages at one scale</h3>
-      <p class="cx-sub">The logic dies are the pieces of silicon that do the computing, and the memory stacks feed them data. The interposer is the layer of wiring that connects the two, and the substrate is the small circuit board underneath.</p>
-      <div class="cx-key" id="cx-key"></div>
-      <div id="cx-plans" class="cx-plans"></div>
-      <h3 class="label cx-h">Specs side by side</h3>
-      <p class="cx-sub">TFLOPS counts trillions of calculations a second. FP16, FP8 and FP4 are number formats that use 16, 8 and 4 bits per number. The fewer the bits, the more calculations a chip can do.</p>
-      <p class="cx-more" id="cx-more" hidden>Scroll sideways to see every chip &rarr;</p>
-      <div id="cx-table-wrap" class="cx-tablewrap"><table class="cx-table" id="cx-table"></table></div>
-      <div id="cx-foot" class="cx-foot"></div>
-      <div id="cx-notes" class="cx-notes"></div>
-      <footer class="site-footer">{{FOOTER}}</footer>
-    </section>
-
-    <section class="view column wide" data-view="suppliers" hidden>
-      <div class="view-head">
-        <h1>Suppliers</h1>
-        <p class="dek">{{SUPPLIERS_INTRO}}</p>
-      </div>
-      {{HOME_MAP}}
-      <nav class="subtabs sup-tabs" aria-label="Firms by stage or by country"><a href="#/suppliers" data-tab="stage" aria-current="true">By stage</a><a href="#/suppliers?tab=country" data-tab="country">By country</a></nav>
-      <div class="sup-tab" data-tab="stage">
-      <div class="filters">
-        <input id="sup-search" type="search" placeholder="Search suppliers, cities, tickers…" aria-label="Search suppliers">
-        <select id="sup-country" aria-label="Filter by country"><option value="">All countries</option></select>
-        <select id="sup-chk" aria-label="Filter by chokepoint level"><option value="">All chokepoint levels</option><option>Critical</option><option>Important</option><option>Contested</option><option>Diversified</option></select>
-      </div>
-      <div class="sup-toolbar" id="sup-toolbar">
-        <span class="count" id="sup-count"></span>
-        <button class="btn ghost sup-allstages" id="sup-allstages" type="button" hidden>All stages</button>
-        <div class="sup-modes" role="group" aria-label="Firm list layout">
-          <button type="button" class="sup-mode" data-mode="ladder" aria-pressed="true">Ladder</button>
-          <button type="button" class="sup-mode" data-mode="table" aria-pressed="false">Table</button>
-        </div>
-        <button class="btn ghost" id="sup-copy" type="button">Copy table</button>
-      </div>
-      <h3 class="label sup-ladder-h" id="sup-ladder-h">Stages by number of firms, fewest first</h3>
-      <p class="sup-key" id="sup-key" aria-hidden="true"><b class="k-crit">Critical</b><span aria-hidden="true">·</span><b>Important or contested</b><span aria-hidden="true">·</span><b class="k-div">Diversified</b></p>
-      <div class="sup-ladder" id="sup-ladder" aria-labelledby="sup-ladder-h"></div>
-      <div class="sup-wrap" id="sup-wrap" hidden><table class="sup" id="sup-table"></table></div>
-      <p class="sup-note sup-rev-note" id="sup-rev-note">{{SUPPLIERS_REVENUE_NOTE}}</p>
-      </div>
-      <div class="sup-tab" data-tab="country" hidden>
-      <section class="sup-pipe" id="sup-pipe" aria-labelledby="sup-pipe-h">
-        <h3 class="label sup-pipe-h" id="sup-pipe-h">Which countries supply which stages</h3>
-        <div class="sup-pipe-scroll" id="sup-pipe-scroll"></div>
-        <p class="sup-legend" id="sup-legend"></p>
-        <div class="sup-tip" id="sup-tip" role="tooltip" hidden></div>
-      </section>
-      </div>
-      <footer class="site-footer">{{FOOTER}}</footer>
-    </section>
-
-    <section class="view column wide" data-view="controls" hidden>
-      <div class="view-head">
-        <h1>Export Controls</h1>
-        <p class="dek">{{CONTROLS_DEK}}</p>
-      </div>
-      <nav class="subtabs" id="controls-subtabs" aria-label="Controls sections"><a href="#/controls" data-sub="timeline" aria-current="true">What the rules did</a><a href="#/exposure" data-sub="exposure">China revenue share</a></nav>
-      <div class="sub" data-sub="timeline">
-      <div class="cf-top">
-        <div>
-          <p class="cf-jump"><button type="button" class="cf-jump-btn">The timeline of AI chip export controls, 2018 to today ↓</button></p>
-        </div>
-        <div class="cf-modes" id="cf-modes" role="group" aria-label="Order the events" hidden><button type="button" class="cf-mode" data-mode="subject" aria-pressed="false">By subject</button><button type="button" class="cf-mode" data-mode="date" aria-pressed="true">By date</button></div>
-      </div>
-      <div class="cf" id="cf" data-mode="date">
-        <div class="cf-side" id="cf-side" hidden>
-          <div class="cf-scrub" id="cf-scrub"></div>
-          <div class="cf-scale" aria-hidden="true"><span class="cf-scale-l">What can be sold</span><span class="cf-scale-r"><span>No license</span><i></i><span>Prohibited</span></span><span class="cf-scale-x">The state on the date above. The full key is under the board.</span></div>
-          <div class="cf-board" id="cf-board"></div>
-          <ul class="cf-legend" aria-label="What each state means">
-            <li><span class="cf-pill is-open">No license</span><span>None needed.</span></li>
-            <li><span class="cf-pill is-restricted">Restricted</span><span>A government limits sales to some buyers or uses without banning them outright.</span></li>
-            <li><span class="cf-pill is-case">Case by case</span><span>A license is required, and each application is judged on its own.</span></li>
-            <li><span class="cf-pill is-denial">Presumption of denial</span><span>A license is required and will normally be refused. This is the usual policy for those on the Entity List, a US list of restricted foreign companies, institutes and individuals.</span></li>
-            <li><span class="cf-pill is-prohibited">Prohibited</span><span>No license is available, or the item is banned outright.</span></li>
-            <li><span class="cf-pill is-policy">Policy</span><span>Money and tariffs, which do not stop a shipment.</span></li>
-            <li><span class="cf-susp">Suspended</span><span>The rule is on hold until the date shown. When the hold ends, the state beside it takes effect.</span></li>
-          </ul>
-        </div>
-        <div class="cf-chron" id="cf-chron">
-          <div class="tl-bar"><div id="tl-filters" class="chips tl-filters" role="group" aria-label="Filter events"></div><button type="button" class="btn ghost tl-all" id="tl-all" aria-pressed="false">Show full summaries</button></div>
-          <ol class="timeline" id="timeline"></ol>
-        </div>
-      </div>
-      </div>
-      <div class="sub" data-sub="exposure" hidden>
-      <h3 class="label" style="margin: 10px 0 6px">China share of revenue, from company filings</h3>
-      <div id="exposure-viz">{{EXPOSURE_VIZ}}</div>
-      <details class="table-view"><summary>The same figures as a table</summary><div class="matrix-wrap"><table class="matrix" id="exposure-table"></table></div></details>
-      <p class="matrix-note" id="exposure-note">{{EXPOSURE_NOTE}}</p>
-      </div>
-      <footer class="site-footer">{{FOOTER}}</footer>
-    </section>
-
-    <section class="view column" data-view="walk" hidden>{{WALK}}<footer class="site-footer">{{FOOTER}}</footer></section>
-
-    <section class="view column wide" data-view="glossary" hidden>
+    <section class="view column wide" data-view="glossary">
       <div class="view-head">
         <h1>Glossary</h1>
         <p class="dek">Every term, firm, chip and country, with the passages that mention them.</p>
@@ -263,11 +293,10 @@
 <script>{{APP}}</script>
 <script>{{CITE_JS}}</script>
 <script>
-/* The printed cover's art (print-title.png, about 490 KB) is never fetched on the home page. It is fetched when the browser
-   is idle after the chain is shown (src/app.js), when the reader points at or focuses "Print this page", before that button
-   opens the dialog (it waits for the image, src/app.js), when the browser is about to print (too late on a slow line, so
-   only a fallback), and when build/pdf.py lays the page out for the PDF (it calls CP_PRINT.prepare before Paged.js, which
-   waits for the image). */
+/* The printed cover's art (print-title.png, about 490 KB) is fetched only for print, never just because a page was read:
+   when the reader points at or focuses "Print this page", before that button opens the dialog (it waits for the image,
+   src/app.js), when the browser is about to print (too late on a slow line, so only a fallback), and when build/pdf.py lays
+   the page out for the PDF (it calls CP_PRINT.prepare before Paged.js, which waits for the image). */
 (function () {
   function art() { var i = document.querySelector('img.pt-art[data-src]'); if (i && !i.getAttribute('src')) i.src = i.getAttribute('data-src'); return i; }
   window.CP_ART = art;

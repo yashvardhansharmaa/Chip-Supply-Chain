@@ -1,0 +1,1233 @@
+{
+ "url": "http://127.0.0.1:8765/#/chain",
+ "net": "slow4g",
+ "cpu": 4.0,
+ "desktop": false,
+ "variant": null,
+ "ratio_index": [
+  4.639799184407623,
+  4199524,
+  905109
+ ],
+ "ratio_litho": [
+  5.086166185675199,
+  135704,
+  26681
+ ],
+ "runs": [
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      1288
+     ],
+     [
+      "first-contentful-paint",
+      1288
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 1288,
+      "size": 4000,
+      "el": "a.wordmark > span.wm-name",
+      "url": ""
+     },
+     {
+      "t": 1300,
+      "size": 73696,
+      "el": "div#howto.howto > p.howto-lede",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [
+     [
+      4744.199999988079,
+      150
+     ],
+     [
+      5037,
+      55
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 174.79999995231628,
+      "d": 648.8000000119209,
+      "block": 0,
+      "render": 33.59999996423721,
+      "style": 33.59999996423721,
+      "scripts": []
+     },
+     {
+      "t": 866.3999999761581,
+      "d": 419.69999998807907,
+      "block": 0,
+      "render": 3.599999964237213,
+      "style": 3.599999964237213,
+      "scripts": []
+     },
+     {
+      "t": 1356.2999999523163,
+      "d": 617,
+      "block": 0,
+      "render": 5.399999976158142,
+      "style": 5.399999976158142,
+      "scripts": []
+     },
+     {
+      "t": 2007.0999999642372,
+      "d": 251.60000002384186,
+      "block": 0,
+      "render": 5.699999988079071,
+      "style": 5.699999988079071,
+      "scripts": []
+     },
+     {
+      "t": 2357.7999999523163,
+      "d": 71.5,
+      "block": 0,
+      "render": 5.5,
+      "style": 5.5,
+      "scripts": []
+     },
+     {
+      "t": 4744.199999988079,
+      "d": 156.19999998807907,
+      "block": 105.7,
+      "render": 4.800000011920929,
+      "style": 2.100000023841858,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 255122,
+        "d": 126,
+        "comp": 39
+       },
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "bind",
+        "pos": 350575,
+        "d": 13,
+        "comp": 10
+       }
+      ]
+     },
+     {
+      "t": 5036.899999976158,
+      "d": 64.69999998807907,
+      "block": 14.6,
+      "render": 9.5,
+      "style": 9,
+      "scripts": [
+       {
+        "inv": "IdleRequestCallback",
+        "fn": "step",
+        "pos": 44092,
+        "d": 55,
+        "comp": 54
+       }
+      ]
+     }
+    ],
+    "draw": 4897.5,
+    "drawN": 614,
+    "builds": [
+     [
+      "die-floorplan",
+      4829,
+      36,
+      57440
+     ],
+     [
+      "boule-and-wafer",
+      4932,
+      26,
+      28057
+     ],
+     [
+      "gas-cabinet",
+      4995,
+      31,
+      72071
+     ]
+    ],
+    "marks": {
+     "dcl": 4745.299999952316,
+     "load": 4915
+    }
+   },
+   "nav": {
+    "ttfb": 3.5,
+    "respEnd": 4679.199999988079,
+    "domInteractive": 4744.199999988079,
+    "dcl": 4884.099999964237,
+    "load": 4915.199999988079,
+    "transfer": 4199824,
+    "decoded": 4199524
+   },
+   "dom": 21608,
+   "stage": {
+    "hidden": "0",
+    "collapsed": "1",
+    "w": 203,
+    "h": 203
+   },
+   "heap": 9.7,
+   "view": "stack",
+   "docH": 226435,
+   "density": 0.22000000000000003,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 11
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 24,
+     "end_ms": 32
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4199714,
+     "failed": null,
+     "start_ms": 1950,
+     "end_ms": 6629
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 2123,
+     "end_ms": 2725
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 2427,
+     "end_ms": 2428
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6881,
+     "end_ms": 7040
+    }
+   ],
+   "summary": {
+    "fp": 1288,
+    "fcp": 1288,
+    "lcp": 1300,
+    "lcp_el": "div#howto.howto > p.howto-lede",
+    "tbt": 105,
+    "longtasks": 2,
+    "lt_total": 205,
+    "lt_max": 150,
+    "cls": 0,
+    "draw": 4897.5,
+    "ttfb": 3.5,
+    "respEnd": 4679.199999988079,
+    "domInteractive": 4744.199999988079,
+    "dcl": 4884.099999964237,
+    "load": 4915.199999988079,
+    "dom": 21608,
+    "heap": 9.7,
+    "view": "stack",
+    "first_build": [
+     "die-floorplan",
+     4829,
+     36,
+     57440
+    ],
+    "n_builds": 3,
+    "build_ms_total": 93,
+    "stage": {
+     "hidden": "0",
+     "collapsed": "1",
+     "w": 203,
+     "h": 203
+    },
+    "density": 0.22000000000000003
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      844
+     ],
+     [
+      "first-contentful-paint",
+      844
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 844,
+      "size": 4000,
+      "el": "a.wordmark > span.wm-name",
+      "url": ""
+     },
+     {
+      "t": 900,
+      "size": 73696,
+      "el": "div#howto.howto > p.howto-lede",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [
+     [
+      4746.099999964237,
+      143
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 173.69999998807907,
+      "d": 659.3000000119209,
+      "block": 3.8,
+      "render": 36.5,
+      "style": 36.5,
+      "scripts": []
+     },
+     {
+      "t": 4746.099999964237,
+      "d": 149,
+      "block": 98.8,
+      "render": 5.199999988079071,
+      "style": 2.299999952316284,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 255122,
+        "d": 119,
+        "comp": 35
+       },
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "bind",
+        "pos": 350575,
+        "d": 12,
+        "comp": 10
+       }
+      ]
+     },
+     {
+      "t": 4924.599999964237,
+      "d": 50.10000002384186,
+      "block": 0,
+      "render": 1.699999988079071,
+      "style": 0.6000000238418579,
+      "scripts": [
+       {
+        "inv": "IdleRequestCallback",
+        "fn": "go",
+        "pos": 8263,
+        "d": 25,
+        "comp": 0
+       }
+      ]
+     },
+     {
+      "t": 4975.300000011921,
+      "d": 59.299999952316284,
+      "block": 7.6,
+      "render": 8.899999976158142,
+      "style": 8.299999952316284,
+      "scripts": [
+       {
+        "inv": "IdleRequestCallback",
+        "fn": "step",
+        "pos": 44092,
+        "d": 49,
+        "comp": 47
+       }
+      ]
+     }
+    ],
+    "draw": 4892.599999964237,
+    "drawN": 615,
+    "builds": [
+     [
+      "die-floorplan",
+      4823,
+      37,
+      57440
+     ],
+     [
+      "boule-and-wafer",
+      4926,
+      24,
+      28057
+     ],
+     [
+      "gas-cabinet",
+      5058,
+      30,
+      72071
+     ]
+    ],
+    "marks": {
+     "dcl": 4746.699999988079,
+     "load": 4909.5
+    }
+   },
+   "nav": {
+    "ttfb": 2.199999988079071,
+    "respEnd": 4680.300000011921,
+    "domInteractive": 4746.099999964237,
+    "dcl": 4878.800000011921,
+    "load": 4910,
+    "transfer": 4199824,
+    "decoded": 4199524
+   },
+   "dom": 21608,
+   "stage": {
+    "hidden": "0",
+    "collapsed": "1",
+    "w": 203,
+    "h": 203
+   },
+   "heap": 11.1,
+   "view": "stack",
+   "docH": 226435,
+   "density": 0.22000000000000003,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 2
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 12,
+     "end_ms": 14
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4199714,
+     "failed": null,
+     "start_ms": 1211,
+     "end_ms": 5891
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1383,
+     "end_ms": 1988
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1692,
+     "end_ms": 1693
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6134,
+     "end_ms": 6295
+    }
+   ],
+   "summary": {
+    "fp": 844,
+    "fcp": 844,
+    "lcp": 900,
+    "lcp_el": "div#howto.howto > p.howto-lede",
+    "tbt": 93,
+    "longtasks": 1,
+    "lt_total": 143,
+    "lt_max": 143,
+    "cls": 0,
+    "draw": 4892.599999964237,
+    "ttfb": 2.199999988079071,
+    "respEnd": 4680.300000011921,
+    "domInteractive": 4746.099999964237,
+    "dcl": 4878.800000011921,
+    "load": 4910,
+    "dom": 21608,
+    "heap": 11.1,
+    "view": "stack",
+    "first_build": [
+     "die-floorplan",
+     4823,
+     37,
+     57440
+    ],
+    "n_builds": 3,
+    "build_ms_total": 91,
+    "stage": {
+     "hidden": "0",
+     "collapsed": "1",
+     "w": 203,
+     "h": 203
+    },
+    "density": 0.22000000000000003
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      836
+     ],
+     [
+      "first-contentful-paint",
+      836
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 836,
+      "size": 4000,
+      "el": "a.wordmark > span.wm-name",
+      "url": ""
+     },
+     {
+      "t": 888,
+      "size": 73696,
+      "el": "div#howto.howto > p.howto-lede",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [
+     [
+      4744.399999976158,
+      145
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 174.29999995231628,
+      "d": 651.6000000238419,
+      "block": 2.6,
+      "render": 35.89999997615814,
+      "style": 35.89999997615814,
+      "scripts": []
+     },
+     {
+      "t": 4744.399999976158,
+      "d": 150.30000001192093,
+      "block": 99.9,
+      "render": 5,
+      "style": 2.300000011920929,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 255122,
+        "d": 118,
+        "comp": 37
+       },
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "bind",
+        "pos": 350575,
+        "d": 13,
+        "comp": 10
+       }
+      ]
+     },
+     {
+      "t": 5031.199999988079,
+      "d": 59.19999998807907,
+      "block": 9,
+      "render": 11,
+      "style": 10.100000023841858,
+      "scripts": [
+       {
+        "inv": "IdleRequestCallback",
+        "fn": "step",
+        "pos": 44092,
+        "d": 48,
+        "comp": 46
+       }
+      ]
+     }
+    ],
+    "draw": 4892.299999952316,
+    "drawN": 613,
+    "builds": [
+     [
+      "die-floorplan",
+      4822,
+      35,
+      57440
+     ],
+     [
+      "boule-and-wafer",
+      4926,
+      26,
+      28057
+     ],
+     [
+      "gas-cabinet",
+      4977,
+      35,
+      72071
+     ]
+    ],
+    "marks": {
+     "dcl": 4745.599999964237,
+     "load": 4908.899999976158
+    }
+   },
+   "nav": {
+    "ttfb": 4.5,
+    "respEnd": 4680.899999976158,
+    "domInteractive": 4745.099999964237,
+    "dcl": 4877.099999964237,
+    "load": 4909.599999964237,
+    "transfer": 4199824,
+    "decoded": 4199524
+   },
+   "dom": 21608,
+   "stage": {
+    "hidden": "0",
+    "collapsed": "1",
+    "w": 203,
+    "h": 203
+   },
+   "heap": 9.8,
+   "view": "stack",
+   "docH": 226435,
+   "density": 0.22000000000000003,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 2
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 12,
+     "end_ms": 14
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4199714,
+     "failed": null,
+     "start_ms": 1213,
+     "end_ms": 5893
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1384,
+     "end_ms": 1988
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1691,
+     "end_ms": 1693
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6137,
+     "end_ms": 6294
+    }
+   ],
+   "summary": {
+    "fp": 836,
+    "fcp": 836,
+    "lcp": 888,
+    "lcp_el": "div#howto.howto > p.howto-lede",
+    "tbt": 95,
+    "longtasks": 1,
+    "lt_total": 145,
+    "lt_max": 145,
+    "cls": 0,
+    "draw": 4892.299999952316,
+    "ttfb": 4.5,
+    "respEnd": 4680.899999976158,
+    "domInteractive": 4745.099999964237,
+    "dcl": 4877.099999964237,
+    "load": 4909.599999964237,
+    "dom": 21608,
+    "heap": 9.8,
+    "view": "stack",
+    "first_build": [
+     "die-floorplan",
+     4822,
+     35,
+     57440
+    ],
+    "n_builds": 3,
+    "build_ms_total": 96,
+    "stage": {
+     "hidden": "0",
+     "collapsed": "1",
+     "w": 203,
+     "h": 203
+    },
+    "density": 0.22000000000000003
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      836
+     ],
+     [
+      "first-contentful-paint",
+      836
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 836,
+      "size": 4000,
+      "el": "a.wordmark > span.wm-name",
+      "url": ""
+     },
+     {
+      "t": 892,
+      "size": 73696,
+      "el": "div#howto.howto > p.howto-lede",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [
+     [
+      4787.5,
+      146
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 174,
+      "d": 649.8999999761581,
+      "block": 0,
+      "render": 33.39999997615814,
+      "style": 33.39999997615814,
+      "scripts": []
+     },
+     {
+      "t": 4787.5,
+      "d": 151.79999995231628,
+      "block": 101.7,
+      "render": 4.799999952316284,
+      "style": 2,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 255122,
+        "d": 121,
+        "comp": 33
+       },
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "bind",
+        "pos": 350575,
+        "d": 13,
+        "comp": 9
+       }
+      ]
+     },
+     {
+      "t": 5088.399999976158,
+      "d": 56.89999997615814,
+      "block": 6.8,
+      "render": 10.199999988079071,
+      "style": 9.399999976158142,
+      "scripts": [
+       {
+        "inv": "IdleRequestCallback",
+        "fn": "step",
+        "pos": 44092,
+        "d": 46,
+        "comp": 45
+       }
+      ]
+     }
+    ],
+    "draw": 4936.299999952316,
+    "drawN": 605,
+    "builds": [
+     [
+      "die-floorplan",
+      4866,
+      38,
+      57440
+     ],
+     [
+      "boule-and-wafer",
+      4965,
+      27,
+      28057
+     ],
+     [
+      "gas-cabinet",
+      5046,
+      32,
+      72071
+     ]
+    ],
+    "marks": {
+     "dcl": 4788.099999964237,
+     "load": 4953.399999976158
+    }
+   },
+   "nav": {
+    "ttfb": 3.299999952316284,
+    "respEnd": 4716.099999964237,
+    "domInteractive": 4787.5,
+    "dcl": 4922.199999988079,
+    "load": 4954.099999964237,
+    "transfer": 4199824,
+    "decoded": 4199524
+   },
+   "dom": 21608,
+   "stage": {
+    "hidden": "0",
+    "collapsed": "1",
+    "w": 203,
+    "h": 203
+   },
+   "heap": 12.7,
+   "view": "stack",
+   "docH": 226435,
+   "density": 0.22000000000000003,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 2
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 12,
+     "end_ms": 14
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4199714,
+     "failed": null,
+     "start_ms": 1213,
+     "end_ms": 5929
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1385,
+     "end_ms": 1987
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1692,
+     "end_ms": 1694
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6207,
+     "end_ms": 6363
+    }
+   ],
+   "summary": {
+    "fp": 836,
+    "fcp": 836,
+    "lcp": 892,
+    "lcp_el": "div#howto.howto > p.howto-lede",
+    "tbt": 96,
+    "longtasks": 1,
+    "lt_total": 146,
+    "lt_max": 146,
+    "cls": 0,
+    "draw": 4936.299999952316,
+    "ttfb": 3.299999952316284,
+    "respEnd": 4716.099999964237,
+    "domInteractive": 4787.5,
+    "dcl": 4922.199999988079,
+    "load": 4954.099999964237,
+    "dom": 21608,
+    "heap": 12.7,
+    "view": "stack",
+    "first_build": [
+     "die-floorplan",
+     4866,
+     38,
+     57440
+    ],
+    "n_builds": 3,
+    "build_ms_total": 97,
+    "stage": {
+     "hidden": "0",
+     "collapsed": "1",
+     "w": 203,
+     "h": 203
+    },
+    "density": 0.22000000000000003
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      836
+     ],
+     [
+      "first-contentful-paint",
+      836
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 836,
+      "size": 4000,
+      "el": "a.wordmark > span.wm-name",
+      "url": ""
+     },
+     {
+      "t": 892,
+      "size": 73696,
+      "el": "div#howto.howto > p.howto-lede",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [
+     [
+      4780.800000011921,
+      175
+     ],
+     [
+      6286.899999976158,
+      60
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 174.30000001192093,
+      "d": 651.8999999761581,
+      "block": 2.6,
+      "render": 35.39999997615814,
+      "style": 35.39999997615814,
+      "scripts": []
+     },
+     {
+      "t": 4729.199999988079,
+      "d": 51.60000002384186,
+      "block": 0,
+      "render": 8,
+      "style": 7.900000035762787,
+      "scripts": []
+     },
+     {
+      "t": 4780.800000011921,
+      "d": 180.39999997615814,
+      "block": 129.4,
+      "render": 4.399999976158142,
+      "style": 1.800000011920929,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 255122,
+        "d": 147,
+        "comp": 38
+       },
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "bind",
+        "pos": 350575,
+        "d": 15,
+        "comp": 11
+       }
+      ]
+     },
+     {
+      "t": 4969.699999988079,
+      "d": 65.40000003576279,
+      "block": 0,
+      "render": 1.4000000357627869,
+      "style": 0.7000000476837158,
+      "scripts": []
+     },
+     {
+      "t": 5070.5,
+      "d": 373.69999998807907,
+      "block": 0,
+      "render": 0.8999999761581421,
+      "style": 0.800000011920929,
+      "scripts": []
+     },
+     {
+      "t": 5444.800000011921,
+      "d": 767.5,
+      "block": 0,
+      "render": 1.199999988079071,
+      "style": 0.5,
+      "scripts": [
+       {
+        "inv": "IdleRequestCallback",
+        "fn": "go",
+        "pos": 8263,
+        "d": 35,
+        "comp": 0
+       }
+      ]
+     },
+     {
+      "t": 6212.899999976158,
+      "d": 65.30000001192093,
+      "block": 0,
+      "render": 1.699999988079071,
+      "style": 0.5,
+      "scripts": []
+     },
+     {
+      "t": 6285.800000011921,
+      "d": 72.30000001192093,
+      "block": 21.1,
+      "render": 10.5,
+      "style": 9.700000047683716,
+      "scripts": [
+       {
+        "inv": "IdleRequestCallback",
+        "fn": "step",
+        "pos": 44092,
+        "d": 60,
+        "comp": 57
+       }
+      ]
+     }
+    ],
+    "draw": 4959.300000011921,
+    "drawN": 541,
+    "builds": [
+     [
+      "die-floorplan",
+      4882,
+      39,
+      57440
+     ],
+     [
+      "boule-and-wafer",
+      5039,
+      29,
+      28057
+     ],
+     [
+      "gas-cabinet",
+      5445,
+      33,
+      72071
+     ]
+    ],
+    "marks": {
+     "dcl": 4781.699999988079,
+     "load": 4976.5
+    }
+   },
+   "nav": {
+    "ttfb": 4.199999988079071,
+    "respEnd": 4702,
+    "domInteractive": 4781.300000011921,
+    "dcl": 4943.300000011921,
+    "load": 4977.300000011921,
+    "transfer": 4199824,
+    "decoded": 4199524
+   },
+   "dom": 21608,
+   "stage": {
+    "hidden": "0",
+    "collapsed": "1",
+    "w": 203,
+    "h": 203
+   },
+   "heap": 12.5,
+   "view": "stack",
+   "docH": 226435,
+   "density": 0.22000000000000003,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 2
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 12,
+     "end_ms": 14
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4199714,
+     "failed": null,
+     "start_ms": 1213,
+     "end_ms": 5914
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1385,
+     "end_ms": 1988
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1692,
+     "end_ms": 1693
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6199,
+     "end_ms": 6362
+    }
+   ],
+   "summary": {
+    "fp": 836,
+    "fcp": 836,
+    "lcp": 892,
+    "lcp_el": "div#howto.howto > p.howto-lede",
+    "tbt": 135,
+    "longtasks": 2,
+    "lt_total": 235,
+    "lt_max": 175,
+    "cls": 0,
+    "draw": 4959.300000011921,
+    "ttfb": 4.199999988079071,
+    "respEnd": 4702,
+    "domInteractive": 4781.300000011921,
+    "dcl": 4943.300000011921,
+    "load": 4977.300000011921,
+    "dom": 21608,
+    "heap": 12.5,
+    "view": "stack",
+    "first_build": [
+     "die-floorplan",
+     4882,
+     39,
+     57440
+    ],
+    "n_builds": 3,
+    "build_ms_total": 101,
+    "stage": {
+     "hidden": "0",
+     "collapsed": "1",
+     "w": 203,
+     "h": 203
+    },
+    "density": 0.22000000000000003
+   }
+  }
+ ]
+}

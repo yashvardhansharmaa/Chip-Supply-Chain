@@ -1,0 +1,802 @@
+{
+ "url": "http://127.0.0.1:8765/lithography/",
+ "net": "slow4g",
+ "cpu": 4.0,
+ "desktop": false,
+ "variant": null,
+ "ratio_index": [
+  4.639799184407623,
+  4199524,
+  905109
+ ],
+ "ratio_litho": [
+  5.086166185675199,
+  135704,
+  26681
+ ],
+ "runs": [
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      1964
+     ],
+     [
+      "first-contentful-paint",
+      1964
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 1964,
+      "size": 39785,
+      "el": "header.ch-head > p.ch-lede",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [],
+    "loaf": [
+     {
+      "t": 175.19999998807907,
+      "d": 694.5,
+      "block": 39.9,
+      "render": 79.19999998807907,
+      "style": 79.19999998807907,
+      "scripts": []
+     },
+     {
+      "t": 1399.3999999761581,
+      "d": 564.9000000357628,
+      "block": 0,
+      "render": 1.5,
+      "style": 1.5,
+      "scripts": []
+     },
+     {
+      "t": 876.6999999880791,
+      "d": 413.69999998807907,
+      "block": 0,
+      "render": 5.5,
+      "style": 5.5,
+      "scripts": []
+     }
+    ],
+    "draw": null,
+    "drawN": 0,
+    "builds": [],
+    "marks": {
+     "dcl": 882.3999999761581,
+     "load": 1020.5
+    }
+   },
+   "nav": {
+    "ttfb": 2.899999976158142,
+    "respEnd": 291,
+    "domInteractive": 882.3000000119209,
+    "dcl": 882.5,
+    "load": 1020.5,
+    "transfer": 136004,
+    "decoded": 135704
+   },
+   "dom": 1122,
+   "stage": null,
+   "heap": 1.6,
+   "view": null,
+   "docH": 18650,
+   "density": null,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 12
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 26,
+     "end_ms": 28
+    },
+    {
+     "url": "http://127.0.0.1:8765/lithography/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 135893,
+     "failed": null,
+     "start_ms": 1988,
+     "end_ms": 2279
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 2162,
+     "end_ms": 2765
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 2178,
+     "end_ms": 2179
+    },
+    {
+     "url": "http://127.0.0.1:8765/media/litho-light-end.jpg",
+     "type": "Image",
+     "status": 200,
+     "bytes": 130142,
+     "failed": null,
+     "start_ms": 2203,
+     "end_ms": 3008
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 3029,
+     "end_ms": 3186
+    }
+   ],
+   "summary": {
+    "fp": 1964,
+    "fcp": 1964,
+    "lcp": 1964,
+    "lcp_el": "header.ch-head > p.ch-lede",
+    "tbt": 0,
+    "longtasks": 0,
+    "lt_total": 0,
+    "lt_max": 0,
+    "cls": 0,
+    "draw": null,
+    "ttfb": 2.899999976158142,
+    "respEnd": 291,
+    "domInteractive": 882.3000000119209,
+    "dcl": 882.5,
+    "load": 1020.5,
+    "dom": 1122,
+    "heap": 1.6,
+    "view": null,
+    "first_build": null,
+    "n_builds": 0,
+    "build_ms_total": 0,
+    "stage": null,
+    "density": null
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      908
+     ],
+     [
+      "first-contentful-paint",
+      908
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 908,
+      "size": 39785,
+      "el": "header.ch-head > p.ch-lede",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [],
+    "loaf": [
+     {
+      "t": 174.5,
+      "d": 695.9000000357628,
+      "block": 40.7,
+      "render": 77.80000001192093,
+      "style": 77.30000001192093,
+      "scripts": []
+     },
+     {
+      "t": 879.7000000476837,
+      "d": 69.79999995231628,
+      "block": 17.4,
+      "render": 59.89999997615814,
+      "style": 59.799999952316284,
+      "scripts": []
+     }
+    ],
+    "draw": null,
+    "drawN": 0,
+    "builds": [],
+    "marks": {
+     "dcl": 959.4000000357628,
+     "load": 1018.1000000238419
+    }
+   },
+   "nav": {
+    "ttfb": 3.600000023841858,
+    "respEnd": 289.7000000476837,
+    "domInteractive": 958.8000000119209,
+    "dcl": 959.8000000119209,
+    "load": 1018.1000000238419,
+    "transfer": 136004,
+    "decoded": 135704
+   },
+   "dom": 1122,
+   "stage": null,
+   "heap": 1.3,
+   "view": null,
+   "docH": 18650,
+   "density": null,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 2
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 17,
+     "end_ms": 19
+    },
+    {
+     "url": "http://127.0.0.1:8765/lithography/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 135893,
+     "failed": null,
+     "start_ms": 1215,
+     "end_ms": 1504
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1387,
+     "end_ms": 1990
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1403,
+     "end_ms": 1404
+    },
+    {
+     "url": "http://127.0.0.1:8765/media/litho-light-end.jpg",
+     "type": "Image",
+     "status": 200,
+     "bytes": 130142,
+     "failed": null,
+     "start_ms": 1428,
+     "end_ms": 2231
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 2234,
+     "end_ms": 2397
+    }
+   ],
+   "summary": {
+    "fp": 908,
+    "fcp": 908,
+    "lcp": 908,
+    "lcp_el": "header.ch-head > p.ch-lede",
+    "tbt": 0,
+    "longtasks": 0,
+    "lt_total": 0,
+    "lt_max": 0,
+    "cls": 0,
+    "draw": null,
+    "ttfb": 3.600000023841858,
+    "respEnd": 289.7000000476837,
+    "domInteractive": 958.8000000119209,
+    "dcl": 959.8000000119209,
+    "load": 1018.1000000238419,
+    "dom": 1122,
+    "heap": 1.3,
+    "view": null,
+    "first_build": null,
+    "n_builds": 0,
+    "build_ms_total": 0,
+    "stage": null,
+    "density": null
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      916
+     ],
+     [
+      "first-contentful-paint",
+      916
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 916,
+      "size": 39785,
+      "el": "header.ch-head > p.ch-lede",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [],
+    "loaf": [
+     {
+      "t": 176.10000002384186,
+      "d": 703.6000000238419,
+      "block": 42.2,
+      "render": 79.10000002384186,
+      "style": 78.90000003576279,
+      "scripts": []
+     },
+     {
+      "t": 888.9000000357628,
+      "d": 67,
+      "block": 14.2,
+      "render": 57,
+      "style": 57,
+      "scripts": []
+     }
+    ],
+    "draw": null,
+    "drawN": 0,
+    "builds": [],
+    "marks": {
+     "dcl": 964.5,
+     "load": 1021.6000000238419
+    }
+   },
+   "nav": {
+    "ttfb": 2.100000023841858,
+    "respEnd": 287,
+    "domInteractive": 964.4000000357628,
+    "dcl": 965.1000000238419,
+    "load": 1022.1000000238419,
+    "transfer": 136004,
+    "decoded": 135704
+   },
+   "dom": 1122,
+   "stage": null,
+   "heap": 1.3,
+   "view": null,
+   "docH": 18650,
+   "density": null,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 2
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 21,
+     "end_ms": 31
+    },
+    {
+     "url": "http://127.0.0.1:8765/lithography/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 135893,
+     "failed": null,
+     "start_ms": 1211,
+     "end_ms": 1498
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1384,
+     "end_ms": 1992
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1395,
+     "end_ms": 1397
+    },
+    {
+     "url": "http://127.0.0.1:8765/media/litho-light-end.jpg",
+     "type": "Image",
+     "status": 200,
+     "bytes": 130142,
+     "failed": null,
+     "start_ms": 1421,
+     "end_ms": 2231
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 2236,
+     "end_ms": 2395
+    }
+   ],
+   "summary": {
+    "fp": 916,
+    "fcp": 916,
+    "lcp": 916,
+    "lcp_el": "header.ch-head > p.ch-lede",
+    "tbt": 0,
+    "longtasks": 0,
+    "lt_total": 0,
+    "lt_max": 0,
+    "cls": 0,
+    "draw": null,
+    "ttfb": 2.100000023841858,
+    "respEnd": 287,
+    "domInteractive": 964.4000000357628,
+    "dcl": 965.1000000238419,
+    "load": 1022.1000000238419,
+    "dom": 1122,
+    "heap": 1.3,
+    "view": null,
+    "first_build": null,
+    "n_builds": 0,
+    "build_ms_total": 0,
+    "stage": null,
+    "density": null
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      912
+     ],
+     [
+      "first-contentful-paint",
+      912
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 912,
+      "size": 39785,
+      "el": "header.ch-head > p.ch-lede",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [],
+    "loaf": [
+     {
+      "t": 176.20000004768372,
+      "d": 701.0999999642372,
+      "block": 40.7,
+      "render": 78,
+      "style": 78,
+      "scripts": []
+     },
+     {
+      "t": 885.4000000357628,
+      "d": 67,
+      "block": 14,
+      "render": 56.60000002384186,
+      "style": 56.60000002384186,
+      "scripts": []
+     }
+    ],
+    "draw": null,
+    "drawN": 0,
+    "builds": [],
+    "marks": {
+     "dcl": 961.8000000119209,
+     "load": 1019.3000000119209
+    }
+   },
+   "nav": {
+    "ttfb": 4.800000011920929,
+    "respEnd": 291.60000002384186,
+    "domInteractive": 961.7000000476837,
+    "dcl": 962.4000000357628,
+    "load": 1019.3000000119209,
+    "transfer": 136004,
+    "decoded": 135704
+   },
+   "dom": 1122,
+   "stage": null,
+   "heap": 1.3,
+   "view": null,
+   "docH": 18650,
+   "density": null,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 2
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 23,
+     "end_ms": 32
+    },
+    {
+     "url": "http://127.0.0.1:8765/lithography/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 135893,
+     "failed": null,
+     "start_ms": 1214,
+     "end_ms": 1505
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1387,
+     "end_ms": 1995
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1403,
+     "end_ms": 1404
+    },
+    {
+     "url": "http://127.0.0.1:8765/media/litho-light-end.jpg",
+     "type": "Image",
+     "status": 200,
+     "bytes": 130142,
+     "failed": null,
+     "start_ms": 1428,
+     "end_ms": 2231
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 2235,
+     "end_ms": 2396
+    }
+   ],
+   "summary": {
+    "fp": 912,
+    "fcp": 912,
+    "lcp": 912,
+    "lcp_el": "header.ch-head > p.ch-lede",
+    "tbt": 0,
+    "longtasks": 0,
+    "lt_total": 0,
+    "lt_max": 0,
+    "cls": 0,
+    "draw": null,
+    "ttfb": 4.800000011920929,
+    "respEnd": 291.60000002384186,
+    "domInteractive": 961.7000000476837,
+    "dcl": 962.4000000357628,
+    "load": 1019.3000000119209,
+    "dom": 1122,
+    "heap": 1.3,
+    "view": null,
+    "first_build": null,
+    "n_builds": 0,
+    "build_ms_total": 0,
+    "stage": null,
+    "density": null
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      912
+     ],
+     [
+      "first-contentful-paint",
+      912
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 912,
+      "size": 39785,
+      "el": "header.ch-head > p.ch-lede",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [],
+    "loaf": [
+     {
+      "t": 176.69999998807907,
+      "d": 699.4000000357628,
+      "block": 39.7,
+      "render": 76.90000003576279,
+      "style": 76.90000003576279,
+      "scripts": []
+     },
+     {
+      "t": 884.4000000357628,
+      "d": 71.19999998807907,
+      "block": 17.3,
+      "render": 60.30000001192093,
+      "style": 60.30000001192093,
+      "scripts": []
+     }
+    ],
+    "draw": null,
+    "drawN": 0,
+    "builds": [],
+    "marks": {
+     "dcl": 964.6999999880791,
+     "load": 1017.5
+    }
+   },
+   "nav": {
+    "ttfb": 4.199999988079071,
+    "respEnd": 290.19999998807907,
+    "domInteractive": 964.5,
+    "dcl": 964.6999999880791,
+    "load": 1018.1999999880791,
+    "transfer": 136004,
+    "decoded": 135704
+   },
+   "dom": 1122,
+   "stage": null,
+   "heap": 1.3,
+   "view": null,
+   "docH": 18650,
+   "density": null,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 2
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 19,
+     "end_ms": 28
+    },
+    {
+     "url": "http://127.0.0.1:8765/lithography/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 135893,
+     "failed": null,
+     "start_ms": 1216,
+     "end_ms": 1505
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1390,
+     "end_ms": 1996
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1403,
+     "end_ms": 1405
+    },
+    {
+     "url": "http://127.0.0.1:8765/media/litho-light-end.jpg",
+     "type": "Image",
+     "status": 200,
+     "bytes": 130142,
+     "failed": null,
+     "start_ms": 1428,
+     "end_ms": 2232
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 2236,
+     "end_ms": 2396
+    }
+   ],
+   "summary": {
+    "fp": 912,
+    "fcp": 912,
+    "lcp": 912,
+    "lcp_el": "header.ch-head > p.ch-lede",
+    "tbt": 0,
+    "longtasks": 0,
+    "lt_total": 0,
+    "lt_max": 0,
+    "cls": 0,
+    "draw": null,
+    "ttfb": 4.199999988079071,
+    "respEnd": 290.19999998807907,
+    "domInteractive": 964.5,
+    "dcl": 964.6999999880791,
+    "load": 1018.1999999880791,
+    "dom": 1122,
+    "heap": 1.3,
+    "view": null,
+    "first_build": null,
+    "n_builds": 0,
+    "build_ms_total": 0,
+    "stage": null,
+    "density": null
+   }
+  }
+ ]
+}

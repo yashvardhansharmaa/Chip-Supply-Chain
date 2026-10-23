@@ -1,0 +1,399 @@
+{
+ "vp": "390",
+ "theme": "dark",
+ "obscured": {
+  "#/chain": {
+   "forward": {
+    "bar": 12,
+    "clear": 58
+   },
+   "back": {
+    "clear": 40
+   },
+   "hidden": []
+  },
+  "#/": {
+   "forward": {
+    "bar": 12,
+    "clear": 58
+   },
+   "back": {
+    "clear": 40
+   },
+   "hidden": []
+  }
+ },
+ "chips": {
+  "picked": 3,
+  "barShown": false,
+  "cxSticky": "46px",
+  "paddingTop": "133px",
+  "back": {
+   "clear": 30
+  },
+  "stepsWithBar": 28,
+  "hidden": []
+ },
+ "skip": {
+  "#/suppliers": {
+   "firstTab": "A.skip \"Skip to content\"",
+   "afterEnter": {
+    "hash": "#/suppliers",
+    "active": "MAIN#main \"How AI chips are made An introduction to\""
+   },
+   "nextTab": {
+    "active": "BUTTON.sa-role \"United Statesleads five stages, one of t\"",
+    "inMain": true,
+    "view": "suppliers"
+   }
+  },
+  "#/chain": {
+   "firstTab": "A.skip \"Skip to content\"",
+   "afterEnter": {
+    "hash": "#/chain",
+    "active": "MAIN#main \"How AI chips are made An introduction to\""
+   },
+   "nextTab": {
+    "active": "A.btn.ghost \"Download the chain as a PDF\"",
+    "inMain": true,
+    "view": "stack"
+   }
+  },
+  "#/": {
+   "firstTab": "A.skip \"Skip to content\"",
+   "afterEnter": {
+    "hash": "#/",
+    "active": "MAIN#main \"1 / 17Chip Design, EDA and IP How AI chi\""
+   },
+   "nextTab": {
+    "active": "A \"01Chip Design, EDA and IPExtreme concent\"",
+    "inMain": true,
+    "view": "walk"
+   }
+  }
+ },
+ "search": {
+  "open": {
+   "open": true,
+   "modal": "true",
+   "appInert": true,
+   "active": "INPUT \"Search\"",
+   "inputRing": "rgb(226, 92, 87) 0px -2px 0px 0px inset"
+  },
+  "status": "14 results.",
+  "tab24_inside": 24,
+  "tab24_outside": 0,
+  "outside": [],
+  "escFromBody": {
+   "closed": true,
+   "active": "BUTTON.search-btn \"Search\"",
+   "appInert": false
+  },
+  "escFromResult": {
+   "closed": true,
+   "active": "BUTTON.search-btn \"Search\""
+  },
+  "picks": {
+   "lithography/Chapter": {
+    "pick": "Chapter | Lithography",
+    "hash": "#lithography",
+    "active": "H2.ch-title \"Chapter 4: Lithography\"",
+    "heading": true,
+    "inView": true,
+    "where": "clear"
+   },
+   "high-NA/None": {
+    "pick": "Lithography | High-NA EUV",
+    "hash": "#lithography--high-na-euv",
+    "active": "H4#lithography--high-na-euv \"High-NA EUV#\"",
+    "heading": true,
+    "inView": true,
+    "where": "clear"
+   },
+   "TSMC/Supplier": {
+    "pick": "Supplier | TSMC",
+    "hash": "#/suppliers",
+    "active": "H1 \"Suppliers\"",
+    "heading": true,
+    "inView": true,
+    "where": "clear"
+   },
+   "H100/Chip": {
+    "pick": "Chip | Nvidia H100 (SXM5)",
+    "hash": "#/landscape",
+    "active": "H1 \"AI Chips\"",
+    "heading": true,
+    "inView": true,
+    "where": "clear"
+   },
+   "Entity List/Term": {
+    "pick": "Term | Entity List",
+    "hash": "#gl-entity-list",
+    "active": "DT \"Entity Listentity-list, Entity-Listed, E\"",
+    "heading": false,
+    "inView": true,
+    "where": "clear"
+   },
+   "Entity List/Event": {
+    "pick": "Event 2020-12-18 | SMIC added to the Entity List",
+    "hash": "#/controls/2020-12-18-smic-listed",
+    "active": "H4 \"SMIC added to the Entity List\"",
+    "heading": true,
+    "inView": true,
+    "where": "clear"
+   },
+   "ASML 2023/China revenue": {
+    "pick": "China revenue | ASML FY2023",
+    "hash": "#/exposure/asml",
+    "active": "FIGURE#ex-asml.ex-panel \"ASMLNL \u00b7 peak 36% in FY202415%14%26%36%2\"",
+    "heading": false,
+    "inView": true,
+    "where": "clear"
+   }
+  }
+ },
+ "sheet": {
+  "open": {
+   "open": true,
+   "modal": "true",
+   "appInert": true,
+   "active": "BUTTON.sheet-close \"Close\""
+  },
+  "tab40_inside": 40,
+  "tab40_outside": 0,
+  "outside": [],
+  "escape": {
+   "closed": true,
+   "active": "BUTTON.stage-menu \"Contents\"",
+   "appInert": false
+  },
+  "closeBtn": {
+   "closed": true,
+   "active": "BUTTON.stage-menu \"Contents\""
+  },
+  "chapter": {
+   "closed": true,
+   "hash": "#lithography",
+   "active": "H2.ch-title \"Chapter 4: Lithography\"",
+   "where": "clear"
+  },
+  "page": {
+   "closed": true,
+   "hash": "#/suppliers",
+   "active": "H1 \"Suppliers\""
+  }
+ },
+ "contrast": {
+  "animStepN": {
+   "n": 75,
+   "min": 5.05,
+   "max": 6.32,
+   "sample": {
+    "fg": "rgb(147, 154, 163)",
+    "op": 1,
+    "bg": "rgb(20,23,28)",
+    "ratio": 6.32
+   }
+  },
+  "atlasStops": {
+   "n": 15,
+   "min": 1.72,
+   "max": 1.72,
+   "sample": {
+    "fg": "rgb(20, 23, 28)",
+    "op": 0.5,
+    "bg": "rgb(87,92.5,100)",
+    "ratio": 1.72
+   }
+  },
+  "edges": {
+   "supSearch": {
+    "edge": "rgb(109, 116, 124)",
+    "width": "1px",
+    "bg": "rgb(20,23,28)",
+    "ratio": 3.8
+   },
+   "supCountry": {
+    "edge": "rgb(109, 116, 124)",
+    "width": "1px",
+    "bg": "rgb(20,23,28)",
+    "ratio": 3.8
+   },
+   "supChk": {
+    "edge": "rgb(109, 116, 124)",
+    "width": "1px",
+    "bg": "rgb(20,23,28)",
+    "ratio": 3.8
+   },
+   "ghostBtn": {
+    "edge": "rgb(195, 199, 205)",
+    "width": "0px",
+    "bg": "rgb(20,23,28)",
+    "ratio": 10.58
+   },
+   "glSearch": {
+    "edge": "rgb(109, 116, 124)",
+    "width": "1px",
+    "bg": "rgb(20,23,28)",
+    "ratio": 3.8
+   },
+   "filterChip": {
+    "edge": "rgb(109, 116, 124)",
+    "width": "1px",
+    "bg": "rgb(20,23,28)",
+    "ratio": 3.8
+   },
+   "chipSquare": {
+    "edge": "rgb(109, 116, 124)",
+    "width": "1px",
+    "bg": "rgb(20,23,28)",
+    "ratio": 3.8
+   }
+  },
+  "peaks": {
+   "n": 24,
+   "min": 6.83,
+   "under45": 0,
+   "sample": {
+    "fg": "rgb(236, 233, 226)",
+    "op": 1,
+    "bg": "rgb(64.0639898,65.8399745,68.39197348)",
+    "ratio": 8.33
+   }
+  },
+  "placeholder": {
+   "color": "rgb(147, 154, 163)",
+   "ratio": 6.32
+  }
+ },
+ "focus": {
+  "toTopHiddenStops": 0,
+  "toTopShown": {
+   "show": "1",
+   "vis": "visible",
+   "display": "none"
+  },
+  "wkTabs": {
+   "fv": true,
+   "outline": "solid 1px rgb(226, 92, 87)"
+  },
+  "cfJump": {
+   "fv": true,
+   "outline": "solid 1px rgb(226, 92, 87)"
+  }
+ },
+ "spin": {
+  "control": {
+   "text": "",
+   "label": "Pause the turn",
+   "pressed": null,
+   "w": 28,
+   "h": 28,
+   "shown": true
+  },
+  "turn2s": 0.22,
+  "afterPress": {
+   "text": "",
+   "pressed": null,
+   "turn2s": 0,
+   "saved": "1"
+  },
+  "afterReload": {
+   "text": "",
+   "pressed": null,
+   "turn2s": 0
+  },
+  "resumed": {
+   "text": "",
+   "turn2s": 0.22
+  },
+  "hscroll": 0
+ },
+ "home": {
+  "before": {
+   "y": 6000,
+   "hash": "#/walk/photomasks-and-pellicles"
+  },
+  "after": {
+   "y": 0,
+   "hash": "#/",
+   "active": "H1.wk-title \"How AI chips are made\""
+  },
+  "how": "click (tab hidden on phones)"
+ },
+ "axe": {
+  "#/": {
+   "total": 9,
+   "rules": {
+    "target-size": 9
+   },
+   "nodes": {
+    "target-size": [
+     ".gl-term[data-term=\"cmos\"] | Target has insufficient size (43.8px by 22.5px, should be at least 24px by 24px)",
+     ".wk-facts[aria-label=\"Two facts from the chapter\"] > li:nth-child(2) > .gl-term[data-term=\"wafer\"] | Target has insufficient size (41.2px by 22.5px, should be at least 24px by 24px)",
+     "li:nth-child(1) > .gl-term[data-term=\"gate-all-around\"] | Target has insufficient size (75.2px by 22.5px, should be at least 24px by 24px)",
+     "#\\/walk\\/foundries-and-fabs > .wk-block > .wk-facts[aria-label=\"Two facts from the chapter\"] > li:nth-child(1) > .gl-term[data-term=\"nanometer\"] | Target has insufficient size (24.4px by 22.5px, should be at least 24px by 24px)",
+     "#\\/walk\\/foundries-and-fabs > .wk-block > .wk-facts[aria-label=\"Two facts from the chapter\"] > li:nth-child(1) > .gl-term[data-term=\"wafer\"] | Target has insufficient size (41.2px by 22.5px, should be at least 24px by 24px)",
+     "#\\/walk\\/systems-and-networking > .wk-block > .wk-facts[aria-label=\"Two facts from the chapter\"] > li:nth-child(1) > .gl-term[data-term=\"gb/s\"] | Target has insufficient size (32.7px by 22.5px, should be at least 24px by 24px)"
+    ]
+   }
+  },
+  "#/chain": {
+   "total": 18,
+   "rules": {
+    "target-size": 18
+   },
+   "nodes": {
+    "target-size": [
+     "div:nth-child(1) > p > .gl-term[data-term=\"polysilicon\"] | Target has insufficient size (80.1px by 23.3px, should be at least 24px by 24px)",
+     "div:nth-child(1) > p > .gl-term[data-term=\"electronic-grade\"] | Target has insufficient size (81.3px by 23.3px, should be at least 24px by 24px)",
+     ".why > .gl-term[data-term=\"fab\"] | Target has insufficient size (23.3px by 22.5px, should be at least 24px by 24px)",
+     "#lithography > .chapter-head > .plate > .plate-kpis > div:nth-child(2) > .sub > .gl-term[data-term=\"euv\"] | Target has insufficient size (88.6px by 19.6px, should be at least 24px by 24px)",
+     "#lithography > .chapter-head > .plate > .plate-rows > .row:nth-child(3) > .why > .gl-term[data-term=\"nanometer\"] | Target has insufficient size (81.5px by 22.5px, should be at least 24px by 24px)",
+     ".plate-status > div:nth-child(2) > p > .gl-term[data-term=\"deposition\"] | Target has insufficient size (76.8px by 23.3px, should be at least 24px by 24px)"
+    ]
+   }
+  },
+  "#/suppliers": {
+   "total": 12,
+   "rules": {
+    "target-size": 12
+   },
+   "nodes": {
+    "target-size": [
+     "a[data-place=\"San Jose\"] | Target has insufficient size (9px by 9px, should be at least 24px by 24px)",
+     "a[data-place=\"Tokyo\"] | Target has insufficient size (9px by 9px, should be at least 24px by 24px)",
+     "a[data-place=\"Kawasaki\"] | Target has insufficient size (9px by 9px, should be at least 24px by 24px)",
+     "a[data-place=\"Yokohama\"] | Target has insufficient size (9px by 9px, should be at least 24px by 24px)",
+     "a[data-place=\"Santa Clara\"] | Target has insufficient size (9px by 9px, should be at least 24px by 24px)",
+     "a[data-place=\"Milpitas\"] | Target has insufficient size (9px by 9px, should be at least 24px by 24px)"
+    ]
+   }
+  },
+  "#/glossary": {
+   "total": 0,
+   "rules": {},
+   "nodes": {}
+  },
+  "#/controls": {
+   "total": 0,
+   "rules": {},
+   "nodes": {}
+  },
+  "#/exposure": {
+   "total": 0,
+   "rules": {},
+   "nodes": {}
+  },
+  "#/landscape": {
+   "total": 0,
+   "rules": {},
+   "nodes": {}
+  },
+  "search-open": {
+   "total": 0,
+   "rules": {},
+   "nodes": {}
+  }
+ }
+}

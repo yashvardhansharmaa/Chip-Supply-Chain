@@ -1,0 +1,126 @@
+{
+ "vp": "1024",
+ "theme": "dark",
+ "obscured": {
+  "#/chain": {
+   "forward": {
+    "bar": 11,
+    "invisible": 1,
+    "clear": 58
+   },
+   "back": {
+    "clear": 38,
+    "hidden": 2
+   },
+   "hidden": [
+    {
+     "el": "BUTTON.to-top \"Back to top\"",
+     "state": "invisible",
+     "top": 70,
+     "bottom": 103,
+     "barTop": 56,
+     "barBottom": 768
+    },
+    {
+     "el": "A.t \"Substrates and PCBs\"",
+     "state": "hidden",
+     "top": 0,
+     "bottom": 22,
+     "barTop": 56,
+     "barBottom": 768
+    },
+    {
+     "el": "A.t \"Transistors and the Front End\"",
+     "state": "hidden",
+     "top": 0,
+     "bottom": 23,
+     "barTop": 56,
+     "barBottom": 768
+    }
+   ]
+  },
+  "#/": {
+   "forward": {
+    "bar": 11,
+    "invisible": 1,
+    "clear": 58
+   },
+   "back": {
+    "clear": 29,
+    "hidden": 9,
+    "part": 2
+   },
+   "hidden": [
+    {
+     "el": "BUTTON.to-top \"Back to top\"",
+     "state": "invisible",
+     "top": 70,
+     "bottom": 103,
+     "barTop": 56,
+     "barBottom": 768
+    },
+    {
+     "el": "BUTTON.gl-term \"cleaning chemicals\"",
+     "state": "hidden",
+     "top": 16,
+     "bottom": 45,
+     "barTop": 100,
+     "barBottom": 768
+    },
+    {
+     "el": "A.wk-read \"Read the chapter\"",
+     "state": "hidden",
+     "top": 24,
+     "bottom": 47,
+     "barTop": 100,
+     "barBottom": 768
+    },
+    {
+     "el": "BUTTON.gl-term.label \"Concentration\"",
+     "state": "hidden",
+     "top": 26,
+     "bottom": 45,
+     "barTop": 100,
+     "barBottom": 768
+    },
+    {
+     "el": "A.wk-src \"source\"",
+     "state": "hidden",
+     "top": 68,
+     "bottom": 81,
+     "barTop": 100,
+     "barBottom": 768
+    },
+    {
+     "el": "BUTTON.gl-term \"licensed circuit blocks\"",
+     "state": "hidden",
+     "top": 17,
+     "bottom": 40,
+     "barTop": 100,
+     "barBottom": 768
+    },
+    {
+     "el": "BUTTON.gl-term \"chip design software\"",
+     "state": "hidden",
+     "top": 0,
+     "bottom": 22,
+     "barTop": 100,
+     "barBottom": 768
+    },
+    {
+     "el": "BUTTON.gl-term \"Chip\"",
+     "state": "hidden",
+     "top": 53,
+     "bottom": 81,
+     "barTop": 100,
+     "barBottom": 768
+    }
+   ]
+  }
+ },
+ "spin": {
+  "control": null,
+  "turn2s": 0.22,
+  "hscroll": 0
+ }
+}

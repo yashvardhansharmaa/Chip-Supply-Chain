@@ -1,0 +1,40 @@
+site: ~/Library/Application Support/Claude/scratch-workspaces/0a31970a-fa59-4805-8c4d-4478d5acd73a/47d04afc-9f92-4fb3-9c9e-e634493ca6a4/scratch-2026-09-09-7267aa/chokepoints
+== a thrown error in app.js (smoke --only chain): exit 1
+smoke: 3 failures in 3 page loads (4 s)
+  chain at 320: uncaught: Error: broken on purpose |     at http://127.0.0.1:10362/:12936:32
+  chain at 390: uncaught: Error: broken on purpose |     at http://127.0.0.1:10362/:12936:32
+  chain at 1440: uncaught: Error: broken on purpose |     at http://127.0.0.1:10362/:12936:32
+== a module that fails to load (smoke --only glossary): exit 1
+smoke: 3 failures in 3 page loads (4 s)
+  glossary at 320: console.warn: module lookup.js failed Error: broken on purpose
+    at http://127.0.0.1:10362/:12938:7
+  glossary at 390: console.warn: module lookup.js failed Error: broken on purpose
+    at http://127.0.0.1:10362/:12938:7
+  glossary at 1440: console.warn: module lookup.js failed Error: broken on purpose
+    at http://127.0.0.1:10362/:12938:7
+== a wide element at 320 and 390 (smoke --only walk,chapter-page): exit 1
+smoke: 3 failures in 6 page loads (6 s)
+  walk at 320: scrolls sideways: the page is 378 px wide on a 320 px screen (widest: a.wordmark right 364; nav.tabs right 364; div.wk-rail-bar right 362; p.wk-rail-line right 362)
+  chapter-page at 320: scrolls sideways: the page is 416 px wide on a 320 px screen (widest: h1.ch-title right 416)
+  chapter-page at 390: scrolls sideways: the page is 417 px wide on a 390 px screen (widest: h1.ch-title right 416)
+== the chokepoint card renamed away (smoke --only chain,chapter-page): exit 1
+smoke: 6 failures in 6 page loads (67 s)
+  chain at 320: the key part is missing (chapters: 17, cards: 0)
+  chain at 390: the key part is missing (chapters: 17, cards: 0)
+  chain at 1440: the key part is missing (chapters: 17, cards: 0)
+  chapter-page at 320: the key part is missing (title: Lithography, card: false, sources: 46)
+  chapter-page at 390: the key part is missing (title: Lithography, card: false, sources: 46)
+  chapter-page at 1440: the key part is missing (title: Lithography, card: false, sources: 46)
+== pages that follow the device's dark setting (smoke --only theme): exit 1
+smoke: 3 failures in 6 page loads (6 s)
+  theme main page: follows the device's dark setting: ground rgb(20, 23, 28), expected the light rgb(247, 246, 242)
+  theme chapter page: follows the device's dark setting: ground rgb(20, 23, 28), expected the light rgb(247, 246, 242)
+  theme summary: follows the device's dark setting: ground rgb(20, 23, 28), expected the light rgb(247, 246, 242)
+== a missing file the page asks for (smoke --only chapter-page): exit 1
+smoke: 6 failures in 3 page loads (4 s)
+  chapter-page at 320: log: Failed to load resource: the server responded with a status of 404 (Not Found) http://127.0.0.1:10362/media/litho-light-end.jpg
+  chapter-page at 320: 404 on the local server: /media/litho-light-end.jpg
+  chapter-page at 390: log: Failed to load resource: the server responded with a status of 404 (Not Found) http://127.0.0.1:10362/media/litho-light-end.jpg
+  chapter-page at 390: 404 on the local server: /media/litho-light-end.jpg
+  chapter-page at 1440: log: Failed to load resource: the server responded with a status of 404 (Not Found) http://127.0.0.1:10362/media/litho-light-end.jpg
+  chapter-page at 1440: 404 on the local server: /media/litho-light-end.jpg

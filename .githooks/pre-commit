@@ -1,0 +1,4 @@
+#!/bin/sh
+# Refuses a commit that stages a file over 5 MB outside dist/ and media/ (qa/scripts/check-size.js).
+# Turn it on once per clone: git config core.hooksPath .githooks
+exec node qa/scripts/check-size.js --staged

@@ -1,0 +1,16 @@
+== out/before/home.json (n=5)
+   fcp 868 [832-1276]  lcp 5008 [4996-5120]  tbt 243 [224-318]  lt_max 226 [203-281]  longtasks 2 [2-4]  cls 0.0000 [0.0000-0.0000]  draw 4887 [4873-4955]  respEnd 4605 [4595-4628]  dcl 4873 [4859-4938]  load 4957 [4943-5041]  build_ms_total 564 [562-604]  dom 21599 [21599-21599]  heap 16 [14-45]
+   lcp element {'section.wk-gl > p.wk-gl-p'}  first build ['die-floorplan', 4872, 41, 80473]  stage {'hidden': '0', 'collapsed': '1', 'w': 203, 'h': 203}
+   requests run0: / 4143781 @1696; https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz, 76 @1873; https://gc.zgo.at/count.js net::ERR_BLOCKED_BY_CLIENT.Inspector @2168; /favicon.svg 933 @6804
+== out/before/chain.json (n=5)
+   fcp 836 [832-1016]  lcp 5420 [5372-5544]  tbt 797 [758-833]  lt_max 530 [506-565]  longtasks 4 [4-5]  cls 0.0000 [0.0000-0.0000]  draw 5175 [5158-5216]  respEnd 4601 [4595-4606]  dcl 5158 [5145-5203]  load 5452 [5406-5469]  build_ms_total 572 [553-578]  dom 21599 [21599-21599]  heap 46 [43-47]
+   lcp element {'div#howto.howto > p.howto-lede'}  first build ['die-floorplan', 5118, 36, 80473]  stage {'hidden': '0', 'collapsed': '1', 'w': 203, 'h': 203}
+   requests run0: / 4143781 @2020; https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz, 76 @2198; https://gc.zgo.at/count.js net::ERR_BLOCKED_BY_CLIENT.Inspector @2493; /favicon.svg 933 @7595; /print-title.png 501200 @7598
+== out/before/suppliers.json (n=5)
+   fcp 852 [840-1100]  lcp 5024 [4916-5040]  tbt 254 [213-271]  lt_max 219 [185-230]  longtasks 4 [3-4]  cls 0.0176 [0.0176-0.0176]  draw -  respEnd 4600 [4596-4654]  dcl 4852 [4818-4922]  load 4934 [4897-5016]  build_ms_total 580 [572-621]  dom 22601 [22601-22601]  heap 12 [11-44]
+   lcp element {'article.sa-panel > p.sa-panel-lede'}  first build ['die-floorplan', 5040, 36, 80473]  stage {'hidden': '1', 'collapsed': '1', 'w': 1, 'h': 1}
+   requests run0: / 4143781 @1787; https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz, 76 @1960; https://gc.zgo.at/count.js net::ERR_BLOCKED_BY_CLIENT.Inspector @2254; /favicon.svg 933 @6765
+== out/before/litho.json (n=5)
+   fcp 932 [908-1196]  lcp 932 [908-1196]  tbt 0 [0-0]  lt_max 0 [0-0]  longtasks 0 [0-0]  cls 0.0000 [0.0000-0.0000]  draw -  respEnd 292 [287-301]  dcl 951 [883-990]  load 1680 [1664-1717]  build_ms_total 0 [0-0]  dom 1115 [1115-1115]  heap 1 [1-1]
+   lcp element {'header.ch-head > p.ch-lede'}  first build None  stage None
+   requests run0: /lithography/ 134756 @1926; https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz, 76 @2098; https://gc.zgo.at/count.js net::ERR_BLOCKED_BY_CLIENT.Inspector @2111; /media/litho-light-end.jpg 130142 @2137; /media/litho-print-end.jpg 130069 @2138; /favicon.svg 933 @3591

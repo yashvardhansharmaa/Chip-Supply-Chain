@@ -1,0 +1,36 @@
+== untracked files git add -A would sweep in, with the committed .gitignore (HEAD)
+25197 files, 11.85 GB
+    11130.1 MB  23519 files  qa/promo/
+      208.0 MB    146 files  qa/chapter-pages/
+       92.1 MB    314 files  qa/release/
+       52.2 MB    135 files  qa/brand-redesign/
+       49.8 MB    160 files  qa/review/
+       40.0 MB    183 files  qa/fixes/
+       30.0 MB     50 files  qa/crit/
+       30.0 MB     13 files  qa/cover-redesign/
+       27.1 MB     28 files  qa/suppliers-redesign/
+       20.9 MB     61 files  qa/redesign/
+
+== with the new .gitignore
+233 files, 0.01 GB
+        2.7 MB     15 files  qa/writing/
+        1.5 MB     30 files  qa/verify/
+        0.8 MB      7 files  qa/fixes/
+        0.5 MB     78 files  qa/release/
+        0.5 MB     54 files  qa/code-review/
+        0.2 MB     10 files  qa/review/
+        0.1 MB     10 files  qa/chapter-pages/
+        0.1 MB     11 files  qa/design/
+        0.1 MB      1 files  qa/inshort-audit.md
+        0.1 MB      1 files  qa/glossary-review.html
+
+== spot checks (git check-ignore -v)
+.gitignore:63:qa/promo/	qa/promo/BRIEF.md
+.gitignore:38:qa/**/*.jpg	qa/chapter-pages/component-costs-desktop-dark-full.jpg
+.gitignore:37:qa/**/*.png	qa/crit/gfx-fig-litho-375.png
+.gitignore:35:__pycache__/	build/__pycache__/cards.cpython-312.pyc
+not ignored (stay committable):
+  ok qa/code-review/fixes/safety/dates-after.txt
+  ok qa/review/SUMMARY.md
+  ok qa/fixes/RULES.md
+  ok docs/RUNBOOK.md

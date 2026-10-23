@@ -15,6 +15,8 @@ module.exports = function (ctx) {
 
   // the geopolitics chapter is a view of its own; every other chapter is an anchor in the stack
   const chapterHref = (id) => (id === 'geopolitics' ? '#/geopolitics' : '#' + id);
+  // a chapter link's href is its static page, which search engines can follow; data-route keeps a plain click in the app (src/app.js Router.init)
+  const pageLink = (id) => `href="${esc(id)}/" data-route="${esc(chapterHref(id))}"`;
   // a step's own id is "/walk/<chapter>", so the hash "#/walk/<chapter>" keeps the router on this
   // view (it matches /^#\/([a-z-]+)/ as "walk") and still scrolls to the block
   const stepId = (id) => '/walk/' + id;
@@ -68,7 +70,7 @@ module.exports = function (ctx) {
   const xMeaning = /this stage/.test(xNote) ? xNote.replace('this stage', 'each').replace(/ of it\.$/, '.').replace(/\.$/, '').replace(/^\w/, (m) => m.toLowerCase()) : '';
   const glanceRow = (s, i) => {
     const b = (card[s.id] || {}).band || '';
-    return `<li data-level="${LEVEL[b] || 0}"><a href="${esc(chapterHref(s.id))}"><span class="wk-gl-n">${pad(i + 1)}</span><span class="wk-gl-t">${esc(s.title)}</span>${b ? `<span class="wk-gl-c">${meter(b)}<span class="wk-gl-w">${esc(b)}<span class="sr-only"> concentration</span></span></span>` : ''}</a></li>`;
+    return `<li data-level="${LEVEL[b] || 0}"><a ${pageLink(s.id)}><span class="wk-gl-n">${pad(i + 1)}</span><span class="wk-gl-t">${esc(s.title)}</span>${b ? `<span class="wk-gl-c">${meter(b)}<span class="wk-gl-w">${esc(b)}<span class="sr-only"> concentration</span></span></span>` : ''}</a></li>`;
   };
   const GLANCE = stages.length ? `<section class="wk-gl" aria-labelledby="wk-gl-h">
 <h2 class="label wk-gl-h" id="wk-gl-h">The chain at a glance</h2>
@@ -95,7 +97,7 @@ ${nExtreme ? `<p class="wk-gl-p"><b>${nExtreme} of the ${stages.length} stages</
 ${ctx.glossaryWrap ? ctx.glossaryWrap(`<p class="wk-p">${esc(plainOf(ch.id))}</p>`) : `<p class="wk-p">${esc(plainOf(ch.id))}</p>`}
 ${ctx.glossaryWrap ? ctx.glossaryWrap(factsHTML(ch)) : factsHTML(ch)}
 ${leadersHTML(c)}
-<div class="wk-foot">${bandHTML(c)}<a class="wk-read" href="${esc(chapterHref(ch.id))}">Read the chapter</a></div>
+<div class="wk-foot">${bandHTML(c)}<a class="wk-read" ${pageLink(ch.id)}>Read the chapter</a></div>
 <nav class="wk-pn" aria-label="Step ${i + 1} of ${steps.length}">${
       prev ? `<a class="wk-prev" href="#${esc(stepId(prev.id))}"><span class="label">Previous</span><span class="wk-pn-t">${esc(prev.title)}</span></a>` : '<span></span>'
     }${

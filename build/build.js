@@ -9,6 +9,14 @@ const read = (p) => fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : null;
 const readJSON = (p, fallback) => { const s = read(p); if (!s) return fallback; try { return JSON.parse(s); } catch (e) { warn(`bad JSON in ${path.basename(p)}: ${e.message}`); return fallback; } };
 const warnings = [];
 const warn = (m) => { warnings.push(m); console.warn('warn: ' + m); };
+// broken content stops the build here, before anything is written: bad or cut-off JSON, a chapter missing a field, a band
+// outside its four words, a figure marker with no figure or a figure with no data (build/validate.js names the file and field)
+{
+  const problems = require('./validate.js')(root);
+  if (problems.length) { console.error(`build failed: ${problems.length} content problem${problems.length === 1 ? '' : 's'}, nothing was written`); problems.forEach((p) => console.error('  ' + p)); process.exit(1); }
+}
+// failures found later (a build module that throws) are collected here; the build finishes its report, then exits 1
+const fatal = [];
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 // a URL from a data file may only be http(s), mailto, a fragment or a site-relative path; anything else becomes a dead fragment
 const safeUrl = (u) => { const v = String(u == null ? '' : u).trim(); return /^(https?:|mailto:|#|\/)/i.test(v) ? esc(v) : '#'; };
@@ -450,7 +458,7 @@ const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
 const isStage = (ch) => ch.number >= 1 && ch.number <= 15; // chapters 1 to 15 are the stages; 16 is costs, 17 the essay
 const stages = chapters.filter(isStage);
 function chainTrack(chs, currentId) {
-  return `<ol class="chain-track">${chs.map((c) => { const cb = (c.meta.card || {}).concentration || ''; return `<li class="stage-cell" data-band="${BANDS[cb] || 0}" data-id="${esc(c.id)}"${c.id === currentId ? ' aria-current="true"' : ''}><a href="#${esc(c.id)}" title="${esc(c.title)}${cb ? ' · ' + esc(cb) + ' concentration' : ''}"><span class="n">${pad(c.number)}</span><span class="bar"><i></i></span><span class="t">${esc(SHORT[c.id] || c.title)}</span></a></li>`; }).join('')}</ol>`;
+  return `<ol class="chain-track">${chs.map((c) => { const cb = (c.meta.card || {}).concentration || ''; return `<li class="stage-cell" data-band="${BANDS[cb] || 0}" data-id="${esc(c.id)}"${c.id === currentId ? ' aria-current="true"' : ''}><a href="${esc(c.id)}/" data-route="#${esc(c.id)}" title="${esc(c.title)}${cb ? ' · ' + esc(cb) + ' concentration' : ''}"><span class="n">${pad(c.number)}</span><span class="bar"><i></i></span><span class="t">${esc(SHORT[c.id] || c.title)}</span></a></li>`; }).join('')}</ol>`;
 }
 const textOf = (html) => String(html || '').replace(/<sup class="cite">[\s\S]*?<\/sup>/g, '').replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
 const norm = (t) => textOf(t).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
@@ -529,7 +537,7 @@ function prevNext(ch) {
   if (i < 0) return '';
   const prev = seq[i - 1], next = seq[i + 1];
   if (!prev && !next) return '';
-  const link = (c, dir, label) => (c ? `<a class="pn ${dir}" href="${chapterHref(c)}"><span class="label">${label}</span><span class="t"><span class="n">${pad(c.number)}</span> ${esc(c.title)}</span></a>` : '');
+  const link = (c, dir, label) => (c ? `<a class="pn ${dir}" href="${esc(c.id)}/" data-route="${chapterHref(c)}"><span class="label">${label}</span><span class="t"><span class="n">${pad(c.number)}</span> ${esc(c.title)}</span></a>` : '');
   return `<nav class="prevnext" aria-label="Previous and next chapter">${link(prev, 'prev', 'Previous')}${link(next, 'next', 'Next')}</nav>`;
 }
 // End-of-chapter flashcards: four cards (question on the front, answer and reason on the back), then the four things to
@@ -828,7 +836,27 @@ const footer = `<p class="credits">${credits}<span class="updated">Updated ${bui
    The day each page last changed. build/page-dates.json keeps, for each page, a hash of its content, the day that hash
    last changed and the day the page first appeared, so a rebuild that changes nothing leaves the dates, the footer's
    "Updated" day and the sitemap's lastmod alone. Days are local, like builtStr, so all three name the same day.
-   Commit the file with the build: a fresh checkout (the deploy) then keeps the same dates. */
+   Commit the file with the build: a fresh checkout (the deploy) then keeps the same dates.
+   The rule: a page's date moves only when its words, figures or data change, never for markup, CSS or JS. So the hash is
+   taken over what a reader reads (contentKey): <style> and <script> blocks, comments, every tag and all whitespace are
+   dropped and entities decoded, keeping the text (figures are text: bar values, table cells, captions), the address of each
+   outside link (a changed source counts) and each image's alt text. The main page adds DATA, the data its views draw from.
+   A renamed class, a new wrapper, a CSS or JS edit or a reindented template leave every date alone. The day is written into
+   a page through the DAY_TOKEN after hashing, never found by its text, so a figure dated the build day cannot hide a change.
+   A PDF is hashed by its bytes. Entries hashed by the old whole-page rule ("hash", before 21 Oct 2026) take the new hash once
+   and keep their day. */
+const DAY_TOKEN = '{{DAY:UPDATED}}'; // has a colon, so the sweep of unfilled {{PLACEHOLDERS}} leaves it for the step after hashing
+const ENTITY = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ', shy: '' };
+const contentKey = (html) => String(html)
+  .replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, ' ')
+  .replace(/<!--[\s\S]*?-->/g, ' ')
+  .replace(/<\/?[a-zA-Z][^>]*>/g, (tag) => {
+    const keep = [], href = /\shref=\\?"((?:https?|mailto):[^"\\]*)/i.exec(tag), alt = /\salt=\\?"([^"\\]+)/i.exec(tag);
+    if (href) keep.push(href[1]); if (alt) keep.push(alt[1]);
+    return ' ' + keep.join(' ') + ' ';
+  })
+  .replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (m, e) => (e[0] === '#' ? String.fromCodePoint(e[1] === 'x' || e[1] === 'X' ? parseInt(e.slice(2), 16) : +e.slice(1)) : ENTITY[e.toLowerCase()] != null ? ENTITY[e.toLowerCase()] : m))
+  .replace(/[\s\u00ad\u200b\u2060]+/g, '');
 const isoOf = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 const dayStr = (iso) => { const [y, m, d] = String(iso).split('-').map(Number); return `${d} ${MONTHS[m - 1]} ${y}`; };
 const today = isoOf(builtOn);
@@ -842,10 +870,13 @@ const firstDay = (file) => {
     return /^\d{4}-\d\d-\d\d$/.test(out) ? out : today;
   } catch (e) { return today; }
 };
+// content: a page's HTML (hashed by contentKey) or a PDF's bytes (hashed as they are)
 const pageDate = (key, content, file) => {
-  const hash = require('crypto').createHash('sha256').update(content).digest('hex').slice(0, 16);
+  const hash = require('crypto').createHash('sha256').update(Buffer.isBuffer(content) ? content : contentKey(content)).digest('hex').slice(0, 16);
   const e = pageDates[key] || (pageDates[key] = { published: firstDay(file) });
-  if (e.hash !== hash) { e.hash = hash; e.modified = today; }
+  if (e.content === undefined && e.hash && e.modified) e.content = hash; // the one-time switch from the whole-page hash
+  delete e.hash;
+  if (e.content !== hash) { e.content = hash; e.modified = today; }
   if (!e.published || e.published > e.modified) e.published = e.modified;
   e.seen = true;
   return e;
@@ -853,6 +884,10 @@ const pageDate = (key, content, file) => {
 
 const footerKey = footer + `<p class="sources-key"><span class="tier tier-A">A</span> company filings, governments, standards bodies, universities and research institutions; <span class="tier tier-B">B</span> SemiAnalysis, Reuters, the Financial Times and Nikkei Asia.</p>`;
 const suppliersIntro = suppliers.length ? `What each of the ${suppliers.length} firms makes, where it is based, and how hard it would be to replace.` : 'The supplier list is not compiled yet.';
+// the Export Controls dek and the note under the China revenue charts, printed by the main page and by /export-controls/ (build/modules/reference-pages.js)
+const exposureFirms = new Set(exposure.map((r) => r.firm)).size;
+const controlsDek = `The main rules since 2018, what can still be sold to China, and China's share of revenue at ${exposureFirms} firms, from their filings.`;
+const exposureNote = exposure.length ? `The charts cover ${exposureFirms} firms, each of which gives a figure for China in its own filings. Other firms are not shown, and some, such as Lasertec, AGC and Axcelis, give no China figure. Each share is computed from the revenue amounts the firm filed, except Nova's, which its filings give only as a rounded percentage. Firms count China differently, for example by where the goods ship, where they are billed, or where the customer is based. Fiscal years are labeled by the calendar year in which they end.` : '';
 
 const kit = read(path.join(root, 'src', 'kit.js')) || '';
 const specDir = path.join(root, 'specimens');
@@ -925,6 +960,8 @@ const exposureLinks = {}; Object.keys(exposureJoin.byFirm).forEach((f) => { expo
 const data = { landscape, landscapeNotes, landscapeCompare, suppliers: suppliersData, timeline, matrix, flows, exposure, exposureLinks, chapters: all.map((c) => { const card = c.meta.card || {}; return { id: c.id, number: c.number, title: c.title, specimen: c.meta.specimen, oneLiner: c.meta.oneLiner || '', plain: String(c.meta.plain || '').replace(/\s*\(\[source\]\([^)\s]*\)\)/g, ''), score: +card.chokepointScore || 0, concentration: card.concentration || '', band: card.concentration || '', bandRank: BANDS[card.concentration] || 0, substitutability: card.substitutability || null, leaders: card.leaders || [], countries: card.countries || [], substitution: card.substitution || {}, chinaStatus: card.chinaStatus || '', usStatus: card.usStatus || '' }; }) };
 let html = read(path.join(root, 'src', 'template.html'));
 const fill = (k, v) => { html = html.split(`{{${k}}}`).join(v); };
+// the route before boot, inlined in <head>: it shows the routed view while the rest of the page arrives (src/preroute.js)
+fill('PREROUTE', read(path.join(root, 'src', 'preroute.js')).replace(/<\/script/gi, '<\\/script'));
 const modDir = (d) => (fs.existsSync(d) ? fs.readdirSync(d).filter((f) => !f.startsWith('.')).sort() : []);
 const moduleCSS = modDir(path.join(root, 'src', 'modules')).filter((f) => f.endsWith('.css')).map((f) => `\n/* module: ${f} */\n` + read(path.join(root, 'src', 'modules', f))).join('\n');
 fill('STYLES', read(path.join(root, 'src', 'styles.css')) + moduleCSS);
@@ -935,10 +972,12 @@ const ctx = { root, fs, path, all, chapters, geo, stages, data, esc, pad, word, 
   // the flashcard deck, for the one that ends Start here (build/modules/walk.js)
   deckHTML,
   // the cite line under the chapter title, as the main page prints it (the readable page's own date goes in)
-  citeBlock, CITE_JS };
+  citeBlock, CITE_JS,
+  // for the reference pages (build/modules/reference-pages.js): the views' own words and helpers, as the main page uses them
+  suppliersIntro, suppliersRevenueNote, controlsDek, exposureNote, safeUrl, COUNTRY };
 for (const f of modDir(path.join(root, 'build', 'modules')).filter((x) => x.endsWith('.js'))) {
   try { const out = require(path.join(root, 'build', 'modules', f))(ctx) || {}; Object.keys(out).forEach((k) => fill(k, String(out[k]))); }
-  catch (e) { warn(`build module ${f} failed: ${e.message}`); }
+  catch (e) { warn(`build module ${f} failed: ${e.message}`); fatal.push(`build/modules/${f} threw: ${e.message}`); }
 }
 fill('SITE_URL', SITE.url); fill('SITE_HOST', SITE.host);
 // the counter: each hash route counts as its own page ("/lithography", "/suppliers"), and the query string is dropped;
@@ -999,9 +1038,9 @@ data.countries = Object.keys(COUNTRY).filter((cc) => /^[A-Z]{2}$/.test(cc) && ((
 data.countries.forEach((c) => lkItems.push({ kind: 'country', id: 'lk-country-' + c.code.toLowerCase(), key: c.code, name: c.name, alias: c.aliases, label: 'Country', text: [c.name, c.code, c.aliases.join(' '), 'country', c.role].join(' ') }));
 lkItems.sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }));
 fill('LOOKUP_LIST', lkItems.map((i) => `<li id="${esc(i.id)}" data-kind="${i.kind}" data-key="${esc(i.key || i.name)}"${i.alias && i.alias.length ? ` data-alias="${esc(i.alias.join('|'))}"` : ''} data-text="${esc(i.text.toLowerCase().replace(/\s+/g, ' '))}"><button type="button"><span class="lk-name">${esc(i.name)}</span><span class="lk-lab">${esc(i.label)}</span></button></li>`).join(''));
-fill('CONTROLS_DEK', `The main rules since 2018, what can still be sold to China, and China's share of revenue at ${new Set(exposure.map((r) => r.firm)).size} firms, from their filings.`);
+fill('CONTROLS_DEK', controlsDek);
 fill('EXPOSURE_VIZ', exposureViz(exposure));
-fill('EXPOSURE_NOTE', exposure.length ? `The charts cover ${new Set(exposure.map((r) => r.firm)).size} firms, each of which gives a figure for China in its own filings. Other firms are not shown, and some, such as Lasertec, AGC and Axcelis, give no China figure. Each share is computed from the revenue amounts the firm filed, except Nova's, which its filings give only as a rounded percentage. Firms count China differently, for example by where the goods ship, where they are billed, or where the customer is based. Fiscal years are labeled by the calendar year in which they end.` : '');
+fill('EXPOSURE_NOTE', exposureNote);
 fill('KIT', kit); fill('SPECIMENS', specimens);
 fill('DATA', JSON.stringify(data).replace(/<\/script/gi, '<\\/script'));
 const moduleJS = modDir(path.join(root, 'src', 'modules')).filter((f) => f.endsWith('.js')).map((f) => `\n/* module: ${f} */\ntry {\n${read(path.join(root, 'src', 'modules', f)).replace(/<\/script/gi, '<\\/script')}\n} catch (e) { console.warn('module ${f} failed', e); }`).join('\n');
@@ -1009,18 +1048,32 @@ fill('APP', read(path.join(root, 'src', 'app.js')) + moduleJS);
 // any placeholder no module filled is removed rather than shipped as braces
 html = html.replace(/\{\{[A-Z_]+\}\}/g, () => '');
 // the main page's "Updated" day (footer and printed title page) is the day its content last changed, not the build's
-const homeDates = pageDate('/', html.split(builtStr).join(''));
-if (homeDates.modified !== today) html = html.split(`Updated ${builtStr}`).join(`Updated ${dayStr(homeDates.modified)}`);
+// (page dates, above): the footers and the printed title page say "Updated <build day>" until here; they take the DAY_TOKEN,
+// the page is hashed by its text and DATA, and then the token becomes the day the content last changed
+html = html.split(`Updated ${builtStr}`).join(`Updated ${DAY_TOKEN}`);
+const homeDates = pageDate('/', html + JSON.stringify(data));
+html = html.split(DAY_TOKEN).join(dayStr(homeDates.modified));
 // each chapter's cite line carries that chapter's own day, the one its readable page shows (social.js has just dated it);
 // it goes in only now, so that neither the main page's hash nor its "Updated" rewrite above ever sees a chapter's day
 html = html.replace(/\{\{CITE_DAY:([a-z0-9-]+)\}\}/g, (m, id) => { const e = pageDates['/' + id + '/']; if (!e || !e.modified) warn(`cite line: chapter ${id} has no page date`); return dayStr((e && e.modified) || today); });
 
+// the route before boot: an address that names an id in one view must not show another view while the page loads
+{
+  const pre = require(path.join(root, 'src', 'preroute.js')), main = html.slice(html.indexOf('<main'), html.indexOf('</main>'));
+  const cuts = [...main.matchAll(/<section class="view\b[^"]*" data-view="([a-z]+)"/g)], wrong = [];
+  cuts.forEach((c, i) => {
+    const part = main.slice(c.index, i + 1 < cuts.length ? cuts[i + 1].index : main.length);
+    for (const m of part.matchAll(/\sid="([^"']+)"/g)) { const got = pre.route('#' + m[1]).view; if (got !== c[1]) wrong.push(`#${m[1]} (in ${c[1]}, opens ${got})`); }
+  });
+  if (cuts.length < 6) warn(`preroute: found ${cuts.length} views on the page, expected 6`);
+  if (wrong.length) warn(`preroute: ${wrong.length} ids would show the wrong view while the page loads, so add their prefix to OWN in src/preroute.js: ${wrong.slice(0, 8).join(', ')}`);
+}
 fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
 fs.writeFileSync(path.join(root, 'dist', 'index.html'), html);
 if (SITE.cname) fs.writeFileSync(path.join(root, 'dist', 'CNAME'), SITE.cname + '\n'); else if (fs.existsSync(path.join(root, 'dist', 'CNAME'))) fs.unlinkSync(path.join(root, 'dist', 'CNAME'));
-// for search engines: everything may be crawled, and the sitemap lists the pages that carry their own content
-// (the site itself, each chapter's readable page, the summary, and the PDFs: the chain, the summary and each chapter's own;
-// the view share pages only forward to the site, so they are left out)
+// for search engines: everything may be crawled, and the sitemap lists the HTML pages that carry their own content
+// (the site itself, each chapter's readable page, the summary, and the four reference pages that reference-pages.js writes;
+// the other view share pages only forward to the site, so they are left out). The PDFs are still dated here, by their bytes.
 // each with the day its content last changed (page dates, above): the readable pages hash their article, a PDF its bytes
 const chapterPages = (ctx.readablePages || []).map((id) => '/' + id + '/'); // social.js lists the readable pages it wrote
 if (chapterPages.length !== all.length) warn(`sitemap: ${all.length - chapterPages.length} of ${all.length} chapters have no readable page`);
@@ -1034,11 +1087,12 @@ if (chapterPdfs.length < all.length) warn(`chapter PDFs: ${all.length - chapterP
 const lastmod = (key) => (pageDates[key] || {}).modified || today;
 fs.writeFileSync(path.join(root, 'dist', 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${SITE.url}sitemap.xml\n`);
 fs.writeFileSync(path.join(root, 'dist', 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-  ['/', ...chapterPages, '/summary/', '/' + pdfName, '/' + summaryPdf, ...chapterPdfs].map((k) => `  <url><loc>${SITE.url}${k.slice(1)}</loc><lastmod>${lastmod(k)}</lastmod></url>`).join('\n') + `\n</urlset>\n`);
+  // HTML pages only (the owner, 21 Oct 2026): the PDFs stay on the site and are linked from their pages, but are not listed
+  ['/', ...chapterPages, '/summary/', ...(ctx.referencePages || [])].map((k) => `  <url><loc>${SITE.url}${k.slice(1)}</loc><lastmod>${lastmod(k)}</lastmod></url>`).join('\n') + `\n</urlset>\n`);
 // keep the dates of the pages this build wrote (a retired page drops out); the file is rewritten only when a date or hash moved
 {
   const kept = {};
-  Object.keys(pageDates).sort().forEach((k) => { const e = pageDates[k]; if (e.seen) kept[k] = { published: e.published, modified: e.modified, hash: e.hash }; });
+  Object.keys(pageDates).sort().forEach((k) => { const e = pageDates[k]; if (e.seen) kept[k] = { published: e.published, modified: e.modified, content: e.content }; });
   const text = JSON.stringify(kept, null, 2) + '\n';
   if (read(datesFile) !== text) fs.writeFileSync(datesFile, text);
 }
@@ -1053,3 +1107,4 @@ const report = [`built ${new Date().toISOString()}`, `source tiers: A ${tierTota
   `size: ${(html.length / 1024).toFixed(0)} KB`, ...all.map((c) => { const tc = tierCounts(c.cites); return `  ${pad(c.number)} ${c.id}: ${c.words} words, ${c.cites.length} sources (D ${tc.D}, ? ${tc['?']}), ${(c.meta.figures || []).length} figures`; }), ...warnings.map((w) => 'WARN ' + w)].join('\n');
 fs.writeFileSync(path.join(root, 'dist', 'build-report.txt'), report);
 console.log(report);
+if (fatal.length) { console.error(`build failed: ${fatal.length} problem${fatal.length === 1 ? '' : 's'}; dist/ is incomplete, do not deploy it`); fatal.forEach((p) => console.error('  ' + p)); process.exit(1); }

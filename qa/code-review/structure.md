@@ -102,7 +102,7 @@ done
 ### P1-3. A link checker sends the owner's email address to every site it checks
 
 **Evidence.**
-- `qa/scripts/recheck-links.js:5` sets the User-Agent to "Compute Chokepoints link check (yashvardhan@uni.minerva.edu)" and sends it to every cited host it rechecks, sec.gov among them. That is what happened on 3 October.
+- `qa/scripts/recheck-links.js:5` sets the User-Agent to a string carrying the owner's email (now replaced with a generic one) and sends it to every cited host it rechecks, sec.gov among them. That is what happened on 3 October.
 - The other fetch tools carry no personal data:
   - `qa/scripts/check-links.js:10` passes itself off as Chrome and uses the old name;
   - `build/harvest-bibliography.js:35-37` passes itself off as Chrome;

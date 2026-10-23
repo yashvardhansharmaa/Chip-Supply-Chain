@@ -1,0 +1,479 @@
+{
+ "vp": "390",
+ "theme": "dark",
+ "obscured": {
+  "#/chain": {
+   "forward": {
+    "body": 49,
+    "bar": 11,
+    "clear": 7,
+    "part": 2,
+    "hidden": 1
+   },
+   "back": {
+    "clear": 24,
+    "hidden": 3,
+    "bar": 11,
+    "body": 1,
+    "part": 1
+   },
+   "hidden": [
+    {
+     "el": "A.t \"Lithography\"",
+     "state": "hidden",
+     "top": 731,
+     "bottom": 753,
+     "barTop": 70,
+     "barBottom": 716
+    },
+    {
+     "el": "A.howto-alt \"Read the summary online\"",
+     "state": "hidden",
+     "top": 19,
+     "bottom": 35,
+     "barTop": 70,
+     "barBottom": 716
+    },
+    {
+     "el": "A.btn.ghost \"Download a short summary\"",
+     "state": "hidden",
+     "top": 0,
+     "bottom": 35,
+     "barTop": 70,
+     "barBottom": 716
+    },
+    {
+     "el": "A \"Source 62: ASML 2025 fourth-quarter and \"",
+     "state": "hidden",
+     "top": 31,
+     "bottom": 44,
+     "barTop": 70,
+     "barBottom": 716
+    }
+   ]
+  },
+  "#/": {
+   "forward": {
+    "bar": 11,
+    "clear": 42,
+    "part": 2,
+    "hidden": 15
+   },
+   "back": {
+    "clear": 34,
+    "hidden": 6
+   },
+   "hidden": [
+    {
+     "el": "A \"12Substrates and PCBsExtreme concentrati\"",
+     "state": "hidden",
+     "top": 736,
+     "bottom": 765,
+     "barTop": 70,
+     "barBottom": 716
+    },
+    {
+     "el": "A \"13Test and AssemblyHigh concentration\"",
+     "state": "hidden",
+     "top": 766,
+     "bottom": 795,
+     "barTop": 70,
+     "barBottom": 716
+    },
+    {
+     "el": "A \"14Systems and NetworkingHigh concentrati\"",
+     "state": "hidden",
+     "top": 796,
+     "bottom": 825,
+     "barTop": 70,
+     "barBottom": 716
+    },
+    {
+     "el": "A \"15Data Centers and PowerHigh concentrati\"",
+     "state": "hidden",
+     "top": 815,
+     "bottom": 844,
+     "barTop": 70,
+     "barBottom": 716
+    },
+    {
+     "el": "BUTTON.gl-term \"mask\"",
+     "state": "hidden",
+     "top": 817,
+     "bottom": 844,
+     "barTop": 70,
+     "barBottom": 716
+    },
+    {
+     "el": "BUTTON.gl-term.label \"Concentration\"",
+     "state": "hidden",
+     "top": 781,
+     "bottom": 800,
+     "barTop": 114,
+     "barBottom": 716
+    },
+    {
+     "el": "A.wk-read \"Read the chapter\"",
+     "state": "hidden",
+     "top": 811,
+     "bottom": 834,
+     "barTop": 114,
+     "barBottom": 716
+    },
+    {
+     "el": "A.wk-prev \"PreviousChip Design, EDA and IP\"",
+     "state": "hidden",
+     "top": 731,
+     "bottom": 805,
+     "barTop": 114,
+     "barBottom": 716
+    }
+   ]
+  }
+ },
+ "skip": {
+  "#/suppliers": {
+   "firstTab": "A.skip \"Skip to content\"",
+   "afterEnter": {
+    "hash": "#app",
+    "active": "BODY"
+   },
+   "nextTab": {
+    "active": "A \"Export Controls\"",
+    "inMain": false,
+    "view": "suppliers"
+   }
+  },
+  "#/chain": {
+   "firstTab": "A.skip \"Skip to content\"",
+   "afterEnter": {
+    "hash": "#app",
+    "active": "BODY"
+   },
+   "nextTab": {
+    "active": "A \"AI Chips\"",
+    "inMain": false,
+    "view": "stack"
+   }
+  },
+  "#/": {
+   "firstTab": "A.skip \"Skip to content\"",
+   "afterEnter": {
+    "hash": "#app",
+    "active": "BODY"
+   },
+   "nextTab": {
+    "active": "A.wordmark \"Chip Supply Chain\"",
+    "inMain": false,
+    "view": "walk"
+   }
+  }
+ },
+ "search": {
+  "open": {
+   "open": true,
+   "modal": null,
+   "appInert": false,
+   "active": "INPUT \"Search\""
+  },
+  "status": null,
+  "tab24_inside": 14,
+  "tab24_outside": 10,
+  "escFromBody": {
+   "closed": false,
+   "active": "BODY",
+   "appInert": false
+  },
+  "escFromResult": {
+   "closed": true,
+   "active": "BUTTON.search-btn \"Search\""
+  },
+  "picks": {
+   "lithography/Chapter": {
+    "pick": "Chapter | Lithography",
+    "hash": "#lithography",
+    "active": "BODY",
+    "heading": false,
+    "inView": false,
+    "where": "body"
+   },
+   "high-NA/None": {
+    "pick": "Lithography | High-NA EUV",
+    "hash": "#lithography--high-na-euv",
+    "active": "BODY",
+    "heading": false,
+    "inView": false,
+    "where": "body"
+   },
+   "TSMC/Supplier": {
+    "pick": "Supplier | TSMC",
+    "hash": "#/suppliers",
+    "active": "BODY",
+    "heading": false,
+    "inView": false,
+    "where": "body"
+   },
+   "H100/Chip": {
+    "pick": "Chip | Nvidia H100 (SXM5)",
+    "hash": "#/landscape",
+    "active": "BODY",
+    "heading": false,
+    "inView": false,
+    "where": "body"
+   },
+   "Entity List/Term": {
+    "pick": "Term | Entity List",
+    "hash": "#gl-entity-list",
+    "active": "BODY",
+    "heading": false,
+    "inView": false,
+    "where": "body"
+   },
+   "Entity List/Event": {
+    "pick": "Event 2020-12-18 | SMIC added to the Entity List",
+    "hash": "#/controls/2020-12-18-smic-listed",
+    "active": "BODY",
+    "heading": false,
+    "inView": false,
+    "where": "body"
+   },
+   "ASML 2023/China revenue": {
+    "pick": "China revenue | ASML FY2023",
+    "hash": "#/exposure/asml",
+    "active": "BODY",
+    "heading": false,
+    "inView": false,
+    "where": "body"
+   }
+  }
+ },
+ "sheet": {
+  "open": {
+   "open": true,
+   "modal": null,
+   "appInert": false,
+   "active": "BUTTON.sheet-close \"Close\""
+  },
+  "tab40_inside": 23,
+  "tab40_outside": 17,
+  "escape": {
+   "closed": true,
+   "active": "A.t \"Lithography\"",
+   "appInert": false
+  },
+  "closeBtn": {
+   "closed": true,
+   "active": "BODY"
+  },
+  "chapter": {
+   "closed": true,
+   "hash": "#lithography",
+   "active": "BODY",
+   "where": "body"
+  },
+  "page": {
+   "closed": true,
+   "hash": "#/suppliers",
+   "active": "BODY"
+  }
+ },
+ "contrast": {
+  "animStepN": {
+   "n": 75,
+   "min": 3.06,
+   "max": 3.74,
+   "sample": {
+    "fg": "rgb(147, 154, 163)",
+    "op": 0.7,
+    "bg": "rgb(20,23,28)",
+    "ratio": 3.74
+   }
+  },
+  "atlasStops": {
+   "n": 15,
+   "min": 2.02,
+   "max": 2.02,
+   "sample": {
+    "fg": "rgb(20, 23, 28)",
+    "op": 0.5,
+    "bg": "rgb(111,115,121)",
+    "ratio": 2.02
+   }
+  },
+  "edges": {
+   "supSearch": {
+    "edge": "rgb(61, 67, 75)",
+    "width": "1px",
+    "bg": "rgb(20,23,28)",
+    "ratio": 1.8
+   },
+   "supCountry": {
+    "edge": "rgb(61, 67, 75)",
+    "width": "1px",
+    "bg": "rgb(20,23,28)",
+    "ratio": 1.8
+   },
+   "supChk": {
+    "edge": "rgb(61, 67, 75)",
+    "width": "1px",
+    "bg": "rgb(20,23,28)",
+    "ratio": 1.8
+   },
+   "ghostBtn": {
+    "edge": "rgb(61, 67, 75)",
+    "width": "1px",
+    "bg": "rgb(20,23,28)",
+    "ratio": 1.8
+   },
+   "glSearch": {
+    "edge": "rgb(61, 67, 75)",
+    "width": "1px",
+    "bg": "rgb(20,23,28)",
+    "ratio": 1.8
+   },
+   "filterChip": {
+    "edge": "rgb(61, 67, 75)",
+    "width": "1px",
+    "bg": "rgb(20,23,28)",
+    "ratio": 1.8
+   },
+   "chipSquare": {
+    "edge": "rgb(61, 67, 75)",
+    "width": "1px",
+    "bg": "rgb(20,23,28)",
+    "ratio": 1.8
+   }
+  },
+  "peaks": {
+   "n": 24,
+   "min": 3.02,
+   "under45": 13,
+   "sample": {
+    "fg": "rgb(238, 122, 115)",
+    "op": 1,
+    "bg": "rgb(64.0639898,65.8399745,68.39197348)",
+    "ratio": 3.69
+   }
+  },
+  "placeholder": {
+   "color": "rgb(117, 117, 117)",
+   "ratio": 3.9
+  }
+ },
+ "focus": {
+  "toTopHiddenStops": 0,
+  "toTopShown": {
+   "show": "0",
+   "vis": "visible",
+   "display": "none"
+  },
+  "wkTabs": {
+   "fv": true,
+   "outline": "none 3px rgb(195, 199, 205)"
+  },
+  "cfJump": {
+   "fv": true,
+   "outline": "none 3px rgb(236, 233, 226)"
+  }
+ },
+ "spin": {
+  "control": null,
+  "turn2s": 0,
+  "hscroll": 0
+ },
+ "home": {
+  "before": {
+   "y": 6000,
+   "hash": "#/"
+  },
+  "after": {
+   "y": 6000,
+   "hash": "#/",
+   "active": "BODY"
+  }
+ },
+ "axe": {
+  "#/": {
+   "total": 9,
+   "rules": {
+    "target-size": 9
+   },
+   "nodes": {
+    "target-size": [
+     ".gl-term[data-term=\"cmos\"] | Target has insufficient size (43.8px by 22.5px, should be at least 24px by 24px)",
+     ".wk-facts[aria-label=\"Two facts from the chapter\"] > li:nth-child(2) > .gl-term[data-term=\"wafer\"] | Target has insufficient size (41.2px by 22.5px, should be at least 24px by 24px)",
+     "li:nth-child(1) > .gl-term[data-term=\"gate-all-around\"] | Target has insufficient size (75.2px by 22.5px, should be at least 24px by 24px)",
+     "#\\/walk\\/foundries-and-fabs > .wk-block > .wk-facts[aria-label=\"Two facts from the chapter\"] > li:nth-child(1) > .gl-term[data-term=\"nanometer\"] | Target has insufficient size (24.4px by 22.5px, should be at least 24px by 24px)",
+     "#\\/walk\\/foundries-and-fabs > .wk-block > .wk-facts[aria-label=\"Two facts from the chapter\"] > li:nth-child(1) > .gl-term[data-term=\"wafer\"] | Target has insufficient size (41.2px by 22.5px, should be at least 24px by 24px)",
+     "#\\/walk\\/systems-and-networking > .wk-block > .wk-facts[aria-label=\"Two facts from the chapter\"] > li:nth-child(1) > .gl-term[data-term=\"gb/s\"] | Target has insufficient size (32.7px by 22.5px, should be at least 24px by 24px)"
+    ]
+   }
+  },
+  "#/chain": {
+   "total": 93,
+   "rules": {
+    "color-contrast": 75,
+    "target-size": 18
+   },
+   "nodes": {
+    "color-contrast": [
+     "#fig-design-and-eda-design-timing > .anim-steps > li:nth-child(1) > button[data-t=\"0.4\"][aria-current=\"step\"] > .n | Element has insufficient color contrast of 3.05 (foreground color: #a44745, background color: #14171c, font size: 8.3pt (11px), font weight: normal). Expected c",
+     "li:nth-child(2) > button[data-t=\"6.2\"] > .n | Element has insufficient color contrast of 3.75 (foreground color: #6d737b, background color: #14171c, font size: 8.3pt (11px), font weight: normal). Expected c",
+     "button[data-t=\"10.4\"] > .n | Element has insufficient color contrast of 3.75 (foreground color: #6d737b, background color: #14171c, font size: 8.3pt (11px), font weight: normal). Expected c",
+     "button[data-t=\"14.2\"] > .n | Element has insufficient color contrast of 3.75 (foreground color: #6d737b, background color: #14171c, font size: 8.3pt (11px), font weight: normal). Expected c",
+     "#fig-design-and-eda-design-timing > .anim-steps > li:nth-child(5) > button[data-t=\"18.4\"] > .n | Element has insufficient color contrast of 3.75 (foreground color: #6d737b, background color: #14171c, font size: 8.3pt (11px), font weight: normal). Expected c",
+     "#fig-silicon-and-wafers-sand-to-wafer > .anim-steps > li:nth-child(1) > button[data-t=\"0.4\"][aria-current=\"step\"] > .n | Element has insufficient color contrast of 3.05 (foreground color: #a44745, background color: #14171c, font size: 8.3pt (11px), font weight: normal). Expected c"
+    ],
+    "target-size": [
+     "div:nth-child(1) > p > .gl-term[data-term=\"polysilicon\"] | Target has insufficient size (80.1px by 23.3px, should be at least 24px by 24px)",
+     "div:nth-child(1) > p > .gl-term[data-term=\"electronic-grade\"] | Target has insufficient size (81.3px by 23.3px, should be at least 24px by 24px)",
+     ".why > .gl-term[data-term=\"fab\"] | Target has insufficient size (23.3px by 22.5px, should be at least 24px by 24px)",
+     "#lithography > .chapter-head > .plate > .plate-kpis > div:nth-child(2) > .sub > .gl-term[data-term=\"euv\"] | Target has insufficient size (88.6px by 19.6px, should be at least 24px by 24px)",
+     "#lithography > .chapter-head > .plate > .plate-rows > .row:nth-child(3) > .why > .gl-term[data-term=\"nanometer\"] | Target has insufficient size (81.5px by 22.5px, should be at least 24px by 24px)",
+     ".plate-status > div:nth-child(2) > p > .gl-term[data-term=\"deposition\"] | Target has insufficient size (76.8px by 23.3px, should be at least 24px by 24px)"
+    ]
+   }
+  },
+  "#/suppliers": {
+   "total": 12,
+   "rules": {
+    "target-size": 12
+   },
+   "nodes": {
+    "target-size": [
+     "a[data-place=\"San Jose\"] | Target has insufficient size (9px by 9px, should be at least 24px by 24px)",
+     "a[data-place=\"Tokyo\"] | Target has insufficient size (9px by 9px, should be at least 24px by 24px)",
+     "a[data-place=\"Kawasaki\"] | Target has insufficient size (9px by 9px, should be at least 24px by 24px)",
+     "a[data-place=\"Yokohama\"] | Target has insufficient size (9px by 9px, should be at least 24px by 24px)",
+     "a[data-place=\"Santa Clara\"] | Target has insufficient size (9px by 9px, should be at least 24px by 24px)",
+     "a[data-place=\"Milpitas\"] | Target has insufficient size (9px by 9px, should be at least 24px by 24px)"
+    ]
+   }
+  },
+  "#/glossary": {
+   "total": 0,
+   "rules": {},
+   "nodes": {}
+  },
+  "#/controls": {
+   "total": 0,
+   "rules": {},
+   "nodes": {}
+  },
+  "#/exposure": {
+   "total": 0,
+   "rules": {},
+   "nodes": {}
+  },
+  "#/landscape": {
+   "total": 0,
+   "rules": {},
+   "nodes": {}
+  },
+  "search-open": {
+   "total": 0,
+   "rules": {},
+   "nodes": {}
+  }
+ }
+}

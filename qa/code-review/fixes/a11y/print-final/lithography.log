@@ -1,0 +1,18 @@
+[   7.9s] prepared: {"mode":"footnotes","cites":110,"notes":110,"chapters":1,"dropped":5,"chapter":"lithography","edition":"Edition of 21 October 2026"}
+[   8.3s] print fonts: 18 faces loaded
+[  10.5s] paginating: 0 pages
+[  13.5s] paginated 11 pages in 4.1s (Paged.js reports 1549 ms)
+[  13.5s] footnotes: {"pages":11,"notes":76,"repeats":0,"stray":0,"overflow":0,"short":[],"stranded":[],"split":[],"overlap":[],"crowded":[],"lost":[],"sources":[],"floats":[{"id":"card-lithography","k":1,"page":2}],"failed":[],"tight":[],"gap":0.29}
+[  13.5s] laying out again: card-lithography down 1
+[  24.6s] prepared: {"mode":"footnotes","cites":110,"notes":110,"chapters":1,"dropped":5,"moved":1,"chapter":"lithography","edition":"Edition of 21 October 2026"}
+[  24.6s] print fonts: 18 faces loaded
+[  25.8s] paginating: 0 pages
+[  28.8s] paginated 11 pages in 3.0s (Paged.js reports 685 ms)
+[  28.8s] footnotes: {"pages":11,"notes":76,"repeats":0,"stray":0,"overflow":0,"short":[],"stranded":[],"split":[],"overlap":[],"crowded":[],"lost":[],"sources":[],"floats":[],"failed":["card-lithography"],"tight":[],"gap":0.3}
+[  28.8s] no better than the layout before
+[  36.6s] prepared: {"mode":"footnotes","cites":110,"notes":110,"chapters":1,"dropped":5,"chapter":"lithography","edition":"Edition of 21 October 2026"}
+[  36.7s] print fonts: 18 faces loaded
+[  38.0s] paginating: 0 pages
+[  41.0s] paginated 11 pages in 3.2s (Paged.js reports 921 ms)
+[  41.1s] footnotes: {"pages":11,"notes":76,"repeats":0,"stray":0,"overflow":0,"short":[],"stranded":[],"split":[],"overlap":[],"crowded":[],"lost":[],"sources":[],"floats":[{"id":"card-lithography","k":1,"page":2}],"failed":[],"tight":[],"gap":0.29}
+[  43.7s] wrote /var/folders/d1/s8nt256s36g24pjjb8v00_5w0000gn/T/cp-chapter-pdfs-t4e8s9u8/lithography.pdf 0.62 MB

@@ -1,0 +1,503 @@
+/* REFERENCE PAGES: /suppliers/, /export-controls/, /chips/ and /glossary/ as real pages of their own, for search engines,
+   for citation and for anyone who reads without scripts. Until 21 Oct 2026 these four addresses were forwarding pages
+   (build/modules/social.js) whose canonical was the hash route, so a search engine read them as the home page.
+
+   Each page is the view's content as plain HTML, generated from data/ through the same helpers the main page uses (the
+   revenue as build.js prints it, the China share as build/exposure.js names it, the board's states as src/app.js reads
+   them), so a weekly data edit updates it with the next build. Nothing here types a figure, rounds one or computes one:
+   every number is printed as the main page prints it, with the source link and date the main page gives it. The words
+   that are the main page's own (deks, labels, the board's key, the notes) are read from where the main page keeps them:
+   build.js passes its strings on ctx, the template's static text is read from src/template.html, and the few client
+   constants (country names, the stage order, the comparison's row labels and source hints) are read from src/app.js.
+
+   The pages share the readable chapter pages' head, masthead, footer, type and tokens (social.js exports them, and
+   build/assets/chapter-page.css is inlined with build/assets/reference-page.css after it). They open light; ?theme=dark or
+   the site's saved choice turns them dark, as the chapter pages do. Each has its own canonical, the view's Open Graph and
+   Twitter tags and card, structured data (a Dataset, or a DefinedTermSet for the Glossary) and a link near the top to the
+   interactive view. The page's "Updated" day is its content's own (build.js page dates), and build.js lists the four in
+   the sitemap (ctx.referencePages). This module runs before social.js, which skips the four views it writes. */
+'use strict';
+const vm = require('vm');
+const S = require('./social.js');
+const SITE_CONFIG = require('../site.js');
+const EXPOSURE = require('../exposure.js');
+const PAGE_TITLES = require('../page-titles.js');
+
+const BASE = S.BASE;
+const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const DAY = '{{REF:DAY}}', ASOF = '{{REF:ASOF}}'; // filled after the page is hashed for its date, so neither moves the date
+const PAGES = [['suppliers', 'Suppliers'], ['export-controls', 'Export Controls'], ['chips', 'AI Chips'], ['glossary', 'Glossary']];
+
+const slug = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+// "15 Jan 2026": day first, as the board prints its dates
+const shortDate = (iso) => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso || '')); return m ? `${+m[3]} ${MON[+m[2] - 1]} ${m[1]}` : String(iso || ''); };
+const hostOf = (u) => String(u || '').replace(/^https?:\/\//, '').split('/')[0];
+const textOf = (html) => String(html || '').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/\s+/g, ' ').trim();
+
+module.exports = function (ctx) {
+  const { root, fs, path, warn, esc, data } = ctx;
+  const safe = ctx.safeUrl || ((u) => (/^(https?:|mailto:|#|\/)/i.test(String(u || '').trim()) ? esc(String(u).trim()) : '#'));
+  const ext = (u, text, attrs) => { const h = safe(u); return h && h !== '#' ? `<a href="${h}" target="_blank" rel="noopener"${attrs || ''}>${text}</a>` : text; };
+  const template = ctx.read(path.join(root, 'src', 'template.html')) || '';
+  const appSrc = ctx.read(path.join(root, 'src', 'app.js')) || '';
+
+  /* ---------------- the main page's own words and constants ---------------- */
+  // a literal from src/app.js (an object or array of plain strings and numbers), evaluated on its own with nothing in scope
+  const literal = (name, re) => {
+    const m = re.exec(appSrc);
+    if (m) { try { return vm.runInNewContext('(' + m[1] + ')', Object.create(null), { timeout: 100 }); } catch (e) { /* reported below */ } }
+    warn(`reference pages: could not read ${name} from src/app.js, so a fallback is used`);
+    return null;
+  };
+  const COUNTRY = Object.assign({}, ctx.COUNTRY || {}, literal('COUNTRY', /var COUNTRY = (\{[^;]*?\});/) || {});
+  const cname = (c) => COUNTRY[c] || c;
+  const ORDER = literal('Suppliers.ORDER', /\bORDER: (\[[^\]]*\])/) || [];
+  const RANK = literal('Suppliers.RANK', /\bRANK: (\{[^}]*\})/) || { Critical: 0, Important: 1, Contested: 2, Diversified: 3 };
+  const SHORT = literal('Suppliers.SHORT', /\bSHORT: (\{[^}]*\})/) || {};
+  const STATE = literal('Geo.STATE', /\bSTATE: (\{[^}]*\})/) || { open: 'No license', restricted: 'Restricted', case: 'Case by case', denial: 'Presumption of denial', prohibited: 'Prohibited', policy: 'Policy' };
+  const OLD_STATE = literal('Geo.OLD_STATE', /\bOLD_STATE: (\{[^}]*\})/) || {};
+  const INSTRUMENT = literal('Geo.INSTRUMENT', /\bINSTRUMENT: (\{[^}]*\})/) || {};
+  // the comparison's rows: each label with the words that pick its source from the chip's list (Landscape.rows, sourceTitle)
+  const HINTS = {};
+  appSrc.replace(/\{ label: '([^']+)', hint: (\[[^\]]*\])/g, (m, label, arr) => { try { HINTS[label] = vm.runInNewContext('(' + arr + ')', Object.create(null), { timeout: 100 }); } catch (e) { } return m; });
+  if (!Object.keys(HINTS).length) warn('reference pages: could not read the AI Chips rows from src/app.js');
+  // static text in src/template.html
+  const tmpl = (re, name) => { const m = re.exec(template); if (!m) { warn(`reference pages: ${name} is missing from src/template.html`); return ''; } return m[1].trim(); };
+  // each view's own <section> (the template names the views earlier too, in its pre-boot CSS and the nav)
+  const chipsDek = tmpl(/<section class="view[^"]*" data-view="landscape"[^>]*>[\s\S]*?<p class="dek">([\s\S]*?)<\/p>/, 'the AI Chips dek');
+  const specsSub = tmpl(/Specs side by side<\/h3>\s*<p class="cx-sub">([\s\S]*?)<\/p>/, 'the AI Chips specs note');
+  const glossaryDek = tmpl(/<section class="view[^"]*" data-view="glossary"[^>]*>[\s\S]*?<p class="dek">([\s\S]*?)<\/p>/, 'the Glossary dek');
+  const ladderLabel = tmpl(/id="sup-ladder-h">([^<]*)</, 'the Suppliers ladder heading');
+  const LEGEND = [];
+  (tmpl(/<ul class="cf-legend"[^>]*>([\s\S]*?)<\/ul>/, 'the board key').match(/<li>[\s\S]*?<\/li>/g) || []).forEach((li) => {
+    const m = /<span class="(cf-pill is-([a-z]+)|cf-susp)">([^<]*)<\/span><span>([\s\S]*?)<\/span>/.exec(li);
+    if (m) LEGEND.push({ status: m[2] || 'suspended', word: m[3], text: m[4] });
+  });
+
+  /* ---------------- shared page furniture ---------------- */
+  const manifest = new Map(S.manifest(root).map((p) => [p.slug, p]));
+  const versions = S.cardVersions(root, fs, path);
+  let css = '';
+  for (const f of ['chapter-page.css', 'reference-page.css']) {
+    try { css += S.minCSS(fs.readFileSync(path.join(root, 'build', 'assets', f), 'utf8')); } catch (e) { warn(`reference pages: build/assets/${f} is missing, so they ship part-styled`); }
+  }
+  const builtStr = ctx.builtStr, today = ctx.builtOn ? `${ctx.builtOn.getFullYear()}-${String(ctx.builtOn.getMonth() + 1).padStart(2, '0')}-${String(ctx.builtOn.getDate()).padStart(2, '0')}` : new Date().toISOString().slice(0, 10);
+  const analytics = SITE_CONFIG.analytics ? `<script async src="https://gc.zgo.at/count.js" data-goatcounter="${esc(SITE_CONFIG.analytics)}"></script>` : '';
+  const person = { '@type': 'Person', name: S.AUTHOR.name, url: S.AUTHOR.url };
+  const org = { '@type': 'Organization', name: S.SITE, url: BASE };
+
+  // a page: the head as the chapter pages have it, the masthead, the view's own head and button, the content, the footer
+  function page(o) {
+    const p0 = manifest.get(o.slug) || { slug: o.slug, kind: 'view', title: o.h1, eyebrow: S.SITE, line: o.description, description: o.description, route: o.route };
+    const p = Object.assign({}, p0, { seo: { title: o.shareTitle || o.title, description: o.description } }); // the share tags say what the search result says
+    const url = BASE + o.slug + '/', app = '../' + (p.route || o.route);
+    const cta = (cls) => `<div class="cta${cls}"><a class="btn" href="${esc(app)}">Open the interactive page <span aria-hidden="true">→</span></a><p class="cta-note">${esc(o.ctaNote)}</p></div>`;
+    const nav = `<nav class="refnav" aria-label="Reference pages"><span class="label">Reference</span><ul>${PAGES.map(([s, t]) => `<li>${s === o.slug ? `<span aria-current="page">${esc(t)}</span>` : `<a href="../${s}/">${esc(t)}</a>`}</li>`).join('')}</ul></nav>`;
+    const main = `<header class="ch-head">
+<p class="eyebrow"><b>Reference</b></p>
+<h1 class="ch-title">${esc(o.h1)}</h1>
+<p class="ch-lede">${o.dekHTML}</p>
+<p class="ch-meta">${o.facts.map((f) => `<span>${esc(f)}</span>`).join('')}<span>Updated ${DAY}</span></p>
+${cta('')}
+</header>
+${o.body}
+<nav class="endnav" aria-label="After the page">${cta(' cta--end')}${nav}</nav>`;
+    // the day this page's content last changed: build.js keeps a hash of its text per page (page dates)
+    const dates = ctx.pageDate ? ctx.pageDate('/' + o.slug + '/', main) : { published: today, modified: today };
+    const day = ctx.dayStr ? ctx.dayStr(dates.modified) : builtStr;
+    const footer = String(ctx.footerKey || '').split(`Updated ${builtStr}`).join(`Updated ${day}`);
+    const ld = Object.assign({ '@context': 'https://schema.org' }, o.ld(url), { url, inLanguage: 'en', datePublished: dates.published, dateModified: dates.modified, isPartOf: { '@type': 'WebSite', name: S.SITE, url: BASE } });
+    const body = main.split(DAY).join(esc(day)).split(ASOF).join(esc(ctx.dayStr ? ctx.dayStr(today) : today));
+    return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(o.title)}</title>
+<meta name="description" content="${esc(o.description)}">
+<link rel="canonical" href="${esc(url)}">
+<meta name="author" content="${esc(S.AUTHOR.name)}">
+${S.shareTags(p, versions)}
+${S.ICONS}
+<meta name="color-scheme" content="light dark">
+<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="${S.FONTS}">
+${S.THEME_JS}
+<style>${css}</style>
+${analytics}
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+${S.masthead ? S.masthead('../' + o.slug + '/') : S.MASTHEAD}
+<main id="main" class="page ref">
+${body}
+<footer class="site-footer">${footer}</footer>
+</main>
+</body>
+</html>
+`;
+  }
+  const dataset = (name, description, files, measured) => (url) => ({
+    '@type': 'Dataset', name, description, creator: person, author: person, publisher: org, isAccessibleForFree: true,
+    distribution: files.map((f) => ({ '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: BASE + 'data/' + f })),
+    variableMeasured: measured, mainEntityOfPage: url,
+  });
+  // the approved search title and description (build/page-titles.json), with each count in them set from the data so a weekly
+  // edit keeps them right; a count the file states differently is reported, so the editor's file can be brought up to date
+  const seoFor = (slug, counts) => {
+    const e = PAGE_TITLES('/' + slug + '/');
+    if (!e) { warn(`page titles: build/page-titles.json has no entry for /${slug}/`); return null; }
+    const fix = (t) => counts.reduce((acc, [re, n, what]) => acc.replace(re, (m, k) => { if (+k !== n) warn(`page titles: /${slug}/ says ${k} ${what}, the data has ${n}; the page prints ${n}`); return m.replace(k, String(n)); }), String(t || ''));
+    return { title: fix(e.title), description: fix(e.description) };
+  };
+  // { title, shareTitle, description } for page(): the approved words with the site name after the title, or the view's name
+  const titled = (slug, counts, fallback) => { const t = seoFor(slug, counts); const name = (manifest.get(slug) || {}).title || slug; return t ? { title: `${t.title} · ${S.SITE}`, shareTitle: t.title, description: t.description } : { title: `${name} · ${S.SITE}`, shareTitle: name, description: fallback }; };
+  // an id used twice on one page is renamed and reported, so every anchor lands where it says
+  const idsFor = () => { const seen = new Set(); return (want, what) => { let id = want || 'x', k = 2; while (seen.has(id)) id = `${want}-${k++}`; if (id !== want) warn(`reference pages: two ${what} share the anchor #${want}; the second is #${id}`); seen.add(id); return id; }; };
+
+  /* ================= /suppliers/ ================= */
+  const suppliers = (data.suppliers || []).slice();
+  const firmIds = new Map(); // firm name -> its anchor on /suppliers/, for the Glossary's links
+  const countryIds = new Map();
+  function suppliersPage() {
+    const uid = idsFor();
+    // the stages as the ladder groups and ranks them (Suppliers.groupStages and ladderOrder in src/app.js): fewest firms first,
+    // then the stage with more Critical firms, then chain order
+    const by = {};
+    suppliers.forEach((r) => { const s = by[r.category] || (by[r.category] = { name: r.category, rows: [], crit: 0 }); s.rows.push(r); if (r.chokepoint === 'Critical') s.crit++; });
+    const order = ORDER.filter((c) => by[c]);
+    Object.keys(by).sort().forEach((c) => { if (order.indexOf(c) < 0) order.push(c); });
+    const stages = order.map((c, i) => Object.assign(by[c], { i, id: uid('stage-' + slug(c), 'stages') }));
+    const ladder = stages.slice().sort((a, b) => (a.rows.length - b.rows.length) || (b.crit - a.crit) || (a.i - b.i));
+    const rank = (r) => (RANK[r.chokepoint] != null ? RANK[r.chokepoint] : 9);
+    suppliers.forEach((r) => firmIds.set(r.name, uid(slug(r.name), 'firms')));
+
+    // a firm's revenue as the drawer prints it (Suppliers.revenueHTML): the filed figure linked to the filing, the fiscal year,
+    // and about how much in dollars for a firm that does not file in dollars, with the rates behind it as the figure's title
+    const revenue = (r) => {
+      const s = r.revenueShown;
+      if (s && s.filed) {
+        return (s.href ? ext(s.href, esc(s.filed), ' class="rev-filed"') : esc(s.filed)) + (s.year ? ` (${s.group ? 'group revenue, ' : ''}${esc(s.year)})` : '')
+          + (s.about ? `, <span class="rev-usd"${r.revenueUSDBasis ? ` title="${esc(r.revenueUSDBasis)}"` : ''}>${esc(s.about)}</span>` : '');
+      }
+      if (r.revenueUSDb != null) { const v = (r.revenueUSDb >= 10 ? r.revenueUSDb.toFixed(1) : r.revenueUSDb.toFixed(2)).replace(/0+$/, '').replace(/\.$/, ''); return '$' + v + 'B' + (r.revenueYear ? ' (' + esc(r.revenueYear) + ')' : ''); }
+      return '';
+    };
+    const exHref = (h) => { const m = /#\/exposure\/([a-z0-9-]+)/.exec(String(h || '')); return m ? `../export-controls/#ex-${m[1]}` : '../export-controls/#china-revenue'; };
+    const firm = (r) => {
+      const facts = [];
+      if ((r.customers || []).length) facts.push(['Customers', esc(r.customers.join(', '))]);
+      if (r.shareNote) facts.push(['Share', esc(r.shareNote)]);
+      if (r.founded) facts.push(['Founded', esc(r.founded)]);
+      if (r.ownership) facts.push(['Ownership', esc(r.ownership)]);
+      const rev = revenue(r); if (rev) facts.push(['Revenue', rev]);
+      if (r.china) facts.push(['From China', `<a href="${esc(exHref(r.china.href))}">${esc(String(r.china.label).replace(/^China /, ''))}</a>`]);
+      const where = [cname(r.country) + (r.city ? ', ' + r.city : ''), /^private$/i.test(r.ticker || '') ? '' : r.ticker].filter(Boolean).join(' · ');
+      const note = r.revenueShown && r.revenueShown.note ? `<p class="row-fine"><b>About the revenue figure.</b> ${esc(r.revenueShown.note)}</p>` : '';
+      return `<li class="row" id="${firmIds.get(r.name)}"><div><h3 class="row-h">${esc(r.name)}${r.nativeName ? `<span class="native" lang="${/[\u3040-\u30ff]/.test(r.nativeName) ? 'ja' : /[\uac00-\ud7af]/.test(r.nativeName) ? 'ko' : /[\u4e00-\u9fff]/.test(r.nativeName) ? 'zh' : 'en'}">${esc(r.nativeName)}</span>` : ''}</h3>`
+        + `<p class="row-meta">${esc(where)}</p>${r.chokepoint ? `<p class="row-meta"><span class="sr-only">Chokepoint level: </span><span class="lv lv-${esc(r.chokepoint)}">${esc(r.chokepoint)}</span></p>` : ''}</div>`
+        + `<div class="row-body">${r.subcategory ? `<p class="row-lead">${esc(r.subcategory)}</p>` : ''}${r.role ? `<p>${esc(r.role)}</p>` : ''}`
+        + (facts.length ? `<dl class="facts">${facts.map((f) => `<dt>${f[0]}</dt><dd>${f[1]}</dd>`).join('')}</dl>` : '') + note
+        + (r.source ? `<p class="row-src">${ext(r.source, 'Source', ` aria-label="Source for ${esc(r.name)}"`)}</p>` : '') + '</div></li>';
+    };
+    const stageHTML = (s) => {
+      const rows = s.rows.slice().sort((a, b) => (rank(a) - rank(b)) || String(a.name).localeCompare(String(b.name)));
+      return `<section class="ref-sec" aria-labelledby="${s.id}-h"><h2 class="ref-h2" id="${s.id}">${esc(s.name)}<small id="${s.id}-h-n">${s.rows.length} ${s.rows.length === 1 ? 'firm' : 'firms'}${s.crit ? ` · ${s.crit} critical` : ''}</small></h2><span hidden id="${s.id}-h">${esc(s.name)}</span><ol class="ledger">${rows.map(firm).join('')}</ol></section>`;
+    };
+    const jump = `<nav class="jump" aria-labelledby="stages-k"><span class="label" id="stages-k">${esc(ladderLabel || 'Stages by number of firms, fewest first')}</span><ol>${ladder.map((s) => `<li><a href="#${s.id}">${esc(SHORT[s.name] || s.name)}</a><span class="n">${s.rows.length}</span></li>`).join('')}<li><a href="#countries">What each country makes</a></li></ol></nav>`;
+
+    // what each country makes: the Suppliers atlas's own lines (build/modules/summary-a.js HOME_MAP), in its order, with the
+    // number of firms each has in the supplier list, as the Glossary's country card counts them
+    let roles = [];
+    try {
+      const out = require('./summary-a.js')(Object.assign({}, ctx, { warn: () => { } })) || {};
+      String(out.HOME_MAP || '').replace(/class="sa-role" data-cc="([^"]+)"[^>]*><span class="sa-role-name">([\s\S]*?)<\/span><span class="sa-role-meta">([\s\S]*?)<\/span><span class="sa-role-line">([\s\S]*?)<\/span>/g, (m, cc, name, meta, line) => { roles.push({ cc, name, meta, line }); return m; });
+    } catch (e) { warn('reference pages: the Suppliers atlas did not build, so /suppliers/ has no country summary: ' + e.message); }
+    if (!roles.length) warn('reference pages: no country lines found in the Suppliers atlas');
+    roles.forEach((c) => countryIds.set(c.cc, uid('country-' + c.cc.toLowerCase(), 'countries')));
+    const countries = roles.length ? `<section class="ref-sec" aria-labelledby="countries"><h2 class="ref-h2" id="countries">What each country makes</h2><p class="ref-sub">Each country's firms are counted under the country of the firm's own headquarters.</p><dl class="cards">${roles.map((c) => {
+      const n = suppliers.filter((r) => r.country === c.cc).length;
+      return `<div class="card" id="${countryIds.get(c.cc)}"><dt>${c.name}</dt><dd><p class="row-meta">${c.meta}${n ? ` · ${n} ${n === 1 ? 'firm' : 'firms'} in the supplier list` : ''}</p>${c.line}.</dd></div>`;
+    }).join('')}</dl></section>` : '';
+
+    const revNote = ctx.suppliersRevenueNote ? `<p class="ref-note">${ctx.suppliersRevenueNote}</p>` : '';
+    const withRev = suppliers.filter((r) => r.revenueShown && r.revenueShown.filed).length;
+    return page({
+      slug: 'suppliers', route: '#/suppliers', h1: 'Suppliers',
+      ...titled('suppliers', [[/(\d+) firms/, suppliers.length, 'firms']], `What each of the ${suppliers.length} firms in the AI chip supply chain makes, where it is based and how hard it would be to replace.`),
+      dekHTML: esc(ctx.suppliersIntro || ''),
+      facts: [`${suppliers.length} firms`, `${stages.length} stages`],
+      ctaNote: 'The interactive page adds a map of the route one chip takes, a drawing of which countries supply which stages, search and filters.',
+      body: jump + revNote + ladder.map(stageHTML).join('') + countries,
+      ld: dataset('Suppliers to the AI chip supply chain', `The ${suppliers.length} firms in the AI chip supply chain across ${stages.length} stages: what each makes, where it is based, how hard it would be to replace, and the latest annual revenue of ${withRev} of them as filed, each with its source.`,
+        ['suppliers.json', 'fx-rates.json'], ['Stage', 'Country', 'Chokepoint level', 'Revenue as filed', 'Revenue in US dollars', 'China share of revenue']),
+    });
+  }
+
+  /* ================= /export-controls/ ================= */
+  const timeline = (Array.isArray(data.timeline) ? data.timeline : ((data.timeline || {}).events || [])).slice().sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
+  function controlsPage() {
+    const uid = idsFor();
+    const evIds = new Map(); timeline.forEach((e, i) => evIds.set(e, uid(e.id || 'entry-' + i, 'timeline entries')));
+    const evById = new Map(timeline.filter((e) => e.id).map((e) => [e.id, e]));
+    // the board (Geo in src/app.js): a flow's state on a date is the last state that took effect on or before it
+    const raw = data.flows && (Array.isArray(data.flows) ? data.flows : data.flows.flows);
+    const flows = (raw || []).filter((f) => f && f.id).slice().sort((a, b) => (a.order == null ? 99 : a.order) - (b.order == null ? 99 : b.order));
+    const norm = (s) => { let k = String(s || 'open'); if (OLD_STATE[k]) k = OLD_STATE[k]; if (!STATE[k]) { warn(`reference pages: a board state "${k}" has no word, so it reads as open`); k = 'open'; } return k; };
+    const stateAt = (f, date) => {
+      const st = (f.states || []).slice().sort((a, b) => (String(a.date) < String(b.date) ? -1 : String(a.date) > String(b.date) ? 1 : 0));
+      let out = null; st.forEach((s) => { if (s && s.date && s.date <= date) out = s; });
+      const s = out || (f.initial && typeof f.initial === 'object' ? f.initial : null);
+      if (!s) { const k = norm(typeof f.initial === 'string' ? f.initial : 'open'); return { status: k, label: STATE[k], date: null, announced: null, suspendedUntil: null, suspended: false, cite: null, event: null }; }
+      const k = norm(s.status);
+      return { status: k, label: s.label || STATE[k], date: out ? out.date : (s.date || null), announced: s.announced || null, suspendedUntil: s.suspendedUntil || null, suspended: !!(s.suspendedUntil && String(s.suspendedUntil) >= String(date)), cite: s.cite || null, event: s.event || null };
+    };
+    const citeText = (c) => (c ? [c.fr, c.cfr].filter(Boolean).join(' · ') : '');
+    const cite = (c) => { const t = citeText(c) || (c && c.url ? hostOf(c.url) : ''); return t ? (c && c.url ? ext(c.url, esc(t)) : esc(t)) : ''; };
+    const first = timeline.length ? String(timeline[0].date).slice(0, 4) : '2018';
+    const flowHTML = (f) => {
+      const st = stateAt(f, today), word = STATE[st.status];
+      let when = st.date ? 'from ' + shortDate(st.date) : `open since ${first}`;
+      if (st.announced && st.date && st.announced !== st.date) when += ' · announced ' + shortDate(st.announced);
+      const ev = st.event && evById.get(st.event);
+      return `<li class="row" id="${uid('flow-' + slug(f.id), 'board rows')}"><div><h3 class="row-h">${esc(f.name || f.id)}</h3>${f.route ? `<p class="row-meta">${esc(f.route)}</p>` : ''}</div>`
+        + `<div class="row-body"><p><span class="pill is-${esc(st.status)}${st.suspended ? ' is-suspended' : ''}">${esc(word)}</span>${st.suspended ? `<span class="susp">Suspended until ${esc(shortDate(st.suspendedUntil))}</span>` : ''}</p>`
+        + (st.label && st.label !== word ? `<p class="row-lead">${esc(st.label)}</p>` : '')
+        + `<p class="row-meta">${esc(when)}${citeText(st.cite) || (st.cite && st.cite.url) ? ` · ${cite(st.cite)}` : ''}${ev ? ` · <a class="src-a" href="#${evIds.get(ev)}">Entry in the timeline</a>` : ''}</p>`
+        + (f.what ? `<p class="row-fine">${esc(f.what)}</p>` : '') + '</div></li>';
+    };
+    const key = LEGEND.length ? `<ul class="key" aria-label="What each state means">${LEGEND.map((l) => `<li>${l.status === 'suspended' ? `<span class="susp">${esc(l.word)}</span>` : `<span class="pill is-${esc(l.status)}">${esc(l.word)}</span>`}<span>${esc(l.text)}</span></li>`).join('')}</ul>` : '';
+    const board = flows.length ? `<section class="ref-sec" aria-labelledby="board"><h2 class="ref-h2" id="board">What can be sold<small>On ${ASOF}</small></h2><ol class="ledger">${flows.map(flowHTML).join('')}</ol>${key}</section>` : '';
+
+    // the timeline, oldest first, by year (Geo.renderTimeline): each entry with its date, actor, kind, title, summary and source
+    const instWord = (v) => { const k = String(v || ''); if (!k) return ''; if (INSTRUMENT[k]) return INSTRUMENT[k]; const w = k.replace(/-/g, ' '); return w.charAt(0).toUpperCase() + w.slice(1); };
+    const years = [];
+    timeline.forEach((e) => { const y = String(e.date || '').slice(0, 4); let g = years[years.length - 1]; if (!g || g.y !== y) years.push(g = { y, rows: [] }); g.rows.push(e); });
+    const entry = (e) => {
+      const eff = e.effectiveDate && e.effectiveDate !== e.date ? e.effectiveDate : null;
+      const ct = citeText({ fr: e.frCitation, cfr: e.cfr }), host = e.source ? hostOf(e.source) : '';
+      const src = e.source ? (ct ? `${ext(e.source, esc(ct))}<span class="host">${esc(host)}</span>` : ext(e.source, esc(host))) : esc(ct);
+      return `<li class="row ev" id="${evIds.get(e)}"><p class="row-meta"><b>${esc(shortDate(e.date))}</b>${eff ? `<span class="eff">in force ${esc(shortDate(eff))}</span>` : ''}${esc(e.actor || '')}</p>`
+        + `<div class="row-body"><p class="ev-tags">${[e.category, instWord(e.instrument)].filter(Boolean).map(esc).join(' · ')}</p><h4>${esc(e.title)}</h4>`
+        + (e.gist ? `<p class="gist">${esc(e.gist)}</p>` : '') + (e.summary ? `<p class="sum">${esc(e.summary)}</p>` : '')
+        + (src ? `<p class="row-src">${src}</p>` : '') + '</div></li>';
+    };
+    const last = timeline.length ? String(timeline[timeline.length - 1].date).slice(0, 4) : first;
+    const tl = timeline.length ? `<section class="ref-sec" aria-labelledby="timeline"><h2 class="ref-h2" id="timeline">The timeline of AI chip export controls, ${esc(first)} to ${esc(last)}<small>${timeline.length} entries</small></h2>`
+      + `<nav class="jump" aria-label="Years"><ol>${years.map((g) => `<li><a href="#year-${g.y}">${esc(g.y)}</a><span class="n">${g.rows.length}</span></li>`).join('')}</ol></nav>`
+      + years.map((g) => `<h3 class="ref-h3" id="${uid('year-' + g.y, 'years')}">${esc(g.y)}<small>${g.rows.length} ${g.rows.length === 1 ? 'move' : 'moves'}</small></h3><ol class="ledger">${g.rows.map(entry).join('')}</ol>`).join('') + '</section>' : '';
+
+    // China's share of revenue by fiscal year, one cell a filing (Controls.build in src/app.js, the table behind the charts)
+    const ex = (data.exposure || []).filter((r) => r && r.firm);
+    const firms = {}, yrs = {}, meta = {};
+    ex.forEach((r) => { (firms[r.firm] = firms[r.firm] || {})[r.fiscalYear] = r; yrs[r.fiscalYear] = 1; meta[r.firm] = r; });
+    const ys = Object.keys(yrs).sort(), lastY = ys[ys.length - 1];
+    const fOrder = Object.keys(firms).sort((a, b) => ((firms[b][lastY] || {}).chinaShare || 0) - ((firms[a][lastY] || {}).chinaShare || 0));
+    const basisShort = (b) => { b = String(b || '').toLowerCase(); if (!b) return ''; if (/ship-to|ship to|destination|fab\)/.test(b)) return 'counted where it ships'; if (/bill|invoice/.test(b)) return 'counted where it is billed'; if (/headquarters/.test(b)) return 'counted by headquarters'; if (/seat|licen/.test(b)) return 'counted by license seats'; if (/used|usage/.test(b)) return 'counted where it is used'; if (/own operating|operating units|own units/.test(b)) return 'counted by own units'; return 'counted by customer location'; };
+    const firstLine = (b) => { const t = String(b || ''), i = t.indexOf('. '); return i > 0 ? t.slice(0, i + 1) : t; };
+    const exRow = (f) => {
+      const m = meta[f], segs = [];
+      ys.forEach((y) => { const r = firms[f][y]; if (!r || r.chinaShare == null || !r.basis) return; const k = basisShort(r.basis), l = segs[segs.length - 1]; if (!l || l.k !== k) segs.push({ k, from: y, to: y, text: firstLine(r.basis) }); else l.to = y; });
+      const starts = {}; segs.forEach((sg, i) => { if (i) starts[sg.from] = 1; });
+      const label = segs.length > 1 ? segs.map((sg, i) => { const w = i ? sg.k.replace(/^counted /, '') : sg.k; return i === segs.length - 1 ? w + ' from ' + sg.from : (i ? w + ' ' + sg.from + ' to ' + sg.to : w + ' to ' + sg.to); }).join(', ') : (m.basis ? basisShort(m.basis) : '');
+      const rowTitle = segs.length > 1 ? segs.map((sg) => sg.from + (sg.to !== sg.from ? ' to ' + sg.to : '') + ': ' + sg.text).join(' ') : (m.basis || '');
+      let peak = 0; ys.forEach((y) => { const r = firms[f][y]; if (r && r.chinaShare != null) peak = Math.max(peak, r.chinaShare); });
+      return `<tr id="${uid('ex-' + EXPOSURE.slug(f), 'China revenue rows')}"><th scope="row" title="${esc(rowTitle)}">${esc(f)}<span class="sub">${esc([m.category, cname(m.country), label].filter(Boolean).join(' · '))}</span></th>` + ys.map((y) => {
+        const r = firms[f][y];
+        if (!r || r.chinaShare == null) return '<td><span class="sh none" aria-hidden="true">·</span><span class="sr-only">Not filed for this year</span></td>';
+        const brk = starts[y], basis = r.basis ? 'Counted: ' + firstLine(r.basis) : '';
+        const tip = [r.chinaRevenue != null ? r.chinaRevenue.toLocaleString('en-US') + ' of ' + (r.totalRevenue || 0).toLocaleString('en-US') + ' ' + (r.currency || '') : '', r.note || '', (brk ? 'New basis from this year. ' : '') + basis].filter(Boolean).join(' · ');
+        const v = (r.chinaRevenue != null ? Number(r.chinaShare).toFixed(1) : String(r.chinaShare)) + '%'; // as build/exposure.js shareText prints it
+        return `<td${brk ? ' class="brk"' : ''}>${brk ? '<span class="sr-only">The firm counts China differently from this year. </span>' : ''}${ext(r.source, esc(v), ` class="sh${r.chinaShare === peak ? ' peak' : ''}" title="${esc(tip)}" aria-label="${esc(f)} ${esc(y)}: ${esc(String(r.chinaShare))} percent from China, opens the filing"`)}</td>`;
+      }).join('') + '</tr>';
+    };
+    const exNote = String(ctx.exposureNote || '').replace(/^The charts cover/, 'The table covers');
+    const exposure = fOrder.length ? `<section class="ref-sec" aria-labelledby="china-revenue"><h2 class="ref-h2" id="china-revenue">China share of revenue, from company filings<small>${fOrder.length} firms · ${esc(ys[0])} to ${esc(lastY)}</small></h2>`
+      + `<p class="ex-key"><span>Each share links to the firm's filing for that year.</span><span><i class="k-peak" aria-hidden="true"></i>The year it peaked</span><span><i class="k-brk" aria-hidden="true"></i>The firm changed how it counts China</span></p>`
+      + `<p class="tbl-cue" aria-hidden="true">Scroll the table sideways to see every year.</p><div class="tbl ex" role="region" aria-labelledby="china-revenue" tabindex="0"><table><thead><tr><th scope="col">Firm</th>${ys.map((y) => `<th scope="col">${esc(y)}</th>`).join('')}</tr></thead><tbody>${fOrder.map(exRow).join('')}</tbody></table></div>`
+      + (exNote ? `<p class="ref-note">${esc(exNote)}</p>` : '') + '</section>' : '';
+
+    return page({
+      slug: 'export-controls', route: '#/controls', h1: 'Export Controls',
+      ...titled('export-controls', [[/since (\d{4})/g, +first, 'as the first year'], [/at (\d+) firms/, fOrder.length, 'firms']], ctx.controlsDek || ''),
+      dekHTML: esc(ctx.controlsDek || ''),
+      facts: [`${flows.length} rows on the board`, `${timeline.length} entries`, `${fOrder.length} firms`],
+      ctaNote: `The interactive page moves the board to any date since ${first} and draws each firm's China share as a chart.`,
+      body: board + tl + exposure,
+      ld: dataset('AI chip export controls and China revenue shares', `The main export-control moves on AI chips and chipmaking since ${first} (${timeline.length} entries, each with its legal citation and source), the state of ${flows.length} kinds of trade under them, and China's share of revenue at ${fOrder.length} firms by fiscal year, from their filings.`,
+        ['export-controls-timeline.json', 'control-flows.json', 'exposure.json'], ['Date', 'Actor', 'Legal citation', 'License outcome', 'China share of revenue']),
+    });
+  }
+
+  /* ================= /chips/ ================= */
+  const chips = (data.landscape || []).slice();
+  const chipIds = new Map();
+  function chipsPage() {
+    const uid = idsFor();
+    chips.forEach((c) => chipIds.set(c.id, uid(slug(c.id), 'chips')));
+    const nf = (v) => (Math.round(v * 100) / 100).toLocaleString('en-US'); // Landscape.nf
+    const sub = (t) => (t ? `<span class="sub">${t}</span>` : '');
+    const hint = (label, fallback) => { if (HINTS[label]) return HINTS[label]; if (Object.keys(HINTS).length) warn(`reference pages: the AI Chips row "${label}" is not in src/app.js, so its source hints are the module's own`); return fallback; };
+    // the columns: the comparison's rows (Landscape.rows) for the fields the brief names, in the comparison's words
+    const COLS = [
+      { label: 'Vendor', hints: hint('Vendor', ['product page', 'press release', 'corporate']), html: (c) => esc(c.vendor) + sub(esc(cname(c.vendorCountry))) },
+      { label: 'Announced', hints: hint('Availability', ['product page', 'press release', 'spec table']), html: (c) => (c.announced ? esc(String(c.announced).slice(0, 4)) : null) },
+      { label: 'Foundry, process node', wide: true, hints: hint('Foundry, process node', ['architecture', 'deep dive', 'white paper', 'documentation']), html: (c) => { const p = c.process || {}; return p.foundry ? esc(p.foundry) + sub(esc(p.node || '') + (p.country ? ' · ' + esc(cname(p.country)) : '')) : null; } },
+      { label: 'Memory type', hints: hint('Memory type', ['hbm', 'micron', 'memory', 'datasheet']), html: (c) => { const m = c.memory || {}; return m.type ? esc(m.type) + (m.stacks ? sub(m.stacks + ' stacks') : '') : null; } },
+      { label: 'Memory, gigabytes', num: true, hints: hint('Memory, gigabytes', ['spec table', 'datasheet', 'product page']), val: (c) => (c.memory || {}).capacityGB },
+      // the dek names the memory supplier; the comparison has no row for it, so its source is picked by the suppliers' own names
+      { label: 'Memory suppliers', wide: true, hints: ['supplier', 'sk hynix', 'samsung', 'micron', 'cxmt', 'hbm'], html: (c) => { const s = (c.memory || {}).suppliers || []; return s.length ? esc(s.join(', ')) : null; } },
+      { label: 'Package', wide: true, hints: hint('Package', ['cowos', 'packag', 'deep dive', 'architecture']), html: (c) => { const p = c.package || {}; return p.type ? esc(p.type) + (p.assembler ? sub('assembled by ' + esc(p.assembler)) : '') : null; } },
+      { label: 'Bandwidth, terabytes/s', num: true, hints: hint('Bandwidth, terabytes/s', ['spec table', 'datasheet', 'product page']), val: (c) => (c.memory || {}).bandwidthTBs },
+      { label: 'Speed at FP16, TFLOPS', num: true, fmt: 'fp16', hints: hint('Speed at FP16, TFLOPS', ['spec table', 'datasheet', 'product page']), val: (c) => (c.compute || {}).fp16TFLOPS },
+      { label: 'Speed at FP8, TFLOPS', num: true, fmt: 'fp8', hints: hint('Speed at FP8, TFLOPS', ['spec table', 'datasheet', 'product page']), val: (c) => (c.compute || {}).fp8TFLOPS },
+      { label: 'Speed at FP4, TFLOPS', num: true, fmt: 'fp4', hints: hint('Speed at FP4, TFLOPS', ['spec table', 'datasheet', 'product page']), val: (c) => (c.compute || {}).fp4TFLOPS },
+      { label: 'Power, watts', num: true, hints: hint('Power, watts', ['spec table', 'datasheet', 'product page']), val: (c) => c.tdpW },
+    ];
+    // an empty cell says which kind of empty it is (Landscape.nil): a format the hardware cannot run, or a figure no one has published
+    const nil = (c, col) => (col.fmt && ((c.compute || {}).support || {})[col.fmt] === 'no' ? '<span class="nil">not supported</span>' : '<span class="nil">not published</span>');
+    // the cell's source, picked as the main page picks it (Landscape.sourceTitle): the first source whose label carries one of the
+    // row's words; when none does, the cell points to the chip's whole list, as the main page lists them all
+    const mark = (c, col) => {
+      const srcs = c.sources || [], id = chipIds.get(c.id);
+      if (!srcs.length) return '';
+      for (const h of col.hints) for (let i = 0; i < srcs.length; i++) {
+        const l = String(srcs[i].label || '');
+        if (l.toLowerCase().indexOf(h) >= 0) return `<sup class="cite"><a href="#${id}-s${i + 1}" title="Source: ${esc(l || srcs[i].url)}" aria-label="Source ${i + 1}: ${esc(l || srcs[i].url)}"><span class="br">[</span>${i + 1}<span class="br">]</span></a></sup>`;
+      }
+      return `<sup class="cite"><a href="#${id}-sources" title="Sources for the ${esc(c.name)}" aria-label="Sources for the ${esc(c.name)}"><span class="br">[</span>all<span class="br">]</span></a></sup>`;
+    };
+    const cell = (c, col) => {
+      if (col.num) { const v = col.val(c); return `<td class="num">${v == null ? nil(c, col) : esc(nf(v)) + mark(c, col)}</td>`; }
+      const t = col.html(c);
+      if (t == null || t === '') return `<td${col.wide ? ' class="wide"' : ''}>${nil(c, col)}</td>`;
+      const at = t.indexOf('<span class="sub">'), m = mark(c, col); // the mark sits on the value, before its second line
+      return `<td${col.wide ? ' class="wide"' : ''}>${at >= 0 ? t.slice(0, at) + m + t.slice(at) : t + m}</td>`;
+    };
+    const rowHTML = (c) => `<tr id="${chipIds.get(c.id)}"><th scope="row"><a href="#${chipIds.get(c.id)}-sources">${esc(c.name)}</a>${c.family && c.family !== c.name ? sub(esc(c.family)) : ''}</th>${COLS.map((col) => cell(c, col)).join('')}</tr>`;
+    const table = `<section class="ref-sec" aria-labelledby="specs"><h2 class="ref-h2" id="specs">Specs side by side<small>${chips.length} chips</small></h2>${specsSub ? `<p class="ref-sub">${specsSub}</p>` : ''}`
+      + `<p class="ref-sub">Each figure carries the number of its source in the chip's list below.</p>`
+      + `<p class="tbl-cue always" aria-hidden="true">Scroll the table sideways to see every column.</p><div class="tbl chips-t" role="region" aria-labelledby="specs" tabindex="0"><table><thead><tr><th scope="col">Chip</th>${COLS.map((col) => `<th scope="col"${col.num ? ' class="num"' : ''}>${esc(col.label)}</th>`).join('')}</tr></thead><tbody>${chips.map(rowHTML).join('')}</tbody></table></div></section>`;
+    // each chip's sources, numbered as the cells cite them, after its note on how the speed figures are measured
+    const srcBlock = (c) => {
+      const id = chipIds.get(c.id), srcs = c.sources || [];
+      if (!srcs.length) warn(`reference pages: chip ${c.id} has no sources`);
+      const pn = (c.compute || {}).precisionNote;
+      return `<section id="${id}-sources" aria-labelledby="${id}-sources-h"><h3 id="${id}-sources-h">${esc(c.name)}<small>${esc([c.vendor, cname(c.vendorCountry)].filter(Boolean).join(' · '))}</small></h3>`
+        + (pn ? `<p><b>How the speed figures are measured.</b> ${esc(pn)}</p>` : '')
+        + (srcs.length ? `<ol>${srcs.map((s, i) => `<li id="${id}-s${i + 1}">${ext(s.url, esc(s.label || s.url))}</li>`).join('')}</ol>` : '') + '</section>';
+    };
+    const sources = `<section class="ref-sec" aria-labelledby="chip-sources"><h2 class="ref-h2" id="chip-sources">Sources<small>${chips.reduce((a, c) => a + (c.sources || []).length, 0)} sources for ${chips.length} chips</small></h2><div class="srcs">${chips.map(srcBlock).join('')}</div></section>`;
+    const makers = new Set(chips.map((c) => c.vendor)).size;
+    return page({
+      slug: 'chips', route: '#/landscape', h1: 'AI Chips',
+      ...titled('chips', [[/(\d+) AI chips/, chips.length, 'AI chips']], textOf(chipsDek)),
+      dekHTML: chipsDek,
+      facts: [`${chips.length} chips`, `${makers} makers`],
+      ctaNote: 'The interactive page draws each chip\'s package to scale and sets up to four chips side by side.',
+      body: table + sources,
+      ld: dataset('AI accelerator specifications', `${chips.length} AI accelerators from ${makers} makers: the foundry, process node, memory type, capacity and suppliers, package and assembler, memory bandwidth, dense speed at FP16, FP8 and FP4, and power of each, with the sources for every figure.`,
+        ['landscape.json'], ['Foundry', 'Process node', 'Memory', 'Memory bandwidth', 'Dense TFLOPS', 'Power']),
+    });
+  }
+
+  /* ================= /glossary/ ================= */
+  function glossaryPage() {
+    const uid = idsFor();
+    const glossary = (ctx.data.glossary || ctx.readJSON(path.join(root, 'data', 'glossary.json'), []) || []).filter((g) => g && g.term);
+    const terms = glossary.slice().sort((a, b) => a.term.localeCompare(b.term));
+    // the chapters each term appears in, found as the Glossary finds its passages (src/modules/lookup.js): the term and its other
+    // names, matched in the paragraphs and list items of each chapter's own text, a short name with capitals only as written
+    const chapters = (ctx.all || []).filter((c) => c.rendered);
+    const corpus = chapters.map((c) => {
+      const r = c.rendered, html = [r.plain, r.inShort, r.plate, r.prose].join('\n')
+        .replace(/<figure\b[\s\S]*?<\/figure>/g, ' ').replace(/<table\b[\s\S]*?<\/table>/g, ' ')
+        .replace(/<sup class="cite(?:-sep)?">[\s\S]*?<\/sup>/g, '').replace(/<span class="(?:chip|lead-cn)"[^>]*>[\s\S]*?<\/span>/g, ' ');
+      const paras = []; html.replace(/<(p|li)\b[^>]*>([\s\S]*?)<\/\1>/g, (m, t, inner) => { const s = textOf(inner).replace(/\s+([.,;:])/g, '$1'); if (s.length > 40) paras.push(s); return m; });
+      return { c, paras };
+    });
+    const regex = (patterns) => {
+      const parts = patterns.map((p) => {
+        p = String(p).trim(); if (!p) return null;
+        let e = p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const bounded = /^[A-Za-z0-9]/.test(p) && /[A-Za-z0-9)]$/.test(p);
+        if (p.length <= 4 && /[A-Z]/.test(p)) e = e.split('').map((ch) => (/[a-z]/i.test(ch) ? (/[A-Z]/.test(ch) ? ch : '[' + ch + ch.toUpperCase() + ']') : ch)).join('');
+        return bounded ? '\\b' + e + '(?![A-Za-z0-9])' : e;
+      }).filter(Boolean);
+      if (!parts.length) return null;
+      const short = patterns.some((p) => String(p).trim().length <= 4 && /[A-Z]/.test(p));
+      return new RegExp(parts.join('|'), short ? '' : 'i');
+    };
+    const chapterOf = new Map(chapters.map((c) => [c.id, c]));
+    const chLink = (c) => `<a href="../${esc(c.id)}/">${esc(c.title)}</a>`;
+    const letterOf = (t) => (/^[0-9]/.test(t) ? '0-9' : t.charAt(0).toUpperCase());
+    const groups = [];
+    terms.forEach((g) => { const L = letterOf(g.term); let k = groups.find((x) => x.L === L); if (!k) groups.push(k = { L, rows: [] }); k.rows.push(g); });
+    groups.sort((a, b) => (a.L === '0-9' ? -1 : b.L === '0-9' ? 1 : a.L.localeCompare(b.L)));
+    const termIds = new Map(terms.map((g) => [g, uid(slug(g.term), 'terms')]));
+    const entry = (g) => {
+      // the other names the Glossary list searches by (build.js, LOOKUP_LIST): three letters or more, and not a plain lower-case word
+      const akas = String(g.aka || '').split(/[;,]/).map((x) => x.trim()).filter((x) => x.length >= 3 && x.toLowerCase() !== g.term.toLowerCase() && !/^[a-z]+$/.test(x));
+      const re = regex([g.term].concat(akas));
+      const home = g.chapter && chapterOf.get(g.chapter);
+      const used = re ? corpus.filter((k) => k.c !== home && k.paras.some((s) => re.test(s))).map((k) => k.c) : [];
+      const ch = home || used.length ? `<p class="gl-ch">${home ? `Read it in ${chLink(home)}` : ''}${used.length ? `<span${home ? ' class="k2"' : ''}>${home ? 'Also in' : 'In'}</span> ${used.map(chLink).join(', ')}` : ''}</p>` : '';
+      return `<div class="row" id="${termIds.get(g)}"><dt>${esc(g.term)}${g.aka ? `<span class="aka">${esc(g.aka)}</span>` : ''}</dt><dd><p>${esc(g.plain)}</p>${g.why ? `<p class="why">${esc(g.why)}</p>` : ''}${ch}</dd></div>`;
+    };
+    const letterId = (L) => 'letter-' + (L === '0-9' ? '0-9' : L.toLowerCase());
+    const have = new Set(groups.map((g) => g.L));
+    const letters = ['0-9'].concat('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')).filter((L) => L !== '0-9' || have.has(L));
+    const jump = `<nav class="jump letters" aria-label="Terms by letter"><ul>${letters.map((L) => `<li>${have.has(L) ? `<a href="#${letterId(L)}">${L === '0-9' ? '0–9' : L}</a>` : `<span aria-hidden="true">${L}</span>`}</li>`).join('')}</ul></nav>`
+      + `<nav class="jump" aria-label="Other entries"><ul><li><a href="#list-firms">Firms</a><span class="n">${suppliers.length}</span></li><li><a href="#list-chips">AI chips</a><span class="n">${chips.length}</span></li>${countryIds.size ? `<li><a href="#list-countries">Countries</a><span class="n">${countryIds.size}</span></li>` : ''}</ul></nav>`;
+    const termsHTML = groups.map((k) => `<section class="gl-sec" aria-labelledby="${letterId(k.L)}"><h2 class="ref-h2" id="${uid(letterId(k.L), 'letters')}">${k.L === '0-9' ? '0–9' : k.L}</h2><dl class="gl ledger">${k.rows.map(entry).join('')}</dl></section>`).join('');
+
+    // firms, chips and countries: one line each, as the Glossary list names them, linked to their place on /suppliers/ and /chips/
+    const stageLabel = (c) => SHORT[c] || String(c || 'Firm').split(' ').map((w, i) => (i && !/[A-Z].*[A-Z]/.test(w) ? w.toLowerCase() : w)).join(' ');
+    const byName = (a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' });
+    const firmList = suppliers.map((r) => ({ name: r.name, lab: stageLabel(r.category) + ' · ' + cname(r.country), href: '../suppliers/#' + (firmIds.get(r.name) || slug(r.name)) })).sort(byName);
+    const chipList = chips.map((c) => ({ name: `${c.vendor} ${c.name}`, lab: 'AI chip' + (c.announced ? ' · ' + String(c.announced).slice(0, 4) : ''), href: '../chips/#' + (chipIds.get(c.id) || slug(c.id)) })).sort(byName);
+    const countryList = [...countryIds.keys()].map((cc) => ({ name: cname(cc), lab: 'Country', href: '../suppliers/#' + countryIds.get(cc) })).sort(byName);
+    const idx = (id, title, list, sub) => (list.length ? `<section class="ref-sec" aria-labelledby="${id}"><h2 class="ref-h2" id="${id}">${title}<small>${list.length}</small></h2>${sub ? `<p class="ref-sub">${sub}</p>` : ''}<ul class="idx">${list.map((x) => `<li><a href="${esc(x.href)}">${esc(x.name)}</a><span class="lab">${esc(x.lab)}</span></li>`).join('')}</ul></section>` : '');
+    const others = idx('list-firms', 'Firms', firmList, 'Each firm links to its entry on the Suppliers page.') + idx('list-chips', 'AI chips', chipList, 'Each chip links to its row on the AI Chips page.') + idx('list-countries', 'Countries', countryList, 'Each country links to its line on the Suppliers page.');
+
+    const firstWord = (terms.find((g) => /^[A-Za-z]/.test(g.term)) || terms[0] || { term: '' }).term, lastWord = (terms[terms.length - 1] || { term: '' }).term;
+    return page({
+      slug: 'glossary', route: '#/glossary', h1: 'Glossary',
+      ...titled('glossary', [[/(\d+) terms/, terms.length, 'terms']], `Plain definitions of ${terms.length} terms from the AI chip supply chain, from ${firstWord} to ${lastWord}.`),
+      dekHTML: glossaryDek,
+      facts: [`${terms.length} terms`, `${suppliers.length} firms`, `${chips.length} chips`],
+      ctaNote: 'The interactive page adds search and shows the passages that mention each entry.',
+      body: jump + termsHTML + others,
+      ld: (url) => ({
+        '@type': 'DefinedTermSet', '@id': url + '#terms', name: 'Glossary of the AI chip supply chain', description: `Plain definitions of ${terms.length} terms from the AI chip supply chain.`,
+        author: person, publisher: org, mainEntityOfPage: url,
+        hasDefinedTerm: terms.map((g) => {
+          const akas = String(g.aka || '').split(/[;,]/).map((x) => x.trim()).filter(Boolean);
+          return Object.assign({ '@type': 'DefinedTerm', name: g.term, description: g.plain, url: url + '#' + termIds.get(g) }, akas.length ? { alternateName: akas } : {}); // nested in the set, so each term needs no id or set of its own
+        }),
+      }),
+    });
+  }
+
+  /* ---------------- write ---------------- */
+  // Suppliers first: the Glossary links to its firm and country anchors, and to the chips' rows
+  const built = [['suppliers', suppliersPage], ['export-controls', controlsPage], ['chips', chipsPage], ['glossary', glossaryPage]];
+  ctx.referencePages = [];
+  const sizes = [];
+  for (const [s, make] of built) {
+    const html = make();
+    const dir = path.join(root, 'dist', s);
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, 'index.html'), html);
+    ctx.referencePages.push('/' + s + '/');
+    const kb = Buffer.byteLength(html) / 1024;
+    sizes.push(`${s} ${kb.toFixed(0)} KB`);
+    if (kb > 400) warn(`reference page /${s}/ weighs ${kb.toFixed(0)} KB, over the 400 KB budget`);
+    if (/<button\b/.test(html)) warn(`reference page /${s}/ carries a button from the app`);
+    if (/\{\{REF:/.test(html)) warn(`reference page /${s}/ kept a placeholder`);
+  }
+  console.log('reference pages: ' + sizes.join(' · '));
+  return {};
+};

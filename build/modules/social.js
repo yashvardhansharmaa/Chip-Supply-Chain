@@ -9,9 +9,10 @@
    tags. It has no redirect: a button opens the interactive chapter at <site>/#<chapter>. Its canonical URL is
    its own, and build.js lists it in the sitemap (ctx.readablePages). Styles: build/assets/chapter-page.css.
 
-   Views (/chips/, /suppliers/, /export-controls/, /glossary/, /home/, /intro/, /chain/): a small static page
-   with the title, description, canonical, Open Graph and Twitter tags and one paragraph, then a meta refresh
-   and a location.replace to the hash route on the main page. Unfurlers read the tags; people are redirected.
+   Views (/home/, /intro/, /chain/): a small static page with the title, description, canonical, Open Graph and
+   Twitter tags and one paragraph, then a meta refresh and a location.replace to the hash route on the main page.
+   Unfurlers read the tags; people are redirected. /chips/, /suppliers/, /export-controls/ and /glossary/ are real
+   pages with their own content, written by build/modules/reference-pages.js with these same tags and card.
 
    The card images come from build/assets/cards/<slug>.png (rendered by `python3 build/cards.py`, not on
    every build) and are copied to dist/cards/ here.
@@ -33,6 +34,8 @@ const AUTHOR = { name: 'Yashvardhan Sharma', url: 'https://www.linkedin.com/in/y
 const FONTS = 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,400&family=Instrument+Sans:wght@400..700&display=swap';
 const SUBWORD = { 'Very hard': 'Very hard to substitute', Hard: 'Hard to substitute', Moderate: 'Moderately hard to substitute', Easy: 'Easy to substitute' };
 const TILE = { 16: 'The economics', 17: 'The contest' }; // what the chapter tile says for the two chapters that are not stages
+const PAGE_TITLES = require('../page-titles.js'); // the approved <title> and description of each static page
+const RELATED = (() => { try { return require('../related-chapters.js'); } catch (e) { return {}; } })(); // the hand-picked "Related chapters" line
 
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const pad = (n) => String(n).padStart(2, '0');
@@ -151,14 +154,17 @@ function cardVersions(root, fs, path) {
 }
 const cardURL = (slug, versions) => BASE + 'cards/' + slug + '.png' + ((versions && versions[slug] > 1) ? '?v=' + versions[slug] : '');
 
-const pageTitle = (p) => (p.kind === 'chapter' ? `${p.title} · ${SITE}` : (p.slug === 'home' ? SITE : `${p.title} · ${SITE}`));
+// a page's search title and description: the approved list (build/page-titles.js) where it names the page, or p.seo, which a
+// writer passes with its counts filled in (reference-pages.js); the share card's own title and line stay the manifest's
+const seoOf = (p) => p.seo || PAGE_TITLES('/' + p.slug + '/');
+const pageTitle = (p) => { const t = seoOf(p); if (t) return `${t.title} · ${SITE}`; return p.kind === 'chapter' ? `${p.title} · ${SITE}` : (p.slug === 'home' ? SITE : `${p.title} · ${SITE}`); };
 // what an unfurler reads: the same tags on a chapter's readable page and on a view's forwarding page
 function shareTags(p, versions) {
   const url = BASE + p.slug + '/';
   const image = cardURL(p.slug, versions);
-  const title = p.kind === 'chapter' ? p.title : pageTitle(p);
+  const seo = seoOf(p), title = seo ? seo.title : p.kind === 'chapter' ? p.title : pageTitle(p);
   // a chapter's preview leads with its one-line summary (the fact a reader would share), whole; the meta description cuts it to search length
-  const description = p.kind === 'chapter' && (p.shareDescription || p.metaDescription) ? (p.shareDescription || p.metaDescription) : p.description;
+  const description = seo && seo.description ? seo.description : p.kind === 'chapter' && (p.shareDescription || p.metaDescription) ? (p.shareDescription || p.metaDescription) : p.description;
   return `<meta property="og:site_name" content="${SITE}">
 <meta property="og:type" content="${p.kind === 'chapter' ? 'article' : 'website'}">
 <meta property="og:title" content="${esc(title)}">
@@ -176,6 +182,14 @@ function shareTags(p, versions) {
 const ICONS = `<link rel="icon" href="../favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">`;
+// the static pages' masthead (the readable chapters, Start here's page and the reference pages in reference-pages.js): the wordmark
+// home, The Chain on the main page, and the four reference pages by their real paths, so a crawler follows them (SEO review P1-1);
+// current is the link of the page it heads, marked as the current page
+const NAV = [['../#/chain', 'The Chain'], ['../chips/', 'AI Chips'], ['../suppliers/', 'Suppliers'], ['../export-controls/', 'Export Controls'], ['../glossary/', 'Glossary']];
+const masthead = (current) => `<header class="masthead"><a class="wordmark" href="../" aria-label="Chip Supply Chain"><svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg><span class="wm-name">Chip Supply Chain</span></a><nav aria-label="Site">${NAV.map(([href, text]) => `<a href="${href}"${href === current ? ' aria-current="page"' : ''}>${text}</a>`).join('')}</nav></header>`;
+const MASTHEAD = masthead('');
+// the static pages open light; ?theme= or the site's saved choice sets the theme before the first paint
+const THEME_JS = `<script>(function(){try{var q=/[?&]theme=(light|dark)/.exec(location.search);var t=q?q[1]:localStorage.getItem('cp-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>`;
 
 // a view's page: the tags, one paragraph, and straight on to the view on the main page
 function pageHTML(p, versions) {
@@ -240,7 +254,7 @@ ${ICONS}
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="masthead"><a class="wordmark" href="../" aria-label="Chip Supply Chain"><svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg><span class="wm-name">Chip Supply Chain</span></a><nav aria-label="Site"><a href="../#/chain">The Chain</a><a href="../#/glossary">Glossary</a></nav></header>
+${MASTHEAD}
 <main id="main" class="page">
 <header class="ch-head">
 <p class="eyebrow"><b>Start here</b></p>
@@ -319,7 +333,8 @@ const plainTerms = (html) => String(html || '').replace(/<button type="button" c
 });
 
 // An explainer animation: the main page plays it in time with its captions; here it is the video, with controls and
-// nothing fetched until it is played, the last frame as its poster, and every step written out underneath.
+// nothing fetched until it is played, the last frame as its poster, and every step written out underneath. The still is
+// for paper only (hidden on screen, chapter-page.css), so it loads lazily: the browser fetches it when the page is printed.
 const staticAnimations = (html) => html.replace(/<figure class="figure figure--anim"( id="[^"]*")?>([\s\S]*?)<\/figure>/g, (m, id, inner) => {
   const src = (inner.match(/\bdata-src="([^"]*)"/) || [])[1];
   if (!src) return m;
@@ -329,7 +344,7 @@ const staticAnimations = (html) => html.replace(/<figure class="figure figure--a
   const notes = (inner.match(/<p class="fig-source">[\s\S]*?<\/p>/g) || []).join('');
   const base = '../' + src;
   const size = ratio ? ` width="${ratio[1]}" height="${ratio[2]}"` : '';
-  return `<figure class="figure figure--anim"${id || ''}>${title}<div class="anim-frame"><video controls preload="none" playsinline muted${size} poster="${base}-light-end.jpg" src="${base}-light.mp4" data-media="${base}" aria-label="Animation: ${textOf(title)}"></video></div><img class="anim-still" src="${base}-print-end.jpg" alt="Last frame of the animation: ${textOf(title)}" decoding="async" fetchpriority="low">${steps ? `<ol class="anim-steps">${steps}</ol>` : ''}${notes}</figure>`;
+  return `<figure class="figure figure--anim"${id || ''}>${title}<div class="anim-frame"><video controls preload="none" playsinline muted${size} poster="${base}-light-end.jpg" src="${base}-light.mp4" data-media="${base}" aria-label="Animation: ${textOf(title)}"></video></div><img class="anim-still" src="${base}-print-end.jpg" alt="Last frame of the animation: ${textOf(title)}" loading="lazy" decoding="async" fetchpriority="low">${steps ? `<ol class="anim-steps">${steps}</ol>` : ''}${notes}</figure>`;
 });
 
 // Links inside the chapter: a heading on this page stays a fragment, another chapter goes to its readable page, anything
@@ -355,6 +370,7 @@ function readableHTML(p, ch, ctx, versions, css) {
   const { stages, flashcards, SPECIMEN_NAME, tierTag, sourceLine, builtOn, builtStr } = ctx;
   const r = ch.rendered, m = ch.meta || {};
   const url = BASE + p.slug + '/', app = BASE + '#' + ch.id, image = cardURL(p.slug, versions);
+  const seo = seoOf(p), metaDescription = seo && seo.description ? seo.description : (p.metaDescription || p.description); // the approved line (build/page-titles.js)
   const seq = ctx.chapters.concat(ctx.geo ? [ctx.geo] : []);
   const at = seq.findIndex((c) => c.id === ch.id), prev = seq[at - 1], next = seq[at + 1];
   const si = stages.findIndex((c) => c.id === ch.id);
@@ -416,9 +432,18 @@ ${sources}
   // (they carry the day, so they cannot be hashed) and the one-line key to the strip's colors
   const bandsUsed = ['Extreme', 'High', 'Moderate', 'Low'].filter((b) => stages.some((c) => (c.meta.card || {}).concentration === b));
   const trackKey = bandsUsed.length ? `<p class="track-key"><span class="tk-k">Concentration</span>${bandsUsed.map((b) => `<span class="tk" data-band="${BANDS[b]}"><i aria-hidden="true"></i>${b}</span>`).join('')}</p>` : '';
+  // ...and, before Previous and Next, the hand-picked related chapters (build/related-chapters.js), by name
+  const picks = RELATED[ch.id] || [];
+  const rel = picks.map((k) => {
+    if (String(k).charAt(0) === '/') { const n = NAV.find(([h]) => h === '..' + k); if (!n) ctx.warn(`related chapters: ${ch.id} names ${k}, which is not a reference page`); return n ? `<a href="${n[0]}">${n[1]}</a>` : ''; }
+    const c = seq.find((x) => x.id === k); if (!c) ctx.warn(`related chapters: ${ch.id} names ${k}, which is not a chapter`);
+    return c && c.id !== ch.id ? `<a href="../${esc(c.id)}/">${esc(c.title)}</a>` : '';
+  }).filter(Boolean);
+  const related = rel.length ? `<p class="related"><span class="label">${picks.every((k) => String(k).charAt(0) !== '/') ? 'Related chapters' : 'Related pages'}</span>${rel.join('')}</p>` : '';
   const main = text
     .replace(/(<p class="ch-meta">[\s\S]*?)(<\/p>)/, (m, meta, end) => meta + `<span>Updated ${esc(day)}</span>` + end + (ctx.citeBlock ? ctx.citeBlock(ch, day, true) : ''))
-    .replace(/(<p class="track-foot">[\s\S]*?<\/p>)(<\/nav>)/, (m, foot, end) => foot + trackKey + end);
+    .replace(/(<p class="track-foot">[\s\S]*?<\/p>)(<\/nav>)/, (m, foot, end) => foot + trackKey + end)
+    .replace(/(<nav class="endnav"[^>]*>[\s\S]*?)(<div class="prevnext">)/, (m, head, pn) => head + related + pn);
   const ymd = String(dates.modified).replace(/-/g, '/');
   const scholar = `<meta name="citation_title" content="${esc(ch.title)}">
 <meta name="citation_author" content="Sharma, Yashvardhan">
@@ -429,7 +454,7 @@ ${sources}
 <meta name="citation_fulltext_html_url" content="${esc(url)}">`;
 
   const ld = {
-    '@context': 'https://schema.org', '@type': 'Article', headline: ch.title, description: p.metaDescription || p.description,
+    '@context': 'https://schema.org', '@type': 'Article', headline: ch.title, description: metaDescription,
     url, mainEntityOfPage: url, image, inLanguage: 'en', datePublished: dates.published, dateModified: dates.modified,
     author: { '@type': 'Person', name: AUTHOR.name, url: AUTHOR.url },
     publisher: { '@type': 'Organization', name: SITE, url: BASE },
@@ -442,7 +467,7 @@ ${sources}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(pageTitle(p))}</title>
-<meta name="description" content="${esc(p.metaDescription || p.description)}">
+<meta name="description" content="${esc(metaDescription)}">
 <link rel="canonical" href="${esc(url)}">
 <meta name="author" content="${AUTHOR.name}">
 ${scholar}
@@ -453,19 +478,21 @@ ${ICONS}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="${FONTS}">
-<script>(function(){try{var q=/[?&]theme=(light|dark)/.exec(location.search);var t=q?q[1]:localStorage.getItem('cp-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+${THEME_JS}
 <style>${css}${EXTRA_CSS}</style>
 ${SITE_CONFIG.analytics ? `<script async src="https://gc.zgo.at/count.js" data-goatcounter="${esc(SITE_CONFIG.analytics)}"></script>` : ''}
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="masthead"><a class="wordmark" href="../" aria-label="Chip Supply Chain"><svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg><span class="wm-name">Chip Supply Chain</span></a><nav aria-label="Site"><a href="../#/chain">The Chain</a><a href="../#/glossary">Glossary</a></nav></header>
+${MASTHEAD}
 <main id="main" class="page">
 ${main}
 <footer class="site-footer">${footerKey}</footer>
 </main>
 ${ctx.CITE_JS ? `<script>${ctx.CITE_JS}</script>` : ''}
-${hasVideo ? `<script>(function(){var t=document.documentElement.getAttribute('data-theme');if(t!=='dark')return;[].forEach.call(document.querySelectorAll('video[data-media]'),function(v){var b=v.getAttribute('data-media');v.poster=b+'-dark-end.jpg';v.src=b+'-dark.mp4';});})();</script>` : ''}
+${hasVideo ? `<script>(function(){var t=document.documentElement.getAttribute('data-theme');if(t!=='dark')return;[].forEach.call(document.querySelectorAll('video[data-media]'),function(v){var b=v.getAttribute('data-media');v.poster=b+'-dark-end.jpg';v.src=b+'-dark.mp4';});})();
+/* the print still loads lazily; a browser that does not fetch lazy images for print is told to now */
+window.addEventListener('beforeprint',function(){[].forEach.call(document.querySelectorAll('img.anim-still[loading="lazy"]'),function(i){i.loading='eager';});});</script>` : ''}
 </body>
 </html>
 `;
@@ -487,7 +514,10 @@ module.exports = function (ctx) {
     return ch ? ` <a href="../${esc(ch.id)}/">Read: ${esc(ch.title)}</a>` : '';
   }) : '';
   ctx.readablePages = []; // build.js lists these in the sitemap
+  // the four views that have a real page of their own (build/modules/reference-pages.js, which runs first, writes and lists them)
+  const written = new Set((ctx.referencePages || []).map((k) => k.replace(/\//g, '')));
   for (const p of pages) {
+    if (p.kind === 'view' && written.has(p.slug)) continue;
     const dir = path.join(dist, p.slug);
     fs.mkdirSync(dir, { recursive: true });
     const ch = p.kind === 'chapter' ? byId.get(p.slug) : null;
@@ -510,8 +540,16 @@ module.exports = function (ctx) {
   for (const f of have) fs.copyFileSync(path.join(src, f), path.join(out, f));
   const missing = pages.filter((p) => !have.includes(p.slug + '.png')).map((p) => p.slug);
   if (missing.length) warn(`social cards missing (run python3 build/cards.py): ${missing.join(', ')}`);
-  return { HOME_CARD: cardURL('home', versions) };
+  // the main page's own <title> and description (src/template.html), from the same approved list; its title already ends in the site name
+  const home = PAGE_TITLES('/');
+  if (!home) warn('page titles: build/page-titles.json has no entry for the main page, so it keeps the site name as its title');
+  // the same titles for the app's own tab, by page path, so a chapter read in The Chain carries its static page's title (src/app.js Router.title)
+  const viewTitles = {};
+  for (const p of PAGE_TITLES.paths()) { const e = PAGE_TITLES(p); viewTitles[p] = p === '/' ? e.title : `${e.title} · ${SITE}`; }
+  return { HOME_CARD: cardURL('home', versions), HOME_TITLE: esc(home ? home.title : SITE), HOME_DESCRIPTION: esc(home && home.description ? home.description : 'How AI chips are made, and who controls each stage of the supply chain.'), VIEW_TITLES: esc(JSON.stringify(viewTitles)) };
 };
 module.exports.manifest = manifest;
 module.exports.pageHTML = pageHTML;
 module.exports.BASE = BASE;
+// for the reference pages (build/modules/reference-pages.js): the same head, tags, card and masthead as the chapter pages
+Object.assign(module.exports, { SITE, AUTHOR, FONTS, ICONS, MASTHEAD, masthead, THEME_JS, minCSS, pageTitle, shareTags, cardVersions, cardURL, describe });

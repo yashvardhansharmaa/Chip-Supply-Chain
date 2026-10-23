@@ -1,0 +1,45 @@
+/* Option C, "Starting sets": the page opens on six named comparisons, each one tap from a full table. The checklist
+   stays under "Or choose from all 38", with a one-line status that rides the top of the list while it scrolls.
+   Lands in src/modules/chips.css (the .cx-bar rules go; Clear moves into the status line). */
+
+/* ---------- the sets ---------- */
+.cxc { margin: 6px 0 44px; }
+.cxc-h, .cxc-h2 { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 400; font-size: var(--fs-d3); line-height: 1.2; color: var(--ink); text-transform: none; letter-spacing: 0; margin: 0 0 12px; }
+.cxc-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 28px; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--ink); }
+.cxc-list li { border-bottom: 1px solid var(--line); }
+.cxc-set {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto; column-gap: 12px; row-gap: 4px;
+  width: 100%; min-height: 72px; padding: 13px 8px 13px 0; text-align: left; color: var(--ink);
+}
+.cxc-t { grid-column: 1; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 400; font-size: var(--fs-d5); line-height: 1.2; }
+.cxc-c { grid-column: 1; font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); letter-spacing: 0.01em; }
+.cxc-go { grid-column: 2; grid-row: 1 / -1; align-self: center; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--ink-2); }
+.cxc-set:hover .cxc-t { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 0.18em; }
+.cxc-set:hover .cxc-go { color: var(--ink); }
+/* the set on show: a garnet rule at its left, as the focused chip has in the checklist */
+.cxc-set[aria-pressed="true"] { box-shadow: inset 2px 0 0 var(--accent); padding-left: 12px; background: var(--bg-2); }
+.cxc-set[aria-pressed="true"] .cxc-go { color: var(--accent-ink); }
+
+/* ---------- or choose from all 38 ---------- */
+section[data-view="landscape"] .cx-bar { display: none; }
+.cxc-own {
+  position: sticky; top: var(--masthead); z-index: 6; background: var(--bg);
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; margin: 0 0 14px; padding: 10px 0 10px; border-bottom: 1px solid var(--line);
+}
+.cxc-own .cxc-h2 { margin: 0; font-size: var(--fs-d4); }
+.cxc-say { margin: 0 auto 0 0; font-family: var(--font-mono); font-size: var(--fs-ui); color: var(--ink-2); }
+.cxc-say b { font-weight: 600; color: var(--ink); }
+.cxc-say[data-warn="1"] { color: var(--accent-ink); }
+.cxc-see, .cxc-clear { min-height: 24px; padding: 2px 0; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+.cxc-see { color: var(--accent-ink); text-decoration-color: var(--accent); }
+.cxc-see[hidden], .cxc-clear[hidden] { display: none; }
+.cxc-pick { margin-bottom: 34px; }
+html:has(section[data-view="landscape"]:not([hidden])) { scroll-padding-top: calc(var(--masthead) + 64px); } /* a focused chip never hides under the status line */
+
+@media (max-width: 900px) {
+  .cxc-list { grid-template-columns: minmax(0, 1fr); }
+  .cxc-h, .cxc-h2 { font-size: var(--fs-d4); }
+  .cxc-set { min-height: 64px; padding: 11px 0; }
+  .cxc-own { margin-left: -18px; margin-right: -18px; padding-left: 18px; padding-right: 18px; }
+  .cxc-own .cxc-h2 { font-size: var(--fs-d5); flex: 1 0 100%; }
+}

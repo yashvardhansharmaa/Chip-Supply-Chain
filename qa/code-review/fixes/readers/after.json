@@ -1,0 +1,340 @@
+{
+ "board_now": {
+  "11 Nov 2026": {
+   "today": "Wed Nov 11 2026",
+   "asOf": "11 Nov 2026",
+   "entity": "Presumption of denialAffiliates rule suspended until 9 November 2026from 10 Nov 2025 \u00b7 announced 12 Nov 202590 FR 50857 \u00b7 15 CFR 744.11(a)(1)",
+   "minerals": "ProhibitedSuspended until 27 Nov 2026Ban on exports to America suspendedfrom 9 Nov 2025MOFCOM Announcement 2025 No. 72",
+   "mineralsWorld": "Case by case0.1 percent rule suspended on 7 November, before it took effectfrom 7 Nov 2025MOFCOM and GAC Announcement 2025 No. 70",
+   "suspendedShown": [
+    "Suspended until 27 Nov 2026"
+   ]
+  },
+  "errors": [],
+  "real today": {
+   "today": "Wed Oct 21 2026",
+   "asOf": "21 Oct 2026",
+   "entity": "Presumption of denialSuspended until 9 Nov 2026Affiliates rule suspended until 9 November 2026from 10 Nov 2025 \u00b7 announced 12 Nov 202590 FR 50857 \u00b7 15 CFR 744.11(a)(1)",
+   "minerals": "ProhibitedSuspended until 27 Nov 2026Ban on exports to America suspendedfrom 9 Nov 2025MOFCOM Announcement 2025 No. 72",
+   "mineralsWorld": "Case by caseSuspended until 10 Nov 20260.1 percent rule suspended on 7 November, before it took effectfrom 7 Nov 2025MOFCOM and GAC Announcement 2025 No. 70",
+   "suspendedShown": [
+    "Suspended until 9 Nov 2026",
+    "Suspended until 27 Nov 2026",
+    "Suspended until 10 Nov 2026"
+   ]
+  },
+  "pass": true,
+  "doc": "P1-3: the board's Now on 11 Nov 2026 (faked clock) and on the real today"
+ },
+ "board_status": {
+  "result": {
+   "afterYear": {
+    "role": "status",
+    "live": "polite (role)",
+    "text": "Board as of 31 Dec 2022. 11 rows changed."
+   },
+   "afterArrow": {
+    "role": "status",
+    "live": "polite (role)",
+    "text": "Board as of 31 Dec 2023. 8 rows changed."
+   },
+   "afterNow": {
+    "role": "status",
+    "live": "polite (role)",
+    "text": "Board as of 21 Oct 2026. 11 rows changed."
+   },
+   "afterChip": {
+    "role": "status",
+    "live": "polite (role)",
+    "text": "13 of 74 events shown: China."
+   }
+  },
+  "errors": [],
+  "pass": true,
+  "doc": "a11y #5: a year press, the arrow keys and Now are announced in a polite status"
+ },
+ "passage_link": {
+  "result": {
+   "term": "lk-term-big-fund",
+   "chapter": "geopolitics",
+   "text": "China spends more than the United States. The latest round of its Nati",
+   "samples": [
+    {
+     "t": 250,
+     "passageTop": 72,
+     "onScreen": true,
+     "chapterTop": -9186
+    },
+    {
+     "t": 1000,
+     "passageTop": 73,
+     "onScreen": true,
+     "chapterTop": -9185
+    },
+    {
+     "t": 1600,
+     "passageTop": 73,
+     "onScreen": true,
+     "chapterTop": -9185
+    },
+    {
+     "t": 2600,
+     "passageTop": 73,
+     "onScreen": true,
+     "chapterTop": -9185
+    }
+   ]
+  },
+  "errors": [],
+  "pass": true,
+  "doc": "P1-1 (A1): a Where it appears passage link lands on the passage and stays there"
+ },
+ "popover_close": {
+  "desktop": {
+   "from": 33559,
+   "href": "#gl-scanner",
+   "hash": "#gl-scanner",
+   "tipHidden": true,
+   "tipRect": null,
+   "scrollY": 0,
+   "entryHeadTop": 322,
+   "entryHeadVisible": true,
+   "focus": "DT",
+   "entryToEntry": {
+    "scrollY": 0,
+    "headTop": 322,
+    "mast": 56,
+    "visible": true
+   }
+  },
+  "errors": [],
+  "phone": {
+   "from": 48778,
+   "href": "#gl-scanner",
+   "hash": "#gl-scanner",
+   "tipHidden": true,
+   "tipRect": null,
+   "scrollY": 333,
+   "entryHeadTop": 109,
+   "entryHeadVisible": true,
+   "focus": "DT",
+   "entryToEntry": {
+    "scrollY": 333,
+    "headTop": 109,
+    "mast": 75,
+    "visible": true
+   }
+  },
+  "pass": true,
+  "doc": "P1-5 (A5): Look it up closes the popover; the Glossary opens with the entry in view; entry to entry lands below the masthead"
+ },
+ "non_passages": {
+  "result": {
+   "indexed": 984,
+   "nonPassages": 0,
+   "byKind": {},
+   "wordCountLines": 0,
+   "citationLines": 0,
+   "rawSearchYashvardhan": "(none)",
+   "sample": []
+  },
+  "errors": [],
+  "pass": true,
+  "doc": "P1-4: word-count lines, citation text and card furniture are not passages"
+ },
+ "card_focus": {
+  "result": {
+   "afterEnter": "DT ABFAjinomoto Build-up Film, build-up fil in card: true",
+   "tabsToFirstCardLink": 1,
+   "landedOn": "Read it in Substrates and PCBs \u2192",
+   "tabFromSearch": [
+    "list: BUTTON ABFTerm",
+    "card: A Read it in Substrates and PCBs",
+    "card: A Chapter 12Substrates and PCBsA",
+    "card: A Chapter 12Substrates and PCBsA"
+   ],
+   "arrowDownTwice": "3A090Export control"
+  },
+  "errors": [],
+  "pass": true,
+  "doc": "a11y #1: Enter on the 5th list entry; Tab presses from there to the card's first link"
+ },
+ "search_enter": {
+  "result": {
+   "whileTyping": "gl-search",
+   "active": "DT HBMhigh bandwidth memory, high",
+   "inCard": true,
+   "countRole": "status",
+   "countLive": null,
+   "count": "65 of 487 entries",
+   "selected": "lk-term-hbm"
+  },
+  "errors": [],
+  "pass": true,
+  "doc": "a11y #1 / QA: Enter in the Glossary search moves focus to the chosen entry, not to the page; the count is a polite status"
+ },
+ "company_links": {
+  "result": {
+   "lam research": "https://chipexplorer.eto.tech/?parentNode=N46&selectedNode=N103",
+   "wistron": "https://www.wistron.com/en/Product&Services/Enterprise&Networking"
+  },
+  "errors": [],
+  "pass": true,
+  "doc": "P1 #6: the Company page links for Lam Research and Wistron"
+ },
+ "supplier_ribbons": {
+  "result": {
+   "counts": [
+    "3 of 226 suppliers \u00b7 Silicon & Wafers \u00b7 Japan",
+    "6 of 226 suppliers \u00b7 Photomasks \u00b7 Japan"
+   ],
+   "countRole": "status",
+   "countLive": null
+  },
+  "errors": [],
+  "pass": true,
+  "doc": "P1-2 (A2): two Japan ribbons in a row keep the Japan filter"
+ },
+ "supplier_glossary_links": {
+  "result": {
+   "asml": "13 of 226 suppliers \u00b7 matching \u201casml\u201d",
+   "searchAfterAsml": "ASML",
+   "japan": "45 of 226 suppliers \u00b7 Japan",
+   "searchAfterJapan": "",
+   "japanFirms": 45
+  },
+  "errors": [],
+  "pass": true,
+  "doc": "P1-2 (A3): ASML's 'In the supplier list', then Japan's 'Its firms in the supplier list'"
+ },
+ "table_sort_focus": {
+  "result": {
+   "first": {
+    "active": "BUTTON country",
+    "thSort": "ascending",
+    "btnSort": null
+   },
+   "second": {
+    "active": "BUTTON country",
+    "thSort": "descending"
+   }
+  },
+  "errors": [],
+  "pass": true,
+  "doc": "a11y #12: focus after pressing a sort header in Table mode"
+ },
+ "timeline_mentions": {
+  "result": {
+   "n": 13,
+   "hrefs": [
+    "#/controls/2018-10-30-jinhua-listed",
+    "#/controls/2019-05-16-huawei-listed",
+    "#/controls/2020-12-18-smic-listed",
+    "#/controls/2022-10-07-october-rules",
+    "#/controls/2023-10-17-density-test",
+    "#/controls/2023-10-17-entity-additions",
+    "#/controls/2024-12-02-hbm-package",
+    "#/controls/2025-03-25-entity-additions"
+   ],
+   "resolve": true
+  },
+  "errors": [],
+  "pass": true,
+  "doc": "P1-6: the Entity List card's Export Controls mentions link to their entries"
+ },
+ "popover_keyboard": {
+  "desktop": {
+   "start": "term: lithography systems | tip open",
+   "tab1": "tip link: Look it up \u2192 | tip open",
+   "shiftTab": "term: lithography systems | tip open",
+   "tabFromLink": "term: extreme ultraviolet | tip open",
+   "escapeFromLink": "term: extreme ultraviolet | tip closed"
+  },
+  "errors": [],
+  "phone": {
+   "start": "term: lithography systems | tip open",
+   "tab1": "tip link: Look it up \u2192 | tip open",
+   "shiftTab": "term: lithography systems | tip open",
+   "tabFromLink": "term: extreme ultraviolet | tip open",
+   "escapeFromLink": "term: extreme ultraviolet | tip closed"
+  },
+  "pass": true,
+  "doc": "P1-7a / a11y #18: Tab from a glossary term reaches the popover's link; Tab again moves on; Shift+Tab and Escape come back"
+ },
+ "stale_search": {
+  "result": {
+   "essayEntries": [],
+   "top": [
+    "Chapter \u00b7 Who Controls the Chain -> #geopolitics",
+    "Start here \u00b7 Who Controls the Chain, in plain terms -> #/walk/geopolitics",
+    "Who Controls the Chain \u00b7 Ways around the controls -> #geopolitics--ways-around-the-controls",
+    "Flashcard \u00b7 What have export controls achieved against China? -> #geopolitics--flashcards"
+   ]
+  },
+  "errors": [],
+  "pass": true,
+  "doc": "P1-9: search has no Essay entry that opens Export Controls"
+ },
+ "tooltips": {
+  "ribbons": {
+   "onFocus": {
+    "shown": true,
+    "pe": "auto"
+   },
+   "afterEscape": {
+    "shown": false,
+    "pe": "auto"
+   },
+   "pointerOnTip": {
+    "shown": true,
+    "pe": "auto"
+   },
+   "escapeWhileHovered": {
+    "shown": false,
+    "pe": "auto"
+   }
+  },
+  "atlas": {
+   "onFocus": {
+    "shown": true,
+    "pe": "auto"
+   },
+   "afterEscape": {
+    "shown": false,
+    "pe": "auto"
+   }
+  },
+  "china": {
+   "onFocus": {
+    "shown": true,
+    "pe": "auto"
+   },
+   "afterEscape": {
+    "shown": false,
+    "pe": "auto"
+   },
+   "pointerOnTip": {
+    "shown": true,
+    "pe": "auto"
+   }
+  },
+  "errors": [],
+  "pass": true,
+  "doc": "a11y #10 (WCAG 1.4.13): the ribbon, China revenue and atlas tips close with Escape and can be hovered"
+ },
+ "ribbon_click_real": {
+  "desktop": {
+   "count": "3 of 226 suppliers \u00b7 Silicon & Wafers \u00b7 Japan",
+   "stage": "Silicon & Wafers",
+   "country": "JP"
+  },
+  "errors": [],
+  "phone": {
+   "count": "3 of 226 suppliers \u00b7 Silicon & Wafers \u00b7 Japan",
+   "stage": "Silicon & Wafers",
+   "country": "JP"
+  },
+  "pass": true,
+  "doc": "the tips take a mouse pointer now: a real click on a ribbon (and a tap on a phone) still reaches the ribbon"
+ }
+}

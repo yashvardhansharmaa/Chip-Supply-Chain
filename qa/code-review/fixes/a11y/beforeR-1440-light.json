@@ -1,0 +1,95 @@
+{
+ "vp": "1440",
+ "theme": "light",
+ "obscured": {
+  "#/chain": {
+   "forward": {
+    "bar": 11,
+    "invisible": 1,
+    "clear": 56,
+    "part": 2
+   },
+   "back": {
+    "clear": 39,
+    "part": 1
+   },
+   "hidden": [
+    {
+     "el": "BUTTON.to-top \"Back to top\"",
+     "state": "invisible",
+     "top": 70,
+     "bottom": 103,
+     "barTop": 56,
+     "barBottom": 900
+    }
+   ]
+  },
+  "#/": {
+   "forward": {
+    "bar": 11,
+    "invisible": 1,
+    "clear": 57,
+    "part": 1
+   },
+   "back": {
+    "clear": 35,
+    "hidden": 5
+   },
+   "hidden": [
+    {
+     "el": "BUTTON.to-top \"Back to top\"",
+     "state": "invisible",
+     "top": 70,
+     "bottom": 103,
+     "barTop": 56,
+     "barBottom": 900
+    },
+    {
+     "el": "BUTTON.gl-term \"wafer\"",
+     "state": "hidden",
+     "top": 30,
+     "bottom": 59,
+     "barTop": 100,
+     "barBottom": 900
+    },
+    {
+     "el": "BUTTON.gl-term \"Lithography\"",
+     "state": "hidden",
+     "top": 30,
+     "bottom": 59,
+     "barTop": 100,
+     "barBottom": 900
+    },
+    {
+     "el": "BUTTON.gl-term \"cleaning chemicals\"",
+     "state": "hidden",
+     "top": 21,
+     "bottom": 51,
+     "barTop": 100,
+     "barBottom": 900
+    },
+    {
+     "el": "A.wk-src \"source\"",
+     "state": "hidden",
+     "top": 47,
+     "bottom": 60,
+     "barTop": 100,
+     "barBottom": 900
+    },
+    {
+     "el": "A.wk-src \"source\"",
+     "state": "hidden",
+     "top": 0,
+     "bottom": 13,
+     "barTop": 100,
+     "barBottom": 900
+    }
+   ]
+  }
+ },
+ "spin": {
+  "control": null,
+  "turn2s": 0.222,
+  "hscroll": 0
+ }
+}

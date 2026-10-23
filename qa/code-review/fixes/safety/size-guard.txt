@@ -1,0 +1,19 @@
+== on this repository (the real one): every tracked file
+check-size: 615 files outside dist/ and media/, none over 5.0 MB
+exit 0
+
+== scratch repo: 7 MB files only in dist/ and media/
+check-size: 3 files outside dist/ and media/, none over 5.0 MB
+exit 0
+
+== scratch repo: a 5.7 MB QA render staged, the pre-commit hook (core.hooksPath .githooks) refuses the commit
+check-size: 1 file over 5.0 MB outside dist/ and media/:
+  qa/shots/new-render.png  5.7 MB
+Unstage it (git restore --staged <file>) and keep it on this Mac.
+commit exit 1
+
+== scratch repo: the same render committed with the hook skipped, as CI then sees it
+check-size: 1 file over 5.0 MB outside dist/ and media/:
+  qa/shots/new-render.png  5.7 MB
+Remove it from git with git rm --cached <file> (the file stays on disk), add its folder to .gitignore, and commit.
+exit 1

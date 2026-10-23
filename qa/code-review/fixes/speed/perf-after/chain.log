@@ -1,0 +1,5 @@
+run 0: ttfb 4 respEnd 4679 fcp 1288 lcp 1300 (div#howto.howto > p.howto-lede) dcl 4884 load 4915 tbt 105 lt 2 max 150 cls 0 draw 4897.5 build1 ['die-floorplan', 4829, 36, 57440] builds 3 (93 ms) dom 21608 heap 9.7
+run 1: ttfb 2 respEnd 4680 fcp 844 lcp 900 (div#howto.howto > p.howto-lede) dcl 4879 load 4910 tbt 93 lt 1 max 143 cls 0 draw 4892.599999964237 build1 ['die-floorplan', 4823, 37, 57440] builds 3 (91 ms) dom 21608 heap 11.1
+run 2: ttfb 4 respEnd 4681 fcp 836 lcp 888 (div#howto.howto > p.howto-lede) dcl 4877 load 4910 tbt 95 lt 1 max 145 cls 0 draw 4892.299999952316 build1 ['die-floorplan', 4822, 35, 57440] builds 3 (96 ms) dom 21608 heap 9.8
+run 3: ttfb 3 respEnd 4716 fcp 836 lcp 892 (div#howto.howto > p.howto-lede) dcl 4922 load 4954 tbt 96 lt 1 max 146 cls 0 draw 4936.299999952316 build1 ['die-floorplan', 4866, 38, 57440] builds 3 (97 ms) dom 21608 heap 12.7
+run 4: ttfb 4 respEnd 4702 fcp 836 lcp 892 (div#howto.howto > p.howto-lede) dcl 4943 load 4977 tbt 135 lt 2 max 175 cls 0 draw 4959.300000011921 build1 ['die-floorplan', 4882, 39, 57440] builds 3 (101 ms) dom 21608 heap 12.5

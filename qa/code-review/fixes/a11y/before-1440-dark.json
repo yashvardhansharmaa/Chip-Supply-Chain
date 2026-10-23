@@ -1,0 +1,394 @@
+{
+ "vp": "1440",
+ "theme": "dark",
+ "obscured": {
+  "#/chain": {
+   "forward": {
+    "bar": 11,
+    "invisible": 1,
+    "clear": 56,
+    "part": 2
+   },
+   "back": {
+    "clear": 39,
+    "part": 1
+   },
+   "hidden": [
+    {
+     "el": "BUTTON.to-top \"Back to top\"",
+     "state": "invisible",
+     "top": 70,
+     "bottom": 103,
+     "barTop": 56,
+     "barBottom": 900
+    }
+   ]
+  },
+  "#/": {
+   "forward": {
+    "bar": 11,
+    "invisible": 1,
+    "clear": 57,
+    "part": 1
+   },
+   "back": {
+    "clear": 35,
+    "hidden": 5
+   },
+   "hidden": [
+    {
+     "el": "BUTTON.to-top \"Back to top\"",
+     "state": "invisible",
+     "top": 70,
+     "bottom": 103,
+     "barTop": 56,
+     "barBottom": 900
+    },
+    {
+     "el": "BUTTON.gl-term \"wafer\"",
+     "state": "hidden",
+     "top": 30,
+     "bottom": 59,
+     "barTop": 100,
+     "barBottom": 900
+    },
+    {
+     "el": "BUTTON.gl-term \"Lithography\"",
+     "state": "hidden",
+     "top": 30,
+     "bottom": 59,
+     "barTop": 100,
+     "barBottom": 900
+    },
+    {
+     "el": "BUTTON.gl-term \"cleaning chemicals\"",
+     "state": "hidden",
+     "top": 21,
+     "bottom": 51,
+     "barTop": 100,
+     "barBottom": 900
+    },
+    {
+     "el": "A.wk-src \"source\"",
+     "state": "hidden",
+     "top": 47,
+     "bottom": 60,
+     "barTop": 100,
+     "barBottom": 900
+    },
+    {
+     "el": "A.wk-src \"source\"",
+     "state": "hidden",
+     "top": 0,
+     "bottom": 13,
+     "barTop": 100,
+     "barBottom": 900
+    }
+   ]
+  }
+ },
+ "skip": {
+  "#/suppliers": {
+   "firstTab": "A.skip \"Skip to content\"",
+   "afterEnter": {
+    "hash": "#app",
+    "active": "BODY"
+   },
+   "nextTab": {
+    "active": "A.wordmark \"Chip Supply Chain\"",
+    "inMain": false,
+    "view": "suppliers"
+   }
+  },
+  "#/chain": {
+   "firstTab": "A.skip \"Skip to content\"",
+   "afterEnter": {
+    "hash": "#app",
+    "active": "BODY"
+   },
+   "nextTab": {
+    "active": "A.wordmark \"Chip Supply Chain\"",
+    "inMain": false,
+    "view": "stack"
+   }
+  },
+  "#/": {
+   "firstTab": "A.skip \"Skip to content\"",
+   "afterEnter": {
+    "hash": "#app",
+    "active": "BODY"
+   },
+   "nextTab": {
+    "active": "A.wordmark \"Chip Supply Chain\"",
+    "inMain": false,
+    "view": "walk"
+   }
+  }
+ },
+ "search": {
+  "open": {
+   "open": true,
+   "modal": null,
+   "appInert": false,
+   "active": "INPUT \"Search\""
+  },
+  "status": null,
+  "tab24_inside": 14,
+  "tab24_outside": 10,
+  "escFromBody": {
+   "closed": false,
+   "active": "BODY",
+   "appInert": false
+  },
+  "escFromResult": {
+   "closed": true,
+   "active": "BUTTON.search-btn \"Search\""
+  },
+  "picks": {
+   "lithography/Chapter": {
+    "pick": "Chapter | Lithography",
+    "hash": "#lithography",
+    "active": "BODY",
+    "heading": false,
+    "inView": false,
+    "where": "body"
+   },
+   "high-NA/None": {
+    "pick": "Lithography | High-NA EUV",
+    "hash": "#lithography--high-na-euv",
+    "active": "BODY",
+    "heading": false,
+    "inView": false,
+    "where": "body"
+   },
+   "TSMC/Supplier": {
+    "pick": "Supplier | TSMC",
+    "hash": "#/suppliers",
+    "active": "BODY",
+    "heading": false,
+    "inView": false,
+    "where": "body"
+   },
+   "H100/Chip": {
+    "pick": "Chip | Nvidia H100 (SXM5)",
+    "hash": "#/landscape",
+    "active": "BODY",
+    "heading": false,
+    "inView": false,
+    "where": "body"
+   },
+   "Entity List/Term": {
+    "pick": "Term | Entity List",
+    "hash": "#gl-entity-list",
+    "active": "BODY",
+    "heading": false,
+    "inView": false,
+    "where": "body"
+   },
+   "Entity List/Event": {
+    "pick": "Event 2020-12-18 | SMIC added to the Entity List",
+    "hash": "#/controls/2020-12-18-smic-listed",
+    "active": "BODY",
+    "heading": false,
+    "inView": false,
+    "where": "body"
+   },
+   "ASML 2023/China revenue": {
+    "pick": "China revenue | ASML FY2023",
+    "hash": "#/exposure/asml",
+    "active": "BODY",
+    "heading": false,
+    "inView": false,
+    "where": "body"
+   }
+  }
+ },
+ "contrast": {
+  "animStepN": {
+   "n": 75,
+   "min": 3.06,
+   "max": 3.74,
+   "sample": {
+    "fg": "rgb(147, 154, 163)",
+    "op": 0.7,
+    "bg": "rgb(20,23,28)",
+    "ratio": 3.74
+   }
+  },
+  "atlasStops": {
+   "n": 15,
+   "min": 1.67,
+   "max": 1.67,
+   "sample": {
+    "fg": "rgb(20, 23, 28)",
+    "op": 0.42,
+    "bg": "rgb(97.55999999999999,101.56,107.56)",
+    "ratio": 1.67
+   }
+  },
+  "edges": {
+   "supSearch": {
+    "edge": "rgb(61, 67, 75)",
+    "width": "1px",
+    "bg": "rgb(20,23,28)",
+    "ratio": 1.8
+   },
+   "supCountry": {
+    "edge": "rgb(61, 67, 75)",
+    "width": "1px",
+    "bg": "rgb(20,23,28)",
+    "ratio": 1.8
+   },
+   "supChk": {
+    "edge": "rgb(61, 67, 75)",
+    "width": "1px",
+    "bg": "rgb(20,23,28)",
+    "ratio": 1.8
+   },
+   "ghostBtn": {
+    "edge": "rgb(61, 67, 75)",
+    "width": "1px",
+    "bg": "rgb(20,23,28)",
+    "ratio": 1.8
+   },
+   "glSearch": {
+    "edge": "rgb(61, 67, 75)",
+    "width": "1px",
+    "bg": "rgb(20,23,28)",
+    "ratio": 1.8
+   },
+   "filterChip": {
+    "edge": "rgb(61, 67, 75)",
+    "width": "1px",
+    "bg": "rgb(20,23,28)",
+    "ratio": 1.8
+   },
+   "chipSquare": {
+    "edge": "rgb(61, 67, 75)",
+    "width": "1px",
+    "bg": "rgb(20,23,28)",
+    "ratio": 1.8
+   }
+  },
+  "peaks": {
+   "n": 24,
+   "min": 3.02,
+   "under45": 13,
+   "sample": {
+    "fg": "rgb(238, 122, 115)",
+    "op": 1,
+    "bg": "rgb(64.0639898,65.8399745,68.39197348)",
+    "ratio": 3.69
+   }
+  },
+  "placeholder": {
+   "color": "rgb(117, 117, 117)",
+   "ratio": 3.9
+  }
+ },
+ "focus": {
+  "toTopHiddenStops": 1,
+  "toTopShown": {
+   "show": "0",
+   "vis": "visible",
+   "display": "block"
+  },
+  "wkTabs": {
+   "fv": true,
+   "outline": "none 3px rgb(195, 199, 205)"
+  },
+  "cfJump": {
+   "fv": true,
+   "outline": "none 3px rgb(236, 233, 226)"
+  }
+ },
+ "spin": {
+  "control": null,
+  "turn2s": 0,
+  "hscroll": 0
+ },
+ "home": {
+  "before": {
+   "y": 6000,
+   "hash": "#/"
+  },
+  "after": {
+   "y": 6000,
+   "hash": "#/",
+   "active": "A \"Home\""
+  }
+ },
+ "axe": {
+  "#/": {
+   "total": 0,
+   "rules": {},
+   "nodes": {}
+  },
+  "#/chain": {
+   "total": 96,
+   "rules": {
+    "color-contrast": 75,
+    "target-size": 21
+   },
+   "nodes": {
+    "color-contrast": [
+     "#fig-design-and-eda-design-timing > .anim-steps > li:nth-child(1) > button[data-t=\"0.4\"][aria-current=\"step\"] > .n | Element has insufficient color contrast of 3.05 (foreground color: #a44745, background color: #14171c, font size: 8.3pt (11px), font weight: normal). Expected c",
+     "li:nth-child(2) > button[data-t=\"6.2\"] > .n | Element has insufficient color contrast of 3.75 (foreground color: #6d737b, background color: #14171c, font size: 8.3pt (11px), font weight: normal). Expected c",
+     "button[data-t=\"10.4\"] > .n | Element has insufficient color contrast of 3.75 (foreground color: #6d737b, background color: #14171c, font size: 8.3pt (11px), font weight: normal). Expected c",
+     "button[data-t=\"14.2\"] > .n | Element has insufficient color contrast of 3.75 (foreground color: #6d737b, background color: #14171c, font size: 8.3pt (11px), font weight: normal). Expected c",
+     "#fig-design-and-eda-design-timing > .anim-steps > li:nth-child(5) > button[data-t=\"18.4\"] > .n | Element has insufficient color contrast of 3.75 (foreground color: #6d737b, background color: #14171c, font size: 8.3pt (11px), font weight: normal). Expected c",
+     "#fig-silicon-and-wafers-sand-to-wafer > .anim-steps > li:nth-child(1) > button[data-t=\"0.4\"][aria-current=\"step\"] > .n | Element has insufficient color contrast of 3.05 (foreground color: #a44745, background color: #14171c, font size: 8.3pt (11px), font weight: normal). Expected c"
+    ],
+    "target-size": [
+     "div:nth-child(1) > p > .gl-term[data-term=\"polysilicon\"] | Target has insufficient size (80.1px by 23.3px, should be at least 24px by 24px)",
+     "div:nth-child(1) > p > .gl-term[data-term=\"electronic-grade\"] | Target has insufficient size (81.3px by 23.3px, should be at least 24px by 24px)",
+     ".why > .gl-term[data-term=\"fab\"] | Target has insufficient size (23.3px by 22.5px, should be at least 24px by 24px)",
+     "td:nth-child(3) > .gl-term[data-term=\"high-na euv\"] | Target has insufficient size (101px by 21.7px, should be at least 24px by 24px)",
+     "td:nth-child(3) > .gl-term[data-term=\"pitch\"] | Target has insufficient size (52.7px by 21.7px, should be at least 24px by 24px)",
+     ".prose > p:nth-child(3) > .gl-term[data-term=\"photomask\"] | Target has insufficient size because it is partially obscured (smallest space is 93.5px by 2px, should be at least 24px by 24px)"
+    ]
+   }
+  },
+  "#/suppliers": {
+   "total": 6,
+   "rules": {
+    "target-size": 6
+   },
+   "nodes": {
+    "target-size": [
+     "a[data-place=\"San Jose\"] | Target has insufficient size (22px by 22px, should be at least 24px by 24px)",
+     "a[data-place=\"Tokyo\"] | Target has insufficient size (22px by 22px, should be at least 24px by 24px)",
+     "a[data-place=\"Kawasaki\"] | Target has insufficient size (22px by 22px, should be at least 24px by 24px)",
+     "a[data-place=\"Milpitas\"] | Target has insufficient size (22px by 22px, should be at least 24px by 24px)",
+     "a[data-place=\"Icheon\"] | Target has insufficient size (22px by 22px, should be at least 24px by 24px)",
+     "a[data-place=\"Ogaki\"] | Target has insufficient size (22px by 22px, should be at least 24px by 24px)"
+    ]
+   }
+  },
+  "#/glossary": {
+   "total": 0,
+   "rules": {},
+   "nodes": {}
+  },
+  "#/controls": {
+   "total": 0,
+   "rules": {},
+   "nodes": {}
+  },
+  "#/exposure": {
+   "total": 0,
+   "rules": {},
+   "nodes": {}
+  },
+  "#/landscape": {
+   "total": 0,
+   "rules": {},
+   "nodes": {}
+  },
+  "search-open": {
+   "total": 0,
+   "rules": {},
+   "nodes": {}
+  }
+ }
+}

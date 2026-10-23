@@ -1,0 +1,2914 @@
+[
+ {
+  "width": 1440,
+  "theme": "light",
+  "hash": "#/",
+  "ok": {
+   "name": "die-floorplan",
+   "lvl": "full",
+   "pts": 110875
+  },
+  "state": {
+   "view": "walk",
+   "vis": [
+    "walk"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "die-floorplan",
+    "lvl": "full",
+    "pts": 110875
+   },
+   "lvl": "full",
+   "built": 17,
+   "canvas": [
+    533,
+    550
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1440,
+  "theme": "light",
+  "hash": "#/chain",
+  "ok": {
+   "name": "die-floorplan",
+   "lvl": "full",
+   "pts": 110875
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "die-floorplan",
+    "lvl": "full",
+    "pts": 110875
+   },
+   "lvl": "full",
+   "built": 17,
+   "canvas": [
+    533,
+    550
+   ],
+   "sized": 17,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1440,
+  "theme": "light",
+  "hash": "#lithography",
+  "ok": {
+   "name": "euv-scanner",
+   "lvl": "full",
+   "pts": 112228
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": [
+    68,
+    68
+   ],
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "euv-scanner",
+    "lvl": "full",
+    "pts": 112228
+   },
+   "lvl": "full",
+   "built": 17,
+   "canvas": [
+    533,
+    588
+   ],
+   "sized": 16,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1440,
+  "theme": "light",
+  "hash": "#geopolitics",
+  "ok": {
+   "name": "globe",
+   "lvl": "full",
+   "pts": 92757
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": [
+    68,
+    68
+   ],
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "globe",
+    "lvl": "full",
+    "pts": 92757
+   },
+   "lvl": "full",
+   "built": 17,
+   "canvas": [
+    533,
+    550
+   ],
+   "sized": 16,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1440,
+  "theme": "light",
+  "hash": "#lithography--high-na-euv",
+  "ok": {
+   "name": "euv-scanner",
+   "lvl": "full",
+   "pts": 112228
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": [
+    72,
+    72
+   ],
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "euv-scanner",
+    "lvl": "full",
+    "pts": 112228
+   },
+   "lvl": "full",
+   "built": 17,
+   "canvas": [
+    533,
+    588
+   ],
+   "sized": 14,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1440,
+  "theme": "light",
+  "hash": "#/suppliers",
+  "ok": true,
+  "state": {
+   "view": "suppliers",
+   "vis": [
+    "suppliers"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1440,
+  "theme": "light",
+  "hash": "#/suppliers?country=JP",
+  "ok": true,
+  "state": {
+   "view": "suppliers",
+   "vis": [
+    "suppliers"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1440,
+  "theme": "light",
+  "hash": "#/suppliers?tab=country",
+  "ok": true,
+  "state": {
+   "view": "suppliers",
+   "vis": [
+    "suppliers"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1440,
+  "theme": "light",
+  "hash": "#/controls",
+  "ok": true,
+  "state": {
+   "view": "controls",
+   "vis": [
+    "controls"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1440,
+  "theme": "light",
+  "hash": "#/exposure/asml",
+  "ok": true,
+  "state": {
+   "view": "controls",
+   "vis": [
+    "controls"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1440,
+  "theme": "light",
+  "hash": "#/controls/2019-05-16-huawei-listed",
+  "ok": true,
+  "state": {
+   "view": "controls",
+   "vis": [
+    "controls"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1440,
+  "theme": "light",
+  "hash": "#/glossary",
+  "ok": true,
+  "state": {
+   "view": "glossary",
+   "vis": [
+    "glossary"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1440,
+  "theme": "light",
+  "hash": "#gl-euv",
+  "ok": true,
+  "state": {
+   "view": "glossary",
+   "vis": [
+    "glossary"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1440,
+  "theme": "light",
+  "hash": "#/landscape",
+  "ok": {
+   "name": "package",
+   "lvl": "full",
+   "pts": 91088
+  },
+  "state": {
+   "view": "landscape",
+   "vis": [
+    "landscape"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "package",
+    "lvl": "full",
+    "pts": 91088
+   },
+   "lvl": "full",
+   "built": 18,
+   "canvas": [
+    533,
+    705
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1440,
+  "theme": "light",
+  "hash": "#/walk/lithography",
+  "ok": {
+   "name": "euv-scanner",
+   "lvl": "full",
+   "pts": 112228
+  },
+  "state": {
+   "view": "walk",
+   "vis": [
+    "walk"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": [
+    122,
+    122
+   ],
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "euv-scanner",
+    "lvl": "full",
+    "pts": 112228
+   },
+   "lvl": "full",
+   "built": 17,
+   "canvas": [
+    533,
+    588
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1440,
+  "theme": "dark",
+  "hash": "#/",
+  "ok": {
+   "name": "die-floorplan",
+   "lvl": "full",
+   "pts": 110875
+  },
+  "state": {
+   "view": "walk",
+   "vis": [
+    "walk"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "die-floorplan",
+    "lvl": "full",
+    "pts": 110875
+   },
+   "lvl": "full",
+   "built": 17,
+   "canvas": [
+    533,
+    550
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1440,
+  "theme": "dark",
+  "hash": "#/chain",
+  "ok": {
+   "name": "die-floorplan",
+   "lvl": "full",
+   "pts": 110875
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "die-floorplan",
+    "lvl": "full",
+    "pts": 110875
+   },
+   "lvl": "full",
+   "built": 17,
+   "canvas": [
+    533,
+    550
+   ],
+   "sized": 17,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1440,
+  "theme": "dark",
+  "hash": "#lithography",
+  "ok": {
+   "name": "euv-scanner",
+   "lvl": "full",
+   "pts": 112228
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": [
+    68,
+    68
+   ],
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "euv-scanner",
+    "lvl": "full",
+    "pts": 112228
+   },
+   "lvl": "full",
+   "built": 17,
+   "canvas": [
+    533,
+    588
+   ],
+   "sized": 16,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1440,
+  "theme": "dark",
+  "hash": "#/suppliers",
+  "ok": true,
+  "state": {
+   "view": "suppliers",
+   "vis": [
+    "suppliers"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1440,
+  "theme": "dark",
+  "hash": "#/controls",
+  "ok": true,
+  "state": {
+   "view": "controls",
+   "vis": [
+    "controls"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1440,
+  "theme": "dark",
+  "hash": "#/glossary",
+  "ok": true,
+  "state": {
+   "view": "glossary",
+   "vis": [
+    "glossary"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1440,
+  "theme": "dark",
+  "hash": "#/landscape",
+  "ok": {
+   "name": "package",
+   "lvl": "full",
+   "pts": 91088
+  },
+  "state": {
+   "view": "landscape",
+   "vis": [
+    "landscape"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "package",
+    "lvl": "full",
+    "pts": 91088
+   },
+   "lvl": "full",
+   "built": 18,
+   "canvas": [
+    533,
+    705
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1440,
+  "interactions": {
+   "contents": [
+    "#memory-and-hbm",
+    68,
+    68,
+    "hbm-stack"
+   ],
+   "ledger": [
+    "foundries-and-fabs",
+    68,
+    68,
+    "foup"
+   ],
+   "errors": []
+  }
+ },
+ {
+  "width": 1024,
+  "theme": "light",
+  "hash": "#/",
+  "ok": {
+   "name": "die-floorplan",
+   "lvl": "full",
+   "pts": 110875
+  },
+  "state": {
+   "view": "walk",
+   "vis": [
+    "walk"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "die-floorplan",
+    "lvl": "full",
+    "pts": 110875
+   },
+   "lvl": "full",
+   "built": 17,
+   "canvas": [
+    389,
+    418
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1024,
+  "theme": "light",
+  "hash": "#/chain",
+  "ok": {
+   "name": "die-floorplan",
+   "lvl": "full",
+   "pts": 110875
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "die-floorplan",
+    "lvl": "full",
+    "pts": 110875
+   },
+   "lvl": "full",
+   "built": 17,
+   "canvas": [
+    389,
+    418
+   ],
+   "sized": 17,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1024,
+  "theme": "light",
+  "hash": "#lithography",
+  "ok": {
+   "name": "euv-scanner",
+   "lvl": "full",
+   "pts": 112228
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": [
+    68,
+    68
+   ],
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "euv-scanner",
+    "lvl": "full",
+    "pts": 112228
+   },
+   "lvl": "full",
+   "built": 17,
+   "canvas": [
+    389,
+    456
+   ],
+   "sized": 16,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1024,
+  "theme": "light",
+  "hash": "#geopolitics",
+  "ok": {
+   "name": "globe",
+   "lvl": "full",
+   "pts": 92757
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": [
+    68,
+    68
+   ],
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "globe",
+    "lvl": "full",
+    "pts": 92757
+   },
+   "lvl": "full",
+   "built": 17,
+   "canvas": [
+    389,
+    418
+   ],
+   "sized": 16,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1024,
+  "theme": "light",
+  "hash": "#lithography--high-na-euv",
+  "ok": {
+   "name": "euv-scanner",
+   "lvl": "full",
+   "pts": 112228
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": [
+    72,
+    72
+   ],
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "euv-scanner",
+    "lvl": "full",
+    "pts": 112228
+   },
+   "lvl": "full",
+   "built": 17,
+   "canvas": [
+    389,
+    456
+   ],
+   "sized": 16,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1024,
+  "theme": "light",
+  "hash": "#/suppliers",
+  "ok": true,
+  "state": {
+   "view": "suppliers",
+   "vis": [
+    "suppliers"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1024,
+  "theme": "light",
+  "hash": "#/suppliers?country=JP",
+  "ok": true,
+  "state": {
+   "view": "suppliers",
+   "vis": [
+    "suppliers"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1024,
+  "theme": "light",
+  "hash": "#/suppliers?tab=country",
+  "ok": true,
+  "state": {
+   "view": "suppliers",
+   "vis": [
+    "suppliers"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1024,
+  "theme": "light",
+  "hash": "#/controls",
+  "ok": true,
+  "state": {
+   "view": "controls",
+   "vis": [
+    "controls"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1024,
+  "theme": "light",
+  "hash": "#/exposure/asml",
+  "ok": true,
+  "state": {
+   "view": "controls",
+   "vis": [
+    "controls"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1024,
+  "theme": "light",
+  "hash": "#/controls/2019-05-16-huawei-listed",
+  "ok": true,
+  "state": {
+   "view": "controls",
+   "vis": [
+    "controls"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1024,
+  "theme": "light",
+  "hash": "#/glossary",
+  "ok": true,
+  "state": {
+   "view": "glossary",
+   "vis": [
+    "glossary"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1024,
+  "theme": "light",
+  "hash": "#gl-euv",
+  "ok": true,
+  "state": {
+   "view": "glossary",
+   "vis": [
+    "glossary"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1024,
+  "theme": "light",
+  "hash": "#/landscape",
+  "ok": {
+   "name": "package",
+   "lvl": "full",
+   "pts": 91088
+  },
+  "state": {
+   "view": "landscape",
+   "vis": [
+    "landscape"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "package",
+    "lvl": "full",
+    "pts": 91088
+   },
+   "lvl": "full",
+   "built": 18,
+   "canvas": [
+    389,
+    573
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1024,
+  "theme": "light",
+  "hash": "#/walk/lithography",
+  "ok": {
+   "name": "euv-scanner",
+   "lvl": "full",
+   "pts": 112228
+  },
+  "state": {
+   "view": "walk",
+   "vis": [
+    "walk"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": [
+    122,
+    122
+   ],
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "euv-scanner",
+    "lvl": "full",
+    "pts": 112228
+   },
+   "lvl": "full",
+   "built": 17,
+   "canvas": [
+    389,
+    456
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1024,
+  "theme": "dark",
+  "hash": "#/",
+  "ok": {
+   "name": "die-floorplan",
+   "lvl": "full",
+   "pts": 110875
+  },
+  "state": {
+   "view": "walk",
+   "vis": [
+    "walk"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "die-floorplan",
+    "lvl": "full",
+    "pts": 110875
+   },
+   "lvl": "full",
+   "built": 17,
+   "canvas": [
+    389,
+    418
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1024,
+  "theme": "dark",
+  "hash": "#/chain",
+  "ok": {
+   "name": "die-floorplan",
+   "lvl": "full",
+   "pts": 110875
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "die-floorplan",
+    "lvl": "full",
+    "pts": 110875
+   },
+   "lvl": "full",
+   "built": 17,
+   "canvas": [
+    389,
+    418
+   ],
+   "sized": 17,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1024,
+  "theme": "dark",
+  "hash": "#lithography",
+  "ok": {
+   "name": "euv-scanner",
+   "lvl": "full",
+   "pts": 112228
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": [
+    68,
+    68
+   ],
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "euv-scanner",
+    "lvl": "full",
+    "pts": 112228
+   },
+   "lvl": "full",
+   "built": 17,
+   "canvas": [
+    389,
+    456
+   ],
+   "sized": 16,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1024,
+  "theme": "dark",
+  "hash": "#/suppliers",
+  "ok": true,
+  "state": {
+   "view": "suppliers",
+   "vis": [
+    "suppliers"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1024,
+  "theme": "dark",
+  "hash": "#/controls",
+  "ok": true,
+  "state": {
+   "view": "controls",
+   "vis": [
+    "controls"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1024,
+  "theme": "dark",
+  "hash": "#/glossary",
+  "ok": true,
+  "state": {
+   "view": "glossary",
+   "vis": [
+    "glossary"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1024,
+  "theme": "dark",
+  "hash": "#/landscape",
+  "ok": {
+   "name": "package",
+   "lvl": "full",
+   "pts": 91088
+  },
+  "state": {
+   "view": "landscape",
+   "vis": [
+    "landscape"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "package",
+    "lvl": "full",
+    "pts": 91088
+   },
+   "lvl": "full",
+   "built": 18,
+   "canvas": [
+    389,
+    573
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 1024,
+  "interactions": {
+   "contents": [
+    "#memory-and-hbm",
+    68,
+    68,
+    "hbm-stack"
+   ],
+   "ledger": [
+    "foundries-and-fabs",
+    68,
+    68,
+    "foup"
+   ],
+   "errors": []
+  }
+ },
+ {
+  "width": 390,
+  "theme": "light",
+  "hash": "#/",
+  "ok": {
+   "name": "die-floorplan",
+   "lvl": "thumb",
+   "pts": 57440
+  },
+  "state": {
+   "view": "walk",
+   "vis": [
+    "walk"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "die-floorplan",
+    "lvl": "thumb",
+    "pts": 57440
+   },
+   "lvl": "thumb",
+   "built": 3,
+   "canvas": [
+    232,
+    232
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 390,
+  "theme": "light",
+  "hash": "#/chain",
+  "ok": {
+   "name": "die-floorplan",
+   "lvl": "thumb",
+   "pts": 57440
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "die-floorplan",
+    "lvl": "thumb",
+    "pts": 57440
+   },
+   "lvl": "thumb",
+   "built": 3,
+   "canvas": [
+    232,
+    232
+   ],
+   "sized": 17,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 390,
+  "theme": "light",
+  "hash": "#lithography",
+  "ok": {
+   "name": "euv-scanner",
+   "lvl": "thumb",
+   "pts": 70513
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": [
+    87,
+    87
+   ],
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "euv-scanner",
+    "lvl": "thumb",
+    "pts": 70513
+   },
+   "lvl": "thumb",
+   "built": 3,
+   "canvas": [
+    232,
+    232
+   ],
+   "sized": 16,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 390,
+  "theme": "light",
+  "hash": "#geopolitics",
+  "ok": {
+   "name": "globe",
+   "lvl": "thumb",
+   "pts": 54240
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": [
+    87,
+    87
+   ],
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "globe",
+    "lvl": "thumb",
+    "pts": 54240
+   },
+   "lvl": "thumb",
+   "built": 1,
+   "canvas": [
+    232,
+    232
+   ],
+   "sized": 16,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 390,
+  "theme": "light",
+  "hash": "#lithography--high-na-euv",
+  "ok": {
+   "name": "euv-scanner",
+   "lvl": "thumb",
+   "pts": 70513
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": [
+    91,
+    91
+   ],
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "euv-scanner",
+    "lvl": "thumb",
+    "pts": 70513
+   },
+   "lvl": "thumb",
+   "built": 3,
+   "canvas": [
+    232,
+    232
+   ],
+   "sized": 16,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 390,
+  "theme": "light",
+  "hash": "#/suppliers",
+  "ok": true,
+  "state": {
+   "view": "suppliers",
+   "vis": [
+    "suppliers"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 390,
+  "theme": "light",
+  "hash": "#/suppliers?country=JP",
+  "ok": true,
+  "state": {
+   "view": "suppliers",
+   "vis": [
+    "suppliers"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 390,
+  "theme": "light",
+  "hash": "#/suppliers?tab=country",
+  "ok": true,
+  "state": {
+   "view": "suppliers",
+   "vis": [
+    "suppliers"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 390,
+  "theme": "light",
+  "hash": "#/controls",
+  "ok": true,
+  "state": {
+   "view": "controls",
+   "vis": [
+    "controls"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 390,
+  "theme": "light",
+  "hash": "#/exposure/asml",
+  "ok": true,
+  "state": {
+   "view": "controls",
+   "vis": [
+    "controls"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 390,
+  "theme": "light",
+  "hash": "#/controls/2019-05-16-huawei-listed",
+  "ok": true,
+  "state": {
+   "view": "controls",
+   "vis": [
+    "controls"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 390,
+  "theme": "light",
+  "hash": "#/glossary",
+  "ok": true,
+  "state": {
+   "view": "glossary",
+   "vis": [
+    "glossary"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 390,
+  "theme": "light",
+  "hash": "#gl-euv",
+  "ok": true,
+  "state": {
+   "view": "glossary",
+   "vis": [
+    "glossary"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 390,
+  "theme": "light",
+  "hash": "#/landscape",
+  "ok": {
+   "name": "package",
+   "lvl": "thumb",
+   "pts": 32524
+  },
+  "state": {
+   "view": "landscape",
+   "vis": [
+    "landscape"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "package",
+    "lvl": "thumb",
+    "pts": 32524
+   },
+   "lvl": "thumb",
+   "built": 1,
+   "canvas": [
+    232,
+    232
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 390,
+  "theme": "light",
+  "hash": "#/walk/lithography",
+  "ok": {
+   "name": "euv-scanner",
+   "lvl": "thumb",
+   "pts": 70513
+  },
+  "state": {
+   "view": "walk",
+   "vis": [
+    "walk"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": [
+    135,
+    135
+   ],
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "euv-scanner",
+    "lvl": "thumb",
+    "pts": 70513
+   },
+   "lvl": "thumb",
+   "built": 3,
+   "canvas": [
+    232,
+    232
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 390,
+  "theme": "dark",
+  "hash": "#/",
+  "ok": {
+   "name": "die-floorplan",
+   "lvl": "thumb",
+   "pts": 57440
+  },
+  "state": {
+   "view": "walk",
+   "vis": [
+    "walk"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "die-floorplan",
+    "lvl": "thumb",
+    "pts": 57440
+   },
+   "lvl": "thumb",
+   "built": 3,
+   "canvas": [
+    232,
+    232
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 390,
+  "theme": "dark",
+  "hash": "#/chain",
+  "ok": {
+   "name": "die-floorplan",
+   "lvl": "thumb",
+   "pts": 57440
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "die-floorplan",
+    "lvl": "thumb",
+    "pts": 57440
+   },
+   "lvl": "thumb",
+   "built": 3,
+   "canvas": [
+    232,
+    232
+   ],
+   "sized": 17,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 390,
+  "theme": "dark",
+  "hash": "#lithography",
+  "ok": {
+   "name": "euv-scanner",
+   "lvl": "thumb",
+   "pts": 70513
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": [
+    87,
+    87
+   ],
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "euv-scanner",
+    "lvl": "thumb",
+    "pts": 70513
+   },
+   "lvl": "thumb",
+   "built": 3,
+   "canvas": [
+    232,
+    232
+   ],
+   "sized": 16,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 390,
+  "theme": "dark",
+  "hash": "#/suppliers",
+  "ok": true,
+  "state": {
+   "view": "suppliers",
+   "vis": [
+    "suppliers"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 390,
+  "theme": "dark",
+  "hash": "#/controls",
+  "ok": true,
+  "state": {
+   "view": "controls",
+   "vis": [
+    "controls"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 390,
+  "theme": "dark",
+  "hash": "#/glossary",
+  "ok": true,
+  "state": {
+   "view": "glossary",
+   "vis": [
+    "glossary"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 390,
+  "theme": "dark",
+  "hash": "#/landscape",
+  "ok": {
+   "name": "package",
+   "lvl": "thumb",
+   "pts": 32524
+  },
+  "state": {
+   "view": "landscape",
+   "vis": [
+    "landscape"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "package",
+    "lvl": "thumb",
+    "pts": 32524
+   },
+   "lvl": "thumb",
+   "built": 1,
+   "canvas": [
+    232,
+    232
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 390,
+  "interactions": {
+   "contents": [
+    "#memory-and-hbm",
+    87,
+    87,
+    "hbm-stack"
+   ],
+   "ledger": [
+    "foundries-and-fabs",
+    87,
+    87,
+    "foup"
+   ],
+   "expand": {
+    "before": {
+     "lvl": "thumb",
+     "pts": 59425
+    },
+    "expanded": {
+     "lvl": "full",
+     "pts": 91714,
+     "collapsed": "0",
+     "canvas": 707
+    },
+    "after": {
+     "lvl": "thumb",
+     "pts": 59425,
+     "collapsed": "1"
+    },
+    "top": "visible"
+   },
+   "sheet": {
+    "opened": true,
+    "closed": true,
+    "land": [
+     87,
+     87
+    ]
+   },
+   "errors": []
+  }
+ },
+ {
+  "width": 320,
+  "theme": "light",
+  "hash": "#/",
+  "ok": {
+   "name": "die-floorplan",
+   "lvl": "thumb",
+   "pts": 57440
+  },
+  "state": {
+   "view": "walk",
+   "vis": [
+    "walk"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "die-floorplan",
+    "lvl": "thumb",
+    "pts": 57440
+   },
+   "lvl": "thumb",
+   "built": 3,
+   "canvas": [
+    232,
+    232
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 320,
+  "theme": "light",
+  "hash": "#/chain",
+  "ok": {
+   "name": "die-floorplan",
+   "lvl": "thumb",
+   "pts": 57440
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "die-floorplan",
+    "lvl": "thumb",
+    "pts": 57440
+   },
+   "lvl": "thumb",
+   "built": 3,
+   "canvas": [
+    232,
+    232
+   ],
+   "sized": 17,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 320,
+  "theme": "light",
+  "hash": "#lithography",
+  "ok": {
+   "name": "euv-scanner",
+   "lvl": "thumb",
+   "pts": 70513
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": [
+    87,
+    87
+   ],
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "euv-scanner",
+    "lvl": "thumb",
+    "pts": 70513
+   },
+   "lvl": "thumb",
+   "built": 3,
+   "canvas": [
+    232,
+    232
+   ],
+   "sized": 16,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 320,
+  "theme": "light",
+  "hash": "#geopolitics",
+  "ok": {
+   "name": "globe",
+   "lvl": "thumb",
+   "pts": 54240
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": [
+    87,
+    87
+   ],
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "globe",
+    "lvl": "thumb",
+    "pts": 54240
+   },
+   "lvl": "thumb",
+   "built": 1,
+   "canvas": [
+    232,
+    232
+   ],
+   "sized": 16,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 320,
+  "theme": "light",
+  "hash": "#lithography--high-na-euv",
+  "ok": {
+   "name": "euv-scanner",
+   "lvl": "thumb",
+   "pts": 70513
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": [
+    91,
+    91
+   ],
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "euv-scanner",
+    "lvl": "thumb",
+    "pts": 70513
+   },
+   "lvl": "thumb",
+   "built": 3,
+   "canvas": [
+    232,
+    232
+   ],
+   "sized": 16,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 320,
+  "theme": "light",
+  "hash": "#/suppliers",
+  "ok": true,
+  "state": {
+   "view": "suppliers",
+   "vis": [
+    "suppliers"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 320,
+  "theme": "light",
+  "hash": "#/suppliers?country=JP",
+  "ok": true,
+  "state": {
+   "view": "suppliers",
+   "vis": [
+    "suppliers"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 320,
+  "theme": "light",
+  "hash": "#/suppliers?tab=country",
+  "ok": true,
+  "state": {
+   "view": "suppliers",
+   "vis": [
+    "suppliers"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 320,
+  "theme": "light",
+  "hash": "#/controls",
+  "ok": true,
+  "state": {
+   "view": "controls",
+   "vis": [
+    "controls"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 320,
+  "theme": "light",
+  "hash": "#/exposure/asml",
+  "ok": true,
+  "state": {
+   "view": "controls",
+   "vis": [
+    "controls"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 320,
+  "theme": "light",
+  "hash": "#/controls/2019-05-16-huawei-listed",
+  "ok": true,
+  "state": {
+   "view": "controls",
+   "vis": [
+    "controls"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 320,
+  "theme": "light",
+  "hash": "#/glossary",
+  "ok": true,
+  "state": {
+   "view": "glossary",
+   "vis": [
+    "glossary"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 320,
+  "theme": "light",
+  "hash": "#gl-euv",
+  "ok": true,
+  "state": {
+   "view": "glossary",
+   "vis": [
+    "glossary"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 320,
+  "theme": "light",
+  "hash": "#/landscape",
+  "ok": {
+   "name": "package",
+   "lvl": "thumb",
+   "pts": 32524
+  },
+  "state": {
+   "view": "landscape",
+   "vis": [
+    "landscape"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "package",
+    "lvl": "thumb",
+    "pts": 32524
+   },
+   "lvl": "thumb",
+   "built": 1,
+   "canvas": [
+    232,
+    232
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 320,
+  "theme": "light",
+  "hash": "#/walk/lithography",
+  "ok": {
+   "name": "euv-scanner",
+   "lvl": "thumb",
+   "pts": 70513
+  },
+  "state": {
+   "view": "walk",
+   "vis": [
+    "walk"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": [
+    135,
+    135
+   ],
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "euv-scanner",
+    "lvl": "thumb",
+    "pts": 70513
+   },
+   "lvl": "thumb",
+   "built": 3,
+   "canvas": [
+    232,
+    232
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 320,
+  "theme": "dark",
+  "hash": "#/",
+  "ok": {
+   "name": "die-floorplan",
+   "lvl": "thumb",
+   "pts": 57440
+  },
+  "state": {
+   "view": "walk",
+   "vis": [
+    "walk"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "die-floorplan",
+    "lvl": "thumb",
+    "pts": 57440
+   },
+   "lvl": "thumb",
+   "built": 3,
+   "canvas": [
+    232,
+    232
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 320,
+  "theme": "dark",
+  "hash": "#/chain",
+  "ok": {
+   "name": "die-floorplan",
+   "lvl": "thumb",
+   "pts": 57440
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "die-floorplan",
+    "lvl": "thumb",
+    "pts": 57440
+   },
+   "lvl": "thumb",
+   "built": 3,
+   "canvas": [
+    232,
+    232
+   ],
+   "sized": 17,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 320,
+  "theme": "dark",
+  "hash": "#lithography",
+  "ok": {
+   "name": "euv-scanner",
+   "lvl": "thumb",
+   "pts": 70513
+  },
+  "state": {
+   "view": "stack",
+   "vis": [
+    "stack"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": [
+    87,
+    87
+   ],
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "euv-scanner",
+    "lvl": "thumb",
+    "pts": 70513
+   },
+   "lvl": "thumb",
+   "built": 3,
+   "canvas": [
+    232,
+    232
+   ],
+   "sized": 16,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 320,
+  "theme": "dark",
+  "hash": "#/suppliers",
+  "ok": true,
+  "state": {
+   "view": "suppliers",
+   "vis": [
+    "suppliers"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 320,
+  "theme": "dark",
+  "hash": "#/controls",
+  "ok": true,
+  "state": {
+   "view": "controls",
+   "vis": [
+    "controls"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 320,
+  "theme": "dark",
+  "hash": "#/glossary",
+  "ok": true,
+  "state": {
+   "view": "glossary",
+   "vis": [
+    "glossary"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "1",
+   "collapsed": "1",
+   "spec": null,
+   "lvl": null,
+   "built": 0,
+   "canvas": [
+    1,
+    1
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 320,
+  "theme": "dark",
+  "hash": "#/landscape",
+  "ok": {
+   "name": "package",
+   "lvl": "thumb",
+   "pts": 32524
+  },
+  "state": {
+   "view": "landscape",
+   "vis": [
+    "landscape"
+   ],
+   "booted": true,
+   "hscroll": 0,
+   "land": null,
+   "stage": "0",
+   "collapsed": "1",
+   "spec": {
+    "name": "package",
+    "lvl": "thumb",
+    "pts": 32524
+   },
+   "lvl": "thumb",
+   "built": 1,
+   "canvas": [
+    232,
+    232
+   ],
+   "sized": 0,
+   "art": false
+  },
+  "errors": []
+ },
+ {
+  "width": 320,
+  "interactions": {
+   "contents": [
+    "#memory-and-hbm",
+    87,
+    87,
+    "hbm-stack"
+   ],
+   "ledger": [
+    "foundries-and-fabs",
+    87,
+    87,
+    "foup"
+   ],
+   "expand": {
+    "before": {
+     "lvl": "thumb",
+     "pts": 59425
+    },
+    "expanded": {
+     "lvl": "full",
+     "pts": 91714,
+     "collapsed": "0",
+     "canvas": 460
+    },
+    "after": {
+     "lvl": "thumb",
+     "pts": 59425,
+     "collapsed": "1"
+    },
+    "top": "visible"
+   },
+   "sheet": {
+    "opened": true,
+    "closed": true,
+    "land": [
+     87,
+     87
+    ]
+   },
+   "errors": []
+  }
+ }
+]

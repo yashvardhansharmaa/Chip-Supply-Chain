@@ -17,6 +17,7 @@
   --muted: #5c636d;
   --line: #d8d4cc;
   --line-2: #bfb9af;
+  --control-edge: #857f74; /* the edge of a field, a select, a chip or a checkbox, 3.7:1 on paper (WCAG 1.4.11); rules stay hairlines */
   --accent: #7a1f2b;
   --accent-ink: #611722;
   --accent-soft: rgba(122, 31, 43, 0.09);
@@ -66,7 +67,7 @@
 :root[data-theme="dark"] {
   --bg: #14171c; --bg-2: #1b1f25; --bg-3: #23282f;
   --ink: #ece9e2; --ink-2: #c3c7cd; --muted: #939aa3;
-  --line: #2c3138; --line-2: #3d434b;
+  --line: #2c3138; --line-2: #3d434b; --control-edge: #6d747c; /* 3.8:1 on the dark ground */
   --accent: #e25c57; --accent-ink: #ee7a73; --accent-soft: rgba(226, 92, 87, 0.14); /* red for text on the dark ground, 5.1:1 */
   --accent-fill: #a8414b; /* a deeper wine for bars and filled marks, 3.0:1 */
   --c1: #5b8ee6; --c2: #ef8140; --c3: #34b585; --c4: #d9b21e; --c5: #8676d8; --c6: #e0504a; --c7: #4f9c3a; --c8: #8a9099;
@@ -79,6 +80,17 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+/* a control reached by Tab scrolls clear of the fixed masthead, the walk's rail under it and the phone strip (WCAG 2.4.11).
+   The padding holds while the reader moves by Tab (html.kb, set in src/app.js Keys): links and jumps already land clear of
+   the masthead through scroll-margin-top, and the two would add up. AI Chips' Comparing bar adds --cx-sticky (0 elsewhere), as
+   the view's own rule in chips.css does */
+html.kb { scroll-padding-top: calc(var(--masthead) + var(--cx-sticky, 0px) + 12px); }
+html.kb:has(.view[data-view="walk"]:not([hidden]) .wk-rail[data-show="1"]:not([hidden])) { scroll-padding-top: calc(var(--masthead) + 58px); }
+@media (max-width: 900px) {
+  html.kb { scroll-padding-bottom: 140px; }
+  html.kb:has(.stage[data-collapsed="0"]) { scroll-padding-bottom: calc(min(58vh, 480px) + 12px); }
+  html.kb:has(.stage[data-hidden="1"]) { scroll-padding-bottom: 60px; }
+}
 @media (prefers-reduced-motion: reduce) { .stage { transition: none; } html { scroll-behavior: auto; } }
 body {
   margin: 0;
@@ -104,6 +116,7 @@ small { font-size: 0.85em; }
 .sr-only { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
 .skip { position: absolute; left: -10000px; top: 8px; z-index: 100; padding: 8px 12px; background: var(--ink); color: var(--bg); font-family: var(--font-mono); font-size: 12px; text-decoration: none; border-radius: 0; }
 .skip:focus { left: 8px; }
+#main:focus { outline: none; } /* the skip link lands on the whole column, which draws no ring: the next Tab shows where focus is */
 
 /* ---------- labels ---------- */
 .label { font-family: var(--font-mono); font-size: var(--fs-cap); font-weight: 500; letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); }
@@ -191,6 +204,15 @@ small { font-size: 0.85em; }
 }
 .stage figcaption b { color: var(--ink-2); font-weight: 400; }
 .stage[data-hidden="1"] { display: none; }
+/* the turn's pause (WCAG 2.2.2, src/app.js Band.init): a small square at the end of the plate tag on a laptop, over the
+   thumbnail's corner on a phone. Reduced motion never turns the specimen, so it has no button */
+.stage .stage-pause { pointer-events: auto; display: inline-grid; place-items: center; width: 24px; height: 24px; margin: -6px 0 -6px 12px; padding: 0; vertical-align: middle; border: 1px solid var(--line-2); border-radius: 0; background: var(--bg); color: var(--ink-2); letter-spacing: 0; }
+.stage .stage-pause svg { width: 12px; height: 12px; fill: currentColor; stroke: none; }
+.stage .stage-pause:hover { color: var(--ink); border-color: var(--ink); }
+@media (max-width: 900px) {
+  .stage .stage-pause { position: absolute; left: 9px; bottom: 9px; z-index: 2; margin: 0; width: 28px; height: 28px; }
+  .stage[data-collapsed="0"] .stage-pause { bottom: auto; top: 50px; left: 12px; }
+}
 
 /* ---------- contents ---------- */
 .contents { padding: 36px 0 20px; border-top: 1px solid var(--line); margin-top: 40px; }
@@ -347,8 +369,8 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .chapter-sources li .host { font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); margin-left: 6px; }
 
 /* Back to top sits in the bottom corner: links and jumps land controls near the top of the window (Copy table, the board's Now), never at its foot */
-.to-top { position: fixed; right: 24px; bottom: 20px; z-index: 35; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); border: 1px solid var(--line-2); background: var(--bg); padding: 7px 10px; border-radius: 0; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
-.to-top[data-show="1"] { opacity: 1; pointer-events: auto; }
+.to-top { position: fixed; right: 24px; bottom: 20px; z-index: 35; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); border: 1px solid var(--line-2); background: var(--bg); padding: 7px 10px; border-radius: 0; opacity: 0; pointer-events: none; visibility: hidden; transition: opacity 0.3s, visibility 0s 0.3s; }
+.to-top[data-show="1"] { opacity: 1; pointer-events: auto; visibility: visible; transition: opacity 0.3s; } /* hidden, it leaves the Tab order too */
 /* where the specimen fills the right of the window (The Chain, Home), its caption holds the foot, so the button keeps the empty top corner */
 @media (min-width: 901px) { body:has(.stage[data-hidden="0"]) .to-top { top: calc(var(--masthead) + 14px); bottom: auto; } }
 .to-top:hover { color: var(--ink); border-color: var(--ink); }
@@ -375,7 +397,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 
 /* ---------- suppliers ---------- */
 .filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 20px 0 14px; }
-.filters input, .filters select { font: inherit; font-family: var(--font-mono); font-size: 13px; padding: 8px 10px; border: 1px solid var(--line-2); border-radius: 0; background: var(--bg); color: var(--ink); min-width: 180px; }
+.filters input, .filters select { font: inherit; font-family: var(--font-mono); font-size: 13px; padding: 8px 10px; border: 1px solid var(--control-edge); border-radius: 0; background: var(--bg); color: var(--ink); min-width: 180px; }
 .filters input::placeholder { color: var(--muted); }
 /* the selects drop the browser's rounded arrow for a hairline chevron, square like the inputs beside them */
 .filters select {
@@ -385,7 +407,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 }
 .filters input:focus-visible, .filters select:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 2px; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 16px; }
-.chips button { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui-s); letter-spacing: 0.01em; padding: 5px 9px; border: 1px solid var(--line-2); border-radius: 0; background: none; color: var(--ink-2); }
+.chips button { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui-s); letter-spacing: 0.01em; padding: 5px 9px; border: 1px solid var(--control-edge); border-radius: 0; background: none; color: var(--ink-2); }
 .chips button b { font-weight: 500; color: var(--muted); margin-left: 5px; }
 .chips button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .chips button[aria-pressed="true"] b { color: var(--bg); opacity: 0.7; }
@@ -398,8 +420,8 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .sup { border-collapse: collapse; width: 100%; font-size: var(--fs-note); line-height: 1.4; }
 .sup th { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); background: var(--bg); text-align: left; padding: 10px 12px 10px 0; border-bottom: 1px solid var(--line-2); white-space: nowrap; position: sticky; top: 0; }
 .sup th button { font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit; }
-.sup th button[aria-sort="ascending"]::after { content: " \25B2"; color: var(--accent); }
-.sup th button[aria-sort="descending"]::after { content: " \25BC"; color: var(--accent); }
+.sup th[aria-sort="ascending"] button::after { content: " \25B2"; color: var(--accent); }
+.sup th[aria-sort="descending"] button::after { content: " \25BC"; color: var(--accent); }
 .sup td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
 .sup td.name b { font-weight: 600; display: block; }
 .sup td.name span { font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); }
@@ -424,6 +446,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 /* the China revenue table shades in ink (AA on every cell, both themes) and marks each firm's highest year in garnet, as its panel does */
 #exposure-table td .cell { background: color-mix(in srgb, var(--ink) calc(var(--v) * 0.3%), transparent); }
 #exposure-table td .cell.is-peak { color: var(--accent-ink); font-weight: 600; box-shadow: inset 0 -2px 0 var(--accent-fill); }
+:root[data-theme="dark"] #exposure-table td .cell.is-peak { color: var(--ink); } /* dark: the red figure fell to 3.0:1 on its heat cell, so the peak keeps its weight and garnet rule in ink */
 .matrix td:first-child small { display: block; font-family: var(--font-mono); font-size: 10px; color: var(--muted); font-weight: 400; letter-spacing: 0.04em; }
 .matrix td .cell { display: block; padding: 9px 6px; color: var(--ink); background: color-mix(in srgb, var(--accent) calc(var(--v) * 1%), transparent); }
 .matrix td .cell[data-hi="1"] { font-weight: 700; }
@@ -494,6 +517,8 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 #cp-search { position: fixed; inset: 0; z-index: 100; background: var(--scrim); display: flex; align-items: flex-start; justify-content: center; padding: 12vh 16px 0; }
 .cp-search-panel { width: min(680px, 100%); background: var(--bg); border: 1px solid var(--line-2); border-top: 2px solid var(--ink); border-radius: 0; box-shadow: var(--shadow); overflow: hidden; }
 .cp-search-panel input { width: 100%; font: inherit; font-size: 17px; padding: 14px 16px; border: 0; border-bottom: 1px solid var(--line); background: var(--bg); color: var(--ink); outline: none; }
+.cp-search-panel input:focus-visible { box-shadow: inset 0 -2px 0 var(--accent); } /* the box draws no ring, so focus shows as a garnet rule along its foot */
+.cp-search-panel input::placeholder { color: var(--muted); } /* the browser's gray fell to 3.9:1 in dark; muted is 5.6:1 and 6.3:1 */
 .cp-search-results { list-style: none; margin: 0; padding: 0; max-height: 56vh; overflow: auto; }
 .cp-search-results li a { display: grid; grid-template-columns: 110px 1fr; gap: 2px 12px; padding: 10px 16px; border-bottom: 1px solid var(--line); text-decoration: none; }
 .cp-search-results li a:hover, .cp-search-results li a:focus { background: var(--bg-2); }
@@ -684,6 +709,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .ex-panel .pt { fill: var(--bg); stroke: var(--ink); stroke-width: 1.5; }
 .ex-panel .pt.peak { fill: var(--accent); stroke: var(--accent); }
 .ex-tip { position: absolute; z-index: 40; max-width: 320px; padding: 8px 10px; background: var(--ink); color: var(--bg); font-family: var(--font-mono); font-size: var(--fs-ui-s); line-height: 1.45; border-radius: 0; pointer-events: none; }
+@media (hover: hover) { .ex-tip { pointer-events: auto; } } /* a mouse can move onto the tip and it stays (WCAG 1.4.13); a tap still reaches the bar */
 .ex-tip b { display: block; font-size: 14px; margin-bottom: 2px; }
 .table-view > summary { cursor: pointer; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); margin: 10px 0 4px; }
 
@@ -723,6 +749,19 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
   display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr); column-gap: var(--gutter-gap); align-items: start;
   padding: 72px 0 24px; border-top: 1px solid var(--line-2); scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + 12px);
 }
+/* On screen, a chapter away from the window skips its layout and stands at an estimated height (about a median chapter at
+   this width), which makes showing The Chain cheap. Once laid out, its real height is remembered (auto), and app.js (Sizes)
+   lays each chapter out once while the browser is idle; .cv-open holds one laid out meanwhile. Print lays out everything. */
+@media screen {
+  article.chapter { content-visibility: auto; contain-intrinsic-height: auto 9400px; }
+  article.chapter.cv-open { content-visibility: visible; }
+  /* the browser keeps the view still as chapters above it take their real heights (scroll anchoring) by following an element
+     on screen; the sticky ledger never moves, so it must not be the one followed */
+  .ch-ledger { overflow-anchor: none; }
+}
+@media screen and (max-width: 1100px) { article.chapter { contain-intrinsic-height: auto 11500px; } }
+@media screen and (max-width: 900px) { article.chapter { contain-intrinsic-height: auto 13500px; } }
+@media screen and (max-width: 360px) { article.chapter { contain-intrinsic-height: auto 16000px; } }
 .chapter > .ch-ledger { grid-column: 1; grid-row: 1 / span 2; }
 .chapter > .chapter-head, .chapter > .prose { grid-column: 2; }
 .chapter-head { margin-bottom: 8px; min-width: 0; }
@@ -882,8 +921,8 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
     font-family: var(--font-mono); font-weight: 500; font-size: 20px; line-height: 1; color: var(--ink-2);
     background: linear-gradient(to right, color-mix(in srgb, var(--bg) 0%, transparent), var(--bg) 62%); pointer-events: none;
   }
-  .stage-top { display: none; }
-  body:has(.to-top[data-show="1"]) .stage-top { display: inline-block; }
+  .stage-top { visibility: hidden; } /* its place is kept, so Contents and Expand never move when it appears */
+  body:has(.to-top[data-show="1"]) .stage-top { visibility: visible; }
   /* without WebGL the strip keeps its buttons (Contents, Top) so the phone still has its navigation */
   .stage[data-hidden="1"] { display: grid; height: 48px; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: 1fr; padding: 0 12px; }
   .stage[data-hidden="1"] canvas, .stage[data-hidden="1"] figcaption, .stage[data-hidden="1"] .stage-tag, .stage[data-hidden="1"] .stage-toggle { display: none; }
@@ -990,7 +1029,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .figure--anim .anim-steps { display: flex; flex-wrap: wrap; gap: 2px 13px; list-style: none; margin: 10px 0 12px; padding: 0; }
 .figure--anim .anim-steps li { margin: 0; }
 .anim-steps button { font-family: var(--font-mono); font-size: var(--fs-cap); font-weight: 500; letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); background: none; border: 0; border-bottom: 2px solid transparent; border-radius: 0; padding: 5px 0 4px; cursor: pointer; }
-.anim-steps button .n { margin-right: 6px; font-variant-numeric: tabular-nums; opacity: 0.7; }
+.anim-steps button .n { margin-right: 6px; font-variant-numeric: tabular-nums; } /* full strength: at 0.7 opacity the numbers fell to 3.0:1 */
 .anim-steps button:hover { color: var(--ink); }
 .anim-steps button[aria-current="step"] { color: var(--accent); border-bottom-color: var(--accent); }
 .anim-steps button:focus-visible, .anim-stage:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }

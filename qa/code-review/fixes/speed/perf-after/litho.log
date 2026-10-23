@@ -1,0 +1,5 @@
+run 0: ttfb 3 respEnd 291 fcp 1964 lcp 1964 (header.ch-head > p.ch-lede) dcl 882 load 1020 tbt 0 lt 0 max 0 cls 0 draw None build1 None builds 0 (0 ms) dom 1122 heap 1.6
+run 1: ttfb 4 respEnd 290 fcp 908 lcp 908 (header.ch-head > p.ch-lede) dcl 960 load 1018 tbt 0 lt 0 max 0 cls 0 draw None build1 None builds 0 (0 ms) dom 1122 heap 1.3
+run 2: ttfb 2 respEnd 287 fcp 916 lcp 916 (header.ch-head > p.ch-lede) dcl 965 load 1022 tbt 0 lt 0 max 0 cls 0 draw None build1 None builds 0 (0 ms) dom 1122 heap 1.3
+run 3: ttfb 5 respEnd 292 fcp 912 lcp 912 (header.ch-head > p.ch-lede) dcl 962 load 1019 tbt 0 lt 0 max 0 cls 0 draw None build1 None builds 0 (0 ms) dom 1122 heap 1.3
+run 4: ttfb 4 respEnd 290 fcp 912 lcp 912 (header.ch-head > p.ch-lede) dcl 965 load 1018 tbt 0 lt 0 max 0 cls 0 draw None build1 None builds 0 (0 ms) dom 1122 heap 1.3

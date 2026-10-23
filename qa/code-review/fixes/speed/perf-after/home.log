@@ -1,0 +1,5 @@
+run 0: ttfb 2 respEnd 4680 fcp 1940 lcp 1940 (section.wk-gl > p.wk-gl-p) dcl 4964 load 5020 tbt 163 lt 1 max 213 cls 0 draw 4980.300000011921 build1 ['die-floorplan', 4895, 45, 57440] builds 3 (101 ms) dom 21608 heap 10.6
+run 1: ttfb 4 respEnd 4682 fcp 968 lcp 968 (section.wk-gl > p.wk-gl-p) dcl 4915 load 4966 tbt 121 lt 1 max 171 cls 0 draw 4929.400000035763 build1 ['die-floorplan', 4854, 39, 57440] builds 3 (95 ms) dom 21608 heap 12
+run 2: ttfb 4 respEnd 4681 fcp 948 lcp 948 (section.wk-gl > p.wk-gl-p) dcl 4885 load 4932 tbt 92 lt 1 max 142 cls 0 draw 4898 build1 ['die-floorplan', 4832, 32, 57440] builds 3 (91 ms) dom 21608 heap 11.8
+run 3: ttfb 4 respEnd 4682 fcp 956 lcp 956 (section.wk-gl > p.wk-gl-p) dcl 4905 load 4954 tbt 111 lt 1 max 161 cls 0 draw 4918.5 build1 ['die-floorplan', 4849, 34, 57440] builds 3 (95 ms) dom 21608 heap 12.5
+run 4: ttfb 3 respEnd 4696 fcp 944 lcp 944 (section.wk-gl > p.wk-gl-p) dcl 4905 load 4953 tbt 103 lt 1 max 153 cls 0 draw 4917.700000047684 build1 ['die-floorplan', 4848, 36, 57440] builds 3 (94 ms) dom 21608 heap 12.4

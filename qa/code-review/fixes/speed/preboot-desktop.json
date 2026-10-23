@@ -1,0 +1,942 @@
+{
+ "#/": {
+  "preboot_views": [
+   "walk"
+  ],
+  "preboot_subs": [
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "None"
+  ],
+  "postboot_views": [
+   "walk"
+  ],
+  "router": "walk",
+  "first_poll_with_view": 887,
+  "boot_at": 14750,
+  "fcp": 7416,
+  "lcp": {
+   "t": 7416,
+   "size": 52584,
+   "el": "header.wk-head > h1.wk-title",
+   "url": ""
+  },
+  "cls": 0.0056,
+  "shifts": [
+   {
+    "t": 14734.699999988079,
+    "v": 0.005616781603652263,
+    "input": false,
+    "src": [
+     {
+      "n": "header.masthead > nav.tabs",
+      "p": [
+       0,
+       56
+      ],
+      "c": [
+       0,
+       56
+      ]
+     },
+     {
+      "n": "figure.stage > div.stage-tag",
+      "p": [
+       823,
+       31
+      ],
+      "c": [
+       630,
+       35
+      ]
+     }
+    ]
+   }
+  ],
+  "console": []
+ },
+ "#/chain": {
+  "preboot_views": [
+   "stack"
+  ],
+  "preboot_subs": [
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "None"
+  ],
+  "postboot_views": [
+   "stack"
+  ],
+  "router": "stack",
+  "first_poll_with_view": 815,
+  "boot_at": 4902,
+  "fcp": 824,
+  "lcp": {
+   "t": 868,
+   "size": 112039,
+   "el": "div#howto.howto > p.howto-lede",
+   "url": ""
+  },
+  "cls": 0.0056,
+  "shifts": [
+   {
+    "t": 4897.100000023842,
+    "v": 0.005616781603652263,
+    "input": false,
+    "src": [
+     {
+      "n": "header.masthead > nav.tabs",
+      "p": [
+       0,
+       56
+      ],
+      "c": [
+       0,
+       56
+      ]
+     },
+     {
+      "n": "figure.stage > div.stage-tag",
+      "p": [
+       823,
+       31
+      ],
+      "c": [
+       630,
+       35
+      ]
+     }
+    ]
+   }
+  ],
+  "console": []
+ },
+ "#lithography": {
+  "preboot_views": [
+   "stack"
+  ],
+  "preboot_subs": [
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "None"
+  ],
+  "postboot_views": [
+   "stack"
+  ],
+  "router": "stack",
+  "first_poll_with_view": 808,
+  "boot_at": 4888,
+  "fcp": 872,
+  "lcp": {
+   "t": 1232,
+   "size": 208692,
+   "el": "div.plain > p",
+   "url": ""
+  },
+  "cls": 0.0042,
+  "shifts": [
+   {
+    "t": 4881.300000011921,
+    "v": 0.004247500321502058,
+    "input": false,
+    "src": [
+     {
+      "n": "header.masthead > nav.tabs",
+      "p": [
+       0,
+       56
+      ],
+      "c": [
+       0,
+       56
+      ]
+     },
+     {
+      "n": "figure.stage > div.stage-tag",
+      "p": [
+       823,
+       31
+      ],
+      "c": [
+       668,
+       35
+      ]
+     }
+    ]
+   }
+  ],
+  "console": []
+ },
+ "#geopolitics": {
+  "preboot_views": [
+   "stack"
+  ],
+  "preboot_subs": [
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "None"
+  ],
+  "postboot_views": [
+   "stack"
+  ],
+  "router": "stack",
+  "first_poll_with_view": 2193,
+  "boot_at": 4999,
+  "fcp": 2224,
+  "lcp": {
+   "t": 2624,
+   "size": 197192,
+   "el": "div.plain > p",
+   "url": ""
+  },
+  "cls": 0.0057,
+  "shifts": [
+   {
+    "t": 4981.699999988079,
+    "v": 0.005656751677169067,
+    "input": false,
+    "src": [
+     {
+      "n": "header.masthead > nav.tabs",
+      "p": [
+       0,
+       56
+      ],
+      "c": [
+       0,
+       56
+      ]
+     },
+     {
+      "n": "figure.stage > div.stage-tag",
+      "p": [
+       823,
+       31
+      ],
+      "c": [
+       630,
+       35
+      ]
+     }
+    ]
+   }
+  ],
+  "console": []
+ },
+ "#lithography--high-na-euv": {
+  "preboot_views": [
+   "stack"
+  ],
+  "preboot_subs": [
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "None"
+  ],
+  "postboot_views": [
+   "stack"
+  ],
+  "router": "stack",
+  "first_poll_with_view": 1204,
+  "boot_at": 21210,
+  "fcp": 21024,
+  "lcp": {
+   "t": 21332,
+   "size": 135400,
+   "el": "div.prose > p",
+   "url": ""
+  },
+  "cls": 0.0042,
+  "shifts": [
+   {
+    "t": 21197.799999952316,
+    "v": 0.004247500321502058,
+    "input": false,
+    "src": [
+     {
+      "n": "header.masthead > nav.tabs",
+      "p": [
+       0,
+       56
+      ],
+      "c": [
+       0,
+       56
+      ]
+     },
+     {
+      "n": "figure.stage > div.stage-tag",
+      "p": [
+       823,
+       31
+      ],
+      "c": [
+       668,
+       35
+      ]
+     }
+    ]
+   }
+  ],
+  "console": []
+ },
+ "#/suppliers": {
+  "preboot_views": [
+   "suppliers"
+  ],
+  "preboot_subs": [
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "1"
+  ],
+  "postboot_views": [
+   "suppliers"
+  ],
+  "router": "suppliers",
+  "first_poll_with_view": 835,
+  "boot_at": 5080,
+  "fcp": 1120,
+  "lcp": {
+   "t": 1120,
+   "size": 37111,
+   "el": "div.view-head > p.dek",
+   "url": ""
+  },
+  "cls": 0.0011,
+  "shifts": [
+   {
+    "t": 5065.199999988079,
+    "v": 0.0010799468449931412,
+    "input": false,
+    "src": [
+     {
+      "n": "header.masthead > nav.tabs",
+      "p": [
+       0,
+       56
+      ],
+      "c": [
+       0,
+       56
+      ]
+     }
+    ]
+   }
+  ],
+  "console": []
+ },
+ "#/suppliers?country=JP": {
+  "preboot_views": [
+   "suppliers"
+  ],
+  "preboot_subs": [
+   "timeline"
+  ],
+  "preboot_stage": [
+   "1"
+  ],
+  "postboot_views": [
+   "suppliers"
+  ],
+  "router": "suppliers",
+  "first_poll_with_view": 2322,
+  "boot_at": 6037,
+  "fcp": 2360,
+  "lcp": {
+   "t": 2360,
+   "size": 37111,
+   "el": "div.view-head > p.dek",
+   "url": ""
+  },
+  "cls": 0.0011,
+  "shifts": [
+   {
+    "t": 6023.899999976158,
+    "v": 0.0010799468449931412,
+    "input": false,
+    "src": [
+     {
+      "n": "header.masthead > nav.tabs",
+      "p": [
+       0,
+       56
+      ],
+      "c": [
+       0,
+       56
+      ]
+     }
+    ]
+   }
+  ],
+  "console": []
+ },
+ "#/suppliers?tab=country": {
+  "preboot_views": [
+   "suppliers"
+  ],
+  "preboot_subs": [
+   "timeline"
+  ],
+  "preboot_stage": [
+   "1"
+  ],
+  "postboot_views": [
+   "suppliers"
+  ],
+  "router": "suppliers",
+  "first_poll_with_view": 1150,
+  "boot_at": 8044,
+  "fcp": 7368,
+  "lcp": {
+   "t": 7368,
+   "size": 37111,
+   "el": "div.view-head > p.dek",
+   "url": ""
+  },
+  "cls": 0.0011,
+  "shifts": [
+   {
+    "t": 8031.799999952316,
+    "v": 0.0010799468449931412,
+    "input": false,
+    "src": [
+     {
+      "n": "header.masthead > nav.tabs",
+      "p": [
+       0,
+       56
+      ],
+      "c": [
+       0,
+       56
+      ]
+     }
+    ]
+   }
+  ],
+  "console": []
+ },
+ "#/controls": {
+  "preboot_views": [
+   "controls"
+  ],
+  "preboot_subs": [
+   "stage"
+  ],
+  "preboot_stage": [
+   "1"
+  ],
+  "postboot_views": [
+   "controls"
+  ],
+  "router": "controls",
+  "first_poll_with_view": 1279,
+  "boot_at": 5208,
+  "fcp": 1984,
+  "lcp": {
+   "t": 1984,
+   "size": 36288,
+   "el": "div.view-head > h1",
+   "url": ""
+  },
+  "cls": 0.0011,
+  "shifts": [
+   {
+    "t": 5138.199999988079,
+    "v": 0.0010799468449931412,
+    "input": false,
+    "src": [
+     {
+      "n": "header.masthead > nav.tabs",
+      "p": [
+       0,
+       56
+      ],
+      "c": [
+       0,
+       56
+      ]
+     }
+    ]
+   }
+  ],
+  "console": []
+ },
+ "#/exposure/asml": {
+  "preboot_views": [
+   "controls"
+  ],
+  "preboot_subs": [
+   "stage,exposure"
+  ],
+  "preboot_stage": [
+   "1"
+  ],
+  "postboot_views": [
+   "controls"
+  ],
+  "router": "controls",
+  "first_poll_with_view": 806,
+  "boot_at": 5135,
+  "fcp": 964,
+  "lcp": {
+   "t": 964,
+   "size": 36288,
+   "el": "div.view-head > h1",
+   "url": ""
+  },
+  "cls": 0.0011,
+  "shifts": [
+   {
+    "t": 5098.899999976158,
+    "v": 0.0010799468449931412,
+    "input": false,
+    "src": [
+     {
+      "n": "header.masthead > nav.tabs",
+      "p": [
+       0,
+       56
+      ],
+      "c": [
+       0,
+       56
+      ]
+     }
+    ]
+   }
+  ],
+  "console": []
+ },
+ "#/controls/2019-05-16-huawei-listed": {
+  "preboot_views": [
+   "controls"
+  ],
+  "preboot_subs": [
+   "stage"
+  ],
+  "preboot_stage": [
+   "1"
+  ],
+  "postboot_views": [
+   "controls"
+  ],
+  "router": "controls",
+  "first_poll_with_view": 852,
+  "boot_at": 4852,
+  "fcp": 1320,
+  "lcp": {
+   "t": 1320,
+   "size": 36288,
+   "el": "div.view-head > h1",
+   "url": ""
+  },
+  "cls": 0.0011,
+  "shifts": [
+   {
+    "t": 4843,
+    "v": 0.0010799468449931412,
+    "input": false,
+    "src": [
+     {
+      "n": "header.masthead > nav.tabs",
+      "p": [
+       0,
+       56
+      ],
+      "c": [
+       0,
+       56
+      ]
+     }
+    ]
+   }
+  ],
+  "console": []
+ },
+ "#/glossary": {
+  "preboot_views": [
+   "",
+   "glossary"
+  ],
+  "preboot_subs": [
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "1"
+  ],
+  "postboot_views": [
+   "glossary"
+  ],
+  "router": "glossary",
+  "first_poll_with_view": 2640,
+  "boot_at": 5014,
+  "fcp": 1680,
+  "lcp": {
+   "t": 2840,
+   "size": 36934,
+   "el": "div.view-head > p.dek",
+   "url": ""
+  },
+  "cls": 0.0011,
+  "shifts": [
+   {
+    "t": 4999.899999976158,
+    "v": 0.0010799468449931412,
+    "input": false,
+    "src": [
+     {
+      "n": "header.masthead > nav.tabs",
+      "p": [
+       0,
+       56
+      ],
+      "c": [
+       0,
+       56
+      ]
+     }
+    ]
+   }
+  ],
+  "console": []
+ },
+ "#gl-euv": {
+  "preboot_views": [
+   "",
+   "glossary"
+  ],
+  "preboot_subs": [
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "1"
+  ],
+  "postboot_views": [
+   "glossary"
+  ],
+  "router": "glossary",
+  "first_poll_with_view": 2596,
+  "boot_at": 4770,
+  "fcp": 804,
+  "lcp": {
+   "t": 2524,
+   "size": 36934,
+   "el": "div.view-head > p.dek",
+   "url": ""
+  },
+  "cls": 0.0011,
+  "shifts": [
+   {
+    "t": 4761.399999976158,
+    "v": 0.0010799468449931412,
+    "input": false,
+    "src": [
+     {
+      "n": "header.masthead > nav.tabs",
+      "p": [
+       0,
+       56
+      ],
+      "c": [
+       0,
+       56
+      ]
+     }
+    ]
+   }
+  ],
+  "console": []
+ },
+ "#/landscape": {
+  "preboot_views": [
+   "landscape"
+  ],
+  "preboot_subs": [
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "None"
+  ],
+  "postboot_views": [
+   "landscape"
+  ],
+  "router": "landscape",
+  "first_poll_with_view": 828,
+  "boot_at": 4887,
+  "fcp": 860,
+  "lcp": {
+   "t": 860,
+   "size": 74400,
+   "el": "div.view-head > p.dek",
+   "url": ""
+  },
+  "cls": 0.0015,
+  "shifts": [
+   {
+    "t": 4879.5,
+    "v": 0.0015344666280864196,
+    "input": false,
+    "src": [
+     {
+      "n": "header.masthead > nav.tabs",
+      "p": [
+       0,
+       56
+      ],
+      "c": [
+       0,
+       56
+      ]
+     },
+     {
+      "n": "figure.stage > div.stage-tag",
+      "p": [
+       823,
+       31
+      ],
+      "c": [
+       785,
+       35
+      ]
+     }
+    ]
+   }
+  ],
+  "console": []
+ },
+ "#/walk/lithography": {
+  "preboot_views": [
+   "walk"
+  ],
+  "preboot_subs": [
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "None"
+  ],
+  "postboot_views": [
+   "walk"
+  ],
+  "router": "walk",
+  "first_poll_with_view": 817,
+  "boot_at": 4843,
+  "fcp": 948,
+  "lcp": {
+   "t": 948,
+   "size": 253080,
+   "el": "div.wk-block > p.wk-p",
+   "url": ""
+  },
+  "cls": 0.0042,
+  "shifts": [
+   {
+    "t": 4835.100000023842,
+    "v": 0.004247500321502058,
+    "input": false,
+    "src": [
+     {
+      "n": "header.masthead > nav.tabs",
+      "p": [
+       0,
+       56
+      ],
+      "c": [
+       0,
+       56
+      ]
+     },
+     {
+      "n": "figure.stage > div.stage-tag",
+      "p": [
+       823,
+       31
+      ],
+      "c": [
+       668,
+       35
+      ]
+     }
+    ]
+   }
+  ],
+  "console": []
+ },
+ "#design-and-eda": {
+  "preboot_views": [
+   "stack"
+  ],
+  "preboot_subs": [
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "None"
+  ],
+  "postboot_views": [
+   "stack"
+  ],
+  "router": "stack",
+  "first_poll_with_view": 802,
+  "boot_at": 4821,
+  "fcp": 832,
+  "lcp": {
+   "t": 896,
+   "size": 147110,
+   "el": "div.plain > p",
+   "url": ""
+  },
+  "cls": 0.0056,
+  "shifts": [
+   {
+    "t": 4816.699999988079,
+    "v": 0.005616781603652263,
+    "input": false,
+    "src": [
+     {
+      "n": "header.masthead > nav.tabs",
+      "p": [
+       0,
+       56
+      ],
+      "c": [
+       0,
+       56
+      ]
+     },
+     {
+      "n": "figure.stage > div.stage-tag",
+      "p": [
+       823,
+       31
+      ],
+      "c": [
+       630,
+       35
+      ]
+     }
+    ]
+   }
+  ],
+  "console": []
+ },
+ "#component-costs": {
+  "preboot_views": [
+   "stack"
+  ],
+  "preboot_subs": [
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "None"
+  ],
+  "postboot_views": [
+   "stack"
+  ],
+  "router": "stack",
+  "first_poll_with_view": 793,
+  "boot_at": 4877,
+  "fcp": 824,
+  "lcp": {
+   "t": 824,
+   "size": 112039,
+   "el": "div#howto.howto > p.howto-lede",
+   "url": ""
+  },
+  "cls": 0.0063,
+  "shifts": [
+   {
+    "t": 4858.800000011921,
+    "v": 0.006329546641911007,
+    "input": false,
+    "src": [
+     {
+      "n": "header.masthead > nav.tabs",
+      "p": [
+       0,
+       56
+      ],
+      "c": [
+       0,
+       56
+      ]
+     },
+     {
+      "n": "figure.stage > div.stage-tag",
+      "p": [
+       823,
+       31
+      ],
+      "c": [
+       610,
+       35
+      ]
+     }
+    ]
+   }
+  ],
+  "console": []
+ },
+ "#main": {
+  "preboot_views": [
+   "stack"
+  ],
+  "preboot_subs": [
+   "stage,timeline"
+  ],
+  "preboot_stage": [
+   "None"
+  ],
+  "postboot_views": [
+   "stack"
+  ],
+  "router": "stack",
+  "first_poll_with_view": 807,
+  "boot_at": 4952,
+  "fcp": 844,
+  "lcp": {
+   "t": 844,
+   "size": 112039,
+   "el": "div#howto.howto > p.howto-lede",
+   "url": ""
+  },
+  "cls": 0.0056,
+  "shifts": [
+   {
+    "t": 4947.800000011921,
+    "v": 0.005616781603652263,
+    "input": false,
+    "src": [
+     {
+      "n": "header.masthead > nav.tabs",
+      "p": [
+       0,
+       56
+      ],
+      "c": [
+       0,
+       56
+      ]
+     },
+     {
+      "n": "figure.stage > div.stage-tag",
+      "p": [
+       823,
+       31
+      ],
+      "c": [
+       630,
+       35
+      ]
+     }
+    ]
+   }
+  ],
+  "console": []
+ }
+}

@@ -29,7 +29,6 @@
 .wk-tabs .wk-tab::after { content: "\00a0\2192"; color: var(--line-2); font-weight: 400; }
 .wk-tabs a:hover .wk-tab, .wk-tabs a:focus-visible .wk-tab { background: none; color: var(--accent); }
 .wk-tabs a:hover .wk-tab::after { color: var(--accent); }
-.wk-tabs a:focus-visible { outline: none; }
 .wk-tabs span { display: block; font-size: var(--fs-small); line-height: 1.45; }
 
 /* ---------- the chain at a glance: under the hero, at every width ----------

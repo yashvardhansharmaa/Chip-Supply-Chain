@@ -1,40 +1,59 @@
-name: Build and deploy to GitHub Pages
+name: Build, check and deploy to GitHub Pages
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
+# read-only by default; only the deploy job may write to Pages
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
+# one deploy at a time, and a running deploy is never cancelled halfway
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      # the build dates pages by the local day; this keeps CI on the owner's day (US Eastern), as on the Mac
+      TZ: America/New_York
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      # actions are pinned to commit IDs; the comment names the release (the same code the v4 and v3 tags ran before)
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
-          node-version: 20
+          node-version: 22
+      # no file over 5 MB in git outside dist/ and media/
+      - run: node qa/scripts/check-size.js
+      # the build stops on broken content (bad JSON, a missing chapter field, a misspelt band, a figure marker with no figure)
       - run: node build/build.js
-      - run: cat dist/build-report.txt
-      # every citation must come from a tier A or B source (data/source-tiers.json); a failure here stops the deploy
+      - name: Page dates match the committed file
+        run: git diff --quiet -- build/page-dates.json || echo "::warning file=build/page-dates.json::This build moved page dates. Build on the Mac and commit build/page-dates.json with the change, or the live dates drift."
+      # every citation must come from a tier A or B source (data/source-tiers.json)
       - run: node qa/scripts/check-sources.js
-      - uses: actions/upload-pages-artifact@v3
+      # internal links, ids and the data files agree with each other
+      - run: node qa/scripts/check-integrity.js
+      # no Claude-speak in the reader-facing text
+      - run: node qa/scripts/check-speak.js
+      # every route in headless Chrome: console errors, sideways scroll at 320 and 390, key parts, the light default
+      - run: node qa/scripts/smoke.js
+      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
         with:
           path: dist
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5

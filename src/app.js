@@ -5,7 +5,9 @@
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var DATA = window.CP_DATA || {};
   var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var narrow = function () { return window.innerWidth < 900; };
+  // under 900 px wide, read from a media query: reading window.innerWidth made the browser lay the page out first
+  var wideMQ = window.matchMedia ? matchMedia('(min-width: 900px)') : null;
+  var narrow = function () { return wideMQ ? !wideMQ.matches : window.innerWidth < 900; };
   var safeUrl = function (u) { var v = String(u == null ? '' : u).trim(); return /^(https?:|mailto:|#|\/)/i.test(v) ? esc(v) : '#'; }; // data-fed link targets may only be web links, mail, fragments or site paths
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var dec = function (s) { try { return decodeURIComponent(s); } catch (e) { return s; } }; // a hand-typed "#%" is not valid escaping and must not throw the router
@@ -26,8 +28,10 @@
   /* every scroll the script makes to an element goes through here, so a title never lands under the masthead or the rail */
   var scrollToEl = function (el, smooth) {
     if (!el || !el.getBoundingClientRect) return;
+    var glide = !!smooth && !reduced;
+    if (glide) Sizes.before(el); // the chapters a glide passes take their real heights first, so it lands on el
     var y = Math.max(0, Math.round(el.getBoundingClientRect().top + window.pageYOffset - landAt(el)));
-    var root = document.documentElement, prev = root.style.scrollBehavior, glide = !!smooth && !reduced;
+    var root = document.documentElement, prev = root.style.scrollBehavior;
     if (!glide) root.style.scrollBehavior = 'auto'; // html has scroll-behavior: smooth; a jump must not animate 30,000 px
     window.scrollTo({ top: y, behavior: glide ? 'smooth' : 'auto' });
     if (!glide) root.style.scrollBehavior = prev;
@@ -93,6 +97,21 @@
   var Stage = {
     ok: false, gl: null, canvas: null, cache: {}, cur: null, prev: null, transStart: 0, transDur: reduced ? 1 : 1100,
     spin: 0, scrollAngle: 0, lastT: 0, userYaw: 0, userPitch: 0, held: false, dragging: false, ink: [0.07, 0.09, 0.1], accent: [0.79, 0.54, 0.07], dpr: 1, w: 0, h: 0, hidden: false, active: true,
+    /* Clouds are sized to the canvas they are drawn on. The phone strip's 116 px thumbnail ("thumb", any canvas under 200 px
+       on its short side) takes THUMB of the points a full-size stage gets, and a specimen is built again at full size when the
+       strip expands. lvl is the size of the canvas now; null until it has been laid out. */
+    lvl: null, THUMB: 0.4, queue: [], idling: false,
+    level: function (r) { r = r || this.canvas.getBoundingClientRect(); return !r.width || !r.height ? null : Math.min(r.width, r.height) < 200 ? 'thumb' : 'full'; },
+    density: function (lvl) { return (narrow() ? 0.55 : (window.devicePixelRatio > 1.5 ? 0.85 : 1)) * (lvl === 'thumb' ? this.THUMB : 1); },
+    // specimens to build while the browser is idle, before the reader reaches them, and only while the stage is showing
+    soon: function (names) { var self = this; (names || []).forEach(function (n) { if (n && self.queue.indexOf(n) < 0) self.queue.push(n); }); this.idle(); },
+    idle: function () {
+      var self = this;
+      if (this.idling || !this.queue.length || !this.ok || !this.active) return; // setVisible(true) picks the queue up again
+      this.idling = true;
+      var go = function () { self.idling = false; if (!self.active) return; var n = self.queue.shift(); if (n) self.build(n, null); self.idle(); };
+      if (window.requestIdleCallback) requestIdleCallback(go, { timeout: 2000 }); else setTimeout(go, 300);
+    },
     init: function () {
       this.canvas = $('#stage-canvas');
       this.fig = $('.stage');
@@ -117,7 +136,6 @@
       this.loc = { aP: gl.getAttribLocation(prog, 'aP'), uMVP: gl.getUniformLocation(prog, 'uMVP'), uSize: gl.getUniformLocation(prog, 'uSize'), uOp: gl.getUniformLocation(prog, 'uOp'), uInk: gl.getUniformLocation(prog, 'uInk'), uAcc: gl.getUniformLocation(prog, 'uAcc'), uAcc2: gl.getUniformLocation(prog, 'uAcc2') };
       gl.enableVertexAttribArray(this.loc.aP);
       gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA); gl.disable(gl.DEPTH_TEST);
-      PC.density = narrow() ? 0.55 : (window.devicePixelRatio > 1.5 ? 0.85 : 1);
       this.ok = true;
       this.refreshColors();
       var self = this;
@@ -151,16 +169,25 @@
       this.w = Math.max(1, Math.round(r.width * this.dpr)); this.h = Math.max(1, Math.round(r.height * this.dpr));
       if (this.canvas.width !== this.w || this.canvas.height !== this.h) { this.canvas.width = this.w; this.canvas.height = this.h; }
       this.gl.viewport(0, 0, this.w, this.h);
+      var l = this.level(r);
+      if (l) this.lvl = l;
+      // the strip expanded (or the window grew): the specimen on show is built again for the bigger canvas, in place
+      if (this.cur && this.lvl && this.cur.lvl !== this.lvl) {
+        var s = this.build(this.cur.name, this.cur.params);
+        if (s && s !== this.cur) { s.spinBase = this.cur.spinBase; if (this.prev === this.cur) this.prev = null; this.cur = s; }
+      }
     },
     build: function (name, params) {
       if (!this.ok || !name) return null; // no context: building the cloud would cost the work and then throw at the buffer
-      var key = name + '|' + JSON.stringify(params || {});
+      var lvl = this.lvl || (narrow() ? 'thumb' : 'full'); // before the canvas is laid out: a phone shows the strip
+      var key = name + '|' + JSON.stringify(params || {}) + '|' + lvl;
       if (this.cache[key]) return this.cache[key];
       var spec;
+      PC.density = this.density(lvl);
       try { spec = PC.build(name, params); } catch (e) { console.warn('specimen failed:', name, e.message); return null; }
       var gl = this.gl, vbo = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, vbo); gl.bufferData(gl.ARRAY_BUFFER, spec.cloud, gl.STATIC_DRAW);
-      var slot = { key: key, vbo: vbo, n: PC.count(spec.cloud), spin: spec.spin, tilt: spec.tilt, turntable: !!spec.turntable, caption: spec.caption, spinBase: 0,
+      var slot = { key: key, name: name, params: params || null, lvl: lvl, vbo: vbo, n: PC.count(spec.cloud), spin: spec.spin, tilt: spec.tilt, turntable: !!spec.turntable, caption: spec.caption, spinBase: 0,
         spec: { accent: spec.accent, accent2: spec.accent2, accentDark: spec.accentDark, accent2Dark: spec.accent2Dark }, colors: null };
       this.cache[key] = slot;
       return slot;
@@ -178,7 +205,7 @@
       this.scrollAngle = 0; this.userYaw = 0; this.userPitch = 0;
     },
     // with no WebGL there is nothing to draw, so the figure stays hidden rather than framing an empty canvas under a stale tag
-    setVisible: function (v) { var self = this; this.active = v; if (!this.fig) return; var show = v && this.ok; this.fig.setAttribute('data-hidden', show ? '0' : '1'); if (show) { this.resize(); requestAnimationFrame(function () { self.resize(); }); } },
+    setVisible: function (v) { var self = this; this.active = v; if (!this.fig) return; var show = v && this.ok; this.fig.setAttribute('data-hidden', show ? '0' : '1'); if (show) { this.resize(); requestAnimationFrame(function () { self.resize(); }); this.idle(); } },
     draw: function (slot, op, extraRot, sc) {
       var gl = this.gl, aspect = this.w / this.h;
       var P = perspective(34 * Math.PI / 180, aspect, 0.1, 40);
@@ -239,7 +266,7 @@
       var gl = this.gl;
       gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
       if (!this.cur) return;
-      if (!reduced && !this.held) this.spin += (this.cur.spin || 0.1) * dt; // the idle turn pauses while the pointer rests on the specimen
+      if (!reduced && !this.held && !this.still) this.spin += (this.cur.spin || 0.1) * dt; // the idle turn pauses while the pointer rests on the specimen, and stops while the reader has paused it (Band.init)
       var k = easeOut((t - this.transStart) / this.transDur);
       if (this.prev && k < 1) this.draw(this.prev, 1 - k, 0.35 * k, 1 + 0.04 * k);
       else this.prev = null;
@@ -256,15 +283,45 @@
       var toggle = $('.stage-toggle'), menu = $('.stage-menu'), sheet = $('#sheet');
       this.set(true);
       if (toggle) toggle.addEventListener('click', function () { self.set(!self.collapsed); });
-      var open = function (v) { if (!sheet) return; sheet.hidden = !v; document.documentElement.style.overflow = v ? 'hidden' : ''; if (v) { var c = $('.sheet-close'); if (c) c.focus(); } };
+      // the sheet is a modal (aria-modal in src/template.html): while it stands, the page behind and the skip link are inert, so
+      // Tab stays in the sheet. Closing gives focus back to the button that opened it, or after a link to the heading the link
+      // lands on (Keys.land). A call that changes nothing (the resize below, on every resize) leaves focus alone
+      var opener = null;
+      var open = function (v, href) {
+        if (!sheet) return;
+        var was = !sheet.hidden;
+        sheet.hidden = !v; document.documentElement.style.overflow = v ? 'hidden' : '';
+        if (v === was) return;
+        [$('#app'), $('.skip')].forEach(function (el) { if (el) el.inert = v; });
+        if (v) { opener = document.activeElement; var c = $('.sheet-close'); if (c) c.focus(); return; }
+        var back = opener; opener = null;
+        if (href) Keys.land(href);
+        else if (back && back.focus && document.contains(back)) { try { back.focus({ preventScroll: true }); } catch (e) { } }
+      };
       if (menu) menu.addEventListener('click', function () { open(true); });
       if (sheet) {
-        sheet.addEventListener('click', function (e) { if (e.target.closest('a') || e.target.closest('.sheet-close')) { open(false); self.set(true); } });
+        sheet.addEventListener('click', function (e) { var a = e.target.closest('a'); if (a || e.target.closest('.sheet-close')) { open(false, a ? a.getAttribute('href') : null); self.set(true); } });
         document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) open(false); });
         // Back and Forward leave the sheet standing over the new view with the page still locked, so close it on any route change
         window.addEventListener('hashchange', function () { if (!sheet.hidden) open(false); });
       }
       window.addEventListener('resize', function () { if (!narrow()) { open(false); self.set(true); } });
+      // the turn's pause (WCAG 2.2.2: the specimen turns for as long as the page is open). One button, at the end of the plate
+      // tag on a laptop and over the thumbnail's corner on a phone (src/styles.css .stage-pause); Stage.loop holds the turn while
+      // Stage.still is set, and the choice is kept on this device. Reduced motion never turns the specimen, so it gets no button
+      var tag = $('.stage-tag', this.el);
+      if (!reduced && tag) {
+        var still = false; try { still = localStorage.getItem('cp-still') === '1'; } catch (e) { }
+        var pb = document.createElement('button'); pb.type = 'button'; pb.className = 'stage-pause';
+        var draw = function () {
+          Stage.still = still;
+          var say = still ? 'Resume the turn' : 'Pause the turn';
+          pb.setAttribute('aria-label', say); pb.title = say;
+          pb.innerHTML = still ? '<svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 1.5v9l7.5-4.5z"/></svg>' : '<svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 1.5h2.5v9H2.5zM7 1.5h2.5v9H7z"/></svg>';
+        };
+        pb.addEventListener('click', function () { still = !still; try { localStorage.setItem('cp-still', still ? '1' : '0'); } catch (e) { } draw(); });
+        draw(); tag.appendChild(pb);
+      }
     },
     set: function (collapsed) {
       this.collapsed = collapsed;
@@ -286,6 +343,15 @@
       // scroll is not taken for the reader's
       window.addEventListener('scroll', function () { if (self.current === 'stack' && self.place && (history.state || {}).cpPlace === self.place) self.places[self.place] = window.pageYOffset; }, { passive: true });
       window.addEventListener('hashchange', function () { self.route(); });
+      // chapter links carry their static page as the href, for search engines, and the app's route in data-route: a plain
+      // click stays in the app (a click on the route already showing lands it again); a new-tab click opens the static page
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest ? e.target.closest('a[data-route]') : null;
+        if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+        e.preventDefault();
+        var r = a.getAttribute('data-route');
+        if (r === location.hash) self.route(); else location.hash = r;
+      });
       var wm = $('.wordmark'); // the wordmark always takes you back to the top of the stack
       if (wm) wm.addEventListener('click', function (e) { e.preventDefault(); if (location.hash && location.hash !== '#/') location.hash = '#/'; window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' }); });
       this.route();
@@ -327,14 +393,18 @@
         $$('#controls-subtabs a').forEach(function (a) { if (a.getAttribute('data-sub') === sub) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
       }
       $$('.view').forEach(function (s) { s.hidden = s.getAttribute('data-view') !== v; });
-      $$('.tabs a').forEach(function (a) { var dv = a.getAttribute('data-view'); var on = dv === v; if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
-      if (narrow()) { var onTab = $('.tabs a[aria-current="page"]'); if (onTab && onTab.scrollIntoView) onTab.scrollIntoView({ block: 'nearest', inline: 'nearest' }); } // the phone tab strip scrolls; keep the current tab in view
-      if (v === 'stack' && !this.artSoon) { // the chain is the page that prints, so its cover art comes in once the page has loaded and gone idle
-        this.artSoon = true;
-        var art = function () { if (window.CP_ART) window.CP_ART(); };
-        var later = function () { if (window.requestIdleCallback) requestIdleCallback(art, { timeout: 5000 }); else setTimeout(art, 1500); };
-        if (document.readyState === 'complete') later(); else window.addEventListener('load', later, { once: true });
+      // Until the first route the template's CSS showed the view the address names (read in <head> by src/preroute.js), so it
+      // could paint while the page arrived. From here the hidden attributes decide. A reader who scrolled or tapped in that
+      // time keeps their place: the first route neither returns them to the top nor jumps to the anchor (kept).
+      var pre = window.CP_PRE || {}, first = !this.routed, kept = first && !!pre.touched;
+      if (first) {
+        document.documentElement.classList.add('booted');
+        if (pre.view && pre.view !== v) console.warn('src/preroute.js showed "' + pre.view + '" while the page loaded, but the router opens "' + v + '" for ' + location.hash);
       }
+      $$('.tabs a').forEach(function (a) { var dv = a.getAttribute('data-view'); var on = dv === v; if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+      if (narrow()) { var strip = $('.tabs'), onTab = $('.tabs a[aria-current="page"]'); if (strip && onTab) { var sr = strip.getBoundingClientRect(), tr = onTab.getBoundingClientRect(); if (tr.left < sr.left) strip.scrollLeft -= sr.left - tr.left; else if (tr.right > sr.right) strip.scrollLeft += tr.right - sr.right; } } // the phone tab strip scrolls; keep the current tab in view by moving the strip alone (scrollIntoView would also move the Tab starting point to the tab, so the first Tab skipped the skip link)
+      // the printed cover's art is fetched only on the way to print (src/template.html), never because The Chain was read
+      if (v === 'stack') Sizes.wake();
       var mv = MODULE_VIEWS[v];
       Stage.setVisible(v === 'stack' || v === 'landscape' || v === 'walk' || !!(mv && mv.stage));
       if (mv && mv.activate) { try { mv.activate(); } catch (err) { console.warn('view module failed', v, err); } }
@@ -353,7 +423,7 @@
       this.exId = sub === 'exposure' ? exId : null;
       // no anchor to land on (or an entry address naming no entry), so start the new view at the top ("#/" included); a view that
       // places the page itself (the walk returning the reader to the step they left) says so through owns()
-      if ((changed || leftEntry || leftFirm) && !anchor && !focused && backY === null && !(mv && mv.owns && mv.owns())) window.scrollTo(0, 0);
+      if ((changed || leftEntry || leftFirm) && !anchor && !focused && backY === null && !kept && !(mv && mv.owns && mv.owns())) window.scrollTo(0, 0);
       if (v === 'stack' || v === 'walk') {
         if (backY !== null) { // Back or Forward to an entry of the chain: the place the reader left, at once
           var root = document.documentElement, sb = root.style.scrollBehavior;
@@ -361,7 +431,7 @@
           this.booted = true;
         } else if (anchor) {
           var el = document.getElementById(anchor);
-          if (el) {
+          if (el && !kept) {
             var jumpIt = !this.booted || changed;
             scrollToEl(el, !jumpIt); // first load or a new view: jump, do not animate 30,000 px; within the view: glide
             if (jumpIt) this.settle(el);
@@ -371,19 +441,29 @@
         Sections.update();
       }
       this.routed = true;
-      var label = { stack: 'The Chain', landscape: 'AI Chips', suppliers: 'Suppliers', controls: sub === 'exposure' ? 'China revenue share' : 'Export Controls', glossary: 'Glossary' }[v];
-      document.title = (v === 'home' || !label) ? 'Chip Supply Chain' : 'Chip Supply Chain · ' + label;
+      this.title();
       // one page view per route change (the counter counts the first load itself)
       var gc = window.goatcounter;
       if (gc && gc.path) { var pth = gc.path(); if (this.counted === undefined) this.counted = pth; else if (pth !== this.counted && gc.count) { this.counted = pth; try { gc.count(); } catch (err) { } } }
     },
+    /* the tab's title: the approved title of the matching static page (build/page-titles.json, through the cp-titles meta),
+       and on The Chain the chapter in view, so seventeen open chapters no longer all read "The Chain" */
+    title: function () {
+      if (!this.titles) { try { this.titles = JSON.parse(document.querySelector('meta[name="cp-titles"]').getAttribute('content')) || {}; } catch (e) { this.titles = {}; } }
+      var T = this.titles, v = this.current, ch = v === 'stack' && Sections.currentId ? '/' + Sections.currentId + '/' : '';
+      var page = { walk: '/', landscape: '/chips/', suppliers: '/suppliers/', controls: '/export-controls/', glossary: '/glossary/' }[v];
+      document.title = (ch && T[ch]) || (page && T[page]) || (v === 'stack' ? 'The Chain · Chip Supply Chain' : T['/'] || 'Chip Supply Chain');
+    },
     /* a jump lands before the web fonts, late images and freshly built rows settle, and anything reflowing above the target
        moves it; for the next second or two, put it back whenever it has drifted, unless the reader has started to scroll or gone elsewhere */
     settle: function (el) {
+      // each settle takes a number, and a newer one retires the older: a Glossary passage link settles the passage after the
+      // router has settled its chapter, and the chapter must not pull the page back to its top (correctness P1-1)
+      var self = this, gen = this.settleGen = (this.settleGen || 0) + 1;
       var moved = false, h0 = location.hash, mark = function () { moved = true; };
       ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (t) { window.addEventListener(t, mark, { passive: true, once: true }); });
       var again = function () {
-        if (moved || location.hash !== h0 || !document.contains(el) || el.closest('[hidden]')) return;
+        if (gen !== self.settleGen || moved || location.hash !== h0 || !document.contains(el) || el.closest('[hidden]')) return;
         if (Math.abs(el.getBoundingClientRect().top - landAt(el)) > 2) scrollToEl(el, false);
       };
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { setTimeout(again, 30); });
@@ -430,10 +510,98 @@
       var id = best.id || best.getAttribute('data-specimen');
       if (id !== this.currentId) {
         this.currentId = id;
+        if (Router.current === 'stack') Router.title();
         var num = best.getAttribute('data-number');
         Stage.show(best.getAttribute('data-specimen'), null, best.getAttribute('data-caption') ? esc(best.getAttribute('data-caption')) : null,
           num ? 'Specimen <b>' + num + '</b> · ' + esc(best.getAttribute('data-title') || '') : 'Specimen <b>00</b> · the whole chip');
+        // a phone builds only the next two specimens ahead of the reader (a wide screen queues them all at boot)
+        if (narrow()) {
+          var ahead = [];
+          for (var j = items.indexOf(best) + 1; j < items.length && ahead.length < 2; j++) { var nm = items[j].getAttribute('data-specimen'); if (nm && nm !== best.getAttribute('data-specimen') && ahead.indexOf(nm) < 0) ahead.push(nm); }
+          Stage.soon(ahead);
+        }
       }
+    }
+  };
+
+  /* ---------------- chapters off screen (content-visibility, styles.css) ----------------
+     An off-screen chapter skips its layout and stands at an estimated height, which makes showing The Chain cheap. Once a
+     chapter has been laid out its real height is remembered (contain-intrinsic-size: auto). A chapter above the reader never
+     changes height under them: they either scrolled past it (so it was laid out) or arrived by a link, and then
+     src/preroute.js laid out every chapter above the anchor before landing. While the browser is idle, Sizes lays out each
+     chapter below the window once, so the page's height and every anchor come to rest on real heights. A glide before that
+     lays out the chapters it passes first, or it would land where the estimates put the target. */
+  var Sizes = {
+    list: null, busy: false, anchors: !!(window.CSS && CSS.supports && CSS.supports('overflow-anchor', 'auto')),
+    init: function () {
+      this.list = $$('[data-view="stack"] article.chapter');
+      // a chapter the reader has had on screen has been laid out, and its height is remembered
+      this.list.forEach(function (ch) { ch.addEventListener('contentvisibilityautostatechange', function (e) { if (!e.skipped) ch._sized = true; }); });
+      // one held open before boot (src/preroute.js, the chapter above a deep link) has its real height already
+      var held = this.list.filter(function (c) { return c.classList.contains('cv-open'); });
+      held.forEach(function (c) { c._sized = true; });
+      if (held.length) this.release(held);
+    },
+    // after the next frame has recorded each height, the chapters may skip again: off screen, each keeps its real height.
+    // One on screen stays laid out (let go, it would skip for a frame and blink). A browser that remembers no height would
+    // put the estimate back, so such a chapter simply stays laid out too
+    release: function (chs) {
+      requestAnimationFrame(function () {
+        setTimeout(function () {
+          var vh = window.innerHeight;
+          chs = chs.filter(function (c) { var r = c.getBoundingClientRect(); return !(r.bottom > 0 && r.top < vh); });
+          var hs = chs.map(function (c) { return c.offsetHeight; });
+          chs.forEach(function (c) { c.classList.remove('cv-open'); });
+          chs.forEach(function (c, k) { if (Math.abs(c.offsetHeight - hs[k]) > 1) c.classList.add('cv-open'); });
+        }, 0);
+      });
+    },
+    // lay out these chapters now; any above the window take their real heights without moving what is on screen
+    open: function (chs) {
+      // a chapter on screen is laid out already (it may have come on screen before boot, unseen by init), and holding it
+      // open and letting it go would skip it for a frame
+      var vh = window.innerHeight;
+      chs = chs.filter(function (c) { if (c._sized) return false; var r = c.getBoundingClientRect(); if (r.bottom > 0 && r.top < vh) { c._sized = true; return false; } return true; });
+      if (!chs.length || Router.current !== 'stack') return;
+      // A browser with scroll anchoring keeps the view still by itself, and does not count that as the page moving. Safari has
+      // none, so there the view is held still by hand: the first chapter still on screen goes back to where it was.
+      var root = document.documentElement, ref = null, top0 = 0;
+      if (!this.anchors) for (var i = 0; i < this.list.length; i++) { var r = this.list[i].getBoundingClientRect(); if (r.bottom > 0) { ref = this.list[i]; top0 = r.top; break; } }
+      chs.forEach(function (c) { c.classList.add('cv-open'); c._sized = true; });
+      var d = ref ? ref.getBoundingClientRect().top - top0 : (void document.body.offsetHeight, 0); // the layout happens here, not in the next frame
+      if (Math.abs(d) >= 1) { var sb = root.style.scrollBehavior; root.style.scrollBehavior = 'auto'; window.scrollBy(0, d); root.style.scrollBehavior = sb; }
+      this.release(chs);
+    },
+    // before a glide to el: the chapters between the window and el, which the glide would lay out on its way
+    before: function (el) {
+      if (!this.list || !el || !el.closest) return;
+      var host = el.closest('article.chapter'), at = host ? this.list.indexOf(host) : -1;
+      if (at < 0 && !(el.closest('[data-view="stack"]'))) return;
+      if (at < 0) at = this.list.length; // the footer, past every chapter
+      var here = 0;
+      for (var i = 0; i < this.list.length; i++) if (this.list[i].getBoundingClientRect().bottom > 0) { here = i; break; }
+      this.open(this.list.slice(0, Math.max(at, here) + 1));
+    },
+    // once the page has loaded, one chapter per idle moment, nearest below the window first; never one above the reader
+    wake: function () {
+      var self = this;
+      if (this.busy || !this.list) return;
+      this.busy = true;
+      var later = window.requestIdleCallback ? function (f) { requestIdleCallback(f); } : function (f) { setTimeout(f, 200); }; // Safari has no idle callback
+      var step = function (dl) {
+        self.busy = false;
+        if (Router.current !== 'stack') return; // the chain is hidden; the next visit wakes this again
+        var left = self.list.filter(function (c) { return !c._sized; });
+        if (!left.length) return;
+        self.busy = true;
+        if (dl && dl.timeRemaining && dl.timeRemaining() < 12) { later(step); return; } // too little of this idle moment left
+        var below = left.filter(function (c) { return c.getBoundingClientRect().top > window.innerHeight; });
+        if (!below.length) { self.busy = false; return; } // nothing left below the window
+        self.open([below[0]]);
+        later(step);
+      };
+      var start = function () { later(step); };
+      if (document.readyState === 'complete') start(); else window.addEventListener('load', start, { once: true });
     }
   };
 
@@ -496,8 +664,8 @@
       var srow = $('#cxa-row');
       if (srow) srow.addEventListener('click', function (e) {
         var b = e.target.closest('button[data-act]'); if (!b) return;
-        var i = +b.closest('.cxa-slot').getAttribute('data-i'), act = b.getAttribute('data-act');
-        if (act === 'choose') { if (self.pop && self.pop.trigger === b) self.closePicker(true); else self.openPicker(i, b); }
+        var i = b.hasAttribute('data-slot') ? +b.getAttribute('data-slot') : +b.closest('.cxa-slot').getAttribute('data-i'), act = b.getAttribute('data-act');
+        if (act === 'choose') { if (self.pop && self.pop.trigger === b) self.closePicker(true); else self.openPicker(i, b, 'slot'); }
         else if (act === 'remove') { self.setSlot(i, ''); self.focusSlot(Math.min(i, self.picked.length)); }
         else if (act === 'try') { self.setSlot(i, b.getAttribute('data-id')); self.focusSlot(i); }
       });
@@ -512,18 +680,40 @@
       if (clear) clear.addEventListener('click', function () { self.clear(); self.focusSlot(0); });
       var plans = $('#cx-plans');
       if (plans) {
-        plans.addEventListener('click', function (e) { var b = e.target.closest('button[data-id]'); if (b) self.focus(b.getAttribute('data-id')); });
+        plans.addEventListener('click', function (e) {
+          var a = e.target.closest('button[data-act]'); if (a) { self.colAct(a, '#cx-plans'); return; }
+          var b = e.target.closest('button[data-id]'); if (b) self.focus(b.getAttribute('data-id'));
+        });
         plans.addEventListener('keydown', function (e) { self.arrows(e, $$('button[data-id]', plans)); });
       }
+      // the bar that follows the reader once the slots scroll away: each chip with its ×, + Add, Clear
+      var bar = $('#cxs-in');
+      if (bar) bar.addEventListener('click', function (e) {
+        var b = e.target.closest('button[data-bar]'); if (!b) return;
+        var act = b.getAttribute('data-bar'), i = +b.getAttribute('data-slot');
+        if (act === 'name' || act === 'add') { // back to the slot, its picker open
+          scrollToEl($('#cx-slots'), false); self.updateBar();
+          var t = $('#cxa-row .cxa-slot[data-i="' + (act === 'add' ? self.picked.length : i) + '"] [data-act="choose"]');
+          if (t) self.openPicker(act === 'add' ? self.picked.length : i, t, 'slot');
+        } else if (act === 'remove') {
+          self.setSlot(i, '');
+          var n = self.picked.length, next = n && $('#cxs-in [data-bar="name"][data-slot="' + Math.min(i, n - 1) + '"]');
+          if (next) next.focus(); else self.focusSlot(0);
+        } else if (act === 'clear') { self.clear(); self.focusSlot(0); }
+      });
+      var bt = 0;
+      window.addEventListener('scroll', function () { if (!bt) bt = requestAnimationFrame(function () { bt = 0; self.updateBar(); }); }, { passive: true });
+      window.addEventListener('hashchange', function () { setTimeout(function () { self.updateBar(); }, 0); }); // leaving AI Chips takes the bar and its scroll padding away
       var rt = null;
       window.addEventListener('resize', function () {
         if (Router.current !== 'landscape') return;
-        clearTimeout(rt); rt = setTimeout(function () { self.renderPlans(); self.scrollCue(); self.replacePicker(); }, 160);
+        clearTimeout(rt); rt = setTimeout(function () { self.renderPlans(); self.scrollCue(); self.replacePicker(); self.updateBar(); }, 160);
       });
       var tw = $('#cx-table-wrap');
       if (tw) tw.addEventListener('scroll', function () { self.scrollCue(); }, { passive: true });
       var tb = $('#cx-table');
       if (tb) tb.addEventListener('click', function (e) {
+        var a = e.target.closest('button[data-act]'); if (a) { self.colAct(a, '#cx-table'); return; }
         var j = e.target.closest('button[data-notes]');
         if (j) { var id = j.getAttribute('data-notes'); self.focus(id); self.jumpToNotes(id); return; }
         var b = e.target.closest('button[data-id]');
@@ -637,6 +827,10 @@
       var self = this, row = $('#cxa-row'); if (!row) return;
       var n = this.picked.length, shown = n < 2 ? 2 : Math.min(this.max, n + 1), html = '';
       for (var i = 0; i < shown; i++) html += this.slotHTML(i, n);
+      if (n === 1) { // Try with sits in its own cell under slot 2, so the cards in the row keep one height
+        var sug = (this.compare.with[this.picked[0]] || []).filter(function (s) { return self.byId(s) && self.picked.indexOf(s) < 0; }).slice(0, 3);
+        if (sug.length) html += '<p class="cxa-try"><span class="cxa-pk">Try with</span>' + sug.map(function (s) { var t = self.short(self.byId(s)); return '<button type="button" data-act="try" data-slot="1" data-id="' + esc(s) + '" aria-label="Add ' + esc(t) + ' as chip 2">' + esc(t) + '</button>'; }).join('') + '</p>';
+      }
       row.innerHTML = html;
       row.setAttribute('data-n', String(shown));
       var ask = $('#cxa-ask'); if (ask) ask.textContent = this.hint || this.guide();
@@ -652,17 +846,47 @@
       if (c) {
         return '<div class="cxa-slot" data-i="' + i + '" data-state="filled">' + head + '<div class="cxa-card cxa-chip">' +
           '<span class="cxa-thumb" aria-hidden="true">' + this.thumbSVG(c) + '</span>' +
-          '<span class="cxa-id"><b class="cxa-name" title="' + esc(c.name) + '">' + esc(c.name) + '</b><span class="cxa-meta">' + esc(this.metaLine(c)) + '</span></span>' +
+          '<span class="cxa-id"><b class="cxa-name">' + esc(c.name) + '</b><span class="cxa-meta">' + esc(this.metaLine(c)) + '</span></span>' +
           '<span class="cxa-acts"><button type="button" class="cxa-act" data-act="choose" aria-haspopup="dialog" aria-expanded="false" aria-label="Change chip ' + (i + 1) + ', ' + esc(c.name) + '">Change</button>' +
           '<button type="button" class="cxa-act" data-act="remove" aria-label="Remove ' + esc(c.name) + ' from chip ' + (i + 1) + '">Remove</button></span></div></div>';
       }
-      var text = state === 'more' ? 'Add a ' + this.ORD[i] + ' chip (optional)' : 'Choose a chip', tryHTML = '';
-      if (state === 'next' && n === 1) {
-        var sug = (this.compare.with[this.picked[0]] || []).filter(function (s) { return self.byId(s) && self.picked.indexOf(s) < 0; }).slice(0, 3);
-        if (sug.length) tryHTML = '<p class="cxa-try"><span class="cxa-pk">Try with</span>' + sug.map(function (s) { var t = self.short(self.byId(s)); return '<button type="button" data-act="try" data-id="' + esc(s) + '" aria-label="Add ' + esc(t) + ' as chip 2">' + esc(t) + '</button>'; }).join('') + '</p>';
-      }
+      var text = state === 'more' ? 'Add a ' + this.ORD[i] + ' chip (optional)' : 'Choose a chip';
       return '<div class="cxa-slot" data-i="' + i + '" data-state="' + state + '">' + head +
-        '<button type="button" class="cxa-card cxa-add" data-act="choose" aria-haspopup="dialog" aria-expanded="false" aria-describedby="' + k + '"><span class="cxa-plus" aria-hidden="true">+</span><span>' + esc(text) + '</span></button>' + tryHTML + '</div>';
+        '<button type="button" class="cxa-card cxa-add" data-act="choose" aria-haspopup="dialog" aria-expanded="false" aria-describedby="' + k + '"><span class="cxa-plus" aria-hidden="true">+</span><span>' + esc(text) + '</span></button></div>';
+    },
+    // Change and × on every column head of the comparison (a package card, a table column), so the reader never has to go back up
+    colActs: function (c, i) {
+      return { change: '<button type="button" class="cx-act" data-act="change" data-slot="' + i + '" aria-haspopup="dialog" aria-expanded="false" aria-label="Change chip ' + (i + 1) + ', ' + esc(c.name) + '">Change</button>',
+        remove: '<button type="button" class="cx-x" data-act="remove" data-slot="' + i + '" aria-label="Remove ' + esc(this.short(c)) + ' from the comparison"><span aria-hidden="true">&times;</span></button>' };
+    },
+    colAct: function (b, region) { // region: '#cx-plans' or '#cx-table'; focus stays in that region after the change
+      var i = +b.getAttribute('data-slot'), act = b.getAttribute('data-act');
+      if (act === 'change') { if (this.pop && this.pop.trigger === b) this.closePicker(true); else this.openPicker(i, b, region); return; }
+      if (act !== 'remove') return;
+      this.setSlot(i, '');
+      var n = this.picked.length, next = n && $(region + ' [data-act="change"][data-slot="' + Math.min(i, n - 1) + '"]');
+      if (next) next.focus(); else this.focusSlot(0);
+    },
+    renderBar: function () {
+      var self = this, host = $('#cxs-in'); if (!host) return;
+      var n = this.picked.length;
+      host.innerHTML = '<span class="cxs-k">Comparing</span><span class="cxs-list">' + this.picked.map(function (id, i) {
+        var c = self.byId(id), t = c ? self.short(c) : id;
+        return '<span class="cxs-chip"><button type="button" class="cxs-name" data-bar="name" data-slot="' + i + '" title="' + esc(c ? c.name : id) + '" aria-label="Change ' + esc(t) + ', chip ' + (i + 1) + '">' + esc(t) + '</button>' +
+          '<button type="button" class="cxs-x" data-bar="remove" data-slot="' + i + '" aria-label="Remove ' + esc(t) + ' from the comparison"><span aria-hidden="true">&times;</span></button></span>';
+      }).join('') + (n < this.max ? '<button type="button" class="cxs-add" data-bar="add"><span aria-hidden="true">+</span> Add</button>' : '') + '</span>' +
+        '<button type="button" class="cxs-clear" data-bar="clear">Clear</button>';
+      this.updateBar();
+    },
+    updateBar: function () { // shown under the masthead once the slots have scrolled away, while a chip is in
+      var bar = $('#cx-sticky'), row = $('#cxa-row'); if (!bar || !row) return;
+      var here = Router.current === 'landscape' && this.picked.length > 0, show = here && row.getBoundingClientRect().bottom < headerH() + 4;
+      if (!show && !bar.hidden && bar.contains(document.activeElement)) this.focusSlot(0); // the bar is going while it holds focus: hand it to the slots
+      bar.hidden = !show;
+      if (show) this.barH = bar.offsetHeight;
+      // --cx-sticky holds the bar's height whenever a chip is in, shown or not: a jump into the comparison makes the bar appear, so its
+      // target must already clear it; a little extra room near the slots costs nothing
+      document.documentElement.style.setProperty('--cx-sticky', here ? (this.barH || 48) + 'px' : '0px');
     },
 
     /* ---- the chip picker: a popover under the slot (a sheet from the bottom on phones) holding a filter field and the chips by maker.
@@ -708,10 +932,10 @@
       window.addEventListener('hashchange', function () { self.closePicker(false); }); // Back or a link must not leave the picker over another page
       return el;
     },
-    openPicker: function (i, trigger) {
+    openPicker: function (i, trigger, origin) { // origin: 'slot', or the region of a column head ('#cx-plans', '#cx-table') where focus returns
       var self = this, el = this.popEl || this.buildPicker(), cur = this.picked[i] || null, sheet = narrow();
       if (this.pop) this.closePicker(false);
-      this.pop = { slot: i, trigger: trigger };
+      this.pop = { slot: i, trigger: trigger, origin: origin || 'slot' };
       $('#cxp-t', el).textContent = (cur ? 'Change chip ' : 'Choose chip ') + (i + 1);
       this.popOpts.forEach(function (o) { // chips already in another slot are marked and cannot be picked twice
         var at = self.picked.indexOf(o.id), other = at >= 0 && at !== i;
@@ -727,9 +951,9 @@
       if (cur) this.setActive(document.getElementById('cxp-o-' + cur));
       this.popIn.focus({ preventScroll: true });
     },
-    placePicker: function () { // under the slot's card, as wide as the card or 340 px, kept inside the column; the page moves only if the list cannot fit
+    placePicker: function () { // under its slot's card or column head, as wide as that or 340 px, kept inside the column; the page moves only if the list cannot fit
       var el = this.popEl, p = this.pop; if (!p) return;
-      var slot = p.trigger.closest('.cxa-slot'), card = (slot && $('.cxa-card', slot)) || p.trigger, r = card.getBoundingClientRect(), col = $('#cx-slots').getBoundingClientRect();
+      var slot = p.trigger.closest('.cxa-slot'), card = (slot && $('.cxa-card', slot)) || p.trigger.closest('.cx-plan, th') || p.trigger, r = card.getBoundingClientRect(), col = $('#cx-slots').getBoundingClientRect();
       var w = Math.min(Math.max(r.width, 340), col.width), left = r.left;
       if (left + w > col.right) left = Math.max(col.left, r.right - w);
       el.style.bottom = ''; el.style.maxHeight = '';
@@ -779,7 +1003,10 @@
       this.closePicker(false);
       if (this.picked[p.slot] !== id) this.setSlot(p.slot, id);
       var self = this, n = this.picked.length, to = n < 2 ? n : Math.min(p.slot, n - 1); // the next waiting slot while the comparison needs one, else the slot just filled
-      setTimeout(function () { self.focusSlot(to); }, 0); // after the key event that picked, so the Enter cannot also press the slot it lands on
+      setTimeout(function () { // after the key event that picked, so the Enter cannot also press the control it lands on
+        var col = p.origin !== 'slot' && $(p.origin + ' [data-act="change"][data-slot="' + Math.min(p.slot, n - 1) + '"]'); // from a column head: that column's Change, where the reader is
+        if (col) col.focus(); else self.focusSlot(to);
+      }, 0);
     },
 
     /* ---- render ---- */
@@ -796,6 +1023,7 @@
       this.renderNotes();
       this.syncExport();
       this.renderSlots();
+      this.renderBar();
       this.announceChange();
     },
     renderCount: function () { // the count line went with the slots: the guidance line over them says where the reader is
@@ -822,10 +1050,19 @@
       sel.forEach(function (c) { var b = self.planBounds(c.layout); if (b) { span = Math.max(span, b[0], b[1]); total += b[0]; } });
       if (!span) return 1;
       var k = Math.min((narrow() ? 148 : 196) / span, 2.6);
-      var free = (room || 0) - sel.length * 40; // padding and gaps between the cards
-      if (!narrow() && total > 0 && free > 80) k = Math.min(k, free / total); // on phones the row scrolls instead of shrinking
+      // a card is never narrower than PLAN_MIN, so a long name wraps in two lines; a plan narrower than that stops shrinking
+      var avail = (room || 0) - sel.length * 22 - (sel.length - 1) * 20 - 4; // card padding and borders, the gaps between cards
+      // where even the narrowest cards cannot share one row (1024, a phone), the row wraps and keeps this scale; the cards are never cut
+      if (!narrow() && total > 0 && avail >= sel.length * self.PLAN_MIN) {
+        for (var it = 0; it < 3; it++) {
+          var fixed = 0, flex = 0;
+          sel.forEach(function (c) { var b = self.planBounds(c.layout); if (!b || b[0] * k < self.PLAN_MIN) fixed += self.PLAN_MIN; else flex += b[0]; });
+          if (flex > 0 && fixed + flex * k > avail) k = Math.max(0.05, (avail - fixed) / flex); else break;
+        }
+      }
       return k;
     },
+    PLAN_MIN: 132,
     rects: function (list, cls) {
       var self = this;
       return (list || []).map(function (r) {
@@ -871,12 +1108,17 @@
     renderPlans: function () {
       var self = this, host = $('#cx-plans'); if (!host) return;
       var sel = this.selection(), k = this.scaleFor(sel, host.clientWidth);
-      host.innerHTML = sel.map(function (c) {
-        var L = c.layout || {}, tip = L.note || (c.package || {}).type || '';
-        return '<button type="button" class="cx-plan" data-id="' + esc(c.id) + '" aria-pressed="' + (c.id === self.sel ? 'true' : 'false') + '"' + (tip ? ' title="' + esc(tip) + '"' : '') + '>' +
+      host.innerHTML = sel.map(function (c, i) {
+        // a card: a button that puts the chip on the stage (the one there says so), and the column's Change and ×
+        var L = c.layout || {}, tip = L.note || (c.package || {}).type || '', b = self.planBounds(L), on = c.id === self.sel, acts = self.colActs(c, i);
+        var w = Math.max(self.PLAN_MIN, b ? Math.round(b[0] * k) : 0);
+        return '<div class="cx-plan' + (on ? ' is-on' : '') + '" style="width:' + (w + 22) + 'px">' +
+          '<button type="button" class="cx-plan-hit" data-id="' + esc(c.id) + '" aria-pressed="' + (on ? 'true' : 'false') + '" title="' + esc((on ? '' : 'Show ' + c.name + ' on the stage. ') + tip) + '">' +
+          '<span class="cx-on">' + (on ? 'On the stage' : '') + '</span>' + // the line is kept on every card, so the names stay level
           '<span class="cx-plan-name"><b>' + esc(c.name) + '</b><em>' + esc(c.vendor) + '</em></span>' +
-          '<span class="cx-plan-art">' + self.planSVG(c, k) + '</span>' +
-          '<span class="cx-plan-size">' + esc(self.planSize(c)) + '</span></button>';
+          '<span class="cx-plan-art">' + (b ? self.planSVG(c, k) : '<i class="cx-noplan">No published layout</i>') + '</span>' +
+          '<span class="cx-plan-size">' + esc(self.planSize(c)) + '</span></button>' +
+          acts.remove + '<span class="cx-plan-foot">' + acts.change + '</span></div>';
       }).join('') + this.ghostPlans(sel.length);
       var key = $('#cx-key');
       if (key) key.innerHTML = '<span><i class="cx-sw die"></i>logic die</span><span><i class="cx-sw hbm"></i>memory stack</span><span><i class="cx-sw int"></i>interposer</span><span><i class="cx-sw sub"></i>substrate</span>' + this.scaleKey(k);
@@ -956,10 +1198,11 @@
       sel.forEach(function (c) { var n = (c.compute || {}).precisionNote; if (n) fns.push({ c: c, n: n }); });
       var marker = function (c) { for (var i = 0; i < fns.length; i++) if (fns[i].c.id === c.id) return '<sup class="cx-fn">' + (i + 1) + '</sup>'; return ''; };
       var html = '<thead><tr><th class="cx-rowhead" scope="col"><span class="sr-only">Specification</span></th>';
-      sel.forEach(function (c) {
-        html += '<th scope="col" class="cx-col' + (c.id === self.sel ? ' is-focus' : '') + '">' +
+      sel.forEach(function (c, i) {
+        var acts = self.colActs(c, i);
+        html += '<th scope="col" class="cx-col' + (c.id === self.sel ? ' is-focus' : '') + '">' + acts.remove +
           '<button type="button" class="cx-colhead" data-id="' + esc(c.id) + '" aria-pressed="' + (c.id === self.sel ? 'true' : 'false') + '"><b>' + esc(c.name) + '</b><span>' + esc(c.vendor) + '</span></button>' +
-          '<button type="button" class="cx-jump" data-notes="' + esc(c.id) + '">Read the notes</button></th>';
+          '<span class="cx-colacts">' + acts.change + '<button type="button" class="cx-jump" data-notes="' + esc(c.id) + '">Read the notes</button></span></th>';
       });
       // until two chips are in, an empty hatched column waits for each one missing, so the reader sees what the table will hold
       var g = Math.max(0, 2 - sel.length), gd = '';
@@ -1131,6 +1374,10 @@
       this.drawPipe();
       var host = $('#sup-pipe-scroll');
       host.addEventListener('scroll', function () { self.hideTip(); });
+      // the tip stays while the pointer moves onto it, and Escape closes it (WCAG 1.4.13; accessibility #10)
+      var tipEl = $('#sup-tip');
+      if (tipEl) { tipEl.addEventListener('mouseenter', function () { clearTimeout(self.tipT); }); tipEl.addEventListener('mouseleave', function () { self.hideTip(); }); }
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { var t = $('#sup-tip'); if (t && !t.hidden) self.hideTip(); } });
       var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { self.fitPipe(); }, 160); });
       this.sync();
       this.render();
@@ -1230,16 +1477,17 @@
       var hot = function (sel, on) { svg.setAttribute('data-hot', on ? '1' : '0'); $$('.sup-rib', svg).forEach(function (r) { if (on && sel(r)) r.setAttribute('data-hot', '1'); else r.removeAttribute('data-hot'); }); };
       svg.addEventListener('mouseover', function (e) {
         var rib = e.target.closest ? e.target.closest('.sup-rib') : null;
-        if (rib) { var rc = rib.getAttribute('data-c'), ri = rib.getAttribute('data-i'); hot(function (r) { return r.getAttribute('data-c') === rc && r.getAttribute('data-i') === ri; }, true); self.showRibTip(rib.getAttribute('data-c'), +rib.getAttribute('data-i'), rib); return; }
+        clearTimeout(self.tipT); // back on the drawing before the tip went: it stays, or the new one takes its place
+        if (rib) { var rc = rib.getAttribute('data-c'), ri = rib.getAttribute('data-i'); hot(function (r) { return r.getAttribute('data-c') === rc && r.getAttribute('data-i') === ri; }, true); self.showRibTip(rib.getAttribute('data-c'), +rib.getAttribute('data-i'), rib, e); return; }
         var ch = e.target.closest ? e.target.closest('.sup-chit') : null;
         if (ch) { var c = ch.getAttribute('data-c'); hot(function (r) { return r.getAttribute('data-c') === c; }, true); self.showCountryTip(c, ch); return; }
         var h = e.target.closest ? e.target.closest('.sup-hit') : null;
         if (h) { var i = +h.getAttribute('data-i'); hot(function (r) { return +r.getAttribute('data-i') === i; }, true); self.showTip(i); }
       });
-      svg.addEventListener('mouseleave', function () { hot(null, false); self.hideTip(); });
+      svg.addEventListener('mouseleave', function () { clearTimeout(self.tipT); self.tipT = setTimeout(function () { self.hideTip(); }, 260); }); // a moment to reach the tip; hideTip clears the lit ribbons too
       svg.addEventListener('click', function (e) {
         var rib = e.target.closest ? e.target.closest('.sup-rib') : null;
-        if (rib) { var c0 = rib.getAttribute('data-c'); self.stage = ''; self.setCountry(self.keyOf(c0), false); self.goStage(+rib.getAttribute('data-i')); return; }
+        if (rib) { var c0 = rib.getAttribute('data-c'); self.stage = ''; self.setCountry(self.keyOf(c0), false, true); self.goStage(+rib.getAttribute('data-i')); return; } // a ribbon sets its country, never clears it
         var ch = e.target.closest ? e.target.closest('.sup-chit') : null;
         if (ch) { var c = ch.getAttribute('data-c'); self.setCountry(self.keyOf(c), true); return; }
         var h = e.target.closest ? e.target.closest('.sup-hit') : null;
@@ -1327,7 +1575,7 @@
         (crit.length ? '<span class="sup-tip-crit"><i class="sup-crit-sw"></i>Critical: ' + esc(crit.join(', ')) + '</span>' : '');
       this.tipAt(el, anchor, false);
     },
-    showRibTip: function (c, i, anchor) { // a ribbon: the firms of one country at one stage
+    showRibTip: function (c, i, anchor, ev) { // a ribbon: the firms of one country at one stage; ev, the pointer that found it
       var self = this, s = this.stages[i], el = $('#sup-tip'); if (!s || !el) return;
       var rows = s.rows.filter(function (r) { return self.colOf(r.country) === c; });
       var isOther = c === 'Other' || c === 'EU'; // a column of several countries names each firm's own
@@ -1337,10 +1585,15 @@
         '<span class="sup-tip-co sup-tip-stages">' + names.join(', ') + '</span>';
       var host = $('#sup-pipe'), m = host.getBoundingClientRect(), r = anchor.getBoundingClientRect();
       el.hidden = false;
-      var left = Math.max(0, Math.min((r.left + r.right) / 2 - m.left - el.offsetWidth / 2, m.width - el.offsetWidth));
-      el.style.left = Math.round(left) + 'px'; el.style.top = Math.round(Math.max(0, (r.top + r.bottom) / 2 - m.top - el.offsetHeight - 14)) + 'px';
+      // the tip takes the pointer now (so it can be hovered), so it sits just over the pointer, never under it, or a click on the
+      // ribbon would land on the tip; below the pointer when there is no room above
+      var cx = ev && ev.clientX != null ? ev.clientX : (r.left + r.right) / 2, cy = ev && ev.clientY != null ? ev.clientY : (r.top + r.bottom) / 2;
+      var left = Math.max(0, Math.min(cx - m.left - el.offsetWidth / 2, m.width - el.offsetWidth)), top = cy - m.top - el.offsetHeight - 14;
+      if (top < 0) top = cy - m.top + 18;
+      el.style.left = Math.round(left) + 'px'; el.style.top = Math.round(top) + 'px';
     },
     hideTip: function () {
+      clearTimeout(this.tipT);
       var el = $('#sup-tip'); if (el) el.hidden = true;
       $$('.sup-lab[data-hot]').forEach(function (g) { g.removeAttribute('data-hot'); });
       var svg = $('.sup-pipe-svg'); if (svg) { svg.setAttribute('data-hot', '0'); $$('.sup-rib[data-hot]', svg).forEach(function (r) { r.removeAttribute('data-hot'); }); }
@@ -1366,12 +1619,32 @@
     },
 
     /* ---- filters ---- */
-    setCountry: function (c, scroll) {
-      this.country = (c === this.country ? '' : c) || '';
+    setCountry: function (c, scroll, force) { // a country label toggles its country; force (a ribbon) sets it, as the ribbon's stage is set
+      this.country = (force ? c : (c === this.country ? '' : c)) || '';
       this.sync(); this.render();
       if (scroll) { this.toStage(); var t = $('#sup-toolbar'); if (t) t.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' }); }
     },
-    sortBy: function (k) { if (this.sortKey === k) this.sortDir = -this.sortDir; else { this.sortKey = k; this.sortDir = 1; } this.render(); },
+    /* a link from elsewhere (the Glossary's firm and country cards) sets the whole filter, so a search or stage left from an
+       earlier visit cannot narrow it: Japan's card shows all of Japan's firms (correctness P1-2) */
+    show: function (f) {
+      f = f || {};
+      if (!this.built) this.build();
+      var q = String(f.q || ''), s = $('#sup-search'), k = $('#sup-chk');
+      if (s) s.value = q;
+      this.q = q.trim().toLowerCase();
+      this.chk = f.chk || ''; if (k) k.value = this.chk;
+      this.stage = f.stage || '';
+      $$('.sup-rung[data-lit], .sup-lab[data-lit]').forEach(function (el) { el.removeAttribute('data-lit'); });
+      this.country = f.country || '';
+      this.sync(); this.render();
+    },
+    sortBy: function (k) {
+      if (this.sortKey === k) this.sortDir = -this.sortDir; else { this.sortKey = k; this.sortDir = 1; }
+      var a = document.activeElement, inTable = !!(a && a.closest && a.closest('#sup-table'));
+      this.render();
+      // the table is drawn afresh, so the pressed header would take focus with it: give it to the new one (accessibility #12)
+      var b = inTable ? $('#sup-table button[data-sort="' + k + '"]') : null; if (b) b.focus();
+    },
     setMode: function (m) {
       if (m === this.mode) return;
       this.mode = m;
@@ -1425,7 +1698,10 @@
     render: function () {
       var rows = this.filtered();
       $('#sup-count').textContent = (rows.length === this.rows.length ? rows.length + ' suppliers' : rows.length + ' of ' + this.rows.length + ' suppliers') +
-        (this.stage ? ' · ' + this.stage : '') + (this.country ? ' · ' + this.countryLabel() : '') + (this.chk ? ' · ' + this.chk : '');
+        (this.stage ? ' · ' + this.stage : '') + (this.country ? ' · ' + this.countryLabel() : '') + (this.chk ? ' · ' + this.chk : '') +
+        (this.q ? ' · matching “' + this.q + '”' : ''); // the search narrows the list too, so the line names it
+      // a polite status, so the new count is read out; set after the first count, so arriving on the page says nothing (accessibility #5)
+      var cnt = $('#sup-count'); if (cnt && !cnt.hasAttribute('role')) setTimeout(function () { cnt.setAttribute('role', 'status'); }, 0);
       var allBtn = $('#sup-allstages'); if (allBtn) allBtn.hidden = !this.stage;
       if (this.mode === 'table') this.renderTable(rows); else this.applyFilter();
     },
@@ -1538,7 +1814,8 @@
     /* ---- detailed table: every field, as before ---- */
     renderTable: function (rows) {
       var self = this;
-      var th = function (k, label) { return '<th><button type="button" data-sort="' + k + '"' + (self.sortKey === k ? ' aria-sort="' + (self.sortDir > 0 ? 'ascending' : 'descending') + '"' : '') + '>' + label + '</button></th>'; };
+      // aria-sort belongs on the column header, not on the button inside it (accessibility #12)
+      var th = function (k, label) { return '<th' + (self.sortKey === k ? ' aria-sort="' + (self.sortDir > 0 ? 'ascending' : 'descending') + '"' : '') + '><button type="button" data-sort="' + k + '">' + label + '</button></th>'; };
       var html = '<thead><tr>' + th('name', 'Supplier') + th('category', 'Category') + th('country', 'Country') + th('founded', 'Founded') + th('chokepoint', 'Chokepoint level') + '<th>What they make</th><th>Customers</th></tr></thead><tbody>';
       rows.forEach(function (r) {
         html += '<tr><td class="name"><b>' + esc(r.name) + '</b><span>' + esc([r.nativeName, r.ticker].filter(Boolean).join(' · ')) + '</span>' +
@@ -1660,7 +1937,10 @@
       this.tl = tl;
       var names = Object.keys(cats).sort(function (a, b) { var ia = order.indexOf(a), ib = order.indexOf(b); return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib); });
       chips.innerHTML = names.map(function (c) { return '<button type="button" class="tl-chip ' + self.CATS[self.lane(c)].cls + '" data-cat="' + esc(c) + '" aria-pressed="false">' + esc(c) + '<b>' + cats[c] + '</b></button>'; }).join('');
-      chips.addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; var c = b.getAttribute('data-cat'); self.cat = self.cat === c ? null : c; $$('button', chips).forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-cat') === self.cat ? 'true' : 'false'); }); self.renderTimeline(); });
+      chips.addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; var c = b.getAttribute('data-cat'); self.cat = self.cat === c ? null : c; $$('button', chips).forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-cat') === self.cat ? 'true' : 'false'); }); self.renderTimeline();
+        var shown = (self.visible || []).length; self.say(self.cat ? shown + ' of ' + tl.length + ' events shown: ' + self.cat + '.' : 'All ' + tl.length + ' events shown.'); });
+      // one polite status for the page: the board's date when a reader moves it, and the events a filter leaves (accessibility #5)
+      var cfHost = $('#cf'); if (cfHost && !$('#cf-status')) cfHost.insertAdjacentHTML('beforeend', '<p class="sr-only" id="cf-status" role="status"></p>');
       var all = $('#tl-all'); if (all) all.addEventListener('click', function () { self.setFull(!self.full); });
       var list = $('#timeline');
       list.addEventListener('click', function (e) {
@@ -1671,7 +1951,10 @@
       // the flows; without them the page is the chronology it has always been
       this.flows = this.loadFlows();
       tl.forEach(function (e, i) { if (!e.id) e.id = 'tl' + i; });
-      this.now = tl.length ? tl[tl.length - 1].date : new Date().toISOString().slice(0, 10);
+      // Now is the reader's own today, or the last entry's date if the chronology runs past it, so a stay reads as lapsed from
+      // the day after it ends (9 and 10 Nov 2026), not from the next entry the data adds (correctness P1-3)
+      var today = localISO(), lastDay = tl.length ? String(tl[tl.length - 1].date || '') : '';
+      this.now = lastDay > today ? lastDay : today;
       this.asOf = this.now;
       var y0 = 2018, y1 = parseInt(this.now.slice(0, 4), 10);
       for (var y = y0; y <= y1; y++) { this.years.push(y); this.yearN[y] = 0; }
@@ -1986,9 +2269,9 @@
         this.citeHTML(st.cite, 'cf-cite');
     },
     /* re-read every row from the as-of date; rows that moved inside the span glow */
-    paintBoard: function (span) {
-      var self = this, host = $('#cf-board');
-      if (!host || !this.flows) return;
+    paintBoard: function (span) { // returns the number of rows whose state changed, for the status line
+      var self = this, host = $('#cf-board'), changed = 0;
+      if (!host || !this.flows) return 0;
       $$('.cf-row', host).forEach(function (row) {
         var f = self.byId[row.getAttribute('data-f')];
         if (!f) return;
@@ -1997,6 +2280,7 @@
         var ramp = row.querySelector('.cf-ramp');
         if (ramp) { ramp.className = self.rampClass(st); ramp.style.setProperty('--i', self.rampAt(st)); }
         if (box && key !== self.keys[f.id]) {
+          changed++;
           box.innerHTML = self.pillHTML(st);
           var btn = row.querySelector('.cf-btn');
           if (btn) btn.setAttribute('aria-label', self.rowLabel(f, st, self.nMoves(f)));
@@ -2005,6 +2289,7 @@
         self.keys[f.id] = key;
         if (span && !reduced && self.movedIn(f, span)) { row.classList.remove('is-changed'); void row.offsetWidth; row.classList.add('is-changed'); }
       });
+      return changed;
     },
     movedIn: function (f, span) {
       var st = f.states || [];
@@ -2120,7 +2405,7 @@
             '<span class="cf-yl">' + y + '</span><span class="cf-ys">’' + String(y).slice(2) + '</span><span class="cf-yn">' + n + '</span></button>';
         }).join('') + '</div><div class="cf-head" id="cf-head" aria-hidden="true"></div></div>';
       var years = $('#cf-years'), now = $('#cf-now');
-      if (now) now.addEventListener('click', function () { self.setAsOf(self.now, [self.years[self.years.length - 1] + '-01-01', self.now]); });
+      if (now) now.addEventListener('click', function () { self.sayAsOf(self.setAsOf(self.now, [self.years[self.years.length - 1] + '-01-01', self.now])); });
       if (years) {
         years.addEventListener('click', function (e) { var b = e.target.closest ? e.target.closest('.cf-year') : null; if (b) self.pickYear(parseInt(b.getAttribute('data-y'), 10)); });
         years.addEventListener('keydown', function (e) {
@@ -2135,19 +2420,26 @@
       }
       this.markYears(); this.placeHead();
     },
-    pickYear: function (y) {
+    pickYear: function (y) { // a year pressed, or reached with the arrow keys: the board moves, and the status says to when
       var last = this.years[this.years.length - 1];
-      this.setAsOf(y >= last ? this.now : y + '-12-31', [y + '-01-01', y + '-12-31']);
+      this.sayAsOf(this.setAsOf(y >= last ? this.now : y + '-12-31', [y + '-01-01', y + '-12-31']));
     },
-    /* the one lever on the page: move the as-of date, and the board re-reads itself from it */
+    /* the one lever on the page: move the as-of date, and the board re-reads itself from it; returns the rows that changed.
+       The scroll moves it too, in By date, and that is not announced: the reader is already reading the entry that moved it */
     setAsOf: function (date, span) {
-      if (!date || !this.flows) return;
+      if (!date || !this.flows) return 0;
       var prev = this.asOf;
       this.asOf = date;
       var lab = $('#cf-asof'); if (lab) lab.textContent = this.fmtDate(date);
       if (!span && prev && prev !== date) span = prev < date ? [prev, date] : [date, prev];
-      this.paintBoard(prev === date ? null : span);
+      var changed = this.paintBoard(prev === date ? null : span);
       this.markYears(); this.placeHead();
+      return changed;
+    },
+    sayAsOf: function (changed) { this.say('Board as of ' + this.fmtDate(this.asOf) + '. ' + (changed ? changed + (changed === 1 ? ' row' : ' rows') + ' changed.' : 'No row changed.')); },
+    say: function (text) { // emptied first, so the same words twice are read twice
+      var s = $('#cf-status'); if (!s) return;
+      s.textContent = ''; clearTimeout(this.sayT); this.sayT = setTimeout(function () { s.textContent = text; }, 60);
     },
     markYears: function () {
       var y = parseInt(String(this.asOf).slice(0, 4), 10);
@@ -2265,6 +2557,7 @@
       document.addEventListener('mouseout', function (e) { if (mark(e)) self.later(); });
       document.addEventListener('focusin', function (e) { var a = mark(e); if (a) self.show(a); else if (self.el && !self.el.contains(e.target)) self.hide(); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && self.el && !self.el.hidden) { var a = self.a; self.hide(); if (a) a.focus(); } });
+      window.addEventListener('hashchange', function () { self.hide(); }); // a new place in the site leaves no source card behind (correctness P1-5)
       window.addEventListener('scroll', function () {
         if (!self.a || !self.el || self.el.hidden || self.el.classList.contains('is-sheet')) return;
         var r = self.a.getBoundingClientRect(), gone = r.bottom < 0 || r.top > window.innerHeight;
@@ -2335,18 +2628,41 @@
       if (this.el) this.el.hidden = true;
     },
     later: function () { var self = this; clearTimeout(this.timer); this.timer = setTimeout(function () { self.hide(); }, 220); },
+    /* the panel sits at the end of the page, so Tab from a term would never reach its link. While it is open, Tab from the term
+       goes into the panel; from its link, Tab goes on to whatever follows the term and Shift+Tab goes back to the term
+       (correctness P1-7a; accessibility #18) */
+    tab: function (e) {
+      var b = this.btn, link = this.el.querySelector('a'), at = document.activeElement;
+      if (at === b && !e.shiftKey && link) { e.preventDefault(); link.focus(); return; }
+      if (!this.el.contains(at)) return;
+      e.preventDefault();
+      if (e.shiftKey) { b.focus(); return; }
+      var next = this.after(b); this.hide(); (next || b).focus();
+    },
+    after: function (b) { // the next stop in the page's own order after the term, outside the panel
+      var scope = (b.closest && b.closest('.view')) || document.body;
+      var all = $$('a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]', scope), i = all.indexOf(b);
+      for (var k = i + 1; k < all.length; k++) { var x = all[k]; if (x.tabIndex < 0 || x.closest('[hidden], [inert]') || !x.getClientRects().length) continue; return x; }
+      return null;
+    },
     init: function () {
       var self = this, term = function (e) { return e.target.closest ? e.target.closest('.gl-term') : null; };
       document.addEventListener('mouseover', function (e) { var b = term(e); if (b) self.show(b); });
       document.addEventListener('mouseout', function (e) { if (term(e)) self.later(); });
-      document.addEventListener('focusin', function (e) { var b = term(e); if (b) self.show(b); else if (self.el && !self.el.contains(e.target)) self.hide(); });
+      // quiet: Escape hands focus back to the term with the panel shut, so that focus must not open it again
+      document.addEventListener('focusin', function (e) { var b = term(e); if (b) { if (self.quiet === b) { self.quiet = null; return; } self.show(b); } else if (self.el && !self.el.contains(e.target)) self.hide(); });
       document.addEventListener('click', function (e) {
         var b = term(e);
         // a tap on a phone sends mouseover (which opens the panel) a moment before its click, so that click must not close it again
         if (b) { if (self.btn === b && self.el && !self.el.hidden) { if (Date.now() - self.at > 500) self.hide(); } else self.show(b); return; }
         if (!self.el || !self.el.contains(e.target)) self.hide();
+        else if (e.target.closest && e.target.closest('a')) self.hide(); // its own link (Look it up) leaves the panel behind (correctness P1-5)
       });
-      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && self.el && !self.el.hidden) { var b = self.btn; self.hide(); if (b) b.focus(); } });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && self.el && !self.el.hidden) { var b = self.btn; self.hide(); if (b && document.activeElement !== b) { self.quiet = b; b.focus(); } }
+        else if (e.key === 'Tab' && !e.altKey && !e.ctrlKey && !e.metaKey && self.el && !self.el.hidden && self.btn) self.tab(e);
+      });
+      window.addEventListener('hashchange', function () { self.hide(); }); // and so does any move to a new place in the site
       // follow the term while the page scrolls; let go once it has left the screen
       window.addEventListener('scroll', function () {
         if (!self.btn || !self.el || self.el.hidden || self.el.classList.contains('is-sheet')) return;
@@ -2395,8 +2711,13 @@
           tip.style.left = Math.max(8, Math.min(x - tip.offsetWidth / 2, window.scrollX + window.innerWidth - tip.offsetWidth - 8)) + 'px';
           tip.style.top = (y - tip.offsetHeight - 10) + 'px';
         };
-        viz.addEventListener('mouseover', function (e) { var c = e.target.closest && e.target.closest('[data-firm]'); if (c) showTip(c); });
-        viz.addEventListener('mouseout', function (e) { if (e.target.closest && e.target.closest('[data-firm]')) tip.hidden = true; });
+        // the tip stays while the pointer crosses onto it, and Escape closes it (WCAG 1.4.13; accessibility #10)
+        var tipT = null, hideSoon = function () { clearTimeout(tipT); tipT = setTimeout(function () { tip.hidden = true; }, 260); };
+        tip.addEventListener('mouseenter', function () { clearTimeout(tipT); });
+        tip.addEventListener('mouseleave', function () { clearTimeout(tipT); tip.hidden = true; });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !tip.hidden) { clearTimeout(tipT); tip.hidden = true; } });
+        viz.addEventListener('mouseover', function (e) { var c = e.target.closest && e.target.closest('[data-firm]'); if (c) { clearTimeout(tipT); showTip(c); } });
+        viz.addEventListener('mouseout', function (e) { if (e.target.closest && e.target.closest('[data-firm]')) hideSoon(); });
         viz.addEventListener('focusin', function (e) { var a = e.target.closest ? e.target.closest('a') : null, c = a ? a.querySelector('[data-firm]') : null; if (c) showTip(c); }); // a bar's link; the chart itself, focused by its address, shows none
         viz.addEventListener('focusout', function () { tip.hidden = true; });
       }
@@ -2432,6 +2753,55 @@
   };
 
   /* ---------------- research tools: search, permalinks, dataset export, citation ---------------- */
+  /* ---------------- keyboard aids: the skip link, Tab clear of the fixed bars, Home on the home page, and the heading a search
+     result or a Contents link lands on (started from Tools.init) ---------------- */
+  var Keys = {
+    init: function () {
+      var root = document.documentElement, self = this;
+      // while the reader moves by Tab, html.kb turns on the scroll padding that keeps a focused control clear of the masthead and
+      // the phone strip (src/styles.css); a pointer or a touch turns it off, so their jumps land where they always have
+      document.addEventListener('keydown', function (e) { if (e.key === 'Tab') root.classList.add('kb'); }, true);
+      document.addEventListener('pointerdown', function () { root.classList.remove('kb'); }, true);
+      // the skip link moves focus to the main column and leaves the address alone, so the route stays as it was
+      var skip = $('.skip'), main = $('#main');
+      if (skip && main) skip.addEventListener('click', function (e) { e.preventDefault(); self.focus(main); });
+      // Home while on the home page: back to the top, as the wordmark goes, with focus on the title there
+      var home = $('.tabs a[data-view="walk"]');
+      if (home) home.addEventListener('click', function (e) {
+        if (Router.current !== 'walk' || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+        e.preventDefault();
+        if (location.hash && location.hash !== '#/') location.hash = '#/';
+        window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+        self.focus(self.title($('.view[data-view="walk"]')));
+      });
+    },
+    shown: function (el) { return !!el && !el.closest('[hidden]') && el.getClientRects().length > 0; },
+    title: function (view) { return view ? $$('h1', view).filter(this.shown)[0] || null : null; }, // the view's own h1 (the chain also holds the printed cover's)
+    focus: function (el) {
+      if (!el) return;
+      if (!el.matches('a[href], button, input, select, textarea, [tabindex]')) el.setAttribute('tabindex', '-1');
+      try { el.focus({ preventScroll: true }); } catch (e) { try { el.focus(); } catch (e2) { } }
+    },
+    /* after a search result or a Contents link is followed, focus goes to the heading of the place it lands on: a chapter's
+       title, a section's heading, a Glossary term, an event, or the view's own title. A place that takes focus itself (a
+       flashcard, a firm's chart) keeps it */
+    land: function (href) {
+      var self = this;
+      setTimeout(function () {
+        var a = document.activeElement; if (a && a !== document.body && a !== document.documentElement) return;
+        var h = href || '', el = null, m;
+        if (/^#\/walk\/[^?#\/]+$/.test(h)) el = document.getElementById(dec(h.slice(1)));
+        else if (/^#\/controls\/./.test(h)) el = $('.timeline .is-target');
+        else if ((m = /^#\/exposure\/([^?#\/]+)/.exec(h))) el = document.getElementById('ex-' + dec(m[1]).toLowerCase());
+        else if (/^#[^\/]/.test(h)) el = document.getElementById(dec(h.slice(1)));
+        var view = $$('.view').filter(function (v) { return !v.hidden; })[0];
+        if (!self.shown(el) || !view || !view.contains(el)) el = self.title(view);
+        else if (!/^H[1-6]$/.test(el.tagName)) el = $$('h1, h2, h3, h4, h5, h6, dt', el).filter(self.shown)[0] || el;
+        self.focus(el);
+      }, 150);
+    }
+  };
+
   var Tools = {
     index: null, from: null,
     buildIndex: function () {
@@ -2449,7 +2819,6 @@
           idx.push({ kind: title.replace(/^Chapter \d+: /, ''), title: h.textContent.replace(/#$/, ''), text: t.replace(/\s+/g, ' ').replace(/\s+([.,;:)])/g, '$1').trim().slice(0, 900), href: '#' + h.id });
         });
       });
-      (DATA.chapters || []).filter(function (c) { return c.id === 'geopolitics'; }).forEach(function () { idx.push({ kind: 'Essay', title: 'Who Controls the Chain', text: 'Who holds each chokepoint, the export-control campaign, China\'s response, the Gulf and smuggling.', href: '#/controls' }); });
       $$('#glossary .gl-entry').forEach(function (el) { idx.push({ kind: 'Term', title: el.querySelector('dt').firstChild.textContent, text: el.querySelector('dd p').textContent, href: '#' + el.id }); });
       (DATA.suppliers || []).forEach(function (r) { idx.push({ kind: 'Supplier', title: r.name, text: r.category + ' · ' + cname(r.country) + (r.role ? ' · ' + r.role : ''), href: '#/suppliers', q: r.name }); });
       (DATA.landscape || []).forEach(function (c) { idx.push({ kind: 'Chip', title: c.vendor + ' ' + c.name, text: ((c.process || {}).node || '') + ' · ' + ((c.memory || {}).type || '') + ' · ' + (c.status || ''), href: '#/landscape', chip: c.id }); });
@@ -2515,10 +2884,13 @@
     open: function () {
       var self = this, box = $('#cp-search');
       if (!box) {
-        box = document.createElement('div'); box.id = 'cp-search'; box.hidden = true; box.setAttribute('role', 'dialog'); box.setAttribute('aria-label', 'Search');
+        box = document.createElement('div'); box.id = 'cp-search'; box.hidden = true; box.setAttribute('role', 'dialog'); box.setAttribute('aria-modal', 'true'); box.setAttribute('aria-label', 'Search');
         box.innerHTML = '<div class="cp-search-panel"><input type="search" placeholder="Search chapters, terms, suppliers, chips and events…" aria-label="Search"><p class="cp-search-try"></p><ol class="cp-search-results"></ol><p class="cp-search-hint">Enter opens the first result · Esc closes</p></div>';
+        // the number of results goes to a polite status, so a screen reader hears it once the typing pauses
+        var said = document.createElement('p'); said.className = 'sr-only cp-search-said'; said.setAttribute('role', 'status'); $('.cp-search-panel', box).appendChild(said);
         document.body.appendChild(box);
         var inp = $('input', box), list = $('ol', box), tryRow = $('.cp-search-try', box);
+        var say = function (text) { clearTimeout(self.sayT); self.sayT = setTimeout(function () { said.textContent = text; }, text ? 400 : 0); };
         // an empty search suggests what to type, from the Glossary's own Try row; a tap fills the box and searches
         var names = self.tryNames();
         if (names.length) tryRow.innerHTML = '<span class="label">Try</span>' + names.map(function (n) { return '<button type="button">' + esc(n) + '</button>'; }).join('');
@@ -2527,20 +2899,35 @@
         // the keyboard hint means nothing on a touch screen with no keyboard
         if (window.matchMedia && matchMedia('(hover: none) and (pointer: coarse)').matches) { var hint = $('.cp-search-hint', box); if (hint) hint.hidden = true; }
         box.addEventListener('click', function (e) { if (e.target === box) self.close(); });
-        box.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.preventDefault(); self.close(); } }); // on the panel, not the input: Esc must work from a result too
         inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') { var a = list.querySelector('a'); if (a) a.click(); } });
         inp.addEventListener('input', function () {
           var q = inp.value.trim();
           if (tryRow) tryRow.hidden = !!q; // the suggestions give way to the results
-          if (!q) { list.innerHTML = ''; return; }
+          if (!q) { list.innerHTML = ''; say(''); return; }
           var res = self.search(q), hits = res.hits;
+          say(res.note ? 'Nothing matches. ' + (hits.length === 1 ? '1 nearest term.' : hits.length + ' nearest terms.') : !hits.length ? 'Nothing matches.' : hits.length === 1 ? '1 result.' : hits.length + ' results.');
           list.innerHTML = (res.note ? '<li class="none">' + esc(res.note) + '</li>' : '') +
             (hits.map(function (h, k) { return '<li><a href="' + safeUrl(h.href) + '" data-k="' + k + '"><span class="k">' + esc(h.kind) + '</span><b>' + esc(h.title) + '</b><span class="t">' + esc(clip(h.text, 140)) + '</span></a></li>'; }).join('') || (res.note ? '' : '<li class="none">Nothing matches.</li>'));
-          list.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { var h = hits[+a.getAttribute('data-k')]; self.close(true); if (h.href === location.hash) setTimeout(function () { Router.route(); }, 0); /* the address is already this one, so no hashchange will come: go there anyway */ if (h.chip) setTimeout(function () { Landscape.select(h.chip); }, 60); if (h.q) setTimeout(function () { var s = $('#sup-search'); if (s) { s.value = h.q; s.dispatchEvent(new Event('input')); } }, 60); if (h.el) setTimeout(function () { h.el.scrollIntoView({ block: 'center' }); }, 60); if (h.card && self.openCard) setTimeout(function () { self.openCard(h.card.id, h.card.i); }, 60); }); });
+          list.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { var h = hits[+a.getAttribute('data-k')]; self.close(true); Keys.land(h.href); if (h.href === location.hash) setTimeout(function () { Router.route(); }, 0); /* the address is already this one, so no hashchange will come: go there anyway */ if (h.chip) setTimeout(function () { Landscape.select(h.chip); }, 60); if (h.q) setTimeout(function () { Suppliers.show({ q: h.q }); }, 60); /* the whole filter, so a country or stage left from an earlier visit cannot hide the firm */ if (h.el) setTimeout(function () { h.el.scrollIntoView({ block: 'center' }); }, 60); if (h.card && self.openCard) setTimeout(function () { self.openCard(h.card.id, h.card.i); }, 60); }); });
         });
       }
       if (box.hidden) this.from = document.activeElement; // where the reader was, so closing can put them back
-      box.hidden = false; $('input', box).value = ''; $('ol', box).innerHTML = ''; var tr = $('.cp-search-try', box); if (tr) tr.hidden = false; $('input', box).focus();
+      box.hidden = false; $('input', box).value = ''; $('ol', box).innerHTML = ''; var tr = $('.cp-search-try', box); if (tr) tr.hidden = false;
+      var sd = $('.cp-search-said', box); if (sd) { clearTimeout(this.sayT); sd.textContent = ''; }
+      this.hold(true); $('input', box).focus();
+    },
+    /* the dialog is modal: while it is open everything else on the page is inert, so Tab, a click or a screen reader's cursor
+       stays in the dialog. Only what this call made inert is released (the phone Contents sheet keeps its own) */
+    hold: function (on) {
+      var box = $('#cp-search'), self = this;
+      if (on) {
+        if (this.held) return;
+        this.held = [];
+        [].forEach.call(document.body.children, function (el) { if (el !== box && el.tagName !== 'SCRIPT' && !el.inert) { el.inert = true; self.held.push(el); } });
+      } else {
+        (this.held || []).forEach(function (el) { el.inert = false; });
+        this.held = null;
+      }
     },
     /* the suggestions under an empty search box, drawn once per visit the way the Glossary draws its own Try row
        (src/modules/lookup.js suggest: two short terms, two firms that matter, one chip, one country) from the same list of
@@ -2560,11 +2947,14 @@
         return String(own || name(li)).replace(/\s*\([^)]*\)$/, '');
       }).filter(Boolean);
     },
-    close: function (following) { // following a result: the destination takes focus, so leave it alone
-      var box = $('#cp-search'); if (box) box.hidden = true;
+    close: function (following) { // following a result: the destination takes focus (Keys.land), so leave it alone
+      var box = $('#cp-search'); if (!box || box.hidden) return;
+      box.hidden = true; this.hold(false);
       var back = this.from; this.from = null;
-      if (following || !back || !back.focus || !document.contains(back)) return;
-      try { back.focus({ preventScroll: true }); } catch (e) { try { back.focus(); } catch (e2) { } }
+      if (following) return;
+      // back where the reader was; opened from nowhere in particular (Ctrl+K on the page), back to the search button
+      if (!back || back === document.body || !back.focus || !document.contains(back) || (back.closest && back.closest('[inert]'))) back = $('.search-btn');
+      if (back) { try { back.focus({ preventScroll: true }); } catch (e) { try { back.focus(); } catch (e2) { } } }
     },
     init: function () {
       var self = this;
@@ -2573,6 +2963,10 @@
       btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>';
       btn.addEventListener('click', function () { self.open(); });
       if (nav) nav.insertBefore(btn, $('.theme-toggle'));
+      Keys.init();
+      // Escape closes the dialog wherever focus is (the panel, a result, or nowhere after a click on its text). It is heard first
+      // and goes no further, so the Contents sheet under it stays open
+      document.addEventListener('keydown', function (e) { if (e.key !== 'Escape') return; var b = $('#cp-search'); if (!b || b.hidden) return; e.preventDefault(); e.stopImmediatePropagation(); self.close(); }, true);
       document.addEventListener('keydown', function (e) { var k = e.key || '', a = document.activeElement || document.body; if ((e.ctrlKey || e.metaKey) && k.toLowerCase() === 'k') { e.preventDefault(); self.open(); } if (k === '/' && !/INPUT|TEXTAREA|SELECT/.test(a.tagName || '') && !a.isContentEditable) { e.preventDefault(); self.open(); } });
       // end-of-chapter flashcards: one card at a time. "Show answer" turns a card over and "Show question" turns it back;
       // marking a card moves on; Previous and Next revisit cards (Next only to cards already marked); the end lists the takeaways.
@@ -2887,19 +3281,31 @@
       tabs.addEventListener('scroll', edge, { passive: true }); window.addEventListener('resize', edge); edge();
     })();
     Tools.init();
-    var setMast = function () { var m = $('.masthead'), root = document.documentElement; if (!m) return; root.style.removeProperty('--masthead'); root.style.setProperty('--masthead', m.offsetHeight + 'px'); }; // the masthead wraps on phones, so the sticky offsets follow its real height
+    // The masthead wraps on phones, so the sticky offsets make room for its real height when it is taller than the
+    // stylesheet's --masthead (large text, a narrow screen). A shorter one keeps the stylesheet's value: the page has been
+    // painted against it since before boot, so a write would move everything on screen, and each write lays the whole page
+    // out again. It is checked at boot, at load (the fonts may have come in) and when the width changes; a phone's address
+    // bar coming and going changes only the height. A wide masthead's height is var(--masthead) itself.
+    var mastW = -1, mastCSS = 0;
+    var setMast = function (e) {
+      var m = $('.masthead'), root = document.documentElement; if (!m) return;
+      var w = window.innerWidth, was = root.style.getPropertyValue('--masthead');
+      if (e && e.type === 'resize') { if (w === mastW) return; if (was) { root.style.removeProperty('--masthead'); was = ''; } }
+      if (!was) mastCSS = cssPx('--masthead'); // the stylesheet's own value at this width
+      mastW = w;
+      var h = m.offsetHeight, want = h > mastCSS + 0.5 ? h + 'px' : '';
+      if (want !== was) { if (want) root.style.setProperty('--masthead', want); else root.style.removeProperty('--masthead'); }
+    };
     setMast(); window.addEventListener('resize', setMast); window.addEventListener('load', setMast);
     Stage.init();
     Band.init();
+    Sizes.init();
     Router.init();
     Sections.init();
     Anim.init();
-    // warm the cache for the next chapters while idle
-    var names = $$('[data-view="stack"] [data-specimen]').map(function (el) { return el.getAttribute('data-specimen'); });
-    var i = 0;
-    var idle = window.requestIdleCallback ? function (f, ms) { requestIdleCallback(f, { timeout: ms * 3 }); } : function (f, ms) { setTimeout(f, ms); };
-    var warm = function () { if (i >= names.length) return; try { Stage.build(names[i++], null); } catch (e) { } idle(warm, 250); };
-    idle(warm, 1200);
+    // specimens are built ahead of the reader while the browser is idle, and only while the stage shows: a wide screen queues
+    // every one the chain names, a phone only the next two (Sections.update), and a view without a stage builds none
+    if (!narrow()) Stage.soon($$('[data-view="stack"] [data-specimen]').map(function (el) { return el.getAttribute('data-specimen'); }));
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();

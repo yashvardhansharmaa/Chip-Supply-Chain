@@ -1,0 +1,1679 @@
+{
+ "url": "http://127.0.0.1:8765/#/",
+ "net": "slow4g",
+ "cpu": 4.0,
+ "desktop": false,
+ "variant": null,
+ "ratio_index": [
+  4.6652499149949,
+  4143591,
+  888182
+ ],
+ "ratio_litho": [
+  5.107876257354337,
+  134567,
+  26345
+ ],
+ "runs": [
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      1276
+     ],
+     [
+      "first-contentful-paint",
+      1276
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 1276,
+      "size": 4000,
+      "el": "a.wordmark > span.wm-name",
+      "url": ""
+     },
+     {
+      "t": 5120,
+      "size": 24222,
+      "el": "section.wk-gl > p.wk-gl-p",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [
+     [
+      4668.100000023842,
+      281
+     ],
+     [
+      4951.199999988079,
+      56
+     ],
+     [
+      5009.199999988079,
+      57
+     ],
+     [
+      5800.699999988079,
+      124
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 977,
+      "d": 302.10000002384186,
+      "block": 0,
+      "render": 2.600000023841858,
+      "style": 2.600000023841858,
+      "scripts": []
+     },
+     {
+      "t": 179.10000002384186,
+      "d": 749,
+      "block": 9.4,
+      "render": 42,
+      "style": 42,
+      "scripts": []
+     },
+     {
+      "t": 1326,
+      "d": 718.1999999880791,
+      "block": 0,
+      "render": 4.799999952316284,
+      "style": 4.799999952316284,
+      "scripts": []
+     },
+     {
+      "t": 2078.100000023842,
+      "d": 259.5999999642372,
+      "block": 0,
+      "render": 5.299999952316284,
+      "style": 5.299999952316284,
+      "scripts": []
+     },
+     {
+      "t": 2429.300000011921,
+      "d": 81.39999997615814,
+      "block": 0,
+      "render": 4.899999976158142,
+      "style": 4.899999976158142,
+      "scripts": []
+     },
+     {
+      "t": 4668.100000023842,
+      "d": 313.5,
+      "block": 261.9,
+      "render": 30.100000023841858,
+      "style": 21.400000035762787,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 224238,
+        "d": 252,
+        "comp": 151
+       },
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "bind",
+        "pos": 313904,
+        "d": 15,
+        "comp": 12
+       },
+       {
+        "inv": "FrameRequestCallback",
+        "fn": "update",
+        "pos": 323005,
+        "d": 5,
+        "comp": 3
+       }
+      ]
+     },
+     {
+      "t": 5007.600000023842,
+      "d": 80.19999998807907,
+      "block": 26,
+      "render": 18.600000023841858,
+      "style": 16.80000001192093,
+      "scripts": [
+       {
+        "inv": "DOMWindow.onload",
+        "fn": "setMast",
+        "pos": 226465,
+        "d": 26,
+        "comp": 25
+       }
+      ]
+     },
+     {
+      "t": 5162.800000011921,
+      "d": 219.69999998807907,
+      "block": 0,
+      "render": 1.0999999642372131,
+      "style": 0.5999999642372131,
+      "scripts": [
+       {
+        "inv": "IdleRequestCallback",
+        "fn": "warm",
+        "pos": 227289,
+        "d": 36,
+        "comp": 0
+       }
+      ]
+     }
+    ],
+    "draw": 4954.699999988079,
+    "drawN": 580,
+    "builds": [
+     [
+      "die-floorplan",
+      4872,
+      41,
+      80473
+     ],
+     [
+      "boule-and-wafer",
+      5128,
+      33,
+      37097
+     ],
+     [
+      "gas-cabinet",
+      5164,
+      35,
+      79809
+     ],
+     [
+      "euv-scanner",
+      5383,
+      48,
+      88035
+     ],
+     [
+      "photomask",
+      5433,
+      16,
+      63001
+     ],
+     [
+      "process-chamber",
+      5452,
+      48,
+      59401
+     ],
+     [
+      "sem-column",
+      5502,
+      40,
+      75941
+     ],
+     [
+      "gaa-transistor",
+      5544,
+      21,
+      54955
+     ],
+     [
+      "foup",
+      5566,
+      29,
+      91714
+     ],
+     [
+      "hbm-stack",
+      5598,
+      17,
+      55310
+     ],
+     [
+      "cowos-exploded",
+      5616,
+      19,
+      60256
+     ],
+     [
+      "substrate-layers",
+      5638,
+      21,
+      45237
+     ],
+     [
+      "probe-card",
+      5660,
+      39,
+      98110
+     ],
+     [
+      "gpu-baseboard",
+      5701,
+      28,
+      85096
+     ],
+     [
+      "rack",
+      5753,
+      30,
+      76109
+     ],
+     [
+      "wafer-cost",
+      5785,
+      15,
+      53749
+     ],
+     [
+      "globe",
+      5801,
+      124,
+      69348
+     ]
+    ],
+    "marks": {
+     "dcl": 4670.199999988079,
+     "load": 5015.699999988079
+    }
+   },
+   "nav": {
+    "ttfb": 2.900000035762787,
+    "respEnd": 4598.400000035763,
+    "domInteractive": 4668.900000035763,
+    "dcl": 4937.699999988079,
+    "load": 5041.199999988079,
+    "transfer": 4143891,
+    "decoded": 4143591
+   },
+   "dom": 21599,
+   "stage": {
+    "hidden": "0",
+    "collapsed": "1",
+    "w": 203,
+    "h": 203
+   },
+   "heap": 15.1,
+   "view": "walk",
+   "docH": 20613,
+   "density": 0.55,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 5
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 32,
+     "end_ms": 35
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4143781,
+     "failed": null,
+     "start_ms": 1696,
+     "end_ms": 6294
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1873,
+     "end_ms": 2501
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 2168,
+     "end_ms": 2169
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6804,
+     "end_ms": 6967
+    }
+   ],
+   "summary": {
+    "fp": 1276,
+    "fcp": 1276,
+    "lcp": 5120,
+    "lcp_el": "section.wk-gl > p.wk-gl-p",
+    "tbt": 318,
+    "longtasks": 4,
+    "lt_total": 518,
+    "lt_max": 281,
+    "cls": 0,
+    "draw": 4954.699999988079,
+    "ttfb": 2.900000035762787,
+    "respEnd": 4598.400000035763,
+    "domInteractive": 4668.900000035763,
+    "dcl": 4937.699999988079,
+    "load": 5041.199999988079,
+    "dom": 21599,
+    "heap": 15.1,
+    "view": "walk",
+    "first_build": [
+     "die-floorplan",
+     4872,
+     41,
+     80473
+    ],
+    "n_builds": 17,
+    "build_ms_total": 604,
+    "stage": {
+     "hidden": "0",
+     "collapsed": "1",
+     "w": 203,
+     "h": 203
+    },
+    "density": 0.55
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      888
+     ],
+     [
+      "first-contentful-paint",
+      888
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 888,
+      "size": 4000,
+      "el": "a.wordmark > span.wm-name",
+      "url": ""
+     },
+     {
+      "t": 4996,
+      "size": 24222,
+      "el": "section.wk-gl > p.wk-gl-p",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [
+     [
+      4677,
+      203
+     ],
+     [
+      5463.800000011921,
+      121
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 194.60000002384186,
+      "d": 677.8999999761581,
+      "block": 12.6,
+      "render": 46.5,
+      "style": 46.5,
+      "scripts": [
+       {
+        "inv": "http://127.0.0.1:8765/#/",
+        "fn": "",
+        "pos": 0,
+        "d": 7,
+        "comp": 0
+       }
+      ]
+     },
+     {
+      "t": 4644.100000023842,
+      "d": 255.19999998807907,
+      "block": 171.4,
+      "render": 17.600000023841858,
+      "style": 12.300000011920929,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 224238,
+        "d": 182,
+        "comp": 111
+       },
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "bind",
+        "pos": 313904,
+        "d": 11,
+        "comp": 9
+       }
+      ]
+     },
+     {
+      "t": 4919.5,
+      "d": 50.90000003576279,
+      "block": 0,
+      "render": 10.100000023841858,
+      "style": 9.300000011920929,
+      "scripts": [
+       {
+        "inv": "DOMWindow.onload",
+        "fn": "setMast",
+        "pos": 226465,
+        "d": 19,
+        "comp": 19
+       }
+      ]
+     },
+     {
+      "t": 5132,
+      "d": 51.60000002384186,
+      "block": 0,
+      "render": 0.699999988079071,
+      "style": 0.699999988079071,
+      "scripts": [
+       {
+        "inv": "IdleRequestCallback",
+        "fn": "warm",
+        "pos": 227289,
+        "d": 47,
+        "comp": 0
+       }
+      ]
+     }
+    ],
+    "draw": 4883.400000035763,
+    "drawN": 595,
+    "builds": [
+     [
+      "die-floorplan",
+      4819,
+      36,
+      80473
+     ],
+     [
+      "boule-and-wafer",
+      5015,
+      26,
+      37097
+     ],
+     [
+      "gas-cabinet",
+      5042,
+      30,
+      79809
+     ],
+     [
+      "euv-scanner",
+      5074,
+      40,
+      88035
+     ],
+     [
+      "photomask",
+      5116,
+      15,
+      63001
+     ],
+     [
+      "process-chamber",
+      5132,
+      47,
+      59401
+     ],
+     [
+      "sem-column",
+      5184,
+      38,
+      75941
+     ],
+     [
+      "gaa-transistor",
+      5224,
+      21,
+      54955
+     ],
+     [
+      "foup",
+      5246,
+      28,
+      91714
+     ],
+     [
+      "hbm-stack",
+      5275,
+      16,
+      55310
+     ],
+     [
+      "cowos-exploded",
+      5292,
+      18,
+      60256
+     ],
+     [
+      "substrate-layers",
+      5311,
+      19,
+      45237
+     ],
+     [
+      "probe-card",
+      5332,
+      37,
+      98110
+     ],
+     [
+      "gpu-baseboard",
+      5370,
+      25,
+      85096
+     ],
+     [
+      "rack",
+      5411,
+      32,
+      76109
+     ],
+     [
+      "wafer-cost",
+      5447,
+      15,
+      53749
+     ],
+     [
+      "globe",
+      5464,
+      121,
+      69348
+     ]
+    ],
+    "marks": {
+     "dcl": 4677.800000011921,
+     "load": 4923.900000035763
+    }
+   },
+   "nav": {
+    "ttfb": 8.600000023841858,
+    "respEnd": 4628.100000023842,
+    "domInteractive": 4677.100000023842,
+    "dcl": 4871.400000035763,
+    "load": 4942.699999988079,
+    "transfer": 4143891,
+    "decoded": 4143591
+   },
+   "dom": 21599,
+   "stage": {
+    "hidden": "0",
+    "collapsed": "1",
+    "w": 203,
+    "h": 203
+   },
+   "heap": 15.9,
+   "view": "walk",
+   "docH": 20613,
+   "density": 0.55,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 4
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 19,
+     "end_ms": 22
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4143781,
+     "failed": null,
+     "start_ms": 1220,
+     "end_ms": 5847
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1410,
+     "end_ms": 2021
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1692,
+     "end_ms": 1694
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6204,
+     "end_ms": 6362
+    }
+   ],
+   "summary": {
+    "fp": 888,
+    "fcp": 888,
+    "lcp": 4996,
+    "lcp_el": "section.wk-gl > p.wk-gl-p",
+    "tbt": 224,
+    "longtasks": 2,
+    "lt_total": 324,
+    "lt_max": 203,
+    "cls": 0,
+    "draw": 4883.400000035763,
+    "ttfb": 8.600000023841858,
+    "respEnd": 4628.100000023842,
+    "domInteractive": 4677.100000023842,
+    "dcl": 4871.400000035763,
+    "load": 4942.699999988079,
+    "dom": 21599,
+    "heap": 15.9,
+    "view": "walk",
+    "first_build": [
+     "die-floorplan",
+     4819,
+     36,
+     80473
+    ],
+    "n_builds": 17,
+    "build_ms_total": 564,
+    "stage": {
+     "hidden": "0",
+     "collapsed": "1",
+     "w": 203,
+     "h": 203
+    },
+    "density": 0.55
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      832
+     ],
+     [
+      "first-contentful-paint",
+      832
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 832,
+      "size": 4000,
+      "el": "a.wordmark > span.wm-name",
+      "url": ""
+     },
+     {
+      "t": 4996,
+      "size": 24222,
+      "el": "section.wk-gl > p.wk-gl-p",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [
+     [
+      4642.300000011921,
+      227
+     ],
+     [
+      5485.100000023842,
+      119
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 174,
+      "d": 650.4000000357628,
+      "block": 0,
+      "render": 31.69999998807907,
+      "style": 31.69999998807907,
+      "scripts": []
+     },
+     {
+      "t": 4642.300000011921,
+      "d": 248.60000002384186,
+      "block": 197.3,
+      "render": 20.100000023841858,
+      "style": 14.300000011920929,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 224238,
+        "d": 202,
+        "comp": 119
+       },
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "bind",
+        "pos": 313904,
+        "d": 13,
+        "comp": 11
+       }
+      ]
+     },
+     {
+      "t": 4914.700000047684,
+      "d": 63.69999998807907,
+      "block": 11.7,
+      "render": 13.5,
+      "style": 12.300000011920929,
+      "scripts": [
+       {
+        "inv": "DOMWindow.onload",
+        "fn": "setMast",
+        "pos": 226465,
+        "d": 24,
+        "comp": 23
+       }
+      ]
+     },
+     {
+      "t": 5149.600000023842,
+      "d": 55.19999998807907,
+      "block": 0,
+      "render": 0.5,
+      "style": 0.3999999761581421,
+      "scripts": [
+       {
+        "inv": "IdleRequestCallback",
+        "fn": "warm",
+        "pos": 227289,
+        "d": 49,
+        "comp": 0
+       }
+      ]
+     }
+    ],
+    "draw": 4872.900000035763,
+    "drawN": 595,
+    "builds": [
+     [
+      "die-floorplan",
+      4800,
+      38,
+      80473
+     ],
+     [
+      "boule-and-wafer",
+      5016,
+      31,
+      37097
+     ],
+     [
+      "gas-cabinet",
+      5050,
+      33,
+      79809
+     ],
+     [
+      "euv-scanner",
+      5085,
+      44,
+      88035
+     ],
+     [
+      "photomask",
+      5132,
+      17,
+      63001
+     ],
+     [
+      "process-chamber",
+      5150,
+      48,
+      59401
+     ],
+     [
+      "sem-column",
+      5206,
+      39,
+      75941
+     ],
+     [
+      "gaa-transistor",
+      5248,
+      22,
+      54955
+     ],
+     [
+      "foup",
+      5272,
+      27,
+      91714
+     ],
+     [
+      "hbm-stack",
+      5301,
+      16,
+      55310
+     ],
+     [
+      "cowos-exploded",
+      5319,
+      18,
+      60256
+     ],
+     [
+      "substrate-layers",
+      5337,
+      20,
+      45237
+     ],
+     [
+      "probe-card",
+      5359,
+      35,
+      98110
+     ],
+     [
+      "gpu-baseboard",
+      5396,
+      25,
+      85096
+     ],
+     [
+      "rack",
+      5422,
+      23,
+      76109
+     ],
+     [
+      "wafer-cost",
+      5462,
+      20,
+      53749
+     ],
+     [
+      "globe",
+      5486,
+      119,
+      69348
+     ]
+    ],
+    "marks": {
+     "dcl": 4643.400000035763,
+     "load": 4920.100000023842
+    }
+   },
+   "nav": {
+    "ttfb": 2.600000023841858,
+    "respEnd": 4595.100000023842,
+    "domInteractive": 4642.900000035763,
+    "dcl": 4859,
+    "load": 4943.700000047684,
+    "transfer": 4143891,
+    "decoded": 4143591
+   },
+   "dom": 21599,
+   "stage": {
+    "hidden": "0",
+    "collapsed": "1",
+    "w": 203,
+    "h": 203
+   },
+   "heap": 13.8,
+   "view": "walk",
+   "docH": 20613,
+   "density": 0.55,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 2
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 20,
+     "end_ms": 25
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4143781,
+     "failed": null,
+     "start_ms": 1212,
+     "end_ms": 5807
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1384,
+     "end_ms": 1990
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1678,
+     "end_ms": 1679
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6206,
+     "end_ms": 6362
+    }
+   ],
+   "summary": {
+    "fp": 832,
+    "fcp": 832,
+    "lcp": 4996,
+    "lcp_el": "section.wk-gl > p.wk-gl-p",
+    "tbt": 246,
+    "longtasks": 2,
+    "lt_total": 346,
+    "lt_max": 227,
+    "cls": 0,
+    "draw": 4872.900000035763,
+    "ttfb": 2.600000023841858,
+    "respEnd": 4595.100000023842,
+    "domInteractive": 4642.900000035763,
+    "dcl": 4859,
+    "load": 4943.700000047684,
+    "dom": 21599,
+    "heap": 13.8,
+    "view": "walk",
+    "first_build": [
+     "die-floorplan",
+     4800,
+     38,
+     80473
+    ],
+    "n_builds": 17,
+    "build_ms_total": 575,
+    "stage": {
+     "hidden": "0",
+     "collapsed": "1",
+     "w": 203,
+     "h": 203
+    },
+    "density": 0.55
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      868
+     ],
+     [
+      "first-contentful-paint",
+      868
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 868,
+      "size": 4000,
+      "el": "a.wordmark > span.wm-name",
+      "url": ""
+     },
+     {
+      "t": 5008,
+      "size": 24222,
+      "el": "section.wk-gl > p.wk-gl-p",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [
+     [
+      4659.899999976158,
+      223
+     ],
+     [
+      5478.5,
+      118
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 177.39999997615814,
+      "d": 677.1000000238419,
+      "block": 23.3,
+      "render": 52.5,
+      "style": 52.39999997615814,
+      "scripts": []
+     },
+     {
+      "t": 4659.899999976158,
+      "d": 245.5,
+      "block": 194.1,
+      "render": 20.599999964237213,
+      "style": 14.099999964237213,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 224238,
+        "d": 199,
+        "comp": 120
+       },
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "bind",
+        "pos": 313904,
+        "d": 13,
+        "comp": 11
+       }
+      ]
+     },
+     {
+      "t": 4928.399999976158,
+      "d": 59.60000002384186,
+      "block": 7.4,
+      "render": 11.300000011920929,
+      "style": 9.699999988079071,
+      "scripts": [
+       {
+        "inv": "DOMWindow.onload",
+        "fn": "setMast",
+        "pos": 226465,
+        "d": 22,
+        "comp": 22
+       }
+      ]
+     }
+    ],
+    "draw": 4886.800000011921,
+    "drawN": 594,
+    "builds": [
+     [
+      "die-floorplan",
+      4817,
+      35,
+      80473
+     ],
+     [
+      "boule-and-wafer",
+      5022,
+      30,
+      37097
+     ],
+     [
+      "gas-cabinet",
+      5056,
+      33,
+      79809
+     ],
+     [
+      "euv-scanner",
+      5091,
+      42,
+      88035
+     ],
+     [
+      "photomask",
+      5151,
+      17,
+      63001
+     ],
+     [
+      "process-chamber",
+      5175,
+      48,
+      59401
+     ],
+     [
+      "sem-column",
+      5224,
+      41,
+      75941
+     ],
+     [
+      "gaa-transistor",
+      5268,
+      22,
+      54955
+     ],
+     [
+      "foup",
+      5290,
+      28,
+      91714
+     ],
+     [
+      "hbm-stack",
+      5320,
+      16,
+      55310
+     ],
+     [
+      "cowos-exploded",
+      5337,
+      18,
+      60256
+     ],
+     [
+      "substrate-layers",
+      5357,
+      19,
+      45237
+     ],
+     [
+      "probe-card",
+      5377,
+      35,
+      98110
+     ],
+     [
+      "gpu-baseboard",
+      5414,
+      26,
+      85096
+     ],
+     [
+      "rack",
+      5441,
+      22,
+      76109
+     ],
+     [
+      "wafer-cost",
+      5464,
+      14,
+      53749
+     ],
+     [
+      "globe",
+      5479,
+      118,
+      69348
+     ]
+    ],
+    "marks": {
+     "dcl": 4660.100000023842,
+     "load": 4934.800000011921
+    }
+   },
+   "nav": {
+    "ttfb": 3.5,
+    "respEnd": 4604.699999988079,
+    "domInteractive": 4659.899999976158,
+    "dcl": 4873.199999988079,
+    "load": 4957.199999988079,
+    "transfer": 4143891,
+    "decoded": 4143591
+   },
+   "dom": 21599,
+   "stage": {
+    "hidden": "0",
+    "collapsed": "1",
+    "w": 203,
+    "h": 203
+   },
+   "heap": 45.2,
+   "view": "walk",
+   "docH": 20613,
+   "density": 0.55,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 2
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 12,
+     "end_ms": 13
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4143781,
+     "failed": null,
+     "start_ms": 1213,
+     "end_ms": 5817
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1386,
+     "end_ms": 1995
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1684,
+     "end_ms": 1687
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6217,
+     "end_ms": 6378
+    }
+   ],
+   "summary": {
+    "fp": 868,
+    "fcp": 868,
+    "lcp": 5008,
+    "lcp_el": "section.wk-gl > p.wk-gl-p",
+    "tbt": 241,
+    "longtasks": 2,
+    "lt_total": 341,
+    "lt_max": 223,
+    "cls": 0,
+    "draw": 4886.800000011921,
+    "ttfb": 3.5,
+    "respEnd": 4604.699999988079,
+    "domInteractive": 4659.899999976158,
+    "dcl": 4873.199999988079,
+    "load": 4957.199999988079,
+    "dom": 21599,
+    "heap": 45.2,
+    "view": "walk",
+    "first_build": [
+     "die-floorplan",
+     4817,
+     35,
+     80473
+    ],
+    "n_builds": 17,
+    "build_ms_total": 564,
+    "stage": {
+     "hidden": "0",
+     "collapsed": "1",
+     "w": 203,
+     "h": 203
+    },
+    "density": 0.55
+   }
+  },
+  {
+   "perf": {
+    "paint": [
+     [
+      "first-paint",
+      848
+     ],
+     [
+      "first-contentful-paint",
+      848
+     ]
+    ],
+    "lcp": [
+     {
+      "t": 848,
+      "size": 4000,
+      "el": "a.wordmark > span.wm-name",
+      "url": ""
+     },
+     {
+      "t": 5024,
+      "size": 24222,
+      "el": "section.wk-gl > p.wk-gl-p",
+      "url": ""
+     }
+    ],
+    "ls": [],
+    "lt": [
+     [
+      4664.700000047684,
+      226
+     ],
+     [
+      5487.900000035763,
+      117
+     ]
+    ],
+    "loaf": [
+     {
+      "t": 183.10000002384186,
+      "d": 652.3999999761581,
+      "block": 0,
+      "render": 32.299999952316284,
+      "style": 32.19999998807907,
+      "scripts": []
+     },
+     {
+      "t": 4664.700000047684,
+      "d": 252.69999998807907,
+      "block": 202.6,
+      "render": 25.80000001192093,
+      "style": 16.5,
+      "scripts": [
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "boot",
+        "pos": 224238,
+        "d": 202,
+        "comp": 120
+       },
+       {
+        "inv": "#document.onDOMContentLoaded",
+        "fn": "bind",
+        "pos": 313904,
+        "d": 13,
+        "comp": 10
+       },
+       {
+        "inv": "FrameRequestCallback",
+        "fn": "update",
+        "pos": 323005,
+        "d": 6,
+        "comp": 4
+       }
+      ]
+     },
+     {
+      "t": 4941.100000023842,
+      "d": 66,
+      "block": 12.8,
+      "render": 15,
+      "style": 13,
+      "scripts": [
+       {
+        "inv": "DOMWindow.onload",
+        "fn": "setMast",
+        "pos": 226465,
+        "d": 22,
+        "comp": 22
+       }
+      ]
+     }
+    ],
+    "draw": 4894.5,
+    "drawN": 594,
+    "builds": [
+     [
+      "die-floorplan",
+      4824,
+      36,
+      80473
+     ],
+     [
+      "boule-and-wafer",
+      5035,
+      29,
+      37097
+     ],
+     [
+      "gas-cabinet",
+      5068,
+      34,
+      79809
+     ],
+     [
+      "euv-scanner",
+      5105,
+      42,
+      88035
+     ],
+     [
+      "photomask",
+      5149,
+      16,
+      63001
+     ],
+     [
+      "process-chamber",
+      5166,
+      47,
+      59401
+     ],
+     [
+      "sem-column",
+      5232,
+      38,
+      75941
+     ],
+     [
+      "gaa-transistor",
+      5272,
+      21,
+      54955
+     ],
+     [
+      "foup",
+      5294,
+      28,
+      91714
+     ],
+     [
+      "hbm-stack",
+      5324,
+      16,
+      55310
+     ],
+     [
+      "cowos-exploded",
+      5341,
+      18,
+      60256
+     ],
+     [
+      "substrate-layers",
+      5360,
+      20,
+      45237
+     ],
+     [
+      "probe-card",
+      5381,
+      36,
+      98110
+     ],
+     [
+      "gpu-baseboard",
+      5420,
+      25,
+      85096
+     ],
+     [
+      "rack",
+      5448,
+      23,
+      76109
+     ],
+     [
+      "wafer-cost",
+      5472,
+      16,
+      53749
+     ],
+     [
+      "globe",
+      5488,
+      117,
+      69348
+     ]
+    ],
+    "marks": {
+     "dcl": 4665.800000011921,
+     "load": 4948.200000047684
+    }
+   },
+   "nav": {
+    "ttfb": 12.800000011920929,
+    "respEnd": 4612.900000035763,
+    "domInteractive": 4664.700000047684,
+    "dcl": 4880.900000035763,
+    "load": 4970.300000011921,
+    "transfer": 4143891,
+    "decoded": 4143591
+   },
+   "dom": 21599,
+   "stage": {
+    "hidden": "0",
+    "collapsed": "1",
+    "w": 203,
+    "h": 203
+   },
+   "heap": 45.1,
+   "view": "walk",
+   "docH": 20613,
+   "density": 0.55,
+   "scroll": null,
+   "requests": [
+    {
+     "url": "http://127.0.0.1:8765/robots.txt",
+     "type": "Document",
+     "status": 200,
+     "bytes": 259,
+     "failed": null,
+     "start_ms": 0,
+     "end_ms": 2
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.ico",
+     "type": "Other",
+     "status": 200,
+     "bytes": 3033,
+     "failed": null,
+     "start_ms": 11,
+     "end_ms": 12
+    },
+    {
+     "url": "http://127.0.0.1:8765/",
+     "type": "Document",
+     "status": 200,
+     "bytes": 4143781,
+     "failed": null,
+     "start_ms": 1217,
+     "end_ms": 5828
+    },
+    {
+     "url": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..6",
+     "type": "Stylesheet",
+     "status": 200,
+     "bytes": 76,
+     "failed": null,
+     "start_ms": 1397,
+     "end_ms": 2005
+    },
+    {
+     "url": "https://gc.zgo.at/count.js",
+     "type": "Script",
+     "status": null,
+     "bytes": null,
+     "failed": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+     "start_ms": 1692,
+     "end_ms": 1694
+    },
+    {
+     "url": "http://127.0.0.1:8765/favicon.svg",
+     "type": "Other",
+     "status": 200,
+     "bytes": 933,
+     "failed": null,
+     "start_ms": 6240,
+     "end_ms": 6401
+    }
+   ],
+   "summary": {
+    "fp": 848,
+    "fcp": 848,
+    "lcp": 5024,
+    "lcp_el": "section.wk-gl > p.wk-gl-p",
+    "tbt": 243,
+    "longtasks": 2,
+    "lt_total": 343,
+    "lt_max": 226,
+    "cls": 0,
+    "draw": 4894.5,
+    "ttfb": 12.800000011920929,
+    "respEnd": 4612.900000035763,
+    "domInteractive": 4664.700000047684,
+    "dcl": 4880.900000035763,
+    "load": 4970.300000011921,
+    "dom": 21599,
+    "heap": 45.1,
+    "view": "walk",
+    "first_build": [
+     "die-floorplan",
+     4824,
+     36,
+     80473
+    ],
+    "n_builds": 17,
+    "build_ms_total": 562,
+    "stage": {
+     "hidden": "0",
+     "collapsed": "1",
+     "w": 203,
+     "h": 203
+    },
+    "density": 0.55
+   }
+  }
+ ]
+}

@@ -1,0 +1,21 @@
+[   7.0s] prepared: {"mode":"footnotes","cites":389,"notes":389,"chapters":4,"dropped":5,"edition":"Edition of 21 October 2026"}
+[   7.2s] print fonts: 18 faces loaded
+[   8.2s] paginating: 0 pages
+[  11.3s] paginating: 31 pages
+[  14.3s] paginated 46 pages in 6.1s (Paged.js reports 5995 ms)
+[  14.6s] footnotes: {"pages":46,"notes":251,"repeats":0,"stray":0,"overflow":0,"short":["24:11%"],"stranded":[],"split":[],"overlap":[25],"crowded":["chemicals-gases-and-photoresist"],"lost":[],"sources":["design-and-eda"],"floats":[{"id":"card-design-and-eda","k":1,"page":4},{"id":"card-lithography","k":1,"page":36}],"failed":[],"tight":["chemicals-gases-and-photoresist"],"gap":4.34}
+[  14.6s] laying out again: card-design-and-eda down 1, card-lithography down 1, chemicals-gases-and-photoresist closer, chemicals-gases-and-photoresist card may break, design-and-eda sources closer
+[  21.0s] prepared: {"mode":"footnotes","cites":389,"notes":389,"chapters":4,"dropped":5,"moved":2,"edition":"Edition of 21 October 2026"}
+[  21.1s] print fonts: 18 faces loaded
+[  22.1s] paginating: 0 pages
+[  25.1s] paginating: 37 pages
+[  28.1s] paginated 44 pages in 6.0s (Paged.js reports 4385 ms)
+[  28.4s] footnotes: {"pages":44,"notes":250,"repeats":0,"stray":0,"overflow":0,"short":[],"stranded":[],"split":[],"overlap":[],"crowded":[],"lost":[],"sources":[],"floats":[],"failed":["card-lithography"],"tight":[],"gap":2.6}
+[  28.4s] laying out again: card-lithography back
+[  34.8s] prepared: {"mode":"footnotes","cites":389,"notes":389,"chapters":4,"dropped":5,"moved":1,"edition":"Edition of 21 October 2026"}
+[  34.9s] print fonts: 18 faces loaded
+[  35.9s] paginating: 0 pages
+[  39.0s] paginating: 38 pages
+[  42.0s] paginated 44 pages in 6.2s (Paged.js reports 4219 ms)
+[  42.3s] footnotes: {"pages":44,"notes":250,"repeats":0,"stray":0,"overflow":0,"short":[],"stranded":[],"split":[],"overlap":[],"crowded":[],"lost":[],"sources":[],"floats":[{"id":"card-lithography","k":1,"page":34}],"failed":[],"tight":[],"gap":2.6}
+[  45.7s] wrote qa/code-review/fixes/speed/print-after/book-only4.pdf 3.69 MB

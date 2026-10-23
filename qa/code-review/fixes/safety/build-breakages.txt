@@ -1,0 +1,57 @@
+site: ~/Library/Application Support/Claude/scratch-workspaces/0a31970a-fa59-4805-8c4d-4478d5acd73a/47d04afc-9f92-4fb3-9c9e-e634493ca6a4/scratch-2026-09-09-7267aa/chokepoints
+== clean build, three runs
+   exit 0, real 0.87
+   exit 0, real 0.61
+   exit 0, real 0.62
+   warnings: 0
+== 1. bibliography.json cut off mid-file: exit 1, dist/index.html not rewritten
+build failed: 1 content problem, nothing was written
+  data/bibliography.json: not valid JSON, the file may be cut off or have a typo: Unexpected end of JSON input
+== 2. five figure markers mistyped in chapter 4: exit 1, dist/index.html not rewritten
+build failed: 5 content problems, nothing was written
+  content/04-lithography.md line 97: {{figure:litho-prints}} names no figure; "figures" in the front matter has litho-print, euv-shipments, tool-price, litho-mix, asml-region
+  content/04-lithography.md line 125: {{figure:tool-prices}} names no figure; "figures" in the front matter has litho-print, euv-shipments, tool-price, litho-mix, asml-region
+  content/04-lithography.md line 134: {{figure:euv-shipmentss}} names no figure; "figures" in the front matter has litho-print, euv-shipments, tool-price, litho-mix, asml-region
+  content/04-lithography.md line 151: {{figure:litho-mixs}} names no figure; "figures" in the front matter has litho-print, euv-shipments, tool-price, litho-mix, asml-region
+  content/04-lithography.md line 170: {{figure:asml-regions}} names no figure; "figures" in the front matter has litho-print, euv-shipments, tool-price, litho-mix, asml-region
+== 3. card concentration typed extreme: exit 1, dist/index.html not rewritten
+build failed: 1 content problem, nothing was written
+  content/04-lithography.md: card.concentration is "extreme"; it must be Extreme, High, Moderate or Low
+== 4. a syntax error in suppliers.json: exit 1, dist/index.html not rewritten
+build failed: 1 content problem, nothing was written
+  data/suppliers.json: not valid JSON, the file may be cut off or have a typo: Unexpected string in JSON at position 2202 (line 48, column 5)
+== 5. a syntax error in chapter 9's front matter: exit 1, dist/index.html not rewritten
+build failed: 1 content problem, nothing was written
+  content/09-foundries-and-fabs.md: the front matter is not valid JSON: Unexpected string in JSON at position 31 (line 3, column 2)
+== 6. chapter 4 loses its title: exit 1, dist/index.html not rewritten
+build failed: 1 content problem, nothing was written
+  content/04-lithography.md: "title" is missing
+== 7. chapter 12 loses number, oneLiner and plain: exit 1, dist/index.html not rewritten
+build failed: 3 content problems, nothing was written
+  content/12-substrates-and-pcbs.md: "number" is missing; it must be a whole number, 1 or more
+  content/12-substrates-and-pcbs.md: "oneLiner" is missing
+  content/12-substrates-and-pcbs.md: "plain" is missing
+== 8. chapter 6 loses its card: exit 1, dist/index.html not rewritten
+build failed: 1 content problem, nothing was written
+  content/06-deposition-and-etch.md: "card" is missing; chapters 1 to 15 are stages and need a chokepoint card
+== 9. a substitutability band misspelt: exit 1, dist/index.html not rewritten
+build failed: 1 content problem, nothing was written
+  content/02-silicon-and-wafers.md: card.substitutability.band is "Moderat"; it must be Very hard, Hard, Moderate or Easy
+== 10. a figure with no data: exit 1, dist/index.html not rewritten
+build failed: 1 content problem, nothing was written
+  content/16-component-costs.md: figure "gross-margins" has no data; "data" needs rows like ["label", value]
+== 11. an animation whose steps were never rendered: exit 1, dist/index.html not rewritten
+build failed: 1 content problem, nothing was written
+  media/litho.json: the file is missing
+== 12. glossary.json left empty: exit 1, dist/index.html not rewritten
+build failed: 1 content problem, nothing was written
+  data/glossary.json: the file is empty
+== 13. fx-rates.json cut off: exit 1, dist/index.html not rewritten
+build failed: 1 content problem, nothing was written
+  data/fx-rates.json: not valid JSON, the file may be cut off or have a typo: Unexpected end of JSON input
+== 14. a figure marker inside a sentence: exit 1, dist/index.html not rewritten
+build failed: 1 content problem, nothing was written
+  content/10-memory-and-hbm.md line 88: {{figure:hbm-inside}} must sit on a line of its own, or the figure is not drawn
+== 15. a build module that throws: exit 1
+build failed: 1 problem; dist/ is incomplete, do not deploy it
+  build/modules/walk.js threw: broken on purpose

@@ -1,0 +1,117 @@
+[
+  {
+    "path": "/",
+    "title": "How AI chips are made · Chip Supply Chain",
+    "description": "A free, sourced introduction to how AI chips are made and who makes each part, in seventeen chapters from chip design to the data center."
+  },
+  {
+    "path": "/design-and-eda/",
+    "title": "How chips are designed with EDA software",
+    "description": "How chip design software lays out billions of transistors. Synopsys, Cadence and Siemens EDA took over 85 percent of an $18 billion market in 2025."
+  },
+  {
+    "path": "/silicon-and-wafers/",
+    "title": "How silicon wafers are made",
+    "description": "How quartz becomes the silicon wafers chips are built on. Firms based in Japan, Taiwan, Germany and South Korea make most 300 mm wafers for advanced chips."
+  },
+  {
+    "path": "/chemicals-gases-and-photoresist/",
+    "title": "Photoresist and the chemicals used to make chips",
+    "description": "How photoresist and hundreds of other chemicals and gases are used to make chips. Japanese companies held 78 percent of world photoresist sales in 2023."
+  },
+  {
+    "path": "/lithography/",
+    "title": "How ASML's EUV lithography machines work",
+    "description": "How extreme ultraviolet (EUV) lithography prints the finest layers of a chip. ASML, a Dutch firm, is the only maker of these machines and sold 48 in 2025."
+  },
+  {
+    "path": "/photomasks-and-pellicles/",
+    "title": "What photomasks and pellicles are",
+    "description": "What a photomask and its pellicle are, and why an EUV mask is a mirror. Only three firms make the blank plates for EUV masks."
+  },
+  {
+    "path": "/deposition-and-etch/",
+    "title": "How deposition and etch build a chip",
+    "description": "How deposition and etch tools build a chip layer by layer. Applied Materials, Lam Research, Tokyo Electron and ASM International make most of them."
+  },
+  {
+    "path": "/metrology-and-inspection/",
+    "title": "How wafer metrology and inspection work",
+    "description": "How chip factories measure wafers and find defects between steps. KLA held 56.8 percent of the market for these tools in 2025, by CSET's count."
+  },
+  {
+    "path": "/transistors-and-front-end/",
+    "title": "How gate-all-around transistors are made",
+    "description": "How transistors switch current and why gate-all-around designs leak less. Only TSMC, Intel and Samsung make 2 nm-class transistors in volume."
+  },
+  {
+    "path": "/foundries-and-fabs/",
+    "title": "How chip foundries like TSMC work",
+    "description": "What a chip foundry is. TSMC's six largest plants are all in Taiwan, and in 2025 they could make more than 13 million wafers a year."
+  },
+  {
+    "path": "/memory-and-hbm/",
+    "title": "What HBM is and who makes it",
+    "description": "What high bandwidth memory (HBM) is and how it is stacked. SK hynix took 63.2 percent of HBM revenue in 2025, ahead of Samsung and Micron."
+  },
+  {
+    "path": "/advanced-packaging/",
+    "title": "How advanced packaging like TSMC's CoWoS works",
+    "description": "How advanced packaging joins AI chips and memory. Epoch AI estimates that Nvidia, Google, AMD and Amazon used around 90 percent of CoWoS capacity in 2025."
+  },
+  {
+    "path": "/substrates-and-pcbs/",
+    "title": "What chip substrates and PCBs are",
+    "description": "What a package substrate does. Ajinomoto said in June 2026 that it holds over 95 percent of the market for the insulating film inside high-end packages."
+  },
+  {
+    "path": "/test-and-assembly/",
+    "title": "How chips are tested and assembled",
+    "description": "How chips are tested on the wafer and after packaging. Japan's Advantest took about 65 percent of 2025 spending on chip testers, by its own estimate."
+  },
+  {
+    "path": "/systems-and-networking/",
+    "title": "How AI chips are networked together",
+    "description": "How 72 AI chips are wired into one rack and run as one computer. In 2026 the lasers for the optical links that carry their signals were scarce."
+  },
+  {
+    "path": "/data-centers-and-power/",
+    "title": "How AI data centers get their power",
+    "description": "Why AI data centers take years to connect to the grid. One rack can draw 142 kilowatts, and large transformers commonly took three years to arrive in 2024."
+  },
+  {
+    "path": "/component-costs/",
+    "title": "What Nvidia's B200 AI chip costs to make",
+    "description": "Epoch AI estimated in December 2025 that Nvidia's B200 cost about $6,400 to build, mostly for memory and packaging. Its processor silicon cost about $900."
+  },
+  {
+    "path": "/geopolitics/",
+    "title": "Who controls the chip supply chain",
+    "description": "Why few governments can use export controls well. Since 2018 the United States has used them to limit China's access to advanced chips and chipmaking tools."
+  },
+  {
+    "path": "/summary/",
+    "title": "The AI chip supply chain in brief",
+    "description": "The fifteen stages of the AI chip supply chain in one read, with who leads each and how concentrated it is. A four-page PDF is included."
+  },
+  {
+    "path": "/chips/",
+    "title": "AI chips compared",
+    "description": "Specs for 38 AI chips, from the A100 of 2020 to chips shipping in 2026. Each lists the foundry, memory supplier and packaging plant where published."
+  },
+  {
+    "path": "/suppliers/",
+    "title": "Who makes what in the AI chip supply chain",
+    "description": "What each of the 226 firms in the AI chip supply chain makes, where it is based and how hard it would be to replace. Revenue comes from company filings."
+  },
+  {
+    "path": "/export-controls/",
+    "title": "Chip export controls since 2018",
+    "description": "A timeline of the main chip export rules since 2018 and what can still be sold to China. Company filings show China's share of revenue at 24 firms."
+  },
+  {
+    "path": "/glossary/",
+    "title": "Glossary of chip terms",
+    "description": "Plain definitions of 208 terms from the AI chip supply chain, each linked to the chapters that use it."
+  }
+]

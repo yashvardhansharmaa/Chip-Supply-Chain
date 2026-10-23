@@ -72,6 +72,7 @@
   background: var(--bg); border: 1px solid var(--line-2); border-radius: 0; box-shadow: var(--shadow); pointer-events: none;
 }
 .sup-tip[hidden] { display: none; }
+@media (hover: hover) { .sup-tip { pointer-events: auto; } } /* a mouse can move onto the tip and it stays (WCAG 1.4.13); a tap still reaches the drawing under it */
 .sup-tip b { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: 14px; line-height: 1.2; color: var(--ink); }
 .sup-tip .sup-tip-n { display: block; margin: 2px 0 7px; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; color: var(--muted); }
 .sup-tip .sup-tip-co { display: flex; flex-wrap: wrap; gap: 3px 10px; }

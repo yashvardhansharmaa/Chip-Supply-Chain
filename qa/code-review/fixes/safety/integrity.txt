@@ -1,0 +1,28 @@
+== before the fix: HEAD's check-integrity.js on a clean build
+exposure row for Veeco Instruments has no supplier entry
+views: suppliers, controls, glossary, geopolitics, walk, stack, home, landscape, summary-a · ids: 1043 · chapters: 17
+exit 0
+
+== after: the same clean build
+allowed: exposure row for Veeco Instruments has no supplier entry. Reason: Veeco files a China share, so it has a China revenue panel, but it is not in the supplier list. data/exposure-notes.md classes it as Deposition & Etch.
+integrity: no problems
+views: suppliers, controls, glossary, geopolitics, walk, stack, home, landscape, summary-a · ids: 1043 · chapters: 17
+exit 0
+
+== before the fix, on a copy with a new China revenue firm that has no supplier entry and a link to a missing chapter
+internal link to nothing: #no-such-chapter (1x)
+exposure row for Veeco Instruments has no supplier entry
+exposure row for Example Tools Inc has no supplier entry
+views: suppliers, controls, glossary, geopolitics, walk, stack, home, landscape, summary-a · ids: 1043 · chapters: 17
+exit 0
+
+== after, on the same broken copy
+allowed: exposure row for Veeco Instruments has no supplier entry. Reason: Veeco files a China share, so it has a China revenue panel, but it is not in the supplier list. data/exposure-notes.md classes it as Deposition & Etch.
+internal link to nothing: #no-such-chapter (1x)
+exposure row for Example Tools Inc has no supplier entry
+views: suppliers, controls, glossary, geopolitics, walk, stack, home, landscape, summary-a · ids: 1043 · chapters: 17
+check-integrity: 2 problems
+exit 1
+
+== after, the same broken copy checked from another folder
+exit 1

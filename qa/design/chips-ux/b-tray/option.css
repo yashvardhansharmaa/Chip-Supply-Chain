@@ -1,0 +1,55 @@
+/* Option B, "Steps and tray": the checklist stays. Two numbered steps frame the page (1 Pick, 2 Compare), and the
+   count bar under the checklist becomes a tray that rides the bottom of the window while the list scrolls, then
+   docks in place above the comparison. It holds four slots, the count in words, and a Compare button.
+   Lands in src/modules/chips.css (the .cx-bar, .cx-count and .cx-clear rules are replaced). */
+
+/* ---------- the steps ---------- */
+.cxb-step { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; align-items: baseline; column-gap: 4px; margin: 8px 0 18px; padding-top: 12px; border-top: 1px solid var(--ink); }
+.cxb-n { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 400; font-size: 34px; line-height: 1; color: var(--muted); font-variant-numeric: lining-nums; }
+.cxb-step[data-now="1"] .cxb-n { color: var(--accent); }
+.cxb-t { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 400; font-size: var(--fs-d3); line-height: 1.2; margin: 0; color: var(--ink); text-transform: none; letter-spacing: 0; }
+.cxb-s { grid-column: 2 / -1; margin: 4px 0 0; font-size: var(--fs-small); color: var(--muted); }
+.cxb-back { align-self: center; min-height: 24px; padding: 2px 0; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+#cxb-step2 { margin-top: 8px; }
+/* before two chips, step 2 waits in grey and says what will come */
+#cxb-step2[data-wait="1"] .cxb-t { color: var(--muted); }
+#cxb-step2[data-wait="1"] .cxb-back { display: none; }
+
+/* ---------- the tray ---------- */
+.cx-bar.cxb-tray {
+  position: sticky; bottom: 0; z-index: 6; margin: 10px 0 34px; padding: 12px 0 12px;
+  display: grid; grid-template-columns: minmax(0, 1fr) auto auto; grid-template-rows: auto auto; align-items: center; gap: 10px 16px;
+  background: var(--bg); border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line);
+}
+.cxb-say { grid-column: 1; grid-row: 1; margin: 0; font-family: var(--font-mono); font-size: var(--fs-ui); color: var(--ink-2); }
+.cxb-say b { font-weight: 600; color: var(--ink); }
+.cxb-say[data-warn="1"] { color: var(--accent-ink); }
+.cxb-tray .cx-clear { grid-column: 2; grid-row: 1; min-height: 32px; }
+.cxb-tray .cx-clear[hidden] { display: none; }
+.cxb-go { grid-column: 3; grid-row: 1; min-height: 36px; padding: 8px 16px; }
+.cxb-go[aria-disabled="true"] { background: transparent; color: var(--muted); border-color: var(--line-2); cursor: default; }
+.cxb-go[aria-disabled="true"]:hover { opacity: 1; }
+.cxb-slots { grid-column: 1 / -1; grid-row: 2; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
+.cxb-tok { display: flex; align-items: center; gap: 6px; min-width: 0; min-height: 36px; padding: 4px 4px 4px 10px; border: 1px solid var(--ink); }
+.cxb-tok b { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-mono); font-weight: 600; font-size: var(--fs-ui); color: var(--ink); }
+.cxb-tok button { flex: none; width: 28px; height: 28px; font-size: 17px; line-height: 1; color: var(--ink-2); }
+.cxb-tok button:hover { color: var(--ink); background: var(--bg-2); }
+.cxb-tok.is-empty { border: 1px dashed var(--line-2); font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); }
+.cxb-tok.is-next { border-color: var(--accent); border-style: solid; color: var(--accent-ink); box-shadow: inset 0 0 0 1px var(--accent); }
+/* at four, the chips not picked step back; they stay focusable, and a tick on one says why it did nothing */
+section[data-view="landscape"][data-full="1"] .cx-picker button[aria-pressed="false"] { opacity: 0.42; }
+section[data-view="landscape"][data-full="1"] .cx-picker button[aria-pressed="false"]:hover { opacity: 0.7; }
+/* a focused chip must never sit under the tray (WCAG 2.4.11) */
+html:has(section[data-view="landscape"]:not([hidden])) { scroll-padding-bottom: 120px; }
+
+@media (max-width: 900px) {
+  .cxb-step { grid-template-columns: 34px minmax(0, 1fr) auto; }
+  .cxb-n { font-size: 26px; }
+  .cxb-t { font-size: var(--fs-d4); }
+  /* on a phone the tray rides on the specimen strip, one line: the count in words and Compare */
+  .cx-bar.cxb-tray { bottom: 128px; grid-template-columns: minmax(0, 1fr) auto auto; gap: 8px 12px; padding: 8px 18px; margin-left: -18px; margin-right: -18px; }
+  .cxb-tray .cx-clear { border: 0; padding: 4px 0; min-height: 24px; text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+  .cxb-slots { display: none; }
+  .cxb-say { font-size: var(--fs-ui-s); line-height: 1.35; }
+  html:has(section[data-view="landscape"]:not([hidden])) { scroll-padding-bottom: 200px; }
+}

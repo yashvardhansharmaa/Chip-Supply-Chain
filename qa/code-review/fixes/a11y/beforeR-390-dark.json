@@ -1,0 +1,168 @@
+{
+ "vp": "390",
+ "theme": "dark",
+ "obscured": {
+  "#/chain": {
+   "forward": {
+    "bar": 11,
+    "clear": 44,
+    "part": 5,
+    "hidden": 10
+   },
+   "back": {
+    "clear": 37,
+    "hidden": 3
+   },
+   "hidden": [
+    {
+     "el": "A.t \"Lithography\"",
+     "state": "hidden",
+     "top": 731,
+     "bottom": 753,
+     "barTop": 70,
+     "barBottom": 716
+    },
+    {
+     "el": "A.t \"Transistors and the Front End\"",
+     "state": "hidden",
+     "top": 821,
+     "bottom": 844,
+     "barTop": 70,
+     "barBottom": 716
+    },
+    {
+     "el": "A.t \"Advanced Packaging\"",
+     "state": "hidden",
+     "top": 730,
+     "bottom": 753,
+     "barTop": 70,
+     "barBottom": 716
+    },
+    {
+     "el": "BUTTON.gl-term \"foundry\"",
+     "state": "hidden",
+     "top": 789,
+     "bottom": 815,
+     "barTop": 70,
+     "barBottom": 716
+    },
+    {
+     "el": "BUTTON.gl-term \"transistor\"",
+     "state": "hidden",
+     "top": 728,
+     "bottom": 756,
+     "barTop": 70,
+     "barBottom": 716
+    },
+    {
+     "el": "BUTTON.gl-term \"nm\"",
+     "state": "hidden",
+     "top": 756,
+     "bottom": 785,
+     "barTop": 70,
+     "barBottom": 716
+    },
+    {
+     "el": "A \"Source 3: Implementation of Certain 2021\"",
+     "state": "hidden",
+     "top": 760,
+     "bottom": 774,
+     "barTop": 70,
+     "barBottom": 716
+    },
+    {
+     "el": "BUTTON.gl-term \"CSIS\"",
+     "state": "hidden",
+     "top": 796,
+     "bottom": 825,
+     "barTop": 70,
+     "barBottom": 716
+    }
+   ]
+  },
+  "#/": {
+   "forward": {
+    "bar": 11,
+    "clear": 47,
+    "part": 2,
+    "hidden": 10
+   },
+   "back": {
+    "clear": 34,
+    "hidden": 5,
+    "part": 1
+   },
+   "hidden": [
+    {
+     "el": "A \"12Substrates and PCBsExtreme concentrati\"",
+     "state": "hidden",
+     "top": 736,
+     "bottom": 765,
+     "barTop": 70,
+     "barBottom": 716
+    },
+    {
+     "el": "A \"13Test and AssemblyHigh concentration\"",
+     "state": "hidden",
+     "top": 766,
+     "bottom": 795,
+     "barTop": 70,
+     "barBottom": 716
+    },
+    {
+     "el": "A \"14Systems and NetworkingHigh concentrati\"",
+     "state": "hidden",
+     "top": 796,
+     "bottom": 825,
+     "barTop": 70,
+     "barBottom": 716
+    },
+    {
+     "el": "A \"15Data Centers and PowerHigh concentrati\"",
+     "state": "hidden",
+     "top": 815,
+     "bottom": 844,
+     "barTop": 70,
+     "barBottom": 716
+    },
+    {
+     "el": "BUTTON.gl-term \"mask\"",
+     "state": "hidden",
+     "top": 817,
+     "bottom": 844,
+     "barTop": 70,
+     "barBottom": 716
+    },
+    {
+     "el": "BUTTON.gl-term.label \"Concentration\"",
+     "state": "hidden",
+     "top": 781,
+     "bottom": 800,
+     "barTop": 114,
+     "barBottom": 716
+    },
+    {
+     "el": "A.wk-read \"Read the chapter\"",
+     "state": "hidden",
+     "top": 811,
+     "bottom": 834,
+     "barTop": 114,
+     "barBottom": 716
+    },
+    {
+     "el": "A.wk-prev \"PreviousChip Design, EDA and IP\"",
+     "state": "hidden",
+     "top": 731,
+     "bottom": 805,
+     "barTop": 114,
+     "barBottom": 716
+    }
+   ]
+  }
+ },
+ "spin": {
+  "control": null,
+  "turn2s": 0.22,
+  "hscroll": 0
+ }
+}

@@ -1,0 +1,233 @@
+===== before-1440-dark.json
+  obscured #/chain  fwd {'bar': 11, 'invisible': 1, 'clear': 56, 'part': 2} | back {'clear': 39, 'part': 1}
+      e.g. BUTTON.to-top "Back to top" invisible 70 103 bars 56 900
+  obscured #/       fwd {'bar': 11, 'invisible': 1, 'clear': 57, 'part': 1} | back {'clear': 35, 'hidden': 5}
+      e.g. BUTTON.to-top "Back to top" invisible 70 103 bars 56 900
+      e.g. BUTTON.gl-term "wafer" hidden 30 59 bars 100 900
+      e.g. BUTTON.gl-term "Lithography" hidden 30 59 bars 100 900
+  skip #/suppliers first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A.wordmark "Chip Supply Chain" (in main: False)
+  skip #/chain     first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A.wordmark "Chip Supply Chain" (in main: False)
+  skip #/          first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A.wordmark "Chip Supply Chain" (in main: False)
+  search: aria-modal None, #app inert False | status None | 24 Tabs: 14 inside, 10  outside | Esc with focus on body: closed False | Esc from a result: closed True, focus BUTTON.search-btn "Search"
+     pick lithography/Chapter      -> BODY  heading=False where=body
+     pick high-NA/None             -> BODY  heading=False where=body
+     pick TSMC/Supplier            -> BODY  heading=False where=body
+     pick H100/Chip                -> BODY  heading=False where=body
+     pick Entity List/Term         -> BODY  heading=False where=body
+     pick Entity List/Event        -> BODY  heading=False where=body
+     pick ASML 2023/China revenue  -> BODY  heading=False where=body
+  contrast: step numbers 3.06 to 3.74 (75) | atlas stops 1.67 to 1.67 | table peaks min 3.02, under 4.5: 13 of 24 | search placeholder 3.9
+  control edges: supSearch 1.8, supCountry 1.8, supChk 1.8, ghostBtn 1.8, glSearch 1.8, filterChip 1.8, chipSquare 1.8
+  Back to top: hidden but focused in first 14 Tabs: 1; hidden state {'show': '0', 'vis': 'visible', 'display': 'block'} | .wk-tabs a outline: none 3px rgb(195, 199, 205) | .cf-jump-btn outline: none 3px rgb(236, 233, 226)
+  spin: {'control': None, 'turn2s': 0, 'hscroll': 0}
+  Home tab (Enter): before {'y': 6000, 'hash': '#/'} -> after {'y': 6000, 'hash': '#/', 'active': 'A "Home"'}
+  axe: #/ 0 {}; #/chain 96 {'color-contrast': 75, 'target-size': 21}; #/suppliers 6 {'target-size': 6}; #/glossary 0 {}; #/controls 0 {}; #/exposure 0 {}; #/landscape 0 {}; search-open 0 {}
+===== before-1440-light.json
+  obscured #/chain  fwd {'body': 70} | back {'body': 30, 'invisible': 1, 'bar': 9}
+      e.g. BUTTON.to-top "Back to top" invisible 70 103 bars 56 900
+  obscured #/       fwd {'bar': 11, 'invisible': 1, 'clear': 57, 'part': 1} | back {'clear': 35, 'hidden': 5}
+      e.g. BUTTON.to-top "Back to top" invisible 70 103 bars 56 900
+      e.g. BUTTON.gl-term "wafer" hidden 30 59 bars 100 900
+      e.g. BUTTON.gl-term "Lithography" hidden 30 59 bars 100 900
+  skip #/suppliers first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A.wordmark "Chip Supply Chain" (in main: False)
+  skip #/chain     first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A.wordmark "Chip Supply Chain" (in main: False)
+  skip #/          first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A.wordmark "Chip Supply Chain" (in main: False)
+  search: aria-modal None, #app inert False | status None | 24 Tabs: 14 inside, 10  outside | Esc with focus on body: closed False | Esc from a result: closed True, focus BUTTON.search-btn "Search"
+     pick lithography/Chapter      -> BODY  heading=False where=body
+     pick high-NA/None             -> BODY  heading=False where=body
+     pick TSMC/Supplier            -> BODY  heading=False where=body
+     pick H100/Chip                -> BODY  heading=False where=body
+     pick Entity List/Term         -> BODY  heading=False where=body
+     pick Entity List/Event        -> BODY  heading=False where=body
+     pick ASML 2023/China revenue  -> BODY  heading=False where=body
+  contrast: step numbers 3.01 to 4.48 (75) | atlas stops 1.45 to 1.45 | table peaks min 6.63, under 4.5: 0 of 24 | search placeholder 4.26
+  control edges: supSearch 1.8, supCountry 1.8, supChk 1.8, ghostBtn 1.8, glSearch 1.8, filterChip 1.8, chipSquare 1.8
+  Back to top: hidden but focused in first 14 Tabs: 1; hidden state {'show': '0', 'vis': 'visible', 'display': 'block'} | .wk-tabs a outline: none 3px rgb(59, 66, 76) | .cf-jump-btn outline: none 3px rgb(20, 24, 31)
+  spin: {'control': None, 'turn2s': 0, 'hscroll': 0}
+  Home tab (Enter): before {'y': 6000, 'hash': '#/'} -> after {'y': 6000, 'hash': '#/', 'active': 'A "Home"'}
+  axe: #/ 0 {}; #/chain 96 {'color-contrast': 75, 'target-size': 21}; #/suppliers 6 {'target-size': 6}; #/glossary 0 {}; #/controls 0 {}; #/exposure 0 {}; #/landscape 0 {}; search-open 0 {}
+===== before-1024-dark.json
+  obscured #/chain  fwd {'body': 70} | back {'body': 40}
+  obscured #/       fwd {'bar': 11, 'invisible': 1, 'clear': 58} | back {'clear': 32, 'part': 1, 'hidden': 7}
+      e.g. BUTTON.to-top "Back to top" invisible 70 103 bars 56 768
+      e.g. BUTTON.gl-term "193-nanometer" hidden 67 96 bars 100 768
+      e.g. BUTTON.gl-term "nanometers" hidden 67 96 bars 100 768
+  skip #/suppliers first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A.wordmark "Chip Supply Chain" (in main: False)
+  skip #/chain     first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A.wordmark "Chip Supply Chain" (in main: False)
+  skip #/          first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A.wordmark "Chip Supply Chain" (in main: False)
+  search: aria-modal None, #app inert False | status None | 24 Tabs: 14 inside, 10  outside | Esc with focus on body: closed False | Esc from a result: closed True, focus BUTTON.search-btn "Search"
+     pick lithography/Chapter      -> BODY  heading=False where=body
+     pick high-NA/None             -> BODY  heading=False where=body
+     pick TSMC/Supplier            -> BODY  heading=False where=body
+     pick H100/Chip                -> BODY  heading=False where=body
+     pick Entity List/Term         -> BODY  heading=False where=body
+     pick Entity List/Event        -> BODY  heading=False where=body
+     pick ASML 2023/China revenue  -> BODY  heading=False where=body
+  contrast: step numbers 3.06 to 3.74 (75) | atlas stops 1.67 to 1.67 | table peaks min 3.02, under 4.5: 13 of 24 | search placeholder 3.9
+  control edges: supSearch 1.8, supCountry 1.8, supChk 1.8, ghostBtn 1.8, glSearch 1.8, filterChip 1.8, chipSquare 1.8
+  Back to top: hidden but focused in first 14 Tabs: 1; hidden state {'show': '0', 'vis': 'visible', 'display': 'block'} | .wk-tabs a outline: none 3px rgb(195, 199, 205) | .cf-jump-btn outline: none 3px rgb(236, 233, 226)
+  spin: {'control': None, 'turn2s': 0, 'hscroll': 0}
+  Home tab (Enter): before {'y': 6000, 'hash': '#/'} -> after {'y': 6000, 'hash': '#/', 'active': 'A "Home"'}
+  axe: #/ 14 {'target-size': 14}; #/chain 96 {'color-contrast': 75, 'target-size': 21}; #/suppliers 12 {'target-size': 12}; #/glossary 0 {}; #/controls 0 {}; #/exposure 0 {}; #/landscape 0 {}; search-open 0 {}
+===== before-1024-light.json
+  obscured #/chain  fwd {'body': 17, 'bar': 11, 'invisible': 1, 'clear': 41} | back {'clear': 37, 'hidden': 3}
+      e.g. BUTTON.to-top "Back to top" invisible 70 103 bars 56 768
+      e.g. A.t "Substrates and PCBs" hidden 0 22 bars 56 768
+      e.g. A.t "Transistors and the Front End" hidden 0 23 bars 56 768
+  obscured #/       fwd {'bar': 11, 'invisible': 1, 'clear': 58} | back {'clear': 32, 'part': 1, 'hidden': 7}
+      e.g. BUTTON.to-top "Back to top" invisible 70 103 bars 56 768
+      e.g. BUTTON.gl-term "193-nanometer" hidden 67 96 bars 100 768
+      e.g. BUTTON.gl-term "nanometers" hidden 67 96 bars 100 768
+  skip #/suppliers first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A.wordmark "Chip Supply Chain" (in main: False)
+  skip #/chain     first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A.wordmark "Chip Supply Chain" (in main: False)
+  skip #/          first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A.wordmark "Chip Supply Chain" (in main: False)
+  search: aria-modal None, #app inert False | status None | 24 Tabs: 14 inside, 10  outside | Esc with focus on body: closed False | Esc from a result: closed True, focus BUTTON.search-btn "Search"
+     pick lithography/Chapter      -> BODY  heading=False where=body
+     pick high-NA/None             -> BODY  heading=False where=body
+     pick TSMC/Supplier            -> BODY  heading=False where=body
+     pick H100/Chip                -> BODY  heading=False where=body
+     pick Entity List/Term         -> BODY  heading=False where=body
+     pick Entity List/Event        -> BODY  heading=False where=body
+     pick ASML 2023/China revenue  -> BODY  heading=False where=body
+  contrast: step numbers 3.01 to 4.48 (75) | atlas stops 1.45 to 1.45 | table peaks min 6.63, under 4.5: 0 of 24 | search placeholder 4.26
+  control edges: supSearch 1.8, supCountry 1.8, supChk 1.8, ghostBtn 1.8, glSearch 1.8, filterChip 1.8, chipSquare 1.8
+  Back to top: hidden but focused in first 14 Tabs: 1; hidden state {'show': '0', 'vis': 'visible', 'display': 'block'} | .wk-tabs a outline: none 3px rgb(59, 66, 76) | .cf-jump-btn outline: none 3px rgb(20, 24, 31)
+  spin: {'control': None, 'turn2s': 0, 'hscroll': 0}
+  Home tab (Enter): before {'y': 6000, 'hash': '#/'} -> after {'y': 6000, 'hash': '#/', 'active': 'A "Home"'}
+  axe: #/ 14 {'target-size': 14}; #/chain 96 {'color-contrast': 75, 'target-size': 21}; #/suppliers 12 {'target-size': 12}; #/glossary 0 {}; #/controls 0 {}; #/exposure 0 {}; #/landscape 0 {}; search-open 0 {}
+===== before-390-dark.json
+  obscured #/chain  fwd {'body': 49, 'bar': 11, 'clear': 7, 'part': 2, 'hidden': 1} | back {'clear': 24, 'hidden': 3, 'bar': 11, 'body': 1, 'part': 1}
+      e.g. A.t "Lithography" hidden 731 753 bars 70 716
+      e.g. A.howto-alt "Read the summary online" hidden 19 35 bars 70 716
+      e.g. A.btn.ghost "Download a short summary" hidden 0 35 bars 70 716
+  obscured #/       fwd {'bar': 11, 'clear': 42, 'part': 2, 'hidden': 15} | back {'clear': 34, 'hidden': 6}
+      e.g. A "12Substrates and PCBsExtreme concentrati" hidden 736 765 bars 70 716
+      e.g. A "13Test and AssemblyHigh concentration" hidden 766 795 bars 70 716
+      e.g. A "14Systems and NetworkingHigh concentrati" hidden 796 825 bars 70 716
+  skip #/suppliers first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A "Export Controls" (in main: False)
+  skip #/chain     first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A "AI Chips" (in main: False)
+  skip #/          first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A.wordmark "Chip Supply Chain" (in main: False)
+  search: aria-modal None, #app inert False | status None | 24 Tabs: 14 inside, 10  outside | Esc with focus on body: closed False | Esc from a result: closed True, focus BUTTON.search-btn "Search"
+     pick lithography/Chapter      -> BODY  heading=False where=body
+     pick high-NA/None             -> BODY  heading=False where=body
+     pick TSMC/Supplier            -> BODY  heading=False where=body
+     pick H100/Chip                -> BODY  heading=False where=body
+     pick Entity List/Term         -> BODY  heading=False where=body
+     pick Entity List/Event        -> BODY  heading=False where=body
+     pick ASML 2023/China revenue  -> BODY  heading=False where=body
+  sheet: aria-modal None, #app inert False | 40 Tabs: 23 inside, 17  outside | Esc -> A.t "Lithography" | Close -> BODY | chapter link -> BODY (body) | page link -> BODY
+  contrast: step numbers 3.06 to 3.74 (75) | atlas stops 2.02 to 2.02 | table peaks min 3.02, under 4.5: 13 of 24 | search placeholder 3.9
+  control edges: supSearch 1.8, supCountry 1.8, supChk 1.8, ghostBtn 1.8, glSearch 1.8, filterChip 1.8, chipSquare 1.8
+  Back to top: hidden but focused in first 14 Tabs: 0; hidden state {'show': '0', 'vis': 'visible', 'display': 'none'} | .wk-tabs a outline: none 3px rgb(195, 199, 205) | .cf-jump-btn outline: none 3px rgb(236, 233, 226)
+  spin: {'control': None, 'turn2s': 0, 'hscroll': 0}
+  Home tab (Enter): before {'y': 6000, 'hash': '#/'} -> after {'y': 6000, 'hash': '#/', 'active': 'BODY'}
+  axe: #/ 9 {'target-size': 9}; #/chain 93 {'color-contrast': 75, 'target-size': 18}; #/suppliers 12 {'target-size': 12}; #/glossary 0 {}; #/controls 0 {}; #/exposure 0 {}; #/landscape 0 {}; search-open 0 {}
+===== before-390-light.json
+  obscured #/chain  fwd {'body': 2, 'bar': 11, 'clear': 40, 'part': 5, 'hidden': 12} | back {'clear': 36, 'hidden': 3, 'part': 1}
+      e.g. A.t "Lithography" hidden 731 753 bars 70 716
+      e.g. A.t "Transistors and the Front End" hidden 821 844 bars 70 716
+      e.g. A.t "Advanced Packaging" hidden 730 753 bars 70 716
+  obscured #/       fwd {'bar': 11, 'clear': 42, 'part': 2, 'hidden': 15} | back {'clear': 34, 'hidden': 6}
+      e.g. A "12Substrates and PCBsExtreme concentrati" hidden 736 765 bars 70 716
+      e.g. A "13Test and AssemblyHigh concentration" hidden 766 795 bars 70 716
+      e.g. A "14Systems and NetworkingHigh concentrati" hidden 796 825 bars 70 716
+  skip #/suppliers first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A "Export Controls" (in main: False)
+  skip #/chain     first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A "AI Chips" (in main: False)
+  skip #/          first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A.wordmark "Chip Supply Chain" (in main: False)
+  search: aria-modal None, #app inert False | status None | 24 Tabs: 14 inside, 10  outside | Esc with focus on body: closed False | Esc from a result: closed True, focus BUTTON.search-btn "Search"
+     pick lithography/Chapter      -> BODY  heading=False where=body
+     pick high-NA/None             -> BODY  heading=False where=body
+     pick TSMC/Supplier            -> BODY  heading=False where=body
+     pick H100/Chip                -> BODY  heading=False where=body
+     pick Entity List/Term         -> BODY  heading=False where=body
+     pick Entity List/Event        -> BODY  heading=False where=body
+     pick ASML 2023/China revenue  -> BODY  heading=False where=body
+  sheet: aria-modal None, #app inert False | 40 Tabs: 23 inside, 17  outside | Esc -> A.t "Lithography" | Close -> BODY | chapter link -> BODY (body) | page link -> BODY
+  contrast: step numbers 3.01 to 4.48 (75) | atlas stops 1.7 to 1.7 | table peaks min 6.63, under 4.5: 0 of 24 | search placeholder 4.26
+  control edges: supSearch 1.8, supCountry 1.8, supChk 1.8, ghostBtn 1.8, glSearch 1.8, filterChip 1.8, chipSquare 1.8
+  Back to top: hidden but focused in first 14 Tabs: 0; hidden state {'show': '0', 'vis': 'visible', 'display': 'none'} | .wk-tabs a outline: none 3px rgb(59, 66, 76) | .cf-jump-btn outline: none 3px rgb(20, 24, 31)
+  spin: {'control': None, 'turn2s': 0, 'hscroll': 0}
+  Home tab (Enter): before {'y': 6000, 'hash': '#/'} -> after {'y': 6000, 'hash': '#/', 'active': 'BODY'}
+  axe: #/ 9 {'target-size': 9}; #/chain 93 {'color-contrast': 75, 'target-size': 18}; #/suppliers 12 {'target-size': 12}; #/glossary 0 {}; #/controls 0 {}; #/exposure 0 {}; #/landscape 0 {}; search-open 0 {}
+===== before-320-dark.json
+  obscured #/chain  fwd {'bar': 11, 'clear': 42, 'hidden': 12, 'part': 5} | back {'clear': 32, 'hidden': 6, 'part': 2}
+      e.g. A.t "Chip Design, EDA and IP" hidden 609 632 bars 70 512
+      e.g. A.t "Foundries and Fabs" hidden 514 537 bars 70 512
+      e.g. A "Source 1: The Dark Side Of The Semicondu" hidden 547 560 bars 70 512
+  obscured #/       fwd {'bar': 11, 'clear': 33, 'part': 3, 'hidden': 23} | back {'hidden': 13, 'clear': 26, 'part': 1}
+      e.g. A "03Chemicals, Gases and PhotoresistHigh c" hidden 527 575 bars 70 512
+      e.g. A "04LithographyExtreme concentration" hidden 576 605 bars 70 512
+      e.g. A "05Photomasks and PelliclesExtreme concen" hidden 592 640 bars 70 512
+  skip #/suppliers first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A "Export Controls" (in main: False)
+  skip #/chain     first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A "AI Chips" (in main: False)
+  skip #/          first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A.wordmark "Chip Supply Chain" (in main: False)
+  search: aria-modal None, #app inert False | status None | 24 Tabs: 14 inside, 10  outside | Esc with focus on body: closed False | Esc from a result: closed True, focus BUTTON.search-btn "Search"
+     pick lithography/Chapter      -> BODY  heading=False where=body
+     pick high-NA/None             -> BODY  heading=False where=body
+     pick TSMC/Supplier            -> BODY  heading=False where=body
+     pick H100/Chip                -> BODY  heading=False where=body
+     pick Entity List/Term         -> BODY  heading=False where=body
+     pick Entity List/Event        -> BODY  heading=False where=body
+     pick ASML 2023/China revenue  -> BODY  heading=False where=body
+  sheet: aria-modal None, #app inert False | 40 Tabs: 23 inside, 17  outside | Esc -> A.t "Lithography" | Close -> BODY | chapter link -> BODY (body) | page link -> BODY
+  contrast: step numbers 3.06 to 3.74 (75) | atlas stops 2.02 to 2.02 | table peaks min 3.02, under 4.5: 13 of 24 | search placeholder 3.9
+  control edges: supSearch 1.8, supCountry 1.8, supChk 1.8, ghostBtn 1.8, glSearch 1.8, filterChip 1.8, chipSquare 1.8
+  Back to top: hidden but focused in first 14 Tabs: 0; hidden state {'show': '0', 'vis': 'visible', 'display': 'none'} | .wk-tabs a outline: none 3px rgb(195, 199, 205) | .cf-jump-btn outline: none 3px rgb(236, 233, 226)
+  spin: {'control': None, 'turn2s': 0, 'hscroll': 0}
+  Home tab (Enter): before {'y': 6000, 'hash': '#/'} -> after {'y': 6000, 'hash': '#/', 'active': 'BODY'}
+  axe: #/ 12 {'target-size': 12}; #/chain 88 {'color-contrast': 75, 'target-size': 13}; #/suppliers 13 {'target-size': 13}; #/glossary 0 {}; #/controls 0 {}; #/exposure 0 {}; #/landscape 0 {}; search-open 0 {}
+===== before-320-light.json
+  obscured #/chain  fwd {'bar': 11, 'clear': 42, 'hidden': 12, 'part': 5} | back {'clear': 32, 'hidden': 6, 'part': 2}
+      e.g. A.t "Chip Design, EDA and IP" hidden 609 632 bars 70 512
+      e.g. A.t "Foundries and Fabs" hidden 514 537 bars 70 512
+      e.g. A "Source 1: The Dark Side Of The Semicondu" hidden 547 560 bars 70 512
+  obscured #/       fwd {'bar': 11, 'clear': 33, 'part': 3, 'hidden': 23} | back {'hidden': 13, 'clear': 26, 'part': 1}
+      e.g. A "03Chemicals, Gases and PhotoresistHigh c" hidden 527 575 bars 70 512
+      e.g. A "04LithographyExtreme concentration" hidden 576 605 bars 70 512
+      e.g. A "05Photomasks and PelliclesExtreme concen" hidden 592 640 bars 70 512
+  skip #/suppliers first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A "Export Controls" (in main: False)
+  skip #/chain     first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A "AI Chips" (in main: False)
+  skip #/          first Tab: A.skip "Skip to content" | Enter: #app, focus BODY | next Tab: A.wordmark "Chip Supply Chain" (in main: False)
+  search: aria-modal None, #app inert False | status None | 24 Tabs: 14 inside, 10  outside | Esc with focus on body: closed False | Esc from a result: closed True, focus BUTTON.search-btn "Search"
+     pick lithography/Chapter      -> BODY  heading=False where=body
+     pick high-NA/None             -> BODY  heading=False where=body
+     pick TSMC/Supplier            -> BODY  heading=False where=body
+     pick H100/Chip                -> BODY  heading=False where=body
+     pick Entity List/Term         -> BODY  heading=False where=body
+     pick Entity List/Event        -> BODY  heading=False where=body
+     pick ASML 2023/China revenue  -> BODY  heading=False where=body
+  sheet: aria-modal None, #app inert False | 40 Tabs: 23 inside, 17  outside | Esc -> A.t "Lithography" | Close -> BODY | chapter link -> BODY (body) | page link -> BODY
+  contrast: step numbers 3.01 to 4.48 (75) | atlas stops 1.7 to 1.7 | table peaks min 6.63, under 4.5: 0 of 24 | search placeholder 4.26
+  control edges: supSearch 1.8, supCountry 1.8, supChk 1.8, ghostBtn 1.8, glSearch 1.8, filterChip 1.8, chipSquare 1.8
+  Back to top: hidden but focused in first 14 Tabs: 0; hidden state {'show': '0', 'vis': 'visible', 'display': 'none'} | .wk-tabs a outline: none 3px rgb(59, 66, 76) | .cf-jump-btn outline: none 3px rgb(20, 24, 31)
+  spin: {'control': None, 'turn2s': 0, 'hscroll': 0}
+  Home tab (Enter): before {'y': 6000, 'hash': '#/'} -> after {'y': 6000, 'hash': '#/', 'active': 'BODY'}
+  axe: #/ 12 {'target-size': 12}; #/chain 88 {'color-contrast': 75, 'target-size': 13}; #/suppliers 13 {'target-size': 13}; #/glossary 0 {}; #/controls 0 {}; #/exposure 0 {}; #/landscape 0 {}; search-open 0 {}
+===== beforeR-1440-light.json
+  obscured #/chain  fwd {'bar': 11, 'invisible': 1, 'clear': 56, 'part': 2} | back {'clear': 39, 'part': 1}
+      e.g. BUTTON.to-top "Back to top" invisible 70 103 bars 56 900
+  obscured #/       fwd {'bar': 11, 'invisible': 1, 'clear': 57, 'part': 1} | back {'clear': 35, 'hidden': 5}
+      e.g. BUTTON.to-top "Back to top" invisible 70 103 bars 56 900
+      e.g. BUTTON.gl-term "wafer" hidden 30 59 bars 100 900
+      e.g. BUTTON.gl-term "Lithography" hidden 30 59 bars 100 900
+  spin: {'control': None, 'turn2s': 0.222, 'hscroll': 0}
+===== beforeR-1024-dark.json
+  obscured #/chain  fwd {'bar': 11, 'invisible': 1, 'clear': 58} | back {'clear': 38, 'hidden': 2}
+      e.g. BUTTON.to-top "Back to top" invisible 70 103 bars 56 768
+      e.g. A.t "Substrates and PCBs" hidden 0 22 bars 56 768
+      e.g. A.t "Transistors and the Front End" hidden 0 23 bars 56 768
+  obscured #/       fwd {'bar': 11, 'invisible': 1, 'clear': 58} | back {'clear': 29, 'hidden': 9, 'part': 2}
+      e.g. BUTTON.to-top "Back to top" invisible 70 103 bars 56 768
+      e.g. BUTTON.gl-term "cleaning chemicals" hidden 16 45 bars 100 768
+      e.g. A.wk-read "Read the chapter" hidden 24 47 bars 100 768
+  spin: {'control': None, 'turn2s': 0.22, 'hscroll': 0}
+===== beforeR-390-dark.json
+  obscured #/chain  fwd {'bar': 11, 'clear': 44, 'part': 5, 'hidden': 10} | back {'clear': 37, 'hidden': 3}
+      e.g. A.t "Lithography" hidden 731 753 bars 70 716
+      e.g. A.t "Transistors and the Front End" hidden 821 844 bars 70 716
+      e.g. A.t "Advanced Packaging" hidden 730 753 bars 70 716
+  obscured #/       fwd {'bar': 11, 'clear': 47, 'part': 2, 'hidden': 10} | back {'clear': 34, 'hidden': 5, 'part': 1}
+      e.g. A "12Substrates and PCBsExtreme concentrati" hidden 736 765 bars 70 716
+      e.g. A "13Test and AssemblyHigh concentration" hidden 766 795 bars 70 716
+      e.g. A "14Systems and NetworkingHigh concentrati" hidden 796 825 bars 70 716
+  spin: {'control': None, 'turn2s': 0.22, 'hscroll': 0}

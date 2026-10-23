@@ -131,9 +131,15 @@
     window.addEventListener('resize', function () { more($('.sa-panel:not([hidden])', root)); });
 
     // the route's stops: a card on hover or focus with the stage, its town, who leads it and its concentration band
-    var tip = null;
+    // it stays while the pointer crosses onto it, and Escape closes it (WCAG 1.4.13; accessibility #10)
+    var tip = null, tipT = null;
     var showStop = function (a) {
-      if (!tip) { tip = document.createElement('div'); tip.className = 'sa-stop-tip'; tip.setAttribute('role', 'tooltip'); tip.hidden = true; document.body.appendChild(tip); }
+      clearTimeout(tipT);
+      if (!tip) {
+        tip = document.createElement('div'); tip.className = 'sa-stop-tip'; tip.setAttribute('role', 'tooltip'); tip.hidden = true; document.body.appendChild(tip);
+        tip.addEventListener('mouseenter', function () { clearTimeout(tipT); });
+        tip.addEventListener('mouseleave', function () { hideStop(); });
+      }
       var d = a.dataset;
       tip.innerHTML = '<b>' + a.querySelector('span').textContent + ' · ' + d.title + '</b><span>' + d.town + (d.lead ? ' · ' + d.lead : '') + '</span>' + (d.band ? '<span class="sa-stop-tip-s">' + d.band + ' concentration</span>' : '');
       tip.hidden = false;
@@ -143,9 +149,10 @@
       tip.style.left = Math.round(left) + 'px'; tip.style.top = Math.round(top + window.scrollY) + 'px';
       $$('.sa-stopcard', root).forEach(function (c) { c.classList.toggle('is-hot', c.getAttribute('href') === a.getAttribute('href')); });
     };
-    var hideStop = function () { if (tip) tip.hidden = true; $$('.sa-stopcard.is-hot', root).forEach(function (c) { c.classList.remove('is-hot'); }); };
+    var hideStop = function () { clearTimeout(tipT); if (tip) tip.hidden = true; $$('.sa-stopcard.is-hot', root).forEach(function (c) { c.classList.remove('is-hot'); }); };
     root.addEventListener('mouseover', function (e) { var a = e.target.closest ? e.target.closest('.sa-stop') : null; if (a) showStop(a); });
-    root.addEventListener('mouseout', function (e) { if (e.target.closest && e.target.closest('.sa-stop')) hideStop(); });
+    root.addEventListener('mouseout', function (e) { if (e.target.closest && e.target.closest('.sa-stop')) { clearTimeout(tipT); tipT = setTimeout(hideStop, 260); } });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && tip && !tip.hidden) hideStop(); });
     root.addEventListener('focusin', function (e) { var a = e.target.closest ? e.target.closest('.sa-stop') : null; if (a) showStop(a); else hideStop(); });
     window.addEventListener('scroll', function () { hideStop(); }, { passive: true });
 
