@@ -12245,6 +12245,16 @@ PC.register('wafer', function (p) {
       document.addEventListener('focusin', function (e) { var a = mark(e); if (a) self.show(a); else if (self.el && !self.el.contains(e.target)) self.hide(); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && self.el && !self.el.hidden) { var a = self.a; self.hide(); if (a) a.focus(); } });
       window.addEventListener('hashchange', function () { self.hide(); }); // a new place in the site leaves no source card behind (correctness P1-5)
+      // on a touch screen a tap opens the source card (a sheet on a phone) and its link goes to the source; the tap used to
+      // follow the mark's own link to the publisher in a new tab before the card could be read. A tap elsewhere closes it.
+      // A mouse click on a laptop still follows the mark's link.
+      var touch = window.matchMedia ? window.matchMedia('(hover: none)') : null;
+      document.addEventListener('click', function (e) {
+        if (!touch || !touch.matches) return;
+        var a = mark(e);
+        if (a) { e.preventDefault(); self.show(a); return; }
+        if (self.el && !self.el.hidden && !self.el.contains(e.target)) self.hide();
+      });
       window.addEventListener('scroll', function () {
         if (!self.a || !self.el || self.el.hidden || self.el.classList.contains('is-sheet')) return;
         var r = self.a.getBoundingClientRect(), gone = r.bottom < 0 || r.top > window.innerHeight;
