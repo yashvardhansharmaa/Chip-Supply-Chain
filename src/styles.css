@@ -917,9 +917,9 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
   .sheet[hidden] { display: none; }
   .sheet-head { display: flex; justify-content: space-between; align-items: center; margin: 0 0 14px; }
   .sheet-head b { font-size: var(--fs-d4); }
-  .sheet-close { font-size: 22px; line-height: 1; background: none; border: 1px solid var(--line-2); border-radius: 0; width: 36px; height: 36px; color: var(--ink); }
+  .sheet-close { font-size: 22px; line-height: 1; background: none; border: 1px solid var(--rule-ink); border-radius: 50%; width: 36px; height: 36px; color: var(--ink); }
   .sheet-pages { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 18px; }
-  .sheet-pages a { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui); padding: 7px 11px; border: 1px solid var(--line-2); border-radius: 0; color: var(--ink); text-decoration: none; }
+  .sheet-pages a { font-family: var(--font-ui); font-weight: 500; font-size: var(--fs-ui); padding: 7px 14px; border: 1px solid var(--rule-ink); border-radius: 999px; color: var(--ink); text-decoration: none; }
   .sheet-chapters { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
   .sheet-chapters a { display: grid; grid-template-columns: 34px 1fr; align-items: baseline; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none; }
   .sheet-chapters .n { font-family: var(--font-mono); font-size: var(--fs-cap); color: var(--muted); font-variant-numeric: tabular-nums; }

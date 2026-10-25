@@ -560,7 +560,8 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .cp-search-panel { width: min(680px, 100%); background: var(--bg); border: 1px solid var(--ink); border-radius: 6px; box-shadow: var(--shadow); overflow: hidden; }
 .cp-search-panel input { width: 100%; font: inherit; font-family: var(--font-ui); font-size: 17px; padding: 14px 16px; border: 0; border-bottom: 1px solid var(--line); background: var(--bg); color: var(--ink); outline: none; }
 .cp-search-panel input:focus-visible { box-shadow: inset 0 -2px 0 var(--accent); } /* the box draws no ring, so focus shows as a garnet rule along its foot */
-.cp-search-panel input::placeholder { color: var(--muted); } /* the browser's gray fell to 3.9:1 in dark; muted is 5.6:1 and 6.3:1 */
+.cp-search-panel input::placeholder { color: var(--muted); }
+.cp-search-panel input::-webkit-search-cancel-button { filter: grayscale(1); opacity: 0.7; cursor: pointer; } /* the browser's clear button, in the site's grays */ /* the browser's gray fell to 3.9:1 in dark; muted is 5.6:1 and 6.3:1 */
 .cp-search-results { list-style: none; margin: 0; padding: 0; max-height: 56vh; overflow: auto; }
 .cp-search-results li a { display: grid; grid-template-columns: 110px 1fr; gap: 2px 12px; padding: 10px 16px; border-bottom: 1px solid var(--line); text-decoration: none; }
 .cp-search-results li a:hover, .cp-search-results li a:focus { background: var(--bg-2); }
@@ -947,9 +948,9 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
   .sheet[hidden] { display: none; }
   .sheet-head { display: flex; justify-content: space-between; align-items: center; margin: 0 0 14px; }
   .sheet-head b { font-size: var(--fs-d4); }
-  .sheet-close { font-size: 22px; line-height: 1; background: none; border: 1px solid var(--line-2); border-radius: 0; width: 36px; height: 36px; color: var(--ink); }
+  .sheet-close { font-size: 22px; line-height: 1; background: none; border: 1px solid var(--rule-ink); border-radius: 50%; width: 36px; height: 36px; color: var(--ink); }
   .sheet-pages { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 18px; }
-  .sheet-pages a { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui); padding: 7px 11px; border: 1px solid var(--line-2); border-radius: 0; color: var(--ink); text-decoration: none; }
+  .sheet-pages a { font-family: var(--font-ui); font-weight: 500; font-size: var(--fs-ui); padding: 7px 14px; border: 1px solid var(--rule-ink); border-radius: 999px; color: var(--ink); text-decoration: none; }
   .sheet-chapters { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
   .sheet-chapters a { display: grid; grid-template-columns: 34px 1fr; align-items: baseline; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none; }
   .sheet-chapters .n { font-family: var(--font-mono); font-size: var(--fs-cap); color: var(--muted); font-variant-numeric: tabular-nums; }
