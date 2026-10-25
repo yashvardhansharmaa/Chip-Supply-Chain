@@ -221,7 +221,7 @@ html.no-stage .chapter .ch-spec-cap { grid-column: 1 / 9; }
 .chapter .fig-k { display: inline-block; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--ink); text-decoration: none; }
 .chapter .fig-k:hover { color: var(--accent-ink); }
 .chapter .figure .fig-title { margin: 10px 0 6px; max-width: 36em; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 22px; line-height: 1.27; letter-spacing: -0.008em; text-wrap: balance; }
-.chapter .figure .fig-title .unit, .chapter .figure .fig-sub .unit { font-family: var(--font-code); font-weight: 400; font-size: 12px; color: var(--muted); margin-left: 8px; letter-spacing: 0; white-space: nowrap; }
+.chapter .figure .fig-title .unit, .chapter .figure .fig-sub .unit { font-family: var(--font-code); font-weight: 400; font-size: 12px; color: var(--muted); margin-left: 8px; letter-spacing: 0; }
 .chapter .fig-sub { margin: 0; max-width: 44em; font-family: var(--font-body); font-size: 15px; line-height: 1.45; color: var(--ink-2); text-wrap: pretty; }
 .chapter .fig-body { padding: 20px 26px 18px; }
 /* bars, rule B: the largest ink with a bold label, the rest the light tint, a remainder hatched */
@@ -246,11 +246,11 @@ html.no-stage .chapter .ch-spec-cap { grid-column: 1 / 9; }
   display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 22px; padding: 12px 26px 13px;
   background: var(--bg-2); border-top: 1px solid var(--line); font-family: var(--font-code); font-size: 12px; line-height: 18px; color: var(--ink);
 }
-.chapter .fig-strip .fs-k { margin-right: 8px; color: var(--muted); }
+.chapter .fig-strip .fs-k { margin-right: 4px; color: var(--muted); }
 .chapter .fig-strip .fs-src a { color: var(--ink); text-underline-offset: 3px; text-decoration-color: var(--rule-ink); }
 .chapter .fig-strip .fs-src a:hover { text-decoration-color: var(--accent); }
 /* the source's footnote number, in brackets on the line (it opens the same card as the marks in the text) */
-.chapter .fig-strip sup.cite { font-size: 12px; vertical-align: baseline; line-height: inherit; margin-left: 6px; }
+.chapter .fig-strip sup.cite { font-size: 12px; vertical-align: baseline; line-height: inherit; margin-left: 2px; }
 .chapter .fig-strip sup.cite a { font-family: var(--font-code); font-weight: 400; color: var(--muted); }
 .chapter .fig-strip sup.cite a::after { content: "]"; }
 .chapter .fig-strip sup.cite a::before { content: "["; position: static; width: auto; height: auto; transform: none; }

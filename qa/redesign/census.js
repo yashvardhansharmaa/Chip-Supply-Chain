@@ -9,7 +9,10 @@
    tab or a folded <details> is out on both sides alike. Math.random is seeded, so the Glossary's "Try" row and the search
    suggestions draw the same names on both sides. The three forwarding pages (/home/, /intro/, /chain/) send a reader on
    with a script, so their text is read from the HTML itself.
-   usage: node qa/redesign/census.js [--out qa/redesign/census.txt] [--only walk,lithography] */
+   Either side may be a built dist/ folder instead of a server (--a or --b with a path): stage 2 compares the live design built
+   from the same chapter text (git archive 907850e, built in a scratch folder), because MAIN's own build now carries a writing
+   pass that is not in the redesign branch, and that would show as lost text that no design change caused.
+   usage: node qa/redesign/census.js [--a <url|dist path>] [--b <url|dist path>] [--out qa/redesign/census.txt] [--only walk,lithography] */
 'use strict';
 const fs = require('fs');
 const path = require('path');
@@ -20,7 +23,9 @@ const args = process.argv.slice(2);
 const opt = (n, d) => { const i = args.indexOf('--' + n); return i >= 0 ? args[i + 1] : d; };
 const OUT = opt('out', path.join(__dirname, 'census.txt'));
 const ONLY = (opt('only', '') || '').split(',').filter(Boolean);
-const A = 'http://127.0.0.1:8765', B = 'http://127.0.0.1:8766';
+const A = opt('a', 'http://127.0.0.1:8765'), B = opt('b', 'http://127.0.0.1:8766');
+// a dist folder is read as files: a view is index.html with its hash, a page its own index.html
+const at = (base, url) => /^https?:/.test(base) ? base + url : 'file://' + base.replace(/\/$/, '') + url.replace(/^\/(#.*)?$/, '/index.html$1').replace(/^\/([^#]+)\/$/, '/$1/index.html');
 const DIST = path.resolve(__dirname, '..', '..', 'dist');
 
 const VIEWS = [['walk', '/#/'], ['chain', '/#/chain'], ['ai-chips', '/#/landscape'], ['suppliers', '/#/suppliers'], ['suppliers-by-country', '/#/suppliers?tab=country'],
@@ -42,6 +47,7 @@ const bag = (arr) => { const m = new Map(); arr.forEach((x) => m.set(x, (m.get(x
 const minus = (a, b) => { const out = []; const mb = new Map(b); for (const [k, v] of a) { const n = v - (mb.get(k) || 0); for (let i = 0; i < n; i++) out.push(k); } return out; };
 
 function get(url) {
+  if (!/^https?:/.test(url)) return Promise.resolve(fs.readFileSync(url.replace(/^file:\/\//, ''), 'utf8'));
   return new Promise((res, rej) => http.get(url, (r) => { let d = ''; r.setEncoding('utf8'); r.on('data', (c) => (d += c)); r.on('end', () => res(d)); }).on('error', rej));
 }
 const htmlText = (h) => h.replace(/<(script|style)[\s\S]*?<\/\1>/gi, '\n').replace(/<\/(p|h\d|li|div|main|header|title)>/gi, '\n').replace(/<[^>]+>/g, ' ')
@@ -59,7 +65,7 @@ async function readPage(chrome, base, url) {
     await s('Page.addScriptToEvaluateOnNewDocument', { source: SEED });
     await s('Emulation.setDeviceMetricsOverride', { width: 1440, height: 900, deviceScaleFactor: 1, mobile: false });
     await s('Emulation.setEmulatedMedia', { media: 'screen', features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
-    await s('Page.navigate', { url: base + url });
+    await s('Page.navigate', { url: at(base, url) });
     for (let t = 0; !loaded && t < 300; t++) await sleep(100);
     await sleep(2500);
     const r = await s('Runtime.evaluate', { expression: READ, returnByValue: true, awaitPromise: true });
@@ -90,7 +96,7 @@ function compare(name, ta, tb) {
       console.log(`${p.name}: ${r.linesA} -> ${r.linesB} lines; case only ${r.caseOnly.length}; only in main ${r.onlyA.length}; only in redesign ${r.onlyB.length}; words lost ${r.wordsLost.length}, added ${r.wordsAdded.length}`);
     }
     for (const f of FORWARD.filter((x) => !ONLY.length || ONLY.includes('/' + x + '/'))) {
-      const r = compare('/' + f + '/', htmlText(await get(`${A}/${f}/`)), htmlText(await get(`${B}/${f}/`))); results.push(r);
+      const r = compare('/' + f + '/', htmlText(await get(at(A, `/${f}/`))), htmlText(await get(at(B, `/${f}/`)))); results.push(r);
       console.log(`/${f}/: only in main ${r.onlyA.length}; only in redesign ${r.onlyB.length}; words lost ${r.wordsLost.length}`);
     }
   } finally { await chrome.close(); }

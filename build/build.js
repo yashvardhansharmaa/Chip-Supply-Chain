@@ -200,9 +200,9 @@ function figure(f, ctx) {
   const head = `<div class="fig-head"><a class="fig-k" href="#${fid}">${esc(kick)}</a>`
     + `<p class="fig-title${finding ? ' fig-find' : ''}">${esc(big)}${small ? '' : unitTag}</p>${small ? `<p class="fig-sub">${esc(small)}${unitTag}</p>` : ''}</div>`;
   // the strip: Source (or a note) first, then the address and the actions
-  const src = f.source && f.source.url ? `<span class="fs-src"><span class="fs-k">Source</span><a href="${safeUrl(f.source.url)}" target="_blank" rel="noopener">${esc(f.source.label || host(f.source.url))}</a>${srcMark}</span>`
-    : (f.source && f.source.label ? `<span class="fs-src"><span class="fs-k">Source</span>${esc(f.source.label)}</span>` : '');
-  const note = f.note ? `<span class="fs-note fig-source"><span class="fs-k">Note</span>${esc(f.note)}</span>` : '';
+  const src = f.source && f.source.url ? `<span class="fs-src"><span class="fs-k">Source</span> <a href="${safeUrl(f.source.url)}" target="_blank" rel="noopener">${esc(f.source.label || host(f.source.url))}</a> ${srcMark}</span>`
+    : (f.source && f.source.label ? `<span class="fs-src"><span class="fs-k">Source</span> ${esc(f.source.label)}</span>` : '');
+  const note = f.note ? `<span class="fs-note fig-source"><span class="fs-k">Note</span> ${esc(f.note)}</span>` : '';
   const box = `cite-${fid}`;
   const csv = data.length && !isAnim ? `<a class="fs-csv" href="${figCSV(f, data)}" download="chip-supply-chain-figure-${num.replace('.', '-')}-${esc(f.id)}.csv">CSV</a>` : '';
   const acts = `<span class="fs-acts" data-kind="${esc(f.type)}"><button type="button" class="ch-cite-btn" aria-expanded="false" aria-controls="${box}">Cite</button>${csv}</span>`;
