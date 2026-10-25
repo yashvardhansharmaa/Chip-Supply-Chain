@@ -1446,7 +1446,7 @@
           if (kc < k) ribs += path(am, a1, bm, b1, '');
         });
       });
-      var fsL = phone ? 11.5 : tight ? 12 : 13, fsR = phone ? 10.5 : tight ? 11 : 12;
+      var fsL = phone ? 11.5 : tight ? 12 : 13, fsR = phone ? 11 : tight ? 11 : 12; // no label under 11 px (redesign, 25 Oct 2026)
       var nodesL = '', hitsL = '';
       cols.forEach(function (c) {
         var yy = ly[c], mid = (yy[0] + yy[1]) / 2;

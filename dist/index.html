@@ -557,8 +557,8 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .search-btn { width: 34px; height: 34px; flex: 0 0 auto; border: 1px solid var(--line-2); border-radius: 50%; display: inline-grid; place-items: center; margin-left: 8px; color: var(--ink); transition: border-color 0.15s, color 0.15s; }
 .search-btn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 1.6; }
 #cp-search { position: fixed; inset: 0; z-index: 100; background: var(--scrim); display: flex; align-items: flex-start; justify-content: center; padding: 12vh 16px 0; }
-.cp-search-panel { width: min(680px, 100%); background: var(--bg); border: 1px solid var(--line-2); border-top: 2px solid var(--ink); border-radius: 0; box-shadow: var(--shadow); overflow: hidden; }
-.cp-search-panel input { width: 100%; font: inherit; font-size: 17px; padding: 14px 16px; border: 0; border-bottom: 1px solid var(--line); background: var(--bg); color: var(--ink); outline: none; }
+.cp-search-panel { width: min(680px, 100%); background: var(--bg); border: 1px solid var(--ink); border-radius: 6px; box-shadow: var(--shadow); overflow: hidden; }
+.cp-search-panel input { width: 100%; font: inherit; font-family: var(--font-ui); font-size: 17px; padding: 14px 16px; border: 0; border-bottom: 1px solid var(--line); background: var(--bg); color: var(--ink); outline: none; }
 .cp-search-panel input:focus-visible { box-shadow: inset 0 -2px 0 var(--accent); } /* the box draws no ring, so focus shows as a garnet rule along its foot */
 .cp-search-panel input::placeholder { color: var(--muted); } /* the browser's gray fell to 3.9:1 in dark; muted is 5.6:1 and 6.3:1 */
 .cp-search-results { list-style: none; margin: 0; padding: 0; max-height: 56vh; overflow: auto; }
@@ -918,7 +918,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) { :root { --col: 62%; --gutter: 64px; --gutter-gap: 20px; } body { font-size: 18px; } .ch-tile .v { font-size: var(--fs-num-m); } }
 @media (max-width: 900px) {
-  :root { --col: 100%; --masthead: 75px; --gutter: 34px; --gutter-gap: 12px; } /* the two-row phone masthead; measured at runtime too, but the first paint must not shift */
+  :root { --col: 100%; --masthead: 81px; --gutter: 34px; --gutter-gap: 12px; } /* the two-row phone masthead; measured at runtime too, but the first paint must not shift */
   body { font-size: 17px; }
   .masthead { padding: 8px 16px 0; height: auto; min-height: 52px; flex-wrap: wrap; gap: 0 8px; align-items: center; }
   .masthead .search-btn, .masthead .theme-toggle { position: absolute; top: 7px; width: 32px; height: 32px; margin: 0; } /* the buttons live inside the tab strip; on phones they pin to the first row, clear of the tabs below so each tab keeps a full 24 px to tap */
@@ -995,7 +995,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
   .timeline li { grid-template-columns: 1fr; gap: 4px; }
 }
 /* a phone: the wordmark is the way home, so the Home tab goes and the other five fit a 360 px screen without scrolling */
-@media (max-width: 480px) { .tabs a[data-view="walk"] { display: none; } .tabs { gap: 0; } .tabs a { padding: 6px 6px 9px; font-size: 11.5px; } }
+@media (max-width: 480px) { :root { --masthead: 76px; } .tabs a[data-view="walk"] { display: none; } .tabs { gap: 0; } .tabs a { padding: 6px 6px 9px; font-size: 11.5px; } }
 @media (max-width: 380px) { .tabs a { padding-left: 5px; padding-right: 5px; padding-bottom: 10px; font-size: 11px; } } /* the extra pixel keeps the masthead's height, so the page sits where it does at 390 px */
 
 
@@ -1028,7 +1028,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .fc-row--foot { margin-top: auto; flex-wrap: wrap; }
 .fc-row--gap { justify-content: flex-start; }
 .fc-marks { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; margin-left: auto; }
-.fc-link { font-family: var(--font-mono); font-size: var(--fs-cap); font-weight: 500; letter-spacing: 0; color: var(--ink-2); background: none; border: 0; border-radius: 0; padding: 8px 2px; cursor: pointer; text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 4px; }
+.fc-link { font-family: var(--font-mono); font-size: 13px; font-weight: 500; letter-spacing: 0; color: var(--ink-2); background: none; border: 0; border-radius: 0; padding: 8px 2px; cursor: pointer; text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 4px; }
 .fc-link:hover:not(:disabled) { color: var(--ink); text-decoration-color: var(--ink); }
 .fc-link:disabled { color: var(--muted); opacity: 0.45; text-decoration: none; cursor: default; }
 .fc-link.fc-prev:disabled, .fc-link.fc-next:disabled { visibility: hidden; } /* a step the reader cannot take yet is not drawn; its space stays, so nothing moves */
@@ -1038,7 +1038,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .fc-a { margin: 4px 0 0; font-family: var(--font-body); font-weight: 600; font-size: var(--fs-d4); line-height: 1.35; color: var(--ink); text-wrap: balance; }
 .fc-why { margin: 0 0 6px; font-size: 16.5px; line-height: 1.5; color: var(--ink-2); }
 .fc-more { font-family: var(--font-mono); font-size: var(--fs-cap); letter-spacing: 0; color: var(--accent); white-space: normal; margin-left: 4px; } /* it wraps: a long section name would widen the card past a 320 px screen */
-.fc-btn { font-family: var(--font-mono); font-size: var(--fs-cap); font-weight: 500; letter-spacing: 0; color: var(--ink-2); background: none; border: 1px solid var(--line-2); border-radius: 0; padding: 9px 13px; cursor: pointer; }
+.fc-btn { font-family: var(--font-ui); font-size: 14px; font-weight: 500; letter-spacing: 0; color: var(--ink); background: var(--bg); border: 1px solid var(--rule-ink); border-radius: 999px; padding: 8px 16px; min-height: 36px; cursor: pointer; }
 .fc-btn:hover { border-color: var(--ink); color: var(--ink); }
 .fc-btn--solid { background: var(--ink); border-color: var(--ink); color: var(--bg); }
 .fc-btn--solid:hover { color: var(--bg); background: var(--ink-2); border-color: var(--ink-2); }
@@ -1791,8 +1791,9 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 .lk { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 34px; align-items: start; margin: 6px 0 40px; }
 .lk-list { position: sticky; top: calc(var(--masthead) + 16px); border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2); border-radius: 0; background: none; overflow: hidden; }
 .lk-search { padding: 12px 0 10px; border-bottom: 1px solid var(--line-2); }
-.lk-search input { width: 100%; font: inherit; font-family: var(--font-body); font-size: 16px; padding: 9px 12px; border: 1px solid var(--control-edge); border-radius: 0; background: var(--bg); color: var(--ink); }
+.lk-search input { width: 100%; font: inherit; font-family: var(--font-ui); font-size: 16px; padding: 9px 12px; border: 1px solid var(--control-edge); border-radius: 0; background: var(--bg); color: var(--ink); }
 .lk-search input:focus { outline: none; border-color: var(--ink); }
+.lk-search input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; } /* the field's focus shows as the site's own ring */
 .lk-search input::placeholder { color: var(--muted); }
 #lk-items { list-style: none; margin: 0; padding: 6px 0; max-height: calc(100vh - var(--masthead) - 160px); min-height: 200px; overflow: auto; overscroll-behavior: contain; }
 #lk-items li { margin: 0; }
@@ -11158,7 +11159,7 @@ PC.register('wafer', function (p) {
           if (kc < k) ribs += path(am, a1, bm, b1, '');
         });
       });
-      var fsL = phone ? 11.5 : tight ? 12 : 13, fsR = phone ? 10.5 : tight ? 11 : 12;
+      var fsL = phone ? 11.5 : tight ? 12 : 13, fsR = phone ? 11 : tight ? 11 : 12; // no label under 11 px (redesign, 25 Oct 2026)
       var nodesL = '', hitsL = '';
       cols.forEach(function (c) {
         var yy = ly[c], mid = (yy[0] + yy[1]) / 2;

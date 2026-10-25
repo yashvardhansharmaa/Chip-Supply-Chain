@@ -30,7 +30,7 @@ const PAGES = [['walk', '/#/'], ['chain', '/#/chain'], ['ai-chips', '/#/landscap
   ['page-suppliers', '/suppliers/'], ['page-export-controls', '/export-controls/'], ['page-glossary', '/glossary/']].filter(([n]) => !ONLY.length || ONLY.includes(n));
 
 const MEASURE = `(() => {
-  const st = document.createElement('style'); st.textContent = '*{content-visibility:visible!important}'; document.head.appendChild(st);
+  const st = document.createElement('style'); st.textContent = 'article.chapter{content-visibility:visible!important}'; document.head.appendChild(st); // the chain's chapters only: a closed <details> must stay closed
   const W = innerWidth, de = document.documentElement, out = { sw: de.scrollWidth, W, small: [], clipped: [], overlap: [] };
   const name = (el) => (el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + (typeof el.className === 'string' && el.className.trim() ? '.' + el.className.trim().split(/\\s+/).slice(0, 2).join('.') : '')).slice(0, 70);
   const shown = (el) => { for (let p = el; p && p.nodeType === 1; p = p.parentElement) { const cs = getComputedStyle(p); if (cs.display === 'none' || cs.visibility === 'hidden' || +cs.opacity === 0) return false; } return true; };
@@ -63,7 +63,7 @@ const MEASURE = `(() => {
     // a glyph box runs past its line when line-height is under 1, so each box is cut to the line's own height
     const lh = parseFloat(getComputedStyle(el).lineHeight);
     for (const q of rg.getClientRects()) {
-      if (q.width < 2 || q.height < 2 || q.bottom < 0 || q.top > innerHeight * 3) continue;
+      if (q.width < 2 || q.height < 2 || q.bottom < 0 || q.top > innerHeight * 3 || q.right < 0 || q.left > W) continue; // off-screen copies (left: -10000px) are not on the page
       let r = { left: q.left, right: q.right, top: q.top, bottom: q.bottom };
       if (lh && lh < q.height) { const c = (q.top + q.bottom) / 2; r = { left: q.left, right: q.right, top: c - lh / 2, bottom: c + lh / 2 }; }
       // text an ancestor clips (a line clamp, a scroller) counts only where it shows
