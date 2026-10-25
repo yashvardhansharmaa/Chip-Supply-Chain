@@ -283,8 +283,6 @@ const textOf = (html) => String(html || '').replace(/<[^>]+>/g, '').replace(/\s+
 const EXTRA_CSS = minCSS(`
 .ch-head .ch-meta { margin-bottom: 4px; }
 .ch-meta > span { white-space: nowrap; }
-.ch-meta > span + span::before { content: "\\00b7"; margin: 0 8px; }
-@media (max-width: 640px) { .ch-head .ch-meta { display: flex; flex-wrap: wrap; gap: 0 20px; } .ch-meta > span + span::before { content: none; } }
 .ch-cite { margin: 0 0 26px; }
 .ch-cite-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 8px; margin: 0; font-family: var(--font-label); font-size: 13px; font-weight: 500; letter-spacing: 0; color: var(--muted); }
 .ch-cite-line > * { padding: 4px 0; }
@@ -335,17 +333,45 @@ const plainTerms = (html) => String(html || '').replace(/<button type="button" c
 // An explainer animation: the main page plays it in time with its captions; here it is the video, with controls and
 // nothing fetched until it is played, the last frame as its poster, and every step written out underneath. The still is
 // for paper only (hidden on screen, chapter-page.css), so it loads lazily: the browser fetches it when the page is printed.
-const staticAnimations = (html) => html.replace(/<figure class="figure figure--anim"( id="[^"]*")?>([\s\S]*?)<\/figure>/g, (m, id, inner) => {
+const staticAnimations = (html) => html.replace(/(<figure class="figure figure--anim"[^>]*>[\s\S]*?)<div class="fig-body">([\s\S]*?)<\/div><div class="fig-strip">/g, (m, head, inner) => {
   const src = (inner.match(/\bdata-src="([^"]*)"/) || [])[1];
   if (!src) return m;
-  const title = (inner.match(/<p class="fig-title">[\s\S]*?<\/p>/) || [''])[0];
+  const title = textOf((head.match(/<p class="fig-title[^"]*">([\s\S]*?)<\/p>/) || [])[1] || '');
   const ratio = inner.match(/aspect-ratio:(\d+)\/(\d+)/);
   const steps = (inner.match(/<ol class="anim-transcript">([\s\S]*?)<\/ol>/) || [])[1] || '';
-  const notes = (inner.match(/<p class="fig-source">[\s\S]*?<\/p>/g) || []).join('');
   const base = '../' + src;
   const size = ratio ? ` width="${ratio[1]}" height="${ratio[2]}"` : '';
-  return `<figure class="figure figure--anim"${id || ''}>${title}<div class="anim-frame"><video controls preload="none" playsinline muted${size} poster="${base}-light-end.jpg" src="${base}-light.mp4" data-media="${base}" aria-label="Animation: ${textOf(title)}"></video></div><img class="anim-still" src="${base}-print-end.jpg" alt="Last frame of the animation: ${textOf(title)}" loading="lazy" decoding="async" fetchpriority="low">${steps ? `<ol class="anim-steps">${steps}</ol>` : ''}${notes}</figure>`;
+  return `${head}<div class="fig-body"><div class="anim-frame"><video controls preload="none" playsinline muted${size} poster="${base}-light-end.jpg" src="${base}-light.mp4" data-media="${base}" aria-label="Animation: ${esc(title)}"></video></div><img class="anim-still" src="${base}-print-end.jpg" alt="Last frame of the animation: ${esc(title)}" loading="lazy" decoding="async" fetchpriority="low">${steps ? `<ol class="anim-steps">${steps}</ol>` : ''}</div><div class="fig-strip">`;
 });
+// The figures' controls without the app: Cite becomes a link to its citation, which opens as the link's :target without scripts
+// and as a toggle with them (CITE_JS); Table and PNG come from FIG_JS. A chapter link (href="<id>/" with the app's data-route)
+// goes to that chapter's readable page.
+const staticFigures = (html) => html
+  .replace(/<button type="button" class="ch-cite-btn" aria-expanded="false" aria-controls="([^"]+)">Cite<\/button>/g, '<a class="ch-cite-btn" href="#$1" aria-controls="$1">Cite</a>')
+  .replace(/(<div class="ch-cite-box fig-cite-box"[^>]*?) hidden>/g, '$1>');
+const staticRoutes = (html) => html.replace(/href="([a-z0-9-]+)\/" data-route="#[a-z0-9-]+"/g, 'href="../$1/"');
+// the annotated still a readable page shows where the app draws the live specimen (data/specimen-parts.json "still"): the
+// picture, and over it a balloon per part in a column clear of the drawing on the part's side, each with its leader lines
+function stillSVG(still, parts, title) {
+  const S = +still.size || 772, cx = S / 2;
+  const items = parts.map((p, i) => {
+    const pts = (still.points || [])[i] || [];
+    const mx = pts.reduce((a, q) => a + q[0], 0) / (pts.length || 1), my = pts.reduce((a, q) => a + q[1], 0) / (pts.length || 1);
+    return { p, pts, side: mx < cx ? -1 : 1, y: my };
+  }).filter((x) => x.pts.length);
+  [-1, 1].forEach((side) => { const l = items.filter((x) => x.side === side).sort((a, b) => a.y - b.y); for (let i = 1; i < l.length; i++) if (l[i].y - l[i - 1].y < 96) l[i].y = l[i - 1].y + 96; });
+  const f = (n) => n.toFixed(1);
+  const label = `${esc(title)}, with ${parts.length} numbered parts: ${parts.map((p) => `${+p.n} ${esc(String(p.name).toLowerCase())}`).join(', ')}.`;
+  // wide: each balloon named beside it; narrow (a phone), the numbers alone, larger, and the list under the caption names them
+  const draw = (o) => items.map((x) => {
+    const bx = x.side < 0 ? o.l : o.r, by = x.y;
+    const lines = x.pts.map((q) => { const dx = q[0] - bx, dy = q[1] - by, L = Math.hypot(dx, dy) || 1; return `<line x1="${f(bx + dx / L * o.r0)}" y1="${f(by + dy / L * o.r0)}" x2="${f(q[0])}" y2="${f(q[1])}" style="stroke-width:${o.sw}"/><circle class="dot" cx="${f(q[0])}" cy="${f(q[1])}" r="${o.dot}"/>`; }).join('');
+    return `<g>${lines}<circle class="bal" cx="${f(bx)}" cy="${f(by)}" r="${o.r0}" style="stroke-width:${o.sw}"/><text class="num" x="${f(bx)}" y="${f(by + o.fs * 0.36)}" text-anchor="middle" style="font-size:${o.fs}px">${+x.p.n}</text>${o.names ? `<text class="nm" x="${f(x.side < 0 ? bx - o.r0 - 12 : bx + o.r0 + 12)}" y="${f(by + o.fn * 0.36)}" text-anchor="${x.side < 0 ? 'end' : 'start'}" style="font-size:${o.fn}px">${esc(x.p.name)}</text>` : ''}</g>`;
+  }).join('');
+  const img = `<image href="../media/${esc(still.file)}" x="0" y="0" width="${S}" height="${S}"/>`;
+  return `<svg class="ch-still ch-still--wide" viewBox="-300 -14 ${S + 560} ${S + 28}" role="img" aria-label="${label}">${img}${draw({ l: -64, r: S + 74, r0: 24, fs: 24, fn: 30, sw: 2.4, dot: 6, names: true })}</svg>`
+    + `<svg class="ch-still ch-still--narrow" viewBox="-96 -14 ${S + 192} ${S + 28}" aria-hidden="true">${img}${draw({ l: -46, r: S + 46, r0: 40, fs: 40, fn: 0, sw: 3.6, dot: 9, names: false })}</svg>`;
+}
 
 // Links inside the chapter: a heading on this page stays a fragment, another chapter goes to its readable page, anything
 // else on the main page (a view, a glossary entry) goes to the main page.
@@ -377,20 +403,23 @@ function readableHTML(p, ch, ctx, versions, css) {
   const fc = flashcards[ch.id];
   const cards = fc && Array.isArray(fc.cards) ? fc.cards.filter((c) => c.q && c.a) : [];
 
-  const eyebrow = `<b>Chapter ${pad(ch.number)}</b> · ${si >= 0 ? `Stage ${si + 1} of ${stages.length}` : (TILE[ch.number] || '')}`.replace(/ · $/, '');
+  const conc = si >= 0 ? (m.card || {}).concentration || '' : '';
+  const kick = `<p class="ch-kick"><span>Chapter ${pad(ch.number)}</span><span>${si >= 0 ? `Stage ${si + 1} of ${stages.length}` : esc(TILE[ch.number] || '')}</span>${conc ? `<span class="ch-band" data-band="${BANDS[conc] || 0}"><i aria-hidden="true"></i>${esc(conc)}</span>` : ''}</p>`;
   const adds = ['a 3D model', 'glossary definitions', cards.length ? 'flashcards' : ''].filter(Boolean);
   const note = `The interactive chapter adds ${adds.length > 1 ? adds.slice(0, -1).join(', ') + ' and ' + adds[adds.length - 1] : adds[0]}.`;
   const cta = (cls) => `<div class="cta${cls}"><a class="btn" href="${esc(app)}">Open the interactive chapter <span aria-hidden="true">→</span></a><p class="cta-note">${note}</p></div>`;
 
-  // where the stage sits: the fifteen stages, each bar as tall as its concentration, each a link to its own page
-  const track = si < 0 ? '' : `<nav class="track" aria-label="The ${stages.length} stages of the chain"><ol>${stages.map((c) => {
-    const band = (c.meta.card || {}).concentration || '';
-    return `<li data-band="${BANDS[band] || 0}"${c.id === ch.id ? ' aria-current="page"' : ''}><a href="../${esc(c.id)}/" aria-label="Chapter ${pad(c.number)}: ${esc(c.title)}${band ? ', ' + esc(band) + ' concentration' : ''}" title="${pad(c.number)} ${esc(c.title)}${band ? ' · ' + esc(band) + ' concentration' : ''}"><span class="bar"><i></i></span><span class="n">${pad(c.number)}</span></a></li>`;
-  }).join('')}</ol><p class="track-foot"><span><b>${esc(ch.title)}</b>, stage ${si + 1} of ${stages.length}</span><span>${stages[si + 1] ? `Next stage: <a href="../${esc(stages[si + 1].id)}/">${pad(stages[si + 1].number)} ${esc(stages[si + 1].title)}</a>` : 'Last stage in the chain'}</span></p></nav>`;
+  const specimen = m.specimen || (ch.id === 'geopolitics' ? 'globe' : 'wafer');
+  // the specimen: Lithography shows its annotated still (data/specimen-parts.json); every chapter its caption, flush left, and
+  // the way to the live drawing
+  const pe = (ctx.specimenParts || {})[ch.id], parts = pe && Array.isArray(pe.parts) ? pe.parts : [];
+  const still = pe && pe.still && parts.length ? stillSVG(pe.still, parts, m.specimenCaption ? m.specimenCaption.split('. ')[0] : ch.title) : '';
+  const specimenHTML = `<figure class="ch-spec${still ? ' has-still' : ''}"${ch.number >= 16 ? ' data-night="1"' : ''}>${still ? `<div class="ch-spec-draw">${still}</div>` : ''}<figcaption class="ch-spec-cap"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${r.parts || ''}<a class="ch-spec-3d" href="${esc(app)}">See it in 3D in the interactive chapter</a></figcaption></figure>`;
 
-  const specimen = m.specimen || 'wafer';
-  const specimenHTML = m.specimenCaption ? `<aside class="specimen" aria-label="Specimen"><span class="label">Specimen · ${esc(SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' '))}</span><p>${esc(m.specimenCaption)}</p><a href="${esc(app)}">See it in 3D in the interactive chapter</a></aside>` : '';
-
+  // the contents rail, as the app draws it (build.js railHTML), with this page's own section anchors
+  const toc = (r.plain ? [[`${ch.id}--plain`, 'In plain terms']] : []).concat((ch.headings || []).map((h) => [h.id, esc(String(h.text).replace(/\*\*/g, ''))]))
+    .concat(cards.length ? [['review-questions', 'Review questions']] : []).concat(ch.cites.length ? [['sources', 'Sources']] : []);
+  const rail = ctx.railHTML ? ctx.railHTML(ch, si, toc) : '';
   const review = cards.length ? reviewSection(cards, (c) => {
     const anchor = c.section ? `${ch.id}--${ctx.slug(c.section)}` : '';
     return anchor ? ` <a href="#${esc(anchor)}">Reread: ${esc(c.section)}</a>` : '';
@@ -401,27 +430,26 @@ function readableHTML(p, ch, ctx, versions, css) {
 
   const sources = ch.cites.length ? `<section class="sources" aria-labelledby="sources"><h2 class="label" id="sources">Sources (${ch.cites.length})</h2><ol>${ch.cites.map((c, k) => `<li id="source-${k + 1}">${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol></section>` : '';
 
-  const article = `<article>
-<header class="ch-head">
-<p class="eyebrow">${eyebrow}</p>
-<h1 class="ch-title">${esc(ch.title)}</h1>
+  const article = `<article class="chapter ch-page" data-number="${pad(ch.number)}">
+<header class="chapter-head">
+<div class="ch-open">${kick}<h1 class="ch-title${ch.title.length > 16 ? ' is-long' : ''}">${esc(ch.title)}</h1>
 ${m.oneLiner ? `<p class="ch-lede">${esc(m.oneLiner)}</p>` : ''}
-<p class="ch-meta"><span>${ch.words.toLocaleString('en-US')} words / ${r.mins} min</span></p>
-${cta('')}
-</header>
-${track}
-${r.plain || ''}
-${r.inShort ? `<section class="inshort"><h2>In short</h2>${levelUp(r.inShort)}</section>` : ''}
-${plainTerms(r.plate)}
+<div class="ch-omet"><p class="ch-meta"><span class="label">${ch.words.toLocaleString('en-US')} words / ${r.mins} min</span><span class="label">Specimen: ${esc(SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' '))}</span>${ch.cites.length ? `<span class="label">${ch.cites.length} sources</span>` : ''}</p>
+${cta('')}</div></div>
 ${specimenHTML}
+${plainTerms(r.plate)}
+${levelUp(r.plain || '')}
+${r.inShort ? `<section class="inshort"><h2 class="label">In short</h2>${levelUp(r.inShort)}</section>` : ''}
+</header>
+${rail}
 <div class="prose">
-${staticAnimations(levelUp(r.prose))}
-</div>
+${staticFigures(staticAnimations(levelUp(r.prose)))}
 ${review}
 <nav class="endnav" aria-label="After the chapter">${cta(' cta--end')}${prevnext}</nav>
 ${sources}
+</div>
 </article>`;
-  const text = fixLinks(plainTerms(plainCites(article)), new Set(seq.map((c) => c.id)));
+  const text = fixLinks(staticRoutes(plainTerms(plainCites(article))), new Set(seq.map((c) => c.id)));
   // the day this chapter's text last changed (build.js keeps a hash of `text` per page), and the day it first appeared;
   // the footer's "Updated" day says the same, in the main page's wording
   const today = builtOn.toISOString().slice(0, 10);
@@ -429,9 +457,7 @@ ${sources}
   const day = ctx.dayStr ? ctx.dayStr(dates.modified) : builtStr;
   const footerKey = ctx.dayStr ? ctx.footerKey.split(`Updated ${builtStr}`).join(`Updated ${day}`) : ctx.footerKey;
   // after the hash, the page furniture that is not the chapter's text: the head's "Updated <day>" and the cite line under it
-  // (they carry the day, so they cannot be hashed) and the one-line key to the strip's colors
-  const bandsUsed = ['Extreme', 'High', 'Moderate', 'Low'].filter((b) => stages.some((c) => (c.meta.card || {}).concentration === b));
-  const trackKey = bandsUsed.length ? `<p class="track-key"><span class="tk-k">Concentration</span>${bandsUsed.map((b) => `<span class="tk" data-band="${BANDS[b]}"><i aria-hidden="true"></i>${b}</span>`).join('')}</p>` : '';
+  // (they carry the day, so they cannot be hashed)
   // ...and, before Previous and Next, the hand-picked related chapters (build/related-chapters.js), by name
   const picks = RELATED[ch.id] || [];
   const rel = picks.map((k) => {
@@ -441,8 +467,8 @@ ${sources}
   }).filter(Boolean);
   const related = rel.length ? `<p class="related"><span class="label">${picks.every((k) => String(k).charAt(0) !== '/') ? 'Related chapters' : 'Related pages'}</span>${rel.join('')}</p>` : '';
   const main = text
-    .replace(/(<p class="ch-meta">[\s\S]*?)(<\/p>)/, (m, meta, end) => meta + `<span>Updated ${esc(day)}</span>` + end + (ctx.citeBlock ? ctx.citeBlock(ch, day, true) : ''))
-    .replace(/(<p class="track-foot">[\s\S]*?<\/p>)(<\/nav>)/, (m, foot, end) => foot + trackKey + end)
+    .replace(/(<p class="ch-meta">[\s\S]*?)(<span class="label">\d+ sources<\/span>)?(<\/p>)/, (m, meta, srcs, end) => meta + `<span class="label">Updated ${esc(day)}</span>` + (srcs || '') + end + (ctx.citeBlock ? ctx.citeBlock(ch, day, true) : ''))
+    .replace(/\{\{CITE_DAY:[a-z0-9-]+\}\}/g, esc(day))
     .replace(/(<nav class="endnav"[^>]*>[\s\S]*?)(<div class="prevnext">)/, (m, head, pn) => head + related + pn);
   const ymd = String(dates.modified).replace(/-/g, '/');
   const scholar = `<meta name="citation_title" content="${esc(ch.title)}">
@@ -485,11 +511,12 @@ ${SITE_CONFIG.analytics ? `<script async src="https://gc.zgo.at/count.js" data-g
 <body>
 <a class="skip" href="#main">Skip to content</a>
 ${MASTHEAD}
-<main id="main" class="page">
+<main id="main" class="page page--chapter">
 ${main}
 <footer class="site-footer">${footerKey}</footer>
 </main>
 ${ctx.CITE_JS ? `<script>${ctx.CITE_JS}</script>` : ''}
+${ctx.FIG_JS ? `<script>${ctx.FIG_JS}</script>` : ''}
 ${hasVideo ? `<script>(function(){var t=document.documentElement.getAttribute('data-theme');if(t!=='dark')return;[].forEach.call(document.querySelectorAll('video[data-media]'),function(v){var b=v.getAttribute('data-media');v.poster=b+'-dark-end.jpg';v.src=b+'-dark.mp4';});})();
 /* the print still loads lazily; a browser that does not fetch lazy images for print is told to now */
 window.addEventListener('beforeprint',function(){[].forEach.call(document.querySelectorAll('img.anim-still[loading="lazy"]'),function(i){i.loading='eager';});});</script>` : ''}
@@ -505,6 +532,9 @@ module.exports = function (ctx) {
   const versions = cardVersions(root, fs, path);
   let css = '';
   try { css = minCSS(fs.readFileSync(path.join(root, 'build', 'assets', 'chapter-page.css'), 'utf8')); } catch (e) { warn('chapter pages: build/assets/chapter-page.css is missing, so they ship unstyled'); }
+  // the chapter page's own sheet, shared with The Chain in the app (src/modules/chapter.css), after the readable pages' common one
+  let chCSS = '';
+  try { chCSS = minCSS(fs.readFileSync(path.join(root, 'src', 'modules', 'chapter.css'), 'utf8')); } catch (e) { warn('chapter pages: src/modules/chapter.css is missing'); }
   const byId = new Map((ctx.all || []).map((c) => [c.id, c]));
   // the deck that ends Start here (data/flashcards.json "intro"), for /intro/: each answer links to its chapter's readable page
   const introDeck = (ctx.flashcards || {}).intro;
@@ -523,7 +553,7 @@ module.exports = function (ctx) {
     const ch = p.kind === 'chapter' ? byId.get(p.slug) : null;
     let html;
     if (ch && ch.rendered) {
-      html = readableHTML(p, ch, ctx, versions, css);
+      html = readableHTML(p, ch, ctx, versions, css + chCSS);
       if (/<button\b/.test(html)) warn(`chapter page ${p.slug}: a button from the app survived into the static page`);
       ctx.readablePages.push(p.slug);
     } else {
@@ -531,6 +561,14 @@ module.exports = function (ctx) {
       html = p.slug === 'intro' && introReview ? introHTML(p, versions, css, introReview) : pageHTML(p, versions);
     }
     fs.writeFileSync(path.join(dir, 'index.html'), html);
+  }
+  // the annotated stills the readable pages show in place of the live specimen (data/specimen-parts.json "still")
+  for (const e of Object.values(ctx.specimenParts || {})) {
+    const f = e && e.still && e.still.file;
+    if (!f) continue;
+    const from = path.join(root, 'build', 'assets', 'specimens', f);
+    if (fs.existsSync(from)) { fs.mkdirSync(path.join(dist, 'media'), { recursive: true }); fs.copyFileSync(from, path.join(dist, 'media', f)); }
+    else warn(`specimen still ${f} is missing from build/assets/specimens/`);
   }
   // the cards, rendered by build/cards.py into build/assets/cards/; the build only copies them
   const src = path.join(root, 'build', 'assets', 'cards');

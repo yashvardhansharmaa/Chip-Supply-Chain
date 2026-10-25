@@ -1088,6 +1088,8 @@ const ctx = { root, fs, path, all, chapters, geo, stages, data, esc, pad, word, 
   deckHTML, glossary,
   // the cite line under the chapter title, as the main page prints it (the readable page's own date goes in)
   citeBlock, CITE_JS, FIG_JS,
+  // the chapter page's contents rail and the numbered parts of a specimen, for the readable chapter pages (social.js)
+  railHTML, specimenParts,
   // for the reference pages (build/modules/reference-pages.js): the views' own words and helpers, as the main page uses them
   suppliersIntro, suppliersRevenueNote, controlsDek, exposureNote, safeUrl, COUNTRY };
 for (const f of modDir(path.join(root, 'build', 'modules')).filter((x) => x.endsWith('.js'))) {

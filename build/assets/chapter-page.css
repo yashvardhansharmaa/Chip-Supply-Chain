@@ -26,6 +26,12 @@
   --fs-note: 13.5px; --fs-small: 15.5px; --fs-plain: 17px; --fs-body: 18px; --fs-lede: 21px;
   --fs-d6: 16.5px; --fs-d5: 19px; --fs-d4: 21px; --fs-d3: 24px; --fs-d2: 28px; --fs-d1s: clamp(26px, 2.3vw, 32px); --fs-d1: clamp(40px, 4.6vw, 66px);
   --fs-num-s: 30px; --fs-num-m: 54px; --fs-num-l: 72px;
+  /* the tokens the chapter page's own sheet reads (src/modules/chapter.css, shared with The Chain in the app) */
+  --font-ui: var(--font-label);
+  --margin: clamp(16px, 4.45vw, 64px);
+  --masthead: 0px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --night: #121211; --night-ink: #e8e7e3; --night-ink2: #a9a7a1; --night-rule: #34332f; --night-accent: #d98a95;
   color-scheme: light;
 }
 /* dark only on an explicit choice (?theme=dark or the site's saved choice): the site opens light for everyone, the owner's call of 21 Oct */

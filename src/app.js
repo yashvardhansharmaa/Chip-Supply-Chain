@@ -341,9 +341,12 @@
         if (p.x === null || snap || reduced) { p.x = tx; p.y = ty; } else { p.x += (tx - p.x) * 0.14; p.y += (ty - p.y) * 0.14; }
         p.c.setAttribute('cx', p.x.toFixed(1)); p.c.setAttribute('cy', p.y.toFixed(1));
         p.tn.setAttribute('x', p.x.toFixed(1)); p.tn.setAttribute('y', (p.y + 4.5).toFixed(1));
-        var left = p.x < cx;
-        p.tl.setAttribute('x', (left ? p.x - 18 : p.x + 18).toFixed(1)); p.tl.setAttribute('y', (p.y + 5).toFixed(1));
-        p.tl.setAttribute('text-anchor', left ? 'end' : 'start');
+        var left = p.x < cx, tw = p.tw || 0;
+        if (!tw) { tw = p.tl.getComputedTextLength ? p.tl.getComputedTextLength() : 0; if (tw > 0) p.tw = tw; else tw = String(p.name).length * 8; } // measured once the faces are in
+        // the name beside its balloon, or under it where beside would run past the drawing's edge (the page clips there)
+        var under = left ? p.x - 18 - tw < 2 : p.x + 18 + tw > w - 2;
+        p.tl.setAttribute('x', (under ? p.x : left ? p.x - 18 : p.x + 18).toFixed(1)); p.tl.setAttribute('y', (under ? p.y + 32 : p.y + 5).toFixed(1));
+        p.tl.setAttribute('text-anchor', under ? 'middle' : left ? 'end' : 'start');
         p.pts.forEach(function (q, i) {
           var dx = q[0] - p.x, dy = q[1] - p.y, L = Math.sqrt(dx * dx + dy * dy) || 1;
           var l = p.lines[i]; l.setAttribute('x1', (p.x + dx / L * 12).toFixed(1)); l.setAttribute('y1', (p.y + dy / L * 12).toFixed(1)); l.setAttribute('x2', q[0].toFixed(1)); l.setAttribute('y2', q[1].toFixed(1));
@@ -720,7 +723,8 @@
       this.set(past ? ch : null, cur);
       // the masthead: up while the reader scrolls down past the top of the page, back as soon as they scroll up
       var dy = y - this.lastY;
-      if (y < 200 || $('#sheet:not([hidden])')) html.classList.remove('mast-up');
+      // a jump (a link, a search result, the page landing on an anchor) moves hundreds of pixels at once: the masthead stays
+      if (y < 200 || $('#sheet:not([hidden])') || Math.abs(dy) > 320) html.classList.remove('mast-up');
       else if (dy > 6) html.classList.add('mast-up');
       else if (dy < -6) html.classList.remove('mast-up');
       if (Math.abs(dy) > 6 || y < 200) this.lastY = y;
