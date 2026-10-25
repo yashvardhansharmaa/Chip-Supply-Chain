@@ -266,24 +266,31 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
     </section>
 
     <section class="view column wide" data-view="glossary">
-      <div class="view-head">
+      <!-- The Glossary as a dictionary (redesign option B, src/modules/lookup.js): every entry in columns, A to Z, under a sticky
+           bar with the search, the kinds and the letters; an entry opens in the sheet. #lk-items and #glossary are the entries as
+           data, read by the dictionary, the look-up popovers and the site search, and their ids are the entries' addresses -->
+      <div class="view-head vh gl-head">
         <h1>Glossary</h1>
         <p class="dek">Every term, firm, chip and country, with the passages that mention them.</p>
+        <p class="gl-tally">{{GLOSSARY_TALLY}}</p>
+        <p class="gl-try" id="gl-try"><span class="gl-try-k">Try</span></p>
       </div>
-      <div class="lk">
-        <aside class="lk-list" id="lk-list">
-          <div class="lk-search"><input id="gl-search" type="search" placeholder="A term, a firm, a chip, a country…" aria-label="Find a term, a firm, a chip or a country" autocomplete="off" spellcheck="false"></div>
-          <button type="button" class="lk-browse" id="lk-browse" aria-controls="lk-items" aria-expanded="false">Browse all entries</button>
-          <ul id="lk-items" aria-label="Entries">{{LOOKUP_LIST}}</ul>
-          <p class="lk-count" id="lk-count"></p>
-        </aside>
-        <div class="lk-entry" id="lk-entry">
-          <div class="lk-rest" id="lk-rest"><p class="lk-try"><span class="lk-try-k">Try</span></p></div>
-          <dl class="glossary" id="glossary">{{GLOSSARY}}</dl>
-          <div id="lk-card" hidden></div>
-          <section class="lk-mentions" id="lk-mentions" hidden></section>
+      <div class="gl-bar-at" id="gl-bar-at" aria-hidden="true"></div>
+      <div class="gl-bar" id="gl-bar">
+        <div class="gl-bar-row">
+          <label class="gl-field"><span class="sr-only">Find a term, a firm, a chip or a country</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="gl-search" type="search" placeholder="A term, a firm, a chip, a country" autocomplete="off" spellcheck="false"><button type="button" class="gl-clear" id="gl-clear" aria-label="Clear the search" hidden>×</button></label>
+          <div class="gl-bar-r"><div class="gl-kinds" id="gl-kinds" role="group" aria-label="Kind of entry"></div><p class="gl-count" id="lk-count" role="status"></p></div>
         </div>
+        <nav class="gl-letters-nav" aria-label="Entries by letter"><ul class="gl-letters" id="gl-letters"></ul></nav>
       </div>
+      <div class="gl-none" id="gl-none" hidden></div>
+      <div class="gl-dict" id="gl-dict"></div>
+      <ul class="gl-data" id="lk-items" hidden>{{LOOKUP_LIST}}</ul>
+      <dl class="glossary gl-data" id="glossary" hidden>{{GLOSSARY}}</dl>
+      <aside class="gl-sheet" id="gl-sheet" aria-labelledby="gl-sheet-t" hidden>
+        <div class="gl-sheet-bar"><p class="gl-sheet-k" id="gl-sheet-k"></p><div class="gl-sheet-nav"><button type="button" id="gl-prev" aria-label="Previous entry"><span aria-hidden="true">←</span></button><button type="button" id="gl-next" aria-label="Next entry"><span aria-hidden="true">→</span></button><button type="button" class="gl-close" id="gl-close">Close</button></div></div>
+        <div class="gl-sheet-body" id="gl-sheet-body"></div>
+      </aside>
       <footer class="site-footer">{{FOOTER}}</footer>
     </section>
 
