@@ -118,6 +118,51 @@
     if (el && CP.Router.settle) CP.Router.settle(el);
   }
 
+  /* The hero (redesign, 25 Oct 2026). The evidence figure's fifteen marks pick the specimen: a mark copies its stage's
+     specimen, number, title and caption onto the hero (#wk-hero, a [data-specimen] item that Sections in src/app.js tracks
+     like a step), and a scroll event asks Sections to draw it. One mark is in the Tab order; the arrow keys, Home and End move
+     along them, as they do on the Suppliers pipeline. The search field hands what is typed to the site's search (Tools). */
+  (function hero() {
+    var box = document.getElementById('wk-hero');
+    var marks = box ? CP.$$('.wk-stop', box) : [];
+    var shown = box ? box.querySelector('.wk-shown') : null;
+    function pick(i, focus) {
+      var b = marks[i]; if (!b) return;
+      marks.forEach(function (m, k) { m.setAttribute('aria-pressed', k === i ? 'true' : 'false'); m.tabIndex = k === i ? 0 : -1; });
+      box.setAttribute('data-specimen', b.getAttribute('data-spec') || '');
+      box.setAttribute('data-number', b.getAttribute('data-n') || '');
+      box.setAttribute('data-title', b.getAttribute('data-t') || '');
+      box.setAttribute('data-caption', b.getAttribute('data-cap') || '');
+      if (shown) shown.textContent = 'Shown: ' + (b.getAttribute('data-n') || '') + ' ' + (b.getAttribute('data-t') || '');
+      if (focus) b.focus();
+      window.dispatchEvent(new Event('scroll'));
+    }
+    marks.forEach(function (b, i) {
+      b.addEventListener('click', function () { pick(i, false); });
+      b.addEventListener('keydown', function (e) {
+        var k = e.key, n = marks.length, to = -1;
+        if (k === 'ArrowRight' || k === 'ArrowDown') to = Math.min(n - 1, i + 1);
+        else if (k === 'ArrowLeft' || k === 'ArrowUp') to = Math.max(0, i - 1);
+        else if (k === 'Home') to = 0; else if (k === 'End') to = n - 1;
+        if (to < 0) return;
+        e.preventDefault(); pick(to, true);
+      });
+    });
+    var q = document.getElementById('wk-q');
+    if (q && CP.Tools) {
+      var hand = function () { // the dialog opens with the field's words in its own box, and the field empties
+        var v = q.value; q.value = '';
+        CP.Tools.open();
+        var inp = document.querySelector('#cp-search input');
+        if (inp && v) { inp.value = v; inp.dispatchEvent(new Event('input')); }
+      };
+      q.addEventListener('input', function () { if (q.value) hand(); });
+      q.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); hand(); } });
+      q.addEventListener('mousedown', function (e) { if (e.button === 0) { e.preventDefault(); hand(); } });
+      q.addEventListener('touchend', function (e) { e.preventDefault(); hand(); });
+    }
+  })();
+
   CP.register('walk', {
     /* the router leaves the page where this view puts it: a step to land on, or the place the reader left */
     owns: function () { return !!pending; },

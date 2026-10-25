@@ -508,8 +508,10 @@
       var p = r2.height > vh ? Math.max(0, Math.min(1, (probe - r2.top) / (r2.height - vh * 0.3))) : 0;
       Stage.scrollAngle = (reduced ? 0 : p * 1.15);
       var id = best.id || best.getAttribute('data-specimen');
-      if (id !== this.currentId) {
-        this.currentId = id;
+      // the home hero keeps one id while the reader picks its specimen (src/modules/walk.js), so the specimen it names counts too
+      var key = id + '|' + (best.getAttribute('data-specimen') || '');
+      if (id !== this.currentId || key !== this.currentKey) {
+        this.currentId = id; this.currentKey = key;
         if (Router.current === 'stack') Router.title();
         var num = best.getAttribute('data-number');
         Stage.show(best.getAttribute('data-specimen'), null, best.getAttribute('data-caption') ? esc(best.getAttribute('data-caption')) : null,

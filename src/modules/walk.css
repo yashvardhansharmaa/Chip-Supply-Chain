@@ -1,155 +1,134 @@
 /* ==========================================================================
-   The ten-minute walk (#/walk, the home page) and the start-here block.
+   The home page (#/, the Start here walk) in the redesign of 25 Oct 2026 (qa/redesign/BRIEF.md, the hybrid mockup's home).
    Tokens only; every class is prefixed wk-.
-   The left edge is the ledger column (--gutter): each chapter's number sits in it, large and light, beside a
-   hairline that fills with garnet as the reader scrolls (walk.js sets --wk-fill on the current step).
+   The hero: the title and subtitle, then the evidence figure (8 of the 15 stages are rated Extreme, with a mark per stage that
+   picks the specimen on the stage beside it), the search field and the two ways in. Then the chain at a glance, the walk (one
+   plain paragraph per chapter, each number in the ledger column), the flashcards and Other pages.
    ========================================================================== */
 
-/* ---------- the walk: head, indented by the ledger column so the margin reads from the first line ---------- */
+/* ---------- the hero ---------- */
 .wk { padding-bottom: 30px; }
-.wk-head { padding: clamp(40px, 7vh, 76px) 0 4px; margin-left: calc(var(--gutter) + var(--gutter-gap)); }
-.wk-eyebrow { display: block; margin: 0 0 13px; }
+.wk-head { padding: clamp(32px, 6.5vh, 72px) 0 0; }
 .wk-title {
-  font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: var(--fs-d1); line-height: 1.02;
-  text-transform: none; letter-spacing: -0.015em;
-  margin: 0 0 16px; max-width: 12em;
+  font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-title);
+  font-size: clamp(52px, 6.4vw, 100px); line-height: 0.96; letter-spacing: -0.028em;
+  text-transform: none; margin: 0 0 0 -0.045em; max-width: 7.4em; color: var(--ink);
 }
-.wk-dek { font-size: var(--fs-lede); line-height: 1.45; color: var(--ink-2); max-width: 30em; margin: 0 0 18px; }
-.wk-meta { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0; }
-.wk-meta .label { position: relative; }
-.wk-meta .label + .label::before { content: ""; position: absolute; left: -10px; top: 2px; width: 1px; height: 10px; background: var(--line-2); }
+.wk-dek { font-family: var(--font-body); font-weight: 400; font-size: clamp(19px, 1.55vw, 23px); line-height: 1.4; color: var(--ink-2); max-width: 24em; margin: 22px 0 0; }
 
-/* ---------- the overview: a ruled table, name on the left, one line on the right ---------- */
-.wk-tabs { display: block; margin: 30px 0 4px; padding: 0; background: none; border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2); border-radius: 0; }
-.wk-tabs-k { margin: 0; padding: 10px 0 8px; border-bottom: 1px solid var(--line); color: var(--muted); }
-.wk-tabs a { display: grid; grid-template-columns: 172px minmax(0, 1fr); gap: 0 20px; align-items: baseline; min-width: 0; padding: 9px 0 10px; border-top: 1px solid var(--line); color: var(--ink-2); text-decoration: none; }
-.wk-tabs a:first-of-type { border-top: 0; }
-.wk-tabs .wk-tab { display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--fs-d5); line-height: 1.2; padding: 0; margin: 0; border: 0; border-radius: 0; color: var(--ink); background: none; transition: color 0.15s; }
-.wk-tabs .wk-tab::after { content: "\00a0\2192"; color: var(--line-2); font-weight: 400; }
-.wk-tabs a:hover .wk-tab, .wk-tabs a:focus-visible .wk-tab { background: none; color: var(--accent); }
-.wk-tabs a:hover .wk-tab::after { color: var(--accent); }
-.wk-tabs span { display: block; font-size: var(--fs-small); line-height: 1.45; }
+/* the evidence: the count, what Extreme means, a mark per stage in chapter order */
+.wk-ev { margin: clamp(32px, 5.5vh, 52px) 0 0; max-width: 780px; }
+.wk-ev-cap { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 20px; align-items: end; margin: 0 0 22px; }
+.wk-ev-n {
+  font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-numeral);
+  font-size: clamp(44px, 4.1vw, 60px); line-height: 0.9; letter-spacing: -0.03em; white-space: nowrap; margin-left: -0.03em;
+  font-variant-numeric: lining-nums;
+}
+.wk-ev-t { font-family: var(--font-body); font-size: 19px; line-height: 1.3; padding-bottom: 1px; color: var(--ink); }
+.wk-ev-d { grid-column: 1 / -1; margin-top: 14px; font-family: var(--font-body); font-size: 15px; line-height: 1.5; color: var(--ink-2); max-width: 38em; }
+.wk-stops { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(15, minmax(0, 1fr)); position: relative; }
+.wk-stops::after { content: ""; position: absolute; left: 0; right: 0; top: 46px; height: 1px; background: var(--ink); pointer-events: none; }
+.wk-stops li { min-width: 0; }
+.wk-stop { display: grid; grid-template-rows: 46px auto; justify-items: start; width: 100%; padding: 0 2px 4px 0; text-align: left; cursor: pointer; }
+.wk-stop-bar { align-self: end; width: 9px; height: 44px; background: var(--ink); transition: background-color 0.15s; }
+.wk-stops [data-band="h"] .wk-stop-bar { height: 22px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); }
+.wk-stop-n { margin-top: 8px; font-family: var(--font-kicker); font-size: 12px; line-height: 16px; color: var(--muted); font-variant-numeric: tabular-nums; }
+@media (hover: hover) {
+  .wk-stop:hover .wk-stop-bar { background: var(--ink-2); }
+  .wk-stops [data-band="h"] .wk-stop:hover .wk-stop-bar { background: var(--ctx); }
+  .wk-stop:hover .wk-stop-n { color: var(--ink); }
+}
+.wk-stop[aria-pressed="true"] .wk-stop-bar, .wk-stops [data-band="h"] .wk-stop[aria-pressed="true"] .wk-stop-bar { background: var(--accent); box-shadow: none; }
+.wk-stop[aria-pressed="true"] .wk-stop-n { color: var(--accent-ink); }
+.wk-stop:focus-visible { outline-offset: 2px; }
+.wk-legend { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 14px 0 0; font-family: var(--font-ui); font-size: 13px; line-height: 1.3; color: var(--ink-2); }
+.wk-legend span { display: inline-flex; gap: 8px; align-items: flex-end; }
+.wk-legend i { display: inline-block; flex: none; width: 7px; height: 15px; background: var(--ink); }
+.wk-legend i.h { height: 8px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); }
+.wk-legend .wk-shown { color: var(--ink); }
 
-/* ---------- the chain at a glance: under the hero, at every width ----------
-   The fifteen stages in order, one line each: the number in the ledger column (so the names line up with the walk's
-   text below), the name, and the concentration drawn as the summary page draws it, a four-step meter and the plain word,
-   garnet at Extreme. Each line is a link to its chapter, the full width of the column and at least 28 px tall.
-   Other pages, which repeats the tabs, closes the walk (.wk-end). The phone block comes first and is the shipped phone
-   layout; from 701 px the rows grow a little, and from 901 px the numbers hang in the ledger column, so the names start
-   on the title's edge and the list previews the walk's own structure. */
-@media (max-width: 700px) {
-  .wk-gl { display: block; margin: 24px 0 0; border-top: 1px solid var(--ink); }
-  .wk-gl-h { display: block; margin: 0; padding: 10px 0 0; }
-  .wk-gl-p { margin: 5px 0 12px; font-size: var(--fs-small); line-height: 1.45; color: var(--ink-2); }
-  .wk-gl-p b { color: var(--accent); font-weight: 600; }
-  .wk-gl-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
-  .wk-gl-list li + li { border-top: 1px solid var(--line); }
-  .wk-gl-list a {
-    display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr) auto; column-gap: var(--gutter-gap); align-items: baseline;
-    min-height: 28px; padding: 4px 0; color: var(--ink); text-decoration: none;
-  }
-  .wk-gl-n { padding-right: 8px; text-align: right; font-family: var(--font-mono); font-size: var(--fs-cap); color: var(--muted); font-variant-numeric: tabular-nums; }
-  .wk-gl-t { font-size: var(--fs-small); line-height: 1.3; text-wrap: balance; } /* a long name breaks into two even lines, never one word alone */
-  .wk-gl-c { display: inline-flex; align-items: baseline; gap: 7px; font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--ink); }
-  .wk-gl-m { display: inline-flex; align-self: center; align-items: flex-end; gap: 2px; height: 14px; }
-  .wk-gl-m i { display: block; width: 6px; background: var(--line); }
-  .wk-gl-m i:nth-child(1) { height: 5px; }
-  .wk-gl-m i:nth-child(2) { height: 8px; }
-  .wk-gl-m i:nth-child(3) { height: 11px; }
-  .wk-gl-m i:nth-child(4) { height: 14px; }
-  .wk-gl-list li .wk-gl-m i.on { background: var(--muted); }
-  .wk-gl-list li[data-level="3"] .wk-gl-m i.on { background: var(--bar-4); }
-  .wk-gl-list li[data-level="4"] .wk-gl-m i.on { background: var(--accent-fill); }
-  .wk-gl-w { min-width: 4.1em; } /* every word as wide as the longest, so the meters stand in one column */
-  .wk-gl-list li[data-level="4"] .wk-gl-w { color: var(--accent); font-weight: 600; }
-  .wk-gl-list a:hover .wk-gl-t, .wk-gl-list a:active .wk-gl-t, .wk-gl-list a:focus-visible .wk-gl-t { color: var(--accent); }
-  .wk-gl-list a:focus-visible { outline-offset: 2px; }
+/* the search field and the two ways in */
+.wk-find { margin: 34px 0 0; max-width: 640px; }
+.wk-qbox { display: flex; align-items: center; gap: 12px; height: 52px; padding: 0 14px 0 16px; border: 1px solid var(--ink); border-radius: 4px; background: var(--bg); color: var(--ink-2); cursor: text; }
+.wk-qbox:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+.wk-qbox svg { flex: none; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+.wk-qbox input { flex: 1 1 auto; min-width: 0; height: 100%; margin: 0; padding: 0; border: 0; outline: 0; background: transparent; font-family: var(--font-ui); font-size: 17px; color: var(--ink); cursor: text; }
+.wk-qbox input::placeholder { color: var(--muted); opacity: 1; }
+.wk-qbox input::-webkit-search-cancel-button { display: none; }
+.wk-qbox kbd { flex: none; font-family: var(--font-kicker); font-size: 12px; line-height: 1; color: var(--muted); border: 1px solid var(--rule-ink); border-radius: 3px; padding: 3px 6px; }
+@media (hover: none) and (pointer: coarse) { .wk-qbox kbd { display: none; } }
+.wk-reads { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 22px 0 0; }
+.wk-way { display: flex; flex-direction: column; gap: 7px; min-width: 0; padding: 12px 0 4px; border-top: 1px solid var(--ink); color: var(--ink); text-decoration: none; }
+.wk-way-t { font-family: var(--font-ui); font-weight: 500; font-size: 19px; line-height: 1.25; letter-spacing: -0.01em; }
+.wk-way-d { display: flex; flex-wrap: wrap; gap: 0 8px; font-family: var(--font-kicker); font-size: 12px; line-height: 1.5; color: var(--muted); }
+.wk-way-d span + span::before { content: "\00b7"; margin-right: 8px; }
+.wk-way:hover .wk-way-t { color: var(--accent-ink); }
+
+/* ---------- the chain at a glance: the fifteen stages, one line each, numbers in the ledger column ---------- */
+.wk-gl { margin: clamp(80px, 13vh, 128px) 0 0; }
+.wk-gl-h {
+  margin: 0 0 18px; font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-title);
+  font-size: clamp(30px, 2.8vw, 42px); line-height: 1.05; letter-spacing: -0.02em; color: var(--ink);
 }
-@media (max-width: 380px) { /* a 360 px phone: a narrower meter and word keep most names on one line */
-  .wk-gl-t { font-size: var(--fs-small); }
-  .wk-gl-c { gap: 5px; font-size: var(--fs-ui-s); }
-  .wk-gl-m i { width: 5px; }
+.wk-gl-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.wk-gl-list li { border-bottom: 1px solid var(--line); }
+.wk-gl-list a {
+  display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr) auto; column-gap: var(--gutter-gap); align-items: baseline;
+  min-height: 40px; padding: 9px 0 8px; color: var(--ink); text-decoration: none;
 }
-@media (min-width: 701px) {
-  .wk-gl { display: block; margin: 34px 0 0; border-top: 1px solid var(--ink); }
-  .wk-gl-h { display: block; margin: 0; padding: 11px 0 0; }
-  .wk-gl-p { margin: 6px 0 14px; font-size: var(--fs-plain); line-height: 1.45; color: var(--ink-2); max-width: 36em; }
-  .wk-gl-p b { color: var(--accent); font-weight: 600; }
-  .wk-gl-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
-  .wk-gl-list li + li { border-top: 1px solid var(--line); }
-  .wk-gl-list a {
-    display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr) auto; column-gap: var(--gutter-gap); align-items: baseline;
-    min-height: 30px; padding: 5px 0 4px; color: var(--ink); text-decoration: none;
-  }
-  .wk-gl-n { padding-right: 8px; text-align: right; font-family: var(--font-mono); font-size: var(--fs-cap); color: var(--muted); font-variant-numeric: tabular-nums; }
-  .wk-gl-t { font-size: var(--fs-d6); line-height: 1.3; }
-  .wk-gl-c { display: inline-flex; align-items: baseline; gap: 8px; font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--ink-2); }
-  .wk-gl-m { display: inline-flex; align-self: center; align-items: flex-end; gap: 2px; height: 14px; }
-  .wk-gl-m i { display: block; width: 6px; background: var(--line); }
-  .wk-gl-m i:nth-child(1) { height: 5px; }
-  .wk-gl-m i:nth-child(2) { height: 8px; }
-  .wk-gl-m i:nth-child(3) { height: 11px; }
-  .wk-gl-m i:nth-child(4) { height: 14px; }
-  .wk-gl-list li .wk-gl-m i.on { background: var(--muted); }
-  .wk-gl-list li[data-level="3"] .wk-gl-m i.on { background: var(--bar-4); }
-  .wk-gl-list li[data-level="4"] .wk-gl-m i.on { background: var(--accent-fill); }
-  .wk-gl-w { min-width: 4.4em; }
-  .wk-gl-list li[data-level="4"] .wk-gl-w, .wk-gl-list li[data-level="4"] .wk-gl-n { color: var(--accent); }
-  .wk-gl-list li[data-level="4"] .wk-gl-w { font-weight: 600; }
-  .wk-gl-list a:hover { background: var(--bg-2); }
-  .wk-gl-list a:hover .wk-gl-t, .wk-gl-list a:focus-visible .wk-gl-t { color: var(--accent); }
-}
-@media (min-width: 901px) {
-  .wk-gl { border-top: 0; }
-  .wk-gl-h { border-top: 1px solid var(--ink); }
-  .wk-gl-list a { position: relative; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; }
-  .wk-gl-n { position: absolute; top: 9px; left: calc(-1 * (var(--gutter) + var(--gutter-gap))); width: var(--gutter); padding-right: 14px; }
-  .wk-gl-t { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--fs-d6); line-height: 1.25; }
-}
+.wk-gl-n { font-family: var(--font-kicker); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.wk-gl-t { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 18px; line-height: 1.25; text-wrap: balance; }
+.wk-gl-c { display: inline-flex; align-items: baseline; gap: 9px; font-family: var(--font-ui); font-size: 13px; color: var(--ink-2); }
+/* the band as the hero marks it: a solid bar for Extreme, an outline half as tall for High (the four-step meter's cells are not drawn) */
+.wk-gl-m { display: inline-block; flex: none; align-self: center; width: 6px; height: 15px; background: var(--ink); }
+.wk-gl-m i { display: none; }
+.wk-gl-list li[data-level="3"] .wk-gl-m { height: 8px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); align-self: center; }
+.wk-gl-list li[data-level="2"] .wk-gl-m, .wk-gl-list li[data-level="1"] .wk-gl-m { height: 4px; background: var(--ctx); }
+.wk-gl-w { min-width: 4.4em; }
+.wk-gl-list li[data-level="4"] .wk-gl-w { color: var(--ink); }
+.wk-gl-list a:hover .wk-gl-t, .wk-gl-list a:focus-visible .wk-gl-t { color: var(--accent-ink); }
+.wk-gl-list a:focus-visible { outline-offset: 2px; }
 
 /* ---------- the walk: the ledger column ---------- */
-.wk-list { list-style: none; margin: 44px 0 0; padding: 0; }
+.wk-list { list-style: none; margin: clamp(80px, 13vh, 120px) 0 0; padding: 0; }
 .wk-step {
   display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr); gap: 0 var(--gutter-gap);
   scroll-margin-top: calc(var(--masthead) + 66px);
 }
-.wk-block { min-width: 0; padding: 0 0 52px; }
+.wk-block { min-width: 0; padding: 0 0 64px; }
 
 .wk-mark { position: relative; }
 .wk-mark::before { /* the hairline: one segment per step, joined into a continuous rule */
   content: ""; position: absolute; right: 0; top: 0; height: 100%; width: 1px; background: var(--line-2);
 }
 .wk-list .wk-step:last-child .wk-mark::before { height: 26px; }
-.wk-n { /* the number is the mark: Fraunces at its lightest weight and highest contrast */
-  position: absolute; right: 14px; top: -14px;
-  font-family: var(--font-display); font-weight: 300; font-variation-settings: var(--opsz-numeral);
-  font-size: var(--fs-num-m); line-height: 1; letter-spacing: -0.02em;
+.wk-n { /* the number is the mark: Fraunces, light, large */
+  position: absolute; right: 14px; top: -12px;
+  font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-numeral);
+  font-size: var(--fs-num-m); line-height: 1; letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums lining-nums; color: var(--muted);
 }
 .wk-step.is-past .wk-mark::before { background: var(--ink-2); }
 .wk-step.is-here .wk-mark::before { background: linear-gradient(to bottom, var(--accent) var(--wk-fill, 0%), var(--line-2) var(--wk-fill, 0%)); }
 .wk-step.is-past .wk-n { color: var(--ink-2); }
-.wk-step.is-here .wk-n { color: var(--accent); }
+.wk-step.is-here .wk-n { color: var(--accent-ink); }
 
 /* ---------- the walk: one block ---------- */
-.wk-where { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0 0 9px; }
-.wk-where .wk-stage { position: relative; }
-.wk-where .wk-stage::before { content: ""; position: absolute; left: -9px; top: 2px; width: 1px; height: 10px; background: var(--line-2); }
+.wk-where { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0 0 10px; }
 .wk-t {
-  font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title);
-  font-size: var(--fs-d1s); line-height: 1.1; letter-spacing: 0;
-  margin: 0 0 14px; max-width: 15em;
+  font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
+  font-size: var(--fs-d1s); line-height: 1.1; letter-spacing: -0.01em;
+  margin: 0 0 16px; max-width: 15em;
 }
-.wk-p { max-width: var(--measure); line-height: 1.6; margin: 0 0 16px; }
+.wk-p { max-width: var(--measure); line-height: 1.62; margin: 0 0 18px; }
 
 .wk-leaders {
   display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 11px;
-  max-width: var(--measure); margin: 0 0 15px;
+  max-width: var(--measure); margin: 0 0 16px;
   font-size: var(--fs-small); line-height: 1.5; color: var(--ink-2);
 }
 .wk-leaders .label { flex: 0 0 auto; }
-.wk-lead { font-weight: 600; color: var(--ink); }
+.wk-lead { font-weight: 500; color: var(--ink); }
 .wk-lead .chip { margin: 0 0 0 3px; } /* the markup already carries a literal space, so the name reads apart from its code */
 .wk-sep { font-style: normal; color: var(--line-2); }
 
@@ -158,46 +137,51 @@
   max-width: var(--measure); padding-top: 12px; border-top: 1px solid var(--line);
 }
 .wk-score {
-  display: inline-flex; align-items: center; gap: 9px;
-  font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); font-variant-numeric: tabular-nums;
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-ui); font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums;
 }
-.wk-pips { display: inline-flex; gap: 4px; }
-.wk-pips i { display: block; box-sizing: border-box; width: 8px; height: 8px; border-radius: 0; border: 1.5px solid var(--line-2); }
-/* the chain strip's colors: garnet only at 5 of 5 */
-.wk-score[data-rank="3"] .wk-pips i.on { background: var(--bar-3); border-color: var(--bar-3); }
-.wk-score[data-rank="4"] .wk-pips i.on { background: var(--bar-4); border-color: var(--bar-4); }
-.wk-score[data-rank="5"] .wk-pips i.on { background: var(--bar-5); border-color: var(--bar-5); }
-.wk-sc b { color: var(--ink); font-weight: 600; font-size: var(--fs-ui); }
-.wk-score[data-rank="5"] .wk-sc, .wk-score[data-rank="5"] .wk-sc b { color: var(--accent); }
+.wk-sc { display: inline-flex; align-items: center; gap: 8px; }
+.wk-sc::before { content: ""; display: inline-block; flex: none; width: 6px; height: 4px; background: var(--ctx); }
+.wk-score[data-rank="5"] .wk-sc::before { height: 15px; background: var(--ink); }
+.wk-score[data-rank="4"] .wk-sc::before { height: 8px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); }
+.wk-sc b { color: var(--ink); font-weight: 500; font-size: 14px; }
 .wk-read {
-  margin-left: auto; font-family: var(--font-mono); font-weight: 500;
-  font-size: var(--fs-ui); letter-spacing: 0.01em; white-space: nowrap;
-  text-decoration: none; border-bottom: 1px solid var(--line-2); padding-bottom: 1px;
+  margin-left: auto; font-family: var(--font-ui); font-weight: 500;
+  font-size: 15px; letter-spacing: 0; white-space: nowrap; color: var(--ink);
+  text-decoration: none; border-bottom: 1px solid var(--ink); padding: 3px 0 2px;
 }
-.wk-read::after { content: "\00a0\2192"; color: var(--muted); }
-/* Read the chapter, the Concentration tag and each source link look as they did but take a fingertip: an invisible box
-   at least 24 px tall, centered on the control */
+.wk-read::after { content: "\00a0\2192"; }
+/* Read the chapter, the Concentration tag and each source link take a fingertip: an invisible box at least 24 px tall,
+   centered on the control */
 .wk-read, .wk-score-term, .wk-facts .wk-src { position: relative; }
 .wk-read::before, .wk-score-term::before, .wk-facts .wk-src::before {
   content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 24px); height: max(100%, 26px); transform: translate(-50%, -50%);
 }
 .wk-facts .wk-src::before { width: calc(100% + 8px); }
-.wk-read:hover { color: var(--accent); border-bottom-color: var(--accent); }
-.wk-read:hover::after { color: var(--accent); }
+.wk-read:hover { color: var(--accent-ink); border-bottom-color: var(--accent); }
 
 .wk-pn { display: none; }
 
 /* ---------- the walk: the end, Other pages (its own ink rule opens it) ---------- */
+.wk-tabs { display: block; margin: 30px 0 4px; padding: 0; background: none; border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2); border-radius: 0; }
+.wk-tabs-k { margin: 0; padding: 12px 0 10px; border-bottom: 1px solid var(--line); }
+.wk-tabs a { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 0 20px; align-items: baseline; min-width: 0; padding: 12px 0 13px; border-top: 1px solid var(--line); color: var(--ink-2); text-decoration: none; }
+.wk-tabs a:first-of-type { border-top: 0; }
+.wk-tabs .wk-tab { display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--fs-d5); line-height: 1.2; padding: 0; margin: 0; border: 0; border-radius: 0; color: var(--ink); background: none; transition: color 0.15s; }
+.wk-tabs .wk-tab::after { content: "\00a0\2192"; font-weight: 400; color: var(--muted); }
+.wk-tabs a:hover .wk-tab, .wk-tabs a:focus-visible .wk-tab { background: none; color: var(--accent-ink); }
+.wk-tabs a:hover .wk-tab::after { color: var(--accent-ink); }
+.wk-tabs span { display: block; font-size: var(--fs-small); line-height: 1.5; }
 .wk-end { max-width: var(--measure); margin-left: calc(var(--gutter) + var(--gutter-gap)); }
 .wk-end .wk-tabs { margin: 0; }
 
 /* ---------- the walk: the flashcards after the last step ----------
    The chapter decks' component and look (styles.css .review, .fc-*), set in the walk's text column. A chapter's deck sits in
    .prose, which gives its title the heading type; here the title takes the same type directly. */
-.wk-deck { max-width: var(--measure); margin: 0 0 48px calc(var(--gutter) + var(--gutter-gap)); }
+.wk-deck { max-width: var(--measure); margin: 0 0 56px calc(var(--gutter) + var(--gutter-gap)); }
 .wk-deck .review { margin-top: 6px; }
 .wk-deck .rv-title {
-  font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); letter-spacing: 0;
+  font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); letter-spacing: -0.01em;
   font-size: var(--fs-d2); line-height: 1.15; margin: 0.55em 0 0.2em;
 }
 /* ten dots leave a phone no room for both step links beside them, so the links move under the dots, each on one line */
@@ -208,50 +192,43 @@
 /* ---------- the progress rail ---------- */
 .wk-rail {
   position: fixed; left: 0; top: var(--masthead); z-index: 30; width: var(--col);
-  padding: 8px clamp(16px, 4vw, 56px) 8px clamp(16px, 3vw, 44px);
+  padding: 8px clamp(16px, 4vw, 56px) 9px var(--margin);
   background: var(--bg); border-bottom: 1px solid var(--line);
   transform: translateY(-110%); opacity: 0; transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
 }
 .wk-rail[data-show="1"] { transform: none; opacity: 1; }
 .wk-rail-bar { height: 2px; background: var(--line); border-radius: 0; overflow: hidden; }
 .wk-rail-bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width 0.15s linear; }
-.wk-rail-line { display: flex; gap: 12px; align-items: baseline; margin: 6px 0 0; font-family: var(--font-mono); font-size: var(--fs-ui-s); letter-spacing: 0.01em; color: var(--muted); }
-.wk-rail-n { flex: 0 0 auto; color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+.wk-rail-line { display: flex; gap: 12px; align-items: baseline; margin: 6px 0 0; font-family: var(--font-ui); font-size: 13px; letter-spacing: 0; color: var(--muted); }
+.wk-rail-n { flex: 0 0 auto; font-family: var(--font-kicker); font-size: 12px; color: var(--ink); font-variant-numeric: tabular-nums; }
 .wk-rail-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-/* ---------- start here: the landing-page chooser, under the hero ---------- */
+/* ---------- start here: the landing-page chooser (START_HERE, not placed on the page today) ---------- */
 .wk-sh { border-top: 1px solid var(--line); padding: 15px 0 20px; }
 .wk-sh-h { display: block; margin: 0 0 11px; }
 .wk-sh-list { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px 14px; margin: 0; padding: 0; }
 .wk-sh-list li { display: flex; flex-direction: column; min-width: 0; }
-.wk-sh-item {
-  flex: 1 1 auto; display: block; text-decoration: none;
-  border: 0; border-top: 1px solid var(--line-2); border-radius: 0; background: none;
-  padding: 10px 0 11px; transition: border-color 0.15s;
-}
+.wk-sh-item { flex: 1 1 auto; display: block; text-decoration: none; border: 0; border-top: 1px solid var(--line-2); border-radius: 0; background: none; padding: 10px 0 11px; transition: border-color 0.15s; }
 .wk-sh-item:hover { border-top-color: var(--ink); background: none; }
-.wk-sh-t {
-  display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title);
-  font-size: var(--fs-d6); line-height: 1.2; letter-spacing: 0; margin: 0 0 4px; text-wrap: balance;
-}
+.wk-sh-t { display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--fs-d6); line-height: 1.2; letter-spacing: 0; margin: 0 0 4px; text-wrap: balance; }
 .wk-sh-t::after { content: "\00a0\2192"; color: var(--muted); font-weight: 400; }
-.wk-sh-item:hover .wk-sh-t { color: var(--accent); }
+.wk-sh-item:hover .wk-sh-t { color: var(--accent-ink); }
 .wk-sh-d { display: block; font-size: 13.5px; line-height: 1.38; color: var(--ink-2); }
-.wk-sh-more {
-  align-self: flex-start; margin-top: 6px;
-  font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase;
-  color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--line-2);
-}
-.wk-sh-more:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.wk-sh-more { align-self: flex-start; margin-top: 6px; font-family: var(--font-ui); font-weight: 500; font-size: 13px; color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--line-2); }
+.wk-sh-more:hover { color: var(--accent-ink); border-bottom-color: var(--accent); }
 .wk-sh-more::after { content: "\00a0\2192"; }
 
 /* ---------- the walk: sourced facts ---------- */
-.wk-facts { list-style: none; margin: 10px 0 4px; padding: 8px 0 6px 16px; border-left: 1px solid var(--line-2); max-width: var(--measure); }
-.wk-facts li { font-family: var(--font-body); font-size: var(--fs-small); line-height: 1.45; color: var(--ink-2); margin: 0 0 6px; }
-.wk-facts .wk-src { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; color: var(--accent); text-decoration: none; margin-left: 6px; }
-.wk-facts .wk-src:hover { text-decoration: underline; }
+.wk-facts { list-style: none; margin: 10px 0 6px; padding: 8px 0 6px 16px; border-left: 1px solid var(--line-2); max-width: var(--measure); }
+.wk-facts li { font-family: var(--font-body); font-size: var(--fs-small); line-height: 1.5; color: var(--ink-2); margin: 0 0 7px; }
+.wk-facts .wk-src { font-family: var(--font-ui); font-weight: 500; font-size: 12.5px; letter-spacing: 0; color: var(--accent-ink); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent); text-underline-offset: 3px; margin-left: 6px; white-space: nowrap; }
+.wk-facts .wk-src::after { content: "\00a0\2197"; }
+.wk-facts .wk-src:hover { text-decoration-color: var(--accent); }
 
-/* ---------- narrow ---------- */
+/* ---------- laptops between 901 and 1199 px ---------- */
+@media (max-width: 1199px) and (min-width: 901px) {
+  .wk-title { font-size: clamp(48px, 6vw, 64px); }
+}
 @media (max-width: 1100px) {
   .wk-tabs a { grid-template-columns: 150px minmax(0, 1fr); }
 }
@@ -259,36 +236,60 @@
   .wk-sh-list { grid-template-columns: 1fr; gap: 8px; }
   .wk-sh-t { font-size: 15.5px; }
 }
+
+/* ---------- phones: one column; the specimen is the strip at the foot of the screen ---------- */
 @media (max-width: 900px) {
-  /* the ledger column narrows to 34 px; the number stays in it, small */
-  .wk-head { margin-left: 0; padding-top: 26px; }
-  .wk-title { font-size: 36px; max-width: none; }
-  .wk-dek { font-size: var(--fs-plain); }
-  .wk-meta .label + .label::before, .wk-where .wk-stage::before { display: none; }
-  .wk-tabs a { grid-template-columns: 1fr; gap: 2px; }
-  .wk-tabs .wk-tab { font-size: var(--fs-d6); }
-  .wk-tabs span { font-size: var(--fs-small); }
-  .wk-list { margin-top: 30px; }
+  .wk-head { padding-top: 26px; }
+  .wk-title { font-size: min(68px, 16vw); line-height: 0.98; max-width: none; }
+  .wk-dek { font-size: 19px; margin-top: 16px; }
+  .wk-ev { margin-top: 32px; }
+  .wk-ev-cap { grid-template-columns: 1fr; row-gap: 6px; margin-bottom: 18px; }
+  .wk-ev-n { font-size: 46px; }
+  .wk-ev-d { grid-column: 1; margin-top: 6px; font-size: 14.5px; }
+  .wk-stops::after { top: 36px; }
+  .wk-stop { grid-template-rows: 36px auto; padding-right: 1px; }
+  .wk-stop-bar { width: 6px; height: 34px; }
+  .wk-stops [data-band="h"] .wk-stop-bar { height: 17px; }
+  .wk-stop-n { font-size: 11px; letter-spacing: -0.04em; margin-top: 7px; }
+  .wk-legend { gap: 8px 18px; }
+  .wk-find { margin-top: 28px; }
+  .wk-qbox { gap: 9px; padding: 0 12px; height: 50px; }
+  .wk-qbox input { font-size: 16px; } /* 16 px stops iOS zooming in on focus */
+  .wk-reads { grid-template-columns: 1fr; gap: 14px; }
+  .wk-way-t { font-size: 18px; }
+
+  .wk-gl { margin-top: 64px; }
+  .wk-gl-h { font-size: 30px; }
+  .wk-gl-list a { min-height: 36px; padding: 7px 0 6px; }
+  .wk-gl-t { font-size: 16px; }
+  .wk-gl-c { gap: 7px; font-size: 12.5px; }
+  .wk-gl-w { min-width: 4.1em; }
+
+  .wk-list { margin-top: 64px; }
   .wk-step { scroll-margin-top: calc(var(--masthead) + 60px); }
-  .wk-block { padding-bottom: 38px; }
-  .wk-n { display: block; right: 8px; top: -6px; font-size: 26px; }
+  .wk-block { padding-bottom: 40px; }
+  .wk-n { display: block; right: 8px; top: -4px; font-size: 26px; }
   .wk-t { font-size: var(--fs-d3); max-width: none; }
   .wk-foot { gap: 10px 14px; }
   .wk-read { margin-left: 0; }
   .wk-end { margin-left: 0; }
+  .wk-tabs a { grid-template-columns: 1fr; gap: 2px; }
+  .wk-tabs .wk-tab { font-size: var(--fs-d6); }
+  .wk-tabs span { font-size: var(--fs-small); }
 
   .wk-pn { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 18px 0 0; }
-  .wk-pn a {
-    display: block; min-width: 0; text-decoration: none;
-    border: 1px solid var(--line-2); border-radius: 0; background: none; padding: 9px 11px 10px;
-  }
-  .wk-pn a:hover { border-color: var(--accent); }
+  .wk-pn a { display: block; min-width: 0; text-decoration: none; border: 1px solid var(--line-2); border-radius: 4px; background: none; padding: 9px 11px 10px; }
+  .wk-pn a:hover { border-color: var(--ink); }
   .wk-pn .wk-next { text-align: right; }
   .wk-pn .label { display: block; margin-bottom: 3px; }
   .wk-pn-t { display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 14.5px; line-height: 1.25; overflow-wrap: anywhere; }
 }
+@media (max-width: 380px) {
+  .wk-gl-c { gap: 5px; font-size: 12px; }
+  .wk-gl-w { min-width: 0; }
+  .wk-legend { font-size: 12.5px; gap: 6px 14px; }
+}
 @media (max-width: 420px) {
-  .wk-title { font-size: 33px; }
   .wk-t { font-size: var(--fs-d3); }
   .wk-pn-t { font-size: 13px; }
 }
@@ -296,6 +297,6 @@
   .wk-rail { transition: none; }
 }
 @media print {
-  .wk-rail, .wk-pn { display: none !important; }
+  .wk-rail, .wk-pn, .wk-find, .wk-stops, .wk-legend { display: none !important; }
   .wk-step { break-inside: avoid; }
 }

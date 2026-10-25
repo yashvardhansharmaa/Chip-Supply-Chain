@@ -27,85 +27,92 @@
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "Chip Supply Chain", "url": "https://chipsupplychain.org/", "description": "How AI chips are made: an introduction to the entire semiconductor supply chain.", "inLanguage": "en", "author": {"@type": "Person", "name": "Yashvardhan Sharma", "url": "https://www.linkedin.com/in/yashvardhan07/"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,400&family=Instrument+Sans:ital,wght@0,400..700;1,400&family=Jost:wght@400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..600,0,0&family=Literata:ital,opsz,wght@0,7..72,300..700;1,7..72,400&family=Hanken+Grotesk:wght@400..700&family=Fragment+Mono&display=swap">
 <style>
-/* CHIP SUPPLY CHAIN design system: the ledger
-   Ground: a pale warm white, paper. Ink: near-black with a hint of blue. Accent: garnet, used the way a bookkeeper
-   used red ink, only where a figure needs to be seen (Extreme, Critical, the current stage, a citation number).
-   Type: Fraunces (display; weight 300 at the top of the optical range for the large numerals, 400 for titles,
-   SOFT and WONK pinned to zero), Source Serif 4 (reading, 18.5 px), Instrument Sans (labels, tabs, table heads,
-   buttons: the slot that used to be monospace), Jost (the specimen caption). A real monospace survives only where
-   digits must align under one another: code, the copy-as-CSV block, the board's dates and years.
-   Rules: hairlines instead of boxes, corners square, no shadows except under a floating popover, no grain.
-   The one thing to remember is the left edge of the page: a ruled ledger column (--gutter) that carries the chapter
-   number on the home walk and, on every chapter, the number and the fifteen stages of the chain turned vertical. */
+/* CHIP SUPPLY CHAIN design system (the redesign of 25 Oct 2026, qa/redesign/BRIEF.md)
+   Ground: white. Ink: a warm near-black, with two secondary inks. Paper (#f4f4f2) is a tint only, for the chokepoint card,
+   figure frames, source strips and flashcards.
+   Accent: red wine, #7a1f2b on white and #d98a95 on dark. It marks links, the reader's place (the current menu item, the
+   current item in a contents list), the reader's own selection and the logo tile. It never marks a data value; the one
+   exception is the Critical rating on Suppliers.
+   Type (pairing C2): Fraunces for the name, headings, titles and large numbers ("opsz" 48, SOFT and WONK at zero; about
+   350 at display sizes, 500 for small headings); Literata for standfirsts, text, review questions and captions of more than
+   one line; Hanken Grotesk only for menus, buttons, tabs, fields and small interface labels; Fragment Mono for kickers,
+   codes, dates in meta lines and table numbers. No text under 11 px. */
 :root {
-  --bg: #f7f6f2;
-  --bg-2: #f1efea;
-  --bg-3: #e8e5df;
-  --ink: #14181f;
-  --ink-2: #3b424c;
-  --muted: #5c636d;
-  --line: #d8d4cc;
-  --line-2: #bfb9af;
-  --control-edge: #857f74; /* the edge of a field, a select, a chip or a checkbox, 3.7:1 on paper (WCAG 1.4.11); rules stay hairlines */
+  --bg: #ffffff;
+  --bg-2: #f4f4f2;   /* paper: a tint, never the ground */
+  --bg-3: #e4e3df;
+  --ink: #171716;
+  --ink-2: #45443f;
+  --muted: #56554f;  /* 7.5:1 on white, 6.8:1 on paper */
+  --line: #e1e0db;
+  --line-2: #c4c3bd;
+  --rule-ink: #8c8a84; /* a rule that must be seen: the foot of a field row, the footer's top */
+  --control-edge: #8c8a84; /* the edge of a field, a select, a chip or a checkbox, 3.5:1 on white (WCAG 1.4.11) */
   --accent: #7a1f2b;
-  --accent-ink: #611722;
-  --accent-soft: rgba(122, 31, 43, 0.09);
-  --accent-fill: var(--accent); /* bars and other filled marks */
+  --accent-ink: #7a1f2b; /* 10.2:1 on white */
+  --accent-soft: #f3e3e5;
+  --accent-fill: var(--accent);
+  --ctx: #d2d1cc; /* chart rule B: the values that are not the largest */
   --c1: #2b63c4; --c2: #e06a1f; --c3: #1f9a6d; --c4: #c9a10c; --c5: #5a48b8; --c6: #c3302b; --c7: #2e7d1e; --c8: #8a9099;
-  --stage-ink: 20, 24, 31;
+  /* night: the specimen ground of chapters 16 and 17 */
+  --night: #121211; --night-ink: #e8e7e3; --night-ink2: #a9a7a1; --night-rule: #34332f; --night-accent: #d98a95;
+  --stage-ink: 23, 23, 22;
   --stage-accent: 122, 31, 43;
-  --shadow: 0 0 0 1px rgba(20, 24, 31, 0.06), 0 6px 20px rgba(20, 24, 31, 0.06); /* floating popovers only */
-  --font-display: "Fraunces", "Libre Caslon Display", "Iowan Old Style", Georgia, serif;
-  --font-body: "Source Serif 4", "Literata", "Iowan Old Style", Georgia, serif;
-  --font-mono: "Instrument Sans", "Public Sans", "Helvetica Neue", Arial, sans-serif; /* the label slot; kept under its old name so every module reads it */
-  --font-code: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace; /* where digits must align */
-  --font-caption: "Jost", "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
-  --opsz-title: "opsz" 48, "SOFT" 0, "WONK" 0;   /* Fraunces as a sober transitional */
-  --opsz-numeral: "opsz" 144, "SOFT" 0, "WONK" 0; /* Fraunces at its highest contrast, for the light numerals */
+  --shadow: 0 0 0 1px rgba(23, 23, 22, 0.06), 0 18px 30px -18px rgba(23, 23, 22, 0.35); /* floating popovers only */
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --font-body: "Literata", "Iowan Old Style", Georgia, serif;
+  --font-ui: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-ui); /* the interface-label slot, kept under its old name so every module reads it */
+  --font-code: "Fragment Mono", ui-monospace, SFMono-Regular, Menlo, monospace; /* kickers, codes, dates, table numbers */
+  --font-kicker: var(--font-code);
+  --font-caption: var(--font-body);
+  --opsz-title: "opsz" 48, "SOFT" 0, "WONK" 0;
+  --opsz-numeral: "opsz" 48, "SOFT" 0, "WONK" 0;
+  --opsz-name: "opsz" 28, "SOFT" 0, "WONK" 0; /* the name in the masthead */
   --band: 0px; /* height of the sticky specimen band on phones; anchors add it to their offset */
-  --measure: 37em; /* about 85 characters of Source Serif at 18.5 px; 41em on 25 Sept, narrowed 10 percent on 27 Sept for a wider specimen stage */
+  --measure: 36em; /* about 75 characters of Literata at 18 px */
   --frame: 650px;   /* chapter header and chokepoint card keep their earlier width */
-  --bar-5: var(--accent-fill); --bar-4: #3b424c; --bar-3: #bfb9af;
+  --bar-5: var(--ink); --bar-4: #8c8a84; --bar-3: #c4c3bd; /* bands as marks: Extreme ink, High mid gray, below that a tint */
   --col: 63%;
+  --margin: clamp(16px, 4.45vw, 64px); /* the page's outer margin, the masthead's and the column's */
   --gutter: 88px;     /* the ledger column */
   --gutter-gap: 28px;
-  --masthead: 56px;
+  --masthead: 64px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --scrim: rgba(20, 24, 31, 0.30); /* the ground under a modal (search); darker in dark mode, never lighter */
-  /* the type and spacing scale (design round, 21 Oct 2026). The screen rules use it (remap of 21 Oct, qa/design/build/
-     frame-notes.md); a new rule takes a step, and a size between two goes to the nearer by role. Capitals track at --tr-cap
-     (--tr-cap-s at 10 px), sentence case at 0.01em, Fraunces at -0.015em for d1 and 0 below; the specimen tag's 0.28em stays
-     the one plate-caption voice. Kept off the scale on purpose: the masthead, body and input sizes, chart and board labels
-     fitted to their geometry, em-sized footnote marks, and the few rules the PDF inherits (print.css sets no size of its own) */
-  /* labels: Instrument Sans */
-  --fs-cap-s: 10px;  --tr-cap-s: 0.08em; /* dense capitals: stage numbers and tiles, country codes, card keys */
-  --fs-cap: 11px;    --tr-cap: 0.1em;    /* the label: kickers, meta lines, buttons, sub-tabs, summaries */
-  --fs-ui-s: 12px;                       /* sentence case: footer, sources, hints, counts */
-  --fs-ui: 13.5px;                       /* tabs, named chips, Read the chapter */
-  /* reading: Source Serif 4 */
-  --fs-note: 13.5px; --fs-small: 15.5px; --fs-plain: 17px; --fs-body: 18.5px; --fs-lede: 21px;
+  --scrim: rgba(23, 23, 22, 0.30); /* the ground under a modal (search); darker in dark mode, never lighter */
+  /* the type and spacing scale. Labels are sentence case (the tracking tokens stay for the rules that read them). Kept off the
+     scale on purpose: the masthead, body and input sizes, chart and board labels fitted to their geometry, em-sized
+     footnote marks, and the few rules the PDF inherits (print.css sets no size of its own) */
+  /* interface labels: Hanken Grotesk */
+  --fs-cap-s: 11px;  --tr-cap-s: 0.01em; /* dense labels: stage numbers and tiles, country codes, card keys */
+  --fs-cap: 12px;    --tr-cap: 0.01em;   /* the label: meta lines, buttons, sub-tabs, summaries */
+  --fs-ui-s: 12.5px;                     /* footer, sources, hints, counts */
+  --fs-ui: 14px;                         /* tabs, named chips, Read the chapter */
+  /* reading: Literata */
+  --fs-note: 13.5px; --fs-small: 15.5px; --fs-plain: 17px; --fs-body: 18px; --fs-lede: 21px;
   /* display: Fraunces */
   --fs-d6: 16.5px; --fs-d5: 19px; --fs-d4: 21px; --fs-d3: 24px; --fs-d2: 28px;
   --fs-d1s: clamp(26px, 2.3vw, 32px);    /* walk step titles */
-  --fs-d1: clamp(40px, 4.4vw, 62px);     /* every page title, the walk's included */
+  --fs-d1: clamp(40px, 4.6vw, 66px);     /* every page title */
   --fs-num-s: 30px; --fs-num-m: 54px; --fs-num-l: 72px;
   /* block rhythm: the gaps between sections (inner paddings stay their own) */
   --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 72px;
   color-scheme: light;
 }
 :root[data-theme="dark"] {
-  --bg: #14171c; --bg-2: #1b1f25; --bg-3: #23282f;
-  --ink: #ece9e2; --ink-2: #c3c7cd; --muted: #939aa3;
-  --line: #2c3138; --line-2: #3d434b; --control-edge: #6d747c; /* 3.8:1 on the dark ground */
-  --accent: #e25c57; --accent-ink: #ee7a73; --accent-soft: rgba(226, 92, 87, 0.14); /* red for text on the dark ground, 5.1:1 */
-  --accent-fill: #a8414b; /* a deeper wine for bars and filled marks, 3.0:1 */
+  --bg: #121211; --bg-2: #1c1c1a; --bg-3: #272725;
+  --ink: #e8e7e3; --ink-2: #c6c4be; --muted: #a9a7a1; /* muted 7.7:1 on the ground, 7.0:1 on the tint */
+  --line: #2c2b28; --line-2: #45443f; --rule-ink: #75736d; --control-edge: #75736d; /* 3.9:1 on the dark ground */
+  --accent: #d98a95; --accent-ink: #d98a95; --accent-soft: rgba(217, 138, 149, 0.16); /* wine for text on dark, 7.2:1 */
+  --accent-fill: #a8414b;
+  --ctx: #45443f;
   --c1: #5b8ee6; --c2: #ef8140; --c3: #34b585; --c4: #d9b21e; --c5: #8676d8; --c6: #e0504a; --c7: #4f9c3a; --c8: #8a9099;
-  --stage-ink: 236, 233, 226; --stage-accent: 226, 92, 87;
-  --shadow: 0 0 0 1px rgba(0, 0, 0, 0.4), 0 6px 20px rgba(0, 0, 0, 0.35);
-  --bar-4: #636a73; --bar-3: #4a515a; /* High: luminance 0.142, matched to the wine's 0.126, so hue alone marks Extreme (as in light) */
-  --scrim: rgba(6, 8, 11, 0.72);
+  --stage-ink: 232, 231, 227; --stage-accent: 217, 138, 149;
+  --shadow: 0 0 0 1px rgba(0, 0, 0, 0.5), 0 18px 30px -18px rgba(0, 0, 0, 0.6);
+  --bar-5: var(--ink); --bar-4: #8c8a84; --bar-3: #45443f;
+  --scrim: rgba(6, 6, 5, 0.72);
   color-scheme: dark;
 }
 
@@ -128,29 +135,32 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: 18.5px;
-  line-height: 1.58;
+  font-size: var(--fs-body);
+  line-height: 1.62;
   font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
-a { color: inherit; text-decoration-color: var(--line-2); text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+a { color: inherit; text-decoration-color: var(--rule-ink); text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
 a:hover { text-decoration-color: var(--accent); }
-:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 3px; border-radius: 0; }
+::selection { background: var(--accent-soft); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
 img, svg, canvas { max-width: 100%; }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
 h1, h2, h3, h4 { margin: 0; text-wrap: balance; }
+p, li, dd { text-wrap: pretty; }
 p { margin: 0 0 1.15em; }
 strong { font-weight: 600; }
 small { font-size: 0.85em; }
 [hidden] { display: none !important; }
 .sr-only { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
-.skip { position: absolute; left: -10000px; top: 8px; z-index: 100; padding: 8px 12px; background: var(--ink); color: var(--bg); font-family: var(--font-mono); font-size: 12px; text-decoration: none; border-radius: 0; }
+.skip { position: absolute; left: -10000px; top: 8px; z-index: 100; padding: 8px 14px; background: var(--ink); color: var(--bg); font-family: var(--font-ui); font-size: 14px; font-weight: 500; text-decoration: none; border-radius: 999px; }
 .skip:focus { left: 8px; }
 #main:focus { outline: none; } /* the skip link lands on the whole column, which draws no ring: the next Tab shows where focus is */
 
-/* ---------- labels ---------- */
-.label { font-family: var(--font-mono); font-size: var(--fs-cap); font-weight: 500; letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); }
+/* ---------- labels: a kicker in Fragment Mono, sentence case ---------- */
+.label { font-family: var(--font-kicker); font-size: var(--fs-cap); line-height: 1.4; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted); }
 .num, .tabular { font-variant-numeric: tabular-nums; }
 
 /* ---------- display type: Fraunces at a restrained optical size, never bold ---------- */
@@ -160,85 +170,86 @@ small { font-size: 0.85em; }
   font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); letter-spacing: 0;
 }
 
-/* ---------- masthead: a running head, not a toolbar ---------- */
+/* ---------- links and buttons: the two the redesign draws everywhere ----------
+   .link: a way on, in Hanken over an ink rule that turns wine; .btn: a pill, solid ink or a ghost edge */
+.link { font-family: var(--font-ui); font-weight: 500; font-size: 15px; line-height: 1.2; color: var(--ink); text-decoration: none; display: inline-flex; gap: 8px; align-items: baseline; padding: 6px 0 5px; border-bottom: 1px solid var(--ink); }
+.link:hover { color: var(--accent-ink); border-bottom-color: var(--accent); }
+
+/* ---------- masthead: the wordmark, the menu with the current item marked, search and the theme ---------- */
 .masthead {
   position: fixed; top: 0; left: 0; right: 0; z-index: 40; height: var(--masthead);
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  padding: 0 clamp(16px, 3vw, 40px);
+  padding: 0 var(--margin);
   background: var(--bg);
-  border-bottom: 1px solid var(--line-2);
+  border-bottom: 1px solid var(--line);
 }
-/* the wordmark: the favicon's tile (build/assets/icons/favicon.svg, inline) beside the name in Fraunces title case.
-   The tile keeps the favicon's own garnet and paper in both themes, so it matches the tab icon; odd sizes (29 px in the
-   55 px bar, 25 px in the 27 px phone row) center it on whole pixels. The link's aria-label carries the name. */
+/* the wordmark: the favicon's tile (build/assets/icons/favicon.svg, inline) beside the name in Fraunces 540 at opsz 28.
+   The tile keeps the favicon's own wine in both themes, so it matches the tab icon; the link's aria-label carries the name */
 .wordmark { display: flex; align-items: center; gap: 12px; min-height: 44px; text-decoration: none; }
-.wordmark .wm-tile { display: block; flex: none; width: 29px; height: 29px; }
+.wordmark .wm-tile { display: block; flex: none; width: 27px; height: 27px; }
 .wordmark .wm-tile rect { fill: #7a1f2b; }
-.wordmark .wm-tile path { fill: #f7f6f2; }
-.wordmark .wm-name { font-family: var(--font-display); font-size: 21px; font-weight: 540; font-variation-settings: "opsz" 28, "SOFT" 0, "WONK" 0; letter-spacing: -0.005em; line-height: 1; white-space: nowrap; }
+.wordmark .wm-tile path { fill: #ffffff; }
+.wordmark .wm-name { font-family: var(--font-display); font-size: 20px; font-weight: 540; font-variation-settings: var(--opsz-name); letter-spacing: -0.01em; line-height: 1; white-space: nowrap; }
 @media (max-width: 900px) {
-  .wordmark { flex: 1 1 auto; min-width: 0; min-height: 27px; gap: 9px; padding-right: 92px; }
+  .wordmark { flex: 1 1 auto; min-width: 0; min-height: 30px; gap: 10px; padding-right: 92px; }
   .wordmark .wm-tile { width: 25px; height: 25px; }
   .wordmark .wm-name { font-size: 18px; }
 }
 .tabs { display: flex; gap: 4px; align-items: center; min-width: 0; overflow-x: auto; scrollbar-width: none; }
 .tabs::-webkit-scrollbar { display: none; }
 .tabs a {
-  font-family: var(--font-mono); font-weight: 500; font-size: 13.5px; letter-spacing: 0.01em;
-  text-decoration: none; padding: 8px 10px 7px; border: 0; border-bottom: 1px solid transparent; border-radius: 0; color: var(--ink-2); white-space: nowrap; flex: 0 0 auto;
+  font-family: var(--font-ui); font-weight: 400; font-size: 15px; letter-spacing: 0;
+  text-decoration: none; padding: 8px 10px 7px; border: 0; border-bottom: 2px solid transparent; border-radius: 0; color: var(--ink); white-space: nowrap; flex: 0 0 auto;
 }
-.tabs a:hover { border-bottom-color: var(--line-2); color: var(--ink); }
+.tabs a:hover { color: var(--ink-2); border-bottom-color: var(--line-2); }
 .tabs a[aria-current="page"] { background: none; color: var(--ink); border-bottom-color: var(--accent); }
-.theme-toggle { width: 34px; height: 34px; flex: 0 0 auto; border: 1px solid transparent; border-radius: 0; display: inline-grid; place-items: center; margin-left: 6px; color: var(--ink-2); transition: border-color 0.15s, color 0.15s; }
-.theme-toggle svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.4; }
-/* the two icon buttons (search is .search-btn, below) carry no box in a bar of hairlines; the box shows on hover */
-@media (hover: hover) { .search-btn:hover, .theme-toggle:hover { border-color: var(--line-2); color: var(--ink); } } /* a tap on a phone leaves no box behind */
-/* from 901 px the tabs fill the bar's height, so the current tab's garnet rule lies on the masthead's own hairline; a short
-   upright rule sets the two icon buttons apart from the tabs */
+/* the two icon buttons, round, on a hairline edge (search is .search-btn, below) */
+.theme-toggle { width: 34px; height: 34px; flex: 0 0 auto; border: 1px solid var(--line-2); border-radius: 50%; display: inline-grid; place-items: center; margin-left: 8px; color: var(--ink); transition: border-color 0.15s, color 0.15s; }
+.theme-toggle svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+@media (hover: hover) { .search-btn:hover, .theme-toggle:hover { border-color: var(--ink); color: var(--ink); } } /* a tap on a phone leaves no mark behind */
+/* from 901 px the tabs fill the bar's height, so the current item's wine rule lies on the masthead's own hairline */
 @media (min-width: 901px) {
   .masthead { align-items: stretch; }
   .wordmark { align-self: center; }
-  .tabs { align-self: stretch; align-items: stretch; overflow: visible; }
-  .tabs a { display: flex; align-items: center; padding: 0 10px; border-bottom: 2px solid transparent; margin-bottom: -1px; }
-  .tabs a:focus-visible { outline-offset: -4px; } /* the tab is the bar's full height, so its focus ring draws inside it */
+  .tabs { align-self: stretch; align-items: stretch; overflow: visible; gap: 6px; }
+  .tabs a { display: flex; align-items: center; padding: 0 9px; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .tabs a:focus-visible { outline-offset: -6px; } /* the tab is the bar's full height, so its focus ring draws inside it */
   .tabs .search-btn, .tabs .theme-toggle { align-self: center; }
-  .tabs .search-btn { position: relative; margin-left: 21px; }
-  .tabs .search-btn::before { content: ""; position: absolute; left: -12px; top: 7px; bottom: 7px; width: 1px; background: var(--line-2); }
-  .tabs .theme-toggle { margin-left: 2px; }
+  .tabs .search-btn { margin-left: 14px; }
+  .tabs .theme-toggle { margin-left: 8px; }
 }
 
 /* ---------- page grid ---------- */
 #app { position: relative; z-index: 1; padding-top: var(--masthead); }
-.column { width: var(--col); padding: 0 clamp(16px, 4vw, 56px) 0 clamp(16px, 3vw, 44px); }
+.column { width: var(--col); padding: 0 clamp(16px, 4vw, 56px) 0 var(--margin); }
 .column.wide { width: min(100%, 1180px); }
 .column.wide[data-view="suppliers"], .column.wide[data-view="controls"], .column.wide[data-view="glossary"] { width: 100%; }
 .view { min-height: 60vh; }
 
-/* ---------- stage (the specimen): the canvas, a short centered rule, the tracked plate number, the caption ---------- */
+/* ---------- stage (the specimen): the canvas, then a plain caption flush left, a mono label and the chapter's own words ---------- */
 .stage {
   position: fixed; top: var(--masthead); right: 0; bottom: 0; width: calc(100% - var(--col)); margin: 0; /* the UA gives figure a 40px margin, which pushed the stage under the rail */
   z-index: 5; pointer-events: none;
-  display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;
 }
 .stage canvas { order: 1; position: relative; flex: 1 1 0; min-height: 0; width: 100%; align-self: stretch; display: block; margin-top: 24px; }
-@media (hover: hover) and (pointer: fine) { .stage canvas { pointer-events: auto; cursor: grab; touch-action: none; outline: none; } /* the figure itself lets clicks through to the page; the canvas takes them so it can be turned */ .stage canvas.is-dragging { cursor: grabbing; } .stage canvas:focus-visible { box-shadow: inset 0 0 0 1.5px var(--accent); } }
+@media (hover: hover) and (pointer: fine) { .stage canvas { pointer-events: auto; cursor: grab; touch-action: none; outline: none; } /* the figure itself lets clicks through to the page; the canvas takes them so it can be turned */ .stage canvas.is-dragging { cursor: grabbing; } .stage canvas:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); } }
 .stage .stage-tag {
-  order: 2; position: relative; z-index: 1; margin: 0 0 10px; padding: 14px 0 0; text-align: center;
-  font-family: var(--font-caption); font-size: 10.5px; font-weight: 400; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ink-2);
+  order: 2; position: relative; z-index: 1; margin: 0 var(--margin) 6px clamp(16px, 2.2vw, 32px); padding: 14px 0 0; text-align: left;
+  font-family: var(--font-kicker); font-size: 12px; line-height: 16px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted);
 }
-.stage .stage-tag::before { content: ""; position: absolute; top: 0; left: 50%; width: 28px; height: 1px; margin-left: -14px; background: var(--ink); }
-.stage .stage-tag b { color: var(--accent); font-weight: 400; }
+.stage .stage-tag b { color: inherit; font-weight: 400; }
 .stage figcaption {
-  order: 3; position: relative; z-index: 1; flex: none; margin: 0 0 36px; max-width: 40ch; text-align: center;
-  font-family: var(--font-caption); font-size: 12.5px; line-height: 1.55; letter-spacing: 0.01em; color: var(--muted);
-  padding: 0 24px;
+  order: 3; position: relative; z-index: 1; flex: none; margin: 0 var(--margin) 32px clamp(16px, 2.2vw, 32px); max-width: 34em; text-align: left;
+  font-family: var(--font-caption); font-size: 14px; line-height: 1.5; letter-spacing: 0; color: var(--ink-2);
+  padding: 0;
 }
-.stage figcaption b { color: var(--ink-2); font-weight: 400; }
+.stage figcaption b { color: var(--ink); font-weight: 500; }
 .stage[data-hidden="1"] { display: none; }
-/* the turn's pause (WCAG 2.2.2, src/app.js Band.init): a small square at the end of the plate tag on a laptop, over the
-   thumbnail's corner on a phone. Reduced motion never turns the specimen, so it has no button */
-.stage .stage-pause { pointer-events: auto; display: inline-grid; place-items: center; width: 24px; height: 24px; margin: -6px 0 -6px 12px; padding: 0; vertical-align: middle; border: 1px solid var(--line-2); border-radius: 0; background: var(--bg); color: var(--ink-2); letter-spacing: 0; }
-.stage .stage-pause svg { width: 12px; height: 12px; fill: currentColor; stroke: none; }
+/* the turn's pause (WCAG 2.2.2, src/app.js Band.init): a small round button at the end of the specimen label on a laptop,
+   over the thumbnail's corner on a phone. Reduced motion never turns the specimen, so it has no button */
+.stage .stage-pause { pointer-events: auto; display: inline-grid; place-items: center; width: 24px; height: 24px; margin: -6px 0 -6px 12px; padding: 0; vertical-align: middle; border: 1px solid var(--line-2); border-radius: 50%; background: var(--bg); color: var(--ink-2); letter-spacing: 0; }
+.stage .stage-pause svg { width: 10px; height: 10px; fill: currentColor; stroke: none; }
 .stage .stage-pause:hover { color: var(--ink); border-color: var(--ink); }
 @media (max-width: 900px) {
   .stage .stage-pause { position: absolute; left: 9px; bottom: 9px; z-index: 2; margin: 0; width: 28px; height: 28px; }
@@ -366,8 +377,8 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
    from "go there"; solid garnet on hover and while its popover is open; one shared popover */
 .gl-term { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; text-align: inherit; cursor: help; text-decoration: underline; text-decoration-style: dotted; text-decoration-color: color-mix(in srgb, var(--muted) 75%, var(--bg)); text-decoration-thickness: 1.5px; text-underline-offset: 0.24em; transition: text-decoration-color 0.15s; }
 .gl-term:hover, .gl-term[aria-describedby] { text-decoration-style: solid; text-decoration-color: var(--accent); }
-.site-footer .sources-key { margin: 10px 0 0; font-family: var(--font-mono); font-size: var(--fs-ui-s); letter-spacing: 0.01em; line-height: 1.7; color: var(--muted); max-width: 90ch; }
-.site-footer .updated { display: block; margin-top: 8px; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); }
+.site-footer .sources-key { margin: 12px 0 0; font-family: var(--font-ui); font-size: 13px; letter-spacing: 0; line-height: 1.7; color: var(--muted); max-width: 90ch; }
+.site-footer .updated { display: block; margin-top: 10px; font-family: var(--font-kicker); font-weight: 400; font-size: 12px; letter-spacing: 0; text-transform: none; color: var(--muted); }
 .gl-tip { position: fixed; z-index: 50; width: max-content; max-width: min(340px, calc(100vw - 16px)); background: var(--bg); border: 1px solid var(--line-2); border-top: 2px solid var(--ink); border-radius: 0; box-shadow: var(--shadow); padding: 12px 16px 13px; }
 .gl-tip b { display: block; font-size: var(--fs-d6); line-height: 1.2; margin-bottom: 6px; }
 .gl-tip p { font-family: var(--font-body); font-size: var(--fs-small); line-height: 1.45; color: var(--ink-2); margin: 0 0 10px; }
@@ -443,10 +454,10 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .chips button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .chips button[aria-pressed="true"] b { color: var(--bg); opacity: 0.7; }
 .sup-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
-.btn { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; padding: 8px 12px; border: 1px solid var(--ink); border-radius: 0; background: var(--ink); color: var(--bg); }
-.btn.ghost { background: transparent; color: var(--ink); border-color: var(--line-2); }
-.btn:hover { opacity: 0.85; }
-.btn.ghost:hover { opacity: 1; border-color: var(--ink); }
+.btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1.2; letter-spacing: 0; text-transform: none; padding: 9px 16px; min-height: 38px; border: 1px solid var(--ink); border-radius: 999px; background: var(--ink); color: var(--bg); }
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--rule-ink); }
+.btn:hover { background: var(--ink-2); border-color: var(--ink-2); color: var(--bg); }
+.btn.ghost:hover { background: transparent; color: var(--ink); border-color: var(--ink); }
 .sup-wrap { overflow-x: auto; border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2); border-radius: 0; margin-bottom: 40px; }
 .sup { border-collapse: collapse; width: 100%; font-size: var(--fs-note); line-height: 1.4; }
 .sup th { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); background: var(--bg); text-align: left; padding: 10px 12px 10px 0; border-bottom: 1px solid var(--line-2); white-space: nowrap; position: sticky; top: 0; }
@@ -608,17 +619,19 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .src-meta { display: block; font-family: var(--font-mono); font-size: 11px; line-height: 1.4; color: var(--muted); }
 
 /* ---------- footer ---------- */
-.site-footer { border-top: 1px solid var(--line-2); margin-top: 60px; padding: 28px 0 60px; font-family: var(--font-mono); font-size: var(--fs-ui-s); line-height: 1.7; color: var(--muted); }
-.site-footer a { color: var(--ink-2); }
-.site-footer .credits { margin: 0 0 2px; color: var(--ink-2); }
+.site-footer { border-top: 1px solid var(--rule-ink); margin-top: 72px; padding: 32px 0 64px; font-family: var(--font-ui); font-size: 14px; line-height: 1.6; color: var(--muted); }
+.site-footer a { color: var(--ink); text-underline-offset: 3px; }
+.site-footer a:hover { color: var(--accent-ink); }
+.site-footer .credits { margin: 0 0 4px; font-size: 15px; line-height: 1.5; color: var(--ink); max-width: 36em; }
+.site-footer .credits b { font-weight: 500; }
 /* on the two ledger pages (the walk and The Chain) the footer is the ledger's last row: the favicon's tile (build.js puts the
    masthead's own tile first in the footer) signs off in the ledger column and the words keep to the text's edge. A phone's
    chapters drop the column, so there The Chain's footer stays flush with the text; the walk keeps its 34 px column. Screen
    only: the PDF sets its own footer (print.css). Elsewhere the tile stays hidden. */
 .site-footer .ft-mark { display: none; }
 .ft-mark .wm-tile { display: block; width: 22px; height: 22px; }
-.ft-mark .wm-tile rect { fill: #7a1f2b; } /* the favicon's own garnet and paper in both themes, as in the masthead */
-.ft-mark .wm-tile path { fill: #f7f6f2; }
+.ft-mark .wm-tile rect { fill: #7a1f2b; } /* the favicon's own wine and white in both themes, as in the masthead */
+.ft-mark .wm-tile path { fill: #ffffff; }
 @media screen {
   .view[data-view="walk"] .site-footer { display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr); column-gap: var(--gutter-gap); align-items: start; }
   .view[data-view="walk"] .site-footer > * { grid-column: 2; min-width: 0; }
@@ -907,23 +920,22 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 @media (max-width: 900px) {
   :root { --col: 100%; --masthead: 75px; --gutter: 34px; --gutter-gap: 12px; } /* the two-row phone masthead; measured at runtime too, but the first paint must not shift */
   body { font-size: 17px; }
-  .masthead { padding: 6px 14px 0; height: auto; min-height: 52px; flex-wrap: wrap; gap: 0 8px; align-items: center; }
-  .masthead .search-btn, .masthead .theme-toggle { position: absolute; top: 5px; width: 32px; height: 32px; } /* the buttons live inside the tab strip; on phones they pin to the first row, clear of the tabs below so each tab keeps a full 24 px to tap */
-  .masthead .theme-toggle { right: 14px; }
-  .masthead .search-btn { right: 52px; }
+  .masthead { padding: 8px 16px 0; height: auto; min-height: 52px; flex-wrap: wrap; gap: 0 8px; align-items: center; }
+  .masthead .search-btn, .masthead .theme-toggle { position: absolute; top: 7px; width: 32px; height: 32px; margin: 0; } /* the buttons live inside the tab strip; on phones they pin to the first row, clear of the tabs below so each tab keeps a full 24 px to tap */
+  .masthead .theme-toggle { right: 16px; }
+  .masthead .search-btn { right: 56px; }
   .tabs { order: 3; flex: 0 0 100%; width: 100%; flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; -webkit-overflow-scrolling: touch; margin: 2px 0 -1px; padding: 0; }
-  .tabs a { padding: 6px 8px 9px; font-size: 12.5px; border-bottom-width: 2px; } /* the current tab's rule lies on the masthead's hairline, as on a laptop */
+  .tabs a { padding: 7px 8px 9px; font-size: 14px; border-bottom-width: 2px; } /* the current tab's rule lies on the masthead's hairline, as on a laptop */
   .chapter .chain--compact { display: none; }
   .column { padding: 0 18px; }
   :root { --band: 0px; }
   /* the specimen becomes a bottom strip, like a dashboard bar: a live thumbnail, where you are, Contents and Show; tap Show to expand */
   .stage { position: fixed; top: auto; bottom: 0; left: 0; right: 0; width: 100%; height: 128px; min-height: 0; margin: 0; z-index: 35; background: var(--bg); border-top: 1px solid var(--line-2); border-bottom: 0; box-shadow: none; pointer-events: auto; display: grid; grid-template-columns: 116px minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto; align-items: start; column-gap: 12px; row-gap: 4px; padding: 6px 10px 8px 6px; overflow: hidden; transition: height 0.25s var(--ease); }
   .stage canvas { order: 0; grid-column: 1; grid-row: 1 / -1; width: 116px; height: 116px; margin: 0; align-self: center; }
-  .stage .stage-tag { order: 0; position: static; grid-column: 2; grid-row: 1; margin: 0; padding: 4px 0 0; text-align: left; font-size: 10.5px; letter-spacing: 0.18em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .stage .stage-tag::before { display: none; }
+  .stage .stage-tag { order: 0; position: static; grid-column: 2; grid-row: 1; margin: 0; padding: 4px 0 0; text-align: left; font-size: 11.5px; letter-spacing: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .stage .stage-actions { display: flex; gap: 6px; grid-column: 2; grid-row: 3; justify-self: end; }
-  .stage .stage-actions button { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--ink); background: none; border: 1px solid var(--line-2); border-radius: 0; padding: 8px 10px; cursor: pointer; }
-  .stage figcaption { order: 0; display: -webkit-box; grid-column: 2; grid-row: 2; margin: 0; padding: 0; max-width: none; text-align: left; font-size: 11px; line-height: 1.35; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .stage .stage-actions button { font-family: var(--font-ui); font-weight: 500; font-size: 13px; letter-spacing: 0; text-transform: none; color: var(--ink); background: none; border: 1px solid var(--rule-ink); border-radius: 999px; padding: 6px 12px; min-height: 32px; cursor: pointer; }
+  .stage figcaption { order: 0; display: -webkit-box; grid-column: 2; grid-row: 2; margin: 0; padding: 0; max-width: none; text-align: left; font-size: 12px; line-height: 1.4; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
   .stage[data-collapsed="0"] { height: min(58vh, 480px); grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: 44px minmax(0, 1fr) auto; padding: 0 12px 8px; }
   .stage[data-collapsed="0"] canvas { grid-column: 1 / -1; grid-row: 2; width: 100%; height: 100%; }
   .stage[data-collapsed="0"] .stage-tag { grid-column: 1; grid-row: 1; padding-top: 14px; }
@@ -2985,157 +2997,136 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 
 /* module: walk.css */
 /* ==========================================================================
-   The ten-minute walk (#/walk, the home page) and the start-here block.
+   The home page (#/, the Start here walk) in the redesign of 25 Oct 2026 (qa/redesign/BRIEF.md, the hybrid mockup's home).
    Tokens only; every class is prefixed wk-.
-   The left edge is the ledger column (--gutter): each chapter's number sits in it, large and light, beside a
-   hairline that fills with garnet as the reader scrolls (walk.js sets --wk-fill on the current step).
+   The hero: the title and subtitle, then the evidence figure (8 of the 15 stages are rated Extreme, with a mark per stage that
+   picks the specimen on the stage beside it), the search field and the two ways in. Then the chain at a glance, the walk (one
+   plain paragraph per chapter, each number in the ledger column), the flashcards and Other pages.
    ========================================================================== */
 
-/* ---------- the walk: head, indented by the ledger column so the margin reads from the first line ---------- */
+/* ---------- the hero ---------- */
 .wk { padding-bottom: 30px; }
-.wk-head { padding: clamp(40px, 7vh, 76px) 0 4px; margin-left: calc(var(--gutter) + var(--gutter-gap)); }
-.wk-eyebrow { display: block; margin: 0 0 13px; }
+.wk-head { padding: clamp(32px, 6.5vh, 72px) 0 0; }
 .wk-title {
-  font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
-  font-size: var(--fs-d1); line-height: 1.02;
-  text-transform: none; letter-spacing: -0.015em;
-  margin: 0 0 16px; max-width: 12em;
+  font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-title);
+  font-size: clamp(52px, 6.4vw, 100px); line-height: 0.96; letter-spacing: -0.028em;
+  text-transform: none; margin: 0 0 0 -0.045em; max-width: 7.4em; color: var(--ink);
 }
-.wk-dek { font-size: var(--fs-lede); line-height: 1.45; color: var(--ink-2); max-width: 30em; margin: 0 0 18px; }
-.wk-meta { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0; }
-.wk-meta .label { position: relative; }
-.wk-meta .label + .label::before { content: ""; position: absolute; left: -10px; top: 2px; width: 1px; height: 10px; background: var(--line-2); }
+.wk-dek { font-family: var(--font-body); font-weight: 400; font-size: clamp(19px, 1.55vw, 23px); line-height: 1.4; color: var(--ink-2); max-width: 24em; margin: 22px 0 0; }
 
-/* ---------- the overview: a ruled table, name on the left, one line on the right ---------- */
-.wk-tabs { display: block; margin: 30px 0 4px; padding: 0; background: none; border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2); border-radius: 0; }
-.wk-tabs-k { margin: 0; padding: 10px 0 8px; border-bottom: 1px solid var(--line); color: var(--muted); }
-.wk-tabs a { display: grid; grid-template-columns: 172px minmax(0, 1fr); gap: 0 20px; align-items: baseline; min-width: 0; padding: 9px 0 10px; border-top: 1px solid var(--line); color: var(--ink-2); text-decoration: none; }
-.wk-tabs a:first-of-type { border-top: 0; }
-.wk-tabs .wk-tab { display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--fs-d5); line-height: 1.2; padding: 0; margin: 0; border: 0; border-radius: 0; color: var(--ink); background: none; transition: color 0.15s; }
-.wk-tabs .wk-tab::after { content: "\00a0\2192"; color: var(--line-2); font-weight: 400; }
-.wk-tabs a:hover .wk-tab, .wk-tabs a:focus-visible .wk-tab { background: none; color: var(--accent); }
-.wk-tabs a:hover .wk-tab::after { color: var(--accent); }
-.wk-tabs span { display: block; font-size: var(--fs-small); line-height: 1.45; }
+/* the evidence: the count, what Extreme means, a mark per stage in chapter order */
+.wk-ev { margin: clamp(32px, 5.5vh, 52px) 0 0; max-width: 780px; }
+.wk-ev-cap { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 20px; align-items: end; margin: 0 0 22px; }
+.wk-ev-n {
+  font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-numeral);
+  font-size: clamp(44px, 4.1vw, 60px); line-height: 0.9; letter-spacing: -0.03em; white-space: nowrap; margin-left: -0.03em;
+  font-variant-numeric: lining-nums;
+}
+.wk-ev-t { font-family: var(--font-body); font-size: 19px; line-height: 1.3; padding-bottom: 1px; color: var(--ink); }
+.wk-ev-d { grid-column: 1 / -1; margin-top: 14px; font-family: var(--font-body); font-size: 15px; line-height: 1.5; color: var(--ink-2); max-width: 38em; }
+.wk-stops { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(15, minmax(0, 1fr)); position: relative; }
+.wk-stops::after { content: ""; position: absolute; left: 0; right: 0; top: 46px; height: 1px; background: var(--ink); pointer-events: none; }
+.wk-stops li { min-width: 0; }
+.wk-stop { display: grid; grid-template-rows: 46px auto; justify-items: start; width: 100%; padding: 0 2px 4px 0; text-align: left; cursor: pointer; }
+.wk-stop-bar { align-self: end; width: 9px; height: 44px; background: var(--ink); transition: background-color 0.15s; }
+.wk-stops [data-band="h"] .wk-stop-bar { height: 22px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); }
+.wk-stop-n { margin-top: 8px; font-family: var(--font-kicker); font-size: 12px; line-height: 16px; color: var(--muted); font-variant-numeric: tabular-nums; }
+@media (hover: hover) {
+  .wk-stop:hover .wk-stop-bar { background: var(--ink-2); }
+  .wk-stops [data-band="h"] .wk-stop:hover .wk-stop-bar { background: var(--ctx); }
+  .wk-stop:hover .wk-stop-n { color: var(--ink); }
+}
+.wk-stop[aria-pressed="true"] .wk-stop-bar, .wk-stops [data-band="h"] .wk-stop[aria-pressed="true"] .wk-stop-bar { background: var(--accent); box-shadow: none; }
+.wk-stop[aria-pressed="true"] .wk-stop-n { color: var(--accent-ink); }
+.wk-stop:focus-visible { outline-offset: 2px; }
+.wk-legend { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 14px 0 0; font-family: var(--font-ui); font-size: 13px; line-height: 1.3; color: var(--ink-2); }
+.wk-legend span { display: inline-flex; gap: 8px; align-items: flex-end; }
+.wk-legend i { display: inline-block; flex: none; width: 7px; height: 15px; background: var(--ink); }
+.wk-legend i.h { height: 8px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); }
+.wk-legend .wk-shown { color: var(--ink); }
 
-/* ---------- the chain at a glance: under the hero, at every width ----------
-   The fifteen stages in order, one line each: the number in the ledger column (so the names line up with the walk's
-   text below), the name, and the concentration drawn as the summary page draws it, a four-step meter and the plain word,
-   garnet at Extreme. Each line is a link to its chapter, the full width of the column and at least 28 px tall.
-   Other pages, which repeats the tabs, closes the walk (.wk-end). The phone block comes first and is the shipped phone
-   layout; from 701 px the rows grow a little, and from 901 px the numbers hang in the ledger column, so the names start
-   on the title's edge and the list previews the walk's own structure. */
-@media (max-width: 700px) {
-  .wk-gl { display: block; margin: 24px 0 0; border-top: 1px solid var(--ink); }
-  .wk-gl-h { display: block; margin: 0; padding: 10px 0 0; }
-  .wk-gl-p { margin: 5px 0 12px; font-size: var(--fs-small); line-height: 1.45; color: var(--ink-2); }
-  .wk-gl-p b { color: var(--accent); font-weight: 600; }
-  .wk-gl-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
-  .wk-gl-list li + li { border-top: 1px solid var(--line); }
-  .wk-gl-list a {
-    display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr) auto; column-gap: var(--gutter-gap); align-items: baseline;
-    min-height: 28px; padding: 4px 0; color: var(--ink); text-decoration: none;
-  }
-  .wk-gl-n { padding-right: 8px; text-align: right; font-family: var(--font-mono); font-size: var(--fs-cap); color: var(--muted); font-variant-numeric: tabular-nums; }
-  .wk-gl-t { font-size: var(--fs-small); line-height: 1.3; text-wrap: balance; } /* a long name breaks into two even lines, never one word alone */
-  .wk-gl-c { display: inline-flex; align-items: baseline; gap: 7px; font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--ink); }
-  .wk-gl-m { display: inline-flex; align-self: center; align-items: flex-end; gap: 2px; height: 14px; }
-  .wk-gl-m i { display: block; width: 6px; background: var(--line); }
-  .wk-gl-m i:nth-child(1) { height: 5px; }
-  .wk-gl-m i:nth-child(2) { height: 8px; }
-  .wk-gl-m i:nth-child(3) { height: 11px; }
-  .wk-gl-m i:nth-child(4) { height: 14px; }
-  .wk-gl-list li .wk-gl-m i.on { background: var(--muted); }
-  .wk-gl-list li[data-level="3"] .wk-gl-m i.on { background: var(--bar-4); }
-  .wk-gl-list li[data-level="4"] .wk-gl-m i.on { background: var(--accent-fill); }
-  .wk-gl-w { min-width: 4.1em; } /* every word as wide as the longest, so the meters stand in one column */
-  .wk-gl-list li[data-level="4"] .wk-gl-w { color: var(--accent); font-weight: 600; }
-  .wk-gl-list a:hover .wk-gl-t, .wk-gl-list a:active .wk-gl-t, .wk-gl-list a:focus-visible .wk-gl-t { color: var(--accent); }
-  .wk-gl-list a:focus-visible { outline-offset: 2px; }
+/* the search field and the two ways in */
+.wk-find { margin: 34px 0 0; max-width: 640px; }
+.wk-qbox { display: flex; align-items: center; gap: 12px; height: 52px; padding: 0 14px 0 16px; border: 1px solid var(--ink); border-radius: 4px; background: var(--bg); color: var(--ink-2); cursor: text; }
+.wk-qbox:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+.wk-qbox svg { flex: none; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+.wk-qbox input { flex: 1 1 auto; min-width: 0; height: 100%; margin: 0; padding: 0; border: 0; outline: 0; background: transparent; font-family: var(--font-ui); font-size: 17px; color: var(--ink); cursor: text; }
+.wk-qbox input::placeholder { color: var(--muted); opacity: 1; }
+.wk-qbox input::-webkit-search-cancel-button { display: none; }
+.wk-qbox kbd { flex: none; font-family: var(--font-kicker); font-size: 12px; line-height: 1; color: var(--muted); border: 1px solid var(--rule-ink); border-radius: 3px; padding: 3px 6px; }
+@media (hover: none) and (pointer: coarse) { .wk-qbox kbd { display: none; } }
+.wk-reads { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 22px 0 0; }
+.wk-way { display: flex; flex-direction: column; gap: 7px; min-width: 0; padding: 12px 0 4px; border-top: 1px solid var(--ink); color: var(--ink); text-decoration: none; }
+.wk-way-t { font-family: var(--font-ui); font-weight: 500; font-size: 19px; line-height: 1.25; letter-spacing: -0.01em; }
+.wk-way-d { display: flex; flex-wrap: wrap; gap: 0 8px; font-family: var(--font-kicker); font-size: 12px; line-height: 1.5; color: var(--muted); }
+.wk-way-d span + span::before { content: "\00b7"; margin-right: 8px; }
+.wk-way:hover .wk-way-t { color: var(--accent-ink); }
+
+/* ---------- the chain at a glance: the fifteen stages, one line each, numbers in the ledger column ---------- */
+.wk-gl { margin: clamp(80px, 13vh, 128px) 0 0; }
+.wk-gl-h {
+  margin: 0 0 18px; font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-title);
+  font-size: clamp(30px, 2.8vw, 42px); line-height: 1.05; letter-spacing: -0.02em; color: var(--ink);
 }
-@media (max-width: 380px) { /* a 360 px phone: a narrower meter and word keep most names on one line */
-  .wk-gl-t { font-size: var(--fs-small); }
-  .wk-gl-c { gap: 5px; font-size: var(--fs-ui-s); }
-  .wk-gl-m i { width: 5px; }
+.wk-gl-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.wk-gl-list li { border-bottom: 1px solid var(--line); }
+.wk-gl-list a {
+  display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr) auto; column-gap: var(--gutter-gap); align-items: baseline;
+  min-height: 40px; padding: 9px 0 8px; color: var(--ink); text-decoration: none;
 }
-@media (min-width: 701px) {
-  .wk-gl { display: block; margin: 34px 0 0; border-top: 1px solid var(--ink); }
-  .wk-gl-h { display: block; margin: 0; padding: 11px 0 0; }
-  .wk-gl-p { margin: 6px 0 14px; font-size: var(--fs-plain); line-height: 1.45; color: var(--ink-2); max-width: 36em; }
-  .wk-gl-p b { color: var(--accent); font-weight: 600; }
-  .wk-gl-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
-  .wk-gl-list li + li { border-top: 1px solid var(--line); }
-  .wk-gl-list a {
-    display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr) auto; column-gap: var(--gutter-gap); align-items: baseline;
-    min-height: 30px; padding: 5px 0 4px; color: var(--ink); text-decoration: none;
-  }
-  .wk-gl-n { padding-right: 8px; text-align: right; font-family: var(--font-mono); font-size: var(--fs-cap); color: var(--muted); font-variant-numeric: tabular-nums; }
-  .wk-gl-t { font-size: var(--fs-d6); line-height: 1.3; }
-  .wk-gl-c { display: inline-flex; align-items: baseline; gap: 8px; font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--ink-2); }
-  .wk-gl-m { display: inline-flex; align-self: center; align-items: flex-end; gap: 2px; height: 14px; }
-  .wk-gl-m i { display: block; width: 6px; background: var(--line); }
-  .wk-gl-m i:nth-child(1) { height: 5px; }
-  .wk-gl-m i:nth-child(2) { height: 8px; }
-  .wk-gl-m i:nth-child(3) { height: 11px; }
-  .wk-gl-m i:nth-child(4) { height: 14px; }
-  .wk-gl-list li .wk-gl-m i.on { background: var(--muted); }
-  .wk-gl-list li[data-level="3"] .wk-gl-m i.on { background: var(--bar-4); }
-  .wk-gl-list li[data-level="4"] .wk-gl-m i.on { background: var(--accent-fill); }
-  .wk-gl-w { min-width: 4.4em; }
-  .wk-gl-list li[data-level="4"] .wk-gl-w, .wk-gl-list li[data-level="4"] .wk-gl-n { color: var(--accent); }
-  .wk-gl-list li[data-level="4"] .wk-gl-w { font-weight: 600; }
-  .wk-gl-list a:hover { background: var(--bg-2); }
-  .wk-gl-list a:hover .wk-gl-t, .wk-gl-list a:focus-visible .wk-gl-t { color: var(--accent); }
-}
-@media (min-width: 901px) {
-  .wk-gl { border-top: 0; }
-  .wk-gl-h { border-top: 1px solid var(--ink); }
-  .wk-gl-list a { position: relative; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; }
-  .wk-gl-n { position: absolute; top: 9px; left: calc(-1 * (var(--gutter) + var(--gutter-gap))); width: var(--gutter); padding-right: 14px; }
-  .wk-gl-t { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--fs-d6); line-height: 1.25; }
-}
+.wk-gl-n { font-family: var(--font-kicker); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.wk-gl-t { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 18px; line-height: 1.25; text-wrap: balance; }
+.wk-gl-c { display: inline-flex; align-items: baseline; gap: 9px; font-family: var(--font-ui); font-size: 13px; color: var(--ink-2); }
+/* the band as the hero marks it: a solid bar for Extreme, an outline half as tall for High (the four-step meter's cells are not drawn) */
+.wk-gl-m { display: inline-block; flex: none; align-self: center; width: 6px; height: 15px; background: var(--ink); }
+.wk-gl-m i { display: none; }
+.wk-gl-list li[data-level="3"] .wk-gl-m { height: 8px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); align-self: center; }
+.wk-gl-list li[data-level="2"] .wk-gl-m, .wk-gl-list li[data-level="1"] .wk-gl-m { height: 4px; background: var(--ctx); }
+.wk-gl-w { min-width: 4.4em; }
+.wk-gl-list li[data-level="4"] .wk-gl-w { color: var(--ink); }
+.wk-gl-list a:hover .wk-gl-t, .wk-gl-list a:focus-visible .wk-gl-t { color: var(--accent-ink); }
+.wk-gl-list a:focus-visible { outline-offset: 2px; }
 
 /* ---------- the walk: the ledger column ---------- */
-.wk-list { list-style: none; margin: 44px 0 0; padding: 0; }
+.wk-list { list-style: none; margin: clamp(80px, 13vh, 120px) 0 0; padding: 0; }
 .wk-step {
   display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr); gap: 0 var(--gutter-gap);
   scroll-margin-top: calc(var(--masthead) + 66px);
 }
-.wk-block { min-width: 0; padding: 0 0 52px; }
+.wk-block { min-width: 0; padding: 0 0 64px; }
 
 .wk-mark { position: relative; }
 .wk-mark::before { /* the hairline: one segment per step, joined into a continuous rule */
   content: ""; position: absolute; right: 0; top: 0; height: 100%; width: 1px; background: var(--line-2);
 }
 .wk-list .wk-step:last-child .wk-mark::before { height: 26px; }
-.wk-n { /* the number is the mark: Fraunces at its lightest weight and highest contrast */
-  position: absolute; right: 14px; top: -14px;
-  font-family: var(--font-display); font-weight: 300; font-variation-settings: var(--opsz-numeral);
-  font-size: var(--fs-num-m); line-height: 1; letter-spacing: -0.02em;
+.wk-n { /* the number is the mark: Fraunces, light, large */
+  position: absolute; right: 14px; top: -12px;
+  font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-numeral);
+  font-size: var(--fs-num-m); line-height: 1; letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums lining-nums; color: var(--muted);
 }
 .wk-step.is-past .wk-mark::before { background: var(--ink-2); }
 .wk-step.is-here .wk-mark::before { background: linear-gradient(to bottom, var(--accent) var(--wk-fill, 0%), var(--line-2) var(--wk-fill, 0%)); }
 .wk-step.is-past .wk-n { color: var(--ink-2); }
-.wk-step.is-here .wk-n { color: var(--accent); }
+.wk-step.is-here .wk-n { color: var(--accent-ink); }
 
 /* ---------- the walk: one block ---------- */
-.wk-where { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0 0 9px; }
-.wk-where .wk-stage { position: relative; }
-.wk-where .wk-stage::before { content: ""; position: absolute; left: -9px; top: 2px; width: 1px; height: 10px; background: var(--line-2); }
+.wk-where { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0 0 10px; }
 .wk-t {
-  font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title);
-  font-size: var(--fs-d1s); line-height: 1.1; letter-spacing: 0;
-  margin: 0 0 14px; max-width: 15em;
+  font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title);
+  font-size: var(--fs-d1s); line-height: 1.1; letter-spacing: -0.01em;
+  margin: 0 0 16px; max-width: 15em;
 }
-.wk-p { max-width: var(--measure); line-height: 1.6; margin: 0 0 16px; }
+.wk-p { max-width: var(--measure); line-height: 1.62; margin: 0 0 18px; }
 
 .wk-leaders {
   display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 11px;
-  max-width: var(--measure); margin: 0 0 15px;
+  max-width: var(--measure); margin: 0 0 16px;
   font-size: var(--fs-small); line-height: 1.5; color: var(--ink-2);
 }
 .wk-leaders .label { flex: 0 0 auto; }
-.wk-lead { font-weight: 600; color: var(--ink); }
+.wk-lead { font-weight: 500; color: var(--ink); }
 .wk-lead .chip { margin: 0 0 0 3px; } /* the markup already carries a literal space, so the name reads apart from its code */
 .wk-sep { font-style: normal; color: var(--line-2); }
 
@@ -3144,46 +3135,51 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
   max-width: var(--measure); padding-top: 12px; border-top: 1px solid var(--line);
 }
 .wk-score {
-  display: inline-flex; align-items: center; gap: 9px;
-  font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); font-variant-numeric: tabular-nums;
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-ui); font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums;
 }
-.wk-pips { display: inline-flex; gap: 4px; }
-.wk-pips i { display: block; box-sizing: border-box; width: 8px; height: 8px; border-radius: 0; border: 1.5px solid var(--line-2); }
-/* the chain strip's colors: garnet only at 5 of 5 */
-.wk-score[data-rank="3"] .wk-pips i.on { background: var(--bar-3); border-color: var(--bar-3); }
-.wk-score[data-rank="4"] .wk-pips i.on { background: var(--bar-4); border-color: var(--bar-4); }
-.wk-score[data-rank="5"] .wk-pips i.on { background: var(--bar-5); border-color: var(--bar-5); }
-.wk-sc b { color: var(--ink); font-weight: 600; font-size: var(--fs-ui); }
-.wk-score[data-rank="5"] .wk-sc, .wk-score[data-rank="5"] .wk-sc b { color: var(--accent); }
+.wk-sc { display: inline-flex; align-items: center; gap: 8px; }
+.wk-sc::before { content: ""; display: inline-block; flex: none; width: 6px; height: 4px; background: var(--ctx); }
+.wk-score[data-rank="5"] .wk-sc::before { height: 15px; background: var(--ink); }
+.wk-score[data-rank="4"] .wk-sc::before { height: 8px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); }
+.wk-sc b { color: var(--ink); font-weight: 500; font-size: 14px; }
 .wk-read {
-  margin-left: auto; font-family: var(--font-mono); font-weight: 500;
-  font-size: var(--fs-ui); letter-spacing: 0.01em; white-space: nowrap;
-  text-decoration: none; border-bottom: 1px solid var(--line-2); padding-bottom: 1px;
+  margin-left: auto; font-family: var(--font-ui); font-weight: 500;
+  font-size: 15px; letter-spacing: 0; white-space: nowrap; color: var(--ink);
+  text-decoration: none; border-bottom: 1px solid var(--ink); padding: 3px 0 2px;
 }
-.wk-read::after { content: "\00a0\2192"; color: var(--muted); }
-/* Read the chapter, the Concentration tag and each source link look as they did but take a fingertip: an invisible box
-   at least 24 px tall, centered on the control */
+.wk-read::after { content: "\00a0\2192"; }
+/* Read the chapter, the Concentration tag and each source link take a fingertip: an invisible box at least 24 px tall,
+   centered on the control */
 .wk-read, .wk-score-term, .wk-facts .wk-src { position: relative; }
 .wk-read::before, .wk-score-term::before, .wk-facts .wk-src::before {
   content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 24px); height: max(100%, 26px); transform: translate(-50%, -50%);
 }
 .wk-facts .wk-src::before { width: calc(100% + 8px); }
-.wk-read:hover { color: var(--accent); border-bottom-color: var(--accent); }
-.wk-read:hover::after { color: var(--accent); }
+.wk-read:hover { color: var(--accent-ink); border-bottom-color: var(--accent); }
 
 .wk-pn { display: none; }
 
 /* ---------- the walk: the end, Other pages (its own ink rule opens it) ---------- */
+.wk-tabs { display: block; margin: 30px 0 4px; padding: 0; background: none; border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2); border-radius: 0; }
+.wk-tabs-k { margin: 0; padding: 12px 0 10px; border-bottom: 1px solid var(--line); }
+.wk-tabs a { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 0 20px; align-items: baseline; min-width: 0; padding: 12px 0 13px; border-top: 1px solid var(--line); color: var(--ink-2); text-decoration: none; }
+.wk-tabs a:first-of-type { border-top: 0; }
+.wk-tabs .wk-tab { display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--fs-d5); line-height: 1.2; padding: 0; margin: 0; border: 0; border-radius: 0; color: var(--ink); background: none; transition: color 0.15s; }
+.wk-tabs .wk-tab::after { content: "\00a0\2192"; font-weight: 400; color: var(--muted); }
+.wk-tabs a:hover .wk-tab, .wk-tabs a:focus-visible .wk-tab { background: none; color: var(--accent-ink); }
+.wk-tabs a:hover .wk-tab::after { color: var(--accent-ink); }
+.wk-tabs span { display: block; font-size: var(--fs-small); line-height: 1.5; }
 .wk-end { max-width: var(--measure); margin-left: calc(var(--gutter) + var(--gutter-gap)); }
 .wk-end .wk-tabs { margin: 0; }
 
 /* ---------- the walk: the flashcards after the last step ----------
    The chapter decks' component and look (styles.css .review, .fc-*), set in the walk's text column. A chapter's deck sits in
    .prose, which gives its title the heading type; here the title takes the same type directly. */
-.wk-deck { max-width: var(--measure); margin: 0 0 48px calc(var(--gutter) + var(--gutter-gap)); }
+.wk-deck { max-width: var(--measure); margin: 0 0 56px calc(var(--gutter) + var(--gutter-gap)); }
 .wk-deck .review { margin-top: 6px; }
 .wk-deck .rv-title {
-  font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); letter-spacing: 0;
+  font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); letter-spacing: -0.01em;
   font-size: var(--fs-d2); line-height: 1.15; margin: 0.55em 0 0.2em;
 }
 /* ten dots leave a phone no room for both step links beside them, so the links move under the dots, each on one line */
@@ -3194,50 +3190,43 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 /* ---------- the progress rail ---------- */
 .wk-rail {
   position: fixed; left: 0; top: var(--masthead); z-index: 30; width: var(--col);
-  padding: 8px clamp(16px, 4vw, 56px) 8px clamp(16px, 3vw, 44px);
+  padding: 8px clamp(16px, 4vw, 56px) 9px var(--margin);
   background: var(--bg); border-bottom: 1px solid var(--line);
   transform: translateY(-110%); opacity: 0; transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
 }
 .wk-rail[data-show="1"] { transform: none; opacity: 1; }
 .wk-rail-bar { height: 2px; background: var(--line); border-radius: 0; overflow: hidden; }
 .wk-rail-bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width 0.15s linear; }
-.wk-rail-line { display: flex; gap: 12px; align-items: baseline; margin: 6px 0 0; font-family: var(--font-mono); font-size: var(--fs-ui-s); letter-spacing: 0.01em; color: var(--muted); }
-.wk-rail-n { flex: 0 0 auto; color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+.wk-rail-line { display: flex; gap: 12px; align-items: baseline; margin: 6px 0 0; font-family: var(--font-ui); font-size: 13px; letter-spacing: 0; color: var(--muted); }
+.wk-rail-n { flex: 0 0 auto; font-family: var(--font-kicker); font-size: 12px; color: var(--ink); font-variant-numeric: tabular-nums; }
 .wk-rail-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-/* ---------- start here: the landing-page chooser, under the hero ---------- */
+/* ---------- start here: the landing-page chooser (START_HERE, not placed on the page today) ---------- */
 .wk-sh { border-top: 1px solid var(--line); padding: 15px 0 20px; }
 .wk-sh-h { display: block; margin: 0 0 11px; }
 .wk-sh-list { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px 14px; margin: 0; padding: 0; }
 .wk-sh-list li { display: flex; flex-direction: column; min-width: 0; }
-.wk-sh-item {
-  flex: 1 1 auto; display: block; text-decoration: none;
-  border: 0; border-top: 1px solid var(--line-2); border-radius: 0; background: none;
-  padding: 10px 0 11px; transition: border-color 0.15s;
-}
+.wk-sh-item { flex: 1 1 auto; display: block; text-decoration: none; border: 0; border-top: 1px solid var(--line-2); border-radius: 0; background: none; padding: 10px 0 11px; transition: border-color 0.15s; }
 .wk-sh-item:hover { border-top-color: var(--ink); background: none; }
-.wk-sh-t {
-  display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title);
-  font-size: var(--fs-d6); line-height: 1.2; letter-spacing: 0; margin: 0 0 4px; text-wrap: balance;
-}
+.wk-sh-t { display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: var(--fs-d6); line-height: 1.2; letter-spacing: 0; margin: 0 0 4px; text-wrap: balance; }
 .wk-sh-t::after { content: "\00a0\2192"; color: var(--muted); font-weight: 400; }
-.wk-sh-item:hover .wk-sh-t { color: var(--accent); }
+.wk-sh-item:hover .wk-sh-t { color: var(--accent-ink); }
 .wk-sh-d { display: block; font-size: 13.5px; line-height: 1.38; color: var(--ink-2); }
-.wk-sh-more {
-  align-self: flex-start; margin-top: 6px;
-  font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase;
-  color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--line-2);
-}
-.wk-sh-more:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.wk-sh-more { align-self: flex-start; margin-top: 6px; font-family: var(--font-ui); font-weight: 500; font-size: 13px; color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--line-2); }
+.wk-sh-more:hover { color: var(--accent-ink); border-bottom-color: var(--accent); }
 .wk-sh-more::after { content: "\00a0\2192"; }
 
 /* ---------- the walk: sourced facts ---------- */
-.wk-facts { list-style: none; margin: 10px 0 4px; padding: 8px 0 6px 16px; border-left: 1px solid var(--line-2); max-width: var(--measure); }
-.wk-facts li { font-family: var(--font-body); font-size: var(--fs-small); line-height: 1.45; color: var(--ink-2); margin: 0 0 6px; }
-.wk-facts .wk-src { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); text-transform: uppercase; color: var(--accent); text-decoration: none; margin-left: 6px; }
-.wk-facts .wk-src:hover { text-decoration: underline; }
+.wk-facts { list-style: none; margin: 10px 0 6px; padding: 8px 0 6px 16px; border-left: 1px solid var(--line-2); max-width: var(--measure); }
+.wk-facts li { font-family: var(--font-body); font-size: var(--fs-small); line-height: 1.5; color: var(--ink-2); margin: 0 0 7px; }
+.wk-facts .wk-src { font-family: var(--font-ui); font-weight: 500; font-size: 12.5px; letter-spacing: 0; color: var(--accent-ink); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent); text-underline-offset: 3px; margin-left: 6px; white-space: nowrap; }
+.wk-facts .wk-src::after { content: "\00a0\2197"; }
+.wk-facts .wk-src:hover { text-decoration-color: var(--accent); }
 
-/* ---------- narrow ---------- */
+/* ---------- laptops between 901 and 1199 px ---------- */
+@media (max-width: 1199px) and (min-width: 901px) {
+  .wk-title { font-size: clamp(48px, 6vw, 64px); }
+}
 @media (max-width: 1100px) {
   .wk-tabs a { grid-template-columns: 150px minmax(0, 1fr); }
 }
@@ -3245,36 +3234,60 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
   .wk-sh-list { grid-template-columns: 1fr; gap: 8px; }
   .wk-sh-t { font-size: 15.5px; }
 }
+
+/* ---------- phones: one column; the specimen is the strip at the foot of the screen ---------- */
 @media (max-width: 900px) {
-  /* the ledger column narrows to 34 px; the number stays in it, small */
-  .wk-head { margin-left: 0; padding-top: 26px; }
-  .wk-title { font-size: 36px; max-width: none; }
-  .wk-dek { font-size: var(--fs-plain); }
-  .wk-meta .label + .label::before, .wk-where .wk-stage::before { display: none; }
-  .wk-tabs a { grid-template-columns: 1fr; gap: 2px; }
-  .wk-tabs .wk-tab { font-size: var(--fs-d6); }
-  .wk-tabs span { font-size: var(--fs-small); }
-  .wk-list { margin-top: 30px; }
+  .wk-head { padding-top: 26px; }
+  .wk-title { font-size: min(68px, 16vw); line-height: 0.98; max-width: none; }
+  .wk-dek { font-size: 19px; margin-top: 16px; }
+  .wk-ev { margin-top: 32px; }
+  .wk-ev-cap { grid-template-columns: 1fr; row-gap: 6px; margin-bottom: 18px; }
+  .wk-ev-n { font-size: 46px; }
+  .wk-ev-d { grid-column: 1; margin-top: 6px; font-size: 14.5px; }
+  .wk-stops::after { top: 36px; }
+  .wk-stop { grid-template-rows: 36px auto; padding-right: 1px; }
+  .wk-stop-bar { width: 6px; height: 34px; }
+  .wk-stops [data-band="h"] .wk-stop-bar { height: 17px; }
+  .wk-stop-n { font-size: 11px; letter-spacing: -0.04em; margin-top: 7px; }
+  .wk-legend { gap: 8px 18px; }
+  .wk-find { margin-top: 28px; }
+  .wk-qbox { gap: 9px; padding: 0 12px; height: 50px; }
+  .wk-qbox input { font-size: 16px; } /* 16 px stops iOS zooming in on focus */
+  .wk-reads { grid-template-columns: 1fr; gap: 14px; }
+  .wk-way-t { font-size: 18px; }
+
+  .wk-gl { margin-top: 64px; }
+  .wk-gl-h { font-size: 30px; }
+  .wk-gl-list a { min-height: 36px; padding: 7px 0 6px; }
+  .wk-gl-t { font-size: 16px; }
+  .wk-gl-c { gap: 7px; font-size: 12.5px; }
+  .wk-gl-w { min-width: 4.1em; }
+
+  .wk-list { margin-top: 64px; }
   .wk-step { scroll-margin-top: calc(var(--masthead) + 60px); }
-  .wk-block { padding-bottom: 38px; }
-  .wk-n { display: block; right: 8px; top: -6px; font-size: 26px; }
+  .wk-block { padding-bottom: 40px; }
+  .wk-n { display: block; right: 8px; top: -4px; font-size: 26px; }
   .wk-t { font-size: var(--fs-d3); max-width: none; }
   .wk-foot { gap: 10px 14px; }
   .wk-read { margin-left: 0; }
   .wk-end { margin-left: 0; }
+  .wk-tabs a { grid-template-columns: 1fr; gap: 2px; }
+  .wk-tabs .wk-tab { font-size: var(--fs-d6); }
+  .wk-tabs span { font-size: var(--fs-small); }
 
   .wk-pn { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 18px 0 0; }
-  .wk-pn a {
-    display: block; min-width: 0; text-decoration: none;
-    border: 1px solid var(--line-2); border-radius: 0; background: none; padding: 9px 11px 10px;
-  }
-  .wk-pn a:hover { border-color: var(--accent); }
+  .wk-pn a { display: block; min-width: 0; text-decoration: none; border: 1px solid var(--line-2); border-radius: 4px; background: none; padding: 9px 11px 10px; }
+  .wk-pn a:hover { border-color: var(--ink); }
   .wk-pn .wk-next { text-align: right; }
   .wk-pn .label { display: block; margin-bottom: 3px; }
   .wk-pn-t { display: block; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 14.5px; line-height: 1.25; overflow-wrap: anywhere; }
 }
+@media (max-width: 380px) {
+  .wk-gl-c { gap: 5px; font-size: 12px; }
+  .wk-gl-w { min-width: 0; }
+  .wk-legend { font-size: 12.5px; gap: 6px 14px; }
+}
 @media (max-width: 420px) {
-  .wk-title { font-size: 33px; }
   .wk-t { font-size: var(--fs-d3); }
   .wk-pn-t { font-size: 13px; }
 }
@@ -3282,7 +3295,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
   .wk-rail { transition: none; }
 }
 @media print {
-  .wk-rail, .wk-pn { display: none !important; }
+  .wk-rail, .wk-pn, .wk-find, .wk-stops, .wk-legend { display: none !important; }
   .wk-step { break-inside: avoid; }
 }
 
@@ -3290,7 +3303,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 <style>
 /* the cite line under each chapter title, its actions: Link to chapter · Cite this chapter · Chapter PDF (build/build.js citeBlock) */
 .ch-cite { margin: 4px 0 0; }
-.ch-cite-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 8px; margin: 0; font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.ch-cite-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 8px; margin: 0; font-family: var(--font-mono); font-size: 13px; font-weight: 500; letter-spacing: 0; color: var(--muted); }
 .ch-cite-line > * { padding: 4px 0; }
 .ch-cite-btn, .ch-cite-pdf, .ch-cite-copy, .ch-cite-copylink { font: inherit; letter-spacing: inherit; text-transform: inherit; background: none; border: 0; margin: 0; cursor: pointer; color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2); }
 .ch-cite-btn:hover, .ch-cite-pdf:hover, .ch-cite-copy:hover, .ch-cite-copylink:hover { text-decoration-color: var(--accent); }
@@ -3299,7 +3312,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 .ch-cite-box { margin: 6px 0 2px; padding: 12px 14px 10px; border-left: 2px solid var(--accent); background: var(--bg-2); max-width: 40em; }
 .ch-cite-text { margin: 0; font-family: var(--font-body); font-size: 15px; line-height: 1.5; color: var(--ink); overflow-wrap: anywhere; }
 .ch-cite-text a { color: inherit; }
-.ch-cite-copy { display: inline-block; margin-top: 6px; padding: 4px 0; font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; }
+.ch-cite-copy { display: inline-block; margin-top: 6px; padding: 4px 0; font-family: var(--font-mono); font-size: 13px; font-weight: 500; letter-spacing: 0; }
 @media print { .ch-cite { display: none !important; } }
 </style>
 <script>
@@ -3444,16 +3457,29 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
     <!-- the views in the order a first visit needs them: home first, the three small views, The Chain, the Glossary -->
     <section class="view column" data-view="walk"><div class="wk">
 <div class="wk-rail" id="wk-rail" data-show="0" aria-hidden="true" hidden><div class="wk-rail-bar"><i></i></div><p class="wk-rail-line"><span class="wk-rail-n"></span><span class="wk-rail-t"></span></p></div>
-<header class="wk-head">
+<header class="wk-head" id="wk-hero" data-specimen="euv-scanner" data-number="04" data-title="Lithography" data-caption="An extreme ultraviolet scanner cut open along its light path. The machine is the size of a bus and weighs about 180 metric tons. The blue-violet thread is the 13.5 nm light, bouncing mirror to mirror from the violet-white tin plasma at bottom left to the wafer. Both ends are drawn about twice their true size.">
+<div class="wk-htext">
 <h1 class="wk-title">How AI chips are made</h1>
 <p class="wk-dek">An introduction to the entire semiconductor supply chain.</p>
-<p class="wk-meta"><span class="label">17 paragraphs</span><span class="label">2,456 words</span><span class="label">about 11 min</span></p>
+</div>
+<figure class="wk-ev">
+<figcaption class="wk-ev-cap"><span class="wk-ev-n">8 <span class="wk-ev-of">of the 15</span></span> <span class="wk-ev-t">stages are rated Extreme</span> <span class="wk-ev-d">Extreme means three or fewer firms could supply the stage today, or one firm holds more than half of it. Each bar is a stage, in the order a chip is made.</span></figcaption>
+<ol class="wk-stops" aria-label="The fifteen stages. Choose one to show its specimen."><li data-band="x"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="die-floorplan" data-n="01" data-t="Chip Design, EDA and IP" data-cap="A GPU die based on Nvidia's published H100 block diagram. It is drawn at the size of one full reticle field, 26 by 33 mm, the largest area a scanner can print in one shot. The 144 compute tiles fill the center in eight clusters. H100 is a single die. The copper strip on one short edge stands for the die-to-die link that two-die designs such as Blackwell add." aria-label="01 Chip Design, EDA and IP, Extreme"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">01</span></button></li><li data-band="h"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="boule-and-wafer" data-n="02" data-t="Silicon and Wafers" data-cap="A silicon ingot, one crystal pulled whole from a melt, with two wafers sawn from it. It is 2.1 m long, 300 mm across and about 265 kg, taller than a door and about as heavy as three grown men. It hangs from a neck about 10 mm wide. Drawn to scale. The wafer standing on its rim is shown in silver." aria-label="02 Silicon and Wafers, High"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">02</span></button></li><li data-band="h"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="gas-cabinet" data-n="03" data-t="Chemicals, Gases and Photoresist" data-cap="A specialty gas cabinet with its door off, and a bulk liquid cylinder standing behind it. The cabinet is about 1 m wide and 1.9 m tall and holds three gas cylinders. The drawing is to scale. The steel-gray panel on the back wall holds the valves, regulator and gauges that control the gas flow." aria-label="03 Chemicals, Gases and Photoresist, High"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">03</span></button></li><li data-band="x"><button type="button" class="wk-stop" aria-pressed="true" tabindex="0" data-spec="euv-scanner" data-n="04" data-t="Lithography" data-cap="An extreme ultraviolet scanner cut open along its light path. The machine is the size of a bus and weighs about 180 metric tons. The blue-violet thread is the 13.5 nm light, bouncing mirror to mirror from the violet-white tin plasma at bottom left to the wafer. Both ends are drawn about twice their true size." aria-label="04 Lithography, Extreme"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">04</span></button></li><li data-band="x"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="photomask" data-n="05" data-t="Photomasks and Pellicles" data-cap="An EUV photomask, or reticle, with its pellicle dust cover. The mask, drawn to scale, is a 152 mm square of glass 6.35 mm thick, about the size of a small floor tile. The dark blue band around the top edge is the mirror coating. The real coating is about forty pairs of layers, each pair 7 nm thick, far thinner than drawn." aria-label="05 Photomasks and Pellicles, Extreme"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">05</span></button></li><li data-band="h"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="process-chamber" data-n="06" data-t="Deposition and Etch" data-cap="A plasma etch chamber cut in half. The vessel is 500 mm across inside and holds one 300 mm wafer clamped to a chuck at the bottom. The violet haze above the wafer is the plasma. The gap it fills is drawn about twice its real height of 30 to 40 mm. The rest is to scale." aria-label="06 Deposition and Etch, High"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">06</span></button></li><li data-band="h"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="sem-column" data-n="07" data-t="Metrology and Inspection" data-cap="An electron-beam inspection column standing over a 300 mm wafer, cut in half down its axis. The column is about a meter tall, drawn to scale. The green line is the electron beam, running from the emitter at the top through the lenses to the spot where it lands on the wafer." aria-label="07 Metrology and Inspection, High"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">07</span></button></li><li data-band="x"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="gaa-transistor" data-n="08" data-t="Transistors and the Front End" data-cap="A gate-all-around transistor, the switch in a 2 nm-class chip, drawn at true proportions. The three silicon sheets are each 6 nm thick and 30 nm wide: a few dozen atoms from top to bottom, and roughly ten thousand times thinner than a human hair. The gold cage is the gate metal wrapping all four sides of each sheet." aria-label="08 Transistors and the Front End, Extreme"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">08</span></button></li><li data-band="x"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="foup" data-n="09" data-t="Foundries and Fabs" data-cap="A FOUP, the sealed pod that carries 25 wafers between tools, drawn to scale. The 300 mm wafers inside, each the width of a dinner plate, nearly fill it. The shell is translucent, as the real polycarbonate is. One wafer is picked out in silver." aria-label="09 Foundries and Fabs, Extreme"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">09</span></button></li><li data-band="x"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="hbm-stack" data-n="10" data-t="Memory and HBM" data-cap="A twelve-high HBM stack pulled apart: a logic die at the base, shown in copper, and twelve memory dies above it. The finished part is 11 by 11 mm and 0.72 mm tall. Each memory die is ground to about 30 micrometers, thinner than a human hair. The footprint is to scale, but the heights are exaggerated about fifteen times." aria-label="10 Memory and HBM, Extreme"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">10</span></button></li><li data-band="x"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="cowos-exploded" data-n="11" data-t="Advanced Packaging" data-cap="A CoWoS-L package, pulled apart. Two logic dies and eight HBM stacks sit on the interposer, shown in silver with its copper wiring. In CoWoS-L the interposer is fine redistribution wiring with small embedded silicon bridges. It sits on a resin substrate with a grid of solder balls underneath. The chips together cover about 2,700 mm2, a little over three reticle fields. Footprints are to scale. Thicknesses and the gaps between layers are exaggerated." aria-label="11 Advanced Packaging, Extreme"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">11</span></button></li><li data-band="x"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="substrate-layers" data-n="12" data-t="Substrates and PCBs" data-cap="A build-up substrate, the board a chip sits on, with a quarter cut away. It is about 100 by 72 mm and 1.5 mm thick, with eighteen copper layers inside. The olive-green bands are the build-up film between the copper layers. The footprint is to scale, but the thickness is exaggerated about twenty times." aria-label="12 Substrates and PCBs, Extreme"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">12</span></button></li><li data-band="h"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="probe-card" data-n="13" data-t="Test and Assembly" data-cap="A vertical probe card over a wafer. The card is round, about 305 mm across, a little wider than the 300 mm wafer beneath it. Thousands of needles under it land on four dies at once, picked out in blue-violet. The gap between card and wafer is exaggerated. The real gap is a millimeter or two." aria-label="13 Test and Assembly, High"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">13</span></button></li><li data-band="h"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="gpu-baseboard" data-n="14" data-t="Systems and Networking" data-cap="An eight-GPU baseboard, the board that carries eight accelerator modules and the switch chips joining them. It is about 510 by 400 mm and drawn to scale, with the module frames standing about 30 mm above the board. The two nickel-gray squares in the middle are the NVLink switch chips." aria-label="14 Systems and Networking, High"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">14</span></button></li><li data-band="h"><button type="button" class="wk-stop" aria-pressed="false" tabindex="-1" data-spec="rack" data-n="15" data-t="Data Centers and Power" data-cap="A liquid-cooled rack of 72 GPUs, Nvidia's GB200 NVL72, drawn to scale. It is 2.24 m tall and 600 mm wide, taller than a door. It weighs about 1.36 metric tons, more than a small car, and draws about 120 kW. The gray steel power shelves and the copper busbar they feed are picked out." aria-label="15 Data Centers and Power, High"><span class="wk-stop-bar" aria-hidden="true"></span><span class="wk-stop-n" aria-hidden="true">15</span></button></li></ol>
+<p class="wk-legend"><span><i aria-hidden="true"></i>Extreme, 8</span><span><i class="h" aria-hidden="true"></i>High, 7</span><span class="wk-shown" aria-live="polite">Shown: 04 Lithography</span></p>
+</figure>
+<div class="wk-find">
+<label class="sr-only" for="wk-q">Search the site</label>
+<div class="wk-qbox"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg><input id="wk-q" type="search" autocomplete="off" spellcheck="false" placeholder="Search 226 firms, 38 chips, 208 terms"><kbd aria-hidden="true">/</kbd></div>
+<div class="wk-reads">
+<a class="wk-way" href="#/walk/design-and-eda"><span class="wk-way-t">Introduction <span aria-hidden="true">→</span></span><span class="wk-way-d"><span>17 paragraphs</span><span>2,456 words</span><span>about 11 min</span></span></a>
+<a class="wk-way" href="chain/" data-route="#/chain"><span class="wk-way-t">Each stage, in detail <span aria-hidden="true">→</span></span><span class="wk-way-d"><span>The Chain, 17 chapters</span></span></a>
+</div>
+</div>
+</header>
 <section class="wk-gl" aria-labelledby="wk-gl-h">
-<h2 class="label wk-gl-h" id="wk-gl-h">The chain at a glance</h2>
-<p class="wk-gl-p"><b>8 of the 15 stages</b> are rated Extreme, meaning three or fewer firms could supply each today, or one firm holds more than half.</p>
+<h2 class="wk-gl-h" id="wk-gl-h">The chain at a glance</h2>
 <ol class="wk-gl-list"><li data-level="4"><a href="design-and-eda/" data-route="#design-and-eda"><span class="wk-gl-n">01</span><span class="wk-gl-t">Chip Design, EDA and IP</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="wk-gl-w">Extreme<span class="sr-only"> concentration</span></span></span></a></li><li data-level="3"><a href="silicon-and-wafers/" data-route="#silicon-and-wafers"><span class="wk-gl-n">02</span><span class="wk-gl-t">Silicon and Wafers</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="wk-gl-w">High<span class="sr-only"> concentration</span></span></span></a></li><li data-level="3"><a href="chemicals-gases-and-photoresist/" data-route="#chemicals-gases-and-photoresist"><span class="wk-gl-n">03</span><span class="wk-gl-t">Chemicals, Gases and Photoresist</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="wk-gl-w">High<span class="sr-only"> concentration</span></span></span></a></li><li data-level="4"><a href="lithography/" data-route="#lithography"><span class="wk-gl-n">04</span><span class="wk-gl-t">Lithography</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="wk-gl-w">Extreme<span class="sr-only"> concentration</span></span></span></a></li><li data-level="4"><a href="photomasks-and-pellicles/" data-route="#photomasks-and-pellicles"><span class="wk-gl-n">05</span><span class="wk-gl-t">Photomasks and Pellicles</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="wk-gl-w">Extreme<span class="sr-only"> concentration</span></span></span></a></li><li data-level="3"><a href="deposition-and-etch/" data-route="#deposition-and-etch"><span class="wk-gl-n">06</span><span class="wk-gl-t">Deposition and Etch</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="wk-gl-w">High<span class="sr-only"> concentration</span></span></span></a></li><li data-level="3"><a href="metrology-and-inspection/" data-route="#metrology-and-inspection"><span class="wk-gl-n">07</span><span class="wk-gl-t">Metrology and Inspection</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="wk-gl-w">High<span class="sr-only"> concentration</span></span></span></a></li><li data-level="4"><a href="transistors-and-front-end/" data-route="#transistors-and-front-end"><span class="wk-gl-n">08</span><span class="wk-gl-t">Transistors and the Front End</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="wk-gl-w">Extreme<span class="sr-only"> concentration</span></span></span></a></li><li data-level="4"><a href="foundries-and-fabs/" data-route="#foundries-and-fabs"><span class="wk-gl-n">09</span><span class="wk-gl-t">Foundries and Fabs</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="wk-gl-w">Extreme<span class="sr-only"> concentration</span></span></span></a></li><li data-level="4"><a href="memory-and-hbm/" data-route="#memory-and-hbm"><span class="wk-gl-n">10</span><span class="wk-gl-t">Memory and HBM</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="wk-gl-w">Extreme<span class="sr-only"> concentration</span></span></span></a></li><li data-level="4"><a href="advanced-packaging/" data-route="#advanced-packaging"><span class="wk-gl-n">11</span><span class="wk-gl-t">Advanced Packaging</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="wk-gl-w">Extreme<span class="sr-only"> concentration</span></span></span></a></li><li data-level="4"><a href="substrates-and-pcbs/" data-route="#substrates-and-pcbs"><span class="wk-gl-n">12</span><span class="wk-gl-t">Substrates and PCBs</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="wk-gl-w">Extreme<span class="sr-only"> concentration</span></span></span></a></li><li data-level="3"><a href="test-and-assembly/" data-route="#test-and-assembly"><span class="wk-gl-n">13</span><span class="wk-gl-t">Test and Assembly</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="wk-gl-w">High<span class="sr-only"> concentration</span></span></span></a></li><li data-level="3"><a href="systems-and-networking/" data-route="#systems-and-networking"><span class="wk-gl-n">14</span><span class="wk-gl-t">Systems and Networking</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="wk-gl-w">High<span class="sr-only"> concentration</span></span></span></a></li><li data-level="3"><a href="data-centers-and-power/" data-route="#data-centers-and-power"><span class="wk-gl-n">15</span><span class="wk-gl-t">Data Centers and Power</span><span class="wk-gl-c"><span class="wk-gl-m" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="wk-gl-w">High<span class="sr-only"> concentration</span></span></span></a></li></ol>
 </section>
-</header>
 <ol class="wk-list">
 <li class="wk-step" id="/walk/design-and-eda" data-title="Chip Design, EDA and IP" data-number="01" data-specimen="die-floorplan" data-caption="A GPU die based on Nvidia's published H100 block diagram. It is drawn at the size of one full reticle field, 26 by 33 mm, the largest area a scanner can print in one shot. The 144 compute tiles fill the center in eight clusters. H100 is a single die. The copper strip on one short edge stands for the die-to-die link that two-die designs such as Blackwell add.">
 <div class="wk-mark" aria-hidden="true"><span class="wk-n">01</span></div>
@@ -10196,8 +10222,10 @@ PC.register('wafer', function (p) {
       var p = r2.height > vh ? Math.max(0, Math.min(1, (probe - r2.top) / (r2.height - vh * 0.3))) : 0;
       Stage.scrollAngle = (reduced ? 0 : p * 1.15);
       var id = best.id || best.getAttribute('data-specimen');
-      if (id !== this.currentId) {
-        this.currentId = id;
+      // the home hero keeps one id while the reader picks its specimen (src/modules/walk.js), so the specimen it names counts too
+      var key = id + '|' + (best.getAttribute('data-specimen') || '');
+      if (id !== this.currentId || key !== this.currentKey) {
+        this.currentId = id; this.currentKey = key;
         if (Router.current === 'stack') Router.title();
         var num = best.getAttribute('data-number');
         Stage.show(best.getAttribute('data-specimen'), null, best.getAttribute('data-caption') ? esc(best.getAttribute('data-caption')) : null,
@@ -14481,6 +14509,51 @@ try {
     ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (t) { window.addEventListener(t, go, { passive: true, once: true }); });
     if (el && CP.Router.settle) CP.Router.settle(el);
   }
+
+  /* The hero (redesign, 25 Oct 2026). The evidence figure's fifteen marks pick the specimen: a mark copies its stage's
+     specimen, number, title and caption onto the hero (#wk-hero, a [data-specimen] item that Sections in src/app.js tracks
+     like a step), and a scroll event asks Sections to draw it. One mark is in the Tab order; the arrow keys, Home and End move
+     along them, as they do on the Suppliers pipeline. The search field hands what is typed to the site's search (Tools). */
+  (function hero() {
+    var box = document.getElementById('wk-hero');
+    var marks = box ? CP.$$('.wk-stop', box) : [];
+    var shown = box ? box.querySelector('.wk-shown') : null;
+    function pick(i, focus) {
+      var b = marks[i]; if (!b) return;
+      marks.forEach(function (m, k) { m.setAttribute('aria-pressed', k === i ? 'true' : 'false'); m.tabIndex = k === i ? 0 : -1; });
+      box.setAttribute('data-specimen', b.getAttribute('data-spec') || '');
+      box.setAttribute('data-number', b.getAttribute('data-n') || '');
+      box.setAttribute('data-title', b.getAttribute('data-t') || '');
+      box.setAttribute('data-caption', b.getAttribute('data-cap') || '');
+      if (shown) shown.textContent = 'Shown: ' + (b.getAttribute('data-n') || '') + ' ' + (b.getAttribute('data-t') || '');
+      if (focus) b.focus();
+      window.dispatchEvent(new Event('scroll'));
+    }
+    marks.forEach(function (b, i) {
+      b.addEventListener('click', function () { pick(i, false); });
+      b.addEventListener('keydown', function (e) {
+        var k = e.key, n = marks.length, to = -1;
+        if (k === 'ArrowRight' || k === 'ArrowDown') to = Math.min(n - 1, i + 1);
+        else if (k === 'ArrowLeft' || k === 'ArrowUp') to = Math.max(0, i - 1);
+        else if (k === 'Home') to = 0; else if (k === 'End') to = n - 1;
+        if (to < 0) return;
+        e.preventDefault(); pick(to, true);
+      });
+    });
+    var q = document.getElementById('wk-q');
+    if (q && CP.Tools) {
+      var hand = function () { // the dialog opens with the field's words in its own box, and the field empties
+        var v = q.value; q.value = '';
+        CP.Tools.open();
+        var inp = document.querySelector('#cp-search input');
+        if (inp && v) { inp.value = v; inp.dispatchEvent(new Event('input')); }
+      };
+      q.addEventListener('input', function () { if (q.value) hand(); });
+      q.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); hand(); } });
+      q.addEventListener('mousedown', function (e) { if (e.button === 0) { e.preventDefault(); hand(); } });
+      q.addEventListener('touchend', function (e) { e.preventDefault(); hand(); });
+    }
+  })();
 
   CP.register('walk', {
     /* the router leaves the page where this view puts it: a step to land on, or the place the reader left */

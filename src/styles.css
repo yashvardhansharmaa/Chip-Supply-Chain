@@ -1,80 +1,87 @@
-/* CHIP SUPPLY CHAIN design system: the ledger
-   Ground: a pale warm white, paper. Ink: near-black with a hint of blue. Accent: garnet, used the way a bookkeeper
-   used red ink, only where a figure needs to be seen (Extreme, Critical, the current stage, a citation number).
-   Type: Fraunces (display; weight 300 at the top of the optical range for the large numerals, 400 for titles,
-   SOFT and WONK pinned to zero), Source Serif 4 (reading, 18.5 px), Instrument Sans (labels, tabs, table heads,
-   buttons: the slot that used to be monospace), Jost (the specimen caption). A real monospace survives only where
-   digits must align under one another: code, the copy-as-CSV block, the board's dates and years.
-   Rules: hairlines instead of boxes, corners square, no shadows except under a floating popover, no grain.
-   The one thing to remember is the left edge of the page: a ruled ledger column (--gutter) that carries the chapter
-   number on the home walk and, on every chapter, the number and the fifteen stages of the chain turned vertical. */
+/* CHIP SUPPLY CHAIN design system (the redesign of 25 Oct 2026, qa/redesign/BRIEF.md)
+   Ground: white. Ink: a warm near-black, with two secondary inks. Paper (#f4f4f2) is a tint only, for the chokepoint card,
+   figure frames, source strips and flashcards.
+   Accent: red wine, #7a1f2b on white and #d98a95 on dark. It marks links, the reader's place (the current menu item, the
+   current item in a contents list), the reader's own selection and the logo tile. It never marks a data value; the one
+   exception is the Critical rating on Suppliers.
+   Type (pairing C2): Fraunces for the name, headings, titles and large numbers ("opsz" 48, SOFT and WONK at zero; about
+   350 at display sizes, 500 for small headings); Literata for standfirsts, text, review questions and captions of more than
+   one line; Hanken Grotesk only for menus, buttons, tabs, fields and small interface labels; Fragment Mono for kickers,
+   codes, dates in meta lines and table numbers. No text under 11 px. */
 :root {
-  --bg: #f7f6f2;
-  --bg-2: #f1efea;
-  --bg-3: #e8e5df;
-  --ink: #14181f;
-  --ink-2: #3b424c;
-  --muted: #5c636d;
-  --line: #d8d4cc;
-  --line-2: #bfb9af;
-  --control-edge: #857f74; /* the edge of a field, a select, a chip or a checkbox, 3.7:1 on paper (WCAG 1.4.11); rules stay hairlines */
+  --bg: #ffffff;
+  --bg-2: #f4f4f2;   /* paper: a tint, never the ground */
+  --bg-3: #e4e3df;
+  --ink: #171716;
+  --ink-2: #45443f;
+  --muted: #56554f;  /* 7.5:1 on white, 6.8:1 on paper */
+  --line: #e1e0db;
+  --line-2: #c4c3bd;
+  --rule-ink: #8c8a84; /* a rule that must be seen: the foot of a field row, the footer's top */
+  --control-edge: #8c8a84; /* the edge of a field, a select, a chip or a checkbox, 3.5:1 on white (WCAG 1.4.11) */
   --accent: #7a1f2b;
-  --accent-ink: #611722;
-  --accent-soft: rgba(122, 31, 43, 0.09);
-  --accent-fill: var(--accent); /* bars and other filled marks */
+  --accent-ink: #7a1f2b; /* 10.2:1 on white */
+  --accent-soft: #f3e3e5;
+  --accent-fill: var(--accent);
+  --ctx: #d2d1cc; /* chart rule B: the values that are not the largest */
   --c1: #2b63c4; --c2: #e06a1f; --c3: #1f9a6d; --c4: #c9a10c; --c5: #5a48b8; --c6: #c3302b; --c7: #2e7d1e; --c8: #8a9099;
-  --stage-ink: 20, 24, 31;
+  /* night: the specimen ground of chapters 16 and 17 */
+  --night: #121211; --night-ink: #e8e7e3; --night-ink2: #a9a7a1; --night-rule: #34332f; --night-accent: #d98a95;
+  --stage-ink: 23, 23, 22;
   --stage-accent: 122, 31, 43;
-  --shadow: 0 0 0 1px rgba(20, 24, 31, 0.06), 0 6px 20px rgba(20, 24, 31, 0.06); /* floating popovers only */
-  --font-display: "Fraunces", "Libre Caslon Display", "Iowan Old Style", Georgia, serif;
-  --font-body: "Source Serif 4", "Literata", "Iowan Old Style", Georgia, serif;
-  --font-mono: "Instrument Sans", "Public Sans", "Helvetica Neue", Arial, sans-serif; /* the label slot; kept under its old name so every module reads it */
-  --font-code: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace; /* where digits must align */
-  --font-caption: "Jost", "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
-  --opsz-title: "opsz" 48, "SOFT" 0, "WONK" 0;   /* Fraunces as a sober transitional */
-  --opsz-numeral: "opsz" 144, "SOFT" 0, "WONK" 0; /* Fraunces at its highest contrast, for the light numerals */
+  --shadow: 0 0 0 1px rgba(23, 23, 22, 0.06), 0 18px 30px -18px rgba(23, 23, 22, 0.35); /* floating popovers only */
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --font-body: "Literata", "Iowan Old Style", Georgia, serif;
+  --font-ui: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-ui); /* the interface-label slot, kept under its old name so every module reads it */
+  --font-code: "Fragment Mono", ui-monospace, SFMono-Regular, Menlo, monospace; /* kickers, codes, dates, table numbers */
+  --font-kicker: var(--font-code);
+  --font-caption: var(--font-body);
+  --opsz-title: "opsz" 48, "SOFT" 0, "WONK" 0;
+  --opsz-numeral: "opsz" 48, "SOFT" 0, "WONK" 0;
+  --opsz-name: "opsz" 28, "SOFT" 0, "WONK" 0; /* the name in the masthead */
   --band: 0px; /* height of the sticky specimen band on phones; anchors add it to their offset */
-  --measure: 37em; /* about 85 characters of Source Serif at 18.5 px; 41em on 25 Sept, narrowed 10 percent on 27 Sept for a wider specimen stage */
+  --measure: 36em; /* about 75 characters of Literata at 18 px */
   --frame: 650px;   /* chapter header and chokepoint card keep their earlier width */
-  --bar-5: var(--accent-fill); --bar-4: #3b424c; --bar-3: #bfb9af;
+  --bar-5: var(--ink); --bar-4: #8c8a84; --bar-3: #c4c3bd; /* bands as marks: Extreme ink, High mid gray, below that a tint */
   --col: 63%;
+  --margin: clamp(16px, 4.45vw, 64px); /* the page's outer margin, the masthead's and the column's */
   --gutter: 88px;     /* the ledger column */
   --gutter-gap: 28px;
-  --masthead: 56px;
+  --masthead: 64px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --scrim: rgba(20, 24, 31, 0.30); /* the ground under a modal (search); darker in dark mode, never lighter */
-  /* the type and spacing scale (design round, 21 Oct 2026). The screen rules use it (remap of 21 Oct, qa/design/build/
-     frame-notes.md); a new rule takes a step, and a size between two goes to the nearer by role. Capitals track at --tr-cap
-     (--tr-cap-s at 10 px), sentence case at 0.01em, Fraunces at -0.015em for d1 and 0 below; the specimen tag's 0.28em stays
-     the one plate-caption voice. Kept off the scale on purpose: the masthead, body and input sizes, chart and board labels
-     fitted to their geometry, em-sized footnote marks, and the few rules the PDF inherits (print.css sets no size of its own) */
-  /* labels: Instrument Sans */
-  --fs-cap-s: 10px;  --tr-cap-s: 0.08em; /* dense capitals: stage numbers and tiles, country codes, card keys */
-  --fs-cap: 11px;    --tr-cap: 0.1em;    /* the label: kickers, meta lines, buttons, sub-tabs, summaries */
-  --fs-ui-s: 12px;                       /* sentence case: footer, sources, hints, counts */
-  --fs-ui: 13.5px;                       /* tabs, named chips, Read the chapter */
-  /* reading: Source Serif 4 */
-  --fs-note: 13.5px; --fs-small: 15.5px; --fs-plain: 17px; --fs-body: 18.5px; --fs-lede: 21px;
+  --scrim: rgba(23, 23, 22, 0.30); /* the ground under a modal (search); darker in dark mode, never lighter */
+  /* the type and spacing scale. Labels are sentence case (the tracking tokens stay for the rules that read them). Kept off the
+     scale on purpose: the masthead, body and input sizes, chart and board labels fitted to their geometry, em-sized
+     footnote marks, and the few rules the PDF inherits (print.css sets no size of its own) */
+  /* interface labels: Hanken Grotesk */
+  --fs-cap-s: 11px;  --tr-cap-s: 0.01em; /* dense labels: stage numbers and tiles, country codes, card keys */
+  --fs-cap: 12px;    --tr-cap: 0.01em;   /* the label: meta lines, buttons, sub-tabs, summaries */
+  --fs-ui-s: 12.5px;                     /* footer, sources, hints, counts */
+  --fs-ui: 14px;                         /* tabs, named chips, Read the chapter */
+  /* reading: Literata */
+  --fs-note: 13.5px; --fs-small: 15.5px; --fs-plain: 17px; --fs-body: 18px; --fs-lede: 21px;
   /* display: Fraunces */
   --fs-d6: 16.5px; --fs-d5: 19px; --fs-d4: 21px; --fs-d3: 24px; --fs-d2: 28px;
   --fs-d1s: clamp(26px, 2.3vw, 32px);    /* walk step titles */
-  --fs-d1: clamp(40px, 4.4vw, 62px);     /* every page title, the walk's included */
+  --fs-d1: clamp(40px, 4.6vw, 66px);     /* every page title */
   --fs-num-s: 30px; --fs-num-m: 54px; --fs-num-l: 72px;
   /* block rhythm: the gaps between sections (inner paddings stay their own) */
   --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 72px;
   color-scheme: light;
 }
 :root[data-theme="dark"] {
-  --bg: #14171c; --bg-2: #1b1f25; --bg-3: #23282f;
-  --ink: #ece9e2; --ink-2: #c3c7cd; --muted: #939aa3;
-  --line: #2c3138; --line-2: #3d434b; --control-edge: #6d747c; /* 3.8:1 on the dark ground */
-  --accent: #e25c57; --accent-ink: #ee7a73; --accent-soft: rgba(226, 92, 87, 0.14); /* red for text on the dark ground, 5.1:1 */
-  --accent-fill: #a8414b; /* a deeper wine for bars and filled marks, 3.0:1 */
+  --bg: #121211; --bg-2: #1c1c1a; --bg-3: #272725;
+  --ink: #e8e7e3; --ink-2: #c6c4be; --muted: #a9a7a1; /* muted 7.7:1 on the ground, 7.0:1 on the tint */
+  --line: #2c2b28; --line-2: #45443f; --rule-ink: #75736d; --control-edge: #75736d; /* 3.9:1 on the dark ground */
+  --accent: #d98a95; --accent-ink: #d98a95; --accent-soft: rgba(217, 138, 149, 0.16); /* wine for text on dark, 7.2:1 */
+  --accent-fill: #a8414b;
+  --ctx: #45443f;
   --c1: #5b8ee6; --c2: #ef8140; --c3: #34b585; --c4: #d9b21e; --c5: #8676d8; --c6: #e0504a; --c7: #4f9c3a; --c8: #8a9099;
-  --stage-ink: 236, 233, 226; --stage-accent: 226, 92, 87;
-  --shadow: 0 0 0 1px rgba(0, 0, 0, 0.4), 0 6px 20px rgba(0, 0, 0, 0.35);
-  --bar-4: #636a73; --bar-3: #4a515a; /* High: luminance 0.142, matched to the wine's 0.126, so hue alone marks Extreme (as in light) */
-  --scrim: rgba(6, 8, 11, 0.72);
+  --stage-ink: 232, 231, 227; --stage-accent: 217, 138, 149;
+  --shadow: 0 0 0 1px rgba(0, 0, 0, 0.5), 0 18px 30px -18px rgba(0, 0, 0, 0.6);
+  --bar-5: var(--ink); --bar-4: #8c8a84; --bar-3: #45443f;
+  --scrim: rgba(6, 6, 5, 0.72);
   color-scheme: dark;
 }
 
@@ -97,29 +104,32 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: 18.5px;
-  line-height: 1.58;
+  font-size: var(--fs-body);
+  line-height: 1.62;
   font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
-a { color: inherit; text-decoration-color: var(--line-2); text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+a { color: inherit; text-decoration-color: var(--rule-ink); text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
 a:hover { text-decoration-color: var(--accent); }
-:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 3px; border-radius: 0; }
+::selection { background: var(--accent-soft); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
 img, svg, canvas { max-width: 100%; }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
 h1, h2, h3, h4 { margin: 0; text-wrap: balance; }
+p, li, dd { text-wrap: pretty; }
 p { margin: 0 0 1.15em; }
 strong { font-weight: 600; }
 small { font-size: 0.85em; }
 [hidden] { display: none !important; }
 .sr-only { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
-.skip { position: absolute; left: -10000px; top: 8px; z-index: 100; padding: 8px 12px; background: var(--ink); color: var(--bg); font-family: var(--font-mono); font-size: 12px; text-decoration: none; border-radius: 0; }
+.skip { position: absolute; left: -10000px; top: 8px; z-index: 100; padding: 8px 14px; background: var(--ink); color: var(--bg); font-family: var(--font-ui); font-size: 14px; font-weight: 500; text-decoration: none; border-radius: 999px; }
 .skip:focus { left: 8px; }
 #main:focus { outline: none; } /* the skip link lands on the whole column, which draws no ring: the next Tab shows where focus is */
 
-/* ---------- labels ---------- */
-.label { font-family: var(--font-mono); font-size: var(--fs-cap); font-weight: 500; letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); }
+/* ---------- labels: a kicker in Fragment Mono, sentence case ---------- */
+.label { font-family: var(--font-kicker); font-size: var(--fs-cap); line-height: 1.4; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted); }
 .num, .tabular { font-variant-numeric: tabular-nums; }
 
 /* ---------- display type: Fraunces at a restrained optical size, never bold ---------- */
@@ -129,85 +139,86 @@ small { font-size: 0.85em; }
   font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); letter-spacing: 0;
 }
 
-/* ---------- masthead: a running head, not a toolbar ---------- */
+/* ---------- links and buttons: the two the redesign draws everywhere ----------
+   .link: a way on, in Hanken over an ink rule that turns wine; .btn: a pill, solid ink or a ghost edge */
+.link { font-family: var(--font-ui); font-weight: 500; font-size: 15px; line-height: 1.2; color: var(--ink); text-decoration: none; display: inline-flex; gap: 8px; align-items: baseline; padding: 6px 0 5px; border-bottom: 1px solid var(--ink); }
+.link:hover { color: var(--accent-ink); border-bottom-color: var(--accent); }
+
+/* ---------- masthead: the wordmark, the menu with the current item marked, search and the theme ---------- */
 .masthead {
   position: fixed; top: 0; left: 0; right: 0; z-index: 40; height: var(--masthead);
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  padding: 0 clamp(16px, 3vw, 40px);
+  padding: 0 var(--margin);
   background: var(--bg);
-  border-bottom: 1px solid var(--line-2);
+  border-bottom: 1px solid var(--line);
 }
-/* the wordmark: the favicon's tile (build/assets/icons/favicon.svg, inline) beside the name in Fraunces title case.
-   The tile keeps the favicon's own garnet and paper in both themes, so it matches the tab icon; odd sizes (29 px in the
-   55 px bar, 25 px in the 27 px phone row) center it on whole pixels. The link's aria-label carries the name. */
+/* the wordmark: the favicon's tile (build/assets/icons/favicon.svg, inline) beside the name in Fraunces 540 at opsz 28.
+   The tile keeps the favicon's own wine in both themes, so it matches the tab icon; the link's aria-label carries the name */
 .wordmark { display: flex; align-items: center; gap: 12px; min-height: 44px; text-decoration: none; }
-.wordmark .wm-tile { display: block; flex: none; width: 29px; height: 29px; }
+.wordmark .wm-tile { display: block; flex: none; width: 27px; height: 27px; }
 .wordmark .wm-tile rect { fill: #7a1f2b; }
-.wordmark .wm-tile path { fill: #f7f6f2; }
-.wordmark .wm-name { font-family: var(--font-display); font-size: 21px; font-weight: 540; font-variation-settings: "opsz" 28, "SOFT" 0, "WONK" 0; letter-spacing: -0.005em; line-height: 1; white-space: nowrap; }
+.wordmark .wm-tile path { fill: #ffffff; }
+.wordmark .wm-name { font-family: var(--font-display); font-size: 20px; font-weight: 540; font-variation-settings: var(--opsz-name); letter-spacing: -0.01em; line-height: 1; white-space: nowrap; }
 @media (max-width: 900px) {
-  .wordmark { flex: 1 1 auto; min-width: 0; min-height: 27px; gap: 9px; padding-right: 92px; }
+  .wordmark { flex: 1 1 auto; min-width: 0; min-height: 30px; gap: 10px; padding-right: 92px; }
   .wordmark .wm-tile { width: 25px; height: 25px; }
   .wordmark .wm-name { font-size: 18px; }
 }
 .tabs { display: flex; gap: 4px; align-items: center; min-width: 0; overflow-x: auto; scrollbar-width: none; }
 .tabs::-webkit-scrollbar { display: none; }
 .tabs a {
-  font-family: var(--font-mono); font-weight: 500; font-size: 13.5px; letter-spacing: 0.01em;
-  text-decoration: none; padding: 8px 10px 7px; border: 0; border-bottom: 1px solid transparent; border-radius: 0; color: var(--ink-2); white-space: nowrap; flex: 0 0 auto;
+  font-family: var(--font-ui); font-weight: 400; font-size: 15px; letter-spacing: 0;
+  text-decoration: none; padding: 8px 10px 7px; border: 0; border-bottom: 2px solid transparent; border-radius: 0; color: var(--ink); white-space: nowrap; flex: 0 0 auto;
 }
-.tabs a:hover { border-bottom-color: var(--line-2); color: var(--ink); }
+.tabs a:hover { color: var(--ink-2); border-bottom-color: var(--line-2); }
 .tabs a[aria-current="page"] { background: none; color: var(--ink); border-bottom-color: var(--accent); }
-.theme-toggle { width: 34px; height: 34px; flex: 0 0 auto; border: 1px solid transparent; border-radius: 0; display: inline-grid; place-items: center; margin-left: 6px; color: var(--ink-2); transition: border-color 0.15s, color 0.15s; }
-.theme-toggle svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.4; }
-/* the two icon buttons (search is .search-btn, below) carry no box in a bar of hairlines; the box shows on hover */
-@media (hover: hover) { .search-btn:hover, .theme-toggle:hover { border-color: var(--line-2); color: var(--ink); } } /* a tap on a phone leaves no box behind */
-/* from 901 px the tabs fill the bar's height, so the current tab's garnet rule lies on the masthead's own hairline; a short
-   upright rule sets the two icon buttons apart from the tabs */
+/* the two icon buttons, round, on a hairline edge (search is .search-btn, below) */
+.theme-toggle { width: 34px; height: 34px; flex: 0 0 auto; border: 1px solid var(--line-2); border-radius: 50%; display: inline-grid; place-items: center; margin-left: 8px; color: var(--ink); transition: border-color 0.15s, color 0.15s; }
+.theme-toggle svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+@media (hover: hover) { .search-btn:hover, .theme-toggle:hover { border-color: var(--ink); color: var(--ink); } } /* a tap on a phone leaves no mark behind */
+/* from 901 px the tabs fill the bar's height, so the current item's wine rule lies on the masthead's own hairline */
 @media (min-width: 901px) {
   .masthead { align-items: stretch; }
   .wordmark { align-self: center; }
-  .tabs { align-self: stretch; align-items: stretch; overflow: visible; }
-  .tabs a { display: flex; align-items: center; padding: 0 10px; border-bottom: 2px solid transparent; margin-bottom: -1px; }
-  .tabs a:focus-visible { outline-offset: -4px; } /* the tab is the bar's full height, so its focus ring draws inside it */
+  .tabs { align-self: stretch; align-items: stretch; overflow: visible; gap: 6px; }
+  .tabs a { display: flex; align-items: center; padding: 0 9px; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .tabs a:focus-visible { outline-offset: -6px; } /* the tab is the bar's full height, so its focus ring draws inside it */
   .tabs .search-btn, .tabs .theme-toggle { align-self: center; }
-  .tabs .search-btn { position: relative; margin-left: 21px; }
-  .tabs .search-btn::before { content: ""; position: absolute; left: -12px; top: 7px; bottom: 7px; width: 1px; background: var(--line-2); }
-  .tabs .theme-toggle { margin-left: 2px; }
+  .tabs .search-btn { margin-left: 14px; }
+  .tabs .theme-toggle { margin-left: 8px; }
 }
 
 /* ---------- page grid ---------- */
 #app { position: relative; z-index: 1; padding-top: var(--masthead); }
-.column { width: var(--col); padding: 0 clamp(16px, 4vw, 56px) 0 clamp(16px, 3vw, 44px); }
+.column { width: var(--col); padding: 0 clamp(16px, 4vw, 56px) 0 var(--margin); }
 .column.wide { width: min(100%, 1180px); }
 .column.wide[data-view="suppliers"], .column.wide[data-view="controls"], .column.wide[data-view="glossary"] { width: 100%; }
 .view { min-height: 60vh; }
 
-/* ---------- stage (the specimen): the canvas, a short centered rule, the tracked plate number, the caption ---------- */
+/* ---------- stage (the specimen): the canvas, then a plain caption flush left, a mono label and the chapter's own words ---------- */
 .stage {
   position: fixed; top: var(--masthead); right: 0; bottom: 0; width: calc(100% - var(--col)); margin: 0; /* the UA gives figure a 40px margin, which pushed the stage under the rail */
   z-index: 5; pointer-events: none;
-  display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;
 }
 .stage canvas { order: 1; position: relative; flex: 1 1 0; min-height: 0; width: 100%; align-self: stretch; display: block; margin-top: 24px; }
-@media (hover: hover) and (pointer: fine) { .stage canvas { pointer-events: auto; cursor: grab; touch-action: none; outline: none; } /* the figure itself lets clicks through to the page; the canvas takes them so it can be turned */ .stage canvas.is-dragging { cursor: grabbing; } .stage canvas:focus-visible { box-shadow: inset 0 0 0 1.5px var(--accent); } }
+@media (hover: hover) and (pointer: fine) { .stage canvas { pointer-events: auto; cursor: grab; touch-action: none; outline: none; } /* the figure itself lets clicks through to the page; the canvas takes them so it can be turned */ .stage canvas.is-dragging { cursor: grabbing; } .stage canvas:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); } }
 .stage .stage-tag {
-  order: 2; position: relative; z-index: 1; margin: 0 0 10px; padding: 14px 0 0; text-align: center;
-  font-family: var(--font-caption); font-size: 10.5px; font-weight: 400; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ink-2);
+  order: 2; position: relative; z-index: 1; margin: 0 var(--margin) 6px clamp(16px, 2.2vw, 32px); padding: 14px 0 0; text-align: left;
+  font-family: var(--font-kicker); font-size: 12px; line-height: 16px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted);
 }
-.stage .stage-tag::before { content: ""; position: absolute; top: 0; left: 50%; width: 28px; height: 1px; margin-left: -14px; background: var(--ink); }
-.stage .stage-tag b { color: var(--accent); font-weight: 400; }
+.stage .stage-tag b { color: inherit; font-weight: 400; }
 .stage figcaption {
-  order: 3; position: relative; z-index: 1; flex: none; margin: 0 0 36px; max-width: 40ch; text-align: center;
-  font-family: var(--font-caption); font-size: 12.5px; line-height: 1.55; letter-spacing: 0.01em; color: var(--muted);
-  padding: 0 24px;
+  order: 3; position: relative; z-index: 1; flex: none; margin: 0 var(--margin) 32px clamp(16px, 2.2vw, 32px); max-width: 34em; text-align: left;
+  font-family: var(--font-caption); font-size: 14px; line-height: 1.5; letter-spacing: 0; color: var(--ink-2);
+  padding: 0;
 }
-.stage figcaption b { color: var(--ink-2); font-weight: 400; }
+.stage figcaption b { color: var(--ink); font-weight: 500; }
 .stage[data-hidden="1"] { display: none; }
-/* the turn's pause (WCAG 2.2.2, src/app.js Band.init): a small square at the end of the plate tag on a laptop, over the
-   thumbnail's corner on a phone. Reduced motion never turns the specimen, so it has no button */
-.stage .stage-pause { pointer-events: auto; display: inline-grid; place-items: center; width: 24px; height: 24px; margin: -6px 0 -6px 12px; padding: 0; vertical-align: middle; border: 1px solid var(--line-2); border-radius: 0; background: var(--bg); color: var(--ink-2); letter-spacing: 0; }
-.stage .stage-pause svg { width: 12px; height: 12px; fill: currentColor; stroke: none; }
+/* the turn's pause (WCAG 2.2.2, src/app.js Band.init): a small round button at the end of the specimen label on a laptop,
+   over the thumbnail's corner on a phone. Reduced motion never turns the specimen, so it has no button */
+.stage .stage-pause { pointer-events: auto; display: inline-grid; place-items: center; width: 24px; height: 24px; margin: -6px 0 -6px 12px; padding: 0; vertical-align: middle; border: 1px solid var(--line-2); border-radius: 50%; background: var(--bg); color: var(--ink-2); letter-spacing: 0; }
+.stage .stage-pause svg { width: 10px; height: 10px; fill: currentColor; stroke: none; }
 .stage .stage-pause:hover { color: var(--ink); border-color: var(--ink); }
 @media (max-width: 900px) {
   .stage .stage-pause { position: absolute; left: 9px; bottom: 9px; z-index: 2; margin: 0; width: 28px; height: 28px; }
@@ -335,8 +346,8 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
    from "go there"; solid garnet on hover and while its popover is open; one shared popover */
 .gl-term { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; text-align: inherit; cursor: help; text-decoration: underline; text-decoration-style: dotted; text-decoration-color: color-mix(in srgb, var(--muted) 75%, var(--bg)); text-decoration-thickness: 1.5px; text-underline-offset: 0.24em; transition: text-decoration-color 0.15s; }
 .gl-term:hover, .gl-term[aria-describedby] { text-decoration-style: solid; text-decoration-color: var(--accent); }
-.site-footer .sources-key { margin: 10px 0 0; font-family: var(--font-mono); font-size: var(--fs-ui-s); letter-spacing: 0.01em; line-height: 1.7; color: var(--muted); max-width: 90ch; }
-.site-footer .updated { display: block; margin-top: 8px; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); }
+.site-footer .sources-key { margin: 12px 0 0; font-family: var(--font-ui); font-size: 13px; letter-spacing: 0; line-height: 1.7; color: var(--muted); max-width: 90ch; }
+.site-footer .updated { display: block; margin-top: 10px; font-family: var(--font-kicker); font-weight: 400; font-size: 12px; letter-spacing: 0; text-transform: none; color: var(--muted); }
 .gl-tip { position: fixed; z-index: 50; width: max-content; max-width: min(340px, calc(100vw - 16px)); background: var(--bg); border: 1px solid var(--line-2); border-top: 2px solid var(--ink); border-radius: 0; box-shadow: var(--shadow); padding: 12px 16px 13px; }
 .gl-tip b { display: block; font-size: var(--fs-d6); line-height: 1.2; margin-bottom: 6px; }
 .gl-tip p { font-family: var(--font-body); font-size: var(--fs-small); line-height: 1.45; color: var(--ink-2); margin: 0 0 10px; }
@@ -412,10 +423,10 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .chips button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .chips button[aria-pressed="true"] b { color: var(--bg); opacity: 0.7; }
 .sup-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
-.btn { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; padding: 8px 12px; border: 1px solid var(--ink); border-radius: 0; background: var(--ink); color: var(--bg); }
-.btn.ghost { background: transparent; color: var(--ink); border-color: var(--line-2); }
-.btn:hover { opacity: 0.85; }
-.btn.ghost:hover { opacity: 1; border-color: var(--ink); }
+.btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1.2; letter-spacing: 0; text-transform: none; padding: 9px 16px; min-height: 38px; border: 1px solid var(--ink); border-radius: 999px; background: var(--ink); color: var(--bg); }
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--rule-ink); }
+.btn:hover { background: var(--ink-2); border-color: var(--ink-2); color: var(--bg); }
+.btn.ghost:hover { background: transparent; color: var(--ink); border-color: var(--ink); }
 .sup-wrap { overflow-x: auto; border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2); border-radius: 0; margin-bottom: 40px; }
 .sup { border-collapse: collapse; width: 100%; font-size: var(--fs-note); line-height: 1.4; }
 .sup th { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--muted); background: var(--bg); text-align: left; padding: 10px 12px 10px 0; border-bottom: 1px solid var(--line-2); white-space: nowrap; position: sticky; top: 0; }
@@ -577,17 +588,19 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .src-meta { display: block; font-family: var(--font-mono); font-size: 11px; line-height: 1.4; color: var(--muted); }
 
 /* ---------- footer ---------- */
-.site-footer { border-top: 1px solid var(--line-2); margin-top: 60px; padding: 28px 0 60px; font-family: var(--font-mono); font-size: var(--fs-ui-s); line-height: 1.7; color: var(--muted); }
-.site-footer a { color: var(--ink-2); }
-.site-footer .credits { margin: 0 0 2px; color: var(--ink-2); }
+.site-footer { border-top: 1px solid var(--rule-ink); margin-top: 72px; padding: 32px 0 64px; font-family: var(--font-ui); font-size: 14px; line-height: 1.6; color: var(--muted); }
+.site-footer a { color: var(--ink); text-underline-offset: 3px; }
+.site-footer a:hover { color: var(--accent-ink); }
+.site-footer .credits { margin: 0 0 4px; font-size: 15px; line-height: 1.5; color: var(--ink); max-width: 36em; }
+.site-footer .credits b { font-weight: 500; }
 /* on the two ledger pages (the walk and The Chain) the footer is the ledger's last row: the favicon's tile (build.js puts the
    masthead's own tile first in the footer) signs off in the ledger column and the words keep to the text's edge. A phone's
    chapters drop the column, so there The Chain's footer stays flush with the text; the walk keeps its 34 px column. Screen
    only: the PDF sets its own footer (print.css). Elsewhere the tile stays hidden. */
 .site-footer .ft-mark { display: none; }
 .ft-mark .wm-tile { display: block; width: 22px; height: 22px; }
-.ft-mark .wm-tile rect { fill: #7a1f2b; } /* the favicon's own garnet and paper in both themes, as in the masthead */
-.ft-mark .wm-tile path { fill: #f7f6f2; }
+.ft-mark .wm-tile rect { fill: #7a1f2b; } /* the favicon's own wine and white in both themes, as in the masthead */
+.ft-mark .wm-tile path { fill: #ffffff; }
 @media screen {
   .view[data-view="walk"] .site-footer { display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr); column-gap: var(--gutter-gap); align-items: start; }
   .view[data-view="walk"] .site-footer > * { grid-column: 2; min-width: 0; }
@@ -876,23 +889,22 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 @media (max-width: 900px) {
   :root { --col: 100%; --masthead: 75px; --gutter: 34px; --gutter-gap: 12px; } /* the two-row phone masthead; measured at runtime too, but the first paint must not shift */
   body { font-size: 17px; }
-  .masthead { padding: 6px 14px 0; height: auto; min-height: 52px; flex-wrap: wrap; gap: 0 8px; align-items: center; }
-  .masthead .search-btn, .masthead .theme-toggle { position: absolute; top: 5px; width: 32px; height: 32px; } /* the buttons live inside the tab strip; on phones they pin to the first row, clear of the tabs below so each tab keeps a full 24 px to tap */
-  .masthead .theme-toggle { right: 14px; }
-  .masthead .search-btn { right: 52px; }
+  .masthead { padding: 8px 16px 0; height: auto; min-height: 52px; flex-wrap: wrap; gap: 0 8px; align-items: center; }
+  .masthead .search-btn, .masthead .theme-toggle { position: absolute; top: 7px; width: 32px; height: 32px; margin: 0; } /* the buttons live inside the tab strip; on phones they pin to the first row, clear of the tabs below so each tab keeps a full 24 px to tap */
+  .masthead .theme-toggle { right: 16px; }
+  .masthead .search-btn { right: 56px; }
   .tabs { order: 3; flex: 0 0 100%; width: 100%; flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; -webkit-overflow-scrolling: touch; margin: 2px 0 -1px; padding: 0; }
-  .tabs a { padding: 6px 8px 9px; font-size: 12.5px; border-bottom-width: 2px; } /* the current tab's rule lies on the masthead's hairline, as on a laptop */
+  .tabs a { padding: 7px 8px 9px; font-size: 14px; border-bottom-width: 2px; } /* the current tab's rule lies on the masthead's hairline, as on a laptop */
   .chapter .chain--compact { display: none; }
   .column { padding: 0 18px; }
   :root { --band: 0px; }
   /* the specimen becomes a bottom strip, like a dashboard bar: a live thumbnail, where you are, Contents and Show; tap Show to expand */
   .stage { position: fixed; top: auto; bottom: 0; left: 0; right: 0; width: 100%; height: 128px; min-height: 0; margin: 0; z-index: 35; background: var(--bg); border-top: 1px solid var(--line-2); border-bottom: 0; box-shadow: none; pointer-events: auto; display: grid; grid-template-columns: 116px minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto; align-items: start; column-gap: 12px; row-gap: 4px; padding: 6px 10px 8px 6px; overflow: hidden; transition: height 0.25s var(--ease); }
   .stage canvas { order: 0; grid-column: 1; grid-row: 1 / -1; width: 116px; height: 116px; margin: 0; align-self: center; }
-  .stage .stage-tag { order: 0; position: static; grid-column: 2; grid-row: 1; margin: 0; padding: 4px 0 0; text-align: left; font-size: 10.5px; letter-spacing: 0.18em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .stage .stage-tag::before { display: none; }
+  .stage .stage-tag { order: 0; position: static; grid-column: 2; grid-row: 1; margin: 0; padding: 4px 0 0; text-align: left; font-size: 11.5px; letter-spacing: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .stage .stage-actions { display: flex; gap: 6px; grid-column: 2; grid-row: 3; justify-self: end; }
-  .stage .stage-actions button { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: var(--tr-cap); text-transform: uppercase; color: var(--ink); background: none; border: 1px solid var(--line-2); border-radius: 0; padding: 8px 10px; cursor: pointer; }
-  .stage figcaption { order: 0; display: -webkit-box; grid-column: 2; grid-row: 2; margin: 0; padding: 0; max-width: none; text-align: left; font-size: 11px; line-height: 1.35; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .stage .stage-actions button { font-family: var(--font-ui); font-weight: 500; font-size: 13px; letter-spacing: 0; text-transform: none; color: var(--ink); background: none; border: 1px solid var(--rule-ink); border-radius: 999px; padding: 6px 12px; min-height: 32px; cursor: pointer; }
+  .stage figcaption { order: 0; display: -webkit-box; grid-column: 2; grid-row: 2; margin: 0; padding: 0; max-width: none; text-align: left; font-size: 12px; line-height: 1.4; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
   .stage[data-collapsed="0"] { height: min(58vh, 480px); grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: 44px minmax(0, 1fr) auto; padding: 0 12px 8px; }
   .stage[data-collapsed="0"] canvas { grid-column: 1 / -1; grid-row: 2; width: 100%; height: 100%; }
   .stage[data-collapsed="0"] .stage-tag { grid-column: 1; grid-row: 1; padding-top: 14px; }
