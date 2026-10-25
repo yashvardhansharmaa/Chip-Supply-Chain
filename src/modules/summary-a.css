@@ -227,71 +227,58 @@
 
 .sa-town[data-dead="1"] { cursor: default; }
 
-/* ---------- the atlas on the Suppliers page: the route, the strip, what each country makes ---------- */
-.sa-doors { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 10px 0 34px; }
-.sa-door { display: block; border: 0; border-top: 1px solid var(--line-2); background: none; border-radius: 0; padding: 12px 0 15px; text-decoration: none; color: var(--ink); transition: border-color 0.15s; }
-.sa-door:hover, .sa-door:focus-visible { border-top-color: var(--ink); }
-.sa-door-k { display: block; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--accent); margin-bottom: 6px; }
-.sa-door b { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: var(--fs-d5); margin-bottom: 3px; }
-.sa-door span:last-child { font-size: 14.5px; color: var(--ink-2); }
-.sa-route { fill: none; stroke: var(--accent); stroke-width: 1; opacity: 0.45; }
-.sa-tail { stroke: var(--ink-2); stroke-width: 0.8; }
-.sa-stop { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; background: var(--ink); color: var(--bg); border: 1.5px solid var(--bg); display: grid; place-items: center; font-family: var(--font-mono); font-weight: 600; font-size: 11px; text-decoration: none; transition: transform 0.15s var(--ease); z-index: 3; }
-.sa-stop[data-cc="JP"] { box-shadow: 0 0 0 3px var(--c1); } .sa-stop[data-cc="NL"] { box-shadow: 0 0 0 3px var(--c2); } .sa-stop[data-cc="TW"] { box-shadow: 0 0 0 3px var(--c3); } .sa-stop[data-cc="KR"] { box-shadow: 0 0 0 3px var(--c5); } .sa-stop[data-cc="MY"] { box-shadow: 0 0 0 3px var(--c8); } .sa-stop[data-cc="CN"] { box-shadow: 0 0 0 3px var(--c6); }
-.sa-stop:hover, .sa-stop:focus-visible { transform: scale(1.25); z-index: 4; outline: none; box-shadow: 0 0 0 2px var(--accent); }
-.sa-stop-tip { position: absolute; z-index: 50; max-width: 300px; padding: 9px 11px 10px; background: var(--ink); color: var(--bg); border-radius: 0; font-family: var(--font-mono); font-size: var(--fs-ui-s); line-height: 1.45; pointer-events: none; }
-.sa-stop-tip[hidden] { display: none; }
-@media (hover: hover) { .sa-stop-tip { pointer-events: auto; } } /* a mouse can move onto the tip and it stays (WCAG 1.4.13) */
-.sa-stop-tip b { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-size: 14.5px; letter-spacing: 0; margin-bottom: 3px; color: var(--bg); }
-.sa-stop-tip span { display: block; opacity: 0.85; }
-.sa-stop-tip .sa-stop-tip-s { margin-top: 4px; color: var(--accent); opacity: 1; }
-.sa-strip-stops { list-style: none; margin: 12px 0 0; padding: 0; display: grid; grid-template-columns: repeat(15, 1fr); gap: 6px; }
-.sa-stopcard { display: block; border-top: 1px solid var(--ink); padding: 6px 4px 0; text-decoration: none; color: var(--ink); min-width: 0; }
-.sa-stopcard[data-cc="JP"] { border-color: var(--c1); } .sa-stopcard[data-cc="NL"] { border-color: var(--c2); } .sa-stopcard[data-cc="TW"] { border-color: var(--c3); } .sa-stopcard[data-cc="KR"] { border-color: var(--c5); } .sa-stopcard[data-cc="MY"] { border-color: var(--c8); }
-.sa-stopcard:hover .sa-stopcard-t, .sa-stopcard.is-hot .sa-stopcard-t, .sa-stopcard:focus-visible .sa-stopcard-t { color: var(--accent); }
-.sa-stopcard-n { display: block; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: var(--tr-cap-s); color: var(--muted); font-variant-numeric: tabular-nums; }
-.sa-stopcard-t { display: block; font-family: var(--font-body); font-weight: 500; font-size: var(--fs-note); line-height: 1.15; margin: 2px 0 3px; overflow-wrap: break-word; hyphens: auto; }
-.sa-stopcard-w { display: block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.02em; color: var(--muted); }
-
-/* the plate: chips across the top, the caption, the map with the panel at its right, the strip as the footer */
+/* ---------- the atlas on the Suppliers page: the route of one chip (redesign stage 3) ----------
+   The hybrid mockup's route (qa/design3/directions/hybrid/suppliers.html): a section head over an ink rule, the country
+   buttons as pills, the map on white with the land in a light tint, the fifteen stops as numbered discs (solid ink for a
+   stage rated Extreme, an ink ring for one rated High, as the key says), the chosen country's panel beside the map and the
+   strip of stops under it. A chosen country keeps its stops as they are and names their towns; the other stops turn gray.
+   No color marks a country: the accent marks only the reader's place (a stop or card under the pointer or in focus). */
+:root { --map-land: #ecebe7; --map-grat: #efeeea; --stop-off: #d6d5d0; }
+:root[data-theme="dark"] { --map-land: #2a2a27; --map-grat: #1f1f1d; --stop-off: #3a3936; }
 .sa--atlas { padding-bottom: 0; }
-.atlas { margin-top: 8px; border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2); border-radius: 0; background: none; }
-.atlas-bar { display: flex; align-items: center; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--line); }
-.atlas-bar-l { flex: 0 0 auto; color: var(--ink); font-weight: 600; }
-.sa-roles { display: flex; flex-wrap: wrap; gap: 5px; margin: 0; padding: 0; list-style: none; }
-.sa-role { display: inline-flex; align-items: baseline; margin: 0; padding: 6px 10px 7px; border: 1px solid var(--line-2); border-radius: 0; background: none; color: var(--ink-2); cursor: pointer; }
-.sa-role:hover { background: none; border-color: var(--ink); color: var(--ink); }
-.sa-role:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.sa-role-name { font-family: var(--font-mono); font-size: var(--fs-ui); font-weight: 500; line-height: 1.1; }
-.sa-role-meta, .sa-role-line { display: none; }
-.sa-role[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.atlas-caption { margin: 0; padding: 9px 0 10px 14px; border-bottom: 1px solid var(--line); font-size: var(--fs-small); line-height: 1.4; color: var(--ink-2); }
-.atlas-caption-name { font-family: var(--font-mono); font-weight: 600; font-size: 13px; letter-spacing: 0; color: var(--ink); margin-right: 6px; }
-.atlas-caption-meta { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em; color: var(--muted); margin-right: 10px; }
-.atlas-body { display: grid; grid-template-columns: minmax(0, 1fr) 360px; grid-template-rows: auto auto; align-items: stretch; }
-.atlas .sa-map { grid-column: 1; grid-row: 1; border: 0; border-right: 1px solid var(--line); border-radius: 0; background: var(--bg-2); }
-.atlas .sa-svg { border-radius: 0; }
-.atlas .sa-strip-stops { grid-column: 1; grid-row: 2; margin: 0; padding: 12px 12px 14px; border-top: 1px solid var(--line); border-right: 1px solid var(--line); gap: 12px 8px; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); /* as many columns as fit whole words such as "Lithography"; eight at full width */ }
-.atlas .sa-panels { grid-column: 2; grid-row: 1 / span 2; position: relative; min-width: 0; }
-.atlas .sa-panel { position: absolute; inset: 0; max-height: none; overflow: auto; border: 0; border-radius: 0; padding: 16px 16px 14px; }
-.atlas .sa-panels[data-more="1"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 40px; background: linear-gradient(to bottom, transparent, var(--bg)); pointer-events: none; }
-.atlas .sa-panel-head h4 { font-size: 26px; }
-.atlas .sa-panel-lede { font-size: var(--fs-small); margin: 8px 0 12px; }
-.atlas .sa-fact a, .atlas .sa-fact-in { padding: 7px 2px; }
-.atlas .sa-panel-foot { margin-top: 10px; }
+.sa-doors { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 10px 0 34px; }
+.atlas { margin-top: 72px; }
+.atlas .sup-sec-h { margin: 0; }
+.atlas .sa-roles { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 14px 0; list-style: none; border-bottom: 1px solid var(--line); }
+.atlas .sa-role {
+  display: inline-flex; align-items: center; margin: 0; padding: 8px 13px; min-height: 34px; border: 1px solid var(--control-edge); border-radius: 999px;
+  background: none; color: var(--ink); cursor: pointer; font-family: var(--font-ui); font-size: 14px; font-weight: 400; line-height: 1;
+}
+.atlas .sa-role:hover { border-color: var(--ink); }
+.atlas .sa-role[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.atlas .sa-role-name { font: inherit; }
+.atlas .sa-role-meta, .atlas .sa-role-line { display: none; }
 
-/* the chosen country lifts out of the route: its stops ring in garnet and carry their towns, the other stops and the arcs dim */
-.atlas .sa-stop:not(.is-on) { box-shadow: none; background: var(--muted); } /* a gray disc in place of opacity dims the stop and keeps its number at 5.6:1 (6.3:1 dark); at 0.42 opacity it fell to 1.4:1 */
-.atlas .sa-stop:not(.is-on):hover, .atlas .sa-stop:not(.is-on):focus-visible { opacity: 1; box-shadow: 0 0 0 2px var(--accent); }
-.atlas .sa-route { opacity: 0.22; }
-.atlas .sa-tail { opacity: 0.45; }
-.atlas .sa-stop.is-on { background: var(--ink); box-shadow: 0 0 0 3px var(--accent); transform: scale(1.16); z-index: 5; }
-.atlas .sa-stop.is-on:hover, .atlas .sa-stop.is-on:focus-visible { transform: scale(1.25); z-index: 6; }
+.atlas-body { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-template-rows: auto auto; column-gap: 24px; align-items: start; }
+.atlas .sa-map { grid-column: 1 / 10; grid-row: 1; margin-top: 18px; border: 0; background: none; }
+.atlas .sa-svg { display: block; }
+.atlas .sa-ocean { fill: var(--bg); }
+.atlas .sa-land { fill: var(--map-land); stroke: var(--bg); stroke-width: 0.6; }
+.atlas .sa-sea { fill: var(--bg); stroke: var(--line); stroke-width: 0.6; }
+.atlas .sa-grat { stroke: var(--map-grat); stroke-width: 0.6; opacity: 1; }
+.atlas .sa-route { fill: none; stroke: var(--ink); stroke-width: 1; opacity: 0.32; vector-effect: non-scaling-stroke; }
+.atlas .sa-tail { stroke: var(--ink-2); stroke-width: 0.8; opacity: 0.8; vector-effect: non-scaling-stroke; }
+
+/* the stops: Extreme solid, High a ring, both on a white halo so they read over the routes */
+.sa-stop {
+  position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; z-index: 3;
+  display: grid; place-items: center; background: var(--ink); color: var(--bg); border: 0; box-shadow: 0 0 0 2px var(--bg);
+  font-family: var(--font-ui); font-weight: 600; font-size: 11.5px; line-height: 1; text-decoration: none; transition: background 0.15s, color 0.15s;
+}
+.sa-stop[data-band="High"] { background: var(--bg); color: var(--ink); box-shadow: 0 0 0 2px var(--bg), inset 0 0 0 1.5px var(--ink); }
+.sa-stop:hover, .sa-stop:focus-visible { z-index: 6; outline: 2px solid var(--accent); outline-offset: 2px; }
+/* a chosen country: its stops stay as they are and name their towns; the rest become small gray dots on the route, so every
+   name sits beside its own stop (the strip under the map still lists them all) */
+.atlas .sa-map[data-cc] .sa-stop:not(.is-on) { width: 10px; height: 10px; margin: -5px 0 0 -5px; background: var(--stop-off); box-shadow: 0 0 0 1.5px var(--bg); }
+.atlas .sa-map[data-cc] .sa-stop:not(.is-on) span { display: none; }
+.atlas .sa-map[data-cc] .sa-stop:not(.is-on):hover, .atlas .sa-map[data-cc] .sa-stop:not(.is-on):focus-visible { outline-offset: 3px; }
+.atlas .sa-map[data-cc] .sa-route { opacity: 0.18; }
+.atlas .sa-stop.is-on { z-index: 5; }
 .atlas .sa-stop.is-on::after { content: attr(data-place); }
 .sa-stop::after {
-  content: none; position: absolute; left: 27px; top: 50%; transform: translateY(-50%); white-space: nowrap;
-  font-family: var(--font-mono); font-weight: 600; font-size: 11px; letter-spacing: 0.04em; color: var(--ink);
-  background: color-mix(in srgb, var(--bg-2) 90%, transparent); padding: 2px 5px; border-radius: 0; pointer-events: none;
+  content: none; position: absolute; left: 27px; top: 50%; transform: translateY(-50%); white-space: nowrap; pointer-events: none;
+  font-family: var(--font-code); font-weight: 400; font-size: 11px; line-height: 16px; letter-spacing: 0; color: var(--ink);
+  background: color-mix(in srgb, var(--bg) 88%, transparent); padding: 1px 4px;
 }
 /* where a country's towns crowd, the build gives each label a side (data-lab) so none covers a stop or another label */
 .sa-stop[data-lab="l"]::after { left: auto; right: 27px; }
@@ -305,39 +292,92 @@
 .sa-stop[data-lab="dl"]::after { left: auto; right: 3px; top: 24px; transform: none; }
 .sa-stop[data-lab="ur"]::after { left: 3px; top: auto; bottom: 24px; transform: none; }
 .sa-stop[data-lab="ul"]::after { left: auto; right: 3px; top: auto; bottom: 24px; transform: none; }
+.sa-stop-tip { position: absolute; z-index: 50; max-width: 300px; padding: 10px 12px 11px; background: var(--bg); color: var(--ink); border: 1px solid var(--line-2); box-shadow: var(--shadow); font-family: var(--font-ui); font-size: 13px; line-height: 1.45; pointer-events: none; }
+.sa-stop-tip[hidden] { display: none; }
+@media (hover: hover) { .sa-stop-tip { pointer-events: auto; } } /* a mouse can move onto the tip and it stays (WCAG 1.4.13) */
+.sa-stop-tip b { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: 15px; margin-bottom: 3px; }
+.sa-stop-tip span { display: block; color: var(--ink-2); }
+.sa-stop-tip .sa-stop-tip-s { margin-top: 4px; font-family: var(--font-code); font-size: 11.5px; color: var(--muted); }
 
-/* the strip agrees with the map: the chosen country's cards carry the garnet bar, the rest go quiet */
-.atlas .sa-stopcard:not(.is-on) { border-top-color: var(--line-2); }
-.atlas .sa-stopcard:not(.is-on) .sa-stopcard-t, .atlas .sa-stopcard:not(.is-on) .sa-stopcard-w { color: var(--muted); }
-.atlas .sa-stopcard.is-on { border-top: 2px solid var(--accent); padding-top: 5px; }
-.atlas .sa-stopcard.is-on .sa-stopcard-t { color: var(--ink); }
-.atlas .sa-stopcard:hover .sa-stopcard-t, .atlas .sa-stopcard.is-hot .sa-stopcard-t, .atlas .sa-stopcard:focus-visible .sa-stopcard-t { color: var(--accent); }
+/* beside the map: the chosen country's panel, then the key. The column runs as tall as the map and the strip under it, and a
+   longer panel scrolls inside it, with a fade at its foot until the end is in view (src/modules/summary-a.js more()) */
+.atlas-side { grid-column: 10 / 13; grid-row: 1 / span 2; align-self: stretch; display: flex; flex-direction: column; margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--rule-ink); min-height: 0; }
+.atlas .sa-panels { position: relative; flex: 1 1 auto; min-height: 300px; }
+.atlas .sa-panel { position: absolute; inset: 0; max-height: none; overflow: auto; border: 0; padding: 0 4px 12px 0; }
+.atlas .sa-panels[data-more="1"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 40px; background: linear-gradient(to bottom, transparent, var(--bg)); pointer-events: none; }
+.atlas .sa-panel-head { display: flex; align-items: baseline; gap: 10px; }
+.atlas .sa-panel-cc { order: 2; border: 0; padding: 0; font-family: var(--font-code); font-size: 12px; font-weight: 400; color: var(--muted); }
+.atlas .sa-panel-head h4 { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: 24px; line-height: 1.15; letter-spacing: -0.01em; }
+.atlas .sa-panel-meta { margin: 6px 0 0; font-family: var(--font-code); font-size: 12px; line-height: 17px; color: var(--muted); }
+.atlas .sa-panel-role { margin: 6px 0 0; font-family: var(--font-body); font-size: 15px; line-height: 1.5; color: var(--ink); }
+.atlas .sa-panel-lede { margin: 10px 0 14px; font-family: var(--font-body); font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+.atlas .sa-panel--none .sa-panel-lede { color: var(--ink-2); }
+.atlas .sa-facts { border-top: 1px solid var(--line); }
+.atlas .sa-fact a, .atlas .sa-fact-in { padding: 8px 2px; }
+.atlas .sa-fact a:hover { background: none; }
+.atlas .sa-fact a:hover .sa-fact-k { color: var(--accent-ink); }
+.atlas .sa-fact-bar { background: var(--bg-2); } /* a share as a light tint behind its row: data, so never the accent */
+.atlas .sa-fact-k { font-family: var(--font-ui); font-size: 14px; font-weight: 500; }
+.atlas .sa-fact-v { font-family: var(--font-code); font-size: 13px; font-weight: 400; }
+.atlas .sa-fact-v small { font-family: var(--font-code); letter-spacing: 0; }
+.atlas .sa-fact-note { font-family: var(--font-body); font-size: 13.5px; color: var(--muted); }
+.atlas .sa-est { display: block; margin: 2px 0 0; font-family: var(--font-code); font-weight: 400; font-size: 11px; color: var(--muted); }
+/* a stage's band beside its name, as the chapter's kicker marks it: a bar for Extreme, an outline for High */
+.atlas .sa-sc { display: inline-flex; align-items: center; gap: 5px; margin-left: 8px; padding: 0; background: none; color: var(--ink); font-family: var(--font-ui); font-size: 12px; font-weight: 500; vertical-align: 1px; }
+.atlas .sa-sc::before { content: ""; display: block; width: 4px; height: 11px; background: var(--ink); }
+.atlas .sa-sc[data-band="3"]::before { height: 6px; margin-top: 5px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); }
+:root[data-theme="dark"] .atlas .sa-sc { color: var(--ink); }
+.atlas .sa-china { margin: 14px 0 0; padding: 10px 0 2px; border-left: 0; border-top: 1px solid var(--line); }
+.atlas .sa-china a { color: var(--ink); text-decoration-color: var(--rule-ink); }
+.atlas .sa-china a:hover { text-decoration-color: var(--accent); }
+.atlas .sa-panel-foot { margin: 12px 0 0; font-family: var(--font-ui); font-size: 13px; line-height: 1.5; color: var(--muted); }
+.atlas .sa-panel-foot a { color: var(--ink-2); }
+.atlas-key { display: grid; gap: 8px; margin: 0 0 14px; padding-bottom: 14px; border-bottom: 1px solid var(--line); font-family: var(--font-ui); font-size: 13.5px; line-height: 20px; color: var(--ink-2); }
+.atlas-key span { display: inline-flex; align-items: center; gap: 9px; }
+.sa-kstop { display: inline-grid; place-items: center; width: 20px; height: 20px; flex: none; border-radius: 50%; background: var(--ink); color: var(--bg); font-family: var(--font-ui); font-style: normal; font-weight: 600; font-size: 11px; line-height: 1; }
+.sa-kstop[data-band="High"] { background: var(--bg); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); }
 
+/* the strip: the fifteen stops in order, each with its band as a mark beside its number */
+.atlas .sa-strip-stops { grid-column: 1 / 10; grid-row: 2; list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); column-gap: 14px; row-gap: 4px; border-top: 1px solid var(--ink); }
+.atlas .sa-strip-stops li { min-width: 0; }
+.sa-stopcard { display: flex; flex-direction: column; gap: 3px; padding: 10px 6px 8px 0; text-decoration: none; color: var(--ink); min-width: 0; border: 0; }
+.sa-stopcard-n { display: flex; align-items: flex-end; gap: 6px; font-family: var(--font-code); font-size: 11.5px; line-height: 16px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.sa-bmk { display: inline-block; width: 5px; height: 12px; margin-bottom: 2px; background: var(--ink); }
+.sa-stopcard[data-band="High"] .sa-bmk { height: 6px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); }
+.sa-stopcard-t { display: block; font-family: var(--font-ui); font-weight: 500; font-size: 13.5px; line-height: 1.25; margin: 0; overflow-wrap: break-word; hyphens: auto; }
+.sa-stopcard-w { display: block; font-family: var(--font-code); font-size: 11px; line-height: 15px; color: var(--muted); }
+.sa-stopcard:hover .sa-stopcard-t, .sa-stopcard.is-hot .sa-stopcard-t, .sa-stopcard:focus-visible .sa-stopcard-t { color: var(--accent-ink); }
+/* the strip agrees with the map: with a country chosen, its cards stay dark and the rest go quiet */
+.atlas[data-cc] .sa-stopcard:not(.is-on) .sa-stopcard-t { color: var(--muted); font-weight: 400; }
+.atlas[data-cc] .sa-stopcard:not(.is-on) .sa-bmk { opacity: 0.35; }
+
+@media (max-width: 1199px) {
+  .atlas .sa-map { grid-column: 1 / -1; }
+  .atlas-side { grid-column: 1 / -1; grid-row: 2; margin-top: 18px; }
+  .atlas .sa-panels { min-height: 0; }
+  .atlas .sa-panel { position: static; overflow: visible; padding: 0; }
+  .atlas .sa-panels[data-more="1"]::after { content: none; }
+  .atlas-key { grid-template-columns: auto auto; justify-content: start; column-gap: 28px; }
+  .atlas .sa-strip-stops { grid-column: 1 / -1; grid-row: 3; grid-template-columns: repeat(5, minmax(0, 1fr)); margin-top: 24px; }
+  .sa-stop { width: 20px; height: 20px; margin: -10px 0 0 -10px; font-size: 11px; }
+}
 @media (max-width: 899px) {
   .sa-doors { grid-template-columns: 1fr; gap: 8px; margin: 6px 0 24px; }
-  .sa-door { padding: 11px 13px 12px; }
-  /* the plate stacks on a phone: the chips scroll sideways, then the caption, the map, the panel and the strip */
-  .atlas-bar { flex-direction: column; align-items: stretch; gap: 8px; padding: 10px 0 9px 12px; }
-  .sa-roles { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 2px 12px 3px 0; scrollbar-width: none; }
-  .sa-roles::-webkit-scrollbar { display: none; }
-  .sa-role { flex: 0 0 auto; padding: 5px 8px 6px; }
-  .sa-role-name { font-size: var(--fs-ui); }
-  .atlas-caption { padding: 8px 12px 9px; font-size: var(--fs-small); }
-  .atlas-caption-line { display: block; margin-top: 2px; }
-  .atlas-body { grid-template-columns: 1fr; grid-template-rows: none; }
-  .atlas .sa-map, .atlas .sa-panels, .atlas .sa-strip-stops { grid-column: 1; grid-row: auto; }
-  .atlas .sa-map { order: 1; margin: 0; border: 0; }
-  .atlas .sa-panels { order: 2; border-top: 1px solid var(--line); }
-  .atlas .sa-strip-stops { order: 3; padding: 10px 12px 12px; border-right: 0; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px 6px; }
-  .atlas .sa-panel { position: static; overflow: visible; padding: 16px 12px 14px; }
-  .atlas .sa-panels[data-more="1"]::after { content: none; }
-  .sa-stop { width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; pointer-events: none; border-width: 1px; } /* on a phone the map is small: the dots mark the route and the strip below is the tappable list */
-  .sa-stop span { display: none; }
-  .sa-stop::after { display: none; }
-  .atlas .sa-stop:not(.is-on) { opacity: 0.5; }
-  .atlas .sa-stop.is-on { transform: none; box-shadow: 0 0 0 2px var(--accent); width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; }
-  .sa-tail { display: none; }
 }
-/* a phone's strip: three stops a row, so every title wraps between words; five a row needs about 600 px before "Lithography" fits on one line */
-@media (max-width: 600px) { .atlas .sa-strip-stops { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 8px; } }
+@media (max-width: 760px) {
+  .atlas { margin-top: 48px; }
+  /* a phone: the buttons scroll sideways, the stops are small dots (the strip below is the list to tap), the strip in two columns */
+  .atlas .sa-roles { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin-right: calc(-1 * var(--margin)); padding-right: var(--margin); }
+  .atlas .sa-roles::-webkit-scrollbar { display: none; }
+  .atlas .sa-role { flex: 0 0 auto; padding: 7px 11px; font-size: 13.5px; }
+  .atlas .sa-map { margin-left: calc(-1 * var(--margin)); margin-right: calc(-1 * var(--margin)); }
+  .sa-stop { width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; pointer-events: none; box-shadow: 0 0 0 1px var(--bg); }
+  .sa-stop[data-band="High"] { box-shadow: 0 0 0 1px var(--bg), inset 0 0 0 1.25px var(--ink); }
+  .sa-stop span { display: none; }
+  .sa-stop::after, .atlas .sa-stop.is-on::after { display: none; }
+  .atlas .sa-map[data-cc] .sa-stop:not(.is-on) { box-shadow: 0 0 0 1px var(--bg); }
+  .atlas .sa-tail { display: none; }
+  .atlas .sa-strip-stops { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 14px; }
+  .atlas-key { grid-template-columns: 1fr; }
+}
 @media (prefers-reduced-motion: reduce) { .sa-stop { transition: none; } }

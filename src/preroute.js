@@ -1,7 +1,7 @@
 /* The route before boot. build/build.js inlines this file into <head> (the PREROUTE placeholder in src/template.html), where it runs
    before any of the body has arrived. It reads the address by the router's own rules (src/app.js Router.route) and sets
    <html data-route="walk|stack|landscape|suppliers|controls|glossary"> (and data-sub="exposure" for the China revenue
-   panel, data-sub="country" for the Suppliers ribbons). The template's CSS then shows only that view while the rest of the file streams in, so the view a reader asked
+   panel, data-sub="country" for the Suppliers By country tab). The template's CSS then shows only that view while the rest of the file streams in, so the view a reader asked
    for paints as soon as its own markup has arrived. boot() takes over with the router's hidden attributes and html.booted.
    The build runs route() over every id on the page and warns when one would open a view other than the one it sits in. */
 (function (root) {
@@ -23,7 +23,7 @@
     } else if (m) {
       view = NAMED[m[1]] || 'walk';
       if (m[1] === 'exposure') sub = 'exposure';
-      else if (view === 'suppliers' && /[?&]tab=country\b/.test(h)) sub = 'country'; // the ribbons tab (Suppliers.activate)
+      else if (view === 'suppliers' && /[?&]tab=country\b/.test(h)) sub = 'country'; // the By country tab (Suppliers.activate)
       if (view === 'suppliers' && /[?&]country=[A-Za-z]{2}\b/.test(h)) return { view: view, sub: sub, pick: true }; // a country on the atlas (summary-a.js)
       if (view === 'walk' && /^#\/walk\/[^?#\/]+$/.test(h)) return { view: view, sub: sub, anchor: h.slice(1) }; // a step of the walk
     } else {

@@ -1492,13 +1492,14 @@
   Landscape.initSelection();
 
   /* ---------------- suppliers ----------------
-     Two drawings of one list. The pipeline is the chain seen from the side: the stream's thickness at a stage
-     is the number of firms there, the color bands are countries in a fixed order, and the amber squares above
-     the stream count the Critical firms. The ladder is the same twenty stages ranked thinnest first, every firm
-     named in the open, each name opening its own panel. */
+     One list of firms, drawn twice and listed three ways. The ribbons run from the countries the firms are based in to the
+     twenty segments of the list (its categories), a ribbon's width the number of firms; the firms rated Critical ride on top
+     in red wine, the one data color on the site, and every other ribbon is gray. Under them the firms are listed by segment
+     (the ladder, thinnest segment first), by country, or in a table, every name opening its own panel. "Stages" are the
+     fifteen chapters of the chain; the list's own categories are "segments". */
   var Suppliers = {
     rows: DATA.suppliers || [], built: false, stage: '', country: '', chk: '', q: '', sortKey: 'name', sortDir: 1,
-    mode: 'ladder', stages: [], at: 0, tipAt: -1, drawW: 0, wiped: false,
+    tab: 'segment', savedTab: '', follow: '', atlasCC: '', stages: [], at: 0, tipAt: -1, drawW: 0, wiped: false,
     CO: ['US', 'JP', 'CN', 'TW', 'KR', 'NL', 'DE'], // the band order down the stack; every other country stacks last
     /* the ribbons can also count the EU's members as one column (#/suppliers?tab=country&group=eu). Every firm keeps its own
        country: the grouping only changes which column it is drawn in, and the list's "Other countries" follows the drawing */
@@ -1528,14 +1529,16 @@
       'Systems & Servers': 'Systems & servers', 'Power & Cooling': 'Power & cooling',
       'Silicon & Wafers': 'Silicon wafers', 'IP & Architecture': 'IP & architecture'
     },
+    /* the address: #/suppliers opens By segment, ?tab=country By country and ?tab=table the table; &group=eu draws the EU-27
+       members as one column in the ribbons and lands on them (the Glossary's EU-27 card links there) */
     activate: function () {
-      this.setTab(/[?&]tab=country\b/.test(location.hash || '') ? 'country' : 'stage'); // #/suppliers?tab=country opens the ribbons
-      var eu = /[?&]group=eu\b/.test(location.hash || '');
-      if (eu) this.setGroup('eu', true); // ...and &group=eu draws the EU-27 as one
-      else if (this.tab === 'country' && this.group === 'eu') this.groupURL(); // the grouping chosen earlier stays, and the address says so
+      var h = location.hash || '', eu = /[?&]group=eu\b/.test(h);
+      var tab = /[?&]tab=country\b/.test(h) ? 'country' : /[?&]tab=table\b/.test(h) ? 'table' : '';
+      if (eu) this.setGroup('eu', true); // before the first draw, so the ribbons are drawn once, grouped
       if (!this.built) this.build(); else this.fitPipe();
-      // a link to the EU-27 view (the Glossary's member countries) lands on the ribbons, below the atlas; the router has just put the page at its top
-      if (eu && this.tab === 'country') setTimeout(function () { var t = $('#sup-pipe'); if (t && !t.closest('[hidden]')) { scrollToEl(t, false); Router.settle(t); } }, 0);
+      this.setTab(tab || this.savedTab || 'segment', true);
+      // the router has just put the page at its top; a link to the EU-27 view lands on the ribbons, under the route
+      if (eu) setTimeout(function () { var t = $('#sup-pipe'); if (t && !t.closest('[hidden]')) { scrollToEl(t, false); Router.settle(t); } }, 0);
     },
     /* the ribbons by country, or with the EU-27 members as one column; quiet: set it up before the first draw */
     setGroup: function (g, quiet) {
@@ -1543,38 +1546,50 @@
       $$('#sup-group .sup-gbtn').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-group') === g ? 'true' : 'false'); });
       if (g === this.group) return;
       this.group = g;
-      this.litCC = g === 'eu' ? 'EU' : (this.atlasCC || ''); // the EU column lights as it appears; back by country, the atlas's choice lights again
+      this.follow = g === 'eu' ? 'EU' : this.atlasCol(); // the EU column lights as it appears; back by country, the route's choice lights again
       if (!this.built) return;
-      this.groupStages(); this.legend(); this.otherCount();
-      this.drawW = 0; this.drawPipe(); // drawn now if its tab is open, else when the tab opens (fitPipe)
+      this.groupStages(); this.legend(); this.chips(); this.otherCount();
+      this.drawW = 0; this.drawPipe();
       this.sync(); this.render();
-      if (!quiet) this.groupURL();
+      if (!quiet) this.url();
     },
-    groupURL: function () { if (this.tab === 'country') try { history.replaceState(null, '', '#/suppliers?tab=country' + (this.group === 'eu' ? '&group=eu' : '')); } catch (e) { } },
+    /* the address follows the tab and the grouping, without a new history entry */
+    url: function () {
+      var q = [];
+      if (this.tab === 'country' || this.tab === 'table') q.push('tab=' + this.tab);
+      if (this.group === 'eu') q.push('group=eu');
+      try { history.replaceState(history.state, '', '#/suppliers' + (q.length ? '?' + q.join('&') : '')); } catch (e) { }
+    },
     otherCount: function () { // "Other countries" in the firm filter counts what the drawing's Other column holds
       var self = this, o = $('#sup-country option[value="__other"]'); if (!o) return;
       o.textContent = 'Other countries (' + this.rows.filter(function (r) { return self.colOf(r.country) === 'Other'; }).length + ')';
     },
-    /* two tabs under the atlas: the ladder by stage, the ribbons by country */
-    setTab: function (tab) {
+    /* three tabs over the firms: by segment (the ladder), by country, and the table */
+    setTab: function (tab, quiet) {
+      tab = tab === 'country' || tab === 'table' ? tab : 'segment';
+      var was = this.tab;
       this.tab = tab;
-      $$('.sup-tab').forEach(function (d) { d.hidden = d.getAttribute('data-tab') !== tab; });
       $$('.sup-tabs a').forEach(function (a) { if (a.getAttribute('data-tab') === tab) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+      if (!quiet) { this.savedTab = tab === 'table' ? 'table' : ''; try { localStorage.setItem('cp-sup-mode', tab === 'table' ? 'table' : 'ladder'); } catch (e) { } }
+      if (this.built && was !== tab) { this.sync(); this.render(); }
+      if (!quiet) this.url();
     },
-    toStage: function () { // the ribbons index the ladder, which lives on the other tab
-      if (this.tab === 'stage') return;
-      this.setTab('stage');
-      if (/[?&]tab=country\b/.test(location.hash || '')) history.replaceState(null, '', '#/suppliers');
-    },
-    light: function (cc) { // the atlas's chosen country lights its column's ribbons (none for a country drawn in Other); a country set in the firm filter takes over
-      this.atlasCC = this.litCC = cc || '';
+    toStage: function () { if (this.tab !== 'segment') this.setTab('segment'); }, // the ribbons index the ladder by segment
+    atlasCol: function () { var c = this.atlasCC ? this.colOf(this.atlasCC) : ''; return c === 'Other' ? '' : c; }, // a country drawn inside Other lights nothing
+    light: function (cc) { // the route's chosen country lights its column's ribbons and presses its button there
+      this.atlasCC = cc || '';
+      this.follow = this.atlasCol();
       if (this.built) this.sync();
+    },
+    followCol: function (c) { // a country button over the ribbons: press it to follow its ribbons, press it again to let go
+      this.follow = this.follow === c ? '' : c;
+      this.sync();
     },
 
     build: function () {
       this.built = true;
       var self = this, countries = {};
-      try { var saved = localStorage.getItem('cp-sup-mode'); if (saved === 'table' || saved === 'detailed') this.mode = 'table'; } catch (e) { }
+      try { var saved = localStorage.getItem('cp-sup-mode'); if (saved === 'table' || saved === 'detailed') this.savedTab = 'table'; } catch (e) { }
       this.groupStages();
 
       var sel = $('#sup-country'), other = 0;
@@ -1586,26 +1601,27 @@
       if (other) { var oo = document.createElement('option'); oo.value = '__other'; oo.textContent = 'Other countries (' + other + ')'; sel.appendChild(oo); }
       this.otherCount();
       sel.addEventListener('change', function () { self.setCountry(sel.value, false); });
-      // over the ribbons: the switch that counts the EU-27 as one column; under them, how a firm is given a country
-      var ph = $('#sup-pipe-h');
-      if (ph && !$('#sup-group')) { // the heading and the switch share one row, which wraps on a phone
-        var row = document.createElement('div'); row.className = 'sup-pipe-top';
-        ph.parentNode.insertBefore(row, ph); row.appendChild(ph);
-        row.insertAdjacentHTML('beforeend', '<div class="sup-modes sup-group" id="sup-group" role="group" aria-label="Count the EU-27 members"><button type="button" class="sup-gbtn" data-group="country" aria-pressed="' + (this.group !== 'eu') + '">Each country</button><button type="button" class="sup-gbtn" data-group="eu" aria-pressed="' + (this.group === 'eu') + '">EU-27 together</button></div>');
-        $$('#sup-group .sup-gbtn').forEach(function (b) { b.addEventListener('click', function () { self.setGroup(b.getAttribute('data-group')); }); });
-      }
-      var lg = $('#sup-legend');
-      if (lg && !$('#sup-note')) lg.insertAdjacentHTML('afterend', '<p class="sup-note" id="sup-note">' + esc(this.NOTE) + '</p>');
+      // over the ribbons, the switch that counts the EU-27 as one column; beside them, the buttons that follow a country's
+      // ribbons, and the note on how a firm is given a country
+      $$('#sup-group .sup-gbtn').forEach(function (b) {
+        b.setAttribute('aria-pressed', b.getAttribute('data-group') === self.group ? 'true' : 'false');
+        b.addEventListener('click', function () { self.setGroup(b.getAttribute('data-group')); });
+      });
+      var note = $('#sup-note'); if (note) note.textContent = this.NOTE;
+      var chipBox = $('#sup-chips'); if (chipBox) chipBox.addEventListener('click', function (e) { var b = e.target.closest ? e.target.closest('.sup-chip') : null; if (b) self.followCol(b.getAttribute('data-c')); });
+      this.chips();
+      // the tabs change the list in place and keep the reader where they are; the address follows (url)
+      $$('.sup-tabs a').forEach(function (a) { a.addEventListener('click', function (e) { if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return; e.preventDefault(); self.setTab(a.getAttribute('data-tab')); }); });
 
       $('#sup-chk').addEventListener('change', function (e) { self.chk = e.target.value; self.render(); });
       var supTimer; $('#sup-search').addEventListener('input', function (e) { var v = e.target.value; clearTimeout(supTimer); supTimer = setTimeout(function () { self.q = v.trim().toLowerCase(); self.render(); }, 120); });
       $('#sup-copy').addEventListener('click', function () { self.copy(); });
       var allStages = $('#sup-allstages'); if (allStages) allStages.addEventListener('click', function () { self.clearStage(); });
       $('#sup-table').addEventListener('click', function (e) { var b = e.target.closest('button[data-sort]'); if (b) self.sortBy(b.getAttribute('data-sort')); });
-      $('#sup-ladder').addEventListener('click', function (e) { var b = e.target.closest('.sup-name'); if (b) self.openName(b); });
-      $$('.sup-mode').forEach(function (b) { b.addEventListener('click', function () { self.setMode(b.getAttribute('data-mode')); }); });
+      $$('#sup-ladder, #sup-ladder-cc').forEach(function (l) { l.addEventListener('click', function (e) { var b = e.target.closest('.sup-name'); if (b) self.openName(b); }); });
 
       this.buildLadder();
+      this.buildCountries();
       this.legend();
       this.drawPipe();
       var host = $('#sup-pipe-scroll');
@@ -1637,15 +1653,15 @@
     coName: function (c) { return c === 'Other' ? 'Other' : c === 'EU' ? 'European Union' : cname(c); },
     otherNames: function (rows) { var seen = {}; rows.forEach(function (r) { if (this.colOf(r.country) !== r.country) seen[cname(r.country)] = 1; }, this); return Object.keys(seen).sort(); }, // the real countries behind an Other or EU band or ribbon
 
-    /* ---- the pipeline: the chain drawn as a pipe that narrows where the firms run out ---- */
+    /* ---- the ribbons: countries on the left, the segments on the right ---- */
     fitPipe: function () {
       var host = $('#sup-pipe-scroll'); if (!host) return;
       if (Math.max(280, Math.round(host.clientWidth) || 280) !== this.drawW) this.drawPipe();
     },
-    drawPipe: function () { // the ribbons: countries on the left, the twenty stages on the right, a ribbon for every pairing, its width the firms
-      var self = this, host = $('#sup-pipe-scroll'); if (!host || !host.clientWidth) return; // under the other tab it has no width; it is drawn when its tab opens
+    drawPipe: function () { // the ribbons: countries on the left, the twenty segments on the right, a ribbon for every pairing, its width the firms
+      var self = this, host = $('#sup-pipe-scroll'); if (!host || !host.clientWidth) return; // a hidden view has no width; it is drawn when it opens
       var st = this.stages, n = st.length; if (!n) return;
-      // drawn to the column's width; a phone gets country codes on the left and a taller field, so every stage label stays on screen
+      // drawn to the column's width; a phone gets country codes on the left and a taller field, so every segment label stays on screen
       var W = Math.max(280, Math.round(host.clientWidth) || 280), tight = W < 1000, phone = W < 600;
       this.drawW = W;
       var cols = this.cols(), nc = cols.length;
@@ -1659,17 +1675,17 @@
       st.forEach(function (s) { cols.forEach(function (c) { cTot[c] += s.by[c] || 0; }); });
       var ly = {}, y = padT;                                             // the left nodes, in the fixed country order
       cols.forEach(function (c) { ly[c] = [y, y + cTot[c] * uL]; y += cTot[c] * uL + gL; });
-      var ry = [], y2 = padT;                                            // the right nodes, in chain order
+      var ry = [], y2 = padT;                                            // the right nodes, in the segments' chain order
       st.forEach(function (s) { ry.push([y2, y2 + s.n * uR]); y2 += s.n * uR + gR; });
       var curL = {}, curR = []; cols.forEach(function (c) { curL[c] = ly[c][0]; }); st.forEach(function (s, i) { curR[i] = ry[i][0]; });
       var ribs = '', mx = (x0 + wL + x1) / 2;
-      cols.forEach(function (c) {                                        // each country's ribbons leave in stage order; each stage's arrive in country order
+      cols.forEach(function (c) {                                        // each country's ribbons leave in segment order; each segment's arrive in country order
         st.forEach(function (s, i) {
           var k = s.by[c] || 0; if (!k) return;
           var kc = s.rows.filter(function (r) { return self.colOf(r.country) === c && r.chokepoint === 'Critical'; }).length;
           var a0 = curL[c], a1 = a0 + k * uL, b0 = curR[i], b1 = b0 + k * uR;
           curL[c] = a1; curR[i] = b1;
-          // the pairing's Critical firms ride on top as a ribbon of their own, as wide as their count, so the garnet counts them
+          // the pairing's Critical firms ride on top as a ribbon of their own, as wide as their count, so the red wine counts them
           var am = a0 + kc * uL, bm = b0 + kc * uR, xa = x0 + wL;
           var path = function (A0, A1, B0, B1, cls) {
             return '<path class="sup-band sup-rib c-' + c + cls + '" data-c="' + c + '" data-i="' + i + '" d="M' + xa + ',' + A0.toFixed(1) +
@@ -1680,7 +1696,7 @@
           if (kc < k) ribs += path(am, a1, bm, b1, '');
         });
       });
-      var fsL = phone ? 11.5 : tight ? 12 : 13, fsR = phone ? 11 : tight ? 11 : 12; // no label under 11 px (redesign, 25 Oct 2026)
+      var fsL = phone ? 11.5 : tight ? 12.5 : 13.5, fsR = phone ? 11 : tight ? 11.5 : 12.5; // no label under 11 px (redesign, 25 Oct 2026)
       var nodesL = '', hitsL = '';
       cols.forEach(function (c) {
         var yy = ly[c], mid = (yy[0] + yy[1]) / 2;
@@ -1698,7 +1714,7 @@
           '" role="button" tabindex="' + (i === self.at ? '0' : '-1') + '" aria-label="' + esc(s.name + ': ' + s.n + ' firms, ' + s.crit.length + ' critical.') + '"></rect>';
       });
       // tabindex -1: Chrome otherwise makes the drawing itself a tab stop (its content overflows it), one before the stages
-      host.innerHTML = '<svg class="sup-pipe-svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" tabindex="-1" role="group" aria-label="Countries to stages: a ribbon for every country and stage pairing, its width the number of firms, garnet for the Critical firms' + (this.group === 'eu' ? '. The EU-27 members are drawn as one' : '') + '">' +
+      host.innerHTML = '<svg class="sup-pipe-svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" tabindex="-1" role="group" aria-label="Countries to segments: a ribbon for every country and segment pairing, its width the number of firms, red wine for the Critical firms' + (this.group === 'eu' ? '. The EU-27 members are drawn as one' : '') + '">' +
         '<defs><clipPath id="sup-wipe-clip"><rect class="sup-wipe' + (this.wiped ? '' : ' is-new') + '" x="0" y="0" width="' + W + '" height="' + H + '"></rect></clipPath></defs>' +
         '<g class="sup-flow" clip-path="url(#sup-wipe-clip)">' + ribs + nodesL + nodesR + '<g class="sup-labels">' + labs + '</g><g class="sup-clabs">' + '</g></g>' +
         '<g class="sup-chits">' + hitsL + '</g><g class="sup-hits">' + hits + '</g></svg>';
@@ -1709,7 +1725,7 @@
       svg.insertAdjacentHTML('beforeend', '<g class="sup-clabs" pointer-events="none">' + clabs + '</g>');
       this.wiped = true;
       this.x1 = x1;
-      var x = function () { return x1; };                                // the keyboard scroll-into-view below asks where a stage sits
+      var x = function () { return x1; };                                // the keyboard scroll-into-view below asks where a segment sits
       var hot = function (sel, on) { svg.setAttribute('data-hot', on ? '1' : '0'); $$('.sup-rib', svg).forEach(function (r) { if (on && sel(r)) r.setAttribute('data-hot', '1'); else r.removeAttribute('data-hot'); }); };
       svg.addEventListener('mouseover', function (e) {
         var rib = e.target.closest ? e.target.closest('.sup-rib') : null;
@@ -1765,15 +1781,17 @@
       }
       return lines;
     },
-    roving: function () { // one tab stop for the whole pipeline; the arrow keys walk the stages
+    roving: function () { // one tab stop for the whole drawing; the arrow keys walk the segments
       var self = this;
       $$('.sup-hit').forEach(function (r) { r.setAttribute('tabindex', +r.getAttribute('data-i') === self.at ? '0' : '-1'); });
     },
-    legend: function () {
-      var self = this, h = '';
-      this.cols().forEach(function (c) { h += '<span class="sup-lg"><i class="sup-sw c-' + c + '"></i>' + esc(self.coName(c)) + '</span>'; });
-      $('#sup-legend').innerHTML = h + '<span class="sup-lg"><i class="sup-crit-sw"></i>Critical firms</span>' +
-        '<span class="sup-lg-note">Ribbon width is the number of firms a country has at a stage.</span>';
+    legend: function () { // the key: gray for the firms on the list, red wine for those rated Critical
+      $('#sup-legend').innerHTML = '<span class="sup-lg"><i class="sup-all-sw" aria-hidden="true"></i>Firms on the list, by headquarters</span>' +
+        '<span class="sup-lg"><i class="sup-crit-sw" aria-hidden="true"></i>Of them, firms rated Critical</span>';
+    },
+    chips: function () { // one button a column of the drawing, so the EU-27 view has one for the EU
+      var self = this, box = $('#sup-chips'); if (!box) return;
+      box.innerHTML = this.cols().map(function (c) { return '<button type="button" class="sup-chip" data-c="' + c + '" aria-pressed="' + (self.follow === c) + '">' + esc(self.coName(c)) + '</button>'; }).join('');
     },
     tipAt: function (el, anchor, alignRight) { // place #sup-tip beside an element of the drawing, inside #sup-pipe
       var host = $('#sup-pipe'); if (!host || !anchor) return;
@@ -1785,7 +1803,7 @@
       top = Math.max(0, Math.min(top, m.height - hh));
       el.style.left = Math.round(left) + 'px'; el.style.top = Math.round(top) + 'px';
     },
-    showTip: function (i, focused) { // a stage: its firms by country and its Critical names
+    showTip: function (i, focused) { // a segment: its firms by country and its Critical names
       var s = this.stages[i], el = $('#sup-tip'), hit = $('.sup-hit[data-i="' + i + '"]');
       if (!s || !el || !hit) return;
       var self = this, co = '';
@@ -1798,20 +1816,20 @@
       this.tipAt(el, hit, true);
       $$('.sup-lab').forEach(function (g) { if (+g.getAttribute('data-i') === i) g.setAttribute('data-hot', '1'); else g.removeAttribute('data-hot'); });
     },
-    showCountryTip: function (c, anchor) { // a country: how many firms, at which stages, and its Critical names
+    showCountryTip: function (c, anchor) { // a country: how many firms, in which segments, and its Critical names
       var self = this, el = $('#sup-tip'); if (!el) return;
       var rows = this.rows.filter(function (r) { return self.colOf(r.country) === c; });
       var by = {}; rows.forEach(function (r) { by[r.category] = (by[r.category] || 0) + 1; });
       var stages = this.stages.filter(function (s) { return by[s.name]; }).map(function (s) { return esc(s.short) + ' <b>' + by[s.name] + '</b>'; });
       var crit = rows.filter(function (r) { return r.chokepoint === 'Critical'; }).map(function (r) { return r.name; });
       var others = c === 'Other' || c === 'EU' ? this.otherNames(rows) : [];
-      el.innerHTML = '<b>' + esc(this.coName(c)) + '</b><span class="sup-tip-n">' + rows.length + ' firms across ' + stages.length + ' stages</span>' +
+      el.innerHTML = '<b>' + esc(this.coName(c)) + '</b><span class="sup-tip-n">' + rows.length + ' firms across ' + stages.length + ' segments</span>' +
         (others.length ? '<span class="sup-tip-co">' + esc(others.join(', ')) + '</span>' : '') +
         '<span class="sup-tip-co sup-tip-stages">' + stages.join(' · ') + '</span>' +
         (crit.length ? '<span class="sup-tip-crit"><i class="sup-crit-sw"></i>Critical: ' + esc(crit.join(', ')) + '</span>' : '');
       this.tipAt(el, anchor, false);
     },
-    showRibTip: function (c, i, anchor, ev) { // a ribbon: the firms of one country at one stage; ev, the pointer that found it
+    showRibTip: function (c, i, anchor, ev) { // a ribbon: the firms of one country in one segment; ev, the pointer that found it
       var self = this, s = this.stages[i], el = $('#sup-tip'); if (!s || !el) return;
       var rows = s.rows.filter(function (r) { return self.colOf(r.country) === c; });
       var isOther = c === 'Other' || c === 'EU'; // a column of several countries names each firm's own
@@ -1834,17 +1852,16 @@
       $$('.sup-lab[data-hot]').forEach(function (g) { g.removeAttribute('data-hot'); });
       var svg = $('.sup-pipe-svg'); if (svg) { svg.setAttribute('data-hot', '0'); $$('.sup-rib[data-hot]', svg).forEach(function (r) { r.removeAttribute('data-hot'); }); }
     },
-    goStage: function (i) { // the pipeline is the ladder's index: a stage filters the list to its firms and sends you to its rung; click it again to clear
+    goStage: function (i) { // the ribbons are the ladder's index: a segment filters the list to its firms and goes to its rung; click it again to clear
       var s = this.stages[i]; if (!s) return;
       this.hideTip();
       var off = this.stage === s.name;
       this.stage = off ? '' : s.name;
-      if (this.mode !== 'ladder') this.setMode('ladder');
+      if (!off) this.toStage();
       $$('.sup-rung').forEach(function (el) { if (!off && el.id === s.id) el.setAttribute('data-lit', '1'); else el.removeAttribute('data-lit'); });
       $$('.sup-lab').forEach(function (g) { if (!off && +g.getAttribute('data-i') === i) g.setAttribute('data-lit', '1'); else g.removeAttribute('data-lit'); });
       this.render();
       if (off) return;
-      this.toStage();
       var el = document.getElementById(s.id);
       if (el) el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
     },
@@ -1858,7 +1875,7 @@
     setCountry: function (c, scroll, force) { // a country label toggles its country; force (a ribbon) sets it, as the ribbon's stage is set
       this.country = (force ? c : (c === this.country ? '' : c)) || '';
       this.sync(); this.render();
-      if (scroll) { this.toStage(); var t = $('#sup-toolbar'); if (t) t.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' }); }
+      if (scroll) { var t = $('#sup-reg'); if (t) t.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' }); }
     },
     /* a link from elsewhere (the Glossary's firm and country cards) sets the whole filter, so a search or stage left from an
        earlier visit cannot narrow it: Japan's card shows all of Japan's firms (correctness P1-2) */
@@ -1881,28 +1898,24 @@
       // the table is drawn afresh, so the pressed header would take focus with it: give it to the new one (accessibility #12)
       var b = inTable ? $('#sup-table button[data-sort="' + k + '"]') : null; if (b) b.focus();
     },
-    setMode: function (m) {
-      if (m === this.mode) return;
-      this.mode = m;
-      try { localStorage.setItem('cp-sup-mode', m); } catch (e) { }
-      this.sync(); this.render();
-    },
-    sync: function () { // every control, the pipeline and the ladder show the same state
-      var self = this, on = this.country, lad = this.mode === 'ladder';
+    sync: function () { // every control, the ribbons and the lists show the same state
+      var self = this, on = this.country, tab = this.tab;
       var sel = $('#sup-country'); if (sel) sel.value = this.country || '';
-      $$('.sup-mode').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-mode') === self.mode ? 'true' : 'false'); });
-      $('#sup-ladder').hidden = !lad;
-      $('#sup-ladder-h').hidden = !lad;
-      var key = $('#sup-key'); if (key) key.hidden = !lad; // the key names the ladder's colors, so it goes with it
-      $('#sup-wrap').hidden = lad;
-      // the firm filter lights each ribbon that holds a firm it keeps, so a country drawn inside the Other or EU column lights those ribbons
+      $('#sup-ladder').hidden = tab !== 'segment';
+      $('#sup-ladder-cc').hidden = tab !== 'country';
+      $('#sup-wrap').hidden = tab !== 'table';
+      var lh = $('#sup-ladder-h'); if (lh) { lh.hidden = tab === 'table'; lh.textContent = tab === 'country' ? 'Countries by number of firms, most first' : 'Segments by number of firms, fewest first'; }
+      var key = $('#sup-key'); if (key) key.hidden = tab === 'table'; // the key names the colors of the names, so it goes with the lists
+      // a pressed country button (or the route's chosen country) follows its column; else the firm filter lights each ribbon
+      // that holds a firm it keeps, so a country drawn inside the Other or EU column lights those ribbons
+      var lit = this.follow && this.cols().indexOf(this.follow) >= 0 ? this.follow : '';
+      $$('.sup-chip').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-c') === lit ? 'true' : 'false'); });
       $$('.sup-band').forEach(function (p) {
-        var i = p.getAttribute('data-i'), s = on && i != null ? self.stages[+i] : null, c = p.getAttribute('data-c');
-        if (s && s.rows.some(function (r) { return self.colOf(r.country) === c && self.inCountry(r); })) p.setAttribute('data-on', '1'); else p.removeAttribute('data-on');
+        var i = p.getAttribute('data-i'), st = on && !lit && i != null ? self.stages[+i] : null, c = p.getAttribute('data-c');
+        if (st && st.rows.some(function (r) { return self.colOf(r.country) === c && self.inCountry(r); })) p.setAttribute('data-on', '1'); else p.removeAttribute('data-on');
       });
-      var lit = on || !this.litCC || this.colOf(this.litCC) === 'Other' ? '' : this.colOf(this.litCC);
       $$('.sup-rib').forEach(function (p) { if (lit && p.getAttribute('data-c') === lit) p.setAttribute('data-lit', '1'); else p.removeAttribute('data-lit'); });
-      var pipe = $('#sup-pipe'); if (pipe) { pipe.setAttribute('data-filtered', on ? '1' : '0'); pipe.setAttribute('data-lit', lit ? '1' : '0'); }
+      var pipe = $('#sup-pipe'); if (pipe) { pipe.setAttribute('data-filtered', on && !lit ? '1' : '0'); pipe.setAttribute('data-lit', lit ? '1' : '0'); }
     },
     countryLabel: function () { return this.country === '__other' ? 'Other countries' : this.country === '__eu' ? 'EU-27 members' : cname(this.country); },
     filtering: function () { return !!this.stage || !!(this.country || this.chk || this.q); },
@@ -1939,11 +1952,11 @@
       // a polite status, so the new count is read out; set after the first count, so arriving on the page says nothing (accessibility #5)
       var cnt = $('#sup-count'); if (cnt && !cnt.hasAttribute('role')) setTimeout(function () { cnt.setAttribute('role', 'status'); }, 0);
       var allBtn = $('#sup-allstages'); if (allBtn) allBtn.hidden = !this.stage;
-      if (this.mode === 'table') this.renderTable(rows); else this.applyFilter();
+      if (this.tab === 'table') this.renderTable(rows); else this.applyFilter();
     },
 
-    /* ---- the ladder: the stages ranked thinnest first, every firm named ---- */
-    ladderOrder: function () { // fewest firms first, then the stage with more Critical firms, then chain order
+    /* ---- the ladder: the segments ranked thinnest first, every firm named ---- */
+    ladderOrder: function () { // fewest firms first, then the segment with more Critical firms, then chain order
       return this.stages.slice().sort(function (a, b) {
         return (a.n - b.n) || (b.crit.length - a.crit.length) || (a.i - b.i);
       });
@@ -1959,7 +1972,7 @@
             (f.chokepoint === 'Critical' || f.chokepoint === 'Diversified' ? '<span class="sr-only">, ' + esc(f.chokepoint) + '</span>' : '') + // the name's color, said aloud
             '</button></span>'; // the list stays names only: a firm's revenue and its China share open with the firm (detail, below)
         }).join(' '); // the lines break at these spaces, so a name never leaves its comma at the start of the next line
-        // the numeral is the stage's number of firms, the value the ladder is sorted by, so ties show at a glance
+        // the numeral is the segment's number of firms, the value the ladder is sorted by, so ties show at a glance
         html += '<section class="sup-rung" id="' + s.id + '" data-i="' + s.i + '" data-crit="' + s.crit.length + '" aria-labelledby="' + s.id + '-h">' +
           '<span class="sup-rank" aria-hidden="true">' + s.n + '</span>' +
           '<div class="sup-rung-head"><h3 class="sup-rung-name" id="' + s.id + '-h">' + esc(s.name) + '</h3>' +
@@ -1969,13 +1982,38 @@
       });
       $('#sup-ladder').innerHTML = html;
     },
-    // beside a stage's name: its Critical firms, one garnet square each (the numeral already shows the number of firms; a screen reader hears it here)
+    /* ---- by country: every country on the list, the most firms first, each firm with its segment ---- */
+    buildCountries: function () {
+      var self = this, by = {}, html = '', seg = {};
+      this.stages.forEach(function (s) { seg[s.name] = s.i; });
+      this.rows.forEach(function (r) { (by[r.country] = by[r.country] || []).push(r); });
+      Object.keys(by).map(function (cc) { return { cc: cc, rows: by[cc], crit: by[cc].filter(function (r) { return r.chokepoint === 'Critical'; }).length }; })
+        .sort(function (a, b) { return (b.rows.length - a.rows.length) || (b.crit - a.crit) || cname(a.cc).localeCompare(cname(b.cc)); })
+        .forEach(function (c) {
+          var id = 'sup-cc-' + c.cc.toLowerCase();
+          var names = c.rows.slice().sort(function (a, b) {
+            return (self.RANK[a.chokepoint] - self.RANK[b.chokepoint]) || ((seg[a.category] || 0) - (seg[b.category] || 0)) || String(a.name).localeCompare(String(b.name));
+          }).map(function (f) {
+            return '<span class="sup-nw" data-r="' + f._ix + '"><button type="button" class="sup-name lv-' + esc(f.chokepoint || 'Important') +
+              '" aria-expanded="false" aria-controls="' + id + '-p">' + esc(f.name) + '<i class="sup-cc">' + esc(self.SHORT[f.category] || f.category) + '</i>' +
+              (f.chokepoint === 'Critical' || f.chokepoint === 'Diversified' ? '<span class="sr-only">, ' + esc(f.chokepoint) + '</span>' : '') + '</button></span>';
+          }).join(' ');
+          html += '<section class="sup-rung" id="' + id + '" data-crit="' + c.crit + '" aria-labelledby="' + id + '-h">' +
+            '<span class="sup-rank" aria-hidden="true">' + c.rows.length + '</span>' +
+            '<div class="sup-rung-head"><h3 class="sup-rung-name" id="' + id + '-h">' + esc(cname(c.cc)) + '</h3>' +
+            '<p class="sup-rung-n">' + self.rungCount(c.rows.length, c.crit) + '</p></div>' +
+            '<p class="sup-names">' + names + '</p>' +
+            '<div class="sup-panel" id="' + id + '-p"><div class="sup-panel-in"></div></div></section>';
+        });
+      $('#sup-ladder-cc').innerHTML = html;
+    },
+    // beside a segment's or a country's name: its Critical firms, one red wine mark each (the numeral already shows the number of firms; a screen reader hears it here)
     rungCount: function (n, crit) {
       return '<span class="sr-only">' + n + ' firms. </span>' + (crit ? '<span class="sup-crit-n"><span class="sup-crit-sq" aria-hidden="true">' + new Array(crit + 1).join('<i></i>') + '</span>' + crit + ' critical</span>' : '');
     },
     applyFilter: function () { // the rungs never move; the filters only hide names and change the count
       var self = this, on = this.filtering();
-      $$('.sup-rung').forEach(function (rung) {
+      $$(this.tab === 'country' ? '#sup-ladder-cc .sup-rung' : '#sup-ladder .sup-rung').forEach(function (rung) {
         var items = $$('.sup-nw', rung), hits = 0, last = null;
         items.forEach(function (w) {
           var ok = self.match(self.rows[+w.getAttribute('data-r')]);
@@ -2052,7 +2090,7 @@
       var self = this;
       // aria-sort belongs on the column header, not on the button inside it (accessibility #12)
       var th = function (k, label) { return '<th' + (self.sortKey === k ? ' aria-sort="' + (self.sortDir > 0 ? 'ascending' : 'descending') + '"' : '') + '><button type="button" data-sort="' + k + '">' + label + '</button></th>'; };
-      var html = '<thead><tr>' + th('name', 'Supplier') + th('category', 'Category') + th('country', 'Country') + th('founded', 'Founded') + th('chokepoint', 'Chokepoint level') + '<th>What they make</th><th>Customers</th></tr></thead><tbody>';
+      var html = '<thead><tr>' + th('name', 'Supplier') + th('category', 'Segment') + th('country', 'Country') + th('founded', 'Founded') + th('chokepoint', 'Chokepoint level') + '<th>What they make</th><th>Customers</th></tr></thead><tbody>';
       rows.forEach(function (r) {
         html += '<tr><td class="name"><b>' + esc(r.name) + '</b><span>' + esc([r.nativeName, r.ticker].filter(Boolean).join(' · ')) + '</span>' +
           (r.china ? '<a class="sup-ex-a" href="' + safeUrl(r.china.href) + '">' + esc(r.china.label) + '</a>' : '') + '</td>' +

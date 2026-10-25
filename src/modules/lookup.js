@@ -313,7 +313,7 @@
         var EU27 = (CP.Suppliers && CP.Suppliers.EU27) || [];
         if (EU27.indexOf(cc) >= 0) {
           var eu = (DATA.suppliers || []).filter(function (r) { return EU27.indexOf(r.country) >= 0; }), euCrit = eu.filter(function (r) { return r.chokepoint === 'Critical'; }).length;
-          h += '<p class="lk-eu">Across the EU-27, the supplier list has ' + eu.length + ' firms' + (euCrit ? ', ' + euCrit + ' of them Critical' : '') + '. <a href="#/suppliers?tab=country&amp;group=eu">See them together on the Suppliers page →</a></p>';
+          h += '<p class="lk-eu">Across the EU-27, the supplier list has ' + eu.length + ' firms' + (euCrit ? ', ' + euCrit + ' of them Critical' : '') + '. <a href="#/suppliers?group=eu">See them together on the Suppliers page →</a></p>';
         }
       }
       // how the card's numbers give a firm its country: shares of a market's revenue go by parent company, capacity by plant, the

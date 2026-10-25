@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-/* Screenshots for the look gate. usage: node qa/redesign/shots.js <outdir> "<name>|<url>|<width>[|<theme>[|<scrollY or #selector>[|full]]]" ...
+/* Screenshots for the look gate. usage: node qa/redesign/shots.js <outdir> "<name>|<url>|<width>[|<theme>[|<scrollY or #selector>[|full[|<js>]]]]" ...
    e.g. node qa/redesign/shots.js /tmp/shots "home-1440|http://127.0.0.1:8766/#/|1440" "home-390-dark|http://127.0.0.1:8766/#/|390|dark"
    A scroll target is a pixel offset or a CSS selector to bring to the top; after it the faces are awaited again and 1.5 s
-   passes, so Literata never falls back to Georgia in a shot. */
+   passes, so Literata never falls back to Georgia in a shot. A last field of script runs first (stage 3: to press a button,
+   open a tab or pick a country before the shot), and the faces and 1.5 s are awaited again after it. */
 'use strict';
 const fs = require('fs');
 const path = require('path');
@@ -15,8 +16,9 @@ const { launch, open } = require('./cdp.js');
   const chrome = launch();
   try {
     for (const spec of specs) {
-      const [name, url, w, theme, scroll, full] = spec.split('|');
+      const [name, url, w, theme, scroll, full, js] = spec.split('|');
       const t = await open(chrome, url, { width: +w || 1440, theme: theme || '', wait: 2500 });
+      if (js) { await t.ev(`(async () => { ${js} })()`); await t.ev('document.fonts ? document.fonts.ready.then(() => 1) : 1'); await new Promise((r) => setTimeout(r, 1500)); }
       if (scroll) {
         if (/^\d+$/.test(scroll)) await t.scrollTo(+scroll);
         else { const y = await t.ev(`(function(){var e=document.querySelector(${JSON.stringify(scroll)});return e?Math.round(e.getBoundingClientRect().top+scrollY-(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--masthead'))||64)-16):0;})()`); await t.scrollTo(y); }

@@ -63,7 +63,7 @@ html:not(.booted)[data-route="glossary"] .view:not([data-view="glossary"]),
 html:not(.booted)[data-route="pending"] .view,
 html:not(.booted) .view[data-view="controls"] .sub[data-sub="exposure"],
 html:not(.booted)[data-sub="exposure"] .view[data-view="controls"] .sub[data-sub="timeline"],
-html:not(.booted)[data-sub="country"] .view[data-view="suppliers"] .sup-tab[data-tab="stage"] { display: none !important; }
+html:not(.booted)[data-sub="country"] .view[data-view="suppliers"] #sup-ladder { display: none !important; }
 html:not(.booted)[data-sub="exposure"] .view[data-view="controls"] .sub[data-sub="exposure"] { display: block !important; }
 /* the views whose bodies boot() builds show only their heads until then, so nothing painted early moves when it does:
    the Export Controls board and timeline, the Glossary, AI Chips, and the Suppliers atlas when the address picks a country */
@@ -138,41 +138,48 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
     </section>
 
     <section class="view column wide" data-view="suppliers">
-      <div class="view-head">
+      <!-- Suppliers (redesign stage 3): the title and its four counts, the route of one chip, the ribbons open on the page,
+           then every firm under three tabs: by segment (the ladder), by country, and as a table -->
+      <div class="view-head vh sup-head">
         <h1>Suppliers</h1>
         <p class="dek">{{SUPPLIERS_INTRO}}</p>
+        {{SUPPLIERS_FACTS}}
       </div>
       {{HOME_MAP}}
-      <nav class="subtabs sup-tabs" aria-label="Firms by stage or by country"><a href="#/suppliers" data-tab="stage" aria-current="true">By stage</a><a href="#/suppliers?tab=country" data-tab="country">By country</a></nav>
-      <div class="sup-tab" data-tab="stage">
-      <div class="filters">
-        <input id="sup-search" type="search" placeholder="Search suppliers, cities, tickers…" aria-label="Search suppliers">
-        <select id="sup-country" aria-label="Filter by country"><option value="">All countries</option></select>
-        <select id="sup-chk" aria-label="Filter by chokepoint level"><option value="">All chokepoint levels</option><option>Critical</option><option>Important</option><option>Contested</option><option>Diversified</option></select>
+      <section class="sup-pipe" id="sup-pipe" aria-labelledby="sup-pipe-h">
+        <div class="sup-sec-h sup-pipe-top"><h2 class="sup-pipe-h" id="sup-pipe-h">Which countries supply which segments</h2>
+          <div class="sup-seg2 sup-group" id="sup-group" role="group" aria-label="Count the EU-27 members"><button type="button" class="sup-gbtn" data-group="country" aria-pressed="true">Each country</button><button type="button" class="sup-gbtn" data-group="eu" aria-pressed="false">EU-27 together</button></div></div>
+        <div class="sup-pipe-body">
+          <div class="sup-pipe-plot"><div class="sup-pipe-scroll" id="sup-pipe-scroll"></div><div class="sup-tip" id="sup-tip" role="tooltip" hidden></div></div>
+          <div class="sup-pipe-side">
+            <p class="sup-legend" id="sup-legend"></p>
+            <div class="sup-follow"><p class="sup-follow-k" id="sup-follow-k">Choose a country to follow its ribbons</p><div class="sup-chips" id="sup-chips" role="group" aria-labelledby="sup-follow-k"></div></div>
+            <p class="sup-note sup-note-sel">The list is a selection of the main suppliers in each segment, so a ribbon's width counts firms on this list and says nothing about market share.</p>
+          </div>
+          <p class="sup-note sup-pipe-note" id="sup-note"></p>
+        </div>
+      </section>
+      <section class="sup-reg" id="sup-reg" aria-labelledby="sup-tab-segment">
+      <div class="sup-reg-h">
+        <nav class="sup-tabs" aria-label="Firms by segment, by country or in a table"><a href="#/suppliers" id="sup-tab-segment" data-tab="segment" aria-current="true">By segment</a><a href="#/suppliers?tab=country" data-tab="country">By country</a><a href="#/suppliers?tab=table" data-tab="table">Table</a></nav>
+        <div class="filters">
+          <input id="sup-search" type="search" placeholder="Search suppliers, cities, tickers…" aria-label="Search suppliers">
+          <select id="sup-country" aria-label="Filter by country"><option value="">All countries</option></select>
+          <select id="sup-chk" aria-label="Filter by chokepoint level"><option value="">All chokepoint levels</option><option>Critical</option><option>Important</option><option>Contested</option><option>Diversified</option></select>
+        </div>
       </div>
       <div class="sup-toolbar" id="sup-toolbar">
         <span class="count" id="sup-count"></span>
-        <button class="btn ghost sup-allstages" id="sup-allstages" type="button" hidden>All stages</button>
-        <div class="sup-modes" role="group" aria-label="Firm list layout">
-          <button type="button" class="sup-mode" data-mode="ladder" aria-pressed="true">Ladder</button>
-          <button type="button" class="sup-mode" data-mode="table" aria-pressed="false">Table</button>
-        </div>
+        <button class="btn ghost sup-allstages" id="sup-allstages" type="button" hidden>All segments</button>
         <button class="btn ghost" id="sup-copy" type="button">Copy table</button>
       </div>
-      <h3 class="label sup-ladder-h" id="sup-ladder-h">Stages by number of firms, fewest first</h3>
-      <p class="sup-key" id="sup-key" aria-hidden="true"><b class="k-crit">Critical</b><span aria-hidden="true">·</span><b>Important or contested</b><span aria-hidden="true">·</span><b class="k-div">Diversified</b></p>
+      <div class="sup-lv"><h3 class="label sup-ladder-h" id="sup-ladder-h">Segments by number of firms, fewest first</h3>
+      <p class="sup-key" id="sup-key" aria-hidden="true"><b class="k-crit">Critical</b><b>Important or contested</b><b class="k-div">Diversified</b></p></div>
       <div class="sup-ladder" id="sup-ladder" aria-labelledby="sup-ladder-h"></div>
+      <div class="sup-ladder sup-ladder-cc" id="sup-ladder-cc" aria-labelledby="sup-ladder-h" hidden></div>
       <div class="sup-wrap" id="sup-wrap" hidden><table class="sup" id="sup-table"></table></div>
       <p class="sup-note sup-rev-note" id="sup-rev-note">{{SUPPLIERS_REVENUE_NOTE}}</p>
-      </div>
-      <div class="sup-tab" data-tab="country" hidden>
-      <section class="sup-pipe" id="sup-pipe" aria-labelledby="sup-pipe-h">
-        <h3 class="label sup-pipe-h" id="sup-pipe-h">Which countries supply which stages</h3>
-        <div class="sup-pipe-scroll" id="sup-pipe-scroll"></div>
-        <p class="sup-legend" id="sup-legend"></p>
-        <div class="sup-tip" id="sup-tip" role="tooltip" hidden></div>
       </section>
-      </div>
       <footer class="site-footer">{{FOOTER}}</footer>
     </section>
 

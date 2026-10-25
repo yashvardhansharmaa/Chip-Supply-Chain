@@ -206,7 +206,7 @@ ${body}
       const rows = s.rows.slice().sort((a, b) => (rank(a) - rank(b)) || String(a.name).localeCompare(String(b.name)));
       return `<section class="ref-sec" aria-labelledby="${s.id}-h"><h2 class="ref-h2" id="${s.id}">${esc(s.name)}<small id="${s.id}-h-n">${s.rows.length} ${s.rows.length === 1 ? 'firm' : 'firms'}${s.crit ? ` · ${s.crit} critical` : ''}</small></h2><span hidden id="${s.id}-h">${esc(s.name)}</span><ol class="ledger">${rows.map(firm).join('')}</ol></section>`;
     };
-    const jump = `<nav class="jump" aria-labelledby="stages-k"><span class="label" id="stages-k">${esc(ladderLabel || 'Stages by number of firms, fewest first')}</span><ol>${ladder.map((s) => `<li><a href="#${s.id}">${esc(SHORT[s.name] || s.name)}</a><span class="n">${s.rows.length}</span></li>`).join('')}<li><a href="#countries">What each country makes</a></li></ol></nav>`;
+    const jump = `<nav class="jump" aria-labelledby="stages-k"><span class="label" id="stages-k">${esc(ladderLabel || 'Segments by number of firms, fewest first')}</span><ol>${ladder.map((s) => `<li><a href="#${s.id}">${esc(SHORT[s.name] || s.name)}</a><span class="n">${s.rows.length}</span></li>`).join('')}<li><a href="#countries">What each country makes</a></li></ol></nav>`;
 
     // what each country makes: the Suppliers atlas's own lines (build/modules/summary-a.js HOME_MAP), in its order, with the
     // number of firms each has in the supplier list, as the Glossary's country card counts them
@@ -228,11 +228,11 @@ ${body}
       slug: 'suppliers', route: '#/suppliers', h1: 'Suppliers',
       ...titled('suppliers', [[/(\d+) firms/, suppliers.length, 'firms']], `What each of the ${suppliers.length} firms in the AI chip supply chain makes, where it is based and how hard it would be to replace.`),
       dekHTML: esc(ctx.suppliersIntro || ''),
-      facts: [`${suppliers.length} firms`, `${stages.length} stages`],
-      ctaNote: 'The interactive page adds a map of the route one chip takes, a drawing of which countries supply which stages, search and filters.',
+      facts: [`${suppliers.length} firms`, `${stages.length} segments`],
+      ctaNote: 'The interactive page adds a map of the route one chip takes, a drawing of which countries supply which segments, search and filters.',
       body: jump + revNote + ladder.map(stageHTML).join('') + countries,
-      ld: dataset('Suppliers to the AI chip supply chain', `The ${suppliers.length} firms in the AI chip supply chain across ${stages.length} stages: what each makes, where it is based, how hard it would be to replace, and the latest annual revenue of ${withRev} of them as filed, each with its source.`,
-        ['suppliers.json', 'fx-rates.json'], ['Stage', 'Country', 'Chokepoint level', 'Revenue as filed', 'Revenue in US dollars', 'China share of revenue']),
+      ld: dataset('Suppliers to the AI chip supply chain', `The ${suppliers.length} firms in the AI chip supply chain across ${stages.length} segments: what each makes, where it is based, how hard it would be to replace, and the latest annual revenue of ${withRev} of them as filed, each with its source.`,
+        ['suppliers.json', 'fx-rates.json'], ['Segment', 'Country', 'Chokepoint level', 'Revenue as filed', 'Revenue in US dollars', 'China share of revenue']),
     });
   }
 

@@ -1,7 +1,7 @@
 /* summary-a: the atlas on the Suppliers page (and the map-first summary at #/summary-a).
  * The plate is rendered whole by build/modules/summary-a.js; this file only
- * switches which country is chosen: its chips, its stops and strip cards, the
- * caption and its panel. Everything is a real button, so keyboard and screen
+ * switches which country is chosen: its buttons, its stops and strip cards,
+ * and its panel beside the map (which carries the country's role line). Everything is a real button, so keyboard and screen
  * readers get the same page. */
 (function () {
   var CP = window.CP;
@@ -10,16 +10,6 @@
   var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var hoverable = !window.matchMedia || matchMedia('(hover: hover)').matches;
   var root = null, map = null, bound = false;
-
-  // the caption under the chips reads the chosen country's name, meta and role line from its own chip
-  function caption(cc) {
-    var cap = $('.atlas-caption', root), role = $('.sa-role[data-cc="' + cc + '"]', root);
-    if (!cap || !role) return;
-    ['name', 'meta', 'line'].forEach(function (k) {
-      var to = $('.atlas-caption-' + k, cap), from = $('.sa-role-' + k, role);
-      if (to && from) to.textContent = from.textContent;
-    });
-  }
 
   // a panel taller than the plate scrolls inside it; the fade at its foot stays until the reader reaches the end
   function more(panel) {
@@ -30,13 +20,9 @@
   // no country chosen: every chip, marker and stop is off, and the neutral panel says how to pick one
   function clearCountry() {
     if (map) map.removeAttribute('data-cc');
+    var at = $('.atlas', root); if (at) at.removeAttribute('data-cc'); // the strip under the map reads the choice from the plate
     $$('.sa-marker, .sa-chip, .sa-role', root).forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
     $$('.sa-town, .sa-stop, .sa-stopcard', root).forEach(function (el) { el.classList.remove('is-on'); });
-    var cap = $('.atlas-caption', root);
-    if (cap) {
-      var set = function (k, v) { var el = $('.atlas-caption-' + k, cap); if (el) el.textContent = v; };
-      set('name', 'All countries'); set('meta', ''); set('line', 'Choose one to light its stops on the route');
-    }
     $$('.sa-panel', root).forEach(function (p) { p.hidden = p.getAttribute('data-cc') !== 'none'; });
     more($('.sa-panel[data-cc="none"]', root));
     if (CP.Suppliers && CP.Suppliers.light) CP.Suppliers.light('');
@@ -52,21 +38,21 @@
   function selectCountry(cc, fromMap) {
     if (!cc || !$('.sa-panel[data-cc="' + cc + '"]', root)) return;
     if (map) map.setAttribute('data-cc', cc);
+    var at = $('.atlas', root); if (at) at.setAttribute('data-cc', cc);
     $$('.sa-marker, .sa-chip, .sa-role', root).forEach(function (b) {
       b.setAttribute('aria-pressed', b.getAttribute('data-cc') === cc ? 'true' : 'false');
     });
     $$('.sa-town', root).forEach(function (t) {
       t.classList.toggle('is-on', t.getAttribute('data-cc') === cc);
     });
-    // the route answers: the chosen country's stops ring in amber and carry their towns, its cards in the strip take the amber bar
+    // the route answers: the chosen country's stops stay dark and carry their towns, the others turn gray, and so do the strip's cards
     $$('.sa-stop, .sa-stopcard', root).forEach(function (el) {
       el.classList.toggle('is-on', el.getAttribute('data-cc') === cc);
     });
-    caption(cc);
     $$('.sa-panel', root).forEach(function (p) { p.hidden = p.getAttribute('data-cc') !== cc; });
     var panel = $('.sa-panel[data-cc="' + cc + '"]', root);
     if (panel) { panel.scrollTop = 0; more(panel); }
-    // the ribbons on the By country tab light the same country
+    // the ribbons under the map follow the same country
     if (CP.Suppliers && CP.Suppliers.light) CP.Suppliers.light(cc);
     if (window.innerWidth < 900) {
       var chip = $('.sa-role[data-cc="' + cc + '"]', root); // the chip row scrolls sideways on a phone: keep the chosen chip in view

@@ -1003,6 +1003,12 @@ const pageDate = (key, content, file) => {
 
 const footerKey = footer + `<p class="sources-key"><span class="tier tier-A">A</span> company filings, governments, standards bodies, universities and research institutions; <span class="tier tier-B">B</span> SemiAnalysis, Reuters, the Financial Times and Nikkei Asia.</p>`;
 const suppliersIntro = suppliers.length ? `What each of the ${suppliers.length} firms makes, where it is based, and how hard it would be to replace.` : 'The supplier list is not compiled yet.';
+// the four counts beside the Suppliers title, from the list itself: firms, the countries they are based in, the segments (the
+// list's 20 categories) and the firms rated Critical, whose mark is the page's one red wine
+const suppliersFacts = suppliers.length ? `<dl class="sup-facts-row">${[
+  [suppliers.length, 'firms'], [new Set(suppliers.map((r) => r.country)).size, 'countries'], [new Set(suppliers.map((r) => r.category)).size, 'segments'],
+  [suppliers.filter((r) => r.chokepoint === 'Critical').length, 'Critical']
+].map(([n, k], i) => `<div><dt>${i === 3 ? '<i class="sup-mk" aria-hidden="true"></i>' : ''}${k}</dt><dd>${n}</dd></div>`).join('')}</dl>` : '';
 // the Export Controls dek and the note under the China revenue charts, printed by the main page and by /export-controls/ (build/modules/reference-pages.js)
 const exposureFirms = new Set(exposure.map((r) => r.firm)).size;
 const controlsDek = `The main rules since 2018, what can still be sold to China, and China's share of revenue at ${exposureFirms} firms, from their filings.`;
@@ -1116,7 +1122,7 @@ fill('CONTENTS', contentsHTML); fill('CHAPTERS', chaptersHTML); fill('CREDITS', 
 const ftMark = (html.match(/<svg class="wm-tile"[\s\S]*?<\/svg>/) || [])[0] || '';
 const ftLead = ftMark ? `<span class="ft-mark" aria-hidden="true">${ftMark}</span>` : '';
 fill('FOOTER', ftLead + footer); fill('FOOTER_KEY', ftLead + footerKey);
-fill('SUPPLIERS_INTRO', suppliersIntro); fill('SUPPLIERS_REVENUE_NOTE', suppliersRevenueNote); fill('BUILT', builtStr);
+fill('SUPPLIERS_INTRO', suppliersIntro); fill('SUPPLIERS_FACTS', suppliersFacts); fill('SUPPLIERS_REVENUE_NOTE', suppliersRevenueNote); fill('BUILT', builtStr);
 // the PDF title page's art ships beside the page
 // explainer animations: the rendered videos and stills go to dist/media
 { const md = path.join(root, 'media'); if (fs.existsSync(md)) { fs.mkdirSync(path.join(root, 'dist', 'media'), { recursive: true }); fs.readdirSync(md).filter((f) => /\.(mp4|jpg)$/.test(f) && [...USED_MEDIA].some((u) => f.startsWith(u + '-'))).forEach((f) => fs.copyFileSync(path.join(md, f), path.join(root, 'dist', 'media', f))); } }

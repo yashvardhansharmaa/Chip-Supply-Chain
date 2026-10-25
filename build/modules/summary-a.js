@@ -108,16 +108,16 @@ const SHORT = {
 
 const EQUIPMENT = ['Lithography', 'Deposition & Etch', 'Metrology & Inspection', 'Test', 'Advanced Packaging & OSAT', 'Equipment Subsystems & Components'];
 
-/* Where a stop's town label sits when the country is chosen. The label is 10.5 px mono on a 16.6 px line with 2 px
- * of padding (20.6 px tall, 6.2 px a character plus 10), and it grows with the chosen stop's 1.16 scale. The map is
- * drawn 1000 units wide but shown at the plate's width, so a label covers more of the map on a narrow screen: the
- * sides are solved for the map as a 1280 px laptop shows it (830 px wide), and anything wider has more room. The
- * offsets match summary-a.css: 16 px from the stop's center to a side label, 13 px to a label above or below, 11 px
- * from center to center for the corner labels. Right is the default; the rest are tried in this order when right
- * would cover another stop, another label or the edge of the map. Each entry gives the label's top-left corner. */
-const LAB_MAP_PX = 830, LAB_S = 1.16 * VW / LAB_MAP_PX;
-const LAB_H = 20.6 * LAB_S, LAB_GAP = 16 * LAB_S, LAB_V = 13 * LAB_S, LAB_C = 11 * LAB_S, LAB_IN = 8 * LAB_S;
-const labW = (name) => (name.length * 6.2 + 10) * LAB_S;
+/* Where a stop's town label sits when the country is chosen. The label is 11 px Fragment Mono on a 16 px line with 1 px of
+ * padding above and below and 4 px at the sides (18 px tall, 6.6 px a character plus 8). The map is drawn 1000 units wide
+ * but shown at its column's width, so a label covers more of the map on a narrow screen: the sides are solved for the map as
+ * a 1280 px laptop shows it (about 830 px wide), and anything wider has more room. The offsets match summary-a.css: 16 px
+ * from the stop's center to a side label, 13 px to a label above or below, 11 px from center to center for the corner
+ * labels. Right is the default; the rest are tried in this order when right would cover another stop, another label or the
+ * edge of the map. Each entry gives the label's top-left corner. */
+const LAB_MAP_PX = 830, LAB_S = VW / LAB_MAP_PX;
+const LAB_H = 18 * LAB_S, LAB_GAP = 16 * LAB_S, LAB_V = 13 * LAB_S, LAB_C = 11 * LAB_S, LAB_IN = 8 * LAB_S;
+const labW = (name) => (name.length * 6.6 + 8) * LAB_S;
 const LAB = {
   r: (x, y, w) => [x + LAB_GAP, y - LAB_H / 2], l: (x, y, w) => [x - LAB_GAP - w, y - LAB_H / 2],
   d: (x, y, w) => [x - w / 2, y + LAB_V], u: (x, y, w) => [x - w / 2, y - LAB_V - LAB_H],
@@ -145,7 +145,7 @@ function labelSides(stops, VW, VH, warn) {
     const cost = (s, b, placed) => {
       let c = 0;
       c += 10 * (overlap(b, [0, 0, VW, VH]) < (b[2] - b[0]) * (b[3] - b[1]) ? (b[2] - b[0]) * (b[3] - b[1]) - overlap(b, [0, 0, VW, VH]) : 0);
-      stops.forEach((o) => { if (o === s) return; const r = (o.cc === cc ? 14 * 1.16 : 11) * VW / LAB_MAP_PX; c += overlap(b, [o.x - r, o.y - r, o.x + r, o.y + r]); }); // a chosen stop is ringed and scaled
+      stops.forEach((o) => { if (o === s) return; const r = (o.cc === cc ? 13 : 7) * VW / LAB_MAP_PX; c += overlap(b, [o.x - r, o.y - r, o.x + r, o.y + r]); }); // a chosen stop and its halo; another country's stop is a small dot then (summary-a.css)
       placed.forEach((p) => { c += 20 * overlap(b, p); });
       return c;
     };
@@ -160,6 +160,7 @@ function labelSides(stops, VW, VH, warn) {
     const clash = boxes.reduce((a, b, i) => a + boxes.slice(i + 1).reduce((t, o) => t + overlap(b, o), 0), 0);
     if (clash > 0) warn('summary-a: two town labels for ' + cc + ' overlap by ' + Math.round(clash) + ' square units at best');
     else if (bestCost > 900) warn('summary-a: the town labels for ' + cc + ' cover ' + Math.round(bestCost) + ' square units of the map at best');
+    if (process.env.CP_LABCOST) console.log('labels', cc, Math.round(bestCost), own.map((s, i) => s.key.split('-')[0] + ':' + best[i] + '@' + Math.round(s.x) + ',' + Math.round(s.y)).join(' '));
     own.forEach((s, i) => { sides[s.key] = best[i]; });
   });
   return sides;
@@ -300,6 +301,13 @@ module.exports = function (ctx) {
   PRIMARY.concat(SECONDARY).forEach((cc) => { info[cc] = country(cc); });
   matrix.forEach((r) => { if (!SEG_CH[r.segment]) warn('summary-a: no chapter mapped for the matrix segment "' + r.segment + '"'); });
 
+  // the stages each country leads (its first-named on the card), for the panel's meta line and the order of the country buttons
+  const ledBy = {}; stages.forEach((c) => { const first = (c.countries || [])[0]; if (first) (ledBy[first.code] = ledBy[first.code] || []).push(c); });
+  const metaOf = (cc) => {
+    const led = ledBy[cc] || [], five = led.filter((c) => c.band === 'Extreme').length;
+    return led.length ? `leads ${word(led.length)} stage${led.length > 1 ? 's' : ''}${five ? `, ${word(five)} of them extreme` : ''}` : `named on ${word(info[cc].named.length)} chokepoint card${info[cc].named.length === 1 ? '' : 's'}`;
+  };
+
   function panel(cc, open) {
     const d = info[cc];
     const top = d.segs[0];
@@ -340,6 +348,7 @@ module.exports = function (ctx) {
 
     return `<article class="sa-panel" data-cc="${cc}"${open ? '' : ' hidden'}>
 <header class="sa-panel-head"><span class="sa-panel-cc">${cc}</span><h4>${esc(d.name)}</h4></header>
+${ROLE[cc] ? `<p class="sa-panel-meta">${metaOf(cc)}</p><p class="sa-panel-role">${esc(ROLE[cc])}</p>` : ''}
 <p class="sa-panel-lede">${esc(lede)}</p>
 <ul class="sa-facts">${shares.join('')}${cards.join('')}</ul>
 ${china}
@@ -363,7 +372,7 @@ ${china}
 
   // the panel shown when the reader clears the chosen country (click it again); src/modules/summary-a.js shows and hides it
   const nonePanel = `<article class="sa-panel sa-panel--none" data-cc="none"${DEFAULT_CC ? ' hidden' : ''}>
-<header class="sa-panel-head"><h4>No country chosen</h4></header>
+<header class="sa-panel-head"><h4>All countries</h4></header>
 <p class="sa-panel-lede">Each numbered stop is one stage of the chain, pinned where a leading firm is based. Choose a country to see what it makes and which stages it leads.</p>
 </article>`;
   const panels = nonePanel + PRIMARY.concat(SECONDARY).map((cc) => panel(cc, cc === DEFAULT_CC)).join('');
@@ -462,42 +471,62 @@ ${svg}
   // the atlas on the Suppliers page: the route of one chip, its strip of stops, and what each country makes, with its panel
   const stopOf = {}; STOPS.forEach((st) => { stopOf[st[0]] = st; });
   const routeStops = stages.map((c) => ({ c, st: stopOf[c.id] })).filter((x) => { if (!x.st) warn('summary-a: no stop for ' + x.c.id); return !!x.st; });
-  const XY = (st) => [px(st[3]) + st[5], py(st[2]) + st[6]];
+  // Each stop starts at its town plus the editorial nudge (STOPS), then the stops are pushed apart until no two touch on
+  // the narrowest map that numbers them: 690 px wide (a 768 px window; under 761 px the stops are small dots, suppliers.css).
+  // Their boxes are what must not meet (the layout sweep measures boxes), so two stops are clear once they are a stop's
+  // width apart on either axis. STOP_PX is a 22 px stop and 2 px of air; the stops are 20 px below 1200 px, so this holds there too.
+  const STOP_PX = 24, MIN_MAP = 690, STOP_D = STOP_PX * VW / MIN_MAP, EDGE = 14 * VW / MIN_MAP;
+  const pos = routeStops.map((x) => [px(x.st[3]) + x.st[5], py(x.st[2]) + x.st[6]]);
+  for (let it = 0; it < 500; it++) {
+    let moved = false;
+    for (let i = 0; i < pos.length; i++) for (let j = i + 1; j < pos.length; j++) {
+      const dx = pos[j][0] - pos[i][0], dy = pos[j][1] - pos[i][1];
+      if (Math.abs(dx) >= STOP_D - 0.01 || Math.abs(dy) >= STOP_D - 0.01) continue;
+      moved = true;
+      const nx = STOP_D - Math.abs(dx), ny = STOP_D - Math.abs(dy); // the smaller push clears the pair
+      if (nx <= ny) { const k = (dx > 0 || (dx === 0 && j > i) ? 1 : -1) * (nx / 2 + 0.05); pos[i][0] -= k; pos[j][0] += k; }
+      else { const k = (dy > 0 || (dy === 0 && j > i) ? 1 : -1) * (ny / 2 + 0.05); pos[i][1] -= k; pos[j][1] += k; }
+    }
+    pos.forEach((p) => { p[0] = Math.max(EDGE, Math.min(VW - EDGE, p[0])); p[1] = Math.max(EDGE, Math.min(VH - EDGE, p[1])); });
+    if (!moved) break;
+  }
+  for (let i = 0; i < pos.length; i++) for (let j = i + 1; j < pos.length; j++) {
+    if (Math.abs(pos[j][0] - pos[i][0]) < STOP_D - 0.1 && Math.abs(pos[j][1] - pos[i][1]) < STOP_D - 0.1) warn(`summary-a: route stops ${routeStops[i].c.number} and ${routeStops[j].c.number} still touch on a ${MIN_MAP} px map`);
+  }
+  const posOf = {}; routeStops.forEach((x, i) => { posOf[x.c.id] = pos[i]; });
+  const XY = (x) => posOf[x.c.id];
   const arc = (a, b) => { const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2, dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy) || 1, k = 0.18;
     return `M${a[0].toFixed(1)},${a[1].toFixed(1)} Q${(mx - dy / L * L * k).toFixed(1)},${(my + dx / L * L * k).toFixed(1)} ${b[0].toFixed(1)},${b[1].toFixed(1)}`; };
   let route = '', tails = '';
   routeStops.forEach((x, i) => {
-    const a = XY(x.st);
-    if (i < routeStops.length - 1) route += `<path class="sa-route" d="${arc(a, XY(routeStops[i + 1].st))}"/>`;
-    if (x.st[5] || x.st[6]) tails += `<line class="sa-tail" x1="${px(x.st[3])}" y1="${py(x.st[2])}" x2="${a[0].toFixed(1)}" y2="${a[1].toFixed(1)}"/>`;
+    const a = XY(x), t = [px(x.st[3]), py(x.st[2])];
+    if (i < routeStops.length - 1) route += `<path class="sa-route" d="${arc(a, XY(routeStops[i + 1]))}"/>`;
+    if (Math.hypot(a[0] - t[0], a[1] - t[1]) > 3) tails += `<line class="sa-tail" x1="${t[0]}" y1="${t[1]}" x2="${a[0].toFixed(1)}" y2="${a[1].toFixed(1)}"/>`; // a stop moved off its town keeps a line back to it
   });
-  const routeSvg = svg.replace('</svg>', `<g class="sa-routes">${route}${tails}</g></svg>`);
+  // the route's map is the summary map without its country markers' leader lines, which point at markers this map does not have
+  const routeSvg = svg.replace(/<line [^>]*class="sa-leader"[^>]*\/>/g, '').replace('</svg>', `<g class="sa-routes">${route}${tails}</g></svg>`);
   // the chosen country's stops carry their town names; the label sides are solved so none covers a stop or another label
-  const sides = labelSides(routeStops.map((x) => { const a = XY(x.st); return { key: x.c.id, cc: x.st[4], x: a[0], y: a[1], w: labW(x.st[1]) }; }), VW, VH, warn);
+  const sides = labelSides(routeStops.map((x) => { const a = XY(x); return { key: x.c.id, cc: x.st[4], x: a[0], y: a[1], w: labW(x.st[1]) }; }), VW, VH, warn);
+  // a stop is solid ink for a stage rated Extreme and an ink ring for one rated High, as the key beside the map says
   const stopBtns = routeStops.map((x) => {
-    const a = XY(x.st), lead = ((x.c.leaders || [])[0] || {}).name || '', side = sides[x.c.id] || 'r';
+    const a = XY(x), lead = ((x.c.leaders || [])[0] || {}).name || '', side = sides[x.c.id] || 'r';
     return `<a class="sa-stop${x.st[4] === DEFAULT_CC ? ' is-on' : ''}" data-cc="${x.st[4]}" href="${href(x.c)}" style="left:${(a[0] / VW * 100).toFixed(2)}%;top:${(a[1] / VH * 100).toFixed(2)}%" data-place="${esc(x.st[1])}"${side === 'r' ? '' : ` data-lab="${side}"`} data-title="${esc(x.c.title)}" data-town="${esc(x.st[1])}, ${esc(COUNTRY[x.st[4]] || x.st[4])}" data-lead="${esc(lead)}" data-band="${esc(x.c.band || '')}" aria-label="Stop ${x.c.number}, ${esc(x.c.title)}: ${esc(x.st[1])}${lead ? ', led by ' + esc(lead) : ''}, ${x.c.band ? x.c.band.toLowerCase() + ' concentration' : ''}."><span>${x.c.number}</span></a>`;
   }).join('');
-  const strip = routeStops.map((x) => `<li><a class="sa-stopcard${x.st[4] === DEFAULT_CC ? ' is-on' : ''}" data-cc="${x.st[4]}" href="${href(x.c)}"><span class="sa-stopcard-n">${String(x.c.number).padStart(2, '0')}</span><span class="sa-stopcard-t">${esc(x.c.title.replace(/ and /g, ' & '))}</span><span class="sa-stopcard-w">${esc(x.st[1])} · ${x.st[4]}</span></a></li>`).join('');
-  const ledBy = {}; stages.forEach((c) => { const first = (c.countries || [])[0]; if (first) (ledBy[first.code] = ledBy[first.code] || []).push(c); });
+  const strip = routeStops.map((x) => `<li><a class="sa-stopcard${x.st[4] === DEFAULT_CC ? ' is-on' : ''}" data-cc="${x.st[4]}" data-band="${esc(x.c.band || '')}" href="${href(x.c)}"><span class="sa-stopcard-n">${String(x.c.number).padStart(2, '0')}<i class="sa-bmk" aria-hidden="true"></i></span><span class="sa-stopcard-t">${esc(x.c.title.replace(/ and /g, ' & '))}</span><span class="sa-stopcard-w">${esc(x.st[1])} · ${x.st[4]}</span></a></li>`).join('');
   const roleOrder = Object.keys(ROLE).filter((cc) => info[cc]).sort((a, b) => ((ledBy[b] || []).length - (ledBy[a] || []).length) || (info[b].named.length - info[a].named.length));
-  const metaOf = (cc) => {
-    const led = ledBy[cc] || [], five = led.filter((c) => c.band === 'Extreme').length;
-    return led.length ? `leads ${word(led.length)} stage${led.length > 1 ? 's' : ''}${five ? `, ${word(five)} of them extreme` : ''}` : `named on ${word(info[cc].named.length)} chokepoint card${info[cc].named.length === 1 ? '' : 's'}`;
-  };
-  // the country chips keep the meta and the role line in their markup; the chip shows the name and the caption below reads the rest
+  // the country buttons keep the meta and the role line in their markup (the reference page reads them); each country's
+  // panel beside the map prints them
   const roles = roleOrder.map((cc) => `<li><button type="button" class="sa-role" data-cc="${cc}" aria-pressed="${cc === DEFAULT_CC}"><span class="sa-role-name">${esc(COUNTRY[cc] || cc)}</span><span class="sa-role-meta">${metaOf(cc)}</span><span class="sa-role-line">${esc(ROLE[cc])}</span></button></li>`).join('');
-  const caption = DEFAULT_CC ? `<p class="atlas-caption"><b class="atlas-caption-name">${esc(COUNTRY[DEFAULT_CC])}</b> <span class="atlas-caption-meta">${metaOf(DEFAULT_CC)}</span> <span class="atlas-caption-line">${esc(ROLE[DEFAULT_CC])}</span></p>`
-    : '<p class="atlas-caption"><b class="atlas-caption-name">All countries</b> <span class="atlas-caption-meta"></span> <span class="atlas-caption-line">Choose one to light its stops on the route</span></p>'; // as clearCountry() in src/modules/summary-a.js writes it
+  const ex = routeStops.find((x) => x.c.band === 'Extreme'), hi = routeStops.find((x) => x.c.band === 'High');
+  const key = `<p class="atlas-key">${ex ? `<span><i class="sa-kstop" data-band="Extreme" aria-hidden="true">${ex.c.number}</i>Stage rated Extreme</span>` : ''}${hi ? `<span><i class="sa-kstop" data-band="High" aria-hidden="true">${hi.c.number}</i>Stage rated High</span>` : ''}</p>`;
   const homeMap = `<div class="sa sa--home sa--atlas">
 <section class="atlas" id="the-route" aria-labelledby="atlas-h">
-<h3 class="sr-only" id="atlas-h">What each country makes</h3>
-<div class="atlas-bar"><span class="label atlas-bar-l">The route of one chip</span><ul class="sa-roles" aria-label="Countries">${roles}</ul></div>
-${caption}
+<div class="sup-sec-h atlas-h"><h2 id="atlas-h">The route of one chip</h2><p class="sup-sec-sub">The ${routeStops.length} stages of the chain, each pinned where a leading firm is based</p></div>
+<ul class="sa-roles" aria-label="Countries">${roles}</ul>
 <div class="atlas-body">
 <div class="sa-map sa-map--route"${DEFAULT_CC ? ` data-cc="${DEFAULT_CC}"` : ''}>${routeSvg}<div class="sa-overlay">${stopBtns}</div></div>
+<div class="atlas-side">${key}<div class="sa-panels" aria-live="polite">${panels}</div></div>
 <ol class="sa-strip-stops">${strip}</ol>
-<div class="sa-panels" aria-live="polite">${panels}</div>
 </div>
 </section>
 </div>`;
