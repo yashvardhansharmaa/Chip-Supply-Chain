@@ -1,0 +1,382 @@
+== walk  (383 lines in main, 383 in the redesign)
+   case only: 0
+== chain  (4389 lines in main, 4394 in the redesign)
+   case only: 0
+   - Concentration. How many firms could supply the stage today. Every stage rates Extreme (three or fewer firms, or one with more than half) or High (four to six).
+   - Substitutability. How hard it would be for a well-funded state or firm to build an alternative, rated Very hard, Hard or Moderately hard.
+   - Price or market size. What one unit costs, or what the stage earns in a year.
+   + Concentration.
+   + How many firms could supply the stage today. Every stage rates Extreme (three or fewer firms, or one with more than half) or High (four to six).
+   + Substitutability.
+   + How hard it would be for a well-funded state or firm to build an alternative, rated Very hard, Hard or Moderately hard.
+   + Price or market size.
+   + What one unit costs, or what the stage earns in a year.
+   + Extreme
+   + High
+   words added: extreme high
+== ai-chips  (59 lines in main, 59 in the redesign)
+   case only: 0
+== suppliers  (302 lines in main, 354 in the redesign)
+   case only: 0
+   - What each country makes
+   - All countries Choose one to light its stops on the route
+   - No country chosen
+   - By stage
+   - Ladder
+   - Stages by number of firms, fewest first
+   - ·
+   - ·
+   + firms
+   + 226
+   + countries
+   + 18
+   + segments
+   + 20
+   + Critical
+   + 28
+   + The 15 stages of the chain, each pinned where a leading firm is based
+   + United States
+   + Japan
+   + Taiwan
+   + South Korea
+   + Netherlands
+   + China
+   + Germany
+   + 1
+   + 2
+   + Stage rated Extreme
+   + Stage rated High
+   + All countries
+   + Which countries supply which segments
+   + Each country
+   + EU-27 together
+   + Design & EDA 7
+   + IP & architecture 5
+   + Silicon wafers 12
+   + Photomasks 10
+   + Lithography 6
+   + Deposition & etch 11
+   + Photoresist 11
+   + Chemicals & gases 11
+   + Optics & Photonics 9
+   + Equipment subsystems 14
+   + Metrology 9
+   + Foundry 9
+   + Memory 9
+   + Advanced packaging 16
+   + Test 10
+   + Substrates & PCBs 17
+   + Interconnect 7
+   + Power & cooling 13
+   + Systems & servers 12
+   + Accelerator vendors 28
+   + United States 67
+   + Japan 45
+   + China 33
+   + Taiwan 25
+   + South Korea 15
+   + Netherlands 4
+   + Germany 10
+   + Other 27
+   + Firms on the list, by headquarters
+   + Of them, firms rated Critical
+   + Choose a country to follow its ribbons
+   + Other
+   + The list is a selection of the main suppliers in each segment, so a ribbon's width counts firms on this list and says nothing about market share.
+   + The ribbons count each firm in the supplier list under the country of its own headquarters. Country shares of a market's revenue count most firms under their parent company's home country. Siemens EDA is run from Oregon but owned by Siemens AG, so the ribbons count it under the US and the EDA software share under Germany. Linde plc is incorporated in Ireland, with head offices in the UK and the US. The ribbons count it under the UK. The specialty gases share counts it under Germany for its roots in Linde AG, as Georgetown University's Emerging Technology Observatory does.
+   + By segment
+   + Segments by number of firms, fewest first
+   words lost: what makes route one light stops no chosen ladder
+   words added: supply chain home the the the the the the the the the the the the the the the suppliers each each each of of of of of 226 firms firms firms firms firms where it it it is is is is based and and and countries countries 18 segments segments segments 20 critical critical 28 28 15 15 pinned a a a a a leading firm firm united united states states japan japan taiwan taiwan south south korea korea netherlands netherlands china china germany germany germany germany 1 2 4 5 6 7 7 9 9 9 9 10 10 10 11 11 11 12 12 13 14 stage rated rated rated extreme high country country country which which design eda eda eda & & & & & & & & ip us us silicon wafers chemicals gases gases photoresist lithography photomasks deposition etch metrology memory advanced packaging substrates pcbs test systems power eu-27 together architecture optics photonics equipment subsystems foundry 16 17 interconnect cooling servers accelerator vendors 67 45 33 25 other other 27 on list list list list by by headquarters headquarters them follow its its ribbons ribbons ribbons ribbons selection main in in in in in segment segment so so ribbon s s s s width counts counts this says nothing about market market share share share count count count count supplier under under under under under under own shares revenue most their parent company siemens siemens run from oregon but owned ag ag software linde linde plc incorporated ireland with head offices uk uk specialty for roots as georgetown university emerging technology observatory does
+== suppliers-by-country  (133 lines in main, 343 in the redesign)
+   case only: 0
+   - What each country makes
+   - All countries Choose one to light its stops on the route
+   - No country chosen
+   - By stage
+   - Which countries supply which stages
+   - Critical firmsRibbon width is the number of firms a country has at a stage.
+   + firms
+   + 226
+   + countries
+   + 18
+   + segments
+   + 20
+   + Critical
+   + Critical
+   + Critical
+   + 28
+   + The 15 stages of the chain, each pinned where a leading firm is based
+   + United States
+   + Japan
+   + Taiwan
+   + South Korea
+   + Netherlands
+   + China
+   + Germany
+   + Israel
+   + Austria
+   + Singapore
+   + United Kingdom
+   + 1
+   + 1
+   + 1
+   + 1
+   + 1
+   + 2
+   + 3
+   + 3
+   + 3
+   + 3
+   + 3
+   + 3
+   + 4
+   + 5
+   + 10
+   + 15
+   + Stage rated Extreme
+   + Stage rated High
+   + All countries
+   + All countries
+   + Which countries supply which segments
+   + Firms on the list, by headquarters
+   + Of them, firms rated Critical
+   + Choose a country to follow its ribbons
+   + The list is a selection of the main suppliers in each segment, so a ribbon's width counts firms on this list and says nothing about market share.
+   + By segment
+   + Table
+   + United States (67)
+   + Japan (45)
+   + China (33)
+   + Taiwan (25)
+   + South Korea (15)
+   + Germany (10)
+   + United Kingdom (5)
+   + Netherlands (4)
+   + Canada (3)
+   + France (3)
+   + Switzerland (3)
+   + Austria (3)
+   + Israel (3)
+   + Singapore (3)
+   + Italy (1)
+   + Thailand (1)
+   + Ireland (1)
+   + Denmark (1)
+   + EU-27 members (23)
+   + Other countries (27)
+   + All chokepoint levels
+   + Important
+   + Contested
+   + Diversified
+   + Diversified
+   + 226 suppliers
+   + Copy table
+   + Countries by number of firms, most first
+   + Important or contested
+   + 67
+   + 67 firms.
+   + 7 critical
+   + Cadence Design SystemsDesign & EDA
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + , Critical
+   + Siemens EDADesign & EDA
+   + SynopsysDesign & EDA
+   + CymerLithography
+   + KLAMetrology
+   + Micron TechnologyMemory
+   + NvidiaAccelerator vendors
+   + AnsysDesign & EDA RambusIP & architecture Hemlock SemiconductorSilicon wafers PhotronicsPhotomasks Applied MaterialsDeposition & etch Lam ResearchDeposition & etch InpriaPhotoresist Qnity ElectronicsPhotoresist Air ProductsChemicals & gases EntegrisChemicals & gases Coherent CorpOptics & Photonics CorningOptics & Photonics LumentumOptics & Photonics Advanced Energy IndustriesEquipment subsystems Ichor HoldingsEquipment subsystems MKS InstrumentsEquipment subsystems Ultra Clean HoldingsEquipment subsystems Onto InnovationMetrology SanDiskMemory Amkor TechnologyAdvanced packaging Aehr Test SystemsTest CohuTest FormFactorTest TeradyneTest TTM TechnologiesSubstrates & PCBs AmphenolInterconnect Arista NetworksInterconnect Astera LabsInterconnect Credo TechnologyInterconnect GE VernovaPower & cooling Monolithic Power SystemsPower & cooling VertivPower & cooling Super Micro ComputerSystems & servers ZT SystemsSystems & servers AMDAccelerator vendors Annapurna LabsAccelerator vendors BroadcomAccelerator vendors GoogleAccelerator vendors IntelAccelerator vendors Marvell TechnologyAccelerator vendors ACM ResearchDeposition & etch AXTOptics & Photonics Ayar LabsOptics & Photonics LightmatterOptics & Photonics Intel FoundryFoundry AbsolicsSubstrates & PCBs Cerebras SystemsAccelerator vendors d-MatrixAccelerator vendors EtchedAccelerator vendors GroqAccelerator vendors Meta PlatformsAccelerator vendors Microsoft Azure SiliconAccelerator vendors SambaNova SystemsAccelerator vendors SiFiveIP & architecture
+   + , Diversified
+   + , Diversified
+   + , Diversified
+   + , Diversified
+   + , Diversified
+   + , Diversified
+   + , Diversified
+   + , Diversified
+   + , Diversified
+   + , Diversified
+   + , Diversified
+   + , Diversified
+   + , Diversified
+   + , Diversified
+   + , Diversified
+   + , Diversified
+   + GlobalFoundriesFoundry
+   + Cisco SystemsInterconnect
+   + Dell TechnologiesSystems & servers
+   + Hewlett Packard EnterpriseSystems & servers
+   + JabilSystems & servers
+   + QualcommAccelerator vendors
+   + 45
+   + 45 firms.
+   + 11 critical
+   + AGC Inc.Photomasks
+   + HoyaPhotomasks
+   + Mitsui ChemicalsPhotomasks
+   + Tokyo ElectronDeposition & etch
+   + Morita Chemical IndustriesChemicals & gases
+   + Stella ChemifaChemicals & gases
+   + LasertecMetrology
+   + Disco CorporationAdvanced packaging
+   + AdvantestTest
+   + AjinomotoSubstrates & PCBs
+   + NittoboSubstrates & PCBs
+   + Shin-Etsu ChemicalSilicon wafers SUMCOSilicon wafers TokuyamaSilicon wafers Dai Nippon PrintingPhotomasks NuFlare TechnologyPhotomasks Toppan HoldingsPhotomasks CanonLithography GigaphotonLithography NikonLithography Kokusai ElectricDeposition & etch SCREEN HoldingsDeposition & etch AdekaPhotoresist FujifilmPhotoresist Fujimi IncorporatedPhotoresist JSR CorporationPhotoresist JX Advanced MetalsPhotoresist Sumitomo ChemicalPhotoresist Tokyo Ohka KogyoPhotoresist Kanto Denka KogyoChemicals & gases Nippon Sanso HoldingsChemicals & gases Resonac HoldingsChemicals & gases Ferrotec HoldingsEquipment subsystems HoribaEquipment subsystems Hitachi High-TechMetrology KioxiaMemory Micronics JapanTest Tokyo Seimitsu (Accretech)Test IbidenSubstrates & PCBs Mitsubishi Gas ChemicalSubstrates & PCBs Panasonic IndustrySubstrates & PCBs Shinko Electric IndustriesSubstrates & PCBs Mitsubishi PowerPower & cooling NidecPower & cooling RapidusFoundry
+   + 33
+   + 33 firms.
+   + Eoptolink TechnologyOptics & Photonics Innolight TechnologyOptics & Photonics Empyrean TechnologyDesign & EDA Primarius TechnologiesDesign & EDA SemitronixDesign & EDA Eswin MaterialSilicon wafers National Silicon Industry GroupSilicon wafers Shenzhen Newway PhotomaskPhotomasks Shenzhen Qingyi PhotomaskPhotomasks SMEELithography AMECDeposition & etch Naura TechnologyDeposition & etch PiotechDeposition & etch Skyverse TechnologyMetrology Wuhan Jingce ElectronicMetrology Hua Hong SemiconductorFoundry SMICFoundry CXMTMemory YMTCMemory Hua Tian TechnologyAdvanced packaging JCET GroupAdvanced packaging Tongfu MicroelectronicsAdvanced packaging Victory Giant TechnologySubstrates & PCBs WUS Printed CircuitSubstrates & PCBs Luxshare PrecisionInterconnect Biren TechnologyAccelerator vendors Cambricon TechnologiesAccelerator vendors HiSiliconAccelerator vendors Hygon Information TechnologyAccelerator vendors Iluvatar CoreXAccelerator vendors MetaXAccelerator vendors Moore ThreadsAccelerator vendors LenovoSystems & servers
+   + 25
+   + 25 firms.
+   + 1 critical
+   + 1 critical
+   + 1 critical
+   + 1 critical
+   + 1 critical
+   + TSMCFoundry
+   + GlobalWafersSilicon wafers ASE Technology HoldingAdvanced packaging King Yuan ElectronicsAdvanced packaging Powertech TechnologyAdvanced packaging Chroma ATETest MPI CorporationTest Gold Circuit ElectronicsSubstrates & PCBs Kinsus InterconnectSubstrates & PCBs Nan Ya PCBSubstrates & PCBs UnimicronSubstrates & PCBs Accton TechnologyInterconnect Delta ElectronicsPower & cooling Hon Hai PrecisionSystems & servers InventecSystems & servers Quanta ComputerSystems & servers WistronSystems & servers WiwynnSystems & servers Alchip TechnologiesAccelerator vendors Global UnichipAccelerator vendors MediaTekAccelerator vendors UMCFoundry
+   + Nanya TechnologyMemory
+   + Winbond ElectronicsMemory
+   + Chipbond TechnologyAdvanced packaging
+   + 15 firms.
+   + 3 critical
+   + Samsung MemoryMemory
+   + SK hynixMemory
+   + Hanmi SemiconductorAdvanced packaging
+   + SK SiltronSilicon wafers SEMESDeposition & etch SK SpecialtyChemicals & gases Park SystemsMetrology Samsung FoundryFoundry LG InnotekSubstrates & PCBs Samsung Electro-MechanicsSubstrates & PCBs Dongjin SemichemPhotoresist SoulbrainPhotoresist FuriosaAIAccelerator vendors RebellionsAccelerator vendors OCI HoldingsSilicon wafers
+   + 10 firms.
+   + 2 critical
+   + Carl Zeiss SMTEquipment subsystems
+   + TrumpfEquipment subsystems
+   + SiltronicSilicon wafers Wacker ChemieSilicon wafers Merck KGaAChemicals & gases JenoptikEquipment subsystems Pfeiffer VacuumEquipment subsystems SUSS MicroTecAdvanced packaging InfineonPower & cooling Siemens EnergyPower & cooling
+   + 5 firms.
+   + Arm HoldingsIP & architecture
+   + Alphawave SemiIP & architecture LindeChemicals & gases Edwards VacuumEquipment subsystems Imagination TechnologiesIP & architecture
+   + 4 firms.
+   + ASMLLithography
+   + ASM InternationalDeposition & etch VDL GroepEquipment subsystems BE Semiconductor IndustriesAdvanced packaging
+   + 3 firms.
+   + 3 firms.
+   + 3 firms.
+   + 3 firms.
+   + 3 firms.
+   + 3 firms.
+   + IMS NanofabricationPhotomasks
+   + EV GroupAdvanced packaging AT&SSubstrates & PCBs
+   + Switzerland
+   + VAT GroupEquipment subsystems
+   + Comet GroupEquipment subsystems Hitachi EnergyPower & cooling
+   + Canada
+   + CoolIT SystemsPower & cooling CelesticaSystems & servers TenstorrentAccelerator vendors
+   + France
+   + SoitecSilicon wafers Air LiquideChemicals & gases Schneider ElectricPower & cooling
+   + CamtekMetrology Nova LtdMetrology Tower SemiconductorFoundry
+   + ASMPTAdvanced packaging Kulicke and SoffaAdvanced packaging UTAC HoldingsAdvanced packaging
+   + Denmark
+   + 1 firms.
+   + 1 firms.
+   + 1 firms.
+   + 1 firms.
+   + AsetekPower & cooling
+   + Ireland
+   + EatonPower & cooling
+   + Italy
+   + TechnoprobeTest
+   + Thailand
+   + FabrinetOptics & Photonics
+   + Revenue is each company's latest annual figure as filed, in the currency and unit of its own report. For a company that does not report in US dollars, the dollar figure is converted at the average of the Federal Reserve's monthly exchange rates over the company's fiscal year (release G.5).
+   words lost: what makes country country route one light stops no chosen firmsribbon has
+   words added: chain the the the the the the the the suppliers suppliers each each of of of of of 226 226 firms firms firms firms firms firms firms firms firms firms firms firms firms firms firms firms firms firms firms firms firms firms where is is is based and and and be countries countries countries countries 18 segments segments 20 critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical critical 28 15 15 15 15 pinned a a a leading firm united united united united states states japan japan taiwan taiwan south south korea korea netherlands netherlands china china germany germany israel israel austria austria singapore singapore kingdom kingdom 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 4 4 4 5 5 5 5 7 10 10 10 11 rated rated rated extreme high all all design eda eda eda eda eda eda eda & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & us silicon wafers wafers wafers wafers wafers wafers wafers wafers wafers wafers wafers wafers tokyo tokyo tokyo gases gases gases gases gases gases gases gases gases gases gases photomasks etch etch etch etch etch etch etch etch etch etch etch advanced advanced packaging packaging packaging packaging packaging packaging packaging packaging packaging packaging packaging packaging packaging packaging packaging packaging pcbs pcbs pcbs pcbs pcbs pcbs pcbs pcbs pcbs pcbs pcbs pcbs pcbs pcbs pcbs pcbs pcbs test test power eu-27 architecture architecture architecture architecture architecture photonics photonics photonics photonics photonics photonics photonics photonics photonics subsystems subsystems subsystems subsystems subsystems subsystems subsystems subsystems subsystems subsystems subsystems subsystems subsystems subsystems cooling cooling cooling cooling cooling cooling cooling cooling cooling cooling cooling cooling cooling servers servers servers servers servers servers servers servers servers servers servers servers vendors vendors vendors vendors vendors vendors vendors vendors vendors vendors vendors vendors vendors vendors vendors vendors vendors vendors vendors vendors vendors vendors vendors vendors vendors vendors vendors vendors 67 67 67 45 45 45 33 33 33 25 25 25 other 27 on list list list by by headquarters them follow its ribbons selection main in in in segment segment so ribbon s s s s counts this says nothing about market share own revenue most company company company siemens siemens ireland ireland for as technology does table table canada canada france france switzerland switzerland italy italy thailand thailand denmark denmark members 23 chokepoint levels important important contested contested diversified diversified diversified diversified diversified diversified diversified diversified diversified diversified diversified diversified diversified diversified diversified diversified diversified diversified copy first or cadence systemsdesign edadesign synopsysdesign cymerlithography klametrology micron technologymemory technologymemory nvidiaaccelerator ansysdesign rambusip hemlock semiconductorsilicon photronicsphotomasks applied materialsdeposition lam researchdeposition researchdeposition inpriaphotoresist qnity electronicsphotoresist air air productschemicals entegrischemicals coherent corpoptics corningoptics lumentumoptics energy industriesequipment ichor holdingsequipment holdingsequipment holdingsequipment mks instrumentsequipment ultra clean onto innovationmetrology sandiskmemory amkor technologyadvanced technologyadvanced technologyadvanced technologyadvanced aehr systemstest cohutest formfactortest teradynetest ttm technologiessubstrates amphenolinterconnect arista networksinterconnect astera labsinterconnect credo technologyinterconnect technologyinterconnect ge vernovapower monolithic systemspower systemspower vertivpower super micro computersystems computersystems zt systemssystems amdaccelerator annapurna labsaccelerator broadcomaccelerator googleaccelerator intelaccelerator marvell technologyaccelerator technologyaccelerator technologyaccelerator acm axtoptics ayar labsoptics lightmatteroptics intel foundryfoundry foundryfoundry absolicssubstrates cerebras systemsaccelerator systemsaccelerator d-matrixaccelerator etchedaccelerator groqaccelerator meta platformsaccelerator microsoft azure siliconaccelerator sambanova sifiveip globalfoundriesfoundry cisco systemsinterconnect dell technologiessystems hewlett packard enterprisesystems jabilsystems qualcommaccelerator agc inc hoyaphotomasks mitsui chemicalsphotomasks electrondeposition morita chemical industrieschemicals stella chemifachemicals lasertecmetrology disco corporationadvanced advantesttest ajinomotosubstrates nittobosubstrates shin-etsu chemicalsilicon sumcosilicon tokuyamasilicon dai nippon nippon printingphotomasks nuflare technologyphotomasks toppan holdingsphotomasks canonlithography gigaphotonlithography nikonlithography kokusai electricdeposition screen holdingsdeposition adekaphotoresist fujifilmphotoresist fujimi incorporatedphotoresist jsr corporationphotoresist jx metalsphotoresist sumitomo chemicalphotoresist ohka kogyophotoresist kanto denka kogyochemicals sanso holdingschemicals holdingschemicals resonac ferrotec horibaequipment hitachi hitachi high-techmetrology kioxiamemory micronics japantest seimitsu accretech ibidensubstrates mitsubishi mitsubishi gas chemicalsubstrates panasonic industrysubstrates shinko electric industriessubstrates powerpower nidecpower rapidusfoundry eoptolink technologyoptics technologyoptics innolight empyrean technologydesign primarius technologiesdesign semitronixdesign eswin materialsilicon national industry groupsilicon shenzhen shenzhen newway photomaskphotomasks photomaskphotomasks qingyi smeelithography amecdeposition naura technologydeposition piotechdeposition skyverse technologymetrology wuhan jingce electronicmetrology hua hua hong semiconductorfoundry semiconductorfoundry smicfoundry cxmtmemory ymtcmemory tian jcet groupadvanced groupadvanced tongfu microelectronicsadvanced victory giant technologysubstrates wus printed circuitsubstrates luxshare precisioninterconnect biren cambricon technologiesaccelerator technologiesaccelerator hisiliconaccelerator hygon information iluvatar corexaccelerator metaxaccelerator moore threadsaccelerator lenovosystems tsmcfoundry globalwaferssilicon ase holdingadvanced king yuan electronicsadvanced powertech chroma atetest mpi corporationtest gold circuit electronicssubstrates kinsus interconnectsubstrates nan ya pcbsubstrates unimicronsubstrates accton delta electronicspower hon hai precisionsystems inventecsystems quanta wistronsystems wiwynnsystems alchip global unichipaccelerator mediatekaccelerator umcfoundry nanya winbond electronicsmemory chipbond samsung samsung samsung memorymemory sk sk sk hynixmemory hanmi semiconductoradvanced siltronsilicon semesdeposition specialtychemicals park systemsmetrology lg innoteksubstrates electro-mechanicssubstrates dongjin semichemphotoresist soulbrainphotoresist furiosaaiaccelerator rebellionsaccelerator oci holdingssilicon carl zeiss smtequipment trumpfequipment siltronicsilicon wacker chemiesilicon merck kgaachemicals jenoptikequipment pfeiffer vacuumequipment vacuumequipment suss microtecadvanced infineonpower energypower energypower arm holdingsip alphawave semiip lindechemicals edwards imagination technologiesip asmllithography asm internationaldeposition vdl groepequipment semiconductor industriesadvanced ims nanofabricationphotomasks ev at&ssubstrates vat groupequipment groupequipment comet coolit celesticasystems tenstorrentaccelerator soitecsilicon liquidechemicals schneider electricpower camtekmetrology nova ltdmetrology tower asmptadvanced kulicke soffaadvanced utac holdingsadvanced asetekpower eatonpower technoprobetest fabrinetoptics latest annual figure figure filed currency unit report report that not dollars dollar converted average federal reserve monthly exchange rates over fiscal year release g
+== export-controls  (731 lines in main, 731 in the redesign)
+   case only: 0
+== china-revenue  (258 lines in main, 258 in the redesign)
+   case only: 0
+== glossary  (995 lines in main, 995 in the redesign)
+   case only: 0
+== /advanced-packaging/  (345 lines in main, 345 in the redesign)
+   case only: 0
+== /chemicals-gases-and-photoresist/  (342 lines in main, 342 in the redesign)
+   case only: 0
+== /chips/  (639 lines in main, 639 in the redesign)
+   case only: 0
+== /component-costs/  (313 lines in main, 313 in the redesign)
+   case only: 0
+== /data-centers-and-power/  (340 lines in main, 340 in the redesign)
+   case only: 0
+== /deposition-and-etch/  (391 lines in main, 391 in the redesign)
+   case only: 0
+== /design-and-eda/  (325 lines in main, 325 in the redesign)
+   case only: 0
+== /export-controls/  (880 lines in main, 880 in the redesign)
+   case only: 0
+== /foundries-and-fabs/  (328 lines in main, 328 in the redesign)
+   case only: 0
+== /geopolitics/  (416 lines in main, 416 in the redesign)
+   case only: 0
+== /glossary/  (1664 lines in main, 1664 in the redesign)
+   case only: 0
+== /lithography/  (418 lines in main, 418 in the redesign)
+   case only: 0
+== /memory-and-hbm/  (292 lines in main, 292 in the redesign)
+   case only: 0
+== /metrology-and-inspection/  (374 lines in main, 374 in the redesign)
+   case only: 0
+== /photomasks-and-pellicles/  (286 lines in main, 286 in the redesign)
+   case only: 0
+== /silicon-and-wafers/  (295 lines in main, 295 in the redesign)
+   case only: 0
+== /substrates-and-pcbs/  (338 lines in main, 338 in the redesign)
+   case only: 0
+== /summary/  (367 lines in main, 367 in the redesign)
+   case only: 0
+== /suppliers/  (3602 lines in main, 3602 in the redesign)
+   case only: 0
+   - 226 firms20 stagesUpdated 21 October 2026
+   - The interactive page adds a map of the route one chip takes, a drawing of which countries supply which stages, search and filters.
+   - The interactive page adds a map of the route one chip takes, a drawing of which countries supply which stages, search and filters.
+   - Stages by number of firms, fewest first
+   + 226 firms20 segmentsUpdated 21 October 2026
+   + The interactive page adds a map of the route one chip takes, a drawing of which countries supply which segments, search and filters.
+   + The interactive page adds a map of the route one chip takes, a drawing of which countries supply which segments, search and filters.
+   + Segments by number of firms, fewest first
+   words lost: stagesupdated stages stages stages
+   words added: segmentsupdated segments segments segments
+== /systems-and-networking/  (319 lines in main, 319 in the redesign)
+   case only: 0
+== /test-and-assembly/  (324 lines in main, 324 in the redesign)
+   case only: 0
+== /transistors-and-front-end/  (304 lines in main, 304 in the redesign)
+   case only: 0
+== /home/  (5 lines in main, 5 in the redesign)
+   case only: 0
+== /intro/  (29 lines in main, 29 in the redesign)
+   case only: 0
+== /chain/  (5 lines in main, 5 in the redesign)
+   case only: 0

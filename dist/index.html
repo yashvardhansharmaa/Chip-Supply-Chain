@@ -1552,6 +1552,10 @@ html.no-stage .chapter .ch-spec-cap { grid-column: 1 / 9; }
   .chapter .fig-strip { padding: 12px var(--margin); }
   .chapter .figure .fig-title { font-size: 19px; line-height: 1.3; }
   .chapter .fig-strip .fs-acts { margin-left: 0; }
+  /* as the card: in The Chain a figure stays in the column, since the chapter's paint containment would clip a bleed */
+  .view[data-view="stack"] .chapter .figure { margin: 28px 0 36px; }
+  .view[data-view="stack"] .chapter .fig-head, .view[data-view="stack"] .chapter .fig-body { padding-left: 0; padding-right: 0; }
+  .view[data-view="stack"] .chapter .fig-strip { padding: 12px 14px; }
   .chapter .fig-strip { grid-template-columns: minmax(0, 1fr); }
   .chapter .fig-strip > .fs-acts { grid-column: 1; grid-row: auto; flex-wrap: wrap; }
   .chapter .fc-face { padding: 20px 18px; }
