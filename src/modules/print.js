@@ -344,7 +344,7 @@
      opts.edition   the day the PDF is made, "20 October 2026": printed as "Edition of 20 October 2026" on the title
                     block, in the foot of every page and in the citation
      opts.site      the site's address, "https://chipsupplychain.org/" (default: the page's canonical link)
-     opts.moves, opts.tight, opts.split, opts.sources   what an earlier layout learned (build/pdf.py, from finish()) */
+     opts.moves, opts.tight, opts.split, opts.sources, opts.nudge   what an earlier layout learned (build/pdf.py, from finish()) */
   function prepare(opts) {
     opts = opts || {};
     var out = { mode: opts.mode || 'footnotes', cites: 0, notes: 0, chapters: 0, dropped: 0 };
@@ -450,6 +450,12 @@
     Object.keys(opts.split || {}).forEach(function (id) {
       var ch = document.getElementById(id);
       if (ch && opts.split[id]) ch.classList.add('cp-split');
+    });
+    /* and chapters that lost lines at a page's foot to Paged.js: their lines are set a little closer (.cp-nudge), so the
+       page ends fall elsewhere */
+    Object.keys(opts.nudge || {}).forEach(function (id) {
+      var ch = document.getElementById(id);
+      if (ch && opts.nudge[id]) ch.classList.add('cp-nudge');
     });
     /* and chapters whose last few sources ran onto a page of their own: the list is set closer (.cp-sources-tight) */
     Object.keys(opts.sources || {}).forEach(function (id) {

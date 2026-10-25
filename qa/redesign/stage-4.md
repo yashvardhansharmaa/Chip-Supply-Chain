@@ -72,8 +72,8 @@ All 23 cards besides the home card are in the "whole chain" style. Each keeps it
 | Gate | Result |
 | --- | --- |
 | `node build/build.js` | Passes, with no warnings. The 23 card versions were bumped by the build. |
-| `check-speak`, `check-integrity`, `check-sources`, `check-size` | All four pass: no matches; no integrity problems (17 chapters); 2,851 citations, all tier A or B; no file over 5 MB. |
-| `node qa/scripts/smoke.js --port 9616` | SMOKE_RESULT |
+| `check-speak`, `check-integrity`, `check-sources`, `check-size` | All four pass. check-speak finds no matches, check-integrity no problems (17 chapters), check-sources 2,851 citations, all tier A or B, and check-size no file over 5 MB. |
+| `node qa/scripts/smoke.js --port 9616` | Passes: 33 page loads, no failures. With the device set to dark, the main page, a chapter page and the summary keep the white ground, and `?theme=dark` turns them to rgb(18, 18, 17). |
 | Screen text | No visible text changed on any built page. All 25 changed HTML files in `dist/` have the same text, with scripts and styles stripped, as at c9f95cb. Every change is inside `@media print`, the print scripts, or the `og:image` addresses' `?v=`. |
 | Cards | 23 rendered, 56 KB to 132 KB, with fonts loaded, no overflow and the smallest text at 23 px. See `qa/redesign/cards-sheet.png`. |
 | Chapter PDFs | ALL17_RESULT |

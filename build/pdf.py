@@ -200,7 +200,7 @@ try:
     # in that order. A failed move is undone and not tried again. The last layout made is the one printed, so after a
     # worse one the best is laid out again.
     def lay_out():
-        fit, seen, tried, pinned = {'moves': {}, 'tight': {}, 'split': {}, 'sources': {}}, [], set(), set()
+        fit, seen, tried, pinned, tried_tight = {'moves': {}, 'tight': {}, 'split': {}, 'sources': {}, 'nudge': {}}, [], set(), set(), set()
         prepare('footnotes'); best = run_paged()
         score = lambda r: (len(r.get('lost') or []), len(r.get('overlap') or []), len(r.get('stranded') or []),
                            len(r.get('short') or []), r.get('pages') or 0,
@@ -208,11 +208,16 @@ try:
                            r.get('gap') or 0)
         current = True
         for _ in range(6):
-            trial = {'moves': dict(fit['moves']), 'tight': dict(fit['tight']), 'split': dict(fit['split']), 'sources': dict(fit['sources'])}
+            trial = {'moves': dict(fit['moves']), 'tight': dict(fit['tight']), 'split': dict(fit['split']), 'sources': dict(fit['sources']), 'nudge': dict(fit['nudge'])}
             for c in best.get('failed') or []: trial['moves'].pop(c, None); pinned.add(c)
             for f in best.get('floats') or []:
                 if f['id'] not in pinned: trial['moves'][f['id']] = trial['moves'].get(f['id'], 0) + int(f['k'])
-            for t in best.get('tight') or []: trial['tight'][t] = 1
+            # a card that opens a page after a short one: its chapter set closer; if that was tried and the page before
+            # is still short, the card may also break between its parts, so it can start on that page
+            for t in best.get('tight') or []:
+                trial['tight'][t] = 1
+                if t in tried_tight: trial['split'][t] = 1
+                tried_tight.add(t)
             for t in best.get('sources') or []: trial['sources'][t] = 1
             for t in best.get('crowded') or []:
                 if t in trial['tight'] or t in tried: trial['split'][t] = 1
@@ -231,6 +236,14 @@ try:
                                                  + [f'{i} card may break' for i in trial['split'] if i not in fit['split']]
                                                  + [f'{i} sources closer' for i in trial['sources'] if i not in fit['sources']]))
             load(); prepare('footnotes', trial); again = run_paged()
+            # a layout that lost lines to that Paged.js habit is tried once more with the chapter's lines set a little
+            # closer (print.js .cp-nudge), so they fall elsewhere: otherwise a layout that mends the rest would be thrown out
+            if again.get('lost') and any(t not in trial['nudge'] for t in again.get('lostIn') or []):
+                nudged = dict(trial, nudge=dict(trial['nudge'], **{t: 1 for t in again['lostIn']}))
+                say('laying out again: ' + ', '.join(f'{t} lines closer' for t in again['lostIn'] if t not in trial['nudge']))
+                load(); prepare('footnotes', nudged); again2 = run_paged()
+                if score(again2) < score(again): trial, again = nudged, again2
+                seen.append(trial)
             pinned.update(again.get('failed') or [])  # a card move that failed is not tried again, whichever layout is kept
             if score(again) < score(best):
                 fit, best, current = trial, again, True
