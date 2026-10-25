@@ -8,9 +8,10 @@
 .view[data-view="landscape"] { width: 100%; padding: 0 var(--margin); --aic-hbm: #8c8a84; }
 
 /* ---------- the head: the title, and the standfirst with its counts beside it ---------- */
-.view-head.aic-head { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 24px; align-items: start; padding: clamp(40px, 7vh, 64px) 0 0; }
-.view-head.aic-head h1 { margin: -6px 0 0 -0.03em; font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-title); font-size: clamp(52px, 4.6vw, 66px); line-height: 1.02; letter-spacing: -0.02em; }
-.aic-head .dek { margin: 0; max-width: 34em; font-family: var(--font-body); font-size: clamp(19px, 1.46vw, 21px); line-height: 1.5; color: var(--ink-2); }
+/* the head is the views' shared one (.view-head.vh, suppliers.css): the title, then the standfirst and facts under it */
+.view-head.vh.aic-head .aic-head-r { grid-column: 1 / 7; margin-top: 24px; }
+@media (max-width: 1199px) { .view-head.vh.aic-head .aic-head-r { grid-column: 1 / -1; } }
+.aic-head .aic-head-r .dek { margin: 0; }
 .aic-meta { display: flex; flex-wrap: wrap; gap: 4px 0; margin: 16px 0 0; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
 .aic-meta span:not(:last-child)::after { content: "\00b7"; margin: 0 10px; }
 
@@ -316,9 +317,7 @@ section[data-view="landscape"] .cx-h, section[data-view="landscape"] .cx-note, s
   .cx-table th.cx-rowhead { width: 120px; }
 }
 @media (max-width: 760px) {
-  .view-head.aic-head { grid-template-columns: minmax(0, 1fr); gap: 16px; padding-top: 32px; }
-  .view-head.aic-head h1 { margin-top: 0; font-size: 44px; }
-  .aic-head .dek { font-size: 18px; line-height: 1.45; }
+.aic-head .aic-head-r .dek { margin: 0; }
   .aic-atlas { margin-top: 44px; }
   .aic-gut-k { flex-basis: 100%; min-width: 0; }
   .aic-pill { white-space: normal; }
