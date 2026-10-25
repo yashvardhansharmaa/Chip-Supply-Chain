@@ -109,31 +109,65 @@ html:not(.booted)[data-pick] .view[data-view="suppliers"] > :not(.view-head) { d
     <!-- the views in the order a first visit needs them: home first, the three small views, The Chain, the Glossary -->
     <section class="view column" data-view="walk">{{WALK}}<footer class="site-footer">{{FOOTER}}</footer></section>
 
-    <section class="view column" data-view="landscape" data-specimen="package">
-      <div class="view-head">
+    <section class="view column wide" data-view="landscape" data-specimen="package">
+      <!-- AI Chips (redesign, option C "The timeline", qa/design4/ai-chips/ in the main checkout): the title; the chart of every chip
+           by the month it was announced against one measure the reader picks, with the specimen beside it; the row of picks; then
+           the comparison: the packages at one scale, each figure as a row of bars, the rest as a table of words, notes and sources.
+           src/app.js Landscape draws it, src/modules/chips.css styles it -->
+      <div class="view-head aic-head">
         <h1>AI Chips</h1>
-        <p class="dek">The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026. Each entry names the foundry, process node, memory supplier and packaging plant behind the chip wherever the maker or a cited source has published them.</p>
+        <div class="aic-head-r">
+          <p class="dek">The chips that train and run AI models, from the A100 of 2020 to the parts shipping in 2026. Each entry names the foundry, process node, memory supplier and packaging plant behind the chip wherever the maker or a cited source has published them.</p>
+          <p class="aic-meta">{{AIC_FACTS}}<span>Updated {{CITE_DAY:chips}}</span></p>
+        </div>
       </div>
-      <div class="cxa" id="cx-slots">
+      <section class="aic-atlas" aria-labelledby="cx-atlas-t">
+        <div class="aic-bar"><p class="aic-k" id="cx-atlas-k"></p><div class="aic-measures" id="cx-measures" role="group" aria-label="The measure on the chart"></div></div>
+        <div class="aic-grid">
+          <figure class="aic-fig">
+            <h2 class="aic-h" id="cx-atlas-t"></h2>
+            <p class="aic-sub" id="cx-atlas-s"></p>
+            <div class="aic-chart" id="cx-chart"></div>
+            <div class="aic-tip" id="cx-tip" aria-hidden="true" hidden></div>
+            <div class="aic-gutter" id="cx-gutter"></div>
+            <p class="aic-note">Each dot is a chip, placed at the month its maker announced it. A chip dated only to a year sits in that year's middle, on a line across the year. The highest value is the one solid dot.</p>
+          </figure>
+          <figure class="ch-spec aic-spec">
+            <div class="ch-spec-draw aic-spec-draw"></div>
+            <figcaption class="ch-spec-cap aic-spec-cap"><p class="label"><span id="cx-spec-tag">AI chips · Package</span></p><p id="cx-spec-text">An AI accelerator package, drawn from above.</p></figcaption>
+          </figure>
+        </div>
+      </section>
+      <section class="cxa" id="cx-slots" aria-labelledby="cxa-ask">
         <div class="cxa-head"><p class="cxa-ask" id="cxa-ask">Choose two chips to compare. Add up to four.</p><button type="button" class="cxa-clear" id="cx-clear" hidden>Clear</button></div>
         <div class="cxa-row" id="cxa-row" role="group" aria-labelledby="cxa-ask"></div>
         <div class="cxa-pairs" id="cxa-pairs"></div>
         <details class="cxa-browse" id="cxa-browse"><summary>Browse all chips by maker</summary>
-          <div id="picker" class="picker cx-picker" role="group" aria-label="All chips, by maker"></div>
+          <div id="picker" class="aic-list" role="group" aria-label="All chips, by maker"></div>
         </details>
         <p class="sr-only" id="cxa-live" aria-live="polite"></p>
-      </div>
+      </section>
       <div class="cxs" id="cx-sticky" role="region" aria-label="Chips in the comparison" hidden><div class="cxs-in" id="cxs-in"></div></div>
-      <h3 class="label cx-h">Packages at one scale</h3>
-      <p class="cx-sub">The logic dies are the pieces of silicon that do the computing, and the memory stacks feed them data. The interposer is the layer of wiring that connects the two, and the substrate is the small circuit board underneath.</p>
-      <div class="cx-key" id="cx-key"></div>
-      <div id="cx-plans" class="cx-plans"></div>
-      <h3 class="label cx-h">Specs side by side</h3>
-      <p class="cx-sub">TFLOPS counts trillions of calculations a second. FP16, FP8 and FP4 are number formats that use 16, 8 and 4 bits per number. The fewer the bits, the more calculations a chip can do.</p>
-      <p class="cx-more" id="cx-more" hidden>Scroll sideways to see every chip &rarr;</p>
-      <div id="cx-table-wrap" class="cx-tablewrap"><table class="cx-table" id="cx-table"></table></div>
-      <div id="cx-foot" class="cx-foot"></div>
-      <div id="cx-notes" class="cx-notes"></div>
+      <section class="aic-cmp" id="cx-compare" aria-labelledby="cx-title">
+        <h2 class="aic-cmp-t" id="cx-title">Two chips, side by side</h2>
+        <p class="cx-sub aic-lede"><span class="aic-tflops">TFLOPS counts trillions of calculations a second. FP16, FP8 and FP4 are number formats that use 16, 8 and 4 bits per number. The fewer the bits, the more calculations a chip can do.</span> Each figure carries the number of its source in the chip's list under Notes and sources.</p>
+        <div class="aic-sec aic-pk">
+          <div class="aic-sec-h"><h3 class="label cx-h">Packages at one scale</h3><div class="cx-key" id="cx-key"></div></div>
+          <p class="cx-sub">The logic dies are the pieces of silicon that do the computing, and the memory stacks feed them data. The interposer is the layer of wiring that connects the two, and the substrate is the small circuit board underneath.</p>
+          <div id="cx-plans" class="cx-plans"></div>
+        </div>
+        <div class="aic-sec">
+          <div class="aic-sec-h"><h3 class="label cx-h">Figures</h3><p class="aic-sec-r">In each row, the largest figure has the solid bar</p></div>
+          <div class="aic-strips" id="cx-strips"></div>
+        </div>
+        <div class="aic-sec">
+          <div class="aic-sec-h"><h3 class="label cx-h">In words</h3></div>
+          <p class="cx-more" id="cx-more" hidden>Scroll sideways to see every chip &rarr;</p>
+          <div id="cx-table-wrap" class="cx-tablewrap"><table class="cx-table" id="cx-table"></table></div>
+        </div>
+        <div id="cx-foot" class="cx-foot"></div>
+        <div id="cx-notes" class="cx-notes"></div>
+      </section>
       <footer class="site-footer">{{FOOTER}}</footer>
     </section>
 

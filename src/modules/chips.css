@@ -1,311 +1,364 @@
-/* AI Chips: compare two to four accelerators.
-   Plans and table share one grammar: ink is silicon, amber is memory, and amber marks only
-   the focused chip, never a winning number. Row leaders are bold; bars use --bar-4. */
+/* AI Chips (redesign, option C "The timeline", chosen 25 Oct 2026; qa/design4/ai-chips/ in the main checkout).
+   The page reads top to bottom: the title, the chart of every chip by the month it was announced with the specimen beside it,
+   the row of picks, then the comparison (the packages at one scale, the figures as rows of bars, the rest as a table of words,
+   the notes and sources). Rule B on every chart: the largest value is solid ink, the rest the light tint (--ctx). Red wine
+   marks only links, the reader's place (the pick waiting for a chip) and the reader's own selection (the picked dots' rings,
+   the chip on the stage). No country is ever a color: a maker's country is a plain label. src/app.js Landscape draws it. */
 
-/* ---------- picker ---------- */
-.cx-picker button { padding-left: 30px; position: relative; }
-.cx-picker button::before {
-  content: ""; position: absolute; left: 10px; top: 11px; width: 12px; height: 12px;
-  border: 1px solid var(--control-edge); border-radius: 0; background: var(--bg); /* the empty box is the state, so it takes the 3:1 control edge */
-}
-/* chosen: the box becomes a tick in the ground color on the ink fill */
-.cx-picker button[aria-pressed="true"]::before { left: 12px; top: 10px; width: 5px; height: 9px; border: solid var(--bg); border-width: 0 1.5px 1.5px 0; background: none; transform: rotate(45deg); }
-.cx-picker button[data-focus="1"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
-/* the picker as a checklist: makers in three columns, one line a chip with a square check. The group heading names the
-   country, so the chips drop their country code; the family name (Blackwell, Hopper) moves to the button's title */
-.cx-picker { display: block; columns: 3 220px; column-gap: 28px; }
-.cx-picker .group { column-span: all; margin: 14px 0 4px; padding-top: 10px; }
-.cx-picker .group:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
-.cx-picker .vrow { display: block; break-inside: avoid; margin: 0 0 12px; }
-.cx-picker .vname { display: block; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); padding: 0 0 3px; border-bottom: 1px solid var(--line); margin-bottom: 2px; }
-.cx-picker .vchips { display: block; }
-.cx-picker button { display: flex; align-items: baseline; gap: 7px; width: 100%; min-width: 0; min-height: 30px; padding: 5px 4px 5px 24px; border: 0; background: none; color: var(--ink); }
-.cx-picker button:hover { background: var(--bg-2); }
-.cx-picker button[data-cc]::after, .cx-picker button span { display: none; }
-.cx-picker button::before { left: 4px; top: 50%; margin-top: -6px; }
-.picker.cx-picker button[data-cc][aria-pressed="true"] { background: var(--bg-2); color: var(--ink); border-color: transparent; }
-.cx-picker button[aria-pressed="true"]::before { left: 4px; top: 50%; margin-top: -6px; width: 12px; height: 12px; transform: none; border: 0; background: var(--ink); box-shadow: inset 0 0 0 2.5px var(--bg), 0 0 0 1px var(--ink); }
-.cx-picker button[aria-pressed="true"] b { font-weight: 600; }
-.cx-picker button[data-focus="1"] { box-shadow: inset 2px 0 0 var(--accent); }
-.cx-picker button b { font-size: var(--fs-ui); }
+.view[data-view="landscape"] { width: 100%; padding: 0 var(--margin); --aic-hbm: #8c8a84; }
 
-/* ---------- the slots: two to four columns that ask for their chips (21 Oct 2026, qa/design/chips-ux/) ----------
-   Garnet marks only the slot waiting for the next pick and the focus ring. A chosen slot and an empty one are the same height. */
-.cxa { margin: 4px 0 40px; container: cxa / inline-size; }
-.cxa-head { display: flex; align-items: baseline; gap: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
-.cxa-ask { margin: 0 auto 0 0; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 400; font-size: var(--fs-d3); line-height: 1.2; color: var(--ink); }
-.cxa-clear, .cxa-act, .cxa-try button {
-  min-height: 24px; padding: 2px 0; font-family: var(--font-mono); color: var(--ink-2);
-  text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px;
+/* ---------- the head: the title, and the standfirst with its counts beside it ---------- */
+.view-head.aic-head { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 24px; align-items: start; padding: clamp(40px, 7vh, 64px) 0 0; }
+.view-head.aic-head h1 { margin: -6px 0 0 -0.03em; font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-title); font-size: clamp(52px, 4.6vw, 66px); line-height: 1.02; letter-spacing: -0.02em; }
+.aic-head .dek { margin: 0; max-width: 34em; font-family: var(--font-body); font-size: clamp(19px, 1.46vw, 21px); line-height: 1.5; color: var(--ink-2); }
+.aic-meta { display: flex; flex-wrap: wrap; gap: 4px 0; margin: 16px 0 0; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.aic-meta span:not(:last-child)::after { content: "\00b7"; margin: 0 10px; }
+
+/* ---------- pills: the measures, the pairs, Try with, the chips with no figure, the folded list ---------- */
+.aic-pill { display: inline-flex; align-items: center; min-height: 36px; padding: 0 15px; border: 1px solid var(--control-edge); border-radius: 999px; background: none; color: var(--ink); font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1.15; white-space: nowrap; text-align: left; }
+.aic-pill.sm { min-height: 30px; padding: 0 12px; font-size: 13px; }
+.aic-pill:hover { border-color: var(--ink); }
+.aic-pill[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.aic-pill[aria-disabled="true"] { opacity: 0.45; }
+/* a chip's number in the comparison, as the chart's labels, the picks, the bars and the table carry it */
+.cx-no { display: inline-grid; font-style: normal; place-items: center; box-sizing: border-box; min-width: 19px; height: 19px; padding: 0 4px; margin-right: 4px; border: 1px solid var(--ink-2); border-radius: 10px; font-family: var(--font-code); font-weight: 400; font-size: 11px; line-height: 1; color: var(--ink); vertical-align: 2px; }
+.aic-pill[aria-pressed="true"] .cx-no { border-color: currentColor; color: inherit; }
+
+/* ---------- the chart, with the specimen beside it ---------- */
+.aic-atlas { margin-top: 64px; padding-top: 14px; border-top: 1px solid var(--ink); }
+.aic-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 24px; }
+.aic-k { margin: 0; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.aic-measures { display: flex; flex-wrap: wrap; gap: 6px; }
+.aic-grid { display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: 0 48px; margin-top: 22px; }
+.aic-fig { position: relative; margin: 0; min-width: 0; }
+.aic-h { margin: 0; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 21px; line-height: 1.25; letter-spacing: -0.005em; color: var(--ink); }
+.aic-sub { margin: 8px 0 0; max-width: 46em; font-family: var(--font-body); font-size: 15.5px; line-height: 1.55; color: var(--ink-2); }
+.aic-chart { margin-top: 18px; min-height: 320px; }
+.aic-chart svg { display: block; overflow: visible; }
+.aic-chart .ax { font-family: var(--font-code); font-size: 11px; fill: var(--muted); }
+.aic-chart .gx, .aic-chart .gy { stroke: var(--line); stroke-width: 1; }
+.aic-chart .gy.base { stroke: var(--rule-ink); }
+.aic-chart .pt { cursor: pointer; outline: none; }
+.aic-chart .pt .hit { fill: transparent; }
+.aic-chart .pt .dot { fill: var(--ctx); }
+.aic-chart .pt:hover .dot { fill: var(--rule-ink); }
+.aic-chart .pt.top .dot { fill: var(--ink); }
+.aic-chart .pt .ring { fill: none; stroke: var(--accent); stroke-width: 2; }
+.aic-chart .pt .yr { stroke: var(--line-2); stroke-width: 1.5; }
+.aic-chart .pt .arr { fill: var(--ink); }
+.aic-chart .pt:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.aic-chart .pt:focus-visible .hit { stroke: var(--accent); stroke-width: 2; stroke-dasharray: 3 2; }
+.aic-chart .lab { font-family: var(--font-ui); font-weight: 400; font-size: 11.5px; fill: var(--muted); pointer-events: none; }
+.aic-chart .lab.top, .aic-chart .lab.mine { font-size: 12.5px; font-weight: 600; fill: var(--ink); }
+.aic-chart .lab .lv { font-weight: 700; }
+.aic-chart .lab .lno { font-family: var(--font-code); font-weight: 400; fill: var(--accent-ink); }
+/* a dot's card, on hover or focus */
+.aic-tip { position: absolute; z-index: 5; display: flex; flex-direction: column; gap: 2px; max-width: 250px; padding: 10px 12px; background: var(--bg-2); border-top: 2px solid var(--ink); box-shadow: var(--shadow); pointer-events: none; font-family: var(--font-ui); font-size: 13px; line-height: 1.35; color: var(--ink-2); }
+.aic-tip[hidden] { display: none; }
+.aic-tip b { font-weight: 600; font-size: 14px; color: var(--ink); }
+.aic-tip .tv { font-family: var(--font-code); font-size: 12.5px; color: var(--ink); }
+.aic-tip .ta { font-size: 12px; color: var(--muted); }
+/* the chips with no figure for the measure, as pills that pick them */
+.aic-gutter { margin-top: 18px; }
+.aic-gut { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0 0 8px; }
+.aic-gut-k { min-width: 180px; margin-right: 6px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.aic-note { max-width: 60em; margin: 14px 0 0; padding-top: 12px; border-top: 1px solid var(--line); font-family: var(--font-ui); font-size: 13px; line-height: 1.5; color: var(--muted); }
+/* the specimen beside the chart: the stage's canvas moves here on a wide screen (Landscape.hostStage), with its label, pause
+   and caption under it; the caption stands on the drawing's foot (--slack, src/app.js Stage.fit) */
+.aic-spec.ch-spec { position: sticky; top: calc(var(--masthead) + 24px); align-self: start; min-width: 0; margin: 0; }
+.aic-spec-draw { position: relative; height: min(46vh, 400px); min-height: 220px; }
+.aic-spec-draw canvas { display: block; width: 100%; height: 100%; }
+@media (hover: hover) and (pointer: fine) {
+  .aic-spec-draw canvas { cursor: grab; touch-action: none; outline: none; }
+  .aic-spec-draw canvas.is-dragging { cursor: grabbing; }
+  .aic-spec-draw canvas:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
 }
-.cxa-clear { flex: none; font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; }
-.cxa-clear:hover, .cxa-act:hover, .cxa-try button:hover { color: var(--ink); text-decoration-color: var(--ink-2); }
-.cxa-row { --n: 2; display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 12px; padding-top: 12px; }
-.cxa-row[data-n="3"] { --n: 3; }
-.cxa-row[data-n="4"] { --n: 4; }
-.cxa-slot { min-width: 0; display: flex; flex-direction: column; container: cxa-slot / inline-size; } /* the card fills the row, so the cards in a row match */
-.cxa-k { margin: 0 0 6px; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--muted); }
-.cxa-card { flex: 1 1 auto; display: grid; box-sizing: border-box; width: 100%; min-height: 116px; border: 1px solid var(--line-2); border-radius: 0; background: var(--bg); text-align: left; }
-/* an empty slot is one button */
-.cxa-add { display: flex; align-items: center; gap: 9px; padding: 0 14px; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui); color: var(--ink); cursor: pointer; }
-.cxa-add:hover { border-color: var(--ink); background: var(--bg-2); }
-.cxa-plus { font-size: 20px; font-weight: 400; line-height: 1; color: var(--ink-2); }
-.cxa-slot[data-state="next"] .cxa-k, .cxa-slot[data-state="next"] .cxa-plus { color: var(--accent-ink); }
-.cxa-slot[data-state="next"] .cxa-add { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
-.cxa-slot[data-state="more"] .cxa-add { border-style: dashed; font-weight: 400; color: var(--ink-2); }
-/* a chosen slot looks like the chip: its plan, its name, maker · country · year, and two quiet actions */
-.cxa-chip { grid-template-columns: auto minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; column-gap: 12px; padding: 10px 12px 8px; }
-.cxa-thumb { grid-row: 1 / -1; display: flex; align-items: center; justify-content: center; width: 64px; }
-.cxa-thumb svg { width: 64px; height: 56px; max-width: none; } /* the viewBox fits each plan to the box, so thumbnails are not to scale with one another */
-.cxa-thumb .cx-hbm { fill: var(--muted); } /* memory goes grey here: in the slots garnet belongs to the slot waiting for a pick */
-.cxa-noplan { display: block; width: 50px; height: 38px; border: 1px dashed var(--line-2); background: repeating-linear-gradient(135deg, transparent 0 5px, var(--line) 5px 6px); }
-.cxa-id { min-width: 0; align-self: start; }
-.cxa-name { display: block; overflow-wrap: break-word; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 400; font-size: var(--fs-d5); line-height: 1.15; color: var(--ink); }
-.cxa-meta { display: block; margin-top: 4px; overflow-wrap: break-word; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0; line-height: 1.4; color: var(--muted); }
-.cxa-acts { grid-column: 2; display: flex; gap: 14px; }
-.cxa-act { font-size: var(--fs-ui-s); }
-/* Try with: under the slot waiting for the second chip */
-.cxa-try { grid-column: 2; margin: -4px 0 0; font-family: var(--font-mono); font-size: var(--fs-ui-s); line-height: 1.6; color: var(--muted); }
-.cxa-pk { margin-right: 10px; }
-.cxa-try button { margin-right: 12px; font-weight: 500; font-size: var(--fs-ui-s); color: var(--ink); }
-/* the empty page's pairs: small ruled buttons */
-.cxa-pairs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 16px 0 0; font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); }
-.cxa-pairs .cxa-pk { margin-right: 4px; }
-.cxa-pairs button { min-height: 32px; padding: 5px 10px; border: 1px solid var(--line-2); border-radius: 0; background: var(--bg); font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui-s); color: var(--ink); }
-.cxa-pairs button:hover { border-color: var(--ink); background: var(--bg-2); }
-/* the checklist, folded under the slots; a tick fills the next free slot */
-.cxa-browse { margin: 18px 0 0; border-top: 1px solid var(--line); }
-.cxa-browse summary { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; cursor: pointer; list-style: none; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--ink-2); }
+.aic-spec-cap { position: relative; margin: calc(-1 * var(--slack, 0px)) 0 0; max-width: 34em; transition: margin-top 0.3s var(--ease, ease); }
+.aic-spec-cap .label { display: flex; align-items: center; gap: 10px; margin: 0 0 6px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.aic-spec-cap .label b { font-weight: 400; color: inherit; }
+.aic-spec-cap > p:not(.label) { margin: 0; font-family: var(--font-body); font-size: 14px; line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
+.aic-spec-cap .stage-pause { pointer-events: auto; display: inline-grid; place-items: center; width: 24px; height: 24px; margin: -4px 0; padding: 0; border: 1px solid var(--line-2); border-radius: 50%; background: var(--bg); color: var(--ink-2); }
+.aic-spec-cap .stage-pause svg { width: 10px; height: 10px; fill: currentColor; stroke: none; }
+.aic-spec-cap .stage-pause:hover { color: var(--ink); border-color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .aic-spec-cap { transition: none; } }
+html.no-stage .aic-spec { display: none; }
+html.no-stage .aic-grid { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) {
+  /* the stage beside the page stands down: the specimen sits beside the chart */
+  html[data-view="landscape"] .stage { display: none; }
+  html[data-view="landscape"] body:has(.stage[data-hidden]) .to-top { top: auto; bottom: 20px; }
+}
+
+/* ---------- the picks: a row of two to four chips, each with Change and Remove ---------- */
+.cxa { margin-top: 80px; }
+.cxa-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
+.cxa-ask { margin: 0; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 25px; line-height: 1.25; color: var(--ink); }
+.cxa-clear, .cxa-act, .cx-act, .cx-jump, .cxs-clear {
+  display: inline-flex; align-items: center; min-height: 24px; padding: 4px 0; background: none; border: 0;
+  font-family: var(--font-ui); font-weight: 500; font-size: 13px; line-height: 1.2; color: var(--ink);
+  text-decoration: underline; text-decoration-color: var(--rule-ink); text-underline-offset: 4px;
+}
+.cxa-clear:hover, .cxa-act:hover, .cx-act:hover, .cx-jump:hover, .cxs-clear:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
+.cxa-clear { flex: none; }
+.cxa-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
+.cxa-slot { display: flex; flex-direction: column; min-width: 0; padding: 16px 20px 18px 0; }
+.cxa-slot + .cxa-slot { padding-left: 20px; border-left: 1px solid var(--line); }
+.cxa-k { display: flex; align-items: center; margin: 0 0 8px; font-family: var(--font-code); font-size: 12px; line-height: 19px; color: var(--muted); }
+.cxa-slot[data-state="next"] .cxa-k { color: var(--accent-ink); }
+.cxa-name { align-self: flex-start; padding: 0; background: none; border: 0; text-align: left; overflow-wrap: anywhere; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 26px; line-height: 1.12; color: var(--ink); }
+.cxa-name:hover { text-decoration: underline; text-decoration-color: var(--rule-ink); text-decoration-thickness: 1px; text-underline-offset: 6px; }
+.cxa-slot[data-on="1"] .cxa-name { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 6px; }
+.cxa-meta { margin-top: 6px; font-family: var(--font-ui); font-size: 13px; line-height: 1.4; color: var(--muted); overflow-wrap: anywhere; }
+.cxa-acts { display: flex; flex-wrap: wrap; gap: 0 16px; margin-top: 6px; }
+.cxa-add { display: flex; align-items: center; gap: 8px; flex: 1 1 auto; width: 100%; min-height: 92px; padding: 0 16px; border: 1px dashed var(--control-edge); background: none; text-align: left; font-family: var(--font-ui); font-weight: 500; font-size: 15px; line-height: 1.3; color: var(--ink); }
+.cxa-add:hover { border-color: var(--ink); }
+.cxa-plus { font-size: 18px; font-weight: 400; line-height: 1; }
+.cxa-slot[data-state="next"] .cxa-add { border: 1.5px solid var(--accent); }
+.cxa-slot[data-state="more"] .cxa-add { font-weight: 400; color: var(--ink-2); }
+/* the line under the picks: pairs, then Try with */
+.cxa-pairs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 18px; }
+.cxa-pk { margin-right: 6px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+/* the folded list of every chip, by country and maker */
+.cxa-browse { margin-top: 18px; border-top: 1px solid var(--line); }
+.cxa-browse summary { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0; cursor: pointer; list-style: none; font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1.2; color: var(--ink); }
 .cxa-browse summary::-webkit-details-marker { display: none; }
-.cxa-browse summary::before { content: "+"; width: 12px; font-size: var(--fs-ui); color: var(--muted); }
+.cxa-browse summary::before { content: "+"; width: 12px; font-size: 16px; font-weight: 400; color: var(--muted); }
 .cxa-browse[open] summary::before { content: "\2212"; }
-.cxa-browse summary:hover { color: var(--ink); }
-.cxa-browse .cx-picker { margin: 6px 0 4px; }
-section[data-view="landscape"][data-full="1"] .cx-picker button[aria-pressed="false"] { opacity: 0.42; }
-@container cxa (max-width: 700px) { .cxa-row[data-n="3"], .cxa-row[data-n="4"] { --n: 2; } } /* a third and fourth wrap under the pair */
-@container cxa-slot (max-width: 230px) { /* a narrow slot stacks: plan, name, maker line, actions */
-  .cxa-card { min-height: 152px; }
-  .cxa-add { padding: 0 10px; }
-  .cxa-chip { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto; row-gap: 6px; padding: 10px 10px 8px; }
-  .cxa-thumb { grid-row: auto; justify-content: flex-start; width: auto; }
-  .cxa-thumb svg { width: 46px; height: 34px; }
-  .cxa-noplan { width: 40px; height: 30px; }
-  .cxa-acts { grid-column: 1; gap: 12px; }
-}
+.aic-lg { padding: 4px 0 14px; }
+.aic-lg-h { margin: 6px 0 8px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.aic-lr { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 6px 16px; align-items: baseline; padding: 8px 0; border-top: 1px solid var(--line); }
+.aic-ln { font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1.3; color: var(--ink); }
+.aic-lc { display: flex; flex-wrap: wrap; gap: 6px; }
 
-/* ---------- the chip picker: a popover under its slot, a sheet from the bottom on phones ---------- */
-.cxp { position: absolute; z-index: 39; display: flex; flex-direction: column; background: var(--bg); border: 1px solid var(--line-2); border-top: 2px solid var(--ink); border-radius: 0; box-shadow: var(--shadow); }
-.cxp-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 8px 0 12px; }
-.cxp-t { margin: 0; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--muted); }
-.cxp-x { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; font-size: 20px; line-height: 1; color: var(--ink-2); }
+/* ---------- the chip picker: a popover under its pick, a sheet from the bottom on phones ---------- */
+.cxp { position: absolute; z-index: 39; display: flex; flex-direction: column; background: var(--bg); border: 1px solid var(--ink); box-shadow: var(--shadow); padding-top: 12px; font-family: var(--font-ui); }
+.cxp-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 10px 8px 16px; }
+.cxp-t { margin: 0; font-weight: 500; font-size: 15px; line-height: 1.2; color: var(--ink); }
+.cxp-x { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; font-size: 20px; line-height: 1; color: var(--ink-2); }
 .cxp-x:hover { color: var(--ink); background: var(--bg-2); }
-.cxp-in { display: block; margin: 6px 12px 0; padding: 9px 10px; font: inherit; font-family: var(--font-mono); font-size: var(--fs-ui); color: var(--ink); background: var(--bg); border: 1px solid var(--control-edge); border-radius: 0; }
+.cxp-in { display: block; box-sizing: border-box; width: calc(100% - 32px); height: 40px; margin: 0 16px 10px; padding: 0 12px; border: 1px solid var(--control-edge); border-radius: 0; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 15px; }
 .cxp-in::placeholder { color: var(--muted); }
-.cxp-in:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 2px; }
-.cxp-list { position: relative; flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; margin-top: 10px; padding-bottom: 6px; border-top: 1px solid var(--line); }
-.cxp-gh { position: sticky; top: 0; z-index: 1; padding: 9px 12px 4px; background: var(--bg); font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); }
-.cxp-o { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 10px; padding: 6px 12px; cursor: pointer; }
-.cxp-n { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui); line-height: 1.35; color: var(--ink); }
-.cxp-m { grid-column: 1; font-family: var(--font-mono); font-size: var(--fs-ui-s); line-height: 1.4; color: var(--muted); }
-.cxp-s { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); }
-.cxp-o:hover { background: var(--bg-2); }
-.cxp-o.is-active { background: var(--bg-2); box-shadow: inset 2px 0 0 var(--accent); } /* the active chip is the list's focus ring */
-.cxp-o.is-mine .cxp-n { font-weight: 600; }
+.cxp-in:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.cxp-list { position: relative; flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding-bottom: 6px; border-top: 1px solid var(--line); }
+.cxp-gh { position: sticky; top: 0; z-index: 1; padding: 10px 16px 4px; background: var(--bg); font-family: var(--font-code); font-size: 11.5px; line-height: 16px; color: var(--muted); }
+.cxp-o { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 10px; padding: 7px 16px; cursor: pointer; }
+.cxp-n { font-weight: 500; font-size: 15px; line-height: 1.3; color: var(--ink); }
+.cxp-m { grid-column: 1; font-size: 12.5px; line-height: 1.35; color: var(--muted); }
+.cxp-s { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-family: var(--font-code); font-size: 11.5px; line-height: 1; color: var(--muted); }
+.cxp-o:hover, .cxp-o.is-active { background: var(--bg-2); }
+.cxp-o.is-active { box-shadow: inset 2px 0 0 var(--accent); } /* the active chip is the list's focus mark */
+.cxp-o.is-active .cxp-n { color: var(--accent-ink); }
+.cxp-o.is-mine .cxp-s { color: var(--accent-ink); }
 .cxp-o[aria-disabled="true"] { cursor: default; }
 .cxp-o[aria-disabled="true"]:hover { background: none; }
 .cxp-o[aria-disabled="true"] .cxp-n, .cxp-o[aria-disabled="true"] .cxp-m { color: var(--muted); opacity: 0.6; }
-.cxp-none { margin: 12px; font-size: var(--fs-small); color: var(--muted); }
+.cxp-none { margin: 10px 16px 16px; font-size: 14px; line-height: 1.4; color: var(--muted); }
 .cxp-scrim { position: fixed; inset: 0; z-index: 59; background: var(--scrim); }
-.cxp.is-sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; border-left: 0; border-right: 0; border-bottom: 0; box-shadow: none; padding-bottom: env(safe-area-inset-bottom, 0px); }
-.cxp.is-sheet .cxp-head { padding: 10px 6px 0 16px; }
+.cxp.is-sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; border: 0; border-top: 2px solid var(--ink); box-shadow: none; padding-bottom: env(safe-area-inset-bottom, 0px); }
 .cxp.is-sheet .cxp-x { width: 44px; height: 44px; font-size: 24px; }
-.cxp.is-sheet .cxp-in { margin: 4px 16px 0; padding: 11px 12px; font-size: 16px; } /* 16 px, or iOS zooms the page when the field takes focus */
-.cxp.is-sheet .cxp-gh { padding: 10px 16px 4px; }
+.cxp.is-sheet .cxp-in { font-size: 16px; } /* 16 px, or iOS zooms the page when the field takes focus */
 .cxp.is-sheet .cxp-o { padding: 9px 16px; }
 
-/* ---------- the empty frame: dashed plans and hatched columns wait for each chip not yet chosen ---------- */
-.cx-plan--ghost { gap: 8px; padding: 8px 10px 10px; border: 1px dashed var(--line-2); cursor: default; min-width: 150px; }
-.cx-plan--ghost:hover { border-color: var(--line-2); }
-.cx-plan--ghost .cx-plan-name b, .cx-plan--ghost .cx-plan-name em { color: var(--muted); }
-.cx-plan--ghost .cx-plan-art i { display: block; width: 128px; height: 92px; background: repeating-linear-gradient(135deg, transparent 0 7px, var(--line) 7px 8px); }
-.cx-col--ghost .cx-ghost-h { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 400; font-size: var(--fs-d5); line-height: 1.1; color: var(--muted); }
-.cx-col--ghost .cx-ghost-s { display: block; margin-top: 3px; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); }
-.cx-table td.cx-ghost { background: repeating-linear-gradient(135deg, transparent 0 6px, var(--line) 6px 7px); }
-.cx-h { display: block; margin: 30px 0 4px; }
-.cx-sub { font-size: var(--fs-small); color: var(--muted); margin: 0 0 12px; max-width: 58ch; }
+/* ---------- the comparison ---------- */
+.aic-cmp { margin-top: 96px; }
+.aic-cmp-t { margin: 0; font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-title); font-size: 46px; line-height: 1.08; letter-spacing: -0.015em; color: var(--ink); }
+.aic-cmp .aic-lede { margin: 10px 0 0; max-width: 38em; font-family: var(--font-body); font-size: 15.5px; line-height: 1.55; color: var(--ink-2); }
+.aic-sec { margin-top: 56px; padding-top: 12px; border-top: 1px solid var(--ink); }
+.aic-sec-h { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 24px; }
+.aic-sec-h .cx-h { margin: 0; }
+.aic-sec-r { margin: 0; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.aic-pk .cx-sub { margin: 12px 0 0; max-width: 46em; font-family: var(--font-body); font-size: 14px; line-height: 1.55; color: var(--ink-2); }
 
-/* ---------- key and scale bar ---------- */
-.cx-key {
-  display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; margin: 0 0 10px;
-  font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted);
-}
-.cx-key span { display: inline-flex; align-items: center; gap: 6px; }
-.cx-sw { width: 10px; height: 10px; border-radius: 0; display: inline-block; }
+/* the key and the scale bar */
+.cx-key { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; font-family: var(--font-ui); font-size: 12.5px; line-height: 1; color: var(--ink-2); }
+.cx-key span { display: inline-flex; align-items: center; gap: 7px; }
+.cx-sw { display: inline-block; width: 11px; height: 11px; }
 .cx-sw.die { background: var(--ink); }
-.cx-sw.hbm { background: var(--accent); }
-.cx-sw.int { background: var(--bg-3); border: 1px solid var(--line-2); }
-.cx-sw.sub { background: var(--bg-2); border: 1px solid var(--line-2); }
-.cx-scale { margin-left: auto; }
-.cx-scale i { display: inline-block; height: 5px; border: 1px solid var(--muted); border-top: 0; }
+.cx-sw.hbm { background: var(--aic-hbm); }
+.cx-sw.int { background: var(--bg-3); box-shadow: inset 0 0 0 1px var(--line-2); }
+.cx-sw.sub { background: var(--bg-2); box-shadow: inset 0 0 0 1px var(--line-2); }
+.cx-scale { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-code); font-size: 12px; color: var(--muted); }
+.cx-scale i { display: inline-block; height: 6px; border: 1px solid var(--muted); border-top: 0; }
 
-/* ---------- package plans, one scale ---------- */
-.cx-plans {
-  display: flex; flex-wrap: wrap; align-items: stretch; gap: 20px; max-width: 100%; /* the cards wrap where they cannot share a row, so none is cut off */
-  padding: 6px 2px 14px; margin-bottom: 6px;
-}
-.cx-plan {
-  position: relative; flex: 0 0 auto; display: flex; flex-direction: column; box-sizing: border-box; text-align: left;
-  border: 1px solid transparent; border-radius: 0;
-}
-.cx-plan:hover { border-color: var(--line-2); }
-/* the chip on the 3D stage: an ink outline and a label that says so */
-.cx-plan.is-on, .cx-plan.is-on:hover { border-color: var(--ink); }
-.cx-plan-hit { display: flex; flex: 1 1 auto; flex-direction: column; gap: 8px; width: 100%; padding: 8px 10px 4px; text-align: left; }
-.cx-on { display: block; min-height: 15px; padding-right: 26px; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); }
-.cx-plan.is-on .cx-on { font-weight: 600; color: var(--ink); }
-.cx-plan-hit:hover .cx-on { color: var(--ink); }
-.cx-plan-foot { display: flex; align-items: center; gap: 12px; padding: 0 10px 8px; }
-.cx-noplan { display: flex; align-items: center; justify-content: center; width: 112px; height: 72px; padding: 6px; box-sizing: border-box; border: 1px dashed var(--line-2); background: repeating-linear-gradient(135deg, transparent 0 7px, var(--line) 7px 8px); font-family: var(--font-mono); font-style: normal; font-size: var(--fs-cap-s); letter-spacing: 0; text-align: center; color: var(--muted); }
-.cx-plan-name b { display: block; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui); line-height: 1.2; overflow-wrap: break-word; }
-.cx-plan-name em {
-  display: block; font-style: normal; font-family: var(--font-mono);
-  font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); margin-top: 2px;
-}
-.cx-plan-art { display: flex; align-items: flex-end; flex: 1 1 auto; min-height: 0; }
-.cx-plan-size { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--muted); }
+/* the packages at one scale: each drawing over a rule, its number and name, its size; the chip on the stage says so in wine */
+.cx-plans { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 28px 48px; margin-top: 28px; }
+.cx-plan { display: flex; flex-direction: column; min-width: 0; max-width: 100%; }
+.cx-plan-hit { display: flex; flex-direction: column; width: 100%; padding: 0; background: none; border: 0; text-align: left; color: var(--ink); }
+.cx-plan-art { display: flex; align-items: flex-end; box-sizing: content-box; height: var(--plan-h, 84px); padding-bottom: 12px; border-bottom: 1px solid var(--line-2); }
+.cx-plan.is-on .cx-plan-art { padding-bottom: 11px; border-bottom: 2px solid var(--accent); }
+.cx-plan-hit:hover .cx-plan-name b { text-decoration: underline; text-decoration-color: var(--rule-ink); text-underline-offset: 3px; }
 .cx-plan-svg { display: block; max-width: none; }
+.cx-plan-name { display: block; margin-top: 10px; font-family: var(--font-ui); font-size: 15px; line-height: 1.3; overflow-wrap: anywhere; }
+.cx-plan-name b { font-weight: 500; }
+.cx-plan-name em { display: block; margin-top: 1px; font-style: normal; font-size: 13px; color: var(--muted); }
+.cx-plan-size { display: block; margin-top: 4px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.cx-on { display: block; min-height: 16px; margin-top: 6px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--accent-ink); }
+.cx-noplan { display: flex; align-items: center; justify-content: center; box-sizing: border-box; width: 112px; height: 72px; padding: 6px; border: 1px dashed var(--line-2); font-family: var(--font-code); font-style: normal; font-size: 11px; line-height: 1.3; text-align: center; color: var(--muted); }
+.cx-plan--ghost .cx-plan-art i { display: block; width: 128px; height: 84px; border: 1px dashed var(--line-2); background: repeating-linear-gradient(135deg, var(--line) 0 1px, transparent 1px 8px); }
+.cx-plan--ghost .cx-plan-name b { color: var(--ink-2); }
 .cx-plan-svg rect, .cx-plan-svg circle, .cx-plan-svg line { vector-effect: non-scaling-stroke; }
 .cx-substrate { fill: var(--bg-2); stroke: var(--line-2); stroke-width: 1; }
 .cx-interposer { fill: var(--bg-3); stroke: var(--line-2); stroke-width: 1; }
 .cx-base { fill: var(--ink); opacity: 0.3; }
 .cx-die { fill: var(--ink); }
-.cx-hbm { fill: var(--accent); }
+.cx-hbm { fill: var(--aic-hbm); } /* memory is gray: red wine never marks a part */
 .cx-wafer { fill: var(--bg-2); stroke: var(--line-2); stroke-width: 1; stroke-dasharray: 4 3; }
 .cx-grid { stroke: var(--bg); stroke-width: 0.6; opacity: 0.55; }
 
-/* ---------- the side-by-side table ---------- */
-.cx-tablewrap {
-  max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; container-type: inline-size;
-  border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line-2);
-}
-/* the scroll cue: the right edge fades while more of the table sits past it */
-.cx-tablewrap[data-more="1"] { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 56px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 56px), transparent); }
-.cx-more { margin: 0 0 6px; text-align: right; font-family: var(--font-mono); font-size: var(--fs-cap); letter-spacing: 0; color: var(--muted); }
+/* the figures: each measure a row of bars, the largest solid ink and the rest the light tint */
+.aic-strips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 56px; }
+.srow { min-width: 0; padding: 18px 0 16px; border-bottom: 1px solid var(--line); }
+.srow-h { margin: 0 0 10px; font-family: var(--font-ui); font-weight: 600; font-size: 15px; line-height: 1.3; color: var(--ink); }
+.srow-h span { margin-left: 8px; font-family: var(--font-code); font-weight: 400; font-size: 11.5px; color: var(--muted); }
+.sl { display: grid; grid-template-columns: 150px minmax(0, 1fr) 148px; gap: 4px 14px; align-items: center; min-height: 30px; }
+.sl-n { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-family: var(--font-ui); font-size: 13.5px; line-height: 1.6; color: var(--ink); }
+.sl.is-on .sl-n { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.sl-b { display: block; height: 12px; }
+.sl-b i { display: block; height: 100%; background: var(--ctx); }
+.sl-b i.top { background: var(--ink); }
+.sl.ghost .sl-n { color: var(--muted); }
+.sl.ghost .sl-b i { width: 100%; background: repeating-linear-gradient(135deg, var(--line-2) 0 1px, transparent 1px 7px); }
+.sl-v { min-width: 0; font-family: var(--font-code); font-size: 14px; line-height: 1.3; color: var(--ink-2); }
+.cx-v.is-top { font-weight: 700; color: var(--ink); } /* rule B: the largest figure bold in ink */
+.sl-v .cx-2 { display: block; margin-top: 1px; font-family: var(--font-ui); font-size: 11.5px; line-height: 1.3; color: var(--muted); }
+.cx-nil { font-family: var(--font-code); font-size: 12px; line-height: 1.4; color: var(--muted); }
+.cx-fn { margin-left: 1px; font-family: var(--font-code); font-size: 11px; line-height: 0; vertical-align: super; color: var(--muted); }
+/* "all": a figure whose source the chip's list does not name row by row goes to the whole list */
+sup.cite.cx-all button { position: relative; padding: 0 1px; background: none; border: 0; font-family: var(--font-mono); font-weight: 500; font-size: inherit; line-height: inherit; color: var(--accent); cursor: pointer; }
+sup.cite.cx-all button::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 24px); height: max(100%, 26px); transform: translate(-50%, -50%); }
+sup.cite.cx-all button:hover { background: var(--accent-soft); }
+
+/* the words: one column per chip, Change, × and Read the notes on each head */
+.cx-more { margin: 10px 0 0; text-align: right; font-family: var(--font-code); font-size: 12px; color: var(--muted); }
 .cx-more[hidden] { display: none; }
-.cx-table { border-collapse: collapse; width: 100%; font-size: var(--fs-note); font-variant-numeric: tabular-nums; }
-.cx-table th, .cx-table td { padding: 9px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
-.cx-table tr:last-child th, .cx-table tr:last-child td { border-bottom: 0; }
-.cx-table td { color: var(--ink-2); }
-.cx-rowhead {
-  position: sticky; left: 0; z-index: 1; background: var(--bg); min-width: 128px;
-  font-family: var(--font-mono); font-size: var(--fs-cap-s); font-weight: 500; letter-spacing: 0; color: var(--muted); white-space: nowrap;
-  border-right: 1px solid var(--line);
-}
-.cx-table thead th { background: var(--bg); border-bottom: 1px solid var(--line-2); vertical-align: bottom; }
-.cx-table thead .cx-rowhead { background: var(--bg); }
-.cx-col { min-width: 152px; }
-.cx-col { position: relative; }
-.cx-col.is-focus { box-shadow: inset 0 -2px 0 var(--ink); }
-/* three or four chips: the columns share the box equally and the row names wrap, so every chip shows without scrolling */
-@container (min-width: 520px) {
-  .cx-table[data-n="3"] { table-layout: fixed; }
-  .cx-table[data-n="3"] .cx-col { min-width: 0; }
-  .cx-table[data-n="3"] .cx-rowhead { width: 120px; min-width: 0; white-space: normal; }
-}
-@container (min-width: 640px) {
-  .cx-table[data-n="4"] { table-layout: fixed; }
-  .cx-table[data-n="4"] .cx-col { min-width: 0; }
-  .cx-table[data-n="4"] .cx-rowhead { width: 112px; min-width: 0; white-space: normal; }
-  .cx-table[data-n="4"] th, .cx-table[data-n="4"] td { padding-left: 10px; padding-right: 10px; overflow-wrap: anywhere; }
-}
-.cx-colhead { display: block; padding-right: 30px; text-align: left; overflow-wrap: break-word; }
-.cx-colhead b { display: block; font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: var(--fs-d5); line-height: 1.1; }
-.cx-colhead span { display: block; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); margin-top: 3px; }
-.cx-colhead:hover b { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 0.18em; }
-.cx-colacts { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; margin-top: 6px; }
-.cx-jump {
-  margin-top: 0; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); border-bottom: 1px solid var(--line-2); padding-bottom: 1px;
-}
-.cx-jump:hover { color: var(--ink); border-color: var(--ink-2); }
+.cx-tablewrap { max-width: 100%; margin-top: 10px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.cx-tablewrap[data-more="1"] { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 56px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 56px), transparent); }
+.cx-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.cx-table[data-n="3"], .cx-table[data-n="4"] { min-width: 720px; }
+.cx-table th.cx-rowhead { width: 150px; padding: 13px 14px 13px 0; text-align: left; vertical-align: top; font-family: var(--font-ui); font-weight: 400; font-size: 13.5px; line-height: 1.35; color: var(--ink-2); }
+.cx-table thead th { position: relative; padding: 0 14px 12px; text-align: left; vertical-align: bottom; border-bottom: 2px solid var(--ink); }
+.cx-table thead th.cx-rowhead { padding-left: 0; }
+.cx-table thead th.is-focus { box-shadow: inset 0 -2px 0 var(--accent); }
+.cx-table td { padding: 13px 14px; vertical-align: top; border-bottom: 1px solid var(--line); font-family: var(--font-body); font-size: 15px; line-height: 1.45; color: var(--ink); overflow-wrap: anywhere; }
+.cx-table tbody th { border-bottom: 1px solid var(--line); }
+.cx-table td.cx-long { font-size: 14px; line-height: 1.5; }
 .cx-table td.is-focus { background: var(--bg-2); }
-.cx-v { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 400; font-size: var(--fs-d6); color: var(--ink); font-variant-numeric: tabular-nums; }
-.cx-v.is-best { font-weight: 600; }
-.cx-2 { display: block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--muted); margin-top: 3px; }
-.cx-nil { font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); }
-.cx-meter { display: block; height: 3px; max-width: 118px; margin-top: 7px; background: var(--line); }
-.cx-meter i { display: block; height: 100%; background: var(--bar-4); }
-.cx-long { font-size: 13px; line-height: 1.45; min-width: 190px; max-width: 280px; white-space: normal; }
-.cx-fn { font-family: var(--font-mono); font-size: 11px; color: var(--muted); vertical-align: super; margin-left: 2px; }
-
-/* ---------- footnotes and notes ---------- */
-.cx-foot { margin: 14px 0 0; }
-.cx-fns { margin: 8px 0 0; padding-left: 20px; font-size: var(--fs-note); line-height: 1.5; color: var(--ink-2); }
-.cx-fns li { margin-bottom: 8px; }
-.cx-fns b { font-weight: 600; color: var(--ink); }
-.cx-notes { margin: 24px 0 56px; }
-.cx-note { border-top: 1px solid var(--line); }
-.cx-note:last-child { border-bottom: 1px solid var(--line); }
-.cx-note summary { display: flex; align-items: baseline; gap: 10px; padding: 12px 0; list-style: none; }
-.cx-note summary::-webkit-details-marker { display: none; }
-.cx-note summary::before {
-  content: "+"; font-family: var(--font-mono); font-size: var(--fs-ui); color: var(--muted); width: 12px; flex: 0 0 12px;
-}
-.cx-note[open] summary::before { content: "−"; }
-.cx-note summary b { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 500; font-size: var(--fs-d5); }
-.cx-note summary span { font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0; color: var(--muted); }
-.cx-note-body { padding: 0 0 6px 22px; font-size: var(--fs-plain); line-height: 1.55; color: var(--ink-2); }
-.cx-note-body p:last-child { margin-bottom: 0.6em; }
-.cx-srcs { padding-left: 22px; font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); overflow-wrap: anywhere; }
-.cx-srcs a { color: var(--muted); margin-right: 14px; }
-
-@media (max-width: 900px) {
-  .cx-picker button { min-width: 116px; }
-  .cx-plans { gap: 14px; }
-  .cx-sub { font-size: var(--fs-small); }
-  .cx-table { font-size: var(--fs-note); }
-  .cx-table th, .cx-table td { padding: 8px 10px; }
-  .cx-rowhead { min-width: 112px; }
-  .cx-col { min-width: 138px; }
-  .cx-long { min-width: 172px; max-width: 220px; }
-  .cx-note-body { font-size: var(--fs-small); }
-  .cxa-ask { font-size: var(--fs-d4); }
-  .cx-col--ghost { min-width: 104px; }
-  .cx-plan--ghost { min-width: 120px; }
-  .cx-plan--ghost .cx-plan-art i { width: 96px; height: 70px; }
-}
-
-/* nothing picked: the slots lead, and the plans and the table show their empty frame; the explanations, key, notes and export wait */
-section[data-view="landscape"][data-empty="1"] .cx-key, section[data-view="landscape"][data-empty="1"] .cx-foot, section[data-view="landscape"][data-empty="1"] .cx-notes, section[data-view="landscape"][data-empty="1"] .export-bar, section[data-view="landscape"][data-empty="1"] .cx-plans-head, section[data-view="landscape"][data-empty="1"] .cx-table-head, section[data-view="landscape"][data-empty="1"] .cx-sub, section[data-view="landscape"][data-empty="1"] .cx-more { display: none; }
-@media print { .cxp, .cxp-scrim { display: none !important; } }
-
-/* ---------- Change and × on every column head of the comparison (21 Oct 2026, fix2) ---------- */
-.cx-act { min-height: 24px; padding: 2px 0; font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
-.cx-act:hover { color: var(--ink); text-decoration-color: var(--ink-2); }
-.cx-x { position: absolute; top: 4px; right: 4px; z-index: 1; display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; font-size: 17px; line-height: 1; color: var(--ink-2); }
+.cx-table td .cx-2 { display: block; margin-top: 3px; font-family: var(--font-ui); font-size: 12.5px; line-height: 1.4; color: var(--muted); }
+.cx-table td.cx-ghost { background: repeating-linear-gradient(135deg, var(--line) 0 1px, transparent 1px 8px); }
+.cx-colhead { display: block; padding: 0 34px 0 0; background: none; border: 0; text-align: left; color: var(--ink); }
+.cx-colhead b { font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 23px; line-height: 1.15; overflow-wrap: anywhere; }
+.cx-colhead .cx-no { vertical-align: 4px; }
+.cx-colhead span { display: block; margin-top: 3px; font-family: var(--font-ui); font-size: 13px; line-height: 1.4; color: var(--muted); }
+.cx-colhead:hover b { text-decoration: underline; text-decoration-color: var(--rule-ink); text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.cx-colacts { display: flex; flex-wrap: wrap; gap: 0 14px; margin-top: 4px; }
+.cx-x { position: absolute; top: 0; right: 10px; display: inline-grid; place-items: center; width: 28px; height: 28px; padding: 0; border: 0; border-radius: 50%; background: none; font-family: var(--font-ui); font-size: 18px; line-height: 1; color: var(--muted); }
 .cx-x:hover { color: var(--ink); background: var(--bg-2); }
-.cx-table th.cx-col .cx-x { top: 6px; right: 6px; z-index: 0; } /* under the sticky row heads when a phone scrolls the table sideways */
+.cx-ghost-h { display: block; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 23px; line-height: 1.15; color: var(--ink-2); }
+.cx-ghost-s { display: block; margin-top: 3px; font-family: var(--font-ui); font-size: 13px; color: var(--muted); }
 
-/* ---------- the bar that follows the reader once the slots scroll away ---------- */
-:root { --cx-sticky: 0px; } /* Landscape.updateBar sets it to the bar's height while the bar shows; any scroll padding for the masthead can add it */
-.cxs { position: fixed; top: var(--masthead); left: 0; z-index: 30; box-sizing: border-box; width: var(--col); padding: 0 clamp(16px, 4vw, 56px) 0 clamp(16px, 3vw, 44px); background: var(--bg); }
-.cxs-in { display: flex; align-items: center; gap: 8px 14px; min-height: 46px; padding: 6px 0; border-bottom: 1px solid var(--line-2); }
-.cxs-k { flex: none; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--muted); }
+/* the speed notes, and the notes and sources */
+.cx-foot { margin-top: 28px; }
+.cx-foot .label { margin: 0 0 10px; }
+.cx-fns { margin: 0; padding-left: 20px; max-width: 60em; font-family: var(--font-body); font-size: 14px; line-height: 1.55; color: var(--ink-2); }
+.cx-fns li { margin-bottom: 8px; }
+.cx-fns b { margin-right: 6px; font-family: var(--font-ui); font-weight: 600; font-size: 13px; color: var(--ink); }
+.cx-notes { margin-top: 88px; }
+.cx-notes-h { margin: 0 0 16px; font-family: var(--font-display); font-weight: 400; font-variation-settings: var(--opsz-title); font-size: 32px; line-height: 1.15; letter-spacing: -0.012em; color: var(--ink); }
+.cx-note { border-top: 1px solid var(--line-2); }
+.cx-note:last-child { border-bottom: 1px solid var(--line-2); }
+.cx-note summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; padding: 14px 0; cursor: pointer; list-style: none; }
+.cx-note summary::-webkit-details-marker { display: none; }
+.cx-note summary::before { content: "+"; flex: 0 0 12px; width: 12px; font-family: var(--font-ui); font-size: 16px; line-height: 1; color: var(--muted); }
+.cx-note[open] summary::before { content: "\2212"; }
+.cx-note summary b { font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 21px; line-height: 1.2; color: var(--ink); }
+.cx-note summary span { font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.cx-note-body { max-width: 40em; padding-left: 24px; font-family: var(--font-body); font-size: 16.5px; line-height: 1.65; color: var(--ink); }
+.cx-note-body p { margin: 0 0 14px; }
+.cx-srcs { margin: 6px 0 22px 24px; padding: 12px 0 0; border-top: 1px solid var(--line); list-style: none; counter-reset: cxs; columns: 2; column-gap: 32px; font-family: var(--font-ui); font-size: 13px; line-height: 1.45; }
+.cx-srcs li { display: grid; grid-template-columns: 26px minmax(0, 1fr); padding: 0 0 7px; break-inside: avoid; }
+.cx-srcs li::before { counter-increment: cxs; content: counter(cxs); font-family: var(--font-code); font-size: 11.5px; line-height: 1.6; color: var(--muted); }
+.cx-srcs a { color: var(--ink); text-decoration-color: var(--rule-ink); overflow-wrap: anywhere; }
+.cx-srcs a:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
+
+/* nothing picked: the comparison shows its empty frame; the notes, the speed notes and the copy line wait */
+section[data-view="landscape"][data-empty="1"] .cx-foot, section[data-view="landscape"][data-empty="1"] .cx-notes, section[data-view="landscape"][data-empty="1"] .export-bar, section[data-view="landscape"][data-empty="1"] .cx-more { display: none; }
+section[data-view="landscape"] .export-bar.xq { margin-top: 16px; }
+
+/* ---------- the bar that follows the reader once the picks scroll away ---------- */
+:root { --cx-sticky: 0px; } /* Landscape.updateBar sets it to the bar's height while a chip is in */
+.cxs { position: fixed; top: var(--masthead); left: 0; right: 0; z-index: 30; background: var(--bg); border-bottom: 1px solid var(--line-2); }
+.cxs-in { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; min-height: 48px; padding: 7px var(--margin); box-sizing: border-box; }
+.cxs-k { flex: none; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
 .cxs-list { display: flex; flex: 1 1 auto; flex-wrap: wrap; align-items: center; gap: 6px; min-width: 0; }
-.cxs-chip { display: inline-flex; align-items: center; border: 1px solid var(--line-2); background: var(--bg); }
-.cxs-name { min-height: 28px; padding: 2px 2px 2px 9px; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui-s); color: var(--ink); }
-.cxs-name:hover { text-decoration: underline; text-decoration-color: var(--ink-2); text-underline-offset: 3px; }
-.cxs-x { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; font-size: 16px; line-height: 1; color: var(--ink-2); }
+.cxs-chip { display: inline-flex; align-items: center; min-height: 32px; padding: 0 2px 0 13px; border: 1px solid var(--control-edge); border-radius: 999px; }
+.cxs-name { padding: 0; background: none; border: 0; font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1; color: var(--ink); }
+.cxs-name:hover { text-decoration: underline; text-decoration-color: var(--rule-ink); text-underline-offset: 3px; }
+.cxs-x { display: inline-grid; place-items: center; width: 26px; height: 26px; padding: 0; border: 0; border-radius: 50%; background: none; font-size: 16px; line-height: 1; color: var(--muted); }
 .cxs-x:hover { color: var(--ink); background: var(--bg-2); }
-.cxs-add { min-height: 30px; padding: 2px 10px; border: 1px dashed var(--line-2); font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui-s); color: var(--ink-2); }
-.cxs-add:hover { border-color: var(--ink); color: var(--ink); }
-.cxs-clear { flex: none; min-height: 24px; padding: 2px 0; font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
-.cxs-clear:hover { color: var(--ink); }
+.cxs-add { min-height: 32px; padding: 0 13px; border: 1px dashed var(--control-edge); border-radius: 999px; background: none; font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1; color: var(--ink); }
+.cxs-add:hover { border-color: var(--ink); }
+.cxs-clear { flex: none; margin-left: auto; }
 /* nothing focused may sit under the masthead and the bar (WCAG 2.4.11) */
 html.kb:has(section[data-view="landscape"]:not([hidden])) { scroll-padding-top: calc(var(--masthead) + var(--band, 0px) + var(--cx-sticky) + 12px); }
 section[data-view="landscape"] .cx-h, section[data-view="landscape"] .cx-note, section[data-view="landscape"] .cx-tablewrap { scroll-margin-top: calc(var(--masthead) + var(--band, 0px) + var(--cx-sticky) + 16px); }
-@media (max-width: 900px) {
-  .cxs { padding: 0 18px; }
+
+/* ---------- narrower screens ---------- */
+@media (max-width: 1200px) {
+  .aic-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 0 32px; }
+  .aic-strips { gap: 0 32px; }
+  .sl { grid-template-columns: 120px minmax(0, 1fr) 132px; }
+}
+@media (max-width: 899px) {
+  /* a phone keeps the specimen in the strip at the foot of the screen, so the chart takes the width */
+  .aic-grid { grid-template-columns: minmax(0, 1fr); }
+  .aic-spec { display: none; }
+  .cx-table th.cx-rowhead { width: 120px; }
+}
+@media (max-width: 760px) {
+  .view-head.aic-head { grid-template-columns: minmax(0, 1fr); gap: 16px; padding-top: 32px; }
+  .view-head.aic-head h1 { margin-top: 0; font-size: 44px; }
+  .aic-head .dek { font-size: 18px; line-height: 1.45; }
+  .aic-atlas { margin-top: 44px; }
+  .aic-gut-k { flex-basis: 100%; min-width: 0; }
+  .aic-pill { white-space: normal; }
+  .cxa { margin-top: 56px; }
+  .cxa-ask { font-size: 21px; }
+  .cxa-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cxa-slot:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .cxa-slot:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .cxa-slot { padding-right: 12px; }
+  .cxa-slot + .cxa-slot { padding-left: 12px; }
+  .cxa-name { font-size: 21px; }
+  .cxa-add { min-height: 76px; padding: 0 12px; font-size: 14px; }
+  .aic-lr { grid-template-columns: minmax(0, 1fr); }
+  .aic-cmp { margin-top: 72px; }
+  .aic-cmp-t { font-size: 32px; }
+  .aic-strips { grid-template-columns: minmax(0, 1fr); }
+  .sl { grid-template-columns: minmax(0, 1fr) 112px; gap: 2px 12px; margin-bottom: 6px; }
+  .sl-n { grid-column: 1 / -1; font-size: 13px; }
+  .sl-v { font-size: 13px; }
+  .cx-plans { gap: 24px 28px; }
   .cxs-k { display: none; }
   .cxs-in { gap: 6px 10px; }
+  /* the table of words stacks: each row's name, then the chips two to a line, so nothing scrolls sideways */
+  .cx-tablewrap { overflow: visible; }
+  .cx-table[data-n="3"], .cx-table[data-n="4"] { min-width: 0; }
+  .cx-table, .cx-table thead, .cx-table tbody, .cx-table tr, .cx-table th, .cx-table td { display: block; width: auto; }
+  .cx-table thead tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; border-bottom: 2px solid var(--ink); }
+  .cx-table thead th.cx-rowhead { display: none; }
+  .cx-table thead th { padding: 0 0 12px; border: 0; }
+  .cx-table thead th.is-focus { box-shadow: inset 0 -2px 0 var(--accent); }
+  .cx-table tbody tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 12px; border-bottom: 1px solid var(--line); }
+  .cx-table tbody th.cx-rowhead { grid-column: 1 / -1; width: auto; padding: 12px 0 2px; border: 0; font-size: 13px; color: var(--muted); }
+  .cx-table td { padding: 4px 0 12px; border: 0; font-size: 14.5px; }
+  .cx-table td.is-focus { background: none; }
+  .cx-table td.cx-ghost { min-height: 40px; }
+  .cx-table[data-n="3"] td::before, .cx-table[data-n="4"] td::before { content: attr(data-n); display: block; margin-bottom: 2px; font-family: var(--font-code); font-size: 11px; line-height: 16px; color: var(--muted); }
+  .cx-colhead { padding-right: 30px; }
+  .cx-colhead b { font-size: 20px; }
+  .cx-x { right: 0; }
+  .cx-more { display: none; }
+  .cx-srcs { columns: 1; margin-left: 0; }
+  .cx-note-body { padding-left: 0; font-size: 16px; }
 }
-@media print { .cxs { display: none !important; } }
+@media print { .cxp, .cxp-scrim, .cxs { display: none !important; } }

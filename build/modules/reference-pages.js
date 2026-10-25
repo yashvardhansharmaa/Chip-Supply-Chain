@@ -65,7 +65,7 @@ module.exports = function (ctx) {
   const tmpl = (re, name) => { const m = re.exec(template); if (!m) { warn(`reference pages: ${name} is missing from src/template.html`); return ''; } return m[1].trim(); };
   // each view's own <section> (the template names the views earlier too, in its pre-boot CSS and the nav)
   const chipsDek = tmpl(/<section class="view[^"]*" data-view="landscape"[^>]*>[\s\S]*?<p class="dek">([\s\S]*?)<\/p>/, 'the AI Chips dek');
-  const specsSub = tmpl(/Specs side by side<\/h3>\s*<p class="cx-sub">([\s\S]*?)<\/p>/, 'the AI Chips specs note');
+  const specsSub = tmpl(/<span class="aic-tflops">([\s\S]*?)<\/span>/, 'the AI Chips note on TFLOPS');
   const glossaryDek = tmpl(/<section class="view[^"]*" data-view="glossary"[^>]*>[\s\S]*?<p class="dek">([\s\S]*?)<\/p>/, 'the Glossary dek');
   const ladderLabel = tmpl(/id="sup-ladder-h">([^<]*)</, 'the Suppliers ladder heading');
   const LEGEND = [];
@@ -499,5 +499,6 @@ ${body}
     if (/\{\{REF:/.test(html)) warn(`reference page /${s}/ kept a placeholder`);
   }
   console.log('reference pages: ' + sizes.join(' · '));
-  return {};
+  // the AI Chips view's counts under its standfirst (src/template.html {{AIC_FACTS}}), counted from the data as /chips/ counts them
+  return { AIC_FACTS: `<span>${chips.length} chips</span><span>${new Set(chips.map((c) => c.vendor)).size} makers</span>` };
 };
