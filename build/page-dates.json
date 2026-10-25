@@ -2,17 +2,17 @@
   "/": {
     "published": "2026-10-01",
     "modified": "2026-10-25",
-    "content": "8a63edff564d8150"
+    "content": "0d6d48cc75e70c73"
   },
   "/advanced-packaging/": {
     "published": "2026-09-09",
-    "modified": "2026-10-21",
-    "content": "4cd80b8c4a84e594"
+    "modified": "2026-10-25",
+    "content": "0cc33b212238ea2c"
   },
   "/chemicals-gases-and-photoresist/": {
     "published": "2026-09-09",
-    "modified": "2026-10-21",
-    "content": "31764c305e6f1945"
+    "modified": "2026-10-25",
+    "content": "ce26eed355d23c87"
   },
   "/chip-supply-chain-summary.pdf": {
     "published": "2026-10-20",
@@ -31,23 +31,23 @@
   },
   "/component-costs/": {
     "published": "2026-09-09",
-    "modified": "2026-10-21",
-    "content": "5397a84141b52469"
+    "modified": "2026-10-25",
+    "content": "2b0aa81c18b8e885"
   },
   "/data-centers-and-power/": {
     "published": "2026-09-09",
-    "modified": "2026-10-21",
-    "content": "580c6d56c9ea9334"
+    "modified": "2026-10-25",
+    "content": "e4ee8221f5e0bdfc"
   },
   "/deposition-and-etch/": {
     "published": "2026-09-09",
-    "modified": "2026-10-21",
-    "content": "e8e0b79f1a3c69dc"
+    "modified": "2026-10-25",
+    "content": "e1470307194b9814"
   },
   "/design-and-eda/": {
     "published": "2026-09-09",
-    "modified": "2026-10-21",
-    "content": "4e9ae74afc87a594"
+    "modified": "2026-10-25",
+    "content": "13cd30060f8a32bf"
   },
   "/export-controls/": {
     "published": "2026-10-21",
@@ -56,33 +56,33 @@
   },
   "/foundries-and-fabs/": {
     "published": "2026-09-09",
-    "modified": "2026-10-21",
-    "content": "a07319e88ab61b4b"
+    "modified": "2026-10-25",
+    "content": "86c358b5181648e8"
   },
   "/geopolitics/": {
     "published": "2026-09-09",
-    "modified": "2026-10-21",
-    "content": "181c1bd47a9f4871"
+    "modified": "2026-10-25",
+    "content": "62bf217f40963dbd"
   },
   "/glossary/": {
     "published": "2026-10-21",
     "modified": "2026-10-25",
-    "content": "732de2325d1f2878"
+    "content": "0dfef24588817521"
   },
   "/lithography/": {
     "published": "2026-09-09",
     "modified": "2026-10-25",
-    "content": "9667078c48da5f9b"
+    "content": "068336ab2b841726"
   },
   "/memory-and-hbm/": {
     "published": "2026-09-09",
-    "modified": "2026-10-21",
-    "content": "27386511c5f60e67"
+    "modified": "2026-10-25",
+    "content": "3384ab5178d4dbad"
   },
   "/metrology-and-inspection/": {
     "published": "2026-09-09",
-    "modified": "2026-10-21",
-    "content": "437e2aa518356d15"
+    "modified": "2026-10-25",
+    "content": "b2ceeb93df47e49b"
   },
   "/pdf/advanced-packaging.pdf": {
     "published": "2026-10-20",
@@ -171,23 +171,23 @@
   },
   "/photomasks-and-pellicles/": {
     "published": "2026-09-09",
-    "modified": "2026-10-21",
-    "content": "ac8d96e93ee9aacf"
+    "modified": "2026-10-25",
+    "content": "c5164541f5c3ec02"
   },
   "/silicon-and-wafers/": {
     "published": "2026-09-09",
-    "modified": "2026-10-21",
-    "content": "693c3875644e797f"
+    "modified": "2026-10-25",
+    "content": "ff922e508c698450"
   },
   "/substrates-and-pcbs/": {
     "published": "2026-09-09",
-    "modified": "2026-10-21",
-    "content": "ab9a16db08abd81f"
+    "modified": "2026-10-25",
+    "content": "266ee5076f83e855"
   },
   "/summary/": {
     "published": "2026-10-21",
-    "modified": "2026-10-21",
-    "content": "d87523332099be7e"
+    "modified": "2026-10-25",
+    "content": "dc35fe7dce15c599"
   },
   "/suppliers/": {
     "published": "2026-10-21",
@@ -196,17 +196,17 @@
   },
   "/systems-and-networking/": {
     "published": "2026-09-09",
-    "modified": "2026-10-21",
-    "content": "50bf2aa2dc132a50"
+    "modified": "2026-10-25",
+    "content": "3bb5ed14986caf14"
   },
   "/test-and-assembly/": {
     "published": "2026-09-09",
-    "modified": "2026-10-21",
-    "content": "688cde8e6f8c6f5b"
+    "modified": "2026-10-25",
+    "content": "84423c27443a5dfe"
   },
   "/transistors-and-front-end/": {
     "published": "2026-09-09",
-    "modified": "2026-10-21",
-    "content": "fe39414cfbeeff7d"
+    "modified": "2026-10-25",
+    "content": "2810af1aa0427fdf"
   }
 }

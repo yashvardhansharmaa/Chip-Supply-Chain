@@ -1,13 +1,33 @@
 {
-  "checked": 755,
-  "ok": 593,
-  "blocked": 123,
-  "dead": 34,
+  "checked": 1483,
+  "ok": 1156,
+  "blocked": 267,
+  "dead": 51,
   "deadList": [
     {
-      "url": "https://www.purdue.edu/newsroom/2026/Q3/sk-hynix-breaks-ground-on-4-billion-advanced-packaging-production-facility-in-purdue-research-park/",
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20230321001209&dcmNo=9083795&eleId=20&offset=336980&length=497577&dtd=dart3.xsd",
       "status": 0,
-      "error": "UND_ERR_SOCKET"
+      "error": "TypeError"
+    },
+    {
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260317000635&dcmNo=11132576&eleId=48&offset=2673284&length=29807&dtd=dart4.xsd",
+      "status": 0,
+      "error": "TypeError"
+    },
+    {
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20240319000684&dcmNo=9731387&eleId=49&offset=1689059&length=20688&dtd=dart4.xsd",
+      "status": 0,
+      "error": "TypeError"
+    },
+    {
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20250319000665&dcmNo=10428620&eleId=48&offset=1773970&length=22955&dtd=dart4.xsd",
+      "status": 0,
+      "error": "TypeError"
+    },
+    {
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20220322000590&dcmNo=8490476&eleId=20&offset=345759&length=564559&dtd=dart3.xsd",
+      "status": 0,
+      "error": "TypeError"
     },
     {
       "url": "https://investors.broadcom.com/news-releases/news-release-details/openai-and-broadcom-announce-strategic-collaboration-deploy-10",
@@ -20,27 +40,47 @@
       "error": "AbortError"
     },
     {
+      "url": "https://www.purdue.edu/newsroom/2026/Q3/sk-hynix-breaks-ground-on-4-billion-advanced-packaging-production-facility-in-purdue-research-park/",
+      "status": 0,
+      "error": "UND_ERR_SOCKET"
+    },
+    {
+      "url": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-innovative-pattern-shaping-technology-reduces",
+      "status": 0,
+      "error": "AbortError"
+    },
+    {
+      "url": "https://www.asml.com/en/news/press-releases/2023/statement-regarding-export-control-regulations-dutch-government",
+      "status": 0,
+      "error": "AbortError"
+    },
+    {
+      "url": "https://www.asml.com/en/news/press-releases/2026/high-na-euv-reaches-new-readiness-milestone",
+      "status": 0,
+      "error": "AbortError"
+    },
+    {
+      "url": "https://www.asml.com/en/news/press-releases/2023/statement-regarding-partial-revocation-export-license",
+      "status": 0,
+      "error": "AbortError"
+    },
+    {
       "url": "https://www.unimicron.com/files/money/Earnings/en/2026-Q2-consolidated-en.pdf",
       "status": 0,
       "error": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
     },
     {
-      "url": "https://technoprobe.com/wp-content/uploads/2026/03/PR-FY-2025",
-      "status": 404,
-      "final": "https://www.technoprobe.com/wp-content/uploads/2026/03/PR-FY-2025"
-    },
-    {
-      "url": "https://www.globenewswire.com/news-release/2025/12/10/3203040/0/en/Photronics-Reports-Full-Year-and-Fourth-Quarter-Fiscal-2025-Results.html",
+      "url": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-unveils-next-gen-chipmaking-products",
       "status": 0,
       "error": "AbortError"
     },
     {
-      "url": "https://www.globenewswire.com/news-release/2024/07/08/2909540/0/en/applied-materials-unveils-chip-wiring-innovations-for-more-energy-efficient-computing.html",
+      "url": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-technologies-enable-2d-scaling-euv-and-3d-gate",
       "status": 0,
       "error": "AbortError"
     },
     {
-      "url": "https://www.globenewswire.com/news-release/2026/08/13/3344890/0/en/applied-materials-announces-third-quarter-2026-results.html",
+      "url": "https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced",
       "status": 0,
       "error": "AbortError"
     },
@@ -50,12 +90,17 @@
       "error": "ECONNRESET"
     },
     {
-      "url": "https://ir.amkor.com/news-releases/news-release-details/amkor-technology-breaks-ground-new-semiconductor-advanced",
+      "url": "https://ir.amkor.com/news-releases/news-release-details/tsmc-and-amkor-technology-announce-long-term-partnership",
       "status": 0,
       "error": "AbortError"
     },
     {
-      "url": "https://ir.amkor.com/news-releases/news-release-details/tsmc-and-amkor-technology-announce-long-term-partnership",
+      "url": "https://www.government.nl/site/binaries/site-content/collections/documents/2025/11/19/letter-t…",
+      "status": 404,
+      "final": "https://www.government.nl/site/binaries/site-content/collections/documents/2025/11/19/letter-t%E2%80%A6"
+    },
+    {
+      "url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-ships-tomahawk-4-industrys-highest-bandwidth-ethernet",
       "status": 0,
       "error": "AbortError"
     },
@@ -65,29 +110,14 @@
       "error": "AbortError"
     },
     {
-      "url": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-third-quarter-2026-results",
+      "url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-ships-tomahawk-6-worlds-first-1024-tbps-switch",
       "status": 0,
       "error": "AbortError"
     },
     {
-      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20220322000590&dcmNo=8490476&eleId=20&offset=345759&length=564559&dtd=dart3.xsd",
+      "url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-announces-tomahawkr-6-davisson-industrys-first-1024",
       "status": 0,
-      "error": "TypeError"
-    },
-    {
-      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260317000635&dcmNo=11132576&eleId=48&offset=2673284&length=29807&dtd=dart4.xsd",
-      "status": 0,
-      "error": "TypeError"
-    },
-    {
-      "url": "https://www.amd.com/en/products/accelerators/instinct/mi350/mi355x.html\\",
-      "status": 404,
-      "final": "https://www.amd.com/en/products/accelerators/instinct/mi350/mi355x.html/"
-    },
-    {
-      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20230321001209&dcmNo=9083795&eleId=20&offset=336980&length=497577&dtd=dart3.xsd",
-      "status": 0,
-      "error": "TypeError"
+      "error": "AbortError"
     },
     {
       "url": "https://www.amd.com/en/products/accelerators/instinct/mi400/mi455x.html\\",
@@ -95,19 +125,24 @@
       "final": "https://www.amd.com/en/products/accelerators/instinct/mi400/mi455x.html/"
     },
     {
-      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20250319000665&dcmNo=10428620&eleId=48&offset=1773970&length=22955&dtd=dart4.xsd",
-      "status": 0,
-      "error": "TypeError"
-    },
-    {
-      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20240319000684&dcmNo=9731387&eleId=49&offset=1689059&length=20688&dtd=dart4.xsd",
-      "status": 0,
-      "error": "TypeError"
+      "url": "https://www.amd.com/en/products/accelerators/instinct/mi350/mi355x.html\\",
+      "status": 404,
+      "final": "https://www.amd.com/en/products/accelerators/instinct/mi350/mi355x.html/"
     },
     {
       "url": "https://rocm.blogs.amd.com/ecosystems-and-partners/cdna5-helios/README.html\\",
       "status": 404,
       "final": "https://rocm.blogs.amd.com/ecosystems-and-partners/cdna5-helios/README.html/"
+    },
+    {
+      "url": "https://aisystemcodesign.github.io/papers/MTIA300_ISCA2026.pdf\\",
+      "status": 404,
+      "final": "https://aisystemcodesign.github.io/papers/MTIA300_ISCA2026.pdf/"
+    },
+    {
+      "url": "https://awsdocs-neuron.readthedocs-hosted.com/en/latest/general/arch/neuron-hardware/trainium3.html\\",
+      "status": 404,
+      "final": "https://awsdocs-neuron.readthedocs-hosted.com/en/latest/about-neuron/arch/neuron-hardware/trainium3.html/"
     },
     {
       "url": "https://ai.meta.com/blog/meta-mtia-scale-ai-chips-for-billions/\\",
@@ -120,9 +155,19 @@
       "final": "https://docs.habana.ai/en/latest/Gaudi_Overview/Gaudi_Architecture.html/"
     },
     {
-      "url": "https://awsdocs-neuron.readthedocs-hosted.com/en/latest/general/arch/neuron-hardware/trainium3.html\\",
+      "url": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-third-quarter-2026-results",
+      "status": 0,
+      "error": "AbortError"
+    },
+    {
+      "url": "https://hc2024.hotchips.org/assets/program/conference/day2/81_HC2024.Microsoft.Xu.Ramakrishnan.final.v2.pdf\\",
       "status": 404,
-      "final": "https://awsdocs-neuron.readthedocs-hosted.com/en/latest/about-neuron/arch/neuron-hardware/trainium3.html/"
+      "final": "https://hc2024.hotchips.org/assets/program/conference/day2/81_HC2024.Microsoft.Xu.Ramakrishnan.final.v2.pdf/"
+    },
+    {
+      "url": "https://static.sse.com.cn/stock/disclosure/announcement/c/202509/002098_20250919_IP6Z.pdf",
+      "status": 0,
+      "error": "UND_ERR_CONNECT_TIMEOUT"
     },
     {
       "url": "https://www.semitronix.com/",
@@ -130,22 +175,22 @@
       "error": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
     },
     {
-      "url": "https://www.nsig.com/en/",
-      "status": 0,
-      "error": "ERR_TLS_CERT_ALTNAME_INVALID"
-    },
-    {
-      "url": "https://www.semes.com/en/",
-      "status": 0,
-      "error": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
-    },
-    {
-      "url": "https://www.dongjin.com/en/business/semiconductor.php",
+      "url": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2025-10-22/688783_20251022_UYMD.pdf",
       "status": 0,
       "error": "UND_ERR_CONNECT_TIMEOUT"
     },
     {
-      "url": "https://investors.arm.com/",
+      "url": "https://www.semes.com/en/company/management-information/view",
+      "status": 0,
+      "error": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+    },
+    {
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260318000617&dcmNo=11136858&eleId=21&offset=503877&length=26152&dtd=dart4.xsd",
+      "status": 0,
+      "error": "AbortError"
+    },
+    {
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260316001567&dcmNo=11129507&eleId=21&offset=259551&length=31561&dtd=dart4.xsd",
       "status": 0,
       "error": "AbortError"
     },
@@ -155,9 +200,29 @@
       "error": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
     },
     {
-      "url": "https://www.coherent.com/networking",
+      "url": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-05-15/688347_20260515_XRZ3.pdf",
       "status": 0,
       "error": "UND_ERR_CONNECT_TIMEOUT"
+    },
+    {
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260319000022&dcmNo=11145726&eleId=21&offset=268686&length=26691&dtd=dart4.xsd",
+      "status": 0,
+      "error": "TypeError"
+    },
+    {
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260317000635&dcmNo=11132576&eleId=21&offset=371607&length=31668&dtd=dart4.xsd",
+      "status": 0,
+      "error": "TypeError"
+    },
+    {
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260312001270&dcmNo=11116775&eleId=21&offset=303972&length=21173&dtd=dart4.xsd",
+      "status": 0,
+      "error": "TypeError"
+    },
+    {
+      "url": "https://dart.fss.or.kr/report/viewer.do?rcpNo=20260310003071&dcmNo=11105795&eleId=21&offset=341261&length=44392&dtd=dart4.xsd",
+      "status": 0,
+      "error": "TypeError"
     },
     {
       "url": "https://industrial.panasonic.com/ww/products/pt/megtron",
@@ -173,20 +238,197 @@
       "url": "https://www.eaton.com/us/en-us/markets/data-centers.html",
       "status": 0,
       "error": "AbortError"
+    },
+    {
+      "url": "https://www.hoya.com/ir/2025/en/review/it.html",
+      "status": 0,
+      "error": "ENOTFOUND"
+    },
+    {
+      "url": "https://investor.asml.com/news-releases/news-release-details/statement-regarding-partial-revocation-export-license",
+      "status": 0,
+      "error": "AbortError"
+    },
+    {
+      "url": "https://www.asml.com/en/news/press-releases/2026/q2-2026-financial-results",
+      "status": 0,
+      "error": "AbortError"
+    },
+    {
+      "url": "https://www.usgs.gov/news/national-news-release/usgs-critical-minerals-study-bans-gallium-and-germanium-exports-could",
+      "status": 0,
+      "error": "AbortError"
     }
   ],
   "blockedList": [
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/883241/000119312525314200/d29055dex991.htm",
-      "status": 403
-    },
     {
       "url": "http://www.w3.org/2000/svg",
       "status": 403,
       "final": "https://www.w3.org/2000/svg"
     },
     {
-      "url": "https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000119312525314200/d29055dex991.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025",
+      "status": 403
+    },
+    {
+      "url": "https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm",
+      "status": 403
+    },
+    {
+      "url": "https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech",
+      "status": 403
+    },
+    {
+      "url": "https://www.tsmc.com/english/dedicatedFoundry/manufacturing/gigafab",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.jedec.org/news/pressreleases/jedec%C2%AE-and-industry-leaders-collaborate-release-jesd270-4-hbm4-standard-advancing",
+      "status": 403
+    },
+    {
+      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf",
+      "status": 403
+    },
+    {
+      "url": "https://www.linkedin.com/in/yashvardhan07/",
+      "status": 999,
+      "final": "https://www.linkedin.com/in/yashvardhan07"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/0002120882/000119312526299963/d32785d424b4.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/937966/000093796623000014/R68.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/R71.htm",
+      "status": 403
+    },
+    {
+      "url": "https://pr.tsmc.com/english/news/3302",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/R94.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1109138/000117891326001561/R91.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1109345/000117891323000775/R82.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/R84.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920123000031/R125.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754923000102/R103.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/R112.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/103145/000155837024001289/R104.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/6951/000000695122000043/R104.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/6951/000162828025056742/R85.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/704532/000095017024020150/R79.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/103145/000110465926019711/R108.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1109138/000117891324001028/R90.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/704532/000119312526066937/R94.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/97210/000119312523044711/R130.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/R140.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1101302/000110130224000009/R105.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1101302/000110130226000012/R106.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/R123.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1046179/000119312524099840/R120.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312522000048/R106.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/R113.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248824000012/R73.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/R85.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/R54.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/R84.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581023000017/R87.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367223000011/R115.htm",
       "status": 403
     },
     {
@@ -194,11 +436,31 @@
       "status": 403
     },
     {
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000088324122000017/R104.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000088324125000028/R122.htm",
+      "status": 403
+    },
+    {
       "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367225000093/cdns-20250702.htm",
       "status": 403
     },
     {
-      "url": "https://www.sec.gov/Archives/edgar/data/883241/000119312525155294/d80081d8k.htm",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000088324124000024/R117.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000013/cdns02172026ex9901.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
       "status": 403
     },
     {
@@ -206,12 +468,72 @@
       "status": 401
     },
     {
-      "url": "https://www.commerce.gov/news/press-releases/2024/12/biden-harris-administration-announces-chips-incentives-awards",
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000119312525155294/d80081d8k.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.semi.org/en/products-services/market-data/mmds",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1101302/000114036122025275/ny20004647x3_ex99-1.htm",
+      "status": 403
+    },
+    {
+      "url": "https://newscenter.lbl.gov/2023/08/21/how-scientists-are-accelerating-next-gen-microelectronics/",
+      "status": 403
+    },
+    {
+      "url": "https://www.appliedmaterials.com/eu/en/semiconductor/semiconductor-technologies/pvd.html",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/2058873/000205887326000010/q-20251231.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1102934/000110293420000048/ccmp-20201001xex991.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.investors.dupont.com/news-and-media/press-release-details/2025/DuPont-Completes-Separation-of-Qnity-Electronics/default.aspx",
       "status": 403
     },
     {
       "url": "https://www.reuters.com/world/asia-pacific/250-million-asml-printer-behind-nvidias-chips-2026-07-28/",
       "status": 401
+    },
+    {
+      "url": "https://www.reuters.com/world/china/how-china-built-its-manhattan-project-rival-west-ai-chips-2025-12-17/",
+      "status": 401
+    },
+    {
+      "url": "https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/",
+      "status": 401
+    },
+    {
+      "url": "https://web.archive.org/web/20250408171837/https://www.meti.go.jp/english/press/2023/0323_001.html",
+      "status": 429
+    },
+    {
+      "url": "https://echa.europa.eu/-/echa-publishes-updated-pfas-restriction-proposal",
+      "status": 403
+    },
+    {
+      "url": "https://echa.europa.eu/-/echa-supports-pfas-restriction-with-targeted-derogations",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/810136/000114036125045801/ef20057458_10k.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/937966/000093796617000010/pressreleasequarterlyresul.htm",
+      "status": 403
     },
     {
       "url": "https://www.intel.com/content/www/us/en/newsroom/news/intel-foundry/intel-foundry-asml-accelerate-industry-readiness-for-high-na-euv.html",
@@ -222,27 +544,35 @@
       "status": 403
     },
     {
-      "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm",
+      "url": "https://www.trumpf.com/en_US/products/lasers/euv-drive-laser/",
       "status": 403
     },
     {
-      "url": "https://echa.europa.eu/-/echa-supports-pfas-restriction-with-targeted-derogations",
+      "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm",
       "status": 403
     },
     {
-      "url": "https://www.reuters.com/world/china/china-starts-production-home-grown-immersion-duv-chipmaking-tools-source-2026-07-28/",
-      "status": 401
+      "url": "https://www.nuflare.co.jp/english/products/beam/",
+      "status": 503
     },
     {
-      "url": "https://www.reuters.com/world/china/how-china-built-its-manhattan-project-rival-west-ai-chips-2025-12-17/",
-      "status": 401
+      "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617925000019/tsmc2024q4consolidatedfina.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+      "status": 403
     },
     {
       "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000033/lrcx_exhibitx991xq4x2026.htm",
       "status": 403
     },
     {
-      "url": "https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025",
+      "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
       "status": 403
     },
     {
@@ -258,11 +588,11 @@
       "status": 403
     },
     {
-      "url": "https://www.tsmc.com/english/dedicatedFoundry/technology/platform_HPC_tech_advancedTech",
+      "url": "https://pr.tsmc.com/english/news/3228",
       "status": 403
     },
     {
-      "url": "https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm",
+      "url": "https://www.intel.com/content/www/us/en/foundry/process/18a.html",
       "status": 403
     },
     {
@@ -270,15 +600,15 @@
       "status": 403
     },
     {
-      "url": "https://pr.tsmc.com/english/news/3302",
+      "url": "https://pr.tsmc.com/english/news/3136",
       "status": 403
     },
     {
-      "url": "https://www.tsmc.com/english/dedicatedFoundry/manufacturing/gigafab",
+      "url": "https://research.tsmc.com/page/memory/4.html",
       "status": 403
     },
     {
-      "url": "https://pr.tsmc.com/english/news/3210",
+      "url": "https://www.semi.org/en/products-services/market-data/world-fab-forecast",
       "status": 403
     },
     {
@@ -286,11 +616,19 @@
       "status": 403
     },
     {
+      "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000157/intc-20260627.htm",
+      "status": 403
+    },
+    {
       "url": "https://www.bcg.com/publications/2023/navigating-the-semiconductor-manufacturing-costs",
       "status": 403
     },
     {
-      "url": "https://www.sec.gov/Archives/edgar/data/0001046179/000104617926000451/a2q26e_withguidancexfinal.htm",
+      "url": "https://www.tsmc.com/english/aboutTSMC/company_profile",
+      "status": 403
+    },
+    {
+      "url": "https://www.semi.org/en/semi-press-release/eighteen-new-semiconductor-fabs-to-start-construction-in-2025-semi-reports",
       "status": 403
     },
     {
@@ -298,7 +636,11 @@
       "status": 403
     },
     {
-      "url": "https://www.bcg.com/publications/2024/emerging-resilience-in-semiconductor-supply-chain",
+      "url": "https://pr.tsmc.com/english/news/3210",
+      "status": 403
+    },
+    {
+      "url": "https://pr.tsmc.com/english/news/3204",
       "status": 403
     },
     {
@@ -306,15 +648,20 @@
       "status": 403
     },
     {
-      "url": "https://www.jedec.org/news/pressreleases/jedec%C2%AE-and-industry-leaders-collaborate-release-jesd270-4-hbm4-standard-advancing",
+      "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/mu-20260903.htm",
       "status": 403
     },
     {
-      "url": "https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm",
+      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf#page=10",
+      "status": 403,
+      "final": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf"
+    },
+    {
+      "url": "https://www.intel.com/content/www/us/en/newsroom/news/intel-opens-fab-9-new-mexico.html",
       "status": 403
     },
     {
-      "url": "https://investor.tsmc.com/static/annualReports/2025/english/pdf/2025_tsmc_ar_e_ch5.pdf",
+      "url": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000007/amkr123125erex-991.htm",
       "status": 403
     },
     {
@@ -322,16 +669,32 @@
       "status": 403
     },
     {
-      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf",
+      "url": "https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm",
       "status": 403
     },
     {
-      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf",
+      "url": "https://investor.tsmc.com/static/annualReports/2025/english/pdf/2025_tsmc_ar_e_ch5.pdf#page=3",
+      "status": 403,
+      "final": "https://investor.tsmc.com/static/annualReports/2025/english/pdf/2025_tsmc_ar_e_ch5.pdf"
+    },
+    {
+      "url": "https://investor.tsmc.com/static/annualReports/2022/english/ebook/files/basic-html/page97.html",
       "status": 403
     },
     {
-      "url": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000007/amkr123125erex-991.htm",
-      "status": 403
+      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf#page=6",
+      "status": 403,
+      "final": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf"
+    },
+    {
+      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf#page=7",
+      "status": 403,
+      "final": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf"
+    },
+    {
+      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf#page=17",
+      "status": 403,
+      "final": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf"
     },
     {
       "url": "https://www.appliedmaterials.com/eu/en/product-library/kinex-integrated-die-to-wafer-hybrid-bonding-system.html",
@@ -342,19 +705,58 @@
       "status": 403
     },
     {
-      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf",
+      "url": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm",
       "status": 403
+    },
+    {
+      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf#page=13",
+      "status": 403,
+      "final": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf"
+    },
+    {
+      "url": "https://investor.tsmc.com/static/annualReports/2025/english/pdf/2025_tsmc_ar_e_ch5.pdf#page=4",
+      "status": 403,
+      "final": "https://investor.tsmc.com/static/annualReports/2025/english/pdf/2025_tsmc_ar_e_ch5.pdf"
     },
     {
       "url": "https://www.sec.gov/Archives/edgar/data/1116942/000119312526051976/ttmi-20251229.htm",
       "status": 403
     },
     {
+      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf#page=16",
+      "status": 403,
+      "final": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf"
+    },
+    {
       "url": "https://www.sec.gov/Archives/edgar/data/1122411/000095010326011351/dp250868_6k.htm",
       "status": 403
     },
     {
+      "url": "https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/ter-20251231.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1040470/000165495426006919/aehr_10k.htm",
+      "status": 403
+    },
+    {
       "url": "https://www.sec.gov/Archives/edgar/data/1039399/000103939926000009/form-20251227.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/56978/000005697825000078/ex991liveq42025.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1122411/000095010326001661/dp241159_6k.htm",
       "status": 403
     },
     {
@@ -370,11 +772,15 @@
       "status": 403
     },
     {
-      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm",
+      "url": "https://www.sec.gov/Archives/edgar/data/1051627/000143774926027677/axti20260630_10q.htm",
       "status": 403
     },
     {
-      "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563224000193/final2024_12x02xmarvell-.htm",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm",
       "status": 403
     },
     {
@@ -382,39 +788,47 @@
       "status": 403
     },
     {
-      "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm",
-      "status": 403
-    },
-    {
-      "url": "https://pr.tsmc.com/english/news/3326",
-      "status": 403
-    },
-    {
-      "url": "https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Results-for-the-Third-Quarter-of-Fiscal-2026/default.aspx",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/0001047127/000104712726000043/amkr6302026erex-991.htm",
-      "status": 403
-    },
-    {
-      "url": "https://investors.micron.com/news/press-release/2025/Micron-Technology-Inc--Reports-Results-for-the-Fourth-Quarter-and-Full-Year-of-Fiscal-2025-09-23-2025/default.aspx",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/0002120882/000119312526299963/d32785d424b4.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000082/nvda-20250409.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000209/nvda-20250727.htm",
+      "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
       "status": 403
     },
     {
       "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.fcc.gov/supplychain/coveredlist",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563224000193/final2024_12x02xmarvell-.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1622536/000162828025030559/a20250611pressreleasebusin.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000015/mu-20260528.htm",
+      "status": 403
+    },
+    {
+      "url": "https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Fiscal-Fourth-Quarter-and-Full-Year-2026-Results/default.aspx",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/0001047127/000104712726000043/amkr6302026erex-991.htm",
       "status": 403
     },
     {
@@ -426,119 +840,36 @@
       "status": 403
     },
     {
-      "url": "https://www.sec.gov/Archives/edgar/data/1109138/000117891326001561/R91.htm",
+      "url": "https://www.stimson.org/2025/why-taiwan-fears-america-first-risks-eroding-its-silicon-shield/",
       "status": 403
     },
     {
-      "url": "https://www.sec.gov/Archives/edgar/data/1109138/000117891324001028/R90.htm",
+      "url": "https://digital-strategy.ec.europa.eu/en/library/proposal-chips-act-20",
       "status": 403
     },
     {
-      "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/R94.htm",
+      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf#page=5",
+      "status": 403,
+      "final": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf"
+    },
+    {
+      "url": "https://investors.micron.com/news-releases/news-release-details/micron-innovates-data-center-edge-nvidia",
       "status": 403
     },
     {
-      "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754923000102/R103.htm",
+      "url": "https://investors.micron.com/news/press-release/2024/Micron-Commences-Volume-Production-of-Industry-Leading-HBM3E-Solution-to-Accelerate-the-Growth-of-AI-02-26-2024/default.aspx",
       "status": 403
     },
     {
-      "url": "https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/R84.htm",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000082/nvda-20250409.htm",
       "status": 403
     },
     {
-      "url": "https://www.sec.gov/Archives/edgar/data/1109345/000117891323000775/R82.htm",
-      "status": 403
+      "url": "https://www.reuters.com/technology/nvidias-new-china-focused-ai-chip-set-be-sold-similar-price-huawei-product-2024-02-01/",
+      "status": 401
     },
     {
-      "url": "https://www.sec.gov/Archives/edgar/data/6951/000000695122000043/R104.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920123000031/R125.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/937966/000093796623000014/R68.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/6951/000162828025056742/R85.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/R112.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/R71.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/103145/000155837024001289/R104.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/103145/000110465926019711/R108.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/1101302/000110130226000012/R106.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/1101302/000110130224000009/R105.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248824000012/R73.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/R54.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/97210/000119312523044711/R130.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367223000011/R115.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/R140.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/883241/000088324122000017/R104.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/883241/000088324125000028/R122.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581023000017/R87.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/R84.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/R113.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/704532/000095017024020150/R79.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312522000048/R106.htm",
-      "status": 403
-    },
-    {
-      "url": "https://www.sec.gov/Archives/edgar/data/704532/000119312526066937/R94.htm",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581023000221/nvda-20231023.htm",
       "status": 403
     },
     {
@@ -546,8 +877,31 @@
       "status": 403
     },
     {
+      "url": "https://web.archive.org/web/20240514221055/https://cloud.google.com/tpu/docs/v5e",
+      "status": 429
+    },
+    {
       "url": "https://www.intel.com/content/www/us/en/content-details/817486/intel-gaudi-3-ai-accelerator-white-paper.html",
       "status": 403
+    },
+    {
+      "url": "https://www.intel.com/content/www/us/en/newsroom/news/artificial-intelligence/intel-to-expand-ai-accelerator-portfolio-with-new-gpu.html",
+      "status": 403
+    },
+    {
+      "url": "https://investors.micron.com/news-releases/news-release-details/micron-innovates-data-center-edge-nvidia\\",
+      "status": 403,
+      "final": "https://investors.micron.com/news-releases/news-release-details/micron-innovates-data-center-edge-nvidia/"
+    },
+    {
+      "url": "https://investors.micron.com/news/press-release/2024/Micron-Commences-Volume-Production-of-Industry-Leading-HBM3E-Solution-to-Accelerate-the-Growth-of-AI-02-26-2024/default.aspx\\",
+      "status": 403,
+      "final": "https://investors.micron.com/news/press-release/2024/Micron-Commences-Volume-Production-of-Industry-Leading-HBM3E-Solution-to-Accelerate-the-Growth-of-AI-02-26-2024/default.aspx/"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm\\",
+      "status": 403,
+      "final": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm/"
     },
     {
       "url": "https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/product-briefs/amd-instinct-mi355x-gpu-brochure.pdf\\",
@@ -560,16 +914,25 @@
       "final": "https://www.amd.com/content/dam/amd/en/documents/products/accelerators/instinct/amd-instinct-mi455x_brochure.pdf/"
     },
     {
-      "url": "https://www.intel.com/content/www/us/en/content-details/817486/intel-gaudi-3-ai-accelerator-white-paper.html\\",
+      "url": "https://cdrdv2-public.intel.com/817486/gaudi-3-ai-accelerator-white-paper.pdf\\",
       "status": 403,
-      "final": "https://www.intel.com/content/www/us/en/content-details/817486/intel-gaudi-3-ai-accelerator-white-paper.html/"
+      "final": "https://cdrdv2-public.intel.com/817486/gaudi-3-ai-accelerator-white-paper.pdf/"
     },
     {
-      "url": "https://www.intel.com/content/www/us/en/products/details/processors/ai-accelerators.html",
+      "url": "https://www.intel.com/content/www/us/en/newsroom/news/artificial-intelligence/intel-to-expand-ai-accelerator-portfolio-with-new-gpu.html\\",
+      "status": 403,
+      "final": "https://www.intel.com/content/www/us/en/newsroom/news/artificial-intelligence/intel-to-expand-ai-accelerator-portfolio-with-new-gpu.html/"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/883241/000088324125000028/R5.htm",
       "status": 403
     },
     {
-      "url": "https://www.marvell.com/company/investor-relations.html",
+      "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/R5.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1013462/000101346225000009/R5.htm",
       "status": 403
     },
     {
@@ -578,7 +941,111 @@
       "final": "https://ansys.synopsys.com/products/semiconductors"
     },
     {
+      "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/R3.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/R4.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/R3.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/R3.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.intel.com/content/www/us/en/products/details/processors/ai-accelerators/gaudi.html",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/R3.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/R5.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.marvell.com/company/investor-relations.html",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/R5.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/R4.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/2021728/000162828026035214/cerebras-424b4.htm",
+      "status": 403
+    },
+    {
+      "url": "https://web.archive.org/web/20250809220519/http://nsig.com/en/about",
+      "status": 429
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/2058873/000205887326000010/R3.htm",
+      "status": 403
+    },
+    {
+      "url": "https://web.archive.org/web/20260911215719/https://www.dongjin.com/en/business/semiconductor.php",
+      "status": 429
+    },
+    {
+      "url": "https://www.emdgroup.com/",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1101302/000110130226000012/R5.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1707925/000162828026011430/R3.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1707925/000162828026011430/lin-20251231.htm",
+      "status": 403
+    },
+    {
       "url": "https://www.airproducts.com/industries/electronics",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/2969/000000296925000055/R3.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.trumpf.com/en_US/solutions/applications/euv-lithography/",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1049502/000119312526066820/R4.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/927003/000110465926014731/R4.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1652535/000165253526000012/R5.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1275014/000162828026010744/R5.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/810136/000114036125045801/R5.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/R5.htm",
       "status": 403
     },
     {
@@ -586,7 +1053,23 @@
       "status": 403
     },
     {
+      "url": "https://www.sec.gov/Archives/edgar/data/704532/000119312526066937/R2.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.nuflare.co.jp/",
+      "status": 503
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1109138/000117891326001561/R4.htm",
+      "status": 403
+    },
+    {
       "url": "https://www.appliedmaterials.com/us/en/semiconductor.html",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/6951/000162828025056742/R3.htm",
       "status": 403
     },
     {
@@ -594,7 +1077,15 @@
       "status": 403
     },
     {
+      "url": "https://www.sec.gov/Archives/edgar/data/1680062/000162828026013231/R4.htm",
+      "status": 403
+    },
+    {
       "url": "https://www.intel.com/content/www/us/en/foundry/overview.html",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/R5.htm",
       "status": 403
     },
     {
@@ -602,7 +1093,31 @@
       "status": 403
     },
     {
+      "url": "https://www.sec.gov/Archives/edgar/data/928876/000117891326002318/R4.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000023/R3.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm",
+      "status": 403
+    },
+    {
       "url": "https://www.sec.gov/Archives/edgar/data/1122411/000095010326001662/dp241167_6k.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/R3.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/56978/000005697825000081/R5.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1116942/000119312526051976/R4.htm",
       "status": 403
     },
     {
@@ -610,7 +1125,39 @@
       "status": 403
     },
     {
+      "url": "https://www.sec.gov/Archives/edgar/data/1039399/000103939926000009/R5.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/97210/000119312526059002/R4.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/R4.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1040470/000165495426006919/R4.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000010/R5.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/R5.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/R5.htm",
+      "status": 403
+    },
+    {
       "url": "https://www.cisco.com/site/us/en/products/networking/silicon-one/index.html",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/R5.htm",
       "status": 403
     },
     {
@@ -618,15 +1165,19 @@
       "status": 403
     },
     {
-      "url": "https://www.wistron.com/en/Business/Solutions",
+      "url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926013549/R3.htm",
       "status": 403
     },
     {
-      "url": "https://www.supermicro.com/en/products/gpu",
+      "url": "https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/R5.htm",
       "status": 403
     },
     {
-      "url": "https://www.qct.io/solution/index/AI-Solutions",
+      "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026057358/R3.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/R5.htm",
       "status": 403
     },
     {
@@ -634,7 +1185,51 @@
       "status": 403
     },
     {
+      "url": "https://www.sec.gov/Archives/edgar/data/24741/000002474126000124/R3.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.qct.io/solution/index/AI-Solutions",
+      "status": 403
+    },
+    {
+      "url": "https://www.wistron.com/en/Product&Services/Enterprise&Networking",
+      "status": 403
+    },
+    {
+      "url": "https://www.supermicro.com/en/products/gpu",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536526000022/R5.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000008/R5.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/R3.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/R5.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/898293/000162828025045293/R5.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/R3.htm",
+      "status": 403
+    },
+    {
       "url": "https://www.se.com/us/en/work/solutions/for-business/data-centers-and-networks/",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000007/R3.htm",
       "status": 403
     },
     {
@@ -642,11 +1237,47 @@
       "status": 403
     },
     {
-      "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086325000129/0000050863-25-000129-index.htm",
+      "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/R3.htm",
       "status": 403
     },
     {
-      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+      "url": "https://www.sec.gov/Archives/edgar/data/1280452/000143774926006113/R4.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.reuters.com/article/us-southkorea-japan-whitelist/south-korea-removes-japan-from-fast-track-trade-white-list-idUSKBN1W21T2",
+      "status": 401
+    },
+    {
+      "url": "https://www.reuters.com/markets/deals/italys-draghi-vetoes-third-chinese-takeover-this-year-2021-11-23/",
+      "status": 401
+    },
+    {
+      "url": "https://www.reuters.com/markets/deals/germany-block-chinese-takeover-semiconductor-firm-ers-electronic-handelsblatt-2022-11-09/",
+      "status": 401
+    },
+    {
+      "url": "https://www.reuters.com/technology/uk-orders-chinas-nexperia-sell-least-86-microchip-factory-2022-11-16/",
+      "status": 401
+    },
+    {
+      "url": "https://web.archive.org/web/20250325151832/https://www.meti.go.jp/english/press/2019/0701_001.html",
+      "status": 429
+    },
+    {
+      "url": "https://web.archive.org/web/20221222221824/https://www.meti.go.jp/english/press/2019/0802_001.html",
+      "status": 429
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/937966/000093796625000009/asml-20241231.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.reuters.com/world/china/taiwan-adds-chinas-huawei-smic-export-control-list-2025-06-15/",
+      "status": 401
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086325000129/0000050863-25-000129-index.htm",
       "status": 403
     },
     {
@@ -654,25 +1285,69 @@
       "status": 403
     },
     {
-      "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm",
-      "status": 403
-    },
-    {
       "url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm",
       "status": 403
     },
     {
-      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+      "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2284784",
+      "status": 401
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm",
       "status": 403
     },
     {
-      "url": "https://pr.tsmc.com/english/news/3228",
+      "url": "https://www.semi.org/en/semi-press-release/esd-alliance-reports-electronic-system-design-industry-posts-5.1-billion-dollars-in-revenue-in-q2-2025",
       "status": 403
     },
     {
-      "url": "https://www.sec.gov/Archives/edgar/data/937966/000093796625000009/asml-20241231.htm",
+      "url": "https://www.semi.org/en/semi-press-release/esd-alliance-reports-electronic-system-design-industry-posts-5.1-billion-dollars-in-revenue-in-q1-2025",
+      "status": 403
+    },
+    {
+      "url": "https://www.semi.org/en/semi-press-release/esd-alliance-reports-electronic-system-design-industry-posts-5.6-billion-dollars-in-revenue-in-q3-2025",
+      "status": 403
+    },
+    {
+      "url": "https://www.semi.org/en/semi-press-release/esd-alliance-reports-electronic-system-design-industry-posts-5.5-billion-dollars-in-revenue-in-q4-2025",
+      "status": 403
+    },
+    {
+      "url": "https://www.semi.org/en/semi-press-release/semi-reports-2025-annual-worldwide-silicon-wafer-shipments-and-revenue-results",
+      "status": 403
+    },
+    {
+      "url": "https://digital-strategy.ec.europa.eu/en/faqs/general-purpose-ai-models-ai-act-questions-answers",
+      "status": 403
+    },
+    {
+      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-08/5122725a56670882d777a8e8bfe0ed247cc55330/TSMC%202Q24%20Transcript.pdf",
+      "status": 403
+    },
+    {
+      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2025-10/6860312f04fd291d0f26b46c1234f84e6332717e/TSMC%203Q25%20Transcript.pdf",
+      "status": 403
+    },
+    {
+      "url": "https://investor.tsmc.com/static/annualReports/2025/english/pdf/2025_tsmc_ar_e_ch5.pdf",
+      "status": 403
+    },
+    {
+      "url": "https://pr.tsmc.com/english/news/3326",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/0001046179/000104617926000451/a2q26e_withguidancexfinal.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000209/nvda-20250727.htm",
+      "status": 403
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm",
       "status": 403
     }
   ],
-  "when": "2026-09-10T17:10:39.670Z"
+  "when": "2026-10-25T07:47:59.495Z"
 }
