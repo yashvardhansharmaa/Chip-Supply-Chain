@@ -1,222 +1,179 @@
 #!/usr/bin/env python3
-"""Render the social cards (1200 x 630 PNG, one per chapter and per view) with headless Chrome.
+"""Render the share cards (1200 x 630 PNG, one per chapter and per view) with headless Chrome.
 
 usage: python3 build/cards.py [--only <slug>[,<slug>]] [--keep] [--port <devtools port, default 9334>] [--out <dir>]
 
-Run by hand, like build/pdf.py, not on every build. The list of pages (slug, eyebrow, title, line, lede, tags) is
-build/modules/social.js's manifest(), read through node so the card and the unfurl page never disagree.
-Output: build/assets/cards/<slug>.png (--out writes them to another folder, for a trial); `node build/build.js` copies the
-folder to dist/cards/.
+Run by hand, like build/pdf.py, not on every build. The list of pages is build/modules/social.js's manifest(), read
+through node, so the cards and the pages share one list. Output: build/assets/cards/<slug>.png (--out writes them to
+another folder, for a trial); `node build/build.js` copies the folder to dist/cards/ and bumps a card's version in
+versions.json when its bytes change. The home card is drawn by build/home_card.py and is skipped here.
 
-The card is the "Plate" direction from qa/cards-redesign-2/light: the page itself at card size. The site's light
-tokens (qa/brand-build.md: warm white ground, blue-black ink, garnet as the only accent), no gradient and no
-vignette. At the right, large on the bare ground, the chapter's own specimen: the point cloud the page shows,
-dumped from src/kit.js by build/cards-art.js and drawn here with Pillow in ink with its accent points in the
-colors the specimen declares for the light ground (qa/specimen-colors.md), at the tilt the site opens it at, over
-the centered 28 px rule and the tracked plate line ("SPECIMEN 04 · EUV SCANNER, IN SECTION", Jost, the number in garnet). The
-left column is the chapter head reduced to its essentials: the wordmark (the favicon's tile beside "Chip Supply
-Chain" in Fraunces, as in the site's masthead) with a hairline tick and "CHAPTER 04 · STAGE 4 OF 15" in Instrument
-Sans, the title in Fraunces at 116 px (opsz 144, SOFT and WONK at 0), the two ratings as garnet-ruled tags in sentence
-case ("Moderately hard to substitute" in tracked capitals ran out of the column into the specimen), and the lede in Source Serif 4: the first two sentences of the chapter's oneLiner, the second
-cut to its first clause when it runs long. A view follows the wordmark with the italic tagline instead, carries no
-tags, and shows its dek; the home card is the site's
-hero, "How AI chips are made", over the GPU die. A chapter names its specimen in its front matter; a view takes
-one from VIEW_SPECIMEN below. The foot carries the domain.
+The style is "The whole chain", the home card the owner chose on 25 October 2026 (qa/design3/cards/chain/ in the main
+checkout): white ground, ink, Fraunces for the titles, Literata for the line under them, and the wine logo tile as the
+only color. Every card stands on the shelf of the fifteen stage drawings, in the order a chip is made.
+- A chapter follows that folder's Lithography sketch: the wordmark, the chapter's title and its one-line summary at the
+  left, its own drawing large at the right, and the fifteen drawings small along the foot, pale but for the chapter's own
+  stage, which is in ink with an ink rule under it on the shelf. Chapters 16 and 17 are not stages: the fifteen are all
+  in ink and no stage is marked, since each covers the whole chain.
+- A view (Start here, The Chain, AI Chips, Suppliers, Export Controls, Glossary) follows the home card: the wordmark,
+  the view's short title and one line centered over the fifteen drawings at the home card's size. The row is copied from
+  build/assets/home-card/card.html, so it matches the home card to the pixel.
 
-The fit script shrinks the title while it runs past two lines, then while the whole text column overflows, so the
-title never reaches the art; the lede is shrunk until five lines hold it. Every PNG is quantized to a palette and
-must come in under 150 KB; if it does not, the cloud is thinned and the card drawn again. No em dashes anywhere.
+The drawings come from build/assets/cards-art/<chapter-id>.png (made by qa/redesign/card-art.py from the redesign's
+specimen renders): each chapter's specimen as ink coverage, cropped. The small ones are drawn as qa/design3/cards/chain/
+build.py draws them (same area each, the lines kept crisp, the haze dropped, the weights evened out); the large one keeps
+its stipple. The fit script shrinks a long title until it takes at most two lines in its column, then drops the
+summary's last sentence while the text would run into the row of drawings. Every PNG is quantized to a palette and must
+come in under 150 KB.
 """
-import base64, json, math, os, re, shutil, subprocess, sys, tempfile, time, urllib.request
+import base64, io, json, os, re, shutil, subprocess, sys, tempfile, time, urllib.request
+import numpy as np
+from PIL import Image
 import websocket  # websocket-client
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, 'build', 'assets', 'cards')
-ART_JS = os.path.join(ROOT, 'build', 'cards-art.js')
+ART = os.path.join(ROOT, 'build', 'assets', 'cards-art')
+HOME_CARD = os.path.join(ROOT, 'build', 'assets', 'home-card', 'card.html')
 CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 PORT = 9334
 W, H = 1200, 630
-ART_BOX = (600, 500)        # the art box, at right: 36px; top: 30px, with the plate line beneath it
-COL_W = 500                 # the text column, from x = 72
 LIMIT = 150 * 1024
-DENSITY = 0.8               # share of each cloud's points drawn; thinned further when a PNG is over the limit
-COLORS = 256
-SUPERSAMPLE = 1             # 1 keeps the dots crisp, as on the page, and halves the PNG against 2
-TITLE_PX = 116
-LEDE_PX = 25
-LEDE_LINES = 5
-LONG_SENTENCE = 120         # a second sentence past this is cut to its first clause
+INK = (23, 23, 22)          # --ink #171716
 
 args = sys.argv[1:]
 only = args[args.index('--only') + 1].split(',') if '--only' in args else None
-keep = '--keep' in args  # keep the temporary HTML and art files for inspection
+keep = '--keep' in args  # keep the temporary HTML for inspection
 if '--port' in args:
-    PORT = int(args[args.index('--port') + 1])  # a free DevTools port when another headless Chrome holds the default
+    PORT = int(args[args.index('--port') + 1])
 if '--out' in args:
-    OUT = os.path.abspath(args[args.index('--out') + 1])  # a trial folder; the cards the site ships stay as they are
+    OUT = os.path.abspath(args[args.index('--out') + 1])
 
-# the light sheet, qa/brand-build.md (:root in src/styles.css)
-# (the two rule colors are named rule_line and rule_line2 so they never collide with the card's `line` text in the template dict)
-LIGHT = dict(bg='#f7f6f2', ink='#14181f', ink2='#3b424c', muted='#5c636d', rule_line='#d8d4cc', rule_line2='#bfb9af', accent='#7a1f2b')
-SITE = 'Chip Supply Chain'
-TAGLINE = 'Every stage, and who controls it'  # the wordmark's tagline, src/template.html
-# the favicon's tile (build/assets/icons/favicon.svg), as the masthead's wordmark draws it; .wordmark .wm-tile colors it
-TILE = ('<svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true"><rect width="16" height="16" rx="3.2"/>'
-        '<path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 '
-        'Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 '
-        'Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 '
-        'Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 '
-        'Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 '
-        'Q1011 765 1011 683 Z"/></svg>')
-
-# the specimen a view shows; chapters name theirs in content/*.md front matter
-VIEW_SPECIMEN = {'home': 'die-floorplan', 'intro': 'boule-and-wafer', 'chain': 'cowos-exploded', 'chips': 'package',
-                 'suppliers': 'globe', 'export-controls': 'globe', 'glossary': 'wafer'}
-
-# the plate line names the specimen, for a chapter as for a view (the chapter's title already stands beside it at 100 px).
-# The kit's captions run to a paragraph.
-LABEL = {
-    'die-floorplan': 'GPU die, one reticle field', 'boule-and-wafer': 'Silicon ingot and wafer', 'gas-cabinet': 'Specialty gas cabinet',
-    'euv-scanner': 'EUV scanner, in section', 'photomask': 'EUV reticle and pellicle', 'process-chamber': 'Plasma etch chamber, in section',
-    'sem-column': 'Electron-beam inspection column', 'gaa-transistor': 'Gate-all-around transistor', 'foup': 'FOUP, 25 wafers',
-    'hbm-stack': 'HBM stack, twelve high', 'cowos-exploded': 'CoWoS package, exploded', 'substrate-layers': 'Flip-chip substrate, cut away',
-    'probe-card': 'Probe card over a wafer', 'gpu-baseboard': 'Eight-GPU baseboard', 'rack': 'Liquid-cooled rack, 72 accelerators',
-    'wafer-cost': 'Cost of one B200, to scale', 'globe': 'Chokepoint towns', 'package': 'AI accelerator package', 'wafer': '300 mm wafer',
+# a view's card: its own short title and one line. Start here's page title is the site's hero, which the home card
+# already carries, so its card is named for the page. Suppliers and Export Controls take the first sentence of their
+# page's own description (build/page-titles.json), Suppliers' cut to fit; the others keep the line social.js gives them.
+VIEW_TITLE = {'intro': 'Start here', 'chain': 'The Chain', 'chips': 'AI Chips', 'suppliers': 'Suppliers',
+              'export-controls': 'Export Controls', 'glossary': 'Glossary'}
+VIEW_LINE = {
+    'suppliers': 'What each of the {firms} firms makes, where it is based and how hard it would be to replace.',
+    'export-controls': 'A timeline of the main chip export rules since 2018 and what can still be sold to China.',
 }
 
-# per-specimen framing: zoom (1 = fit the box), horizontal and vertical offset as a share of the box
-FRAME = {'globe': dict(zoom=0.88), 'wafer-cost': dict(zoom=0.97), 'rack': dict(zoom=1.0), 'boule-and-wafer': dict(zoom=0.94), 'sem-column': dict(zoom=1.0),
-         'euv-scanner': dict(zoom=0.94), 'die-floorplan': dict(zoom=0.92)}
+# ---------------------------------------------------------------- layout (qa/design3/cards/chain/build.py)
+SHELF_GAP = 7               # the shelf rule sits this far below the drawings
+CH_ROOT_AREA, CH_MAX_W, CH_MAX_H = 34.0, 56, 56   # the chapter row: each drawing about 34 x 34 px, none over 56 px
+CH_X, CH_BASE = 64, 584     # the chapter row runs from x = 64 to 1136 and stands on y = 584
+WEIGHT_RANGE = (0.62, 1.5)
+INK_GAIN = 1.2
+OFF_TONE = 0.30             # the stages that are not this chapter's
+BIG_AREA = 150000           # the large drawing covers about this many px (Lithography: 345 x 424, as in the sketch)
+BIG_BOX = (456, 440)        # and fits a box at right: 64, top: 52
+BIG_RIGHT, BIG_TOP = 64, 52
+TEXT_GAP = 48               # at least this much between the text column and the large drawing
+COL_MAX = 600               # the text column, from x = 64
+TITLE_PX, LINE_PX = 104, 25
+TWO_LINE_PX = 88           # a chapter title that takes two lines is set at most this large
+TEXT_BOTTOM = 630 - CH_BASE + CH_MAX_H + 24   # the text stops 24 px above the tallest drawing in the row
+VIEW_TITLE_PX = 104
+VIEW_COL = 560              # a view's title and line stay inside the center 630 x 630 square, as the home card's do
 
-TEMPLATE = """<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..600,0,0&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;1,8..60,400&family=Instrument+Sans:wght@400;500;600&family=Jost:wght@400&display=block">
+TILE = ('<svg class="tile" viewBox="0 0 16 16" aria-hidden="true"><rect width="16" height="16" rx="3.2" fill="#7a1f2b"/><path fill="#ffffff" '
+        'transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 '
+        'L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 '
+        'Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 '
+        '563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 '
+        '1011 683 Z"/></svg>')
+
+TEMPLATE = """<!doctype html><html lang="en"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,100..900,0..100,0..1&family=Literata:opsz,wght@7..72,200..900&display=block">
 <style>
-:root { --bg: %(bg)s; --ink: %(ink)s; --ink-2: %(ink2)s; --muted: %(muted)s; --line: %(rule_line)s; --line-2: %(rule_line2)s; --accent: %(accent)s;
-  --display: "Fraunces", Georgia, serif; --body: "Source Serif 4", Georgia, serif; --label: "Instrument Sans", "Helvetica Neue", Arial, sans-serif; --caption: "Jost", "Instrument Sans", sans-serif; }
-* { box-sizing: border-box; }
-html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
-body { background: var(--bg); color: var(--ink); font-family: var(--label); -webkit-font-smoothing: antialiased; }
-.card { position: relative; width: 1200px; height: 630px; overflow: hidden; }
-.art { position: absolute; right: 36px; top: 30px; width: %(art_w)spx; height: %(art_h)spx; background: url(%(art)s) 0 0 / %(art_w)spx %(art_h)spx no-repeat; }
-.plate-line { position: absolute; right: 36px; width: %(art_w)spx; top: 536px; text-align: center; font-family: var(--caption); font-weight: 400; font-size: 14.5px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ink-2); padding-top: 16px; margin: 0; white-space: nowrap; }
-.plate-line::before { content: ""; position: absolute; top: 0; left: 50%%; width: 28px; height: 1px; margin-left: -14px; background: var(--ink); }
-.plate-line b { color: var(--accent); font-weight: 400; }
-.text { position: absolute; left: 72px; top: 60px; bottom: 56px; width: %(col_w)spx; display: flex; flex-direction: column; }
-.wordmark { flex: none; display: flex; align-items: center; gap: 15px; margin: 0; white-space: nowrap; }
-.wordmark .wm-tile { display: block; flex: none; width: 36px; height: 36px; }
-.wordmark .wm-tile rect { fill: %(accent)s; }
-.wordmark .wm-tile path { fill: %(bg)s; }
-.wordmark .wm-text { display: flex; align-items: baseline; }
-.wordmark .wm-name { font-family: var(--display); font-weight: 540; font-size: 26px; font-variation-settings: "opsz" 28, "SOFT" 0, "WONK" 0; letter-spacing: -0.005em; line-height: 1; color: var(--ink); }
-.wordmark .tagline { font-family: var(--body); font-style: italic; font-size: 18px; color: var(--muted); margin-left: 16px; font-weight: 400; }
-.wordmark .rest { font-family: var(--label); font-weight: 500; font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
-.wordmark .rest i { font-style: normal; display: inline-block; width: 1px; height: 0.9em; background: var(--line-2); margin: 0 14px -2px; }
-.mid { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: center; padding: 8px 0 24px; }
-.title { font-family: var(--display); font-weight: 400; font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0; font-size: %(title_px)spx; line-height: 1.0; letter-spacing: -0.015em; margin: 0; color: var(--ink); overflow-wrap: normal; }
-.tags { display: flex; flex: none; flex-wrap: wrap; gap: 8px 10px; margin: 30px 0 0; padding: 0; list-style: none; }
-.tags li { font-family: var(--label); font-weight: 500; font-size: 16.5px; letter-spacing: 0; text-transform: none; line-height: 1.2; padding: 6px 10px 7px; border: 1px solid var(--accent); color: var(--accent); white-space: nowrap; }
-.line { flex: none; font-family: var(--body); font-weight: 400; font-variation-settings: "opsz" 24; font-size: %(lede_px)spx; line-height: 1.32; color: var(--ink-2); margin: 28px 0 0; max-width: %(col_w)spx; display: -webkit-box; -webkit-line-clamp: %(lede_lines)s; -webkit-box-orient: vertical; overflow: hidden; }
-.tags + .line { margin-top: 26px; }
-.foot { flex: none; font-family: var(--label); font-weight: 500; font-size: 18px; line-height: 1; letter-spacing: 0.04em; color: var(--muted); margin: 0; white-space: nowrap; }
-</style>
-</head>
-<body>
-<div class="card">
-  <div class="art"></div>
-  <p class="plate-line">%(plate)s</p>
-  <div class="text">
-    %(head)s
-    <div class="mid">
-      <h1 class="title" id="title">%(title)s</h1>
-      %(tags)s
-      <p class="line" id="line">%(line)s</p>
-    </div>
-    <p class="foot">%(host)s</p>
-  </div>
+:root{--wall:#ffffff;--ink:#171716;--ink2:#45443f;--rule:#dcdbd6;
+  --f-serif:"Fraunces",Georgia,serif;--f-read:"Literata",Georgia,serif}
+*{box-sizing:border-box}
+html,body{margin:0;width:1200px;height:630px;overflow:hidden;background:var(--wall)}
+.card{position:relative;width:1200px;height:630px;overflow:hidden;background:var(--wall);color:var(--ink);-webkit-font-smoothing:antialiased}
+.wm{display:flex;align-items:center;gap:14px;margin:0}
+.wm .tile{display:block;flex:none;width:38px;height:38px}
+.wm span{font-family:var(--f-serif);font-size:28px;line-height:1;white-space:nowrap;color:var(--ink);font-weight:540;font-variation-settings:"opsz" 28,"SOFT" 0,"WONK" 0;letter-spacing:-.005em}
+h1{margin:0;color:var(--ink);font-family:var(--f-serif);font-weight:350;font-variation-settings:"opsz" 48,"SOFT" 0,"WONK" 0;line-height:1;text-wrap:balance}
+.line{margin:0;font-family:var(--f-read);font-weight:400;font-variation-settings:"opsz" 24;color:var(--ink2)}
+.frieze{position:absolute;left:0;right:0}
+.frieze img{position:absolute;bottom:0;display:block}
+.shelf{position:absolute;height:2px;background:var(--rule)}
+.here{position:absolute;height:2px;background:var(--ink)}
+
+/* a chapter: the Lithography sketch */
+.chapter .wm{position:absolute;left:64px;top:54px}
+.chapter .text{position:absolute;left:64px;top:122px;width:{{COL}}px;bottom:{{TEXT_BOTTOM}}px;overflow:hidden}
+.chapter h1{margin-left:-2px;font-size:{{TITLE_PX}}px;letter-spacing:-.012em}
+.chapter .line{margin-top:42px;font-size:{{LINE_PX}}px;line-height:1.42;text-wrap:pretty}
+.chapter .big{position:absolute;display:block}
+.chapter .frieze{bottom:{{FRIEZE_BOTTOM}}px;height:{{FRIEZE_H}}px}
+.chapter .shelf{left:64px;right:64px;top:{{SHELF_TOP}}px}
+
+/* a view: the home card, with the view's title and line */
+.view .wm{position:absolute;left:0;right:0;top:52px;justify-content:center}
+.view .text{position:absolute;left:0;right:0;top:96px;bottom:{{VIEW_TEXT_BOTTOM}}px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.view h1{max-width:{{VIEW_COL}}px;font-size:{{VIEW_TITLE_PX}}px;letter-spacing:-.014em}
+.view .line{max-width:{{VIEW_COL}}px;margin-top:34px;font-size:24px;line-height:31px;text-wrap:balance}
+.view .frieze{bottom:{{FRIEZE_BOTTOM}}px;height:{{FRIEZE_H}}px}
+.view .shelf{left:{{SHELF_X}}px;right:{{SHELF_X}}px;top:{{SHELF_TOP}}px}
+</style></head><body><div class="card {{KIND}}">
+<p class="wm">{{TILE}}<span>Chip Supply Chain</span></p>
+<div class="text" data-two="{{TWO_PX}}"><h1 id="title">{{TITLE}}</h1><p class="line" id="line" data-sentences="{{SENTENCES}}">{{LINE}}</p></div>
+{{BIG}}
+<div class="shelf"></div>{{HERE}}
+<div class="frieze">
+{{FRIEZE}}
 </div>
-</body>
-</html>
+</div></body></html>
 """
 
-# shrink the title until it sits on at most two lines inside the text column, then further while the whole column overflows
-# (the lede is flex: none, so a squeezed column shows as overflow instead of a silently clipped lede); then shrink the lede
-# until its clamp holds the whole text, and report whether anything still overflows and whether each face loaded
-FIT_JS = """
+# a chapter: shrink the title until it takes at most two lines and fits its column; then drop the summary's last
+# sentence while the text runs past its box, and last shrink the summary a little. A view: shrink its title while it
+# runs past two lines. Reports what it did and whether each face loaded.
+FIT_JS = r"""
 (async () => {
   await document.fonts.ready;
-  // fonts.ready can resolve before a face the page uses has been requested; ask for each face the template uses
-  const specs = ['400 20px "Fraunces"', '500 20px "Fraunces"', '400 20px "Source Serif 4"', 'italic 400 20px "Source Serif 4"', '500 20px "Instrument Sans"', '600 20px "Instrument Sans"', '400 20px "Jost"'];
-  for (const s of specs) { try { await document.fonts.load(s); } catch (e) {} }
+  for (const s of ['350 40px "Fraunces"', '540 28px "Fraunces"', '400 20px "Literata"']) { try { await document.fonts.load(s); } catch (e) {} }
   await document.fonts.ready;
-  const t = document.getElementById('title');
+  const t = document.getElementById('title'), l = document.getElementById('line'), box = document.querySelector('.text');
   let px = parseFloat(getComputedStyle(t).fontSize);
-  const lh = parseFloat(getComputedStyle(t).lineHeight) / px;
-  const lines = () => Math.round(t.getBoundingClientRect().height / (px * lh));
+  const lines = (el) => Math.round(el.getBoundingClientRect().height / parseFloat(getComputedStyle(el).lineHeight));
   const wide = () => t.scrollWidth > t.clientWidth + 1;
-  while ((lines() > 2 || wide()) && px > 56) { px -= 2; t.style.fontSize = px + 'px'; }
-  const text = document.querySelector('.text');
-  const overflow = () => text.scrollHeight > text.clientHeight + 2;
-  while (overflow() && px > 56) { px -= 2; t.style.fontSize = px + 'px'; }
-  const l = document.getElementById('line');
-  let lpx = parseFloat(getComputedStyle(l).fontSize);
-  while (l.scrollHeight > l.clientHeight + 2 && lpx > 20) { lpx -= 1; l.style.fontSize = lpx + 'px'; }
-  // a tag that runs past the column's right edge would cross into the specimen
-  const tagsWide = () => { const u = document.querySelector('.tags'); return !!u && [...u.children].some((li) => li.getBoundingClientRect().right > u.getBoundingClientRect().right + 1); };
-  // and a plate line (it names the specimen) wider than the art box above it
-  const plateWide = () => { const q = document.querySelector('.plate-line'); return !!q && q.scrollWidth > q.clientWidth + 1; };
-  const over = overflow() || wide() || tagsWide() || plateWide() || l.scrollHeight > l.clientHeight + 2;
-  const fam = (spec) => document.fonts.check(spec);  // check the weights the template uses; a weight not in the sheet reads as false
-  const faces = [...document.fonts].map((f) => f.family.replace(/"/g, '') + ' ' + f.style + ' ' + f.weight + ' ' + f.status);
-  return JSON.stringify({ px, lpx, lines: lines(), over, fonts: [fam('400 20px "Fraunces"'), fam('400 20px "Source Serif 4"'), fam('500 20px "Instrument Sans"'), fam('400 20px "Jost"')], faces });
+  const setT = (v) => { px = v; t.style.fontSize = px + 'px'; };
+  while ((lines(t) > 2 || wide()) && px > 56) setT(px - 2);
+  const two = +(box.dataset.two || 0);
+  if (two && lines(t) === 2 && px > two) setT(two);  // a title on two lines is set smaller, so the summary keeps its room
+  const over = () => box.scrollHeight > box.clientHeight + 1;
+  const ss = JSON.parse(l.dataset.sentences || '[]');
+  let n = ss.length, lpx = parseFloat(getComputedStyle(l).fontSize);
+  const setL = (v) => { lpx = v; l.style.fontSize = lpx + 'px'; };
+  // while the text runs into the row of drawings: the summary to 23 px, then the title to 80 px, then the summary's
+  // last sentence goes, and last the summary to 21 px
+  while (over() && lpx > 23) setL(lpx - 1);
+  while (over() && two && px > 80) setT(px - 2);
+  while (over() && n > 1) { n -= 1; l.textContent = ss.slice(0, n).join(' '); }
+  while (over() && lpx > 21) setL(lpx - 1);
+  const fonts = [document.fonts.check('350 40px "Fraunces"'), document.fonts.check('400 20px "Literata"')];
+  // the smallest text on the card, in px, and how close the text comes to the large drawing
+  const sizes = [...document.querySelectorAll('h1, .line, .wm span')].map((e) => parseFloat(getComputedStyle(e).fontSize));
+  const big = document.querySelector('.big'), tr = Math.max(...[...document.querySelectorAll('h1, .line')].map((e) => {
+    const r = document.createRange(); r.selectNodeContents(e); return Math.max(...[...r.getClientRects()].map((q) => q.right), 0); }));
+  return JSON.stringify({ px, lines: lines(t), lpx, kept: n, of: ss.length, over: over() || wide(), fonts, smallest: Math.min(...sizes),
+    clear: big ? Math.round(big.getBoundingClientRect().left - tr) : null, text: l.textContent });
 })()
 """
 
 
 def esc(s):
-    return str(s).replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+    return str(s).replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;')
 
 
-def lede(text):
-    """The first two sentences of a chapter's lede; a long second sentence is cut to its first clause."""
-    ss = [s.strip() for s in re.split(r'(?<=[.!?]) ', str(text or '').replace('\n', ' ')) if s.strip()][:2]
-    if len(ss) == 2 and len(ss[1]) > LONG_SENTENCE:
-        m = re.match(r'(.{30,}?)[,;:] ', ss[1])
-        if m:
-            ss[1] = m.group(1).rstrip() + '.'
-    return ' '.join(ss)
-
-
-def head_html(p):
-    """The wordmark (the favicon's tile and the name, as in the masthead), then for a chapter a hairline tick and
-    "Chapter 04 · Stage 4 of 15", for a view the italic tagline."""
-    if p['kind'] == 'chapter':
-        rest = '<span class="rest"><i></i>%s</span>' % esc(' · '.join(p['eyebrow'].split(' · ')[1:]))
-    else:
-        rest = '<span class="tagline">%s</span>' % esc(TAGLINE)
-    return '<p class="wordmark">%s<span class="wm-text"><span class="wm-name">%s</span>%s</span></p>' % (TILE, esc(SITE), rest)
-
-
-def tags_html(p):
-    tags = p.get('tags') or []
-    return ('<ul class="tags">%s</ul>' % ''.join('<li>%s</li>' % esc(t) for t in tags)) if tags else ''
-
-
-def plate_html(p, name, specimen_no):
-    """"Specimen 04 · EUV scanner, in section" for a chapter; for a view, the specimen's number (when a chapter owns it) and
-    its label. A specimen with no label falls back to the chapter's title."""
-    no = ('%02d' % p['number']) if p['kind'] == 'chapter' else specimen_no.get(name)
-    text = LABEL.get(name, p['title'] if p['kind'] == 'chapter' else name)
-    return ('Specimen <b>%s</b> · %s' % (no, esc(text))) if no else esc(text)
-
-
-def site_host():
-    js = "process.stdout.write(require(%s).host)" % json.dumps(os.path.join(ROOT, 'build', 'site.js'))
-    return subprocess.run(['node', '-e', js], capture_output=True, text=True, check=True).stdout.strip()
+def sentences(text):
+    """The summary's sentences, with a no-break space between a number and its unit, so "474 GW" never breaks."""
+    text = re.sub(r'(\d) (GW|MW|nm|mm|percent|billion|million)\b', '\\1\u00a0\\2', str(text or '').replace('\n', ' '))
+    return [s.strip() for s in re.split(r'(?<=[.!?])\s+(?=["A-Z0-9])', text) if s.strip()]
 
 
 def manifest():
@@ -224,129 +181,192 @@ def manifest():
     return json.loads(subprocess.check_output(['node', '-e', js], cwd=ROOT))
 
 
-def chapter_specimens():
-    """chapter id -> specimen name, from the JSON front matter of content/NN-*.md."""
+def chapters():
+    """number -> {id, title, one}, from the JSON front matter of content/NN-*.md."""
     out = {}
-    cdir = os.path.join(ROOT, 'content')
-    for f in sorted(os.listdir(cdir)):
-        if not re.match(r'^\d\d-.*\.md$', f):
-            continue
-        m = re.match(r'^---json\s*\n([\s\S]*?)\n---', open(os.path.join(cdir, f)).read())
-        if m:
-            fm = json.loads(m.group(1))
-            if fm.get('specimen'):
-                out[fm['id']] = fm['specimen']
+    for f in sorted(os.listdir(os.path.join(ROOT, 'content'))):
+        if re.match(r'^\d\d-.*\.md$', f):
+            m = json.loads(re.match(r'^---json\s*\n(.*?)\n---', open(os.path.join(ROOT, 'content', f), encoding='utf8').read(), re.S).group(1))
+            out[m['number']] = dict(id=m['id'], title=m['title'], one=m.get('oneLiner') or '')
+    assert all(n in out for n in range(1, 16)), 'expected stages 1 to 15 in content/'
     return out
 
 
-def specimen_for(p, chapters):
+def supplier_count():
+    try:
+        return len(json.load(open(os.path.join(ROOT, 'data', 'suppliers.json'), encoding='utf8')))
+    except Exception:
+        return None
+
+
+# ---------------------------------------------------------------- the drawings (qa/design3/cards/chain/build.py)
+
+def load(cid):
+    """The chapter's drawing as an 8-bit coverage image (L), already cropped to its ink."""
+    p = os.path.join(ART, cid + '.png')
+    if not os.path.exists(p):
+        sys.exit('missing %s: run python3 qa/redesign/card-art.py' % os.path.relpath(p, ROOT))
+    return Image.open(p).convert('L')
+
+
+def coverage(im, w, h, k=3):
+    return np.asarray(im.resize((w * k, h * k), Image.LANCZOS, reducing_gap=3.0)).astype(np.float32) / 255.0
+
+
+def lines(a):
+    """Keep the drawing's lines and drop its haze (see build.py): dense stipple goes to full ink on a smooth step set by
+    the drawing's own 93rd percentile, the open stipple stays a light gray capped at 35 percent."""
+    p = float(np.percentile(a[a > 0.03], 93))
+    lo, hi = 0.22 * p, 0.50 * p
+    t = np.clip((a - lo) / (hi - lo), 0, 1)
+    t = t * t * (3 - 2 * t)
+    return np.maximum(t, np.clip(a / p * 0.32, 0, 0.35))
+
+
+def rgba(alpha):
+    out = np.zeros(alpha.shape + (4,), np.uint8)
+    out[:, :, 0], out[:, :, 1], out[:, :, 2] = INK
+    out[:, :, 3] = np.round(np.clip(alpha, 0, 1) * 255).astype(np.uint8)
+    return Image.fromarray(out, 'RGBA')
+
+
+def draw(im, w, h, tone=1.0, weight=1.0, k=3):
+    a = np.clip(lines(coverage(im, w, h, k)) * weight, 0, 1)
+    m = np.asarray(Image.fromarray(np.round(a * 255).astype(np.uint8), 'L').resize((w, h), Image.LANCZOS)).astype(np.float32) / 255.0
+    return rgba(m * tone)
+
+
+def soft(im, w, h, gain=1.6, gamma=0.9):
+    """The large drawing keeps its stipple: a plain resample with a mild lift."""
+    a = np.asarray(im.resize((w, h), Image.LANCZOS, reducing_gap=3.0)).astype(np.float32) / 255.0
+    return rgba(np.clip(a * gain, 0, 1) ** gamma)
+
+
+def weights(ims, sz, strength=0.5, lo=0.75, hi=1.5):
+    means = [float(lines(coverage(im, w, h)).mean()) for im, (w, h) in zip(ims, sz)]
+    med = float(np.median(means))
+    return [min(hi, max(lo, (med / m) ** strength)) for m in means]
+
+
+def place(widths, left, right):
+    gap = (1200 - left - right - sum(widths)) / (len(widths) - 1)
+    xs, x = [], float(left)
+    for w in widths:
+        xs.append(int(round(x)))
+        x += w + gap
+    return xs
+
+
+def sizes(ims, root_area, max_w, max_h):
+    out = []
+    for im in ims:
+        r = im.width / im.height
+        w, h = root_area * r ** 0.5, root_area / r ** 0.5
+        k = min(1.0, max_w / w, max_h / h)
+        out.append((max(1, round(w * k)), max(1, round(h * k))))
+    return out
+
+
+def uri(im):
+    b = io.BytesIO()
+    im.save(b, 'PNG', optimize=True)
+    return 'data:image/png;base64,' + base64.b64encode(b.getvalue()).decode()
+
+
+def img(im, x, extra=''):
+    return '<img style="left:%dpx%s" src="%s" width="%d" height="%d" alt="">' % (x, extra, uri(im), im.width, im.height)
+
+
+class Row:
+    """The fifteen drawings at the chapter cards' size, in ink and pale, with their places on the shelf."""
+    def __init__(self, ch):
+        ims = [load(ch[n]['id']) for n in range(1, 16)]
+        self.sz = sizes(ims, CH_ROOT_AREA, CH_MAX_W, CH_MAX_H)
+        wt = weights(ims, self.sz, lo=WEIGHT_RANGE[0], hi=WEIGHT_RANGE[1])
+        self.on = [draw(im, w, h, weight=k * INK_GAIN) for im, (w, h), k in zip(ims, self.sz, wt)]
+        self.off = [draw(im, w, h, weight=k * INK_GAIN, tone=OFF_TONE) for im, (w, h), k in zip(ims, self.sz, wt)]
+        self.xs = place([w for w, h in self.sz], CH_X, CH_X)
+        self.h = max(h for w, h in self.sz)
+
+    def html(self, stage):
+        """stage: 1 to 15 marks that stage; None draws all fifteen in ink and marks none."""
+        items = [self.on[i] if stage is None or i == stage - 1 else self.off[i] for i in range(15)]
+        return '\n'.join(img(d, x) for d, x in zip(items, self.xs))
+
+
+def home_row():
+    """The home card's own row of drawings and shelf, copied from its card.html."""
+    s = open(HOME_CARD, encoding='utf8').read()
+    sec = s[s.index('<section class="page home">'):]
+    sec = sec[:sec.index('</section>')]
+    imgs = re.findall(r'<img class="s[^"]*" style="left:(\d+)px" src="(data:image/png;base64,[^"]+)" width="(\d+)" height="(\d+)" alt="">', sec)
+    assert len(imgs) == 15, 'expected 15 drawings in the home card'
+    fr = re.search(r'\.home \.frieze\{bottom:(\d+)px;height:(\d+)px\}', s)
+    sh = re.search(r'\.home \.shelf\{left:(\d+)px;right:\d+px;top:(\d+)px\}', s)
+    html = '\n'.join('<img style="left:%spx" src="%s" width="%s" height="%s" alt="">' % (x, u, w, h) for x, u, w, h in imgs)
+    return dict(html=html, bottom=int(fr.group(1)), h=int(fr.group(2)), shelf_x=int(sh.group(1)), shelf_top=int(sh.group(2)))
+
+
+def big_size(im):
+    """Same area for every large drawing, clipped to the box: a tall drawing stands 440 px high, a wide one 456 px across."""
+    r = im.width / im.height
+    w, h = (BIG_AREA * r) ** 0.5, (BIG_AREA / r) ** 0.5
+    k = min(1.0, BIG_BOX[0] / w, BIG_BOX[1] / h)
+    return max(1, round(w * k)), max(1, round(h * k))
+
+
+def page_html(p, ch, row, home):
+    rep = {'{{TWO_PX}}': str(TWO_LINE_PX) if p['kind'] == 'chapter' else '0', '{{TILE}}': TILE, '{{TITLE_PX}}': str(TITLE_PX), '{{LINE_PX}}': str(LINE_PX), '{{TEXT_BOTTOM}}': str(TEXT_BOTTOM),
+           '{{VIEW_COL}}': str(VIEW_COL), '{{VIEW_TITLE_PX}}': str(VIEW_TITLE_PX)}
     if p['kind'] == 'chapter':
-        return chapters.get(p['slug'], 'die-floorplan')
-    return VIEW_SPECIMEN.get(p['slug'], 'die-floorplan')
+        c = ch[p['number']]
+        im = load(c['id'])
+        bw, bh = big_size(im)
+        bx = 1200 - BIG_RIGHT - bw
+        by = BIG_TOP + (BIG_BOX[1] - bh) // 2  # a short drawing sits at the middle of the box
+        ss = sentences(c['one'])
+        rep.update({'{{KIND}}': 'chapter', '{{TITLE}}': esc(c['title']),
+                    '{{LINE}}': esc(' '.join(ss)), '{{SENTENCES}}': esc(json.dumps(ss)),
+                    '{{COL}}': str(min(COL_MAX, bx - TEXT_GAP - 64)),
+                    '{{BIG}}': '<img class="big" style="left:%dpx;top:%dpx" src="%s" width="%d" height="%d" alt="">' % (bx, by, uri(soft(im, bw, bh)), bw, bh),
+                    '{{FRIEZE}}': row.html(p['number'] if p['number'] <= 15 else None),
+                    '{{FRIEZE_BOTTOM}}': str(630 - CH_BASE), '{{FRIEZE_H}}': str(row.h), '{{SHELF_TOP}}': str(CH_BASE + SHELF_GAP),
+                    '{{HERE}}': ('<div class="here" style="left:%dpx;width:%dpx;top:%dpx"></div>' % (row.xs[p['number'] - 1], row.sz[p['number'] - 1][0], CH_BASE + SHELF_GAP)) if p['number'] <= 15 else '',
+                    '{{SHELF_X}}': '64', '{{VIEW_TEXT_BOTTOM}}': '0'})
+    else:
+        line = VIEW_LINE.get(p['slug'], p['line']).replace('{firms}', str(supplier_count() or 226))
+        rep.update({'{{KIND}}': 'view', '{{TITLE}}': esc(VIEW_TITLE.get(p['slug'], p['title'])), '{{LINE}}': esc(line), '{{SENTENCES}}': '[]',
+                    '{{COL}}': '0', '{{BIG}}': '', '{{HERE}}': '', '{{FRIEZE}}': home['html'],
+                    '{{FRIEZE_BOTTOM}}': str(home['bottom']), '{{FRIEZE_H}}': str(home['h']), '{{SHELF_TOP}}': str(home['shelf_top']),
+                    '{{SHELF_X}}': str(home['shelf_x']), '{{VIEW_TEXT_BOTTOM}}': str(home['bottom'] + home['h'] + 16)})
+    html = TEMPLATE
+    for k, v in rep.items():
+        html = html.replace(k, v)
+    assert '{{' not in html, 'a template slot is left unfilled'
+    return html
 
 
-# ---------- the art: a point cloud drawn with Pillow ----------
-
-def dump_cloud(name, folder):
-    """Run build/cards-art.js once per specimen; returns (bin path, meta)."""
-    binpath = os.path.join(folder, name + '.bin')
-    if not os.path.exists(binpath):
-        r = subprocess.run(['node', ART_JS, name, binpath], capture_output=True, text=True, cwd=ROOT)
-        if r.returncode:
-            sys.exit('cards-art.js failed for %s: %s' % (name, r.stderr.strip()[-400:]))
-        open(binpath + '.json', 'w').write(r.stdout.strip().splitlines()[-1])
-    return binpath, json.load(open(binpath + '.json'))
-
-
-def hexcol(s):
-    s = s.lstrip('#')
-    return tuple(int(s[i:i + 2], 16) for i in (0, 2, 4))
-
-
-def col(c):
-    return hexcol(c) if isinstance(c, str) else tuple(int(x) for x in c)
-
-
-def rot(rx, ry, rz):
-    import numpy as np
-    cx, sx = math.cos(rx), math.sin(rx)
-    cy, sy = math.cos(ry), math.sin(ry)
-    cz, sz = math.cos(rz), math.sin(rz)
-    Rx = np.array([[1, 0, 0], [0, cx, -sx], [0, sx, cx]])
-    Ry = np.array([[cy, 0, sy], [0, 1, 0], [-sy, 0, cy]])
-    Rz = np.array([[cz, -sz, 0], [sz, cz, 0], [0, 0, 1]])
-    return Rz @ Ry @ Rx
-
-
-def render_art(binpath, tilt, out, density, box=ART_BOX, zoom=0.92, ox=0.0, oy=0.0, S=SUPERSAMPLE, dot=1.0, colors=None):
-    """Draw the cloud into a transparent box: ink points, accent points (w in [2,3]) and second-accent points (w in (3,4])
-    in the specimen's own light-ground colors (`colors` = {accent, accent2} as 0..255 triplets from cards-art.js, else the
-    card's garnet for both), far to near, the way qa/cover/render.py does it. density is the share of points kept (a fixed
-    subsample, so a re-render is repeatable). S is the supersample; 1 keeps the dots crisp, as on the page. The alpha runs
-    28 to 140 so the cloud reads as the page's gray stipple on the warm white, with accent points at 1.4 times."""
-    import numpy as np
-    from PIL import Image, ImageDraw
-    inkc = hexcol(LIGHT['ink'])
-    acc1 = col(colors['accent']) if colors else hexcol(LIGHT['accent'])
-    acc2 = col(colors['accent2']) if colors else acc1
-    data = np.fromfile(binpath, dtype=np.float32).reshape(-1, 4)
-    if density < 1:
-        rng = np.random.default_rng(7)
-        data = data[rng.random(len(data)) < density]
-    xyz, w = data[:, :3].astype(np.float64), data[:, 3].astype(np.float64)
-    p = xyz @ rot(*tilt).T
-    z = p[:, 2]
-    f = 1.55 / (3.2 - z)
-    u, v = p[:, 0] * f, -p[:, 1] * f
-    du, dv = u.max() - u.min(), v.max() - v.min()
-    Wpx, Hpx = box[0] * S, box[1] * S
-    scale = zoom * min(Wpx / du, Hpx / dv)
-    u = (u - (u.min() + u.max()) / 2) * scale + Wpx / 2 + ox * Wpx
-    v = (v - (v.min() + v.max()) / 2) * scale + Hpx / 2 + oy * Hpx
-    img = Image.new('RGBA', (Wpx, Hpx), (0, 0, 0, 0))
-    d = ImageDraw.Draw(img)
-    order = np.argsort(z)
-    uo, vo, wo, zo = u[order], v[order], w[order], z[order]
-    zr = (zo - zo.min()) / max(1e-6, zo.max() - zo.min())
-    is_acc2 = wo > 3.0
-    is_acc = (wo >= 2.0) & ~is_acc2
-    strength = np.where(is_acc2, np.clip(wo - 3.0, 0, 1), np.where(is_acc, np.clip(wo - 2.0, 0, 1), np.clip(wo, 0, 1)))
-    amin, amax = 28, 140
-    alpha = amin + (amax - amin) * (0.45 * strength + 0.55 * zr)
-    alpha = np.where(is_acc | is_acc2, np.clip(alpha * 1.4, 0, 255), alpha)
-    rad = (1.2 + 0.8 * zr) * S * dot
-    for x, y, r, a, c1, c2 in zip(uo, vo, rad, alpha, is_acc, is_acc2):
-        d.ellipse((x - r, y - r, x + r, y + r), fill=(acc2 if c2 else acc1 if c1 else inkc) + (int(a),))
-    if S > 1:
-        img = img.resize(box, Image.LANCZOS)
-    img.save(out, optimize=False)
-    return len(data)
-
-
-def shrink(path, colors=COLORS):
-    """Quantize a PNG to a palette with Pillow; the cloud is a two- or three-color drawing over a flat ground."""
-    from PIL import Image
+def shrink(path, colors=256):
+    """Quantize a PNG to a palette with Pillow, median cut, no dither: ink and gray drawings over a flat white ground."""
     im = Image.open(path).convert('RGB').quantize(colors=colors, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
     im.save(path, optimize=True)
     return os.path.getsize(path)
 
 
 def main():
-    pages = manifest()
-    host = site_host()
-    chapters = chapter_specimens()
-    specimen_no = {name: '%02d' % p['number'] for p in pages if p['kind'] == 'chapter' for name in [chapters.get(p['slug'])] if name}
-    pages = [p for p in pages if p['slug'] != 'home']  # the home card is centered for LinkedIn's crops; build/home_card.py draws it
+    pages = [p for p in manifest() if p['slug'] != 'home']  # build/home_card.py draws the home card
     if only:
         pages = [p for p in pages if p['slug'] in only]
+    ch = chapters()
+    row = Row(ch) if any(p['kind'] == 'chapter' for p in pages) else None
+    home = home_row()
     os.makedirs(OUT, exist_ok=True)
     tmp = tempfile.mkdtemp(prefix='cp-cards-')
     profile = tempfile.mkdtemp(prefix='cp-cards-profile-')
     proc = subprocess.Popen([CHROME, '--headless=new', '--disable-gpu', '--hide-scrollbars', '--no-first-run', '--no-default-browser-check',
                              '--force-device-scale-factor=1', f'--remote-debugging-port={PORT}', f'--user-data-dir={profile}', 'about:blank'],
                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    fonts_ok = True
-    total = 0
+    problems, total = [], 0
     try:
         targets = None
         for _ in range(50):
@@ -372,24 +392,11 @@ def main():
         send('Page.enable')
         first = True
         for p in pages:
-            font_tries = 0
-            name = specimen_for(p, chapters)
-            binpath, meta = dump_cloud(name, tmp)
-            frame = FRAME.get(name, {})
-            density = DENSITY
+            src = os.path.join(tmp, p['slug'] + '.html')
+            open(src, 'w', encoding='utf8').write(page_html(p, ch, row, home))
             out = os.path.join(OUT, p['slug'] + '.png')
-            text = lede(p['lede']) if p['kind'] == 'chapter' else p['line']
-            for attempt in range(6):
-                art = os.path.join(tmp, '%s-%s.png' % (p['slug'], attempt))
-                drawn = render_art(binpath, meta['tilt'], art, density, zoom=frame.get('zoom', 0.92), ox=frame.get('ox', 0.0), oy=frame.get('oy', 0.0),
-                                   colors=meta.get('colors'))
-                html = TEMPLATE % dict(LIGHT, art_w=ART_BOX[0], art_h=ART_BOX[1], col_w=COL_W, art='file://' + art, head=head_html(p), tags=tags_html(p),
-                                       plate=plate_html(p, name, specimen_no), title=esc(p['title']), line=esc(text), title_px=TITLE_PX,
-                                       lede_px=LEDE_PX, lede_lines=LEDE_LINES, host=host)
-                src = os.path.join(tmp, p['slug'] + '.html')
-                open(src, 'w').write(html)
+            for attempt in range(3):
                 send('Page.navigate', {'url': 'file://' + src})
-                # wait until this page, not the last one, is the document Chrome answers for; the first page also fetches the fonts
                 ready = "document.readyState === 'complete' && location.href.endsWith(%s) && !!document.getElementById('title')" % json.dumps('/' + p['slug'] + '.html')
                 for _ in range(100):
                     if send('Runtime.evaluate', {'expression': ready, 'returnByValue': True}).get('result', {}).get('value') is True:
@@ -404,32 +411,35 @@ def main():
                 if not isinstance(val, str):
                     sys.exit('fit script failed for %s: %s' % (p['slug'], json.dumps(r.get('exceptionDetails') or r)[:400]))
                 fit = json.loads(val)
-                if os.environ.get('CARDS_DEBUG'):
-                    print(p['slug'], 'attempt', attempt, fit['fonts'], [f for f in fit['faces'] if 'loaded' not in f] or 'all faces loaded')
-                if not all(fit.get('fonts', [])) and font_tries < 2:
-                    font_tries += 1  # a face did not arrive in time; load the page again at the same density
-                    time.sleep(1.0)
-                    continue
-                time.sleep(0.3)
-                shot = send('Page.captureScreenshot', {'format': 'png', 'clip': {'x': 0, 'y': 0, 'width': W, 'height': H, 'scale': 1}})
-                if 'data' not in shot or len(shot['data']) < 4000:
-                    sys.exit('capture failed for %s: %s' % (p['slug'], json.dumps(shot)[:300]))
-                open(out, 'wb').write(base64.b64decode(shot['data']))
-                size = shrink(out)
+                if all(fit['fonts']):
+                    break
+                time.sleep(1.0)  # a face did not arrive in time; load the page again
+            time.sleep(0.3)
+            shot = send('Page.captureScreenshot', {'format': 'png', 'clip': {'x': 0, 'y': 0, 'width': W, 'height': H, 'scale': 1}})
+            if 'data' not in shot or len(shot['data']) < 4000:
+                sys.exit('capture failed for %s: %s' % (p['slug'], json.dumps(shot)[:300]))
+            open(out, 'wb').write(base64.b64decode(shot['data']))
+            size = shrink(out)
+            for n in (192, 128, 96, 64):
                 if size <= LIMIT:
                     break
-                density *= 0.72  # thin the cloud and draw again
-            note = ' (%d of %d points)' % (drawn, meta['points'])
+                size = shrink(out, n)
+            note = ''
             if size > LIMIT:
                 note += ' OVER 150 KB'
-            if fit.get('over'):
-                note += ' OVERFLOW: check the title, the tags and the plate line'
-            if not all(fit.get('fonts', [])):
-                fonts_ok = False
-                note += ' FONTS %s' % ','.join(n for n, ok in zip(('Fraunces', 'Source Serif 4', 'Instrument Sans', 'Jost'), fit['fonts']) if not ok)
+            if fit['over']:
+                note += ' OVERFLOW'
+            if not all(fit['fonts']):
+                note += ' FONTS DID NOT LOAD'
+            if fit['smallest'] < 11:
+                note += ' TEXT UNDER 11 PX'
+            if note:
+                problems.append(p['slug'] + note)
             total += size
-            print('%-32s %4d KB  %-16s title %3spx, %s line%s, lede %2spx%s' % (p['slug'] + '.png', size // 1024, name, fit.get('px', '?'), fit.get('lines', '?'),
-                                                                                's' if fit.get('lines') != 1 else '', fit.get('lpx', '?'), note))
+            kept = '' if fit['kept'] == fit['of'] else ', summary %d of %d sentences' % (fit['kept'], fit['of'])
+            clear = '' if fit['clear'] is None else ', %d px clear of the drawing' % fit['clear']
+            print('%-38s %4d KB  title %3dpx, %d line%s, line %dpx%s%s%s' % (p['slug'] + '.png', size // 1024, fit['px'], fit['lines'],
+                                                                         '' if fit['lines'] == 1 else 's', fit['lpx'], kept, clear, note))
     finally:
         proc.terminate()
         try:
@@ -441,9 +451,9 @@ def main():
             print('kept', tmp)
         else:
             shutil.rmtree(tmp, ignore_errors=True)
-    if not fonts_ok:
-        print('warning: Google Fonts did not load; the cards fell back to system fonts', file=sys.stderr)
     print('wrote %d cards to %s, %d KB in all' % (len(pages), OUT, total // 1024))
+    if problems:
+        sys.exit('problems: ' + '; '.join(problems))
 
 
 if __name__ == '__main__':

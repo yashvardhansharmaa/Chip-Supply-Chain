@@ -2571,6 +2571,14 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
    the page has loaded; src/modules/print.js writes each note from the citation's data-* fields
    and puts the class cp-print on <html>. Without Paged.js (the browser's own Print) the page
    still prints and each chapter keeps its source list at its end.
+   The type and colors are the redesign's (qa/redesign/BRIEF.md, stage 4): Fraunces for headings (400 where the screen
+   sets 350: a weight between the named ones prints as Type 3 shapes, which do not copy or search), Literata for text,
+   Hanken Grotesk for labels, Fragment Mono for kickers, codes and dates; ink on white, with the wine only on links (the
+   citation marks, the parts list's links) and the logo tile, and rule B on the charts (the largest value solid ink with a
+   bold label, the rest the light tint).
+   The chapter on screen is a 12-column grid (src/modules/chapter.css). On paper it is one column of text with the chain
+   in a margin column at its left, so the rules below undo the grid; they carry the screen's selector weight (.chapter
+   ...) and come after chapter.css, so they win.
    Everything below is inside @page or @media print: the screen site must not change. */
 
 @page {
@@ -2584,13 +2592,13 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
      in one box cancel each other out. The left head is the chapter's own "Chapter 4: Lithography"; the right names the
      section the page holds ("Chokepoint card", "Who makes it", "Sources (30)"; string-set, below), since the foot
      already names the site. Chrome's own print drops the string() declaration and keeps the site's name. */
-  @top-left { content: string(chapter); font: 500 7.5pt "Instrument Sans", "Helvetica Neue", Arial, sans-serif; letter-spacing: 0.06em; color: #5b646d; }
-  @top-right { content: "Chip Supply Chain"; content: string(section); font: 500 7.5pt "Instrument Sans", "Helvetica Neue", Arial, sans-serif; letter-spacing: 0.06em; color: #5b646d; }
-  @bottom-left { content: "chipsupplychain.org"; font: 500 7.5pt "Instrument Sans", "Helvetica Neue", Arial, sans-serif; letter-spacing: 0.06em; color: #5b646d; }
-  @bottom-right { content: counter(page) " / " counter(pages); font: 500 7.5pt "Instrument Sans", "Helvetica Neue", Arial, sans-serif; letter-spacing: 0.06em; color: #5b646d; }
+  @top-left { content: string(chapter); font: 500 7.5pt "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif; color: #45443f; }
+  @top-right { content: "Chip Supply Chain"; content: string(section); font: 500 7.5pt "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif; color: #45443f; }
+  @bottom-left { content: "chipsupplychain.org"; font: 500 7.5pt "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif; color: #45443f; }
+  @bottom-right { content: counter(page) " / " counter(pages); font: 500 7.5pt "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif; color: #45443f; }
 
   /* The foot of the page: a hairline, then the notes. */
-  @footnote { margin-top: 4mm; padding-top: 2.2mm; border-top: 0.4pt solid #b9bec2; }
+  @footnote { margin-top: 4mm; padding-top: 2.2mm; border-top: 0.4pt solid #c4c3bd; }
 }
 
 /* The title page carries no head and no folio. */
@@ -2602,241 +2610,363 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 }
 
 @media print {
-  /* Dark mode must not print as dark ink. Light tokens for paper, whatever the reader was using: the list matches
-     every dark-theme selector at equal weight (a system-dark block uses :root:not([data-theme="light"])). */
+  /* Paper is white with ink, whatever the reader was using: the site's light tokens, and the list matches every
+     dark-theme selector at equal weight (a system-dark block uses :root:not([data-theme="light"])). */
   :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
-    --bg: #fff; --bg-2: #f4f5f6; --bg-3: #e9ebec;
-    --ink: #000; --ink-2: #22272b; --muted: #464e55;
-    --line: #c6cacd; --line-2: #a4aaaf;
-    --accent: #7a1f2b; --accent-ink: #611722; --accent-soft: rgba(122, 31, 43, 0.09); --accent-fill: #7a1f2b;
+    --bg: #fff; --bg-2: #f4f4f2; --bg-3: #e4e3df;
+    --ink: #171716; --ink-2: #45443f; --muted: #56554f;
+    --line: #e1e0db; --line-2: #c4c3bd; --rule-ink: #8c8a84; --control-edge: #8c8a84;
+    --accent: #7a1f2b; --accent-ink: #7a1f2b; --accent-soft: #f3e3e5; --accent-fill: #7a1f2b;
+    --ctx: #d2d1cc; /* rule B: the values that are not the largest */
     --c1: #2b63c4; --c2: #e06a1f; --c3: #1f9a6d; --c4: #c9a10c; --c5: #5a48b8; --c6: #c3302b; --c7: #2e7d1e; --c8: #8a9099;
-    --stage-ink: 20, 24, 31; --stage-accent: 122, 31, 43;
-    --bar-5: #7a1f2b; --bar-4: #3a434c; --bar-3: #adb3b8;
-    /* the stacked bars' hues (src/styles.css --stk-*), in their light values whatever the theme */
-    --stk-1: #2b63c4; --stk-2: #1f9a6d; --stk-3: #c9a10c; --stk-4: #5a48b8; --stk-5: #e06a1f; --stk-tail: #c9c6bf; --stk-edge: #a9a49b; --stk-n1: #8a9099; --stk-n2: #b4b9be;
-    --shadow: none; --masthead: 0px; --band: 0px; --col: 100%; --measure: 132mm;
+    --stage-ink: 23, 23, 22; --stage-accent: 122, 31, 43;
+    --bar-5: #171716; --bar-4: #8c8a84; --bar-3: #c4c3bd;
+    --shadow: none; --masthead: 0px; --band: 0px; --col: 100%; --measure: 128mm;
     /* the static print fonts (print.js printFonts), with Noto for Chinese and Japanese titles, so nothing falls back to a
        system font (those print as Type 3 shapes, which do not copy or search) */
     --font-display: "Fraunces", "Noto Serif SC", "Noto Serif JP", Georgia, serif;
-    --font-body: "Source Serif 4", "Noto Serif SC", "Noto Serif JP", Georgia, serif;
-    --font-mono: "Instrument Sans", "Noto Sans SC", "Noto Sans JP", "Helvetica Neue", Arial, sans-serif;
-    --font-code: "IBM Plex Mono", "Noto Sans SC", "Noto Sans JP", ui-monospace, monospace;
-    --font-caption: "Instrument Sans", "Noto Sans SC", "Noto Sans JP", "Helvetica Neue", Arial, sans-serif;
-    --opsz-title: normal; --opsz-numeral: normal;
+    --font-body: "Literata", "Noto Serif SC", "Noto Serif JP", Georgia, serif;
+    --font-ui: "Hanken Grotesk", "Noto Sans SC", "Noto Sans JP", "Helvetica Neue", Arial, sans-serif;
+    --font-mono: var(--font-ui);
+    --font-code: "Fragment Mono", "Noto Sans SC", "Noto Sans JP", ui-monospace, monospace;
+    --font-kicker: var(--font-code); --font-caption: var(--font-body);
+    --opsz-title: normal; --opsz-numeral: normal; --opsz-name: normal;
     color-scheme: light;
   }
   :root[data-theme="dark"] .timeline .cat.policy { color: #7a5f06; } /* the screen's dark-theme yellow is unreadable on paper */
 
-  /* Fills and backgrounds are data here: the chain bars, the chokepoint pips and every SVG chart. */
+  /* Fills and backgrounds are data here: the bars, the band marks and every SVG chart. */
   *, *::before, *::after { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   /* static fonts have no axes to set: each optical size is its own instance (print.js PRINT_FONTS) */
   *, *::before, *::after { font-variation-settings: normal !important; font-optical-sizing: none; }
-  /* Capital labels tracked wider than about 0.06 em copy out of a PDF as single letters ("C O N C E N T R A T I O N"):
-     on paper they are tracked at 0.05 em */
-  .label, .inshort h3.label, .plain .label, .review .rv-keep h4.label, .ch-tile .k, .ch-tile .of, .plate-kpis .k, .plate-rows dt,
-  .plate-status .k, .contents-k, .howto h3.howto-k, .howto h2:not(.howto-title), .prose th, .prose h5, .pt-chapter .ptc-k,
-  .print-title .pt-k, .cp-sources .cp-sources-h, .site-footer .updated, .chip, .fig-title .unit, .stack-legend,
-  .contents-grid .n { letter-spacing: 0.05em !important; }
+  /* and no bold or italic made up by the browser: Chrome draws a made-up face as Type 3 shapes too (Fragment Mono has one
+     weight, so a mono label inside a bold line keeps its own) */
+  *, *::before, *::after { font-synthesis: none; }
 
   /* Chrome, screen furniture off: masthead, specimen stage, phone strip and its sheet, rail,
      back-to-top, search dialog, hover tooltips and the copy buttons. */
   .masthead, .tabs, .search-btn, .theme-toggle, .skip,
   .stage, .stage-actions, .stage-tag, .sheet,
   .rail, .to-top, #cp-search, .ex-tip, .ct-tip, .gl-tip, .export-bar, .permalink, .ch-copy,
-  .howto-dl, .prevnext, .ch-meta, .chain--compact, .chain-foot, .ledger-key { display: none !important; }
+  .howto-dl, .prevnext, .ch-meta, .chain--compact, .chain-foot, .ledger-key, .ch-slim { display: none !important; }
 
   /* Every view that is on screen prints, full width. Hidden views stay hidden. */
   .view[hidden] { display: none !important; }
   .view:not([hidden]) { display: block; min-height: 0; }
-  .view.column:not([hidden]), .view.column.wide:not([hidden]) { width: 100%; max-width: none; padding: 0; }
+  .view.column:not([hidden]), .view.column.wide:not([hidden]), .view[data-view="stack"]:not([hidden]) { width: 100%; max-width: none; padding: 0; }
+  .view[data-view="stack"] > .howto, .view[data-view="stack"] > .contents { max-width: none; }
   #app { padding-top: 0; }
   body::before { display: none !important; } /* the wafer grain is a page-sized alpha layer; printed, it costs a megabyte a page */
 
   /* ---------- the type ramp for paper ----------
-     Screen sizes are in px and far too large at this measure; every step of the ramp is set
-     here in points against a 10 pt body, so the hierarchy holds on the page. */
-  body { background: #fff; color: #000; font-size: 10pt; line-height: 1.45; }
-  /* a reading measure of about 80 characters, left-aligned, the way a report reads */
-  .column, .chapter, .prose { width: 100%; max-width: none; padding: 0; margin-left: 0; }
-  .prose > p, .prose > ul, .prose > ol, .prose h3, .prose h4, .inshort p, .plain p, .ch-lede { max-width: 132mm; }
-  .mt-prose > p, .mt-log p, .mt-cites { max-width: 132mm; }
-  .prose > p, .prose > ul, .prose > ol, .prose blockquote { font-size: 10pt; line-height: 1.45; }
-  /* Space between blocks is set above them, never below. Chrome drops a block's top margin at the head of a page, but
-     counts a bottom margin against the page it ends: the last lines of a paragraph, or the card after it, then went over. */
-  .prose > p, .prose > ul, .prose > ol, .prose > blockquote { margin: 2.4mm 0 0; }
-  .prose li { margin: 0.3em 0 0; }
-  .chapter > .prose { margin-top: 5mm; }
-  .prose blockquote { padding-left: 4mm; border-left-width: 1.5pt; }
-  .prose code { font-size: 0.86em; }
+     Screen sizes are in px and far too large at this measure; every step of the ramp is set here in points against a
+     9.8 pt body of Literata (a wide face: 9.8 pt reads as 10.5 pt of the old serif), so the hierarchy holds on the page. */
+  body { background: #fff; color: var(--ink); font-family: var(--font-body); font-size: 9.8pt; line-height: 1.5; }
+  .column { width: 100%; max-width: none; padding: 0; margin-left: 0; }
+  a[href] { text-decoration: none; color: inherit; }
+  /* the marks in the text are links: they stay wine, the notes they call are at the foot */
+  .prose sup.cite a, .chapter sup.cite a, .chapter .plate sup.cite a, sup.cite-sep { color: var(--accent-ink); }
+  sup.cite { margin-left: 1px; }
+  sup.cite a { padding: 0; background: none !important; }
 
-  .ch-title { font-size: 23pt; line-height: 1.02; margin: -1mm 0 3mm; }
-  .ch-lede { font-size: 11.8pt; line-height: 1.36; max-width: 118mm; }
-  /* The ledger column keeps its place on paper: the number in a 22 mm margin, the head and the text beside it. The
-     number floats in the chapter's left padding. A grid would hold the head as one row, which Chrome moves whole to the
-     next page when it fits there: a short head then left the page before it empty. */
-  .chapter { display: block; padding: 0 0 0 28mm; border-top: 0; }
-  .chapter > .ch-ledger { float: left; width: 22mm; margin-left: -28mm; position: static; text-align: right; padding: 0; }
-  .chapter > .chapter-head, .chapter > .prose { margin-left: 0; }
-  .ch-tile { padding: 0; }
-  .ch-tile .v { font-size: 24pt; margin: 0.6mm 0 0.4mm; }
-  .ch-tile .k, .ch-tile .of { font-size: 6.4pt; }
-  .ch-id { margin-bottom: 5mm; }
-  /* The chapter opener: the title sinks 20 mm below the top margin, so the first page reads as an opening (the book's
-     pages after it start at the margin: Paged.js copies the chapter's box onto each page, and the copies carry
-     data-split-from). A chapter printed alone opens under its title block, with no sink. */
-  article.chapter { padding-top: 20mm; }
+  /* ---------- the chapter: one column of text, the chain in a margin column at its left ---------- */
+  /* Paged.js copies the chapter onto each page it fills, each copy with its own padding: so no padding at the foot,
+     or it stood under the last line of every page. The opener sinks 20 mm on its first page (the book's later pages,
+     copies with data-split-from, start at the margin); a chapter printed alone opens under its title block. */
+  article.chapter { display: block; break-before: page; padding: 20mm 0 0 36mm; border-top: 0; }
   article.chapter[data-split-from] { padding-top: 0; }
   .cp-alone article.chapter { padding-top: 0; }
-  /* The fifteen stages under the chapter's number, as the screen's ledger column shows them (print.js stageIndex): short
-     name and number, the current stage in ink with a garnet tick. It sits in the 28 mm margin and moves no text. */
-  .ch-ledger .cp-index { list-style: none; margin: 7mm 0 0; padding: 0; border-top: 0.6pt solid var(--ink); border-bottom: 0.3pt solid var(--line); }
-  .cp-index li { display: flex; justify-content: flex-end; align-items: baseline; gap: 1.5mm; margin: 0; padding: 0.85mm 1.6mm 0.85mm 0;
-    border-top: 0.3pt solid var(--line); border-right: 1.2pt solid transparent; font-family: var(--font-mono); font-weight: 500;
-    font-size: 6pt; line-height: 1.1; letter-spacing: 0.03em; color: var(--muted); white-space: nowrap; }
-  .cp-index li.cp-top { border-top: 0; }
-  .cp-index .n { width: 3.4mm; text-align: right; font-variant-numeric: tabular-nums lining-nums; color: var(--muted); }
-  .cp-index li.is-here { color: var(--ink); font-weight: 600; border-right-color: var(--accent); }
-  .cp-index li.is-here .n { color: var(--accent); }
-  .prose h3 { font-size: 14pt; line-height: 1.16; margin: 6mm 0 2mm; }
-  .prose h4 { font-size: 11pt; line-height: 1.25; margin: 4.5mm 0 1.6mm; }
-  .prose h5 { font-size: 7.6pt; margin: 4mm 0 1.4mm; }
-  .label, .plate-head .label { font-size: 7pt; }
+  article.chapter > .chapter-head { display: block; margin: 0; }
+  .chapter .ch-open, .chapter .ch-spec, .chapter .plain, .chapter .inshort, .chapter > .prose { grid-column: auto; grid-row: auto; }
 
-  /* the two boxes that carry the argument in plain words */
-  .inshort { margin: 6mm 0 0; border-left-width: 3pt; padding-left: 0; } /* one left edge with the title and the text */
-  /* each paragraph stands 1.8 mm below the one before (the first meets the label's own space and the larger counts).
-     No "a + b" or ":first-of-type" selectors in this file: Paged.js rewrites them as attribute rules of lower weight,
-     and they lose. */
-  .inshort p { font-size: 10.8pt; line-height: 1.42; margin: 1.8mm 0 0; }
-  .plain { margin: 5mm 0 0; padding: 3mm 0 3.4mm; border-left-width: 2.5pt; max-width: 132mm; }
-  .plain p { font-size: 10pt; line-height: 1.48; margin: 0; }
-  /* the takeaways after the flashcards ("Four things to remember"): the list at the size of In plain terms, its label at
-     the labels' size. Left to the screen's 17 px, it printed at 12.75 pt, above
-     In short. The selectors match the screen's (styles.css) in weight, so these, coming later, win. */
-  .review { border-top: 0; padding-top: 0; margin-top: 7mm; } /* the deck's head is screen-only, so its rule would stand alone over the list's own */
+  /* the margin column: print.js moves the rail to the head of the chapter, where it floats beside the opener. Its screen
+     parts go (chapter.css); what prints is the chain (print.js stageIndex): each stage's number, its whole name and its
+     band's mark, as the screen's rail shows them, the chapter's own stage in bold. Long names take two lines. */
+  .chapter > .ch-ledger { float: left; width: 31mm; margin: 0.6mm 0 0 -36mm; padding: 0; position: static; max-height: none; overflow: visible; text-align: left; }
+  .chapter .ch-tile { display: none !important; }
+  .chapter .cp-index-k { margin: 0 0 1.4mm; font-family: var(--font-code); font-size: 6.6pt; line-height: 1.3; color: var(--muted); }
+  .chapter .cp-index { list-style: none; margin: 0; padding: 0; border-top: 0.6pt solid var(--ink); }
+  .chapter .cp-index li { display: grid; grid-template-columns: 4.2mm minmax(0, 1fr) 1.4mm; column-gap: 1.2mm; align-items: baseline; margin: 0; padding: 0.75mm 0;
+    border-bottom: 0.3pt solid var(--line); font-family: var(--font-ui); font-size: 6.4pt; line-height: 1.22; color: var(--ink-2); break-inside: avoid; }
+  .chapter .cp-index .n { font-family: var(--font-code); font-size: 6pt; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .chapter .cp-index .t { min-width: 0; text-wrap: balance; }
+  .chapter .cp-index .bm { display: block; align-self: start; width: 1.2mm; height: 2.4mm; margin-top: 0.3mm; }
+  .chapter .cp-index li[data-band="4"] .bm { background: var(--ink); }
+  .chapter .cp-index li[data-band="3"] .bm { height: 1.3mm; margin-top: 1.4mm; box-shadow: inset 0 0 0 0.5pt var(--ink); }
+  .chapter .cp-index li.is-here { color: var(--ink); font-weight: 600; }
+  .chapter .cp-index li.is-here .n { color: var(--ink); }
+  .chapter .cp-index.cp-across { margin-top: 2.4mm; border-top-width: 0.3pt; border-top-color: var(--line-2); }
+
+  /* 1. the opener: the kicker in mono, the title in Fraunces, the standfirst in Literata, an ink rule under them */
+  .chapter .ch-open { display: block; margin: 0; padding: 0 0 4.2mm; border-bottom: 0.6pt solid var(--ink); }
+  .chapter .ch-kick { display: flex; flex-wrap: wrap; align-items: center; gap: 1mm 5mm; margin: 0; font-family: var(--font-code); font-size: 7.4pt; line-height: 1.3; color: var(--muted); }
+  .chapter .ch-band { gap: 1.6mm; font-family: var(--font-ui); font-size: 7.6pt; font-weight: 500; color: var(--ink); }
+  .chapter .ch-band i { width: 1.4mm; height: 3.2mm; }
+  .chapter .ch-band[data-band="3"] i { height: 1.7mm; margin-top: 1.5mm; box-shadow: inset 0 0 0 0.6pt var(--ink); }
+  .chapter .ch-title, .chapter .ch-title.is-long { margin: 4.4mm 0 0 -0.04em; font-family: var(--font-display); font-weight: 400; font-size: 34pt; line-height: 0.98; letter-spacing: -0.02em; color: var(--ink); text-wrap: balance; }
+  .chapter .ch-title.is-long { font-size: 27pt; line-height: 1.02; }
+  .chapter .ch-lede { margin: 4mm 0 0; max-width: 118mm; font-family: var(--font-body); font-size: 11.6pt; line-height: 1.4; color: var(--ink-2); }
+  .chapter .ch-omet { display: none; } /* the facts line and the cite line are the screen's; the title block and the colophon carry both */
+
+  /* 2. the specimen: its caption, plain and flush left; Lithography's annotated drawing above it (print.js stills) */
+  .chapter .ch-spec, .chapter .ch-spec[data-night] { display: block; margin: 0; padding: 4mm 0 0; background: none; color: var(--ink);
+    --bg: #fff; --ink: #171716; --ink-2: #45443f; --muted: #56554f; --line-2: #c4c3bd; --rule-ink: #8c8a84; --accent: #7a1f2b; --accent-ink: #7a1f2b; }
+  .chapter .ch-spec .cp-still { margin: 0 0 3mm; break-inside: avoid; }
+  .chapter .ch-spec .cp-still svg { display: block; width: 122mm; max-width: 100%; height: auto; overflow: visible; }
+  .chapter .ch-spec .ch-still--narrow { display: none; }
+  .chapter .ch-spec-cap { margin: 0; max-width: 122mm; }
+  .chapter .ch-spec-cap .label { display: block; margin: 0 0 1mm; font-family: var(--font-code); font-size: 7pt; line-height: 1.3; color: var(--muted); }
+  .chapter .ch-spec-cap > p:not(.ch-parts-k) { margin: 0; font-family: var(--font-body); font-size: 8.4pt; line-height: 1.45; color: var(--ink-2); }
+  .chapter .ch-spec-cap .stage-pause { display: none; }
+  .chapter .ch-parts-k { margin: 2.4mm 0 0.6mm; padding-top: 1.8mm; border-top: 0.4pt solid var(--rule-ink); font-family: var(--font-code); font-size: 7pt; line-height: 1.3; color: var(--muted); }
+  .chapter .ch-parts { font-family: var(--font-ui); font-size: 8pt; line-height: 1.35; color: var(--ink); }
+  .chapter .ch-parts li { grid-template-columns: 5mm minmax(0, 1fr); column-gap: 1.2mm; padding: 0.6mm 0; break-inside: avoid; }
+  .chapter .ch-parts b { width: 3.8mm; height: 3.8mm; border-width: 0.7pt; font-size: 6.4pt; }
+  .chapter .ch-parts a { color: var(--accent-ink); text-decoration: none; }
+  .ch-still line { stroke: var(--ink); }
+  .ch-still .dot { fill: var(--ink); stroke: #fff; }
+  .ch-still .bal { fill: #fff; stroke: var(--ink); }
+  .ch-still .num, .ch-still .nm { font-family: var(--font-ui); fill: var(--ink); }
+
+  /* In plain terms opens the text as a section does: an ink rule, then the heading in Fraunces. In short follows it. */
+  .chapter .plain, .chapter .ch-page .plain { max-width: 128mm; margin: 6mm 0 0; padding: 2.6mm 0 0; border: 0; border-top: 0.6pt solid var(--ink); background: none; }
+  .chapter .plain h3.label, .chapter .plain .label { display: block; margin: 0 0 2.4mm; padding: 0; font-family: var(--font-display); font-weight: 400; font-size: 16pt; line-height: 1.12; letter-spacing: -0.012em; color: var(--ink); }
+  .chapter .plain p { margin: 0; max-width: 128mm; font-family: var(--font-body); font-size: 10.2pt; line-height: 1.5; color: var(--ink); }
+  .chapter .inshort { max-width: 128mm; margin: 5mm 0 0; padding: 0; border: 0; }
+  .chapter .inshort h3.label { margin: 0 0 1.2mm; font-family: var(--font-ui); font-weight: 600; font-size: 8pt; line-height: 1.3; color: var(--ink); }
+  /* each paragraph stands 1.8 mm below the one before. No "a + b" or ":first-of-type" selectors in this file: Paged.js
+     rewrites them as attribute rules of lower weight, and they lose. */
+  .chapter .inshort p, .chapter .inshort li { margin: 1.8mm 0 0; font-family: var(--font-body); font-size: 10pt; line-height: 1.48; color: var(--ink); }
+
+  /* the text: a measure of about 75 characters, left-aligned, the way a report reads. Space between blocks is set above
+     them, never below: Chrome drops a block's top margin at the head of a page, but counts a bottom margin against the
+     page it ends, so the last lines of a paragraph, or the card after it, went over. */
+  .chapter > .prose { margin: 5mm 0 0; max-width: none; }
+  .chapter > .prose > * { max-width: none; }
+  .chapter > .prose > p, .chapter > .prose > ul, .chapter > .prose > ol, .chapter > .prose > blockquote,
+  .chapter > .prose > h3, .chapter > .prose > h4, .chapter > .prose > h5 { max-width: 128mm; }
+  .chapter > .prose > p, .chapter > .prose > ul, .chapter > .prose > ol, .chapter > .prose > blockquote { margin: 2.4mm 0 0; font-size: 9.8pt; line-height: 1.5; }
+  .chapter .prose li { margin: 0.3em 0 0; }
+  .chapter .prose blockquote { padding-left: 4mm; border-left: 0.6pt solid var(--ink); }
+  .chapter .prose code { font-family: var(--font-code); font-size: 0.86em; }
+  /* each section opens on an ink rule, its number in mono above the heading in Fraunces (print.js numbers them: a CSS
+     counter starts again on every page Paged.js lays out) */
+  .chapter > .prose > h3 { break-inside: avoid; margin: 7mm 0 2.2mm; padding: 2.4mm 0 0; border-top: 0.6pt solid var(--ink); font-family: var(--font-display); font-weight: 400; font-size: 16pt; line-height: 1.12; letter-spacing: -0.012em; color: var(--ink); }
+  .chapter > .prose > h3::before { content: attr(data-cp-n); display: block; margin: 0 0 1.6mm; font-family: var(--font-code); font-size: 7pt; font-weight: 400; line-height: 1.3; letter-spacing: 0; color: var(--muted); }
+  .chapter > .prose > h4 { margin: 4.6mm 0 1.4mm; font-family: var(--font-display); font-weight: 500; font-size: 11.2pt; line-height: 1.25; letter-spacing: 0; color: var(--ink); }
+  .chapter > .prose > h5 { margin: 4mm 0 1.2mm; font-family: var(--font-ui); font-weight: 600; font-size: 8pt; color: var(--ink); }
+
+  /* 3. the chokepoint card: heads the chapter's second page (print.js cardsToText). On paper it is ruled, not tinted: an
+     ink rule over the head, the two ratings large in Fraunces with the band's mark, then label and text in rows. */
+  .chapter .plate { max-width: none; margin: 6mm 0 0; padding: 0; background: none; border: 0; border-bottom: 0.6pt solid var(--ink); box-shadow: none; overflow: hidden; }
+  .chapter .prose .plate li { margin-top: 0; }
+  .chapter .plate-head { display: flex; justify-content: space-between; align-items: baseline; gap: 4mm; padding: 2mm 0 2mm; border-top: 0.6pt solid var(--ink); border-bottom: 0.4pt solid var(--rule-ink); }
+  .chapter .plate-head .label { font-family: var(--font-ui); font-size: 8.4pt; font-weight: 600; line-height: 1.3; color: var(--ink); white-space: nowrap; }
+  .chapter .plate-where { font-family: var(--font-code); font-size: 7pt; color: var(--muted); }
+  .chapter .plate-kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 6mm; padding: 2.6mm 0 3mm; border-bottom: 0.4pt solid var(--rule-ink); }
+  .chapter .plate-kpis > div, .chapter .plate-kpis > div + div { padding: 0; border: 0; }
+  .chapter .plate-kpis .k, .chapter .plate-status .k, .chapter .plate-rows dt { display: block; margin: 0 0 1mm; padding: 0; font-family: var(--font-code); font-size: 6.8pt; font-weight: 400; line-height: 1.3; letter-spacing: 0; color: var(--muted); }
+  .chapter .plate-kpis .v { display: flex; align-items: flex-end; gap: 2mm; margin: 1.2mm 0 1.4mm; font-family: var(--font-display); font-weight: 400; font-size: 21pt; line-height: 0.95; letter-spacing: -0.02em; white-space: nowrap; color: var(--ink); }
+  .chapter .plate-kpis .v .bm { width: 1.8mm; height: 0.74em; margin-bottom: 0.06em; }
+  .chapter .plate-kpis .v .bm[data-band="3"] { height: 0.36em; box-shadow: inset 0 0 0 0.7pt var(--ink); }
+  .chapter .plate-kpis .v.cost { display: block; margin: 1.2mm 0 1mm; font-size: 13pt; line-height: 1.1; white-space: normal; }
+  .chapter .plate-kpis .v.cost.long { font-family: var(--font-body); font-weight: 600; font-size: 8.8pt; line-height: 1.3; letter-spacing: 0; }
+  .chapter .plate-kpis .v small { font-size: 8pt; }
+  .chapter .plate-kpis .sub { display: block; margin: 0; font-family: var(--font-body); font-size: 7.4pt; line-height: 1.38; color: var(--ink-2); }
+  .chapter .plate-rows { display: block; margin: 0; border: 0; }
+  .chapter .plate-rows .row, .chapter .plate-rows .row--why { display: grid; grid-template-columns: 26mm minmax(0, 1fr); column-gap: 4mm; padding: 1.8mm 0; border: 0; border-bottom: 0.3pt solid var(--line-2); }
+  .chapter .plate-rows dt { margin: 0.3mm 0 0; }
+  .chapter .plate-rows dd { margin: 0; font-family: var(--font-body); font-size: 8.2pt; line-height: 1.36; color: var(--ink); max-width: none; }
+  .chapter .plate-rows .row--why dd, .chapter .plate-rows .why { font-size: 8.2pt; color: var(--ink-2); }
+  .chapter .plate-rows ul { margin: 0; padding: 0; list-style: none; }
+  .chapter .plate-rows li { display: grid; grid-template-columns: 5.4mm minmax(0, 24mm) minmax(0, 1fr); column-gap: 1.6mm; align-items: baseline; margin: 0 0 0.7mm; padding: 0; text-indent: 0; }
+  .chapter .plate-rows .chip, .chapter .plate .chip { width: auto; margin: 0; padding: 0; border: 0; text-align: left; font-family: var(--font-code); font-size: 6.6pt; font-weight: 400; letter-spacing: 0; color: var(--muted); }
+  .chapter .plate-rows .who { font-family: var(--font-ui); font-size: 8pt; font-weight: 600; color: var(--ink); }
+  .chapter .plate-rows .note { font-family: var(--font-body); font-size: 7.8pt; line-height: 1.34; color: var(--ink-2); }
+  .chapter .plate-status { display: grid; grid-template-columns: 1fr 1fr; column-gap: 6mm; border: 0; }
+  .chapter .plate-status > div, .chapter .plate-status > div + div { padding: 1.8mm 0 2.2mm; border: 0; }
+  .chapter .plate-status p { margin: 0; font-family: var(--font-body); font-size: 7.9pt; line-height: 1.36; color: var(--ink-2); max-width: none; }
+  .chapter .plate sup.cite { vertical-align: super; }
+  .cc { font-family: var(--font-code); font-size: 6.8pt; }
+  /* A chapter whose card would open a page after a short one is laid out again with its head and card set closer
+     (build/pdf.py, print.js .cp-tight): the end of In short and the card then share a page. */
+  .chapter.cp-tight .plain, .chapter.cp-tight .inshort, .chapter.cp-tight .plate { margin-top: 4.5mm; }
+  .chapter.cp-tight .plain { padding-top: 2mm; }
+  .chapter.cp-tight .plain p { line-height: 1.44; }
+  .chapter.cp-tight .inshort p { margin-top: 1.4mm; font-size: 9.6pt; line-height: 1.42; }
+  .chapter.cp-tight .plate-kpis { padding: 2mm 0 2.2mm; }
+  .chapter.cp-tight .plate-rows .row, .chapter.cp-tight .plate-rows .row--why { padding: 1.2mm 0; }
+  .chapter.cp-tight .plate-rows dd, .chapter.cp-tight .plate-rows .why { font-size: 7.8pt; line-height: 1.3; }
+  .chapter.cp-tight .plate-rows .note { font-size: 7.5pt; }
+  .chapter.cp-tight .plate-rows li { margin-bottom: 0.3mm; }
+  .chapter.cp-tight .plate-status > div { padding: 1.4mm 0 1.6mm; }
+  .chapter.cp-tight .plate-status p { font-size: 7.6pt; line-height: 1.3; }
+  /* A card that with its notes is taller than a page even set closer would run into the notes (it is kept whole as one
+     block, and Chrome never breaks that). Its chapter is laid out once more with the card free to break, between its
+     parts only (print.js .cp-split): the figures, each row, the two lines on China and the US. */
+  .chapter.cp-split .plate { break-inside: auto; overflow: visible; }
+  .chapter.cp-split .plate-head, .chapter.cp-split .plate-kpis, .chapter.cp-split .plate-rows .row, .chapter.cp-split .plate-status { break-inside: avoid; }
+  .chapter.cp-split .plate-head { break-after: avoid; }
+  .chapter .plate[data-split-to] { border-bottom: 0; } /* the card's closing rule on its last part only */
+
+  /* ---------- figures: the number in mono, the finding in Fraunces, the title under it, the chart, the source ----------
+     On paper the frame is an ink rule above and a hairline below; the strip's address and its buttons are the screen's
+     (chapter.css hides them). */
+  .chapter .figure { max-width: none; margin: 5.5mm 0 0; padding: 0; border: 0; border-top: 0.6pt solid var(--ink); border-bottom: 0.3pt solid var(--line-2); background: none; }
+  .chapter .fig-head { padding: 2.2mm 0 0; }
+  .chapter .fig-k { font-family: var(--font-code); font-size: 7pt; line-height: 1.3; color: var(--ink); }
+  .chapter .figure .fig-title { margin: 1.4mm 0 0.8mm; max-width: 128mm; font-family: var(--font-display); font-weight: 500; font-size: 11.4pt; line-height: 1.24; letter-spacing: -0.005em; color: var(--ink); text-wrap: balance; }
+  .chapter .figure .fig-title .unit, .chapter .figure .fig-sub .unit { margin-left: 1.6mm; font-family: var(--font-code); font-weight: 400; font-size: 6.8pt; color: var(--muted); }
+  .chapter .fig-sub { margin: 0; max-width: 128mm; font-family: var(--font-body); font-size: 8.2pt; line-height: 1.4; color: var(--ink-2); }
+  .chapter .fig-body { padding: 3mm 0 2.6mm; }
+  /* bars as HTML rows (figure() in build/build.js), rule B: the largest solid ink with a bold label, the rest the tint; on
+     paper the label stands beside its bar, right-aligned (the screen sets it above the bar below 641 px, a width Paged.js's
+     pages never report) */
+  .chapter .hbars { gap: 0.9mm; margin: 0; font-family: var(--font-ui); font-size: 7.6pt; }
+  .chapter .hb { grid-template-columns: min(var(--lw, 14em), 45%) minmax(0, 1fr); align-items: center; gap: 0 3mm; column-gap: 3mm; }
+  .chapter .hb-l { text-align: right; line-height: 1.25; color: var(--ink-2); }
+  .chapter .hb-r { gap: 2mm; }
+  .chapter .hb-r i { height: 2.8mm; background: var(--ctx); border-radius: 0; }
+  .chapter .hb-r b { font-family: var(--font-code); font-size: 7pt; font-weight: 400; color: var(--ink-2); }
+  .chapter .hb.top .hb-l { color: var(--ink); font-weight: 700; }
+  .chapter .hb.top .hb-r i { background: var(--ink); }
+  .chapter .hb.top .hb-r b { font-family: var(--font-ui); font-size: 7.8pt; font-weight: 700; color: var(--ink); }
+  .chapter .hb.rest .hb-r i { background: repeating-linear-gradient(135deg, var(--rule-ink) 0 0.5pt, transparent 0.5pt 1.4mm); box-shadow: inset 0 0 0 0.5pt var(--rule-ink); }
+  .chapter .figure .tl li { font-family: var(--font-body); font-size: 8.4pt; line-height: 1.36; }
+  .chapter .figure .tl li .d { font-family: var(--font-code); font-size: 6.8pt; }
+  /* an animation on paper: its last frame, then its steps in the figures' small type (styles.css prints the list) */
+  .chapter .figure--anim .anim-stage { border: 0; }
+  .chapter .figure--anim .anim-print { display: block; width: 100%; height: auto; }
+  .chapter .figure--anim .anim-transcript { margin: 2.4mm 0 0; padding-left: 5mm; font-family: var(--font-body); font-size: 8.4pt; line-height: 1.38; }
+  .chapter .figure--anim .anim-transcript li { margin: 0 0 0.9mm; }
+  /* the source line: "Source", the source's name and its note number, any note */
+  .chapter .fig-strip { display: block; padding: 1.6mm 0 1.8mm; background: none; border-top: 0.3pt solid var(--line-2); font-family: var(--font-code); font-size: 6.8pt; line-height: 1.4; color: var(--ink-2); }
+  .chapter .fig-strip .fs-src, .chapter .fig-strip .fs-note { display: block; }
+  .chapter .fig-strip .fs-note { margin-top: 0.6mm; font-family: var(--font-body); font-size: 7.6pt; line-height: 1.38; max-width: 128mm; color: var(--ink-2); }
+  .chapter .fig-strip .fs-k, .chapter .fig-strip .fs-note .fs-k { margin-right: 1.4mm; font-family: var(--font-code); font-size: 6.8pt; color: var(--muted); }
+  .chapter .fig-strip .fs-src a { color: var(--ink); text-decoration: none; }
+  .chapter .fig-strip sup.cite { font-size: 6.8pt; vertical-align: baseline; }
+  .chapter .fig-strip sup.cite a { font-family: var(--font-code); color: var(--accent-ink); }
+  .chapter .fig-strip .ch-cite-box { display: none !important; }
+  /* tables in the text: they may fill the column, never spill off it */
+  .table-wrap { overflow: visible; margin: 4mm 0 0; }
+  .prose > .cp-after { margin-top: 4.5mm; } /* the block after a figure or table (print.js marks it) */
+  .prose table { font-family: var(--font-ui); font-size: 8pt; line-height: 1.32; }
+  .prose th, .prose td { padding: 1.3mm 2.4mm; }
+  .prose th { font-family: var(--font-ui); font-size: 7pt; font-weight: 600; letter-spacing: 0; text-transform: none; }
+  .prose td.num, .prose td[data-num] { font-family: var(--font-code); }
+  figure svg, .figure svg, #exposure-viz svg { max-width: 100%; height: auto; }
+
+  /* ---------- the questions and the takeaways ---------- */
+  .chapter > .prose > .review { max-width: 128mm; margin: 7mm 0 0; padding: 0; border-top: 0; } /* the deck's head is screen-only, so its rule would stand alone over the list's own */
   .review .fc-end { margin-top: 0; }
   .review .rv-keep { margin: 0; padding-top: 2.6mm; }
-  .review .rv-keep h4.label { font-size: 7pt; margin-bottom: 0.8mm; }
-  .review .rv-keep li { font-size: 10pt; line-height: 1.45; padding-bottom: 0; margin-top: 1.6mm; }
+  .review .rv-keep h4.label, .review .cp-quiz h4.label { margin: 0 0 1mm; font-family: var(--font-ui); font-weight: 600; font-size: 8pt; line-height: 1.35; letter-spacing: 0; text-transform: none; color: var(--ink); }
+  .review .rv-keep li { margin-top: 1.6mm; padding: 0 0 0 6mm; font-family: var(--font-body); font-size: 9.6pt; line-height: 1.45; }
+  .review .rv-keep li::before { left: 0.6mm; top: 0.7em; width: 2.8mm; border-top: 0.8pt solid var(--ink); }
   /* the deck's questions, printed above the takeaways (print.js quiz): each with the section that answers it, so a
-     reader can answer from memory and then check against the list below */
-  .review .cp-quiz { margin: 0; padding-top: 2.6mm; }
-  .review .cp-quiz h4.label { font-family: var(--font-mono); font-weight: 500; font-size: 7pt; line-height: 1.4; text-transform: uppercase; color: var(--accent); margin: 0 0 0.8mm; }
-  .review .cp-quiz ol { margin: 0; padding-left: 7mm; }
-  .review .cp-quiz li { font-size: 10pt; line-height: 1.45; margin: 1.4mm 0 0; padding-left: 1.2mm; }
-  .review .cp-quiz li::marker { font-family: var(--font-mono); font-size: 7.4pt; font-weight: 500; color: var(--muted); }
-  .review .cp-quiz .cp-quiz-re { font-family: var(--font-mono); font-size: 6.8pt; letter-spacing: 0.03em; color: var(--muted); white-space: nowrap; margin-left: 1.2mm; }
-  .review .rv-keep.cp-quizzed { margin-top: 4mm; border-top: 0.3pt solid var(--line); }
+     reader can answer from memory and then check against the list below. Its rule is ink, as every section's. */
+  .review .cp-quiz { margin: 0; padding-top: 2.6mm; border-top: 0.6pt solid var(--ink); }
+  .review .cp-quiz ol { margin: 0; padding-left: 6mm; }
+  .review .cp-quiz li { margin: 1.4mm 0 0; padding-left: 1.2mm; font-family: var(--font-body); font-size: 9.6pt; line-height: 1.45; }
+  .review .cp-quiz li::marker { font-family: var(--font-code); font-size: 7pt; color: var(--muted); }
+  .review .cp-quiz .cp-quiz-re { margin-left: 1.2mm; font-family: var(--font-code); font-size: 6.8pt; color: var(--muted); white-space: nowrap; }
+  .review .rv-keep.cp-quizzed { margin-top: 4mm; border-top: 0.3pt solid var(--line-2); }
   /* each question and each takeaway whole: Paged.js lost the first line of a takeaway it split across two pages */
   .review .rv-keep li, .review .cp-quiz li { break-inside: avoid; }
   .review .rv-keep[data-split-from], .review .cp-quiz[data-split-from] { border-top: 0; margin-top: 0; padding-top: 0; }
 
-  /* the chokepoint card, kept whole on one page (below) and set close, so that with its notes it shares a page with the
-     end of In short */
-  .plate { margin: 6mm 0 0; box-shadow: none; } /* the screen's overflow: hidden stays: Chrome then moves the card whole */
-  /* print.js moves the card to the head of the text (it then heads the chapter's second page, and floats() moves it down
-     past the opening paragraph when that fits the first): the text's list spacing must not reach into it */
-  .prose .plate li { margin-top: 0; }
-  .chapter-head { margin-bottom: 0; }
-  .plate-head { padding: 1.4mm 3mm; gap: 3mm; }
-  .plate-head .label { white-space: nowrap; }
-  .plate-score { font-size: 7.4pt; }
-  .plate-score b { font-size: 8pt; }
-  .pips i { width: 6.5pt; height: 6.5pt; border-width: 1pt; }
-  .plate-kpis > div { padding: 1.8mm 3mm 2mm; }
-  .plate-kpis .k, .plate-status .k, .plate-rows dt { font-size: 6.4pt; margin-bottom: 1mm; }
-  .plate-kpis .v { font-size: 13pt; line-height: 1.06; }
-  .plate-kpis .v.cost { font-size: 12pt; }
-  .plate-kpis .v.cost.long { font-size: 8.8pt; line-height: 1.3; }
-  .plate-kpis .v small { font-size: 8pt; }
-  .plate-kpis .sub { font-size: 6.6pt; line-height: 1.36; margin-top: 1mm; }
-  .plate-rows .row { grid-template-columns: 24mm 1fr; gap: 3.5mm; padding: 1.4mm 3mm; }
-  .plate-rows dd { font-size: 8.3pt; line-height: 1.32; }
-  .plate-rows li { padding-left: 7mm; text-indent: -7mm; margin-bottom: 0.5mm; }
-  .plate-rows .note { font-size: 7.9pt; }
-  .plate-rows .why { font-size: 8.3pt; }
-  .plate-status > div { padding: 1.7mm 3mm 1.9mm; }
-  .plate-status p { font-size: 8.1pt; line-height: 1.34; }
-  /* A chapter whose card would open a page after a short one is laid out again with its head and card set closer
-     (build/pdf.py, print.js .cp-tight): the end of In short and the card then share a page. */
-  .cp-tight .plain, .cp-tight .inshort, .cp-tight .plate { margin-top: 4.5mm; }
-  .cp-tight .plain { padding: 2.4mm 0 2.8mm; }
-  .cp-tight .plain p { line-height: 1.42; }
-  .cp-tight .inshort p { font-size: 10.4pt; line-height: 1.38; }
-  .cp-tight .inshort p { margin-top: 1.4mm; }
-  .cp-tight .plate-kpis > div { padding: 1.4mm 3mm 1.5mm; }
-  .cp-tight .plate-rows .row { padding: 1mm 3mm; }
-  .cp-tight .plate-rows dd, .cp-tight .plate-rows .why { font-size: 7.9pt; line-height: 1.27; }
-  .cp-tight .plate-rows .note { font-size: 7.6pt; }
-  .cp-tight .plate-rows li { margin-bottom: 0.2mm; }
-  .cp-tight .plate-status > div { padding: 1.4mm 3mm 1.5mm; }
-  .cp-tight .plate-status p { font-size: 7.8pt; line-height: 1.28; }
-  /* A card that with its notes is taller than a page even set closer would run into the notes (it is kept whole as one
-     block, and Chrome never breaks that). Its chapter is laid out once more with the card free to break, between its
-     parts only (print.js .cp-split): the figures, each row, the two lines on China and the US. */
-  .cp-split .plate { break-inside: auto; overflow: visible; }
-  .cp-split .plate-head, .cp-split .plate-kpis, .cp-split .plate-rows .row, .cp-split .plate-status { break-inside: avoid; }
-  .cp-split .plate-head { break-after: avoid; }
-  /* the card's marks print in the notes' red, as the prose's do */
-  .plate sup.cite a, .plate sup.cite-sep { color: var(--accent-ink); }
-  .chip { font-size: 6.4pt; width: 6mm; }
-  /* on paper boxed country codes read as form fields: the code alone, in a column of its own */
-  .plate .chip { border: 0; width: 5.4mm; text-align: left; padding: 0; margin-right: 1.2mm; font-weight: 600; color: var(--muted); }
-  .cc { font-size: 7pt; }
+  /* ---------- the book's cover, how to read, and the contents ---------- */
+  .print-only { display: block !important; }
+  /* A4 portrait, the wafer cover (qa/cover-wafer.md). The 300 mm wafer in plan view, drawn in ink by build/cover-art.py,
+     sits centred as one object on the white sheet: 164mm across, 23mm in from either side, 14mm from the head, notch at
+     the foot. Beneath it the type: the wordmark (the favicon's tile and the name, as on every page of the site), the
+     title in Fraunces, the subtitle in Literata, then the colophon at the foot under one hairline. No running head:
+     @page :first empties the margin boxes. The cover fills its box to within 2 mm: a larger title or tile runs the
+     edition line onto page 2. */
+  .print-title { break-after: page; min-height: 258mm; display: flex !important; flex-direction: column; padding-bottom: 0; line-height: 1.42; }
+  .print-title .pt-art { align-self: flex-start; display: block; width: 164mm; height: auto; max-width: none; margin: -3mm 0 0 3mm; background: none; break-inside: avoid; break-after: avoid; }
+  .print-title .pt-type { margin: 0; }
+  .print-title .pt-k { margin: 16mm 0 7mm; font-family: var(--font-code); font-size: 8pt; color: var(--muted); }
+  .print-title .pt-k.pt-wm { display: flex; align-items: center; gap: 3mm; color: var(--ink); margin: 13mm 0 6mm; }
+  .print-title .pt-wm .wm-tile { display: block; width: 7mm; height: 7mm; flex: none; }
+  .print-title .pt-wm .wm-tile rect { fill: #7a1f2b; }
+  .print-title .pt-wm .wm-tile path { fill: #fff; }
+  .print-title .pt-wm .wm-name { font-family: "Fraunces Mark", var(--font-display); font-weight: 500; font-size: 14pt; letter-spacing: -0.005em; line-height: 1; }
+  .print-title .pt-h { margin: 0 0 6mm; font-family: var(--font-display); font-weight: 400; font-size: 64pt; line-height: 0.92; letter-spacing: -0.025em; color: var(--ink); }
+  .print-title .pt-sub { margin: 0; max-width: 150mm; font-family: var(--font-body); font-weight: 400; font-size: 14pt; line-height: 1.32; color: var(--ink-2); }
+  .print-title .pt-foot { margin-top: auto; padding-top: 4mm; }
+  .print-title .pt-row { display: flex; justify-content: space-between; align-items: baseline; gap: 8mm; border-top: 0.5pt solid var(--ink); padding-top: 3.5mm; }
+  .print-title .pt-by { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 11pt; }
+  .print-title .pt-what { margin: 0; font-family: var(--font-ui); font-size: 8pt; color: var(--muted); }
+  .print-title .pt-meta { margin: 2.6mm 0 0; font-family: var(--font-code); font-size: 7.4pt; color: var(--muted); }
 
-  /* tables and figures: they may fill the column, never spill off it */
-  .table-wrap { overflow: visible; margin: 4mm 0 0; }
-  .prose > .cp-after { margin-top: 4.5mm; } /* the block after a figure or table (print.js marks it) */
-  .prose table { font-size: 8.6pt; line-height: 1.32; }
-  .prose th, .prose td { padding: 1.4mm 2.6mm; }
-  .prose th { font-size: 6.8pt; }
-  .figure { margin: 5mm 0 0; padding: 3mm 3.5mm 2.6mm; }
-  .figure .fig-title { font-size: 9.5pt; margin-bottom: 2.4mm; }
-  .figure .fig-title .unit { font-size: 6.8pt; }
-  .figure .fig-source { font-size: 6.8pt; margin-top: 2mm; }
-  .stack-legend { font-size: 7pt; gap: 1mm 4mm; margin-top: 2mm; }
-  /* bar charts as HTML rows (figure() in build/build.js): on paper the label stands beside its bar, right-aligned, in the
-     figures' small type; the screen sets it above the bar below 641 px, a width Paged.js's pages never report */
-  .hbars { gap: 1.2mm; margin: 0.6mm 0 0; font-size: 7.5pt; }
-  .hb { grid-template-columns: min(var(--lw, 14em), 45%) minmax(0, 1fr); align-items: center; gap: 0 3mm; }
-  .hb-l { text-align: right; line-height: 1.25; }
-  .hb-r { gap: 2mm; }
-  .hb-r i { height: 2.6mm; }
-  .tl li { font-size: 8.6pt; }
-  .tl li .d { font-size: 6.8pt; }
-  /* an animation on paper: its last frame, then its steps in the figures' small type (styles.css prints the list) */
-  .figure--anim .anim-stage { border: 0; }
-  .figure--anim .anim-print { display: block; width: 100%; height: auto; }
-  .figure--anim .anim-transcript { font-size: 8.6pt; line-height: 1.38; margin: 2.6mm 0 0; padding-left: 5mm; }
-  .figure--anim .anim-transcript li { margin: 0 0 0.9mm; }
-  figure svg, .figure svg, #exposure-viz svg { max-width: 100%; height: auto; }
-
-
-  /* how to read, and the contents as a report's contents: one line a chapter, with its page. One left edge: the box's
-     padding and the list's indent are the screen's. */
-  .howto { margin: 0 0 4mm; padding: 3.4mm 0 1mm; border-top: 0.5pt solid var(--ink); } /* the page's head rule, which the screen's tab no longer draws */
+  /* how to read, and the contents as a report's contents: one line a chapter, with its page */
+  .howto { margin: 0 0 4mm; padding: 3.4mm 0 1mm; border-top: 0.6pt solid var(--ink); break-inside: avoid; }
   .howto ul { padding-left: 0; }
-  .howto h2 { font-size: 7.4pt; margin-bottom: 2.4mm; }
-  .howto h1.howto-title, .howto h2.howto-title { font-size: 19pt; line-height: 1.1; margin: 0 0 1.6mm; }
-  .howto .howto-lede { font-size: 10.5pt; line-height: 1.45; max-width: 148mm; margin-bottom: 3mm; }
-  .howto h3.howto-k { font-size: 7.4pt; padding-top: 2.4mm; margin-bottom: 1.6mm; }
-  .howto p, .howto li { font-size: 9pt; line-height: 1.45; }
-  .contents { break-after: page; padding: 3mm 0 0; margin-top: 3mm; }
-  /* the two group heads ("The fifteen stages", "Across the chain") and the note under the second: the screen's 62 px
+  .howto h2 { margin-bottom: 2.4mm; font-family: var(--font-ui); font-size: 8pt; font-weight: 600; }
+  .howto h1.howto-title, .howto h2.howto-title { margin: 0 0 2mm; font-family: var(--font-display); font-weight: 400; font-size: 24pt; line-height: 1.04; letter-spacing: -0.02em; }
+  .howto .howto-lede { max-width: 140mm; margin-bottom: 2.6mm; font-family: var(--font-body); font-size: 9.8pt; line-height: 1.42; color: var(--ink-2); }
+  .howto h3.howto-k { margin-bottom: 1.6mm; padding-top: 2.4mm; font-family: var(--font-ui); font-size: 8pt; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--ink); }
+  .howto p, .howto li { font-family: var(--font-body); font-size: 8.6pt; line-height: 1.4; }
+  .contents { break-after: page; padding: 2.6mm 0 0; margin-top: 2mm; border-top: 0.6pt solid var(--ink); }
+  /* the two group heads ("The fifteen stages", "Across the chain") and the note under the second: the screen's 40 px
      above the second ran the contents' last line onto a page of its own */
-  .contents .contents-k { margin: 3.5mm 0 2mm; padding-top: 0; border-top: 0; font-size: 7pt; }
-  .contents .contents-note { margin: 0 0 2mm; font-size: 9pt; line-height: 1.4; }
-  .contents h2 { font-size: 14pt; margin-bottom: 4mm; }
+  .contents .contents-k { margin: 3.5mm 0 2mm; padding-top: 0; border-top: 0; font-family: var(--font-code); font-size: 7.2pt; font-weight: 400; color: var(--muted); }
+  .contents .contents-note { margin: 0 0 2mm; font-family: var(--font-body); font-size: 8.8pt; line-height: 1.4; color: var(--ink-2); }
+  .contents h2 { margin-bottom: 3mm; font-family: var(--font-display); font-weight: 400; font-size: 16pt; letter-spacing: -0.012em; }
   .contents-grid { display: block; }
-  .contents-grid .item { break-inside: avoid; display: flex; align-items: baseline; gap: 0;
-    border-top: 0; border-bottom: 0.3pt solid var(--line); padding: 0.9mm 0; } /* close enough that the seventeen lines share the page with How to read */
+  .contents-grid .item { break-inside: avoid; display: flex; align-items: baseline; gap: 0; border-top: 0; border-bottom: 0.3pt solid var(--line-2); padding: 0.6mm 0; } /* close enough that the seventeen lines share the page with How to read */
   /* the number in a column of its own, so every title starts on one edge; the page number set in the text's figures, on
      the title's baseline */
-  .contents-grid .n { flex: none; width: 9mm; padding: 0; font-size: 7.4pt; font-variant-numeric: tabular-nums lining-nums; }
-  .contents-grid .t { flex: 1; display: flex; justify-content: space-between; align-items: baseline; gap: 6mm;
-    margin: 0; font-size: 9.5pt; line-height: 1.45; letter-spacing: 0; }
+  .contents-grid .n { flex: none; width: 9mm; padding: 0; font-family: var(--font-code); font-size: 7.2pt; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .contents-grid .t { flex: 1; display: flex; justify-content: space-between; align-items: baseline; gap: 6mm; margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 9.6pt; line-height: 1.4; letter-spacing: 0; }
   .contents-grid .item ul, .contents-grid .ol { display: none; } /* the section list and the one-liners are the site's; the page wants the spine */
-  .contents-grid .t::after { content: target-counter(attr(href url), page); font-family: var(--font-body); font-weight: 400; font-size: 9.5pt; font-variant-numeric: tabular-nums lining-nums; color: var(--ink-2); }
+  .contents-grid .t::after { content: target-counter(attr(href url), page); font-family: var(--font-code); font-weight: 400; font-size: 7.6pt; color: var(--ink-2); }
+  .contents .item { break-inside: avoid; }
+
+  /* ---------- one chapter alone (build/pdf.py --chapter) ----------
+     print.js puts a compact title block where the cover and contents were: the wordmark and the edition, then the chapter's
+     own address. The chapter starts beneath it, and the colophon follows the last page of text (the two breaks are turned
+     off under .site-footer, below). */
+  .pt-chapter { margin: 0 0 7mm; padding: 0 0 3.4mm; border-bottom: 0.4pt solid var(--line-2); break-inside: avoid; break-after: avoid; }
+  .pt-chapter p { margin: 0; }
+  .pt-chapter .ptc-k { display: flex; justify-content: space-between; align-items: center; gap: 6mm; font-family: var(--font-code); font-size: 7.4pt; color: var(--muted); }
+  .pt-chapter .ptc-ed { color: var(--ink-2); }
+  .pt-chapter .ptc-wm { display: inline-flex; align-items: center; gap: 2.4mm; color: var(--ink); }
+  .pt-chapter .ptc-wm .wm-tile { display: block; width: 5.4mm; height: 5.4mm; flex: none; }
+  .pt-chapter .ptc-wm .wm-tile rect { fill: #7a1f2b; }
+  .pt-chapter .ptc-wm .wm-tile path { fill: #fff; }
+  .pt-chapter .ptc-wm .wm-name { font-family: "Fraunces Mark", var(--font-display); font-weight: 500; font-size: 11pt; line-height: 1; }
+  .pt-chapter .ptc-url { margin-top: 1.6mm; font-family: var(--font-code); font-size: 7.4pt; color: var(--muted); }
+  .pt-chapter .ptc-url a { color: var(--accent-ink); }
+
+  /* ---------- the colophon ----------
+     the citation for this edition, written by print.js in place of the screen's, set as type: the citation in the text
+     face with the work in italic, the BibTeX in mono, each on a hairline at its left. The edition is in the foot of every
+     page, so the screen's "Updated" line is left out. */
+  .site-footer { break-before: page; margin-left: 36mm; padding: 0; border-top: 0.6pt solid var(--ink); font-family: var(--font-ui); font-size: 8.4pt; line-height: 1.5; color: var(--ink-2); }
+  .site-footer[data-split-from] { border-top: 0; }
+  .site-footer .ft-mark { display: none; }
+  .site-footer .credits { margin: 2.6mm 0 0; font-size: 9pt; color: var(--ink); }
+  .site-footer .credits b { font-weight: 600; }
+  .site-footer .sources-key { margin-top: 2mm; font-size: 7.4pt; line-height: 1.45; color: var(--ink-2); }
+  .site-footer .updated { display: none; }
+  .site-footer .tier { width: auto; height: auto; line-height: 1.25; padding: 0 0.8mm; margin: 0 1.2mm 0 0; font-family: var(--font-ui); font-size: 6.2pt; vertical-align: 0.4pt; }
+  .site-footer .sources-key .tier { border: 0 !important; width: auto; font-weight: 600; padding: 0; margin: 0 1mm 0 0; }
+  .site-footer .cite--edition summary { margin: 6mm 0 2mm; font-family: var(--font-ui); font-weight: 600; font-size: 8pt; letter-spacing: 0; text-transform: none; color: var(--ink); }
+  .site-footer .cite--edition pre, .site-footer .cite--edition .cp-cite-text { margin: 2.4mm 0 0; padding: 0.4mm 0 0.4mm 3.5mm; background: none; border: 0; border-left: 0.6pt solid var(--line-2); }
+  .site-footer .cite--edition .cp-cite-text { max-width: 128mm; font-family: var(--font-body); font-size: 9pt; line-height: 1.45; color: var(--ink); border-left-color: var(--ink); overflow-wrap: anywhere; }
+  .site-footer .cite--edition .cp-cite-text a { color: var(--accent-ink); }
+  .site-footer .cite--edition pre { font-family: var(--font-code); font-size: 6.8pt; line-height: 1.45; color: var(--ink-2); overflow-wrap: anywhere; }
+  /* the citation and its BibTeX on one page, under their heading; the credits and the tier key may close the page before */
+  .site-footer .cite--edition { break-inside: avoid; }
+  .site-footer .credits, .site-footer .sources-key { break-inside: avoid; }
+  /* one chapter alone starts under its title block and the colophon follows its text. Paged.js applies breaks by
+     selector, in the order the rules come, inside the body: so these come after the rules they undo, and key on the
+     title block rather than on a class of <html>. */
+  .pt-chapter + .chapter { break-before: auto; }
+  .pt-chapter ~ .site-footer { break-before: auto; margin-top: 10mm; }
 
   /* Collapsed source lists and method notes open on paper. */
   details { display: block; }
@@ -2845,111 +2975,34 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
   details::details-content { content-visibility: visible !important; display: block !important; block-size: auto !important; }
   .mt-note { break-inside: avoid; }
   .chapter-sources li { break-inside: avoid; }
-  .chapter-sources ol, .mt-cites { font-size: 7.6pt; }
+  .chapter-sources ol, .mt-cites { font-size: 7.4pt; }
   .chapter-sources li, .mt-cites li { overflow-wrap: anywhere; }
   /* the browser's own print (and the PDF's fallback) gives each source its full address under its title; the marks in
      the text stay numbers. src/app.js opens the folded lists before the browser prints. */
-  .chapter-sources li > a[href]::after { content: attr(href); display: block; font-family: var(--font-code); font-size: 6.8pt; line-height: 1.35; color: var(--muted); overflow-wrap: anywhere; }
+  .chapter-sources li > a[href]::after { content: attr(href); display: block; font-family: var(--font-code); font-size: 6.4pt; line-height: 1.35; color: var(--muted); overflow-wrap: anywhere; }
   .chapter-sources summary::before, .chapter-sources[open] summary::before, .mt-note > summary::before { content: ""; }
   .chapter-sources summary::after, .chapter-sources[open] summary::after { content: none; }
+  .chapter .chapter-sources summary { font-size: 16pt; padding: 2.4mm 0 2mm; }
   /* with real footnotes, the list at the end of the chapter would say everything twice */
   .cp-print .chapter-sources { display: none !important; }
 
-  /* One chapter per page, and blocks that must not be split across the fold. */
-  /* No padding at the chapter's foot: Paged.js copies the chapter onto each page it fills, each copy with its own padding,
-     so a bottom padding stood under the last line of every page and pushed that paragraph out of sight */
-  .chapter { break-before: page; padding-top: 0; padding-bottom: 0; border-top: 0; }
-  .print-only { display: block !important; }
-  /* ---------- the cover ----------
-     A4 portrait, the wafer cover (qa/cover-wafer.md). The 300 mm wafer in plan view, drawn by
-     build/cover-art.py, sits centred as one object on the white sheet: 164mm across, 23mm in from
-     either side, 14mm from the head, notch at the foot, no plate and no bleed. Beneath it the
-     seven lines of type: the wordmark (the favicon's tile and the name, as on every page of the site), the title in
-     Fraunces at its largest optical size and the site's display weight, 400 (print.js loads it as "Fraunces Display"),
-     the subtitle, then the colophon at the foot under one hairline. No running head: @page :first empties the margin
-     boxes. The cover fills its box to within 2 mm: a larger title or tile runs the edition line onto page 2. */
-  .print-title { break-after: page; min-height: 258mm; display: flex !important; flex-direction: column; padding-bottom: 0; line-height: 1.42; } /* its own leading: the body's 1.45 ran the cover's last line onto page 2 */
-  .print-title .pt-art {
-    align-self: flex-start; display: block;
-    width: 164mm; height: auto; max-width: none;
-    margin: -3mm 0 0 3mm;               /* the page margin is 17mm top and 20mm sides: 14mm and 23mm from the trim */
-    background: none;
-    break-inside: avoid; break-after: avoid;
-  }
-  .print-title .pt-type { margin: 0; }
-  .print-title .pt-k { font-family: var(--font-mono); font-weight: 500; font-size: 8.5pt; letter-spacing: 0.18em; text-transform: uppercase; color: #5b646d; margin: 16mm 0 7mm; }
-  .print-title .pt-k.pt-wm { display: flex; align-items: center; gap: 3mm; letter-spacing: 0 !important; text-transform: none; color: var(--ink); margin: 13mm 0 6mm; }
-  .print-title .pt-wm .wm-tile { display: block; width: 7mm; height: 7mm; flex: none; }
-  .print-title .pt-wm .wm-tile rect { fill: #7a1f2b; }
-  .print-title .pt-wm .wm-tile path { fill: #fff; }
-  .print-title .pt-wm .wm-name { font-family: "Fraunces Mark", var(--font-display); font-weight: 500; font-size: 14pt; letter-spacing: -0.005em; line-height: 1; }
-  .print-title .pt-h { font-family: "Fraunces Display", var(--font-display); font-weight: 400; font-size: 68pt; line-height: 0.88; margin: 0 0 7mm; letter-spacing: -0.02em; color: #12161a; }
-  .print-title .pt-sub { font-family: var(--font-body); font-weight: 400; font-size: 14.5pt; line-height: 1.3; color: var(--ink-2); margin: 0; max-width: 150mm; }
-  .print-title .pt-foot { margin-top: auto; padding-top: 4mm; }   /* the cover fills the 264mm box to within 2mm; more and the print line spills to page 2 */
-  .print-title .pt-row { display: flex; justify-content: space-between; align-items: baseline; gap: 8mm;
-    border-top: 0.5pt solid #b9bec2; padding-top: 3.5mm; }
-  .print-title .pt-by { font-family: var(--font-display); font-weight: 600; font-size: 11pt; margin: 0; }
-  .print-title .pt-what { font-family: var(--font-mono); font-size: 8pt; color: #5b646d; margin: 0; }
-  .print-title .pt-meta { font-family: var(--font-mono); font-size: 7.6pt; color: #5b646d; margin: 2.6mm 0 0; }
-
-  /* ---------- one chapter alone (build/pdf.py --chapter) ----------
-     print.js puts a compact title block where the cover and contents were: the site and the edition, the chapter, its
-     own page and how to cite it. The chapter starts beneath it, and the colophon follows the last page of text
-     (the two breaks are turned off under .site-footer, below). */
-  .pt-chapter { margin: 0 0 7mm; padding: 0 0 3.4mm; border-bottom: 0.5pt solid var(--line-2); break-inside: avoid; break-after: avoid; }
-  .pt-chapter p { margin: 0; }
-  .pt-chapter .ptc-k { display: flex; justify-content: space-between; gap: 6mm; font-family: var(--font-mono); font-weight: 500; font-size: 7.4pt; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
-  .pt-chapter .ptc-ed { color: var(--ink); }
-  /* the first line opens on the wordmark, as the site's pages do (print.js titleBlock); the ledger gives the number */
-  .pt-chapter .ptc-k { align-items: center; }
-  .pt-chapter .ptc-wm { display: inline-flex; align-items: center; gap: 2.4mm; letter-spacing: 0 !important; text-transform: none; color: var(--ink); }
-  .pt-chapter .ptc-wm .wm-tile { display: block; width: 5.4mm; height: 5.4mm; flex: none; }
-  .pt-chapter .ptc-wm .wm-tile rect { fill: #7a1f2b; }
-  .pt-chapter .ptc-wm .wm-tile path { fill: #fff; }
-  .pt-chapter .ptc-wm .wm-name { font-family: "Fraunces Mark", var(--font-display); font-weight: 500; font-size: 11pt; line-height: 1; }
-  .pt-chapter .ptc-h { font-family: var(--font-display); font-variation-settings: var(--opsz-title); font-weight: 600; font-size: 13pt; line-height: 1.2; color: var(--ink); margin-top: 2.6mm; }
-  .pt-chapter .ptc-url { font-family: var(--font-mono); font-size: 8pt; color: var(--muted); margin-top: 1.6mm; }
-  .pt-chapter .ptc-cite { font-family: var(--font-body); font-size: 8pt; line-height: 1.4; color: var(--ink-2); margin-top: 2.4mm; max-width: 150mm; overflow-wrap: anywhere; }
-  .pt-chapter .ptc-ck { font-family: var(--font-mono); font-weight: 500; font-size: 6.6pt; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
-  /* the colophon's citation for this edition, written by print.js in place of the screen's, set as type: the citation in
-     the text face with the work in italic, the BibTeX in the code face, each on a hairline at its left. The edition is in
-     the foot of every page, so the screen's "Updated" line is left out. */
-  .site-footer .updated { display: none; }
-  .site-footer .cite--edition summary { font-family: var(--font-mono); font-weight: 500; font-size: 7pt; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin: 6mm 0 2mm; }
-  .site-footer .cite--edition pre, .site-footer .cite--edition .cp-cite-text { background: none; border: 0; border-left: 0.6pt solid var(--line-2); padding: 0.4mm 0 0.4mm 3.5mm; margin: 2.4mm 0 0; }
-  .site-footer .cite--edition .cp-cite-text { font-family: var(--font-body); font-size: 9pt; line-height: 1.45; color: var(--ink); border-left-color: var(--accent); max-width: 132mm; overflow-wrap: anywhere; }
-  .site-footer .cite--edition pre { font-size: 7pt; line-height: 1.45; color: var(--ink-2); overflow-wrap: anywhere; }
-  /* the citation and its BibTeX on one page, under their heading; the credits and the tier key may close the page before */
-  .site-footer .cite--edition { break-inside: avoid; }
-  .site-footer .credits, .site-footer .sources-key { break-inside: avoid; }
-  .howto { break-inside: avoid; }
-  .contents .item { break-inside: avoid; }
+  /* Whole on one page: the card, each chart or figure with its title and source line, and the short boxes elsewhere on
+     the site. In plain terms, In short, paragraphs and lists run on across a page like any text, two lines at least
+     either side. */
   .gl-term { border-bottom: 0 !important; text-decoration: none !important; background: none !important; color: inherit !important; }
   /* print.js makes each glossary term a span (a button never breaks across a line), the card's two ratings among them */
-  .gl-term { display: inline; white-space: normal; line-height: inherit; letter-spacing: inherit; vertical-align: baseline; }
-  sup.cite { margin-left: 1px; }
-  sup.cite a { padding: 0; background: none !important; }
+  .gl-term { display: inline; white-space: normal; line-height: inherit; letter-spacing: inherit; vertical-align: baseline; font: inherit; }
   .view-head { break-after: avoid; padding-top: 0; }
-  /* Whole on one page: the card, each chart or figure with its title and source line, and the short boxes elsewhere on the
-     site. In plain terms, In short, paragraphs and lists run on across a page like any text, two lines at least either side. */
-  .plate, .figure, .brief-card, .gl-entry, .mt-note, .mt-log li { break-inside: avoid; }
-  /* a box that runs on to the next page has its top rule on its first part only and its bottom rule on its last */
-  .plain[data-split-to], .cp-sources[data-split-to] { border-bottom: 0; padding-bottom: 0; }
+  .plate, .figure, .brief-card, .gl-entry, .mt-note, .mt-log li, .ch-spec .cp-still { break-inside: avoid; }
+  /* a box that runs on to the next page has its top rule on its first part only */
   .plain[data-split-from], .cp-sources[data-split-from] { border-top: 0; padding-top: 0; margin-top: 0; }
   p, li, blockquote, dd { orphans: 2; widows: 2; }
-  h1, h2, h3, h4, h5, .ch-title, .ch-lede, .label { break-after: avoid; }
+  /* the screen's "pretty" wrap moves a paragraph's line ends once Paged.js has cut it at a page's foot, and the lines it
+     measured for the first page then overran it and were lost: on paper every paragraph wraps the plain way */
+  p, li, blockquote, dd, .ch-lede, .fig-sub { text-wrap: wrap !important; }
+  h1, h2, h3, h4, h5, .ch-title, .ch-lede, .ch-kick, .label, .fig-head { break-after: avoid; }
   thead { display: table-header-group; }
   tr { break-inside: avoid; }
-  a[href] { text-decoration: none; color: inherit; }
-  .prose sup.cite a { color: var(--accent-ink); }
-  .site-footer { break-before: page; font-size: 8pt; margin-left: 28mm; } /* on the text's column, as the source list is */
-  .site-footer .sources-key, .site-footer .updated { font-size: 7.2pt; }
-  .site-footer .tier { width: auto; height: auto; line-height: 1.25; padding: 0 0.8mm; margin: 0 1.2mm 0 0; font-size: 6.2pt; vertical-align: 0.4pt; }
-  /* one chapter alone starts under its title block and the colophon follows its text. Paged.js applies breaks by
-     selector, in the order the rules come, inside the body: so these come after the rules they undo, and key on the
-     title block rather than on a class of <html>. */
-  .pt-chapter + .chapter { break-before: auto; }
-  .pt-chapter ~ .site-footer { break-before: auto; margin-top: 10mm; }
 
   /* ---------- footnotes ----------
      print.js writes one .fn beside every citation from its data-* fields; Paged.js floats it to
@@ -2960,34 +3013,36 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
   .fn::footnote-marker { content: ""; }
   /* One note a line where it fits: the number hung in the margin of the notes, the title in ink, then publisher, date
      and page, then the short address (print.js shortUrl; the chapter's source list gives it in full). */
-  .fn[data-note] { font-family: var(--font-body); font-size: 7.4pt; line-height: 1.3; color: var(--ink-2); }
-  .pagedjs_footnote_inner_content .fn {
-    display: block; list-style: none; position: relative;
-    padding-left: 5.5mm; margin: 0 0 0.7mm;
-  }
+  .fn[data-note] { font-family: var(--font-body); font-size: 7.1pt; line-height: 1.32; color: var(--ink-2); }
+  .pagedjs_footnote_inner_content .fn { display: block; list-style: none; position: relative; padding-left: 5.5mm; margin: 0 0 0.7mm; }
   .pagedjs_footnote_inner_content .fn:last-child { margin-bottom: 0; }
-  .fn-n { position: absolute; left: 0; top: 0.1pt; width: 4.4mm; text-align: right; font-family: var(--font-mono); font-weight: 500; font-size: 6.6pt; color: var(--accent-ink); font-variant-numeric: tabular-nums; }
+  .fn-n { position: absolute; left: 0; top: 0.2pt; width: 4.4mm; text-align: right; font-family: var(--font-code); font-weight: 400; font-size: 6.4pt; color: var(--ink-2); font-variant-numeric: tabular-nums; }
   .fn-t { color: var(--ink); }
   .fn-m { color: var(--ink-2); }
-  .fn-u { font-family: var(--font-mono); font-size: 6.3pt; letter-spacing: -0.01em; color: var(--muted); white-space: nowrap; }
+  .fn-u { font-family: var(--font-code); font-size: 6pt; color: var(--muted); white-space: nowrap; }
 
   /* ---------- the chapter's source list, after its text ----------
      print.js (sourceList) builds it from the screen's list: numbered as the notes are, each source with its tier, its
-     title, its publisher and date, and its full address. */
-  .cp-sources { margin: 9mm 0 0; padding-top: 2.6mm; border-top: 0.5pt solid var(--line-2); max-width: none; }
-  .cp-sources .cp-sources-h { font-family: var(--font-mono); font-weight: 500; font-size: 7pt; line-height: 1.3; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 2.6mm; break-after: avoid; }
-  .cp-sources ol { margin: 0; padding-left: 6.5mm; font-size: 7.6pt; line-height: 1.32; color: var(--ink-2); }
+     title, its publisher and date, and its full address. It opens as a section does. */
+  .cp-sources { max-width: none; margin: 9mm 0 0; padding-top: 2.4mm; border-top: 0.6pt solid var(--ink); }
+  .cp-sources .cp-sources-h { margin: 0 0 2.6mm; font-family: var(--font-display); font-weight: 400; font-size: 16pt; line-height: 1.12; letter-spacing: -0.012em; text-transform: none; color: var(--ink); break-after: avoid; }
+  .cp-sources ol { margin: 0; padding-left: 6.5mm; font-family: var(--font-body); font-size: 7.4pt; line-height: 1.34; color: var(--ink-2); }
   .cp-sources li { padding-left: 3.8mm; margin: 1.1mm 0 0; break-inside: avoid; }
-  .cp-sources li::marker { font-family: var(--font-mono); font-weight: 500; font-size: 6.6pt; color: var(--accent-ink); }
+  .cp-sources li::marker { font-family: var(--font-code); font-size: 6.4pt; color: var(--ink-2); }
   .cp-sources li a { color: var(--ink); }
   /* the tier as a quiet letter in a hanging column, so the title, its second line and the address share one edge (a
      negative margin keeps it on the baseline; placed absolutely, it ran into the list's number) */
   .cp-sources .tier { display: inline-block; border: 0 !important; background: none !important; width: 3.8mm; height: auto; padding: 0;
-    margin: 0 0 0 -3.8mm; text-align: left; font-weight: 600; font-size: 6pt; line-height: 1; vertical-align: baseline; color: var(--muted) !important; }
-  .site-footer .sources-key .tier { border: 0 !important; width: auto; font-weight: 600; padding: 0; margin: 0 1mm 0 0; }
-  .cp-sources .src-meta { display: inline; font-family: var(--font-body); font-size: 7.6pt; color: var(--ink-2); }
+    margin: 0 0 0 -3.8mm; text-align: left; font-family: var(--font-ui); font-weight: 600; font-size: 6pt; line-height: 1; vertical-align: baseline; color: var(--muted) !important; }
+  .cp-sources .src-meta { display: inline; font-family: var(--font-body); font-size: 7.4pt; color: var(--ink-2); }
   .cp-sources .src-meta::before { content: ". "; }
-  .cp-sources .src-url { display: block; font-family: var(--font-mono); font-size: 6.3pt; line-height: 1.35; color: var(--muted); overflow-wrap: anywhere; }
+  .cp-sources .src-url { display: block; font-family: var(--font-code); font-size: 6.1pt; line-height: 1.36; color: var(--muted); overflow-wrap: anywhere; }
+  /* a heading an earlier layout left at the foot of a page opens the next one (print.js .cp-break, build/pdf.py) */
+  .cp-break { break-before: page; }
+  /* a chapter that lost lines at a page's foot to Paged.js is laid out again with its lines a little closer (print.js
+     .cp-nudge, build/pdf.py), so its page ends fall elsewhere */
+  .chapter.cp-nudge .plain p, .chapter.cp-nudge .inshort p, .chapter.cp-nudge > .prose > p, .chapter.cp-nudge > .prose > ul,
+  .chapter.cp-nudge > .prose > ol { line-height: 1.45; }
   /* a chapter whose last few sources ran onto a page of their own is laid out again with its list set closer
      (print.js finish() names it, build/pdf.py lays it out, prepare() marks it .cp-sources-tight) */
   .cp-sources-tight .cp-sources li { margin-top: 0.55mm; }
@@ -2998,7 +3053,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 
   /* the hairline above the notes is short, the width of a thumb, like the report this follows */
   .pagedjs_footnote_content { border-top: 0 !important; position: relative; }
-  .pagedjs_footnote_content::before { content: ""; position: absolute; top: 0; left: 0; width: 42mm; border-top: 0.4pt solid #b9bec2; }
+  .pagedjs_footnote_content::before { content: ""; position: absolute; top: 0; left: 0; width: 42mm; border-top: 0.4pt solid #c4c3bd; }
 
   /* ---------- running heads ----------
      the h2 carries "Chapter 4: " for screen readers, which makes it the running head already */
@@ -3013,8 +3068,9 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
   .pagedjs_margin-top-right > .pagedjs_margin-content::after,
   .pagedjs_margin-bottom-left > .pagedjs_margin-content::after,
   .pagedjs_margin-bottom-right > .pagedjs_margin-content::after {
-    font-family: var(--font-mono); font-size: 7.5pt; letter-spacing: 0.06em; color: #5b646d; white-space: nowrap;
+    font-family: var(--font-ui); font-weight: 500; font-size: 7.5pt; color: var(--ink-2); white-space: nowrap;
   }
+  .pagedjs_margin-bottom-right > .pagedjs_margin-content::after { font-family: var(--font-code); font-weight: 400; font-size: 7pt; }
   .pagedjs_margin-top-left > .pagedjs_margin-content::after,
   .pagedjs_margin-top-right > .pagedjs_margin-content::after { padding-top: 8mm; }
   .pagedjs_margin-bottom-left > .pagedjs_margin-content::after,
@@ -14514,24 +14570,23 @@ try {
   /* Paper gets static fonts. Chrome cannot put a variable font into a PDF as a font: it draws each instance as Type 3
      shapes, which copy and search as broken words ("ED / A"). So for print the page's variable families give way to
      fixed instances of the same families, all under the SIL Open Font License, served by Google Fonts as the site's own
-     fonts are: Fraunces at one optical size per weight (the screen's settings: 48 for heads, 72 for the card's figures,
-     144 for the chapter numerals), Source Serif 4 at its text size, Instrument Sans, IBM Plex Mono, and Noto Serif and
-     Sans for the Chinese and Japanese titles of some sources (the system's own CJK fonts print as Type 3 too). Chrome
-     embeds each as TrueType, subset to the letters used. */
+     fonts are: the redesign's four (qa/redesign/BRIEF.md). Fraunces at the screen's optical size, 48, with SOFT and WONK
+     at 0, in the three weights print.css sets (400 for titles and section heads, 500 for small heads, 600 for bold in
+     them: the screen's 350 is between named weights, and such an instance prints as Type 3 again); Literata at its text size; Hanken Grotesk for labels; Fragment Mono for kickers, codes and dates; and Noto
+     Serif and Sans for the Chinese and Japanese titles of some sources (the system's own CJK fonts print as Type 3 too).
+     Chrome embeds each as TrueType, subset to the letters used. */
   /* one request per instance: asked for a single point, Google Fonts serves a fixed instance; asked for several weights
      at once, it serves one variable file that covers them, and that prints as Type 3 again */
-  var PRINT_FONTS = ['Fraunces:opsz,wght@14,600', 'Fraunces:opsz,wght@48,500', 'Fraunces:opsz,wght@72,400',
-    'Fraunces:opsz,wght@96,700', 'Fraunces:opsz,wght@144,300',
-    'Source+Serif+4:ital,opsz,wght@0,12,400', 'Source+Serif+4:ital,opsz,wght@0,12,500', 'Source+Serif+4:ital,opsz,wght@0,12,600',
-    'Source+Serif+4:ital,opsz,wght@0,12,700', 'Source+Serif+4:ital,opsz,wght@1,12,400', 'Source+Serif+4:ital,opsz,wght@1,12,600',
-    'Instrument+Sans:wght@400', 'Instrument+Sans:wght@500', 'Instrument+Sans:wght@600', 'Instrument+Sans:wght@700',
-    'IBM+Plex+Mono:wght@400;500', 'Noto+Serif+SC:wght@400', 'Noto+Serif+SC:wght@600', 'Noto+Serif+JP:wght@400',
+  var PRINT_FONTS = ['Fraunces:opsz,wght,SOFT,WONK@48,400,0,0', 'Fraunces:opsz,wght,SOFT,WONK@48,500,0,0', 'Fraunces:opsz,wght,SOFT,WONK@48,600,0,0',
+    'Literata:ital,opsz,wght@0,12,400', 'Literata:ital,opsz,wght@0,12,600', 'Literata:ital,opsz,wght@0,12,700',
+    'Literata:ital,opsz,wght@1,12,400', 'Literata:ital,opsz,wght@1,12,600',
+    'Hanken+Grotesk:wght@400', 'Hanken+Grotesk:wght@500', 'Hanken+Grotesk:wght@600', 'Hanken+Grotesk:wght@700',
+    'Fragment+Mono', 'Noto+Serif+SC:wght@400', 'Noto+Serif+SC:wght@600', 'Noto+Serif+JP:wght@400',
     'Noto+Serif+JP:wght@600', 'Noto+Sans+SC:wght@400', 'Noto+Sans+JP:wght@400'];
-  /* Two more instances of Fraunces under names of their own: the cover's title at the largest optical size and the
-     site's display weight, and the wordmark at the masthead's optical size. Under the family's own name they would take
-     the place of the 400 and 500 above (one face to a weight), which set the card's figures and the heads. Each comes
-     from the same Google Fonts request a link would make, added through the FontFace API under its new name. */
-  var PRINT_FACES = [['Fraunces Display', 'Fraunces:opsz,wght@144,400'], ['Fraunces Mark', 'Fraunces:opsz,wght@28,500']];
+  /* One more instance of Fraunces under a name of its own: the wordmark, 500 at the masthead's optical size, 28 (the screen's 540 is between named weights). Under
+     the family's own name it would take the place of the 500 above (one face to a weight). It comes from the same Google
+     Fonts request a link would make, added through the FontFace API under its new name. */
+  var PRINT_FACES = [['Fraunces Mark', 'Fraunces:opsz,wght,SOFT,WONK@28,500,0,0']];
   var fontsLoaded = null;
   function fontURL(family) { return 'https://fonts.googleapis.com/css2?family=' + family + '&display=block'; }
   function namedFace(name, family) {
@@ -14560,12 +14615,12 @@ try {
   }
   /* pdf.py waits on this after prepare(): the stylesheet, then each face the print uses, then any other pending load */
   function fontsReady() {
-    var faces = ['300 24pt Fraunces', '400 13pt Fraunces', '500 14pt Fraunces', '600 11pt Fraunces', '700 68pt Fraunces',
-      '400 10pt "Source Serif 4"', '500 10pt "Source Serif 4"', '600 10pt "Source Serif 4"', '700 10pt "Source Serif 4"',
-      'italic 400 10pt "Source Serif 4"', '400 7pt "Instrument Sans"', '500 7pt "Instrument Sans"', '600 7pt "Instrument Sans"',
-      '700 7pt "Instrument Sans"', '400 7pt "IBM Plex Mono"', '500 7pt "IBM Plex Mono"', '400 68pt "Fraunces Display"',
-      '500 11pt "Fraunces Mark"'];
-    return Promise.resolve(fontsLoaded).then(function () {
+    var faces = ['400 24pt Fraunces', '500 11pt Fraunces', '600 11pt Fraunces',
+      '400 10pt Literata', '600 10pt Literata', '700 10pt Literata', 'italic 400 10pt Literata', 'italic 600 10pt Literata',
+      '400 7pt "Hanken Grotesk"', '500 7pt "Hanken Grotesk"', '600 7pt "Hanken Grotesk"', '700 7pt "Hanken Grotesk"',
+      '400 7pt "Fragment Mono"', '500 11pt "Fraunces Mark"'];
+    /* and Lithography's annotated drawing, fetched from its readable page (stills, below) */
+    return Promise.all([fontsLoaded, stillsLoaded]).then(function () {
       return Promise.all(faces.map(function (f) { return document.fonts.load(f).catch(function () { return []; }); }));
     }).then(function () { return document.fonts.ready; }).then(function () {
       var got = []; document.fonts.forEach(function (f) { if (f.status === 'loaded') got.push(f.family + ' ' + f.weight + (f.style !== 'normal' ? ' ' + f.style : '')); });
@@ -14720,24 +14775,70 @@ try {
 
   /* ---------- the chapter opener, the questions and the contents page, for paper ---------- */
 
-  /* The fifteen stages in the ledger column, under the chapter's number, as the screen's column shows them (print.css
-     .cp-index): built from the screen's strip before it goes. The two chapters that are not stages have no strip, and
-     print none. */
+  /* The chain in the margin column beside the chapter (print.css .cp-index), as the screen's rail shows it: each of the
+     fifteen stages with its number, its whole name and its band's mark (solid for Extreme, an outline for High), then the
+     two chapters that look across them; the chapter's own line in bold. Built from the rail before its screen parts go,
+     and the rail moves to the head of the chapter, where it floats beside the opener. */
   function stageIndex() {
     each('article.chapter', document, function (ch) {
       var led = ch.querySelector('.ch-ledger'), track = led && led.querySelector('.chain-track');
       if (!track) return;
-      var ol = node('ol', 'cp-index');
-      ol.setAttribute('aria-hidden', 'true');
-      each('li', track, function (li, i) {
-        var n = li.querySelector('.n'), t = li.querySelector('.t');
-        var item = node('li', (i ? '' : 'cp-top') + (li.getAttribute('aria-current') === 'true' ? ' is-here' : ''));
-        item.appendChild(node('span', 't', t ? t.textContent.replace(/\u00ad/g, '') : ''));
-        item.appendChild(node('span', 'n', n ? n.textContent : ''));
-        ol.appendChild(item);
-      });
-      led.appendChild(ol);
+      var list = function (src, cls) {
+        var ol = node('ol', cls);
+        ol.setAttribute('aria-hidden', 'true');
+        each(':scope > li', src, function (li) {
+          var n = li.querySelector('.n'), t = li.querySelector('.t');
+          var item = node('li', li.getAttribute('aria-current') === 'true' ? 'is-here' : '');
+          item.setAttribute('data-band', li.getAttribute('data-band') || '0');
+          item.appendChild(node('span', 'n', n ? n.textContent : ''));
+          item.appendChild(node('span', 't', t ? t.textContent.replace(/\u00ad/g, '') : ''));
+          item.appendChild(node('i', 'bm'));
+          ol.appendChild(item);
+        });
+        return ol;
+      };
+      led.appendChild(node('p', 'cp-index-k', 'The chain'));
+      led.appendChild(list(track, 'cp-index'));
+      var across = led.querySelector('.rail-across');
+      if (across) led.appendChild(list(across, 'cp-index cp-across'));
+      ch.insertBefore(led, ch.firstChild);
     });
+  }
+
+  /* Each section's number, written on its heading for print.css (h3::before): the screen counts them with a CSS counter,
+     which starts again on every page Paged.js lays out. */
+  function sectionNumbers() {
+    each('article.chapter > .prose', document, function (prose) {
+      var i = 0;
+      each(':scope > h3', prose, function (h) { i++; h.setAttribute('data-cp-n', (i < 10 ? '0' : '') + i); });
+    });
+  }
+
+  /* A chapter whose drawing carries numbered parts (data/specimen-parts.json: Lithography) prints the annotated still its
+     readable page shows, balloons and all, above its caption: the live drawing does not print. It is taken from that page
+     (build/modules/social.js stillSVG draws it), so the two never differ. fontsReady() waits for it and its picture. */
+  var stillsLoaded = null;
+  function stills() {
+    var jobs = [];
+    each('article.chapter .ch-spec[data-parts]', document, function (fig) {
+      var ch = fig.closest('article.chapter');
+      if (!ch || !ch.id || fig.querySelector('.cp-still') || typeof fetch !== 'function') return;
+      jobs.push(fetch(ch.id + '/').then(function (r) { return r.ok ? r.text() : ''; }).then(function (html) {
+        var svg = html && new DOMParser().parseFromString(html, 'text/html').querySelector('svg.ch-still--wide');
+        if (!svg) return null;
+        svg = document.importNode(svg, true);
+        var src = '';
+        each('image', svg, function (im) {
+          src = (im.getAttribute('href') || '').replace(/^\.\.\//, ''); // the readable page is a folder down
+          im.setAttribute('href', src);
+        });
+        var box = node('div', 'cp-still');
+        box.appendChild(svg);
+        fig.insertBefore(box, fig.querySelector('.ch-spec-cap'));
+        return src ? new Promise(function (done) { var im = new Image(); im.onload = done; im.onerror = done; im.src = src; }) : null;
+      }).catch(function () { return null; }));
+    });
+    stillsLoaded = Promise.all(jobs);
   }
 
   /* The card heads the chapter's second page, as a plate. It goes to the head of the text under an id of its own, so that
@@ -14793,7 +14894,7 @@ try {
      opts.edition   the day the PDF is made, "20 October 2026": printed as "Edition of 20 October 2026" on the title
                     block, in the foot of every page and in the citation
      opts.site      the site's address, "https://chipsupplychain.org/" (default: the page's canonical link)
-     opts.moves, opts.tight, opts.split, opts.sources   what an earlier layout learned (build/pdf.py, from finish()) */
+     opts.moves, opts.tight, opts.split, opts.sources, opts.nudge, opts.breaks   what an earlier layout learned (build/pdf.py, from finish()) */
   function prepare(opts) {
     opts = opts || {};
     var out = { mode: opts.mode || 'footnotes', cites: 0, notes: 0, chapters: 0, dropped: 0 };
@@ -14810,6 +14911,15 @@ try {
     var tile = document.querySelector('.masthead .wm-tile');
     tile = tile ? tile.cloneNode(true) : null;
     stageIndex();
+    sectionNumbers();
+    /* Paged.js gathers every counter in the page's sheets into one counter-reset on its pages. The screen's section
+       counter (chapter.css: "counter-reset: sec", and "counter-increment: none" on the readable page) put a counter
+       named "none" there, which voided the rule, and every folio printed as "n / 0". On paper the numbers are written on
+       the headings (sectionNumbers), so those declarations leave the sheets before Paged.js reads them. */
+    each('style', document, function (st) {
+      var t = st.textContent, u = t.replace(/counter-(?:reset|increment):\s*(?:sec|none)\s*;?/g, '');
+      if (u !== t) st.textContent = u;
+    });
 
     /* Kill the specimen's animation loops: they re-arm through requestAnimationFrame, so a
        quarter second of dead frames ends them. Paged.js drives its own render queue through
@@ -14878,6 +14988,8 @@ try {
       out.chapters = 1; out.chapter = alone.id;
     } else printLede();
 
+    stills(); // after the other chapters go, so a chapter printed alone fetches only its own drawing
+
     /* chapters whose card opened a page after a short one in an earlier layout (from pdf.py): the head and the card
        are set closer (print.css .cp-tight), so that the end of In short and the card share a page */
     Object.keys(opts.tight || {}).forEach(function (id) {
@@ -14888,6 +15000,17 @@ try {
     Object.keys(opts.split || {}).forEach(function (id) {
       var ch = document.getElementById(id);
       if (ch && opts.split[id]) ch.classList.add('cp-split');
+    });
+    /* headings an earlier layout left at the foot of a page open the next page instead (.cp-break) */
+    Object.keys(opts.breaks || {}).forEach(function (id) {
+      var h = document.getElementById(id);
+      if (h && opts.breaks[id]) h.classList.add('cp-break');
+    });
+    /* and chapters that lost lines at a page's foot to Paged.js: their lines are set a little closer (.cp-nudge), so the
+       page ends fall elsewhere */
+    Object.keys(opts.nudge || {}).forEach(function (id) {
+      var ch = document.getElementById(id);
+      if (ch && opts.nudge[id]) ch.classList.add('cp-nudge');
     });
     /* and chapters whose last few sources ran onto a page of their own: the list is set closer (.cp-sources-tight) */
     Object.keys(opts.sources || {}).forEach(function (id) {
@@ -15129,7 +15252,7 @@ try {
      page of their own (sources). It also marks each chapter's opening page and the book's colophon, which carry no
      running head (print.css .cp-opener, .cp-colophon); that changes no layout. */
   function finish() {
-    var out = { pages: 0, notes: 0, repeats: 0, stray: 0, overflow: 0, short: [], stranded: [], split: [], overlap: [], crowded: [], lost: [], sources: [] };
+    var out = { pages: 0, notes: 0, repeats: 0, stray: 0, overflow: 0, short: [], stranded: [], split: [], overlap: [], crowded: [], lost: [], lostIn: [], sources: [], strandedIds: [] };
     var pages = document.querySelectorAll('.pagedjs_page'), fills = [], alone = !!document.querySelector('.pagedjs_page .pt-chapter');
     Array.prototype.forEach.call(pages, function (page, i) {
       out.pages++;
@@ -15185,9 +15308,19 @@ try {
           if (qs.some(function (q) { return q.left >= right - 1; })) gone++;
           if (qs.some(function (q) { return q.left < right - 1; })) seenLast = tn;
         }
-        if (gone) out.lost.push((i + 1) + ':' + gone);
+        if (gone) {
+          out.lost.push((i + 1) + ':' + gone);
+          /* and its chapter, which pdf.py lays out again set closer: the lines then fall elsewhere on the page */
+          var lc = box.querySelector('article.chapter'), lid = lc ? lc.id || lc.getAttribute('data-id') : '';
+          if (lid && out.lostIn.indexOf(lid) < 0) out.lostIn.push(lid);
+        }
         var head = seenLast && seenLast.parentNode.closest('h2, h3, h4, h5, .fig-title, .cp-sources-h');
-        if (head && i < pages.length - 1) out.stranded.push((i + 1) + ':' + head.textContent.trim().slice(0, 40));
+        if (head && i < pages.length - 1) {
+          out.stranded.push((i + 1) + ':' + head.textContent.trim().slice(0, 40));
+          /* its id, so pdf.py can lay the chapter out again with that heading opening the next page (.cp-break) */
+          var hid = head.id || head.getAttribute('data-id') || '';
+          if (hid && out.strandedIds.indexOf(hid) < 0) out.strandedIds.push(hid);
+        }
       }
       /* the last few entries of a chapter's source list alone on a page, under a fifth of it, or (a chapter printed alone)
          its citation alone on the last page: that chapter's list is set closer next time (prepare({sources})) */
