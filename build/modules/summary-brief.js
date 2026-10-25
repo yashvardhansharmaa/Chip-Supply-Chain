@@ -259,7 +259,7 @@ ${ch.inShort ? `<div class="short">${firstPara(ch.inShort)}</div>` : ''}
     .wordmark { gap: 9px; }
     .wordmark .wm-tile { width: 25px; height: 25px; }
     .wordmark .wm-name { font-size: 18px; }
-    .masthead nav a { font-size: 12.5px; padding: 6px 6px 5px; }
+    .masthead nav a { font-size: 12.5px; padding: 6px 5px 5px; }
     .scr, .site-footer { overflow-wrap: break-word; }
     .dek { font-size: 18.5px; }
     .sides { grid-template-columns: minmax(0, 1fr); }

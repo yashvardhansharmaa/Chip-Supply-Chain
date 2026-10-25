@@ -86,13 +86,7 @@
 == /substrates-and-pcbs/  (245 lines in main, 245 in the redesign)
    case only: 33 e.g. "CHAPTER 12 · STAGE 12 OF 15", "1,912 WORDS / 8 MINUPDATED 21 OCTOBER 2026", "CITE THIS CHAPTER", "CHAPTER PDF", "SUBSTRATES AND PCBS, STAGE 12 OF 15", "NEXT STAGE: 13 TEST AND ASSEMBLY"
 == /summary/  (367 lines in main, 367 in the redesign)
-   case only: 97 e.g. "SUMMARY · THE WHOLE CHAIN IN ONE READ", "STAGE", "CONCENTRATION", "SUBSTITUTABILITY", "WHO LEADS", "WHO LEADS"
-   - Updated 21 October 2026 · Every figure is cited in the chapter each card links to
-   - UPDATED 21 OCTOBER 2026
-   + Updated 25 October 2026 · Every figure is cited in the chapter each card links to
-   + Updated 25 October 2026
-   words lost: 21 21
-   words added: 25 25
+   case only: 98 e.g. "SUMMARY · THE WHOLE CHAIN IN ONE READ", "STAGE", "CONCENTRATION", "SUBSTITUTABILITY", "WHO LEADS", "WHO LEADS"
 == /suppliers/  (3602 lines in main, 3602 in the redesign)
    case only: 1135 e.g. "REFERENCE", "REFERENCE", "226 FIRMS20 STAGESUPDATED 21 OCTOBER 2026", "STAGES BY NUMBER OF FIRMS, FEWEST FIRST", "5 FIRMS · 1 CRITICAL", "CRITICAL"
 == /systems-and-networking/  (243 lines in main, 243 in the redesign)
