@@ -11770,7 +11770,7 @@ PC.register('wafer', function (p) {
       return { change: '<button type="button" class="cx-act" data-act="change" data-slot="' + i + '" aria-haspopup="dialog" aria-expanded="false" aria-label="Change chip ' + (i + 1) + ', ' + esc(c.name) + '">Change</button>',
         remove: '<button type="button" class="cx-x" data-act="remove" data-slot="' + i + '" aria-label="Remove ' + esc(this.short(c)) + ' from the comparison"><span aria-hidden="true">&times;</span></button>' };
     },
-    colAct: function (b, region) { // region: '#cx-plans' or '#cx-table'; focus stays in that region after the change
+    colAct: function (b, region) { // region: '#cx-table', the column heads; focus stays there after the change
       var i = +b.getAttribute('data-slot'), act = b.getAttribute('data-act');
       if (act === 'change') { if (this.pop && this.pop.trigger === b) this.closePicker(true); else this.openPicker(i, b, region); return; }
       if (act !== 'remove') return;
@@ -11843,7 +11843,7 @@ PC.register('wafer', function (p) {
       window.addEventListener('hashchange', function () { self.closePicker(false); }); // Back or a link must not leave the picker over another page
       return el;
     },
-    openPicker: function (i, trigger, origin) { // origin: 'slot', or the region of a column head ('#cx-plans', '#cx-table') where focus returns
+    openPicker: function (i, trigger, origin) { // origin: 'slot', or '#cx-table' for a column head's Change, where focus returns
       var self = this, el = this.popEl || this.buildPicker(), cur = this.picked[i] || null, sheet = narrow();
       if (this.pop) this.closePicker(false);
       this.pop = { slot: i, trigger: trigger, origin: origin || 'slot' };

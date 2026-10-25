@@ -54,7 +54,26 @@ Branch `redesign-chips`, made from `redesign`. Built to `qa/redesign/BRIEF.md` (
 
 ## QA gates
 
-RESULTS
+| Gate | Result |
+| --- | --- |
+| 1. `node build/build.js` | Passes with no warnings. |
+| 2. `check-speak`, `check-integrity`, `check-sources`, `check-size` | All four pass: no matches; integrity, no problems; 2,851 citations, all tier A or B; no file over 5 MB. `check-speak` reads the built page without its scripts, so the labels the view draws at run time were checked line by line by the census instead (no hits). |
+| 3. `node qa/scripts/smoke.js --port 9626` | Passes: 33 page loads, no failures. It passed on the build before too (port 9625). |
+| 4. Text census (`qa/redesign/census-chips.js`, output `qa/redesign/census-chips.txt`) | No text lost. The differences are listed below. |
+| 5. Layout sweep (`qa/redesign/sweep-chips.js`, output `qa/redesign/sweep-chips.txt`) | 60 loads with no findings: five states at 320, 390, 768, 1024, 1280 and 1440 px, light and dark. The states are the view as it opens, the pair (measured from the comparison), four chips (measured from the figures, then from the table of words), and `/chips/` (measured from its chart). No sideways scroll, no text under 11 px (SVG labels at their size on screen), no clipped or overlapping text, and a focus mark on each of 2,388 Tab stops. The first run found one overlap: a die's area line ("area not published") 3 px into the next chip's source mark in the logic dies row. It was fixed and the sweep run again in full. |
+| 6. Look | Shots at 1440 and 390 and the widths between, light and dark (list below), compared with the mockup's shots. Fixed after review: the number badge taking the table head's Fraunces; a pick's padding on a phone; a year-only chip's line under a label ("Gaudi 2"); the figure rows' names run into their units for a screen reader ("Speed at FP16TFLOPS"). |
+| 7. This report | Committed. |
+
+Also run: `qa/redesign/interact-chips.js` drives every control in 47 checks, all passing on the final build:
+
+- the chart: rule B, the one solid dot, the tint, one Tab stop, the arrow keys and Enter, the dot's card, the measures, the bandwidth chip over the scale, not published and not supported;
+- the specimen beside the chart, and back to the stage on leaving the view;
+- the pairs, Try with, the picker with a filter and Enter, the folded list, and the fifth chip refused in words;
+- in the comparison: rule B in every row of bars, a source on every figure and every cell, Change, × and Read the notes on each column head, the packages, the speed notes, the copy line and the numbered sources;
+- the bar that follows the reader, search's way in, the phone's strip and sheet;
+- on `/chips/`: 38 rows with their anchors, and the chart's 30 links.
+
+A further check moved between AI Chips, Lithography in The Chain and the home with motion on: the drawing and its pause button went to the aside, the chapter's slot and the stage, in turn, with no console errors.
 
 ## Census differences
 
