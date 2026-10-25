@@ -189,6 +189,15 @@ const NAV = [['../#/chain', 'The Chain'], ['../chips/', 'AI Chips'], ['../suppli
 const masthead = (current) => `<header class="masthead"><a class="wordmark" href="../" aria-label="Chip Supply Chain"><svg class="wm-tile" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect width="16" height="16" rx="3.2"/><path transform="translate(3.3324 11.8693) scale(0.009179 -0.009179)" d="M1011 683 Q1011 612 960 564 Q909 515 823 515 Q739 515 696 561 Q653 607 653 680 L653 720 Q653 786 623 823 Q594 861 544 861 Q502 861 468 831 Q433 801 412 741 Q391 682 391 594 Q391 474 431 393 Q470 312 540 270 Q609 229 697 229 Q769 229 825 251 Q880 273 924 326 Q946 348 959 356 Q971 363 983 363 Q1000 363 1007 347 Q1015 330 1015 307 Q1012 216 954 140 Q896 64 796 19 Q695 -26 563 -26 Q417 -26 301 33 Q185 91 118 198 Q51 305 51 450 Q51 602 118 721 Q184 840 305 909 Q425 978 588 978 Q720 978 815 938 Q909 898 960 832 Q1011 765 1011 683 Z"/></svg><span class="wm-name">Chip Supply Chain</span></a><nav aria-label="Site">${NAV.map(([href, text]) => `<a href="${href}"${href === current ? ' aria-current="page"' : ''}>${text}</a>`).join('')}</nav></header>`;
 const MASTHEAD = masthead('');
 // the static pages open light; ?theme= or the site's saved choice sets the theme before the first paint
+// the rail's On this page marks the section the reader is in, as the app's does (src/app.js Rail.update): the last section
+// whose top has passed 30 percent of the window takes aria-current, which src/modules/chapter.css draws as a wine rule. Then the
+// names beside the still's balloons are set at 14 px on screen, as the app sets them, whatever the still's scale (stage 2
+// review, item 6); without scripts they keep the size the still is drawn at
+const RAIL_JS = `(function(){var r=document.querySelector('.ch-rail .rail-toc');if(!r)return;var dec=function(s){try{return decodeURIComponent(s);}catch(e){return s;}};
+var xs=[].slice.call(r.querySelectorAll('a[href^="#"]')).map(function(a){return [a,document.getElementById(dec(a.getAttribute('href').slice(1)))];}).filter(function(x){return x[1];}),cur=null,q=0;
+function up(){q=0;var line=Math.max(innerHeight*0.3,80),on=null;xs.forEach(function(x){if(x[1].getBoundingClientRect().top<line)on=x;});if(on!==cur){if(cur)cur[0].removeAttribute('aria-current');if(on)on[0].setAttribute('aria-current','location');cur=on;}}
+addEventListener('scroll',function(){if(!q)q=requestAnimationFrame(up);},{passive:true});addEventListener('resize',up);up();})();
+(function(){var nm=function(){[].forEach.call(document.querySelectorAll('svg.ch-still--wide'),function(s){var m=s.getScreenCTM&&s.getScreenCTM();if(!m||!m.a)return;[].forEach.call(s.querySelectorAll('text.nm'),function(t){t.style.fontSize=(14/m.a).toFixed(1)+'px';});});};nm();addEventListener('resize',nm);addEventListener('load',nm);})();`;
 const THEME_JS = `<script>(function(){try{var q=/[?&]theme=(light|dark)/.exec(location.search);var t=q?q[1]:localStorage.getItem('cp-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>`;
 
 // a view's page: the tags, one paragraph, and straight on to the view on the main page
@@ -366,7 +375,7 @@ function stillSVG(still, parts, title) {
   const draw = (o) => items.map((x) => {
     const bx = x.side < 0 ? o.l : o.r, by = x.y;
     const lines = x.pts.map((q) => { const dx = q[0] - bx, dy = q[1] - by, L = Math.hypot(dx, dy) || 1; return `<line x1="${f(bx + dx / L * o.r0)}" y1="${f(by + dy / L * o.r0)}" x2="${f(q[0])}" y2="${f(q[1])}" style="stroke-width:${o.sw}"/><circle class="dot" cx="${f(q[0])}" cy="${f(q[1])}" r="${o.dot}"/>`; }).join('');
-    return `<g>${lines}<circle class="bal" cx="${f(bx)}" cy="${f(by)}" r="${o.r0}" style="stroke-width:${o.sw}"/><text class="num" x="${f(bx)}" y="${f(by + o.fs * 0.36)}" text-anchor="middle" style="font-size:${o.fs}px">${+x.p.n}</text>${o.names ? `<text class="nm" x="${f(x.side < 0 ? bx - o.r0 - 12 : bx + o.r0 + 12)}" y="${f(by + o.fn * 0.36)}" text-anchor="${x.side < 0 ? 'end' : 'start'}" style="font-size:${o.fn}px">${esc(x.p.name)}</text>` : ''}</g>`;
+    return `<g>${lines}<circle class="bal" cx="${f(bx)}" cy="${f(by)}" r="${o.r0}" style="stroke-width:${o.sw}"/><text class="num" x="${f(bx)}" y="${f(by + o.fs * 0.36)}" text-anchor="middle" style="font-size:${o.fs}px">${+x.p.n}</text>${o.names ? `<text class="nm" x="${f(x.side < 0 ? bx - o.r0 - 12 : bx + o.r0 + 12)}" y="${f(by)}" dominant-baseline="central" text-anchor="${x.side < 0 ? 'end' : 'start'}" style="font-size:${o.fn}px">${esc(x.p.name)}</text>` : ''}</g>`;
   }).join('');
   const img = `<image href="../media/${esc(still.file)}" x="0" y="0" width="${S}" height="${S}"/>`;
   return `<svg class="ch-still ch-still--wide" viewBox="-300 -14 ${S + 560} ${S + 28}" role="img" aria-label="${label}">${img}${draw({ l: -64, r: S + 74, r0: 24, fs: 24, fn: 30, sw: 2.4, dot: 6, names: true })}</svg>`
@@ -413,7 +422,11 @@ function readableHTML(p, ch, ctx, versions, css) {
   // the specimen: Lithography shows its annotated still (data/specimen-parts.json); every chapter its caption, flush left, and
   // the way to the live drawing. With no drawing on the page, chapters 16 and 17 have no night ground to set it on
   const pe = (ctx.specimenParts || {})[ch.id], parts = pe && Array.isArray(pe.parts) ? pe.parts : [];
-  const still = pe && pe.still && parts.length ? stillSVG(pe.still, parts, m.specimenCaption ? m.specimenCaption.split('. ')[0] : ch.title) : '';
+  let still = pe && pe.still && parts.length ? stillSVG(pe.still, parts, m.specimenCaption ? m.specimenCaption.split('. ')[0] : ch.title) : '';
+  // every other chapter shows a still of its own specimen, shot from the app at the angle it opens on (qa/redesign/stills.js,
+  // build/assets/specimens/<id>.webp at twice the pixels it is shown at), so no readable page opens on a lone caption
+  const sz = !still && (ctx.stillSizes || {})[ch.id];
+  if (sz) still = `<img class="ch-still-img" src="../media/spec-${esc(ch.id)}.webp" width="${Math.round(sz[0] / 2)}" height="${Math.round(sz[1] / 2)}" alt="${esc((SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' ')))}, the chapter's specimen" decoding="async">`;
   const specimenHTML = `<figure class="ch-spec${still ? ' has-still' : ''}"${still && ch.number >= 16 ? ' data-night="1"' : ''}>${still ? `<div class="ch-spec-draw">${still}</div>` : ''}<figcaption class="ch-spec-cap"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${r.parts || ''}<a class="ch-spec-3d" href="${esc(app)}">See it in 3D in the interactive chapter</a></figcaption></figure>`;
 
   // the contents rail, as the app draws it (build.js railHTML), with this page's own section anchors
@@ -517,6 +530,7 @@ ${main}
 </main>
 ${ctx.CITE_JS ? `<script>${ctx.CITE_JS}</script>` : ''}
 ${ctx.FIG_JS ? `<script>${ctx.FIG_JS}</script>` : ''}
+<script>${RAIL_JS}</script>
 ${hasVideo ? `<script>(function(){var t=document.documentElement.getAttribute('data-theme');if(t!=='dark')return;[].forEach.call(document.querySelectorAll('video[data-media]'),function(v){var b=v.getAttribute('data-media');v.poster=b+'-dark-end.jpg';v.src=b+'-dark.mp4';});})();
 /* the print still loads lazily; a browser that does not fetch lazy images for print is told to now */
 window.addEventListener('beforeprint',function(){[].forEach.call(document.querySelectorAll('img.anim-still[loading="lazy"]'),function(i){i.loading='eager';});});</script>` : ''}
@@ -561,6 +575,11 @@ module.exports = function (ctx) {
       html = p.slug === 'intro' && introReview ? introHTML(p, versions, css, introReview) : pageHTML(p, versions);
     }
     fs.writeFileSync(path.join(dir, 'index.html'), html);
+  }
+  // the plain stills of the other chapters (qa/redesign/stills.js), copied as spec-<id>.webp
+  for (const id of Object.keys(ctx.stillSizes || {})) {
+    const from = path.join(root, 'build', 'assets', 'specimens', id + '.webp');
+    if (fs.existsSync(from)) { fs.mkdirSync(path.join(dist, 'media'), { recursive: true }); fs.copyFileSync(from, path.join(dist, 'media', 'spec-' + id + '.webp')); }
   }
   // the annotated stills the readable pages show in place of the live specimen (data/specimen-parts.json "still")
   for (const e of Object.values(ctx.specimenParts || {})) {

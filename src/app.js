@@ -293,8 +293,8 @@
        column clear of the drawing on the side the part is on, at the part's height, with a leader to each point. A part that
        crosses to the other side as the drawing turns moves its balloon across. The phone's strip and the home show none. */
     balloonEl: null, parts: null,
-    balloons: function (el) {
-      var fig = el.closest('.ch-spec'), raw = fig && fig.getAttribute('data-parts');
+    balloons: function (el, from) {
+      var fig = from || el.closest('.ch-spec'), raw = fig && fig.getAttribute('data-parts');
       if (!raw) return;
       var parts; try { parts = JSON.parse(raw); } catch (e) { return; }
       if (!parts || !parts.length) return;
@@ -312,6 +312,20 @@
       });
       el.appendChild(svg);
       this.balloonEl = svg; this.parts = parts; this.partsFor = (fig.closest('article.chapter') || {}).getAttribute ? fig.closest('article.chapter').getAttribute('data-specimen') : '';
+      return svg;
+    },
+    /* On a phone the drawing stays in the strip at the foot of the screen; expanded, the strip numbers the parts too, with the
+       numbers only, as the readable page does on a phone, since the list under the caption names them (stage 2 review, item 2).
+       Called when the strip opens or closes and when the specimen changes (loop) */
+    stripBalloons: function () {
+      this._balCur = this.cur;
+      var want = !this.hostEl && narrow() && Band.el && !Band.collapsed && this.cur, el = this.balloonEl;
+      if (el && el.classList.contains('is-strip') && (!want || this.partsFor !== this.cur.name)) { el.remove(); this.balloonEl = null; this.parts = null; }
+      if (!want || this.balloonEl) return;
+      var art = $('.view[data-view="stack"] article.chapter[data-specimen="' + this.cur.name + '"]'), spec = art && $('.ch-spec[data-parts]', art);
+      if (!spec) return;
+      var svg = this.balloons(this.fig, spec);
+      if (svg) { svg.classList.add('is-strip'); this.balloonsSnap = true; }
     },
     drawBalloons: function () {
       var parts = this.parts, slot = this.cur;
@@ -319,6 +333,7 @@
       var r = this.canvas.getBoundingClientRect(), w = r.width, h = r.height;
       if (!w || !h) return;
       this.balloonEl.style.display = '';
+      if (this.balloonEl.classList.contains('is-strip')) { var bs = this.balloonEl.style; bs.left = this.canvas.offsetLeft + 'px'; bs.top = this.canvas.offsetTop + 'px'; bs.width = w + 'px'; bs.height = h + 'px'; } // over the strip's canvas
       var k = easeOut((performance.now() - this.transStart) / this.transDur);
       var A = mul(this.proj(w / h), this.model(slot, -0.45 * (1 - k), 0.94 + 0.06 * k));
       var nc = slot.norm.c, nk = slot.norm.k, e = this.reach(slot) || { side: w * 0.3 };
@@ -425,6 +440,7 @@
       if (this.prev && k < 1) this.draw(this.prev, 1 - k, 0.35 * k, 1 + 0.04 * k);
       else this.prev = null;
       this.draw(this.cur, k, -0.45 * (1 - k), 0.94 + 0.06 * k);
+      if (this.cur !== this._balCur) this.stripBalloons();
       if (this.balloonEl) this.drawBalloons();
     }
   };
@@ -482,6 +498,7 @@
       this.collapsed = collapsed;
       this.el.setAttribute('data-collapsed', collapsed ? '1' : '0');
       var t = $('.stage-toggle'); if (t) { t.textContent = collapsed ? 'Expand' : 'Collapse'; t.setAttribute('aria-expanded', collapsed ? 'false' : 'true'); }
+      if (Stage.stripBalloons) Stage.stripBalloons(); // expanded, the strip numbers the parts of a drawing that has them
     }
   };
 

@@ -155,6 +155,9 @@ html.no-stage .chapter .ch-spec-cap { grid-column: 1 / 9; }
 .ch-balloons .bal { fill: var(--bg); stroke: var(--ink); stroke-width: 1.6; }
 .ch-balloons .num { font-family: var(--font-ui); font-size: 13px; font-weight: 700; fill: var(--ink); }
 .ch-balloons .nm { font-family: var(--font-ui); font-size: 14px; font-weight: 600; fill: var(--ink); paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round; }
+/* the phone's expanded strip: the numbers alone, over the strip's canvas (src/app.js Stage.stripBalloons) */
+.stage .ch-balloons.is-strip { right: auto; bottom: auto; z-index: 2; }
+.ch-balloons.is-strip .nm { display: none; }
 /* chapters 16 and 17 set their drawing on the night ground, a band across the window (the hybrid's --night tokens) */
 .chapter .ch-spec[data-night] {
   margin: 26px 0 0; padding: 32px 36px 36px; background: var(--night); color: var(--night-ink);
@@ -258,7 +261,7 @@ html.no-stage .chapter .ch-spec-cap { grid-column: 1 / 9; }
   font-family: var(--font-display); font-weight: 330; font-variation-settings: var(--opsz-title);
   font-size: clamp(32px, 3vw, 44px); line-height: 1.08; letter-spacing: -0.02em;
 }
-.chapter > .prose > h3::before { content: counter(sec, decimal-leading-zero); display: block; margin: 0 0 14px; font-family: var(--font-code); font-size: 12px; font-weight: 400; line-height: 16px; letter-spacing: 0; color: var(--muted); }
+.chapter > .prose > h3::before { content: counter(sec, decimal-leading-zero) " · " attr(data-k); display: block; margin: 0 0 14px; font-family: var(--font-code); font-size: 12px; font-weight: 400; line-height: 16px; letter-spacing: 0; color: var(--muted); }
 .chapter > .prose > h4 { margin: 40px 0 14px; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 22px; line-height: 1.27; letter-spacing: -0.005em; }
 .chapter > .prose > p, .chapter > .prose > ul, .chapter > .prose > ol { font-size: 18.5px; line-height: 1.62; }
 
@@ -307,6 +310,12 @@ html.no-stage .chapter .ch-spec-cap { grid-column: 1 / 9; }
 .chapter .fig-strip .fs-addr { color: var(--muted); text-decoration: none; overflow-wrap: anywhere; }
 .chapter .fig-strip .fs-addr:hover { color: var(--accent-ink); }
 .chapter .fig-strip .fs-acts { margin-left: auto; display: flex; flex-wrap: wrap; gap: 4px 16px; }
+/* the actions keep their place at the right of the first line, beside the source and the address, and an opened citation runs
+   the full width under them (stage 2 review, items 4 and 5) */
+.chapter .fig-strip { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 28px; row-gap: 6px; }
+.chapter .fig-strip > * { grid-column: 1; min-width: 0; }
+.chapter .fig-strip > .fs-acts { grid-column: 2; grid-row: 1; margin-left: 0; flex-wrap: nowrap; }
+.chapter .fig-strip > .ch-cite-box { grid-column: 1 / -1; max-width: none; }
 .chapter .fig-strip .fs-acts > a, .chapter .fig-strip .fs-acts > button {
   font: inherit; color: var(--ink); background: none; border: 0; padding: 3px 0; cursor: pointer;
   text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--rule-ink); text-decoration-thickness: 1px;
@@ -380,6 +389,20 @@ html.no-stage .chapter .ch-spec-cap { grid-column: 1 / 9; }
   .chapter .plain { grid-column: 1 / 10; grid-row: 5; margin-top: 40px; }
   .chapter .inshort { grid-column: 1 / 10; grid-row: 6; }
   .chapter > .prose { grid-column: 1 / -1; grid-row: 7; }
+  /* a readable page has no other way to the other stages (The Chain in the app has its contents and its sheet), so under 1200 px
+     its rail keeps The chain, compact: one numbered cell a chapter with its band's mark, the chapter's name in the link's label */
+  .page--chapter .chapter .ch-rail .rail-chain-w { display: block; margin-top: 18px; }
+  .page--chapter .chapter .ch-rail .rail-chain, .page--chapter .chapter .ch-rail .rail-across { display: flex; flex-wrap: wrap; gap: 4px; }
+  .page--chapter .chapter .ch-rail .rail-across { margin: 4px 0 0; padding: 0; border: 0; }
+  .page--chapter .chapter .ch-rail .stage-cell a,
+  .page--chapter .chapter .ch-rail .rail-across .stage-cell a { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 44px; height: 36px; padding: 0 8px; border: 1px solid var(--line-2); border-radius: 3px; }
+  .page--chapter .chapter .ch-rail .stage-cell .t { display: none; }
+  .page--chapter .chapter .ch-rail .stage-cell .n { font-size: 12px; color: var(--ink-2); }
+  .page--chapter .chapter .ch-rail .stage-cell .bm { justify-self: auto; width: 4px; height: 12px; margin: 0; }
+  .page--chapter .chapter .ch-rail .stage-cell[data-band="3"] .bm { height: 6px; align-self: center; margin: 6px 0 0; }
+  .page--chapter .chapter .ch-rail .stage-cell a:hover { border-color: var(--ink); }
+  .page--chapter .chapter .ch-rail .stage-cell[aria-current="true"] a { border-color: var(--accent); }
+  .page--chapter .chapter .ch-rail .rail-across::before { content: ""; display: block; flex: 0 0 100%; height: 0; }
 }
 
 /* ---------- the app's phone (under 900 px): one column; the specimen is the strip at the foot of the screen ---------- */
@@ -398,6 +421,9 @@ html.no-stage .chapter .ch-spec-cap { grid-column: 1 / 9; }
   .chapter .ch-omet .ch-cite-line { gap: 4px 22px; }
   .view[data-view="stack"] .chapter .ch-spec { display: none; }
   .chapter .plate { margin: 40px calc(-1 * var(--margin)) 0; padding: 24px var(--margin) 28px; }
+  /* in The Chain each chapter keeps its paint inside its box (content-visibility), which would clip a bleed to the column and
+     leave the text on the tint's edge: there the card stays in the column with padding of its own (stage 2 review, item 3) */
+  .view[data-view="stack"] .chapter .plate { margin: 40px 0 0; padding: 24px 18px 28px; }
   .chapter .plate-kpis { grid-template-columns: 1fr; row-gap: 24px; padding: 20px 0 24px; }
   .chapter .plate-kpis .v { font-size: 54px; }
   .chapter .plate-rows, .chapter .plate-status { grid-template-columns: 1fr; }
@@ -418,6 +444,8 @@ html.no-stage .chapter .ch-spec-cap { grid-column: 1 / 9; }
   .chapter .fig-strip { padding: 12px var(--margin); }
   .chapter .figure .fig-title { font-size: 19px; line-height: 1.3; }
   .chapter .fig-strip .fs-acts { margin-left: 0; }
+  .chapter .fig-strip { grid-template-columns: minmax(0, 1fr); }
+  .chapter .fig-strip > .fs-acts { grid-column: 1; grid-row: auto; flex-wrap: wrap; }
   .chapter .fc-face { padding: 20px 18px; }
   .chapter .fc-q { font-size: 22px; }
   .chapter > .prose > .prevnext { grid-template-columns: 1fr; gap: 24px; margin-top: 64px; }
@@ -478,7 +506,12 @@ article.ch-page { padding-top: 56px; border-top: 0; }
 .ch-page .ch-omet .ch-cite-line { font-family: var(--font-ui); }
 /* the specimen: its caption beside where the drawing would stand, and the way to the live one; Lithography's annotated still */
 .ch-page .ch-spec { align-items: start; }
-.ch-page .ch-spec:not(.has-still) .ch-spec-cap { grid-column: 1 / 8; margin: 0; padding-left: 16px; border-left: 2px solid var(--line-2); }
+.ch-page .ch-spec:not(.has-still) .ch-spec-cap { grid-column: 1 / 8; margin: 0; } /* only if a chapter has no still yet: a plain caption, flush left */
+/* a chapter's still (qa/redesign/stills.js): centered in the drawing's columns at the size the app draws it, never taller than
+   the slot; on the dark theme it is turned light-on-dark as Lithography's is, and chapters 16 and 17 keep their night plate */
+.ch-page .ch-still-img { display: block; width: auto; height: auto; max-width: 100%; max-height: min(540px, 62vh); margin: 0 auto; }
+@media (max-width: 760px) { .ch-page .ch-still-img { max-height: min(420px, 52vh); } }
+:root[data-theme="dark"] .ch-page .ch-spec:not([data-night]) .ch-still-img { filter: invert(1) hue-rotate(180deg); mix-blend-mode: screen; }
 .ch-page .ch-spec.has-still .ch-spec-draw { height: auto; }
 .ch-page .ch-spec.has-still .ch-spec-cap { align-self: end; margin: 0 0 24px; }
 .ch-page .ch-spec-3d { display: inline-block; margin-top: 10px; font-family: var(--font-ui); font-size: 14px; font-weight: 500; color: var(--accent-ink); }
@@ -498,7 +531,7 @@ article.ch-page { padding-top: 56px; border-top: 0; }
   counter-increment: sec; margin: 72px 0 22px; padding-top: 14px; border-top: 1px solid var(--ink); max-width: 36em;
   font-family: var(--font-display); font-weight: 330; font-variation-settings: var(--opsz-title); font-size: clamp(32px, 3vw, 44px); line-height: 1.08; letter-spacing: -0.02em;
 }
-.ch-page > .prose > h2::before { content: counter(sec, decimal-leading-zero); display: block; margin: 0 0 14px; font-family: var(--font-code); font-size: 12px; font-weight: 400; line-height: 16px; color: var(--muted); }
+.ch-page > .prose > h2::before { content: counter(sec, decimal-leading-zero) " · " attr(data-k); display: block; margin: 0 0 14px; font-family: var(--font-code); font-size: 12px; font-weight: 400; line-height: 16px; color: var(--muted); }
 .ch-page > .prose > h3 { counter-increment: none; margin: 40px 0 14px; padding: 0; border: 0; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 22px; line-height: 1.27; letter-spacing: -0.005em; }
 .ch-page > .prose > h3::before { content: none; }
 .ch-page > .prose > .review, .ch-page > .prose > .sources, .ch-page > .prose > .endnav { max-width: 40em; }

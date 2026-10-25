@@ -249,7 +249,9 @@ function markdown(src, ctx) {
         closeTakeaways();
         if (/^takeaways?$/i.test(text)) { out.push(`<div class="takeaways"><h3 id="${id}">Takeaways</h3>`); inTakeaways = true; i++; continue; }
         headings.push({ id, text });
-        out.push(`<h3 id="${id}">${inline(text, ctx)}</h3>`);
+        // data-k: the section's name in plain words, for its kicker ("05 · The chokepoint", src/modules/chapter.css)
+        const kick = text.replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[*_`]/g, '').trim();
+        out.push(`<h3 id="${id}" data-k="${esc(kick)}">${inline(text, ctx)}</h3>`);
       } else if (level === 3) out.push(`<h4 id="${id}">${inline(text, ctx)}</h4>`);
       else out.push(`<h5 id="${id}">${inline(text, ctx)}</h5>`);
       i++; continue;
@@ -1102,7 +1104,7 @@ const ctx = { root, fs, path, all, chapters, geo, stages, data, esc, pad, word, 
   // the cite line under the chapter title, as the main page prints it (the readable page's own date goes in)
   citeBlock, CITE_JS, FIG_JS,
   // the chapter page's contents rail and the numbered parts of a specimen, for the readable chapter pages (social.js)
-  railHTML, specimenParts,
+  railHTML, specimenParts, stillSizes: readJSON(path.join(root, 'build', 'assets', 'specimens', 'stills.json'), {}),
   // for the reference pages (build/modules/reference-pages.js): the views' own words and helpers, as the main page uses them
   suppliersIntro, suppliersRevenueNote, controlsDek, exposureNote, safeUrl, COUNTRY };
 for (const f of modDir(path.join(root, 'build', 'modules')).filter((x) => x.endsWith('.js'))) {

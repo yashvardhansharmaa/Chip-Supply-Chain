@@ -7,12 +7,12 @@
   "/advanced-packaging/": {
     "published": "2026-09-09",
     "modified": "2026-10-25",
-    "content": "5890ecb0911a4417"
+    "content": "163458343f13e3bf"
   },
   "/chemicals-gases-and-photoresist/": {
     "published": "2026-09-09",
     "modified": "2026-10-25",
-    "content": "f7ba73086b5d7397"
+    "content": "3e04de939ed184ec"
   },
   "/chip-supply-chain-summary.pdf": {
     "published": "2026-10-20",
@@ -32,22 +32,22 @@
   "/component-costs/": {
     "published": "2026-09-09",
     "modified": "2026-10-25",
-    "content": "5d1833e3071d3392"
+    "content": "5b85a745172e2df3"
   },
   "/data-centers-and-power/": {
     "published": "2026-09-09",
     "modified": "2026-10-25",
-    "content": "332df5e9a32e6dec"
+    "content": "c9fcc823a339ec21"
   },
   "/deposition-and-etch/": {
     "published": "2026-09-09",
     "modified": "2026-10-25",
-    "content": "dd82a674e890cea3"
+    "content": "8e4e7fac1477754e"
   },
   "/design-and-eda/": {
     "published": "2026-09-09",
     "modified": "2026-10-25",
-    "content": "bcefdefa34f44129"
+    "content": "73db99d670cd99a1"
   },
   "/export-controls/": {
     "published": "2026-10-21",
@@ -57,12 +57,12 @@
   "/foundries-and-fabs/": {
     "published": "2026-09-09",
     "modified": "2026-10-25",
-    "content": "95e4f29b040a17ac"
+    "content": "fc6127a5b34aeca2"
   },
   "/geopolitics/": {
     "published": "2026-09-09",
     "modified": "2026-10-25",
-    "content": "45b0f196d8e748e5"
+    "content": "b72d0b77097fdbb1"
   },
   "/glossary/": {
     "published": "2026-10-21",
@@ -77,12 +77,12 @@
   "/memory-and-hbm/": {
     "published": "2026-09-09",
     "modified": "2026-10-25",
-    "content": "4c558bc982335c57"
+    "content": "864868c147654eab"
   },
   "/metrology-and-inspection/": {
     "published": "2026-09-09",
     "modified": "2026-10-25",
-    "content": "8ed9bd2d9f92f84c"
+    "content": "3e2f4e9d005045a5"
   },
   "/pdf/advanced-packaging.pdf": {
     "published": "2026-10-20",
@@ -172,17 +172,17 @@
   "/photomasks-and-pellicles/": {
     "published": "2026-09-09",
     "modified": "2026-10-25",
-    "content": "65f91bc450816ab1"
+    "content": "44de931af8b74300"
   },
   "/silicon-and-wafers/": {
     "published": "2026-09-09",
     "modified": "2026-10-25",
-    "content": "8395db04186ca2f7"
+    "content": "c155c3ee11aada70"
   },
   "/substrates-and-pcbs/": {
     "published": "2026-09-09",
     "modified": "2026-10-25",
-    "content": "c36f974deeb05ca5"
+    "content": "afcdde6b5f27ade0"
   },
   "/summary/": {
     "published": "2026-10-21",
@@ -197,16 +197,16 @@
   "/systems-and-networking/": {
     "published": "2026-09-09",
     "modified": "2026-10-25",
-    "content": "29f16b0ac669bfc4"
+    "content": "adf748b198ee5eea"
   },
   "/test-and-assembly/": {
     "published": "2026-09-09",
     "modified": "2026-10-25",
-    "content": "f4cbbd0bd2ae4155"
+    "content": "f3c96ee4c3494d39"
   },
   "/transistors-and-front-end/": {
     "published": "2026-09-09",
     "modified": "2026-10-25",
-    "content": "94fbd075e6adaf31"
+    "content": "65dd4188b774f0fd"
   }
 }
