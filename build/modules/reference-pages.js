@@ -453,8 +453,8 @@ ${body}
     // names, the definition, the reason it matters, then the chapters that use it
     const entry = (g) => {
       const { home, used } = refs.get(g);
-      const ch = home || used.length ? `<p class="gl-refs">${home ? `<span class="gl-refs-k">Read it in</span> ${chLink(home)}` : ''}${used.length ? `${home ? ' ' : ''}<span class="gl-refs-k${home ? ' gl-refs-k2' : ''}">${home ? 'Also in' : 'In'}</span> ${used.map(chLink).join(', ')}` : ''}</p>` : '';
-      return `<div class="gl-de" id="${termIds.get(g)}"><dt><span class="gl-hw">${esc(g.term)}</span> <span class="gl-pos">${g.chapter === 'geopolitics' ? 'export control' : 'term'}</span></dt><dd>${g.aka ? `<p class="gl-aka">${esc(g.aka)}</p>` : ''}<p class="gl-df">${esc(g.plain)}</p>${g.why ? `<p class="gl-wy">${esc(g.why)}</p>` : ''}${ch}</dd></div>`;
+      const ch = home || used.length ? `<p class="gl-refs">${home ? `Read it in ${chLink(home)}` : ''}${used.length ? `${home ? ' <span>Also in</span>' : 'In'} ${used.map(chLink).join(', ')}` : ''}</p>` : '';
+      return `<div class="gl-de" id="${termIds.get(g)}"><dt>${esc(g.term)} <i>${g.chapter === 'geopolitics' ? 'export control' : 'term'}</i></dt><dd>${g.aka ? `<p class="gl-aka">${esc(g.aka)}</p>` : ''}<p>${esc(g.plain)}</p>${g.why ? `<p class="gl-wy">${esc(g.why)}</p>` : ''}${ch}</dd></div>`;
     };
     const letterId = (L) => 'letter-' + (L === '0-9' ? '0-9' : L.toLowerCase());
     const have = new Set(groups.map((g) => g.L));
