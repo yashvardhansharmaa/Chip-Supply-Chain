@@ -210,8 +210,6 @@ try:
         for _ in range(6):
             trial = {'moves': dict(fit['moves']), 'tight': dict(fit['tight']), 'split': dict(fit['split']), 'sources': dict(fit['sources']),
                      'nudge': dict(fit['nudge']), 'breaks': dict(fit['breaks'])}
-            # a heading left at the foot of a page opens the next one instead
-            for t in best.get('strandedIds') or []: trial['breaks'][t] = 1
             for c in best.get('failed') or []: trial['moves'].pop(c, None); pinned.add(c)
             for f in best.get('floats') or []:
                 if f['id'] not in pinned: trial['moves'][f['id']] = trial['moves'].get(f['id'], 0) + int(f['k'])
@@ -231,6 +229,10 @@ try:
             for t in best.get('lostIn') or []:
                 if t not in trial['tight']: trial['tight'][t] = 1
                 else: trial['sources'][t] = 1
+            # a heading left at the foot of a page opens the next one instead, as a last resort: another change often moves
+            # it anyway, and a forced break leaves the page before it short
+            if (trial == fit or trial in seen) and best.get('strandedIds'):
+                trial = dict(trial, breaks=dict(trial['breaks'], **{t: 1 for t in best['strandedIds']}))
             if trial == fit or trial in seen: break
             seen.append(trial)
             say('laying out again: ' + ', '.join([f'{i} down {n}' for i, n in trial['moves'].items() if n != fit['moves'].get(i)]
