@@ -1,9 +1,9 @@
 /* Export Controls: the board of flows, the year scrubber and the threshold board.
    The board is the page's index, nine things that move across the chokepoint, each with its state on
    the scrubber's date, and every row opens into its own history. By date keeps the plain chronology
-   with a compact board riding the scroll. Colour follows the .timeline .cat classes, so a chip, a
-   category tag and a history entry of the same kind are the same color. Dates and years are set in the
-   monospace so their digits align; every other label is Instrument Sans. */
+   with a compact board riding the scroll. The kinds of move are words, never colors. Dates and years are
+   set in Fragment Mono so their digits align; every other label is Hanken Grotesk. The redesign's block
+   at the foot of this file sets the page in the new type and takes the accent off every data value. */
 
 /* ---------- shared chrome ---------- */
 .controls-intro { margin: 0 0 16px; }
@@ -148,10 +148,6 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
   display: block; font-family: var(--font-mono); font-size: var(--fs-cap-s); letter-spacing: 0;
   color: var(--ink-2); margin-bottom: 2px; /* the US category in ink, as on Suppliers */
 }
-.cf-hist .cat.cn { color: var(--c6); }
-.cf-hist .cat.ally { color: var(--c1); }
-.cf-hist .cat.policy { color: var(--c4); }
-.cf-hist .cat.corp { color: var(--c5); }
 .cf-hist .src { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
 .cf-none { font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); padding: 8px 0 14px; margin: 0; }
 
@@ -179,15 +175,7 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
   content: ""; position: absolute; left: 9px; top: 50%; width: 7px; height: 7px;
   margin-top: -3.5px; border-radius: 50%; background: var(--ink);
 }
-.tl-chip.cn::before { background: var(--c6); }
-.tl-chip.ally::before { background: var(--c1); }
-.tl-chip.policy::before { background: var(--c4); }
-.tl-chip.corp::before { background: var(--c5); }
-.tl-chip[aria-pressed="true"]::before { background: var(--bg); } /* the pressed chip is filled with ink, so the US dot turns to paper */
-.tl-chip.cn[aria-pressed="true"]::before { background: var(--c6); }
-.tl-chip.ally[aria-pressed="true"]::before { background: var(--c1); }
-.tl-chip.policy[aria-pressed="true"]::before { background: var(--c4); }
-.tl-chip.corp[aria-pressed="true"]::before { background: var(--c5); }
+.tl-chip[aria-pressed="true"]::before { background: var(--bg); } /* the pressed chip is filled with ink, so its dot turns to the ground */
 
 /* ---------- timeline: compact entries ---------- */
 .cf-rowh { margin: 0; font-size: inherit; }
@@ -365,3 +353,89 @@ a.cf-ev-cite:hover, a.cf-ev-cite:focus-visible { color: var(--accent); text-deco
 .cf-year { justify-content: flex-end; }
 .cf-year[aria-pressed="true"] .cf-yb { background: var(--accent-fill); opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .cf-ramp-f, .cf-ramp-d { transition: none; } }
+
+/* ==========================================================================
+   The redesign (stage 3, qa/redesign/BRIEF.md): today's deadline-first layout, restyled. The title over its standfirst
+   (.view-head.vh, suppliers.css), the two sub-tabs, the countdown, then the timeline and the board. No data value takes the
+   accent: the board's states, its scale and the countdown are ink, gray or an outline; the wine marks only the reader's place
+   (the current tab, the entry a link opened) and links.
+   ========================================================================== */
+.view[data-view="controls"] { width: 100%; padding: 0 var(--margin); }
+
+/* the countdown: the date, how far off it is, what happens, and its entry */
+.cf-up { margin: 40px 0 36px; }
+.cf-up-h { margin: 0; padding-bottom: 12px; border-bottom: 1px solid var(--ink); font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 24px; line-height: 1.2; letter-spacing: -0.01em; color: var(--ink); }
+.cf-up-list { list-style: none; margin: 0; padding: 0; }
+.cf-up-i { display: grid; grid-template-columns: 8.6em 7.4em minmax(0, 1fr); column-gap: 24px; align-items: baseline; padding: 13px 0 12px; border-bottom: 1px solid var(--line); }
+.cf-up-d, .cf-up-n { font-family: var(--font-code); font-size: 12.5px; line-height: 20px; color: var(--muted); white-space: nowrap; }
+.cf-up-d { color: var(--ink); }
+.cf-up-i.is-soon .cf-up-n { color: var(--ink); }
+.cf-up-t { min-width: 0; font-family: var(--font-body); font-size: 16.5px; line-height: 1.45; color: var(--ink); }
+.cf-up-link { display: inline-block; margin-left: 12px; padding: 2px 0; font-family: var(--font-ui); font-size: 13px; line-height: 18px; color: var(--ink-2); white-space: nowrap; text-decoration-color: var(--rule-ink); }
+.cf-up-link:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
+@media (max-width: 760px) {
+  .cf-up { margin: 28px 0 28px; }
+  .cf-up-h { font-size: 22px; }
+  .cf-up-i { grid-template-columns: auto minmax(0, 1fr); column-gap: 16px; row-gap: 4px; }
+  .cf-up-t { grid-column: 1 / -1; font-size: 16px; }
+}
+
+/* the line that points down to the chronology, and the order switch */
+.cf-jump-btn { font-family: var(--font-body); font-size: 17px; color: var(--ink); text-decoration-color: var(--rule-ink); }
+.cf-modes { padding: 3px; gap: 2px; border: 1px solid var(--control-edge); border-radius: 999px; }
+.cf-mode, .cf-mode:first-child, .cf-mode:last-child { border: 0; border-radius: 999px; font-family: var(--font-ui); font-weight: 400; font-size: 13.5px; line-height: 1; padding: 8px 14px; min-height: 30px; color: var(--ink-2); }
+.cf-mode[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.cf-mode:focus-visible { outline-offset: 2px; }
+@media (max-width: 899px) { .cf-mode { min-height: 40px; } }
+
+/* the timeline's filters and its entries: the kinds of move are words, each chip's dot ink */
+.tl-chip::before { background: var(--ink); }
+.cf-hist .cat { color: var(--ink-2); }
+.tl-all.btn.ghost { font-family: var(--font-ui); font-size: 13.5px; }
+.timeline .tl-year .year-label { font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-numeral); font-size: 44px; line-height: 1; letter-spacing: -0.03em; }
+.timeline .tl-n { font-family: var(--font-code); font-size: 12px; vertical-align: 10px; }
+.timeline .cat, .cf-hist .cat { font-family: var(--font-ui); font-size: 12.5px; font-weight: 500; }
+.cf-inst { font-family: var(--font-ui); font-size: 12px; border-radius: 3px; padding: 1px 6px 2px; }
+.timeline .tl-gist { font-size: 16.5px; line-height: 1.5; }
+.timeline .tl-more, .cf-hist .tl-more { font-family: var(--font-ui); font-size: 13px; color: var(--ink-2); }
+
+/* the scrubber: the year shown is ink, never wine (its bar is a count, a data value) */
+.cf-asof { font-family: var(--font-ui); font-weight: 400; font-size: 13px; color: var(--muted); }
+.cf-asof b { font-weight: 350; }
+.cf-now { font-family: var(--font-ui); font-weight: 400; font-size: 13px; padding: 6px 14px; border: 1px solid var(--control-edge); border-radius: 999px; color: var(--ink); }
+.cf-now:hover, .cf-now:focus-visible { border-color: var(--ink); }
+.cf-year { border-radius: 3px; }
+.cf-year[aria-pressed="true"] { border-color: var(--ink); }
+.cf-year[aria-pressed="true"] .cf-yn { color: var(--ink); }
+.cf-year[aria-pressed="true"] .cf-yb { background: var(--ink); }
+.cf-head, .cf-head::after { background: var(--ink); }
+
+/* the board: the five states from open to closed as outlines of rising weight, then a fill. No license a hairline, Restricted
+   a light dash, Case by case an ink dash, Presumption of denial a solid ink outline, Prohibited filled ink */
+.cf-pill { font-family: var(--font-ui); font-weight: 500; font-size: 12px; line-height: 16px; padding: 2px 8px 3px; border-radius: 3px; }
+.cf-pill.is-denial { border: 1.5px solid var(--ink); color: var(--ink); padding: 1.5px 7.5px 2.5px; }
+.cf-susp { font-family: var(--font-ui); font-size: 12px; border-radius: 3px; }
+.cf-name { font-size: 19px; }
+.cf-route, .cf-when, .cf-cite, .cf-ev-cite, .cf-ev-from { font-family: var(--font-code); letter-spacing: 0; }
+.cf-ramp-f { background: var(--ink-2); }
+.cf-ramp.is-closed .cf-ramp-f, .cf-ramp.is-closed .cf-ramp-d { background: var(--ink); }
+.cf-ramp.is-closed .cf-ramp-f { height: 4px; top: 8.5px; } /* past a presumption of denial the line thickens, as the pills do */
+.cf-scale-r { font-family: var(--font-ui); font-size: 12px; }
+.cf-scale-r i { background: linear-gradient(to right, var(--line-2), var(--ink)); }
+.cf-scale-r i::after { border-left-color: var(--ink); }
+.cf-scale-r span:last-child { color: var(--ink); }
+.cf-scale-l, .cf-scale-x { font-family: var(--font-ui); font-size: 12px; }
+.cf-legend li > span:last-child { font-size: 14px; }
+.cf-row.is-changed { animation-name: cf-glow2; }
+@keyframes cf-glow2 { 0%, 62% { background-color: var(--bg-2); } 100% { background-color: transparent; } }
+@media (min-width: 900px) {
+  .cf[data-mode="date"] .cf-side { border-left-color: var(--line-2); }
+}
+
+/* China revenue share: the section head as the countdown's, the key in Hanken at a readable size */
+.ex-h { margin-top: 40px; }
+.ex-legend { font-family: var(--font-ui); font-weight: 400; font-size: 12.5px; color: var(--ink-2); margin-top: 16px; }
+.ex-cat { font-family: var(--font-ui); font-size: 13px; color: var(--ink); }
+.ex-panel figcaption span { font-family: var(--font-ui); font-size: 12px; }
+.table-view > summary { font-family: var(--font-ui); font-size: 13.5px; color: var(--ink-2); }
+@media (max-width: 760px) { .ex-h { margin-top: 28px; } }

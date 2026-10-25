@@ -2448,10 +2448,9 @@
       if (!host) {
         var sub = $('.view[data-view="controls"] .sub[data-sub="timeline"]'); if (!sub) return;
         host = document.createElement('section'); host.className = 'cf-up'; host.id = 'cf-upcoming'; host.setAttribute('aria-labelledby', 'cf-up-h');
-        host.style.cssText = 'margin:4px 0 20px;padding-top:9px;border-top:1px solid var(--ink)';
         sub.insertBefore(host, sub.firstChild);
       }
-      var self = this, mono = 'font-family:var(--font-code);font-size:12px;letter-spacing:0;';
+      var self = this;
       if (!host._wired) { // the address may already be that entry's, so no hashchange would come: go there anyway
         host._wired = true;
         host.addEventListener('click', function (e) {
@@ -2460,16 +2459,15 @@
         });
       }
       host.hidden = false;
-      host.innerHTML = '<h3 class="label" id="cf-up-h" style="margin:0 0 2px">Coming up</h3><ol style="list-style:none;margin:0;padding:0">' + list.map(function (x) {
+      // the deadlines first (the page's own order): the date, how far off it is, what happens, and the entry or source behind it.
+      // A deadline within a month is ink, the others muted; the accent never marks a data value (src/modules/controls.css .cf-up)
+      host.innerHTML = '<h2 class="cf-up-h" id="cf-up-h">Coming up</h2><ol class="cf-up-list">' + list.map(function (x) {
         var u = x.u, when = x.n === 0 ? 'Today' : x.n === 1 ? 'Tomorrow' : 'In ' + x.n + ' days'; // sentence case as written: CSS sets no capitals
-        // the link is quiet, in sentence case; a deadline within a month is ink, the others muted (the accent never marks a data value)
-        var quiet = 'display:inline-block;padding:4px 0;font-family:var(--font-mono);font-size:11px;line-height:16px;color:var(--muted);margin-left:10px;white-space:nowrap';
-        var link = u.event ? '<a class="cf-up-link" href="' + esc('#/controls/' + encodeURIComponent(u.event)) + '" style="' + quiet + '" aria-label="Entry in the timeline">Entry <span aria-hidden="true">→</span></a>'
-          : (u.source && safeUrl(u.source) !== '#' ? '<a class="cf-up-link" href="' + safeUrl(u.source) + '" target="_blank" rel="noopener" style="' + quiet + '">Source</a>' : '');
-        return '<li style="display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 14px;padding:8px 0;border-bottom:1px solid var(--line)">' +
-          '<span style="' + mono + 'flex:0 0 8.6em;color:var(--ink)">' + esc(self.fmtDate(u.date)) + '</span>' +
-          '<span style="' + mono + 'flex:0 0 7em;color:' + (x.n <= 30 ? 'var(--ink)' : 'var(--muted)') + '">' + esc(when) + '</span>' +
-          '<span style="flex:1 1 18em;min-width:0;font-size:15px;line-height:1.4;color:var(--ink-2)">' + esc(u.label || '') + link + '</span></li>';
+        var link = u.event ? '<a class="cf-up-link" href="' + esc('#/controls/' + encodeURIComponent(u.event)) + '" aria-label="Entry in the timeline">Entry <span aria-hidden="true">→</span></a>'
+          : (u.source && safeUrl(u.source) !== '#' ? '<a class="cf-up-link" href="' + safeUrl(u.source) + '" target="_blank" rel="noopener">Source</a>' : '');
+        return '<li class="cf-up-i' + (x.n <= 30 ? ' is-soon' : '') + '"><span class="cf-up-d">' + esc(self.fmtDate(u.date)) + '</span>' +
+          '<span class="cf-up-n">' + esc(when) + '</span>' +
+          '<span class="cf-up-t">' + esc(u.label || '') + link + '</span></li>';
       }).join('') + '</ol>';
     },
     /* entries rise into view once; with no observer they simply stay readable */

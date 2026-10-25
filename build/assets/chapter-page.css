@@ -223,10 +223,10 @@ sup.cite .br { font-size: 0; }
 .hb { display: grid; gap: 4px; }
 .hb-l { line-height: 1.3; color: var(--ink-2); }
 .hb-r { display: flex; align-items: center; gap: 8px; padding-right: var(--vw, 3.6em); }
-.hb-r i { display: block; flex: none; height: 12px; background: var(--bar-4); }
+.hb-r i { display: block; flex: none; height: 12px; background: var(--ctx); }
 .hb-r b { flex: none; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; margin-right: calc(-1 * var(--vw, 3.6em)); }
-.hb.top .hb-r i { background: var(--accent-fill); }
-.hb.top .hb-r b { color: var(--accent-ink); }
+.hb.top .hb-r i { background: var(--ink); }
+.hb.top .hb-r b { color: var(--ink); font-weight: 700; }
 @media (min-width: 641px) { .hbars { gap: 7px; } .hb { grid-template-columns: min(var(--lw, 14em), 45%) minmax(0, 1fr); align-items: center; column-gap: 12px; } .hb-l { text-align: right; } }
 .stack-bar { display: flex; height: 26px; gap: 2px; overflow: hidden; }
 .stack-bar i { display: block; height: 100%; min-width: 2px; }

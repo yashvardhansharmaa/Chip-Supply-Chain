@@ -16,7 +16,7 @@
   padding: clamp(40px, 7vh, 64px) 0 0;
 }
 .view-head.vh h1 {
-  grid-column: 1 / 8; margin: 0 0 0 -0.045em;
+  grid-column: 1 / -1; margin: 0 0 0 -0.045em;
   font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-title);
   font-size: clamp(60px, 8vw, 120px); line-height: 0.9; letter-spacing: -0.03em;
 }
@@ -24,7 +24,8 @@
   grid-column: 1 / 7; margin: 24px 0 0; max-width: 31em;
   font-family: var(--font-body); font-size: clamp(19px, 1.62vw, 23px); line-height: 1.38; color: var(--ink-2);
 }
-@media (max-width: 1199px) { .view-head.vh .dek { grid-column: 1 / -1; } .view-head.vh h1 { grid-column: 1 / -1; } }
+.view-head.sup-head h1 { grid-column: 1 / 8; } /* beside its four counts */
+@media (max-width: 1199px) { .view-head.vh .dek { grid-column: 1 / -1; } .view-head.sup-head h1 { grid-column: 1 / -1; } }
 @media (max-width: 760px) {
   .view-head.vh { display: block; padding-top: 32px; }
   .view-head.vh h1 { font-size: min(76px, 19vw); }

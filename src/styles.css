@@ -303,10 +303,10 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .hb { display: grid; gap: 4px; }
 .hb-l { line-height: 1.3; color: var(--ink-2); }
 .hb-r { display: flex; align-items: center; gap: 8px; padding-right: var(--vw, 3.6em); }
-.hb-r i { display: block; flex: none; height: 12px; background: var(--bar-4); }
+.hb-r i { display: block; flex: none; height: 12px; background: var(--ctx); }
 .hb-r b { flex: none; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; margin-right: calc(-1 * var(--vw, 3.6em)); }
-.hb.top .hb-r i { background: var(--accent-fill); }
-.hb.top .hb-r b { color: var(--accent-ink); }
+.hb.top .hb-r i { background: var(--ink); } /* rule B: the largest value in ink with a bold label, the rest in the light tint */
+.hb.top .hb-r b { color: var(--ink); font-weight: 700; }
 @media (min-width: 641px) { .hbars { gap: 7px; } .hb { grid-template-columns: min(var(--lw, 14em), 45%) minmax(0, 1fr); align-items: center; column-gap: 12px; } .hb-l { text-align: right; } }
 .stack-bar { display: flex; height: 26px; gap: 2px; border-radius: 0; overflow: hidden; }
 .stack-bar i { display: block; height: 100%; min-width: 2px; }
@@ -321,7 +321,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 :root[data-theme="dark"] { --stk-1: #4f86dc; --stk-2: #2a9670; --stk-3: #ad8f14; --stk-4: #7f6fd4; --stk-5: #c96a2a; --stk-tail: #4b5159; --stk-edge: #6d747c; }
 .stack-bar i, .stack-legend span { --sw: var(--stk-tail); }
 .stack-bar i { background: var(--sw); }
-.stack-bar [data-k="lead"], .stack-legend [data-k="lead"] { --sw: var(--accent-fill); }
+.stack-bar [data-k="lead"], .stack-legend [data-k="lead"] { --sw: var(--ink); }
 .stack-bar [data-k="1"], .stack-legend [data-k="1"] { --sw: var(--stk-1); }
 .stack-bar [data-k="2"], .stack-legend [data-k="2"] { --sw: var(--stk-2); }
 .stack-bar [data-k="3"], .stack-legend [data-k="3"] { --sw: var(--stk-3); }
@@ -337,7 +337,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .stack-bar [data-k="n1"], .stack-legend [data-k="n1"] { --sw: var(--stk-n1); }
 .stack-bar [data-k="n2"], .stack-legend [data-k="n2"] { --sw: var(--stk-n2); }
 .stack-bar i[data-k="rest"], .stack-legend span[data-k="rest"]::before { background: repeating-linear-gradient(135deg, var(--stk-edge) 0 1px, transparent 1px 4px); box-shadow: inset 0 0 0 1px var(--stk-edge); }
-.stack-legend span[data-k="lead"] b { color: var(--accent-ink); }
+.stack-legend span[data-k="lead"] b { color: var(--ink); font-weight: 700; }
 .tl { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line-2); }
 .tl li { position: relative; padding: 0 0 12px 18px; font-size: var(--fs-small); line-height: 1.4; }
 .tl li::before { content: ""; position: absolute; left: -4px; top: 8px; width: 7px; height: 7px; border-radius: 0; background: var(--ink); }
@@ -421,8 +421,9 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 }
 .filters input:focus-visible, .filters select:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 2px; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 16px; }
-.chips button { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-ui-s); letter-spacing: 0.01em; padding: 5px 9px; border: 1px solid var(--control-edge); border-radius: 0; background: none; color: var(--ink-2); }
-.chips button b { font-weight: 500; color: var(--muted); margin-left: 5px; }
+.chips button { font-family: var(--font-ui); font-weight: 400; font-size: 13.5px; line-height: 1; letter-spacing: 0; padding: 8px 12px; min-height: 32px; border: 1px solid var(--control-edge); border-radius: 999px; background: none; color: var(--ink); }
+.chips button:hover { border-color: var(--ink); }
+.chips button b { font-family: var(--font-code); font-weight: 400; font-size: 11.5px; color: var(--muted); margin-left: 6px; }
 .chips button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .chips button[aria-pressed="true"] b { color: var(--bg); opacity: 0.7; }
 .sup-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
@@ -462,7 +463,7 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 #exposure-table td .cell.is-peak { color: var(--accent-ink); font-weight: 600; box-shadow: inset 0 -2px 0 var(--accent-fill); }
 :root[data-theme="dark"] #exposure-table td .cell.is-peak { color: var(--ink); } /* dark: the red figure fell to 3.0:1 on its heat cell, so the peak keeps its weight and garnet rule in ink */
 .matrix td:first-child small { display: block; font-family: var(--font-mono); font-size: 11px; color: var(--muted); font-weight: 400; letter-spacing: 0.04em; }
-.matrix td .cell { display: block; padding: 9px 6px; color: var(--ink); background: color-mix(in srgb, var(--accent) calc(var(--v) * 1%), transparent); }
+.matrix td .cell { display: block; padding: 9px 6px; color: var(--ink); background: color-mix(in srgb, var(--ctx) calc(min(var(--v), 60) * 1.66%), transparent); } /* a light tint that deepens with the share; never the accent */
 .matrix td .cell[data-hi="1"] { font-weight: 700; }
 .matrix td .cell.zero { color: var(--muted); }
 .matrix-note { font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); margin: 8px 0 30px; line-height: 1.5; }
@@ -473,11 +474,8 @@ sup.cite a::before, .ch-copy::before, .permalink::before, .fc-more::before {
 .timeline h4 { font-size: var(--fs-d5); margin-bottom: 4px; }
 .timeline p { font-size: var(--fs-small); line-height: 1.5; color: var(--ink-2); margin: 0 0 6px; }
 .timeline .cat { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--ink-2); } /* the US category in ink, as on Suppliers; garnet stays for what must be seen */
-.timeline .cat.cn { color: var(--c6); }
-.timeline .cat.ally { color: var(--c1); }
-.timeline .cat.policy { color: #7a5f06; }
-:root[data-theme="dark"] .timeline .cat.policy { color: var(--c4); }
-.timeline .cat.corp { color: var(--c5); }
+/* the five kinds of move are words, never colors: no hue marks a country (redesign, rule B) */
+.timeline .cat.cn, .timeline .cat.ally, .timeline .cat.policy, .timeline .cat.corp { color: var(--ink-2); }
 .timeline .src { font-family: var(--font-mono); font-size: var(--fs-ui-s); color: var(--muted); }
 .year-label { font-family: var(--font-display); font-weight: 300; font-variation-settings: var(--opsz-numeral); font-size: 40px; color: var(--muted); line-height: 1; margin: 28px 0 0; letter-spacing: -0.02em; font-variant-numeric: tabular-nums lining-nums; }
 .tl-filters { margin: 14px 0 6px; }
@@ -644,10 +642,12 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 @media (prefers-reduced-motion: reduce) { .scroll-hint svg { animation: none; } }
 
 /* ---------- sub-tabs inside a view (Controls: what the rules did / China revenue share) ---------- */
-.subtabs { display: flex; gap: 4px; margin: 4px 0 22px; border-bottom: 1px solid var(--line); }
-.subtabs a { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--muted); text-decoration: none; padding: 10px 14px 9px; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+/* sub-tabs (Export Controls): Hanken words over a hairline, the current one on a 2 px wine rule, the reader's place */
+.subtabs { display: flex; gap: 28px; margin: 40px 0 0; border-bottom: 1px solid var(--line-2); }
+.subtabs a { font-family: var(--font-ui); font-weight: 400; font-size: 17px; line-height: 1; letter-spacing: 0; color: var(--ink-2); text-decoration: none; padding: 12px 0 14px; border-bottom: 2px solid transparent; margin-bottom: -1px; }
 .subtabs a:hover { color: var(--ink); }
 .subtabs a[aria-current="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+@media (max-width: 760px) { .subtabs { gap: 22px; margin-top: 28px; } .subtabs a { font-size: 16px; } }
 @media (max-width: 1240px) { .tabs a { padding: 0 7px; font-size: 13px; } } /* the phone strip (900 px, below) sets its own padding */
 @media (max-width: 1060px) { .tabs a { padding: 0 5px; font-size: 12.5px; } .tabs { gap: 2px; } }
 
@@ -680,21 +680,20 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .ex-legend i { display: inline-block; vertical-align: middle; margin-right: 7px; width: 10px; height: 10px; border-radius: 50%; box-sizing: border-box; }
 /* the context bars recede to a mid gray, so the peak year differs from them in lightness as well as hue (3.0:1 against the
    garnet in light; dark already separates, 3.5:1 against the wine) */
-.ex-legend, .ex-panel { --ex-bar: #858b94; }
-:root[data-theme="dark"] .ex-legend, :root[data-theme="dark"] .ex-panel { --ex-bar: var(--ink-2); }
+.ex-legend, .ex-panel { --ex-bar: var(--ctx); } /* rule B: each firm's peak year in ink, the other years in the light tint */
 .ex-legend .lg-bar { width: 10px; height: 12px; border-radius: 0; background: var(--ex-bar); }
-.ex-legend .lg-top { width: 10px; height: 12px; border-radius: 0; background: var(--accent-fill); }
+.ex-legend .lg-top { width: 10px; height: 12px; border-radius: 0; background: var(--ink); }
 .ex-legend .lg-rule { width: 1px; height: 12px; border-radius: 0; border-left: 1px solid var(--ink); background: none; opacity: 0.4; }
 .ex-cat { grid-column: 1 / -1; margin: 18px 0 0; padding-bottom: 6px; border-bottom: 1px solid var(--ink); font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-cap); letter-spacing: 0; color: var(--ink-2); }
 .ex-cat:first-child { margin-top: 4px; }
 .ex-panel .tick { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); }
 .ex-panel .bar { fill: var(--ex-bar); }
-.ex-panel .bar.top { fill: var(--accent-fill); }
+.ex-panel .bar.top { fill: var(--ink); }
 /* a hovered bar darkens; it never turns garnet, which marks only the peak */
-.ex-panel a:hover rect, .ex-panel a:hover circle { fill: var(--ink); stroke: none; }
-.ex-panel a:hover rect.top { fill: var(--accent-ink); }
+.ex-panel a:hover rect, .ex-panel a:hover circle { fill: var(--ink-2); stroke: none; }
+.ex-panel a:hover rect.top { fill: var(--ink); }
 .ex-panel .share { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); }
-.ex-panel .share.top { fill: var(--accent-ink); font-weight: 600; }
+.ex-panel .share.top { fill: var(--ink); font-weight: 700; }
 .ex-panel .val { font-family: var(--font-mono); font-size: 11px; font-weight: 500; fill: var(--ink); }
 .ex-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px 22px; margin: 6px 0 12px; }
 /* each category is a group (exposureViz in build/build.js). Where subgrid works, a group spans as many columns as it has panels,
@@ -724,7 +723,7 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
 .ex-panel .area { fill: var(--ink); fill-opacity: 0.07; }
 .ex-panel .line { fill: none; stroke: var(--ink-2); stroke-width: 1.8; stroke-linejoin: round; }
 .ex-panel .pt { fill: var(--bg); stroke: var(--ink); stroke-width: 1.5; }
-.ex-panel .pt.peak { fill: var(--accent); stroke: var(--accent); }
+.ex-panel .pt.peak { fill: var(--ink); stroke: var(--ink); }
 .ex-tip { position: absolute; z-index: 40; max-width: 320px; padding: 8px 10px; background: var(--ink); color: var(--bg); font-family: var(--font-mono); font-size: var(--fs-ui-s); line-height: 1.45; border-radius: 0; pointer-events: none; }
 @media (hover: hover) { .ex-tip { pointer-events: auto; } } /* a mouse can move onto the tip and it stays (WCAG 1.4.13); a tap still reaches the bar */
 .ex-tip b { display: block; font-size: 14px; margin-bottom: 2px; }
