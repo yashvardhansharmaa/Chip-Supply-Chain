@@ -770,15 +770,15 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
    this width), which makes showing The Chain cheap. Once laid out, its real height is remembered (auto), and app.js (Sizes)
    lays each chapter out once while the browser is idle; .cv-open holds one laid out meanwhile. Print lays out everything. */
 @media screen {
-  article.chapter { content-visibility: auto; contain-intrinsic-height: auto 9400px; }
+  article.chapter { content-visibility: auto; contain-intrinsic-height: auto 12500px; } /* the chapter page of redesign stage 2: a median chapter's height at each width, measured 25 Oct 2026 */
   article.chapter.cv-open { content-visibility: visible; }
   /* the browser keeps the view still as chapters above it take their real heights (scroll anchoring) by following an element
      on screen; the sticky ledger never moves, so it must not be the one followed */
   .ch-ledger { overflow-anchor: none; }
 }
-@media screen and (max-width: 1100px) { article.chapter { contain-intrinsic-height: auto 11500px; } }
-@media screen and (max-width: 900px) { article.chapter { contain-intrinsic-height: auto 13500px; } }
-@media screen and (max-width: 360px) { article.chapter { contain-intrinsic-height: auto 16000px; } }
+@media screen and (max-width: 1100px) { article.chapter { contain-intrinsic-height: auto 12600px; } }
+@media screen and (max-width: 900px) { article.chapter { contain-intrinsic-height: auto 16900px; } }
+@media screen and (max-width: 360px) { article.chapter { contain-intrinsic-height: auto 19200px; } }
 .chapter > .ch-ledger { grid-column: 1; grid-row: 1 / span 2; }
 .chapter > .chapter-head, .chapter > .prose { grid-column: 2; }
 .chapter-head { margin-bottom: 8px; min-width: 0; }

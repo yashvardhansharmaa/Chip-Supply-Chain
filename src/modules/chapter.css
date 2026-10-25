@@ -335,7 +335,11 @@ html.no-stage .chapter .ch-spec-cap { grid-column: 1 / 9; }
 
 /* ---------- the app's phone (under 900 px): one column; the specimen is the strip at the foot of the screen ---------- */
 @media (max-width: 900px) {
-  article.chapter { display: block; padding: 40px 0 24px; }
+  /* one column in reading order: the opener, the card, On this page, then In plain terms, In short and the text */
+  article.chapter { display: flex; flex-direction: column; align-items: stretch; padding: 40px 0 24px; }
+  article.chapter > .chapter-head > *, article.chapter > .ch-rail, article.chapter > .prose { min-width: 0; }
+  .chapter .ch-open { order: 1; } .chapter .ch-spec { order: 2; } .chapter .plate { order: 3; } .chapter .ch-rail { order: 4; }
+  .chapter .plain { order: 5; } .chapter .inshort { order: 6; } article.chapter > .prose { order: 7; }
   .chapter .ch-open { display: block; padding-bottom: 22px; }
   .chapter .ch-kick { gap: 4px 14px; }
   .chapter .ch-title, .chapter .ch-title.is-long { margin: 18px 0 0 -0.04em; font-size: min(68px, 15vw); line-height: 0.98; }

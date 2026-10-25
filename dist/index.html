@@ -801,15 +801,15 @@ h3:hover .permalink, h4:hover .permalink, .permalink:focus, .permalink[data-done
    this width), which makes showing The Chain cheap. Once laid out, its real height is remembered (auto), and app.js (Sizes)
    lays each chapter out once while the browser is idle; .cv-open holds one laid out meanwhile. Print lays out everything. */
 @media screen {
-  article.chapter { content-visibility: auto; contain-intrinsic-height: auto 9400px; }
+  article.chapter { content-visibility: auto; contain-intrinsic-height: auto 12500px; } /* the chapter page of redesign stage 2: a median chapter's height at each width, measured 25 Oct 2026 */
   article.chapter.cv-open { content-visibility: visible; }
   /* the browser keeps the view still as chapters above it take their real heights (scroll anchoring) by following an element
      on screen; the sticky ledger never moves, so it must not be the one followed */
   .ch-ledger { overflow-anchor: none; }
 }
-@media screen and (max-width: 1100px) { article.chapter { contain-intrinsic-height: auto 11500px; } }
-@media screen and (max-width: 900px) { article.chapter { contain-intrinsic-height: auto 13500px; } }
-@media screen and (max-width: 360px) { article.chapter { contain-intrinsic-height: auto 16000px; } }
+@media screen and (max-width: 1100px) { article.chapter { contain-intrinsic-height: auto 12600px; } }
+@media screen and (max-width: 900px) { article.chapter { contain-intrinsic-height: auto 16900px; } }
+@media screen and (max-width: 360px) { article.chapter { contain-intrinsic-height: auto 19200px; } }
 .chapter > .ch-ledger { grid-column: 1; grid-row: 1 / span 2; }
 .chapter > .chapter-head, .chapter > .prose { grid-column: 2; }
 .chapter-head { margin-bottom: 8px; min-width: 0; }
@@ -1444,7 +1444,11 @@ html.no-stage .chapter .ch-spec-cap { grid-column: 1 / 9; }
 
 /* ---------- the app's phone (under 900 px): one column; the specimen is the strip at the foot of the screen ---------- */
 @media (max-width: 900px) {
-  article.chapter { display: block; padding: 40px 0 24px; }
+  /* one column in reading order: the opener, the card, On this page, then In plain terms, In short and the text */
+  article.chapter { display: flex; flex-direction: column; align-items: stretch; padding: 40px 0 24px; }
+  article.chapter > .chapter-head > *, article.chapter > .ch-rail, article.chapter > .prose { min-width: 0; }
+  .chapter .ch-open { order: 1; } .chapter .ch-spec { order: 2; } .chapter .plate { order: 3; } .chapter .ch-rail { order: 4; }
+  .chapter .plain { order: 5; } .chapter .inshort { order: 6; } article.chapter > .prose { order: 7; }
   .chapter .ch-open { display: block; padding-bottom: 22px; }
   .chapter .ch-kick { gap: 4px 14px; }
   .chapter .ch-title, .chapter .ch-title.is-long { margin: 18px 0 0 -0.04em; font-size: min(68px, 15vw); line-height: 0.98; }

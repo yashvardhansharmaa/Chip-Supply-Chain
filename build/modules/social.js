@@ -411,10 +411,10 @@ function readableHTML(p, ch, ctx, versions, css) {
 
   const specimen = m.specimen || (ch.id === 'geopolitics' ? 'globe' : 'wafer');
   // the specimen: Lithography shows its annotated still (data/specimen-parts.json); every chapter its caption, flush left, and
-  // the way to the live drawing
+  // the way to the live drawing. With no drawing on the page, chapters 16 and 17 have no night ground to set it on
   const pe = (ctx.specimenParts || {})[ch.id], parts = pe && Array.isArray(pe.parts) ? pe.parts : [];
   const still = pe && pe.still && parts.length ? stillSVG(pe.still, parts, m.specimenCaption ? m.specimenCaption.split('. ')[0] : ch.title) : '';
-  const specimenHTML = `<figure class="ch-spec${still ? ' has-still' : ''}"${ch.number >= 16 ? ' data-night="1"' : ''}>${still ? `<div class="ch-spec-draw">${still}</div>` : ''}<figcaption class="ch-spec-cap"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${r.parts || ''}<a class="ch-spec-3d" href="${esc(app)}">See it in 3D in the interactive chapter</a></figcaption></figure>`;
+  const specimenHTML = `<figure class="ch-spec${still ? ' has-still' : ''}"${still && ch.number >= 16 ? ' data-night="1"' : ''}>${still ? `<div class="ch-spec-draw">${still}</div>` : ''}<figcaption class="ch-spec-cap"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${r.parts || ''}<a class="ch-spec-3d" href="${esc(app)}">See it in 3D in the interactive chapter</a></figcaption></figure>`;
 
   // the contents rail, as the app draws it (build.js railHTML), with this page's own section anchors
   const toc = (r.plain ? [[`${ch.id}--plain`, 'In plain terms']] : []).concat((ch.headings || []).map((h) => [h.id, esc(String(h.text).replace(/\*\*/g, ''))]))
