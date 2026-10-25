@@ -1604,7 +1604,7 @@
             '<span class="sl-v"><span class="cx-v' + (top ? ' is-top' : '') + '">' + esc(self.nf(v)) + '</span>' + (row.fn ? fm.mark(c) : '') + self.cite(c, row) + (row.sub ? '<span class="cx-2">' + esc(row.sub(c)) + '</span>' : '') + '</span></div>';
         }).join('');
         for (var j = 0; j < g; j++) lines += '<div class="sl ghost" aria-hidden="true"><span class="sl-n">Chip ' + (sel.length + j + 1) + '</span><span class="sl-b"><i></i></span><span class="sl-v"><span class="cx-nil">not chosen yet</span></span></div>';
-        return '<div class="srow"><h4 class="srow-h">' + esc(row.short) + '<span>' + esc(row.unit) + '</span></h4>' + lines + '</div>';
+        return '<div class="srow"><h4 class="srow-h">' + esc(row.short) + ' <span>' + esc(row.unit) + '</span></h4>' + lines + '</div>';
       }).join('');
     },
     // the words: a table with one column per chip, Change, × and Read the notes on each head

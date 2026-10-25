@@ -1,0 +1,509 @@
+== AI Chips, nothing picked  (51 lines in main, 152 in the redesign)
+   case only: 23: "CHIP 1", "CHIP 2", "BROWSE ALL 38 CHIPS BY MAKER", "PACKAGES AT ONE SCALE", "NOT CHOSEN YET", "NOT CHOSEN YET", "NOT CHOSEN YET", "NOT CHOSEN YET", "SPECIFICATION", "VENDOR", "AVAILABILITY", "BUILT FOR", "FOUNDRY, PROCESS NODE", "PACKAGE", "MEMORY TYPE", "CHIP-TO-CHIP LINKS", "SCALE-UP, IN ONE RACK", "PRICE ESTIMATE", "COST TO MAKE, ESTIMATE", "EXPORT-CONTROL STATUS", "UPDATED 25 OCTOBER 2026", "HOW TO CITE", "AI CHIPS · PACKAGE"
+   - Choose a chip
+   - Choose a chip
+   - SPECS SIDE BY SIDE
+   - LOGIC DIES
+   - TRANSISTORS, BILLION
+   - MEMORY, GIGABYTES
+   - BANDWIDTH, TERABYTES/S
+   - SPEED AT FP16, TFLOPS
+   - SPEED AT FP8, TFLOPS
+   - SPEED AT FP4, TFLOPS
+   - POWER, WATTS
+   + 38 chips
+   + 13 makers
+   + Updated 21 October 2026
+   + 30 of 38 chips have a published figure
+   + Speed at FP16
+   + Speed at FP8
+   + Speed at FP4
+   + Memory
+   + Bandwidth
+   + Power
+   + Speed at FP16, by the year each chip was announced
+   + The Instinct MI455X is the highest, at 5,033 TFLOPS. Choose a dot to add its chip to the comparison.
+   + 2020
+   + 2021
+   + 2022
+   + 2023
+   + 2024
+   + 2025
+   + 2026
+   + 0
+   + 2,000
+   + 4,000
+   + 6,000
+   + TFLOPS
+   + Instinct MI455X, 5,033
+   + Rubin
+   + Instinct MI355X
+   + B300
+   + TPU v7
+   + B200
+   + Gaudi 3
+   + Instinct MI325X
+   + Instinct MI300X
+   + Maia 200
+   + H200
+   + H800
+   + H100
+   + TPU v6e
+   + Trainium3
+   + Trainium2
+   + MTIA 300
+   + TPU v5p
+   + Gaudi 2
+   + Ascend 950PR
+   + A800
+   + A100
+   + TPU v4
+   + TPU v5e
+   + MTIA v2
+   + H20
+   + Not published at FP16
+   + TPU 8t
+   + TPU 8i
+   + MTIA 400
+   + Jalapeño
+   + WSE-3 Turbo
+   + LPU
+   + Siyuan 590
+   + MTT S5000
+   + Each dot is a chip, placed at the month its maker announced it. A chip dated only to a year sits in that year's middle, on a line across the year. The highest value is the one solid dot.
+   + Chip 1
+   + Chip 1
+   + Chip 1
+   + Chip 1
+   + Chip 1
+   + Chip 1
+   + Chip 1
+   + Chip 1
+   + Choose a chip, or a dot above
+   + Choose a chip, or a dot above
+   + Chip 2
+   + Chip 2
+   + Chip 2
+   + Chip 2
+   + Chip 2
+   + Chip 2
+   + Chip 2
+   + Chip 2
+   + Two chips, side by side
+   + TFLOPS counts trillions of calculations a second. FP16, FP8 and FP4 are number formats that use 16, 8 and 4 bits per number. The fewer the bits, the more calculations a chip can do. Each figure carries the number of its source in the chip's list under Notes and sources.
+   + Logic die
+   + Memory stack
+   + Interposer
+   + Substrate
+   + The logic dies are the pieces of silicon that do the computing, and the memory stacks feed them data. The interposer is the layer of wiring that connects the two, and the substrate is the small circuit board underneath.
+   + Figures
+   + In each row, the largest figure has the solid bar
+   + Speed at FP16 TFLOPS
+   + not chosen yet
+   + not chosen yet
+   + not chosen yet
+   + not chosen yet
+   + not chosen yet
+   + not chosen yet
+   + not chosen yet
+   + not chosen yet
+   + not chosen yet
+   + not chosen yet
+   + not chosen yet
+   + not chosen yet
+   + not chosen yet
+   + not chosen yet
+   + not chosen yet
+   + not chosen yet
+   + Speed at FP8 TFLOPS
+   + Speed at FP4 TFLOPS
+   + Memory gigabytes
+   + Bandwidth terabytes a second
+   + Power watts
+   + Transistors billion
+   + Logic dies count
+   + In words
+   words lost: specs terabytes/s
+   words added: chips chips chips the the the the the the the the the the the the the the the the the the the the the the the the that that that that and and and and and a100 of of of of of 2020 to to to in in in in 2026 2026 each each each each memory memory memory chip chip chip chip chip chip chip chip chip chip chip chip chip chip chip chip chip chip chip chip chip chip maker or or a a a a a a a a a a a source has published published them 38 38 13 makers updated 21 october 30 have figure figure figure speed speed speed speed at at at at at at at fp16 fp16 fp16 fp16 fp8 fp8 fp4 fp4 bandwidth power by year year year year was announced announced instinct instinct instinct instinct instinct mi455x mi455x is is is is is highest highest 5 5 033 033 tflops tflops tflops choose dot dot dot dot dot add its its its comparison 2021 2022 2023 2024 2025 0 2 2 2 2 2 2 2 2 2 2 000 000 000 4 4 6 rubin mi355x b300 tpu tpu tpu tpu tpu tpu tpu v7 b200 gaudi gaudi 3 mi325x mi300x maia 200 h200 h800 h100 v6e trainium3 trainium2 mtia mtia mtia 300 v5p ascend 950pr a800 v4 v5e v2 h20 not not not not not not not not not not not not not not not not not 8t 8i 400 jalapeño wse-3 turbo lpu siyuan 590 mtt s5000 placed month it dated only sits s s middle on line across value one solid solid above above two two 1 1 1 1 1 1 1 1 counts trillions calculations calculations second second are are number number number formats use 16 8 bits bits per fewer more can do do carries list under notes sources logic logic die stack interposer interposer substrate substrate dies pieces silicon computing stacks feed data layer wiring connects small circuit board underneath chosen chosen chosen chosen chosen chosen chosen chosen chosen chosen chosen chosen chosen chosen chosen chosen yet yet yet yet yet yet yet yet yet yet yet yet yet yet yet yet figures row largest bar terabytes count words
+   writing rules on the added lines: no hits
+== AI Chips, B200 and Ascend 910C  (115 lines in main, 210 in the redesign)
+   case only: 42: "CLEAR", "CHIP 1", "NVIDIA · UNITED STATES · 2024", "CHIP 2", "HUAWEI (HISILICON) · CHINA · 2024", "CHIP 3, OPTIONAL", "BROWSE ALL 38 CHIPS BY MAKER", "PACKAGES AT ONE SCALE", "LOGIC DIE", "MEMORY STACK", "INTERPOSER", "SUBSTRATE", "50 MM", "ON THE STAGE", "NVIDIA", "NVIDIA", "HUAWEI (HISILICON)", "HUAWEI (HISILICON)", "SPECIFICATION", "READ THE NOTES", "READ THE NOTES", "VENDOR Nvidia", "AVAILABILITY Shipping", "BUILT FOR Training and inference Training and inference, used more for inference in practice", "FOUNDRY, PROCESS NODE TSMC", "PACKAGE CoWoS-L", "MEMORY TYPE HBM3E", "CHIP-TO-CHIP LINKS NV-HBI 10 TB/s die-to-die; NVLink 5 at 1.8 TB/s per GPU HCCS / UnifiedBus; 784 GB/s per NPU in both directions, theoretical, in the Atlas 900 A3 SuperPoD", "SCALE-UP, IN ONE RACK HGX B200 8-GPU baseboard; GB200 NVL72 (72 GPUs, 130 TB/s NVLink) CloudMatrix 384 / Atlas 900 A3 SuperPoD, 384 chips", "PRICE ESTIMATE $30,000 to $40,000 per GPU, the range Nvidia's CEO gave in March 2024. Epoch AI's chip sales model, with data through October 2025, puts Nvidia's compute revenue per GPU in GB200 rack systems at $33,000 to $42,000, leaving out the networking gear. SemiAnalysis's cloud cost model measures the hourly cost of owning or renting one, counting server, power, data center space and financing. As of October 2026 it rates the B200 at about $1.73 per GPU-hour owned at large hyperscaler volume and $3.70 per GPU-hour at the retail tier No published per-card price. As a system comparison, a Huawei Atlas appliance for DeepSeek-R1 671B is reported at RMB 3M to 5M, against roughly RMB 20M for an H100-based equivalent", "COST TO MAKE, ESTIMATE Epoch AI estimated in December 2025 about $6,400 to build ($5,700 to $7,300): memory $2,900, packaging $1,100, packaging yield loss $1,000, the two logic dies $900 not published", "EXPORT-CONTROL STATUS Controlled. Dense FP8 of 4,500 TFLOPS puts total processing performance (TPP) near 36,000, well above the 21,000 TPP ceiling for case-by-case review in the BIS rule effective 15 January 2026. So an export to China or Macau needs a license, which BIS reviews with a presumption of denial under 15 CFR 742.6(b)(10). An application may still be filed. Huawei has been on the US Entity List since May 2019 and SMIC since December 2020, so the 910C cannot lawfully draw on US-origin technology.", "COPY THE COMPARISON AS A", "TABLE", "COPY THE COMPARISON AS", "HOW THE SPEED FIGURES ARE MEASURED", "NOTES AND SOURCES", "NVIDIA · UNITED STATES", "HUAWEI (HISILICON) · CHINA", "UPDATED 25 OCTOBER 2026", "HOW TO CITE", "AI CHIPS · B200"
+   - B200
+   - B200
+   - Change
+   - Change
+   - Ascend 910C
+   - Ascend 910C
+   - ×
+   - ×
+   - SPECS SIDE BY SIDE
+   - TFLOPS counts trillions of calculations a second. FP16, FP8 and FP4 are number formats that use 16, 8 and 4 bits per number. The fewer the bits, the more calculations a chip can do.
+   - LOGIC DIES 2
+   - TRANSISTORS, BILLION 208
+   - MEMORY, GIGABYTES 192
+   - BANDWIDTH, TERABYTES/S 8
+   - SPEED AT FP16, TFLOPS 2,2501
+   - SPEED AT FP8, TFLOPS 4,5001
+   - SPEED AT FP4, TFLOPS 9,0001
+   - POWER, WATTS 1,000
+   - Nvidia Blackwell architecture pageNvidia HGX platform spec tableNvidia DGX B200 spec tableEpoch AI machine learning hardware database (ml_hardware.csv)15 CFR 742.6(b)(10), license review policy for advanced computing items (eCFR)Epoch AI: B200 cost breakdown and priceEpoch AI: AI chip sales methodology, chip price and cost estimatesNvidia technical blog: Inside Nvidia Blackwell Ultra (Blackwell column: 192 GB, 8 TB/s)SemiAnalysis InferenceX B200 chip pageSemiAnalysis, March 2024: Nvidia B100, B200, GB200 (SK hynix and Micron as HBM3E suppliers)Micron, March 2025: HBM3E 8-high 24 GB available for the HGX B200 and GB200 NVL72
+   + 38 chips
+   + 13 makers
+   + Updated 21 October 2026
+   + 30 of 38 chips have a published figure
+   + Speed at FP16
+   + Speed at FP8
+   + Speed at FP4
+   + Memory
+   + Bandwidth
+   + Power
+   + Speed at FP16, by the year each chip was announced
+   + The Instinct MI455X is the highest, at 5,033 TFLOPS. Choose a dot to add its chip to the comparison.
+   + 2020
+   + 2021
+   + 2022
+   + 2023
+   + 2024
+   + 2025
+   + 2026
+   + 0
+   + 2,000
+   + 4,000
+   + 6,000
+   + TFLOPS
+   + 1 B200
+   + 1 B200
+   + 1 B200
+   + 1 B200
+   + 1 B200
+   + 1 B200
+   + 1 B200
+   + 1 B200
+   + 1 B200
+   + 1 B200
+   + 1 B200
+   + 2 Ascend 910C
+   + 2 Ascend 910C
+   + 2 Ascend 910C
+   + 2 Ascend 910C
+   + 2 Ascend 910C
+   + 2 Ascend 910C
+   + 2 Ascend 910C
+   + 2 Ascend 910C
+   + 2 Ascend 910C
+   + 2 Ascend 910C
+   + 2 Ascend 910C
+   + Instinct MI455X, 5,033
+   + Rubin
+   + Instinct MI355X
+   + B300
+   + TPU v7
+   + Gaudi 3
+   + Instinct MI325X
+   + Instinct MI300X
+   + Maia 200
+   + H200
+   + H800
+   + H100
+   + TPU v6e
+   + Trainium3
+   + Trainium2
+   + MTIA 300
+   + TPU v5p
+   + Gaudi 2
+   + Ascend 950PR
+   + A800
+   + A100
+   + TPU v4
+   + TPU v5e
+   + H20
+   + Not published at FP16
+   + TPU 8t
+   + TPU 8i
+   + MTIA 400
+   + Jalapeño
+   + WSE-3 Turbo
+   + LPU
+   + Siyuan 590
+   + MTT S5000
+   + Each dot is a chip, placed at the month its maker announced it. A chip dated only to a year sits in that year's middle, on a line across the year. The highest value is the one solid dot.
+   + 1
+   + 2
+   + 2
+   + B200 and Ascend 910C, side by side
+   + TFLOPS counts trillions of calculations a second. FP16, FP8 and FP4 are number formats that use 16, 8 and 4 bits per number. The fewer the bits, the more calculations a chip can do. Each figure carries the number of its source in the chip's list under Notes and sources.
+   + Figures
+   + In each row, the largest figure has the solid bar
+   + Speed at FP16 TFLOPS
+   + 2,2501
+   + Speed at FP8 TFLOPS
+   + 4,5001
+   + Speed at FP4 TFLOPS
+   + 9,0001
+   + Memory gigabytes
+   + 192
+   + Bandwidth terabytes a second
+   + 8
+   + Power watts
+   + 1,000
+   + Transistors billion
+   + 208
+   + Logic dies count
+   + In words
+   + Nvidia Blackwell architecture page
+   + Nvidia HGX platform spec table
+   + Nvidia DGX B200 spec table
+   + Epoch AI machine learning hardware database (ml_hardware.csv)
+   + 15 CFR 742.6(b)(10), license review policy for advanced computing items (eCFR)
+   + Epoch AI: B200 cost breakdown and price
+   + Epoch AI: AI chip sales methodology, chip price and cost estimates
+   + Nvidia technical blog: Inside Nvidia Blackwell Ultra (Blackwell column: 192 GB, 8 TB/s)
+   + SemiAnalysis InferenceX B200 chip page
+   + SemiAnalysis, March 2024: Nvidia B100, B200, GB200 (SK hynix and Micron as HBM3E suppliers)
+   + Micron, March 2025: HBM3E 8-high 24 GB available for the HGX B200 and GB200 NVL72
+   words lost: change change specs terabytes/s pagenvidia tablenvidia tableepoch priceepoch estimatesnvidia pagesemianalysis
+   words added: chips chips the the the the the the the the the the the the that and and a100 of of 2020 to to to in in in in 2026 2026 each each each each memory chip chip chip chip chip maker a a a a a a a source has published published 38 38 13 makers updated 21 october 30 have figure figure figure speed speed speed speed at at at at at at at fp16 fp16 fp16 fp8 fp4 bandwidth power by year year year year was announced announced instinct instinct instinct instinct instinct mi455x mi455x is is is highest highest 5 5 033 033 tflops tflops choose dot dot dot add its its its comparison 2021 2022 2023 2024 2025 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 000 000 000 4 6 1 1 1 1 1 1 1 1 1 1 1 1 b200 b200 b200 b200 b200 b200 b200 b200 b200 b200 ascend ascend ascend ascend ascend ascend ascend ascend ascend ascend ascend 910c 910c 910c 910c 910c 910c 910c 910c 910c 910c rubin mi355x b300 tpu tpu tpu tpu tpu tpu tpu v7 gaudi gaudi 3 mi325x mi300x maia 200 h200 h800 h100 v6e trainium3 trainium2 mtia mtia 300 v5p 950pr a800 v4 v5e h20 not 8t 8i 400 jalapeño wse-3 turbo lpu siyuan 590 mtt s5000 placed month it dated only sits s s middle on line across value one solid solid nvidia nvidia nvidia second number carries list under notes sources figures row largest bar terabytes count words semianalysis price epoch epoch table table page page estimates
+   writing rules on the added lines: no hits
+== AI Chips, four chips, every fold open  (250 lines in main, 374 in the redesign)
+   case only: 65: "CLEAR", "CHIP 1", "NVIDIA · UNITED STATES · 2024", "CHIP 2", "HUAWEI (HISILICON) · CHINA · 2024", "CHIP 3", "AMD · UNITED STATES · 2025", "CHIP 4", "CEREBRAS · UNITED STATES · 2026", "BROWSE ALL 38 CHIPS BY MAKER", "UNITED STATES", "NVIDIA", "NVIDIA", "NVIDIA", "GOOGLE", "AMAZON (ANNAPURNA LABS)", "MICROSOFT", "META", "OPENAI WITH BROADCOM", "INTEL", "CEREBRAS", "CEREBRAS", "CEREBRAS", "GROQ", "CHINA", "HUAWEI (HISILICON)", "HUAWEI (HISILICON)", "HUAWEI (HISILICON)", "CAMBRICON", "MOORE THREADS", "PACKAGES AT ONE SCALE", "LOGIC DIE", "MEMORY STACK", "INTERPOSER", "SUBSTRATE", "100 MM", "ON THE STAGE", "SPECIFICATION", "READ THE NOTES", "READ THE NOTES", "READ THE NOTES", "READ THE NOTES", "VENDOR Nvidia", "AVAILABILITY Shipping", "BUILT FOR Training and inference Training and inference, used more for inference in practice Training and inference Mainly inference, also used for training", "FOUNDRY, PROCESS NODE TSMC", "PACKAGE CoWoS-L", "MEMORY TYPE HBM3E", "CHIP-TO-CHIP LINKS NV-HBI 10 TB/s die-to-die; NVLink 5 at 1.8 TB/s per GPU HCCS / UnifiedBus; 784 GB/s per NPU in both directions, theoretical, in the Atlas 900 A3 SuperPoD 7 Infinity Fabric links at 153.6 GB/s each On-wafer fabric at 53.5 PB/s; Cerebras says the CS-4 Wafer I/O Module doubles I/O bandwidth", "SCALE-UP, IN ONE RACK HGX B200 8-GPU baseboard; GB200 NVL72 (72 GPUs, 130 TB/s NVLink) CloudMatrix 384 / Atlas 900 A3 SuperPoD, 384 chips 8-GPU OAM baseboard, full mesh; no rack-scale fabric in this generation CS-4 rack: three WSE-3 Turbo wafers, 132 GB SRAM, 750 PFLOPS aggregate AI compute, about 2 microseconds wafer to wafer", "PRICE ESTIMATE $30,000 to $40,000 per GPU, the range Nvidia's CEO gave in March 2024. Epoch AI's chip sales model, with data through October 2025, puts Nvidia's compute revenue per GPU in GB200 rack systems at $33,000 to $42,000, leaving out the networking gear. SemiAnalysis's cloud cost model measures the hourly cost of owning or renting one, counting server, power, data center space and financing. As of October 2026 it rates the B200 at about $1.73 per GPU-hour owned at large hyperscaler volume and $3.70 per GPU-hour at the retail tier No published per-card price. As a system comparison, a Huawei Atlas appliance for DeepSeek-R1 671B is reported at RMB 3M to 5M, against roughly RMB 20M for an H100-based equivalent Epoch AI estimates $25,000 to $30,000, from analyst reports. SemiAnalysis’s cloud cost model rates it at about $1.50 per GPU-hour owned at large hyperscaler volume and $2.90 per GPU-hour at the retail tier not published", "COST TO MAKE, ESTIMATE Epoch AI estimated in December 2025 about $6,400 to build ($5,700 to $7,300): memory $2,900, packaging $1,100, packaging yield loss $1,000, the two logic dies $900 not published not published not published", "EXPORT-CONTROL STATUS Controlled. Dense FP8 of 4,500 TFLOPS puts total processing performance (TPP) near 36,000, well above the 21,000 TPP ceiling for case-by-case review in the BIS rule effective 15 January 2026. So an export to China or Macau needs a license, which BIS reviews with a presumption of denial under 15 CFR 742.6(b)(10). An application may still be filed. Huawei has been on the US Entity List since May 2019 and SMIC since December 2020, so the 910C cannot lawfully draw on US-origin technology. Controlled. It is above the January 2026 China licensing thresholds. AMD's licensable China part is the older MI325X, which the BIS rule names alongside the Nvidia H200. US-designed and fabricated by TSMC. Exports to China and other restricted destinations fall under the advanced-computing rules of the Export Administration Regulations (EAR).", "COPY THE COMPARISON AS A", "TABLE", "COPY THE COMPARISON AS", "HOW THE SPEED FIGURES ARE MEASURED", "NOTES AND SOURCES", "NVIDIA · UNITED STATES", "HUAWEI (HISILICON) · CHINA", "AMD · UNITED STATES", "CEREBRAS · UNITED STATES", "UPDATED 25 OCTOBER 2026", "HOW TO CITE", "AI CHIPS · B200"
+   - B200
+   - B200
+   - Change
+   - Change
+   - Change
+   - Change
+   - Ascend 910C
+   - Ascend 910C
+   - Instinct MI355X
+   - Instinct MI355X
+   - WSE-3 Turbo (CS-4)
+   - WSE-3 Turbo (CS-4)
+   - ×
+   - ×
+   - ×
+   - ×
+   - SPECS SIDE BY SIDE
+   - TFLOPS counts trillions of calculations a second. FP16, FP8 and FP4 are number formats that use 16, 8 and 4 bits per number. The fewer the bits, the more calculations a chip can do.
+   - LOGIC DIES 2
+   - TRANSISTORS, BILLION 208
+   - not published 185
+   - MEMORY, GIGABYTES 192
+   - BANDWIDTH, TERABYTES/S 8
+   - SPEED AT FP16, TFLOPS 2,2501
+   - SPEED AT FP8, TFLOPS 4,5001
+   - not supported 5,0333
+   - SPEED AT FP4, TFLOPS 9,0001
+   - not supported 10,0663
+   - POWER, WATTS 1,000
+   - Nvidia Blackwell architecture pageNvidia HGX platform spec tableNvidia DGX B200 spec tableEpoch AI machine learning hardware database (ml_hardware.csv)15 CFR 742.6(b)(10), license review policy for advanced computing items (eCFR)Epoch AI: B200 cost breakdown and priceEpoch AI: AI chip sales methodology, chip price and cost estimatesNvidia technical blog: Inside Nvidia Blackwell Ultra (Blackwell column: 192 GB, 8 TB/s)SemiAnalysis InferenceX B200 chip pageSemiAnalysis, March 2024: Nvidia B100, B200, GB200 (SK hynix and Micron as HBM3E suppliers)Micron, March 2025: HBM3E 8-high 24 GB available for the HGX B200 and GB200 NVL72
+   - SemiAnalysis: Huawei AI CloudMatrix 384MOFCOM spokesperson on the Unreliable Entity List measures naming TechInsightsEpoch AI machine learning hardware database (ml_hardware.csv)Huawei Connect 2025 keynote: the Ascend roadmapHuawei Ascend: Atlas 900 A3 SuperPoD spec table
+   - AMD Instinct MI355X product pageSemiAnalysis InferenceX MI355X chip pageAMD Instinct MI355X GPU datasheetEpoch AI: AI chip sales methodology, chip price and cost estimates
+   - Cerebras WSE-3 product pageCerebras: Introducing the CS-4Cerebras CS-4 system pageCerebras: Ultrafast frontier inference, the Hot Chips 2026 deep diveCerebras developer documentation: supported precisions and data formats
+   + 38 chips
+   + 13 makers
+   + Updated 21 October 2026
+   + 30 of 38 chips have a published figure
+   + Speed at FP16
+   + Speed at FP8
+   + Speed at FP4
+   + Memory
+   + Bandwidth
+   + Power
+   + Speed at FP16, by the year each chip was announced
+   + The Instinct MI455X is the highest, at 5,033 TFLOPS. Choose a dot to add its chip to the comparison.
+   + 2020
+   + 2021
+   + 2022
+   + 2023
+   + 2024
+   + 2025
+   + 2026
+   + 0
+   + 2,000
+   + 4,000
+   + 6,000
+   + TFLOPS
+   + 3 Instinct MI355X
+   + 3 Instinct MI355X
+   + 3 Instinct MI355X
+   + 3 Instinct MI355X
+   + 3 Instinct MI355X
+   + 3 Instinct MI355X
+   + 3 Instinct MI355X
+   + 3 Instinct MI355X
+   + 3 Instinct MI355X
+   + 3 Instinct MI355X
+   + 3 Instinct MI355X
+   + 1 B200
+   + 1 B200
+   + 1 B200
+   + 1 B200
+   + 1 B200
+   + 1 B200
+   + 1 B200
+   + 1 B200
+   + 1 B200
+   + 1 B200
+   + 1 B200
+   + 2 Ascend 910C
+   + 2 Ascend 910C
+   + 2 Ascend 910C
+   + 2 Ascend 910C
+   + 2 Ascend 910C
+   + 2 Ascend 910C
+   + 2 Ascend 910C
+   + 2 Ascend 910C
+   + 2 Ascend 910C
+   + 2 Ascend 910C
+   + 2 Ascend 910C
+   + Instinct MI455X, 5,033
+   + Rubin
+   + B300
+   + TPU v7
+   + Gaudi 3
+   + Instinct MI325X
+   + Instinct MI300X
+   + Maia 200
+   + H200
+   + H800
+   + H100
+   + TPU v6e
+   + Trainium3
+   + Trainium2
+   + MTIA 300
+   + TPU v5p
+   + Gaudi 2
+   + Ascend 950PR
+   + A800
+   + A100
+   + TPU v4
+   + TPU v5e
+   + H20
+   + Not published at FP16
+   + TPU 8t
+   + TPU 8i
+   + MTIA 400
+   + Jalapeño
+   + 4
+   + 4
+   + WSE-3 Turbo
+   + LPU
+   + Siyuan 590
+   + MTT S5000
+   + Each dot is a chip, placed at the month its maker announced it. A chip dated only to a year sits in that year's middle, on a line across the year. The highest value is the one solid dot.
+   + 1
+   + 2
+   + 2
+   + 3
+   + B200, Ascend 910C, Instinct MI355X and WSE-3 Turbo, side by side
+   + TFLOPS counts trillions of calculations a second. FP16, FP8 and FP4 are number formats that use 16, 8 and 4 bits per number. The fewer the bits, the more calculations a chip can do. Each figure carries the number of its source in the chip's list under Notes and sources.
+   + 4 WSE-3 Turbo (CS-4)
+   + 4 WSE-3 Turbo (CS-4)
+   + Figures
+   + In each row, the largest figure has the solid bar
+   + Speed at FP16 TFLOPS
+   + 2,2501
+   + 4 WSE-3 Turbo
+   + 4 WSE-3 Turbo
+   + 4 WSE-3 Turbo
+   + 4 WSE-3 Turbo
+   + 4 WSE-3 Turbo
+   + 4 WSE-3 Turbo
+   + 4 WSE-3 Turbo
+   + 4 WSE-3 Turbo
+   + not published
+   + Speed at FP8 TFLOPS
+   + 4,5001
+   + not supported
+   + not supported
+   + 5,0333
+   + Speed at FP4 TFLOPS
+   + 9,0001
+   + 10,0663
+   + Memory gigabytes
+   + 192
+   + Bandwidth terabytes a second
+   + 8
+   + Power watts
+   + 1,000
+   + Transistors billion
+   + 208
+   + 185
+   + Logic dies count
+   + In words
+   + Nvidia Blackwell architecture page
+   + Nvidia HGX platform spec table
+   + Nvidia DGX B200 spec table
+   + Epoch AI machine learning hardware database (ml_hardware.csv)
+   + Epoch AI machine learning hardware database (ml_hardware.csv)
+   + 15 CFR 742.6(b)(10), license review policy for advanced computing items (eCFR)
+   + Epoch AI: B200 cost breakdown and price
+   + Epoch AI: AI chip sales methodology, chip price and cost estimates
+   + Epoch AI: AI chip sales methodology, chip price and cost estimates
+   + Nvidia technical blog: Inside Nvidia Blackwell Ultra (Blackwell column: 192 GB, 8 TB/s)
+   + SemiAnalysis InferenceX B200 chip page
+   + SemiAnalysis, March 2024: Nvidia B100, B200, GB200 (SK hynix and Micron as HBM3E suppliers)
+   + Micron, March 2025: HBM3E 8-high 24 GB available for the HGX B200 and GB200 NVL72
+   + SemiAnalysis: Huawei AI CloudMatrix 384
+   + MOFCOM spokesperson on the Unreliable Entity List measures naming TechInsights
+   + Huawei Connect 2025 keynote: the Ascend roadmap
+   + Huawei Ascend: Atlas 900 A3 SuperPoD spec table
+   + AMD Instinct MI355X product page
+   + SemiAnalysis InferenceX MI355X chip page
+   + AMD Instinct MI355X GPU datasheet
+   + Cerebras WSE-3 product page
+   + Cerebras: Introducing the CS-4
+   + Cerebras CS-4 system page
+   + Cerebras: Ultrafast frontier inference, the Hot Chips 2026 deep dive
+   + Cerebras developer documentation: supported precisions and data formats
+   words lost: change change change change specs terabytes/s pagenvidia tablenvidia tableepoch priceepoch estimatesnvidia pagesemianalysis pagesemianalysis 384mofcom techinsightsepoch roadmaphuawei pageamd datasheetepoch pagecerebras pagecerebras cs-4cerebras divecerebras
+   words added: chips chips the the the the the the the the the the the the that and and a100 of of 2020 to to to in in in in 2026 2026 each each each each memory chip chip chip chip chip maker a a a a a a a source has published published 38 38 13 makers updated 21 october 30 have figure figure figure speed speed speed speed at at at at at at at fp16 fp16 fp16 fp8 fp4 bandwidth power by year year year year was announced announced instinct instinct instinct instinct instinct instinct instinct instinct instinct instinct instinct instinct instinct instinct mi455x mi455x is is is highest highest 5 5 033 033 tflops tflops choose dot dot dot add its its its comparison 2021 2022 2023 2024 2025 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 000 000 000 4 4 4 4 4 4 4 4 4 4 4 4 4 6 3 3 3 3 3 3 3 3 3 3 3 3 3 mi355x mi355x mi355x mi355x mi355x mi355x mi355x mi355x mi355x mi355x 1 1 1 1 1 1 1 1 1 1 1 1 b200 b200 b200 b200 b200 b200 b200 b200 b200 b200 ascend ascend ascend ascend ascend ascend ascend ascend ascend ascend ascend 910c 910c 910c 910c 910c 910c 910c 910c 910c 910c rubin b300 tpu tpu tpu tpu tpu tpu tpu v7 gaudi gaudi mi325x mi300x maia 200 h200 h800 h100 v6e trainium3 trainium2 mtia mtia 300 v5p 950pr a800 v4 v5e h20 not 8t 8i 400 jalapeño wse-3 wse-3 wse-3 wse-3 wse-3 wse-3 wse-3 wse-3 wse-3 wse-3 turbo turbo turbo turbo turbo turbo turbo turbo turbo turbo lpu siyuan 590 mtt s5000 placed month it dated only sits s s middle on line across value one solid solid nvidia nvidia nvidia huawei amd cs-4 cerebras cerebras cerebras cerebras second number carries list under notes sources figures row largest bar terabytes count words semianalysis semianalysis 384 price epoch epoch epoch epoch estimates table table datasheet page page page page page page roadmap techinsights mofcom dive
+   writing rules on the added lines: no hits
+== /chips/  (639 lines in main, 682 in the redesign)
+   case only: 7: "REFERENCE", "REFERENCE", "38 CHIPS13 MAKERSUPDATED 21 OCTOBER 2026", "38 CHIPS", "CHIP VENDOR ANNOUNCED FOUNDRY, PROCESS NODE MEMORY TYPE MEMORY, GIGABYTES MEMORY SUPPLIERS PACKAGE BANDWIDTH, TERABYTES/S SPEED AT FP16, TFLOPS SPEED AT FP8, TFLOPS SPEED AT FP4, TFLOPS POWER, WATTS", "216 SOURCES FOR 38 CHIPS", "UPDATED 21 OCTOBER 2026"
+   + Speed at FP16, by the year each chip was announced
+   + 30 of 38 chips have a published figure
+   + The Instinct MI455X is the highest, at 5,033 TFLOPS. Each dot links to its chip's row in the table.
+   + TFLOPS
+   + 0
+   + 2,000
+   + 4,000
+   + 6,000
+   + 2020
+   + 2021
+   + 2022
+   + 2023
+   + 2024
+   + 2025
+   + 2026
+   + B200
+   + B300
+   + Rubin
+   + H200
+   + H20
+   + H800
+   + A800
+   + H100
+   + A100
+   + Instinct MI355X
+   + Instinct MI455X, 5,033
+   + Instinct MI325X
+   + Instinct MI300X
+   + TPU v7
+   + TPU v6e
+   + TPU v5p
+   + TPU v5e
+   + TPU v4
+   + Trainium3
+   + Trainium2
+   + Maia 200
+   + MTIA 300
+   + MTIA v2
+   + Gaudi 3
+   + Gaudi 2
+   + Ascend 950PR
+   + Not published at FP16 TPU 8t, TPU 8i, MTIA 400, Jalapeño, WSE-3 Turbo, LPU, Siyuan 590, MTT S5000
+   + Each dot is a chip, placed at the month its maker announced it. A chip dated only to a year sits in that year's middle, on a line across the year. The highest value is the one solid dot.
+   words lost: none
+   words added: to to chip chip chip chip the the the the the the the the chips that a100 of 2020 in in 2026 each each each maker a a a a a published published 38 s s by speed at at at at fp16 fp16 year year year year was announced announced 30 have figure instinct instinct instinct instinct instinct mi455x mi455x is is is highest highest 5 5 033 033 tflops tflops dot dot dot links its its row table 0 2 2 000 000 000 4 6 2021 2022 2023 2024 2025 b200 b300 rubin h200 h20 h800 a800 h100 mi355x mi325x mi300x tpu tpu tpu tpu tpu tpu tpu v7 v6e v5p v5e v4 trainium3 trainium2 maia 200 mtia mtia mtia 300 v2 gaudi gaudi 3 ascend 950pr not 8t 8i 400 jalapeño wse-3 turbo lpu siyuan 590 mtt s5000 placed month it dated only sits middle on line across value one solid
+   writing rules on the added lines: no hits

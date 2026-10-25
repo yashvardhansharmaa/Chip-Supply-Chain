@@ -209,7 +209,7 @@ html.no-stage .aic-grid { grid-template-columns: minmax(0, 1fr); }
 .aic-strips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 56px; }
 .srow { min-width: 0; padding: 18px 0 16px; border-bottom: 1px solid var(--line); }
 .srow-h { margin: 0 0 10px; font-family: var(--font-ui); font-weight: 600; font-size: 15px; line-height: 1.3; color: var(--ink); }
-.srow-h span { margin-left: 8px; font-family: var(--font-code); font-weight: 400; font-size: 11.5px; color: var(--muted); }
+.srow-h span { margin-left: 4px; font-family: var(--font-code); font-weight: 400; font-size: 11.5px; color: var(--muted); }
 .sl { display: grid; grid-template-columns: 150px minmax(0, 1fr) 148px; gap: 4px 14px; align-items: center; min-height: 30px; }
 .sl-n { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-family: var(--font-ui); font-size: 13.5px; line-height: 1.6; color: var(--ink); }
 .sl.is-on .sl-n { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 4px; }
