@@ -112,6 +112,8 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8769';
     check('the passage flashes in its chapter', (await t.ev("document.querySelectorAll('.lk-flash').length")) === 1);
     await t.ev('(history.back(),1)'); await sleep(1500);
     check('Back returns to the entry', (await t.ev("document.documentElement.getAttribute('data-view')")) === 'glossary' && (await t.ev(open_)) && (await t.ev(title)) === 'EUV', await t.ev('location.hash'));
+    await t.ev("(location.hash='#/glossary',1)"); await sleep(800);
+    check('the Glossary tab closes the sheet', !(await t.ev(open_)));
     await t.close();
     t = await open(chrome, BASE + '/#lk-country-nl', { width: 1440, wait: 2500 });
     check('#lk-country-nl opens the Netherlands card', (await t.ev(title)) === 'Netherlands' && /Share of each segment/.test(await t.ev("document.getElementById('gl-sheet-body').innerText")));
@@ -135,6 +137,13 @@ const BASE = process.argv[2] || 'http://127.0.0.1:8769';
     check('Look it up opens the entry in the Glossary', (await t.ev("document.documentElement.getAttribute('data-view')")) === 'glossary' && (await t.ev(open_)) && (await t.ev("location.hash")) === look, look + ' -> ' + (await t.ev(title)));
     check('after a move within the site the title takes focus', (await t.ev("document.activeElement && document.activeElement.classList.contains('lk-t')")));
     check('no script errors in the chapter and back', !t.errors.length, t.errors.join(' | '));
+    await t.close();
+
+    t = await open(chrome, BASE + '/#lithography', { width: 390, wait: 2500 });
+    await t.ev("(function(){var b=[...document.querySelectorAll('#lithography .prose .gl-term')].filter(function(x){return !x.dataset.note;})[0];b.scrollIntoView({block:'center'});b.click();return 1;})()"); await sleep(600);
+    check('390: a tap opens the look-up card as a sheet over the text', (await t.ev("!document.getElementById('gl-tip').hidden && document.getElementById('gl-tip').classList.contains('is-sheet')")));
+    await t.ev("(document.querySelector('#gl-tip a').click(),1)"); await sleep(1500);
+    check('390: Look it up opens the entry full screen', (await t.ev("document.documentElement.getAttribute('data-view')")) === 'glossary' && (await t.ev(open_)) && (await t.ev("document.getElementById('gl-sheet').getBoundingClientRect().top")) === 0);
     await t.close();
 
     /* ---------- 768: the sheet lies over the page ---------- */

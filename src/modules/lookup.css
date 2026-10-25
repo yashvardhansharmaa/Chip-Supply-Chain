@@ -45,6 +45,8 @@ html:not(.booted) .gl-try { visibility: hidden; } /* its six names arrive at boo
 .gl-field input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .gl-field input::-webkit-search-cancel-button { display: none; }
 .gl-field > svg { position: absolute; left: 15px; top: 50%; width: 16px; height: 16px; margin-top: -8px; fill: none; stroke: var(--ink-2); stroke-width: 1.6; stroke-linecap: round; pointer-events: none; }
+/* a narrow phone: the field gives its icon's room to the words, so the hint is never cut */
+@media (max-width: 360px) { .gl-field > svg { display: none; } .gl-field input { padding-left: 12px; } .gl-field input:placeholder-shown { padding-right: 12px; } }
 .gl-clear { position: absolute; right: 4px; top: 50%; margin-top: -18px; width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; font-family: var(--font-ui); font-size: 20px; line-height: 1; color: var(--ink-2); }
 .gl-clear:hover { color: var(--ink); background: var(--bg-2); }
 .gl-bar-r { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-width: 0; }
