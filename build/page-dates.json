@@ -1,8 +1,8 @@
 {
   "/": {
     "published": "2026-10-01",
-    "modified": "2026-10-21",
-    "content": "014e227d30c0e988"
+    "modified": "2026-10-25",
+    "content": "dafc13b52dfebda5"
   },
   "/advanced-packaging/": {
     "published": "2026-09-09",
@@ -21,8 +21,8 @@
   },
   "/chip-supply-chain-the-chain.pdf": {
     "published": "2026-10-01",
-    "modified": "2026-10-21",
-    "content": "5753fc19a1fa708f"
+    "modified": "2026-10-25",
+    "content": "8c48d4bbfe16c2b8"
   },
   "/chips/": {
     "published": "2026-10-21",
@@ -66,13 +66,13 @@
   },
   "/glossary/": {
     "published": "2026-10-21",
-    "modified": "2026-10-21",
-    "content": "373f467f2a066ddf"
+    "modified": "2026-10-25",
+    "content": "732de2325d1f2878"
   },
   "/lithography/": {
     "published": "2026-09-09",
-    "modified": "2026-10-21",
-    "content": "e9a8339974f7c395"
+    "modified": "2026-10-25",
+    "content": "be49f4e68530d73a"
   },
   "/memory-and-hbm/": {
     "published": "2026-09-09",
@@ -126,8 +126,8 @@
   },
   "/pdf/lithography.pdf": {
     "published": "2026-10-20",
-    "modified": "2026-10-23",
-    "content": "d9010fb8f23e6efd"
+    "modified": "2026-10-25",
+    "content": "bd5bad2eec763746"
   },
   "/pdf/memory-and-hbm.pdf": {
     "published": "2026-10-20",

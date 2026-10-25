@@ -7,6 +7,35 @@ description: Edit or write prose using William Zinsser's principles from On Writ
 
 Zinsser's thesis: clear writing is clear thinking made visible, and the work is in the rewriting. Most first drafts can lose a third to a half of their words without losing a fact. Apply the checklist below to every paragraph, then read the result aloud.
 
+## 0. Make the argument before polishing the words
+
+Cutting clutter does not fix muddled thinking, and it can make the muddle worse. The owner found this paragraph in Lithography (October 2026):
+
+> If ASML stopped shipping, no fab anywhere could add EUV scanners. Tools already in fabs would keep printing for as long as they were serviced. [95 percent of systems still in use.] It guarantees service and spare parts for each platform until at least a committed date, subject to export controls. ASML itself could not quickly rebuild its production, because Zeiss makes its optics and Trumpf its drive laser.
+
+It read smoothly and said little:
+- **No stated point.** It stacked facts without saying what a halt would mean.
+- **A placeholder.** "Until at least a committed date" hides a fact the reader needs.
+- **A last sentence that does not follow.** It answers a different question (what if ASML's own suppliers stopped?), and it got that way during a plain-writing pass that compressed an earlier sentence.
+
+The rewrite:
+
+> If ASML stopped shipping, no fab anywhere could add EUV capacity, because no other company makes EUV scanners. The scanners already in fabs would keep printing only as long as they were serviced. ASML has around 10,000 customer support employees who maintain and upgrade those machines around the clock. Serviced this way, ASML's machines stay in use for a long time. [95 percent still in use.] The same report warned that export controls may limit the service ASML can provide for machines already installed.
+>
+> ASML has a chokepoint of its own. Zeiss SMT is its only supplier of lenses, mirrors and other critical optics. ASML says that if Zeiss could not supply them for a long period, it would effectively be unable to run its business.
+
+The rules, taken from that fix and from the two pieces the owner named as models (techstatecraft.org/duv/ and IFP's "How to increase America's AI lead over China"):
+
+1. **State each paragraph's point first, in one plain sentence.** Write it before anything else. If a reader who knows nothing could not restate the paragraph in one sentence, the paragraph has no point yet.
+2. **Every sentence must follow from the one before it.** Read the premise, then each sentence in turn, and ask whether it answers the question the paragraph asked. A sentence that answers a different question goes in its own paragraph, under its own point sentence.
+3. **Explain a chokepoint as a chain of dependency.** Say who needs what from whom, and what happens when it stops: "no fab could add EUV capacity, because no other company makes EUV scanners." Say the "because" outright, and never leave the reader to infer the link.
+4. **Name a turn in the argument.** When the topic shifts, open a new paragraph with a sentence that says so ("ASML has a chokepoint of its own").
+5. **A placeholder is a missing fact.** "A committed date", "certain tools", "some customers": give the date, the tools, the customers from the source, or cut the clause. Never hint at a fact the source does not give.
+6. **Compressing must not change the meaning.** After every cut, reread the sentence alone and then with its neighbors. A shorter sentence that says something different is a new error.
+7. **Paraphrase a source into its plain meaning.** A vague paraphrase hides the fact it was meant to carry. Check every paraphrase against the page it cites.
+8. **Findings in short declarative sentences, then the evidence.** State a caveat right after the claim it limits. Translate a scale the reader cannot picture.
+9. **Close off the second reading.** If a sentence can be read two ways, add the fact that rules one out. "ASML's machines last a long time" after "only as long as they were serviced" left the owner unsure whether the machines need no service or last because they are serviced. Naming who does the work fixed it: "ASML has around 10,000 customer support employees who maintain and upgrade those machines around the clock. Serviced this way, ASML's machines stay in use for a long time."
+
 ## 1. Strip every sentence to its cleanest parts
 
 Bracket, then delete, anything that does no work:
