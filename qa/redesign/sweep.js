@@ -10,7 +10,9 @@
        in the first three screens;
      - focus: Tab is pressed up to --tabs times and each control it reaches must draw a focus mark (an outline, a box
        shadow or a border that changes).
-   usage: node qa/redesign/sweep.js [--only walk,lithography] [--widths 390,1440] [--tabs 40] [--out qa/redesign/sweep.txt] */
+   --set chapters (stage 2) measures every chapter instead: each of the 17 in The Chain, landed on by its anchor (the first three
+   screens are then its opener, specimen and card, and Tab starts at the chapter), and each readable page dist/<chapter>/.
+   usage: node qa/redesign/sweep.js [--set chapters] [--only walk,lithography] [--widths 390,1440] [--tabs 40] [--out qa/redesign/sweep.txt] */
 'use strict';
 const fs = require('fs');
 const path = require('path');
@@ -24,7 +26,10 @@ const THEMES = opt('themes', 'light,dark').split(',');
 const TABS = +opt('tabs', 40);
 const ONLY = (opt('only', '') || '').split(',').filter(Boolean);
 const OUT = opt('out', path.join(__dirname, 'sweep.txt'));
-const PAGES = [['walk', '/#/'], ['chain', '/#/chain'], ['ai-chips', '/#/landscape'], ['suppliers', '/#/suppliers'], ['suppliers-by-country', '/#/suppliers?tab=country'],
+const CHAPTERS = fs.readdirSync(path.join(__dirname, '..', '..', 'content')).filter((f) => /^\d\d-.*\.md$/.test(f)).sort()
+  .map((f) => { const m = fs.readFileSync(path.join(__dirname, '..', '..', 'content', f), 'utf8').match(/"id":\s*"([^"]+)"/); return m ? m[1] : f.replace(/^\d\d-|\.md$/g, ''); });
+const SET = opt('set', '');
+const PAGES = SET === 'chapters' ? CHAPTERS.map((id) => ['chain-' + id, '/#' + id]).concat(CHAPTERS.map((id) => ['page-' + id, '/' + id + '/'])).filter(([n]) => !ONLY.length || ONLY.includes(n)) : [['walk', '/#/'], ['chain', '/#/chain'], ['ai-chips', '/#/landscape'], ['suppliers', '/#/suppliers'], ['suppliers-by-country', '/#/suppliers?tab=country'],
   ['export-controls', '/#/controls'], ['china-revenue', '/#/exposure'], ['glossary', '/#/glossary'],
   ['page-lithography', '/lithography/'], ['page-geopolitics', '/geopolitics/'], ['page-summary', '/summary/'], ['page-chips', '/chips/'],
   ['page-suppliers', '/suppliers/'], ['page-export-controls', '/export-controls/'], ['page-glossary', '/glossary/']].filter(([n]) => !ONLY.length || ONLY.includes(n));
@@ -118,7 +123,10 @@ const FOCUS = `(() => {
         const m = await ev(MEASURE); loads++;
         // focus: Tab through the page from the top
         const bad = []; let reached = 0;
-        await ev('(window.scrollTo(0,0), document.activeElement && document.activeElement.blur && document.activeElement.blur(), 1)');
+        // a chapter landed on by its anchor: Tab starts at the chapter (its first control is the next stop); any other page from the top
+        const startAt = h && /^[a-z0-9-]+$/.test(h) ? h : '';
+        if (startAt) await ev(`(function(){var e=document.getElementById(${JSON.stringify(startAt)});if(!e)return 0;e.setAttribute('tabindex','-1');e.focus({preventScroll:true});e.removeAttribute('tabindex');return 1;})()`);
+        else await ev('(window.scrollTo(0,0), document.activeElement && document.activeElement.blur && document.activeElement.blur(), 1)');
         for (let k = 0; k < TABS; k++) {
           await s('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 });
           await s('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 });

@@ -45,15 +45,13 @@ article.chapter > .chapter-head > * { min-width: 0; }
   font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-title);
   font-size: clamp(60px, 7.7vw, 116px); line-height: 0.9; letter-spacing: -0.03em; text-wrap: balance; overflow-wrap: normal;
 }
-/* a long title ("Chemicals, Gases and Photoresist") takes two lines at a smaller size, as wide as the columns allow */
-.chapter .ch-title.is-long { grid-column: 1 / 8; font-size: clamp(46px, 5.3vw, 80px); line-height: 0.96; letter-spacing: -0.022em; }
+/* a long title ("Chemicals, Gases and Photoresist") takes two lines at a smaller size in the same six columns */
+.chapter .ch-title.is-long { font-size: clamp(44px, 5vw, 74px); line-height: 0.98; letter-spacing: -0.022em; }
 .chapter .ch-lede {
   grid-column: 7 / 13; grid-row: 2; align-self: end; margin: 26px 0 0; max-width: 31em;
   font-family: var(--font-body); font-weight: 400; font-size: clamp(19px, 1.62vw, 23px); line-height: 1.38; color: var(--ink-2);
 }
-.chapter .ch-title.is-long + .ch-lede { grid-column: 8 / 13; }
 .chapter .ch-omet { grid-column: 7 / 13; grid-row: 3; margin-top: 20px; min-width: 0; }
-.chapter .ch-title.is-long ~ .ch-omet { grid-column: 8 / 13; }
 /* the facts: one mono line, a dot between facts, none at the start of a wrapped line (the 18 px slot is clipped) */
 .chapter .ch-meta { display: flex; flex-wrap: wrap; align-items: baseline; margin: 0 0 0 -18px; clip-path: inset(0 0 0 18px); }
 .chapter .ch-meta .label { font-family: var(--font-code); font-size: 12px; line-height: 20px; color: var(--ink-2); white-space: nowrap; }
@@ -318,8 +316,8 @@ html.no-stage .chapter .ch-spec-cap { grid-column: 1 / 9; }
 @media (max-width: 1199px) {
   .chapter .ch-title { grid-column: 1 / -1; }
   .chapter .ch-title.is-long { grid-column: 1 / -1; }
-  .chapter .ch-lede, .chapter .ch-title.is-long + .ch-lede { grid-column: 1 / 10; grid-row: 3; margin-top: 22px; }
-  .chapter .ch-omet, .chapter .ch-title.is-long ~ .ch-omet { grid-column: 1 / 10; grid-row: 4; }
+  .chapter .ch-lede { grid-column: 1 / 10; grid-row: 3; margin-top: 22px; }
+  .chapter .ch-omet { grid-column: 1 / 10; grid-row: 4; }
   .chapter .ch-spec-draw { grid-column: 1 / 8; }
   .chapter .ch-spec-cap { grid-column: 8 / 13; }
   .chapter .plate { padding: 28px 30px 32px; }
