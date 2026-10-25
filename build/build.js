@@ -788,10 +788,12 @@ const chaptersHTML = chapters.length ? chapters.map(chapterHTML).join('\n') : `<
 
 // the fifteen stages of the chain first, then the two chapters that look across all of them under their own heading; each
 // entry gives the chapter's one-line summary (decision 12; the section links stay in search and the permalinks)
-const contentsItem = (ch) => `<div class="item"><span class="n">${pad(ch.number)}</span><a class="t" href="#${esc(ch.id)}">${esc(ch.title)}</a>${ch.meta.oneLiner ? `<p class="ol">${esc(ch.meta.oneLiner)}</p>` : ''}</div>`;
+// a contents entry: the number with the stage's band as a mark (a bar for Extreme, an outline for High, as in the chapter's rail),
+// the title and the chapter's one line
+const contentsItem = (ch) => { const band = ((ch.meta && ch.meta.card) || {}).concentration || ''; return `<div class="item"><span class="n">${pad(ch.number)}${band === 'Extreme' || band === 'High' ? `<i class="ct-bmk${band === 'High' ? ' h' : ''}" aria-hidden="true"></i>` : ''}</span><a class="t" href="#${esc(ch.id)}">${esc(ch.title)}</a>${ch.meta.oneLiner ? `<p class="ol">${esc(ch.meta.oneLiner)}</p>` : ''}</div>`; };
 const stageIds = new Set(stages.map((c) => c.id));
 const acrossChapters = chapters.filter((c) => !stageIds.has(c.id)).concat(geo ? [geo] : []);
-const contentsHTML = `<h3 class="contents-k">The ${word(stages.length)} stages of the chain</h3><div class="contents-grid">${stages.map(contentsItem).join('')}</div>`
+const contentsHTML = `<div class="contents-kr"><h3 class="contents-k">The ${word(stages.length)} stages of the chain</h3><p class="ct-key" aria-hidden="true"><span><i class="ct-bmk"></i>Extreme</span><span><i class="ct-bmk h"></i>High</span></p></div><div class="contents-grid">${stages.map(contentsItem).join('')}</div>`
   + (acrossChapters.length ? `<h3 class="contents-k">Across the chain</h3><p class="contents-note">These ${word(acrossChapters.length)} chapters are not stages. They look across all ${word(stages.length)}, at what a chip costs and at the contest over who controls each stage.</p><div class="contents-grid">${acrossChapters.map(contentsItem).join('')}</div>` : '');
 const thesisHTML = 'How AI chips are made';
 const subtitleHTML = 'Every stage of the supply chain, and who controls it.';

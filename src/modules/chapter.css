@@ -16,8 +16,57 @@
 
 /* ---------- the page ---------- */
 .view[data-view="stack"] { width: 100%; padding: 0 var(--margin); }
-/* the top of The Chain (how to read a chapter, the contents) keeps its reading width until stage 3 redraws it */
-.view[data-view="stack"] > .howto, .view[data-view="stack"] > .contents { max-width: 1000px; }
+/* ---------- the top of The Chain (stage 3): the title and its standfirst, How to read a chapter, the contents ----------
+   On the chapter's grid: the title across the row in Fraunces 350, the standfirst to column 8, then two sections, each a
+   Fraunces heading over an ink rule. The three scales of the card sit side by side; the contents list each chapter's number
+   with its band as a mark, its title and its one line, three to a row */
+.view[data-view="stack"] > .howto {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: start;
+  padding: clamp(40px, 7vh, 64px) 0 0;
+}
+.view[data-view="stack"] > .howto > * { grid-column: 1 / -1; min-width: 0; }
+.howto h1.howto-title {
+  margin: 0 0 0 -0.045em; font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-title);
+  font-size: clamp(60px, 8vw, 120px); line-height: 0.9; letter-spacing: -0.03em;
+}
+.view[data-view="stack"] > .howto > .howto-lede { grid-column: 1 / 9; margin: 24px 0 0; max-width: 36em; font-family: var(--font-body); font-size: clamp(19px, 1.5vw, 22px); line-height: 1.42; color: var(--ink-2); }
+.howto h3.howto-k, .contents > h2 {
+  margin: 72px 0 0; padding: 0 0 12px; border: 0; border-bottom: 1px solid var(--ink);
+  font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 24px; line-height: 1.2; letter-spacing: -0.01em; color: var(--ink);
+}
+.view[data-view="stack"] > .howto > h3.howto-k + p { grid-column: 1 / 9; margin: 18px 0 0; max-width: 40em; font-family: var(--font-body); font-size: 17.5px; line-height: 1.55; color: var(--ink); }
+.view[data-view="stack"] > .howto > ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 24px; margin: 24px 0 0; padding: 0; list-style: none; }
+.howto ul li { margin: 0; padding: 14px 24px 0 0; border-top: 1px solid var(--line-2); font-family: var(--font-body); font-size: 16px; line-height: 1.55; color: var(--ink-2); }
+.howto ul li b { display: block; margin: 0 0 6px; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 19px; line-height: 1.2; color: var(--ink); }
+.view[data-view="stack"] > .howto > .howto-dl { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 28px 0 0; }
+.howto .howto-dl .howto-alt { margin-left: 8px; font-family: var(--font-ui); font-size: 15px; font-weight: 500; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 3px; }
+.howto .howto-dl .howto-alt:hover { color: var(--accent-ink); border-bottom-color: var(--accent); }
+.view[data-view="stack"] > .contents { margin: 0; padding: 0 0 72px; border: 0; }
+.contents-kr { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 20px; margin: 26px 0 0; }
+.contents-kr .contents-k { margin: 0; }
+.ct-key { display: flex; gap: 16px; margin: 0; font-family: var(--font-ui); font-size: 13px; line-height: 16px; color: var(--ink-2); }
+.ct-key span { display: inline-flex; align-items: flex-end; gap: 6px; }
+.contents-k { margin: 26px 0 0; font-family: var(--font-code); font-weight: 400; font-size: 12px; line-height: 16px; color: var(--muted); }
+.contents-grid + .contents-k { margin-top: 44px; padding-top: 0; border-top: 0; }
+.contents-note { margin: 8px 0 0; max-width: 46em; font-family: var(--font-body); font-size: 16px; line-height: 1.5; color: var(--ink-2); }
+.contents-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 24px; margin-top: 12px; }
+.contents-grid .item { grid-template-columns: 1fr; padding: 14px 8px 18px 0; border-top: 1px solid var(--line-2); }
+.contents-grid .n { grid-row: auto; display: flex; align-items: flex-end; gap: 7px; padding: 0; font-family: var(--font-code); font-size: 12px; line-height: 16px; font-weight: 400; color: var(--muted); }
+.ct-bmk { display: inline-block; width: 5px; height: 12px; margin-bottom: 2px; background: var(--ink); }
+.ct-bmk.h { height: 6px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); }
+.contents-grid .t { margin: 8px 0 6px; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 21px; line-height: 1.18; color: var(--ink); text-decoration: none; }
+.contents-grid .t:hover { color: var(--accent-ink); }
+.contents-grid .ol { grid-column: 1; margin: 0; max-width: 34em; font-family: var(--font-body); font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+@media (max-width: 1199px) { .contents-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .view[data-view="stack"] > .howto > .howto-lede, .view[data-view="stack"] > .howto > h3.howto-k + p { grid-column: 1 / -1; } }
+@media (max-width: 760px) {
+  .view[data-view="stack"] > .howto { display: block; padding-top: 32px; }
+  .howto h1.howto-title { font-size: min(76px, 19vw); }
+  .view[data-view="stack"] > .howto > .howto-lede { margin-top: 16px; font-size: 18px; }
+  .howto h3.howto-k, .contents > h2 { margin-top: 48px; font-size: 22px; }
+  .view[data-view="stack"] > .howto > ul { grid-template-columns: 1fr; row-gap: 16px; }
+  .contents-grid { grid-template-columns: 1fr; }
+  .view[data-view="stack"] > .contents { padding-bottom: 48px; }
+}
 
 article.chapter {
   --g: 24px;
