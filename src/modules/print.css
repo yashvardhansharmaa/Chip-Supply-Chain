@@ -470,6 +470,8 @@
   .cp-sources .src-meta { display: inline; font-family: var(--font-body); font-size: 7.4pt; color: var(--ink-2); }
   .cp-sources .src-meta::before { content: ". "; }
   .cp-sources .src-url { display: block; font-family: var(--font-code); font-size: 6.1pt; line-height: 1.36; color: var(--muted); overflow-wrap: anywhere; }
+  /* a heading an earlier layout left at the foot of a page opens the next one (print.js .cp-break, build/pdf.py) */
+  .cp-break { break-before: page; }
   /* a chapter that lost lines at a page's foot to Paged.js is laid out again with its lines a little closer (print.js
      .cp-nudge, build/pdf.py), so its page ends fall elsewhere */
   .chapter.cp-nudge .plain p, .chapter.cp-nudge .inshort p, .chapter.cp-nudge > .prose > p, .chapter.cp-nudge > .prose > ul,

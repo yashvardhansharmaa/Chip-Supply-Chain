@@ -344,7 +344,7 @@
      opts.edition   the day the PDF is made, "20 October 2026": printed as "Edition of 20 October 2026" on the title
                     block, in the foot of every page and in the citation
      opts.site      the site's address, "https://chipsupplychain.org/" (default: the page's canonical link)
-     opts.moves, opts.tight, opts.split, opts.sources, opts.nudge   what an earlier layout learned (build/pdf.py, from finish()) */
+     opts.moves, opts.tight, opts.split, opts.sources, opts.nudge, opts.breaks   what an earlier layout learned (build/pdf.py, from finish()) */
   function prepare(opts) {
     opts = opts || {};
     var out = { mode: opts.mode || 'footnotes', cites: 0, notes: 0, chapters: 0, dropped: 0 };
@@ -450,6 +450,11 @@
     Object.keys(opts.split || {}).forEach(function (id) {
       var ch = document.getElementById(id);
       if (ch && opts.split[id]) ch.classList.add('cp-split');
+    });
+    /* headings an earlier layout left at the foot of a page open the next page instead (.cp-break) */
+    Object.keys(opts.breaks || {}).forEach(function (id) {
+      var h = document.getElementById(id);
+      if (h && opts.breaks[id]) h.classList.add('cp-break');
     });
     /* and chapters that lost lines at a page's foot to Paged.js: their lines are set a little closer (.cp-nudge), so the
        page ends fall elsewhere */
@@ -697,7 +702,7 @@
      page of their own (sources). It also marks each chapter's opening page and the book's colophon, which carry no
      running head (print.css .cp-opener, .cp-colophon); that changes no layout. */
   function finish() {
-    var out = { pages: 0, notes: 0, repeats: 0, stray: 0, overflow: 0, short: [], stranded: [], split: [], overlap: [], crowded: [], lost: [], lostIn: [], sources: [] };
+    var out = { pages: 0, notes: 0, repeats: 0, stray: 0, overflow: 0, short: [], stranded: [], split: [], overlap: [], crowded: [], lost: [], lostIn: [], sources: [], strandedIds: [] };
     var pages = document.querySelectorAll('.pagedjs_page'), fills = [], alone = !!document.querySelector('.pagedjs_page .pt-chapter');
     Array.prototype.forEach.call(pages, function (page, i) {
       out.pages++;
@@ -760,7 +765,12 @@
           if (lid && out.lostIn.indexOf(lid) < 0) out.lostIn.push(lid);
         }
         var head = seenLast && seenLast.parentNode.closest('h2, h3, h4, h5, .fig-title, .cp-sources-h');
-        if (head && i < pages.length - 1) out.stranded.push((i + 1) + ':' + head.textContent.trim().slice(0, 40));
+        if (head && i < pages.length - 1) {
+          out.stranded.push((i + 1) + ':' + head.textContent.trim().slice(0, 40));
+          /* its id, so pdf.py can lay the chapter out again with that heading opening the next page (.cp-break) */
+          var hid = head.id || head.getAttribute('data-id') || '';
+          if (hid && out.strandedIds.indexOf(hid) < 0) out.strandedIds.push(hid);
+        }
       }
       /* the last few entries of a chapter's source list alone on a page, under a fifth of it, or (a chapter printed alone)
          its citation alone on the last page: that chapter's list is set closer next time (prepare({sources})) */
