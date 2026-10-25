@@ -53,7 +53,11 @@ All 23 cards besides the home card are in the "whole chain" style. Each keeps it
   - **The weights change on paper.** The screen's Fraunces 350 prints as 400, and the wordmark's 540 as 500. A weight between the named ones came back as Type 3 shapes, which do not copy or search.
 - **Two layout bugs, fixed:**
   - **Every folio printed as "n / 0".** Paged.js gathers every `counter-reset` in the page's sheets into one rule on its pages. The screen's section counter (`counter-reset: sec`, and `counter-increment: none` on the readable page) put a counter named "none" in that rule, which voided it. On paper `print.js` writes each section number on its heading (`data-cp-n`) and removes those two declarations before Paged.js reads the sheets. Folios now read "1 / 14".
-  - **Paged.js lost lines.** It sometimes cut a page at the wrong line when a footnote's call fell at the page's foot. Lithography's opener lost about three lines of In plain terms this way. Paragraphs on paper now wrap the plain way (`text-wrap: wrap`) and section heads are kept whole. `finish()` names each chapter that lost lines (`lostIn`), and `pdf.py` lays it out again set closer, so its lines fall elsewhere. `chapter_pdfs.py` still refuses any file whose log says "TEXT OFF THE PAGE".
+  - **Paged.js lost lines.** It sometimes cut a page at the wrong line when a footnote's call fell at the page's foot. Lithography's opener lost about three lines of In plain terms this way. Paragraphs on paper now wrap the plain way (`text-wrap: wrap`) and section heads are kept whole. `finish()` names each chapter that lost lines (`lostIn`), and `pdf.py` lays it out again set closer, so its lines fall elsewhere. A trial layout that loses lines is tried once more with the chapter's lines a little closer (`.cp-nudge`) before it is judged, so a layout that mends everything else is not thrown out for that alone. `chapter_pdfs.py` still refuses any file whose log says "TEXT OFF THE PAGE".
+- **Two more layout passes in `pdf.py`:**
+  - **Advanced Packaging.** Its card ran into the notes on page 3. The trial that mended it lost lines and was thrown out. With the nudge it now prints on 11 pages with no faults.
+  - **Data Centers and Power.** Its card left page 2 only 26 percent full, even set closer. Such a card may now also break between its parts, so it starts on that page. The chapter prints on 11 pages with none short.
+  - **Transistors and the Front End.** "Variants and trade-offs" stood alone at the foot of page 4. `finish()` now names each heading it finds alone at a page's foot (`strandedIds`), and `pdf.py` lays the chapter out again with that heading opening the next page (`.cp-break`).
 - **The book's front:**
   - **The cover.** The wafer is drawn in ink. The picked field is denser ink with its heavier seal ring, where it used to be blue. `build/cover-art.py` now draws in the ink unless a colour is named, and `build/assets/print-title.png` is regenerated from it. The wordmark is Fraunces at opsz 28, the title Fraunces at 64 pt, the subtitle Literata.
   - **How to read and Contents.** Both are restyled and set closer, so all 17 contents lines share page 2 with How to read.
@@ -76,17 +80,18 @@ All 23 cards besides the home card are in the "whole chain" style. Each keeps it
 | `node qa/scripts/smoke.js --port 9616` | Passes: 33 page loads, no failures. With the device set to dark, the main page, a chapter page and the summary keep the white ground, and `?theme=dark` turns them to rgb(18, 18, 17). |
 | Screen text | No visible text changed on any built page. All 25 changed HTML files in `dist/` have the same text, with scripts and styles stripped, as at c9f95cb. Every change is inside `@media print`, the print scripts, or the `og:image` addresses' `?v=`. |
 | Cards | 23 rendered, 56 KB to 132 KB, with fonts loaded, no overflow and the smallest text at 23 px. See `qa/redesign/cards-sheet.png`. |
-| Chapter PDFs | ALL17_RESULT |
+| Chapter PDFs | All 17 printed alone with `build/pdf.py --chapter` to my scratch space (197 pages in all). No log says "TEXT OFF THE PAGE" or that Paged.js failed, no text runs into the notes, and no heading stands alone at a page's foot. Two pages are under two-thirds full: Lithography's page 2 (59 percent) and Memory and HBM's page 3 (58 percent). Three cards break between their parts, in Chemicals, Gases and Photoresist, Systems and Networking, and Data Centers and Power. `pdffonts` on all 17 lists only Fraunces, Literata, Hanken Grotesk, Fragment Mono and Noto Serif SC, all embedded as TrueType. |
 | Summary PDF | 4 pages, 0.21 MB, with only the four new faces embedded, all TrueType. |
 
 ## Sample PDFs and their page images
 
-The PDFs were printed with `build/pdf.py` and `build/summary_pdf.py` from a copy of this checkout's `dist/` served on 127.0.0.1:9610 and 9614 for the job, to my scratch space. They have been deleted. Nothing in `dist/pdf/` or the book PDF was touched or committed.
+The PDFs were printed with `build/pdf.py` and `build/summary_pdf.py` from this checkout's `dist/` (or a frozen copy of it) served on 127.0.0.1:9610 or 9614 for the job only, to my scratch space. They have been deleted. Nothing in `dist/pdf/` or the book PDF was touched or committed.
 
 - `qa/redesign/print-lithography.png`: all 14 pages of the Lithography chapter PDF.
 - `qa/redesign/print-lithography-detail.png`: page 1 (the opener, the chain in the margin, the annotated drawing, the parts list, In plain terms), page 3 (the card and a section opening) and page 7 (two bar figures under rule B, with their findings and source lines).
 - `qa/redesign/print-book-front.png`: the whole-chain book's cover, How to read and Contents, and chapter 01's opener and card. It was printed with `--only 1`, so the contents' page numbers past chapter 01 read 0.
 - `qa/redesign/print-summary.png`: the four-page summary.
+- `qa/redesign/print-data-centers-split-card.png`: Data Centers and Power's pages 2 and 3, where the card breaks between its parts.
 
 ## Changes outside stage 4's own files (for the merge)
 
@@ -100,6 +105,6 @@ The PDFs were printed with `build/pdf.py` and `build/summary_pdf.py` from a copy
 - **og:image:alt still describes the old cards.** `social.js` builds it from the manifest's eyebrow, title and line, so a chapter's alt names its two ratings ("Extreme concentration · Very hard to substitute"). The new card shows the one-line summary. Suppliers' alt still says "where it sits", and Start here's alt names the hero title. I left `social.js` alone because stage 3 is changing `build/modules/`. Suggested fix: build the alt from the card's title and line. For example, `cards.py` could write them to a `cards.json` that `social.js` reads.
 - **The card drawings come from files only the main checkout has.** `build/assets/cards-art/` is committed, so `cards.py` runs anywhere. Remaking those drawings needs `qa/redesign/card-art.py --src <main checkout>`, as the home card's `card.html` needs the main checkout's `qa/design3/cards/chain/build.py`.
 - **Fraunces prints at 400 where the screen sets 350.** See the fonts note above. If the lead prefers lighter titles on paper, 300 is the other named weight that embeds as TrueType.
-- **Paged.js and footnotes.** The relayout catches lost lines, and every chapter in the full run came out with none (see the gates). The bug itself is in Paged.js 0.4.3 and the note handler, so the lead's run should still watch `chapter_pdfs.py` for refusals.
-- **Short pages.** As before the redesign, a card is kept whole and may leave the page before it short. Lithography's page 2 is 59 percent full. The existing float and set-closer passes handle the rest.
+- **Paged.js and footnotes.** The relayout catches lost lines, and every chapter in the full run came out with none (see the gates). The bug itself is in Paged.js 0.4.3 or the site's note handler, and I did not find its cause. The lead's run should still watch `chapter_pdfs.py` for refusals. The whole-chain book was printed only with `--only 1`, so its full run is untested.
+- **Short pages.** As before the redesign, a card is kept whole where it can be, and may leave the page before it short. Lithography's page 2 is 59 percent full. Pages under two-thirds full are listed in each chapter's log line in the gates above.
 - **PDFs not regenerated.** `dist/pdf/*.pdf`, `dist/chip-supply-chain-the-chain.pdf` and `dist/chip-supply-chain-summary.pdf` are still the old design until the lead regenerates them.
