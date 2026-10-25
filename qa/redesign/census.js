@@ -12,7 +12,7 @@
    Either side may be a built dist/ folder instead of a server (--a or --b with a path): stage 2 compares the live design built
    from the same chapter text (git archive 907850e, built in a scratch folder), because MAIN's own build now carries a writing
    pass that is not in the redesign branch, and that would show as lost text that no design change caused.
-   usage: node qa/redesign/census.js [--a <url|dist path>] [--b <url|dist path>] [--out qa/redesign/census.txt] [--only walk,lithography] */
+   usage: node qa/redesign/census.js [--a <url|dist path>] [--b <url|dist path>] [--out qa/redesign/census.txt] [--only walk,lithography] [--nocites] */
 'use strict';
 const fs = require('fs');
 const path = require('path');
@@ -35,8 +35,12 @@ const statics = fs.readdirSync(DIST).filter((d) => fs.existsSync(path.join(DIST,
 const PAGES = VIEWS.map(([n, u]) => ({ name: n, url: u })).concat(statics.map((d) => ({ name: '/' + d + '/', url: '/' + d + '/' })));
 
 const SEED = `(function(){var s=20261025;Math.random=function(){s=(s*1103515245+12345)%2147483648;return s/2147483648;};})();`;
+// --nocites (stage 3): the citation marks are read out of both sides, since stage 3 renumbers them in reading order and every
+// paragraph with a mark would otherwise differ; qa/redesign/check-cites.js checks the marks themselves
+const NOCITES = args.includes('--nocites');
 const READ = `(async () => {
   const st = document.createElement('style'); st.textContent = '*{content-visibility:visible!important}'; document.head.appendChild(st);
+  ${NOCITES ? "document.querySelectorAll('sup.cite, sup.cite-sep').forEach((e) => e.remove());" : ''}
   await new Promise((r) => setTimeout(r, 400));
   return document.body.innerText;
 })()`;
