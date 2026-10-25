@@ -376,10 +376,12 @@ function cardCites(card, ctx) {
   if (!any) warn(`${ctx.id}: the card has no source fields (qa/round2/SCHEMA.md §1)`);
   else if (off.length) warn(`${ctx.id}: card url and sentence counts differ: ${off.join(', ')}`);
 }
-// The chapter's head comes before its body: In plain terms (meta.plain, the first paragraph of How it works), In short (the
-// body's Takeaways section, which splitTakeaways moves to the head), then the card. Their sources are numbered first, in
-// that order, before markdown() numbers the rest of the body as it reads it; a source met again keeps its number.
+// The chapter's head comes before its body, in the order the page shows it (redesign, 25 Oct 2026): the chokepoint card, In
+// plain terms (meta.plain, the first paragraph of How it works), then In short (the body's Takeaways section, which
+// splitTakeaways moves to the head). Their sources are numbered first, in that order, before markdown() numbers the rest of
+// the body as it reads it; a source met again keeps its number, and every mark looks its number up by its url (cite).
 function readingOrderCites(meta, body, ctx, hasCard) {
+  if (hasCard) cardCites(meta.card, ctx); // the card comes first on the page (redesign stage 2), so its marks are numbered first
   if (meta.plain) inline(String(meta.plain), ctx);
   const lines = String(body || '').replace(/\r/g, '').split('\n');
   const at = lines.findIndex((l) => /^##\s+takeaways?\s*(\{#[^}]*\})?\s*$/i.test(l.trim().replace(/\*\*/g, '')));
@@ -387,7 +389,6 @@ function readingOrderCites(meta, body, ctx, hasCard) {
     const rest = lines.slice(at + 1), end = rest.findIndex((l) => /^#{1,2}\s/.test(l.trim()));
     inline((end < 0 ? rest : rest.slice(0, end)).join('\n'), ctx);
   }
-  if (hasCard) cardCites(meta.card, ctx);
 }
 // The marks for one place in the text. More urls than sentences: the extras sit with the last sentence, a comma between
 // marks so that 1 and 2 never read as 12. A sentence with no url gets no mark.
