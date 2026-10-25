@@ -20,24 +20,23 @@
   /* Paper gets static fonts. Chrome cannot put a variable font into a PDF as a font: it draws each instance as Type 3
      shapes, which copy and search as broken words ("ED / A"). So for print the page's variable families give way to
      fixed instances of the same families, all under the SIL Open Font License, served by Google Fonts as the site's own
-     fonts are: Fraunces at one optical size per weight (the screen's settings: 48 for heads, 72 for the card's figures,
-     144 for the chapter numerals), Source Serif 4 at its text size, Instrument Sans, IBM Plex Mono, and Noto Serif and
-     Sans for the Chinese and Japanese titles of some sources (the system's own CJK fonts print as Type 3 too). Chrome
-     embeds each as TrueType, subset to the letters used. */
+     fonts are: the redesign's four (qa/redesign/BRIEF.md). Fraunces at the screen's optical size, 48, with SOFT and WONK
+     at 0, in the three weights print.css sets (400 for titles and section heads, 500 for small heads, 600 for bold in
+     them: the screen's 350 is between named weights, and such an instance prints as Type 3 again); Literata at its text size; Hanken Grotesk for labels; Fragment Mono for kickers, codes and dates; and Noto
+     Serif and Sans for the Chinese and Japanese titles of some sources (the system's own CJK fonts print as Type 3 too).
+     Chrome embeds each as TrueType, subset to the letters used. */
   /* one request per instance: asked for a single point, Google Fonts serves a fixed instance; asked for several weights
      at once, it serves one variable file that covers them, and that prints as Type 3 again */
-  var PRINT_FONTS = ['Fraunces:opsz,wght@14,600', 'Fraunces:opsz,wght@48,500', 'Fraunces:opsz,wght@72,400',
-    'Fraunces:opsz,wght@96,700', 'Fraunces:opsz,wght@144,300',
-    'Source+Serif+4:ital,opsz,wght@0,12,400', 'Source+Serif+4:ital,opsz,wght@0,12,500', 'Source+Serif+4:ital,opsz,wght@0,12,600',
-    'Source+Serif+4:ital,opsz,wght@0,12,700', 'Source+Serif+4:ital,opsz,wght@1,12,400', 'Source+Serif+4:ital,opsz,wght@1,12,600',
-    'Instrument+Sans:wght@400', 'Instrument+Sans:wght@500', 'Instrument+Sans:wght@600', 'Instrument+Sans:wght@700',
-    'IBM+Plex+Mono:wght@400;500', 'Noto+Serif+SC:wght@400', 'Noto+Serif+SC:wght@600', 'Noto+Serif+JP:wght@400',
+  var PRINT_FONTS = ['Fraunces:opsz,wght,SOFT,WONK@48,400,0,0', 'Fraunces:opsz,wght,SOFT,WONK@48,500,0,0', 'Fraunces:opsz,wght,SOFT,WONK@48,600,0,0',
+    'Literata:ital,opsz,wght@0,12,400', 'Literata:ital,opsz,wght@0,12,600', 'Literata:ital,opsz,wght@0,12,700',
+    'Literata:ital,opsz,wght@1,12,400', 'Literata:ital,opsz,wght@1,12,600',
+    'Hanken+Grotesk:wght@400', 'Hanken+Grotesk:wght@500', 'Hanken+Grotesk:wght@600', 'Hanken+Grotesk:wght@700',
+    'Fragment+Mono', 'Noto+Serif+SC:wght@400', 'Noto+Serif+SC:wght@600', 'Noto+Serif+JP:wght@400',
     'Noto+Serif+JP:wght@600', 'Noto+Sans+SC:wght@400', 'Noto+Sans+JP:wght@400'];
-  /* Two more instances of Fraunces under names of their own: the cover's title at the largest optical size and the
-     site's display weight, and the wordmark at the masthead's optical size. Under the family's own name they would take
-     the place of the 400 and 500 above (one face to a weight), which set the card's figures and the heads. Each comes
-     from the same Google Fonts request a link would make, added through the FontFace API under its new name. */
-  var PRINT_FACES = [['Fraunces Display', 'Fraunces:opsz,wght@144,400'], ['Fraunces Mark', 'Fraunces:opsz,wght@28,500']];
+  /* One more instance of Fraunces under a name of its own: the wordmark, 500 at the masthead's optical size, 28 (the screen's 540 is between named weights). Under
+     the family's own name it would take the place of the 500 above (one face to a weight). It comes from the same Google
+     Fonts request a link would make, added through the FontFace API under its new name. */
+  var PRINT_FACES = [['Fraunces Mark', 'Fraunces:opsz,wght,SOFT,WONK@28,500,0,0']];
   var fontsLoaded = null;
   function fontURL(family) { return 'https://fonts.googleapis.com/css2?family=' + family + '&display=block'; }
   function namedFace(name, family) {
@@ -66,12 +65,12 @@
   }
   /* pdf.py waits on this after prepare(): the stylesheet, then each face the print uses, then any other pending load */
   function fontsReady() {
-    var faces = ['300 24pt Fraunces', '400 13pt Fraunces', '500 14pt Fraunces', '600 11pt Fraunces', '700 68pt Fraunces',
-      '400 10pt "Source Serif 4"', '500 10pt "Source Serif 4"', '600 10pt "Source Serif 4"', '700 10pt "Source Serif 4"',
-      'italic 400 10pt "Source Serif 4"', '400 7pt "Instrument Sans"', '500 7pt "Instrument Sans"', '600 7pt "Instrument Sans"',
-      '700 7pt "Instrument Sans"', '400 7pt "IBM Plex Mono"', '500 7pt "IBM Plex Mono"', '400 68pt "Fraunces Display"',
-      '500 11pt "Fraunces Mark"'];
-    return Promise.resolve(fontsLoaded).then(function () {
+    var faces = ['400 24pt Fraunces', '500 11pt Fraunces', '600 11pt Fraunces',
+      '400 10pt Literata', '600 10pt Literata', '700 10pt Literata', 'italic 400 10pt Literata', 'italic 600 10pt Literata',
+      '400 7pt "Hanken Grotesk"', '500 7pt "Hanken Grotesk"', '600 7pt "Hanken Grotesk"', '700 7pt "Hanken Grotesk"',
+      '400 7pt "Fragment Mono"', '500 11pt "Fraunces Mark"'];
+    /* and Lithography's annotated drawing, fetched from its readable page (stills, below) */
+    return Promise.all([fontsLoaded, stillsLoaded]).then(function () {
       return Promise.all(faces.map(function (f) { return document.fonts.load(f).catch(function () { return []; }); }));
     }).then(function () { return document.fonts.ready; }).then(function () {
       var got = []; document.fonts.forEach(function (f) { if (f.status === 'loaded') got.push(f.family + ' ' + f.weight + (f.style !== 'normal' ? ' ' + f.style : '')); });
@@ -226,24 +225,70 @@
 
   /* ---------- the chapter opener, the questions and the contents page, for paper ---------- */
 
-  /* The fifteen stages in the ledger column, under the chapter's number, as the screen's column shows them (print.css
-     .cp-index): built from the screen's strip before it goes. The two chapters that are not stages have no strip, and
-     print none. */
+  /* The chain in the margin column beside the chapter (print.css .cp-index), as the screen's rail shows it: each of the
+     fifteen stages with its number, its whole name and its band's mark (solid for Extreme, an outline for High), then the
+     two chapters that look across them; the chapter's own line in bold. Built from the rail before its screen parts go,
+     and the rail moves to the head of the chapter, where it floats beside the opener. */
   function stageIndex() {
     each('article.chapter', document, function (ch) {
       var led = ch.querySelector('.ch-ledger'), track = led && led.querySelector('.chain-track');
       if (!track) return;
-      var ol = node('ol', 'cp-index');
-      ol.setAttribute('aria-hidden', 'true');
-      each('li', track, function (li, i) {
-        var n = li.querySelector('.n'), t = li.querySelector('.t');
-        var item = node('li', (i ? '' : 'cp-top') + (li.getAttribute('aria-current') === 'true' ? ' is-here' : ''));
-        item.appendChild(node('span', 't', t ? t.textContent.replace(/\u00ad/g, '') : ''));
-        item.appendChild(node('span', 'n', n ? n.textContent : ''));
-        ol.appendChild(item);
-      });
-      led.appendChild(ol);
+      var list = function (src, cls) {
+        var ol = node('ol', cls);
+        ol.setAttribute('aria-hidden', 'true');
+        each(':scope > li', src, function (li) {
+          var n = li.querySelector('.n'), t = li.querySelector('.t');
+          var item = node('li', li.getAttribute('aria-current') === 'true' ? 'is-here' : '');
+          item.setAttribute('data-band', li.getAttribute('data-band') || '0');
+          item.appendChild(node('span', 'n', n ? n.textContent : ''));
+          item.appendChild(node('span', 't', t ? t.textContent.replace(/\u00ad/g, '') : ''));
+          item.appendChild(node('i', 'bm'));
+          ol.appendChild(item);
+        });
+        return ol;
+      };
+      led.appendChild(node('p', 'cp-index-k', 'The chain'));
+      led.appendChild(list(track, 'cp-index'));
+      var across = led.querySelector('.rail-across');
+      if (across) led.appendChild(list(across, 'cp-index cp-across'));
+      ch.insertBefore(led, ch.firstChild);
     });
+  }
+
+  /* Each section's number, written on its heading for print.css (h3::before): the screen counts them with a CSS counter,
+     which starts again on every page Paged.js lays out. */
+  function sectionNumbers() {
+    each('article.chapter > .prose', document, function (prose) {
+      var i = 0;
+      each(':scope > h3', prose, function (h) { i++; h.setAttribute('data-cp-n', (i < 10 ? '0' : '') + i); });
+    });
+  }
+
+  /* A chapter whose drawing carries numbered parts (data/specimen-parts.json: Lithography) prints the annotated still its
+     readable page shows, balloons and all, above its caption: the live drawing does not print. It is taken from that page
+     (build/modules/social.js stillSVG draws it), so the two never differ. fontsReady() waits for it and its picture. */
+  var stillsLoaded = null;
+  function stills() {
+    var jobs = [];
+    each('article.chapter .ch-spec[data-parts]', document, function (fig) {
+      var ch = fig.closest('article.chapter');
+      if (!ch || !ch.id || fig.querySelector('.cp-still') || typeof fetch !== 'function') return;
+      jobs.push(fetch(ch.id + '/').then(function (r) { return r.ok ? r.text() : ''; }).then(function (html) {
+        var svg = html && new DOMParser().parseFromString(html, 'text/html').querySelector('svg.ch-still--wide');
+        if (!svg) return null;
+        svg = document.importNode(svg, true);
+        var src = '';
+        each('image', svg, function (im) {
+          src = (im.getAttribute('href') || '').replace(/^\.\.\//, ''); // the readable page is a folder down
+          im.setAttribute('href', src);
+        });
+        var box = node('div', 'cp-still');
+        box.appendChild(svg);
+        fig.insertBefore(box, fig.querySelector('.ch-spec-cap'));
+        return src ? new Promise(function (done) { var im = new Image(); im.onload = done; im.onerror = done; im.src = src; }) : null;
+      }).catch(function () { return null; }));
+    });
+    stillsLoaded = Promise.all(jobs);
   }
 
   /* The card heads the chapter's second page, as a plate. It goes to the head of the text under an id of its own, so that
@@ -316,6 +361,15 @@
     var tile = document.querySelector('.masthead .wm-tile');
     tile = tile ? tile.cloneNode(true) : null;
     stageIndex();
+    sectionNumbers();
+    /* Paged.js gathers every counter in the page's sheets into one counter-reset on its pages. The screen's section
+       counter (chapter.css: "counter-reset: sec", and "counter-increment: none" on the readable page) put a counter
+       named "none" there, which voided the rule, and every folio printed as "n / 0". On paper the numbers are written on
+       the headings (sectionNumbers), so those declarations leave the sheets before Paged.js reads them. */
+    each('style', document, function (st) {
+      var t = st.textContent, u = t.replace(/counter-(?:reset|increment):\s*(?:sec|none)\s*;?/g, '');
+      if (u !== t) st.textContent = u;
+    });
 
     /* Kill the specimen's animation loops: they re-arm through requestAnimationFrame, so a
        quarter second of dead frames ends them. Paged.js drives its own render queue through
@@ -383,6 +437,8 @@
       document.title = (alone.getAttribute('data-title') || alone.id) + ' · Chip Supply Chain'; // the PDF's own title
       out.chapters = 1; out.chapter = alone.id;
     } else printLede();
+
+    stills(); // after the other chapters go, so a chapter printed alone fetches only its own drawing
 
     /* chapters whose card opened a page after a short one in an earlier layout (from pdf.py): the head and the card
        are set closer (print.css .cp-tight), so that the end of In short and the card share a page */
@@ -635,7 +691,7 @@
      page of their own (sources). It also marks each chapter's opening page and the book's colophon, which carry no
      running head (print.css .cp-opener, .cp-colophon); that changes no layout. */
   function finish() {
-    var out = { pages: 0, notes: 0, repeats: 0, stray: 0, overflow: 0, short: [], stranded: [], split: [], overlap: [], crowded: [], lost: [], sources: [] };
+    var out = { pages: 0, notes: 0, repeats: 0, stray: 0, overflow: 0, short: [], stranded: [], split: [], overlap: [], crowded: [], lost: [], lostIn: [], sources: [] };
     var pages = document.querySelectorAll('.pagedjs_page'), fills = [], alone = !!document.querySelector('.pagedjs_page .pt-chapter');
     Array.prototype.forEach.call(pages, function (page, i) {
       out.pages++;
@@ -691,7 +747,12 @@
           if (qs.some(function (q) { return q.left >= right - 1; })) gone++;
           if (qs.some(function (q) { return q.left < right - 1; })) seenLast = tn;
         }
-        if (gone) out.lost.push((i + 1) + ':' + gone);
+        if (gone) {
+          out.lost.push((i + 1) + ':' + gone);
+          /* and its chapter, which pdf.py lays out again set closer: the lines then fall elsewhere on the page */
+          var lc = box.querySelector('article.chapter'), lid = lc ? lc.id || lc.getAttribute('data-id') : '';
+          if (lid && out.lostIn.indexOf(lid) < 0) out.lostIn.push(lid);
+        }
         var head = seenLast && seenLast.parentNode.closest('h2, h3, h4, h5, .fig-title, .cp-sources-h');
         if (head && i < pages.length - 1) out.stranded.push((i + 1) + ':' + head.textContent.trim().slice(0, 40));
       }

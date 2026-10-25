@@ -218,6 +218,11 @@ try:
                 if t in trial['tight'] or t in tried: trial['split'][t] = 1
                 else: trial['tight'][t] = 1
                 tried.add(t)
+            # Paged.js now and then cuts a page at the wrong line when a footnote's call falls near its foot, and the lines
+            # between are lost (lost, lostIn): that chapter is laid out again set closer, so its lines fall elsewhere
+            for t in best.get('lostIn') or []:
+                if t not in trial['tight']: trial['tight'][t] = 1
+                else: trial['sources'][t] = 1
             if trial == fit or trial in seen: break
             seen.append(trial)
             say('laying out again: ' + ', '.join([f'{i} down {n}' for i, n in trial['moves'].items() if n != fit['moves'].get(i)]
