@@ -64,10 +64,10 @@
     build: function () {
       var self = this, groups = this.groups = {};
       this.items.forEach(function (it) { var L = letterOf(it.name); (groups[L] = groups[L] || []).push(it); });
-      var html = '<section class="gl-sec gl-best" id="gl-best" aria-labelledby="gl-best-h" hidden><div class="gl-sec-h"><h2 class="gl-L" id="gl-best-h">Names that match</h2><p class="gl-gw"></p></div><div class="gl-cols"></div></section>';
+      var html = '<section class="gl-sec gl-best" id="gl-best" aria-labelledby="gl-best-h" hidden><div class="gl-sec-h"><h2 class="gl-L" id="gl-best-h">Names that match</h2><p class="gl-gw"></p></div><div class="gl-pages"></div></section>';
       html += LETTERS.filter(function (L) { return groups[L]; }).map(function (L) {
-        return '<section class="gl-sec" id="gl-sec-' + idL(L) + '" aria-labelledby="gl-h-' + idL(L) + '"><div class="gl-sec-h"><h2 class="gl-L" id="gl-h-' + idL(L) + '">' + showL(L) + '</h2><p class="gl-gw"></p></div><div class="gl-cols">' +
-          groups[L].map(function (it) { return self.entryHTML(it); }).join('') + '</div></section>';
+        return '<section class="gl-sec" id="gl-sec-' + idL(L) + '" aria-labelledby="gl-h-' + idL(L) + '"><div class="gl-sec-h"><h2 class="gl-L" id="gl-h-' + idL(L) + '">' + showL(L) + '</h2><p class="gl-gw"></p></div><div class="gl-pages"><div class="gl-cols">' +
+          groups[L].map(function (it) { return self.entryHTML(it); }).join('') + '</div></div></section>';
       }).join('');
       $('#gl-dict').innerHTML = html;
       this.best = $('#gl-best');
@@ -144,12 +144,11 @@
       });
       // the names that match stand first, six at most, above the rest of the matches in their letters
       var top = lq ? res.filter(function (it) { return it.isName; }).sort(function (a, b) { return (b.isExact - a.isExact) || (a.order - b.order); }).slice(0, 6) : [];
-      // the entries that stood first go back to their letters, in order, and this search's names take their place
-      if (this.top.length) Object.keys(this.secs).forEach(function (L) { var cols = self.secs[L].querySelector('.gl-cols'); self.groups[L].forEach(function (it) { it.moved = false; cols.appendChild(it.el); }); });
+      // the entries that stood first go back to their letters, and this search's names take their place
+      this.items.forEach(function (it) { it.moved = false; it.el.hidden = !it.on; });
+      top.forEach(function (it) { it.moved = true; });
       this.top = top;
-      var bc = this.best.querySelector('.gl-cols');
-      top.forEach(function (it) { bc.appendChild(it.el); it.moved = true; });
-      this.items.forEach(function (it) { it.el.hidden = !it.on; });
+      this.paginate(true);
       this.best.hidden = !top.length;
       this.best.querySelector('.gl-gw').textContent = top.length ? top.length + (top.length === 1 ? ' entry' : ' entries') + (res.length > top.length ? ', then ' + (res.length - top.length) + ' more below that mention it' : '') : '';
       // the order the reader sees, which the sheet's arrows follow
@@ -165,6 +164,28 @@
       // the results start under the bar, so each word typed shows its first matches
       if (typed) { var at = this.barTop(); if (at != null && Math.abs(window.pageYOffset - at) > 1) jump(at); }
       this.spy();
+    },
+
+    /* a letter's entries set as pages, three to a column: each page's columns are about a screen tall, so the eye goes down a
+       column and back up to the next without a long scroll, as a printed dictionary turns its page. One column needs no pages */
+    paginate: function (force) {
+      var self = this, w = ($('#gl-dict') || {}).clientWidth || this.lastW || 0, cols = full() ? 1 : w >= 996 ? 3 : w >= 648 ? 2 : 1; // columns: 300px 3, a 48 px gap; one on a phone
+      if (w) this.lastW = w;
+      if (!force && cols === this.cols) return;
+      this.cols = cols;
+      var per = cols > 1 ? cols * 3 : 1e9;
+      Object.keys(this.secs).forEach(function (L) { self.pages(self.secs[L].querySelector('.gl-pages'), self.groups[L].filter(function (it) { return !it.moved; }), per); });
+      this.pages(this.best.querySelector('.gl-pages'), this.top, per);
+    },
+    pages: function (box, list, per) {
+      var frag = document.createDocumentFragment(), page = null, n = 0, off = null;
+      list.forEach(function (it) {
+        if (!it.on) { if (!off) { off = document.createElement('div'); off.className = 'gl-off'; off.hidden = true; } off.appendChild(it.el); return; }
+        if (n++ % per === 0) { page = document.createElement('div'); page.className = 'gl-cols'; frag.appendChild(page); }
+        page.appendChild(it.el);
+      });
+      if (off) frag.appendChild(off);
+      box.textContent = ''; box.appendChild(frag);
     },
 
     /* each letter's guide words, as a printed dictionary heads its page: the first and last entry shown, and how many */
@@ -265,7 +286,7 @@
       });
       window.addEventListener('scroll', function () { if (self.built) self.spy(); }, { passive: true });
       var rs = null;
-      window.addEventListener('resize', function () { clearTimeout(rs); rs = setTimeout(function () { self.measure(); if (self.open) self.layout(); self.spy(); }, 120); });
+      window.addEventListener('resize', function () { clearTimeout(rs); rs = setTimeout(function () { self.measure(); if (self.open) self.layout(); else self.paginate(false); self.spy(); }, 120); });
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { self.measure(); });
       // a link in the sheet that leaves the Glossary leaves nothing held: the rest of the page is no longer inert
       window.addEventListener('hashchange', function () { if (!CP.Router || CP.Router.current !== 'glossary') self.hold(false); });
@@ -332,6 +353,7 @@
       var view = $('.view[data-view="glossary"]'), open = !!this.open && !$('#gl-sheet').hidden;
       view.classList.toggle('gl-open', open);
       view.classList.toggle('gl-split', open && beside());
+      this.paginate(false);
       this.hold(open && !beside());
       var sheet = $('#gl-sheet');
       if (open && !beside()) { sheet.setAttribute('role', 'dialog'); sheet.setAttribute('aria-modal', 'true'); }
@@ -361,7 +383,7 @@
     },
     close: function (focus) {
       var it = this.open, sheet = $('#gl-sheet');
-      sheet.hidden = true; this.open = null; this.layout();
+      sheet.hidden = true; this.open = null; this.cursor = -1; this.layout();
       if (it && it.el) {
         it.el.classList.remove('is-on');
         if (focus) { var b = it.el.querySelector('.gl-hw button'); if (b) { try { b.focus({ preventScroll: true }); } catch (e) { b.focus(); } this.reveal(it, false); } }

@@ -72,6 +72,8 @@ html.kb:has(.view[data-view="glossary"]:not([hidden])) { scroll-padding-top: cal
 .gl-gw { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 0; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
 .gl-gw b { font-weight: 400; color: var(--ink-2); }
 .gl-cols { columns: 300px 3; column-gap: 48px; column-rule: 1px solid var(--line); }
+/* a letter's next page, under a hairline (lookup.js paginate) */
+.gl-cols + .gl-cols { margin-top: 4px; padding-top: 22px; border-top: 1px solid var(--line); }
 
 /* one entry: the headword and its kind, its other names, what it is and why it matters, the chapters that use it */
 .gl-de { position: relative; break-inside: avoid; margin: 0; padding: 2px 0 20px; }

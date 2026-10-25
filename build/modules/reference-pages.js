@@ -462,9 +462,12 @@ ${body}
     // the thumb index of letters stays at the top of the window while the columns scroll under it
     const jump = `<nav class="jump gl-other" aria-label="Other entries"><ul><li><a href="#list-firms">Firms</a><span class="n">${suppliers.length}</span></li><li><a href="#list-chips">AI chips</a><span class="n">${chips.length}</span></li>${countryIds.size ? `<li><a href="#list-countries">Countries</a><span class="n">${countryIds.size}</span></li>` : ''}</ul></nav>`
       + `<nav class="gl-thumb" aria-label="Terms by letter"><ul>${letters.map((L) => `<li>${have.has(L) ? `<a href="#${letterId(L)}">${L === '0-9' ? '0–9' : L}</a>` : `<span aria-hidden="true">${L}</span>`}</li>`).join('')}</ul></nav>`;
+    // a letter's terms set as pages of nine, three to a column on a wide screen, so the eye goes down a column and back up to the
+    // next without a long scroll, as a printed dictionary turns its page (the interactive Glossary does the same, lookup.js paginate)
+    const pages = (rows) => { const out = []; for (let i = 0; i < rows.length; i += 9) out.push(`<dl class="gl-cols">${rows.slice(i, i + 9).map(entry).join('')}</dl>`); return out.join(''); };
     // each letter heads its columns with its guide words, as a printed dictionary heads its page: the first and last term, and how many
     const guide = (rows) => `<p class="gl-gw"><b>${esc(rows[0].term)}</b>${rows.length > 1 ? `<span>to</span><b>${esc(rows[rows.length - 1].term)}</b>` : ''}<span>${rows.length} ${rows.length === 1 ? 'entry' : 'entries'}</span></p>`;
-    const termsHTML = `<div class="gl-dict">${groups.map((k) => `<section class="gl-sec" aria-labelledby="${letterId(k.L)}"><div class="gl-sec-h"><h2 class="gl-L" id="${uid(letterId(k.L), 'letters')}">${k.L === '0-9' ? '0–9' : k.L}</h2>${guide(k.rows)}</div><dl class="gl-cols">${k.rows.map(entry).join('')}</dl></section>`).join('')}</div>`;
+    const termsHTML = `<div class="gl-dict">${groups.map((k) => `<section class="gl-sec" aria-labelledby="${letterId(k.L)}"><div class="gl-sec-h"><h2 class="gl-L" id="${uid(letterId(k.L), 'letters')}">${k.L === '0-9' ? '0–9' : k.L}</h2>${guide(k.rows)}</div>${pages(k.rows)}</section>`).join('')}</div>`;
 
     // firms, chips and countries: one line each, as the Glossary list names them, linked to their place on /suppliers/ and /chips/
     const stageLabel = (c) => SHORT[c] || String(c || 'Firm').split(' ').map((w, i) => (i && !/[A-Z].*[A-Z]/.test(w) ? w.toLowerCase() : w)).join(' ');
