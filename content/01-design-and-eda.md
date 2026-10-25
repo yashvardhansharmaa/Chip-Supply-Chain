@@ -3,7 +3,7 @@
  "id": "design-and-eda",
  "number": 1,
  "title": "Chip Design, EDA and IP",
- "oneLiner": "Synopsys, Cadence and Siemens EDA sell the software used to design every leading-edge AI accelerator. In 2025 they took over 85 percent of an $18 billion market, licensed blocks included.",
+ "oneLiner": "Synopsys, Cadence and Siemens EDA make the software used to design every advanced chip. In 2025 they took over 85 percent of its $18 billion market, licensed blocks included.",
  "plain": "Chip design turns an idea for a new chip into a complete blueprint. A chip holds billions of transistors, tiny electrical switches. The blueprint fixes where each one sits and how it is wired to the others. The chip runs on a clock, and a signal has to cross those wires within one tick, less than a billionth of a second. Software from three companies, Synopsys, Cadence and Siemens, lays out the blueprint, checks it and signs it off. A foundry, a factory that makes chips for other companies, accepts only designs that have passed that software's checks. The foundry prints each layer of the design onto silicon through a stencil called a mask. Changing the blueprint once the masks are made takes new masks and a few months ([source](https://newsletter.semianalysis.com/p/the-dark-side-of-the-semiconductor)).",
  "bridge": "The chain starts before any material does, when a company still has nothing but an idea for a processor.",
  "specimen": "die-floorplan",

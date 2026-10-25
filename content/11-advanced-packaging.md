@@ -123,7 +123,7 @@ In 3D packaging one die sits on top of another, and the joints between them are 
 
 TSMC put SoIC into volume production in 2022, stacking SRAM memory chips on logic wafers ([source](https://investor.tsmc.com/static/annualReports/2022/english/ebook/files/basic-html/page97.html)). Its 3 nm SoIC entered volume production in 2025 ([source](https://investor.tsmc.com/static/annualReports/2025/english/pdf/2025_tsmc_ar_e_ch5.pdf#page=3)). An A14-on-A14 version, stacking dies made on TSMC's 1.4 nm process, is due in 2029 ([source](https://pr.tsmc.com/english/news/3302)). It will carry 1.8 times the die-to-die connection density of SoIC that stacks 2 nm dies on 2 nm dies ([source](https://pr.tsmc.com/english/news/3302)).
 
-In a stack the bottom die is the hardest to cool and the top die is the hardest to power. Because of the heat, 3D designs often put cache memory underneath and compute circuits on top.
+In a stack, power for the top die has to pass up through vertical wires in the die below, called through-silicon vias (TSVs) ([source](https://newsletter.semianalysis.com/p/hybrid-bonding-process-flow-advanced)).
 
 SoIC bonding also brings optics into the package. TSMC's COUPE uses SoIC to join a silicon photonics chip, which sends data as light, to its electrical control chip ([source](https://investor.tsmc.com/static/annualReports/2025/english/pdf/2025_tsmc_ar_e_ch5.pdf#page=3)). TSMC said in April 2026 that COUPE on substrate would begin production in 2026 ([source](https://pr.tsmc.com/english/news/3302)). It also said that putting COUPE inside the package gives twice the power efficiency of a pluggable version on the circuit board ([source](https://pr.tsmc.com/english/news/3302)).
 
