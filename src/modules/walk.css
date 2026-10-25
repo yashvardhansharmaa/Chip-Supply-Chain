@@ -42,7 +42,7 @@
 .wk-stop[aria-pressed="true"] .wk-stop-n { color: var(--accent-ink); }
 .wk-stop:focus-visible { outline-offset: 2px; }
 .wk-legend { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 14px 0 0; font-family: var(--font-ui); font-size: 13px; line-height: 1.3; color: var(--ink-2); }
-.wk-legend span { display: inline-flex; gap: 8px; align-items: flex-end; }
+.wk-legend span { display: inline-flex; gap: 8px; align-items: baseline; } /* each mark stands on the line its words stand on */
 .wk-legend i { display: inline-block; flex: none; width: 7px; height: 15px; background: var(--ink); }
 .wk-legend i.h { height: 8px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); }
 .wk-legend .wk-shown { color: var(--ink); }

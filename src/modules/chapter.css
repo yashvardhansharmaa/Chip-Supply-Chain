@@ -1,0 +1,414 @@
+/* ==========================================================================
+   The chapter page (redesign stage 2, qa/redesign/BRIEF.md; the hybrid mockup's chapter.html in the type of r8-body-1/2).
+   One sheet for both homes of a chapter: The Chain in the app (article.chapter, built by build/build.js chapterHTML) and the
+   readable page dist/<chapter>/ (build/modules/social.js inlines this file after build/assets/chapter-page.css).
+   It reads only tokens both define: the grounds and inks, --ctx, --night*, the four faces (--font-display, --font-body,
+   --font-ui, --font-code), --margin and --masthead.
+   The article is a 12-column grid:
+     row 1  the opener: kicker, title (cols 1-6) beside the standfirst, the facts and the cite line (cols 7-12)
+     row 2  the specimen: the drawing (cols 1-8) and its caption, flush left, standing on the drawing's foot (cols 9-12)
+     row 3  the chokepoint card, the full width, on the paper tint
+     rows 4-6  the contents rail (cols 1-3, sticky) beside In plain terms, In short and the prose (cols 4-12: text to col 9,
+            figures to col 12, where the look-up cards also open)
+   Under 1200 px the rail becomes a line of links over the text; under 900 px (the app's phone, where the specimen is the
+   strip at the foot of the screen) everything is one column.
+   ========================================================================== */
+
+/* ---------- the page ---------- */
+.view[data-view="stack"] { width: 100%; padding: 0 var(--margin); }
+/* the top of The Chain (how to read a chapter, the contents) keeps its reading width until stage 3 redraws it */
+.view[data-view="stack"] > .howto, .view[data-view="stack"] > .contents { max-width: 1000px; }
+
+article.chapter {
+  --g: 24px;
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--g); align-items: start;
+  padding: 104px 0 32px; border-top: 1px solid var(--line-2);
+}
+@media (max-width: 1199px) { article.chapter { --g: 20px; } }
+article.chapter > .chapter-head { display: contents; }
+article.chapter > .chapter-head > * { min-width: 0; }
+
+/* ---------- 1. the opener ---------- */
+.chapter .ch-open {
+  grid-column: 1 / -1; grid-row: 1; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--g);
+  align-items: end; padding-bottom: 26px; border-bottom: 1px solid var(--ink);
+}
+.chapter .ch-kick {
+  grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 22px; margin: 0;
+  font-family: var(--font-code); font-size: 12px; line-height: 16px; font-weight: 400; color: var(--muted);
+}
+.chapter .ch-band { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-ui); font-size: 13px; font-weight: 500; color: var(--ink); }
+.chapter .ch-band i { display: block; width: 6px; height: 15px; background: var(--ink); }
+.chapter .ch-band[data-band="3"] i { height: 8px; margin-top: 7px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); }
+.chapter .ch-title {
+  grid-column: 1 / 7; grid-row: 2; align-self: end; margin: 26px 0 0 -0.045em;
+  font-family: var(--font-display); font-weight: 350; font-variation-settings: var(--opsz-title);
+  font-size: clamp(60px, 7.7vw, 116px); line-height: 0.9; letter-spacing: -0.03em; text-wrap: balance; overflow-wrap: normal;
+}
+/* a long title ("Chemicals, Gases and Photoresist") takes two lines at a smaller size, as wide as the columns allow */
+.chapter .ch-title.is-long { grid-column: 1 / 8; font-size: clamp(46px, 5.3vw, 80px); line-height: 0.96; letter-spacing: -0.022em; }
+.chapter .ch-lede {
+  grid-column: 7 / 13; grid-row: 2; align-self: end; margin: 26px 0 0; max-width: 31em;
+  font-family: var(--font-body); font-weight: 400; font-size: clamp(19px, 1.62vw, 23px); line-height: 1.38; color: var(--ink-2);
+}
+.chapter .ch-title.is-long + .ch-lede { grid-column: 8 / 13; }
+.chapter .ch-omet { grid-column: 7 / 13; grid-row: 3; margin-top: 20px; min-width: 0; }
+.chapter .ch-title.is-long ~ .ch-omet { grid-column: 8 / 13; }
+/* the facts: one mono line, a dot between facts, none at the start of a wrapped line (the 18 px slot is clipped) */
+.chapter .ch-meta { display: flex; flex-wrap: wrap; align-items: baseline; margin: 0 0 0 -18px; clip-path: inset(0 0 0 18px); }
+.chapter .ch-meta .label { font-family: var(--font-code); font-size: 12px; line-height: 20px; color: var(--ink-2); white-space: nowrap; }
+.chapter .ch-meta .label::before { content: "\00b7"; display: inline-block; width: 18px; text-align: center; color: var(--muted); }
+/* the cite line: Link to chapter, Cite this chapter and Chapter PDF as the site's .link, ink over an ink rule that turns wine */
+.chapter .ch-omet .ch-cite { margin: 12px 0 0; }
+.chapter .ch-omet .ch-cite-line { gap: 4px 24px; font-family: var(--font-ui); font-size: 15px; font-weight: 500; color: var(--ink); }
+.chapter .ch-omet .ch-cite-line > * { padding: 6px 0 5px; }
+.chapter .ch-omet .ch-cite-sep { display: none; }
+.chapter .ch-omet .ch-cite-btn, .chapter .ch-omet .ch-cite-pdf, .chapter .ch-omet .ch-cite-copylink {
+  color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 5px;
+}
+.chapter .ch-omet .ch-cite-btn:hover, .chapter .ch-omet .ch-cite-pdf:hover, .chapter .ch-omet .ch-cite-copylink:hover { color: var(--accent-ink); border-bottom-color: var(--accent); }
+.chapter .ch-omet .ch-cite-copylink[data-done] { color: var(--muted); border-bottom-color: var(--line-2); }
+.chapter .ch-omet .ch-cite-box { margin-top: 10px; }
+
+/* ---------- 2. the specimen: the drawing, its caption flush left beside its foot ---------- */
+.chapter .ch-spec {
+  grid-column: 1 / -1; grid-row: 2; margin: 0; padding: 22px 0 0;
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--g); align-items: end;
+}
+.chapter .ch-spec-draw { grid-column: 1 / 9; position: relative; height: clamp(380px, 64vh, 580px); min-width: 0; }
+.chapter .ch-spec-draw canvas { display: block; width: 100%; height: 100%; }
+@media (hover: hover) and (pointer: fine) {
+  .chapter .ch-spec-draw canvas { cursor: grab; touch-action: none; outline: none; }
+  .chapter .ch-spec-draw canvas.is-dragging { cursor: grabbing; }
+  .chapter .ch-spec-draw canvas:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
+}
+/* with no WebGL (src/app.js Stage.init) the slot would frame nothing: the caption stands alone */
+html.no-stage .chapter .ch-spec-draw { display: none; }
+html.no-stage .chapter .ch-spec-cap { grid-column: 1 / 9; }
+/* the caption stands on the drawing's own foot: --slack is the empty band under the drawing (src/app.js Stage.fit) */
+.chapter .ch-spec-cap { grid-column: 9 / 13; min-width: 0; margin: 0 0 var(--slack, 0px); max-width: 34em; transition: margin-bottom 0.3s var(--ease, ease); }
+.chapter .ch-spec-cap .label { display: flex; align-items: center; gap: 10px; margin: 0 0 6px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.chapter .ch-spec-cap > p { margin: 0; font-family: var(--font-body); font-size: 14px; line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
+/* the turn's pause, when the drawing is in this slot (Stage.host moves it here from the stage) */
+.chapter .ch-spec-cap .stage-pause { pointer-events: auto; display: inline-grid; place-items: center; width: 24px; height: 24px; margin: -4px 0; padding: 0; border: 1px solid var(--line-2); border-radius: 50%; background: var(--bg); color: var(--ink-2); }
+.chapter .ch-spec-cap .stage-pause svg { width: 10px; height: 10px; fill: currentColor; stroke: none; }
+.chapter .ch-spec-cap .stage-pause:hover { color: var(--ink); border-color: var(--ink); }
+/* the parts, as numbered on the drawing (data/specimen-parts.json): a ruled list under the caption */
+.ch-parts-k { margin: 14px 0 4px; padding-top: 10px; border-top: 1px solid var(--rule-ink); font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.ch-parts { list-style: none; margin: 0; padding: 0; font-family: var(--font-ui); font-size: 13.5px; line-height: 1.4; color: var(--ink); }
+.ch-parts li { display: grid; grid-template-columns: 26px minmax(0, 1fr); column-gap: 6px; align-items: baseline; padding: 4px 0; }
+.ch-parts b { display: grid; place-items: center; width: 20px; height: 20px; border: 1.25px solid var(--ink); border-radius: 50%; font-family: var(--font-ui); font-size: 11px; font-weight: 600; line-height: 1; transform: translateY(4px); }
+.ch-parts a { color: var(--accent-ink); text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent); }
+.ch-parts a:hover { text-decoration-color: var(--accent); }
+/* the balloons over the live drawing (src/app.js Stage.balloons): numbered circles, their names, leader lines to the parts */
+.ch-balloons { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.ch-balloons line { stroke: var(--ink); stroke-width: 1.4; }
+.ch-balloons .dot { fill: var(--ink); stroke: var(--bg); stroke-width: 1.5; }
+.ch-balloons .bal { fill: var(--bg); stroke: var(--ink); stroke-width: 1.6; }
+.ch-balloons .num { font-family: var(--font-ui); font-size: 13px; font-weight: 700; fill: var(--ink); }
+.ch-balloons .nm { font-family: var(--font-ui); font-size: 14px; font-weight: 600; fill: var(--ink); paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round; }
+/* chapters 16 and 17 set their drawing on the night ground, a band across the window (the hybrid's --night tokens) */
+.chapter .ch-spec[data-night] {
+  margin: 30px calc(-1 * var(--margin)) 0; padding: 36px var(--margin) 40px; background: var(--night); color: var(--night-ink);
+  --bg: var(--night); --ink: var(--night-ink); --ink-2: var(--night-ink2); --muted: var(--night-ink2); --line-2: var(--night-rule); --rule-ink: var(--night-rule); --accent: var(--night-accent); --accent-ink: var(--night-accent);
+  --stage-ink: 232, 231, 227; --stage-accent: 217, 138, 149;
+}
+
+/* ---------- 3. the chokepoint card: large values on the paper tint ---------- */
+.chapter .plate {
+  grid-column: 1 / -1; grid-row: 3; max-width: none; margin: 64px 0 0; padding: 32px 44px 36px;
+  background: var(--bg-2); border: 0; overflow: visible;
+}
+.chapter .plate-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 20px; padding: 0 0 16px; border-bottom: 1px solid var(--ink); }
+.chapter .plate-head .label { font-family: var(--font-ui); font-size: 15px; font-weight: 500; line-height: 20px; color: var(--ink); }
+.chapter .plate-where { font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--muted); }
+.chapter .plate-kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 44px; padding: 26px 0 30px; border-bottom: 1px solid var(--rule-ink); }
+.chapter .plate-kpis > div, .chapter .plate-kpis > div + div { padding: 0; border: 0; min-width: 0; }
+.chapter .plate-kpis .k { font-family: var(--font-code); font-size: 12px; font-weight: 400; line-height: 16px; color: var(--muted); margin: 0; }
+.chapter .plate-kpis .v {
+  display: flex; align-items: flex-end; gap: 14px; margin: 12px 0 14px;
+  font-family: var(--font-display); font-weight: 330; font-variation-settings: var(--opsz-title);
+  font-size: clamp(48px, 5vw, 76px); line-height: 0.92; letter-spacing: -0.03em; white-space: nowrap; overflow-wrap: normal; color: var(--ink);
+}
+.chapter .plate-kpis .v .bm { display: block; flex: none; width: 12px; height: 0.74em; margin-bottom: 0.08em; background: var(--ink); }
+.chapter .plate-kpis .v .bm[data-band="3"] { height: 0.36em; background: transparent; box-shadow: inset 0 0 0 2px var(--ink); }
+.chapter .plate-kpis .v .v-btn { text-underline-offset: 0.12em; text-decoration-thickness: 1.5px; }
+.chapter .plate-kpis .v.cost { display: block; margin: 12px 0 8px; font-weight: 400; font-size: 26px; line-height: 1.15; letter-spacing: -0.01em; white-space: normal; }
+.chapter .plate-kpis .v.cost.long { font-family: var(--font-body); font-weight: 500; font-size: 17px; line-height: 1.4; letter-spacing: 0; font-variation-settings: normal; }
+.chapter .plate-kpis .sub { margin: 0; max-width: 28em; font-family: var(--font-body); font-size: 14.5px; line-height: 1.5; color: var(--ink-2); }
+/* Who leads beside Where it is made, the reason under them, then China beside the US */
+.chapter .plate-rows { display: grid; grid-template-columns: 1fr 1fr; column-gap: 44px; border-bottom: 1px solid var(--line-2); }
+.chapter .plate-rows .row { display: block; padding: 18px 0 20px; border-bottom: 0; }
+.chapter .plate-rows .row--why { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); column-gap: 44px; border-top: 1px solid var(--line-2); }
+.chapter .plate-rows .row--why:only-child, .chapter .plate-rows .row--why:first-child { border-top: 0; }
+.chapter .plate-rows dt { padding: 0 0 10px; font-family: var(--font-code); font-size: 12px; font-weight: 400; line-height: 16px; color: var(--muted); }
+.chapter .plate-rows dd { font-family: var(--font-body); font-size: 15px; line-height: 1.5; }
+.chapter .plate-rows .row--why dd { max-width: 40em; color: var(--ink-2); }
+.chapter .plate-rows li { display: grid; grid-template-columns: 32px minmax(0, 7.5em) minmax(0, 1fr); column-gap: 12px; align-items: baseline; padding: 0; text-indent: 0; margin: 0 0 9px; }
+.chapter .plate-rows .chip { width: auto; margin: 0; padding: 0; border: 0; text-align: left; font-family: var(--font-code); font-size: 11px; font-weight: 400; letter-spacing: 0; color: var(--muted); }
+.chapter .plate-rows .who { font-family: var(--font-ui); font-size: 15px; font-weight: 600; }
+.chapter .plate-rows .note { font-family: var(--font-body); font-size: 14.5px; line-height: 1.45; color: var(--ink-2); }
+.chapter .plate-status { grid-template-columns: 1fr 1fr; column-gap: 44px; border: 0; }
+.chapter .plate-status > div, .chapter .plate-status > div + div { padding: 18px 0 2px; border: 0; }
+.chapter .plate-status .k { margin: 0 0 10px; font-family: var(--font-code); font-size: 12px; font-weight: 400; line-height: 16px; color: var(--muted); }
+.chapter .plate-status p { font-family: var(--font-body); font-size: 15px; line-height: 1.55; color: var(--ink-2); max-width: 36em; }
+.chapter .plate sup.cite { vertical-align: 0.5em; }
+
+/* ---------- 4. the body: the rail beside the text ---------- */
+.chapter .ch-rail {
+  grid-column: 1 / 4; grid-row: 4 / span 3; align-self: start; position: sticky; top: calc(var(--masthead) + 28px);
+  max-height: calc(100vh - var(--masthead) - 56px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin;
+  margin-top: 88px; padding: 0 14px 8px 0; text-align: left; font-family: var(--font-ui);
+}
+.chapter .ch-rail .rail-part + .rail-part { margin-top: 26px; }
+.chapter .ch-rail .rail-k { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 0 0 8px; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--ink); }
+.chapter .ch-rail ol { list-style: none; margin: 0; padding: 0; }
+.chapter .rail-toc a { display: block; padding: 5px 0 5px 12px; border-left: 2px solid var(--line); font-size: 14.5px; line-height: 20px; color: var(--ink-2); text-decoration: none; }
+.chapter .rail-toc a:hover { color: var(--ink); }
+.chapter .rail-toc a[aria-current] { color: var(--ink); font-weight: 500; border-left-color: var(--accent); }
+.chapter .rail-figs a { display: grid; grid-template-columns: 44px minmax(0, 1fr); padding: 3px 0; font-size: 13.5px; line-height: 18px; color: var(--ink-2); text-decoration: none; }
+.chapter .rail-figs a:hover { color: var(--ink); }
+.chapter .rail-figs .n { font-family: var(--font-code); font-size: 11.5px; color: var(--muted); }
+.chapter .rail-key { display: inline-flex; gap: 10px; color: var(--muted); }
+.chapter .rail-key span { display: inline-flex; align-items: baseline; gap: 5px; }
+.chapter .rail-key i { display: inline-block; width: 5px; height: 11px; background: var(--ink); }
+.chapter .rail-key i.h { height: 6px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); }
+/* the chain: number, name, the band's mark at the line's end; the current stage in wine (its number and mark) */
+.chapter .ch-rail .chain-track { display: block; gap: 0; }
+.chapter .ch-rail .stage-cell { position: static; }
+.chapter .ch-rail .stage-cell::after { content: none; }
+.chapter .ch-rail .stage-cell a { display: grid; grid-template-columns: 24px minmax(0, 1fr) 10px; column-gap: 6px; align-items: center; height: auto; padding: 3px 0; border: 0; font-size: 13px; line-height: 16px; color: var(--ink-2); text-decoration: none; }
+.chapter .ch-rail .stage-cell .n { width: auto; font-family: var(--font-code); font-size: 11px; line-height: 16px; color: var(--muted); }
+.chapter .ch-rail .stage-cell .t { display: block; visibility: visible; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--font-ui); font-size: 13px; font-weight: 400; color: inherit; }
+.chapter .ch-rail .stage-cell .bm { justify-self: end; width: 6px; height: 13px; background: var(--ink); }
+.chapter .ch-rail .stage-cell[data-band="3"] .bm { height: 7px; align-self: end; margin-bottom: 3px; background: transparent; box-shadow: inset 0 0 0 1.25px var(--ink); }
+.chapter .ch-rail .stage-cell a:hover { color: var(--ink); }
+.chapter .ch-rail .stage-cell[aria-current="true"] a { color: var(--ink); font-weight: 600; }
+.chapter .ch-rail .stage-cell[aria-current="true"] .t { font-weight: 600; }
+.chapter .ch-rail .stage-cell[aria-current="true"] .n { color: var(--accent-ink); }
+.chapter .ch-rail .stage-cell[aria-current="true"] .bm { background: var(--accent); box-shadow: none; }
+.chapter .ch-rail .rail-across { margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--line); }
+.chapter .ch-rail .rail-across .stage-cell a { grid-template-columns: 24px minmax(0, 1fr); }
+
+/* In plain terms and In short open the main column, then the prose */
+.chapter .plain { grid-column: 4 / 10; grid-row: 4; max-width: none; margin: 88px 0 0; padding: 14px 0 0; border: 0; border-top: 1px solid var(--ink); background: none; }
+.chapter .plain h3.label, .chapter .plain .label {
+  display: block; margin: 14px 0 22px; padding: 0; font-family: var(--font-display); font-weight: 330; font-variation-settings: var(--opsz-title);
+  font-size: clamp(34px, 3.1vw, 44px); line-height: 1.08; letter-spacing: -0.02em; color: var(--ink);
+}
+.chapter .plain p { margin: 0; font-family: var(--font-body); font-size: 21px; line-height: 1.57; color: var(--ink); max-width: 33em; }
+.chapter .inshort { grid-column: 4 / 10; grid-row: 5; max-width: 36em; margin: 36px 0 0; }
+.chapter .inshort h3.label { margin: 0 0 12px; font-family: var(--font-ui); font-weight: 500; font-size: 15px; line-height: 20px; color: var(--ink); }
+.chapter .inshort p, .chapter .inshort li { font-family: var(--font-body); font-size: 19px; line-height: 1.55; color: var(--ink); }
+.chapter .inshort p { margin: 0 0 0.7em; }
+.chapter > .prose { grid-column: 4 / 13; grid-row: 6; max-width: none; min-width: 0; margin-top: 16px; counter-reset: sec; }
+.chapter > .prose > * { max-width: 36em; }
+.chapter > .prose > .figure, .chapter > .prose > .table-wrap, .chapter > .prose > .prevnext { max-width: none; }
+/* each section opens on an ink rule, its number in mono above a large Fraunces heading */
+.chapter > .prose > h3 {
+  counter-increment: sec; margin: 72px 0 22px; padding-top: 14px; border-top: 1px solid var(--ink); max-width: 36em;
+  font-family: var(--font-display); font-weight: 330; font-variation-settings: var(--opsz-title);
+  font-size: clamp(32px, 3vw, 44px); line-height: 1.08; letter-spacing: -0.02em;
+}
+.chapter > .prose > h3::before { content: counter(sec, decimal-leading-zero); display: block; margin: 0 0 14px; font-family: var(--font-code); font-size: 12px; font-weight: 400; line-height: 16px; letter-spacing: 0; color: var(--muted); }
+.chapter > .prose > h4 { margin: 40px 0 14px; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 22px; line-height: 1.27; letter-spacing: -0.005em; }
+.chapter > .prose > p, .chapter > .prose > ul, .chapter > .prose > ol { font-size: 18.5px; line-height: 1.62; }
+
+/* ---------- figures: one grammar for every chart ---------- */
+.chapter .figure { margin: 34px 0 44px; padding: 0; border: 1px solid var(--rule-ink); background: var(--bg); max-width: none; }
+.chapter .figure--anim { max-width: none; }
+.chapter .fig-head { padding: 22px 26px 0; }
+.chapter .fig-k { display: inline-block; font-family: var(--font-code); font-size: 12px; line-height: 16px; color: var(--ink); text-decoration: none; }
+.chapter .fig-k:hover { color: var(--accent-ink); }
+.chapter .figure .fig-title { margin: 10px 0 6px; max-width: 36em; font-family: var(--font-display); font-weight: 500; font-variation-settings: var(--opsz-title); font-size: 22px; line-height: 1.27; letter-spacing: -0.008em; text-wrap: balance; }
+.chapter .figure .fig-title .unit, .chapter .figure .fig-sub .unit { font-family: var(--font-code); font-weight: 400; font-size: 12px; color: var(--muted); margin-left: 8px; letter-spacing: 0; white-space: nowrap; }
+.chapter .fig-sub { margin: 0; max-width: 44em; font-family: var(--font-body); font-size: 15px; line-height: 1.45; color: var(--ink-2); text-wrap: pretty; }
+.chapter .fig-body { padding: 20px 26px 18px; }
+/* bars, rule B: the largest ink with a bold label, the rest the light tint, a remainder hatched */
+.chapter .hbars { gap: 10px; margin: 0; font-family: var(--font-ui); font-size: 14px; }
+.chapter .hb-l { line-height: 1.3; color: var(--ink-2); }
+.chapter .hb-r { gap: 10px; }
+.chapter .hb-r i { height: 22px; background: var(--ctx); border-radius: 0 2px 2px 0; }
+.chapter .hb-r b { font-family: var(--font-code); font-size: 13px; font-weight: 400; color: var(--ink-2); }
+.chapter .hb.top .hb-l { color: var(--ink); font-weight: 600; }
+.chapter .hb.top .hb-r i { background: var(--ink); }
+.chapter .hb.top .hb-r b { font-family: var(--font-ui); font-size: 15px; font-weight: 700; color: var(--ink); }
+.chapter .hb.rest .hb-r i { background: repeating-linear-gradient(135deg, var(--rule-ink) 0 1px, transparent 1px 5px); box-shadow: inset 0 0 0 1px var(--rule-ink); }
+@media (min-width: 641px) { .chapter .hbars { gap: 10px; } .chapter .hb { column-gap: 14px; } }
+/* the table a reader can switch to (Table, src/app.js Figs): the figure's own rows, ruled */
+.chapter .figure.is-table table.fig-table { position: static; width: 100%; height: auto; margin: 0; clip: auto; clip-path: none; overflow: visible; white-space: normal; border-collapse: collapse; font-family: var(--font-ui); font-size: 14px; line-height: 20px; }
+.chapter .figure.is-table table.fig-table caption { display: none; }
+.chapter .figure.is-table table.fig-table th, .chapter .figure.is-table table.fig-table td { padding: 7px 0; border-bottom: 1px solid var(--line); text-align: left; font-weight: 400; }
+.chapter .figure.is-table table.fig-table td { text-align: right; font-family: var(--font-code); font-size: 13px; }
+.chapter .figure.is-table .hbars { display: none; }
+/* the source strip: the source and its footnote, any note, the figure's address, then Cite, Table, CSV and PNG */
+.chapter .fig-strip {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 22px; padding: 12px 26px 13px;
+  background: var(--bg-2); border-top: 1px solid var(--line); font-family: var(--font-code); font-size: 12px; line-height: 18px; color: var(--ink);
+}
+.chapter .fig-strip .fs-k { margin-right: 8px; color: var(--muted); }
+.chapter .fig-strip .fs-src a { color: var(--ink); text-underline-offset: 3px; text-decoration-color: var(--rule-ink); }
+.chapter .fig-strip .fs-src a:hover { text-decoration-color: var(--accent); }
+/* the source's footnote number, in brackets on the line (it opens the same card as the marks in the text) */
+.chapter .fig-strip sup.cite { font-size: 12px; vertical-align: baseline; line-height: inherit; margin-left: 6px; }
+.chapter .fig-strip sup.cite a { font-family: var(--font-code); font-weight: 400; color: var(--muted); }
+.chapter .fig-strip sup.cite a::after { content: "]"; }
+.chapter .fig-strip sup.cite a::before { content: "["; position: static; width: auto; height: auto; transform: none; }
+.chapter .fig-strip .fs-note { color: var(--ink-2); font-family: var(--font-body); font-size: 13.5px; line-height: 1.45; max-width: 46em; }
+.chapter .fig-strip .fs-note .fs-k { font-family: var(--font-code); font-size: 12px; }
+.chapter .fig-strip .fs-addr { color: var(--muted); text-decoration: none; overflow-wrap: anywhere; }
+.chapter .fig-strip .fs-addr:hover { color: var(--accent-ink); }
+.chapter .fig-strip .fs-acts { margin-left: auto; display: flex; flex-wrap: wrap; gap: 4px 16px; }
+.chapter .fig-strip .fs-acts > a, .chapter .fig-strip .fs-acts > button {
+  font: inherit; color: var(--ink); background: none; border: 0; padding: 3px 0; cursor: pointer;
+  text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--rule-ink); text-decoration-thickness: 1px;
+}
+.chapter .fig-strip .fs-acts > a:hover, .chapter .fig-strip .fs-acts > button:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
+.chapter .fig-strip .fs-acts > [aria-pressed="true"] { color: var(--accent-ink); text-decoration-color: var(--accent); }
+.chapter .fig-strip .ch-cite-box { flex-basis: 100%; margin: 4px 0 0; padding: 10px 14px; border-left: 2px solid var(--accent); background: var(--bg); }
+.chapter .fig-strip .ch-cite-text { font-family: var(--font-body); font-size: 14px; line-height: 1.5; color: var(--ink); }
+.chapter .fig-strip .ch-cite-copy { font-family: var(--font-ui); font-size: 13px; font-weight: 500; color: var(--accent-ink); background: none; border: 0; padding: 4px 0; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+/* an explainer animation: its steps above, the video, the caption under it */
+.chapter .figure--anim .anim-steps { margin: 0 0 12px; }
+.chapter .figure--anim .anim-cap { margin: 12px 0 0; font-family: var(--font-body); font-size: 16px; }
+/* a timeline: dates in mono on a hairline */
+.chapter .figure .tl li { font-family: var(--font-body); font-size: 15px; }
+.chapter .figure .tl li::before { background: var(--ink); }
+
+/* ---------- flashcards, sources, previous and next ---------- */
+.chapter > .prose > .review { max-width: 40em; margin: 88px 0 0; padding-top: 14px; border-top: 1px solid var(--ink); }
+.chapter .review .rv-head { display: block; }
+.chapter .review .rv-title, .chapter .prose .review .rv-title {
+  margin: 0 0 8px; padding: 0; border: 0; font-family: var(--font-display); font-weight: 330; font-variation-settings: var(--opsz-title);
+  font-size: clamp(32px, 3vw, 44px); line-height: 1.08; letter-spacing: -0.02em;
+}
+.chapter .review .rv-title::before { content: none; }
+.chapter .review .rv-sub { font-family: var(--font-ui); font-size: 14px; color: var(--muted); }
+.chapter .fc-deck { margin-top: 22px; }
+.chapter .fc-face { padding: 24px 28px 22px; border: 0; background: var(--bg-2); }
+.chapter .fc-behind { border: 0; background: color-mix(in srgb, var(--bg-2) 70%, var(--line)); }
+.chapter .fc-behind--2 { background: color-mix(in srgb, var(--bg-2) 45%, var(--line)); }
+.chapter .fc-row .label { font-family: var(--font-code); font-size: 12px; color: var(--muted); }
+.chapter .fc-back .fc-row .label:last-child { color: var(--accent-ink); }
+.chapter .fc-q { margin: 18px 0 22px; font-family: var(--font-body); font-weight: 400; font-size: 26px; line-height: 1.32; letter-spacing: -0.005em; }
+.chapter .fc-a { font-family: var(--font-body); font-weight: 600; font-size: 20px; line-height: 1.4; }
+.chapter .fc-why { font-family: var(--font-body); font-size: 16px; line-height: 1.55; }
+.chapter .fc-more { font-family: var(--font-ui); font-size: 13.5px; font-weight: 500; }
+/* the sources fold under an ink rule, their summary a section heading */
+.chapter > .prose > .chapter-sources { max-width: 40em; margin: 88px 0 0; border-top: 1px solid var(--ink); }
+.chapter .chapter-sources summary {
+  padding: 16px 0 12px; font-family: var(--font-display); font-weight: 330; font-variation-settings: var(--opsz-title);
+  font-size: clamp(32px, 3vw, 44px); line-height: 1.08; letter-spacing: -0.02em; color: var(--ink);
+}
+.chapter .chapter-sources summary::after { font-family: var(--font-ui); font-size: 26px; font-weight: 300; }
+.chapter .chapter-sources ol { font-size: 14px; }
+/* previous, quietly; next, as the page's last large line */
+.chapter > .prose > .prevnext { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--g); margin: 96px 0 0; padding-top: 22px; border-top: 1px solid var(--ink); }
+.chapter .prevnext .pn { border: 0; padding: 0; }
+.chapter .prevnext .pn .label { font-family: var(--font-code); font-size: 12px; margin-bottom: 8px; }
+.chapter .prevnext .prev .t { font-family: var(--font-ui); font-weight: 400; font-variation-settings: normal; font-size: 16px; line-height: 1.35; color: var(--ink-2); }
+.chapter .prevnext .next { grid-column: 2; text-align: left; }
+.chapter .prevnext .next .t { font-family: var(--font-display); font-weight: 330; font-variation-settings: var(--opsz-title); font-size: clamp(36px, 3.8vw, 58px); line-height: 1; letter-spacing: -0.03em; }
+.chapter .prevnext .next .n { display: block; margin: 0 0 6px; font-family: var(--font-code); font-size: 13px; font-weight: 400; color: var(--muted); letter-spacing: 0; }
+.chapter .prevnext .pn:hover .t { color: var(--accent-ink); }
+.chapter .prevnext .next:only-child { grid-column: 1 / -1; }
+
+/* ---------- under 1200 px: the rail becomes a line of links over the text; the drawing takes seven columns ---------- */
+@media (max-width: 1199px) {
+  .chapter .ch-title { grid-column: 1 / -1; }
+  .chapter .ch-title.is-long { grid-column: 1 / -1; }
+  .chapter .ch-lede, .chapter .ch-title.is-long + .ch-lede { grid-column: 1 / 10; grid-row: 3; margin-top: 22px; }
+  .chapter .ch-omet, .chapter .ch-title.is-long ~ .ch-omet { grid-column: 1 / 10; grid-row: 4; }
+  .chapter .ch-spec-draw { grid-column: 1 / 8; }
+  .chapter .ch-spec-cap { grid-column: 8 / 13; }
+  .chapter .plate { padding: 28px 30px 32px; }
+  .chapter .plate-kpis, .chapter .plate-rows, .chapter .plate-status { column-gap: 28px; }
+  .chapter .plate-kpis .v { font-size: clamp(42px, 5.4vw, 60px); }
+  .chapter .ch-rail { grid-column: 1 / -1; grid-row: 4; position: static; max-height: none; overflow: visible; margin-top: 64px; padding: 0; }
+  .chapter .ch-rail .rail-figs-w, .chapter .ch-rail .rail-chain-w { display: none; }
+  .chapter .rail-toc { display: flex; flex-wrap: wrap; gap: 4px 22px; }
+  .chapter .rail-toc a { padding: 2px 0; border: 0; border-bottom: 1px solid var(--rule-ink); font-size: 14.5px; line-height: 24px; }
+  .chapter .rail-toc a[aria-current] { font-weight: 400; border-bottom-color: var(--rule-ink); }
+  .chapter .plain { grid-column: 1 / 10; grid-row: 5; margin-top: 40px; }
+  .chapter .inshort { grid-column: 1 / 10; grid-row: 6; }
+  .chapter > .prose { grid-column: 1 / -1; grid-row: 7; }
+}
+
+/* ---------- the app's phone (under 900 px): one column; the specimen is the strip at the foot of the screen ---------- */
+@media (max-width: 900px) {
+  article.chapter { display: block; padding: 40px 0 24px; }
+  .chapter .ch-open { display: block; padding-bottom: 22px; }
+  .chapter .ch-kick { gap: 4px 14px; }
+  .chapter .ch-title, .chapter .ch-title.is-long { margin: 18px 0 0 -0.04em; font-size: min(68px, 15vw); line-height: 0.98; }
+  .chapter .ch-title.is-long { font-size: min(46px, 11vw); line-height: 1.02; }
+  .chapter .ch-lede { margin-top: 18px; font-size: 20px; line-height: 1.38; }
+  .chapter .ch-omet { margin-top: 16px; }
+  .chapter .ch-omet .ch-cite-line { gap: 4px 22px; }
+  .view[data-view="stack"] .chapter .ch-spec { display: none; }
+  .chapter .plate { margin: 40px calc(-1 * var(--margin)) 0; padding: 24px var(--margin) 28px; }
+  .chapter .plate-kpis { grid-template-columns: 1fr; row-gap: 24px; padding: 20px 0 24px; }
+  .chapter .plate-kpis .v { font-size: 54px; }
+  .chapter .plate-rows, .chapter .plate-status { grid-template-columns: 1fr; }
+  .chapter .plate-rows .row--why { display: block; border-top: 1px solid var(--line-2); }
+  .chapter .plate-rows .row--where { border-top: 1px solid var(--line-2); }
+  .chapter .plate-rows li { grid-template-columns: 28px minmax(0, 1fr); }
+  .chapter .plate-rows li .note { grid-column: 2; }
+  .chapter .plate-status > div + div { border-top: 1px solid var(--line-2); }
+  .chapter .ch-rail { margin-top: 44px; }
+  .chapter .plain { margin-top: 36px; }
+  .chapter .plain p { font-size: 18.5px; line-height: 1.55; }
+  .chapter .inshort p, .chapter .inshort li { font-size: 18px; }
+  .chapter > .prose > h3 { margin-top: 56px; font-size: 32px; }
+  .chapter > .prose > p, .chapter > .prose > ul, .chapter > .prose > ol { font-size: 17.5px; }
+  .chapter .figure { margin: 28px calc(-1 * var(--margin)) 36px; border-left: 0; border-right: 0; }
+  .chapter .fig-head { padding: 18px var(--margin) 0; }
+  .chapter .fig-body { padding: 16px var(--margin) 14px; }
+  .chapter .fig-strip { padding: 12px var(--margin); }
+  .chapter .figure .fig-title { font-size: 19px; line-height: 1.3; }
+  .chapter .fig-strip .fs-acts { margin-left: 0; }
+  .chapter .fc-face { padding: 20px 18px; }
+  .chapter .fc-q { font-size: 22px; }
+  .chapter > .prose > .prevnext { grid-template-columns: 1fr; gap: 24px; margin-top: 64px; }
+  .chapter .prevnext .next { grid-column: 1; }
+}
+
+/* ---------- the stage beside the page, on The Chain and elsewhere ---------- */
+@media (min-width: 901px) {
+  /* The Chain draws its specimen in each chapter's slot, so the stage beside the page stands down there */
+  html[data-view="stack"] .stage { display: none; }
+  /* the caption stands right under the drawing: the empty band the drawing leaves at the canvas's foot (--slack, Stage.fit) */
+  .stage .stage-tag { margin-top: calc(-1 * var(--slack, 0px)); transition: margin-top 0.3s var(--ease, ease); }
+}
+@media (min-width: 901px) and (prefers-reduced-motion: reduce) { .stage .stage-tag, .chapter .ch-spec-cap { transition: none; } }
+/* the parts list rides in the phone strip's caption on The Chain, shown once the strip is expanded */
+.stage .stage-parts { display: none; }
+@media (max-width: 900px) {
+  .stage[data-collapsed="0"] figcaption { display: block; -webkit-line-clamp: unset; max-height: 9.5em; overflow-y: auto; }
+  .stage[data-collapsed="0"] .stage-parts { display: block; }
+  .stage .stage-parts .ch-parts-k { margin-top: 8px; }
+  .stage .stage-parts .ch-parts { font-size: 12.5px; }
+}
+
+/* ---------- the phone's slim bar: where the reader is, once the masthead has gone up (src/app.js Slim) ---------- */
+.ch-slim { display: none; }
+@media (max-width: 900px) {
+  .ch-slim {
+    display: flex; align-items: center; gap: 10px; position: fixed; left: 0; right: 0; top: 0; z-index: 39; height: 40px;
+    padding: 0 16px; background: var(--bg); border-bottom: 1px solid var(--line-2); color: var(--ink); text-decoration: none;
+    transform: translateY(-100%); visibility: hidden; transition: transform 0.25s var(--ease, ease), visibility 0s 0.25s;
+    font-family: var(--font-ui); font-size: 13px; line-height: 1.2; white-space: nowrap; overflow: hidden;
+  }
+  .ch-slim .n { flex: none; font-family: var(--font-code); font-size: 12px; color: var(--muted); }
+  .ch-slim .t { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
+  .ch-slim .s { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; color: var(--ink-2); }
+  .ch-slim .s:not(:empty)::before { content: "\00b7"; margin: 0 8px 0 0; color: var(--muted); }
+  html.slim-on .ch-slim { transform: none; visibility: visible; transition: transform 0.25s var(--ease, ease); }
+  html.slim-on:not(.mast-up) .ch-slim { top: var(--masthead); }
+  .masthead { transition: transform 0.25s var(--ease, ease); }
+  html.mast-up .masthead { transform: translateY(-100%); }
+}
+@media (max-width: 900px) and (prefers-reduced-motion: reduce) { .ch-slim, .masthead { transition: none; } }
+
+@media print {
+  .ch-slim, .chapter .ch-rail .rail-part, .chapter .ch-spec-draw, .chapter .fig-strip .fs-acts, .chapter .fig-strip .fs-addr { display: none !important; }
+}

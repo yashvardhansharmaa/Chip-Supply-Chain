@@ -118,7 +118,7 @@
       if (!this.canvas || !this.fig) return;
       var gl = this.canvas.getContext('webgl2', { alpha: true, antialias: false, premultipliedAlpha: true, powerPreference: 'high-performance' }) ||
                this.canvas.getContext('webgl', { alpha: true, antialias: false, premultipliedAlpha: true });
-      if (!gl || !window.PC) { this.fig.setAttribute('data-hidden', '1'); return; }
+      if (!gl || !window.PC) { this.fig.setAttribute('data-hidden', '1'); document.documentElement.classList.add('no-stage'); return; }
       this.gl = gl;
       var vs = 'attribute vec4 aP;uniform mat4 uMVP;uniform float uSize;uniform float uOp;uniform vec3 uInk;uniform vec3 uAcc;uniform vec3 uAcc2;varying vec4 vC;' +
         'void main(){vec4 p=uMVP*vec4(aP.xyz,1.0);gl_Position=p;float w=aP.w;vec3 c;float a;' +
@@ -131,7 +131,7 @@
       var prog = gl.createProgram();
       var sh = function (type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; };
       try { gl.attachShader(prog, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(prog); }
-      catch (e) { this.fig.setAttribute('data-hidden', '1'); return; }
+      catch (e) { this.fig.setAttribute('data-hidden', '1'); document.documentElement.classList.add('no-stage'); return; }
       gl.useProgram(prog);
       this.loc = { aP: gl.getAttribLocation(prog, 'aP'), uMVP: gl.getUniformLocation(prog, 'uMVP'), uSize: gl.getUniformLocation(prog, 'uSize'), uOp: gl.getUniformLocation(prog, 'uOp'), uInk: gl.getUniformLocation(prog, 'uInk'), uAcc: gl.getUniformLocation(prog, 'uAcc'), uAcc2: gl.getUniformLocation(prog, 'uAcc2') };
       gl.enableVertexAttribArray(this.loc.aP);
@@ -147,12 +147,13 @@
       requestAnimationFrame(function (t) { self.loop(t); });
     },
     refreshColors: function () {
-      var cs = getComputedStyle(document.documentElement);
+      // read where the canvas sits: a chapter's night slot (chapters 16 and 17) sets its own ink and accent (src/modules/chapter.css)
+      var cs = getComputedStyle(this.canvas && this.canvas.isConnected ? this.canvas : document.documentElement);
       var p = function (v, d) { var m = (cs.getPropertyValue(v) || '').split(','); if (m.length < 3) return d; return [parseFloat(m[0]) / 255, parseFloat(m[1]) / 255, parseFloat(m[2]) / 255]; };
       this.ink = p('--stage-ink', this.ink); this.accent = p('--stage-accent', this.accent);
       // a specimen's own colours are picked per theme: accentDark/accent2Dark when data-theme="dark", else the light
       // colour lifted by PC.lift (HSL lightness raised to at least 0.62, hue and saturation kept); see src/kit.js
-      this.dark = document.documentElement.getAttribute('data-theme') === 'dark';
+      this.dark = document.documentElement.getAttribute('data-theme') === 'dark' || !!(this.canvas && this.canvas.closest && this.canvas.closest('[data-night]'));
       for (var k in this.cache) if (this.cache.hasOwnProperty(k)) this.cache[k].colors = null;
     },
     // the two accent colours a slot draws with, as 0..1 triplets: its own if it declares any, else the CSS accent for both
@@ -176,6 +177,7 @@
         var s = this.build(this.cur.name, this.cur.params);
         if (s && s !== this.cur) { s.spinBase = this.cur.spinBase; if (this.prev === this.cur) this.prev = null; this.cur = s; }
       }
+      this.fit();
     },
     build: function (name, params) {
       if (!this.ok || !name) return null; // no context: building the cloud would cost the work and then throw at the buffer
@@ -187,7 +189,11 @@
       try { spec = PC.build(name, params); } catch (e) { console.warn('specimen failed:', name, e.message); return null; }
       var gl = this.gl, vbo = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, vbo); gl.bufferData(gl.ARRAY_BUFFER, spec.cloud, gl.STATIC_DRAW);
+      // every k-th point, about 1,500 in all: enough to find how far down the drawing reaches as it turns (fit)
+      var cl = spec.cloud, np = cl.length / 4, k = Math.max(1, Math.floor(np / 1500)), smp = [];
+      for (var q = 0; q < np; q += k) smp.push(cl[q * 4], cl[q * 4 + 1], cl[q * 4 + 2]);
       var slot = { key: key, name: name, params: params || null, lvl: lvl, vbo: vbo, n: PC.count(spec.cloud), spin: spec.spin, tilt: spec.tilt, turntable: !!spec.turntable, caption: spec.caption, spinBase: 0,
+        sample: smp, norm: spec.norm || null, extent: {},
         spec: { accent: spec.accent, accent2: spec.accent2, accentDark: spec.accentDark, accent2Dark: spec.accent2Dark }, colors: null };
       this.cache[key] = slot;
       return slot;
@@ -203,23 +209,157 @@
       this.prev = this.cur; this.cur = slot; this.transStart = performance.now();
       slot.spinBase = -this.spin; // each specimen starts from its own tilt
       this.scrollAngle = 0; this.userYaw = 0; this.userPitch = 0;
+      this.fit();
+    },
+    /* The model's view matrix for a slot at the current turn (as draw() sets it), so the balloons can find a part on the screen */
+    model: function (slot, extraRot, sc) {
+      var t = slot.tilt, idle = this.spin + slot.spinBase;
+      var M = slot.turntable
+        ? mul(rotZ(t[2]), mul(rotY(t[1] + this.scrollAngle + extraRot), mul(rotX(t[0]), rotY(idle))))
+        : mul(rotZ(t[2]), mul(rotY(t[1] + idle + this.scrollAngle + extraRot), rotX(t[0])));
+      M = mul(M, scale(sc));
+      if (this.userYaw || this.userPitch) M = mul(rotX(this.userPitch), mul(rotY(this.userYaw), M));
+      return M;
+    },
+    proj: function (aspect) {
+      return mul(perspective(34 * Math.PI / 180, aspect, 0.1, 40), translate(0, 0, -3.8 * Math.max(1, 0.98 / aspect)));
+    },
+    /* How far the drawing reaches across a turn, in CSS pixels of this canvas: the lowest point and the widest either side of
+       the centre, over 24 steps of the idle turn. fit() puts the caption right under the drawing with it (the stage's empty
+       band under a drawing, --slack), and the balloons keep clear of the drawing with it. */
+    reach: function (slot) {
+      var r = this.canvas.getBoundingClientRect(), w = r.width, h = r.height;
+      if (!w || !h || !slot || !slot.sample) return null;
+      var key = Math.round(w) + 'x' + Math.round(h);
+      if (slot.extent[key]) return slot.extent[key];
+      var P = this.proj(w / h), t = slot.tilt, smp = slot.sample, bottom = 0, top = h, side = 0;
+      for (var a = 0; a < 24; a++) {
+        var yaw = a * Math.PI / 12;
+        var M = slot.turntable ? mul(rotZ(t[2]), mul(rotY(t[1]), mul(rotX(t[0]), rotY(yaw)))) : mul(rotZ(t[2]), mul(rotY(t[1] + yaw), rotX(t[0])));
+        var A = mul(P, M);
+        for (var i = 0; i < smp.length; i += 3) {
+          var x = smp[i], y = smp[i + 1], z = smp[i + 2];
+          var cw = A[3] * x + A[7] * y + A[11] * z + A[15]; if (cw <= 0) continue;
+          var sx = (A[0] * x + A[4] * y + A[8] * z + A[12]) / cw, sy = (A[1] * x + A[5] * y + A[9] * z + A[13]) / cw;
+          var py = (1 - sy) / 2 * h, px = Math.abs(sx) / 2 * w;
+          if (py > bottom) bottom = py; if (py < top) top = py; if (px > side) side = px;
+        }
+      }
+      return (slot.extent[key] = { bottom: bottom, top: top, side: side, w: w, h: h });
+    },
+    // the caption stands on the drawing's foot: the empty band under the drawing goes to the stage (or the chapter's slot) as --slack
+    fit: function () {
+      if (!this.ok || !this.cur) return;
+      var e = this.reach(this.cur), host = this.hostEl || this.fig;
+      if (!e || !host) return;
+      var slack = Math.max(0, Math.round(e.h - e.bottom - 10));
+      (this.hostEl ? this.hostEl.closest('.ch-spec') : this.fig).style.setProperty('--slack', slack + 'px');
+    },
+    /* The chapter's slot the drawing sits in on The Chain (src/modules/chapter.css .ch-spec-draw), or null for the stage beside
+       the page (the home, AI Chips) and the phone's strip. The canvas and its pause button move; the canvas keeps its context. */
+    hostEl: null,
+    host: function (el) {
+      if (!this.canvas || el === this.hostEl) return;
+      var pause = this.fig ? $('.stage-pause', this.fig) || (this.hostEl ? $('.stage-pause', this.hostEl.closest('.ch-spec')) : null) : null;
+      if (this.balloonEl) { this.balloonEl.remove(); this.balloonEl = null; this.parts = null; }
+      if (el) {
+        el.appendChild(this.canvas);
+        var lab = $('.ch-spec-cap .label', el.closest('.ch-spec'));
+        if (pause && lab) lab.appendChild(pause);
+        this.fig.setAttribute('data-hosted', '1');
+        this.balloons(el);
+      } else {
+        this.fig.insertBefore(this.canvas, this.fig.firstChild);
+        var tag = $('.stage-tag', this.fig);
+        if (pause && tag) tag.appendChild(pause);
+        this.fig.removeAttribute('data-hosted');
+      }
+      this.hostEl = el;
+      this.refreshColors();
+      this.resize();
+    },
+    /* The numbered balloons over the live drawing, where the chapter's slot lists parts (data/specimen-parts.json, carried on the
+       slot as data-parts): each part's points are turned with the drawing every frame and projected; its balloon stands in a
+       column clear of the drawing on the side the part is on, at the part's height, with a leader to each point. A part that
+       crosses to the other side as the drawing turns moves its balloon across. The phone's strip and the home show none. */
+    balloonEl: null, parts: null,
+    balloons: function (el) {
+      var fig = el.closest('.ch-spec'), raw = fig && fig.getAttribute('data-parts');
+      if (!raw) return;
+      var parts; try { parts = JSON.parse(raw); } catch (e) { return; }
+      if (!parts || !parts.length) return;
+      var NS = 'http://www.w3.org/2000/svg', svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('class', 'ch-balloons'); svg.setAttribute('aria-hidden', 'true');
+      parts.forEach(function (p) {
+        var g = document.createElementNS(NS, 'g');
+        p.lines = (p.at || []).map(function () { var l = document.createElementNS(NS, 'line'); g.appendChild(l); return l; });
+        p.dots = (p.at || []).map(function () { var d = document.createElementNS(NS, 'circle'); d.setAttribute('class', 'dot'); d.setAttribute('r', '3.5'); g.appendChild(d); return d; });
+        p.c = document.createElementNS(NS, 'circle'); p.c.setAttribute('class', 'bal'); p.c.setAttribute('r', '12'); g.appendChild(p.c);
+        p.tn = document.createElementNS(NS, 'text'); p.tn.setAttribute('class', 'num'); p.tn.setAttribute('text-anchor', 'middle'); p.tn.textContent = p.n; g.appendChild(p.tn);
+        p.tl = document.createElementNS(NS, 'text'); p.tl.setAttribute('class', 'nm'); p.tl.textContent = p.name; g.appendChild(p.tl);
+        svg.appendChild(g);
+        p.x = null; p.y = null; p.side = 0;
+      });
+      el.appendChild(svg);
+      this.balloonEl = svg; this.parts = parts; this.partsFor = (fig.closest('article.chapter') || {}).getAttribute ? fig.closest('article.chapter').getAttribute('data-specimen') : '';
+    },
+    drawBalloons: function () {
+      var parts = this.parts, slot = this.cur;
+      if (!parts || !slot || slot.name !== this.partsFor || !slot.norm) { if (this.balloonEl) this.balloonEl.style.display = 'none'; return; }
+      var r = this.canvas.getBoundingClientRect(), w = r.width, h = r.height;
+      if (!w || !h) return;
+      this.balloonEl.style.display = '';
+      var k = easeOut((performance.now() - this.transStart) / this.transDur);
+      var A = mul(this.proj(w / h), this.model(slot, -0.45 * (1 - k), 0.94 + 0.06 * k));
+      var nc = slot.norm.c, nk = slot.norm.k, e = this.reach(slot) || { side: w * 0.3 };
+      var pr = function (q) {
+        var x = (q[0] - nc[0]) * nk, y = (q[1] - nc[1]) * nk, z = ((q[2] || 0) - nc[2]) * nk;
+        var cw = A[3] * x + A[7] * y + A[11] * z + A[15];
+        return [((A[0] * x + A[4] * y + A[8] * z + A[12]) / cw + 1) / 2 * w, (1 - (A[1] * x + A[5] * y + A[9] * z + A[13]) / cw) / 2 * h];
+      };
+      var cx = w / 2, gap = Math.max(26, Math.min(56, w * 0.05)), colL = Math.max(18, cx - e.side - gap), colR = Math.min(w - 18, cx + e.side + gap);
+      var sides = [[], []];
+      parts.forEach(function (p) {
+        p.pts = (p.at || []).map(pr);
+        if (!p.pts.length) return;
+        var mx = 0, my = 0; p.pts.forEach(function (q) { mx += q[0]; my += q[1]; }); mx /= p.pts.length; my /= p.pts.length;
+        // the side a part's balloon stands on changes only once the part is well past the middle, so it never flickers
+        var want = mx < cx ? -1 : 1; if (!p.side || (want !== p.side && Math.abs(mx - cx) > w * 0.04)) p.side = want;
+        p.ty = my; sides[p.side < 0 ? 0 : 1].push(p);
+      });
+      // on each side, the balloons keep 34 px apart, in the order of the parts' heights
+      sides.forEach(function (list) {
+        list.sort(function (a, b) { return a.ty - b.ty; });
+        for (var i = 1; i < list.length; i++) if (list[i].ty - list[i - 1].ty < 34) list[i].ty = list[i - 1].ty + 34;
+        var over = list.length ? list[list.length - 1].ty - (h - 18) : 0;
+        if (over > 0) list.forEach(function (p) { p.ty -= over; });
+      });
+      var snap = this.balloonsSnap; this.balloonsSnap = false;
+      parts.forEach(function (p) {
+        if (!p.pts || !p.pts.length) return;
+        var tx = p.side < 0 ? colL : colR, ty = Math.max(16, p.ty);
+        if (p.x === null || snap || reduced) { p.x = tx; p.y = ty; } else { p.x += (tx - p.x) * 0.14; p.y += (ty - p.y) * 0.14; }
+        p.c.setAttribute('cx', p.x.toFixed(1)); p.c.setAttribute('cy', p.y.toFixed(1));
+        p.tn.setAttribute('x', p.x.toFixed(1)); p.tn.setAttribute('y', (p.y + 4.5).toFixed(1));
+        var left = p.x < cx;
+        p.tl.setAttribute('x', (left ? p.x - 18 : p.x + 18).toFixed(1)); p.tl.setAttribute('y', (p.y + 5).toFixed(1));
+        p.tl.setAttribute('text-anchor', left ? 'end' : 'start');
+        p.pts.forEach(function (q, i) {
+          var dx = q[0] - p.x, dy = q[1] - p.y, L = Math.sqrt(dx * dx + dy * dy) || 1;
+          var l = p.lines[i]; l.setAttribute('x1', (p.x + dx / L * 12).toFixed(1)); l.setAttribute('y1', (p.y + dy / L * 12).toFixed(1)); l.setAttribute('x2', q[0].toFixed(1)); l.setAttribute('y2', q[1].toFixed(1));
+          p.dots[i].setAttribute('cx', q[0].toFixed(1)); p.dots[i].setAttribute('cy', q[1].toFixed(1));
+        });
+      });
     },
     // with no WebGL there is nothing to draw, so the figure stays hidden rather than framing an empty canvas under a stale tag
     setVisible: function (v) { var self = this; this.active = v; if (!this.fig) return; var show = v && this.ok; this.fig.setAttribute('data-hidden', show ? '0' : '1'); if (show) { this.resize(); requestAnimationFrame(function () { self.resize(); }); this.idle(); } },
     draw: function (slot, op, extraRot, sc) {
       var gl = this.gl, aspect = this.w / this.h;
-      var P = perspective(34 * Math.PI / 180, aspect, 0.1, 40);
-      // pull the camera back on narrow (portrait) stages so the bounding sphere fits the width too
-      var V = translate(0, 0, -3.8 * Math.max(1, 0.98 / aspect)); // 3.8 keeps the unit sphere inside 89% of the canvas height, including perspective
-      var t = slot.tilt;
-      // turntable specimens spin about their own vertical axis before the tilt (a plan view rotating in its plane); the rest spin about the world axis
-      var idle = this.spin + slot.spinBase;
-      var M = slot.turntable
-        ? mul(rotZ(t[2]), mul(rotY(t[1] + this.scrollAngle + extraRot), mul(rotX(t[0]), rotY(idle))))
-        : mul(rotZ(t[2]), mul(rotY(t[1] + idle + this.scrollAngle + extraRot), rotX(t[0])));
-      M = mul(M, scale(sc));
-      if (this.userYaw || this.userPitch) M = mul(rotX(this.userPitch), mul(rotY(this.userYaw), M)); // the reader's own turn, about the world axes
-      var MVP = mul(P, mul(V, M));
+      // proj(): the perspective, and the camera pulled back on narrow (portrait) stages so the bounding sphere fits the width too
+      // (3.8 keeps the unit sphere inside 89% of the canvas height, including perspective). model(): turntable specimens spin
+      // about their own vertical axis before the tilt (a plan view rotating in its plane), the rest about the world axis, and the
+      // reader's own turn about the world axes
+      var MVP = mul(this.proj(aspect), this.model(slot, extraRot, sc));
       gl.uniformMatrix4fv(this.loc.uMVP, false, new Float32Array(MVP));
       var size = 6.6 * this.dpr * Math.min(1.05, Math.max(0.6, this.h / (900 * this.dpr))) * Math.max(1, 0.98 / aspect);
       gl.uniform1f(this.loc.uSize, size);
@@ -262,6 +402,7 @@
       var self = this;
       requestAnimationFrame(function (tt) { self.loop(tt); });
       if (!this.ok || this.hidden || !this.active) { this.lastT = t; return; }
+      if (this.hostEl) { var hr = this.canvas.getBoundingClientRect(); if (hr.bottom < 0 || hr.top > window.innerHeight) { this.lastT = t; return; } } // a chapter's slot scrolled out of view
       var dt = Math.min(0.05, (t - this.lastT) / 1000 || 0); this.lastT = t;
       var gl = this.gl;
       gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
@@ -271,6 +412,7 @@
       if (this.prev && k < 1) this.draw(this.prev, 1 - k, 0.35 * k, 1 + 0.04 * k);
       else this.prev = null;
       this.draw(this.cur, k, -0.45 * (1 - k), 0.94 + 0.06 * k);
+      if (this.balloonEl) this.drawBalloons();
     }
   };
 
@@ -393,6 +535,9 @@
         $$('#controls-subtabs a').forEach(function (a) { if (a.getAttribute('data-sub') === sub) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
       }
       $$('.view').forEach(function (s) { s.hidden = s.getAttribute('data-view') !== v; });
+      document.documentElement.setAttribute('data-view', v); // the chapter page's styles read it (src/modules/chapter.css: the stage beside the page goes on The Chain)
+      if (v !== 'stack') Stage.host(null); // the drawing leaves a chapter's slot for the stage of the view it goes to
+      if (v !== 'stack') document.documentElement.classList.remove('slim-on', 'mast-up'); // the phone's slim bar and the raised masthead belong to The Chain
       // Until the first route the template's CSS showed the view the address names (read in <head> by src/preroute.js), so it
       // could paint while the page arrived. From here the hidden attributes decide. A reader who scrolled or tapped in that
       // time keeps their place: the first route neither returns them to the top nor jumps to the anchor (kept).
@@ -507,6 +652,10 @@
       var r2 = best.getBoundingClientRect();
       var p = r2.height > vh ? Math.max(0, Math.min(1, (probe - r2.top) / (r2.height - vh * 0.3))) : 0;
       Stage.scrollAngle = (reduced ? 0 : p * 1.15);
+      // on a wide screen The Chain's drawing stands in the chapter's own slot under its opener, whichever slot is in view
+      // (src/modules/chapter.css .ch-spec-draw); on a phone it stays in the strip and follows the chapter, as before
+      var inSlot = Router.current === 'stack' && !narrow();
+      if (inSlot) this.hostSpec(); else if (Stage.hostEl) Stage.host(null);
       var id = best.id || best.getAttribute('data-specimen');
       // the home hero keeps one id while the reader picks its specimen (src/modules/walk.js), so the specimen it names counts too
       var key = id + '|' + (best.getAttribute('data-specimen') || '');
@@ -514,7 +663,7 @@
         this.currentId = id; this.currentKey = key;
         if (Router.current === 'stack') Router.title();
         var num = best.getAttribute('data-number');
-        Stage.show(best.getAttribute('data-specimen'), null, best.getAttribute('data-caption') ? esc(best.getAttribute('data-caption')) : null,
+        if (!inSlot) Stage.show(best.getAttribute('data-specimen'), null, this.caption(best),
           num ? 'Specimen <b>' + num + '</b> · ' + esc(best.getAttribute('data-title') || '') : 'Specimen <b>00</b> · the whole chip');
         // a phone builds only the next two specimens ahead of the reader (a wide screen queues them all at boot)
         if (narrow()) {
@@ -523,6 +672,76 @@
           Stage.soon(ahead);
         }
       }
+      Rail.update();
+    },
+    // the caption the stage shows for an item: its own words, and on The Chain the parts list under them (the phone's strip
+    // shows it once expanded)
+    caption: function (item) {
+      var c = item.getAttribute('data-caption') ? esc(item.getAttribute('data-caption')) : null;
+      var parts = Router.current === 'stack' ? $('.ch-spec .ch-parts', item) : null, k = parts ? $('.ch-spec .ch-parts-k', item) : null;
+      return c && parts ? c + '<span class="stage-parts">' + (k ? k.outerHTML : '') + parts.outerHTML + '</span>' : c;
+    },
+    // the chapter's slot that is most in view takes the drawing, and the drawing becomes that chapter's specimen
+    hostSpec: function () {
+      var slots = this.slots || (this.slots = $$('[data-view="stack"] .ch-spec-draw'));
+      var vh = window.innerHeight, top = cssPx('--masthead'), best = null, most = 0;
+      for (var i = 0; i < slots.length; i++) {
+        var r = slots[i].getBoundingClientRect();
+        if (!r.height) continue;
+        var v = Math.min(r.bottom, vh) - Math.max(r.top, top);
+        if (v > most) { most = v; best = slots[i]; }
+      }
+      if (!best || best === Stage.hostEl) return;
+      var ch = best.closest('article.chapter');
+      if (!ch) return;
+      Stage.host(best);
+      var num = ch.getAttribute('data-number');
+      Stage.show(ch.getAttribute('data-specimen'), null, this.caption(ch), 'Specimen <b>' + num + '</b> · ' + esc(ch.getAttribute('data-title') || ''));
+      Stage.balloonsSnap = true;
+    }
+  };
+
+  /* ---------------- the chapter's contents rail and the phone's slim bar (redesign stage 2) ----------------
+     The rail's On this page marks the section the reader is in (src/modules/chapter.css .rail-toc a[aria-current]). On a phone
+     the masthead goes up as the reader scrolls down a chapter and comes back as they scroll up, and once the opener has gone a
+     slim bar at the top names the chapter and the section (.ch-slim, a link to the chapter's top). */
+  var Rail = {
+    slim: null, lastY: 0,
+    update: function () {
+      var html = document.documentElement, y = window.pageYOffset;
+      var ch = Router.current === 'stack' && Sections.currentId ? document.getElementById(Sections.currentId) : null;
+      if (!ch || !ch.classList || !ch.classList.contains('chapter')) { this.set(null); html.classList.remove('mast-up'); this.lastY = y; return; }
+      if (!ch._rail) ch._rail = $$('.rail-toc a', ch).map(function (a) { return [a, document.getElementById(dec(a.getAttribute('href').slice(1)))]; }).filter(function (x) { return x[1]; });
+      var line = Math.max(window.innerHeight * 0.3, headerH() + 40), cur = null;
+      ch._rail.forEach(function (x) { if (x[1].getBoundingClientRect().top < line) cur = x; });
+      if (ch._railCur !== cur) { if (ch._railCur) ch._railCur[0].removeAttribute('aria-current'); if (cur) cur[0].setAttribute('aria-current', 'location'); ch._railCur = cur; }
+      if (!narrow()) { this.set(null); html.classList.remove('mast-up'); this.lastY = y; return; }
+      var open = $('.ch-open', ch), past = open && open.getBoundingClientRect().bottom < 0;
+      this.set(past ? ch : null, cur);
+      // the masthead: up while the reader scrolls down past the top of the page, back as soon as they scroll up
+      var dy = y - this.lastY;
+      if (y < 200 || $('#sheet:not([hidden])')) html.classList.remove('mast-up');
+      else if (dy > 6) html.classList.add('mast-up');
+      else if (dy < -6) html.classList.remove('mast-up');
+      if (Math.abs(dy) > 6 || y < 200) this.lastY = y;
+    },
+    set: function (ch, cur) {
+      var html = document.documentElement;
+      if (!ch) { html.classList.remove('slim-on'); return; }
+      if (!this.slim) {
+        this.slim = document.createElement('a'); this.slim.className = 'ch-slim';
+        this.slim.innerHTML = '<span class="n"></span><span class="t"></span><span class="s"></span>';
+        document.body.appendChild(this.slim);
+      }
+      var a = this.slim;
+      if (a.getAttribute('href') !== '#' + ch.id) {
+        a.setAttribute('href', '#' + ch.id);
+        a.setAttribute('aria-label', 'Back to the top of ' + (ch.getAttribute('data-title') || ''));
+        $('.n', a).textContent = ch.getAttribute('data-number') || '';
+        $('.t', a).textContent = ch.getAttribute('data-title') || '';
+      }
+      $('.s', a).textContent = cur ? cur[0].textContent : '';
+      html.classList.add('slim-on');
     }
   };
 

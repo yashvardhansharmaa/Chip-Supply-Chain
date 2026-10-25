@@ -383,6 +383,8 @@
     var s = PC.specimens[name](params || {});
     if (!s || !s.cloud) throw new Error('specimen ' + name + ' returned no cloud');
     s.name = name;
+    // the transform normalize applies, kept so a point named in the specimen's own units (a part's balloon, data/specimen-parts.json) lands where the drawing puts it
+    var b = PC.bounds(s.cloud); s.norm = { c: b.center, k: 1 / (b.radius || 1) };
     s.cloud = PC.normalize(s.cloud, 1);
     if (s.spin == null) s.spin = 0.12;
     if (!s.tilt) s.tilt = [0.35, -0.6, 0];

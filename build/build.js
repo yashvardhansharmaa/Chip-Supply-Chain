@@ -3,6 +3,10 @@
 const fs = require('fs');
 const path = require('path');
 const SITE = require('./site.js'); // the public address; see build/site.js
+// the work a citation names, and the token a cite line's day goes in as (filled once every page's date is known, below);
+// up here because the figures' citations (figure()) are drawn while the chapters are read
+const CITE_WORK = 'Chip Supply Chain: How AI Chips Are Made';
+const CITE_DAY = (id) => `{{CITE_DAY:${id}}}`;
 
 const root = path.resolve(__dirname, '..');
 const read = (p) => fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : null;
@@ -117,73 +121,68 @@ function withUnit(v, unit) {
   if (sign) return sign[0] + n + esc(u.slice(1));
   return n + '\u00a0' + esc(u); // a no-break space: the figure and its unit never part
 }
-/* Stacked bars (decision 4, the owner's middle way, 21 Oct 2026). data-k on each segment and its legend entry names its
-   color, and the stylesheets map each to a token (src/styles.css and build/assets/chapter-page.css, light and dark):
-   "lead", the largest share that is not a remainder, garnet; "1" to "5", the others in data order, the five chart hues;
-   "tail", any past those five; "rest", a remainder ("Other", "All others", "… and all others"), hatched with a hairline edge.
-   The country stacks keep each country's own color (COUNTRY_COLOR, the Suppliers page's), as "c1" to "c7", never twice in a
-   chart; Europe takes the EU color (c2), and a region or remainder turns neutral, "n1" then "n2". */
+/* Chart rule B (the owner's choice of 25 Oct 2026, qa/redesign/BRIEF.md): the largest value is solid ink with a bold label, every
+   other value the light tint --ctx, and no accent color marks a value. A remainder ("Other", "All others", "… and all others")
+   is hatched, and is never the one marked largest. A stack (shares of one whole) is drawn as bars, one per share in the
+   data's order, as the hybrid mockup draws them, so each share keeps its label and no legend is needed. */
 const STACK_REST = /^(other|others|all others|everyone else|rest of world|.* and all others|.*other companies)$/i;
-const COUNTRY_STACKS = new Set(['wafer-concentration', 'resist-country', 'asml-region']);
-const COUNTRY_ADJ = { Japanese: 'Japan', American: 'United States', Taiwanese: 'Taiwan', Korean: 'South Korea', 'South Korean': 'South Korea', Chinese: 'China', Dutch: 'Netherlands', German: 'Germany' };
-function stackKeys(f, segs) {
-  if (COUNTRY_STACKS.has(f.id)) {
-    const used = new Set(); let n = 0;
-    return segs.map((s) => {
-      const adj = String(s.name).match(/^(\w+(?: Korean)?) (?:companies|firms|suppliers)$/);
-      const name = adj && COUNTRY_ADJ[adj[1]] ? COUNTRY_ADJ[adj[1]] : s.name;
-      const c = /^europe$/i.test(name) ? 2 : COUNTRY_COLOR[name];
-      if (c && c < 8 && !used.has(c)) { used.add(c); return 'c' + c; }
-      n += 1; return 'n' + Math.min(n, 2);
-    });
-  }
-  const rest = segs.map((s) => STACK_REST.test(String(s.name).trim()));
-  let lead = -1;
-  segs.forEach((s, i) => { if (!rest[i] && (lead < 0 || s.v > segs[lead].v)) lead = i; });
-  let n = 0;
-  return segs.map((s, i) => (i === lead ? 'lead' : rest[i] ? 'rest' : ++n <= 5 ? String(n) : 'tail'));
-}
 // a unit that moves onto the values leaves the title, and so does any copy of it the title spells out ("2022 ($M)", "price in Europe ($/kg)", decision 11)
 const figTitle = (f) => (unitOnValue(f.unit) ? String(f.title || '').split(` (${f.unit})`).join('') : String(f.title || ''));
+// the figure's short name in the chapter's contents rail: its title's first sentence
+const figShort = (f) => figTitle(f).split(/(?<=[a-z0-9)%])\.\s+(?=[A-Z])/)[0].replace(/\.$/, '');
+// a figure's own address, as the reader would paste it: the chapter's readable page and the figure's anchor
+const figAddr = (ctx, f) => `${SITE.host}/${ctx.id}/#fig-${ctx.id}-${f.id}`;
+// the figure's data as a CSV file, a data: link the browser saves without any script (the readable pages carry it too)
+function figCSV(f, data) {
+  const q = (v) => { const s = String(v == null ? '' : v); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+  const head = f.type === 'timeline' ? ['Date', 'Event'] : ['Item', f.unit ? `Value (${f.unit})` : 'Value'];
+  const rows = [head].concat(data.map((d) => [d[0], d[1]]));
+  return 'data:text/csv;charset=utf-8,' + encodeURIComponent('﻿' + rows.map((r) => r.map(q).join(',')).join('\r\n') + '\r\n');
+}
+/* One grammar for every figure (the hybrid's): a head with the figure's number ("Figure 04.5"), a large line and, when the
+   figure has a finding, the title under it; then the chart; then a source strip on the paper tint with the source and its
+   footnote number, any note, the figure's address and its actions: Cite (a citation that opens in place, as the chapter's
+   does), Table and PNG (added by the runtime, src/app.js Figs, and by the readable pages' script) and CSV (a plain download).
+   A figure without a finding shows its title as the large line and nothing under it. */
 function figure(f, ctx) {
   if (!f) return '';
+  ctx.figNo = (ctx.figNo || 0) + 1;
+  const num = `${String(ctx.number || 0).padStart(2, "0")}.${ctx.figNo}`, fid = `fig-${ctx.id}-${f.id}`;
   const shortUnit = unitOnValue(f.unit);
-  const title = `<p class="fig-title">${esc(figTitle(f))}${f.unit && !shortUnit ? `<span class="unit">${esc(f.unit)}</span>` : ''}</p>`;
-  const source = f.source && f.source.url ? `<p class="fig-source">Source: <a href="${safeUrl(f.source.url)}" target="_blank" rel="noopener">${esc(f.source.label || host(f.source.url))}</a></p>` : (f.source && f.source.label ? `<p class="fig-source">Source: ${esc(f.source.label)}</p>` : '');
-  if (f.source && f.source.url) cite(f.source.url, ctx);
-  let body = '';
+  const unitTag = f.unit && !shortUnit ? `<span class="unit">${esc(f.unit)}</span>` : '';
+  const finding = String(f.finding || '').trim();
+  const isAnim = f.type === 'animation';
+  (ctx.figList = ctx.figList || []).push({ id: fid, num, label: isAnim ? figTitle(f) : figShort(f) });
+  // the source's footnote number is the chapter's own (the figure registers its source as it always has)
+  const srcMark = f.source && f.source.url ? cite(f.source.url, ctx) : '';
   const data = Array.isArray(f.data) ? f.data.filter((d) => Array.isArray(d) && d.length >= 2) : [];
-  if (f.type === 'bars') {
+  let body = '', kick = `Figure ${num}`;
+  if (f.type === 'bars' || f.type === 'stack') {
     // HTML rows, so a label is never cut and wraps at a readable size on a phone: the label beside its bar from 641 px up
-    // (its column as wide as the longest label, at most 45 percent), above it below that. One series, so the bars are ink
-    // and the largest garnet (.hb.top; ties mark each). --lw and --vw size the label column and the room for the value.
+    // (its column as wide as the longest label, at most 45 percent), above it below that. --lw and --vw size the label column
+    // and the room for the value. The largest value that is not a remainder is ink (.top; ties mark each), a remainder is hatched.
+    const rest = data.map((d) => STACK_REST.test(String(d[0]).trim()));
     const max = Math.max(...data.map((d) => +d[1] || 0), 1e-9);
+    const top = Math.max(...data.filter((d, i) => !rest[i]).map((d) => +d[1] || 0), -Infinity);
     const vals = data.map((d) => withUnit(d[1], f.unit));
     const lw = Math.max(...data.map((d) => String(d[0]).length)), vw = Math.max(...vals.map((v) => v.replace(/&[a-z]+;/g, '&').length));
     body = `<div class="hbars" aria-hidden="true" style="--lw:${(lw * 0.56 + 0.4).toFixed(1)}em;--vw:${(vw * 0.62 + 0.9).toFixed(1)}em">`
-      + data.map((d, i) => `<div class="hb${(+d[1] || 0) === max ? ' top' : ''}"><span class="hb-l">${esc(d[0])}</span><span class="hb-r"><i style="width:${Math.max(0.6, (+d[1] || 0) / max * 100).toFixed(1)}%"></i><b>${vals[i]}</b></span></div>`).join('')
+      + data.map((d, i) => `<div class="hb${rest[i] ? ' rest' : (+d[1] || 0) === top ? ' top' : ''}" data-v="${+d[1] || 0}"><span class="hb-l">${esc(d[0])}</span><span class="hb-r"><i style="width:${Math.max(0.6, (+d[1] || 0) / max * 100).toFixed(1)}%"></i><b>${vals[i]}</b></span></div>`).join('')
       + `</div>` + tableFallback(data, f);
-  } else if (f.type === 'stack') {
-    const total = data.reduce((a, d) => a + (+d[1] || 0), 0) || 1;
-    const segs = data.map((d) => ({ name: d[0], v: +d[1] || 0 }));
-    const keys = stackKeys(f, segs);
-    body = `<div class="stack-bar" role="img" aria-label="${esc(f.title)}">` + segs.map((s, i) => `<i data-k="${keys[i]}" style="flex:${(s.v / total * 100).toFixed(2)} 0 0" title="${esc(s.name)}: ${withUnit(s.v, f.unit)}"></i>`).join('') + `</div>` +
-      `<div class="stack-legend">` + segs.map((s, i) => `<span data-k="${keys[i]}">${esc(s.name)}<b>${withUnit(s.v, f.unit)}</b></span>`).join('') + `</div>`;
-  } else if (f.type === 'animation') {
+  } else if (isAnim) {
     // an explainer animation rendered by build/animate.py: the step names and captions are page text, kept in time
     // with the video by app.js; the transcript is read by screen readers and printed in place of the video
     const meta = readJSON(path.join(root, 'media', f.src + '.json'), null);
     if (!meta || !Array.isArray(meta.steps)) { warn(`${ctx.id}: animation ${f.src} has not been rendered (run build/animate.py ${f.src})`); return ''; }
     USED_MEDIA.add(f.src);
     const m = `media/${esc(f.src)}`, steps = meta.steps;
+    if (meta.duration) kick += ` · Explainer, ${Math.round(meta.duration)} seconds`;
     body = `<ol class="anim-steps">${steps.map((st, i) => `<li><button type="button" data-t="${+st.t0}"${i ? '' : ' aria-current="step"'}><span class="n">${String(i + 1).padStart(2, "0")}</span>${esc(st.k)}</button></li>`).join('')}</ol>`
       + `<div class="anim-stage" role="button" tabindex="0" aria-label="Pause the animation" style="aspect-ratio:${meta.width}/${meta.height}">`
       + `<video muted loop playsinline preload="none" aria-hidden="true" data-src="${m}"></video>` // no poster attribute: app.js sets it (theme-matched) once the figure nears the screen, and for print
       + `<img class="anim-print" src="${m}-print-end.jpg" alt="" loading="lazy"><span class="anim-state" aria-hidden="true">Paused</span></div>`
       + `<p class="anim-cap" aria-hidden="true">${esc(steps[0].cap)}</p>`
-      + `<ol class="anim-transcript">${steps.map((st) => `<li><b>${esc(st.k)}.</b> ${esc(st.cap)}</li>`).join('')}</ol>`
-      + (f.note ? `<p class="fig-source">${esc(f.note)}</p>` : '');
-    return `<figure class="figure figure--anim" id="fig-${esc(ctx.id)}-${esc(f.id)}">${title}${body}${source}</figure>`;
+      + `<ol class="anim-transcript">${steps.map((st) => `<li><b>${esc(st.k)}.</b> ${esc(st.cap)}</li>`).join('')}</ol>`;
   } else if (f.type === 'timeline') {
     // a row's date is a day (2019-05-16), a month (2028-03) or a bare year (2028), written as the source gave it; a year sits
     // at the start of that year and is labelled with the year alone. Rows are put in date order (ties keep their order).
@@ -194,7 +193,18 @@ function figure(f, ctx) {
     warn(`${ctx.id}: unknown figure type ${f.type}`);
     return '';
   }
-  return `<figure class="figure" id="fig-${esc(ctx.id)}-${esc(f.id)}">${title}${body}${source}</figure>`;
+  const head = `<div class="fig-head"><a class="fig-k" href="#${fid}">${esc(kick)}</a>`
+    + (finding ? `<p class="fig-title fig-find">${esc(finding)}</p><p class="fig-sub">${esc(figTitle(f))}${unitTag}</p>` : `<p class="fig-title">${esc(figTitle(f))}${unitTag}</p>`) + `</div>`;
+  // the strip: Source (or a note) first, then the address and the actions
+  const src = f.source && f.source.url ? `<span class="fs-src"><span class="fs-k">Source</span><a href="${safeUrl(f.source.url)}" target="_blank" rel="noopener">${esc(f.source.label || host(f.source.url))}</a>${srcMark}</span>`
+    : (f.source && f.source.label ? `<span class="fs-src"><span class="fs-k">Source</span>${esc(f.source.label)}</span>` : '');
+  const note = f.note ? `<span class="fs-note fig-source"><span class="fs-k">Note</span>${esc(f.note)}</span>` : '';
+  const box = `cite-${fid}`;
+  const csv = data.length && !isAnim ? `<a class="fs-csv" href="${figCSV(f, data)}" download="chip-supply-chain-figure-${num.replace('.', '-')}-${esc(f.id)}.csv">CSV</a>` : '';
+  const acts = `<span class="fs-acts" data-kind="${esc(f.type)}"><button type="button" class="ch-cite-btn" aria-expanded="false" aria-controls="${box}">Cite</button>${csv}</span>`;
+  const citeText = `<div class="ch-cite-box fig-cite-box" id="${box}" role="region" aria-label="Citation for figure ${num}" hidden><p class="ch-cite-text">Sharma, Yashvardhan. “Figure ${num}: ${esc(figTitle(f))}.” <i>${CITE_WORK}</i>. Updated ${CITE_DAY(ctx.id)}. <a href="${esc(SITE.url + ctx.id + '/#' + fid)}">${esc(SITE.url + ctx.id + '/#' + fid)}</a></p></div>`;
+  const strip = `<div class="fig-strip">${src}${note}<a class="fs-addr" href="#${fid}">${esc(figAddr(ctx, f))}</a>${acts}${citeText}</div>`;
+  return `<figure class="figure${isAnim ? ' figure--anim' : ''}" id="${fid}" data-num="${num}">${head}<div class="fig-body">${body}</div>${strip}</figure>`;
 }
 // A date in a figure: { key, the day it sorts as; iso, for <time datetime>; label, what the reader sees }. A full day keeps the
 // form the data gives; a month reads "March 2028"; a bare year reads "2028" and sorts as 1 January. Anything else is not a date.
@@ -205,7 +215,7 @@ function figDate(s) {
   return { key: `${m[1]}-${m[2] || '01'}-${m[3] || '01'}`, iso: v, label: m[3] ? v : m[2] ? `${MONTHS[+m[2] - 1]} ${m[1]}` : m[1] };
 }
 function tableFallback(data, f) {
-  return `<table class="sr-only"><caption>${esc(figTitle(f))}</caption><tbody>${data.map((d) => `<tr><th scope="row">${esc(d[0])}</th><td>${unitOnValue(f.unit) ? withUnit(d[1], f.unit) : fmtNum(d[1]) + (f.unit ? ' ' + esc(f.unit) : '')}</td></tr>`).join('')}</tbody></table>`;
+  return `<table class="sr-only fig-table"><caption>${esc(figTitle(f))}</caption><tbody>${data.map((d) => `<tr><th scope="row">${esc(d[0])}</th><td>${unitOnValue(f.unit) ? withUnit(d[1], f.unit) : fmtNum(d[1]) + (f.unit ? ' ' + esc(f.unit) : '')}</td></tr>`).join('')}</tbody></table>`;
 }
 
 /* ---------------- block markdown ---------------- */
@@ -391,7 +401,8 @@ const COST_LEAD = /^((?:about |roughly |up to |from |over |under |~|≈)?(?:US)?
 // gl, when given, marks glossary terms in the card's prose (the substitutability test, the reason and the China and US
 // lines), the first use of each across the card; it takes and returns escaped HTML. ctx is the chapter's citation context
 // ({ id, cites }); without it the card is drawn without marks.
-function nameplate(card, title, gl, ctx) {
+// where, when given, names the stage at the card's head ("Lithography, stage 4 of 15")
+function nameplate(card, title, gl, ctx, where) {
   if (!card) return '';
   const g = gl || ((s) => s), plain = (s) => s;
   const F = {}; cardFields(card).forEach((f) => { F[f.what] = f.urls; });
@@ -416,16 +427,16 @@ function nameplate(card, title, gl, ctx) {
   const costSubHTML = lead ? esc(numLead[2]) + firstMarks + esc(firstStop) + (restHTML ? ' ' + restHTML : '') : restHTML;
   const costLabel = card.costLabel ? esc(card.costLabel) : 'Price or market size';
   return `<section class="plate" aria-label="Chokepoint card${title ? ' for ' + esc(title) : ''}">
-<header class="plate-head"><span class="label">Chokepoint card</span></header>
+<header class="plate-head"><span class="label">Chokepoint card</span>${where ? `<span class="plate-where">${esc(where)}</span>` : ''}</header>
 <div class="plate-kpis">
-<div><span class="k">Concentration</span><b class="v ${esc(conc)}">${conc ? `<button type="button" class="gl-term v-btn" data-band="${BANDS[conc] || 0}" data-term="concentration" data-head="${esc(conc)} concentration" data-note="${esc(BAND_NOTE[conc] || '')}">${esc(conc)}</button>` : '—'}</b>${BAND_NOTE[conc] ? `<span class="sub">${esc(BAND_NOTE[conc])}</span>` : ''}</div>
+<div><span class="k">Concentration</span><b class="v ${esc(conc)}">${conc ? `<i class="bm" data-band="${BANDS[conc] || 0}" aria-hidden="true"></i><button type="button" class="gl-term v-btn" data-band="${BANDS[conc] || 0}" data-term="concentration" data-head="${esc(conc)} concentration" data-note="${esc(BAND_NOTE[conc] || '')}">${esc(conc)}</button>` : '—'}</b>${BAND_NOTE[conc] ? `<span class="sub">${esc(BAND_NOTE[conc])}</span>` : ''}</div>
 ${sb ? `<div><span class="k">Substitutability</span><b class="v sub-${SUBS[sb.band] || 0}"><button type="button" class="gl-term v-btn" data-band="${SUBS[sb.band] || 0}" data-term="substitutability" data-head="${esc(SUBWORD[sb.band] || sb.band)}" data-note="${esc(SUB_NOTE[sb.band] || '')}" data-test="${esc(sb.test || '')}">${esc(sb.band)}</button></b>${sb.test ? `<span class="sub">${cardText(sb.test, F['substitutability test'], ctx, g)}</span>` : ''}</div>` : `<div><span class="k">Substitution time</span><b class="v">${esc(sub.years || '—')}${sub.years && !/year/i.test(sub.years) ? '<small>years</small>' : ''}</b></div>`}
 <div><span class="k">${costLabel}</span><b class="v cost${costLong ? ' long' : ''}">${costHeadHTML}</b>${costSubHTML ? `<span class="sub">${costSubHTML}</span>` : ''}</div>
 </div>
 <dl class="plate-rows">
-${leaders ? `<div class="row"><dt>Who leads</dt><dd><ul>${leaders}</ul></dd></div>` : ''}
-${countries ? `<div class="row"><dt>Where it is made</dt><dd><ul>${countries}</ul></dd></div>` : ''}
-${(sb && sb.why) || sub.why ? `<div class="row"><dt>Why substitution is ${sb && SUBS[sb.band] <= 2 ? 'possible' : 'slow'}</dt><dd class="why">${sb && sb.why ? cardText(sb.why, F['substitutability why'], ctx, g) : g(esc(sub.why))}</dd></div>` : ''}
+${leaders ? `<div class="row row--leads"><dt>Who leads</dt><dd><ul>${leaders}</ul></dd></div>` : ''}
+${countries ? `<div class="row row--where"><dt>Where it is made</dt><dd><ul>${countries}</ul></dd></div>` : ''}
+${(sb && sb.why) || sub.why ? `<div class="row row--why"><dt>Why substitution is ${sb && SUBS[sb.band] <= 2 ? 'possible' : 'slow'}</dt><dd class="why">${sb && sb.why ? cardText(sb.why, F['substitutability why'], ctx, g) : g(esc(sub.why))}</dd></div>` : ''}
 </dl>
 ${card.chinaStatus || card.usStatus ? `<div class="plate-status">${card.chinaStatus ? `<div><span class="k">Where China stands</span><p>${cardText(card.chinaStatus, F.chinaStatus, ctx, g)}</p></div>` : ''}${card.usStatus ? `<div><span class="k">Where the US stands</span><p>${cardText(card.usStatus, F.usStatus, ctx, g)}</p></div>` : ''}</div>` : ''}
 </section>`;
@@ -439,11 +450,12 @@ let geo = null;
 for (const f of files) {
   const { meta, body } = parseChapter(read(path.join(contentDir, f)), f);
   const id = meta.id || f.replace(/^\d\d-/, '').replace(/\.md$/, '');
-  const ctx = { id, cites: [], figures: meta.figures || [] };
+  const ctx = { id, cites: [], figures: meta.figures || [], number: meta.number || chapters.length + 1, figList: [] };
   readingOrderCites(meta, body, ctx, id !== 'geopolitics' && meta.number >= 1 && meta.number <= 15);
   const { html, headings } = markdown(body, ctx);
   const words = wordCount(body);
-  const ch = { file: f, id, meta, html, headings, words, cites: ctx.cites, number: meta.number || chapters.length + 1, title: meta.title || id };
+  // figList: the figures in the order they are placed, numbered "04.1" on, for the contents rail (chapterHTML)
+  const ch = { file: f, id, meta, html, headings, words, cites: ctx.cites, figList: ctx.figList, number: meta.number || chapters.length + 1, title: meta.title || id };
   (meta.figures || []).forEach((fig) => { if (!body.includes(`{{figure:${fig.id}}}`)) warn(`${id}: figure ${fig.id} defined but never placed`); });
   if (id === 'geopolitics') geo = ch; else chapters.push(ch);
 }
@@ -475,7 +487,7 @@ function plainBox(html, plain, ctx) {
   const key = norm(plain).slice(0, 60);
   let done = false;
   html = html.replace(/<p>([\s\S]*?)<\/p>/g, (whole, inner) => { if (!done && key && norm(inner).slice(0, 60) === key) { done = true; return ''; } return whole; });
-  return { html, box: `<div class="plain"><span class="label">In plain terms</span><p>${inline(plain, ctx)}</p></div>` };
+  return { html, box: `<div class="plain" id="${esc(ctx.id)}--plain"><h3 class="label">In plain terms</h3><p>${inline(plain, ctx)}</p></div>` };
 }
 // the main page's "In plain terms" box, with the first use of each glossary term in its paragraph marked (the label is left alone)
 const glPlain = (box) => String(box || '').replace(/<p>([\s\S]*)<\/p>/, (m, inner) => `<p>${glossaryWrap(inner)}</p>`);
@@ -587,7 +599,6 @@ const copyLink = (id) => `<a class="ch-copy ch-cite-copylink" href="${esc(id)}/"
    Chapter PDF" on the chapter's readable page. The day is the chapter's own (page dates, below). The citation names the chapter and its readable page; Chapter PDF downloads the
    chapter's own PDF. On the main page the toggle is a button. On the readable page it is a link to the citation, which
    then opens without scripts (:target), and CITE_JS turns it into a toggle there too. */
-const CITE_WORK = 'Chip Supply Chain: How AI Chips Are Made';
 // each chapter's PDF, dist/pdf/<id>.pdf (written by build/chapter_pdfs.py, not by the build): the cite line links it and the
 // sitemap lists it once the file exists, so a chapter not yet printed never shows a broken link
 const chapterPDFs = new Map();
@@ -625,38 +636,147 @@ document.addEventListener('keydown',function(e){if(e.key!==' ')return;var t=e.ta
 Array.prototype.forEach.call(document.querySelectorAll('a.ch-cite-btn'),function(a){a.setAttribute('role','button');a.setAttribute('aria-expanded','false');});
 try{var o=location.hash.length>1?document.getElementById(location.hash.slice(1)):null;if(o&&o.classList.contains('ch-cite-box')){var t=document.querySelector('.ch-cite-btn[aria-controls="'+o.id+'"]');if(t)set(t,true);}}catch(e){}
 })();`;
+// A figure's Table and PNG actions (figure() above draws Cite and CSV, which need no script). Shared by the main page
+// (src/template.html) and the readable pages (social.js), as CITE_JS is. Table shows the figure's own rows in place of its
+// bars, and back; PNG draws the figure, always on the light ground, to a 1,600 px wide picture and saves it.
+const FIG_JS = `(function(){
+var D=document;
+function el(t,c,x){var e=D.createElement(t);if(c)e.className=c;if(x)e.textContent=x;return e;}
+function wrap(g,s,w){var out=[],line='';String(s).split(/\\s+/).forEach(function(word){var t=line?line+' '+word:word;if(g.measureText(t).width>w&&line){out.push(line);line=word;}else line=t;});if(line)out.push(line);return out;}
+function txt(n){return n?n.textContent.replace(/\\s+/g,' ').trim():'';}
+function png(fig){
+var rows=[].map.call(fig.querySelectorAll('.hb'),function(r){var c=r.cloneNode(true);return{l:txt(r.querySelector('.hb-l')),v:txt(r.querySelector('.hb-r b')),n:+r.getAttribute('data-v')||0,top:r.classList.contains('top'),rest:r.classList.contains('rest')};});
+if(!rows.length)return;
+var k=txt(fig.querySelector('.fig-k')),t1=txt(fig.querySelector('.fig-title')),t2=txt(fig.querySelector('.fig-sub'));
+var src=fig.querySelector('.fs-src'),sc=src?src.cloneNode(true):null;if(sc)[].forEach.call(sc.querySelectorAll('.fs-k'),function(x){x.remove();});
+var srcT=sc?txt(sc).replace(/\\s*(\\d+)$/,' [$1]'):'',addr=txt(fig.querySelector('.fs-addr'));
+var W=800,P=40,S=2,cv=el('canvas'),g=cv.getContext('2d');
+var FD='"Fraunces",Georgia,serif',FB='"Literata",Georgia,serif',FU='"Hanken Grotesk","Helvetica Neue",Arial,sans-serif',FM='"Fragment Mono",Menlo,monospace';
+g.font='500 24px '+FD;var L1=wrap(g,t1,W-2*P);g.font='400 15px '+FB;var L2=t2?wrap(g,t2,W-2*P):[];
+g.font='400 14px '+FU;var lw=Math.min(W*0.42,Math.max.apply(null,rows.map(function(r){return g.measureText(r.l).width;}))+8);
+var H=P+18+L1.length*31+(L2.length?6+L2.length*21:0)+24+rows.length*34+20+56;
+cv.width=W*S;cv.height=H*S;g.scale(S,S);g.fillStyle='#ffffff';g.fillRect(0,0,W,H);
+var y=P;g.textBaseline='alphabetic';g.fillStyle='#56554f';g.font='400 13px '+FM;g.fillText(k,P,y+12);y+=22;
+g.fillStyle='#171716';g.font='500 24px '+FD;L1.forEach(function(s){y+=28;g.fillText(s,P,y);y+=3;});
+if(L2.length){y+=6;g.fillStyle='#45443f';g.font='400 15px '+FB;L2.forEach(function(s){y+=19;g.fillText(s,P,y);y+=2;});}
+y+=24;var max=Math.max.apply(null,rows.map(function(r){return r.n;}))||1,x0=P+lw+12,bw=W-P-x0-90;
+rows.forEach(function(r){var w=Math.max(1,r.n/max*bw);
+g.textAlign='right';g.fillStyle=r.top?'#171716':'#45443f';g.font=(r.top?'600':'400')+' 14px '+FU;g.fillText(r.l,P+lw,y+16);g.textAlign='left';
+if(r.rest){g.save();g.beginPath();g.rect(x0,y,w,22);g.clip();g.strokeStyle='#8c8a84';g.lineWidth=1;for(var i=-22;i<w+22;i+=5){g.beginPath();g.moveTo(x0+i,y+22);g.lineTo(x0+i+22,y);g.stroke();}g.restore();g.strokeRect(x0+0.5,y+0.5,w-1,21);}
+else{g.fillStyle=r.top?'#171716':'#d2d1cc';g.fillRect(x0,y,w,22);}
+g.fillStyle=r.top?'#171716':'#45443f';g.font=r.top?'700 15px '+FU:'400 13px '+FM;g.fillText(r.v,x0+w+10,y+16);y+=34;});
+y+=14;g.fillStyle='#e1e0db';g.fillRect(P,y,W-2*P,1);y+=22;
+g.fillStyle='#45443f';g.font='400 12px '+FM;var sl=wrap(g,(srcT?'Source  '+srcT:''),W-2*P);sl.slice(0,1).forEach(function(s){g.fillText(s,P,y);});
+g.fillStyle='#56554f';g.fillText(addr,P,y+20);
+cv.toBlob(function(b){if(!b)return;var a=el('a');a.href=URL.createObjectURL(b);a.download='chip-supply-chain-'+(k.replace(/^Figure\\s*/,'figure-').replace(/[^0-9a-z]+/gi,'-').toLowerCase())+'-'+(fig.id.split('-').slice(2).join('-')||'chart')+'.png';D.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},2000);},'image/png');
+}
+function add(acts){
+if(acts.getAttribute('data-ready'))return;acts.setAttribute('data-ready','1');
+var kind=acts.getAttribute('data-kind'),fig=acts.closest('.figure');if(!fig||(kind!=='bars'&&kind!=='stack'))return;
+var tb=el('button','fs-tab','Table');tb.type='button';tb.setAttribute('aria-pressed','false');
+tb.addEventListener('click',function(){var on=!fig.classList.contains('is-table'),t=fig.querySelector('table.fig-table');fig.classList.toggle('is-table',on);if(t)t.classList.toggle('sr-only',!on);tb.setAttribute('aria-pressed',on?'true':'false');});
+var pb=el('button','fs-png','PNG');pb.type='button';pb.setAttribute('aria-label','Save the figure as a PNG picture');
+pb.addEventListener('click',function(){var go=function(){png(fig);};if(D.fonts&&D.fonts.ready)D.fonts.ready.then(go);else go();});
+var cite=acts.querySelector('.ch-cite-btn');acts.insertBefore(tb,cite?cite.nextSibling:acts.firstChild);acts.appendChild(pb);
+}
+[].forEach.call(D.querySelectorAll('.figure .fs-acts'),add);
+})();`;
 // the cite line's date goes in once every page's date is known (after the build modules write the readable pages)
-const CITE_DAY = (id) => `{{CITE_DAY:${id}}}`;
 // the key under the ledger column's fifteen rows: each band the stages hold, its bar drawn as the rows draw it
 const LEDGER_KEY = (() => {
   const used = ['Extreme', 'High', 'Moderate', 'Low'].filter((b) => stages.some((c) => (c.meta.card || {}).concentration === b));
   return used.length ? `<p class="ledger-key" aria-hidden="true">${used.map((b) => `<span class="lgk" data-band="${BANDS[b]}"><i></i>${b}</span>`).join('')}</p>` : '';
 })();
+/* ---------------- the chapter page (redesign stage 2, qa/redesign/BRIEF.md and the hybrid mockup's chapter) ----------------
+   An article in four parts:
+   1. the opener: a kicker (the chapter, the stage and its Extreme or High mark), the title, the standfirst (oneLiner), the
+      facts line and the cite line (Link to chapter, Cite this chapter, Chapter PDF);
+   2. the specimen: a slot the live 3D drawing moves into while it is on screen (src/app.js Stage.host), and its plain caption,
+      a mono label and the chapter's own specimenCaption, with the parts list under it where data/specimen-parts.json has one;
+   3. the chokepoint card;
+   4. the body: the contents rail on the left (On this page, Figures, The chain), and In plain terms, In short, the prose, the
+      flashcards, the sources and Previous and Next beside it.
+   The head keeps its class (.chapter-head) and the prose stays the article's own child, which the search index and the print
+   path read (src/app.js Tools, src/modules/print.js). */
+// the chapters whose drawing carries numbered parts (the owner's decision of 25 Oct 2026: Lithography only for now). The file is
+// keyed by chapter id; each part has its number, its name, either its maker or the stage that covers it, and the points on the
+// specimen its balloon points at ("at", in the specimen's own units, as specimens/<name>.js draws it)
+const specimenParts = readJSON(path.join(root, 'data', 'specimen-parts.json'), {});
+const partsOf = (ch) => { const e = specimenParts[ch.id]; return e && Array.isArray(e.parts) ? e.parts : []; };
+const chapterById = (id) => chapters.find((c) => c.id === id) || (geo && geo.id === id ? geo : null);
+function partsHTML(ch) {
+  const ps = partsOf(ch);
+  if (!ps.length) return '';
+  const e = specimenParts[ch.id];
+  if (e.specimen && e.specimen !== (ch.meta.specimen || '')) warn(`specimen-parts: ${ch.id} lists parts for ${e.specimen}, but the chapter shows ${ch.meta.specimen}`);
+  const line = (p) => {
+    if (p.stage) {
+      const c = chapterById(p.stage), si = stages.findIndex((x) => x.id === p.stage);
+      if (!c) { warn(`specimen-parts: ${ch.id} part ${p.n} names no chapter ${p.stage}`); return esc(p.name); }
+      return `${esc(p.name)}: <a href="${esc(c.id)}/" data-route="#${esc(c.id)}">see stage ${pad(si >= 0 ? si + 1 : c.number)}, ${esc(c.title)}</a>`;
+    }
+    return `${esc(p.name)}: ${esc(p.maker || '')}`;
+  };
+  return `<p class="ch-parts-k">Parts, as numbered on the drawing</p><ol class="ch-parts">${ps.map((p) => `<li><b aria-hidden="true">${+p.n}</b><span>${line(p)}</span></li>`).join('')}</ol>`;
+}
+// the band as a mark and a word: Extreme a solid bar, High an outline (the home's evidence figure draws them alike)
+const bandMark = (b) => (b ? `<span class="ch-band" data-band="${BANDS[b] || 0}"><i aria-hidden="true"></i>${esc(b)}</span>` : '');
+const TILE_WORD = { 16: 'The economics', 17: 'The contest' }; // the second item of the kicker for the two chapters that are not stages
+// the contents rail: the chapter's sections, its figures by number, and the chain (the fifteen stages with their marks, the
+// current one in wine, then the two chapters that look across them). Under 1200 px only On this page shows, as a line of links
+function railHTML(ch, stageIdx, toc) {
+  const figs = ch.figList || [];
+  const item = (c, i) => {
+    const b = (c.meta.card || {}).concentration || '', cur = c.id === ch.id;
+    return `<li class="stage-cell"${i != null ? ` data-band="${BANDS[b] || 0}"` : ''}${cur ? ' aria-current="true"' : ''}><a href="${esc(c.id)}/" data-route="#${esc(c.id)}" aria-label="${pad(c.number)} ${esc(c.title)}${b && i != null ? ', ' + esc(b) : ''}"${cur ? ' aria-current="page"' : ''}><span class="n">${pad(c.number)}</span><span class="t">${esc(c.title)}</span>${i != null ? '<i class="bm" aria-hidden="true"></i>' : ''}</a></li>`;
+  };
+  const across = chapters.filter((c) => !isStage(c)).concat(geo ? [geo] : []);
+  return `<nav class="ch-rail ch-ledger" aria-label="${esc(ch.title)}: contents">`
+    // the chapter's number and stage, for paper only (src/modules/print.css sets it in the ledger column)
+    + `<div class="ch-tile print-only"><span class="k">Chapter</span><span class="v">${pad(ch.number)}</span><span class="of">${stageIdx >= 0 ? `Stage ${stageIdx + 1} of ${stages.length}` : esc(TILE_WORD[ch.number] || '')}</span></div>`
+    + `<div class="rail-part rail-on"><p class="rail-k">On this page</p><ol class="rail-toc">${toc.map(([id, t]) => `<li><a href="#${esc(id)}">${t}</a></li>`).join('')}</ol></div>`
+    + (figs.length ? `<div class="rail-part rail-figs-w"><p class="rail-k">Figures</p><ol class="rail-figs">${figs.map((f) => `<li><a href="#${esc(f.id)}"><span class="n">${esc(f.num)}</span><span class="t">${esc(f.label)}</span></a></li>`).join('')}</ol></div>` : '')
+    + `<div class="rail-part rail-chain-w"><p class="rail-k">The chain <span class="rail-key" aria-hidden="true"><span><i></i>Extreme</span><span><i class="h"></i>High</span></span></p>`
+    + `<ol class="chain-track rail-chain">${stages.map((c, i) => item(c, i)).join('')}</ol>`
+    + (across.length ? `<ol class="rail-chain rail-across">${across.map((c) => item(c, null)).join('')}</ol>` : '') + `</div></nav>`;
+}
 function chapterHTML(ch) {
   const m = ch.meta, mins = Math.max(1, Math.round(ch.words / 230));
-  const specimen = m.specimen || 'wafer';
+  const specimen = m.specimen || (ch.id === 'geopolitics' ? 'globe' : 'wafer');
   const parts = splitTakeaways(ch.html);
   const pb = plainBox(parts.body, m.plain, { id: ch.id, cites: ch.cites, figures: [] });
   ch.inShort = parts.inShort;
-  const sources = ch.cites.length ? `<details class="chapter-sources"><summary>Sources (${ch.cites.length})</summary><ol>${ch.cites.map((c) => `<li>${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol></details>` : '';
+  const sources = ch.cites.length ? `<details class="chapter-sources" id="${esc(ch.id)}--sources"><summary>Sources (${ch.cites.length})</summary><ol>${ch.cites.map((c) => `<li>${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol></details>` : '';
   const stageIdx = stages.findIndex((c) => c.id === ch.id);
-  const tile = stageIdx >= 0 ? `<div class="ch-tile"><span class="k">Chapter</span><span class="v">${pad(ch.number)}</span><span class="of">stage ${stageIdx + 1} of ${stages.length}</span></div>` : `<div class="ch-tile"><span class="k">Chapter</span><span class="v">${pad(ch.number)}</span><span class="of">${ch.id === 'geopolitics' ? 'the contest' : 'the economics'}</span></div>`;
-  const chain = stageIdx >= 0 ? `<div class="chain chain--compact" aria-label="Where this stage sits in the chain">${chainTrack(stages, ch.id)}${LEDGER_KEY}</div>` : '';
+  const conc = stageIdx >= 0 ? (m.card || {}).concentration || '' : '';
+  const where = stageIdx >= 0 ? `${ch.title}, stage ${stageIdx + 1} of ${stages.length}` : '';
   const cardCtx = { id: ch.id, cites: ch.cites, figures: [] }; // the card's marks number with the body's (its urls were registered first)
-  const plate = isStage(ch) ? nameplate(m.card, ch.title, null, cardCtx) : '';
+  const plate = isStage(ch) ? nameplate(m.card, ch.title, null, cardCtx, where) : '';
   // the same pieces, kept for the chapter's own readable page (build/modules/social.js); the prose is the copy before glossary buttons
-  ch.rendered = { plain: pb.box, inShort: parts.inShort, plate, prose: pb.html, mins };
+  ch.rendered = { plain: pb.box, inShort: parts.inShort, plate, prose: pb.html, mins, parts: partsHTML(ch) };
   // the main page's head: each block (In plain terms, In short, the card's prose) marks the first use of each glossary term in it
   const cardUsed = new Set();
-  const plateGl = isStage(ch) ? nameplate(m.card, ch.title, (h) => glossaryWrap(h, cardUsed), cardCtx) : '';
+  const plateGl = isStage(ch) ? nameplate(m.card, ch.title, (h) => glossaryWrap(h, cardUsed), cardCtx, where) : '';
+  const kick = `<p class="ch-kick"><span>Chapter ${pad(ch.number)}</span><span>${stageIdx >= 0 ? `Stage ${stageIdx + 1} of ${stages.length}` : esc(TILE_WORD[ch.number] || '')}</span>${bandMark(conc)}</p>`;
+  const facts = `<p class="ch-meta"><span class="label">${ch.words.toLocaleString('en-US')} words / ${mins} min</span><span class="label">Specimen: ${esc(SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' '))}</span><span class="label">Updated ${CITE_DAY(ch.id)}</span>${ch.cites.length ? `<span class="label">${ch.cites.length} sources</span>` : ''}</p>`;
+  // the specimen's slot and its caption; chapters 16 and 17 set their drawing on the night ground (data-night)
+  const ps = partsOf(ch), night = ch.number >= 16;
+  const spec = `<figure class="ch-spec"${night ? ' data-night="1"' : ''}${ps.length ? ` data-parts="${esc(JSON.stringify(ps.map((p) => ({ n: +p.n, name: p.name, at: p.at || [] }))))}"` : ''}>`
+    + `<div class="ch-spec-draw"></div>`
+    + `<figcaption class="ch-spec-cap"><span class="label">Specimen ${pad(ch.number)} · ${esc(ch.title)}</span>${m.specimenCaption ? `<p>${esc(m.specimenCaption)}</p>` : ''}${ch.rendered.parts}</figcaption></figure>`;
+  // On this page: In plain terms, the chapter's own sections, the flashcards and the sources
+  const fc = flashcards[ch.id], hasDeck = fc && Array.isArray(fc.cards) && fc.cards.length;
+  const toc = (m.plain ? [[`${ch.id}--plain`, 'In plain terms']] : []).concat((ch.headings || []).map((h) => [h.id, inline(h.text, { id: ch.id, cites: [], figures: [] }).replace(/<sup[\s\S]*?<\/sup>/g, '')]))
+    .concat(hasDeck ? [[`${ch.id}--flashcards`, 'Flashcards']] : []).concat(ch.cites.length ? [[`${ch.id}--sources`, 'Sources']] : []);
   return `<article class="chapter" id="${esc(ch.id)}" data-specimen="${esc(specimen)}" data-number="${pad(ch.number)}" data-title="${esc(ch.title)}" data-caption="${esc(m.specimenCaption || '')}">
-<aside class="ch-ledger" aria-label="Chapter ${ch.number}${stageIdx >= 0 ? ', stage ' + (stageIdx + 1) + ' of ' + stages.length : ''}">${tile}${chain}</aside>
 <header class="chapter-head">
-<div class="ch-id"><div><h2 class="ch-title"><span class="sr-only">Chapter ${ch.number}: </span>${esc(ch.title)}</h2>${m.oneLiner ? `<p class="ch-lede">${esc(m.oneLiner)}</p>` : ''}<p class="ch-meta"><span class="label">${ch.words.toLocaleString('en-US')} words / ${mins} min</span><span class="label">Specimen: ${esc(SPECIMEN_NAME[specimen] || specimen.replace(/-/g, ' '))}</span><span class="label">Updated ${CITE_DAY(ch.id)}</span></p>${citeBlock(ch, CITE_DAY(ch.id), false, copyLink(ch.id))}</div></div>
+<div class="ch-open">${kick}<h2 class="ch-title${ch.title.length > 16 ? ' is-long' : ''}"><span class="sr-only">Chapter ${ch.number}: </span>${esc(ch.title)}</h2>${m.oneLiner ? `<p class="ch-lede">${esc(m.oneLiner)}</p>` : ''}<div class="ch-omet">${facts}${citeBlock(ch, CITE_DAY(ch.id), false, copyLink(ch.id))}</div></div>
+${spec}
+${plateGl}
 ${glPlain(pb.box)}
 ${parts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${glossaryWrap(parts.inShort)}</section>` : ''}
-${plateGl}
 </header>
+${railHTML(ch, stageIdx, toc)}
 <div class="prose">${glossaryWrap(pb.html)}${reviewHTML(ch)}${sources}${prevNext(ch)}</div>
 </article>`;
 }
@@ -790,15 +910,10 @@ function exposureViz(rows) {
 
 
 /* ---------------- geopolitics view ---------------- */
-let geoBody = '<p>The geopolitics essay is not written yet.</p>', geoDek ='Who holds each chokepoint, how the export-control campaign has unfolded since 2018, and where the chips go.';
-if (geo) {
-  geoDek = geo.meta.oneLiner || geoDek;
-  const sources = geo.cites.length ? `<details class="chapter-sources"><summary>Sources (${geo.cites.length})</summary><ol>${geo.cites.map((c) => `<li>${tierTag(c.url)}${sourceLine(c.url)}</li>`).join('')}</ol></details>` : '';
-  const gparts = splitTakeaways(geo.html); geo.inShort = gparts.inShort;
-  const gpb = plainBox(gparts.body, geo.meta.plain, { id: 'geopolitics', cites: geo.cites, figures: [] });
-  geo.rendered = { plain: gpb.box, inShort: gparts.inShort, plate: '', prose: gpb.html, mins: Math.max(1, Math.round(geo.words / 230)) };
-  geoBody = glPlain(gpb.box) + (gparts.inShort ? `<section class="inshort"><h3 class="label">In short</h3>${glossaryWrap(gparts.inShort)}</section>` : '') + glossaryWrap(gpb.html) + reviewHTML(geo) + sources + prevNext(geo);
-}
+let geoArticle = '', geoDek = 'Who holds each chokepoint, how the export-control campaign has unfolded since 2018, and where the chips go.';
+// chapter 17 is drawn by the same chapterHTML as the others (redesign stage 2): the opener, its specimen on the night ground and
+// the rail; it has no card, being no stage
+if (geo) { geoDek = geo.meta.oneLiner || geoDek; geoArticle = chapterHTML(geo); }
 
 /* ---------------- sources view ---------------- */
 const all = chapters.concat(geo ? [geo] : []);
@@ -972,7 +1087,7 @@ const ctx = { root, fs, path, all, chapters, geo, stages, data, esc, pad, word, 
   // the flashcard deck, for the one that ends Start here, and the glossary, whose count the home search field shows (build/modules/walk.js)
   deckHTML, glossary,
   // the cite line under the chapter title, as the main page prints it (the readable page's own date goes in)
-  citeBlock, CITE_JS,
+  citeBlock, CITE_JS, FIG_JS,
   // for the reference pages (build/modules/reference-pages.js): the views' own words and helpers, as the main page uses them
   suppliersIntro, suppliersRevenueNote, controlsDek, exposureNote, safeUrl, COUNTRY };
 for (const f of modDir(path.join(root, 'build', 'modules')).filter((x) => x.endsWith('.js'))) {
@@ -1002,7 +1117,7 @@ fill('SUPPLIERS_INTRO', suppliersIntro); fill('SUPPLIERS_REVENUE_NOTE', supplier
 for (const asset of ['print-title.png']) { const from = path.join(root, 'build', 'assets', asset); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', asset)); }
 // the site icons (drawn by `python3 build/icons.py`) go to the root of dist/, where browsers look for /favicon.ico
 for (const icon of ['favicon.ico', 'favicon.svg', 'apple-touch-icon.png']) { const from = path.join(root, 'build', 'assets', 'icons', icon); if (fs.existsSync(from)) fs.copyFileSync(from, path.join(root, 'dist', icon)); else warn(`icon ${icon} is missing; run python3 build/icons.py`); }
-fill('GEO_DEK', esc(geoDek)); fill('GEO_CITE', geo ? `<p class="ch-meta"><span class="label">${geo.words.toLocaleString('en-US')} words / ${geo.rendered.mins} min</span><span class="label">Updated ${CITE_DAY(geo.id)}</span></p>` + citeBlock(geo, CITE_DAY(geo.id), false, copyLink('geopolitics')) : ''); fill('CITE_JS', CITE_JS); fill('GEO_BODY', geoBody); fill('GEO_CAPTION', esc(geo ? geo.meta.specimenCaption || '' : '')); // the globe's caption, from the chapter's front matter as the other chapters' are
+fill('GEO_ARTICLE', geoArticle); fill('CITE_JS', CITE_JS); fill('FIG_JS', FIG_JS); // chapter 17, the essay, from the same chapterHTML as the others
 fill('BRIEFING', briefingHTML); fill('GLOSSARY', glossaryHTML); fill('GLOSSARY_COUNT', String(glossary.length));
 // the Look up page: one list of every term, firm and chip, alphabetical, each with the kind a reader would call it
 const lkSlug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
