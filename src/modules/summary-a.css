@@ -242,7 +242,7 @@
 .atlas .sa-roles { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 14px 0; list-style: none; border-bottom: 1px solid var(--line); }
 .atlas .sa-role {
   display: inline-flex; align-items: center; margin: 0; padding: 8px 13px; min-height: 34px; border: 1px solid var(--control-edge); border-radius: 999px;
-  background: none; color: var(--ink); cursor: pointer; font-family: var(--font-ui); font-size: 14px; font-weight: 400; line-height: 1;
+  background: none; color: var(--ink); cursor: pointer; font-family: var(--font-ui); font-size: 14px; font-weight: 400; line-height: 1; white-space: nowrap;
 }
 .atlas .sa-role:hover { border-color: var(--ink); }
 .atlas .sa-role[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
@@ -369,7 +369,8 @@
   /* a phone: the buttons scroll sideways, the stops are small dots (the strip below is the list to tap), the strip in two columns */
   .atlas .sa-roles { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin-right: calc(-1 * var(--margin)); padding-right: var(--margin); }
   .atlas .sa-roles::-webkit-scrollbar { display: none; }
-  .atlas .sa-role { flex: 0 0 auto; padding: 7px 11px; font-size: 13.5px; }
+  .atlas .sa-roles li { flex: 0 0 auto; }
+  .atlas .sa-role { padding: 7px 11px; font-size: 13.5px; white-space: nowrap; }
   .atlas .sa-map { margin-left: calc(-1 * var(--margin)); margin-right: calc(-1 * var(--margin)); }
   .sa-stop { width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; pointer-events: none; box-shadow: 0 0 0 1px var(--bg); }
   .sa-stop[data-band="High"] { box-shadow: 0 0 0 1px var(--bg), inset 0 0 0 1.25px var(--ink); }

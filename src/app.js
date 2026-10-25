@@ -1667,7 +1667,7 @@
       var cols = this.cols(), nc = cols.length;
       var total = this.rows.length || 1;
       var H = phone ? 720 : tight ? 520 : 580, padT = 16, padB = 16, inner = H - padT - padB;
-      var x0 = phone ? 54 : tight ? 128 : 172, wL = phone ? 10 : 12, x1 = W - (phone ? 150 : tight ? 168 : 214), wR = phone ? 8 : 10;
+      var x0 = phone ? 66 : tight ? 128 : 172, wL = phone ? 10 : 12, x1 = W - (phone ? 150 : tight ? 168 : 214), wR = phone ? 8 : 10;
       var coLab = function (c) { return phone ? c : self.coName(c); };
       var gL = 8, gR = 4;
       var uL = (inner - gL * (nc - 1)) / total, uR = (inner - gR * (n - 1)) / total;
